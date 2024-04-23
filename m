@@ -4,77 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E568CC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 09:49:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 123AAC18E72
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 10:25:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzCm0-000167-UO; Tue, 23 Apr 2024 05:49:12 -0400
+	id 1rzDJs-0006Bv-Cz; Tue, 23 Apr 2024 06:24:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rzCly-00015e-A5
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 05:49:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <adiupina@astralinux.ru>)
+ id 1rzDJq-0006BO-1z; Tue, 23 Apr 2024 06:24:10 -0400
+Received: from new-mail.astralinux.ru ([51.250.53.244])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rzClw-0003bQ-C0
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 05:49:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713865747;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7TR0DYSlqpy3tXMA4xysJX+ccLoaqSBSZAeBe11VhzA=;
- b=iQi2yTDLjZYhEb9ZH3F0Y11Me2Fz2ypnU7Vgyr8evTX7NEdKqYesLtolQz6/fXJbgEUP4Z
- Oljq7AUKZ2tkrC50/Lu57HITiVaz0BFJNzRgXH6rTtB1X6a1A5ZS6L9IFl+K1LGsk/h8al
- jDGwrYk3pmvnXBQVRYgxAbQKPEd34iw=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-433-Ecel4J5TM3uUrxTG37FnXw-1; Tue, 23 Apr 2024 05:49:05 -0400
-X-MC-Unique: Ecel4J5TM3uUrxTG37FnXw-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3626C80591B;
- Tue, 23 Apr 2024 09:49:05 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.127])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 50D01492BC7;
- Tue, 23 Apr 2024 09:49:03 +0000 (UTC)
-Date: Tue, 23 Apr 2024 10:49:00 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Jean-Philippe Brucker <jean-philippe@linaro.org>
-Cc: peter.maydell@linaro.org, richard.henderson@linaro.org,
- philmd@linaro.org, pbonzini@redhat.com, alex.bennee@linaro.org,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH v2 02/22] target/arm: Add confidential guest support
-Message-ID: <ZieEDDhjZYoBUUW4@redhat.com>
-References: <20240419155709.318866-2-jean-philippe@linaro.org>
- <20240419155709.318866-4-jean-philippe@linaro.org>
- <ZiKa6MQaujEMlC23@redhat.com> <20240423094456.GA4454@myrica>
+ (Exim 4.90_1) (envelope-from <adiupina@astralinux.ru>)
+ id 1rzDJn-0001A2-I6; Tue, 23 Apr 2024 06:24:09 -0400
+Received: from [10.177.233.137] (unknown [10.177.233.137])
+ by new-mail.astralinux.ru (Postfix) with ESMTPA id 4VNyrh0K2tzyQr;
+ Tue, 23 Apr 2024 13:23:47 +0300 (MSK)
+Message-ID: <aa967494-d3d1-4896-8006-b5fc2252a56e@astralinux.ru>
+Date: Tue, 23 Apr 2024 13:23:33 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: RuPost Desktop
+Subject: Re: [PATCH RFC] prevent overflow in
+ xlnx_dpdma_desc_get_source_address()
+To: "Konrad, Frederic" <Frederic.Konrad@amd.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "sdl.qemu@linuxtesting.org" <sdl.qemu@linuxtesting.org>
+References: <20240412081328.11183-1-adiupina@astralinux.ru>
+ <CAFEAcA9wfzpc74iA_2G-YbtQtwGCA9VPQuXagg-Q0FwC92tg+w@mail.gmail.com>
+ <CY8PR12MB8411CAB26257B5974DAE2CA2E60F2@CY8PR12MB8411.namprd12.prod.outlook.com>
+Content-Language: ru
+From: Alexandra Diupina <adiupina@astralinux.ru>
+In-Reply-To: <CY8PR12MB8411CAB26257B5974DAE2CA2E60F2@CY8PR12MB8411.namprd12.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240423094456.GA4454@myrica>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-DrWeb-SpamScore: -100
+X-DrWeb-SpamState: legit
+X-DrWeb-SpamDetail: gggruggvucftvghtrhhoucdtuddrgedvfedrvdehuddgtddvucetufdoteggodetrfcurfhrohhfihhlvgemucfftfghgfeunecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefkffggfgfuvfevfhfhjggtgfesthekredttderjeenucfhrhhomheptehlvgigrghnughrrgcuffhiuhhpihhnrgcuoegrughiuhhpihhnrgesrghsthhrrghlihhnuhigrdhruheqnecuggftrfgrthhtvghrnhepiedvgfdtudfffeegleevheeltddtffejtdfgveevgfehtdeujeejgfdtteehgeejnecuffhomhgrihhnpehlihhnuhigthgvshhtihhnghdrohhrghdprghmugdrtghomhenucfkphepuddtrddujeejrddvfeefrddufeejnecurfgrrhgrmhephhgvlhhopegluddtrddujeejrddvfeefrddufeejngdpihhnvghtpedutddrudejjedrvdeffedrudefjeemheejgedtkedpmhgrihhlfhhrohhmpegrughiuhhpihhnrgesrghsthhrrghlihhnuhigrdhruhdpnhgspghrtghpthhtohepjedprhgtphhtthhopefhrhgvuggvrhhitgdrmfhonhhrrggusegrmhgurdgtohhmpdhrtghpthhtohepphgvthgvrhdrmhgrhiguvghllheslhhinhgrrhhordhorhhgpdhrtghpthhtoheprghlihhsthgrihhrsegrlhhishhtrghirhdvfedrmhgvpdhrtghpthhtohepvggughgrrhdrihhglhgvshhirghssehgmhgrihhlrdgtohhmpdhrtghpthhtohepqhgvmh
+ huqdgrrhhmsehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepshgulhdrqhgvmhhusehlihhnuhigthgvshhtihhnghdrohhrgh
+X-DrWeb-SpamVersion: Vade Retro 01.423.251#02 AS+AV+AP Profile: DRWEB;
+ Bailout: 300
+X-AntiVirus: Checked by Dr.Web [MailD: 11.1.19.2307031128,
+ SE: 11.1.12.2210241838, Core engine: 7.00.62.01180, Virus records: 12626735,
+ Updated: 2024-Apr-23 08:25:08 UTC]
+Received-SPF: pass client-ip=51.250.53.244;
+ envelope-from=adiupina@astralinux.ru; helo=new-mail.astralinux.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,35 +70,93 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 23, 2024 at 10:44:56AM +0100, Jean-Philippe Brucker wrote:
-> On Fri, Apr 19, 2024 at 05:25:12PM +0100, Daniel P. Berrangé wrote:
-> > On Fri, Apr 19, 2024 at 04:56:50PM +0100, Jean-Philippe Brucker wrote:
-> > > Add a new RmeGuest object, inheriting from ConfidentialGuestSupport, to
-> > > support the Arm Realm Management Extension (RME). It is instantiated by
-> > > passing on the command-line:
-> > > 
-> > >   -M virt,confidential-guest-support=<id>
-> > >   -object guest-rme,id=<id>[,options...]
-> 
-> Hm, the commit message is wrong, it should say "rme-guest".
-> 
-> > How about either "arm-rme" or merely 'rme' as the object name 
-> 
-> I don't feel strongly about the name, but picked this one to be consistent
-> with existing confidential-guest-support objects: sev-guest, pef-guest,
-> s390-pv-guest, and upcoming tdx-guest [1]
 
-Lets stick with 'rme-guest' then.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
+17/04/24 13:05, Konrad, Frederic пишет:
+> Hi,
+>
+>> -----Original Message-----
+>> From: qemu-devel-bounces+fkonrad=amd.com@nongnu.org <qemu-devel-bounces+fkonrad=amd.com@nongnu.org> On Behalf Of
+>> Peter Maydell
+>> Sent: Friday, April 12, 2024 12:07 PM
+>> To: Alexandra Diupina <adiupina@astralinux.ru>
+>> Cc: Alistair Francis <alistair@alistair23.me>; Edgar E. Iglesias <edgar.iglesias@gmail.com>; qemu-arm@nongnu.org; qemu-
+>> devel@nongnu.org; sdl.qemu@linuxtesting.org
+>> Subject: Re: [PATCH RFC] prevent overflow in xlnx_dpdma_desc_get_source_address()
+>>
+>> On Fri, 12 Apr 2024 at 09:13, Alexandra Diupina <adiupina@astralinux.ru> wrote:
+>>> Overflow can occur in a situation where desc->source_address
+>>> has a maximum value (pow(2, 32) - 1), so add a cast to a
+>>> larger type before the assignment.
+>>>
+>>> Found by Linux Verification Center (linuxtesting.org) with SVACE.
+>>>
+>>> Fixes: d3c6369a96 ("introduce xlnx-dpdma")
+>>> Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
+>>> ---
+>>>   hw/dma/xlnx_dpdma.c | 20 ++++++++++----------
+>>>   1 file changed, 10 insertions(+), 10 deletions(-)
+>>>
+>>> diff --git a/hw/dma/xlnx_dpdma.c b/hw/dma/xlnx_dpdma.c
+>>> index 1f5cd64ed1..224259225c 100644
+>>> --- a/hw/dma/xlnx_dpdma.c
+>>> +++ b/hw/dma/xlnx_dpdma.c
+>>> @@ -175,24 +175,24 @@ static uint64_t xlnx_dpdma_desc_get_source_address(DPDMADescriptor *desc,
+>>>
+>>>       switch (frag) {
+>>>       case 0:
+>>> -        addr = desc->source_address
+>>> -            + (extract32(desc->address_extension, 16, 12) << 20);
+>>> +        addr = (uint64_t)(desc->source_address
+>>> +            + (extract32(desc->address_extension, 16, 12) << 20));
+>> Unless I'm confused, this cast doesn't help, because we
+>> will have already done a 32-bit addition of desc->source_address
+>> and the value from the address_extension part, so it doesn't
+>> change the result.
+>>
+>> If we want to do the addition at 64 bits then using extract64()
+>> would be the simplest way to arrange for that.
+>>
+>> However, I can't figure out what this code is trying to do and
+>> make that line up with the data sheet; maybe this isn't the
+>> right datasheet for this device?
+>>
+>> https://docs.amd.com/r/en-US/ug1085-zynq-ultrascale-trm/ADDR_EXT-Field
+>>
+>> The datasheet suggests that we should take 32 bits of the address
+>> from one field (here desc->source_address) and 16 bits of the
+>> address from another (here desc->address_extension's high bits)
+>> and combine them to make a 48 bit address. But this code is only
+>> looking at 12 bits of the high 16 in address_extension, and it
+>> doesn't shift them right enough to put them into bits [47:32]
+>> of the final address.
+>>
+>> Xilinx folks: what hardware is this modelling, and is it
+>> really the right behaviour?
+> Looks like this is the right documentation.  Most probably the descriptor field changed
+> since I did that model, or I got really confused.
+>
+>> Also, this device looks like it has a host-endianness bug: the
+>> DPDMADescriptor struct is read directly from guest memory in
+>> dma_memory_read(), but the device never does anything to swap
+>> the fields from guest memory order to host memory order. So
+>> this is likely broken on big-endian hosts.
+>>
+> Yes indeed.
+>
+> Best Regards,
+> Fred
+>
+>> thanks
+>> -- PMM
+
+hw/dma/xlnx_dpdma.c defines a dma_ops structure
+with the endianness field set to DEVICE_NATIVE_ENDIAN.
+Doesn't this guarantee that there will be no endian errors?
+
+Alexandra
 
