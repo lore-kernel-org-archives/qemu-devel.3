@@ -4,88 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6422C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 16:03:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9ACFC10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 16:16:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzIZm-0004nO-Ji; Tue, 23 Apr 2024 12:00:58 -0400
+	id 1rzIn8-00033F-U4; Tue, 23 Apr 2024 12:14:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bill.mills@linaro.org>)
- id 1rzIZk-0004kS-Ot
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 12:00:56 -0400
-Received: from mail-qv1-xf29.google.com ([2607:f8b0:4864:20::f29])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bill.mills@linaro.org>)
- id 1rzIZi-0003dR-Aj
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 12:00:56 -0400
-Received: by mail-qv1-xf29.google.com with SMTP id
- 6a1803df08f44-69b44071a07so49690186d6.3
- for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 09:00:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713888053; x=1714492853; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QUXF0pbqPINBlWAL3oyQd0ZXBGy6HiUG13wz1FRP9pg=;
- b=e3WxsppzabUGtwSIrkp+Jxj2seXjbo6uxETvfh9X9Z3XJcbEoFFrXHYCKJydxyQkoA
- vav26T1IkqDTRm++jTu9UuFCmfFx8CDum2sHJfsmYTMLsPkHUE9EXtAUq7/WvXtSACJI
- NYQ9rEce8g/AkIE0Q+fyhAhcSkzRuZzaYfvYS5T5fcCGgF0zX1hiBfdzTL7uaF6neM8p
- 7AZWOrOnd+N2pWAINoj8cryrOZ2NkiMHr09Tf53F3XkdWrOfM5L2KF7imo3/RsjO0DAl
- hWxQ7SGjjd8hQjzG2S0wLAsZkeRk+SkO6kcbQNqpnWWBHOCqYnC6/b3WMT+X6is9sJtQ
- dzpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713888053; x=1714492853;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QUXF0pbqPINBlWAL3oyQd0ZXBGy6HiUG13wz1FRP9pg=;
- b=HEGIPiBwG7MKiU0sl5q0Ei08SMAvjRHUXZJTj+vA6EBzN/ZdICMJShss6MP+k1GIaS
- dnoFvriIjFZT6nYwx1u5b3y/c0tMA4wgx4BWBwyr4kDV8+IeUurnkmm33e+IMawk876x
- ZNbu98o1t/rRb/nBcMDZrscDNK9ae9zH4hKbMgSrIxGVTdtX7iHm+/HaXofW7tcmSS8u
- bMtC+gG33QbnEsW9FvGH8cg24z4DoDsmNTDFFz6wLRrMHOkAsPUIPZCWnxVGFBNOGw/L
- dOb9+ClE9qskXXWgPQOE1wq0jkkNvg0b1vc1ArLxQ9kb+klxrOqDOysgd1ZvKOzwSkIZ
- 3pvA==
-X-Gm-Message-State: AOJu0YwtrT9AZUrZCn57X5mE3ReWxIk/J+YWg1s4jLtk3DnqiDb90d9q
- 303xb0yV/dg3C4BVeB9FH1pCc17BYQMk/OLgI/A7acNWgePhfrPrqyi1052NsmQ=
-X-Google-Smtp-Source: AGHT+IFHyYErQf67inmK+ur4lzrBBmXfVCID0ViuwnycAsaZ92iAIKWD0AY5tw4uOOU7fVDE46HlMg==
-X-Received: by 2002:a0c:e58a:0:b0:6a0:582c:61a with SMTP id
- t10-20020a0ce58a000000b006a0582c061amr9791054qvm.55.1713888052666; 
- Tue, 23 Apr 2024 09:00:52 -0700 (PDT)
-Received: from [192.168.2.7] (pool-72-83-14-124.washdc.fios.verizon.net.
- [72.83.14.124]) by smtp.gmail.com with ESMTPSA id
- ez4-20020ad45904000000b00690c77505bdsm4392053qvb.37.2024.04.23.09.00.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Apr 2024 09:00:51 -0700 (PDT)
-Message-ID: <ecf04b2a-2038-43ac-a0bb-38d0baca7a7c@linaro.org>
-Date: Tue, 23 Apr 2024 12:00:50 -0400
+ (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
+ id 1rzIn7-000335-6a
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 12:14:45 -0400
+Received: from vps-vb.mhejs.net ([37.28.154.113])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
+ id 1rzIn4-00060A-48
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 12:14:44 -0400
+Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
+ (envelope-from <mail@maciej.szmigiero.name>)
+ id 1rzImm-00017t-Jm; Tue, 23 Apr 2024 18:14:24 +0200
+Message-ID: <9fa34f3e-2f65-442b-8872-513565bb335c@maciej.szmigiero.name>
+Date: Tue, 23 Apr 2024 18:14:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/6] Add ivshmem-flat device
-To: Markus Armbruster <armbru@redhat.com>,
- Gustavo Romero <gustavo.romero@linaro.org>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, thuth@redhat.com,
- lvivier@redhat.com, qemu-arm@nongnu.org, alex.bennee@linaro.org,
- pbonzini@redhat.com, anton.kochkov@proton.me, richard.henderson@linaro.org,
- peter.maydell@linaro.org
-References: <20240222222218.2261956-1-gustavo.romero@linaro.org>
- <87wmqp3xug.fsf@pond.sub.org>
- <a28f3657-c827-7a0d-a8da-b82d17d17577@linaro.org>
- <87sezc8irk.fsf@pond.sub.org>
-Content-Language: en-US
-From: Bill Mills <bill.mills@linaro.org>
-In-Reply-To: <87sezc8irk.fsf@pond.sub.org>
+Subject: =?UTF-8?Q?Re=3A_=5BPATCH_RFC_00/26=5D_Multifd_=F0=9F=94=80_device_s?=
+ =?UTF-8?Q?tate_transfer_support_with_VFIO_consumer?=
+To: Peter Xu <peterx@redhat.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Alex Williamson
+ <alex.williamson@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+References: <cover.1713269378.git.maciej.szmigiero@oracle.com>
+ <Zh-KF72Fe9oV6tfT@redhat.com>
+ <c0b1dbb1-d353-4832-af90-96895b2129fc@maciej.szmigiero.name>
+ <Zh_6W8u3H4FmGS49@redhat.com>
+ <71ede5c8-857c-418b-9e37-b8d343ddfa06@maciej.szmigiero.name>
+ <ZiD4aLSre6qubuHr@redhat.com>
+ <aebcd78e-b8b6-44db-b2be-0bbd5acccf3f@maciej.szmigiero.name>
+ <ZiF8aWVfW7kPuOtn@x1n>
+Content-Language: en-US, pl-PL
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <ZiF8aWVfW7kPuOtn@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f29;
- envelope-from=bill.mills@linaro.org; helo=mail-qv1-xf29.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=37.28.154.113;
+ envelope-from=mail@maciej.szmigiero.name; helo=vps-vb.mhejs.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,100 +113,296 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Markus,
-
-On 4/23/24 6:39 AM, Markus Armbruster wrote:
-> Gustavo Romero <gustavo.romero@linaro.org> writes:
-> 
->> Hi Markus,
->>
->> Thanks for interesting in the ivshmem-flat device.
->>
->> Bill Mills (cc:ed) is the best person to answer your question,
->> so please find his answer below.
->>
->> On 2/28/24 3:29 AM, Markus Armbruster wrote:
->>> Gustavo Romero <gustavo.romero@linaro.org> writes:
->>>
->>> [...]
->>>
->>>> This patchset introduces a new device, ivshmem-flat, which is similar to the
->>>> current ivshmem device but does not require a PCI bus. It implements the ivshmem
->>>> status and control registers as MMRs and the shared memory as a directly
->>>> accessible memory region in the VM memory layout. It's meant to be used on
->>>> machines like those with Cortex-M MCUs, which usually lack a PCI bus, e.g.,
->>>> lm3s6965evb and mps2-an385. Additionally, it has the benefit of requiring a tiny
->>>> 'device driver,' which is helpful on some RTOSes, like Zephyr, that run on
->>>> memory-constrained resource targets.
+On 18.04.2024 22:02, Peter Xu wrote:
+> On Thu, Apr 18, 2024 at 08:14:15PM +0200, Maciej S. Szmigiero wrote:
+>> On 18.04.2024 12:39, Daniel P. Berrangé wrote:
+>>> On Thu, Apr 18, 2024 at 11:50:12AM +0200, Maciej S. Szmigiero wrote:
+>>>> On 17.04.2024 18:35, Daniel P. Berrangé wrote:
+>>>>> On Wed, Apr 17, 2024 at 02:11:37PM +0200, Maciej S. Szmigiero wrote:
+>>>>>> On 17.04.2024 10:36, Daniel P. Berrangé wrote:
+>>>>>>> On Tue, Apr 16, 2024 at 04:42:39PM +0200, Maciej S. Szmigiero wrote:
+>>>>>>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>> (..)
+>>>>>>> That said, the idea of reserving channels specifically for VFIO doesn't
+>>>>>>> make a whole lot of sense to me either.
+>>>>>>>
+>>>>>>> Once we've done the RAM transfer, and are in the switchover phase
+>>>>>>> doing device state transfer, all the multifd channels are idle.
+>>>>>>> We should just use all those channels to transfer the device state,
+>>>>>>> in parallel.  Reserving channels just guarantees many idle channels
+>>>>>>> during RAM transfer, and further idle channels during vmstate
+>>>>>>> transfer.
+>>>>>>>
+>>>>>>> IMHO it is more flexible to just use all available multifd channel
+>>>>>>> resources all the time.
+>>>>>>
+>>>>>> The reason for having dedicated device state channels is that they
+>>>>>> provide lower downtime in my tests.
+>>>>>>
+>>>>>> With either 15 or 11 mixed multifd channels (no dedicated device state
+>>>>>> channels) I get a downtime of about 1250 msec.
+>>>>>>
+>>>>>> Comparing that with 15 total multifd channels / 4 dedicated device
+>>>>>> state channels that give downtime of about 1100 ms it means that using
+>>>>>> dedicated channels gets about 14% downtime improvement.
+>>>>>
+>>>>> Hmm, can you clarify. /when/ is the VFIO vmstate transfer taking
+>>>>> place ? Is is transferred concurrently with the RAM ? I had thought
+>>>>> this series still has the RAM transfer iterations running first,
+>>>>> and then the VFIO VMstate at the end, simply making use of multifd
+>>>>> channels for parallelism of the end phase. your reply though makes
+>>>>> me question my interpretation though.
+>>>>>
+>>>>> Let me try to illustrate channel flow in various scenarios, time
+>>>>> flowing left to right:
+>>>>>
+>>>>> 1. serialized RAM, then serialized VM state  (ie historical migration)
+>>>>>
+>>>>>          main: | Init | RAM iter 1 | RAM iter 2 | ... | RAM iter N | VM State |
+>>>>>
+>>>>>
+>>>>> 2. parallel RAM, then serialized VM state (ie today's multifd)
+>>>>>
+>>>>>          main: | Init |                                            | VM state |
+>>>>>      multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+>>>>>      multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+>>>>>      multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+>>>>>
+>>>>>
+>>>>> 3. parallel RAM, then parallel VM state
+>>>>>
+>>>>>          main: | Init |                                            | VM state |
+>>>>>      multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+>>>>>      multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+>>>>>      multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+>>>>>      multifd4:                                                     | VFIO VM state |
+>>>>>      multifd5:                                                     | VFIO VM state |
+>>>>>
+>>>>>
+>>>>> 4. parallel RAM and VFIO VM state, then remaining VM state
+>>>>>
+>>>>>          main: | Init |                                            | VM state |
+>>>>>      multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+>>>>>      multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+>>>>>      multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+>>>>>      multifd4:        | VFIO VM state                                         |
+>>>>>      multifd5:        | VFIO VM state                                         |
+>>>>>
+>>>>>
+>>>>> I thought this series was implementing approx (3), but are you actually
+>>>>> implementing (4), or something else entirely ?
 >>>>
->>>> The patchset includes a QTest for the ivshmem-flat device, however, it's also
->>>> possible to experiment with it in two ways:
->>>>
->>>> (a) using two Cortex-M VMs running Zephyr; or
->>>> (b) using one aarch64 VM running Linux with the ivshmem PCI device and another
->>>>       arm (Cortex-M) VM running Zephyr with the new ivshmem-flat device.
->>>>
->>>> Please note that for running the ivshmem-flat QTests the following patch, which
->>>> is not committed to the tree yet, must be applied:
->>>>
->>>> https://lists.nongnu.org/archive/html/qemu-devel/2023-11/msg03176.html
+>>>> You are right that this series operation is approximately implementing
+>>>> the schema described as numer 3 in your diagrams.
 >>>
->>> What problem are you trying to solve with ivshmem?
+>>>> However, there are some additional details worth mentioning:
+>>>> * There's some but relatively small amount of VFIO data being
+>>>> transferred from the "save_live_iterate" SaveVMHandler while the VM is
+>>>> still running.
+>>>>
+>>>> This is still happening via the main migration channel.
+>>>> Parallelizing this transfer in the future might make sense too,
+>>>> although obviously this doesn't impact the downtime.
+>>>>
+>>>> * After the VM is stopped and downtime starts the main (~ 400 MiB)
+>>>> VFIO device state gets transferred via multifd channels.
+>>>>
+>>>> However, these multifd channels (if they are not dedicated to device
+>>>> state transfer) aren't idle during that time.
+>>>> Rather they seem to be transferring the residual RAM data.
+>>>>
+>>>> That's most likely what causes the additional observed downtime
+>>>> when dedicated device state transfer multifd channels aren't used.
 >>>
->>> Shared memory is not a solution to any communication problem, it's
->>> merely a building block for building such solutions: you invariably have
->>> to layer some protocol on top.  What do you intend to put on top of
->>> ivshmem?
+>>> Ahh yes, I forgot about the residual dirty RAM, that makes sense as
+>>> an explanation. Allow me to work through the scenarios though, as I
+>>> still think my suggestion to not have separate dedicate channels is
+>>> better....
+>>>
+>>>
+>>> Lets say hypothetically we have an existing deployment today that
+>>> uses 6 multifd channels for RAM. ie:
+>>>           main: | Init |                                            | VM state |
+>>>       multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>>>       multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>>>       multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>>>       multifd4:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>>>       multifd5:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>>>       multifd6:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>>>
+>>> That value of 6 was chosen because that corresponds to the amount
+>>> of network & CPU utilization the admin wants to allow, for this
+>>> VM to migrate. All 6 channels are fully utilized at all times.
+>>>
+>>>
+>>> If we now want to parallelize VFIO VM state, the peak network
+>>> and CPU utilization the admin wants to reserve for the VM should
+>>> not change. Thus the admin will still wants to configure only 6
+>>> channels total.
+>>>
+>>> With your proposal the admin has to reduce RAM transfer to 4 of the
+>>> channels, in order to then reserve 2 channels for VFIO VM state, so we
+>>> get a flow like:
+>>>
+>>>           main: | Init |                                            | VM state |
+>>>       multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>>>       multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>>>       multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>>>       multifd4:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>>>       multifd5:                                                     | VFIO VM state |
+>>>       multifd6:                                                     | VFIO VM state |
+>>>
+>>> This is bad, as it reduces performance of RAM transfer. VFIO VM
+>>> state transfer is better, but that's not a net win overall.
+>>>
+>>>
+>>>
+>>> So lets say the admin was happy to increase the number of multifd
+>>> channels from 6 to 8.
+>>>
+>>> This series proposes that they would leave RAM using 6 channels as
+>>> before, and now reserve the 2 extra ones for VFIO VM state:
+>>>
+>>>           main: | Init |                                            | VM state |
+>>>       multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>>>       multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>>>       multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>>>       multifd4:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>>>       multifd5:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>>>       multifd6:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>>>       multifd7:                                                     | VFIO VM state |
+>>>       multifd8:                                                     | VFIO VM state |
+>>>
+>>>
+>>> RAM would perform as well as it did historically, and VM state would
+>>> improve due to the 2 parallel channels, and not competing with the
+>>> residual RAM transfer.
+>>>
+>>> This is what your latency comparison numbers show as a benefit for
+>>> this channel reservation design.
+>>>
+>>> I believe this comparison is inappropriate / unfair though, as it is
+>>> comparing a situation with 6 total channels against a situation with
+>>> 8 total channels.
+>>>
+>>> If the admin was happy to increase the total channels to 8, then they
+>>> should allow RAM to use all 8 channels, and then VFIO VM state +
+>>> residual RAM to also use the very same set of 8 channels:
+>>>
+>>>           main: | Init |                                            | VM state |
+>>>       multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
+>>>       multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
+>>>       multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
+>>>       multifd4:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
+>>>       multifd5:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
+>>>       multifd6:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
+>>>       multifd7:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
+>>>       multifd8:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
+>>>
+>>> This will speed up initial RAM iters still further & the final switch
+>>> over phase even more. If residual RAM is larger than VFIO VM state,
+>>> then it will dominate the switchover latency, so having VFIO VM state
+>>> compete is not a problem. If VFIO VM state is larger than residual RAM,
+>>> then allowing it acces to all 8 channels instead of only 2 channels
+>>> will be a clear win.
 >>
->> Actually ivshmem is shared memory and bi-direction notifications (in this case a doorbell register and an irq).
+>> I re-did the measurement with increased the number of multifd channels,
+>> first to (total count/dedicated count) 25/0, then to 100/0.
+>>
+>> The results did not improve:
+>> With 25/0 multifd mixed channels config I still get around 1250 msec
+>> downtime - the same as with 15/0 or 11/0 mixed configs I measured
+>> earlier.
+>>
+>> But with the (pretty insane) 100/0 mixed channel config the whole setup
+>> gets so for into the law of diminishing returns that the results actually
+>> get worse: the downtime is now about 1450 msec.
+>> I guess that's from all the extra overhead from switching between 100
+>> multifd channels.
 > 
-> Yes, ivshmem-doorbell supports interrupts.  Doesn't change my argument.
+> 100 threads are probably too much indeed.
 > 
->> This is the fundamental requirement for many types of communication but our interest is for the OpenAMP project [1].
->>
->> All the OpenAMP project's communication is based on shared memory and bi-directional notification.  Often this is on a AMP SOC with Cortex-As and Cortex-Ms or Rs.  However we are now expanding into PCIe based AMP. One example of this is an x86 host computer and a PCIe card with an ARM SOC.  Other examples include two systems with PCIe root complex connected via a non-transparent bridge.
->>
->> The existing PCI based ivshmem lets us model these types of systems in a simple generic way without worrying about the details of the RC/EP relationship or the details of a specific non-transparent bridge.  In fact the ivshmem looks to the two (or more) systems like a non-transparent bridge with its own memory (and no other memory access is allowed).
->>
->> Right now we are testing this with RPMSG between two QEMU system where both systems are cortex-a53 and both running Zephyr. [2]
->>
->> We will expand this by switching one of the QEMU systems to either arm64 Linux or x86 Linux.
-> 
-> So you want to simulate a heterogeneous machine by connecting multiple
-> qemu-system-FOO processes via ivshmem, correct?
+> However I agree with Dan's question raised, and I'd like to second that.
+> It so far looks better if the multifd channels can be managed just like a
+> pool of workers without assignments to specific jobs.  It looks like this
+> series is already getting there, it's a pity we lose that genericity only
+> because some other side effects on the ram sync semantics.
 
-An AMP SOC is one use case.  A PCIe card with an embedded Cortex-M would 
-be another.
+We don't lose any genericity since by default the transfer is done via
+mixed RAM / device state multifd channels from a shared pool.
 
-> 
->> We (and others) are also working on a generic virtio transport that will work between any two systems as long as they have shared memory and bi-directional notifications.
-> 
-> On top of or adjacent to ivshmem?
-> 
+It's only when x-multifd-channels-device-state is set to value > 0 then
+the requested multifd channel counts gets dedicated to device state.
 
-On top of ivshmem.  It is not the only use case but it is an important one.
+It could be seen as a fine-tuning option for cases where tests show that
+it provides some benefits to the particular workload - just like many
+other existing migration options are.
 
-I just gave a talk on this subject at EOSS.  If you would like to look 
-at the slides they are here:
-https://sched.co/1aBFm
+14% downtime improvement is too much to waste - I'm not sure that's only
+due to avoiding RAM syncs, it's possible that there are other subtle
+performance interactions too.
+
+For even more genericity this option could be named like
+x-multifd-channels-map and contain an array of channel settings like
+"ram,ram,ram,device-state,device-state".
+Then a possible future other uses of multifd channels wouldn't even need
+a new dedicated option.
+
+>>
+>> I think one of the reasons for these results is that mixed (RAM + device
+>> state) multifd channels participate in the RAM sync process
+>> (MULTIFD_FLAG_SYNC) whereas device state dedicated channels don't.
+> 
+> Firstly, I'm wondering whether we can have better names for these new
+> hooks.  Currently (only comment on the async* stuff):
+> 
+>    - complete_precopy_async
+>    - complete_precopy
+>    - complete_precopy_async_wait
+> 
+> But perhaps better:
+> 
+>    - complete_precopy_begin
+>    - complete_precopy
+>    - complete_precopy_end
+> 
+> ?
+> 
+> As I don't see why the device must do something with async in such hook.
+> To me it's more like you're splitting one process into multiple, then
+> begin/end sounds more generic.
+
+Ack, I will rename these hooks to begin/end.
+
+> Then, if with that in mind, IIUC we can already split ram_save_complete()
+> into >1 phases too. For example, I would be curious whether the performance
+> will go back to normal if we offloading multifd_send_sync_main() into the
+> complete_precopy_end(), because we really only need one shot of that, and I
+> am quite surprised it already greatly affects VFIO dumping its own things.
+
+AFAIK there's already just one multifd_send_sync_main() during downtime -
+the one called from save_live_complete_precopy SaveVMHandler.
+
+In order to truly never interfere with device state transfer the sync would
+need to be ordered after the device state transfer is complete - that is,
+after VFIO complete_precopy_end (complete_precopy_async_wait) handler
+returns.
+
+> I would even ask one step further as what Dan was asking: have you thought
+> about dumping VFIO states via multifd even during iterations?  Would that
+> help even more than this series (which IIUC only helps during the blackout
+> phase)?
+> 
+> It could mean that the "async*" hooks can be done differently, and I'm not
+> sure whether they're needed at all, e.g. when threads are created during
+> save_setup but cleaned up in save_cleanup.
+
+Responded to this thread in another e-mail message.
+
+> Thanks,
+> 
 
 Thanks,
-Bill
+Maciej
 
->> Now for ivshmem-flat.  We want to expand this model to include MCU like CPUs and RTOS'es that don't have PCIe.  We focus on Cortex-M because every open source RTOS has an existing port for one of the Cortex-M machines already in QEMU.  However they don't normally pick the same one.  If we added our own custom machine for this, the QEMU project would push back and even if accepted we would have to do a port for each RTOS.  This would mean we would not test as many RTOSes.
->>
->> The ivshmem-flat is actually a good model for what a Cortex-M based PCIe card would look like.  The host system would see the connection as PCIe but to the Cortex-M it would just appear as memory, MMR's for the doorbell, and an IRQ.
->>
->> So even after we have a "roll your own machine definition from a file", I expect ivshmem and ivshmem-flat to still be very useful.
->>
->> [1] https://www.openampproject.org/
->> [2] Work in progress here: https://github.com/OpenAMP/openamp-system-reference/tree/main/examples/zephyr/dual_qemu_ivshmem
-> 
-
--- 
-Bill Mills
-Principal Technical Consultant, Linaro
-+1-240-643-0836
-TZ: US Eastern
-Work Schedule:  Tues/Wed/Thur
 
