@@ -4,61 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52288C04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:13:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46327C04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:13:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzHnS-00065E-9A; Tue, 23 Apr 2024 11:11:02 -0400
+	id 1rzHnY-0006jC-Mz; Tue, 23 Apr 2024 11:11:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHnL-0005Oz-Ot
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1rzHnJ-0005B0-4G
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHnJ-0000M5-QT
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:55 -0400
+ id 1rzHnH-0000LQ-Fu
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713885053;
+ s=mimecast20190719; t=1713885050;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RJ9NjBd4Ldl0Zbc2tRqgEosye1gIgb6S3EDsnAKGjfk=;
- b=VcQDqY39vPOQAUNZG281+C8vzbeXeUHDavLNxoZZGjqSHp6YX5aUSJejSuqktf6Wmn4rVg
- 5+3u0GkSPQPcCrmWOrfnnlPdDDJhv1YbRojNR4gtxgv6UI1NDVw1mhEjrws6rYOnnk7MrS
- a3U2tBeYBn2N9fPXbi1G20H5HGYFi98=
+ bh=hKxuqx421O2wqdb9KsN4J5Wd2cyXLjl4fsj6bsG3P+Q=;
+ b=P5Kjr+bAesu7rDUx1VnXMio5BVfNVZmIv7a9VU+/Bf2KL1sY4nxcFzMiAX2SAryFAXz1EE
+ 3vu9HPSYVY7TiJZYQ8TbnWrGf2wDSnSb3U8vzFzpxkyCjgj+5AVLsnN9m0+tmRn2qRKfeR
+ CXmrYOpnRXH8J2zTBOG1mNcRaotPOTA=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-622-hRzLme8PNV2r32ZIwtZTkA-1; Tue,
- 23 Apr 2024 11:10:51 -0400
-X-MC-Unique: hRzLme8PNV2r32ZIwtZTkA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-407-HQHepl6hNVWXU9CmSJbspw-1; Tue,
+ 23 Apr 2024 11:10:49 -0400
+X-MC-Unique: HQHepl6hNVWXU9CmSJbspw-1
 Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
  [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 740C21C0C652;
- Tue, 23 Apr 2024 15:10:51 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id BCF1F1C0C64D;
+ Tue, 23 Apr 2024 15:10:48 +0000 (UTC)
 Received: from avogadro.lan (unknown [10.39.192.70])
- by smtp.corp.redhat.com (Postfix) with ESMTP id DE950200E290;
- Tue, 23 Apr 2024 15:10:50 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 12FFA200E290;
+ Tue, 23 Apr 2024 15:10:47 +0000 (UTC)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 59/63] target/i386/cpu: Consolidate the use of
- warn_report_once()
-Date: Tue, 23 Apr 2024 17:09:47 +0200
-Message-ID: <20240423150951.41600-60-pbonzini@redhat.com>
+Cc: Isaku Yamahata <isaku.yamahata@intel.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: [PULL 56/63] kvm/tdx: Don't complain when converting vMMIO region to
+ shared
+Date: Tue, 23 Apr 2024 17:09:44 +0200
+Message-ID: <20240423150951.41600-57-pbonzini@redhat.com>
 In-Reply-To: <20240423150951.41600-1-pbonzini@redhat.com>
 References: <20240423150951.41600-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -82,54 +83,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: Isaku Yamahata <isaku.yamahata@intel.com>
 
-The difference between error_printf() and error_report() is the latter
-may contain more information, such as the name of the program
-("qemu-system-x86_64").
+Because vMMIO region needs to be shared region, guest TD may explicitly
+convert such region from private to shared.  Don't complain such
+conversion.
 
-Thus its variant error_report_once() and warn_report()'s variant
-warn_report_once() can be used here to print the information only once
-without a static local variable "ht_warned".
-
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Message-ID: <20240327103951.3853425-3-zhao1.liu@linux.intel.com>
+Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Message-ID: <20240229063726.610065-34-xiaoyao.li@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.c | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ accel/kvm/kvm-all.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index eda15b0d4c7..28452983786 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -7367,7 +7367,6 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
-     X86CPUClass *xcc = X86_CPU_GET_CLASS(dev);
-     CPUX86State *env = &cpu->env;
-     Error *local_err = NULL;
--    static bool ht_warned;
-     unsigned requested_lbr_fmt;
- 
- #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
-@@ -7610,13 +7609,11 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
-      */
-     if (IS_AMD_CPU(env) &&
-         !(env->features[FEAT_8000_0001_ECX] & CPUID_EXT3_TOPOEXT) &&
--        cs->nr_threads > 1 && !ht_warned) {
--            warn_report("This family of AMD CPU doesn't support "
--                        "hyperthreading(%d)",
--                        cs->nr_threads);
--            error_printf("Please configure -smp options properly"
--                         " or try enabling topoext feature.\n");
--            ht_warned = true;
-+        cs->nr_threads > 1) {
-+            warn_report_once("This family of AMD CPU doesn't support "
-+                             "hyperthreading(%d).", cs->nr_threads);
-+            error_report_once("Please configure -smp options properly"
-+                              " or try enabling topoext feature.");
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 9eef2c64003..0911154bf8e 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -2927,9 +2927,22 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
      }
  
- #ifndef CONFIG_USER_ONLY
+     if (!memory_region_has_guest_memfd(mr)) {
+-        error_report("Converting non guest_memfd backed memory region "
+-                     "(0x%"HWADDR_PRIx" ,+ 0x%"HWADDR_PRIx") to %s",
+-                     start, size, to_private ? "private" : "shared");
++        /*
++         * Because vMMIO region must be shared, guest TD may convert vMMIO
++         * region to shared explicitly.  Don't complain such case.  See
++         * memory_region_type() for checking if the region is MMIO region.
++         */
++        if (!to_private &&
++            !memory_region_is_ram(mr) &&
++            !memory_region_is_ram_device(mr) &&
++            !memory_region_is_rom(mr) &&
++            !memory_region_is_romd(mr)) {
++		    ret = 0;
++        } else {
++            error_report("Convert non guest_memfd backed memory region "
++                        "(0x%"HWADDR_PRIx" ,+ 0x%"HWADDR_PRIx") to %s",
++                        start, size, to_private ? "private" : "shared");
++        }
+         goto out_unref;
+     }
+ 
 -- 
 2.44.0
 
