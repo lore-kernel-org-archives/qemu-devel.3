@@ -4,111 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE927C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 20:06:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB69EC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 20:40:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzMOo-0001z5-Et; Tue, 23 Apr 2024 16:05:55 -0400
+	id 1rzMvG-0007Wq-99; Tue, 23 Apr 2024 16:39:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rzMOh-0001yi-AX
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 16:05:48 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzMv9-0007W2-2A
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 16:39:19 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rzMOf-0004G8-Ja
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 16:05:47 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 9CA9760599;
- Tue, 23 Apr 2024 20:05:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1713902743; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=tesKB/DR/0OoDCqYZAUigjlyHF1+YqNsjCRHuLbihNE=;
- b=yRcd9xKpwJ60jbPVlhINbtYBaLes+WrToAZdCZ1OR3Nadum+OmKVMBNoTcq830ovywbZwg
- cxCWognHr+US+YHee8ZPs/gRzwxWl1vho4RLy3vHi7jV1rT53mYZ3cMcDRPl0FsSxndfPX
- 6B9WavKDzoXKqjoIcXqy4u4KxEWClXU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1713902743;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=tesKB/DR/0OoDCqYZAUigjlyHF1+YqNsjCRHuLbihNE=;
- b=9cX5WAzlqpEO58SGfltFeYNVM5anSkQOuOCCHCezyLM5DM4fAhSYTZ/P6PXZEs4WdxuLz6
- uPE5Z6bFpdkvCvBg==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=yRcd9xKp;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=9cX5WAzl
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1713902743; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=tesKB/DR/0OoDCqYZAUigjlyHF1+YqNsjCRHuLbihNE=;
- b=yRcd9xKpwJ60jbPVlhINbtYBaLes+WrToAZdCZ1OR3Nadum+OmKVMBNoTcq830ovywbZwg
- cxCWognHr+US+YHee8ZPs/gRzwxWl1vho4RLy3vHi7jV1rT53mYZ3cMcDRPl0FsSxndfPX
- 6B9WavKDzoXKqjoIcXqy4u4KxEWClXU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1713902743;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=tesKB/DR/0OoDCqYZAUigjlyHF1+YqNsjCRHuLbihNE=;
- b=9cX5WAzlqpEO58SGfltFeYNVM5anSkQOuOCCHCezyLM5DM4fAhSYTZ/P6PXZEs4WdxuLz6
- uPE5Z6bFpdkvCvBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1CC5613929;
- Tue, 23 Apr 2024 20:05:42 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id /BZPNZYUKGbXXQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 23 Apr 2024 20:05:42 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: philmd@linaro.org
-Subject: Re: [PATCH 11/22] meson: make target endianneess available to Kconfig
-In-Reply-To: <20240423131612.28362-12-pbonzini@redhat.com>
-References: <20240423131612.28362-1-pbonzini@redhat.com>
- <20240423131612.28362-12-pbonzini@redhat.com>
-Date: Tue, 23 Apr 2024 17:05:40 -0300
-Message-ID: <87edavj14b.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzMv7-0001ak-80
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 16:39:18 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a524ecaf215so626736866b.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 13:39:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1713904755; x=1714509555; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=whJX+F+fVuXoaTtj61On/mh60c/Mc5Ka7TYyclrYv2w=;
+ b=AI1Z61+aawQJYrt0qCSKThGPDcTUOk2aievuEmzBR4wRngi0XNX7JB+Sn79APpaW1I
+ TJVS6dA32z42ZjMn5JKiMmdXnbm6DFXDEpclOASw1bJU8ydyR8pTa/OaQOVHT1nMPd7s
+ c4UFZ6ssMKkzsGhCX9uuFSVjbtq8kIGXCNCrGi2H1e0BLUosPqZsGc3YJeVt7K3+g7PC
+ hgIZ5qjmqfc2kTV/ztHjWcYU+ODG+fA3RBqwDgxJ6jNv3JMt6XVoL5+hifG8sS9rmfOn
+ kmWlqj+mC7pW/zbmIavVv6zZZarTGmjtkZ2q0mwllOO0wM3xpsZxSorMh+4CcnFXxwDn
+ QC3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713904755; x=1714509555;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=whJX+F+fVuXoaTtj61On/mh60c/Mc5Ka7TYyclrYv2w=;
+ b=HzpZgueJCta49yRBfNlqHPbDVmS/CH5iSrxXtTTNqO7aycRzFqVcGhQNNhXR+wzxAj
+ a5leDveyXDbuFoevNzkdhD6j9SJnjUy+5FC6mYOcASBPyHdg5y9Fc5BqVysULjpPr3yC
+ OUkZg61fpmVQSg7LsN2cbXU68SFc21NIqllNyAf+gEsb5ui1vzJyCBfqYXQu1y+74qpa
+ T4IaW2+0w1SljeMEEpUCRvpCnaKqfRnbDI3zpMcxYh4Vfc7r5LsTiXutQwEce0hQ1bcD
+ 6DryVNp7yJrNvV8aYSjhjAUxMNpYza8B2bhOXZlxHyP1M+p5bI6cA5AEKdD3+vUFaumn
+ bdWA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWowAGE9H5ZF1lATtRmYeSjCB16aer74CTWv+z/bKGj6o6l+UZYLffLKtYx2agAPB034UQGi9dNPYYnqytGNzV5sBVWFEc=
+X-Gm-Message-State: AOJu0Yy8h8j4+2zaaGIXTmXLsZm/Hx6veudZgFJKsXeFXDcseERPih5p
+ hgRJ/k3X7QC+pe/1/JxogklzGNp76qsIpzTfyEHlx2zuD1mhgMc81dU79gJKiUE=
+X-Google-Smtp-Source: AGHT+IETszKhsJCj0WCs9cvIyP1W3qOZmWAo+w1Vyvf8hCiPFXNzERUVYTPmynY7ud5X7TBXadxg7Q==
+X-Received: by 2002:a17:906:34c6:b0:a55:b5ba:8104 with SMTP id
+ h6-20020a17090634c600b00a55b5ba8104mr258616ejb.27.1713904755487; 
+ Tue, 23 Apr 2024 13:39:15 -0700 (PDT)
+Received: from [192.168.69.100] (pas38-h02-176-184-5-107.dsl.sta.abo.bbox.fr.
+ [176.184.5.107]) by smtp.gmail.com with ESMTPSA id
+ ky17-20020a170907779100b00a55926df215sm5224375ejc.72.2024.04.23.13.39.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Apr 2024 13:39:14 -0700 (PDT)
+Message-ID: <dae5c53a-0f1d-484d-b62d-3c827f6fb8a1@linaro.org>
+Date: Tue, 23 Apr 2024 22:39:12 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 9CA9760599
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.35 / 50.00]; BAYES_HAM(-2.84)[99.30%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
- ARC_NA(0.00)[]; FROM_HAS_DN(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; TO_DN_SOME(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCPT_COUNT_THREE(0.00)[3];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns, suse.de:dkim, suse.de:email]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Kconfig: kvm: allow building without any board
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>
+References: <20240423191728.52535-1-pbonzini@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240423191728.52535-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,15 +95,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
-
-> Some targets use "default y" for boards to filter out those that require
-> TCG.  For consistency we are switching all other targets to do the same.
-> MIPS boards may only be available for big-endian or only for
-> little-endian emulators, add a symbol so that this can be described
-> with a "depends on" clause.
->
+On 23/4/24 21:17, Paolo Bonzini wrote:
+> KVM code might have to call functions on the PCIDevice that is
+> passed to kvm_arch_fixup_msi_route().  This fails in the case
+> where --without-default-devices is used and no board is
+> configured.  While this is not really a useful configuration,
+> and therefore setting up stubs for CONFIG_PCI is overkill,
+> failing the build is impolite.  Just include the PCI
+> subsystem if kvm_arch_fixup_msi_route() requires it, as
+> is the case for ARM and x86.
+> 
+> Reported-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Tested-by: Fabiano Rosas <farosas@suse.de>
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   target/arm/Kconfig  | 2 ++
+>   target/i386/Kconfig | 2 ++
+>   2 files changed, 4 insertions(+)
+> 
+> diff --git a/target/arm/Kconfig b/target/arm/Kconfig
+> index bf57d739cd1..5847c5a74a7 100644
+> --- a/target/arm/Kconfig
+> +++ b/target/arm/Kconfig
+> @@ -9,3 +9,5 @@ config ARM
+>   config AARCH64
+>       bool
+>       select ARM
+> +    # kvm_arch_fixup_msi_route() needs to access PCIDevice
+> +    select PCI if KVM
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Kind of funny :)
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
