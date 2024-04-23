@@ -4,92 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 287EBC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 09:19:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1430C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 09:19:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzCIY-0003mg-T2; Tue, 23 Apr 2024 05:18:47 -0400
+	id 1rzCJ8-0003rJ-KZ; Tue, 23 Apr 2024 05:19:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzCIT-0003mJ-8q
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 05:18:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzCIQ-0006el-Km
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 05:18:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713863916;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Ughj38E8UToDMogbjiGsui0eSWa3f0Tq87pVHTREbAQ=;
- b=alZkHVlKF0cD3yQMY/Oc+qMGylE0U5kPq/1P8uMGHglZjHkjrf/JAX8hPWf79wi2nUY35n
- oHoy6joioGx2AbFUzPC3j8TBfRYy6v4E5KMOGRmVJm170gy+x3nFIKnygjahGZEjBdoogC
- 2TzVRCgWb7SOjVFbHSqft7ZOVsKLRQk=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-403-3XR8GVCJOwuUCXUvGtFkQw-1; Tue, 23 Apr 2024 05:18:35 -0400
-X-MC-Unique: 3XR8GVCJOwuUCXUvGtFkQw-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-41a370b6acdso7526415e9.2
- for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 02:18:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1rzCIx-0003pW-OK
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 05:19:13 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1rzCIv-0006jU-Ti
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 05:19:11 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-518b9527c60so6235057e87.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 02:19:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1713863947; x=1714468747; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dZo4rpsnvQfm+Oo0XVHWkYgZewv0qBjrbr3g1M7/QoU=;
+ b=O2ZJAsZp2fVYgUVE9jHIvQIQsC8mlu3Tfii9aXtYlBYtDRtREA4DQSN0MHVprpZRET
+ YS8M0uZVDHhmRzi29hDmINQ1k+XFJRo3Woqs3412+zYi0qGAxntDf9+sGxH82SaEiGLF
+ zZ86JoS8R9y2FTMt0RMLVSzHiLa8wJcGWaG6iY/48vKedv4GJwcbv6dIdPVTFRi0qOrd
+ CmVjcJK+d5DLIKhtmslCtv/ydsq1zrNWVsHfBdoJoW2EHvMRKE4BtT8rWIh3cj/MBdId
+ PSICfLjdbLjnOVZrX1l5J7eljZ61YdjDpOQMZjmVNMSZujQ8XSn3Ewm7Swun9/gBHrTx
+ FTlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713863914; x=1714468714;
+ d=1e100.net; s=20230601; t=1713863947; x=1714468747;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Ughj38E8UToDMogbjiGsui0eSWa3f0Tq87pVHTREbAQ=;
- b=nqHb8OD/BemhibBR987uQv00bU3r4jbFHU/R+TMBrLodwRnL6KzQocoHS2BwZuP694
- ErFnpB8aKX7J7REVsraW+3fcuBN69tbN0ZJGSirQfAPl2tYYgVPLapo61oau1tk6HXAm
- 7gmcxHJHUUyl99mGa5vVLPx8NM+wMxzPC3ujoeQ3cv5F9UG0BDEU03GCp15HQ9uil+7C
- +DuEZW83SlqKzIJHErW/s7Txd/i6I+v38oiqt0pyzIq6VClYCy3dwKxvgRkNZ5M4EriQ
- nFbh/fOzSnWmAm2nN34OqVyf+Sicoupiu1pBfIlUDOCY6yE633YRgwkm5fI3B0PsSV5o
- 8Sug==
+ bh=dZo4rpsnvQfm+Oo0XVHWkYgZewv0qBjrbr3g1M7/QoU=;
+ b=LvcB1MdHPMwe/nIAbiE0c1dP1YnVrb6vlPk8Fr/y/+lJVSHWA0WTL53XCA9BLu3GE9
+ actSbffY+TR0KJ+ov64qTBPS8Q4F6VUHRPGaVJ8vvx/NXorD9ohNG8YKg9eZYiR65P8M
+ J26WTz2BJkWqKPySK7sAmeQZUwWFcvmudsAQZWAHWJeLF9yoeO3Fb6e2kfTSDjDv6ClN
+ 3QYzsMA52dbf7tZD4oX69QOy+nrcSrAd7WgFBtOPkEETRk1hZN6sTAjJ39uOBOajF6oE
+ R0t0PoAmniJ1DiJL5aJNXm8FxVjfe6/CzBjseO1Hhoh362itvTvj8ynI6rlN9pjaMr8B
+ nXUQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX0wYkg8YVvpPjbJ21O4K3/M/iJBQY4GfKYPqjFQy39RZ/C/4L/b0sSCzhLfgONUdOQLqvjY5ZbcFUG0gvEnr/930eINp0=
-X-Gm-Message-State: AOJu0YzCeZUFjzGRTr32ft/agPJAPa5Gjr01QDmsZgjC7mwOsRICIFf8
- CNq9WoVEWgim1ekmCkYduIL1tGT87ryFzRCWUowyQzSDTxXH4jh14t4qQJbYO2CwdSmK/PGcbMV
- Pztqu7q84l2lUhuKI77oRBBDA51f/xjbo1TtkjN9hUpVSDTjPxDHBmiNZhYbCagVzMy88rzj0KS
- blsjJMMRCDYhNaiR2ZoVevkHVrZ08=
-X-Received: by 2002:a5d:498d:0:b0:343:39ef:53b0 with SMTP id
- r13-20020a5d498d000000b0034339ef53b0mr7673873wrq.24.1713863914088; 
- Tue, 23 Apr 2024 02:18:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFn7iipzIqc7ATj5GM65H9AJi/cq1Rd2zpcAAX/M9PN/w7yU2g1vilCyBGxAbMTxqpaHrOxjNXz6nYPCMY+5lI=
-X-Received: by 2002:a5d:498d:0:b0:343:39ef:53b0 with SMTP id
- r13-20020a5d498d000000b0034339ef53b0mr7673860wrq.24.1713863913779; Tue, 23
- Apr 2024 02:18:33 -0700 (PDT)
+ AJvYcCVPhbaBjylqIUxESPee8KNbtHiCsBbBLeI7zryof5Oci/fpNmHnvVm5Jq+LfG0T4zXiX2cu6AylD2xGj7eJ5X1sMuLFnUI=
+X-Gm-Message-State: AOJu0YwePloT8oe41hbKFjtC++wnRnCQaaCcEVIdASLntpMx7dJ6p723
+ iXiIR+7kMkYiz83T8wzOJx6FtIdsEC/kcimVgVJTgC35SKE43b8BprP2lhnisme1f3HZOyVPO5O
+ Dc0w9X1827k5Fuoo+29QuqoubYrna21cOy7VCEw==
+X-Google-Smtp-Source: AGHT+IFoWTzxEoZNLjqb4BPAlGHvrXGLHIeKn2uLtPPK68X2WLUcRkDbBr552gi9VaJLfqnz1B0Q963pHlAvHW1FoeU=
+X-Received: by 2002:a05:6512:683:b0:51b:6366:3459 with SMTP id
+ t3-20020a056512068300b0051b63663459mr5002854lfe.67.1713863947028; Tue, 23 Apr
+ 2024 02:19:07 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240419195147.434894-1-mark.cave-ayland@ilande.co.uk>
- <fefb7b6b-29fc-42ee-b62e-059512e881e4@linaro.org>
- <3ff9df0d-6465-45a3-bb62-0db17ed9210c@ilande.co.uk>
- <d84e246a-fb43-4bb9-ad61-5ebfea4e323f@t-online.de>
-In-Reply-To: <d84e246a-fb43-4bb9-ad61-5ebfea4e323f@t-online.de>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 23 Apr 2024 11:18:20 +0200
-Message-ID: <CABgObfYsCO-fH1MZQ1=mRUJQHn9h2QBcCfytBnDhhM91iEd4sA@mail.gmail.com>
-Subject: Re: [PATCH] target/i386/translate.c: always write 32-bits for SGDT
- and SIDT
-To: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Richard Henderson <richard.henderson@linaro.org>, eduardo@habkost.net,
- qemu-devel@nongnu.org
+References: <20240422142056.3023-1-philmd@linaro.org>
+ <20240422170056-mutt-send-email-mst@kernel.org>
+ <1f6447c4-ea4c-4bd3-a879-8efb72448bb8@linaro.org>
+ <20240422170913-mutt-send-email-mst@kernel.org>
+ <CAAjaMXZxFJtEdJh38_76ZdL82JBM52Ke0+p1K07miiFeQSJtcw@mail.gmail.com>
+In-Reply-To: <CAAjaMXZxFJtEdJh38_76ZdL82JBM52Ke0+p1K07miiFeQSJtcw@mail.gmail.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Tue, 23 Apr 2024 12:18:50 +0300
+Message-ID: <CAAjaMXaoPeCVpd=q-d2GH25SfrNPVqh6hCerMOrQ6payXVMmyA@mail.gmail.com>
+Subject: Re: [PATCH v3] hw/audio/virtio-snd: Use device endianness instead of
+ target one
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ qemu-stable@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lf1-x134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,51 +98,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 22, 2024 at 9:10=E2=80=AFPM Volker R=C3=BCmelin <vr_qemu@t-onli=
-ne.de> wrote:
+On Tue, 23 Apr 2024 at 11:47, Manos Pitsidianakis
+<manos.pitsidianakis@linaro.org> wrote:
 >
-> Am 20.04.24 um 07:40 schrieb Mark Cave-Ayland:
-> >> Current documentation agrees that all 32 bits are written, so I don't
-> >> think you need this comment:
+> On Tue, 23 Apr 2024 at 00:11, Michael S. Tsirkin <mst@redhat.com> wrote:
 > >
-> > Ah that's good to know the docs are now correct. I added the comment
-> > as there was a lot of conflicting information around for older CPUs so
-> > I thought it was worth an explicit mention.
+> > On Mon, Apr 22, 2024 at 11:07:21PM +0200, Philippe Mathieu-Daud=C3=A9 w=
+rote:
+> > > On 22/4/24 23:02, Michael S. Tsirkin wrote:
+> > > > On Mon, Apr 22, 2024 at 04:20:56PM +0200, Philippe Mathieu-Daud=C3=
+=A9 wrote:
+> > > > > Since VirtIO devices can change endianness at runtime,
+> > > > > we need to use the device endianness, not the target
+> > > > > one.
+> > > > >
+> > > > > Cc: qemu-stable@nongnu.org
+> > > > > Fixes: eb9ad377bb ("virtio-sound: handle control messages and str=
+eams")
+> > > > > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> > > >
+> > > >
+> > > >
+> > > > This is all completely bogus. Virtio SND is from Virtio 1.0 only.
+> > > > It is unconditionally little endian.
 >
-> Quote from the Intel=C2=AE 64 and IA-32 Architectures Software Developer=
-=E2=80=99s
-> Manual Volume 2B: Instruction Set Reference, M-U March 2024:
 >
-> IA-32 Architecture Compatibility
-> The 16-bit form of SGDT is compatible with the Intel 286 processor if
-> the upper 8 bits are not referenced. The Intel 286 processor fills these
-> bits with 1s; processor generations later than the Intel 286 processor
-> fill these bits with 0s.
->
-> Intel still claims the upper 8 bits are filled with 0s, but the
-> Operation pseudo code below is correct. The same is true for SIDT.
+> This part of the code is for PCM frames (raw bytes), not virtio spec
+> fields (which indeed must be LE in modern VIRTIO).
 
-I think the claim is that it fills with 0s when the software is
-compatible with the 286, i.e. never uses a 32-bit LIDT or LGDT
-instruction. Software written to target specifically older processors
-typically used the undocumented LOADALL instruction to exit protected
-mode or to set 4GB segment limits, so it won't run on QEMU. You can
-read about the usage here:
-
-https://www.os2museum.com/wp/more-on-loadall-and-os2/ (286)
-https://www.os2museum.com/wp/386-loadall/ (386)
-
-and about how it worked here:
-
-https://www.pcjs.org/documents/manuals/intel/80286/loadall/
-https://www.pcjs.org/documents/manuals/intel/80386/loadall/
-
-Interestingly, byte 3 of the GDTR or IDTR on the 286 are documented as
-"should be zeroes" for LOADALL, not all ones.
-
-Let's change "Despite claims to the contrary" with "Despite a
-confusing description".
-
-Paolo
-
+Thought a little more about it. We should keep the target's endianness
+here, if it's mutable then we should query the machine the device is
+attached to somehow. the virtio device should never change endianness
+like Michael says since it's not legacy.
 
