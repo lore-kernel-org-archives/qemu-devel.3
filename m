@@ -4,75 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8BD9C10F15
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7E93C04FFE
 	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 13:17:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzG0b-00057L-0B; Tue, 23 Apr 2024 09:16:29 -0400
+	id 1rzG0r-0005Bn-SY; Tue, 23 Apr 2024 09:16:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzG0X-00056i-HG
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 09:16:25 -0400
+ id 1rzG0q-0005BX-3E
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 09:16:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzG0T-0001s9-70
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 09:16:23 -0400
+ id 1rzG0o-0001ve-EL
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 09:16:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713878179;
+ s=mimecast20190719; t=1713878201;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=e+O+W2i62FDGR13CKY50D1yVNwOkcbU/X4PHsRwARD4=;
- b=SgEWD0pZkplE1HIW5JSmt2JKDM2qkmVTrdjYwC5SMEfjfrq1evyHIhc5BzDAroqGBqix57
- 3oNNz7347GXWJObq4LiF+lp4/34M1x1J84Sh3+m2hKo6GXonDTy75Tq6oM46E8ZwNAh4Ub
- MP5BO7XGoJrou/g56rUcIwKpRlIe38A=
-Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
- [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yqDRm0fAGdjZV6ibXIEOtjpw6ZjN24iUaHtZzdPh+OI=;
+ b=hsdW4147HDd3cNnH31n41Wck0+/vt/z78JNzTx7YZjvz3i1vlV2FGJu5XPz4fdIgwvCDlE
+ cwP8j86ak9iF7nbpzTvXdqFa1nAf8GE92xV5rIv83Lb3zPTEQ00EUaYJ0LCVE28pbUnQd+
+ wFVZ0P6mZCLkhsuVuEWpqA8k0se6f9U=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-548-lTyHs_PiOwKWbhbSL0mv7A-1; Tue, 23 Apr 2024 09:16:17 -0400
-X-MC-Unique: lTyHs_PiOwKWbhbSL0mv7A-1
-Received: by mail-lj1-f200.google.com with SMTP id
- 38308e7fff4ca-2dd05014390so33939941fa.3
- for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 06:16:17 -0700 (PDT)
+ us-mta-314-jppiwWmPOmyvGHOxGWjFOg-1; Tue, 23 Apr 2024 09:16:40 -0400
+X-MC-Unique: jppiwWmPOmyvGHOxGWjFOg-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a572ceb5340so102193466b.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 06:16:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713878175; x=1714482975;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=e+O+W2i62FDGR13CKY50D1yVNwOkcbU/X4PHsRwARD4=;
- b=h4blVPwCgyBUbosDhgepe3b3L32BK/Ro7pwC3e6FYhLc/Cg1s4BriTUYd04+04Pr5m
- nl1kM3phoaKlnq1eJdYuAguNVliDvk0wt+Hhy4H7dwItiElxxA0VZwuG42jzHVpMelr3
- KtIZdHVaYrjW7/nz2HlNMjgMH4KWQkcbIiRQC4U9/v3nrwxgHznk5x/L858DkMnFQ/Do
- 9Atu3iYssEwCTpP3kMnh8+UzaLKL7pVvJttfp+VgG+ZsqbZsEXnqShxwokrq8XuADZce
- vc8z64mE5HW8d0rlriQDP21ZZo5AZfVEYv5mXMoVXkQR/USWAdL3DiZCZaZt7a9yG00S
- NV+A==
-X-Gm-Message-State: AOJu0YyS+D/vimdpa7VGy0eAg8x83lBEiHuUfoknIx3BgXoeIqm9RSJs
- nM9ZZYO4P+bebkW+Y4Oer9PaGRZZo07/TY9g/sTJxGqEvA2GkxfkDEw9mWhYES03xApOiyu0Ys3
- d50PxYrACdlcQAkgpY2n88xWFLbRIDdb5SYj8aXTZNO+83LC7HHq/g0o+JPE6XAvsYZzGndtXIh
- p17l/9bby25+ejnLkTLgABnW/jlMYO+3hOQ9Zq
-X-Received: by 2002:a05:651c:198c:b0:2dd:bd92:63a with SMTP id
- bx12-20020a05651c198c00b002ddbd92063amr3865158ljb.34.1713878175213; 
- Tue, 23 Apr 2024 06:16:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHRtqCELcigiTgM4KNXKt8pqLpau1Eo/BfNA8eyiXjz5rLBziMSaFSMU+NIf9Xe+Tuh+FNIFQ==
-X-Received: by 2002:a05:651c:198c:b0:2dd:bd92:63a with SMTP id
- bx12-20020a05651c198c00b002ddbd92063amr3865125ljb.34.1713878174685; 
- Tue, 23 Apr 2024 06:16:14 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1713878199; x=1714482999;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yqDRm0fAGdjZV6ibXIEOtjpw6ZjN24iUaHtZzdPh+OI=;
+ b=cACA+HaYYIfBVbXe3nO0U2qjEozygAguwrgxUXjySJlZc1AMbu1Xc0a54b9Y09PQlZ
+ OOsUK/DKBcB8T2r53b5G7fvZD9fFSLbNpdMAgQjax6hjQRCGKTcQz66FI4rLWOfrL0Os
+ 7gVodVxZYfNGBC9o4fjE5drraLUVDiMoj1CzycWGlglEpwJA18IoRWU066/UX8vwzRcl
+ 4MfYaumPKoCku8O59OD4NhmhiCIxCiI0Ik4YbdwGE0v0OHuRqfWmdMeK0zqdVTexHjHb
+ 1+dYaZdF73lN3+et4nlIj5F4Ws+EPXG4leUQ0lE4YhMCC4AZ+xdY47zlqMdAjoj9aIoo
+ pccg==
+X-Gm-Message-State: AOJu0Yxj7BRhv/WA4uvnVO7WLz8/3My6y/Adhn7PzBkInTWrDPbP/3qP
+ Di/F55jTaftQvMFPOAURhQBXZ2K6F/qf3inF26CjEgnYEHfTOPDvRl7A9mRZXgAq5ebO0rhrTwI
+ KoGxMo2yDSjvF8cIfQMxzbPMkFW2x99cmQ8qRTGoRm5gaWN8N6NDIAQzxyd5wfdJ8zXj20U7c1a
+ aFcoCNA8vQicCkyjOEQuUGcxvDXm/H2OaQu0rP
+X-Received: by 2002:a17:906:561a:b0:a58:73ac:8b29 with SMTP id
+ f26-20020a170906561a00b00a5873ac8b29mr2060846ejq.64.1713878199304; 
+ Tue, 23 Apr 2024 06:16:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEzcwHKHNHuEXq/ss6frcee/6Kjlbg5ZdZ0giFa/0o3xnOZAZjKD8c6HnIkQ6FuBtgGMGM68Q==
+X-Received: by 2002:a17:906:561a:b0:a58:73ac:8b29 with SMTP id
+ f26-20020a170906561a00b00a5873ac8b29mr2060826ejq.64.1713878199058; 
+ Tue, 23 Apr 2024 06:16:39 -0700 (PDT)
 Received: from avogadro.local ([151.81.119.75])
  by smtp.gmail.com with ESMTPSA id
- ch15-20020a0564021bcf00b0056e34297cbasm6697011edb.80.2024.04.23.06.16.13
+ u19-20020a170906c41300b00a587b25d648sm970426ejz.183.2024.04.23.06.16.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Apr 2024 06:16:13 -0700 (PDT)
+ Tue, 23 Apr 2024 06:16:37 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org,
 	farosas@suse.de
-Subject: [PATCH 00/22] configs: switch boards to "default y"
-Date: Tue, 23 Apr 2024 15:15:50 +0200
-Message-ID: <20240423131612.28362-1-pbonzini@redhat.com>
+Subject: [PATCH 09/22] m68k: switch boards to "default y"
+Date: Tue, 23 Apr 2024 15:15:59 +0200
+Message-ID: <20240423131612.28362-10-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240423131612.28362-1-pbonzini@redhat.com>
+References: <20240423131612.28362-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -100,100 +103,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some boards, notably ARM boards that use TCG, are already using
-"default y".  This was done to remove TCG-only boards from
-a KVM-only build in commit 29d9efca16 (2023-04-26).
+Some targets use "default y" for boards to filter out those that require
+TCG.  For consistency we are switching all other targets to do the same.
+Continue with m68k.
 
-This series converts all other boards to that, so that the requirements
-of each board are clearer in the Kconfig files.
+No changes to generated config-devices.mak file.
 
-For now, the only such use is MIPS's 64-bit and endianness requirements.
-In the future, it will be possible to enable/disable boards based
-on the presence of required libraries, for example libfdt, or
-their deprecation status.
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ configs/devices/m68k-softmmu/default.mak | 13 ++++++-------
+ hw/m68k/Kconfig                          | 10 ++++++++++
+ 2 files changed, 16 insertions(+), 7 deletions(-)
 
-There is an important difference in that Kconfig symbols for boards
-have to be enabled in a --without-default-devices build, similar to
-devices.
-
-Paolo
-
-Paolo Bonzini (22):
-  configs: list "implied" device groups in the default configs
-  alpha: switch boards to "default y"
-  arm: switch boards to "default y"
-  avr: switch boards to "default y"
-  cris: switch boards to "default y"
-  hppa: switch boards to "default y"
-  i386: switch boards to "default y"
-  loongarch: switch boards to "default y"
-  m68k: switch boards to "default y"
-  microblaze: switch boards to "default y"
-  meson: make target endianneess available to Kconfig
-  mips: switch boards to "default y"
-  nios2: switch boards to "default y"
-  openrisc: switch boards to "default y"
-  ppc: switch boards to "default y"
-  riscv: switch boards to "default y"
-  rx: switch boards to "default y"
-  s390x: switch boards to "default y"
-  sh4: switch boards to "default y"
-  sparc: switch boards to "default y"
-  tricore: switch boards to "default y"
-  xtensa: switch boards to "default y"
-
- configs/devices/alpha-softmmu/default.mak     |  5 ++--
- configs/devices/arm-softmmu/default.mak       |  5 +++-
- configs/devices/avr-softmmu/default.mak       |  5 ++--
- configs/devices/cris-softmmu/default.mak      |  5 ++--
- configs/devices/hppa-softmmu/default.mak      |  5 ++--
- configs/devices/i386-softmmu/default.mak      | 11 ++++---
- .../devices/loongarch64-softmmu/default.mak   |  6 +++-
- configs/devices/m68k-softmmu/default.mak      | 13 ++++----
- .../devices/microblaze-softmmu/default.mak    |  9 +++---
- configs/devices/mips-softmmu/common.mak       |  5 ++--
- configs/devices/mips64-softmmu/default.mak    |  4 ++-
- configs/devices/mips64el-softmmu/default.mak  | 10 ++++---
- configs/devices/nios2-softmmu/default.mak     |  7 ++---
- configs/devices/or1k-softmmu/default.mak      |  9 ++++--
- configs/devices/ppc-softmmu/default.mak       | 30 +++++++++++--------
- configs/devices/ppc64-softmmu/default.mak     |  8 ++---
- configs/devices/riscv32-softmmu/default.mak   | 17 +++++------
- configs/devices/riscv64-softmmu/default.mak   | 19 ++++++------
- configs/devices/rx-softmmu/default.mak        |  3 +-
- configs/devices/s390x-softmmu/default.mak     |  5 ++--
- configs/devices/sh4-softmmu/default.mak       |  7 ++---
- configs/devices/sparc-softmmu/default.mak     |  7 ++---
- configs/devices/sparc64-softmmu/default.mak   |  7 ++---
- configs/devices/tricore-softmmu/default.mak   |  7 +++--
- configs/devices/xtensa-softmmu/default.mak    | 11 ++++---
- meson.build                                   | 12 ++++----
- hw/alpha/Kconfig                              |  2 ++
- hw/arm/Kconfig                                |  2 ++
- hw/avr/Kconfig                                |  3 ++
- hw/cris/Kconfig                               |  2 ++
- hw/hppa/Kconfig                               |  2 ++
- hw/i386/Kconfig                               | 10 ++++++-
- hw/loongarch/Kconfig                          |  2 ++
- hw/m68k/Kconfig                               | 10 +++++++
- hw/microblaze/Kconfig                         |  6 ++++
- hw/mips/Kconfig                               | 12 ++++++++
- hw/nios2/Kconfig                              |  9 +++---
- hw/openrisc/Kconfig                           |  4 +++
- hw/ppc/Kconfig                                | 26 ++++++++++++++++
- hw/riscv/Kconfig                              | 14 +++++++++
- hw/rx/Kconfig                                 |  2 ++
- hw/s390x/Kconfig                              |  2 ++
- hw/sh4/Kconfig                                |  4 +++
- hw/sparc/Kconfig                              |  4 +++
- hw/sparc64/Kconfig                            |  4 +++
- hw/tricore/Kconfig                            |  4 +++
- hw/xtensa/Kconfig                             |  6 ++++
- target/Kconfig                                |  3 ++
- target/i386/Kconfig                           |  1 +
- target/ppc/Kconfig                            |  1 +
- 50 files changed, 252 insertions(+), 115 deletions(-)
-
+diff --git a/configs/devices/m68k-softmmu/default.mak b/configs/devices/m68k-softmmu/default.mak
+index 8dcaa28ed38..3ceda6b041b 100644
+--- a/configs/devices/m68k-softmmu/default.mak
++++ b/configs/devices/m68k-softmmu/default.mak
+@@ -1,9 +1,8 @@
+ # Default configuration for m68k-softmmu
+ 
+-# Boards:
+-#
+-CONFIG_AN5206=y
+-CONFIG_MCF5208=y
+-CONFIG_NEXTCUBE=y
+-CONFIG_Q800=y
+-CONFIG_M68K_VIRT=y
++# Boards are selected by default, uncomment to keep out of the build.
++# CONFIG_AN5206=n
++# CONFIG_MCF5208=n
++# CONFIG_NEXTCUBE=n
++# CONFIG_Q800=n
++# CONFIG_M68K_VIRT=n
+diff --git a/hw/m68k/Kconfig b/hw/m68k/Kconfig
+index d88741ec9d1..0092cda4e9c 100644
+--- a/hw/m68k/Kconfig
++++ b/hw/m68k/Kconfig
+@@ -1,20 +1,28 @@
+ config AN5206
+     bool
++    default y
++    depends on M68K
+     select COLDFIRE
+     select PTIMER
+ 
+ config MCF5208
+     bool
++    default y
++    depends on M68K
+     select COLDFIRE
+     select PTIMER
+ 
+ config NEXTCUBE
+     bool
++    default y
++    depends on M68K
+     select FRAMEBUFFER
+     select ESCC
+ 
+ config Q800
+     bool
++    default y
++    depends on M68K
+     select MAC_VIA
+     select NUBUS
+     select MACFB
+@@ -29,6 +37,8 @@ config Q800
+ 
+ config M68K_VIRT
+     bool
++    default y
++    depends on M68K
+     select M68K_IRQC
+     select VIRT_CTRL
+     select GOLDFISH_PIC
 -- 
 2.44.0
 
