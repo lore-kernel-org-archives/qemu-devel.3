@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C072C10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:13:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52288C04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:13:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzHnF-0004vm-MU; Tue, 23 Apr 2024 11:10:49 -0400
+	id 1rzHnS-00065E-9A; Tue, 23 Apr 2024 11:11:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHmk-0004Nb-E0
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:19 -0400
+ id 1rzHnL-0005Oz-Ot
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHmg-00006U-Pb
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:17 -0400
+ id 1rzHnJ-0000M5-QT
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713885013;
+ s=mimecast20190719; t=1713885053;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fDjSKg9j7/BPCoPR7rAcsTu+bH62iGTdw9jAhjhp9nc=;
- b=JbtSjMv5vEaaj0w7uhbKbbp2M5JPiXynm39e57jq7VkSulXKRjPSqYvS2+gLjsG9noibxD
- FvihPLaUwR/MdGEaKNZs/y5ugQrRQUo0KOkbfGqwAW/yMiK2O5Yc05mhewl2Nw3wDxCtEL
- 9m8pUscxtK3Ajw7D1/x8IsA7A9hT2SI=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-648-SpzDhWJoPwOvnN1sRGEUWg-1; Tue, 23 Apr 2024 11:10:09 -0400
-X-MC-Unique: SpzDhWJoPwOvnN1sRGEUWg-1
+ bh=RJ9NjBd4Ldl0Zbc2tRqgEosye1gIgb6S3EDsnAKGjfk=;
+ b=VcQDqY39vPOQAUNZG281+C8vzbeXeUHDavLNxoZZGjqSHp6YX5aUSJejSuqktf6Wmn4rVg
+ 5+3u0GkSPQPcCrmWOrfnnlPdDDJhv1YbRojNR4gtxgv6UI1NDVw1mhEjrws6rYOnnk7MrS
+ a3U2tBeYBn2N9fPXbi1G20H5HGYFi98=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-622-hRzLme8PNV2r32ZIwtZTkA-1; Tue,
+ 23 Apr 2024 11:10:51 -0400
+X-MC-Unique: hRzLme8PNV2r32ZIwtZTkA-1
 Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
  [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 302A48065D2;
- Tue, 23 Apr 2024 15:10:09 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 740C21C0C652;
+ Tue, 23 Apr 2024 15:10:51 +0000 (UTC)
 Received: from avogadro.lan (unknown [10.39.192.70])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 7B451200E290;
- Tue, 23 Apr 2024 15:10:08 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id DE950200E290;
+ Tue, 23 Apr 2024 15:10:50 +0000 (UTC)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 14/63] memory-device: move stubs out of stubs/
-Date: Tue, 23 Apr 2024 17:09:02 +0200
-Message-ID: <20240423150951.41600-15-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 59/63] target/i386/cpu: Consolidate the use of
+ warn_report_once()
+Date: Tue, 23 Apr 2024 17:09:47 +0200
+Message-ID: <20240423150951.41600-60-pbonzini@redhat.com>
 In-Reply-To: <20240423150951.41600-1-pbonzini@redhat.com>
 References: <20240423150951.41600-1-pbonzini@redhat.com>
 MIME-Version: 1.0
@@ -82,49 +82,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the memory-device stubs are needed exactly when the Kconfig symbols are not
-needed, move them to hw/mem/.
+From: Zhao Liu <zhao1.liu@intel.com>
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20240408155330.522792-15-pbonzini@redhat.com>
+The difference between error_printf() and error_report() is the latter
+may contain more information, such as the name of the program
+("qemu-system-x86_64").
+
+Thus its variant error_report_once() and warn_report()'s variant
+warn_report_once() can be used here to print the information only once
+without a static local variable "ht_warned".
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Message-ID: <20240327103951.3853425-3-zhao1.liu@linux.intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- stubs/memory_device.c => hw/mem/memory-device-stubs.c | 0
- hw/mem/meson.build                                    | 1 +
- stubs/meson.build                                     | 1 -
- 3 files changed, 1 insertion(+), 1 deletion(-)
- rename stubs/memory_device.c => hw/mem/memory-device-stubs.c (100%)
+ target/i386/cpu.c | 13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/stubs/memory_device.c b/hw/mem/memory-device-stubs.c
-similarity index 100%
-rename from stubs/memory_device.c
-rename to hw/mem/memory-device-stubs.c
-diff --git a/hw/mem/meson.build b/hw/mem/meson.build
-index faee1fe9360..1c1c6da24b5 100644
---- a/hw/mem/meson.build
-+++ b/hw/mem/meson.build
-@@ -6,6 +6,7 @@ mem_ss.add(when: 'CONFIG_NVDIMM', if_true: files('nvdimm.c'))
- mem_ss.add(when: 'CONFIG_CXL_MEM_DEVICE', if_true: files('cxl_type3.c'))
- system_ss.add(when: 'CONFIG_CXL_MEM_DEVICE', if_false: files('cxl_type3_stubs.c'))
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index eda15b0d4c7..28452983786 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -7367,7 +7367,6 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+     X86CPUClass *xcc = X86_CPU_GET_CLASS(dev);
+     CPUX86State *env = &cpu->env;
+     Error *local_err = NULL;
+-    static bool ht_warned;
+     unsigned requested_lbr_fmt;
  
-+system_ss.add(when: 'CONFIG_MEM_DEVICE', if_false: files('memory-device-stubs.c'))
- system_ss.add_all(when: 'CONFIG_MEM_DEVICE', if_true: mem_ss)
+ #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+@@ -7610,13 +7609,11 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+      */
+     if (IS_AMD_CPU(env) &&
+         !(env->features[FEAT_8000_0001_ECX] & CPUID_EXT3_TOPOEXT) &&
+-        cs->nr_threads > 1 && !ht_warned) {
+-            warn_report("This family of AMD CPU doesn't support "
+-                        "hyperthreading(%d)",
+-                        cs->nr_threads);
+-            error_printf("Please configure -smp options properly"
+-                         " or try enabling topoext feature.\n");
+-            ht_warned = true;
++        cs->nr_threads > 1) {
++            warn_report_once("This family of AMD CPU doesn't support "
++                             "hyperthreading(%d).", cs->nr_threads);
++            error_report_once("Please configure -smp options properly"
++                              " or try enabling topoext feature.");
+     }
  
- system_ss.add(when: 'CONFIG_SPARSE_MEM', if_true: files('sparse-mem.c'))
-diff --git a/stubs/meson.build b/stubs/meson.build
-index 92887660e41..a4404e765ab 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -31,7 +31,6 @@ stub_ss.add(files('monitor.c'))
- stub_ss.add(files('monitor-core.c'))
- stub_ss.add(files('physmem.c'))
- stub_ss.add(files('qemu-timer-notify-cb.c'))
--stub_ss.add(files('memory_device.c'))
- stub_ss.add(files('qmp-command-available.c'))
- stub_ss.add(files('qmp-quit.c'))
- stub_ss.add(files('qtest.c'))
+ #ifndef CONFIG_USER_ONLY
 -- 
 2.44.0
 
