@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11E54C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 22:33:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53E9DC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 22:34:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzOfy-0001HA-EG; Tue, 23 Apr 2024 18:31:46 -0400
+	id 1rzOfo-0001Ao-SJ; Tue, 23 Apr 2024 18:31:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rzOfh-000181-Sk; Tue, 23 Apr 2024 18:31:31 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1rzOfb-00016v-SG; Tue, 23 Apr 2024 18:31:25 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rzOfg-0004cc-6p; Tue, 23 Apr 2024 18:31:29 -0400
+ id 1rzOfY-0004an-6a; Tue, 23 Apr 2024 18:31:23 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 4AB494E603E;
- Wed, 24 Apr 2024 00:31:26 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id C161D4E6042;
+ Wed, 24 Apr 2024 00:31:16 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id SuFV9X7D57eU; Wed, 24 Apr 2024 00:31:24 +0200 (CEST)
+ with ESMTP id wRP8tTGP9yDN; Wed, 24 Apr 2024 00:31:14 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 5D7F44E603D; Wed, 24 Apr 2024 00:31:24 +0200 (CEST)
-Message-Id: <d10dd341c58026d789c5b8867450c9b29219f2e8.1713907038.git.balaton@eik.bme.hu>
+ id D45FC4E6031; Wed, 24 Apr 2024 00:31:14 +0200 (CEST)
+Message-Id: <70bd4c106a5dd14eacf4b79131741c76accb9ad4.1713907038.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1713907038.git.balaton@eik.bme.hu>
 References: <cover.1713907038.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 13/24] target/ppc/mmu_common.c: Simplify
- mmubooke_get_physical_address()
+Subject: [PATCH 04/24] target/ppc: Remove unused helper
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,9 +39,9 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Wed, 24 Apr 2024 00:31:24 +0200 (CEST)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Date: Wed, 24 Apr 2024 00:31:14 +0200 (CEST)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -63,56 +62,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The helper_rac function is defined but not used, remove it.
+
+Fixes: 005b69fdcc (target/ppc: Remove PowerPC 601 CPUs)
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- target/ppc/mmu_common.c | 25 +++++++++----------------
- 1 file changed, 9 insertions(+), 16 deletions(-)
+ target/ppc/helper.h     |  2 --
+ target/ppc/mmu_helper.c | 24 ------------------------
+ 2 files changed, 26 deletions(-)
 
-diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 843f909619..d40ddb6fc3 100644
---- a/target/ppc/mmu_common.c
-+++ b/target/ppc/mmu_common.c
-@@ -668,31 +668,24 @@ static int mmubooke_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
-                                          MMUAccessType access_type)
- {
-     ppcemb_tlb_t *tlb;
--    hwaddr raddr;
--    int i, ret;
-+    hwaddr raddr = (hwaddr)-1ULL;
-+    int i, ret = -1;
+diff --git a/target/ppc/helper.h b/target/ppc/helper.h
+index 86f97ee1e7..f769e01c3d 100644
+--- a/target/ppc/helper.h
++++ b/target/ppc/helper.h
+@@ -700,8 +700,6 @@ DEF_HELPER_2(book3s_msgclr, void, env, tl)
  
--    ret = -1;
--    raddr = (hwaddr)-1ULL;
-     for (i = 0; i < env->nb_tlb; i++) {
-         tlb = &env->tlb.tlbe[i];
-         ret = mmubooke_check_tlb(env, tlb, &raddr, &ctx->prot, address,
-                                  access_type, i);
-         if (ret != -1) {
-+            if (ret >= 0) {
-+                ctx->raddr = raddr;
-+            }
-             break;
-         }
-     }
+ DEF_HELPER_4(dlmzb, tl, env, tl, tl, i32)
+ #if !defined(CONFIG_USER_ONLY)
+-DEF_HELPER_2(rac, tl, env, tl)
 -
--    if (ret >= 0) {
--        ctx->raddr = raddr;
--        qemu_log_mask(CPU_LOG_MMU, "%s: access granted " TARGET_FMT_lx
--                      " => " HWADDR_FMT_plx " %d %d\n", __func__,
--                      address, ctx->raddr, ctx->prot, ret);
--    } else {
--         qemu_log_mask(CPU_LOG_MMU, "%s: access refused " TARGET_FMT_lx
--                       " => " HWADDR_FMT_plx " %d %d\n", __func__,
--                       address, raddr, ctx->prot, ret);
--    }
--
-+    qemu_log_mask(CPU_LOG_MMU,
-+                  "%s: access %s " TARGET_FMT_lx " => " HWADDR_FMT_plx
-+                  " %d %d\n", __func__, ret < 0 ? "refused" : "granted",
-+                  address, raddr, ctx->prot, ret);
-     return ret;
+ DEF_HELPER_2(load_dcr, tl, env, tl)
+ DEF_HELPER_3(store_dcr, void, env, tl, tl)
+ #endif
+diff --git a/target/ppc/mmu_helper.c b/target/ppc/mmu_helper.c
+index c071b4d5e2..817836b731 100644
+--- a/target/ppc/mmu_helper.c
++++ b/target/ppc/mmu_helper.c
+@@ -595,30 +595,6 @@ void helper_6xx_tlbi(CPUPPCState *env, target_ulong EPN)
+     do_6xx_tlb(env, EPN, 1);
  }
  
+-/*****************************************************************************/
+-/* PowerPC 601 specific instructions (POWER bridge) */
+-
+-target_ulong helper_rac(CPUPPCState *env, target_ulong addr)
+-{
+-    mmu_ctx_t ctx;
+-    int nb_BATs;
+-    target_ulong ret = 0;
+-
+-    /*
+-     * We don't have to generate many instances of this instruction,
+-     * as rac is supervisor only.
+-     *
+-     * XXX: FIX THIS: Pretend we have no BAT
+-     */
+-    nb_BATs = env->nb_BATs;
+-    env->nb_BATs = 0;
+-    if (get_physical_address_wtlb(env, &ctx, addr, 0, ACCESS_INT, 0) == 0) {
+-        ret = ctx.raddr;
+-    }
+-    env->nb_BATs = nb_BATs;
+-    return ret;
+-}
+-
+ static inline target_ulong booke_tlb_to_page_size(int size)
+ {
+     return 1024 << (2 * size);
 -- 
 2.30.9
 
