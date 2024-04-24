@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93026C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 07:46:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 875E5C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 07:48:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzXKD-0001Hk-ER; Wed, 24 Apr 2024 03:45:53 -0400
+	id 1rzXMH-00028p-Ma; Wed, 24 Apr 2024 03:48:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXKB-0001H2-Kx
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 03:45:51 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXMG-00028X-RH
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 03:48:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXKA-0000lS-9A
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 03:45:51 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXME-0001EW-HI
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 03:48:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713944749;
+ s=mimecast20190719; t=1713944878;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=idnZ3O5QpquEjnpHSPgjq3UMUhmcPJzmS7huwewbnII=;
- b=iSD0/8JT0lWZhcDl+X7w/Gvh3cZMZJr5Qz3sR16xG7s8Gh8Zrpg4S5TxpHAiZbEW2gh6ca
- sZcKOVI3sytuu+KUtscIAmH+bpsxokvGuWNCt0HTgopONACVKcMSiTohpBms+jxQctmCyG
- nhljsr7nwAxxgb/zEgbzkSFL9S8oLBQ=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-166-VvKFmxwEPY2GCwzr9fnYOw-1; Wed,
- 24 Apr 2024 03:45:45 -0400
-X-MC-Unique: VvKFmxwEPY2GCwzr9fnYOw-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
+ bh=kUpy5at5Thg7QVdKDZVN120+azrVQPJiCHoT3CGUSpg=;
+ b=EUnV4ifIUtXTWIwl6H7ozp9r934U6rh3VQxYeI+Mwp143cS4rXgB8t5ZDsYadK2dJFPCIK
+ 3AsWomcsZTPqFtl8UYmb0YVZHD57R0oJia1n7dSJj27v1l36NzvkxdbutDPaQbWYoY6ich
+ syuKux+y5ApACVdjkH8NpGQbmqiiVOg=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-538-S62NRE5-PE2S2rKIONwXzQ-1; Wed, 24 Apr 2024 03:44:24 -0400
+X-MC-Unique: S62NRE5-PE2S2rKIONwXzQ-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2F800380391A;
- Wed, 24 Apr 2024 07:45:45 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 24EA6812C58;
+ Wed, 24 Apr 2024 07:44:23 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 0A48B1121313;
- Wed, 24 Apr 2024 07:45:45 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id CD9252166B31;
+ Wed, 24 Apr 2024 07:44:22 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1873421E66C8; Wed, 24 Apr 2024 09:45:44 +0200 (CEST)
+ id ECEC921E66C8; Wed, 24 Apr 2024 09:44:21 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org,  Artyom Tarasenko <atar4qemu@gmail.com>,  Chris
@@ -54,24 +54,23 @@ Cc: qemu-devel@nongnu.org,  Artyom Tarasenko <atar4qemu@gmail.com>,  Chris
  Jiaxun Yang <jiaxun.yang@flygoat.com>,  Nicholas Piggin
  <npiggin@gmail.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel
  Henrique Barboza <danielhb413@gmail.com>,  Yoshinori Sato
- <ysato@users.sourceforge.jp>,  Markus Armbruster <armbru@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,  qemu-ppc@nongnu.org,
- Laurent Vivier <laurent@vivier.eu>,  Mark Cave-Ayland
- <mark.cave-ayland@ilande.co.uk>
-Subject: Re: [PATCH-for-9.1 21/21] target/xtensa: Replace qemu_printf() by
+ <ysato@users.sourceforge.jp>,  Richard Henderson
+ <richard.henderson@linaro.org>,  qemu-ppc@nongnu.org,  Laurent Vivier
+ <laurent@vivier.eu>,  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: Re: [PATCH-for-9.1 16/21] target/sparc: Replace qemu_printf() by
  monitor_printf() in monitor
-In-Reply-To: <20240321154838.95771-22-philmd@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Thu, 21 Mar 2024 16:48:37
+In-Reply-To: <20240321154838.95771-17-philmd@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Thu, 21 Mar 2024 16:48:32
  +0100")
 References: <20240321154838.95771-1-philmd@linaro.org>
- <20240321154838.95771-22-philmd@linaro.org>
-Date: Wed, 24 Apr 2024 09:45:44 +0200
-Message-ID: <87a5lj4313.fsf@pond.sub.org>
+ <20240321154838.95771-17-philmd@linaro.org>
+Date: Wed, 24 Apr 2024 09:44:21 +0200
+Message-ID: <87edav433e.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -98,12 +97,62 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-> Replace qemu_printf() by monitor_printf() / monitor_puts() in monitor.
+> Replace qemu_printf() by monitor_printf() in monitor.c.
+> Rename dump_mmu() as sparc_dump_mmu().
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-My review comments to PATCH 05 apply.
+Same "why?" and "suggest to mention passing current monitor" as for
+PATCH 05.
 
+In addition:
+
+> ---
+>  target/sparc/cpu.h         |   2 +-
+>  target/sparc/ldst_helper.c |  18 +++----
+>  target/sparc/mmu_helper.c  | 102 ++++++++++++++++++-------------------
+>  target/sparc/monitor.c     |   2 +-
+>  4 files changed, 62 insertions(+), 62 deletions(-)
+>
+> diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
+> index f3cdd17c62..55589c8ae4 100644
+> --- a/target/sparc/cpu.h
+> +++ b/target/sparc/cpu.h
+> @@ -601,7 +601,7 @@ bool sparc_cpu_tlb_fill(CPUState *cs, vaddr address, =
+int size,
+>                          MMUAccessType access_type, int mmu_idx,
+>                          bool probe, uintptr_t retaddr);
+>  target_ulong mmu_probe(CPUSPARCState *env, target_ulong address, int mmu=
+lev);
+> -void dump_mmu(CPUSPARCState *env);
+> +void sparc_dump_mmu(Monitor *mon, CPUSPARCState *env);
+>=20=20
+>  #if !defined(TARGET_SPARC64) && !defined(CONFIG_USER_ONLY)
+>  int sparc_cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+> diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
+> index 064390d1d4..44f8b2bb7a 100644
+> --- a/target/sparc/ldst_helper.c
+> +++ b/target/sparc/ldst_helper.c
+> @@ -195,7 +195,7 @@ static void demap_tlb(SparcTLBEntry *tlb, target_ulon=
+g demap_addr,
+>              replace_tlb_entry(&tlb[i], 0, 0, env1);
+>  #ifdef DEBUG_MMU
+>              DPRINTF_MMU("%s demap invalidated entry [%02u]\n", strmmu, i=
+);
+> -            dump_mmu(env1);
+> +            sparc_dump_mmu(env1);
+
+You add a parameter below.  I don't think this compiles :)
+
+Several more instances follow.
+
+>  #endif
+>          }
+>      }
+
+[...]
+
+With that fixed
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
 
