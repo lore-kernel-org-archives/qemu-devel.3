@@ -4,70 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D6A5C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 08:19:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62648C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 08:19:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzXqV-0006lk-Gi; Wed, 24 Apr 2024 04:19:15 -0400
+	id 1rzXoo-0000QK-FE; Wed, 24 Apr 2024 04:17:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rzXqR-0006TH-AR
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:19:11 -0400
-Received: from mgamail.intel.com ([192.198.163.8])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXof-0000OC-5k
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:17:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rzXqP-0006h2-Bn
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:19:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713946749; x=1745482749;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=bFnz7FygbxZO/pmCm/pperaLmXCGTA5hGfUrid4KAIA=;
- b=LLpDb+rfeNG0JWi5SgkK7zGnc+gVnEsnXpK4iY1jBX3fGH93HHsirWa3
- +M9Mr5qJifIBX80NQIPZPPHX9IHcQsHX2iduhF+IuGHOCyoXlSmXvgMQC
- heBHavdjEL2b6MR5Vu8ueTYIMP5iKqSFFlXJvo9PNY+PaaNIIqWq5wO8R
- JY8FKQ6zw/RGNXgTnOPHyKjnQUv9cI7FD9Z78ShH2+H2RXhNBQAyfqQBo
- IR4MhLD7SGByMzZ30SN3rnGwrI7F7byJAw1Cc0gIRPr/RKhwkK8QCPR8k
- W3k4hQzXv3zuiFezWgjWlImLPrwvRkRSXTNHZjvQZiNgW6ZCZFE0CeuLy A==;
-X-CSE-ConnectionGUID: FMRn5Kd+QkWOX+geEBLhrg==
-X-CSE-MsgGUID: tuHTpugQRpS38wr/xl5Brw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11053"; a="27079310"
-X-IronPort-AV: E=Sophos;i="6.07,225,1708416000"; d="scan'208";a="27079310"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Apr 2024 01:19:07 -0700
-X-CSE-ConnectionGUID: AGNbggYMQYC3KCECNdPdPA==
-X-CSE-MsgGUID: jf/Xv6hwTbeaML7rtD2pcg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,225,1708416000"; d="scan'208";a="29117820"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 24 Apr 2024 01:19:04 -0700
-Date: Wed, 24 Apr 2024 16:33:11 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Lei Wang <lei4.wang@intel.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, manish.mishra@nutanix.com,
- xiaoyao.li@intel.com, chenyi.qiang@intel.com, tao1.su@linux.intel.com
-Subject: Re: [PATCH] target/i386: Introduce SapphireRapids-v3 to add missing
- features
-Message-ID: <ZijDx4m117yv64JK@intel.com>
-References: <20240424072912.43188-1-lei4.wang@intel.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXob-0006Mo-Gj
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:17:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713946636;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Wz1zxirIKAizmFcsqM70mJlR0iniwwzgVCKiwzPR6tQ=;
+ b=SshfFRpR8aS9Dw0Ppi8OxrVIkQWPbcjdTK+oFjHzUJe6YGfSscunnNaIVg61G+FoSrS7Lg
+ P5Zg9dwB+70xpUBRovNhRkOZPvv5NbjO9WHKMei3ax45QnTJeD50/BgCn4l6XlX5FbY+9o
+ 7W2SNbf8rSnTxXMxbtp+rjhwp764Y4Q=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-345-z6fcVgTTOgyFNgs_KQyo-A-1; Wed, 24 Apr 2024 04:17:14 -0400
+X-MC-Unique: z6fcVgTTOgyFNgs_KQyo-A-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5C47D8001B2;
+ Wed, 24 Apr 2024 08:17:14 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 3D08640C140B;
+ Wed, 24 Apr 2024 08:17:14 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 0F43021F980F; Wed, 24 Apr 2024 10:17:11 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org,
+	John Snow <jsnow@redhat.com>
+Subject: [PULL 22/25] qapi/schema: turn on mypy strictness
+Date: Wed, 24 Apr 2024 10:17:07 +0200
+Message-ID: <20240424081710.2907748-23-armbru@redhat.com>
+In-Reply-To: <20240424081710.2907748-1-armbru@redhat.com>
+References: <20240424081710.2907748-1-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240424072912.43188-1-lei4.wang@intel.com>
-Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.67,
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.67,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,24 +82,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Lei,
+From: John Snow <jsnow@redhat.com>
 
-On Wed, Apr 24, 2024 at 03:29:12AM -0400, Lei Wang wrote:
-> Date: Wed, 24 Apr 2024 03:29:12 -0400
-> From: Lei Wang <lei4.wang@intel.com>
-> Subject: [PATCH] target/i386: Introduce SapphireRapids-v3 to add missing
->  features
-> X-Mailer: git-send-email 2.39.3
-> 
-> Add the missing features(ss, tsc-adjust, cldemote, movdiri, movdir64b) in
-> the SapphireRapids-v3 CPU model.
+This patch can be rolled in with the previous one once the series is
+ready for merge, but for work-in-progress' sake, it's separate here.
 
-Considering that these are missing features, not hardware updates/fixes/Linux
-support changes, then as opposed to adding v3, it would be more appropriate
-to add these flags directly to the v1 SPR model with Fixes tag (Fixes:
-commit 7eb061b06e97 ("i386: Add new CPU model SapphireRapids")).
+Signed-off-by: John Snow <jsnow@redhat.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Message-ID: <20240315152301.3621858-23-armbru@redhat.com>
+---
+ scripts/qapi/mypy.ini | 5 -----
+ 1 file changed, 5 deletions(-)
 
-Regards,
-Zhao
+diff --git a/scripts/qapi/mypy.ini b/scripts/qapi/mypy.ini
+index 56e0dfb132..8109470a03 100644
+--- a/scripts/qapi/mypy.ini
++++ b/scripts/qapi/mypy.ini
+@@ -2,8 +2,3 @@
+ strict = True
+ disallow_untyped_calls = False
+ python_version = 3.8
+-
+-[mypy-qapi.schema]
+-disallow_untyped_defs = False
+-disallow_incomplete_defs = False
+-check_untyped_defs = False
+-- 
+2.44.0
 
 
