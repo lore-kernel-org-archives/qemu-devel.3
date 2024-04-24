@@ -4,104 +4,160 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A03BC4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 17:55:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB9F8C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 18:00:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzgpO-0001dh-0f; Wed, 24 Apr 2024 13:54:42 -0400
+	id 1rzguB-0003nC-Cs; Wed, 24 Apr 2024 13:59:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1rzgpJ-0001d4-O4; Wed, 24 Apr 2024 13:54:40 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1rzgu8-0003me-H4; Wed, 24 Apr 2024 13:59:36 -0400
+Received: from mail-he1eur04on20700.outbound.protection.outlook.com
+ ([2a01:111:f403:260f::700]
+ helo=EUR04-HE1-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1rzgpI-0007MM-5f; Wed, 24 Apr 2024 13:54:37 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43OHoDmj025099; Wed, 24 Apr 2024 17:54:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=fdwGo/sEgVbP77bQ+gllvE52rYY3EZG+3f/jMLElKbI=;
- b=bEHpWZeXSkTbLCfNrqjnYswPZbMozW+KBhVn1JL1GBF+0v25c+eZfL01iQ8f2gFky1Nt
- KWKfnOwc5CshbyKGrYLJKzic+ZPyYC5Mf6E8BfQYnqanstzbTQObRePHDOPn2ESIuJMq
- yhQy6dVNnhB6KIJ2C2Icub9qRAOApNn9jjnvzW18SCRRSI7u7WXRIfX0dRqbRVZLi9uB
- FZAKUh1d/0rfPaJh57lFmWPQwxz+2cbb7RuZ0+cvxffFMeb1/aLRCpOirK7vG7orDDNu
- KNZv7bfXej4PyX3enwpMI0FMAnG7gJxRhkxNhK/cBI2VsKRQEzWIGCTx155MGZGTZI3M VA== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xq6n4g18j-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Apr 2024 17:54:29 +0000
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43OHsSbm029212;
- Wed, 24 Apr 2024 17:54:28 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xq6n4g16y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Apr 2024 17:54:28 +0000
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43OHcjoF020953; Wed, 24 Apr 2024 17:51:28 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3xmre0573p-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Apr 2024 17:51:27 +0000
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 43OHpP2B33489636
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 24 Apr 2024 17:51:27 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 383245805A;
- Wed, 24 Apr 2024 17:51:25 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AABBC58051;
- Wed, 24 Apr 2024 17:51:24 +0000 (GMT)
-Received: from [9.12.68.85] (unknown [9.12.68.85])
- by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 24 Apr 2024 17:51:24 +0000 (GMT)
-Message-ID: <9a5fee10-4260-4311-95b9-77791217993e@linux.ibm.com>
-Date: Wed, 24 Apr 2024 13:51:24 -0400
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1rzgu6-0000dF-9M; Wed, 24 Apr 2024 13:59:36 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=SeNxEq723MkvVuCi7kPVEfz31P6C3o0FtU+E4A0fvNkYHHhFWdb49Rgk//M7gcUcSzhOoHcZK9SVsQUQnFfW10YrG7oGHurTAb7h8QLVFrN5dgNASQ/mzp/NzDiohrp5PMjfgk5QBW8PqrYfxFgTjUBF3hS2a3rGq57g1t/lx5/Qkzh61EmSRePbv415aDM+vhxmBX+FRWEPVEa9edyYevBZ592k2zP/8Vk2I8A+SPcgsyDZjoKIUf/47CwLu4yLKJb+20xqGTO3HBayE9AqP9JUVzbtqukL3dJUdW5xHNEAYNdUOm5wKgogutR5imFbdrK8IBTOj5gpViDa/APvAQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wktWiItTd1n3wx5Jo40waU2dpsjXF3Xn/EfWPeEpyZE=;
+ b=j9itBgxIR9FRi9JnHqgiS3pulXwSeITU4aOYtPx6Wyz9yj2tJAhcC1XhyLqjfTq1KBj8rSK768TUc4BqiYkcCvM5VAxEXs0WWOTY4+xtlawOJIk02Eeq8R7c/84nsVCHLWUIyMQyKnbaj0y/09l/8cM61idXN6OiYVOjDsDNKBbCve6oFJp3C4+U5sXJMV7N3Wncsu7YIDL3u+T030ZFT0YN9XopW/2sKuDFMdoWqT3g4t9BeN/i1abDx63pCOe0x2f2ISo7KiFt9QsLhIAGuzKDJR14HYfSb6I5qU1rEKuXVo6r44tLwX3cU05xzL1TdG0/gECKdWDR1BJVPaYZNQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=wktWiItTd1n3wx5Jo40waU2dpsjXF3Xn/EfWPeEpyZE=;
+ b=N97A6FqcpPhHRv6TjdS57jDFaNLvbvWW1YTv0tmqnYM7f+lnTE+pwymOUaQxVnvhNP92/egop60PW5XGNgk0N4Ei/g0wsfCUq/WgeTXwLO+J5MzzxV7vOvVLAbYUAhPSdLLrfAaMEeWnVwhsPCJ+YZoVl662QbJBcCXYAZ8nzil6OR3qR1v1YoZ3jZ8+j37sl3ssc8XhtVFedeLM1Ac/4LOMfM7vZoUNlobbtO8kTyLBB71AK6RyWu+FcAGfYLWRBwDdsAvdYXhB55RNvPPCBNYozhAsQSQhrFCFBgS7eLke7Lu4FCVtgJv/aOHrSt+6f7GwI0XjouInO57btC1nIQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from DBBPR08MB10650.eurprd08.prod.outlook.com (2603:10a6:10:52d::7)
+ by GV1PR08MB7345.eurprd08.prod.outlook.com (2603:10a6:150:20::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7472.44; Wed, 24 Apr
+ 2024 17:59:27 +0000
+Received: from DBBPR08MB10650.eurprd08.prod.outlook.com
+ ([fe80::b0a0:bda8:8808:adab]) by DBBPR08MB10650.eurprd08.prod.outlook.com
+ ([fe80::b0a0:bda8:8808:adab%6]) with mapi id 15.20.7472.044; Wed, 24 Apr 2024
+ 17:59:27 +0000
+Message-ID: <fa7a3d64-aa65-444b-8e65-87a64e47684a@virtuozzo.com>
+Date: Wed, 24 Apr 2024 21:00:08 +0300
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] cpu-models: add "disable-deprecated-feats" option
- to cpu model expansion
 Content-Language: en-US
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, thuth@redhat.com,
- david@redhat.com, wangyanan55@huawei.com, philmd@linaro.org,
- marcel.apfelbaum@gmail.com, eduardo@habkost.net, armbru@redhat.com
-References: <20240423210655.66656-1-walling@linux.ibm.com>
- <20240423210655.66656-2-walling@linux.ibm.com> <ZijA2XFbPwxi0F4h@redhat.com>
-From: Collin Walling <walling@linux.ibm.com>
-In-Reply-To: <ZijA2XFbPwxi0F4h@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Eric Blake <eblake@redhat.com>, "Denis V. Lunev" <den@virtuozzo.com>,
+ andrey.drobyshev@virtuozzo.com
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Subject: [BUG, RFC] Base node is in RW after making external snapshot
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: qdvssdw7_6EO3RdtDJcYL9bXzW7xWpMw
-X-Proofpoint-GUID: a8_aHy9c3jDYZzTAaxRRljdLccho-Om1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-24_15,2024-04-24_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 mlxscore=0
- lowpriorityscore=0 spamscore=0 impostorscore=0 clxscore=1015
- priorityscore=1501 adultscore=0 phishscore=0 bulkscore=0 suspectscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2404010000 definitions=main-2404240080
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=walling@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: FR4P281CA0031.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:c7::15) To DBBPR08MB10650.eurprd08.prod.outlook.com
+ (2603:10a6:10:52d::7)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DBBPR08MB10650:EE_|GV1PR08MB7345:EE_
+X-MS-Office365-Filtering-Correlation-Id: 93ccf682-2963-4ba5-393d-08dc6488487b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?cTMvYytyRzJ4aGZ4Y2RXdkVoUG5vdEhjaWVOTms5aUJIcG91bUZ5cEZhdkl6?=
+ =?utf-8?B?bDdJMGduOUJ2RTNycmptZXE1UXA0Zm42ZzRpeG94MlQ4bVMyb1V2OXBPQjlU?=
+ =?utf-8?B?N1dVQ1EydVo5NTg2N0NCWmFjWk9aU0RmdmVhQitBL0UvcWVQODRHdEVWTkJN?=
+ =?utf-8?B?d21KRG02M3pmWGh6N3plL2hCWjVwZThBUXYvSGppT0JyWlNSaXBYeEgvUW50?=
+ =?utf-8?B?TVcxZ0xTT3RjNjRFVk1OcXoyMGRlNi9aZFE4S283eUZPSXFGM2NVQnpNbXAw?=
+ =?utf-8?B?bVlxN2d4M05SdmhYbVpCWkU2YldIbkQ3S1JWME5NZGFIOGw0dEp6V1BnSVV6?=
+ =?utf-8?B?SkZtQ2FiTmpkVmpuQTlBcDN3VDhHaDljQmJ0SWNkWE5sRmZ5YlN2UHNqRHpS?=
+ =?utf-8?B?TW92TWlZZWZST21YTHJUV05qYzVZOTllc2J5YTlodURvUjNSdzRNb0hrVE5O?=
+ =?utf-8?B?QUVHdGxzR2JyRTRqNlVCTXVPYmd1UjQxVDU5Yy9JbUgyRHJET0Zoa3pxVHNG?=
+ =?utf-8?B?dUlvdjI3WjhSWjh4aldvYUhPVk40cVRNZkFZcWYzcnRXRC9GQzVhOHY4MW1T?=
+ =?utf-8?B?eFNMQkI4azhiL2xUbldrYXRPZ0hPeGlzS0syME9TajMyTGIxejdYT0VSK0th?=
+ =?utf-8?B?ci85YmxpZ2pXbzNMaks3NHdKQys5WklXNVRnMTEzcGd5UmVWN0tubHFSZ1U2?=
+ =?utf-8?B?eXRJTDN1QjdoVzFLK3ZTeWxic0ptUWdWL0krSHpKSEVEU0ZjUmorUDdsVDdJ?=
+ =?utf-8?B?ZmREeXlmTGNtQzFiOXl3cG9LZ3owR2JZcjVHMUdyU25XTWNSRkMrcXZRUm5I?=
+ =?utf-8?B?RGYxSkRyNUFHVFBIbzlhYVo3S2pGajRxRjh3TVRZM2NadkQyTHlObmxRQWx3?=
+ =?utf-8?B?R1BMaDNxVXE1U3ppQmtoOUZBME9lWVkwU3VHK0tPNzRUZ0dwOU5qVFVPNWlv?=
+ =?utf-8?B?ZnhvM2lyWFpkdlUzM1EwaXRaUWVCWnVOUmQxU3lSdW9BMVN2THZXSURDRTFS?=
+ =?utf-8?B?akY1YlMrWGw0VTB5NlZQeXZwTmNsc2F2dzRvcFFPZVh5c21ST3M3VlBWMVda?=
+ =?utf-8?B?RlhKZExkTGRPeWtoOGNYS2JCalJWR0doZUpPWCtOWXpyNjd3cXNpY1VJV3hV?=
+ =?utf-8?B?a1JhSFBkclZqSGdFb2k2QjBNaVBIbHBkL0g3ZDN2SGFqWjZ2RVpBelp6SFdl?=
+ =?utf-8?B?eCszbHZtakpqMGtjYjlyWHhSTTB6Zk4xM0Y0c1JIRXZvVzhwNnIrUTNacktW?=
+ =?utf-8?B?MThNVE5TMVoyQ3NHL1NlSzVCVlV5UklCY0lNWkFURHYwdTRuNlhhamZrbjlS?=
+ =?utf-8?B?RElTKy9jL1FZemNYS2RzaTlHZ2g1UjZuMDRoRVlhS0lFRmZiWS8ybGozY1Q4?=
+ =?utf-8?B?czlNOEl0cWpZNG85b1dnSUowQWpNNGpzSDEyZkVUNnFTSEhVQ05HekZ0RHVj?=
+ =?utf-8?B?Q0haYVpZcVJubTBNUGRIUy9rRjRZSytRNm83MXVEU3NKem5GRnhKSEUxbHAz?=
+ =?utf-8?B?TEJ2SzFtN2xESXBtRjBEV0J0ZnAxQmVKNDlxekdDTkZNdlZpdEtPaGhiNGxC?=
+ =?utf-8?B?dk9iK1dWRjBtQ3NEUTRxcnNscjhUS2cwRkhTNG1zcVlEREFWcnVBVlZ0MGxO?=
+ =?utf-8?B?cDY2cFdnKzdqMzB3ejdpakhiZ0kzRVpDSTlabCtUR0QvdjlxMjFCd1lLbVVE?=
+ =?utf-8?B?aXlneFI2Mk85RCsvbjlRc0F5bGNsYkU4OTN3b05FSGhoQ0RJUHEwZFJ3PT0=?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DBBPR08MB10650.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(376005)(366007)(1800799015); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aVdYbWFOZ0hHaG9LSW5ZQjJnMkVMTVJsb0R0YzE2WU80QUhXMkZlZTZDYTlE?=
+ =?utf-8?B?WEZKaVRkcmtUSTY3OW1OT3RCdktEOEpNL0doQTd4TVF6M2JiVlVlQ29sRktW?=
+ =?utf-8?B?M1licnNlR0JGNmpDVytUd0lnMCtFMm4raXEvaHRIa0cvM0hMRWVSbXN4cEUr?=
+ =?utf-8?B?Zzl5endoVmZnc3ZXNWJmUGxTMDIwV3RwcEhKNWRzazhpZitxaVJlU0NLNFY1?=
+ =?utf-8?B?eEZkN2FJckpyNXU4RnBPTEdiekZ2aUhZY0puWHJJR1pDM3A4ZkhoREprWjJ4?=
+ =?utf-8?B?eGQwa0tnWjNnQXk4MktvbkpPMnFqRWRFRkJXRGZjOHRsUVd4TEpNVk5yT282?=
+ =?utf-8?B?WjNMMllkL2hkeTkwdFJTSWJVTUxOWEdaaWdOUHNScVk4SDVaYkp5OS9lSVZz?=
+ =?utf-8?B?aTZMMEFOTGJ4bmhjWG5LUC92S291cHZXZ0w4c3I2cXB6bFg2SXY0NzVDM25G?=
+ =?utf-8?B?R2Z4TXdhRkxtUUVDa2pqRUprbHVPcmdOZmlNZGhQSXJRN3FrS3hKcmU2QlBp?=
+ =?utf-8?B?MG1XT28rZnBLZFZoRlFLS0l0OU9rMU1Nb0c2dmlRWEU1b0RwajF5VW9RVWdH?=
+ =?utf-8?B?VFJ0R29PU1RuVjdMSTRJM3ovVXlUbEdUczZKYUx0QkV6VzdGVzhTMU1iOG4x?=
+ =?utf-8?B?b204U1dzQ2pOdVY1OFd5UGx3bDNpcCswZU1zb2VBaEpuQzdoL1AxdUdTOWQ2?=
+ =?utf-8?B?V0JpVDlZU3puKzF0ZjdvbmlnZVNKRXpuU2lWWU5zUW1ZeVpYYWJhUVUzTC93?=
+ =?utf-8?B?NWlBQ3AwbzVTVTlpRGhzMko2N3NRNWp4VXphanh5dUNuVEZob1RKUEY1bm1a?=
+ =?utf-8?B?M3NoMUFodDJrUnFMRUdTcnBlaXVTZGJITFp6emNaZVUvdERhdjhjaytBN3dj?=
+ =?utf-8?B?Ly9QZHhzQ2owVUhEUTlNUVpuV3ZWQmU2a2dlbGRrS1hBQU1UOC90b1ZVREoy?=
+ =?utf-8?B?b2hDUXlPdXhiRS9PY0lNUTFidEcwMStwenQvaGlwY2ZZMktDK1Y2WUdJUmFP?=
+ =?utf-8?B?dzJLVWhDRG5sVkcvdTZDa1RBaldvMzBEamt3Y3oxRzZLemhuaEVRSDdWMTdm?=
+ =?utf-8?B?T2cxUXNvY2doQVlLN2NlejZ2bUhsYisrbTE5S01LQnh1MHBWdjNnMTAzZEs4?=
+ =?utf-8?B?RW5kdkZyK0lWZVFEaUVXMlBjSTRmeS9hR0xONjl4Tzg3NkpqK1A1RnA4Y2dV?=
+ =?utf-8?B?dVIrcUJOTkdwZEhEREVDU0pycGFhRmxZL2lnN2NndE1HWmpBQnNGUm82Nlo5?=
+ =?utf-8?B?SXV2bkl2UGxSTkVaVlJJNllsbCt1WVorWFdKUmVudFc5TGVuTjBFOVdxNDlv?=
+ =?utf-8?B?dmlmY3FReVlDcGFWK0JkNk1BRG44Y2pIMUd1S1RqWldsbUVURkMwL09mMXRp?=
+ =?utf-8?B?SGRtUFEwK3ZpNkNGNDlPSUl3bnNONFAyKzhRYUllcXRORmZuWHJIL280RzJH?=
+ =?utf-8?B?amtoRUJxMEhGYVpVWW9ENUVEZk5BTG44WkNXakpIbG56ajhCdlVlRHJZb0dG?=
+ =?utf-8?B?YS92ZEJBWnJnc0lLMThlWVFZSFM5N0p2RkFVTkppdWh6VFV6d1pkSG1jTTNq?=
+ =?utf-8?B?RG1VOXlYS0w2V2ZhbHJnWEZ2MVZhdUVienJ3aXZzeG9USG5OWmJZVkpTamdq?=
+ =?utf-8?B?czlUTEFMa1E0b2MwWWdDZ2pmTEcxUG1mcC9hUnRYSitrMEVybnJHOS8vYURW?=
+ =?utf-8?B?bnJoSlhqSGcvMm5aZkJKZGtkSTVGaWcxZTViL0dHTFp5bWdSd3JpSlNSMzhz?=
+ =?utf-8?B?L29sZlVmNkJTLzMvbnpMR3EzMTVxRk9ZU0N4N3dFQkVsQm9iZTlCKytyMC9v?=
+ =?utf-8?B?WjdQTTcvbXcxRkZjVDlBNkVCek9YWFJhSDE5V2NybmdZQnM2ZVpDZ3RrMzQx?=
+ =?utf-8?B?Z29QY25VdytHS29NUks5WkpFODlUcUZxaDB0dmZmS1VENnh0NG1PM0V6UktV?=
+ =?utf-8?B?WEhTVndKQ0RnVmhUczhoYUVaM05kREMzK0N3eW8xYkpoWkxRMHhuRk80ZDJh?=
+ =?utf-8?B?UU5vd1FSRk5IU1BmRmRXYTJST3o0YUl5VlZIVktTTTkyY2dTb2VGa0JBSjVL?=
+ =?utf-8?B?WXN3SGVwa3lMRFlDQlFmcnUwRWRHa2pITzNIT1puUGQ2SUxXSE92VXBMRmVO?=
+ =?utf-8?B?ZHBBc0YwVkdiVEE1T0V6L1lha2JURHcrbEVvNkFLamd5Nnc5Z1VkOExaMFha?=
+ =?utf-8?B?aFE9PQ==?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 93ccf682-2963-4ba5-393d-08dc6488487b
+X-MS-Exchange-CrossTenant-AuthSource: DBBPR08MB10650.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Apr 2024 17:59:27.5222 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: VOBW/t2jbNskG23jYVMpDlh7LgM+XyvDGHiGxntw/Sq4hugI4ZiAXmYvpr5xvkSJ3b//8YoK6RXgJ/2EUiTiL0nt1OJPNaqTJSh8wgSrLj4=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV1PR08MB7345
+Received-SPF: pass client-ip=2a01:111:f403:260f::700;
+ envelope-from=andrey.drobyshev@virtuozzo.com;
+ helo=EUR04-HE1-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,104 +174,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/24/24 04:20, Daniel P. Berrangé wrote:
-> On Tue, Apr 23, 2024 at 05:06:53PM -0400, Collin Walling wrote:
->> This optional parameter for query-cpu-model-expansion enables CPU
->> model features flagged as deprecated to appear in the resulting
->> list of properties.
->>
->> This commit does not add support beyond adding a new argument
->> to the query. All queries with this option present will result
->> in an error claiming this option is not supported.
->>
->> Signed-off-by: Collin Walling <walling@linux.ibm.com>
->> ---
->>  qapi/machine-target.json         | 7 ++++++-
->>  target/arm/arm-qmp-cmds.c        | 7 +++++++
->>  target/i386/cpu-sysemu.c         | 7 +++++++
->>  target/s390x/cpu_models_sysemu.c | 7 +++++++
->>  4 files changed, 27 insertions(+), 1 deletion(-)
->>
->> diff --git a/qapi/machine-target.json b/qapi/machine-target.json
->> index 29e695aa06..b9da284d2d 100644
->> --- a/qapi/machine-target.json
->> +++ b/qapi/machine-target.json
->> @@ -285,6 +285,10 @@
->>  #
->>  # @type: expansion type, specifying how to expand the CPU model
->>  #
->> +# @disable-deprecated-feats: include CPU model features that are
->> +#     flagged as deprecated. If supported, these features will appear
->> +#     in the properties list paired with false.
->> +#
->>  # Returns: a CpuModelExpansionInfo describing the expanded CPU model
->>  #
->>  # Errors:
->> @@ -298,7 +302,8 @@
->>  ##
->>  { 'command': 'query-cpu-model-expansion',
->>    'data': { 'type': 'CpuModelExpansionType',
->> -            'model': 'CpuModelInfo' },
->> +            'model': 'CpuModelInfo',
->> +            '*disable-deprecated-feats': 'bool' },
->>    'returns': 'CpuModelExpansionInfo',
->>    'if': { 'any': [ 'TARGET_S390X',
->>                     'TARGET_I386',
-> 
-> I think this is an odd design approach. Lets consider the
-> current output:
-> 
-> (QEMU) query-cpu-model-expansion type=static model={"name":"z14"}
-> {
->     "return": {
->         "model": {
->             "name": "z14-base",
->             "props": {
->                 "aefsi": true,
->                 "aen": true,
->                 ...snip...
->                 "vxpd": true,
->                 "zpci": true
->             }
->         }
->     }
-> }
-> 
-> 
-> If we want to inform a mgmt app of some features being deprecated,
-> why not just unconditionally include that info in the reply thus:
-> 
-> 
-> (QEMU) query-cpu-model-expansion type=static model={"name":"z14"}
-> {
->     "return": {
->         "model": {
->             "name": "z14-base",
->             "props": {
->                 "aefsi": true,
->                 "aen": true,
->                 ...snip...
->                 "vxpd": true,
->                 "zpci": true
->             }
->             "deprecated-props": ["ppa15", "ri"]
->         }
->     }
-> }
-> 
-> 
-> 
-> With regards,
-> Daniel
+Hi everyone,
 
-That's a good idea. In this way, we're not mucking up any of the CPU
-model information and this makes it much more clear as to which features
-are actually deprecated... I like this more.
+When making an external snapshot, we end up in a situation when 2 block
+graph nodes related to the same image file (format and storage nodes)
+have different RO flags set on them.
 
-I'll work on this.
+E.g.
 
--- 
-Regards,
-  Collin
+# ls -la /proc/PID/fd
+lrwx------ 1 root qemu 64 Apr 24 20:14 12 -> /path/to/harddisk.hdd
 
+# virsh qemu-monitor-command VM '{"execute": "query-named-block-nodes"}'
+--pretty | egrep '"node-name"|"ro"'
+      "ro": false,
+      "node-name": "libvirt-1-format",
+      "ro": false,
+      "node-name": "libvirt-1-storage",
+
+# virsh snapshot-create-as VM --name snap --disk-only
+Domain snapshot snap created
+
+# ls -la /proc/PID/fd
+lr-x------ 1 root qemu 64 Apr 24 20:14 134 -> /path/to/harddisk.hdd
+lrwx------ 1 root qemu 64 Apr 24 20:14 135 -> /path/to/harddisk.snap
+
+# virsh qemu-monitor-command VM '{"execute": "query-named-block-nodes"}'
+--pretty | egrep '"node-name"|"ro"'
+      "ro": false,
+      "node-name": "libvirt-2-format",
+      "ro": false,
+      "node-name": "libvirt-2-storage",
+      "ro": true,
+      "node-name": "libvirt-1-format",
+      "ro": false,                        <--------------
+      "node-name": "libvirt-1-storage",
+
+File descriptor has been reopened in RO, but "libvirt-1-storage" node
+still has RW permissions set.
+
+I'm wondering it this a bug or this is intended?  Looks like a bug to
+me, although I see that some iotests (e.g. 273) expect 2 nodes related
+to the same image file to have different RO flags.
+
+bdrv_reopen_set_read_only()
+  bdrv_reopen()
+    bdrv_reopen_queue()
+      bdrv_reopen_queue_child()
+    bdrv_reopen_multiple()
+      bdrv_list_refresh_perms()
+        bdrv_topological_dfs()
+        bdrv_do_refresh_perms()
+      bdrv_reopen_commit()
+
+In the stack above bdrv_reopen_set_read_only() is only being called for
+the parent (libvirt-1-format) node.  There're 2 lists: BDSs from
+refresh_list are used by bdrv_drv_set_perm and this leads to actual
+reopen with RO of the file descriptor.  And then there's reopen queue
+bs_queue -- BDSs from this queue get their parameters updated.  While
+refresh_list ends up having the whole subtree (including children, this
+is done in bdrv_topological_dfs()) bs_queue only has the parent.  And
+that is because storage (child) node's (bs->inherits_from == NULL), so
+bdrv_reopen_queue_child() never adds it to the queue.  Could it be the
+source of this bug?
+
+Anyway, would greatly appreciate a clarification.
+
+Andrey
 
