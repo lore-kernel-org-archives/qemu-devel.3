@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1060DC4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 08:05:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3D1AC4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 08:05:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzXc4-000709-Kb; Wed, 24 Apr 2024 04:04:21 -0400
+	id 1rzXc1-0006w9-3N; Wed, 24 Apr 2024 04:04:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXbZ-0005w3-Tb
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:03:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXbW-0003oj-Tj
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXbX-0005su-3n
  for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:03:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXbS-0003nj-78
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:03:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713945825;
+ s=mimecast20190719; t=1713945821;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yY7Lyt8jbClugq7sDetbkp4p8g2FdKdPefPysU+ox9U=;
- b=KG7Kau5qByNbMZurxfCxEkJLfkxbYBGgoeTNduzc2fwyxZKMxJIxLgJuX7AJ+kYAFCbshi
- bv6C8YbZphDjbJXLmytISv4mm+vhUO5EWoN/dIS+w7+5upJvWOkxGuHrKeBUgmfNNRpmy1
- ZhwqgvbdtnyEBeraTdtTrnykuk480R0=
+ bh=kXLAsN/MjWVrTQesWQIb8lj4bZIyULexZMx0u8KANK0=;
+ b=UCYKdlLgOz/Km603AA55deTGb5DNJf27q3UqRfH6lreiC1F7QUJw4IeFIFSREu7u9y6rSK
+ EKeKOHBLZrRk3p8wLASQOrDvyClCOTT/op3kYeQuFkUs70StVJ6aL2Hs9SM9JJtnQeZDUV
+ mdkQOlx0J4QTJlkQazUDewEOdwbdKxY=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-186-f4WgmtguOB2o3NQYoFgtQQ-1; Wed, 24 Apr 2024 04:03:39 -0400
-X-MC-Unique: f4WgmtguOB2o3NQYoFgtQQ-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
+ us-mta-185-0g-fZ5TLMgib_g2FIqKLoA-1; Wed, 24 Apr 2024 04:03:39 -0400
+X-MC-Unique: 0g-fZ5TLMgib_g2FIqKLoA-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 464E5104B502;
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 48033834FB1;
  Wed, 24 Apr 2024 08:03:39 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 25A3940C6CC0;
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 25B49400EAF;
  Wed, 24 Apr 2024 08:03:39 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5426021EE971; Wed, 24 Apr 2024 10:03:37 +0200 (CEST)
+ id 4E07B21E65DE; Wed, 24 Apr 2024 10:03:37 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 10/10] qapi: Inline and remove QERR_PROPERTY_VALUE_BAD
- definition
-Date: Wed, 24 Apr 2024 10:03:37 +0200
-Message-ID: <20240424080337.2782594-11-armbru@redhat.com>
+ Juan Quintela <quintela@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 08/10] qapi: Correct error message for 'vcpu_dirty_limit'
+ parameter
+Date: Wed, 24 Apr 2024 10:03:35 +0200
+Message-ID: <20240424080337.2782594-9-armbru@redhat.com>
 In-Reply-To: <20240424080337.2782594-1-armbru@redhat.com>
 References: <20240424080337.2782594-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -86,61 +86,45 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Address the comment added in commit 4629ed1e98
-("qerror: Finally unused, clean up"), from 2015:
+QERR_INVALID_PARAMETER_VALUE is defined as:
 
-  /*
-   * These macros will go away, please don't use
-   * in new code, and do not add new ones!
-   */
+  #define QERR_INVALID_PARAMETER_VALUE \
+      "Parameter '%s' expects %s"
 
-Manual change. Remove the definition in
-include/qapi/qmp/qerror.h.
+The current error is formatted as:
+
+  "Parameter 'vcpu_dirty_limit' expects is invalid, it must greater then 1 MB/s"
+
+Replace by:
+
+  "Parameter 'vcpu_dirty_limit' must be greater than 1 MB/s"
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Juan Quintela <quintela@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20240312141343.3168265-11-armbru@redhat.com>
+Message-ID: <20240312141343.3168265-9-armbru@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+[New error message corrected, commit message updated accordingly]
 ---
- include/qapi/qmp/qerror.h | 3 ---
- hw/core/qdev-properties.c | 3 +--
- 2 files changed, 1 insertion(+), 5 deletions(-)
+ migration/options.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/include/qapi/qmp/qerror.h b/include/qapi/qmp/qerror.h
-index 385a4876d6..00b18e9082 100644
---- a/include/qapi/qmp/qerror.h
-+++ b/include/qapi/qmp/qerror.h
-@@ -26,9 +26,6 @@
- #define QERR_MISSING_PARAMETER \
-     "Parameter '%s' is missing"
+diff --git a/migration/options.c b/migration/options.c
+index bfd7753b69..d7a773aea8 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -1286,9 +1286,8 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
  
--#define QERR_PROPERTY_VALUE_BAD \
--    "Property '%s.%s' doesn't take value '%s'"
--
- #define QERR_PROPERTY_VALUE_OUT_OF_RANGE \
-     "Property %s.%s doesn't take value %" PRId64 " (minimum: %" PRId64 ", maximum: %" PRId64 ")"
+     if (params->has_vcpu_dirty_limit &&
+         (params->vcpu_dirty_limit < 1)) {
+-        error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
+-                   "vcpu_dirty_limit",
+-                   "is invalid, it must greater then 1 MB/s");
++        error_setg(errp,
++                   "Parameter 'vcpu_dirty_limit' must be greater than 1 MB/s");
+         return false;
+     }
  
-diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-index 7d6fa726fd..86a583574d 100644
---- a/hw/core/qdev-properties.c
-+++ b/hw/core/qdev-properties.c
-@@ -2,7 +2,6 @@
- #include "hw/qdev-properties.h"
- #include "qapi/error.h"
- #include "qapi/qapi-types-misc.h"
--#include "qapi/qmp/qerror.h"
- #include "qapi/qmp/qlist.h"
- #include "qemu/ctype.h"
- #include "qemu/error-report.h"
-@@ -792,7 +791,7 @@ void error_set_from_qdev_prop_error(Error **errp, int ret, Object *obj,
-         break;
-     default:
-     case -EINVAL:
--        error_setg(errp, QERR_PROPERTY_VALUE_BAD,
-+        error_setg(errp, "Property '%s.%s' doesn't take value '%s'",
-                    object_get_typename(obj), name, value);
-         break;
-     case -ENOENT:
 -- 
 2.44.0
 
