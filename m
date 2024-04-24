@@ -4,71 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 297B3C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 00:08:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8A94C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 00:09:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzQAK-0002Ic-Gi; Tue, 23 Apr 2024 20:07:12 -0400
+	id 1rzQCJ-0006dO-Vd; Tue, 23 Apr 2024 20:09:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rzQA3-000290-TO
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 20:06:55 -0400
-Received: from mgamail.intel.com ([198.175.65.12])
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1rzQCG-0006X4-Ee
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 20:09:12 -0400
+Received: from mail-dm6nam12on20600.outbound.protection.outlook.com
+ ([2a01:111:f403:2417::600]
+ helo=NAM12-DM6-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rzQ9z-0003gl-2q
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 20:06:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713917211; x=1745453211;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=yk3Dn0PQGdJQf1Ue1fgWZlp/8amYl9Gq5gIqFo1bbHk=;
- b=ZIuUJXCgEgvCmH5VlL+gSDfbuMtYSdwe2i80WZH2zzkXZGpJUHbIPkHf
- xfhdSJRHOvrEidfJneNxwKFp0nR/3rreGT6N3K3WEvznJ+eK50AQ7RsGp
- JjpEYRJFnUCJNLr3LmamS7S96aWcbFky6ZqvJSHUPOf6LSUAYy09L/APd
- iaynwcF/eq1VtMVhW2C9FP1w/HrjSmRrAHa9Ah1gsVwjW9Kl70eQCxjfC
- Z8crgBq8buinHwWtqvDa1pXZccRfJJpeIv1TmK8RULog22iqUvt+5Lbkw
- 3I90aXp/ZJQz6i80c0g5S11i+4yCsBEUNhTmTYd+okXu4//Xk8ZWCXsBU A==;
-X-CSE-ConnectionGUID: NXyQpYTVRyKLa44C/6Cnxw==
-X-CSE-MsgGUID: C7zG+sl7R26Wt7Q+8k/r3A==
-X-IronPort-AV: E=McAfee;i="6600,9927,11053"; a="20950434"
-X-IronPort-AV: E=Sophos;i="6.07,222,1708416000"; d="scan'208";a="20950434"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Apr 2024 17:06:39 -0700
-X-CSE-ConnectionGUID: dS6n+R5MQvCwSG+eox+atQ==
-X-CSE-MsgGUID: GEiwTRHkSGaUrUjNmmRsTg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,222,1708416000"; d="scan'208";a="24533450"
-Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.129.124])
- by fmviesa009.fm.intel.com with ESMTP; 23 Apr 2024 17:06:38 -0700
-From: dongwon.kim@intel.com
-To: qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com,
-	berrange@redhat.com,
-	philmd@linaro.org
-Subject: [PATCH v11 5/6] ui/console: Use qemu_dmabuf_new() and free() helpers
- instead
-Date: Tue, 23 Apr 2024 17:02:18 -0700
-Message-Id: <20240424000219.1025101-6-dongwon.kim@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240424000219.1025101-1-dongwon.kim@intel.com>
-References: <20240424000219.1025101-1-dongwon.kim@intel.com>
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1rzQCC-00044E-2c
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 20:09:12 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=gP7PUEE+mCGXW8GCFZ/FjKR5qFKosUbQyzGk6txKadQpVMNgtTc3/gDJuTJaSLkpXlq1urbYYH5zYo/nYdPXzsuwotWq1EJppH7v04SoWatuBT10nIPvVwVP7Uwbc31D5rxRRSK3Ko/utQwJsKBnOTqw2RgwHR3O1QgVfFNorNJGq8gPfC2kLApgocFPftrlCFEIPz8RxyH1SlyYAl+XDisbFSC5uSwJZwHlK30uWeIGeW9sTmeMi+pQEb0pRjcabRVm0EMg76V+9qTzGBD69ktgJPvHJLArma6VknNdUB9gd4MTDrZ4H0T4d9+jil6sj7940cnD5qdc3yXZQykZvQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=SFj4VLXpPGAxeno9p5TXvZBa1bZ69tJHoOuMFF09Igg=;
+ b=RXtvaxm8RC08uorjgn+w6qInFm0dHJiqhXtblXYLClhIWqKiz3Umky1gXMIEAzDGZ4KX/MgZBxi4fqN0XoyVb8r7c9ZpsJLEmRTA8fkTd6oCcrOMmKEY4kYNNex2Sll4Zr0ZNWDqpV8RdGAOu4n8W2jN4JT58AUGS79h1PqZPHxi+3HxMu+RC0H+xSt8j10aAxWPYOmswkyxeaQMQDieuwFRYZKr2bZExC5ofgoyAKR+giVHHeKkVltQwTkzmfQGJAbowyMGwgMMvycZNBfUzV2Fr7va1UeJqVwlBj0NDhduuVE5H/qL2SeQA5BjQCQf6quyJ2aT2yxWtFTsNbYM4g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=intel.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=SFj4VLXpPGAxeno9p5TXvZBa1bZ69tJHoOuMFF09Igg=;
+ b=xIieUONvv8wGODQSJaQEnexTErGfT58WbEyw3s7Q5GmDHRgDCYyXpm8THRH437tH08WGKA3dRyAAKJdcbKF89XUJ+lvL+5qAXHgDfr4l21sYpnkGHwNsSmIB9K+Jo5IOA55TwUoKmn1+CTRnOVsqwl373cBX7A4Tw1Shy5saZwg=
+Received: from DM6PR11CA0065.namprd11.prod.outlook.com (2603:10b6:5:14c::42)
+ by LV3PR12MB9355.namprd12.prod.outlook.com (2603:10b6:408:216::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7472.44; Wed, 24 Apr
+ 2024 00:09:01 +0000
+Received: from DS3PEPF0000C37E.namprd04.prod.outlook.com
+ (2603:10b6:5:14c:cafe::50) by DM6PR11CA0065.outlook.office365.com
+ (2603:10b6:5:14c::42) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7495.34 via Frontend
+ Transport; Wed, 24 Apr 2024 00:09:01 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ DS3PEPF0000C37E.mail.protection.outlook.com (10.167.23.8) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.7519.19 via Frontend Transport; Wed, 24 Apr 2024 00:09:01 +0000
+Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 23 Apr
+ 2024 19:08:52 -0500
+Date: Tue, 23 Apr 2024 19:08:38 -0500
+From: Michael Roth <michael.roth@amd.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+CC: Isaku Yamahata <isaku.yamahata@intel.com>, <qemu-devel@nongnu.org>,
+ <kvm@vger.kernel.org>, Tom Lendacky <thomas.lendacky@amd.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?=
+ <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>, Pankaj Gupta
+ <pankaj.gupta@amd.com>, Isaku Yamahata <isaku.yamahata@linux.intel.com>
+Subject: Re: [PATCH v3 48/49] hw/i386/sev: Use guest_memfd for legacy ROMs
+Message-ID: <20240424000838.menxh32bnvnyvfz4@amd.com>
+References: <20240320083945.991426-1-michael.roth@amd.com>
+ <20240320083945.991426-49-michael.roth@amd.com>
+ <20240320181223.GG1994522@ls.amr.corp.intel.com>
+ <61462f83-1406-48ea-8f1a-fae848ff1443@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.12; envelope-from=dongwon.kim@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.67,
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <61462f83-1406-48ea-8f1a-fae848ff1443@intel.com>
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS3PEPF0000C37E:EE_|LV3PR12MB9355:EE_
+X-MS-Office365-Filtering-Correlation-Id: 53312bda-ed0b-41f3-93dd-08dc63f2beed
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?T2oFQbR+HA6sTXibzfJrb9Fn8FkVVPDXPcjAm4C1poYi8InzzGtb3uXC40+4?=
+ =?us-ascii?Q?VgsyeevypAaMIeVEXSgXLWzTp2BTL+RXkhm125hApogWMiTzB0cHjrpAaIhy?=
+ =?us-ascii?Q?ftzEBVyV4aXynhNROS2bK9jnJNkPTZ+mFfJojQSlcm5V+YPWUyXCcF53+WsO?=
+ =?us-ascii?Q?lPSKSf6umoqQD2EoAEY/glNntReEbq9im+bsffb5zI22xaXfnXJ0zQEQta5r?=
+ =?us-ascii?Q?qcF6jnuRj4GX8tIncJUHjliXEl0sfR33oEaFUjRbWaKd4TFTzY4pkq7YrUFI?=
+ =?us-ascii?Q?WbC/ZFLQXEH0tqU2NNHrVmTYjATu/a7eHRQbO2SUoj2ga2R3Ll2u2AmOn6eX?=
+ =?us-ascii?Q?jyEt0CzyuJTPNdBPMXxgPI/lua3FRFSW/tpsw5zQVCMKLX6RdPSqv7n9hZ+5?=
+ =?us-ascii?Q?cBUIwsyZx5WfaUqfmXPuHfwhfZxIKcEJzY1dPjTsakJkLX14SvOgXa4aB1GB?=
+ =?us-ascii?Q?SFwMptuGCs9ES5iBDGGQia3h4QcMpT0R280R10I1/pd1ZtI6mfmH0SkN8njY?=
+ =?us-ascii?Q?9oyWWvVEaq6bzDuvw/D/AZqqSp5mzsBNrCA1GBqInmQgOAneq2HkgqwfJJaE?=
+ =?us-ascii?Q?mbs0yIweqTwAxh7VAxaEc5d5c77NsRWUsU4mlC9YxNpOmuc/DbL+vdKdmonZ?=
+ =?us-ascii?Q?cT4z9VK3fWfLnx2Icd9vyhn/PY5pGwpTMYJUNVLg3J1ke4L+9FSdtA0R7SDV?=
+ =?us-ascii?Q?vL4vaxklAYS4R9R8AvT0aY3zuOtCBkGyB55LUlspXW779dzNEzdUdhMmLMg7?=
+ =?us-ascii?Q?36q2nF9vB7heuepF11cFl1jNlFly/CAEXI1JjnLDLQlvxRLxRTZvGnxGUV7N?=
+ =?us-ascii?Q?E8FRCnfvjkD12b6j3GjtvHR9B3zcreJncGD5joBIm8gMzssYuLeO+L5yQ9HC?=
+ =?us-ascii?Q?s/3dp6BvWhpL7S5GaSUkkihd3i88AeM28/RY4cRdUdQYPZlIGB8Trf5V3aWm?=
+ =?us-ascii?Q?dKT/nq4tqQ89V5ICiVb6MyPqU52Fk5OHUyClgZgdcXNV6zioPZwCgaPWgoey?=
+ =?us-ascii?Q?GkL8AaT+p6H9Wb6tfUTxLkx2k7nik9VGlopJ42QutmieFNJwUawo+FgiPWvG?=
+ =?us-ascii?Q?JJYR7FEsWSUaoe1WR05J9WERg8q8TaefvGQnJpQfNYK9FBWixZPyzhe7h3L5?=
+ =?us-ascii?Q?6RLzWMs9hA5ugdbv1altwgkuI3rR08AAVfFdKvVSyuqXFyzjzGGk1OUxsL+q?=
+ =?us-ascii?Q?wwRxWorq6ht758wQiVPYlKufLjSCLmtI9XQ25Xe+UsL3Z7q/sdDvP/mQSR7u?=
+ =?us-ascii?Q?5+CZUD+OQEMMHd344kIPd0LpRLjgTc36Z09/+EoRT9hbLoKBxXi0QUmpnDDz?=
+ =?us-ascii?Q?Q35pauBxMetDJwJ9mqyMxIGb?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230031)(376005)(1800799015)(36860700004)(82310400014); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Apr 2024 00:09:01.4994 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 53312bda-ed0b-41f3-93dd-08dc63f2beed
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: DS3PEPF0000C37E.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9355
+Received-SPF: permerror client-ip=2a01:111:f403:2417::600;
+ envelope-from=Michael.Roth@amd.com;
+ helo=NAM12-DM6-obe.outbound.protection.outlook.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.67,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,288 +150,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dongwon Kim <dongwon.kim@intel.com>
+On Thu, Mar 28, 2024 at 08:45:03AM +0800, Xiaoyao Li wrote:
+> On 3/21/2024 2:12 AM, Isaku Yamahata wrote:
+> > On Wed, Mar 20, 2024 at 03:39:44AM -0500,
+> > Michael Roth <michael.roth@amd.com> wrote:
+> > 
+> > > TODO: make this SNP-specific if TDX disables legacy ROMs in general
+> > 
+> > TDX disables pc.rom, not disable isa-bios. IIRC, TDX doesn't need pc pflash.
+> 
+> Not TDX doesn't need pc pflash, but TDX cannot support pflash.
+> 
+> Can SNP support the behavior of pflash? That what's got changed will be
+> synced back to OVMF file?
 
-This commit introduces utility functions for the creation and deallocation
-of QemuDmaBuf instances. Additionally, it updates all relevant sections
-of the codebase to utilize these new utility functions.
+For split OVMF files (separate FD for CODE vs. VARS) it can, but it
+requires special handling in OVMF to handle MMIO to the VARS area using
+direct MMIO hypercalls rather than relying on MMIO emulation. Here's the
+relevant OVMF commit:
 
-v7: remove prefix, "dpy_gl_" from all helpers
-    qemu_dmabuf_free() returns without doing anything if input is null
-    (Daniel P. Berrangé <berrange@redhat.com>)
-    call G_DEFINE_AUTOPTR_CLEANUP_FUNC for qemu_dmabuf_free()
-    (Daniel P. Berrangé <berrange@redhat.com>)
+  commit 437eb3f7a8db7681afe0e6064d3a8edb12abb766
+  Author: Tom Lendacky <thomas.lendacky@amd.com>
+  Date:   Wed Aug 12 15:21:42 2020 -0500
 
-v8: Introduction of helpers was removed as those were already added
-    by the previous commit
+      OvmfPkg/QemuFlashFvbServicesRuntimeDxe: Bypass flash detection with SEV-ES
 
-v9: set dmabuf->allow_fences to 'true' when dmabuf is created in
-    virtio_gpu_create_dmabuf()/virtio-gpu-udmabuf.c
+      BZ: https://bugzilla.tianocore.org/show_bug.cgi?id=2198
 
-    removed unnecessary spaces were accidently added in the patch,
-    'ui/console: Use qemu_dmabuf_new() a...'
+For SNP, the plan is to continue to use -bios to handle the actual
+CODE/BIOS FD, but to allow the use of pflash,unit=0 to handle the VARS
+fd if a separate/persistent store is desired. This allows us to continue
+using read-only memslots on the VARS/pflash side without being at odds
+with the fact that read-only memslots are no longer supported for private
+memslots (since VARS doesn't need to be measured/mapped as private), and
+limiting the special handling to -bios where TDX/SNP both need private
+memslots.
 
-v11: Calling qemu_dmabuf_close was removed as closing dmabuf->fd will be
-     done in qemu_dmabuf_free anyway.
-     (Daniel P. Berrangé <berrange@redhat.com>)
+This is roughly how things will look with v4 of this series:
 
-Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
----
- include/hw/vfio/vfio-common.h   |  2 +-
- include/hw/virtio/virtio-gpu.h  |  4 ++--
- hw/display/vhost-user-gpu.c     | 22 +++++++++++-----------
- hw/display/virtio-gpu-udmabuf.c | 24 +++++++++---------------
- hw/vfio/display.c               | 25 +++++++++++--------------
- ui/dbus-listener.c              | 28 ++++++++++++----------------
- 6 files changed, 46 insertions(+), 59 deletions(-)
+  https://github.com/AMDESE/qemu/commit/21fff075372ad25b2d09c5e416349c2b353fdb4c
 
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index b9da6c08ef..d66e27db02 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -148,7 +148,7 @@ typedef struct VFIOGroup {
- } VFIOGroup;
- 
- typedef struct VFIODMABuf {
--    QemuDmaBuf buf;
-+    QemuDmaBuf *buf;
-     uint32_t pos_x, pos_y, pos_updates;
-     uint32_t hot_x, hot_y, hot_updates;
-     int dmabuf_id;
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index ed44cdad6b..56d6e821bf 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -169,7 +169,7 @@ struct VirtIOGPUBaseClass {
-     DEFINE_PROP_UINT32("yres", _state, _conf.yres, 800)
- 
- typedef struct VGPUDMABuf {
--    QemuDmaBuf buf;
-+    QemuDmaBuf *buf;
-     uint32_t scanout_id;
-     QTAILQ_ENTRY(VGPUDMABuf) next;
- } VGPUDMABuf;
-@@ -238,7 +238,7 @@ struct VhostUserGPU {
-     VhostUserBackend *vhost;
-     int vhost_gpu_fd; /* closed by the chardev */
-     CharBackend vhost_chr;
--    QemuDmaBuf dmabuf[VIRTIO_GPU_MAX_SCANOUTS];
-+    QemuDmaBuf *dmabuf[VIRTIO_GPU_MAX_SCANOUTS];
-     bool backend_blocked;
- };
- 
-diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
-index 454e5afcff..173189ae7c 100644
---- a/hw/display/vhost-user-gpu.c
-+++ b/hw/display/vhost-user-gpu.c
-@@ -249,6 +249,7 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
-     case VHOST_USER_GPU_DMABUF_SCANOUT: {
-         VhostUserGpuDMABUFScanout *m = &msg->payload.dmabuf_scanout;
-         int fd = qemu_chr_fe_get_msgfd(&g->vhost_chr);
-+        uint64_t modifier = 0;
-         QemuDmaBuf *dmabuf;
- 
-         if (m->scanout_id >= g->parent_obj.conf.max_outputs) {
-@@ -261,27 +262,26 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
- 
-         g->parent_obj.enable = 1;
-         con = g->parent_obj.scanout[m->scanout_id].con;
--        dmabuf = &g->dmabuf[m->scanout_id];
--        qemu_dmabuf_close(dmabuf);
-+        dmabuf = g->dmabuf[m->scanout_id];
-         dpy_gl_release_dmabuf(con, dmabuf);
-+        g_clear_pointer(&dmabuf, qemu_dmabuf_free);
-         if (fd == -1) {
-             dpy_gl_scanout_disable(con);
-             break;
-         }
--        *dmabuf = (QemuDmaBuf) {
--            .fd = fd,
--            .width = m->fd_width,
--            .height = m->fd_height,
--            .stride = m->fd_stride,
--            .fourcc = m->fd_drm_fourcc,
--            .y0_top = m->fd_flags & VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP,
--        };
-         if (msg->request == VHOST_USER_GPU_DMABUF_SCANOUT2) {
-             VhostUserGpuDMABUFScanout2 *m2 = &msg->payload.dmabuf_scanout2;
--            dmabuf->modifier = m2->modifier;
-+            modifier = m2->modifier;
-         }
- 
-+        dmabuf = qemu_dmabuf_new(m->fd_width, m->fd_height,
-+                                 m->fd_stride, 0, 0, 0, 0,
-+                                 m->fd_drm_fourcc, modifier,
-+                                 fd, false, m->fd_flags &
-+                                 VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP);
-+
-         dpy_gl_scanout_dmabuf(con, dmabuf);
-+        g->dmabuf[m->scanout_id] = dmabuf;
-         break;
-     }
-     case VHOST_USER_GPU_DMABUF_UPDATE: {
-diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
-index c90eba281e..c02ec6d37d 100644
---- a/hw/display/virtio-gpu-udmabuf.c
-+++ b/hw/display/virtio-gpu-udmabuf.c
-@@ -162,7 +162,8 @@ static void virtio_gpu_free_dmabuf(VirtIOGPU *g, VGPUDMABuf *dmabuf)
-     struct virtio_gpu_scanout *scanout;
- 
-     scanout = &g->parent_obj.scanout[dmabuf->scanout_id];
--    dpy_gl_release_dmabuf(scanout->con, &dmabuf->buf);
-+    dpy_gl_release_dmabuf(scanout->con, dmabuf->buf);
-+    g_clear_pointer(&dmabuf->buf, qemu_dmabuf_free);
-     QTAILQ_REMOVE(&g->dmabuf.bufs, dmabuf, next);
-     g_free(dmabuf);
- }
-@@ -181,17 +182,10 @@ static VGPUDMABuf
-     }
- 
-     dmabuf = g_new0(VGPUDMABuf, 1);
--    dmabuf->buf.width = r->width;
--    dmabuf->buf.height = r->height;
--    dmabuf->buf.stride = fb->stride;
--    dmabuf->buf.x = r->x;
--    dmabuf->buf.y = r->y;
--    dmabuf->buf.backing_width = fb->width;
--    dmabuf->buf.backing_height = fb->height;
--    dmabuf->buf.fourcc = qemu_pixman_to_drm_format(fb->format);
--    dmabuf->buf.fd = res->dmabuf_fd;
--    dmabuf->buf.allow_fences = true;
--    dmabuf->buf.draw_submitted = false;
-+    dmabuf->buf = qemu_dmabuf_new(r->width, r->height, fb->stride,
-+                                  r->x, r->y, fb->width, fb->height,
-+                                  qemu_pixman_to_drm_format(fb->format),
-+                                  0, res->dmabuf_fd, true, false);
-     dmabuf->scanout_id = scanout_id;
-     QTAILQ_INSERT_HEAD(&g->dmabuf.bufs, dmabuf, next);
- 
-@@ -217,11 +211,11 @@ int virtio_gpu_update_dmabuf(VirtIOGPU *g,
-         old_primary = g->dmabuf.primary[scanout_id];
-     }
- 
--    width = qemu_dmabuf_get_width(&new_primary->buf);
--    height = qemu_dmabuf_get_height(&new_primary->buf);
-+    width = qemu_dmabuf_get_width(new_primary->buf);
-+    height = qemu_dmabuf_get_height(new_primary->buf);
-     g->dmabuf.primary[scanout_id] = new_primary;
-     qemu_console_resize(scanout->con, width, height);
--    dpy_gl_scanout_dmabuf(scanout->con, &new_primary->buf);
-+    dpy_gl_scanout_dmabuf(scanout->con, new_primary->buf);
- 
-     if (old_primary) {
-         virtio_gpu_free_dmabuf(g, old_primary);
-diff --git a/hw/vfio/display.c b/hw/vfio/display.c
-index 7784502b53..34e1969370 100644
---- a/hw/vfio/display.c
-+++ b/hw/vfio/display.c
-@@ -241,14 +241,11 @@ static VFIODMABuf *vfio_display_get_dmabuf(VFIOPCIDevice *vdev,
- 
-     dmabuf = g_new0(VFIODMABuf, 1);
-     dmabuf->dmabuf_id  = plane.dmabuf_id;
--    dmabuf->buf.width  = plane.width;
--    dmabuf->buf.height = plane.height;
--    dmabuf->buf.backing_width = plane.width;
--    dmabuf->buf.backing_height = plane.height;
--    dmabuf->buf.stride = plane.stride;
--    dmabuf->buf.fourcc = plane.drm_format;
--    dmabuf->buf.modifier = plane.drm_format_mod;
--    dmabuf->buf.fd     = fd;
-+    dmabuf->buf = qemu_dmabuf_new(plane.width, plane.height,
-+                                  plane.stride, 0, 0, plane.width,
-+                                  plane.height, plane.drm_format,
-+                                  plane.drm_format_mod, fd, false, false);
-+
-     if (plane_type == DRM_PLANE_TYPE_CURSOR) {
-         vfio_display_update_cursor(dmabuf, &plane);
-     }
-@@ -261,8 +258,8 @@ static void vfio_display_free_one_dmabuf(VFIODisplay *dpy, VFIODMABuf *dmabuf)
- {
-     QTAILQ_REMOVE(&dpy->dmabuf.bufs, dmabuf, next);
- 
--    qemu_dmabuf_close(&dmabuf->buf);
--    dpy_gl_release_dmabuf(dpy->con, &dmabuf->buf);
-+    dpy_gl_release_dmabuf(dpy->con, dmabuf->buf);
-+    g_clear_pointer(&dmabuf->buf, qemu_dmabuf_free);
-     g_free(dmabuf);
- }
- 
-@@ -298,13 +295,13 @@ static void vfio_display_dmabuf_update(void *opaque)
-         return;
-     }
- 
--    width = qemu_dmabuf_get_width(&primary->buf);
--    height = qemu_dmabuf_get_height(&primary->buf);
-+    width = qemu_dmabuf_get_width(primary->buf);
-+    height = qemu_dmabuf_get_height(primary->buf);
- 
-     if (dpy->dmabuf.primary != primary) {
-         dpy->dmabuf.primary = primary;
-         qemu_console_resize(dpy->con, width, height);
--        dpy_gl_scanout_dmabuf(dpy->con, &primary->buf);
-+        dpy_gl_scanout_dmabuf(dpy->con, primary->buf);
-         free_bufs = true;
-     }
- 
-@@ -318,7 +315,7 @@ static void vfio_display_dmabuf_update(void *opaque)
-     if (cursor && (new_cursor || cursor->hot_updates)) {
-         bool have_hot = (cursor->hot_x != 0xffffffff &&
-                          cursor->hot_y != 0xffffffff);
--        dpy_gl_cursor_dmabuf(dpy->con, &cursor->buf, have_hot,
-+        dpy_gl_cursor_dmabuf(dpy->con, cursor->buf, have_hot,
-                              cursor->hot_x, cursor->hot_y);
-         cursor->hot_updates = 0;
-     } else if (!cursor && new_cursor) {
-diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
-index 62d1e2d3f9..f46f53cd76 100644
---- a/ui/dbus-listener.c
-+++ b/ui/dbus-listener.c
-@@ -442,28 +442,24 @@ static void dbus_scanout_texture(DisplayChangeListener *dcl,
-     trace_dbus_scanout_texture(tex_id, backing_y_0_top,
-                                backing_width, backing_height, x, y, w, h);
- #ifdef CONFIG_GBM
--    QemuDmaBuf dmabuf = {
--        .width = w,
--        .height = h,
--        .y0_top = backing_y_0_top,
--        .x = x,
--        .y = y,
--        .backing_width = backing_width,
--        .backing_height = backing_height,
--    };
-+    int fd;
-+    uint32_t stride, fourcc;
-+    uint64_t modifier;
-+    QemuDmaBuf *dmabuf;
- 
-     assert(tex_id);
--    dmabuf.fd = egl_get_fd_for_texture(
--        tex_id, (EGLint *)&dmabuf.stride,
--        (EGLint *)&dmabuf.fourcc,
--        &dmabuf.modifier);
--    if (dmabuf.fd < 0) {
-+    fd = egl_get_fd_for_texture(tex_id, (EGLint *)&stride, (EGLint *)&fourcc,
-+                                &modifier);
-+    if (fd < 0) {
-         error_report("%s: failed to get fd for texture", __func__);
-         return;
-     }
-+    dmabuf = qemu_dmabuf_new(w, h, stride, x, y, backing_width,
-+                             backing_height, fourcc, modifier, fd,
-+                             false, backing_y_0_top);
- 
--    dbus_scanout_dmabuf(dcl, &dmabuf);
--    close(dmabuf.fd);
-+    dbus_scanout_dmabuf(dcl, dmabuf);
-+    qemu_dmabuf_close(dmabuf);
- #endif
- 
- #ifdef WIN32
--- 
-2.34.1
+I think (if needed) TDX could in theory take a similar approach with
+similar modifications to OVMF and providing an option for a split CODE/VARS
+variant.
 
+-Mike
+
+> 
+> > Xiaoyao can chime in.
+> > 
+> > Thanks,
+> > 
+> > > 
+> > > Current SNP guest kernels will attempt to access these regions with
+> > > with C-bit set, so guest_memfd is needed to handle that. Otherwise,
+> > > kvm_convert_memory() will fail when the guest kernel tries to access it
+> > > and QEMU attempts to call KVM_SET_MEMORY_ATTRIBUTES to set these ranges
+> > > to private.
+> > > 
+> > > Whether guests should actually try to access ROM regions in this way (or
+> > > need to deal with legacy ROM regions at all), is a separate issue to be
+> > > addressed on kernel side, but current SNP guest kernels will exhibit
+> > > this behavior and so this handling is needed to allow QEMU to continue
+> > > running existing SNP guest kernels.
+> > > 
+> > > Signed-off-by: Michael Roth <michael.roth@amd.com>
+> > > ---
+> > >   hw/i386/pc.c       | 13 +++++++++----
+> > >   hw/i386/pc_sysfw.c | 13 ++++++++++---
+> > >   2 files changed, 19 insertions(+), 7 deletions(-)
+> > > 
+> > > diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> > > index feb7a93083..5feaeb43ee 100644
+> > > --- a/hw/i386/pc.c
+> > > +++ b/hw/i386/pc.c
+> > > @@ -1011,10 +1011,15 @@ void pc_memory_init(PCMachineState *pcms,
+> > >       pc_system_firmware_init(pcms, rom_memory);
+> > >       option_rom_mr = g_malloc(sizeof(*option_rom_mr));
+> > > -    memory_region_init_ram(option_rom_mr, NULL, "pc.rom", PC_ROM_SIZE,
+> > > -                           &error_fatal);
+> > > -    if (pcmc->pci_enabled) {
+> > > -        memory_region_set_readonly(option_rom_mr, true);
+> > > +    if (machine_require_guest_memfd(machine)) {
+> > > +        memory_region_init_ram_guest_memfd(option_rom_mr, NULL, "pc.rom",
+> > > +                                           PC_ROM_SIZE, &error_fatal);
+> > > +    } else {
+> > > +        memory_region_init_ram(option_rom_mr, NULL, "pc.rom", PC_ROM_SIZE,
+> > > +                               &error_fatal);
+> > > +        if (pcmc->pci_enabled) {
+> > > +            memory_region_set_readonly(option_rom_mr, true);
+> > > +        }
+> > >       }
+> > >       memory_region_add_subregion_overlap(rom_memory,
+> > >                                           PC_ROM_MIN_VGA,
+> > > diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+> > > index 9dbb3f7337..850f86edd4 100644
+> > > --- a/hw/i386/pc_sysfw.c
+> > > +++ b/hw/i386/pc_sysfw.c
+> > > @@ -54,8 +54,13 @@ static void pc_isa_bios_init(MemoryRegion *rom_memory,
+> > >       /* map the last 128KB of the BIOS in ISA space */
+> > >       isa_bios_size = MIN(flash_size, 128 * KiB);
+> > >       isa_bios = g_malloc(sizeof(*isa_bios));
+> > > -    memory_region_init_ram(isa_bios, NULL, "isa-bios", isa_bios_size,
+> > > -                           &error_fatal);
+> > > +    if (machine_require_guest_memfd(current_machine)) {
+> > > +        memory_region_init_ram_guest_memfd(isa_bios, NULL, "isa-bios",
+> > > +                                           isa_bios_size, &error_fatal);
+> > > +    } else {
+> > > +        memory_region_init_ram(isa_bios, NULL, "isa-bios", isa_bios_size,
+> > > +                               &error_fatal);
+> > > +    }
+> > >       memory_region_add_subregion_overlap(rom_memory,
+> > >                                           0x100000 - isa_bios_size,
+> > >                                           isa_bios,
+> > > @@ -68,7 +73,9 @@ static void pc_isa_bios_init(MemoryRegion *rom_memory,
+> > >              ((uint8_t*)flash_ptr) + (flash_size - isa_bios_size),
+> > >              isa_bios_size);
+> > > -    memory_region_set_readonly(isa_bios, true);
+> > > +    if (!machine_require_guest_memfd(current_machine)) {
+> > > +        memory_region_set_readonly(isa_bios, true);
+> > > +    }
+> > >   }
+> > >   static PFlashCFI01 *pc_pflash_create(PCMachineState *pcms,
+> > > -- 
+> > > 2.25.1
+> > > 
+> > > 
+> > 
+> 
+> 
 
