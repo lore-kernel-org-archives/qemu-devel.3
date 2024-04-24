@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58355C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 23:34:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF2CDC4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 23:34:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzm5e-0005qr-6p; Wed, 24 Apr 2024 19:31:50 -0400
+	id 1rzm5v-00062I-Em; Wed, 24 Apr 2024 19:32:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rzm5Z-0005oc-18
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 19:31:45 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ id 1rzm5o-0005zG-4Y
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 19:32:00 -0400
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rzm5W-0003Rt-Ur
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 19:31:44 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-60275a82611so328313a12.1
- for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 16:31:41 -0700 (PDT)
+ id 1rzm5m-0003kw-3Z
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 19:31:59 -0400
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-5f80aa2d4a3so374670a12.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 16:31:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714001500; x=1714606300; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714001516; x=1714606316; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=anHznBY/Cz4MfTk0yCQsZvoF8eFCJyevU6fe4oFhrBI=;
- b=GramDGr7IoCp6j4ysld0JeI0MR8LABxyBDhYVc7wN/tmo6RBFTw+gNIqoCNzFS/43H
- i1QoWrpv6u7w6AC94J+g8MFZVAH9H1HFZqPk5MZd5fBPZV+Kb6QVb2/ZTMAfsj8H8sa4
- JQDO0AFriswPfrJXSBhlpoWFUuH988Q9da8A45WLv9phIqXrl2hvb3N3zQlcMqvUBRIT
- iEAAQ2JRKTMy+f06wECG8u7kVPhn70IZ9mHMbKJW6kP+MiuVwRRPbZzFYP4tJFZSwANQ
- KnpExNr19Bbe2E2Mh6DNkry5+9+d2LZsqKgHWJzT9FrdArqSEsxxfulYsJUr1QHMg29F
- Th/Q==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LFwVHeO0xdQZE4q/p0sWN9ZrSqg0kbbJP7VPGYxlODk=;
+ b=aKN/BtH7f0SwgqWPEu9bNYSFZ5duD4NI1gtb8SudsqpXHgT95y3IT73UdrcwLtVZd3
+ vLs/FHsGP5gu6eaZRPAgoHi+hgju/e2bU3/lcg/GbfgxkKljmkngcnmvsllHB9G5O7QK
+ iEKT0iKu3qenQPZv9wEKGZxblxG03XiNRLjrelfJ6U9hBdP3q66TF7X0GU87/8rj9F/V
+ XmjZN7CqHoHSYy6QNlp3kOGjhBN0+iDPvuQQFlXsINqq6hJQvlKz90GbhjeJHMa2U4of
+ M9davGxNgSHmY3MQDT7I/tTFa1AwfGP6JSlXy8++cTfDVHh5e9tpELvQfC6sDZzFLIVH
+ POAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714001500; x=1714606300;
+ d=1e100.net; s=20230601; t=1714001516; x=1714606316;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=anHznBY/Cz4MfTk0yCQsZvoF8eFCJyevU6fe4oFhrBI=;
- b=of6zHvFpPQRb2/6hr45NHrdJfiZx09VMYXuLxpq2PQUt8KS1oUkCoOmS+OmlF7JAGr
- hqoMX/OCJX5CF+CkwY9mf3GPsVX0pCScp1Rs30/3sn1bgVtXeKJ4059RnGEyzmenQ0Iy
- riArBhboVDdx1F5vEZkwhsllfZiMx8RuxsFTB9nz4KZPpgk3tL/Q4XsC+szZzJmjpln5
- Cc981nvyfw9PvW973kGTM0t0R/ueCCzpTQhHl2AuWb3z7I5LSFiASkN1cM/QgbmTOUcc
- 1W2CxovjblcHQ4M2u4KqmHUz11eSCrJv9QTiZ4qFcjXdp6r+1jji+QDPL5SpEs/T8yZ3
- qmkQ==
-X-Gm-Message-State: AOJu0YznwJHlcRQo6csL4afh4WR4GWJ8B0vmKaq/l2EpLNRVbqORBVac
- gqW7Nky0g/2GhUm8U5hd/XY2urUavISWPCPFg9qD41NomAUqZHm6/l0Rae+AHG9u81RVwrwYGJX
- X
-X-Google-Smtp-Source: AGHT+IH7pDBnjoALyZdmZ9uCcvwfyfaKrj+uXsFip5REYCUDz+b/MXKyC3J3vLnnLwJJq/JOaTQHTw==
-X-Received: by 2002:a17:90b:f17:b0:2a2:937e:f958 with SMTP id
- br23-20020a17090b0f1700b002a2937ef958mr3713406pjb.40.1714001500260; 
- Wed, 24 Apr 2024 16:31:40 -0700 (PDT)
+ bh=LFwVHeO0xdQZE4q/p0sWN9ZrSqg0kbbJP7VPGYxlODk=;
+ b=thqBm6cbKEepfo3EGdKOrWFwVJ0gsKSmICYJ8aiDv7sUWPTozLMhqaeu/dnDZ+MjYb
+ FUE7F2ij4UsaGJvZKQLY2v0PSCPE4G0msDjxFkx7CfujTfksFN9NK3PJMO4IwanBBMmz
+ 44N+mr73xtp+e2LKIcn/kL4ZRv7ML9BV/CapGMsUtQIeHSBarhfdHFrbWn4jLEA1d3bv
+ 4gk8pw4kdoPwAGNEtmGxlC3j3hSQIXE0lv5lGWGEHFCHzjENoHlc+LyIctsvq/ug0Co2
+ hEwIfEyPT5PZGk0kPCenmHWVoMoxYIE/H37Vdc2B7JE8ONZnlRv28ypk4AaAQzcmkHhA
+ 5xZQ==
+X-Gm-Message-State: AOJu0Yzqu5b+isNA3XjOJ8HsRzhPRHIiQjqdKvnwSsPSB4fRCNqKQxOX
+ a/k3/Pib/XHEffYPBNVYOHmhHuiwwyDcQgaB7WvsMuHNbuVkMdJLL2B63MOmPielQAz8sEvKdkz
+ g
+X-Google-Smtp-Source: AGHT+IFaWhXWjDuTEJ8mgLBztbul2vSHTmordR/CcoN44RzPAgXfqSlULJouRb5UkgzxzmkdWgPkYw==
+X-Received: by 2002:a05:6a21:880a:b0:1a3:65af:9baa with SMTP id
+ ta10-20020a056a21880a00b001a365af9baamr3714878pzc.62.1714001516676; 
+ Wed, 24 Apr 2024 16:31:56 -0700 (PDT)
 Received: from stoup.. ([156.19.246.23]) by smtp.gmail.com with ESMTPSA id
- z24-20020a17090abd9800b002a56b3931dfsm11737859pjr.49.2024.04.24.16.31.39
- for <qemu-devel@nongnu.org>
+ z24-20020a17090abd9800b002a56b3931dfsm11737859pjr.49.2024.04.24.16.31.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Apr 2024 16:31:39 -0700 (PDT)
+ Wed, 24 Apr 2024 16:31:56 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 08/33] accel/tcg: Record DisasContextBase in tcg_ctx for
- plugins
-Date: Wed, 24 Apr 2024 16:31:06 -0700
-Message-Id: <20240424233131.988727-9-richard.henderson@linaro.org>
+Cc: "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 27/33] target/cris: Use translator_ld* in cris_fetch
+Date: Wed, 24 Apr 2024 16:31:25 -0700
+Message-Id: <20240424233131.988727-28-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240424233131.988727-1-richard.henderson@linaro.org>
 References: <20240424233131.988727-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,36 +95,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/tcg/tcg.h      | 1 +
- accel/tcg/plugin-gen.c | 1 +
- 2 files changed, 2 insertions(+)
+ target/cris/translate.c | 25 ++++++++-----------------
+ 1 file changed, 8 insertions(+), 17 deletions(-)
 
-diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
-index 135e36d729..2a1c080bab 100644
---- a/include/tcg/tcg.h
-+++ b/include/tcg/tcg.h
-@@ -537,6 +537,7 @@ struct TCGContext {
-      * space for instructions (for variable-instruction-length ISAs).
-      */
-     struct qemu_plugin_tb *plugin_tb;
-+    const struct DisasContextBase *plugin_db;
+diff --git a/target/cris/translate.c b/target/cris/translate.c
+index b5410189d4..bb2d6612ba 100644
+--- a/target/cris/translate.c
++++ b/target/cris/translate.c
+@@ -222,37 +222,28 @@ static int sign_extend(unsigned int val, unsigned int width)
+ }
  
-     /* descriptor of the instruction being translated */
-     struct qemu_plugin_insn *plugin_insn;
-diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
-index 3db74ae9bf..94bbad6dc7 100644
---- a/accel/tcg/plugin-gen.c
-+++ b/accel/tcg/plugin-gen.c
-@@ -329,6 +329,7 @@ bool plugin_gen_tb_start(CPUState *cpu, const DisasContextBase *db,
-         tcg_gen_plugin_cb(PLUGIN_GEN_FROM_TB);
+ static int cris_fetch(CPUCRISState *env, DisasContext *dc, uint32_t addr,
+-              unsigned int size, unsigned int sign)
++                      unsigned int size, bool sign)
+ {
+     int r;
+ 
+     switch (size) {
+     case 4:
+-    {
+-        r = cpu_ldl_code(env, addr);
++        r = translator_ldl(env, &dc->base, addr);
+         break;
+-    }
+     case 2:
+-    {
++        r = translator_lduw(env, &dc->base, addr);
+         if (sign) {
+-            r = cpu_ldsw_code(env, addr);
+-        } else {
+-            r = cpu_lduw_code(env, addr);
++            r = (int16_t)r;
+         }
+         break;
+-    }
+     case 1:
+-    {
++        r = translator_ldub(env, &dc->base, addr);
+         if (sign) {
+-            r = cpu_ldsb_code(env, addr);
+-        } else {
+-            r = cpu_ldub_code(env, addr);
++            r = (int8_t)r;
+         }
+         break;
+-    }
+     default:
+-        cpu_abort(CPU(dc->cpu), "Invalid fetch size %d\n", size);
+-        break;
++        g_assert_not_reached();
      }
+     return r;
+ }
+@@ -2868,7 +2859,7 @@ static unsigned int crisv32_decoder(CPUCRISState *env, DisasContext *dc)
+     int i;
  
-+    tcg_ctx->plugin_db = db;
-     tcg_ctx->plugin_insn = NULL;
+     /* Load a halfword onto the instruction register.  */
+-        dc->ir = cris_fetch(env, dc, dc->pc, 2, 0);
++    dc->ir = cris_fetch(env, dc, dc->pc, 2, 0);
  
-     return ret;
+     /* Now decode it.  */
+     dc->opcode   = EXTRACT_FIELD(dc->ir, 4, 11);
 -- 
 2.34.1
 
