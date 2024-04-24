@@ -4,65 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82837C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 08:23:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8821C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 08:26:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzXup-0007Zq-LM; Wed, 24 Apr 2024 04:23:45 -0400
+	id 1rzXwu-0001nA-P8; Wed, 24 Apr 2024 04:25:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rzXuW-00078F-Fn
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:23:28 -0400
+ id 1rzXwr-0001lq-Qy
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:25:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rzXuQ-0007ay-Cw
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:23:22 -0400
+ id 1rzXwp-0008K9-DF
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:25:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713946997;
+ s=mimecast20190719; t=1713947146;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=yll5/mR4EgIVv/uOsfXv8hYuOmnUoJOofH8mK+I21Bk=;
- b=c0ro3Uky4GeCwgghE/f9N21OhTIGP4odm3GXhuUYA0TpU4n38jkph0DDNAsIPomy4hTlkP
- s84AbgpcHWUhGXJ5/SfirmzYdrlaBgAQuTzBUzaid5NiENo5wBOcBYs4ArPi34N0xHcWlh
- 33Ho2j/JEf3+0oEkrsyRH+bL6TRBGXo=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-624-wXEV8eZbN6KGf-JDsNoCLQ-1; Wed,
- 24 Apr 2024 04:23:15 -0400
-X-MC-Unique: wXEV8eZbN6KGf-JDsNoCLQ-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=Do8rqvpVYrQLUokyNJNfhMQO0qIwbAVh4vfyFkXJ1lE=;
+ b=GpI1v8SxIVj/SlmWEnsyevUEQk8PJru8M/VpJDQ9tU8Exh+G1OJhs/4oB4xeAxTWfy6OX2
+ j5aO23P8GjMALA3Y6Wk3rx4NMyrOjGQoqVCrTNtDj7hSuaTWhtKo7RS/LxDQBTfmhV/Jx6
+ IWUrJV2O3qR35wkk52mQjUJT7k/3Ga4=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-96-nuRkCVrBPRe1Vez5vDRM0w-1; Wed, 24 Apr 2024 04:25:42 -0400
+X-MC-Unique: nuRkCVrBPRe1Vez5vDRM0w-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 509D438035A8;
- Wed, 24 Apr 2024 08:23:15 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2B2BB18065B2;
+ Wed, 24 Apr 2024 08:25:42 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.55])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id B43D340C140B;
- Wed, 24 Apr 2024 08:23:14 +0000 (UTC)
-Date: Wed, 24 Apr 2024 09:23:12 +0100
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 1BABE112132A;
+ Wed, 24 Apr 2024 08:25:41 +0000 (UTC)
+Date: Wed, 24 Apr 2024 09:25:39 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH] .gitlab-ci.d/cirrus.yml: Fix the NetBSD and OpenBSD
- Cirrus-CI KVM jobs
-Message-ID: <ZijBcG5hnr_8rFPS@redhat.com>
-References: <20240424074202.245646-1-thuth@redhat.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Lei Wang <lei4.wang@intel.com>, qemu-devel@nongnu.org,
+ pbonzini@redhat.com, manish.mishra@nutanix.com,
+ xiaoyao.li@intel.com, chenyi.qiang@intel.com, tao1.su@linux.intel.com
+Subject: Re: [PATCH] target/i386: Introduce SapphireRapids-v3 to add missing
+ features
+Message-ID: <ZijCAz19K6-Y29uF@redhat.com>
+References: <20240424072912.43188-1-lei4.wang@intel.com>
+ <ZijDx4m117yv64JK@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240424074202.245646-1-thuth@redhat.com>
+In-Reply-To: <ZijDx4m117yv64JK@intel.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -88,26 +86,27 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 24, 2024 at 09:42:02AM +0200, Thomas Huth wrote:
-> Pulling the "master" libvirt-ci containers does not work anymore,
-> so we have to switch to the "latest" instead. See also:
-> https://gitlab.com/libvirt/libvirt/-/commit/5d591421220c850aa64a640
-> https://gitlab.com/libvirt/libvirt-ci/-/commit/6e3c5ccac77714be70c0
+On Wed, Apr 24, 2024 at 04:33:11PM +0800, Zhao Liu wrote:
+> Hi Lei,
 > 
-> The effects were dormant for a year as the old ':master' tags were
-> not removed until some weeks ago.
+> On Wed, Apr 24, 2024 at 03:29:12AM -0400, Lei Wang wrote:
+> > Date: Wed, 24 Apr 2024 03:29:12 -0400
+> > From: Lei Wang <lei4.wang@intel.com>
+> > Subject: [PATCH] target/i386: Introduce SapphireRapids-v3 to add missing
+> >  features
+> > X-Mailer: git-send-email 2.39.3
+> > 
+> > Add the missing features(ss, tsc-adjust, cldemote, movdiri, movdir64b) in
+> > the SapphireRapids-v3 CPU model.
 > 
-> The other Cirrus-CI jobs were already fixed in commit 1d2f2b35bc86b7a1
-> ("gitlab-ci/cirrus: switch from 'master' to 'latest'"), but apparently
-> nobody noticed the KVM jobs so far that need to be triggered manually.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  .gitlab-ci.d/cirrus.yml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> Considering that these are missing features, not hardware updates/fixes/Linux
+> support changes, then as opposed to adding v3, it would be more appropriate
+> to add these flags directly to the v1 SPR model with Fixes tag (Fixes:
+> commit 7eb061b06e97 ("i386: Add new CPU model SapphireRapids")).
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-
+That would break compatibility with v1 CPU models from existing releases
+of QEMU. Once released, a CPU version is read-only to preserve compatibility,
+which is why we have the CPU versioning concept. 
 
 With regards,
 Daniel
