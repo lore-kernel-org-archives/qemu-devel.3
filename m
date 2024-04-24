@@ -4,99 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DE40C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 10:32:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 114D4C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 10:42:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzZuy-0007xT-Nx; Wed, 24 Apr 2024 06:32:00 -0400
+	id 1rza4X-0001pb-MZ; Wed, 24 Apr 2024 06:41:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rzZuw-0007wy-QW; Wed, 24 Apr 2024 06:31:58 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rzZus-0006Nk-Td; Wed, 24 Apr 2024 06:31:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=rCFjYNz1YPtGrDDtqPuxf93DbvSa+CJM+WDOXLeSzFA=; b=WhVfJrrGKz8IPGGcQ598/BR+S3
- AsE0BOKXebFl8x2khTEEeAvyvfNmi7frLCbDLypze71zV+rJm0BcCX3bntVVeHNbFKqS8Tzlgu3kE
- 3Plh+pS18fW6OwmvkQahPxn0296n+g7kR74L9Qw9L9YPFJGxv6TjU3tM6fTz2bzm4aa3pw2RJ3TKL
- B+g3bpTN3/HrVeecR3XwsjJxv9C3RzOrKat/DZVixxuOaGqhy2cT5P7lwY3K4BEb9s92eAvbuoJgW
- nGHoX/ZVsRn3PH1PtHZd3otCge6x9Syja52vTkDf4aCgjN90xJGMFMbE6RRUdFNYpiramgdUp44BZ
- CmiSOa3xAr34fafgCiFWMoI7enBv592wvmpqzIPy1wa6q280BDXeU4DX50sA9gTN/0SOOBXuHeV+g
- OSZGlmIZFE/O+OOkJk0r+5EuNxiJ+lNUxhk6IoXVYVUeMty0ochaoQS7GWpcdP57ay9x8kRUiUlXH
- 0WDJ16d0JPVEWh6u04byRfILAHkqfqtaQId0qRXbdvhJ7i2BbZuEPr/RmOxAiNPI0Sdyo1ZWG8T8j
- dSEZvtwYx7xN79Yx2MJbYdRCAyDtAIeBNs8sMGI+uwurQ/gV6Z64gMDKFwdKvlrEXQERvwirUxIWs
- gqg2gZbfykAdqq/MEhDOQqb5dZ1j4WkLrzfnolAYQ=;
-Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rzZtl-0004Jx-NJ; Wed, 24 Apr 2024 11:30:49 +0100
-Message-ID: <b9fb7a87-2328-4999-8f7e-6b6cf04984a3@ilande.co.uk>
-Date: Wed, 24 Apr 2024 11:31:46 +0100
+ (Exim 4.90_1) (envelope-from <pjp@fedoraproject.org>)
+ id 1rza4V-0001p4-AG
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 06:41:51 -0400
+Received: from sonic312-19.consmr.mail.sg3.yahoo.com ([106.10.244.209])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pjp@fedoraproject.org>)
+ id 1rza4S-0007j1-Pw
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 06:41:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
+ t=1713955290; bh=ZHUvPf6x9dzkrjde/3+5mJAgiMDJMxVS/+99VE6c2yY=;
+ h=Date:From:Reply-To:To:Cc:In-Reply-To:References:Subject:From:Subject:Reply-To;
+ b=SaAjN6QNH/fSe/eG+XFpfjPtnA3kYd3wNtlHJYUzSrLGvsiE08PxN5hf23dGO4LzUdOdTnYe2kvETvYfQ4XoQRJRj0lVxCCwbkdcngHE9YJH98ohcPUmG+Ews3Wi98Eob60J2ZdcF0EB0j357NxOW7T++DLjAlm3PrWA4hTVt3gSjDcBg7GuKGpuQJGUALuU/sHetxssxVbiib7WOUS8Rla+dZ6V7t9ITdcLfmM4NIS8iT7DRB4hcnB2CQs0whlLsuCTqc/NQhxzXvn5tby43teTBIa0h2amAz6QgDysj7tkb1005yXE5YV7lqYPc5SIhky/Q1fDkHkZMw4Ic8x4jQ==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
+ t=1713955290; bh=kg9KoxasYPEFNCD0paJmxltZuTvH+uv4g6Lr0o59dcp=;
+ h=X-Sonic-MF:Date:From:To:Subject:From:Subject;
+ b=nejTjaLVkHAGS9kCRp+tLM2R/TrGvAp9FMQ0sitBQLguhyCLvZf+cFoosFY8OEeaa1MQvjViMKJC4V8dn6b9bMy7wFJrTxXn7VjsUJRTBwR6h/r+czP+2NfXWzaTehE3jJeo5+CXvVDVsijTrN/NDV65u/27YVPz5vBmsNWu1QtKUtYH/EW2dSLXXtmjTIfySlKE9AlYWnvF7/33v7APX5inQqzx9jDEScBCg0yExBlx+JOVBZ5YLuqhTUcYQnd97Dps5iOvy+tUQgIeymh3Qg+8jntSIH1vCRZCG19EqNtAMEfohJv91SdG94x89dEZzwfjkBB4nTJlboaCi8zXNw==
+X-YMail-OSG: RzG42BQVM1kkuzeaNYR0Yh6VS0p6dHqZwNmrfDpOtjjQ5iB8lyeyd7Ki9oO9eyG
+ SPu..wufyX7_qkglontsh0stzWLY6VC3QlUD_tRHb1Hs4TJD_R9RNHwR3RTAPw9HzMKzFsqoD82y
+ gMkDXeq79.CEamoVQ5edEZEqsWAwF9fuhMnrq0oUPTTLPoNa1YHtJGx.2CB4Kmy.HEju5z9ObdMU
+ G2NSZsgGsTRBDR.oyo8FnezSGSjagJqFsh_N.mjd7fnK91D0MNYpopEilAt9nrC.9sjTHcNOWOVO
+ MyXO4fSPtzPg7WXtxNDq4V9LoBs2I_YbFvniwSLuceQePXepvneoMLZmBi3q4TF6zH2RlunSxZdz
+ 79xHzCY.5Qx27esq39A7tYW8sX_MdcjhQBKx6b0C6JqRCABuPand16_bEgJRRvbuYgnYtfhiThZx
+ fHmLuwCEhr7sm5JxhcVxV2wlwO6q.loORBTwNrMz6g3cUTFq255L7mfZ5oyPVBoGYK8HF779kb1r
+ Ipno8pA6OSH796YVNd_0ErH1krteIJrmkhs5zZeWJjMgdL_Es0kjssMDgahPZf4h8uczEpfYpByo
+ 7nzYoMCGrEGLPkBS4K6Rnf56839JbGdNRTesozLQze22ok5.1OWb.PZsWOVoiUpJDdnruIjfJ6XR
+ iU2GLxwwgZbnacprLrCCNpN9uawaQegDE4Bxfc2h.kT5ezMSTfCU6UfdvYTe4qPyb_QJnro4CF_v
+ r2SE87Fo3tbhYhDn__DNBg2GGdX1hIWrFYIcTcIgY.JTObMoF_NqRdO02UqIslR5LqwFduaLcymm
+ fKht4fCRtj5pyVoLjufLdkzLQ.J_X0vvF6Cj6gLmgBvlIfbIqbcU6LOkWMOzEcnsAvZdli4e1uTx
+ Vcj1oY45DYEhhs12Xw2yLqDxqYUEy4dgnigTVQXVlZdXViyqqFbHS7NOkd1SZ3IGP6HJx6wBuJPF
+ mJltsm2Rez6l179mNg5roR6cinpMRFsn.IekVF3TmVMytn49Lr8dx1JJR9YSb2Xm9iZkS9vgVPUd
+ zkuOm81Yl0S2PU8UVmkKDF96245ujaSu1V6rQhjPtqoM8NzZfgORWBjgRrPZ6UgEGVcm7ihOxuKY
+ F1cxMqb9WqwHo3TwIzrWLz.EzfwlpLrGjv4NEbQOhi4GaJRqZOMstXq4_c9tdqo2J9dYewNuONNZ
+ x.PzgxL8HYixeYmZWw5R458Q.Y58CbtgWHZ7MgAL8m9wmIgPHf6NokWgH5jAuNCFH8AD3aDOUtOK
+ 09AZI0DpZWf4rsRLmdn7nIrXwS5DTB1Z01N9AHGO1wuA1SAB7u5wLp3UERNfpaZKiGAsd6J3PnYR
+ 6Slk6Jg2jp25r_REjuJ_EWMOVVHmLQA53qHvMTlcHqdB.8xZwXcqbghsht8cGpOPky7c48XdLuWN
+ qbVzgTtD7jyaJDaML_H4Ra7WBNYf60uxnZ5cEG7GrigLBwcyKc69welUL.8ANcOrDg518ECBa5yc
+ ykdQ9hYCRLtYKT2K3nZ.uMeFAs5faK9BytF7dOlQSKmHsrQoJDx00mOVzs5qTL_2iaLC2HvbLfWK
+ byCXaSrDVLm2q4mIEq3ElmEUTTd5rg1.NJ5Tv1aY_5jTPbjOatVjSmy4um94Be4hhUWgwPVHQ2Jq
+ 94UCG9bnAFjkgwIQ8a6bnE6VdBcMCamE5lB5QGghitFU4wkct9qm3Ds9TuVNDohCEQPXmUs3Qins
+ naGUgbMwgrMceagQO_uiUmfwm5ZQDNwN5JhxX3kTog5.tD.NeD3A1TgIa_Z.ZU3xzEdH4pZDMj5d
+ joZ5eHsKusHNj5LNNrS_AAMlR2uYt5vmcI.MgGmG1uLwKV3nm0qzF.H83DkguHhO5oKHy6VQOl1y
+ g2R3B8wAoy.Ibhpy4tYlqOXP0xDvWqTfI91NBxw_8UdFzZgi_x6TMvD_qcPcqANIiiWQbMB1T8iO
+ .BfM6uDOvVWTQvrQZ4QGNe7o3InViE6k8xCJEWLzTXGEU1aig6Hx.6JOPjmlIqgkzFFufi._zSat
+ eWnicVZ4rA1WngBVRoah217UWSi_GiLdJM7CuP56v9M4iKrNbEsbqKJs9X02tMVp_r6_66L_VmEG
+ .hHY2Y2OBLYuD6h8Osjrhg6x1utxsD6vvxk.nmQQASu4y44cwGdAVFoz5S9pqxHRwrtm2vt25zic
+ uvPnm3soZvKhbXRvNRHXiEe7YjotRbLSwuV8SBl6DPXUZ36fcj9iH7HD6I4R7BojsGwCo6oab9GM
+ poaS3xAK48tHB1ewu7PGP9gXx0HM99tEfZGdh0t17.vMc42ZKCR6v060-
+X-Sonic-MF: <pjp@fedoraproject.org>
+X-Sonic-ID: de48d154-cc05-4d84-9995-646901de3d4e
+Received: from sonic.gate.mail.ne1.yahoo.com by
+ sonic312.consmr.mail.sg3.yahoo.com with HTTP; Wed, 24 Apr 2024 10:41:30 +0000
+Date: Wed, 24 Apr 2024 10:41:26 +0000 (UTC)
+From: Prasad Pandit <pjp@fedoraproject.org>
+To: Mauro Matteo Cascella <mcascell@redhat.com>, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>, 
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Alexander Bulekov <alxndr@bu.edu>, 
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
+ Beniamino Galvani <b.galvani@gmail.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>, 
+ Jason Wang <jasowang@redhat.com>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Alistair Francis <alistair@alistair23.me>, Stefan Weil <sw@weilnetz.de>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Andrew Jeffery <andrew@aj.id.au>, Joel Stanley <joel@jms.id.au>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Helge Deller <deller@gmx.de>, 
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>, 
+ Thomas Huth <huth@tuxfamily.org>, 
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>, 
+ Subbaraya Sundeep <sundeep.lkml@gmail.com>, 
+ Jan Kiszka <jan.kiszka@web.de>, Tyrone Ting <kfting@nuvoton.com>, 
+ Hao Wu <wuhaotsh@google.com>, Max Filippov <jcmvbkbc@gmail.com>, 
+ Jiri Pirko <jiri@resnulli.us>, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>, 
+ David Gibson <david@gibson.dropbear.id.au>, Greg Kurz <groug@kaod.org>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Sven Schnelle <svens@stackframe.org>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefano Stabellini <sstabellini@kernel.org>, 
+ Anthony Perard <anthony.perard@citrix.com>, 
+ Paul Durrant <paul@xen.org>, Rob Herring <robh@kernel.org>, 
+ Gerd Hoffmann <kraxel@redhat.com>, 
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
+ "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>, 
+ "xen-devel@lists.xenproject.org" <xen-devel@lists.xenproject.org>
+Message-ID: <1497808863.2030924.1713955286878@mail.yahoo.com>
+In-Reply-To: <ac66952e-4281-4250-96f4-dc3d5b518d24@linaro.org>
+References: <20230601031859.7115-1-akihiko.odaki@daynix.com>
+ <20230601031859.7115-2-akihiko.odaki@daynix.com>
+ <ac66952e-4281-4250-96f4-dc3d5b518d24@linaro.org>
+Subject: Re: [PATCH v2 1/2] net: Provide MemReentrancyGuard * to qemu_new_nic()
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- qemu-stable@nongnu.org
-References: <20240422142056.3023-1-philmd@linaro.org>
- <20240422170056-mutt-send-email-mst@kernel.org>
- <1f6447c4-ea4c-4bd3-a879-8efb72448bb8@linaro.org>
- <20240422170913-mutt-send-email-mst@kernel.org>
- <CAAjaMXZxFJtEdJh38_76ZdL82JBM52Ke0+p1K07miiFeQSJtcw@mail.gmail.com>
- <CAAjaMXaoPeCVpd=q-d2GH25SfrNPVqh6hCerMOrQ6payXVMmyA@mail.gmail.com>
- <f5c67478-4fb9-4fb9-a6b2-286d6372bd0a@linaro.org>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <f5c67478-4fb9-4fb9-a6b2-286d6372bd0a@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v3] hw/audio/virtio-snd: Use device endianness instead of
- target one
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: WebService/1.1.22256 YMailNorrin
+Received-SPF: neutral client-ip=106.10.244.209;
+ envelope-from=pjp@fedoraproject.org;
+ helo=sonic312-19.consmr.mail.sg3.yahoo.com
+X-Spam_score_int: 10
+X-Spam_score: 1.0
+X-Spam_bar: +
+X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ FREEMAIL_FORGED_REPLYTO=2.095, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,58 +131,38 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Prasad Pandit <pj.pandit@yahoo.in>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/04/2024 12:05, Philippe Mathieu-Daudé wrote:
+On Wednesday, 24 April, 2024 at 03:36:01 pm IST, Philippe Mathieu-Daud=C3=
+=A9 wrote:
+>On 1/6/23 05:18, Akihiko Odaki wrote:
+>> Recently MemReentrancyGuard was added to DeviceState to record that the
+>> device is engaging in I/O. The network device backend needs to update it
+>> when delivering a packet to a device.
+>>=C2=A0
+>> In preparation for such a change, add MemReentrancyGuard * as a
+>> parameter of qemu_new_nic().
+>
+>An user on IRC asked if this patch is related/fixing CVE-2021-20255,
+>any clue?
 
-> On 23/4/24 11:18, Manos Pitsidianakis wrote:
->> On Tue, 23 Apr 2024 at 11:47, Manos Pitsidianakis
->> <manos.pitsidianakis@linaro.org> wrote:
->>>
->>> On Tue, 23 Apr 2024 at 00:11, Michael S. Tsirkin <mst@redhat.com> wrote:
->>>>
->>>> On Mon, Apr 22, 2024 at 11:07:21PM +0200, Philippe Mathieu-Daudé wrote:
->>>>> On 22/4/24 23:02, Michael S. Tsirkin wrote:
->>>>>> On Mon, Apr 22, 2024 at 04:20:56PM +0200, Philippe Mathieu-Daudé wrote:
->>>>>>> Since VirtIO devices can change endianness at runtime,
->>>>>>> we need to use the device endianness, not the target
->>>>>>> one.
->>>>>>>
->>>>>>> Cc: qemu-stable@nongnu.org
->>>>>>> Fixes: eb9ad377bb ("virtio-sound: handle control messages and streams")
->>>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>>>
->>>>>>
->>>>>>
->>>>>> This is all completely bogus. Virtio SND is from Virtio 1.0 only.
->>>>>> It is unconditionally little endian.
->>>
->>>
->>> This part of the code is for PCM frames (raw bytes), not virtio spec
->>> fields (which indeed must be LE in modern VIRTIO).
->>
->> Thought a little more about it. We should keep the target's endianness
->> here, if it's mutable then we should query the machine the device is
->> attached to somehow. the virtio device should never change endianness
->> like Michael says since it's not legacy.
-> 
-> Grr. So as Richard suggested, this need to be pass as a device
-> property then.
-> (https://lore.kernel.org/qemu-devel/ed134c9d-6e6f-465b-900f-e39ca4e09876@linaro.org/)
+* CVE-2021-20255 bug: infinite recursion is pointing at a different fix pat=
+ch.
+=C2=A0 ->=C2=A0https://bugzilla.redhat.com/show_bug.cgi?id=3DCVE-2021-20255
 
-It feels to me that the endianness is something that should be negotiated as part of 
-the frame format, since the endianness of the audio hardware can be different from 
-that of the CPU (think PReP machines where it was common that a big endian CPU is 
-driving little endian hardware as found on x86).
-
-My feeling is that either the VIRTIO_SND_PCM_FMT_* constants should be extended to 
-have both _LE and _BE variants, or all frame formats are defined to always be little 
-endian.
+* And the this patch below has different issue tagged
+=C2=A0 ->=C2=A0https://lists.nongnu.org/archive/html/qemu-devel/2023-05/msg=
+08312.html
+=C2=A0 Fixes: CVE-2023-3019
 
 
-ATB,
+* They look different, former is an infinite recursion issue and the latter=
+ is a use-after-free one.
 
-Mark.
 
+Thank you.
+---
+=C2=A0 -Prasad
 
