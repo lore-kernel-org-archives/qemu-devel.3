@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB26EC4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 17:10:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A3E8C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 17:10:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzg7T-0001zA-QX; Wed, 24 Apr 2024 13:09:19 -0400
+	id 1rzg7c-00021D-RS; Wed, 24 Apr 2024 13:09:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rzg7Q-0001yE-Ru
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:09:16 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1rzg7V-0001zh-Nx
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:09:22 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rzg7P-0005MJ-4D
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:09:16 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-1e8bbcbc2b7so502215ad.0
- for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 10:09:14 -0700 (PDT)
+ id 1rzg7T-0005NL-QR
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:09:21 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-1e3ca4fe4cfso229835ad.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 10:09:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713978553; x=1714583353; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713978558; x=1714583358; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=KHDjww4pw6BIJWGas2p/P5rVjL2rJzApCM5JT+Uks+8=;
- b=L9hVKtCBjyBW7kK5z0F0c7Jliqi/V/L/B8taIJdcDewTKlhM1011FFVloxSVAqHD7V
- RQKXD+7T5Es6U1/tit6Oqu/iwZaEREOcDPXXMofVDdio0MscPWT6wOsfORxZB5vgOkj1
- GwcXQRBWaCH4jcpl7pAwM+BD6oOdsgmPICq0bSuVfT+BF0f/H0uildMqeyp6vgUWLad5
- n2PN+vB9hNqs2cxCMGUwZCywu8DjDa7lXNRalgLf2emmUWqWg4tcFxWvlRpQT7f4zul7
- l7XUKXW0wjVq/p/ooTc3qYjj3Ckt81UxDbQL0slDZejRyLeTiOG6H429eJ6NLbGFuFRu
- HmLA==
+ :reply-to; bh=5odWkAYeVMNCe6Cty3EzFB4YygxLZJZYtuimpCAAowk=;
+ b=w0NXHGyst2MBcklpeOWnqA9xZASv4SNFQyu/cCYj2yvahdzFp3h8G0QI5mQjxnh1uT
+ mfzn0CwYlomMnWtP3VGuZZzKwyF77jtc2aVTI7jtIs2Zd7H/5kpwDMlysbk69LqluxXv
+ uT8qGgfmywCluU/WptqN0ir51ewGD2IpJY11Mcve9I/gvyZSGhlaYkilA5pA6NXK1faF
+ U1K8nOdmFXE0sGoQZbMxDqhzp+FEtKjgdCfI/6XIc0vu8X+r6EqeTY1Du0C9nz8fhVBF
+ GO/lh/rbcLYlQIqzTLqg57iBtpe8WUTqa9P/cW/I7IN1QfuKIKDCcDARVnZ8jmCIoMW7
+ nYqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713978553; x=1714583353;
+ d=1e100.net; s=20230601; t=1713978558; x=1714583358;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KHDjww4pw6BIJWGas2p/P5rVjL2rJzApCM5JT+Uks+8=;
- b=kMjHpcY6vDekv5wp2NwYr4x1aGdkY5eKmI4Js3WpB0yFbLa/FpSCVcuT+NLa+NO/4v
- Q2y1KEJkha+D3hO1dEe2vT/t+fB3LFQXG6ctWmC4aO/qQ8ikAkh3WTn6XHaWiBl1HoEL
- uH8vPzhFDpU3B37Q1GZe6Qlcm2XoiQevfYLoaniYMD/Tuc+uGF9C0z3Ta2N8tSqo8R4i
- NtwzpJ2gUZdMR89deSq1seHZJzMWQm5dePUTwp/G9EKHF8Yz2TdQ5xGnEV+9A2myb8wZ
- yxvhUV9CN/Y/3t0Ky/4SNfVV3Rkr8Wwvb0CXSkLCgFbt+Bs0oNYDIVKtCvVEgmc9FHaa
- 4HcA==
-X-Gm-Message-State: AOJu0YxXIZkIPEt5G6KcVHaDVJl3xAx7OiHucPeierXkBFk8nFlYl6h9
- Pe+XACUJ7QlFAaM+drGmPBIA0uqCvk/ODZPXu/sgbAfft0b2MmmJMVWxSvzgQANtAcGBySCZESY
- R
-X-Google-Smtp-Source: AGHT+IGEumGdugEFeniZ8yzLJX4wL3yCOpTmXuZOT12XMIQq6P3rc/eVhpARI88J8eCNT1AFg29o8A==
-X-Received: by 2002:a17:903:284:b0:1e0:dc6e:45d6 with SMTP id
- j4-20020a170903028400b001e0dc6e45d6mr4460721plr.60.1713978553551; 
- Wed, 24 Apr 2024 10:09:13 -0700 (PDT)
+ bh=5odWkAYeVMNCe6Cty3EzFB4YygxLZJZYtuimpCAAowk=;
+ b=t9GA2HqV5nq48LGqhzHWQ/dquTUNNucvt8wsFEKNe7QjkXj95MjxEf0tArunOHpGuN
+ lFSYo4rPELa+zeY7/JomsELsTzgNhHSj/XH9GBv5V7A+T+ul2JKY7z23Yx0T94A3l0mU
+ DtIrlayyX/Rs+/bvXuSwoutjdMlaXh7VhSg6FWc/NKoNIOvbfQ0K18l4cq8DqFhFThxd
+ PtmHnaDHepi8qCnqAASCUxjSBwekyiof71YeQEYVOiKUTKN1x/cht+dpoNQRDdQguN1b
+ OGsgCTWab/zG3gB0Y0FCiUme4xyK10JCPAGJea0qbt2qOjUDHCCAkDrlYocwelnIaSq3
+ n4HA==
+X-Gm-Message-State: AOJu0Yw60s5rO9YXsh+gXlegPcmu3hms6o+x992WEHGRsahEaQHp2HU7
+ rNk9m4ls9UnrxcuxRYARjR+L3DfgPWbPWZx8pMg0AfVXBLo1olLcSRlKXzXCUwnF0IRLdAQCgvF
+ f
+X-Google-Smtp-Source: AGHT+IEG5mkJaOUXDGH5Lh2fZO5v15uZ/cATGc+mxF/W2E8EqUarBb0u8jCpVioujWSjdjQYq0nkLg==
+X-Received: by 2002:a17:902:e944:b0:1e3:dfdc:6972 with SMTP id
+ b4-20020a170902e94400b001e3dfdc6972mr4491816pll.9.1713978558138; 
+ Wed, 24 Apr 2024 10:09:18 -0700 (PDT)
 Received: from stoup.. ([156.19.246.23]) by smtp.gmail.com with ESMTPSA id
- u8-20020a170902e80800b001e0b5d49fc7sm12215489plg.161.2024.04.24.10.09.12
+ u8-20020a170902e80800b001e0b5d49fc7sm12215489plg.161.2024.04.24.10.09.17
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Apr 2024 10:09:13 -0700 (PDT)
+ Wed, 24 Apr 2024 10:09:17 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 1/5] tcg: Add write_aofs to GVecGen3i
-Date: Wed, 24 Apr 2024 10:09:04 -0700
-Message-Id: <20240424170908.759043-3-richard.henderson@linaro.org>
+Subject: [PATCH 4/5] tcg/optimize: Optimize setcond with zmask
+Date: Wed, 24 Apr 2024 10:09:07 -0700
+Message-Id: <20240424170908.759043-6-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240424170908.759043-1-richard.henderson@linaro.org>
 References: <20240424170908.759043-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,123 +92,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+If we can show that high bits of an input are zero,
+then we may optimize away some comparisons.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/tcg/tcg-op-gvec-common.h |  2 ++
- tcg/tcg-op-gvec.c                | 30 ++++++++++++++++++++++--------
- 2 files changed, 24 insertions(+), 8 deletions(-)
+ tcg/optimize.c | 110 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 110 insertions(+)
 
-diff --git a/include/tcg/tcg-op-gvec-common.h b/include/tcg/tcg-op-gvec-common.h
-index 4db8a58c14..65553f5f97 100644
---- a/include/tcg/tcg-op-gvec-common.h
-+++ b/include/tcg/tcg-op-gvec-common.h
-@@ -183,6 +183,8 @@ typedef struct {
-     bool prefer_i64;
-     /* Load dest as a 3rd source operand.  */
-     bool load_dest;
-+    /* Write aofs as a 2nd dest operand.  */
-+    bool write_aofs;
- } GVecGen3i;
- 
- typedef struct {
-diff --git a/tcg/tcg-op-gvec.c b/tcg/tcg-op-gvec.c
-index bb88943f79..0308732d9b 100644
---- a/tcg/tcg-op-gvec.c
-+++ b/tcg/tcg-op-gvec.c
-@@ -785,7 +785,8 @@ static void expand_3_i32(uint32_t dofs, uint32_t aofs,
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index 2e9e5725a9..8886f7037a 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -2099,6 +2099,108 @@ static bool fold_remainder(OptContext *ctx, TCGOp *op)
+     return false;
  }
  
- static void expand_3i_i32(uint32_t dofs, uint32_t aofs, uint32_t bofs,
--                          uint32_t oprsz, int32_t c, bool load_dest,
-+                          uint32_t oprsz, int32_t c,
-+                          bool load_dest, bool write_aofs,
-                           void (*fni)(TCGv_i32, TCGv_i32, TCGv_i32, int32_t))
- {
-     TCGv_i32 t0 = tcg_temp_new_i32();
-@@ -801,6 +802,9 @@ static void expand_3i_i32(uint32_t dofs, uint32_t aofs, uint32_t bofs,
-         }
-         fni(t2, t0, t1, c);
-         tcg_gen_st_i32(t2, tcg_env, dofs + i);
-+        if (write_aofs) {
-+            tcg_gen_st_i32(t0, tcg_env, aofs + i);
++static bool fold_setcond_zmask(OptContext *ctx, TCGOp *op, bool neg)
++{
++    uint64_t a_zmask, b_val;
++    TCGCond cond;
++
++    if (!arg_is_const(op->args[2])) {
++        return false;
++    }
++
++    a_zmask = arg_info(op->args[1])->z_mask;
++    b_val = arg_info(op->args[2])->val;
++    cond = op->args[3];
++
++    if (ctx->type == TCG_TYPE_I32) {
++        a_zmask = (uint32_t)a_zmask;
++        b_val = (uint32_t)b_val;
++    }
++
++    /*
++     * A with only low bits set vs B with high bits set means that A < B.
++     */
++    if (a_zmask < b_val) {
++        bool inv = false;
++
++        switch (cond) {
++        case TCG_COND_NE:
++        case TCG_COND_LEU:
++        case TCG_COND_LTU:
++            inv = true;
++            /* fall through */
++        case TCG_COND_GTU:
++        case TCG_COND_GEU:
++        case TCG_COND_EQ:
++            return tcg_opt_gen_movi(ctx, op, op->args[0], neg ? -inv : inv);
++        default:
++            break;
 +        }
-     }
-     tcg_temp_free_i32(t0);
-     tcg_temp_free_i32(t1);
-@@ -944,7 +948,8 @@ static void expand_3_i64(uint32_t dofs, uint32_t aofs,
- }
- 
- static void expand_3i_i64(uint32_t dofs, uint32_t aofs, uint32_t bofs,
--                          uint32_t oprsz, int64_t c, bool load_dest,
-+                          uint32_t oprsz, int64_t c,
-+                          bool load_dest, bool write_aofs,
-                           void (*fni)(TCGv_i64, TCGv_i64, TCGv_i64, int64_t))
- {
-     TCGv_i64 t0 = tcg_temp_new_i64();
-@@ -960,6 +965,9 @@ static void expand_3i_i64(uint32_t dofs, uint32_t aofs, uint32_t bofs,
-         }
-         fni(t2, t0, t1, c);
-         tcg_gen_st_i64(t2, tcg_env, dofs + i);
-+        if (write_aofs) {
-+            tcg_gen_st_i64(t0, tcg_env, aofs + i);
++    }
++
++    /*
++     * A with only lsb set is already boolean.
++     */
++    if (a_zmask <= 1) {
++        bool convert = false;
++        bool inv = false;
++
++        switch (cond) {
++        case TCG_COND_EQ:
++            inv = true;
++            /* fall through */
++        case TCG_COND_NE:
++            convert = (b_val == 0);
++            break;
++        case TCG_COND_LTU:
++        case TCG_COND_TSTEQ:
++            inv = true;
++            /* fall through */
++        case TCG_COND_GEU:
++        case TCG_COND_TSTNE:
++            convert = (b_val == 1);
++            break;
++        default:
++            break;
 +        }
-     }
-     tcg_temp_free_i64(t0);
-     tcg_temp_free_i64(t1);
-@@ -1102,7 +1110,8 @@ static void expand_3_vec(unsigned vece, uint32_t dofs, uint32_t aofs,
-  */
- static void expand_3i_vec(unsigned vece, uint32_t dofs, uint32_t aofs,
-                           uint32_t bofs, uint32_t oprsz, uint32_t tysz,
--                          TCGType type, int64_t c, bool load_dest,
-+                          TCGType type, int64_t c,
-+                          bool load_dest, bool write_aofs,
-                           void (*fni)(unsigned, TCGv_vec, TCGv_vec, TCGv_vec,
-                                       int64_t))
- {
-@@ -1118,6 +1127,9 @@ static void expand_3i_vec(unsigned vece, uint32_t dofs, uint32_t aofs,
-         }
-         fni(vece, t2, t0, t1, c);
-         tcg_gen_st_vec(t2, tcg_env, dofs + i);
-+        if (write_aofs) {
-+            tcg_gen_st_vec(t0, tcg_env, aofs + i);
++        if (convert) {
++            TCGOpcode add_opc, xor_opc, neg_opc;
++
++            if (!inv && !neg) {
++                return tcg_opt_gen_mov(ctx, op, op->args[0], op->args[1]);
++            }
++
++            switch (ctx->type) {
++            case TCG_TYPE_I32:
++                add_opc = INDEX_op_add_i32;
++                neg_opc = INDEX_op_neg_i32;
++                xor_opc = INDEX_op_xor_i32;
++                break;
++            case TCG_TYPE_I64:
++                add_opc = INDEX_op_add_i64;
++                neg_opc = INDEX_op_neg_i64;
++                xor_opc = INDEX_op_xor_i64;
++                break;
++            default:
++                g_assert_not_reached();
++            }
++
++            if (!inv) {
++                op->opc = neg_opc;
++            } else if (neg) {
++                op->opc = add_opc;
++                op->args[2] = arg_new_constant(ctx, -1);
++            } else {
++                op->opc = xor_opc;
++                op->args[2] = arg_new_constant(ctx, 1);
++            }
++            return false;
 +        }
++    }
++
++    return false;
++}
++
+ static void fold_setcond_tst_pow2(OptContext *ctx, TCGOp *op, bool neg)
+ {
+     TCGOpcode and_opc, sub_opc, xor_opc, neg_opc, shr_opc;
+@@ -2200,6 +2302,10 @@ static bool fold_setcond(OptContext *ctx, TCGOp *op)
+     if (i >= 0) {
+         return tcg_opt_gen_movi(ctx, op, op->args[0], i);
      }
- }
++
++    if (fold_setcond_zmask(ctx, op, false)) {
++        return true;
++    }
+     fold_setcond_tst_pow2(ctx, op, false);
  
-@@ -1471,7 +1483,7 @@ void tcg_gen_gvec_3i(uint32_t dofs, uint32_t aofs, uint32_t bofs,
-          */
-         some = QEMU_ALIGN_DOWN(oprsz, 32);
-         expand_3i_vec(g->vece, dofs, aofs, bofs, some, 32, TCG_TYPE_V256,
--                      c, g->load_dest, g->fniv);
-+                      c, g->load_dest, g->write_aofs, g->fniv);
-         if (some == oprsz) {
-             break;
-         }
-@@ -1483,18 +1495,20 @@ void tcg_gen_gvec_3i(uint32_t dofs, uint32_t aofs, uint32_t bofs,
-         /* fallthru */
-     case TCG_TYPE_V128:
-         expand_3i_vec(g->vece, dofs, aofs, bofs, oprsz, 16, TCG_TYPE_V128,
--                      c, g->load_dest, g->fniv);
-+                      c, g->load_dest, g->write_aofs, g->fniv);
-         break;
-     case TCG_TYPE_V64:
-         expand_3i_vec(g->vece, dofs, aofs, bofs, oprsz, 8, TCG_TYPE_V64,
--                      c, g->load_dest, g->fniv);
-+                      c, g->load_dest, g->write_aofs, g->fniv);
-         break;
+     ctx->z_mask = 1;
+@@ -2214,6 +2320,10 @@ static bool fold_negsetcond(OptContext *ctx, TCGOp *op)
+     if (i >= 0) {
+         return tcg_opt_gen_movi(ctx, op, op->args[0], -i);
+     }
++
++    if (fold_setcond_zmask(ctx, op, true)) {
++        return true;
++    }
+     fold_setcond_tst_pow2(ctx, op, true);
  
-     case 0:
-         if (g->fni8 && check_size_impl(oprsz, 8)) {
--            expand_3i_i64(dofs, aofs, bofs, oprsz, c, g->load_dest, g->fni8);
-+            expand_3i_i64(dofs, aofs, bofs, oprsz, c,
-+                          g->load_dest, g->write_aofs, g->fni8);
-         } else if (g->fni4 && check_size_impl(oprsz, 4)) {
--            expand_3i_i32(dofs, aofs, bofs, oprsz, c, g->load_dest, g->fni4);
-+            expand_3i_i32(dofs, aofs, bofs, oprsz, c,
-+                          g->load_dest, g->write_aofs, g->fni4);
-         } else {
-             assert(g->fno != NULL);
-             tcg_gen_gvec_3_ool(dofs, aofs, bofs, oprsz, maxsz, c, g->fno);
+     /* Value is {0,-1} so all bits are repetitions of the sign. */
 -- 
 2.34.1
 
