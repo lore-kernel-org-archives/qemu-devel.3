@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A94F5C19F4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 15:39:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC66CC4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 15:40:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzefj-0004Rf-6y; Wed, 24 Apr 2024 11:36:35 -0400
+	id 1rzego-0007QU-Mg; Wed, 24 Apr 2024 11:37:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rzefg-0004RK-MW
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 11:36:32 -0400
+ id 1rzegn-0007N5-Gj
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 11:37:41 -0400
 Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rzefe-0005bU-7m
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 11:36:32 -0400
+ id 1rzegl-0005j1-Nk
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 11:37:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713972990; x=1745508990;
+ t=1713973060; x=1745509060;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=vrFTIzPFYA+sIxidwPhji43BgFWiZ4Z6zoyYu1w7dUw=;
- b=c01jTyZ9PWuUluWXyB7URTul49CdCcaitfyqx8Pb3l8a6v4XhWdXP3Zs
- wn6K5mY34oumd2HK13WcNdBsxj4ZGqkCZ6ksleqUPnnlPKH0+uZuh7JCz
- HZGiH1FbOFyjEhwGyuNleX0COoOkhksfvlGNJjSd/CAKESpFO9XqmD7jf
- 32ea3Ihaz45MTiJaN+BJH9TqQ3GJbleT/vb1mJ6y7tgtsYAxwAM+Fq9Oy
- 1JiPwaTszL1XW2CzoHRyGhFCaB5O8IstaqKOPp+bWTfbCIq/uQ29RkThl
- Cy3MAWMEXa3panTN70D5dMv3NAg7I5qnMn/AGI7leGyAkf2kviwoAvZYL Q==;
-X-CSE-ConnectionGUID: EnnrdMnOSEa81esLUr/SBg==
-X-CSE-MsgGUID: 6OI/9/irRe6Ig6Y1i8Dkgg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11054"; a="12545653"
-X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; d="scan'208";a="12545653"
+ bh=7BZitRTZgHvSoVHH6B/n9vW2IiXDZrdhO0sh04YdlOI=;
+ b=AFoPFL5cO7vqk4S0WdegOAR4iNTdQpltuOAOi3b2vk0e7PKsn++Hve36
+ nEnMm/Fsle7hURWmt53uYqrZYJutGy5AsWrdpY9hzLYnnoA+oOr5XGW+S
+ kQ8gI4usSvJimvEHeqFRMZbY2adv/J/jZEtGKaEebIO1KI6e/mgGNJ354
+ VNe6q2ISPISZ1jnywKve/pjZEiZCDDl1r4XN8ym3TK4kukbe3FkdyM1kO
+ SszBxf/4tbVTIhz+nHlm+5XKSZfx6akOgR1TNvJ1UULFZQE8nVZMfEI4F
+ sXS5ZMD2oKwuZJB1XxwGvIigJ78lFgIizFFWaGGJk9aIZILRAKgswcnP2 Q==;
+X-CSE-ConnectionGUID: IZ+sI5LDQmWQ5Qpsen0p7Q==
+X-CSE-MsgGUID: FEcT1OU1RSS17sZM5r/lUA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11054"; a="12545824"
+X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; d="scan'208";a="12545824"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Apr 2024 08:36:28 -0700
-X-CSE-ConnectionGUID: 3iVfLXFzR4+1g0BBE7PvSg==
-X-CSE-MsgGUID: RPCfjHvjRd+evYGgTRVEFQ==
+ 24 Apr 2024 08:37:25 -0700
+X-CSE-ConnectionGUID: 1qityOk/TbenJ6PscERgVQ==
+X-CSE-MsgGUID: miNxteewQtO+tFPR/C48sA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; d="scan'208";a="25363079"
+X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; d="scan'208";a="25363337"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa008.jf.intel.com with ESMTP; 24 Apr 2024 08:36:23 -0700
+ by orviesa008.jf.intel.com with ESMTP; 24 Apr 2024 08:37:21 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -60,12 +60,10 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  Zhenyu Wang <zhenyu.z.wang@intel.com>,
  Zhuocheng Ding <zhuocheng.ding@intel.com>, Babu Moger <babu.moger@amd.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
- Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
- Robert Hoo <robert.hu@linux.intel.com>
-Subject: [PATCH v11 06/21] i386/cpu: Use APIC ID info to encode cache topo in
- CPUID[4]
-Date: Wed, 24 Apr 2024 23:49:14 +0800
-Message-Id: <20240424154929.1487382-7-zhao1.liu@intel.com>
+ Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH v11 18/21] hw/i386/pc: Support smp.modules for x86 PC machine
+Date: Wed, 24 Apr 2024 23:49:26 +0800
+Message-Id: <20240424154929.1487382-19-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240424154929.1487382-1-zhao1.liu@intel.com>
 References: <20240424154929.1487382-1-zhao1.liu@intel.com>
@@ -95,177 +93,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Refer to the fixes of cache_info_passthrough ([1], [2]) and SDM, the
-CPUID.04H:EAX[bits 25:14] and CPUID.04H:EAX[bits 31:26] should use the
-nearest power-of-2 integer.
+As module-level topology support is added to X86CPU, now we can enable
+the support for the modules parameter on PC machines. With this support,
+we can define a 5-level x86 CPU topology with "-smp":
 
-The nearest power-of-2 integer can be calculated by pow2ceil() or by
-using APIC ID offset/width (like L3 topology using 1 << die_offset [3]).
+-smp cpus=*,maxcpus=*,sockets=*,dies=*,modules=*,cores=*,threads=*.
 
-But in fact, CPUID.04H:EAX[bits 25:14] and CPUID.04H:EAX[bits 31:26]
-are associated with APIC ID. For example, in linux kernel, the field
-"num_threads_sharing" (Bits 25 - 14) is parsed with APIC ID. And for
-another example, on Alder Lake P, the CPUID.04H:EAX[bits 31:26] is not
-matched with actual core numbers and it's calculated by:
-"(1 << (pkg_offset - core_offset)) - 1".
+So, add the 5-level topology example in description of "-smp".
 
-Therefore the topology information of APIC ID should be preferred to
-calculate nearest power-of-2 integer for CPUID.04H:EAX[bits 25:14] and
-CPUID.04H:EAX[bits 31:26]:
-1. d/i cache is shared in a core, 1 << core_offset should be used
-   instead of "cs->nr_threads" in encode_cache_cpuid4() for
-   CPUID.04H.00H:EAX[bits 25:14] and CPUID.04H.01H:EAX[bits 25:14].
-2. L2 cache is supposed to be shared in a core as for now, thereby
-   1 << core_offset should also be used instead of "cs->nr_threads" in
-   encode_cache_cpuid4() for CPUID.04H.02H:EAX[bits 25:14].
-3. Similarly, the value for CPUID.04H:EAX[bits 31:26] should also be
-   calculated with the bit width between the package and SMT levels in
-   the APIC ID (1 << (pkg_offset - core_offset) - 1).
+Additionally, add the missed drawers and books options in previous
+example.
 
-In addition, use APIC ID bits calculations to replace "pow2ceil()" for
-cache_info_passthrough case.
-
-[1]: efb3934adf9e ("x86: cpu: make sure number of addressable IDs for processor cores meets the spec")
-[2]: d7caf13b5fcf ("x86: cpu: fixup number of addressable IDs for logical processors sharing cache")
-[3]: d65af288a84d ("i386: Update new x86_apicid parsing rules with die_offset support")
-
-Fixes: 7e3482f82480 ("i386: Helpers to encode cache information consistently")
-Suggested-by: Robert Hoo <robert.hu@linux.intel.com>
 Tested-by: Yongwei Ma <yongwei.ma@intel.com>
+Co-developed-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
+Signed-off-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 Tested-by: Babu Moger <babu.moger@amd.com>
+Reviewed-by: Babu Moger <babu.moger@amd.com>
 ---
 Changes since v9:
- * Added comments on addressable_threads_width and
-   addressable_cores_width. (Xiaoyao)
+ * Mentioned the change about adding missed drawers and books. (Babu)
+
+Changes since v8:
+ * Added missing "modules" parameter in -smp example.
 
 Changes since v7:
- * Fixed calculations in cache_info_passthrough case. (Xiaoyao)
- * Renamed variables as *_width. (Xiaoyao)
- * Unified variable names for encoding cache_info_passthrough case and
-   non-cache_info_passthrough case as addressable_cores_width and
-   addressable_threads_width.
- * Fixed typos in commit message. (Xiaoyao)
- * Dropped Michael/Babu's ACKed/Tested tags since the code change.
+ * Supported modules instead of clusters for PC.
+ * Dropped Michael/Babu/Yanan's ACKed/Tested/Reviewed tags since the
+   code change.
  * Re-added Yongwei's Tested tag For his re-testing.
-
-Changes since v3:
- * Fixed compile warnings. (Babu)
- * Fixed spelling typo.
-
-Changes since v1:
- * Used APIC ID offset to replace "pow2ceil()" for cache_info_passthrough
-   case. (Yanan)
- * Split the L1 cache fix into a separate patch.
- * Renamed the title of this patch (the original is "i386/cpu: Fix number
-   of addressable IDs in CPUID.04H").
 ---
- target/i386/cpu.c | 45 ++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 36 insertions(+), 9 deletions(-)
+ hw/i386/pc.c    |  1 +
+ qemu-options.hx | 18 ++++++++++--------
+ 2 files changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 46155b07466e..93c2f56780f5 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -6150,7 +6150,6 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
- {
-     X86CPU *cpu = env_archcpu(env);
-     CPUState *cs = env_cpu(env);
--    uint32_t die_offset;
-     uint32_t limit;
-     uint32_t signature[3];
-     X86CPUTopoInfo topo_info;
-@@ -6222,7 +6221,18 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-                (cpuid2_cache_descriptor(env->cache_info_cpuid2.l1i_cache) <<  8) |
-                (cpuid2_cache_descriptor(env->cache_info_cpuid2.l2_cache));
-         break;
--    case 4:
-+    case 4: {
-+        /*
-+         * CPUID.04H:EAX[bits 25:14]: Maximum number of addressable IDs for
-+         * logical processors sharing this cache.
-+         */
-+        int addressable_threads_width;
-+        /*
-+         * CPUID.04H:EAX[bits 31:26]: Maximum number of addressable IDs for
-+         * processor cores in the physical package.
-+         */
-+        int addressable_cores_width;
-+
-         /* cache info: needed for Core compatibility */
-         if (cpu->cache_info_passthrough) {
-             x86_cpu_get_cache_cpuid(index, count, eax, ebx, ecx, edx);
-@@ -6234,39 +6244,55 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-                 int host_vcpus_per_cache = 1 + ((*eax & 0x3FFC000) >> 14);
-                 int vcpus_per_socket = cs->nr_cores * cs->nr_threads;
-                 if (cs->nr_cores > 1) {
-+                    addressable_cores_width = apicid_pkg_offset(&topo_info) -
-+                                              apicid_core_offset(&topo_info);
-+
-                     *eax &= ~0xFC000000;
--                    *eax |= (pow2ceil(cs->nr_cores) - 1) << 26;
-+                    *eax |= ((1 << addressable_cores_width) - 1) << 26;
-                 }
-                 if (host_vcpus_per_cache > vcpus_per_socket) {
-+                    /* Share the cache at package level. */
-+                    addressable_threads_width = apicid_pkg_offset(&topo_info);
-+
-                     *eax &= ~0x3FFC000;
--                    *eax |= (pow2ceil(vcpus_per_socket) - 1) << 14;
-+                    *eax |= ((1 << addressable_threads_width) - 1) << 14;
-                 }
-             }
-         } else if (cpu->vendor_cpuid_only && IS_AMD_CPU(env)) {
-             *eax = *ebx = *ecx = *edx = 0;
-         } else {
-             *eax = 0;
-+            addressable_cores_width = apicid_pkg_offset(&topo_info) -
-+                                      apicid_core_offset(&topo_info);
-+
-             switch (count) {
-             case 0: /* L1 dcache info */
-+                addressable_threads_width = apicid_core_offset(&topo_info);
-                 encode_cache_cpuid4(env->cache_info_cpuid4.l1d_cache,
--                                    cs->nr_threads, cs->nr_cores,
-+                                    (1 << addressable_threads_width),
-+                                    (1 << addressable_cores_width),
-                                     eax, ebx, ecx, edx);
-                 break;
-             case 1: /* L1 icache info */
-+                addressable_threads_width = apicid_core_offset(&topo_info);
-                 encode_cache_cpuid4(env->cache_info_cpuid4.l1i_cache,
--                                    cs->nr_threads, cs->nr_cores,
-+                                    (1 << addressable_threads_width),
-+                                    (1 << addressable_cores_width),
-                                     eax, ebx, ecx, edx);
-                 break;
-             case 2: /* L2 cache info */
-+                addressable_threads_width = apicid_core_offset(&topo_info);
-                 encode_cache_cpuid4(env->cache_info_cpuid4.l2_cache,
--                                    cs->nr_threads, cs->nr_cores,
-+                                    (1 << addressable_threads_width),
-+                                    (1 << addressable_cores_width),
-                                     eax, ebx, ecx, edx);
-                 break;
-             case 3: /* L3 cache info */
--                die_offset = apicid_die_offset(&topo_info);
-                 if (cpu->enable_l3_cache) {
-+                    addressable_threads_width = apicid_die_offset(&topo_info);
-                     encode_cache_cpuid4(env->cache_info_cpuid4.l3_cache,
--                                        (1 << die_offset), cs->nr_cores,
-+                                        (1 << addressable_threads_width),
-+                                        (1 << addressable_cores_width),
-                                         eax, ebx, ecx, edx);
-                     break;
-                 }
-@@ -6277,6 +6303,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-             }
-         }
-         break;
-+    }
-     case 5:
-         /* MONITOR/MWAIT Leaf */
-         *eax = cpu->mwait.eax; /* Smallest monitor-line size in bytes */
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 08c7de416fda..6d2ad5d663d2 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -1839,6 +1839,7 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
+     mc->default_cpu_type = TARGET_DEFAULT_CPU_TYPE;
+     mc->nvdimm_supported = true;
+     mc->smp_props.dies_supported = true;
++    mc->smp_props.modules_supported = true;
+     mc->default_ram_id = "pc.ram";
+     pcmc->default_smbios_ep_type = SMBIOS_ENTRY_POINT_TYPE_AUTO;
+ 
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 8ce85d45598d..eddd3595c7b9 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -281,7 +281,8 @@ ERST
+ 
+ DEF("smp", HAS_ARG, QEMU_OPTION_smp,
+     "-smp [[cpus=]n][,maxcpus=maxcpus][,drawers=drawers][,books=books][,sockets=sockets]\n"
+-    "               [,dies=dies][,clusters=clusters][,cores=cores][,threads=threads]\n"
++    "               [,dies=dies][,clusters=clusters][,modules=modules][,cores=cores]\n"
++    "               [,threads=threads]\n"
+     "                set the number of initial CPUs to 'n' [default=1]\n"
+     "                maxcpus= maximum number of total CPUs, including\n"
+     "                offline CPUs for hotplug, etc\n"
+@@ -290,7 +291,8 @@ DEF("smp", HAS_ARG, QEMU_OPTION_smp,
+     "                sockets= number of sockets in one book\n"
+     "                dies= number of dies in one socket\n"
+     "                clusters= number of clusters in one die\n"
+-    "                cores= number of cores in one cluster\n"
++    "                modules= number of modules in one cluster\n"
++    "                cores= number of cores in one module\n"
+     "                threads= number of threads in one core\n"
+     "Note: Different machines may have different subsets of the CPU topology\n"
+     "      parameters supported, so the actual meaning of the supported parameters\n"
+@@ -306,7 +308,7 @@ DEF("smp", HAS_ARG, QEMU_OPTION_smp,
+     "      must be set as 1 in the purpose of correct parsing.\n",
+     QEMU_ARCH_ALL)
+ SRST
+-``-smp [[cpus=]n][,maxcpus=maxcpus][,sockets=sockets][,dies=dies][,clusters=clusters][,cores=cores][,threads=threads]``
++``-smp [[cpus=]n][,maxcpus=maxcpus][,drawers=drawers][,books=books][,sockets=sockets][,dies=dies][,clusters=clusters][,modules=modules][,cores=cores][,threads=threads]``
+     Simulate a SMP system with '\ ``n``\ ' CPUs initially present on
+     the machine type board. On boards supporting CPU hotplug, the optional
+     '\ ``maxcpus``\ ' parameter can be set to enable further CPUs to be
+@@ -345,14 +347,14 @@ SRST
+         -smp 8,sockets=2,cores=2,threads=2,maxcpus=8
+ 
+     The following sub-option defines a CPU topology hierarchy (2 sockets
+-    totally on the machine, 2 dies per socket, 2 cores per die, 2 threads
+-    per core) for PC machines which support sockets/dies/cores/threads.
+-    Some members of the option can be omitted but their values will be
+-    automatically computed:
++    totally on the machine, 2 dies per socket, 2 modules per die, 2 cores per
++    module, 2 threads per core) for PC machines which support sockets/dies
++    /modules/cores/threads. Some members of the option can be omitted but
++    their values will be automatically computed:
+ 
+     ::
+ 
+-        -smp 16,sockets=2,dies=2,cores=2,threads=2,maxcpus=16
++        -smp 32,sockets=2,dies=2,modules=2,cores=2,threads=2,maxcpus=32
+ 
+     The following sub-option defines a CPU topology hierarchy (2 sockets
+     totally on the machine, 2 clusters per socket, 2 cores per cluster,
 -- 
 2.34.1
 
