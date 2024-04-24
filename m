@@ -4,19 +4,19 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 869B2C10F15
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 08:18:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E513CC4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 08:18:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzXpB-00018s-9v; Wed, 24 Apr 2024 04:17:53 -0400
+	id 1rzXpB-0001Fw-Rp; Wed, 24 Apr 2024 04:17:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXoe-0000N3-1H
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:17:20 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXod-0000Mz-TS
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:17:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXob-0006MX-4M
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXoa-0006MS-SE
  for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:17:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1713946636;
@@ -24,40 +24,40 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=okQXhM5EdV4nJ/xGs2usfi2oSxOw1NGs7cFrvbXnFKA=;
- b=BPFKjjZoupC5gmuktDm2CR26xP4g5sIMD51X3nl720HpGlYKxuQ1iudr8orNyt9wvSuYRn
- F1/ZeflbWYVnhluw5BMPJLU4EjWsZJ9Qn45t9pB7aTrZ/eLEVuEC+pTAUwC/9LryqS0pT0
- M+mUTc5oMXzvDUq7Uq5Ifv9CASQOGIQ=
+ bh=c+msAICXsvjcDlthJmm3X7WQUPEXlBOV+/3EZ10XoiM=;
+ b=dCHc+Ozx8bRj9i8w5Q854vH3iH+Hijc69CKjWVVTrgjaSYP7cfiqwVwbp/gvleDtx0XXkM
+ PurH27+dxkBezMPPS4JyF0DgKo78eYK2NzrTPkHguF2SRw8ORdBh1pjdh0ztO50yTlBrJt
+ paIly2Gdx2ccjNaVfZS9oziJMKOadUY=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-20-qNUjfTvCOUS3PDl__OCwpg-1; Wed, 24 Apr 2024 04:17:12 -0400
-X-MC-Unique: qNUjfTvCOUS3PDl__OCwpg-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
+ us-mta-552-lAg7zbtUOSa4vAk3pS8S9A-1; Wed, 24 Apr 2024 04:17:13 -0400
+X-MC-Unique: lAg7zbtUOSa4vAk3pS8S9A-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.8])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2C17F812C55;
- Wed, 24 Apr 2024 08:17:12 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2D151810BDC;
+ Wed, 24 Apr 2024 08:17:13 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 0C3B78C4;
- Wed, 24 Apr 2024 08:17:12 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 0D9CDC13FA3;
+ Wed, 24 Apr 2024 08:17:13 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id CC05821E669B; Wed, 24 Apr 2024 10:17:10 +0200 (CEST)
+ id E688021D49C2; Wed, 24 Apr 2024 10:17:10 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
 	John Snow <jsnow@redhat.com>
-Subject: [PULL 03/25] qapi: sort pylint suppressions
-Date: Wed, 24 Apr 2024 10:16:48 +0200
-Message-ID: <20240424081710.2907748-4-armbru@redhat.com>
+Subject: [PULL 12/25] qapi: Assert built-in types exist
+Date: Wed, 24 Apr 2024 10:16:57 +0200
+Message-ID: <20240424081710.2907748-13-armbru@redhat.com>
 In-Reply-To: <20240424081710.2907748-1-armbru@redhat.com>
 References: <20240424081710.2907748-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -82,38 +82,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: John Snow <jsnow@redhat.com>
+QAPISchema.lookup_type('FOO') returns a QAPISchemaType when type 'FOO'
+exists, else None.  It won't return None for built-in types like
+'int'.
 
-Suggested-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: John Snow <jsnow@redhat.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Since mypy can't see that, it'll complain that we assign the
+Optional[QAPISchemaType] returned by .lookup_type() to QAPISchemaType
+variables.
+
+Add assertions to help it over the hump.
+
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20240315152301.3621858-4-armbru@redhat.com>
+Message-ID: <20240315152301.3621858-13-armbru@redhat.com>
+Reviewed-by: John Snow <jsnow@redhat.com>
 ---
- scripts/qapi/pylintrc | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ scripts/qapi/introspect.py | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/qapi/pylintrc b/scripts/qapi/pylintrc
-index 90546df534..1342412c3c 100644
---- a/scripts/qapi/pylintrc
-+++ b/scripts/qapi/pylintrc
-@@ -16,13 +16,13 @@ ignore-patterns=schema.py,
- # --enable=similarities". If you want to run only the classes checker, but have
- # no Warning level messages displayed, use "--disable=all --enable=classes
- # --disable=W".
--disable=fixme,
-+disable=consider-using-f-string,
-+        fixme,
-         missing-docstring,
-         too-many-arguments,
-         too-many-branches,
--        too-many-statements,
-         too-many-instance-attributes,
--        consider-using-f-string,
-+        too-many-statements,
-         useless-option-value,
+diff --git a/scripts/qapi/introspect.py b/scripts/qapi/introspect.py
+index 67c7d89aae..4679b1bc2c 100644
+--- a/scripts/qapi/introspect.py
++++ b/scripts/qapi/introspect.py
+@@ -227,10 +227,14 @@ def _use_type(self, typ: QAPISchemaType) -> str:
  
- [REPORTS]
+         # Map the various integer types to plain int
+         if typ.json_type() == 'int':
+-            typ = self._schema.lookup_type('int')
++            type_int = self._schema.lookup_type('int')
++            assert type_int
++            typ = type_int
+         elif (isinstance(typ, QAPISchemaArrayType) and
+               typ.element_type.json_type() == 'int'):
+-            typ = self._schema.lookup_type('intList')
++            type_intList = self._schema.lookup_type('intList')
++            assert type_intList
++            typ = type_intList
+         # Add type to work queue if new
+         if typ not in self._used_types:
+             self._used_types.append(typ)
 -- 
 2.44.0
 
