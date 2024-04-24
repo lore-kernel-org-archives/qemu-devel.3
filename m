@@ -4,105 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDF7BC4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 16:29:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28359C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 16:31:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzfTi-0000FC-Gl; Wed, 24 Apr 2024 12:28:14 -0400
+	id 1rzfVn-0001K4-PQ; Wed, 24 Apr 2024 12:30:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1rzfTg-0000Eo-AZ
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 12:28:12 -0400
-Received: from mail.weilnetz.de ([37.120.169.71]
- helo=mail.v2201612906741603.powersrv.de)
+ (Exim 4.90_1) (envelope-from <sameer.kp.in@gmail.com>)
+ id 1rzfVd-0001I2-SP; Wed, 24 Apr 2024 12:30:14 -0400
+Received: from mail-yb1-xb31.google.com ([2607:f8b0:4864:20::b31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1rzfTX-00066M-5E
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 12:28:05 -0400
-Received: from [100.72.56.255] (unknown [185.109.152.103])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.v2201612906741603.powersrv.de (Postfix) with ESMTPSA id 2B85FDA0C0C;
- Wed, 24 Apr 2024 18:27:59 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=weilnetz.de; s=dkim;
- t=1713976079;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=qSNPQ9X4/sHlny61JEhKG7Af0B2sm5O0KRFyPwUi200=;
- b=aPATnTfrIOaNe6Wp7VeyKVHBDdoY+3/mVdquP2Kx2CIzEB1wkDwv+asq2KAUrLfV5qymrM
- ykhJqYHOSjKDBDOs5oamIdKA8YlWoxvwtE6YO5Ak23SmvBuUrHpDmdmT90enJgqVB6uRYZ
- QoeYFW4GgDvrNQhU2/V7u3uXpX6q2tYI6iJl7lxuc5bzXEmHHsDECw4KJuOr03mnaE3uVG
- 896UBMwO3kqTHeVFEAlwcApXdyGbDw4QvbrIoycX/9rQGmxyWMm2YPDIZKeIMwZpLueulY
- V1iLGRmJTYBYW2hkwEcdmZOQYeki9LFzxvvxnm0vuNAqQVs2LJOqXWRYab9sHQ==
-Message-ID: <50ee3a92-1bb5-4113-8558-281e78b0c2e3@weilnetz.de>
-Date: Wed, 24 Apr 2024 18:27:58 +0200
+ (Exim 4.90_1) (envelope-from <sameer.kp.in@gmail.com>)
+ id 1rzfVb-0006V4-7r; Wed, 24 Apr 2024 12:30:13 -0400
+Received: by mail-yb1-xb31.google.com with SMTP id
+ 3f1490d57ef6-de480576c3cso55121276.2; 
+ Wed, 24 Apr 2024 09:30:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1713976207; x=1714581007; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ovv+A4uxhaDrDl+Rv68DIOVlX2PfhXNLXW9JYdWX9EE=;
+ b=BEDcPKodKGO6nXF4JT3ACMbSfQXolU4WtjSg8Cq2iBKY1NdJTESqrvqUIHfFfM03j2
+ MwPs+IbDC3DJ74tQJN//lBJxr17+7EN4fI/3pmLkpgrbrmZlLFtEYrOzou6Nu3VIRJPT
+ MdHbCrUa6MMyG6xex3ZfF7/kme2pKYmzgS79mmYwEcXoxpPCMv3pq2WaQitIubk1KmQH
+ uFebcy15T198rOeJzph303KJzXryXTHP2eIKGjayLE1kOEKc4GdoY2CdHII/fplft2VA
+ /mTX7RMlcdb+VUcFxTZgBHUvU1JPXEyLRsuTf85T+4ShIasfpjQ4KvyOsRZMzmakBlq0
+ SMjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713976207; x=1714581007;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ovv+A4uxhaDrDl+Rv68DIOVlX2PfhXNLXW9JYdWX9EE=;
+ b=SLYVHpMZyhKMU/SgnHPbaRtslTf3QS/ZCqQfA63+aXZi2RLIBvJF7dG4QtYF9ZGXAf
+ MwSncSmyH2sgzR6jg+jkViYdxRzLgNO05Ef7Izf3o3e8+k5jnYh3lvxtFsz+D7g7+Hwj
+ 6vkElqMh1ps6pyBoAuLz6hMgANEUHQiafr2/F/oZ00a4O51W8/EFnhBeg2uqk9QNymL1
+ KFJ7BxKehrnA4HM23FzYrR6c9OqAcfISFQrqUNnIH0+VyC+A1R5NG8YsZe6i6yAeperc
+ 2S//4SAtCXzVNVp4RyC2n/s/t6+TivMApot3/tONHqoHu4eJGKZLSkQPc9axzFCWDATK
+ epzw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWuz/XIZ1BQTurRAfTJfyvHHhop9uq+fOGZK2/vXI7tMQVg8ElWYyTA6EdiS1byL/5R5tUAfvb6sZRt1oczvTRoRU+418tDVlvWtwcRxuRlYaOp5HVclt59rekFaRkC
+X-Gm-Message-State: AOJu0YwWB/c1u9k2Kh9u2fWa7uFpaOJ3rfhDI+0IgJkRauFcEkpOi99l
+ H4i6qWZnnUzgAZQKc7etwnrb81K69lo0AeTyEXvhKsPpULLhmPdQBoWL/JnqhwR4dtdIMZVE9Le
+ 8h2a/Kxnw5N9eUo7yZsmdZ6878uZEOwJd
+X-Google-Smtp-Source: AGHT+IFzkkA9PG+gu5a1wB8y6L2czKdshIKqAbne0q5/JWUMkrFt2T/lweWMPGOt9H2BAYa6Om+KvqwJ2rY1Q+y17PE=
+X-Received: by 2002:a25:b948:0:b0:dc6:4b66:2636 with SMTP id
+ s8-20020a25b948000000b00dc64b662636mr2821217ybm.19.1713976206823; Wed, 24 Apr
+ 2024 09:30:06 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Timeouts in CI jobs (was: cross-i686-tci CI job is flaky again
- (timeouts): can somebody who cares about TCI investigate?)
-To: QEMU Developers <qemu-devel@nongnu.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <CAFEAcA92aivDF-LjSrtZH6o4UtgrtcWnM2wuPZA5VOiN6j7KMA@mail.gmail.com>
- <f5926850-670b-43fa-8011-c33ba45d8fc3@weilnetz.de>
- <9692cfcb-ef59-4cec-8452-8bfb859e8a6c@weilnetz.de>
-Autocrypt: addr=sw@weilnetz.de; keydata=
- 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
-In-Reply-To: <9692cfcb-ef59-4cec-8452-8bfb859e8a6c@weilnetz.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=37.120.169.71; envelope-from=sw@weilnetz.de;
- helo=mail.v2201612906741603.powersrv.de
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <CAAA2AK8p=RtqeNZXfnqprw+kqEBTvrQo1Va81+ctfYAT6k6jnA@mail.gmail.com>
+ <07e79630-7171-4cb5-829d-a87a8165adc5@linaro.org>
+ <gqzmd4roytmeq3hbtb4b4frhomqtcn4aje4wja7bwmbrvb5dfh@oumkvbg3uah3>
+ <CAAA2AK-tMmG079EAuqmZ7QNWiP1yXNbCfk+4FW8ypgB4hmeDsw@mail.gmail.com>
+ <2dmeztro45uitfbbpjlpekwv6zai2wntvvyfbggx2ps5ds2ye3@ij7eygqpw4x7>
+In-Reply-To: <2dmeztro45uitfbbpjlpekwv6zai2wntvvyfbggx2ps5ds2ye3@ij7eygqpw4x7>
+From: Sameer Kalliadan Poyil <sameer.kp.in@gmail.com>
+Date: Wed, 24 Apr 2024 12:29:30 -0400
+Message-ID: <CAAA2AK-3eH58WwOY-tmDaYD94Z7vWH3Hm24cNE0BLG62bNWLFw@mail.gmail.com>
+Subject: Re: Qemu for TC377
+To: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-discuss@nongnu.org, qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000f61af50616da2eba"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b31;
+ envelope-from=sameer.kp.in@gmail.com; helo=mail-yb1-xb31.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,75 +89,231 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Stefan Weil <sw@weilnetz.de>
-From:  Stefan Weil via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 20.04.24 um 22:25 schrieb Stefan Weil:
-> Am 16.04.24 um 14:17 schrieb Stefan Weil:
->> Am 16.04.24 um 14:10 schrieb Peter Maydell:
->>
->>> The cross-i686-tci job is flaky again, with persistent intermittent
->>> failures due to jobs timing out.
->> [...]
->>> Some of these timeouts are very high -- no test should be taking
->>> 10 minutes, even given TCI and a slowish CI runner -- which suggests
->>> to me that there's some kind of intermittent deadlock going on.
->>>
->>> Can somebody who cares about TCI investigate, please, and track
->>> down whatever this is?
->>
->> I'll have a look.
-> 
-> Short summary:
-> 
-> The "persistent intermittent failures due to jobs timing out" are not 
-> related to TCI: they also occur if the same tests are run with the 
-> normal TCG. I suggest that the CI tests should run single threaded.
+--000000000000f61af50616da2eba
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Paolo,
+Hi Bastian,
 
-I need help from someone who knows the CI and the build and test 
-framework better.
+Thanks a lot. I have downloaded HighTec IDE from (
+https://free-entry-toolchain.hightec-rt.com/) and tried to run the TSIM but
+no success. In web, I don't see any documentation how to run it. The doc
+comes along with tsim doesn't explain how to start the simulator. Could you
+let me know how to start tsim for a helloworld.elf for TC3xx ? is there a
+Menu in highTec IDE to start it ?  I believe it is a cmd
+tool(C:\HIGHTEC\toolchains\tricore\v4.9.3.0-infineon-1.0\bin\tsim)
 
-Peter reported intermittent timeouts for the cross-i686-tci job, causing 
-it to fail. I can reproduce such timeouts locally, but noticed that they 
-are not limited to TCI. The GitLab CI also shows other examples, such as 
-this job:
+Regards
+Sameer
 
-https://gitlab.com/qemu-project/qemu/-/jobs/6700955287
+On Sun, Apr 21, 2024 at 6:18=E2=80=AFAM Bastian Koppelmann <
+kbastian@mail.uni-paderborn.de> wrote:
 
-I think the timeouts are caused by running too many parallel processes 
-during testing.
+> Hi Sameer,
+>
+> On Tue, Apr 16, 2024 at 02:26:10PM -0400, Sameer Kalliadan Poyil wrote:
+> > Hi Bastian,
+> >
+> > Thanks for the information. I thought that I can do some prototyping
+> before the
+> > HW arrives. :)
+> >
+> >  Yes I am interested for your bare metal program boot_to_main run it on
+> TSIM.
+> > Is Infineon TSIM free? I searched it and I didn't find any download
+> link. Could
+> > you please give a link for that if it is from Infineon?
+>
+> I usually get it from the free entry toolchain [1]
+>
+> >
+> > s it(TSIM)  trace32 simulator ?
+> https://repo.lauterbach.com/download_demo.html
+> > ?
+> >
+> > This page https://wiki.qemu.org/Documentation/Platforms/TriCore shows
+> SCU is
+> > under development.
+>
+> I should change that on the wiki. I was experimenting with a QEMU model
+> for the
+> SCU when I was still in University, but nothing usable resulted from that=
+.
+> Now
+> my time for such developments is unfortunately limited :(.
+>
+> >
+> > Could you let me know who is developing it ? is  it possible to take an
+> > existing SCU and modify according to AURIX data sheet? I see that UART =
+is
+> > possible to for Tricore like the one developed for ARM versatile platfo=
+rm
+> >
+> > Here is the link
+> https://mail.gnu.org/archive/html/qemu-devel/2016-10/msg04514.html
+>
+> Sure, you can add a model of the Aurix UART in QEMU. It's "just" a matter
+> of
+> putting in the time to implement its registers and functionality.
+>
+> >
+> > I have aurix development trial version and able to compile a UART
+> project using
+> > Tasking compiler and tried to run it on qemu, but I don't see any logs
+> in the
+> > qemu terminal as you said there is no peripherals implemented
+> >
+> > qemu-system-tricore -machine KIT_AURIX_TC277_TRB -cpu tc27x -m 6M
+> -nographic
+> > -kernel ASCLIN_Shell_UART_1_KIT_TC277_TFT.elf  -serial stdio -append
+> "console=3D
+> > ttyAMA0 console=3DttyS0"
+>
+> I usually add '-d exec,cpu,nochain -D /tmp/exec.log -accel
+> tcg,one-insn-per-tb=3Don'
+> to get an execution trace to see if the binary is executing.
+>
+> You can also try attaching gdb by adding '-s -S' to the CLI. And then run
+> in
+> tricore-gdb 'target remote localhost:1234' see [2]
+>
+> >
+> >
+> > Also do you know if there is a virtual UART framework to communicate
+> between
+> > two Qemu instances or two TSIM instances running similar OS or differen=
+t
+> OS? I
+> > need to do prototype testing RPMSg communication between  MCU and SOC
+> using
+> > external physical UART/SPI which can be tested using vritual UART using
+> two
+> > qemu instances.
+>
+> No, I don't know of something like this.
+>
+> Cheers,
+> Bastian
+>
+> [1] https://free-entry-toolchain.hightec-rt.com/
+> [2] https://www.qemu.org/docs/master/system/gdb.html
+>
 
-The CI uses parallel builds:
+--000000000000f61af50616da2eba
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-make -j$(expr $(nproc) + 1) all check-build $MAKE_CHECK_ARGS
+<div dir=3D"ltr">Hi=C2=A0Bastian,=C2=A0<div><br><div>Thanks a lot. I have d=
+ownloaded=C2=A0HighTec IDE from (<a href=3D"https://free-entry-toolchain.hi=
+ghtec-rt.com/">https://free-entry-toolchain.hightec-rt.com/</a>)=C2=A0and t=
+ried to run=C2=A0the TSIM but no success. In web, I don&#39;t see any docum=
+entation how to run it. The doc comes along with tsim doesn&#39;t explain h=
+ow to start the simulator. Could you let me know how to start tsim for a he=
+lloworld.elf for TC3xx ? is there=C2=A0a Menu in highTec IDE to start it ?=
+=C2=A0 I believe=C2=A0it is a cmd tool(C:\HIGHTEC\toolchains\tricore\v4.9.3=
+.0-infineon-1.0\bin\tsim)<br></div><div><br></div><div>Regards</div><div>Sa=
+meer</div></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=
+=3D"gmail_attr">On Sun, Apr 21, 2024 at 6:18=E2=80=AFAM Bastian Koppelmann =
+&lt;<a href=3D"mailto:kbastian@mail.uni-paderborn.de">kbastian@mail.uni-pad=
+erborn.de</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">Hi Sameer,<br>
+<br>
+On Tue, Apr 16, 2024 at 02:26:10PM -0400, Sameer Kalliadan Poyil wrote:<br>
+&gt; Hi Bastian,<br>
+&gt;<br>
+&gt; Thanks for the information. I thought that I can do some prototyping b=
+efore the<br>
+&gt; HW arrives. :)<br>
+&gt;<br>
+&gt; =C2=A0Yes I am interested for your bare metal program=C2=A0boot_to_mai=
+n run it on TSIM.=C2=A0=C2=A0<br>
+&gt; Is Infineon TSIM free? I searched it and=C2=A0I didn&#39;t find any do=
+wnload link. Could<br>
+&gt; you please give a link for that if it is from Infineon?<br>
+<br>
+I usually get it from the free entry toolchain [1]<br>
+<br>
+&gt;<br>
+&gt; s it(TSIM)=C2=A0 trace32 simulator ? <a href=3D"https://repo.lauterbac=
+h.com/download_demo.html" rel=3D"noreferrer" target=3D"_blank">https://repo=
+.lauterbach.com/download_demo.html</a><br>
+&gt; ?<br>
+&gt;<br>
+&gt; This page=C2=A0<a href=3D"https://wiki.qemu.org/Documentation/Platform=
+s/TriCore" rel=3D"noreferrer" target=3D"_blank">https://wiki.qemu.org/Docum=
+entation/Platforms/TriCore</a> shows SCU is<br>
+&gt; under development.<br>
+<br>
+I should change that on the wiki. I was experimenting with a QEMU model for=
+ the<br>
+SCU when I was still in University, but nothing usable resulted from that. =
+Now<br>
+my time for such developments is unfortunately limited :(.<br>
+<br>
+&gt;<br>
+&gt; Could you let me know who is developing=C2=A0it ?=C2=A0is=C2=A0 it pos=
+sible to take an<br>
+&gt; existing SCU and modify according to AURIX data sheet? I see that UART=
+ is<br>
+&gt; possible to for Tricore like the one developed for ARM versatile platf=
+orm<br>
+&gt;<br>
+&gt; Here is the link <a href=3D"https://mail.gnu.org/archive/html/qemu-dev=
+el/2016-10/msg04514.html" rel=3D"noreferrer" target=3D"_blank">https://mail=
+.gnu.org/archive/html/qemu-devel/2016-10/msg04514.html</a><br>
+<br>
+Sure, you can add a model of the Aurix UART in QEMU. It&#39;s &quot;just&qu=
+ot; a matter of<br>
+putting in the time to implement its registers and functionality.<br>
+<br>
+&gt;<br>
+&gt; I have aurix development=C2=A0trial version and able to compile a UART=
+ project=C2=A0using<br>
+&gt; Tasking compiler and tried to run it on qemu, but I don&#39;t see any =
+logs in the<br>
+&gt; qemu terminal=C2=A0as you said there is no peripherals implemented<br>
+&gt;<br>
+&gt; qemu-system-tricore -machine KIT_AURIX_TC277_TRB -cpu tc27x -m 6M -nog=
+raphic<br>
+&gt; -kernel ASCLIN_Shell_UART_1_KIT_TC277_TFT.elf =C2=A0-serial stdio -app=
+end &quot;console=3D<br>
+&gt; ttyAMA0 console=3DttyS0&quot;<br>
+<br>
+I usually add &#39;-d exec,cpu,nochain -D /tmp/exec.log -accel tcg,one-insn=
+-per-tb=3Don&#39;<br>
+to get an execution trace to see if the binary is executing.<br>
+<br>
+You can also try attaching gdb by adding &#39;-s -S&#39; to the CLI. And th=
+en run in<br>
+tricore-gdb &#39;target remote localhost:1234&#39; see [2]<br>
+<br>
+&gt;<br>
+&gt;<br>
+&gt; Also do you know if there is a virtual UART framework to communicate b=
+etween<br>
+&gt; two Qemu instances or two TSIM instances=C2=A0running similar OS or di=
+fferent OS? I<br>
+&gt; need to do prototype testing RPMSg communication between=C2=A0 MCU and=
+ SOC using<br>
+&gt; external physical UART/SPI which can be tested using vritual=C2=A0UART=
+ using two<br>
+&gt; qemu instances.=C2=A0<br>
+<br>
+No, I don&#39;t know of something like this.<br>
+<br>
+Cheers,<br>
+Bastian<br>
+<br>
+[1] <a href=3D"https://free-entry-toolchain.hightec-rt.com/" rel=3D"norefer=
+rer" target=3D"_blank">https://free-entry-toolchain.hightec-rt.com/</a><br>
+[2] <a href=3D"https://www.qemu.org/docs/master/system/gdb.html" rel=3D"nor=
+eferrer" target=3D"_blank">https://www.qemu.org/docs/master/system/gdb.html=
+</a><br>
+</blockquote></div>
 
-It looks like `nproc` returns 8, and make runs with 9 threads.
-`meson test` uses the same value to run 9 test processes in parallel:
-
-/builds/qemu-project/qemu/build/pyvenv/bin/meson test  --no-rebuild -t 1 
-  --num-processes 9 --print-errorlogs
-
-Since the host can only handle 8 parallel threads, 9 threads might 
-already cause some tests to run non-deterministically.
-
-But if some of the individual tests also use multithreading (according 
-to my tests they do so with at least 3 or 4 threads), things get even 
-worse. Then there are up to 4 * 9 = 36 threads competing to run on the 
-available 8 cores.
-
-In this scenario timeouts are expected and can occur randomly.
-
-In my tests setting --num-processes to a lower value not only avoided 
-timeouts but also reduced the processing overhead without increasing the 
-runtime.
-
-Could we run all tests with `--num-processes 1`?
-
-Thanks,
-Stefan
-
+--000000000000f61af50616da2eba--
 
