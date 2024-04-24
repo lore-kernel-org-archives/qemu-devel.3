@@ -4,79 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28359C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 16:31:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3357C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 17:05:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzfVn-0001K4-PQ; Wed, 24 Apr 2024 12:30:27 -0400
+	id 1rzg3W-0000Rz-7g; Wed, 24 Apr 2024 13:05:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sameer.kp.in@gmail.com>)
- id 1rzfVd-0001I2-SP; Wed, 24 Apr 2024 12:30:14 -0400
-Received: from mail-yb1-xb31.google.com ([2607:f8b0:4864:20::b31])
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1rzg3R-0000Rc-HM
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:05:09 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sameer.kp.in@gmail.com>)
- id 1rzfVb-0006V4-7r; Wed, 24 Apr 2024 12:30:13 -0400
-Received: by mail-yb1-xb31.google.com with SMTP id
- 3f1490d57ef6-de480576c3cso55121276.2; 
- Wed, 24 Apr 2024 09:30:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1rzg3O-0004hM-Qd
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:05:09 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-6ed5109d924so136170b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 10:05:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1713976207; x=1714581007; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ovv+A4uxhaDrDl+Rv68DIOVlX2PfhXNLXW9JYdWX9EE=;
- b=BEDcPKodKGO6nXF4JT3ACMbSfQXolU4WtjSg8Cq2iBKY1NdJTESqrvqUIHfFfM03j2
- MwPs+IbDC3DJ74tQJN//lBJxr17+7EN4fI/3pmLkpgrbrmZlLFtEYrOzou6Nu3VIRJPT
- MdHbCrUa6MMyG6xex3ZfF7/kme2pKYmzgS79mmYwEcXoxpPCMv3pq2WaQitIubk1KmQH
- uFebcy15T198rOeJzph303KJzXryXTHP2eIKGjayLE1kOEKc4GdoY2CdHII/fplft2VA
- /mTX7RMlcdb+VUcFxTZgBHUvU1JPXEyLRsuTf85T+4ShIasfpjQ4KvyOsRZMzmakBlq0
- SMjA==
+ d=gmail.com; s=20230601; t=1713978305; x=1714583105; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+ bh=pxMsRIMJ+DYLqAKwua38zdR5mgT9McfR/xx92XBIL0Q=;
+ b=d3JKS2zTrX035M5rlH/9urAhoejo+pAFCCW2Xt4WlaHt5Qn30y2EJEG3BmkIQsR7RI
+ psS9RXEU49UHybJUF6cTtbGekIDZl8RoZfglgSiTO/xqS7H7IgUQP0bFZbsuw0TAMWsa
+ Fo9pCOyWZgOtfpmxUx7F0bDxhHE0cOibUsv9UwdyBqhsp3tp1FrvNHRKqk5L/UhC/OKR
+ sODFp3OOmbu0f9yv/DAD05m9ciQwBFIKBFIfFwV4ddtN4/mxORZFiEmy1aE9LJ6cATOg
+ T4Sdj7zT05mVQ9J6u7auqze2CP/5eVU2kesrf86lkhcdSvTBGysQsvzwa73nwT0Phxsi
+ 3A3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713976207; x=1714581007;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ovv+A4uxhaDrDl+Rv68DIOVlX2PfhXNLXW9JYdWX9EE=;
- b=SLYVHpMZyhKMU/SgnHPbaRtslTf3QS/ZCqQfA63+aXZi2RLIBvJF7dG4QtYF9ZGXAf
- MwSncSmyH2sgzR6jg+jkViYdxRzLgNO05Ef7Izf3o3e8+k5jnYh3lvxtFsz+D7g7+Hwj
- 6vkElqMh1ps6pyBoAuLz6hMgANEUHQiafr2/F/oZ00a4O51W8/EFnhBeg2uqk9QNymL1
- KFJ7BxKehrnA4HM23FzYrR6c9OqAcfISFQrqUNnIH0+VyC+A1R5NG8YsZe6i6yAeperc
- 2S//4SAtCXzVNVp4RyC2n/s/t6+TivMApot3/tONHqoHu4eJGKZLSkQPc9axzFCWDATK
- epzw==
+ d=1e100.net; s=20230601; t=1713978305; x=1714583105;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:sender:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pxMsRIMJ+DYLqAKwua38zdR5mgT9McfR/xx92XBIL0Q=;
+ b=knFIH/kviPFUmi7nNWF7LB2AO42RA86c+j84JnLm3eEB655b6dolC4yHn3mQluipsX
+ deEL6mpekf0wEZxtIqB16ASBdS6p4/PR1uPtaRCnmOgrNZ9qCHcUYhx2HGnnrOSzz6eY
+ 0RS3/wiVG1XYDpFYVgpWBa1eUwpaJgyoxZCVQZfVo+Be8E7S2ZwSo3mmEsyCTf1pNLsT
+ 7/DPkSU6WW0R4xYh6KbgANyK1/BNDgGBnvfZPjZJlEu3M2SHZNO0JHxJPJCyFmzjnjJo
+ 8Q3oHmGtKQYK5S2ydeJpyk2Pg+uCiGQ/1OdOsIe+qqdJvo8oEX1Usp0EmUfjUqzg6YV2
+ YTkg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWuz/XIZ1BQTurRAfTJfyvHHhop9uq+fOGZK2/vXI7tMQVg8ElWYyTA6EdiS1byL/5R5tUAfvb6sZRt1oczvTRoRU+418tDVlvWtwcRxuRlYaOp5HVclt59rekFaRkC
-X-Gm-Message-State: AOJu0YwWB/c1u9k2Kh9u2fWa7uFpaOJ3rfhDI+0IgJkRauFcEkpOi99l
- H4i6qWZnnUzgAZQKc7etwnrb81K69lo0AeTyEXvhKsPpULLhmPdQBoWL/JnqhwR4dtdIMZVE9Le
- 8h2a/Kxnw5N9eUo7yZsmdZ6878uZEOwJd
-X-Google-Smtp-Source: AGHT+IFzkkA9PG+gu5a1wB8y6L2czKdshIKqAbne0q5/JWUMkrFt2T/lweWMPGOt9H2BAYa6Om+KvqwJ2rY1Q+y17PE=
-X-Received: by 2002:a25:b948:0:b0:dc6:4b66:2636 with SMTP id
- s8-20020a25b948000000b00dc64b662636mr2821217ybm.19.1713976206823; Wed, 24 Apr
- 2024 09:30:06 -0700 (PDT)
+ AJvYcCVb9t7GacD5Hpzb2/v6MTI+D8OGHIETOIjBevYn29TiaRIOcU1hAG0H4iiPWrs5uGDxAEt1rM2kR8zBgw2ltUBjpdbU32U=
+X-Gm-Message-State: AOJu0YyuJaWJjdT/gDhV1wUcT3G4t9/IFlgaOHKoZR5F6kY1cwQTj9i+
+ Otv5r8+LJaFF23+G6lac9ZURgowgfVlnSMcIKH+RBNMrArIU8nGs
+X-Google-Smtp-Source: AGHT+IHMkj5AhrYaGU7ll8Bk7rBQeDZgj1S/af7fvQlsJmsx6P6hwv4DGgIiQ+AeaplkiEAoZn63Vg==
+X-Received: by 2002:a05:6a00:893:b0:6ed:63e:3525 with SMTP id
+ q19-20020a056a00089300b006ed063e3525mr3878201pfj.31.1713978304690; 
+ Wed, 24 Apr 2024 10:05:04 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c?
+ ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id
+ gj7-20020a056a00840700b006e8f75d3b07sm11693378pfb.181.2024.04.24.10.05.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 24 Apr 2024 10:05:03 -0700 (PDT)
+Message-ID: <394f6c85-9814-40e9-a9aa-ce7e497aad3c@roeck-us.net>
+Date: Wed, 24 Apr 2024 10:05:01 -0700
 MIME-Version: 1.0
-References: <CAAA2AK8p=RtqeNZXfnqprw+kqEBTvrQo1Va81+ctfYAT6k6jnA@mail.gmail.com>
- <07e79630-7171-4cb5-829d-a87a8165adc5@linaro.org>
- <gqzmd4roytmeq3hbtb4b4frhomqtcn4aje4wja7bwmbrvb5dfh@oumkvbg3uah3>
- <CAAA2AK-tMmG079EAuqmZ7QNWiP1yXNbCfk+4FW8ypgB4hmeDsw@mail.gmail.com>
- <2dmeztro45uitfbbpjlpekwv6zai2wntvvyfbggx2ps5ds2ye3@ij7eygqpw4x7>
-In-Reply-To: <2dmeztro45uitfbbpjlpekwv6zai2wntvvyfbggx2ps5ds2ye3@ij7eygqpw4x7>
-From: Sameer Kalliadan Poyil <sameer.kp.in@gmail.com>
-Date: Wed, 24 Apr 2024 12:29:30 -0400
-Message-ID: <CAAA2AK-3eH58WwOY-tmDaYD94Z7vWH3Hm24cNE0BLG62bNWLFw@mail.gmail.com>
-Subject: Re: Qemu for TC377
-To: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-discuss@nongnu.org, qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000f61af50616da2eba"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b31;
- envelope-from=sameer.kp.in@gmail.com; helo=mail-yb1-xb31.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: Problems (timeouts) when testing usb-ohci with qemu
+From: Guenter Roeck <linux@roeck-us.net>
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Alan Stern <stern@rowland.harvard.edu>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-usb@vger.kernel.org,
+ qemu-devel@nongnu.org
+References: <4664cf39-5dfe-4557-959d-149640ca36e1@roeck-us.net>
+ <edfmff7qm46edap6nz2ppvfhcw4jp6ahjltrv76jsiq5rhz5hw@v2lcbclpdsjt>
+ <b815670f-fea4-4ab5-bf67-671c8395bfa6@roeck-us.net>
+Content-Language: en-US
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
+In-Reply-To: <b815670f-fea4-4ab5-bf67-671c8395bfa6@roeck-us.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=groeck7@gmail.com; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,228 +145,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f61af50616da2eba
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 4/24/24 08:23, Guenter Roeck wrote:
+> On 4/24/24 04:16, Gerd Hoffmann wrote:
+>>> qemu hack:
+>>>
+>>>   hw/usb/hcd-ohci.c | 11 +++++++++++
+>>>   hw/usb/hcd-ohci.h |  1 +
+>>>   2 files changed, 12 insertions(+)
+>>>
+>>> diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
+>>> index fc8fc91a1d..99e52ad13a 100644
+>>> --- a/hw/usb/hcd-ohci.c
+>>> +++ b/hw/usb/hcd-ohci.c
+>>> @@ -267,6 +267,10 @@ static inline void ohci_intr_update(OHCIState *ohci)
+>>>           (ohci->intr_status & ohci->intr))
+>>>           level = 1;
+>>> +    if (level && ohci->level)
+>>> +        qemu_set_irq(ohci->irq, 0);
+>>> +
+>>> +    ohci->level = level;
+>>>       qemu_set_irq(ohci->irq, level);
+>>>   }
+>>> diff --git a/hw/usb/hcd-ohci.h b/hw/usb/hcd-ohci.h
+>>> index e1827227ac..6f82e72bd9 100644
+>>> --- a/hw/usb/hcd-ohci.h
+>>> +++ b/hw/usb/hcd-ohci.h
+>>> @@ -52,6 +52,7 @@ struct OHCIState {
+>>>       uint32_t ctl, status;
+>>>       uint32_t intr_status;
+>>>       uint32_t intr;
+>>> +    int level;
+>>>       /* memory pointer partition */
+>>>       uint32_t hcca;
+>>
+>> Phew.  Disclaimer: Havn't looked at the ohci emulation code for years.
+>>
+>> It should not be needed to store the interrupt level that way.  It is
+>> possible to calculate what the interrupt level should be, based on the
+>> interrupt status register and the interrupt mask register, and the code
+>> above seems to do exactly that (the "ohci->intr_status & ohci->intr"
+>> bit).
+>>
+> 
+> You are correct. For the purpose of this kludge a simpler
+> +    qemu_set_irq(ohci->irq, 0);
+>      qemu_set_irq(ohci->irq, level);
+> 
+> would have been sufficient. My original code added tracing,
+> where this generated a lot of noise. I didn't completely simplify
+> the kludge. Sorry for that and for any confusion it may have caused.
+> 
+>> ohci_intr_update() must be called if one of these two registers changes,
+>> i.e. if the guest changes the mask, if the guest acks an IRQ by clearing
+>> an status bit, if the device raises an IRQ by setting an status bit.
+>> Might be the ohci emulation has a bug here.
+>>
+>> Another possible trouble spot is that the timing behavior is different
+>> on virtual vs. physical hardware.  Specifically with the emulated
+>> hardware some actions appear to complete instantly (when the vmexit to
+>> handle the mmio register write returns it's finished already), which
+>> will never complete that quickly on physical hardware.  So drivers can
+>> have race conditions which only trigger on virtual hardware.  The error
+>> pattern you are describing sounds like this could be the case here.
+>>
+> 
+> I think the underlying problem is that both the qemu emulation and
+> the Linux kernel driver expect that the interrupt is level triggered.
+> It looks like some entity in between handles the interrupts as edge
+> triggered. This makes the kludge necessary: All it does is to generate
+> an artificial interrupt edge.
+> 
+> This can be worked around in the Linux interrupt handler by checking
+> if another interrupt arrived while the original interrupt was handled.
+> This will ensure that all interrupts are handled and cleared when the
+> handler exits, and that a later arriving interrupt will generate the
+> necessary edge and thus another interrupt. That doesn't fix the
+> edge<->level triggered interrupt confusion (if that is indeed the root
+> cause of the problem), but it does address its consequences.
+> 
+> If anyone has an idea how to find out where the interrupt confusion
+> happens, please let me know, and I'll be happy to do some more testing.
+> I am quite curious myself, and it would make sense to solve the problem
+> at its root.
+> 
+Update:
 
-Hi Bastian,
+I found upstream commit 0b60557230ad ("usb: ehci: Prevent missed ehci
+interrupts with edge-triggered MSI") which I think explains the problem.
 
-Thanks a lot. I have downloaded HighTec IDE from (
-https://free-entry-toolchain.hightec-rt.com/) and tried to run the TSIM but
-no success. In web, I don't see any documentation how to run it. The doc
-comes along with tsim doesn't explain how to start the simulator. Could you
-let me know how to start tsim for a helloworld.elf for TC3xx ? is there a
-Menu in highTec IDE to start it ?  I believe it is a cmd
-tool(C:\HIGHTEC\toolchains\tricore\v4.9.3.0-infineon-1.0\bin\tsim)
+Guenter
 
-Regards
-Sameer
-
-On Sun, Apr 21, 2024 at 6:18=E2=80=AFAM Bastian Koppelmann <
-kbastian@mail.uni-paderborn.de> wrote:
-
-> Hi Sameer,
->
-> On Tue, Apr 16, 2024 at 02:26:10PM -0400, Sameer Kalliadan Poyil wrote:
-> > Hi Bastian,
-> >
-> > Thanks for the information. I thought that I can do some prototyping
-> before the
-> > HW arrives. :)
-> >
-> >  Yes I am interested for your bare metal program boot_to_main run it on
-> TSIM.
-> > Is Infineon TSIM free? I searched it and I didn't find any download
-> link. Could
-> > you please give a link for that if it is from Infineon?
->
-> I usually get it from the free entry toolchain [1]
->
-> >
-> > s it(TSIM)  trace32 simulator ?
-> https://repo.lauterbach.com/download_demo.html
-> > ?
-> >
-> > This page https://wiki.qemu.org/Documentation/Platforms/TriCore shows
-> SCU is
-> > under development.
->
-> I should change that on the wiki. I was experimenting with a QEMU model
-> for the
-> SCU when I was still in University, but nothing usable resulted from that=
-.
-> Now
-> my time for such developments is unfortunately limited :(.
->
-> >
-> > Could you let me know who is developing it ? is  it possible to take an
-> > existing SCU and modify according to AURIX data sheet? I see that UART =
-is
-> > possible to for Tricore like the one developed for ARM versatile platfo=
-rm
-> >
-> > Here is the link
-> https://mail.gnu.org/archive/html/qemu-devel/2016-10/msg04514.html
->
-> Sure, you can add a model of the Aurix UART in QEMU. It's "just" a matter
-> of
-> putting in the time to implement its registers and functionality.
->
-> >
-> > I have aurix development trial version and able to compile a UART
-> project using
-> > Tasking compiler and tried to run it on qemu, but I don't see any logs
-> in the
-> > qemu terminal as you said there is no peripherals implemented
-> >
-> > qemu-system-tricore -machine KIT_AURIX_TC277_TRB -cpu tc27x -m 6M
-> -nographic
-> > -kernel ASCLIN_Shell_UART_1_KIT_TC277_TFT.elf  -serial stdio -append
-> "console=3D
-> > ttyAMA0 console=3DttyS0"
->
-> I usually add '-d exec,cpu,nochain -D /tmp/exec.log -accel
-> tcg,one-insn-per-tb=3Don'
-> to get an execution trace to see if the binary is executing.
->
-> You can also try attaching gdb by adding '-s -S' to the CLI. And then run
-> in
-> tricore-gdb 'target remote localhost:1234' see [2]
->
-> >
-> >
-> > Also do you know if there is a virtual UART framework to communicate
-> between
-> > two Qemu instances or two TSIM instances running similar OS or differen=
-t
-> OS? I
-> > need to do prototype testing RPMSg communication between  MCU and SOC
-> using
-> > external physical UART/SPI which can be tested using vritual UART using
-> two
-> > qemu instances.
->
-> No, I don't know of something like this.
->
-> Cheers,
-> Bastian
->
-> [1] https://free-entry-toolchain.hightec-rt.com/
-> [2] https://www.qemu.org/docs/master/system/gdb.html
->
-
---000000000000f61af50616da2eba
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi=C2=A0Bastian,=C2=A0<div><br><div>Thanks a lot. I have d=
-ownloaded=C2=A0HighTec IDE from (<a href=3D"https://free-entry-toolchain.hi=
-ghtec-rt.com/">https://free-entry-toolchain.hightec-rt.com/</a>)=C2=A0and t=
-ried to run=C2=A0the TSIM but no success. In web, I don&#39;t see any docum=
-entation how to run it. The doc comes along with tsim doesn&#39;t explain h=
-ow to start the simulator. Could you let me know how to start tsim for a he=
-lloworld.elf for TC3xx ? is there=C2=A0a Menu in highTec IDE to start it ?=
-=C2=A0 I believe=C2=A0it is a cmd tool(C:\HIGHTEC\toolchains\tricore\v4.9.3=
-.0-infineon-1.0\bin\tsim)<br></div><div><br></div><div>Regards</div><div>Sa=
-meer</div></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=
-=3D"gmail_attr">On Sun, Apr 21, 2024 at 6:18=E2=80=AFAM Bastian Koppelmann =
-&lt;<a href=3D"mailto:kbastian@mail.uni-paderborn.de">kbastian@mail.uni-pad=
-erborn.de</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">Hi Sameer,<br>
-<br>
-On Tue, Apr 16, 2024 at 02:26:10PM -0400, Sameer Kalliadan Poyil wrote:<br>
-&gt; Hi Bastian,<br>
-&gt;<br>
-&gt; Thanks for the information. I thought that I can do some prototyping b=
-efore the<br>
-&gt; HW arrives. :)<br>
-&gt;<br>
-&gt; =C2=A0Yes I am interested for your bare metal program=C2=A0boot_to_mai=
-n run it on TSIM.=C2=A0=C2=A0<br>
-&gt; Is Infineon TSIM free? I searched it and=C2=A0I didn&#39;t find any do=
-wnload link. Could<br>
-&gt; you please give a link for that if it is from Infineon?<br>
-<br>
-I usually get it from the free entry toolchain [1]<br>
-<br>
-&gt;<br>
-&gt; s it(TSIM)=C2=A0 trace32 simulator ? <a href=3D"https://repo.lauterbac=
-h.com/download_demo.html" rel=3D"noreferrer" target=3D"_blank">https://repo=
-.lauterbach.com/download_demo.html</a><br>
-&gt; ?<br>
-&gt;<br>
-&gt; This page=C2=A0<a href=3D"https://wiki.qemu.org/Documentation/Platform=
-s/TriCore" rel=3D"noreferrer" target=3D"_blank">https://wiki.qemu.org/Docum=
-entation/Platforms/TriCore</a> shows SCU is<br>
-&gt; under development.<br>
-<br>
-I should change that on the wiki. I was experimenting with a QEMU model for=
- the<br>
-SCU when I was still in University, but nothing usable resulted from that. =
-Now<br>
-my time for such developments is unfortunately limited :(.<br>
-<br>
-&gt;<br>
-&gt; Could you let me know who is developing=C2=A0it ?=C2=A0is=C2=A0 it pos=
-sible to take an<br>
-&gt; existing SCU and modify according to AURIX data sheet? I see that UART=
- is<br>
-&gt; possible to for Tricore like the one developed for ARM versatile platf=
-orm<br>
-&gt;<br>
-&gt; Here is the link <a href=3D"https://mail.gnu.org/archive/html/qemu-dev=
-el/2016-10/msg04514.html" rel=3D"noreferrer" target=3D"_blank">https://mail=
-.gnu.org/archive/html/qemu-devel/2016-10/msg04514.html</a><br>
-<br>
-Sure, you can add a model of the Aurix UART in QEMU. It&#39;s &quot;just&qu=
-ot; a matter of<br>
-putting in the time to implement its registers and functionality.<br>
-<br>
-&gt;<br>
-&gt; I have aurix development=C2=A0trial version and able to compile a UART=
- project=C2=A0using<br>
-&gt; Tasking compiler and tried to run it on qemu, but I don&#39;t see any =
-logs in the<br>
-&gt; qemu terminal=C2=A0as you said there is no peripherals implemented<br>
-&gt;<br>
-&gt; qemu-system-tricore -machine KIT_AURIX_TC277_TRB -cpu tc27x -m 6M -nog=
-raphic<br>
-&gt; -kernel ASCLIN_Shell_UART_1_KIT_TC277_TFT.elf =C2=A0-serial stdio -app=
-end &quot;console=3D<br>
-&gt; ttyAMA0 console=3DttyS0&quot;<br>
-<br>
-I usually add &#39;-d exec,cpu,nochain -D /tmp/exec.log -accel tcg,one-insn=
--per-tb=3Don&#39;<br>
-to get an execution trace to see if the binary is executing.<br>
-<br>
-You can also try attaching gdb by adding &#39;-s -S&#39; to the CLI. And th=
-en run in<br>
-tricore-gdb &#39;target remote localhost:1234&#39; see [2]<br>
-<br>
-&gt;<br>
-&gt;<br>
-&gt; Also do you know if there is a virtual UART framework to communicate b=
-etween<br>
-&gt; two Qemu instances or two TSIM instances=C2=A0running similar OS or di=
-fferent OS? I<br>
-&gt; need to do prototype testing RPMSg communication between=C2=A0 MCU and=
- SOC using<br>
-&gt; external physical UART/SPI which can be tested using vritual=C2=A0UART=
- using two<br>
-&gt; qemu instances.=C2=A0<br>
-<br>
-No, I don&#39;t know of something like this.<br>
-<br>
-Cheers,<br>
-Bastian<br>
-<br>
-[1] <a href=3D"https://free-entry-toolchain.hightec-rt.com/" rel=3D"norefer=
-rer" target=3D"_blank">https://free-entry-toolchain.hightec-rt.com/</a><br>
-[2] <a href=3D"https://www.qemu.org/docs/master/system/gdb.html" rel=3D"nor=
-eferrer" target=3D"_blank">https://www.qemu.org/docs/master/system/gdb.html=
-</a><br>
-</blockquote></div>
-
---000000000000f61af50616da2eba--
 
