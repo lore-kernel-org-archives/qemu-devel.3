@@ -4,64 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71B68C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 08:21:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F35CC4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 08:22:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzXsC-0002LL-9E; Wed, 24 Apr 2024 04:21:00 -0400
+	id 1rzXpC-0001Gp-8a; Wed, 24 Apr 2024 04:17:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rzXs5-0002DT-Bp
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:20:55 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXog-0000PD-Pg
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:17:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rzXs3-0007Hh-Aq
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:20:52 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXoc-0006NN-Np
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:17:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713946850;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=zb0ZY/OtYGFlhwxIfsFFVt97Rf7DxPQlwIUFJI/IxCQ=;
- b=T3HrU0RBxMRlsHajkG7EPmHGsa0muwpAelTdUsz2a1fXZhftCBOI87CM6oRy4Qg3amxUto
- uu7aGylHSIc36bkhjE0aSYjj5JTRPSaWrhXugLkRlF+8RFD11+T3zywI9feSXA17JZ8Fsk
- kL+pm/Z4MC3t6tHP1UNqb7lE3XLAY+U=
+ s=mimecast20190719; t=1713946637;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=q3PB96E5geOcilAlxYVVbJAYbBbSyK2NOflBBzkZQT4=;
+ b=JXJF2HwqQUiiK/lT4rTkKp9E8zeMaSF7DUiFZMeBKZfwoWIvecP0JWcr/TdTmuOq+cYz09
+ qrE1Qm5xIZuzt4UI1t5+DgVNX6A2HqsR4E4gCC04G+2TxybLb1Fnd1MOhcEvGXXHXhZmQn
+ ziQvEbT+h6TGtYNXEmK/g0hhKtlLEHc=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-451-E4cCnN1INjesGt-cIDbUXQ-1; Wed, 24 Apr 2024 04:20:46 -0400
-X-MC-Unique: E4cCnN1INjesGt-cIDbUXQ-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
+ us-mta-601-rPfsceHKO2Cwn-MZZ7ufXA-1; Wed, 24 Apr 2024 04:17:13 -0400
+X-MC-Unique: rPfsceHKO2Cwn-MZZ7ufXA-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id CE0781011A14;
- Wed, 24 Apr 2024 08:20:45 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.55])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 7B0222166B34;
- Wed, 24 Apr 2024 08:20:43 +0000 (UTC)
-Date: Wed, 24 Apr 2024 09:20:41 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Collin Walling <walling@linux.ibm.com>
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, thuth@redhat.com,
- david@redhat.com, wangyanan55@huawei.com, philmd@linaro.org,
- marcel.apfelbaum@gmail.com, eduardo@habkost.net, armbru@redhat.com
-Subject: Re: [PATCH v2 1/3] cpu-models: add "disable-deprecated-feats" option
- to cpu model expansion
-Message-ID: <ZijA2XFbPwxi0F4h@redhat.com>
-References: <20240423210655.66656-1-walling@linux.ibm.com>
- <20240423210655.66656-2-walling@linux.ibm.com>
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2B28318065AF;
+ Wed, 24 Apr 2024 08:17:13 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 0CBBA112132A;
+ Wed, 24 Apr 2024 08:17:13 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id D537121E66AB; Wed, 24 Apr 2024 10:17:10 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org,
+	John Snow <jsnow@redhat.com>
+Subject: [PULL 06/25] qapi/schema: declare type for
+ QAPISchemaObjectTypeMember.type
+Date: Wed, 24 Apr 2024 10:16:51 +0200
+Message-ID: <20240424081710.2907748-7-armbru@redhat.com>
+In-Reply-To: <20240424081710.2907748-1-armbru@redhat.com>
+References: <20240424081710.2907748-1-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240423210655.66656-2-walling@linux.ibm.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -82,101 +80,55 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 23, 2024 at 05:06:53PM -0400, Collin Walling wrote:
-> This optional parameter for query-cpu-model-expansion enables CPU
-> model features flagged as deprecated to appear in the resulting
-> list of properties.
-> 
-> This commit does not add support beyond adding a new argument
-> to the query. All queries with this option present will result
-> in an error claiming this option is not supported.
-> 
-> Signed-off-by: Collin Walling <walling@linux.ibm.com>
-> ---
->  qapi/machine-target.json         | 7 ++++++-
->  target/arm/arm-qmp-cmds.c        | 7 +++++++
->  target/i386/cpu-sysemu.c         | 7 +++++++
->  target/s390x/cpu_models_sysemu.c | 7 +++++++
->  4 files changed, 27 insertions(+), 1 deletion(-)
-> 
-> diff --git a/qapi/machine-target.json b/qapi/machine-target.json
-> index 29e695aa06..b9da284d2d 100644
-> --- a/qapi/machine-target.json
-> +++ b/qapi/machine-target.json
-> @@ -285,6 +285,10 @@
->  #
->  # @type: expansion type, specifying how to expand the CPU model
->  #
-> +# @disable-deprecated-feats: include CPU model features that are
-> +#     flagged as deprecated. If supported, these features will appear
-> +#     in the properties list paired with false.
-> +#
->  # Returns: a CpuModelExpansionInfo describing the expanded CPU model
->  #
->  # Errors:
-> @@ -298,7 +302,8 @@
->  ##
->  { 'command': 'query-cpu-model-expansion',
->    'data': { 'type': 'CpuModelExpansionType',
-> -            'model': 'CpuModelInfo' },
-> +            'model': 'CpuModelInfo',
-> +            '*disable-deprecated-feats': 'bool' },
->    'returns': 'CpuModelExpansionInfo',
->    'if': { 'any': [ 'TARGET_S390X',
->                     'TARGET_I386',
+From: John Snow <jsnow@redhat.com>
 
-I think this is an odd design approach. Lets consider the
-current output:
+A QAPISchemaObjectTypeMember's type gets resolved only during .check().
+We have QAPISchemaObjectTypeMember.__init__() initialize self.type =
+None, and .check() assign the actual type.  Using .type before .check()
+is wrong, and hopefully crashes due to the value being None.  Works.
 
-(QEMU) query-cpu-model-expansion type=static model={"name":"z14"}
-{
-    "return": {
-        "model": {
-            "name": "z14-base",
-            "props": {
-                "aefsi": true,
-                "aen": true,
-                ...snip...
-                "vxpd": true,
-                "zpci": true
-            }
-        }
-    }
-}
+However, it makes for awkward typing.  With .type:
+Optional[QAPISchemaType], mypy is of course unable to see that it's None
+before .check(), and a QAPISchemaType after.  To help it over the hump,
+we'd have to assert self.type is not None before all the (valid) uses.
+The assertion catches invalid uses, but only at run time; mypy can't
+flag them.
 
+Instead, declare .type in .__init__() as QAPISchemaType *without*
+initializing it.  Using .type before .check() now certainly crashes,
+which is an improvement.  Mypy still can't flag invalid uses, but that's
+okay.
 
-If we want to inform a mgmt app of some features being deprecated,
-why not just unconditionally include that info in the reply thus:
+Addresses typing errors such as these:
 
+qapi/schema.py:657: error: "None" has no attribute "alternate_qtype"  [attr-defined]
+qapi/schema.py:662: error: "None" has no attribute "describe"  [attr-defined]
 
-(QEMU) query-cpu-model-expansion type=static model={"name":"z14"}
-{
-    "return": {
-        "model": {
-            "name": "z14-base",
-            "props": {
-                "aefsi": true,
-                "aen": true,
-                ...snip...
-                "vxpd": true,
-                "zpci": true
-            }
-            "deprecated-props": ["ppa15", "ri"]
-        }
-    }
-}
+Signed-off-by: John Snow <jsnow@redhat.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Message-ID: <20240315152301.3621858-7-armbru@redhat.com>
+---
+ scripts/qapi/schema.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-
-With regards,
-Daniel
+diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
+index b298c8b4f9..307f8af01a 100644
+--- a/scripts/qapi/schema.py
++++ b/scripts/qapi/schema.py
+@@ -786,7 +786,7 @@ def __init__(self, name, info, typ, optional, ifcond=None, features=None):
+             assert isinstance(f, QAPISchemaFeature)
+             f.set_defined_in(name)
+         self._type_name = typ
+-        self.type = None
++        self.type: QAPISchemaType  # set during check()
+         self.optional = optional
+         self.features = features or []
+ 
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.44.0
 
 
