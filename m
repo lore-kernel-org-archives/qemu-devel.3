@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E263DC10F15
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 00:01:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F2F0C19F4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 00:01:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzmXx-0008Ia-T3; Wed, 24 Apr 2024 20:01:06 -0400
+	id 1rzmXr-0008Ft-3v; Wed, 24 Apr 2024 20:01:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rzmXY-0008AY-2e
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 20:00:45 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1rzmXT-00088d-0e
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 20:00:40 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rzmXU-0006BA-JI
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 20:00:38 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-1e65b29f703so3493095ad.3
- for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 17:00:35 -0700 (PDT)
+ id 1rzmXP-00069g-Pg
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 20:00:33 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1e834159f40so3377415ad.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 17:00:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714003234; x=1714608034; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714003230; x=1714608030; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=IYeP6b8MmHZVDWhGv2pjfTgnSIDzPsYfhG3pp0jo1l8=;
- b=yVKd6IiJ4WLPh8JbNIhaign1XAlfQNSu2aZE2QI3692m99Ti08I05AuSITWJiclf6K
- UvmsD51Ltx7z2Fv/IP0CJ1FMSlQlTu4LCGT2iJhtcTpo01XNPDWj0qd8A8yw9uLSR35h
- bQsKOmjSKcM+fQiFaVtxuIYA6crOZUkSzcgyTO3CEOuDzVR9NEJCyFeibrmsRAjMBHNI
- S9I8sNCQL6eMsa5984DEmFNJ3S6d7W37jRSg6r04TITGaARZ4/kXTwNmtYQNSOu57F5+
- K49ffYZe5ftXdRrk2/yRG4IavyKZ2KIkZxA/WUkfZSwMEvt2a3MdbVE+HqPphpY/FRGX
- ggyg==
+ :reply-to; bh=sPOPP89zz2v/sO50UiLzGptqHlTjqXVxcZh0h8hT7xk=;
+ b=JBykPiAJJnOAEdAqdZgEDVp0lK3YxwrCv4E35xwBcl118yZyoEzgidsOIxcaJsArbZ
+ H3z4nIdew8OR4jv4B7U37lfzsNdlhCbmkhp5GOTNV8kVwBH71GOIc1tHEfwZAMSfDdkF
+ Wik4Ex4sNA3UQUH9epp1L0o9A0Kv9NCRL/+49FvL9UG3K7JVeAGNd8+xybhsWD4qTNEr
+ +AvDuLXLNf2YFvfnjfXl5jUwAeIqBLDeTt6Faze+1K8V8QAm4E8oEs2Au81x27kPX4OH
+ V0pniLUvYyT/L24+0m2JFCkq/sT1mYtc2y/K6jXmBl0cwaoSk0u7Cyn0PiWUmIoPHCIc
+ pF3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714003234; x=1714608034;
+ d=1e100.net; s=20230601; t=1714003230; x=1714608030;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IYeP6b8MmHZVDWhGv2pjfTgnSIDzPsYfhG3pp0jo1l8=;
- b=nM/9rOqjVfAB/oNXaKHyQOIbAiCpJd0QKzQs/DVlLV+o92lMoDop3kdlW0cmVEoF50
- CludbvIxNtQKSka0P1YAPmVIszbpbgIuveKkWs8P9H7toHd/H6Az3YEYzRGyRpJRK5vk
- ga4JBH9bGKNz8qSGnzRq/D9Ha0b+XW1+SIR8e8CpkfrX4OMAq9EeLnO/ZH06mDt5ZKUE
- 2N5px0cz9sFslsTAcHIqe837TbUAT7w1s1PKWKq3Qb9rpHuV8Ey0xgYTUM+Lyjf3fCj4
- a/giJX2A29+ts6Zc4u5U3ZhMWTyyTOEDgaZeGerI0muoF3d8U3/Et+6cseni0vodpAAO
- QmGg==
-X-Gm-Message-State: AOJu0YwWTpkkvstC5Dr1Kic7tbfPKmWt8OjccpLtZvc/+J6nOhXL8H0z
- J4zfYyGKt4SEbkMFvrG8qn8b9NjXO2UboYXRuuBFeo0LDTdvrNVeP8rTlYhN16gZ/HMzi92e75i
- s
-X-Google-Smtp-Source: AGHT+IG+wXwIJ5DDKBE3v2vjMbwMT6fB2BoQ4sqn243jVbM9ko+vdsLJK+uOzzneJxEoCrcq4jq/dg==
-X-Received: by 2002:a17:902:7488:b0:1e2:a91c:9836 with SMTP id
- h8-20020a170902748800b001e2a91c9836mr3972979pll.33.1714003233839; 
- Wed, 24 Apr 2024 17:00:33 -0700 (PDT)
+ bh=sPOPP89zz2v/sO50UiLzGptqHlTjqXVxcZh0h8hT7xk=;
+ b=u4BnaWS50Yrh5JuCTew0FZCTt8oMMq2lgcnEs+DooM4ihuwRP6mbZ7LRakOD08WpRW
+ rYNaOnnVb+MtUAt6c4xqlN3XI8+ESffrusCTosjceMXPgNz4Y/ZTMiKnWtP3fWgk+EfC
+ pRxH6qnWw1vpIjoayzIiemp4pisYtUoJpMW77MlWbY9ys+WlOq0CyRUauVwTy9IMONvx
+ r1zCzQDe0uwIr8bXBzOGgBdnOPayVAVI4DiVGytCrmSMefHtbJJLBCLj9KpJJmPCfqAV
+ TwIUg1zkeSItlgYITHTfyocDjQDqNFy3Iygthn3FNG1jPJwOufiboFUX6zw8yEJVO34w
+ jGGw==
+X-Gm-Message-State: AOJu0YxJ1LQ6y+ZIemLatmpiGgEtk2WAyNXnqFeH99LJyz6xrjSJNCd/
+ AW+eYqUgmtY4YGCK0cNnmXpIOaGbeV/mDqLKPJjuuNUuXSq8HE1urknQeIiiqPEy7cA9b9E6EDN
+ v
+X-Google-Smtp-Source: AGHT+IF5AONCJfw0D+kbAFnqdA0Z8G2+P9urDtnC/x2VoHIe2Z/Z3/w+rbUlL9bi9b1oIfFxEDgfmw==
+X-Received: by 2002:a17:903:28f:b0:1e5:3c5:55a5 with SMTP id
+ j15-20020a170903028f00b001e503c555a5mr5186794plr.8.1714003228481; 
+ Wed, 24 Apr 2024 17:00:28 -0700 (PDT)
 Received: from stoup.. ([156.19.246.23]) by smtp.gmail.com with ESMTPSA id
- t6-20020a170902e84600b001e604438791sm12465715plg.156.2024.04.24.17.00.33
+ t6-20020a170902e84600b001e604438791sm12465715plg.156.2024.04.24.17.00.27
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Apr 2024 17:00:33 -0700 (PDT)
+ Wed, 24 Apr 2024 17:00:28 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 08/45] target/hppa: Add install_link
-Date: Wed, 24 Apr 2024 16:59:46 -0700
-Message-Id: <20240425000023.1002026-9-richard.henderson@linaro.org>
+Subject: [PATCH 02/45] target/hppa: Use hppa_form_gva_psw in hppa_cpu_get_pc
+Date: Wed, 24 Apr 2024 16:59:40 -0700
+Message-Id: <20240425000023.1002026-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240425000023.1002026-1-richard.henderson@linaro.org>
 References: <20240425000023.1002026-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,131 +92,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a common routine for writing the return address.
+This function is for log_pc(), which needs to produce a
+similar result to cpu_get_tb_cpu_state().
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/translate.c | 54 +++++++++++++++++++++++------------------
- 1 file changed, 31 insertions(+), 23 deletions(-)
+ target/hppa/cpu.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index cad33e7aa6..195a0e7e79 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -633,6 +633,23 @@ static void install_iaq_entries(DisasContext *ctx, uint64_t bi, TCGv_i64 bv,
-     }
+diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
+index 1d5f5086bf..7315567910 100644
+--- a/target/hppa/cpu.c
++++ b/target/hppa/cpu.c
+@@ -38,9 +38,10 @@ static void hppa_cpu_set_pc(CPUState *cs, vaddr value)
+ 
+ static vaddr hppa_cpu_get_pc(CPUState *cs)
+ {
+-    HPPACPU *cpu = HPPA_CPU(cs);
++    CPUHPPAState *env = cpu_env(cs);
+ 
+-    return cpu->env.iaoq_f;
++    return hppa_form_gva_psw(env->psw, (env->psw & PSW_C ? env->iasq_f : 0),
++                             env->iaoq_f & -4);
  }
  
-+static void install_link(DisasContext *ctx, unsigned link, bool with_sr0)
-+{
-+    tcg_debug_assert(ctx->null_cond.c == TCG_COND_NEVER);
-+    if (link) {
-+        if (ctx->iaoq_b == -1) {
-+            tcg_gen_addi_i64(cpu_gr[link], cpu_iaoq_b, 4);
-+        } else {
-+            tcg_gen_movi_i64(cpu_gr[link], ctx->iaoq_b + 4);
-+        }
-+#ifndef CONFIG_USER_ONLY
-+        if (with_sr0) {
-+            tcg_gen_mov_i64(cpu_sr[0], cpu_iasq_b);
-+        }
-+#endif
-+    }
-+}
-+
- static inline uint64_t iaoq_dest(DisasContext *ctx, int64_t disp)
- {
-     return ctx->iaoq_f + disp + 8;
-@@ -1786,9 +1803,7 @@ static bool do_dbranch(DisasContext *ctx, int64_t disp,
-     uint64_t dest = iaoq_dest(ctx, disp);
+ void cpu_get_tb_cpu_state(CPUHPPAState *env, vaddr *pc,
+@@ -61,8 +62,7 @@ void cpu_get_tb_cpu_state(CPUHPPAState *env, vaddr *pc,
+     flags |= env->psw & (PSW_W | PSW_C | PSW_D | PSW_P);
+     flags |= (env->iaoq_f & 3) << TB_FLAG_PRIV_SHIFT;
  
-     if (ctx->null_cond.c == TCG_COND_NEVER && ctx->null_lab == NULL) {
--        if (link != 0) {
--            copy_iaoq_entry(ctx, cpu_gr[link], ctx->iaoq_n, ctx->iaoq_n_var);
--        }
-+        install_link(ctx, link, false);
-         ctx->iaoq_n = dest;
-         if (is_n) {
-             ctx->null_cond.c = TCG_COND_ALWAYS;
-@@ -1796,10 +1811,7 @@ static bool do_dbranch(DisasContext *ctx, int64_t disp,
-     } else {
-         nullify_over(ctx);
+-    *pc = hppa_form_gva_psw(env->psw, (env->psw & PSW_C ? env->iasq_f : 0),
+-                            env->iaoq_f & -4);
++    *pc = hppa_cpu_get_pc(env_cpu(env));
+     *cs_base = env->iasq_f;
  
--        if (link != 0) {
--            copy_iaoq_entry(ctx, cpu_gr[link], ctx->iaoq_n, ctx->iaoq_n_var);
--        }
--
-+        install_link(ctx, link, false);
-         if (is_n && use_nullify_skip(ctx)) {
-             nullify_set(ctx, 0);
-             gen_goto_tb(ctx, 0, dest, dest + 4);
-@@ -1891,9 +1903,7 @@ static bool do_ibranch(DisasContext *ctx, TCGv_i64 dest,
-         next = tcg_temp_new_i64();
-         tcg_gen_mov_i64(next, dest);
- 
--        if (link != 0) {
--            copy_iaoq_entry(ctx, cpu_gr[link], ctx->iaoq_n, ctx->iaoq_n_var);
--        }
-+        install_link(ctx, link, false);
-         if (is_n) {
-             if (use_nullify_skip(ctx)) {
-                 install_iaq_entries(ctx, -1, next, -1, NULL);
-@@ -1910,16 +1920,17 @@ static bool do_ibranch(DisasContext *ctx, TCGv_i64 dest,
- 
-     nullify_over(ctx);
- 
-+    next = tcg_temp_new_i64();
-+    tcg_gen_mov_i64(next, dest);
-+
-+    install_link(ctx, link, false);
-     if (is_n && use_nullify_skip(ctx)) {
--        install_iaq_entries(ctx, -1, dest, -1, NULL);
-+        install_iaq_entries(ctx, -1, next, -1, NULL);
-         nullify_set(ctx, 0);
-     } else {
--        install_iaq_entries(ctx, ctx->iaoq_b, cpu_iaoq_b, -1, dest);
-+        install_iaq_entries(ctx, ctx->iaoq_b, cpu_iaoq_b, -1, next);
-         nullify_set(ctx, is_n);
-     }
--    if (link != 0) {
--        copy_iaoq_entry(ctx, cpu_gr[link], ctx->iaoq_n, ctx->iaoq_n_var);
--    }
- 
-     tcg_gen_lookup_and_goto_ptr();
-     ctx->base.is_jmp = DISAS_NORETURN;
-@@ -3898,10 +3909,7 @@ static bool trans_be(DisasContext *ctx, arg_be *a)
-     nullify_over(ctx);
- 
-     load_spr(ctx, new_spc, a->sp);
--    if (a->l) {
--        copy_iaoq_entry(ctx, cpu_gr[31], ctx->iaoq_n, ctx->iaoq_n_var);
--        tcg_gen_mov_i64(cpu_sr[0], cpu_iasq_b);
--    }
-+    install_link(ctx, a->l, true);
-     if (a->n && use_nullify_skip(ctx)) {
-         install_iaq_entries(ctx, -1, tmp, -1, NULL);
-         tcg_gen_mov_i64(cpu_iasq_f, new_spc);
-@@ -4018,16 +4026,16 @@ static bool trans_bve(DisasContext *ctx, arg_bve *a)
-     return do_ibranch(ctx, dest, a->l, a->n);
- #else
-     nullify_over(ctx);
--    dest = do_ibranch_priv(ctx, load_gpr(ctx, a->b));
-+    dest = tcg_temp_new_i64();
-+    tcg_gen_mov_i64(dest, load_gpr(ctx, a->b));
-+    dest = do_ibranch_priv(ctx, dest);
- 
-+    install_link(ctx, a->l, false);
-     install_iaq_entries(ctx, ctx->iaoq_b, cpu_iaoq_b, -1, dest);
-     if (ctx->iaoq_b == -1) {
-         tcg_gen_mov_i64(cpu_iasq_f, cpu_iasq_b);
-     }
-     tcg_gen_mov_i64(cpu_iasq_b, space_select(ctx, 0, dest));
--    if (a->l) {
--        copy_iaoq_entry(ctx, cpu_gr[a->l], ctx->iaoq_n, ctx->iaoq_n_var);
--    }
-     nullify_set(ctx, a->n);
-     tcg_gen_lookup_and_goto_ptr();
-     ctx->base.is_jmp = DISAS_NORETURN;
+     /* Insert a difference between IAOQ_B and IAOQ_F within the otherwise zero
 -- 
 2.34.1
 
