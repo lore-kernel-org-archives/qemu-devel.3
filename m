@@ -4,84 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82833C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 07:34:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A732C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 07:36:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzX9E-0004fk-8P; Wed, 24 Apr 2024 03:34:32 -0400
+	id 1rzXAt-0005NS-MB; Wed, 24 Apr 2024 03:36:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rzX9C-0004fV-2Y
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 03:34:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXAp-0005Mv-OZ
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 03:36:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rzX99-0006va-G9
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 03:34:29 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXAm-0007Pr-MU
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 03:36:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713944066;
+ s=mimecast20190719; t=1713944167;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rra5Xj35pasCpd5GbId8SOvFKTWdFwa1qtMG69oGDIM=;
- b=UwSRr7L6jpGLs4H4/MdjcNDZJP7cDCig8Jmsr37JeAU0FBGkD+Ff9N8FdpmU0mISlIhhw3
- 7Ha1a8ImxEWoyTjU19l5XBGCwYT7fipmiHBxhq1PuT0VMLys0riS9UyRwJm6ChQhKDLAAB
- 7aK0jSFO5F5q+tHnfYuQonmWcqt/QBs=
-Received: from mail-yb1-f197.google.com (mail-yb1-f197.google.com
- [209.85.219.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-543-lPGn8tKaPJySdMVqdK-Q0g-1; Wed, 24 Apr 2024 03:34:23 -0400
-X-MC-Unique: lPGn8tKaPJySdMVqdK-Q0g-1
-Received: by mail-yb1-f197.google.com with SMTP id
- 3f1490d57ef6-dc647f65573so13772690276.2
- for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 00:34:23 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713944063; x=1714548863;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=rra5Xj35pasCpd5GbId8SOvFKTWdFwa1qtMG69oGDIM=;
- b=VVd0PKxIKVQHpSR7CZCSaXUK8NJXQBIpMf042ZJCCMiVVfjDS/julUHt7SaGL6uGFN
- 7fZAJ7UJlsYYHTKEnn7OkuUL9aajcUEwOkG3x3qQ3SBILnd9GtzYOaDg31o2Vb3pUP53
- tbQMeI9I/RvKyyJS1Us6ODHRhwU8RGa0ib+rErnIR/HADEywTj5SmIsXvJv48babfOsq
- l1YDTtaB7xEXue/NJMM8CHXHhf8IXrFFKBkoeQBib+0yshDYNlJj55vTC4Sj+c102MkS
- JqQUY3rHpUOyIb+O8QkhRFHDviCmdwQFOvK8qMPrrzVY6vQyGAR64Yd5ik3OURXG3Rnd
- Wv5w==
-X-Gm-Message-State: AOJu0Ywf029WnkJdU+7KyEyuHEMOIe4YsSJcPdsc/wTtZzkYG0bgRvJZ
- tUQozHKYuNJ/R0i8DdLZ8Abh7KjeiGCYqq8GTgVSNnigTRtMPWEAvQ+3HnBK6az3wcoL42mr8p5
- Pe2S/bq4Y8fKw74UqAaFXTZxVHnOsG0fbQ5DNreiFrcfSE/dOAML9e7DnU0LoLkxu+SmG6Y3tUn
- /7ofXzK6dEcGcrvvbQeGO8fAq2hrA=
-X-Received: by 2002:a05:6902:114d:b0:de5:4b71:2d1d with SMTP id
- p13-20020a056902114d00b00de54b712d1dmr2372893ybu.29.1713944063221; 
- Wed, 24 Apr 2024 00:34:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE7IqYyMVHaAxDWhACvpsdUEDXRt20+3MFM3GiSRIeZeO9OqOiRHi8bzHNvlJ9TJbxQ/RmUTJrx2105rEWiSXU=
-X-Received: by 2002:a05:6902:114d:b0:de5:4b71:2d1d with SMTP id
- p13-20020a056902114d00b00de54b712d1dmr2372875ybu.29.1713944062872; Wed, 24
- Apr 2024 00:34:22 -0700 (PDT)
+ bh=pqXPdpx97BSzFQ7gHWn6BaMdsthAefXUokU9dQIKBZc=;
+ b=M+tLEQrIfM8kMxw4E7eK5mD/KY3IkM4Z65pgdBRhJKuKzoy770L87yXf+wib3ums6K758b
+ GHI0NG59m/njb6vemgDfToFAu0lCGM7FmN7DFbt8J/7c6ZM16nIYxIhbzzlSqrn3ssaaf5
+ Vo7YJM6g504FBTVLWu7RoBFRH2KiFnA=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-472-G7xM3ulTOLmon69cnr1YNQ-1; Wed,
+ 24 Apr 2024 03:36:02 -0400
+X-MC-Unique: G7xM3ulTOLmon69cnr1YNQ-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 214D03C1014E;
+ Wed, 24 Apr 2024 07:36:01 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 1C56B3543A;
+ Wed, 24 Apr 2024 07:36:00 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 524A221E6811; Wed, 24 Apr 2024 09:35:58 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,  Artyom Tarasenko <atar4qemu@gmail.com>,  Chris
+ Wulff <crwulff@gmail.com>,  "Edgar E. Iglesias"
+ <edgar.iglesias@gmail.com>,  Marek Vasut <marex@denx.de>,  Max Filippov
+ <jcmvbkbc@gmail.com>,  "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,  Nicholas Piggin
+ <npiggin@gmail.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel
+ Henrique Barboza <danielhb413@gmail.com>,  Yoshinori Sato
+ <ysato@users.sourceforge.jp>,  Richard Henderson
+ <richard.henderson@linaro.org>,  qemu-ppc@nongnu.org,  Laurent Vivier
+ <laurent@vivier.eu>,  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: Re: [PATCH-for-9.1 05/21] target/m68k: Replace qemu_printf() by
+ monitor_printf() in monitor
+In-Reply-To: <20240321154838.95771-6-philmd@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Thu, 21 Mar 2024 16:48:21
+ +0100")
+References: <20240321154838.95771-1-philmd@linaro.org>
+ <20240321154838.95771-6-philmd@linaro.org>
+Date: Wed, 24 Apr 2024 09:35:58 +0200
+Message-ID: <87sezb43hd.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20240410100345.389462-1-eperezma@redhat.com>
- <20240410100345.389462-2-eperezma@redhat.com>
- <558124df-be44-47ae-85b9-0f282fc3889c@oracle.com>
- <CAJaqyWeE3kfgN5Y0=Kj6oCOFwg0H-gQEr4g3TM+3_+5N7mfd=A@mail.gmail.com>
- <450d0da1-3d11-428b-bd89-d09a2964cdb1@oracle.com>
- <CAJaqyWfXNQJQdTcJ9V-mSUrMs9up7rpAMwyK-qB3BuJwbUw+5w@mail.gmail.com>
- <f2dcbc76-f90f-4abe-b5c3-f159befd07bd@oracle.com>
-In-Reply-To: <f2dcbc76-f90f-4abe-b5c3-f159befd07bd@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Wed, 24 Apr 2024 09:33:46 +0200
-Message-ID: <CAJaqyWeSrwVt6imakpccieqN_3C85JcOZuj=FR+Xnmr7FKFaAw@mail.gmail.com>
-Subject: Re: [RFC 1/2] iova_tree: add an id member to DMAMap
-To: Si-Wei Liu <si-wei.liu@oracle.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Lei Yang <leiyang@redhat.com>, 
- Peter Xu <peterx@redhat.com>, Jonah Palmer <jonah.palmer@oracle.com>, 
- Dragos Tatulea <dtatulea@nvidia.com>, Jason Wang <jasowang@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -89,7 +79,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.67,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,164 +95,342 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 24, 2024 at 12:21=E2=80=AFAM Si-Wei Liu <si-wei.liu@oracle.com>=
- wrote:
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+
+> Replace qemu_printf() by monitor_printf() / monitor_puts() in monitor.
+
+Why?  Here's my attempt at an answer: because this runs only within HMP
+command "info tlb".  Using qemu_printf() there isn't wrong, but with
+monitor_printf(), it's obvious that we print to the monitor.
+
+On monitor_printf() vs. monitor_puts().
+
+qemu_printf() behaves like monitor_printf() when monitor_cur() returns
+non-null, which it certainly does within a monitor command.
+
+monitor_printf() prints like monitor_puts() when monitor_is_qmp()
+returns false, which it certainly does within an HMP command.
+
+Note: despite their names, monitor_printf() and monitor_puts() are at
+different interface layers!=20=20
+
+We need a low-level function to send to a monitor, be it HMP or QMP:
+monitor_puts().
+
+We need a high-level function to format JSON and send it to QMP:
+qmp_send_response().
+
+We need a high-level functions to format text and send it to HMP:
+monitor_printf(), ...
+
+Naming the functions that expect an HMP monitor hmp_FOO() would make
+more sense.  Renaming them now would be quite some churn, though.
+Discussed at
+<https://lore.kernel.org/qemu-devel/87y1adm0os.fsf@pond.sub.org/>.
+
+HMP code using both two layers to print gives me a slightly queasy
+feeling.  It's not wrong, though.
+
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  target/m68k/cpu.h     |   2 +-
+>  target/m68k/helper.c  | 126 +++++++++++++++++++++---------------------
+>  target/m68k/monitor.c |   4 +-
+>  3 files changed, 67 insertions(+), 65 deletions(-)
 >
->
->
-> On 4/22/2024 1:49 AM, Eugenio Perez Martin wrote:
-> > On Sat, Apr 20, 2024 at 1:50=E2=80=AFAM Si-Wei Liu <si-wei.liu@oracle.c=
-om> wrote:
-> >>
-> >>
-> >> On 4/19/2024 1:29 AM, Eugenio Perez Martin wrote:
-> >>> On Thu, Apr 18, 2024 at 10:46=E2=80=AFPM Si-Wei Liu <si-wei.liu@oracl=
-e.com> wrote:
-> >>>>
-> >>>> On 4/10/2024 3:03 AM, Eugenio P=C3=A9rez wrote:
-> >>>>> IOVA tree is also used to track the mappings of virtio-net shadow
-> >>>>> virtqueue.  This mappings may not match with the GPA->HVA ones.
-> >>>>>
-> >>>>> This causes a problem when overlapped regions (different GPA but sa=
-me
-> >>>>> translated HVA) exists in the tree, as looking them by HVA will ret=
-urn
-> >>>>> them twice.  To solve this, create an id member so we can assign un=
-ique
-> >>>>> identifiers (GPA) to the maps.
-> >>>>>
-> >>>>> Signed-off-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
-> >>>>> ---
-> >>>>>     include/qemu/iova-tree.h | 5 +++--
-> >>>>>     util/iova-tree.c         | 3 ++-
-> >>>>>     2 files changed, 5 insertions(+), 3 deletions(-)
-> >>>>>
-> >>>>> diff --git a/include/qemu/iova-tree.h b/include/qemu/iova-tree.h
-> >>>>> index 2a10a7052e..34ee230e7d 100644
-> >>>>> --- a/include/qemu/iova-tree.h
-> >>>>> +++ b/include/qemu/iova-tree.h
-> >>>>> @@ -36,6 +36,7 @@ typedef struct DMAMap {
-> >>>>>         hwaddr iova;
-> >>>>>         hwaddr translated_addr;
-> >>>>>         hwaddr size;                /* Inclusive */
-> >>>>> +    uint64_t id;
-> >>>>>         IOMMUAccessFlags perm;
-> >>>>>     } QEMU_PACKED DMAMap;
-> >>>>>     typedef gboolean (*iova_tree_iterator)(DMAMap *map);
-> >>>>> @@ -100,8 +101,8 @@ const DMAMap *iova_tree_find(const IOVATree *tr=
-ee, const DMAMap *map);
-> >>>>>      * @map: the mapping to search
-> >>>>>      *
-> >>>>>      * Search for a mapping in the iova tree that translated_addr o=
-verlaps with the
-> >>>>> - * mapping range specified.  Only the first found mapping will be
-> >>>>> - * returned.
-> >>>>> + * mapping range specified and map->id is equal.  Only the first f=
-ound
-> >>>>> + * mapping will be returned.
-> >>>>>      *
-> >>>>>      * Return: DMAMap pointer if found, or NULL if not found.  Note=
- that
-> >>>>>      * the returned DMAMap pointer is maintained internally.  User =
-should
-> >>>>> diff --git a/util/iova-tree.c b/util/iova-tree.c
-> >>>>> index 536789797e..0863e0a3b8 100644
-> >>>>> --- a/util/iova-tree.c
-> >>>>> +++ b/util/iova-tree.c
-> >>>>> @@ -97,7 +97,8 @@ static gboolean iova_tree_find_address_iterator(g=
-pointer key, gpointer value,
-> >>>>>
-> >>>>>         needle =3D args->needle;
-> >>>>>         if (map->translated_addr + map->size < needle->translated_a=
-ddr ||
-> >>>>> -        needle->translated_addr + needle->size < map->translated_a=
-ddr) {
-> >>>>> +        needle->translated_addr + needle->size < map->translated_a=
-ddr ||
-> >>>>> +        needle->id !=3D map->id) {
-> >>>> It looks this iterator can also be invoked by SVQ from
-> >>>> vhost_svq_translate_addr() -> iova_tree_find_iova(), where guest GPA
-> >>>> space will be searched on without passing in the ID (GPA), and exact
-> >>>> match for the same GPA range is not actually needed unlike the mappi=
-ng
-> >>>> removal case. Could we create an API variant, for the SVQ lookup cas=
-e
-> >>>> specifically? Or alternatively, add a special flag, say skip_id_matc=
-h to
-> >>>> DMAMap, and the id match check may look like below:
-> >>>>
-> >>>> (!needle->skip_id_match && needle->id !=3D map->id)
-> >>>>
-> >>>> I think vhost_svq_translate_addr() could just call the API variant o=
-r
-> >>>> pass DMAmap with skip_id_match set to true to svq_iova_tree_find_iov=
-a().
-> >>>>
-> >>> I think you're totally right. But I'd really like to not complicate
-> >>> the API of the iova_tree more.
-> >>>
-> >>> I think we can look for the hwaddr using memory_region_from_host and
-> >>> then get the hwaddr. It is another lookup though...
-> >> Yeah, that will be another means of doing translation without having t=
-o
-> >> complicate the API around iova_tree. I wonder how the lookup through
-> >> memory_region_from_host() may perform compared to the iova tree one, t=
-he
-> >> former looks to be an O(N) linear search on a linked list while the
-> >> latter would be roughly O(log N) on an AVL tree?
-> > Even worse, as the reverse lookup (from QEMU vaddr to SVQ IOVA) is
-> > linear too. It is not even ordered.
-> Oh Sorry, I misread the code and I should look for g_tree_foreach ()
-> instead of g_tree_search_node(). So the former is indeed linear
-> iteration, but it looks to be ordered?
->
-> https://github.com/GNOME/glib/blob/main/glib/gtree.c#L1115
+> diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
+> index 346427e144..4e4307956d 100644
+> --- a/target/m68k/cpu.h
+> +++ b/target/m68k/cpu.h
+> @@ -620,6 +620,6 @@ static inline void cpu_get_tb_cpu_state(CPUM68KState =
+*env, vaddr *pc,
+>      }
+>  }
+>=20=20
+> -void dump_mmu(CPUM68KState *env);
+> +void dump_mmu(Monitor *mon, CPUM68KState *env);
+>=20=20
+>  #endif
+> diff --git a/target/m68k/helper.c b/target/m68k/helper.c
+> index 1a475f082a..310e26dfa1 100644
+> --- a/target/m68k/helper.c
+> +++ b/target/m68k/helper.c
+> @@ -25,7 +25,7 @@
+>  #include "exec/helper-proto.h"
+>  #include "gdbstub/helpers.h"
+>  #include "fpu/softfloat.h"
+> -#include "qemu/qemu-print.h"
+> +#include "monitor/monitor.h"
+>=20=20
+>  #define SIGNBIT (1u << 31)
+>=20=20
+> @@ -455,28 +455,30 @@ void m68k_switch_sp(CPUM68KState *env)
+>  #if !defined(CONFIG_USER_ONLY)
+>  /* MMU: 68040 only */
+>=20=20
+> -static void print_address_zone(uint32_t logical, uint32_t physical,
+> +static void print_address_zone(Monitor *mon,
+> +                               uint32_t logical, uint32_t physical,
+>                                 uint32_t size, int attr)
+>  {
+> -    qemu_printf("%08x - %08x -> %08x - %08x %c ",
+> -                logical, logical + size - 1,
+> -                physical, physical + size - 1,
+> -                attr & 4 ? 'W' : '-');
+> +    monitor_printf(mon, "%08x - %08x -> %08x - %08x %c ",
+> +                   logical, logical + size - 1,
+> +                   physical, physical + size - 1,
+> +                   attr & 4 ? 'W' : '-');
+>      size >>=3D 10;
+>      if (size < 1024) {
+> -        qemu_printf("(%d KiB)\n", size);
+> +        monitor_printf(mon, "(%d KiB)\n", size);
+>      } else {
+>          size >>=3D 10;
+>          if (size < 1024) {
+> -            qemu_printf("(%d MiB)\n", size);
+> +            monitor_printf(mon, "(%d MiB)\n", size);
+>          } else {
+>              size >>=3D 10;
+> -            qemu_printf("(%d GiB)\n", size);
+> +            monitor_printf(mon, "(%d GiB)\n", size);
+>          }
+>      }
+>  }
+>=20=20
+> -static void dump_address_map(CPUM68KState *env, uint32_t root_pointer)
+> +static void dump_address_map(Monitor *mon, CPUM68KState *env,
+> +                             uint32_t root_pointer)
+>  {
+>      int i, j, k;
+>      int tic_size, tic_shift;
+> @@ -545,7 +547,7 @@ static void dump_address_map(CPUM68KState *env, uint3=
+2_t root_pointer)
+>                      if (first_logical !=3D 0xffffffff) {
+>                          size =3D last_logical + (1 << tic_shift) -
+>                                 first_logical;
+> -                        print_address_zone(first_logical,
+> +                        print_address_zone(mon, first_logical,
+>                                             first_physical, size, last_at=
+tr);
+>                      }
+>                      first_logical =3D logical;
+> @@ -556,125 +558,125 @@ static void dump_address_map(CPUM68KState *env, u=
+int32_t root_pointer)
+>      }
+>      if (first_logical !=3D logical || (attr & 4) !=3D (last_attr & 4)) {
+>          size =3D logical + (1 << tic_shift) - first_logical;
+> -        print_address_zone(first_logical, first_physical, size, last_att=
+r);
+> +        print_address_zone(mon, first_logical, first_physical, size, las=
+t_attr);
+>      }
+>  }
+>=20=20
+>  #define DUMP_CACHEFLAGS(a) \
+>      switch (a & M68K_DESC_CACHEMODE) { \
+>      case M68K_DESC_CM_WRTHRU: /* cacheable, write-through */ \
+> -        qemu_printf("T"); \
+> +        monitor_puts(mon, "T"); \
 
-The GPA / IOVA are ordered but we're looking by QEMU's vaddr.
+Not wrong, but I'd stick to monitor_printf() to keep the transformation
+as simple as possible, and to sidestep the need for explaining the
+subtleties around monitor_printf() vs. monitor_puts() in the commit
+message.
 
-If we have these translations:
-[0x1000, 0x2000] -> [0x10000, 0x11000]
-[0x2000, 0x3000] -> [0x6000, 0x7000]
+>          break; \
+>      case M68K_DESC_CM_COPYBK: /* cacheable, copyback */ \
+> -        qemu_printf("C"); \
+> +        monitor_puts(mon, "C"); \
 
-We will see them in this order, so we cannot stop the search at the first n=
-ode.
+Likewise.  Not going to note this again.
 
-> >
-> > But apart from this detail you're right, I have the same concerns with
-> > this solution too. If we see a hard performance regression we could go
-> > to more complicated solutions, like maintaining a reverse IOVATree in
-> > vhost-iova-tree too. First RFCs of SVQ did that actually.
-> Agreed, yeap we can use memory_region_from_host for now.  Any reason why
-> reverse IOVATree was dropped, lack of users? But now we have one!
->
+>          break; \
+>      case M68K_DESC_CM_SERIAL: /* noncachable, serialized */ \
+> -        qemu_printf("S"); \
+> +        monitor_puts(mon, "S"); \
+>          break; \
+>      case M68K_DESC_CM_NCACHE: /* noncachable */ \
+> -        qemu_printf("N"); \
+> +        monitor_puts(mon, "N"); \
+>          break; \
+>      }
+>=20=20
+> -static void dump_ttr(uint32_t ttr)
+> +static void dump_ttr(Monitor *mon, uint32_t ttr)
+>  {
+>      if ((ttr & M68K_TTR_ENABLED) =3D=3D 0) {
+> -        qemu_printf("disabled\n");
+> +        monitor_puts(mon, "disabled\n");
+>          return;
+>      }
+> -    qemu_printf("Base: 0x%08x Mask: 0x%08x Control: ",
+> -                ttr & M68K_TTR_ADDR_BASE,
+> -                (ttr & M68K_TTR_ADDR_MASK) << M68K_TTR_ADDR_MASK_SHIFT);
+> +    monitor_printf(mon, "Base: 0x%08x Mask: 0x%08x Control: ",
+> +                   ttr & M68K_TTR_ADDR_BASE,
+> +                   (ttr & M68K_TTR_ADDR_MASK) << M68K_TTR_ADDR_MASK_SHIF=
+T);
+>      switch (ttr & M68K_TTR_SFIELD) {
+>      case M68K_TTR_SFIELD_USER:
+> -        qemu_printf("U");
+> +        monitor_puts(mon, "U");
+>          break;
+>      case M68K_TTR_SFIELD_SUPER:
+> -        qemu_printf("S");
+> +        monitor_puts(mon, "S");
+>          break;
+>      default:
+> -        qemu_printf("*");
+> +        monitor_puts(mon, "*");
+>          break;
+>      }
+>      DUMP_CACHEFLAGS(ttr);
+>      if (ttr & M68K_DESC_WRITEPROT) {
+> -        qemu_printf("R");
+> +        monitor_puts(mon, "R");
+>      } else {
+> -        qemu_printf("W");
+> +        monitor_puts(mon, "W");
+>      }
+> -    qemu_printf(" U: %d\n", (ttr & M68K_DESC_USERATTR) >>
+> +    monitor_printf(mon, " U: %d\n", (ttr & M68K_DESC_USERATTR) >>
+>                                 M68K_DESC_USERATTR_SHIFT);
+>  }
+>=20=20
+> -void dump_mmu(CPUM68KState *env)
+> +void dump_mmu(Monitor *mon, CPUM68KState *env)
+>  {
+>      if ((env->mmu.tcr & M68K_TCR_ENABLED) =3D=3D 0) {
+> -        qemu_printf("Translation disabled\n");
+> +        monitor_puts(mon, "Translation disabled\n");
+>          return;
+>      }
+> -    qemu_printf("Page Size: ");
+> +    monitor_puts(mon, "Page Size: ");
+>      if (env->mmu.tcr & M68K_TCR_PAGE_8K) {
+> -        qemu_printf("8kB\n");
+> +        monitor_puts(mon, "8kB\n");
+>      } else {
+> -        qemu_printf("4kB\n");
+> +        monitor_puts(mon, "4kB\n");
+>      }
+>=20=20
+> -    qemu_printf("MMUSR: ");
+> +    monitor_puts(mon, "MMUSR: ");
+>      if (env->mmu.mmusr & M68K_MMU_B_040) {
+> -        qemu_printf("BUS ERROR\n");
+> +        monitor_puts(mon, "BUS ERROR\n");
+>      } else {
+> -        qemu_printf("Phy=3D%08x Flags: ", env->mmu.mmusr & 0xfffff000);
+> +        monitor_printf(mon, "Phy=3D%08x Flags: ", env->mmu.mmusr & 0xfff=
+ff000);
+>          /* flags found on the page descriptor */
+>          if (env->mmu.mmusr & M68K_MMU_G_040) {
+> -            qemu_printf("G"); /* Global */
+> +            monitor_puts(mon, "G"); /* Global */
+>          } else {
+> -            qemu_printf(".");
+> +            monitor_puts(mon, ".");
+>          }
+>          if (env->mmu.mmusr & M68K_MMU_S_040) {
+> -            qemu_printf("S"); /* Supervisor */
+> +            monitor_puts(mon, "S"); /* Supervisor */
+>          } else {
+> -            qemu_printf(".");
+> +            monitor_puts(mon, ".");
+>          }
+>          if (env->mmu.mmusr & M68K_MMU_M_040) {
+> -            qemu_printf("M"); /* Modified */
+> +            monitor_puts(mon, "M"); /* Modified */
+>          } else {
+> -            qemu_printf(".");
+> +            monitor_puts(mon, ".");
+>          }
+>          if (env->mmu.mmusr & M68K_MMU_WP_040) {
+> -            qemu_printf("W"); /* Write protect */
+> +            monitor_puts(mon, "W"); /* Write protect */
+>          } else {
+> -            qemu_printf(".");
+> +            monitor_puts(mon, ".");
+>          }
+>          if (env->mmu.mmusr & M68K_MMU_T_040) {
+> -            qemu_printf("T"); /* Transparent */
+> +            monitor_puts(mon, "T"); /* Transparent */
+>          } else {
+> -            qemu_printf(".");
+> +            monitor_puts(mon, ".");
+>          }
+>          if (env->mmu.mmusr & M68K_MMU_R_040) {
+> -            qemu_printf("R"); /* Resident */
+> +            monitor_puts(mon, "R"); /* Resident */
+>          } else {
+> -            qemu_printf(".");
+> +            monitor_puts(mon, ".");
+>          }
+> -        qemu_printf(" Cache: ");
+> +        monitor_puts(mon, " Cache: ");
+>          DUMP_CACHEFLAGS(env->mmu.mmusr);
+> -        qemu_printf(" U: %d\n", (env->mmu.mmusr >> 8) & 3);
+> -        qemu_printf("\n");
+> +        monitor_printf(mon, " U: %d\n", (env->mmu.mmusr >> 8) & 3);
+> +        monitor_puts(mon, "\n");
+>      }
+>=20=20
+> -    qemu_printf("ITTR0: ");
+> -    dump_ttr(env->mmu.ttr[M68K_ITTR0]);
+> -    qemu_printf("ITTR1: ");
+> -    dump_ttr(env->mmu.ttr[M68K_ITTR1]);
+> -    qemu_printf("DTTR0: ");
+> -    dump_ttr(env->mmu.ttr[M68K_DTTR0]);
+> -    qemu_printf("DTTR1: ");
+> -    dump_ttr(env->mmu.ttr[M68K_DTTR1]);
+> +    monitor_puts(mon, "ITTR0: ");
+> +    dump_ttr(mon, env->mmu.ttr[M68K_ITTR0]);
+> +    monitor_puts(mon, "ITTR1: ");
+> +    dump_ttr(mon, env->mmu.ttr[M68K_ITTR1]);
+> +    monitor_puts(mon, "DTTR0: ");
+> +    dump_ttr(mon, env->mmu.ttr[M68K_DTTR0]);
+> +    monitor_puts(mon, "DTTR1: ");
+> +    dump_ttr(mon, env->mmu.ttr[M68K_DTTR1]);
+>=20=20
+> -    qemu_printf("SRP: 0x%08x\n", env->mmu.srp);
+> -    dump_address_map(env, env->mmu.srp);
+> +    monitor_printf(mon, "SRP: 0x%08x\n", env->mmu.srp);
+> +    dump_address_map(mon, env, env->mmu.srp);
+>=20=20
+> -    qemu_printf("URP: 0x%08x\n", env->mmu.urp);
+> -    dump_address_map(env, env->mmu.urp);
+> +    monitor_printf(mon, "URP: 0x%08x\n", env->mmu.urp);
+> +    dump_address_map(mon, env, env->mmu.urp);
+>  }
+>=20=20
+>  static int check_TTR(uint32_t ttr, int *prot, target_ulong addr,
+> diff --git a/target/m68k/monitor.c b/target/m68k/monitor.c
+> index 2bdf6acae0..623c6ab635 100644
+> --- a/target/m68k/monitor.c
+> +++ b/target/m68k/monitor.c
+> @@ -15,11 +15,11 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+>      CPUArchState *env1 =3D mon_get_cpu_env(mon);
+>=20=20
+>      if (!env1) {
+> -        monitor_printf(mon, "No CPU available\n");
+> +        monitor_puts(mon, "No CPU available\n");
+>          return;
+>      }
+>=20=20
+> -    dump_mmu(env1);
+> +    dump_mmu(mon, env1);
+>  }
+>=20=20
+>  static const MonitorDef monitor_defs[] =3D {
 
-No, it is just simplicity. We already have an user in the hot patch in
-the master branch, vhost_svq_vring_write_descs. But I never profiled
-enough to find if it is a bottleneck or not to be honest.
+In addition to replacing qemu_printf(), the patch passes the current
+monitor around.  The alternative is monitor_cur().  I guess you pass
+because you consider it cleaner and/or simpler.  No objection, but I
+suggest to mention it the commit message.
 
-I'll send the new series by today, thank you for finding these issues!
-
-> Thanks,
-> -Siwei
-> >
-> > Thanks!
-> >
-> >> Of course,
-> >> memory_region_from_host() won't search out of the guest memory space f=
-or
-> >> sure. As this could be on the hot data path I have a little bit
-> >> hesitance over the potential cost or performance regression this chang=
-e
-> >> could bring in, but maybe I'm overthinking it too much...
-> >>
-> >> Thanks,
-> >> -Siwei
-> >>
-> >>>> Thanks,
-> >>>> -Siwei
-> >>>>>             return false;
-> >>>>>         }
-> >>>>>
->
+The patch is not wrong, so
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
 
