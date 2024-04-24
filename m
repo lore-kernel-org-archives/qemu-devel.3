@@ -4,83 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21869C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 14:47:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FF5BC4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 15:12:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzdtb-00077D-DC; Wed, 24 Apr 2024 10:46:51 -0400
+	id 1rzeHf-0006Dm-KP; Wed, 24 Apr 2024 11:11:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1rzdtV-00076C-GQ
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 10:46:45 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1rzeHe-0006DY-4o
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 11:11:42 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1rzdtS-0005gb-Qv
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 10:46:45 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-a55ab922260so477394166b.3
- for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 07:46:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1rzeHc-0001cF-A6
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 11:11:41 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-1e51398cc4eso61908745ad.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 08:11:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1713970001; x=1714574801; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=YqZ0BRIapaMHeZ3lavwFhX+MMvltS4Y1Ce+4y0p7Jts=;
- b=FR2PfGcNiSjHZb5XqVyPghY4VGG+YPv7EeIzHMXaHCxXjkgTZU8G4Irx3jwtEbX+wK
- gyS7sBb7g2H6KC0E9VrZKVPzpAs/45XWmXNSJdfV7Wo6fXNeKm1ZWNECmZknLRMdZUUS
- yHkLC1kFOwRS9eFMR6t/2wDJHrMAc2wTee7BrwaYeB4PyYPQ8vz+45qY/e8NfZF6OWNr
- ir8QbaKeTgjFiFWdy0CLfjDQdeWsCX9ekNhMjYHLuXPUSV0LDCEf2PQXcd9a9YhInKpD
- BYJs1a4r4hzFxer7ctuCIB9B6Xo7L1znbWkLzdYR4CxBWWlpUCOr84dwk5CJ88XzGftM
- Fdqw==
+ d=gmail.com; s=20230601; t=1713971499; x=1714576299; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+ bh=ezga8vsGnxKuTmimBIH65oYj/ZjxeNdELLdMTwjb6Dw=;
+ b=j7iaefQkgGXQxcc0Avi+tnvJEB+ETR9u4vN0T6KVdBwfT8q8cPv3UUZq6MtfMXndWw
+ tZpKIhBqOCDFrtsYfDvwuG6hYiyKdeh1KdAi6SOzdsAE8TkRHnePwDDzs++tS7cyGLxg
+ FrGBhgBch3n2N7iipYw/WkhPbaa1MDuDmeZfzm7LcwyzX8aZ8HmD8HOMpPonFHUZvrQc
+ UR4nAVAHXo0MsU5qBzAwoDt1ieCjgdqHioM/ErExaw+nAjQTaXFtgtU4JMN/6R1/KFrB
+ NxO7X66qbLq4qIe5LahrOJjLxA9sGYYsVgzLVSCSuhGhrW2fHZ6D12hI8XZ5Fkjt9ghQ
+ br0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713970001; x=1714574801;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1713971499; x=1714576299;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YqZ0BRIapaMHeZ3lavwFhX+MMvltS4Y1Ce+4y0p7Jts=;
- b=aKi4l3yH+r7BOXgOcPO2U3koCi1BNT/Smyu7biJR9DcKoOC32tkouzLkDIZjrOUIhf
- ZBTEsPJhXk/fzLmfTv5oRWq55fKmDEAp/KJAXAKOUGwVJnt9hVNjB1T5woA3qMjyJm50
- z2aZM+3cl5WEmINIGjnZnFjvBzi6kSDCn7rFo3J8yfw87bgzpfarbhqFjvgJ0bEUjhi6
- T6ucrmYZGUw1mqnF3Be8uHCuQgloTP9N3eGQHBMJkKMV5FkXHVTllE2UG45AF2ynHJdl
- gh5kj139RJLuqWzmVrJXG0XeSuz221WXf+Fsq+s4HHNbaZgw4dq+AViSAfjVZxbj9wYx
- aUxw==
-X-Gm-Message-State: AOJu0YzyMktQCxiR1auGvVH0zMbhbI+LiTRFvyx0Mn9btwXHrlAig2Tc
- MmPEWcV/K+eoQrm4Ah2DSO8ZmsbT/cfhm2bKN7SVWL1DTVybSX12Lp3GNG6X20ZQC7Vs8QI42fO
- a4jY=
-X-Google-Smtp-Source: AGHT+IEeU8xcwX/+nJgDZkd944Ela0X3y0YOLO2axABSFVxGvvCvgYzsUFMvfOb+42Tw0AXDbq5z1w==
-X-Received: by 2002:a17:906:cb8f:b0:a58:71e7:d1e8 with SMTP id
- mf15-20020a170906cb8f00b00a5871e7d1e8mr1788434ejb.52.1713970000894; 
- Wed, 24 Apr 2024 07:46:40 -0700 (PDT)
-Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
- [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
+ bh=ezga8vsGnxKuTmimBIH65oYj/ZjxeNdELLdMTwjb6Dw=;
+ b=pYUg7R6Tm+geQOd0k/xmRglrwXCN4NglrjDi0+0A2pthb3rfsY9lWzM286LI6mxJGn
+ HyDrd8ysKux1xmyS/Yn4kjXhuArii5IVNN60JWFT3TNC454cpeFeYSjuQMNqvYkPlzP8
+ zCoWd7kI38/nw9FehqoQbtt5tX9XmK0b3JTAt6itvPv1HDqb6C+HKYYxfGXvyQtWFGK5
+ d01HOszopg5DE1CZM34c64uOYzaqOrRc1zKANg0Zo7P61z2k+RJDMOBrKP+EWBSuX3yY
+ 4t/TmaXyPkjmDWD67YA/gjiAYEZnt4Bc735nJ0KjKWjKfVyIMt1gwQGqrC9uoYvgBYjw
+ iLog==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUYu1lnDo+OlH0dtrG98Rx42G3OBTgbBUlYEiUkJqUJakTZK1OA65Sv5UZkqjPyioa22DVEwVdXXy9x6s7K1yQim0QON5M=
+X-Gm-Message-State: AOJu0YwHybgJtjn90zVOwqZ8TCBkCuDNDAm7/mpVKPS6Emkpvi11C1Nj
+ GdIm8/8NNrKxXmsUMDu48xSeOzRRgAc4GmsSx5wBm49HO/rdCh4E
+X-Google-Smtp-Source: AGHT+IEp5gL719XHCrSdKK2LRMn/KfaleYsQr5soML42TF5DPcAcSaN7Pb0dO41a3sq2uLeQZ3Yk9Q==
+X-Received: by 2002:a17:902:d2d2:b0:1e2:ca65:68c2 with SMTP id
+ n18-20020a170902d2d200b001e2ca6568c2mr3725205plc.51.1713971498728; 
+ Wed, 24 Apr 2024 08:11:38 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c?
+ ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
  by smtp.gmail.com with ESMTPSA id
- bu6-20020a170906a14600b00a57c75871d8sm2998529ejb.106.2024.04.24.07.46.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Apr 2024 07:46:40 -0700 (PDT)
-Date: Wed, 24 Apr 2024 16:46:39 +0200
-From: Andrew Jones <ajones@ventanamicro.com>
-To: qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Cc: christoph.muellner@vrull.eu, palmer@dabbelt.com, 
- alistair.francis@wdc.com, bin.meng@windriver.com, liwei1518@gmail.com, 
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com
-Subject: Re: [PATCH v3] target/riscv: Raise exceptions on wrs.nto
-Message-ID: <20240424-31025d6338d49bfbda2be736@orel>
-References: <20240424142808.62936-2-ajones@ventanamicro.com>
+ l3-20020a170903244300b001ea90148816sm537864pls.253.2024.04.24.08.11.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 24 Apr 2024 08:11:38 -0700 (PDT)
+Message-ID: <57027a7b-4811-4c30-8b0b-bdc4e76abe84@roeck-us.net>
+Date: Wed, 24 Apr 2024 08:11:36 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240424142808.62936-2-ajones@ventanamicro.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=ajones@ventanamicro.com; helo=mail-ej1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: Problems (timeouts) when testing usb-ohci with qemu
+To: Alan Stern <stern@rowland.harvard.edu>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ linux-usb@vger.kernel.org, Gerd Hoffmann <kraxel@redhat.com>,
+ qemu-devel@nongnu.org
+References: <4664cf39-5dfe-4557-959d-149640ca36e1@roeck-us.net>
+ <10f44ba3-51a4-42a6-85c7-f8068b56fee1@rowland.harvard.edu>
+ <52bac533-6b22-49b0-8390-ded9c075e72b@roeck-us.net>
+ <27fd4d9c-3be3-4d3d-87e3-8eddc507a634@rowland.harvard.edu>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
+In-Reply-To: <27fd4d9c-3be3-4d3d-87e3-8eddc507a634@rowland.harvard.edu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=groeck7@gmail.com; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,118 +146,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 24, 2024 at 04:28:09PM +0200, Andrew Jones wrote:
-> Implementing wrs.nto to always just return is consistent with the
-> specification, as the instruction is permitted to terminate the
-> stall for any reason, but it's not useful for virtualization, where
-> we'd like the guest to trap to the hypervisor in order to allow
-> scheduling of the lock holding VCPU. Change to always immediately
-> raise exceptions when the appropriate conditions are present,
-> otherwise continue to just return. Note, immediately raising
-> exceptions is also consistent with the specification since the
-> time limit that should expire prior to the exception is
-> implementation-specific.
+On 4/23/24 19:11, Alan Stern wrote:
+[ ... ]
 > 
-> Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
-> Reviewed-by: Christoph M??llner <christoph.muellner@vrull.eu>
-> ---
-> v3:
->  - Sending again, hoping the ?? remains in M??llner
-
-This looks like my mail reader (neomutt)'s problem. The patch was correct
-(also for v2) and other readers render it correctly. Sorry for the noise.
+> To avoid the overhead of repeated interrupts, it would be best to check the
+> interrupt status at the end of the routine and restart if any of the
+> enabled bits are set, as in your first patch.
+> 
+> If you would like to clean it up (get rid of the debugging stuff) and
+> submit it, I'll review it.
+> 
+Sure, I'll do that.
 
 Thanks,
-drew
+Guenter
 
-> v2:
->  - Added #ifndef CONFIG_USER_ONLY around helper call
-> 
->  target/riscv/helper.h                       |  1 +
->  target/riscv/insn_trans/trans_rvzawrs.c.inc | 29 ++++++++++++++-------
->  target/riscv/op_helper.c                    | 11 ++++++++
->  3 files changed, 32 insertions(+), 9 deletions(-)
-> 
-> diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-> index 8a635238514d..451261ce5a4f 100644
-> --- a/target/riscv/helper.h
-> +++ b/target/riscv/helper.h
-> @@ -132,6 +132,7 @@ DEF_HELPER_6(csrrw_i128, tl, env, int, tl, tl, tl, tl)
->  DEF_HELPER_1(sret, tl, env)
->  DEF_HELPER_1(mret, tl, env)
->  DEF_HELPER_1(wfi, void, env)
-> +DEF_HELPER_1(wrs_nto, void, env)
->  DEF_HELPER_1(tlb_flush, void, env)
->  DEF_HELPER_1(tlb_flush_all, void, env)
->  /* Native Debug */
-> diff --git a/target/riscv/insn_trans/trans_rvzawrs.c.inc b/target/riscv/insn_trans/trans_rvzawrs.c.inc
-> index 32efbff4d5a5..0eef03383889 100644
-> --- a/target/riscv/insn_trans/trans_rvzawrs.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvzawrs.c.inc
-> @@ -16,7 +16,7 @@
->   * this program.  If not, see <http://www.gnu.org/licenses/>.
->   */
->  
-> -static bool trans_wrs(DisasContext *ctx)
-> +static bool trans_wrs_sto(DisasContext *ctx, arg_wrs_sto *a)
->  {
->      if (!ctx->cfg_ptr->ext_zawrs) {
->          return false;
-> @@ -40,12 +40,23 @@ static bool trans_wrs(DisasContext *ctx)
->      return true;
->  }
->  
-> -#define GEN_TRANS_WRS(insn)                                     \
-> -static bool trans_ ## insn(DisasContext *ctx, arg_ ## insn *a)  \
-> -{                                                               \
-> -    (void)a;                                                    \
-> -    return trans_wrs(ctx);                                      \
-> -}
-> +static bool trans_wrs_nto(DisasContext *ctx, arg_wrs_nto *a)
-> +{
-> +    if (!ctx->cfg_ptr->ext_zawrs) {
-> +        return false;
-> +    }
->  
-> -GEN_TRANS_WRS(wrs_nto)
-> -GEN_TRANS_WRS(wrs_sto)
-> +    /*
-> +     * Depending on the mode of execution, mstatus.TW and hstatus.VTW, wrs.nto
-> +     * should raise an exception when the implementation-specific bounded time
-> +     * limit has expired. Our time limit is zero, so we either return
-> +     * immediately, as does our implementation of wrs.sto, or raise an
-> +     * exception, as handled by the wrs.nto helper.
-> +     */
-> +#ifndef CONFIG_USER_ONLY
-> +    gen_helper_wrs_nto(tcg_env);
-> +#endif
-> +
-> +    /* We only get here when helper_wrs_nto() doesn't raise an exception. */
-> +    return trans_wrs_sto(ctx, NULL);
-> +}
-> diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-> index f414aaebdbab..2baf5bc3ca19 100644
-> --- a/target/riscv/op_helper.c
-> +++ b/target/riscv/op_helper.c
-> @@ -380,6 +380,17 @@ void helper_wfi(CPURISCVState *env)
->      }
->  }
->  
-> +void helper_wrs_nto(CPURISCVState *env)
-> +{
-> +    if (env->virt_enabled && (env->priv == PRV_S || env->priv == PRV_U) &&
-> +        get_field(env->hstatus, HSTATUS_VTW) &&
-> +        !get_field(env->mstatus, MSTATUS_TW)) {
-> +        riscv_raise_exception(env, RISCV_EXCP_VIRT_INSTRUCTION_FAULT, GETPC());
-> +    } else if (env->priv != PRV_M && get_field(env->mstatus, MSTATUS_TW)) {
-> +        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
-> +    }
-> +}
-> +
->  void helper_tlb_flush(CPURISCVState *env)
->  {
->      CPUState *cs = env_cpu(env);
-> -- 
-> 2.44.0
-> 
 
