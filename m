@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F5A3C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 11:49:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5CA9C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 12:06:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzb7a-0002A8-DA; Wed, 24 Apr 2024 07:49:06 -0400
+	id 1rzbNR-0005Uu-Vy; Wed, 24 Apr 2024 08:05:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzb7U-00029R-9s
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 07:49:00 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzbNC-0005Sz-F9
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 08:05:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzb7S-0004QE-22
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 07:48:59 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzbN9-0007k7-9u
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 08:05:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713959336;
+ s=mimecast20190719; t=1713960308;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=8LsSbt/JsCLWeUKHRoiPkAe6pwdStXYgUmbK0K/5wcg=;
- b=hc+QF4iZe0/+pjNx3rgvNva3rlx715SFz+zdFkdcu5N2Hk9C3liBN0z7WFDEi2ccQ/Ce9X
- R8v49e/jUlUhsryy4OK43ivWRumwjgXK+Ne0SHYsCEbJlzA4MmtwOWguhL1n4PVwvO76pW
- bZJs+WEvYb8G3hoYbLpvuQAhlP95jAQ=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-562-tdZx5ms6MWGRARU8gitYoA-1; Wed, 24 Apr 2024 07:48:53 -0400
-X-MC-Unique: tdZx5ms6MWGRARU8gitYoA-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
+ bh=iVrYGxGITgZAFY6HD+X1tBO3SRfHgsn7badY2DEhpDg=;
+ b=JqbUcttNY5GwiB7Bd4txd3x+XbftEA6QQAjhPS0A31CEHjVwrNyrDzzoECTVPa3MOfm2CD
+ AMQxNy58bBig1QCSP4QTwoMXmO5EP04I/Gz+ysobkUM15m20BULPz+j6VJ74JynmWgm4Jk
+ z5NQ2s6ibKiklnO8bhcGJEt8Lica0JQ=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-592-y4sIrR3vMDmJHjd237aVUA-1; Wed,
+ 24 Apr 2024 08:05:06 -0400
+X-MC-Unique: y4sIrR3vMDmJHjd237aVUA-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id BE775834FB4;
- Wed, 24 Apr 2024 11:48:52 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 34FD629AC016;
+ Wed, 24 Apr 2024 12:05:06 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 2FFBB490EE;
- Wed, 24 Apr 2024 11:48:52 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id E388B1C060D0;
+ Wed, 24 Apr 2024 12:05:05 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 328AB21E6680; Wed, 24 Apr 2024 13:48:51 +0200 (CEST)
+ id 8BB5621E6680; Wed, 24 Apr 2024 14:05:04 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Cc: qemu-block@nongnu.org,  raphael@enfabrica.net,  mst@redhat.com,
  kwolf@redhat.com,  hreitz@redhat.com,  pbonzini@redhat.com,
- berrange@redhat.com,  eduardo@habkost.net,  dave@treblig.org,
- eblake@redhat.com,  qemu-devel@nongnu.org,  yc-core@yandex-team.ru
+ berrange@redhat.com,  eduardo@habkost.net,  armbru@redhat.com,
+ dave@treblig.org,  eblake@redhat.com,  qemu-devel@nongnu.org,
+ yc-core@yandex-team.ru
 Subject: Re: [PATCH v3 4/5] qapi: introduce device-sync-config
 In-Reply-To: <20240329183758.3360733-5-vsementsov@yandex-team.ru> (Vladimir
  Sementsov-Ogievskiy's message of "Fri, 29 Mar 2024 21:37:57 +0300")
 References: <20240329183758.3360733-1-vsementsov@yandex-team.ru>
  <20240329183758.3360733-5-vsementsov@yandex-team.ru>
-Date: Wed, 24 Apr 2024 13:48:51 +0200
-Message-ID: <87plufvv4s.fsf@pond.sub.org>
+Date: Wed, 24 Apr 2024 14:05:04 +0200
+Message-ID: <87bk5zvudr.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -96,110 +97,9 @@ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 > sync only in RUNNING state.
 >
 > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->  hw/block/vhost-user-blk.c | 27 ++++++++++++++++------
->  hw/virtio/virtio-pci.c    |  9 ++++++++
->  include/hw/qdev-core.h    |  3 +++
->  include/sysemu/runstate.h |  1 +
->  qapi/qdev.json            | 21 +++++++++++++++++
->  system/qdev-monitor.c     | 47 +++++++++++++++++++++++++++++++++++++++
->  system/runstate.c         |  5 +++++
->  7 files changed, 106 insertions(+), 7 deletions(-)
->
-> diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-> index 9e6bbc6950..2f301f380c 100644
-> --- a/hw/block/vhost-user-blk.c
-> +++ b/hw/block/vhost-user-blk.c
-> @@ -88,27 +88,39 @@ static void vhost_user_blk_set_config(VirtIODevice *vdev, const uint8_t *config)
->      s->blkcfg.wce = blkcfg->wce;
->  }
->  
-> +static int vhost_user_blk_sync_config(DeviceState *dev, Error **errp)
-> +{
-> +    int ret;
-> +    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-> +    VHostUserBlk *s = VHOST_USER_BLK(vdev);
-> +
-> +    ret = vhost_dev_get_config(&s->dev, (uint8_t *)&s->blkcfg,
-> +                               vdev->config_len, errp);
-> +    if (ret < 0) {
-> +        return ret;
-> +    }
-> +
-> +    memcpy(vdev->config, &s->blkcfg, vdev->config_len);
-> +    virtio_notify_config(vdev);
-> +
-> +    return 0;
-> +}
-> +
->  static int vhost_user_blk_handle_config_change(struct vhost_dev *dev)
->  {
->      int ret;
-> -    VirtIODevice *vdev = dev->vdev;
-> -    VHostUserBlk *s = VHOST_USER_BLK(dev->vdev);
->      Error *local_err = NULL;
->  
->      if (!dev->started) {
->          return 0;
->      }
->  
-> -    ret = vhost_dev_get_config(dev, (uint8_t *)&s->blkcfg,
-> -                               vdev->config_len, &local_err);
-> +    ret = vhost_user_blk_sync_config(DEVICE(dev->vdev), &local_err);
->      if (ret < 0) {
->          error_report_err(local_err);
->          return ret;
->      }
->  
-> -    memcpy(dev->vdev->config, &s->blkcfg, vdev->config_len);
-> -    virtio_notify_config(dev->vdev);
-> -
->      return 0;
->  }
 
-This factors vhost_user_blk_sync_config() out of
-vhost_user_blk_handle_config_change() for reuse.  Correct?
+[...]
 
->  
-> @@ -576,6 +588,7 @@ static void vhost_user_blk_class_init(ObjectClass *klass, void *data)
->  
->      device_class_set_props(dc, vhost_user_blk_properties);
->      dc->vmsd = &vmstate_vhost_user_blk;
-> +    dc->sync_config = vhost_user_blk_sync_config;
->      set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
->      vdc->realize = vhost_user_blk_device_realize;
->      vdc->unrealize = vhost_user_blk_device_unrealize;
-> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> index eaaf86402c..92afbae71c 100644
-> --- a/hw/virtio/virtio-pci.c
-> +++ b/hw/virtio/virtio-pci.c
-> @@ -2501,6 +2501,14 @@ static void virtio_pci_dc_realize(DeviceState *qdev, Error **errp)
->      vpciklass->parent_dc_realize(qdev, errp);
->  }
->  
-> +static int virtio_pci_sync_config(DeviceState *dev, Error **errp)
-> +{
-> +    VirtIOPCIProxy *proxy = VIRTIO_PCI(dev);
-> +    VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
-> +
-> +    return qdev_sync_config(DEVICE(vdev), errp);
-> +}
-> +
->  static void virtio_pci_class_init(ObjectClass *klass, void *data)
->  {
->      DeviceClass *dc = DEVICE_CLASS(klass);
-> @@ -2517,6 +2525,7 @@ static void virtio_pci_class_init(ObjectClass *klass, void *data)
->      device_class_set_parent_realize(dc, virtio_pci_dc_realize,
->                                      &vpciklass->parent_dc_realize);
->      rc->phases.hold = virtio_pci_bus_reset_hold;
-> +    dc->sync_config = virtio_pci_sync_config;
->  }
->  
-
-I tried to follow the callbacks, but quickly gave up.  Leaving to a
-reviewer who understands virtio.
-
->  static const TypeInfo virtio_pci_info = {
 > diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
 > index 9228e96c87..87135bdcdf 100644
 > --- a/include/hw/qdev-core.h
@@ -217,168 +117,17 @@ reviewer who understands virtio.
 >      DeviceRealize realize;
 >      DeviceUnrealize unrealize;
 > +    DeviceSyncConfig sync_config;
+
+I get
+
+    include/hw/qdev-core.h:179: warning: Function parameter or member 'sync_config' not described in 'DeviceClass'
+
+To fix this, cover the new member in the doc comment.
+
 >  
 >      /**
 >       * @vmsd: device state serialisation description for
-> @@ -546,6 +548,7 @@ bool qdev_hotplug_allowed(DeviceState *dev, Error **errp);
->   */
->  HotplugHandler *qdev_get_hotplug_handler(DeviceState *dev);
->  void qdev_unplug(DeviceState *dev, Error **errp);
-> +int qdev_sync_config(DeviceState *dev, Error **errp);
->  void qdev_simple_device_unplug_cb(HotplugHandler *hotplug_dev,
->                                    DeviceState *dev, Error **errp);
->  void qdev_machine_creation_done(void);
-> diff --git a/include/sysemu/runstate.h b/include/sysemu/runstate.h
-> index 0117d243c4..296af52322 100644
-> --- a/include/sysemu/runstate.h
-> +++ b/include/sysemu/runstate.h
-> @@ -5,6 +5,7 @@
->  #include "qemu/notify.h"
->  
->  bool runstate_check(RunState state);
-> +const char *current_run_state_str(void);
->  void runstate_set(RunState new_state);
->  RunState runstate_get(void);
->  bool runstate_is_running(void);
-> diff --git a/qapi/qdev.json b/qapi/qdev.json
-> index facaa0bc6a..e8be79c3d5 100644
-> --- a/qapi/qdev.json
-> +++ b/qapi/qdev.json
-> @@ -161,3 +161,24 @@
->  ##
->  { 'event': 'DEVICE_UNPLUG_GUEST_ERROR',
->    'data': { '*device': 'str', 'path': 'str' } }
-> +
-> +##
-> +# @device-sync-config:
-> +#
-> +# Synchronize config from backend to the guest. The command notifies
-> +# re-read the device config from the backend and notifies the guest
-> +# to re-read the config. The command may be used to notify the guest
-> +# about block device capcity change. Currently only vhost-user-blk
-> +# device supports this.
 
-I'm not sure I understand this.  To work towards an understanding, I
-rephrase it, and you point out the errors.
-
-     Synchronize device configuration from host to guest part.  First,
-     copy the configuration from the host part (backend) to the guest
-     part (frontend).  Then notify guest software that device
-     configuration changed.
-
-I wonder how configuration can get out of sync.  Can you explain?
-
-> +#
-> +# @id: the device's ID or QOM path
-> +#
-> +# Features:
-> +#
-> +# @unstable: The command is experimental.
-> +#
-> +# Since: 9.1
-> +##
-> +{ 'command': 'device-sync-config',
-> +  'features': [ 'unstable' ],
-> +  'data': {'id': 'str'} }
-> diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-> index 7e075d91c1..cb35ea0b86 100644
-> --- a/system/qdev-monitor.c
-> +++ b/system/qdev-monitor.c
-> @@ -23,6 +23,7 @@
->  #include "monitor/monitor.h"
->  #include "monitor/qdev.h"
->  #include "sysemu/arch_init.h"
-> +#include "sysemu/runstate.h"
->  #include "qapi/error.h"
->  #include "qapi/qapi-commands-qdev.h"
->  #include "qapi/qmp/dispatch.h"
-> @@ -969,6 +970,52 @@ void qmp_device_del(const char *id, Error **errp)
->      }
->  }
->  
-> +int qdev_sync_config(DeviceState *dev, Error **errp)
-> +{
-> +    DeviceClass *dc = DEVICE_GET_CLASS(dev);
-> +
-> +    if (!dc->sync_config) {
-> +        error_setg(errp, "device-sync-config is not supported for '%s'",
-> +                   object_get_typename(OBJECT(dev)));
-> +        return -ENOTSUP;
-> +    }
-> +
-> +    return dc->sync_config(dev, errp);
-> +}
-> +
-> +void qmp_device_sync_config(const char *id, Error **errp)
-> +{
-> +    DeviceState *dev;
-> +
-> +    /*
-> +     * During migration there is a race between syncing`config and
-> +     * migrating it, so let's just not allow it.
-
-Can you briefly explain the race?
-
-> +     *
-> +     * Moreover, let's not rely on setting up interrupts in paused
-> +     * state, which may be a part of migration process.
-
-What dependence exactly are you avoiding?  Config synchronization
-depending on guest interrupt delivery?
-
-> +     */
-> +
-> +    if (migration_is_running()) {
-> +        error_setg(errp, "Config synchronization is not allowed "
-> +                   "during migration.");
-
-qapi/error.h:
-
-     * The resulting message should be a single phrase, with no newline or
-     * trailing punctuation.
-
-Drop the period, please.
-
-> +        return;
-> +    }
-> +
-> +    if (!runstate_is_running()) {
-> +        error_setg(errp, "Config synchronization allowed only in '%s' state, "
-> +                   "current state is '%s'", RunState_str(RUN_STATE_RUNNING),
-> +                   current_run_state_str());
-> +        return;
-> +    }
-> +
-> +    dev = find_device_state(id, true, errp);
-> +    if (!dev) {
-> +        return;
-> +    }
-> +
-> +    qdev_sync_config(dev, errp);
-> +}
-> +
->  void hmp_device_add(Monitor *mon, const QDict *qdict)
->  {
->      Error *err = NULL;
-> diff --git a/system/runstate.c b/system/runstate.c
-> index d6ab860eca..8fd89172ae 100644
-> --- a/system/runstate.c
-> +++ b/system/runstate.c
-> @@ -189,6 +189,11 @@ bool runstate_check(RunState state)
->      return current_run_state == state;
->  }
->  
-> +const char *current_run_state_str(void)
-> +{
-> +    return RunState_str(current_run_state);
-> +}
-> +
-
-This helper is used just once.  Suggest to use
-RunState_str(runstate_get()) instead.
-
->  static void runstate_init(void)
->  {
->      const RunStateTransition *p;
+[...]
 
 
