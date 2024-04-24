@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5A8AC07E8E
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 15:58:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F68BC4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 16:06:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzf01-00056b-3O; Wed, 24 Apr 2024 11:57:33 -0400
+	id 1rzf75-00007D-AI; Wed, 24 Apr 2024 12:04:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rzezs-00056L-5r
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 11:57:24 -0400
-Received: from mgamail.intel.com ([192.198.163.15])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rzezp-0000ZR-Ho
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 11:57:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713974241; x=1745510241;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=szSvnPPOZogSbQg2l5FImdE9D+W2Mso6/U/ehpDLjtg=;
- b=izKOh63oGCKbT7myKf6mLyKKvl/DJlZfs0ngNNAZkLDeDNCuHwGD9rjw
- V1ctaV5rWyGx412KGOaJxQuoR+yKWi2R8/ObTpe6kiP5ZPmjUmr8Dk+ZB
- sXgMT28pXC1iMje7O8sr1Dn4rjsutDAM4P4i8jIDQoMb4cDFtJlo9rBQK
- GVm0OGNhmkv/xFwEYI96GZ+9xTd77RoSzrc7U5ERaelj1kxyTEe+xGoXu
- MncKuTqP2XXFrx2PpKjcBHtwEAFjxumxvOT4d7x95gwXvs6D9rCkWpGCL
- tLMR3D0fp31GUaptavTZl82e+FULR18ij6IjTDbkWBfk1u1oLe/ymN8V3 w==;
-X-CSE-ConnectionGUID: 5Pbnf+5MR+mygMl4WRVKEA==
-X-CSE-MsgGUID: 8RIzLh9RS+i2FpPXu/+Gcw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11054"; a="9776172"
-X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; 
-   d="scan'208";a="9776172"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Apr 2024 08:57:17 -0700
-X-CSE-ConnectionGUID: sPs8qcndRmmnxNGDQsUxSw==
-X-CSE-MsgGUID: DrAM4+fPRKKgQpa+TloHrg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; d="scan'208";a="24770849"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.242.48])
- ([10.124.242.48])
- by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Apr 2024 08:57:14 -0700
-Message-ID: <fb252e78-2e71-4422-9499-9eac69102eec@intel.com>
-Date: Wed, 24 Apr 2024 23:57:11 +0800
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rzf6x-00006R-Ev
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 12:04:46 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rzf6v-0001ea-Ow
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 12:04:43 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-56e69a51a33so6621423a12.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 09:04:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1713974679; x=1714579479; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=AvhxFkw9jqfxOrZ5LRzVFFZbTM1fOmun5chamhyiV+E=;
+ b=c00QQ/5JSjI1aIwpD8LUKni5NY7zpf2CRYNAlaG6jK9ApGQ++ElHUK0NirR7lo7vT5
+ 02IwyYfnzhT3VB4Gk1lxms8+fFQX8pVTAZDmm1pt/QdthuY23Pg8NKUB51Tkx3Y488Ge
+ d8m1thsJOCykNCu4vgqUBLUPK8cL7OE63wR/LIJmiDfT/4AvOtmX0H8bFkfDo0ZG12YD
+ kszQv8m3VIuLHv0Pa71JaLnV0FV+RnVDIziVSZm0S3IJOm4g0eQyJ7vnm81sEsDU1hrm
+ r5eP5hrIypZ+Yu8wS6E7DbmtB2nHNMngSdUTuEd6kLol4H8MevhMsKKEDCmxbdTMztiq
+ EzIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713974679; x=1714579479;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=AvhxFkw9jqfxOrZ5LRzVFFZbTM1fOmun5chamhyiV+E=;
+ b=inCroMckCe8bihErBuRZW5zmRk7hJYudQMI1Fp8ToF10w7WWsJIwZA/w4PrL4Hp2jh
+ 6NBm1U9vTGUMw3H3B/HBJ6AF3BEOE0dSNzdbL+HGfC6Azd5iBB12eYER4NMFYqbFuU9H
+ uPcEsfrGhQn257DtbRA0Px5xSjODMOS9yrznmEc1czGo0y0/97z6HA6b1emh9pJUjakO
+ BG4wScvvXmQINaK9rT5EocaGYz8Phkbk1DDCVx5eT14VKC9JAX+eIIySz5ugspFggapB
+ vojIPpjyulmaz9WMJI15DayYnEkLOnUriJYbPHmnX3ZB/4lxDYjzwVuB4ZiLzfKpaqOU
+ CODg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVeAIFoszLiRp3whMDKJ+iCdAHd8+vZGBcuISKE36oylNELYppH/O5a1RK7BZzn0XXPjpU+bAns6ZK8jgkPTFAJv6wBALE=
+X-Gm-Message-State: AOJu0Yxl3R10URaDBDaZ9r71oXB7BJ4Qo/lynTdAr8gaNGNVk0ABKitx
+ Btm52CjUQEH+wQ11IJ0//xK4C/taVym4VFzDm/HINdo+OkuE3J/FHmx/rBznuaWaLbRJne58W7/
+ VKJaBAll39OyMetS15gzA4W6WG0zGIrz33cSuFg==
+X-Google-Smtp-Source: AGHT+IHqynN6Er7RUqzNYSdpXRm3xyTkDQyDdl0S6wd4Al2pm8dfXtdVpli1JWpjULN1mQJWzBv2zy4TslT5/uV3B/0=
+X-Received: by 2002:a50:f688:0:b0:570:1ea6:e9d8 with SMTP id
+ d8-20020a50f688000000b005701ea6e9d8mr2137218edn.9.1713974679115; Wed, 24 Apr
+ 2024 09:04:39 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.1 0/7] target/i386/kvm: Cleanup the kvmclock feature
- name
-To: Zhao Liu <zhao1.liu@linux.intel.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, "Michael S . Tsirkin"
- <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Tim Wiederhake <twiederh@redhat.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
-References: <20240329101954.3954987-1-zhao1.liu@linux.intel.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20240329101954.3954987-1-zhao1.liu@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.15; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.668,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <CAFEAcA9JXOxkbQP6-1uTK+hG5yvYRcO31PYFZSxGjfrPis1nYA@mail.gmail.com>
+ <20240424125324.1628-1-adiupina@astralinux.ru>
+In-Reply-To: <20240424125324.1628-1-adiupina@astralinux.ru>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 24 Apr 2024 17:04:27 +0100
+Message-ID: <CAFEAcA-=kk_TQVRLLQvH96DC-ffmDqd_hU5=z=Og8ntYGxPUeg@mail.gmail.com>
+Subject: Re: [PATCH v2 RFC] fix host-endianness bug and prevent overflow
+To: Alexandra Diupina <adiupina@astralinux.ru>
+Cc: Alistair Francis <alistair@alistair23.me>, "Konrad,
+ Frederic" <Frederic.Konrad@amd.com>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, sdl.qemu@linuxtesting.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,87 +93,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/29/2024 6:19 PM, Zhao Liu wrote:
-> From: Zhao Liu <zhao1.liu@intel.com>
-> 
-> Hi list,
-> 
-> This series is based on Paolo's guest_phys_bits patchset [1].
-> 
-> Currently, the old and new kvmclocks have the same feature name
-> "kvmclock" in FeatureWordInfo[FEAT_KVM].
-> 
-> When I tried to dig into the history of this unusual naming and fix it,
-> I realized that Tim was already trying to rename it, so I picked up his
-> renaming patch [2] (with a new commit message and other minor changes).
-> 
-> 13 years age, the same name was introduced in [3], and its main purpose
-> is to make it easy for users to enable/disable 2 kvmclocks. Then, in
-> 2012, Don tried to rename the new kvmclock, but the follow-up did not
-> address Igor and Eduardo's comments about compatibility.
-> 
-> Tim [2], not long ago, and I just now, were both puzzled by the naming
-> one after the other.
+On Wed, 24 Apr 2024 at 13:53, Alexandra Diupina <adiupina@astralinux.ru> wrote:
+>
+> Add a type cast and use extract64() instead of extract32()
+> to avoid integer overflow on addition. Fix bit fields
+> extraction according to documentation.
+> Also fix host-endianness bug by swapping desc fields from guest
+> memory order to host memory order after dma_memory_read().
 
-The commit message of [3] said the reason clearly:
+Thanks for this patch. Could you split it into two, please?
+The error in handling of the descriptor extension fields is a
+separate problem from the endianness bug, so they should be
+fixed in separate patches.
 
-   When we tweak flags involving this value - specially when we use "-",
-   we have to act on both.
+> @@ -660,6 +660,24 @@ size_t xlnx_dpdma_start_operation(XlnxDPDMAState *s, uint8_t channel,
+>              break;
+>          }
+>
+> +        /* Convert from LE into host endianness.  */
+> +        desc.control = le32_to_cpu(desc.control);
+> +        desc.descriptor_id = le32_to_cpu(desc.descriptor_id);
+> +        desc.xfer_size = le32_to_cpu(desc.xfer_size);
+> +        desc.line_size_stride = le32_to_cpu(desc.line_size_stride);
+> +        desc.timestamp_lsb = le32_to_cpu(desc.timestamp_lsb);
+> +        desc.timestamp_msb = le32_to_cpu(desc.timestamp_msb);
+> +        desc.address_extension = le32_to_cpu(desc.address_extension);
+> +        desc.next_descriptor = le32_to_cpu(desc.next_descriptor);
+> +        desc.source_address = le32_to_cpu(desc.source_address);
+> +        desc.address_extension_23 = le32_to_cpu(desc.address_extension_23);
+> +        desc.address_extension_45 = le32_to_cpu(desc.address_extension_45);
+> +        desc.source_address2 = le32_to_cpu(desc.source_address2);
+> +        desc.source_address3 = le32_to_cpu(desc.source_address3);
+> +        desc.source_address4 = le32_to_cpu(desc.source_address4);
+> +        desc.source_address5 = le32_to_cpu(desc.source_address5);
+> +        desc.crc = le32_to_cpu(desc.crc);
+> +
+>          xlnx_dpdma_update_desc_info(s, channel, &desc);
+>
+>  #ifdef DEBUG_DPDMA
 
-So you are trying to change it to "when people want to disable kvmclock, 
-they need to use '-kvmclock,-kvmclock2' instead of '-kvmclock'"
+I would suggest factoring out a function like
 
-IMHO, I prefer existing code and I don't see much value of 
-differentiating them. If the current code puzzles you, then we can add 
-comment to explain.
+static MemTxResult xlnx_dpdma_read_descriptor(XlnxDPDMAState *s,
+uint64_t desc_addr,
+                                              DPDMADescriptor *desc)
 
-> So, this series is to push for renaming the new kvmclock feature to
-> "kvmclock2" and adding compatibility support for older machines (PC 9.0
-> and older).
-> 
-> Finally, let's put an end to decades of doubt about this name.
-> 
-> 
-> Next Step
-> =========
-> 
-> This series just separates the two kvmclocks from the naming, and in
-> subsequent patches I plan to stop setting kvmclock(old kcmclock) by
-> default as long as KVM supports kvmclock2 (new kvmclock).
+which wraps up "read the descriptor from desc_addr and fill in desc"
+as a single operation (by calling dma_memory_read() and then
+doing the byteswap).
 
-No. It will break existing guests that use KVM_FEATURE_CLOCKSOURCE.
-
-> Also, try to deprecate the old kvmclock in KVM side.
-> 
-> [1]: https://lore.kernel.org/qemu-devel/20240325141422.1380087-1-pbonzini@redhat.com/
-> [2]: https://lore.kernel.org/qemu-devel/20230908124534.25027-4-twiederh@redhat.com/
-> [3]: https://lore.kernel.org/qemu-devel/1300401727-5235-3-git-send-email-glommer@redhat.com/
-> [4]: https://lore.kernel.org/qemu-devel/1348171412-23669-3-git-send-email-Don@CloudSwitch.com/
-> 
-> Thanks and Best Regards,
-> Zhao
-> 
-> ---
-> Tim Wiederhake (1):
->    target/i386: Fix duplicated kvmclock name in FEAT_KVM
-> 
-> Zhao Liu (6):
->    target/i386/kvm: Add feature bit definitions for KVM CPUID
->    target/i386/kvm: Remove local MSR_KVM_WALL_CLOCK and
->      MSR_KVM_SYSTEM_TIME definitions
->    target/i386/kvm: Only Save/load kvmclock MSRs when kvmclock enabled
->    target/i386/kvm: Save/load MSRs of new kvmclock
->      (KVM_FEATURE_CLOCKSOURCE2)
->    target/i386/kvm: Add legacy_kvmclock cpu property
->    target/i386/kvm: Update comment in kvm_cpu_realizefn()
-> 
->   hw/i386/kvm/clock.c       |  5 ++--
->   hw/i386/pc.c              |  1 +
->   target/i386/cpu.c         |  3 +-
->   target/i386/cpu.h         | 32 +++++++++++++++++++++
->   target/i386/kvm/kvm-cpu.c | 25 ++++++++++++++++-
->   target/i386/kvm/kvm.c     | 59 +++++++++++++++++++++++++--------------
->   6 files changed, 99 insertions(+), 26 deletions(-)
-> 
-
+thanks
+-- PMM
 
