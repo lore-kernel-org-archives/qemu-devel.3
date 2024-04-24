@@ -4,38 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26DADC10F15
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 08:51:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB65CC10F16
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 08:51:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzYL4-00011J-Rb; Wed, 24 Apr 2024 04:50:51 -0400
+	id 1rzYL4-00011I-SJ; Wed, 24 Apr 2024 04:50:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rzYL2-0000xB-N9; Wed, 24 Apr 2024 04:50:48 -0400
+ id 1rzYL2-0000x9-JM; Wed, 24 Apr 2024 04:50:48 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rzYL0-0003ty-VO; Wed, 24 Apr 2024 04:50:48 -0400
+ id 1rzYL0-0003tz-Bi; Wed, 24 Apr 2024 04:50:48 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E17416152A;
+ by isrv.corpit.ru (Postfix) with ESMTP id DA1A861529;
  Wed, 24 Apr 2024 11:50:42 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 17BE1BE0DA;
+ by tsrv.corpit.ru (Postfix) with SMTP id 0B2DDBE0D9;
  Wed, 24 Apr 2024 11:50:36 +0300 (MSK)
-Received: (nullmailer pid 1179580 invoked by uid 1000);
- Wed, 24 Apr 2024 08:50:36 -0000
+Received: (nullmailer pid 1179576 invoked by uid 1000);
+ Wed, 24 Apr 2024 08:50:35 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-block@nongnu.org
-Subject: [PATCH 01/27] qemu-img: measure: convert img_size to signed,
- simplify handling
-Date: Wed, 24 Apr 2024 11:50:09 +0300
-Message-Id: <96a60661e238e62536306a149e353ef16b5d43fc.1713948448.git.mjt@tls.msk.ru>
+Subject: [PATCH v3 00/27] qemu-img: refersh options and --help handling,
+ cleanups
+Date: Wed, 24 Apr 2024 11:50:08 +0300
+Message-Id: <cover.1713948448.git.mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <cover.1713948448.git.mjt@tls.msk.ru>
-References: <cover.1713948448.git.mjt@tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -61,74 +59,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qemu_opt_set_number() expects signed int64_t.
+Quite big patchset trying to implement normal, readable qemu-img --help
+(and qemu-img COMMAND --help) output with readable descriptions, and
+adding many long options in the process.
 
-Use int64_t instead of uint64_t for img_size, use -1 as "unset"
-value instead of UINT64_MAX, and do not require temporary sval
-for conversion from string.
+In the end I stopped using qemu-img-opts.hx in qemu-img.c, perhaps
+this can be avoided, with only list of commands and their desrciptions
+kept there, but I don't see big advantage here.  The same list should
+be included in docs/tools/qemu-img.rst, - this is not done now.
 
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
----
- qemu-img.c | 19 +++++++------------
- 1 file changed, 7 insertions(+), 12 deletions(-)
+Also each command syntax isn't reflected in the doc for now, because
+I want to give good names for options first, - and there, we've quite
+some inconsistences and questions.  For example, measure --output=OFMT
+-O OFMT, - this is priceless :)  I've no idea why we have this ugly
+--output=json thing, why not have --json? ;)  I gave the desired
+format long name --target-format to avoid clash with --output.
 
-diff --git a/qemu-img.c b/qemu-img.c
-index 7668f86769..6e7ac2048f 100644
---- a/qemu-img.c
-+++ b/qemu-img.c
-@@ -5364,7 +5364,7 @@ static int img_measure(int argc, char **argv)
-     QemuOpts *sn_opts = NULL;
-     QemuOptsList *create_opts = NULL;
-     bool image_opts = false;
--    uint64_t img_size = UINT64_MAX;
-+    int64_t img_size = -1;
-     BlockMeasureInfo *info = NULL;
-     Error *local_err = NULL;
-     int ret = 1;
-@@ -5422,16 +5422,11 @@ static int img_measure(int argc, char **argv)
-             }
-             break;
-         case OPTION_SIZE:
--        {
--            int64_t sval;
--
--            sval = cvtnum("image size", optarg);
--            if (sval < 0) {
-+            img_size = cvtnum("image size", optarg);
-+            if (img_size < 0) {
-                 goto out;
-             }
--            img_size = (uint64_t)sval;
--        }
--        break;
-+            break;
-         }
-     }
- 
-@@ -5446,11 +5441,11 @@ static int img_measure(int argc, char **argv)
-         error_report("--image-opts, -f, and -l require a filename argument.");
-         goto out;
-     }
--    if (filename && img_size != UINT64_MAX) {
-+    if (filename && img_size != -1) {
-         error_report("--size N cannot be used together with a filename.");
-         goto out;
-     }
--    if (!filename && img_size == UINT64_MAX) {
-+    if (!filename && img_size == -1) {
-         error_report("Either --size N or one filename must be specified.");
-         goto out;
-     }
-@@ -5498,7 +5493,7 @@ static int img_measure(int argc, char **argv)
-             goto out;
-         }
-     }
--    if (img_size != UINT64_MAX) {
-+    if (img_size != -1) {
-         qemu_opt_set_number(opts, BLOCK_OPT_SIZE, img_size, &error_abort);
-     }
- 
+For rebase, src vs tgt probably should be renamed in local variables
+too, and I'm not even sure I've got the caches right. For caches,
+the thing is inconsistent across commands.
+
+For compare, I used --a-format/--b-format (for -f/-F), - this can
+be made --souce-format and --target-format, to compare source (file1)
+with target (file2).
+
+For bitmap, things are scary, I'm not sure what -b SRC_FILENAME
+really means, - for now I gave it --source option, but this does
+not make it more clear, suggestions welcome.
+
+There are many other inconsistencies, I can't fix them all in one go.
+
+Changes since v2:
+
+ - added Dan's R-Bs
+ - refined couple cvtnum conversions
+ - dropped "stop printing error twice in a few places"
+
+Michael Tokarev (27):
+  qemu-img: measure: convert img_size to signed, simplify handling
+  qemu-img: create: convert img_size to signed, simplify handling
+  qemu-img: global option processing and error printing
+  qemu-img: pass current cmd info into command handlers
+  qemu-img: create: refresh options/--help
+  qemu-img: factor out parse_output_format() and use it in the code
+  qemu-img: check: refresh options/--help
+  qemu-img: simplify --repair error message
+  qemu-img: commit: refresh options/--help
+  qemu-img: compare: refresh options/--help
+  qemu-img: convert: refresh options/--help
+  qemu-img: info: refresh options/--help
+  qemu-img: map: refresh options/--help
+  qemu-img: snapshot: allow specifying -f fmt
+  qemu-img: snapshot: make -l (list) the default, simplify option
+    handling
+  qemu-img: snapshot: refresh options/--help
+  qemu-img: rebase: refresh options/--help
+  qemu-img: resize: do not always eat last argument
+  qemu-img: resize: refresh options/--help
+  qemu-img: amend: refresh options/--help
+  qemu-img: bench: refresh options/--help
+  qemu-img: bitmap: refresh options/--help
+  qemu-img: dd: refresh options/--help
+  qemu-img: measure: refresh options/--help
+  qemu-img: implement short --help, remove global help() function
+  qemu-img: inline list of supported commands, remove qemu-img-cmds.h
+    include
+  qemu-img: extend cvtnum() and use it in more places
+
+ docs/tools/qemu-img.rst    |    4 +-
+ qemu-img-cmds.hx           |    4 +-
+ qemu-img.c                 | 1311 ++++++++++++++++++++++--------------
+ tests/qemu-iotests/049.out |    9 +-
+ 4 files changed, 821 insertions(+), 507 deletions(-)
+
 -- 
 2.39.2
 
