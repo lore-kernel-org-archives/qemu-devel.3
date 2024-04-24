@@ -4,91 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB199C07E8E
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 17:20:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96330C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 17:27:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzgH0-0001x6-86; Wed, 24 Apr 2024 13:19:11 -0400
+	id 1rzgOB-0003s8-7T; Wed, 24 Apr 2024 13:26:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rzgGr-0001wQ-O0
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:19:02 -0400
-Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rzgGn-00071U-GP
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:18:58 -0400
-Received: by mail-oi1-x22e.google.com with SMTP id
- 5614622812f47-3c5ee4ce695so66732b6e.0
- for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 10:18:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1713979136; x=1714583936; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=GsOCIQKFSyHzRI8PbcW9VcRuxJW59AWgDAEe38Er4SI=;
- b=QEiXX6Lz07YoOYbOXmddMidTty7TygN9qVDPOw3Z1qcegKd+Xga8JdHskcV5G0lgV0
- KIrSj+5QY5hBPWT55AzI9ouDADex82U+5KLgLT5LVuMhIfySNzK/hSVTdNCyOhybl6nQ
- fD6fpy8zkuMtLOKg2Z48afwN6eCSvm36Gs47Hy5x/dp2bSImHgSGG2080OpHwk5ZwQwa
- BjNIFZ+i9cN63NaOVU7kEq4kES2IwdpfWJ0bXx61vddwpsSDC1KkiK2pu91Fp4O5nslP
- pcy3kqAGxCdHc8w1xWU8Xcsy+un0uON3feeQthUPKZR32f16BTsbk/o+aVWxI2Gi4KUQ
- Y9Iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713979136; x=1714583936;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GsOCIQKFSyHzRI8PbcW9VcRuxJW59AWgDAEe38Er4SI=;
- b=GNRD9ACbUFHz9DblXg17y4T5aNq0cBAWJG0CAoZyYTYqHthTwdWWCphQkhXYakodWq
- icFJx4Fn1daCTkeOhpA5aqL24WMabYJ6up6s3X/jLgQPNZIjqSyj/zg+HMqhV488/fit
- O5fQH3xUQ/0W36AyCyOK59F0OcKKM7fkjmYU7qUSv3p9AINTLge/V5jYvYm6IXSdqVTX
- 6F3gtskoDCmczwLSd4qZveBjNAfbKuuEXB2XMrzrz72C0AP4igqgHKk48+N023cEHnDC
- yQF1m1Epjmgys+3Mb7v74tGTcsCgwIeK9pwosv2fQR0igS9PLDuiITQqiPdPG4um/bOl
- 8K4A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWOwF3gaZbD+1aTldHRWekL2H0ujcykZ8W7uX88rj+d5X3UIV+4UhNfTYwPtbObKDHIRQsCNo0Z7nntsIDVVP2yNIO7D9Q=
-X-Gm-Message-State: AOJu0Yy8aCcwC04wnX2Yi4udNjIqTb/T7jlwVyHhCPrC1BkxVkmHcHiO
- CY5WLFLzuOJNigZ7LcX9Z2w6fGqedQlCf5iU9JljBXX9bEMnQ7QN9zho82SAGVQ=
-X-Google-Smtp-Source: AGHT+IHykTZG/3+gty8JFJ0bl7IKuHEPHVwwezTCdbRkivI28Xx4Dw55dXnfVZpjegvbe/zCqoHdYA==
-X-Received: by 2002:a05:6870:f10c:b0:222:99cb:2215 with SMTP id
- k12-20020a056870f10c00b0022299cb2215mr3303030oac.28.1713979136046; 
- Wed, 24 Apr 2024 10:18:56 -0700 (PDT)
-Received: from [192.168.68.110] ([191.255.35.121])
- by smtp.gmail.com with ESMTPSA id
- fa19-20020a056a002d1300b006e57247f4e5sm11680927pfb.8.2024.04.24.10.18.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Apr 2024 10:18:55 -0700 (PDT)
-Message-ID: <a619f516-d174-428a-aa19-52664282265b@ventanamicro.com>
-Date: Wed, 24 Apr 2024 14:18:50 -0300
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzgO8-0003rv-QV
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:26:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzgO6-00014P-VS
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:26:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713979589;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lNZ2GSMyKTkCQIOnN2LNE4NSLe1XqgAYfruR0VO0M+g=;
+ b=P3Haj4k5i1aR+2L1am/9zTNFQwY3Vuk3/cp7NozWpKIDKe+LGxv11ugsnLfctL2mjaNSnV
+ wTbumX0o/XYirc6vRlLKzbvGQZD44dCHOjE+hPfA5wb9ahkC55d/nUebSFijM43uz/2wde
+ nKPcOQvx5vBT7Txvg37XB/ZJBIHzosM=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-31-Ta705BcSOjWjRm34S_r5FQ-1; Wed, 24 Apr 2024 13:26:26 -0400
+X-MC-Unique: Ta705BcSOjWjRm34S_r5FQ-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3DEF31815A81;
+ Wed, 24 Apr 2024 17:26:25 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id BC10040C6CC0;
+ Wed, 24 Apr 2024 17:26:24 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id B030F21E66C8; Wed, 24 Apr 2024 19:26:23 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: fan <nifan.cxl@gmail.com>
+Cc: qemu-devel@nongnu.org,  jonathan.cameron@huawei.com,
+ linux-cxl@vger.kernel.org,  gregory.price@memverge.com,
+ ira.weiny@intel.com,  dan.j.williams@intel.com,
+ a.manzanares@samsung.com,  dave@stgolabs.net,  nmtadam.samsung@gmail.com,
+ jim.harris@samsung.com,  Jorgen.Hansen@wdc.com,  wj28.lee@gmail.com,  Fan
+ Ni <fan.ni@samsung.com>
+Subject: Re: [PATCH v5 09/13] hw/cxl/events: Add qmp interfaces to
+ add/release dynamic capacity extents
+In-Reply-To: <Zik88BUMsMEFb0Nr@debian> (fan's message of "Wed, 24 Apr 2024
+ 10:10:08 -0700")
+References: <20240304194331.1586191-1-nifan.cxl@gmail.com>
+ <20240304194331.1586191-10-nifan.cxl@gmail.com>
+ <87a5livrdr.fsf@pond.sub.org> <Zik88BUMsMEFb0Nr@debian>
+Date: Wed, 24 Apr 2024 19:26:23 +0200
+Message-ID: <87pluebrk0.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/riscv/kvm: remove sneaky strerrorname_np()
- instance
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- thuth@redhat.com, alex.bennee@linaro.org, mjt@tls.msk.ru,
- ajones@ventanamicro.com
-References: <20240424094700.453356-1-dbarboza@ventanamicro.com>
- <20240424094700.453356-2-dbarboza@ventanamicro.com>
- <82079170-9d82-46d5-81e4-44d3b38b551f@linaro.org>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <82079170-9d82-46d5-81e4-44d3b38b551f@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22e;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-oi1-x22e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.668,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,52 +89,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+fan <nifan.cxl@gmail.com> writes:
 
+> On Wed, Apr 24, 2024 at 03:09:52PM +0200, Markus Armbruster wrote:
+>> nifan.cxl@gmail.com writes:
+>> 
+>> > From: Fan Ni <fan.ni@samsung.com>
+>> >
+>> > Since fabric manager emulation is not supported yet, the change implements
+>> > the functions to add/release dynamic capacity extents as QMP interfaces.
+>> 
+>> Will fabric manager emulation obsolete these commands?
+>> 
+>
+> Hi Markus,
+> Thanks for reviewing the patchset. This is v5 and we have sent out v7
+> recently, there are a lot of changes from v5 to v7.
+>
+> FYI. v7: https://lore.kernel.org/linux-cxl/ZiaFYUB6FC9NR7W4@memverge.com/T/#t
 
-On 4/24/24 06:55, Philippe Mathieu-Daudé wrote:
-> On 24/4/24 11:46, Daniel Henrique Barboza wrote:
->> Commit d424db2354 excluded some strerrorname_np() instances because they
->> break musl libc builds. Another instance happened to slip by via commit
->> d4ff3da8f4.
->>
->> Remove it before it causes trouble again.
->>
->> Fixes: d4ff3da8f4 (target/riscv/kvm: initialize 'vlenb' via get-reg-list)
->> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->> ---
->>   target/riscv/kvm/kvm-cpu.c | 4 ++--
->>   1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
->> index 6a6c6cae80..ee69ea9785 100644
->> --- a/target/riscv/kvm/kvm-cpu.c
->> +++ b/target/riscv/kvm/kvm-cpu.c
->> @@ -1054,8 +1054,8 @@ static void kvm_riscv_read_vlenb(RISCVCPU *cpu, KVMScratchCPU *kvmcpu,
->>           ret = ioctl(kvmcpu->cpufd, KVM_GET_ONE_REG, &reg);
->>           if (ret != 0) {
->> -            error_report("Unable to read vlenb register, error code: %s",
->> -                         strerrorname_np(errno));
->> +            error_report("Unable to read vlenb register, error code: %d",
->> +                         errno);
-> 
-> Why not use "%s" strerror(errno)?
+Missed it because you neglected to cc: me for qapi/cxl.json :)
 
-It's not exactly the same. For errno = 2 strerrorname_np() gives "ENOENT", and
-sterror() gives "No such file or directory". In this particular context I think
-just printing a "error code -2" is clearer because we're not mentioning files and
-dirs in a KVM reg context.
+Thanks!
 
-But in the end I don't mind changing to strerror() if you feel strong about it. It's
-fine either way.
-
-
-Thanks,
-
-
-Daniel
-
-> 
->>               exit(EXIT_FAILURE);
->>           }
-> 
 
