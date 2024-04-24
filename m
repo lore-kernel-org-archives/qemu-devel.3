@@ -4,54 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 328D3C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 12:54:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3EC8C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 12:55:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzc8d-0002na-Gp; Wed, 24 Apr 2024 08:54:15 -0400
+	id 1rzc9b-0003a0-E8; Wed, 24 Apr 2024 08:55:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adiupina@astralinux.ru>)
- id 1rzc8b-0002n2-2N; Wed, 24 Apr 2024 08:54:13 -0400
-Received: from new-mail.astralinux.ru ([51.250.53.164])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rzc99-00039n-2H
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 08:54:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adiupina@astralinux.ru>)
- id 1rzc8Y-0007U8-SA; Wed, 24 Apr 2024 08:54:12 -0400
-Received: from rbta-msk-lt-302690.astralinux.ru (unknown [10.177.236.253])
- by new-mail.astralinux.ru (Postfix) with ESMTPA id 4VPf7S5hhRzqSQj;
- Wed, 24 Apr 2024 15:53:56 +0300 (MSK)
-From: Alexandra Diupina <adiupina@astralinux.ru>
-To: Alistair Francis <alistair@alistair23.me>
-Cc: Alexandra Diupina <adiupina@astralinux.ru>,
- "Konrad, Frederic" <Frederic.Konrad@amd.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, sdl.qemu@linuxtesting.org
-Subject: [PATCH v2 RFC] fix host-endianness bug and prevent overflow
-Date: Wed, 24 Apr 2024 15:53:24 +0300
-Message-Id: <20240424125324.1628-1-adiupina@astralinux.ru>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <CAFEAcA9JXOxkbQP6-1uTK+hG5yvYRcO31PYFZSxGjfrPis1nYA@mail.gmail.com>
-References: 
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rzc94-0007XV-IT
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 08:54:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713963281;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=qVynGe+t5z5NyGs0+Qd10ORM1+RjFFwRMd09+L7iEaM=;
+ b=QiTLYD37IwuQFIEEh5q9qqokS4xuNvkBbzC0+Ta1P0RSRrKWkF4cFWMJAlKAkiCOCedtXE
+ UeIgmrf//tOEo4DOSjhYngxSQ/XDBrngHAdRirE1LFxxNmuxqfQirIEBK4VWXyvLCbP7GU
+ pR9MnLSoXSMBZzLVSsqlL2ww9dZRumE=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-10--WmtGsSKPa2Q2xgWhZS6vA-1; Wed,
+ 24 Apr 2024 08:54:37 -0400
+X-MC-Unique: -WmtGsSKPa2Q2xgWhZS6vA-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 912DE29AC018;
+ Wed, 24 Apr 2024 12:54:37 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.39.195.34])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 35823EC682;
+ Wed, 24 Apr 2024 12:54:34 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Tony Krowiak <akrowiak@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>, Thomas Huth <thuth@redhat.com>
+Cc: qemu-s390x@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH] vfio/ap: Use g_autofree variable
+Date: Wed, 24 Apr 2024 14:54:32 +0200
+Message-ID: <20240424125432.215886-1-clg@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-DrWeb-SpamScore: -100
-X-DrWeb-SpamState: legit
-X-DrWeb-SpamDetail: gggruggvucftvghtrhhoucdtuddrgedvfedrvdehuddgtddvucetufdoteggodetrfcurfhrohhfihhlvgemucfftfghgfeunecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeetlhgvgigrnhgurhgrucffihhuphhinhgruceorgguihhuphhinhgrsegrshhtrhgrlhhinhhugidrrhhuqeenucggtffrrghtthgvrhhnpeefkedufedvkeffuedtgfdugeeutdegvdffffejfffgleffieduhfejvdelffdvudenucffohhmrghinheplhhinhhugihtvghsthhinhhgrdhorhhgnecukfhppedutddrudejjedrvdefiedrvdehfeenucfrrghrrghmpehhvghloheprhgsthgrqdhmshhkqdhlthdqfedtvdeiledtrdgrshhtrhgrlhhinhhugidrrhhupdhinhgvthepuddtrddujeejrddvfeeirddvheefmeefjedufeekpdhmrghilhhfrhhomheprgguihhuphhinhgrsegrshhtrhgrlhhinhhugidrrhhupdhnsggprhgtphhtthhopeekpdhrtghpthhtoheprghlihhsthgrihhrsegrlhhishhtrghirhdvfedrmhgvpdhrtghpthhtoheprgguihhuphhinhgrsegrshhtrhgrlhhinhhugidrrhhupdhrtghpthhtohephfhrvgguvghrihgtrdfmohhnrhgrugesrghmugdrtghomhdprhgtphhtthhopegvughgrghrrdhighhlvghsihgrshesghhmrghilhdrtghomhdprhgtphhtth
- hopehpvghtvghrrdhmrgihuggvlhhlsehlihhnrghrohdrohhrghdprhgtphhtthhopehqvghmuhdqrghrmhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehsughlrdhqvghmuheslhhinhhugihtvghsthhinhhgrdhorhhg
-X-DrWeb-SpamVersion: Vade Retro 01.423.251#02 AS+AV+AP Profile: DRWEB;
- Bailout: 300
-X-AntiVirus: Checked by Dr.Web [MailD: 11.1.19.2307031128,
- SE: 11.1.12.2210241838, Core engine: 7.00.62.01180, Virus records: 12628564,
- Updated: 2024-Apr-24 10:54:44 UTC]
-Received-SPF: pass client-ip=51.250.53.164;
- envelope-from=adiupina@astralinux.ru; helo=new-mail.astralinux.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.668,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,85 +80,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a type cast and use extract64() instead of extract32()
-to avoid integer overflow on addition. Fix bit fields
-extraction according to documentation.
-Also fix host-endianness bug by swapping desc fields from guest
-memory order to host memory order after dma_memory_read().
+Also change the return value of vfio_ap_register_irq_notifier() to be
+a bool since it takes and 'Error **' argument. See the qapi/error.h
+Rules section.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: d3c6369a96 ("introduce xlnx-dpdma")
-Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/dma/xlnx_dpdma.c | 38 ++++++++++++++++++++++++++++----------
- 1 file changed, 28 insertions(+), 10 deletions(-)
+ hw/vfio/ap.c | 19 ++++++++-----------
+ 1 file changed, 8 insertions(+), 11 deletions(-)
 
-diff --git a/hw/dma/xlnx_dpdma.c b/hw/dma/xlnx_dpdma.c
-index dd66be5265..d22b942274 100644
---- a/hw/dma/xlnx_dpdma.c
-+++ b/hw/dma/xlnx_dpdma.c
-@@ -175,24 +175,24 @@ static uint64_t xlnx_dpdma_desc_get_source_address(DPDMADescriptor *desc,
+diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+index 7c4caa5938636937680fec87e999249ac84a4498..8bb024e2fde4a1d72346dee4b662d762374326b9 100644
+--- a/hw/vfio/ap.c
++++ b/hw/vfio/ap.c
+@@ -70,14 +70,14 @@ static void vfio_ap_req_notifier_handler(void *opaque)
+     }
+ }
  
-     switch (frag) {
-     case 0:
--        addr = desc->source_address
--            + (extract32(desc->address_extension, 16, 12) << 20);
-+        addr = (uint64_t)desc->source_address
-+            + (extract64(desc->address_extension, 16, 16) << 32);
-         break;
-     case 1:
--        addr = desc->source_address2
--            + (extract32(desc->address_extension_23, 0, 12) << 8);
-+        addr = (uint64_t)desc->source_address2
-+            + (extract64(desc->address_extension_23, 0, 16) << 32);
-         break;
-     case 2:
--        addr = desc->source_address3
--            + (extract32(desc->address_extension_23, 16, 12) << 20);
-+        addr = (uint64_t)desc->source_address3
-+            + (extract64(desc->address_extension_23, 16, 16) << 32);
-         break;
-     case 3:
--        addr = desc->source_address4
--            + (extract32(desc->address_extension_45, 0, 12) << 8);
-+        addr = (uint64_t)desc->source_address4
-+            + (extract64(desc->address_extension_45, 0, 16) << 32);
-         break;
-     case 4:
--        addr = desc->source_address5
--            + (extract32(desc->address_extension_45, 16, 12) << 20);
-+        addr = (uint64_t)desc->source_address5
-+            + (extract64(desc->address_extension_45, 16, 16) << 32);
+-static void vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
++static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
+                                           unsigned int irq, Error **errp)
+ {
+     int fd;
+     size_t argsz;
+     IOHandler *fd_read;
+     EventNotifier *notifier;
+-    struct vfio_irq_info *irq_info;
++    g_autofree struct vfio_irq_info *irq_info = NULL;
+     VFIODevice *vdev = &vapdev->vdev;
+ 
+     switch (irq) {
+@@ -87,13 +87,13 @@ static void vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
          break;
      default:
-         addr = 0;
-@@ -660,6 +660,24 @@ size_t xlnx_dpdma_start_operation(XlnxDPDMAState *s, uint8_t channel,
-             break;
-         }
+         error_setg(errp, "vfio: Unsupported device irq(%d)", irq);
+-        return;
++        return false;
+     }
  
-+        /* Convert from LE into host endianness.  */
-+        desc.control = le32_to_cpu(desc.control);
-+        desc.descriptor_id = le32_to_cpu(desc.descriptor_id);
-+        desc.xfer_size = le32_to_cpu(desc.xfer_size);
-+        desc.line_size_stride = le32_to_cpu(desc.line_size_stride);
-+        desc.timestamp_lsb = le32_to_cpu(desc.timestamp_lsb);
-+        desc.timestamp_msb = le32_to_cpu(desc.timestamp_msb);
-+        desc.address_extension = le32_to_cpu(desc.address_extension);
-+        desc.next_descriptor = le32_to_cpu(desc.next_descriptor);
-+        desc.source_address = le32_to_cpu(desc.source_address);
-+        desc.address_extension_23 = le32_to_cpu(desc.address_extension_23);
-+        desc.address_extension_45 = le32_to_cpu(desc.address_extension_45);
-+        desc.source_address2 = le32_to_cpu(desc.source_address2);
-+        desc.source_address3 = le32_to_cpu(desc.source_address3);
-+        desc.source_address4 = le32_to_cpu(desc.source_address4);
-+        desc.source_address5 = le32_to_cpu(desc.source_address5);
-+        desc.crc = le32_to_cpu(desc.crc);
-+
-         xlnx_dpdma_update_desc_info(s, channel, &desc);
+     if (vdev->num_irqs < irq + 1) {
+         error_setg(errp, "vfio: IRQ %u not available (number of irqs %u)",
+                    irq, vdev->num_irqs);
+-        return;
++        return false;
+     }
  
- #ifdef DEBUG_DPDMA
+     argsz = sizeof(*irq_info);
+@@ -104,14 +104,14 @@ static void vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
+     if (ioctl(vdev->fd, VFIO_DEVICE_GET_IRQ_INFO,
+               irq_info) < 0 || irq_info->count < 1) {
+         error_setg_errno(errp, errno, "vfio: Error getting irq info");
+-        goto out_free_info;
++        return false;
+     }
+ 
+     if (event_notifier_init(notifier, 0)) {
+         error_setg_errno(errp, errno,
+                          "vfio: Unable to init event notifier for irq (%d)",
+                          irq);
+-        goto out_free_info;
++        return false;
+     }
+ 
+     fd = event_notifier_get_fd(notifier);
+@@ -123,9 +123,7 @@ static void vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
+         event_notifier_cleanup(notifier);
+     }
+ 
+-out_free_info:
+-    g_free(irq_info);
+-
++    return true;
+ }
+ 
+ static void vfio_ap_unregister_irq_notifier(VFIOAPDevice *vapdev,
+@@ -171,8 +169,7 @@ static void vfio_ap_realize(DeviceState *dev, Error **errp)
+         goto error;
+     }
+ 
+-    vfio_ap_register_irq_notifier(vapdev, VFIO_AP_REQ_IRQ_INDEX, &err);
+-    if (err) {
++    if (!vfio_ap_register_irq_notifier(vapdev, VFIO_AP_REQ_IRQ_INDEX, &err)) {
+         /*
+          * Report this error, but do not make it a failing condition.
+          * Lack of this IRQ in the host does not prevent normal operation.
 -- 
-2.30.2
+2.44.0
 
 
