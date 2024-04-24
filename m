@@ -4,69 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE5D6C4345F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E263DC10F15
 	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 00:01:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzmXk-0008Aj-1W; Wed, 24 Apr 2024 20:00:52 -0400
+	id 1rzmXx-0008Ia-T3; Wed, 24 Apr 2024 20:01:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rzmXO-00088I-PG
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 20:00:30 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1rzmXY-0008AY-2e
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 20:00:45 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rzmXM-00068T-Jn
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 20:00:30 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-6ed5109d924so440810b3a.0
- for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 17:00:27 -0700 (PDT)
+ id 1rzmXU-0006BA-JI
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 20:00:38 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1e65b29f703so3493095ad.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 17:00:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714003227; x=1714608027; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=AFDAMBsOqP15KyZoIrMT4zuMcfapYJQz+ty1Lh5NUtM=;
- b=lOoNb1GLVAlbP/fAz7HWGu36KueW8ZYfwlRLR6TojITqbg1THMnN9rNk/XTQREK1YM
- 2Wf3hS9hkqMzioUDSzeZu5lqrFzMJKp6fPpdwbxydiOqHqnAxnnFMLW3MV6P+yscrQpk
- miqv7jvPEzb+EyYWUhWkxUnUFZ+Q+x1UBrHrppjPywH3S29y1FV5K4C7pIuh5d58N/Ww
- NwjIYqtYXQrRMhEwiBfAa0tlZWfgyis+vLdYMeuBX2wKYudvgV+OapfLERoajXkE6I8o
- itdlUC04V+H6mZJ+R4dc5ARNxn9G6iSPpP7LAfFjyl8kmn4HLyl4ImfgCi0fmNMXDKuK
- +OzA==
+ d=linaro.org; s=google; t=1714003234; x=1714608034; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=IYeP6b8MmHZVDWhGv2pjfTgnSIDzPsYfhG3pp0jo1l8=;
+ b=yVKd6IiJ4WLPh8JbNIhaign1XAlfQNSu2aZE2QI3692m99Ti08I05AuSITWJiclf6K
+ UvmsD51Ltx7z2Fv/IP0CJ1FMSlQlTu4LCGT2iJhtcTpo01XNPDWj0qd8A8yw9uLSR35h
+ bQsKOmjSKcM+fQiFaVtxuIYA6crOZUkSzcgyTO3CEOuDzVR9NEJCyFeibrmsRAjMBHNI
+ S9I8sNCQL6eMsa5984DEmFNJ3S6d7W37jRSg6r04TITGaARZ4/kXTwNmtYQNSOu57F5+
+ K49ffYZe5ftXdRrk2/yRG4IavyKZ2KIkZxA/WUkfZSwMEvt2a3MdbVE+HqPphpY/FRGX
+ ggyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714003227; x=1714608027;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AFDAMBsOqP15KyZoIrMT4zuMcfapYJQz+ty1Lh5NUtM=;
- b=mq0eE2LFBNWqVvTOOahl4W5BQS4Lqj//20Pt+H7LMLEgoitsnw9pPkaYT8IMqQ/mog
- VxM4QTTXF8HRoc8MQ882eFnNKEXS2z1ZzFgLD9c83OzlnyBwUFZo4CJfIhFIeqTP46Vu
- PFUrf4Z37T2cW3SCCorsCq8vcwWWz015atLJcXwDtCL5Ah3IgG0mgqd/cbB42qrVnd8o
- 3ucY6fuK9MPnJvilPkw47qZD9qq1pATJknjDE9P9og2Ig1wNB/oTOYNYCehOqvBVViHW
- WXIhTJYT1zewFam9rxsdK0UAw1GMEL3WEt2/vmZcGC3YEAqSH2SGPRSE+ipRs0HqZBX/
- AbYw==
-X-Gm-Message-State: AOJu0Yw1kkW+6/0DH9zjzO/sPAe0Z77y5MitQ9TfPMxQ4HUy3QEEu3HN
- DUetY4Y0N2qXYEOIL0Sjafc/wUbLCV7dGq84TCNjiNSDN+8D7BzImPQUzTA8y+xD71Vb55qdJOF
- c
-X-Google-Smtp-Source: AGHT+IF702TnHIlM/eCUTNdjU5LcSWFEPhHHOgMBpEOxC1ieySDkFecSv+HQzRGQivfkKGFEu1jUqw==
-X-Received: by 2002:a05:6a21:6da1:b0:1aa:5b16:1ed with SMTP id
- wl33-20020a056a216da100b001aa5b1601edmr4968747pzb.10.1714003226727; 
- Wed, 24 Apr 2024 17:00:26 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1714003234; x=1714608034;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=IYeP6b8MmHZVDWhGv2pjfTgnSIDzPsYfhG3pp0jo1l8=;
+ b=nM/9rOqjVfAB/oNXaKHyQOIbAiCpJd0QKzQs/DVlLV+o92lMoDop3kdlW0cmVEoF50
+ CludbvIxNtQKSka0P1YAPmVIszbpbgIuveKkWs8P9H7toHd/H6Az3YEYzRGyRpJRK5vk
+ ga4JBH9bGKNz8qSGnzRq/D9Ha0b+XW1+SIR8e8CpkfrX4OMAq9EeLnO/ZH06mDt5ZKUE
+ 2N5px0cz9sFslsTAcHIqe837TbUAT7w1s1PKWKq3Qb9rpHuV8Ey0xgYTUM+Lyjf3fCj4
+ a/giJX2A29+ts6Zc4u5U3ZhMWTyyTOEDgaZeGerI0muoF3d8U3/Et+6cseni0vodpAAO
+ QmGg==
+X-Gm-Message-State: AOJu0YwWTpkkvstC5Dr1Kic7tbfPKmWt8OjccpLtZvc/+J6nOhXL8H0z
+ J4zfYyGKt4SEbkMFvrG8qn8b9NjXO2UboYXRuuBFeo0LDTdvrNVeP8rTlYhN16gZ/HMzi92e75i
+ s
+X-Google-Smtp-Source: AGHT+IG+wXwIJ5DDKBE3v2vjMbwMT6fB2BoQ4sqn243jVbM9ko+vdsLJK+uOzzneJxEoCrcq4jq/dg==
+X-Received: by 2002:a17:902:7488:b0:1e2:a91c:9836 with SMTP id
+ h8-20020a170902748800b001e2a91c9836mr3972979pll.33.1714003233839; 
+ Wed, 24 Apr 2024 17:00:33 -0700 (PDT)
 Received: from stoup.. ([156.19.246.23]) by smtp.gmail.com with ESMTPSA id
- t6-20020a170902e84600b001e604438791sm12465715plg.156.2024.04.24.17.00.25
+ t6-20020a170902e84600b001e604438791sm12465715plg.156.2024.04.24.17.00.33
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Apr 2024 17:00:26 -0700 (PDT)
+ Wed, 24 Apr 2024 17:00:33 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 00/45] target/hppa: Misc improvements
-Date: Wed, 24 Apr 2024 16:59:38 -0700
-Message-Id: <20240425000023.1002026-1-richard.henderson@linaro.org>
+Subject: [PATCH 08/45] target/hppa: Add install_link
+Date: Wed, 24 Apr 2024 16:59:46 -0700
+Message-Id: <20240425000023.1002026-9-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240425000023.1002026-1-richard.henderson@linaro.org>
+References: <20240425000023.1002026-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,83 +92,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Most of the patches lead up to implementing CF_PCREL.
-Along the way there is a grab bag of code updates (TCG_COND_TST*),
-bug fixes (space changes during branch-in-branch-delay-slot),
-and implementation of features (PSW bits B, X, T, H, L).
+Add a common routine for writing the return address.
 
-Sven reported that PSW L tripped up HP/UX, so possibly there's
-something wrong there, but that's right at the end of the patch set.
-So I'd like some feedback on the rest leading up to that too.
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/hppa/translate.c | 54 +++++++++++++++++++++++------------------
+ 1 file changed, 31 insertions(+), 23 deletions(-)
 
-
-r~
-
-
-Richard Henderson (45):
-  target/hppa: Move cpu_get_tb_cpu_state out of line
-  target/hppa: Use hppa_form_gva_psw in hppa_cpu_get_pc
-  target/hppa: Move constant destination check into use_goto_tb
-  target/hppa: Pass displacement to do_dbranch
-  target/hppa: Allow prior nullification in do_ibranch
-  target/hppa: Use CF_BP_PAGE instead of cpu_breakpoint_test
-  target/hppa: Add install_iaq_entries
-  target/hppa: Add install_link
-  target/hppa: Delay computation of IAQ_Next
-  target/hppa: Skip nullified insns in unconditional dbranch path
-  target/hppa: Simplify TB end
-  target/hppa: Add IASQ entries to DisasContext
-  target/hppa: Add space arguments to install_iaq_entries
-  target/hppa: Add space argument to do_ibranch
-  target/hppa: Use umax in do_ibranch_priv
-  target/hppa: Always make a copy in do_ibranch_priv
-  target/hppa: Introduce and use DisasIAQE for branch management
-  target/hppa: Use displacements in DisasIAQE
-  target/hppa: Rename cond_make_* helpers
-  target/hppa: Use TCG_COND_TST* in do_cond
-  target/hppa: Use TCG_COND_TST* in do_log_cond
-  target/hppa: Use TCG_COND_TST* in do_unit_zero_cond
-  target/hppa: Use TCG_COND_TST* in do_unit_addsub
-  target/hppa: Use TCG_COND_TST* in trans_bb_imm
-  target/hppa: Use registerfields.h for FPSR
-  target/hppa: Use TCG_COND_TST* in trans_ftest
-  target/hppa: Remove cond_free
-  target/hppa: Introduce DisasDelayException
-  target/hppa: Use delay_excp for conditional traps
-  target/hppa: Use delay_excp for conditional trap on overflow
-  linux-user/hppa: Force all code addresses to PRIV_USER
-  target/hppa: Store full iaoq_f and page bits of iaoq_d in TB
-  target/hppa: Do not mask in copy_iaoq_entry
-  target/hppa: Improve hppa_cpu_dump_state
-  target/hppa: Split PSW X and B into their own field
-  target/hppa: Manage PSW_X and PSW_B in translator
-  target/hppa: Implement PSW_B
-  target/hppa: Implement PSW_X
-  target/hppa: Drop tlb_entry return from hppa_get_physical_address
-  target/hppa: Adjust priv for B,GATE at runtime
-  target/hppa: Implement CF_PCREL
-  target/hppa: Implement PSW_T
-  target/hppa: Implement PSW_H, PSW_L
-  target/hppa: Log cpu state at interrupt
-  target/hppa: Log cpu state on return-from-interrupt
-
- linux-user/hppa/target_cpu.h |    4 +-
- target/hppa/cpu.h            |   80 +--
- target/hppa/helper.h         |    3 +-
- linux-user/elfload.c         |    4 +-
- linux-user/hppa/cpu_loop.c   |   14 +-
- linux-user/hppa/signal.c     |    6 +-
- target/hppa/cpu.c            |   92 ++-
- target/hppa/fpu_helper.c     |   26 +-
- target/hppa/gdbstub.c        |    6 +
- target/hppa/helper.c         |   66 +-
- target/hppa/int_helper.c     |   33 +-
- target/hppa/mem_helper.c     |   99 +--
- target/hppa/op_helper.c      |   17 +-
- target/hppa/sys_helper.c     |   12 +
- target/hppa/translate.c      | 1232 ++++++++++++++++++----------------
- 15 files changed, 947 insertions(+), 747 deletions(-)
-
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index cad33e7aa6..195a0e7e79 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -633,6 +633,23 @@ static void install_iaq_entries(DisasContext *ctx, uint64_t bi, TCGv_i64 bv,
+     }
+ }
+ 
++static void install_link(DisasContext *ctx, unsigned link, bool with_sr0)
++{
++    tcg_debug_assert(ctx->null_cond.c == TCG_COND_NEVER);
++    if (link) {
++        if (ctx->iaoq_b == -1) {
++            tcg_gen_addi_i64(cpu_gr[link], cpu_iaoq_b, 4);
++        } else {
++            tcg_gen_movi_i64(cpu_gr[link], ctx->iaoq_b + 4);
++        }
++#ifndef CONFIG_USER_ONLY
++        if (with_sr0) {
++            tcg_gen_mov_i64(cpu_sr[0], cpu_iasq_b);
++        }
++#endif
++    }
++}
++
+ static inline uint64_t iaoq_dest(DisasContext *ctx, int64_t disp)
+ {
+     return ctx->iaoq_f + disp + 8;
+@@ -1786,9 +1803,7 @@ static bool do_dbranch(DisasContext *ctx, int64_t disp,
+     uint64_t dest = iaoq_dest(ctx, disp);
+ 
+     if (ctx->null_cond.c == TCG_COND_NEVER && ctx->null_lab == NULL) {
+-        if (link != 0) {
+-            copy_iaoq_entry(ctx, cpu_gr[link], ctx->iaoq_n, ctx->iaoq_n_var);
+-        }
++        install_link(ctx, link, false);
+         ctx->iaoq_n = dest;
+         if (is_n) {
+             ctx->null_cond.c = TCG_COND_ALWAYS;
+@@ -1796,10 +1811,7 @@ static bool do_dbranch(DisasContext *ctx, int64_t disp,
+     } else {
+         nullify_over(ctx);
+ 
+-        if (link != 0) {
+-            copy_iaoq_entry(ctx, cpu_gr[link], ctx->iaoq_n, ctx->iaoq_n_var);
+-        }
+-
++        install_link(ctx, link, false);
+         if (is_n && use_nullify_skip(ctx)) {
+             nullify_set(ctx, 0);
+             gen_goto_tb(ctx, 0, dest, dest + 4);
+@@ -1891,9 +1903,7 @@ static bool do_ibranch(DisasContext *ctx, TCGv_i64 dest,
+         next = tcg_temp_new_i64();
+         tcg_gen_mov_i64(next, dest);
+ 
+-        if (link != 0) {
+-            copy_iaoq_entry(ctx, cpu_gr[link], ctx->iaoq_n, ctx->iaoq_n_var);
+-        }
++        install_link(ctx, link, false);
+         if (is_n) {
+             if (use_nullify_skip(ctx)) {
+                 install_iaq_entries(ctx, -1, next, -1, NULL);
+@@ -1910,16 +1920,17 @@ static bool do_ibranch(DisasContext *ctx, TCGv_i64 dest,
+ 
+     nullify_over(ctx);
+ 
++    next = tcg_temp_new_i64();
++    tcg_gen_mov_i64(next, dest);
++
++    install_link(ctx, link, false);
+     if (is_n && use_nullify_skip(ctx)) {
+-        install_iaq_entries(ctx, -1, dest, -1, NULL);
++        install_iaq_entries(ctx, -1, next, -1, NULL);
+         nullify_set(ctx, 0);
+     } else {
+-        install_iaq_entries(ctx, ctx->iaoq_b, cpu_iaoq_b, -1, dest);
++        install_iaq_entries(ctx, ctx->iaoq_b, cpu_iaoq_b, -1, next);
+         nullify_set(ctx, is_n);
+     }
+-    if (link != 0) {
+-        copy_iaoq_entry(ctx, cpu_gr[link], ctx->iaoq_n, ctx->iaoq_n_var);
+-    }
+ 
+     tcg_gen_lookup_and_goto_ptr();
+     ctx->base.is_jmp = DISAS_NORETURN;
+@@ -3898,10 +3909,7 @@ static bool trans_be(DisasContext *ctx, arg_be *a)
+     nullify_over(ctx);
+ 
+     load_spr(ctx, new_spc, a->sp);
+-    if (a->l) {
+-        copy_iaoq_entry(ctx, cpu_gr[31], ctx->iaoq_n, ctx->iaoq_n_var);
+-        tcg_gen_mov_i64(cpu_sr[0], cpu_iasq_b);
+-    }
++    install_link(ctx, a->l, true);
+     if (a->n && use_nullify_skip(ctx)) {
+         install_iaq_entries(ctx, -1, tmp, -1, NULL);
+         tcg_gen_mov_i64(cpu_iasq_f, new_spc);
+@@ -4018,16 +4026,16 @@ static bool trans_bve(DisasContext *ctx, arg_bve *a)
+     return do_ibranch(ctx, dest, a->l, a->n);
+ #else
+     nullify_over(ctx);
+-    dest = do_ibranch_priv(ctx, load_gpr(ctx, a->b));
++    dest = tcg_temp_new_i64();
++    tcg_gen_mov_i64(dest, load_gpr(ctx, a->b));
++    dest = do_ibranch_priv(ctx, dest);
+ 
++    install_link(ctx, a->l, false);
+     install_iaq_entries(ctx, ctx->iaoq_b, cpu_iaoq_b, -1, dest);
+     if (ctx->iaoq_b == -1) {
+         tcg_gen_mov_i64(cpu_iasq_f, cpu_iasq_b);
+     }
+     tcg_gen_mov_i64(cpu_iasq_b, space_select(ctx, 0, dest));
+-    if (a->l) {
+-        copy_iaoq_entry(ctx, cpu_gr[a->l], ctx->iaoq_n, ctx->iaoq_n_var);
+-    }
+     nullify_set(ctx, a->n);
+     tcg_gen_lookup_and_goto_ptr();
+     ctx->base.is_jmp = DISAS_NORETURN;
 -- 
 2.34.1
 
