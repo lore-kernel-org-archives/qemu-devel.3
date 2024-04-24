@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A8D9C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 17:10:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 258F2C10F15
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 17:10:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzg7a-00020d-FA; Wed, 24 Apr 2024 13:09:26 -0400
+	id 1rzg7Y-0001zn-I3; Wed, 24 Apr 2024 13:09:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rzg7T-0001zB-GH
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:09:19 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rzg7R-0005Mt-Mu
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:09:19 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-1e4c4fb6af3so1221315ad.0
- for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 10:09:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713978556; x=1714583356; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=w8fmNK6lWstHDkHAiX3GTp5ypgknN5T6iIFnYWpyosQ=;
- b=aJYTh7RrI9l9gg6BYo2p55gIN9ximdsaeYUriOnIwpjHbFUTMQ0BFpSrmHIH19x8xs
- SmQ+zdaf4ic4FDxgF1oe5S76zPUtgFjRi44yRqIG+Htz5PGckhruplSk2sQHxrH3CcUX
- HUjG7dvWfcBhkoAPBKaat66FVOusmcy3/7P+IQJo110xLYVJh+XFWSP7DIjDz4oaR1l1
- XVCWDWUDvNMeXGCYXiCbrtrgnF5+ESTCmRrEcz1DiZcrIClmM/pr+hTPRqrsXxqnZsd6
- tkx3+iTP5mQDuaODgQ1Yks4Ts95+FGW8mmrGRHcJOSALlXdkKfOEmFswjxYSzFjm2w02
- W9EQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713978556; x=1714583356;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=w8fmNK6lWstHDkHAiX3GTp5ypgknN5T6iIFnYWpyosQ=;
- b=fnspTB5ng+KCViOTxxHnnFXSKAXKQN7k7voALoPto+xy+BF38+3YckjugG0uicuYiO
- ZO/kmqcSH09zsq82VfATR+/4hV6rIEz+9C0osMP73rTGdQU2Uwa320tbcmWN5K6anzMY
- Ktn8oZcW4+8HCLx11uFVHPxXIfT+du/Ejni7VeJtHnZySE85W1Pe1vI+kgSl3tOgHyUY
- wvp8g1d0vQem8QQljE9uh5XyZTJmQ1p14Ih1keRZxNJH26hyTF8ov1jIV5ytkTlPjVRx
- OvkqesmcQWzZDtawYhj9sORSWhwe+QGOaa5xEdRTYuZw+Zk7/1qmEEnuv4xGQoDy08Q1
- QC1Q==
-X-Gm-Message-State: AOJu0YyYscTXx/ikZjadpDU5JHttQ1nfOXV8+3Bp5E0XrG2CDiGQECy0
- buBbWHb7kfBvt3uVGQd+nx/tqgGrsVM/Qze5KFuw4wh0TitzYd3GxzcvpjW862Mkd572UvlO9A1
- c
-X-Google-Smtp-Source: AGHT+IFzf1W/uabRb1bkLAVqusgu4GqxiBa8/gftHoDHYhBmMqipipZkMapO6iGfHppE1ARhUwuh+g==
-X-Received: by 2002:a17:902:e149:b0:1e4:3c7f:c179 with SMTP id
- d9-20020a170902e14900b001e43c7fc179mr294478pla.12.1713978556088; 
- Wed, 24 Apr 2024 10:09:16 -0700 (PDT)
-Received: from stoup.. ([156.19.246.23]) by smtp.gmail.com with ESMTPSA id
- u8-20020a170902e80800b001e0b5d49fc7sm12215489plg.161.2024.04.24.10.09.15
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Apr 2024 10:09:15 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PATCH 3/5] tcg/i386: Optimize setcond of TST{EQ,NE} with 0xffffffff
-Date: Wed, 24 Apr 2024 10:09:06 -0700
-Message-Id: <20240424170908.759043-5-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240424170908.759043-1-richard.henderson@linaro.org>
-References: <20240424170908.759043-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rzg7S-0001yh-0H
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:09:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rzg7P-0005MR-E5
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:09:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713978554;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=vA8oK5CxRJp84hszs5cQ2U/0pZiazwsxUysXKgZRiso=;
+ b=fPQnZLJnImuP5b0oHenUa0/UXg74ue31hTDJgcxVI4SKGQWsHkX6tcWTXmMquEWGpD3Wh3
+ dVbSZyLrl1P8SUcg7IvQ+Yc8gPFHN3MikNAY3lN6y3bYKh2y34I19EkXN7dg7R17AngBns
+ kiHvS05dHQisDOTimv04s4gHGvc2AWY=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-50-7zxelKadNzukvhKJU7qEvQ-1; Wed,
+ 24 Apr 2024 13:09:10 -0400
+X-MC-Unique: 7zxelKadNzukvhKJU7qEvQ-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 397B829AC021;
+ Wed, 24 Apr 2024 17:09:10 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.55])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 3E68CEC682;
+ Wed, 24 Apr 2024 17:09:08 +0000 (UTC)
+Date: Wed, 24 Apr 2024 18:09:07 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Stefan Weil <sw@weilnetz.de>
+Cc: QEMU Developers <qemu-devel@nongnu.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: Timeouts in CI jobs (was: cross-i686-tci CI job is flaky again
+ (timeouts): can somebody who cares about TCI investigate?)
+Message-ID: <Zik8s6_iNM8u0SZ6@redhat.com>
+References: <CAFEAcA92aivDF-LjSrtZH6o4UtgrtcWnM2wuPZA5VOiN6j7KMA@mail.gmail.com>
+ <f5926850-670b-43fa-8011-c33ba45d8fc3@weilnetz.de>
+ <9692cfcb-ef59-4cec-8452-8bfb859e8a6c@weilnetz.de>
+ <50ee3a92-1bb5-4113-8558-281e78b0c2e3@weilnetz.de>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <50ee3a92-1bb5-4113-8558-281e78b0c2e3@weilnetz.de>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.668,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,67 +88,134 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This may be treated as a 32-bit EQ/NE comparison against 0,
-which is in turn treated as a LTU/GEU comparison against 1.
+On Wed, Apr 24, 2024 at 06:27:58PM +0200, Stefan Weil via wrote:
+> Am 20.04.24 um 22:25 schrieb Stefan Weil:
+> > Am 16.04.24 um 14:17 schrieb Stefan Weil:
+> > > Am 16.04.24 um 14:10 schrieb Peter Maydell:
+> > > 
+> > > > The cross-i686-tci job is flaky again, with persistent intermittent
+> > > > failures due to jobs timing out.
+> > > [...]
+> > > > Some of these timeouts are very high -- no test should be taking
+> > > > 10 minutes, even given TCI and a slowish CI runner -- which suggests
+> > > > to me that there's some kind of intermittent deadlock going on.
+> > > > 
+> > > > Can somebody who cares about TCI investigate, please, and track
+> > > > down whatever this is?
+> > > 
+> > > I'll have a look.
+> > 
+> > Short summary:
+> > 
+> > The "persistent intermittent failures due to jobs timing out" are not
+> > related to TCI: they also occur if the same tests are run with the
+> > normal TCG. I suggest that the CI tests should run single threaded.
+> 
+> Hi Paolo,
+> 
+> I need help from someone who knows the CI and the build and test framework
+> better.
+> 
+> Peter reported intermittent timeouts for the cross-i686-tci job, causing it
+> to fail. I can reproduce such timeouts locally, but noticed that they are
+> not limited to TCI. The GitLab CI also shows other examples, such as this
+> job:
+> 
+> https://gitlab.com/qemu-project/qemu/-/jobs/6700955287
+> 
+> I think the timeouts are caused by running too many parallel processes
+> during testing.
+> 
+> The CI uses parallel builds:
+> 
+> make -j$(expr $(nproc) + 1) all check-build $MAKE_CHECK_ARGS
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tcg/i386/tcg-target.c.inc | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+Note that command is running both the compile and test phases of
+the job. Overcommitting CPUs for the compile phase is a good
+idea to keep CPUs busy while another process is waiting on
+I/O, and is almost always safe todo.
 
-diff --git a/tcg/i386/tcg-target.c.inc b/tcg/i386/tcg-target.c.inc
-index 6837c519b0..59235b4f38 100644
---- a/tcg/i386/tcg-target.c.inc
-+++ b/tcg/i386/tcg-target.c.inc
-@@ -1658,6 +1658,7 @@ static void tcg_out_setcond(TCGContext *s, int rexw, TCGCond cond,
-                             TCGArg dest, TCGArg arg1, TCGArg arg2,
-                             int const_arg2, bool neg)
- {
-+    int cmp_rexw = rexw;
-     bool inv = false;
-     bool cleared;
-     int jcc;
-@@ -1674,6 +1675,18 @@ static void tcg_out_setcond(TCGContext *s, int rexw, TCGCond cond,
-         }
-         break;
- 
-+    case TCG_COND_TSTNE:
-+        inv = true;
-+        /* fall through */
-+    case TCG_COND_TSTEQ:
-+        /* If arg2 is -1, convert to LTU/GEU vs 1. */
-+        if (const_arg2 && arg2 == 0xffffffffu) {
-+            arg2 = 1;
-+            cmp_rexw = 0;
-+            goto do_ltu;
-+        }
-+        break;
-+
-     case TCG_COND_LEU:
-         inv = true;
-         /* fall through */
-@@ -1697,7 +1710,7 @@ static void tcg_out_setcond(TCGContext *s, int rexw, TCGCond cond,
-          * We can then use NEG or INC to produce the desired result.
-          * This is always smaller than the SETCC expansion.
-          */
--        tcg_out_cmp(s, TCG_COND_LTU, arg1, arg2, const_arg2, rexw);
-+        tcg_out_cmp(s, TCG_COND_LTU, arg1, arg2, const_arg2, cmp_rexw);
- 
-         /* X - X - C = -C = (C ? -1 : 0) */
-         tgen_arithr(s, ARITH_SBB + (neg ? rexw : 0), dest, dest);
-@@ -1744,7 +1757,7 @@ static void tcg_out_setcond(TCGContext *s, int rexw, TCGCond cond,
-         cleared = true;
-     }
- 
--    jcc = tcg_out_cmp(s, cond, arg1, arg2, const_arg2, rexw);
-+    jcc = tcg_out_cmp(s, cond, arg1, arg2, const_arg2, cmp_rexw);
-     tcg_out_modrm(s, OPC_SETCC | jcc, 0, dest);
- 
-     if (!cleared) {
+Overcommitting CPUs for the test phase is less helpful and
+can cause a variety of problems as you say.
+
+> 
+> It looks like `nproc` returns 8, and make runs with 9 threads.
+> `meson test` uses the same value to run 9 test processes in parallel:
+> 
+> /builds/qemu-project/qemu/build/pyvenv/bin/meson test  --no-rebuild -t 1
+> --num-processes 9 --print-errorlogs
+> 
+> Since the host can only handle 8 parallel threads, 9 threads might already
+> cause some tests to run non-deterministically.
+
+In contributor forks, gitlab CI will be using the public shared
+runners. These are Google Cloud VMs, which only have 2 vCPUs.
+
+In the primary QEMU repo, we have a customer runner registered
+that uses Azure based VMs. Not sure on the resources we have
+configured for them offhand.
+
+The important thing there is that what you see for CI speed in
+your fork repo is not neccessarily a match for CI speed in QEMU
+upstream repo.
+
+> 
+> But if some of the individual tests also use multithreading (according to my
+> tests they do so with at least 3 or 4 threads), things get even worse. Then
+> there are up to 4 * 9 = 36 threads competing to run on the available 8
+> cores.
+> 
+> In this scenario timeouts are expected and can occur randomly.
+> 
+> In my tests setting --num-processes to a lower value not only avoided
+> timeouts but also reduced the processing overhead without increasing the
+> runtime.
+> 
+> Could we run all tests with `--num-processes 1`?
+
+The question is what impact that has on the overall job execution
+time. A lot of our jobs are already quite long, which is bad for
+the turnaround time of CI testing.  Reliable CI though is arguably
+the #1 priority though, otherwise developers cease trusting it.
+We need to find the balance between avoiding timeouts, while having
+the shortest pratical job time.  The TCI job you show abuot came
+out at 22 minutes, which is not our worst job, so there is some
+scope for allowing it to run longer with less parallelism.
+
+Timeouts for individual tests are a relatively  recent change to
+QEMU in:
+
+  commit 4156325cd3c205ce77b82de2c48127ccacddaf5b
+  Author: Daniel P. Berrangé <berrange@redhat.com>
+  Date:   Fri Dec 15 08:03:57 2023 +0100
+
+    mtest2make: stop disabling meson test timeouts
+
+Read the full commit message of that for the background rationale,
+but especially this paragraph:
+
+    The main risk of this change is that the individual test timeouts might
+    be too short to allow completion in high load scenarios. Thus, there is
+    likely to be some short term pain where we have to bump the timeouts for
+    certain tests to make them reliable enough. The preceeding few patches
+    raised the timeouts for all failures that were immediately apparent
+    in GitLab CI.
+
+which highlights the problem you're looking at.
+
+The expectation was that we would need to bump the timeouts for various
+tests until we get the the point where they reliably run in GitLab CI,
+both forks and upstream.
+
+With regards,
+Daniel
 -- 
-2.34.1
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
