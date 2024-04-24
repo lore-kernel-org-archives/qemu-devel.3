@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13514C07E8E
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 17:34:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ED10C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 17:34:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzgVD-0005yA-4r; Wed, 24 Apr 2024 13:33:51 -0400
+	id 1rzgV8-0005xH-H1; Wed, 24 Apr 2024 13:33:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzgVB-0005xt-NR
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:33:49 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzgV6-0005ww-SD
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:33:44 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzgV9-00030c-U3
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:33:49 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-34b029296f5so44975f8f.2
- for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 10:33:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzgV4-0002ze-L0
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:33:44 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-34a4772d5easo60859f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 10:33:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713980026; x=1714584826; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713980021; x=1714584821; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RC3I7eEuU1Vrf2ad1mlMtTC053sX+mHPqI7q34t9+Ao=;
- b=rn1DLcmo5ijKpH8qjcbRGo8MKtllfDSTlNvNZX0hqByVmkETd1aOvEOhlDavaACMbT
- 6VGgBJj7k3LwDGJu6RWN87exvLKrbT1/PtahXRKmo7oU1lRolvAmKQ7lu17M80cR+8xj
- sS88G9nCqocHH/7lwxITSDTGa5vrvhR01jPkFuOZAzODyAAChMVxgW2Ayab3GAF7wEWC
- wcAGXO5unYLVm/gDqMiX5dQBhBcfprGeZRFaD6FqEegG83akzeGY0xgW/ZIppOah0dNZ
- TNKmjaryp3vBbkChodXqN43gsj6ufY+/xyHXgJVZWraIOh02nLtEUm4fGWyWO36VrAPZ
- 2zxw==
+ bh=TWf9rL1cSEDkz+YpJv977X8fZ+y5L+MRJ6Wf+vNPaVI=;
+ b=dqQ2OXdELLoA8gpENqgom1k8NNHbgsNNuf2qNqX3qSXBTGEzCaxFSIVyqR+0+f9eyq
+ fTsD9bjsdtBoDLJb2JFX0ETVfyuaOLwzyp873ZOaGlMMs1v0gU0FtyHrBINZ7Ivl07oN
+ pGPRcde5MsjchrRzBVA3x5nsduhPKxgO1/ymjPlaJ4BCaXxq2qoJn7ocoW12IVAXCjPy
+ BzYgGmJEvz1nsMweDfT5AexhAKi6Cy/rvpc7pyoYZvQ2tqTQ/pkgfmR6PXGDEA4wXypO
+ CPCgA8UK4wIqrf/EZoCFh2itiSKtv/n9TR2W3cgdBDtm0wh146b3WCdGt1RlRdaDg0kc
+ xG6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713980026; x=1714584826;
+ d=1e100.net; s=20230601; t=1713980021; x=1714584821;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RC3I7eEuU1Vrf2ad1mlMtTC053sX+mHPqI7q34t9+Ao=;
- b=DQ2vq9Y7tSIBHJdqswofHn6w0sLD/0J5FPl3hOh3QNRB4ChlQmdUcRn91vb8xe0PRa
- wtPQ6+1VQkXQtE22Or60K9OFMd+hZYaE0V0QtoDvV9zMnBCgoohpfjCzUaj8wT9kO5hv
- LZG1jd2AsUlEjJGgG0r7+9ixsHeGdnBov5O+BMUiQyArH+xygnHbr4Vg6/zGtpO9mJfT
- wz3VYNHshQsQIgOKjFUtrjRXhatZ0/3BMbdk0K1cbOi3hA71c1EQDPELHEt1SpTos785
- XNE/bk/jA1E1dQa8KWo/5ZIbOlkP25FTCLoMjk1rbN9v7SGy08oqFGuic6ow7V+ZVgQc
- yvDA==
-X-Gm-Message-State: AOJu0YxjaVltXAc2VudbARauvPXV1cewkc3+Rr25FvSz5r15HSqvQaGh
- aiIPHWUJ3rEN2qw/GWv8glCwEnEI3P9DXKu9kf6gjuia5KN9WgaWjvJE3CgaR+SRzXP1ER5HcF9
- T
-X-Google-Smtp-Source: AGHT+IHUxY5NPMfGB+DSEuwBc9Ru++YOfqw8opfpXvkav63vpLKwF6crXniKmC3FD7yyAkHid1WS5w==
-X-Received: by 2002:a5d:6b90:0:b0:34a:2b3f:262f with SMTP id
- n16-20020a5d6b90000000b0034a2b3f262fmr2680321wrx.32.1713980026045; 
- Wed, 24 Apr 2024 10:33:46 -0700 (PDT)
+ bh=TWf9rL1cSEDkz+YpJv977X8fZ+y5L+MRJ6Wf+vNPaVI=;
+ b=M90gmOy+a9bslyJH8mkkonOoMvOg5M9+I3Tx8SkeZ3yCw75IEDp8s8U6sEU8ltfxFU
+ OzI0BLnajzt/Z1j9kGuCoqjl0zB1zDmqRXEelOvuuoy+OrgBkqUj2smTFxEKx6GoOu2F
+ kmk3gby0vTEnhLFJuUA/59s+5iveVdZCfjizmGJ9Eslw0HIH5g3+e3Ta3BG9uTSd/kkh
+ BXEHkd7e+nRvTKz8l0ir6oJam/ECxHnB+ia3e4cktgR++wCeBpNG8GAgqLQ/XoL5/bgf
+ 5/pQTaNK3VLe4wjhclfKXHJZZ57JOnto16NWKNrGr0v/nIfGoCRNL6NBZCJ4RTai4q3C
+ XLhQ==
+X-Gm-Message-State: AOJu0YwjFpDYM4I2+JC5brJX2sgyM7ZTlTQhU8FP52FVsjT6fYfrrrZx
+ 0sreW1PzlC+oevCIpvtTdT4no5E3a3pfmS2YmrjhkjVpQgOSKr6AdePo7nJETsZYyLUTtWC+2Aj
+ h
+X-Google-Smtp-Source: AGHT+IFmijY3PGUk1FQ7+woY4H2mO5QfdlymbOCFfSZFJyrXItUPeEGRNZey0nv/HSywvqMAdcxeJA==
+X-Received: by 2002:adf:f90e:0:b0:349:eeaf:3a01 with SMTP id
+ b14-20020adff90e000000b00349eeaf3a01mr2325604wrr.22.1713980020828; 
+ Wed, 24 Apr 2024 10:33:40 -0700 (PDT)
 Received: from localhost.localdomain
  (mon75-h03-176-184-51-42.dsl.sta.abo.bbox.fr. [176.184.51.42])
  by smtp.gmail.com with ESMTPSA id
- r11-20020a056000014b00b0034ab4cb8af1sm11782180wrx.29.2024.04.24.10.33.45
+ b7-20020adff907000000b0034b3394f0e1sm7195874wrr.10.2024.04.24.10.33.39
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Apr 2024 10:33:45 -0700 (PDT)
+ Wed, 24 Apr 2024 10:33:40 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 2/3] accel/tcg: Rename load-extract/store-insert headers
- using .h.inc suffix
-Date: Wed, 24 Apr 2024 19:33:31 +0200
-Message-ID: <20240424173333.96148-3-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
+ Laurent Vivier <laurent@vivier.eu>
+Subject: [PATCH v2 1/3] hw/elf_ops: Rename elf_ops.h -> elf_ops.h.inc
+Date: Wed, 24 Apr 2024 19:33:30 +0200
+Message-ID: <20240424173333.96148-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240424173333.96148-1-philmd@linaro.org>
 References: <20240424173333.96148-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,71 +109,69 @@ about includes") this is documented in the Coding Style:
   the ``.c.inc`` or ``.h.inc`` suffix to make it clear they are
   being included for expansion.
 
-Therefore rename 'store-insert-al16.h' as 'store-insert-al16.h.inc'
-and 'load-extract-al16-al8.h' as 'load-extract-al16-al8.h.inc'.
+Therefore rename "hw/elf_ops.h" as "hw/elf_ops.h.inc".
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- .../{load-extract-al16-al8.h => load-extract-al16-al8.h.inc}  | 0
- .../host/{store-insert-al16.h => store-insert-al16.h.inc}     | 0
- .../{load-extract-al16-al8.h => load-extract-al16-al8.h.inc}  | 0
- .../host/{store-insert-al16.h => store-insert-al16.h.inc}     | 0
- .../{load-extract-al16-al8.h => load-extract-al16-al8.h.inc}  | 0
- .../host/{store-insert-al16.h => store-insert-al16.h.inc}     | 0
- .../{load-extract-al16-al8.h => load-extract-al16-al8.h.inc}  | 0
- accel/tcg/ldst_atomicity.c.inc                                | 4 ++--
- 8 files changed, 2 insertions(+), 2 deletions(-)
- rename host/include/aarch64/host/{load-extract-al16-al8.h => load-extract-al16-al8.h.inc} (100%)
- rename host/include/aarch64/host/{store-insert-al16.h => store-insert-al16.h.inc} (100%)
- rename host/include/generic/host/{load-extract-al16-al8.h => load-extract-al16-al8.h.inc} (100%)
- rename host/include/generic/host/{store-insert-al16.h => store-insert-al16.h.inc} (100%)
- rename host/include/loongarch64/host/{load-extract-al16-al8.h => load-extract-al16-al8.h.inc} (100%)
- rename host/include/loongarch64/host/{store-insert-al16.h => store-insert-al16.h.inc} (100%)
- rename host/include/x86_64/host/{load-extract-al16-al8.h => load-extract-al16-al8.h.inc} (100%)
+ include/hw/{elf_ops.h => elf_ops.h.inc} | 0
+ bsd-user/elfload.c                      | 2 +-
+ hw/core/loader.c                        | 4 ++--
+ linux-user/elfload.c                    | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
+ rename include/hw/{elf_ops.h => elf_ops.h.inc} (100%)
 
-diff --git a/host/include/aarch64/host/load-extract-al16-al8.h b/host/include/aarch64/host/load-extract-al16-al8.h.inc
+diff --git a/include/hw/elf_ops.h b/include/hw/elf_ops.h.inc
 similarity index 100%
-rename from host/include/aarch64/host/load-extract-al16-al8.h
-rename to host/include/aarch64/host/load-extract-al16-al8.h.inc
-diff --git a/host/include/aarch64/host/store-insert-al16.h b/host/include/aarch64/host/store-insert-al16.h.inc
-similarity index 100%
-rename from host/include/aarch64/host/store-insert-al16.h
-rename to host/include/aarch64/host/store-insert-al16.h.inc
-diff --git a/host/include/generic/host/load-extract-al16-al8.h b/host/include/generic/host/load-extract-al16-al8.h.inc
-similarity index 100%
-rename from host/include/generic/host/load-extract-al16-al8.h
-rename to host/include/generic/host/load-extract-al16-al8.h.inc
-diff --git a/host/include/generic/host/store-insert-al16.h b/host/include/generic/host/store-insert-al16.h.inc
-similarity index 100%
-rename from host/include/generic/host/store-insert-al16.h
-rename to host/include/generic/host/store-insert-al16.h.inc
-diff --git a/host/include/loongarch64/host/load-extract-al16-al8.h b/host/include/loongarch64/host/load-extract-al16-al8.h.inc
-similarity index 100%
-rename from host/include/loongarch64/host/load-extract-al16-al8.h
-rename to host/include/loongarch64/host/load-extract-al16-al8.h.inc
-diff --git a/host/include/loongarch64/host/store-insert-al16.h b/host/include/loongarch64/host/store-insert-al16.h.inc
-similarity index 100%
-rename from host/include/loongarch64/host/store-insert-al16.h
-rename to host/include/loongarch64/host/store-insert-al16.h.inc
-diff --git a/host/include/x86_64/host/load-extract-al16-al8.h b/host/include/x86_64/host/load-extract-al16-al8.h.inc
-similarity index 100%
-rename from host/include/x86_64/host/load-extract-al16-al8.h
-rename to host/include/x86_64/host/load-extract-al16-al8.h.inc
-diff --git a/accel/tcg/ldst_atomicity.c.inc b/accel/tcg/ldst_atomicity.c.inc
-index 97dae70d53..134da3c1da 100644
---- a/accel/tcg/ldst_atomicity.c.inc
-+++ b/accel/tcg/ldst_atomicity.c.inc
-@@ -9,8 +9,8 @@
-  * See the COPYING file in the top-level directory.
-  */
+rename from include/hw/elf_ops.h
+rename to include/hw/elf_ops.h.inc
+diff --git a/bsd-user/elfload.c b/bsd-user/elfload.c
+index baf2f63d2f..833fa3bd05 100644
+--- a/bsd-user/elfload.c
++++ b/bsd-user/elfload.c
+@@ -383,7 +383,7 @@ static const char *lookup_symbolxx(struct syminfo *s, uint64_t orig_addr)
+     return "";
+ }
  
--#include "host/load-extract-al16-al8.h"
--#include "host/store-insert-al16.h"
-+#include "host/load-extract-al16-al8.h.inc"
-+#include "host/store-insert-al16.h.inc"
+-/* FIXME: This should use elf_ops.h  */
++/* FIXME: This should use elf_ops.h.inc  */
+ static int symcmp(const void *s0, const void *s1)
+ {
+     struct elf_sym *sym0 = (struct elf_sym *)s0;
+diff --git a/hw/core/loader.c b/hw/core/loader.c
+index b8e52f3fb0..2f8105d7de 100644
+--- a/hw/core/loader.c
++++ b/hw/core/loader.c
+@@ -305,7 +305,7 @@ static void *load_at(int fd, off_t offset, size_t size)
+ #define elf_word        uint32_t
+ #define elf_sword       int32_t
+ #define bswapSZs        bswap32s
+-#include "hw/elf_ops.h"
++#include "hw/elf_ops.h.inc"
  
- #ifdef CONFIG_ATOMIC64
- # define HAVE_al8          true
+ #undef elfhdr
+ #undef elf_phdr
+@@ -327,7 +327,7 @@ static void *load_at(int fd, off_t offset, size_t size)
+ #define elf_sword       int64_t
+ #define bswapSZs        bswap64s
+ #define SZ              64
+-#include "hw/elf_ops.h"
++#include "hw/elf_ops.h.inc"
+ 
+ const char *load_elf_strerror(ssize_t error)
+ {
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 60cf55b36c..0c3ddce971 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -3671,7 +3671,7 @@ static const char *lookup_symbolxx(struct syminfo *s, uint64_t orig_addr)
+     return "";
+ }
+ 
+-/* FIXME: This should use elf_ops.h  */
++/* FIXME: This should use elf_ops.h.inc  */
+ static int symcmp(const void *s0, const void *s1)
+ {
+     struct elf_sym *sym0 = (struct elf_sym *)s0;
 -- 
 2.41.0
 
