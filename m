@@ -4,95 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 402E9C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 17:12:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B571CC4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 17:13:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzgAf-0007Ef-16; Wed, 24 Apr 2024 13:12:37 -0400
+	id 1rzgBC-0007uq-LW; Wed, 24 Apr 2024 13:13:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rzgAa-0007EH-Nm
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:12:33 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rzgAZ-0005vI-3k
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:12:32 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-6eced6fd98aso160141b3a.0
- for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 10:12:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1713978749; x=1714583549; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:date:from:from:to
- :cc:subject:date:message-id:reply-to;
- bh=PJx7B4fgRPYu09r5fjNBdBPXGt14luISrtxZ4rM/dAA=;
- b=EiBeZV38NtHjBjzR1F1qAuVroX91pdasNWiBkLQutHQCogznp+57ZWTEgeWoBHyXF2
- pQdPQ0ItTwQQKsXVyAzpY3+0JUkCDURMWGl3BYiYjDSdqJlx4QNJyei4XIKDR30YcP6G
- 7lbIpIHgpNDdLGHA9YlYQ5oFDIZM4R/73AXaTAVwXl8Lf1WtG6usr6Q8y+dUgur1Hah5
- SuntEikda4+yvzrL7+RGqiTFfKb12RIb3qS9EhkgCFgweYo1Ui2XoQzRpxsqhYX7GQsL
- chdqsCxiHcMnxpFoBA8ZFSGVcMEFlMLKqEaFfd96u9mS80CLncICjvc7s843isjEQyTO
- ZhWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713978749; x=1714583549;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:date:from
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PJx7B4fgRPYu09r5fjNBdBPXGt14luISrtxZ4rM/dAA=;
- b=GzaEvxJB/RphWC1gc/OWX60BFkVh+y8TWmtg1CbO3gH8Gg8zQ8AduvJlGEKuacSh2t
- DI5vNGLRe6ibM7DwZEDP7ozxmGQwTXpHbAgUYtrU5GLzZRWUjdJudj3LQb1fKeQ9JItD
- YbviqoEYCoCsNhsM0MJQD8aCn6Fl+bQMk7UHUhF0Qu5R9nHNH1ZmzjCQOdiCsch31kcK
- mRDYcmAfITrkQNPIlOy+SgX6bG11xmFi35fy5I9WPGDK3SNC91mSZUXKy1enILRB0JDj
- azMq6JmqUT/7RFPfr9r4qEVQK383HhLjrFGxi4XIPW+DRTi47QA8fBIlqzH2lIUyuTf3
- hOzQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVSArUHxD9dvJQpH2TmWqW+n0WHJ7vPz+ReCAWpfWX8x7Ld5E3+UAeQy4t/omtbHHi9GdkFJiSC4Ck7SVETzFOrEsb2S7w=
-X-Gm-Message-State: AOJu0Yyf1oL8oG5giiPrtAcF9xCOmfoachv3jFiSKRWKEVbMIUcx7XkA
- MQLlga1eoIr8poVbtEr0xds2yxoqHvjKIWPEZN+IF3rMl4mHLXI1
-X-Google-Smtp-Source: AGHT+IEIE1XN1WJXhjD/39WDyRmROHsSznUnr2Qdm0ZdIYmjrfNZpwKAz0Ik5fOx2a0ZGv6qGRjxCw==
-X-Received: by 2002:a05:6a20:244d:b0:1a9:11e4:72b6 with SMTP id
- t13-20020a056a20244d00b001a911e472b6mr4112692pzc.57.1713978748469; 
- Wed, 24 Apr 2024 10:12:28 -0700 (PDT)
-Received: from debian ([2601:641:300:14de:b318:9476:706a:e82a])
- by smtp.gmail.com with ESMTPSA id
- b1-20020a170902d30100b001e451abffebsm12157336plc.86.2024.04.24.10.12.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Apr 2024 10:12:28 -0700 (PDT)
-From: fan <nifan.cxl@gmail.com>
-X-Google-Original-From: fan <fan@debian>
-Date: Wed, 24 Apr 2024 10:12:23 -0700
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- fan <nifan.cxl@gmail.com>, Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
- gregory.price@memverge.com, ira.weiny@intel.com,
- dan.j.williams@intel.com, a.manzanares@samsung.com,
- dave@stgolabs.net, nmtadam.samsung@gmail.com,
- jim.harris@samsung.com, Jorgen.Hansen@wdc.com, wj28.lee@gmail.com,
- Fan Ni <fan.ni@samsung.com>
-Subject: Re: [PATCH v5 13/13] qapi/cxl.json: Add QMP interfaces to print out
- accepted and pending DC extents
-Message-ID: <Zik9dxGopfrifCzU@debian>
-References: <20240304194331.1586191-1-nifan.cxl@gmail.com>
- <20240304194331.1586191-14-nifan.cxl@gmail.com>
- <20240305160908.000010c5@Huawei.com> <ZedFIp5gK4aXsqD-@redhat.com>
- <ZedRsZee2WhTi_Nd@debian> <ZedTEa8aktb-kKwt@redhat.com>
- <8734ravr99.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
+ id 1rzgBA-0007uA-BS; Wed, 24 Apr 2024 13:13:08 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
+ id 1rzgB7-00069R-Vs; Wed, 24 Apr 2024 13:13:08 -0400
+Received: from pps.filterd (m0353727.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43OGlqI8022254; Wed, 24 Apr 2024 17:12:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=4N71XImNLU+eaygbqjIsi80jp704ae9Buk0fJpEgWrU=;
+ b=LTtazN9qLLQrgLKfSkkX3FzpikIyGqS/5VQYvGmxYNcNG8K+P9zRKVV7xeFPTev54r92
+ dyuUBC2LoCWFXBNtNhqK56OhZXcRYekELkqF7OSvCQ24/COepQSzKLdUjsdgKTRrGlOk
+ ICgZ6kKuMBrPClJsDCnp78ZtFzGYutm5gO12piTm7e9JQx4R5VDAkftkvKo9lFqt2XlP
+ MKFcbtO6rVJTDmeXo5MXnGdWT0+mikH23E2mmaOWj2QUzgUuQpXw11AOnojQg5gJjqbm
+ f5E2SiitxT0VF44Z1Oq6h7PgCtDuruvYzhu2OsPJFclDJKVCzyvzP5GxvsAuTf22OYzj ig== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xq5we832f-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 24 Apr 2024 17:12:54 +0000
+Received: from m0353727.ppops.net (m0353727.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43OHCrrn002783;
+ Wed, 24 Apr 2024 17:12:53 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xq5we832b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 24 Apr 2024 17:12:53 +0000
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43OFokF1015289; Wed, 24 Apr 2024 17:12:52 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3xmshmcrhg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 24 Apr 2024 17:12:52 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 43OHCmw64457000
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 24 Apr 2024 17:12:50 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5BF6E20043;
+ Wed, 24 Apr 2024 17:12:48 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 33DDF20040;
+ Wed, 24 Apr 2024 17:12:46 +0000 (GMT)
+Received: from [9.43.104.132] (unknown [9.43.104.132])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 24 Apr 2024 17:12:45 +0000 (GMT)
+Message-ID: <9fb57d82-7cd6-4033-8898-35472fbf4a97@linux.ibm.com>
+Date: Wed, 24 Apr 2024 22:42:44 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/6] hw/ppc: SPI controller wiring to P10 chip and
+ create seeprom device
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
+ calebs@us.ibm.com, chalapathi.v@ibm.com, saif.abrar@linux.vnet.ibm.com,
+ dantan@us.ibm.com
+References: <20240409175700.27535-1-chalapathi.v@linux.ibm.com>
+ <20240409175700.27535-6-chalapathi.v@linux.ibm.com>
+ <5cd0d411-a723-4324-b706-913ac936f77b@kaod.org>
+Content-Language: en-US
+From: Chalapathi V <chalapathi.v@linux.ibm.com>
+In-Reply-To: <5cd0d411-a723-4324-b706-913ac936f77b@kaod.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <8734ravr99.fsf@pond.sub.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pf1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: joC9ad-yk1LA0OGDdCkZ9O0R-0hX0meP
+X-Proofpoint-GUID: AEOcWI9UOFkAA1UqKgZMAutW9vV2aTW9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-04-24_14,2024-04-24_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 mlxscore=0
+ spamscore=0 bulkscore=0 clxscore=1015 malwarescore=0 lowpriorityscore=0
+ phishscore=0 mlxlogscore=999 adultscore=0 impostorscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2404010000
+ definitions=main-2404240074
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=chalapathi.v@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,60 +119,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 24, 2024 at 03:12:34PM +0200, Markus Armbruster wrote:
-> Daniel P. Berrang� <berrange@redhat.com> writes:
-> 
-> > On Tue, Mar 05, 2024 at 09:09:05AM -0800, fan wrote:
-> >> On Tue, Mar 05, 2024 at 04:15:30PM +0000, Daniel P. Berrang� wrote:
-> >> > On Tue, Mar 05, 2024 at 04:09:08PM +0000, Jonathan Cameron via wrote:
-> >> > > On Mon,  4 Mar 2024 11:34:08 -0800
-> >> > > nifan.cxl@gmail.com wrote:
-> >> > > 
-> >> > > > From: Fan Ni <fan.ni@samsung.com>
-> >> > > > 
-> >> > > > With the change, we add the following two QMP interfaces to print out
-> >> > > > extents information in the device,
-> >> > > > 1. cxl-display-accepted-dc-extents: print out the accepted DC extents in
-> >> > > >    the device;
-> >> > > > 2. cxl-display-pending-to-add-dc-extents: print out the pending-to-add
-> >> > > >    DC extents in the device;
-> >> > > > The output is appended to a file passed to the command and by default
-> >> > > > it is /tmp/dc-extent.txt.
-> >> > > Hi Fan,
-> >> > > 
-> >> > > Is there precedence for this sort of logging to a file from a qmp
-> >> > > command?  I can see something like this being useful.
-> >> > 
-> >> > This is pretty unusual.
-> >> 
-> >> Yeah. I cannot find anything similar in existing code, my initial plan
-> >> was to print out to the screen directly, however, cannot find out how to
-> >> do it nicely, so decided to go with a file. 
-> >> 
-> >> Is there a reason why we do not want to go with this approach?
-> >> 
-> >> > 
-> >> > For runtime debugging information our strong preference is to integrate
-> >> > 'trace' probes throughout the code:
-> >> > 
-> >> >   https://www.qemu.org/docs/master/devel/tracing.html#tracing
-> >> 
-> >> I am not familiar with the trace mechanism. However, I think the
-> >> approach in this patch may be useful not only for debugging purpose.
-> >> Although not tried yet, maybe we can also use the approach to set
-> >> some parameters at runtime like what procfs does?
-> >
-> > Please don't invent something new unless you can show why QEMU's existing
-> > tracing system isn't sufficiently good for the problem. QEMU's tracing
-> > can dump to the terminal directly, or integrate with a variety of other
-> > backends, and data can be turned off/on at runtime per-trace point.
-> 
-> Seconded.
-> 
+Hello Cedric,
 
-Thanks. 
-This patch is removed from the latest version (v7):
-https://lore.kernel.org/linux-cxl/ZiaFYUB6FC9NR7W4@memverge.com/T/#t
+Thank You for reviewing v2 patches.
 
-Fan
+Regards,
+
+Chalapathi
+
+On 22-04-2024 20:33, Cédric Le Goater wrote:
+> On 4/9/24 19:56, Chalapathi V wrote:
+>> In this commit
+>> Creates SPI controller on p10 chip.
+>> Create the keystore seeprom of type "seeprom-25csm04"
+>> Connect the cs of seeprom to PIB_SPIC[2] cs irq.
+>>
+>> The QOM tree of spi controller and seeprom are.
+>> /machine (powernv10-machine)
+>>    /chip[0] (power10_v2.0-pnv-chip)
+>>      /pib_spic[2] (pnv-spi-controller)
+>>        /bus (pnv-spi-bus)
+>>          /pnv-spi-bus.2 (SSI)
+>>        /xscom-spi-controller-regs[0] (memory-region)
+>>
+>> /machine (powernv10-machine)
+>>    /unattached (container)
+>>      /device[7] (seeprom-25csm04)
+>>        /ssi-gpio-cs[0] (irq)
+>>
+>> (qemu) qom-get /machine/unattached/device[7] "parent_bus"
+>> "/machine/chip[0]/pib_spic[2]/bus/pnv-spi-bus.2"
+>>
+>> Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
+>> ---
+>>   include/hw/ppc/pnv_chip.h |  3 +++
+>>   hw/ppc/pnv.c              | 36 +++++++++++++++++++++++++++++++++++-
+>>   2 files changed, 38 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/include/hw/ppc/pnv_chip.h b/include/hw/ppc/pnv_chip.h
+>> index 8589f3291e..3edf13e8f9 100644
+>> --- a/include/hw/ppc/pnv_chip.h
+>> +++ b/include/hw/ppc/pnv_chip.h
+>> @@ -6,6 +6,7 @@
+>>   #include "hw/ppc/pnv_core.h"
+>>   #include "hw/ppc/pnv_homer.h"
+>>   #include "hw/ppc/pnv_n1_chiplet.h"
+>> +#include "hw/ppc/pnv_spi_controller.h"
+>>   #include "hw/ppc/pnv_lpc.h"
+>>   #include "hw/ppc/pnv_occ.h"
+>>   #include "hw/ppc/pnv_psi.h"
+>> @@ -118,6 +119,8 @@ struct Pnv10Chip {
+>>       PnvSBE       sbe;
+>>       PnvHomer     homer;
+>>       PnvN1Chiplet     n1_chiplet;
+>> +#define PNV10_CHIP_MAX_PIB_SPIC 6
+>> +    PnvSpiController pib_spic[PNV10_CHIP_MAX_PIB_SPIC];
+>>         uint32_t     nr_quads;
+>>       PnvQuad      *quads;
+>> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+>> index 6e3a5ccdec..eeb2d650bd 100644
+>> --- a/hw/ppc/pnv.c
+>> +++ b/hw/ppc/pnv.c
+>> @@ -46,6 +46,7 @@
+>>   #include "hw/pci-host/pnv_phb.h"
+>>   #include "hw/pci-host/pnv_phb3.h"
+>>   #include "hw/pci-host/pnv_phb4.h"
+>> +#include "hw/ssi/ssi.h"
+>>     #include "hw/ppc/xics.h"
+>>   #include "hw/qdev-properties.h"
+>> @@ -1829,6 +1830,11 @@ static void 
+>> pnv_chip_power10_instance_init(Object *obj)
+>>       for (i = 0; i < pcc->i2c_num_engines; i++) {
+>>           object_initialize_child(obj, "i2c[*]", &chip10->i2c[i], 
+>> TYPE_PNV_I2C);
+>>       }
+>> +
+>> +    for (i = 0; i < PNV10_CHIP_MAX_PIB_SPIC ; i++) {
+>> +        object_initialize_child(obj, "pib_spic[*]", 
+>> &chip10->pib_spic[i],
+>> +                                TYPE_PNV_SPI_CONTROLLER);
+>> +    }
+>>   }
+>>     static void pnv_chip_power10_quad_realize(Pnv10Chip *chip10, 
+>> Error **errp)
+>> @@ -2043,7 +2049,35 @@ static void 
+>> pnv_chip_power10_realize(DeviceState *dev, Error **errp)
+>> qdev_get_gpio_in(DEVICE(&chip10->psi),
+>> PSIHB9_IRQ_SBE_I2C));
+>>       }
+>> -
+>> +    /* PIB SPI Controller */
+>> +    for (i = 0; i < PNV10_CHIP_MAX_PIB_SPIC; i++) {
+>> + object_property_set_int(OBJECT(&chip10->pib_spic[i]), "spic_num",
+>> +                                i , &error_fatal);
+>> +        /*
+>> +         * The TPM attached SPIC needs to reverse the bit order in 
+>> each byte
+>> +         * it sends to the TPM.
+>> +         */
+>> +        if (i == 4) {
+>> + object_property_set_bool(OBJECT(&chip10->pib_spic[i]),
+>> +                    "reverse_bits", true, &error_fatal);
+>> +        }
+>
+> or
+>
+> object_property_set_bool(OBJECT(&chip10->pib_spic[i]),
+>                     "reverse_bits", (i == 4) , &error_fatal);
+>
+>
+> That said. This setting looks weird to me.
+>
+> Why do we need to reverse the bits ? is it an endian issue ?
+>
+> Are there other SPI devices on the buses ?
+There are no other SPI devices attached to this bus.
+Checking about reversing the bits that sent to TPM.
+>
+>> +        if (!qdev_realize(DEVICE(&chip10->pib_spic[i]), NULL, errp)) {
+>> +            return;
+>> +        }
+>> +        pnv_xscom_add_subregion(chip, PNV10_XSCOM_PIB_SPIC_BASE +
+>> +                                i * PNV10_XSCOM_PIB_SPIC_SIZE,
+>> + &chip10->pib_spic[i].xscom_spic_regs);
+>> +    }
+>
+>
+> The devices below belong to the rainer machine it seems. We should 
+> introduce
+> a per-machine handler to create them like it was done for the I2C 
+> devices.
+> For this purpose, the PnvMachineClass::i2c_init) handler could be changed
+> to create all machine specific devices.
+ACK, Thank You.
+>
+>> +    /* Primary MEAS/MVPD/Keystore SEEPROM connected to pib_spic[2] */
+>> +    DeviceState *seeprom = qdev_new("seeprom-25csm04");
+>> +    qdev_prop_set_string(seeprom, "filename",
+>> +                         "sbe_measurement_seeprom.bin.ecc");
+>
+> This should be done differently. Here is a command line example :
+>
+> $ qemu-system-arm -M ast2600-evb \
+>       -blockdev node-name=fmc0,driver=file,filename=/path/to/fmc0.img \
+>       -device mx66u51235f,bus=ssi.0,cs=0x0,drive=fmc0 \
+>       -blockdev node-name=fmc1,driver=file,filename=/path/to/fmc1.img \
+>       -device mx66u51235f,bus=ssi.0,cs=0x1,drive=fmc1 \
+>       -blockdev node-name=spi1,driver=file,filename=/path/to/spi1.img \
+>       -device mx66u51235f,cs=0x0,bus=ssi.1,drive=spi1 \
+>       ...
+>
+> Please try to rework "seeprom-25csm04" on top of "m25p80". It should 
+> help.
+Sure, Will check and do the updates.
+>
+>
+>> +    ssi_realize_and_unref(seeprom, 
+>> ((&chip10->pib_spic[2])->bus).ssi_bus,
+>> +                          &error_fatal);
+>> +    qemu_irq seeprom_cs = qdev_get_gpio_in_named(seeprom, 
+>> SSI_GPIO_CS, 0);
+>> +    Object *bus = OBJECT(&(&chip10->pib_spic[2])->bus);
+>> +    sysbus_connect_irq(SYS_BUS_DEVICE(bus), 0, seeprom_cs);
+>
+> Could you please slightly change the models to connect the IRQ line using
+> qdev_connect_gpio_out instead ?  See pnv_rainier_i2c_init.
+>
+> Thanks,
+>
+> C.
+Sure, Will check and update. Thank You.
+>
+>>   }
+>>     static void pnv_rainier_i2c_init(PnvMachineState *pnv)
+>
 
