@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A3E8C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 17:10:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AC1CC4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 17:10:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzg7c-00021D-RS; Wed, 24 Apr 2024 13:09:28 -0400
+	id 1rzg7Z-000209-39; Wed, 24 Apr 2024 13:09:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rzg7V-0001zh-Nx
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:09:22 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1rzg7R-0001ye-Or
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:09:17 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rzg7T-0005NL-QR
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:09:21 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-1e3ca4fe4cfso229835ad.2
- for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 10:09:19 -0700 (PDT)
+ id 1rzg7P-0005Mf-S2
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:09:17 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1e2b1cd446fso265435ad.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 10:09:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713978558; x=1714583358; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713978554; x=1714583354; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=5odWkAYeVMNCe6Cty3EzFB4YygxLZJZYtuimpCAAowk=;
- b=w0NXHGyst2MBcklpeOWnqA9xZASv4SNFQyu/cCYj2yvahdzFp3h8G0QI5mQjxnh1uT
- mfzn0CwYlomMnWtP3VGuZZzKwyF77jtc2aVTI7jtIs2Zd7H/5kpwDMlysbk69LqluxXv
- uT8qGgfmywCluU/WptqN0ir51ewGD2IpJY11Mcve9I/gvyZSGhlaYkilA5pA6NXK1faF
- U1K8nOdmFXE0sGoQZbMxDqhzp+FEtKjgdCfI/6XIc0vu8X+r6EqeTY1Du0C9nz8fhVBF
- GO/lh/rbcLYlQIqzTLqg57iBtpe8WUTqa9P/cW/I7IN1QfuKIKDCcDARVnZ8jmCIoMW7
- nYqQ==
+ :reply-to; bh=T0/wwsmOrIFP2k0lfcZhLa1SDoLg5xmY78unAbAeB00=;
+ b=H7sImLsv1v8mHhJEgDamGcp/w1GmWIzqCpeKm5BxXmvM2ZW7DAO2+bbRg26EDStnfC
+ rsYRRVbkBZBJus5H7/C0MkEoDPJxLPOe9/jnfcZBv81SpwocczasBfbNkrV+AMYDgND4
+ H062sECC9+6qQn/EFFMcPYbh3oggSpL8vb8/yzNi4e7fWQ33QMdSLc/aqDasfzZakuW4
+ 0fAzrlI/h2Y8XEoiBOk2iz2+CxI9PMKDc8A9XuhLD4pesawJ5lwr2cfDCQECjYMTaTRv
+ sQqqOBdq9rrsLnroQA7mr5JLgExuRxO9l1g1wve8xDJGjqdxtqohGsPgrOw5YJNu1cQ9
+ XHeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713978558; x=1714583358;
+ d=1e100.net; s=20230601; t=1713978554; x=1714583354;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5odWkAYeVMNCe6Cty3EzFB4YygxLZJZYtuimpCAAowk=;
- b=t9GA2HqV5nq48LGqhzHWQ/dquTUNNucvt8wsFEKNe7QjkXj95MjxEf0tArunOHpGuN
- lFSYo4rPELa+zeY7/JomsELsTzgNhHSj/XH9GBv5V7A+T+ul2JKY7z23Yx0T94A3l0mU
- DtIrlayyX/Rs+/bvXuSwoutjdMlaXh7VhSg6FWc/NKoNIOvbfQ0K18l4cq8DqFhFThxd
- PtmHnaDHepi8qCnqAASCUxjSBwekyiof71YeQEYVOiKUTKN1x/cht+dpoNQRDdQguN1b
- OGsgCTWab/zG3gB0Y0FCiUme4xyK10JCPAGJea0qbt2qOjUDHCCAkDrlYocwelnIaSq3
- n4HA==
-X-Gm-Message-State: AOJu0Yw60s5rO9YXsh+gXlegPcmu3hms6o+x992WEHGRsahEaQHp2HU7
- rNk9m4ls9UnrxcuxRYARjR+L3DfgPWbPWZx8pMg0AfVXBLo1olLcSRlKXzXCUwnF0IRLdAQCgvF
- f
-X-Google-Smtp-Source: AGHT+IEG5mkJaOUXDGH5Lh2fZO5v15uZ/cATGc+mxF/W2E8EqUarBb0u8jCpVioujWSjdjQYq0nkLg==
-X-Received: by 2002:a17:902:e944:b0:1e3:dfdc:6972 with SMTP id
- b4-20020a170902e94400b001e3dfdc6972mr4491816pll.9.1713978558138; 
- Wed, 24 Apr 2024 10:09:18 -0700 (PDT)
+ bh=T0/wwsmOrIFP2k0lfcZhLa1SDoLg5xmY78unAbAeB00=;
+ b=G94VHNqzlBiBmaPx6tFcvTyxOZrX2xRXJaWHesbAr6U2A7m5ECDjYYch6AdhScrfFh
+ SbyZ+Dhchggez8g1dp2AQVOOJbWEAS/bjojo78rkQUcRAesdsMv4FbDu0t5NirTuMAFf
+ 2dZkWhft3teAFsLwE5knaOZVaK5myWPyrWhN4Pf38Sldlt+8rZiIuM0Pt0ogmjT6KW+J
+ /VQSoQiHkXzDXWxAIoiRQOSJAAFESbkcPhBCvp7Ww4pXPs8p+DTyrNb5rY4aJs7FlqAQ
+ QDQBQCz0kL1QugESTY9p/46SpVRnbSLc5VNvs2i3t9auiRoTpcoW1B7UALqnyD+l3F0w
+ gsYQ==
+X-Gm-Message-State: AOJu0YyY27BwdgVd+FF3Oo0pXX6b17IDXTrMxs9agpahU/qgby7TzZ1j
+ I2K2znxDx/ec+RsGSEFchB0Tt9uN4+qdieQ7twOniCOlwQ4AGbACkJ510cSdTl4ffaLson5cjvU
+ K
+X-Google-Smtp-Source: AGHT+IH4yayLi5d/dSHHjT7FVFY+A2gphbGYUG7hxuH44xiwskJqpRxbqh4ErcbbpzqivnuWSKgkOA==
+X-Received: by 2002:a17:902:784f:b0:1e6:1a7a:98df with SMTP id
+ e15-20020a170902784f00b001e61a7a98dfmr2657901pln.66.1713978554565; 
+ Wed, 24 Apr 2024 10:09:14 -0700 (PDT)
 Received: from stoup.. ([156.19.246.23]) by smtp.gmail.com with ESMTPSA id
- u8-20020a170902e80800b001e0b5d49fc7sm12215489plg.161.2024.04.24.10.09.17
+ u8-20020a170902e80800b001e0b5d49fc7sm12215489plg.161.2024.04.24.10.09.13
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Apr 2024 10:09:17 -0700 (PDT)
+ Wed, 24 Apr 2024 10:09:14 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 4/5] tcg/optimize: Optimize setcond with zmask
-Date: Wed, 24 Apr 2024 10:09:07 -0700
-Message-Id: <20240424170908.759043-6-richard.henderson@linaro.org>
+Subject: [PATCH 2/5] tcg/i386: Simplify immediate 8-bit logical vector shifts
+Date: Wed, 24 Apr 2024 10:09:05 -0700
+Message-Id: <20240424170908.759043-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240424170908.759043-1-richard.henderson@linaro.org>
 References: <20240424170908.759043-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,149 +92,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If we can show that high bits of an input are zero,
-then we may optimize away some comparisons.
+The x86 isa does not have this operation, so we need an expansion.
+Use the same algorithm that we use for expanding this vector
+operation with integers: perform the shift with a wider type
+and then mask the bits that must be zero.
+
+This reduces the instruction count from 5 to 2.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/optimize.c | 110 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 110 insertions(+)
+ tcg/i386/tcg-target.c.inc | 61 +++++++++------------------------------
+ 1 file changed, 14 insertions(+), 47 deletions(-)
 
-diff --git a/tcg/optimize.c b/tcg/optimize.c
-index 2e9e5725a9..8886f7037a 100644
---- a/tcg/optimize.c
-+++ b/tcg/optimize.c
-@@ -2099,6 +2099,108 @@ static bool fold_remainder(OptContext *ctx, TCGOp *op)
-     return false;
+diff --git a/tcg/i386/tcg-target.c.inc b/tcg/i386/tcg-target.c.inc
+index c6ba498623..6837c519b0 100644
+--- a/tcg/i386/tcg-target.c.inc
++++ b/tcg/i386/tcg-target.c.inc
+@@ -3769,49 +3769,20 @@ int tcg_can_emit_vec_op(TCGOpcode opc, TCGType type, unsigned vece)
+     }
  }
  
-+static bool fold_setcond_zmask(OptContext *ctx, TCGOp *op, bool neg)
-+{
-+    uint64_t a_zmask, b_val;
-+    TCGCond cond;
-+
-+    if (!arg_is_const(op->args[2])) {
-+        return false;
-+    }
-+
-+    a_zmask = arg_info(op->args[1])->z_mask;
-+    b_val = arg_info(op->args[2])->val;
-+    cond = op->args[3];
-+
-+    if (ctx->type == TCG_TYPE_I32) {
-+        a_zmask = (uint32_t)a_zmask;
-+        b_val = (uint32_t)b_val;
-+    }
-+
-+    /*
-+     * A with only low bits set vs B with high bits set means that A < B.
-+     */
-+    if (a_zmask < b_val) {
-+        bool inv = false;
-+
-+        switch (cond) {
-+        case TCG_COND_NE:
-+        case TCG_COND_LEU:
-+        case TCG_COND_LTU:
-+            inv = true;
-+            /* fall through */
-+        case TCG_COND_GTU:
-+        case TCG_COND_GEU:
-+        case TCG_COND_EQ:
-+            return tcg_opt_gen_movi(ctx, op, op->args[0], neg ? -inv : inv);
-+        default:
-+            break;
-+        }
-+    }
-+
-+    /*
-+     * A with only lsb set is already boolean.
-+     */
-+    if (a_zmask <= 1) {
-+        bool convert = false;
-+        bool inv = false;
-+
-+        switch (cond) {
-+        case TCG_COND_EQ:
-+            inv = true;
-+            /* fall through */
-+        case TCG_COND_NE:
-+            convert = (b_val == 0);
-+            break;
-+        case TCG_COND_LTU:
-+        case TCG_COND_TSTEQ:
-+            inv = true;
-+            /* fall through */
-+        case TCG_COND_GEU:
-+        case TCG_COND_TSTNE:
-+            convert = (b_val == 1);
-+            break;
-+        default:
-+            break;
-+        }
-+        if (convert) {
-+            TCGOpcode add_opc, xor_opc, neg_opc;
-+
-+            if (!inv && !neg) {
-+                return tcg_opt_gen_mov(ctx, op, op->args[0], op->args[1]);
-+            }
-+
-+            switch (ctx->type) {
-+            case TCG_TYPE_I32:
-+                add_opc = INDEX_op_add_i32;
-+                neg_opc = INDEX_op_neg_i32;
-+                xor_opc = INDEX_op_xor_i32;
-+                break;
-+            case TCG_TYPE_I64:
-+                add_opc = INDEX_op_add_i64;
-+                neg_opc = INDEX_op_neg_i64;
-+                xor_opc = INDEX_op_xor_i64;
-+                break;
-+            default:
-+                g_assert_not_reached();
-+            }
-+
-+            if (!inv) {
-+                op->opc = neg_opc;
-+            } else if (neg) {
-+                op->opc = add_opc;
-+                op->args[2] = arg_new_constant(ctx, -1);
-+            } else {
-+                op->opc = xor_opc;
-+                op->args[2] = arg_new_constant(ctx, 1);
-+            }
-+            return false;
-+        }
-+    }
-+
-+    return false;
-+}
-+
- static void fold_setcond_tst_pow2(OptContext *ctx, TCGOp *op, bool neg)
+-static void expand_vec_shi(TCGType type, unsigned vece, TCGOpcode opc,
++static void expand_vec_shi(TCGType type, unsigned vece, bool right,
+                            TCGv_vec v0, TCGv_vec v1, TCGArg imm)
  {
-     TCGOpcode and_opc, sub_opc, xor_opc, neg_opc, shr_opc;
-@@ -2200,6 +2302,10 @@ static bool fold_setcond(OptContext *ctx, TCGOp *op)
-     if (i >= 0) {
-         return tcg_opt_gen_movi(ctx, op, op->args[0], i);
-     }
-+
-+    if (fold_setcond_zmask(ctx, op, false)) {
-+        return true;
-+    }
-     fold_setcond_tst_pow2(ctx, op, false);
+-    TCGv_vec t1, t2;
++    uint8_t mask;
  
-     ctx->z_mask = 1;
-@@ -2214,6 +2320,10 @@ static bool fold_negsetcond(OptContext *ctx, TCGOp *op)
-     if (i >= 0) {
-         return tcg_opt_gen_movi(ctx, op, op->args[0], -i);
+     tcg_debug_assert(vece == MO_8);
+-
+-    t1 = tcg_temp_new_vec(type);
+-    t2 = tcg_temp_new_vec(type);
+-
+-    /*
+-     * Unpack to W, shift, and repack.  Tricky bits:
+-     * (1) Use punpck*bw x,x to produce DDCCBBAA,
+-     *     i.e. duplicate in other half of the 16-bit lane.
+-     * (2) For right-shift, add 8 so that the high half of the lane
+-     *     becomes zero.  For left-shift, and left-rotate, we must
+-     *     shift up and down again.
+-     * (3) Step 2 leaves high half zero such that PACKUSWB
+-     *     (pack with unsigned saturation) does not modify
+-     *     the quantity.
+-     */
+-    vec_gen_3(INDEX_op_x86_punpckl_vec, type, MO_8,
+-              tcgv_vec_arg(t1), tcgv_vec_arg(v1), tcgv_vec_arg(v1));
+-    vec_gen_3(INDEX_op_x86_punpckh_vec, type, MO_8,
+-              tcgv_vec_arg(t2), tcgv_vec_arg(v1), tcgv_vec_arg(v1));
+-
+-    if (opc != INDEX_op_rotli_vec) {
+-        imm += 8;
+-    }
+-    if (opc == INDEX_op_shri_vec) {
+-        tcg_gen_shri_vec(MO_16, t1, t1, imm);
+-        tcg_gen_shri_vec(MO_16, t2, t2, imm);
++    if (right) {
++        mask = 0xff >> imm;
++        tcg_gen_shri_vec(MO_16, v0, v1, imm);
+     } else {
+-        tcg_gen_shli_vec(MO_16, t1, t1, imm);
+-        tcg_gen_shli_vec(MO_16, t2, t2, imm);
+-        tcg_gen_shri_vec(MO_16, t1, t1, 8);
+-        tcg_gen_shri_vec(MO_16, t2, t2, 8);
++        mask = 0xff << imm;
++        tcg_gen_shli_vec(MO_16, v0, v1, imm);
      }
-+
-+    if (fold_setcond_zmask(ctx, op, true)) {
-+        return true;
-+    }
-     fold_setcond_tst_pow2(ctx, op, true);
+-
+-    vec_gen_3(INDEX_op_x86_packus_vec, type, MO_8,
+-              tcgv_vec_arg(v0), tcgv_vec_arg(t1), tcgv_vec_arg(t2));
+-    tcg_temp_free_vec(t1);
+-    tcg_temp_free_vec(t2);
++    tcg_gen_and_vec(MO_8, v0, v0, tcg_constant_vec(type, MO_8, mask));
+ }
  
-     /* Value is {0,-1} so all bits are repetitions of the sign. */
+ static void expand_vec_sari(TCGType type, unsigned vece,
+@@ -3821,7 +3792,7 @@ static void expand_vec_sari(TCGType type, unsigned vece,
+ 
+     switch (vece) {
+     case MO_8:
+-        /* Unpack to W, shift, and repack, as in expand_vec_shi.  */
++        /* Unpack to 16-bit, shift, and repack.  */
+         t1 = tcg_temp_new_vec(type);
+         t2 = tcg_temp_new_vec(type);
+         vec_gen_3(INDEX_op_x86_punpckl_vec, type, MO_8,
+@@ -3874,12 +3845,7 @@ static void expand_vec_rotli(TCGType type, unsigned vece,
+ {
+     TCGv_vec t;
+ 
+-    if (vece == MO_8) {
+-        expand_vec_shi(type, vece, INDEX_op_rotli_vec, v0, v1, imm);
+-        return;
+-    }
+-
+-    if (have_avx512vbmi2) {
++    if (vece != MO_8 && have_avx512vbmi2) {
+         vec_gen_4(INDEX_op_x86_vpshldi_vec, type, vece,
+                   tcgv_vec_arg(v0), tcgv_vec_arg(v1), tcgv_vec_arg(v1), imm);
+         return;
+@@ -4155,10 +4121,11 @@ void tcg_expand_vec_op(TCGOpcode opc, TCGType type, unsigned vece,
+ 
+     switch (opc) {
+     case INDEX_op_shli_vec:
+-    case INDEX_op_shri_vec:
+-        expand_vec_shi(type, vece, opc, v0, v1, a2);
++        expand_vec_shi(type, vece, false, v0, v1, a2);
++        break;
++    case INDEX_op_shri_vec:
++        expand_vec_shi(type, vece, true, v0, v1, a2);
+         break;
+-
+     case INDEX_op_sari_vec:
+         expand_vec_sari(type, vece, v0, v1, a2);
+         break;
 -- 
 2.34.1
 
