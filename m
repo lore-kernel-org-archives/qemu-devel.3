@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 991F7C10F15
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 15:36:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BDBCC4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 15:37:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzefK-0004O8-FT; Wed, 24 Apr 2024 11:36:10 -0400
+	id 1rzeff-0004Qi-O4; Wed, 24 Apr 2024 11:36:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rzefG-0004NU-Px
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 11:36:06 -0400
+ id 1rzefT-0004PN-Lq
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 11:36:19 -0400
 Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rzefE-0005bD-Qo
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 11:36:06 -0400
+ id 1rzefS-0005bU-0q
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 11:36:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713972965; x=1745508965;
+ t=1713972978; x=1745508978;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=8hKAub2DQTIg1zWSIgNLu+p4gDCrNuUGZ6NJQx9fNFw=;
- b=WLD79GKsGkRiQr2Ok/YN0RaRvM+8DHirurK6Ell5qtfbRr6pkzUnv0Up
- 8TiraCxCN837NaBJjmMzjExJw/LLZYFHd5UAsGGLeEOQXFGeGxDL0Vtwy
- r0g7ijwxwFj9TrWD3sPy8QBfX8f1kdy0E59O0mpDixOOYe9OkFeJCZM78
- glwdhq6agvjEtRGffXHOCSkKR3TfdYmHbsQTGYfLuKcKHIZUMkBB9OmNq
- PXfhi0Au7nL4UK81uG6FXsa601s9EVtJMDrPAAzHek8Syk/V5myanX1XV
- G2ACCn+ntziCjRE/9m2WUtZwgejmFGA2YM3SQesJbIK2rMc9FzegghtSN A==;
-X-CSE-ConnectionGUID: nfWopoL0RvGnor9GXrQV8Q==
-X-CSE-MsgGUID: 4s+fYiOdT6KZuqRkHsJHoA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11054"; a="12545563"
-X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; d="scan'208";a="12545563"
+ bh=OcaGvBTqko2FWPtpMgMPh5cbkqFxJE/4lZyHG11ypss=;
+ b=PobnSKTyGGsAu5Vn2IOVCuu18ImyyuRAWyb+yFlOPDl/C1HIKfrAt0WZ
+ hw6sT8hMTxuZtCT/xojrULUW2wMHS4jGktyJ51tTCrhEzpmzp5nNerc9m
+ mf4q6Soilww3E6pZkmoR3prSbhhRkZUM59kkWeIQfXsVqFXepLxHsXf8P
+ XOFSr8YgDqXTqhgRgUFUoQlR1BSRekH48+owg1gsoilAuSzbRy+N4NxJx
+ FCN6GSd50eMrw1txh9RwYgNx2OVxuk86sW+hAk+z+4kMUckQabNtY7Xau
+ XXid2kRI3VRnCRv/57ySYyo5b/NXbD/Vg4GOph0QDXOMWcSHNgwgz4ADR w==;
+X-CSE-ConnectionGUID: cR2CV4rsTySU590lO4e9nA==
+X-CSE-MsgGUID: GnOuKhOASwmri/wVqCu/XQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11054"; a="12545618"
+X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; d="scan'208";a="12545618"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Apr 2024 08:36:03 -0700
-X-CSE-ConnectionGUID: BaRgLiHvQsic+w5l/Cx44w==
-X-CSE-MsgGUID: g3LAKQLVQpiJ8pww8yklHg==
+ 24 Apr 2024 08:36:17 -0700
+X-CSE-ConnectionGUID: yf8H39wFS2uFzsQlHY0Wwg==
+X-CSE-MsgGUID: UHlSoaLoR2uloqFelLnsGw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; d="scan'208";a="25363038"
+X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; d="scan'208";a="25363061"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa008.jf.intel.com with ESMTP; 24 Apr 2024 08:35:59 -0700
+ by orviesa008.jf.intel.com with ESMTP; 24 Apr 2024 08:36:13 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -61,10 +61,9 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  Zhuocheng Ding <zhuocheng.ding@intel.com>, Babu Moger <babu.moger@amd.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
  Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v11 01/21] hw/core/machine: Introduce the module as a CPU
- topology level
-Date: Wed, 24 Apr 2024 23:49:09 +0800
-Message-Id: <20240424154929.1487382-2-zhao1.liu@intel.com>
+Subject: [PATCH v11 04/21] hw/core: Support module-id in numa configuration
+Date: Wed, 24 Apr 2024 23:49:12 +0800
+Message-Id: <20240424154929.1487382-5-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240424154929.1487382-1-zhao1.liu@intel.com>
 References: <20240424154929.1487382-1-zhao1.liu@intel.com>
@@ -94,124 +93,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In x86, module is the topology level above core, which contains a set
-of cores that share certain resources (in current products, the resource
-usually includes L2 cache, as well as module scoped features and MSRs).
+Module is a level above the core, thereby supporting numa
+configuration on the module level can bring user more numa flexibility.
 
-Though smp.clusters could also share the L2 cache resource [1], there
-are following reasons that drive us to introduce the new smp.modules:
+This is the natural further support for module level.
 
-  * As the CPU topology abstraction in device tree [2], cluster supports
-    nesting (though currently QEMU hasn't support that). In contrast,
-    (x86) module does not support nesting.
+Add module level support in numa configuration.
 
-  * Due to nesting, there is great flexibility in sharing resources
-    on cluster, rather than narrowing cluster down to sharing L2 (and
-    L3 tags) as the lowest topology level that contains cores.
-
-  * Flexible nesting of cluster allows it to correspond to any level
-    between the x86 package and core.
-
-  * In Linux kernel, x86's cluster only represents the L2 cache domain
-    but QEMU's smp.clusters is the CPU topology level. Linux kernel will
-    also expose module level topology information in sysfs for x86. To
-    avoid cluster ambiguity and keep a consistent CPU topology naming
-    style with the Linux kernel, we introduce module level for x86.
-
-The module is, in existing hardware practice, the lowest layer that
-contains the core, while the cluster is able to have a higher
-topological scope than the module due to its nesting.
-
-Therefore, place the module between the cluster and the core:
-
-    drawer/book/socket/die/cluster/module/core/thread
-
-With the above topological hierarchy order, introduce module level
-support in MachineState and MachineClass.
-
-[1]: https://lore.kernel.org/qemu-devel/c3d68005-54e0-b8fe-8dc1-5989fe3c7e69@huawei.com/
-[2]: https://www.kernel.org/doc/Documentation/devicetree/bindings/cpu/cpu-topology.txt
-
-Suggested-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Tested-by: Yongwei Ma <yongwei.ma@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 Tested-by: Babu Moger <babu.moger@amd.com>
 ---
-Changes since v8:
- * Add the reason of why a new module level is needed in commit message.
-   (Markus).
- * Add the description about how Linux kernel supports x86 module level.
-   (Daniel)
-
 Changes since v7:
- * New commit to introduce module level in -smp.
+ * New commit to support module level.
 ---
- hw/core/machine-smp.c | 2 +-
- hw/core/machine.c     | 1 +
- include/hw/boards.h   | 4 ++++
- 3 files changed, 6 insertions(+), 1 deletion(-)
+ hw/core/machine.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
-index 27864c950766..2e68fcfdfd79 100644
---- a/hw/core/machine-smp.c
-+++ b/hw/core/machine-smp.c
-@@ -266,7 +266,7 @@ void machine_parse_smp_config(MachineState *ms,
- 
- unsigned int machine_topo_get_cores_per_socket(const MachineState *ms)
- {
--    return ms->smp.cores * ms->smp.clusters * ms->smp.dies;
-+    return ms->smp.cores * ms->smp.modules * ms->smp.clusters * ms->smp.dies;
- }
- 
- unsigned int machine_topo_get_threads_per_socket(const MachineState *ms)
 diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 582c2df37aaf..996664115939 100644
+index 494b712a7638..0dec48e8021a 100644
 --- a/hw/core/machine.c
 +++ b/hw/core/machine.c
-@@ -1157,6 +1157,7 @@ static void machine_initfn(Object *obj)
-     ms->smp.sockets = 1;
-     ms->smp.dies = 1;
-     ms->smp.clusters = 1;
-+    ms->smp.modules = 1;
-     ms->smp.cores = 1;
-     ms->smp.threads = 1;
+@@ -800,6 +800,11 @@ void machine_set_cpu_numa_node(MachineState *machine,
+             return;
+         }
  
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index 69c1ba45cf94..2fa800f11ae4 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -144,6 +144,7 @@ typedef struct {
-  *                 provided SMP configuration
-  * @books_supported - whether books are supported by the machine
-  * @drawers_supported - whether drawers are supported by the machine
-+ * @modules_supported - whether modules are supported by the machine
-  */
- typedef struct {
-     bool prefer_sockets;
-@@ -152,6 +153,7 @@ typedef struct {
-     bool has_clusters;
-     bool books_supported;
-     bool drawers_supported;
-+    bool modules_supported;
- } SMPCompatProps;
++        if (props->has_module_id && !slot->props.has_module_id) {
++            error_setg(errp, "module-id is not supported");
++            return;
++        }
++
+         if (props->has_cluster_id && !slot->props.has_cluster_id) {
+             error_setg(errp, "cluster-id is not supported");
+             return;
+@@ -824,6 +829,11 @@ void machine_set_cpu_numa_node(MachineState *machine,
+                 continue;
+         }
  
- /**
-@@ -339,6 +341,7 @@ typedef struct DeviceMemoryState {
-  * @sockets: the number of sockets in one book
-  * @dies: the number of dies in one socket
-  * @clusters: the number of clusters in one die
-+ * @modules: the number of modules in one cluster
-  * @cores: the number of cores in one cluster
-  * @threads: the number of threads in one core
-  * @max_cpus: the maximum number of logical processors on the machine
-@@ -350,6 +353,7 @@ typedef struct CpuTopology {
-     unsigned int sockets;
-     unsigned int dies;
-     unsigned int clusters;
-+    unsigned int modules;
-     unsigned int cores;
-     unsigned int threads;
-     unsigned int max_cpus;
++        if (props->has_module_id &&
++            props->module_id != slot->props.module_id) {
++                continue;
++        }
++
+         if (props->has_cluster_id &&
+             props->cluster_id != slot->props.cluster_id) {
+                 continue;
+@@ -1226,6 +1236,12 @@ static char *cpu_slot_to_string(const CPUArchId *cpu)
+         }
+         g_string_append_printf(s, "cluster-id: %"PRId64, cpu->props.cluster_id);
+     }
++    if (cpu->props.has_module_id) {
++        if (s->len) {
++            g_string_append_printf(s, ", ");
++        }
++        g_string_append_printf(s, "module-id: %"PRId64, cpu->props.module_id);
++    }
+     if (cpu->props.has_core_id) {
+         if (s->len) {
+             g_string_append_printf(s, ", ");
 -- 
 2.34.1
 
