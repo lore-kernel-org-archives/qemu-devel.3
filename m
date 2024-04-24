@@ -4,172 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07013C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 20:10:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7BDCC4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 20:10:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rziw3-0003nu-1m; Wed, 24 Apr 2024 16:09:43 -0400
+	id 1rziwe-000451-6K; Wed, 24 Apr 2024 16:10:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <svetly.todorov@memverge.com>)
- id 1rzivx-0003nh-Bv
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 16:09:38 -0400
-Received: from mail-mw2nam10on2131.outbound.protection.outlook.com
- ([40.107.94.131] helo=NAM10-MW2-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
+ id 1rziwJ-0003sr-LQ; Wed, 24 Apr 2024 16:10:00 -0400
+Received: from zproxy3.enst.fr ([137.194.2.222])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <svetly.todorov@memverge.com>)
- id 1rzivt-000104-0w
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 16:09:35 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=gzaKrVShoWwRk/piSjIDYiyBdycKrUlG0Qx8b9I6CKBB0XW+s75ss6v1FcMCFd5RGG0jCMw8Sy8ugqXsLtz2RrWeYYBJCn/uIybmdLjbtDoAFK/QaOxKCa8iqPx7bJMAoxC820aHRlUTmQyZ/B2H25qAOljvSaH9MJYq+0CMs3OwE1+sOwmGMQ6N/JH0myU1irczdOI3mVErCJPK9N6CoRWLEjruseFBSofGpx2v2MTfH/qGX186UxkYHqSqsmfdOG2QQrVRidmDPQxG6TyNFhy6aMy6ZIzgk/leB9VIB0W3ZqWVRY+vZacGt8mMpL6dAisXwsDBYNrtZZfVoxzaxA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Wx7TUQpgXn2svQwcZic5gTntpFzkqSKnIrikoW7iQf0=;
- b=TQFqYZxdD1/m3GisOqfdRsWO/C6AkgUWPevVWK4F5VD3yedS/PmtUKAy4iB8yO5wtxAXtcwo2ErV4lwSD4OiyOmI3B/WXHsxuf4VlbtBImyjWyxp5azgyFYcxfXWu9ulbSKfKpYL3WJv273ic7f+3dB4Dn97kHAmlXZkEA2TRppt2GfPVqBJwfS7Da12ONnXBZF69+W/PvmHyzAdO5zKk76Y/ol18L56NwHpDyT6MJVR9jMPMRWp5QnaabZEMJAR2+XEeEUmOd4M1soxphxG2woxfTHW7LyHer3HfvJlW48F2YLWCSnKgD+cc/kZf+8Dfr+W1w4OkoTlP92HJCfgcQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=memverge.com; dmarc=pass action=none header.from=memverge.com;
- dkim=pass header.d=memverge.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=memverge.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Wx7TUQpgXn2svQwcZic5gTntpFzkqSKnIrikoW7iQf0=;
- b=C15kOMU864/ugcsT6bTaLll4b2OdivzcZKb3gEgJSwhWzzA9uMUv9xIH8im2m3VrMGV2b0aPzzZl+dUjxnv/dbTfDf1MYvaGd2md3CyQA+mRN878tZjZI5xs7kxznszuB2UyVOCIe5/kD+lVBd24IytyfkqbYaRpRnkKN7AcX/k=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=memverge.com;
-Received: from IA0PR17MB6347.namprd17.prod.outlook.com (2603:10b6:208:435::22)
- by SN4PR17MB5846.namprd17.prod.outlook.com (2603:10b6:806:215::22)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7472.44; Wed, 24 Apr
- 2024 20:04:24 +0000
-Received: from IA0PR17MB6347.namprd17.prod.outlook.com
- ([fe80::200e:df84:29a9:8c9a]) by IA0PR17MB6347.namprd17.prod.outlook.com
- ([fe80::200e:df84:29a9:8c9a%6]) with mapi id 15.20.7519.021; Wed, 24 Apr 2024
- 20:04:24 +0000
-From: Svetly Todorov <svetly.todorov@memverge.com>
-Subject: [PATCH RFC v2 0/3] cxl: Multi-headed Single Logical Device (MHSLD)
-Date: Wed, 24 Apr 2024 13:04:05 -0700
-Message-Id: <20240424-cxl-2024-04-22-pullahead-v2-0-a87fc4597795@memverge.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIALVlKWYC/x3MMQqAMAxA0atIZgM1FEGvIg7FpBooKi1KoXh3q
- +Mb/i+QJKokGJsCUW5NeuwV1DawbG5fBZWrgQxZY4lwyQE/oLFYeV4huE0co+fe8yA9d0JQ8zO
- K1/yvp/l5XgKMHEZqAAAA
+ (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
+ id 1rziw7-000118-Qe; Wed, 24 Apr 2024 16:09:55 -0400
+Received: from localhost (localhost [IPv6:::1])
+ by zproxy3.enst.fr (Postfix) with ESMTP id 485A8A07A8;
+ Wed, 24 Apr 2024 22:09:40 +0200 (CEST)
+Received: from zproxy3.enst.fr ([IPv6:::1])
+ by localhost (zproxy3.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
+ id EAxF3PDfTkXe; Wed, 24 Apr 2024 22:09:39 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+ by zproxy3.enst.fr (Postfix) with ESMTP id C2370A07B7;
+ Wed, 24 Apr 2024 22:09:39 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy3.enst.fr C2370A07B7
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
+ s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1713989379;
+ bh=rkvHDWHwM89qp+9rxTxnpGySHdZI835QMMEyoTWJEHs=;
+ h=From:To:Date:Message-ID:MIME-Version;
+ b=FFyCsaD50xb9wmUv6Hz8DNhMNYpdnfODrmRruV2JiCpWGXSpV1ZxBCpeLpXowF6mL
+ CdWzJJClpPJ/oTtuSzCCxk/r9ApOt42A6mtnYS4cgJxXYQmYjqPQQq0o3Twxnsja2z
+ kMi5yNX+d/MJKJDJLlpbs3aLyZ8WdoYIezirrM4A=
+X-Virus-Scanned: amavis at enst.fr
+Received: from zproxy3.enst.fr ([IPv6:::1])
+ by localhost (zproxy3.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
+ id jmIBBcFlFR1D; Wed, 24 Apr 2024 22:09:39 +0200 (CEST)
+Received: from inesv-Inspiron-3501.. (unknown
+ [IPv6:2a02:1808:204:e56c:df60:5720:79e:c1dd])
+ by zproxy3.enst.fr (Postfix) with ESMTPSA id 165C2A07AD;
+ Wed, 24 Apr 2024 22:09:39 +0200 (CEST)
+From: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
 To: qemu-devel@nongnu.org
-Cc: Svetly Todorov <svetly.todorov@memverge.com>, 
- Gregory Price <gregory.price@memverge.com>, jonathan.cameron@huawei.com, 
- linux-cxl@vger.kernel.org, nifan.cxl@gmail.com
-X-Mailer: b4 0.14-dev
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1713989063; l=4382;
- i=svetly.todorov@memverge.com; s=20240312; h=from:subject:message-id;
- bh=BSjVtaO9NBh+Y7TbtFAKyzXM/xn9MGFLTeiMzP4i7A0=;
- b=98qdpKg/Y71Z5Mi+h5s5MoT8o0e1niqL247WOx8dKwp7E9jphWkEwrdMMnYgi/F0fsjdZa3b+
- iBrxmo5rAhrBpniE42bt1J7SxFhiiQmj3OndxdbBRMcWf5J7iSSaTbo
-X-Developer-Key: i=svetly.todorov@memverge.com; a=ed25519;
- pk=bo0spdkY5tAEf+QP9ZH+jA9biE/razmOR7VcBXnymUE=
-X-ClientProxiedBy: BY3PR03CA0005.namprd03.prod.outlook.com
- (2603:10b6:a03:39a::10) To IA0PR17MB6347.namprd17.prod.outlook.com
- (2603:10b6:208:435::22)
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Samuel Tardieu <sam@rfc1149.net>, qemu-arm@nongnu.org,
+ Thomas Huth <thuth@redhat.com>,
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH v6 3/5] hw/arm : Create Bl475eMachineState
+Date: Wed, 24 Apr 2024 22:06:53 +0200
+Message-ID: <20240424200929.240921-4-ines.varhol@telecom-paris.fr>
+X-Mailer: git-send-email 2.43.2
+In-Reply-To: <20240424200929.240921-1-ines.varhol@telecom-paris.fr>
+References: <20240424200929.240921-1-ines.varhol@telecom-paris.fr>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA0PR17MB6347:EE_|SN4PR17MB5846:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3a0fb8be-ae44-4a30-b752-08dc6499bcb7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?aEcwY2xtR0d0SEwyQUgvMDBPQlRJSmFaNDFDdlA3eStnd3JCZFhrVUFIRzdI?=
- =?utf-8?B?aHFmSUZzQWNLaVRrWXRqVkpLVkF4Y3lGTWRNeU9xQzgydUNYUmdSQzdHMzQr?=
- =?utf-8?B?RURFYi9uTnZkY0FZS1pxMzRjelNPemx6RkNpMm9lQWEwQ1RGUnNRRkJBS1Uz?=
- =?utf-8?B?NENlajd6aDhjRnFFVE5MSUpUdE1iOWxzN3pEOExxcVNPWWhGdUhrL2NIUWE5?=
- =?utf-8?B?TVhFR2liUlNQdGVReUVRUTF2VUZVRENrcVlxYThyVEJHWVAvcG51YlY0RzBi?=
- =?utf-8?B?SFVVY3FDeFI5UkhETTh3SHFoTTBGaGdNY0VoRWlBYitaREprdWxSUCt2ZU1m?=
- =?utf-8?B?MFJmL0xqTFd5azFrQ3VyZE83UmlPbTRyazQyZXk3dVRkQXFZbHVVckVRVVIr?=
- =?utf-8?B?aS9nVEZCR0E4bEVXL2lGNFpBRUk4a0I2c1pNZWtjSGNsWGI4MnY5UFl2eXVB?=
- =?utf-8?B?REV1ZG80ODlqQ1VLaHZZSGZ3eVdHUG9OQ2hkbG5nR2s5ZFFWU2FPOGFFVk5J?=
- =?utf-8?B?ZldRK1lNWFVJR0kyajBHLy96Ukp5bnpWT3Nkb21PdElwZXRSNkhzM3ZZM0Vk?=
- =?utf-8?B?VjNjeTRTczUvWG9paTdpWDhIWEdyTlpDKzRpMWEzd3ZDTno1Tjl5L1BCZVZq?=
- =?utf-8?B?citxSE9RNXAwdjYwTDhubStvbzlWZjF6aXJMMEh6bXUzYytwbXg3bW9SOVZ2?=
- =?utf-8?B?SlIybkR1WnBkMHJETTFSVnpOb2dSaUhWTDZlK3JnRXlEYkFVNnA1UmpKd1lY?=
- =?utf-8?B?bUJMdjZUZnFXVDRhbzFuakc2emtkY3hucGxBMU5Qb0x0blBNTmZNL1FTR3Fx?=
- =?utf-8?B?S051MGJjSVlyNFlqSDVZNnR5aGxhSEtyVXl3dVFIdWg0VXc0dy9ScmhuY2gz?=
- =?utf-8?B?b21nUDBUcHdrTE5iRFBVOTRjaHVsQy9DWHA0bTh5L3F0M3RBWElHVjh2YStQ?=
- =?utf-8?B?UUlwZzV3dGFaU2tQMVJucVp5azVzMHZWM3RNSGxrYnFRZHlSbEQwcGpmajhS?=
- =?utf-8?B?M2Nqczc5SnB2YzRYejk0OWU2VHN0Rkg5SExkWFpEdzdpRW9jcHUvbHhPYVdS?=
- =?utf-8?B?Tk5xajlqR3QzM0pjbzRPb3V0SG5HTTBUL1lSVFBuRytuYmE4WTBSL0kvMkhu?=
- =?utf-8?B?WjJTZ3pMZnR1b0VMUUQzZmZDaW0xbU0vWllubHJaaUw2a1hnNGw4R2JlK29h?=
- =?utf-8?B?cUtRK1o4OU8vazhYVmNOZVRpa0M1WWJOM2JaaE1CU1dWWEYzU0lPcW54ZjEr?=
- =?utf-8?B?NVd6aWp1ZkxxeGY5cGlsa3N4WUFabmJzY3dSeFZVemlWYUErV3JwbGxKcEM5?=
- =?utf-8?B?RHc1WVQ3SVNleWtteU1TbldmQ3BOb0FpczNXaG5KQm5wUk9FeEpUYWwyZ3ln?=
- =?utf-8?B?eUhCUElReURxUmJwWG02aWNDSTJLQlQ1eFdhc1IrcnE1UFIxK3BiOVFWSm5y?=
- =?utf-8?B?SkF3dVAyZHBUY1pZblVNclFVM0luclBWcFI4UFlTcUorbGtTODlEWHdnUkUy?=
- =?utf-8?B?Mk9ESjliek91cUZOU0JrbkV3aHpSUHZFcGtMbkZwVzdITEsxWXBVYlZCMDls?=
- =?utf-8?B?bXdOYk5LV0FPTktmSUhsUkkyOXkrT2hlSFVSTzJFYkswR3pnbDVFUXh5Vncv?=
- =?utf-8?B?d3dOT1ZYN2hLRDNqbE9yNy9ZWTIxOFlaNUhDeEdRUHFyVlBhditIdFR5d3VG?=
- =?utf-8?B?UEY2bFovSDZiTWdjMVdjdUxRWSt2NTliU0MrN0FkbVJPVWNDNFlaMWJmSExH?=
- =?utf-8?B?S0xGL1RlZFhFcloyN2RiOGFaK3FVWExrTlg2eXhRcVdic1hEVEVUdnNsQlhM?=
- =?utf-8?B?elhPWDNIMUFmTE0zVXpnZz09?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA0PR17MB6347.namprd17.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(366007)(376005)(52116005)(1800799015)(38350700005); DIR:OUT;
- SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZWEwYmZQQ2JqM0FlbzJZT0pxR1VnRWIzZ2JzSWFMN2duby9pb0xGY240OEM0?=
- =?utf-8?B?Vm5zc2thaU9lKzFyRG15RGpVcUx1WWdmTTBuWklSUW5UQUh4MGhrelRUOVFH?=
- =?utf-8?B?eDFtVmF4Q0NiRkVoWUJJa1F3dmpiaDYxdElxWDQwTUt5NlZ4THVqa3k1VGli?=
- =?utf-8?B?K2xwREhaK2tha25aWTdYY2pxZXpaYVAvR2twMUtEMXBncE9MdnNVWE42RWU4?=
- =?utf-8?B?WDVBdHpncnZ0TDRZRnJoQ241K3paYXZ1c2lRUHVrWVo5Wk41QXkyUEhpUVli?=
- =?utf-8?B?M0lILzF5ZklGc0paSXJ2L2FsNzJGQll0NVFDWVYrN0JFT2hBekFOelhaU1VE?=
- =?utf-8?B?WnByb2tCa1Q0SFJhVFhXRktqYzJJRHRHNVphQXdxb2ozYllQYkZ6Y2tieWwx?=
- =?utf-8?B?UzlKT2hiQU1mV3g5T0xRWTdQQ3JZU0t5bnpJd1VTNDR6MkluVkQwNjJqM0VI?=
- =?utf-8?B?Zzd2Z3Z0b2dBWVFBU1Jwa2F5cGV6dTlVeWNzNlJHZ1c0cFlraGZiNVJ0alVX?=
- =?utf-8?B?UEluWHVzYXdLYjduWDAreWx6ZVJ0MmxMWGVxakFtQVMxYldSZ09vUFJDMjJj?=
- =?utf-8?B?amp6VTlCYitWWnoyTzUyUkQvTnI5ajBZVXNHblRsL2FoNDlUNDlwNjlBRy8w?=
- =?utf-8?B?ZGtwUE5uRnV3d3pnTEdDbGcxWHkzQVlHZGpVb3JaMS9RS1JGd1VVM0c1dXpT?=
- =?utf-8?B?NmdNcnI1UStESjJOZ01ZNEVJendNZzRKcHQ2RitjaEI2NC9Ydmh0SFkwV1VO?=
- =?utf-8?B?djBqamVVZjlvMVVxb2ZuLzhUVC9FK1Z0TnV6VzhzR1d3ejRNNlJPeEs5dHJN?=
- =?utf-8?B?VWIxMHR1V1I5L1A2VW9PTitJblJCTkpoME80Q3RhZmk4UC9DT1BNNjJqcS8y?=
- =?utf-8?B?STNVOHFiaEtwcDRGMU1QdjNSSUF6UTR0ZGlkTm1RWitxSjdudkllZVVpZ1Ux?=
- =?utf-8?B?TmlobGszMHNxV3JEbXhyQ2pFdFFWUUVaM2dYMFF6TmVyMEFJVnJMSTI5c0VE?=
- =?utf-8?B?ZWp3UlpGSUtjRFpVeWxoU25xNmJ5ZGpBRzdSR3VqOXFaSGVlWHJVUXIzaXZG?=
- =?utf-8?B?WGxPU2IrZEhrSjlSblVxbm12dHdhNHkwWi9YbTVZUEhGMVdEdlJuSmJYZnUz?=
- =?utf-8?B?NGhqU2hxM2cwa1NDWDhadVlDU1NrZ1oxY1I4TGV5cU43b09LSUFMRHZFYS9E?=
- =?utf-8?B?WEpIQjNFOG1tY2pEdWR3UkppWjkyQjlLZjNOWWYzUmxGaTRFaVJydytlL2pF?=
- =?utf-8?B?M0tjR1hhZ0Y2TFpiQ1d4RGJkS21nZU5sRWovT0g0dGhmNzRXQlUvM3NvQlVa?=
- =?utf-8?B?aXlyVXB4TnhYM3NrcWZVZGUraCtBSkpKdndqNjFBSGg2em1ybTJ6NFFDcUZV?=
- =?utf-8?B?T3JmZWI4Q2ZQSFBYQ2JNd1BqbVhiVjEyekpHQnNuSlc3ZEIwRW9TV2l3a1l3?=
- =?utf-8?B?WFo1MWVkaVZoNkpzQkVtb2MwS0JIVUo1UG5iRWdiZmxmb2JxaUpWTjc5aUcz?=
- =?utf-8?B?TUJOVWc4QXdEL2ZRdDVvVVNBdDVLM3lZalExWTYrdVA1Q3ZuUldMUzdlQjlC?=
- =?utf-8?B?YUNzbnN4MFhnNFdTTWRmYkwvc3NrMUZFZVd2bGtIaitpVXZtVjF5Ykg5MkVL?=
- =?utf-8?B?bXhiUHF6YW4zWnNyU2Q5VGMzT3lmZGsyV2dMTHhZQXUzRjdiTWdwYnBLQkpS?=
- =?utf-8?B?dG9ycEUrTXJiWlBnV3JGUzl4QUgyVjg4NmgzSlM5dWVqdjVOY0lXMGhQMS9O?=
- =?utf-8?B?anIwOCthVm5GMDBiUUNVYURJQ3hodXVLVjRyWXlhcVBNenVqL3QzcFBxVmVs?=
- =?utf-8?B?YUs0bzgyK1greWNsVjg3Wm5aWUNIRWExYkRmbytBa2QvOGlobTdjbkw2aHda?=
- =?utf-8?B?MzN6VGNuZC9yQlVzSUU2QVROYjN4TkxMUXNNWEp0MFVwSzVXR3I1YW9ieG1O?=
- =?utf-8?B?WlAyVUwzYjEzK2FKdlM5ZmxTTXlhS0MvdDR3UWI2K1pNWTdqdW54VElHa2Rh?=
- =?utf-8?B?dHlaL3l4eitzK21rV3A2NDFzR1BiMFE4ZjZ4OTA1NHd4V0MzUGpFZ1pGQWxj?=
- =?utf-8?B?dXIwM0hGczZndEpYMnJBSmFsdmhrU09IY21OVS9WQ0FUSnFvZTBUeVdkUWtU?=
- =?utf-8?B?dVpjb0QyY1czaUd6emNuYnkyMzZrczRVY3pHOTBLU3JIbTZvOHlaRWtkbEQ5?=
- =?utf-8?B?cVE9PQ==?=
-X-OriginatorOrg: memverge.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3a0fb8be-ae44-4a30-b752-08dc6499bcb7
-X-MS-Exchange-CrossTenant-AuthSource: IA0PR17MB6347.namprd17.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Apr 2024 20:04:23.9839 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 5c90cb59-37e7-4c81-9c07-00473d5fb682
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: NSKfE3EHSU148TPgvtxUYlbY1/zlQgunJsqmke0u9xomW2JPWXYCw92DsiL1dqm07fJ/4BTUUcDQ2/2vVFy1NbEHPGVZFH5bw6VtlD0nzlk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN4PR17MB5846
-Received-SPF: pass client-ip=40.107.94.131;
- envelope-from=svetly.todorov@memverge.com;
- helo=NAM10-MW2-obe.outbound.protection.outlook.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=137.194.2.222;
+ envelope-from=ines.varhol@telecom-paris.fr; helo=zproxy3.enst.fr
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -186,107 +85,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-MHSLDs allow multiple hosts to access dynamic capacity on a single
-backing device. This complicates DC management because adds,
-removals, and accesses need to be vetted such that hosts don't
-stomp on each other's data.
-
-This patchset proposes a set of hooks to be called in cxl_type3.c
-when each of the above events happens. The results of the hooks
-can be used to prevent illegal DC operations in the corresponding
-cxl_* functions. 
-
-It also proposes an implementation for MHSLD emulation. The device's
-state is stored in a shared memory-backed file (on Linux, under /dev/shm).
-Extent ownership is tracked in a bytemap, wherein every byte acts
-as a set of flags showing which host ID can access the extent at that
-index. Blocks in an extent are claimed via compare-and-swap. Failure to
-claim the entirety of an extent is treated as a failure; the host will
-parse back over any blocks claimed so far and mask out its corresponding
-ownership bit. Operations on block states are done via atomics. This
-allows claims on unrelated extents to be serviced concurrently.
-
-Block state is relegated to a u8 to conserve space.
-Therefore only 8 heads are currently supported.
-
-The MHSLD device inherits from the CXL_TYPE3 class and adds the following
-configuration options:
---mhd-head=<u32>
---mhd-state_file=<str>
---mhd-init=<bool>
-
---mhd-head specifies the head ID of the host on the given device.
-
---mhd-state_file is the name of the shared-memory-backed file used
-to store the MHD state.
-
---mhd-init indicates whether this QEMU instance should initialize
-the state_file; if so, the instance will create the file if it does
-not exist, ftruncate it to the appropriate size, and initialize its
-header. It is assumed that the --mhd-init instance is run and allowed
-to completely finish configuration before any other guests access the
-shared state.
-
-The shared state file only needs to be intialized once. Even if a guest
-dies without clearing the ownership bits associated with its head-ID,
-future guests with that ID will clear those bits in cxl_mhsld_realize(),
-regardless of whether mhd_init is true or false.
-
-The following command line options create an MHSLD with 4GB of
-backing memory, whose state is tracked in /dev/shm/mhd_metadata.
---mhd-init=true tells this instance to initialize the file as
-described above.
-
-./qemu-system_x86-64 \
-[... other options ...] \
--device pxb-cxl,id=cxl.0,bus=pcie.0,bus_nr=52 \
--device cxl-rp,id=rp0,bus=cxl.0,chassis=0,port=0,slot=0 \
--object memory-backend-ram,id=mem0,size=4G \
--device cxl-mhsld,bus=rp0,num-dc-regions=1,volatile-dc-memdev=mem0,id=cxl-mem0,sn=66667,mhd-head=0,mhd-state_file=mhd_metadata,mhd-init=true \
--M cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.size=4G \
--qmp unix:/tmp/qmp-sock-1,server,nowait
-
-Once this guest completes setup, other guests looking to access the
-device can be booted with the same configuration options, but with
---mhd-head != 0,
---mhd-init=false,
-and a different QMP socket.
-
-The first patch in the series moves the CXLUpdateDCExtentListInPl
-struct to a shared header. This allows DC-management code outside
-of cxl_type3.c (like mhsld.c) to see which extents have been
-accepted by a host in its DC-add response.
-
-Signed-off-by: Svetly Todorov <svetly.todorov@memverge.com>
-Signed-off-by: Gregory Price <gregory.price@memverge.com
-
-Changes in v2:
-- remove explicit init_mhsld script
-- implement remaining DC add/remove logic
-- link to v1: https://lore.kernel.org/qemu-devel/20240308185211.277116-1-gregory.price@memverge.com/
-
+Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
+Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 ---
-Svetly Todorov (3):
-      cxl-mailbox-utils: move CXLUpdateDCExtentListInPl into header
-      cxl_type3: add MHD callbacks
-      mhsld: implement MHSLD device
+ hw/arm/b-l475e-iot01a.c | 46 ++++++++++++++++++++++++++++-------------
+ 1 file changed, 32 insertions(+), 14 deletions(-)
 
- hw/cxl/Kconfig              |   1 +
- hw/cxl/cxl-mailbox-utils.c  |  44 +++--
- hw/cxl/meson.build          |   1 +
- hw/cxl/mhsld/Kconfig        |   4 +
- hw/cxl/mhsld/meson.build    |   3 +
- hw/cxl/mhsld/mhsld.c        | 456 ++++++++++++++++++++++++++++++++++++++++++++
- hw/cxl/mhsld/mhsld.h        |  75 ++++++++
- hw/mem/cxl_type3.c          |  17 ++
- include/hw/cxl/cxl_device.h |  24 +++
- 9 files changed, 608 insertions(+), 17 deletions(-)
----
-base-commit: 532d3bf76f73b8edafd3333dacae449b7c9bb61d
-change-id: 20240422-cxl-2024-04-22-pullahead-fd6fd9e6d1e2
-
-Best regards,
--- 
-Svetly Todorov <svetly.todorov@memverge.com>
+diff --git a/hw/arm/b-l475e-iot01a.c b/hw/arm/b-l475e-iot01a.c
+index d862aa43fc..970c637ce6 100644
+--- a/hw/arm/b-l475e-iot01a.c
++++ b/hw/arm/b-l475e-iot01a.c
+@@ -2,8 +2,8 @@
+  * B-L475E-IOT01A Discovery Kit machine
+  * (B-L475E-IOT01A IoT Node)
+  *
+- * Copyright (c) 2023 Arnaud Minier <arnaud.minier@telecom-paris.fr>
+- * Copyright (c) 2023 In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
++ * Copyright (c) 2023-2024 Arnaud Minier <arnaud.minier@telecom-paris.fr=
+>
++ * Copyright (c) 2023-2024 In=C3=A8s Varhol <ines.varhol@telecom-paris.f=
+r>
+  *
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  *
+@@ -32,33 +32,51 @@
+=20
+ /* B-L475E-IOT01A implementation is derived from netduinoplus2 */
+=20
+-static void b_l475e_iot01a_init(MachineState *machine)
++#define TYPE_B_L475E_IOT01A MACHINE_TYPE_NAME("b-l475e-iot01a")
++OBJECT_DECLARE_SIMPLE_TYPE(Bl475eMachineState, B_L475E_IOT01A)
++
++typedef struct Bl475eMachineState {
++    MachineState parent_obj;
++
++    Stm32l4x5SocState soc;
++} Bl475eMachineState;
++
++static void bl475e_init(MachineState *machine)
+ {
++    Bl475eMachineState *s =3D B_L475E_IOT01A(machine);
+     const Stm32l4x5SocClass *sc;
+-    DeviceState *dev;
+=20
+-    dev =3D qdev_new(TYPE_STM32L4X5XG_SOC);
+-    object_property_add_child(OBJECT(machine), "soc", OBJECT(dev));
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    object_initialize_child(OBJECT(machine), "soc", &s->soc,
++                            TYPE_STM32L4X5XG_SOC);
++    sysbus_realize(SYS_BUS_DEVICE(&s->soc), &error_fatal);
+=20
+-    sc =3D STM32L4X5_SOC_GET_CLASS(dev);
+-    armv7m_load_kernel(ARM_CPU(first_cpu),
+-                       machine->kernel_filename,
+-                       0, sc->flash_size);
++    sc =3D STM32L4X5_SOC_GET_CLASS(&s->soc);
++    armv7m_load_kernel(ARM_CPU(first_cpu), machine->kernel_filename, 0,
++                       sc->flash_size);
+ }
+=20
+-static void b_l475e_iot01a_machine_init(MachineClass *mc)
++static void bl475e_machine_init(ObjectClass *oc, void *data)
+ {
++    MachineClass *mc =3D MACHINE_CLASS(oc);
+     static const char *machine_valid_cpu_types[] =3D {
+         ARM_CPU_TYPE_NAME("cortex-m4"),
+         NULL
+     };
+     mc->desc =3D "B-L475E-IOT01A Discovery Kit (Cortex-M4)";
+-    mc->init =3D b_l475e_iot01a_init;
++    mc->init =3D bl475e_init;
+     mc->valid_cpu_types =3D machine_valid_cpu_types;
+=20
+     /* SRAM pre-allocated as part of the SoC instantiation */
+     mc->default_ram_size =3D 0;
+ }
+=20
+-DEFINE_MACHINE("b-l475e-iot01a", b_l475e_iot01a_machine_init)
++static const TypeInfo bl475e_machine_type[] =3D {
++    {
++        .name           =3D TYPE_B_L475E_IOT01A,
++        .parent         =3D TYPE_MACHINE,
++        .instance_size  =3D sizeof(Bl475eMachineState),
++        .class_init     =3D bl475e_machine_init,
++    }
++};
++
++DEFINE_TYPES(bl475e_machine_type)
+--=20
+2.43.2
 
 
