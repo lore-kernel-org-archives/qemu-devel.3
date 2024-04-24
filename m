@@ -4,61 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E1C2C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 08:04:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A41CFC10F15
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 08:04:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzXbp-0006Na-KC; Wed, 24 Apr 2024 04:04:05 -0400
+	id 1rzXbp-0006P3-LG; Wed, 24 Apr 2024 04:04:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXbT-0005pG-9l
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:03:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXbY-0005te-JV
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:03:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXbR-0003nB-Di
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:03:42 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXbW-0003oV-N1
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:03:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713945820;
+ s=mimecast20190719; t=1713945824;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ote8/Ggg+mQ1mV4i16sKa7lJ17Z9TkkbhrUQT2Vox2o=;
- b=b3aVhcyEbRlT3IL5vOga0LtU7VZb1qT9zE6W00QniufW9OOZjFGiXm/ylNcbfmmapM/XFA
- iKIeiEsgn1tgWefJY4aKbIFv3hc5Br7HwZZajbNzT2ReTHqF0R6UGGRv/AvjAVfed4zCFK
- Fbd9BHoPLe0VDo4Te6wZzfrY+Qlc+28=
+ bh=C0vcnHD36q3vBRtSJzWoo1mOJokKaLTmecVzyyv/5dE=;
+ b=BaHFvdr0gQLd7ZW1wXT6hNtdAO+4nYj9UbUAPI3CcCXtCbUbL4iIfT2/oQ4rYdRN3FKYDC
+ 4824vzhRcEK/IJpu4jkEraDdYPnLOHY9IzbFZiiisvOXqpc8wdd9IReLeYTEB7uR2PmSZb
+ ltPUOAXcDmBMRY3xqSq5yMeP1gsayYQ=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-172-BWuTSmCpNRemtIC9zTbvEQ-1; Wed, 24 Apr 2024 04:03:38 -0400
-X-MC-Unique: BWuTSmCpNRemtIC9zTbvEQ-1
+ us-mta-201-POa6OTM0OZyIeAXV6jgEVQ-1; Wed, 24 Apr 2024 04:03:39 -0400
+X-MC-Unique: POa6OTM0OZyIeAXV6jgEVQ-1
 Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
  [10.11.54.7])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3F579834FB3;
- Wed, 24 Apr 2024 08:03:38 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4610F812C55;
+ Wed, 24 Apr 2024 08:03:39 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 1EE301C060D0;
- Wed, 24 Apr 2024 08:03:38 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 2599F1C060D0;
+ Wed, 24 Apr 2024 08:03:39 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 4148621E669C; Wed, 24 Apr 2024 10:03:37 +0200 (CEST)
+ id 512FD21E65E1; Wed, 24 Apr 2024 10:03:37 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 04/10] qapi: Inline and remove QERR_DEVICE_NO_HOTPLUG definition
-Date: Wed, 24 Apr 2024 10:03:31 +0200
-Message-ID: <20240424080337.2782594-5-armbru@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Juan Quintela <quintela@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 09/10] qapi: Inline and remove QERR_MIGRATION_ACTIVE definition
+Date: Wed, 24 Apr 2024 10:03:36 +0200
+Message-ID: <20240424080337.2782594-10-armbru@redhat.com>
 In-Reply-To: <20240424080337.2782594-1-armbru@redhat.com>
 References: <20240424080337.2782594-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -92,66 +93,85 @@ Address the comment added in commit 4629ed1e98
    * in new code, and do not add new ones!
    */
 
-Mechanical transformation using sed, and manual cleanup.
+Mechanical transformation using sed, manually
+removing the definition in include/qapi/qmp/qerror.h.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Juan Quintela <quintela@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20240312141343.3168265-5-armbru@redhat.com>
+Message-ID: <20240312141343.3168265-10-armbru@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+[Straightforward conflict with commit aeaafb1e59f (migration: export
+migration_is_running) resolved]
 ---
  include/qapi/qmp/qerror.h | 3 ---
- hw/core/qdev.c            | 4 ++--
- system/qdev-monitor.c     | 2 +-
- 3 files changed, 3 insertions(+), 6 deletions(-)
+ migration/migration.c     | 2 +-
+ migration/options.c       | 4 ++--
+ migration/savevm.c        | 2 +-
+ 4 files changed, 4 insertions(+), 7 deletions(-)
 
 diff --git a/include/qapi/qmp/qerror.h b/include/qapi/qmp/qerror.h
-index daa889809b..e93211085a 100644
+index b723830eff..385a4876d6 100644
 --- a/include/qapi/qmp/qerror.h
 +++ b/include/qapi/qmp/qerror.h
-@@ -17,9 +17,6 @@
-  * add new ones!
-  */
+@@ -23,9 +23,6 @@
+ #define QERR_IO_ERROR \
+     "An IO error has occurred"
  
--#define QERR_DEVICE_NO_HOTPLUG \
--    "Device '%s' does not support hotplugging"
+-#define QERR_MIGRATION_ACTIVE \
+-    "There's a migration process in progress"
 -
- #define QERR_INVALID_PARAMETER \
-     "Invalid parameter '%s'"
+ #define QERR_MISSING_PARAMETER \
+     "Parameter '%s' is missing"
  
-diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-index c68d0f7c51..00efaf1bd1 100644
---- a/hw/core/qdev.c
-+++ b/hw/core/qdev.c
-@@ -29,7 +29,6 @@
- #include "qapi/error.h"
- #include "qapi/qapi-events-qdev.h"
- #include "qapi/qmp/qdict.h"
--#include "qapi/qmp/qerror.h"
- #include "qapi/visitor.h"
- #include "qemu/error-report.h"
- #include "qemu/option.h"
-@@ -479,7 +478,8 @@ static void device_set_realized(Object *obj, bool value, Error **errp)
-     static int unattached_count;
+diff --git a/migration/migration.c b/migration/migration.c
+index 86bf76e925..32cd89e13d 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1956,7 +1956,7 @@ static bool migrate_prepare(MigrationState *s, bool blk, bool blk_inc,
+     }
  
-     if (dev->hotplugged && !dc->hotpluggable) {
--        error_setg(errp, QERR_DEVICE_NO_HOTPLUG, object_get_typename(obj));
-+        error_setg(errp, "Device '%s' does not support hotplugging",
-+                   object_get_typename(obj));
+     if (migration_is_running()) {
+-        error_setg(errp, QERR_MIGRATION_ACTIVE);
++        error_setg(errp, "There's a migration process in progress");
+         return false;
+     }
+ 
+diff --git a/migration/options.c b/migration/options.c
+index d7a773aea8..239f5ecfb4 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -685,7 +685,7 @@ bool migrate_cap_set(int cap, bool value, Error **errp)
+     bool new_caps[MIGRATION_CAPABILITY__MAX];
+ 
+     if (migration_is_running()) {
+-        error_setg(errp, QERR_MIGRATION_ACTIVE);
++        error_setg(errp, "There's a migration process in progress");
+         return false;
+     }
+ 
+@@ -729,7 +729,7 @@ void qmp_migrate_set_capabilities(MigrationCapabilityStatusList *params,
+     bool new_caps[MIGRATION_CAPABILITY__MAX];
+ 
+     if (migration_is_running() || migration_in_colo_state()) {
+-        error_setg(errp, QERR_MIGRATION_ACTIVE);
++        error_setg(errp, "There's a migration process in progress");
          return;
      }
  
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 2ae1460e21..6af6ef7d66 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -917,7 +917,7 @@ void qdev_unplug(DeviceState *dev, Error **errp)
+diff --git a/migration/savevm.c b/migration/savevm.c
+index e7c1215671..3fae9f155f 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -1707,7 +1707,7 @@ static int qemu_savevm_state(QEMUFile *f, Error **errp)
+     MigrationStatus status;
+ 
+     if (migration_is_running()) {
+-        error_setg(errp, QERR_MIGRATION_ACTIVE);
++        error_setg(errp, "There's a migration process in progress");
+         return -EINVAL;
      }
  
-     if (!dc->hotpluggable) {
--        error_setg(errp, QERR_DEVICE_NO_HOTPLUG,
-+        error_setg(errp, "Device '%s' does not support hotplugging",
-                    object_get_typename(OBJECT(dev)));
-         return;
-     }
 -- 
 2.44.0
 
