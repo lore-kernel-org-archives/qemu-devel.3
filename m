@@ -4,76 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35A4BC19F4E
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 22:52:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A711C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 22:52:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzlSg-0006xl-MT; Wed, 24 Apr 2024 18:51:34 -0400
+	id 1rzlSk-00070t-4m; Wed, 24 Apr 2024 18:51:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rzlSf-0006wr-4C
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 18:51:33 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1rzlSi-0006yM-E4
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 18:51:36 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rzlSd-0006g3-IV
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 18:51:32 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-6ece8991654so434410b3a.3
- for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 15:51:31 -0700 (PDT)
+ id 1rzlSg-0006h3-K5
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 18:51:36 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-6ee0642f718so1140591b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 15:51:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713999090; x=1714603890; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713999093; x=1714603893; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/Qew14nZN1wX0iqwNUmvetvShYAajmyZbQ1f420VzBg=;
- b=Nl1fYlMg5DMZGTM4O5nY49rVIm2dm68dYtvBjqjcSAYKaSMH4NbpzfsdtdQI+U8clA
- yfX6tXaEqyWOqvlxPeM6IhHDFPJnV+b/IMu+mmaDwHzVlDDoWayIHTs3O2OZFqnvsO0C
- b6MAmSlFE1AzUm7TXSji8YhoRRr8z0kmplehgVxAC5o9bjyXHfBbMxbheMqHkLcYjuSf
- XffCEO3isocEdoB3G7RzF+p7VrSHByjWGv3C/s3IUIbCFnbpOf4FpAkdKurf5KSAxm1v
- kB8rmZdcwvk4dFzQxP6Xtqh7mNJk5TeDUpDqWUlZmmP7BAk2wrsdsprwkJ1okUbj3RFX
- piWg==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=N1Fb/iLBacLjG+JYW3VIwBtHrdP9tAIF5ogLnK/WoGA=;
+ b=gXL7aYadEgiP2R7/QB5RSLbcPfaEMqT0uSwshd+3qtx3EVwMGft3oW0Qc6GSZpRtor
+ 4XAH8PS/1o69MvDZH2xVP8Zil1lcoAE26fxhNQi384GW1mOU7U8W6wm6G8REQy9FX+E/
+ 5IcbwEtjKgY3Z0qrloB7FczCj2CTB02Y5EGsDt3IosB+OWRhkZfWtAt7HebEiuBaD+XI
+ 0VY0jwhjt4i2/qWgbDusqm9RcySHfw322k/CMqJQLLKauEHZ4ww6cyzDvKWENtfhxxG1
+ kOCTK32P9iQlf/GV15MS1otRwvQFGSS1sIUytVoJw4HfXMG/3OC1TqvYS6LQF/6LUiLG
+ ckYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713999090; x=1714603890;
+ d=1e100.net; s=20230601; t=1713999093; x=1714603893;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/Qew14nZN1wX0iqwNUmvetvShYAajmyZbQ1f420VzBg=;
- b=kMIoWo4+Juw69xsPyqiXfhXxaDyh8eSu5zPzVBPkhGxyTVKKf/6pxkoBDWQGEi0lQu
- YFIDmJvcVETCVREDP2S8e6YG8cq0OC2j5diLtUy4oXmIkjFa81mEy8cga3iO7bAs4pTY
- II2yUwU0YQGVlmksRcVJmzTQ/6ZW3G3Q9CabgoC8kB6ZHImE3ajPXLPPofHjhr/1Uuf+
- 7+b9NUt8oHTBaCXsKn73oo8cD+9c1hLlBTr4Wp5+LUmcpfS6nt15LC/HfzgOSmpvzB54
- KOTseUyBQA2yeLksIWPdcnXLT/D47NCrLuvUC+nGknSofCU9TmGzyRrLoYx6DNVlULcc
- wYIw==
-X-Gm-Message-State: AOJu0YzvV0PSYoxI/Yp0rTOEKjiy6IH87zoFMCecdRHXtjDmhi+jN77/
- f2IWNa2h0Is8jqBsJQmTSd81luN5VUGoc6TImzWjAYJcOGWfamybvrOH2DenWURARD4cIkXYmvY
- K
-X-Google-Smtp-Source: AGHT+IFJAHrL3Kwrpi0ZJ2frFe2ZJ5teqk8ugDlLfhbu1sBJuuZ0Sp97UdCzx6kKiaJ7qk2Va8/dDQ==
-X-Received: by 2002:a05:6a21:6d9c:b0:1a7:3d2a:7383 with SMTP id
- wl28-20020a056a216d9c00b001a73d2a7383mr5517735pzb.18.1713999090209; 
- Wed, 24 Apr 2024 15:51:30 -0700 (PDT)
+ bh=N1Fb/iLBacLjG+JYW3VIwBtHrdP9tAIF5ogLnK/WoGA=;
+ b=nYqZ0vqakZmv8m5PePkiaB3RanK0U7VcN6pkXVBJkGcW0V+4ltWOEKTAg+c8k7ldsC
+ 2Md2eZ1jNaKqME8QAk6f7WQ1PbIEMNV85yhrorj39PyeUG1etQotWeJGRwwEmveU0rtv
+ A2eLIzoZEAvl6W7OfrtV2vcsoyaKcYkRjylUM7R7kGTmEtBi1WXZ5f4v9ughi7O4+PHh
+ hjIwUokk385Bs4Uc+FYodvXBUF4IMGM7b8Z4cfblEYZAJHw7hKUJOmFKWTetVF9LSsLV
+ nR9jL2f6ymY8I+DTKxo67V00fzBRzGj0Ql87aSphoHKWoiMvdPYfr2diNYy4QNw8V6VN
+ 318w==
+X-Gm-Message-State: AOJu0YxvPI6ZnguqeMGCy3YWMEfOaa6BQRfZBOTJQQIMuVcby1yzYHxb
+ 5SvJBwZybC9QTjATyyWKRx//+eQc+Mw3tbP+A9Q+z9inDymT0feecCixv+Bo7EWUDSvr6ln+7Nf
+ 1
+X-Google-Smtp-Source: AGHT+IFfbmk//iNHRmpl0Jb3mZsOIbCi2khvtXpct3hGDCdjI6bkGhfNcPuGIKEcEyY7h/GqlEF1zQ==
+X-Received: by 2002:a05:6a20:9190:b0:1a9:9839:f142 with SMTP id
+ v16-20020a056a20919000b001a99839f142mr1675127pzd.10.1713999093218; 
+ Wed, 24 Apr 2024 15:51:33 -0700 (PDT)
 Received: from stoup.. ([156.19.246.23]) by smtp.gmail.com with ESMTPSA id
- it12-20020a056a00458c00b006ead792b6f2sm11960864pfb.1.2024.04.24.15.51.29
+ it12-20020a056a00458c00b006ead792b6f2sm11960864pfb.1.2024.04.24.15.51.32
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Apr 2024 15:51:29 -0700 (PDT)
+ Wed, 24 Apr 2024 15:51:32 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 5/9] linux-user: do_setsockopt: eliminate goto in switch for
- SO_SNDTIMEO
-Date: Wed, 24 Apr 2024 15:51:19 -0700
-Message-Id: <20240424225123.929152-6-richard.henderson@linaro.org>
+Subject: [PULL 8/9] target/m68k: Perform the semihosting test during translate
+Date: Wed, 24 Apr 2024 15:51:22 -0700
+Message-Id: <20240424225123.929152-9-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240424225123.929152-1-richard.henderson@linaro.org>
 References: <20240424225123.929152-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,55 +92,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Michael Tokarev <mjt@tls.msk.ru>
+Replace EXCP_HALT_INSN by EXCP_SEMIHOSTING.  Perform the pre-
+and post-insn tests during translate, leaving only the actual
+semihosting operation for the exception.
 
-There's identical code for SO_SNDTIMEO and SO_RCVTIMEO, currently
-implemented using an ugly goto into another switch case.  Eliminate
-that using arithmetic if, making code flow more natural.
-
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-Message-Id: <20240331100737.2724186-5-mjt@tls.msk.ru>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/syscall.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ target/m68k/cpu.h       |  2 +-
+ target/m68k/op_helper.c | 14 ++-----------
+ target/m68k/translate.c | 45 +++++++++++++++++++++++++++++++++++++----
+ 3 files changed, 44 insertions(+), 17 deletions(-)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 1fedf16650..41659b63f5 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -2301,12 +2301,10 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
-     case TARGET_SOL_SOCKET:
-         switch (optname) {
-         case TARGET_SO_RCVTIMEO:
-+        case TARGET_SO_SNDTIMEO:
-         {
-                 struct timeval tv;
+diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
+index e184239a81..b5bbeedb7a 100644
+--- a/target/m68k/cpu.h
++++ b/target/m68k/cpu.h
+@@ -66,7 +66,7 @@
+ #define EXCP_MMU_ACCESS     58  /* MMU Access Level Violation Error */
  
--                optname = SO_RCVTIMEO;
--
--set_timeout:
-                 if (optlen != sizeof(struct target_timeval)) {
-                     return -TARGET_EINVAL;
-                 }
-@@ -2315,13 +2313,12 @@ set_timeout:
-                     return -TARGET_EFAULT;
-                 }
+ #define EXCP_RTE            0x100
+-#define EXCP_HALT_INSN      0x101
++#define EXCP_SEMIHOSTING    0x101
  
--                ret = get_errno(setsockopt(sockfd, SOL_SOCKET, optname,
-+                ret = get_errno(setsockopt(sockfd, SOL_SOCKET,
-+                                optname == TARGET_SO_RCVTIMEO ?
-+                                    SO_RCVTIMEO : SO_SNDTIMEO,
-                                 &tv, sizeof(tv)));
-                 return ret;
+ #define M68K_DTTR0   0
+ #define M68K_DTTR1   1
+diff --git a/target/m68k/op_helper.c b/target/m68k/op_helper.c
+index 125f6c1b08..15bad5dd46 100644
+--- a/target/m68k/op_helper.c
++++ b/target/m68k/op_helper.c
+@@ -202,18 +202,8 @@ static void cf_interrupt_all(CPUM68KState *env, int is_hw)
+             /* Return from an exception.  */
+             cf_rte(env);
+             return;
+-        case EXCP_HALT_INSN:
+-            if (semihosting_enabled((env->sr & SR_S) == 0)
+-                    && (env->pc & 3) == 0
+-                    && cpu_lduw_code(env, env->pc - 4) == 0x4e71
+-                    && cpu_ldl_code(env, env->pc) == 0x4e7bf000) {
+-                env->pc += 4;
+-                do_m68k_semihosting(env, env->dregs[0]);
+-                return;
+-            }
+-            cs->halted = 1;
+-            cs->exception_index = EXCP_HLT;
+-            cpu_loop_exit(cs);
++        case EXCP_SEMIHOSTING:
++            do_m68k_semihosting(env, env->dregs[0]);
+             return;
          }
--        case TARGET_SO_SNDTIMEO:
--                optname = SO_SNDTIMEO;
--                goto set_timeout;
-         case TARGET_SO_ATTACH_FILTER:
-         {
-                 struct target_sock_fprog *tfprog;
+     }
+diff --git a/target/m68k/translate.c b/target/m68k/translate.c
+index 8a194f2f21..647bd9d9be 100644
+--- a/target/m68k/translate.c
++++ b/target/m68k/translate.c
+@@ -26,12 +26,11 @@
+ #include "qemu/log.h"
+ #include "qemu/qemu-print.h"
+ #include "exec/translator.h"
+-
+ #include "exec/helper-proto.h"
+ #include "exec/helper-gen.h"
+-
+ #include "exec/log.h"
+ #include "fpu/softfloat.h"
++#include "semihosting/semihost.h"
+ 
+ #define HELPER_H "helper.h"
+ #include "exec/helper-info.c.inc"
+@@ -1401,6 +1400,40 @@ static void gen_jmp_tb(DisasContext *s, int n, target_ulong dest,
+     s->base.is_jmp = DISAS_NORETURN;
+ }
+ 
++#ifndef CONFIG_USER_ONLY
++static bool semihosting_test(DisasContext *s)
++{
++    uint32_t test;
++
++    if (!semihosting_enabled(IS_USER(s))) {
++        return false;
++    }
++
++    /*
++     * "The semihosting instruction is immediately preceded by a
++     * nop aligned to a 4-byte boundary..."
++     * The preceding 2-byte (aligned) nop plus the 2-byte halt/bkpt
++     * means that we have advanced 4 bytes from the required nop.
++     */
++    if (s->pc % 4 != 0) {
++        return false;
++    }
++    test = translator_lduw(s->env, &s->base, s->pc - 4);
++    if (test != 0x4e71) {
++        return false;
++    }
++    /* "... and followed by an invalid sentinel instruction movec %sp,0." */
++    test = translator_ldl(s->env, &s->base, s->pc);
++    if (test != 0x4e7bf000) {
++        return false;
++    }
++
++    /* Consume the sentinel. */
++    s->pc += 4;
++    return true;
++}
++#endif /* !CONFIG_USER_ONLY */
++
+ DISAS_INSN(scc)
+ {
+     DisasCompare c;
+@@ -4465,8 +4498,12 @@ DISAS_INSN(halt)
+         gen_exception(s, s->base.pc_next, EXCP_PRIVILEGE);
+         return;
+     }
+-
+-    gen_exception(s, s->pc, EXCP_HALT_INSN);
++    if (semihosting_test(s)) {
++        gen_exception(s, s->pc, EXCP_SEMIHOSTING);
++        return;
++    }
++    tcg_gen_movi_i32(cpu_halted, 1);
++    gen_exception(s, s->pc, EXCP_HLT);
+ }
+ 
+ DISAS_INSN(stop)
 -- 
 2.34.1
 
