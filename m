@@ -4,64 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCC75C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 12:11:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B98C6C10F15
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 12:18:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzbTH-0008W8-PC; Wed, 24 Apr 2024 08:11:31 -0400
+	id 1rzbZL-0001tC-G0; Wed, 24 Apr 2024 08:17:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzbTG-0008VV-6X
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 08:11:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rzbZK-0001t2-1N
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 08:17:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzbTE-0000SX-Fq
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 08:11:29 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rzbZI-0001Bq-5a
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 08:17:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713960687;
+ s=mimecast20190719; t=1713961062;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=iO254fgiRB13Jdm8pmVJEfSGgSzux/0GWLOQxhpRPok=;
- b=Twh5RaHmhe03npoixXNeNgO95cYpQoNeJgxejX2ysz7B+WcTZWTqV9HrX5PyjQzaCsLJnv
- M88GJcAQ084hgLDbzGotyYX6XMek4q/0zoiCjyA1HIAn3qnOE8lFhhpaqTAGGSMqNryDn2
- xpBiGxFoujZpSvaFcgJVW4iTCA0j1GI=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-401-FOzNXeLeO1WGs0xAzDO90w-1; Wed,
- 24 Apr 2024 08:11:22 -0400
-X-MC-Unique: FOzNXeLeO1WGs0xAzDO90w-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
+ bh=MNqr3IHCfzprWKtVKTZH9+LYj6zgwI9P+4vNxSKeeLk=;
+ b=emrh8XdE1s2gTpwgULbB4+i0YXAItnA25VGF5NXkCNiKuVAsBTZJ4la6hkngcIb92fULda
+ s/Rad954GxDRocbCwG3UyVC8NJvoeHzMwsUxkSPNUXcSLH5Abq93BLxXSINOQ805+kPtpu
+ 1QCRVFL33SZYz4IB26AJM2xmY7pg424=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-400-59R2i3KaMM-i-BGQRx3UCg-1; Wed, 24 Apr 2024 08:17:41 -0400
+X-MC-Unique: 59R2i3KaMM-i-BGQRx3UCg-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C575D1C0C654;
- Wed, 24 Apr 2024 12:11:21 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 7EB11EC684;
- Wed, 24 Apr 2024 12:11:21 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 6A23D21E6680; Wed, 24 Apr 2024 14:11:20 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-block@nongnu.org,  raphael@enfabrica.net,  mst@redhat.com,
- kwolf@redhat.com,  hreitz@redhat.com,  pbonzini@redhat.com,
- berrange@redhat.com,  eduardo@habkost.net,  dave@treblig.org,
- eblake@redhat.com,  qemu-devel@nongnu.org,  yc-core@yandex-team.ru
-Subject: Re: [PATCH v3 5/5] qapi: introduce CONFIG_READ event
-In-Reply-To: <20240329183758.3360733-6-vsementsov@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Fri, 29 Mar 2024 21:37:58 +0300")
-References: <20240329183758.3360733-1-vsementsov@yandex-team.ru>
- <20240329183758.3360733-6-vsementsov@yandex-team.ru>
-Date: Wed, 24 Apr 2024 14:11:20 +0200
-Message-ID: <87a5ljvu3b.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 05A808B6BC0;
+ Wed, 24 Apr 2024 12:17:41 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.194.202])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 516571121312;
+ Wed, 24 Apr 2024 12:17:39 +0000 (UTC)
+Date: Wed, 24 Apr 2024 14:17:38 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: stefanha@redhat.com, qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ mtosatti@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH v4] linux-aio: add IO_CMD_FDSYNC command support
+Message-ID: <Zij4YnZxXwXFcnN3@redhat.com>
+References: <20240314111628.1508636-1-ppandit@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240314111628.1508636-1-ppandit@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -69,7 +63,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.668,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,174 +79,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+Am 14.03.2024 um 12:16 hat Prasad Pandit geschrieben:
+> From: Prasad Pandit <pjp@fedoraproject.org>
+> 
+> Libaio defines IO_CMD_FDSYNC command to sync all outstanding
+> asynchronous I/O operations, by flushing out file data to the
+> disk storage.
+> 
+> Enable linux-aio to submit such aio request. This helps to
+> reduce latency induced via pthread_create calls by
+> thread-pool (aio=threads).
+> 
+> Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
 
-> Send a new event when guest reads virtio-pci config after
-> virtio_notify_config() call.
->
-> That's useful to check that guest fetched modified config, for example
-> after resizing disk backend.
->
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->  hw/virtio/virtio-pci.c |  9 +++++++++
->  include/monitor/qdev.h |  2 ++
->  monitor/monitor.c      |  1 +
->  qapi/qdev.json         | 33 +++++++++++++++++++++++++++++++++
->  stubs/qdev.c           |  6 ++++++
->  system/qdev-monitor.c  |  6 ++++++
->  6 files changed, 57 insertions(+)
->
-> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> index 92afbae71c..c0c158dae2 100644
-> --- a/hw/virtio/virtio-pci.c
-> +++ b/hw/virtio/virtio-pci.c
-> @@ -23,6 +23,7 @@
->  #include "hw/boards.h"
->  #include "hw/virtio/virtio.h"
->  #include "migration/qemu-file-types.h"
-> +#include "monitor/qdev.h"
->  #include "hw/pci/pci.h"
->  #include "hw/pci/pci_bus.h"
->  #include "hw/qdev-properties.h"
-> @@ -530,6 +531,10 @@ static uint64_t virtio_pci_config_read(void *opaque, hwaddr addr,
+As we discussed in chat, it would be good to be more detailed about the
+scenario that we're really concerned about here. The commit message
+above sounds like submitting fdsync takes too long, but the real concern
+seems to be about the effect that creating and destroying a thread has
+on a vcpu by adding a TLB flush. Describing the mechanisms, the sequence
+of operations that happen and the problem this causes in more detail
+would make the commit message a lot more useful.
+
+>  block/file-posix.c      |  7 +++++++
+>  block/linux-aio.c       | 21 ++++++++++++++++++++-
+>  include/block/raw-aio.h |  1 +
+>  3 files changed, 28 insertions(+), 1 deletion(-)
+> 
+> v4: New boolean field to indicate if aio_fdsync is available or not.
+>     It is set at file open time and checked before AIO_FLUSH call.
+>   - https://lists.nongnu.org/archive/html/qemu-devel/2024-03/msg03701.html
+> 
+> diff --git a/block/file-posix.c b/block/file-posix.c
+> index 35684f7e21..78a8cea03b 100644
+> --- a/block/file-posix.c
+> +++ b/block/file-posix.c
+> @@ -159,6 +159,7 @@ typedef struct BDRVRawState {
+>      bool has_discard:1;
+>      bool has_write_zeroes:1;
+>      bool use_linux_aio:1;
+> +    bool has_laio_fdsync:1;
+>      bool use_linux_io_uring:1;
+>      int page_cache_inconsistent; /* errno from fdatasync failure */
+>      bool has_fallocate;
+> @@ -718,6 +719,7 @@ static int raw_open_common(BlockDriverState *bs, QDict *options,
+>          ret = -EINVAL;
+>          goto fail;
 >      }
->      addr -= config;
->  
-> +    if (vdev->generation > 0) {
-> +        qdev_virtio_config_read_event(DEVICE(proxy));
-> +    }
-> +
->      switch (size) {
->      case 1:
->          val = virtio_config_readb(vdev, addr);
-> @@ -1884,6 +1889,10 @@ static uint64_t virtio_pci_device_read(void *opaque, hwaddr addr,
->          return UINT64_MAX;
->      }
->  
-> +    if (vdev->generation > 0) {
-> +        qdev_virtio_config_read_event(DEVICE(proxy));
-> +    }
-> +
->      switch (size) {
->      case 1:
->          val = virtio_config_modern_readb(vdev, addr);
-> diff --git a/include/monitor/qdev.h b/include/monitor/qdev.h
-> index 1d57bf6577..fc9a834dca 100644
-> --- a/include/monitor/qdev.h
-> +++ b/include/monitor/qdev.h
-> @@ -36,4 +36,6 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
->   */
->  const char *qdev_set_id(DeviceState *dev, char *id, Error **errp);
->  
-> +void qdev_virtio_config_read_event(DeviceState *dev);
-> +
->  #endif
-> diff --git a/monitor/monitor.c b/monitor/monitor.c
-> index 01ede1babd..5b06146503 100644
-> --- a/monitor/monitor.c
-> +++ b/monitor/monitor.c
-> @@ -316,6 +316,7 @@ static MonitorQAPIEventConf monitor_qapi_event_conf[QAPI_EVENT__MAX] = {
->      [QAPI_EVENT_VSERPORT_CHANGE]   = { 1000 * SCALE_MS },
->      [QAPI_EVENT_MEMORY_DEVICE_SIZE_CHANGE] = { 1000 * SCALE_MS },
->      [QAPI_EVENT_HV_BALLOON_STATUS_REPORT] = { 1000 * SCALE_MS },
-> +    [QAPI_EVENT_VIRTIO_CONFIG_READ] = { 300 * SCALE_MS },
+> +    s->has_laio_fdsync = laio_has_fdsync(s->fd);
 
-All the other rate-limited events use 1s.  Why 0.3s for this one?
+I think this should be conditional on s->use_linux_aio. No point in
+probing it if we'll never call it anyway.
 
->  };
->  
->  /*
-> diff --git a/qapi/qdev.json b/qapi/qdev.json
-> index e8be79c3d5..29a4f47360 100644
-> --- a/qapi/qdev.json
-> +++ b/qapi/qdev.json
-> @@ -182,3 +182,36 @@
->  { 'command': 'device-sync-config',
->    'features': [ 'unstable' ],
->    'data': {'id': 'str'} }
-> +
-> +##
-> +# @VIRTIO_CONFIG_READ:
-> +#
-> +# Emitted whenever guest reads virtio device configuration after
-> +# configuration change.
-
-Is it emitted whenever the guest reads, or only when it reads after a
-configuration change?
-
-> +#
-> +# The event may be used in pair with device-sync-config. It shows
-> +# that guest has re-read updated configuration. It doesn't
-> +# guarantee that guest successfully handled it and updated the
-> +# view of the device for the user, but still it's a kind of
-> +# success indicator.
-
-The event is virtio-only.  device-sync-config isn't.  Why?
-
-> +#
-> +# @device: device name
-> +#
-> +# @path: device path
-> +#
-> +# Features:
-> +#
-> +# @unstable: The event is experimental.
-> +#
-
-Missing:
-
-   # Note: This event is rate-limited.
-   #
-
-> +# Since: 9.1
-> +#
-> +# Example:
-> +#
-> +#     <- { "event": "VIRTIO_CONFIG_READ",
-> +#          "data": { "device": "virtio-net-pci-0",
-> +#                    "path": "/machine/peripheral/virtio-net-pci-0" },
-> +#          "timestamp": { "seconds": 1265044230, "microseconds": 450486 } }
-> +##
-> +{ 'event': 'VIRTIO_CONFIG_READ',
-> +  'features': [ 'unstable' ],
-> +  'data': { '*device': 'str', 'path': 'str' } }
-> diff --git a/stubs/qdev.c b/stubs/qdev.c
-> index 6869f6f90a..ab6c4afe0b 100644
-> --- a/stubs/qdev.c
-> +++ b/stubs/qdev.c
-> @@ -26,3 +26,9 @@ void qapi_event_send_device_unplug_guest_error(const char *device,
->  {
->      /* Nothing to do. */
->  }
-> +
-> +void qapi_event_send_virtio_config_read(const char *device,
-> +                                        const char *path)
-> +{
-> +    /* Nothing to do. */
-> +}
-> diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-> index cb35ea0b86..8a2ca77fde 100644
-> --- a/system/qdev-monitor.c
-> +++ b/system/qdev-monitor.c
-> @@ -26,6 +26,7 @@
->  #include "sysemu/runstate.h"
->  #include "qapi/error.h"
->  #include "qapi/qapi-commands-qdev.h"
-> +#include "qapi/qapi-events-qdev.h"
->  #include "qapi/qmp/dispatch.h"
->  #include "qapi/qmp/qdict.h"
->  #include "qapi/qmp/qerror.h"
-> @@ -1206,3 +1207,8 @@ bool qmp_command_available(const QmpCommand *cmd, Error **errp)
->      }
->      return true;
->  }
-> +
-> +void qdev_virtio_config_read_event(DeviceState *dev)
-> +{
-> +    qapi_event_send_virtio_config_read(dev->id, dev->canonical_path);
-> +}
-
-Which configuration needs the stub?
+Kevin
 
 
