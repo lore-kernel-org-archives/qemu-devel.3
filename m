@@ -4,62 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3D1AC4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 08:05:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55B05C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 08:05:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzXc1-0006w9-3N; Wed, 24 Apr 2024 04:04:17 -0400
+	id 1rzXbx-0006ra-Hz; Wed, 24 Apr 2024 04:04:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXbX-0005su-3n
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXbW-0005ss-OO
  for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:03:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXbS-0003nj-78
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXbR-0003nI-Ms
  for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:03:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713945821;
+ s=mimecast20190719; t=1713945820;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kXLAsN/MjWVrTQesWQIb8lj4bZIyULexZMx0u8KANK0=;
- b=UCYKdlLgOz/Km603AA55deTGb5DNJf27q3UqRfH6lreiC1F7QUJw4IeFIFSREu7u9y6rSK
- EKeKOHBLZrRk3p8wLASQOrDvyClCOTT/op3kYeQuFkUs70StVJ6aL2Hs9SM9JJtnQeZDUV
- mdkQOlx0J4QTJlkQazUDewEOdwbdKxY=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-185-0g-fZ5TLMgib_g2FIqKLoA-1; Wed, 24 Apr 2024 04:03:39 -0400
-X-MC-Unique: 0g-fZ5TLMgib_g2FIqKLoA-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
+ bh=NiuiV2XNWoLOe0i8EiZrScnl5eVDDJW6PHINxn2sw/0=;
+ b=Pg+WD1YOAMihhAGu9PCudo49jsD9Dt0SpsMdQ0Qtbf6ZzHBiHZqaAp8eIX5ovwzIOdM6pF
+ 3c4oGzQPSLntr1TDaNohG9QwqU/uncuo7gJZDGQPsCulzirWWNQ8i8SLyHSjv5Yto3qGN4
+ eCc4Q/XcjJNrm0vkZ8xO+DNB4szIfkY=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-695-9BK_vXyENPqZQA65VJvL8w-1; Wed,
+ 24 Apr 2024 04:03:38 -0400
+X-MC-Unique: 9BK_vXyENPqZQA65VJvL8w-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 48033834FB1;
- Wed, 24 Apr 2024 08:03:39 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 39CD31C03159;
+ Wed, 24 Apr 2024 08:03:38 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 25B49400EAF;
- Wed, 24 Apr 2024 08:03:39 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 19F5A1121312;
+ Wed, 24 Apr 2024 08:03:38 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 4E07B21E65DE; Wed, 24 Apr 2024 10:03:37 +0200 (CEST)
+ id 3E1B221E669B; Wed, 24 Apr 2024 10:03:37 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Juan Quintela <quintela@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 08/10] qapi: Correct error message for 'vcpu_dirty_limit'
- parameter
-Date: Wed, 24 Apr 2024 10:03:35 +0200
-Message-ID: <20240424080337.2782594-9-armbru@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 03/10] qapi: Inline and remove QERR_DEVICE_HAS_NO_MEDIUM
+ definition
+Date: Wed, 24 Apr 2024 10:03:30 +0200
+Message-ID: <20240424080337.2782594-4-armbru@redhat.com>
 In-Reply-To: <20240424080337.2782594-1-armbru@redhat.com>
 References: <20240424080337.2782594-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -86,45 +85,84 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-QERR_INVALID_PARAMETER_VALUE is defined as:
+Address the comment added in commit 4629ed1e98
+("qerror: Finally unused, clean up"), from 2015:
 
-  #define QERR_INVALID_PARAMETER_VALUE \
-      "Parameter '%s' expects %s"
+  /*
+   * These macros will go away, please don't use
+   * in new code, and do not add new ones!
+   */
 
-The current error is formatted as:
-
-  "Parameter 'vcpu_dirty_limit' expects is invalid, it must greater then 1 MB/s"
-
-Replace by:
-
-  "Parameter 'vcpu_dirty_limit' must be greater than 1 MB/s"
+Mechanical transformation using sed, and manual cleanup.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Juan Quintela <quintela@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20240312141343.3168265-9-armbru@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-[New error message corrected, commit message updated accordingly]
+Message-ID: <20240312141343.3168265-4-armbru@redhat.com>
 ---
- migration/options.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ include/qapi/qmp/qerror.h | 3 ---
+ block/snapshot.c          | 7 ++++---
+ blockdev.c                | 2 +-
+ 3 files changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/migration/options.c b/migration/options.c
-index bfd7753b69..d7a773aea8 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -1286,9 +1286,8 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
+diff --git a/include/qapi/qmp/qerror.h b/include/qapi/qmp/qerror.h
+index 06a1d2248e..daa889809b 100644
+--- a/include/qapi/qmp/qerror.h
++++ b/include/qapi/qmp/qerror.h
+@@ -17,9 +17,6 @@
+  * add new ones!
+  */
  
-     if (params->has_vcpu_dirty_limit &&
-         (params->vcpu_dirty_limit < 1)) {
--        error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
--                   "vcpu_dirty_limit",
--                   "is invalid, it must greater then 1 MB/s");
-+        error_setg(errp,
-+                   "Parameter 'vcpu_dirty_limit' must be greater than 1 MB/s");
-         return false;
+-#define QERR_DEVICE_HAS_NO_MEDIUM \
+-    "Device '%s' has no medium"
+-
+ #define QERR_DEVICE_NO_HOTPLUG \
+     "Device '%s' does not support hotplugging"
+ 
+diff --git a/block/snapshot.c b/block/snapshot.c
+index 8242b4abac..8fd1756777 100644
+--- a/block/snapshot.c
++++ b/block/snapshot.c
+@@ -28,7 +28,6 @@
+ #include "block/qdict.h"
+ #include "qapi/error.h"
+ #include "qapi/qmp/qdict.h"
+-#include "qapi/qmp/qerror.h"
+ #include "qapi/qmp/qstring.h"
+ #include "qemu/option.h"
+ #include "sysemu/block-backend.h"
+@@ -359,7 +358,8 @@ int bdrv_snapshot_delete(BlockDriverState *bs,
+     GLOBAL_STATE_CODE();
+ 
+     if (!drv) {
+-        error_setg(errp, QERR_DEVICE_HAS_NO_MEDIUM, bdrv_get_device_name(bs));
++        error_setg(errp, "Device '%s' has no medium",
++                   bdrv_get_device_name(bs));
+         return -ENOMEDIUM;
      }
+     if (!snapshot_id && !name) {
+@@ -437,7 +437,8 @@ int bdrv_snapshot_load_tmp(BlockDriverState *bs,
+     GRAPH_RDLOCK_GUARD_MAINLOOP();
  
+     if (!drv) {
+-        error_setg(errp, QERR_DEVICE_HAS_NO_MEDIUM, bdrv_get_device_name(bs));
++        error_setg(errp, "Device '%s' has no medium",
++                   bdrv_get_device_name(bs));
+         return -ENOMEDIUM;
+     }
+     if (!snapshot_id && !name) {
+diff --git a/blockdev.c b/blockdev.c
+index 057601dcf0..08eccc9052 100644
+--- a/blockdev.c
++++ b/blockdev.c
+@@ -1395,7 +1395,7 @@ static void external_snapshot_action(TransactionAction *action,
+     bdrv_drained_begin(state->old_bs);
+ 
+     if (!bdrv_is_inserted(state->old_bs)) {
+-        error_setg(errp, QERR_DEVICE_HAS_NO_MEDIUM,
++        error_setg(errp, "Device '%s' has no medium",
+                    bdrv_get_device_or_node_name(state->old_bs));
+         return;
+     }
 -- 
 2.44.0
 
