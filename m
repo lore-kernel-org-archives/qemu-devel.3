@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E257C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 09:56:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46602C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 09:57:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzZM2-0004L2-2A; Wed, 24 Apr 2024 05:55:54 -0400
+	id 1rzZNa-0005VT-4X; Wed, 24 Apr 2024 05:57:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzZM0-0004Ki-HA
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 05:55:52 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzZNV-0005V7-UL
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 05:57:26 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzZLy-0007lh-Pt
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 05:55:52 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-347e635b1fcso5446042f8f.1
- for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 02:55:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzZNU-000837-Cr
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 05:57:25 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-41aa21b06b3so24410375e9.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 02:57:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713952549; x=1714557349; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713952642; x=1714557442; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=plBgM7Mzo/JhuzXa8aMMZ3nZa0XciMHnM8kXA2l9pkA=;
- b=xWVJni44+cfVC77JtAsdhRR1DIZx42aGBeVDipCt6rYdYc4+VXNpMOX9C983T97p/d
- FNBL90KP7bZP7czYc17pFuKXpueOk3XaDVzSWADCR1K6/NIW+6uC1BqADaBvtfDd6Omn
- L0uxkU1/Cg+UMtqXiPYVj4vihYc4oDM3H7MfXlCJABZOrcXILtujYi0/u7iL2LK6FSs0
- MbPf1+bvDyCeZoJZiy/hzxJ5TWX8R/T7/e7adDBRX4WKPOWmKWSBLiXoe9ZhcUgYLNhH
- AfE2GheIay4TWTutm0kcFjNoB2OR3ozSigrOxcWhJLq5c81N4Cz7sts5T6gdLX0Xh5Cy
- 1qcQ==
+ bh=SJq9k/F4E/DI20pJ/4+qr9oTkkg3vgba9fcPK4UT7io=;
+ b=COd12O2wK0/K9ZfhJX+Rrm5yqExwN5KPwu/wi8mE8KDPBTbS3UGndSJtrog1UAyeoB
+ 6YNYkgZ4iLGAl2TE6dg/85PepxixnhTiXUIs4upbVqK2e2oyL1OUmBLwkMVbuwvjGjaT
+ 5lFErjuNLyMpgEr2iXar5CD2uAj9zJ66PGJmsWnKdqr1gp9TbrssD1vdMfy/fcPn8b8E
+ U9yUX7X303U2s4vpYHxVISAVmkHokek5j1cM3I3Hj/eNzITGHeuNfehYu3MoQP5+hxR9
+ xJmcae/ZSFBL2aRbGUyPOHa99+giBdxBbXsqxKPgt8jo+ZDigAMMQqhHnCN0Z4SJ4G6v
+ 3THA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713952549; x=1714557349;
+ d=1e100.net; s=20230601; t=1713952642; x=1714557442;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=plBgM7Mzo/JhuzXa8aMMZ3nZa0XciMHnM8kXA2l9pkA=;
- b=PGIPTs4NCFrd/4iIEbmynLmchdygVcsN3XkleDZCDU2IrQEXNgeTlDtA3axCYyQqmC
- ZOPtMfEZEvVaTNLI09Kf0SX6jPjNKABbxfswQx+kjNEUslLKIXYyiY5U0Qg1ppjfUMJW
- e1t2pC/WI+9CGG9fnPuw4R/dC39p/dwfg/6lTmgjgpZ99MCxXKu+H87U363KQADy5kqh
- 1FFmCQ8sgGEvlc3A60dD20hWG/m28qxK6t/oBCY41tlt+TsCgXlrf5ZTR5zOq/jGgrj0
- 6SqgSRr1L2s1AwpN1cL8OHsQJA//JISlGM0CbbQ9WGztj2ssBA5ZuTRTlb6kq1k5NfJD
- /p/Q==
+ bh=SJq9k/F4E/DI20pJ/4+qr9oTkkg3vgba9fcPK4UT7io=;
+ b=GohSjGN3T4+O4yiEigP6FTnc++eG2x9f+qa5MEZMLUgdTgS1o3GXjgivFuB6p93kR7
+ GF6HZ2Cl1+iPzqUkGbpzCYUXDDaL/jy7p3EGBEAW3d8eZ4qY2FkKIVoz2bRHxHzlfznf
+ RrRJx8Pa6mUMxOy9M7rCOkd4VhWTwS4CC3GEgPcvDY8ZFp8bF2Zmi/h32DUVY3MN7lKc
+ fCjJhaKTpO4dOY6cpjFAjf7/N3MNY58dKrKtmGanun/p8FEhjhBs4P54ZpaD78siVutP
+ TvFszzw1m3iZT32VIPL4qSLgAqgT9/HHjMvsDQoV7xZkDJSJCK7IUitHZM36CzVn00Cr
+ 0KWA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUMN9WJY6bK52rezB+AueC6Z8LJeA/9K9O+IxLVsE018xFQigXoAEp4OTcC73ICsdnaL6JoCiNGpH5uWucP8siT1DDHm+4=
-X-Gm-Message-State: AOJu0Ywds1xI9TUhbVJw3LTR4YhZcyCEt7a/yHLZh134iqDow/4gBD7x
- 0RMwBNNYbwDcZ3pg+pQQjiM52lqNLJf0DUeAEkIhJAGpKqKoyERkjmWbqPsiwrw=
-X-Google-Smtp-Source: AGHT+IGnn8+69RrPbwnJAXVNkb6ZqC2VXSWpV0sbr26lTVO6qncPhx10N7VGFhz8hx5wTb1X1qRd8Q==
-X-Received: by 2002:adf:c04c:0:b0:346:b452:1740 with SMTP id
- c12-20020adfc04c000000b00346b4521740mr1308529wrf.3.1713952549029; 
- Wed, 24 Apr 2024 02:55:49 -0700 (PDT)
+ AJvYcCXE4q9z9rAP23sLJXBwhoh90cJF4BsQc6RLoE2vrNewoNtMoqYODc2Cv9Zt8R9ZDXYHOna9foCGM+KvK2XS0un6el4CJHk=
+X-Gm-Message-State: AOJu0YxvD7aRWOavKi2hxuUPR2OE0vCXBOXSGzHrcOd5CJEAuEIVz1Tl
+ D+bHZZpH5OTCMKv5y12cFpUtWcavlnk4MJKtcfTjh9zqSTbsJxoVXqTpwhkdtgE=
+X-Google-Smtp-Source: AGHT+IEDN8R2JZw0OmOUXDYO+040F/N93WfINE4HnvuzfNTiHnvWhc/ehkUAxa42LlN5Kkj8bsPkUQ==
+X-Received: by 2002:a05:600c:4ed0:b0:419:d013:758f with SMTP id
+ g16-20020a05600c4ed000b00419d013758fmr1573629wmq.33.1713952642182; 
+ Wed, 24 Apr 2024 02:57:22 -0700 (PDT)
 Received: from [192.168.1.102] (mon75-h03-176-184-51-42.dsl.sta.abo.bbox.fr.
  [176.184.51.42]) by smtp.gmail.com with ESMTPSA id
- z6-20020adff1c6000000b00343ad4bca7dsm16755948wro.85.2024.04.24.02.55.47
+ je1-20020a05600c1f8100b0041adf358058sm3388312wmb.27.2024.04.24.02.57.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Apr 2024 02:55:48 -0700 (PDT)
-Message-ID: <82079170-9d82-46d5-81e4-44d3b38b551f@linaro.org>
-Date: Wed, 24 Apr 2024 11:55:46 +0200
+ Wed, 24 Apr 2024 02:57:21 -0700 (PDT)
+Message-ID: <14fbd0a8-de17-4686-9304-ea384a094828@linaro.org>
+Date: Wed, 24 Apr 2024 11:57:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/riscv/kvm: remove sneaky strerrorname_np()
- instance
+Subject: Re: [PATCH 2/2] checkpatch.pl: forbid strerrorname_np()
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
  thuth@redhat.com, alex.bennee@linaro.org, mjt@tls.msk.ru,
  ajones@ventanamicro.com
 References: <20240424094700.453356-1-dbarboza@ventanamicro.com>
- <20240424094700.453356-2-dbarboza@ventanamicro.com>
+ <20240424094700.453356-3-dbarboza@ventanamicro.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240424094700.453356-2-dbarboza@ventanamicro.com>
+In-Reply-To: <20240424094700.453356-3-dbarboza@ventanamicro.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,36 +99,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/4/24 11:46, Daniel Henrique Barboza wrote:
-> Commit d424db2354 excluded some strerrorname_np() instances because they
-> break musl libc builds. Another instance happened to slip by via commit
-> d4ff3da8f4.
+On 24/4/24 11:47, Daniel Henrique Barboza wrote:
+> Commit d424db2354 removed an instance of strerrorname_np() because it
+> was breaking building with musl libc. A recent RISC-V patch ended up
+> re-introducing it again by accident.
 > 
-> Remove it before it causes trouble again.
+> Put this function in the baddies list in checkpatch.pl to avoid this
+> situation again. This is what it will look like next time:
 > 
-> Fixes: d4ff3da8f4 (target/riscv/kvm: initialize 'vlenb' via get-reg-list)
+>   $ ./scripts/checkpatch.pl 0001-temp-test.patch
+>   ERROR: use strerror() instead of strerrorname_np()
+>   #22: FILE: target/riscv/kvm/kvm-cpu.c:1058:
+>   +                         strerrorname_np(errno));
+> 
+>   total: 1 errors, 0 warnings, 10 lines checked
+> 
 > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 > ---
->   target/riscv/kvm/kvm-cpu.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+>   scripts/checkpatch.pl | 4 ++++
+>   1 file changed, 4 insertions(+)
 > 
-> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index 6a6c6cae80..ee69ea9785 100644
-> --- a/target/riscv/kvm/kvm-cpu.c
-> +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -1054,8 +1054,8 @@ static void kvm_riscv_read_vlenb(RISCVCPU *cpu, KVMScratchCPU *kvmcpu,
+> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+> index 7026895074..be0982246d 100755
+> --- a/scripts/checkpatch.pl
+> +++ b/scripts/checkpatch.pl
+> @@ -3056,6 +3056,10 @@ sub process {
+>   		}
+>   	}
 >   
->           ret = ioctl(kvmcpu->cpufd, KVM_GET_ONE_REG, &reg);
->           if (ret != 0) {
-> -            error_report("Unable to read vlenb register, error code: %s",
-> -                         strerrorname_np(errno));
-> +            error_report("Unable to read vlenb register, error code: %d",
-> +                         errno);
+> +	if ($line =~ /\bstrerrorname_np\(/) {
+> +		ERROR("use strerror() instead of strerrorname_np()\n" . $herecurr);
+> +	}
+> +
+>   # check for non-portable libc calls that have portable alternatives in QEMU
 
-Why not use "%s" strerror(errno)?
+This should be added here in the "non-portable libc calls" section.
 
->               exit(EXIT_FAILURE);
->           }
->   
+>   		if ($line =~ /\bffs\(/) {
+>   			ERROR("use ctz32() instead of ffs()\n" . $herecurr);
 
 
