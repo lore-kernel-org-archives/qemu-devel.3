@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE007C07E8E
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 17:38:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9271DC4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 17:39:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzgZj-0000oA-OF; Wed, 24 Apr 2024 13:38:32 -0400
+	id 1rzgai-0001MR-LH; Wed, 24 Apr 2024 13:39:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rzgZe-0000ni-Hu; Wed, 24 Apr 2024 13:38:28 -0400
+ id 1rzgaL-0001KB-Ke; Wed, 24 Apr 2024 13:39:11 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rzgZc-0003pd-28; Wed, 24 Apr 2024 13:38:26 -0400
+ id 1rzgaH-0003uX-7I; Wed, 24 Apr 2024 13:39:07 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0BA6761822;
- Wed, 24 Apr 2024 20:38:28 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 135CA61824;
+ Wed, 24 Apr 2024 20:39:10 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 849C4BE619;
- Wed, 24 Apr 2024 20:38:20 +0300 (MSK)
-Received: (nullmailer pid 1218037 invoked by uid 1000);
- Wed, 24 Apr 2024 17:38:15 -0000
-Subject: [ANNOUNCE] QEMU 7.2.11 Stable released
+ by tsrv.corpit.ru (Postfix) with SMTP id B9C31BE61C;
+ Wed, 24 Apr 2024 20:39:02 +0300 (MSK)
+Received: (nullmailer pid 1218348 invoked by uid 1000);
+ Wed, 24 Apr 2024 17:39:01 -0000
+Subject: [ANNOUNCE] QEMU 8.2.3 Stable released
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-Date: Wed, 24 Apr 2024 20:38:15 +0300
-Message-Id: <1713980295.669157.1218032.nullmailer@tls.msk.ru>
+Date: Wed, 24 Apr 2024 20:39:01 +0300
+Message-Id: <1713980341.971368.1218343.nullmailer@tls.msk.ru>
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -62,158 +62,272 @@ Hash: SHA256
 
 Hi everyone,
 
-The QEMU v7.2.11 stable release is now available.
+The QEMU v8.2.3 stable release is now available.
 
 You can grab the tarball from our download page here:
 
   https://www.qemu.org/download/#source
 
-  https://download.qemu.org/qemu-7.2.11.tar.xz
-  https://download.qemu.org/qemu-7.2.11.tar.xz.sig (signature)
+  https://download.qemu.org/qemu-8.2.3.tar.xz
+  https://download.qemu.org/qemu-8.2.3.tar.xz.sig (signature)
 
-v7.2.11 is now tagged in the official qemu.git repository, and the
-stable-7.2 branch has been updated accordingly:
+v8.2.3 is now tagged in the official qemu.git repository, and the
+stable-8.2 branch has been updated accordingly:
 
-  https://gitlab.com/qemu-project/qemu/-/commits/stable-7.2
+  https://gitlab.com/qemu-project/qemu/-/commits/stable-8.2
 
-There are 59 changes since the previous v7.2.10 release.
+There are 116 changes since the previous v8.2.2 release.
 
 Thank you everyone who has been involved and helped with the stable series!
 
 /mjt
 
-Changelog (stable-7.2-hash master-hash Author Name: Commmit-Subject):
+Changelog (stable-8.2-hash master-hash Author Name: Commmit-Subject):
 
-c6fe0f315c Michael Tokarev:
- Update version for 7.2.11 release
-ab4a60c1b7 c4f91d7b7b Harsh Prateek Bora:
+8216663a5c Michael Tokarev:
+ Update version for 8.2.3 release
+51da750063 c4f91d7b7b Harsh Prateek Bora:
  ppc/spapr: Initialize max_cpus limit to SPAPR_IRQ_NR_IPIS.
-3f481e3305 2df5c1f5b0 Harsh Prateek Bora:
+c513ee1b91 2df5c1f5b0 Harsh Prateek Bora:
  ppc/spapr: Introduce SPAPR_IRQ_NR_IPIS to refer IRQ range for CPU IPIs.
-4741ae6b8e b754cb2dcd Zack Buhman:
- target/sh4: add missing CHECK_NOT_DELAY_SLOT
-2429cb7a9f 9e4b27ca6b Philippe Mathieu-Daudé:
+1a78b89bcf 6e4aceba20 BALATON Zoltan:
+ hw/pci-host/ppc440_pcix: Do not expose a bridge device on PCI bus
+dd784cb65d f33274265a BALATON Zoltan:
+ hw/isa/vt82c686: Keep track of PIRQ/PINT pins separately
+fcbb086ae5 2ce6cff94d Cindy Lu:
+ virtio-pci: fix use of a released vector
+6e29509abc 4ef1f559f2 Richard Henderson:
+ linux-user/x86_64: Handle the vsyscall page in open_self_maps_{2,4}
+e2dfadfd07 dcb0a1ac03 Philippe Mathieu-Daudé:
+ hw/audio/virtio-snd: Remove unused assignment
+1cfe45956e 83ddb3dbba Philippe Mathieu-Daudé:
+ hw/net/net_tx_pkt: Fix overrun in update_sctp_checksum()
+35a67d2aa8 9e4b27ca6b Philippe Mathieu-Daudé:
  hw/sd/sdhci: Do not update TRNMOD when Command Inhibit (DAT) is set
-f3130798d4 a45223467e Philippe Mathieu-Daudé:
- hw/net/lan9118: Replace magic '2048' value by MIL_TXFIFO_SIZE definition
-cd7beea4a4 ad766d603f Philippe Mathieu-Daudé:
+9666bd2b79 ad766d603f Philippe Mathieu-Daudé:
  hw/net/lan9118: Fix overflow in MIL TX FIFO
-734314d8ce eaf2bd2953 Philippe Mathieu-Daudé:
+4e6240e184 a45223467e Philippe Mathieu-Daudé:
+ hw/net/lan9118: Replace magic '2048' value by MIL_TXFIFO_SIZE definition
+516bdbc234 eaf2bd2953 Philippe Mathieu-Daudé:
  backends/cryptodev: Do not abort for invalid session ID
-9b7bc39890 fc09ff2979 Philippe Mathieu-Daudé:
+1c5005c450 fc09ff2979 Philippe Mathieu-Daudé:
  hw/misc/applesmc: Fix memory leak in reset() handler
-8394be7faa d39fdfff34 Philippe Mathieu-Daudé:
+6e7e387b79 d39fdfff34 Philippe Mathieu-Daudé:
  hw/block/nand: Fix out-of-bound access in NAND block buffer
-9ca7801c6a 2e3e09b368 Philippe Mathieu-Daudé:
+ab995895ad 2e3e09b368 Philippe Mathieu-Daudé:
  hw/block/nand: Have blk_load() take unsigned offset and return boolean
-caeb4489b7 7a86544f28 Philippe Mathieu-Daudé:
+15b41461ea 7a86544f28 Philippe Mathieu-Daudé:
  hw/block/nand: Factor nand_load_iolen() method out
-d5c41e4491 aa88f99c87 Yuquan Wang:
+5d53ff200b aa88f99c87 Yuquan Wang:
  qemu-options: Fix CXL Fixed Memory Window interleave-granularity typo
-7aaf5f7778 f4729ec39a Philippe Mathieu-Daudé:
+4f01537ced f4729ec39a Philippe Mathieu-Daudé:
  hw/virtio/virtio-crypto: Protect from DMA re-entrancy bugs
-e7c2df3fd7 b4295bff25 Philippe Mathieu-Daudé:
+fbeb0a160c b4295bff25 Philippe Mathieu-Daudé:
  hw/char/virtio-serial-bus: Protect from DMA re-entrancy bugs
-6d37a30815 ba28e0ff4d Philippe Mathieu-Daudé:
+1b2a52712b ba28e0ff4d Philippe Mathieu-Daudé:
  hw/display/virtio-gpu: Protect from DMA re-entrancy bugs
-e070e5e674 ec0504b989 Philippe Mathieu-Daudé:
+eb546a3f49 ec0504b989 Philippe Mathieu-Daudé:
  hw/virtio: Introduce virtio_bh_new_guarded() helper
-d6e7ec1f8e f0907ff4ca Richard Henderson:
+390da29ce5 5888357942 Keith Packard:
+ target/m68k: Map FPU exceptions to FPSR register
+0764b8a8e3 b754cb2dcd Zack Buhman:
+ target/sh4: add missing CHECK_NOT_DELAY_SLOT
+733511728a 7227c0cd50 Zack Buhman:
+ target/sh4: Fix mac.w with saturation enabled
+77e03229ca c97e8977dc Zack Buhman:
+ target/sh4: Fix mac.l with saturation enabled
+7fc1bcb65f 7d95db5e78 Richard Henderson:
+ target/sh4: Merge mach and macl into a union
+be88ed87a6 b0f2f2976b Zack Buhman:
+ target/sh4: mac.w: memory accesses are 16-bit words
+c02844b8e8 f0907ff4ca Richard Henderson:
  linux-user: Fix waitid return of siginfo_t and rusage
-b198998b7f e25fe886b8 Richard Henderson:
+196601e759 e25fe886b8 Richard Henderson:
  tcg/optimize: Do not attempt to constant fold neg_vec
-fd01f5a847 2d9a31b3c2 Wafer:
+20cd0c8655 731655f87f Manos Pitsidianakis:
+ virtio-snd: rewrite invalid tx/rx message handling
+627aa460ba a45f09935c Zheyu Ma:
+ virtio-snd: Enhance error handling for invalid transfers
+cd461c8445 6ae72f609a lyx634449800:
+ vdpa-dev: Fix the issue of device status not updating when configuration interruption is triggered
+b57b102a81 2d9a31b3c2 Wafer:
  hw/virtio: Fix packed virtqueue flush used_idx
-227d9450b5 4c54f5bc8e Yajun Wu:
+f7a1ff69ba 19b254e86a Peter Maydell:
+ target/arm: Use correct SecuritySpace for AArch64 AT ops at EL3
+6983d1657d 7afbdada7e Wei Wang:
+ migration/postcopy: ensure preempt channel is ready before loading states
+46f03be3ed bbdf902366 Zheyu Ma:
+ block/virtio-blk: Fix memory leak from virtio_blk_zone_report
+9c2b8194ac 4c54f5bc8e Yajun Wu:
  hw/net/virtio-net: fix qemu set used ring flag even vhost started
-393b7ab067 44e25fbc19 Peter Maydell:
+e961fa43e9 fbe5ac5671 Peter Maydell:
+ target/arm: take HSTR traps of cp15 accesses to EL2, not EL1
+2702763548 44e25fbc19 Peter Maydell:
  hw/intc/arm_gicv3: ICC_HPPIR* return SPURIOUS if int group is disabled
-eebb7fb506 1d2f2b35bc Michael Tokarev:
+2befb8a9c7 1d2f2b35bc Michael Tokarev:
  gitlab-ci/cirrus: switch from 'master' to 'latest'
-6fca92c9d1 4a3aa11e1f Richard Henderson:
+3168476965 d0ad271a76 Avihai Horon:
+ migration/postcopy: Ensure postcopy_start() sets errp if it fails
+35fface50f 4a3aa11e1f Richard Henderson:
  target/hppa: Clear psw_n for BE on use_nullify_skip path
-162c54b7c1 2911e9b95f Richard Henderson:
+3cdfd68e4e 2911e9b95f Richard Henderson:
  tcg/optimize: Fix sign_mask for logical right-shift
-493b1cc785 1c188fc8cb Akihiko Odaki:
+d3e9e0fb29 89a8de364b Akihiko Odaki:
+ hw/net/net_tx_pkt: Fix virtio header without checksum offloading
+12e4886108 1c188fc8cb Akihiko Odaki:
  virtio-net: Fix vhost virtqueue notifiers for RSS
-70b0e142e6 a158c63b3b Yao Xingtao:
+1e4ec0958e 385e575cd5 Yong-Xuan Wang:
+ target/riscv/kvm: fix timebase-frequency when using KVM acceleration
+38f36fc568 e06adebb08 Irina Ryapolova:
+ target/riscv: Fix mode in riscv_tlb_fill
+dc2abb61af c9b07fe14d Max Chou:
+ target/riscv: rvv: Remove the dependency of Zvfbfmin to Zfbfmin
+6c49ccaaba 078189b327 Frank Chang:
+ hw/intc: Update APLIC IDC after claiming iforce register
+b7ff2c5600 0a11629c91 Daniel Henrique Barboza:
+ target/riscv/vector_helper.c: optimize loops in ldst helpers
+c4ed8c5610 df4252b2ec Daniel Henrique Barboza:
+ target/riscv/vector_helpers: do early exit when vstart >= vl
+43ca6c1a9b 7e53e3ddf6 Daniel Henrique Barboza:
+ target/riscv: always clear vstart in whole vec move insns
+693ceca987 768e7b329c Daniel Henrique Barboza:
+ target/riscv/vector_helper.c: fix 'vmvr_v' memcpy endianess
+9f0db88ca9 0848f7c18e Daniel Henrique Barboza:
+ trans_rvv.c.inc: set vstart = 0 in int scalar move insns
+bf26b6acc1 d3646e31ce Daniel Henrique Barboza:
+ target/riscv/vector_helper.c: set vstart = 0 in GEN_VEXT_VSLIDEUP_VX()
+0041b5a014 a158c63b3b Yao Xingtao:
  monitor/hmp-cmds-target: Append a space in error message in gpa2hva()
-2e1645ac6a 7c7a9f578e Lorenz Brun:
+783b2fc0a9 7c7a9f578e Lorenz Brun:
  hw/scsi/scsi-generic: Fix io_timeout property not applying
-610db167da 1590154ee4 Song Gao:
+78bebf8692 9dab7bbb01 Gregory Price:
+ target/i386/tcg: Enable page walking from MMIO memory
+eaa20895b7 12d7b3bbd3 Fiona Ebner:
+ iotests: add test for stream job with an unaligned prefetch read
+edba203229 bac09b093e Fiona Ebner:
+ block-backend: fix edge case in bdrv_next_cleanup() where BDS associated to BB changes
+1652e5b97f f6d38c9f6d Fiona Ebner:
+ block-backend: fix edge case in bdrv_next() where BDS associated to BB changes
+80ccf1e485 3f934817c8 Stefan Reiter:
+ block/io: accept NULL qiov in bdrv_pad_request
+73d604a4bc 2c66de61f8 Kevin Wolf:
+ vdpa-dev: Fix initialisation order to restore VDUSE compatibility
+784ebe52bd 272fba9779 Ido Plat:
+ target/s390x: Use mutable temporary value for op_ts
+ef9b43bb8e 1590154ee4 Song Gao:
  target/loongarch: Fix qemu-system-loongarch64 assert failed with the option '-d int'
-e9e41446c2 7fd226b047 Tao Su:
+358dd25fb0 eb844330bd Thomas Huth:
+ docs/conf.py: Remove usage of distutils
+5b51920fbd 77642f92c0 Song Gao:
+ target/loongarch: Fix qemu-loongarch64 hang when executing 'll.d $t0, $t0, 0'
+242370f8bd 518d2f4300 Sven Schnelle:
+ target/hppa: fix do_stdby_e()
+b0a0ec47ba b5e0b3a53c Sven Schnelle:
+ target/hppa: mask privilege bits in mfia
+e3b3cff998 ad1fdacd1b Sven Schnelle:
+ target/hppa: exit tb on flush cache instructions
+4dbeff3d48 ae157fc250 Sven Schnelle:
+ target/hppa: fix access_id check
+ca52ee4a9b d37fad0ae5 Sven Schnelle:
+ target/hppa: fix shrp for wide mode
+4a76c5665b c3ea1996a1 Sven Schnelle:
+ target/hppa: ldcw,s uses static shift of 3
+de74e73d91 46174e140d Richard Henderson:
+ target/hppa: Fix assemble_12a insns for wide mode
+efbcf7cead 4768c28edd Richard Henderson:
+ target/hppa: Fix assemble_11a insns for wide mode
+f6f4703c5a 72bace2d13 Richard Henderson:
+ target/hppa: Fix assemble_16 insns for wide mode
+cf794e4774 7fd226b047 Tao Su:
  target/i386: Revert monitor_puts() in do_inject_x86_mce()
-a6fc9a234b 2cc68629a6 Paolo Bonzini:
+f8fb5928a8 d4069a84a3 Marc-André Lureau:
+ ui: compile dbus-display1.c with -fPIC as necessary
+de742b16b3 e8ee827ffd Daniel P. Berrangé:
+ Revert "chardev/char-socket: Fix TLS io channels sending too much data to the backend"
+509525dc67 2cc68629a6 Paolo Bonzini:
  target/i386: fix direction of "32-bit MMU" test
-ad003650d5 90f641531c Paolo Bonzini:
+1ced8cd541 90f641531c Paolo Bonzini:
  target/i386: use separate MMU indexes for 32-bit accesses
-6332f3c12f 5f97afe254 Paolo Bonzini:
+a85b8ec872 5f97afe254 Paolo Bonzini:
  target/i386: introduce function to query MMU indices
-e4b23890b3 55f7c6a5f2 Peter Maydell:
- tests: Raise timeouts for bufferiszero and crypto-tlscredsx509
-9405029750 63b18312d1 Kevin Wolf:
+25bdc64b62 63b18312d1 Kevin Wolf:
  tests/unit: Bump test-replication timeout to 60 seconds
-4f048b771d e1b363e328 Thomas Huth:
+96ff214a2a e1b363e328 Thomas Huth:
  tests/unit: Bump test-crypto-block test timeout to 5 minutes
-dcb9a64d22 c45f8f1aef Thomas Huth:
+2a1ce7c374 c45f8f1aef Thomas Huth:
  tests/unit: Bump test-aio-multithread test timeout to 2 minutes
-e1e9d74f57 2e128776dc Cédric Le Goater:
+ddf4412bf4 e8fce34ecc Kevin Wolf:
+ iotests: Add test for reset/AioContext switches with NBD exports
+a69a002dcd 9c707525cb Kevin Wolf:
+ nbd/server: Fix race in draining the export
+13fc21ae3d 7075d23511 Stefan Hajnoczi:
+ nbd/server: introduce NBDClient->lock to protect fields
+aee1039c61 f816310d0c Stefan Hajnoczi:
+ nbd/server: only traverse NBDExport->clients from main loop thread
+0d835791f0 ae5a40e858 Kevin Wolf:
+ mirror: Don't call job_pause_point() under graph lock
+8996768ebc 2e128776dc Cédric Le Goater:
  migration: Skip only empty block devices
-04b3d34d5c 74e2845c5f Jonathan Cameron:
+7820b9b7a0 633487df8d Volker Rümelin:
+ hw/audio/virtio-sound: return correct command response size
+b5c6660ea6 74e2845c5f Jonathan Cameron:
  hmat acpi: Fix out of bounds access due to missing use of indirection
-309051ac40 6081b4243c Akihiko Odaki:
+313e746958 6081b4243c Akihiko Odaki:
  pcie_sriov: Validate NumVFs
-3f7892be24 91bb64a8d2 Akihiko Odaki:
+98f3488c1b 91bb64a8d2 Akihiko Odaki:
  hw/nvme: Use pcie_sriov_num_vfs()
-e00b062da7 31180dbdca Akihiko Odaki:
- pcie: Introduce pcie_sriov_num_vfs
-0b7ccfd1d2 fa905f65c5 Klaus Jensen:
+3097bcbf37 fa905f65c5 Klaus Jensen:
  hw/nvme: add machine compatibility parameter to enable msix exclusive bar
-6a5d6849d1 ee7bda4d38 Klaus Jensen:
+273111ca71 ee7bda4d38 Klaus Jensen:
  hw/nvme: generalize the mbar size helper
-424e6209e5 4f0a4a3d58 Minwoo Im:
+389f6655ca 8c78015a55 Klaus Jensen:
+ hw/nvme: fix invalid check on mcl
+2d281e030d 4f0a4a3d58 Minwoo Im:
  hw/nvme: separate 'serial' property for VFs
-5c3889be15 973f76cf77 Klaus Jensen:
- hw/nvme: cleanup error reporting in nvme_init_pci()
-201c9701f5 784fd35387 Klaus Jensen:
- hw/nvme: clean up confusing use of errp/local_err
-edb47553b0 6a5287ce80 Nick Briggs:
+35ca0f7cbc 9253d83062 Peng Fan:
+ xen: Drop out of coroutine context xen_invalidate_map_cache_entry
+31e20693ea 6a5287ce80 Nick Briggs:
  Avoid unaligned fetch in ladr_match()
-df052d6c1c 4cadf10234 Laurent Vivier:
+0ba8be81f8 4cadf10234 Laurent Vivier:
  e1000e: fix link state on resume
-f1efd85486 9bc9e95119 Michael Tokarev:
+c440c89ecb 65c2ab8085 Laurent Vivier:
+ igb: fix link state on resume
+6ad78a085e 69f7b00d05 Yu Zhang:
+ migration/rdma: Fix a memory issue for migration
+8f1eb52422 9bc9e95119 Michael Tokarev:
  make-release: switch to .xz format by default
-eeb5699176 9876359990 Sven Schnelle:
+5ae5473e2e 9876359990 Sven Schnelle:
  hw/scsi/lsi53c895a: add timer to scripts processing
-275436de62 8b09b7fe47 Sven Schnelle:
- hw/scsi/lsi53c895a: add missing decrement of reentrancy counter
-c57a6fca39 a9198b3132 Sven Schnelle:
+37a8b9205f a9198b3132 Sven Schnelle:
  hw/scsi/lsi53c895a: stop script on phase mismatch
-e55ec34d3e 012b170173 Dmitrii Gavrilov:
+5dc46b3ff8 012b170173 Dmitrii Gavrilov:
  system/qdev-monitor: move drain_call_rcu call under if (!dev) in qmp_device_add()
-ce252563f2 fd7f95f23d Peter Maydell:
+4db93405e5 fd7f95f23d Peter Maydell:
  hw/rtc/sun4v-rtc: Relicense to GPLv2-or-later
-518c3dfdfb 1f51573f79 Richard Henderson:
- target/arm: Fix SME full tile indexing
-13cf40e594 3dc2afeab2 Peter Maydell:
- tests/tcg/aarch64/sysregs.c: Use S syntax for id_aa64zfr0_el1 and id_aa64smfr0_el1
-4002b76c1c bc6bd20ee3 Zhuojia Shen:
- target/arm: align exposed ID registers with Linux
-331c0fa584 f5af80271a David Parsons:
+f0ae5d6d5f d572bcb222 Richard Henderson:
+ target/arm: Fix 32-bit SMOPA
+81c0ebf107 f5af80271a David Parsons:
  ui/cocoa: Fix window clipping on macOS 14
-aba89ef725 9ea920dc28 Daniel P. Berrangé:
+94b544f127 9ea920dc28 Daniel P. Berrangé:
  gitlab: update FreeBSD Cirrus CI image to 13.3
+420a8d8735 b816e1b5ba Richard Henderson:
+ linux-user: Remove pgb_dynamic alignment assertion
+151d593c7d 7f89fdf8eb Richard Henderson:
+ tcg/aarch64: Apple does not align __int128_t in even registers
+16f1f95ebd 15cc103362 Paolo Bonzini:
+ configure: run plugin TCG tests again
+eae7509be9 Michael Tokarev:
+ Revert "configure: run plugin TCG tests again"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCAAdFiEEe3O61ovnosKJMUsicBtPaxppPlkFAmYpQ4cACgkQcBtPaxpp
-Pll8kAf+MeKgCUxiFH6bZlQJsPocdQxZ75INmg2RUCmcw0VDNflUMbbwb801Giqu
-MA/00HcdrErszg1saAVxv+HPdY7ErLZm5eC6IeUDJKvuS+T4TxYrPB+bFX60Q5Dr
-5XuQgJrAhDnXrPXq59XOYP9Pt8fU27khi8WXE7razOms4mwZuBC/gM8sYT+Jqmfi
-XI+JUJoOeEel4SwjtldHbR34G5AOub8In/4DALh4+LPoIZkMBXGN4Ndbvt83CoSr
-95lke9+hzT5HYLtws3MlTkYxTNj4pIeCX6gsOiiSxRhEMjuglcDneGaDBpOJR5z1
-s00pQVsQ6Smusz25LPJaGAxOwLV8yw==
-=gNMO
+iQEzBAEBCAAdFiEEe3O61ovnosKJMUsicBtPaxppPlkFAmYpQ7YACgkQcBtPaxpp
+PlkZkAf+PhUZk8YRn+Q4QvYvMtrrm9Nl/OGXLtAR7RvaE9q5YLJwo1hPj4RMMkB8
+ENWdlhbjdHvXqdI0KhVmlhpnsYkQgIldrzKhKXFiLhxl0UkPRwo8rdtOeSD+ssO1
+iS547mguzaWxenCEWECNDsBbjcfHrAYmkFUPeonVbQYJYywVJLMkyBhgVageYxuK
+aGrCcPaw01SwUTnMLnMLlNV8nKxtzd5sGdTIu3/UTKcqeYMEl/OhQSryxY6fIo3z
+PmLMItSPLjcA5uttHI+NmQ/6tV2+CEXB/OzuULPAPfoEdH5tvqRgZjJYHHIfavaj
+0+YIlV8FBLbCZGWqri9Gp+kDIwYnXQ==
+=HwO7
 -----END PGP SIGNATURE-----
 
