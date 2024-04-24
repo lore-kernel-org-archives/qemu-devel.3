@@ -4,104 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CD0FC4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 17:47:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9004AC4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 17:54:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzgi0-0007gq-Uc; Wed, 24 Apr 2024 13:47:08 -0400
+	id 1rzgpG-0001cD-Uk; Wed, 24 Apr 2024 13:54:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1rzghe-0007U2-5L; Wed, 24 Apr 2024 13:46:47 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1rzghc-0005pF-4n; Wed, 24 Apr 2024 13:46:41 -0400
-Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43OHXclj011114; Wed, 24 Apr 2024 17:46:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=PdqtxYxoJy2JY1FqCJT6mHxCnup1Ruh3xvdfG7phapw=;
- b=dX2rGXp27N9h3+Vy6Pj03lRq9jvlXMUlxTKS8ScDwIF+Qhm3IXvrlUF7K3BZ9Lf7f4nd
- GcUQv1XKdxT7E1WPfuTj3IswZx9VrmfeqMx0f3FvMZ4kROl0f8LlisrIgMCbB9OycaOT
- +bSJm9V+49xemnE3TH45s+gkLfqI8wKJf3iEq6iG9EkwXPO8X3Hh76IMDN6xNi917v7j
- 9sbmj1ibh1UzT+cdYAizjiVmE09MkYR6bz6iM/CTQo416KzawHbjakmUL587ig0uDb8c
- uB6Xt8OvK7W/fE0gJWtTWCqb5Bc2gCWzzWzTynlS3PXSKc+IjkGL8fd6ZAqSdLYUZqH0 JA== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xq6gf01h0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Apr 2024 17:46:30 +0000
-Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43OHhFMe024616;
- Wed, 24 Apr 2024 17:46:29 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xq6gf01gu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Apr 2024 17:46:29 +0000
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43OG6vxu005341; Wed, 24 Apr 2024 17:46:29 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xmx3ckthj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Apr 2024 17:46:29 +0000
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 43OHkQ7346072126
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 24 Apr 2024 17:46:28 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A19B05805A;
- Wed, 24 Apr 2024 17:46:26 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1DDCF58068;
- Wed, 24 Apr 2024 17:46:26 +0000 (GMT)
-Received: from [9.12.68.85] (unknown [9.12.68.85])
- by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 24 Apr 2024 17:46:26 +0000 (GMT)
-Message-ID: <809ee6ee-e66e-466f-bbf2-93ba7ec1afda@linux.ibm.com>
-Date: Wed, 24 Apr 2024 13:46:25 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzgpB-0001bL-91
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:54:29 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzgp8-0007LI-U0
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:54:28 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-349545c3eb8so48566f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 10:54:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1713981265; x=1714586065; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=z3P1jKumN/2f0w+S1BnkZarrfCBd03HH4eddYEKpnIg=;
+ b=UGWWk4wO4h6vdW1RzVKXKb7X4NSH4lxw1wUu/Zf8xOyNAe1R8017zmtAsMHChOE42o
+ kkbY43FijOzTde4Njk+3fu8XY7ladI9ExjTVKojnl9CtdGxdy2Z4zKzxYykv4SVDkbPw
+ AvtmkNr7GF60nyspX1c+Xecmz4m0N2oDqReCD3HUH6jOFfhu1NDJjqR0Hb3ASggOZrpn
+ ML7gZQp9HFvblAn46eT/49jWe7kEA++Gz5Zq62km0JM4HKEauXhQGBtXUAFyj7WJuDo5
+ D5eWtIJTsWHNTq5YE5U+azSS2Bt0WCg+Ixuxzt0GdsKKMVQdTkfrK6/N+V/wHO0+aK7B
+ hong==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713981265; x=1714586065;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=z3P1jKumN/2f0w+S1BnkZarrfCBd03HH4eddYEKpnIg=;
+ b=CMRnzLk6yxGlBI5jTWVbpfoCt31QfoyPsr5XlkpqqgBJB51qNzk6qEjQdtsuF7E7Ry
+ JOUDL66vaCeJbW3bYnhBrhNXLbHqdZJuihSWrqlAok5U2gILX2k3BThozhrvvjW24gno
+ 5TK3LodRDuuNaydzOfEyRmwYGr1i5EaAkkDm0A/HrUa2KquUV/wRYN8esKRBZHD4M0aH
+ uY3vmNPQLKryrvt0SNy51bpAKDTKecynQal6NA4V6JywNmbPhKt+C85sr7HBilj620p2
+ Z9l+11X3nIiPRzr2Kq1LDLL8O4q7M9wshvvXNSa29nwQE59jzgKpPmZsxVAeRKlcXJlI
+ 7y8A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU8NLcoHTxoHi+cy31BIaTI22UG8/Mt1xWKViBxM7qaRPxEYRee6AD0PB+d6ZTQ1PA1WeklMCT+tCpQkqEdrg3nZw6422A=
+X-Gm-Message-State: AOJu0YzdurDN6yst4nscAk1TPKOiUxiDeZUQJ+Cjuf+3Rz2yipkESr0R
+ aT1WIzPy0ZplPiMWgdrViWyhz0kd7Gea0O6ujCGMUu9gY1zgFos6NWgzkZFax8o=
+X-Google-Smtp-Source: AGHT+IFmIodfRftbVOhvB2rYpm7nOqzp1jhLDBa+AeynyBeo/vuHfmY814JY+lmYeHpY5XtHdnoPCg==
+X-Received: by 2002:adf:b11a:0:b0:34a:4e2:7014 with SMTP id
+ l26-20020adfb11a000000b0034a04e27014mr2182476wra.35.1713981265284; 
+ Wed, 24 Apr 2024 10:54:25 -0700 (PDT)
+Received: from [192.168.1.102] (mon75-h03-176-184-51-42.dsl.sta.abo.bbox.fr.
+ [176.184.51.42]) by smtp.gmail.com with ESMTPSA id
+ o12-20020a5d684c000000b0034aa1e534c2sm12314832wrw.96.2024.04.24.10.54.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 24 Apr 2024 10:54:24 -0700 (PDT)
+Message-ID: <409f547e-fdab-4183-8f9a-9852f9be34f6@linaro.org>
+Date: Wed, 24 Apr 2024 19:54:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] cpu-models: add "disable-deprecated-feats" option
- to cpu model expansion
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, thuth@redhat.com,
- david@redhat.com, wangyanan55@huawei.com, philmd@linaro.org,
- marcel.apfelbaum@gmail.com, eduardo@habkost.net
-References: <20240423210655.66656-1-walling@linux.ibm.com>
- <20240423210655.66656-2-walling@linux.ibm.com> <87bk5z5ll9.fsf@pond.sub.org>
+Subject: Re: [PATCH 1/2] target/riscv/kvm: remove sneaky strerrorname_np()
+ instance
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ thuth@redhat.com, alex.bennee@linaro.org, mjt@tls.msk.ru,
+ ajones@ventanamicro.com
+References: <20240424094700.453356-1-dbarboza@ventanamicro.com>
+ <20240424094700.453356-2-dbarboza@ventanamicro.com>
+ <82079170-9d82-46d5-81e4-44d3b38b551f@linaro.org>
+ <a619f516-d174-428a-aa19-52664282265b@ventanamicro.com>
 Content-Language: en-US
-From: Collin Walling <walling@linux.ibm.com>
-In-Reply-To: <87bk5z5ll9.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: vu384PxIENLHVGwjahlwwrFkIIpWVnWR
-X-Proofpoint-GUID: o58Z4HHKHMBrdaVpF4-cBCv7I2Wv4m1s
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-24_14,2024-04-24_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0
- lowpriorityscore=0 mlxscore=0 adultscore=0 suspectscore=0 mlxlogscore=999
- priorityscore=1501 clxscore=1015 phishscore=0 malwarescore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2404010000
- definitions=main-2404240077
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=walling@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <a619f516-d174-428a-aa19-52664282265b@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,239 +102,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/24/24 02:19, Markus Armbruster wrote:
-> Collin Walling <walling@linux.ibm.com> writes:
-> 
->> This optional parameter for query-cpu-model-expansion enables CPU
->> model features flagged as deprecated to appear in the resulting
->> list of properties.
+On 24/4/24 19:18, Daniel Henrique Barboza wrote:
+> On 4/24/24 06:55, Philippe Mathieu-Daudé wrote:
+>> On 24/4/24 11:46, Daniel Henrique Barboza wrote:
+>>> Commit d424db2354 excluded some strerrorname_np() instances because they
+>>> break musl libc builds. Another instance happened to slip by via commit
+>>> d4ff3da8f4.
+>>>
+>>> Remove it before it causes trouble again.
+>>>
+>>> Fixes: d4ff3da8f4 (target/riscv/kvm: initialize 'vlenb' via 
+>>> get-reg-list)
+>>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>>> ---
+>>>   target/riscv/kvm/kvm-cpu.c | 4 ++--
+>>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+>>> index 6a6c6cae80..ee69ea9785 100644
+>>> --- a/target/riscv/kvm/kvm-cpu.c
+>>> +++ b/target/riscv/kvm/kvm-cpu.c
+>>> @@ -1054,8 +1054,8 @@ static void kvm_riscv_read_vlenb(RISCVCPU *cpu, 
+>>> KVMScratchCPU *kvmcpu,
+>>>           ret = ioctl(kvmcpu->cpufd, KVM_GET_ONE_REG, &reg);
+>>>           if (ret != 0) {
+>>> -            error_report("Unable to read vlenb register, error code: 
+>>> %s",
+>>> -                         strerrorname_np(errno));
+>>> +            error_report("Unable to read vlenb register, error code: 
+>>> %d",
+>>> +                         errno);
 >>
->> This commit does not add support beyond adding a new argument
->> to the query. All queries with this option present will result
->> in an error claiming this option is not supported.
->>
->> Signed-off-by: Collin Walling <walling@linux.ibm.com>
->> ---
->>  qapi/machine-target.json         | 7 ++++++-
->>  target/arm/arm-qmp-cmds.c        | 7 +++++++
->>  target/i386/cpu-sysemu.c         | 7 +++++++
->>  target/s390x/cpu_models_sysemu.c | 7 +++++++
->>  4 files changed, 27 insertions(+), 1 deletion(-)
->>
->> diff --git a/qapi/machine-target.json b/qapi/machine-target.json
->> index 29e695aa06..b9da284d2d 100644
->> --- a/qapi/machine-target.json
->> +++ b/qapi/machine-target.json
->> @@ -285,6 +285,10 @@
->>  #
->>  # @type: expansion type, specifying how to expand the CPU model
->>  #
->> +# @disable-deprecated-feats: include CPU model features that are
->> +#     flagged as deprecated. If supported, these features will appear
->> +#     in the properties list paired with false.
+>> Why not use "%s" strerror(errno)?
 > 
-> What's the default?
+> It's not exactly the same. For errno = 2 strerrorname_np() gives 
+> "ENOENT", and
+> sterror() gives "No such file or directory". In this particular context 
+> I think
+> just printing a "error code -2" is clearer because we're not mentioning 
+> files and
+> dirs in a KVM reg context.
 > 
-> Which command result(s) does this affect?  Suggest to explain using
-> unabridged example QMP input and output before and after this series.
-> 
+> But in the end I don't mind changing to strerror() if you feel strong 
+> about it. It's
+> fine either way.
 
-Fair enough. Bool defaults to false but that's not apparent in the
-description. I will add more detail.
+I'm fine with "error code -2" ;)
 
-> We generally avoid abbreviations in QMP names.  Let's call this
-> @disable-deprecated-features.
-> 
-
-Okay.
-
-> Separate sentences with two spaces for consistency, please.
-> 
-
-Understood.
-
->> +#
->>  # Returns: a CpuModelExpansionInfo describing the expanded CPU model
->>  #
->>  # Errors:
->> @@ -298,7 +302,8 @@
->>  ##
->>  { 'command': 'query-cpu-model-expansion',
->>    'data': { 'type': 'CpuModelExpansionType',
->> -            'model': 'CpuModelInfo' },
->> +            'model': 'CpuModelInfo',
->> +            '*disable-deprecated-feats': 'bool' },
->>    'returns': 'CpuModelExpansionInfo',
->>    'if': { 'any': [ 'TARGET_S390X',
->>                     'TARGET_I386',
->                       'TARGET_ARM',
->                       'TARGET_LOONGARCH64',
->                       'TARGET_RISCV' ] } }
-> 
-> Put a pin into this conditional: [*].
-> 
->> diff --git a/target/arm/arm-qmp-cmds.c b/target/arm/arm-qmp-cmds.c
->> index 3cc8cc738b..1010d654e3 100644
->> --- a/target/arm/arm-qmp-cmds.c
->> +++ b/target/arm/arm-qmp-cmds.c
->> @@ -100,6 +100,8 @@ static const char *cpu_model_advertised_features[] = {
->>  
->>  CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
->>                                                       CpuModelInfo *model,
->> +                                                     bool has_disable_deprecated_feats,
->> +                                                     bool disable_deprecated_feats,
->>                                                       Error **errp)
->>  {
->>      CpuModelExpansionInfo *expansion_info;
->> @@ -110,6 +112,11 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
->>      const char *name;
->>      int i;
->>  
->> +    if (has_disable_deprecated_feats) {
->> +        error_setg(&err, "Unsupported option 'disable-deprecated-feats'");
->> +        return NULL;
->> +    }
-> 
-> Reject the new argument in the ARM version, ...
-> 
->> +
->>      if (type != CPU_MODEL_EXPANSION_TYPE_FULL) {
->>          error_setg(errp, "The requested expansion type is not supported");
->>          return NULL;
->> diff --git a/target/i386/cpu-sysemu.c b/target/i386/cpu-sysemu.c
->> index 3f9093d285..c15786fb66 100644
->> --- a/target/i386/cpu-sysemu.c
->> +++ b/target/i386/cpu-sysemu.c
->> @@ -196,6 +196,8 @@ out:
->>  CpuModelExpansionInfo *
->>  qmp_query_cpu_model_expansion(CpuModelExpansionType type,
->>                                                        CpuModelInfo *model,
->> +                                                      bool has_disable_deprecated_feats,
->> +                                                      bool disable_deprecated_feats,
->>                                                        Error **errp)
->>  {
->>      X86CPU *xc = NULL;
->> @@ -204,6 +206,11 @@ qmp_query_cpu_model_expansion(CpuModelExpansionType type,
->>      QDict *props = NULL;
->>      const char *base_name;
->>  
->> +    if (has_disable_deprecated_feats) {
->> +        error_setg(&err, "Unsupported option 'disable-deprecated-feats'");
->> +        goto out;
->> +    }
-> 
-> ... the i386 version, ...
-> 
->> +
->>      xc = x86_cpu_from_model(model->name, model->props, "model.props", &err);
->>      if (err) {
->>          goto out;
->> diff --git a/target/s390x/cpu_models_sysemu.c b/target/s390x/cpu_models_sysemu.c
->> index 2d99218069..ef9fa80efd 100644
->> --- a/target/s390x/cpu_models_sysemu.c
->> +++ b/target/s390x/cpu_models_sysemu.c
->> @@ -210,6 +210,8 @@ static void cpu_info_from_model(CpuModelInfo *info, const S390CPUModel *model,
->>  
->>  CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
->>                                                        CpuModelInfo *model,
->> +                                                      bool has_disable_deprecated_feats,
->> +                                                      bool disable_deprecated_feats,
->>                                                        Error **errp)
->>  {
->>      Error *err = NULL;
->> @@ -217,6 +219,11 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
->>      S390CPUModel s390_model;
->>      bool delta_changes = false;
->>  
->> +    if (has_disable_deprecated_feats) {
->> +        error_setg(&err, "Unsupported option 'disable-deprecated-feats'");
->> +        return NULL;
->> +    }
-> 
-> ... and the S390 version, but ...
-> 
->> +
->>      /* convert it to our internal representation */
->>      cpu_model_from_info(&s390_model, model, "model", &err);
->>      if (err) {
-> 
-> ... neither the loongarch not the RISC-V version, which according to
-> condition [*] above also implement the command[*].  Bug?
-> 
-> Peeking ahead in the series, I see that you implement
-> @disable-deprecated-feats only for S390.
-> 
-> Having to reject @disable-deprecated-feats in targets that implement
-> query-cpu-model-expansion, but not the @disable-deprecated-feats, is
-> problematic:
-> 
-> 1. If we implement query-cpu-model-expansion for another target, we need
-> to remember rejecting @disable-deprecated-feats.  Trap for the unwary.
-> 
-> 2. query-qmp-schema can't tell whether the argument is supported.
-> 
-> You could make @query-cpu-model-expansion conditional on S390.
-> 
-> Since conditional arguments require 'boxed': true, you first have to
-> do that, like so:
-> 
->     { 'command': 'query-cpu-model-expansion', 'boxed': true,
->       'data': 'Foo',
->       'returns': 'CpuModelExpansionInfo',
->       'if': { 'any': [ 'TARGET_S390X',
->                        'TARGET_I386',
->                        'TARGET_ARM',
->                        'TARGET_LOONGARCH64',
->                        'TARGET_RISCV' ] } }
-> 
-> where Foo is
-> 
->     { 'struct': 'Foo',
->       'data': { 'type': 'CpuModelExpansionType',
->                 'model': 'CpuModelInfo' } }
-> 
-> Then add the conditional argument:
-> 
->     { 'struct': 'Foo',
->       'data': { 'type': 'CpuModelExpansionType',
->                 'model': 'CpuModelInfo' } }
->                 '*disable-deprecated-feats': { 'type': 'bool',
->                                                'if': 'TARGET_S390X' }
-> 
-> Use a reasonable name instead of Foo, of course.
-> 
-> Disadvantages:
-> 
-> * More churn
-> 
-> * Possibly something else I can't see without trying it
-> 
-> Advantages:
-> 
-> * You don't have to reject the argument for all targets that don't
->   implement it
-> 
-> * We can't forget to reject the argument when implementing
->   query-cpu-model-expansion for another target
-> 
-> * query-cpu-model-expansion shows whether the argument is supported
-> 
-> I think you should give this a try.
-> 
-> 
-
-Very cool. Avoiding the requirement of others architectures to catch
-this conditional and handle it would definitely be nice. Thank you for
-this insight. I'll play around with it and find a cleaner approach to
-what I have.
-
-I will need to reflect on Daniel's feedback as well, which suggests
-simply listing deprecated features as a separate array in the QMP response.
-
-Thanks for your feedback!
-
--- 
 Regards,
-  Collin
 
+Phil.
 
