@@ -4,79 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FD3DC07E8E
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 12:54:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 328D3C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 12:54:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzc7Y-0001wu-Au; Wed, 24 Apr 2024 08:53:08 -0400
+	id 1rzc8d-0002na-Gp; Wed, 24 Apr 2024 08:54:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1rzc7W-0001wV-8W
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 08:53:06 -0400
-Received: from madrid.collaboradmins.com ([46.235.227.194])
+ (Exim 4.90_1) (envelope-from <adiupina@astralinux.ru>)
+ id 1rzc8b-0002n2-2N; Wed, 24 Apr 2024 08:54:13 -0400
+Received: from new-mail.astralinux.ru ([51.250.53.164])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1rzc7U-0007Pb-Ge
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 08:53:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
- s=mail; t=1713963182;
- bh=onMY1lu3JFtKonKYbbWWlXYmK0OoNOSu9q7gZOeYlZY=;
- h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
- b=aTGzYhawmLx/K+WJ4LcREXkMUpO5hIBaU7B2IOckKeAumBVim4eeFhQ9QV1REh1nO
- s027iNQwZ18brVfNH+KsH7aTPRBg+vKq7qMpafmFgkBVSNYwI7fmb4mw8oAj5MU5Gl
- 7CHP1w1Z3/39xinnucCjXnhAYRg0JbFL89Gs37SOFxDSertzUtwuOSiCz3zYXexWwx
- XJmv9wVyR9p7rDshj6VHzs+33VuRE32CizmhbtLrxrHI892nKccGE+R1G9m+EQzSOe
- mDbtVwREwlG8ycZz2EmleYb7nm4DIojkv+uOGvT5FPtEUVtMI+Uw9oPtQwyjJhLCxw
- mcK78MpOi9Kwg==
-Received: from [100.109.49.129] (cola.collaboradmins.com [195.201.22.229])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- (Authenticated sender: dmitry.osipenko)
- by madrid.collaboradmins.com (Postfix) with ESMTPSA id 422E037813E3;
- Wed, 24 Apr 2024 12:53:00 +0000 (UTC)
-Message-ID: <902711ed-2c59-4804-bd55-62545bde67e4@collabora.com>
-Date: Wed, 24 Apr 2024 15:52:57 +0300
+ (Exim 4.90_1) (envelope-from <adiupina@astralinux.ru>)
+ id 1rzc8Y-0007U8-SA; Wed, 24 Apr 2024 08:54:12 -0400
+Received: from rbta-msk-lt-302690.astralinux.ru (unknown [10.177.236.253])
+ by new-mail.astralinux.ru (Postfix) with ESMTPA id 4VPf7S5hhRzqSQj;
+ Wed, 24 Apr 2024 15:53:56 +0300 (MSK)
+From: Alexandra Diupina <adiupina@astralinux.ru>
+To: Alistair Francis <alistair@alistair23.me>
+Cc: Alexandra Diupina <adiupina@astralinux.ru>,
+ "Konrad, Frederic" <Frederic.Konrad@amd.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, sdl.qemu@linuxtesting.org
+Subject: [PATCH v2 RFC] fix host-endianness bug and prevent overflow
+Date: Wed, 24 Apr 2024 15:53:24 +0300
+Message-Id: <20240424125324.1628-1-adiupina@astralinux.ru>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <CAFEAcA9JXOxkbQP6-1uTK+hG5yvYRcO31PYFZSxGjfrPis1nYA@mail.gmail.com>
+References: 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 09/11] virtio-gpu: Resource UUID
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony.perard@citrix.com>,
- Antonio Caggiano <quic_acaggian@quicinc.com>,
- "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
- Robert Beckett <bob.beckett@collabora.com>,
- Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
- ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-References: <20240418190040.1110210-1-dmitry.osipenko@collabora.com>
- <20240418190040.1110210-10-dmitry.osipenko@collabora.com>
-Content-Language: en-US
-In-Reply-To: <20240418190040.1110210-10-dmitry.osipenko@collabora.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=46.235.227.194;
- envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+X-DrWeb-SpamScore: -100
+X-DrWeb-SpamState: legit
+X-DrWeb-SpamDetail: gggruggvucftvghtrhhoucdtuddrgedvfedrvdehuddgtddvucetufdoteggodetrfcurfhrohhfihhlvgemucfftfghgfeunecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeetlhgvgigrnhgurhgrucffihhuphhinhgruceorgguihhuphhinhgrsegrshhtrhgrlhhinhhugidrrhhuqeenucggtffrrghtthgvrhhnpeefkedufedvkeffuedtgfdugeeutdegvdffffejfffgleffieduhfejvdelffdvudenucffohhmrghinheplhhinhhugihtvghsthhinhhgrdhorhhgnecukfhppedutddrudejjedrvdefiedrvdehfeenucfrrghrrghmpehhvghloheprhgsthgrqdhmshhkqdhlthdqfedtvdeiledtrdgrshhtrhgrlhhinhhugidrrhhupdhinhgvthepuddtrddujeejrddvfeeirddvheefmeefjedufeekpdhmrghilhhfrhhomheprgguihhuphhinhgrsegrshhtrhgrlhhinhhugidrrhhupdhnsggprhgtphhtthhopeekpdhrtghpthhtoheprghlihhsthgrihhrsegrlhhishhtrghirhdvfedrmhgvpdhrtghpthhtoheprgguihhuphhinhgrsegrshhtrhgrlhhinhhugidrrhhupdhrtghpthhtohephfhrvgguvghrihgtrdfmohhnrhgrugesrghmugdrtghomhdprhgtphhtthhopegvughgrghrrdhighhlvghsihgrshesghhmrghilhdrtghomhdprhgtphhtth
+ hopehpvghtvghrrdhmrgihuggvlhhlsehlihhnrghrohdrohhrghdprhgtphhtthhopehqvghmuhdqrghrmhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehsughlrdhqvghmuheslhhinhhugihtvghsthhinhhgrdhorhhg
+X-DrWeb-SpamVersion: Vade Retro 01.423.251#02 AS+AV+AP Profile: DRWEB;
+ Bailout: 300
+X-AntiVirus: Checked by Dr.Web [MailD: 11.1.19.2307031128,
+ SE: 11.1.12.2210241838, Core engine: 7.00.62.01180, Virus records: 12628564,
+ Updated: 2024-Apr-24 10:54:44 UTC]
+Received-SPF: pass client-ip=51.250.53.164;
+ envelope-from=adiupina@astralinux.ru; helo=new-mail.astralinux.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,18 +67,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/18/24 22:00, Dmitry Osipenko wrote:
-> @@ -1405,6 +1408,8 @@ static int virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
->              res->iov[i].iov_len = qemu_get_be32(f);
->          }
->  
-> +        qemu_get_buffer(f, res->uuid.data, sizeof(res->uuid.data));
+Add a type cast and use extract64() instead of extract32()
+to avoid integer overflow on addition. Fix bit fields
+extraction according to documentation.
+Also fix host-endianness bug by swapping desc fields from guest
+memory order to host memory order after dma_memory_read().
 
-Save/loading uuid without changing vm version was a bad idea. Will drop
-it in v9, we don't need to save/load uuid for virgl anyways.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
+Fixes: d3c6369a96 ("introduce xlnx-dpdma")
+Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
+---
+ hw/dma/xlnx_dpdma.c | 38 ++++++++++++++++++++++++++++----------
+ 1 file changed, 28 insertions(+), 10 deletions(-)
+
+diff --git a/hw/dma/xlnx_dpdma.c b/hw/dma/xlnx_dpdma.c
+index dd66be5265..d22b942274 100644
+--- a/hw/dma/xlnx_dpdma.c
++++ b/hw/dma/xlnx_dpdma.c
+@@ -175,24 +175,24 @@ static uint64_t xlnx_dpdma_desc_get_source_address(DPDMADescriptor *desc,
+ 
+     switch (frag) {
+     case 0:
+-        addr = desc->source_address
+-            + (extract32(desc->address_extension, 16, 12) << 20);
++        addr = (uint64_t)desc->source_address
++            + (extract64(desc->address_extension, 16, 16) << 32);
+         break;
+     case 1:
+-        addr = desc->source_address2
+-            + (extract32(desc->address_extension_23, 0, 12) << 8);
++        addr = (uint64_t)desc->source_address2
++            + (extract64(desc->address_extension_23, 0, 16) << 32);
+         break;
+     case 2:
+-        addr = desc->source_address3
+-            + (extract32(desc->address_extension_23, 16, 12) << 20);
++        addr = (uint64_t)desc->source_address3
++            + (extract64(desc->address_extension_23, 16, 16) << 32);
+         break;
+     case 3:
+-        addr = desc->source_address4
+-            + (extract32(desc->address_extension_45, 0, 12) << 8);
++        addr = (uint64_t)desc->source_address4
++            + (extract64(desc->address_extension_45, 0, 16) << 32);
+         break;
+     case 4:
+-        addr = desc->source_address5
+-            + (extract32(desc->address_extension_45, 16, 12) << 20);
++        addr = (uint64_t)desc->source_address5
++            + (extract64(desc->address_extension_45, 16, 16) << 32);
+         break;
+     default:
+         addr = 0;
+@@ -660,6 +660,24 @@ size_t xlnx_dpdma_start_operation(XlnxDPDMAState *s, uint8_t channel,
+             break;
+         }
+ 
++        /* Convert from LE into host endianness.  */
++        desc.control = le32_to_cpu(desc.control);
++        desc.descriptor_id = le32_to_cpu(desc.descriptor_id);
++        desc.xfer_size = le32_to_cpu(desc.xfer_size);
++        desc.line_size_stride = le32_to_cpu(desc.line_size_stride);
++        desc.timestamp_lsb = le32_to_cpu(desc.timestamp_lsb);
++        desc.timestamp_msb = le32_to_cpu(desc.timestamp_msb);
++        desc.address_extension = le32_to_cpu(desc.address_extension);
++        desc.next_descriptor = le32_to_cpu(desc.next_descriptor);
++        desc.source_address = le32_to_cpu(desc.source_address);
++        desc.address_extension_23 = le32_to_cpu(desc.address_extension_23);
++        desc.address_extension_45 = le32_to_cpu(desc.address_extension_45);
++        desc.source_address2 = le32_to_cpu(desc.source_address2);
++        desc.source_address3 = le32_to_cpu(desc.source_address3);
++        desc.source_address4 = le32_to_cpu(desc.source_address4);
++        desc.source_address5 = le32_to_cpu(desc.source_address5);
++        desc.crc = le32_to_cpu(desc.crc);
++
+         xlnx_dpdma_update_desc_info(s, channel, &desc);
+ 
+ #ifdef DEBUG_DPDMA
 -- 
-Best regards,
-Dmitry
+2.30.2
 
 
