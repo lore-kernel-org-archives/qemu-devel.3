@@ -4,65 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A10CBC10F16
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 08:05:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4979C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 08:13:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzXcH-0007Td-2j; Wed, 24 Apr 2024 04:04:33 -0400
+	id 1rzXk2-0005yC-K2; Wed, 24 Apr 2024 04:12:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXbX-0005t0-5j
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:03:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rzXk0-0005xj-3X; Wed, 24 Apr 2024 04:12:32 -0400
+Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXbR-0003n5-LH
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:03:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713945820;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=Zunl/HWq8Dw2wpmCVEkJl4ueEcDyCn1CQwpLkNWnB5k=;
- b=NbdpG0vryu3++gLOfG/BHtLrcQLwZjAVr6rvZnfUjJ22pDfg+4FDEJi/WXNAMqrnirpELT
- +JDhKC/4VjDmbBMdkHXteTOoEEU7zeGhiHBV/fpNf6Y2tZ1lrxi0JIs9jAIYCcngOcszNd
- kWQMoDR2jd7wZCTD0ZFAk6Om/Xn0iyQ=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-172-fHvQLwp0NsC3dCVV8Cs6Xg-1; Wed, 24 Apr 2024 04:03:38 -0400
-X-MC-Unique: fHvQLwp0NsC3dCVV8Cs6Xg-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3739E81F309;
- Wed, 24 Apr 2024 08:03:38 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 172A02166B31;
- Wed, 24 Apr 2024 08:03:38 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 3676C21E66C8; Wed, 24 Apr 2024 10:03:37 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org
-Subject: [PULL 00/10] Error reporting patches for 2024-04-24
-Date: Wed, 24 Apr 2024 10:03:27 +0200
-Message-ID: <20240424080337.2782594-1-armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rzXju-0005RB-Jt; Wed, 24 Apr 2024 04:12:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1713946347; x=1745482347;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=5/bYwr8c534YsqY0qHZ1MsLawXaHscEg3ybis5UV7v4=;
+ b=HItpuG55CQyp4uPBqHQbnDS8v3mqpfslEmfK8fN+ghi0IoR1j/WUyGdt
+ iqBlzoPoOuFc0PVRvLc8o3hc2L3nxqlfK5bhzT5C5LAXC1jcO8R6MT7tz
+ YMp1bZHrAxg9lV1lpvrH0+3110KQL8/nT+XHekxAuYD2oZh4KSJjgBNHk
+ 8uqOIItgTdQHZ9zBFxz+DpFNZYrLurjtpf6Wa8UuL+dHfK7mLbjLoF5M4
+ rdxC+JJzpTGXUsCadCu3ZmIf0xqck1fv4MKXBpS7sHbFejavZVmXAa96K
+ yvxkQiinbF3OuLl5vPCNx2SQQdH3hNfmE4COE0Cp6Eqx9ZqvaoW4SN08+ g==;
+X-CSE-ConnectionGUID: kBr7euP9SgG/EZLjzlN0nA==
+X-CSE-MsgGUID: dcjKWMHJSgiLf89Cak4VfQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11053"; a="9727693"
+X-IronPort-AV: E=Sophos;i="6.07,225,1708416000"; 
+   d="scan'208";a="9727693"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 Apr 2024 01:12:21 -0700
+X-CSE-ConnectionGUID: GiEEsVZJR7aimfrbwmBvwQ==
+X-CSE-MsgGUID: h/pwvNubTCWuF0bpE7TkPQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,225,1708416000"; d="scan'208";a="29098464"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa005.fm.intel.com with ESMTP; 24 Apr 2024 01:12:17 -0700
+Date: Wed, 24 Apr 2024 16:26:23 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Artyom Tarasenko <atar4qemu@gmail.com>,
+ Chris Wulff <crwulff@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Marek Vasut <marex@denx.de>, Max Filippov <jcmvbkbc@gmail.com>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Markus Armbruster <armbru@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ qemu-ppc@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: Re: [PATCH-for-9.1 03/21] target/i386: Move APIC related code to
+ cpu-apic.c
+Message-ID: <ZijCLxqNPFqXSycf@intel.com>
+References: <20240321154838.95771-1-philmd@linaro.org>
+ <20240321154838.95771-4-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.67,
+In-Reply-To: <20240321154838.95771-4-philmd@linaro.org>
+Received-SPF: pass client-ip=198.175.65.18; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.67,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,59 +95,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Mar 21, 2024 at 04:48:19PM +0100, Philippe Mathieu-Daudé wrote:
+> Date: Thu, 21 Mar 2024 16:48:19 +0100
+> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Subject: [PATCH-for-9.1 03/21] target/i386: Move APIC related code to
+>  cpu-apic.c
+> X-Mailer: git-send-email 2.41.0
+> 
+> Move APIC related code split in cpu-sysemu.c and
+> monitor.c to cpu-apic.c.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  target/i386/cpu-apic.c   | 112 +++++++++++++++++++++++++++++++++++++++
+>  target/i386/cpu-sysemu.c |  77 ---------------------------
+>  target/i386/monitor.c    |  25 ---------
+>  target/i386/meson.build  |   1 +
+>  4 files changed, 113 insertions(+), 102 deletions(-)
+>  create mode 100644 target/i386/cpu-apic.c
+> 
+> diff --git a/target/i386/cpu-apic.c b/target/i386/cpu-apic.c
+> new file mode 100644
+> index 0000000000..d397ec94dc
+> --- /dev/null
+> +++ b/target/i386/cpu-apic.c
 
-The following changes since commit c25df57ae8f9fe1c72eee2dab37d76d904ac382e:
+Nit: New file needs a MAINTAINER entry ;-).
 
-  Update version for 9.0.0 release (2024-04-23 14:19:21 +0100)
+Others LGTM,
 
-are available in the Git repository at:
-
-  https://repo.or.cz/qemu/armbru.git tags/pull-error-2024-04-24
-
-for you to fetch changes up to be842efbe3102c6aa1980039f6d4a8f997f1ff8c:
-
-  qapi: Inline and remove QERR_PROPERTY_VALUE_BAD definition (2024-04-24 09:50:58 +0200)
-
-----------------------------------------------------------------
-Error reporting patches for 2024-04-24
-
-----------------------------------------------------------------
-Markus Armbruster (1):
-      error: Drop superfluous #include "qapi/qmp/qerror.h"
-
-Philippe Mathieu-DaudÃ© (9):
-      qapi: Inline and remove QERR_BUS_NO_HOTPLUG definition
-      qapi: Inline and remove QERR_DEVICE_HAS_NO_MEDIUM definition
-      qapi: Inline and remove QERR_DEVICE_NO_HOTPLUG definition
-      qapi: Inline and remove QERR_INVALID_PARAMETER definition
-      qapi: Inline QERR_INVALID_PARAMETER_TYPE definition (constant value)
-      qapi: Inline and remove QERR_INVALID_PARAMETER_TYPE definition
-      qapi: Correct error message for 'vcpu_dirty_limit' parameter
-      qapi: Inline and remove QERR_MIGRATION_ACTIVE definition
-      qapi: Inline and remove QERR_PROPERTY_VALUE_BAD definition
-
- include/qapi/qmp/qerror.h    | 21 ---------------------
- backends/iommufd.c           |  1 -
- block/snapshot.c             |  7 ++++---
- blockdev.c                   |  2 +-
- chardev/char-fe.c            |  1 -
- hw/core/qdev-properties.c    |  3 +--
- hw/core/qdev.c               |  4 ++--
- hw/ppc/spapr_pci.c           |  5 ++---
- migration/migration.c        |  2 +-
- migration/options.c          |  9 ++++-----
- migration/savevm.c           |  2 +-
- qapi/opts-visitor.c          |  2 +-
- qapi/qobject-input-visitor.c | 32 ++++++++++++++++----------------
- qapi/string-input-visitor.c  |  8 ++++----
- qom/object.c                 | 16 ++++++++++------
- system/qdev-monitor.c        | 10 ++++++----
- system/rtc.c                 |  1 -
- util/qemu-option.c           | 10 +++++-----
- scripts/qapi/visit.py        |  5 ++---
- 19 files changed, 60 insertions(+), 81 deletions(-)
-
--- 
-2.44.0
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
