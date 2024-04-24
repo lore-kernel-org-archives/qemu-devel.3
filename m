@@ -4,23 +4,23 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D721EC4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 18:14:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83FFBC07E8E
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 18:14:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzh7z-0007LM-VP; Wed, 24 Apr 2024 14:13:55 -0400
+	id 1rzh7x-0007Km-KC; Wed, 24 Apr 2024 14:13:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adiupina@astralinux.ru>)
- id 1rzh7v-0007KB-IS; Wed, 24 Apr 2024 14:13:51 -0400
+ id 1rzh7v-0007KC-IX; Wed, 24 Apr 2024 14:13:51 -0400
 Received: from new-mail.astralinux.ru ([51.250.53.164])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adiupina@astralinux.ru>)
- id 1rzh7s-0005QZ-S7; Wed, 24 Apr 2024 14:13:51 -0400
+ id 1rzh7s-0005Q8-Pd; Wed, 24 Apr 2024 14:13:51 -0400
 Received: from rbta-msk-lt-302690.astralinux.ru (unknown [10.177.232.60])
- by new-mail.astralinux.ru (Postfix) with ESMTPA id 4VPnDS4tVszqSSK;
- Wed, 24 Apr 2024 21:13:44 +0300 (MSK)
+ by new-mail.astralinux.ru (Postfix) with ESMTPA id 4VPnDP3y0qzqSR8;
+ Wed, 24 Apr 2024 21:13:41 +0300 (MSK)
 From: Alexandra Diupina <adiupina@astralinux.ru>
 To: Alistair Francis <alistair@alistair23.me>
 Cc: Alexandra Diupina <adiupina@astralinux.ru>,
@@ -28,12 +28,12 @@ Cc: Alexandra Diupina <adiupina@astralinux.ru>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org, sdl.qemu@linuxtesting.org
-Subject: [PATCH] fix bit fields extraction and prevent overflow
-Date: Wed, 24 Apr 2024 21:13:21 +0300
-Message-Id: <20240424181321.20844-2-adiupina@astralinux.ru>
+Subject: [PATCH] fix host-endianness bug
+Date: Wed, 24 Apr 2024 21:13:20 +0300
+Message-Id: <20240424181321.20844-1-adiupina@astralinux.ru>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <CAFEAcA-=kk_TQVRLLQvH96DC-ffmDqd_hU5=z=Og8ntYGxPUeg@mail.gmail.com>
-References: <20240424181321.20844-1-adiupina@astralinux.ru>
+References: 
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-DrWeb-SpamScore: -100
@@ -67,57 +67,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a type cast and use extract64() instead of extract32()
-to avoid integer overflow on addition. Fix bit fields
-extraction according to documentation.
+Add a function xlnx_dpdma_read_descriptor() that
+combines reading the descriptor from desc_addr
+by calling dma_memory_read() and swapping desc
+fields from guest memory order to host memory order.
 
 Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
 Fixes: d3c6369a96 ("introduce xlnx-dpdma")
 Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
 ---
- hw/dma/xlnx_dpdma.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ hw/dma/xlnx_dpdma.c | 38 +++++++++++++++++++++++++++++++++-----
+ 1 file changed, 33 insertions(+), 5 deletions(-)
 
 diff --git a/hw/dma/xlnx_dpdma.c b/hw/dma/xlnx_dpdma.c
-index 1f5cd64ed1..52e8c594fe 100644
+index 1f5cd64ed1..5fd4e31699 100644
 --- a/hw/dma/xlnx_dpdma.c
 +++ b/hw/dma/xlnx_dpdma.c
-@@ -175,24 +175,24 @@ static uint64_t xlnx_dpdma_desc_get_source_address(DPDMADescriptor *desc,
+@@ -614,6 +614,38 @@ static void xlnx_dpdma_register_types(void)
+     type_register_static(&xlnx_dpdma_info);
+ }
  
-     switch (frag) {
-     case 0:
--        addr = desc->source_address
--            + (extract32(desc->address_extension, 16, 12) << 20);
-+        addr = (uint64_t)desc->source_address
-+            + (extract64(desc->address_extension, 16, 12) << 20);
-         break;
-     case 1:
--        addr = desc->source_address2
--            + (extract32(desc->address_extension_23, 0, 12) << 8);
-+        addr = (uint64_t)desc->source_address2
-+            + (extract64(desc->address_extension_23, 0, 12) << 8);
-         break;
-     case 2:
--        addr = desc->source_address3
--            + (extract32(desc->address_extension_23, 16, 12) << 20);
-+        addr = (uint64_t)desc->source_address3
-+            + (extract64(desc->address_extension_23, 16, 12) << 20);
-         break;
-     case 3:
--        addr = desc->source_address4
--            + (extract32(desc->address_extension_45, 0, 12) << 8);
-+        addr = (uint64_t)desc->source_address4
-+            + (extract64(desc->address_extension_45, 0, 12) << 8);
-         break;
-     case 4:
--        addr = desc->source_address5
--            + (extract32(desc->address_extension_45, 16, 12) << 20);
-+        addr = (uint64_t)desc->source_address5
-+            + (extract64(desc->address_extension_45, 16, 12) << 20);
-         break;
-     default:
-         addr = 0;
++static MemTxResult xlnx_dpdma_read_descriptor(XlnxDPDMAState *s, uint8_t channel, 
++                                        uint64_t desc_addr, DPDMADescriptor *desc)
++{
++    if (dma_memory_read(&address_space_memory, desc_addr, &desc,
++                            sizeof(DPDMADescriptor), MEMTXATTRS_UNSPECIFIED)) {
++        s->registers[DPDMA_EISR] |= ((1 << 1) << channel);
++        xlnx_dpdma_update_irq(s);
++        s->operation_finished[channel] = true;
++        return MEMTX_ERROR;
++    }
++
++    /* Convert from LE into host endianness.  */
++    desc->control = le32_to_cpu(desc->control);
++    desc->descriptor_id = le32_to_cpu(desc->descriptor_id);
++    desc->xfer_size = le32_to_cpu(desc->xfer_size);
++    desc->line_size_stride = le32_to_cpu(desc->line_size_stride);
++    desc->timestamp_lsb = le32_to_cpu(desc->timestamp_lsb);
++    desc->timestamp_msb = le32_to_cpu(desc->timestamp_msb);
++    desc->address_extension = le32_to_cpu(desc->address_extension);
++    desc->next_descriptor = le32_to_cpu(desc->next_descriptor);
++    desc->source_address = le32_to_cpu(desc->source_address);
++    desc->address_extension_23 = le32_to_cpu(desc->address_extension_23);
++    desc->address_extension_45 = le32_to_cpu(desc->address_extension_45);
++    desc->source_address2 = le32_to_cpu(desc->source_address2);
++    desc->source_address3 = le32_to_cpu(desc->source_address3);
++    desc->source_address4 = le32_to_cpu(desc->source_address4);
++    desc->source_address5 = le32_to_cpu(desc->source_address5);
++    desc->crc = le32_to_cpu(desc->crc);
++
++    return MEMTX_OK;
++}
++
+ size_t xlnx_dpdma_start_operation(XlnxDPDMAState *s, uint8_t channel,
+                                     bool one_desc)
+ {
+@@ -651,11 +683,7 @@ size_t xlnx_dpdma_start_operation(XlnxDPDMAState *s, uint8_t channel,
+             desc_addr = xlnx_dpdma_descriptor_next_address(s, channel);
+         }
+ 
+-        if (dma_memory_read(&address_space_memory, desc_addr, &desc,
+-                            sizeof(DPDMADescriptor), MEMTXATTRS_UNSPECIFIED)) {
+-            s->registers[DPDMA_EISR] |= ((1 << 1) << channel);
+-            xlnx_dpdma_update_irq(s);
+-            s->operation_finished[channel] = true;
++        if (xlnx_dpdma_read_descriptor(s, channel, desc_addr, &desc)) {
+             DPRINTF("Can't get the descriptor.\n");
+             break;
+         }
 -- 
 2.30.2
 
