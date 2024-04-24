@@ -4,58 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83FFBC07E8E
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 18:14:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22F86C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 18:16:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzh7x-0007Km-KC; Wed, 24 Apr 2024 14:13:55 -0400
+	id 1rzhAM-00012W-Af; Wed, 24 Apr 2024 14:16:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adiupina@astralinux.ru>)
- id 1rzh7v-0007KC-IX; Wed, 24 Apr 2024 14:13:51 -0400
-Received: from new-mail.astralinux.ru ([51.250.53.164])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1rzhAI-000127-4u; Wed, 24 Apr 2024 14:16:20 -0400
+Received: from forwardcorp1c.mail.yandex.net
+ ([2a02:6b8:c03:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adiupina@astralinux.ru>)
- id 1rzh7s-0005Q8-Pd; Wed, 24 Apr 2024 14:13:51 -0400
-Received: from rbta-msk-lt-302690.astralinux.ru (unknown [10.177.232.60])
- by new-mail.astralinux.ru (Postfix) with ESMTPA id 4VPnDP3y0qzqSR8;
- Wed, 24 Apr 2024 21:13:41 +0300 (MSK)
-From: Alexandra Diupina <adiupina@astralinux.ru>
-To: Alistair Francis <alistair@alistair23.me>
-Cc: Alexandra Diupina <adiupina@astralinux.ru>,
- "Konrad, Frederic" <Frederic.Konrad@amd.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, sdl.qemu@linuxtesting.org
-Subject: [PATCH] fix host-endianness bug
-Date: Wed, 24 Apr 2024 21:13:20 +0300
-Message-Id: <20240424181321.20844-1-adiupina@astralinux.ru>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <CAFEAcA-=kk_TQVRLLQvH96DC-ffmDqd_hU5=z=Og8ntYGxPUeg@mail.gmail.com>
-References: 
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1rzhAD-000689-Tv; Wed, 24 Apr 2024 14:16:17 -0400
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:c10a:0:640:882f:0])
+ by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id 16FC060A03;
+ Wed, 24 Apr 2024 21:16:08 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:8811::1:29] (unknown
+ [2a02:6b8:b081:8811::1:29])
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 7GQpQ73IamI0-0nxgfLQP; Wed, 24 Apr 2024 21:16:07 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1713982567;
+ bh=h160bdeEzMsp0Bg9tGZVv7rAjvV3NTdli/yO753rleo=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=IQraanN3xidMONVpP4E3OUpD2gZCBbvLU9oy7wUHlFpOvp83UvvlW7/+cEYkNi8Hz
+ 9PDGPfApz89s1yCq4lMLn+6oBTWOFHCNMUHLSVc7FvsasusoIvdJ+7E5BSu1zL5cuP
+ iOv+JR1D9azUEJmBISBCjAy+K7biz3snsX2SEJHU=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <943009b6-fcab-461d-91eb-b20d6550a978@yandex-team.ru>
+Date: Wed, 24 Apr 2024 21:16:07 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-DrWeb-SpamScore: -100
-X-DrWeb-SpamState: legit
-X-DrWeb-SpamDetail: gggruggvucftvghtrhhoucdtuddrgedvfedrvdehuddgtddvucetufdoteggodetrfcurfhrohhfihhlvgemucfftfghgfeunecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeetlhgvgigrnhgurhgrucffihhuphhinhgruceorgguihhuphhinhgrsegrshhtrhgrlhhinhhugidrrhhuqeenucggtffrrghtthgvrhhnpeefkedufedvkeffuedtgfdugeeutdegvdffffejfffgleffieduhfejvdelffdvudenucffohhmrghinheplhhinhhugihtvghsthhinhhgrdhorhhgnecukfhppedutddrudejjedrvdefvddriedtnecurfgrrhgrmhephhgvlhhopehrsghtrgdqmhhskhdqlhhtqdeftddvieeltddrrghsthhrrghlihhnuhigrdhruhdpihhnvghtpedutddrudejjedrvdefvddriedtmeehieegjedvpdhmrghilhhfrhhomheprgguihhuphhinhgrsegrshhtrhgrlhhinhhugidrrhhupdhnsggprhgtphhtthhopeekpdhrtghpthhtoheprghlihhsthgrihhrsegrlhhishhtrghirhdvfedrmhgvpdhrtghpthhtoheprgguihhuphhinhgrsegrshhtrhgrlhhinhhugidrrhhupdhrtghpthhtohephfhrvgguvghrihgtrdfmohhnrhgrugesrghmugdrtghomhdprhgtphhtthhopegvughgrghrrdhighhlvghsihgrshesghhmrghilhdrtghomhdprhgtphhtthhope
- hpvghtvghrrdhmrgihuggvlhhlsehlihhnrghrohdrohhrghdprhgtphhtthhopehqvghmuhdqrghrmhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehsughlrdhqvghmuheslhhinhhugihtvghsthhinhhgrdhorhhg
-X-DrWeb-SpamVersion: Vade Retro 01.423.251#02 AS+AV+AP Profile: DRWEB;
- Bailout: 300
-X-AntiVirus: Checked by Dr.Web [MailD: 11.1.19.2307031128,
- SE: 11.1.12.2210241838, Core engine: 7.00.62.01180, Virus records: 12628730,
- Updated: 2024-Apr-24 16:23:42 UTC]
-Received-SPF: pass client-ip=51.250.53.164;
- envelope-from=adiupina@astralinux.ru; helo=new-mail.astralinux.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/avocado: add hotplug_blk test
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, crosa@redhat.com, philmd@linaro.org,
+ wainersm@redhat.com, bleal@redhat.com, yc-core@yandex-team.ru
+References: <20240409065854.366856-1-vsementsov@yandex-team.ru>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20240409065854.366856-1-vsementsov@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c03:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -67,76 +75,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a function xlnx_dpdma_read_descriptor() that
-combines reading the descriptor from desc_addr
-by calling dma_memory_read() and swapping desc
-fields from guest memory order to host memory order.
+ping!)
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: d3c6369a96 ("introduce xlnx-dpdma")
-Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
----
- hw/dma/xlnx_dpdma.c | 38 +++++++++++++++++++++++++++++++++-----
- 1 file changed, 33 insertions(+), 5 deletions(-)
-
-diff --git a/hw/dma/xlnx_dpdma.c b/hw/dma/xlnx_dpdma.c
-index 1f5cd64ed1..5fd4e31699 100644
---- a/hw/dma/xlnx_dpdma.c
-+++ b/hw/dma/xlnx_dpdma.c
-@@ -614,6 +614,38 @@ static void xlnx_dpdma_register_types(void)
-     type_register_static(&xlnx_dpdma_info);
- }
- 
-+static MemTxResult xlnx_dpdma_read_descriptor(XlnxDPDMAState *s, uint8_t channel, 
-+                                        uint64_t desc_addr, DPDMADescriptor *desc)
-+{
-+    if (dma_memory_read(&address_space_memory, desc_addr, &desc,
-+                            sizeof(DPDMADescriptor), MEMTXATTRS_UNSPECIFIED)) {
-+        s->registers[DPDMA_EISR] |= ((1 << 1) << channel);
-+        xlnx_dpdma_update_irq(s);
-+        s->operation_finished[channel] = true;
-+        return MEMTX_ERROR;
-+    }
-+
-+    /* Convert from LE into host endianness.  */
-+    desc->control = le32_to_cpu(desc->control);
-+    desc->descriptor_id = le32_to_cpu(desc->descriptor_id);
-+    desc->xfer_size = le32_to_cpu(desc->xfer_size);
-+    desc->line_size_stride = le32_to_cpu(desc->line_size_stride);
-+    desc->timestamp_lsb = le32_to_cpu(desc->timestamp_lsb);
-+    desc->timestamp_msb = le32_to_cpu(desc->timestamp_msb);
-+    desc->address_extension = le32_to_cpu(desc->address_extension);
-+    desc->next_descriptor = le32_to_cpu(desc->next_descriptor);
-+    desc->source_address = le32_to_cpu(desc->source_address);
-+    desc->address_extension_23 = le32_to_cpu(desc->address_extension_23);
-+    desc->address_extension_45 = le32_to_cpu(desc->address_extension_45);
-+    desc->source_address2 = le32_to_cpu(desc->source_address2);
-+    desc->source_address3 = le32_to_cpu(desc->source_address3);
-+    desc->source_address4 = le32_to_cpu(desc->source_address4);
-+    desc->source_address5 = le32_to_cpu(desc->source_address5);
-+    desc->crc = le32_to_cpu(desc->crc);
-+
-+    return MEMTX_OK;
-+}
-+
- size_t xlnx_dpdma_start_operation(XlnxDPDMAState *s, uint8_t channel,
-                                     bool one_desc)
- {
-@@ -651,11 +683,7 @@ size_t xlnx_dpdma_start_operation(XlnxDPDMAState *s, uint8_t channel,
-             desc_addr = xlnx_dpdma_descriptor_next_address(s, channel);
-         }
- 
--        if (dma_memory_read(&address_space_memory, desc_addr, &desc,
--                            sizeof(DPDMADescriptor), MEMTXATTRS_UNSPECIFIED)) {
--            s->registers[DPDMA_EISR] |= ((1 << 1) << channel);
--            xlnx_dpdma_update_irq(s);
--            s->operation_finished[channel] = true;
-+        if (xlnx_dpdma_read_descriptor(s, channel, desc_addr, &desc)) {
-             DPRINTF("Can't get the descriptor.\n");
-             break;
-         }
 -- 
-2.30.2
+Best regards,
+Vladimir
 
 
