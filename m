@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49C39C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 15:37:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2F34C10F15
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 15:37:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzefR-0004OS-AV; Wed, 24 Apr 2024 11:36:17 -0400
+	id 1rzefx-0004aa-0G; Wed, 24 Apr 2024 11:36:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rzefL-0004OH-Tb
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 11:36:13 -0400
+ id 1rzefp-0004Sg-Al
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 11:36:42 -0400
 Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rzefJ-0005bU-OC
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 11:36:11 -0400
+ id 1rzefm-0005bU-6q
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 11:36:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713972970; x=1745508970;
+ t=1713972998; x=1745508998;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=NAiHZpGVOqwrzQp+rlbSyO5VMtyvYLfh5u8un67PwEg=;
- b=AnOjxk6OlPbIy7edltW6qGscz/9MHlWkOnwKxR2PSBe1ornKJ9Sovf5e
- wo2+grbKiKTRbQc41gT3Bw/Xf1LAtvg9MYTJ5NjSBpvJbWo+2tFvOyWeY
- nhuN/aUVlT/MdAyaXP2xmesYg4/dLSy6+xclVsqK+Oz9oVqgqOKZTrgHV
- LE0yY2H1crgL9Brgmq3tHlglOgJkTvKiIzFTkW0HzGYe0CF9ZwGra0jpE
- yktaWnsaMQxEWKRQWKs/tIDhSn3uZTSllenG8Ej+2QRJUvcKGzlRkGgnZ
- 1ohIbMvCT1EejI4zl1a/SmFRsgz37TmVCpslMvxbijKSv3IpcxxzVrrLr w==;
-X-CSE-ConnectionGUID: T8jjt19kQ+a2xdDXG3bDbw==
-X-CSE-MsgGUID: ecLXWoUKSpmtuWN5UWy4kA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11054"; a="12545585"
-X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; d="scan'208";a="12545585"
+ bh=l/pgfos9pSMOosq2Hj5bUnDrab4aBTjWVffYw2fMNN0=;
+ b=VI794jNkiSbhUDFPRvqxCIiElP6MlMmgurr2fRjQFBb5WBrv+hAcyl6I
+ 95RnMohybaJXGpWP258V4X8zClIYXI9RQwBeqz7sMSUCd2XIi2bZ5oWCu
+ TIHVIiz6UpJ88I1Dnh9w6IobpTrbaD3YeT3t0M7z6z97aU4cTnxzJ48d5
+ cLzgohaeOg3lvVamnaHjWN/ueYw0YSRri5n/Ag1gjMa5DsvjXMg7Q2Ro/
+ OMQttQge96yQ0ziWemgKM+h0v35QqHaWUdv3IZItziAeT0mVk7e2lKk2x
+ 6c4rZvLNztN2Pc9zbFsmiCcQJJ2Lyit2/OAwqY918tBtR7I2LnX6uJKOa Q==;
+X-CSE-ConnectionGUID: KVzN1wqmSuWDFCGKQybVNg==
+X-CSE-MsgGUID: CGHaatepQ+iK1gj5RtqU1Q==
+X-IronPort-AV: E=McAfee;i="6600,9927,11054"; a="12545675"
+X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; d="scan'208";a="12545675"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Apr 2024 08:36:08 -0700
-X-CSE-ConnectionGUID: LIGYrk/kSjCy2mHABXcGiQ==
-X-CSE-MsgGUID: 2+g92xsNSa+uTK1qqGRnTw==
+ 24 Apr 2024 08:36:37 -0700
+X-CSE-ConnectionGUID: skOWEB+3S1ims2aXFP/2XQ==
+X-CSE-MsgGUID: ZaFY/5bRRw2J89pteXlG8A==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; d="scan'208";a="25363044"
+X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; d="scan'208";a="25363120"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa008.jf.intel.com with ESMTP; 24 Apr 2024 08:36:03 -0700
+ by orviesa008.jf.intel.com with ESMTP; 24 Apr 2024 08:36:33 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -60,14 +60,17 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  Zhenyu Wang <zhenyu.z.wang@intel.com>,
  Zhuocheng Ding <zhuocheng.ding@intel.com>, Babu Moger <babu.moger@amd.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
- Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v11 02/21] hw/core/machine: Support modules in -smp
-Date: Wed, 24 Apr 2024 23:49:10 +0800
-Message-Id: <20240424154929.1487382-3-zhao1.liu@intel.com>
+ Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Robert Hoo <robert.hu@linux.intel.com>
+Subject: [PATCH v11 08/21] i386/cpu: Consolidate the use of topo_info in
+ cpu_x86_cpuid()
+Date: Wed, 24 Apr 2024 23:49:16 +0800
+Message-Id: <20240424154929.1487382-9-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240424154929.1487382-1-zhao1.liu@intel.com>
 References: <20240424154929.1487382-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
@@ -93,185 +96,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add "modules" parameter parsing support in -smp.
+In cpu_x86_cpuid(), there are many variables in representing the cpu
+topology, e.g., topo_info, cs->nr_cores and cs->nr_threads.
 
-Suggested-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Since the names of cs->nr_cores and cs->nr_threads do not accurately
+represent its meaning, the use of cs->nr_cores or cs->nr_threads is
+prone to confusion and mistakes.
+
+And the structure X86CPUTopoInfo names its members clearly, thus the
+variable "topo_info" should be preferred.
+
+In addition, in cpu_x86_cpuid(), to uniformly use the topology variable,
+replace env->dies with topo_info.dies_per_pkg as well.
+
+Suggested-by: Robert Hoo <robert.hu@linux.intel.com>
 Tested-by: Yongwei Ma <yongwei.ma@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Tested-by: Babu Moger <babu.moger@amd.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
 ---
 Changes since v9:
- * Rebased on the SMP changes about unsupported "parameter=1"
-   configurations. (Philippe)
- * Fixed typo about topology field. (Dapeng)
+ * Polished the commit message. ( Xiaoyao)
 
 Changes since v8:
- * Added module description in qemu_smp_opts.
+ * Added Philippe's reviewed-by tag.
 
 Changes since v7:
- * New commit to introduce module level in -smp.
----
- hw/core/machine-smp.c | 39 +++++++++++++++++++++++++++++++++------
- hw/core/machine.c     |  1 +
- qapi/machine.json     |  3 +++
- system/vl.c           |  3 +++
- 4 files changed, 40 insertions(+), 6 deletions(-)
+ * Renamed cpus_per_pkg to threads_per_pkg. (Xiaoyao)
+ * Dropped Michael/Babu's Acked/Tested tags since the code change.
+ * Re-added Yongwei's Tested tag For his re-testing.
+ * Added Xiaoyao's Reviewed tag.
 
-diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
-index 2e68fcfdfd79..2b93fa99c943 100644
---- a/hw/core/machine-smp.c
-+++ b/hw/core/machine-smp.c
-@@ -51,6 +51,10 @@ static char *cpu_hierarchy_to_string(MachineState *ms)
-         g_string_append_printf(s, " * clusters (%u)", ms->smp.clusters);
-     }
+Changes since v3:
+ * Fixed typo. (Babu)
+
+Changes since v1:
+ * Extracted cores_per_socket from the code block and use it as a local
+   variable for cpu_x86_cpuid(). (Yanan)
+ * Removed vcpus_per_socket variable and use cpus_per_pkg directly.
+   (Yanan)
+ * Replaced env->dies with topo_info.dies_per_pkg in cpu_x86_cpuid().
+---
+ target/i386/cpu.c | 31 ++++++++++++++++++-------------
+ 1 file changed, 18 insertions(+), 13 deletions(-)
+
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index c13bfed28878..0611f8ffbf8b 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -6153,11 +6153,16 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+     uint32_t limit;
+     uint32_t signature[3];
+     X86CPUTopoInfo topo_info;
++    uint32_t cores_per_pkg;
++    uint32_t threads_per_pkg;
  
-+    if (mc->smp_props.modules_supported) {
-+        g_string_append_printf(s, " * modules (%u)", ms->smp.modules);
-+    }
-+
-     g_string_append_printf(s, " * cores (%u)", ms->smp.cores);
-     g_string_append_printf(s, " * threads (%u)", ms->smp.threads);
+     topo_info.dies_per_pkg = env->nr_dies;
+     topo_info.cores_per_die = cs->nr_cores / env->nr_dies;
+     topo_info.threads_per_core = cs->nr_threads;
  
-@@ -88,6 +92,7 @@ void machine_parse_smp_config(MachineState *ms,
-     unsigned sockets = config->has_sockets ? config->sockets : 0;
-     unsigned dies    = config->has_dies ? config->dies : 0;
-     unsigned clusters = config->has_clusters ? config->clusters : 0;
-+    unsigned modules = config->has_modules ? config->modules : 0;
-     unsigned cores   = config->has_cores ? config->cores : 0;
-     unsigned threads = config->has_threads ? config->threads : 0;
-     unsigned maxcpus = config->has_maxcpus ? config->maxcpus : 0;
-@@ -103,6 +108,7 @@ void machine_parse_smp_config(MachineState *ms,
-         (config->has_sockets && config->sockets == 0) ||
-         (config->has_dies && config->dies == 0) ||
-         (config->has_clusters && config->clusters == 0) ||
-+        (config->has_modules && config->modules == 0) ||
-         (config->has_cores && config->cores == 0) ||
-         (config->has_threads && config->threads == 0) ||
-         (config->has_maxcpus && config->maxcpus == 0)) {
-@@ -115,6 +121,20 @@ void machine_parse_smp_config(MachineState *ms,
-      * If not supported by the machine, a topology parameter must be
-      * omitted.
-      */
-+    if (!mc->smp_props.modules_supported && config->has_modules) {
-+        if (config->modules > 1) {
-+            error_setg(errp, "modules not supported by this "
-+                       "machine's CPU topology");
-+            return;
-+        } else {
-+            /* Here modules only equals 1 since we've checked zero case. */
-+            warn_report("Deprecated CPU topology (considered invalid): "
-+                        "Unsupported modules parameter mustn't be "
-+                        "specified as 1");
-+        }
-+    }
-+    modules = modules > 0 ? modules : 1;
++    cores_per_pkg = topo_info.cores_per_die * topo_info.dies_per_pkg;
++    threads_per_pkg = cores_per_pkg * topo_info.threads_per_core;
 +
-     if (!mc->smp_props.clusters_supported && config->has_clusters) {
-         if (config->clusters > 1) {
-             error_setg(errp, "clusters not supported by this "
-@@ -185,11 +205,13 @@ void machine_parse_smp_config(MachineState *ms,
-                 cores = cores > 0 ? cores : 1;
-                 threads = threads > 0 ? threads : 1;
-                 sockets = maxcpus /
--                          (drawers * books * dies * clusters * cores * threads);
-+                          (drawers * books * dies * clusters *
-+                           modules * cores * threads);
-             } else if (cores == 0) {
-                 threads = threads > 0 ? threads : 1;
-                 cores = maxcpus /
--                        (drawers * books * sockets * dies * clusters * threads);
-+                        (drawers * books * sockets * dies *
-+                         clusters * modules * threads);
-             }
+     /* Calculate & apply limits for different index ranges */
+     if (index >= 0xC0000000) {
+         limit = env->cpuid_xlevel2;
+@@ -6193,8 +6198,8 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+             *ecx |= CPUID_EXT_OSXSAVE;
+         }
+         *edx = env->features[FEAT_1_EDX];
+-        if (cs->nr_cores * cs->nr_threads > 1) {
+-            *ebx |= (cs->nr_cores * cs->nr_threads) << 16;
++        if (threads_per_pkg > 1) {
++            *ebx |= threads_per_pkg << 16;
+             *edx |= CPUID_HT;
+         }
+         if (!cpu->enable_pmu) {
+@@ -6242,15 +6247,15 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+              */
+             if (*eax & 31) {
+                 int host_vcpus_per_cache = 1 + ((*eax & 0x3FFC000) >> 14);
+-                int vcpus_per_socket = cs->nr_cores * cs->nr_threads;
+-                if (cs->nr_cores > 1) {
++
++                if (cores_per_pkg > 1) {
+                     addressable_cores_width = apicid_pkg_offset(&topo_info) -
+                                               apicid_core_offset(&topo_info);
+ 
+                     *eax &= ~0xFC000000;
+                     *eax |= ((1 << addressable_cores_width) - 1) << 26;
+                 }
+-                if (host_vcpus_per_cache > vcpus_per_socket) {
++                if (host_vcpus_per_cache > threads_per_pkg) {
+                     /* Share the cache at package level. */
+                     addressable_threads_width = apicid_pkg_offset(&topo_info);
+ 
+@@ -6396,12 +6401,12 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+         switch (count) {
+         case 0:
+             *eax = apicid_core_offset(&topo_info);
+-            *ebx = cs->nr_threads;
++            *ebx = topo_info.threads_per_core;
+             *ecx |= CPUID_TOPOLOGY_LEVEL_SMT;
+             break;
+         case 1:
+             *eax = apicid_pkg_offset(&topo_info);
+-            *ebx = cs->nr_cores * cs->nr_threads;
++            *ebx = threads_per_pkg;
+             *ecx |= CPUID_TOPOLOGY_LEVEL_CORE;
+             break;
+         default:
+@@ -6421,7 +6426,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+         break;
+     case 0x1F:
+         /* V2 Extended Topology Enumeration Leaf */
+-        if (env->nr_dies < 2) {
++        if (topo_info.dies_per_pkg < 2) {
+             *eax = *ebx = *ecx = *edx = 0;
+             break;
+         }
+@@ -6431,7 +6436,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+         switch (count) {
+         case 0:
+             *eax = apicid_core_offset(&topo_info);
+-            *ebx = cs->nr_threads;
++            *ebx = topo_info.threads_per_core;
+             *ecx |= CPUID_TOPOLOGY_LEVEL_SMT;
+             break;
+         case 1:
+@@ -6441,7 +6446,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+             break;
+         case 2:
+             *eax = apicid_pkg_offset(&topo_info);
+-            *ebx = cs->nr_cores * cs->nr_threads;
++            *ebx = threads_per_pkg;
+             *ecx |= CPUID_TOPOLOGY_LEVEL_DIE;
+             break;
+         default:
+@@ -6669,7 +6674,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+          * discards multiple thread information if it is set.
+          * So don't set it here for Intel to make Linux guests happy.
+          */
+-        if (cs->nr_cores * cs->nr_threads > 1) {
++        if (threads_per_pkg > 1) {
+             if (env->cpuid_vendor1 != CPUID_VENDOR_INTEL_1 ||
+                 env->cpuid_vendor2 != CPUID_VENDOR_INTEL_2 ||
+                 env->cpuid_vendor3 != CPUID_VENDOR_INTEL_3) {
+@@ -6736,7 +6741,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+              *eax |= (cpu->guest_phys_bits << 16);
+         }
+         *ebx = env->features[FEAT_8000_0008_EBX];
+-        if (cs->nr_cores * cs->nr_threads > 1) {
++        if (threads_per_pkg > 1) {
+             /*
+              * Bits 15:12 is "The number of bits in the initial
+              * Core::X86::Apic::ApicId[ApicId] value that indicate
+@@ -6744,7 +6749,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+              * Bits 7:0 is "The number of threads in the package is NC+1"
+              */
+             *ecx = (apicid_pkg_offset(&topo_info) << 12) |
+-                   ((cs->nr_cores * cs->nr_threads) - 1);
++                   (threads_per_pkg - 1);
          } else {
-             /* prefer cores over sockets since 6.2 */
-@@ -197,22 +219,26 @@ void machine_parse_smp_config(MachineState *ms,
-                 sockets = sockets > 0 ? sockets : 1;
-                 threads = threads > 0 ? threads : 1;
-                 cores = maxcpus /
--                        (drawers * books * sockets * dies * clusters * threads);
-+                        (drawers * books * sockets * dies *
-+                         clusters * modules * threads);
-             } else if (sockets == 0) {
-                 threads = threads > 0 ? threads : 1;
-                 sockets = maxcpus /
--                          (drawers * books * dies * clusters * cores * threads);
-+                          (drawers * books * dies * clusters *
-+                           modules * cores * threads);
-             }
+             *ecx = 0;
          }
- 
-         /* try to calculate omitted threads at last */
-         if (threads == 0) {
-             threads = maxcpus /
--                      (drawers * books * sockets * dies * clusters * cores);
-+                      (drawers * books * sockets * dies *
-+                       clusters * modules * cores);
-         }
-     }
- 
--    total_cpus = drawers * books * sockets * dies * clusters * cores * threads;
-+    total_cpus = drawers * books * sockets * dies *
-+                 clusters * modules * cores * threads;
-     maxcpus = maxcpus > 0 ? maxcpus : total_cpus;
-     cpus = cpus > 0 ? cpus : maxcpus;
- 
-@@ -222,6 +248,7 @@ void machine_parse_smp_config(MachineState *ms,
-     ms->smp.sockets = sockets;
-     ms->smp.dies = dies;
-     ms->smp.clusters = clusters;
-+    ms->smp.modules = modules;
-     ms->smp.cores = cores;
-     ms->smp.threads = threads;
-     ms->smp.max_cpus = maxcpus;
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 996664115939..494b712a7638 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -881,6 +881,7 @@ static void machine_get_smp(Object *obj, Visitor *v, const char *name,
-         .has_sockets = true, .sockets = ms->smp.sockets,
-         .has_dies = true, .dies = ms->smp.dies,
-         .has_clusters = true, .clusters = ms->smp.clusters,
-+        .has_modules = true, .modules = ms->smp.modules,
-         .has_cores = true, .cores = ms->smp.cores,
-         .has_threads = true, .threads = ms->smp.threads,
-         .has_maxcpus = true, .maxcpus = ms->smp.max_cpus,
-diff --git a/qapi/machine.json b/qapi/machine.json
-index e8b60641f23d..252cd019f62e 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -1633,6 +1633,8 @@
- #
- # @clusters: number of clusters per parent container (since 7.0)
- #
-+# @modules: number of modules per parent container (since 9.1)
-+#
- # @cores: number of cores per parent container
- #
- # @threads: number of threads per core
-@@ -1646,6 +1648,7 @@
-      '*sockets': 'int',
-      '*dies': 'int',
-      '*clusters': 'int',
-+     '*modules': 'int',
-      '*cores': 'int',
-      '*threads': 'int',
-      '*maxcpus': 'int' } }
-diff --git a/system/vl.c b/system/vl.c
-index c64422298245..7756eac81e48 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -741,6 +741,9 @@ static QemuOptsList qemu_smp_opts = {
-         }, {
-             .name = "clusters",
-             .type = QEMU_OPT_NUMBER,
-+        }, {
-+            .name = "modules",
-+            .type = QEMU_OPT_NUMBER,
-         }, {
-             .name = "cores",
-             .type = QEMU_OPT_NUMBER,
 -- 
 2.34.1
 
