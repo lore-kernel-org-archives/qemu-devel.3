@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 904F9C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 08:38:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F927C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 08:45:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzY8h-0004lH-QW; Wed, 24 Apr 2024 04:38:03 -0400
+	id 1rzYFH-0006vb-Ar; Wed, 24 Apr 2024 04:44:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzY8b-0004dT-Li
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:37:57 -0400
-Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzYFF-0006uy-BI
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:44:49 -0400
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzY8Z-0001lk-Tv
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:37:57 -0400
-Received: by mail-lj1-x22b.google.com with SMTP id
- 38308e7fff4ca-2d8a24f8a3cso82933731fa.1
- for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 01:37:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzYFC-0002wV-O1
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:44:49 -0400
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-2da0b3f7ad2so95342601fa.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 01:44:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713947874; x=1714552674; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713948284; x=1714553084; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=kr4rn0fr1RcDoImrOy+lafgj5qW+Ky8y/aVAmX/iyWs=;
- b=XFelXd2oTsx02G8ZdDXmVjGbpYgi1KSYNt6Zaup8rAtACf7bwnzBTFhWiW1nZZZ8ma
- 6In0NhJM06ldH4yxtvaZdvlkSkBVJ2ajkZ8sct9ar0ufrAGI6eXjBzlhg90xgCSGa4Zm
- xqaieFBF4T9Cd+y7V5yoFbXpG1m4VbgNcirPhKrxB/8GahPrITd1AZgkvarKY+eT4W9y
- 8C/wjbWPCUVUxVWgEDu02mK+b9UBP5p9ZddRDvqFzSEQcLM4Q/U5/kfj6M0kmc2a+sj4
- 05Fgo256seu7SQmWl2WJEOj4bhFH+F+CGZ6Ob1Sef2sgKpqPgfEATRc8KCqZaTMI9otA
- c/ng==
+ bh=hgALXVVjSwrwkltp36vxTj/9Vt2I0zuQY7MS0AYLINY=;
+ b=HOQCST543h6PE1RzEjBf9YQdliM9psroxUARMjEKrDRi5qJn9tRElVvFX5Z/x38DYo
+ n+g4dwYgbwB1qJ74L3rMptOka7DTTDZ55g0AhRLj4SsgJG1QRkVdQMhCxhXFCcy8K1k7
+ IBCAERVIprGur5gV/t27obwdMlgFmUtK3IFhMmSw3MIuS7woU7Nrx5iIrSqwkZz/62eB
+ S1KUut6nqzhKhLLBCTWz3yMOV4LelD4+CV1k/GqnizWkCzu24ByM/4yCqbaBcPpeMA8I
+ MyB07mnOvKsimVfbOqE7FUiyC8XexdYANCtSqJ+Vmo0hlfVwEM5C2if4BgMw9cN5gD+R
+ mhQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713947874; x=1714552674;
+ d=1e100.net; s=20230601; t=1713948284; x=1714553084;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kr4rn0fr1RcDoImrOy+lafgj5qW+Ky8y/aVAmX/iyWs=;
- b=oeL2OtGwzqhBCShgMlB1rumeM52oF6sPfY7cvc2Fhyipm+ytXlPFG3bbrPVqNortxm
- soZydsYadmZxgH+80XF2f/g8WlTWcf5mXJxin3Jo/SO/C7i83fMdP85o0p07sNtbj4lA
- AE2+pCFr8eGHsN5iCsgT04f+eUPW76I/T5OVxrzmT3jUCrrPBbaDMP8GaNeC11vZ7xUc
- T0arXnI63Or5aWRC9q5kqR4sOQ4RF1Eu5/3olTj7UX/FyiSdDGsktYU0HoeyvMPAeRbu
- nQb7EgzNb+abf/RwQxwv/dI4OBaFQpj2Yny8wiDiV/fQIcwBKMjowmcBZVzJMFYxLssD
- OPHw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWmfjY0/eCwMi+EDf105kCPOnUCzsNwatgvAuFnjzmvNQMEiXQjUbE7fYjEmdB5Yvqtb2twvCJZG68lviL6DCy6YPtYykM=
-X-Gm-Message-State: AOJu0YwsRY4b7aUIE0oJejTm0nSu0hbLz6PW7/8SbZgUOuIdnZByrFQ9
- OqDOXmrBT9Aw7kPqZ07tWd8HKpYfGmt13aLkg1pFxeVvETwFMoBLAOWU8t+KHUg=
-X-Google-Smtp-Source: AGHT+IEb/89CgCpbYA/Hvif/am+PovRCB1drljgnSWoLkVLTGj8Bi6YNprH7+yxl/KcosNnA7Yh6pA==
-X-Received: by 2002:a2e:b1c9:0:b0:2dc:d2c5:ec8 with SMTP id
- e9-20020a2eb1c9000000b002dcd2c50ec8mr1045244lja.39.1713947873789; 
- Wed, 24 Apr 2024 01:37:53 -0700 (PDT)
+ bh=hgALXVVjSwrwkltp36vxTj/9Vt2I0zuQY7MS0AYLINY=;
+ b=VAJaKPaTWNbvO+SK3vCN6LtD10rUeNIR7sNyT/Krf74szJMw2lhq64D85RzHOQieEq
+ x54GTGil6wwu9lip5I/WaV9TOVnn/vQvqO9gvrHeKluHLzbAmSl+sgeAvi+iTb9ww58V
+ j7ef92x4EhBT/FhVceJFZ83LtANZk1pxQg5Um14UQI9gvU96uSsgDW00jMr9nAIa9NrF
+ lmfGwYI5X5Mo6cApXMLaYQnCW0fGTF3mBl/ebfBrLqdjLVxL9prWmxxj+TVrF/xt5JSg
+ pK4fxb33t291TN6Gwj9m8lrWGFgMrnQCIYArrcFJcwXcd7iX1VyjuiCDaol9yuvLxhHU
+ wvLg==
+X-Gm-Message-State: AOJu0YzPt4omyDuXrsSZb+p+xdIwhv5wGyVcQTWsF7jtPlDytVaXI1s3
+ q0Xx6RvAvRe/CMe0f4TUQvw3jSMzKJwQAS3VaG1D2DQwtpiyzE39+SynRTdYGMc633h4nFhM+YD
+ H9o8=
+X-Google-Smtp-Source: AGHT+IFGGUjcXtTbSvmHJI3W3WMfezNhujiPDvoOgb9zuZeXiNi2p4HFanqj3lYJGIMy6tpigPWTGw==
+X-Received: by 2002:a2e:8507:0:b0:2d8:394c:6e7e with SMTP id
+ j7-20020a2e8507000000b002d8394c6e7emr995796lji.15.1713948284501; 
+ Wed, 24 Apr 2024 01:44:44 -0700 (PDT)
 Received: from [192.168.1.102] (mon75-h03-176-184-51-42.dsl.sta.abo.bbox.fr.
  [176.184.51.42]) by smtp.gmail.com with ESMTPSA id
- n5-20020a05600c3b8500b0041a3b5ed993sm11238581wms.25.2024.04.24.01.37.52
+ n5-20020a05600c3b8500b0041a3b5ed993sm11257643wms.25.2024.04.24.01.44.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Apr 2024 01:37:53 -0700 (PDT)
-Message-ID: <19eadc84-1038-44b6-af2f-61abe9a18b45@linaro.org>
-Date: Wed, 24 Apr 2024 10:37:52 +0200
+ Wed, 24 Apr 2024 01:44:44 -0700 (PDT)
+Message-ID: <17f53dbd-4eed-4375-a5e4-b00a3b2a48e5@linaro.org>
+Date: Wed, 24 Apr 2024 10:44:42 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] .gitlab-ci.d/cirrus.yml: Fix the NetBSD and OpenBSD
- Cirrus-CI KVM jobs
-To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20240424074202.245646-1-thuth@redhat.com>
+Subject: Re: [PATCH v4 00/22] hw/i386: Remove deprecated pc-i440fx-2.0 -> 2.3
+ machines
+To: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-riscv@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ kvm@vger.kernel.org, qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20240416185939.37984-1-philmd@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240424074202.245646-1-thuth@redhat.com>
+In-Reply-To: <20240416185939.37984-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x233.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,25 +98,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/4/24 09:42, Thomas Huth wrote:
-> Pulling the "master" libvirt-ci containers does not work anymore,
-> so we have to switch to the "latest" instead. See also:
-> https://gitlab.com/libvirt/libvirt/-/commit/5d591421220c850aa64a640
-> https://gitlab.com/libvirt/libvirt-ci/-/commit/6e3c5ccac77714be70c0
-> 
-> The effects were dormant for a year as the old ':master' tags were
-> not removed until some weeks ago.
-> 
-> The other Cirrus-CI jobs were already fixed in commit 1d2f2b35bc86b7a1
-> ("gitlab-ci/cirrus: switch from 'master' to 'latest'"), but apparently
-> nobody noticed the KVM jobs so far that need to be triggered manually.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   .gitlab-ci.d/cirrus.yml | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+Hi,
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Michael, I expect this series to go via your maintainer tree :)
 
+Thanks,
 
+Phil.
+
+On 16/4/24 20:59, Philippe Mathieu-Daudé wrote:
+> Series fully reviewed.
+
+> Philippe Mathieu-Daudé (22):
+>    hw/i386/pc: Deprecate 2.4 to 2.12 pc-i440fx machines
+>    hw/i386/pc: Remove deprecated pc-i440fx-2.0 machine
+>    hw/usb/hcd-xhci: Remove XHCI_FLAG_FORCE_PCIE_ENDCAP flag
+>    hw/usb/hcd-xhci: Remove XHCI_FLAG_SS_FIRST flag
+>    hw/i386/acpi: Remove PCMachineClass::legacy_acpi_table_size
+>    hw/acpi/ich9: Remove 'memory-hotplug-support' property
+>    hw/acpi/ich9: Remove dead code related to 'acpi_memory_hotplug'
+>    hw/i386/pc: Remove deprecated pc-i440fx-2.1 machine
+>    target/i386/kvm: Remove x86_cpu_change_kvm_default() and 'kvm-cpu.h'
+>    hw/i386/pc: Remove PCMachineClass::smbios_uuid_encoded
+>    hw/smbios: Remove 'uuid_encoded' argument from smbios_set_defaults()
+>    hw/smbios: Remove 'smbios_uuid_encoded', simplify smbios_encode_uuid()
+>    hw/i386/pc: Remove PCMachineClass::enforce_aligned_dimm
+>    hw/mem/pc-dimm: Remove legacy_align argument from pc_dimm_pre_plug()
+>    hw/mem/memory-device: Remove legacy_align from
+>      memory_device_pre_plug()
+>    hw/i386/pc: Remove deprecated pc-i440fx-2.2 machine
+>    hw/i386/pc: Remove PCMachineClass::resizable_acpi_blob
+>    hw/i386/pc: Remove PCMachineClass::rsdp_in_ram
+>    hw/i386/acpi: Remove AcpiBuildState::rsdp field
+>    hw/i386/pc: Remove deprecated pc-i440fx-2.3 machine
+>    target/i386: Remove X86CPU::kvm_no_smi_migration field
+>    hw/i386/pc: Replace PCMachineClass::acpi_data_size by
+>      PC_ACPI_DATA_SIZE
 
