@@ -4,137 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8A94C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 00:09:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B5C9C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 00:14:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzQCJ-0006dO-Vd; Tue, 23 Apr 2024 20:09:16 -0400
+	id 1rzQH5-00087Q-Kh; Tue, 23 Apr 2024 20:14:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1rzQCG-0006X4-Ee
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 20:09:12 -0400
-Received: from mail-dm6nam12on20600.outbound.protection.outlook.com
- ([2a01:111:f403:2417::600]
- helo=NAM12-DM6-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1rzQCC-00044E-2c
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 20:09:12 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=gP7PUEE+mCGXW8GCFZ/FjKR5qFKosUbQyzGk6txKadQpVMNgtTc3/gDJuTJaSLkpXlq1urbYYH5zYo/nYdPXzsuwotWq1EJppH7v04SoWatuBT10nIPvVwVP7Uwbc31D5rxRRSK3Ko/utQwJsKBnOTqw2RgwHR3O1QgVfFNorNJGq8gPfC2kLApgocFPftrlCFEIPz8RxyH1SlyYAl+XDisbFSC5uSwJZwHlK30uWeIGeW9sTmeMi+pQEb0pRjcabRVm0EMg76V+9qTzGBD69ktgJPvHJLArma6VknNdUB9gd4MTDrZ4H0T4d9+jil6sj7940cnD5qdc3yXZQykZvQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SFj4VLXpPGAxeno9p5TXvZBa1bZ69tJHoOuMFF09Igg=;
- b=RXtvaxm8RC08uorjgn+w6qInFm0dHJiqhXtblXYLClhIWqKiz3Umky1gXMIEAzDGZ4KX/MgZBxi4fqN0XoyVb8r7c9ZpsJLEmRTA8fkTd6oCcrOMmKEY4kYNNex2Sll4Zr0ZNWDqpV8RdGAOu4n8W2jN4JT58AUGS79h1PqZPHxi+3HxMu+RC0H+xSt8j10aAxWPYOmswkyxeaQMQDieuwFRYZKr2bZExC5ofgoyAKR+giVHHeKkVltQwTkzmfQGJAbowyMGwgMMvycZNBfUzV2Fr7va1UeJqVwlBj0NDhduuVE5H/qL2SeQA5BjQCQf6quyJ2aT2yxWtFTsNbYM4g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=intel.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SFj4VLXpPGAxeno9p5TXvZBa1bZ69tJHoOuMFF09Igg=;
- b=xIieUONvv8wGODQSJaQEnexTErGfT58WbEyw3s7Q5GmDHRgDCYyXpm8THRH437tH08WGKA3dRyAAKJdcbKF89XUJ+lvL+5qAXHgDfr4l21sYpnkGHwNsSmIB9K+Jo5IOA55TwUoKmn1+CTRnOVsqwl373cBX7A4Tw1Shy5saZwg=
-Received: from DM6PR11CA0065.namprd11.prod.outlook.com (2603:10b6:5:14c::42)
- by LV3PR12MB9355.namprd12.prod.outlook.com (2603:10b6:408:216::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7472.44; Wed, 24 Apr
- 2024 00:09:01 +0000
-Received: from DS3PEPF0000C37E.namprd04.prod.outlook.com
- (2603:10b6:5:14c:cafe::50) by DM6PR11CA0065.outlook.office365.com
- (2603:10b6:5:14c::42) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7495.34 via Frontend
- Transport; Wed, 24 Apr 2024 00:09:01 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- DS3PEPF0000C37E.mail.protection.outlook.com (10.167.23.8) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7519.19 via Frontend Transport; Wed, 24 Apr 2024 00:09:01 +0000
-Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 23 Apr
- 2024 19:08:52 -0500
-Date: Tue, 23 Apr 2024 19:08:38 -0500
-From: Michael Roth <michael.roth@amd.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-CC: Isaku Yamahata <isaku.yamahata@intel.com>, <qemu-devel@nongnu.org>,
- <kvm@vger.kernel.org>, Tom Lendacky <thomas.lendacky@amd.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?=
- <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>, Pankaj Gupta
- <pankaj.gupta@amd.com>, Isaku Yamahata <isaku.yamahata@linux.intel.com>
-Subject: Re: [PATCH v3 48/49] hw/i386/sev: Use guest_memfd for legacy ROMs
-Message-ID: <20240424000838.menxh32bnvnyvfz4@amd.com>
-References: <20240320083945.991426-1-michael.roth@amd.com>
- <20240320083945.991426-49-michael.roth@amd.com>
- <20240320181223.GG1994522@ls.amr.corp.intel.com>
- <61462f83-1406-48ea-8f1a-fae848ff1443@intel.com>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rzQH2-000872-Ma; Tue, 23 Apr 2024 20:14:08 -0400
+Received: from mail-ua1-x92b.google.com ([2607:f8b0:4864:20::92b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rzQH0-0004xC-W1; Tue, 23 Apr 2024 20:14:08 -0400
+Received: by mail-ua1-x92b.google.com with SMTP id
+ a1e0cc1a2514c-7eb89aa9176so1876119241.3; 
+ Tue, 23 Apr 2024 17:14:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1713917641; x=1714522441; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Bqux2F1GZ9uFOQ6wr08fmB0cKm4rga5TZUBfcEt/pTM=;
+ b=OIxaxR044qPP3MBC5b10sl2Znyi35142kFbgUR64I98kPcr98TWig9xSEsArUZ5gcN
+ jO2CYR6+fyGK6Kva5BVa608YVqiEAY2BuvA2ERBdopUSjuAWR+/BaqDa2OI6OPQXAVyW
+ 0msLd+PfoMZZLFDauvwAREoxi9IWHbRvcWgu8Nk5eOwDLN80YA9+gWGEjQ7mvC+8FeTl
+ 3sg4xWhuqhqFDNEJ5H1elQ2pEtXSWYm3rI2kFMFYHFuqLmlD5zu8fNrRTsDwvtFy25R5
+ 0j1w1CEnH8C3HAPEUN/KIczJC+ylRRjU1gvkuEXpInyXyhTkx58TXQm9x3xHgWSfrtYu
+ VjqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713917641; x=1714522441;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Bqux2F1GZ9uFOQ6wr08fmB0cKm4rga5TZUBfcEt/pTM=;
+ b=ERJ9WgKlFAL68e/4W6r2n1+pfICsw6JkhmXYIoOzNSwJQupASaNtx0H0wRqwqDq77T
+ m9+olo5xPg0IX00CoOZSghzw9EoZcES9ktKhqDkbWAMQAy8jnJxuC+TK5t4tFzShoIaQ
+ thIz3V50bwdoM5SwEQ7mq4G+GxbnctpgtrLN2KK+qSFCIVadvY8lJcqk0ZznhYnWez0v
+ DSVK6LBLjsXsRKbIxUhBmddNBOd4onSaFKt2XIV3vZgAiJtoQAd86M9PEWasDrS0f4MF
+ hG+lIl9L774eJ1shobZ4KnaWInPnHcFhEYWqHxpsrtSiDkZOYB7LpW+xuDW81M35fRub
+ EtqA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVSz7TmxUoUGxRbVd3sRdKo0XZrPODHiMj5XNDKvvfuyJ8yAQDMO4pcZm/kUF9YcaRmafZrZnWeH1stabfXUxLzWnM/QG0=
+X-Gm-Message-State: AOJu0Yy/gVo8D8l9eTmQ90nLhFPMQJPWGSsBRCgQVjaNaNSiqknUAn1T
+ 3ieKXHI/eOsn6K5aiV9Xvvk+WCwsUNdnkrcXPxo7T4Pvfsw7bCPIU+jIUQg6r+zBJkQ7WR2b7sn
+ 7fWM9YD/Zwfee6mP9yMoAjeqfwtVcA/V+VOg=
+X-Google-Smtp-Source: AGHT+IGMYdKNzgEndLXYzaR9CjeGefEYs3SAXBgzbawvIEdyZ6B8UTsDCYa45izD1Q1jsO7sf/O3L6+QPc4kxr3pdVY=
+X-Received: by 2002:a05:6102:26c9:b0:47b:d34f:a4ca with SMTP id
+ m9-20020a05610226c900b0047bd34fa4camr1342382vss.30.1713917640817; Tue, 23 Apr
+ 2024 17:14:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <61462f83-1406-48ea-8f1a-fae848ff1443@intel.com>
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS3PEPF0000C37E:EE_|LV3PR12MB9355:EE_
-X-MS-Office365-Filtering-Correlation-Id: 53312bda-ed0b-41f3-93dd-08dc63f2beed
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?T2oFQbR+HA6sTXibzfJrb9Fn8FkVVPDXPcjAm4C1poYi8InzzGtb3uXC40+4?=
- =?us-ascii?Q?VgsyeevypAaMIeVEXSgXLWzTp2BTL+RXkhm125hApogWMiTzB0cHjrpAaIhy?=
- =?us-ascii?Q?ftzEBVyV4aXynhNROS2bK9jnJNkPTZ+mFfJojQSlcm5V+YPWUyXCcF53+WsO?=
- =?us-ascii?Q?lPSKSf6umoqQD2EoAEY/glNntReEbq9im+bsffb5zI22xaXfnXJ0zQEQta5r?=
- =?us-ascii?Q?qcF6jnuRj4GX8tIncJUHjliXEl0sfR33oEaFUjRbWaKd4TFTzY4pkq7YrUFI?=
- =?us-ascii?Q?WbC/ZFLQXEH0tqU2NNHrVmTYjATu/a7eHRQbO2SUoj2ga2R3Ll2u2AmOn6eX?=
- =?us-ascii?Q?jyEt0CzyuJTPNdBPMXxgPI/lua3FRFSW/tpsw5zQVCMKLX6RdPSqv7n9hZ+5?=
- =?us-ascii?Q?cBUIwsyZx5WfaUqfmXPuHfwhfZxIKcEJzY1dPjTsakJkLX14SvOgXa4aB1GB?=
- =?us-ascii?Q?SFwMptuGCs9ES5iBDGGQia3h4QcMpT0R280R10I1/pd1ZtI6mfmH0SkN8njY?=
- =?us-ascii?Q?9oyWWvVEaq6bzDuvw/D/AZqqSp5mzsBNrCA1GBqInmQgOAneq2HkgqwfJJaE?=
- =?us-ascii?Q?mbs0yIweqTwAxh7VAxaEc5d5c77NsRWUsU4mlC9YxNpOmuc/DbL+vdKdmonZ?=
- =?us-ascii?Q?cT4z9VK3fWfLnx2Icd9vyhn/PY5pGwpTMYJUNVLg3J1ke4L+9FSdtA0R7SDV?=
- =?us-ascii?Q?vL4vaxklAYS4R9R8AvT0aY3zuOtCBkGyB55LUlspXW779dzNEzdUdhMmLMg7?=
- =?us-ascii?Q?36q2nF9vB7heuepF11cFl1jNlFly/CAEXI1JjnLDLQlvxRLxRTZvGnxGUV7N?=
- =?us-ascii?Q?E8FRCnfvjkD12b6j3GjtvHR9B3zcreJncGD5joBIm8gMzssYuLeO+L5yQ9HC?=
- =?us-ascii?Q?s/3dp6BvWhpL7S5GaSUkkihd3i88AeM28/RY4cRdUdQYPZlIGB8Trf5V3aWm?=
- =?us-ascii?Q?dKT/nq4tqQ89V5ICiVb6MyPqU52Fk5OHUyClgZgdcXNV6zioPZwCgaPWgoey?=
- =?us-ascii?Q?GkL8AaT+p6H9Wb6tfUTxLkx2k7nik9VGlopJ42QutmieFNJwUawo+FgiPWvG?=
- =?us-ascii?Q?JJYR7FEsWSUaoe1WR05J9WERg8q8TaefvGQnJpQfNYK9FBWixZPyzhe7h3L5?=
- =?us-ascii?Q?6RLzWMs9hA5ugdbv1altwgkuI3rR08AAVfFdKvVSyuqXFyzjzGGk1OUxsL+q?=
- =?us-ascii?Q?wwRxWorq6ht758wQiVPYlKufLjSCLmtI9XQ25Xe+UsL3Z7q/sdDvP/mQSR7u?=
- =?us-ascii?Q?5+CZUD+OQEMMHd344kIPd0LpRLjgTc36Z09/+EoRT9hbLoKBxXi0QUmpnDDz?=
- =?us-ascii?Q?Q35pauBxMetDJwJ9mqyMxIGb?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230031)(376005)(1800799015)(36860700004)(82310400014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Apr 2024 00:09:01.4994 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 53312bda-ed0b-41f3-93dd-08dc63f2beed
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: DS3PEPF0000C37E.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9355
-Received-SPF: permerror client-ip=2a01:111:f403:2417::600;
- envelope-from=Michael.Roth@amd.com;
- helo=NAM12-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.67,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240422134605.534207-2-ajones@ventanamicro.com>
+In-Reply-To: <20240422134605.534207-2-ajones@ventanamicro.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 24 Apr 2024 10:13:34 +1000
+Message-ID: <CAKmqyKNX=gnWgTBDp60W_iZk3aEfcNbvfhB+N6ZoWvkQdwxgkg@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv/kvm: Fix exposure of Zkr
+To: Andrew Jones <ajones@ventanamicro.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
+ kvm-riscv@lists.infradead.org, palmer@dabbelt.com, alistair.francis@wdc.com, 
+ bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com, 
+ zhiwei_liu@linux.alibaba.com, apatel@ventanamicro.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92b;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,133 +93,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 28, 2024 at 08:45:03AM +0800, Xiaoyao Li wrote:
-> On 3/21/2024 2:12 AM, Isaku Yamahata wrote:
-> > On Wed, Mar 20, 2024 at 03:39:44AM -0500,
-> > Michael Roth <michael.roth@amd.com> wrote:
-> > 
-> > > TODO: make this SNP-specific if TDX disables legacy ROMs in general
-> > 
-> > TDX disables pc.rom, not disable isa-bios. IIRC, TDX doesn't need pc pflash.
-> 
-> Not TDX doesn't need pc pflash, but TDX cannot support pflash.
-> 
-> Can SNP support the behavior of pflash? That what's got changed will be
-> synced back to OVMF file?
+On Mon, Apr 22, 2024 at 11:47=E2=80=AFPM Andrew Jones <ajones@ventanamicro.=
+com> wrote:
+>
+> The Zkr extension may only be exposed to KVM guests if the VMM
+> implements the SEED CSR. Use the same implementation as TCG.
+>
+> Without this patch, running with a KVM which does not forward the
+> SEED CSR access to QEMU will result in an ILL exception being
+> injected into the guest (this results in Linux guests crashing on
+> boot). And, when running with a KVM which does forward the access,
+> QEMU will crash, since QEMU doesn't know what to do with the exit.
+>
+> Fixes: 3108e2f1c69d ("target/riscv/kvm: update KVM exts to Linux 6.8")
+> Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
 
-For split OVMF files (separate FD for CODE vs. VARS) it can, but it
-requires special handling in OVMF to handle MMIO to the VARS area using
-direct MMIO hypercalls rather than relying on MMIO emulation. Here's the
-relevant OVMF commit:
+Thanks!
 
-  commit 437eb3f7a8db7681afe0e6064d3a8edb12abb766
-  Author: Tom Lendacky <thomas.lendacky@amd.com>
-  Date:   Wed Aug 12 15:21:42 2020 -0500
+Applied to riscv-to-apply.next
 
-      OvmfPkg/QemuFlashFvbServicesRuntimeDxe: Bypass flash detection with SEV-ES
+Alistair
 
-      BZ: https://bugzilla.tianocore.org/show_bug.cgi?id=2198
-
-For SNP, the plan is to continue to use -bios to handle the actual
-CODE/BIOS FD, but to allow the use of pflash,unit=0 to handle the VARS
-fd if a separate/persistent store is desired. This allows us to continue
-using read-only memslots on the VARS/pflash side without being at odds
-with the fact that read-only memslots are no longer supported for private
-memslots (since VARS doesn't need to be measured/mapped as private), and
-limiting the special handling to -bios where TDX/SNP both need private
-memslots.
-
-This is roughly how things will look with v4 of this series:
-
-  https://github.com/AMDESE/qemu/commit/21fff075372ad25b2d09c5e416349c2b353fdb4c
-
-I think (if needed) TDX could in theory take a similar approach with
-similar modifications to OVMF and providing an option for a split CODE/VARS
-variant.
-
--Mike
-
-> 
-> > Xiaoyao can chime in.
-> > 
-> > Thanks,
-> > 
-> > > 
-> > > Current SNP guest kernels will attempt to access these regions with
-> > > with C-bit set, so guest_memfd is needed to handle that. Otherwise,
-> > > kvm_convert_memory() will fail when the guest kernel tries to access it
-> > > and QEMU attempts to call KVM_SET_MEMORY_ATTRIBUTES to set these ranges
-> > > to private.
-> > > 
-> > > Whether guests should actually try to access ROM regions in this way (or
-> > > need to deal with legacy ROM regions at all), is a separate issue to be
-> > > addressed on kernel side, but current SNP guest kernels will exhibit
-> > > this behavior and so this handling is needed to allow QEMU to continue
-> > > running existing SNP guest kernels.
-> > > 
-> > > Signed-off-by: Michael Roth <michael.roth@amd.com>
-> > > ---
-> > >   hw/i386/pc.c       | 13 +++++++++----
-> > >   hw/i386/pc_sysfw.c | 13 ++++++++++---
-> > >   2 files changed, 19 insertions(+), 7 deletions(-)
-> > > 
-> > > diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> > > index feb7a93083..5feaeb43ee 100644
-> > > --- a/hw/i386/pc.c
-> > > +++ b/hw/i386/pc.c
-> > > @@ -1011,10 +1011,15 @@ void pc_memory_init(PCMachineState *pcms,
-> > >       pc_system_firmware_init(pcms, rom_memory);
-> > >       option_rom_mr = g_malloc(sizeof(*option_rom_mr));
-> > > -    memory_region_init_ram(option_rom_mr, NULL, "pc.rom", PC_ROM_SIZE,
-> > > -                           &error_fatal);
-> > > -    if (pcmc->pci_enabled) {
-> > > -        memory_region_set_readonly(option_rom_mr, true);
-> > > +    if (machine_require_guest_memfd(machine)) {
-> > > +        memory_region_init_ram_guest_memfd(option_rom_mr, NULL, "pc.rom",
-> > > +                                           PC_ROM_SIZE, &error_fatal);
-> > > +    } else {
-> > > +        memory_region_init_ram(option_rom_mr, NULL, "pc.rom", PC_ROM_SIZE,
-> > > +                               &error_fatal);
-> > > +        if (pcmc->pci_enabled) {
-> > > +            memory_region_set_readonly(option_rom_mr, true);
-> > > +        }
-> > >       }
-> > >       memory_region_add_subregion_overlap(rom_memory,
-> > >                                           PC_ROM_MIN_VGA,
-> > > diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
-> > > index 9dbb3f7337..850f86edd4 100644
-> > > --- a/hw/i386/pc_sysfw.c
-> > > +++ b/hw/i386/pc_sysfw.c
-> > > @@ -54,8 +54,13 @@ static void pc_isa_bios_init(MemoryRegion *rom_memory,
-> > >       /* map the last 128KB of the BIOS in ISA space */
-> > >       isa_bios_size = MIN(flash_size, 128 * KiB);
-> > >       isa_bios = g_malloc(sizeof(*isa_bios));
-> > > -    memory_region_init_ram(isa_bios, NULL, "isa-bios", isa_bios_size,
-> > > -                           &error_fatal);
-> > > +    if (machine_require_guest_memfd(current_machine)) {
-> > > +        memory_region_init_ram_guest_memfd(isa_bios, NULL, "isa-bios",
-> > > +                                           isa_bios_size, &error_fatal);
-> > > +    } else {
-> > > +        memory_region_init_ram(isa_bios, NULL, "isa-bios", isa_bios_size,
-> > > +                               &error_fatal);
-> > > +    }
-> > >       memory_region_add_subregion_overlap(rom_memory,
-> > >                                           0x100000 - isa_bios_size,
-> > >                                           isa_bios,
-> > > @@ -68,7 +73,9 @@ static void pc_isa_bios_init(MemoryRegion *rom_memory,
-> > >              ((uint8_t*)flash_ptr) + (flash_size - isa_bios_size),
-> > >              isa_bios_size);
-> > > -    memory_region_set_readonly(isa_bios, true);
-> > > +    if (!machine_require_guest_memfd(current_machine)) {
-> > > +        memory_region_set_readonly(isa_bios, true);
-> > > +    }
-> > >   }
-> > >   static PFlashCFI01 *pc_pflash_create(PCMachineState *pcms,
-> > > -- 
-> > > 2.25.1
-> > > 
-> > > 
-> > 
-> 
-> 
+> ---
+>  target/riscv/cpu.h         |  3 +++
+>  target/riscv/csr.c         | 18 ++++++++++++++----
+>  target/riscv/kvm/kvm-cpu.c | 25 +++++++++++++++++++++++++
+>  3 files changed, 42 insertions(+), 4 deletions(-)
+>
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 3b1a02b9449a..52fb8c15d08f 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -821,6 +821,9 @@ void riscv_set_csr_ops(int csrno, riscv_csr_operation=
+s *ops);
+>
+>  void riscv_cpu_register_gdb_regs_for_features(CPUState *cs);
+>
+> +target_ulong riscv_new_csr_seed(target_ulong new_value,
+> +                                target_ulong write_mask);
+> +
+>  uint8_t satp_mode_max_from_map(uint32_t map);
+>  const char *satp_mode_str(uint8_t satp_mode, bool is_32_bit);
+>
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index 726096444fae..829d8346ed4e 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -4267,10 +4267,8 @@ static RISCVException write_upmbase(CPURISCVState =
+*env, int csrno,
+>  #endif
+>
+>  /* Crypto Extension */
+> -static RISCVException rmw_seed(CPURISCVState *env, int csrno,
+> -                               target_ulong *ret_value,
+> -                               target_ulong new_value,
+> -                               target_ulong write_mask)
+> +target_ulong riscv_new_csr_seed(target_ulong new_value,
+> +                                target_ulong write_mask)
+>  {
+>      uint16_t random_v;
+>      Error *random_e =3D NULL;
+> @@ -4294,6 +4292,18 @@ static RISCVException rmw_seed(CPURISCVState *env,=
+ int csrno,
+>          rval =3D random_v | SEED_OPST_ES16;
+>      }
+>
+> +    return rval;
+> +}
+> +
+> +static RISCVException rmw_seed(CPURISCVState *env, int csrno,
+> +                               target_ulong *ret_value,
+> +                               target_ulong new_value,
+> +                               target_ulong write_mask)
+> +{
+> +    target_ulong rval;
+> +
+> +    rval =3D riscv_new_csr_seed(new_value, write_mask);
+> +
+>      if (ret_value) {
+>          *ret_value =3D rval;
+>      }
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index 6a6c6cae80f1..50bdbd24a878 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -1418,6 +1418,28 @@ static int kvm_riscv_handle_sbi(CPUState *cs, stru=
+ct kvm_run *run)
+>      return ret;
+>  }
+>
+> +static int kvm_riscv_handle_csr(CPUState *cs, struct kvm_run *run)
+> +{
+> +    target_ulong csr_num =3D run->riscv_csr.csr_num;
+> +    target_ulong new_value =3D run->riscv_csr.new_value;
+> +    target_ulong write_mask =3D run->riscv_csr.write_mask;
+> +    int ret =3D 0;
+> +
+> +    switch (csr_num) {
+> +    case CSR_SEED:
+> +        run->riscv_csr.ret_value =3D riscv_new_csr_seed(new_value, write=
+_mask);
+> +        break;
+> +    default:
+> +        qemu_log_mask(LOG_UNIMP,
+> +                      "%s: un-handled CSR EXIT for CSR %lx\n",
+> +                      __func__, csr_num);
+> +        ret =3D -1;
+> +        break;
+> +    }
+> +
+> +    return ret;
+> +}
+> +
+>  int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
+>  {
+>      int ret =3D 0;
+> @@ -1425,6 +1447,9 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_r=
+un *run)
+>      case KVM_EXIT_RISCV_SBI:
+>          ret =3D kvm_riscv_handle_sbi(cs, run);
+>          break;
+> +    case KVM_EXIT_RISCV_CSR:
+> +        ret =3D kvm_riscv_handle_csr(cs, run);
+> +        break;
+>      default:
+>          qemu_log_mask(LOG_UNIMP, "%s: un-handled exit reason %d\n",
+>                        __func__, run->exit_reason);
+> --
+> 2.44.0
+>
+>
 
