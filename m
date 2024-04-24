@@ -4,68 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 397D4C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 11:17:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64524C07E8E
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 11:49:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzacI-0002qc-Po; Wed, 24 Apr 2024 07:16:46 -0400
+	id 1rzakn-0005Vd-ER; Wed, 24 Apr 2024 07:25:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rzacB-0002pS-3p
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 07:16:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1rzakm-0005VV-6d
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 07:25:32 -0400
+Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rzac9-0006wG-0K
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 07:16:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713957395;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jYmO/M9Ur/Qfkgn9LUApbJZOelOP5x9iOICHoNUu/8w=;
- b=WnB0l1YJ1df5tdAVhVq0n6/mvjOswssWZfHVqRm/Q/FKunLbhpVGyGRFzRwEf/eLcQbWEy
- 9Vpbifd/sAm0NTipDheqrwHcsWvpCk30zQVuDEIWd3NwNb+4A1shnHcPMMg7efg+HLZNh0
- h12iyLgdH/C0UJjEZHK3rd3jaYPOxTg=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-633-kBUq7rhJMLiaNw4t81ocNg-1; Wed, 24 Apr 2024 07:16:32 -0400
-X-MC-Unique: kBUq7rhJMLiaNw4t81ocNg-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id CD63F104B503;
- Wed, 24 Apr 2024 11:16:31 +0000 (UTC)
-Received: from dobby.home.kraxel.org (unknown [10.39.192.254])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 8CE99EC682;
- Wed, 24 Apr 2024 11:16:31 +0000 (UTC)
-Received: by dobby.home.kraxel.org (Postfix, from userid 1000)
- id 168D6F6235; Wed, 24 Apr 2024 13:16:30 +0200 (CEST)
-Date: Wed, 24 Apr 2024 13:16:30 +0200
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: Alan Stern <stern@rowland.harvard.edu>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-usb@vger.kernel.org,
- qemu-devel@nongnu.org
-Subject: Re: Problems (timeouts) when testing usb-ohci with qemu
-Message-ID: <edfmff7qm46edap6nz2ppvfhcw4jp6ahjltrv76jsiq5rhz5hw@v2lcbclpdsjt>
-References: <4664cf39-5dfe-4557-959d-149640ca36e1@roeck-us.net>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1rzakj-0000Y5-7B
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 07:25:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1713957929; x=1745493929;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=cz/dURFluKwGMZXjMxDdBntuez0U0bvZ+fpHCncB8GA=;
+ b=AXRbzIYgvulkP+sqgEFtTJEhvE7kw6tLXgr6yAWrrhsQ/daohuhhbQKn
+ 9BHuxz12XEg1pwRKELK1r17Sztcue8y32L3rn0/7uaYyQNyR01Odfzs+t
+ Xnm5zsCIQ9K6DI1Bpy/vZgvhf0DcNWnFAiqfqghpdiQHVCKUC3Pf5MFQ4
+ MAKFzDB3Z+zHQ0Y1HqZoUrS3V87ttpNYmdGNfmeLkh6ca86YxvuNjx1n1
+ 0ly23prx6CNm0gtesceAHedusQHCpWahsoF5QQsJcyKx76uqRjci7JaoP
+ Mv82AneF6Bco/D48C52WcGhcTIN3OAAW6MCk2ARqM8PxRD4qJWg355MxS g==;
+X-CSE-ConnectionGUID: fRINEXPXRsqNuFAzdcGY/g==
+X-CSE-MsgGUID: mlPNHHwjQK6R2AirxGdcGA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11053"; a="20277908"
+X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; d="scan'208";a="20277908"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 Apr 2024 04:25:26 -0700
+X-CSE-ConnectionGUID: A1HlO/p5Rzy5isTOYGkguQ==
+X-CSE-MsgGUID: 1CurQVV5QmO0dBuaqQk7ag==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; d="scan'208";a="29501052"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.242.48])
+ ([10.124.242.48])
+ by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 Apr 2024 04:25:23 -0700
+Message-ID: <1d81395a-93b4-4c63-b73d-7701f3e30666@intel.com>
+Date: Wed, 24 Apr 2024 19:25:19 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4664cf39-5dfe-4557-959d-149640ca36e1@roeck-us.net>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.668,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.1 1/7] target/i386/kvm: Add feature bit definitions
+ for KVM CPUID
+To: Zhao Liu <zhao1.liu@linux.intel.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, "Michael S . Tsirkin"
+ <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Tim Wiederhake <twiederh@redhat.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
+References: <20240329101954.3954987-1-zhao1.liu@linux.intel.com>
+ <20240329101954.3954987-2-zhao1.liu@linux.intel.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20240329101954.3954987-2-zhao1.liu@linux.intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.668,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,62 +91,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> qemu hack:
+On 3/29/2024 6:19 PM, Zhao Liu wrote:
+> From: Zhao Liu <zhao1.liu@intel.com>
 > 
->  hw/usb/hcd-ohci.c | 11 +++++++++++
->  hw/usb/hcd-ohci.h |  1 +
->  2 files changed, 12 insertions(+)
+> Add feature definiations for KVM_CPUID_FEATURES in CPUID (
+> CPUID[4000_0001].EAX and CPUID[4000_0001].EDX), to get rid of lots of
+> offset calculations.
 > 
-> diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
-> index fc8fc91a1d..99e52ad13a 100644
-> --- a/hw/usb/hcd-ohci.c
-> +++ b/hw/usb/hcd-ohci.c
-> @@ -267,6 +267,10 @@ static inline void ohci_intr_update(OHCIState *ohci)
->          (ohci->intr_status & ohci->intr))
->          level = 1;
->  
-> +    if (level && ohci->level)
-> +        qemu_set_irq(ohci->irq, 0);
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>   hw/i386/kvm/clock.c   |  5 ++---
+>   target/i386/cpu.h     | 23 +++++++++++++++++++++++
+>   target/i386/kvm/kvm.c | 28 ++++++++++++++--------------
+>   3 files changed, 39 insertions(+), 17 deletions(-)
+> 
+> diff --git a/hw/i386/kvm/clock.c b/hw/i386/kvm/clock.c
+> index 40aa9a32c32c..7c9752d5036f 100644
+> --- a/hw/i386/kvm/clock.c
+> +++ b/hw/i386/kvm/clock.c
+> @@ -27,7 +27,6 @@
+>   #include "qapi/error.h"
+>   
+>   #include <linux/kvm.h>
+> -#include "standard-headers/asm-x86/kvm_para.h"
+>   #include "qom/object.h"
+>   
+>   #define TYPE_KVM_CLOCK "kvmclock"
+> @@ -334,8 +333,8 @@ void kvmclock_create(bool create_always)
+>   
+>       assert(kvm_enabled());
+>       if (create_always ||
+> -        cpu->env.features[FEAT_KVM] & ((1ULL << KVM_FEATURE_CLOCKSOURCE) |
+> -                                       (1ULL << KVM_FEATURE_CLOCKSOURCE2))) {
+> +        cpu->env.features[FEAT_KVM] & (CPUID_FEAT_KVM_CLOCK |
+> +                                       CPUID_FEAT_KVM_CLOCK2)) {
+>           sysbus_create_simple(TYPE_KVM_CLOCK, -1, NULL);
+>       }
+>   }
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index 83e473584517..b1b8d11cb0fe 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -27,6 +27,7 @@
+>   #include "qapi/qapi-types-common.h"
+>   #include "qemu/cpu-float.h"
+>   #include "qemu/timer.h"
+> +#include "standard-headers/asm-x86/kvm_para.h"
+>   
+>   #define XEN_NR_VIRQS 24
+>   
+> @@ -951,6 +952,28 @@ uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
+>   /* Packets which contain IP payload have LIP values */
+>   #define CPUID_14_0_ECX_LIP              (1U << 31)
+>   
+> +/* (Old) KVM paravirtualized clocksource */
+> +#define CPUID_FEAT_KVM_CLOCK            (1U << KVM_FEATURE_CLOCKSOURCE)
+
+we can drop the _FEAT_, just name it as
+
+CPUID_KVM_CLOCK
+
+> +/* (New) KVM specific paravirtualized clocksource */
+> +#define CPUID_FEAT_KVM_CLOCK2           (1U << KVM_FEATURE_CLOCKSOURCE2)
+> +/* KVM asynchronous page fault */
+> +#define CPUID_FEAT_KVM_ASYNCPF          (1U << KVM_FEATURE_ASYNC_PF)
+> +/* KVM stolen (when guest vCPU is not running) time accounting */
+> +#define CPUID_FEAT_KVM_STEAL_TIME       (1U << KVM_FEATURE_STEAL_TIME)
+> +/* KVM paravirtualized end-of-interrupt signaling */
+> +#define CPUID_FEAT_KVM_PV_EOI           (1U << KVM_FEATURE_PV_EOI)
+> +/* KVM paravirtualized spinlocks support */
+> +#define CPUID_FEAT_KVM_PV_UNHALT        (1U << KVM_FEATURE_PV_UNHALT)
+> +/* KVM host-side polling on HLT control from the guest */
+> +#define CPUID_FEAT_KVM_POLL_CONTROL     (1U << KVM_FEATURE_POLL_CONTROL)
+> +/* KVM interrupt based asynchronous page fault*/
+> +#define CPUID_FEAT_KVM_ASYNCPF_INT      (1U << KVM_FEATURE_ASYNC_PF_INT)
+> +/* KVM 'Extended Destination ID' support for external interrupts */
+> +#define CPUID_FEAT_KVM_MSI_EXT_DEST_ID  (1U << KVM_FEATURE_MSI_EXT_DEST_ID)
 > +
-> +    ohci->level = level;
->      qemu_set_irq(ohci->irq, level);
->  }
->  
-> diff --git a/hw/usb/hcd-ohci.h b/hw/usb/hcd-ohci.h
-> index e1827227ac..6f82e72bd9 100644
-> --- a/hw/usb/hcd-ohci.h
-> +++ b/hw/usb/hcd-ohci.h
-> @@ -52,6 +52,7 @@ struct OHCIState {
->      uint32_t ctl, status;
->      uint32_t intr_status;
->      uint32_t intr;
-> +    int level;
->  
->      /* memory pointer partition */
->      uint32_t hcca;
-
-Phew.  Disclaimer: Havn't looked at the ohci emulation code for years.
-
-It should not be needed to store the interrupt level that way.  It is
-possible to calculate what the interrupt level should be, based on the
-interrupt status register and the interrupt mask register, and the code
-above seems to do exactly that (the "ohci->intr_status & ohci->intr"
-bit).
-
-ohci_intr_update() must be called if one of these two registers changes,
-i.e. if the guest changes the mask, if the guest acks an IRQ by clearing
-an status bit, if the device raises an IRQ by setting an status bit.
-Might be the ohci emulation has a bug here.
-
-Another possible trouble spot is that the timing behavior is different
-on virtual vs. physical hardware.  Specifically with the emulated
-hardware some actions appear to complete instantly (when the vmexit to
-handle the mmio register write returns it's finished already), which
-will never complete that quickly on physical hardware.  So drivers can
-have race conditions which only trigger on virtual hardware.  The error
-pattern you are describing sounds like this could be the case here.
-
-HTH & take care,
-  Gerd
+> +/* Hint to KVM that vCPUs expect never preempted for an unlimited time */
+> +#define CPUID_FEAT_KVM_HINTS_REALTIME    (1U << KVM_HINTS_REALTIME)
+> +
+>   /* CLZERO instruction */
+>   #define CPUID_8000_0008_EBX_CLZERO      (1U << 0)
+>   /* Always save/restore FP error pointers */
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index e68cbe929302..2f3c8bc3a4ed 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -481,13 +481,13 @@ uint32_t kvm_arch_get_supported_cpuid(KVMState *s, uint32_t function,
+>            * be enabled without the in-kernel irqchip
+>            */
+>           if (!kvm_irqchip_in_kernel()) {
+> -            ret &= ~(1U << KVM_FEATURE_PV_UNHALT);
+> +            ret &= ~CPUID_FEAT_KVM_PV_UNHALT;
+>           }
+>           if (kvm_irqchip_is_split()) {
+> -            ret |= 1U << KVM_FEATURE_MSI_EXT_DEST_ID;
+> +            ret |= CPUID_FEAT_KVM_MSI_EXT_DEST_ID;
+>           }
+>       } else if (function == KVM_CPUID_FEATURES && reg == R_EDX) {
+> -        ret |= 1U << KVM_HINTS_REALTIME;
+> +        ret |= CPUID_FEAT_KVM_HINTS_REALTIME;
+>       }
+>   
+>       return ret;
+> @@ -3324,20 +3324,20 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
+>           kvm_msr_entry_add(cpu, MSR_IA32_TSC, env->tsc);
+>           kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME, env->system_time_msr);
+>           kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK, env->wall_clock_msr);
+> -        if (env->features[FEAT_KVM] & (1 << KVM_FEATURE_ASYNC_PF_INT)) {
+> +        if (env->features[FEAT_KVM] & CPUID_FEAT_KVM_ASYNCPF_INT) {
+>               kvm_msr_entry_add(cpu, MSR_KVM_ASYNC_PF_INT, env->async_pf_int_msr);
+>           }
+> -        if (env->features[FEAT_KVM] & (1 << KVM_FEATURE_ASYNC_PF)) {
+> +        if (env->features[FEAT_KVM] & CPUID_FEAT_KVM_ASYNCPF) {
+>               kvm_msr_entry_add(cpu, MSR_KVM_ASYNC_PF_EN, env->async_pf_en_msr);
+>           }
+> -        if (env->features[FEAT_KVM] & (1 << KVM_FEATURE_PV_EOI)) {
+> +        if (env->features[FEAT_KVM] & CPUID_FEAT_KVM_PV_EOI) {
+>               kvm_msr_entry_add(cpu, MSR_KVM_PV_EOI_EN, env->pv_eoi_en_msr);
+>           }
+> -        if (env->features[FEAT_KVM] & (1 << KVM_FEATURE_STEAL_TIME)) {
+> +        if (env->features[FEAT_KVM] & CPUID_FEAT_KVM_STEAL_TIME) {
+>               kvm_msr_entry_add(cpu, MSR_KVM_STEAL_TIME, env->steal_time_msr);
+>           }
+>   
+> -        if (env->features[FEAT_KVM] & (1 << KVM_FEATURE_POLL_CONTROL)) {
+> +        if (env->features[FEAT_KVM] & CPUID_FEAT_KVM_POLL_CONTROL) {
+>               kvm_msr_entry_add(cpu, MSR_KVM_POLL_CONTROL, env->poll_control_msr);
+>           }
+>   
+> @@ -3789,19 +3789,19 @@ static int kvm_get_msrs(X86CPU *cpu)
+>   #endif
+>       kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME, 0);
+>       kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK, 0);
+> -    if (env->features[FEAT_KVM] & (1 << KVM_FEATURE_ASYNC_PF_INT)) {
+> +    if (env->features[FEAT_KVM] & CPUID_FEAT_KVM_ASYNCPF_INT) {
+>           kvm_msr_entry_add(cpu, MSR_KVM_ASYNC_PF_INT, 0);
+>       }
+> -    if (env->features[FEAT_KVM] & (1 << KVM_FEATURE_ASYNC_PF)) {
+> +    if (env->features[FEAT_KVM] & CPUID_FEAT_KVM_ASYNCPF) {
+>           kvm_msr_entry_add(cpu, MSR_KVM_ASYNC_PF_EN, 0);
+>       }
+> -    if (env->features[FEAT_KVM] & (1 << KVM_FEATURE_PV_EOI)) {
+> +    if (env->features[FEAT_KVM] & CPUID_FEAT_KVM_PV_EOI) {
+>           kvm_msr_entry_add(cpu, MSR_KVM_PV_EOI_EN, 0);
+>       }
+> -    if (env->features[FEAT_KVM] & (1 << KVM_FEATURE_STEAL_TIME)) {
+> +    if (env->features[FEAT_KVM] & CPUID_FEAT_KVM_STEAL_TIME) {
+>           kvm_msr_entry_add(cpu, MSR_KVM_STEAL_TIME, 0);
+>       }
+> -    if (env->features[FEAT_KVM] & (1 << KVM_FEATURE_POLL_CONTROL)) {
+> +    if (env->features[FEAT_KVM] & CPUID_FEAT_KVM_POLL_CONTROL) {
+>           kvm_msr_entry_add(cpu, MSR_KVM_POLL_CONTROL, 1);
+>       }
+>       if (has_architectural_pmu_version > 0) {
+> @@ -5434,7 +5434,7 @@ uint64_t kvm_swizzle_msi_ext_dest_id(uint64_t address)
+>           return address;
+>       }
+>       env = &X86_CPU(first_cpu)->env;
+> -    if (!(env->features[FEAT_KVM] & (1 << KVM_FEATURE_MSI_EXT_DEST_ID))) {
+> +    if (!(env->features[FEAT_KVM] & CPUID_FEAT_KVM_MSI_EXT_DEST_ID)) {
+>           return address;
+>       }
+>   
 
 
