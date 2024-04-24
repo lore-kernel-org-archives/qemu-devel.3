@@ -4,72 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FA56C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 06:20:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64D20C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 06:51:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzVyo-0006I1-2F; Wed, 24 Apr 2024 02:19:42 -0400
+	id 1rzWSf-0003Az-N1; Wed, 24 Apr 2024 02:50:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzVyn-0006Go-BX
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 02:19:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzVyl-00033p-6N
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 02:19:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713939577;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=bsOflYf6wj8EJhMeT5A3h2oQmsjrNBlc38MKgUT1k8U=;
- b=DrVmHWSVXcawmqIw4xpOa4cbm0jx/MgH4ErW5je1UGptbIcVIBLrCSNwmYrJnl4fDY1d1U
- 0JC1Ne5Gi8pymeLfJIEwv9957URbl3BbXuicv5uMf8vqqZKu/EQyfU8HItWPDFse4B+ROG
- IRAAc5aiwmODi9kjKI84nePH/2K+gA4=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-679-IN1xE2AWMP65ZtXJLeM5cA-1; Wed, 24 Apr 2024 02:19:32 -0400
-X-MC-Unique: IN1xE2AWMP65ZtXJLeM5cA-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3DE3380B935;
- Wed, 24 Apr 2024 06:19:32 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 8AC1F200AE7F;
- Wed, 24 Apr 2024 06:19:31 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id AB7E321E6680; Wed, 24 Apr 2024 08:19:30 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Collin Walling <walling@linux.ibm.com>
-Cc: qemu-s390x@nongnu.org,  qemu-devel@nongnu.org,  thuth@redhat.com,
- david@redhat.com,  wangyanan55@huawei.com,  philmd@linaro.org,
- marcel.apfelbaum@gmail.com,  eduardo@habkost.net
-Subject: Re: [PATCH v2 1/3] cpu-models: add "disable-deprecated-feats"
- option to cpu model expansion
-In-Reply-To: <20240423210655.66656-2-walling@linux.ibm.com> (Collin Walling's
- message of "Tue, 23 Apr 2024 17:06:53 -0400")
-References: <20240423210655.66656-1-walling@linux.ibm.com>
- <20240423210655.66656-2-walling@linux.ibm.com>
-Date: Wed, 24 Apr 2024 08:19:30 +0200
-Message-ID: <87bk5z5ll9.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rzWSc-00039X-U7
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 02:50:30 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rzWSb-0008Nw-2m
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 02:50:30 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-5e42b4bbfa4so3834288a12.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 23:50:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1713941427; x=1714546227; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=REyADsEZG+58lfOSWOvHmqRtQE8gQLDYURoE9CStww4=;
+ b=YmvBBl0ON4SNU4yxcggkfpLdnOmih2RR+sTmorM0NMPG3826rWX30xtaG1ZzrKWXbb
+ NEi9gID7ilPIs7boxmC8CDF2VLoua0AyDyVi0XD8YWB+iwe4CJp8rbno5sl0+AOmsezy
+ QjeJdkXcXB0WMMI2a1zMoediMTtq4w3k3cuo36aLh4pTtM/3qMk48+wTx+XMn/H8RoWY
+ f/jGgRoTZf0i14JtWzdaraEG3t9dHkQbR+BdtqpSUn4MuG/RjPcctwmzgdSeZl2SN9Uz
+ LP3jDOa2l2dldL+c/24uxbbTbgy07edvXMBAbz6R2qwzwblwA6UJoby3SWyIRS6mD3t2
+ t9ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713941427; x=1714546227;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=REyADsEZG+58lfOSWOvHmqRtQE8gQLDYURoE9CStww4=;
+ b=j6FPUn4SndjfDgjmNpYsqEV/ZpGFdITWsrzIw96INLkNWNLJfRh0Jim8cfp25oKuvP
+ 0/CCy/5MhNO8ZfiNCCXaHbfze4YV6PEYnxUUPNpJ9KA3rPgMCL3TwcfR0wOdDk588iQg
+ y//xgw4IXLh9rhW5YiPMQnbuD5F+VHJxPerPQT50hzKSZh/Wv5Y3jei3L7bfC264SAiP
+ j5pdxW2h1kXcdnIX8KWiEjC/zY63sTadKFmc/51TpSjmMgAuF+PVtNLjcOGGaVsTITYB
+ nGkbABr32kn5iGbw0o88nBPmFnQ7x67L10eZ5VPZDk4TDMV/C6AD4MUSh1X/WGZbyUSI
+ JLtA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVe+QYiPxdqidDnUPOei6VEr9byKnTEfN8/6hecXz5rhyc31oRIYgGmjKCmljTa2j9IZEEV2vdnXqVk8cjW6+EQRIWb+cE=
+X-Gm-Message-State: AOJu0YwozjaOKLGelFIZAlSOwnt6SEl7RJ+zO/eF0CNQX13zZRCD+PE1
+ ktO1d8q0K4q9SKE303EWuSVr871kIDGGFh4jXb1Z4IA+xh1XuqTC49npbOW64r8=
+X-Google-Smtp-Source: AGHT+IGmJEa7r2cUb4tsxRPp9IMuon+5G5crGO/gVKncl219+r2f6PfKc42LEU3QT1PY5+IGW+bBqg==
+X-Received: by 2002:a05:6a20:564d:b0:1a3:bfce:ec9e with SMTP id
+ is13-20020a056a20564d00b001a3bfceec9emr1426715pzc.18.1713941426749; 
+ Tue, 23 Apr 2024 23:50:26 -0700 (PDT)
+Received: from [192.168.91.227] ([156.19.246.23])
+ by smtp.gmail.com with ESMTPSA id
+ r13-20020aa79ecd000000b006ed045af796sm10710183pfq.88.2024.04.23.23.50.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Apr 2024 23:50:26 -0700 (PDT)
+Message-ID: <61650624-a62b-4ef8-8ae7-b413f09411b8@linaro.org>
+Date: Tue, 23 Apr 2024 23:50:22 -0700
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/26] Migration 20240423 patches
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: Prasad Pandit <ppandit@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>
+References: <20240423223813.3237060-1-peterx@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240423223813.3237060-1-peterx@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.67,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,212 +98,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Collin Walling <walling@linux.ibm.com> writes:
+On 4/23/24 15:37, Peter Xu wrote:
+> The following changes since commit c25df57ae8f9fe1c72eee2dab37d76d904ac382e:
+> 
+>    Update version for 9.0.0 release (2024-04-23 14:19:21 +0100)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/peterx/qemu.git  tags/migration-20240423-pull-request
+> 
+> for you to fetch changes up to 2cc637f1ea08d2a1b19fc5b1a30bc609f948de93:
+> 
+>    migration/colo: Fix bdrv_graph_rdlock_main_loop: Assertion `!qemu_in_coroutine()' failed. (2024-04-23 18:36:01 -0400)
+> 
+> ----------------------------------------------------------------
+> Migration pull for 9.1
+> 
+> - Het's new test cases for "channels"
+> - Het's fix for a typo for vsock parsing
+> - Cedric's VFIO error report series
+> - Cedric's one more patch for dirty-bitmap error reports
+> - Zhijian's rdma deprecation patch
+> - Yuan's zeropage optimization to fix double faults on anon mem
+> - Zhijian's COLO fix on a crash
 
-> This optional parameter for query-cpu-model-expansion enables CPU
-> model features flagged as deprecated to appear in the resulting
-> list of properties.
->
-> This commit does not add support beyond adding a new argument
-> to the query. All queries with this option present will result
-> in an error claiming this option is not supported.
->
-> Signed-off-by: Collin Walling <walling@linux.ibm.com>
-> ---
->  qapi/machine-target.json         | 7 ++++++-
->  target/arm/arm-qmp-cmds.c        | 7 +++++++
->  target/i386/cpu-sysemu.c         | 7 +++++++
->  target/s390x/cpu_models_sysemu.c | 7 +++++++
->  4 files changed, 27 insertions(+), 1 deletion(-)
->
-> diff --git a/qapi/machine-target.json b/qapi/machine-target.json
-> index 29e695aa06..b9da284d2d 100644
-> --- a/qapi/machine-target.json
-> +++ b/qapi/machine-target.json
-> @@ -285,6 +285,10 @@
->  #
->  # @type: expansion type, specifying how to expand the CPU model
->  #
-> +# @disable-deprecated-feats: include CPU model features that are
-> +#     flagged as deprecated. If supported, these features will appear
-> +#     in the properties list paired with false.
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
-What's the default?
 
-Which command result(s) does this affect?  Suggest to explain using
-unabridged example QMP input and output before and after this series.
-
-We generally avoid abbreviations in QMP names.  Let's call this
-@disable-deprecated-features.
-
-Separate sentences with two spaces for consistency, please.
-
-> +#
->  # Returns: a CpuModelExpansionInfo describing the expanded CPU model
->  #
->  # Errors:
-> @@ -298,7 +302,8 @@
->  ##
->  { 'command': 'query-cpu-model-expansion',
->    'data': { 'type': 'CpuModelExpansionType',
-> -            'model': 'CpuModelInfo' },
-> +            'model': 'CpuModelInfo',
-> +            '*disable-deprecated-feats': 'bool' },
->    'returns': 'CpuModelExpansionInfo',
->    'if': { 'any': [ 'TARGET_S390X',
->                     'TARGET_I386',
-                      'TARGET_ARM',
-                      'TARGET_LOONGARCH64',
-                      'TARGET_RISCV' ] } }
-
-Put a pin into this conditional: [*].
-
-> diff --git a/target/arm/arm-qmp-cmds.c b/target/arm/arm-qmp-cmds.c
-> index 3cc8cc738b..1010d654e3 100644
-> --- a/target/arm/arm-qmp-cmds.c
-> +++ b/target/arm/arm-qmp-cmds.c
-> @@ -100,6 +100,8 @@ static const char *cpu_model_advertised_features[] = {
->  
->  CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
->                                                       CpuModelInfo *model,
-> +                                                     bool has_disable_deprecated_feats,
-> +                                                     bool disable_deprecated_feats,
->                                                       Error **errp)
->  {
->      CpuModelExpansionInfo *expansion_info;
-> @@ -110,6 +112,11 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
->      const char *name;
->      int i;
->  
-> +    if (has_disable_deprecated_feats) {
-> +        error_setg(&err, "Unsupported option 'disable-deprecated-feats'");
-> +        return NULL;
-> +    }
-
-Reject the new argument in the ARM version, ...
-
-> +
->      if (type != CPU_MODEL_EXPANSION_TYPE_FULL) {
->          error_setg(errp, "The requested expansion type is not supported");
->          return NULL;
-> diff --git a/target/i386/cpu-sysemu.c b/target/i386/cpu-sysemu.c
-> index 3f9093d285..c15786fb66 100644
-> --- a/target/i386/cpu-sysemu.c
-> +++ b/target/i386/cpu-sysemu.c
-> @@ -196,6 +196,8 @@ out:
->  CpuModelExpansionInfo *
->  qmp_query_cpu_model_expansion(CpuModelExpansionType type,
->                                                        CpuModelInfo *model,
-> +                                                      bool has_disable_deprecated_feats,
-> +                                                      bool disable_deprecated_feats,
->                                                        Error **errp)
->  {
->      X86CPU *xc = NULL;
-> @@ -204,6 +206,11 @@ qmp_query_cpu_model_expansion(CpuModelExpansionType type,
->      QDict *props = NULL;
->      const char *base_name;
->  
-> +    if (has_disable_deprecated_feats) {
-> +        error_setg(&err, "Unsupported option 'disable-deprecated-feats'");
-> +        goto out;
-> +    }
-
-... the i386 version, ...
-
-> +
->      xc = x86_cpu_from_model(model->name, model->props, "model.props", &err);
->      if (err) {
->          goto out;
-> diff --git a/target/s390x/cpu_models_sysemu.c b/target/s390x/cpu_models_sysemu.c
-> index 2d99218069..ef9fa80efd 100644
-> --- a/target/s390x/cpu_models_sysemu.c
-> +++ b/target/s390x/cpu_models_sysemu.c
-> @@ -210,6 +210,8 @@ static void cpu_info_from_model(CpuModelInfo *info, const S390CPUModel *model,
->  
->  CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
->                                                        CpuModelInfo *model,
-> +                                                      bool has_disable_deprecated_feats,
-> +                                                      bool disable_deprecated_feats,
->                                                        Error **errp)
->  {
->      Error *err = NULL;
-> @@ -217,6 +219,11 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
->      S390CPUModel s390_model;
->      bool delta_changes = false;
->  
-> +    if (has_disable_deprecated_feats) {
-> +        error_setg(&err, "Unsupported option 'disable-deprecated-feats'");
-> +        return NULL;
-> +    }
-
-... and the S390 version, but ...
-
-> +
->      /* convert it to our internal representation */
->      cpu_model_from_info(&s390_model, model, "model", &err);
->      if (err) {
-
-... neither the loongarch not the RISC-V version, which according to
-condition [*] above also implement the command[*].  Bug?
-
-Peeking ahead in the series, I see that you implement
-@disable-deprecated-feats only for S390.
-
-Having to reject @disable-deprecated-feats in targets that implement
-query-cpu-model-expansion, but not the @disable-deprecated-feats, is
-problematic:
-
-1. If we implement query-cpu-model-expansion for another target, we need
-to remember rejecting @disable-deprecated-feats.  Trap for the unwary.
-
-2. query-qmp-schema can't tell whether the argument is supported.
-
-You could make @query-cpu-model-expansion conditional on S390.
-
-Since conditional arguments require 'boxed': true, you first have to
-do that, like so:
-
-    { 'command': 'query-cpu-model-expansion', 'boxed': true,
-      'data': 'Foo',
-      'returns': 'CpuModelExpansionInfo',
-      'if': { 'any': [ 'TARGET_S390X',
-                       'TARGET_I386',
-                       'TARGET_ARM',
-                       'TARGET_LOONGARCH64',
-                       'TARGET_RISCV' ] } }
-
-where Foo is
-
-    { 'struct': 'Foo',
-      'data': { 'type': 'CpuModelExpansionType',
-                'model': 'CpuModelInfo' } }
-
-Then add the conditional argument:
-
-    { 'struct': 'Foo',
-      'data': { 'type': 'CpuModelExpansionType',
-                'model': 'CpuModelInfo' } }
-                '*disable-deprecated-feats': { 'type': 'bool',
-                                               'if': 'TARGET_S390X' }
-
-Use a reasonable name instead of Foo, of course.
-
-Disadvantages:
-
-* More churn
-
-* Possibly something else I can't see without trying it
-
-Advantages:
-
-* You don't have to reject the argument for all targets that don't
-  implement it
-
-* We can't forget to reject the argument when implementing
-  query-cpu-model-expansion for another target
-
-* query-cpu-model-expansion shows whether the argument is supported
-
-I think you should give this a try.
+r~
 
 
