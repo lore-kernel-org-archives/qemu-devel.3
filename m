@@ -4,62 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BD6DC4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 08:21:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71B68C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 08:21:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzXpF-0001NS-NE; Wed, 24 Apr 2024 04:17:57 -0400
+	id 1rzXsC-0002LL-9E; Wed, 24 Apr 2024 04:21:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXof-0000Ok-GF
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:17:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rzXs5-0002DT-Bp
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:20:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzXob-0006N5-NQ
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:17:21 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rzXs3-0007Hh-Aq
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 04:20:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713946637;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lBJCFbjf3roQdO9+j3YUS7y1SwDDMCx19PhFNSbCPrw=;
- b=HoOj8JgFUARQLr6yGULqxZdBtvclYPA7wUAacz6Zb7VHXXbc3yj+dbU1sMRXr9RsvPuvP2
- 69RcnkoDr78/fue7IZ2ZSIuka/XRWG4kJLh7EnHbJyrNFbJo+jsWSNaIE0rJ2cCUiCzAQr
- HJ5ndzda59MngRnOw7pujvgnbFDgoMA=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-602-qNo9diBuO2SNx0ldUSpflg-1; Wed,
- 24 Apr 2024 04:17:13 -0400
-X-MC-Unique: qNo9diBuO2SNx0ldUSpflg-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
+ s=mimecast20190719; t=1713946850;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=zb0ZY/OtYGFlhwxIfsFFVt97Rf7DxPQlwIUFJI/IxCQ=;
+ b=T3HrU0RBxMRlsHajkG7EPmHGsa0muwpAelTdUsz2a1fXZhftCBOI87CM6oRy4Qg3amxUto
+ uu7aGylHSIc36bkhjE0aSYjj5JTRPSaWrhXugLkRlF+8RFD11+T3zywI9feSXA17JZ8Fsk
+ kL+pm/Z4MC3t6tHP1UNqb7lE3XLAY+U=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-451-E4cCnN1INjesGt-cIDbUXQ-1; Wed, 24 Apr 2024 04:20:46 -0400
+X-MC-Unique: E4cCnN1INjesGt-cIDbUXQ-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2D5C43806278;
- Wed, 24 Apr 2024 08:17:13 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 0E50D1C060D0;
- Wed, 24 Apr 2024 08:17:13 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id DAC3621E65DE; Wed, 24 Apr 2024 10:17:10 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org,
-	John Snow <jsnow@redhat.com>
-Subject: [PULL 08/25] qapi/schema: make c_type() and json_type() abstract
- methods
-Date: Wed, 24 Apr 2024 10:16:53 +0200
-Message-ID: <20240424081710.2907748-9-armbru@redhat.com>
-In-Reply-To: <20240424081710.2907748-1-armbru@redhat.com>
-References: <20240424081710.2907748-1-armbru@redhat.com>
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id CE0781011A14;
+ Wed, 24 Apr 2024 08:20:45 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.55])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 7B0222166B34;
+ Wed, 24 Apr 2024 08:20:43 +0000 (UTC)
+Date: Wed, 24 Apr 2024 09:20:41 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Collin Walling <walling@linux.ibm.com>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, thuth@redhat.com,
+ david@redhat.com, wangyanan55@huawei.com, philmd@linaro.org,
+ marcel.apfelbaum@gmail.com, eduardo@habkost.net, armbru@redhat.com
+Subject: Re: [PATCH v2 1/3] cpu-models: add "disable-deprecated-feats" option
+ to cpu model expansion
+Message-ID: <ZijA2XFbPwxi0F4h@redhat.com>
+References: <20240423210655.66656-1-walling@linux.ibm.com>
+ <20240423210655.66656-2-walling@linux.ibm.com>
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240423210655.66656-2-walling@linux.ibm.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -80,56 +82,101 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: John Snow <jsnow@redhat.com>
+On Tue, Apr 23, 2024 at 05:06:53PM -0400, Collin Walling wrote:
+> This optional parameter for query-cpu-model-expansion enables CPU
+> model features flagged as deprecated to appear in the resulting
+> list of properties.
+> 
+> This commit does not add support beyond adding a new argument
+> to the query. All queries with this option present will result
+> in an error claiming this option is not supported.
+> 
+> Signed-off-by: Collin Walling <walling@linux.ibm.com>
+> ---
+>  qapi/machine-target.json         | 7 ++++++-
+>  target/arm/arm-qmp-cmds.c        | 7 +++++++
+>  target/i386/cpu-sysemu.c         | 7 +++++++
+>  target/s390x/cpu_models_sysemu.c | 7 +++++++
+>  4 files changed, 27 insertions(+), 1 deletion(-)
+> 
+> diff --git a/qapi/machine-target.json b/qapi/machine-target.json
+> index 29e695aa06..b9da284d2d 100644
+> --- a/qapi/machine-target.json
+> +++ b/qapi/machine-target.json
+> @@ -285,6 +285,10 @@
+>  #
+>  # @type: expansion type, specifying how to expand the CPU model
+>  #
+> +# @disable-deprecated-feats: include CPU model features that are
+> +#     flagged as deprecated. If supported, these features will appear
+> +#     in the properties list paired with false.
+> +#
+>  # Returns: a CpuModelExpansionInfo describing the expanded CPU model
+>  #
+>  # Errors:
+> @@ -298,7 +302,8 @@
+>  ##
+>  { 'command': 'query-cpu-model-expansion',
+>    'data': { 'type': 'CpuModelExpansionType',
+> -            'model': 'CpuModelInfo' },
+> +            'model': 'CpuModelInfo',
+> +            '*disable-deprecated-feats': 'bool' },
+>    'returns': 'CpuModelExpansionInfo',
+>    'if': { 'any': [ 'TARGET_S390X',
+>                     'TARGET_I386',
 
-These methods should always return a str, it's only the default abstract
-implementation that doesn't. They can be marked "abstract", which
-requires subclasses to override the method with the proper return type.
+I think this is an odd design approach. Lets consider the
+current output:
 
-Signed-off-by: John Snow <jsnow@redhat.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20240315152301.3621858-9-armbru@redhat.com>
----
- scripts/qapi/schema.py | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+(QEMU) query-cpu-model-expansion type=static model={"name":"z14"}
+{
+    "return": {
+        "model": {
+            "name": "z14-base",
+            "props": {
+                "aefsi": true,
+                "aen": true,
+                ...snip...
+                "vxpd": true,
+                "zpci": true
+            }
+        }
+    }
+}
 
-diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
-index 48f157fb91..0b01c841ff 100644
---- a/scripts/qapi/schema.py
-+++ b/scripts/qapi/schema.py
-@@ -16,6 +16,7 @@
- 
- # TODO catching name collisions in generated code would be nice
- 
-+from abc import ABC, abstractmethod
- from collections import OrderedDict
- import os
- import re
-@@ -245,9 +246,10 @@ def visit(self, visitor):
-         visitor.visit_include(self._sub_module.name, self.info)
- 
- 
--class QAPISchemaType(QAPISchemaDefinition):
-+class QAPISchemaType(QAPISchemaDefinition, ABC):
-     # Return the C type for common use.
-     # For the types we commonly box, this is a pointer type.
-+    @abstractmethod
-     def c_type(self):
-         pass
- 
-@@ -259,6 +261,7 @@ def c_param_type(self):
-     def c_unboxed_type(self):
-         return self.c_type()
- 
-+    @abstractmethod
-     def json_type(self):
-         pass
- 
+
+If we want to inform a mgmt app of some features being deprecated,
+why not just unconditionally include that info in the reply thus:
+
+
+(QEMU) query-cpu-model-expansion type=static model={"name":"z14"}
+{
+    "return": {
+        "model": {
+            "name": "z14-base",
+            "props": {
+                "aefsi": true,
+                "aen": true,
+                ...snip...
+                "vxpd": true,
+                "zpci": true
+            }
+            "deprecated-props": ["ppa15", "ri"]
+        }
+    }
+}
+
+
+
+With regards,
+Daniel
 -- 
-2.44.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
