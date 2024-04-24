@@ -4,39 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36573C10F15
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 08:53:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94C68C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 08:53:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzYLz-0002uo-Py; Wed, 24 Apr 2024 04:51:47 -0400
+	id 1rzYML-0004mk-72; Wed, 24 Apr 2024 04:52:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rzYLm-0002Mg-5s; Wed, 24 Apr 2024 04:51:34 -0400
+ id 1rzYMI-0004Sz-GT; Wed, 24 Apr 2024 04:52:06 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rzYLk-00044a-CL; Wed, 24 Apr 2024 04:51:33 -0400
+ id 1rzYMG-00047f-JY; Wed, 24 Apr 2024 04:52:06 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A4C5561537;
+ by isrv.corpit.ru (Postfix) with ESMTP id E81BA6153C;
  Wed, 24 Apr 2024 11:50:43 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id CE708BE0E7;
- Wed, 24 Apr 2024 11:50:36 +0300 (MSK)
-Received: (nullmailer pid 1179620 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 1DBE0BE0EC;
+ Wed, 24 Apr 2024 11:50:37 +0300 (MSK)
+Received: (nullmailer pid 1179636 invoked by uid 1000);
  Wed, 24 Apr 2024 08:50:36 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-block@nongnu.org
-Subject: [PATCH 14/27] qemu-img: snapshot: allow specifying -f fmt
-Date: Wed, 24 Apr 2024 11:50:22 +0300
-Message-Id: <06091e6d16feada71cebd5f3a9fdc2e0bfd02c1d.1713948448.git.mjt@tls.msk.ru>
+Subject: [PATCH 19/27] qemu-img: resize: refresh options/--help
+Date: Wed, 24 Apr 2024 11:50:27 +0300
+Message-Id: <291c47dc2239737ec33382c9a3dca28ce304b2cf.1713948448.git.mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <cover.1713948448.git.mjt@tls.msk.ru>
 References: <cover.1713948448.git.mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,87 +59,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For consistency with other commands, and since it already
-accepts --image-opts, allow specifying -f fmt too.
+Add missing long options and --help output.
 
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- docs/tools/qemu-img.rst | 2 +-
- qemu-img-cmds.hx        | 4 ++--
- qemu-img.c              | 9 ++++++---
- 3 files changed, 9 insertions(+), 6 deletions(-)
+ qemu-img.c | 38 +++++++++++++++++++++++++++++---------
+ 1 file changed, 29 insertions(+), 9 deletions(-)
 
-diff --git a/docs/tools/qemu-img.rst b/docs/tools/qemu-img.rst
-index 3653adb963..9b628c4da5 100644
---- a/docs/tools/qemu-img.rst
-+++ b/docs/tools/qemu-img.rst
-@@ -663,7 +663,7 @@ Command description:
-   bitmap support, or 0 if bitmaps are supported but there is nothing
-   to copy.
- 
--.. option:: snapshot [--object OBJECTDEF] [--image-opts] [-U] [-q] [-l | -a SNAPSHOT | -c SNAPSHOT | -d SNAPSHOT] FILENAME
-+.. option:: snapshot [--object OBJECTDEF] [-f FMT | --image-opts] [-U] [-q] [-l | -a SNAPSHOT | -c SNAPSHOT | -d SNAPSHOT] FILENAME
- 
-   List, apply, create or delete snapshots in image *FILENAME*.
- 
-diff --git a/qemu-img-cmds.hx b/qemu-img-cmds.hx
-index c9dd70a892..2c5a8a28f9 100644
---- a/qemu-img-cmds.hx
-+++ b/qemu-img-cmds.hx
-@@ -84,9 +84,9 @@ SRST
- ERST
- 
- DEF("snapshot", img_snapshot,
--    "snapshot [--object objectdef] [--image-opts] [-U] [-q] [-l | -a snapshot | -c snapshot | -d snapshot] filename")
-+    "snapshot [--object objectdef] [-f fmt | --image-opts] [-U] [-q] [-l | -a snapshot | -c snapshot | -d snapshot] filename")
- SRST
--.. option:: snapshot [--object OBJECTDEF] [--image-opts] [-U] [-q] [-l | -a SNAPSHOT | -c SNAPSHOT | -d SNAPSHOT] FILENAME
-+.. option:: snapshot [--object OBJECTDEF] [-f FMT | --image-opts] [-U] [-q] [-l | -a SNAPSHOT | -c SNAPSHOT | -d SNAPSHOT] FILENAME
- ERST
- 
- DEF("rebase", img_rebase,
 diff --git a/qemu-img.c b/qemu-img.c
-index 84e2e53fb7..8adc324496 100644
+index da10fafffc..688c01722c 100644
 --- a/qemu-img.c
 +++ b/qemu-img.c
-@@ -3595,7 +3595,7 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
-     BlockBackend *blk;
-     BlockDriverState *bs;
-     QEMUSnapshotInfo sn;
--    char *filename, *snapshot_name = NULL;
-+    char *filename, *fmt = NULL, *snapshot_name = NULL;
-     int c, ret = 0, bdrv_oflags;
-     int action = 0;
-     bool quiet = false;
-@@ -3614,7 +3614,7 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
-             {"force-share", no_argument, 0, 'U'},
+@@ -4324,27 +4324,45 @@ static int img_resize(const img_cmd_t *ccmd, int argc, char **argv)
+     for(;;) {
+         static const struct option long_options[] = {
+             {"help", no_argument, 0, 'h'},
++            {"quiet", no_argument, 0, 'q'},
+             {"object", required_argument, 0, OPTION_OBJECT},
++            {"format", required_argument, 0, 'f'},
+             {"image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
+             {"preallocation", required_argument, 0, OPTION_PREALLOCATION},
+             {"shrink", no_argument, 0, OPTION_SHRINK},
              {0, 0, 0, 0}
          };
--        c = getopt_long(argc, argv, ":la:c:d:hqU",
-+        c = getopt_long(argc, argv, ":la:c:d:f:hqU",
+-        c = getopt_long(argc, argv, "-:f:hq",
++        c = getopt_long(argc, argv, "-f:hq",
                          long_options, NULL);
          if (c == -1) {
              break;
-@@ -3629,6 +3629,9 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
+         }
+         switch(c) {
+-        case ':':
+-            missing_argument(argv[optind - 1]);
+-            break;
+-        case '?':
+-            unrecognized_option(argv[optind - 1]);
+-            break;
          case 'h':
-             help();
-             return 0;
-+        case 'f':
-+            fmt = optarg;
-+            break;
-         case 'l':
-             if (action) {
-                 error_exit(argv[0], "Cannot mix '-l', '-a', '-c', '-d'");
-@@ -3682,7 +3685,7 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
-     filename = argv[optind++];
- 
-     /* Open the image */
--    blk = img_open(image_opts, filename, NULL, bdrv_oflags, false, quiet,
-+    blk = img_open(image_opts, filename, fmt, bdrv_oflags, false, quiet,
-                    force_share);
-     if (!blk) {
-         return 1;
+-            help();
+-            break;
++            cmd_help(ccmd,
++"[-f FMT | --image-opts] [--preallocation PREALLOC] [--shrink]\n"
++"        [--object OBJECTDEF] [-q] FILENAME [+-]SIZE[bkKMGTPE]\n"
++,
++"  -q, --quiet\n"
++"     quiet operation\n"
++"  -f, --format FMT\n"
++"     specify FILENAME format explicitly\n"
++"  --image-opts\n"
++"     indicates that FILENAME is a complete image specification\n"
++"   instead of a file name (incompatible with --format)\n"
++"  --shrink\n"
++"     allow operation when new size is smaller than original\n"
++"  --preallocation PREALLOC\n"
++"     specify preallocation type for the new areas\n"
++"  --object OBJDEF\n"
++"     QEMU user-creatable object (eg encryption key)\n"
++"  FILENAME\n"
++"     image file (specification) to resize\n"
++"  [+-]SIZE[bkKMGTPE]\n"
++"     new image size or amount by which to shrink/grow,\n"
++"     with optional suffix (1024-based multiplies)\n"
++);
++            return 0;
+         case 'f':
+             fmt = optarg;
+             break;
+@@ -4386,6 +4404,8 @@ static int img_resize(const img_cmd_t *ccmd, int argc, char **argv)
+                 error_exit(argv[0], "Extra argument(s) in command line");
+             }
+             break;
++        default:
++            tryhelp(argv[0]);
+         }
+     }
+     if (!filename && optind < argc) {
 -- 
 2.39.2
 
