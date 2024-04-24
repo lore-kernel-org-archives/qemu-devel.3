@@ -4,78 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E67BDC4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 23:16:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08B61C19F4E
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 23:32:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzlpq-0000Oz-BZ; Wed, 24 Apr 2024 19:15:30 -0400
+	id 1rzm5e-0005qq-3v; Wed, 24 Apr 2024 19:31:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rzlpe-0000Nr-1b
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 19:15:22 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1rzm5Z-0005or-GJ
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 19:31:47 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rzlpc-0006x7-1d
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 19:15:17 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-6ece8991654so447034b3a.3
- for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 16:15:13 -0700 (PDT)
+ id 1rzm5X-0003SD-J4
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 19:31:45 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-2a4df5d83c7so360599a91.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 16:31:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714000512; x=1714605312; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=FpaiVEBlxxoYrCmqblEKTbgi1ilpb6EDQX934DCEWkM=;
- b=CWMST7g3lxYOdzVM18ggVLCwtjPNXTM0UKuHbfWX2QNUWdrhlpSv8gi90k42LsEGw+
- sSWpwXC/pWKzV95tmLPvtebMh5iUtesyCLuPQSBfxyrYD9Aqc158+6XPG3B0aPoB6ECC
- l3v7x7S6wBXliq60wKnf0bxO3Ft+M0szTMJsRyzgL8ad+fehY5o5JOsUXTpgx4CxegyO
- uJZ+2fHsE842ng2EjyXi8wE2tvkqF8AaVKKKs8K57n76+bY2tnFyzNkkT+R5F21+a5K0
- IA2KlKqXtYwIBUI6KXnhUiTZHZR7r0BDjQP2bJaxcqqxHl1bviXsVQkA0uQZNF49hVE1
- AnuA==
+ d=linaro.org; s=google; t=1714001502; x=1714606302; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=klixi9bNxAQDyfNDVaZxjig2PNXDSzSH4KeZpVMjb1U=;
+ b=WK6bif1ayj7dRP5XUu827SywcM4p1nIRhgW+WXWyFFmWfL/E87lXzZj27qGmEWtLIa
+ MCjsLMmRlR0GeQFkd6q3DfaM7EITsD53v/JVOICjCp1AhY3/dN7R4UQPTaTzc5R57XFh
+ 9NmLPT6rVwPUQmuaek+ZHf//o7dRqPM8jj/2qP2xErOL/Jx1gtG42P3puO3fnRGpTPNx
+ mUroH22h4Pq97CJp+TiUoXxM7d8X6pT6ZhBdrNinpJXMSVCDVAQScOCi73aG12kwqKMC
+ hQrxJJdS1/eBoURm26PQhvxAe+Piceqa9QGKm1WOjO1KiIz5ue1ffm56fxpEzpMyhSld
+ A8yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714000512; x=1714605312;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FpaiVEBlxxoYrCmqblEKTbgi1ilpb6EDQX934DCEWkM=;
- b=WX2N0w4YwrCvOKXbn2XCwKWCNtZWDipwEwkya1xP8yi0CpAFiB3NgE7WNpw13xXRjc
- NZhGr95462WRX/GIWvcISM13flCASZjIEkM4v42SUqznKWH3eah3CToFvUetGqnOVId6
- dJnHnbq9qcS//sJ9Ws6Y3HyE+YzCdxCrq3Hnkc/xdbmoaWHB88wSmnGhh0XWmBOU/QXF
- I/UxaPg/TlTxaBsiUMlQVk41udflrKlwHcDH/Oo/0hV0J0Y+NwN8ckWdMP0LVAZFtlil
- jyicMLlGBsoBJHHyrRVa0ThvunceBmtIAm3Wc+KSwSpVdiGZ6TDoQ5cF9a5b5ZLXSic6
- IgfA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWYNr/l8+pWtWzOdhbXiDQRxdfPHciYaiUgKp4LEpEvdbKySb+NbMmSkBlAaQDW63PhRuY5P49bvBtpqtY9cxK7Ms481Kw=
-X-Gm-Message-State: AOJu0YzErDVfaCrU3G/imdDBjrRJv0cdDfugMVN1giaud64jBxKkbfAh
- n2FE6vHh9AXPUIzI9UqoRMNO9sCpufoO0YRpKoyjtCwjhRSZKGTNP61AN7zjG8g=
-X-Google-Smtp-Source: AGHT+IEnD6esIykGtn9/sugE1GBKMUCGtOmAyiiEFojoUw/MNDZzKuFyvCc6FA2QR4jJ7Hjds5p69w==
-X-Received: by 2002:a05:6a20:7f8f:b0:1a7:5425:3044 with SMTP id
- d15-20020a056a207f8f00b001a754253044mr5235697pzj.62.1714000512322; 
- Wed, 24 Apr 2024 16:15:12 -0700 (PDT)
-Received: from [192.168.91.227] ([156.19.246.23])
- by smtp.gmail.com with ESMTPSA id
- ka4-20020a056a00938400b006f3aa6a03dbsm1439338pfb.127.2024.04.24.16.15.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Apr 2024 16:15:11 -0700 (PDT)
-Message-ID: <9ce3f50f-2074-48ba-8827-3e5276cc88b4@linaro.org>
-Date: Wed, 24 Apr 2024 16:15:09 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] target/arm: Update emulation.rst, add some easy
- features
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20240418152004.2106516-1-peter.maydell@linaro.org>
-Content-Language: en-US
+ d=1e100.net; s=20230601; t=1714001502; x=1714606302;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=klixi9bNxAQDyfNDVaZxjig2PNXDSzSH4KeZpVMjb1U=;
+ b=wrw63k4y2TUNyAcCKRSKeJIaN4SPoU9LYNTFf6Z61B2BFwsdjeGXLLI//rReo7D1Yc
+ X2eo1RXPDOp7heURXNVuVRot2wLM2Avzi0/vhIwjbv7QmhEWYxPkeYjSHSQNmmkVf7Ar
+ d33KcU3Wuye7+u8vg/ae4N52ric49SPqK2bwPaPQ19bpGWd6brffDUN1S77RFDHdT+hQ
+ FyXqppjtXPpBkGWB4btBlq6KLztaGQJJgHA7rXPHFmFr9pL0pWN5D9AwIY/n0OrPLZjs
+ cy5eslEa5T2BXE5gEc9LesTaKkA0ft0EZDQbGYin8jxrqlrtWAj47WqIMEcXOR5DfYgf
+ mQbw==
+X-Gm-Message-State: AOJu0YyIXngZCLBNkiRh98ghUegMXAHxCl7H2sH2fUKHuNmszHa7cZRB
+ aMm/UrZKl799hwkVtbnPCj/fnBD/F/HPUYbE8O0bsZ5bn+gDo8cQF1s2rpNW9f737A4QjiePQkN
+ F
+X-Google-Smtp-Source: AGHT+IHSUwZw45D8L1RTZMvi07N9o9Pbkid95WoJ64uV/EZlBCy5LHS/phaBy8hQDPKlYDCSzPFx6A==
+X-Received: by 2002:a17:90b:3d02:b0:2af:9067:8097 with SMTP id
+ pt2-20020a17090b3d0200b002af90678097mr2384707pjb.23.1714001501990; 
+ Wed, 24 Apr 2024 16:31:41 -0700 (PDT)
+Received: from stoup.. ([156.19.246.23]) by smtp.gmail.com with ESMTPSA id
+ z24-20020a17090abd9800b002a56b3931dfsm11737859pjr.49.2024.04.24.16.31.41
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 24 Apr 2024 16:31:41 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240418152004.2106516-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+To: qemu-devel@nongnu.org
+Subject: [PATCH v2 10/33] accel/tcg: Implement translator_st
+Date: Wed, 24 Apr 2024 16:31:08 -0700
+Message-Id: <20240424233131.988727-11-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240424233131.988727-1-richard.henderson@linaro.org>
+References: <20240424233131.988727-1-richard.henderson@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,15 +92,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/18/24 08:19, Peter Maydell wrote:
-> Peter Maydell (5):
->    docs/system/arm/emulation.rst: Add missing implemented features
->    target/arm: Enable FEAT_CSV2_3 for -cpu max
->    target/arm: Enable FEAT_ETS2 for -cpu max
->    target/arm: Implement ID_AA64MMFR3_EL1
->    target/arm: Enable FEAT_Spec_FPACC for -cpu max
+Copy data out of a completed translation.  This will be used
+for both plugins and disassembly.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ include/exec/translator.h | 23 ++++++++++++++++
+ accel/tcg/translator.c    | 55 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 78 insertions(+)
 
-r~
+diff --git a/include/exec/translator.h b/include/exec/translator.h
+index e92dfba035..3c354a4310 100644
+--- a/include/exec/translator.h
++++ b/include/exec/translator.h
+@@ -246,6 +246,29 @@ translator_ldq_swap(CPUArchState *env, DisasContextBase *db,
+  */
+ void translator_fake_ldb(DisasContextBase *db, vaddr pc, uint8_t insn8);
+ 
++/**
++ * translator_st
++ * @db: disassembly context
++ * @dest: address to copy into
++ * @addr: virtual address within TB
++ * @len: length
++ *
++ * Copy @len bytes from @addr into @dest.
++ * All bytes must have been read during translation.
++ * Return true on success or false on failure.
++ */
++bool translator_st(const DisasContextBase *db, void *dest,
++                   vaddr addr, size_t len);
++
++/**
++ * translator_st_len
++ * @db: disassembly context
++ *
++ * Return the number of bytes available to copy from the
++ * current translation block with translator_st.
++ */
++size_t translator_st_len(const DisasContextBase *db);
++
+ #ifdef NEED_CPU_H
+ /*
+  * Return whether addr is on the same page as where disassembly started.
+diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
+index 6863455ed9..7f63a8085d 100644
+--- a/accel/tcg/translator.c
++++ b/accel/tcg/translator.c
+@@ -353,6 +353,61 @@ static void record_save(DisasContextBase *db, vaddr pc,
+     memcpy(db->record + (offset - db->record_start), from, size);
+ }
+ 
++size_t translator_st_len(const DisasContextBase *db)
++{
++    return db->fake_insn ? db->record_len : db->tb->size;
++}
++
++bool translator_st(const DisasContextBase *db, void *dest,
++                   vaddr addr, size_t len)
++{
++    size_t offset, offset_end;
++
++    if (addr < db->pc_first) {
++        return false;
++    }
++    offset = addr - db->pc_first;
++    offset_end = offset + len;
++    if (offset_end > translator_st_len(db)) {
++        return false;
++    }
++
++    if (!db->fake_insn) {
++        size_t offset_page1 = -(db->pc_first | TARGET_PAGE_MASK);
++
++        /* Get all the bytes from the first page. */
++        if (db->host_addr[0]) {
++            if (offset_end <= offset_page1) {
++                memcpy(dest, db->host_addr[0] + offset, len);
++                return true;
++            }
++            if (offset < offset_page1) {
++                size_t len0 = offset_page1 - offset;
++                memcpy(dest, db->host_addr[0] + offset, len0);
++                offset += len0;
++                dest += len0;
++            }
++        }
++
++        /* Get any bytes from the second page. */
++        if (db->host_addr[1] && offset >= offset_page1) {
++            memcpy(dest, db->host_addr[1] + (offset - offset_page1),
++                   offset_end - offset);
++            return true;
++        }
++    }
++
++    /* Else get recorded bytes. */
++    if (db->record_len != 0 &&
++        offset >= db->record_start &&
++        offset_end <= db->record_start + db->record_len) {
++        memcpy(dest, db->record + (offset - db->record_start),
++               offset_end - offset);
++        return true;
++    }
++    return false;
++}
++
+ static void plugin_insn_append(vaddr pc, const void *from, size_t size)
+ {
+ #ifdef CONFIG_PLUGIN
+-- 
+2.34.1
+
 
