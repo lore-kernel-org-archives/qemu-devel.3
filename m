@@ -4,182 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C0DEC4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 17:35:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE007C07E8E
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 17:38:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzgVA-0005xZ-7T; Wed, 24 Apr 2024 13:33:48 -0400
+	id 1rzgZj-0000oA-OF; Wed, 24 Apr 2024 13:38:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ira.weiny@intel.com>)
- id 1rzgV8-0005xD-CL
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:33:46 -0400
-Received: from mgamail.intel.com ([192.198.163.10])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rzgZe-0000ni-Hu; Wed, 24 Apr 2024 13:38:28 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ira.weiny@intel.com>)
- id 1rzgV4-0002zU-D8
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 13:33:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713980023; x=1745516023;
- h=date:from:to:cc:subject:message-id:references:
- in-reply-to:mime-version;
- bh=HFB3VMdJSA/xuseLr43E5JPggIyRf4NMj++adQD4jHM=;
- b=HjqgHLd7mpEqhvola/Lk8F0JKS7Kz31//06wa1Ohza2N4lv0G+1HBPlQ
- M0FFBMw/wPt6zOcb+0zwh3Cf8JBiiFG1vargTcsLM2EeEOUC6JE/XseAO
- 1NohfeiNVl3WoX8UC3pKd9zRd5T0e86s3mfwrLcUIocGuz+Svlbk5fhnL
- y8rEj29tcWCbAFzsUUHUduHv2irnyR4zM0iRs6aFDeYAf8996iQsf7DCn
- uCgAWhT5LjTUZQM96kaUslOmfDwqeS8+fWBOnxW/n+IUeGvUh+AklyYqK
- MYaWTk7UuIWLIRfNwV0RKww8zP104kJ4mrXr56IrVgWNMNh4/WfTPC1bC w==;
-X-CSE-ConnectionGUID: GwHm12IXQZy5KRmx7vvhJQ==
-X-CSE-MsgGUID: CSY1vVNoSQG+v+OMqVqOLA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11054"; a="21038435"
-X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; d="scan'208";a="21038435"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Apr 2024 10:33:40 -0700
-X-CSE-ConnectionGUID: Nl0RHZe9Ttq3Djz5c/0rmA==
-X-CSE-MsgGUID: Dp76McFJTRqssvbOnTLvYA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; d="scan'208";a="29267738"
-Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
- by fmviesa003.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 24 Apr 2024 10:33:39 -0700
-Received: from fmsmsx612.amr.corp.intel.com (10.18.126.92) by
- fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Wed, 24 Apr 2024 10:33:39 -0700
-Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
- fmsmsx612.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35 via Frontend Transport; Wed, 24 Apr 2024 10:33:39 -0700
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (104.47.56.169)
- by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Wed, 24 Apr 2024 10:33:39 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=gOaKHEkAYjXTZTJ3/+ocDmzt2soanF04hWjG2D6iB5t0s2VQXBRmFt361FJUoergkfmSWgdPli82BWUhfTvSk2eN/1LvEuV+GkmrCHwuNyhk2ShTqOSOJLfwDTumeYWjid8DJd5mNOvic7848SShQSd1RUFAKeVe8VhLC/ymsgcKLaE18nKYK4cEInqSSM40gSNH4JWOGTSABt3FPlfTzU03VDmMPeochGcBQfH3eQtLRLOgwBHaUKuB229juHj5UiJg/RzgmJr44mnjj/k9AZwmhqkJHpGWRLXd+Z1zZQwtyY1WfJnit4mbxpJ3ORgWbPDgn7bTU+DTplEret3qQA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/T/wl6MczSuRQTNiinhVuHtAEsA7TEVnpEDBW/BT0Pc=;
- b=Jdzn0L7iGjNvExmQw4N0TTOW/JMoQ9BE3kwPWqhwA4+UQquVgk9MGYUcXLRfkRQpXdVIysfORP6yBkH+tzTI/bIa/SWb2cQ4Kqs0sgXoHfPBE3ehS4WQw9w/+EaCbwW+kPdR8fa85UaZUd3rgOVm47mB1i343jzquA+98hLb8hepDEICyUEpDu2gdtrGt9YQeMeCAWyEkFiCTjPNyvRRQHLoy7UaBSMyvawTYAmzaE+fQwRetbPVD13lJ8lP1vB/Wk0gPnyzmcL+ik/QTogKhp7kuiJCWO8tVBuFtF+HOySIg4zhutM1CHp52WMjjCOMOMApNjlTX5bq1h6C+ljUFg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SA1PR11MB6733.namprd11.prod.outlook.com (2603:10b6:806:25c::17)
- by SA1PR11MB8596.namprd11.prod.outlook.com (2603:10b6:806:3b5::18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7519.22; Wed, 24 Apr
- 2024 17:33:36 +0000
-Received: from SA1PR11MB6733.namprd11.prod.outlook.com
- ([fe80::d543:d6c2:6eee:4ec]) by SA1PR11MB6733.namprd11.prod.outlook.com
- ([fe80::d543:d6c2:6eee:4ec%4]) with mapi id 15.20.7519.020; Wed, 24 Apr 2024
- 17:33:36 +0000
-Date: Wed, 24 Apr 2024 10:33:33 -0700
-From: Ira Weiny <ira.weiny@intel.com>
-To: Markus Armbruster <armbru@redhat.com>, <nifan.cxl@gmail.com>
-CC: <qemu-devel@nongnu.org>, <jonathan.cameron@huawei.com>,
- <linux-cxl@vger.kernel.org>, <gregory.price@memverge.com>,
- <ira.weiny@intel.com>, <dan.j.williams@intel.com>,
- <a.manzanares@samsung.com>, <dave@stgolabs.net>, <nmtadam.samsung@gmail.com>, 
- <jim.harris@samsung.com>, <Jorgen.Hansen@wdc.com>, <wj28.lee@gmail.com>, "Fan
- Ni" <fan.ni@samsung.com>
-Subject: Re: [PATCH v5 09/13] hw/cxl/events: Add qmp interfaces to
- add/release dynamic capacity extents
-Message-ID: <6629426dcdbb3_e1bea294d8@iweiny-mobl.notmuch>
-References: <20240304194331.1586191-1-nifan.cxl@gmail.com>
- <20240304194331.1586191-10-nifan.cxl@gmail.com>
- <87a5livrdr.fsf@pond.sub.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <87a5livrdr.fsf@pond.sub.org>
-X-ClientProxiedBy: BY3PR04CA0017.namprd04.prod.outlook.com
- (2603:10b6:a03:217::22) To SA1PR11MB6733.namprd11.prod.outlook.com
- (2603:10b6:806:25c::17)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rzgZc-0003pd-28; Wed, 24 Apr 2024 13:38:26 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 0BA6761822;
+ Wed, 24 Apr 2024 20:38:28 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id 849C4BE619;
+ Wed, 24 Apr 2024 20:38:20 +0300 (MSK)
+Received: (nullmailer pid 1218037 invoked by uid 1000);
+ Wed, 24 Apr 2024 17:38:15 -0000
+Subject: [ANNOUNCE] QEMU 7.2.11 Stable released
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA1PR11MB6733:EE_|SA1PR11MB8596:EE_
-X-MS-Office365-Filtering-Correlation-Id: b7846eb7-d7b4-43be-3059-08dc6484ac36
-X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230031|376005|366007|1800799015|7416005;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?MX1wdjpsDb199Ep9RsCgJ6jlRYQvTHgIwlXbskNSiiKHjuf+712ooYVOx7Qz?=
- =?us-ascii?Q?BLsYpASrJn6I6yyWR8Lzny//vgal/n5gXz7lzQeuL0A1f+Li1SAPQ0HhwAwA?=
- =?us-ascii?Q?fdqfUNTc0DNlHdi87w9xgnZTJVuN1C8o9VbYu0t6Irz57rSvk4JjqnhbrjWM?=
- =?us-ascii?Q?Jt5Qvn9dkgbsq0kb6bVhoWcN13d+2AUEZzcfWIIhLi+ry4rP8wxxiTnSzzer?=
- =?us-ascii?Q?jksnX2I71X4mk+8+9HmfE54axiNrb9lbsDKj0UCsB8OyARSP1AFQpHtjHxIz?=
- =?us-ascii?Q?mhAAMpMdAf35u87gE/FV99e+rJiiHbTUa0HaN9AngHfFYcrLlNwkky0IsuEs?=
- =?us-ascii?Q?YAftDsUTKGgW66W2N9sTFPK10/CG1hho7Sou9dCKcycHnNuDNUtCAYcF8wvv?=
- =?us-ascii?Q?OOwvfBVB6g90rKv968xx0BJB+yyYePEqrDzGPMswPFGU3hOqRmXTlPxjF0pE?=
- =?us-ascii?Q?EkW4zVNJYPl3IlibCmNhai+vy174rOsx6iXmYHnaBomsNuzvLlfs2faXwwuV?=
- =?us-ascii?Q?gp2mVtcW7WbrIAGSuZxIcJFq5cCEznKj6BkpD80W1iBt38ON/eFtBfOLLhXt?=
- =?us-ascii?Q?133QA4IKl5Z7M+cm6OZASrWPs1TaUoiU907yNvMav54zsY6FxjVQ5MAeyM0k?=
- =?us-ascii?Q?4KOvW074Nv5huaPY5j8iG/xESLSFS+ERW0bl2Uq6qUy+MMbcCNMxX28mAuhB?=
- =?us-ascii?Q?yzxPKxCoWcsMnD/iBO9bydWcCfZrkJgopfZC9WeLE6hLGaJsAser198qCEN3?=
- =?us-ascii?Q?qYYapBNQjqi6fdslNustPhYbW5ousv3mntzkr8zc0poWyPLY3r2CBlcyeGqX?=
- =?us-ascii?Q?AhQcPTpxFKEY+fOZUYOrCQc4DlBTpdPbtrA8ZlPmTnQpCWF+zMx7DDnD/UJd?=
- =?us-ascii?Q?PCm6jmumL8eZeOPqR3AOsTl6Pd89jihkD80o7MEL5XCg+e1N9Z4ZHpQvdp6P?=
- =?us-ascii?Q?fyYwig8cIg4ToDGxokPCEV7EC4wNjOBNjnDvsVIPOtCUe0b37NHR9GzOMvc1?=
- =?us-ascii?Q?46xBTp2hZn6J40haiZu50rHri5b3SGQ+Je7Z+kOYpKxGj36djUUC7JXFaA4T?=
- =?us-ascii?Q?iLsxiZqVtpHrewUao/yMgiS5Y3xGNKDJb4BG8V7plk5hzMpeJT7KcIhZoNI4?=
- =?us-ascii?Q?GyXObv6ab8NPJEOxnZizo30s1PXVRoQS7nuAXZ8ad9lQANj+sviC+Ro23kup?=
- =?us-ascii?Q?MQvVDdWhBEqalz2+hD8yGadNScrkC9uzuKf3jFAyl7kel0NqoVO+xYbN6Jy2?=
- =?us-ascii?Q?sFhSKNBzA3eAVt+JJQB0b+1oz14tteQQA7uHZuCEbQ=3D=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SA1PR11MB6733.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(376005)(366007)(1800799015)(7416005); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?oSGOuaQapXPyjnn/MeNZwP1Fb3N/mqF5FVZkrmQzNK34qsKanIAKniwV//Zp?=
- =?us-ascii?Q?ZHJpsgrlcfKS0FpbwJ0BVWKivknU8N06NROCy/RzO8cX1rz0skwLlp9Wz+UU?=
- =?us-ascii?Q?M0mwZppJMIsnqgtvbHDTuRBMfyE95qOr27srTEKzW7cPQd+uCRwoQGBZI/hH?=
- =?us-ascii?Q?LMDC7fPAqz8qo2To6DhLvvKDFRdGd8TKCEP9ZojybPHmR3O1LD37920xrdjC?=
- =?us-ascii?Q?KFqVDdPDFQic2gZAjPvIS44S5HvT7gISZwP4YAXQja6mpjscPXdBTE92nwBI?=
- =?us-ascii?Q?u86BP5QMfHUpERMAm4ELdAItZs5HHIZyKKvDwUms6b7ZKjvXXLngsDDuCdf9?=
- =?us-ascii?Q?60Htm8sMjndz/mksW1h2rfzuaa0fPISJyQGbXT9xb8nbHXvP3VxAeEaTmF9Y?=
- =?us-ascii?Q?De7OLUTEBZNmgoYGpPgx+qBrXIqQkCacugT8Jl75XAiEenJJcL5GiAj3DKzT?=
- =?us-ascii?Q?TghkdBIRNqoTkBQoHEUD3WKeIrENx2LAeEFGDXaMhxbHAUyMJn6neCUKVBRZ?=
- =?us-ascii?Q?pMnsxeAWj+l0dCpesjMiM5GxuU2l0wjp23kSwjccpZWwBPXjTQayDpfXv16E?=
- =?us-ascii?Q?ZoBU/gV+/ubzHrdrr3DtewL2HHqac5xJXJ7ftf3BDqlo3HRRH4SayyU8vVfe?=
- =?us-ascii?Q?5C9abUjNzf+dnc8RWXObK7tDZELaK9OcIujCbCVwzsTG8sm/Tsv7wPndA2C5?=
- =?us-ascii?Q?4LLPOGIM/qfNX2cMKNEcmVcvTrLyN8A3152Y73zA5aq6C0mvlxzJJjAhGmhR?=
- =?us-ascii?Q?LCbZ/UQ+AH6Zw+YftT311okl/1MV1nAl+0izEuwTdB8tOTHBjf0V+4DmzAcO?=
- =?us-ascii?Q?9UxIvBetsAoIoSpnE5H34TKsiUwjDEqweB9xwzWy40udqbbWX888AO7PpJKd?=
- =?us-ascii?Q?zeCk7BcOTmZ/bR60yujyndcssPGCDk/u/LXXRumMkHUy9duea3m/wfoC7Uge?=
- =?us-ascii?Q?sWk4e9/shcu/JX8ZJ/h+X2G5mHYlA5eGinZpP6iq2B2ZAk/N57XX3AZbD9UD?=
- =?us-ascii?Q?JLM2/MweIER2fPY8nkAylEqkbns7rJma2ryVUYVYlwHdtHQxc7GOZg4a/uMq?=
- =?us-ascii?Q?Hgjtvi3qqh9t+WPYZmY8uY/8vRfRWe1I0Ah2JVb6gTgZPdyuVIqbO3MkX1YZ?=
- =?us-ascii?Q?iztKqzwDYolN7Mvq+YVbAXcbLZ49T/pG6aaW6b3z2FE58G7JmOV/I/FZ8xr/?=
- =?us-ascii?Q?b7WTQ0+CK6uK5HljNpkjB3m4qYwQX5T7djr6uZxaY/jNtmAXknEEOGhi76D7?=
- =?us-ascii?Q?tvLVFBD/Ct6E2DLwe+J6/YHvuS05Kzi/FflyT2WuGZkMnBALx+hn042I6nuI?=
- =?us-ascii?Q?w0+p35EH2COtGkl6CvUzRN4Wy7r3zB5g9Z85DfQ1WbuRK0MW0pMDuTkM+AqY?=
- =?us-ascii?Q?+ajZCkFsZgikzdVFEdXmxEBpGq32yPwioq8XvTXZj+nibQgJ3UlTbzrraK3+?=
- =?us-ascii?Q?C1K2+3vxgqopKPtUXP3DnzbO5FVsoCrl7ArTA79RJDnKaH6q5CDqfNqss3hf?=
- =?us-ascii?Q?zAg+a4f6SctY0k57crBNQZd3Gsrs1V04RlxuwsnRYnwUS2vAZvKik8T5+qYT?=
- =?us-ascii?Q?xvcqfGjwGkuZIQlJxUkPZ6XdudZitMImtj0aDCaS?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: b7846eb7-d7b4-43be-3059-08dc6484ac36
-X-MS-Exchange-CrossTenant-AuthSource: SA1PR11MB6733.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Apr 2024 17:33:36.8702 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: sMGLwM48Vr9JcouBG5D2I0Yn4ZKtGbw/K1SbDIInCEc/9ScH38eAMM/N8VtOkSG7zs98elujbP1SitUcG/Qs5A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR11MB8596
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.10; envelope-from=ira.weiny@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.668,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Date: Wed, 24 Apr 2024 20:38:15 +0300
+Message-Id: <1713980295.669157.1218032.nullmailer@tls.msk.ru>
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -195,205 +57,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Markus Armbruster wrote:
-> nifan.cxl@gmail.com writes:
-> 
-> > From: Fan Ni <fan.ni@samsung.com>
-> >
-> > Since fabric manager emulation is not supported yet, the change implements
-> > the functions to add/release dynamic capacity extents as QMP interfaces.
-> 
-> Will fabric manager emulation obsolete these commands?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I don't think so.  In the development of the kernel, I see these being
-valuable to do CI and regression testing without the complexity of an FM.
+Hi everyone,
 
-Ira
+The QEMU v7.2.11 stable release is now available.
 
-> 
-> > Note: we skips any FM issued extent release request if the exact extent
-> > does not exist in the extent list of the device. We will loose the
-> > restriction later once we have partial release support in the kernel.
-> >
-> > 1. Add dynamic capacity extents:
-> >
-> > For example, the command to add two continuous extents (each 128MiB long)
-> > to region 0 (starting at DPA offset 0) looks like below:
-> >
-> > { "execute": "qmp_capabilities" }
-> >
-> > { "execute": "cxl-add-dynamic-capacity",
-> >   "arguments": {
-> >       "path": "/machine/peripheral/cxl-dcd0",
-> >       "region-id": 0,
-> >       "extents": [
-> >       {
-> >           "dpa": 0,
-> >           "len": 134217728
-> >       },
-> >       {
-> >           "dpa": 134217728,
-> >           "len": 134217728
-> >       }
-> >       ]
-> >   }
-> > }
-> >
-> > 2. Release dynamic capacity extents:
-> >
-> > For example, the command to release an extent of size 128MiB from region 0
-> > (DPA offset 128MiB) look like below:
-> >
-> > { "execute": "cxl-release-dynamic-capacity",
-> >   "arguments": {
-> >       "path": "/machine/peripheral/cxl-dcd0",
-> >       "region-id": 0,
-> >       "extents": [
-> >       {
-> >           "dpa": 134217728,
-> >           "len": 134217728
-> >       }
-> >       ]
-> >   }
-> > }
-> >
-> > Signed-off-by: Fan Ni <fan.ni@samsung.com>
-> 
-> [...]
-> 
-> > diff --git a/qapi/cxl.json b/qapi/cxl.json
-> > index 8cc4c72fa9..2645004666 100644
-> > --- a/qapi/cxl.json
-> > +++ b/qapi/cxl.json
-> > @@ -19,13 +19,16 @@
-> >  #
-> >  # @fatal: Fatal Event Log
-> >  #
-> > +# @dyncap: Dynamic Capacity Event Log
-> > +#
-> >  # Since: 8.1
-> >  ##
-> >  { 'enum': 'CxlEventLog',
-> >    'data': ['informational',
-> >             'warning',
-> >             'failure',
-> > -           'fatal']
-> > +           'fatal',
-> > +           'dyncap']
-> 
-> We tend to avoid abbreviations in QMP identifiers: dynamic-capacity.
-> 
-> >   }
-> >  
-> >  ##
-> > @@ -361,3 +364,59 @@
-> >  ##
-> >  {'command': 'cxl-inject-correctable-error',
-> >   'data': {'path': 'str', 'type': 'CxlCorErrorType'}}
-> > +
-> > +##
-> > +# @CXLDCExtentRecord:
-> 
-> Such traffic jams of capital letters are hard to read.
-> 
-> What does DC mean?
-> 
-> > +#
-> > +# Record of a single extent to add/release
-> > +#
-> > +# @offset: offset to the start of the region where the extent to be operated
-> 
-> Blank line here, please
-> 
-> > +# @len: length of the extent
-> > +#
-> > +# Since: 9.0
-> > +##
-> > +{ 'struct': 'CXLDCExtentRecord',
-> > +  'data': {
-> > +      'offset':'uint64',
-> > +      'len': 'uint64'
-> > +  }
-> > +}
-> > +
-> > +##
-> > +# @cxl-add-dynamic-capacity:
-> > +#
-> > +# Command to start add dynamic capacity extents flow. The device will
-> 
-> I think we're missing an article here.  Is it "a flow" or "the flow"?
-> 
-> > +# have to acknowledged the acceptance of the extents before they are usable.
-> 
-> to acknowledge
-> 
-> docs/devel/qapi-code-gen.rst:
-> 
->     For legibility, wrap text paragraphs so every line is at most 70
->     characters long.
-> 
->     Separate sentences with two spaces.
-> 
-> > +#
-> > +# @path: CXL DCD canonical QOM path
-> 
-> What is a CXL DCD?  Is it a device?
-> 
-> I'd prefer @qom-path, unless you can make a consistency argument for
-> @path.
-> 
-> > +# @region-id: id of the region where the extent to add
-> 
-> What's a region, and how do they get their IDs?
-> 
-> > +# @extents: Extents to add
-> 
-> Blank lines between argument descriptions, please.
-> 
-> > +#
-> > +# Since : 9.0
-> 
-> 9.1
-> 
-> > +##
-> > +{ 'command': 'cxl-add-dynamic-capacity',
-> > +  'data': { 'path': 'str',
-> > +            'region-id': 'uint8',
-> > +            'extents': [ 'CXLDCExtentRecord' ]
-> > +           }
-> > +}
-> > +
-> > +##
-> > +# @cxl-release-dynamic-capacity:
-> > +#
-> > +# Command to start release dynamic capacity extents flow. The host will
-> 
-> Article again.
-> 
-> The host?  In cxl-add-dynamic-capacity's doc comment, it's the device.
-> 
-> > +# need to respond to indicate that it has released the capacity before it
-> > +# is made unavailable for read and write and can be re-added.
-> 
-> Is "and can be re-added" relevant here?
-> 
-> > +#
-> > +# @path: CXL DCD canonical QOM path
-> > +# @region-id: id of the region where the extent to release
-> > +# @extents: Extents to release
-> > +#
-> > +# Since : 9.0
-> 
-> 9.1
-> 
-> > +##
-> > +{ 'command': 'cxl-release-dynamic-capacity',
-> > +  'data': { 'path': 'str',
-> > +            'region-id': 'uint8',
-> > +            'extents': [ 'CXLDCExtentRecord' ]
-> > +           }
-> > +}
-> 
+You can grab the tarball from our download page here:
 
+  https://www.qemu.org/download/#source
 
+  https://download.qemu.org/qemu-7.2.11.tar.xz
+  https://download.qemu.org/qemu-7.2.11.tar.xz.sig (signature)
+
+v7.2.11 is now tagged in the official qemu.git repository, and the
+stable-7.2 branch has been updated accordingly:
+
+  https://gitlab.com/qemu-project/qemu/-/commits/stable-7.2
+
+There are 59 changes since the previous v7.2.10 release.
+
+Thank you everyone who has been involved and helped with the stable series!
+
+/mjt
+
+Changelog (stable-7.2-hash master-hash Author Name: Commmit-Subject):
+
+c6fe0f315c Michael Tokarev:
+ Update version for 7.2.11 release
+ab4a60c1b7 c4f91d7b7b Harsh Prateek Bora:
+ ppc/spapr: Initialize max_cpus limit to SPAPR_IRQ_NR_IPIS.
+3f481e3305 2df5c1f5b0 Harsh Prateek Bora:
+ ppc/spapr: Introduce SPAPR_IRQ_NR_IPIS to refer IRQ range for CPU IPIs.
+4741ae6b8e b754cb2dcd Zack Buhman:
+ target/sh4: add missing CHECK_NOT_DELAY_SLOT
+2429cb7a9f 9e4b27ca6b Philippe Mathieu-Daudé:
+ hw/sd/sdhci: Do not update TRNMOD when Command Inhibit (DAT) is set
+f3130798d4 a45223467e Philippe Mathieu-Daudé:
+ hw/net/lan9118: Replace magic '2048' value by MIL_TXFIFO_SIZE definition
+cd7beea4a4 ad766d603f Philippe Mathieu-Daudé:
+ hw/net/lan9118: Fix overflow in MIL TX FIFO
+734314d8ce eaf2bd2953 Philippe Mathieu-Daudé:
+ backends/cryptodev: Do not abort for invalid session ID
+9b7bc39890 fc09ff2979 Philippe Mathieu-Daudé:
+ hw/misc/applesmc: Fix memory leak in reset() handler
+8394be7faa d39fdfff34 Philippe Mathieu-Daudé:
+ hw/block/nand: Fix out-of-bound access in NAND block buffer
+9ca7801c6a 2e3e09b368 Philippe Mathieu-Daudé:
+ hw/block/nand: Have blk_load() take unsigned offset and return boolean
+caeb4489b7 7a86544f28 Philippe Mathieu-Daudé:
+ hw/block/nand: Factor nand_load_iolen() method out
+d5c41e4491 aa88f99c87 Yuquan Wang:
+ qemu-options: Fix CXL Fixed Memory Window interleave-granularity typo
+7aaf5f7778 f4729ec39a Philippe Mathieu-Daudé:
+ hw/virtio/virtio-crypto: Protect from DMA re-entrancy bugs
+e7c2df3fd7 b4295bff25 Philippe Mathieu-Daudé:
+ hw/char/virtio-serial-bus: Protect from DMA re-entrancy bugs
+6d37a30815 ba28e0ff4d Philippe Mathieu-Daudé:
+ hw/display/virtio-gpu: Protect from DMA re-entrancy bugs
+e070e5e674 ec0504b989 Philippe Mathieu-Daudé:
+ hw/virtio: Introduce virtio_bh_new_guarded() helper
+d6e7ec1f8e f0907ff4ca Richard Henderson:
+ linux-user: Fix waitid return of siginfo_t and rusage
+b198998b7f e25fe886b8 Richard Henderson:
+ tcg/optimize: Do not attempt to constant fold neg_vec
+fd01f5a847 2d9a31b3c2 Wafer:
+ hw/virtio: Fix packed virtqueue flush used_idx
+227d9450b5 4c54f5bc8e Yajun Wu:
+ hw/net/virtio-net: fix qemu set used ring flag even vhost started
+393b7ab067 44e25fbc19 Peter Maydell:
+ hw/intc/arm_gicv3: ICC_HPPIR* return SPURIOUS if int group is disabled
+eebb7fb506 1d2f2b35bc Michael Tokarev:
+ gitlab-ci/cirrus: switch from 'master' to 'latest'
+6fca92c9d1 4a3aa11e1f Richard Henderson:
+ target/hppa: Clear psw_n for BE on use_nullify_skip path
+162c54b7c1 2911e9b95f Richard Henderson:
+ tcg/optimize: Fix sign_mask for logical right-shift
+493b1cc785 1c188fc8cb Akihiko Odaki:
+ virtio-net: Fix vhost virtqueue notifiers for RSS
+70b0e142e6 a158c63b3b Yao Xingtao:
+ monitor/hmp-cmds-target: Append a space in error message in gpa2hva()
+2e1645ac6a 7c7a9f578e Lorenz Brun:
+ hw/scsi/scsi-generic: Fix io_timeout property not applying
+610db167da 1590154ee4 Song Gao:
+ target/loongarch: Fix qemu-system-loongarch64 assert failed with the option '-d int'
+e9e41446c2 7fd226b047 Tao Su:
+ target/i386: Revert monitor_puts() in do_inject_x86_mce()
+a6fc9a234b 2cc68629a6 Paolo Bonzini:
+ target/i386: fix direction of "32-bit MMU" test
+ad003650d5 90f641531c Paolo Bonzini:
+ target/i386: use separate MMU indexes for 32-bit accesses
+6332f3c12f 5f97afe254 Paolo Bonzini:
+ target/i386: introduce function to query MMU indices
+e4b23890b3 55f7c6a5f2 Peter Maydell:
+ tests: Raise timeouts for bufferiszero and crypto-tlscredsx509
+9405029750 63b18312d1 Kevin Wolf:
+ tests/unit: Bump test-replication timeout to 60 seconds
+4f048b771d e1b363e328 Thomas Huth:
+ tests/unit: Bump test-crypto-block test timeout to 5 minutes
+dcb9a64d22 c45f8f1aef Thomas Huth:
+ tests/unit: Bump test-aio-multithread test timeout to 2 minutes
+e1e9d74f57 2e128776dc Cédric Le Goater:
+ migration: Skip only empty block devices
+04b3d34d5c 74e2845c5f Jonathan Cameron:
+ hmat acpi: Fix out of bounds access due to missing use of indirection
+309051ac40 6081b4243c Akihiko Odaki:
+ pcie_sriov: Validate NumVFs
+3f7892be24 91bb64a8d2 Akihiko Odaki:
+ hw/nvme: Use pcie_sriov_num_vfs()
+e00b062da7 31180dbdca Akihiko Odaki:
+ pcie: Introduce pcie_sriov_num_vfs
+0b7ccfd1d2 fa905f65c5 Klaus Jensen:
+ hw/nvme: add machine compatibility parameter to enable msix exclusive bar
+6a5d6849d1 ee7bda4d38 Klaus Jensen:
+ hw/nvme: generalize the mbar size helper
+424e6209e5 4f0a4a3d58 Minwoo Im:
+ hw/nvme: separate 'serial' property for VFs
+5c3889be15 973f76cf77 Klaus Jensen:
+ hw/nvme: cleanup error reporting in nvme_init_pci()
+201c9701f5 784fd35387 Klaus Jensen:
+ hw/nvme: clean up confusing use of errp/local_err
+edb47553b0 6a5287ce80 Nick Briggs:
+ Avoid unaligned fetch in ladr_match()
+df052d6c1c 4cadf10234 Laurent Vivier:
+ e1000e: fix link state on resume
+f1efd85486 9bc9e95119 Michael Tokarev:
+ make-release: switch to .xz format by default
+eeb5699176 9876359990 Sven Schnelle:
+ hw/scsi/lsi53c895a: add timer to scripts processing
+275436de62 8b09b7fe47 Sven Schnelle:
+ hw/scsi/lsi53c895a: add missing decrement of reentrancy counter
+c57a6fca39 a9198b3132 Sven Schnelle:
+ hw/scsi/lsi53c895a: stop script on phase mismatch
+e55ec34d3e 012b170173 Dmitrii Gavrilov:
+ system/qdev-monitor: move drain_call_rcu call under if (!dev) in qmp_device_add()
+ce252563f2 fd7f95f23d Peter Maydell:
+ hw/rtc/sun4v-rtc: Relicense to GPLv2-or-later
+518c3dfdfb 1f51573f79 Richard Henderson:
+ target/arm: Fix SME full tile indexing
+13cf40e594 3dc2afeab2 Peter Maydell:
+ tests/tcg/aarch64/sysregs.c: Use S syntax for id_aa64zfr0_el1 and id_aa64smfr0_el1
+4002b76c1c bc6bd20ee3 Zhuojia Shen:
+ target/arm: align exposed ID registers with Linux
+331c0fa584 f5af80271a David Parsons:
+ ui/cocoa: Fix window clipping on macOS 14
+aba89ef725 9ea920dc28 Daniel P. Berrangé:
+ gitlab: update FreeBSD Cirrus CI image to 13.3
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEe3O61ovnosKJMUsicBtPaxppPlkFAmYpQ4cACgkQcBtPaxpp
+Pll8kAf+MeKgCUxiFH6bZlQJsPocdQxZ75INmg2RUCmcw0VDNflUMbbwb801Giqu
+MA/00HcdrErszg1saAVxv+HPdY7ErLZm5eC6IeUDJKvuS+T4TxYrPB+bFX60Q5Dr
+5XuQgJrAhDnXrPXq59XOYP9Pt8fU27khi8WXE7razOms4mwZuBC/gM8sYT+Jqmfi
+XI+JUJoOeEel4SwjtldHbR34G5AOub8In/4DALh4+LPoIZkMBXGN4Ndbvt83CoSr
+95lke9+hzT5HYLtws3MlTkYxTNj4pIeCX6gsOiiSxRhEMjuglcDneGaDBpOJR5z1
+s00pQVsQ6Smusz25LPJaGAxOwLV8yw==
+=gNMO
+-----END PGP SIGNATURE-----
 
