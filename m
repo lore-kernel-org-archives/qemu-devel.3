@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9832C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 09:34:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AE9FC4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 09:44:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzZ1J-0005Ir-UK; Wed, 24 Apr 2024 05:34:30 -0400
+	id 1rzZ9t-0006uX-AH; Wed, 24 Apr 2024 05:43:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1rzZ1D-0005IY-60
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 05:34:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1rzZ9s-0006uK-7H
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 05:43:20 -0400
+Received: from madrid.collaboradmins.com ([2a00:1098:ed:100::25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1rzZ1B-0003wr-4z
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 05:34:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713951260;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7jnxP9geMg/2L/qjk8udop7PnrXxGQRDe36Q2tGqvUM=;
- b=H3YtlvcCDuMp+JqmvXrXVwaoheBaQ5ryCEk3rz5mnl/Iz+W5RRFmprb8InmlozW/ZqV1P9
- 8RwyrvDN2BFeYacKXlToWO+lrRivSgDj42Syr3PRVUpmINDLSMyZNElxKAAiRuTYBzwfbj
- EyomR79coD0K/p6qjpezvmJbCmrRcO4=
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-642-Qyx71XjqOi6kx640FRoEYA-1; Wed, 24 Apr 2024 05:34:18 -0400
-X-MC-Unique: Qyx71XjqOi6kx640FRoEYA-1
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-6150dcdf83fso137572877b3.2
- for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 02:34:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713951257; x=1714556057;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7jnxP9geMg/2L/qjk8udop7PnrXxGQRDe36Q2tGqvUM=;
- b=oxzRzM+uibwrnBU72S19TCeHTkKe6T5vr5Hv1ogsueW2fDRAOaayydCuYoOx4Zw7Pl
- 0QqTDHvUE/xM1Ah6TAeaw/v7QOJimlScgrVGK20Wjh3ZPUowwTSUXc11aZc2e2IHprDV
- /D7PYk4ADenMbOUKLm1F2f08AjuZIIUVf1j8+ne9iDMEWBIr/jpQb0LOGwF/kEy9rsF3
- FerucFwKjrQkFVjAHuMNbHSJuP2qQ4GuB2VPVhEzAXynfmB2stNuYbbeB4m7USIKE6m1
- dRs/UdanKxePXq7yhbDA2Agd/awFmcqiZcf0AC1ROI5NcolGP8KRbxHCgUkR5VLlgrR5
- Zd5w==
-X-Gm-Message-State: AOJu0YxH+Z9DNUsC2S0OdeSHTqFFxCuWN1FeIeBjrhCA5rcsA5npKher
- aVAeR6/UvnvtXwpjwEaC8cqv2GDmKmGFSiLVQpaHrHoMGGy4UCD/eaCYwmFnNuBDgQSOfrrtzEF
- 3iH66Jo0vrBKeTlXzq4QN7i8l/qYH0J/xTthx4GEaFCSjE+/C+5CtsrgtEix+UxFHf5Kj8hkJNn
- HSL495JVBIf1fZ9w+QuLr89f8aDOw=
-X-Received: by 2002:a05:690c:fd0:b0:615:4700:94cb with SMTP id
- dg16-20020a05690c0fd000b00615470094cbmr2455068ywb.1.1713951257493; 
- Wed, 24 Apr 2024 02:34:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEX0gJSywsjFEz74c/kXNE8RWsofkSuPgoqqZAMx/XRawQKduwPY++ydfwmEk+K7PR2G2xMqVyePaN8+Cmk9oI=
-X-Received: by 2002:a05:690c:fd0:b0:615:4700:94cb with SMTP id
- dg16-20020a05690c0fd000b00615470094cbmr2455051ywb.1.1713951257126; Wed, 24
- Apr 2024 02:34:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1rzZ9q-0005UA-ES
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 05:43:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+ s=mail; t=1713951796;
+ bh=BXbvLZz8JvDlWrKMQ5pPPsYvvXMRo+xV6cR4XM6LE28=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=A7N7eoC9j4BNc34nXoboZgcqGtkQnXAOfi891/vUCS0UIab0sGA0xcWbcELUYqqEw
+ fPNZ7+KJtLmYm91XhwNF6B4BQqEsI1NtnjnlnoszhVvFswjdtpeGw8A7y85WOxpEr0
+ il0/zcOTKnuvyO/LA5JHyny4hIGkVrPqhPrKCjt8MC13wuPKSdT+9k2gMO8/fi2V26
+ TGM70u+42NUuv/jWhnS6DqiWT1mUmbYuoHPWBe6pU7JS80tWV6lC1ucY6gMA5HeYRs
+ P7q6kv/gVherwF585W65Jgp0l2Dr2xUxPsLpbkD64i9NNZq0Vb52wDHAWm6cO0v3hd
+ dz2v6jOb/1auw==
+Received: from [100.109.49.129] (cola.collaboradmins.com [195.201.22.229])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ (Authenticated sender: dmitry.osipenko)
+ by madrid.collaboradmins.com (Postfix) with ESMTPSA id 0EE6837809CE;
+ Wed, 24 Apr 2024 09:43:13 +0000 (UTC)
+Message-ID: <4c6b3ca0-4813-48f4-87f8-a94e911c02d3@collabora.com>
+Date: Wed, 24 Apr 2024 12:43:11 +0300
 MIME-Version: 1.0
-References: <20240320161648.158226-1-andrey.drobyshev@virtuozzo.com>
-In-Reply-To: <20240320161648.158226-1-andrey.drobyshev@virtuozzo.com>
-From: Konstantin Kostiuk <kkostiuk@redhat.com>
-Date: Wed, 24 Apr 2024 12:34:06 +0300
-Message-ID: <CAPMcbCrKw==M5PtGxYHSpxb3ozaSfONsxkK3qM38piqeuQS-HQ@mail.gmail.com>
-Subject: Re: [PATCH v4 0/7] qga/commands-posix: replace code duplicating
- commands with a helper
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, michael.roth@amd.com, 
- marcandre.lureau@redhat.com, philmd@linaro.org, den@virtuozzo.com
-Content-Type: multipart/alternative; boundary="000000000000d7fb1d0616d45fbf"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 07/11] virtio-gpu: Support suspension of commands
+ processing
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony.perard@citrix.com>,
+ Antonio Caggiano <quic_acaggian@quicinc.com>,
+ "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Robert Beckett <bob.beckett@collabora.com>,
+ Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
+ ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
+References: <20240418190040.1110210-1-dmitry.osipenko@collabora.com>
+ <20240418190040.1110210-8-dmitry.osipenko@collabora.com>
+ <8a153bf1-f86c-46c8-a29a-08e9a0197dc3@daynix.com>
+Content-Language: en-US
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <8a153bf1-f86c-46c8-a29a-08e9a0197dc3@daynix.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1098:ed:100::25;
+ envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.67,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,98 +95,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000d7fb1d0616d45fbf
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 4/19/24 11:53, Akihiko Odaki wrote:
+> On 2024/04/19 4:00, Dmitry Osipenko wrote:
+>> Add new "suspended" flag to virtio_gpu_ctrl_command telling cmd
+>> processor that it should stop processing commands and retry again
+>> next time until flag is unset.
+>>
+>> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> 
+> This flag shouldn't be added to virtio_gpu_ctrl_command. suspended is
+> just !finished in virtio-gpu.c. Only virtio_gpu_virgl_process_cmd()
+> needs the distinction of suspended and !finished so it is not
+> appropriate to add this flag the common structure.
 
-To series:
+The VIRTIO_GPU_FILL_CMD() macro returns void and this macro is used by
+every function processing commands. Changing process_cmd() to return
+bool will require to change all those functions. Not worthwhile to
+change it, IMO.
 
-Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+The flag reflects the exact command status. The !finished + !suspended
+means that command is fenced, i.e. these flags don't have exactly same
+meaning.
 
+I'd keep the flag if there are no better suggestions.
 
-On Wed, Mar 20, 2024 at 6:17=E2=80=AFPM Andrey Drobyshev <
-andrey.drobyshev@virtuozzo.com> wrote:
-
-> v3 -> v4:
->   * Patch 1/7:
->     - Replaced "since 8.3" with "since 9.0" as we're now at v9.0.0-rc0;
->     - Renamed the field to 'total-bytes-privileged';
->     - Got rid of the implementation details in the docs;
->   * Patch 6/7: added g_autoptr macro to local error declaration.
->
-> v3: https://lists.nongnu.org/archive/html/qemu-devel/2024-03/msg04068.htm=
-l
->
-> Andrey Drobyshev (7):
->   qga: guest-get-fsinfo: add optional 'total-bytes-privileged' field
->   qga: introduce ga_run_command() helper for guest cmd execution
->   qga/commands-posix: qmp_guest_shutdown: use ga_run_command helper
->   qga/commands-posix: qmp_guest_set_time: use ga_run_command helper
->   qga/commands-posix: execute_fsfreeze_hook: use ga_run_command helper
->   qga/commands-posix: don't do fork()/exec() when suspending via sysfs
->   qga/commands-posix: qmp_guest_set_user_password: use ga_run_command
->     helper
->
->  qga/commands-posix.c | 404 +++++++++++++++++++------------------------
->  qga/commands-win32.c |   1 +
->  qga/qapi-schema.json |   7 +-
->  3 files changed, 187 insertions(+), 225 deletions(-)
->
-> --
-> 2.39.3
->
->
-
---000000000000d7fb1d0616d45fbf
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>To series:</div><div><br></div><div>Reviewed-by: Kons=
-tantin Kostiuk &lt;<a href=3D"mailto:kkostiuk@redhat.com">kkostiuk@redhat.c=
-om</a>&gt;</div><br></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" c=
-lass=3D"gmail_attr">On Wed, Mar 20, 2024 at 6:17=E2=80=AFPM Andrey Drobyshe=
-v &lt;<a href=3D"mailto:andrey.drobyshev@virtuozzo.com">andrey.drobyshev@vi=
-rtuozzo.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">v3 -&gt; v4:<br>
-=C2=A0 * Patch 1/7:<br>
-=C2=A0 =C2=A0 - Replaced &quot;since 8.3&quot; with &quot;since 9.0&quot; a=
-s we&#39;re now at v9.0.0-rc0;<br>
-=C2=A0 =C2=A0 - Renamed the field to &#39;total-bytes-privileged&#39;;<br>
-=C2=A0 =C2=A0 - Got rid of the implementation details in the docs;<br>
-=C2=A0 * Patch 6/7: added g_autoptr macro to local error declaration.<br>
-<br>
-v3: <a href=3D"https://lists.nongnu.org/archive/html/qemu-devel/2024-03/msg=
-04068.html" rel=3D"noreferrer" target=3D"_blank">https://lists.nongnu.org/a=
-rchive/html/qemu-devel/2024-03/msg04068.html</a><br>
-<br>
-Andrey Drobyshev (7):<br>
-=C2=A0 qga: guest-get-fsinfo: add optional &#39;total-bytes-privileged&#39;=
- field<br>
-=C2=A0 qga: introduce ga_run_command() helper for guest cmd execution<br>
-=C2=A0 qga/commands-posix: qmp_guest_shutdown: use ga_run_command helper<br=
->
-=C2=A0 qga/commands-posix: qmp_guest_set_time: use ga_run_command helper<br=
->
-=C2=A0 qga/commands-posix: execute_fsfreeze_hook: use ga_run_command helper=
-<br>
-=C2=A0 qga/commands-posix: don&#39;t do fork()/exec() when suspending via s=
-ysfs<br>
-=C2=A0 qga/commands-posix: qmp_guest_set_user_password: use ga_run_command<=
-br>
-=C2=A0 =C2=A0 helper<br>
-<br>
-=C2=A0qga/commands-posix.c | 404 +++++++++++++++++++-----------------------=
--<br>
-=C2=A0qga/commands-win32.c |=C2=A0 =C2=A01 +<br>
-=C2=A0qga/qapi-schema.json |=C2=A0 =C2=A07 +-<br>
-=C2=A03 files changed, 187 insertions(+), 225 deletions(-)<br>
-<br>
--- <br>
-2.39.3<br>
-<br>
-</blockquote></div>
-
---000000000000d7fb1d0616d45fbf--
+-- 
+Best regards,
+Dmitry
 
 
