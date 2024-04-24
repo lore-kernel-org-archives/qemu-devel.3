@@ -4,75 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62528C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 10:20:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F222C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 10:31:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzZjA-0003QU-Jy; Wed, 24 Apr 2024 06:19:49 -0400
+	id 1rzZtO-0007I4-7X; Wed, 24 Apr 2024 06:30:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rzZj7-0003Pj-Mc
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 06:19:45 -0400
-Received: from mgamail.intel.com ([198.175.65.10])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1rzZtM-0007Hl-5t
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 06:30:20 -0400
+Received: from madrid.collaboradmins.com ([46.235.227.194])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rzZj4-0003fs-Us
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 06:19:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713953983; x=1745489983;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=Ro8LJdgZqyCdBFIoBx/EtjaSCPEmCl/nrm9NUdz+RfE=;
- b=FDvfDHhhNcsSVRiT47Ca/9+hoJwo/Zm7uXF1tOTvzvk5lruLbwMW++h5
- zcOKrS3UdfXpK1thx5LJWZQSnwb90skSnnU+t5Qr4zgmfp+lq4GoyoV39
- Zo8B1gFdZNnw//YeGBqU1L+LFnw8r/BUJlWiGDhr0XZMHHTP/UNYrS/qi
- 0CSL9HP2ayDzV/TxHTKP5XA8m83bZ1SQN6ixkz8JQYL7H+/YZEZRpMXeQ
- lNrXUGNFQsJAUsa50ptXbLgVGYAtaZyN34qu+Up+sR6gieqjZ9a6sZ5h4
- M0+sMG8nX5f+pakiQYj8v7gsGLVxTGxntAsUCF63sN+CQPVnzdBAJmQeN A==;
-X-CSE-ConnectionGUID: 33GR64v8TZSLhfdmmcDZzg==
-X-CSE-MsgGUID: 5yjhA3NITTiJvfyMWdsXFA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11053"; a="27032264"
-X-IronPort-AV: E=Sophos;i="6.07,225,1708416000"; d="scan'208";a="27032264"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Apr 2024 03:19:40 -0700
-X-CSE-ConnectionGUID: cNB1Y3tgQZC1OhIlSs1w6A==
-X-CSE-MsgGUID: 7qPVLuibTjOUwVDbsuRCJw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,225,1708416000"; d="scan'208";a="29305819"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa003.jf.intel.com with ESMTP; 24 Apr 2024 03:19:37 -0700
-Date: Wed, 24 Apr 2024 18:33:43 +0800
-From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Zhao Liu <zhao1.liu@linux.intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Tim Wiederhake <twiederh@redhat.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org
-Subject: Re: [PATCH for-9.1 0/7] target/i386/kvm: Cleanup the kvmclock
- feature name
-Message-ID: <ZijgB1Aocksr+ec9@intel.com>
-References: <20240329101954.3954987-1-zhao1.liu@linux.intel.com>
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1rzZtK-00062E-7j
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 06:30:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+ s=mail; t=1713954615;
+ bh=Ed7Qh8TTuz8FwJVjHqw6PLd42KC97mNpUxPtreeK7Kg=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=KIb9eu1p5sKkAw6y6HGtFhghwPcrEVhrnVAVLbfQQs5zl/1V3In/jS209hMQwbfLr
+ CPVuNb92mFqLCVgpNe9pQPk8POpUf5/gDc9sHXfDfNDOz7gn8A4uyyf7KTRz6uufhX
+ gbRG7aLLaXlzb5MRa+dnw/VnZZqdbIHby7TOLqcrjAfkihZZ/eIzD7BB0XTlYyKt7x
+ JlmqX2CoRZfIYebYcF5rLMtHYq/IfodtKy8xeWMRRo2W4uq+56MyL/RULWKz3iEpvN
+ x4ij7/euYbbmuqH7h67bj552IqY7sm9EyhQGzZHzGeFJihMnA7Inf34kSAX3FYDSQF
+ oUVFBXSSSeA+A==
+Received: from [100.109.49.129] (cola.collaboradmins.com [195.201.22.229])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ (Authenticated sender: dmitry.osipenko)
+ by madrid.collaboradmins.com (Postfix) with ESMTPSA id 3A9AD378000E;
+ Wed, 24 Apr 2024 10:30:13 +0000 (UTC)
+Message-ID: <51b45c53-b7d3-4f3c-984c-44a94e6cf5af@collabora.com>
+Date: Wed, 24 Apr 2024 13:30:10 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240329101954.3954987-1-zhao1.liu@linux.intel.com>
-Received-SPF: none client-ip=198.175.65.10;
- envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.67,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 08/11] virtio-gpu: Handle resource blob commands
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony.perard@citrix.com>,
+ Antonio Caggiano <quic_acaggian@quicinc.com>,
+ "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Robert Beckett <bob.beckett@collabora.com>,
+ Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
+ ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
+References: <20240418190040.1110210-1-dmitry.osipenko@collabora.com>
+ <20240418190040.1110210-9-dmitry.osipenko@collabora.com>
+ <2c5a0b2e-58ef-4766-baea-5df98fa6fc2f@daynix.com>
+Content-Language: en-US
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <2c5a0b2e-58ef-4766-baea-5df98fa6fc2f@daynix.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=46.235.227.194;
+ envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,88 +94,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi maintainers,
+On 4/19/24 12:18, Akihiko Odaki wrote:
+>> @@ -61,6 +61,10 @@ struct virtio_gpu_simple_resource {
+>>       int dmabuf_fd;
+>>       uint8_t *remapped;
+>>   +    MemoryRegion *mr;
+>> +    bool async_unmap_completed;
+>> +    bool async_unmap_in_progress;
+>> +
+> 
+> Don't add fields to virtio_gpu_simple_resource but instead create a
+> struct that embeds virtio_gpu_simple_resource in virtio-gpu-virgl.c.
 
-Ping. Do you like this diea?
+Please give a justification. I'd rather rename
+virtio_gpu_simple_resource s/_simple//. Simple resource already supports
+blob and the added fields are directly related to the blob. Don't see
+why another struct is needed.
 
-Thanks,
-Zhao
+-- 
+Best regards,
+Dmitry
 
-On Fri, Mar 29, 2024 at 06:19:47PM +0800, Zhao Liu wrote:
-> Date: Fri, 29 Mar 2024 18:19:47 +0800
-> From: Zhao Liu <zhao1.liu@linux.intel.com>
-> Subject: [PATCH for-9.1 0/7] target/i386/kvm: Cleanup the kvmclock feature
->  name
-> X-Mailer: git-send-email 2.34.1
-> 
-> From: Zhao Liu <zhao1.liu@intel.com>
-> 
-> Hi list,
-> 
-> This series is based on Paolo's guest_phys_bits patchset [1].
-> 
-> Currently, the old and new kvmclocks have the same feature name
-> "kvmclock" in FeatureWordInfo[FEAT_KVM].
-> 
-> When I tried to dig into the history of this unusual naming and fix it,
-> I realized that Tim was already trying to rename it, so I picked up his
-> renaming patch [2] (with a new commit message and other minor changes).
-> 
-> 13 years age, the same name was introduced in [3], and its main purpose
-> is to make it easy for users to enable/disable 2 kvmclocks. Then, in
-> 2012, Don tried to rename the new kvmclock, but the follow-up did not
-> address Igor and Eduardo's comments about compatibility.
-> 
-> Tim [2], not long ago, and I just now, were both puzzled by the naming
-> one after the other.
-> 
-> So, this series is to push for renaming the new kvmclock feature to
-> "kvmclock2" and adding compatibility support for older machines (PC 9.0
-> and older).
-> 
-> Finally, let's put an end to decades of doubt about this name.
-> 
-> 
-> Next Step
-> =========
-> 
-> This series just separates the two kvmclocks from the naming, and in
-> subsequent patches I plan to stop setting kvmclock(old kcmclock) by
-> default as long as KVM supports kvmclock2 (new kvmclock).
-> 
-> Also, try to deprecate the old kvmclock in KVM side.
-> 
-> [1]: https://lore.kernel.org/qemu-devel/20240325141422.1380087-1-pbonzini@redhat.com/
-> [2]: https://lore.kernel.org/qemu-devel/20230908124534.25027-4-twiederh@redhat.com/
-> [3]: https://lore.kernel.org/qemu-devel/1300401727-5235-3-git-send-email-glommer@redhat.com/
-> [4]: https://lore.kernel.org/qemu-devel/1348171412-23669-3-git-send-email-Don@CloudSwitch.com/
-> 
-> Thanks and Best Regards,
-> Zhao
-> 
-> ---
-> Tim Wiederhake (1):
->   target/i386: Fix duplicated kvmclock name in FEAT_KVM
-> 
-> Zhao Liu (6):
->   target/i386/kvm: Add feature bit definitions for KVM CPUID
->   target/i386/kvm: Remove local MSR_KVM_WALL_CLOCK and
->     MSR_KVM_SYSTEM_TIME definitions
->   target/i386/kvm: Only Save/load kvmclock MSRs when kvmclock enabled
->   target/i386/kvm: Save/load MSRs of new kvmclock
->     (KVM_FEATURE_CLOCKSOURCE2)
->   target/i386/kvm: Add legacy_kvmclock cpu property
->   target/i386/kvm: Update comment in kvm_cpu_realizefn()
-> 
->  hw/i386/kvm/clock.c       |  5 ++--
->  hw/i386/pc.c              |  1 +
->  target/i386/cpu.c         |  3 +-
->  target/i386/cpu.h         | 32 +++++++++++++++++++++
->  target/i386/kvm/kvm-cpu.c | 25 ++++++++++++++++-
->  target/i386/kvm/kvm.c     | 59 +++++++++++++++++++++++++--------------
->  6 files changed, 99 insertions(+), 26 deletions(-)
-> 
-> -- 
-> 2.34.1
-> 
 
