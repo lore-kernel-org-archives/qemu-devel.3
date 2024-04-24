@@ -4,135 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C53AC10F15
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 22:59:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7535C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 00:07:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzP6H-0005US-Da; Tue, 23 Apr 2024 18:58:57 -0400
+	id 1rzQ9S-00024s-Bb; Tue, 23 Apr 2024 20:06:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1rzP6C-0005UB-Fm
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 18:58:52 -0400
-Received: from mail-dm6nam11on2063.outbound.protection.outlook.com
- ([40.107.223.63] helo=NAM11-DM6-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1rzP69-0001BV-Mx
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 18:58:52 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=mDnrVkxu1AE6iNOJRtNuNd6PZWj2Uoxm7ZufqTxbn4km06DiyEdx9+lphdOMCOWYSeTdZXZe01M2SpICMnWgtQ6gb5fZWElNcJlIdcR469Kx+Aa8O+lgy1kL0yJeMFUhWdhjOt19JrrQ9wneuepvwZj6YsydHPiE8DaH88Jfb+QqlEgDw8X4ZHb9RkM4FML0UVceMgCIlFu7hLpFqro4EQ7SZXNcPxPMpVKLDFeJ6yd9o2PjnUSQ26I62j38IvD16Me+FagBs3X4MB3EMbMCx6ufze5f6E6OgLHJFPgyGCWzHqLrGvPehPHdWvZcj4Z00emI0503HfM9uZvli21bPA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=wYvQUoiMtBp9fif4eK7lJkINGixky+KB+t5inQD4l4A=;
- b=V2wsTy0JxrnQJGXn3lyn/LbsBia701AGNcnHY/rWlrGTOc8RQIIo/Zy38/7yycvrs8zBVNqdKz0lZkMmhSULb/FsMIbss5MBhOymUHjGSKQqOTxbBnk5up0/pS52IaXqTbW+dkIweDL07i3WcUtk1wjMEjJ9KDLnZEFtCteuKvMLkOh/LYScCJnwA/z+EtX9Q6IU8RDwRGJYWwDdwp+/UqfHGgRUJOSrvWaAaxHNKe1/aw/WO5DIEdPIQOW5lQE0LFrkajbYbUdf+GmcZOtkyAa/6mxcRCa3+XfPNVusufGQ4xgozVlyMqlDv1zDnvYgUABXPyQl9uYfI0mAGARgdw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=wYvQUoiMtBp9fif4eK7lJkINGixky+KB+t5inQD4l4A=;
- b=xYUQOaEpRLNWWmRN2QKlSuX0ssdiiZjTBbag0BwnpijODAm89XQA5FLXnf7KO80X5y5J6EI0qBba29xrxrkl8qeWOoSxl6zHii0Glj90b3zDhv2/QisGc03X1O9EZE1lZPehsL5WAJVZ6zeNDFspzdbAQlqhV6O+zVd77+ffntU=
-Received: from DS7PR03CA0268.namprd03.prod.outlook.com (2603:10b6:5:3b3::33)
- by DS7PR12MB5768.namprd12.prod.outlook.com (2603:10b6:8:77::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7472.44; Tue, 23 Apr
- 2024 22:53:43 +0000
-Received: from CY4PEPF0000EDD4.namprd03.prod.outlook.com
- (2603:10b6:5:3b3:cafe::84) by DS7PR03CA0268.outlook.office365.com
- (2603:10b6:5:3b3::33) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7519.22 via Frontend
- Transport; Tue, 23 Apr 2024 22:53:42 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- CY4PEPF0000EDD4.mail.protection.outlook.com (10.167.241.208) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7519.19 via Frontend Transport; Tue, 23 Apr 2024 22:53:42 +0000
-Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 23 Apr
- 2024 17:53:42 -0500
-Content-Type: text/plain; charset="utf-8"
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rzQ9N-00023L-W9
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 20:06:14 -0400
+Received: from mail-vk1-xa30.google.com ([2607:f8b0:4864:20::a30])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rzQ9M-0003dR-7C
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 20:06:13 -0400
+Received: by mail-vk1-xa30.google.com with SMTP id
+ 71dfb90a1353d-4dac4791267so1602751e0c.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 17:06:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1713917171; x=1714521971; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RJ0APwPiQl9ZejBsVtFGRaWjF1f3F9rtWwnlfBDDCdo=;
+ b=W3XiFCnQGIW77ix8UkN3WAsc5WqKF5E3tVHgKtsdi6U06GAtE6uJxanLPBnhFTbKfg
+ 3+mqZg2cXpitZ/HhyC/N+bba/yvlgTj2fMODG0ffZK7uytyclbarewINdaCYy8cDcoGP
+ 5T1+mG+knM37c0MngEJeMuFPsy+JpPKtB5usJodXBvmaRZ+ZRx/9GsiSObjYMEop3Ntq
+ i9an2cSSSrNGBhRNYJjclPCQQfLOyDPWNlbJdNrf54fyjViN61n7oG9ahUn4CzNs0gFF
+ 7WASM1pDVwobWQ+dQk+c01QAuWbM52nJYR2wacAMI2pcgqDsJ8oIXb3gMA1f+qoZXQkl
+ MsNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713917171; x=1714521971;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=RJ0APwPiQl9ZejBsVtFGRaWjF1f3F9rtWwnlfBDDCdo=;
+ b=kuOs2Ug5vdi+hAdQaugeYgWXC1KXcQMHRrf3hqmU3zJWcDlL+iEtI33SDvxNCpprjL
+ dB4rSdCy6c49M2CjVEcYXodl05J+oSH5E9YvHZRGgAh6jPUoVuGS0gcWFF/kNVTiL31Q
+ elg9GlE1+IUfuSB3znzn+O5CIcpisOFivjI23bF4EObbXzFI8BIO5PZEzaqTbGMyazBu
+ Lg0wJkzVAI8hDJns++KjX6WnMPhfxzUJEM1Jd/bZhZ5YSTKv4CJ94G8tqqh+BeVd7GZU
+ hCT/BFnj4st1o0qpZ4eGpA8ZQU1UfsjkrkoZ3e1iGYaiQNhHv/lt7cj0IvvZOhZo6UCn
+ PwCg==
+X-Gm-Message-State: AOJu0YzCGO+5yJBLiJgr97d5O/xtEgOwXOd340AapKk7WZYnfdbMUilP
+ +VXvgOyYr5rNpeHgHhW3Vqnsa89XEDzTSXpglzjyfb20upxZpohzT7dTLDjvg3CuMRSB6VYQj5d
+ xNIgEn2zabisiznFfV76yGCRStXc=
+X-Google-Smtp-Source: AGHT+IFrbt75HyopuzzsGOyjFx7PqhPitXg4OKcgoQ7hVpza+INQB8NAFj09uDT9pg0ONYj+7B2ORUP7IeQ+w40UmLA=
+X-Received: by 2002:a05:6122:1816:b0:4d4:16ed:3ae4 with SMTP id
+ ay22-20020a056122181600b004d416ed3ae4mr1177284vkb.14.1713917170786; Tue, 23
+ Apr 2024 17:06:10 -0700 (PDT)
 MIME-Version: 1.0
+References: <20240423131612.28362-1-pbonzini@redhat.com>
+ <20240423131612.28362-17-pbonzini@redhat.com>
+In-Reply-To: <20240423131612.28362-17-pbonzini@redhat.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 24 Apr 2024 10:05:44 +1000
+Message-ID: <CAKmqyKPCHqNs0VEhH0A52R7YN8ULF0Wpwbc3Oj_HKpF-szsS0Q@mail.gmail.com>
+Subject: Re: [PATCH 16/22] riscv: switch boards to "default y"
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, farosas@suse.de
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Subject: [ANNOUNCE] QEMU 9.0.0 is now available
-From: Michael Roth <michael.roth@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 23 Apr 2024 17:53:20 -0500
-Message-ID: <171391280061.1793640.6382208414891377838@amd.com>
-User-Agent: alot/0.9
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY4PEPF0000EDD4:EE_|DS7PR12MB5768:EE_
-X-MS-Office365-Filtering-Correlation-Id: 519dccb4-0eb2-4e43-9002-08dc63e8397a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?eTdxWHhBUGJxN1Z1TlRXMERuTmZ3Z3FTR3J6ekVYaVFwQkJOUnVaM3hlWmhC?=
- =?utf-8?B?aXN5eVc3Y0N4NXZmK01UZGNNeXA2VStFU2RLTU9NS0RqSTVTeUhQdlNyaUtl?=
- =?utf-8?B?N3AzMVdBUFdEVGRQT0prSWM2Nlh2MWFUQktkcllOMVFSZ1paVUJ3eDVyWGY1?=
- =?utf-8?B?Z3BPbDJRSVRITEd6ZmtPazhYamRscmZIWFZ1NXUxam5XQmtmQnVRc00vaTM4?=
- =?utf-8?B?cld0V1QvY3FCZE41b2ltTUpUYmliSkdFVWtqbkNVVlppSmVQQzhZL29nMzNh?=
- =?utf-8?B?dGxBbU4za0JWU0hCUUpkZ00yeVEvaVZMSUlMN2ZVby92emlUSzNBT1NMajk5?=
- =?utf-8?B?bGhsVUtsb3AvTDJBNWtnWXBBY0c2SHpqcUdHL3NRSE1PandNOUtjR1pzTDZG?=
- =?utf-8?B?M1A5bTJSd3ltZnYyRWpTVEFIU3hMZHhPQ05wVytkMVcrNkxsZjVEMzB5YW00?=
- =?utf-8?B?a1FzWXZRODMxSnlFVTNzN3BvaUhFQ3dYQ2hmbjc5NjRWUS9GMzNjZmNDYnR6?=
- =?utf-8?B?djg2RXJSVEp4bnBUL2crbjZpUmhVZE5zMDg5VGZUWDcwTU9mNHRqZWZvOTY1?=
- =?utf-8?B?cWlVOXh3Z0NFVnhpYnZzaHBDUVg1Umx4Z0hqelUzSzRZYWxkNithNXg4Vnhr?=
- =?utf-8?B?cmJqRThiN2N4cGx1ZWVreTZQZVJiTStpWm0xMEs0WGRncG9yV0Q2U0NXSlB6?=
- =?utf-8?B?YnY1UmlmT2hkeTJMNjgvck1XaWx0WndEcFYxd0xqbHFZQm9ROWgzbk1pejRM?=
- =?utf-8?B?dnpXWU40bThFVkR1eDc5ODJyYWVDYk80bTdXSHBZdDVjM0Y1N2ppN2xndU1s?=
- =?utf-8?B?dUlwdFRsUWpxTlZwOVRxa1BLdEM2cWxyTWhkbG9raW9CNHhIcW5yaUdvNUZK?=
- =?utf-8?B?OGVqWThxanZzM2hTeWwvMC93ZEJ1T2oxY3hkVTA0SE1jaEtwZTNKQmpRRjBW?=
- =?utf-8?B?YlRWaVJzeUROcUlEVTNJaElwajRrOGl1WUlBQUh1clh6NjNIajBXaklBSlVJ?=
- =?utf-8?B?VlVScHNwQk52SG5TSTcrbEVNWUFRcTFVRWJ4OEFIUFhKWlN3MmNIZGErODlk?=
- =?utf-8?B?bFo5UlhobVBxU3c5WHl5QlFoaVRqMkg1RWFmTjJMWmo4bjNPcENPTjhxRCtR?=
- =?utf-8?B?M21uWnh3RTk4UXY0b3RicEx6N0xaclYrejhNYnVFeVBZWGtVdXZuNk5ZN1Br?=
- =?utf-8?B?RHJhaWNSVlh5SE84YndyQmRvcEVsRlI0a2JqRE9JZkF5SnFBcmVZQkVCdDlY?=
- =?utf-8?B?NytyTWR0ajZmdTdmbjJySjN4a1hYcy9SeFpPUTE1amtpcG5aZGRHTGhXcWNM?=
- =?utf-8?B?SlpjWkhuY0dON2NwcVE3cDBmSWxxZkU2cVdRaXA3VFJvUWtQOS84cjNHRkVs?=
- =?utf-8?B?akxCTDdzb001QmdPM1l3L0JHQmtzQmgxNFBieHVIRnNkS0JlWVAyak1nYnhl?=
- =?utf-8?B?R1pCek4rZ2dNcjhXZDVzYzJTSnpWVjUwbHBzYzIrZ3dlSTJ2VmoybzNMY0pG?=
- =?utf-8?B?QzdYU2t5ZEFpN0tWQXNaK0dhd01GQ2Jaczk5b2RTYTRQalM0V3Q5ZWlNN3lN?=
- =?utf-8?B?QUlWZTVoMUhjNytKaTYxTURzRjBwbUZGZEVKRWdhUVg3dFRKUUpra3k2bmgr?=
- =?utf-8?B?LzBMVVRISWcwbXN6RzROM0ZJQzRoUXE5MGE5N2VidjZpQlBZZTNLczJZanVq?=
- =?utf-8?B?Y0ZqVlAzbExZTGRTS1hGeXUrdld0MnhFc2VHOE1YZ3hQcUl3T0pldEE3OWM1?=
- =?utf-8?Q?wFXZaqa9M2XtEzZyw0/4LdURvfY/WhO/en7B/If?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230031)(376005)(36860700004)(1800799015)(82310400014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Apr 2024 22:53:42.6570 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 519dccb4-0eb2-4e43-9002-08dc63e8397a
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000EDD4.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB5768
-Received-SPF: permerror client-ip=40.107.223.63;
- envelope-from=Michael.Roth@amd.com;
- helo=NAM11-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.67,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a30;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa30.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -149,50 +91,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+On Tue, Apr 23, 2024 at 11:20=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com=
+> wrote:
+>
+> Some targets use "default y" for boards to filter out those that require
+> TCG.  For consistency we are switching all other targets to do the same.
+> Continue with RISC-V.
+>
+> No changes to generated config-devices.mak file.
+>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-On behalf of the QEMU Team, I'd like to announce the availability of
-the QEMU 9.0.0 release. This release contains 2700+ commits from 220
-authors.
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
-You can grab the tarball from our download page here:
+Alistair
 
-  https://www.qemu.org/download/#source
-
-The full list of changes are available at:
-
-  https://wiki.qemu.org/ChangeLog/9.0
-
-Highlights include:
-
- * block: virtio-blk now supports multiqueue where different queues of a
-   single disk can be processed by different I/O threads
- * gdbstub: various improvements such as catching syscalls in user-mode,
-   support for fork-follow modes, and support for siginfo:read
- * memory: preallocation of memory backends can now be handled
-   concurrently using multiple threads in some cases
- * migration: support for "mapped-ram" capability allowing for more
-   efficient VM snapshots, improved support for zero-page detection, and
-   checkpoint-restart support for VFIO
-
- * ARM: architectural feature support for ECV (Enhanced Counter
-   Virtualization), NV (Nested Virtualization), and NV2 (Enhanced Nested
-   Virtualization)
- * ARM: board support for B-L475E-IOT01A IoT node, mp3-an536 (MPS3 dev board
-   + AN536 firmware), and raspi4b (Raspberry Pi 4 Model B)
- * ARM: additional IO/disk/USB/SPI/ethernet controller and timer support for
-   Freescale i.MX6, Allwinner R40, Banana Pi, npcm7xxx, and virt boards
- * HPPA: numerous bug fixes and SeaBIOS-hppa firmware updated to version 16
- * LoongArch: KVM acceleration support, including LSX/LASX vector extensions
- * RISC-V: ISA/extension support for Zacas, amocas, RVA22 profiles,
-   Zaamo, Zalrsc, Ztso, and more
- * RISC-V: SMBIOS support for RISC-V virt machine, ACPI support for
-   SRAT, SLIT, AIA, PLIC and updated RHCT table support, and numerous
-   fixes
- * s390x: Emulation support for CVDG, CVB, CVBY and CVBG instructions,
-   and fixes for LAE (Load Address Extended) emulation
-
- * and lots more...
-
-Thank you to everyone involved!
+> ---
+>  configs/devices/riscv32-softmmu/default.mak | 13 ++++++-------
+>  configs/devices/riscv64-softmmu/default.mak | 15 +++++++--------
+>  hw/riscv/Kconfig                            | 14 ++++++++++++++
+>  3 files changed, 27 insertions(+), 15 deletions(-)
+>
+> diff --git a/configs/devices/riscv32-softmmu/default.mak b/configs/device=
+s/riscv32-softmmu/default.mak
+> index 07e4fd26df3..c2cd86ce05f 100644
+> --- a/configs/devices/riscv32-softmmu/default.mak
+> +++ b/configs/devices/riscv32-softmmu/default.mak
+> @@ -4,10 +4,9 @@
+>  # CONFIG_PCI_DEVICES=3Dn
+>  # CONFIG_TEST_DEVICES=3Dn
+>
+> -# Boards:
+> -#
+> -CONFIG_SPIKE=3Dy
+> -CONFIG_SIFIVE_E=3Dy
+> -CONFIG_SIFIVE_U=3Dy
+> -CONFIG_RISCV_VIRT=3Dy
+> -CONFIG_OPENTITAN=3Dy
+> +# Boards are selected by default, uncomment to keep out of the build.
+> +# CONFIG_SPIKE=3Dn
+> +# CONFIG_SIFIVE_E=3Dn
+> +# CONFIG_SIFIVE_U=3Dn
+> +# CONFIG_RISCV_VIRT=3Dn
+> +# CONFIG_OPENTITAN=3Dn
+> diff --git a/configs/devices/riscv64-softmmu/default.mak b/configs/device=
+s/riscv64-softmmu/default.mak
+> index 221963d4c5c..39ed3a0061a 100644
+> --- a/configs/devices/riscv64-softmmu/default.mak
+> +++ b/configs/devices/riscv64-softmmu/default.mak
+> @@ -4,11 +4,10 @@
+>  # CONFIG_PCI_DEVICES=3Dn
+>  # CONFIG_TEST_DEVICES=3Dn
+>
+> -# Boards:
+> -#
+> -CONFIG_SPIKE=3Dy
+> -CONFIG_SIFIVE_E=3Dy
+> -CONFIG_SIFIVE_U=3Dy
+> -CONFIG_RISCV_VIRT=3Dy
+> -CONFIG_MICROCHIP_PFSOC=3Dy
+> -CONFIG_SHAKTI_C=3Dy
+> +# Boards are selected by default, uncomment to keep out of the build.
+> +# CONFIG_SPIKE=3Dn
+> +# CONFIG_SIFIVE_E=3Dn
+> +# CONFIG_SIFIVE_U=3Dn
+> +# CONFIG_RISCV_VIRT=3Dn
+> +# CONFIG_MICROCHIP_PFSOC=3Dn
+> +# CONFIG_SHAKTI_C=3Dn
+> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+> index 5d644eb7b16..b2955a8ae77 100644
+> --- a/hw/riscv/Kconfig
+> +++ b/hw/riscv/Kconfig
+> @@ -8,6 +8,8 @@ config IBEX
+>
+>  config MICROCHIP_PFSOC
+>      bool
+> +    default y
+> +    depends on RISCV64
+>      select CADENCE_SDHCI
+>      select MCHP_PFSOC_DMC
+>      select MCHP_PFSOC_IOSCB
+> @@ -20,12 +22,16 @@ config MICROCHIP_PFSOC
+>
+>  config OPENTITAN
+>      bool
+> +    default y
+> +    depends on RISCV32
+>      select IBEX
+>      select SIFIVE_PLIC
+>      select UNIMP
+>
+>  config RISCV_VIRT
+>      bool
+> +    default y
+> +    depends on RISCV32 || RISCV64
+>      imply PCI_DEVICES
+>      imply VIRTIO_VGA
+>      imply TEST_DEVICES
+> @@ -50,6 +56,8 @@ config RISCV_VIRT
+>
+>  config SHAKTI_C
+>      bool
+> +    default y
+> +    depends on RISCV64
+>      select RISCV_ACLINT
+>      select SHAKTI_UART
+>      select SIFIVE_PLIC
+> @@ -57,6 +65,8 @@ config SHAKTI_C
+>
+>  config SIFIVE_E
+>      bool
+> +    default y
+> +    depends on RISCV32 || RISCV64
+>      select RISCV_ACLINT
+>      select SIFIVE_GPIO
+>      select SIFIVE_PLIC
+> @@ -67,6 +77,8 @@ config SIFIVE_E
+>
+>  config SIFIVE_U
+>      bool
+> +    default y
+> +    depends on RISCV32 || RISCV64
+>      select CADENCE
+>      select RISCV_ACLINT
+>      select SIFIVE_GPIO
+> @@ -83,6 +95,8 @@ config SIFIVE_U
+>
+>  config SPIKE
+>      bool
+> +    default y
+> +    depends on RISCV32 || RISCV64
+>      select RISCV_NUMA
+>      select HTIF
+>      select RISCV_ACLINT
+> --
+> 2.44.0
+>
+>
 
