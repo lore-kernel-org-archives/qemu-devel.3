@@ -4,75 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1672C07E8E
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 13:27:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 911EFC4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 13:55:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzcf2-0007mH-Li; Wed, 24 Apr 2024 09:27:44 -0400
+	id 1rzd5S-0006Sw-SS; Wed, 24 Apr 2024 09:55:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzcey-0007lX-R1
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 09:27:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <ovs@ovs.to>) id 1rzaJO-00074j-NA
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 06:57:14 -0400
+Received: from qs51p00im-qukt01072301.me.com ([17.57.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzcew-0006RK-Fm
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 09:27:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713965257;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pvqSkn4GGbipLUKNGsqGoTdNyo8oa3kL77zI9iK2hZs=;
- b=eeHbK6ttycRT0tkCW5OAiuAMslkeJFH9gbcvrMfLTDjlD/SigVZAOub5yNP8921jD6KQXE
- 2WueFxm4ZF3h5A/9KrX2urCiVTF3qL8pIJcvM3BgttyFf9A9yLIoww1f6vBcjYETxkRtRY
- CB4wxCZu8kwz2dK2Jl9csvgHH2t6D1A=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-42-N8ng-lCXNCmcJw2wm96QAA-1; Wed, 24 Apr 2024 09:27:33 -0400
-X-MC-Unique: N8ng-lCXNCmcJw2wm96QAA-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 79038834FB1;
- Wed, 24 Apr 2024 13:27:33 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 55215C13FA7;
- Wed, 24 Apr 2024 13:27:33 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 664BA21E66C8; Wed, 24 Apr 2024 15:27:32 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>,  Alex Williamson
- <alex.williamson@redhat.com>,  Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,  qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH] vfio/ccw: Use g_autofree variable
-In-Reply-To: <20240424125441.215953-1-clg@redhat.com> (=?utf-8?Q?=22C?=
- =?utf-8?Q?=C3=A9dric?= Le Goater"'s
- message of "Wed, 24 Apr 2024 14:54:41 +0200")
-References: <20240424125441.215953-1-clg@redhat.com>
-Date: Wed, 24 Apr 2024 15:27:32 +0200
-Message-ID: <87cyqeubzv.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <ovs@ovs.to>) id 1rzaJM-00032Q-T8
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 06:57:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ovs.to; s=sig1;
+ t=1713956228; bh=UWC2JDeqhopdUAA3a6ItrwHEC6ucS1ZQ3oowEpM9ofw=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version;
+ b=pTEio9xTqdxG+fKfoJ+bNcsdFdWTvUhtppF6GvS8AGo1EM1MgCa7K5INjgLTA+51H
+ KyzYV99HGptkVeUji5/4gcwcbrpMFR3VSHIDXNKLpzYagv0qN59Va3pPJCJOlq62Uy
+ 9vHaTolna1zAiQS1zFHb0aUh4wDsFV3tAJkfIdRwrVcGoNN7trbUjDMMNsdJaI81ch
+ AkQcMZXxKRsuSxaWNre/bnwYMuOVvKO9YYDYTkGy9G/RjM9As5kN2tqgegf1g0Qi0V
+ 7Ome8NX3paXfDxJWwfDj+Av/zUPvUhRaAWfcnMpEpjcENaxjrsj8GAQsxqjkOtPB3/
+ fp6ZBpd9FGKVQ==
+Received: from localhost (qs51p00im-dlb-asmtp-mailmevip.me.com [17.57.155.28])
+ by qs51p00im-qukt01072301.me.com (Postfix) with ESMTPSA id
+ EF9F425400F3; Wed, 24 Apr 2024 10:57:06 +0000 (UTC)
+From: Konstantin Ovsepian <ovs@ovs.to>
+To: stable@vger.kernel.org,
+	gregkh@linuxfoundation.org
+Cc: davem@davemloft.net, hengqi@linux.alibaba.com, leitao@debian.org,
+ xuanzhuo@linux.alibaba.com, ovs@meta.com, qemu-devel@nongnu.org
+Subject: [PATCH 6.1.y] virtio_net: Do not send RSS key if it is not supported
+Date: Wed, 24 Apr 2024 03:57:04 -0700
+Message-ID: <20240424105704.182708-1-ovs@ovs.to>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <2024041414-humming-alarm-eb41@gregkh>
+References: <2024041414-humming-alarm-eb41@gregkh>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: sdjGZWmWw7_ebjwMuRx20I3WAV38thMO
+X-Proofpoint-ORIG-GUID: sdjGZWmWw7_ebjwMuRx20I3WAV38thMO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-04-24_08,2024-04-23_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ spamscore=0 mlxlogscore=957
+ bulkscore=0 malwarescore=0 clxscore=1030 adultscore=0 phishscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2308100000 definitions=main-2404240045
+Received-SPF: pass client-ip=17.57.155.12; envelope-from=ovs@ovs.to;
+ helo=qs51p00im-qukt01072301.me.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.668,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 24 Apr 2024 09:54:58 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,128 +78,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-C=C3=A9dric Le Goater <clg@redhat.com> writes:
+From: Breno Leitao <leitao@debian.org>
 
-> Also change the return value of vfio_ccw_register_irq_notifier() to be
-> a bool since it takes and 'Error **' argument. See the qapi/error.h
-> Rules section.
->
-> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
+commit 059a49aa2e25c58f90b50151f109dd3c4cdb3a47 upstream
 
-My comments on "[PATCH] vfio/ap: Use g_autofree variable" apply.
+There is a bug when setting the RSS options in virtio_net that can break
+the whole machine, getting the kernel into an infinite loop.
 
-More inline.
+Running the following command in any QEMU virtual machine with virtionet
+will reproduce this problem:
 
-> ---
->  hw/vfio/ccw.c | 25 +++++++++++--------------
->  1 file changed, 11 insertions(+), 14 deletions(-)
->
-> diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-> index 90e4a534371684c08e112364e1537eb8979f73f4..1c630f6e9abe93ae0c2b5615d=
-4409669f096c8c9 100644
-> --- a/hw/vfio/ccw.c
-> +++ b/hw/vfio/ccw.c
-> @@ -379,12 +379,12 @@ read_err:
->      css_inject_io_interrupt(sch);
->  }
->=20=20
-> -static void vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
-> +static bool vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
->                                             unsigned int irq,
->                                             Error **errp)
->  {
->      VFIODevice *vdev =3D &vcdev->vdev;
-> -    struct vfio_irq_info *irq_info;
-> +    g_autofree struct vfio_irq_info *irq_info =3D NULL;
->      size_t argsz;
->      int fd;
->      EventNotifier *notifier;
-> @@ -405,13 +405,13 @@ static void vfio_ccw_register_irq_notifier(VFIOCCWD=
-evice *vcdev,
->          break;
->      default:
->          error_setg(errp, "vfio: Unsupported device irq(%d)", irq);
-> -        return;
-> +        return false;
->      }
->=20=20
->      if (vdev->num_irqs < irq + 1) {
->          error_setg(errp, "vfio: IRQ %u not available (number of irqs %u)=
-",
->                     irq, vdev->num_irqs);
-> -        return;
-> +        return false;
->      }
->=20=20
->      argsz =3D sizeof(*irq_info);
-> @@ -421,14 +421,14 @@ static void vfio_ccw_register_irq_notifier(VFIOCCWD=
-evice *vcdev,
->      if (ioctl(vdev->fd, VFIO_DEVICE_GET_IRQ_INFO,
->                irq_info) < 0 || irq_info->count < 1) {
->          error_setg_errno(errp, errno, "vfio: Error getting irq info");
-> -        goto out_free_info;
-> +        return false;
->      }
->=20=20
->      if (event_notifier_init(notifier, 0)) {
->          error_setg_errno(errp, errno,
->                           "vfio: Unable to init event notifier for irq (%=
-d)",
->                           irq);
-> -        goto out_free_info;
-> +        return false;
->      }
->=20=20
->      fd =3D event_notifier_get_fd(notifier);
-> @@ -440,8 +440,7 @@ static void vfio_ccw_register_irq_notifier(VFIOCCWDev=
-ice *vcdev,
->          event_notifier_cleanup(notifier);
->      }
->=20=20
-> -out_free_info:
-> -    g_free(irq_info);
-> +    return true;
->  }
->=20=20
->  static void vfio_ccw_unregister_irq_notifier(VFIOCCWDevice *vcdev,
-> @@ -605,20 +604,18 @@ static void vfio_ccw_realize(DeviceState *dev, Erro=
-r **errp)
->          goto out_region_err;
->      }
->=20=20
-> -    vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_IO_IRQ_INDEX, &err);
-> -    if (err) {
-> +    if (!vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_IO_IRQ_INDEX, &e=
-rr)) {
+    # ethtool -X eth0  hfunc toeplitz
 
-Please pass errp instead of &err.
+This is how the problem happens:
 
->          goto out_io_notifier_err;
->      }
->=20=20
->      if (vcdev->crw_region) {
-> -        vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_CRW_IRQ_INDEX, &e=
-rr);
-> -        if (err) {
-> +        if (!vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_CRW_IRQ_INDE=
-X,
-> +                                            &err)) {
+1) ethtool_set_rxfh() calls virtnet_set_rxfh()
 
-Likewise.
+2) virtnet_set_rxfh() calls virtnet_commit_rss_command()
 
->              goto out_irq_notifier_err;
->          }
->      }
->=20=20
-> -    vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_REQ_IRQ_INDEX, &err);
-> -    if (err) {
-> +    if (!vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_REQ_IRQ_INDEX, &=
-err)) {
->          /*
->           * Report this error, but do not make it a failing condition.
->           * Lack of this IRQ in the host does not prevent normal operatio=
-n.
+3) virtnet_commit_rss_command() populates 4 entries for the rss
+scatter-gather
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+4) Since the command above does not have a key, then the last
+scatter-gatter entry will be zeroed, since rss_key_size == 0.
+sg_buf_size = vi->rss_key_size;
+
+5) This buffer is passed to qemu, but qemu is not happy with a buffer
+with zero length, and do the following in virtqueue_map_desc() (QEMU
+function):
+
+  if (!sz) {
+      virtio_error(vdev, "virtio: zero sized buffers are not allowed");
+
+6) virtio_error() (also QEMU function) set the device as broken
+
+    vdev->broken = true;
+
+7) Qemu bails out, and do not repond this crazy kernel.
+
+8) The kernel is waiting for the response to come back (function
+virtnet_send_command())
+
+9) The kernel is waiting doing the following :
+
+      while (!virtqueue_get_buf(vi->cvq, &tmp) &&
+	     !virtqueue_is_broken(vi->cvq))
+	      cpu_relax();
+
+10) None of the following functions above is true, thus, the kernel
+loops here forever. Keeping in mind that virtqueue_is_broken() does
+not look at the qemu `vdev->broken`, so, it never realizes that the
+vitio is broken at QEMU side.
+
+Fix it by not sending RSS commands if the feature is not available in
+the device.
+
+Fixes: c7114b1249fa ("drivers/net/virtio_net: Added basic RSS support.")
+Cc: stable@vger.kernel.org
+Cc: qemu-devel@nongnu.org
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Heng Qi <hengqi@linux.alibaba.com>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+(cherry picked from commit 059a49aa2e25c58f90b50151f109dd3c4cdb3a47)
+Signed-off-by: Konstantin Ovsepian <ovs@ovs.to>
+---
+ drivers/net/virtio_net.c | 26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index 45f1a871b7da..32cddb633793 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -2948,19 +2948,35 @@ static int virtnet_get_rxfh(struct net_device *dev, u32 *indir, u8 *key, u8 *hfu
+ static int virtnet_set_rxfh(struct net_device *dev, const u32 *indir, const u8 *key, const u8 hfunc)
+ {
+ 	struct virtnet_info *vi = netdev_priv(dev);
++	bool update = false;
+ 	int i;
+ 
+ 	if (hfunc != ETH_RSS_HASH_NO_CHANGE && hfunc != ETH_RSS_HASH_TOP)
+ 		return -EOPNOTSUPP;
+ 
+ 	if (indir) {
++		if (!vi->has_rss)
++			return -EOPNOTSUPP;
++
+ 		for (i = 0; i < vi->rss_indir_table_size; ++i)
+ 			vi->ctrl->rss.indirection_table[i] = indir[i];
++		update = true;
+ 	}
+-	if (key)
++
++	if (key) {
++		/* If either _F_HASH_REPORT or _F_RSS are negotiated, the
++		 * device provides hash calculation capabilities, that is,
++		 * hash_key is configured.
++		 */
++		if (!vi->has_rss && !vi->has_rss_hash_report)
++			return -EOPNOTSUPP;
++
+ 		memcpy(vi->ctrl->rss.key, key, vi->rss_key_size);
++		update = true;
++	}
+ 
+-	virtnet_commit_rss_command(vi);
++	if (update)
++		virtnet_commit_rss_command(vi);
+ 
+ 	return 0;
+ }
+@@ -3852,13 +3868,15 @@ static int virtnet_probe(struct virtio_device *vdev)
+ 	if (virtio_has_feature(vdev, VIRTIO_NET_F_HASH_REPORT))
+ 		vi->has_rss_hash_report = true;
+ 
+-	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS))
++	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS)) {
+ 		vi->has_rss = true;
+ 
+-	if (vi->has_rss || vi->has_rss_hash_report) {
+ 		vi->rss_indir_table_size =
+ 			virtio_cread16(vdev, offsetof(struct virtio_net_config,
+ 				rss_max_indirection_table_length));
++	}
++
++	if (vi->has_rss || vi->has_rss_hash_report) {
+ 		vi->rss_key_size =
+ 			virtio_cread8(vdev, offsetof(struct virtio_net_config, rss_max_key_size));
+ 
+-- 
+2.43.0
 
 
