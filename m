@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19DB9C10F15
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 08:52:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EE3CC4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 08:52:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzYMK-0004ge-Ge; Wed, 24 Apr 2024 04:52:08 -0400
+	id 1rzYMd-0005nX-D5; Wed, 24 Apr 2024 04:52:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rzYMF-00044t-Kr; Wed, 24 Apr 2024 04:52:03 -0400
+ id 1rzYMJ-0004Ze-6Z; Wed, 24 Apr 2024 04:52:07 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rzYMD-000479-5Z; Wed, 24 Apr 2024 04:52:03 -0400
+ id 1rzYMH-00047n-AM; Wed, 24 Apr 2024 04:52:06 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DB73C6153B;
- Wed, 24 Apr 2024 11:50:43 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 00C816153D;
+ Wed, 24 Apr 2024 11:50:44 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 0FFA1BE0EB;
+ by tsrv.corpit.ru (Postfix) with SMTP id 2AC12BE0ED;
  Wed, 24 Apr 2024 11:50:37 +0300 (MSK)
-Received: (nullmailer pid 1179632 invoked by uid 1000);
+Received: (nullmailer pid 1179639 invoked by uid 1000);
  Wed, 24 Apr 2024 08:50:36 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-block@nongnu.org
-Subject: [PATCH 18/27] qemu-img: resize: do not always eat last argument
-Date: Wed, 24 Apr 2024 11:50:26 +0300
-Message-Id: <9e82d6cea5b11833d9cded4dffba82dd934ef56b.1713948448.git.mjt@tls.msk.ru>
+Subject: [PATCH 20/27] qemu-img: amend: refresh options/--help
+Date: Wed, 24 Apr 2024 11:50:28 +0300
+Message-Id: <8249e0a1aabcce49a932257a37a3acf0379acfe6.1713948448.git.mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <cover.1713948448.git.mjt@tls.msk.ru>
 References: <cover.1713948448.git.mjt@tls.msk.ru>
@@ -59,105 +59,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-'qemu-img resize --help' does not work, since it wants more
-arguments.  Also -size is only recognized as a very last
-argument, but it is common for tools to handle other options
-after positional arguments too.
-
-Tell getopt_long() to return non-options together with options,
-and process filename and size in the loop, and check if there's
-an argument right after filename which looks like -N (number),
-and treat it as size (decrement).  This way we can handle --help,
-and we can also have options after filename and size, and `--'
-will be handled fine too.
-
-The only case which is not handled right is when there's an option
-between filename and size, and size is given as decrement, - in
-this case -size will be treated as option, not as size.
+Add missing long options and --help output.
 
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- qemu-img.c | 41 +++++++++++++++++++++++++++--------------
- 1 file changed, 27 insertions(+), 14 deletions(-)
+ qemu-img.c | 34 ++++++++++++++++++++++++++--------
+ 1 file changed, 26 insertions(+), 8 deletions(-)
 
 diff --git a/qemu-img.c b/qemu-img.c
-index 47dfa137c1..da10fafffc 100644
+index 688c01722c..76000c485c 100644
 --- a/qemu-img.c
 +++ b/qemu-img.c
-@@ -4297,7 +4297,7 @@ static int img_resize(const img_cmd_t *ccmd, int argc, char **argv)
- {
-     Error *err = NULL;
-     int c, ret, relative;
--    const char *filename, *fmt, *size;
-+    const char *filename = NULL, *fmt = NULL, *size = NULL;
-     int64_t n, total_size, current_size;
-     bool quiet = false;
-     BlockBackend *blk = NULL;
-@@ -4320,17 +4320,7 @@ static int img_resize(const img_cmd_t *ccmd, int argc, char **argv)
-     bool image_opts = false;
-     bool shrink = false;
- 
--    /* Remove size from argv manually so that negative numbers are not treated
--     * as options by getopt. */
--    if (argc < 3) {
--        error_exit(argv[0], "Not enough arguments");
--        return 1;
--    }
--
--    size = argv[--argc];
--
-     /* Parse getopt arguments */
--    fmt = NULL;
-     for(;;) {
+@@ -4559,26 +4559,42 @@ static int img_amend(const img_cmd_t *ccmd, int argc, char **argv)
+     for (;;) {
          static const struct option long_options[] = {
              {"help", no_argument, 0, 'h'},
-@@ -4340,7 +4330,7 @@ static int img_resize(const img_cmd_t *ccmd, int argc, char **argv)
-             {"shrink", no_argument, 0, OPTION_SHRINK},
++            {"quiet", no_argument, 0, 'q'},
++            {"progress", no_argument, 0, 'p'},
+             {"object", required_argument, 0, OPTION_OBJECT},
++            {"format", required_argument, 0, 'f'},
++            {"cache", required_argument, 0, 't'},
++            {"options", required_argument, 0, 'o'},
+             {"image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
+             {"force", no_argument, 0, OPTION_FORCE},
              {0, 0, 0, 0}
          };
--        c = getopt_long(argc, argv, ":f:hq",
-+        c = getopt_long(argc, argv, "-:f:hq",
+-        c = getopt_long(argc, argv, ":ho:f:t:pq",
++        c = getopt_long(argc, argv, "ho:f:t:pq",
                          long_options, NULL);
          if (c == -1) {
              break;
-@@ -4378,12 +4368,35 @@ static int img_resize(const img_cmd_t *ccmd, int argc, char **argv)
-         case OPTION_SHRINK:
-             shrink = true;
+         }
+ 
+         switch (c) {
+-        case ':':
+-            missing_argument(argv[optind - 1]);
+-            break;
+-        case '?':
+-            unrecognized_option(argv[optind - 1]);
+-            break;
+         case 'h':
+-            help();
++            cmd_help(ccmd,
++"[-f FMT | --image-opts] [t CACHE] [--force] [-p] [-q]\n"
++"        [--object OBJDEF -o OPTIONS FILENAME\n"
++,
++"  -q, --quiet\n"
++"     quiet operation\n"
++"  -p, --progres\n"
++"     show progress\n"
++"  -f, --format FMT\n"
++"     specify FILENAME format explicitly\n"
++"  --image-opts\n"
++"     indicates that FILENAME is a complete image specification\n"
++"   instead of a file name (incompatible with --format)\n"
++"  -t, --cache CACHE\n"
++"     cache mode for FILENAME (" BDRV_DEFAULT_CACHE ")\n"
++"  --force\n"
++"     allow certain unsafe operations\n"
++);
              break;
-+        case 1: /* a non-optional argument */
-+            if (!filename) {
-+                filename = optarg;
-+                /* see if we have -size (number) next to filename */
-+                if (optind < argc) {
-+                    size = argv[optind];
-+                    if (size[0] == '-' && size[1] >= '0' && size[1] <= '9') {
-+                        ++optind;
-+                    } else {
-+                        size = NULL;
-+                    }
-+                }
-+            } else if (!size) {
-+                size = optarg;
-+            } else {
-+                error_exit(argv[0], "Extra argument(s) in command line");
-+            }
-+            break;
+         case 'o':
+             if (accumulate_options(&options, optarg) < 0) {
+@@ -4607,6 +4623,8 @@ static int img_amend(const img_cmd_t *ccmd, int argc, char **argv)
+         case OPTION_FORCE:
+             force = true;
+             break;
++        default:
++            tryhelp(argv[0]);
          }
      }
--    if (optind != argc - 1) {
-+    if (!filename && optind < argc) {
-+        filename = argv[optind++];
-+    }
-+    if (!size && optind < argc) {
-+        size = argv[optind++];
-+    }
-+    if (!filename || !size || optind < argc) {
-         error_exit(argv[0], "Expecting image file name and size");
-     }
--    filename = argv[optind++];
  
-     /* Choose grow, shrink, or absolute resize mode */
-     switch (size[0]) {
 -- 
 2.39.2
 
