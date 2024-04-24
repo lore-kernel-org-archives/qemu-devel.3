@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B5C9C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 00:14:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 679B5C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 01:31:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzQH5-00087Q-Kh; Tue, 23 Apr 2024 20:14:11 -0400
+	id 1rzRT3-0005Y6-2w; Tue, 23 Apr 2024 21:30:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rzQH2-000872-Ma; Tue, 23 Apr 2024 20:14:08 -0400
-Received: from mail-ua1-x92b.google.com ([2607:f8b0:4864:20::92b])
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1rzRSy-0005Xq-3z
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 21:30:32 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rzQH0-0004xC-W1; Tue, 23 Apr 2024 20:14:08 -0400
-Received: by mail-ua1-x92b.google.com with SMTP id
- a1e0cc1a2514c-7eb89aa9176so1876119241.3; 
- Tue, 23 Apr 2024 17:14:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1rzRSv-00070N-2o
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 21:30:31 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-5bdbe2de25fso4970237a12.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 18:28:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1713917641; x=1714522441; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Bqux2F1GZ9uFOQ6wr08fmB0cKm4rga5TZUBfcEt/pTM=;
- b=OIxaxR044qPP3MBC5b10sl2Znyi35142kFbgUR64I98kPcr98TWig9xSEsArUZ5gcN
- jO2CYR6+fyGK6Kva5BVa608YVqiEAY2BuvA2ERBdopUSjuAWR+/BaqDa2OI6OPQXAVyW
- 0msLd+PfoMZZLFDauvwAREoxi9IWHbRvcWgu8Nk5eOwDLN80YA9+gWGEjQ7mvC+8FeTl
- 3sg4xWhuqhqFDNEJ5H1elQ2pEtXSWYm3rI2kFMFYHFuqLmlD5zu8fNrRTsDwvtFy25R5
- 0j1w1CEnH8C3HAPEUN/KIczJC+ylRRjU1gvkuEXpInyXyhTkx58TXQm9x3xHgWSfrtYu
- VjqA==
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1713922105; x=1714526905;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=HvzGrA+pxrw/v+UCmdez8eqSK9SA32+kLNEJ0Eo9KI8=;
+ b=gTTHKiu5aAGOVJZLguqWWqj6zV+zKS25oNBA8NOIAcR2bjjL40Nh6WoKEzujPMeS8H
+ 0mUEvCpT6ypNVMzcE/ssIghBw/3rw5FDnBqYpRRoo6OvwfdtmPniSuo6f1rLGtJfJ1A0
+ bDTBPoqML1gGrQS4LNKfOUc4M/Jr4aXCmSYnVrppVhANtYE8TaPYbe5lYD76KrqbW7X/
+ OMoPtZSH04DtZ2p2VATNBS6tqT6D00QhTX+vzVGS6+vgHVbyoq7N/9ZJfjoRwoCmVru9
+ 4KxDtnwUt4sMVsXNL9SUMn07cllOYaA3SDiL2L7JausD3e3zdB9lLBCBzs4YfhT2IU6S
+ kpFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713917641; x=1714522441;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Bqux2F1GZ9uFOQ6wr08fmB0cKm4rga5TZUBfcEt/pTM=;
- b=ERJ9WgKlFAL68e/4W6r2n1+pfICsw6JkhmXYIoOzNSwJQupASaNtx0H0wRqwqDq77T
- m9+olo5xPg0IX00CoOZSghzw9EoZcES9ktKhqDkbWAMQAy8jnJxuC+TK5t4tFzShoIaQ
- thIz3V50bwdoM5SwEQ7mq4G+GxbnctpgtrLN2KK+qSFCIVadvY8lJcqk0ZznhYnWez0v
- DSVK6LBLjsXsRKbIxUhBmddNBOd4onSaFKt2XIV3vZgAiJtoQAd86M9PEWasDrS0f4MF
- hG+lIl9L774eJ1shobZ4KnaWInPnHcFhEYWqHxpsrtSiDkZOYB7LpW+xuDW81M35fRub
- EtqA==
+ d=1e100.net; s=20230601; t=1713922105; x=1714526905;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=HvzGrA+pxrw/v+UCmdez8eqSK9SA32+kLNEJ0Eo9KI8=;
+ b=lWggXvh27kQSYlFOQb3pNdrIOEc/NKUtkbGcC/bRsll/CYxcXz07qA9ZNCuZdqYVU0
+ giVp3eV6+i/vLTvkKtGnhsI7g4H4iGEiijH7wbVUM1HSqwI+fiPUc+7aubiy6iXIgw0B
+ YLUVGRXOZvj76OLQRBmigeqF2KXmWPIqOdssoV4SWhJ/E1OGZiIFzqkVHjV2h0VSxraR
+ /1ZYcC/tceLdv56BEyaNszhb3kpcxL52TrXNvI5GGAPF68+5VCPsQ828xplz1yZ0+63F
+ zlMWHbRspC5JkxCqW3lqNl2ENTRMR94OmPhOFXj291ozAPzlotYzGLy8H6nfutDkI1XG
+ lSPA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVSz7TmxUoUGxRbVd3sRdKo0XZrPODHiMj5XNDKvvfuyJ8yAQDMO4pcZm/kUF9YcaRmafZrZnWeH1stabfXUxLzWnM/QG0=
-X-Gm-Message-State: AOJu0Yy/gVo8D8l9eTmQ90nLhFPMQJPWGSsBRCgQVjaNaNSiqknUAn1T
- 3ieKXHI/eOsn6K5aiV9Xvvk+WCwsUNdnkrcXPxo7T4Pvfsw7bCPIU+jIUQg6r+zBJkQ7WR2b7sn
- 7fWM9YD/Zwfee6mP9yMoAjeqfwtVcA/V+VOg=
-X-Google-Smtp-Source: AGHT+IGMYdKNzgEndLXYzaR9CjeGefEYs3SAXBgzbawvIEdyZ6B8UTsDCYa45izD1Q1jsO7sf/O3L6+QPc4kxr3pdVY=
-X-Received: by 2002:a05:6102:26c9:b0:47b:d34f:a4ca with SMTP id
- m9-20020a05610226c900b0047bd34fa4camr1342382vss.30.1713917640817; Tue, 23 Apr
- 2024 17:14:00 -0700 (PDT)
+ AJvYcCWVMu27QtbGESRHAoSyHebNStk9C3sJYKOT4RkYoqgJ2XNQdjJ+qd8K586PmIZoWs4/UvLxCAu7pxAr3QQVzf7EFqnAwT4=
+X-Gm-Message-State: AOJu0Yzw+tIyr6BGd4vtOUZgQvuui//eHpPjDGv0Vn6WQJagipGM/GPp
+ Vsg7hLBFLCIB2dN2GsDumHndIwhF+8UkGz+OoABMIfz3MjuXIDf+podoVLVR8obdWtURvEWegVM
+ bTVpU49t2/EpF1RIV5paPpUwR0e8toYefMF4jGg==
+X-Google-Smtp-Source: AGHT+IHtW1UzPZucOoQQ+MTQgrpXLmZczRDZNWSu2dj50IOaBLkC0NdKi6i42ply3TTi695rUzQSctc7XqFFfr3VU+g=
+X-Received: by 2002:a05:6a20:1044:b0:1a7:4b3f:a66c with SMTP id
+ gt4-20020a056a20104400b001a74b3fa66cmr961078pzc.49.1713922104380; Tue, 23 Apr
+ 2024 18:28:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240422134605.534207-2-ajones@ventanamicro.com>
-In-Reply-To: <20240422134605.534207-2-ajones@ventanamicro.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 24 Apr 2024 10:13:34 +1000
-Message-ID: <CAKmqyKNX=gnWgTBDp60W_iZk3aEfcNbvfhB+N6ZoWvkQdwxgkg@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv/kvm: Fix exposure of Zkr
-To: Andrew Jones <ajones@ventanamicro.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
- kvm-riscv@lists.infradead.org, palmer@dabbelt.com, alistair.francis@wdc.com, 
- bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com, 
- zhiwei_liu@linux.alibaba.com, apatel@ventanamicro.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92b;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+References: <20240423091306.754432-1-mii@sfc.wide.ad.jp>
+ <20240423091306.754432-2-mii@sfc.wide.ad.jp> <Zie5Fr3m9BquVpp3@x1n>
+In-Reply-To: <Zie5Fr3m9BquVpp3@x1n>
+From: Yong Huang <yong.huang@smartx.com>
+Date: Wed, 24 Apr 2024 09:28:08 +0800
+Message-ID: <CAK9dgmaOOgQ3i2Er5GWz0i0917puSj_4Wt+1KZdJyV2KoazyMw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] migration/dirtyrate: Fix segmentation fault
+To: Peter Xu <peterx@redhat.com>
+Cc: Masato Imai <mii@sfc.wide.ad.jp>, qemu-devel@nongnu.org, 
+ Fabiano Rosas <farosas@suse.de>
+Content-Type: multipart/alternative; boundary="000000000000346eba0616cd96de"
+Received-SPF: none client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=yong.huang@smartx.com; helo=mail-pg1-x52e.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,134 +91,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 22, 2024 at 11:47=E2=80=AFPM Andrew Jones <ajones@ventanamicro.=
-com> wrote:
->
-> The Zkr extension may only be exposed to KVM guests if the VMM
-> implements the SEED CSR. Use the same implementation as TCG.
->
-> Without this patch, running with a KVM which does not forward the
-> SEED CSR access to QEMU will result in an ILL exception being
-> injected into the guest (this results in Linux guests crashing on
-> boot). And, when running with a KVM which does forward the access,
-> QEMU will crash, since QEMU doesn't know what to do with the exit.
->
-> Fixes: 3108e2f1c69d ("target/riscv/kvm: update KVM exts to Linux 6.8")
-> Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
+--000000000000346eba0616cd96de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thanks!
+On Tue, Apr 23, 2024 at 9:35=E2=80=AFPM Peter Xu <peterx@redhat.com> wrote:
 
-Applied to riscv-to-apply.next
+> On Tue, Apr 23, 2024 at 09:13:08AM +0000, Masato Imai wrote:
+> > When the KVM acceleration parameter is not set, executing calc_dirty_ra=
+te
+> > with the -r or -b option results in a segmentation fault due to accessi=
+ng
+> > a null kvm_state pointer in the kvm_dirty_ring_enabled function.
+> > This commit adds a check for kvm_enabled to prevent segmentation faults=
+.
+> >
+> > Signed-off-by: Masato Imai <mii@sfc.wide.ad.jp>
+> > ---
+> >  migration/dirtyrate.c | 7 +++++++
+> >  1 file changed, 7 insertions(+)
+> >
+> > diff --git a/migration/dirtyrate.c b/migration/dirtyrate.c
+> > index 1d2e85746f..2a7df52519 100644
+> > --- a/migration/dirtyrate.c
+> > +++ b/migration/dirtyrate.c
+> > @@ -799,6 +799,13 @@ void qmp_calc_dirty_rate(int64_t calc_time,
+> >       * dirty ring mode only works when kvm dirty ring is enabled.
+> >       * on the contrary, dirty bitmap mode is not.
+> >       */
+> > +    if (!kvm_enabled() &&
+> > +        (mode =3D=3D DIRTY_RATE_MEASURE_MODE_DIRTY_RING ||
+> > +         mode =3D=3D DIRTY_RATE_MEASURE_MODE_DIRTY_BITMAP)) {
+> > +        error_setg(errp, "mode %s requires kvm to be enabled.",
+> > +                         DirtyRateMeasureMode_str(mode));
+> > +        return;
+> > +    }
+>
+> Logically dirty bitmap should work with tcg.  So the other option is to l=
+et
+> kvm_dirty_ring_enabled() check kvm_state too and return false if
+> kvm_state=3D=3DNULL?
+>
 
-Alistair
+Agree, better solution
 
-> ---
->  target/riscv/cpu.h         |  3 +++
->  target/riscv/csr.c         | 18 ++++++++++++++----
->  target/riscv/kvm/kvm-cpu.c | 25 +++++++++++++++++++++++++
->  3 files changed, 42 insertions(+), 4 deletions(-)
+
+> >      if (((mode =3D=3D DIRTY_RATE_MEASURE_MODE_DIRTY_RING) &&
+> >          !kvm_dirty_ring_enabled()) ||
+> >          ((mode =3D=3D DIRTY_RATE_MEASURE_MODE_DIRTY_BITMAP) &&
+> > --
+> > 2.34.1
+> >
 >
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 3b1a02b9449a..52fb8c15d08f 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -821,6 +821,9 @@ void riscv_set_csr_ops(int csrno, riscv_csr_operation=
-s *ops);
->
->  void riscv_cpu_register_gdb_regs_for_features(CPUState *cs);
->
-> +target_ulong riscv_new_csr_seed(target_ulong new_value,
-> +                                target_ulong write_mask);
-> +
->  uint8_t satp_mode_max_from_map(uint32_t map);
->  const char *satp_mode_str(uint8_t satp_mode, bool is_32_bit);
->
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index 726096444fae..829d8346ed4e 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -4267,10 +4267,8 @@ static RISCVException write_upmbase(CPURISCVState =
-*env, int csrno,
->  #endif
->
->  /* Crypto Extension */
-> -static RISCVException rmw_seed(CPURISCVState *env, int csrno,
-> -                               target_ulong *ret_value,
-> -                               target_ulong new_value,
-> -                               target_ulong write_mask)
-> +target_ulong riscv_new_csr_seed(target_ulong new_value,
-> +                                target_ulong write_mask)
->  {
->      uint16_t random_v;
->      Error *random_e =3D NULL;
-> @@ -4294,6 +4292,18 @@ static RISCVException rmw_seed(CPURISCVState *env,=
- int csrno,
->          rval =3D random_v | SEED_OPST_ES16;
->      }
->
-> +    return rval;
-> +}
-> +
-> +static RISCVException rmw_seed(CPURISCVState *env, int csrno,
-> +                               target_ulong *ret_value,
-> +                               target_ulong new_value,
-> +                               target_ulong write_mask)
-> +{
-> +    target_ulong rval;
-> +
-> +    rval =3D riscv_new_csr_seed(new_value, write_mask);
-> +
->      if (ret_value) {
->          *ret_value =3D rval;
->      }
-> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index 6a6c6cae80f1..50bdbd24a878 100644
-> --- a/target/riscv/kvm/kvm-cpu.c
-> +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -1418,6 +1418,28 @@ static int kvm_riscv_handle_sbi(CPUState *cs, stru=
-ct kvm_run *run)
->      return ret;
->  }
->
-> +static int kvm_riscv_handle_csr(CPUState *cs, struct kvm_run *run)
-> +{
-> +    target_ulong csr_num =3D run->riscv_csr.csr_num;
-> +    target_ulong new_value =3D run->riscv_csr.new_value;
-> +    target_ulong write_mask =3D run->riscv_csr.write_mask;
-> +    int ret =3D 0;
-> +
-> +    switch (csr_num) {
-> +    case CSR_SEED:
-> +        run->riscv_csr.ret_value =3D riscv_new_csr_seed(new_value, write=
-_mask);
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "%s: un-handled CSR EXIT for CSR %lx\n",
-> +                      __func__, csr_num);
-> +        ret =3D -1;
-> +        break;
-> +    }
-> +
-> +    return ret;
-> +}
-> +
->  int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
->  {
->      int ret =3D 0;
-> @@ -1425,6 +1447,9 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_r=
-un *run)
->      case KVM_EXIT_RISCV_SBI:
->          ret =3D kvm_riscv_handle_sbi(cs, run);
->          break;
-> +    case KVM_EXIT_RISCV_CSR:
-> +        ret =3D kvm_riscv_handle_csr(cs, run);
-> +        break;
->      default:
->          qemu_log_mask(LOG_UNIMP, "%s: un-handled exit reason %d\n",
->                        __func__, run->exit_reason);
 > --
-> 2.44.0
+> Peter Xu
 >
 >
+Thanks,
+Yong
+
+
+--=20
+Best regards
+
+--000000000000346eba0616cd96de
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
+t-family:&quot;comic sans ms&quot;,sans-serif"><br></div></div><br><div cla=
+ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Apr 23, 20=
+24 at 9:35=E2=80=AFPM Peter Xu &lt;<a href=3D"mailto:peterx@redhat.com">pet=
+erx@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" st=
+yle=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:sol=
+id;border-left-color:rgb(204,204,204);padding-left:1ex">On Tue, Apr 23, 202=
+4 at 09:13:08AM +0000, Masato Imai wrote:<br>
+&gt; When the KVM acceleration parameter is not set, executing calc_dirty_r=
+ate<br>
+&gt; with the -r or -b option results in a segmentation fault due to access=
+ing<br>
+&gt; a null kvm_state pointer in the kvm_dirty_ring_enabled function.<br>
+&gt; This commit adds a check for kvm_enabled to prevent segmentation fault=
+s.<br>
+&gt; <br>
+&gt; Signed-off-by: Masato Imai &lt;<a href=3D"mailto:mii@sfc.wide.ad.jp" t=
+arget=3D"_blank">mii@sfc.wide.ad.jp</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 migration/dirtyrate.c | 7 +++++++<br>
+&gt;=C2=A0 1 file changed, 7 insertions(+)<br>
+&gt; <br>
+&gt; diff --git a/migration/dirtyrate.c b/migration/dirtyrate.c<br>
+&gt; index 1d2e85746f..2a7df52519 100644<br>
+&gt; --- a/migration/dirtyrate.c<br>
+&gt; +++ b/migration/dirtyrate.c<br>
+&gt; @@ -799,6 +799,13 @@ void qmp_calc_dirty_rate(int64_t calc_time,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0* dirty ring mode only works when kvm dirty =
+ring is enabled.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0* on the contrary, dirty bitmap mode is not.=
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
+&gt; +=C2=A0 =C2=A0 if (!kvm_enabled() &amp;&amp;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 (mode =3D=3D DIRTY_RATE_MEASURE_MODE_DIRT=
+Y_RING ||<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0mode =3D=3D DIRTY_RATE_MEASURE_MODE=
+_DIRTY_BITMAP)) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;mode %s requires k=
+vm to be enabled.&quot;,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0DirtyRateMeasureMode_str(mode));<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+<br>
+Logically dirty bitmap should work with tcg.=C2=A0 So the other option is t=
+o let<br>
+kvm_dirty_ring_enabled() check kvm_state too and return false if<br>
+kvm_state=3D=3DNULL?<br></blockquote><div><br></div><div><div class=3D"gmai=
+l_default" style=3D"font-family:&quot;comic sans ms&quot;,sans-serif">Agree=
+, better solution</div></div><div><br></div><blockquote class=3D"gmail_quot=
+e" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-styl=
+e:solid;border-left-color:rgb(204,204,204);padding-left:1ex">
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 if (((mode =3D=3D DIRTY_RATE_MEASURE_MODE_DIRTY_RI=
+NG) &amp;&amp;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 !kvm_dirty_ring_enabled()) ||<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ((mode =3D=3D DIRTY_RATE_MEASURE_MOD=
+E_DIRTY_BITMAP) &amp;&amp;<br>
+&gt; -- <br>
+&gt; 2.34.1<br>
+&gt; <br>
+<br>
+-- <br>
+Peter Xu<br>
+<br>
+</blockquote></div><div><br></div><div class=3D"gmail_default" style=3D"fon=
+t-family:&quot;comic sans ms&quot;,sans-serif">Thanks,</div><div class=3D"g=
+mail_default" style=3D"font-family:&quot;comic sans ms&quot;,sans-serif">Yo=
+ng</div><br clear=3D"all"><div><br></div><span class=3D"gmail_signature_pre=
+fix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><div dir=3D"l=
+tr"><font face=3D"comic sans ms, sans-serif">Best regards</font></div></div=
+></div>
+
+--000000000000346eba0616cd96de--
 
