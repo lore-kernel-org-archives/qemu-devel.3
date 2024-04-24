@@ -4,91 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1135C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 21:53:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF918C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 21:57:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzkXN-00072h-Mc; Wed, 24 Apr 2024 17:52:21 -0400
+	id 1rzkcK-00086u-S2; Wed, 24 Apr 2024 17:57:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rzkXK-000724-PI
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 17:52:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1rzkcI-00086c-Kh; Wed, 24 Apr 2024 17:57:27 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rzkXI-0000i6-If
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 17:52:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713995535;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=N876Yfb+PMmsdEqjbe4od1uYZnv5ljJY1q7oWqc1ehM=;
- b=L5ocVeJIML7jdAqcTsqu+kbv75Mk8Tmi3h81CMVh//aVnN9jl6mjrxO1ZqbKBl8o1mn2GD
- GAL+FoxRydNkSY+CacBJgH4CYIqmeMvYsFoU2SKW5xLPfvw9GW+L8czzK0RmhSdNm8ocRj
- 5Q/1vwNkpMD31eYMlJMre5RngumYMOA=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-455-vZJX998sPMCUGKepems5YQ-1; Wed, 24 Apr 2024 17:52:13 -0400
-X-MC-Unique: vZJX998sPMCUGKepems5YQ-1
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6a094939dedso1006706d6.3
- for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 14:52:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713995533; x=1714600333;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=N876Yfb+PMmsdEqjbe4od1uYZnv5ljJY1q7oWqc1ehM=;
- b=WFvMKM89jabbD6zG6jmMX273Ft/89Z220TI/L/3jEvz8p8/9e8F2YoBWobe2lE8z9w
- IW47Xxcc8GxIj0A9xpK/ofJUaLqZajroCPoyD+X8551ivt8FlCkg2xpiX1x7T9lj6vBx
- z/6JxgdLQxNyu7+nPL9hCGbFukc0+7J8A5FV7ftF+oJPgz8so7AeiG665vAGhdX/UaVS
- xe1jCFVXdqHk6OG+uTFUE5U+dx9dZSWzkf4UtFdbjdN/dPX/ScQzKXb72yLX5bVNBtMJ
- +5iGz0m7i21S4jCOzbhbnQKwl3k+0e7KPL8py/d2q2k70NqFkllpX5Q5kHhIcWoOJ422
- 8Ifw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXJsXj03u6suu1dnLB2eqi3kNLUyNkknBxmVSoWsv1YrrvYxhV19/WAwYZ0pdQmxzr0xnZNtCQEKXvLAEMjJIThYqOF8wA=
-X-Gm-Message-State: AOJu0Ywlxsr3dzaKalLSqvTW83+k1nrDVldsxBbRysRzxwS0c5kGbRjH
- WU51W4MWEFovdXeIRC/eCIN8bjuTDD6Qr5PKf9LYI0dOXqIpQAhCNUpU2Bm5b5RDOIkrac511A1
- FJ4d75Br+kUzbeAvjS65a5NxGPTL+Xz7I4yzKmosTZVtME8WTGyqQ
-X-Received: by 2002:a05:6214:21cc:b0:696:b235:f39 with SMTP id
- d12-20020a05621421cc00b00696b2350f39mr3973712qvh.6.1713995532622; 
- Wed, 24 Apr 2024 14:52:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHDARA+20ZBS6H5IwdBPVPJLEQvGU7DdwwNSQVpdO3N8WJ4oLGsV+lXu67gwO49kMQv8Jp+HQ==
-X-Received: by 2002:a05:6214:21cc:b0:696:b235:f39 with SMTP id
- d12-20020a05621421cc00b00696b2350f39mr3973691qvh.6.1713995532175; 
- Wed, 24 Apr 2024 14:52:12 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- k11-20020a0cf28b000000b006a053b4c3adsm6369533qvl.118.2024.04.24.14.52.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Apr 2024 14:52:11 -0700 (PDT)
-Date: Wed, 24 Apr 2024 17:52:09 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
- pbonzini@redhat.com, qemu-devel@nongnu.org, yc-core@yandex-team.ru
-Subject: Re: [PATCH v2 1/2] migration: rework migrate_set_error() to
- migrate_report_err()
-Message-ID: <Zil_CUVe7O2NjLRt@x1n>
-References: <20240424174245.1237942-1-vsementsov@yandex-team.ru>
- <20240424174245.1237942-2-vsementsov@yandex-team.ru>
- <ZilgISOGWfODZvMC@x1n>
- <0230a7ce-af4f-4767-984d-ac069b0a9d19@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1rzkcG-0003ia-JU; Wed, 24 Apr 2024 17:57:26 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43OLkC7Y028001; Wed, 24 Apr 2024 21:57:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : content-transfer-encoding : mime-version; s=pp1;
+ bh=uaMPw63nIfu1JfJoaW90reNX4nwtZbK7G4tbPPYh4lw=;
+ b=QAjirQxcgkv8zSblxXLNs3jDWopIJAwOSBwN8ZVERx4+GXllp2BQNs0ni+G5tetnsMN4
+ HyLHOb23Rpa2JG63K+flV/3ajJxAjq5lyho5Gf4QAHLQ7vTiXtHM1lc1juMu3Nr3X5O5
+ YlidsE739HtBobZn9XCLnFHLDLbZZV0MAauqQhHOja4J/zm+lcMHDGKTmY19OOyJCzzB
+ 4VusYO50E0RAwHaAQ3ePRg2n/YQWEPXIenYXiymBNATmd2LnIvdAHwOtyTFzAiMboPGB
+ kX0C2jDhsfFETAwmPx342u1FH9xtnXavIwQonODY/2HgdoGm/XZVGpPgbl3003ZDU5ei GQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xqa0jr1qm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 24 Apr 2024 21:57:13 +0000
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43OLvDXv011760;
+ Wed, 24 Apr 2024 21:57:13 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xqa0jr1qf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 24 Apr 2024 21:57:13 +0000
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43OLLFZh015343; Wed, 24 Apr 2024 21:57:11 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3xmshme2vd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 24 Apr 2024 21:57:11 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 43OLv8eq16581324
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 24 Apr 2024 21:57:11 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E16175805E;
+ Wed, 24 Apr 2024 21:57:08 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5DEDB58056;
+ Wed, 24 Apr 2024 21:57:08 +0000 (GMT)
+Received: from li-d664314c-3171-11b2-a85c-fa8047ef35bd.pok.ibm.com (unknown
+ [9.12.68.85]) by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 24 Apr 2024 21:57:08 +0000 (GMT)
+From: Collin Walling <walling@linux.ibm.com>
+To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: thuth@redhat.com, david@redhat.com, wangyanan55@huawei.com,
+ philmd@linaro.org, marcel.apfelbaum@gmail.com, eduardo@habkost.net,
+ armbru@redhat.com, Collin Walling <walling@linux.ibm.com>
+Subject: [PATCH v3 0/2] query-cpu-model-expansion: report deprecated features
+Date: Wed, 24 Apr 2024 17:56:31 -0400
+Message-ID: <20240424215633.48906-1-walling@linux.ibm.com>
+X-Mailer: git-send-email 2.43.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: xZglCcHHLqGwKDfnqJMMpTx6bChedPvM
+X-Proofpoint-GUID: a-IbC4bcQTuLOqBxDDujyONoUsVWuHhz
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <0230a7ce-af4f-4767-984d-ac069b0a9d19@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-04-24_19,2024-04-24_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015
+ priorityscore=1501 malwarescore=0 bulkscore=0 phishscore=0 suspectscore=0
+ lowpriorityscore=0 spamscore=0 adultscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=944 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2404010000 definitions=main-2404240113
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=walling@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.668,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,126 +112,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 24, 2024 at 10:50:14PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> On 24.04.24 22:40, Peter Xu wrote:
-> > On Wed, Apr 24, 2024 at 08:42:44PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> > > 1. Most of callers want to free the error after call. Let's help them.
-> > > 
-> > > 2. Some callers log the error, some not. We also have places where we
-> > >     log the stored error. Let's instead simply log every migration
-> > >     error.
-> > > 
-> > > 3. Some callers have to retrieve current migration state only to pass
-> > >     it to migrate_set_error(). In the new helper let's get the state
-> > >     automatically.
-> > > 
-> > > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> > > ---
-> > >   migration/migration.c    | 48 ++++++++++++----------------------------
-> > >   migration/migration.h    |  2 +-
-> > >   migration/multifd.c      | 18 ++++++---------
-> > >   migration/postcopy-ram.c |  3 +--
-> > >   migration/savevm.c       | 16 +++++---------
-> > >   5 files changed, 28 insertions(+), 59 deletions(-)
-> > > 
-> > > diff --git a/migration/migration.c b/migration/migration.c
-> > > index 696762bc64..806b7b080b 100644
-> > > --- a/migration/migration.c
-> > > +++ b/migration/migration.c
-> > > @@ -285,7 +285,7 @@ void migration_bh_schedule(QEMUBHFunc *cb, void *opaque)
-> > >   void migration_cancel(const Error *error)
-> > >   {
-> > >       if (error) {
-> > > -        migrate_set_error(current_migration, error);
-> > > +        migrate_report_err(error_copy(error));
-> > >       }
-> > >       if (migrate_dirty_limit()) {
-> > >           qmp_cancel_vcpu_dirty_limit(false, -1, NULL);
-> > > @@ -779,13 +779,6 @@ process_incoming_migration_co(void *opaque)
-> > >       }
-> > >       if (ret < 0) {
-> > > -        MigrationState *s = migrate_get_current();
-> > > -
-> > > -        if (migrate_has_error(s)) {
-> > > -            WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
-> > > -                error_report_err(s->error);
-> > > -            }
-> > > -        }
-> > >           error_report("load of migration failed: %s", strerror(-ret));
-> > >           goto fail;
-> > >       }
-> > > @@ -1402,10 +1395,6 @@ static void migrate_fd_cleanup(MigrationState *s)
-> > >                             MIGRATION_STATUS_CANCELLED);
-> > >       }
-> > > -    if (s->error) {
-> > > -        /* It is used on info migrate.  We can't free it */
-> > > -        error_report_err(error_copy(s->error));
-> > > -    }
-> > >       type = migration_has_failed(s) ? MIG_EVENT_PRECOPY_FAILED :
-> > >                                        MIG_EVENT_PRECOPY_DONE;
-> > >       migration_call_notifiers(s, type, NULL);
-> > > @@ -1418,12 +1407,14 @@ static void migrate_fd_cleanup_bh(void *opaque)
-> > >       migrate_fd_cleanup(opaque);
-> > >   }
-> > > -void migrate_set_error(MigrationState *s, const Error *error)
-> > > +void migrate_report_err(Error *error)
-> > >   {
-> > > +    MigrationState *s = migrate_get_current();
-> > 
-> > Avoid passing in *s looks ok.
-> > 
-> > >       QEMU_LOCK_GUARD(&s->error_mutex);
-> > >       if (!s->error) {
-> > >           s->error = error_copy(error);
-> > 
-> > I think I get your point, but then looks like this error_copy() should be
-> > removed but forgotten?
-> > 
-> > I remember I had an attempt to do similarly (but only transfer the
-> > ownership):
-> > 
-> > https://lore.kernel.org/qemu-devel/20230829214235.69309-3-peterx@redhat.com/
-> > 
-> > However I gave up later and I forgot why.  One reason could be that I hit a
-> > use-after-free, then found that well indeed leaking an Error is much better
-> > than debugging a UAF.
-> 
-> Hmm, yes I saw a leaked Error somewhere, and this patch should fix it. But may be I missed introducing this use-after-free again)
+Previous version here (different subject line): 
+https://mail.gnu.org/archive/html/qemu-devel/2024-04/msg03200.html
 
-Ah do you mean you fixed a bug?  If so please use a standalone patch for
-that and we'll need to copy stable.
+Changelog
 
-I did notice that in this series on patch looks like does more than one
-thing.  It'll be helpful too for reviewers when patch can be split
-properly.
+    v3
+        - removed optional disable-deprecated-feats argument
+        - added deprecated-props array to CpuModelInfo struct
+        - amended cover letter language to reflect design
 
-> 
-> > 
-> > So maybe we simply keep it like before?  If you like such change, let's
-> > just be extremely caucious.
-> > 
-> > >       }
-> > > +    error_report_err(error);
-> > 
-> > The ideal case to me is we don't trigger an error_report() all over the
-> > place.  We're slightly going backward from that regard, IMHO..
-> > 
-> > Ideally I think we shouldn't dump anything to stderr, but user should
-> > always query from qmp.
-> > 
-> 
-> Sounds reasonable to me. I'm just unsure, if keep it like before, how
-> should I correctly update logging to stderr in
-> process_incoming_migration_co(). Could we just drop error reporting to
-> stderr? Or should it be kept as is for the case when exit_on_error is
-> true?
+    v2 
+        - removed "static-recommended" expansion type
+        - implemented optional disable-deprecated-feats argument
 
-I'm not sure I get the question, but I'll comment in patch 2 very soon, so
-we can move the discussion there.
+---
 
-Thanks,
+The current implementation of query-cpu-model-expansion is lacking a way to retrieve
+CPU models with properties (i.e. features) that are flagged as deprecated. To remedy
+this, a list of deprecated-props has been appended to the CpuModelInfo struct, and
+will currently be reported by a query-cpu-model-expansion.
+
+Check patch #2 description for an example output.
+
+A simple interface is designed that contains an array of feature bits that are flagged
+as deprecated. This list may be easily populated with more features in the future.
+
+    void s390_get_deprecated_features(S390FeatBitmap features)
+    {
+        static const int feats[] = {
+             /* CSSKE is deprecated on newer generations */
+             S390_FEAT_CONDITIONAL_SSKE,
+             S390_FEAT_BPB,
+             /* Deprecated on z16 */
+             S390_FEAT_CONSTRAINT_TRANSACTIONAL_EXE,
+             S390_FEAT_TRANSACTIONAL_EXE
+        };
+        int i;
+
+        for (i = 0; i < ARRAY_SIZE(feats); i++) {
+            set_bit(feats[i], features);
+        }
+    }
+
+Use case example:
+
+Newer s390 machines may signal the end-of-support for particular CPU features,
+rendering guests operating with older CPU models incapable of running on
+said machines. A manual effort to disable certain CPU features would be
+required.
+
+Reporting a list of deprecated features allows the user / management app to
+take the next steps to ensure the guest is defined in a way that ensures
+a migration in the future.
+
+Collin L. Walling (2):
+  target/s390x: report deprecated-props in cpu-model-expansion reply
+  target/s390x: flag te and cte as deprecated
+
+ qapi/machine-target.json         |  5 ++++-
+ target/s390x/cpu_features.c      | 17 +++++++++++++++++
+ target/s390x/cpu_features.h      |  1 +
+ target/s390x/cpu_models_sysemu.c |  6 ++++++
+ 4 files changed, 28 insertions(+), 1 deletion(-)
 
 -- 
-Peter Xu
+2.43.0
 
 
