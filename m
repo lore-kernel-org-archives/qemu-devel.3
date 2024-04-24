@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0060DC19F4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 00:11:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F6BAC10F15
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 00:12:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzmbf-00066j-4g; Wed, 24 Apr 2024 20:04:55 -0400
+	id 1rzmY8-0008Nv-CU; Wed, 24 Apr 2024 20:01:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rzmax-0005Fi-7J
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 20:04:13 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1rzmXW-0008AQ-V2
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 20:00:45 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rzmat-0007tv-Lb
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 20:04:10 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-1e40042c13eso2910555ad.2
- for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 17:04:07 -0700 (PDT)
+ id 1rzmXR-0006AH-A1
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 20:00:36 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-5f415fd71f8so337905a12.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 17:00:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714003446; x=1714608246; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714003231; x=1714608031; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=5vBkU+37mGqQK6oTkMHCKqIJ4geVz8b/nkIOKlsoblU=;
- b=rwrBS0nKNdyvOC1d7q8+NdNUSsShR508MPyUYn9FORWrde6KQShmU1JqflmtUYzhrc
- AT2ZlNZCJhKqc7TUfENn/fRoL1Hka+DCxgS9+pivv6StK2f9NyAk1aAsx1tejMaX0w3N
- ly8sCWKHuztYBfJQPWgX4vDITpJd/AYAOUSV7keZ7SQ/iC0VeBIfq+aV7oo8vKKlEng7
- pqmvVnCU3AVXeo+HqPFbay1wrQrw7k8anehzPNohMtnEEji1TNZnlBY21/JTbe0qKmj4
- LlyzHmmTrveIDm32QejmrzWyJdLNaAWtzr11sjNy/Cn8gFBK1Ngl36dnF5K/15Her1bC
- /zGw==
+ :reply-to; bh=JvZtT+b94F+EHwcSvNa04xBqeHxjFbplsfzPgMsFT1g=;
+ b=xpTZwfCCTdS8ObodZi+dXxxItX+zhQ5ffArw2SYD1qlJo4htKjK+vbXO8DbD36vZAx
+ nvi8zsmvjydV2zlP5aODSTebaYf7lpxSl5H3wqevJnvk2qLEy54e7cyXl16e9dTlQlOl
+ 58FO8z0Vnzf2oAk/2aYq7CPfWECyO5Rt+IUXZOR9n2yL08LuuW5vmlnp/GXCfsEkGz3+
+ nZPx1kr+GluzplYQ+I4r4y2icp7VF4OqFA7/qqsSaOKFj1RXVwbqxRvMmoAzgp4L/uy/
+ RthK06wxam7Sfc6ndJKxkNP2eQw4gYNE7lHmtPrMG0NDe7Y1Bi2lYdDuMQ75ySK2UTok
+ x3xQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714003446; x=1714608246;
+ d=1e100.net; s=20230601; t=1714003231; x=1714608031;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5vBkU+37mGqQK6oTkMHCKqIJ4geVz8b/nkIOKlsoblU=;
- b=o3z9jesgCN8i0J0f+ypxBnFM0VrmaIowj+BlHk8fFSAVNJV3ViFIZK2aqXTsSzyRKf
- 2oTDVw7nJlSE7u1K3kKSJw4ZEaReDTEiBkkOy5JEPCv7rno0hIroDeOs1utNy/fhW9cf
- kOl0+YDWcGxQ0k/L5tJBUXPYiBN0kLhOmfD9Kc7m7Q098klJPfcXcxz6QXdAjAfmdRiU
- bFmhTZx7lFjBT2dAj1uARX+p2VNXHZGkly0kkhYoGCK3LqtTtQ6kWP7dZ+8GGdQ9blQv
- OkdLedWhlUmMXAQz15scXC90KRCiM5BmDDmmgQigquX/0fzEn/dKBCb3eYHLyAuxPxJ3
- bHFg==
-X-Gm-Message-State: AOJu0YycmTghI9w2p46yt3zfsNKZXLYvlsr5M5RSRlgiEPdhlEcEbemP
- N790ePFpuDkRLrHVoAEWGylDattjeAcFzYtiBE564B3Ya/Mchro+oazT/0Wb1nR5R4JSphiT8b0
- 8
-X-Google-Smtp-Source: AGHT+IFZ4V/kxHAL1r/j8dPqYMC0LoFqSVshiDmdj2f8Uq7VzXC3jmZltCfCnoeWDKA+LK/kl8/JyA==
-X-Received: by 2002:a17:902:ea94:b0:1e4:3df0:38a5 with SMTP id
- x20-20020a170902ea9400b001e43df038a5mr3982013plb.65.1714003445872; 
- Wed, 24 Apr 2024 17:04:05 -0700 (PDT)
+ bh=JvZtT+b94F+EHwcSvNa04xBqeHxjFbplsfzPgMsFT1g=;
+ b=fhHCu2DI/BwO0qp28q1FN9jKtCH9VaIolJUbJUR8F8irvznFtxf8CVa1lJxQBHJvGf
+ zxaTLj7+cFVNZEBX38v0mh6rRMKjQlQ1ERokMBsOGui1TgKkeJyWAltDX2Y1oXQnpSDx
+ OVRwV92Nzl3PFhOfZ9V4NoTqQEiY3/u1aylrcvIwuvUce3hq/I5SlcYV825IuoABH6b+
+ +cwkgSlKck+D1R+lDmtcTJDo0GbdUH+rNt0TvZ5Kr+wxJ7DDAX95UPCezKybY5C8OZD1
+ 5WY0qBiqbNefPVHp84Or7gq6W88OkOCwfxKWWb+0cdUBmqEJMulBwoC7oma1eVLbmsEA
+ fukg==
+X-Gm-Message-State: AOJu0Yz4PluSojQ46FJRqHavp+j4iSbqWnAHGd8VWa5yf4d41v2IF2hD
+ XhXEOY+VFIQ5HRjbJp6PJuYIPwUJ/vAdoSt8r9ZtTM7aWGMtEog887R9fAjM0mH+HHlbZOpPez3
+ L
+X-Google-Smtp-Source: AGHT+IFiqQ9amjc/etNg8hDltn41ge/g6LUypGv8EA5dPMEh7+SNB2eGla3sOFCYAf3Dxi4/8eCgjw==
+X-Received: by 2002:a05:6a20:9150:b0:1a3:64a9:11e5 with SMTP id
+ x16-20020a056a20915000b001a364a911e5mr4456766pzc.50.1714003230991; 
+ Wed, 24 Apr 2024 17:00:30 -0700 (PDT)
 Received: from stoup.. ([156.19.246.23]) by smtp.gmail.com with ESMTPSA id
- y20-20020a170902ed5400b001e0648dfd68sm12483717plb.296.2024.04.24.17.04.05
+ t6-20020a170902e84600b001e604438791sm12465715plg.156.2024.04.24.17.00.30
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Apr 2024 17:04:05 -0700 (PDT)
+ Wed, 24 Apr 2024 17:00:30 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 42/45] target/hppa: Implement PSW_T
-Date: Wed, 24 Apr 2024 17:00:20 -0700
-Message-Id: <20240425000023.1002026-43-richard.henderson@linaro.org>
+Subject: [PATCH 05/45] target/hppa: Allow prior nullification in do_ibranch
+Date: Wed, 24 Apr 2024 16:59:43 -0700
+Message-Id: <20240425000023.1002026-6-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240425000023.1002026-1-richard.henderson@linaro.org>
 References: <20240425000023.1002026-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,136 +92,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PSW_T enables a trap on taken branches, at the very end of the
-execution of the branch instruction.
+Simplify the function by not attempting a conditional move
+on the branch destination -- just use nullify_over normally.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/cpu.c       |  4 +--
- target/hppa/translate.c | 55 +++++++++++++++++++++++++++++++----------
- 2 files changed, 44 insertions(+), 15 deletions(-)
+ target/hppa/translate.c | 73 +++++++++++------------------------------
+ 1 file changed, 20 insertions(+), 53 deletions(-)
 
-diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
-index b3f3f070d3..42c413211a 100644
---- a/target/hppa/cpu.c
-+++ b/target/hppa/cpu.c
-@@ -76,10 +76,10 @@ void cpu_get_tb_cpu_state(CPUHPPAState *env, vaddr *pc,
-         cs_base |= env->iaoq_b & ~TARGET_PAGE_MASK;
-     }
- 
--    /* ??? E, T, H, L bits need to be here, when implemented.  */
-+    /* ??? E, H, L bits need to be here, when implemented.  */
-     flags |= env->psw_n * PSW_N;
-     flags |= env->psw_xb;
--    flags |= env->psw & (PSW_W | PSW_C | PSW_D | PSW_P);
-+    flags |= env->psw & (PSW_W | PSW_C | PSW_D | PSW_P | PSW_T);
- 
- #ifdef CONFIG_USER_ONLY
-     flags |= TB_FLAG_UNALIGN * !env_cpu(env)->prctl_unalign_sigbus;
 diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index b2cc81c685..7ad7aa675d 100644
+index cbf78a4007..ceba7a98e5 100644
 --- a/target/hppa/translate.c
 +++ b/target/hppa/translate.c
-@@ -1872,6 +1872,23 @@ static bool do_fop_dedd(DisasContext *ctx, unsigned rt,
-     return nullify_end(ctx);
- }
+@@ -1870,17 +1870,15 @@ static bool do_cbranch(DisasContext *ctx, int64_t disp, bool is_n,
+ static bool do_ibranch(DisasContext *ctx, TCGv_i64 dest,
+                        unsigned link, bool is_n)
+ {
+-    TCGv_i64 a0, a1, next, tmp;
+-    TCGCond c;
++    TCGv_i64 next;
  
-+static bool do_taken_branch_trap(DisasContext *ctx, DisasIAQE *next, bool n)
-+{
-+    if (unlikely(ctx->tb_flags & PSW_T)) {
-+        /*
-+         * The X, B and N bits are updated, and the instruction queue
-+         * is advanced before the trap is recognized.
-+         */
-+        nullify_set(ctx, n);
-+        store_psw_xb(ctx, PSW_B);
-+        install_iaq_entries(ctx, &ctx->iaq_b, next);
-+        gen_excp_1(EXCP_TB);
-+        ctx->base.is_jmp = DISAS_NORETURN;
+-    assert(ctx->null_lab == NULL);
++    if (ctx->null_cond.c == TCG_COND_NEVER && ctx->null_lab == NULL) {
++        next = tcg_temp_new_i64();
++        tcg_gen_mov_i64(next, dest);
+ 
+-    if (ctx->null_cond.c == TCG_COND_NEVER) {
+         if (link != 0) {
+             copy_iaoq_entry(ctx, cpu_gr[link], ctx->iaoq_n, ctx->iaoq_n_var);
+         }
+-        next = tcg_temp_new_i64();
+-        tcg_gen_mov_i64(next, dest);
+         if (is_n) {
+             if (use_nullify_skip(ctx)) {
+                 copy_iaoq_entry(ctx, cpu_iaoq_f, -1, next);
+@@ -1894,60 +1892,29 @@ static bool do_ibranch(DisasContext *ctx, TCGv_i64 dest,
+         }
+         ctx->iaoq_n = -1;
+         ctx->iaoq_n_var = next;
+-    } else if (is_n && use_nullify_skip(ctx)) {
+-        /* The (conditional) branch, B, nullifies the next insn, N,
+-           and we're allowed to skip execution N (no single-step or
+-           tracepoint in effect).  Since the goto_ptr that we must use
+-           for the indirect branch consumes no special resources, we
+-           can (conditionally) skip B and continue execution.  */
+-        /* The use_nullify_skip test implies we have a known control path.  */
+-        tcg_debug_assert(ctx->iaoq_b != -1);
+-        tcg_debug_assert(ctx->iaoq_n != -1);
 +        return true;
 +    }
-+    return false;
-+}
+ 
+-        /* We do have to handle the non-local temporary, DEST, before
+-           branching.  Since IOAQ_F is not really live at this point, we
+-           can simply store DEST optimistically.  Similarly with IAOQ_B.  */
++    nullify_over(ctx);
 +
- /* Emit an unconditional branch to a direct target, which may or may not
-    have already had nullification handled.  */
- static bool do_dbranch(DisasContext *ctx, int64_t disp,
-@@ -1881,6 +1898,9 @@ static bool do_dbranch(DisasContext *ctx, int64_t disp,
- 
-     if (ctx->null_cond.c == TCG_COND_NEVER && ctx->null_lab == NULL) {
-         install_link(ctx, link, false);
-+        if (do_taken_branch_trap(ctx, &ctx->iaq_j, is_n)) {
-+            return true;
-+        }
-         if (is_n) {
-             if (use_nullify_skip(ctx)) {
-                 nullify_set(ctx, 0);
-@@ -1897,7 +1917,9 @@ static bool do_dbranch(DisasContext *ctx, int64_t disp,
-         nullify_over(ctx);
- 
-         install_link(ctx, link, false);
--        if (is_n && use_nullify_skip(ctx)) {
-+        if (do_taken_branch_trap(ctx, &ctx->iaq_j, is_n)) {
-+            /* done */
-+        } else if (is_n && use_nullify_skip(ctx)) {
-             nullify_set(ctx, 0);
-             store_psw_xb(ctx, 0);
-             gen_goto_tb(ctx, 0, &ctx->iaq_j, NULL);
-@@ -1959,7 +1981,9 @@ static bool do_cbranch(DisasContext *ctx, int64_t disp, bool is_n,
-     n = is_n && disp >= 0;
- 
-     next = iaqe_branchi(ctx, disp);
--    if (n && use_nullify_skip(ctx)) {
-+    if (do_taken_branch_trap(ctx, &next, is_n)) {
-+        /* done */
-+    } else if (n && use_nullify_skip(ctx)) {
-         nullify_set(ctx, 0);
-         store_psw_xb(ctx, 0);
-         gen_goto_tb(ctx, 1, &next, NULL);
-@@ -1989,6 +2013,9 @@ static bool do_ibranch(DisasContext *ctx, unsigned link,
- {
-     if (ctx->null_cond.c == TCG_COND_NEVER && ctx->null_lab == NULL) {
-         install_link(ctx, link, with_sr0);
-+        if (do_taken_branch_trap(ctx, &ctx->iaq_j, is_n)) {
-+            return true;
-+        }
-         if (is_n) {
-             if (use_nullify_skip(ctx)) {
-                 install_iaq_entries(ctx, &ctx->iaq_j, NULL);
-@@ -2004,20 +2031,22 @@ static bool do_ibranch(DisasContext *ctx, unsigned link,
-     }
- 
-     nullify_over(ctx);
++    if (is_n && use_nullify_skip(ctx)) {
+         copy_iaoq_entry(ctx, cpu_iaoq_f, -1, dest);
+         next = tcg_temp_new_i64();
+         tcg_gen_addi_i64(next, dest, 4);
+         copy_iaoq_entry(ctx, cpu_iaoq_b, -1, next);
 -
-     install_link(ctx, link, with_sr0);
--    if (is_n && use_nullify_skip(ctx)) {
--        install_iaq_entries(ctx, &ctx->iaq_j, NULL);
--        nullify_set(ctx, 0);
--        store_psw_xb(ctx, 0);
--    } else {
--        install_iaq_entries(ctx, &ctx->iaq_b, &ctx->iaq_j);
--        nullify_set(ctx, is_n);
--        store_psw_xb(ctx, PSW_B);
-+
-+    if (!do_taken_branch_trap(ctx, &ctx->iaq_j, is_n)) {
-+        if (is_n && use_nullify_skip(ctx)) {
-+            install_iaq_entries(ctx, &ctx->iaq_j, NULL);
-+            nullify_set(ctx, 0);
-+            store_psw_xb(ctx, 0);
-+        } else {
-+            install_iaq_entries(ctx, &ctx->iaq_b, &ctx->iaq_j);
-+            nullify_set(ctx, is_n);
-+            store_psw_xb(ctx, PSW_B);
-+        }
-+        tcg_gen_lookup_and_goto_ptr();
-+        ctx->base.is_jmp = DISAS_NORETURN;
+-        nullify_over(ctx);
+-        if (link != 0) {
+-            copy_iaoq_entry(ctx, cpu_gr[link], ctx->iaoq_n, ctx->iaoq_n_var);
+-        }
+-        tcg_gen_lookup_and_goto_ptr();
+-        return nullify_end(ctx);
++        nullify_set(ctx, 0);
+     } else {
+-        c = ctx->null_cond.c;
+-        a0 = ctx->null_cond.a0;
+-        a1 = ctx->null_cond.a1;
+-
+-        tmp = tcg_temp_new_i64();
+-        next = tcg_temp_new_i64();
+-
+-        copy_iaoq_entry(ctx, tmp, ctx->iaoq_n, ctx->iaoq_n_var);
+-        tcg_gen_movcond_i64(c, next, a0, a1, tmp, dest);
+-        ctx->iaoq_n = -1;
+-        ctx->iaoq_n_var = next;
+-
+-        if (link != 0) {
+-            tcg_gen_movcond_i64(c, cpu_gr[link], a0, a1, cpu_gr[link], tmp);
+-        }
+-
+-        if (is_n) {
+-            /* The branch nullifies the next insn, which means the state of N
+-               after the branch is the inverse of the state of N that applied
+-               to the branch.  */
+-            tcg_gen_setcond_i64(tcg_invert_cond(c), cpu_psw_n, a0, a1);
+-            cond_free(&ctx->null_cond);
+-            ctx->null_cond = cond_make_n();
+-            ctx->psw_n_nonzero = true;
+-        } else {
+-            cond_free(&ctx->null_cond);
+-        }
++        copy_iaoq_entry(ctx, cpu_iaoq_f, ctx->iaoq_b, cpu_iaoq_b);
++        copy_iaoq_entry(ctx, cpu_iaoq_b, -1, dest);
++        nullify_set(ctx, is_n);
      }
- 
--    tcg_gen_lookup_and_goto_ptr();
--    ctx->base.is_jmp = DISAS_NORETURN;
-     return nullify_end(ctx);
+-    return true;
++    if (link != 0) {
++        copy_iaoq_entry(ctx, cpu_gr[link], ctx->iaoq_n, ctx->iaoq_n_var);
++    }
++
++    tcg_gen_lookup_and_goto_ptr();
++    ctx->base.is_jmp = DISAS_NORETURN;
++    return nullify_end(ctx);
  }
  
+ /* Implement
 -- 
 2.34.1
 
