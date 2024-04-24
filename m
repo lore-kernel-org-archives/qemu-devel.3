@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38432C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 15:37:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A41C6C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 15:37:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzefw-0004aM-IQ; Wed, 24 Apr 2024 11:36:48 -0400
+	id 1rzegs-0007ny-Ge; Wed, 24 Apr 2024 11:37:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rzeft-0004Wh-VL
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 11:36:47 -0400
+ id 1rzegq-0007cF-MZ
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 11:37:44 -0400
 Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rzefq-0005bU-S5
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 11:36:44 -0400
+ id 1rzego-0005hB-8P
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 11:37:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713973003; x=1745509003;
+ t=1713973062; x=1745509062;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=aBOwpxkkwCsLiWf7E1bzg+udTEWTRhPXi5vjfc/GDFo=;
- b=PbIxy8u0RQJP1zrDK/TAf0e5w3yvS0FkGY2Qnm2HinEweuwVSFORXDqT
- QitUT/VuIpqUD2HqFThVAYZnr3ZrpoM+h8PcL4o2fdwPXqmDTDZApPkeV
- yZZfOQF0/3GXscIkFARNCFHEw/6GGZy3QxF+wkqli0+xwx5e5srZYqj3x
- 9HlEZ/YNZPhNT1RwBSpSQywJM2tVbiAwISpKdZo/eoOM97b75PRLhUKSN
- fWD1EpdjN2LLfIpAAXKMqFVs82fkbi/qgx3GA1KNgEqrYn6SSpy5B5o4R
- h4DYAv2srkt157k26FefW688qRBlMx98H7ECRz9828+kgruV/PPkIggGa w==;
-X-CSE-ConnectionGUID: BaEJx5EaSjWkHkK94O0bXw==
-X-CSE-MsgGUID: rfOP4Bj2TP2IwR1K0nnRMw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11054"; a="12545690"
-X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; d="scan'208";a="12545690"
+ bh=ahHhtcUEN153MtV29xLy7++pZm8UAiFhzdkoG2N6yQI=;
+ b=H5M+2V9LuDdsy5gtDx20RT2uBZ1M5DxpeBKUC6WWKcHvwbCDksG0espA
+ fEWok5AWdr4MDvztB86rUJZMVi/SepckpzqHrVECASlocbnTI9Vuztt0G
+ nohvS5NWTkE32gYvloy3+YJ/V8nMvkm/rX6WfXJXs3U6BzEv5FB7tiMPq
+ ZZ88I3d8v1iX30KvJP/7YxAmyDyJdPcUmziU9FbAWaCL6PCWjtWYYbggM
+ T8u0+HUqWktMUIYDMwz/W4ZBRCt8OhdfsyI5QRcZvdEskdt6LC4XMROcv
+ a1s46WIBgi9hzWb7UaeuL8ybO9GmwSdTZlX5zeSdIhvMkLwiaDHhLJ1RA Q==;
+X-CSE-ConnectionGUID: x6Vmo/TZSGW7tXkRXF8tmQ==
+X-CSE-MsgGUID: hYt/ijtsSauEZw2u/8ltJg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11054"; a="12545837"
+X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; d="scan'208";a="12545837"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Apr 2024 08:36:42 -0700
-X-CSE-ConnectionGUID: E02F/BcpSFyhpWdXTavWAQ==
-X-CSE-MsgGUID: nnBVEwhKSV2QGYwIxfFDJw==
+ 24 Apr 2024 08:37:30 -0700
+X-CSE-ConnectionGUID: 2+aiATJJT9qxAnkeE1ZOPw==
+X-CSE-MsgGUID: 6MVvuF1VR6KQHN9q5c7doQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; d="scan'208";a="25363148"
+X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; d="scan'208";a="25363344"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa008.jf.intel.com with ESMTP; 24 Apr 2024 08:36:38 -0700
+ by orviesa008.jf.intel.com with ESMTP; 24 Apr 2024 08:37:25 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -61,10 +61,9 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  Zhuocheng Ding <zhuocheng.ding@intel.com>, Babu Moger <babu.moger@amd.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
  Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v11 09/21] i386/cpu: Introduce bitmap to cache available CPU
- topology levels
-Date: Wed, 24 Apr 2024 23:49:17 +0800
-Message-Id: <20240424154929.1487382-10-zhao1.liu@intel.com>
+Subject: [PATCH v11 19/21] i386: Add cache topology info in CPUCacheInfo
+Date: Wed, 24 Apr 2024 23:49:27 +0800
+Message-Id: <20240424154929.1487382-20-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240424154929.1487382-1-zhao1.liu@intel.com>
 References: <20240424154929.1487382-1-zhao1.liu@intel.com>
@@ -94,182 +93,364 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, QEMU checks the specify number of topology domains to detect
-if there's extended topology levels (e.g., checking nr_dies).
+Currently, by default, the cache topology is encoded as:
+1. i/d cache is shared in one core.
+2. L2 cache is shared in one core.
+3. L3 cache is shared in one die.
 
-With this bitmap, the extended CPU topology (the levels other than SMT,
-core and package) could be easier to detect without touching the
-topology details.
+This default general setting has caused a misunderstanding, that is, the
+cache topology is completely equated with a specific cpu topology, such
+as the connection between L2 cache and core level, and the connection
+between L3 cache and die level.
 
-This is also in preparation for the follow-up to decouple CPUID[0x1F]
-subleaf with specific topology level.
+In fact, the settings of these topologies depend on the specific
+platform and are not static. For example, on Alder Lake-P, every
+four Atom cores share the same L2 cache.
 
-Tested-by: Yongwei Ma <yongwei.ma@intel.com>
+Thus, we should explicitly define the corresponding cache topology for
+different cache models to increase scalability.
+
+Except legacy_l2_cache_cpuid2 (its default topo level is
+CPU_TOPO_LEVEL_UNKNOW), explicitly set the corresponding topology level
+for all other cache models. In order to be compatible with the existing
+cache topology, set the CPU_TOPO_LEVEL_CORE level for the i/d cache, set
+the CPU_TOPO_LEVEL_CORE level for L2 cache, and set the
+CPU_TOPO_LEVEL_DIE level for L3 cache.
+
+The field for CPUID[4].EAX[bits 25:14] or CPUID[0x8000001D].EAX[bits
+25:14] will be set based on CPUCacheInfo.share_level.
+
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 Tested-by: Babu Moger <babu.moger@amd.com>
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Tested-by: Yongwei Ma <yongwei.ma@intel.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
 ---
-Changes since v10:
- * Rebased on commit 88daa112d4eda.
+Changes since v3:
+ * Fixed cache topology uninitialization bugs for some AMD CPUs. (Babu)
+ * Moved the CPUTopoLevel enumeration definition to the previous 0x1f
+   rework patch.
 
-Changes since v7:
- * New commit to response Xiaoyao's suggestion about the gloabl variable
-   to cache topology levels. (Xiaoyao)
+Changes since v1:
+ * Added the prefix "CPU_TOPO_LEVEL_*" for CPU topology level names.
+   (Yanan)
+ * (Revert, pls refer "i386: Decouple CPUID[0x1F] subleaf with specific
+   topology level") Renamed the "INVALID" level to CPU_TOPO_LEVEL_UNKNOW.
+   (Yanan)
 ---
- hw/i386/x86.c              |  5 ++++-
- include/hw/i386/topology.h | 23 +++++++++++++++++++++++
- target/i386/cpu.c          | 18 +++++++++++++++---
- target/i386/cpu.h          |  4 ++++
- target/i386/kvm/kvm.c      |  3 ++-
- 5 files changed, 48 insertions(+), 5 deletions(-)
+ target/i386/cpu.c | 36 ++++++++++++++++++++++++++++++++++++
+ target/i386/cpu.h |  7 +++++++
+ 2 files changed, 43 insertions(+)
 
-diff --git a/hw/i386/x86.c b/hw/i386/x86.c
-index 3d5b51e92db3..004627fa8985 100644
---- a/hw/i386/x86.c
-+++ b/hw/i386/x86.c
-@@ -313,7 +313,10 @@ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
- 
-     init_topo_info(&topo_info, x86ms);
- 
--    env->nr_dies = ms->smp.dies;
-+    if (ms->smp.dies > 1) {
-+        env->nr_dies = ms->smp.dies;
-+        set_bit(CPU_TOPO_LEVEL_DIE, env->avail_cpu_topo);
-+    }
- 
-     /*
-      * If APIC ID is not set,
-diff --git a/include/hw/i386/topology.h b/include/hw/i386/topology.h
-index d4eeb7ab8290..befeb92b0b19 100644
---- a/include/hw/i386/topology.h
-+++ b/include/hw/i386/topology.h
-@@ -60,6 +60,21 @@ typedef struct X86CPUTopoInfo {
-     unsigned threads_per_core;
- } X86CPUTopoInfo;
- 
-+/*
-+ * CPUTopoLevel is the general i386 topology hierarchical representation,
-+ * ordered by increasing hierarchical relationship.
-+ * Its enumeration value is not bound to the type value of Intel (CPUID[0x1F])
-+ * or AMD (CPUID[0x80000026]).
-+ */
-+enum CPUTopoLevel {
-+    CPU_TOPO_LEVEL_INVALID,
-+    CPU_TOPO_LEVEL_SMT,
-+    CPU_TOPO_LEVEL_CORE,
-+    CPU_TOPO_LEVEL_DIE,
-+    CPU_TOPO_LEVEL_PACKAGE,
-+    CPU_TOPO_LEVEL_MAX,
-+};
-+
- /* Return the bit width needed for 'count' IDs */
- static unsigned apicid_bitwidth_for_count(unsigned count)
- {
-@@ -168,4 +183,12 @@ static inline apic_id_t x86_apicid_from_cpu_idx(X86CPUTopoInfo *topo_info,
-     return x86_apicid_from_topo_ids(topo_info, &topo_ids);
- }
- 
-+/*
-+ * Check whether there's extended topology level (die)?
-+ */
-+static inline bool x86_has_extended_topo(unsigned long *topo_bitmap)
-+{
-+    return test_bit(CPU_TOPO_LEVEL_DIE, topo_bitmap);
-+}
-+
- #endif /* HW_I386_TOPOLOGY_H */
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 0611f8ffbf8b..6d6d93ca1497 100644
+index 76085ec007fa..5ba44c57666d 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -6426,7 +6426,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         break;
-     case 0x1F:
-         /* V2 Extended Topology Enumeration Leaf */
--        if (topo_info.dies_per_pkg < 2) {
-+        if (!x86_has_extended_topo(env->avail_cpu_topo)) {
-             *eax = *ebx = *ecx = *edx = 0;
-             break;
-         }
-@@ -7259,7 +7259,7 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
-          * cpu->vendor_cpuid_only has been unset for compatibility with older
-          * machine types.
-          */
--        if ((env->nr_dies > 1) &&
-+        if (x86_has_extended_topo(env->avail_cpu_topo) &&
-             (IS_INTEL_CPU(env) || !cpu->vendor_cpuid_only)) {
-             x86_cpu_adjust_level(cpu, &env->cpuid_min_level, 0x1F);
-         }
-@@ -7782,13 +7782,25 @@ static void x86_cpu_post_initfn(Object *obj)
-     accel_cpu_instance_init(CPU(obj));
- }
+@@ -551,6 +551,7 @@ static CPUCacheInfo legacy_l1d_cache = {
+     .sets = 64,
+     .partitions = 1,
+     .no_invd_sharing = true,
++    .share_level = CPU_TOPO_LEVEL_CORE,
+ };
  
-+static void x86_cpu_init_default_topo(X86CPU *cpu)
-+{
-+    CPUX86State *env = &cpu->env;
-+
-+    env->nr_dies = 1;
-+
-+    /* SMT, core and package levels are set by default. */
-+    set_bit(CPU_TOPO_LEVEL_SMT, env->avail_cpu_topo);
-+    set_bit(CPU_TOPO_LEVEL_CORE, env->avail_cpu_topo);
-+    set_bit(CPU_TOPO_LEVEL_PACKAGE, env->avail_cpu_topo);
-+}
-+
- static void x86_cpu_initfn(Object *obj)
- {
-     X86CPU *cpu = X86_CPU(obj);
-     X86CPUClass *xcc = X86_CPU_GET_CLASS(obj);
-     CPUX86State *env = &cpu->env;
+ /*FIXME: CPUID leaf 0x80000005 is inconsistent with leaves 2 & 4 */
+@@ -565,6 +566,7 @@ static CPUCacheInfo legacy_l1d_cache_amd = {
+     .partitions = 1,
+     .lines_per_tag = 1,
+     .no_invd_sharing = true,
++    .share_level = CPU_TOPO_LEVEL_CORE,
+ };
  
--    env->nr_dies = 1;
-+    x86_cpu_init_default_topo(cpu);
+ /* L1 instruction cache: */
+@@ -578,6 +580,7 @@ static CPUCacheInfo legacy_l1i_cache = {
+     .sets = 64,
+     .partitions = 1,
+     .no_invd_sharing = true,
++    .share_level = CPU_TOPO_LEVEL_CORE,
+ };
  
-     object_property_add(obj, "feature-words", "X86CPUFeatureWordInfo",
-                         x86_cpu_get_feature_words,
+ /*FIXME: CPUID leaf 0x80000005 is inconsistent with leaves 2 & 4 */
+@@ -592,6 +595,7 @@ static CPUCacheInfo legacy_l1i_cache_amd = {
+     .partitions = 1,
+     .lines_per_tag = 1,
+     .no_invd_sharing = true,
++    .share_level = CPU_TOPO_LEVEL_CORE,
+ };
+ 
+ /* Level 2 unified cache: */
+@@ -605,6 +609,7 @@ static CPUCacheInfo legacy_l2_cache = {
+     .sets = 4096,
+     .partitions = 1,
+     .no_invd_sharing = true,
++    .share_level = CPU_TOPO_LEVEL_CORE,
+ };
+ 
+ /*FIXME: CPUID leaf 2 descriptor is inconsistent with CPUID leaf 4 */
+@@ -614,6 +619,7 @@ static CPUCacheInfo legacy_l2_cache_cpuid2 = {
+     .size = 2 * MiB,
+     .line_size = 64,
+     .associativity = 8,
++    .share_level = CPU_TOPO_LEVEL_INVALID,
+ };
+ 
+ 
+@@ -627,6 +633,7 @@ static CPUCacheInfo legacy_l2_cache_amd = {
+     .associativity = 16,
+     .sets = 512,
+     .partitions = 1,
++    .share_level = CPU_TOPO_LEVEL_CORE,
+ };
+ 
+ /* Level 3 unified cache: */
+@@ -642,6 +649,7 @@ static CPUCacheInfo legacy_l3_cache = {
+     .self_init = true,
+     .inclusive = true,
+     .complex_indexing = true,
++    .share_level = CPU_TOPO_LEVEL_DIE,
+ };
+ 
+ /* TLB definitions: */
+@@ -1940,6 +1948,7 @@ static const CPUCaches epyc_cache_info = {
+         .lines_per_tag = 1,
+         .self_init = 1,
+         .no_invd_sharing = true,
++        .share_level = CPU_TOPO_LEVEL_CORE,
+     },
+     .l1i_cache = &(CPUCacheInfo) {
+         .type = INSTRUCTION_CACHE,
+@@ -1952,6 +1961,7 @@ static const CPUCaches epyc_cache_info = {
+         .lines_per_tag = 1,
+         .self_init = 1,
+         .no_invd_sharing = true,
++        .share_level = CPU_TOPO_LEVEL_CORE,
+     },
+     .l2_cache = &(CPUCacheInfo) {
+         .type = UNIFIED_CACHE,
+@@ -1962,6 +1972,7 @@ static const CPUCaches epyc_cache_info = {
+         .partitions = 1,
+         .sets = 1024,
+         .lines_per_tag = 1,
++        .share_level = CPU_TOPO_LEVEL_CORE,
+     },
+     .l3_cache = &(CPUCacheInfo) {
+         .type = UNIFIED_CACHE,
+@@ -1975,6 +1986,7 @@ static const CPUCaches epyc_cache_info = {
+         .self_init = true,
+         .inclusive = true,
+         .complex_indexing = true,
++        .share_level = CPU_TOPO_LEVEL_DIE,
+     },
+ };
+ 
+@@ -1990,6 +2002,7 @@ static CPUCaches epyc_v4_cache_info = {
+         .lines_per_tag = 1,
+         .self_init = 1,
+         .no_invd_sharing = true,
++        .share_level = CPU_TOPO_LEVEL_CORE,
+     },
+     .l1i_cache = &(CPUCacheInfo) {
+         .type = INSTRUCTION_CACHE,
+@@ -2002,6 +2015,7 @@ static CPUCaches epyc_v4_cache_info = {
+         .lines_per_tag = 1,
+         .self_init = 1,
+         .no_invd_sharing = true,
++        .share_level = CPU_TOPO_LEVEL_CORE,
+     },
+     .l2_cache = &(CPUCacheInfo) {
+         .type = UNIFIED_CACHE,
+@@ -2012,6 +2026,7 @@ static CPUCaches epyc_v4_cache_info = {
+         .partitions = 1,
+         .sets = 1024,
+         .lines_per_tag = 1,
++        .share_level = CPU_TOPO_LEVEL_CORE,
+     },
+     .l3_cache = &(CPUCacheInfo) {
+         .type = UNIFIED_CACHE,
+@@ -2025,6 +2040,7 @@ static CPUCaches epyc_v4_cache_info = {
+         .self_init = true,
+         .inclusive = true,
+         .complex_indexing = false,
++        .share_level = CPU_TOPO_LEVEL_DIE,
+     },
+ };
+ 
+@@ -2040,6 +2056,7 @@ static const CPUCaches epyc_rome_cache_info = {
+         .lines_per_tag = 1,
+         .self_init = 1,
+         .no_invd_sharing = true,
++        .share_level = CPU_TOPO_LEVEL_CORE,
+     },
+     .l1i_cache = &(CPUCacheInfo) {
+         .type = INSTRUCTION_CACHE,
+@@ -2052,6 +2069,7 @@ static const CPUCaches epyc_rome_cache_info = {
+         .lines_per_tag = 1,
+         .self_init = 1,
+         .no_invd_sharing = true,
++        .share_level = CPU_TOPO_LEVEL_CORE,
+     },
+     .l2_cache = &(CPUCacheInfo) {
+         .type = UNIFIED_CACHE,
+@@ -2062,6 +2080,7 @@ static const CPUCaches epyc_rome_cache_info = {
+         .partitions = 1,
+         .sets = 1024,
+         .lines_per_tag = 1,
++        .share_level = CPU_TOPO_LEVEL_CORE,
+     },
+     .l3_cache = &(CPUCacheInfo) {
+         .type = UNIFIED_CACHE,
+@@ -2075,6 +2094,7 @@ static const CPUCaches epyc_rome_cache_info = {
+         .self_init = true,
+         .inclusive = true,
+         .complex_indexing = true,
++        .share_level = CPU_TOPO_LEVEL_DIE,
+     },
+ };
+ 
+@@ -2090,6 +2110,7 @@ static const CPUCaches epyc_rome_v3_cache_info = {
+         .lines_per_tag = 1,
+         .self_init = 1,
+         .no_invd_sharing = true,
++        .share_level = CPU_TOPO_LEVEL_CORE,
+     },
+     .l1i_cache = &(CPUCacheInfo) {
+         .type = INSTRUCTION_CACHE,
+@@ -2102,6 +2123,7 @@ static const CPUCaches epyc_rome_v3_cache_info = {
+         .lines_per_tag = 1,
+         .self_init = 1,
+         .no_invd_sharing = true,
++        .share_level = CPU_TOPO_LEVEL_CORE,
+     },
+     .l2_cache = &(CPUCacheInfo) {
+         .type = UNIFIED_CACHE,
+@@ -2112,6 +2134,7 @@ static const CPUCaches epyc_rome_v3_cache_info = {
+         .partitions = 1,
+         .sets = 1024,
+         .lines_per_tag = 1,
++        .share_level = CPU_TOPO_LEVEL_CORE,
+     },
+     .l3_cache = &(CPUCacheInfo) {
+         .type = UNIFIED_CACHE,
+@@ -2125,6 +2148,7 @@ static const CPUCaches epyc_rome_v3_cache_info = {
+         .self_init = true,
+         .inclusive = true,
+         .complex_indexing = false,
++        .share_level = CPU_TOPO_LEVEL_DIE,
+     },
+ };
+ 
+@@ -2140,6 +2164,7 @@ static const CPUCaches epyc_milan_cache_info = {
+         .lines_per_tag = 1,
+         .self_init = 1,
+         .no_invd_sharing = true,
++        .share_level = CPU_TOPO_LEVEL_CORE,
+     },
+     .l1i_cache = &(CPUCacheInfo) {
+         .type = INSTRUCTION_CACHE,
+@@ -2152,6 +2177,7 @@ static const CPUCaches epyc_milan_cache_info = {
+         .lines_per_tag = 1,
+         .self_init = 1,
+         .no_invd_sharing = true,
++        .share_level = CPU_TOPO_LEVEL_CORE,
+     },
+     .l2_cache = &(CPUCacheInfo) {
+         .type = UNIFIED_CACHE,
+@@ -2162,6 +2188,7 @@ static const CPUCaches epyc_milan_cache_info = {
+         .partitions = 1,
+         .sets = 1024,
+         .lines_per_tag = 1,
++        .share_level = CPU_TOPO_LEVEL_CORE,
+     },
+     .l3_cache = &(CPUCacheInfo) {
+         .type = UNIFIED_CACHE,
+@@ -2175,6 +2202,7 @@ static const CPUCaches epyc_milan_cache_info = {
+         .self_init = true,
+         .inclusive = true,
+         .complex_indexing = true,
++        .share_level = CPU_TOPO_LEVEL_DIE,
+     },
+ };
+ 
+@@ -2190,6 +2218,7 @@ static const CPUCaches epyc_milan_v2_cache_info = {
+         .lines_per_tag = 1,
+         .self_init = 1,
+         .no_invd_sharing = true,
++        .share_level = CPU_TOPO_LEVEL_CORE,
+     },
+     .l1i_cache = &(CPUCacheInfo) {
+         .type = INSTRUCTION_CACHE,
+@@ -2202,6 +2231,7 @@ static const CPUCaches epyc_milan_v2_cache_info = {
+         .lines_per_tag = 1,
+         .self_init = 1,
+         .no_invd_sharing = true,
++        .share_level = CPU_TOPO_LEVEL_CORE,
+     },
+     .l2_cache = &(CPUCacheInfo) {
+         .type = UNIFIED_CACHE,
+@@ -2212,6 +2242,7 @@ static const CPUCaches epyc_milan_v2_cache_info = {
+         .partitions = 1,
+         .sets = 1024,
+         .lines_per_tag = 1,
++        .share_level = CPU_TOPO_LEVEL_CORE,
+     },
+     .l3_cache = &(CPUCacheInfo) {
+         .type = UNIFIED_CACHE,
+@@ -2225,6 +2256,7 @@ static const CPUCaches epyc_milan_v2_cache_info = {
+         .self_init = true,
+         .inclusive = true,
+         .complex_indexing = false,
++        .share_level = CPU_TOPO_LEVEL_DIE,
+     },
+ };
+ 
+@@ -2240,6 +2272,7 @@ static const CPUCaches epyc_genoa_cache_info = {
+         .lines_per_tag = 1,
+         .self_init = 1,
+         .no_invd_sharing = true,
++        .share_level = CPU_TOPO_LEVEL_CORE,
+     },
+     .l1i_cache = &(CPUCacheInfo) {
+         .type = INSTRUCTION_CACHE,
+@@ -2252,6 +2285,7 @@ static const CPUCaches epyc_genoa_cache_info = {
+         .lines_per_tag = 1,
+         .self_init = 1,
+         .no_invd_sharing = true,
++        .share_level = CPU_TOPO_LEVEL_CORE,
+     },
+     .l2_cache = &(CPUCacheInfo) {
+         .type = UNIFIED_CACHE,
+@@ -2262,6 +2296,7 @@ static const CPUCaches epyc_genoa_cache_info = {
+         .partitions = 1,
+         .sets = 2048,
+         .lines_per_tag = 1,
++        .share_level = CPU_TOPO_LEVEL_CORE,
+     },
+     .l3_cache = &(CPUCacheInfo) {
+         .type = UNIFIED_CACHE,
+@@ -2275,6 +2310,7 @@ static const CPUCaches epyc_genoa_cache_info = {
+         .self_init = true,
+         .inclusive = true,
+         .complex_indexing = false,
++        .share_level = CPU_TOPO_LEVEL_DIE,
+     },
+ };
+ 
 diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 6112e27bfd5c..3eef30f2847d 100644
+index 042eec417d0f..a28ba33365b4 100644
 --- a/target/i386/cpu.h
 +++ b/target/i386/cpu.h
-@@ -24,6 +24,7 @@
- #include "cpu-qom.h"
- #include "kvm/hyperv-proto.h"
- #include "exec/cpu-defs.h"
-+#include "hw/i386/topology.h"
- #include "qapi/qapi-types-common.h"
- #include "qemu/cpu-float.h"
- #include "qemu/timer.h"
-@@ -1892,6 +1893,9 @@ typedef struct CPUArchState {
- 
-     /* Number of dies within this CPU package. */
-     unsigned nr_dies;
+@@ -1590,6 +1590,13 @@ typedef struct CPUCacheInfo {
+      * address bits.  CPUID[4].EDX[bit 2].
+      */
+     bool complex_indexing;
 +
-+    /* Bitmap of available CPU topology levels for this CPU. */
-+    DECLARE_BITMAP(avail_cpu_topo, CPU_TOPO_LEVEL_MAX);
- } CPUX86State;
++    /*
++     * Cache Topology. The level that cache is shared in.
++     * Used to encode CPUID[4].EAX[bits 25:14] or
++     * CPUID[0x8000001D].EAX[bits 25:14].
++     */
++    enum CPUTopoLevel share_level;
+ } CPUCacheInfo;
  
- struct kvm_msrs;
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index c5943605ee3a..6c864e4611f6 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -51,6 +51,7 @@
- #include "hw/i386/apic_internal.h"
- #include "hw/i386/apic-msidef.h"
- #include "hw/i386/intel_iommu.h"
-+#include "hw/i386/topology.h"
- #include "hw/i386/x86-iommu.h"
- #include "hw/i386/e820_memory_layout.h"
  
-@@ -1791,7 +1792,7 @@ static uint32_t kvm_x86_build_cpuid(CPUX86State *env,
-             break;
-         }
-         case 0x1f:
--            if (env->nr_dies < 2) {
-+            if (!x86_has_extended_topo(env->avail_cpu_topo)) {
-                 cpuid_i--;
-                 break;
-             }
 -- 
 2.34.1
 
