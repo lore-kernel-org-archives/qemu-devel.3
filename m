@@ -4,90 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1E59C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 12:34:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FD3DC07E8E
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Apr 2024 12:54:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzboL-0005EB-Og; Wed, 24 Apr 2024 08:33:17 -0400
+	id 1rzc7Y-0001wu-Au; Wed, 24 Apr 2024 08:53:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@posteo.de>) id 1rzboK-0005D7-2U
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 08:33:16 -0400
-Received: from mout01.posteo.de ([185.67.36.65])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1rzc7W-0001wV-8W
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 08:53:06 -0400
+Received: from madrid.collaboradmins.com ([46.235.227.194])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@posteo.de>) id 1rzboF-0003zB-Pm
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 08:33:15 -0400
-Received: from submission (posteo.de [185.67.36.169]) 
- by mout01.posteo.de (Postfix) with ESMTPS id 49D69240033
- for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 14:33:08 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.de; s=2017;
- t=1713961988; bh=9Ev9618ma5vERQhBo1JV5P5yZ6fPuNrS0jsrcfWeBHU=;
- h=Message-ID:Date:MIME-Version:Subject:To:Cc:From:Content-Type:
- Content-Transfer-Encoding:From;
- b=ptv7qhbbNkf//eI2Nh9He1fmIKvifrvkBbId62jUXUbHffLCiCgT2gC/UxCD40QJf
- S/csiDg+SiKUem4x+H9XEYjGhmVzrjVJItNNweoSQu88/HZdoxqMsLQB6zMCJEFflH
- nqgkUP+6VeQC0qXurWQazaL7sS6hLcvRhJebf1NLm7lE+yaxV/bFwVQXYIm16NmwoO
- Ua/ltPSIkQrhjQrfL1HGbCG9QVhXn1X/ZYhr/EomV4N6v9hUVEgWGcQy6EQ4jNAU68
- Y/hCZ/ePP9xAwMjuBu+1gd1+3t+8ormTy2IWarKJuy11QfazKZI2+br5yTFAHVgMau
- NC1DWjGe6L8Jw==
-Received: from customer (localhost [127.0.0.1])
- by submission (posteo.de) with ESMTPSA id 4VPdgC5dCpz6twh;
- Wed, 24 Apr 2024 14:32:55 +0200 (CEST)
-Message-ID: <088ec61c-39ab-4b58-a02f-8897a3e7ae68@posteo.de>
-Date: Wed, 24 Apr 2024 12:32:55 +0000
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1rzc7U-0007Pb-Ge
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 08:53:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+ s=mail; t=1713963182;
+ bh=onMY1lu3JFtKonKYbbWWlXYmK0OoNOSu9q7gZOeYlZY=;
+ h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+ b=aTGzYhawmLx/K+WJ4LcREXkMUpO5hIBaU7B2IOckKeAumBVim4eeFhQ9QV1REh1nO
+ s027iNQwZ18brVfNH+KsH7aTPRBg+vKq7qMpafmFgkBVSNYwI7fmb4mw8oAj5MU5Gl
+ 7CHP1w1Z3/39xinnucCjXnhAYRg0JbFL89Gs37SOFxDSertzUtwuOSiCz3zYXexWwx
+ XJmv9wVyR9p7rDshj6VHzs+33VuRE32CizmhbtLrxrHI892nKccGE+R1G9m+EQzSOe
+ mDbtVwREwlG8ycZz2EmleYb7nm4DIojkv+uOGvT5FPtEUVtMI+Uw9oPtQwyjJhLCxw
+ mcK78MpOi9Kwg==
+Received: from [100.109.49.129] (cola.collaboradmins.com [195.201.22.229])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ (Authenticated sender: dmitry.osipenko)
+ by madrid.collaboradmins.com (Postfix) with ESMTPSA id 422E037813E3;
+ Wed, 24 Apr 2024 12:53:00 +0000 (UTC)
+Message-ID: <902711ed-2c59-4804-bd55-62545bde67e4@collabora.com>
+Date: Wed, 24 Apr 2024 15:52:57 +0300
 MIME-Version: 1.0
-Subject: Re: [PATCH v2 1/2] net: Provide MemReentrancyGuard * to qemu_new_nic()
-To: Prasad Pandit <pj.pandit@yahoo.in>,
- Mauro Matteo Cascella <mcascell@redhat.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Alexander Bulekov <alxndr@bu.edu>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Beniamino Galvani <b.galvani@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
- Jason Wang <jasowang@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>, Stefan Weil <sw@weilnetz.de>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Andrew Jeffery <andrew@aj.id.au>, Joel Stanley <joel@jms.id.au>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Sriram Yagnaraman
- <sriram.yagnaraman@est.tech>, Thomas Huth <huth@tuxfamily.org>,
- Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
- Subbaraya Sundeep <sundeep.lkml@gmail.com>, Jan Kiszka <jan.kiszka@web.de>,
- Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
- Max Filippov <jcmvbkbc@gmail.com>, Jiri Pirko <jiri@resnulli.us>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>, Greg Kurz <groug@kaod.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Sven Schnelle <svens@stackframe.org>, "Michael S. Tsirkin" <mst@redhat.com>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 09/11] virtio-gpu: Resource UUID
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
  Stefano Stabellini <sstabellini@kernel.org>,
- Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
- Rob Herring <robh@kernel.org>, Gerd Hoffmann <kraxel@redhat.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>,
- "xen-devel@lists.xenproject.org" <xen-devel@lists.xenproject.org>
-References: <20230601031859.7115-1-akihiko.odaki@daynix.com>
- <20230601031859.7115-2-akihiko.odaki@daynix.com>
- <ac66952e-4281-4250-96f4-dc3d5b518d24@linaro.org>
- <1497808863.2030924.1713955286878@mail.yahoo.com>
-From: Thomas Huth <th.huth@posteo.de>
+ Anthony PERARD <anthony.perard@citrix.com>,
+ Antonio Caggiano <quic_acaggian@quicinc.com>,
+ "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Robert Beckett <bob.beckett@collabora.com>,
+ Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
+ ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
+References: <20240418190040.1110210-1-dmitry.osipenko@collabora.com>
+ <20240418190040.1110210-10-dmitry.osipenko@collabora.com>
 Content-Language: en-US
-In-Reply-To: <1497808863.2030924.1713955286878@mail.yahoo.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=185.67.36.65; envelope-from=th.huth@posteo.de;
- helo=mout01.posteo.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+In-Reply-To: <20240418190040.1110210-10-dmitry.osipenko@collabora.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=46.235.227.194;
+ envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,37 +93,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/04/2024 12.41, Prasad Pandit wrote:
-> On Wednesday, 24 April, 2024 at 03:36:01 pm IST, Philippe Mathieu-Daudé wrote:
->> On 1/6/23 05:18, Akihiko Odaki wrote:
->>> Recently MemReentrancyGuard was added to DeviceState to record that the
->>> device is engaging in I/O. The network device backend needs to update it
->>> when delivering a packet to a device.
->>>   
->>> In preparation for such a change, add MemReentrancyGuard * as a
->>> parameter of qemu_new_nic().
->>
->> An user on IRC asked if this patch is related/fixing CVE-2021-20255,
->> any clue?
-> 
-> * CVE-2021-20255 bug: infinite recursion is pointing at a different fix patch.
->    -> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2021-20255
-> 
-> * And the this patch below has different issue tagged
->    -> https://lists.nongnu.org/archive/html/qemu-devel/2023-05/msg08312.html
->    Fixes: CVE-2023-3019
-> 
-> 
-> * They look different, former is an infinite recursion issue and the latter is a use-after-free one.
+On 4/18/24 22:00, Dmitry Osipenko wrote:
+> @@ -1405,6 +1408,8 @@ static int virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
+>              res->iov[i].iov_len = qemu_get_be32(f);
+>          }
+>  
+> +        qemu_get_buffer(f, res->uuid.data, sizeof(res->uuid.data));
 
-I assume the eepro reentrancy issue has been fixed with:
+Save/loading uuid without changing vm version was a bad idea. Will drop
+it in v9, we don't need to save/load uuid for virgl anyways.
 
-  https://gitlab.com/qemu-project/qemu/-/issues/556
-  i.e.:
-  https://gitlab.com/qemu-project/qemu/-/commit/c40ca2301c7603524eaddb5308a3
-
-  HTH,
-   Thomas
-
+-- 
+Best regards,
+Dmitry
 
 
