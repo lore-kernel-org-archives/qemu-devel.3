@@ -4,70 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88050C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 02:00:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B36DC10F15
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 02:23:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzoNR-0000Mq-Bh; Wed, 24 Apr 2024 21:58:21 -0400
+	id 1rzokt-0000TA-JM; Wed, 24 Apr 2024 22:22:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rzoNO-0000Fp-19
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 21:58:18 -0400
-Received: from mgamail.intel.com ([192.198.163.14])
+ (Exim 4.90_1) (envelope-from <hao.xiang@linux.dev>)
+ id 1rzokr-0000Sa-Lf
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 22:22:33 -0400
+Received: from out-188.mta1.migadu.com ([2001:41d0:203:375::bc])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rzoNM-0003TE-Ev
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 21:58:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1714010296; x=1745546296;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=dUJkL91rlbOdHpUus5fXAiArq1qFEmDc9AoT7W2Ya0I=;
- b=iWiTOzzomwXkpGrJxB3kZWBGi+n6ehe0Hvmu9V3goRBasSpLD1MGVTBB
- rcuXJylve02rr5kUcZSsAe9A47K1AeV3EwtmB/1X7wyvX/7kRA3jyaoW5
- 8rteAfGQMpViFzNLjxi91RCqQt2loPwQJ8QE/wUbMUKgDZyLyq2r89BMW
- iPVTxMOjWyX8S2uBYuYWz8+B4prORBkdUJNbeMOpehf5Y0SPHIB+0zBch
- PZiAq5SOvGtS9a3OTbvtyzCZD+Zpw2MrG6WxKCNOnO43FgKk4Ngdf+reI
- E5Qpvagw2+2ha5KtIhfk2cAUQYMv/YqLayxaY07Mn61UyiRB8znArOx/k Q==;
-X-CSE-ConnectionGUID: kVzO6LxhRuaBgQSCwKekcA==
-X-CSE-MsgGUID: 5LTcG+fFTYygmaLKEi2T9A==
-X-IronPort-AV: E=McAfee;i="6600,9927,11054"; a="9890083"
-X-IronPort-AV: E=Sophos;i="6.07,227,1708416000"; 
-   d="scan'208";a="9890083"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Apr 2024 18:58:03 -0700
-X-CSE-ConnectionGUID: nzrLW9gHSNytP2Htq+CV0w==
-X-CSE-MsgGUID: 5CCi11BrTNO6e02dvU3Nvg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,227,1708416000"; d="scan'208";a="24914191"
-Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.129.124])
- by fmviesa009.fm.intel.com with ESMTP; 24 Apr 2024 18:58:03 -0700
-From: dongwon.kim@intel.com
-To: qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com,
-	berrange@redhat.com,
-	philmd@linaro.org
-Subject: [PATCH v12 6/6] ui/console: move QemuDmaBuf struct def to dmabuf.c
-Date: Wed, 24 Apr 2024 18:53:42 -0700
-Message-Id: <20240425015342.1033815-7-dongwon.kim@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240425015342.1033815-1-dongwon.kim@intel.com>
-References: <20240425015342.1033815-1-dongwon.kim@intel.com>
+ (Exim 4.90_1) (envelope-from <hao.xiang@linux.dev>)
+ id 1rzokn-0004qD-Ab
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 22:22:33 -0400
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1714011747;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=kjdVWecrwwPDQpy9+vetY0jaSQPOxwH/bMy/SbjAqvk=;
+ b=Z8AJbAtg3CYBc5IL4HlxzguoZnLc7gnnRS1J4bnTDq346KvL4Tr40M0jiyiVmTJQsJzbB/
+ uH7jT4GCflRk6gskgm7x3+Qv6K98WcrtoHe7lmbXcwLkpN5ZpxKojMQyaYLJ7Wo5WI3Ywv
+ bCAXPTdmSHtiPB11SPNHcKNtXHU3Hp8=
+From: Hao Xiang <hao.xiang@linux.dev>
+To: marcandre.lureau@redhat.com, peterx@redhat.com, farosas@suse.de,
+ armbru@redhat.com, lvivier@redhat.com, qemu-devel@nongnu.org
+Cc: Hao Xiang <hao.xiang@linux.dev>
+Subject: [PATCH v4 02/14] util/dsa: Add dependency idxd.
+Date: Thu, 25 Apr 2024 02:21:05 +0000
+Message-Id: <20240425022117.4035031-3-hao.xiang@linux.dev>
+In-Reply-To: <20240425022117.4035031-1-hao.xiang@linux.dev>
+References: <20240425022117.4035031-1-hao.xiang@linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.14;
- envelope-from=dongwon.kim@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.668,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=2001:41d0:203:375::bc;
+ envelope-from=hao.xiang@linux.dev; helo=out-188.mta1.migadu.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,82 +67,380 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dongwon Kim <dongwon.kim@intel.com>
+Idxd is the device driver for DSA (Intel Data Streaming
+Accelerator). The driver is fully functioning since Linux
+kernel 5.19. This change adds the driver's header file used
+for userspace development.
 
-To complete privatizing process of QemuDmaBuf, QemuDmaBuf struct def
-is moved to dmabuf.c
-
-Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
 ---
- include/ui/dmabuf.h | 19 +------------------
- ui/dmabuf.c         | 19 +++++++++++++++++++
- 2 files changed, 20 insertions(+), 18 deletions(-)
+ linux-headers/linux/idxd.h | 356 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 356 insertions(+)
+ create mode 100644 linux-headers/linux/idxd.h
 
-diff --git a/include/ui/dmabuf.h b/include/ui/dmabuf.h
-index 4198cdf85a..dc74ba895a 100644
---- a/include/ui/dmabuf.h
-+++ b/include/ui/dmabuf.h
-@@ -10,24 +10,7 @@
- #ifndef DMABUF_H
- #define DMABUF_H
- 
--typedef struct QemuDmaBuf {
--    int       fd;
--    uint32_t  width;
--    uint32_t  height;
--    uint32_t  stride;
--    uint32_t  fourcc;
--    uint64_t  modifier;
--    uint32_t  texture;
--    uint32_t  x;
--    uint32_t  y;
--    uint32_t  backing_width;
--    uint32_t  backing_height;
--    bool      y0_top;
--    void      *sync;
--    int       fence_fd;
--    bool      allow_fences;
--    bool      draw_submitted;
--} QemuDmaBuf;
-+typedef struct QemuDmaBuf QemuDmaBuf;
- 
- QemuDmaBuf *qemu_dmabuf_new(uint32_t width, uint32_t height,
-                             uint32_t stride, uint32_t x,
-diff --git a/ui/dmabuf.c b/ui/dmabuf.c
-index e047d5ca26..df7a09703f 100644
---- a/ui/dmabuf.c
-+++ b/ui/dmabuf.c
-@@ -10,6 +10,25 @@
- #include "qemu/osdep.h"
- #include "ui/dmabuf.h"
- 
-+struct QemuDmaBuf {
-+    int       fd;
-+    uint32_t  width;
-+    uint32_t  height;
-+    uint32_t  stride;
-+    uint32_t  fourcc;
-+    uint64_t  modifier;
-+    uint32_t  texture;
-+    uint32_t  x;
-+    uint32_t  y;
-+    uint32_t  backing_width;
-+    uint32_t  backing_height;
-+    bool      y0_top;
-+    void      *sync;
-+    int       fence_fd;
-+    bool      allow_fences;
-+    bool      draw_submitted;
+diff --git a/linux-headers/linux/idxd.h b/linux-headers/linux/idxd.h
+new file mode 100644
+index 0000000000..1d553bedbd
+--- /dev/null
++++ b/linux-headers/linux/idxd.h
+@@ -0,0 +1,356 @@
++/* SPDX-License-Identifier: LGPL-2.1 WITH Linux-syscall-note */
++/* Copyright(c) 2019 Intel Corporation. All rights rsvd. */
++#ifndef _USR_IDXD_H_
++#define _USR_IDXD_H_
++
++#ifdef __KERNEL__
++#include <linux/types.h>
++#else
++#include <stdint.h>
++#endif
++
++/* Driver command error status */
++enum idxd_scmd_stat {
++	IDXD_SCMD_DEV_ENABLED = 0x80000010,
++	IDXD_SCMD_DEV_NOT_ENABLED = 0x80000020,
++	IDXD_SCMD_WQ_ENABLED = 0x80000021,
++	IDXD_SCMD_DEV_DMA_ERR = 0x80020000,
++	IDXD_SCMD_WQ_NO_GRP = 0x80030000,
++	IDXD_SCMD_WQ_NO_NAME = 0x80040000,
++	IDXD_SCMD_WQ_NO_SVM = 0x80050000,
++	IDXD_SCMD_WQ_NO_THRESH = 0x80060000,
++	IDXD_SCMD_WQ_PORTAL_ERR = 0x80070000,
++	IDXD_SCMD_WQ_RES_ALLOC_ERR = 0x80080000,
++	IDXD_SCMD_PERCPU_ERR = 0x80090000,
++	IDXD_SCMD_DMA_CHAN_ERR = 0x800a0000,
++	IDXD_SCMD_CDEV_ERR = 0x800b0000,
++	IDXD_SCMD_WQ_NO_SWQ_SUPPORT = 0x800c0000,
++	IDXD_SCMD_WQ_NONE_CONFIGURED = 0x800d0000,
++	IDXD_SCMD_WQ_NO_SIZE = 0x800e0000,
++	IDXD_SCMD_WQ_NO_PRIV = 0x800f0000,
++	IDXD_SCMD_WQ_IRQ_ERR = 0x80100000,
++	IDXD_SCMD_WQ_USER_NO_IOMMU = 0x80110000,
 +};
 +
- QemuDmaBuf *qemu_dmabuf_new(uint32_t width, uint32_t height,
-                             uint32_t stride, uint32_t x,
-                             uint32_t y, uint32_t backing_width,
++#define IDXD_SCMD_SOFTERR_MASK	0x80000000
++#define IDXD_SCMD_SOFTERR_SHIFT	16
++
++/* Descriptor flags */
++#define IDXD_OP_FLAG_FENCE	0x0001
++#define IDXD_OP_FLAG_BOF	0x0002
++#define IDXD_OP_FLAG_CRAV	0x0004
++#define IDXD_OP_FLAG_RCR	0x0008
++#define IDXD_OP_FLAG_RCI	0x0010
++#define IDXD_OP_FLAG_CRSTS	0x0020
++#define IDXD_OP_FLAG_CR		0x0080
++#define IDXD_OP_FLAG_CC		0x0100
++#define IDXD_OP_FLAG_ADDR1_TCS	0x0200
++#define IDXD_OP_FLAG_ADDR2_TCS	0x0400
++#define IDXD_OP_FLAG_ADDR3_TCS	0x0800
++#define IDXD_OP_FLAG_CR_TCS	0x1000
++#define IDXD_OP_FLAG_STORD	0x2000
++#define IDXD_OP_FLAG_DRDBK	0x4000
++#define IDXD_OP_FLAG_DSTS	0x8000
++
++/* IAX */
++#define IDXD_OP_FLAG_RD_SRC2_AECS	0x010000
++#define IDXD_OP_FLAG_RD_SRC2_2ND	0x020000
++#define IDXD_OP_FLAG_WR_SRC2_AECS_COMP	0x040000
++#define IDXD_OP_FLAG_WR_SRC2_AECS_OVFL	0x080000
++#define IDXD_OP_FLAG_SRC2_STS		0x100000
++#define IDXD_OP_FLAG_CRC_RFC3720	0x200000
++
++/* Opcode */
++enum dsa_opcode {
++	DSA_OPCODE_NOOP = 0,
++	DSA_OPCODE_BATCH,
++	DSA_OPCODE_DRAIN,
++	DSA_OPCODE_MEMMOVE,
++	DSA_OPCODE_MEMFILL,
++	DSA_OPCODE_COMPARE,
++	DSA_OPCODE_COMPVAL,
++	DSA_OPCODE_CR_DELTA,
++	DSA_OPCODE_AP_DELTA,
++	DSA_OPCODE_DUALCAST,
++	DSA_OPCODE_CRCGEN = 0x10,
++	DSA_OPCODE_COPY_CRC,
++	DSA_OPCODE_DIF_CHECK,
++	DSA_OPCODE_DIF_INS,
++	DSA_OPCODE_DIF_STRP,
++	DSA_OPCODE_DIF_UPDT,
++	DSA_OPCODE_CFLUSH = 0x20,
++};
++
++enum iax_opcode {
++	IAX_OPCODE_NOOP = 0,
++	IAX_OPCODE_DRAIN = 2,
++	IAX_OPCODE_MEMMOVE,
++	IAX_OPCODE_DECOMPRESS = 0x42,
++	IAX_OPCODE_COMPRESS,
++	IAX_OPCODE_CRC64,
++	IAX_OPCODE_ZERO_DECOMP_32 = 0x48,
++	IAX_OPCODE_ZERO_DECOMP_16,
++	IAX_OPCODE_ZERO_COMP_32 = 0x4c,
++	IAX_OPCODE_ZERO_COMP_16,
++	IAX_OPCODE_SCAN = 0x50,
++	IAX_OPCODE_SET_MEMBER,
++	IAX_OPCODE_EXTRACT,
++	IAX_OPCODE_SELECT,
++	IAX_OPCODE_RLE_BURST,
++	IAX_OPCODE_FIND_UNIQUE,
++	IAX_OPCODE_EXPAND,
++};
++
++/* Completion record status */
++enum dsa_completion_status {
++	DSA_COMP_NONE = 0,
++	DSA_COMP_SUCCESS,
++	DSA_COMP_SUCCESS_PRED,
++	DSA_COMP_PAGE_FAULT_NOBOF,
++	DSA_COMP_PAGE_FAULT_IR,
++	DSA_COMP_BATCH_FAIL,
++	DSA_COMP_BATCH_PAGE_FAULT,
++	DSA_COMP_DR_OFFSET_NOINC,
++	DSA_COMP_DR_OFFSET_ERANGE,
++	DSA_COMP_DIF_ERR,
++	DSA_COMP_BAD_OPCODE = 0x10,
++	DSA_COMP_INVALID_FLAGS,
++	DSA_COMP_NOZERO_RESERVE,
++	DSA_COMP_XFER_ERANGE,
++	DSA_COMP_DESC_CNT_ERANGE,
++	DSA_COMP_DR_ERANGE,
++	DSA_COMP_OVERLAP_BUFFERS,
++	DSA_COMP_DCAST_ERR,
++	DSA_COMP_DESCLIST_ALIGN,
++	DSA_COMP_INT_HANDLE_INVAL,
++	DSA_COMP_CRA_XLAT,
++	DSA_COMP_CRA_ALIGN,
++	DSA_COMP_ADDR_ALIGN,
++	DSA_COMP_PRIV_BAD,
++	DSA_COMP_TRAFFIC_CLASS_CONF,
++	DSA_COMP_PFAULT_RDBA,
++	DSA_COMP_HW_ERR1,
++	DSA_COMP_HW_ERR_DRB,
++	DSA_COMP_TRANSLATION_FAIL,
++};
++
++enum iax_completion_status {
++	IAX_COMP_NONE = 0,
++	IAX_COMP_SUCCESS,
++	IAX_COMP_PAGE_FAULT_IR = 0x04,
++	IAX_COMP_ANALYTICS_ERROR = 0x0a,
++	IAX_COMP_OUTBUF_OVERFLOW,
++	IAX_COMP_BAD_OPCODE = 0x10,
++	IAX_COMP_INVALID_FLAGS,
++	IAX_COMP_NOZERO_RESERVE,
++	IAX_COMP_INVALID_SIZE,
++	IAX_COMP_OVERLAP_BUFFERS = 0x16,
++	IAX_COMP_INT_HANDLE_INVAL = 0x19,
++	IAX_COMP_CRA_XLAT,
++	IAX_COMP_CRA_ALIGN,
++	IAX_COMP_ADDR_ALIGN,
++	IAX_COMP_PRIV_BAD,
++	IAX_COMP_TRAFFIC_CLASS_CONF,
++	IAX_COMP_PFAULT_RDBA,
++	IAX_COMP_HW_ERR1,
++	IAX_COMP_HW_ERR_DRB,
++	IAX_COMP_TRANSLATION_FAIL,
++	IAX_COMP_PRS_TIMEOUT,
++	IAX_COMP_WATCHDOG,
++	IAX_COMP_INVALID_COMP_FLAG = 0x30,
++	IAX_COMP_INVALID_FILTER_FLAG,
++	IAX_COMP_INVALID_INPUT_SIZE,
++	IAX_COMP_INVALID_NUM_ELEMS,
++	IAX_COMP_INVALID_SRC1_WIDTH,
++	IAX_COMP_INVALID_INVERT_OUT,
++};
++
++#define DSA_COMP_STATUS_MASK		0x7f
++#define DSA_COMP_STATUS_WRITE		0x80
++
++struct dsa_hw_desc {
++	uint32_t	pasid:20;
++	uint32_t	rsvd:11;
++	uint32_t	priv:1;
++	uint32_t	flags:24;
++	uint32_t	opcode:8;
++	uint64_t	completion_addr;
++	union {
++		uint64_t	src_addr;
++		uint64_t	rdback_addr;
++		uint64_t	pattern;
++		uint64_t	desc_list_addr;
++	};
++	union {
++		uint64_t	dst_addr;
++		uint64_t	rdback_addr2;
++		uint64_t	src2_addr;
++		uint64_t	comp_pattern;
++	};
++	union {
++		uint32_t	xfer_size;
++		uint32_t	desc_count;
++	};
++	uint16_t	int_handle;
++	uint16_t	rsvd1;
++	union {
++		uint8_t		expected_res;
++		/* create delta record */
++		struct {
++			uint64_t	delta_addr;
++			uint32_t	max_delta_size;
++			uint32_t 	delt_rsvd;
++			uint8_t 	expected_res_mask;
++		};
++		uint32_t	delta_rec_size;
++		uint64_t	dest2;
++		/* CRC */
++		struct {
++			uint32_t	crc_seed;
++			uint32_t	crc_rsvd;
++			uint64_t	seed_addr;
++		};
++		/* DIF check or strip */
++		struct {
++			uint8_t		src_dif_flags;
++			uint8_t		dif_chk_res;
++			uint8_t		dif_chk_flags;
++			uint8_t		dif_chk_res2[5];
++			uint32_t	chk_ref_tag_seed;
++			uint16_t	chk_app_tag_mask;
++			uint16_t	chk_app_tag_seed;
++		};
++		/* DIF insert */
++		struct {
++			uint8_t		dif_ins_res;
++			uint8_t		dest_dif_flag;
++			uint8_t		dif_ins_flags;
++			uint8_t		dif_ins_res2[13];
++			uint32_t	ins_ref_tag_seed;
++			uint16_t	ins_app_tag_mask;
++			uint16_t	ins_app_tag_seed;
++		};
++		/* DIF update */
++		struct {
++			uint8_t		src_upd_flags;
++			uint8_t		upd_dest_flags;
++			uint8_t		dif_upd_flags;
++			uint8_t		dif_upd_res[5];
++			uint32_t	src_ref_tag_seed;
++			uint16_t	src_app_tag_mask;
++			uint16_t	src_app_tag_seed;
++			uint32_t	dest_ref_tag_seed;
++			uint16_t	dest_app_tag_mask;
++			uint16_t	dest_app_tag_seed;
++		};
++
++		uint8_t		op_specific[24];
++	};
++} __attribute__((packed));
++
++struct iax_hw_desc {
++	uint32_t        pasid:20;
++	uint32_t        rsvd:11;
++	uint32_t        priv:1;
++	uint32_t        flags:24;
++	uint32_t        opcode:8;
++	uint64_t        completion_addr;
++	uint64_t        src1_addr;
++	uint64_t        dst_addr;
++	uint32_t        src1_size;
++	uint16_t        int_handle;
++	union {
++		uint16_t        compr_flags;
++		uint16_t        decompr_flags;
++	};
++	uint64_t        src2_addr;
++	uint32_t        max_dst_size;
++	uint32_t        src2_size;
++	uint32_t	filter_flags;
++	uint32_t	num_inputs;
++} __attribute__((packed));
++
++struct dsa_raw_desc {
++	uint64_t	field[8];
++} __attribute__((packed));
++
++/*
++ * The status field will be modified by hardware, therefore it should be
++ * volatile and prevent the compiler from optimize the read.
++ */
++struct dsa_completion_record {
++	volatile uint8_t	status;
++	union {
++		uint8_t		result;
++		uint8_t		dif_status;
++	};
++	uint16_t		rsvd;
++	uint32_t		bytes_completed;
++	uint64_t		fault_addr;
++	union {
++		/* common record */
++		struct {
++			uint32_t	invalid_flags:24;
++			uint32_t	rsvd2:8;
++		};
++
++		uint32_t	delta_rec_size;
++		uint64_t	crc_val;
++
++		/* DIF check & strip */
++		struct {
++			uint32_t	dif_chk_ref_tag;
++			uint16_t	dif_chk_app_tag_mask;
++			uint16_t	dif_chk_app_tag;
++		};
++
++		/* DIF insert */
++		struct {
++			uint64_t	dif_ins_res;
++			uint32_t	dif_ins_ref_tag;
++			uint16_t	dif_ins_app_tag_mask;
++			uint16_t	dif_ins_app_tag;
++		};
++
++		/* DIF update */
++		struct {
++			uint32_t	dif_upd_src_ref_tag;
++			uint16_t	dif_upd_src_app_tag_mask;
++			uint16_t	dif_upd_src_app_tag;
++			uint32_t	dif_upd_dest_ref_tag;
++			uint16_t	dif_upd_dest_app_tag_mask;
++			uint16_t	dif_upd_dest_app_tag;
++		};
++
++		uint8_t		op_specific[16];
++	};
++} __attribute__((packed));
++
++struct dsa_raw_completion_record {
++	uint64_t	field[4];
++} __attribute__((packed));
++
++struct iax_completion_record {
++	volatile uint8_t        status;
++	uint8_t                 error_code;
++	uint16_t                rsvd;
++	uint32_t                bytes_completed;
++	uint64_t                fault_addr;
++	uint32_t                invalid_flags;
++	uint32_t                rsvd2;
++	uint32_t                output_size;
++	uint8_t                 output_bits;
++	uint8_t                 rsvd3;
++	uint16_t                xor_csum;
++	uint32_t                crc;
++	uint32_t                min;
++	uint32_t                max;
++	uint32_t                sum;
++	uint64_t                rsvd4[2];
++} __attribute__((packed));
++
++struct iax_raw_completion_record {
++	uint64_t	field[8];
++} __attribute__((packed));
++
++#endif
 -- 
-2.34.1
+2.30.2
 
 
