@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFA1AC10F15
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 20:04:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2849C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 20:23:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s05K1-0000h5-2h; Thu, 25 Apr 2024 16:03:57 -0400
+	id 1s05bM-0007R5-FA; Thu, 25 Apr 2024 16:21:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s05Jy-0000gt-Tb
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 16:03:54 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s05bJ-0007Qf-P2
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 16:21:49 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s05Jt-0001Ul-3i
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 16:03:54 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s05bH-00083V-4C
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 16:21:49 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 30669342CA;
- Thu, 25 Apr 2024 20:03:47 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 508EA5C5F9;
+ Thu, 25 Apr 2024 20:21:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1714075427; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1714076505; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Jneuoouxxw7yO9CrHWmQyL2kNm1wcJbLlQE7bJYirPw=;
- b=igRgvN4arzHWs37NWdcMIU8YFZvuxG6gy+PyKuzGnDGTm/RJdImXCw9jijj6t0eTNgTI05
- Pvb/dSiMOFKBwTzFwU4sYi59TYV2qQn8N8fMKYfnjMdEjGSpP2/oFGFSD3IjfFAsUg/xZM
- XwoXVP6HfZSUKCmAxNYTgVBbiwphlMw=
+ bh=JUxyP8gradFuLqSkI7B17QucCnuGEFX2pX/yfE2aWdc=;
+ b=buRHbG34UMhOcL9tZ/14ltNN4xhLoPLZbXpPCCoeoNXEx7VVEaIqd5U26+6IwrROMH9NOk
+ ovZ/H3IxATED9UkXwgpPmp8frSDtdPVSGWz15T9q1OmDZ2igUzBVXG5zLmxzhcHk3wny7q
+ 4zqlKBHYFa+7Z3RTH1WBXhYxBSjbb7U=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1714075427;
+ s=susede2_ed25519; t=1714076505;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Jneuoouxxw7yO9CrHWmQyL2kNm1wcJbLlQE7bJYirPw=;
- b=oZdR2zjFtVO1kG3SSpy6Z6aj//Zg49xNk2meMj4gabpqpxMj44EUmIoLl+YoMmD3pKLyqS
- YZ+ZHXNi7YxxPMCQ==
-Authentication-Results: smtp-out1.suse.de;
+ bh=JUxyP8gradFuLqSkI7B17QucCnuGEFX2pX/yfE2aWdc=;
+ b=/Zfpjo+es/Cn+ACyrHFe0yix/2XBZHNMD97z0PHmhFGBWC3yCUKtijuVL/vci2IaOYLoko
+ CqaEnV+cR30w1aAQ==
+Authentication-Results: smtp-out2.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1714075427; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1714076505; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Jneuoouxxw7yO9CrHWmQyL2kNm1wcJbLlQE7bJYirPw=;
- b=igRgvN4arzHWs37NWdcMIU8YFZvuxG6gy+PyKuzGnDGTm/RJdImXCw9jijj6t0eTNgTI05
- Pvb/dSiMOFKBwTzFwU4sYi59TYV2qQn8N8fMKYfnjMdEjGSpP2/oFGFSD3IjfFAsUg/xZM
- XwoXVP6HfZSUKCmAxNYTgVBbiwphlMw=
+ bh=JUxyP8gradFuLqSkI7B17QucCnuGEFX2pX/yfE2aWdc=;
+ b=buRHbG34UMhOcL9tZ/14ltNN4xhLoPLZbXpPCCoeoNXEx7VVEaIqd5U26+6IwrROMH9NOk
+ ovZ/H3IxATED9UkXwgpPmp8frSDtdPVSGWz15T9q1OmDZ2igUzBVXG5zLmxzhcHk3wny7q
+ 4zqlKBHYFa+7Z3RTH1WBXhYxBSjbb7U=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1714075427;
+ s=susede2_ed25519; t=1714076505;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Jneuoouxxw7yO9CrHWmQyL2kNm1wcJbLlQE7bJYirPw=;
- b=oZdR2zjFtVO1kG3SSpy6Z6aj//Zg49xNk2meMj4gabpqpxMj44EUmIoLl+YoMmD3pKLyqS
- YZ+ZHXNi7YxxPMCQ==
+ bh=JUxyP8gradFuLqSkI7B17QucCnuGEFX2pX/yfE2aWdc=;
+ b=/Zfpjo+es/Cn+ACyrHFe0yix/2XBZHNMD97z0PHmhFGBWC3yCUKtijuVL/vci2IaOYLoko
+ CqaEnV+cR30w1aAQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A6AC21393C;
- Thu, 25 Apr 2024 20:03:46 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D04BF13991;
+ Thu, 25 Apr 2024 20:21:44 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id YyhXGyK3KmZMWAAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 25 Apr 2024 20:03:46 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id QQRyJVi7KmanXAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 25 Apr 2024 20:21:44 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, peterx@redhat.com
 Cc: eblake@redhat.com, armbru@redhat.com, pbonzini@redhat.com,
  qemu-devel@nongnu.org, vsementsov@yandex-team.ru, yc-core@yandex-team.ru
-Subject: Re: [PATCH v3 2/4] migration: process_incoming_migration_co():
- complete cleanup on failure
-In-Reply-To: <20240425181551.1465739-3-vsementsov@yandex-team.ru>
+Subject: Re: [PATCH v3 3/4] migration: process_incoming_migration_co():
+ rework error reporting
+In-Reply-To: <20240425181551.1465739-4-vsementsov@yandex-team.ru>
 References: <20240425181551.1465739-1-vsementsov@yandex-team.ru>
- <20240425181551.1465739-3-vsementsov@yandex-team.ru>
-Date: Thu, 25 Apr 2024 17:03:44 -0300
-Message-ID: <87y191gqfz.fsf@suse.de>
+ <20240425181551.1465739-4-vsementsov@yandex-team.ru>
+Date: Thu, 25 Apr 2024 17:21:42 -0300
+Message-ID: <87ttjpgpm1.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Spamd-Result: default: False [-4.29 / 50.00]; BAYES_HAM(-2.99)[99.97%];
+X-Spamd-Result: default: False [-4.27 / 50.00]; BAYES_HAM(-2.97)[99.88%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.993]; MIME_GOOD(-0.10)[text/plain];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
  ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
  MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
  RCPT_COUNT_SEVEN(0.00)[8]; MID_RHS_MATCH_FROM(0.00)[];
@@ -91,9 +91,10 @@ X-Spamd-Result: default: False [-4.29 / 50.00]; BAYES_HAM(-2.99)[99.97%];
  FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
  TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
  FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[yandex-team.ru:email,suse.de:email]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+ DBL_BLOCKED_OPENRESOLVER(0.00)[yandex-team.ru:email,
+ imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -118,8 +119,8 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-> Make call to migration_incoming_state_destroy(), instead of doing only
-> partial of it.
+> Unify error reporting in the function. This simplifies the following
+> commit, which will not-exit-on-error behavior variant to the function.
 >
 > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
