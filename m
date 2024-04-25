@@ -4,87 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60D1BC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 08:31:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7E62C19F4E
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 08:41:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzuVT-0001yN-3V; Thu, 25 Apr 2024 04:31:03 -0400
+	id 1rzuef-0005Kt-9Z; Thu, 25 Apr 2024 04:40:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzuVL-0001tQ-4B
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 04:30:55 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzuVG-0005SE-LU
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 04:30:52 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a52223e004dso74102166b.2
- for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 01:30:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714033848; x=1714638648; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=tZ3/6YhofnYJIVLe11MJ4UpdhXlzdTRi2JtZxyvTnHI=;
- b=lTGID9KNHfaMkqbOIfdfktcTadym7hOmgvHpfnYGsBTJEzr8i/r74qY8TUTO6qlm+c
- cEs4jCWD705h4oA2EfK8NYupNArKjuwTBRqP/hjQv+NEKTzatnx1fIi+Au5je6NK/FqA
- b4uhg82jBAMb87QNJY/TzeAX3dq2CHibihLywNLqrzJve0weUSXIiqXB2P7yY3r1EU+G
- o7fpCo+7wq3V9v64hRcsQ9uqAyMeKO9/Jkz5jBQB39A6pn+9EGZS1ujrH/2picMbJ1mx
- 8pCX3O+V5wt2P01E70jqFGgMlRDRLmnVI0pcEaTGDXRGvMizDqQXLBd46YE3rn2rZfpY
- 12Tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714033848; x=1714638648;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tZ3/6YhofnYJIVLe11MJ4UpdhXlzdTRi2JtZxyvTnHI=;
- b=rd7xWBkJ3iq6NjS5Uh5QOJbnfj9U9x3jODa2wrO3quMWbORggMhrbT68vtgS8EAuzU
- 46OSryyGABjZ19Xfy9U5042B7aQB+ktOeSCeAd0QtKQ1eFLqS4osJ+Z7gW8KkHOcLIqu
- TWjyKaCJNhITUOpttr2X6MU2/8qLnghUqgTEMJsTmR+dVZQ0Km3MsQ9pKowt0/jkJwTZ
- hjYfTVzlPcf+ewPqdjT/IyaoG4LBX1QN8l1ScbSB4f/ltsnf6AxYIQodkGWjuzjNsB3q
- HIZ8+J/fCAVPGe3cBIjzHAdlsGTUNhvwwOk+u6Y97jEn1qLH4+qx+oidvtNP5r6P7zMn
- kZiw==
-X-Gm-Message-State: AOJu0Yz2/kviMqyAi88Fkm971XegKQ9rJ3YKDGaGCE9KZWpvqdft/bOo
- 4vUx07s3Inpyhxn2durvzq/Z8xao7sX8I6MXKmQ2ye7AAhWN1T/MAaVDyTeeezo=
-X-Google-Smtp-Source: AGHT+IGbxmvKPuF7F+Qe1o2T+PT4u6mNxMQq2gs4ua6p8aEqwoV+d0VmlM+jfXg6mkwgsGfHemKX2Q==
-X-Received: by 2002:a17:906:3b5b:b0:a55:33a5:9116 with SMTP id
- h27-20020a1709063b5b00b00a5533a59116mr4508604ejf.33.1714033847972; 
- Thu, 25 Apr 2024 01:30:47 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.197.201])
- by smtp.gmail.com with ESMTPSA id
- i7-20020a1709061e4700b00a52244ab819sm9434096ejj.170.2024.04.25.01.30.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 25 Apr 2024 01:30:47 -0700 (PDT)
-Message-ID: <86326b55-3435-4ceb-8630-e44ce3b15d93@linaro.org>
-Date: Thu, 25 Apr 2024 10:30:45 +0200
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1rzueb-0005KS-SD
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 04:40:29 -0400
+Received: from mgamail.intel.com ([192.198.163.17])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1rzueR-00012H-3z
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 04:40:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1714034419; x=1745570419;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=K/Cg5XtNto2C/13YZaMoG170H77iS2HAQOjxL3QuFD8=;
+ b=khzFD1IJ3JmMPtmIM83+RsI9piLo2zmThhpL6/T8oIQOYUGo6l1QQEac
+ bkbsAG0jjIT8XPFcUeWSqnUmdHhGWkJpoP8+Bd04tGk04u+Dgg4RG77Lr
+ KOOFosuEy4sXRli4jwoxn9mOwoaNpeTm8JYkzfBFynJ9yQQ5U2YOngz8e
+ 4+pk8tz/0YbPGDQDu2bHUlG/wNcruqdzeiPiuICLIvEO3GxT2L6va6ylM
+ +qM/yI/P3iFnPyXDX+qXpwctdNe1Y2VLGyn1EVpN4gklqM/BBJxwI5pJ+
+ jrfppVNV+s0Z0+Dtg6mu95Y9UsD+ssfRzSrfvHHNkxJwyipi4ewczoFKh Q==;
+X-CSE-ConnectionGUID: csjTzihoSPC/t1lY7rLZWw==
+X-CSE-MsgGUID: FTGmstGwQr2T7FxFIi4nSg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11054"; a="9570768"
+X-IronPort-AV: E=Sophos;i="6.07,228,1708416000"; 
+   d="scan'208";a="9570768"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Apr 2024 01:40:16 -0700
+X-CSE-ConnectionGUID: BY6rdOebSoCkhZNBuGSy/g==
+X-CSE-MsgGUID: BavTUoOpSpK1M8a6krZjOA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,228,1708416000"; d="scan'208";a="29630606"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.242.48])
+ ([10.124.242.48])
+ by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Apr 2024 01:40:12 -0700
+Message-ID: <eb5cfa25-6490-4b8d-8552-4be2662d15d2@intel.com>
+Date: Thu, 25 Apr 2024 16:40:10 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/24] exec: Rename 'exec/user/guest-base.h' as
- 'user/guest-base.h'
-To: Anton Johansson <anjo@rev.ng>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
- qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
- David Hildenbrand <david@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Riku Voipio <riku.voipio@iki.fi>
-References: <20240418192525.97451-1-philmd@linaro.org>
- <20240418192525.97451-15-philmd@linaro.org>
- <mneadkx4ytvujstobsjifz7hoizsbbpes5opi7i2lyodl3tgs2@7jzadxaldrpi>
+Subject: Re: [PATCH for-9.1 0/7] target/i386/kvm: Cleanup the kvmclock feature
+ name
+To: Zhao Liu <zhao1.liu@linux.intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, "Michael S . Tsirkin"
+ <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Tim Wiederhake <twiederh@redhat.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
+References: <20240329101954.3954987-1-zhao1.liu@linux.intel.com>
+ <fb252e78-2e71-4422-9499-9eac69102eec@intel.com> <ZioDhpYUOEdGbWgE@intel.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <mneadkx4ytvujstobsjifz7hoizsbbpes5opi7i2lyodl3tgs2@7jzadxaldrpi>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <ZioDhpYUOEdGbWgE@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=192.198.163.17; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.668,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,26 +93,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/4/24 09:39, Anton Johansson wrote:
-> On 18/04/24, Philippe Mathieu-Daudé wrote:
->> The include/user/ directory contains the user-emulation
->> specific headers. Move guest-base.h there too.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   include/exec/cpu-all.h               | 2 +-
->>   include/{exec => }/user/guest-base.h | 4 ++--
->>   tcg/tcg.c                            | 2 +-
->>   3 files changed, 4 insertions(+), 4 deletions(-)
->>   rename include/{exec => }/user/guest-base.h (72%)
+On 4/25/2024 3:17 PM, Zhao Liu wrote:
+> Hi Xiaoyao,
 > 
-> Patch looks good, but the difference between user/ and exec/user is not
-> entirely clear to me :)
+> On Wed, Apr 24, 2024 at 11:57:11PM +0800, Xiaoyao Li wrote:
+>> Date: Wed, 24 Apr 2024 23:57:11 +0800
+>> From: Xiaoyao Li <xiaoyao.li@intel.com>
+>> Subject: Re: [PATCH for-9.1 0/7] target/i386/kvm: Cleanup the kvmclock
+>>   feature name
+>>
+>> On 3/29/2024 6:19 PM, Zhao Liu wrote:
+>>> From: Zhao Liu <zhao1.liu@intel.com>
+>>>
+>>> Hi list,
+>>>
+>>> This series is based on Paolo's guest_phys_bits patchset [1].
+>>>
+>>> Currently, the old and new kvmclocks have the same feature name
+>>> "kvmclock" in FeatureWordInfo[FEAT_KVM].
+>>>
+>>> When I tried to dig into the history of this unusual naming and fix it,
+>>> I realized that Tim was already trying to rename it, so I picked up his
+>>> renaming patch [2] (with a new commit message and other minor changes).
+>>>
+>>> 13 years age, the same name was introduced in [3], and its main purpose
+>>> is to make it easy for users to enable/disable 2 kvmclocks. Then, in
+>>> 2012, Don tried to rename the new kvmclock, but the follow-up did not
+>>> address Igor and Eduardo's comments about compatibility.
+>>>
+>>> Tim [2], not long ago, and I just now, were both puzzled by the naming
+>>> one after the other.
+>>
+>> The commit message of [3] said the reason clearly:
+>>
+>>    When we tweak flags involving this value - specially when we use "-",
+>>    we have to act on both.
+>>
+>> So you are trying to change it to "when people want to disable kvmclock,
+>> they need to use '-kvmclock,-kvmclock2' instead of '-kvmclock'"
+>>
+>> IMHO, I prefer existing code and I don't see much value of differentiating
+>> them. If the current code puzzles you, then we can add comment to explain.
+> 
+> It's enough to just enable kvmclock2 for Guest; kvmclock (old) is
+> redundant in the presence of kvmclock2.
+> 
+> So operating both feature bits at the same time is not a reasonable
+> choice, we should only keep kvmclock2 for Guest. It's possible because
+> the oldest linux (v4.5) which QEMU i386 supports has kvmclock2.
 
-Neither it is for me. In next batch (part 3) all headers are
-moved to user/.
+who said the oldest Linux QEMU supports is from 4.5? what about 2.x kernel?
 
-> Reviewed-by: Anton Johansson <anjo@rev.ng>
+Besides, not only the Linux guest, whatever guest OS is, it will be 
+broken if the guest is using kvmclock and QEMU starts to drop support of 
+kvmclock.
 
-Thanks!
+So, again, hard NAK to drop the support of kvmclock. It breaks existing 
+guests that use kvmclock. You cannot force people to upgrade their 
+existing VMs to use kvmclock2 instead of kvmclock.
+
+> Pls see:
+> https://elixir.bootlin.com/linux/v4.5/source/arch/x86/include/uapi/asm/kvm_para.h#L22
+> 
+> With this in mind, I'm trying to implement a silky smooth transition to
+> "only kcmclock2 support".
+> 
+> This series is now separating kvmclock and kvmclock2, and then I plan to
+> go to the KVM side and deprecate kvmclock2, and then finally remove
+> kvmclock (old) in QEMU. Separating the two features makes the process
+> clearer.
+> 
+> Continuing to use the same name equally would have silently caused the
+> CPUID to change on the Guest side, which would have hurt compatibility
+> as well.
+> 
+>>> So, this series is to push for renaming the new kvmclock feature to
+>>> "kvmclock2" and adding compatibility support for older machines (PC 9.0
+>>> and older).
+>>>
+>>> Finally, let's put an end to decades of doubt about this name.
+>>>
+>>>
+>>> Next Step
+>>> =========
+>>>
+>>> This series just separates the two kvmclocks from the naming, and in
+>>> subsequent patches I plan to stop setting kvmclock(old kcmclock) by
+>>> default as long as KVM supports kvmclock2 (new kvmclock).
+>>
+>> No. It will break existing guests that use KVM_FEATURE_CLOCKSOURCE.
+> 
+> Please refer to my elaboration on v4.5 above, where kvmclock2 is
+> available, it should be used in priority.
+> 
+>>> Also, try to deprecate the old kvmclock in KVM side.
+>>>
+>>> [1]: https://lore.kernel.org/qemu-devel/20240325141422.1380087-1-pbonzini@redhat.com/
+>>> [2]: https://lore.kernel.org/qemu-devel/20230908124534.25027-4-twiederh@redhat.com/
+>>> [3]: https://lore.kernel.org/qemu-devel/1300401727-5235-3-git-send-email-glommer@redhat.com/
+>>> [4]: https://lore.kernel.org/qemu-devel/1348171412-23669-3-git-send-email-Don@CloudSwitch.com/
+> 
+> Thanks,
+> Zhao
+> 
+> 
+
 
