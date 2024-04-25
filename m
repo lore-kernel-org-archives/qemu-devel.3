@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7723EC4345F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A8F0C19F4E
 	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 00:08:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzmcE-0006gH-TI; Wed, 24 Apr 2024 20:05:38 -0400
+	id 1rzmYK-0008RZ-Aw; Wed, 24 Apr 2024 20:01:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rzmax-0005Fg-1d
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 20:04:11 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1rzmXz-0008Jm-Gy
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 20:01:07 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rzmas-0007tj-Q4
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 20:04:08 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-1e9ffd3f96eso3558315ad.3
- for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 17:04:05 -0700 (PDT)
+ id 1rzmXx-0006Jw-LE
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 20:01:07 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-1e36b7e7dd2so3451775ad.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 17:01:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714003444; x=1714608244; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714003262; x=1714608062; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=sIcgMZsbCQjMNHUGM6x7heye+I2mJEY00KtRZt5wXT0=;
- b=rWEA9QXYcqvVGX1fNHzdZ45nJq2EeQy3lWGkkYxW9hE0QXe+SzjtsJDTDWuId9he1U
- h7EznO338YFi7vh/CPzPdYs5pPrHopjMq/pbi+TL8p4Ctkv3pu25nzBzkLFQMFPE7E7Y
- Rie19PX5yteDgFgiJvZZzLeUWLvrLrTGrxZH5hDKEjGLbG1pBgcki/EvHxt5WdLO/QKK
- 7ELWQoywcn9gF1jMIgSlVPyOY4wcTRtfLABYjKg84SyZ8AxQvqVaf8OVMSuzwLm1S9d6
- Xk6K2a/ODJZ++OxeHYoFgaR62ITZiSdSdw/RpKi/6bt6Jlqxf9Db8DsGoh85zcS5sWfv
- Pedw==
+ :reply-to; bh=03YkZQCWlVOksTPNxrPCbb3bwvJD4b/91KoJpuBrF7U=;
+ b=qY7HYRJ3FEPxKKt5807lXFWOWnyqU66BlZRTCTIp65DO6SVsSUfhQsvkWO/N/q11AK
+ 3AUmjPrnGHEQIXgZg1hlJubbLnkZEM9P4+vw60J6lTC/DoidMdzbGBWh+0fOx+E0X+YP
+ sM0fmlLcsxamh7vBwBjG7ZTmr/7AaxJYyEe1Fa3Pnz6kLPl8n7ebnancEko9asCO56V0
+ BM29mlrQWGcrZyBHPFqJgCmoSJPAC+kbhpfUHsfMwIXifuwRSlMiuVbkcqWboilp1SsU
+ Vr6lYHOsyYAh/Nlo2v1y3tBsco4VtJIczSbCfH07ZQUERZRlKF8XVOb3FCwRm8YnFz2G
+ GOdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714003444; x=1714608244;
+ d=1e100.net; s=20230601; t=1714003262; x=1714608062;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sIcgMZsbCQjMNHUGM6x7heye+I2mJEY00KtRZt5wXT0=;
- b=KtGbF4zxrjC11ueWdcLrgG/FeITqzmDNCM5NyaUc6sQ6KGKfOZP3tRa8jvaxhm+ftu
- j8QGORSeRllkqTUqskbNGPh8PWdQmU1OtqG3s3b2PpYh+Nlu0SWP1I8cSfbmBH5kyqVY
- VsVNmrV6KJRpNrLPN15S09BpoikDMNat6FCeZ6i4a0s2blzvTCbzy67S1eePjf1ehXLI
- K+dDM2Ooff1wT5QMV+xB589K4ruqGUoHp+tvFumayqsfFkWtm/uMsIw7SGnjo14uqPWd
- tTakbxdN5x90n2sAkrF5SicvlpBNyBY6JxNUMH2N9Ct8hG5sGTKR15qFpSTQ4d1NxS3Z
- vyjA==
-X-Gm-Message-State: AOJu0Yw/KnrUqdwxQCTiJW7Vw9ojexz3TaX3cXHotJ59hrdj1wCVRNTs
- WT988OyRyAnw+32bPnytU6zzUEcFDPgWVlC7bUY5BMAdBZqZEUWIJ6Uz6bnK4BskqNo18ewtKUv
- m
-X-Google-Smtp-Source: AGHT+IFScLH1Sz58svI+t05Fvj4HB6dsaAgzDTPIsPDXLU6RGqbvo4qcpbHHRRNQgAUYUN+E7f6FXQ==
-X-Received: by 2002:a17:902:f547:b0:1e5:62:7ac0 with SMTP id
- h7-20020a170902f54700b001e500627ac0mr5773548plf.14.1714003444228; 
- Wed, 24 Apr 2024 17:04:04 -0700 (PDT)
+ bh=03YkZQCWlVOksTPNxrPCbb3bwvJD4b/91KoJpuBrF7U=;
+ b=QNnF8NsPignzci5biTNkl7hmOwXfxkjucEsx5ppukY7ev9pt3pmAwZhNbZ5SI/Osec
+ ayRrLLHKWMN5wdCcyuhudtKjiM8eY8nkZ42qR85xiAyfvjBHiMUT2dFohE2278hoGYT9
+ rz6Qaz9JJKfMpKhCxz7wmdD2+lGM0du05JZAw/QRg4pQLEia2ZFfP8H3/iOQGSe4moHK
+ tSUKCYvL9X3CgDHgp+KuqFlAOpPIw1QKnWSUZVo2/JuERlR0rO09M2ttpu4uGN2ZOkRb
+ rJ6sZ6zxfIEEzLWKmdBr7n6mWfCJHZ+/3x9i35rLpLgsll6EthEHJk2N6GullItSVAvo
+ WQmw==
+X-Gm-Message-State: AOJu0YzB3hjstwko/XIoZjym6jKx+JnpxbIQUrEhKRzLB48PhRSJkfv6
+ HHPJlyS3+wKYHuZHPei4aVCXJZCtEGwRe5ZnG2y2ffnENnnEt2Ue7N/Rn2w/Re6Cz9iDX93fiIR
+ z
+X-Google-Smtp-Source: AGHT+IECc+zEBpRl+ibKSwuBiW8GM7VWyacwp1mGysRZXFTy30mlBFiuxFKRrgFKtUMVkEw4Sn6rbw==
+X-Received: by 2002:a17:902:e54d:b0:1e2:6165:8086 with SMTP id
+ n13-20020a170902e54d00b001e261658086mr5257851plf.61.1714003261779; 
+ Wed, 24 Apr 2024 17:01:01 -0700 (PDT)
 Received: from stoup.. ([156.19.246.23]) by smtp.gmail.com with ESMTPSA id
- y20-20020a170902ed5400b001e0648dfd68sm12483717plb.296.2024.04.24.17.04.03
+ t6-20020a170902e84600b001e604438791sm12465715plg.156.2024.04.24.17.01.01
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Apr 2024 17:04:03 -0700 (PDT)
+ Wed, 24 Apr 2024 17:01:01 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 40/45] target/hppa: Adjust priv for B,GATE at runtime
-Date: Wed, 24 Apr 2024 17:00:18 -0700
-Message-Id: <20240425000023.1002026-41-richard.henderson@linaro.org>
+Subject: [PATCH 38/45] target/hppa: Implement PSW_X
+Date: Wed, 24 Apr 2024 17:00:16 -0700
+Message-Id: <20240425000023.1002026-39-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240425000023.1002026-1-richard.henderson@linaro.org>
 References: <20240425000023.1002026-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,152 +92,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Do not compile in the priv change based on the first
-translation; look up the PTE at execution time.
+Use PAGE_WRITE_INV to temporarily enable write permission
+on for a given page, driven by PSW_X being set.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/cpu.h        |  1 -
- target/hppa/helper.h     |  1 +
- target/hppa/mem_helper.c | 34 +++++++++++++++++++++++++++-------
- target/hppa/translate.c  | 36 +++++++++++++++++++-----------------
- 4 files changed, 47 insertions(+), 25 deletions(-)
+ target/hppa/mem_helper.c | 46 +++++++++++++++++++++++-----------------
+ 1 file changed, 27 insertions(+), 19 deletions(-)
 
-diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-index 5f3e99cdc4..8523f22452 100644
---- a/target/hppa/cpu.h
-+++ b/target/hppa/cpu.h
-@@ -386,7 +386,6 @@ void hppa_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
- extern const MemoryRegionOps hppa_io_eir_ops;
- extern const VMStateDescription vmstate_hppa_cpu;
- void hppa_cpu_alarm_timer(void *);
--int hppa_artype_for_page(CPUHPPAState *env, target_ulong vaddr);
- #endif
- G_NORETURN void hppa_dynamic_excp(CPUHPPAState *env, int excp, uintptr_t ra);
- 
-diff --git a/target/hppa/helper.h b/target/hppa/helper.h
-index c12b48a04a..de411923d9 100644
---- a/target/hppa/helper.h
-+++ b/target/hppa/helper.h
-@@ -86,6 +86,7 @@ DEF_HELPER_1(halt, noreturn, env)
- DEF_HELPER_1(reset, noreturn, env)
- DEF_HELPER_1(rfi, void, env)
- DEF_HELPER_1(rfi_r, void, env)
-+DEF_HELPER_FLAGS_2(b_gate_priv, TCG_CALL_NO_WG, i64, env, i64)
- DEF_HELPER_FLAGS_2(write_interval_timer, TCG_CALL_NO_RWG, void, env, tl)
- DEF_HELPER_FLAGS_2(write_eirr, TCG_CALL_NO_RWG, void, env, tl)
- DEF_HELPER_FLAGS_2(swap_system_mask, TCG_CALL_NO_RWG, tl, env, tl)
 diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
-index 3ef9e80064..6756d36dae 100644
+index 84785b5a5c..5eca5e8a1e 100644
 --- a/target/hppa/mem_helper.c
 +++ b/target/hppa/mem_helper.c
-@@ -690,13 +690,6 @@ target_ulong HELPER(lpa)(CPUHPPAState *env, target_ulong addr)
-     return phys;
- }
- 
--/* Return the ar_type of the TLB at VADDR, or -1.  */
--int hppa_artype_for_page(CPUHPPAState *env, target_ulong vaddr)
--{
--    HPPATLBEntry *ent = hppa_find_tlb(env, vaddr);
--    return ent ? ent->ar_type : -1;
--}
--
- /*
-  * diag_btlb() emulates the PDC PDC_BLOCK_TLB firmware call to
-  * allow operating systems to modify the Block TLB (BTLB) entries.
-@@ -792,3 +785,30 @@ void HELPER(diag_btlb)(CPUHPPAState *env)
-         break;
+@@ -295,30 +295,38 @@ int hppa_get_physical_address(CPUHPPAState *env, vaddr addr, int mmu_idx,
+         goto egress;
      }
- }
-+
-+uint64_t HELPER(b_gate_priv)(CPUHPPAState *env, uint64_t iaoq_f)
-+{
-+    uint64_t gva = hppa_form_gva(env, env->iasq_f, iaoq_f);
-+    HPPATLBEntry *ent = hppa_find_tlb(env, gva);
-+
-+    if (ent == NULL) {
-+        raise_exception_with_ior(env, EXCP_ITLB_MISS, GETPC(), gva, false);
-+    }
-+
+ 
+-    /* In reverse priority order, check for conditions which raise faults.
+-       As we go, remove PROT bits that cover the condition we want to check.
+-       In this way, the resulting PROT will force a re-check of the
+-       architectural TLB entry for the next access.  */
+-    if (unlikely(!ent->d)) {
+-        if (type & PAGE_WRITE) {
+-            /* The D bit is not set -- TLB Dirty Bit Fault.  */
+-            ret = EXCP_TLB_DIRTY;
+-        }
+-        prot &= PAGE_READ | PAGE_EXEC;
+-    }
+-    if (unlikely(ent->b)) {
+-        if (type & PAGE_WRITE) {
+-            /* The B bit is set -- Data Memory Break Fault.  */
+-            ret = EXCP_DMB;
+-        }
+-        prot &= PAGE_READ | PAGE_EXEC;
+-    }
 +    /*
-+     * There should be no need to check page permissions, as that will
-+     * already have been done by tb_lookup via get_page_addr_code.
-+     * All we need at this point is to check the ar_type.
-+     *
-+     * No change for non-gateway pages or for priv decrease.
++     * In priority order, check for conditions which raise faults.
++     * Remove PROT bits that cover the condition we want to check,
++     * so that the resulting PROT will force a re-check of the
++     * architectural TLB entry for the next access.
 +     */
-+    if (ent->ar_type & 4) {
-+        int old_priv = iaoq_f & 3;
-+        int new_priv = ent->ar_type & 3;
-+
-+        if (new_priv < old_priv) {
-+            iaoq_f = (iaoq_f & -4) | new_priv;
+     if (unlikely(ent->t)) {
++        prot &= PAGE_EXEC;
+         if (!(type & PAGE_EXEC)) {
+             /* The T bit is set -- Page Reference Fault.  */
+             ret = EXCP_PAGE_REF;
+         }
+-        prot &= PAGE_EXEC;
++    } else if (!ent->d) {
++        prot &= PAGE_READ | PAGE_EXEC;
++        if (type & PAGE_WRITE) {
++            /* The D bit is not set -- TLB Dirty Bit Fault.  */
++            ret = EXCP_TLB_DIRTY;
 +        }
-+    }
-+    return iaoq_f;
-+}
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index a4200742bd..3ae196490a 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -3959,6 +3959,7 @@ static bool trans_bl(DisasContext *ctx, arg_bl *a)
- static bool trans_b_gate(DisasContext *ctx, arg_b_gate *a)
- {
-     int64_t disp = a->disp;
-+    bool indirect = false;
- 
-     /* Trap if PSW[B] is set. */
-     if (ctx->psw_xb & PSW_B) {
-@@ -3968,24 +3969,22 @@ static bool trans_b_gate(DisasContext *ctx, arg_b_gate *a)
-     nullify_over(ctx);
- 
- #ifndef CONFIG_USER_ONLY
--    if (ctx->tb_flags & PSW_C) {
--        int type = hppa_artype_for_page(cpu_env(ctx->cs), ctx->base.pc_next);
--        /* If we could not find a TLB entry, then we need to generate an
--           ITLB miss exception so the kernel will provide it.
--           The resulting TLB fill operation will invalidate this TB and
--           we will re-translate, at which point we *will* be able to find
--           the TLB entry and determine if this is in fact a gateway page.  */
--        if (type < 0) {
--            gen_excp(ctx, EXCP_ITLB_MISS);
--            return true;
--        }
--        /* No change for non-gateway pages or for priv decrease.  */
--        if (type >= 4 && type - 4 < ctx->privilege) {
--            disp -= ctx->privilege;
--            disp += type - 4;
--        }
-+    if (ctx->privilege == 0) {
-+        /* Privilege cannot decrease. */
-+    } else if (!(ctx->tb_flags & PSW_C)) {
-+        /* With paging disabled, priv becomes 0. */
-+        disp -= ctx->privilege;
-     } else {
--        disp -= ctx->privilege;  /* priv = 0 */
-+        /* Adjust the dest offset for the privilege change from the PTE. */
-+        TCGv_i64 off = tcg_temp_new_i64();
-+
-+        gen_helper_b_gate_priv(off, tcg_env,
-+                               tcg_constant_i64(ctx->iaoq_first
-+                                                + ctx->iaq_f.disp));
-+
-+        ctx->iaq_j.base = off;
-+        ctx->iaq_j.disp = disp + 8;
-+        indirect = true;
-     }
- #endif
- 
-@@ -3998,6 +3997,9 @@ static bool trans_b_gate(DisasContext *ctx, arg_b_gate *a)
-         save_gpr(ctx, a->l, tmp);
++    } else if (unlikely(ent->b)) {
++        prot &= PAGE_READ | PAGE_EXEC;
++        if (type & PAGE_WRITE) {
++            /*
++             * The B bit is set -- Data Memory Break Fault.
++             * Except when PSW_X is set, allow this single access to succeed.
++             * The write bit will be invalidated for subsequent accesses.
++             */
++            if (env->psw_xb & PSW_X) {
++                prot |= PAGE_WRITE_INV;
++            } else {
++                ret = EXCP_DMB;
++            }
++        }
      }
  
-+    if (indirect) {
-+        return do_ibranch(ctx, 0, false, a->n);
-+    }
-     return do_dbranch(ctx, disp, 0, a->n);
- }
- 
+  egress:
 -- 
 2.34.1
 
