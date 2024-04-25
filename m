@@ -4,97 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45E64C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 20:31:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40B76C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 20:33:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s05k6-0000el-UA; Thu, 25 Apr 2024 16:30:57 -0400
+	id 1s05mP-0001hy-DT; Thu, 25 Apr 2024 16:33:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s05js-0000cM-Ix
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 16:30:43 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s05mO-0001hd-1y
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 16:33:16 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s05jo-0002y9-Bp
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 16:30:39 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s05mL-0005Mz-SU
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 16:33:15 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id DEFDF5C62E;
- Thu, 25 Apr 2024 20:30:32 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id B7CB85C642;
+ Thu, 25 Apr 2024 20:33:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1714077033; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1714077192; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=WuD1rc5PTqIu5yFk2ILZenkfZNdZnTzs5gttvsuRiOI=;
- b=SCtIHkWoGmQyPt0Epk02w5MrqlKhGtnN9CUjcmd7QqINJorG9j/gPkuAM9+eRg6NT2KxwM
- vy866NhqZhZYJzePKKpgFvqOMjWqGa65+HMjHqJRkk6yY2O/Uo2iIDFZrr+l37FKBseCCk
- XCcehaPPK+uOuXVJPxdp8ieAt8F4S6s=
+ bh=OtIBOBcw5MkS6gGhSNZih1kX3f/qjrsWcJ4V870H82Y=;
+ b=rGMyZ6+r4GFRgsu90qsxFkuT8uoFiQmAu6zDA1uB4C1FT4d1QInyD8qzVCQ47fm2s7W+/i
+ VGTlbTPMANeJyRITfkrvnuXVcNtMVjm/ZcU/XmzCDZ3mFwXpOtbKmItgA/sOof0BLAkzlk
+ BXqn5d06YaNdpOFhb09fS7tO/ocAYYE=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1714077033;
+ s=susede2_ed25519; t=1714077192;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=WuD1rc5PTqIu5yFk2ILZenkfZNdZnTzs5gttvsuRiOI=;
- b=l0iwL9MHr09pQmMOqp+iXwpiPwCXIhqK5Qj+7r7INvhqz+7QLUQD096ncOX8kRWwctDeGA
- VZQKKo2fLDTqhhCQ==
+ bh=OtIBOBcw5MkS6gGhSNZih1kX3f/qjrsWcJ4V870H82Y=;
+ b=kQXOxJdYOetFPYSKJ2CRIT8axbMvye8+t1g8Ea92ERLf5rNBHA1lz0fEgRvMptg7GCoCce
+ /ua30IXhqKTSoqCw==
 Authentication-Results: smtp-out2.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1714077032; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1714077190; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=WuD1rc5PTqIu5yFk2ILZenkfZNdZnTzs5gttvsuRiOI=;
- b=mue0+9gkHOOwIZF8VqJUrBX9t8ke57v6nIk9dNUhHGy/+yhP0qZnLFxZC3GWH56IoHSq3J
- VMtQewWXlyHOtLlJdX+plIW6rLhAAKqzbKgdHgOtzn5nGI4cVeWOTSMjh8yq2+vFM9Szqo
- 9Mq6m6s05r6MiS0hyaJrGisVU+C6UPU=
+ bh=OtIBOBcw5MkS6gGhSNZih1kX3f/qjrsWcJ4V870H82Y=;
+ b=SWbNXwCfXVS6CfInbuSzhfuw7IvvsJxULeaXyrik2BA0118sorFuMT5PJe4BoK9ndqTwzY
+ Bec/PnSRzCCZVVDU1kPmrsYkSN+XST1FqkrwSKOlh0lJMsAqlGdCdmepAmS+MzS+2cA7nR
+ EXBqUvQlobAUrQ1i9QeuZ3FKxf/e7JI=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1714077032;
+ s=susede2_ed25519; t=1714077190;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=WuD1rc5PTqIu5yFk2ILZenkfZNdZnTzs5gttvsuRiOI=;
- b=odjuvHcu98Jnmrr5f1BjhtGqOyldhB+fiLeYgG9SNKZfBqmCEfIqnHoWP4iq5oLIcoiejh
- zIIOzlUZm40Bw3BQ==
+ bh=OtIBOBcw5MkS6gGhSNZih1kX3f/qjrsWcJ4V870H82Y=;
+ b=xpJYOF5BEp3bfWll93GvZ+VW/MOH5ygXyx19kbSmngtgut1Ed67diQqiMbkIc5LUN3128r
+ 0GzmI+LlPrKEixDg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6949713991;
- Thu, 25 Apr 2024 20:30:32 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3498D13991;
+ Thu, 25 Apr 2024 20:33:09 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id e9EvDGi9KmbHXgAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 25 Apr 2024 20:30:32 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id +rIdOwW+KmZvXwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 25 Apr 2024 20:33:09 +0000
 From: Fabiano Rosas <farosas@suse.de>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, peterx@redhat.com
-Cc: eblake@redhat.com, armbru@redhat.com, pbonzini@redhat.com,
- qemu-devel@nongnu.org, vsementsov@yandex-team.ru, yc-core@yandex-team.ru
-Subject: Re: [PATCH v3 4/4] qapi: introduce exit-on-error parameter for
- migrate-incoming
-In-Reply-To: <20240425181551.1465739-5-vsementsov@yandex-team.ru>
-References: <20240425181551.1465739-1-vsementsov@yandex-team.ru>
- <20240425181551.1465739-5-vsementsov@yandex-team.ru>
-Date: Thu, 25 Apr 2024 17:30:29 -0300
-Message-ID: <87r0etgp7e.fsf@suse.de>
+To: Hao Xiang <hao.xiang@linux.dev>, marcandre.lureau@redhat.com,
+ peterx@redhat.com, armbru@redhat.com, lvivier@redhat.com,
+ qemu-devel@nongnu.org
+Cc: Hao Xiang <hao.xiang@linux.dev>
+Subject: Re: [PATCH v4 02/14] util/dsa: Add dependency idxd.
+In-Reply-To: <20240425022117.4035031-3-hao.xiang@linux.dev>
+References: <20240425022117.4035031-1-hao.xiang@linux.dev>
+ <20240425022117.4035031-3-hao.xiang@linux.dev>
+Date: Thu, 25 Apr 2024 17:33:07 -0300
+Message-ID: <87o79xgp30.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Spamd-Result: default: False [-2.71 / 50.00]; BAYES_HAM(-1.41)[90.96%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
  ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
  MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[8]; MID_RHS_MATCH_FROM(0.00)[];
+ RCPT_COUNT_SEVEN(0.00)[7]; MID_RHS_MATCH_FROM(0.00)[];
  RCVD_TLS_ALL(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
  TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
  FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
  DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns, yandex-team.ru:email]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+ imap1.dmz-prg2.suse.org:rdns, linux.dev:email]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -117,194 +117,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+Hao Xiang <hao.xiang@linux.dev> writes:
 
-> Now we do set MIGRATION_FAILED state, but don't give a chance to
-> orchestrator to query migration state and get the error.
->
-> Let's provide a possibility for QMP-based orchestrators to get an error
-> like with outgoing migration.
->
-> For hmp_migrate_incoming(), let's enable the new behavior: HMP is not
-> and ABI, it's mostly intended to use by developer and it makes sense
-> not to stop the process.
->
-> For x-exit-preconfig, let's keep the old behavior:
->  - it's called from init(), so here we want to keep current behavior by
->    default
->  - it does exit on error by itself as well
-> So, if we want to change the behavior of x-exit-preconfig, it should be
-> another patch.
->
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->  migration/migration-hmp-cmds.c |  2 +-
->  migration/migration.c          | 36 ++++++++++++++++++++++++++++------
->  migration/migration.h          |  3 +++
->  qapi/migration.json            |  7 ++++++-
->  system/vl.c                    |  3 ++-
->  5 files changed, 42 insertions(+), 9 deletions(-)
->
-> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-> index 7e96ae6ffd..23181bbee1 100644
-> --- a/migration/migration-hmp-cmds.c
-> +++ b/migration/migration-hmp-cmds.c
-> @@ -466,7 +466,7 @@ void hmp_migrate_incoming(Monitor *mon, const QDict *qdict)
->      }
->      QAPI_LIST_PREPEND(caps, g_steal_pointer(&channel));
->  
-> -    qmp_migrate_incoming(NULL, true, caps, &err);
-> +    qmp_migrate_incoming(NULL, true, caps, true, false, &err);
->      qapi_free_MigrationChannelList(caps);
->  
->  end:
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 0b15f7ccf4..5cfe420a76 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -72,6 +72,8 @@
->  #define NOTIFIER_ELEM_INIT(array, elem)    \
->      [elem] = NOTIFIER_WITH_RETURN_LIST_INITIALIZER((array)[elem])
->  
-> +#define INMIGRATE_DEFAULT_EXIT_ON_ERROR true
-> +
->  static NotifierWithReturnList migration_state_notifiers[] = {
->      NOTIFIER_ELEM_INIT(migration_state_notifiers, MIG_MODE_NORMAL),
->      NOTIFIER_ELEM_INIT(migration_state_notifiers, MIG_MODE_CPR_REBOOT),
-> @@ -234,6 +236,8 @@ void migration_object_init(void)
->      qemu_cond_init(&current_incoming->page_request_cond);
->      current_incoming->page_requested = g_tree_new(page_request_addr_cmp);
->  
-> +    current_incoming->exit_on_error = INMIGRATE_DEFAULT_EXIT_ON_ERROR;
-> +
->      migration_object_check(current_migration, &error_fatal);
->  
->      blk_mig_init();
-> @@ -797,13 +801,18 @@ fail:
->                        MIGRATION_STATUS_FAILED);
->      migration_incoming_state_destroy();
->  
-> -    if (migrate_has_error(s)) {
-> -        WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
-> -            error_report_err(s->error);
-> +    if (mis->exit_on_error) {
-> +        if (migrate_has_error(s)) {
-> +            WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
-> +                error_report_err(s->error);
+> Idxd is the device driver for DSA (Intel Data Streaming
+> Accelerator). The driver is fully functioning since Linux
+> kernel 5.19. This change adds the driver's header file used
+> for userspace development.
 
-error_report_err(error_copy(s->error))
+Have you looked at the update-linux-headers script?
 
-...because later on you're reading from s->error at
-fill_destination_migration_info.
-
-> +            }
->          }
-> +        error_report_err(local_err);
-
-migrate_error_free(s);
-
-> +        exit(EXIT_FAILURE);
-> +    } else {
-> +        migrate_set_error(s, local_err);
-> +        error_free(local_err);
->      }
-> -    error_report_err(local_err);
-> -    exit(EXIT_FAILURE);
->  }
->  
->  /**
-> @@ -1312,6 +1321,15 @@ static void fill_destination_migration_info(MigrationInfo *info)
->          break;
->      }
->      info->status = mis->state;
-> +
-> +    if (!info->error_desc) {
-> +        MigrationState *s = migrate_get_current();
-> +        QEMU_LOCK_GUARD(&s->error_mutex);
-> +
-> +        if (s->error) {
-> +            info->error_desc = g_strdup(error_get_pretty(s->error));
-> +        }
-> +    }
->  }
->  
->  MigrationInfo *qmp_query_migrate(Error **errp)
-> @@ -1795,10 +1813,13 @@ void migrate_del_blocker(Error **reasonp)
->  }
->  
->  void qmp_migrate_incoming(const char *uri, bool has_channels,
-> -                          MigrationChannelList *channels, Error **errp)
-> +                          MigrationChannelList *channels,
-> +                          bool has_exit_on_error, bool exit_on_error,
-> +                          Error **errp)
->  {
->      Error *local_err = NULL;
->      static bool once = true;
-> +    MigrationIncomingState *mis = migration_incoming_get_current();
->  
->      if (!once) {
->          error_setg(errp, "The incoming migration has already been started");
-> @@ -1813,6 +1834,9 @@ void qmp_migrate_incoming(const char *uri, bool has_channels,
->          return;
->      }
->  
-> +    mis->exit_on_error =
-> +        has_exit_on_error ? exit_on_error : INMIGRATE_DEFAULT_EXIT_ON_ERROR;
-> +
->      qemu_start_incoming_migration(uri, has_channels, channels, &local_err);
->  
->      if (local_err) {
-> diff --git a/migration/migration.h b/migration/migration.h
-> index 8045e39c26..95995a818e 100644
-> --- a/migration/migration.h
-> +++ b/migration/migration.h
-> @@ -227,6 +227,9 @@ struct MigrationIncomingState {
->       * is needed as this field is updated serially.
->       */
->      unsigned int switchover_ack_pending_num;
-> +
-> +    /* Do exit on incoming migration failure */
-> +    bool exit_on_error;
->  };
->  
->  MigrationIncomingState *migration_incoming_get_current(void);
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index 8c65b90328..9de8b98d0b 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -1837,6 +1837,10 @@
->  # @channels: list of migration stream channels with each stream in the
->  #     list connected to a destination interface endpoint.
->  #
-> +# @exit-on-error: Do exit on incoming migration failure.  Default true.
-> +#     When set to false, the error is reported by MIGRATION event and
-> +#     error could be retrieved by query-migrate command.  (since 9.1)
-> +#
->  # Since: 2.3
->  #
->  # Notes:
-> @@ -1889,7 +1893,8 @@
->  ##
->  { 'command': 'migrate-incoming',
->               'data': {'*uri': 'str',
-> -                      '*channels': [ 'MigrationChannel' ] } }
-> +                      '*channels': [ 'MigrationChannel' ],
-> +                      '*exit-on-error': 'bool' } }
->  
->  ##
->  # @xen-save-devices-state:
-> diff --git a/system/vl.c b/system/vl.c
-> index c644222982..3bad81b0a4 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -2720,7 +2720,8 @@ void qmp_x_exit_preconfig(Error **errp)
->      if (incoming) {
->          Error *local_err = NULL;
->          if (strcmp(incoming, "defer") != 0) {
-> -            qmp_migrate_incoming(incoming, false, NULL, &local_err);
-> +            qmp_migrate_incoming(incoming, false, NULL, true, true,
-> +                                 &local_err);
->              if (local_err) {
->                  error_reportf_err(local_err, "-incoming %s: ", incoming);
->                  exit(1);
 
