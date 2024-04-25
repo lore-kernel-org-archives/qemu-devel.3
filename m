@@ -4,71 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54A7AC19F4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 11:04:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79228C10F15
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 11:04:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzwri-0007iT-Jr; Thu, 25 Apr 2024 07:02:10 -0400
+	id 1rzwtn-0000ij-No; Thu, 25 Apr 2024 07:04:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzwrf-0007fy-4h
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:02:07 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzwsa-0008Ot-B6
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:03:14 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzwrZ-00086x-MO
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:02:06 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-34be34b3296so802726f8f.1
- for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 04:02:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzwsW-0008TK-CN
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:03:03 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-41b5dc5e0d6so1749735e9.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 04:02:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714042919; x=1714647719; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=GXxNzvp3pctM95h9IO3sLT8TUCeqLQhxyJlDys2/tCQ=;
- b=fWaBcAP14DTNW7lWH+aYbK2rGwP10WIx/tHl20XK2ebWRIP9xE0KFxxsLcP8IPdl7K
- pbU5aRFNGctUdm709fl8dvBbyh435mcSnl6T3PG3ohSycWLGBaMv8lpx3u1yjEPKk9Gg
- lHP4AACa2R62iJR+4xrN7hkoG7Xc7C9G9dFw/3gGE3fFqX7gzR4qj4Ra51y6A8jZ/h0g
- WnF+gK4KXfnM0715G/PGYwD+mJGqdVzR+d2tWvCYicYLGpqN65VX5Im0gvZFKfCT2Ket
- Of1MjzzOY1/1UVH5qgKc9QR1+ZHLi2aiv8WDlbT/13o1Rlrh5E3xlXiR7LOyIVWbqY35
- FurA==
+ d=linaro.org; s=google; t=1714042977; x=1714647777; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BdAyeGYkrzEliXsZ63G9PrJ5ByexuubM31tow2m95nM=;
+ b=fHYlOULTE2a3fsprAAta1qZ2ezY1pfD4k4EXW6g1tW/+LwQ65TJGGdnhuLJYqvfAgX
+ aICle9981skz+Jnn8Cw0Lxp52xaZICqC9g1Ad27mEuONz0ICz8IHmzsGH2on+6oPUfRE
+ PQebi7rXgU5reXb4kferau3jlWdS4d96dyZk99psuTVjObzaR+/J2xZhBBmymJOqF1DY
+ tHOfzp56SEYb58KS/qB0IdJ8fFVmgrIiDZF1wfAFo9KlAW1xi07fKeLUcuCu6LGzuK5w
+ f1SAgVSJ6i3sbeQyv9nhuI1EZrpDY4/uKi3VROvH286YMNrOqz48LSRJR0TBl4NcUG36
+ 1b7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714042919; x=1714647719;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=GXxNzvp3pctM95h9IO3sLT8TUCeqLQhxyJlDys2/tCQ=;
- b=VDZGZstpTR6jP6L98h52/ovtutjtjsdbF2hLUJYHJOMar0yUgXVVe8TjYc/14SKXHO
- R630Sz2bmNwnExjg7n8+SzdBS1OXe4ixlULE5p8dppl4hIY4d81tk88KeZTLWABH0FNW
- YmoA69oueUs7ZUh/i/dqL5Oj/DoLg4z9Zfnme75i/7IuAW3Bu7/qzl2DXDYnvWIi49nV
- faYJ5tYtfSKnkNvbnWeHZvcPZz/H6mWG63QrLR5CQbxJDAHHbpA7nfegbFocZYU6OHnp
- pqD+sACmjL9TxE7YyuAWWQ/nRSEGINNJuynlR4X9DhawvZYCYkg+/FXypGzzcwnTcKnB
- YvzQ==
-X-Gm-Message-State: AOJu0YxvDLlerW+hQABhxj8NJioYKPXEetjsGslX3Vsa4SfQnpm3Xq2t
- gdAhrG14xJeOLxwtMpQrSy8hkjgqnUjmB1LkHVouRPHmYFOe00anWUmoaOpOdULmlJ1uUk2aad8
- Y
-X-Google-Smtp-Source: AGHT+IE5ZRboWrHzh596fssXbruqsgRoljdtQZ6NEpbvmkxjyPYO9yPeGlp7iGrKtAeGU8ZDhNp64Q==
-X-Received: by 2002:adf:fdc2:0:b0:34a:572b:40f9 with SMTP id
- i2-20020adffdc2000000b0034a572b40f9mr4927027wrs.8.1714042919464; 
- Thu, 25 Apr 2024 04:01:59 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1714042977; x=1714647777;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=BdAyeGYkrzEliXsZ63G9PrJ5ByexuubM31tow2m95nM=;
+ b=fw1p4ZwF/HdbIZJqG68UeNqj7C9+18owzdizJ4v6Q4xMoqfpaJInAKbg3U/ODiZz1W
+ FIdbTBn2H0J4O+GjJ91NCZ6UNZ3LeQCBdlcrCUwzb+POiapf06h8dSf/pO+MC0NyjWNF
+ H0vAExSPhaD7dk2JN/ExjfVpTdaxEY8mh8/u31J4i3pFn1QXz8QmwQrFuY/Jt8DGZzgf
+ sJXPo6b3EFCWEHgk1KahZcuH1fpgAUhqAPpzuQnDTudkctNJnkx/I2vx3WZ67K72hkTV
+ pWYQtJYEsBon0MrvMF87OVwmrFp9KvpIujJvRJh3hRlM5Vh/FyfIR7HCLYZt95kZ02uP
+ veKA==
+X-Gm-Message-State: AOJu0YyW81UVVMYo5A2dIulbAmj1C7/NYyw+qzo0T8W/zVc0ZTPGVrUH
+ iP5HIuTOVVixec1WZAf4l/bpYtDN2ilBUqqHucwDvSjHAj3BCfmfHMBS+u9IaA1+qIpD5ghkDJc
+ p
+X-Google-Smtp-Source: AGHT+IFeW3acT9aERuuRclTexJYBdyBpYe3GuhkGTdOm4UP1aF2NxUWvVkQ1Y32yGXUUjpZL9cegSg==
+X-Received: by 2002:a05:600c:3143:b0:41a:afe1:6d77 with SMTP id
+ h3-20020a05600c314300b0041aafe16d77mr3643130wmo.11.1714042977351; 
+ Thu, 25 Apr 2024 04:02:57 -0700 (PDT)
 Received: from localhost.localdomain ([92.88.170.77])
  by smtp.gmail.com with ESMTPSA id
- z17-20020a5d4d11000000b0034bb61cc5efsm4234704wrt.24.2024.04.25.04.01.58
+ u17-20020a05600c19d100b00416b163e52bsm30648723wmq.14.2024.04.25.04.02.56
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 25 Apr 2024 04:01:59 -0700 (PDT)
+ Thu, 25 Apr 2024 04:02:57 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- Philippe =?unknown-8bit?q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 00/22] Misc HW patches for 2024-04-25
-Date: Thu, 25 Apr 2024 13:01:33 +0200
-Message-ID: <20240425110157.20328-1-philmd@linaro.org>
+Cc: qemu-riscv@nongnu.org, qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 10/22] hw: Fix problem with the A*MPCORE switches in the
+ Kconfig files
+Date: Thu, 25 Apr 2024 13:01:43 +0200
+Message-ID: <20240425110157.20328-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240425110157.20328-1-philmd@linaro.org>
+References: <20240425110157.20328-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,117 +98,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 85b597413d4370cb168f711192eaef2eb70535ac:
+From: Thomas Huth <thuth@redhat.com>
 
-  Merge tag 'housekeeping-20240424' of https://github.com/philmd/qemu into staging (2024-04-24 11:49:57 -0700)
+A9MPCORE, ARM11MPCORE and A15MPCORE are defined twice, once in
+hw/cpu/Kconfig and once in hw/arm/Kconfig. This is only possible
+by accident, since hw/cpu/Kconfig is never included from hw/Kconfig.
+Fix it by declaring the switches only in hw/cpu/Kconfig (since the
+related files reside in the hw/cpu/ folder) and by making sure that
+the file hw/cpu/Kconfig is now properly included from hw/Kconfig.
 
-are available in the Git repository at:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20240415065655.130099-2-thuth@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/Kconfig     |  1 +
+ hw/arm/Kconfig | 15 ---------------
+ hw/cpu/Kconfig | 12 +++++++++---
+ 3 files changed, 10 insertions(+), 18 deletions(-)
 
-  https://github.com/philmd/qemu.git tags/hw-misc-20240425
-
-for you to fetch changes up to 098de99aad1aa911b4950b47b55d2e2bcc4f9c0c:
-
-  hw/core: Support module-id in numa configuration (2024-04-25 12:48:12 +0200)
-
-2 checkpatch issues:
-
-- one spurious:
-WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
-
-- one deliberately ignored in a python script:
-ERROR: line over 90 characters
-
-----------------------------------------------------------------
-Misc HW patch queue
-
-- Script to compare machines compat_props[] (Maksim)
-- Introduce 'module' CPU topology level (Zhao)
-- Various cleanups (Thomas, Zhao, Inès, Bernhard)
-
-----------------------------------------------------------------
-
-Bernhard Beschow (1):
-  hw/i386/pc_sysfw: Remove unused parameter from pc_isa_bios_init()
-
-Inès Varhol (1):
-  hw/misc : Correct 5 spaces indents in stm32l4x5_exti
-
-Maksim Davydov (4):
-  qom: add default value
-  qmp: add dump machine type compatibility properties
-  python/qemu/machine: add method to retrieve QEMUMachine::binary field
-  scripts: add script to compare compatibility properties
-
-Philippe Mathieu-Daudé (7):
-  hw/core: Remove check on NEED_CPU_H in tcg-cpu-ops.h
-  target/i386: Move APIC related code to cpu-apic.c
-  hw/misc/applesmc: Simplify DeviceReset handler
-  hw/misc/imx: Replace sprintf() by snprintf()
-  hw/riscv/virt: Replace sprintf by g_strdup_printf
-  hw/elf_ops: Rename elf_ops.h -> elf_ops.h.inc
-  hw/xtensa: Include missing 'exec/cpu-common.h' in 'bootparam.h'
-
-Thomas Huth (2):
-  hw: Fix problem with the A*MPCORE switches in the Kconfig files
-  hw: Add a Kconfig switch for the TYPE_CPU_CLUSTER device
-
-Zhao Liu (7):
-  hw/cxl/cxl-cdat: Make ct3_load_cdat() return boolean
-  hw/cxl/cxl-cdat: Make ct3_build_cdat() return boolean
-  hw/cxl/cxl-cdat: Make cxl_doe_cdat_init() return boolean
-  hw/core/machine: Introduce the module as a CPU topology level
-  hw/core/machine: Support modules in -smp
-  hw/core: Introduce module-id as the topology subindex
-  hw/core: Support module-id in numa configuration
-
- MAINTAINERS                             |   5 +
- qapi/machine.json                       |  74 +++-
- hw/xtensa/bootparam.h                   |   2 +
- include/hw/boards.h                     |   4 +
- include/hw/core/tcg-cpu-ops.h           |   3 -
- include/hw/cxl/cxl_component.h          |   2 +-
- include/hw/{elf_ops.h => elf_ops.h.inc} |   0
- bsd-user/elfload.c                      |   2 +-
- hw/core/loader.c                        |   4 +-
- hw/core/machine-hmp-cmds.c              |   4 +
- hw/core/machine-qmp-cmds.c              |  23 +-
- hw/core/machine-smp.c                   |  41 +-
- hw/core/machine.c                       |  18 +
- hw/cxl/cxl-cdat.c                       |  28 +-
- hw/i386/pc_sysfw.c                      |   5 +-
- hw/mem/cxl_type3.c                      |   3 +-
- hw/misc/applesmc.c                      |  36 +-
- hw/misc/imx25_ccm.c                     |   2 +-
- hw/misc/imx31_ccm.c                     |   2 +-
- hw/misc/imx6_ccm.c                      |   4 +-
- hw/misc/imx6_src.c                      |   2 +-
- hw/misc/imx6ul_ccm.c                    |   4 +-
- hw/misc/imx7_src.c                      |   2 +-
- hw/misc/stm32l4x5_exti.c                |   8 +-
- hw/net/imx_fec.c                        |   2 +-
- hw/pci-bridge/cxl_upstream.c            |   3 +-
- hw/riscv/virt.c                         |  17 +-
- hw/ssi/imx_spi.c                        |   2 +-
- linux-user/elfload.c                    |   2 +-
- qom/qom-qmp-cmds.c                      |   1 +
- system/vl.c                             |   3 +
- target/i386/cpu-apic.c                  | 112 ++++++
- target/i386/cpu-sysemu.c                |  77 ----
- target/i386/monitor.c                   |  25 --
- tests/qtest/fuzz/qos_fuzz.c             |   2 +-
- hw/Kconfig                              |   1 +
- hw/arm/Kconfig                          |  18 +-
- hw/cpu/Kconfig                          |  15 +-
- hw/cpu/meson.build                      |   3 +-
- hw/riscv/Kconfig                        |   2 +
- python/qemu/machine/machine.py          |   5 +
- scripts/compare-machine-types.py        | 486 ++++++++++++++++++++++++
- target/i386/meson.build                 |   1 +
- 43 files changed, 858 insertions(+), 197 deletions(-)
- rename include/hw/{elf_ops.h => elf_ops.h.inc} (100%)
- create mode 100644 target/i386/cpu-apic.c
- create mode 100755 scripts/compare-machine-types.py
-
+diff --git a/hw/Kconfig b/hw/Kconfig
+index b1cc40d6be..f7866e76f7 100644
+--- a/hw/Kconfig
++++ b/hw/Kconfig
+@@ -47,6 +47,7 @@ source watchdog/Kconfig
+ 
+ # arch Kconfig
+ source arm/Kconfig
++source cpu/Kconfig
+ source alpha/Kconfig
+ source avr/Kconfig
+ source cris/Kconfig
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 893a7bff66..d97015c45c 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -678,21 +678,6 @@ config ZAURUS
+     select NAND
+     select ECC
+ 
+-config A9MPCORE
+-    bool
+-    select A9_GTIMER
+-    select A9SCU       # snoop control unit
+-    select ARM_GIC
+-    select ARM_MPTIMER
+-
+-config A15MPCORE
+-    bool
+-    select ARM_GIC
+-
+-config ARM11MPCORE
+-    bool
+-    select ARM11SCU
+-
+ config ARMSSE
+     bool
+     select ARM_V7M
+diff --git a/hw/cpu/Kconfig b/hw/cpu/Kconfig
+index 1767d028ac..f776e884cd 100644
+--- a/hw/cpu/Kconfig
++++ b/hw/cpu/Kconfig
+@@ -1,8 +1,14 @@
+-config ARM11MPCORE
+-    bool
+-
+ config A9MPCORE
+     bool
++    select A9_GTIMER
++    select A9SCU       # snoop control unit
++    select ARM_GIC
++    select ARM_MPTIMER
+ 
+ config A15MPCORE
+     bool
++    select ARM_GIC
++
++config ARM11MPCORE
++    bool
++    select ARM11SCU
 -- 
 2.41.0
 
