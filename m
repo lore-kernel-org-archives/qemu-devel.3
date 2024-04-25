@@ -4,85 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7D8FC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 11:11:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EAA9C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 11:16:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzwvx-0005cY-Bb; Thu, 25 Apr 2024 07:06:33 -0400
+	id 1rzx58-0002Q0-Um; Thu, 25 Apr 2024 07:16:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzwte-0000LM-NY
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:04:11 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzx4w-0002Oz-Df
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:15:50 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzwtb-0000OF-5o
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:04:09 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-347e635b1fcso639962f8f.1
- for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 04:04:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzx4u-0005ev-11
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:15:50 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-34c09040154so436485f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 04:15:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714043045; x=1714647845; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DtMNR1ZQjJCcNYkkejZVBvEmwe3F+2PjUE+kGb5DBZI=;
- b=qQ8XGqfKyttfqQ17Re/ThAnwmjlzoPq9rO1qUq/w6yY5A71wbKOdIN8SCHl2A22jjN
- O3Ae6fIwtJcAmvtIPr+PWUTPutzI9jMKQUlnFwIn07K3Opu7hDSqeutdoL3IuvTezjfe
- w7Zaj9ygGl+95fhQp5yK5FccE0OIqDUzyDquhlVEjXl4LUWEisOqxkUHAYZ2UzZQFKOI
- wGUhgGJ4iXsdmXhGQI7OBpqaja9wS8FtgYvrQEX2ozOdl0CEIuy6GWLT4SMAciIytFX8
- 4zDk06SRM5R7w9+5w7PtcIkke8e5Opl7BonYK3n+J2J0WfUuIQp5tmX5sPaNoS5kF4CX
- WzLw==
+ d=linaro.org; s=google; t=1714043746; x=1714648546; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=G4ZnQkHtsQYV5izP24jwbUnWOLUgyvTo6sYu/NbRPDw=;
+ b=FXJBNhFmtOAzco+I3ZumqTT0vja1Giu/klP+1H+WvLfRQpBORG5Ib9NlU/JuH0/8pS
+ o1Fox41+zI57GgMZS2sC+dlrZbP9Pkj4wOn+jtGpwHuQTKrC9yKFnTnwIHQLMFbd3aGd
+ NDcwRkIvl+xVNmHkwy9qPYyFuWzhhhmTM1jithIhux2vF/Wfc107s2kxEpME7zdwb7X+
+ uPhUTSnxUzjVY/17LloMQ25JF9lIMvyKp0r9NdqJhZZDVZj2mzyhgH85PaCkd1Yj9uO2
+ 84PyFXUDtEeGgJ3AfWg/FDoHqRi+XNXD7+xg7dpiFZ8WTDPsNqyAojupUvTzmMx61Cst
+ L7nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714043045; x=1714647845;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=DtMNR1ZQjJCcNYkkejZVBvEmwe3F+2PjUE+kGb5DBZI=;
- b=lmzBaij28V5PGGBJ/U2NwieYF1ew1nIl1rZUK3l2A7E7b5LiShRmROqIsxJQoc5F3b
- IfwbzVarGD5KdQjxYz8uFzcXNliz3HTG8mBPXc0ZjOQx3NX5VziI2Us9YuwQg1xsQx8o
- AuqoyGGj9b2IHbeWNSdGIyBfRJ3noFgYVrRQXaQPP7wmaAjLPODqhLk3ehmq/04/XWb3
- uDBKSIFKqGLIN0oKwIY0aHRzbX072Hklv5a1NLJsCirTcA5k87nRFKLS0p13DfgWClmE
- IoFQHhcKClMQMA3Z7x5f/NWSzVATtAXL0V3lOx2K5O7rxTTmvJP8ibDaUiJkKoY5zNtm
- mq1Q==
-X-Gm-Message-State: AOJu0Yyygah4TkJYtf8RhyrVOaVVF7e89IRiZKaLZnDBx3htGOpxdz1x
- Yv9sCgoiS4tzBhlPaL1mgZlr6W9KaSplC+hcosb2fxKpkWwqyALBtETf2cSU3b5RtrCbaPICzk7
- D
-X-Google-Smtp-Source: AGHT+IEWNircr86tkVldy1EsXrXAxD/kzzSUIMWxBrCkq+T/LXkDmvFt7vckXR5njOJa/f9q3055aQ==
-X-Received: by 2002:a5d:6e5d:0:b0:34b:1f34:9c06 with SMTP id
- j29-20020a5d6e5d000000b0034b1f349c06mr3712985wrz.24.1714043045068; 
- Thu, 25 Apr 2024 04:04:05 -0700 (PDT)
-Received: from localhost.localdomain ([92.88.170.77])
+ d=1e100.net; s=20230601; t=1714043746; x=1714648546;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=G4ZnQkHtsQYV5izP24jwbUnWOLUgyvTo6sYu/NbRPDw=;
+ b=hllvBuwsZj6vPoAwPoC02FZoWRtS4LksmGH4hlExTCrYMoKqyxeQ0NYKU32MqDjR4C
+ qPscdpXKN5vN2WU1R2qh4B4xbHZagJyQfJMz6JBVk5XOuxSqdnRNjAZTT+ACxnnW26RA
+ 93JWIwaUWyCQdUY/o7OOrXcvwbnO63GMlcbcN8RJ/vaxUVo/QkQnKL4gje+zwBhN4/hI
+ Sxzezp7tbd6Kzn2AgKvZhltwEe59yQcwYqCdCoDvLMIwVQIj40tQ+lFWsBwfzBOimDCD
+ D0YUlWrvTDmxYrKA/AbRoF3z16p6uVleAX1nXqcIPiOt/8Ic5gbW3N27wG/fhLih7rB/
+ r1rQ==
+X-Gm-Message-State: AOJu0YwlDLMmJGk+iI+zWV1QcMY86nXZb9jvWLZrFV6lI76NnnYKClVm
+ q4Nre3w0gNJASErIPZZwwygh2hUYXhn64+j41lUOcfiaHQo+p0jne6yECxjnT96lXsOOj3XS8rd
+ J
+X-Google-Smtp-Source: AGHT+IHNVvSprpQdm0fsBVrsAp4pC+/X6FOYAgl7gsWdIf/HKlgpfNElYK91YOMnBH9c7xt4Mpw2Fw==
+X-Received: by 2002:a5d:5648:0:b0:34a:e884:977b with SMTP id
+ j8-20020a5d5648000000b0034ae884977bmr3649116wrw.32.1714043745664; 
+ Thu, 25 Apr 2024 04:15:45 -0700 (PDT)
+Received: from [192.168.66.175] ([92.88.170.77])
  by smtp.gmail.com with ESMTPSA id
- u17-20020adfeb51000000b00347321735a6sm19543079wrn.66.2024.04.25.04.04.03
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 25 Apr 2024 04:04:04 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, qemu-arm@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Yongwei Ma <yongwei.ma@intel.com>, Babu Moger <babu.moger@amd.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>
-Subject: [PULL 22/22] hw/core: Support module-id in numa configuration
-Date: Thu, 25 Apr 2024 13:01:55 +0200
-Message-ID: <20240425110157.20328-23-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240425110157.20328-1-philmd@linaro.org>
-References: <20240425110157.20328-1-philmd@linaro.org>
+ j6-20020a5d5646000000b0034b19cb1531sm9938325wrw.59.2024.04.25.04.15.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 25 Apr 2024 04:15:45 -0700 (PDT)
+Message-ID: <fab578a2-42a2-4963-be4f-8cbb73e11404@linaro.org>
+Date: Thu, 25 Apr 2024 13:15:43 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] hw/audio/virtio-snd: Use device endianness instead of
+ target one
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ qemu-stable@nongnu.org
+References: <20240422170056-mutt-send-email-mst@kernel.org>
+ <1f6447c4-ea4c-4bd3-a879-8efb72448bb8@linaro.org>
+ <20240422170913-mutt-send-email-mst@kernel.org>
+ <CAAjaMXZxFJtEdJh38_76ZdL82JBM52Ke0+p1K07miiFeQSJtcw@mail.gmail.com>
+ <CAAjaMXaoPeCVpd=q-d2GH25SfrNPVqh6hCerMOrQ6payXVMmyA@mail.gmail.com>
+ <f5c67478-4fb9-4fb9-a6b2-286d6372bd0a@linaro.org>
+ <b9fb7a87-2328-4999-8f7e-6b6cf04984a3@ilande.co.uk>
+ <CAAjaMXa00nWejPRc_Xc9fnoncXVDiWO9MNabwq-QU5nepA4b9w@mail.gmail.com>
+ <fd6b0336-ecc7-4c0e-aa48-f8e984d293dc@ilande.co.uk>
+ <CAAjaMXaBd8+DuNzeVO9k=6ojt5brt1nmm1gApdwgXJ3JzjisTA@mail.gmail.com>
+ <20240425062213-mutt-send-email-mst@kernel.org>
+ <CAAjaMXYTGUUeABd+Ghaf374pOFjoF7RdncTTiciLhmo1yXXZVQ@mail.gmail.com>
+ <f85ab427-9cb4-4034-8fd7-29acc4d0b8a9@ilande.co.uk>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <f85ab427-9cb4-4034-8fd7-29acc4d0b8a9@ilande.co.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,66 +110,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+On 25/4/24 12:40, Mark Cave-Ayland wrote:
+> On 25/04/2024 11:26, Manos Pitsidianakis wrote:
+> 
+>> On Thu, 25 Apr 2024 at 13:24, Michael S. Tsirkin <mst@redhat.com> wrote:
+>>>
+>>> On Thu, Apr 25, 2024 at 01:04:31PM +0300, Manos Pitsidianakis wrote:
+>>>> On Thu, 25 Apr 2024 at 10:49, Mark Cave-Ayland
+>>>> <mark.cave-ayland@ilande.co.uk> wrote:
+>>>>>
+>>>>> On 25/04/2024 07:30, Manos Pitsidianakis wrote:
+>>>>>
+>>>>>> On Wed, 24 Apr 2024 at 13:31, Mark Cave-Ayland
+>>>>>> <mark.cave-ayland@ilande.co.uk> wrote:
+>>>>>>>
+>>>>>>> On 23/04/2024 12:05, Philippe Mathieu-Daudé wrote:
+>>>>>>>
+>>>>>>>> On 23/4/24 11:18, Manos Pitsidianakis wrote:
+>>>>>>>>> On Tue, 23 Apr 2024 at 11:47, Manos Pitsidianakis
+>>>>>>>>> <manos.pitsidianakis@linaro.org> wrote:
+>>>>>>>>>>
+>>>>>>>>>> On Tue, 23 Apr 2024 at 00:11, Michael S. Tsirkin 
+>>>>>>>>>> <mst@redhat.com> wrote:
+>>>>>>>>>>>
+>>>>>>>>>>> On Mon, Apr 22, 2024 at 11:07:21PM +0200, Philippe 
+>>>>>>>>>>> Mathieu-Daudé wrote:
+>>>>>>>>>>>> On 22/4/24 23:02, Michael S. Tsirkin wrote:
+>>>>>>>>>>>>> On Mon, Apr 22, 2024 at 04:20:56PM +0200, Philippe 
+>>>>>>>>>>>>> Mathieu-Daudé wrote:
+>>>>>>>>>>>>>> Since VirtIO devices can change endianness at runtime,
+>>>>>>>>>>>>>> we need to use the device endianness, not the target
+>>>>>>>>>>>>>> one.
+>>>>>>>>>>>>>>
+>>>>>>>>>>>>>> Cc: qemu-stable@nongnu.org
+>>>>>>>>>>>>>> Fixes: eb9ad377bb ("virtio-sound: handle control messages 
+>>>>>>>>>>>>>> and streams")
+>>>>>>>>>>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>>>>>>>>>>>
+>>>>>>>>>>>>>
+>>>>>>>>>>>>>
+>>>>>>>>>>>>> This is all completely bogus. Virtio SND is from Virtio 1.0 
+>>>>>>>>>>>>> only.
+>>>>>>>>>>>>> It is unconditionally little endian.
+>>>>>>>>>>
+>>>>>>>>>>
+>>>>>>>>>> This part of the code is for PCM frames (raw bytes), not 
+>>>>>>>>>> virtio spec
+>>>>>>>>>> fields (which indeed must be LE in modern VIRTIO).
+>>>>>>>>>
+>>>>>>>>> Thought a little more about it. We should keep the target's 
+>>>>>>>>> endianness
+>>>>>>>>> here, if it's mutable then we should query the machine the 
+>>>>>>>>> device is
+>>>>>>>>> attached to somehow. the virtio device should never change 
+>>>>>>>>> endianness
+>>>>>>>>> like Michael says since it's not legacy.
+>>>>>>>>
+>>>>>>>> Grr. So as Richard suggested, this need to be pass as a device
+>>>>>>>> property then.
+>>>>>>>> (https://lore.kernel.org/qemu-devel/ed134c9d-6e6f-465b-900f-e39ca4e09876@linaro.org/)
+>>>>>>>
+>>>>>>> It feels to me that the endianness is something that should be 
+>>>>>>> negotiated as part of
+>>>>>>> the frame format, since the endianness of the audio hardware can 
+>>>>>>> be different from
+>>>>>>> that of the CPU (think PReP machines where it was common that a 
+>>>>>>> big endian CPU is
+>>>>>>> driving little endian hardware as found on x86).
+>>>>>>
+>>>>>> But that is the job of the hardware drivers, isn't it? Here we are
+>>>>>> taking frames passed from the guest to its virtio driver in the 
+>>>>>> format
+>>>>>> specified in the target cpu's endianness and QEMU as the device 
+>>>>>> passes
+>>>>>> it to host ALSA/Pipewire/etc which in turn passes it to the actual
+>>>>>> audio hardware driver..
+>>>>>
+>>>>> The problem is that the notion of target CPU endian is not fixed. 
+>>>>> For example the
+>>>>> PowerPC CPU starts off in big-endian mode, but these days most 
+>>>>> systems will switch
+>>>>> the CPU to little-endian mode on startup to run ppc64le. There's 
+>>>>> also the ILE bit
+>>>>> which can be configured so that a big-endian PowerPC CPU can 
+>>>>> dynamically switch to
+>>>>> little-endian mode when processing an interrupt, so you could 
+>>>>> potentially end up with
+>>>>> either depending upon the current mode of the CPU.
+>>>>>
+>>>>> These are the kinds of issues that led to the later virtio 
+>>>>> specifications simply
+>>>>> using little-endian for everything, since then there is zero 
+>>>>> ambiguity over what
+>>>>> endian is required for the virtio configuration space accesses.
+>>>>>
+>>>>> It feels to me that assuming a target CPU endian is fixed for the 
+>>>>> PCM frame formats
+>>>>> is simply repeating the mistakes of the past - and even the fact 
+>>>>> that we are
+>>>>> discussing this within this thread suggests that at a very minimum 
+>>>>> the virtio-snd
+>>>>> specification needs to be updated to clarify the byte ordering of 
+>>>>> the PCM frame formats.
+>>>>>
+>>>>>
+>>>>> ATB,
+>>>>>
+>>>>> Mark.
+>>>>>
+>>>>
+>>>>
+>>>> Agreed, I think we are saying approximately the same thing here.
+>>>>
+>>>>   We need a mechanism to retrieve the vCPUs endianness and a way to
+>>>> notify subscribed devices when it changes.
+>>>
+>>> I don't think I agree, it's not the same thing.
+>>> Guest should just convert and send data in LE format.
+>>> Host should then convert from LE format.
+>>> Target endian-ness does not come into it.
+>>
+>> That's not in the VIRTIO 1.2 spec. We are talking about supporting
+>> things as they currently stand, not as they could have been.
+> 
+> Can you also clarify the particular case that you're trying to fix - is 
+> it big-endian on ARM, or something else?
 
-Module is a level above the core, thereby supporting numa
-configuration on the module level can bring user more numa flexibility.
+I'm only aware of big-endian on ARM.
 
-This is the natural further support for module level.
+Regards,
 
-Add module level support in numa configuration.
-
-Tested-by: Yongwei Ma <yongwei.ma@intel.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Tested-by: Babu Moger <babu.moger@amd.com>
-Message-ID: <20240424154929.1487382-5-zhao1.liu@intel.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/core/machine.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
-
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 494b712a76..0dec48e802 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -800,6 +800,11 @@ void machine_set_cpu_numa_node(MachineState *machine,
-             return;
-         }
- 
-+        if (props->has_module_id && !slot->props.has_module_id) {
-+            error_setg(errp, "module-id is not supported");
-+            return;
-+        }
-+
-         if (props->has_cluster_id && !slot->props.has_cluster_id) {
-             error_setg(errp, "cluster-id is not supported");
-             return;
-@@ -824,6 +829,11 @@ void machine_set_cpu_numa_node(MachineState *machine,
-                 continue;
-         }
- 
-+        if (props->has_module_id &&
-+            props->module_id != slot->props.module_id) {
-+                continue;
-+        }
-+
-         if (props->has_cluster_id &&
-             props->cluster_id != slot->props.cluster_id) {
-                 continue;
-@@ -1226,6 +1236,12 @@ static char *cpu_slot_to_string(const CPUArchId *cpu)
-         }
-         g_string_append_printf(s, "cluster-id: %"PRId64, cpu->props.cluster_id);
-     }
-+    if (cpu->props.has_module_id) {
-+        if (s->len) {
-+            g_string_append_printf(s, ", ");
-+        }
-+        g_string_append_printf(s, "module-id: %"PRId64, cpu->props.module_id);
-+    }
-     if (cpu->props.has_core_id) {
-         if (s->len) {
-             g_string_append_printf(s, ", ");
--- 
-2.41.0
-
+Phil.
 
