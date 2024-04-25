@@ -4,84 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4CE6C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 16:46:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC9B1C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 16:47:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s02Eh-0002Ez-Ch; Thu, 25 Apr 2024 12:46:16 -0400
+	id 1s02Fh-0002qw-N9; Thu, 25 Apr 2024 12:47:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s02Ee-0002E5-Bl
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 12:46:12 -0400
-Received: from mail-ot1-x336.google.com ([2607:f8b0:4864:20::336])
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1s02Fd-0002kQ-68
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 12:47:14 -0400
+Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s02Eb-0003Je-Bh
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 12:46:10 -0400
-Received: by mail-ot1-x336.google.com with SMTP id
- 46e09a7af769-6eb55942409so626435a34.1
- for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 09:46:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1s02Fb-0003bv-Fn
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 12:47:12 -0400
+Received: by mail-lj1-x230.google.com with SMTP id
+ 38308e7fff4ca-2dd64d6fe94so13756791fa.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 09:47:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714063568; x=1714668368; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Bk7xD4Z+wnEjumDHf85N1cBVZhmG++l/jd5kbNi9uWU=;
- b=vWbLWDTJFRAJdI9enZ4+jY3Wl7O1gkmmbjwZTN0tQbVCTAl5E2I1nZogLwuVVqF0PD
- 5DBB/d4TNKFwv5ysGRFvvCwGF7bLOIApzt3oHvkVZkQxztBXeWWr7qAmhq47LVnsGCTU
- WIZTdncTSekixX4+GLeHkUsgdAZMSbaJ4OyrJWsYTR+8rkyRVVaa/SZAQVaEhLiOqLN7
- MnGGeJIK9+sOJY9FR1VsEt/L1uco+H7cNRBL2gnJE2CEzrGdQDLeNfJWeW37p45eQLDQ
- LLNoc2zdjDHbQkqJuBubfRxRBHEHEgxPWD76PYzfhTssjca4yn3C1NWOFquRWCkbrFqV
- jdkQ==
+ d=gmail.com; s=20230601; t=1714063626; x=1714668426; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LvYoBl//K1mZp4n6gQiTJLEv0WK6YOM1tJ/Mw67+Cpg=;
+ b=X75ofx0eO8eI5M2rh4EIu4fhRUdbADLEuiaD/zC14hQ2mjVh4eQc2Fek/CHXBhz2q3
+ U3jKBe4CwEj1055rCJiwmQNBxjokVYS9DDQwaZx9gArHsIxLKuHp78F8LqOCtEamoN9b
+ /7AA7udHBTe3V5ABonysYG4jh3ahx42zo8ngzxS48PYMnOMidwFyNibYHRIMgjqFaj5p
+ V/ybLEweNCw8cO1WIUp5NlNSc+20firYSMXzfpwt4t0dAbZbMjIa9SGYECdOmzbkwOj8
+ xNFXFOmWWUvkfFgSpXnZZTbkBhHMOre2NX084qWLKN2UEREFnkEHKdGJd5ldfS5gWFxP
+ ZR8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714063568; x=1714668368;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Bk7xD4Z+wnEjumDHf85N1cBVZhmG++l/jd5kbNi9uWU=;
- b=hkBqo5lTqWHDEi5DpH1uctMbBa0gv1PW78Dg9T0prnUkEe/g/ena7q/5ogPUq1+Fed
- d3nvqSGLn6+nEteUjMse1NtwPvuQt4ICFn73ITuChS0nAlXvA4bc2I0pROeQQ0LBlcp9
- hjjItD7SDCHamKvYz8OIi6e3uYKBxKbHyR8wUwzoXsmaAJLxnrfe6GQBOoYvpkUP4ekA
- v248hGg87XHrju2ZacjA7RcWOf52vme+JoDmAhlp5N2SUXHrJDL14x9Z+rHXmNiL2jd5
- 2Tny+GoIaMRjhFV2x0kyIHuTSc6oq6Vk89C+bproIhJpFfuPBDjy+3i0d8swHIKjS+9G
- Re9g==
+ d=1e100.net; s=20230601; t=1714063626; x=1714668426;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=LvYoBl//K1mZp4n6gQiTJLEv0WK6YOM1tJ/Mw67+Cpg=;
+ b=V3iFv0JDigPM9+55HpgckbMxexbMfK2d3w89FgXBYISUkn8QP7mTDTtgcirWQv4nyt
+ xAgi9AtEvgHEaVhluD/MloDM19f/lgz4oPr3CWr6LsS0H1s97ZsCI5DFcjxN7dFtk3TU
+ Q7HremvCHFO0NNl7nkCCHlKACgnfpiGiyK70vW19E7iJZh8gDARZZ9JZ0Yla3O78mxxX
+ hRJqa7MOtrFCVnih4sA4jskFc20Hjy5lot2ClSXjjngfBpGPm2xTx3cJ8UTrfVVWzLmZ
+ 2QliXMJWfB1OIIz7noLf4OQ5ADGG1H0u52spwaYUWtVItn0ZjEsK9OesJdqvcrNIwl41
+ HYRQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWCy1eQcNkQu+G7WVhd9Ov3kjlWBv79RduMY05qW1rEoIrCRkuZ3VkKvGZtFcqghmeW6v4SACLxnS/W0ROuvM+HG70Py/k=
-X-Gm-Message-State: AOJu0YyD3MkrqRnOxq8nhntAiF+sKAVkn6Camyt1tZEgkgz0GTL7R1we
- DLE1zpfJeWcDMhLeGkLyA2WmtPQ4/XgPIemDN1IZJh3MmNCQsD8vCQbYKjC22StuA5osvxT+yXL
- A
-X-Google-Smtp-Source: AGHT+IE2jTuzoHlXW29MXwP+NBk5Zz6LD5WoKQaF6d90b9qKxxw70xt3kZsVO4sC7M8gYCD9F3U3Vg==
-X-Received: by 2002:a9d:77d4:0:b0:6eb:b266:a2a1 with SMTP id
- w20-20020a9d77d4000000b006ebb266a2a1mr7705702otl.19.1714063568101; 
- Thu, 25 Apr 2024 09:46:08 -0700 (PDT)
-Received: from ?IPV6:2607:fb91:1ae9:8637:9f94:1f67:75f4:ea2d?
- ([2607:fb91:1ae9:8637:9f94:1f67:75f4:ea2d])
- by smtp.gmail.com with ESMTPSA id
- t20-20020a05683014d400b006eb77e42ff5sm2746637otq.26.2024.04.25.09.46.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 25 Apr 2024 09:46:07 -0700 (PDT)
-Message-ID: <7eb856f2-4415-48c4-9142-d24069acc4f5@linaro.org>
-Date: Thu, 25 Apr 2024 09:46:04 -0700
+ AJvYcCWi++S4ksg9VT34xnut6uzHx+w5vU5uYjECNvC8l0EwPqGsG6tF090AfNBM+XD9R0hToRxk3MnnSb8pjgWK4tT1D6BDWLo=
+X-Gm-Message-State: AOJu0YzCH+aFhhqptXiCfCsWxCBbsBL2/VWMuDdhscNnfrB28FSu2mC0
+ XDQvwt3vEOQCITEfVkMUl8uWuNaAxuG8ivB0SU4+1JuBxkFOSCKRlovuNDDxHfGlBSeeLEYJCpl
+ YdCSxTzgnTyCwccXvXzUI0TEriXE=
+X-Google-Smtp-Source: AGHT+IGDLv6Ts76ph9fiH8tUm6ZSHtHJsC+5s6wMmIhNSxgDl97X1NF6ekJUqnU2twYVHsIA/L0hi4B9EUUJKbwEVgw=
+X-Received: by 2002:a2e:9819:0:b0:2de:33cd:b46e with SMTP id
+ a25-20020a2e9819000000b002de33cdb46emr4458770ljj.48.1714063626255; Thu, 25
+ Apr 2024 09:47:06 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 00/16] CI job updates, header cleanups and other misc
- patches
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-References: <20240425145737.451721-1-thuth@redhat.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240425145737.451721-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::336;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240419183135.12276-1-dorjoychy111@gmail.com>
+ <f397f267-06d9-46c1-8acc-1c9ebf9c3773@linaro.org>
+ <CAFEAcA8i_wU+RSRk+D1L8YKy72zHz4YFV20r2Z7m+3ARfzb51w@mail.gmail.com>
+ <CAFEAcA_kHDGWVic=xRm4xOsi-cQC-fF5Z2FWRCrwe_E35KBmNw@mail.gmail.com>
+In-Reply-To: <CAFEAcA_kHDGWVic=xRm4xOsi-cQC-fF5Z2FWRCrwe_E35KBmNw@mail.gmail.com>
+From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Date: Thu, 25 Apr 2024 22:46:54 +0600
+Message-ID: <CAFfO_h7QT=KLODM5Nj0O8ZCXwitKAwBeTc8TVcCM6Px4vRhbVg@mail.gmail.com>
+Subject: Re: [PATCH] target/arm: fix MPIDR value for ARM CPUs with SMT
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::230;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-lj1-x230.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,33 +95,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/25/24 07:57, Thomas Huth wrote:
-> The following changes since commit 5da72194df36535d773c8bdc951529ecd5e31707:
-> 
->    Merge tag 'pull-tcg-20240424' ofhttps://gitlab.com/rth7680/qemu  into staging (2024-04-24 15:51:49 -0700)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/thuth/qemu.git  tags/pull-request-2024-04-25
-> 
-> for you to fetch changes up to 17523a38194d80f2955c6a8e0702e0fc86dd083d:
-> 
->    target/s390x: Remove KVM stubs in cpu_models.h (2024-04-25 15:15:25 +0200)
-> 
-> ----------------------------------------------------------------
-> * Update OpenBSD CI image to 7.5
-> * Update/remove Ubuntu 20.04 CI jobs
-> * Update (most) CentOS 8 CI jobs to CentOS 9
-> * Some clean-ups and improvements to travis.yml
-> * Minor test fixes
-> * s390x header clean-ups
-> * Doc updates
-> 
-> v2: Drop the problematic patch that updates the custom CentOS 8 runner
+On Mon, Apr 22, 2024 at 5:26=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+>
+> On Mon, 22 Apr 2024 at 11:46, Peter Maydell <peter.maydell@linaro.org> wr=
+ote:
+> >
+> > On Sun, 21 Apr 2024 at 06:40, Richard Henderson
+> > <richard.henderson@linaro.org> wrote:
+> > > > --- a/target/arm/cpu.c
+> > > > +++ b/target/arm/cpu.c
+> > > > @@ -1314,8 +1314,18 @@ static void arm_cpu_dump_state(CPUState *cs,=
+ FILE *f, int flags)
+> > > >       }
+> > > >   }
+> > > >
+> > > > -uint64_t arm_build_mp_affinity(int idx, uint8_t clustersz)
+> > > > +uint64_t arm_build_mp_affinity(ARMCPU *cpu, int idx, uint8_t clust=
+ersz)
+> > > >   {
+> > > > +    if (cpu->has_smt) {
+> > > > +        /*
+> > > > +         * Right now, the ARM CPUs with SMT supported by QEMU only=
+ have
+> > > > +         * one thread per core. So Aff0 is always 0.
+> > > > +         */
+> > >
+> > > Well, this isn't true.
+> > >
+> > >      -smp [[cpus=3D]n][,maxcpus=3Dmaxcpus][,drawers=3Ddrawers][,books=
+=3Dbooks][,sockets=3Dsockets]
+> > >                     [,dies=3Ddies][,clusters=3Dclusters][,cores=3Dcor=
+es][,threads=3Dthreads]
+> > >
+> > > I would expect all of Aff[0-3] to be settable with the proper topolog=
+y parameters.
+> >
+> > As I understand it the MPIDR value is more or less independent
+> > of the topology information as presented to the guest OS.
+> > The options to the -smp command set the firmware topology
+> > information, which doesn't/shouldn't affect the reported
+> > MPIDR values, and in particular shouldn't change whether
+> > the CPU selected has the MT bit set or not.
+> >
+> > For Arm's CPUs they fall into two categories:
+> >  * older ones don't set MT in their MPIDR, and the Aff0
+> >    field is effectively the CPU number
+> >  * newer ones do set MT in their MPIDR, but don't have
+> >    SMT, so their Aff0 is always 0 and their Aff1
+> >    is the CPU number
+> >
+> > Of all the CPUs we model, none of them are the
+> > architecturally-permitted "MT is set, CPU implements
+> > actual SMT, Aff0 indicates the thread in the CPU" type.
+>
+> Looking at the TRM, Neoverse-E1 is "MT is set, actual SMT,
+> Aff0 is the thread" (Aff0 can be 0 or 1). We just don't
+> model that CPU type yet. But we should probably make
+> sure we don't block ourselves into a corner where that
+> would be awkward -- I'll have a think about this and
+> look at what x86 does with the topology info.
+>
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+Thanks. Let me know what should be done as part of this patch to
+properly fix the issue if you get a chance to look at it.
 
-
-r~
-
+Regards,
+Dorjoy
 
