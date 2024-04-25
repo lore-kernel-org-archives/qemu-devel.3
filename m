@@ -4,84 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 920C2C41513
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 11:04:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54A7AC19F4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 11:04:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzwru-0007oC-FM; Thu, 25 Apr 2024 07:02:22 -0400
+	id 1rzwri-0007iT-Jr; Thu, 25 Apr 2024 07:02:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzwrq-0007lf-P9
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:02:18 -0400
-Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzwrf-0007fy-4h
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:02:07 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzwrn-00089U-Q5
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:02:18 -0400
-Received: by mail-lj1-x22f.google.com with SMTP id
- 38308e7fff4ca-2dd041acff1so9300301fa.1
- for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 04:02:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzwrZ-00086x-MO
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:02:06 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-34be34b3296so802726f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 04:02:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714042933; x=1714647733; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vLZ+JSbydZ+0P9XLjVkCEIbh5VWxC42GBVm2ZIIKLSk=;
- b=J4G96lAURIAg+kmcYhgjVDW9HYr8wnW1rI66EHq9itxF++2G7BpXZcwRrHgspLFJz4
- qXJTpVMA6A2XKRpDYkHZBFX8QDaLENEum298A7VBXw2BMfsS8QoTdQ28D7fT21wi4a1D
- CsXRg96wAghBks2Imv6xfFZjyZiPfg1PEEEeI3IjEREz2VbKN5E5+h/a7Mw39G+emooP
- IEWrMMiz9Bcjkev0ZR9KT9uCTNR+ar/BdFTgRDywXF6PSbbyXcvquk897uBj+GWe50Uq
- VpyUyv7T6C1Dnpr++Csov+MXkZFOhEUBUTHaWUj1pl/1iSRU/YikE65P4g1Gm9hIbiHD
- lUsw==
+ d=linaro.org; s=google; t=1714042919; x=1714647719; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=GXxNzvp3pctM95h9IO3sLT8TUCeqLQhxyJlDys2/tCQ=;
+ b=fWaBcAP14DTNW7lWH+aYbK2rGwP10WIx/tHl20XK2ebWRIP9xE0KFxxsLcP8IPdl7K
+ pbU5aRFNGctUdm709fl8dvBbyh435mcSnl6T3PG3ohSycWLGBaMv8lpx3u1yjEPKk9Gg
+ lHP4AACa2R62iJR+4xrN7hkoG7Xc7C9G9dFw/3gGE3fFqX7gzR4qj4Ra51y6A8jZ/h0g
+ WnF+gK4KXfnM0715G/PGYwD+mJGqdVzR+d2tWvCYicYLGpqN65VX5Im0gvZFKfCT2Ket
+ Of1MjzzOY1/1UVH5qgKc9QR1+ZHLi2aiv8WDlbT/13o1Rlrh5E3xlXiR7LOyIVWbqY35
+ FurA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714042933; x=1714647733;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=vLZ+JSbydZ+0P9XLjVkCEIbh5VWxC42GBVm2ZIIKLSk=;
- b=ffuy7P8zXZeuSPIP6zmD14irKv+c+Wk/lp5rsmLPzaxGy2caDll2Ss2e4ipnzzwiFi
- TBHDg8mgQm8Q8P9lVZf4zB8Q4hADG5IR/Rd041irekAc27v0EYR5VLASlgNKi98PF4aG
- JYN7MYe0zITWifDyNNIazovrxUGslCHwLJtBpxbtcFJcfk2fiNl62ai28q2wqV38Rbl8
- GYfWJBVu3V05SxNtNO9cTHdtOBPKHjrKJRIp+BvAjP2M25kxIiMooLwV+VNWxQ0YSDEn
- C7q4Chhs6rNTO1/qO5/gqNdTKYCHWcT5RuNYWOjexPxaxldlMGKZ5CEJTJu6UV94GNjP
- 8xqg==
-X-Gm-Message-State: AOJu0YxJhgKQkZwQV1LlUZn0z3RJnmzas0cVWirIufHKulMc1Gqux/Go
- itGlXPjZxiCiu/PQd7kl7kiZ6SXoVA1e4y30ASX0w1sftbL24KXi5O8kU8cNsy+G15kheN91cT1
- Z
-X-Google-Smtp-Source: AGHT+IEIwEKtRxzjDxE5XZKOER0BztzWhqxqJNsv78wTLrxRgsPNwlOo5sgeR9LyeZoBJnnXiQJaKA==
-X-Received: by 2002:a2e:88d1:0:b0:2dd:2fc:3cd with SMTP id
- a17-20020a2e88d1000000b002dd02fc03cdmr3419727ljk.29.1714042933255; 
- Thu, 25 Apr 2024 04:02:13 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1714042919; x=1714647719;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=GXxNzvp3pctM95h9IO3sLT8TUCeqLQhxyJlDys2/tCQ=;
+ b=VDZGZstpTR6jP6L98h52/ovtutjtjsdbF2hLUJYHJOMar0yUgXVVe8TjYc/14SKXHO
+ R630Sz2bmNwnExjg7n8+SzdBS1OXe4ixlULE5p8dppl4hIY4d81tk88KeZTLWABH0FNW
+ YmoA69oueUs7ZUh/i/dqL5Oj/DoLg4z9Zfnme75i/7IuAW3Bu7/qzl2DXDYnvWIi49nV
+ faYJ5tYtfSKnkNvbnWeHZvcPZz/H6mWG63QrLR5CQbxJDAHHbpA7nfegbFocZYU6OHnp
+ pqD+sACmjL9TxE7YyuAWWQ/nRSEGINNJuynlR4X9DhawvZYCYkg+/FXypGzzcwnTcKnB
+ YvzQ==
+X-Gm-Message-State: AOJu0YxvDLlerW+hQABhxj8NJioYKPXEetjsGslX3Vsa4SfQnpm3Xq2t
+ gdAhrG14xJeOLxwtMpQrSy8hkjgqnUjmB1LkHVouRPHmYFOe00anWUmoaOpOdULmlJ1uUk2aad8
+ Y
+X-Google-Smtp-Source: AGHT+IE5ZRboWrHzh596fssXbruqsgRoljdtQZ6NEpbvmkxjyPYO9yPeGlp7iGrKtAeGU8ZDhNp64Q==
+X-Received: by 2002:adf:fdc2:0:b0:34a:572b:40f9 with SMTP id
+ i2-20020adffdc2000000b0034a572b40f9mr4927027wrs.8.1714042919464; 
+ Thu, 25 Apr 2024 04:01:59 -0700 (PDT)
 Received: from localhost.localdomain ([92.88.170.77])
  by smtp.gmail.com with ESMTPSA id
- bi14-20020a05600c3d8e00b0041b5944a197sm1195465wmb.45.2024.04.25.04.02.11
+ z17-20020a5d4d11000000b0034bb61cc5efsm4234704wrt.24.2024.04.25.04.01.58
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 25 Apr 2024 04:02:12 -0700 (PDT)
+ Thu, 25 Apr 2024 04:01:59 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- Maksim Davydov <davydov-max@yandex-team.ru>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Eric Blake <eblake@redhat.com>,
- Alexander Bulekov <alxndr@bu.edu>, Paolo Bonzini <pbonzini@redhat.com>,
- Bandan Das <bsd@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Darren Kenny <darren.kenny@oracle.com>,
- Qiuhao Li <Qiuhao.Li@outlook.com>, Laurent Vivier <lvivier@redhat.com>
-Subject: [PULL 02/22] qmp: add dump machine type compatibility properties
-Date: Thu, 25 Apr 2024 13:01:35 +0200
-Message-ID: <20240425110157.20328-3-philmd@linaro.org>
+ Philippe =?unknown-8bit?q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 00/22] Misc HW patches for 2024-04-25
+Date: Thu, 25 Apr 2024 13:01:33 +0200
+Message-ID: <20240425110157.20328-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240425110157.20328-1-philmd@linaro.org>
-References: <20240425110157.20328-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,184 +91,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Maksim Davydov <davydov-max@yandex-team.ru>
+The following changes since commit 85b597413d4370cb168f711192eaef2eb70535ac:
 
-To control that creating new machine type doesn't affect the previous
-types (their compat_props) and to check complex compat_props inheritance
-we need qmp command to print machine type compatibility properties.
-This patch adds the ability to get list of all the compat_props of the
-corresponding supported machines for their comparison via new optional
-argument of "query-machines" command. Since information on compatibility
-properties can increase the command output by a factor of 40, add an
-argument to enable it, default off.
+  Merge tag 'housekeeping-20240424' of https://github.com/philmd/qemu into staging (2024-04-24 11:49:57 -0700)
 
-Signed-off-by: Maksim Davydov <davydov-max@yandex-team.ru>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Acked-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20240318213550.155573-3-davydov-max@yandex-team.ru>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- qapi/machine.json           | 67 +++++++++++++++++++++++++++++++++++--
- hw/core/machine-qmp-cmds.c  | 23 ++++++++++++-
- tests/qtest/fuzz/qos_fuzz.c |  2 +-
- 3 files changed, 88 insertions(+), 4 deletions(-)
+are available in the Git repository at:
 
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 2df407e877..3e9cc3f17d 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -135,6 +135,26 @@
- ##
- { 'command': 'query-cpus-fast', 'returns': [ 'CpuInfoFast' ] }
- 
-+##
-+# @CompatProperty:
-+#
-+# Property default values specific to a machine type, for use by
-+# scripts/compare-machine-types.
-+#
-+# @qom-type: name of the QOM type to which the default applies
-+#
-+# @property: name of its property to which the default applies
-+#
-+# @value: the default value (machine-specific default can overwrite
-+#     the "default" default, to avoid this use -machine none)
-+#
-+# Since: 9.1
-+##
-+{ 'struct': 'CompatProperty',
-+  'data': { 'qom-type': 'str',
-+            'property': 'str',
-+            'value': 'str' } }
-+
- ##
- # @MachineInfo:
- #
-@@ -166,6 +186,14 @@
- #
- # @acpi: machine type supports ACPI (since 8.0)
- #
-+# @compat-props: The machine type's compatibility properties.  Only
-+#     present when query-machines argument @compat-props is true.
-+#     (since 9.1)
-+#
-+# Features:
-+#
-+# @unstable: Member @compat-props is experimental.
-+#
- # Since: 1.2
- ##
- { 'struct': 'MachineInfo',
-@@ -173,18 +201,53 @@
-             '*is-default': 'bool', 'cpu-max': 'int',
-             'hotpluggable-cpus': 'bool',  'numa-mem-supported': 'bool',
-             'deprecated': 'bool', '*default-cpu-type': 'str',
--            '*default-ram-id': 'str', 'acpi': 'bool' } }
-+            '*default-ram-id': 'str', 'acpi': 'bool',
-+            '*compat-props': { 'type': ['CompatProperty'],
-+                               'features': ['unstable'] } } }
- 
- ##
- # @query-machines:
- #
- # Return a list of supported machines
- #
-+# @compat-props: if true, also return compatibility properties.
-+#     (default: false) (since 9.1)
-+#
-+# Features:
-+#
-+# @unstable: Argument @compat-props is experimental.
-+#
- # Returns: a list of MachineInfo
- #
- # Since: 1.2
-+#
-+# Example:
-+#
-+#     -> { "execute": "query-machines", "arguments": { "compat-props": true } }
-+#     <- { "return": [
-+#               {
-+#                  "hotpluggable-cpus": true,
-+#                  "name": "pc-q35-6.2",
-+#                  "compat-props": [
-+#                       {
-+#                          "qom-type": "virtio-mem",
-+#                          "property": "unplugged-inaccessible",
-+#                          "value": "off"
-+#                       }
-+#                   ],
-+#                   "numa-mem-supported": false,
-+#                   "default-cpu-type": "qemu64-x86_64-cpu",
-+#                   "cpu-max": 288,
-+#                   "deprecated": false,
-+#                   "default-ram-id": "pc.ram"
-+#               },
-+#               ...
-+#        }
- ##
--{ 'command': 'query-machines', 'returns': ['MachineInfo'] }
-+{ 'command': 'query-machines',
-+  'data': { '*compat-props': { 'type': 'bool',
-+                               'features': [ 'unstable' ] } },
-+  'returns': ['MachineInfo'] }
- 
- ##
- # @CurrentMachineParams:
-diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-index c20829b9ae..5972100b1f 100644
---- a/hw/core/machine-qmp-cmds.c
-+++ b/hw/core/machine-qmp-cmds.c
-@@ -64,7 +64,8 @@ CpuInfoFastList *qmp_query_cpus_fast(Error **errp)
-     return head;
- }
- 
--MachineInfoList *qmp_query_machines(Error **errp)
-+MachineInfoList *qmp_query_machines(bool has_compat_props, bool compat_props,
-+                                    Error **errp)
- {
-     GSList *el, *machines = object_class_get_list(TYPE_MACHINE, false);
-     MachineInfoList *mach_list = NULL;
-@@ -96,6 +97,26 @@ MachineInfoList *qmp_query_machines(Error **errp)
-             info->default_ram_id = g_strdup(mc->default_ram_id);
-         }
- 
-+        if (compat_props && mc->compat_props) {
-+            int i;
-+            info->compat_props = NULL;
-+            CompatPropertyList **tail = &(info->compat_props);
-+            info->has_compat_props = true;
-+
-+            for (i = 0; i < mc->compat_props->len; i++) {
-+                GlobalProperty *mt_prop = g_ptr_array_index(mc->compat_props,
-+                                                            i);
-+                CompatProperty *prop;
-+
-+                prop = g_malloc0(sizeof(*prop));
-+                prop->qom_type = g_strdup(mt_prop->driver);
-+                prop->property = g_strdup(mt_prop->property);
-+                prop->value = g_strdup(mt_prop->value);
-+
-+                QAPI_LIST_APPEND(tail, prop);
-+            }
-+        }
-+
-         QAPI_LIST_PREPEND(mach_list, info);
-     }
- 
-diff --git a/tests/qtest/fuzz/qos_fuzz.c b/tests/qtest/fuzz/qos_fuzz.c
-index e403d373a0..b71e945c5f 100644
---- a/tests/qtest/fuzz/qos_fuzz.c
-+++ b/tests/qtest/fuzz/qos_fuzz.c
-@@ -46,7 +46,7 @@ static void qos_set_machines_devices_available(void)
-     MachineInfoList *mach_info;
-     ObjectTypeInfoList *type_info;
- 
--    mach_info = qmp_query_machines(&error_abort);
-+    mach_info = qmp_query_machines(false, false, &error_abort);
-     machines_apply_to_node(mach_info);
-     qapi_free_MachineInfoList(mach_info);
- 
+  https://github.com/philmd/qemu.git tags/hw-misc-20240425
+
+for you to fetch changes up to 098de99aad1aa911b4950b47b55d2e2bcc4f9c0c:
+
+  hw/core: Support module-id in numa configuration (2024-04-25 12:48:12 +0200)
+
+2 checkpatch issues:
+
+- one spurious:
+WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
+
+- one deliberately ignored in a python script:
+ERROR: line over 90 characters
+
+----------------------------------------------------------------
+Misc HW patch queue
+
+- Script to compare machines compat_props[] (Maksim)
+- Introduce 'module' CPU topology level (Zhao)
+- Various cleanups (Thomas, Zhao, Inès, Bernhard)
+
+----------------------------------------------------------------
+
+Bernhard Beschow (1):
+  hw/i386/pc_sysfw: Remove unused parameter from pc_isa_bios_init()
+
+Inès Varhol (1):
+  hw/misc : Correct 5 spaces indents in stm32l4x5_exti
+
+Maksim Davydov (4):
+  qom: add default value
+  qmp: add dump machine type compatibility properties
+  python/qemu/machine: add method to retrieve QEMUMachine::binary field
+  scripts: add script to compare compatibility properties
+
+Philippe Mathieu-Daudé (7):
+  hw/core: Remove check on NEED_CPU_H in tcg-cpu-ops.h
+  target/i386: Move APIC related code to cpu-apic.c
+  hw/misc/applesmc: Simplify DeviceReset handler
+  hw/misc/imx: Replace sprintf() by snprintf()
+  hw/riscv/virt: Replace sprintf by g_strdup_printf
+  hw/elf_ops: Rename elf_ops.h -> elf_ops.h.inc
+  hw/xtensa: Include missing 'exec/cpu-common.h' in 'bootparam.h'
+
+Thomas Huth (2):
+  hw: Fix problem with the A*MPCORE switches in the Kconfig files
+  hw: Add a Kconfig switch for the TYPE_CPU_CLUSTER device
+
+Zhao Liu (7):
+  hw/cxl/cxl-cdat: Make ct3_load_cdat() return boolean
+  hw/cxl/cxl-cdat: Make ct3_build_cdat() return boolean
+  hw/cxl/cxl-cdat: Make cxl_doe_cdat_init() return boolean
+  hw/core/machine: Introduce the module as a CPU topology level
+  hw/core/machine: Support modules in -smp
+  hw/core: Introduce module-id as the topology subindex
+  hw/core: Support module-id in numa configuration
+
+ MAINTAINERS                             |   5 +
+ qapi/machine.json                       |  74 +++-
+ hw/xtensa/bootparam.h                   |   2 +
+ include/hw/boards.h                     |   4 +
+ include/hw/core/tcg-cpu-ops.h           |   3 -
+ include/hw/cxl/cxl_component.h          |   2 +-
+ include/hw/{elf_ops.h => elf_ops.h.inc} |   0
+ bsd-user/elfload.c                      |   2 +-
+ hw/core/loader.c                        |   4 +-
+ hw/core/machine-hmp-cmds.c              |   4 +
+ hw/core/machine-qmp-cmds.c              |  23 +-
+ hw/core/machine-smp.c                   |  41 +-
+ hw/core/machine.c                       |  18 +
+ hw/cxl/cxl-cdat.c                       |  28 +-
+ hw/i386/pc_sysfw.c                      |   5 +-
+ hw/mem/cxl_type3.c                      |   3 +-
+ hw/misc/applesmc.c                      |  36 +-
+ hw/misc/imx25_ccm.c                     |   2 +-
+ hw/misc/imx31_ccm.c                     |   2 +-
+ hw/misc/imx6_ccm.c                      |   4 +-
+ hw/misc/imx6_src.c                      |   2 +-
+ hw/misc/imx6ul_ccm.c                    |   4 +-
+ hw/misc/imx7_src.c                      |   2 +-
+ hw/misc/stm32l4x5_exti.c                |   8 +-
+ hw/net/imx_fec.c                        |   2 +-
+ hw/pci-bridge/cxl_upstream.c            |   3 +-
+ hw/riscv/virt.c                         |  17 +-
+ hw/ssi/imx_spi.c                        |   2 +-
+ linux-user/elfload.c                    |   2 +-
+ qom/qom-qmp-cmds.c                      |   1 +
+ system/vl.c                             |   3 +
+ target/i386/cpu-apic.c                  | 112 ++++++
+ target/i386/cpu-sysemu.c                |  77 ----
+ target/i386/monitor.c                   |  25 --
+ tests/qtest/fuzz/qos_fuzz.c             |   2 +-
+ hw/Kconfig                              |   1 +
+ hw/arm/Kconfig                          |  18 +-
+ hw/cpu/Kconfig                          |  15 +-
+ hw/cpu/meson.build                      |   3 +-
+ hw/riscv/Kconfig                        |   2 +
+ python/qemu/machine/machine.py          |   5 +
+ scripts/compare-machine-types.py        | 486 ++++++++++++++++++++++++
+ target/i386/meson.build                 |   1 +
+ 43 files changed, 858 insertions(+), 197 deletions(-)
+ rename include/hw/{elf_ops.h => elf_ops.h.inc} (100%)
+ create mode 100644 target/i386/cpu-apic.c
+ create mode 100755 scripts/compare-machine-types.py
+
 -- 
 2.41.0
 
