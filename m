@@ -4,64 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76825C19F4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 11:08:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46396C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 11:08:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzwu7-0002ZC-KD; Thu, 25 Apr 2024 07:04:39 -0400
+	id 1rzwu4-0002K9-LE; Thu, 25 Apr 2024 07:04:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1rzwtp-00010I-Sa
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:04:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1rzwtn-0000Rj-TF
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:04:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714043058;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=0/jA1fXfH2t1wTTUgmoVuke/9Re+MG3phXbAKQBwtj0=;
- b=d2XAjbtFnTCbRsIq4dIGeoWdsFCN2mj25vHAWjqt+56Czx5O/+m4Aw/els49BDu4WiDro2
- dHn8L/xdJdFG8SHMvPottk2ntKk9VAOBFEKOGFZTgC/S9ly7t58vcRNDcIWoTefOobvvm7
- V3ptDz6hYy/XBTzRPHVDQBP3aN9VhTQ=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-645-phtnW38fPFKG7sgY_AbJmQ-1; Thu, 25 Apr 2024 07:04:17 -0400
-X-MC-Unique: phtnW38fPFKG7sgY_AbJmQ-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id BB3E918065B1
- for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 11:04:16 +0000 (UTC)
-Received: from srv1.redhat.com (unknown [10.45.225.75])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 23A6B200AE7F;
- Thu, 25 Apr 2024 11:04:15 +0000 (UTC)
-From: Konstantin Kostiuk <kkostiuk@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzwtJ-0000B0-T9
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:04:03 -0400
+Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzwtA-0000I3-Sq
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:03:44 -0400
+Received: by mail-lj1-x231.google.com with SMTP id
+ 38308e7fff4ca-2de233961caso7891981fa.3
+ for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 04:03:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714043011; x=1714647811; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2PQHJ5tsa1+Iw7rGUJbqHRL8DwWj2o26FTHLneT25lU=;
+ b=qF5vPcOkQSHZM1NLwAfCBQMhgKN/jwiR9NQS6Ch89FK9VZIjHtD/ZTHN1U1oybFX9/
+ j8km1Ge599RgH2hYhdMMQ/9FzK9rsJHIXk5WHMmT8xx79+NQvbvqp5RLY1B27ZBbLhsR
+ E45oDsbfz2XHLQloCcYrmAb5HSOCzmCIUypH5bGamARXwIYgz02OqGSD6sFYcSxnIu0O
+ nFAApaf1RT58vkwUKnTcdFQ4dEHldFNiO4Kffc2BISTerJOpHnHPdnFE0AyaIa4UhO5/
+ x7u5Jrz2uRTFxoE08ZqEIvE44frv9LSbx6Wd1fQU6PgRYJbq817/YvCTEYUE8sXv3918
+ GWFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714043011; x=1714647811;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2PQHJ5tsa1+Iw7rGUJbqHRL8DwWj2o26FTHLneT25lU=;
+ b=CW+2pwd07fyF+AOcDJ1u0LQb0PXIMzJjiJseJWGJfm18gjcwtUAsnRptDkD75BaPo4
+ gwY4KZ6bjpdQ5FUmI7RH7Hgmdt9fy8yqp8yr5/r2BzaDQD9HIahniWnAFsMwN67lZRx+
+ LNbVI9XVj2KJImO3ZM5LSUFYegczNvN/6DlGoIu9hCLFqaM7i47a+OphuoKONZJZdswG
+ L2Q4hSJX6ZoyMbpx3ekxp8X5bN0kZkqkLT7WnT6Hb75tGJNutAhvjNTajqHVQB2Nx5Rk
+ zKVESalVnj3tyI8Tw/vPHQOr8CzlmQJO82dOx4iVj0eKnruCHvysJgPotoGpTZjmFMS9
+ tCSA==
+X-Gm-Message-State: AOJu0Yxt7KNJPw4jQR8dem6nJymdQO++FKYLc50joCw3ytmi0F/PfLF1
+ +M9r8WbtvV5V4QOhqGy+L8U7ObXq3USDHikQs9o/XFeDRQZyWRGq8zC716+9bAvr+KXvN724+cm
+ Z
+X-Google-Smtp-Source: AGHT+IHjXpphfPvfQQeNi/tfubBrsdyX+KmCThTxoYcIYz0zKxSB3Us2byui4wQDChBJF2z3pJlAyg==
+X-Received: by 2002:a2e:b353:0:b0:2d8:3e07:5651 with SMTP id
+ q19-20020a2eb353000000b002d83e075651mr4356960lja.34.1714043011391; 
+ Thu, 25 Apr 2024 04:03:31 -0700 (PDT)
+Received: from localhost.localdomain ([92.88.170.77])
+ by smtp.gmail.com with ESMTPSA id
+ bd25-20020a05600c1f1900b00419f7d6879dsm18832137wmb.8.2024.04.25.04.03.30
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 25 Apr 2024 04:03:31 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH] stubs: Add missing qga stubs
-Date: Thu, 25 Apr 2024 14:04:14 +0300
-Message-ID: <20240425110414.36977-1-kkostiuk@redhat.com>
+Cc: qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Anton Johansson <anjo@rev.ng>, Max Filippov <jcmvbkbc@gmail.com>
+Subject: [PULL 16/22] hw/xtensa: Include missing 'exec/cpu-common.h' in
+ 'bootparam.h'
+Date: Thu, 25 Apr 2024 13:01:49 +0200
+Message-ID: <20240425110157.20328-17-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240425110157.20328-1-philmd@linaro.org>
+References: <20240425110157.20328-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::231;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x231.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,46 +96,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Compilation QGA without system and user fails
-./configure --disable-system --disable-user --enable-guest-agent
+cpu_physical_memory_write() is declared in "exec/cpu-common.h".
 
-Fixes: 3a15604900c4f433c970cc6294520a98f201287e
-
-Signed-off-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Anton Johansson <anjo@rev.ng>
+Message-Id: <20240418192525.97451-21-philmd@linaro.org>
 ---
- stubs/meson.build | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ hw/xtensa/bootparam.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/stubs/meson.build b/stubs/meson.build
-index 8ee1fd5753..3b9d42023c 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -21,12 +21,12 @@ if have_block
-   stub_ss.add(files('migr-blocker.c'))
-   stub_ss.add(files('physmem.c'))
-   stub_ss.add(files('ram-block.c'))
--  stub_ss.add(files('replay-tools.c'))
-   stub_ss.add(files('runstate-check.c'))
-   stub_ss.add(files('uuid.c'))
- endif
+diff --git a/hw/xtensa/bootparam.h b/hw/xtensa/bootparam.h
+index ade7891ec5..f57ff850bc 100644
+--- a/hw/xtensa/bootparam.h
++++ b/hw/xtensa/bootparam.h
+@@ -1,6 +1,8 @@
+ #ifndef HW_XTENSA_BOOTPARAM_H
+ #define HW_XTENSA_BOOTPARAM_H
  
- if have_block or have_ga
-+  stub_ss.add(files('replay-tools.c'))
-   # stubs for hooks in util/main-loop.c, util/async.c etc.
-   stub_ss.add(files('cpus-get-virtual-clock.c'))
-   stub_ss.add(files('icount.c'))
-@@ -45,6 +45,10 @@ if have_block or have_ga
-   stub_ss.add(files('qmp-quit.c'))
- endif
- 
-+if have_ga
-+  stub_ss.add(files('error-printf.c'))
-+endif
++#include "exec/cpu-common.h"
 +
- if have_block or have_user
-   stub_ss.add(files('qtest.c'))
-   stub_ss.add(files('vm-stop.c'))
+ #define BP_TAG_COMMAND_LINE     0x1001  /* command line (0-terminated string)*/
+ #define BP_TAG_INITRD           0x1002  /* ramdisk addr and size (bp_meminfo) */
+ #define BP_TAG_MEMORY           0x1003  /* memory addr and size (bp_meminfo) */
 -- 
-2.44.0
+2.41.0
 
 
