@@ -4,89 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5360C19F4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 10:05:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A54FDC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 10:06:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzvyT-0005GE-CZ; Thu, 25 Apr 2024 06:05:07 -0400
+	id 1rzvza-00062v-UP; Thu, 25 Apr 2024 06:06:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rzvyH-0005F7-Ie
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 06:04:53 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rzvyD-0007D4-RJ
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 06:04:52 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-56e78970853so3325690a12.0
- for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 03:04:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714039488; x=1714644288; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ru0Daz2d54FCM9lMBHe/6KP+V8nu7XS8peRkxeMpr7c=;
- b=t+YE9hir54zN8EzvN3sLgWgpkTRi1rywMOpXK5CP8fQ9r6kPxd6Kv5JHiKfLI4KMys
- mm8g+3RJWIfMAazb5NY7/UtSOoyX1+UrjMlad5/afEY6iELYR2fhpJR645C6us6atc/0
- QB1+21tNvho62hHgqQE/9smgMYmGWhHA3TP6CuuLkQfdFQy5sG+71slBKpIZIX21/ejc
- /jFvToBBQ4EQeeP1BAiis4QyWtVfmPqvxs0PnrXO5ukmgKjEaowFDgpv8bwMTiojZZc7
- epZNZiWk5AUQdfTKH+fy66cpd/sKczm/xUKilMTz0WlcHqBnOs6Td17HI3IHmfTIF8y2
- zc3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714039488; x=1714644288;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ru0Daz2d54FCM9lMBHe/6KP+V8nu7XS8peRkxeMpr7c=;
- b=nHJikqUj6Ox9LppncFqib6tAlCf3Np8CSd3gWw7B8Vr2ZZ0NmpG5qJhU4gJKP55/7F
- eQxemG87ac6q8J/uasqXE7YK7j/765VeQNOL53rxdzLCSzxgy4onKhWcpDUJo85EHtw4
- bGoukFWdPo31VHOxuSV7z8I1eLUPhXorriOBP1/oc8HAVv+SdKWyp+AeqSM1idk5A0II
- 9eToHc9eNtK0qdHSiFybILg2GmSoAe3qSIiFioumXsA8oKeSXmRNh/1hNjdswhtNnxi9
- FRmdK7+X6Sfe5cHadxw98XSLNTpjEtUs8wr4aA2J4/g3B2l2403PNYUNGOsBNZkHLdOc
- sajw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX61hOpl3e+c7Mobi+b5tO1z/MKLMaUCteIWfiSdWOXcacdzdr2T33qvFiAwcFmU+3tjLJDH/cEd/WzdeslA1c4aCGid1g=
-X-Gm-Message-State: AOJu0Yx7RN3oQdD7B376czVoVHUOfYc9ayNgUYqSUweWBZ2AMoV74PZ9
- DYA/v4QQFnS2s2JxU66QJy1wu+ly/9vEbwRovgD1PVu08q9g26vAwdaba5rSNiCiGZZgCgDM+vt
- nd0hjfoZNB/P9PavVSmOEOtQyly9HvyWfZFxfag==
-X-Google-Smtp-Source: AGHT+IGfoAtNDLzDzAInxg1ZgJmjhkcX3/d5drHWNzpYIfiTupXk3zlRYnQ233ArbuSybWfcZnHDD2DJIHKGNFl3Sg0=
-X-Received: by 2002:a17:906:f358:b0:a55:aded:200d with SMTP id
- hg24-20020a170906f35800b00a55aded200dmr2430742ejb.12.1714039487634; Thu, 25
- Apr 2024 03:04:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
+ id 1rzvzY-0005wt-Kk
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 06:06:12 -0400
+Received: from esa4.hc1455-7.c3s2.iphmx.com ([68.232.139.117])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
+ id 1rzvzU-0000Jf-9p
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 06:06:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
+ t=1714039568; x=1745575568;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=9ui7yF4xCi0s7W9PYYbpmr3fDfYDVJD2/IAdjVVo60E=;
+ b=rqKy6JGJ6MIhHj7Ndj1mDjA2pZBtbEmNiZ7vktNqXOHR0mm4H8H7LhTP
+ XoUEyE438Lt+yHjk9fK1H1DYvhvVjz97r3LOy3j/JYzH7S3J8YVvdVTYT
+ C6kAIeox6qkOg5rozWv5v4FnRwY6CPNp6Nh8o43bszxdjRbri0yDwze0S
+ sjwTveHc+Ss70lykjUiUiiLc7a2AHjf3VHD/+RKXJZp5X8hjCIrSqBOVM
+ sOJTFJ6hHTdr+rCnt3hWRgO7jau/HKWIFWBPPNeFV73YXzuZP29VG5kPu
+ oMDYiYSPrLC4epFAztGtckPAqfNexC4FoAi2FSaXEeDkh+vJzooeIpfno g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11054"; a="157008415"
+X-IronPort-AV: E=Sophos;i="6.07,229,1708354800"; d="scan'208";a="157008415"
+Received: from unknown (HELO yto-r2.gw.nic.fujitsu.com) ([218.44.52.218])
+ by esa4.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Apr 2024 19:06:03 +0900
+Received: from yto-m2.gw.nic.fujitsu.com (yto-nat-yto-m2.gw.nic.fujitsu.com
+ [192.168.83.65])
+ by yto-r2.gw.nic.fujitsu.com (Postfix) with ESMTP id 9166DC68FB
+ for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 19:06:01 +0900 (JST)
+Received: from kws-ab3.gw.nic.fujitsu.com (kws-ab3.gw.nic.fujitsu.com
+ [192.51.206.21])
+ by yto-m2.gw.nic.fujitsu.com (Postfix) with ESMTP id D3172D560D
+ for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 19:06:00 +0900 (JST)
+Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
+ by kws-ab3.gw.nic.fujitsu.com (Postfix) with ESMTP id 5A1162030EE48
+ for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 19:06:00 +0900 (JST)
+Received: from [192.168.50.5] (unknown [10.167.226.114])
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id 1AF301A000B;
+ Thu, 25 Apr 2024 18:05:58 +0800 (CST)
+Message-ID: <5563b68c-48ab-48e3-bbc9-b93236ea0543@fujitsu.com>
+Date: Thu, 25 Apr 2024 18:05:58 +0800
 MIME-Version: 1.0
-References: <20240422142056.3023-1-philmd@linaro.org>
- <20240422170056-mutt-send-email-mst@kernel.org>
- <1f6447c4-ea4c-4bd3-a879-8efb72448bb8@linaro.org>
- <20240422170913-mutt-send-email-mst@kernel.org>
- <CAAjaMXZxFJtEdJh38_76ZdL82JBM52Ke0+p1K07miiFeQSJtcw@mail.gmail.com>
- <CAAjaMXaoPeCVpd=q-d2GH25SfrNPVqh6hCerMOrQ6payXVMmyA@mail.gmail.com>
- <f5c67478-4fb9-4fb9-a6b2-286d6372bd0a@linaro.org>
- <b9fb7a87-2328-4999-8f7e-6b6cf04984a3@ilande.co.uk>
- <CAAjaMXa00nWejPRc_Xc9fnoncXVDiWO9MNabwq-QU5nepA4b9w@mail.gmail.com>
- <fd6b0336-ecc7-4c0e-aa48-f8e984d293dc@ilande.co.uk>
-In-Reply-To: <fd6b0336-ecc7-4c0e-aa48-f8e984d293dc@ilande.co.uk>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Thu, 25 Apr 2024 13:04:31 +0300
-Message-ID: <CAAjaMXaBd8+DuNzeVO9k=6ojt5brt1nmm1gApdwgXJ3JzjisTA@mail.gmail.com>
-Subject: Re: [PATCH v3] hw/audio/virtio-snd: Use device endianness instead of
- target one
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
- Gerd Hoffmann <kraxel@redhat.com>, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/2] cxl/core: correct length of DPA field masks
+To: Ira Weiny <ira.weiny@intel.com>,
+ Alison Schofield <alison.schofield@intel.com>
+Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
+ Jonathan.Cameron@huawei.com, dan.j.williams@intel.com, dave@stgolabs.net,
+ stable@vger.kernel.org
+References: <20240417075053.3273543-1-ruansy.fnst@fujitsu.com>
+ <20240417075053.3273543-2-ruansy.fnst@fujitsu.com>
+ <ZifzF8cXObFiDiIK@aschofie-mobl2>
+ <66282269c8d4e_d2ce22941e@iweiny-mobl.notmuch>
+In-Reply-To: <66282269c8d4e_d2ce22941e@iweiny-mobl.notmuch>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28342.006
+X-TM-AS-User-Approved-Sender: Yes
+X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28342.006
+X-TMASE-Result: 10--8.769000-10.000000
+X-TMASE-MatchedRID: ehvrJQ9m4PCPvrMjLFD6eHchRkqzj/bEC/ExpXrHizxBqLOmHiM3w9vx
+ x0ntQKyZIvrftAIhWmLy9zcRSkKatdgW4k6aveo4JmbrB1j4Xwqu2GmdldmiUFAoBBK61BhcDNg
+ h8//LFqcY75YLBQacDDXZ4YiSvO26P0DBdQeKlX30hv/rD7WVZAGo1vhC/pWj1tmGB7JU9CMQGU
+ caieHP20ky3+YDnnncWtxX1bZT1YKPaFHMfVTC4IMbH85DUZXyudR/NJw2JHcNYpvo9xW+mI6HM
+ 5rqDwqtdBt/JsWxNYMojJSc3dcGBinRbTgBFGIc+/ubgugAYE5DfpC/4XnsQAPA0m6VHcLNwMzJ
+ Pwl8jS0FTjdoGJlwifD71DijxXcjgokLZRKLKVGdC4HNoe3rP7Iyum16+pyZ1elfyC1yu6+FK45
+ C57CBPA==
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
+Received-SPF: pass client-ip=68.232.139.117;
+ envelope-from=ruansy.fnst@fujitsu.com; helo=esa4.hc1455-7.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,129 +102,61 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shiyang Ruan <ruansy.fnst@fujitsu.com>
+From:  Shiyang Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 25 Apr 2024 at 10:49, Mark Cave-Ayland
-<mark.cave-ayland@ilande.co.uk> wrote:
->
-> On 25/04/2024 07:30, Manos Pitsidianakis wrote:
->
-> > On Wed, 24 Apr 2024 at 13:31, Mark Cave-Ayland
-> > <mark.cave-ayland@ilande.co.uk> wrote:
-> >>
-> >> On 23/04/2024 12:05, Philippe Mathieu-Daud=C3=A9 wrote:
-> >>
-> >>> On 23/4/24 11:18, Manos Pitsidianakis wrote:
-> >>>> On Tue, 23 Apr 2024 at 11:47, Manos Pitsidianakis
-> >>>> <manos.pitsidianakis@linaro.org> wrote:
-> >>>>>
-> >>>>> On Tue, 23 Apr 2024 at 00:11, Michael S. Tsirkin <mst@redhat.com> w=
-rote:
-> >>>>>>
-> >>>>>> On Mon, Apr 22, 2024 at 11:07:21PM +0200, Philippe Mathieu-Daud=C3=
-=A9 wrote:
-> >>>>>>> On 22/4/24 23:02, Michael S. Tsirkin wrote:
-> >>>>>>>> On Mon, Apr 22, 2024 at 04:20:56PM +0200, Philippe Mathieu-Daud=
-=C3=A9 wrote:
-> >>>>>>>>> Since VirtIO devices can change endianness at runtime,
-> >>>>>>>>> we need to use the device endianness, not the target
-> >>>>>>>>> one.
-> >>>>>>>>>
-> >>>>>>>>> Cc: qemu-stable@nongnu.org
-> >>>>>>>>> Fixes: eb9ad377bb ("virtio-sound: handle control messages and s=
-treams")
-> >>>>>>>>> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> >>>>>>>>
-> >>>>>>>>
-> >>>>>>>>
-> >>>>>>>> This is all completely bogus. Virtio SND is from Virtio 1.0 only=
-.
-> >>>>>>>> It is unconditionally little endian.
-> >>>>>
-> >>>>>
-> >>>>> This part of the code is for PCM frames (raw bytes), not virtio spe=
-c
-> >>>>> fields (which indeed must be LE in modern VIRTIO).
-> >>>>
-> >>>> Thought a little more about it. We should keep the target's endianne=
-ss
-> >>>> here, if it's mutable then we should query the machine the device is
-> >>>> attached to somehow. the virtio device should never change endiannes=
-s
-> >>>> like Michael says since it's not legacy.
-> >>>
-> >>> Grr. So as Richard suggested, this need to be pass as a device
-> >>> property then.
-> >>> (https://lore.kernel.org/qemu-devel/ed134c9d-6e6f-465b-900f-e39ca4e09=
-876@linaro.org/)
-> >>
-> >> It feels to me that the endianness is something that should be negotia=
-ted as part of
-> >> the frame format, since the endianness of the audio hardware can be di=
-fferent from
-> >> that of the CPU (think PReP machines where it was common that a big en=
-dian CPU is
-> >> driving little endian hardware as found on x86).
-> >
-> > But that is the job of the hardware drivers, isn't it? Here we are
-> > taking frames passed from the guest to its virtio driver in the format
-> > specified in the target cpu's endianness and QEMU as the device passes
-> > it to host ALSA/Pipewire/etc which in turn passes it to the actual
-> > audio hardware driver..
->
-> The problem is that the notion of target CPU endian is not fixed. For exa=
-mple the
-> PowerPC CPU starts off in big-endian mode, but these days most systems wi=
-ll switch
-> the CPU to little-endian mode on startup to run ppc64le. There's also the=
- ILE bit
-> which can be configured so that a big-endian PowerPC CPU can dynamically =
-switch to
-> little-endian mode when processing an interrupt, so you could potentially=
- end up with
-> either depending upon the current mode of the CPU.
->
-> These are the kinds of issues that led to the later virtio specifications=
- simply
-> using little-endian for everything, since then there is zero ambiguity ov=
-er what
-> endian is required for the virtio configuration space accesses.
->
-> It feels to me that assuming a target CPU endian is fixed for the PCM fra=
-me formats
-> is simply repeating the mistakes of the past - and even the fact that we =
-are
-> discussing this within this thread suggests that at a very minimum the vi=
-rtio-snd
-> specification needs to be updated to clarify the byte ordering of the PCM=
- frame formats.
->
->
-> ATB,
->
-> Mark.
->
 
 
-Agreed, I think we are saying approximately the same thing here.
+在 2024/4/24 5:04, Ira Weiny 写道:
+> Alison Schofield wrote:
+>> On Wed, Apr 17, 2024 at 03:50:52PM +0800, Shiyang Ruan wrote:
+> 
+> [snip]
+> 
+>>> diff --git a/drivers/cxl/core/trace.h b/drivers/cxl/core/trace.h
+>>> index e5f13260fc52..cdfce932d5b1 100644
+>>> --- a/drivers/cxl/core/trace.h
+>>> +++ b/drivers/cxl/core/trace.h
+>>> @@ -253,7 +253,7 @@ TRACE_EVENT(cxl_generic_event,
+>>>    * DRAM Event Record
+>>>    * CXL rev 3.0 section 8.2.9.2.1.2; Table 8-44
+>>>    */
+>>> -#define CXL_DPA_FLAGS_MASK			0x3F
+>>> +#define CXL_DPA_FLAGS_MASK			0x3FULL
+>>>   #define CXL_DPA_MASK				(~CXL_DPA_FLAGS_MASK)
+>>>   
+>>>   #define CXL_DPA_VOLATILE			BIT(0)
+>>
+>> This works but I'm thinking this is the time to convene on one
+>> CXL_EVENT_DPA_MASK for both all CXL events, rather than having
+>> cxl_poison event be different.
+>>
+>> I prefer how poison defines it:
+>>
+>> cxlmem.h:#define CXL_POISON_START_MASK          GENMASK_ULL(63, 6)
+>>
+>> Can we rename that CXL_EVENT_DPA_MASK and use for all events?
 
- We need a mechanism to retrieve the vCPUs endianness and a way to
-notify subscribed devices when it changes.
+cxlmem.h:CXL_POISON_START_MASK is defined for MBOX commands (poison 
+record, the lower 3 bits indicate "Error Source"), but CXL_DPA_MASK here 
+is for events.  They have different meaning though their values are 
+same.  So, I don't think we should consolidate them.
 
- I think that then, since the virtio device is mostly certain of the
-correct target endianness and completely certain of the host
-endianness, it can perform the necessary conversions.
+> 
+> Ah!  Great catch.  I dont' know why I only masked off the 2 used bits.
 
- I don't recall seeing a restriction on the byte ordering of PCM
-formats other than the CPU order; except for the ones which have
-explicit endianness in their definitions. Please correct me if I am
-wrong!
+Per spec, the lowest 2 bits of CXL event's DPA are defined for "Volatile 
+or not" and "not repairable".  So there is no mistake here.
 
-A straightforward solution would be to set an endianness change notify
-callback in DeviceClass. What do you think?
+> That was short sighted of me.
+> 
+> Yes we should consolidate these.
+> Ira
 
---=20
-Manos Pitsidianakis
-Emulation and Virtualization Engineer at Linaro Ltd
+--
+Thanks,
+Ruan.
+
 
