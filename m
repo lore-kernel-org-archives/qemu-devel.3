@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF013C19F4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 10:48:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09C64C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 10:48:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzwWZ-00024y-Nj; Thu, 25 Apr 2024 06:40:19 -0400
+	id 1rzwWN-0001xo-6Z; Thu, 25 Apr 2024 06:40:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rzwWQ-0001zx-UP
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 06:40:11 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1rzwWM-0001x9-0q
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 06:40:06 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rzwWP-0007BM-9K
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 06:40:10 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4196c62bb4eso6441395e9.2
- for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 03:40:08 -0700 (PDT)
+ id 1rzwWK-00070Q-46
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 06:40:05 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-5194cebd6caso901880e87.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 03:40:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714041608; x=1714646408; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714041602; x=1714646402; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=qTCnu62k+8U/GjNoTGBqIqRdrEXskM+ZoSSojfJIbBw=;
- b=YXp1e3M1Z9c+SSQa9H77H3X3JIQ5X6PgZtrXsUGIMv4SYX1qaH0cQ7nwDa2R9iEdGv
- zCiEAlMTkTW38+sKO1rTxDsdkhHXveY2LqF/F016nzlGHlYstwjYNXNwUn/M8b7iBGRy
- gSP9+2m5pq9+nm7K6CP0P6jwf44wKKDv8S1fXUhPp2mS6kPtDniC4PTz3hMS+ocXQdu8
- 070VNCKmUrJYBHysa3lZLFeDK5/NV1bDYtV3JcVdPEFtFK1W+6UxfNMPkkvw4hCLCCgd
- BfxWhphZIBlaY2UGQa6oFY9yogCyNBlM+dyF5vpy2pUiN1fe3OOO5dyYZsNP3bXUZifO
- iOtQ==
+ :reply-to; bh=UIo/4Y0jCkZhZbVf1z/K9VYt8JNRKmGPNz3rHCYkyTk=;
+ b=kmTUlo5n+PIezLqs8wHwqp1IlssJuLBtzASP4yPrLIDef8U3c6B2HG2l87/eVRfJJf
+ Ns1efYXazFPpvydnIHlLG9LmeR7FyXH8T7Crg6gMqcUeguT1AWL7vdVO2IesoiheH/X4
+ LuFUh/jzEMURxkL4cBl/ecbS8xeJTCX8aWbAbToAH1akgLaAfWVI8UGF6gSHP701ToSj
+ J6GP4xK7zSXEEQn52kO59K/Dz/l3MtU/5GcEgHB5DCSJa422JEj5VnANNEuD3gnSCHDi
+ mvTqTQwIAymAGu/roljDqVHGEW4UWx2FmzoQWsH49HysbmAup0UPgzCJBF42y4zFBh6A
+ /GJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714041608; x=1714646408;
+ d=1e100.net; s=20230601; t=1714041602; x=1714646402;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qTCnu62k+8U/GjNoTGBqIqRdrEXskM+ZoSSojfJIbBw=;
- b=izPigaV2FjHSfz/R/iy93c5zUMEdtjHF5mpryqH1Zc5gGJ8U9AmJPuGlMhAlWksEku
- TieSpUFUoSKdxPWJ38doLVuRoMzagm6JZRhy18KuX7RFwHjj2BYa7Osdz/Fn7ITdv1io
- aOwn1SD54Xc3hxlmbt06OBICIuuxLvbOyxzLMWJhSk6qTlVCWUkgf+/NOhxFMc4OxbuQ
- gHqhYeNYscCS8X1Xr7/gJC8wBU2kKj8yNsSF8wgl7hvIe6s+QW8gCYOdhTtTA+3Xm/IX
- VyknU5MK0nRbXB/qgeQmfFdufHvAnASOjqf7LS9aw/uZQ1Nf3VQpIRs5jxv5KdrqT1o8
- CE0w==
-X-Gm-Message-State: AOJu0YxZgm4VBb7HY1huiT3q09pP8W/htzYJamdwRF8dOwTQqx4zpprE
- bikzsef/DOI1QaIvO2/d20C30ufcLINtd3JGRPKdXPFjq1hjy7pZHXbusPOi/S7Hzq6jfqaM3Uj
- N
-X-Google-Smtp-Source: AGHT+IFgvYz/LL7COI7sVcEFIk86rsMy7bHZdmbmd/IL5LKkjeAXw5WTY7QNHEBHgYe89p/qdxAbqA==
-X-Received: by 2002:a05:600c:4fd1:b0:418:be2e:df9e with SMTP id
- o17-20020a05600c4fd100b00418be2edf9emr3499976wmq.41.1714041607855; 
- Thu, 25 Apr 2024 03:40:07 -0700 (PDT)
+ bh=UIo/4Y0jCkZhZbVf1z/K9VYt8JNRKmGPNz3rHCYkyTk=;
+ b=Y0A731qTbU0hhC3yuzEZ2Kz77WX3PxL3Hs0ufhnnR0U59TfTEkYTyPtISikYk8ioCs
+ qlYjxvto7DK6gCll8oyV6DIgB7JhArs/rpEmIU/TO2Ro1RNQwZOlIcmZmB9rEpJc0VFA
+ VUjV5u0038ky/OuTAU2AY6XtBpZpWxGJ95Qtfg7z9hm1rsaeQrcB8PK2IHAzRDIVe4fg
+ 9ZngXROAPN7qB275YNa3QTS3LYUcGdeX8FEdOfM/uzi+ppezyugWmH3yEr+Uk58FoU5s
+ tuCDkpoVi+2fUR0kGTYex70ywJUXVzIO5JLIXxAzFBMzQjGnL9BP2mZtywWzvC1wWcmk
+ ILEg==
+X-Gm-Message-State: AOJu0YxGruwP8cL3vVodNEN0YBXpxspbCLXyHI7BwZcyQTP10tFmIiP2
+ xL/pcZcDhEQtVXnavbcRVPNCyebdeLEYnRv8SuFbhiM2sE/49WM+0VkMDKnVCc5wgTQcfAABMl8
+ x
+X-Google-Smtp-Source: AGHT+IGIUXUfL8ed/1eQi8VCDsq26Ev2gMqoSW7iJUd273qsKnkkXDALYoppPKazDECXEm1E2urHKQ==
+X-Received: by 2002:ac2:4984:0:b0:51c:3e9e:98ee with SMTP id
+ f4-20020ac24984000000b0051c3e9e98eemr1261876lfl.23.1714041602293; 
+ Thu, 25 Apr 2024 03:40:02 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- h15-20020a056000000f00b003434c764f01sm19485768wrx.107.2024.04.25.03.40.07
+ h15-20020a056000000f00b003434c764f01sm19485768wrx.107.2024.04.25.03.40.01
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Apr 2024 03:40:07 -0700 (PDT)
+ Thu, 25 Apr 2024 03:40:01 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 14/37] hw/intc/arm_gicv3_kvm: Not set has-nmi=true for the KVM
- GICv3
-Date: Thu, 25 Apr 2024 11:39:35 +0100
-Message-Id: <20240425103958.3237225-15-peter.maydell@linaro.org>
+Subject: [PULL 03/37] target/arm: Add support for FEAT_NMI,
+ Non-maskable Interrupt
+Date: Thu, 25 Apr 2024 11:39:24 +0100
+Message-Id: <20240425103958.3237225-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240425103958.3237225-1-peter.maydell@linaro.org>
 References: <20240425103958.3237225-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,33 +96,32 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-So far, there is no FEAT_GICv3_NMI support in the in-kernel GIC, so make it
-an error to try to set has-nmi=true for the KVM GICv3.
+Add support for FEAT_NMI. NMI (FEAT_NMI) is an mandatory feature in
+ARMv8.8-A and ARM v9.3-A.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Message-id: 20240407081733.3231820-15-ruanjinjie@huawei.com
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20240407081733.3231820-4-ruanjinjie@huawei.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/intc/arm_gicv3_kvm.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ target/arm/internals.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
-index 77eb37e1317..00a383079b9 100644
---- a/hw/intc/arm_gicv3_kvm.c
-+++ b/hw/intc/arm_gicv3_kvm.c
-@@ -805,6 +805,11 @@ static void kvm_arm_gicv3_realize(DeviceState *dev, Error **errp)
-         return;
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index dd3da211a3f..516e0584bf5 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1229,6 +1229,9 @@ static inline uint32_t aarch64_pstate_valid_mask(const ARMISARegisters *id)
+     if (isar_feature_aa64_mte(id)) {
+         valid |= PSTATE_TCO;
      }
- 
-+    if (s->nmi_support) {
-+        error_setg(errp, "NMI is not supported with the in-kernel GIC");
-+        return;
++    if (isar_feature_aa64_nmi(id)) {
++        valid |= PSTATE_ALLINT;
 +    }
-+
-     gicv3_init_irqs_and_mmio(s, kvm_arm_gicv3_set_irq, NULL);
  
-     for (i = 0; i < s->num_cpu; i++) {
+     return valid;
+ }
 -- 
 2.34.1
 
