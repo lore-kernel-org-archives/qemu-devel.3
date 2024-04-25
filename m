@@ -4,79 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F020C4345F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F00D9C19F4F
 	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 11:03:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzwro-0007ka-G3; Thu, 25 Apr 2024 07:02:16 -0400
+	id 1rzwrw-0007p7-OL; Thu, 25 Apr 2024 07:02:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzwrj-0007ju-R1
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:02:12 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzwrv-0007od-F5
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:02:23 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzwrg-00088I-Th
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:02:11 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-418e4cd2196so6833835e9.1
- for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 04:02:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzwrs-0008Ai-Jk
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:02:23 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-34c1fff534fso204561f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 04:02:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714042927; x=1714647727; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714042938; x=1714647738; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wjoLmpbwfS6wFuFSJimySduX47ZEmh3QOL6abPkvr5o=;
- b=LiSA7jOVkbTokpNSinr3zsFN61oPTSKAuVYvpHfbHxwIk+tJAek43Wlr7awXyBC3/V
- DH5Q8v1rO/VFtXzpKiVCaqtH299eXylf3Xjx+r+EikvMffQg3UGS0ChbbEH52Qxuo6H9
- Qoe+S0gFCgOpxhny2r1+51pgBJOOc0EcpNi1jBcItdH18SLba5xCaalowv+cFYuAflDq
- chgAS5l9hZNOJYVOgOdWF4U3btPV1/1i4FpLeC+LnO3ru8gDZ6FUYKUYKvHcIsNYH6dd
- s8MA1FP5W3zvPN5TOTx6Ff8lg1VRMRzpGkj3//vj7LeTqIWU+zleYuIc9g4FZPGI/0kQ
- NMDg==
+ bh=eiSgNxRXT9EJcnQ8aO7qTnStvPwh3mzz93fTZzoT/NU=;
+ b=VOrNwkjEc18XDYZn+sCdPXF09AvzrAv6uTFbdrdv2L5DxNnyWPIyaLdVGDhpfwYsi1
+ kYBOgtZo2EATtxrtPUkJk7axCF1UcOwP+sPAOi9quSXHTl/8pP0rDcaotA1ebdLE8YLn
+ 794fwgrGxGE0fGgraq79JHMEHJrmi6qSjh2a0ATvlUqnKDMOj16WF+qPUnEMxnjfk+6O
+ Rm1Kg7UmsqEMNJI1glB2I04m1v8ab5iZVGB7p539WX/rrkpXA0eG0qzTuZ8oZFHPfUHN
+ watrBGVN9V0GnLIajZHkP4DwY05b6OxQvC5xqaUW9ZPaNPJ5Qjs68BxwfXyPCpYMyxyW
+ CGeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714042927; x=1714647727;
+ d=1e100.net; s=20230601; t=1714042938; x=1714647738;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wjoLmpbwfS6wFuFSJimySduX47ZEmh3QOL6abPkvr5o=;
- b=HDTJfggxeqpht4dLrBO4cAEbs1EMibxVvLaYq/lib0uSDCYs42AXrcGh9HqV9DnL0O
- 5idTv6rG/1FAWgzES+iVCoRwEgJIn2rgPeuoBXvsO1kZjU3K1dmVW8hagqDnkB8AdIiD
- 2KUKkkFA/WPZTMvVFIiSQHzGcv19s4d3vdyT4MCFYjvnbXJXavWykn0wDPb2lYuUV5dM
- JQwsDdsSkr8Ay5dumv7Rj7UI69oasHdnsISQt/ez6J/etG5j0VcREB0cPtO3yd2nGjsq
- fCiGVBbRolpIG/dZzMSOMAh3mUrU0CeBmV6XGRRtOn2Nw/7e2G1isAEP0mNhVpZ0N1Yg
- dOVg==
-X-Gm-Message-State: AOJu0YwKZMPFtO4SkAf90iPtMw6HuJbk6GqtgiXN+yymvcjM0v/rVBa8
- +3P+jDlAVS478e1PDrNIJnyTYlpnc4qFBkkl+fbKN/ll5KZ6ijQNdFKX9hulMKb95ILuMTTzmjp
- 1
-X-Google-Smtp-Source: AGHT+IHQ2mv+CeJro9jqWlhkOIlmdcn/MGtTGdAo7lLFcltymnD0f4bSsdMfj0nsoNTC4MxDjpUT3w==
-X-Received: by 2002:adf:efcf:0:b0:347:d21:6855 with SMTP id
- i15-20020adfefcf000000b003470d216855mr3965037wrp.14.1714042925092; 
- Thu, 25 Apr 2024 04:02:05 -0700 (PDT)
+ bh=eiSgNxRXT9EJcnQ8aO7qTnStvPwh3mzz93fTZzoT/NU=;
+ b=T+dLKBBBg57vOE121PBtb/o8j/mXbN8mCL9WIqWqsOwOPrtLdviadIyaVTolw7xSho
+ au1Xbyv+bmnMtC7yTR+9p2/1L4ckDlB7JhPaAWQHGYrMz6hsdeHV7xaI0EWqn6A0QzNE
+ LIioyvJ/AGZR5Cx6NfKTlkqxc8n4ydPsnfV5WERE8iF72FS4FjUJmlDuP3kGgwJYTvsE
+ t5uqZDZL0qEUXw0GXrtMkjsDCeoVDwykciTzEDQcTepCrjicuiygR0X/0AcBeBF96Eui
+ /RgumpeF4e/2FU4my8okpdg6PMH2Pnwn3bqXOy3CRbreU7z3Q4dSbvzd8s/jor/GC98J
+ 9YUg==
+X-Gm-Message-State: AOJu0Yw1PGSn5JAv/Mbpb4hfRvMsv2F6WNaUvW16E+XJ/UApLBpRPBZ2
+ TlbFEMDfRBc9e0J1YKhp+SxgKJWMl1Ec91F9lVlZoyqcr4fYwlEba0cAdEvfZkV9gf2gd9J+YxB
+ R
+X-Google-Smtp-Source: AGHT+IGhQJMdjUzfkRipN6K78u1AWPOja9RuLHySGruzAQvqzc+/THb5+/v0sO6OeHnLbaa6kJroSQ==
+X-Received: by 2002:adf:f34d:0:b0:34c:233e:f40c with SMTP id
+ e13-20020adff34d000000b0034c233ef40cmr522061wrp.7.1714042938701; 
+ Thu, 25 Apr 2024 04:02:18 -0700 (PDT)
 Received: from localhost.localdomain ([92.88.170.77])
  by smtp.gmail.com with ESMTPSA id
- b16-20020a5d40d0000000b00346406a5c80sm19587104wrq.32.2024.04.25.04.02.03
+ p3-20020a5d6383000000b00341b451a31asm19488279wru.36.2024.04.25.04.02.17
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 25 Apr 2024 04:02:04 -0700 (PDT)
+ Thu, 25 Apr 2024 04:02:18 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- Maksim Davydov <davydov-max@yandex-team.ru>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Maksim Davydov <davydov-max@yandex-team.ru>, John Snow <jsnow@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 01/22] qom: add default value
-Date: Thu, 25 Apr 2024 13:01:34 +0200
-Message-ID: <20240425110157.20328-2-philmd@linaro.org>
+ Cleber Rosa <crosa@redhat.com>, Beraldo Leal <bleal@redhat.com>
+Subject: [PULL 03/22] python/qemu/machine: add method to retrieve
+ QEMUMachine::binary field
+Date: Thu, 25 Apr 2024 13:01:36 +0200
+Message-ID: <20240425110157.20328-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240425110157.20328-1-philmd@linaro.org>
 References: <20240425110157.20328-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,33 +99,33 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Maksim Davydov <davydov-max@yandex-team.ru>
 
-qmp_qom_list_properties can print default values if they are available
-as qmp_device_list_properties does, because both of them use the
-ObjectPropertyInfo structure with default_value field. This can be useful
-when working with "not device" types (e.g. memory-backend).
+Add a supportive property to access the path to the QEMU binary
 
 Signed-off-by: Maksim Davydov <davydov-max@yandex-team.ru>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: John Snow <jsnow@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20240318213550.155573-2-davydov-max@yandex-team.ru>
+Message-ID: <20240318213550.155573-4-davydov-max@yandex-team.ru>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- qom/qom-qmp-cmds.c | 1 +
- 1 file changed, 1 insertion(+)
+ python/qemu/machine/machine.py | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
-index 7c087299de..e91a235347 100644
---- a/qom/qom-qmp-cmds.c
-+++ b/qom/qom-qmp-cmds.c
-@@ -212,6 +212,7 @@ ObjectPropertyInfoList *qmp_qom_list_properties(const char *typename,
-         info->name = g_strdup(prop->name);
-         info->type = g_strdup(prop->type);
-         info->description = g_strdup(prop->description);
-+        info->default_value = qobject_ref(prop->defval);
+diff --git a/python/qemu/machine/machine.py b/python/qemu/machine/machine.py
+index 31cb9d617d..f648f6af45 100644
+--- a/python/qemu/machine/machine.py
++++ b/python/qemu/machine/machine.py
+@@ -328,6 +328,11 @@ def args(self) -> List[str]:
+         """Returns the list of arguments given to the QEMU binary."""
+         return self._args
  
-         QAPI_LIST_PREPEND(prop_list, info);
-     }
++    @property
++    def binary(self) -> str:
++        """Returns path to the QEMU binary"""
++        return self._binary
++
+     def _pre_launch(self) -> None:
+         if self._qmp_set:
+             if self._monitor_address is None:
 -- 
 2.41.0
 
