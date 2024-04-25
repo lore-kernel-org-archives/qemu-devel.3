@@ -4,111 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8ABAC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 18:52:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52C87C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 19:12:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s04CJ-0005Zf-6n; Thu, 25 Apr 2024 14:51:55 -0400
+	id 1s04VG-0003qE-BJ; Thu, 25 Apr 2024 15:11:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s04CH-0005Z2-Cr
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 14:51:53 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s04VF-0003q5-8S
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 15:11:29 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s04BO-0000ZW-9T
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 14:51:53 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id C573F21F7D;
- Thu, 25 Apr 2024 18:50:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1714071054; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pxlOqw04fFyuhI5FziqB8n3lQ5kQGq5MopTCkZEfdiI=;
- b=Off+hcrzxAIzDKDrYjSwogQa6fZEg6A41n7lY93HE8N4KqqYxWGQ1O+A7sMfbCMhcyNr1C
- VwN6awiHoD57qkeQeu3Je2FXa8PVo8Zp6p8rGT6pwCSfexEkD+5J8j9lt3cpfId2HV9BDS
- MBB1wi+nIQBqz66xkd0SD65LKdCSgJA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1714071054;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pxlOqw04fFyuhI5FziqB8n3lQ5kQGq5MopTCkZEfdiI=;
- b=AceWdqdpwal0ko980cSOYLu4ZxWm+6wGuBy6F6WFcseqV5zczf7eU8VybECC3hSwnwtl3+
- /caXFOFhHGf24GBQ==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=AzVFsBb3;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=FE6nJ0+B
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1714071053; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pxlOqw04fFyuhI5FziqB8n3lQ5kQGq5MopTCkZEfdiI=;
- b=AzVFsBb3luhyXLMMQBfVuTUIV9aSqbibMG5/IycqYsZAvyqt5ksXj83fqyAppQvDB8Wt4r
- R1lm2PtNdBYH/EZAh677nNfhnCjwwbjCnd8iWAuW23xiihvkZEU4teqnUCqIYRqsg+fVUe
- B8ut0JdDJzz2YQGNWgM4astiTC+bgS4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1714071053;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pxlOqw04fFyuhI5FziqB8n3lQ5kQGq5MopTCkZEfdiI=;
- b=FE6nJ0+BbxT/Ey1/wQemME22IC3IAQMEVjJI32wiSl2kfi0oCv+i2HBryJpjzvpFkFQ2Y+
- Y5T84TVD3RS3HNAQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 52B7113991;
- Thu, 25 Apr 2024 18:50:53 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id LSv2Bg2mKmY3SAAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 25 Apr 2024 18:50:53 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Hao Xiang <hao.xiang@linux.dev>, marcandre.lureau@redhat.com,
- peterx@redhat.com, armbru@redhat.com, lvivier@redhat.com,
- qemu-devel@nongnu.org
-Cc: Hao Xiang <hao.xiang@linux.dev>
-Subject: Re: [PATCH v4 01/14] meson: Introduce new instruction set enqcmd to
- the build system.
-In-Reply-To: <20240425022117.4035031-2-hao.xiang@linux.dev>
-References: <20240425022117.4035031-1-hao.xiang@linux.dev>
- <20240425022117.4035031-2-hao.xiang@linux.dev>
-Date: Thu, 25 Apr 2024 15:50:50 -0300
-Message-ID: <875xw5i8dx.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s04Uz-00083O-PY
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 15:11:28 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-5723edf0ae5so1397854a12.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 12:11:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714072269; x=1714677069; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=bZTZhzWF+PRUqaxgybnmDs7bTMMUT/n+sUYeQrG6gXk=;
+ b=f5EXVjhJbURU/q3Rwu1Ab+ouuBMOr6KDV6i2upObeIYMI6HkDwEv00ruf3YRmB1Eit
+ o5cdI0tz7q6uFQcjtp9AmJuuCIZX+nghuziwAumWZUHmQOAdZ/Uew3/j4hrtIPvgZ/C2
+ 0PL1hOS8QSzwl5OWye/Ji9cL/FTMeBGMm9brSGohCtbn8mNsGTLyzdGe+lz91EgdHWZ2
+ P2b+wAqq3ftOgbLuh2U5YZDO0x6dH0nF0YV5AajeXSEZGVbEPe2pms/2+gtJ/9Aab60c
+ 3etfYWAljb2Fethm/D1PVGyqtDllO55HUQBS3BeL9fA9OkV7jWESQ+4M/QSwjAcSZH/M
+ FBXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714072269; x=1714677069;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bZTZhzWF+PRUqaxgybnmDs7bTMMUT/n+sUYeQrG6gXk=;
+ b=P3OMtDJ0VwivjSoEyduI7X/wkCKcwYc8N/XCIUruRQdlU3t+2ZsWHkw2tk853zkTyB
+ i2xoeoOe8f24Hy+1WOLdmZ8nvaEvxaZ6YDH5PbNI+nJdkO3bXoxxWSp0iGdcgRiUCg1C
+ qhGhYCLRfroHJq+Gbrp6gmm2CMmsF4APGy2ogg2dxkDEGwrv8ypJUv8Wfd/2MIGUQr7u
+ KKbQ2hlNl45U4d397GzVLsXzV4NMesKgppjCIn0JuhVks5UmvYPhDxLrtRIOUWtGub3C
+ huVQpNS/KTm2miLaDiTNomG/kZ+9he26rEt7lGEBGi+zQ9ankMuvpmW01azTwGrxDO5e
+ 0Z7Q==
+X-Gm-Message-State: AOJu0YwjenOC9lzqQmtjWXz05AjFtCY0Yp3C8TVqQqUszDsxI86EREaU
+ EmD/EDIfqpbQz2YzmVj7K5BRWIZERiO0FXHZe/o2Xv3Zj5r2M2UanDBvuXSA4V5PLFGsixnsLn6
+ w74aI37ZojUOpaL4B1Im8kPOGS+jaj7NSLeWu/Q==
+X-Google-Smtp-Source: AGHT+IGcs8ZWFMbpT6ImEZ0ykk87S/aqtAaMw+5ZuEySmqt2MsO8x8R3WxyaWsXfh1Px/y7NyuhTPy0ETivDgRUfaTM=
+X-Received: by 2002:a50:9b01:0:b0:572:47be:be37 with SMTP id
+ o1-20020a509b01000000b0057247bebe37mr353475edi.25.1714072269613; Thu, 25 Apr
+ 2024 12:11:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: C573F21F7D
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-5.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- DWL_DNSWL_LOW(-1.00)[suse.de:dkim];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_TLS_ALL(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MISSING_XM_UA(0.00)[];
- ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[7]; FUZZY_BLOCKED(0.00)[rspamd.com];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,linux.dev:email];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240419162951.23558-1-raphael.poggi@lynxleap.co.uk>
+In-Reply-To: <20240419162951.23558-1-raphael.poggi@lynxleap.co.uk>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 25 Apr 2024 20:10:58 +0100
+Message-ID: <CAFEAcA-w32We8F-EEMWt1=aXnDFiDK9qKfub-5Egpzn68q4Htg@mail.gmail.com>
+Subject: Re: [PATCH] hw/core/clock: remove assert in clock_propagate
+To: Raphael Poggi <raphael.poggi@lynxleap.co.uk>
+Cc: qemu-devel@nongnu.org, luc@lmichel.fr, damien.hedde@dahe.fr, 
+ philmd@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,77 +88,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hao Xiang <hao.xiang@linux.dev> writes:
-
-> Enable instruction set enqcmd in build.
+On Fri, 19 Apr 2024 at 17:30, Raphael Poggi
+<raphael.poggi@lynxleap.co.uk> wrote:
 >
-> Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
-> ---
->  meson.build                   | 14 ++++++++++++++
->  meson_options.txt             |  2 ++
->  scripts/meson-buildoptions.sh |  3 +++
->  3 files changed, 19 insertions(+)
+> This commit allows childs clock to propagate their new frequency,
+> for example, after setting a new multiplier/diviser.
 >
-> diff --git a/meson.build b/meson.build
-> index 95cee7046e..9e008ddc34 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -2824,6 +2824,20 @@ config_host_data.set('CONFIG_AVX512BW_OPT', get_option('avx512bw') \
->      int main(int argc, char *argv[]) { return bar(argv[0]); }
->    '''), error_message: 'AVX512BW not available').allowed())
->  
-> +config_host_data.set('CONFIG_DSA_OPT', get_option('enqcmd') \
-> +  .require(have_cpuid_h, error_message: 'cpuid.h not available, cannot enable ENQCMD') \
-> +  .require(cc.links('''
-> +    #include <stdint.h>
-> +    #include <cpuid.h>
-> +    #include <immintrin.h>
-> +    static int __attribute__((target("enqcmd"))) bar(void *a) {
-> +      uint64_t dst[8] = { 0 };
-> +      uint64_t src[8] = { 0 };
-> +      return _enqcmd(dst, src);
-> +    }
-> +    int main(int argc, char *argv[]) { return bar(argv[argc - 1]); }
-> +  '''), error_message: 'ENQCMD not available').allowed())
-> +
->  # For both AArch64 and AArch32, detect if builtins are available.
->  config_host_data.set('CONFIG_ARM_AES_BUILTIN', cc.compiles('''
->      #include <arm_neon.h>
-> diff --git a/meson_options.txt b/meson_options.txt
-> index b5c0bad9e7..63c1bf815b 100644
-> --- a/meson_options.txt
-> +++ b/meson_options.txt
-> @@ -121,6 +121,8 @@ option('avx512f', type: 'feature', value: 'disabled',
->         description: 'AVX512F optimizations')
->  option('avx512bw', type: 'feature', value: 'auto',
->         description: 'AVX512BW optimizations')
-> +option('enqcmd', type: 'feature', value: 'disabled',
-> +       description: 'MENQCMD optimizations')
+> Signed-off-by: Raphael Poggi <raphael.poggi@lynxleap.co.uk>
 
-s/MENQCMD/ENQCMD/
+Applied to target-arm.next, thanks. I rewrote the commit message
+to document the conversation we had in the other email thread:
 
->  option('keyring', type: 'feature', value: 'auto',
->         description: 'Linux keyring support')
->  option('libkeyutils', type: 'feature', value: 'auto',
-> diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-> index 5ace33f167..2cdfc84455 100644
-> --- a/scripts/meson-buildoptions.sh
-> +++ b/scripts/meson-buildoptions.sh
-> @@ -93,6 +93,7 @@ meson_options_help() {
->    printf "%s\n" '  avx2            AVX2 optimizations'
->    printf "%s\n" '  avx512bw        AVX512BW optimizations'
->    printf "%s\n" '  avx512f         AVX512F optimizations'
-> +  printf "%s\n" '  enqcmd          ENQCMD optimizations'
->    printf "%s\n" '  blkio           libblkio block device driver'
->    printf "%s\n" '  bochs           bochs image format support'
->    printf "%s\n" '  bpf             eBPF support'
-> @@ -239,6 +240,8 @@ _meson_option_parse() {
->      --disable-avx512bw) printf "%s" -Davx512bw=disabled ;;
->      --enable-avx512f) printf "%s" -Davx512f=enabled ;;
->      --disable-avx512f) printf "%s" -Davx512f=disabled ;;
-> +    --enable-enqcmd) printf "%s" -Denqcmd=enabled ;;
-> +    --disable-enqcmd) printf "%s" -Denqcmd=disabled ;;
->      --enable-gcov) printf "%s" -Db_coverage=true ;;
->      --disable-gcov) printf "%s" -Db_coverage=false ;;
->      --enable-lto) printf "%s" -Db_lto=true ;;
+    hw/core/clock: allow clock_propagate on child clocks
+
+    clock_propagate() has an assert that clk->source is NULL, i.e. that
+    you are calling it on a clock which has no source clock.  This made
+    sense in the original design where the only way for a clock's
+    frequency to change if it had a source clock was when that source
+    clock changed.  However, we subsequently added multiplier/divider
+    support, but didn't look at what that meant for propagation.
+
+    If a clock-management device changes the multiplier or divider value
+    on a clock, it needs to propagate that change down to child clocks,
+    even if the clock has a source clock set.  So the assertion is now
+    incorrect.
+
+    Remove the assertion.
+
+-- PMM
 
