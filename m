@@ -4,103 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F912C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 10:41:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BDF6C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 10:42:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzwXG-0003w5-L7; Thu, 25 Apr 2024 06:41:02 -0400
+	id 1rzwWj-0002U9-8c; Thu, 25 Apr 2024 06:40:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rzwXE-0003hH-T5; Thu, 25 Apr 2024 06:41:00 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rzwXC-0007Sz-KX; Thu, 25 Apr 2024 06:41:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=PLBKjUmxPNLlkwwzzQTqaZI6+MCx+WVNf8735ssSyLk=; b=OBz8lGwqhDpcrxSiClcbrNIpTO
- /LfOZezXMWACXGPd8DKLo7wKLprAaLALI5VrLwmM8qY1YPwHsNxyhIbAaF1ANme3SlbMoGyJJzPGK
- 5MjcwezcmeaDmkBFCuRkethm19FV0Z5GAq2y4pgKnwc6CE9CLaS4aRkHojYXlmCYCeFwzh5meqSzJ
- 94MH9jDTydDrdD2GgOWlxVAtcaXorCe8HtNxYpniTjZlKf/Mxi8CIEmEdGI9Q2uRjoMoJk/2GPx4H
- w8RX1B2xUeeYMqkBKx9R5yA2n3JnyDU96c/hxmBG9VPcbU+UfzQLa9P1ro5IpTIrpi78Ipb8zZWGV
- EfEwH0vvQHQgjuHeYHZBb7bkZpD7HdpZFwsZ14AOx9IzzEeEEccphT8L8XwvvCaW3aoTy9eCnFEja
- Os64MuOI3Pu23BVBFnsR3EI/v+UbKPdYlxJQsRIge1oU4hYJqa1Zixb3cCDSSMMyK9r0XTUnwJYpT
- n6N4zG7NnzHn+SmOGJ4FeWbRyO9v9u85VnkDZ8gK4MEG8NZTfzoMOavLUXxHgoJUfM5gpliRP6P1a
- 2NrDqVSOO8onWmOnx0c+ryriMQB0vfUahUCRdJ4Tx0+tn1iU3qT8+e4C8xxlwvP5EbxhLU9gIKh9p
- FR/BZlBaqL4IOaUFPd2nJvnvRYpqvDekTMETwBnVk=;
-Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rzwW4-0004sm-Re; Thu, 25 Apr 2024 11:39:52 +0100
-Message-ID: <f85ab427-9cb4-4034-8fd7-29acc4d0b8a9@ilande.co.uk>
-Date: Thu, 25 Apr 2024 11:40:49 +0100
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rzwWe-0002Lv-D8
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 06:40:24 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rzwWc-0007GT-25
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 06:40:24 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-34c1fff534fso190401f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 03:40:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714041620; x=1714646420; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=yAS9t3kk5A9x2Pjb3tQZcenEOZB0rJVuXlQHac+bEsM=;
+ b=IalBA5X2Rp+GGU1Do5ZCjjs3CZv0HJ22BPBb8RK+pH/zji1VCRZLca7gGIMmhMzFap
+ 662vafy8h4rBa9tzY7F526or7A7j9wJiZFm10ClVgQyQZ92aLaAIkUngghPTNbDsWtQB
+ OpAPGgu+V5p6KqQuhtqUDsnKHm07n415UIL1Dln+sj6oCpgurLh0zOWSB6JZMFjlvzv+
+ DArCLkpNfC5rBH5hF42BQwCMVqTS7fm3GicZMrLPak5VOS/2CE2fVZWKlJBL6MC5MB5/
+ aiPAa8jchR2Dy2EcXsW7xuEOK+y0kyaE7lX9oT23PNQzJI9nXUmNjDaZsXbJPem3GJxo
+ k1Qg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714041620; x=1714646420;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yAS9t3kk5A9x2Pjb3tQZcenEOZB0rJVuXlQHac+bEsM=;
+ b=tm/LqvsLfjEZSemgu1sx4Pte83AQxx082wzf5DKWzcMs5RaBadhLfk5JEHnBxUxpfC
+ mAf9Ftg/5e2rJmEVCHO2kXcnHqWPrR/JQUZ/a+2oXpY9ZNwHB989j3oyNXkeAbL9KOBt
+ yJ4xry8ZmZwnaE+Vm1BPHbA1gImV3gjouaHoaxgm9aQZasxsLVOXc2HmyeSEK07UojCY
+ Vf/vS9CwCL08dNJqe60/Ws1jRhkxY/ru7/w5X2DCAPiG43GVHKawuQR59e4eEMoGsRVv
+ o1BNZJzGzModoOCsJLjnuuJwjMSoNufe/erinYt46VkbBNkawU5fcvtaMW7ALKgiT4iL
+ p9Rw==
+X-Gm-Message-State: AOJu0YwvUcGUBJrrwOVj/7AwXOhzs71aE64pSWMcGaHTj0GV5Ol/vl2A
+ gyhXXIiWkBeO/uV9Y5cDDO47NOJvp4OClFMCewRd5wv2krLmz8BTkCIMEt3Rb8wUwpT4X1morcN
+ C
+X-Google-Smtp-Source: AGHT+IGCt3qRshf3yX4MYpDrl2XdVddBcxjrxq6OR3ijFrubGiZJocyBJcm/r2YNmR0Fev0jl1oSnQ==
+X-Received: by 2002:adf:c04c:0:b0:349:eb59:c177 with SMTP id
+ c12-20020adfc04c000000b00349eb59c177mr3540132wrf.11.1714041620518; 
+ Thu, 25 Apr 2024 03:40:20 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ h15-20020a056000000f00b003434c764f01sm19485768wrx.107.2024.04.25.03.40.19
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 25 Apr 2024 03:40:19 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 37/37] tests/qtest: Add tests for the STM32L4x5 USART
+Date: Thu, 25 Apr 2024 11:39:58 +0100
+Message-Id: <20240425103958.3237225-38-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240425103958.3237225-1-peter.maydell@linaro.org>
+References: <20240425103958.3237225-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- qemu-stable@nongnu.org
-References: <20240422170056-mutt-send-email-mst@kernel.org>
- <1f6447c4-ea4c-4bd3-a879-8efb72448bb8@linaro.org>
- <20240422170913-mutt-send-email-mst@kernel.org>
- <CAAjaMXZxFJtEdJh38_76ZdL82JBM52Ke0+p1K07miiFeQSJtcw@mail.gmail.com>
- <CAAjaMXaoPeCVpd=q-d2GH25SfrNPVqh6hCerMOrQ6payXVMmyA@mail.gmail.com>
- <f5c67478-4fb9-4fb9-a6b2-286d6372bd0a@linaro.org>
- <b9fb7a87-2328-4999-8f7e-6b6cf04984a3@ilande.co.uk>
- <CAAjaMXa00nWejPRc_Xc9fnoncXVDiWO9MNabwq-QU5nepA4b9w@mail.gmail.com>
- <fd6b0336-ecc7-4c0e-aa48-f8e984d293dc@ilande.co.uk>
- <CAAjaMXaBd8+DuNzeVO9k=6ojt5brt1nmm1gApdwgXJ3JzjisTA@mail.gmail.com>
- <20240425062213-mutt-send-email-mst@kernel.org>
- <CAAjaMXYTGUUeABd+Ghaf374pOFjoF7RdncTTiciLhmo1yXXZVQ@mail.gmail.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <CAAjaMXYTGUUeABd+Ghaf374pOFjoF7RdncTTiciLhmo1yXXZVQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v3] hw/audio/virtio-snd: Use device endianness instead of
- target one
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,109 +94,368 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/04/2024 11:26, Manos Pitsidianakis wrote:
+From: Arnaud Minier <arnaud.minier@telecom-paris.fr>
 
-> On Thu, 25 Apr 2024 at 13:24, Michael S. Tsirkin <mst@redhat.com> wrote:
->>
->> On Thu, Apr 25, 2024 at 01:04:31PM +0300, Manos Pitsidianakis wrote:
->>> On Thu, 25 Apr 2024 at 10:49, Mark Cave-Ayland
->>> <mark.cave-ayland@ilande.co.uk> wrote:
->>>>
->>>> On 25/04/2024 07:30, Manos Pitsidianakis wrote:
->>>>
->>>>> On Wed, 24 Apr 2024 at 13:31, Mark Cave-Ayland
->>>>> <mark.cave-ayland@ilande.co.uk> wrote:
->>>>>>
->>>>>> On 23/04/2024 12:05, Philippe Mathieu-Daudé wrote:
->>>>>>
->>>>>>> On 23/4/24 11:18, Manos Pitsidianakis wrote:
->>>>>>>> On Tue, 23 Apr 2024 at 11:47, Manos Pitsidianakis
->>>>>>>> <manos.pitsidianakis@linaro.org> wrote:
->>>>>>>>>
->>>>>>>>> On Tue, 23 Apr 2024 at 00:11, Michael S. Tsirkin <mst@redhat.com> wrote:
->>>>>>>>>>
->>>>>>>>>> On Mon, Apr 22, 2024 at 11:07:21PM +0200, Philippe Mathieu-Daudé wrote:
->>>>>>>>>>> On 22/4/24 23:02, Michael S. Tsirkin wrote:
->>>>>>>>>>>> On Mon, Apr 22, 2024 at 04:20:56PM +0200, Philippe Mathieu-Daudé wrote:
->>>>>>>>>>>>> Since VirtIO devices can change endianness at runtime,
->>>>>>>>>>>>> we need to use the device endianness, not the target
->>>>>>>>>>>>> one.
->>>>>>>>>>>>>
->>>>>>>>>>>>> Cc: qemu-stable@nongnu.org
->>>>>>>>>>>>> Fixes: eb9ad377bb ("virtio-sound: handle control messages and streams")
->>>>>>>>>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>>>>>>>>>
->>>>>>>>>>>>
->>>>>>>>>>>>
->>>>>>>>>>>> This is all completely bogus. Virtio SND is from Virtio 1.0 only.
->>>>>>>>>>>> It is unconditionally little endian.
->>>>>>>>>
->>>>>>>>>
->>>>>>>>> This part of the code is for PCM frames (raw bytes), not virtio spec
->>>>>>>>> fields (which indeed must be LE in modern VIRTIO).
->>>>>>>>
->>>>>>>> Thought a little more about it. We should keep the target's endianness
->>>>>>>> here, if it's mutable then we should query the machine the device is
->>>>>>>> attached to somehow. the virtio device should never change endianness
->>>>>>>> like Michael says since it's not legacy.
->>>>>>>
->>>>>>> Grr. So as Richard suggested, this need to be pass as a device
->>>>>>> property then.
->>>>>>> (https://lore.kernel.org/qemu-devel/ed134c9d-6e6f-465b-900f-e39ca4e09876@linaro.org/)
->>>>>>
->>>>>> It feels to me that the endianness is something that should be negotiated as part of
->>>>>> the frame format, since the endianness of the audio hardware can be different from
->>>>>> that of the CPU (think PReP machines where it was common that a big endian CPU is
->>>>>> driving little endian hardware as found on x86).
->>>>>
->>>>> But that is the job of the hardware drivers, isn't it? Here we are
->>>>> taking frames passed from the guest to its virtio driver in the format
->>>>> specified in the target cpu's endianness and QEMU as the device passes
->>>>> it to host ALSA/Pipewire/etc which in turn passes it to the actual
->>>>> audio hardware driver..
->>>>
->>>> The problem is that the notion of target CPU endian is not fixed. For example the
->>>> PowerPC CPU starts off in big-endian mode, but these days most systems will switch
->>>> the CPU to little-endian mode on startup to run ppc64le. There's also the ILE bit
->>>> which can be configured so that a big-endian PowerPC CPU can dynamically switch to
->>>> little-endian mode when processing an interrupt, so you could potentially end up with
->>>> either depending upon the current mode of the CPU.
->>>>
->>>> These are the kinds of issues that led to the later virtio specifications simply
->>>> using little-endian for everything, since then there is zero ambiguity over what
->>>> endian is required for the virtio configuration space accesses.
->>>>
->>>> It feels to me that assuming a target CPU endian is fixed for the PCM frame formats
->>>> is simply repeating the mistakes of the past - and even the fact that we are
->>>> discussing this within this thread suggests that at a very minimum the virtio-snd
->>>> specification needs to be updated to clarify the byte ordering of the PCM frame formats.
->>>>
->>>>
->>>> ATB,
->>>>
->>>> Mark.
->>>>
->>>
->>>
->>> Agreed, I think we are saying approximately the same thing here.
->>>
->>>   We need a mechanism to retrieve the vCPUs endianness and a way to
->>> notify subscribed devices when it changes.
->>
->> I don't think I agree, it's not the same thing.
->> Guest should just convert and send data in LE format.
->> Host should then convert from LE format.
->> Target endian-ness does not come into it.
-> 
-> That's not in the VIRTIO 1.2 spec. We are talking about supporting
-> things as they currently stand, not as they could have been.
+Test:
+- read/write from/to the usart registers
+- send/receive a character/string over the serial port
 
-Can you also clarify the particular case that you're trying to fix - is it big-endian 
-on ARM, or something else?
+Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20240329174402.60382-6-arnaud.minier@telecom-paris.fr
+[PMM: fix checkpatch nits, remove commented out code]
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ tests/qtest/stm32l4x5_usart-test.c | 315 +++++++++++++++++++++++++++++
+ tests/qtest/meson.build            |   4 +-
+ 2 files changed, 318 insertions(+), 1 deletion(-)
+ create mode 100644 tests/qtest/stm32l4x5_usart-test.c
 
-
-ATB,
-
-Mark.
+diff --git a/tests/qtest/stm32l4x5_usart-test.c b/tests/qtest/stm32l4x5_usart-test.c
+new file mode 100644
+index 00000000000..89025182331
+--- /dev/null
++++ b/tests/qtest/stm32l4x5_usart-test.c
+@@ -0,0 +1,315 @@
++/*
++ * QTest testcase for STML4X5_USART
++ *
++ * Copyright (c) 2023 Arnaud Minier <arnaud.minier@telecom-paris.fr>
++ * Copyright (c) 2023 Inès Varhol <ines.varhol@telecom-paris.fr>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
++
++#include "qemu/osdep.h"
++#include "libqtest.h"
++#include "hw/misc/stm32l4x5_rcc_internals.h"
++#include "hw/registerfields.h"
++
++#define RCC_BASE_ADDR 0x40021000
++/* Use USART 1 ADDR, assume the others work the same */
++#define USART1_BASE_ADDR 0x40013800
++
++/* See stm32l4x5_usart for definitions */
++REG32(CR1, 0x00)
++    FIELD(CR1, M1, 28, 1)
++    FIELD(CR1, OVER8, 15, 1)
++    FIELD(CR1, M0, 12, 1)
++    FIELD(CR1, PCE, 10, 1)
++    FIELD(CR1, TXEIE, 7, 1)
++    FIELD(CR1, RXNEIE, 5, 1)
++    FIELD(CR1, TE, 3, 1)
++    FIELD(CR1, RE, 2, 1)
++    FIELD(CR1, UE, 0, 1)
++REG32(CR2, 0x04)
++REG32(CR3, 0x08)
++    FIELD(CR3, OVRDIS, 12, 1)
++REG32(BRR, 0x0C)
++REG32(GTPR, 0x10)
++REG32(RTOR, 0x14)
++REG32(RQR, 0x18)
++REG32(ISR, 0x1C)
++    FIELD(ISR, TXE, 7, 1)
++    FIELD(ISR, RXNE, 5, 1)
++    FIELD(ISR, ORE, 3, 1)
++REG32(ICR, 0x20)
++REG32(RDR, 0x24)
++REG32(TDR, 0x28)
++
++#define NVIC_ISPR1 0XE000E204
++#define NVIC_ICPR1 0xE000E284
++#define USART1_IRQ 37
++
++static bool check_nvic_pending(QTestState *qts, unsigned int n)
++{
++    /* No USART interrupts are less than 32 */
++    assert(n > 32);
++    n -= 32;
++    return qtest_readl(qts, NVIC_ISPR1) & (1 << n);
++}
++
++static bool clear_nvic_pending(QTestState *qts, unsigned int n)
++{
++    /* No USART interrupts are less than 32 */
++    assert(n > 32);
++    n -= 32;
++    qtest_writel(qts, NVIC_ICPR1, (1 << n));
++    return true;
++}
++
++/*
++ * Wait indefinitely for the flag to be updated.
++ * If this is run on a slow CI runner,
++ * the meson harness will timeout after 10 minutes for us.
++ */
++static bool usart_wait_for_flag(QTestState *qts, uint32_t event_addr,
++                                uint32_t flag)
++{
++    while (true) {
++        if ((qtest_readl(qts, event_addr) & flag)) {
++            return true;
++        }
++        g_usleep(1000);
++    }
++
++    return false;
++}
++
++static void usart_receive_string(QTestState *qts, int sock_fd, const char *in,
++                                 char *out)
++{
++    int i, in_len = strlen(in);
++
++    g_assert_true(send(sock_fd, in, in_len, 0) == in_len);
++    for (i = 0; i < in_len; i++) {
++        g_assert_true(usart_wait_for_flag(qts,
++            USART1_BASE_ADDR + A_ISR, R_ISR_RXNE_MASK));
++        out[i] = qtest_readl(qts, USART1_BASE_ADDR + A_RDR);
++    }
++    out[i] = '\0';
++}
++
++static void usart_send_string(QTestState *qts, const char *in)
++{
++    int i, in_len = strlen(in);
++
++    for (i = 0; i < in_len; i++) {
++        qtest_writel(qts, USART1_BASE_ADDR + A_TDR, in[i]);
++        g_assert_true(usart_wait_for_flag(qts,
++            USART1_BASE_ADDR + A_ISR, R_ISR_TXE_MASK));
++    }
++}
++
++/* Init the RCC clocks to run at 80 MHz */
++static void init_clocks(QTestState *qts)
++{
++    uint32_t value;
++
++    /* MSIRANGE can be set only when MSI is OFF or READY */
++    qtest_writel(qts, (RCC_BASE_ADDR + A_CR), R_CR_MSION_MASK);
++
++    /* Clocking from MSI, in case MSI was not the default source */
++    qtest_writel(qts, (RCC_BASE_ADDR + A_CFGR), 0);
++
++    /*
++     * Update PLL and set MSI as the source clock.
++     * PLLM = 1 --> 000
++     * PLLN = 40 --> 40
++     * PPLLR = 2 --> 00
++     * PLLDIV = unused, PLLP = unused (SAI3), PLLQ = unused (48M1)
++     * SRC = MSI --> 01
++     */
++    qtest_writel(qts, (RCC_BASE_ADDR + A_PLLCFGR), R_PLLCFGR_PLLREN_MASK |
++            (40 << R_PLLCFGR_PLLN_SHIFT) |
++            (0b01 << R_PLLCFGR_PLLSRC_SHIFT));
++
++    /* PLL activation */
++
++    value = qtest_readl(qts, (RCC_BASE_ADDR + A_CR));
++    qtest_writel(qts, (RCC_BASE_ADDR + A_CR), value | R_CR_PLLON_MASK);
++
++    /* RCC_CFGR is OK by defaut */
++    qtest_writel(qts, (RCC_BASE_ADDR + A_CFGR), 0);
++
++    /* CCIPR : no periph clock by default */
++    qtest_writel(qts, (RCC_BASE_ADDR + A_CCIPR), 0);
++
++    /* Switches on the PLL clock source */
++    value = qtest_readl(qts, (RCC_BASE_ADDR + A_CFGR));
++    qtest_writel(qts, (RCC_BASE_ADDR + A_CFGR), (value & ~R_CFGR_SW_MASK) |
++        (0b11 << R_CFGR_SW_SHIFT));
++
++    /* Enable SYSCFG clock enabled */
++    qtest_writel(qts, (RCC_BASE_ADDR + A_APB2ENR), R_APB2ENR_SYSCFGEN_MASK);
++
++    /* Enable the IO port B clock (See p.252) */
++    qtest_writel(qts, (RCC_BASE_ADDR + A_AHB2ENR), R_AHB2ENR_GPIOBEN_MASK);
++
++    /* Enable the clock for USART1 (cf p.259) */
++    /* We rewrite SYSCFGEN to not disable it */
++    qtest_writel(qts, (RCC_BASE_ADDR + A_APB2ENR),
++                 R_APB2ENR_SYSCFGEN_MASK | R_APB2ENR_USART1EN_MASK);
++
++    /* TODO: Enable usart via gpio */
++
++    /* Set PCLK as the clock for USART1(cf p.272) i.e. reset both bits */
++    qtest_writel(qts, (RCC_BASE_ADDR + A_CCIPR), 0);
++
++    /* Reset USART1 (see p.249) */
++    qtest_writel(qts, (RCC_BASE_ADDR + A_APB2RSTR), 1 << 14);
++    qtest_writel(qts, (RCC_BASE_ADDR + A_APB2RSTR), 0);
++}
++
++static void init_uart(QTestState *qts)
++{
++    uint32_t cr1;
++
++    init_clocks(qts);
++
++    /*
++     * For 115200 bauds, see p.1349.
++     * The clock has a frequency of 80Mhz,
++     * for 115200, we have to put a divider of 695 = 0x2B7.
++     */
++    qtest_writel(qts, (USART1_BASE_ADDR + A_BRR), 0x2B7);
++
++    /*
++     * Set the oversampling by 16,
++     * disable the parity control and
++     * set the word length to 8. (cf p.1377)
++     */
++    cr1 = qtest_readl(qts, (USART1_BASE_ADDR + A_CR1));
++    cr1 &= ~(R_CR1_M1_MASK | R_CR1_M0_MASK | R_CR1_OVER8_MASK | R_CR1_PCE_MASK);
++    qtest_writel(qts, (USART1_BASE_ADDR + A_CR1), cr1);
++
++    /* Enable the transmitter, the receiver and the USART. */
++    qtest_writel(qts, (USART1_BASE_ADDR + A_CR1),
++        R_CR1_UE_MASK | R_CR1_RE_MASK | R_CR1_TE_MASK);
++}
++
++static void test_write_read(void)
++{
++    QTestState *qts = qtest_init("-M b-l475e-iot01a");
++
++    /* Test that we can write and retrieve a value from the device */
++    qtest_writel(qts, USART1_BASE_ADDR + A_TDR, 0xFFFFFFFF);
++    const uint32_t tdr = qtest_readl(qts, USART1_BASE_ADDR + A_TDR);
++    g_assert_cmpuint(tdr, ==, 0x000001FF);
++}
++
++static void test_receive_char(void)
++{
++    int sock_fd;
++    uint32_t cr1;
++    QTestState *qts = qtest_init_with_serial("-M b-l475e-iot01a", &sock_fd);
++
++    init_uart(qts);
++
++    /* Try without initializing IRQ */
++    g_assert_true(send(sock_fd, "a", 1, 0) == 1);
++    usart_wait_for_flag(qts, USART1_BASE_ADDR + A_ISR, R_ISR_RXNE_MASK);
++    g_assert_cmphex(qtest_readl(qts, USART1_BASE_ADDR + A_RDR), ==, 'a');
++    g_assert_false(check_nvic_pending(qts, USART1_IRQ));
++
++    /* Now with the IRQ */
++    cr1 = qtest_readl(qts, (USART1_BASE_ADDR + A_CR1));
++    cr1 |= R_CR1_RXNEIE_MASK;
++    qtest_writel(qts, USART1_BASE_ADDR + A_CR1, cr1);
++    g_assert_true(send(sock_fd, "b", 1, 0) == 1);
++    usart_wait_for_flag(qts, USART1_BASE_ADDR + A_ISR, R_ISR_RXNE_MASK);
++    g_assert_cmphex(qtest_readl(qts, USART1_BASE_ADDR + A_RDR), ==, 'b');
++    g_assert_true(check_nvic_pending(qts, USART1_IRQ));
++    clear_nvic_pending(qts, USART1_IRQ);
++
++    close(sock_fd);
++
++    qtest_quit(qts);
++}
++
++static void test_send_char(void)
++{
++    int sock_fd;
++    char s[1];
++    uint32_t cr1;
++    QTestState *qts = qtest_init_with_serial("-M b-l475e-iot01a", &sock_fd);
++
++    init_uart(qts);
++
++    /* Try without initializing IRQ */
++    qtest_writel(qts, USART1_BASE_ADDR + A_TDR, 'c');
++    g_assert_true(recv(sock_fd, s, 1, 0) == 1);
++    g_assert_cmphex(s[0], ==, 'c');
++    g_assert_false(check_nvic_pending(qts, USART1_IRQ));
++
++    /* Now with the IRQ */
++    cr1 = qtest_readl(qts, (USART1_BASE_ADDR + A_CR1));
++    cr1 |= R_CR1_TXEIE_MASK;
++    qtest_writel(qts, USART1_BASE_ADDR + A_CR1, cr1);
++    qtest_writel(qts, USART1_BASE_ADDR + A_TDR, 'd');
++    g_assert_true(recv(sock_fd, s, 1, 0) == 1);
++    g_assert_cmphex(s[0], ==, 'd');
++    g_assert_true(check_nvic_pending(qts, USART1_IRQ));
++    clear_nvic_pending(qts, USART1_IRQ);
++
++    close(sock_fd);
++
++    qtest_quit(qts);
++}
++
++static void test_receive_str(void)
++{
++    int sock_fd;
++    char s[10];
++    QTestState *qts = qtest_init_with_serial("-M b-l475e-iot01a", &sock_fd);
++
++    init_uart(qts);
++
++    usart_receive_string(qts, sock_fd, "hello", s);
++    g_assert_true(memcmp(s, "hello", 5) == 0);
++
++    close(sock_fd);
++
++    qtest_quit(qts);
++}
++
++static void test_send_str(void)
++{
++    int sock_fd;
++    char s[10];
++    QTestState *qts = qtest_init_with_serial("-M b-l475e-iot01a", &sock_fd);
++
++    init_uart(qts);
++
++    usart_send_string(qts, "world");
++    g_assert_true(recv(sock_fd, s, 10, 0) == 5);
++    g_assert_true(memcmp(s, "world", 5) == 0);
++
++    close(sock_fd);
++
++    qtest_quit(qts);
++}
++
++int main(int argc, char **argv)
++{
++    int ret;
++
++    g_test_init(&argc, &argv, NULL);
++    g_test_set_nonfatal_assertions();
++
++    qtest_add_func("stm32l4x5/usart/write_read", test_write_read);
++    qtest_add_func("stm32l4x5/usart/receive_char", test_receive_char);
++    qtest_add_func("stm32l4x5/usart/send_char", test_send_char);
++    qtest_add_func("stm32l4x5/usart/receive_str", test_receive_str);
++    qtest_add_func("stm32l4x5/usart/send_str", test_send_str);
++    ret = g_test_run();
++
++    return ret;
++}
++
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 36c5c13a7bb..b128fa5a4bd 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -7,6 +7,7 @@ slow_qtests = {
+   'npcm7xx_pwm-test': 300,
+   'npcm7xx_watchdog_timer-test': 120,
+   'qom-test' : 900,
++  'stm32l4x5_usart-test' : 600,
+   'test-hmp' : 240,
+   'pxe-test': 610,
+   'prom-env-test': 360,
+@@ -205,7 +206,8 @@ qtests_stm32l4x5 = \
+   ['stm32l4x5_exti-test',
+    'stm32l4x5_syscfg-test',
+    'stm32l4x5_rcc-test',
+-   'stm32l4x5_gpio-test']
++   'stm32l4x5_gpio-test',
++   'stm32l4x5_usart-test']
+ 
+ qtests_arm = \
+   (config_all_devices.has_key('CONFIG_MPS2') ? ['sse-timer-test'] : []) + \
+-- 
+2.34.1
 
 
