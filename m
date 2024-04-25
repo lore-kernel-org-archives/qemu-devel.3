@@ -4,95 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB57EC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 15:53:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6610DC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 15:59:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s01P0-0007Cx-1z; Thu, 25 Apr 2024 11:52:50 -0400
+	id 1s01UQ-0000v1-1R; Thu, 25 Apr 2024 11:58:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s01Ox-0007CD-KR
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 11:52:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s01Ov-0000MV-Ro
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 11:52:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714060364;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=p3szdyDL9eEFnSf8Nl3MWXAcXU5l3d49IAnmD45hMtI=;
- b=HYYyKT6Cy3QwEZVyuU+Jp6tnztrHt7Y883XHnKOGd9YTVrgKN2NFG4v0UIQ0gPUYeZbO6L
- Slac5nUAw+sLu4xP6DjIldEe7x556LFzMAoNMqwteeLfb5VBh0zHMJoLlRGjTDxeDZyXbN
- PZRzV7opopYBHaYDGF4TpehK3j3tjFw=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-604-1BokekcrM3C_gmoabXmbWg-1; Thu, 25 Apr 2024 11:52:42 -0400
-X-MC-Unique: 1BokekcrM3C_gmoabXmbWg-1
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-78ed20d9423so160921985a.3
- for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 08:52:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1s01UL-0000tr-N9
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 11:58:23 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1s01UJ-00035o-Ei
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 11:58:21 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-56e1baf0380so1616908a12.3
+ for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 08:58:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1714060697; x=1714665497; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=UTZfElggRQI9RVrbzMFzSRyoL6921zaZnVqvfBJHiQA=;
+ b=i6jBTVf/IWEWnToTId1WE0xjquZ9vOQKX9hyxm+DHA4VV6y5I1XMh7m85jQit4QpMa
+ pf5gL6eCYIwbCcNpwher1lpWzdLKCEvNItbVvhWr3V26hvCitax81ZeFNPlu6zG4KQNw
+ vawzFYWOvtc4AWWUhOn2iujsw1ueqEuoHjQ5A7i3fnCppdXjjVJOUIIFE43KdqUrdqAS
+ ZetnmHCrqDiOC8rnSc3HBEym1SNcSA3gweT5m3nbkCXtUjZ61CezXrhzmgIQYJ8CVecy
+ b4nEOnO8Hk8/lY2lkIs6l5ecjEndqiaIGQV9uyEyAfaRX13e0DwaRvJNO96AvGABA0h/
+ gCMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714060362; x=1714665162;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=p3szdyDL9eEFnSf8Nl3MWXAcXU5l3d49IAnmD45hMtI=;
- b=VZaeTpu6o/UVrf3A2owR5y+aXCiiYU2vurQ5gyWBE+fHCsuYY3amcmd1+hmdX/jrCO
- 2pP1uIcv5fai3SmdRHGKkmO5FCRw3jIrQtmeQ425NHKTsyuvR9IbfngRaHXF2T3hb7l0
- GxmLYDW3PMPDF85dKWNTxLszpNt6P+Vyz+j18fHr7+aKUx2B/ep5dlFkJxGY3ekv8HDs
- FyYzVHrn3vS4In54IlY6nPBvaIGFD1e1iIniyZFRstwABkAkZ2PCZl0qyK/RLzv2bHLS
- 1POK8WZnGJ9lzDGCmpl8hztKfoglBpnXszYjFiN6wbVbDF0atDJf796dewoiMaJ9YtTW
- ltNQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW8imZ3Z68DZ8e2TrURsysSGdvnavMcZjpbwiKoBhUM7bKyCHhBHAhnEL62hUIlXUfp95d14GuHU352d5T+t5UY4xqwqzQ=
-X-Gm-Message-State: AOJu0Yy9+EfhQMjqr1PV2EGneHg8InUu+psHT/gFlwxl/LN9Byr0dMlj
- 38QaByCWEHXF1JAXPgn8yrxVwH6H22oZTxZjNHVnO1bT0qpSdzPH2M80dFzIptqUqmh9IVRo5r4
- xzSC84u7qQMHUaHm+kbhKXoIPcSo5g77/lWhVRlc/iJFkNuJbvngh
-X-Received: by 2002:a05:620a:254b:b0:790:7346:2a49 with SMTP id
- s11-20020a05620a254b00b0079073462a49mr7160794qko.6.1714060362132; 
- Thu, 25 Apr 2024 08:52:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE4nF3FBlmDJTX/201xw9oRPnBg7VjpkZxce8yCObVzwZ4hNKCuiZX/MqVYn14udwDPsM00uQ==
-X-Received: by 2002:a05:620a:254b:b0:790:7346:2a49 with SMTP id
- s11-20020a05620a254b00b0079073462a49mr7160779qko.6.1714060361848; 
- Thu, 25 Apr 2024 08:52:41 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ d=1e100.net; s=20230601; t=1714060697; x=1714665497;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UTZfElggRQI9RVrbzMFzSRyoL6921zaZnVqvfBJHiQA=;
+ b=cjvo25abDpe0418qg1i+Z33IAxT/9GYnUpiDHT8/vSpnOsJexsoaXhhEkBeoE8yixh
+ NchaAvE7maOfV/W2UtVDFN63v6yxaG/eZ1PXWbGBd7mXAIkeqHxsnMLyJqh++OJ/laLp
+ kOEVT9PvHva11g+3Qg3GMjGZm/BdFLEeJvrqaP3qdG7b7FjWr89rwin/NMjQdAXFbMpQ
+ uef1M4wzLyRIL6EtES7ve2I5F0hN7Ldug+CnY2vBRXFLacmLIu57WuCjHkbRFotflw2E
+ mw2fDR04gZjVr+O08WATUIJIEwn8MeNB7Buv/ycf+aN1eQDcWiNJVng+28q2PRFTY698
+ Itng==
+X-Gm-Message-State: AOJu0Ywa0rRS2tlduYRbwgbYDy4eV/TzO6LWB7Wko71fXOHDwon6if/p
+ 3nTOOPHf0rPQy7/eh6P0gpWoNsF4e5i+J+EajIFGp/SVh/HNbAOKiZN6WstMPw0=
+X-Google-Smtp-Source: AGHT+IFTeGe60j3tU1iI7FHg6jBs3UDW0lQrVMjcPpggiY4usD81BE6auY3pdP74sqEdM61GsDRmzw==
+X-Received: by 2002:a17:906:145a:b0:a52:2d83:1483 with SMTP id
+ q26-20020a170906145a00b00a522d831483mr85187ejc.53.1714060696790; 
+ Thu, 25 Apr 2024 08:58:16 -0700 (PDT)
+Received: from localhost (cst2-173-16.cust.vodafone.cz. [31.30.173.16])
  by smtp.gmail.com with ESMTPSA id
- o8-20020ae9f508000000b0079072fa29e4sm3934787qkg.2.2024.04.25.08.52.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 25 Apr 2024 08:52:41 -0700 (PDT)
-Message-ID: <20f41dad-a291-4060-ae49-6ea93a5182f0@redhat.com>
-Date: Thu, 25 Apr 2024 17:52:38 +0200
+ h17-20020a1709070b1100b00a558206b2c5sm8516279ejl.99.2024.04.25.08.58.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 25 Apr 2024 08:58:16 -0700 (PDT)
+Date: Thu, 25 Apr 2024 17:58:15 +0200
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com
+Subject: Re: [PATCH v2 1/1] target/riscv/kvm: tolerate KVM disable ext errors
+Message-ID: <20240425-92aa48159348b26bbae5edbc@orel>
+References: <20240422171425.333037-1-dbarboza@ventanamicro.com>
+ <20240422171425.333037-2-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] vfio/ccw: Make vfio_ccw_register_irq_notifier()
- return a bool
-To: Eric Farman <farman@linux.ibm.com>, Markus Armbruster <armbru@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Alex Williamson <alex.williamson@redhat.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-References: <20240425090214.400194-1-clg@redhat.com>
- <20240425090214.400194-5-clg@redhat.com> <87il056783.fsf@pond.sub.org>
- <f1ac1e5f27239411f0e4a658507c331a106fd0a8.camel@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <f1ac1e5f27239411f0e4a658507c331a106fd0a8.camel@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240422171425.333037-2-dbarboza@ventanamicro.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=ajones@ventanamicro.com; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,149 +95,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/25/24 14:55, Eric Farman wrote:
-> On Thu, 2024-04-25 at 12:56 +0200, Markus Armbruster wrote:
->> Cédric Le Goater <clg@redhat.com> writes:
->>
->>> Since vfio_ccw_register_irq_notifier() takes an 'Error **'
->>> argument,
->>> best practices suggest to return a bool. See the qapi/error.h Rules
->>> section.
->>>
->>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->>> ---
->>>   hw/vfio/ccw.c | 22 +++++++++++-----------
->>>   1 file changed, 11 insertions(+), 11 deletions(-)
->>>
->>> diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
->>> index
->>> 6764388bc47a970329fce2233626ccb8178e0165..1c630f6e9abe93ae0c2b5615d
->>> 4409669f096c8c9 100644
->>> --- a/hw/vfio/ccw.c
->>> +++ b/hw/vfio/ccw.c
->>> @@ -379,7 +379,7 @@ read_err:
->>>       css_inject_io_interrupt(sch);
->>>   }
->>>   
->>> -static void vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
->>> +static bool vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
->>>                                              unsigned int irq,
->>>                                              Error **errp)
->>>   {
->>> @@ -405,13 +405,13 @@ static void
->>> vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
->>>           break;
->>>       default:
->>>           error_setg(errp, "vfio: Unsupported device irq(%d)", irq);
->>> -        return;
->>> +        return false;
->>>       }
->>>   
->>>       if (vdev->num_irqs < irq + 1) {
->>>           error_setg(errp, "vfio: IRQ %u not available (number of
->>> irqs %u)",
->>>                      irq, vdev->num_irqs);
->>> -        return;
->>> +        return false;
->>>       }
->>>   
->>>       argsz = sizeof(*irq_info);
->>> @@ -421,14 +421,14 @@ static void
->>> vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
->>>       if (ioctl(vdev->fd, VFIO_DEVICE_GET_IRQ_INFO,
->>>                 irq_info) < 0 || irq_info->count < 1) {
->>>           error_setg_errno(errp, errno, "vfio: Error getting irq
->>> info");
->>> -        return;
->>> +        return false;
->>>       }
->>>   
->>>       if (event_notifier_init(notifier, 0)) {
->>>           error_setg_errno(errp, errno,
->>>                            "vfio: Unable to init event notifier for
->>> irq (%d)",
->>>                            irq);
->>> -        return;
->>> +        return false;
->>>       }
->>>   
->>>       fd = event_notifier_get_fd(notifier);
->>> @@ -439,6 +439,8 @@ static void
->>> vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
->>>           qemu_set_fd_handler(fd, NULL, NULL, vcdev);
->>>           event_notifier_cleanup(notifier);
->>>       }
->>> +
->>> +    return true;
->>>   }
->>>   
->>>   static void vfio_ccw_unregister_irq_notifier(VFIOCCWDevice *vcdev,
->>> @@ -602,20 +604,18 @@ static void vfio_ccw_realize(DeviceState
->>> *dev, Error **errp)
->>>           goto out_region_err;
->>>       }
->>>   
->>> -    vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_IO_IRQ_INDEX,
->>> &err);
->>> -    if (err) {
->>> +    if (!vfio_ccw_register_irq_notifier(vcdev,
->>> VFIO_CCW_IO_IRQ_INDEX, &err)) {
->>
->> Please pass errp instead of &err.
->>
->>>           goto out_io_notifier_err;
->>>       }
->>>   
->>>       if (vcdev->crw_region) {
->>> -        vfio_ccw_register_irq_notifier(vcdev,
->>> VFIO_CCW_CRW_IRQ_INDEX, &err);
->>> -        if (err) {
->>> +        if (!vfio_ccw_register_irq_notifier(vcdev,
->>> VFIO_CCW_CRW_IRQ_INDEX,
->>> +                                            &err)) {
->>
->> Likewise.
->>
->>>               goto out_irq_notifier_err;
->>>           }
->>>       }
->>>   
->>> -    vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_REQ_IRQ_INDEX,
->>> &err);
->>> -    if (err) {
->>> +    if (!vfio_ccw_register_irq_notifier(vcdev,
->>> VFIO_CCW_REQ_IRQ_INDEX, &err)) {
->>>           /*
->>>            * Report this error, but do not make it a failing
->>> condition.
->>>            * Lack of this IRQ in the host does not prevent normal
->>> operation.
->>              */
->>             error_report_err(err);
->>
->> Not this patch's problem, but here goes anyway: since this isn't an
->> error, we shouldn't use error_report_err().  Would warn_report_err()
->> be
->> appropriate?  info_report_err() doesn't exist, but it could.
->>
->> Preferably with errp instead of &err (two times):
->> Reviewed-by: Markus Armbruster <armbru@redhat.com>
->>
+On Mon, Apr 22, 2024 at 02:14:25PM GMT, Daniel Henrique Barboza wrote:
+> Running a KVM guest using a 6.9-rc3 kernel, in a 6.8 host that has zkr
+> enabled, will fail with a kernel oops SIGILL right at the start. The
+> reason is that we can't expose zkr without implementing the SEED CSR.
+> Disabling zkr in the guest would be a workaround, but if the KVM doesn't
+> allow it we'll error out and never boot.
 > 
-> Don't recall why I used error_report_err() instead of something else
-> (or creating info_), but probably just familiarity. There's no need for
-> it (or the equivalent code in -ap) to be error, and could be another
-> cleanup.
-
-yes. I will send an extra cleanup to replace error_... with warn_...
-and another one to use errp.
-
-Thanks,
-
-C.
-
-
+> In hindsight this is too strict. If we keep proceeding, despite not
+> disabling the extension in the KVM vcpu, we'll not add the extension in
+> the riscv,isa. The guest kernel will be unaware of the extension, i.e.
+> it doesn't matter if the KVM vcpu has it enabled underneath or not. So
+> it's ok to keep booting in this case.
 > 
-> Reviewed-by: Eric Farman <farman@linux.ibm.com>
+> Change our current logic to not error out if we fail to disable an
+> extension in kvm_set_one_reg(), but show a warning and keep booting. It
+> is important to throw a warning because we must make the user aware that
+> the extension is still available in the vcpu, meaning that an
+> ill-behaved guest can ignore the riscv,isa settings and  use the
+> extension.
+> 
+> The case we're handling happens with an EINVAL error code. If we fail to
+> disable the extension in KVM for any other reason, error out.
+> 
+> We'll also keep erroring out when we fail to enable an extension in KVM,
+> since adding the extension in riscv,isa at this point will cause a guest
+> malfunction because the extension isn't enabled in the vcpu.
+> 
+> Suggested-by: Andrew Jones <ajones@ventanamicro.com>
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> ---
+>  target/riscv/kvm/kvm-cpu.c | 12 ++++++++----
+>  1 file changed, 8 insertions(+), 4 deletions(-)
+> 
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index 6a6c6cae80..03e3fee607 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -427,10 +427,14 @@ static void kvm_riscv_update_cpu_cfg_isa_ext(RISCVCPU *cpu, CPUState *cs)
+>          reg = kvm_cpu_cfg_get(cpu, multi_ext_cfg);
+>          ret = kvm_set_one_reg(cs, id, &reg);
+>          if (ret != 0) {
+> -            error_report("Unable to %s extension %s in KVM, error %d",
+> -                         reg ? "enable" : "disable",
+> -                         multi_ext_cfg->name, ret);
+> -            exit(EXIT_FAILURE);
+> +            if (!reg && ret == -EINVAL) {
+> +                warn_report("KVM cannot disable extension %s",
+> +                            multi_ext_cfg->name);
+> +            } else {
+> +                error_report("Unable to enable extension %s in KVM, error %d",
+> +                             multi_ext_cfg->name, ret);
+> +                exit(EXIT_FAILURE);
+> +            }
+>          }
+>      }
+>  }
+> -- 
+> 2.44.0
+>
 
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
 
