@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DDBCC10F15
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 10:46:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB4E5C25B10
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 10:46:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzwWY-00022q-0U; Thu, 25 Apr 2024 06:40:18 -0400
+	id 1rzwWY-00023f-PV; Thu, 25 Apr 2024 06:40:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rzwWO-0001ys-G8
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 06:40:08 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ id 1rzwWS-00020e-Uw
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 06:40:13 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rzwWM-0007A6-H0
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 06:40:08 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-34a00533d08so465366f8f.3
- for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 03:40:06 -0700 (PDT)
+ id 1rzwWQ-0007C9-S8
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 06:40:12 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-41b5dc5e037so1724445e9.3
+ for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 03:40:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714041605; x=1714646405; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714041609; x=1714646409; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=aKgAIExeXe22iXmvncCzPBD6wUC7eTZRMMv1MDBAcwE=;
- b=ZjT8EGa4SbQ2lcNkoeukDJwUQYz1onssSsS0noMIBneJQtqiDdZ6PonzUCzSk7Nfp3
- DWteL+jCaDkVj6z1SyZS6jMeHe/Zu/7qa31WuvrLBChvTARnzsRb9WISxvBOsG6AMmlY
- KQdd88Yfq7t5UelBOZQSiNohu+Eqy5zcUPavJ1Komm/IY0ZagveA7+gT/CVKiWPldSvb
- C2BwufixCILM9rwr64AxP6l7LSkqhYpEXVeSi1IvrHVNTQolyYD5s6/gD/n4v+1PdlZG
- IYQy1e342viqnoqshRkWiv3kEnXkzLMvOSgsGAIIZ6GumwHUgg2cXo4tM6cN/kjftgqF
- W9Yg==
+ :reply-to; bh=De3r6CnTq/eiBsjvjQ7Zn0Ov4u78G8vvXoWo+x3RBXE=;
+ b=yPbljEArm5kepYpBiZ6woyadoBEtdu0Cyi1cJ8sXV/doOTpc9omSUoJknYXWFbKhC2
+ kjx9b7cjEea8hF2ATbvpACYFVQoD5loRfP8yqbHeffNwIgmb3yNg8lwAy5RMM8/XYRtT
+ UkqzJ6sesFo9lq/Y+dpVAaIBXitb2zbLT732Fk/EF1a20q/E1xcipsf9p8qh7M2Z/enC
+ pDFZnaPPuCC7cDXdKfQDsWKE+y5OQyKxHQZdb5DEyL9iR7HNH0fUMBkRFUprPY6yb4VI
+ kcA2G49ITIoIrPoDsimjNpUrTJOavB1jL/YUdXwBg/n/9CQ7a4KFPUT/50sVNIEDmzWc
+ yU4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714041605; x=1714646405;
+ d=1e100.net; s=20230601; t=1714041609; x=1714646409;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aKgAIExeXe22iXmvncCzPBD6wUC7eTZRMMv1MDBAcwE=;
- b=XHkgP43VO3WjPgEeA/9Kb6qQKXlBIKt4A4bKUlUXkV57DPrPApPm12jm4zbdV8dB/z
- gZKWzSe6zEZcHqSo6xJJLbC14d5ej5jR/H1dgFutCofnrSoOxw3Yua43pZH4dz5OUoeD
- 1niU6uu3cIj0qAxOKhKt5qSJpa/fz+uj9f7byBoer2fX4P7B7vKq761RZFKRlBY4UgOO
- 7hjoUlPDgq9zIDIrd/NuXe3o/EMV/+uT8mnRF0z2z1qZg2Jx6iB+3XVu61YmVNQENoRr
- f/TNyjqDYe9b49h7xkpdHJ81EYipKeHUJOiCSDaUp7u5k1wmqKxbhHMxQhcpaoKQDwMR
- zVmQ==
-X-Gm-Message-State: AOJu0YzZ5J17d/w7+suwpDCJQiSWSnBKl4wvCPaypqpIEb1ribX0AQ4v
- evb6bhFJq90BXwBLy493P6eLJ52X13n3/sKgJs2ZdddU0+CRvEgIklTFHylBloWIYSIt5Q6y+mj
- J
-X-Google-Smtp-Source: AGHT+IH4ZI0My2ovJWqjUWMox/A0hOF+S40KWYbGcCXyVHkq2Qb1XVK3lopDxZ75yeJQdpnyx49KwA==
-X-Received: by 2002:a05:6000:1361:b0:349:9e18:9f73 with SMTP id
- q1-20020a056000136100b003499e189f73mr5218145wrz.67.1714041605094; 
- Thu, 25 Apr 2024 03:40:05 -0700 (PDT)
+ bh=De3r6CnTq/eiBsjvjQ7Zn0Ov4u78G8vvXoWo+x3RBXE=;
+ b=S/bGo2Q6w0BBmTiUZzCBBMgkaowL15ChuXhQw+3rR7l8YxkMe1hDRGmZnksFKnptvD
+ CvthRjySGnY67KT3N4z8sT445Bd5CGjAmX61xMyV/Qd/GmeIgXtqu3BmFLS2r9M3am0x
+ e0MbL6O1y4xxzmEubh24jOYz8GaN71AJ97wCO0XFCOHulS4Im+9qWxyNpH+s+1z8wD85
+ 7vZySnN2GIinalfOu/UUJPDlkuryk8jwKwD9XviSES+B0VVMC48uG8e5mKJoKSCpge2g
+ gvfqdI8bsrw4J3Uj2xMgkv8JBWtSDAE6ZhySfD/Zp1qaVc8wh1L3r0m8ZCREyyDpYCJa
+ m0Cg==
+X-Gm-Message-State: AOJu0Yw4JW8yWy5N+d0uL6/w266xXvMPZD7sGFnMf+ec3kug66kqUVh0
+ g9Ow0i6TyIDsWvWH9677GQ24icKa2FfxeEkC0JBatsCTfjIUQbgtkE37pohD0dVB/kdjrlyCiWu
+ j
+X-Google-Smtp-Source: AGHT+IHQcqLQBfLppF0Lz9RXh+jIFRIu5Jet0yzT/50puhFYBCX3JcTSqbVk2XmhmE7X6fO4Y5+s/g==
+X-Received: by 2002:a05:600c:4f06:b0:419:d91e:ba41 with SMTP id
+ l6-20020a05600c4f0600b00419d91eba41mr3606300wmq.32.1714041609251; 
+ Thu, 25 Apr 2024 03:40:09 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- h15-20020a056000000f00b003434c764f01sm19485768wrx.107.2024.04.25.03.40.04
+ h15-20020a056000000f00b003434c764f01sm19485768wrx.107.2024.04.25.03.40.08
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Apr 2024 03:40:04 -0700 (PDT)
+ Thu, 25 Apr 2024 03:40:09 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/37] target/arm: Handle IS/FS in ISR_EL1 for NMI,
- VINMI and VFNMI
-Date: Thu, 25 Apr 2024 11:39:29 +0100
-Message-Id: <20240425103958.3237225-9-peter.maydell@linaro.org>
+Subject: [PULL 17/37] hw/intc/arm_gicv3: Implement GICD_INMIR
+Date: Thu, 25 Apr 2024 11:39:38 +0100
+Message-Id: <20240425103958.3237225-18-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240425103958.3237225-1-peter.maydell@linaro.org>
 References: <20240425103958.3237225-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,67 +95,90 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-Add IS and FS bit in ISR_EL1 and handle the read. With CPU_INTERRUPT_NMI or
-CPU_INTERRUPT_VINMI, both CPSR_I and ISR_IS must be set. With
-CPU_INTERRUPT_VFNMI, both CPSR_F and ISR_FS must be set.
+Add GICD_INMIR, GICD_INMIRnE register and support access GICD_INMIR0.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20240407081733.3231820-9-ruanjinjie@huawei.com
+Message-id: 20240407081733.3231820-18-ruanjinjie@huawei.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu.h    |  2 ++
- target/arm/helper.c | 13 +++++++++++++
- 2 files changed, 15 insertions(+)
+ hw/intc/gicv3_internal.h |  2 ++
+ hw/intc/arm_gicv3_dist.c | 34 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 36 insertions(+)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 08a6bc50de2..97997dbd087 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1398,6 +1398,8 @@ void pmu_init(ARMCPU *cpu);
- #define CPSR_N (1U << 31)
- #define CPSR_NZCV (CPSR_N | CPSR_Z | CPSR_C | CPSR_V)
- #define CPSR_AIF (CPSR_A | CPSR_I | CPSR_F)
-+#define ISR_FS (1U << 9)
-+#define ISR_IS (1U << 10)
+diff --git a/hw/intc/gicv3_internal.h b/hw/intc/gicv3_internal.h
+index 21697ecf391..8d793243f4e 100644
+--- a/hw/intc/gicv3_internal.h
++++ b/hw/intc/gicv3_internal.h
+@@ -52,6 +52,8 @@
+ #define GICD_SGIR            0x0F00
+ #define GICD_CPENDSGIR       0x0F10
+ #define GICD_SPENDSGIR       0x0F20
++#define GICD_INMIR           0x0F80
++#define GICD_INMIRnE         0x3B00
+ #define GICD_IROUTER         0x6000
+ #define GICD_IDREGS          0xFFD0
  
- #define CPSR_IT (CPSR_IT_0_1 | CPSR_IT_2_7)
- #define CACHED_CPSR_BITS (CPSR_T | CPSR_AIF | CPSR_GE | CPSR_IT | CPSR_Q \
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 4ee59b37059..6b6d8a349a2 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -2021,16 +2021,29 @@ static uint64_t isr_read(CPUARMState *env, const ARMCPRegInfo *ri)
-         if (cs->interrupt_request & CPU_INTERRUPT_VIRQ) {
-             ret |= CPSR_I;
-         }
-+        if (cs->interrupt_request & CPU_INTERRUPT_VINMI) {
-+            ret |= ISR_IS;
-+            ret |= CPSR_I;
-+        }
-     } else {
-         if (cs->interrupt_request & CPU_INTERRUPT_HARD) {
-             ret |= CPSR_I;
-         }
+diff --git a/hw/intc/arm_gicv3_dist.c b/hw/intc/arm_gicv3_dist.c
+index 22ddc0d6661..d8207acb22c 100644
+--- a/hw/intc/arm_gicv3_dist.c
++++ b/hw/intc/arm_gicv3_dist.c
+@@ -89,6 +89,29 @@ static int gicd_ns_access(GICv3State *s, int irq)
+     return extract32(s->gicd_nsacr[irq / 16], (irq % 16) * 2, 2);
+ }
+ 
++static void gicd_write_bitmap_reg(GICv3State *s, MemTxAttrs attrs,
++                                  uint32_t *bmp, maskfn *maskfn,
++                                  int offset, uint32_t val)
++{
++    /*
++     * Helper routine to implement writing to a "set" register
++     * (GICD_INMIR, etc).
++     * Semantics implemented here:
++     * RAZ/WI for SGIs, PPIs, unimplemented IRQs
++     * Bits corresponding to Group 0 or Secure Group 1 interrupts RAZ/WI.
++     * offset should be the offset in bytes of the register from the start
++     * of its group.
++     */
++    int irq = offset * 8;
 +
-+        if (cs->interrupt_request & CPU_INTERRUPT_NMI) {
-+            ret |= ISR_IS;
-+            ret |= CPSR_I;
++    if (irq < GIC_INTERNAL || irq >= s->num_irq) {
++        return;
++    }
++    val &= mask_group_and_nsacr(s, attrs, maskfn, irq);
++    *gic_bmp_ptr32(bmp, irq) = val;
++    gicv3_update(s, irq, 32);
++}
++
+ static void gicd_write_set_bitmap_reg(GICv3State *s, MemTxAttrs attrs,
+                                       uint32_t *bmp,
+                                       maskfn *maskfn,
+@@ -545,6 +568,11 @@ static bool gicd_readl(GICv3State *s, hwaddr offset,
+         /* RAZ/WI since affinity routing is always enabled */
+         *data = 0;
+         return true;
++    case GICD_INMIR ... GICD_INMIR + 0x7f:
++        *data = (!s->nmi_support) ? 0 :
++                gicd_read_bitmap_reg(s, attrs, s->nmi, NULL,
++                                     offset - GICD_INMIR);
++        return true;
+     case GICD_IROUTER ... GICD_IROUTER + 0x1fdf:
+     {
+         uint64_t r;
+@@ -754,6 +782,12 @@ static bool gicd_writel(GICv3State *s, hwaddr offset,
+     case GICD_SPENDSGIR ... GICD_SPENDSGIR + 0xf:
+         /* RAZ/WI since affinity routing is always enabled */
+         return true;
++    case GICD_INMIR ... GICD_INMIR + 0x7f:
++        if (s->nmi_support) {
++            gicd_write_bitmap_reg(s, attrs, s->nmi, NULL,
++                                  offset - GICD_INMIR, value);
 +        }
-     }
- 
-     if (hcr_el2 & HCR_FMO) {
-         if (cs->interrupt_request & CPU_INTERRUPT_VFIQ) {
-             ret |= CPSR_F;
-         }
-+        if (cs->interrupt_request & CPU_INTERRUPT_VFNMI) {
-+            ret |= ISR_FS;
-+            ret |= CPSR_F;
-+        }
-     } else {
-         if (cs->interrupt_request & CPU_INTERRUPT_FIQ) {
-             ret |= CPSR_F;
++        return true;
+     case GICD_IROUTER ... GICD_IROUTER + 0x1fdf:
+     {
+         uint64_t r;
 -- 
 2.34.1
 
