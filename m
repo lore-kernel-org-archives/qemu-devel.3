@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B949AC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 11:06:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B2DFC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 11:07:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzwuM-000322-FM; Thu, 25 Apr 2024 07:04:54 -0400
+	id 1rzwvZ-0004Ty-VN; Thu, 25 Apr 2024 07:06:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzwtE-00009y-6k
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:04:03 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzwtd-0000LG-P3
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:04:11 -0400
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzwt9-0000G4-I1
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:03:42 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-41b5e74fa83so1814755e9.0
- for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 04:03:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzwtZ-0000Mw-9g
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:04:08 -0400
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-2dd6c14d000so9581821fa.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 04:04:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714043006; x=1714647806; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714043039; x=1714647839; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AM4wpjhaRu1VnbLScsMczsVnLF9tLEy5hd6kj7QFVIE=;
- b=DRP/e7hmF6iTP+67jZNGAZC5bdVnFmP3bDeqkkvXVRtNO1QVv9eP+1BQ51xeN1OnO7
- GrQgB+KpD9aKhDRUDjNILD++QhzOgAoyQo8ZV2wS16RW7tPR+z9QYb4viTK4x6Tv3tOf
- PJn0lKmm26v30ffqOJfJkntUbhMQN6/WZqaOTMQyaNG5DpTPxDWZx+2xj3ZuAmZx4rWZ
- 53j8HNEgGjxvtECCQ5LQ+OPHXbHisNkuBtdoCc8+NbausmdY4/8V0bMH29qz8ZrME+2D
- BR2kWIENkCnd41O60ynhaXnLwMEJqjUYvwqt8ORwK6XzUuaraxXQQRa4oPp8YIxglKm+
- 1UFQ==
+ bh=vykN0pIt49J3GEMpH2YakbfFLS9d+NOdnblTzedh0DY=;
+ b=ge/5W1Z5UVX3PPgyKn4UHFd9nbESU5wtOTP5095Bm6afywSeBiHPR5htX1M130Qno2
+ XaV2Y+Sal3luYptmwrG+oNOxp/JMTvsZL9PjQhgsiqozUKtxQ3qymfYVfIsL1hnp+w7U
+ 3WP+c3tsTB9UmQ7oAh1nI1HXpLX52wAkmUmoB4mMKULchs7HLoE/PJRl9ZhUBrgEJVcb
+ kRxsZ/RV/ShdXmv4b+vXS42eZFWq8RBOhH54OrSuD+FCQsDlv8IoJ9ryvWzD1rvYp4Tt
+ dRt6r0yr5VmCD+4kCgfU08vUV06QEsJcJ7vFG+xj0q+Yk/9nNNtLsa/pMHUbNssLhWd/
+ 7hyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714043006; x=1714647806;
+ d=1e100.net; s=20230601; t=1714043039; x=1714647839;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AM4wpjhaRu1VnbLScsMczsVnLF9tLEy5hd6kj7QFVIE=;
- b=pajwHbasfcXPaAhindbfoIlB7f0BQlOCex0TRtfo9z+Za3MxG4tjOa2R1vBtEgs1Q3
- /E3aRGZqNGJ+bODNo7rxQXiSWxawZZIrH9OSB4+3QI8nYN/w4W5WVXBzOJpb+a2L1e3/
- LhV4qDjhUoAq1SQGwtYpZZSyl8rfmMePGGS9kKVHYu9ws7mC/JGdL3B+6eQztR5xEDjs
- ODCu736Q/xGJcBDyYXM0SWsqWY11jblmZHZRDFkKcmYNYuo8gMX6rm844xtLn7wFZVJO
- Z9XrCTLwAt1NsfQcQoBa9z7I0ZhxG+mmP3NZLcauTmUcTLowXKuSpmtP3T5lsLxIV0fV
- Lqgw==
-X-Gm-Message-State: AOJu0YyyuI/7yfjf7uncyuQnMiFAanOt2Oa6pE+t90a6MUr6Vn4fJT89
- 4fzOuIhAXkkevgIKpCir3cRRDsOi3yA0RMuTvulajnAMQrhVio8cqsuzGLic2JYtfiMQRKqgW1t
- V
-X-Google-Smtp-Source: AGHT+IGe49IAc2SdSXO25jaUyqK6FP6td8CeYnIlxdI0bb6LP3p3uwTpqkW0EOAH6Idsm470AsYsHQ==
-X-Received: by 2002:a05:600c:4508:b0:418:f991:8ad4 with SMTP id
- t8-20020a05600c450800b00418f9918ad4mr4383715wmo.6.1714043006094; 
- Thu, 25 Apr 2024 04:03:26 -0700 (PDT)
+ bh=vykN0pIt49J3GEMpH2YakbfFLS9d+NOdnblTzedh0DY=;
+ b=wFh0wdH2E4MzO+j7VZA9fpWLC1G0QKfIUvbEmqolVrhHbMlVIXce1dE9JJc6MpLCfq
+ MGjLILMiwyq+2BfnDm4ljUdyYfVHZ/g5pee8tkgGAvlHmwSqGtjj2QPwcTBPiCQM+hfB
+ bBvGlhW+ngWiIA7RNwt818arg6uWukEyEhZBLLrGENIxD9OM/wXaozIkHCMSWR7dEOl8
+ +nUouZXVZaSjQEqKUoJO70NJeL0ImiMgIe59s7v94HjcvntRN6TTskAlIocpka8PN1an
+ TnSCKIdYiKDj6os9jBV/K5Tv+6IbyDaJLn+WQLdXMJ2GZW69GILdNtfnyBCg7awep6dZ
+ Vkxg==
+X-Gm-Message-State: AOJu0YwAZbTP9Hng+h6JhUnmIFfkLaLF09MNCI6ASxElsf7P6gw8HST2
+ Mn7v2BzxqZHDN38YYVcZbNnTh/biVdqesRusAfQqksAwj3DL+dS0CNgxb2cL/BL4J0xdb2XLx3z
+ M
+X-Google-Smtp-Source: AGHT+IH8mFAQdgVe8Ug584icuarIPeRoP8mdneCGHYZqIATf4nok2omqYQTD+Ae/+hRL3KyPU8mLmQ==
+X-Received: by 2002:a2e:bb83:0:b0:2d8:901f:7f45 with SMTP id
+ y3-20020a2ebb83000000b002d8901f7f45mr3356811lje.13.1714043039569; 
+ Thu, 25 Apr 2024 04:03:59 -0700 (PDT)
 Received: from localhost.localdomain ([92.88.170.77])
  by smtp.gmail.com with ESMTPSA id
- l37-20020a05600c1d2500b004186f979543sm31187720wms.33.2024.04.25.04.03.24
+ e4-20020a05600c4e4400b0041b0f10fc7asm5000576wmq.31.2024.04.25.04.03.58
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 25 Apr 2024 04:03:25 -0700 (PDT)
+ Thu, 25 Apr 2024 04:03:59 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
+Cc: qemu-riscv@nongnu.org, qemu-arm@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, Yongwei Ma <yongwei.ma@intel.com>,
+ Babu Moger <babu.moger@amd.com>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
- Laurent Vivier <laurent@vivier.eu>
-Subject: [PULL 15/22] hw/elf_ops: Rename elf_ops.h -> elf_ops.h.inc
-Date: Thu, 25 Apr 2024 13:01:48 +0200
-Message-ID: <20240425110157.20328-16-philmd@linaro.org>
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Eric Blake <eblake@redhat.com>
+Subject: [PULL 21/22] hw/core: Introduce module-id as the topology subindex
+Date: Thu, 25 Apr 2024 13:01:54 +0200
+Message-ID: <20240425110157.20328-22-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240425110157.20328-1-philmd@linaro.org>
 References: <20240425110157.20328-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,82 +99,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit 139c1837db ("meson: rename included C source files
-to .c.inc"), QEMU standard procedure for included C files is to
-use *.c.inc.
+From: Zhao Liu <zhao1.liu@intel.com>
 
-Besides, since commit 6a0057aa22 ("docs/devel: make a statement
-about includes") this is documented in the Coding Style:
+Add module-id in CpuInstanceProperties, to locate the CPU with module
+level.
 
-  If you do use template header files they should be named with
-  the ``.c.inc`` or ``.h.inc`` suffix to make it clear they are
-  being included for expansion.
-
-Therefore rename "hw/elf_ops.h" as "hw/elf_ops.h.inc".
-
+Suggested-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Tested-by: Yongwei Ma <yongwei.ma@intel.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Tested-by: Babu Moger <babu.moger@amd.com>
+Acked-by: Markus Armbruster <armbru@redhat.com>
+Message-ID: <20240424154929.1487382-4-zhao1.liu@intel.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240424173333.96148-2-philmd@linaro.org>
 ---
- include/hw/{elf_ops.h => elf_ops.h.inc} | 0
- bsd-user/elfload.c                      | 2 +-
- hw/core/loader.c                        | 4 ++--
- linux-user/elfload.c                    | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
- rename include/hw/{elf_ops.h => elf_ops.h.inc} (100%)
+ qapi/machine.json          | 4 ++++
+ hw/core/machine-hmp-cmds.c | 4 ++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/include/hw/elf_ops.h b/include/hw/elf_ops.h.inc
-similarity index 100%
-rename from include/hw/elf_ops.h
-rename to include/hw/elf_ops.h.inc
-diff --git a/bsd-user/elfload.c b/bsd-user/elfload.c
-index baf2f63d2f..833fa3bd05 100644
---- a/bsd-user/elfload.c
-+++ b/bsd-user/elfload.c
-@@ -383,7 +383,7 @@ static const char *lookup_symbolxx(struct syminfo *s, uint64_t orig_addr)
-     return "";
- }
- 
--/* FIXME: This should use elf_ops.h  */
-+/* FIXME: This should use elf_ops.h.inc  */
- static int symcmp(const void *s0, const void *s1)
- {
-     struct elf_sym *sym0 = (struct elf_sym *)s0;
-diff --git a/hw/core/loader.c b/hw/core/loader.c
-index b8e52f3fb0..2f8105d7de 100644
---- a/hw/core/loader.c
-+++ b/hw/core/loader.c
-@@ -305,7 +305,7 @@ static void *load_at(int fd, off_t offset, size_t size)
- #define elf_word        uint32_t
- #define elf_sword       int32_t
- #define bswapSZs        bswap32s
--#include "hw/elf_ops.h"
-+#include "hw/elf_ops.h.inc"
- 
- #undef elfhdr
- #undef elf_phdr
-@@ -327,7 +327,7 @@ static void *load_at(int fd, off_t offset, size_t size)
- #define elf_sword       int64_t
- #define bswapSZs        bswap64s
- #define SZ              64
--#include "hw/elf_ops.h"
-+#include "hw/elf_ops.h.inc"
- 
- const char *load_elf_strerror(ssize_t error)
- {
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index f4a0b78c75..a0999dac15 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -3572,7 +3572,7 @@ static const char *lookup_symbolxx(struct syminfo *s, uint64_t orig_addr)
-     return "";
- }
- 
--/* FIXME: This should use elf_ops.h  */
-+/* FIXME: This should use elf_ops.h.inc  */
- static int symcmp(const void *s0, const void *s1)
- {
-     struct elf_sym *sym0 = (struct elf_sym *)s0;
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 48f98e7d9f..bce6e1bbc4 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -988,6 +988,9 @@
+ # @cluster-id: cluster number within the parent container the CPU
+ #     belongs to (since 7.1)
+ #
++# @module-id: module number within the parent container the CPU belongs
++#     to (since 9.1)
++#
+ # @core-id: core number within the parent container the CPU belongs to
+ #
+ # @thread-id: thread number within the core the CPU  belongs to
+@@ -1005,6 +1008,7 @@
+             '*socket-id': 'int',
+             '*die-id': 'int',
+             '*cluster-id': 'int',
++            '*module-id': 'int',
+             '*core-id': 'int',
+             '*thread-id': 'int'
+   }
+diff --git a/hw/core/machine-hmp-cmds.c b/hw/core/machine-hmp-cmds.c
+index a6ff6a4875..8701f00cc7 100644
+--- a/hw/core/machine-hmp-cmds.c
++++ b/hw/core/machine-hmp-cmds.c
+@@ -87,6 +87,10 @@ void hmp_hotpluggable_cpus(Monitor *mon, const QDict *qdict)
+             monitor_printf(mon, "    cluster-id: \"%" PRIu64 "\"\n",
+                            c->cluster_id);
+         }
++        if (c->has_module_id) {
++            monitor_printf(mon, "    module-id: \"%" PRIu64 "\"\n",
++                           c->module_id);
++        }
+         if (c->has_core_id) {
+             monitor_printf(mon, "    core-id: \"%" PRIu64 "\"\n", c->core_id);
+         }
 -- 
 2.41.0
 
