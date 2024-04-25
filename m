@@ -4,73 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9776C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 15:16:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26CD2C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 15:24:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s00p8-0006w6-QT; Thu, 25 Apr 2024 11:15:48 -0400
+	id 1s00w7-0002nR-MQ; Thu, 25 Apr 2024 11:22:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1s00od-0006gS-KT
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 11:15:24 -0400
-Received: from mgamail.intel.com ([198.175.65.14])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s00w6-0002mm-DW
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 11:22:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1s00oU-0002Dd-Ja
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 11:15:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1714058106; x=1745594106;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=u7WG00B7+uNOK3xQT0kyO08wZ8tgfhwulD0Raj+SN5U=;
- b=Gs8+Lg0XEo/cMOKBRVCtcfDqN1HQKIZrwx5lkX+GdWu6gNy0umrea7cY
- voUE9HxazcRNGhskP01wrfPilBlnHY47vLzArgfZZK8mWBvmhVBaw/GSM
- Ms0OTI1SzuMIpFca5w4pbUQj4H8TRSQODKeeGyy30BBWzqJPyECIu8mzO
- vhBl7h6oIYWKva4FpZanCuqhWMCu0d8Ig7ZL3o0CP3j2jKtoWIme8EqlQ
- x2HcAwIlNpCN2pnUT9r61dxDyleq7CHwNrB47/M/vN/mwoP51xE7Xc4Wu
- miBJvF1Scje35Eu5lZntDdIvJVADL/isy3rAzjIMYcjk35a8yHHEQ2IyT w==;
-X-CSE-ConnectionGUID: ly+NY3TVR6CyaATcEPD94A==
-X-CSE-MsgGUID: yw0EU1YoTwmeCAhmYMuO2g==
-X-IronPort-AV: E=McAfee;i="6600,9927,11055"; a="13588209"
-X-IronPort-AV: E=Sophos;i="6.07,229,1708416000"; d="scan'208";a="13588209"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Apr 2024 08:15:02 -0700
-X-CSE-ConnectionGUID: ftF/dONzTPa36XXj2DMJDg==
-X-CSE-MsgGUID: CdqXhzrHRJuzWz3XB778tw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,229,1708416000"; d="scan'208";a="48365264"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa002.fm.intel.com with ESMTP; 25 Apr 2024 08:15:01 -0700
-Date: Thu, 25 Apr 2024 23:29:08 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH for-9.1 09/19] target/i386: move 60-BF opcodes to new
- decoder
-Message-ID: <Zip2xJorL/cPxm5B@intel.com>
-References: <20240409164323.776660-1-pbonzini@redhat.com>
- <20240409164323.776660-10-pbonzini@redhat.com>
- <Zhf/czBP8LaaGORr@intel.com>
- <CABgObfYMu8sAzqJvMSQiDiY6M+uxBYc-fQadpvtoT=J=waWv4w@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s00w3-0006JW-Uo
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 11:22:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714058574;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=1Se4uXSdIjjbfbf+RvDtqj82sCrTpcsBwz5oTl1OgLI=;
+ b=Sa2Zc8FNuZx8FLUCSDTZwRt4oYN1Q1OmGSCGO8UTKyZgw7kif3qXMaGfwZuEB50DxDPmY+
+ tIbw/vsJSL4gVVhSPJg9h6v2/e1d7ruvnPyNbQA4Ar6JU9PcJ05hq3LfZP+etyImtLKOCY
+ 1UBfYMDT8yApEb/B0m3XWwVpmcrttNM=
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
+ [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-539-SOXrCdPeMFGjUbaUm6BAow-1; Thu, 25 Apr 2024 11:22:52 -0400
+X-MC-Unique: SOXrCdPeMFGjUbaUm6BAow-1
+Received: by mail-oi1-f199.google.com with SMTP id
+ 5614622812f47-3c5f32f91d4so1527611b6e.2
+ for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 08:22:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714058572; x=1714663372;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1Se4uXSdIjjbfbf+RvDtqj82sCrTpcsBwz5oTl1OgLI=;
+ b=qzHeFQlHU8Hne+42P30ymQaXRCRqCGFN3/JhDFdAOJAUIcVuQDSt0GCu1GFT4tFoQM
+ OouIiYIJ8T0RiXSprR0a5YU2DNhu/iWgSeSZbeN3t4EOxm3p3wVSh0VVkudqHmL/igcL
+ GTh6udtZxMZDDZHYUVMupBJxVeLwE404SyuipxsaqrTgFe9ovUVyCRllhS1IVN1M6LTC
+ 88r+hlWCu6QajH0SlrgF21AtiaguY4jQx37df3i4sYzjh7BfQJhujY0zqqacBhslS/9X
+ 9vTEwFKLbPVO4oCyg/OniQk+HrL7gvUs6ITi8gwXiCQL6us1740Bmj3MNEM+rUvL7ZdI
+ ULFA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVr7oQt/UMZH3Llc9PGlDRAsTwItaJsOqVVWfiJ4DAQdmgezicnyy3Aho13XDCzAdQ9QK67pJf/PaTVffuuc1c3enJR3W0=
+X-Gm-Message-State: AOJu0YypQ5dNceuos5mM46ClhrM9HkFR5zwVkomFLCABBl+6+elE5o94
+ x/kUdBVunkML8BpbFoOUlK92zPrMPtx5sRplaCfvDf0aZrC7Yypw7hdhp54lgqPceiMgZW1WhPZ
+ KTMEZJU9QnIclAE3GxkH5sxJ2Mt2NcVI1TIxu2dtK7v1FTI51yZPb
+X-Received: by 2002:a05:6808:1506:b0:3c7:2a70:cd6a with SMTP id
+ u6-20020a056808150600b003c72a70cd6amr7232529oiw.44.1714058571902; 
+ Thu, 25 Apr 2024 08:22:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IERzEMzTlHhOUyUM6sBFWR2I7aU3vF8ex8lQau7f5v0lGC4LsiFeuhPvMQWz5Pm81Kum4sAmA==
+X-Received: by 2002:a05:6808:1506:b0:3c7:2a70:cd6a with SMTP id
+ u6-20020a056808150600b003c72a70cd6amr7232510oiw.44.1714058571636; 
+ Thu, 25 Apr 2024 08:22:51 -0700 (PDT)
+Received: from [192.168.0.9] (ip-109-43-177-130.web.vodafone.de.
+ [109.43.177.130]) by smtp.gmail.com with ESMTPSA id
+ d19-20020a0ce453000000b0068f35e9e9a2sm1725188qvm.8.2024.04.25.08.22.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 25 Apr 2024 08:22:51 -0700 (PDT)
+Message-ID: <46455b78-cf64-4f02-aa7d-f952529d583d@redhat.com>
+Date: Thu, 25 Apr 2024 17:22:46 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABgObfYMu8sAzqJvMSQiDiY6M+uxBYc-fQadpvtoT=J=waWv4w@mail.gmail.com>
-Received-SPF: pass client-ip=198.175.65.14; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/7] target/s390x/cpu_models: Make
+ kvm_s390_get_host_cpu_model() return boolean
+To: Zhao Liu <zhao1.liu@intel.com>, David Hildenbrand <david@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+References: <20240425031232.1586401-1-zhao1.liu@intel.com>
+ <20240425031232.1586401-5-zhao1.liu@intel.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240425031232.1586401-5-zhao1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 6
+X-Spam_score: 0.6
+X-Spam_bar: /
+X-Spam_report: (0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,79 +152,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 24, 2024 at 01:13:01PM +0200, Paolo Bonzini wrote:
-> Date: Wed, 24 Apr 2024 13:13:01 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: Re: [PATCH for-9.1 09/19] target/i386: move 60-BF opcodes to new
->  decoder
+On 25/04/2024 05.12, Zhao Liu wrote:
+> As error.h suggested, the best practice for callee is to return
+> something to indicate success / failure.
 > 
-> On Thu, Apr 11, 2024 at 5:05 PM Zhao Liu <zhao1.liu@intel.com> wrote:
-> > HMM, I met Guest boot failure on this patch because of ata unrecognized.
-> > I haven't located the exact error yet, so let me post my log first.
-> > If there are other means I can use to dig further, I'd be happy to try
-> > that too.
-> >
-> > # Command (boot a ubuntu Guest via TCG)
-> >
-> > ./qemu/build/qemu-system-x86_64 \
-> > -smp 1 \
-> > -name ubuntu -m 4G \
-> > -cpu max -accel tcg \
-> > -hda ../img_qemu/test.qcow2 -nographic \
-> > -kernel ../img_qemu/kernel/vmlinuz-6.4.0-rc6+ \
-> > -initrd ../img_qemu/kernel/initrd.img-6.4.0-rc6+ \
-> > -append "root=/dev/sda ro console=ttyS0" \
-> > -qmp unix:/tmp/qmp-sock,server=on,wait=off
+> So make kvm_s390_get_host_cpu_model() return boolean and check the
+> returned boolean in get_max_cpu_model() instead of accessing @err.
 > 
-> The issue is that INS and OUTS are using the incorrect operand size.
-> 
-> While at it I also made OUTS a bit more similar to OUT:
-> 
-> diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-> index 0951b042dfa..46682cfe070 100644
-> --- a/target/i386/tcg/decode-new.c.inc
-> +++ b/target/i386/tcg/decode-new.c.inc
-> @@ -1544,8 +1544,8 @@ static const X86OpEntry opcodes_root[256] = {
->      [0x6B] = X86_OP_ENTRY3(IMUL3, G,v, E,v, I,b, sextT0),
->      [0x6C] = X86_OP_ENTRYrr(INS, Y,b, 2,w), /* DX */
->      [0x6D] = X86_OP_ENTRYrr(INS, Y,z, 2,w), /* DX */
-> -    [0x6E] = X86_OP_ENTRYrr(OUTS, 2,w, X,b), /* DX */
-> -    [0x6F] = X86_OP_ENTRYrr(OUTS, 2,w, X,b), /* DX */
-> +    [0x6E] = X86_OP_ENTRYrr(OUTS, X,b, 2,w), /* DX */
-> +    [0x6F] = X86_OP_ENTRYrr(OUTS, X,z, 2,w), /* DX */
-> 
->      [0x78] = X86_OP_ENTRYr(Jcc, J,b),
->      [0x79] = X86_OP_ENTRYr(Jcc, J,b),
-> @@ -1592,7 +1592,7 @@ static void gen_INC(
-> 
->  static void gen_INS(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
->  {
-> -    MemOp ot = decode->op[0].ot;
-> +    MemOp ot = decode->op[1].ot;
->      TCGv_i32 port = tcg_temp_new_i32();
-> 
->      tcg_gen_trunc_tl_i32(port, s->T1);
-> @@ -2310,10 +2310,10 @@ static void gen_OUT(
-> 
->  static void gen_OUTS(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
->  {
-> -    MemOp ot = decode->op[2].ot;
-> +    MemOp ot = decode->op[1].ot;
->      TCGv_i32 port = tcg_temp_new_i32();
-> 
-> -    tcg_gen_trunc_tl_i32(port, s->T0);
-> +    tcg_gen_trunc_tl_i32(port, s->T1);
->      tcg_gen_ext16u_i32(port, port);
->      if (!gen_check_io(s, ot, port, SVM_IOIO_STR_MASK)) {
->          return;
-> 
-> 
-> (sorry about any word breaking)
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>   target/s390x/cpu_models.c |  9 ++++-----
+>   target/s390x/cpu_models.h |  2 +-
+>   target/s390x/kvm/kvm.c    | 13 +++++++------
+>   3 files changed, 12 insertions(+), 12 deletions(-)
 
-Thanks! With the above fix, now I re-test on each patch, and all patches
-could boot Guest properly! If there is a v2, I can continue to test it.
-
-Regards,
-Zhao
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
