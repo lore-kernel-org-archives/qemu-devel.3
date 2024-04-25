@@ -4,93 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAC95C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 11:47:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2086C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 11:59:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzxYe-0004mY-87; Thu, 25 Apr 2024 07:46:32 -0400
+	id 1rzxkZ-00022D-Nn; Thu, 25 Apr 2024 07:58:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rzxYS-0004k9-3X
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:46:27 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzxkW-00021f-QN
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:58:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rzxYP-000146-CH
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:46:19 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzxkU-0008BH-RH
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:58:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714045575;
+ s=mimecast20190719; t=1714046325;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=uLU3wnXBRRnexax+zdlJubZFQzgUnqmGi6oUkZ+aOaE=;
- b=SSa3p60QQazvXFHSxoYIphnW5TJldVVJr+r2dXMjf0L4Qu3l+e6V+tbnEKsXblQhQ9mK5i
- chnxu1NHHiyqnLdHkb657MaOjcEj0AyI5xx5WDj7nIqArE58kdz9P1dfYsG7efPX0Gi1+X
- QbpTe3j6rGM0V7HqiJfs0tVtPYjbaWA=
-Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com
- [209.85.161.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=R+xFDk2/5ItdOF3n0v7RXkeAPsAbowKOb2jxJkaJNEc=;
+ b=LMsFUfpGtdFKaExHRLD4LN8Lk0WFpZWaogw2ocTOldIAf9J6QxelxMI1DAT+29MuOB6WMG
+ 7j1dQlOYccYa5o2hCYU0O72n5yRGeMAn9CkkyFRGRU11895TYkNUXQCTLiuUZ38pfKlk2/
+ MHSbe3fJCDYMixIEsgdojWOTfPZReDw=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-661-loxAz4CIP0-4aRv28stmEw-1; Thu, 25 Apr 2024 07:46:13 -0400
-X-MC-Unique: loxAz4CIP0-4aRv28stmEw-1
-Received: by mail-oo1-f72.google.com with SMTP id
- 006d021491bc7-5aa3c655dacso1294114eaf.0
- for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 04:46:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714045573; x=1714650373;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uLU3wnXBRRnexax+zdlJubZFQzgUnqmGi6oUkZ+aOaE=;
- b=vweXQocAR/UQWzsEAWLxrqPThMRqLesOAV0zbpHaLMkKd9nBSTt8WkPZ/2VdRH3NdL
- v9/sLcQ7ybIXDwd1QvTedL5nYaLRJbc0UYzaNcisma2bJu2rJQbmkOv8KVuG8l9p4i12
- IP/5e8c//wtFhzHBTRfk8o62sQnwbaWs8REg58ErEZdCnSZ3W4RvMCH0S6nKSPK4YfOO
- cAoLZ1Zc+mEmwFBB7xKFlbk6ncFBUvUlLmsFlT3AzYkIePXwvoNkN1cpbkWjVsRC9p7y
- 25fu0bMtcevlVDmAL7nCyuNohRf69HeuWCTcCL+qN8rEPhAYD8N3D4qQtNmWotd6kBpF
- q5bg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXxZ3/baRvYVYm1loAFpfa44BDNY5cjIYV6wSq5jxLD5Mexgz9afvYGXevQc9AUMR+wZ5Xpw7qIqNxQKzCsT9zjZISH1M8=
-X-Gm-Message-State: AOJu0Yzhzxyx9DvAQ8VHBxlVUvZP85Zt0DUmR12vN0+B21IdO5EMaXZ3
- nAvXclTWlPOW6HBX6/OS04P6QvIPdOId/mFtmdFkmNJPYB3D8bywPe9sG/mMSyEELwo9Gcb0Cxt
- Ag9CB+W1BIcwmhBMeCWojpatQseNKunQrRC8sBEtHm1lPZ7KBoptS
-X-Received: by 2002:a05:6358:722:b0:18d:9d25:725e with SMTP id
- e34-20020a056358072200b0018d9d25725emr5084662rwj.16.1714045572814; 
- Thu, 25 Apr 2024 04:46:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGZqY8L/cgiTipwyW3uM25QvT9ODCfSW2ReoLgWWmTMLKGLeCu6Prgc/L7HbdcDZF5EHj+95w==
-X-Received: by 2002:a05:6358:722:b0:18d:9d25:725e with SMTP id
- e34-20020a056358072200b0018d9d25725emr5084635rwj.16.1714045572170; 
- Thu, 25 Apr 2024 04:46:12 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:17b:9e35:9594:88eb:df3e:840e])
- by smtp.gmail.com with ESMTPSA id
- i15-20020ac8488f000000b00436a8ee913csm6904617qtq.41.2024.04.25.04.46.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Apr 2024 04:46:11 -0700 (PDT)
-Date: Thu, 25 Apr 2024 07:46:06 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- qemu-stable@nongnu.org
-Subject: Re: [PATCH v3] hw/audio/virtio-snd: Use device endianness instead of
- target one
-Message-ID: <20240425074521-mutt-send-email-mst@kernel.org>
-References: <CAAjaMXaoPeCVpd=q-d2GH25SfrNPVqh6hCerMOrQ6payXVMmyA@mail.gmail.com>
- <f5c67478-4fb9-4fb9-a6b2-286d6372bd0a@linaro.org>
- <b9fb7a87-2328-4999-8f7e-6b6cf04984a3@ilande.co.uk>
- <CAAjaMXa00nWejPRc_Xc9fnoncXVDiWO9MNabwq-QU5nepA4b9w@mail.gmail.com>
- <fd6b0336-ecc7-4c0e-aa48-f8e984d293dc@ilande.co.uk>
- <CAAjaMXaBd8+DuNzeVO9k=6ojt5brt1nmm1gApdwgXJ3JzjisTA@mail.gmail.com>
- <20240425062213-mutt-send-email-mst@kernel.org>
- <CAAjaMXYTGUUeABd+Ghaf374pOFjoF7RdncTTiciLhmo1yXXZVQ@mail.gmail.com>
- <f85ab427-9cb4-4034-8fd7-29acc4d0b8a9@ilande.co.uk>
- <fab578a2-42a2-4963-be4f-8cbb73e11404@linaro.org>
+ us-mta-223-DdEDqRNQN2WzslgQebEUdQ-1; Thu, 25 Apr 2024 07:58:42 -0400
+X-MC-Unique: DdEDqRNQN2WzslgQebEUdQ-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 860FA18065AF;
+ Thu, 25 Apr 2024 11:58:41 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 4AE481121312;
+ Thu, 25 Apr 2024 11:58:41 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 3BB6D21E6680; Thu, 25 Apr 2024 13:58:40 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Bill Mills <bill.mills@linaro.org>
+Cc: Gustavo Romero <gustavo.romero@linaro.org>,  qemu-devel@nongnu.org,
+ philmd@linaro.org,  thuth@redhat.com,  lvivier@redhat.com,
+ qemu-arm@nongnu.org,  alex.bennee@linaro.org,  pbonzini@redhat.com,
+ anton.kochkov@proton.me,  richard.henderson@linaro.org,
+ peter.maydell@linaro.org
+Subject: Re: [PATCH 0/6] Add ivshmem-flat device
+In-Reply-To: <ecf04b2a-2038-43ac-a0bb-38d0baca7a7c@linaro.org> (Bill Mills's
+ message of "Tue, 23 Apr 2024 12:00:50 -0400")
+References: <20240222222218.2261956-1-gustavo.romero@linaro.org>
+ <87wmqp3xug.fsf@pond.sub.org>
+ <a28f3657-c827-7a0d-a8da-b82d17d17577@linaro.org>
+ <87sezc8irk.fsf@pond.sub.org>
+ <ecf04b2a-2038-43ac-a0bb-38d0baca7a7c@linaro.org>
+Date: Thu, 25 Apr 2024 13:58:40 +0200
+Message-ID: <87zfth4psf.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <fab578a2-42a2-4963-be4f-8cbb73e11404@linaro.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -114,151 +89,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 25, 2024 at 01:15:43PM +0200, Philippe Mathieu-Daudé wrote:
-> On 25/4/24 12:40, Mark Cave-Ayland wrote:
-> > On 25/04/2024 11:26, Manos Pitsidianakis wrote:
-> > 
-> > > On Thu, 25 Apr 2024 at 13:24, Michael S. Tsirkin <mst@redhat.com> wrote:
-> > > > 
-> > > > On Thu, Apr 25, 2024 at 01:04:31PM +0300, Manos Pitsidianakis wrote:
-> > > > > On Thu, 25 Apr 2024 at 10:49, Mark Cave-Ayland
-> > > > > <mark.cave-ayland@ilande.co.uk> wrote:
-> > > > > > 
-> > > > > > On 25/04/2024 07:30, Manos Pitsidianakis wrote:
-> > > > > > 
-> > > > > > > On Wed, 24 Apr 2024 at 13:31, Mark Cave-Ayland
-> > > > > > > <mark.cave-ayland@ilande.co.uk> wrote:
-> > > > > > > > 
-> > > > > > > > On 23/04/2024 12:05, Philippe Mathieu-Daudé wrote:
-> > > > > > > > 
-> > > > > > > > > On 23/4/24 11:18, Manos Pitsidianakis wrote:
-> > > > > > > > > > On Tue, 23 Apr 2024 at 11:47, Manos Pitsidianakis
-> > > > > > > > > > <manos.pitsidianakis@linaro.org> wrote:
-> > > > > > > > > > > 
-> > > > > > > > > > > On Tue, 23 Apr 2024 at 00:11,
-> > > > > > > > > > > Michael S. Tsirkin <mst@redhat.com>
-> > > > > > > > > > > wrote:
-> > > > > > > > > > > > 
-> > > > > > > > > > > > On Mon, Apr 22, 2024 at
-> > > > > > > > > > > > 11:07:21PM +0200, Philippe
-> > > > > > > > > > > > Mathieu-Daudé wrote:
-> > > > > > > > > > > > > On 22/4/24 23:02, Michael S. Tsirkin wrote:
-> > > > > > > > > > > > > > On Mon, Apr 22, 2024 at
-> > > > > > > > > > > > > > 04:20:56PM +0200,
-> > > > > > > > > > > > > > Philippe Mathieu-Daudé
-> > > > > > > > > > > > > > wrote:
-> > > > > > > > > > > > > > > Since VirtIO devices can change endianness at runtime,
-> > > > > > > > > > > > > > > we need to use the device endianness, not the target
-> > > > > > > > > > > > > > > one.
-> > > > > > > > > > > > > > > 
-> > > > > > > > > > > > > > > Cc: qemu-stable@nongnu.org
-> > > > > > > > > > > > > > > Fixes: eb9ad377bb
-> > > > > > > > > > > > > > > ("virtio-sound:
-> > > > > > > > > > > > > > > handle control
-> > > > > > > > > > > > > > > messages and
-> > > > > > > > > > > > > > > streams")
-> > > > > > > > > > > > > > > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> > > > > > > > > > > > > > 
-> > > > > > > > > > > > > > 
-> > > > > > > > > > > > > > 
-> > > > > > > > > > > > > > This is all completely
-> > > > > > > > > > > > > > bogus. Virtio SND is
-> > > > > > > > > > > > > > from Virtio 1.0 only.
-> > > > > > > > > > > > > > It is unconditionally little endian.
-> > > > > > > > > > > 
-> > > > > > > > > > > 
-> > > > > > > > > > > This part of the code is for PCM
-> > > > > > > > > > > frames (raw bytes), not virtio spec
-> > > > > > > > > > > fields (which indeed must be LE in modern VIRTIO).
-> > > > > > > > > > 
-> > > > > > > > > > Thought a little more about it. We
-> > > > > > > > > > should keep the target's endianness
-> > > > > > > > > > here, if it's mutable then we should
-> > > > > > > > > > query the machine the device is
-> > > > > > > > > > attached to somehow. the virtio device
-> > > > > > > > > > should never change endianness
-> > > > > > > > > > like Michael says since it's not legacy.
-> > > > > > > > > 
-> > > > > > > > > Grr. So as Richard suggested, this need to be pass as a device
-> > > > > > > > > property then.
-> > > > > > > > > (https://lore.kernel.org/qemu-devel/ed134c9d-6e6f-465b-900f-e39ca4e09876@linaro.org/)
-> > > > > > > > 
-> > > > > > > > It feels to me that the endianness is something
-> > > > > > > > that should be negotiated as part of
-> > > > > > > > the frame format, since the endianness of the
-> > > > > > > > audio hardware can be different from
-> > > > > > > > that of the CPU (think PReP machines where it
-> > > > > > > > was common that a big endian CPU is
-> > > > > > > > driving little endian hardware as found on x86).
-> > > > > > > 
-> > > > > > > But that is the job of the hardware drivers, isn't it? Here we are
-> > > > > > > taking frames passed from the guest to its virtio
-> > > > > > > driver in the format
-> > > > > > > specified in the target cpu's endianness and QEMU as
-> > > > > > > the device passes
-> > > > > > > it to host ALSA/Pipewire/etc which in turn passes it to the actual
-> > > > > > > audio hardware driver..
-> > > > > > 
-> > > > > > The problem is that the notion of target CPU endian is
-> > > > > > not fixed. For example the
-> > > > > > PowerPC CPU starts off in big-endian mode, but these
-> > > > > > days most systems will switch
-> > > > > > the CPU to little-endian mode on startup to run ppc64le.
-> > > > > > There's also the ILE bit
-> > > > > > which can be configured so that a big-endian PowerPC CPU
-> > > > > > can dynamically switch to
-> > > > > > little-endian mode when processing an interrupt, so you
-> > > > > > could potentially end up with
-> > > > > > either depending upon the current mode of the CPU.
-> > > > > > 
-> > > > > > These are the kinds of issues that led to the later
-> > > > > > virtio specifications simply
-> > > > > > using little-endian for everything, since then there is
-> > > > > > zero ambiguity over what
-> > > > > > endian is required for the virtio configuration space accesses.
-> > > > > > 
-> > > > > > It feels to me that assuming a target CPU endian is
-> > > > > > fixed for the PCM frame formats
-> > > > > > is simply repeating the mistakes of the past - and even
-> > > > > > the fact that we are
-> > > > > > discussing this within this thread suggests that at a
-> > > > > > very minimum the virtio-snd
-> > > > > > specification needs to be updated to clarify the byte
-> > > > > > ordering of the PCM frame formats.
-> > > > > > 
-> > > > > > 
-> > > > > > ATB,
-> > > > > > 
-> > > > > > Mark.
-> > > > > > 
-> > > > > 
-> > > > > 
-> > > > > Agreed, I think we are saying approximately the same thing here.
-> > > > > 
-> > > > >   We need a mechanism to retrieve the vCPUs endianness and a way to
-> > > > > notify subscribed devices when it changes.
-> > > > 
-> > > > I don't think I agree, it's not the same thing.
-> > > > Guest should just convert and send data in LE format.
-> > > > Host should then convert from LE format.
-> > > > Target endian-ness does not come into it.
-> > > 
-> > > That's not in the VIRTIO 1.2 spec. We are talking about supporting
-> > > things as they currently stand, not as they could have been.
-> > 
-> > Can you also clarify the particular case that you're trying to fix - is
-> > it big-endian on ARM, or something else?
-> 
-> I'm only aware of big-endian on ARM.
-> 
-> Regards,
-> 
-> Phil.
+Bill Mills <bill.mills@linaro.org> writes:
 
-But of course this applies to any BE emulated on LE
-or vice versa.
+> Hi Markus,
+>
+> On 4/23/24 6:39 AM, Markus Armbruster wrote:
+>> Gustavo Romero <gustavo.romero@linaro.org> writes:
+>> 
+>>> Hi Markus,
+>>>
+>>> Thanks for interesting in the ivshmem-flat device.
+>>>
+>>> Bill Mills (cc:ed) is the best person to answer your question,
+>>> so please find his answer below.
+>>>
+>>> On 2/28/24 3:29 AM, Markus Armbruster wrote:
+>>>> Gustavo Romero <gustavo.romero@linaro.org> writes:
+>>>>
+>>>> [...]
+>>>>
+>>>>> This patchset introduces a new device, ivshmem-flat, which is similar to the
+>>>>> current ivshmem device but does not require a PCI bus. It implements the ivshmem
+>>>>> status and control registers as MMRs and the shared memory as a directly
+>>>>> accessible memory region in the VM memory layout. It's meant to be used on
+>>>>> machines like those with Cortex-M MCUs, which usually lack a PCI bus, e.g.,
+>>>>> lm3s6965evb and mps2-an385. Additionally, it has the benefit of requiring a tiny
+>>>>> 'device driver,' which is helpful on some RTOSes, like Zephyr, that run on
+>>>>> memory-constrained resource targets.
+>>>>>
+>>>>> The patchset includes a QTest for the ivshmem-flat device, however, it's also
+>>>>> possible to experiment with it in two ways:
+>>>>>
+>>>>> (a) using two Cortex-M VMs running Zephyr; or
+>>>>> (b) using one aarch64 VM running Linux with the ivshmem PCI device and another
+>>>>>       arm (Cortex-M) VM running Zephyr with the new ivshmem-flat device.
+>>>>>
+>>>>> Please note that for running the ivshmem-flat QTests the following patch, which
+>>>>> is not committed to the tree yet, must be applied:
+>>>>>
+>>>>> https://lists.nongnu.org/archive/html/qemu-devel/2023-11/msg03176.html
+>>>>
+>>>> What problem are you trying to solve with ivshmem?
+>>>>
+>>>> Shared memory is not a solution to any communication problem, it's
+>>>> merely a building block for building such solutions: you invariably have
+>>>> to layer some protocol on top.  What do you intend to put on top of
+>>>> ivshmem?
+>>>
+>>> Actually ivshmem is shared memory and bi-direction notifications (in this case a doorbell register and an irq).
+>>
+>> Yes, ivshmem-doorbell supports interrupts.  Doesn't change my argument.
+>> 
+>>> This is the fundamental requirement for many types of communication but our interest is for the OpenAMP project [1].
+>>>
+>>> All the OpenAMP project's communication is based on shared memory and bi-directional notification.  Often this is on a AMP SOC with Cortex-As and Cortex-Ms or Rs.  However we are now expanding into PCIe based AMP. One example of this is an x86 host computer and a PCIe card with an ARM SOC.  Other examples include two systems with PCIe root complex connected via a non-transparent bridge.
+>>>
+>>> The existing PCI based ivshmem lets us model these types of systems in a simple generic way without worrying about the details of the RC/EP relationship or the details of a specific non-transparent bridge.  In fact the ivshmem looks to the two (or more) systems like a non-transparent bridge with its own memory (and no other memory access is allowed).
+>>>
+>>> Right now we are testing this with RPMSG between two QEMU system where both systems are cortex-a53 and both running Zephyr. [2]
+>>>
+>>> We will expand this by switching one of the QEMU systems to either arm64 Linux or x86 Linux.
+>> So you want to simulate a heterogeneous machine by connecting multiple
+>> qemu-system-FOO processes via ivshmem, correct?
+>
+> An AMP SOC is one use case.  A PCIe card with an embedded Cortex-M would be another.
+>
+>> 
+>>> We (and others) are also working on a generic virtio transport that will work between any two systems as long as they have shared memory and bi-directional notifications.
+>> 
+>> On top of or adjacent to ivshmem?
+>
+> On top of ivshmem.  It is not the only use case but it is an important one.
 
--- 
-MST
+Interesting.
+
+> I just gave a talk on this subject at EOSS.  If you would like to look at the slides they are here:
+> https://sched.co/1aBFm
+
+The talk's abstract:
+
+    AMP Virtio: A New Virto Transport for AMP Systems, with Focus on
+    Zephyr, Linux, and Xen
+
+    Asymmetric multiprocessing systems are common in automotive,
+    Industrial, and mobile markets and are entering the data center
+    market as well.  The OpenAMP project strives to make AMP systems
+    easier and more standards based.  The OpenAMP project is working on
+    a new Virtio transport layer that can be used between cores that do
+    not share a hypervisor.  Example systems include: * AMP SOCs running
+    running Linux on Cortex-A and Zephyr on Cortex-M, * x86 and Arm
+    systems connected via PCIe, both running Linux.  AMP Virtio can also
+    be used in Xen and other hypervisors to reduce worse case latency
+    and increase freedom of interference (FFI).  These aspects are
+    critical in real-time and functionally safe systems.  This
+    presentation will cover:
+    * Why Virtio for AMP systems
+    * What are the problems with the existing virtio transports for AMP
+      systems
+    * Outline of the transport proposal
+    * Prototype software for Zephyr, Linux, and Xen
+    * Show various topologies and use cases for Device and Driver
+      placement
+    * Show portability to other RTOSes and hypervisors.
+
+You're interested in systems that contain multiple cores.  You want to
+create a virtio transport to let these cores talk to each other.
+
+Let's talk physical hardware.  The transport needs to go over some kind
+of device.  The device could be pretty smart and provide the virtio
+transport, or it could be really dumb and provide just enough to let
+software running on the core implement the virtio transport.  What do
+you have in mind?
+
+You need QEMU to emulate one or more of the devices you have in mind.
+
+Note: emulation is about the guest-facing part of the QEMU device model.
+We'll get to the host-facing part in a minute.
+
+Smart device: we know how to emulate virtio devices with various
+connectors, such as PCI, CCW, MMIO.
+
+Dumb device: ivshmem-doorbell could serve as a virtual dumb device.
+Note that a physical ivshmem would be a bad idea; it's design is rather
+poor.  Is this why you're interested in ivshmem?
+
+As is, ivshmem-doorbell comes with a PCI connector.  You want an MMIO
+connector.  Fair enough.
+
+Once you have an actual dumb physical device, you're likely better off
+emulating that instead of approximating it with ivshmem.
+
+Approximating could still be useful as a stopgap.
+
+I sidestepped an important problem so far: the "asymmetric" in AMP.
+When your asymmetric system contains cores with different architectures,
+QEMU can't emulate the entire system, because qemu-system-TARGET can
+only emulate cores with achitecture TARGET.
+
+I guess you want to work around this limitation by running multiple
+qemu-system-TARGETs.  Trouble is you then need to connect them somehow.
+ivshmem's host-facing part can connect its qemu-system-TARGET to other
+processes, including other qemu-system-TARGETs, and the TARGETs need not
+be identical.  Correct?
+
+What if we had a qemu-system that wasn't limited to a single
+architecture?  Would you still want to run multiple connected instances
+then, or would you simply model your asymmetric system in a single one?
+
+[...]
 
 
