@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 024FFC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 10:42:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DC4BC10F15
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 10:42:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzwWe-0002Mt-Ny; Thu, 25 Apr 2024 06:40:24 -0400
+	id 1rzwWO-0001z9-To; Thu, 25 Apr 2024 06:40:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rzwWa-00026V-0m
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 06:40:20 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ id 1rzwWK-0001wl-IW
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 06:40:04 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rzwWW-0007EJ-Mx
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 06:40:19 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-34a4772d5easo741358f8f.0
- for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 03:40:16 -0700 (PDT)
+ id 1rzwWI-0006xK-BY
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 06:40:04 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-34782453ffdso757299f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 03:40:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714041615; x=1714646415; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714041600; x=1714646400; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=IZveBcQ/I3Ep99MpkKq6qvJrHhr8FNS0mASz7sTHHrA=;
- b=CLAFJ662SqhQqARHFMWY5C8BzeVQ9FLTIKr1RGR3radWYd1NB3M085WAbArXU/80+F
- cGDA5yjIO8DaEglxtHf0a7PBz1uDB3ELOMPBirxftBLr4DAIM+FPnkBitPoojVF89Rd+
- EXhU3ENiucjuCP/Wt2nbcTl7jlO5bVHK48/Od6UxQqj4lVoXBpqPOnzErDt+s20WC9iY
- gzCycF+jsHw65oPXRHkEZcjqkCx7wOoTqiZD48ViwnosTYGgCVlmiEkV6buqhTJ9qnob
- p3LTUgRV8p+2DiEBl6UeMLL+GXBXEAjbCnXzmwQ71NfyZL2Dr3Qr+rEF96AoV7JnlfCo
- Mu4w==
+ :reply-to; bh=D6sUqMTkg3AZ/EzB3wSEo9MXBvR+VUgJR/HaUz5GIjY=;
+ b=EW3Vt0S/Fi0dAqid9SXUDrJnwyZgZ9OZLEmiD8P9X/mfgkl2Tv9LUTJqpVwFPX9z39
+ 5ytdfRR0x6Wi5aT2VXUrwFCYf8bKW6gAOPKrlXqmw6p0ft2QQMzyHeSrVKRVUyWduV86
+ QnfKRncs66yGu+QldaA7x9riIOzH4OTpd7sA7yXnF9DAXnRjql6TFQBuLA1HDYnWUB7q
+ Fw0/6rBTuawejhQM+HztYT/kt4Vw4K39zgysP+4Sq8XMh0qIB1K2J/Mx7Jvk2H12UG9B
+ wqAZY/W2cZRcJQ9UD8UBd524OVgMHJ9/yaSFjFfGcLgcDTZlMmCKAiXQIhjrk1Q3qkLk
+ 1+0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714041615; x=1714646415;
+ d=1e100.net; s=20230601; t=1714041600; x=1714646400;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IZveBcQ/I3Ep99MpkKq6qvJrHhr8FNS0mASz7sTHHrA=;
- b=JM+Ei237Oz/EnEChHJLHWjKlv2xL7ebv13rBq1um7eKzu1mrPHFiYTyxx+0qUEVY/i
- Hit9b/hXAW5FXtZqIv/yVwEIerdkL+0JjDLPEcgIp4guraJZZEOoQVC9ofnCs5NO8Ot1
- G3w/6v5MOpdsCeyb5BwOpqYQskKkQjytjoQTTjjjY7JMWOVXWZ/20j7aTd2Z7/G06L+B
- MqyN7mtpNtLPa6OaLyYdsBgcUvirGEFOny3EnPEdhV3CXCuEfp4fRmAFQL/5FHUF3XZJ
- Z7+s8GMxXhYQf0uhQiDruZBIttaY6T+1GS6xh6aBr8d+Q41+XQ1VaCjjK7K/Ccb8UFKW
- OKeg==
-X-Gm-Message-State: AOJu0YwxP+TihJbdrZTUf1cRKCGl8c0BVn20Sc1xECk7Puo8lBr+/ADM
- BOm2kH/AWAf001NDux60nHKQ1GWyAKAxTmoK4/iXgxwSQwMoR+IWSjGL35Cly3qtdoWesBv9QQp
- m
-X-Google-Smtp-Source: AGHT+IFJlr5Dzu3wMiMHn0mT3eYQrVzr0daLa+ORokaf1E6CrsWOmVbd4HAkeBO90iPrW8MRQTBa2w==
-X-Received: by 2002:adf:e8c7:0:b0:343:c6d1:280d with SMTP id
- k7-20020adfe8c7000000b00343c6d1280dmr3560511wrn.21.1714041614901; 
- Thu, 25 Apr 2024 03:40:14 -0700 (PDT)
+ bh=D6sUqMTkg3AZ/EzB3wSEo9MXBvR+VUgJR/HaUz5GIjY=;
+ b=nAnzBscGa+wgDadqZV6GQpuox43+GP7/e38Hmt5xA8euLvA5jnhVuHhLLGTQDqI7OT
+ jqwCW9Y9pPnGsMZVuaPpQQkSIKRbMBnH/GbipxIXmroucCVoecbJ+mJjXiuNTMUPw15p
+ dRgikdvJX95o7Mzpcvxnk7SdEkdWDhfFuN4Pf6y0zEH542nkpmoJTCG9+Dupzyz0mtBC
+ idG8K/WzXLSiFIU5hC83EGXWxDACH+6+02VyRKPpQpB71L4xnCckv1HSEDE4CSNf6AAA
+ jY2JteMCWM5c2MbmsOF3nICfPkiruvN716/wkMIAeNc8Zl4RSSGde0njK6QYPgdEU3jj
+ tUTQ==
+X-Gm-Message-State: AOJu0YxC62g1ziaUdqgOCWXHu3WnaXwqL2wDxVNF1BeumDWcZs3OJWZT
+ Qh4n14o/psDNWMI9KlNYogJbYqoQqPS7z8kHTQcqHxXcPHmYv6ltFR3C2j/f9qX/NMlD8IWG/52
+ b
+X-Google-Smtp-Source: AGHT+IHs92x3xf+ZTwwh0pG9Iug+PY7yk3F6/MmszFduc/R3keQYh/GpRWG3fVGG6Tjg/arGMzDjNg==
+X-Received: by 2002:adf:f1c4:0:b0:34a:5663:40b with SMTP id
+ z4-20020adff1c4000000b0034a5663040bmr4464045wro.3.1714041600512; 
+ Thu, 25 Apr 2024 03:40:00 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- h15-20020a056000000f00b003434c764f01sm19485768wrx.107.2024.04.25.03.40.14
+ h15-20020a056000000f00b003434c764f01sm19485768wrx.107.2024.04.25.03.40.00
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Apr 2024 03:40:14 -0700 (PDT)
+ Thu, 25 Apr 2024 03:40:00 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 29/37] scripts/coccinelle: New script to add ResetType to hold
- and exit phases
-Date: Thu, 25 Apr 2024 11:39:50 +0100
-Message-Id: <20240425103958.3237225-30-peter.maydell@linaro.org>
+Subject: [PULL 01/37] target/arm: Handle HCR_EL2 accesses for bits introduced
+ with FEAT_NMI
+Date: Thu, 25 Apr 2024 11:39:22 +0100
+Message-Id: <20240425103958.3237225-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240425103958.3237225-1-peter.maydell@linaro.org>
 References: <20240425103958.3237225-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,176 +94,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We pass a ResetType argument to the Resettable class enter phase
-method, but we don't pass it to hold and exit, even though the
-callsites have it readily available.  This means that if a device
-cared about the ResetType it would need to record it in the enter
-phase method to use later on.  We should pass the type to all three
-of the phase methods to avoid having to do that.
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-This coccinelle script adds the ResetType argument to the hold and
-exit phases of the Resettable interface.
+FEAT_NMI defines another three new bits in HCRX_EL2: TALLINT, HCRX_VINMI and
+HCRX_VFNMI. When the feature is enabled, allow these bits to be written in
+HCRX_EL2.
 
-The first part of the script (rules holdfn_assigned, holdfn_defined,
-exitfn_assigned, exitfn_defined) update implementations of the
-interface within device models, both to change the signature of their
-method implementations and to pass on the reset type when they invoke
-reset on some other device.
-
-The second part of the script is various special cases:
- * method callsites in resettable_phase_hold(), resettable_phase_exit()
-   and device_phases_reset()
- * updating the typedefs for the methods
- * isl_pmbus_vr.c has some code where one device's reset method directly
-   calls the implementation of a different device's method
-
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20240407081733.3231820-2-ruanjinjie@huawei.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Luc Michel <luc.michel@amd.com>
-Message-id: 20240412160809.1260625-4-peter.maydell@linaro.org
 ---
- scripts/coccinelle/reset-type.cocci | 133 ++++++++++++++++++++++++++++
- 1 file changed, 133 insertions(+)
- create mode 100644 scripts/coccinelle/reset-type.cocci
+ target/arm/cpu-features.h | 5 +++++
+ target/arm/helper.c       | 8 +++++++-
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/scripts/coccinelle/reset-type.cocci b/scripts/coccinelle/reset-type.cocci
-new file mode 100644
-index 00000000000..14abdd7bd0c
---- /dev/null
-+++ b/scripts/coccinelle/reset-type.cocci
-@@ -0,0 +1,133 @@
-+// Convert device code using three-phase reset to add a ResetType
-+// argument to implementations of ResettableHoldPhase and
-+// ResettableEnterPhase methods.
-+//
-+// Copyright Linaro Ltd 2024
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+//
-+// for dir in include hw target; do \
-+// spatch --macro-file scripts/cocci-macro-file.h \
-+//        --sp-file scripts/coccinelle/reset-type.cocci \
-+//        --keep-comments --smpl-spacing --in-place --include-headers \
-+//        --dir $dir; done
-+//
-+// This coccinelle script aims to produce a complete change that needs
-+// no human interaction, so as well as the generic "update device
-+// implementations of the hold and exit phase methods" it includes
-+// the special-case transformations needed for the core code and for
-+// one device model that does something a bit nonstandard. Those
-+// special cases are at the end of the file.
-+
-+// Look for where we use a function as a ResettableHoldPhase method,
-+// either by directly assigning it to phases.hold or by calling
-+// resettable_class_set_parent_phases, and remember the function name.
-+@ holdfn_assigned @
-+identifier enterfn, holdfn, exitfn;
-+identifier rc;
-+expression e;
-+@@
-+ResettableClass *rc;
-+...
-+(
-+ rc->phases.hold = holdfn;
-+|
-+ resettable_class_set_parent_phases(rc, enterfn, holdfn, exitfn, e);
-+)
-+
-+// Look for the definition of the function we found in holdfn_assigned,
-+// and add the new argument. If the function calls a hold function
-+// itself (probably chaining to the parent class reset) then add the
-+// new argument there too.
-+@ holdfn_defined @
-+identifier holdfn_assigned.holdfn;
-+typedef Object;
-+identifier obj;
-+expression parent;
-+@@
-+-holdfn(Object *obj)
-++holdfn(Object *obj, ResetType type)
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index e5758d9fbc8..b300d0446d8 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -681,6 +681,11 @@ static inline bool isar_feature_aa64_sme(const ARMISARegisters *id)
+     return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, SME) != 0;
+ }
+ 
++static inline bool isar_feature_aa64_nmi(const ARMISARegisters *id)
 +{
-+    <...
-+-    parent.hold(obj)
-++    parent.hold(obj, type)
-+    ...>
++    return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, NMI) != 0;
 +}
 +
-+// Similarly for ResettableExitPhase.
-+@ exitfn_assigned @
-+identifier enterfn, holdfn, exitfn;
-+identifier rc;
-+expression e;
-+@@
-+ResettableClass *rc;
-+...
-+(
-+ rc->phases.exit = exitfn;
-+|
-+ resettable_class_set_parent_phases(rc, enterfn, holdfn, exitfn, e);
-+)
-+@ exitfn_defined @
-+identifier exitfn_assigned.exitfn;
-+typedef Object;
-+identifier obj;
-+expression parent;
-+@@
-+-exitfn(Object *obj)
-++exitfn(Object *obj, ResetType type)
-+{
-+    <...
-+-    parent.exit(obj)
-++    parent.exit(obj, type)
-+    ...>
-+}
+ static inline bool isar_feature_aa64_tgran4_lpa2(const ARMISARegisters *id)
+ {
+     return FIELD_SEX64(id->id_aa64mmfr0, ID_AA64MMFR0, TGRAN4) >= 1;
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index a620481d7cf..7a25ea65c9a 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -6187,13 +6187,19 @@ bool el_is_in_host(CPUARMState *env, int el)
+ static void hcrx_write(CPUARMState *env, const ARMCPRegInfo *ri,
+                        uint64_t value)
+ {
++    ARMCPU *cpu = env_archcpu(env);
+     uint64_t valid_mask = 0;
+ 
+     /* FEAT_MOPS adds MSCEn and MCE2 */
+-    if (cpu_isar_feature(aa64_mops, env_archcpu(env))) {
++    if (cpu_isar_feature(aa64_mops, cpu)) {
+         valid_mask |= HCRX_MSCEN | HCRX_MCE2;
+     }
+ 
++    /* FEAT_NMI adds TALLINT, VINMI and VFNMI */
++    if (cpu_isar_feature(aa64_nmi, cpu)) {
++        valid_mask |= HCRX_TALLINT | HCRX_VINMI | HCRX_VFNMI;
++    }
 +
-+// SPECIAL CASES ONLY BELOW HERE
-+// We use a python scripted constraint on the position of the match
-+// to ensure that they only match in a particular function. See
-+// https://public-inbox.org/git/alpine.DEB.2.21.1808240652370.2344@hadrien/
-+// which recommends this as the way to do "match only in this function".
-+
-+// Special case: isl_pmbus_vr.c has some reset methods calling others directly
-+@ isl_pmbus_vr @
-+identifier obj;
-+@@
-+- isl_pmbus_vr_exit_reset(obj);
-++ isl_pmbus_vr_exit_reset(obj, type);
-+
-+// Special case: device_phases_reset() needs to pass RESET_TYPE_COLD
-+@ device_phases_reset_hold @
-+expression obj;
-+identifier rc;
-+identifier phase;
-+position p : script:python() { p[0].current_element == "device_phases_reset" };
-+@@
-+- rc->phases.phase(obj)@p
-++ rc->phases.phase(obj, RESET_TYPE_COLD)
-+
-+// Special case: in resettable_phase_hold() and resettable_phase_exit()
-+// we need to pass through the ResetType argument to the method being called
-+@ resettable_phase_hold @
-+expression obj;
-+identifier rc;
-+position p : script:python() { p[0].current_element == "resettable_phase_hold" };
-+@@
-+- rc->phases.hold(obj)@p
-++ rc->phases.hold(obj, type)
-+@ resettable_phase_exit @
-+expression obj;
-+identifier rc;
-+position p : script:python() { p[0].current_element == "resettable_phase_exit" };
-+@@
-+- rc->phases.exit(obj)@p
-++ rc->phases.exit(obj, type)
-+// Special case: the typedefs for the methods need to declare the new argument
-+@ phase_typedef_hold @
-+identifier obj;
-+@@
-+- typedef void (*ResettableHoldPhase)(Object *obj);
-++ typedef void (*ResettableHoldPhase)(Object *obj, ResetType type);
-+@ phase_typedef_exit @
-+identifier obj;
-+@@
-+- typedef void (*ResettableExitPhase)(Object *obj);
-++ typedef void (*ResettableExitPhase)(Object *obj, ResetType type);
+     /* Clear RES0 bits.  */
+     env->cp15.hcrx_el2 = value & valid_mask;
+ }
 -- 
 2.34.1
 
