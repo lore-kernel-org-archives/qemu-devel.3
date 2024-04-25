@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 905D2C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 13:23:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BB65C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 13:29:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzz3X-0004Mj-St; Thu, 25 Apr 2024 09:22:32 -0400
+	id 1rzz9K-0006VP-L1; Thu, 25 Apr 2024 09:28:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rzz3V-0004MV-Vf
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 09:22:30 -0400
-Received: from mgamail.intel.com ([192.198.163.16])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rzz9I-0006VA-TJ
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 09:28:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rzz3S-0001gT-FQ
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 09:22:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1714051346; x=1745587346;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=1yI1AmeOggJ3cHhFUvziR4XRUExHRkUgkfAFK+a/8B8=;
- b=IObXmK1ptl6OsVSZ2fL85hCbQFr37fPkvAbtaQ4XLi5cVwSf2D2JMZW0
- Pkv+DpE2RJ0Oq6aCjMW7wlp45o0bsy7nM/2U3zHItLbtya3necnDt+oOL
- ztaoBwZA6jbR9Yi8YXwOR2o3oB0NZa1BSwh4kJKfXXpZukerrRTy9PlaN
- 86pbsyAsjPBG/cl/XoSiULIh4zD8QoZs4uN0ch+9JdXWnfFHQHnXL2Bt8
- 2uswNrzZ5k3atBkCINoU3oMb9IXS/6OkT0VeYsOa6qWBzvZlvKgfNO/bW
- Ip/uOPsv5ZLyT+LLbYjU+VdcvgWv0bxWhOgH8Z5VPA+CfV4RclVUzDVEk A==;
-X-CSE-ConnectionGUID: T4h+2SguTw+jKhXiEgqXzg==
-X-CSE-MsgGUID: 7nQJGPqZSLeMkZW8AfL0ng==
-X-IronPort-AV: E=McAfee;i="6600,9927,11054"; a="10272208"
-X-IronPort-AV: E=Sophos;i="6.07,229,1708416000"; d="scan'208";a="10272208"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Apr 2024 06:22:20 -0700
-X-CSE-ConnectionGUID: Jrjz/c8KR+O0UnUDjsYFag==
-X-CSE-MsgGUID: pUqp5B0GQniwGLarYNEKaA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,229,1708416000"; d="scan'208";a="24942598"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa010.jf.intel.com with ESMTP; 25 Apr 2024 06:22:17 -0700
-Date: Thu, 25 Apr 2024 21:36:24 +0800
-From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rzz9G-0003Mp-1f
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 09:28:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714051704;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zkkFTc/UpDM91rjQJPokXNy2hlfyGRx5dAlfhCMuLrQ=;
+ b=I3DHooWTqo4u2QXJVOW0rLAq8XjaXCJlPSD/o6zQiKh1tzWGQivqc6ze2VeOlanwb/3RIR
+ 3OlP/fU1bCEE8rEFtxU7YjhEMjxMVH6oeFYfTD0oe5dATxyznk4UADPQECxC53ozhzU6XE
+ WCd2KOm0814PSkmy4dEnVjh2MOzUXq8=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-594-XreS7ilbONWj3whVUACUjw-1; Thu, 25 Apr 2024 09:28:21 -0400
+X-MC-Unique: XreS7ilbONWj3whVUACUjw-1
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D1222802352;
+ Thu, 25 Apr 2024 13:28:20 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.102])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 1A9DBAC68;
+ Thu, 25 Apr 2024 13:28:18 +0000 (UTC)
+Date: Thu, 25 Apr 2024 14:27:17 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Stefan Weil <sw@weilnetz.de>
+Cc: QEMU Developers <qemu-devel@nongnu.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Tim Wiederhake <twiederh@redhat.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH for-9.1 0/7] target/i386/kvm: Cleanup the kvmclock
- feature name
-Message-ID: <ZipcWGbYR2KCfmxp@intel.com>
-References: <20240329101954.3954987-1-zhao1.liu@linux.intel.com>
- <fb252e78-2e71-4422-9499-9eac69102eec@intel.com>
- <ZioDhpYUOEdGbWgE@intel.com>
- <eb5cfa25-6490-4b8d-8552-4be2662d15d2@intel.com>
- <ZiowbFCZ75LOgBMC@intel.com>
- <6ee5cb90-d299-4977-8a2f-529f78dc3913@intel.com>
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: Timeouts in CI jobs
+Message-ID: <ZipaNZ5JD_7pM6Xp@redhat.com>
+References: <CAFEAcA92aivDF-LjSrtZH6o4UtgrtcWnM2wuPZA5VOiN6j7KMA@mail.gmail.com>
+ <f5926850-670b-43fa-8011-c33ba45d8fc3@weilnetz.de>
+ <9692cfcb-ef59-4cec-8452-8bfb859e8a6c@weilnetz.de>
+ <50ee3a92-1bb5-4113-8558-281e78b0c2e3@weilnetz.de>
+ <Zik8s6_iNM8u0SZ6@redhat.com>
+ <ec748687-93eb-48cf-af47-419a4389ed6e@weilnetz.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <6ee5cb90-d299-4977-8a2f-529f78dc3913@intel.com>
-Received-SPF: none client-ip=192.198.163.16;
- envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ec748687-93eb-48cf-af47-419a4389ed6e@weilnetz.de>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,123 +89,107 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 25, 2024 at 08:04:46PM +0800, Xiaoyao Li wrote:
-> Date: Thu, 25 Apr 2024 20:04:46 +0800
-> From: Xiaoyao Li <xiaoyao.li@intel.com>
-> Subject: Re: [PATCH for-9.1 0/7] target/i386/kvm: Cleanup the kvmclock
->  feature name
+On Wed, Apr 24, 2024 at 08:10:19PM +0200, Stefan Weil wrote:
+> Am 24.04.24 um 19:09 schrieb Daniel P. Berrangé:
 > 
-> On 4/25/2024 6:29 PM, Zhao Liu wrote:
-> > On Thu, Apr 25, 2024 at 04:40:10PM +0800, Xiaoyao Li wrote:
-> > > Date: Thu, 25 Apr 2024 16:40:10 +0800
-> > > From: Xiaoyao Li <xiaoyao.li@intel.com>
-> > > Subject: Re: [PATCH for-9.1 0/7] target/i386/kvm: Cleanup the kvmclock
-> > >   feature name
+> > On Wed, Apr 24, 2024 at 06:27:58PM +0200, Stefan Weil via wrote:
+> > > I think the timeouts are caused by running too many parallel processes
+> > > during testing.
 > > > 
-> > > On 4/25/2024 3:17 PM, Zhao Liu wrote:
-> > > > Hi Xiaoyao,
-> > > > 
-> > > > On Wed, Apr 24, 2024 at 11:57:11PM +0800, Xiaoyao Li wrote:
-> > > > > Date: Wed, 24 Apr 2024 23:57:11 +0800
-> > > > > From: Xiaoyao Li <xiaoyao.li@intel.com>
-> > > > > Subject: Re: [PATCH for-9.1 0/7] target/i386/kvm: Cleanup the kvmclock
-> > > > >    feature name
-> > > > > 
-> > > > > On 3/29/2024 6:19 PM, Zhao Liu wrote:
-> > > > > > From: Zhao Liu <zhao1.liu@intel.com>
-> > > > > > 
-> > > > > > Hi list,
-> > > > > > 
-> > > > > > This series is based on Paolo's guest_phys_bits patchset [1].
-> > > > > > 
-> > > > > > Currently, the old and new kvmclocks have the same feature name
-> > > > > > "kvmclock" in FeatureWordInfo[FEAT_KVM].
-> > > > > > 
-> > > > > > When I tried to dig into the history of this unusual naming and fix it,
-> > > > > > I realized that Tim was already trying to rename it, so I picked up his
-> > > > > > renaming patch [2] (with a new commit message and other minor changes).
-> > > > > > 
-> > > > > > 13 years age, the same name was introduced in [3], and its main purpose
-> > > > > > is to make it easy for users to enable/disable 2 kvmclocks. Then, in
-> > > > > > 2012, Don tried to rename the new kvmclock, but the follow-up did not
-> > > > > > address Igor and Eduardo's comments about compatibility.
-> > > > > > 
-> > > > > > Tim [2], not long ago, and I just now, were both puzzled by the naming
-> > > > > > one after the other.
-> > > > > 
-> > > > > The commit message of [3] said the reason clearly:
-> > > > > 
-> > > > >     When we tweak flags involving this value - specially when we use "-",
-> > > > >     we have to act on both.
-> > > > > 
-> > > > > So you are trying to change it to "when people want to disable kvmclock,
-> > > > > they need to use '-kvmclock,-kvmclock2' instead of '-kvmclock'"
-> > > > > 
-> > > > > IMHO, I prefer existing code and I don't see much value of differentiating
-> > > > > them. If the current code puzzles you, then we can add comment to explain.
-> > > > 
-> > > > It's enough to just enable kvmclock2 for Guest; kvmclock (old) is
-> > > > redundant in the presence of kvmclock2.
-> > > > 
-> > > > So operating both feature bits at the same time is not a reasonable
-> > > > choice, we should only keep kvmclock2 for Guest. It's possible because
-> > > > the oldest linux (v4.5) which QEMU i386 supports has kvmclock2.
+> > > The CI uses parallel builds:
 > > > 
-> > > who said the oldest Linux QEMU supports is from 4.5? what about 2.x kernel?
-> > 
-> > For Host (docs/system/target-i386.rst).
-> > 
-> > > Besides, not only the Linux guest, whatever guest OS is, it will be broken
-> > > if the guest is using kvmclock and QEMU starts to drop support of kvmclock.
-> > 
-> > I'm not aware of any minimum version requirements for Guest supported
-> > by KVM, but there are no commitment.
+> > > make -j$(expr $(nproc) + 1) all check-build $MAKE_CHECK_ARGS
+> > Note that command is running both the compile and test phases of
+> > the job. Overcommitting CPUs for the compile phase is a good
+> > idea to keep CPUs busy while another process is waiting on
+> > I/O, and is almost always safe todo.
 > 
-> the common commitment is at least keeping backwards compatibility.
 > 
-> > > So, again, hard NAK to drop the support of kvmclock. It breaks existing
-> > > guests that use kvmclock. You cannot force people to upgrade their existing
-> > > VMs to use kvmclock2 instead of kvmclock.
-> > 
-> > I agree, legacy kvmclock can be left out, if the old kernel does not
-> > support kvmclock2 and strongly requires kvmclock, it can be enabled
-> > using 9.1 and earlier machines or legacy-kvmclock, as long as Host still
-> > supports it.
-> > 
-> > What's the gap in handling it this way? especially considering that
-> > kvmclock2 was introduced in v2.6.35, and earlier kernels are no longer
-> > maintained. The availability of the PV feature requires compatibility
-> > for both Host and Guest.
-> > 
-> > Anyway, the above discussion here is about future plans, and this series
-> > does not prevent any Guest from ignoring kvmclock2 in favor of kvmclock.
-> > 
-> > What this series is doing, i.e. separating the current two kvmclock and
-> > ensuring CPUID compatibility via legacy-kvmclock, could balance the
-> > compatibility requirements of the ancient (unmaintained kernel) with
-> > the need for future feature changes.
+> Thank you for your answer.
 > 
-> You introduce a user-visible change that people need to use
-> "-kvmclock,-kvmclock2" to totally disable kvmclock.
-> 
-> The only difference between kvmclock and kvmclock2 is the MSR index. And
-> from users' perspective, they don't care this difference. The existing usage
-> is simple. When I want kvmclock, use "+kvmclock". When I don't want it, use
-> "-kvmclock".
-> 
-> You are complicating things and I don't see a strong reason that we have to
-> do it.
->
+> Overcommitting for the build is safe, but in my experience the positive
+> effect is typically very small on modern hosts with fast disk I/O and large
+> buffer caches.
 
-Okay, only when old kvmclock deprecation occurs can the values (of
-renaming) be recognized, then I'll hold the renamed patches for now and
-only keep some of the other cleanups.
+Fine with typical developer machines, but the shared runners in
+gitlab are fairly resource constrained by comparison, and resources
+are often under contention from other VMs in their infra.
 
-Thanks for your review,
+> And there is also a negative impact because this requires scheduling with
+> process switches.
+> 
+> Therefore I am not so sure that overcommitting is a good idea, especially
+> not on cloud servers where the jobs are running in VMs.
 
--Zhao
+As a point of reference, 'ninja' defaults to '$nproc + 2'.
+
+> > 
+> > In the primary QEMU repo, we have a customer runner registered
+> > that uses Azure based VMs. Not sure on the resources we have
+> > configured for them offhand.
+> 
+> I was talking about the primary QEMU.
+> 
+> > The important thing there is that what you see for CI speed in
+> > your fork repo is not neccessarily a match for CI speed in QEMU
+> > upstream repo.
+> 
+> I did not run tests in my GitLab fork because I still have to figure out how
+> to do that.
+
+It is quite simple:
+
+  git remote add gitlab ssh://git@gitlab.com/<yourusername>/qemu
+  git push gitlab -o QEMU_CI=2
+
+this immediately runs all pipelines jobs. USe QEMU_CI=1 to not
+start any jobs, and let you manually start the subset you are
+interested in checking
+
+> My test environment was an older (= slow) VM with 4 cores. I tested with
+> different values for --num-processes. As expected higher values raised the
+> number of timeouts. And the most interesting result was that
+> `--num-processes 1` avoided timeouts, used less CPU time and did not
+> increase the duration.
+> 
+> > > In my tests setting --num-processes to a lower value not only avoided
+> > > timeouts but also reduced the processing overhead without increasing the
+> > > runtime.
+> > > 
+> > > Could we run all tests with `--num-processes 1`?
+> > The question is what impact that has on the overall job execution
+> > time. A lot of our jobs are already quite long, which is bad for
+> > the turnaround time of CI testing.  Reliable CI though is arguably
+> > the #1 priority though, otherwise developers cease trusting it.
+> > We need to find the balance between avoiding timeouts, while having
+> > the shortest practical job time.  The TCI job you show about came
+> > out at 22 minutes, which is not our worst job, so there is some
+> > scope for allowing it to run longer with less parallelism.
+> 
+> The TCI job terminates after less than 7 minutes in my test runs with less
+> parallelism.
+> 
+> Obviously there are tests which already do their own multithreading, and
+> maybe other tests run single threaded. So maybe we need different values for
+> `--num-processes` depending on the number of threads which the single tests
+> use?
+
+QEMU has differnt test suites too. The unit tests are likely safe
+to run fully parallel, but the block I/O tests and qtests are likely
+to benefit from serialization, since they all spawn many QEMU processes
+as children that will consume multiple CPUs, so we probably don't need
+to run the actually test suite in parallel to max out the CPUs. Still
+needs testing under gitlab CI to prove the theory.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
