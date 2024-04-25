@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B36DC10F15
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61BD5C41513
 	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 02:23:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzokt-0000TA-JM; Wed, 24 Apr 2024 22:22:35 -0400
+	id 1rzolD-0000a5-K9; Wed, 24 Apr 2024 22:22:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hao.xiang@linux.dev>)
- id 1rzokr-0000Sa-Lf
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 22:22:33 -0400
-Received: from out-188.mta1.migadu.com ([2001:41d0:203:375::bc])
+ id 1rzolB-0000ZF-A8
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 22:22:53 -0400
+Received: from out-174.mta1.migadu.com ([2001:41d0:203:375::ae])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hao.xiang@linux.dev>)
- id 1rzokn-0004qD-Ab
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 22:22:33 -0400
+ id 1rzol8-0005Vs-VY
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 22:22:53 -0400
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
  include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1714011747;
+ t=1714011769;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kjdVWecrwwPDQpy9+vetY0jaSQPOxwH/bMy/SbjAqvk=;
- b=Z8AJbAtg3CYBc5IL4HlxzguoZnLc7gnnRS1J4bnTDq346KvL4Tr40M0jiyiVmTJQsJzbB/
- uH7jT4GCflRk6gskgm7x3+Qv6K98WcrtoHe7lmbXcwLkpN5ZpxKojMQyaYLJ7Wo5WI3Ywv
- bCAXPTdmSHtiPB11SPNHcKNtXHU3Hp8=
+ bh=N/RsfKs4JwATvFtMGxilZWLtkW2M6AtYnhYyV482uxM=;
+ b=CRkVyU0b/z5LlKmh/GFAvpbK0jyX+FER3HbF606lVUATIMws6I5GUqj1PCg64LwDGAfH3s
+ 6tYEFoqetYMyzvp0JT/ltXD1Ae6CwOSqsQgp3BWVt6s0/nC5G1pfUB1vJJWyKo2W7F5Wpu
+ VuAvBDFrLVHx/+zoPf41udxRvVjtW1E=
 From: Hao Xiang <hao.xiang@linux.dev>
 To: marcandre.lureau@redhat.com, peterx@redhat.com, farosas@suse.de,
  armbru@redhat.com, lvivier@redhat.com, qemu-devel@nongnu.org
 Cc: Hao Xiang <hao.xiang@linux.dev>
-Subject: [PATCH v4 02/14] util/dsa: Add dependency idxd.
-Date: Thu, 25 Apr 2024 02:21:05 +0000
-Message-Id: <20240425022117.4035031-3-hao.xiang@linux.dev>
+Subject: [PATCH v4 11/14] migration/multifd: Add migration option set packet
+ size.
+Date: Thu, 25 Apr 2024 02:21:14 +0000
+Message-Id: <20240425022117.4035031-12-hao.xiang@linux.dev>
 In-Reply-To: <20240425022117.4035031-1-hao.xiang@linux.dev>
 References: <20240425022117.4035031-1-hao.xiang@linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=2001:41d0:203:375::bc;
- envelope-from=hao.xiang@linux.dev; helo=out-188.mta1.migadu.com
+Received-SPF: pass client-ip=2001:41d0:203:375::ae;
+ envelope-from=hao.xiang@linux.dev; helo=out-174.mta1.migadu.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -67,379 +68,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Idxd is the device driver for DSA (Intel Data Streaming
-Accelerator). The driver is fully functioning since Linux
-kernel 5.19. This change adds the driver's header file used
-for userspace development.
+The current multifd packet size is 128 * 4kb. This change adds
+an option to set the packet size. Both sender and receiver needs
+to set the same packet size for things to work.
 
 Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
 ---
- linux-headers/linux/idxd.h | 356 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 356 insertions(+)
- create mode 100644 linux-headers/linux/idxd.h
+ migration/options.c | 36 ++++++++++++++++++++++++++++++++++++
+ migration/options.h |  1 +
+ qapi/migration.json | 21 ++++++++++++++++++---
+ 3 files changed, 55 insertions(+), 3 deletions(-)
 
-diff --git a/linux-headers/linux/idxd.h b/linux-headers/linux/idxd.h
-new file mode 100644
-index 0000000000..1d553bedbd
---- /dev/null
-+++ b/linux-headers/linux/idxd.h
-@@ -0,0 +1,356 @@
-+/* SPDX-License-Identifier: LGPL-2.1 WITH Linux-syscall-note */
-+/* Copyright(c) 2019 Intel Corporation. All rights rsvd. */
-+#ifndef _USR_IDXD_H_
-+#define _USR_IDXD_H_
-+
-+#ifdef __KERNEL__
-+#include <linux/types.h>
-+#else
-+#include <stdint.h>
-+#endif
-+
-+/* Driver command error status */
-+enum idxd_scmd_stat {
-+	IDXD_SCMD_DEV_ENABLED = 0x80000010,
-+	IDXD_SCMD_DEV_NOT_ENABLED = 0x80000020,
-+	IDXD_SCMD_WQ_ENABLED = 0x80000021,
-+	IDXD_SCMD_DEV_DMA_ERR = 0x80020000,
-+	IDXD_SCMD_WQ_NO_GRP = 0x80030000,
-+	IDXD_SCMD_WQ_NO_NAME = 0x80040000,
-+	IDXD_SCMD_WQ_NO_SVM = 0x80050000,
-+	IDXD_SCMD_WQ_NO_THRESH = 0x80060000,
-+	IDXD_SCMD_WQ_PORTAL_ERR = 0x80070000,
-+	IDXD_SCMD_WQ_RES_ALLOC_ERR = 0x80080000,
-+	IDXD_SCMD_PERCPU_ERR = 0x80090000,
-+	IDXD_SCMD_DMA_CHAN_ERR = 0x800a0000,
-+	IDXD_SCMD_CDEV_ERR = 0x800b0000,
-+	IDXD_SCMD_WQ_NO_SWQ_SUPPORT = 0x800c0000,
-+	IDXD_SCMD_WQ_NONE_CONFIGURED = 0x800d0000,
-+	IDXD_SCMD_WQ_NO_SIZE = 0x800e0000,
-+	IDXD_SCMD_WQ_NO_PRIV = 0x800f0000,
-+	IDXD_SCMD_WQ_IRQ_ERR = 0x80100000,
-+	IDXD_SCMD_WQ_USER_NO_IOMMU = 0x80110000,
-+};
-+
-+#define IDXD_SCMD_SOFTERR_MASK	0x80000000
-+#define IDXD_SCMD_SOFTERR_SHIFT	16
-+
-+/* Descriptor flags */
-+#define IDXD_OP_FLAG_FENCE	0x0001
-+#define IDXD_OP_FLAG_BOF	0x0002
-+#define IDXD_OP_FLAG_CRAV	0x0004
-+#define IDXD_OP_FLAG_RCR	0x0008
-+#define IDXD_OP_FLAG_RCI	0x0010
-+#define IDXD_OP_FLAG_CRSTS	0x0020
-+#define IDXD_OP_FLAG_CR		0x0080
-+#define IDXD_OP_FLAG_CC		0x0100
-+#define IDXD_OP_FLAG_ADDR1_TCS	0x0200
-+#define IDXD_OP_FLAG_ADDR2_TCS	0x0400
-+#define IDXD_OP_FLAG_ADDR3_TCS	0x0800
-+#define IDXD_OP_FLAG_CR_TCS	0x1000
-+#define IDXD_OP_FLAG_STORD	0x2000
-+#define IDXD_OP_FLAG_DRDBK	0x4000
-+#define IDXD_OP_FLAG_DSTS	0x8000
-+
-+/* IAX */
-+#define IDXD_OP_FLAG_RD_SRC2_AECS	0x010000
-+#define IDXD_OP_FLAG_RD_SRC2_2ND	0x020000
-+#define IDXD_OP_FLAG_WR_SRC2_AECS_COMP	0x040000
-+#define IDXD_OP_FLAG_WR_SRC2_AECS_OVFL	0x080000
-+#define IDXD_OP_FLAG_SRC2_STS		0x100000
-+#define IDXD_OP_FLAG_CRC_RFC3720	0x200000
-+
-+/* Opcode */
-+enum dsa_opcode {
-+	DSA_OPCODE_NOOP = 0,
-+	DSA_OPCODE_BATCH,
-+	DSA_OPCODE_DRAIN,
-+	DSA_OPCODE_MEMMOVE,
-+	DSA_OPCODE_MEMFILL,
-+	DSA_OPCODE_COMPARE,
-+	DSA_OPCODE_COMPVAL,
-+	DSA_OPCODE_CR_DELTA,
-+	DSA_OPCODE_AP_DELTA,
-+	DSA_OPCODE_DUALCAST,
-+	DSA_OPCODE_CRCGEN = 0x10,
-+	DSA_OPCODE_COPY_CRC,
-+	DSA_OPCODE_DIF_CHECK,
-+	DSA_OPCODE_DIF_INS,
-+	DSA_OPCODE_DIF_STRP,
-+	DSA_OPCODE_DIF_UPDT,
-+	DSA_OPCODE_CFLUSH = 0x20,
-+};
-+
-+enum iax_opcode {
-+	IAX_OPCODE_NOOP = 0,
-+	IAX_OPCODE_DRAIN = 2,
-+	IAX_OPCODE_MEMMOVE,
-+	IAX_OPCODE_DECOMPRESS = 0x42,
-+	IAX_OPCODE_COMPRESS,
-+	IAX_OPCODE_CRC64,
-+	IAX_OPCODE_ZERO_DECOMP_32 = 0x48,
-+	IAX_OPCODE_ZERO_DECOMP_16,
-+	IAX_OPCODE_ZERO_COMP_32 = 0x4c,
-+	IAX_OPCODE_ZERO_COMP_16,
-+	IAX_OPCODE_SCAN = 0x50,
-+	IAX_OPCODE_SET_MEMBER,
-+	IAX_OPCODE_EXTRACT,
-+	IAX_OPCODE_SELECT,
-+	IAX_OPCODE_RLE_BURST,
-+	IAX_OPCODE_FIND_UNIQUE,
-+	IAX_OPCODE_EXPAND,
-+};
-+
-+/* Completion record status */
-+enum dsa_completion_status {
-+	DSA_COMP_NONE = 0,
-+	DSA_COMP_SUCCESS,
-+	DSA_COMP_SUCCESS_PRED,
-+	DSA_COMP_PAGE_FAULT_NOBOF,
-+	DSA_COMP_PAGE_FAULT_IR,
-+	DSA_COMP_BATCH_FAIL,
-+	DSA_COMP_BATCH_PAGE_FAULT,
-+	DSA_COMP_DR_OFFSET_NOINC,
-+	DSA_COMP_DR_OFFSET_ERANGE,
-+	DSA_COMP_DIF_ERR,
-+	DSA_COMP_BAD_OPCODE = 0x10,
-+	DSA_COMP_INVALID_FLAGS,
-+	DSA_COMP_NOZERO_RESERVE,
-+	DSA_COMP_XFER_ERANGE,
-+	DSA_COMP_DESC_CNT_ERANGE,
-+	DSA_COMP_DR_ERANGE,
-+	DSA_COMP_OVERLAP_BUFFERS,
-+	DSA_COMP_DCAST_ERR,
-+	DSA_COMP_DESCLIST_ALIGN,
-+	DSA_COMP_INT_HANDLE_INVAL,
-+	DSA_COMP_CRA_XLAT,
-+	DSA_COMP_CRA_ALIGN,
-+	DSA_COMP_ADDR_ALIGN,
-+	DSA_COMP_PRIV_BAD,
-+	DSA_COMP_TRAFFIC_CLASS_CONF,
-+	DSA_COMP_PFAULT_RDBA,
-+	DSA_COMP_HW_ERR1,
-+	DSA_COMP_HW_ERR_DRB,
-+	DSA_COMP_TRANSLATION_FAIL,
-+};
-+
-+enum iax_completion_status {
-+	IAX_COMP_NONE = 0,
-+	IAX_COMP_SUCCESS,
-+	IAX_COMP_PAGE_FAULT_IR = 0x04,
-+	IAX_COMP_ANALYTICS_ERROR = 0x0a,
-+	IAX_COMP_OUTBUF_OVERFLOW,
-+	IAX_COMP_BAD_OPCODE = 0x10,
-+	IAX_COMP_INVALID_FLAGS,
-+	IAX_COMP_NOZERO_RESERVE,
-+	IAX_COMP_INVALID_SIZE,
-+	IAX_COMP_OVERLAP_BUFFERS = 0x16,
-+	IAX_COMP_INT_HANDLE_INVAL = 0x19,
-+	IAX_COMP_CRA_XLAT,
-+	IAX_COMP_CRA_ALIGN,
-+	IAX_COMP_ADDR_ALIGN,
-+	IAX_COMP_PRIV_BAD,
-+	IAX_COMP_TRAFFIC_CLASS_CONF,
-+	IAX_COMP_PFAULT_RDBA,
-+	IAX_COMP_HW_ERR1,
-+	IAX_COMP_HW_ERR_DRB,
-+	IAX_COMP_TRANSLATION_FAIL,
-+	IAX_COMP_PRS_TIMEOUT,
-+	IAX_COMP_WATCHDOG,
-+	IAX_COMP_INVALID_COMP_FLAG = 0x30,
-+	IAX_COMP_INVALID_FILTER_FLAG,
-+	IAX_COMP_INVALID_INPUT_SIZE,
-+	IAX_COMP_INVALID_NUM_ELEMS,
-+	IAX_COMP_INVALID_SRC1_WIDTH,
-+	IAX_COMP_INVALID_INVERT_OUT,
-+};
-+
-+#define DSA_COMP_STATUS_MASK		0x7f
-+#define DSA_COMP_STATUS_WRITE		0x80
-+
-+struct dsa_hw_desc {
-+	uint32_t	pasid:20;
-+	uint32_t	rsvd:11;
-+	uint32_t	priv:1;
-+	uint32_t	flags:24;
-+	uint32_t	opcode:8;
-+	uint64_t	completion_addr;
-+	union {
-+		uint64_t	src_addr;
-+		uint64_t	rdback_addr;
-+		uint64_t	pattern;
-+		uint64_t	desc_list_addr;
-+	};
-+	union {
-+		uint64_t	dst_addr;
-+		uint64_t	rdback_addr2;
-+		uint64_t	src2_addr;
-+		uint64_t	comp_pattern;
-+	};
-+	union {
-+		uint32_t	xfer_size;
-+		uint32_t	desc_count;
-+	};
-+	uint16_t	int_handle;
-+	uint16_t	rsvd1;
-+	union {
-+		uint8_t		expected_res;
-+		/* create delta record */
-+		struct {
-+			uint64_t	delta_addr;
-+			uint32_t	max_delta_size;
-+			uint32_t 	delt_rsvd;
-+			uint8_t 	expected_res_mask;
-+		};
-+		uint32_t	delta_rec_size;
-+		uint64_t	dest2;
-+		/* CRC */
-+		struct {
-+			uint32_t	crc_seed;
-+			uint32_t	crc_rsvd;
-+			uint64_t	seed_addr;
-+		};
-+		/* DIF check or strip */
-+		struct {
-+			uint8_t		src_dif_flags;
-+			uint8_t		dif_chk_res;
-+			uint8_t		dif_chk_flags;
-+			uint8_t		dif_chk_res2[5];
-+			uint32_t	chk_ref_tag_seed;
-+			uint16_t	chk_app_tag_mask;
-+			uint16_t	chk_app_tag_seed;
-+		};
-+		/* DIF insert */
-+		struct {
-+			uint8_t		dif_ins_res;
-+			uint8_t		dest_dif_flag;
-+			uint8_t		dif_ins_flags;
-+			uint8_t		dif_ins_res2[13];
-+			uint32_t	ins_ref_tag_seed;
-+			uint16_t	ins_app_tag_mask;
-+			uint16_t	ins_app_tag_seed;
-+		};
-+		/* DIF update */
-+		struct {
-+			uint8_t		src_upd_flags;
-+			uint8_t		upd_dest_flags;
-+			uint8_t		dif_upd_flags;
-+			uint8_t		dif_upd_res[5];
-+			uint32_t	src_ref_tag_seed;
-+			uint16_t	src_app_tag_mask;
-+			uint16_t	src_app_tag_seed;
-+			uint32_t	dest_ref_tag_seed;
-+			uint16_t	dest_app_tag_mask;
-+			uint16_t	dest_app_tag_seed;
-+		};
-+
-+		uint8_t		op_specific[24];
-+	};
-+} __attribute__((packed));
-+
-+struct iax_hw_desc {
-+	uint32_t        pasid:20;
-+	uint32_t        rsvd:11;
-+	uint32_t        priv:1;
-+	uint32_t        flags:24;
-+	uint32_t        opcode:8;
-+	uint64_t        completion_addr;
-+	uint64_t        src1_addr;
-+	uint64_t        dst_addr;
-+	uint32_t        src1_size;
-+	uint16_t        int_handle;
-+	union {
-+		uint16_t        compr_flags;
-+		uint16_t        decompr_flags;
-+	};
-+	uint64_t        src2_addr;
-+	uint32_t        max_dst_size;
-+	uint32_t        src2_size;
-+	uint32_t	filter_flags;
-+	uint32_t	num_inputs;
-+} __attribute__((packed));
-+
-+struct dsa_raw_desc {
-+	uint64_t	field[8];
-+} __attribute__((packed));
-+
+diff --git a/migration/options.c b/migration/options.c
+index dc8642df81..a9deb079eb 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -79,6 +79,12 @@
+ #define DEFAULT_MIGRATE_ANNOUNCE_ROUNDS    5
+ #define DEFAULT_MIGRATE_ANNOUNCE_STEP    100
+ 
 +/*
-+ * The status field will be modified by hardware, therefore it should be
-+ * volatile and prevent the compiler from optimize the read.
++ * Parameter for multifd packet size.
 + */
-+struct dsa_completion_record {
-+	volatile uint8_t	status;
-+	union {
-+		uint8_t		result;
-+		uint8_t		dif_status;
-+	};
-+	uint16_t		rsvd;
-+	uint32_t		bytes_completed;
-+	uint64_t		fault_addr;
-+	union {
-+		/* common record */
-+		struct {
-+			uint32_t	invalid_flags:24;
-+			uint32_t	rsvd2:8;
-+		};
++#define DEFAULT_MIGRATE_MULTIFD_PACKET_SIZE (128 * 4 * 1024)
++#define MAX_MIGRATE_MULTIFD_PACKET_SIZE (1023 * 4 * 1024)
 +
-+		uint32_t	delta_rec_size;
-+		uint64_t	crc_val;
+ #define DEFINE_PROP_MIG_CAP(name, x)             \
+     DEFINE_PROP_BOOL(name, MigrationState, capabilities[x], false)
+ 
+@@ -184,6 +190,9 @@ Property migration_properties[] = {
+                        ZERO_PAGE_DETECTION_MULTIFD),
+     DEFINE_PROP_STRING("multifd-dsa-accel", MigrationState,
+                        parameters.multifd_dsa_accel),
++    DEFINE_PROP_SIZE("multifd-packet-size", MigrationState,
++                     parameters.multifd_packet_size,
++                     DEFAULT_MIGRATE_MULTIFD_PACKET_SIZE),
+ 
+     /* Migration capabilities */
+     DEFINE_PROP_MIG_CAP("x-xbzrle", MIGRATION_CAPABILITY_XBZRLE),
+@@ -879,6 +888,13 @@ int migrate_multifd_channels(void)
+     return s->parameters.multifd_channels;
+ }
+ 
++uint64_t migrate_multifd_packet_size(void)
++{
++    MigrationState *s = migrate_get_current();
 +
-+		/* DIF check & strip */
-+		struct {
-+			uint32_t	dif_chk_ref_tag;
-+			uint16_t	dif_chk_app_tag_mask;
-+			uint16_t	dif_chk_app_tag;
-+		};
++    return s->parameters.multifd_packet_size;
++}
 +
-+		/* DIF insert */
-+		struct {
-+			uint64_t	dif_ins_res;
-+			uint32_t	dif_ins_ref_tag;
-+			uint16_t	dif_ins_app_tag_mask;
-+			uint16_t	dif_ins_app_tag;
-+		};
+ MultiFDCompression migrate_multifd_compression(void)
+ {
+     MigrationState *s = migrate_get_current();
+@@ -1031,6 +1047,8 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
+     params->x_checkpoint_delay = s->parameters.x_checkpoint_delay;
+     params->has_block_incremental = true;
+     params->block_incremental = s->parameters.block_incremental;
++    params->has_multifd_packet_size = true;
++    params->multifd_packet_size = s->parameters.multifd_packet_size;
+     params->has_multifd_channels = true;
+     params->multifd_channels = s->parameters.multifd_channels;
+     params->has_multifd_compression = true;
+@@ -1094,6 +1112,7 @@ void migrate_params_init(MigrationParameters *params)
+     params->has_downtime_limit = true;
+     params->has_x_checkpoint_delay = true;
+     params->has_block_incremental = true;
++    params->has_multifd_packet_size = true;
+     params->has_multifd_channels = true;
+     params->has_multifd_compression = true;
+     params->has_multifd_zlib_level = true;
+@@ -1195,6 +1214,17 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
+ 
+     /* x_checkpoint_delay is now always positive */
+ 
++    if (params->has_multifd_packet_size &&
++        ((params->multifd_packet_size < DEFAULT_MIGRATE_MULTIFD_PACKET_SIZE) ||
++            (params->multifd_packet_size >  MAX_MIGRATE_MULTIFD_PACKET_SIZE) ||
++            (params->multifd_packet_size % qemu_target_page_size() != 0))) {
++        error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
++                    "multifd_packet_size",
++                    "a value between 524288 and 4190208, "
++                    "must be a multiple of guest VM's page size.");
++        return false;
++    }
 +
-+		/* DIF update */
-+		struct {
-+			uint32_t	dif_upd_src_ref_tag;
-+			uint16_t	dif_upd_src_app_tag_mask;
-+			uint16_t	dif_upd_src_app_tag;
-+			uint32_t	dif_upd_dest_ref_tag;
-+			uint16_t	dif_upd_dest_app_tag_mask;
-+			uint16_t	dif_upd_dest_app_tag;
-+		};
-+
-+		uint8_t		op_specific[16];
-+	};
-+} __attribute__((packed));
-+
-+struct dsa_raw_completion_record {
-+	uint64_t	field[4];
-+} __attribute__((packed));
-+
-+struct iax_completion_record {
-+	volatile uint8_t        status;
-+	uint8_t                 error_code;
-+	uint16_t                rsvd;
-+	uint32_t                bytes_completed;
-+	uint64_t                fault_addr;
-+	uint32_t                invalid_flags;
-+	uint32_t                rsvd2;
-+	uint32_t                output_size;
-+	uint8_t                 output_bits;
-+	uint8_t                 rsvd3;
-+	uint16_t                xor_csum;
-+	uint32_t                crc;
-+	uint32_t                min;
-+	uint32_t                max;
-+	uint32_t                sum;
-+	uint64_t                rsvd4[2];
-+} __attribute__((packed));
-+
-+struct iax_raw_completion_record {
-+	uint64_t	field[8];
-+} __attribute__((packed));
-+
-+#endif
+     if (params->has_multifd_channels && (params->multifd_channels < 1)) {
+         error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
+                    "multifd_channels",
+@@ -1374,6 +1404,9 @@ static void migrate_params_test_apply(MigrateSetParameters *params,
+     if (params->has_block_incremental) {
+         dest->block_incremental = params->block_incremental;
+     }
++    if (params->has_multifd_packet_size) {
++        dest->multifd_packet_size = params->multifd_packet_size;
++    }
+     if (params->has_multifd_channels) {
+         dest->multifd_channels = params->multifd_channels;
+     }
+@@ -1524,6 +1557,9 @@ static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
+                     " use blockdev-mirror with NBD instead");
+         s->parameters.block_incremental = params->block_incremental;
+     }
++    if (params->has_multifd_packet_size) {
++        s->parameters.multifd_packet_size = params->multifd_packet_size;
++    }
+     if (params->has_multifd_channels) {
+         s->parameters.multifd_channels = params->multifd_channels;
+     }
+diff --git a/migration/options.h b/migration/options.h
+index 1cb3393be9..23995e6608 100644
+--- a/migration/options.h
++++ b/migration/options.h
+@@ -92,6 +92,7 @@ const char *migrate_tls_hostname(void);
+ uint64_t migrate_xbzrle_cache_size(void);
+ ZeroPageDetection migrate_zero_page_detection(void);
+ const char *migrate_multifd_dsa_accel(void);
++uint64_t migrate_multifd_packet_size(void);
+ 
+ /* parameters setters */
+ 
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 934fa8839e..39d609c394 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -920,6 +920,10 @@
+ #     characters. Setting this string to an empty string means disabling
+ #     DSA accelerator offloading. Defaults to an empty string. (since 9.2)
+ #
++# @multifd-packet-size: Packet size in bytes used to migrate data.
++#     The value needs to be a multiple of guest VM's page size.
++#     The default value is 524288 and max value is 4190208. (Since 9.2)
++#
+ # Features:
+ #
+ # @deprecated: Member @block-incremental is deprecated.  Use
+@@ -954,7 +958,8 @@
+            { 'name': 'x-vcpu-dirty-limit-period', 'features': ['unstable'] },
+            'vcpu-dirty-limit',
+            'mode',
+-           'zero-page-detection'] }
++           'zero-page-detection',
++           'multifd-packet-size'] }
+ 
+ ##
+ # @MigrateSetParameters:
+@@ -1134,6 +1139,10 @@
+ #     characters. Setting this string to an empty string means disabling
+ #     DSA accelerator offloading. Defaults to an empty string. (since 9.2)
+ #
++# @multifd-packet-size: Packet size in bytes used to migrate data.
++#     The value needs to be a multiple of guest VM's page size.
++#     The default value is 524288 and max value is 4190208. (Since 9.2)
++#
+ # Features:
+ #
+ # @deprecated: Member @block-incremental is deprecated.  Use
+@@ -1189,7 +1198,8 @@
+             '*vcpu-dirty-limit': 'uint64',
+             '*mode': 'MigMode',
+             '*zero-page-detection': 'ZeroPageDetection',
+-            '*multifd-dsa-accel': 'StrOrNull'} }
++            '*multifd-dsa-accel': 'StrOrNull',
++            '*multifd-packet-size' : 'uint64'} }
+ 
+ ##
+ # @migrate-set-parameters:
+@@ -1373,6 +1383,10 @@
+ #     characters. Setting this string to an empty string means disabling
+ #     DSA accelerator offloading. Defaults to an empty string. (since 9.2)
+ #
++# @multifd-packet-size: Packet size in bytes used to migrate data.
++#     The value needs to be a multiple of guest VM's page size.
++#     The default value is 524288 and max value is 4190208. (Since 9.2)
++#
+ # Features:
+ #
+ # @deprecated: Member @block-incremental is deprecated.  Use
+@@ -1425,7 +1439,8 @@
+             '*vcpu-dirty-limit': 'uint64',
+             '*mode': 'MigMode',
+             '*zero-page-detection': 'ZeroPageDetection',
+-            '*multifd-dsa-accel': 'str'} }
++            '*multifd-dsa-accel': 'str',
++            '*multifd-packet-size': 'uint64'} }
+ 
+ ##
+ # @query-migrate-parameters:
 -- 
 2.30.2
 
