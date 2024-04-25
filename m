@@ -4,72 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89427C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 09:03:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 531F5C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 09:22:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzv06-0003Nr-6g; Thu, 25 Apr 2024 05:02:42 -0400
+	id 1rzvIf-0000oL-TL; Thu, 25 Apr 2024 05:21:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rzv04-0003MZ-MD
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 05:02:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rzv02-0001nc-1A
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 05:02:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714035756;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+C5YBph1gPYL7SiqnOtT3ZSLnOZz+k2TjkkuGQcsy28=;
- b=Ri+YFFe1/TvhLyeH4OP8XDJK+AyyoM56RYbagNwtgkk3BKYolsXLiuhah6yc4mQL1pROAn
- LxnAhbge6Xcd9QCh/FmUXvvD3QDlFxiqQXU8dvNF0slAUggxTw3+wHUZq0G71s64DAHNcO
- ksDffzEqiBnxHIDbqgumY1B+kFnQtws=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-246-HurBy0ciNzu_3bETNknDVA-1; Thu, 25 Apr 2024 05:02:32 -0400
-X-MC-Unique: HurBy0ciNzu_3bETNknDVA-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id ABA098065D2;
- Thu, 25 Apr 2024 09:02:31 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.39.195.34])
- by smtp.corp.redhat.com (Postfix) with ESMTP id EB7472166AE1;
- Thu, 25 Apr 2024 09:02:29 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: Thomas Huth <thuth@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Tony Krowiak <akrowiak@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Subject: [PATCH v2 1/4] vfio/ap: Use g_autofree variable in
- vfio_ap_register_irq_notifier()
-Date: Thu, 25 Apr 2024 11:02:11 +0200
-Message-ID: <20240425090214.400194-2-clg@redhat.com>
-In-Reply-To: <20240425090214.400194-1-clg@redhat.com>
-References: <20240425090214.400194-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1rzvIa-0000lZ-Hn
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 05:21:50 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1rzvIW-0002LX-Jy
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 05:21:47 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-34a7e47d164so581609f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 02:21:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1714036902; x=1714641702; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=97rYkhbb8lYmwpMP8YUYjOvJg+pJSX7ahBwYa+G+Qkc=;
+ b=Bn1YPmmt/y7J59rHzTJKOtID3fwpwejuHnELO7YZBbEL8rQRxo3vHTHmIaXDf4fWwj
+ hEHbSPp/KeyPjd/itAJQ3VEysk+ZFc2jki4SuxBM7ti80FhOVTDnR0hjep7Y+uycfoGQ
+ dLsVt+iQEd9tK9fSGx6ixjk6r97Yhrib4Qdja0ZuwqAYRTXp2yJW+8kwDe0hVQdYL/w/
+ of/O3Rz629npCeDVMjKX8T6S8NHYQ3xvRAltuNT4IZwkb0hMXam3ZKDd/UBuix+j+ck5
+ m3TRSW2ug3mbt6EHb08ZQLYMLWH+bRJOV3zMkD36l+4SeT07ArCtMPvoo3lXKpcwTxx7
+ QAEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714036902; x=1714641702;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=97rYkhbb8lYmwpMP8YUYjOvJg+pJSX7ahBwYa+G+Qkc=;
+ b=bSQvyl30rYWN1N6mJS2oYuJSxtcBlB9dx9MC8BKRXD330adxb7p9jWuD2HPr6e8Vwp
+ 9N8bIj56H2G/2rmWLlyjigkY7Pe/qLJpwWx+VvGqAH5h0cHiUq3uXVoElVU+jfV/wAGE
+ r5GeKCA24aHCMjFRSxdic1TTC4ajG9SXakEXrkci//vCKffiZhI/E6HhqZSzOZX0HtjF
+ rkWv1+PFonIGFR+g/MG2fp2rppiOo8nj72WWvo37NbakOggqjCquLhrpxp1fsW1BFpag
+ Uvi56GV55tkY7ywJO99+Rv3mlRmmcmQN+Xykyj6MyjKD8HEIxz0HfINZM2JaKsCorOo9
+ 8aSg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV8E/MTpuwxyb46hnNZYeRIChWXrGY5HrFwPKE0PN/hHkyCzkHfnnqZ8CtzDCCyOIPDAHd5Bu/K/+H8aGy3olHYzc1mWMU=
+X-Gm-Message-State: AOJu0YzWr6qupserW6F7lvNuyfNaW8LBk4kTZYbYLgmwr7uxgXxixaY0
+ 84TczS8/2Djl0jhkBYBKmjRZJ6RKHDFBG3jPdvgApjMRSdRljYAPoA+O4L7mf8Y=
+X-Google-Smtp-Source: AGHT+IHbmkwgeDmeLwuqPcYAlRYkHqVS2J/oQznlUnUrF/RobpzymoE9nzwh0RIC7lSo97DMZxH66g==
+X-Received: by 2002:a05:6000:912:b0:348:b435:273b with SMTP id
+ cw18-20020a056000091200b00348b435273bmr3966548wrb.54.1714036902024; 
+ Thu, 25 Apr 2024 02:21:42 -0700 (PDT)
+Received: from localhost (cst2-173-16.cust.vodafone.cz. [31.30.173.16])
+ by smtp.gmail.com with ESMTPSA id
+ p17-20020a5d4591000000b0034658db39d7sm19493234wrq.8.2024.04.25.02.21.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 25 Apr 2024 02:21:41 -0700 (PDT)
+Date: Thu, 25 Apr 2024 11:21:40 +0200
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Alexei Filippov <alexei.filippov@syntacore.com>
+Cc: alistair.francis@wdc.com, alistair23@gmail.com, 
+ apatel@ventanamicro.com, bin.meng@windriver.com, dbarboza@ventanamicro.com, 
+ liwei1518@gmail.com, palmer@dabbelt.com, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com
+Subject: Re: [PATCH v6] target/riscv/kvm/kvm-cpu.c: kvm_riscv_handle_sbi()
+ fail with vendor-specific SBI
+Message-ID: <20240425-7ae473e720f2879f34c957f6@orel>
+References: <20240422-e78b28f00a168518c5d4937a@orel>
+ <20240422114254.13839-1-alexei.filippov@syntacore.com>
+ <20240422-fd9fc07462257b6da42d8eb5@orel>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.668,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240422-fd9fc07462257b6da42d8eb5@orel>
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=ajones@ventanamicro.com; helo=mail-wr1-x436.google.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,53 +100,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- hw/vfio/ap.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+On Mon, Apr 22, 2024 at 02:31:36PM +0200, Andrew Jones wrote:
+> On Mon, Apr 22, 2024 at 02:42:54PM +0300, Alexei Filippov wrote:
+> > kvm_riscv_handle_sbi() may return not supported return code to not
+> > trigger qemu abort with vendor-specific sbi.
+> > 
+> > Add new error path to provide proper error in case of
+> > qemu_chr_fe_read_all() may not return sizeof(ch).
+> 
+> I think something more along the lines of what I wrote in my previous
+> reply will help clarify this more. Here's what I wrote
+> 
+> """
+> Exactly zero just means we failed to read input, which can happen, so
+> telling the SBI caller we failed to read, but telling the caller of this
+> function that we successfully emulated the SBI call, is correct. However,
+> anything else, other than sizeof(ch), means something unexpected happened,
+> so we should indeed return an error from this function.
+> """
+> 
+> Thanks,
+> drew
+> 
+> > 
+> > Added SBI related return code's defines.
+> > 
+> > Signed-off-by: Alexei Filippov <alexei.filippov@syntacore.com>
+> > ---
+> > Changes since v4-5:
+> > 		-Added new error path in case of qemu_chr_fe_read_all() may not
+> > 		return sizeof(ch).
+> > 		-Added more comments in commit message.
+> >  target/riscv/kvm/kvm-cpu.c         | 10 ++++++----
+> >  target/riscv/sbi_ecall_interface.h | 12 ++++++++++++
+> >  2 files changed, 18 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> > index f9dbc18a76..5bb7b74d03 100644
+> > --- a/target/riscv/kvm/kvm-cpu.c
+> > +++ b/target/riscv/kvm/kvm-cpu.c
+> > @@ -1173,16 +1173,18 @@ static int kvm_riscv_handle_sbi(CPUState *cs, struct kvm_run *run)
+> >          ret = qemu_chr_fe_read_all(serial_hd(0)->be, &ch, sizeof(ch));
+> >          if (ret == sizeof(ch)) {
+> >              run->riscv_sbi.ret[0] = ch;
+> > +            ret = 0;
+> > +        } else if (ret == 0) {
+> > +            run->riscv_sbi.ret[0] = SBI_ERR_FAILURE;
 
-diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-index 7c4caa5938636937680fec87e999249ac84a4498..03f8ffaa5e2bf13cf8daa2f44aa4cf17809abd94 100644
---- a/hw/vfio/ap.c
-+++ b/hw/vfio/ap.c
-@@ -77,7 +77,7 @@ static void vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
-     size_t argsz;
-     IOHandler *fd_read;
-     EventNotifier *notifier;
--    struct vfio_irq_info *irq_info;
-+    g_autofree struct vfio_irq_info *irq_info = NULL;
-     VFIODevice *vdev = &vapdev->vdev;
- 
-     switch (irq) {
-@@ -104,14 +104,14 @@ static void vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
-     if (ioctl(vdev->fd, VFIO_DEVICE_GET_IRQ_INFO,
-               irq_info) < 0 || irq_info->count < 1) {
-         error_setg_errno(errp, errno, "vfio: Error getting irq info");
--        goto out_free_info;
-+        return;
-     }
- 
-     if (event_notifier_init(notifier, 0)) {
-         error_setg_errno(errp, errno,
-                          "vfio: Unable to init event notifier for irq (%d)",
-                          irq);
--        goto out_free_info;
-+        return;
-     }
- 
-     fd = event_notifier_get_fd(notifier);
-@@ -122,10 +122,6 @@ static void vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
-         qemu_set_fd_handler(fd, NULL, NULL, vapdev);
-         event_notifier_cleanup(notifier);
-     }
--
--out_free_info:
--    g_free(irq_info);
--
- }
- 
- static void vfio_ap_unregister_irq_notifier(VFIOAPDevice *vapdev,
--- 
-2.44.0
+I'd prefer we still explicitly assign ret[0] to -1 here since that's what
+the spec explicitly says.
 
+Thanks,
+drew
+
+> >          } else {
+> > -            run->riscv_sbi.ret[0] = -1;
+> > +            ret = -1;
+> >          }
+> > -        ret = 0;
+> >          break;
+> >      default:
+> >          qemu_log_mask(LOG_UNIMP,
+> > -                      "%s: un-handled SBI EXIT, specific reasons is %lu\n",
+> > +                      "%s: Unhandled SBI exit with extension-id %lu\n"
+> >                        __func__, run->riscv_sbi.extension_id);
+> > -        ret = -1;
+> > +        run->riscv_sbi.ret[0] = SBI_ERR_NOT_SUPPORTED;
+> >          break;
+> >      }
+> >      return ret;
+> > diff --git a/target/riscv/sbi_ecall_interface.h b/target/riscv/sbi_ecall_interface.h
+> > index 43899d08f6..a2e21d9b8c 100644
+> > --- a/target/riscv/sbi_ecall_interface.h
+> > +++ b/target/riscv/sbi_ecall_interface.h
+> > @@ -69,4 +69,16 @@
+> >  #define SBI_EXT_VENDOR_END              0x09FFFFFF
+> >  /* clang-format on */
+> >  
+> > +/* SBI return error codes */
+> > +#define SBI_SUCCESS                  0
+> > +#define SBI_ERR_FAILURE             -1
+> > +#define SBI_ERR_NOT_SUPPORTED       -2
+> > +#define SBI_ERR_INVALID_PARAM       -3
+> > +#define SBI_ERR_DENIED              -4
+> > +#define SBI_ERR_INVALID_ADDRESS     -5
+> > +#define SBI_ERR_ALREADY_AVAILABLE   -6
+> > +#define SBI_ERR_ALREADY_STARTED     -7
+> > +#define SBI_ERR_ALREADY_STOPPED     -8
+> > +#define SBI_ERR_NO_SHMEM            -9
+> > +
+> >  #endif
+> > -- 
+> > 2.34.1
+> > 
 
