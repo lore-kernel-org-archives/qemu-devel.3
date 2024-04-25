@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61BD5C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 589AEC4345F
 	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 02:23:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzolD-0000a5-K9; Wed, 24 Apr 2024 22:22:55 -0400
+	id 1rzol4-0000XL-Bg; Wed, 24 Apr 2024 22:22:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hao.xiang@linux.dev>)
- id 1rzolB-0000ZF-A8
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 22:22:53 -0400
-Received: from out-174.mta1.migadu.com ([2001:41d0:203:375::ae])
+ id 1rzokz-0000W4-TZ
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 22:22:42 -0400
+Received: from out-182.mta1.migadu.com ([2001:41d0:203:375::b6])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hao.xiang@linux.dev>)
- id 1rzol8-0005Vs-VY
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 22:22:53 -0400
+ id 1rzokx-00058U-BM
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 22:22:41 -0400
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
  include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1714011769;
+ t=1714011757;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=N/RsfKs4JwATvFtMGxilZWLtkW2M6AtYnhYyV482uxM=;
- b=CRkVyU0b/z5LlKmh/GFAvpbK0jyX+FER3HbF606lVUATIMws6I5GUqj1PCg64LwDGAfH3s
- 6tYEFoqetYMyzvp0JT/ltXD1Ae6CwOSqsQgp3BWVt6s0/nC5G1pfUB1vJJWyKo2W7F5Wpu
- VuAvBDFrLVHx/+zoPf41udxRvVjtW1E=
+ bh=vCK0OaAzn2uiGL4qe3G1NlR2NavXKytCE3U+haCGbzE=;
+ b=DSp9ta4bOcDDmjxiLijpgb9lvc6kITQke3RhLpkMRlT/uxLyoups1Nn9UASqvjWpMKG1eE
+ AwxNcym3+uI1kZxRp6HJeLQOLiB7E3UFSuzp/jo52p/X6t7aP+iWSr63U5w+ctMaRB7iKd
+ Yj6G2zKGR+SIpEBJu7/wi++PEuYeC/g=
 From: Hao Xiang <hao.xiang@linux.dev>
 To: marcandre.lureau@redhat.com, peterx@redhat.com, farosas@suse.de,
  armbru@redhat.com, lvivier@redhat.com, qemu-devel@nongnu.org
-Cc: Hao Xiang <hao.xiang@linux.dev>
-Subject: [PATCH v4 11/14] migration/multifd: Add migration option set packet
- size.
-Date: Thu, 25 Apr 2024 02:21:14 +0000
-Message-Id: <20240425022117.4035031-12-hao.xiang@linux.dev>
+Cc: Hao Xiang <hao.xiang@linux.dev>,
+	Bryan Zhang <bryan.zhang@bytedance.com>
+Subject: [PATCH v4 06/14] util/dsa: Implement zero page checking in DSA task.
+Date: Thu, 25 Apr 2024 02:21:09 +0000
+Message-Id: <20240425022117.4035031-7-hao.xiang@linux.dev>
 In-Reply-To: <20240425022117.4035031-1-hao.xiang@linux.dev>
 References: <20240425022117.4035031-1-hao.xiang@linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=2001:41d0:203:375::ae;
- envelope-from=hao.xiang@linux.dev; helo=out-174.mta1.migadu.com
+Received-SPF: pass client-ip=2001:41d0:203:375::b6;
+ envelope-from=hao.xiang@linux.dev; helo=out-182.mta1.migadu.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -68,192 +68,357 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The current multifd packet size is 128 * 4kb. This change adds
-an option to set the packet size. Both sender and receiver needs
-to set the same packet size for things to work.
+Create DSA task with operation code DSA_OPCODE_COMPVAL.
+Here we create two types of DSA tasks, a single DSA task and
+a batch DSA task. Batch DSA task reduces task submission overhead
+and hence should be the default option. However, due to the way DSA
+hardware works, a DSA batch task must contain at least two individual
+tasks. There are times we need to submit a single task and hence a
+single DSA task submission is also required.
 
 Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
+Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
 ---
- migration/options.c | 36 ++++++++++++++++++++++++++++++++++++
- migration/options.h |  1 +
- qapi/migration.json | 21 ++++++++++++++++++---
- 3 files changed, 55 insertions(+), 3 deletions(-)
+ include/qemu/dsa.h |  18 ++++
+ util/dsa.c         | 247 +++++++++++++++++++++++++++++++++++++++++----
+ 2 files changed, 244 insertions(+), 21 deletions(-)
 
-diff --git a/migration/options.c b/migration/options.c
-index dc8642df81..a9deb079eb 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -79,6 +79,12 @@
- #define DEFAULT_MIGRATE_ANNOUNCE_ROUNDS    5
- #define DEFAULT_MIGRATE_ANNOUNCE_STEP    100
+diff --git a/include/qemu/dsa.h b/include/qemu/dsa.h
+index 2513192a2b..645e6fc367 100644
+--- a/include/qemu/dsa.h
++++ b/include/qemu/dsa.h
+@@ -73,6 +73,24 @@ void dsa_cleanup(void);
+  */
+ bool dsa_is_running(void);
  
-+/*
-+ * Parameter for multifd packet size.
++/**
++ * @brief Initializes a buffer zero batch task.
++ *
++ * @param task A pointer to the batch task to initialize.
++ * @param results A pointer to an array of zero page checking results.
++ * @param batch_size The number of DSA tasks in the batch.
 + */
-+#define DEFAULT_MIGRATE_MULTIFD_PACKET_SIZE (128 * 4 * 1024)
-+#define MAX_MIGRATE_MULTIFD_PACKET_SIZE (1023 * 4 * 1024)
++void
++buffer_zero_batch_task_init(struct dsa_batch_task *task,
++                            bool *results, int batch_size);
 +
- #define DEFINE_PROP_MIG_CAP(name, x)             \
-     DEFINE_PROP_BOOL(name, MigrationState, capabilities[x], false)
++/**
++ * @brief Performs the proper cleanup on a DSA batch task.
++ *
++ * @param task A pointer to the batch task to cleanup.
++ */
++void buffer_zero_batch_task_destroy(struct dsa_batch_task *task);
++
+ #else
  
-@@ -184,6 +190,9 @@ Property migration_properties[] = {
-                        ZERO_PAGE_DETECTION_MULTIFD),
-     DEFINE_PROP_STRING("multifd-dsa-accel", MigrationState,
-                        parameters.multifd_dsa_accel),
-+    DEFINE_PROP_SIZE("multifd-packet-size", MigrationState,
-+                     parameters.multifd_packet_size,
-+                     DEFAULT_MIGRATE_MULTIFD_PACKET_SIZE),
+ static inline bool dsa_is_running(void)
+diff --git a/util/dsa.c b/util/dsa.c
+index 003c4f47d9..9db4cfcf1d 100644
+--- a/util/dsa.c
++++ b/util/dsa.c
+@@ -76,6 +76,7 @@ uint64_t max_retry_count;
+ static struct dsa_device_group dsa_group;
+ static struct dsa_completion_thread completion_thread;
  
-     /* Migration capabilities */
-     DEFINE_PROP_MIG_CAP("x-xbzrle", MIGRATION_CAPABILITY_XBZRLE),
-@@ -879,6 +888,13 @@ int migrate_multifd_channels(void)
-     return s->parameters.multifd_channels;
++static void buffer_zero_dsa_completion(void *context);
+ 
+ /**
+  * @brief This function opens a DSA device's work queue and
+@@ -207,7 +208,6 @@ dsa_device_group_start(struct dsa_device_group *group)
+  *
+  * @param group A pointer to the DSA device group.
+  */
+-__attribute__((unused))
+ static void
+ dsa_device_group_stop(struct dsa_device_group *group)
+ {
+@@ -243,7 +243,6 @@ dsa_device_group_cleanup(struct dsa_device_group *group)
+  * @return struct dsa_device* A pointer to the next available DSA device
+  *         in the group.
+  */
+-__attribute__((unused))
+ static struct dsa_device *
+ dsa_device_group_get_next_device(struct dsa_device_group *group)
+ {
+@@ -320,7 +319,6 @@ dsa_task_enqueue(struct dsa_device_group *group,
+  * @param group A pointer to the DSA device group.
+  * @return dsa_batch_task* The DSA task being dequeued.
+  */
+-__attribute__((unused))
+ static struct dsa_batch_task *
+ dsa_task_dequeue(struct dsa_device_group *group)
+ {
+@@ -378,22 +376,6 @@ submit_wi_int(void *wq, struct dsa_hw_desc *descriptor)
+     return 0;
  }
  
-+uint64_t migrate_multifd_packet_size(void)
+-/**
+- * @brief Synchronously submits a DSA work item to the
+- *        device work queue.
+- *
+- * @param wq A pointer to the DSA worjk queue's device memory.
+- * @param descriptor A pointer to the DSA work item descriptor.
+- *
+- * @return int Zero if successful, non-zero otherwise.
+- */
+-__attribute__((unused))
+-static int
+-submit_wi(void *wq, struct dsa_hw_desc *descriptor)
+-{
+-    return submit_wi_int(wq, descriptor);
+-}
+-
+ /**
+  * @brief Asynchronously submits a DSA work item to the
+  *        device work queue.
+@@ -402,7 +384,6 @@ submit_wi(void *wq, struct dsa_hw_desc *descriptor)
+  *
+  * @return int Zero if successful, non-zero otherwise.
+  */
+-__attribute__((unused))
+ static int
+ submit_wi_async(struct dsa_batch_task *task)
+ {
+@@ -431,7 +412,6 @@ submit_wi_async(struct dsa_batch_task *task)
+  *
+  * @return int Zero if successful, non-zero otherwise.
+  */
+-__attribute__((unused))
+ static int
+ submit_batch_wi_async(struct dsa_batch_task *batch_task)
+ {
+@@ -713,6 +693,231 @@ static void dsa_completion_thread_stop(void *opaque)
+     qemu_sem_destroy(&thread_context->sem_init_done);
+ }
+ 
++/**
++ * @brief Initializes a buffer zero comparison DSA task.
++ *
++ * @param descriptor A pointer to the DSA task descriptor.
++ * @param completion A pointer to the DSA task completion record.
++ */
++static void
++buffer_zero_task_init_int(struct dsa_hw_desc *descriptor,
++                          struct dsa_completion_record *completion)
 +{
-+    MigrationState *s = migrate_get_current();
-+
-+    return s->parameters.multifd_packet_size;
++    descriptor->opcode = DSA_OPCODE_COMPVAL;
++    descriptor->flags = IDXD_OP_FLAG_RCR | IDXD_OP_FLAG_CRAV;
++    descriptor->comp_pattern = (uint64_t)0;
++    descriptor->completion_addr = (uint64_t)completion;
 +}
 +
- MultiFDCompression migrate_multifd_compression(void)
- {
-     MigrationState *s = migrate_get_current();
-@@ -1031,6 +1047,8 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
-     params->x_checkpoint_delay = s->parameters.x_checkpoint_delay;
-     params->has_block_incremental = true;
-     params->block_incremental = s->parameters.block_incremental;
-+    params->has_multifd_packet_size = true;
-+    params->multifd_packet_size = s->parameters.multifd_packet_size;
-     params->has_multifd_channels = true;
-     params->multifd_channels = s->parameters.multifd_channels;
-     params->has_multifd_compression = true;
-@@ -1094,6 +1112,7 @@ void migrate_params_init(MigrationParameters *params)
-     params->has_downtime_limit = true;
-     params->has_x_checkpoint_delay = true;
-     params->has_block_incremental = true;
-+    params->has_multifd_packet_size = true;
-     params->has_multifd_channels = true;
-     params->has_multifd_compression = true;
-     params->has_multifd_zlib_level = true;
-@@ -1195,6 +1214,17 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
- 
-     /* x_checkpoint_delay is now always positive */
- 
-+    if (params->has_multifd_packet_size &&
-+        ((params->multifd_packet_size < DEFAULT_MIGRATE_MULTIFD_PACKET_SIZE) ||
-+            (params->multifd_packet_size >  MAX_MIGRATE_MULTIFD_PACKET_SIZE) ||
-+            (params->multifd_packet_size % qemu_target_page_size() != 0))) {
-+        error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
-+                    "multifd_packet_size",
-+                    "a value between 524288 and 4190208, "
-+                    "must be a multiple of guest VM's page size.");
-+        return false;
++/**
++ * @brief Initializes a buffer zero batch task.
++ *
++ * @param task A pointer to the batch task to initialize.
++ * @param results A pointer to an array of zero page checking results.
++ * @param batch_size The number of DSA tasks in the batch.
++ */
++void
++buffer_zero_batch_task_init(struct dsa_batch_task *task,
++                            bool *results, int batch_size)
++{
++    int descriptors_size = sizeof(*task->descriptors) * batch_size;
++    memset(task, 0, sizeof(*task));
++
++    task->descriptors =
++        (struct dsa_hw_desc *)qemu_memalign(64, descriptors_size);
++    memset(task->descriptors, 0, descriptors_size);
++    task->completions = (struct dsa_completion_record *)qemu_memalign(
++        32, sizeof(*task->completions) * batch_size);
++    task->results = results;
++    task->batch_size = batch_size;
++
++    task->batch_completion.status = DSA_COMP_NONE;
++    task->batch_descriptor.completion_addr = (uint64_t)&task->batch_completion;
++    /* TODO: Ensure that we never send a batch with count <= 1 */
++    task->batch_descriptor.desc_count = 0;
++    task->batch_descriptor.opcode = DSA_OPCODE_BATCH;
++    task->batch_descriptor.flags = IDXD_OP_FLAG_RCR | IDXD_OP_FLAG_CRAV;
++    task->batch_descriptor.desc_list_addr = (uintptr_t)task->descriptors;
++    task->status = DSA_TASK_READY;
++    task->group = &dsa_group;
++    task->device = dsa_device_group_get_next_device(&dsa_group);
++
++    for (int i = 0; i < task->batch_size; i++) {
++        buffer_zero_task_init_int(&task->descriptors[i],
++                                  &task->completions[i]);
 +    }
 +
-     if (params->has_multifd_channels && (params->multifd_channels < 1)) {
-         error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
-                    "multifd_channels",
-@@ -1374,6 +1404,9 @@ static void migrate_params_test_apply(MigrateSetParameters *params,
-     if (params->has_block_incremental) {
-         dest->block_incremental = params->block_incremental;
-     }
-+    if (params->has_multifd_packet_size) {
-+        dest->multifd_packet_size = params->multifd_packet_size;
++    qemu_sem_init(&task->sem_task_complete, 0);
++    task->completion_callback = buffer_zero_dsa_completion;
++}
++
++/**
++ * @brief Performs the proper cleanup on a DSA batch task.
++ *
++ * @param task A pointer to the batch task to cleanup.
++ */
++void
++buffer_zero_batch_task_destroy(struct dsa_batch_task *task)
++{
++    qemu_vfree(task->descriptors);
++    qemu_vfree(task->completions);
++    task->results = NULL;
++
++    qemu_sem_destroy(&task->sem_task_complete);
++}
++
++/**
++ * @brief Resets a buffer zero comparison DSA batch task.
++ *
++ * @param task A pointer to the batch task.
++ * @param count The number of DSA tasks this batch task will contain.
++ */
++static void
++buffer_zero_batch_task_reset(struct dsa_batch_task *task, size_t count)
++{
++    task->batch_completion.status = DSA_COMP_NONE;
++    task->batch_descriptor.desc_count = count;
++    task->task_type = DSA_BATCH_TASK;
++    task->status = DSA_TASK_READY;
++}
++
++/**
++ * @brief Sets a buffer zero comparison DSA task.
++ *
++ * @param descriptor A pointer to the DSA task descriptor.
++ * @param buf A pointer to the memory buffer.
++ * @param len The length of the buffer.
++ */
++static void
++buffer_zero_task_set_int(struct dsa_hw_desc *descriptor,
++                         const void *buf,
++                         size_t len)
++{
++    struct dsa_completion_record *completion =
++        (struct dsa_completion_record *)descriptor->completion_addr;
++
++    descriptor->xfer_size = len;
++    descriptor->src_addr = (uintptr_t)buf;
++    completion->status = 0;
++    completion->result = 0;
++}
++
++/**
++ * @brief Resets a buffer zero comparison DSA batch task.
++ *
++ * @param task A pointer to the DSA batch task.
++ */
++static void
++buffer_zero_task_reset(struct dsa_batch_task *task)
++{
++    task->completions[0].status = DSA_COMP_NONE;
++    task->task_type = DSA_TASK;
++    task->status = DSA_TASK_READY;
++}
++
++/**
++ * @brief Sets a buffer zero comparison DSA task.
++ *
++ * @param task A pointer to the DSA task.
++ * @param buf A pointer to the memory buffer.
++ * @param len The buffer length.
++ */
++static void
++buffer_zero_task_set(struct dsa_batch_task *task,
++                     const void *buf,
++                     size_t len)
++{
++    buffer_zero_task_reset(task);
++    buffer_zero_task_set_int(&task->descriptors[0], buf, len);
++}
++
++/**
++ * @brief Sets a buffer zero comparison batch task.
++ *
++ * @param batch_task A pointer to the batch task.
++ * @param buf An array of memory buffers.
++ * @param count The number of buffers in the array.
++ * @param len The length of the buffers.
++ */
++static void
++buffer_zero_batch_task_set(struct dsa_batch_task *batch_task,
++                           const void **buf, size_t count, size_t len)
++{
++    assert(count > 0);
++    assert(count <= batch_task->batch_size);
++
++    buffer_zero_batch_task_reset(batch_task, count);
++    for (int i = 0; i < count; i++) {
++        buffer_zero_task_set_int(&batch_task->descriptors[i], buf[i], len);
 +    }
-     if (params->has_multifd_channels) {
-         dest->multifd_channels = params->multifd_channels;
-     }
-@@ -1524,6 +1557,9 @@ static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
-                     " use blockdev-mirror with NBD instead");
-         s->parameters.block_incremental = params->block_incremental;
-     }
-+    if (params->has_multifd_packet_size) {
-+        s->parameters.multifd_packet_size = params->multifd_packet_size;
-+    }
-     if (params->has_multifd_channels) {
-         s->parameters.multifd_channels = params->multifd_channels;
-     }
-diff --git a/migration/options.h b/migration/options.h
-index 1cb3393be9..23995e6608 100644
---- a/migration/options.h
-+++ b/migration/options.h
-@@ -92,6 +92,7 @@ const char *migrate_tls_hostname(void);
- uint64_t migrate_xbzrle_cache_size(void);
- ZeroPageDetection migrate_zero_page_detection(void);
- const char *migrate_multifd_dsa_accel(void);
-+uint64_t migrate_multifd_packet_size(void);
- 
- /* parameters setters */
- 
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 934fa8839e..39d609c394 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -920,6 +920,10 @@
- #     characters. Setting this string to an empty string means disabling
- #     DSA accelerator offloading. Defaults to an empty string. (since 9.2)
- #
-+# @multifd-packet-size: Packet size in bytes used to migrate data.
-+#     The value needs to be a multiple of guest VM's page size.
-+#     The default value is 524288 and max value is 4190208. (Since 9.2)
-+#
- # Features:
- #
- # @deprecated: Member @block-incremental is deprecated.  Use
-@@ -954,7 +958,8 @@
-            { 'name': 'x-vcpu-dirty-limit-period', 'features': ['unstable'] },
-            'vcpu-dirty-limit',
-            'mode',
--           'zero-page-detection'] }
-+           'zero-page-detection',
-+           'multifd-packet-size'] }
- 
- ##
- # @MigrateSetParameters:
-@@ -1134,6 +1139,10 @@
- #     characters. Setting this string to an empty string means disabling
- #     DSA accelerator offloading. Defaults to an empty string. (since 9.2)
- #
-+# @multifd-packet-size: Packet size in bytes used to migrate data.
-+#     The value needs to be a multiple of guest VM's page size.
-+#     The default value is 524288 and max value is 4190208. (Since 9.2)
-+#
- # Features:
- #
- # @deprecated: Member @block-incremental is deprecated.  Use
-@@ -1189,7 +1198,8 @@
-             '*vcpu-dirty-limit': 'uint64',
-             '*mode': 'MigMode',
-             '*zero-page-detection': 'ZeroPageDetection',
--            '*multifd-dsa-accel': 'StrOrNull'} }
-+            '*multifd-dsa-accel': 'StrOrNull',
-+            '*multifd-packet-size' : 'uint64'} }
- 
- ##
- # @migrate-set-parameters:
-@@ -1373,6 +1383,10 @@
- #     characters. Setting this string to an empty string means disabling
- #     DSA accelerator offloading. Defaults to an empty string. (since 9.2)
- #
-+# @multifd-packet-size: Packet size in bytes used to migrate data.
-+#     The value needs to be a multiple of guest VM's page size.
-+#     The default value is 524288 and max value is 4190208. (Since 9.2)
-+#
- # Features:
- #
- # @deprecated: Member @block-incremental is deprecated.  Use
-@@ -1425,7 +1439,8 @@
-             '*vcpu-dirty-limit': 'uint64',
-             '*mode': 'MigMode',
-             '*zero-page-detection': 'ZeroPageDetection',
--            '*multifd-dsa-accel': 'str'} }
-+            '*multifd-dsa-accel': 'str',
-+            '*multifd-packet-size': 'uint64'} }
- 
- ##
- # @query-migrate-parameters:
++}
++
++/**
++ * @brief Asychronously perform a buffer zero DSA operation.
++ *
++ * @param task A pointer to the batch task structure.
++ * @param buf A pointer to the memory buffer.
++ * @param len The length of the memory buffer.
++ *
++ * @return int Zero if successful, otherwise an appropriate error code.
++ */
++__attribute__((unused))
++static int
++buffer_zero_dsa_async(struct dsa_batch_task *task,
++                      const void *buf, size_t len)
++{
++    buffer_zero_task_set(task, buf, len);
++
++    return submit_wi_async(task);
++}
++
++/**
++ * @brief Sends a memory comparison batch task to a DSA device and wait
++ *        for completion.
++ *
++ * @param batch_task The batch task to be submitted to DSA device.
++ * @param buf An array of memory buffers to check for zero.
++ * @param count The number of buffers.
++ * @param len The buffer length.
++ */
++__attribute__((unused))
++static int
++buffer_zero_dsa_batch_async(struct dsa_batch_task *batch_task,
++                            const void **buf, size_t count, size_t len)
++{
++    assert(count <= batch_task->batch_size);
++    buffer_zero_batch_task_set(batch_task, buf, count, len);
++
++    return submit_batch_wi_async(batch_task);
++}
++
++/**
++ * @brief The completion callback function for buffer zero
++ *        comparison DSA task completion.
++ *
++ * @param context A pointer to the callback context.
++ */
++static void
++buffer_zero_dsa_completion(void *context)
++{
++    assert(context != NULL);
++
++    struct dsa_batch_task *task = (struct dsa_batch_task *)context;
++    qemu_sem_post(&task->sem_task_complete);
++}
++
++/**
++ * @brief Wait for the asynchronous DSA task to complete.
++ *
++ * @param batch_task A pointer to the buffer zero comparison batch task.
++ */
++__attribute__((unused))
++static void
++buffer_zero_dsa_wait(struct dsa_batch_task *batch_task)
++{
++    qemu_sem_wait(&batch_task->sem_task_complete);
++}
++
+ /**
+  * @brief Check if DSA is running.
+  *
 -- 
 2.30.2
 
