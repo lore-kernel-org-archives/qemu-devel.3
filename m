@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 589AEC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 02:23:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAA66C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 02:23:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzol4-0000XL-Bg; Wed, 24 Apr 2024 22:22:46 -0400
+	id 1rzol9-0000Yq-Qg; Wed, 24 Apr 2024 22:22:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hao.xiang@linux.dev>)
- id 1rzokz-0000W4-TZ
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 22:22:42 -0400
-Received: from out-182.mta1.migadu.com ([2001:41d0:203:375::b6])
+ id 1rzol8-0000Yf-4l
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 22:22:50 -0400
+Received: from out-172.mta1.migadu.com ([2001:41d0:203:375::ac])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hao.xiang@linux.dev>)
- id 1rzokx-00058U-BM
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 22:22:41 -0400
+ id 1rzol5-0005Oc-Tq
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 22:22:49 -0400
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
  include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1714011757;
+ t=1714011766;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vCK0OaAzn2uiGL4qe3G1NlR2NavXKytCE3U+haCGbzE=;
- b=DSp9ta4bOcDDmjxiLijpgb9lvc6kITQke3RhLpkMRlT/uxLyoups1Nn9UASqvjWpMKG1eE
- AwxNcym3+uI1kZxRp6HJeLQOLiB7E3UFSuzp/jo52p/X6t7aP+iWSr63U5w+ctMaRB7iKd
- Yj6G2zKGR+SIpEBJu7/wi++PEuYeC/g=
+ bh=TyXscLmfoHanQlIuNZkg8+4DhXkI75Cog5suPvjmYdI=;
+ b=F2zyZnilK80+knG+VXmNz8VTZVfz+39KbG1lLD25J8BJKm6sxtlYattU1fMw7YJSU/vBKU
+ /BltPXWZjULEwmOhXYRPwXcKCjB0zGQufQwS/KmXi8Xxx6/CPzA6iMPcxXEuzJuIuS7USD
+ 02FnLbUFfz/v/cUuhOfoGCgRpoHthUc=
 From: Hao Xiang <hao.xiang@linux.dev>
 To: marcandre.lureau@redhat.com, peterx@redhat.com, farosas@suse.de,
  armbru@redhat.com, lvivier@redhat.com, qemu-devel@nongnu.org
-Cc: Hao Xiang <hao.xiang@linux.dev>,
-	Bryan Zhang <bryan.zhang@bytedance.com>
-Subject: [PATCH v4 06/14] util/dsa: Implement zero page checking in DSA task.
-Date: Thu, 25 Apr 2024 02:21:09 +0000
-Message-Id: <20240425022117.4035031-7-hao.xiang@linux.dev>
+Cc: Hao Xiang <hao.xiang@linux.dev>
+Subject: [PATCH v4 10/14] migration/multifd: Enable DSA offloading in multifd
+ sender path.
+Date: Thu, 25 Apr 2024 02:21:13 +0000
+Message-Id: <20240425022117.4035031-11-hao.xiang@linux.dev>
 In-Reply-To: <20240425022117.4035031-1-hao.xiang@linux.dev>
 References: <20240425022117.4035031-1-hao.xiang@linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=2001:41d0:203:375::b6;
- envelope-from=hao.xiang@linux.dev; helo=out-182.mta1.migadu.com
+Received-SPF: pass client-ip=2001:41d0:203:375::ac;
+ envelope-from=hao.xiang@linux.dev; helo=out-172.mta1.migadu.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -68,357 +68,263 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Create DSA task with operation code DSA_OPCODE_COMPVAL.
-Here we create two types of DSA tasks, a single DSA task and
-a batch DSA task. Batch DSA task reduces task submission overhead
-and hence should be the default option. However, due to the way DSA
-hardware works, a DSA batch task must contain at least two individual
-tasks. There are times we need to submit a single task and hence a
-single DSA task submission is also required.
+Multifd sender path gets an array of pages queued by the migration
+thread. It performs zero page checking on every page in the array.
+The pages are classfied as either a zero page or a normal page. This
+change uses Intel DSA to offload the zero page checking from CPU to
+the DSA accelerator. The sender thread submits a batch of pages to DSA
+hardware and waits for the DSA completion thread to signal for work
+completion.
 
 Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
-Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
 ---
- include/qemu/dsa.h |  18 ++++
- util/dsa.c         | 247 +++++++++++++++++++++++++++++++++++++++++----
- 2 files changed, 244 insertions(+), 21 deletions(-)
+ migration/multifd-zero-page.c | 99 +++++++++++++++++++++++++++++++++--
+ migration/multifd.c           | 27 +++++++++-
+ migration/multifd.h           |  1 +
+ 3 files changed, 120 insertions(+), 7 deletions(-)
 
-diff --git a/include/qemu/dsa.h b/include/qemu/dsa.h
-index 2513192a2b..645e6fc367 100644
---- a/include/qemu/dsa.h
-+++ b/include/qemu/dsa.h
-@@ -73,6 +73,24 @@ void dsa_cleanup(void);
-  */
- bool dsa_is_running(void);
- 
-+/**
-+ * @brief Initializes a buffer zero batch task.
-+ *
-+ * @param task A pointer to the batch task to initialize.
-+ * @param results A pointer to an array of zero page checking results.
-+ * @param batch_size The number of DSA tasks in the batch.
-+ */
-+void
-+buffer_zero_batch_task_init(struct dsa_batch_task *task,
-+                            bool *results, int batch_size);
-+
-+/**
-+ * @brief Performs the proper cleanup on a DSA batch task.
-+ *
-+ * @param task A pointer to the batch task to cleanup.
-+ */
-+void buffer_zero_batch_task_destroy(struct dsa_batch_task *task);
-+
- #else
- 
- static inline bool dsa_is_running(void)
-diff --git a/util/dsa.c b/util/dsa.c
-index 003c4f47d9..9db4cfcf1d 100644
---- a/util/dsa.c
-+++ b/util/dsa.c
-@@ -76,6 +76,7 @@ uint64_t max_retry_count;
- static struct dsa_device_group dsa_group;
- static struct dsa_completion_thread completion_thread;
- 
-+static void buffer_zero_dsa_completion(void *context);
+diff --git a/migration/multifd-zero-page.c b/migration/multifd-zero-page.c
+index e1b8370f88..4f426289e4 100644
+--- a/migration/multifd-zero-page.c
++++ b/migration/multifd-zero-page.c
+@@ -37,25 +37,83 @@ static void swap_page_offset(ram_addr_t *pages_offset, int a, int b)
+ }
  
  /**
-  * @brief This function opens a DSA device's work queue and
-@@ -207,7 +208,6 @@ dsa_device_group_start(struct dsa_device_group *group)
+- * multifd_send_zero_page_detect: Perform zero page detection on all pages.
++ * zero_page_detect_cpu: Perform zero page detection using CPU.
   *
-  * @param group A pointer to the DSA device group.
+  * Sorts normal pages before zero pages in p->pages->offset and updates
+  * p->pages->normal_num.
+  *
+  * @param p A pointer to the send params.
   */
--__attribute__((unused))
- static void
- dsa_device_group_stop(struct dsa_device_group *group)
+-void multifd_send_zero_page_detect(MultiFDSendParams *p)
++static void zero_page_detect_cpu(MultiFDSendParams *p)
  {
-@@ -243,7 +243,6 @@ dsa_device_group_cleanup(struct dsa_device_group *group)
-  * @return struct dsa_device* A pointer to the next available DSA device
-  *         in the group.
-  */
--__attribute__((unused))
- static struct dsa_device *
- dsa_device_group_get_next_device(struct dsa_device_group *group)
+     MultiFDPages_t *pages = p->pages;
+     RAMBlock *rb = pages->block;
+     int i = 0;
+     int j = pages->num - 1;
+ 
+-    if (!multifd_zero_page_enabled()) {
+-        pages->normal_num = pages->num;
++    /*
++     * Sort the page offset array by moving all normal pages to
++     * the left and all zero pages to the right of the array.
++     */
++    while (i <= j) {
++        uint64_t offset = pages->offset[i];
++
++        if (!buffer_is_zero(rb->host + offset, p->page_size)) {
++            i++;
++            continue;
++        }
++
++        swap_page_offset(pages->offset, i, j);
++        ram_release_page(rb->idstr, offset);
++        j--;
++    }
++
++    pages->normal_num = i;
++}
++
++
++#ifdef CONFIG_DSA_OPT
++
++static void swap_result(bool *results, int a, int b)
++{
++    bool temp;
++
++    if (a == b) {
+         return;
+     }
+ 
++    temp = results[a];
++    results[a] = results[b];
++    results[b] = temp;
++}
++
++/**
++ * zero_page_detect_dsa: Perform zero page detection using
++ * Intel Data Streaming Accelerator (DSA).
++ *
++ * Sorts normal pages before zero pages in p->pages->offset and updates
++ * p->pages->normal_num.
++ *
++ * @param p A pointer to the send params.
++ */
++static void zero_page_detect_dsa(MultiFDSendParams *p)
++{
++    MultiFDPages_t *pages = p->pages;
++    RAMBlock *rb = pages->block;
++    bool *results = p->batch_task->results;
++
++    for (int i = 0; i < p->pages->num; i++) {
++        p->batch_task->addr[i] = (ram_addr_t)(rb->host + p->pages->offset[i]);
++    }
++
++    buffer_is_zero_dsa_batch_async(p->batch_task,
++                                   (const void **)p->batch_task->addr,
++                                   p->pages->num,
++                                   p->page_size);
++
++    int i = 0;
++    int j = pages->num - 1;
++
+     /*
+      * Sort the page offset array by moving all normal pages to
+      * the left and all zero pages to the right of the array.
+@@ -63,11 +121,12 @@ void multifd_send_zero_page_detect(MultiFDSendParams *p)
+     while (i <= j) {
+         uint64_t offset = pages->offset[i];
+ 
+-        if (!buffer_is_zero(rb->host + offset, p->page_size)) {
++        if (!results[i]) {
+             i++;
+             continue;
+         }
+ 
++        swap_result(results, i, j);
+         swap_page_offset(pages->offset, i, j);
+         ram_release_page(rb->idstr, offset);
+         j--;
+@@ -76,6 +135,15 @@ void multifd_send_zero_page_detect(MultiFDSendParams *p)
+     pages->normal_num = i;
+ }
+ 
++#else
++
++static void zero_page_detect_dsa(MultiFDSendParams *p)
++{
++    exit(1);
++}
++
++#endif
++
+ void multifd_recv_zero_page_process(MultiFDRecvParams *p)
  {
-@@ -320,7 +319,6 @@ dsa_task_enqueue(struct dsa_device_group *group,
-  * @param group A pointer to the DSA device group.
-  * @return dsa_batch_task* The DSA task being dequeued.
-  */
--__attribute__((unused))
- static struct dsa_batch_task *
- dsa_task_dequeue(struct dsa_device_group *group)
- {
-@@ -378,22 +376,6 @@ submit_wi_int(void *wq, struct dsa_hw_desc *descriptor)
+     for (int i = 0; i < p->zero_num; i++) {
+@@ -87,3 +155,24 @@ void multifd_recv_zero_page_process(MultiFDRecvParams *p)
+         }
+     }
+ }
++
++/**
++ * multifd_send_zero_page_detect: Perform zero page detection on all pages.
++ *
++ * @param p A pointer to the send params.
++ */
++void multifd_send_zero_page_detect(MultiFDSendParams *p)
++{
++    MultiFDPages_t *pages = p->pages;
++
++    if (!multifd_zero_page_enabled()) {
++        pages->normal_num = pages->num;
++        return;
++    }
++
++    if (dsa_is_running()) {
++        zero_page_detect_dsa(p);
++    } else {
++        zero_page_detect_cpu(p);
++    }
++}
+diff --git a/migration/multifd.c b/migration/multifd.c
+index cfd3a92f6c..7316643d0a 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -818,6 +818,8 @@ void multifd_send_shutdown(void)
+ 
+     multifd_send_terminate_threads();
+ 
++    dsa_cleanup();
++
+     for (i = 0; i < migrate_multifd_channels(); i++) {
+         MultiFDSendParams *p = &multifd_send_state->params[i];
+         Error *local_err = NULL;
+@@ -1155,11 +1157,20 @@ bool multifd_send_setup(void)
+     uint32_t page_count = MULTIFD_PACKET_SIZE / qemu_target_page_size();
+     bool use_packets = multifd_use_packets();
+     uint8_t i;
++    const char *dsa_parameter = migrate_multifd_dsa_accel();
+ 
+     if (!migrate_multifd()) {
+         return true;
+     }
+ 
++    if (dsa_init(dsa_parameter)) {
++        error_setg(&local_err, "multifd: Sender failed to initialize DSA.");
++        error_report_err(local_err);
++        return false;
++    }
++
++    dsa_start();
++
+     thread_count = migrate_multifd_channels();
+     multifd_send_state = g_malloc0(sizeof(*multifd_send_state));
+     multifd_send_state->params = g_new0(MultiFDSendParams, thread_count);
+@@ -1393,6 +1404,7 @@ void multifd_recv_cleanup(void)
+             qemu_thread_join(&p->thread);
+         }
+     }
++    dsa_cleanup();
+     for (i = 0; i < migrate_multifd_channels(); i++) {
+         multifd_recv_cleanup_channel(&multifd_recv_state->params[i]);
+     }
+@@ -1568,6 +1580,9 @@ int multifd_recv_setup(Error **errp)
+     uint32_t page_count = MULTIFD_PACKET_SIZE / qemu_target_page_size();
+     bool use_packets = multifd_use_packets();
+     uint8_t i;
++    const char *dsa_parameter = migrate_multifd_dsa_accel();
++    int ret;
++    Error *local_err = NULL;
+ 
+     /*
+      * Return successfully if multiFD recv state is already initialised
+@@ -1577,6 +1592,15 @@ int multifd_recv_setup(Error **errp)
+         return 0;
+     }
+ 
++    ret = dsa_init(dsa_parameter);
++    if (ret != 0) {
++        error_setg(&local_err, "multifd: Receiver failed to initialize DSA.");
++        error_propagate(errp, local_err);
++        return ret;
++    }
++
++    dsa_start();
++
+     thread_count = migrate_multifd_channels();
+     multifd_recv_state = g_malloc0(sizeof(*multifd_recv_state));
+     multifd_recv_state->params = g_new0(MultiFDRecvParams, thread_count);
+@@ -1616,13 +1640,12 @@ int multifd_recv_setup(Error **errp)
+ 
+     for (i = 0; i < thread_count; i++) {
+         MultiFDRecvParams *p = &multifd_recv_state->params[i];
+-        int ret;
+-
+         ret = multifd_recv_state->ops->recv_setup(p, errp);
+         if (ret) {
+             return ret;
+         }
+     }
++
      return 0;
  }
  
--/**
-- * @brief Synchronously submits a DSA work item to the
-- *        device work queue.
-- *
-- * @param wq A pointer to the DSA worjk queue's device memory.
-- * @param descriptor A pointer to the DSA work item descriptor.
-- *
-- * @return int Zero if successful, non-zero otherwise.
-- */
--__attribute__((unused))
--static int
--submit_wi(void *wq, struct dsa_hw_desc *descriptor)
--{
--    return submit_wi_int(wq, descriptor);
--}
--
- /**
-  * @brief Asynchronously submits a DSA work item to the
-  *        device work queue.
-@@ -402,7 +384,6 @@ submit_wi(void *wq, struct dsa_hw_desc *descriptor)
-  *
-  * @return int Zero if successful, non-zero otherwise.
-  */
--__attribute__((unused))
- static int
- submit_wi_async(struct dsa_batch_task *task)
- {
-@@ -431,7 +412,6 @@ submit_wi_async(struct dsa_batch_task *task)
-  *
-  * @return int Zero if successful, non-zero otherwise.
-  */
--__attribute__((unused))
- static int
- submit_batch_wi_async(struct dsa_batch_task *batch_task)
- {
-@@ -713,6 +693,231 @@ static void dsa_completion_thread_stop(void *opaque)
-     qemu_sem_destroy(&thread_context->sem_init_done);
- }
+diff --git a/migration/multifd.h b/migration/multifd.h
+index 16e27db5e9..b3717fae24 100644
+--- a/migration/multifd.h
++++ b/migration/multifd.h
+@@ -14,6 +14,7 @@
+ #define QEMU_MIGRATION_MULTIFD_H
  
-+/**
-+ * @brief Initializes a buffer zero comparison DSA task.
-+ *
-+ * @param descriptor A pointer to the DSA task descriptor.
-+ * @param completion A pointer to the DSA task completion record.
-+ */
-+static void
-+buffer_zero_task_init_int(struct dsa_hw_desc *descriptor,
-+                          struct dsa_completion_record *completion)
-+{
-+    descriptor->opcode = DSA_OPCODE_COMPVAL;
-+    descriptor->flags = IDXD_OP_FLAG_RCR | IDXD_OP_FLAG_CRAV;
-+    descriptor->comp_pattern = (uint64_t)0;
-+    descriptor->completion_addr = (uint64_t)completion;
-+}
-+
-+/**
-+ * @brief Initializes a buffer zero batch task.
-+ *
-+ * @param task A pointer to the batch task to initialize.
-+ * @param results A pointer to an array of zero page checking results.
-+ * @param batch_size The number of DSA tasks in the batch.
-+ */
-+void
-+buffer_zero_batch_task_init(struct dsa_batch_task *task,
-+                            bool *results, int batch_size)
-+{
-+    int descriptors_size = sizeof(*task->descriptors) * batch_size;
-+    memset(task, 0, sizeof(*task));
-+
-+    task->descriptors =
-+        (struct dsa_hw_desc *)qemu_memalign(64, descriptors_size);
-+    memset(task->descriptors, 0, descriptors_size);
-+    task->completions = (struct dsa_completion_record *)qemu_memalign(
-+        32, sizeof(*task->completions) * batch_size);
-+    task->results = results;
-+    task->batch_size = batch_size;
-+
-+    task->batch_completion.status = DSA_COMP_NONE;
-+    task->batch_descriptor.completion_addr = (uint64_t)&task->batch_completion;
-+    /* TODO: Ensure that we never send a batch with count <= 1 */
-+    task->batch_descriptor.desc_count = 0;
-+    task->batch_descriptor.opcode = DSA_OPCODE_BATCH;
-+    task->batch_descriptor.flags = IDXD_OP_FLAG_RCR | IDXD_OP_FLAG_CRAV;
-+    task->batch_descriptor.desc_list_addr = (uintptr_t)task->descriptors;
-+    task->status = DSA_TASK_READY;
-+    task->group = &dsa_group;
-+    task->device = dsa_device_group_get_next_device(&dsa_group);
-+
-+    for (int i = 0; i < task->batch_size; i++) {
-+        buffer_zero_task_init_int(&task->descriptors[i],
-+                                  &task->completions[i]);
-+    }
-+
-+    qemu_sem_init(&task->sem_task_complete, 0);
-+    task->completion_callback = buffer_zero_dsa_completion;
-+}
-+
-+/**
-+ * @brief Performs the proper cleanup on a DSA batch task.
-+ *
-+ * @param task A pointer to the batch task to cleanup.
-+ */
-+void
-+buffer_zero_batch_task_destroy(struct dsa_batch_task *task)
-+{
-+    qemu_vfree(task->descriptors);
-+    qemu_vfree(task->completions);
-+    task->results = NULL;
-+
-+    qemu_sem_destroy(&task->sem_task_complete);
-+}
-+
-+/**
-+ * @brief Resets a buffer zero comparison DSA batch task.
-+ *
-+ * @param task A pointer to the batch task.
-+ * @param count The number of DSA tasks this batch task will contain.
-+ */
-+static void
-+buffer_zero_batch_task_reset(struct dsa_batch_task *task, size_t count)
-+{
-+    task->batch_completion.status = DSA_COMP_NONE;
-+    task->batch_descriptor.desc_count = count;
-+    task->task_type = DSA_BATCH_TASK;
-+    task->status = DSA_TASK_READY;
-+}
-+
-+/**
-+ * @brief Sets a buffer zero comparison DSA task.
-+ *
-+ * @param descriptor A pointer to the DSA task descriptor.
-+ * @param buf A pointer to the memory buffer.
-+ * @param len The length of the buffer.
-+ */
-+static void
-+buffer_zero_task_set_int(struct dsa_hw_desc *descriptor,
-+                         const void *buf,
-+                         size_t len)
-+{
-+    struct dsa_completion_record *completion =
-+        (struct dsa_completion_record *)descriptor->completion_addr;
-+
-+    descriptor->xfer_size = len;
-+    descriptor->src_addr = (uintptr_t)buf;
-+    completion->status = 0;
-+    completion->result = 0;
-+}
-+
-+/**
-+ * @brief Resets a buffer zero comparison DSA batch task.
-+ *
-+ * @param task A pointer to the DSA batch task.
-+ */
-+static void
-+buffer_zero_task_reset(struct dsa_batch_task *task)
-+{
-+    task->completions[0].status = DSA_COMP_NONE;
-+    task->task_type = DSA_TASK;
-+    task->status = DSA_TASK_READY;
-+}
-+
-+/**
-+ * @brief Sets a buffer zero comparison DSA task.
-+ *
-+ * @param task A pointer to the DSA task.
-+ * @param buf A pointer to the memory buffer.
-+ * @param len The buffer length.
-+ */
-+static void
-+buffer_zero_task_set(struct dsa_batch_task *task,
-+                     const void *buf,
-+                     size_t len)
-+{
-+    buffer_zero_task_reset(task);
-+    buffer_zero_task_set_int(&task->descriptors[0], buf, len);
-+}
-+
-+/**
-+ * @brief Sets a buffer zero comparison batch task.
-+ *
-+ * @param batch_task A pointer to the batch task.
-+ * @param buf An array of memory buffers.
-+ * @param count The number of buffers in the array.
-+ * @param len The length of the buffers.
-+ */
-+static void
-+buffer_zero_batch_task_set(struct dsa_batch_task *batch_task,
-+                           const void **buf, size_t count, size_t len)
-+{
-+    assert(count > 0);
-+    assert(count <= batch_task->batch_size);
-+
-+    buffer_zero_batch_task_reset(batch_task, count);
-+    for (int i = 0; i < count; i++) {
-+        buffer_zero_task_set_int(&batch_task->descriptors[i], buf[i], len);
-+    }
-+}
-+
-+/**
-+ * @brief Asychronously perform a buffer zero DSA operation.
-+ *
-+ * @param task A pointer to the batch task structure.
-+ * @param buf A pointer to the memory buffer.
-+ * @param len The length of the memory buffer.
-+ *
-+ * @return int Zero if successful, otherwise an appropriate error code.
-+ */
-+__attribute__((unused))
-+static int
-+buffer_zero_dsa_async(struct dsa_batch_task *task,
-+                      const void *buf, size_t len)
-+{
-+    buffer_zero_task_set(task, buf, len);
-+
-+    return submit_wi_async(task);
-+}
-+
-+/**
-+ * @brief Sends a memory comparison batch task to a DSA device and wait
-+ *        for completion.
-+ *
-+ * @param batch_task The batch task to be submitted to DSA device.
-+ * @param buf An array of memory buffers to check for zero.
-+ * @param count The number of buffers.
-+ * @param len The buffer length.
-+ */
-+__attribute__((unused))
-+static int
-+buffer_zero_dsa_batch_async(struct dsa_batch_task *batch_task,
-+                            const void **buf, size_t count, size_t len)
-+{
-+    assert(count <= batch_task->batch_size);
-+    buffer_zero_batch_task_set(batch_task, buf, count, len);
-+
-+    return submit_batch_wi_async(batch_task);
-+}
-+
-+/**
-+ * @brief The completion callback function for buffer zero
-+ *        comparison DSA task completion.
-+ *
-+ * @param context A pointer to the callback context.
-+ */
-+static void
-+buffer_zero_dsa_completion(void *context)
-+{
-+    assert(context != NULL);
-+
-+    struct dsa_batch_task *task = (struct dsa_batch_task *)context;
-+    qemu_sem_post(&task->sem_task_complete);
-+}
-+
-+/**
-+ * @brief Wait for the asynchronous DSA task to complete.
-+ *
-+ * @param batch_task A pointer to the buffer zero comparison batch task.
-+ */
-+__attribute__((unused))
-+static void
-+buffer_zero_dsa_wait(struct dsa_batch_task *batch_task)
-+{
-+    qemu_sem_wait(&batch_task->sem_task_complete);
-+}
-+
- /**
-  * @brief Check if DSA is running.
-  *
+ #include "ram.h"
++#include "qemu/dsa.h"
+ 
+ typedef struct MultiFDRecvData MultiFDRecvData;
+ 
 -- 
 2.30.2
 
