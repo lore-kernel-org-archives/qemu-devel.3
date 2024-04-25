@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29406C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 09:03:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89427C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 09:03:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzv09-0003PS-Il; Thu, 25 Apr 2024 05:02:45 -0400
+	id 1rzv06-0003Nr-6g; Thu, 25 Apr 2024 05:02:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rzv06-0003OA-U9
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 05:02:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rzv04-0003MZ-MD
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 05:02:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rzv05-0001oV-4g
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 05:02:42 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rzv02-0001nc-1A
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 05:02:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714035760;
+ s=mimecast20190719; t=1714035756;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UkNKVoS2arcz7pG5rofnXn80zbCvm2NOTTZMNXuVC38=;
- b=F7VMQy69F3f1vee6TtiDawymbPCtY7R3kUYwS4i4CTqAmUZtd72R8hz37p1lIH8cHGvevR
- cFkNe48YLFINVMruqlyyRSseXu6KKONgkNcc+hhi5NyLu4NpdJQTk60UHQn3L8NUscG1l7
- YD4PXLDfKmeJpJERujp5KgTh8e1fvcQ=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-379-fd63YARgMhuMmDW9XVlN-w-1; Thu,
- 25 Apr 2024 05:02:37 -0400
-X-MC-Unique: fd63YARgMhuMmDW9XVlN-w-1
+ bh=+C5YBph1gPYL7SiqnOtT3ZSLnOZz+k2TjkkuGQcsy28=;
+ b=Ri+YFFe1/TvhLyeH4OP8XDJK+AyyoM56RYbagNwtgkk3BKYolsXLiuhah6yc4mQL1pROAn
+ LxnAhbge6Xcd9QCh/FmUXvvD3QDlFxiqQXU8dvNF0slAUggxTw3+wHUZq0G71s64DAHNcO
+ ksDffzEqiBnxHIDbqgumY1B+kFnQtws=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-246-HurBy0ciNzu_3bETNknDVA-1; Thu, 25 Apr 2024 05:02:32 -0400
+X-MC-Unique: HurBy0ciNzu_3bETNknDVA-1
 Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
  [10.11.54.6])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7666B1C0314F;
- Thu, 25 Apr 2024 09:02:37 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id ABA098065D2;
+ Thu, 25 Apr 2024 09:02:31 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.195.34])
- by smtp.corp.redhat.com (Postfix) with ESMTP id D91AC2166B34;
- Thu, 25 Apr 2024 09:02:35 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id EB7472166AE1;
+ Thu, 25 Apr 2024 09:02:29 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: Thomas Huth <thuth@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
+To: Thomas Huth <thuth@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Tony Krowiak <akrowiak@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>
 Cc: Markus Armbruster <armbru@redhat.com>, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org
-Subject: [PATCH v2 4/4] vfio/ccw: Make vfio_ccw_register_irq_notifier() return
- a bool
-Date: Thu, 25 Apr 2024 11:02:14 +0200
-Message-ID: <20240425090214.400194-5-clg@redhat.com>
+Subject: [PATCH v2 1/4] vfio/ap: Use g_autofree variable in
+ vfio_ap_register_irq_notifier()
+Date: Thu, 25 Apr 2024 11:02:11 +0200
+Message-ID: <20240425090214.400194-2-clg@redhat.com>
 In-Reply-To: <20240425090214.400194-1-clg@redhat.com>
 References: <20240425090214.400194-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -84,95 +85,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since vfio_ccw_register_irq_notifier() takes an 'Error **' argument,
-best practices suggest to return a bool. See the qapi/error.h Rules
-section.
-
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/ccw.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ hw/vfio/ap.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-index 6764388bc47a970329fce2233626ccb8178e0165..1c630f6e9abe93ae0c2b5615d4409669f096c8c9 100644
---- a/hw/vfio/ccw.c
-+++ b/hw/vfio/ccw.c
-@@ -379,7 +379,7 @@ read_err:
-     css_inject_io_interrupt(sch);
- }
+diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+index 7c4caa5938636937680fec87e999249ac84a4498..03f8ffaa5e2bf13cf8daa2f44aa4cf17809abd94 100644
+--- a/hw/vfio/ap.c
++++ b/hw/vfio/ap.c
+@@ -77,7 +77,7 @@ static void vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
+     size_t argsz;
+     IOHandler *fd_read;
+     EventNotifier *notifier;
+-    struct vfio_irq_info *irq_info;
++    g_autofree struct vfio_irq_info *irq_info = NULL;
+     VFIODevice *vdev = &vapdev->vdev;
  
--static void vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
-+static bool vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
-                                            unsigned int irq,
-                                            Error **errp)
- {
-@@ -405,13 +405,13 @@ static void vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
-         break;
-     default:
-         error_setg(errp, "vfio: Unsupported device irq(%d)", irq);
--        return;
-+        return false;
-     }
- 
-     if (vdev->num_irqs < irq + 1) {
-         error_setg(errp, "vfio: IRQ %u not available (number of irqs %u)",
-                    irq, vdev->num_irqs);
--        return;
-+        return false;
-     }
- 
-     argsz = sizeof(*irq_info);
-@@ -421,14 +421,14 @@ static void vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
+     switch (irq) {
+@@ -104,14 +104,14 @@ static void vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
      if (ioctl(vdev->fd, VFIO_DEVICE_GET_IRQ_INFO,
                irq_info) < 0 || irq_info->count < 1) {
          error_setg_errno(errp, errno, "vfio: Error getting irq info");
--        return;
-+        return false;
+-        goto out_free_info;
++        return;
      }
  
      if (event_notifier_init(notifier, 0)) {
          error_setg_errno(errp, errno,
                           "vfio: Unable to init event notifier for irq (%d)",
                           irq);
--        return;
-+        return false;
+-        goto out_free_info;
++        return;
      }
  
      fd = event_notifier_get_fd(notifier);
-@@ -439,6 +439,8 @@ static void vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
-         qemu_set_fd_handler(fd, NULL, NULL, vcdev);
+@@ -122,10 +122,6 @@ static void vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
+         qemu_set_fd_handler(fd, NULL, NULL, vapdev);
          event_notifier_cleanup(notifier);
      }
-+
-+    return true;
+-
+-out_free_info:
+-    g_free(irq_info);
+-
  }
  
- static void vfio_ccw_unregister_irq_notifier(VFIOCCWDevice *vcdev,
-@@ -602,20 +604,18 @@ static void vfio_ccw_realize(DeviceState *dev, Error **errp)
-         goto out_region_err;
-     }
- 
--    vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_IO_IRQ_INDEX, &err);
--    if (err) {
-+    if (!vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_IO_IRQ_INDEX, &err)) {
-         goto out_io_notifier_err;
-     }
- 
-     if (vcdev->crw_region) {
--        vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_CRW_IRQ_INDEX, &err);
--        if (err) {
-+        if (!vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_CRW_IRQ_INDEX,
-+                                            &err)) {
-             goto out_irq_notifier_err;
-         }
-     }
- 
--    vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_REQ_IRQ_INDEX, &err);
--    if (err) {
-+    if (!vfio_ccw_register_irq_notifier(vcdev, VFIO_CCW_REQ_IRQ_INDEX, &err)) {
-         /*
-          * Report this error, but do not make it a failing condition.
-          * Lack of this IRQ in the host does not prevent normal operation.
+ static void vfio_ap_unregister_irq_notifier(VFIOAPDevice *vapdev,
 -- 
 2.44.0
 
