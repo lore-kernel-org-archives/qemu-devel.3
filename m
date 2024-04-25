@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A13FC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 15:49:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCDEEC19F4E
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 15:49:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s01JL-0005kX-Sr; Thu, 25 Apr 2024 11:46:59 -0400
+	id 1s01JN-0005l7-7f; Thu, 25 Apr 2024 11:47:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1s01JI-0005j9-8Z
+ id 1s01JJ-0005jW-Tf
  for qemu-devel@nongnu.org; Thu, 25 Apr 2024 11:46:57 -0400
 Received: from madrid.collaboradmins.com ([46.235.227.194])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1s01JF-0006Dd-5o
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 11:46:55 -0400
+ id 1s01JF-0006Dt-TY
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 11:46:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
- s=mail; t=1714060009;
- bh=a9zN7LbpwOW9hypX4EyUlZDrkQD4pPL51ZCzL2HoB0o=;
- h=From:To:Cc:Subject:Date:From;
- b=yJ2gkPs24YprEUGRfARZ1Ok6bsGLUVuUOy88mwuuW0nR7GG+JvVpaDPcTV1QQXj5q
- PlOg09M/4b6F7SNdCw1NImmoDQ0A6vY9OU+gk/TPK9WA3/lGJ2t/+EQhSTCqSVx2VR
- yjBhECkrCeinr8fi21sl+huDSRrkwnwZm558zoJAu1SxpqfzmbF7VAVrMmxoidhcXP
- nWIkxdDNk4yv681ByBYY0pA+CvYcCwXXqRI0g3IrRVYZ18OG0prpmEEwpLXwCtKw+s
- 5Btl3x9nMfSqq/iyFYLr8DyQVf9KfvCCt8tOxAZslPIYng63O41ZI1BH41wSQXEwUL
- IZ+kITX+DKKTw==
+ s=mail; t=1714060011;
+ bh=15bf1AIyDQbymcGhtATY0tMPcELlUi8zzQRknru+3iw=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=JpI2uppXgnZ8VlpP6v+ev2RXgH5Snxmt+HycFYpz0nvzjV6npMKPLefyYk38/iE6c
+ aTZUPEhJjWMLatGe3zpqJv5t41ysnwaeOuFzdPrq3Lf531EIF5Nnnp+tZjQ3pF3YLW
+ eDhJFZ6rSUi8aDh9nH476vc3C0bl6SBVPkEGNmtFQQ3jExuE+sfBpzaPmrm+LpdAxm
+ DTE9aIM9EVPNlNSZuqy0lGsVXYlQ1HXTc8DssCoP7ZQrXefFQgm8Y2U/Cn0PPF9n/d
+ 4aPg8R1GuzJr3NARA6WMZc7Qo56qvjNWz8DfzNqaQcd2yf7yUJc2J46v55Tca0MDPb
+ zsXqUeJ43qVXw==
 Received: from workpc.. (cola.collaboradmins.com [195.201.22.229])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
  (Authenticated sender: dmitry.osipenko)
- by madrid.collaboradmins.com (Postfix) with ESMTPSA id EBB7337820FA;
- Thu, 25 Apr 2024 15:46:46 +0000 (UTC)
+ by madrid.collaboradmins.com (Postfix) with ESMTPSA id BAC52378214B;
+ Thu, 25 Apr 2024 15:46:49 +0000 (UTC)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>,
@@ -59,12 +59,14 @@ Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
  Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-Subject: [PATCH v9 00/11] Support blob memory and venus on qemu
-Date: Thu, 25 Apr 2024 18:45:28 +0300
-Message-ID: <20240425154539.2680550-1-dmitry.osipenko@collabora.com>
+Subject: [PATCH v9 01/11] virtio-gpu: Use pkgconfig version to decide which
+ virgl features are available
+Date: Thu, 25 Apr 2024 18:45:29 +0300
+Message-ID: <20240425154539.2680550-2-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240425154539.2680550-1-dmitry.osipenko@collabora.com>
+References: <20240425154539.2680550-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=46.235.227.194;
  envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
@@ -89,233 +91,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
-
-This series enables Vulkan Venus context support on virtio-gpu.
-
-All virglrender and almost all Linux kernel prerequisite changes
-needed by Venus are already in upstream. For kernel there is a pending
-KVM patchset that fixes mapping of compound pages needed for DRM drivers
-using TTM [1], othewrwise hostmem blob mapping will fail with a KVM error
-from Qemu.
-
-[1] https://lore.kernel.org/kvm/20240229025759.1187910-1-stevensd@google.com/
-
-Example Qemu cmdline that enables Venus for virtio-gpu:
-
-  qemu-system-x86_64 -device virtio-vga-gl,hostmem=4G,blob=true,vulkan=true
-
-Changes from V8 to V9
-
-- Added resuming of cmdq processing when hostmem MR is freed,
-  as was suggested by Akihiko Odaki.
-
-- Added more error messages, suggested by Akihiko Odaki
-
-- Dropped superfluous 'res->async_unmap_completed', suggested
-  by Akihiko Odaki.
-
-- Kept using cmd->suspended flag. Akihiko Odaki suggested to make
-  virtio_gpu_virgl_process_cmd() return false if cmd processing is
-  suspended, but it's not easy to implement due to ubiquitous
-  VIRTIO_GPU_FILL_CMD() macros that returns void, requiring to change
-  all the virtio-gpu processing code.
-
-- Added back virtio_gpu_virgl_resource as was requested by Akihiko Odaki,
-  though I'm not convinced it's really needed.
-
-- Switched to use GArray, renamed capset2_max_ver/size vars and moved
-  "vulkan" property definition to the virtio-gpu-gl device in the Venus
-  patch, like was suggested by Akihiko Odaki.
-
-- Moved UUID to virtio_gpu_virgl_resource and dropped UUID save/restore
-  since it will require bumping VM version and virgl device isn't miratable
-  anyways.
-
-- Fixed exposing UUID feature with Rutabaga
-
-- Dropped linux-headers update patch because headers were already updated
-  in Qemu/staging.
-
-- Added patch that updates virtio migration doc with a note about virtio-gpu
-  migration specifics, suggested by Akihiko Odaki.
-
-- Addressed coding style issue noticed by Akihiko Odaki
-
-Changes from V7 to V8
-
-- Supported suspension of virtio-gpu commands processing and made
-  unmapping of hostmem region asynchronous by blocking/suspending
-  cmd processing until region is unmapped. Suggested by Akihiko Odaki.
-
-- Fixed arm64 building of x86 targets using updated linux-headers.
-  Corrected the update script. Thanks to Rob Clark for reporting
-  the issue.
-
-- Added new patch that makes registration of virgl capsets dynamic.
-  Requested by Antonio Caggiano and Pierre-Eric Pelloux-Prayer.
-
-- Venus capset now isn't advertised if Vulkan is disabled with vulkan=false
-
-Changes from V6 to V7
-
-- Used scripts/update-linux-headers.sh to update Qemu headers based
-  on Linux v6.8-rc3 that adds Venus capset definition to virtio-gpu
-  protocol, was requested by Peter Maydel
-
-- Added r-bs that were given to v6 patches. Corrected missing s-o-bs
-
-- Dropped context_init Qemu's virtio-gpu device configuration flag,
-  was suggested by Marc-André Lureau
-
-- Added missing error condition checks spotted by Marc-André Lureau
-  and Akihiko Odaki, and few more
-
-- Returned back res->mr referencing to memory_region_init_ram_ptr() like
-  was suggested by Akihiko Odaki. Incorporated fix suggested by Pierre-Eric
-  to specify the MR name
-
-- Dropped the virgl_gpu_resource wrapper, cleaned up and simplified
-  patch that adds blob-cmd support
-
-- Fixed improper blob resource removal from resource list on resource_unref
-  that was spotted by Akihiko Odaki
-
-- Change order of the blob patches, was suggested by Akihiko Odaki.
-  The cmd_set_scanout_blob support is enabled first
-
-- Factored out patch that adds resource management support to virtio-gpu-gl,
-  was requested by Marc-André Lureau
-
-- Simplified and improved the UUID support patch, dropped the hash table
-  as we don't need it for now. Moved QemuUUID to virtio_gpu_simple_resource.
-  This all was suggested by Akihiko Odaki and Marc-André Lureau
-
-- Dropped console_has_gl() check, suggested by Akihiko Odaki
-
-- Reworked Meson cheking of libvirglrender features, made new features
-  available based on virglrender pkgconfig version instead of checking
-  symbols in header. This should fix build error using older virglrender
-  version, reported by Alex Bennée
-
-- Made enabling of Venus context configrable via new virtio-gpu device
-  "vulkan=true" flag, suggested by Marc-André Lureau. The flag is disabled
-  by default because it requires blob and hostmem options to be enabled
-  and configured
-
-Changes from V5 to V6
-
-- Move macros configurations under virgl.found() and rename
-  HAVE_VIRGL_CONTEXT_CREATE_WITH_FLAGS.
-
-- Handle the case while context_init is disabled.
-
-- Enable context_init by default.
-
-- Move virtio_gpu_virgl_resource_unmap() into
-  virgl_cmd_resource_unmap_blob().
-
-- Introduce new struct virgl_gpu_resource to store virgl specific members.
-
-- Remove erro handling of g_new0, because glib will abort() on OOM.
-
-- Set resource uuid as option.
-
-- Implement optional subsection of vmstate_virtio_gpu_resource_uuid_state
-  for virtio live migration.
-
-- Use g_int_hash/g_int_equal instead of the default
-
-- Add scanout_blob function for virtio-gpu-virgl
-
-- Resolve the memory leak on virtio-gpu-virgl
-
-- Remove the unstable API flags check because virglrenderer is already 1.0
-
-- Squash the render server flag support into "Initialize Venus"
-
-Changes from V4 (virtio gpu V4) to V5
-
-- Inverted patch 5 and 6 because we should configure
-  HAVE_VIRGL_CONTEXT_INIT firstly.
-
-- Validate owner of memory region to avoid slowing down DMA.
-
-- Use memory_region_init_ram_ptr() instead of
-  memory_region_init_ram_device_ptr().
-
-- Adjust sequence to allocate gpu resource before virglrender resource
-  creation
-
-- Add virtio migration handling for uuid.
-
-- Send kernel patch to define VIRTIO_GPU_CAPSET_VENUS.
-  https://lore.kernel.org/lkml/20230915105918.3763061-1-ray.huang@amd.com/
-
-- Add meson check to make sure unstable APIs defined from 0.9.0.
-
-Changes from V1 to V2 (virtio gpu V4)
-
-- Remove unused #include "hw/virtio/virtio-iommu.h"
-
-- Add a local function, called virgl_resource_destroy(), that is used
-  to release a vgpu resource on error paths and in resource_unref.
-
-- Remove virtio_gpu_virgl_resource_unmap from
-  virtio_gpu_cleanup_mapping(),
-  since this function won't be called on blob resources and also because
-  blob resources are unmapped via virgl_cmd_resource_unmap_blob().
-
-- In virgl_cmd_resource_create_blob(), do proper cleanup in error paths
-  and move QTAILQ_INSERT_HEAD(&g->reslist, res, next) after the resource
-  has been fully initialized.
-
-- Memory region has a different life-cycle from virtio gpu resources
-  i.e. cannot be released synchronously along with the vgpu resource.
-  So, here the field "region" was changed to a pointer and is allocated
-  dynamically when the blob is mapped.
-  Also, since the pointer can be used to indicate whether the blob
-  is mapped, the explicite field "mapped" was removed.
-
-- In virgl_cmd_resource_map_blob(), add check on the value of
-  res->region, to prevent beeing called twice on the same resource.
-
-- Add a patch to enable automatic deallocation of memory regions to resolve
-  use-after-free memory corruption with a reference.
-
-Antonio Caggiano (3):
-  virtio-gpu: Handle resource blob commands
-  virtio-gpu: Resource UUID
-  virtio-gpu: Support Venus context
-
-Dmitry Osipenko (4):
-  virtio-gpu: Use pkgconfig version to decide which virgl features are
-    available
-  virtio-gpu: Don't require udmabuf when blobs and virgl are enabled
-  virtio-gpu: Support suspension of commands processing
-  migration/virtio: Add virtio-gpu section
-
-Huang Rui (2):
-  virtio-gpu: Support context-init feature with virglrenderer
-  virtio-gpu: Add virgl resource management
-
-Pierre-Eric Pelloux-Prayer (1):
-  virtio-gpu: Register capsets dynamically
-
-Robert Beckett (1):
-  virtio-gpu: Support blob scanout using dmabuf fd
-
- docs/devel/migration/virtio.rst  |   7 +
- hw/display/trace-events          |   1 +
- hw/display/virtio-gpu-base.c     |   3 +
- hw/display/virtio-gpu-gl.c       |   7 +
- hw/display/virtio-gpu-rutabaga.c |   1 +
- hw/display/virtio-gpu-virgl.c    | 561 ++++++++++++++++++++++++++++++-
- hw/display/virtio-gpu.c          |  35 +-
- include/hw/virtio/virtio-gpu.h   |  13 +
- meson.build                      |  10 +-
- 9 files changed, 610 insertions(+), 28 deletions(-)
-
+New virglrerenderer features were stabilized with release of v1.0.0.
+Presence of symbols in virglrenderer.h doesn't guarantee ABI compatibility
+with pre-release development versions of libvirglerender. Use virglrenderer
+version to decide reliably which virgl features are available.
+
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+---
+ meson.build | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
+
+diff --git a/meson.build b/meson.build
+index 553b9409995b..c6f22f565071 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2286,11 +2286,8 @@ config_host_data.set('CONFIG_PNG', png.found())
+ config_host_data.set('CONFIG_VNC', vnc.found())
+ config_host_data.set('CONFIG_VNC_JPEG', jpeg.found())
+ config_host_data.set('CONFIG_VNC_SASL', sasl.found())
+-if virgl.found()
+-  config_host_data.set('HAVE_VIRGL_D3D_INFO_EXT',
+-                       cc.has_member('struct virgl_renderer_resource_info_ext', 'd3d_tex2d',
+-                                     prefix: '#include <virglrenderer.h>',
+-                                     dependencies: virgl))
++if virgl.version().version_compare('>=1.0.0')
++  config_host_data.set('HAVE_VIRGL_D3D_INFO_EXT', 1)
+ endif
+ config_host_data.set('CONFIG_VIRTFS', have_virtfs)
+ config_host_data.set('CONFIG_VTE', vte.found())
 -- 
 2.44.0
 
