@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 325C4C19F4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 11:09:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B02CFC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 11:09:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzwuJ-0002rz-CK; Thu, 25 Apr 2024 07:04:51 -0400
+	id 1rzwuK-0002vj-G1; Thu, 25 Apr 2024 07:04:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzwtN-0000Du-M8
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:04:03 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzwsj-0008UP-3M
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:03:38 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzwtH-0000Jz-Lk
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:03:52 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-41b3692b508so6091645e9.1
- for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 04:03:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzwsb-00005s-E2
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:03:07 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-41adf155cffso6384055e9.2
+ for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 04:03:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714043022; x=1714647822; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714042983; x=1714647783; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3jM66TtA9+JPWnnaJ/wdkFyoBPGKJrTnB7XlYnSXjfw=;
- b=q67tICheuqQtUFBIwqS8xdmp9ZjCnwej4ObCq0rfBW0NnQ5jxQfOibhMOdM4cS/LZO
- 7uEqp3eN7KJ/f6mHWt0GgKd4kvOj8bCevQQIsTWS4PDAgRVEmw/JWezo/nUIlZCDleWp
- lPlHGABqys96bi7bcWl/Baf6f5EW3jNOhUcNwmrFBj/pLdJ+BcS+V4RB8VTY4X/b+ti5
- a4ZNF4Sc7vaIwUXU7DedWrG1qF9SG8ty02pFOLgjKUZnkecwOxCWWJ5Y5jQlgRwxFcYG
- uUQhoPrnbf3PSDWRrSG/RhlgDYK5kXAhZvVj86moZEn003H0yMemIislAARfYsVmG8uR
- Hbkg==
+ bh=LbAs9YmrS9dSJaP9YCdhZk5wTEYcOSkfG+YJap7/m1c=;
+ b=upb2cCJutQ4RH6YHzzcoh/SDNJoih4pUuQVugFQuUw/SYzlRKtBXLJVkLUhTaWhD12
+ 86gxQHirJvp/zOls6O3rP7PURSM3hSXhbz4aoIAS98Fgb5+sO17E2uiD9bisXYPPXwzv
+ jUX1Q+etUnPzPnCmjMj0smUZngnFNRI3rXlLDlsgEk10YDwtaKkNQ6Oz+vUvQoYTd7YZ
+ IvnAmQuDN//McM+FdPzTKIeOkHSOOarysxBBhea3gdeJtDtcuTZfqildmjRlt4e0rTD8
+ FPt0LvRxeSUWNCr6ixC5z6UqlBa/Ro1mRi3szVPepMUPmhHg6syJNqr5MTJIV9AhxKAz
+ W8+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714043022; x=1714647822;
+ d=1e100.net; s=20230601; t=1714042983; x=1714647783;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3jM66TtA9+JPWnnaJ/wdkFyoBPGKJrTnB7XlYnSXjfw=;
- b=MBvshvN+3TEyZF207hQSpIV0u134DHOj7jYMY1DdMGrCEcZplqMr1JDa9HDpHTpEix
- 91G2qoA7ZyNGjplMh3GHLkGFUgRKfs89xzXo0BPW4XYfoJRMmvxFe/1O1dgx/M/12Yeq
- 6bN4kvXgCA1pxc/eC24RwGHhZfUw/zKLufwbwwYbV65wZa0NpzIrl8q2xIJeSA7O1B95
- UrkWgF8vANrvcHCcEI2uLvQy4JPPdjTv4L8BIZQyEpZw+AHfarH81kDav1JN8LIo2BzN
- 05q6tca96Sn40riTTtMa0B/ozODxJliuhdmrciQICpShj4EuG4qnoIgTg9Mr2PIE6SNQ
- E9xA==
-X-Gm-Message-State: AOJu0YzyhRznqnFYNgylpA8NuOG5Xl/+tb0+rsUBsnIaGlx6M1xUtIlp
- ag7sQJ77fjere6oQDtk1jmlGm1G6JdPB41hmV6M92M8esr1yFxFH3Ml2ktUsJNuIIZISBu02nRi
- k
-X-Google-Smtp-Source: AGHT+IFep8mayYoTqo1tEoWaxYRBNnZQKy6JlVbPvXcPmoksWBiLC7hipxkwT32wWx0hqDlaV9VWvQ==
-X-Received: by 2002:a05:600c:4ecb:b0:419:ed35:e312 with SMTP id
- g11-20020a05600c4ecb00b00419ed35e312mr4210635wmq.21.1714043022268; 
- Thu, 25 Apr 2024 04:03:42 -0700 (PDT)
+ bh=LbAs9YmrS9dSJaP9YCdhZk5wTEYcOSkfG+YJap7/m1c=;
+ b=ibNPqwXVnGq157gapBD6lellJsdmIFRqWf5oGuc8huBsdRNWQ0zZPt/K8KPHT1t9rf
+ Q+MsujH0VKssLuo35XahUC/KDGxhsrkR5lW0KqsahD+3ATPQHXy3GW0G3bxY0In8aQom
+ 7DJ9pR934bOZcu+iRJNmdTrIJb9NqVlAkSoH6mXCXJ967xA3z9PA44sKyuwVAfdVSpGu
+ Fr3om1209b412g6koWDG7WSCPqxZbXi30O9Ifdp3pcPCcu32vXyEN0+vZfSFNaAQzDeq
+ /g26uOdlfEUdmlUh1uTUxbTL/9RJJemII74L6t7mYstNk1JuVMYKqswzYgyXqL5G80GV
+ TTgQ==
+X-Gm-Message-State: AOJu0YxIjlpOJCJHb8s1gjGltFvKCDLvaVsNx8JxjOzs+dmbbQO8o4hC
+ BAz/RBZx6Ep0WX3W4G6SwxZqIcF5MVC51lQ0t4VERx4P/UkAIFMaolQycMhVx1Z4hxPP1z6SfOr
+ S
+X-Google-Smtp-Source: AGHT+IFGt7D2a5BG0f6Ej/yKtX3pUKUzeeUlIFdZucYldsHGorV+6z4Q5Ind8NR6PRSHS1Ee03ftFg==
+X-Received: by 2002:a05:600c:154f:b0:418:e08c:817 with SMTP id
+ f15-20020a05600c154f00b00418e08c0817mr3681618wmg.32.1714042983172; 
+ Thu, 25 Apr 2024 04:03:03 -0700 (PDT)
 Received: from localhost.localdomain ([92.88.170.77])
  by smtp.gmail.com with ESMTPSA id
- u11-20020a05600c138b00b004187450e4cesm30787552wmf.29.2024.04.25.04.03.40
+ p9-20020a05600c1d8900b0041b13c5c9f9sm4678586wms.17.2024.04.25.04.03.01
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 25 Apr 2024 04:03:41 -0700 (PDT)
+ Thu, 25 Apr 2024 04:03:02 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- Bernhard Beschow <shentey@gmail.com>,
+Cc: qemu-riscv@nongnu.org, qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 18/22] hw/i386/pc_sysfw: Remove unused parameter from
- pc_isa_bios_init()
-Date: Thu, 25 Apr 2024 13:01:51 +0200
-Message-ID: <20240425110157.20328-19-philmd@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: [PULL 11/22] hw: Add a Kconfig switch for the TYPE_CPU_CLUSTER device
+Date: Thu, 25 Apr 2024 13:01:44 +0200
+Message-ID: <20240425110157.20328-12-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240425110157.20328-1-philmd@linaro.org>
 References: <20240425110157.20328-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,39 +102,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Thomas Huth <thuth@redhat.com>
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+The cpu-cluster device is only needed for some few arm and riscv
+machines. Let's avoid compiling and linking it if it is not really
+necessary.
+
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240422200625.2768-2-shentey@gmail.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20240415065655.130099-3-thuth@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/i386/pc_sysfw.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ hw/arm/Kconfig     | 3 +++
+ hw/cpu/Kconfig     | 3 +++
+ hw/cpu/meson.build | 3 ++-
+ hw/riscv/Kconfig   | 2 ++
+ 4 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
-index 3efabbbab2..87b5bf59d6 100644
---- a/hw/i386/pc_sysfw.c
-+++ b/hw/i386/pc_sysfw.c
-@@ -41,8 +41,7 @@
- #define FLASH_SECTOR_SIZE 4096
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index d97015c45c..5d4015b75a 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -485,6 +485,7 @@ config XLNX_ZYNQMP_ARM
+     select AHCI
+     select ARM_GIC
+     select CADENCE
++    select CPU_CLUSTER
+     select DDC
+     select DPCD
+     select SDHCI
+@@ -503,6 +504,7 @@ config XLNX_VERSAL
+     default y
+     depends on TCG && AARCH64
+     select ARM_GIC
++    select CPU_CLUSTER
+     select PL011
+     select CADENCE
+     select VIRTIO_MMIO
+@@ -688,6 +690,7 @@ config ARMSSE
+     select CMSDK_APB_DUALTIMER
+     select CMSDK_APB_UART
+     select CMSDK_APB_WATCHDOG
++    select CPU_CLUSTER
+     select IOTKIT_SECCTL
+     select IOTKIT_SYSCTL
+     select IOTKIT_SYSINFO
+diff --git a/hw/cpu/Kconfig b/hw/cpu/Kconfig
+index f776e884cd..baff478e1b 100644
+--- a/hw/cpu/Kconfig
++++ b/hw/cpu/Kconfig
+@@ -12,3 +12,6 @@ config A15MPCORE
+ config ARM11MPCORE
+     bool
+     select ARM11SCU
++
++config CPU_CLUSTER
++    bool
+diff --git a/hw/cpu/meson.build b/hw/cpu/meson.build
+index 38cdcfbe57..9d36bf8ae2 100644
+--- a/hw/cpu/meson.build
++++ b/hw/cpu/meson.build
+@@ -1,4 +1,5 @@
+-system_ss.add(files('core.c', 'cluster.c'))
++system_ss.add(files('core.c'))
++system_ss.add(when: 'CONFIG_CPU_CLUSTER', if_true: files('cluster.c'))
  
- static void pc_isa_bios_init(MemoryRegion *rom_memory,
--                             MemoryRegion *flash_mem,
--                             int ram_size)
-+                             MemoryRegion *flash_mem)
- {
-     int isa_bios_size;
-     MemoryRegion *isa_bios;
-@@ -186,7 +185,7 @@ static void pc_system_flash_map(PCMachineState *pcms,
- 
-         if (i == 0) {
-             flash_mem = pflash_cfi01_get_memory(system_flash);
--            pc_isa_bios_init(rom_memory, flash_mem, size);
-+            pc_isa_bios_init(rom_memory, flash_mem);
- 
-             /* Encrypt the pflash boot ROM */
-             if (sev_enabled()) {
+ system_ss.add(when: 'CONFIG_ARM11MPCORE', if_true: files('arm11mpcore.c'))
+ system_ss.add(when: 'CONFIG_REALVIEW', if_true: files('realview_mpcore.c'))
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index 5d644eb7b1..fc72ef0379 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -9,6 +9,7 @@ config IBEX
+ config MICROCHIP_PFSOC
+     bool
+     select CADENCE_SDHCI
++    select CPU_CLUSTER
+     select MCHP_PFSOC_DMC
+     select MCHP_PFSOC_IOSCB
+     select MCHP_PFSOC_MMUART
+@@ -68,6 +69,7 @@ config SIFIVE_E
+ config SIFIVE_U
+     bool
+     select CADENCE
++    select CPU_CLUSTER
+     select RISCV_ACLINT
+     select SIFIVE_GPIO
+     select SIFIVE_PDMA
 -- 
 2.41.0
 
