@@ -4,105 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79DFDC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 15:40:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8749C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 15:43:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s01C2-0002aY-DC; Thu, 25 Apr 2024 11:39:26 -0400
+	id 1s01FG-0003qz-TR; Thu, 25 Apr 2024 11:42:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s01C1-0002Yg-Gk
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 11:39:25 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s01Bz-0003JA-DN
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 11:39:25 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1s01FF-0003qm-JG
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 11:42:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1s01FD-00043b-Jk
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 11:42:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714059762;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=WLE5T0vgo9vkmP4JcxclNycXtXLx+qUYHKpWXt0TKEc=;
+ b=i9BUBADCwwjTrwFJhq/wjAFfFXqcyRpCHgKWeBNgsMIbHqQYBNCbz2TUQzBjIOp9UJd35g
+ YborUxqr04aSI0SI48HQfD6cmPps6MfieUkO4pphHxqkkNAuvCLhZutIh92qxMsYQ0uN24
+ 33r3LAI+JJdYYJHi2yfA3ftApwdjbaU=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-74-TyUp8rp8OSizvFmnsSoGmA-1; Thu,
+ 25 Apr 2024 11:42:40 -0400
+X-MC-Unique: TyUp8rp8OSizvFmnsSoGmA-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 606165BEA6;
- Thu, 25 Apr 2024 15:39:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1714059561; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pHZFPVv/Ro7hB0pHfV4mJgpeX63cjBuXGzcumBcWULY=;
- b=ArQd2hjpxDd4izR7yrrXKyhSDZ2A68OrkY4UkyYxRy6fWe9cavLiZqKNYgsU5/V3kcrfp7
- pm7hI80wAZrQkTN8876KWNuf2s0OjICGM6I4iC75p3UmwwtNnRRPlG25/yjH+CDBOuCiBE
- B3fN5Z9/X3Nk13iPATH124niepYYVoI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1714059561;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pHZFPVv/Ro7hB0pHfV4mJgpeX63cjBuXGzcumBcWULY=;
- b=QOZEs3NZ9d6IxlcLMHRb6CR+xO+5fh6WXy5KnvN5xKWY7hkE7nN6E5brgMwZl/kSLCkKLM
- xuveJxnngJZUW4Bg==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1714059560; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pHZFPVv/Ro7hB0pHfV4mJgpeX63cjBuXGzcumBcWULY=;
- b=A5JrFYNGukpnP4vX1FijwpPpOk4dYbmGGffIV2kuexKx9bXQKCjD0cLNr5cGeM1trYXzdh
- wfcgOhHsUfAVdeaY4zxwn/YwUVYaE+isfZxeoIOpy5rvzXHjfLZ5gLWTZwszI1L3qz+BQ9
- msrwioztqawyQxHSjW74Jekr14tYDsg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1714059560;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pHZFPVv/Ro7hB0pHfV4mJgpeX63cjBuXGzcumBcWULY=;
- b=6EHRPiSffaQB3lHOMfYgs/6tS7cs5B8QLtRDl7r1ce9IAroUtyfLbgGdnM1/mhCEAtKPBR
- xnEnvf/mST88wQDQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DFD651393C;
- Thu, 25 Apr 2024 15:39:19 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id B44sKSd5KmaqFQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 25 Apr 2024 15:39:19 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Hao Xiang <hao.xiang@linux.dev>, marcandre.lureau@redhat.com,
- peterx@redhat.com, armbru@redhat.com, lvivier@redhat.com,
- qemu-devel@nongnu.org
-Cc: Hao Xiang <hao.xiang@linux.dev>
-Subject: Re: [PATCH v4 10/14] migration/multifd: Enable DSA offloading in
- multifd sender path.
-In-Reply-To: <20240425022117.4035031-11-hao.xiang@linux.dev>
-References: <20240425022117.4035031-1-hao.xiang@linux.dev>
- <20240425022117.4035031-11-hao.xiang@linux.dev>
-Date: Thu, 25 Apr 2024 12:39:17 -0300
-Message-ID: <878r11ih96.fsf@suse.de>
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 48DC73806706
+ for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 15:42:40 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.102])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 73DB42166B31;
+ Thu, 25 Apr 2024 15:42:39 +0000 (UTC)
+Date: Thu, 25 Apr 2024 16:42:37 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Anthony Harivel <aharivel@redhat.com>
+Cc: pbonzini@redhat.com, mtosatti@redhat.com, qemu-devel@nongnu.org,
+ vchundur@redhat.com, rjarry@redhat.com
+Subject: Re: [PATCH v5 3/3] Add support for RAPL MSRs in KVM/Qemu
+Message-ID: <Zip57XYKiIVgf2qz@redhat.com>
+References: <20240411121434.253353-1-aharivel@redhat.com>
+ <20240411121434.253353-4-aharivel@redhat.com>
+ <ZiFNcLYyha3_teDT@redhat.com> <D0TBB4DMA8RL.6KN35N5NVAU@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- ARC_NA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCVD_TLS_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
- MISSING_XM_UA(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; TO_DN_SOME(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCPT_COUNT_SEVEN(0.00)[7];
- DBL_BLOCKED_OPENRESOLVER(0.00)[linux.dev:email, imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <D0TBB4DMA8RL.6KN35N5NVAU@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,278 +84,79 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hao Xiang <hao.xiang@linux.dev> writes:
+On Thu, Apr 25, 2024 at 05:34:52PM +0200, Anthony Harivel wrote:
+> Hi Daniel,
+> 
+> Daniel P. Berrangé, Apr 18, 2024 at 18:42:
+> 
+> > > +    if (kvm_is_rapl_feat_enable(cs)) {
+> > > +        if (!IS_INTEL_CPU(env)) {
+> > > +            error_setg(errp, "RAPL feature can only be\
+> > > +                              enabled with Intel CPU models");
+> > > +                return false;
+> > > +        }
+> > > +    }
+> >
+> > I see a crash in kvm_is_rapl_feat_enable() from this caller,
+> > when I run with this kind of command line:
+> >
+> >  $ qemu-system-x86_64 \
+> >       -kernel /lib/modules/6.6.9-100.fc38.x86_64/vmlinuz \
+> >       -initrd tiny-initrd.img  -m 2000 -serial stdio -nodefaults \
+> >       -display none -accel kvm -append "console=ttyS0 quiet"
+> >
+> >
+> > #0  0x0000555555bc14b7 in kvm_is_rapl_feat_enable (cs=cs@entry=0x555557b83470) at ../target/i386/kvm/kvm.c:2531
+> > #1  0x0000555555bc7534 in kvm_cpu_realizefn (cs=0x555557b83470, errp=0x7fffffffd2a0) at ../target/i386/kvm/kvm-cpu.c:54
+> > #2  0x0000555555d2432a in accel_cpu_common_realize (cpu=0x555557b83470, errp=0x7fffffffd2a0) at ../accel/accel-target.c:130
+> > #3  0x0000555555cdd955 in cpu_exec_realizefn (cpu=cpu@entry=0x555557b83470, errp=errp@entry=0x7fffffffd2a0) at ../cpu-target.c:137
+> > #4  0x0000555555c14b89 in x86_cpu_realizefn (dev=0x555557b83470, errp=0x7fffffffd310) at ../target/i386/cpu.c:7320
+> > #5  0x0000555555d58f4b in device_set_realized (obj=<optimized out>, value=<optimized out>, errp=0x7fffffffd390) at ../hw/core/qdev.c:510
+> > #6  0x0000555555d5d78d in property_set_bool (obj=0x555557b83470, v=<optimized out>, name=<optimized out>, opaque=0x5555578558e0, errp=0x7fffffffd390)
+> >     at ../qom/object.c:2358
+> > #7  0x0000555555d60b0b in object_property_set (obj=obj@entry=0x555557b83470, name=name@entry=0x55555607c799 "realized", v=v@entry=0x555557b8ccb0, errp=0x7fffffffd390, 
+> >     errp@entry=0x555556e210d8 <error_fatal>) at ../qom/object.c:1472
+> > #8  0x0000555555d6444f in object_property_set_qobject
+> >     (obj=obj@entry=0x555557b83470, name=name@entry=0x55555607c799 "realized", value=value@entry=0x555557854800, errp=errp@entry=0x555556e210d8 <error_fatal>)
+> >     at ../qom/qom-qobject.c:28
+> > #9  0x0000555555d61174 in object_property_set_bool
+> >     (obj=0x555557b83470, name=name@entry=0x55555607c799 "realized", value=value@entry=true, errp=errp@entry=0x555556e210d8 <error_fatal>) at ../qom/object.c:1541
+> > #10 0x0000555555d59a3c in qdev_realize (dev=<optimized out>, bus=bus@entry=0x0, errp=errp@entry=0x555556e210d8 <error_fatal>) at ../hw/core/qdev.c:292
+> > #11 0x0000555555bd51e0 in x86_cpu_new (x86ms=<optimized out>, apic_id=0, errp=0x555556e210d8 <error_fatal>) at ../hw/i386/x86.c:105
+> > #12 0x0000555555bd52ce in x86_cpus_init (x86ms=x86ms@entry=0x555557aaed30, default_cpu_version=<optimized out>) at ../hw/i386/x86.c:156
+> > #13 0x0000555555bdc1a7 in pc_init1 (machine=0x555557aaed30, pci_type=0x55555604aa61 "i440FX") at ../hw/i386/pc_piix.c:185
+> > #14 0x0000555555947a11 in machine_run_board_init (machine=0x555557aaed30, mem_path=<optimized out>, errp=<optimized out>, errp@entry=0x555556e210d8 <error_fatal>)
+> >     at ../hw/core/machine.c:1547
+> > #15 0x0000555555b020ed in qemu_init_board () at ../system/vl.c:2613
+> > #16 qmp_x_exit_preconfig (errp=0x555556e210d8 <error_fatal>) at ../system/vl.c:2705
+> > #17 0x0000555555b0611e in qemu_init (argc=<optimized out>, argv=<optimized out>) at ../system/vl.c:3739
+> > #18 0x0000555555897ca9 in main (argc=<optimized out>, argv=<optimized out>) at ../system/main.c:47
+> >
+> > The problem is that 'cs->kvm_state' is NULL here
+> >
+> 
+> After some investigation it seems that kvm_state is not yet committed 
+> at this point. Shame, because GDB showed me that we have already pass 
+> the kvm_accel_instance_init() in accel/kvm/kvm-all.c that sets the 
+> value "msr_energy.enable" in kvm_state...
+> 
+> So should I dig more to still do the sanity check in kvm_cpu_realizefn() 
+> or should I already move the RAPL feature  from -kvm to -cpu 
+> like suggested by Zhao from Intel and then access it from the CPUState ?
 
-> Multifd sender path gets an array of pages queued by the migration
-> thread. It performs zero page checking on every page in the array.
-> The pages are classfied as either a zero page or a normal page. This
-> change uses Intel DSA to offload the zero page checking from CPU to
-> the DSA accelerator. The sender thread submits a batch of pages to DSA
-> hardware and waits for the DSA completion thread to signal for work
-> completion.
->
-> Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
-> ---
->  migration/multifd-zero-page.c | 99 +++++++++++++++++++++++++++++++++--
->  migration/multifd.c           | 27 +++++++++-
->  migration/multifd.h           |  1 +
->  3 files changed, 120 insertions(+), 7 deletions(-)
->
-> diff --git a/migration/multifd-zero-page.c b/migration/multifd-zero-page.c
-> index e1b8370f88..4f426289e4 100644
-> --- a/migration/multifd-zero-page.c
-> +++ b/migration/multifd-zero-page.c
-> @@ -37,25 +37,83 @@ static void swap_page_offset(ram_addr_t *pages_offset, int a, int b)
->  }
->  
->  /**
-> - * multifd_send_zero_page_detect: Perform zero page detection on all pages.
-> + * zero_page_detect_cpu: Perform zero page detection using CPU.
->   *
->   * Sorts normal pages before zero pages in p->pages->offset and updates
->   * p->pages->normal_num.
->   *
->   * @param p A pointer to the send params.
->   */
-> -void multifd_send_zero_page_detect(MultiFDSendParams *p)
-> +static void zero_page_detect_cpu(MultiFDSendParams *p)
->  {
->      MultiFDPages_t *pages = p->pages;
->      RAMBlock *rb = pages->block;
->      int i = 0;
->      int j = pages->num - 1;
->  
-> -    if (!multifd_zero_page_enabled()) {
-> -        pages->normal_num = pages->num;
-> +    /*
-> +     * Sort the page offset array by moving all normal pages to
-> +     * the left and all zero pages to the right of the array.
-> +     */
-> +    while (i <= j) {
-> +        uint64_t offset = pages->offset[i];
-> +
-> +        if (!buffer_is_zero(rb->host + offset, p->page_size)) {
-> +            i++;
-> +            continue;
-> +        }
-> +
-> +        swap_page_offset(pages->offset, i, j);
-> +        ram_release_page(rb->idstr, offset);
-> +        j--;
-> +    }
-> +
-> +    pages->normal_num = i;
-> +}
-> +
-> +
-> +#ifdef CONFIG_DSA_OPT
-> +
-> +static void swap_result(bool *results, int a, int b)
-> +{
-> +    bool temp;
-> +
-> +    if (a == b) {
->          return;
->      }
->  
-> +    temp = results[a];
-> +    results[a] = results[b];
-> +    results[b] = temp;
-> +}
-> +
-> +/**
-> + * zero_page_detect_dsa: Perform zero page detection using
-> + * Intel Data Streaming Accelerator (DSA).
-> + *
-> + * Sorts normal pages before zero pages in p->pages->offset and updates
-> + * p->pages->normal_num.
-> + *
-> + * @param p A pointer to the send params.
-> + */
-> +static void zero_page_detect_dsa(MultiFDSendParams *p)
-> +{
-> +    MultiFDPages_t *pages = p->pages;
-> +    RAMBlock *rb = pages->block;
-> +    bool *results = p->batch_task->results;
+I'm not so sure about that question. I think Paolo is best placed
+to suggest which is better, as the KVM maintainer.
 
-At this point I don't see the need to carry p->batch_task in the multifd
-code. results here could be taken from the
-buffer_is_zero_dsa_batch_async call below.
 
-> +
-> +    for (int i = 0; i < p->pages->num; i++) {
-> +        p->batch_task->addr[i] = (ram_addr_t)(rb->host + p->pages->offset[i]);
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
-... and this is just what p->iov[0].iov_base contains.
-
-> +    }
-> +
-> +    buffer_is_zero_dsa_batch_async(p->batch_task,
-
-This is not async. You're using the result right after this call. Leave
-the 'async' for the functions called from whithin this one, which do the
-actual wait part.
-
-> +                                   (const void **)p->batch_task->addr,
-> +                                   p->pages->num,
-> +                                   p->page_size);
-> +
-> +    int i = 0;
-> +    int j = pages->num - 1;
-> +
->      /*
->       * Sort the page offset array by moving all normal pages to
->       * the left and all zero pages to the right of the array.
-> @@ -63,11 +121,12 @@ void multifd_send_zero_page_detect(MultiFDSendParams *p)
->      while (i <= j) {
->          uint64_t offset = pages->offset[i];
->  
-> -        if (!buffer_is_zero(rb->host + offset, p->page_size)) {
-> +        if (!results[i]) {
->              i++;
->              continue;
->          }
->  
-> +        swap_result(results, i, j);
->          swap_page_offset(pages->offset, i, j);
->          ram_release_page(rb->idstr, offset);
->          j--;
-> @@ -76,6 +135,15 @@ void multifd_send_zero_page_detect(MultiFDSendParams *p)
->      pages->normal_num = i;
->  }
->  
-> +#else
-> +
-> +static void zero_page_detect_dsa(MultiFDSendParams *p)
-> +{
-> +    exit(1);
-> +}
-> +
-> +#endif
-> +
->  void multifd_recv_zero_page_process(MultiFDRecvParams *p)
->  {
->      for (int i = 0; i < p->zero_num; i++) {
-> @@ -87,3 +155,24 @@ void multifd_recv_zero_page_process(MultiFDRecvParams *p)
->          }
->      }
->  }
-> +
-> +/**
-> + * multifd_send_zero_page_detect: Perform zero page detection on all pages.
-> + *
-> + * @param p A pointer to the send params.
-> + */
-> +void multifd_send_zero_page_detect(MultiFDSendParams *p)
-> +{
-> +    MultiFDPages_t *pages = p->pages;
-> +
-> +    if (!multifd_zero_page_enabled()) {
-> +        pages->normal_num = pages->num;
-> +        return;
-> +    }
-> +
-> +    if (dsa_is_running()) {
-> +        zero_page_detect_dsa(p);
-> +    } else {
-> +        zero_page_detect_cpu(p);
-> +    }
-> +}
-> diff --git a/migration/multifd.c b/migration/multifd.c
-> index cfd3a92f6c..7316643d0a 100644
-> --- a/migration/multifd.c
-> +++ b/migration/multifd.c
-> @@ -818,6 +818,8 @@ void multifd_send_shutdown(void)
->  
->      multifd_send_terminate_threads();
->  
-> +    dsa_cleanup();
-> +
->      for (i = 0; i < migrate_multifd_channels(); i++) {
->          MultiFDSendParams *p = &multifd_send_state->params[i];
->          Error *local_err = NULL;
-> @@ -1155,11 +1157,20 @@ bool multifd_send_setup(void)
->      uint32_t page_count = MULTIFD_PACKET_SIZE / qemu_target_page_size();
->      bool use_packets = multifd_use_packets();
->      uint8_t i;
-> +    const char *dsa_parameter = migrate_multifd_dsa_accel();
->  
->      if (!migrate_multifd()) {
->          return true;
->      }
->  
-> +    if (dsa_init(dsa_parameter)) {
-> +        error_setg(&local_err, "multifd: Sender failed to initialize DSA.");
-> +        error_report_err(local_err);
-> +        return false;
-> +    }
-> +
-> +    dsa_start();
-> +
->      thread_count = migrate_multifd_channels();
->      multifd_send_state = g_malloc0(sizeof(*multifd_send_state));
->      multifd_send_state->params = g_new0(MultiFDSendParams, thread_count);
-> @@ -1393,6 +1404,7 @@ void multifd_recv_cleanup(void)
->              qemu_thread_join(&p->thread);
->          }
->      }
-> +    dsa_cleanup();
->      for (i = 0; i < migrate_multifd_channels(); i++) {
->          multifd_recv_cleanup_channel(&multifd_recv_state->params[i]);
->      }
-> @@ -1568,6 +1580,9 @@ int multifd_recv_setup(Error **errp)
->      uint32_t page_count = MULTIFD_PACKET_SIZE / qemu_target_page_size();
->      bool use_packets = multifd_use_packets();
->      uint8_t i;
-> +    const char *dsa_parameter = migrate_multifd_dsa_accel();
-> +    int ret;
-> +    Error *local_err = NULL;
->  
->      /*
->       * Return successfully if multiFD recv state is already initialised
-> @@ -1577,6 +1592,15 @@ int multifd_recv_setup(Error **errp)
->          return 0;
->      }
->  
-> +    ret = dsa_init(dsa_parameter);
-> +    if (ret != 0) {
-> +        error_setg(&local_err, "multifd: Receiver failed to initialize DSA.");
-> +        error_propagate(errp, local_err);
-> +        return ret;
-> +    }
-> +
-> +    dsa_start();
-> +
->      thread_count = migrate_multifd_channels();
->      multifd_recv_state = g_malloc0(sizeof(*multifd_recv_state));
->      multifd_recv_state->params = g_new0(MultiFDRecvParams, thread_count);
-> @@ -1616,13 +1640,12 @@ int multifd_recv_setup(Error **errp)
->  
->      for (i = 0; i < thread_count; i++) {
->          MultiFDRecvParams *p = &multifd_recv_state->params[i];
-> -        int ret;
-> -
->          ret = multifd_recv_state->ops->recv_setup(p, errp);
->          if (ret) {
->              return ret;
->          }
->      }
-> +
->      return 0;
->  }
->  
-> diff --git a/migration/multifd.h b/migration/multifd.h
-> index 16e27db5e9..b3717fae24 100644
-> --- a/migration/multifd.h
-> +++ b/migration/multifd.h
-> @@ -14,6 +14,7 @@
->  #define QEMU_MIGRATION_MULTIFD_H
->  
->  #include "ram.h"
-> +#include "qemu/dsa.h"
->  
->  typedef struct MultiFDRecvData MultiFDRecvData;
 
