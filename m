@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F562C19F4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 10:48:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 608C2C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 10:48:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzwWZ-00023x-5c; Thu, 25 Apr 2024 06:40:19 -0400
+	id 1rzwWN-0001xv-BM; Thu, 25 Apr 2024 06:40:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rzwWP-0001za-Rx
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 06:40:10 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1rzwWM-0001xS-FT
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 06:40:06 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rzwWO-0007Ao-7v
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 06:40:09 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-34c09040154so412764f8f.3
- for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 03:40:07 -0700 (PDT)
+ id 1rzwWK-000751-Oz
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 06:40:06 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-343d2b20c4bso605454f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 03:40:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714041606; x=1714646406; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714041603; x=1714646403; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=b6yIAJM8jr7uSpt6r8if5DSOdOSQk5RvqykVEUvE64g=;
- b=YPRs4cYsaYHY97jxa0Ozwm+RG3Zws7TRiTWbD+I4LiVUZyOkoY12FkFNDE+eTtllRx
- 7RvNNieuGmNJ5KbUTe2WU/M/6jQInFjNEtZkS74x2T1AzQXdqZZtcvdKGqXkNIz/7PJd
- OKGPu7UoRuVRUJnunL1xVuFDHlZo67hZvAOQbFdDf8tZrgdaPhHYYx933ckb6sOYFxQg
- E/Mv63d6af0HuqhYB5ONF2ghlhFs463OMdQZQm5a5rNZte5BIdehtASwsnfHWYMMn96m
- jx5h8UaHfwOeqMbJ0bykO1NjwQoNfKr5Q6druXmGAsF7BPFfGN8H4/Uno2nLVikmrMog
- O8PQ==
+ :reply-to; bh=957rAqnR2jdbtNnjgxfqiz7CRvR1nL/QXsIUUvuurzY=;
+ b=i4et7G0tr6OLfDSOHucAWHm/rDT+IhiKqY+c9xiwX10PL0tMvtAmNnNxYOvN11Ke9+
+ UsScK4r3TZDfpkx06CxzLJT1BPuTaCa57WDKvLg0HGiWxaIx20VIohTrfPUU3rViarcW
+ uGL+hv1JF2AabOdg+YCKjvqfTLRdCfskcdkz5IP1fqE5XvgjFr6qh6IMpR8WWch7clPR
+ MP3+X89EQTmwWg5meS/RuGTBgJZ6r5zwDqJVQDEa7YhFw2NhPdHNjdoeYyGR8Qx9fUWd
+ 7sqcaF9Y0gEn3QYEk8XGShnBKmYNlIw7W9vi0kpUn671sZr/gC9PZHJVZ8ySxKVO0FCJ
+ lX8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714041606; x=1714646406;
+ d=1e100.net; s=20230601; t=1714041603; x=1714646403;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=b6yIAJM8jr7uSpt6r8if5DSOdOSQk5RvqykVEUvE64g=;
- b=fIfL3KrEtliRcRaTX1n14NHMcN3yY17L99sIa+GKg+FH912n4VrJUyrOvQ6+DolGTf
- vUeFwXIz16Db6i5mAy0+T6EFkwSkR5/jfM7mi2UCutsZcKbgzimwohpQA45mEwlfj3lO
- A2jKO8C5XOPWo4T45wg2MtzxzLr7bkhP1QmZMIO0FR2veAyZVANDMWmsQ3NFmFAJ6C0t
- TG4pF67MYecFKIX8VVS46vc02yGAoBOoVVQhzZ8toxYZDah2cfuPqLljpyu4XPR0lsxi
- mtgo42HiAIfB4N+FyVc1hmODYCSGzpVUg6Tk7R+nDSHale7vKwdAI/dZxftvilnOgZro
- /0Sw==
-X-Gm-Message-State: AOJu0YxPCdymPLIZEzV87dFeBYrvMaqOTJ6d92sfmHqC8x2RhwwExf0p
- ZhHUR3RkuFdfV+fwyXhk2eX3RIiKpqyEoF2EUX5xJxgTNCMweKDmnWM169K+pHFWJVqAIr7PoRS
- q
-X-Google-Smtp-Source: AGHT+IEunhto1DYegTMoTqYfpazsOcWviVv5WM0Xs1q5WXDh7tAE0qPpdVz04ZUYT5J+bmAd3XxsQQ==
-X-Received: by 2002:a5d:46cd:0:b0:343:edfd:113d with SMTP id
- g13-20020a5d46cd000000b00343edfd113dmr2818121wrs.71.1714041606455; 
- Thu, 25 Apr 2024 03:40:06 -0700 (PDT)
+ bh=957rAqnR2jdbtNnjgxfqiz7CRvR1nL/QXsIUUvuurzY=;
+ b=H7sBMriT+71a28l2Lx2lQd1oaGa9MhlmVea9T9NZdLRqvEQI8GRxwv1/owqecnkQs+
+ f0PCXe9hf8vuiAUbwQFlKvDtcRG3eSL/o7fEnNU3aYU6Pmj4SRbLMhk0vmXs3NRJScQS
+ B1TK9W6JYDO5qa+qX9z6y6VsLwY50fGoodEPKcB2a47vj4X8wmmu/OQkDLVbyiIyQ4ru
+ ZEWezfTte0rsFQMzT+M5TIqDvFzlrmdrfTqQ20HP7SqJZ+EymEX/WaKHDxclUXtccyeM
+ LBC1Ha9TYE14rflbH2ZgfaMnNKxkKR3iO7v+Dad0r5QpljS76N4shRqOse4kKqVgZ+Uv
+ qnpQ==
+X-Gm-Message-State: AOJu0YykC4Hw28B/IGdOD3XwYR2J92NS0h582lm+WoKDeZKR05BIZxva
+ Ily1dfOomYy17nh/rMJyvsPWo5Kbtog4hfrWCH7PGq2i3oCc5JOb22E/5ItLtcNbfVnQAtZa1cd
+ a
+X-Google-Smtp-Source: AGHT+IF57MvCH0I+WRvuZIvG4vQo1H2m8Na0/u8rmqxDPUb6n9oeSOS3vISd3nPf/cr1z5K3H2yEdQ==
+X-Received: by 2002:adf:8b5d:0:b0:34b:2a61:b3c9 with SMTP id
+ v29-20020adf8b5d000000b0034b2a61b3c9mr4093361wra.40.1714041602822; 
+ Thu, 25 Apr 2024 03:40:02 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- h15-20020a056000000f00b003434c764f01sm19485768wrx.107.2024.04.25.03.40.06
+ h15-20020a056000000f00b003434c764f01sm19485768wrx.107.2024.04.25.03.40.02
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Apr 2024 03:40:06 -0700 (PDT)
+ Thu, 25 Apr 2024 03:40:02 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 11/37] hw/arm/virt: Wire NMI and VINMI irq lines from GIC to CPU
-Date: Thu, 25 Apr 2024 11:39:32 +0100
-Message-Id: <20240425103958.3237225-12-peter.maydell@linaro.org>
+Subject: [PULL 04/37] target/arm: Implement ALLINT MSR (immediate)
+Date: Thu, 25 Apr 2024 11:39:25 +0100
+Message-Id: <20240425103958.3237225-5-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240425103958.3237225-1-peter.maydell@linaro.org>
 References: <20240425103958.3237225-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,45 +95,100 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-Wire the new NMI and VINMI interrupt line from the GIC to each CPU if it
-is not GICv2.
+Add ALLINT MSR (immediate) to decodetree, in which the CRm is 0b000x. The
+EL0 check is necessary to ALLINT, and the EL1 check is necessary when
+imm == 1. So implement it inline for EL2/3, or EL1 with imm==0. Avoid the
+unconditional write to pc and use raise_exception_ra to unwind.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240407081733.3231820-12-ruanjinjie@huawei.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20240407081733.3231820-5-ruanjinjie@huawei.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/virt.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ target/arm/tcg/helper-a64.h    |  1 +
+ target/arm/tcg/a64.decode      |  1 +
+ target/arm/tcg/helper-a64.c    | 12 ++++++++++++
+ target/arm/tcg/translate-a64.c | 19 +++++++++++++++++++
+ 4 files changed, 33 insertions(+)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index c9119ef3847..c4b03b09c27 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -821,7 +821,8 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+diff --git a/target/arm/tcg/helper-a64.h b/target/arm/tcg/helper-a64.h
+index 575a5dab7dc..05181653999 100644
+--- a/target/arm/tcg/helper-a64.h
++++ b/target/arm/tcg/helper-a64.h
+@@ -22,6 +22,7 @@ DEF_HELPER_FLAGS_1(rbit64, TCG_CALL_NO_RWG_SE, i64, i64)
+ DEF_HELPER_2(msr_i_spsel, void, env, i32)
+ DEF_HELPER_2(msr_i_daifset, void, env, i32)
+ DEF_HELPER_2(msr_i_daifclear, void, env, i32)
++DEF_HELPER_1(msr_set_allint_el1, void, env)
+ DEF_HELPER_3(vfp_cmph_a64, i64, f16, f16, ptr)
+ DEF_HELPER_3(vfp_cmpeh_a64, i64, f16, f16, ptr)
+ DEF_HELPER_3(vfp_cmps_a64, i64, f32, f32, ptr)
+diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+index 8a20dce3c8f..0e7656fd158 100644
+--- a/target/arm/tcg/a64.decode
++++ b/target/arm/tcg/a64.decode
+@@ -207,6 +207,7 @@ MSR_i_DIT       1101 0101 0000 0 011 0100 .... 010 11111 @msr_i
+ MSR_i_TCO       1101 0101 0000 0 011 0100 .... 100 11111 @msr_i
+ MSR_i_DAIFSET   1101 0101 0000 0 011 0100 .... 110 11111 @msr_i
+ MSR_i_DAIFCLEAR 1101 0101 0000 0 011 0100 .... 111 11111 @msr_i
++MSR_i_ALLINT    1101 0101 0000 0 001 0100 000 imm:1 000 11111
+ MSR_i_SVCR      1101 0101 0000 0 011 0100 0 mask:2 imm:1 011 11111
  
-     /* Wire the outputs from each CPU's generic timer and the GICv3
-      * maintenance interrupt signal to the appropriate GIC PPI inputs,
--     * and the GIC's IRQ/FIQ/VIRQ/VFIQ interrupt outputs to the CPU's inputs.
-+     * and the GIC's IRQ/FIQ/VIRQ/VFIQ/NMI/VINMI interrupt outputs to the
-+     * CPU's inputs.
-      */
-     for (i = 0; i < smp_cpus; i++) {
-         DeviceState *cpudev = DEVICE(qemu_get_cpu(i));
-@@ -865,6 +866,13 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
-                            qdev_get_gpio_in(cpudev, ARM_CPU_VIRQ));
-         sysbus_connect_irq(gicbusdev, i + 3 * smp_cpus,
-                            qdev_get_gpio_in(cpudev, ARM_CPU_VFIQ));
+ # MRS, MSR (register), SYS, SYSL. These are all essentially the
+diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
+index 29f3ef274ae..0ea8668ab4c 100644
+--- a/target/arm/tcg/helper-a64.c
++++ b/target/arm/tcg/helper-a64.c
+@@ -66,6 +66,18 @@ void HELPER(msr_i_spsel)(CPUARMState *env, uint32_t imm)
+     update_spsel(env, imm);
+ }
+ 
++void HELPER(msr_set_allint_el1)(CPUARMState *env)
++{
++    /* ALLINT update to PSTATE. */
++    if (arm_hcrx_el2_eff(env) & HCRX_TALLINT) {
++        raise_exception_ra(env, EXCP_UDEF,
++                           syn_aa64_sysregtrap(0, 1, 0, 4, 1, 0x1f, 0), 2,
++                           GETPC());
++    }
 +
-+        if (vms->gic_version != VIRT_GIC_VERSION_2) {
-+            sysbus_connect_irq(gicbusdev, i + 4 * smp_cpus,
-+                               qdev_get_gpio_in(cpudev, ARM_CPU_NMI));
-+            sysbus_connect_irq(gicbusdev, i + 5 * smp_cpus,
-+                               qdev_get_gpio_in(cpudev, ARM_CPU_VINMI));
-+        }
-     }
++    env->pstate |= PSTATE_ALLINT;
++}
++
+ static void daif_check(CPUARMState *env, uint32_t op,
+                        uint32_t imm, uintptr_t ra)
+ {
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 2666d527111..976094a5c80 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -2036,6 +2036,25 @@ static bool trans_MSR_i_DAIFCLEAR(DisasContext *s, arg_i *a)
+     return true;
+ }
  
-     fdt_add_gic_node(vms);
++static bool trans_MSR_i_ALLINT(DisasContext *s, arg_i *a)
++{
++    if (!dc_isar_feature(aa64_nmi, s) || s->current_el == 0) {
++        return false;
++    }
++
++    if (a->imm == 0) {
++        clear_pstate_bits(PSTATE_ALLINT);
++    } else if (s->current_el > 1) {
++        set_pstate_bits(PSTATE_ALLINT);
++    } else {
++        gen_helper_msr_set_allint_el1(tcg_env);
++    }
++
++    /* Exit the cpu loop to re-evaluate pending IRQs. */
++    s->base.is_jmp = DISAS_UPDATE_EXIT;
++    return true;
++}
++
+ static bool trans_MSR_i_SVCR(DisasContext *s, arg_MSR_i_SVCR *a)
+ {
+     if (!dc_isar_feature(aa64_sme, s) || a->mask == 0) {
 -- 
 2.34.1
 
