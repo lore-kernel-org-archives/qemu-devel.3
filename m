@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9202C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 14:29:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BDAAC10F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 14:33:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s006D-0002YK-Fj; Thu, 25 Apr 2024 10:29:21 -0400
+	id 1s009R-0004kY-DH; Thu, 25 Apr 2024 10:32:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s0069-0002Xj-EY
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 10:29:18 -0400
+ id 1s009L-0004kI-S9
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 10:32:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s0063-00074O-7K
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 10:29:17 -0400
+ id 1s009G-0000uT-QV
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 10:32:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714055349;
+ s=mimecast20190719; t=1714055549;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=x+WV8sZDyNChXVySxfCBNHBL9rUb2duOrWyO26cxGR4=;
- b=DK8dxjdUx4QV86m9Dfof0Xr4mbY3iG8NlsGOky5GWkMBimuhVWUwMSsGi3syRoS74TWbkA
- 8yvJ7JxTTnnoWX1QUflihRVmNHKmX6JpG6no6ViMsjtHF/CSi2dQf+a7nVeUL6ONmU7CRH
- 6HW2pdNHvGx/MEWU6PmYIZN1Ow2W9Lo=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-173-SEwdvfLzNlif3l_fJcWDBw-1; Thu,
- 25 Apr 2024 10:29:07 -0400
-X-MC-Unique: SEwdvfLzNlif3l_fJcWDBw-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
+ bh=ukUEtoouNJ2/ZeEd8OZbkzGx2YXeEr/QNw6eooSGC9Q=;
+ b=e/fxkNTW+J/RrnOvWhropySipP5GKxMgmbtucHCpcHg4clxEKSLYhjZLMDmAeQ/NCxLTTk
+ Emzm+4U5QVJ9Q3v/T/bmGmu6ECUzTOTze9f/DICS2f6ttDrGStAvf7lL2ySTEOjEp6GzU1
+ qaHVamNgif5RmKNzX+Rg48TcyRkzY1c=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-601-ub8f-zyJND2s0JreCanQuQ-1; Thu, 25 Apr 2024 10:32:28 -0400
+X-MC-Unique: ub8f-zyJND2s0JreCanQuQ-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 776DF28EC106;
- Thu, 25 Apr 2024 14:29:07 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 50D8C8EE934;
+ Thu, 25 Apr 2024 14:32:27 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.102])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 03B6A40C6CC1;
- Thu, 25 Apr 2024 14:29:05 +0000 (UTC)
-Date: Thu, 25 Apr 2024 15:29:04 +0100
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 7F8371121313;
+ Thu, 25 Apr 2024 14:32:25 +0000 (UTC)
+Date: Thu, 25 Apr 2024 15:32:23 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Hao Xiang <hao.xiang@linux.dev>
 Cc: marcandre.lureau@redhat.com, peterx@redhat.com, farosas@suse.de,
- armbru@redhat.com, lvivier@redhat.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 10/14] migration/multifd: Enable DSA offloading in
- multifd sender path.
-Message-ID: <ZiposIaLQTJUiEFk@redhat.com>
+ armbru@redhat.com, lvivier@redhat.com, qemu-devel@nongnu.org,
+ Bryan Zhang <bryan.zhang@bytedance.com>
+Subject: Re: [PATCH v4 03/14] util/dsa: Implement DSA device start and stop
+ logic.
+Message-ID: <Zippd7gTrUaRWnq_@redhat.com>
 References: <20240425022117.4035031-1-hao.xiang@linux.dev>
- <20240425022117.4035031-11-hao.xiang@linux.dev>
+ <20240425022117.4035031-4-hao.xiang@linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240425022117.4035031-11-hao.xiang@linux.dev>
+In-Reply-To: <20240425022117.4035031-4-hao.xiang@linux.dev>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -85,135 +86,186 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 25, 2024 at 02:21:13AM +0000, Hao Xiang wrote:
-> Multifd sender path gets an array of pages queued by the migration
-> thread. It performs zero page checking on every page in the array.
-> The pages are classfied as either a zero page or a normal page. This
-> change uses Intel DSA to offload the zero page checking from CPU to
-> the DSA accelerator. The sender thread submits a batch of pages to DSA
-> hardware and waits for the DSA completion thread to signal for work
-> completion.
+On Thu, Apr 25, 2024 at 02:21:06AM +0000, Hao Xiang wrote:
+> * DSA device open and close.
+> * DSA group contains multiple DSA devices.
+> * DSA group configure/start/stop/clean.
 > 
 > Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
+> Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
 > ---
->  migration/multifd-zero-page.c | 99 +++++++++++++++++++++++++++++++++--
->  migration/multifd.c           | 27 +++++++++-
->  migration/multifd.h           |  1 +
->  3 files changed, 120 insertions(+), 7 deletions(-)
+>  include/qemu/dsa.h |  72 +++++++++++
+>  util/dsa.c         | 316 +++++++++++++++++++++++++++++++++++++++++++++
+>  util/meson.build   |   1 +
+>  3 files changed, 389 insertions(+)
+>  create mode 100644 include/qemu/dsa.h
+>  create mode 100644 util/dsa.c
 > 
-> diff --git a/migration/multifd-zero-page.c b/migration/multifd-zero-page.c
-> index e1b8370f88..4f426289e4 100644
-> --- a/migration/multifd-zero-page.c
-> +++ b/migration/multifd-zero-page.c
-
-> diff --git a/migration/multifd.c b/migration/multifd.c
-> index cfd3a92f6c..7316643d0a 100644
-> --- a/migration/multifd.c
-> +++ b/migration/multifd.c
-> @@ -818,6 +818,8 @@ void multifd_send_shutdown(void)
->  
->      multifd_send_terminate_threads();
->  
-> +    dsa_cleanup();
+> diff --git a/include/qemu/dsa.h b/include/qemu/dsa.h
+> new file mode 100644
+> index 0000000000..f15c05ee85
+> --- /dev/null
+> +++ b/include/qemu/dsa.h
+> @@ -0,0 +1,72 @@
+> +#ifndef QEMU_DSA_H
+> +#define QEMU_DSA_H
 > +
->      for (i = 0; i < migrate_multifd_channels(); i++) {
->          MultiFDSendParams *p = &multifd_send_state->params[i];
->          Error *local_err = NULL;
-> @@ -1155,11 +1157,20 @@ bool multifd_send_setup(void)
->      uint32_t page_count = MULTIFD_PACKET_SIZE / qemu_target_page_size();
->      bool use_packets = multifd_use_packets();
->      uint8_t i;
-> +    const char *dsa_parameter = migrate_multifd_dsa_accel();
->  
->      if (!migrate_multifd()) {
->          return true;
->      }
->  
-> +    if (dsa_init(dsa_parameter)) {
-> +        error_setg(&local_err, "multifd: Sender failed to initialize DSA.");
-> +        error_report_err(local_err);
-> +        return false;
-> +    }
+> +#include "qemu/error-report.h"
+> +#include "qemu/thread.h"
+> +#include "qemu/queue.h"
+> +
+> +#ifdef CONFIG_DSA_OPT
+> +
+> +#pragma GCC push_options
+> +#pragma GCC target("enqcmd")
+> +
+> +#include <linux/idxd.h>
+> +#include "x86intrin.h"
+> +
+> +/**
+> + * @brief Initializes DSA devices.
+> + *
+> + * @param dsa_parameter A list of DSA device path from migration parameter.
+> + *
+> + * @return int Zero if successful, otherwise non zero.
+> + */
+> +int dsa_init(const char *dsa_parameter);
 
-This is an example of why all the dsa functions need to report
-a via an "Error **err" parameter. The error reported
-here is useless as it lacks any meaningful information of what
-went wrong.
+BTW, all these methods should also use 'qemu_dsa_' as a name
+prefix, not merely 'dsa_'. The latter is too generic, and
+likely to clash with naming of APIs implemnenting 'dsa'
+crypto, as well as withthe kernel's dsa devoce header.
 
-The multifd_send_setup method itself needs a "Error **errp"
-param so it can pass it back up to be reoprted too.
+Likewise best practice for the structs in the dsa.c file
+to also use 'QemuDsa' as a nameprefix, not merely 'Dsa'.
 
 > +
-> +    dsa_start();
+> +/**
+> + * @brief Start logic to enable using DSA.
+> + */
+> +void dsa_start(void);
 > +
->      thread_count = migrate_multifd_channels();
->      multifd_send_state = g_malloc0(sizeof(*multifd_send_state));
->      multifd_send_state->params = g_new0(MultiFDSendParams, thread_count);
-> @@ -1393,6 +1404,7 @@ void multifd_recv_cleanup(void)
->              qemu_thread_join(&p->thread);
->          }
->      }
-> +    dsa_cleanup();
->      for (i = 0; i < migrate_multifd_channels(); i++) {
->          multifd_recv_cleanup_channel(&multifd_recv_state->params[i]);
->      }
-> @@ -1568,6 +1580,9 @@ int multifd_recv_setup(Error **errp)
->      uint32_t page_count = MULTIFD_PACKET_SIZE / qemu_target_page_size();
->      bool use_packets = multifd_use_packets();
->      uint8_t i;
-> +    const char *dsa_parameter = migrate_multifd_dsa_accel();
-> +    int ret;
-> +    Error *local_err = NULL;
->  
->      /*
->       * Return successfully if multiFD recv state is already initialised
-> @@ -1577,6 +1592,15 @@ int multifd_recv_setup(Error **errp)
->          return 0;
->      }
->  
-> +    ret = dsa_init(dsa_parameter);
-> +    if (ret != 0) {
-> +        error_setg(&local_err, "multifd: Receiver failed to initialize DSA.");
-> +        error_propagate(errp, local_err);
-> +        return ret;
+> +/**
+> + * @brief Stop the device group and the completion thread.
+> + */
+> +void dsa_stop(void);
+> +
+> +/**
+> + * @brief Clean up system resources created for DSA offloading.
+> + */
+> +void dsa_cleanup(void);
+> +
+> +/**
+> + * @brief Check if DSA is running.
+> + *
+> + * @return True if DSA is running, otherwise false.
+> + */
+> +bool dsa_is_running(void);
+> +
+> +#else
+> +
+> +static inline bool dsa_is_running(void)
+> +{
+> +    return false;
+> +}
+> +
+> +static inline int dsa_init(const char *dsa_parameter)
+> +{
+> +    if (dsa_parameter != NULL && strlen(dsa_parameter) != 0) {
+> +        error_report("DSA not supported.");
+> +        return -1;
 > +    }
 > +
-> +    dsa_start();
+> +    return 0;
+> +}
 > +
->      thread_count = migrate_multifd_channels();
->      multifd_recv_state = g_malloc0(sizeof(*multifd_recv_state));
->      multifd_recv_state->params = g_new0(MultiFDRecvParams, thread_count);
-> @@ -1616,13 +1640,12 @@ int multifd_recv_setup(Error **errp)
->  
->      for (i = 0; i < thread_count; i++) {
->          MultiFDRecvParams *p = &multifd_recv_state->params[i];
-> -        int ret;
-> -
->          ret = multifd_recv_state->ops->recv_setup(p, errp);
->          if (ret) {
->              return ret;
->          }
->      }
+> +static inline void dsa_start(void) {}
 > +
->      return 0;
->  }
->  
-> diff --git a/migration/multifd.h b/migration/multifd.h
-> index 16e27db5e9..b3717fae24 100644
-> --- a/migration/multifd.h
-> +++ b/migration/multifd.h
-> @@ -14,6 +14,7 @@
->  #define QEMU_MIGRATION_MULTIFD_H
->  
->  #include "ram.h"
+> +static inline void dsa_stop(void) {}
+> +
+> +static inline void dsa_cleanup(void) {}
+> +
+> +#endif
+> +
+> +#endif
+> diff --git a/util/dsa.c b/util/dsa.c
+> new file mode 100644
+> index 0000000000..05bbf8e31a
+> --- /dev/null
+> +++ b/util/dsa.c
+> @@ -0,0 +1,316 @@
+> +/*
+> + * Use Intel Data Streaming Accelerator to offload certain background
+> + * operations.
+> + *
+> + * Copyright (c) 2023 Hao Xiang <hao.xiang@bytedance.com>
+> + *                    Bryan Zhang <bryan.zhang@bytedance.com>
+> + *
+> + * Permission is hereby granted, free of charge, to any person obtaining a copy
+> + * of this software and associated documentation files (the "Software"), to deal
+> + * in the Software without restriction, including without limitation the rights
+> + * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+> + * copies of the Software, and to permit persons to whom the Software is
+> + * furnished to do so, subject to the following conditions:
+> + *
+> + * The above copyright notice and this permission notice shall be included in
+> + * all copies or substantial portions of the Software.
+> + *
+> + * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+> + * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+> + * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+> + * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+> + * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+> + * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+> + * THE SOFTWARE.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/queue.h"
+> +#include "qemu/memalign.h"
+> +#include "qemu/lockable.h"
+> +#include "qemu/cutils.h"
 > +#include "qemu/dsa.h"
->  
->  typedef struct MultiFDRecvData MultiFDRecvData;
->  
-> -- 
-> 2.30.2
-> 
-> 
+> +#include "qemu/bswap.h"
+> +#include "qemu/error-report.h"
+> +#include "qemu/rcu.h"
+> +
+> +#ifdef CONFIG_DSA_OPT
+> +
+> +#pragma GCC push_options
+> +#pragma GCC target("enqcmd")
+> +
+> +#include <linux/idxd.h>
+> +#include "x86intrin.h"
+> +
+> +#define DSA_WQ_SIZE 4096
+> +#define MAX_DSA_DEVICES 16
+> +
+> +typedef QSIMPLEQ_HEAD(dsa_task_queue, dsa_batch_task) dsa_task_queue;
+> +
+> +struct dsa_device {
+> +    void *work_queue;
+> +};
+> +
+> +struct dsa_device_group {
+
+IMHO preferable to use initial-upper case for struct
+names, to distinguish from method names. ie
+
+ QemuDsaDeviceGroup
+
+also I'd suggest they should all be typedef'd too,
+so its not repeating 'struct <blah>' everywhere.
+
+> +    struct dsa_device *dsa_devices;
+> +    int num_dsa_devices;
+> +    /* The index of the next DSA device to be used. */
+> +    uint32_t device_allocator_index;
+> +    bool running;
+> +    QemuMutex task_queue_lock;
+> +    QemuCond task_queue_cond;
+> +    dsa_task_queue task_queue;
+> +};
 
 With regards,
 Daniel
