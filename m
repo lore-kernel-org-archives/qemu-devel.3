@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35E84C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 14:18:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AB59C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 14:22:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzzuk-00076N-0E; Thu, 25 Apr 2024 10:17:34 -0400
+	id 1rzzz7-0008HN-7C; Thu, 25 Apr 2024 10:22:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rzzua-00074O-GL
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 10:17:20 -0400
+ id 1rzzz4-0008Gq-SC
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 10:21:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rzzuX-0001Tv-Dy
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 10:17:20 -0400
+ id 1rzzz2-0004dN-Qb
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 10:21:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714054633;
+ s=mimecast20190719; t=1714054915;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=ats0eIAYHKFvf8DypLJSegocl/XeTCzUE3xREugdd4w=;
- b=Fy1PcQN6n3rQMao4HdSOKitGu5rSAsYXttW56Zt6VMPyYmuxMw9Jla4Yjv9MpFayYy6UiW
- fBL18LXEkZoV6s+mBmk8AvyRF3aAGHVoWimt7dcuKUo65w1dmfSoJGcCW/csKgQJt8VWp2
- z4h+Idmov6P4hkt03/NS30LczYilnu0=
+ bh=RrmT9/WPDlcmT5HUmFVBAcxMNV3VgLqwLFkFoo0EXSs=;
+ b=PgkpcucBqKbgqjkVyiwBg1lEC0hyu8DYkWvBoNdobCkKu9j5PAY7KuQjfbtkpFO4Ioh8Rn
+ IVjmRJw5ISdkCHTxGlHOxVzK9kJ3yHi/2L6eMGq6hx2o8QdTdK8OcC23r6C6TafBMmOrvX
+ AnAnHUp65RCDpDm9W63NfrXnJc9RczE=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-548-f7oEStASP8yregafkbUpSg-1; Thu, 25 Apr 2024 10:17:09 -0400
-X-MC-Unique: f7oEStASP8yregafkbUpSg-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
+ us-mta-578-3Vx_MxDaN4mjo4z4mm__HQ-1; Thu, 25 Apr 2024 10:21:54 -0400
+X-MC-Unique: 3Vx_MxDaN4mjo4z4mm__HQ-1
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6F82697AF46;
- Thu, 25 Apr 2024 14:17:09 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 9129E9AB82A;
+ Thu, 25 Apr 2024 14:21:52 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.102])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 8AE921121313;
- Thu, 25 Apr 2024 14:17:07 +0000 (UTC)
-Date: Thu, 25 Apr 2024 15:17:05 +0100
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 89276AC69;
+ Thu, 25 Apr 2024 14:21:50 +0000 (UTC)
+Date: Thu, 25 Apr 2024 15:21:48 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Hao Xiang <hao.xiang@linux.dev>
 Cc: marcandre.lureau@redhat.com, peterx@redhat.com, farosas@suse.de,
- armbru@redhat.com, lvivier@redhat.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 08/14] migration/multifd: Add new migration option for
- multifd DSA offloading.
-Message-ID: <Zipl4WkTFgMr92NP@redhat.com>
+ armbru@redhat.com, lvivier@redhat.com, qemu-devel@nongnu.org,
+ Bryan Zhang <bryan.zhang@bytedance.com>
+Subject: Re: [PATCH v4 03/14] util/dsa: Implement DSA device start and stop
+ logic.
+Message-ID: <Zipm_Ef1prJD2tIZ@redhat.com>
 References: <20240425022117.4035031-1-hao.xiang@linux.dev>
- <20240425022117.4035031-9-hao.xiang@linux.dev>
+ <20240425022117.4035031-4-hao.xiang@linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240425022117.4035031-9-hao.xiang@linux.dev>
+In-Reply-To: <20240425022117.4035031-4-hao.xiang@linux.dev>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -85,107 +86,147 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 25, 2024 at 02:21:11AM +0000, Hao Xiang wrote:
-> Intel DSA offloading is an optional feature that turns on if
-> proper hardware and software stack is available. To turn on
-> DSA offloading in multifd live migration:
-> 
-> multifd-dsa-accel="[dsa_dev_path1] [dsa_dev_path2] ... [dsa_dev_pathX]"
-> 
-> This feature is turned off by default.
+On Thu, Apr 25, 2024 at 02:21:06AM +0000, Hao Xiang wrote:
+> * DSA device open and close.
+> * DSA group contains multiple DSA devices.
+> * DSA group configure/start/stop/clean.
 > 
 > Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
+> Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
 > ---
->  migration/migration-hmp-cmds.c |  8 ++++++++
->  migration/options.c            | 30 ++++++++++++++++++++++++++++++
->  migration/options.h            |  1 +
->  qapi/migration.json            | 26 +++++++++++++++++++++++---
->  4 files changed, 62 insertions(+), 3 deletions(-)
+>  include/qemu/dsa.h |  72 +++++++++++
+>  util/dsa.c         | 316 +++++++++++++++++++++++++++++++++++++++++++++
+>  util/meson.build   |   1 +
+>  3 files changed, 389 insertions(+)
+>  create mode 100644 include/qemu/dsa.h
+>  create mode 100644 util/dsa.c
+> 
+> diff --git a/include/qemu/dsa.h b/include/qemu/dsa.h
+> new file mode 100644
+> index 0000000000..f15c05ee85
+> --- /dev/null
+> +++ b/include/qemu/dsa.h
+> @@ -0,0 +1,72 @@
 
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index 8c65b90328..934fa8839e 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -914,6 +914,12 @@
->  #     See description in @ZeroPageDetection.  Default is 'multifd'.
->  #     (since 9.0)
->  #
-> +# @multifd-dsa-accel: If enabled, use DSA accelerator offloading for
-> +#     certain memory operations. Enable DSA accelerator offloading by
-> +#     setting this string to a list of DSA device path separated by space
-> +#     characters. Setting this string to an empty string means disabling
-> +#     DSA accelerator offloading. Defaults to an empty string. (since 9.2)
+Missing license header.
 
-Passing a list of paths as a single space separate string is a
-design anti-pattern. This needs to use a list type at the QAPI
-level.
+> +#ifndef QEMU_DSA_H
+> +#define QEMU_DSA_H
+> +
+> +#include "qemu/error-report.h"
+> +#include "qemu/thread.h"
+> +#include "qemu/queue.h"
+> +
+> +#ifdef CONFIG_DSA_OPT
+> +
+> +#pragma GCC push_options
+> +#pragma GCC target("enqcmd")
+> +
+> +#include <linux/idxd.h>
+> +#include "x86intrin.h"
+> +
+> +/**
+> + * @brief Initializes DSA devices.
+> + *
+> + * @param dsa_parameter A list of DSA device path from migration parameter.
+> + *
+> + * @return int Zero if successful, otherwise non zero.
+> + */
+> +int dsa_init(const char *dsa_parameter);
+> +
+> +/**
+> + * @brief Start logic to enable using DSA.
+> + */
+> +void dsa_start(void);
+> +
+> +/**
+> + * @brief Stop the device group and the completion thread.
+> + */
+> +void dsa_stop(void);
+> +
+> +/**
+> + * @brief Clean up system resources created for DSA offloading.
+> + */
+> +void dsa_cleanup(void);
+> +
+> +/**
+> + * @brief Check if DSA is running.
+> + *
+> + * @return True if DSA is running, otherwise false.
+> + */
+> +bool dsa_is_running(void);
+> +
+> +#else
+> +
+> +static inline bool dsa_is_running(void)
+> +{
+> +    return false;
+> +}
+> +
+> +static inline int dsa_init(const char *dsa_parameter)
+> +{
+> +    if (dsa_parameter != NULL && strlen(dsa_parameter) != 0) {
+> +        error_report("DSA not supported.");
 
-Also I don't think we need add 'multifd' on the name - all
-new features are for multifd.
+Using error_report in this code is undesirable, as it means the
+migration code has no way to feed error information back to the
+mgmt app.
 
-Overall it should be called 'dsa-accel-path' I thjink
+*all* the APIs in dsa.h/dsa.c that can have errors, need to have
+an "Error **errp" parameter, so useful info can be propagated
+back the caller in the migration code.
 
-> @@ -1122,6 +1128,12 @@
->  #     See description in @ZeroPageDetection.  Default is 'multifd'.
->  #     (since 9.0)
->  #
-> +# @multifd-dsa-accel: If enabled, use DSA accelerator offloading for
-> +#     certain memory operations. Enable DSA accelerator offloading by
-> +#     setting this string to a list of DSA device path separated by space
-> +#     characters. Setting this string to an empty string means disabling
-> +#     DSA accelerator offloading. Defaults to an empty string. (since 9.2)
-> +#
->  # Features:
->  #
->  # @deprecated: Member @block-incremental is deprecated.  Use
-> @@ -1176,7 +1188,8 @@
->                                              'features': [ 'unstable' ] },
->              '*vcpu-dirty-limit': 'uint64',
->              '*mode': 'MigMode',
-> -            '*zero-page-detection': 'ZeroPageDetection'} }
-> +            '*zero-page-detection': 'ZeroPageDetection',
-> +            '*multifd-dsa-accel': 'StrOrNull'} }
+> +        return -1;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +static inline void dsa_start(void) {}
+> +
+> +static inline void dsa_stop(void) {}
+> +
+> +static inline void dsa_cleanup(void) {}
+> +
+> +#endif
+> +
+> +#endif
+> diff --git a/util/dsa.c b/util/dsa.c
+> new file mode 100644
+> index 0000000000..05bbf8e31a
+> --- /dev/null
+> +++ b/util/dsa.c
+> @@ -0,0 +1,316 @@
+> +/*
+> + * Use Intel Data Streaming Accelerator to offload certain background
+> + * operations.
+> + *
+> + * Copyright (c) 2023 Hao Xiang <hao.xiang@bytedance.com>
+> + *                    Bryan Zhang <bryan.zhang@bytedance.com>
+> + *
+> + * Permission is hereby granted, free of charge, to any person obtaining a copy
+> + * of this software and associated documentation files (the "Software"), to deal
+> + * in the Software without restriction, including without limitation the rights
+> + * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+> + * copies of the Software, and to permit persons to whom the Software is
+> + * furnished to do so, subject to the following conditions:
+> + *
+> + * The above copyright notice and this permission notice shall be included in
+> + * all copies or substantial portions of the Software.
+> + *
+> + * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+> + * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+> + * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+> + * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+> + * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+> + * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+> + * THE SOFTWARE.
+> + */
 
-This needs to be
+This is an MIT license header, but QEMU's standard license is GPL-2.0-or-later.
 
-  ['str']   not 'StrOrNull'
-
->  
->  ##
->  # @migrate-set-parameters:
-> @@ -1354,6 +1367,12 @@
->  #     See description in @ZeroPageDetection.  Default is 'multifd'.
->  #     (since 9.0)
->  #
-> +# @multifd-dsa-accel: If enabled, use DSA accelerator offloading for
-> +#     certain memory operations. Enable DSA accelerator offloading by
-> +#     setting this string to a list of DSA device path separated by space
-> +#     characters. Setting this string to an empty string means disabling
-> +#     DSA accelerator offloading. Defaults to an empty string. (since 9.2)
-> +#
->  # Features:
->  #
->  # @deprecated: Member @block-incremental is deprecated.  Use
-> @@ -1405,7 +1424,8 @@
->                                              'features': [ 'unstable' ] },
->              '*vcpu-dirty-limit': 'uint64',
->              '*mode': 'MigMode',
-> -            '*zero-page-detection': 'ZeroPageDetection'} }
-> +            '*zero-page-detection': 'ZeroPageDetection',
-> +            '*multifd-dsa-accel': 'str'} }
-
-Liekewise needs to be
-
-   ['str']
-
-
-Having mgmt apps pass in the path every time though, feels like
-overkill. Surely there's a standard path that QEMU should use
-by default, and should only require flag to turn on its usage.
-
-IOW, why not extend the ZeroPageDetection enum, to have a further
-entry for 'dsa' to request ue of dsa accel. Passing paths could
-be optional.
+Please keep new contributions under QEMU's normal  license unless there's a
+reason why you must differ.
 
 
 With regards,
