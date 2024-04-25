@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FFB6C10F15
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 02:25:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52EF1C19F4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 02:25:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzol5-0000Xy-Oc; Wed, 24 Apr 2024 22:22:47 -0400
+	id 1rzokx-0000Uj-Tt; Wed, 24 Apr 2024 22:22:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hao.xiang@linux.dev>)
- id 1rzol3-0000X9-5g
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 22:22:45 -0400
-Received: from out-173.mta1.migadu.com ([95.215.58.173])
+ id 1rzoku-0000TQ-Bn
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 22:22:36 -0400
+Received: from out-189.mta1.migadu.com ([95.215.58.189])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hao.xiang@linux.dev>)
- id 1rzol1-0005IL-An
- for qemu-devel@nongnu.org; Wed, 24 Apr 2024 22:22:44 -0400
+ id 1rzoks-00051I-FL
+ for qemu-devel@nongnu.org; Wed, 24 Apr 2024 22:22:36 -0400
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
  include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1714011762;
+ t=1714011752;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QzuSJ1zKYkpx7ByvuyAxfu5NoEWY50aKxHnWj75q2gE=;
- b=IOsynXx6S5B89y3R2OsL6G69El2xPkzR4+iWqeJ3Z4HKiGZ4LZIxM2aGa3nIfsKLuMZSOK
- 6PknMF91LaNpo6f4ugRtGCMHLjVFMXjpP1SknXWFYDaJ3fCGFc+BgsEuywkm9AsSuvos8d
- Evco26giDoklEmzP/Bdi2U3obVlbL4Y=
+ bh=nlIyorlshT2KtpOtlnobLBBslJn63zcO14fOuSzWnq4=;
+ b=FKoet1pLYSogT2dOq268S0y+aWTFC8gcp0VQQ3avSg+iMg6pMELQy2e48ufTT6JGCNP4PE
+ e/LThCb3nVt4Ks3WcFr/171ztBIuqnDqxL0/v6Pq0esgxcUWpoGa/qF1Im8+AfJ/oWL75E
+ Z/Ml+2CNDxInfZu5DIgB37+Xrc/HHjE=
 From: Hao Xiang <hao.xiang@linux.dev>
 To: marcandre.lureau@redhat.com, peterx@redhat.com, farosas@suse.de,
  armbru@redhat.com, lvivier@redhat.com, qemu-devel@nongnu.org
 Cc: Hao Xiang <hao.xiang@linux.dev>
-Subject: [PATCH v4 08/14] migration/multifd: Add new migration option for
- multifd DSA offloading.
-Date: Thu, 25 Apr 2024 02:21:11 +0000
-Message-Id: <20240425022117.4035031-9-hao.xiang@linux.dev>
+Subject: [PATCH v4 04/14] util/dsa: Implement DSA task enqueue and dequeue.
+Date: Thu, 25 Apr 2024 02:21:07 +0000
+Message-Id: <20240425022117.4035031-5-hao.xiang@linux.dev>
 In-Reply-To: <20240425022117.4035031-1-hao.xiang@linux.dev>
 References: <20240425022117.4035031-1-hao.xiang@linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=95.215.58.173; envelope-from=hao.xiang@linux.dev;
- helo=out-173.mta1.migadu.com
+Received-SPF: pass client-ip=95.215.58.189; envelope-from=hao.xiang@linux.dev;
+ helo=out-189.mta1.migadu.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -69,215 +68,274 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Intel DSA offloading is an optional feature that turns on if
-proper hardware and software stack is available. To turn on
-DSA offloading in multifd live migration:
-
-multifd-dsa-accel="[dsa_dev_path1] [dsa_dev_path2] ... [dsa_dev_pathX]"
-
-This feature is turned off by default.
+* Use a safe thread queue for DSA task enqueue/dequeue.
+* Implement DSA task submission.
+* Implement DSA batch task submission.
 
 Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
 ---
- migration/migration-hmp-cmds.c |  8 ++++++++
- migration/options.c            | 30 ++++++++++++++++++++++++++++++
- migration/options.h            |  1 +
- qapi/migration.json            | 26 +++++++++++++++++++++++---
- 4 files changed, 62 insertions(+), 3 deletions(-)
+ include/qemu/dsa.h |  28 +++++++
+ util/dsa.c         | 201 +++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 229 insertions(+)
 
-diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-index 7e96ae6ffd..7e9bb278c9 100644
---- a/migration/migration-hmp-cmds.c
-+++ b/migration/migration-hmp-cmds.c
-@@ -358,6 +358,9 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
-         monitor_printf(mon, "%s: '%s'\n",
-             MigrationParameter_str(MIGRATION_PARAMETER_TLS_AUTHZ),
-             params->tls_authz);
-+        monitor_printf(mon, "%s: '%s'\n",
-+            MigrationParameter_str(MIGRATION_PARAMETER_MULTIFD_DSA_ACCEL),
-+            params->multifd_dsa_accel);
+diff --git a/include/qemu/dsa.h b/include/qemu/dsa.h
+index f15c05ee85..37cae8d9d2 100644
+--- a/include/qemu/dsa.h
++++ b/include/qemu/dsa.h
+@@ -13,6 +13,34 @@
+ #include <linux/idxd.h>
+ #include "x86intrin.h"
  
-         if (params->has_block_bitmap_mapping) {
-             const BitmapMigrationNodeAliasList *bmnal;
-@@ -622,6 +625,11 @@ void hmp_migrate_set_parameter(Monitor *mon, const QDict *qdict)
-         p->has_block_incremental = true;
-         visit_type_bool(v, param, &p->block_incremental, &err);
-         break;
-+    case MIGRATION_PARAMETER_MULTIFD_DSA_ACCEL:
-+        p->multifd_dsa_accel = g_new0(StrOrNull, 1);
-+        p->multifd_dsa_accel->type = QTYPE_QSTRING;
-+        visit_type_str(v, param, &p->multifd_dsa_accel->u.s, &err);
-+        break;
-     case MIGRATION_PARAMETER_MULTIFD_CHANNELS:
-         p->has_multifd_channels = true;
-         visit_type_uint8(v, param, &p->multifd_channels, &err);
-diff --git a/migration/options.c b/migration/options.c
-index 239f5ecfb4..dc8642df81 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -182,6 +182,8 @@ Property migration_properties[] = {
-     DEFINE_PROP_ZERO_PAGE_DETECTION("zero-page-detection", MigrationState,
-                        parameters.zero_page_detection,
-                        ZERO_PAGE_DETECTION_MULTIFD),
-+    DEFINE_PROP_STRING("multifd-dsa-accel", MigrationState,
-+                       parameters.multifd_dsa_accel),
- 
-     /* Migration capabilities */
-     DEFINE_PROP_MIG_CAP("x-xbzrle", MIGRATION_CAPABILITY_XBZRLE),
-@@ -920,6 +922,13 @@ const char *migrate_tls_creds(void)
-     return s->parameters.tls_creds;
++typedef enum DsaTaskType {
++    DSA_TASK = 0,
++    DSA_BATCH_TASK
++} DsaTaskType;
++
++typedef enum DsaTaskStatus {
++    DSA_TASK_READY = 0,
++    DSA_TASK_PROCESSING,
++    DSA_TASK_COMPLETION
++} DsaTaskStatus;
++
++typedef void (*dsa_completion_fn)(void *);
++
++typedef struct dsa_batch_task {
++    struct dsa_hw_desc batch_descriptor;
++    struct dsa_hw_desc *descriptors;
++    struct dsa_completion_record batch_completion __attribute__((aligned(32)));
++    struct dsa_completion_record *completions;
++    struct dsa_device_group *group;
++    struct dsa_device *device;
++    dsa_completion_fn completion_callback;
++    QemuSemaphore sem_task_complete;
++    DsaTaskType task_type;
++    DsaTaskStatus status;
++    int batch_size;
++    QSIMPLEQ_ENTRY(dsa_batch_task) entry;
++} dsa_batch_task;
++
+ /**
+  * @brief Initializes DSA devices.
+  *
+diff --git a/util/dsa.c b/util/dsa.c
+index 05bbf8e31a..75739a1af6 100644
+--- a/util/dsa.c
++++ b/util/dsa.c
+@@ -244,6 +244,205 @@ dsa_device_group_get_next_device(struct dsa_device_group *group)
+     return &group->dsa_devices[current];
  }
  
-+const char *migrate_multifd_dsa_accel(void)
++/**
++ * @brief Empties out the DSA task queue.
++ *
++ * @param group A pointer to the DSA device group.
++ */
++static void
++dsa_empty_task_queue(struct dsa_device_group *group)
 +{
-+    MigrationState *s = migrate_get_current();
-+
-+    return s->parameters.multifd_dsa_accel;
++    qemu_mutex_lock(&group->task_queue_lock);
++    dsa_task_queue *task_queue = &group->task_queue;
++    while (!QSIMPLEQ_EMPTY(task_queue)) {
++        QSIMPLEQ_REMOVE_HEAD(task_queue, entry);
++    }
++    qemu_mutex_unlock(&group->task_queue_lock);
 +}
 +
- const char *migrate_tls_hostname(void)
- {
-     MigrationState *s = migrate_get_current();
-@@ -1060,6 +1069,8 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
-     params->mode = s->parameters.mode;
-     params->has_zero_page_detection = true;
-     params->zero_page_detection = s->parameters.zero_page_detection;
-+    params->multifd_dsa_accel = g_strdup(s->parameters.multifd_dsa_accel ?
-+                                         s->parameters.multifd_dsa_accel : "");
- 
-     return params;
- }
-@@ -1068,6 +1079,7 @@ void migrate_params_init(MigrationParameters *params)
- {
-     params->tls_hostname = g_strdup("");
-     params->tls_creds = g_strdup("");
-+    params->multifd_dsa_accel = g_strdup("");
- 
-     /* Set has_* up only for parameter checks */
-     params->has_compress_level = true;
-@@ -1416,6 +1428,11 @@ static void migrate_params_test_apply(MigrateSetParameters *params,
-     if (params->has_zero_page_detection) {
-         dest->zero_page_detection = params->zero_page_detection;
++/**
++ * @brief Adds a task to the DSA task queue.
++ *
++ * @param group A pointer to the DSA device group.
++ * @param context A pointer to the DSA task to enqueue.
++ *
++ * @return int Zero if successful, otherwise a proper error code.
++ */
++static int
++dsa_task_enqueue(struct dsa_device_group *group,
++                 struct dsa_batch_task *task)
++{
++    dsa_task_queue *task_queue = &group->task_queue;
++    QemuMutex *task_queue_lock = &group->task_queue_lock;
++    QemuCond *task_queue_cond = &group->task_queue_cond;
++
++    bool notify = false;
++
++    qemu_mutex_lock(task_queue_lock);
++
++    if (!group->running) {
++        error_report("DSA: Tried to queue task to stopped device queue.");
++        qemu_mutex_unlock(task_queue_lock);
++        return -1;
++    }
++
++    /* The queue is empty. This enqueue operation is a 0->1 transition. */
++    if (QSIMPLEQ_EMPTY(task_queue)) {
++        notify = true;
++    }
++
++    QSIMPLEQ_INSERT_TAIL(task_queue, task, entry);
++
++    /* We need to notify the waiter for 0->1 transitions. */
++    if (notify) {
++        qemu_cond_signal(task_queue_cond);
++    }
++
++    qemu_mutex_unlock(task_queue_lock);
++
++    return 0;
++}
++
++/**
++ * @brief Takes a DSA task out of the task queue.
++ *
++ * @param group A pointer to the DSA device group.
++ * @return dsa_batch_task* The DSA task being dequeued.
++ */
++__attribute__((unused))
++static struct dsa_batch_task *
++dsa_task_dequeue(struct dsa_device_group *group)
++{
++    struct dsa_batch_task *task = NULL;
++    dsa_task_queue *task_queue = &group->task_queue;
++    QemuMutex *task_queue_lock = &group->task_queue_lock;
++    QemuCond *task_queue_cond = &group->task_queue_cond;
++
++    qemu_mutex_lock(task_queue_lock);
++
++    while (true) {
++        if (!group->running) {
++            goto exit;
++        }
++        task = QSIMPLEQ_FIRST(task_queue);
++        if (task != NULL) {
++            break;
++        }
++        qemu_cond_wait(task_queue_cond, task_queue_lock);
++    }
++
++    QSIMPLEQ_REMOVE_HEAD(task_queue, entry);
++
++exit:
++    qemu_mutex_unlock(task_queue_lock);
++    return task;
++}
++
++/**
++ * @brief Submits a DSA work item to the device work queue.
++ *
++ * @param wq A pointer to the DSA work queue's device memory.
++ * @param descriptor A pointer to the DSA work item descriptor.
++ *
++ * @return Zero if successful, non-zero otherwise.
++ */
++static int
++submit_wi_int(void *wq, struct dsa_hw_desc *descriptor)
++{
++    uint64_t retry = 0;
++
++    _mm_sfence();
++
++    while (true) {
++        if (_enqcmd(wq, descriptor) == 0) {
++            break;
++        }
++        retry++;
++        if (retry > max_retry_count) {
++            error_report("Submit work retry %lu times.", retry);
++            return -1;
++        }
++    }
++
++    return 0;
++}
++
++/**
++ * @brief Synchronously submits a DSA work item to the
++ *        device work queue.
++ *
++ * @param wq A pointer to the DSA worjk queue's device memory.
++ * @param descriptor A pointer to the DSA work item descriptor.
++ *
++ * @return int Zero if successful, non-zero otherwise.
++ */
++__attribute__((unused))
++static int
++submit_wi(void *wq, struct dsa_hw_desc *descriptor)
++{
++    return submit_wi_int(wq, descriptor);
++}
++
++/**
++ * @brief Asynchronously submits a DSA work item to the
++ *        device work queue.
++ *
++ * @param task A pointer to the buffer zero task.
++ *
++ * @return int Zero if successful, non-zero otherwise.
++ */
++__attribute__((unused))
++static int
++submit_wi_async(struct dsa_batch_task *task)
++{
++    struct dsa_device_group *device_group = task->group;
++    struct dsa_device *device_instance = task->device;
++    int ret;
++
++    assert(task->task_type == DSA_TASK);
++
++    task->status = DSA_TASK_PROCESSING;
++
++    ret = submit_wi_int(device_instance->work_queue,
++                        &task->descriptors[0]);
++    if (ret != 0) {
++        return ret;
++    }
++
++    return dsa_task_enqueue(device_group, task);
++}
++
++/**
++ * @brief Asynchronously submits a DSA batch work item to the
++ *        device work queue.
++ *
++ * @param dsa_batch_task A pointer to the batch buffer zero task.
++ *
++ * @return int Zero if successful, non-zero otherwise.
++ */
++__attribute__((unused))
++static int
++submit_batch_wi_async(struct dsa_batch_task *batch_task)
++{
++    struct dsa_device_group *device_group = batch_task->group;
++    struct dsa_device *device_instance = batch_task->device;
++    int ret;
++
++    assert(batch_task->task_type == DSA_BATCH_TASK);
++    assert(batch_task->batch_descriptor.desc_count <= batch_task->batch_size);
++    assert(batch_task->status == DSA_TASK_READY);
++
++    batch_task->status = DSA_TASK_PROCESSING;
++
++    ret = submit_wi_int(device_instance->work_queue,
++                        &batch_task->batch_descriptor);
++    if (ret != 0) {
++        return ret;
++    }
++
++    return dsa_task_enqueue(device_group, batch_task);
++}
++
+ /**
+  * @brief Check if DSA is running.
+  *
+@@ -300,6 +499,8 @@ void dsa_stop(void)
+     if (!group->running) {
+         return;
      }
 +
-+    if (params->multifd_dsa_accel) {
-+        assert(params->multifd_dsa_accel->type == QTYPE_QSTRING);
-+        dest->multifd_dsa_accel = params->multifd_dsa_accel->u.s;
-+    }
++    dsa_empty_task_queue(group);
  }
  
- static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
-@@ -1570,6 +1587,13 @@ static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
-     if (params->has_zero_page_detection) {
-         s->parameters.zero_page_detection = params->zero_page_detection;
-     }
-+
-+    if (params->multifd_dsa_accel) {
-+        g_free(s->parameters.multifd_dsa_accel);
-+        assert(params->multifd_dsa_accel->type == QTYPE_QSTRING);
-+        s->parameters.multifd_dsa_accel =
-+            g_strdup(params->multifd_dsa_accel->u.s);
-+    }
- }
- 
- void qmp_migrate_set_parameters(MigrateSetParameters *params, Error **errp)
-@@ -1595,6 +1619,12 @@ void qmp_migrate_set_parameters(MigrateSetParameters *params, Error **errp)
-         params->tls_authz->type = QTYPE_QSTRING;
-         params->tls_authz->u.s = strdup("");
-     }
-+    if (params->multifd_dsa_accel
-+        && params->multifd_dsa_accel->type == QTYPE_QNULL) {
-+        qobject_unref(params->multifd_dsa_accel->u.n);
-+        params->multifd_dsa_accel->type = QTYPE_QSTRING;
-+        params->multifd_dsa_accel->u.s = strdup("");
-+    }
- 
-     migrate_params_test_apply(params, &tmp);
- 
-diff --git a/migration/options.h b/migration/options.h
-index ab8199e207..1cb3393be9 100644
---- a/migration/options.h
-+++ b/migration/options.h
-@@ -91,6 +91,7 @@ const char *migrate_tls_creds(void);
- const char *migrate_tls_hostname(void);
- uint64_t migrate_xbzrle_cache_size(void);
- ZeroPageDetection migrate_zero_page_detection(void);
-+const char *migrate_multifd_dsa_accel(void);
- 
- /* parameters setters */
- 
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 8c65b90328..934fa8839e 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -914,6 +914,12 @@
- #     See description in @ZeroPageDetection.  Default is 'multifd'.
- #     (since 9.0)
- #
-+# @multifd-dsa-accel: If enabled, use DSA accelerator offloading for
-+#     certain memory operations. Enable DSA accelerator offloading by
-+#     setting this string to a list of DSA device path separated by space
-+#     characters. Setting this string to an empty string means disabling
-+#     DSA accelerator offloading. Defaults to an empty string. (since 9.2)
-+#
- # Features:
- #
- # @deprecated: Member @block-incremental is deprecated.  Use
-@@ -937,7 +943,7 @@
-            'cpu-throttle-initial', 'cpu-throttle-increment',
-            'cpu-throttle-tailslow',
-            'tls-creds', 'tls-hostname', 'tls-authz', 'max-bandwidth',
--           'avail-switchover-bandwidth', 'downtime-limit',
-+           'avail-switchover-bandwidth', 'downtime-limit', 'multifd-dsa-accel',
-            { 'name': 'x-checkpoint-delay', 'features': [ 'unstable' ] },
-            { 'name': 'block-incremental', 'features': [ 'deprecated' ] },
-            'multifd-channels',
-@@ -1122,6 +1128,12 @@
- #     See description in @ZeroPageDetection.  Default is 'multifd'.
- #     (since 9.0)
- #
-+# @multifd-dsa-accel: If enabled, use DSA accelerator offloading for
-+#     certain memory operations. Enable DSA accelerator offloading by
-+#     setting this string to a list of DSA device path separated by space
-+#     characters. Setting this string to an empty string means disabling
-+#     DSA accelerator offloading. Defaults to an empty string. (since 9.2)
-+#
- # Features:
- #
- # @deprecated: Member @block-incremental is deprecated.  Use
-@@ -1176,7 +1188,8 @@
-                                             'features': [ 'unstable' ] },
-             '*vcpu-dirty-limit': 'uint64',
-             '*mode': 'MigMode',
--            '*zero-page-detection': 'ZeroPageDetection'} }
-+            '*zero-page-detection': 'ZeroPageDetection',
-+            '*multifd-dsa-accel': 'StrOrNull'} }
- 
- ##
- # @migrate-set-parameters:
-@@ -1354,6 +1367,12 @@
- #     See description in @ZeroPageDetection.  Default is 'multifd'.
- #     (since 9.0)
- #
-+# @multifd-dsa-accel: If enabled, use DSA accelerator offloading for
-+#     certain memory operations. Enable DSA accelerator offloading by
-+#     setting this string to a list of DSA device path separated by space
-+#     characters. Setting this string to an empty string means disabling
-+#     DSA accelerator offloading. Defaults to an empty string. (since 9.2)
-+#
- # Features:
- #
- # @deprecated: Member @block-incremental is deprecated.  Use
-@@ -1405,7 +1424,8 @@
-                                             'features': [ 'unstable' ] },
-             '*vcpu-dirty-limit': 'uint64',
-             '*mode': 'MigMode',
--            '*zero-page-detection': 'ZeroPageDetection'} }
-+            '*zero-page-detection': 'ZeroPageDetection',
-+            '*multifd-dsa-accel': 'str'} }
- 
- ##
- # @query-migrate-parameters:
+ /**
 -- 
 2.30.2
 
