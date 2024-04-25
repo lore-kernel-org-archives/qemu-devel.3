@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8061C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 03:00:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23250C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 03:00:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzpKB-0006oC-1T; Wed, 24 Apr 2024 22:59:03 -0400
+	id 1rzpK7-0006mM-DD; Wed, 24 Apr 2024 22:58:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rzpK6-0006m7-IO; Wed, 24 Apr 2024 22:58:58 -0400
+ id 1rzpJy-0006ja-6T; Wed, 24 Apr 2024 22:58:50 -0400
 Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rzpK4-00056r-7p; Wed, 24 Apr 2024 22:58:57 -0400
+ id 1rzpJw-00055w-1f; Wed, 24 Apr 2024 22:58:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1714013937; x=1745549937;
+ t=1714013928; x=1745549928;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=uIA3FScaT/QajfQBBLkqnXQiTMjVrt19xThYfs85OUY=;
- b=KNo8jFjwQBmpOo7qJ8GzJoWPoRDEl0YfvrqbjWEM4yFzTkg+VPYZ+FI3
- VQze0WCNO4Qkkg1oruAJD2TkyHnn36XkFKUa1yzAynYk/Aj/jVh4ZJFy5
- +VqUj5GKeG7cj2EQdfBsm9a/kLv7YSN9g/qpnT6jObc9jmDB0mBrg+R7k
- HlyXyTodZIx5eI1FF45Crd4xegCnhu/W2lszxECuMiGk1UQMhvYMG7FAa
- WLGuAiZRH8Fd/DEP4GrPK1AtmhKVGAjb4psGQwz+6MGSUEcxkByffaXT5
- xUVMm9lUQyz6GTxhr4/3tlmmkNe2RoErP/ZMhOavS7vOXES5PezjkTDTk Q==;
-X-CSE-ConnectionGUID: hDhse/ZrSJ+rxIDePN568g==
-X-CSE-MsgGUID: t50j6gsbQcemGxtnOydkCw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11054"; a="9605671"
+ bh=VhsAZz3GZDugXvCbTu1lmTbG6KqX61IfVZfRXKWJzJA=;
+ b=Z4L4xyhTc3BTUigtqh1blhDdxUNYLLPlR3EZrv70MTkRIruPjHmEHPP6
+ ljKMq10TSpL6B8SrlgaysVHRy1TcctCwXn46wt3uV1qqVswquPqqkkYgS
+ sX6LlkfLTvIWsD6bVy9+a3BgxfJ8HQHh3aHziY/+eWmpxSBFaML5qUHsr
+ 5vIe0PY8oe34LFlGWeeH5mUxaLiGKBogyua/WyN+flblSUCpt54QUmwpK
+ Zc2Xzg/10Gei2Aw4vANA+PqPk3Wa1Gkzy3i8IkgqWrbM9OaG/kjj14tTl
+ E2E+C8kAup2/88BAHNlEUplTTKrlabxyeYq70Zndc+tPnFSkUdfVArD56 A==;
+X-CSE-ConnectionGUID: UHX/Rnk8TFW70tE15Gxv7Q==
+X-CSE-MsgGUID: 0x3epI2hRdmmoP7pBjQmaw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11054"; a="9605645"
 X-IronPort-AV: E=Sophos;i="6.07,228,1708416000"; 
-   d="scan'208";a="9605671"
+   d="scan'208";a="9605645"
 Received: from orviesa001.jf.intel.com ([10.64.159.141])
  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Apr 2024 19:58:55 -0700
-X-CSE-ConnectionGUID: jFHP8G1BRw23n7tv/Ys9ug==
-X-CSE-MsgGUID: 6vGgELU5QiqIFN9/ejOtCg==
+ 24 Apr 2024 19:58:47 -0700
+X-CSE-ConnectionGUID: zzlCY8FgSdaQP8FgQAEYww==
+X-CSE-MsgGUID: 6kUWRUHbRoyTvTSrFSDrkA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,228,1708416000"; d="scan'208";a="62395703"
+X-IronPort-AV: E=Sophos;i="6.07,228,1708416000"; d="scan'208";a="62395668"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa001.jf.intel.com with ESMTP; 24 Apr 2024 19:58:53 -0700
+ by orviesa001.jf.intel.com with ESMTP; 24 Apr 2024 19:58:44 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Thomas Huth <thuth@redhat.com>, David Hildenbrand <david@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -52,10 +52,10 @@ To: Thomas Huth <thuth@redhat.com>, David Hildenbrand <david@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 5/7] target/s390x/cpu_models: Drop local @err in
- get_max_cpu_model()
-Date: Thu, 25 Apr 2024 11:12:30 +0800
-Message-Id: <20240425031232.1586401-6-zhao1.liu@intel.com>
+Subject: [PATCH v2 2/7] target/s390x/cpu_model: Drop local @err in
+ s390_realize_cpu_model()
+Date: Thu, 25 Apr 2024 11:12:27 +0800
+Message-Id: <20240425031232.1586401-3-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240425031232.1586401-1-zhao1.liu@intel.com>
 References: <20240425031232.1586401-1-zhao1.liu@intel.com>
@@ -88,6 +88,7 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Use @errp to fetch error information directly and drop the local
 variable @err.
 
+Suggested-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
@@ -95,27 +96,27 @@ Reviewed-by: Thomas Huth <thuth@redhat.com>
  1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
-index a0e4acb707d7..aae452cfd3fc 100644
+index 8cb47d905fb4..052540a866ac 100644
 --- a/target/s390x/cpu_models.c
 +++ b/target/s390x/cpu_models.c
-@@ -551,7 +551,6 @@ static bool check_compatibility(const S390CPUModel *max_model,
- 
- S390CPUModel *get_max_cpu_model(Error **errp)
+@@ -577,7 +577,6 @@ S390CPUModel *get_max_cpu_model(Error **errp)
+ void s390_realize_cpu_model(CPUState *cs, Error **errp)
  {
+     ERRP_GUARD();
 -    Error *err = NULL;
-     static S390CPUModel max_model;
-     static bool cached;
+     S390CPUClass *xcc = S390_CPU_GET_CLASS(cs);
+     S390CPU *cpu = S390_CPU(cs);
+     const S390CPUModel *max_model;
+@@ -606,8 +605,7 @@ void s390_realize_cpu_model(CPUState *cs, Error **errp)
+     cpu->model->cpu_ver = max_model->cpu_ver;
  
-@@ -560,8 +559,7 @@ S390CPUModel *get_max_cpu_model(Error **errp)
+     check_consistency(cpu->model);
+-    if (!check_compatibility(max_model, cpu->model, &err)) {
+-        error_propagate(errp, err);
++    if (!check_compatibility(max_model, cpu->model, errp)) {
+         return;
      }
  
-     if (kvm_enabled()) {
--        if (!kvm_s390_get_host_cpu_model(&max_model, &err)) {
--            error_propagate(errp, err);
-+        if (!kvm_s390_get_host_cpu_model(&max_model, errp)) {
-             return NULL;
-         }
-     } else {
 -- 
 2.34.1
 
