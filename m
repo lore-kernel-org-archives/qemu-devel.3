@@ -4,84 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 362B3C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 05:03:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EB73C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 05:13:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzrFp-0008TT-4P; Thu, 25 Apr 2024 01:02:41 -0400
+	id 1rzrP4-000250-Um; Thu, 25 Apr 2024 01:12:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rzrFl-0008TC-2y
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 01:02:37 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rzrOy-00022x-HT
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 01:12:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rzrFj-0005l2-BZ
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 01:02:36 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rzrOu-00013V-0u
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 01:12:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714021353;
+ s=mimecast20190719; t=1714021922;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=iHa2VxZ7WMa0+OUhGmfL1Z9T1OJD71Bqr30zbZqjitY=;
- b=LbsrwMU/gIZrp/N/T+HvOEDqnCA8GoP8H6cWcNdechs/5BTvb4uWcfrQpViD5nX/ZuykFV
- cc4uqyM/gvTOFs3vrcU7MnOcumsWw8Ni6ty+0FVwEs3AzU0YDo7tBax4655sFQ092BRkOr
- wGUERKt9drdbmnIT8F5Kd0Bpi+cHD6Y=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=m7aN9cWRPqq8TlS4zwAFjvc4xU7XygYlyz2LPqgYFNY=;
+ b=MFC1LnorB6RBcVUivGBDe9uVzTbIp7tvQ4Lbsyb/+cEseHgXUKi7Y0dd05EJrEFvf46lcr
+ cDfd1HwzU+WoW1QoSfiGUSiY+6a2SXnWBJLb01q8J76khPaUuv4c9DU8npPe+xskDzNqed
+ 9wO4zW8NN92OvzjzLw68Sl0fyp0b5Ig=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-531-ZHaXXO9iOtChfCwFmaghBA-1; Thu, 25 Apr 2024 01:02:31 -0400
-X-MC-Unique: ZHaXXO9iOtChfCwFmaghBA-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-5684c1abc7fso178332a12.3
- for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 22:02:31 -0700 (PDT)
+ us-mta-101-8qN1sQUaM_SaRNi2QqCJUw-1; Thu, 25 Apr 2024 01:11:44 -0400
+X-MC-Unique: 8qN1sQUaM_SaRNi2QqCJUw-1
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-51affa83f97so416141e87.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Apr 2024 22:11:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714021350; x=1714626150;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iHa2VxZ7WMa0+OUhGmfL1Z9T1OJD71Bqr30zbZqjitY=;
- b=YznOKSfxbytuoXYHYuk4R6Zal5SBYkpamlncwDoz7DArlPpfv3156JZ/GqY8TxK11U
- q+7XKEEC02h7doUIGgu4Jm5G1Snzn53SCux5geV3p2DzRuzOCPpjUvioYFyHquNpeIgX
- 8HaWti6lROhNKbpC+xW8V0dBR7omXgQ3xaH2C92oAxo6EnAQbjpgevkelZxHvBncS5Bh
- Ao4Bz69oyudWWzNHahp/IKPxPaxIPpboL37E3q/bUUqwR5JLXS9wcQ8mscirWbMoWliE
- 4ZkUiPtnerL79Wan5tfpg8U8d2DQcDHNHDAwZz51icSQs3mq9NjYpUVUyiR9bjzO0dze
- +eIg==
+ d=1e100.net; s=20230601; t=1714021903; x=1714626703;
+ h=content-transfer-encoding:in-reply-to:autocrypt:cc:from
+ :content-language:references:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=m7aN9cWRPqq8TlS4zwAFjvc4xU7XygYlyz2LPqgYFNY=;
+ b=BKKHAbT4d7csKrE6NqKOyK8En3fYgMBFTAoSafVtys1e8CooClphmmA1gj/HOW0uCr
+ 23I7FvRNp+Sbmbb7wwW9xFFXmdNQfMVU/POsycbFV2eoFqVuwZKx19C4zM5UXvamHF5s
+ n20zwWe6q/5Jr7jk/633e3Jx9ymd7wqiS4XQoLkHU4Z2KrR7DYny4Y3MtV9Kw+LDEp0w
+ vFYdxwRffl2kV+bahhBzpiCaSAhGT5HwqcQAkHKKeP7oscAelV+EGQ5AsCQclehN+0Va
+ SPhgKU3AuKPAih4pFkhYks0DtAE06wo//rVH7nLXVzn6ofF/i2VVUEftoul7hwIPbAaW
+ 9WTw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW1ef4p1v8hz/wBE1hi/j0ktUYYBeWuLIkXHuePQz+D+v1FNLpviokZyw2lDa0BU6JPRBbPb3wpk+C7C4GGTnhUyQAUEqY=
-X-Gm-Message-State: AOJu0YzrPT/Bl2t+qGkyEizHMgGOCn0FdeZOupxatMySj+MjK9vCR0gg
- YBQJoEhx79EjsFC0W2xWAWqKSaGzFsvgKH1zRxvS31jfzepk4WcllQ7rjJo6ScULXc0Q5VAD5wS
- ce16J2i0kNvr3TCQ1vmsn1auYcXR7VyL9JUns70isi79+tPS4UAHX
-X-Received: by 2002:a50:8e08:0:b0:56e:2a0a:c133 with SMTP id
- 8-20020a508e08000000b0056e2a0ac133mr3532263edw.22.1714021350623; 
- Wed, 24 Apr 2024 22:02:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHx+ziPSXosONbbVndh/nATp3KqCYaWDaEnLfUlmyWc81jrJsvrofLW0JZC6M4+rnRrdhTpKA==
-X-Received: by 2002:a50:8e08:0:b0:56e:2a0a:c133 with SMTP id
- 8-20020a508e08000000b0056e2a0ac133mr3532249edw.22.1714021350267; 
- Wed, 24 Apr 2024 22:02:30 -0700 (PDT)
+ AJvYcCUbvQizvu/7GJkpQ0DIKNJbbitgIwHevax6dvwnNwmdy5159WyqtePr+oXcC3HnlP4OQiWYSA7+legHSRe6NLZUMOB7oLI=
+X-Gm-Message-State: AOJu0YxCteLXOjdU33O4J4TylN6iDM/Rk7+4VWSl66w0I8pfKvrzeghc
+ VDtMlb7MwEiu+0MVw+ILo4B8LA4J/RJa9HotrQgzunpFFpyhq6uGuwlo4lC9wit+zDXaylP6Don
+ 9QaN18VPYSK0IacRdwWHa/FEhmLPM0AKkbyAXGaAWaECuW7dgD7q5
+X-Received: by 2002:ac2:5dd4:0:b0:51b:962:4dd0 with SMTP id
+ x20-20020ac25dd4000000b0051b09624dd0mr3542315lfq.3.1714021903372; 
+ Wed, 24 Apr 2024 22:11:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE3vAAqKzFCmLdzDgKKUf54maj17wouIxVQyoXwYWoBl9HkgTc+YHtZgpQt0TnfvHXzYUFVUA==
+X-Received: by 2002:ac2:5dd4:0:b0:51b:962:4dd0 with SMTP id
+ x20-20020ac25dd4000000b0051b09624dd0mr3542300lfq.3.1714021902889; 
+ Wed, 24 Apr 2024 22:11:42 -0700 (PDT)
 Received: from [192.168.0.9] (ip-109-43-177-130.web.vodafone.de.
  [109.43.177.130]) by smtp.gmail.com with ESMTPSA id
- et6-20020a056402378600b0057245a3fd4bsm27695edb.68.2024.04.24.22.02.29
+ h3-20020a170906260300b00a559965b896sm6473951ejc.202.2024.04.24.22.11.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Apr 2024 22:02:29 -0700 (PDT)
-Message-ID: <fb62e426-fc14-4ecf-bbcc-24e8386e8880@redhat.com>
-Date: Thu, 25 Apr 2024 07:02:28 +0200
+ Wed, 24 Apr 2024 22:11:42 -0700 (PDT)
+Message-ID: <91090e7f-4972-4473-8378-402c43116dba@redhat.com>
+Date: Thu, 25 Apr 2024 07:11:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 12/17] tests: Update our CI to use CentOS Stream 9 instead
- of 8
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Cc: =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Cleber Rosa <crosa@redhat.com>
+Subject: Re: [PULL 00/17] CI job updates, header cleanups and other misc
+ patches
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20240424075735.248041-1-thuth@redhat.com>
- <20240424075735.248041-13-thuth@redhat.com>
- <49bf70e6-ad71-4bb4-80c6-2bab08a3145b@linaro.org>
+ <d4b2c78e-c8d4-465c-a47e-53aa49efeb06@linaro.org>
 Content-Language: en-US
 From: Thomas Huth <thuth@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -124,7 +120,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <49bf70e6-ad71-4bb4-80c6-2bab08a3145b@linaro.org>
+In-Reply-To: <d4b2c78e-c8d4-465c-a47e-53aa49efeb06@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -151,47 +147,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/04/2024 18.19, Richard Henderson wrote:
+On 24/04/2024 18.21, Richard Henderson wrote:
 > On 4/24/24 00:57, Thomas Huth wrote:
->> RHEL 9 (and thus also the derivatives) have been available since two
->> years now, so according to QEMU's support policy, we can drop the active
->> support for the previous major version 8 now.
+>> The following changes since commit 13b1e9667737132440f4d500c31cb69320c6b15a:
 >>
->> Another reason for doing this is that Centos Stream 8 will go EOL soon:
+>>    Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into 
+>> staging (2024-04-23 17:35:57 -0700)
 >>
->> https://blog.centos.org/2023/04/end-dates-are-coming-for-centos-stream-8-and-centos-linux-7/
+>> are available in the Git repository at:
 >>
->>    "After May 31, 2024, CentOS Stream 8 will be archived
->>     and no further updates will be provided."
+>>    https://gitlab.com/thuth/qemu.git tags/pull-request-2024-04-24
 >>
->> Thus upgrade our CentOS Stream container to major version 9 now.
+>> for you to fetch changes up to 8f29bab03ea22694a127ee33edeb4ce99eeb124e:
 >>
->> Reviewed-by: Daniel P. Berrangé<berrange@redhat.com>
->> Message-ID:<20240418101056.302103-5-thuth@redhat.com>
->> Signed-off-by: Thomas Huth<thuth@redhat.com>
->> ---
->>   .gitlab-ci.d/buildtest.yml                    | 16 ++++-----
->>   .gitlab-ci.d/container-core.yml               |  4 +--
->>   .../{centos8.docker => centos9.docker}        | 34 +++++++------------
->>   tests/lcitool/mappings.yml                    | 20 -----------
->>   tests/lcitool/refresh                         |  2 +-
->>   tests/vm/centos                               |  4 +--
->>   6 files changed, 26 insertions(+), 54 deletions(-)
->>   rename tests/docker/dockerfiles/{centos8.docker => centos9.docker} (82%)
+>>    target/s390x: Remove KVM stubs in cpu_models.h (2024-04-24 09:45:02 +0200)
+>>
+>> ----------------------------------------------------------------
+>> * Update OpenBSD CI image to 7.5
+>> * Update/remove Ubuntu 20.04 CI jobs
+>> * Update CentOS 8 CI jobs to CentOS 9
+>> * Some clean-ups and improvements to travis.yml
+>> * Minor test fixes
+>> * s390x header clean-ups
+>> * Doc updates
 > 
-> This has missed a bit, since the centos-stream-8-x86_64 job still exists, 
-> but now fails.
+> This introduces a failure in the migration-compat-x86_64 job:
 > 
-> https://gitlab.com/qemu-project/qemu/-/jobs/6707154779
+> https://gitlab.com/qemu-project/qemu/-/jobs/6707154868
 
-It's not this patch, it's rather the "ci: move external build environment 
-setups to CentOS Stream 9" patch that is missing an update to 
-.gitlab-ci.d/custom-runners/centos-stream-8-x86_64.yml ... however, blindly 
-updating the 8s in that file to 9s likely also doesn't work since there are 
-runner tags involved here.
-So what's the right way to update that custom runner to CentOS 9? Paolo, 
-Alex, Cleber, do you know?
+It wasn't failing for me:
 
-  Thomas
+  https://gitlab.com/thuth/qemu/-/jobs/6702058896
+
+And according to the diffstat of my pull request, it's only touching test 
+files, docs, and s390x stuff, so I somehow fail to see how it could 
+influence x86 migration at a first glance. It also looks like the job is 
+running on opensuse, and not on CentOS or Ubuntu, so it should likely not be 
+influenced by the changes in this PR.
+
+Could you please hit the re-run button of that job? If it then passes, we're 
+likely rather facing an intermitted failure that might have been introduced 
+earlier already...
+
+  Thanks,
+   Thomas
 
 
