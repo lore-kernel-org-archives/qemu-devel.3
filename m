@@ -4,65 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D2C8C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 07:06:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A50DEC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 07:06:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rztBF-0007qt-Bo; Thu, 25 Apr 2024 03:06:05 -0400
+	id 1rztBZ-00086V-La; Thu, 25 Apr 2024 03:06:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1rztAj-0007YM-EF
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 03:05:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1rztAh-0004pD-Fx
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 03:05:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714028730;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=OyAaogcrJmF8N8UeG9Br/TYsFMdNXUShXzB0zh0qVJ0=;
- b=hDQMFCY33C/f75tGw6XkLSGUD/45cbswZBbyPUNnaYOb0C6eQI+MDs6cAyye9K33VBNPUe
- 4oTXlz9wdr3tDhTkrwFQi8jcfkAIrU3CstYlzbvVpcKcq4dfM6P99+a6zsEVh9cAg3+taw
- 5o5k3m6wawtSYzjxI6wujOrWdrEe3QQ=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-12-4gsn3do9O3u1PtnQotqt7A-1; Thu,
- 25 Apr 2024 03:04:20 -0400
-X-MC-Unique: 4gsn3do9O3u1PtnQotqt7A-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8099D29AC038;
- Thu, 25 Apr 2024 07:04:20 +0000 (UTC)
-Received: from kaapi.redhat.com (unknown [10.67.24.77])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 30B98492BC7;
- Thu, 25 Apr 2024 07:04:16 +0000 (UTC)
-From: Prasad Pandit <ppandit@redhat.com>
-To: kwolf@redhat.com
-Cc: stefanha@redhat.com, qemu-block@nongnu.org, qemu-devel@nongnu.org,
- mtosatti@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
-Subject: [PATCH v5] linux-aio: add IO_CMD_FDSYNC command support
-Date: Thu, 25 Apr 2024 12:34:12 +0530
-Message-ID: <20240425070412.37248-1-ppandit@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rztBO-00082m-9M
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 03:06:15 -0400
+Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rztBM-0004so-JN
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 03:06:14 -0400
+Received: by mail-lj1-x22d.google.com with SMTP id
+ 38308e7fff4ca-2dd6a7ae2dcso8460761fa.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 00:06:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714028770; x=1714633570; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Ya5Bsnwx0mCTDAjct6O3yvTJBKsJG7q/j0wFCdUMmU0=;
+ b=mgJUl+CtV988Ydhp6jd4LUiBcfFCApkB0JeUJhOyx1E3BfSLeV9glyfvXCJsF6hZ4T
+ o0yBAe/5J9zRfKMoX6hgmrn59BGfEydNzRUvx6nu+PrxhPcROm8GBmRJZAdxwXKg3vdV
+ p7GPdwvzA9+JVlrbIFagsGWpf8XKFmcB7sLv+YnK5R2yFlrtwWz9bV+VpH8MfIFVBo/z
+ ZJsvLN5urjInYx3bpsv27I38/QHbQ8z9bxYskYEGMK04NCS8vRyke7H2+jpEBYleQGc1
+ viOOBEwV/Ap/A85vq58OFj5qNd5CGJ2XMN2DhmbA8ER3gX/r910BJ+NGGgsq26/zmVpk
+ VL/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714028770; x=1714633570;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Ya5Bsnwx0mCTDAjct6O3yvTJBKsJG7q/j0wFCdUMmU0=;
+ b=IgitAoh8IQNYCPALgAFSri2olZgVGpTtaIP2lTc/OYWtz/ubacLPAwWOxdt/cckBCg
+ bwgV4qS1pcSAwwmq/kVit+VhS3Ja7pbBwXgSy33vu9PTWFMmQ9qqFuhoKFAEIXxF/rgO
+ GXsvuwtmm5KPdY7YZea8xenBgrbPGNjZNcADOJj32oHVeW8zBypcKQdS6kOBjv9b6hxD
+ snZrSj4llakYf/n64ZObQT6O7pVscoNRLTT+l3PkT613rFExaWyvo8v+u+HClXTqfCC9
+ /md765P65PDx7Z0i+yT9iURUFb0yXcq0G4FO/R3OHrCcavacYvS1KlHw6VbKrNwWduWv
+ mVjw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXjE6rqADwfIb0+5JczYd0vMIiZz0L9ePZxFixEmNrb1oay7PRXMLo2LML/5clPTft3WepXqgZS/gF8X/Z8dUjw+m7xD7c=
+X-Gm-Message-State: AOJu0YxorHNIOZVAZLjqIvqNlseQsRbQvC9b7lvywO5JLLrDsZ1hDS64
+ RZKpboP/2enHDFazWV2GYcmQCqc6xjDe+Pdxqvi8AqImqUBsujy8JHdSQfN2YZhVyFcnxIkHqZV
+ m
+X-Google-Smtp-Source: AGHT+IH6oNG4RVzYfuxI/edKrgwDwIczXHreQDUVi9YwjuUb8LzxqjRqsmKBPr8TQ4Tgu5DtbDTEow==
+X-Received: by 2002:a2e:7d11:0:b0:2d8:6a04:3bcd with SMTP id
+ y17-20020a2e7d11000000b002d86a043bcdmr3812084ljc.3.1714028770565; 
+ Thu, 25 Apr 2024 00:06:10 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.197.201])
+ by smtp.gmail.com with ESMTPSA id
+ r12-20020a170906c28c00b00a58be31e9f2sm39513ejz.192.2024.04.25.00.06.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 25 Apr 2024 00:06:10 -0700 (PDT)
+Message-ID: <7bfad576-38d3-4101-b599-bd0b6ee639af@linaro.org>
+Date: Thu, 25 Apr 2024 09:06:08 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] hw/i386/pc_sysfw: Remove unused parameter from
+ pc_isa_bios_init()
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20240422200625.2768-1-shentey@gmail.com>
+ <20240422200625.2768-2-shentey@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240422200625.2768-2-shentey@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.668,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,119 +101,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Prasad Pandit <pjp@fedoraproject.org>
+On 22/4/24 22:06, Bernhard Beschow wrote:
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> ---
+>   hw/i386/pc_sysfw.c | 5 ++---
+>   1 file changed, 2 insertions(+), 3 deletions(-)
 
-Libaio defines IO_CMD_FDSYNC command to sync all outstanding
-asynchronous I/O operations, by flushing out file data to the
-disk storage. Enable linux-aio to submit such aio request.
-
-When using aio=native without fdsync() support, QEMU creates
-pthreads, and destroying these pthreads results in TLB flushes.
-In a real-time guest environment, TLB flushes cause a latency
-spike. This patch helps to avoid such spikes.
-
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
----
- block/file-posix.c      |  9 +++++++++
- block/linux-aio.c       | 21 ++++++++++++++++++++-
- include/block/raw-aio.h |  1 +
- 3 files changed, 30 insertions(+), 1 deletion(-)
-
-v5: update commit message, conditionally call laio_has_fdsyny
-  -> https://lists.nongnu.org/archive/html/qemu-devel/2024-04/msg03420.html
-  -> https://lists.nongnu.org/archive/html/qemu-devel/2024-03/msg03867.html
-
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 35684f7e21..9831b08fb6 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -159,6 +159,7 @@ typedef struct BDRVRawState {
-     bool has_discard:1;
-     bool has_write_zeroes:1;
-     bool use_linux_aio:1;
-+    bool has_laio_fdsync:1;
-     bool use_linux_io_uring:1;
-     int page_cache_inconsistent; /* errno from fdatasync failure */
-     bool has_fallocate;
-@@ -718,6 +719,9 @@ static int raw_open_common(BlockDriverState *bs, QDict *options,
-         ret = -EINVAL;
-         goto fail;
-     }
-+    if (s->use_linux_aio) {
-+        s->has_laio_fdsync = laio_has_fdsync(s->fd);
-+    }
- #else
-     if (s->use_linux_aio) {
-         error_setg(errp, "aio=native was specified, but is not supported "
-@@ -2599,6 +2603,11 @@ static int coroutine_fn raw_co_flush_to_disk(BlockDriverState *bs)
-     if (raw_check_linux_io_uring(s)) {
-         return luring_co_submit(bs, s->fd, 0, NULL, QEMU_AIO_FLUSH);
-     }
-+#endif
-+#ifdef CONFIG_LINUX_AIO
-+    if (s->has_laio_fdsync && raw_check_linux_aio(s)) {
-+        return laio_co_submit(s->fd, 0, NULL, QEMU_AIO_FLUSH, 0);
-+    }
- #endif
-     return raw_thread_pool_submit(handle_aiocb_flush, &acb);
- }
-diff --git a/block/linux-aio.c b/block/linux-aio.c
-index ec05d946f3..e3b5ec9aba 100644
---- a/block/linux-aio.c
-+++ b/block/linux-aio.c
-@@ -384,6 +384,9 @@ static int laio_do_submit(int fd, struct qemu_laiocb *laiocb, off_t offset,
-     case QEMU_AIO_READ:
-         io_prep_preadv(iocbs, fd, qiov->iov, qiov->niov, offset);
-         break;
-+    case QEMU_AIO_FLUSH:
-+        io_prep_fdsync(iocbs, fd);
-+        break;
-     /* Currently Linux kernel does not support other operations */
-     default:
-         fprintf(stderr, "%s: invalid AIO request type 0x%x.\n",
-@@ -412,7 +415,7 @@ int coroutine_fn laio_co_submit(int fd, uint64_t offset, QEMUIOVector *qiov,
-     AioContext *ctx = qemu_get_current_aio_context();
-     struct qemu_laiocb laiocb = {
-         .co         = qemu_coroutine_self(),
--        .nbytes     = qiov->size,
-+        .nbytes     = qiov ? qiov->size : 0,
-         .ctx        = aio_get_linux_aio(ctx),
-         .ret        = -EINPROGRESS,
-         .is_read    = (type == QEMU_AIO_READ),
-@@ -486,3 +489,19 @@ void laio_cleanup(LinuxAioState *s)
-     }
-     g_free(s);
- }
-+
-+bool laio_has_fdsync(int fd)
-+{
-+    struct iocb cb;
-+    struct iocb *cbs[] = {&cb, NULL};
-+
-+    io_context_t ctx = 0;
-+    io_setup(1, &ctx);
-+
-+    /* check if host kernel supports IO_CMD_FDSYNC */
-+    io_prep_fdsync(&cb, fd);
-+    int ret = io_submit(ctx, 1, cbs);
-+
-+    io_destroy(ctx);
-+    return (ret == -EINVAL) ? false : true;
-+}
-diff --git a/include/block/raw-aio.h b/include/block/raw-aio.h
-index 20e000b8ef..626706827f 100644
---- a/include/block/raw-aio.h
-+++ b/include/block/raw-aio.h
-@@ -60,6 +60,7 @@ void laio_cleanup(LinuxAioState *s);
- int coroutine_fn laio_co_submit(int fd, uint64_t offset, QEMUIOVector *qiov,
-                                 int type, uint64_t dev_max_batch);
- 
-+bool laio_has_fdsync(int);
- void laio_detach_aio_context(LinuxAioState *s, AioContext *old_context);
- void laio_attach_aio_context(LinuxAioState *s, AioContext *new_context);
- #endif
--- 
-2.44.0
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
