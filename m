@@ -4,126 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97482C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 12:57:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68BD7C10F15
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 13:16:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzyes-0004e4-3R; Thu, 25 Apr 2024 08:57:02 -0400
+	id 1rzyww-0001M7-PK; Thu, 25 Apr 2024 09:15:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rzyeb-0004bh-Nw
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 08:56:48 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rzyeZ-00066i-Pb
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 08:56:45 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 13D0F20CC9;
- Thu, 25 Apr 2024 12:56:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1714049798; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rzywt-0001LJ-VL
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 09:15:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rzyws-0005ip-53
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 09:15:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714050935;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Qfc4QTLVzM9EF9ULvRftiCJIn5hAPCbQPbJdZWMOWrA=;
- b=EML+6mdE26ZS7D2IQ54rEABXG93x6Udmpn0TNV39OfVCZIB9B7FvDAziJ/zqKC85Jeuzdn
- zH6AgZwLdGTOHCK/BGprIXZ9VjXZT6XUS4QmyUkpPxoavoEs+RlXJoZQ/pI95TFGFxHsA6
- ymVP16IIVL86OTTWkhmQ4YQbZWY+H4c=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1714049798;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Qfc4QTLVzM9EF9ULvRftiCJIn5hAPCbQPbJdZWMOWrA=;
- b=GfQ9Kcjghtrg5HyrvTG0S+geiazA/Pik1bCFsGEVFBYzqKHDvBE2aXSns6FUC6YFVjEsRI
- 2+r6vNFsdFXJkJBw==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=EML+6mdE;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=GfQ9Kcjg
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1714049798; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Qfc4QTLVzM9EF9ULvRftiCJIn5hAPCbQPbJdZWMOWrA=;
- b=EML+6mdE26ZS7D2IQ54rEABXG93x6Udmpn0TNV39OfVCZIB9B7FvDAziJ/zqKC85Jeuzdn
- zH6AgZwLdGTOHCK/BGprIXZ9VjXZT6XUS4QmyUkpPxoavoEs+RlXJoZQ/pI95TFGFxHsA6
- ymVP16IIVL86OTTWkhmQ4YQbZWY+H4c=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1714049798;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Qfc4QTLVzM9EF9ULvRftiCJIn5hAPCbQPbJdZWMOWrA=;
- b=GfQ9Kcjghtrg5HyrvTG0S+geiazA/Pik1bCFsGEVFBYzqKHDvBE2aXSns6FUC6YFVjEsRI
- 2+r6vNFsdFXJkJBw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 94AA31393C;
- Thu, 25 Apr 2024 12:56:37 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id d7wCFwVTKmYWaAAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 25 Apr 2024 12:56:37 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, Thomas Huth
- <thuth@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- Peter Xu <peterx@redhat.com>
-Subject: Re: [PULL 00/17] CI job updates, header cleanups and other misc
- patches
-In-Reply-To: <ZioMUCj57Ad9qR8k@redhat.com>
-References: <20240424075735.248041-1-thuth@redhat.com>
- <d4b2c78e-c8d4-465c-a47e-53aa49efeb06@linaro.org>
- <91090e7f-4972-4473-8378-402c43116dba@redhat.com>
- <ZioMUCj57Ad9qR8k@redhat.com>
-Date: Thu, 25 Apr 2024 09:56:35 -0300
-Message-ID: <87bk5xiosc.fsf@suse.de>
+ bh=dbuUPyRdOe+e1ksvPxBxazf8fNvUc0vVtBOyeSFEDMY=;
+ b=HYezwReJLmR5c67z8p7wqQwR9JAXz8LaSZdXakurc1lIn5A+NzvzfefRpbW59tUPxB8tXb
+ Q+agrPzWH2ojsU2d7N733Eki2ujycJYeu3vy1SwcxhtjbxsXkCmkCTSb9obaTUtUS3m+uS
+ toYP1FKW0faXWc8vGHxW+CxIbYlLZNs=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-167-_41qWbsANjSCgi6cEYTXwA-1; Thu, 25 Apr 2024 09:15:34 -0400
+X-MC-Unique: _41qWbsANjSCgi6cEYTXwA-1
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-437972269edso1881101cf.3
+ for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 06:15:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714050933; x=1714655733;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=dbuUPyRdOe+e1ksvPxBxazf8fNvUc0vVtBOyeSFEDMY=;
+ b=k2IwLM6IJmxiMm9WSoUvw8bhBG8U8yegCSCv8kFE/ae3jgbw+fbJc1O5tvWmQVtXwA
+ jmpdYfv7FBIXryPoVeIr2ujB8A/sRtuSV9SgOmgRqTuo7VMXSgZ+GBXWRhgMg1krhajj
+ i/nCfNU3XwxjRm6KpcjGrV6CrjH0EpXezIoXz/ubjeXYLvntv+36OmV8UQ484cUP47HJ
+ yVzUEvm2OkknZ5k9sCFMDUc8ZS0z3fsB1dNrB0Kly0NJnBoBylgvwtYXXD0LVIq6cqMK
+ AI4pb2k50atFVRCdFlGVMJfS/72j1gRxmMldrPKTmjOk15EDeH21atgEuXSeK+zhlHu3
+ aEOw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVdDHR0Xy0U/PAHGr35IrW9TnBavFQZU+Sbo61EFrM8yUyDa2xI/Xs4Z0rEQxcnCBGefSVfFZJ632l8jUF7CgpFsXjOfT0=
+X-Gm-Message-State: AOJu0YzSAOEEeQZ1tWgsgHkw+tNKUwy2RturNkIqUjNtnwjUFDsY4IZA
+ ffDG7sI7SzI2oaDjav1awVWv+8qaW7XrBq7YrZoiirpMScEUWSXh0EAuueHSan1stEoGIPW7IzE
+ Y9XnbI2wAkCD8f2to6BgHfk1JE+iXNTSd7IQLrlabk/4tHggFx2FR
+X-Received: by 2002:a05:620a:b83:b0:790:8c20:e281 with SMTP id
+ k3-20020a05620a0b8300b007908c20e281mr4665939qkh.4.1714050933338; 
+ Thu, 25 Apr 2024 06:15:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFkN8acxD0Bt79AItYDddaxoXTQUsztc/r1/Qem8w5Fah7p1sjlLFiMJlI5PJwEtFO+KGEj/g==
+X-Received: by 2002:a05:620a:b83:b0:790:8c20:e281 with SMTP id
+ k3-20020a05620a0b8300b007908c20e281mr4665910qkh.4.1714050932860; 
+ Thu, 25 Apr 2024 06:15:32 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ z8-20020ae9c108000000b0078f1bd4f7efsm5882018qki.26.2024.04.25.06.15.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 25 Apr 2024 06:15:32 -0700 (PDT)
+Date: Thu, 25 Apr 2024 09:15:31 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Vilhelm Gyda <vilhelmgyda@gmail.com>, qemu-devel@nongnu.org
+Cc: farosas@suse.de, mjt@tls.msk.ru, laurent@vivier.eu
+Subject: Re: [PATCH] migration/ram.c: API Conversion qemu_mutex_lock(), and
+ qemu_mutex_unlock() to WITH_QEMU_LOCK_GUARD macro
+Message-ID: <ZipXc5njVadiOzCJ@x1n>
+References: <20240425114207.54148-1-vilhelmgyda@gmail.com>
+ <CADe4k3+GQGSSbbugg-BK6TNp5cJzLSxBTrS0fL3RCfOtV3wx0Q@mail.gmail.com>
+ <ZipWSkApNVq2SyS9@x1n>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 13D0F20CC9
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-2.71 / 50.00];
- SEM_URIBL(3.50)[gitlab.com:url]; BAYES_HAM(-3.00)[100.00%];
- DWL_DNSWL_MED(-2.00)[suse.de:dkim];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- BAD_REP_POLICIES(0.10)[]; MX_GOOD(-0.01)[];
- R_DKIM_ALLOW(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_DN_SOME(0.00)[]; ARC_NA(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- MIME_TRACE(0.00)[0:+];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FROM_HAS_DN(0.00)[]; RCVD_TLS_ALL(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZipWSkApNVq2SyS9@x1n>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -12
+X-Spam_score: -1.3
+X-Spam_bar: -
+X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,73 +105,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On Thu, Apr 25, 2024 at 09:10:34AM -0400, Peter Xu wrote:
+> Hi,
 
-> On Thu, Apr 25, 2024 at 07:11:41AM +0200, Thomas Huth wrote:
->> On 24/04/2024 18.21, Richard Henderson wrote:
->> > On 4/24/24 00:57, Thomas Huth wrote:
->> > > The following changes since commit 13b1e9667737132440f4d500c31cb6932=
-0c6b15a:
->> > >=20
->> > > =C2=A0=C2=A0 Merge tag 'for-upstream' of https://gitlab.com/bonzini/=
-qemu into
->> > > staging (2024-04-23 17:35:57 -0700)
->> > >=20
->> > > are available in the Git repository at:
->> > >=20
->> > > =C2=A0=C2=A0 https://gitlab.com/thuth/qemu.git tags/pull-request-202=
-4-04-24
->> > >=20
->> > > for you to fetch changes up to 8f29bab03ea22694a127ee33edeb4ce99eeb1=
-24e:
->> > >=20
->> > > =C2=A0=C2=A0 target/s390x: Remove KVM stubs in cpu_models.h (2024-04=
--24 09:45:02 +0200)
->> > >=20
->> > > ----------------------------------------------------------------
->> > > * Update OpenBSD CI image to 7.5
->> > > * Update/remove Ubuntu 20.04 CI jobs
->> > > * Update CentOS 8 CI jobs to CentOS 9
->> > > * Some clean-ups and improvements to travis.yml
->> > > * Minor test fixes
->> > > * s390x header clean-ups
->> > > * Doc updates
->> >=20
->> > This introduces a failure in the migration-compat-x86_64 job:
->> >=20
->> > https://gitlab.com/qemu-project/qemu/-/jobs/6707154868
->>=20
->> It wasn't failing for me:
->>=20
->>  https://gitlab.com/thuth/qemu/-/jobs/6702058896
->>=20
->> And according to the diffstat of my pull request, it's only touching test
->> files, docs, and s390x stuff, so I somehow fail to see how it could
->> influence x86 migration at a first glance. It also looks like the job is
->> running on opensuse, and not on CentOS or Ubuntu, so it should likely no=
-t be
->> influenced by the changes in this PR.
->>=20
->> Could you please hit the re-run button of that job? If it then passes, w=
-e're
->> likely rather facing an intermitted failure that might have been introdu=
-ced
->> earlier already...
->
-> The specific job that's failiing is the multifd cancellation test.
-> This is exactly the kind of functional area of migration where
-> non-deterministic failures are likely to appear. So one for the
-> migration maintainers to look at most likely.
->
+And I just noticed you didn't copy the list, please normally keep copying
+the list in replies.  So before below links, you can also read this first
+just in case you still miss some:
 
-Yes, that's the test that catches any race conditions on
-error/cleanup. I agree that the PR here doesn't seem to interact with
-any of that. The previous PR from Peter Xu has code that changes error
-paths, so it's more likely to be it. The recent changes to the migration
-tests are out of the picture as well because that CI job uses the
-previous QEMU version's tests (i.e. 9.0).
+https://www.qemu.org/docs/master/devel/submitting-a-patch.html
 
-I tried to reproduce it and no luck so far. Usually these bugs reproduce
-well on my machine. I'll probably need to leave it running overnight to
-find the race.
+> 
+> On Thu, Apr 25, 2024 at 06:08:58PM +0530, Vilhelm Gyda wrote:
+> > Hi, I am new here. This trivial patch is my first contribution. I am
+> > not sure who to cc for the review. Checking qemu/MAINTAINERS you guys
+> > seemed to be most relevant for this patch. I am looking for what to
+> > contribute next, let me know if you guys have any ideas on that.
+> > Thanks
+> 
+> Maybe can start with looking at some bugs (see the end of the page below),
+> or todos listed here that you think you have an idea to move on:
+> 
+> https://wiki.qemu.org/ToDo/LiveMigration
+> 
+> > 
+> > On Thu, Apr 25, 2024 at 5:12 PM Will Gyda <vilhelmgyda@gmail.com> wrote:
+> > >
+> > > migration/ram.c: API Conversion qemu_mutex_lock(),
+> > > and qemu_mutex_unlock() to WITH_QEMU_LOCK_GUARD macro
+> > >
+> > > Signed-off-by: Will Gyda <vilhelmgyda@gmail.com>
+> 
+> The patch looks okay:
+> 
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+> 
+> Thanks,
+> 
+> > > ---
+> > >  migration/ram.c | 12 ++++++------
+> > >  1 file changed, 6 insertions(+), 6 deletions(-)
+> > >
+> > > diff --git a/migration/ram.c b/migration/ram.c
+> > > index a975c5af16..50df1e9cd2 100644
+> > > --- a/migration/ram.c
+> > > +++ b/migration/ram.c
+> > > @@ -1066,14 +1066,14 @@ static void migration_bitmap_sync(RAMState *rs, bool last_stage)
+> > >      trace_migration_bitmap_sync_start();
+> > >      memory_global_dirty_log_sync(last_stage);
+> > >
+> > > -    qemu_mutex_lock(&rs->bitmap_mutex);
+> > > -    WITH_RCU_READ_LOCK_GUARD() {
+> > > -        RAMBLOCK_FOREACH_NOT_IGNORED(block) {
+> > > -            ramblock_sync_dirty_bitmap(rs, block);
+> > > +    WITH_QEMU_LOCK_GUARD(&rs->bitmap_mutex) {
+> > > +        WITH_RCU_READ_LOCK_GUARD() {
+> > > +            RAMBLOCK_FOREACH_NOT_IGNORED(block) {
+> > > +                ramblock_sync_dirty_bitmap(rs, block);
+> > > +            }
+> > > +            stat64_set(&mig_stats.dirty_bytes_last_sync, ram_bytes_remaining());
+> > >          }
+> > > -        stat64_set(&mig_stats.dirty_bytes_last_sync, ram_bytes_remaining());
+> > >      }
+> > > -    qemu_mutex_unlock(&rs->bitmap_mutex);
+> > >
+> > >      memory_global_after_dirty_log_sync();
+> > >      trace_migration_bitmap_sync_end(rs->num_dirty_pages_period);
+> > > --
+> > > 2.25.1
+> > >
+> > 
+> 
+> -- 
+> Peter Xu
+
+-- 
+Peter Xu
+
 
