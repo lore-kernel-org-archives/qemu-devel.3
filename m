@@ -4,75 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2086C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 11:59:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3652C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Apr 2024 12:05:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzxkZ-00022D-Nn; Thu, 25 Apr 2024 07:58:51 -0400
+	id 1rzxqV-0005xA-6k; Thu, 25 Apr 2024 08:04:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzxkW-00021f-QN
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:58:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1rzxqT-0005wc-MK
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 08:04:57 -0400
+Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzxkU-0008BH-RH
- for qemu-devel@nongnu.org; Thu, 25 Apr 2024 07:58:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714046325;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=R+xFDk2/5ItdOF3n0v7RXkeAPsAbowKOb2jxJkaJNEc=;
- b=LMsFUfpGtdFKaExHRLD4LN8Lk0WFpZWaogw2ocTOldIAf9J6QxelxMI1DAT+29MuOB6WMG
- 7j1dQlOYccYa5o2hCYU0O72n5yRGeMAn9CkkyFRGRU11895TYkNUXQCTLiuUZ38pfKlk2/
- MHSbe3fJCDYMixIEsgdojWOTfPZReDw=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-223-DdEDqRNQN2WzslgQebEUdQ-1; Thu, 25 Apr 2024 07:58:42 -0400
-X-MC-Unique: DdEDqRNQN2WzslgQebEUdQ-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 860FA18065AF;
- Thu, 25 Apr 2024 11:58:41 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 4AE481121312;
- Thu, 25 Apr 2024 11:58:41 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 3BB6D21E6680; Thu, 25 Apr 2024 13:58:40 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Bill Mills <bill.mills@linaro.org>
-Cc: Gustavo Romero <gustavo.romero@linaro.org>,  qemu-devel@nongnu.org,
- philmd@linaro.org,  thuth@redhat.com,  lvivier@redhat.com,
- qemu-arm@nongnu.org,  alex.bennee@linaro.org,  pbonzini@redhat.com,
- anton.kochkov@proton.me,  richard.henderson@linaro.org,
- peter.maydell@linaro.org
-Subject: Re: [PATCH 0/6] Add ivshmem-flat device
-In-Reply-To: <ecf04b2a-2038-43ac-a0bb-38d0baca7a7c@linaro.org> (Bill Mills's
- message of "Tue, 23 Apr 2024 12:00:50 -0400")
-References: <20240222222218.2261956-1-gustavo.romero@linaro.org>
- <87wmqp3xug.fsf@pond.sub.org>
- <a28f3657-c827-7a0d-a8da-b82d17d17577@linaro.org>
- <87sezc8irk.fsf@pond.sub.org>
- <ecf04b2a-2038-43ac-a0bb-38d0baca7a7c@linaro.org>
-Date: Thu, 25 Apr 2024 13:58:40 +0200
-Message-ID: <87zfth4psf.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1rzxqR-000158-AP
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 08:04:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1714046695; x=1745582695;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=Jr6R/la1rSAowbUSEQZJA/82lMaRwKYgXs88oenMdZM=;
+ b=UCoQ7rO4JIxNixhOJlmrF3RixMBYdGOaKszVs5WFuaK7xZ0s0MmkxTSp
+ a3AqSyhSh4oKhu0fgMmytvbSJNNaJyOqB/2QzVyqmgBwNAKhKOLSxvBts
+ d9g5sGAb/AN+ORArg8HIXOevvqI0SPwwap+xRTpmgKTD66N8bowDkCub4
+ FVZq1yH4QCQJiCq6PrP++fEeN6c3ogtvs3VvYD7RWa39m0Dq9u0On9rFo
+ Sn3+ybu+6jQYrnTx0KNCJXKqn1p4LUig6QEFH94mVsXJtpDxty8lOMbpx
+ BKCjHaiTGSVSG+5pJlLK3jbbwSHM4XFU72MDXj0jGYFdrDx/YmqAlm5xi g==;
+X-CSE-ConnectionGUID: eR+rMEDGTx2XUkO/wnuRIQ==
+X-CSE-MsgGUID: pugJe7EUSgeqTF/bdIUU0A==
+X-IronPort-AV: E=McAfee;i="6600,9927,11054"; a="9848217"
+X-IronPort-AV: E=Sophos;i="6.07,229,1708416000"; 
+   d="scan'208";a="9848217"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Apr 2024 05:04:51 -0700
+X-CSE-ConnectionGUID: E/3EMOI/R+Sgsk9UxL7SMA==
+X-CSE-MsgGUID: cP5IbvouRoCNFyo77NRAtw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,229,1708416000"; d="scan'208";a="24996896"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.242.48])
+ ([10.124.242.48])
+ by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Apr 2024 05:04:49 -0700
+Message-ID: <6ee5cb90-d299-4977-8a2f-529f78dc3913@intel.com>
+Date: Thu, 25 Apr 2024 20:04:46 +0800
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.1 0/7] target/i386/kvm: Cleanup the kvmclock feature
+ name
+To: Zhao Liu <zhao1.liu@linux.intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, "Michael S . Tsirkin"
+ <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Tim Wiederhake <twiederh@redhat.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
+References: <20240329101954.3954987-1-zhao1.liu@linux.intel.com>
+ <fb252e78-2e71-4422-9499-9eac69102eec@intel.com> <ZioDhpYUOEdGbWgE@intel.com>
+ <eb5cfa25-6490-4b8d-8552-4be2662d15d2@intel.com> <ZiowbFCZ75LOgBMC@intel.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <ZiowbFCZ75LOgBMC@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=198.175.65.16; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,153 +94,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Bill Mills <bill.mills@linaro.org> writes:
-
-> Hi Markus,
->
-> On 4/23/24 6:39 AM, Markus Armbruster wrote:
->> Gustavo Romero <gustavo.romero@linaro.org> writes:
->> 
->>> Hi Markus,
->>>
->>> Thanks for interesting in the ivshmem-flat device.
->>>
->>> Bill Mills (cc:ed) is the best person to answer your question,
->>> so please find his answer below.
->>>
->>> On 2/28/24 3:29 AM, Markus Armbruster wrote:
->>>> Gustavo Romero <gustavo.romero@linaro.org> writes:
->>>>
->>>> [...]
->>>>
->>>>> This patchset introduces a new device, ivshmem-flat, which is similar to the
->>>>> current ivshmem device but does not require a PCI bus. It implements the ivshmem
->>>>> status and control registers as MMRs and the shared memory as a directly
->>>>> accessible memory region in the VM memory layout. It's meant to be used on
->>>>> machines like those with Cortex-M MCUs, which usually lack a PCI bus, e.g.,
->>>>> lm3s6965evb and mps2-an385. Additionally, it has the benefit of requiring a tiny
->>>>> 'device driver,' which is helpful on some RTOSes, like Zephyr, that run on
->>>>> memory-constrained resource targets.
->>>>>
->>>>> The patchset includes a QTest for the ivshmem-flat device, however, it's also
->>>>> possible to experiment with it in two ways:
->>>>>
->>>>> (a) using two Cortex-M VMs running Zephyr; or
->>>>> (b) using one aarch64 VM running Linux with the ivshmem PCI device and another
->>>>>       arm (Cortex-M) VM running Zephyr with the new ivshmem-flat device.
->>>>>
->>>>> Please note that for running the ivshmem-flat QTests the following patch, which
->>>>> is not committed to the tree yet, must be applied:
->>>>>
->>>>> https://lists.nongnu.org/archive/html/qemu-devel/2023-11/msg03176.html
->>>>
->>>> What problem are you trying to solve with ivshmem?
->>>>
->>>> Shared memory is not a solution to any communication problem, it's
->>>> merely a building block for building such solutions: you invariably have
->>>> to layer some protocol on top.  What do you intend to put on top of
->>>> ivshmem?
->>>
->>> Actually ivshmem is shared memory and bi-direction notifications (in this case a doorbell register and an irq).
+On 4/25/2024 6:29 PM, Zhao Liu wrote:
+> On Thu, Apr 25, 2024 at 04:40:10PM +0800, Xiaoyao Li wrote:
+>> Date: Thu, 25 Apr 2024 16:40:10 +0800
+>> From: Xiaoyao Li <xiaoyao.li@intel.com>
+>> Subject: Re: [PATCH for-9.1 0/7] target/i386/kvm: Cleanup the kvmclock
+>>   feature name
 >>
->> Yes, ivshmem-doorbell supports interrupts.  Doesn't change my argument.
->> 
->>> This is the fundamental requirement for many types of communication but our interest is for the OpenAMP project [1].
+>> On 4/25/2024 3:17 PM, Zhao Liu wrote:
+>>> Hi Xiaoyao,
 >>>
->>> All the OpenAMP project's communication is based on shared memory and bi-directional notification.  Often this is on a AMP SOC with Cortex-As and Cortex-Ms or Rs.  However we are now expanding into PCIe based AMP. One example of this is an x86 host computer and a PCIe card with an ARM SOC.  Other examples include two systems with PCIe root complex connected via a non-transparent bridge.
+>>> On Wed, Apr 24, 2024 at 11:57:11PM +0800, Xiaoyao Li wrote:
+>>>> Date: Wed, 24 Apr 2024 23:57:11 +0800
+>>>> From: Xiaoyao Li <xiaoyao.li@intel.com>
+>>>> Subject: Re: [PATCH for-9.1 0/7] target/i386/kvm: Cleanup the kvmclock
+>>>>    feature name
+>>>>
+>>>> On 3/29/2024 6:19 PM, Zhao Liu wrote:
+>>>>> From: Zhao Liu <zhao1.liu@intel.com>
+>>>>>
+>>>>> Hi list,
+>>>>>
+>>>>> This series is based on Paolo's guest_phys_bits patchset [1].
+>>>>>
+>>>>> Currently, the old and new kvmclocks have the same feature name
+>>>>> "kvmclock" in FeatureWordInfo[FEAT_KVM].
+>>>>>
+>>>>> When I tried to dig into the history of this unusual naming and fix it,
+>>>>> I realized that Tim was already trying to rename it, so I picked up his
+>>>>> renaming patch [2] (with a new commit message and other minor changes).
+>>>>>
+>>>>> 13 years age, the same name was introduced in [3], and its main purpose
+>>>>> is to make it easy for users to enable/disable 2 kvmclocks. Then, in
+>>>>> 2012, Don tried to rename the new kvmclock, but the follow-up did not
+>>>>> address Igor and Eduardo's comments about compatibility.
+>>>>>
+>>>>> Tim [2], not long ago, and I just now, were both puzzled by the naming
+>>>>> one after the other.
+>>>>
+>>>> The commit message of [3] said the reason clearly:
+>>>>
+>>>>     When we tweak flags involving this value - specially when we use "-",
+>>>>     we have to act on both.
+>>>>
+>>>> So you are trying to change it to "when people want to disable kvmclock,
+>>>> they need to use '-kvmclock,-kvmclock2' instead of '-kvmclock'"
+>>>>
+>>>> IMHO, I prefer existing code and I don't see much value of differentiating
+>>>> them. If the current code puzzles you, then we can add comment to explain.
 >>>
->>> The existing PCI based ivshmem lets us model these types of systems in a simple generic way without worrying about the details of the RC/EP relationship or the details of a specific non-transparent bridge.  In fact the ivshmem looks to the two (or more) systems like a non-transparent bridge with its own memory (and no other memory access is allowed).
+>>> It's enough to just enable kvmclock2 for Guest; kvmclock (old) is
+>>> redundant in the presence of kvmclock2.
 >>>
->>> Right now we are testing this with RPMSG between two QEMU system where both systems are cortex-a53 and both running Zephyr. [2]
->>>
->>> We will expand this by switching one of the QEMU systems to either arm64 Linux or x86 Linux.
->> So you want to simulate a heterogeneous machine by connecting multiple
->> qemu-system-FOO processes via ivshmem, correct?
->
-> An AMP SOC is one use case.  A PCIe card with an embedded Cortex-M would be another.
->
->> 
->>> We (and others) are also working on a generic virtio transport that will work between any two systems as long as they have shared memory and bi-directional notifications.
->> 
->> On top of or adjacent to ivshmem?
->
-> On top of ivshmem.  It is not the only use case but it is an important one.
+>>> So operating both feature bits at the same time is not a reasonable
+>>> choice, we should only keep kvmclock2 for Guest. It's possible because
+>>> the oldest linux (v4.5) which QEMU i386 supports has kvmclock2.
+>>
+>> who said the oldest Linux QEMU supports is from 4.5? what about 2.x kernel?
+> 
+> For Host (docs/system/target-i386.rst).
+> 
+>> Besides, not only the Linux guest, whatever guest OS is, it will be broken
+>> if the guest is using kvmclock and QEMU starts to drop support of kvmclock.
+> 
+> I'm not aware of any minimum version requirements for Guest supported
+> by KVM, but there are no commitment.
 
-Interesting.
+the common commitment is at least keeping backwards compatibility.
 
-> I just gave a talk on this subject at EOSS.  If you would like to look at the slides they are here:
-> https://sched.co/1aBFm
+>> So, again, hard NAK to drop the support of kvmclock. It breaks existing
+>> guests that use kvmclock. You cannot force people to upgrade their existing
+>> VMs to use kvmclock2 instead of kvmclock.
+> 
+> I agree, legacy kvmclock can be left out, if the old kernel does not
+> support kvmclock2 and strongly requires kvmclock, it can be enabled
+> using 9.1 and earlier machines or legacy-kvmclock, as long as Host still
+> supports it.
+> 
+> What's the gap in handling it this way? especially considering that
+> kvmclock2 was introduced in v2.6.35, and earlier kernels are no longer
+> maintained. The availability of the PV feature requires compatibility
+> for both Host and Guest.
+> 
+> Anyway, the above discussion here is about future plans, and this series
+> does not prevent any Guest from ignoring kvmclock2 in favor of kvmclock.
+> 
+> What this series is doing, i.e. separating the current two kvmclock and
+> ensuring CPUID compatibility via legacy-kvmclock, could balance the
+> compatibility requirements of the ancient (unmaintained kernel) with
+> the need for future feature changes.
 
-The talk's abstract:
+You introduce a user-visible change that people need to use 
+"-kvmclock,-kvmclock2" to totally disable kvmclock.
 
-    AMP Virtio: A New Virto Transport for AMP Systems, with Focus on
-    Zephyr, Linux, and Xen
+The only difference between kvmclock and kvmclock2 is the MSR index. And 
+from users' perspective, they don't care this difference. The existing 
+usage is simple. When I want kvmclock, use "+kvmclock". When I don't 
+want it, use "-kvmclock".
 
-    Asymmetric multiprocessing systems are common in automotive,
-    Industrial, and mobile markets and are entering the data center
-    market as well.  The OpenAMP project strives to make AMP systems
-    easier and more standards based.  The OpenAMP project is working on
-    a new Virtio transport layer that can be used between cores that do
-    not share a hypervisor.  Example systems include: * AMP SOCs running
-    running Linux on Cortex-A and Zephyr on Cortex-M, * x86 and Arm
-    systems connected via PCIe, both running Linux.  AMP Virtio can also
-    be used in Xen and other hypervisors to reduce worse case latency
-    and increase freedom of interference (FFI).  These aspects are
-    critical in real-time and functionally safe systems.  This
-    presentation will cover:
-    * Why Virtio for AMP systems
-    * What are the problems with the existing virtio transports for AMP
-      systems
-    * Outline of the transport proposal
-    * Prototype software for Zephyr, Linux, and Xen
-    * Show various topologies and use cases for Device and Driver
-      placement
-    * Show portability to other RTOSes and hypervisors.
+You are complicating things and I don't see a strong reason that we have 
+to do it.
 
-You're interested in systems that contain multiple cores.  You want to
-create a virtio transport to let these cores talk to each other.
-
-Let's talk physical hardware.  The transport needs to go over some kind
-of device.  The device could be pretty smart and provide the virtio
-transport, or it could be really dumb and provide just enough to let
-software running on the core implement the virtio transport.  What do
-you have in mind?
-
-You need QEMU to emulate one or more of the devices you have in mind.
-
-Note: emulation is about the guest-facing part of the QEMU device model.
-We'll get to the host-facing part in a minute.
-
-Smart device: we know how to emulate virtio devices with various
-connectors, such as PCI, CCW, MMIO.
-
-Dumb device: ivshmem-doorbell could serve as a virtual dumb device.
-Note that a physical ivshmem would be a bad idea; it's design is rather
-poor.  Is this why you're interested in ivshmem?
-
-As is, ivshmem-doorbell comes with a PCI connector.  You want an MMIO
-connector.  Fair enough.
-
-Once you have an actual dumb physical device, you're likely better off
-emulating that instead of approximating it with ivshmem.
-
-Approximating could still be useful as a stopgap.
-
-I sidestepped an important problem so far: the "asymmetric" in AMP.
-When your asymmetric system contains cores with different architectures,
-QEMU can't emulate the entire system, because qemu-system-TARGET can
-only emulate cores with achitecture TARGET.
-
-I guess you want to work around this limitation by running multiple
-qemu-system-TARGETs.  Trouble is you then need to connect them somehow.
-ivshmem's host-facing part can connect its qemu-system-TARGET to other
-processes, including other qemu-system-TARGETs, and the TARGETs need not
-be identical.  Correct?
-
-What if we had a qemu-system that wasn't limited to a single
-architecture?  Would you still want to run multiple connected instances
-then, or would you simply model your asymmetric system in a single one?
-
-[...]
+> Thanks,
+> Zhao
+> 
 
 
