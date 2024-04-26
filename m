@@ -4,89 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E94BC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 11:00:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B13A8C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 11:01:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0JIi-0007l3-CC; Fri, 26 Apr 2024 06:59:32 -0400
+	id 1s0JKJ-0008Sh-Ky; Fri, 26 Apr 2024 07:01:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1s0JIf-0007kW-3o
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 06:59:29 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1s0JIb-0007gV-GJ
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 06:59:28 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-a524ecaf215so252458766b.2
- for <qemu-devel@nongnu.org>; Fri, 26 Apr 2024 03:59:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714129163; x=1714733963; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:organization:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=voT8UCcnqz6VM3ogjtv8L+inv5gyz1R2btDp3ebZ/y4=;
- b=LUX09euNRyKAJvaRO0mqsn+BwZVEwgYb4yZlq7IuW4l2PGOGeMsIpWLJhALJOG35dT
- hWqomhYUkstgVQjgq1Jiawa5nnBoGvx8MWboEtg/OuNW9Z+DEjyScd7wrpPytczaa5Zo
- Sne6SbTUz22bG6dp+3DY2YENgN0XaksBsEqVkSdq0KPmC1XUOUKZKIZSUiD+ap2bYloW
- ae0v5WSfaCLVbdTmYXcCFtKXJUJ6qE1Ft3MxW2K0bw94omioXryBzI96n700euL/MY/c
- 2CFRZHA1Rzbv49aqazOXepH4dJcs/eTW1DLhZHcLbKbwegpYzFAURR0gfzIF3Cd3QBDL
- rT6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714129163; x=1714733963;
- h=content-transfer-encoding:in-reply-to:organization:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=voT8UCcnqz6VM3ogjtv8L+inv5gyz1R2btDp3ebZ/y4=;
- b=nrwyoqnhvyeuLeAwapYoz6Ys1liXNed00BnCFa2SOHTJztvaIhMt+U44fXdsh3eBCh
- +libEdI3QU5U3PjpVwYNI1gduGPGN7bp3tMLw+BzJqAW+/qGY/O4CYv/g2C/v4FtFFIb
- qpMZuHryJ4u6I5wOUZ5t9lz7dRNV/DCfIFDMOsxfasT/nFUrlfiBIGg+MNCt3YX7SNae
- HJHkJLsEbyf5XFmw5IAPv5DaH0U2qikZlUFEiOy3jn6LupTFuYp27b/X/EgNw63qIeZ6
- YaE0+7lc9FGFNHmnHTVGwlB6Ctx4R8a/XaXUIGpCMEzOI6MTNKXtD9Gfj0KwZcrlQaKq
- T2gw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXI+/fkfim32+1zAKdI9pS04Aa1/at1pcKw9BAMgFF+1PF/LBsXS5jFX9a1WKTlGDoI6sOx33DoJOftlb2l0dzPHZxZ4Z0=
-X-Gm-Message-State: AOJu0YwpAJDdqIOx46dLV0LX6VpfiV2+giMlEv2d74dZ+4/2T4Ij7VgY
- gB6zwuH7yjwetq+yPCCFdWQPG9tBf74R2EQIbx8HLrhaK2GyQIVKvTZTK+o1wFM=
-X-Google-Smtp-Source: AGHT+IFViIpn7dBnPt0HyOPSfGa5CsMo3ktSGymI99/C3T3KQdAwK0UQfhsYGtpDEFl7lOXtueP2ow==
-X-Received: by 2002:a17:906:1c48:b0:a58:9297:91a1 with SMTP id
- l8-20020a1709061c4800b00a58929791a1mr1715465ejg.53.1714129163124; 
- Fri, 26 Apr 2024 03:59:23 -0700 (PDT)
-Received: from [192.168.200.106] (83.11.4.140.ipv4.supernova.orange.pl.
- [83.11.4.140]) by smtp.gmail.com with ESMTPSA id
- mc11-20020a170906eb4b00b00a5256d8c956sm10445325ejb.61.2024.04.26.03.59.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Apr 2024 03:59:22 -0700 (PDT)
-Message-ID: <a3541699-966b-4940-8a58-bd41dbf3001d@linaro.org>
-Date: Fri, 26 Apr 2024 12:59:21 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/1] hw/arm/sbsa-ref: Enable CPU cluster on ARM sbsa
- machine
-To: Xiong Yining <xiongyining1480@phytium.com.cn>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: rad@semihalf.com, peter.maydell@linaro.org, quic_llindhol@quicinc.com
-References: <20240426073553.326946-1-xiongyining1480@phytium.com.cn>
- <20240426073553.326946-2-xiongyining1480@phytium.com.cn>
-Content-Language: pl-PL, en-GB, en-HK
-From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Organization: Linaro
-In-Reply-To: <20240426073553.326946-2-xiongyining1480@phytium.com.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1s0JJw-0008Lm-6C; Fri, 26 Apr 2024 07:00:50 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1s0JJu-00089X-8s; Fri, 26 Apr 2024 07:00:47 -0400
+Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43QA3X6G025264; Fri, 26 Apr 2024 11:00:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : content-transfer-encoding : mime-version; s=pp1;
+ bh=J2RHWWrl4bmfmnJcL1BJ4i/0hMI84HQ84oLifSo4hK8=;
+ b=hoOX/kY4SjCnrDqF066S2DSA6mzAiAcpcOsllKe6O1NqVnW8ViKtxRP53+PPPxaRPe6A
+ PInAY00Z/iUnk51Dh3A/q2qjmm1hdMQ/JCXim3rlY3HfVdwVHRWy+lQ83AOGB6nnRWoF
+ T4GlUDWGEIX7YereqLlUaK782O8EFtD7oGBaigRVZ1sQUxMK+bS35aa82YEQa9hyz4rM
+ VVLQ61Fo7duW2XkDHkDfoKftkCB8GuXQ8vqXEgIZYePoff6EvN5+AesGTpEwaMSSDc5g
+ uwPvONrRZPVt9iBwYR9qzhVa+HsB06s8RCON8N3qSTo4JxzwX518wtzDpXm0vcQp9ZRn Sw== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xra63g3kg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 26 Apr 2024 11:00:34 +0000
+Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43QB0AiE012411;
+ Fri, 26 Apr 2024 11:00:33 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xra63g3kd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 26 Apr 2024 11:00:33 +0000
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43Q8D8W8020953; Fri, 26 Apr 2024 11:00:33 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3xmre0fey9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 26 Apr 2024 11:00:33 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 43QB0RIi40108292
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 26 Apr 2024 11:00:29 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 97C142005A;
+ Fri, 26 Apr 2024 11:00:27 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A53C42004E;
+ Fri, 26 Apr 2024 11:00:25 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com.com (unknown
+ [9.171.14.245]) by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 26 Apr 2024 11:00:25 +0000 (GMT)
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>
+Subject: [PATCH v2 00/10] Power11 support for QEMU
+Date: Fri, 26 Apr 2024 16:30:13 +0530
+Message-ID: <20240426110023.733309-1-adityag@linux.ibm.com>
+X-Mailer: git-send-email 2.44.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: nijed8ITn8Joo7QZgBee5wwie9SgOs5y
+X-Proofpoint-ORIG-GUID: 5XzVrdXSewAoR7T_7fhxRzGiAkfFYXLW
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-ej1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-04-26_12,2024-04-26_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 mlxlogscore=999
+ bulkscore=0 spamscore=0 lowpriorityscore=0 mlxscore=0 priorityscore=1501
+ malwarescore=0 impostorscore=0 suspectscore=0 clxscore=1011 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2404010000
+ definitions=main-2404260072
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,18 +113,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-W dniu 26.04.2024 o 09:35, Xiong Yining pisze:
-> From: xiongyining1480<xiongyining1480@phytium.com.cn>
-> 
-> Enable CPU cluster support on SbsaQemu platform, so that users can
-> specify a 4-level CPU hierarchy sockets/clusters/cores/threads. And
-> this topology can be passed to the firmware through DT cpu-map.
-> 
-> Signed-off-by: Xiong Yining<xiongyining1480@phytium.com.cn>
-> tested-by: Marcin Juszkiewicz<marcin.juszkiewicz@linaro.org>
+Overview
+============
 
-Thanks. Checked with TF-A and EDK2 patches applied. PPTT table will be 
-more detailed now.
+Add support for Power11 pseries and powernv machine types, to emulate VMs
+running on Power11.
 
-Reviewed-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+As Power11 core is same as Power10, hence much of the code has been reused from
+Power10.
+
+Also make Power11 as default cpu type for 'pseries' and 'powernv'
+machine types, with Power11 being the newest supported Power processor in QEMU.
+
+Git Tree for Testing
+====================
+
+QEMU: https://github.com/adi-g15-ibm/qemu/tree/p11-v2
+
+Has been tested with following cases:
+* '-M pseries' / '-M pseries -cpu Power11'
+* '-M powernv' / '-M powernv10' / '-M powernv11'
+* '-smp' option tested
+* with compat mode: 'max-cpu-compat=power10' and 'max-cpu-compat=power9'
+* with/without device 'virtio-scsi-pci'
+* with/without -kernel and -drive with qcow_file
+
+skiboot with Power11 support: https://github.com/maheshsal/skiboot/tree/upstream_power11
+
+Linux with Power11 support: https://github.com/torvalds/linux, since v6.9-rc1
+
+Changelog
+=========
+v2:
+  + split powernv patch into homer,lpc,occ,psi,sbe
+  + reduce code duplication by reusing power10 code
+  + make power11 as default
+  + rebase on qemu upstream/master
+  + add more information in commit descriptions
+  + update docs
+  + update skiboot.lid
+
+Aditya Gupta (10):
+  ppc/pseries: Add Power11 cpu type
+  ppc/pnv: Introduce 'PnvChipClass::chip_type'
+  ppc/pnv: Add a Power11 Pnv11Chip, and a Power11 Machine
+  ppc/pnv: Add HOMER for POWER11
+  ppc/pnv: Add a LPC controller for POWER11
+  ppc/pnv: Add OCC for Power11
+  ppc/pnv: Add a PSI bridge model for Power11
+  ppc/pnv: Add SBE model for Power11
+  ppc: Make Power11 as default cpu type for 'pseries' and 'powernv'
+  ppc/pnv: Update skiboot.lid to support Power11
+
+ docs/system/ppc/powernv.rst |   9 +--
+ docs/system/ppc/pseries.rst |   6 +-
+ hw/ppc/pnv.c                | 107 ++++++++++++++++++++++++++++++++++--
+ hw/ppc/pnv_core.c           |  16 +++++-
+ hw/ppc/pnv_homer.c          |   8 +++
+ hw/ppc/pnv_lpc.c            |  14 +++++
+ hw/ppc/pnv_occ.c            |  14 +++++
+ hw/ppc/pnv_psi.c            |  24 ++++++++
+ hw/ppc/pnv_sbe.c            |  15 +++++
+ hw/ppc/spapr.c              |   2 +-
+ hw/ppc/spapr_cpu_core.c     |   1 +
+ include/hw/ppc/pnv.h        |   5 ++
+ include/hw/ppc/pnv_chip.h   |  20 +++++++
+ include/hw/ppc/pnv_homer.h  |   3 +
+ include/hw/ppc/pnv_lpc.h    |   4 ++
+ include/hw/ppc/pnv_occ.h    |   2 +
+ include/hw/ppc/pnv_psi.h    |   2 +
+ include/hw/ppc/pnv_sbe.h    |   2 +
+ pc-bios/skiboot.lid         | Bin 2527328 -> 2527328 bytes
+ target/ppc/compat.c         |   7 +++
+ target/ppc/cpu-models.c     |   2 +
+ target/ppc/cpu-models.h     |   2 +
+ target/ppc/cpu_init.c       |  99 +++++++++++++++++++++++++++++++++
+ 23 files changed, 350 insertions(+), 14 deletions(-)
+
+-- 
+2.44.0
+
 
