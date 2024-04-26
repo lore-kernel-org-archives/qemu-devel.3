@@ -4,77 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6CCEC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 05:21:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5E87C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 05:29:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0E1c-0007ht-2Q; Fri, 26 Apr 2024 01:21:32 -0400
+	id 1s0E8I-0000hv-PH; Fri, 26 Apr 2024 01:28:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s0E1b-0007hc-0W
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 01:21:31 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s0E8B-0000hd-BM
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 01:28:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s0E1Z-00059C-7n
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 01:21:30 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s0E89-0007pi-48
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 01:28:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714108887;
+ s=mimecast20190719; t=1714109296;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Ub0FL29cRayvmpCdJtgFYBQGKNkblbLSEBCkq7qiILo=;
- b=fv6RJ09g3CgLUIOYfhC5jKvIywK0p3PXzvWZzxjnpcIABvvOjjEKp3Zs5x1ZvdTNaxYuy7
- Nct1RxYBPuHDwh2ojk5SkwRn+iJwpr/gNl70IFgXi3KHaOIFkZTctjCjOyu51IqoRZGK5P
- QINfY1teImwR6WoPRADDmk48OPhRmYA=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=xCsyPeTUAm9Kzmea7hrUM3dFCubvF3oTah39TvsloEc=;
+ b=V/3cTHTegHCnpusp4kYukxS4K7UTyz1K+rR5RpjPthVhcnMiqpWWSXvDLVBONSI1s6fCdA
+ Ur1wyt6enuzZ/bnkDUJcQp+WSRM241/dWxNKxcbSTUb0n8PK8OQzdwlKluAReRSlfI4z6L
+ gu+RDDqNcuOW49VmUDP7PGrDnqNTjqE=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-437-J6NcisjeOfGPjdlQ8Fwf4g-1; Fri, 26 Apr 2024 01:21:25 -0400
-X-MC-Unique: J6NcisjeOfGPjdlQ8Fwf4g-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-343c7fa0dd5so1126369f8f.0
- for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 22:21:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714108884; x=1714713684;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Ub0FL29cRayvmpCdJtgFYBQGKNkblbLSEBCkq7qiILo=;
- b=sSHAjfUJc7+9djhTn8qhRfSfg/shhjMficX2bXhnZhPzVbjmvRsNSONbcSpu4ZFpQN
- FTVLXPqSR+C3WcxWDBmn+FT4FSZUtRRNhPPRa2Bc5S6E5FI+klj71PinQ9YTZcNZZqmt
- BjiI34Ju0DcBBjEpZ6spevHJccUDbFqrSAiPvqG8eRSKsXe1KpfW3PJuXjKFfuhdi1fH
- kiEDT0JRSECbwqKXor/YsBx0h857oPckEOTxkjeySLCIKcR1AUUQxgo4SWk4xtE5kXMq
- hKw0XvUzdWGIDyv8N4zjmcW2EftmOW0/fWsMgdptw++ErVncW/6xxlKghWuaJddXXrZo
- O1lQ==
-X-Gm-Message-State: AOJu0YzKOBWLEY7ZvyA0qoGSocBS+CCqCb8fhrzr3rQQbBV6Nwd6DOfI
- 43OGpWpi+38S+OqcHXHUuHbh/R+eTQ7gxlMVki/7XlOArPQibV10LfxySgQ6pSiF5MkN6MK1pp5
- ArrE+Y30BArfCmbP3CPofTCECzkZ88FJ4xJ9x/KMyJDc4WwyQbSRWcfflwQXS9w4z4rqszXx3C2
- anowh6QMeXo6rkjliuxe0h8jYB3M0=
-X-Received: by 2002:adf:f906:0:b0:34c:4b26:cf7f with SMTP id
- b6-20020adff906000000b0034c4b26cf7fmr732961wrr.67.1714108884717; 
- Thu, 25 Apr 2024 22:21:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF5m9140TZPb74k7nS047lw9eJk7T1+b0c0qcxPAiCOEiVIdBnxvqvdp75hI6G4L4GrRE9kMknaP0pHDRKdnjE=
-X-Received: by 2002:adf:f906:0:b0:34c:4b26:cf7f with SMTP id
- b6-20020adff906000000b0034c4b26cf7fmr732948wrr.67.1714108884370; Thu, 25 Apr
- 2024 22:21:24 -0700 (PDT)
+ us-mta-649-qpnrnhDtNv-wn43u4dF9rQ-1; Fri, 26 Apr 2024 01:26:12 -0400
+X-MC-Unique: qpnrnhDtNv-wn43u4dF9rQ-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8434C1005D5C;
+ Fri, 26 Apr 2024 05:26:12 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 4B15040C6DAE;
+ Fri, 26 Apr 2024 05:26:12 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 6DFEF21E6680; Fri, 26 Apr 2024 07:26:11 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Peter Xu <peterx@redhat.com>,  devel@lists.libvirt.org,  Eric Blake
+ <eblake@redhat.com>
+Subject: Re: [PATCH 1/6] migration: Remove 'skipped' field from MigrationStats
+In-Reply-To: <20240425150939.19268-2-farosas@suse.de> (Fabiano Rosas's message
+ of "Thu, 25 Apr 2024 12:09:34 -0300")
+References: <20240425150939.19268-1-farosas@suse.de>
+ <20240425150939.19268-2-farosas@suse.de>
+Date: Fri, 26 Apr 2024 07:26:11 +0200
+Message-ID: <87a5lg1yq4.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20240424081443.75869-1-pbonzini@redhat.com>
- <7217032f-2d44-4c9b-aa73-1b97787de03e@linaro.org>
-In-Reply-To: <7217032f-2d44-4c9b-aa73-1b97787de03e@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 26 Apr 2024 07:21:12 +0200
-Message-ID: <CABgObfYAJQS-x6NRnjF5T-i0FmKwJR5eK0XQ8t1HBBTbP2QDkw@mail.gmail.com>
-Subject: Re: [PULL v2 00/63] First batch of i386 and build system patch for
- QEMU 9.1
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -98,29 +85,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 24, 2024 at 8:49=E2=80=AFPM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 4/24/24 01:14, Paolo Bonzini wrote:
-> > The following changes since commit 62dbe54c24dbf77051bafe1039c31ddc8f37=
-602d:
-> >
-> >    Update version for v9.0.0-rc4 release (2024-04-16 18:06:15 +0100)
-> >
-> > are available in the Git repository at:
-> >
-> >    https://gitlab.com/bonzini/qemu.git tags/for-upstream
-> >
-> > for you to fetch changes up to 7653b44534d3267fa63ebc9d7221eaa7b48bf5ae=
-:
-> >
-> >    target/i386/translate.c: always write 32-bits for SGDT and SIDT (202=
-4-04-23 17:35:26 +0200)
->
-> Sorry, I've already merged v1.  You'll need to adjust the fix on top.
+Fabiano Rosas <farosas@suse.de> writes:
 
-It's the same tag, so you actually merged v2.
+> The 'skipped' field of the MigrationStats struct has been deprecated
+> in 8.1. Time to remove it.
+>
+> Deprecation commit 7b24d32634 ("migration: skipped field is really
+> obsolete.").
+>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  docs/about/deprecated.rst       | 6 ------
+>  docs/about/removed-features.rst | 6 ++++++
+>  migration/migration-hmp-cmds.c  | 2 --
+>  migration/migration.c           | 2 --
+>  qapi/migration.json             | 8 --------
+>  5 files changed, 6 insertions(+), 18 deletions(-)
+>
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index 7b548519b5..4d9d6bf2da 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -488,12 +488,6 @@ option).
+>  Migration
+>  ---------
+>  
+> -``skipped`` MigrationStats field (since 8.1)
+> -''''''''''''''''''''''''''''''''''''''''''''
+> -
+> -``skipped`` field in Migration stats has been deprecated.  It hasn't
+> -been used for more than 10 years.
+> -
+>  ``inc`` migrate command option (since 8.2)
+>  ''''''''''''''''''''''''''''''''''''''''''
+>  
+> diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+> index f9cf874f7b..9873f59bee 100644
+> --- a/docs/about/removed-features.rst
+> +++ b/docs/about/removed-features.rst
+> @@ -614,6 +614,12 @@ was superseded by ``sections``.
+>  Member ``section-size`` in the return value of ``query-sgx-capabilities``
+>  was superseded by ``sections``.
+>  
+> +``query-migrate`` return value member ``skipped`` (removed in 9.1)
+> +''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+> +
+> +Member ``skipped`` of the ``MigrationStats`` struct hasn't been used
+> +for more than 10 years. Removed with no replacement.
+> +
+>  Human Monitor Protocol (HMP) commands
+>  -------------------------------------
+>  
+> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+> index 7e96ae6ffd..28f776d06d 100644
+> --- a/migration/migration-hmp-cmds.c
+> +++ b/migration/migration-hmp-cmds.c
+> @@ -105,8 +105,6 @@ void hmp_info_migrate(Monitor *mon, const QDict *qdict)
+>                         info->ram->total >> 10);
+>          monitor_printf(mon, "duplicate: %" PRIu64 " pages\n",
+>                         info->ram->duplicate);
+> -        monitor_printf(mon, "skipped: %" PRIu64 " pages\n",
+> -                       info->ram->skipped);
+>          monitor_printf(mon, "normal: %" PRIu64 " pages\n",
+>                         info->ram->normal);
+>          monitor_printf(mon, "normal bytes: %" PRIu64 " kbytes\n",
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 696762bc64..3b433fdb31 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -1149,8 +1149,6 @@ static void populate_ram_info(MigrationInfo *info, MigrationState *s)
+>      info->ram->transferred = migration_transferred_bytes();
+>      info->ram->total = ram_bytes_total();
+>      info->ram->duplicate = stat64_get(&mig_stats.zero_pages);
+> -    /* legacy value.  It is not used anymore */
+> -    info->ram->skipped = 0;
+>      info->ram->normal = stat64_get(&mig_stats.normal_pages);
+>      info->ram->normal_bytes = info->ram->normal * page_size;
+>      info->ram->mbps = s->mbps;
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index 8c65b90328..401b8e24ac 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -23,9 +23,6 @@
+>  #
+>  # @duplicate: number of duplicate (zero) pages (since 1.2)
+>  #
+> -# @skipped: number of skipped zero pages.  Always zero, only provided
+> -#     for compatibility (since 1.5)
+> -#
+>  # @normal: number of normal pages (since 1.2)
+>  #
+>  # @normal-bytes: number of normal bytes sent (since 1.2)
+> @@ -63,16 +60,11 @@
+>  #     between 0 and @dirty-sync-count * @multifd-channels.  (since
+>  #     7.1)
+>  #
+> -# Features:
+> -#
+> -# @deprecated: Member @skipped is always zero since 1.5.3
+> -#
+>  # Since: 0.14
+>  ##
+>  { 'struct': 'MigrationStats',
+>    'data': {'transferred': 'int', 'remaining': 'int', 'total': 'int' ,
+>             'duplicate': 'int',
+> -           'skipped': { 'type': 'int', 'features': [ 'deprecated' ] },
+>             'normal': 'int',
+>             'normal-bytes': 'int', 'dirty-pages-rate': 'int',
+>             'mbps': 'number', 'dirty-sync-count': 'int',
 
-Paolo
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
 
