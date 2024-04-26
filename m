@@ -4,59 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBB27C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 17:42:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9815EC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 17:42:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0PaW-0005U0-T5; Fri, 26 Apr 2024 13:42:20 -0400
+	id 1s0Pay-0005hW-Kv; Fri, 26 Apr 2024 13:42:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=oYEp=L7=kaod.org=clg@ozlabs.org>)
- id 1s0PaM-0005RM-33; Fri, 26 Apr 2024 13:42:11 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1s0Par-0005ac-Qf; Fri, 26 Apr 2024 13:42:46 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=oYEp=L7=kaod.org=clg@ozlabs.org>)
- id 1s0PaE-0007bu-QI; Fri, 26 Apr 2024 13:42:09 -0400
-Received: from gandalf.ozlabs.org (mail.ozlabs.org
- [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4VR0Qr5zfzz4wc5;
- Sat, 27 Apr 2024 03:41:56 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4VR0Qn3Wg3z4xKb;
- Sat, 27 Apr 2024 03:41:53 +1000 (AEST)
-Message-ID: <f39f0e4a-6f9f-45f7-9f84-1663f20cd755@kaod.org>
-Date: Fri, 26 Apr 2024 19:41:50 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/10] ppc/pseries: Add Power11 cpu type
-To: Aditya Gupta <adityag@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1s0Pae-0007e4-Mj; Fri, 26 Apr 2024 13:42:39 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43QH3B6u021835; Fri, 26 Apr 2024 17:42:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=date : from : to : cc :
+ subject : message-id : references : content-type : in-reply-to :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=YF5uOH/GNrtaDIuRmRlmw/cJ/rSpQWvvo3gbTU3LpSk=;
+ b=WmsVQS/xWF5elFPY78gPwmcH+u7MSzBEzqwxxubN1eJ8++Q+TkeS8Nho8fsp3o5tmP54
+ HT4lXUhHxh3EMFhfadVUF5Uv7yIp+kc1t+GX8EZaCj8bLsZNLa/wGXdxOadNNWvSJyEw
+ eTeVQKoosh1Fjg6441hpeCPJCye5YOsWQGmi+1mClOVI/pmcirFl0zEhK1s+lcyRboDG
+ c/xfzhpN74OKBYrmdbHdCBzQsQ1/pA34dNLMwUnald05PPEeb2UmVnift24g19J2sRJw
+ wJNoGmnRaSsqzZInA88yDlcmn99bqYTLJSpWKE8ZB6A9nHttWQQPZ72d4SPX1hqiCZ8u fA== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xrgb1r2fa-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 26 Apr 2024 17:42:23 +0000
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43QHgMWO013650;
+ Fri, 26 Apr 2024 17:42:22 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xrgb1r2f9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 26 Apr 2024 17:42:22 +0000
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43QGmO9L005355; Fri, 26 Apr 2024 17:42:22 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xmx3cys7m-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 26 Apr 2024 17:42:21 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 43QHgG7j47514054
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 26 Apr 2024 17:42:18 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9E49320043;
+ Fri, 26 Apr 2024 17:42:16 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8D9CE20040;
+ Fri, 26 Apr 2024 17:42:14 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.171.36.162])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Fri, 26 Apr 2024 17:42:14 +0000 (GMT)
+Date: Fri, 26 Apr 2024 23:12:11 +0530
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
 Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
  Madhavan Srinivasan <maddy@linux.ibm.com>,
  Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
+ qemu-ppc@nongnu.org, Joel Stanley <joel@jms.id.au>
+Subject: Re: [PATCH v2 10/10] ppc/pnv: Update skiboot.lid to support Power11
+Message-ID: <qxdrovfjtuynb7fbdj7k2xhx2racl6yjuwx4tsjvriorzkxl5k@dfvz2xccyt7s>
 References: <20240426110023.733309-1-adityag@linux.ibm.com>
- <20240426110023.733309-2-adityag@linux.ibm.com>
- <d35b2a2d-1307-46bf-81ae-747a0e62d6be@kaod.org>
- <p57z4il36laqlccge3llmbzveepyzad7dokxpoipxh22t2y2s3@tsiegjpijeas>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <p57z4il36laqlccge3llmbzveepyzad7dokxpoipxh22t2y2s3@tsiegjpijeas>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <20240426110023.733309-11-adityag@linux.ibm.com>
+ <d6850e42-acbc-42fc-a27b-87c10736dd95@kaod.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <d6850e42-acbc-42fc-a27b-87c10736dd95@kaod.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 9HLM3PsEMeANP-FQDFJCAISdUgCzfWPg
+X-Proofpoint-ORIG-GUID: C21QvLF4M1l2D2baiwwRjz80WsWIcNW3
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=oYEp=L7=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-04-26_14,2024-04-26_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 spamscore=0
+ mlxscore=0 mlxlogscore=999 adultscore=0 malwarescore=0 suspectscore=0
+ clxscore=1015 phishscore=0 lowpriorityscore=0 priorityscore=1501
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2404010000 definitions=main-2404260120
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,137 +119,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/26/24 19:05, Aditya Gupta wrote:
-> Hello CÃ©dric,
+On Fri, Apr 26, 2024 at 04:38:13PM +0200, Cédric Le Goater wrote:
+> On 4/26/24 13:00, Aditya Gupta wrote:
+> > Skiboot/OPAL patches are in discussion upstream [1], with corresponding
+> > commits in github repository [2].
+> > 
+> > Update skiboot.lid, with binary built from 'upstream_power11' branch
+> > of skiboot repository with Power11 enablement patches [2].
+> > 
+> > ---
+> > This patch can be skipped for now, if need to wait for patches to be
+> > merged in open-power/skiboot.
 > 
-> Thanks for your reviews.
+> yes.
 > 
-> On Fri, Apr 26, 2024 at 04:27:04PM +0200, CÃ©dric Le Goater wrote:
->> Hello Aditya
->>
->> On 4/26/24 13:00, Aditya Gupta wrote:
->>> Add base support for "--cpu power11" in QEMU.
->>>
->>> Power11 core is same as Power10, hence reuse functions defined for
->>> Power10.
->>
->> Power11 uses the same ISA it seems. What's the value then ?
+> > Have updated the skiboot.lid to aid in testing this patch series.
 > 
-> Yes, it uses the same ISA. But I added this option so we can have a
-> Power11 PVR in QEMU, which should be identified as Power11 in skiboot
-> and linux, hence defined Power11 cpu type, even though code here is
-> almost same as Power10.
-> 
->>
->>>
->>> Cc: CÃ©dric Le Goater <clg@kaod.org>
->>> Cc: Daniel Henrique Barboza <danielhb413@gmail.com>
->>> Cc: David Gibson <david@gibson.dropbear.id.au>
->>> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
->>> Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
->>> Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
->>> Cc: Nicholas Piggin <npiggin@gmail.com>
->>> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
->>> ---
->>>    docs/system/ppc/pseries.rst |  6 +--
->>>    hw/ppc/spapr_cpu_core.c     |  1 +
->>
->>
->> I would separate the CPU target code adding support for a new POWER
->> Processor from the machine code (pseries).
-> 
-> Sure, I will split it in v3.
-> 
->>
->>
->>>    target/ppc/compat.c         |  7 +++
->>>    target/ppc/cpu-models.c     |  2 +
->>>    target/ppc/cpu-models.h     |  2 +
->>>    target/ppc/cpu_init.c       | 99 +++++++++++++++++++++++++++++++++++++
->>>    6 files changed, 114 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/docs/system/ppc/pseries.rst b/docs/system/ppc/pseries.rst
->>> index a876d897b6e4..3277564b34c2 100644
->>> --- a/docs/system/ppc/pseries.rst
->>> +++ b/docs/system/ppc/pseries.rst
->>> @@ -15,9 +15,9 @@ Supported devices
->>>    =================
->>>     * Multi processor support for many Power processors generations: POWER7,
->>> -   POWER7+, POWER8, POWER8NVL, POWER9, and Power10. Support for POWER5+ exists,
->>> -   but its state is unknown.
->>> - * Interrupt Controller, XICS (POWER8) and XIVE (POWER9 and Power10)
->>> +   POWER7+, POWER8, POWER8NVL, POWER9, Power10 and Power11. Support for POWER5+
->>> +   exists, but its state is unknown.
->>
->> The POWER5+ pseries machine seems functionnal with SLOF
->> (Sep 18 2023 18:57:48) and Linux 6.6.3 under TCG. May be worth
->> to mention (for AIX users) in another patch.
->>
->>> + * Interrupt Controller, XICS (POWER8) and XIVE (POWER9, Power10, Power11)
->>>     * vPHB PCIe Host bridge.
->>>     * vscsi and vnet devices, compatible with the same devices available on a
->>>       PowerVM hypervisor with VIOS managing LPARs.
->>> diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
->>> index e7c9edd033c8..c6e85c031178 100644
->>> --- a/hw/ppc/spapr_cpu_core.c
->>> +++ b/hw/ppc/spapr_cpu_core.c
->>> @@ -401,6 +401,7 @@ static const TypeInfo spapr_cpu_core_type_infos[] = {
->>>        DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.0"),
->>>        DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.2"),
->>>        DEFINE_SPAPR_CPU_CORE_TYPE("power10_v2.0"),
->>> +    DEFINE_SPAPR_CPU_CORE_TYPE("power11"),
->>>    #ifdef CONFIG_KVM
->>>        DEFINE_SPAPR_CPU_CORE_TYPE("host"),
->>>    #endif
->>> diff --git a/target/ppc/compat.c b/target/ppc/compat.c
->>> index ebef2cccecf3..12dd8ae290ca 100644
->>> --- a/target/ppc/compat.c
->>> +++ b/target/ppc/compat.c
->>> @@ -100,6 +100,13 @@ static const CompatInfo compat_table[] = {
->>>            .pcr_level = PCR_COMPAT_3_10,
->>>            .max_vthreads = 8,
->>>        },
->>> +    { /* POWER11, ISA3.10 */
->>> +        .name = "power11",
->>> +        .pvr = CPU_POWERPC_LOGICAL_3_10_PLUS,
->>> +        .pcr = PCR_COMPAT_3_10,
->>> +        .pcr_level = PCR_COMPAT_3_10,
->>> +        .max_vthreads = 8,
->>> +    },
->>>    };
->>>    static const CompatInfo *compat_by_pvr(uint32_t pvr)
->>> diff --git a/target/ppc/cpu-models.c b/target/ppc/cpu-models.c
->>> index f2301b43f78b..1870e69b63df 100644
->>> --- a/target/ppc/cpu-models.c
->>> +++ b/target/ppc/cpu-models.c
->>> @@ -734,6 +734,8 @@
->>>                    "POWER9 v2.2")
->>>        POWERPC_DEF("power10_v2.0",  CPU_POWERPC_POWER10_DD20,           POWER10,
->>>                    "POWER10 v2.0")
->>> +    POWERPC_DEF("power11",  CPU_POWERPC_POWER11,           POWER11,
->>> +                "POWER11")
->>>    #endif /* defined (TARGET_PPC64) */
->>>    /***************************************************************************/
->>> diff --git a/target/ppc/cpu-models.h b/target/ppc/cpu-models.h
->>> index 0229ef3a9a5c..a1b540c3aa9e 100644
->>> --- a/target/ppc/cpu-models.h
->>> +++ b/target/ppc/cpu-models.h
->>> @@ -354,6 +354,7 @@ enum {
->>>        CPU_POWERPC_POWER10_BASE       = 0x00800000,
->>>        CPU_POWERPC_POWER10_DD1        = 0x00801100,
->>>        CPU_POWERPC_POWER10_DD20       = 0x00801200,
->>> +    CPU_POWERPC_POWER11            = 0x00821200,
->>
->> is that a DD2.2 PVR ? If so, It should be mentionned in the definition.
->>
-> 
-> Yes, I have kept the last 2 bytes same as P10 DD2. I will mention it
-> above the line I have added it, in v3.
+> Thanks for doing so.
 
-Skiboot reports :
+Good it helped !
 
-[    0.121234172,6] P11 DD1.00 detected
+Thanks,
+- Aditya Gupta
 
-
-C.
+> 
+> > ---
+> > 
+> > [1]:https://lists.ozlabs.org/pipermail/skiboot/2024-April/018963.html
+> > [2]:https://github.com/maheshsal/skiboot.
+> > 
+> > Cc: Cédric Le Goater<clg@kaod.org>
+> > Cc: Joel Stanley<joel@jms.id.au>
+> > Cc: Mahesh J Salgaonkar<mahesh@linux.ibm.com>
+> > Cc: Madhavan Srinivasan<maddy@linux.ibm.com>
+> > Cc: Nicholas Piggin<npiggin@gmail.com>
+> > Signed-off-by: Aditya Gupta<adityag@linux.ibm.com>
+> > ---
+> >   pc-bios/skiboot.lid | Bin 2527328 -> 2527328 bytes
+> >   1 file changed, 0 insertions(+), 0 deletions(-)
+> 
+> We avoid sending such big blobs on the mailing list. We usually send a
+> PR to the sub-system maintainer (Nick). When time comes (support is
+> merged is skiboot), we will address the skiboot image update in QEMU.
+> 
+> C.
+> 
 
