@@ -4,80 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FBA0C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 09:14:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75F5CC19F4E
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 09:18:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0Hek-00071X-P9; Fri, 26 Apr 2024 05:14:10 -0400
+	id 1s0Hi3-0000fO-Cp; Fri, 26 Apr 2024 05:17:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mcasquer@redhat.com>)
- id 1s0Hei-0006v3-Cl
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 05:14:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s0Hhw-0000eq-VA
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 05:17:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mcasquer@redhat.com>)
- id 1s0Heg-0004IC-SR
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 05:14:08 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s0Hhl-0004yP-Mg
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 05:17:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714122845;
+ s=mimecast20190719; t=1714123025;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HzqgLx78EvlSfnqx+14UcMQjMPJVBXLZODD/QaXQlmY=;
- b=OMrHTEcvIalog/iFk6j99KqUnCPfG9dnIyDrvBQWCl1KE5g/ZsdewpmcVPK5h7sMAPuJ+h
- MMibD/d7E87mBOM7fiphVfPEaLja5SecCLs647O/dLE5DNa5vgZPrbDnH3zTOpiBNeK1MI
- C/4T5oCdRJhJMK5jg6rs59YYV1od1sQ=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=tX7OwYNvfCwW+SWnuBtJDlZFGrh8rNO2CpXDQ7/7/cQ=;
+ b=TCx58bvGB6N0SIdYJPWDmhWlFTtI0YD1pNe2oUPz1XcRrrFEcuaCOMG4mrw4mS2zyjuj4E
+ 4uMsJLeq7aJwCd2gvOvccISrFFmdHPCi1xye1qg8Sz9+lJP1q3rbjCwQyHfZa2ZWO2IqrU
+ 02qh2jNbJG63gYjv1VzVU9469+clkwc=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-9-Pn8we3oMN8eqA93S9DveDw-1; Fri, 26 Apr 2024 05:14:02 -0400
-X-MC-Unique: Pn8we3oMN8eqA93S9DveDw-1
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2dad70b6e03so13805281fa.1
- for <qemu-devel@nongnu.org>; Fri, 26 Apr 2024 02:14:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714122841; x=1714727641;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HzqgLx78EvlSfnqx+14UcMQjMPJVBXLZODD/QaXQlmY=;
- b=GRfgDKEoWDMEG6zm3K7kznPHfeOqPT/3O2RIxMk2JkQmKbuEHg/3sIlADbiskDzcNx
- JH4pA5c5X/V7QMY8gfiVwtuCM1hHf8QlzIMqk/K9ku+a9NMUm9+eczJ/IiaLguERvDLF
- m/VRVGli6dPqbvgXE9I18KWwT7DBwc+EkfbXZcpwAGFc0vFDWDZC1WaEiXO6Gjq9OEjO
- 3JuAzdg40qrZ5PZv3fMBxDDJZ/ADlCaduDLrdHMpoUspFVIFNEhG9eZHbWmwEgUahTVh
- VkBcv3TbmLxgnCmF/ikEt9cB1XtjcbdHJDi6AM7odlMKCluCo5o/YQfCkleRp1v8Dkte
- Eq2w==
-X-Gm-Message-State: AOJu0YzFQsU9LAA53MhZDuwXMuQwR7jAusUFw7BzYLkh96dTS1cAor2M
- hM2kESiukPPVzfTQuM545yQKe7iFQI17ADRjU3bdzbbwssa9kxEgnpSO4Eg+ipQzG+qJ7BmJ3gn
- cXuNic+9EhqCOLv2BitponKGMyx9ayC7u9CC0CWeqZTaV3h3FOtgybiZCVqQnbfrWesZevEPRhi
- W8P+bVstZiAKdhU++4S5kOdyUvoP4=
-X-Received: by 2002:a2e:bc04:0:b0:2da:6f70:38b6 with SMTP id
- b4-20020a2ebc04000000b002da6f7038b6mr1648970ljf.35.1714122841400; 
- Fri, 26 Apr 2024 02:14:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF9y/HWJwf1jpWocOFqS3oFX2RfA8othwHG4DUsGIedHQiE2uXXpDnExoVy2hS3AZfPwtIikJW4213sCNgc3kg=
-X-Received: by 2002:a2e:bc04:0:b0:2da:6f70:38b6 with SMTP id
- b4-20020a2ebc04000000b002da6f7038b6mr1648951ljf.35.1714122841072; Fri, 26 Apr
- 2024 02:14:01 -0700 (PDT)
+ us-mta-16-Jy2qDFmHM_C8QUarimcQ_w-1; Fri, 26 Apr 2024 05:17:00 -0400
+X-MC-Unique: Jy2qDFmHM_C8QUarimcQ_w-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B914918065AD;
+ Fri, 26 Apr 2024 09:16:59 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 994982166B31;
+ Fri, 26 Apr 2024 09:16:59 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id A341221E6680; Fri, 26 Apr 2024 11:16:58 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Hao Xiang <hao.xiang@linux.dev>,  marcandre.lureau@redhat.com,
+ peterx@redhat.com,  farosas@suse.de,  armbru@redhat.com,
+ lvivier@redhat.com,  qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 08/14] migration/multifd: Add new migration option
+ for multifd DSA offloading.
+In-Reply-To: <Zipl4WkTFgMr92NP@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Thu, 25 Apr 2024 15:17:05 +0100")
+References: <20240425022117.4035031-1-hao.xiang@linux.dev>
+ <20240425022117.4035031-9-hao.xiang@linux.dev>
+ <Zipl4WkTFgMr92NP@redhat.com>
+Date: Fri, 26 Apr 2024 11:16:58 +0200
+Message-ID: <87zftgwkj9.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20240420054606.13353-1-thuth@redhat.com>
-In-Reply-To: <20240420054606.13353-1-thuth@redhat.com>
-From: Mario Casquero <mcasquer@redhat.com>
-Date: Fri, 26 Apr 2024 11:13:49 +0200
-Message-ID: <CAMXpfWswsBtuaSXs_pK+-La2qeMrKSSU1JzmP_uCYp3rbxn0vw@mail.gmail.com>
-Subject: Re: [PATCH 0/3] Remove useless architecture prefix from the CPU list
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-ppc@nongnu.org, 
- qemu-s390x@nongnu.org, Nicholas Piggin <npiggin@gmail.com>, 
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Hildenbrand <david@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-trivial@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mcasquer@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -101,33 +89,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series has been successfully tested in x86. Execute the cpu help
-command and check in the list the x86 prefix is no longer present.
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Tested-by: Mario Casquero <mcasquer@redhat.com>
+> On Thu, Apr 25, 2024 at 02:21:11AM +0000, Hao Xiang wrote:
+>> Intel DSA offloading is an optional feature that turns on if
+>> proper hardware and software stack is available. To turn on
+>> DSA offloading in multifd live migration:
+>>=20
+>> multifd-dsa-accel=3D"[dsa_dev_path1] [dsa_dev_path2] ... [dsa_dev_pathX]"
+>>=20
+>> This feature is turned off by default.
+>>=20
+>> Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
+>> ---
+>>  migration/migration-hmp-cmds.c |  8 ++++++++
+>>  migration/options.c            | 30 ++++++++++++++++++++++++++++++
+>>  migration/options.h            |  1 +
+>>  qapi/migration.json            | 26 +++++++++++++++++++++++---
+>>  4 files changed, 62 insertions(+), 3 deletions(-)
+>
+>> diff --git a/qapi/migration.json b/qapi/migration.json
+>> index 8c65b90328..934fa8839e 100644
+>> --- a/qapi/migration.json
+>> +++ b/qapi/migration.json
+>> @@ -914,6 +914,12 @@
+>>  #     See description in @ZeroPageDetection.  Default is 'multifd'.
+>>  #     (since 9.0)
+>>  #
+>> +# @multifd-dsa-accel: If enabled, use DSA accelerator offloading for
+>> +#     certain memory operations. Enable DSA accelerator offloading by
+>> +#     setting this string to a list of DSA device path separated by spa=
+ce
+>> +#     characters. Setting this string to an empty string means disabling
+>> +#     DSA accelerator offloading. Defaults to an empty string. (since 9=
+.2)
+>
+> Passing a list of paths as a single space separate string is a
+> design anti-pattern. This needs to use a list type at the QAPI
+> level.
 
-On Sat, Apr 20, 2024 at 7:47=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrot=
-e:
+Yup.
+
+> Also I don't think we need add 'multifd' on the name - all
+> new features are for multifd.
 >
-> Printing an architecture prefix in front of each CPU name is not helpful
-> at all: It is confusing for the users since they don't know whether they
-> have to specify these letters for the "-cpu" parameter, too, and it also
-> takes some precious space in the dense output of the CPU entries. Let's
-> simply remove those now.
->
-> Thomas Huth (3):
->   target/i386/cpu: Remove "x86" prefix from the CPU list
->   target/s390x/cpu_models: Rework the output of "-cpu help"
->   target/ppc/cpu_init: Remove "PowerPC" prefix from the CPU list
->
->  target/i386/cpu.c         | 2 +-
->  target/ppc/cpu_init.c     | 9 +++++----
->  target/s390x/cpu_models.c | 9 +++++----
->  3 files changed, 11 insertions(+), 9 deletions(-)
->
-> --
-> 2.44.0
->
->
+> Overall it should be called 'dsa-accel-path' I thjink
+
+Moreover, docs/devel/qapi-code-gen.rst:
+
+    For legibility, wrap text paragraphs so every line is at most 70
+    characters long.
+
+    Separate sentences with two spaces.
+
+[...]
 
 
