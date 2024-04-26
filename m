@@ -4,61 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EA9AC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 08:39:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56DFAC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 08:42:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0H78-00046L-7I; Fri, 26 Apr 2024 04:39:26 -0400
+	id 1s0H9t-00052c-8y; Fri, 26 Apr 2024 04:42:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s0H76-00046C-HS
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 04:39:24 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s0H9r-00051t-0H
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 04:42:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s0H73-0002f4-Nz
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 04:39:24 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s0H9p-0003WW-4T
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 04:42:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714120760;
+ s=mimecast20190719; t=1714120932;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=8JEdOeaX8spuPawVTP9NbGYG3RYBIZhk1yrVrxrsIwc=;
- b=dWCBdVlotSdm4f9P5YV5yjPrTn3tZkAfuEpZQrcqnGMzXXpGZ0mitYAnYmZEyn9W5ae78R
- rv0ScS8Dz1dfCw0UdFlndPMVGUEveU3n2P3yJj6Is+NQjd9HbRVa0XdLRE0zVuTKxbpZws
- h4h6bjTY6rten718rDfNxIfRsbrG3AM=
+ bh=QFyIAYuxwo9CFm0D8FhCCDwxvI1pxlH2mhkaqRspA5o=;
+ b=aL8AzDJqv+XUikU4QkBBxYDC1K+Kc4SJOe/vOwkrgTu2+bQViOCXTmUMZSv3X3LCrJI0kK
+ U6u1OSVTyqORacG/Baj2LuQxifonNrKNXrcE31HWEzGq1j/CmfUDfBSWVTx+c9qKAn0uhT
+ t7H5S99HpWw0Ie8oaTSguQOlw2Muqxg=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-588-6jSnObUHMIC33FInZg7Z5A-1; Fri, 26 Apr 2024 04:39:16 -0400
-X-MC-Unique: 6jSnObUHMIC33FInZg7Z5A-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
+ us-mta-230-v6jtalRUOQaZzsdwndn0dQ-1; Fri, 26 Apr 2024 04:42:06 -0400
+X-MC-Unique: v6jtalRUOQaZzsdwndn0dQ-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 10AB718065AB;
- Fri, 26 Apr 2024 08:39:16 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 885EC8943A4;
+ Fri, 26 Apr 2024 08:42:05 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id C2B112166B31;
- Fri, 26 Apr 2024 08:39:15 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 4E5BC40B4979;
+ Fri, 26 Apr 2024 08:42:05 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B6F0321E6811; Fri, 26 Apr 2024 10:39:14 +0200 (CEST)
+ id 41ADF21E6811; Fri, 26 Apr 2024 10:42:04 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
-To: Daniil Tatianin <d-tatianin@yandex-team.ru>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Eric Blake <eblake@redhat.com>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH] mc146818rtc: add a way to generate RTC interrupts via QMP
-In-Reply-To: <20240425133745.464091-1-d-tatianin@yandex-team.ru> (Daniil
- Tatianin's message of "Thu, 25 Apr 2024 16:37:45 +0300")
-References: <20240425133745.464091-1-d-tatianin@yandex-team.ru>
-Date: Fri, 26 Apr 2024 10:39:14 +0200
-Message-ID: <87v844y0ul.fsf@pond.sub.org>
+To: Collin Walling <walling@linux.ibm.com>
+Cc: qemu-s390x@nongnu.org,  qemu-devel@nongnu.org,  thuth@redhat.com,
+ david@redhat.com,  wangyanan55@huawei.com,  philmd@linaro.org,
+ marcel.apfelbaum@gmail.com,  eduardo@habkost.net,  armbru@redhat.com
+Subject: Re: [PATCH v3 1/2] target/s390x: report deprecated-props in
+ cpu-model-expansion reply
+In-Reply-To: <20240424215633.48906-2-walling@linux.ibm.com> (Collin Walling's
+ message of "Wed, 24 Apr 2024 17:56:32 -0400")
+References: <20240424215633.48906-1-walling@linux.ibm.com>
+ <20240424215633.48906-2-walling@linux.ibm.com>
+Date: Fri, 26 Apr 2024 10:42:04 +0200
+Message-ID: <87o79wy0pv.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -67,7 +69,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,115 +85,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniil Tatianin <d-tatianin@yandex-team.ru> writes:
+Collin Walling <walling@linux.ibm.com> writes:
 
-> This can be used to force-synchronize the time in guest after a long
-> stop-cont pause, which can be useful for serverless-type workload.
+> Retain a list of deprecated features disjoint from any particular
+> CPU model. A query-cpu-model-expansion reply will now provide a list of
+> properties (i.e. features) that are flagged as deprecated. Example:
 >
-> Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+>     {
+>       "return": {
+>         "model": {
+>           "name": "z14.2-base",
+>           "deprecated-props": [
+>             "bpb",
+>             "csske"
+>           ],
+>           "props": {
+>             "pfmfi": false,
+>             "exrl": true,
+>             ...a lot more props...
+>             "skey": false,
+>             "vxpdeh2": false
+>           }
+>         }
+>       }
+>     }
+>
+> It is recommended that s390 guests operate with these features
+> explicitly disabled to ensure compatability with future hardware.
+>
+> Signed-off-by: Collin Walling <walling@linux.ibm.com>
 > ---
->  hw/rtc/mc146818rtc.c         | 15 +++++++++++++++
->  include/hw/rtc/mc146818rtc.h |  1 +
->  qapi/misc-target.json        | 16 ++++++++++++++++
->  3 files changed, 32 insertions(+)
+>  qapi/machine-target.json         |  5 ++++-
+>  target/s390x/cpu_features.c      | 14 ++++++++++++++
+>  target/s390x/cpu_features.h      |  1 +
+>  target/s390x/cpu_models_sysemu.c |  6 ++++++
+>  4 files changed, 25 insertions(+), 1 deletion(-)
 >
-> diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
-> index f4c1869232..6980a78d5f 100644
-> --- a/hw/rtc/mc146818rtc.c
-> +++ b/hw/rtc/mc146818rtc.c
-> @@ -116,6 +116,21 @@ void qmp_rtc_reset_reinjection(Error **errp)
->      }
->  }
->  
-> +void qmp_rtc_notify(Error **errp)
-> +{
-> +    MC146818RtcState *s;
-> +
-> +    /*
-> +     * See:
-> +     * https://www.kernel.org/doc/Documentation/virtual/kvm/timekeeping.txt
-> +     */
-> +    QLIST_FOREACH(s, &rtc_devices, link) {
-> +        s->cmos_data[RTC_REG_B] |= REG_B_UIE;
-> +        s->cmos_data[RTC_REG_C] |= REG_C_IRQF | REG_C_UF;
-> +        qemu_irq_raise(s->irq);
-> +    }
-> +}
-> +
-
-Note for later: qmp_rtc_notify() works on all realized mc146818rtc
-devices.  Other kinds of RTC devices are silently ignored.  Just like
-qmp_rtc_reset_reinjection().
-
->  static bool rtc_policy_slew_deliver_irq(MC146818RtcState *s)
->  {
->      kvm_reset_irq_delivered();
-> diff --git a/include/hw/rtc/mc146818rtc.h b/include/hw/rtc/mc146818rtc.h
-> index 97cec0b3e8..5229dffbbd 100644
-> --- a/include/hw/rtc/mc146818rtc.h
-> +++ b/include/hw/rtc/mc146818rtc.h
-> @@ -56,5 +56,6 @@ MC146818RtcState *mc146818_rtc_init(ISABus *bus, int base_year,
->  void mc146818rtc_set_cmos_data(MC146818RtcState *s, int addr, int val);
->  int mc146818rtc_get_cmos_data(MC146818RtcState *s, int addr);
->  void qmp_rtc_reset_reinjection(Error **errp);
-> +void qmp_rtc_notify(Error **errp);
->  
->  #endif /* HW_RTC_MC146818RTC_H */
-> diff --git a/qapi/misc-target.json b/qapi/misc-target.json
-> index 4e0a6492a9..20457b0acc 100644
-> --- a/qapi/misc-target.json
-> +++ b/qapi/misc-target.json
-> @@ -19,6 +19,22 @@
-   ##
-   # @rtc-reset-reinjection:
-   #
-   # This command will reset the RTC interrupt reinjection backlog.  Can
-   # be used if another mechanism to synchronize guest time is in effect,
-   # for example QEMU guest agent's guest-set-time command.
-   #
-   # Since: 2.1
-   #
-   # Example:
-   #
-   #     -> { "execute": "rtc-reset-reinjection" }
-   #     <- { "return": {} }
-   ##
->  { 'command': 'rtc-reset-reinjection',
->    'if': 'TARGET_I386' }
->  
-> +##
-> +# @rtc-notify:
-> +#
-> +# Generate an RTC interrupt.
-
-Our QMP command to generate NMIs is called inject-nmi.  Call this one
-inject-rtc-irq for consistency?  rtc-inject-irq?
-
-> +#
-> +# Since: 9.1
-> +#
-> +# Example:
-> +#
-> +#     -> { "execute": "rtc-notify" }
-> +#     <- { "return": {} }
-> +#
-> +##
-> +{ 'command': 'rtc-notify',
-> +  'if': 'TARGET_I386' }
-> +
-
-As noted above, both commands silently ignore RTCs other than
-mc146818rtc.
-
-They're only available with TARGET_I386.
-
-As long as all machines available with TARGET_I386 can only ever contain
-mc146818rtc RTCs, ignoring other RTCs is a non-problem in practice.
-
-Feels a bit fragile to me.  Thoughts?
-
->  ##
->  # @SevState:
+> diff --git a/qapi/machine-target.json b/qapi/machine-target.json
+> index 29e695aa06..3799a60e3d 100644
+> --- a/qapi/machine-target.json
+> +++ b/qapi/machine-target.json
+> @@ -20,11 +20,14 @@
 >  #
+>  # @props: a dictionary of QOM properties to be applied
+>  #
+> +# @deprecated-props: a list of QOM properties that are flagged as deprecated
+
+Deprecated by whom?  QEMU?  The CPU vendor?
+
+docs/devel/qapi-code-gen.rst:
+
+    For legibility, wrap text paragraphs so every line is at most 70
+    characters long.
+
+> +#
+>  # Since: 2.8
+>  ##
+>  { 'struct': 'CpuModelInfo',
+>    'data': { 'name': 'str',
+> -            '*props': 'any' } }
+> +            '*props': 'any',
+> +            '*deprecated-props': ['str'] } }
+>  
+>  ##
+>  # @CpuModelExpansionType:
+
+[...]
 
 
