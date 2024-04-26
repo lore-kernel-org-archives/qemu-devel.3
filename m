@@ -4,85 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37A36C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 08:36:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EA9AC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 08:39:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0H44-0002qa-0a; Fri, 26 Apr 2024 04:36:16 -0400
+	id 1s0H78-00046L-7I; Fri, 26 Apr 2024 04:39:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
- id 1s0H3x-0002pR-2W
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 04:36:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s0H76-00046C-HS
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 04:39:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
- id 1s0H3v-0002DH-8b
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 04:36:08 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s0H73-0002f4-Nz
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 04:39:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714120566;
+ s=mimecast20190719; t=1714120760;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IldAG9zlrrL/gReM6cDzpnoELZsC8ZDOak7UdXEil1s=;
- b=KqwRPBAXG2v1KGeKXIWvIsfeEFPkGCI+VD+e9E7Iw7D33jR4717qRT25eYCdLY62Sf3J+x
- 0SlQ8azdlVudfDj6NbaCaXAw5F3ZumK43DvTOFhpcri7gds0BRiwdub2dqe3wtPopAfGTJ
- sQNeSQrp9duQX7x1witbAlAXeV8ymgs=
-Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
- [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=8JEdOeaX8spuPawVTP9NbGYG3RYBIZhk1yrVrxrsIwc=;
+ b=dWCBdVlotSdm4f9P5YV5yjPrTn3tZkAfuEpZQrcqnGMzXXpGZ0mitYAnYmZEyn9W5ae78R
+ rv0ScS8Dz1dfCw0UdFlndPMVGUEveU3n2P3yJj6Is+NQjd9HbRVa0XdLRE0zVuTKxbpZws
+ h4h6bjTY6rten718rDfNxIfRsbrG3AM=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-503-_eS2NOX5P9GV-IjwoS3FIg-1; Fri, 26 Apr 2024 04:36:04 -0400
-X-MC-Unique: _eS2NOX5P9GV-IjwoS3FIg-1
-Received: by mail-lj1-f200.google.com with SMTP id
- 38308e7fff4ca-2dccd9dee76so16644911fa.2
- for <qemu-devel@nongnu.org>; Fri, 26 Apr 2024 01:36:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714120562; x=1714725362;
- h=in-reply-to:references:user-agent:subject:cc:to:from:message-id
- :date:content-transfer-encoding:mime-version:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=IldAG9zlrrL/gReM6cDzpnoELZsC8ZDOak7UdXEil1s=;
- b=mLitegPbyhZXb/1DFzigYY9tFrrUCR+NtDSTkY/gkX2acw23mAAXf8caFO1Wy8z8b1
- zEJfKHXhpNP6kgaTlJzrBFqTSbEsCagOf+mEAfUSOv0+OgDquqOy5F0tv5r+i69NoJ8W
- DxmaY2xRYff9Mvx8D6S/UOeCY3qwINm8JMBkE323+WJJEVz7JgiVsRZo5hLEpG6tocR4
- VDH6556+ic16lWfu9naFVnpeA+xvj9x83l22dwJTqVvlExUpJWXmjdnMRljDvzwLDH1f
- RM4MBO3KH/LPzoHH7RVomHpoyqp2tDe0s9MsJHg70o7/80z7ky5JC9wfozw338GYjrhs
- 7uJg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV4ShcEbOXFHWnB3IlEmpEzqmXNj+Zvb0/gYQqCH6qBZkObFkQpvVEFnphteck9HRDt5trdeXxhFAyFBS8I2VhLyvrAnZM=
-X-Gm-Message-State: AOJu0Yw6H4CWHw/RWfQ477xTR0uIhAJcfCDL9SU1sMZ5KizTMyPgeNZ3
- A+IeUdrGVHinM3KbEwrY/qpqkob2OWj/tG4q/W6Py8heixfOwYrEQiKOUcENz+D+VXJvsc6P5cs
- OUW9ka814xLC0ZdjyGJIsWkiyExn3qkm2JEJKEKsD1HnSjWY130YRZFEdLoWz1VI=
-X-Received: by 2002:a2e:9246:0:b0:2d8:729f:cf3a with SMTP id
- v6-20020a2e9246000000b002d8729fcf3amr1129300ljg.32.1714120562121; 
- Fri, 26 Apr 2024 01:36:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFO2iLNDsl1hmB0AY7SmKygNvORppu3JXtVdxFZ6IrmJPI4TafQ7Zpl8W7GTsf0QcC6sPWnbw==
-X-Received: by 2002:a2e:9246:0:b0:2d8:729f:cf3a with SMTP id
- v6-20020a2e9246000000b002d8729fcf3amr1129293ljg.32.1714120561751; 
- Fri, 26 Apr 2024 01:36:01 -0700 (PDT)
-Received: from localhost ([2a01:e0a:a9a:c460:2827:8723:3c60:c84a])
- by smtp.gmail.com with ESMTPSA id
- m16-20020a05600c3b1000b0041496734318sm34043225wms.24.2024.04.26.01.36.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Apr 2024 01:36:01 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 26 Apr 2024 10:36:00 +0200
-Message-Id: <D0TX0YRGY14M.3FU05839TNR56@redhat.com>
-From: "Anthony Harivel" <aharivel@redhat.com>
-To: <pbonzini@redhat.com>
-Cc: <berrange@redhat.com>, <mtosatti@redhat.com>, <qemu-devel@nongnu.org>,
- <vchundur@redhat.com>, <rjarry@redhat.com>, <zhao1.liu@intel.com>
-Subject: Re: [PATCH v5 3/3] Add support for RAPL MSRs in KVM/Qemu
-User-Agent: aerc/0.17.0-121-g0798a428060d
-References: <20240411121434.253353-1-aharivel@redhat.com>
- <20240411121434.253353-4-aharivel@redhat.com> <ZiFNcLYyha3_teDT@redhat.com>
- <D0TBB4DMA8RL.6KN35N5NVAU@redhat.com> <Zip57XYKiIVgf2qz@redhat.com>
-In-Reply-To: <Zip57XYKiIVgf2qz@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=aharivel@redhat.com;
+ us-mta-588-6jSnObUHMIC33FInZg7Z5A-1; Fri, 26 Apr 2024 04:39:16 -0400
+X-MC-Unique: 6jSnObUHMIC33FInZg7Z5A-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 10AB718065AB;
+ Fri, 26 Apr 2024 08:39:16 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id C2B112166B31;
+ Fri, 26 Apr 2024 08:39:15 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id B6F0321E6811; Fri, 26 Apr 2024 10:39:14 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Eric Blake <eblake@redhat.com>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH] mc146818rtc: add a way to generate RTC interrupts via QMP
+In-Reply-To: <20240425133745.464091-1-d-tatianin@yandex-team.ru> (Daniil
+ Tatianin's message of "Thu, 25 Apr 2024 16:37:45 +0300")
+References: <20240425133745.464091-1-d-tatianin@yandex-team.ru>
+Date: Fri, 26 Apr 2024 10:39:14 +0200
+Message-ID: <87v844y0ul.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -106,131 +83,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Daniil Tatianin <d-tatianin@yandex-team.ru> writes:
 
-Hi Paolo,
-
-Daniel P. Berrang=C3=A9, Apr 25, 2024 at 17:42:
-> On Thu, Apr 25, 2024 at 05:34:52PM +0200, Anthony Harivel wrote:
-> > Hi Daniel,
-> >=20
-> > Daniel P. Berrang=C3=A9, Apr 18, 2024 at 18:42:
-> >=20
-> > > > +    if (kvm_is_rapl_feat_enable(cs)) {
-> > > > +        if (!IS_INTEL_CPU(env)) {
-> > > > +            error_setg(errp, "RAPL feature can only be\
-> > > > +                              enabled with Intel CPU models");
-> > > > +                return false;
-> > > > +        }
-> > > > +    }
-> > >
-> > > I see a crash in kvm_is_rapl_feat_enable() from this caller,
-> > > when I run with this kind of command line:
-> > >
-> > >  $ qemu-system-x86_64 \
-> > >       -kernel /lib/modules/6.6.9-100.fc38.x86_64/vmlinuz \
-> > >       -initrd tiny-initrd.img  -m 2000 -serial stdio -nodefaults \
-> > >       -display none -accel kvm -append "console=3DttyS0 quiet"
-> > >
-> > >
-> > > #0  0x0000555555bc14b7 in kvm_is_rapl_feat_enable (cs=3Dcs@entry=3D0x=
-555557b83470) at ../target/i386/kvm/kvm.c:2531
-> > > #1  0x0000555555bc7534 in kvm_cpu_realizefn (cs=3D0x555557b83470, err=
-p=3D0x7fffffffd2a0) at ../target/i386/kvm/kvm-cpu.c:54
-> > > #2  0x0000555555d2432a in accel_cpu_common_realize (cpu=3D0x555557b83=
-470, errp=3D0x7fffffffd2a0) at ../accel/accel-target.c:130
-> > > #3  0x0000555555cdd955 in cpu_exec_realizefn (cpu=3Dcpu@entry=3D0x555=
-557b83470, errp=3Derrp@entry=3D0x7fffffffd2a0) at ../cpu-target.c:137
-> > > #4  0x0000555555c14b89 in x86_cpu_realizefn (dev=3D0x555557b83470, er=
-rp=3D0x7fffffffd310) at ../target/i386/cpu.c:7320
-> > > #5  0x0000555555d58f4b in device_set_realized (obj=3D<optimized out>,=
- value=3D<optimized out>, errp=3D0x7fffffffd390) at ../hw/core/qdev.c:510
-> > > #6  0x0000555555d5d78d in property_set_bool (obj=3D0x555557b83470, v=
-=3D<optimized out>, name=3D<optimized out>, opaque=3D0x5555578558e0, errp=
-=3D0x7fffffffd390)
-> > >     at ../qom/object.c:2358
-> > > #7  0x0000555555d60b0b in object_property_set (obj=3Dobj@entry=3D0x55=
-5557b83470, name=3Dname@entry=3D0x55555607c799 "realized", v=3Dv@entry=3D0x=
-555557b8ccb0, errp=3D0x7fffffffd390,=20
-> > >     errp@entry=3D0x555556e210d8 <error_fatal>) at ../qom/object.c:147=
-2
-> > > #8  0x0000555555d6444f in object_property_set_qobject
-> > >     (obj=3Dobj@entry=3D0x555557b83470, name=3Dname@entry=3D0x55555607=
-c799 "realized", value=3Dvalue@entry=3D0x555557854800, errp=3Derrp@entry=3D=
-0x555556e210d8 <error_fatal>)
-> > >     at ../qom/qom-qobject.c:28
-> > > #9  0x0000555555d61174 in object_property_set_bool
-> > >     (obj=3D0x555557b83470, name=3Dname@entry=3D0x55555607c799 "realiz=
-ed", value=3Dvalue@entry=3Dtrue, errp=3Derrp@entry=3D0x555556e210d8 <error_=
-fatal>) at ../qom/object.c:1541
-> > > #10 0x0000555555d59a3c in qdev_realize (dev=3D<optimized out>, bus=3D=
-bus@entry=3D0x0, errp=3Derrp@entry=3D0x555556e210d8 <error_fatal>) at ../hw=
-/core/qdev.c:292
-> > > #11 0x0000555555bd51e0 in x86_cpu_new (x86ms=3D<optimized out>, apic_=
-id=3D0, errp=3D0x555556e210d8 <error_fatal>) at ../hw/i386/x86.c:105
-> > > #12 0x0000555555bd52ce in x86_cpus_init (x86ms=3Dx86ms@entry=3D0x5555=
-57aaed30, default_cpu_version=3D<optimized out>) at ../hw/i386/x86.c:156
-> > > #13 0x0000555555bdc1a7 in pc_init1 (machine=3D0x555557aaed30, pci_typ=
-e=3D0x55555604aa61 "i440FX") at ../hw/i386/pc_piix.c:185
-> > > #14 0x0000555555947a11 in machine_run_board_init (machine=3D0x555557a=
-aed30, mem_path=3D<optimized out>, errp=3D<optimized out>, errp@entry=3D0x5=
-55556e210d8 <error_fatal>)
-> > >     at ../hw/core/machine.c:1547
-> > > #15 0x0000555555b020ed in qemu_init_board () at ../system/vl.c:2613
-> > > #16 qmp_x_exit_preconfig (errp=3D0x555556e210d8 <error_fatal>) at ../=
-system/vl.c:2705
-> > > #17 0x0000555555b0611e in qemu_init (argc=3D<optimized out>, argv=3D<=
-optimized out>) at ../system/vl.c:3739
-> > > #18 0x0000555555897ca9 in main (argc=3D<optimized out>, argv=3D<optim=
-ized out>) at ../system/main.c:47
-> > >
-> > > The problem is that 'cs->kvm_state' is NULL here
-> > >
-> >=20
-> > After some investigation it seems that kvm_state is not yet committed=
-=20
-> > at this point. Shame, because GDB showed me that we have already pass=
-=20
-> > the kvm_accel_instance_init() in accel/kvm/kvm-all.c that sets the=20
-> > value "msr_energy.enable" in kvm_state...
-> >=20
-> > So should I dig more to still do the sanity check in kvm_cpu_realizefn(=
-)=20
-> > or should I already move the RAPL feature  from -kvm to -cpu=20
-> > like suggested by Zhao from Intel and then access it from the CPUState =
-?
+> This can be used to force-synchronize the time in guest after a long
+> stop-cont pause, which can be useful for serverless-type workload.
 >
-> I'm not so sure about that question. I think Paolo is best placed
-> to suggest which is better, as the KVM maintainer.
+> Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+> ---
+>  hw/rtc/mc146818rtc.c         | 15 +++++++++++++++
+>  include/hw/rtc/mc146818rtc.h |  1 +
+>  qapi/misc-target.json        | 16 ++++++++++++++++
+>  3 files changed, 32 insertions(+)
 >
+> diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
+> index f4c1869232..6980a78d5f 100644
+> --- a/hw/rtc/mc146818rtc.c
+> +++ b/hw/rtc/mc146818rtc.c
+> @@ -116,6 +116,21 @@ void qmp_rtc_reset_reinjection(Error **errp)
+>      }
+>  }
+>  
+> +void qmp_rtc_notify(Error **errp)
+> +{
+> +    MC146818RtcState *s;
+> +
+> +    /*
+> +     * See:
+> +     * https://www.kernel.org/doc/Documentation/virtual/kvm/timekeeping.txt
+> +     */
+> +    QLIST_FOREACH(s, &rtc_devices, link) {
+> +        s->cmos_data[RTC_REG_B] |= REG_B_UIE;
+> +        s->cmos_data[RTC_REG_C] |= REG_C_IRQF | REG_C_UF;
+> +        qemu_irq_raise(s->irq);
+> +    }
+> +}
+> +
 
-I'm facing an issue that either require a simple change or a more=20
-complex one depending on the decision.
+Note for later: qmp_rtc_notify() works on all realized mc146818rtc
+devices.  Other kinds of RTC devices are silently ignored.  Just like
+qmp_rtc_reset_reinjection().
 
-TL;DR: Should I move from -kvm to -cpu the rapl feature ?=20
+>  static bool rtc_policy_slew_deliver_irq(MC146818RtcState *s)
+>  {
+>      kvm_reset_irq_delivered();
+> diff --git a/include/hw/rtc/mc146818rtc.h b/include/hw/rtc/mc146818rtc.h
+> index 97cec0b3e8..5229dffbbd 100644
+> --- a/include/hw/rtc/mc146818rtc.h
+> +++ b/include/hw/rtc/mc146818rtc.h
+> @@ -56,5 +56,6 @@ MC146818RtcState *mc146818_rtc_init(ISABus *bus, int base_year,
+>  void mc146818rtc_set_cmos_data(MC146818RtcState *s, int addr, int val);
+>  int mc146818rtc_get_cmos_data(MC146818RtcState *s, int addr);
+>  void qmp_rtc_reset_reinjection(Error **errp);
+> +void qmp_rtc_notify(Error **errp);
+>  
+>  #endif /* HW_RTC_MC146818RTC_H */
+> diff --git a/qapi/misc-target.json b/qapi/misc-target.json
+> index 4e0a6492a9..20457b0acc 100644
+> --- a/qapi/misc-target.json
+> +++ b/qapi/misc-target.json
+> @@ -19,6 +19,22 @@
+   ##
+   # @rtc-reset-reinjection:
+   #
+   # This command will reset the RTC interrupt reinjection backlog.  Can
+   # be used if another mechanism to synchronize guest time is in effect,
+   # for example QEMU guest agent's guest-set-time command.
+   #
+   # Since: 2.1
+   #
+   # Example:
+   #
+   #     -> { "execute": "rtc-reset-reinjection" }
+   #     <- { "return": {} }
+   ##
+>  { 'command': 'rtc-reset-reinjection',
+>    'if': 'TARGET_I386' }
+>  
+> +##
+> +# @rtc-notify:
+> +#
+> +# Generate an RTC interrupt.
 
-Zhao from Intel suggested me that enabling the rapl feature looks more=20
-natural than through -kvm feature because it is indeed a cpu feature.=20
+Our QMP command to generate NMIs is called inject-nmi.  Call this one
+inject-rtc-irq for consistency?  rtc-inject-irq?
 
-From the point of view of the QEMU architecture, it's more easier to=20
-enable the feature with -kvm because it is kvm dependent; but maybe from=20
-the point of view of the user, it's more natural to enable this at -cpu=20
-level.=20
+> +#
+> +# Since: 9.1
+> +#
+> +# Example:
+> +#
+> +#     -> { "execute": "rtc-notify" }
+> +#     <- { "return": {} }
+> +#
+> +##
+> +{ 'command': 'rtc-notify',
+> +  'if': 'TARGET_I386' }
+> +
 
-The issue I'm facing above is from a suggestion from Daniel to do the=20
-sanity check at kvm_cpu_realizefn() level. However GDB showed me that=20
-kvm_state is not yet populated, even if we have passed the init instance=20
-kvm_accel_instance_init().
+As noted above, both commands silently ignore RTCs other than
+mc146818rtc.
 
-So either I'm moving from -kvm to -cpu and change the location of the=20
-sanity check (checking if rapl feat is activated on Host / if Intel CPU)=20
-or I keep the feature on -kvm and either find a solution of the above=20
-issue or change the location of the sanity check.
+They're only available with TARGET_I386.
 
-Thanks in advance for your guidance.
+As long as all machines available with TARGET_I386 can only ever contain
+mc146818rtc RTCs, ignoring other RTCs is a non-problem in practice.
 
-Regards,
-Anthony
+Feels a bit fragile to me.  Thoughts?
 
-
+>  ##
+>  # @SevState:
+>  #
 
 
