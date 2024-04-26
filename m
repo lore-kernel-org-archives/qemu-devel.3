@@ -4,70 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22515C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 06:03:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27484C04FFE
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 07:29:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0Efs-0006On-PA; Fri, 26 Apr 2024 02:03:08 -0400
+	id 1s0G1G-0007W5-9F; Fri, 26 Apr 2024 03:29:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s0Efq-0006OI-2V
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 02:03:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1s0G1C-0007S9-Tn
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 03:29:14 -0400
+Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s0Efk-0008SZ-BI
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 02:03:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714111379;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=TJA38oFyBYNeHZgEfpr0loy/EniPUphrOjaBppOin0g=;
- b=efWRPH4m6lEAeR38ekqv6Ek75/5V6wxrSDPEKYjDlkuij//H8wFjUtP5aXsBbMh++xf4Ea
- mxtNUjKmTUxzfeYVa1Yomkjcg2WCFW79ZnkmEWdeoMFBbsolmY/M/TTfCqa1rxgXy0O0MS
- SQfYK1hb+F7STX6nwGteKl+f3PUjHMI=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-347-PvlPJKNkOum5tqEI96IYEQ-1; Fri, 26 Apr 2024 02:02:54 -0400
-X-MC-Unique: PvlPJKNkOum5tqEI96IYEQ-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 92CF918065AA;
- Fri, 26 Apr 2024 06:02:54 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 749F41C060D0;
- Fri, 26 Apr 2024 06:02:54 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 68DE221E66E5; Fri, 26 Apr 2024 08:02:53 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Peter Xu <peterx@redhat.com>,  devel@lists.libvirt.org
-Subject: Re: [PATCH 0/6] migration removals & deprecations
-In-Reply-To: <20240425150939.19268-1-farosas@suse.de> (Fabiano Rosas's message
- of "Thu, 25 Apr 2024 12:09:33 -0300")
-References: <20240425150939.19268-1-farosas@suse.de>
-Date: Fri, 26 Apr 2024 08:02:53 +0200
-Message-ID: <87zftgzmnm.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1s0G1A-0008K7-LM
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 03:29:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1714116553; x=1745652553;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=8CDqikRy8rQu2vPZyFLPE+tRdsZUnZr7MlJ8t6mWajg=;
+ b=QyVe7LdaQoMFbFKRxo3lx8O279cIzcA7oRZIM/OVVIU5i4Cy/SYxd5VH
+ PS7qnzy7vNbsBG6WhRJnMIIWeCDOUZwwpOeWYP06NRAcB3KNeB7zMyDrd
+ Zc/GrlKPoNc3F37jvxBbRnQXl2vEg6y7Ku5Ev1X85KFrGliXyHhEXW7rX
+ kgMI72ZV9eNgbydurpqc7RDAR/Evq2a64ZOhQ4G8+NXd0pcbuIR3sBn/u
+ ZDxeSqkPlhHQyTRHbqnpPQolD77lR415xZ6nGgTiO5+O1XBvWzcp5AI2Q
+ O902MrWKQoYRayXlZttGYWclVa4EMmQGLZKmjCs3y8BjVw79K2WfvIUGe A==;
+X-CSE-ConnectionGUID: oUnkS4ucSIeSrsW1yl7flQ==
+X-CSE-MsgGUID: Sf985lw1T2eVEffPvz34pQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11055"; a="20396544"
+X-IronPort-AV: E=Sophos;i="6.07,231,1708416000"; d="scan'208";a="20396544"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Apr 2024 00:29:09 -0700
+X-CSE-ConnectionGUID: aHOpPkvoTISpXj8MG+kPpQ==
+X-CSE-MsgGUID: aH0gI8DjTGSKZSM5LG/vaQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,231,1708416000"; d="scan'208";a="25382483"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa008.fm.intel.com with ESMTP; 26 Apr 2024 00:29:07 -0700
+Date: Fri, 26 Apr 2024 15:43:15 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PULL v2 00/63] First batch of i386 and build system patch for
+ QEMU 9.1
+Message-ID: <ZitbE46sNJAQN0xk@intel.com>
+References: <20240424081443.75869-1-pbonzini@redhat.com>
+ <7217032f-2d44-4c9b-aa73-1b97787de03e@linaro.org>
+ <CABgObfYAJQS-x6NRnjF5T-i0FmKwJR5eK0XQ8t1HBBTbP2QDkw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABgObfYAJQS-x6NRnjF5T-i0FmKwJR5eK0XQ8t1HBBTbP2QDkw@mail.gmail.com>
+Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,6 +85,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Doesn't apply for me.  What's your base?
+Hi Paolo,
+
+On Fri, Apr 26, 2024 at 07:21:12AM +0200, Paolo Bonzini wrote:
+> Date: Fri, 26 Apr 2024 07:21:12 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: Re: [PULL v2 00/63] First batch of i386 and build system patch for
+>  QEMU 9.1
+> 
+> On Wed, Apr 24, 2024 at 8:49 PM Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+> >
+> > On 4/24/24 01:14, Paolo Bonzini wrote:
+> > > The following changes since commit 62dbe54c24dbf77051bafe1039c31ddc8f37602d:
+> > >
+> > >    Update version for v9.0.0-rc4 release (2024-04-16 18:06:15 +0100)
+> > >
+> > > are available in the Git repository at:
+> > >
+> > >    https://gitlab.com/bonzini/qemu.git tags/for-upstream
+> > >
+> > > for you to fetch changes up to 7653b44534d3267fa63ebc9d7221eaa7b48bf5ae:
+> > >
+> > >    target/i386/translate.c: always write 32-bits for SGDT and SIDT (2024-04-23 17:35:26 +0200)
+> >
+> > Sorry, I've already merged v1.  You'll need to adjust the fix on top.
+> 
+> It's the same tag, so you actually merged v2.
+
+The difference between v2 and v1 is about fixing two of Xiaoyao's
+comments, right?
+
+Currently in master, luckly the CPUID fix [1] has landed, but another
+comment fix [2] hasn't land. So Richard merged v1 and helped fix [1],
+[2] did not catch up with v1 merge window. ;-(
+
+I have a misc kvm cleanup series coming up soon that I can also include
+[2]'s fix there.
+
+[1]: https://lore.kernel.org/qemu-devel/b9043b52-5fdf-4349-8a56-c1418feb1bbd@intel.com/
+[2]: https://lore.kernel.org/qemu-devel/2815f0f1-9e20-4985-849c-d74c6cdc94ae@intel.com/
+
+Regards,
+Zhao
 
 
