@@ -4,84 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC482C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 17:35:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E832AC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 17:35:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0PTE-0006UA-7J; Fri, 26 Apr 2024 13:34:48 -0400
+	id 1s0PTu-0007Ii-44; Fri, 26 Apr 2024 13:35:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s0PTD-0006U1-HF
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 13:34:47 -0400
-Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s0PTB-0005vT-Qp
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 13:34:47 -0400
-Received: by mail-lf1-x136.google.com with SMTP id
- 2adb3069b0e04-5193363d255so3315828e87.3
- for <qemu-devel@nongnu.org>; Fri, 26 Apr 2024 10:34:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714152884; x=1714757684; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Yi0PqBRHgvpC6oNMRYqv+hACME+//jZfvlEAAw1+QN0=;
- b=dDK/ii7rrKbheH+25Ba419DdncK1TJVFpNvjFyijYVoBaAl+eBYCIFIfwzZ0nu9JMg
- 2Dho4hxUm4O2+YDPAhi17wn1tltidGiAQe5jr72zBJGJWobTvJAzA6kdaXP/muzrhyBT
- ab8g7lknCk3s6OZdUBVOZ9l1uuZOx6lciUdERFFcsNXAGIC/7YbCzCRjOlOW+0v3T4+U
- 1HACFqqAdjApOc446FhSuNW2d6xTal8HGNmQHrciJi8hmQSjLGFYrkF/bwfmeUewuPuf
- uQrnqnokLgXvaZk7PbkNzd+sasmLV5QlEha/K0IuA+zLLrjaeUKVHaz5HGZ1nosfGdQ2
- +ywg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714152884; x=1714757684;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Yi0PqBRHgvpC6oNMRYqv+hACME+//jZfvlEAAw1+QN0=;
- b=KeqV2wOQ8JmcTqMikgZRL9m0+0Jl5xPL1nZXbMEcaSfqjArQL9S3zawhBjEjOgtBQt
- Rb5MwzWJOpeOASoGHOH8gPJL/UGF4K61WPNAxl0zitfAqf3LEi+B0ZnPxEVdpl+Y6FFP
- /HTWypdWURXkwx5JiJE3/9w/P7qiygHuSSXpMAaiTr1iCYi77ORDsdeReiGjeRkW7l4p
- rOutBshSRQZM0kCBabaa0Yt0DA10c2YoHWHqPh163MRYIxzWyLvprfWgCBZPsrNmC1oY
- bE0GMVRrZGrIU8EuHPjFlS2mlTrFISLHSoOPIY2PsEqgr1J5aUAB6vPeE+LiCr/Kpv9l
- KMcQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVAp9TuNIO3/bOq0lqVvWz8W/T517bf367HOpM2c4+rsZClaqZKpRb+5B0rKX8NfB82ADYj/KhwoZHT8oK5aul5M5VUrrQ=
-X-Gm-Message-State: AOJu0YytmOWkjeamyAYtoMDpWt7dBGP6V1EzFfbrCJQflPwD4GDwohfd
- cJQh7FAbEaZYZ5c9wBbM03gLsP1WiWwa9Cqv03pSXYngSsTS5ubOd0OBLmTQphs=
-X-Google-Smtp-Source: AGHT+IGwccHF5XtAhN1b0bRo/G++FcPvO5eg6Ed+AKvB759U7rch3WvEU5zs5c1vaFjQIPl8fC/fKw==
-X-Received: by 2002:a19:9112:0:b0:51c:c7d:7f0f with SMTP id
- t18-20020a199112000000b0051c0c7d7f0fmr2129350lfd.67.1714152883776; 
- Fri, 26 Apr 2024 10:34:43 -0700 (PDT)
-Received: from [192.168.69.100] (aul93-h02-176-184-11-147.dsl.sta.abo.bbox.fr.
- [176.184.11.147]) by smtp.gmail.com with ESMTPSA id
- c4-20020a056402100400b005720caa01easm5753414edu.69.2024.04.26.10.34.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Apr 2024 10:34:43 -0700 (PDT)
-Message-ID: <de690aec-133d-4aca-a6ba-6ec1e69b14f3@linaro.org>
-Date: Fri, 26 Apr 2024 19:34:41 +0200
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1s0PTp-000732-BQ; Fri, 26 Apr 2024 13:35:26 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1s0PTn-0006DK-47; Fri, 26 Apr 2024 13:35:24 -0400
+Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43QHRQNW029818; Fri, 26 Apr 2024 17:35:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=vNmmZU5vzqHn8GZixhWx+KfJfMHL3P2Dg5hRADs8XKs=;
+ b=sDx2aPSr8l4lm4kJeq8sMA6PaiwM7jfT36Nr6caAc0c2vLmx2wrCq+bZCOAQnkaFHixx
+ lo4f0O2M6Q7m0hsmCxKF52qs4/0BFZ9Pl/pbGcp1gXOneCdzWrCPFAa7TjFiQCd5ib2f
+ 9KdnxjOi90+G5SshEmF+FX9ShfU+ldFKcgcTn171A1SYijzG0TTKWMAAHyyFMxMMh1/z
+ 3sXg5qdt+gj+3v5BjXpsLeJIxNc+V5Mkp5WCAlBRvjlwrgbmNcUkNltWQsvw76rM6JJz
+ JJSDHpKlrxIjlgxaxsIj7cpGm/USv3YOaPxf9BwdSx5t1SO4bQ3KHam6X1p/YNkcNxZ8 5Q== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xrgp6r0dt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 26 Apr 2024 17:35:15 +0000
+Received: from m0353726.ppops.net (m0353726.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43QHZEnG010872;
+ Fri, 26 Apr 2024 17:35:14 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xrgp6r0dq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 26 Apr 2024 17:35:14 +0000
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43QEn1Lj028356; Fri, 26 Apr 2024 17:35:13 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xmtr30h39-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 26 Apr 2024 17:35:13 +0000
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 43QHZAwr39060014
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 26 Apr 2024 17:35:12 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8518F5806F;
+ Fri, 26 Apr 2024 17:35:10 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EA0685805E;
+ Fri, 26 Apr 2024 17:35:09 +0000 (GMT)
+Received: from [9.67.41.19] (unknown [9.67.41.19])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Fri, 26 Apr 2024 17:35:09 +0000 (GMT)
+Message-ID: <8c265c38-d9aa-43bf-a0b6-f70a52c5acf4@linux.ibm.com>
+Date: Fri, 26 Apr 2024 13:35:09 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] qga: Re-enable the qga-ssh-test when running without
- fuzzing
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Michael Roth <michael.roth@amd.com>, Konstantin Kostiuk <kkostiuk@redhat.com>
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20240426162348.684143-1-thuth@redhat.com>
+Subject: Re: [PATCH v3 1/2] target/s390x: report deprecated-props in
+ cpu-model-expansion reply
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, thuth@redhat.com,
+ david@redhat.com, wangyanan55@huawei.com, philmd@linaro.org,
+ marcel.apfelbaum@gmail.com, eduardo@habkost.net
+References: <20240424215633.48906-1-walling@linux.ibm.com>
+ <20240424215633.48906-2-walling@linux.ibm.com> <87o79wy0pv.fsf@pond.sub.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240426162348.684143-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::136;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+From: Collin Walling <walling@linux.ibm.com>
+In-Reply-To: <87o79wy0pv.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: BPmZm1FZM7B6rNpqpJ2wo1H_g_8T94sg
+X-Proofpoint-ORIG-GUID: 6IhDocvs9K9yVGyqYFnxGyF-qLM2OnLk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-04-26_14,2024-04-26_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 adultscore=0
+ mlxlogscore=999 impostorscore=0 malwarescore=0 spamscore=0 mlxscore=0
+ phishscore=0 priorityscore=1501 lowpriorityscore=0 clxscore=1015
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2404010000 definitions=main-2404260119
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=walling@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,18 +118,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/4/24 18:23, Thomas Huth wrote:
-> According to the comment in qga/meson.build, the test got disabled
-> since there were problems with the fuzzing job. But instead of
-> disabling this test completely, we should still be fine running
-> it when fuzzing is disabled.
+On 4/26/24 04:42, Markus Armbruster wrote:
+> Collin Walling <walling@linux.ibm.com> writes:
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   qga/meson.build | 5 ++---
->   1 file changed, 2 insertions(+), 3 deletions(-)
+>> Retain a list of deprecated features disjoint from any particular
+>> CPU model. A query-cpu-model-expansion reply will now provide a list of
+>> properties (i.e. features) that are flagged as deprecated. Example:
+>>
+>>     {
+>>       "return": {
+>>         "model": {
+>>           "name": "z14.2-base",
+>>           "deprecated-props": [
+>>             "bpb",
+>>             "csske"
+>>           ],
+>>           "props": {
+>>             "pfmfi": false,
+>>             "exrl": true,
+>>             ...a lot more props...
+>>             "skey": false,
+>>             "vxpdeh2": false
+>>           }
+>>         }
+>>       }
+>>     }
+>>
+>> It is recommended that s390 guests operate with these features
+>> explicitly disabled to ensure compatability with future hardware.
+>>
+>> Signed-off-by: Collin Walling <walling@linux.ibm.com>
+>> ---
+>>  qapi/machine-target.json         |  5 ++++-
+>>  target/s390x/cpu_features.c      | 14 ++++++++++++++
+>>  target/s390x/cpu_features.h      |  1 +
+>>  target/s390x/cpu_models_sysemu.c |  6 ++++++
+>>  4 files changed, 25 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/qapi/machine-target.json b/qapi/machine-target.json
+>> index 29e695aa06..3799a60e3d 100644
+>> --- a/qapi/machine-target.json
+>> +++ b/qapi/machine-target.json
+>> @@ -20,11 +20,14 @@
+>>  #
+>>  # @props: a dictionary of QOM properties to be applied
+>>  #
+>> +# @deprecated-props: a list of QOM properties that are flagged as deprecated
+> 
+> Deprecated by whom?  QEMU?  The CPU vendor?
+> 
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+The CPU vendor would be the one who decides which props are deprecated.
+How about:
 
+# @deprecated-props: a list of QOM properties that are flagged as
+		     deprecated by the CPU vendor
+
+> docs/devel/qapi-code-gen.rst:
+> 
+>     For legibility, wrap text paragraphs so every line is at most 70
+>     characters long.
+> 
+
+Noted for next iteration.  Thank you.
+
+>> +#
+>>  # Since: 2.8
+>>  ##
+>>  { 'struct': 'CpuModelInfo',
+>>    'data': { 'name': 'str',
+>> -            '*props': 'any' } }
+>> +            '*props': 'any',
+>> +            '*deprecated-props': ['str'] } }
+>>  
+>>  ##
+>>  # @CpuModelExpansionType:
+> 
+> [...]
+> 
+> 
+
+-- 
+Regards,
+  Collin
 
 
