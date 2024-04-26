@@ -4,75 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA10BC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 09:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E94BC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 11:00:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0IGr-0003d2-5z; Fri, 26 Apr 2024 05:53:33 -0400
+	id 1s0JIi-0007l3-CC; Fri, 26 Apr 2024 06:59:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1s0IGp-0003cV-01
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 05:53:31 -0400
-Received: from mgamail.intel.com ([192.198.163.18])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1s0IGl-0006BT-8U
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 05:53:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1714125207; x=1745661207;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=b/2fbk4NjCLRbPp4FCHnEpCvn097YoF5sMd0TPtoTpc=;
- b=X1nFc0RTDxshiC7Qd2lVL6qgRf/vwrpb1a6jQMErM+e9Ly183XFTDonJ
- EOBqZM7gfUSUIQ0Dkp+85l1g3IE/VPQAm7rM90Pf5yF8k2OBaoPPyfjC+
- WIgdA/CgiITCubVC+FX8Xg7qkgMzzOA+Zv5sO5/LgMyfJVrQxD11Ute+e
- z0zgUAu9IEoKPq2AAfGNikxxLWrgXjBWSJV1aXvj1n96sfphjrDvxcYyM
- yhSFehSukvLG44u7jT9I4YtXo6OROoHxmK5CbPjwCWqPJzAA6UZ11vGww
- 2yZAybiCJfWvdL4V6W8n9i52rIljmcoRZxBCS/bqLJZ0faz4W8zZl4Cci A==;
-X-CSE-ConnectionGUID: jnG+tE2ARUqV++zGOIrXAg==
-X-CSE-MsgGUID: s/or1gAyRG+QIx2csvx6fw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11055"; a="9707428"
-X-IronPort-AV: E=Sophos;i="6.07,232,1708416000"; 
-   d="scan'208";a="9707428"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Apr 2024 02:53:26 -0700
-X-CSE-ConnectionGUID: bMUxhFVuRu2k6Qf4yuqELw==
-X-CSE-MsgGUID: rkzpwcHwTVeT3V9LySYMlQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,232,1708416000"; d="scan'208";a="25412335"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa008.fm.intel.com with ESMTP; 26 Apr 2024 02:53:24 -0700
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 4/6] target/i386/kvm: Save/load MSRs of new kvmclock
- (KVM_FEATURE_CLOCKSOURCE2)
-Date: Fri, 26 Apr 2024 18:07:14 +0800
-Message-Id: <20240426100716.2111688-6-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240426100716.2111688-1-zhao1.liu@intel.com>
-References: <20240426100716.2111688-1-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1s0JIf-0007kW-3o
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 06:59:29 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1s0JIb-0007gV-GJ
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 06:59:28 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a524ecaf215so252458766b.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Apr 2024 03:59:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714129163; x=1714733963; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:organization:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=voT8UCcnqz6VM3ogjtv8L+inv5gyz1R2btDp3ebZ/y4=;
+ b=LUX09euNRyKAJvaRO0mqsn+BwZVEwgYb4yZlq7IuW4l2PGOGeMsIpWLJhALJOG35dT
+ hWqomhYUkstgVQjgq1Jiawa5nnBoGvx8MWboEtg/OuNW9Z+DEjyScd7wrpPytczaa5Zo
+ Sne6SbTUz22bG6dp+3DY2YENgN0XaksBsEqVkSdq0KPmC1XUOUKZKIZSUiD+ap2bYloW
+ ae0v5WSfaCLVbdTmYXcCFtKXJUJ6qE1Ft3MxW2K0bw94omioXryBzI96n700euL/MY/c
+ 2CFRZHA1Rzbv49aqazOXepH4dJcs/eTW1DLhZHcLbKbwegpYzFAURR0gfzIF3Cd3QBDL
+ rT6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714129163; x=1714733963;
+ h=content-transfer-encoding:in-reply-to:organization:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=voT8UCcnqz6VM3ogjtv8L+inv5gyz1R2btDp3ebZ/y4=;
+ b=nrwyoqnhvyeuLeAwapYoz6Ys1liXNed00BnCFa2SOHTJztvaIhMt+U44fXdsh3eBCh
+ +libEdI3QU5U3PjpVwYNI1gduGPGN7bp3tMLw+BzJqAW+/qGY/O4CYv/g2C/v4FtFFIb
+ qpMZuHryJ4u6I5wOUZ5t9lz7dRNV/DCfIFDMOsxfasT/nFUrlfiBIGg+MNCt3YX7SNae
+ HJHkJLsEbyf5XFmw5IAPv5DaH0U2qikZlUFEiOy3jn6LupTFuYp27b/X/EgNw63qIeZ6
+ YaE0+7lc9FGFNHmnHTVGwlB6Ctx4R8a/XaXUIGpCMEzOI6MTNKXtD9Gfj0KwZcrlQaKq
+ T2gw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXI+/fkfim32+1zAKdI9pS04Aa1/at1pcKw9BAMgFF+1PF/LBsXS5jFX9a1WKTlGDoI6sOx33DoJOftlb2l0dzPHZxZ4Z0=
+X-Gm-Message-State: AOJu0YwpAJDdqIOx46dLV0LX6VpfiV2+giMlEv2d74dZ+4/2T4Ij7VgY
+ gB6zwuH7yjwetq+yPCCFdWQPG9tBf74R2EQIbx8HLrhaK2GyQIVKvTZTK+o1wFM=
+X-Google-Smtp-Source: AGHT+IFViIpn7dBnPt0HyOPSfGa5CsMo3ktSGymI99/C3T3KQdAwK0UQfhsYGtpDEFl7lOXtueP2ow==
+X-Received: by 2002:a17:906:1c48:b0:a58:9297:91a1 with SMTP id
+ l8-20020a1709061c4800b00a58929791a1mr1715465ejg.53.1714129163124; 
+ Fri, 26 Apr 2024 03:59:23 -0700 (PDT)
+Received: from [192.168.200.106] (83.11.4.140.ipv4.supernova.orange.pl.
+ [83.11.4.140]) by smtp.gmail.com with ESMTPSA id
+ mc11-20020a170906eb4b00b00a5256d8c956sm10445325ejb.61.2024.04.26.03.59.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 26 Apr 2024 03:59:22 -0700 (PDT)
+Message-ID: <a3541699-966b-4940-8a58-bd41dbf3001d@linaro.org>
+Date: Fri, 26 Apr 2024 12:59:21 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/1] hw/arm/sbsa-ref: Enable CPU cluster on ARM sbsa
+ machine
+To: Xiong Yining <xiongyining1480@phytium.com.cn>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: rad@semihalf.com, peter.maydell@linaro.org, quic_llindhol@quicinc.com
+References: <20240426073553.326946-1-xiongyining1480@phytium.com.cn>
+ <20240426073553.326946-2-xiongyining1480@phytium.com.cn>
+Content-Language: pl-PL, en-GB, en-HK
+From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Organization: Linaro
+In-Reply-To: <20240426073553.326946-2-xiongyining1480@phytium.com.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.18; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-ej1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,72 +102,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-MSR_KVM_SYSTEM_TIME_NEW and MSR_KVM_WALL_CLOCK_NEW are bound to new
-kvmclock (KVM_FEATURE_CLOCKSOURCE2).
+W dniu 26.04.2024 o 09:35, Xiong Yining pisze:
+> From: xiongyining1480<xiongyining1480@phytium.com.cn>
+> 
+> Enable CPU cluster support on SbsaQemu platform, so that users can
+> specify a 4-level CPU hierarchy sockets/clusters/cores/threads. And
+> this topology can be passed to the firmware through DT cpu-map.
+> 
+> Signed-off-by: Xiong Yining<xiongyining1480@phytium.com.cn>
+> tested-by: Marcin Juszkiewicz<marcin.juszkiewicz@linaro.org>
 
-Add the save/load support for these 2 MSRs.
+Thanks. Checked with TF-A and EDK2 patches applied. PPTT table will be 
+more detailed now.
 
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
- target/i386/cpu.h     |  2 ++
- target/i386/kvm/kvm.c | 16 ++++++++++++++++
- 2 files changed, 18 insertions(+)
-
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index caa32a91346b..c5cf7734b202 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -1741,6 +1741,8 @@ typedef struct CPUArchState {
- 
-     uint64_t system_time_msr;
-     uint64_t wall_clock_msr;
-+    uint64_t system_time_new_msr;
-+    uint64_t wall_clock_new_msr;
-     uint64_t steal_time_msr;
-     uint64_t async_pf_en_msr;
-     uint64_t async_pf_int_msr;
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 75d2091c4f8c..ee0767e8f501 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -3376,6 +3376,12 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
-             kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME, env->system_time_msr);
-             kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK, env->wall_clock_msr);
-         }
-+        if (env->features[FEAT_KVM] & CPUID_KVM_CLOCK2) {
-+            kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME_NEW,
-+                              env->system_time_new_msr);
-+            kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK_NEW,
-+                              env->wall_clock_new_msr);
-+        }
-         if (env->features[FEAT_KVM] & CPUID_KVM_ASYNCPF_INT) {
-             kvm_msr_entry_add(cpu, MSR_KVM_ASYNC_PF_INT, env->async_pf_int_msr);
-         }
-@@ -3843,6 +3849,10 @@ static int kvm_get_msrs(X86CPU *cpu)
-         kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME, 0);
-         kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK, 0);
-     }
-+    if (env->features[FEAT_KVM] & CPUID_KVM_CLOCK2) {
-+        kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME_NEW, 0);
-+        kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK_NEW, 0);
-+    }
-     if (env->features[FEAT_KVM] & CPUID_KVM_ASYNCPF_INT) {
-         kvm_msr_entry_add(cpu, MSR_KVM_ASYNC_PF_INT, 0);
-     }
-@@ -4082,6 +4092,12 @@ static int kvm_get_msrs(X86CPU *cpu)
-         case MSR_KVM_WALL_CLOCK:
-             env->wall_clock_msr = msrs[i].data;
-             break;
-+        case MSR_KVM_SYSTEM_TIME_NEW:
-+            env->system_time_new_msr = msrs[i].data;
-+            break;
-+        case MSR_KVM_WALL_CLOCK_NEW:
-+            env->wall_clock_new_msr = msrs[i].data;
-+            break;
-         case MSR_MCG_STATUS:
-             env->mcg_status = msrs[i].data;
-             break;
--- 
-2.34.1
-
+Reviewed-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
 
