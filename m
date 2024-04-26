@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91538C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 09:54:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CE1FC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 09:54:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0IGs-0003dR-2J; Fri, 26 Apr 2024 05:53:34 -0400
+	id 1s0IGw-0003e0-5K; Fri, 26 Apr 2024 05:53:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1s0IGp-0003cd-Fp
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 05:53:31 -0400
+ id 1s0IGs-0003dS-9Q
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 05:53:34 -0400
 Received: from mgamail.intel.com ([192.198.163.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1s0IGn-0006B7-AP
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 05:53:31 -0400
+ id 1s0IGq-0006E3-Ox
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 05:53:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1714125209; x=1745661209;
+ t=1714125213; x=1745661213;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=dbHgXYEF7kX6u5b8GXlmzpie+e+fbcRgQqzu6sj3a4E=;
- b=CKWP5U10V8bInzdemabY8QtI4mvFTVGh3hW+7xMnmELxbypAAQ/cK5eG
- i/trgiP7r+Su4QNQLsFx7yIns+/tzkP9Oip6HVSE/lTJvKSKQeal9Qlxq
- y3l4wisZ7ukckI5w7i7Hi/2k7Ne2mQSF8drFexRMdHf2XsHHCBlwg56O1
- lPxG5RzVbLwvIRSONv9sGreoGg4sEOWoTDM7EyaelgYTg6mKggH+sTdwL
- QFpmGonK/rOsDcSEUmGaX9XUh4LQNlWOr+SdjkMWGxbbH0xSwtnzzol9b
- I3H7E1SMhts63+xht0MgSQ9+w4jOJi48LZCb5Z8cY405TvXTRZM8eZSjL g==;
-X-CSE-ConnectionGUID: r/y5o82RQ7Ki6xOPFhTxwg==
-X-CSE-MsgGUID: vGfBvaVeSWqqd1Yr0qZp1g==
-X-IronPort-AV: E=McAfee;i="6600,9927,11055"; a="9707436"
+ bh=7R08FKECIPjQbStAmaj758BPN/jbNEye6fo49Yfk9yA=;
+ b=UkGwCO3qRl1BpahUGDpWzMJyrlrXE/fIR8Zw+Asp7jSuz3HFOpIqv/PQ
+ w6hFUOkLyo4XCOUuKFKMfXfp3ntTcKmomq7Lb1xHsGlYJGql/D0INOoXg
+ FCdV/2SmOzmptfkIZqRqwH4Hvh28shJiW3GuOGgSJuK0QtvdsmoLLrYwB
+ ijmTFHMTagCWnblcKCvgcjEMl8krOgipUi/QvwUbhaBGvKMdH49uPfNsf
+ Jtns4GiKwD+46bHJJXJxCTadlkZLLj7/MF7U1BncGDRvBg2paQixbrvJF
+ tya269PqpPAesvGYuIRJpETEkPALyef8MB4js5cPHigLDHx8XWpuK0zlu A==;
+X-CSE-ConnectionGUID: HXNz2s7+QDq+IjJ1bPMQ+A==
+X-CSE-MsgGUID: jWx3CFmDRCequK3gj1a1qQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11055"; a="9707443"
 X-IronPort-AV: E=Sophos;i="6.07,232,1708416000"; 
-   d="scan'208";a="9707436"
+   d="scan'208";a="9707443"
 Received: from fmviesa008.fm.intel.com ([10.60.135.148])
  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Apr 2024 02:53:29 -0700
-X-CSE-ConnectionGUID: OE7Qb+3LS+qyruCuMTnl2g==
-X-CSE-MsgGUID: xduA+Z6jRnO7PC9XvELYhQ==
+ 26 Apr 2024 02:53:31 -0700
+X-CSE-ConnectionGUID: mKE73GDjSNKXvKTYLA0w8g==
+X-CSE-MsgGUID: bjFA5tHjQ9yU0UwwawPoHQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,232,1708416000"; d="scan'208";a="25412339"
+X-IronPort-AV: E=Sophos;i="6.07,232,1708416000"; d="scan'208";a="25412346"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa008.fm.intel.com with ESMTP; 26 Apr 2024 02:53:26 -0700
+ by fmviesa008.fm.intel.com with ESMTP; 26 Apr 2024 02:53:29 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -55,10 +55,10 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>
 Cc: Xiaoyao Li <xiaoyao.li@intel.com>, qemu-devel@nongnu.org,
  kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 5/6] target/i386/kvm: Drop workaround for
- KVM_X86_DISABLE_EXITS_HTL typo
-Date: Fri, 26 Apr 2024 18:07:15 +0800
-Message-Id: <20240426100716.2111688-7-zhao1.liu@intel.com>
+Subject: [PATCH 6/6] target/i386/confidential-guest: Fix comment of
+ x86_confidential_guest_kvm_type()
+Date: Fri, 26 Apr 2024 18:07:16 +0800
+Message-Id: <20240426100716.2111688-8-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240426100716.2111688-1-zhao1.liu@intel.com>
 References: <20240426100716.2111688-1-zhao1.liu@intel.com>
@@ -88,32 +88,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The KVM_X86_DISABLE_EXITS_HTL typo has been fixed in commit
-77d361b13c19 ("linux-headers: Update to kernel mainline commit
-b357bf602").
+Update the comment to match the X86ConfidentialGuestClass
+implementation.
 
-Drop the related workaround.
-
+Suggested-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/i386/kvm/kvm.c | 4 ----
- 1 file changed, 4 deletions(-)
+ target/i386/confidential-guest.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index ee0767e8f501..b3ce7da37947 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -2692,10 +2692,6 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
- 
-     if (enable_cpu_pm) {
-         int disable_exits = kvm_check_extension(s, KVM_CAP_X86_DISABLE_EXITS);
--/* Work around for kernel header with a typo. TODO: fix header and drop. */
--#if defined(KVM_X86_DISABLE_EXITS_HTL) && !defined(KVM_X86_DISABLE_EXITS_HLT)
--#define KVM_X86_DISABLE_EXITS_HLT KVM_X86_DISABLE_EXITS_HTL
--#endif
-         if (disable_exits) {
-             disable_exits &= (KVM_X86_DISABLE_EXITS_MWAIT |
-                               KVM_X86_DISABLE_EXITS_HLT |
+diff --git a/target/i386/confidential-guest.h b/target/i386/confidential-guest.h
+index 532e172a60b6..06d54a120227 100644
+--- a/target/i386/confidential-guest.h
++++ b/target/i386/confidential-guest.h
+@@ -44,7 +44,7 @@ struct X86ConfidentialGuestClass {
+ /**
+  * x86_confidential_guest_kvm_type:
+  *
+- * Calls #X86ConfidentialGuestClass.unplug callback of @plug_handler.
++ * Calls #X86ConfidentialGuestClass.kvm_type() callback.
+  */
+ static inline int x86_confidential_guest_kvm_type(X86ConfidentialGuest *cg)
+ {
 -- 
 2.34.1
 
