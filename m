@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D2A4C04FFE
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 09:34:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 176A5C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 09:34:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0Hwv-00057m-Fe; Fri, 26 Apr 2024 05:32:57 -0400
+	id 1s0Hwx-0005CF-5Q; Fri, 26 Apr 2024 05:32:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1s0Hwr-0004tx-2c
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 05:32:53 -0400
+ id 1s0Hws-0004yk-Ga
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 05:32:54 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1s0Hwm-0001BH-O5
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 05:32:51 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1s0Hwn-0001DX-RK
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 05:32:54 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Bx+um4dCtm5WUDAA--.1848S3;
- Fri, 26 Apr 2024 17:32:40 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Ax5eq9dCtm9mUDAA--.2389S3;
+ Fri, 26 Apr 2024 17:32:45 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8BxU1a2dCtm+yUGAA--.2929S2; 
- Fri, 26 Apr 2024 17:32:39 +0800 (CST)
+ AQAAf8BxU1a2dCtm+yUGAA--.2929S7; 
+ Fri, 26 Apr 2024 17:32:44 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org,
 	maobibo@loongson.cn
 Cc: richard.henderson@linaro.org, peter.maydell@linaro.org, philmd@linaro.org,
  zltjiangshi@gmail.com
-Subject: [PATCH v7 00/17] Add boot LoongArch elf kernel with FDT
-Date: Fri, 26 Apr 2024 17:15:34 +0800
-Message-Id: <20240426091551.2397867-1-gaosong@loongson.cn>
+Subject: [PATCH v7 05/17] hw/loongarch: Init efi_system_table
+Date: Fri, 26 Apr 2024 17:15:39 +0800
+Message-Id: <20240426091551.2397867-6-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20240426091551.2397867-1-gaosong@loongson.cn>
+References: <20240426091551.2397867-1-gaosong@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8BxU1a2dCtm+yUGAA--.2929S2
+X-CM-TRANSID: AQAAf8BxU1a2dCtm+yUGAA--.2929S7
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,94 +66,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, All
+Add init_systab and set boot_info->a2
 
-We already support boot efi kernel with bios, but not support boot elf kernel.
-This series adds boot elf kernel with FDT.
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Message-Id: <20240307164835.300412-6-gaosong@loongson.cn>
+---
+ include/hw/loongarch/boot.h | 48 +++++++++++++++++++++++++++++++++++++
+ hw/loongarch/boot.c         | 22 +++++++++++++++++
+ 2 files changed, 70 insertions(+)
 
-'LoongArch supports ACPI and FDT. The information that needs to be passed
- to the kernel includes the memmap, the initrd, the command line, optionally
- the ACPI/FDT tables, and so on'  see [1].
-
-Patch 2-8 : Create efi system table, and three efi configuration table
-            boot_memmap, initd, FDT.
-Patch 9-17 : Fixes FDT problems.
-
-Test:
-  - Start kernel
-    See [2] start_kernel.sh
-  - Start qcow2
-    See [2] start_qcow2.sh
-
-Patch 3 and Patch 6 need to be reviewed.
-
-Thanks.
-Song Gao
-
-V7:
-  - Rebase and R-b;
-  - Patch3, replace reg_num with reg_name.
-    move slave boot code buf to pflash0;
-  - Patch5: replace __aligned(8) with QEMU_ALIGNED(8);
-  - Patch8: Use the macro FDT_BASE to indicate the fdt base size.
-
-V6:
-  - Fixes test/compilation failures; 
-
-V5:
-  - Rebase;
-
-V4:
-  - patch 3 change slave_boot_code[] to const, and 'static void *p ' to
-    'void *p';
-  - patch 4 fixes build error;
-  - patch 10-13, add project and commit link.
-
-V3:
-  - Load initrd at  kernel_high + 4 * kernel_size;
-  - Load 'boot_rom' at [0 - 1M], the 'boot_rom' includes
-    slave_boot_code, cmdline_buf and systab_tables;
-  - R-b and rebase.
-
-V2:
-  - FDT pcie node adds cells 'msi-map';
-
-
-[1]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/arch/loongarch/booting.rst?h=v6.7-rc4
-
-[2]: https://github.com/gaosong-loongson/loongarch-binary/releases
-
-Song Gao (17):
-  hw/loongarch: Move boot functions to boot.c
-  hw/loongarch: Add load initrd
-  hw/loongarch: Add slave cpu boot_code
-  hw/loongarch: Add init_cmdline
-  hw/loongarch: Init efi_system_table
-  hw/loongarch: Init efi_boot_memmap table
-  hw/loongarch: Init efi_initrd table
-  hw/loongarch: Init efi_fdt table
-  hw/loongarch: Fix fdt memory node wrong 'reg'
-  hw/loongarch: fdt adds cpu interrupt controller node
-  hw/loongarch: fdt adds Extend I/O Interrupt Controller
-  hw/loongarch: fdt adds pch_pic Controller
-  hw/loongarch: fdt adds pch_msi Controller
-  hw/loongarch: fdt adds pcie irq_map node
-  hw/loongarch: fdt remove unused irqchip node
-  hw/loongarch: Add cells missing from uart node
-  hw/loongarch: Add cells missing from rtc node
-
- include/hw/intc/loongarch_extioi.h |   1 +
- include/hw/loongarch/boot.h        | 109 +++++++++
- include/hw/loongarch/virt.h        |  14 ++
- include/hw/pci-host/ls7a.h         |   2 +
- target/loongarch/cpu.h             |   2 +
- hw/loongarch/boot.c                | 337 ++++++++++++++++++++++++++
- hw/loongarch/virt.c                | 363 ++++++++++++++++-------------
- hw/loongarch/meson.build           |   1 +
- 8 files changed, 669 insertions(+), 160 deletions(-)
- create mode 100644 include/hw/loongarch/boot.h
- create mode 100644 hw/loongarch/boot.c
-
+diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
+index 3275c1e295..cf0e4d4f91 100644
+--- a/include/hw/loongarch/boot.h
++++ b/include/hw/loongarch/boot.h
+@@ -8,6 +8,54 @@
+ #ifndef HW_LOONGARCH_BOOT_H
+ #define HW_LOONGARCH_BOOT_H
+ 
++/* UEFI 2.10 */
++#define EFI_SYSTEM_TABLE_SIGNATURE       0x5453595320494249
++#define EFI_2_100_SYSTEM_TABLE_REVISION  ((2<<16) | (100))
++#define EFI_SPECIFICATION_VERSION        EFI_SYSTEM_TABLE_REVISION
++#define EFI_SYSTEM_TABLE_REVISION        EFI_2_100_SYSTEM_TABLE_REVISION
++
++#define FW_VERSION 0x1
++#define FW_PATCHLEVEL 0x0
++
++typedef struct {
++    uint8_t b[16];
++} efi_guid_t QEMU_ALIGNED(8);
++
++struct efi_config_table {
++    efi_guid_t guid;
++    uint64_t *ptr;
++    const char name[16];
++};
++
++typedef struct {
++    uint64_t signature;
++    uint32_t revision;
++    uint32_t headersize;
++    uint32_t crc32;
++    uint32_t reserved;
++} efi_table_hdr_t;
++
++struct efi_configuration_table {
++    efi_guid_t guid;
++    void *table;
++};
++
++struct efi_system_table {
++    efi_table_hdr_t hdr;
++    uint64_t fw_vendor;        /* physical addr of CHAR16 vendor string */
++    uint32_t fw_revision;
++    uint64_t con_in_handle;
++    uint64_t *con_in;
++    uint64_t con_out_handle;
++    uint64_t *con_out;
++    uint64_t stderr_handle;
++    uint64_t stderr_placeholder;
++    uint64_t *runtime;
++    uint64_t *boottime;
++    uint64_t nr_tables;
++    struct efi_configuration_table *tables;
++};
++
+ struct loongarch_boot_info {
+     uint64_t ram_size;
+     const char *kernel_filename;
+diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+index aca5ad388e..46a241a04c 100644
+--- a/hw/loongarch/boot.c
++++ b/hw/loongarch/boot.c
+@@ -63,6 +63,25 @@ static const unsigned int slave_boot_code[] = {
+     0x4c000020,   /* jirl       $zero, $ra,0                   */
+ };
+ 
++static void init_systab(struct loongarch_boot_info *info, void *p, void *start)
++{
++    struct efi_system_table *systab = p;
++
++    info->a2 = (uint64_t)p - (uint64_t)start;
++
++    systab->hdr.signature = EFI_SYSTEM_TABLE_SIGNATURE;
++    systab->hdr.revision = EFI_SPECIFICATION_VERSION;
++    systab->hdr.revision = sizeof(struct efi_system_table),
++    systab->fw_revision = FW_VERSION << 16 | FW_PATCHLEVEL << 8;
++    systab->runtime = 0;
++    systab->boottime = 0;
++    systab->nr_tables = 0;
++
++    p += ROUND_UP(sizeof(struct efi_system_table), 64 * KiB);
++
++    systab->tables = p;
++}
++
+ static void init_cmdline(struct loongarch_boot_info *info, void *p, void *start)
+ {
+     hwaddr cmdline_addr = (hwaddr)p - (hwaddr)start;
+@@ -135,6 +154,7 @@ static void reset_load_elf(void *opaque)
+ 	if (cpu == LOONGARCH_CPU(first_cpu)) {
+             env->gpr[4] = env->boot_info->a0;
+             env->gpr[5] = env->boot_info->a1;
++            env->gpr[6] = env->boot_info->a2;
+         }
+         cpu_set_pc(CPU(cpu), env->elf_address);
+     }
+@@ -179,6 +199,8 @@ static void init_boot_rom(struct loongarch_boot_info *info, void *p)
+ 
+     init_cmdline(info, p, start);
+     p += COMMAND_LINE_SIZE;
++
++    init_systab(info, p, start);
+ }
+ 
+ static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
 -- 
 2.25.1
 
