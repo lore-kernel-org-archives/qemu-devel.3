@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12E95C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 19:47:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FAD6C19F4F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 19:47:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0RTy-00023c-TT; Fri, 26 Apr 2024 15:43:44 -0400
+	id 1s0RVn-00020z-IE; Fri, 26 Apr 2024 15:45:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s0RTk-0001bq-Rl
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 15:43:29 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s0RVh-0001VR-Hz
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 15:45:30 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s0RTg-00035r-Jx
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 15:43:28 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a58872c07d8so650977066b.0
- for <qemu-devel@nongnu.org>; Fri, 26 Apr 2024 12:43:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s0RVd-0004eU-FT
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 15:45:29 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5708d8beec6so3174045a12.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Apr 2024 12:45:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714160601; x=1714765401; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714160723; x=1714765523; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3j5wqqpS7/lf73uUyWBqUlTl3qEW0g75YQa/BO6RAIE=;
- b=fmEWD8mrPo0nCAdTx+DfDnclKQMlrTALRAnzDDyyiHk64BfQO1BkhBUFlgnMvtx85K
- TUsTNsRav89Qrvl4yKgi/HjgD0tw4WSl9I8Xkzjc6mqQwnUvvYFSiQc3RuepKSoFRKc5
- sl4+mYKRzMmJsg5RbvOJqrPSMjo3Q0CnyN0pEj6wB5xodXnY26KagkAzBAu389yHi6H2
- mj7HVU4j+DaANMEwBE8yBzToxPiVlCcDf8AQXR0+l7ODTVgFM8QVmAlpf/5HMkfiEoBY
- 6d+CoajPuURxZL2CX8tv6JrR3Rm4UUthvjUZ1aVzIa8SnqIItm+tpeSr7e3Gq18yzj3i
- x8og==
+ bh=bzDVxW+21MsfKgGbGkgEmh47Dcww+z+68N+3YiFHARY=;
+ b=aU4oToG0tAKSlN1+wZj99F14T0UuHK/yWR7XAFa62V361kLivQda8O27WUvOBjfgie
+ /NEsG/Z2/grqaAOXrldw0OEeePly8aGT9iMAaJk8M2zo491DkWF7CaLU5iHok8VWxmxo
+ 14PDybByztY+HS8CGK8RlYh1QBEKHkRq+/h5soBfUbHJ9hcVeZP323W+SHFrUZmi+e1I
+ eeAbcnpuApqtGZKJe17oi43Cxh/I5wrQYywtfevvT3DJwN8Kj2Z5C9T4jHsnjs3HhT+X
+ VHrYhbEh3d+BYYw3abcy7fJ0MOqleYy4FkEYiqgzSXNPAWrIsolB86PmyEy+WoMAndX4
+ WT1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714160601; x=1714765401;
+ d=1e100.net; s=20230601; t=1714160723; x=1714765523;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3j5wqqpS7/lf73uUyWBqUlTl3qEW0g75YQa/BO6RAIE=;
- b=cS3ObpCrTG04S4dJKBHpn5WQM19KPhAO5plKVyrtw3E6jeu6HExt/DGGSLj7wW6kEL
- 89w0OuBBm2q5tPkqyZlcwmtmpf9vMCgxLYolnjkukSIkWvfWxErYjbDgRZ0ucB+dbBLd
- fUNSPK/90wN7tKJno8gNBNOk1dAqBA3hLHBqSAmeJMUNT2CWNLiccwAlujnQHMYzJPnK
- c+X/W3ZXpTNDZ0+j7MyUcEQhGvXL3d9GNfa3oA/hjihykEwZruqkchmQg2oLI4+GLYjV
- /xzs6L7seJzr2YD3RNKAcmr7Yh7Ea8MGO0sDFv6zGD667bJxlygnoQdoEGs48QmSuUh+
- +y9A==
-X-Gm-Message-State: AOJu0YyengI+msqv9XgBvFN110sKU9eA9ngWx28W7yWTxsFV5gY17qRl
- DnhVs6X3D4/CiGRTZQOlZvKqLcUNEixiB8W0uShkSF2h98h6lESnzxDBis7/tmkTTDCivxwMLN0
- oOGw=
-X-Google-Smtp-Source: AGHT+IETBPuyIVPCZBmtMgTb33DBkiexcpTAB7tWpueprnBvdcNXAlEwf1W/5t8Jv1KaOUZfGRpp7g==
-X-Received: by 2002:a17:906:f9db:b0:a58:83a6:c68f with SMTP id
- lj27-20020a170906f9db00b00a5883a6c68fmr551531ejb.17.1714160600871; 
- Fri, 26 Apr 2024 12:43:20 -0700 (PDT)
+ bh=bzDVxW+21MsfKgGbGkgEmh47Dcww+z+68N+3YiFHARY=;
+ b=NiD/Ymfc2+XdxzvhUY/j6irl1XR23e4nVfjpz2mt9L7u/66Ei09Wbw0hGPBDJ12bxz
+ lfBXtg49Lpyy7VzOOr7cCrcNT4H0ugeQI05h5sJDP/Xb3CgfaDrKqYMvXNHCRzjU8dM7
+ KDywiiri1nP4Ed2FiJYTBbekw7AVpSZnVSMVgiY3BmxC18zgvlS6kHre2ltnlKEHVQcB
+ LdKtRxrk4NSoN/vferh6Qx4/pgnogmhjlNhYrHITM9iUrSPyfpgYcAvnRV88Rofkwur8
+ sX+1jIiLkRg5pjWr9ikx+wnhDjebP3VKcLTrOjU72ImtdU8ehKUvcCjuk6+mJfItwGtS
+ GQ8w==
+X-Gm-Message-State: AOJu0YyhMtPCZ/Apl5hm257jn6IvP1/pL4WUn0ZELFLNw8ixYRr6M2Xv
+ hvYFGxFoQKnrByzbWqTBRBtV3I9ngRztLOBAwg03zgSAtJCEiyKoKJkVp+nStHiU9sNbUN4yBnB
+ s3D8=
+X-Google-Smtp-Source: AGHT+IFbjzomzyAy10P5S8LAPy9pwi6u7Ad9NMmFM9toKajkmNMRwzbdJvq5YSQfLVs84Je6MszNjA==
+X-Received: by 2002:a17:906:459:b0:a58:7ea5:c49b with SMTP id
+ e25-20020a170906045900b00a587ea5c49bmr3257788eja.42.1714160723638; 
+ Fri, 26 Apr 2024 12:45:23 -0700 (PDT)
 Received: from m1x-phil.lan (aul93-h02-176-184-11-147.dsl.sta.abo.bbox.fr.
  [176.184.11.147]) by smtp.gmail.com with ESMTPSA id
- dk21-20020a170907941500b00a55aee4bf74sm6993231ejc.79.2024.04.26.12.43.19
+ z2-20020a1709063ac200b00a4e1a9e1ab4sm10875255ejd.157.2024.04.26.12.45.22
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 26 Apr 2024 12:43:20 -0700 (PDT)
+ Fri, 26 Apr 2024 12:45:23 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
  qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Anton Johansson <anjo@rev.ng>,
  Richard Henderson <richard.henderson@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
-Subject: [PULL 13/38] target/sparc: Replace abi_ulong by uint32_t for
- TARGET_ABI32
-Date: Fri, 26 Apr 2024 21:41:33 +0200
-Message-ID: <20240426194200.43723-14-philmd@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>
+Subject: [PULL 34/38] exec: Rename 'exec/user/guest-base.h' as
+ 'user/guest-base.h'
+Date: Fri, 26 Apr 2024 21:41:54 +0200
+Message-ID: <20240426194200.43723-35-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240426194200.43723-1-philmd@linaro.org>
 References: <20240426194200.43723-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,30 +99,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have abi_ulong == uint32_t for the 32-bit ABI.
-Use the generic type to avoid to depend on the
-"exec/user/abitypes.h" header.
+The include/user/ directory contains the user-emulation
+specific headers. Move guest-base.h there too.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240418192525.97451-14-philmd@linaro.org>
+Reviewed-by: Anton Johansson <anjo@rev.ng>
+Message-Id: <20240418192525.97451-15-philmd@linaro.org>
 ---
- target/sparc/gdbstub.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/exec/cpu-all.h               | 2 +-
+ include/{exec => }/user/guest-base.h | 4 ++--
+ tcg/tcg.c                            | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
+ rename include/{exec => }/user/guest-base.h (72%)
 
-diff --git a/target/sparc/gdbstub.c b/target/sparc/gdbstub.c
-index 07ea81ab5f..ec0036e9ef 100644
---- a/target/sparc/gdbstub.c
-+++ b/target/sparc/gdbstub.c
-@@ -108,7 +108,7 @@ int sparc_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
-     SPARCCPU *cpu = SPARC_CPU(cs);
-     CPUSPARCState *env = &cpu->env;
- #if defined(TARGET_ABI32)
--    abi_ulong tmp;
-+    uint32_t tmp;
+diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
+index 78848f018c..027f19e052 100644
+--- a/include/exec/cpu-all.h
++++ b/include/exec/cpu-all.h
+@@ -65,7 +65,7 @@
  
-     tmp = ldl_p(mem_buf);
- #else
+ #if defined(CONFIG_USER_ONLY)
+ #include "exec/user/abitypes.h"
+-#include "exec/user/guest-base.h"
++#include "user/guest-base.h"
+ 
+ extern bool have_guest_base;
+ 
+diff --git a/include/exec/user/guest-base.h b/include/user/guest-base.h
+similarity index 72%
+rename from include/exec/user/guest-base.h
+rename to include/user/guest-base.h
+index afe2ab7fbb..1e42bca5db 100644
+--- a/include/exec/user/guest-base.h
++++ b/include/user/guest-base.h
+@@ -4,8 +4,8 @@
+  *  Copyright (c) 2003 Fabrice Bellard
+  */
+ 
+-#ifndef EXEC_USER_GUEST_BASE_H
+-#define EXEC_USER_GUEST_BASE_H
++#ifndef USER_GUEST_BASE_H
++#define USER_GUEST_BASE_H
+ 
+ extern uintptr_t guest_base;
+ 
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index 0c0bb9d169..6a32656cd4 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -57,7 +57,7 @@
+ #include "tcg-internal.h"
+ #include "tcg/perf.h"
+ #ifdef CONFIG_USER_ONLY
+-#include "exec/user/guest-base.h"
++#include "user/guest-base.h"
+ #endif
+ 
+ /* Forward declarations for functions declared in tcg-target.c.inc and
 -- 
 2.41.0
 
