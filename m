@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92DA4C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 11:03:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C851AC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 11:06:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0JKd-0000CL-U5; Fri, 26 Apr 2024 07:01:31 -0400
+	id 1s0JPC-0007k5-64; Fri, 26 Apr 2024 07:06:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1s0JKC-0008RT-BT; Fri, 26 Apr 2024 07:01:05 -0400
+ id 1s0JP9-0007iz-MO; Fri, 26 Apr 2024 07:06:11 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1s0JKA-0008T1-E5; Fri, 26 Apr 2024 07:01:04 -0400
-Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
+ id 1s0JP3-0001MB-4f; Fri, 26 Apr 2024 07:06:11 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43QA3lNK025378; Fri, 26 Apr 2024 11:00:54 GMT
+ 43QB5uYC025578; Fri, 26 Apr 2024 11:05:56 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=from : to : cc : subject
  : date : message-id : in-reply-to : references : mime-version :
  content-type : content-transfer-encoding; s=pp1;
- bh=GpMcdPuq1PA3bLMuZz/wFJul2G+7uP9ofxPj2h93V4Y=;
- b=nvGXuEBthX+tf/5RqUYzCZ9RmchSIcIALgLKqbUrZIH3LnQ3Fj/5mJFYP1fG3AbdLgnK
- QtRYfUcL0cu16KQ2IAm2tBtiCA0Vl/YxIC/qs3pa+RrA7JxE++O1lRMeGNIOoYEb0Sab
- M9N0SyRMPrcOJP2UDA2hCLSQJihMTSxRbIu5EAupE2d7NnW5zz7ln2PF/uV5/gyaU4y7
- zbVYXSKrnCsADdvriZK6bA3Os3zYC1ckBAB4B27VRw30FsheQ6l8CBcDIlEj+OPWaDvH
- dUtDrkWSENo02KB36tzOUQJM+Yzuzh33hQrSZ8coaLWolotxcJ+VZvQa2e/xixZgoGYF yQ== 
+ bh=o5mmwpWln24izk7/WLw17cwc+L1Heaq1AU4H2mASA+0=;
+ b=EcWp7yucEus2WfolLFOtW0PMUEBtAIve1u1TF20+iOhvJ6oNi4mSpNY1yzPFlbFdIhhe
+ GpMpkbhuRRwjNTvXtFwSJjKDwFPtsbV94GzIXTn0nINb2N6WOf/4SyO1AeetFlWUU0ZL
+ SxiMWkit0UDuN3nY32DKrsWaHE/JQZR84kFBx6WmwpUkQ6zLO2TzI+GAo9BZh/JWtZkz
+ N3TBaFg7BDCQwkO/84c0G3oVk1boYLo/HUaulZS7pNspKMmoGolZyZU853DzZwX30O7W
+ 9eGw1DLlksnI2U9bk0PWvPN6r6W7vE7rdceSQOfVaPnkn6ymZjO9n8imLmulGEthAKO+ TA== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xra63g3my-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xrb2mr036-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Apr 2024 11:00:53 +0000
-Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43QB0AiG012411;
- Fri, 26 Apr 2024 11:00:52 GMT
+ Fri, 26 Apr 2024 11:05:56 +0000
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43QB5tMG025571;
+ Fri, 26 Apr 2024 11:05:55 GMT
 Received: from ppma11.dal12v.mail.ibm.com
  (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xra63g3mw-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xrb2mr034-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Apr 2024 11:00:52 +0000
+ Fri, 26 Apr 2024 11:05:55 +0000
 Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
  by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43Q7jvRK028356; Fri, 26 Apr 2024 11:00:51 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xmtr2xuj9-1
+ 43Q7veXT028341; Fri, 26 Apr 2024 11:00:54 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xmtr2xujs-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Apr 2024 11:00:51 +0000
+ Fri, 26 Apr 2024 11:00:54 +0000
 Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
  [10.20.54.104])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 43QB0kln52953490
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 43QB0ncp51970412
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 26 Apr 2024 11:00:48 GMT
+ Fri, 26 Apr 2024 11:00:51 GMT
 Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 89E3E2004B;
+ by IMSVA (Postfix) with ESMTP id 1E6C62004B;
+ Fri, 26 Apr 2024 11:00:49 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id ED0FE2004E;
  Fri, 26 Apr 2024 11:00:46 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 641502006A;
- Fri, 26 Apr 2024 11:00:44 +0000 (GMT)
 Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com.com (unknown
  [9.171.14.245]) by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 26 Apr 2024 11:00:44 +0000 (GMT)
+ Fri, 26 Apr 2024 11:00:46 +0000 (GMT)
 From: Aditya Gupta <adityag@linux.ibm.com>
 To: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
  Madhavan Srinivasan <maddy@linux.ibm.com>,
@@ -72,9 +72,9 @@ To: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
 Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>,
  =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>
-Subject: [PATCH v2 07/10] ppc/pnv: Add a PSI bridge model for Power11
-Date: Fri, 26 Apr 2024 16:30:20 +0530
-Message-ID: <20240426110023.733309-8-adityag@linux.ibm.com>
+Subject: [PATCH v2 08/10] ppc/pnv: Add SBE model for Power11
+Date: Fri, 26 Apr 2024 16:30:21 +0530
+Message-ID: <20240426110023.733309-9-adityag@linux.ibm.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240426110023.733309-1-adityag@linux.ibm.com>
 References: <20240426110023.733309-1-adityag@linux.ibm.com>
@@ -82,17 +82,17 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 4edsYcy9aD9L2H6Bxuzhm39yN5x9f3V_
-X-Proofpoint-ORIG-GUID: 6OZoCIE5GRzHoNkTnWs4HmBUJWrPj30D
+X-Proofpoint-ORIG-GUID: RRscp_M98uAV_lXVf8vyQ6FVRuksx5aT
+X-Proofpoint-GUID: luuJ5MMYDiXu5czrVKGuqDycWSbrkyFj
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
  definitions=2024-04-26_12,2024-04-26_02,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 mlxlogscore=999
- bulkscore=0 spamscore=0 lowpriorityscore=0 mlxscore=0 priorityscore=1501
- malwarescore=0 impostorscore=0 suspectscore=0 clxscore=1015 adultscore=0
+ clxscore=1015 malwarescore=0
+ priorityscore=1501 mlxscore=0 impostorscore=0 phishscore=0 spamscore=0
+ mlxlogscore=999 bulkscore=0 suspectscore=0 adultscore=0 lowpriorityscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2404010000
- definitions=main-2404260072
+ definitions=main-2404260073
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -19
@@ -117,8 +117,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Power11 core is same as Power10, reuse PNV10_PSI initialisation, by
-declaring 'PNV11_PSI' as child class of 'PNV10_PSI'
+Power11 core is same as Power10, reuse PNV10_SBER initialisation, by
+declaring PNV11_PSI as child class of PNV10_PSI
 
 Cc: Cédric Le Goater <clg@kaod.org>
 Cc: Frédéric Barrat <fbarrat@linux.ibm.com>
@@ -127,65 +127,56 @@ Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
 Cc: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 ---
- hw/ppc/pnv_psi.c         | 24 ++++++++++++++++++++++++
- include/hw/ppc/pnv_psi.h |  2 ++
- 2 files changed, 26 insertions(+)
+ hw/ppc/pnv_sbe.c         | 15 +++++++++++++++
+ include/hw/ppc/pnv_sbe.h |  2 ++
+ 2 files changed, 17 insertions(+)
 
-diff --git a/hw/ppc/pnv_psi.c b/hw/ppc/pnv_psi.c
-index 26460d210deb..1f708b183a87 100644
---- a/hw/ppc/pnv_psi.c
-+++ b/hw/ppc/pnv_psi.c
-@@ -939,6 +939,29 @@ static const TypeInfo pnv_psi_power10_info = {
-     .name          = TYPE_PNV10_PSI,
-     .parent        = TYPE_PNV9_PSI,
-     .class_init    = pnv_psi_power10_class_init,
-+    .class_base_init = pnv_psi_power10_class_init,
+diff --git a/hw/ppc/pnv_sbe.c b/hw/ppc/pnv_sbe.c
+index 74cee4eea7ad..a655cc7f8c9e 100644
+--- a/hw/ppc/pnv_sbe.c
++++ b/hw/ppc/pnv_sbe.c
+@@ -366,6 +366,20 @@ static const TypeInfo pnv_sbe_power10_type_info = {
+     .name          = TYPE_PNV10_SBE,
+     .parent        = TYPE_PNV9_SBE,
+     .class_init    = pnv_sbe_power10_class_init,
++    .class_base_init = pnv_sbe_power10_class_init,
 +};
 +
-+static void pnv_psi_power11_class_init(ObjectClass *klass, void *data)
++static void pnv_sbe_power11_class_init(ObjectClass *klass, void *data)
 +{
 +    DeviceClass *dc = DEVICE_CLASS(klass);
-+    PnvPsiClass *ppc = PNV_PSI_CLASS(klass);
-+    static const char compat[] = "ibm,power11-psihb-x\0ibm,psihb-x";
 +
-+    dc->desc    = "PowerNV PSI Controller POWER11";
-+
-+    /*
-+     * ppc->xscom_pbca and ppc->xscom_size will be set up by
-+     * pnv_psi_power10_class_init
-+     */
-+    ppc->compat     = compat;
-+    ppc->compat_size = sizeof(compat);
++    dc->desc = "PowerNV SBE Controller (POWER11)";
 +}
 +
-+static const TypeInfo pnv_psi_power11_info = {
-+    .name          = TYPE_PNV11_PSI,
-+    .parent        = TYPE_PNV10_PSI,
-+    .class_init    = pnv_psi_power11_class_init,
++static const TypeInfo pnv_sbe_power11_type_info = {
++    .name          = TYPE_PNV11_SBE,
++    .parent        = TYPE_PNV10_SBE,
++    .class_init    = pnv_sbe_power11_class_init,
  };
  
- static void pnv_psi_class_init(ObjectClass *klass, void *data)
-@@ -973,6 +996,7 @@ static void pnv_psi_register_types(void)
-     type_register_static(&pnv_psi_power8_info);
-     type_register_static(&pnv_psi_power9_info);
-     type_register_static(&pnv_psi_power10_info);
-+    type_register_static(&pnv_psi_power11_info);
+ static void pnv_sbe_realize(DeviceState *dev, Error **errp)
+@@ -409,6 +423,7 @@ static void pnv_sbe_register_types(void)
+     type_register_static(&pnv_sbe_type_info);
+     type_register_static(&pnv_sbe_power9_type_info);
+     type_register_static(&pnv_sbe_power10_type_info);
++    type_register_static(&pnv_sbe_power11_type_info);
  }
  
- type_init(pnv_psi_register_types);
-diff --git a/include/hw/ppc/pnv_psi.h b/include/hw/ppc/pnv_psi.h
-index 2a6f715350b6..9e1d31779204 100644
---- a/include/hw/ppc/pnv_psi.h
-+++ b/include/hw/ppc/pnv_psi.h
-@@ -70,6 +70,8 @@ struct Pnv9Psi {
+ type_init(pnv_sbe_register_types);
+diff --git a/include/hw/ppc/pnv_sbe.h b/include/hw/ppc/pnv_sbe.h
+index b6b378ad14c7..09073a1256d6 100644
+--- a/include/hw/ppc/pnv_sbe.h
++++ b/include/hw/ppc/pnv_sbe.h
+@@ -29,6 +29,8 @@ OBJECT_DECLARE_TYPE(PnvSBE, PnvSBEClass, PNV_SBE)
+ DECLARE_INSTANCE_CHECKER(PnvSBE, PNV9_SBE, TYPE_PNV9_SBE)
+ #define TYPE_PNV10_SBE TYPE_PNV_SBE "-POWER10"
+ DECLARE_INSTANCE_CHECKER(PnvSBE, PNV10_SBE, TYPE_PNV10_SBE)
++#define TYPE_PNV11_SBE TYPE_PNV_SBE "-POWER11"
++DECLARE_INSTANCE_CHECKER(PnvSBE, PNV11_SBE, TYPE_PNV11_SBE)
  
- #define TYPE_PNV10_PSI TYPE_PNV_PSI "-POWER10"
- 
-+#define TYPE_PNV11_PSI TYPE_PNV_PSI "-POWER11"
-+
- 
- struct PnvPsiClass {
-     SysBusDeviceClass parent_class;
+ struct PnvSBE {
+     DeviceState xd;
 -- 
 2.44.0
 
