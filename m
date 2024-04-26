@@ -4,79 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B1E9C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 13:27:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 867BBC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 13:29:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0LbH-0001l4-QJ; Fri, 26 Apr 2024 09:26:52 -0400
+	id 1s0LdI-0003TS-Hl; Fri, 26 Apr 2024 09:28:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s0Lb4-0001cq-BR
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 09:26:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s0Lb2-0004qO-OX
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 09:26:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714137995;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YJvCCO61Jed4eULRcsH6PyIxGJxHjVefwCt+kqsgbfE=;
- b=SvFoQ24mLPCz9rydq9exwX1BOOdQtVEn5w+R5z/qWf3bZNsVZUr1QaBWuaTJItL9QgB5MN
- M4r8w01rhGLQj/EcHjNOssxLhFa1SpLgC4J96rzqpe/WuaCU8xMJOTeMXcEIppYWeWb3Sk
- fxjlrU4S+Dr4ga695sBZEMLclUrhUiY=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-610-Ag8OEEyrNYaKVRMCKyqMTw-1; Fri,
- 26 Apr 2024 09:26:31 -0400
-X-MC-Unique: Ag8OEEyrNYaKVRMCKyqMTw-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6B2B83C0F43C;
- Fri, 26 Apr 2024 13:26:31 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 4B796400EAC;
- Fri, 26 Apr 2024 13:26:31 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 3795321E6680; Fri, 26 Apr 2024 15:26:30 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Peter Xu <peterx@redhat.com>,  devel@lists.libvirt.org,  Alex
- =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,  Wainer dos Santos Moschetta
- <wainersm@redhat.com>,  Beraldo Leal <bleal@redhat.com>,  Eric Blake
- <eblake@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,  Hanna Reitz
- <hreitz@redhat.com>
-Subject: Re: [PATCH 3/6] migration: Remove 'blk/-b' option from migrate
- commands
-In-Reply-To: <20240425150939.19268-4-farosas@suse.de> (Fabiano Rosas's message
- of "Thu, 25 Apr 2024 12:09:36 -0300")
-References: <20240425150939.19268-1-farosas@suse.de>
- <20240425150939.19268-4-farosas@suse.de>
-Date: Fri, 26 Apr 2024 15:26:30 +0200
-Message-ID: <87y190s1a1.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s0LdE-0003Pz-7L
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 09:28:53 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s0Ld9-00055u-N0
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 09:28:50 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-57232e47a81so3664598a12.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Apr 2024 06:28:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714138125; x=1714742925; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Jatnww9NRbQOfViMHrcl/hzzBD0uBtQqz7689R7WhE8=;
+ b=dJ3poKabWF1xB7onMxT13TDdh9buyW387laNfMi9C/DrX3+HbNFO2gWEtZdypm2t4P
+ Loi4kcEogbg+KBeVUCWDcSou51+sryD1zZ85u2kMbh/ZbAj88TqOv1FoT8XaBq5ZuA/m
+ zrEvzwKDxuwnbuAMnfou2py7ckJKjl+0T3seVB+sQBpbeldaUturvIOFPopDOhixPfff
+ ZzygWq30xxUjNrkMQo2LfAeh0EV2qUJ6cQVo0X96x0Qwc1J55/Jt/fI2jB8VtoqerIEm
+ mYrrTmp5lMRhRC1f00kIhBhIcPf7xzhN6ogQ6cbFMJU1a8yrohf7gT+cE2GkLf84KPDY
+ WjFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714138125; x=1714742925;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Jatnww9NRbQOfViMHrcl/hzzBD0uBtQqz7689R7WhE8=;
+ b=AK904lMWaQFG8p+gc5W6fQFq8oYRLy2yQdZ4ArDsxnnK+epc2d6rcJv+BHLG4XeqbJ
+ oCFdv3ds3rDuLrqH+jIBsqg+G8z1SZwEB5ZeA0W2wy0GLfhXIbC6ikfQoHaPrmUVYj7s
+ 3ku2qZUyKUAkcxs/w94Y0FYK6zLGhPFZDQd7h/YKjfBSMXgQgLOqbtzKJaNQ/X2WQHbs
+ cwWxp0qXu/ZpFACvmWGbgxh/wh5EG7DubDwi1x21odXRpja1CxkAZ58+38lg9ST2+tSZ
+ Rd/Xo6OeIVE39BNJm26J+RdNfof57iMhhs35dkkzu+G2+UHQtMubFyEfoTnDi1AXxID4
+ f4kQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVa+TykI94rw9qb9XUEGhDSsTkAH7e31gBNbDDC9PgzCR8tHRB/GzcKhRYtFDdjhDuKHCIY4Lp4SwN2iny9f0o8xGdlTus=
+X-Gm-Message-State: AOJu0YzneZ+ccG6YuwmOK0Uuoi7rXvAzJYrABeGCpu+oj7I17VNwpZaz
+ f3Wm4Ql5vc6fdntNbw2bFcabxqCPSZ5xarZY9J2ZklIYtIQH+xBvxcHG+NR5TmWY3Q67GCM3qqs
+ pyyVnf8QouG3oMgmId2JLuZ8y8znyASGwmxVAHA==
+X-Google-Smtp-Source: AGHT+IEqwjfhsNj9zLi7H96bL4pYjZJxhsZm/9MkvJIav7gLFsNN8Y7ZlRxUN/16A4J0MjeDsES3r5IBgm9cjudTbZE=
+X-Received: by 2002:a50:c044:0:b0:572:3f71:161f with SMTP id
+ u4-20020a50c044000000b005723f71161fmr4494451edd.12.1714138125068; Fri, 26 Apr
+ 2024 06:28:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20240426122913.3427983-1-peter.maydell@linaro.org>
+ <20240426122913.3427983-4-peter.maydell@linaro.org>
+ <36b9a714-44ff-4b60-a23d-89672a98f46e@linaro.org>
+In-Reply-To: <36b9a714-44ff-4b60-a23d-89672a98f46e@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 26 Apr 2024 14:28:33 +0100
+Message-ID: <CAFEAcA-ajhEXq4wJW-qp_scL0JqfJXCzZNvtmHtQEJLcRhj7-A@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] hw/watchdog/sbsa_gwdt: Make watchdog timer
+ frequency a QOM property
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ Radoslaw Biernacki <rad@semihalf.com>,
+ Leif Lindholm <quic_llindhol@quicinc.com>, 
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,19 +97,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
-
-> The block migration is considered obsolete and has been deprecated in
-> 8.2. Remove the migrate command option that enables it. This only
-> affects the QMP and HMP commands, the feature can still be accessed by
-> setting the migration 'block' capability. The whole feature will be
-> removed in a future patch.
+On Fri, 26 Apr 2024 at 13:46, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
 >
-> Deprecation commit 8846b5bfca ("migration: migrate 'blk' command
-> option is deprecated.").
+> Hi Peter,
 >
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> On 26/4/24 14:29, Peter Maydell wrote:
+> > Currently the sbsa_gdwt watchdog device hardcodes its frequency at
+> > 62.5MHz. In real hardware, this watchdog is supposed to be driven
+> > from the system counter, which also drives the CPU generic timers.
+> > Newer CPU types (in particular from Armv8.6) should have a CPU
+> > generic timer frequency of 1GHz, so we can't leave the watchdog
+> > on the old QEMU default of 62.5GHz.
+> >
+> > Make the frequency a QOM property so it can be set by the board,
+> > and have our only board that uses this device set that frequency
+> > to the same value it sets the CPU frequency.
+> >
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> >   include/hw/watchdog/sbsa_gwdt.h |  3 +--
+> >   hw/arm/sbsa-ref.c               |  1 +
+> >   hw/watchdog/sbsa_gwdt.c         | 15 ++++++++++++++-
+> >   3 files changed, 16 insertions(+), 3 deletions(-)
+>
+>
+> > diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
+> > index 36f6f717b4b..57c337fd92a 100644
+> > --- a/hw/arm/sbsa-ref.c
+> > +++ b/hw/arm/sbsa-ref.c
+> > @@ -543,6 +543,7 @@ static void create_wdt(const SBSAMachineState *sms)
+> >       SysBusDevice *s =3D SYS_BUS_DEVICE(dev);
+> >       int irq =3D sbsa_ref_irqmap[SBSA_GWDT_WS0];
+> >
+> > +    qdev_prop_set_uint64(dev, "clock-frequency", SBSA_GTIMER_HZ);
+>
+> Since we have access to the CPU and its generic timer, what about
+> just keep the wdg in sync, as smth like:
+>
+>    qdev_prop_set_uint64(dev, "clock-frequency",
+>                         object_property_get_uint(OBJECT(some_cpu),
+>                                                  "cntfrq", errp));
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+That introduces an implicit ordering requirement that
+the CPU has been created before the watchdog, which I'm
+not super enthusiastic about. "The platform knows the
+frequency and sets it on the devices that care" seems
+more straightforward to me.
 
+(The really-follow-the-hardware approach here would be to
+model the memory mapped system counter and then wire that
+up to both the CPUs and the watchdog, but that's a lot
+of extra work. I have some half-baked patches in that
+direction but for the moment I figure doing the simple
+thing is all we need.)
+
+-- PMM
 
