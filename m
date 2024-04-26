@@ -4,100 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A538CC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 17:34:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1044AC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 17:35:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0PT2-0006Rp-I0; Fri, 26 Apr 2024 13:34:36 -0400
+	id 1s0PSz-0006QF-V4; Fri, 26 Apr 2024 13:34:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1s0PT0-0006QT-VW
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 13:34:34 -0400
-Received: from vps-vb.mhejs.net ([37.28.154.113])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1s0PSx-0006PG-OO; Fri, 26 Apr 2024 13:34:31 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1s0PSy-0005hj-L0
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 13:34:34 -0400
-Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
- (envelope-from <mail@maciej.szmigiero.name>)
- id 1s0PSg-00049H-T8; Fri, 26 Apr 2024 19:34:14 +0200
-Message-ID: <1a0b3c24-fffd-4db3-a35e-e40ae2e0a074@maciej.szmigiero.name>
-Date: Fri, 26 Apr 2024 19:34:09 +0200
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1s0PSv-0005ks-Kv; Fri, 26 Apr 2024 13:34:31 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43QH3Rr7021905; Fri, 26 Apr 2024 17:34:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=date : from : to : cc :
+ subject : message-id : references : mime-version : content-type :
+ content-transfer-encoding : in-reply-to; s=pp1;
+ bh=Vi9S9klno6f31cN9uDsWsajnNRT8KfmAawJAuZSvv6s=;
+ b=aJGHEkEa61929fyntA/WplpCyOV4dNgW9LC4vknSABwdCDhs3dHT/00LyPUM2t6bUUFh
+ 9St39WVRMg1RUtj/Q3LgHimK2oJJlLBgqLrQX3nL3M7tbz++zMvIx75R17nhMfw4QOSM
+ kzUypM7FDoBWZGTSDbAfi7zqbUevaUBa2agafH/bQUJZUCvBmu1QYLyYTyPeiu1MD1FB
+ 5LHBT+Ar8HSzjlQIWFrApqz4DoEW5+rJxSyrqYLMPKQ8NN0NatYObPkA55aYdvk9mYRo
+ ivcEtxS5Aoz3rN9aMIBW09qFznPx2oNHIpunq/6NU5ssQ3JiIBuKECJisG/GIoypAjo2 Uw== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xrgb1r228-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 26 Apr 2024 17:34:19 +0000
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43QHYJ0B003035;
+ Fri, 26 Apr 2024 17:34:19 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xrgb1r225-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 26 Apr 2024 17:34:19 +0000
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43QF1dIN020915; Fri, 26 Apr 2024 17:34:18 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3xmre0h4ax-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 26 Apr 2024 17:34:18 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 43QHYDhw30540412
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 26 Apr 2024 17:34:15 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1696F2004D;
+ Fri, 26 Apr 2024 17:34:13 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E871E20040;
+ Fri, 26 Apr 2024 17:34:10 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.171.36.162])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Fri, 26 Apr 2024 17:34:10 +0000 (GMT)
+Date: Fri, 26 Apr 2024 23:04:08 +0530
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
+Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org,
+ =?utf-8?B?RnLDqWTDqXJpYw==?= Barrat <fbarrat@linux.ibm.com>
+Subject: Re: [PATCH v2 03/10] ppc/pnv: Add a Power11 Pnv11Chip, and a Power11
+ Machine
+Message-ID: <trxofbh7pgkmmfioku4kw7c7rl4bj3dawe4zakuqcx55tnhujo@fqxgd6s3odvr>
+References: <20240426110023.733309-1-adityag@linux.ibm.com>
+ <20240426110023.733309-4-adityag@linux.ibm.com>
+ <7ac5fa18-70be-42d2-addb-b35c9355e984@kaod.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: =?UTF-8?Q?Re=3A_=5BPATCH_RFC_00/26=5D_Multifd_=F0=9F=94=80_device_s?=
- =?UTF-8?Q?tate_transfer_support_with_VFIO_consumer?=
-To: Peter Xu <peterx@redhat.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Alex Williamson
- <alex.williamson@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-References: <Zh_6W8u3H4FmGS49@redhat.com>
- <71ede5c8-857c-418b-9e37-b8d343ddfa06@maciej.szmigiero.name>
- <ZiD4aLSre6qubuHr@redhat.com>
- <aebcd78e-b8b6-44db-b2be-0bbd5acccf3f@maciej.szmigiero.name>
- <ZiF8aWVfW7kPuOtn@x1n> <ZiJCSZvsekaO8dzO@redhat.com> <ZiKOTkgEIKo-wj5N@x1n>
- <d7d59001-0800-4073-9def-08327e904b7b@maciej.szmigiero.name>
- <Zig0IPofMCpJdGsn@x1n>
- <e88ecd55-14a2-4043-946b-9c2447fe9def@maciej.szmigiero.name>
- <Zig3vebacR4SfJLh@x1n>
-Content-Language: en-US, pl-PL
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <Zig3vebacR4SfJLh@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=37.28.154.113;
- envelope-from=mail@maciej.szmigiero.name; helo=vps-vb.mhejs.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+In-Reply-To: <7ac5fa18-70be-42d2-addb-b35c9355e984@kaod.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: JmfVB39bqpmgp--zCll-PnTmcfJsyUhV
+X-Proofpoint-ORIG-GUID: gLnpa4giT7b7gKnEUtsmli8mbO6O5lNk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-04-26_14,2024-04-26_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 spamscore=0
+ mlxscore=0 mlxlogscore=999 adultscore=0 malwarescore=0 suspectscore=0
+ clxscore=1015 phishscore=0 lowpriorityscore=0 priorityscore=1501
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2404010000 definitions=main-2404260119
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,118 +121,280 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24.04.2024 00:35, Peter Xu wrote:
-> On Wed, Apr 24, 2024 at 12:25:08AM +0200, Maciej S. Szmigiero wrote:
->> On 24.04.2024 00:20, Peter Xu wrote:
->>> On Tue, Apr 23, 2024 at 06:15:35PM +0200, Maciej S. Szmigiero wrote:
->>>> On 19.04.2024 17:31, Peter Xu wrote:
->>>>> On Fri, Apr 19, 2024 at 11:07:21AM +0100, Daniel P. BerrangÃ© wrote:
->>>>>> On Thu, Apr 18, 2024 at 04:02:49PM -0400, Peter Xu wrote:
->>>>>>> On Thu, Apr 18, 2024 at 08:14:15PM +0200, Maciej S. Szmigiero wrote:
->>>>>>>> I think one of the reasons for these results is that mixed (RAM + device
->>>>>>>> state) multifd channels participate in the RAM sync process
->>>>>>>> (MULTIFD_FLAG_SYNC) whereas device state dedicated channels don't.
->>>>>>>
->>>>>>> Firstly, I'm wondering whether we can have better names for these new
->>>>>>> hooks.  Currently (only comment on the async* stuff):
->>>>>>>
->>>>>>>      - complete_precopy_async
->>>>>>>      - complete_precopy
->>>>>>>      - complete_precopy_async_wait
->>>>>>>
->>>>>>> But perhaps better:
->>>>>>>
->>>>>>>      - complete_precopy_begin
->>>>>>>      - complete_precopy
->>>>>>>      - complete_precopy_end
->>>>>>>
->>>>>>> ?
->>>>>>>
->>>>>>> As I don't see why the device must do something with async in such hook.
->>>>>>> To me it's more like you're splitting one process into multiple, then
->>>>>>> begin/end sounds more generic.
->>>>>>>
->>>>>>> Then, if with that in mind, IIUC we can already split ram_save_complete()
->>>>>>> into >1 phases too. For example, I would be curious whether the performance
->>>>>>> will go back to normal if we offloading multifd_send_sync_main() into the
->>>>>>> complete_precopy_end(), because we really only need one shot of that, and I
->>>>>>> am quite surprised it already greatly affects VFIO dumping its own things.
->>>>>>>
->>>>>>> I would even ask one step further as what Dan was asking: have you thought
->>>>>>> about dumping VFIO states via multifd even during iterations?  Would that
->>>>>>> help even more than this series (which IIUC only helps during the blackout
->>>>>>> phase)?
->>>>>>
->>>>>> To dump during RAM iteration, the VFIO device will need to have
->>>>>> dirty tracking and iterate on its state, because the guest CPUs
->>>>>> will still be running potentially changing VFIO state. That seems
->>>>>> impractical in the general case.
->>>>>
->>>>> We already do such interations in vfio_save_iterate()?
->>>>>
->>>>> My understanding is the recent VFIO work is based on the fact that the VFIO
->>>>> device can track device state changes more or less (besides being able to
->>>>> save/load full states).  E.g. I still remember in our QE tests some old
->>>>> devices report much more dirty pages than expected during the iterations
->>>>> when we were looking into such issue that a huge amount of dirty pages
->>>>> reported.  But newer models seem to have fixed that and report much less.
->>>>>
->>>>> That issue was about GPU not NICs, though, and IIUC a major portion of such
->>>>> tracking used to be for GPU vRAMs.  So maybe I was mixing up these, and
->>>>> maybe they work differently.
->>>>
->>>> The device which this series was developed against (Mellanox ConnectX-7)
->>>> is already transferring its live state before the VM gets stopped (via
->>>> save_live_iterate SaveVMHandler).
->>>>
->>>> It's just that in addition to the live state it has more than 400 MiB
->>>> of state that cannot be transferred while the VM is still running.
->>>> And that fact hurts a lot with respect to the migration downtime.
->>>>
->>>> AFAIK it's a very similar story for (some) GPUs.
->>>
->>> So during iteration phase VFIO cannot yet leverage the multifd channels
->>> when with this series, am I right?
->>
->> That's right.
->>
->>> Is it possible to extend that use case too?
->>
->> I guess so, but since this phase (iteration while the VM is still
->> running)Â doesn't impact downtime it is much less critical.
+Hello Cédric,
+
+> >
+> > <...snip...>
+> >
+> > - * Multi processor support for POWER8, POWER8NVL and POWER9.
+> > + * Multi processor support for POWER8, POWER8NVL, POWER9, POWER10 and Power11.
 > 
-> But it affects the bandwidth, e.g. even with multifd enabled, the device
-> iteration data will still bottleneck at ~15Gbps on a common system setup
-> the best case, even if the hosts are 100Gbps direct connected.  Would that
-> be a concern in the future too, or it's known problem and it won't be fixed
-> anyway?
+> POWER10 -> Power10. Don't ask me why.
 
-I think any improvements to the migration performance are good, even if
-they don't impact downtime.
+Sure, got it !
 
-It's just that this patch set focuses on the downtime phase as the more
-critical thing.
+> 
+> >    * XSCOM, serial communication sideband bus to configure chiplets.
+> >    * Simple LPC Controller.
+> >    * Processor Service Interface (PSI) Controller.
+> > - * Interrupt Controller, XICS (POWER8) and XIVE (POWER9) and XIVE2 (Power10).
+> > + * Interrupt Controller, XICS (POWER8) and XIVE (POWER9) and XIVE2 (Power10 &
+> > +   Power11).
+> >    * POWER8 PHB3 PCIe Host bridge and POWER9 PHB4 PCIe Host bridge.
+> >    * Simple OCC is an on-chip micro-controller used for power management tasks.
+> >    * iBT device to handle BMC communication, with the internal BMC simulator
+> > diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+> > index 74e7908e5ffb..06e272f3bdd3 100644
+> > --- a/hw/ppc/pnv.c
+> > +++ b/hw/ppc/pnv.c
+> > @@ -431,13 +431,27 @@ static const uint8_t pa_features_31[] = { 74, 0,
+> >   static void pnv_chip_power10_dt_populate(PnvChip *chip, void *fdt)
+> >   {
+> > -    static const char compat[] = "ibm,power10-xscom\0ibm,xscom";
+> > +    PnvChipClass *pcc = PNV_CHIP_GET_CLASS(chip);
+> > +    static const char compat_p10[] = "ibm,power10-xscom\0ibm,xscom";
+> > +    static const char compat_p11[] = "ibm,power11-xscom\0ibm,xscom";
+> > +
+> > +    PnvChipType chip_type = pcc->chip_type;
+> > +    const char *compat;
+> > +    int compat_len;
+> >       int i;
+> > +    if (chip_type == PNV_TYPE_POWER11) {
+> > +        compat = compat_p11;
+> > +        compat_len = sizeof(compat_p11);
+> > +    } else {
+> > +        compat = compat_p10;
+> > +        compat_len = sizeof(compat_p10);
+> > +    }
+> 
+> please introduce a pnv_chip_power11_dt_populate() routine instead.
 
-After this gets improved there's no reason why not to look at improving
-performance of the VM live phase too if it brings sensible improvements.
+Okay.
 
-> I remember Avihai used to have plan to look into similar issues, I hope
-> this is exactly what he is looking for.  Otherwise changing migration
-> protocol from time to time is cumbersome; we always need to provide a flag
-> to make sure old systems migrates in the old ways, new systems run the new
-> ways, and for such a relatively major change I'd want to double check on
-> how far away we can support offload VFIO iterations data to multifd.
+> 
+> >       pnv_dt_xscom(chip, fdt, 0,
+> >                    cpu_to_be64(PNV10_XSCOM_BASE(chip)),
+> >                    cpu_to_be64(PNV10_XSCOM_SIZE),
+> > -                 compat, sizeof(compat));
+> > +                 compat, compat_len);
+> >       for (i = 0; i < chip->nr_cores; i++) {
+> >           PnvCore *pnv_core = chip->cores[i];
+> > @@ -1288,6 +1302,8 @@ static void pnv_chip_power10_intc_print_info(PnvChip *chip, PowerPCCPU *cpu,
+> >   #define POWER10_CORE_MASK  (0xffffffffffffffull)
+> > +#define POWER11_CORE_MASK  (0xffffffffffffffull)
+> > +
+> >   static void pnv_chip_power8_instance_init(Object *obj)
+> >   {
+> >       Pnv8Chip *chip8 = PNV8_CHIP(obj);
+> > @@ -1838,6 +1854,7 @@ static void pnv_chip_power10_instance_init(Object *obj)
+> >   static void pnv_chip_power10_quad_realize(Pnv10Chip *chip10, Error **errp)
+> >   {
+> >       PnvChip *chip = PNV_CHIP(chip10);
+> > +    PnvChipClass *chip_class = PNV_CHIP_GET_CLASS(chip);
+> >       int i;
+> >       chip10->nr_quads = DIV_ROUND_UP(chip->nr_cores, 4);
+> > @@ -1846,7 +1863,11 @@ static void pnv_chip_power10_quad_realize(Pnv10Chip *chip10, Error **errp)
+> >       for (i = 0; i < chip10->nr_quads; i++) {
+> >           PnvQuad *eq = &chip10->quads[i];
+> > -        pnv_chip_quad_realize_one(chip, eq, chip->cores[i * 4],
+> > +        if (chip_class->chip_type == PNV_TYPE_POWER11)
+> > +            pnv_chip_quad_realize_one(chip, eq, chip->cores[i * 4],
+> > +                                  PNV_QUAD_TYPE_NAME("power11"));
+> > +        else
+> > +            pnv_chip_quad_realize_one(chip, eq, chip->cores[i * 4],
+> >                                     PNV_QUAD_TYPE_NAME("power10"));
+> 
+> 
+> Please change introduce a new pnv_chip_quad_realize() routine taking an
+> extra type_name argument.
 
-The device state transfer is indicated by a new flag in the multifd
-header (MULTIFD_FLAG_DEVICE_STATE).
+Sure, can do it. But as it's called from 'pnv_chip_power10_realize',
+might require a 'pnv_chip_power11_realize' function also, so it can pass
+type_name as "power11" vs "power10".
+Will do it.
 
-If we are to use multifd channels for VM live phase transfers these
-could simply re-use the same flag type.
+> 
+> 
+> >           pnv_xscom_add_subregion(chip, PNV10_XSCOM_EQ_BASE(eq->quad_id),
+> > @@ -2116,6 +2137,35 @@ static void pnv_chip_power10_class_init(ObjectClass *klass, void *data)
+> >                                       &k->parent_realize);
+> >   }
+> > +static void pnv_chip_power11_class_init(ObjectClass *klass, void *data)
+> > +{
+> > +    DeviceClass *dc = DEVICE_CLASS(klass);
+> > +    PnvChipClass *k = PNV_CHIP_CLASS(klass);
+> > +
+> > +    static const int i2c_ports_per_engine[PNV10_CHIP_MAX_I2C] = {14, 14, 2, 16};
+> > +
+> > +    k->chip_cfam_id = 0x120da04900008000ull; /* P11 (with NX) */
+> > +    k->chip_type = PNV_TYPE_POWER11;
+> > +    k->cores_mask = POWER11_CORE_MASK;
+> > +    k->chip_pir = pnv_chip_pir_p10;
+> > +    k->intc_create = pnv_chip_power10_intc_create;
+> > +    k->intc_reset = pnv_chip_power10_intc_reset;
+> > +    k->intc_destroy = pnv_chip_power10_intc_destroy;
+> > +    k->intc_print_info = pnv_chip_power10_intc_print_info;
+> > +    k->isa_create = pnv_chip_power10_isa_create;
+> > +    k->dt_populate = pnv_chip_power10_dt_populate;
+> > +    k->pic_print_info = pnv_chip_power10_pic_print_info;
+> > +    k->xscom_core_base = pnv_chip_power10_xscom_core_base;
+> > +    k->xscom_pcba = pnv_chip_power10_xscom_pcba;
+> > +    dc->desc = "PowerNV Chip POWER11";
+> > +    k->num_pecs = PNV10_CHIP_MAX_PEC;
+> > +    k->i2c_num_engines = PNV10_CHIP_MAX_I2C;
+> > +    k->i2c_ports_per_engine = i2c_ports_per_engine;
+> > +
+> > +    device_class_set_parent_realize(dc, pnv_chip_power10_realize,
+> > +                                    &k->parent_realize);
+> > +}
+> > +
+> >   static void pnv_chip_core_sanitize(PnvChip *chip, Error **errp)
+> >   {
+> >       PnvChipClass *pcc = PNV_CHIP_GET_CLASS(chip);
+> > @@ -2510,6 +2560,22 @@ static void pnv_machine_p10_rainier_class_init(ObjectClass *oc, void *data)
+> >       pmc->i2c_init = pnv_rainier_i2c_init;
+> >   }
+> > +static void pnv_machine_power11_class_init(ObjectClass *oc, void *data)
+> > +{
+> > +    MachineClass *mc = MACHINE_CLASS(oc);
+> > +    PnvMachineClass *pmc = PNV_MACHINE_CLASS(oc);
+> > +    static const char compat[] = "qemu,powernv11\0ibm,powernv";
+> > +
+> > +    /* do power10_class_init as p11 core is same as p10 */
+> > +    pnv_machine_p10_common_class_init(oc, data);
+> > +
+> > +    mc->desc = "IBM PowerNV (Non-Virtualized) POWER11";
+> > +    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power11");
+> 
+> This should be using a versionned CPU "power11_vx.y".
 
+Okay.
+
+> 
+> > +
+> > +    pmc->compat = compat;
+> > +    pmc->compat_size = sizeof(compat);
+> > +}
+> > +
+> >   static bool pnv_machine_get_hb(Object *obj, Error **errp)
+> >   {
+> >       PnvMachineState *pnv = PNV_MACHINE(obj);
+> > @@ -2613,7 +2679,23 @@ static void pnv_machine_class_init(ObjectClass *oc, void *data)
+> >           .parent        = TYPE_PNV10_CHIP,          \
+> >       }
+> > +#define DEFINE_PNV11_CHIP_TYPE(type, class_initfn) \
+> > +    {                                              \
+> > +        .name          = type,                     \
+> > +        .class_init    = class_initfn,             \
+> > +        .parent        = TYPE_PNV11_CHIP,          \
+> > +    }
+> > +
+> >   static const TypeInfo types[] = {
+> > +    {
+> > +        .name          = MACHINE_TYPE_NAME("powernv11"),
+> > +        .parent        = TYPE_PNV_MACHINE,
+> > +        .class_init    = pnv_machine_power11_class_init,
+> > +        .interfaces = (InterfaceInfo[]) {
+> > +            { TYPE_XIVE_FABRIC },
+> > +            { },
+> > +        },
+> > +    },
+> >       {
+> >           .name          = MACHINE_TYPE_NAME("powernv10-rainier"),
+> >           .parent        = MACHINE_TYPE_NAME("powernv10"),
+> > @@ -2668,6 +2750,16 @@ static const TypeInfo types[] = {
+> >           .abstract      = true,
+> >       },
+> > +    /*
+> > +     * P11 chip and variants
+> > +     */
+> > +    {
+> > +        .name          = TYPE_PNV11_CHIP,
+> > +        .parent        = TYPE_PNV10_CHIP,
+> > +        .instance_size = sizeof(Pnv11Chip),
+> > +    },
+> > +    DEFINE_PNV11_CHIP_TYPE(TYPE_PNV_CHIP_POWER11, pnv_chip_power11_class_init),
+> > +
+> >       /*
+> >        * P10 chip and variants
+> >        */
+> > diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
+> > index f40ab721d6fc..4522655793da 100644
+> > --- a/hw/ppc/pnv_core.c
+> > +++ b/hw/ppc/pnv_core.c
+> > @@ -402,7 +402,16 @@ static const TypeInfo pnv_core_infos[] = {
+> >       DEFINE_PNV_CORE_TYPE(power8, "power8_v2.0"),
+> >       DEFINE_PNV_CORE_TYPE(power8, "power8nvl_v1.0"),
+> >       DEFINE_PNV_CORE_TYPE(power9, "power9_v2.2"),
+> > -    DEFINE_PNV_CORE_TYPE(power10, "power10_v2.0"),
+> > +    {
+> > +        .parent = TYPE_PNV_CORE,
+> > +        .name = PNV_CORE_TYPE_NAME("power10_v2.0"),
+> > +        .class_init = pnv_core_power10_class_init,
+> > +        .class_base_init = pnv_core_power10_class_init,
+> > +    },
+> 
+> hmm, what is this change ?
+
+I expanded the macro, to add '.class_base_init', as .class_base_init
+will be run by QEMU during initialisation of any child classes also. And
+I wanted to let QEMU call 'pnv_core_power10_class_init' when it
+initialises 'power11' type.
+
+> 
+> 
+> > +    {
+> > +        .parent = PNV_CORE_TYPE_NAME("power10_v2.0"),
+> > +        .name = PNV_CORE_TYPE_NAME("power11"),
+> > +    }
+> 
+> nope. please use DEFINE_PNV_CORE_TYPE()
+
+Okay, then, should I have a 'pnv_core_power11_class_init' call
+'pnv_core_power10_class_init' ?
+
+> 
+> >   };
+> >   DEFINE_TYPES(pnv_core_infos)
+> > @@ -633,6 +642,11 @@ static const TypeInfo pnv_quad_infos[] = {
+> >           .parent = TYPE_PNV_QUAD,
+> >           .name = PNV_QUAD_TYPE_NAME("power10"),
+> >           .class_init = pnv_quad_power10_class_init,
+> > +        .class_base_init = pnv_quad_power10_class_init,
+> > +    },
+> > +    {
+> > +        .parent = PNV_QUAD_TYPE_NAME("power10"),
+> > +        .name = PNV_QUAD_TYPE_NAME("power11"),
+> 
+> hmm, I'd rather introduce pnv_quad_power11_class_init.
+
+Same, in that case, I can have a 'pnv_quad_power11_class_init' which
+just calls 'pnv_quad_power10_class_init'.
+
+Any comments ?
+
+> > <...snip...>
+> >
+> > +struct Pnv11Chip {
+> > +    /*< private >*/
+> > +    Pnv10Chip      parent_obj;
+> 
+> Can't you use a typedef instead ?
+
+Yes, makes sense. Thanks Cédric.
+
+- Aditya Gupta
+
+> 
 > Thanks,
 > 
-
-Thanks,
-Maciej
-
+> C.
+> 
+> 
+> > +};
+> > +
+> >   struct PnvChipClass {
+> >       /*< private >*/
+> >       SysBusDeviceClass parent_class;
+> 
 
