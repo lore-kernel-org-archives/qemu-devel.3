@@ -4,105 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6B5DC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 08:17:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F385C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 08:19:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0GlQ-0006E0-2b; Fri, 26 Apr 2024 04:17:00 -0400
+	id 1s0Gms-00071H-IZ; Fri, 26 Apr 2024 04:18:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhartmay@linux.ibm.com>)
- id 1s0GlO-0006DO-8D
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 04:16:58 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s0Gmn-0006w1-1C
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 04:18:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhartmay@linux.ibm.com>)
- id 1s0GlI-0004tY-IK
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 04:16:57 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43Q82IBp002150; Fri, 26 Apr 2024 08:16:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : to : cc : subject
- : in-reply-to : references : date : message-id : mime-version :
- content-type : content-transfer-encoding; s=pp1;
- bh=Shn8RqJA4fruhnfi3P+gV4VusOzkRvyaxPZTzy5UECc=;
- b=Sp4yYs/SoGeW3J76bQaHrRHWyhdpwBvVx5mOTZVdyTiPp8+7VBsqL7g98YQuMmmqMEts
- bjzsx/HaPT+665cPFnZXAAfSoCQXi1F5xyfJoT6ekBn9tCpODcqYgxztdX3hCdTP5fQw
- Tk7BqYFlUFRQNCNdtQORlslQJ+M4K64RVV4tjar+oEw2lnrZ8Hzv1hm+3jkcSPIL/gha
- 6ami3GBliNDoqCYX3eIfSbAvICcUhASVhkIEls/aRthTlFwZV0LUhhc/U0lgWDQhSn30
- uD1qafilAartxeRnDuUujS7a1blymPfCyt5SL7ZqLYVfgCxOT6rxGmf6XWlwKtz9nFpF vQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xr8dcg1ey-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Apr 2024 08:16:47 +0000
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43Q8Gcm4024906;
- Fri, 26 Apr 2024 08:16:47 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xr8dcg1ew-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Apr 2024 08:16:47 +0000
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43Q4nTZl029929; Fri, 26 Apr 2024 08:16:46 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xmr1txv36-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Apr 2024 08:16:46 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 43Q8GeOk29425996
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 26 Apr 2024 08:16:42 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AD3C320043;
- Fri, 26 Apr 2024 08:16:40 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 026652004B;
- Fri, 26 Apr 2024 08:16:40 +0000 (GMT)
-Received: from li-1de7cd4c-3205-11b2-a85c-d27f97db1fe1.ibm.com (unknown
- [9.171.40.41]) by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Fri, 26 Apr 2024 08:16:39 +0000 (GMT)
-From: "Marc Hartmayer" <mhartmay@linux.ibm.com>
-To: Dmitrii Gavrilov <ds-gavr@yandex-team.ru>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
- mlevitsk@redhat.com, vsementsov@yandex-team.ru, ds-gavr@yandex-team.ru,
- yc-core@yandex-team.ru, Christian Borntraeger <borntraeger@linux.ibm.com>,
- Benjamin Block <bblock@linux.ibm.com>
-Subject: Re: [PATCH] system/qdev-monitor: move drain_call_rcu call under if
- (!dev) in qmp_device_add()
-In-Reply-To: <20231103105602.90475-1-ds-gavr@yandex-team.ru>
-References: <20231103105602.90475-1-ds-gavr@yandex-team.ru>
-Date: Fri, 26 Apr 2024 10:16:39 +0200
-Message-ID: <8734r8k07s.fsf@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s0Gmg-00057V-FN
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 04:18:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714119496;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=sN7thfPp/2yIrAMCzZsin8pIgKDJFLqi+FxnGvjZU34=;
+ b=MAnjUbY+ogvxOVfCOuZMAeDv3iJmwbQlUVvi8qoCr3u9NkHbhyBTGMsJ7n7TYwKBurEZI9
+ Jl9W8J32qGmg4VbsaL4fySEoa8Fi31pGyW6Hf1Gz9AI5u0Ex3D1yDWU8P5sMb2dyxQzSEQ
+ zQWogaEe0uSjY+fMkhBQ+5WQ2oEPDUA=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-549-kv4E22vZMyGnLaM7MIfzqw-1; Fri,
+ 26 Apr 2024 04:18:12 -0400
+X-MC-Unique: kv4E22vZMyGnLaM7MIfzqw-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 77E59380391A;
+ Fri, 26 Apr 2024 08:18:11 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 0AD1A2166B36;
+ Fri, 26 Apr 2024 08:18:11 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id F2B4F21E66E5; Fri, 26 Apr 2024 10:18:09 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Collin Walling <walling@linux.ibm.com>
+Cc: qemu-s390x@nongnu.org,  qemu-devel@nongnu.org,  thuth@redhat.com,
+ david@redhat.com,  wangyanan55@huawei.com,  philmd@linaro.org,
+ marcel.apfelbaum@gmail.com,  eduardo@habkost.net
+Subject: Re: [PATCH v2 1/3] cpu-models: add "disable-deprecated-feats"
+ option to cpu model expansion
+In-Reply-To: <f5d362f7-c9dd-4730-9b1c-07b14f8128a8@linux.ibm.com> (Collin
+ Walling's message of "Thu, 25 Apr 2024 13:35:17 -0400")
+References: <20240423210655.66656-1-walling@linux.ibm.com>
+ <20240423210655.66656-2-walling@linux.ibm.com>
+ <87bk5z5ll9.fsf@pond.sub.org>
+ <809ee6ee-e66e-466f-bbf2-93ba7ec1afda@linux.ibm.com>
+ <87jzkm9cn8.fsf@pond.sub.org>
+ <f5d362f7-c9dd-4730-9b1c-07b14f8128a8@linux.ibm.com>
+Date: Fri, 26 Apr 2024 10:18:09 +0200
+Message-ID: <87a5lgzge6.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: E9EZ_ccb2EWo593FZFS3Y5LwgmLZZqSD
-X-Proofpoint-ORIG-GUID: t_5BeIxqSGmunndVr4Js6yxnBRSQ52_e
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-26_07,2024-04-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0
- impostorscore=0 clxscore=1011 lowpriorityscore=0 spamscore=0
- priorityscore=1501 mlxscore=0 mlxlogscore=999 adultscore=0 bulkscore=0
- phishscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2404010000 definitions=main-2404260052
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mhartmay@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,212 +89,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Nov 03, 2023 at 01:56 PM +0300, Dmitrii Gavrilov <ds-gavr@yandex-te=
-am.ru> wrote:
-> Original goal of addition of drain_call_rcu to qmp_device_add was to cover
-> the failure case of qdev_device_add. It seems call of drain_call_rcu was
-> misplaced in 7bed89958bfbf40df what led to waiting for pending RCU callba=
-cks
-> under happy path too. What led to overall performance degradation of
-> qmp_device_add.
+Collin Walling <walling@linux.ibm.com> writes:
+
+> On 4/25/24 02:31, Markus Armbruster wrote:
+>> Collin Walling <walling@linux.ibm.com> writes:
+>> 
+>>> On 4/24/24 02:19, Markus Armbruster wrote:
+>>>> Collin Walling <walling@linux.ibm.com> writes:
+>>>>
+>>>>> This optional parameter for query-cpu-model-expansion enables CPU
+>>>>> model features flagged as deprecated to appear in the resulting
+>>>>> list of properties.
+>>>>>
+>>>>> This commit does not add support beyond adding a new argument
+>>>>> to the query. All queries with this option present will result
+>>>>> in an error claiming this option is not supported.
+>>>>>
+>>>>> Signed-off-by: Collin Walling <walling@linux.ibm.com>
+>>>>> ---
+>>>>>  qapi/machine-target.json         | 7 ++++++-
+>>>>>  target/arm/arm-qmp-cmds.c        | 7 +++++++
+>>>>>  target/i386/cpu-sysemu.c         | 7 +++++++
+>>>>>  target/s390x/cpu_models_sysemu.c | 7 +++++++
+>>>>>  4 files changed, 27 insertions(+), 1 deletion(-)
+>>>>>
+>>>>> diff --git a/qapi/machine-target.json b/qapi/machine-target.json
+>>>>> index 29e695aa06..b9da284d2d 100644
+>>>>> --- a/qapi/machine-target.json
+>>>>> +++ b/qapi/machine-target.json
+>>>>> @@ -285,6 +285,10 @@
+>>>>>  #
+>>>>>  # @type: expansion type, specifying how to expand the CPU model
+>>>>>  #
+>>>>> +# @disable-deprecated-feats: include CPU model features that are
+>>>>> +#     flagged as deprecated. If supported, these features will appear
+>>>>> +#     in the properties list paired with false.
+>>>>
+>>>> What's the default?
+>>>>
+>>>> Which command result(s) does this affect?  Suggest to explain using
+>>>> unabridged example QMP input and output before and after this series.
+>>>
+>>> Fair enough. Bool defaults to false but that's not apparent in the
+>>> description. I will add more detail.
+>> 
+>> I didn't mean to ask for example QMP in the doc comment.  I need you to
+>> explain the new member to me.  Once I understand what the thing does, I
+>> may have suggestions on improving the doc comment.
+>> 
+>> [...]
+>> 
 >
-> In this patch call of drain_call_rcu moved under handling of failure of
-> qdev_device_add.
+> Ah, I misunderstood.  The idea behind this "disable-deprecated-feats"
+> option is to add/override any CPU features that are flagged as
+> deprecated to the props dictionary (found in the CpuModelInfo struct)
+> paired with the value false.
 >
-> Signed-off-by: Dmitrii Gavrilov <ds-gavr@yandex-team.ru>
+> For example, the csske feature on s390x is flagged as deprecated.  If a
+> query-cpu-model-expansion command is created with
+> "disable-deprecated-feats": true, then the csske feature will show up in
+> the props list as "csske": false.  This also overrides any user defined
+> features and props that would show up in the response normally. E.g. if
+> the same command was executed and "csske": true was provided in the
+> model's properties by the user, the response will still show "csske":
+> false since the "disable-deprecated-feats" option takes priority (there
+> is a discussion with David H regarding which should take precedence --
+> this is a flaw in this design).
+>
+> In the below QMP samples I provide a static expansion on a host model.
+> Pay close attention to the bpb, te, cte, and csske properties.
 
-I don't know the exact reason, but this commit caused udev events to
-show up much slower than before (~3s vs. ~23s) when a virtio-scsi device
-is hotplugged (I=E2=80=99ve tested this only on s390x). Importantly, this o=
-nly
-happens when asynchronous SCSI scanning is disabled in the *guest*
-kernel (scsi_mod.scan=3Dsync or CONFIG_SCSI_SCAN_ASYNC=3Dn).
+[...]
 
-The `udevadm monitor` output captured while hotplugging the device
-(using QEMU 012b170173bc ("system/qdev-monitor: move drain_call_rcu call
-under if (!dev) in qmp_device_add()")):
+> Hope this helps to provide more context.  Please let me know if you'd
+> like more info.  I am leaning towards v3's design more, as it seems a
+> lot cleaner overall.  I would appreciate your feedback there as well if
+> you have the time.
+>
+> Thanks!
 
-=E2=80=A6
-KERNEL[2.166575] add      /devices/css0/0.0.0002/0.0.0002 (ccw)
-KERNEL[2.166594] bind     /devices/css0/0.0.0002/0.0.0002 (ccw)
-KERNEL[2.166826] add      /devices/css0/0.0.0002/0.0.0002/virtio2 (virtio)
-UDEV  [2.166846] add      /devices/css0/0.0.0002/0.0.0002 (ccw)
-UDEV  [2.167013] bind     /devices/css0/0.0.0002/0.0.0002 (ccw)
-KERNEL[2.167560] add      /devices/virtual/workqueue/scsi_tmf_0 (workqueue)
-UDEV  [2.167977] add      /devices/virtual/workqueue/scsi_tmf_0 (workqueue)
-KERNEL[2.167987] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0 (sc=
-si)
-KERNEL[2.167996] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/scs=
-i_host/host0 (scsi_host)
-KERNEL[2.169113] change   /0:0:0:0 (scsi)
-UDEV  [2.169212] change   /0:0:0:0 (scsi)
-KERNEL[2.199500] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/tar=
-get0:0:0 (scsi)
-KERNEL[2.199513] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/tar=
-get0:0:0/0:0:0:0 (scsi)
-KERNEL[2.199523] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/tar=
-get0:0:0/0:0:0:0/scsi_device/0:0:0:0 (scsi_device)
-KERNEL[2.199532] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/tar=
-get0:0:0/0:0:0:0/scsi_disk/0:0:0:0 (scsi_disk)
-KERNEL[2.199564] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/tar=
-get0:0:0/0:0:0:0/scsi_generic/sg0 (scsi_generic)
-KERNEL[2.199586] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/tar=
-get0:0:0/0:0:0:0/bsg/0:0:0:0 (bsg)
-KERNEL[2.280482] add      /devices/virtual/bdi/8:0 (bdi)
-UDEV  [2.280634] add      /devices/virtual/bdi/8:0 (bdi)
-KERNEL[3.060145] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/tar=
-get0:0:0/0:0:0:0/block/sda (block)
-KERNEL[3.060160] bind     /devices/css0/0.0.0002/0.0.0002/virtio2/host0/tar=
-get0:0:0/0:0:0:0 (scsi)
-KERNEL[22.160147] bind     /devices/css0/0.0.0002/0.0.0002/virtio2 (virtio)
-KERNEL[22.160161] add      /bus/virtio/drivers/virtio_scsi (drivers)
-KERNEL[22.160169] add      /module/virtio_scsi (module)
-UDEV  [22.161078] add      /devices/css0/0.0.0002/0.0.0002/virtio2 (virtio)
-UDEV  [22.161339] add      /bus/virtio/drivers/virtio_scsi (drivers)
-UDEV  [22.161860] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0 (s=
-csi)
-UDEV  [22.161869] add      /module/virtio_scsi (module)
-UDEV  [22.161880] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/ta=
-rget0:0:0 (scsi)
-UDEV  [22.161890] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/sc=
-si_host/host0 (scsi_host)
-UDEV  [22.161901] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/ta=
-rget0:0:0/0:0:0:0 (scsi)
-UDEV  [22.161911] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/ta=
-rget0:0:0/0:0:0:0/scsi_disk/0:0:0:0 (scsi_disk)
-UDEV  [22.161924] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/ta=
-rget0:0:0/0:0:0:0/bsg/0:0:0:0 (bsg)
-UDEV  [22.161937] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/ta=
-rget0:0:0/0:0:0:0/scsi_generic/sg0 (scsi_generic)
-UDEV  [22.162123] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/ta=
-rget0:0:0/0:0:0:0/scsi_device/0:0:0:0 (scsi_device)
-UDEV  [22.468924] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/ta=
-rget0:0:0/0:0:0:0/block/sda (block)
-UDEV  [22.473955] bind     /devices/css0/0.0.0002/0.0.0002/virtio2/host0/ta=
-rget0:0:0/0:0:0:0 (scsi)
-UDEV  [22.473970] bind     /devices/css0/0.0.0002/0.0.0002/virtio2 (virtio)
+Okay, I'll look at v3 then.
 
+Thank you!
 
-The `udevadm monitor` output without this commit (QEMU 9876359990dd ("hw/sc=
-si/lsi53c895a: add timer to scripts processing")):
-
-=E2=80=A6
-KERNEL[2.091114] add      /devices/virtual/workqueue/scsi_tmf_0 (workqueue)
-UDEV  [2.091218] add      /devices/virtual/workqueue/scsi_tmf_0 (workqueue)
-KERNEL[2.091408] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0 (sc=
-si)
-KERNEL[2.091418] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/scs=
-i_host/host0 (scsi_host)
-KERNEL[2.200461] bind     /devices/css0/0.0.0002/0.0.0002/virtio2 (virtio)
-KERNEL[2.200473] add      /bus/virtio/drivers/virtio_scsi (drivers)
-KERNEL[2.200481] add      /module/virtio_scsi (module)
-UDEV  [2.200634] add      /module/virtio_scsi (module)
-UDEV  [2.200678] add      /devices/css0/0.0.0002/0.0.0002/virtio2 (virtio)
-UDEV  [2.200746] add      /bus/virtio/drivers/virtio_scsi (drivers)
-UDEV  [2.200830] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0 (sc=
-si)
-UDEV  [2.200972] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/scs=
-i_host/host0 (scsi_host)
-UDEV  [2.201148] bind     /devices/css0/0.0.0002/0.0.0002/virtio2 (virtio)
-KERNEL[2.201699] change   /0:0:0:0 (scsi)
-KERNEL[2.201734] change   /0:0:0:0 (scsi)
-UDEV  [2.201815] change   /0:0:0:0 (scsi)
-UDEV  [2.201888] change   /0:0:0:0 (scsi)
-KERNEL[2.222062] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/tar=
-get0:0:0 (scsi)
-KERNEL[2.222074] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/tar=
-get0:0:0/0:0:0:0 (scsi)
-KERNEL[2.222083] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/tar=
-get0:0:0/0:0:0:0/scsi_device/0:0:0:0 (scsi_device)
-KERNEL[2.222092] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/tar=
-get0:0:0/0:0:0:0/scsi_disk/0:0:0:0 (scsi_disk)
-KERNEL[2.222104] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/tar=
-get0:0:0/0:0:0:0/scsi_generic/sg0 (scsi_generic)
-KERNEL[2.222127] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/tar=
-get0:0:0/0:0:0:0/bsg/0:0:0:0 (bsg)
-UDEV  [2.222241] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/tar=
-get0:0:0 (scsi)
-UDEV  [2.222486] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/tar=
-get0:0:0/0:0:0:0 (scsi)
-UDEV  [2.222667] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/tar=
-get0:0:0/0:0:0:0/scsi_disk/0:0:0:0 (scsi_disk)
-UDEV  [2.222715] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/tar=
-get0:0:0/0:0:0:0/bsg/0:0:0:0 (bsg)
-UDEV  [2.222877] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/tar=
-get0:0:0/0:0:0:0/scsi_device/0:0:0:0 (scsi_device)
-UDEV  [2.223116] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/tar=
-get0:0:0/0:0:0:0/scsi_generic/sg0 (scsi_generic)
-KERNEL[2.303063] add      /devices/virtual/bdi/8:0 (bdi)
-UDEV  [2.303197] add      /devices/virtual/bdi/8:0 (bdi)
-KERNEL[2.394175] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/tar=
-get0:0:0/0:0:0:0/block/sda (block)
-KERNEL[2.394186] bind     /devices/css0/0.0.0002/0.0.0002/virtio2/host0/tar=
-get0:0:0/0:0:0:0 (scsi)
-UDEV  [2.706054] add      /devices/css0/0.0.0002/0.0.0002/virtio2/host0/tar=
-get0:0:0/0:0:0:0/block/sda (block)
-UDEV  [2.706075] bind     /devices/css0/0.0.0002/0.0.0002/virtio2/host0/tar=
-get0:0:0/0:0:0:0 (scsi)
-
-I=E2=80=99ve used as host kernel 6.7.0-rc3-00033-ge72f947b4f0d and guest ke=
-rnel
-v6.5.0.
-
-QEMU 'info qtree' output when the device was hotplugged:
-
-bus: main-system-bus
-  type System
-  dev: s390-pcihost, id ""
-    x-config-reg-migration-enabled =3D true
-    bypass-iommu =3D false
-    bus: s390-pcibus.0
-      type s390-pcibus
-    bus: pci.0
-      type PCI
-  dev: virtual-css-bridge, id ""
-    css_dev_path =3D true
-    bus: virtual-css
-      type virtual-css-bus
-      dev: virtio-scsi-ccw, id "scsi0"
-        ioeventfd =3D true
-        max_revision =3D 2 (0x2)
-        devno =3D "fe.0.0002"
-        dev_id =3D "fe.0.0002"
-        subch_id =3D "fe.0.0002"
-        bus: virtio-bus
-          type virtio-ccw-bus
-          dev: virtio-scsi-device, id ""
-            num_queues =3D 1 (0x1)
-            virtqueue_size =3D 256 (0x100)
-            seg_max_adjust =3D true
-            max_sectors =3D 65535 (0xffff)
-            cmd_per_lun =3D 128 (0x80)
-            hotplug =3D true
-            param_change =3D true
-            indirect_desc =3D true
-            event_idx =3D true
-            notify_on_empty =3D true
-            any_layout =3D true
-            iommu_platform =3D false
-            packed =3D false
-            queue_reset =3D true
-            use-started =3D true
-            use-disabled-flag =3D true
-            x-disable-legacy-check =3D false
-            bus: scsi0.0
-              type SCSI
-              dev: scsi-generic, id "hostdev0"
-                drive =3D "libvirt-1-backend"
-                share-rw =3D false
-                io_timeout =3D 30 (0x1e)
-                channel =3D 0 (0x0)
-                scsi-id =3D 0 (0x0)
-                lun =3D 0 (0x0)
-=E2=80=A6
-
-Any ideas?
-
-Thanks in advance.
-
-Kind regards,
- Marc
 
