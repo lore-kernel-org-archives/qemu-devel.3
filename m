@@ -4,72 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC72CC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 09:30:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2D11C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 09:33:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0HtT-00034a-Jq; Fri, 26 Apr 2024 05:29:23 -0400
+	id 1s0Hwt-0004zM-DN; Fri, 26 Apr 2024 05:32:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1s0HtS-00034C-8o
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 05:29:22 -0400
-Received: from mgamail.intel.com ([198.175.65.10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1s0HtP-0007yG-Mt
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 05:29:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1714123760; x=1745659760;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=/R0svYu3l/KTHQmXD0bX6MmojqNw+/p8Ly/1FBSYBSg=;
- b=fzv/1ORYv53mFKxSY3JV0q0cqLLrjNqBD6aWKV66q0bcdchuIN3aFQOa
- UQYM/9j0fcTFhgjC6OrvhRydHo/PBZC3sSpQPDroI4DVNai1N6gLeb7BR
- iLLTUT7ZEsTr2ylEbP8aU9ZyhizuHpOXgBHF5KrETbxXdvgFhPkI03Yqk
- ca9iCNvPtgz2GHPN+N5gnFjVfqKHILAh1WTM6rcgNbGRnImMYOFQJ3wqM
- pOheXe6tt6tyRfowEOT1WN+TmESeGu4xoIj58/oa13Ehp09xzRYLWztIl
- I10J2SYic3gMhtoASo/Wfy7gJkmRckQSCgQGujr6yMpauuqAincBs3a01 w==;
-X-CSE-ConnectionGUID: XOkcqM5CQIaxfkuhvJcZfQ==
-X-CSE-MsgGUID: drQYd6O+SoyWDg3U8/wbyw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11055"; a="27309064"
-X-IronPort-AV: E=Sophos;i="6.07,232,1708416000"; d="scan'208";a="27309064"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Apr 2024 02:29:16 -0700
-X-CSE-ConnectionGUID: 28BPWYlqTAqCkk6AMPhRwA==
-X-CSE-MsgGUID: b7J+VUHCTFesPHPnJbAP3g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,232,1708416000"; d="scan'208";a="56299296"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa002.jf.intel.com with ESMTP; 26 Apr 2024 02:29:14 -0700
-Date: Fri, 26 Apr 2024 17:43:22 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Subject: Re: [PULL v2 00/63] First batch of i386 and build system patch for
- QEMU 9.1
-Message-ID: <Zit3OlzAe/sAwNJ+@intel.com>
-References: <20240424081443.75869-1-pbonzini@redhat.com>
- <7217032f-2d44-4c9b-aa73-1b97787de03e@linaro.org>
- <CABgObfYAJQS-x6NRnjF5T-i0FmKwJR5eK0XQ8t1HBBTbP2QDkw@mail.gmail.com>
- <ZitbE46sNJAQN0xk@intel.com>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1s0Hwq-0004tW-Iz
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 05:32:52 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1s0Hwm-0001CT-Np
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 05:32:51 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8AxJ+m7dCtm7GUDAA--.1732S3;
+ Fri, 26 Apr 2024 17:32:43 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8BxU1a2dCtm+yUGAA--.2929S4; 
+ Fri, 26 Apr 2024 17:32:41 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: qemu-devel@nongnu.org,
+	maobibo@loongson.cn
+Cc: richard.henderson@linaro.org, peter.maydell@linaro.org, philmd@linaro.org,
+ zltjiangshi@gmail.com
+Subject: [PATCH v7 02/17] hw/loongarch: Add load initrd
+Date: Fri, 26 Apr 2024 17:15:36 +0800
+Message-Id: <20240426091551.2397867-3-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20240426091551.2397867-1-gaosong@loongson.cn>
+References: <20240426091551.2397867-1-gaosong@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZitbE46sNJAQN0xk@intel.com>
-Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+X-CM-TRANSID: AQAAf8BxU1a2dCtm+yUGAA--.2929S4
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,53 +66,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 26, 2024 at 03:43:15PM +0800, Zhao Liu wrote:
-> Date: Fri, 26 Apr 2024 15:43:15 +0800
-> From: Zhao Liu <zhao1.liu@intel.com>
-> Subject: Re: [PULL v2 00/63] First batch of i386 and build system patch for
->  QEMU 9.1
-> 
-> Hi Paolo,
-> 
-> On Fri, Apr 26, 2024 at 07:21:12AM +0200, Paolo Bonzini wrote:
-> > Date: Fri, 26 Apr 2024 07:21:12 +0200
-> > From: Paolo Bonzini <pbonzini@redhat.com>
-> > Subject: Re: [PULL v2 00/63] First batch of i386 and build system patch for
-> >  QEMU 9.1
-> > 
-> > On Wed, Apr 24, 2024 at 8:49 PM Richard Henderson
-> > <richard.henderson@linaro.org> wrote:
-> > >
-> > > On 4/24/24 01:14, Paolo Bonzini wrote:
-> > > > The following changes since commit 62dbe54c24dbf77051bafe1039c31ddc8f37602d:
-> > > >
-> > > >    Update version for v9.0.0-rc4 release (2024-04-16 18:06:15 +0100)
-> > > >
-> > > > are available in the Git repository at:
-> > > >
-> > > >    https://gitlab.com/bonzini/qemu.git tags/for-upstream
-> > > >
-> > > > for you to fetch changes up to 7653b44534d3267fa63ebc9d7221eaa7b48bf5ae:
-> > > >
-> > > >    target/i386/translate.c: always write 32-bits for SGDT and SIDT (2024-04-23 17:35:26 +0200)
-> > >
-> > > Sorry, I've already merged v1.  You'll need to adjust the fix on top.
-> > 
-> > It's the same tag, so you actually merged v2.
-> 
-> The difference between v2 and v1 is about fixing two of Xiaoyao's
-> comments, right?
-> 
-> Currently in master, luckly the CPUID fix [1] has landed, but another
-> comment fix [2] hasn't land. So Richard merged v1 and helped fix [1],
-> [2] did not catch up with v1 merge window. ;-(
+we load initrd ramdisk after kernel_high address
 
-I misunderstood this and rechecked v2, which also doesn't contain [2].
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Message-Id: <20240307164835.300412-3-gaosong@loongson.cn>
+---
+ hw/loongarch/boot.c | 29 ++++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
 
-> I have a misc kvm cleanup series coming up soon that I can also include
-> [2]'s fix there.
-> 
-> [1]: https://lore.kernel.org/qemu-devel/b9043b52-5fdf-4349-8a56-c1418feb1bbd@intel.com/
-> [2]: https://lore.kernel.org/qemu-devel/2815f0f1-9e20-4985-849c-d74c6cdc94ae@intel.com/
-> 
+diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+index 9feed17db3..a9522d6912 100644
+--- a/hw/loongarch/boot.c
++++ b/hw/loongarch/boot.c
+@@ -22,7 +22,8 @@ static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
+ 
+ static int64_t load_kernel_info(struct loongarch_boot_info *info)
+ {
+-    uint64_t kernel_entry, kernel_low, kernel_high;
++    uint64_t kernel_entry, kernel_low, kernel_high, initrd_size;
++    ram_addr_t initrd_offset;
+     ssize_t kernel_size;
+ 
+     kernel_size = load_elf(info->kernel_filename, NULL,
+@@ -37,6 +38,32 @@ static int64_t load_kernel_info(struct loongarch_boot_info *info)
+                      load_elf_strerror(kernel_size));
+         exit(1);
+     }
++
++    if (info->initrd_filename) {
++        initrd_size = get_image_size(info->initrd_filename);
++        if (initrd_size > 0) {
++            initrd_offset = ROUND_UP(kernel_high + 4 * kernel_size, 64 * KiB);
++
++            if (initrd_offset + initrd_size > info->ram_size) {
++                error_report("memory too small for initial ram disk '%s'",
++                             info->initrd_filename);
++                exit(1);
++            }
++
++            initrd_size = load_image_targphys(info->initrd_filename, initrd_offset,
++                                              info->ram_size - initrd_offset);
++        }
++
++        if (initrd_size == (target_ulong)-1) {
++            error_report("could not load initial ram disk '%s'",
++                         info->initrd_filename);
++            exit(1);
++        }
++    } else {
++        error_report("Need initrd!");
++        exit(1);
++    }
++
+     return kernel_entry;
+ }
+ 
+-- 
+2.25.1
+
 
