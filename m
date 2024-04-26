@@ -4,59 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D102AC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 17:54:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B160C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 18:17:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0Pln-0001jj-QK; Fri, 26 Apr 2024 13:53:59 -0400
+	id 1s0Q78-00076A-3d; Fri, 26 Apr 2024 14:16:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=oYEp=L7=kaod.org=clg@ozlabs.org>)
- id 1s0Pll-0001ig-S4; Fri, 26 Apr 2024 13:53:58 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
- helo=gandalf.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
+ id 1s0Q76-00075h-6X
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 14:16:00 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=oYEp=L7=kaod.org=clg@ozlabs.org>)
- id 1s0Plj-0001r5-8H; Fri, 26 Apr 2024 13:53:57 -0400
-Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4VR0hY2gr3z4wyp;
- Sat, 27 Apr 2024 03:53:49 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4VR0hV4dNmz4wcR;
- Sat, 27 Apr 2024 03:53:46 +1000 (AEST)
-Message-ID: <74a0e78c-0dd2-4f48-a2f3-c0c4460f28b6@kaod.org>
-Date: Fri, 26 Apr 2024 19:53:43 +0200
+ (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
+ id 1s0Q74-0007Ru-A7
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 14:15:59 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43QDxCTC016246;
+ Fri, 26 Apr 2024 18:15:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding:content-type; s=qcppdkim1; bh=XQPphpO
+ Co3g5rcWhbUyCw6rQ1ie5pNKKdOz2b3S3l0w=; b=AvW9B/ftgUebUxP5nXheG/k
+ xMXdYmGXrtf0c648s/iBxYKiZsS2kLD99YcprtstR+DXVsWV8whVsLvoq/cLOOb9
+ +NYGoUsF6QNldWXQiqUyZnqVGqyfAb6e0oA45a7kba3kcTFu8YRoHfCk6bDxoIjn
+ GbPfEgkyVcU7wRT9RYbPYDxuR1PwbqHihj+//dRixQjFpfp2tkRufMNuB/TrISUK
+ 726ialSDpBvAn8YE6fCDXEIWLytJoP4S7e/XcYbmf4SN0tHb4BEZ5Q1g1n4z9cyD
+ un8GJ1KWqTe447Yqk93q6mjzHLvhvTFfDvV1iBkGmdOq6ZCWXk48EIT3cbYIC4Q=
+ =
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xrdmr0k5r-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 26 Apr 2024 18:15:54 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com
+ [10.47.209.196])
+ by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43QIFr9h007840
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 26 Apr 2024 18:15:53 GMT
+Received: from hu-mathbern-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 26 Apr 2024 11:15:53 -0700
+From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+To: <qemu-devel@nongnu.org>
+CC: <bcain@quicinc.com>, <sidneym@quicinc.com>, <ale@rev.ng>, <anjo@rev.ng>,
+ <ltaylorsimpson@gmail.com>
+Subject: [PATCH] Hexagon: add PC alignment check and exception
+Date: Fri, 26 Apr 2024 15:15:39 -0300
+Message-ID: <c7af62451b02ffdc1d68bc00093b40a8080bc3ff.1714155331.git.quic_mathbern@quicinc.com>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/10] ppc/pnv: Add a Power11 Pnv11Chip, and a Power11
- Machine
-To: Aditya Gupta <adityag@linux.ibm.com>
-Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
- <fbarrat@linux.ibm.com>
-References: <20240426110023.733309-1-adityag@linux.ibm.com>
- <20240426110023.733309-4-adityag@linux.ibm.com>
- <7ac5fa18-70be-42d2-addb-b35c9355e984@kaod.org>
- <trxofbh7pgkmmfioku4kw7c7rl4bj3dawe4zakuqcx55tnhujo@fqxgd6s3odvr>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <trxofbh7pgkmmfioku4kw7c7rl4bj3dawe4zakuqcx55tnhujo@fqxgd6s3odvr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=oYEp=L7=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Proofpoint-ORIG-GUID: PRQFDC3JzU_iSrsIyLsi_BY3_G-oJN2w
+X-Proofpoint-GUID: PRQFDC3JzU_iSrsIyLsi_BY3_G-oJN2w
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-04-26_15,2024-04-26_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0
+ priorityscore=1501 spamscore=0 lowpriorityscore=0 impostorscore=0
+ mlxlogscore=999 mlxscore=0 bulkscore=0 phishscore=0 clxscore=1011
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404260125
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=quic_mathbern@quicinc.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,299 +98,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/26/24 19:34, Aditya Gupta wrote:
-> Hello Cédric,
-> 
->>>
->>> <...snip...>
->>>
->>> - * Multi processor support for POWER8, POWER8NVL and POWER9.
->>> + * Multi processor support for POWER8, POWER8NVL, POWER9, POWER10 and Power11.
->>
->> POWER10 -> Power10. Don't ask me why.
-> 
-> Sure, got it !
-> 
->>
->>>     * XSCOM, serial communication sideband bus to configure chiplets.
->>>     * Simple LPC Controller.
->>>     * Processor Service Interface (PSI) Controller.
->>> - * Interrupt Controller, XICS (POWER8) and XIVE (POWER9) and XIVE2 (Power10).
->>> + * Interrupt Controller, XICS (POWER8) and XIVE (POWER9) and XIVE2 (Power10 &
->>> +   Power11).
->>>     * POWER8 PHB3 PCIe Host bridge and POWER9 PHB4 PCIe Host bridge.
->>>     * Simple OCC is an on-chip micro-controller used for power management tasks.
->>>     * iBT device to handle BMC communication, with the internal BMC simulator
->>> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
->>> index 74e7908e5ffb..06e272f3bdd3 100644
->>> --- a/hw/ppc/pnv.c
->>> +++ b/hw/ppc/pnv.c
->>> @@ -431,13 +431,27 @@ static const uint8_t pa_features_31[] = { 74, 0,
->>>    static void pnv_chip_power10_dt_populate(PnvChip *chip, void *fdt)
->>>    {
->>> -    static const char compat[] = "ibm,power10-xscom\0ibm,xscom";
->>> +    PnvChipClass *pcc = PNV_CHIP_GET_CLASS(chip);
->>> +    static const char compat_p10[] = "ibm,power10-xscom\0ibm,xscom";
->>> +    static const char compat_p11[] = "ibm,power11-xscom\0ibm,xscom";
->>> +
->>> +    PnvChipType chip_type = pcc->chip_type;
->>> +    const char *compat;
->>> +    int compat_len;
->>>        int i;
->>> +    if (chip_type == PNV_TYPE_POWER11) {
->>> +        compat = compat_p11;
->>> +        compat_len = sizeof(compat_p11);
->>> +    } else {
->>> +        compat = compat_p10;
->>> +        compat_len = sizeof(compat_p10);
->>> +    }
->>
->> please introduce a pnv_chip_power11_dt_populate() routine instead.
-> 
-> Okay.
-> 
->>
->>>        pnv_dt_xscom(chip, fdt, 0,
->>>                     cpu_to_be64(PNV10_XSCOM_BASE(chip)),
->>>                     cpu_to_be64(PNV10_XSCOM_SIZE),
->>> -                 compat, sizeof(compat));
->>> +                 compat, compat_len);
->>>        for (i = 0; i < chip->nr_cores; i++) {
->>>            PnvCore *pnv_core = chip->cores[i];
->>> @@ -1288,6 +1302,8 @@ static void pnv_chip_power10_intc_print_info(PnvChip *chip, PowerPCCPU *cpu,
->>>    #define POWER10_CORE_MASK  (0xffffffffffffffull)
->>> +#define POWER11_CORE_MASK  (0xffffffffffffffull)
->>> +
->>>    static void pnv_chip_power8_instance_init(Object *obj)
->>>    {
->>>        Pnv8Chip *chip8 = PNV8_CHIP(obj);
->>> @@ -1838,6 +1854,7 @@ static void pnv_chip_power10_instance_init(Object *obj)
->>>    static void pnv_chip_power10_quad_realize(Pnv10Chip *chip10, Error **errp)
->>>    {
->>>        PnvChip *chip = PNV_CHIP(chip10);
->>> +    PnvChipClass *chip_class = PNV_CHIP_GET_CLASS(chip);
->>>        int i;
->>>        chip10->nr_quads = DIV_ROUND_UP(chip->nr_cores, 4);
->>> @@ -1846,7 +1863,11 @@ static void pnv_chip_power10_quad_realize(Pnv10Chip *chip10, Error **errp)
->>>        for (i = 0; i < chip10->nr_quads; i++) {
->>>            PnvQuad *eq = &chip10->quads[i];
->>> -        pnv_chip_quad_realize_one(chip, eq, chip->cores[i * 4],
->>> +        if (chip_class->chip_type == PNV_TYPE_POWER11)
->>> +            pnv_chip_quad_realize_one(chip, eq, chip->cores[i * 4],
->>> +                                  PNV_QUAD_TYPE_NAME("power11"));
->>> +        else
->>> +            pnv_chip_quad_realize_one(chip, eq, chip->cores[i * 4],
->>>                                      PNV_QUAD_TYPE_NAME("power10"));
->>
->>
->> Please change introduce a new pnv_chip_quad_realize() routine taking an
->> extra type_name argument.
-> 
-> Sure, can do it. But as it's called from 'pnv_chip_power10_realize',
-> might require a 'pnv_chip_power11_realize' function also, so it can pass
-> type_name as "power11" vs "power10".
+The Hexagon Programmer's Reference Manual says that the exception 0x1e
+should be raised upon an unaligned program counter. Let's implement that
+and also add tests for both the most common case as well as packets with
+multiple change-of-flow instructions.
 
-Do the Power11 and Power10 processors have the same XSCOM and MMIO
-address spaces ?
+Signed-off-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+---
+ target/hexagon/cpu_bits.h                  |  1 +
+ target/hexagon/translate.h                 |  2 ++
+ target/hexagon/genptr.c                    | 21 ++++++++++++++++-----
+ target/hexagon/translate.c                 |  2 +-
+ tests/tcg/hexagon/Makefile.target          | 13 +++++++++++++
+ tests/tcg/hexagon/unaligned_pc.S           | 10 ++++++++++
+ tests/tcg/hexagon/unaligned_pc_multi_cof.S | 13 +++++++++++++
+ 7 files changed, 56 insertions(+), 6 deletions(-)
+ create mode 100644 tests/tcg/hexagon/unaligned_pc.S
+ create mode 100644 tests/tcg/hexagon/unaligned_pc_multi_cof.S
 
-> Will do it.
-> 
->>
->>
->>>            pnv_xscom_add_subregion(chip, PNV10_XSCOM_EQ_BASE(eq->quad_id),
->>> @@ -2116,6 +2137,35 @@ static void pnv_chip_power10_class_init(ObjectClass *klass, void *data)
->>>                                        &k->parent_realize);
->>>    }
->>> +static void pnv_chip_power11_class_init(ObjectClass *klass, void *data)
->>> +{
->>> +    DeviceClass *dc = DEVICE_CLASS(klass);
->>> +    PnvChipClass *k = PNV_CHIP_CLASS(klass);
->>> +
->>> +    static const int i2c_ports_per_engine[PNV10_CHIP_MAX_I2C] = {14, 14, 2, 16};
->>> +
->>> +    k->chip_cfam_id = 0x120da04900008000ull; /* P11 (with NX) */
->>> +    k->chip_type = PNV_TYPE_POWER11;
->>> +    k->cores_mask = POWER11_CORE_MASK;
->>> +    k->chip_pir = pnv_chip_pir_p10;
->>> +    k->intc_create = pnv_chip_power10_intc_create;
->>> +    k->intc_reset = pnv_chip_power10_intc_reset;
->>> +    k->intc_destroy = pnv_chip_power10_intc_destroy;
->>> +    k->intc_print_info = pnv_chip_power10_intc_print_info;
->>> +    k->isa_create = pnv_chip_power10_isa_create;
->>> +    k->dt_populate = pnv_chip_power10_dt_populate;
->>> +    k->pic_print_info = pnv_chip_power10_pic_print_info;
->>> +    k->xscom_core_base = pnv_chip_power10_xscom_core_base;
->>> +    k->xscom_pcba = pnv_chip_power10_xscom_pcba;
->>> +    dc->desc = "PowerNV Chip POWER11";
->>> +    k->num_pecs = PNV10_CHIP_MAX_PEC;
->>> +    k->i2c_num_engines = PNV10_CHIP_MAX_I2C;
->>> +    k->i2c_ports_per_engine = i2c_ports_per_engine;
->>> +
->>> +    device_class_set_parent_realize(dc, pnv_chip_power10_realize,
->>> +                                    &k->parent_realize);
->>> +}
->>> +
->>>    static void pnv_chip_core_sanitize(PnvChip *chip, Error **errp)
->>>    {
->>>        PnvChipClass *pcc = PNV_CHIP_GET_CLASS(chip);
->>> @@ -2510,6 +2560,22 @@ static void pnv_machine_p10_rainier_class_init(ObjectClass *oc, void *data)
->>>        pmc->i2c_init = pnv_rainier_i2c_init;
->>>    }
->>> +static void pnv_machine_power11_class_init(ObjectClass *oc, void *data)
->>> +{
->>> +    MachineClass *mc = MACHINE_CLASS(oc);
->>> +    PnvMachineClass *pmc = PNV_MACHINE_CLASS(oc);
->>> +    static const char compat[] = "qemu,powernv11\0ibm,powernv";
->>> +
->>> +    /* do power10_class_init as p11 core is same as p10 */
->>> +    pnv_machine_p10_common_class_init(oc, data);
->>> +
->>> +    mc->desc = "IBM PowerNV (Non-Virtualized) POWER11";
->>> +    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power11");
->>
->> This should be using a versionned CPU "power11_vx.y".
-> 
-> Okay.
-> 
->>
->>> +
->>> +    pmc->compat = compat;
->>> +    pmc->compat_size = sizeof(compat);
->>> +}
->>> +
->>>    static bool pnv_machine_get_hb(Object *obj, Error **errp)
->>>    {
->>>        PnvMachineState *pnv = PNV_MACHINE(obj);
->>> @@ -2613,7 +2679,23 @@ static void pnv_machine_class_init(ObjectClass *oc, void *data)
->>>            .parent        = TYPE_PNV10_CHIP,          \
->>>        }
->>> +#define DEFINE_PNV11_CHIP_TYPE(type, class_initfn) \
->>> +    {                                              \
->>> +        .name          = type,                     \
->>> +        .class_init    = class_initfn,             \
->>> +        .parent        = TYPE_PNV11_CHIP,          \
->>> +    }
->>> +
->>>    static const TypeInfo types[] = {
->>> +    {
->>> +        .name          = MACHINE_TYPE_NAME("powernv11"),
->>> +        .parent        = TYPE_PNV_MACHINE,
->>> +        .class_init    = pnv_machine_power11_class_init,
->>> +        .interfaces = (InterfaceInfo[]) {
->>> +            { TYPE_XIVE_FABRIC },
->>> +            { },
->>> +        },
->>> +    },
->>>        {
->>>            .name          = MACHINE_TYPE_NAME("powernv10-rainier"),
->>>            .parent        = MACHINE_TYPE_NAME("powernv10"),
->>> @@ -2668,6 +2750,16 @@ static const TypeInfo types[] = {
->>>            .abstract      = true,
->>>        },
->>> +    /*
->>> +     * P11 chip and variants
->>> +     */
->>> +    {
->>> +        .name          = TYPE_PNV11_CHIP,
->>> +        .parent        = TYPE_PNV10_CHIP,
->>> +        .instance_size = sizeof(Pnv11Chip),
->>> +    },
->>> +    DEFINE_PNV11_CHIP_TYPE(TYPE_PNV_CHIP_POWER11, pnv_chip_power11_class_init),
->>> +
->>>        /*
->>>         * P10 chip and variants
->>>         */
->>> diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
->>> index f40ab721d6fc..4522655793da 100644
->>> --- a/hw/ppc/pnv_core.c
->>> +++ b/hw/ppc/pnv_core.c
->>> @@ -402,7 +402,16 @@ static const TypeInfo pnv_core_infos[] = {
->>>        DEFINE_PNV_CORE_TYPE(power8, "power8_v2.0"),
->>>        DEFINE_PNV_CORE_TYPE(power8, "power8nvl_v1.0"),
->>>        DEFINE_PNV_CORE_TYPE(power9, "power9_v2.2"),
->>> -    DEFINE_PNV_CORE_TYPE(power10, "power10_v2.0"),
->>> +    {
->>> +        .parent = TYPE_PNV_CORE,
->>> +        .name = PNV_CORE_TYPE_NAME("power10_v2.0"),
->>> +        .class_init = pnv_core_power10_class_init,
->>> +        .class_base_init = pnv_core_power10_class_init,
->>> +    },
->>
->> hmm, what is this change ?
-> 
-> I expanded the macro, to add '.class_base_init', as .class_base_init
-> will be run by QEMU during initialisation of any child classes also. And
-> I wanted to let QEMU call 'pnv_core_power10_class_init' when it
-> initialises 'power11' type.
-> 
->>
->>
->>> +    {
->>> +        .parent = PNV_CORE_TYPE_NAME("power10_v2.0"),
->>> +        .name = PNV_CORE_TYPE_NAME("power11"),
->>> +    }
->>
->> nope. please use DEFINE_PNV_CORE_TYPE()
-> 
-> Okay, then, should I have a 'pnv_core_power11_class_init' call
-> 'pnv_core_power10_class_init' ?
-
-yes.
-
-
-> 
->>
->>>    };
->>>    DEFINE_TYPES(pnv_core_infos)
->>> @@ -633,6 +642,11 @@ static const TypeInfo pnv_quad_infos[] = {
->>>            .parent = TYPE_PNV_QUAD,
->>>            .name = PNV_QUAD_TYPE_NAME("power10"),
->>>            .class_init = pnv_quad_power10_class_init,
->>> +        .class_base_init = pnv_quad_power10_class_init,
->>> +    },
->>> +    {
->>> +        .parent = PNV_QUAD_TYPE_NAME("power10"),
->>> +        .name = PNV_QUAD_TYPE_NAME("power11"),
->>
->> hmm, I'd rather introduce pnv_quad_power11_class_init.
-> 
-> Same, in that case, I can have a 'pnv_quad_power11_class_init' which
-> just calls 'pnv_quad_power10_class_init'.
-
-yes.
-
-
-Thanks,
-
-C.
-
-
-> 
-> Any comments ?
-> 
->>> <...snip...>
->>>
->>> +struct Pnv11Chip {
->>> +    /*< private >*/
->>> +    Pnv10Chip      parent_obj;
->>
->> Can't you use a typedef instead ?
-> 
-> Yes, makes sense. Thanks Cédric.
-> 
-> - Aditya Gupta
-> 
->>
->> Thanks,
->>
->> C.
->>
->>
->>> +};
->>> +
->>>    struct PnvChipClass {
->>>        /*< private >*/
->>>        SysBusDeviceClass parent_class;
->>
+diff --git a/target/hexagon/cpu_bits.h b/target/hexagon/cpu_bits.h
+index 96fef71729..d6900c8bda 100644
+--- a/target/hexagon/cpu_bits.h
++++ b/target/hexagon/cpu_bits.h
+@@ -23,6 +23,7 @@
+ #define HEX_EXCP_FETCH_NO_UPAGE  0x012
+ #define HEX_EXCP_INVALID_PACKET  0x015
+ #define HEX_EXCP_INVALID_OPCODE  0x015
++#define HEX_EXCP_PC_NOT_ALIGNED  0x01e
+ #define HEX_EXCP_PRIV_NO_UREAD   0x024
+ #define HEX_EXCP_PRIV_NO_UWRITE  0x025
+ 
+diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
+index 4dd59c6726..daf11eb584 100644
+--- a/target/hexagon/translate.h
++++ b/target/hexagon/translate.h
+@@ -75,6 +75,8 @@ typedef struct DisasContext {
+     TCGv dczero_addr;
+ } DisasContext;
+ 
++void gen_exception_end_tb(DisasContext *ctx, int excp);
++
+ static inline void ctx_log_pred_write(DisasContext *ctx, int pnum)
+ {
+     if (!test_bit(pnum, ctx->pregs_written)) {
+diff --git a/target/hexagon/genptr.c b/target/hexagon/genptr.c
+index dbae6c570a..c96edd9379 100644
+--- a/target/hexagon/genptr.c
++++ b/target/hexagon/genptr.c
+@@ -473,6 +473,7 @@ static void gen_write_new_pc_addr(DisasContext *ctx, TCGv addr,
+                                   TCGCond cond, TCGv pred)
+ {
+     TCGLabel *pred_false = NULL;
++    TCGLabel *branch_taken = NULL;
+     if (cond != TCG_COND_ALWAYS) {
+         pred_false = gen_new_label();
+         tcg_gen_brcondi_tl(cond, pred, 0, pred_false);
+@@ -480,12 +481,22 @@ static void gen_write_new_pc_addr(DisasContext *ctx, TCGv addr,
+ 
+     if (ctx->pkt->pkt_has_multi_cof) {
+         /* If there are multiple branches in a packet, ignore the second one */
+-        tcg_gen_movcond_tl(TCG_COND_NE, hex_gpr[HEX_REG_PC],
+-                           ctx->branch_taken, tcg_constant_tl(0),
+-                           hex_gpr[HEX_REG_PC], addr);
++        branch_taken = gen_new_label();
++        tcg_gen_brcondi_tl(TCG_COND_NE, ctx->branch_taken, 0, branch_taken);
+         tcg_gen_movi_tl(ctx->branch_taken, 1);
+-    } else {
+-        tcg_gen_mov_tl(hex_gpr[HEX_REG_PC], addr);
++    }
++
++    TCGLabel *pc_aligned = gen_new_label();
++    TCGv pc_remainder = tcg_temp_new();
++    tcg_gen_andi_tl(pc_remainder, addr, PCALIGN_MASK);
++    tcg_gen_brcondi_tl(TCG_COND_EQ, pc_remainder, 0, pc_aligned);
++    gen_exception_end_tb(ctx, HEX_EXCP_PC_NOT_ALIGNED);
++    gen_set_label(pc_aligned);
++
++    tcg_gen_mov_tl(hex_gpr[HEX_REG_PC], addr);
++
++    if (ctx->pkt->pkt_has_multi_cof) {
++        gen_set_label(branch_taken);
+     }
+ 
+     if (cond != TCG_COND_ALWAYS) {
+diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+index f163eefe97..e6ee63a53e 100644
+--- a/target/hexagon/translate.c
++++ b/target/hexagon/translate.c
+@@ -185,7 +185,7 @@ static void gen_end_tb(DisasContext *ctx)
+     ctx->base.is_jmp = DISAS_NORETURN;
+ }
+ 
+-static void gen_exception_end_tb(DisasContext *ctx, int excp)
++void gen_exception_end_tb(DisasContext *ctx, int excp)
+ {
+     gen_exec_counters(ctx);
+     tcg_gen_movi_tl(hex_gpr[HEX_REG_PC], ctx->next_PC);
+diff --git a/tests/tcg/hexagon/Makefile.target b/tests/tcg/hexagon/Makefile.target
+index f839b2c0d5..02d7fff34c 100644
+--- a/tests/tcg/hexagon/Makefile.target
++++ b/tests/tcg/hexagon/Makefile.target
+@@ -51,6 +51,19 @@ HEX_TESTS += scatter_gather
+ HEX_TESTS += hvx_misc
+ HEX_TESTS += hvx_histogram
+ HEX_TESTS += invalid-slots
++HEX_TESTS += unaligned_pc
++HEX_TESTS += unaligned_pc_multi_cof
++
++run-unaligned_pc: unaligned_pc
++run-unaligned_pc_multi_cof: unaligned_pc_multi_cof
++run-unaligned_pc run-unaligned_pc_multi_cof:
++	$(call run-test, $<, $(QEMU) $< 2> $<.stderr,"$< on $(TARGET_NAME)"); \
++	if [ $$? -ne 1 ] ; then \
++		return 1; \
++	fi
++	$(call quiet-command, \
++		grep -q "exception 0x1e" $<.stderr, \
++		"GREP", "exception 0x1e");
+ 
+ run-and-check-exception = $(call run-test,$2,$3 2>$2.stderr; \
+ 	test $$? -eq 1 && grep -q "exception $(strip $1)" $2.stderr)
+diff --git a/tests/tcg/hexagon/unaligned_pc.S b/tests/tcg/hexagon/unaligned_pc.S
+new file mode 100644
+index 0000000000..39d6b2060b
+--- /dev/null
++++ b/tests/tcg/hexagon/unaligned_pc.S
+@@ -0,0 +1,10 @@
++test:
++	allocframe(#0x8)
++	r0 = #0xffffffff
++	framekey = r0
++	dealloc_return
++
++.global _start
++_start:
++	call test
++	jump pass
+diff --git a/tests/tcg/hexagon/unaligned_pc_multi_cof.S b/tests/tcg/hexagon/unaligned_pc_multi_cof.S
+new file mode 100644
+index 0000000000..a83e248ece
+--- /dev/null
++++ b/tests/tcg/hexagon/unaligned_pc_multi_cof.S
+@@ -0,0 +1,13 @@
++.org 0x3
++test:
++	nop
++	jumpr r31
++
++.global _start
++_start:
++	p0 = cmp.eq(r0, r0)
++	{
++		if (p0) jump test
++		jump pass
++	}
++	jump pass
+-- 
+2.37.2
 
 
