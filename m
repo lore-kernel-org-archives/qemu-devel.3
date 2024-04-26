@@ -4,84 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 867BBC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 13:29:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72413C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 13:39:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0LdI-0003TS-Hl; Fri, 26 Apr 2024 09:28:56 -0400
+	id 1s0Lme-00062u-4l; Fri, 26 Apr 2024 09:38:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s0LdE-0003Pz-7L
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 09:28:53 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s0Lmb-00062S-4x
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 09:38:33 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s0Ld9-00055u-N0
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 09:28:50 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-57232e47a81so3664598a12.0
- for <qemu-devel@nongnu.org>; Fri, 26 Apr 2024 06:28:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s0LmZ-0007lR-CA
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 09:38:32 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-a52223e004dso249861066b.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Apr 2024 06:38:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714138125; x=1714742925; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Jatnww9NRbQOfViMHrcl/hzzBD0uBtQqz7689R7WhE8=;
- b=dJ3poKabWF1xB7onMxT13TDdh9buyW387laNfMi9C/DrX3+HbNFO2gWEtZdypm2t4P
- Loi4kcEogbg+KBeVUCWDcSou51+sryD1zZ85u2kMbh/ZbAj88TqOv1FoT8XaBq5ZuA/m
- zrEvzwKDxuwnbuAMnfou2py7ckJKjl+0T3seVB+sQBpbeldaUturvIOFPopDOhixPfff
- ZzygWq30xxUjNrkMQo2LfAeh0EV2qUJ6cQVo0X96x0Qwc1J55/Jt/fI2jB8VtoqerIEm
- mYrrTmp5lMRhRC1f00kIhBhIcPf7xzhN6ogQ6cbFMJU1a8yrohf7gT+cE2GkLf84KPDY
- WjFA==
+ d=linaro.org; s=google; t=1714138710; x=1714743510; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=KtqpQh7Tri6+vPBLqrWX47scPgjtZh6qIkOl5hEiGKA=;
+ b=cHcpCPv5D5x6w9z004xexWPDL6dpL+FXGrZlVmSRcxd4xAzLuGkehLeFTwQFQu76tN
+ Ne9R/RChrLXg/dxwNa7G/F+KI3Z6wB+iPsWdcRionqre7RHp2F+iTvRjzGP6U/aka94/
+ NYm8ucLBgVzltlV0aZnCDG/iuwjb4maZVl+DghCbaY7jfK/oKbV8+CJww/s3qj6QiMEU
+ 75zaIebevmQqw+fuxammj2xPTyeDJbtvDefNIHq6BV4v+IrmPXm2UAM09CgOQOS2zyPp
+ uSzSQpuFDP716757iPYgzRNM2vBX/X0RibMpyaWL76akuPAgN1yj0lL/SCIykBm8zITP
+ 38eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714138125; x=1714742925;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Jatnww9NRbQOfViMHrcl/hzzBD0uBtQqz7689R7WhE8=;
- b=AK904lMWaQFG8p+gc5W6fQFq8oYRLy2yQdZ4ArDsxnnK+epc2d6rcJv+BHLG4XeqbJ
- oCFdv3ds3rDuLrqH+jIBsqg+G8z1SZwEB5ZeA0W2wy0GLfhXIbC6ikfQoHaPrmUVYj7s
- 3ku2qZUyKUAkcxs/w94Y0FYK6zLGhPFZDQd7h/YKjfBSMXgQgLOqbtzKJaNQ/X2WQHbs
- cwWxp0qXu/ZpFACvmWGbgxh/wh5EG7DubDwi1x21odXRpja1CxkAZ58+38lg9ST2+tSZ
- Rd/Xo6OeIVE39BNJm26J+RdNfof57iMhhs35dkkzu+G2+UHQtMubFyEfoTnDi1AXxID4
- f4kQ==
+ d=1e100.net; s=20230601; t=1714138710; x=1714743510;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=KtqpQh7Tri6+vPBLqrWX47scPgjtZh6qIkOl5hEiGKA=;
+ b=fDf7O3bEaCwL8/DR2rtAlvBPwFyTDhwKIxud9iIaWwRw6+B3jv2Q46Px86Qi/5h1gi
+ hPawqkbLJlT5kuLACOXOGSbwGBEnorJL1n3h5wK4kRLpDjxIdFKNkcNO/ovuO80KNdGP
+ rG/Kp3fUflwjg79VaOdtVfbKiqJ9CF/cgNtxpv17fEDm8qSC5D6lKY7WpHOWJqaHp+hQ
+ oAcuLRL1kawjwLdX9WJyo7LqTuOl0Ily64p/E0KXJCEHoc1Z9IqG976At91PUiEguoQ/
+ +CbKUk9WqSgoGNbC6A2ejWWavzXihF5pT2Cy8lzMrrDZoV+YO2/eHuFZd2ussUDCkFOq
+ 7rqA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVa+TykI94rw9qb9XUEGhDSsTkAH7e31gBNbDDC9PgzCR8tHRB/GzcKhRYtFDdjhDuKHCIY4Lp4SwN2iny9f0o8xGdlTus=
-X-Gm-Message-State: AOJu0YzneZ+ccG6YuwmOK0Uuoi7rXvAzJYrABeGCpu+oj7I17VNwpZaz
- f3Wm4Ql5vc6fdntNbw2bFcabxqCPSZ5xarZY9J2ZklIYtIQH+xBvxcHG+NR5TmWY3Q67GCM3qqs
- pyyVnf8QouG3oMgmId2JLuZ8y8znyASGwmxVAHA==
-X-Google-Smtp-Source: AGHT+IEqwjfhsNj9zLi7H96bL4pYjZJxhsZm/9MkvJIav7gLFsNN8Y7ZlRxUN/16A4J0MjeDsES3r5IBgm9cjudTbZE=
-X-Received: by 2002:a50:c044:0:b0:572:3f71:161f with SMTP id
- u4-20020a50c044000000b005723f71161fmr4494451edd.12.1714138125068; Fri, 26 Apr
- 2024 06:28:45 -0700 (PDT)
+ AJvYcCXjgcjCycBMyb53/brSaVPk9UWlGAGJd24VHbshZ43zwEg92G1WA8xg87EohArAlXRSMZFyWSQoj0aQzdgZbRG2qk3wv4A=
+X-Gm-Message-State: AOJu0Yzz+sYWcE4Ay/xvW6EnH767aYALgahkatzXselfR9sCUqv+aKF6
+ 2IoBdfpINoT52sRNw8WCkPDv4Fn3O7DwUIeVmjdIZnmjwwvmZ1qMRljNG2wyn88=
+X-Google-Smtp-Source: AGHT+IErcD2rDt7Z7nFGex9tvEZYhoYxMvkKlVwxWn3wreLNR2jKgLJ53cWUCG2DV3XAm3yBzJ8gug==
+X-Received: by 2002:a17:906:244d:b0:a58:8827:6765 with SMTP id
+ a13-20020a170906244d00b00a5888276765mr2221480ejb.67.1714138709613; 
+ Fri, 26 Apr 2024 06:38:29 -0700 (PDT)
+Received: from [192.168.69.100] (aul93-h02-176-184-11-147.dsl.sta.abo.bbox.fr.
+ [176.184.11.147]) by smtp.gmail.com with ESMTPSA id
+ u14-20020a170906b10e00b00a5534758ef7sm10761888ejy.148.2024.04.26.06.38.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 26 Apr 2024 06:38:29 -0700 (PDT)
+Message-ID: <e2fb1d51-b5a6-4c25-a9af-af1e1ed42475@linaro.org>
+Date: Fri, 26 Apr 2024 15:38:24 +0200
 MIME-Version: 1.0
-References: <20240426122913.3427983-1-peter.maydell@linaro.org>
- <20240426122913.3427983-4-peter.maydell@linaro.org>
- <36b9a714-44ff-4b60-a23d-89672a98f46e@linaro.org>
-In-Reply-To: <36b9a714-44ff-4b60-a23d-89672a98f46e@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 26 Apr 2024 14:28:33 +0100
-Message-ID: <CAFEAcA-ajhEXq4wJW-qp_scL0JqfJXCzZNvtmHtQEJLcRhj7-A@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] hw/watchdog/sbsa_gwdt: Make watchdog timer
- frequency a QOM property
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- Radoslaw Biernacki <rad@semihalf.com>,
- Leif Lindholm <quic_llindhol@quicinc.com>, 
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] net: Provide MemReentrancyGuard * to qemu_new_nic()
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, Thomas Huth
+ <th.huth@posteo.de>, Prasad Pandit <pj.pandit@yahoo.in>,
+ Mauro Matteo Cascella <mcascell@redhat.com>
+Cc: Alexander Bulekov <alxndr@bu.edu>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Beniamino Galvani <b.galvani@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
+ Jason Wang <jasowang@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>, Stefan Weil <sw@weilnetz.de>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Andrew Jeffery <andrew@aj.id.au>, Joel Stanley <joel@jms.id.au>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, Sriram Yagnaraman
+ <sriram.yagnaraman@est.tech>, Thomas Huth <huth@tuxfamily.org>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
+ Subbaraya Sundeep <sundeep.lkml@gmail.com>, Jan Kiszka <jan.kiszka@web.de>,
+ Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
+ Max Filippov <jcmvbkbc@gmail.com>, Jiri Pirko <jiri@resnulli.us>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>, Greg Kurz <groug@kaod.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Sven Schnelle <svens@stackframe.org>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
+ Rob Herring <robh@kernel.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>,
+ "xen-devel@lists.xenproject.org" <xen-devel@lists.xenproject.org>
+References: <20230601031859.7115-1-akihiko.odaki@daynix.com>
+ <20230601031859.7115-2-akihiko.odaki@daynix.com>
+ <ac66952e-4281-4250-96f4-dc3d5b518d24@linaro.org>
+ <1497808863.2030924.1713955286878@mail.yahoo.com>
+ <088ec61c-39ab-4b58-a02f-8897a3e7ae68@posteo.de>
+ <81397221-8144-47cd-bce9-b3ab7d94c626@daynix.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <81397221-8144-47cd-bce9-b3ab7d94c626@daynix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,60 +129,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 26 Apr 2024 at 13:46, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> Hi Peter,
->
-> On 26/4/24 14:29, Peter Maydell wrote:
-> > Currently the sbsa_gdwt watchdog device hardcodes its frequency at
-> > 62.5MHz. In real hardware, this watchdog is supposed to be driven
-> > from the system counter, which also drives the CPU generic timers.
-> > Newer CPU types (in particular from Armv8.6) should have a CPU
-> > generic timer frequency of 1GHz, so we can't leave the watchdog
-> > on the old QEMU default of 62.5GHz.
-> >
-> > Make the frequency a QOM property so it can be set by the board,
-> > and have our only board that uses this device set that frequency
-> > to the same value it sets the CPU frequency.
-> >
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> >   include/hw/watchdog/sbsa_gwdt.h |  3 +--
-> >   hw/arm/sbsa-ref.c               |  1 +
-> >   hw/watchdog/sbsa_gwdt.c         | 15 ++++++++++++++-
-> >   3 files changed, 16 insertions(+), 3 deletions(-)
->
->
-> > diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
-> > index 36f6f717b4b..57c337fd92a 100644
-> > --- a/hw/arm/sbsa-ref.c
-> > +++ b/hw/arm/sbsa-ref.c
-> > @@ -543,6 +543,7 @@ static void create_wdt(const SBSAMachineState *sms)
-> >       SysBusDevice *s =3D SYS_BUS_DEVICE(dev);
-> >       int irq =3D sbsa_ref_irqmap[SBSA_GWDT_WS0];
-> >
-> > +    qdev_prop_set_uint64(dev, "clock-frequency", SBSA_GTIMER_HZ);
->
-> Since we have access to the CPU and its generic timer, what about
-> just keep the wdg in sync, as smth like:
->
->    qdev_prop_set_uint64(dev, "clock-frequency",
->                         object_property_get_uint(OBJECT(some_cpu),
->                                                  "cntfrq", errp));
+On 26/4/24 14:37, Akihiko Odaki wrote:
+> On 2024/04/24 21:32, Thomas Huth wrote:
+>> On 24/04/2024 12.41, Prasad Pandit wrote:
+>>> On Wednesday, 24 April, 2024 at 03:36:01 pm IST, Philippe 
+>>> Mathieu-Daudé wrote:
+>>>> On 1/6/23 05:18, Akihiko Odaki wrote:
+>>>>> Recently MemReentrancyGuard was added to DeviceState to record that 
+>>>>> the
+>>>>> device is engaging in I/O. The network device backend needs to 
+>>>>> update it
+>>>>> when delivering a packet to a device.
+>>>>> In preparation for such a change, add MemReentrancyGuard * as a
+>>>>> parameter of qemu_new_nic().
+>>>>
+>>>> An user on IRC asked if this patch is related/fixing CVE-2021-20255,
+>>>> any clue?
+>>>
+>>> * CVE-2021-20255 bug: infinite recursion is pointing at a different 
+>>> fix patch.
+>>>    -> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2021-20255
+>>>
+>>> * And the this patch below has different issue tagged
+>>> -> https://lists.nongnu.org/archive/html/qemu-devel/2023-05/msg08312.html
+>>>    Fixes: CVE-2023-3019
+>>>
+>>>
+>>> * They look different, former is an infinite recursion issue and the 
+>>> latter is a use-after-free one.
+>>
+>> I assume the eepro reentrancy issue has been fixed with:
+>>
+>>   https://gitlab.com/qemu-project/qemu/-/issues/556
+>>   i.e.:
+>>   https://gitlab.com/qemu-project/qemu/-/commit/c40ca2301c7603524eaddb5308a3
+> 
+> I agree. Commit c40ca2301c7603524eaddb5308a3 should be what fixed 
+> CVE-2021-20255, not this patch.
 
-That introduces an implicit ordering requirement that
-the CPU has been created before the watchdog, which I'm
-not super enthusiastic about. "The platform knows the
-frequency and sets it on the devices that care" seems
-more straightforward to me.
+Thank you all for clarifying!
 
-(The really-follow-the-hardware approach here would be to
-model the memory mapped system counter and then wire that
-up to both the CPUs and the watchdog, but that's a lot
-of extra work. I have some half-baked patches in that
-direction but for the moment I figure doing the simple
-thing is all we need.)
-
--- PMM
 
