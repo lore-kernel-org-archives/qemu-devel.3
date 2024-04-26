@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7387CC10F15
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FF59C4345F
 	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 01:41:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0AZV-0006T1-73; Thu, 25 Apr 2024 21:40:17 -0400
+	id 1s0AZs-0006WU-Ku; Thu, 25 Apr 2024 21:40:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1s0AZS-0006RX-Tx; Thu, 25 Apr 2024 21:40:15 -0400
-Received: from out30-112.freemail.mail.aliyun.com ([115.124.30.112])
+ id 1s0AZq-0006Vs-F9; Thu, 25 Apr 2024 21:40:38 -0400
+Received: from out30-101.freemail.mail.aliyun.com ([115.124.30.101])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1s0AZQ-0000hG-9P; Thu, 25 Apr 2024 21:40:14 -0400
+ id 1s0AZo-0000x3-E9; Thu, 25 Apr 2024 21:40:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1714095597; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=m6INjHsZ/84mv6B/Je5F8hzLj8JixF7ldalsSuwtQS4=;
- b=d0ImVzOFsxvpUhgRnwDDqj69aS5AKDKXgiEHQqWrjmfvDP8nl/30NZRDv1w0gj+EeIE46DithyxZMYXTmLPHxPP/Ue5WE+BOSlJx04wzRyiyWndLnDE309ElwQa4KW9qC03GyKmqmpM8DGjPBUGe3Lv6SAA1fN9crQJ+RWFvdBs=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R191e4; CH=green; DM=||false|;
+ t=1714095630; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=xyLdbbtKso8hxC35XrCJqU4Rihqac2TfwcUJ5+2GB+U=;
+ b=SNNJK2Es+rvyA1w+x+SWxJvhkqbN4t3/ZFTP/L/YBSXvZex98Sk4OmmYKk2FCP3ytopTYBtjpTcZtm8qufAuOFPIcObvDClX9UpFg2g+rbJjH/6kLN8lrVwemjClhSJj/p3GCbrn4p8vTROmsjixNiIoJK1od1J+scucGCbkDbc=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R211e4; CH=green; DM=||false|;
  DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037067112;
  MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=8; SR=0;
- TI=SMTPD_---0W5Gx1wQ_1714095595; 
+ TI=SMTPD_---0W5Gx27t_1714095627; 
 Received: from 30.198.0.212(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0W5Gx1wQ_1714095595) by smtp.aliyun-inc.com;
- Fri, 26 Apr 2024 09:39:56 +0800
-Message-ID: <270b35d6-9671-4495-bdb6-4d4e1db28aac@linux.alibaba.com>
-Date: Fri, 26 Apr 2024 09:39:40 +0800
+ fp:SMTPD_---0W5Gx27t_1714095627) by smtp.aliyun-inc.com;
+ Fri, 26 Apr 2024 09:40:28 +0800
+Message-ID: <027bad4d-e1f5-470a-b7ef-809fc49b15dd@linux.alibaba.com>
+Date: Fri, 26 Apr 2024 09:40:13 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.1 v3 1/2] target/riscv/debug: set tval=pc in
- breakpoint exceptions
+Subject: Re: [PATCH for-9.1 v3 2/2] trans_privileged.c.inc: set (m|s)tval on
+ ebreak breakpoint
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
  liwei1518@gmail.com, palmer@rivosinc.com, richard.henderson@linaro.org
 References: <20240416230437.1869024-1-dbarboza@ventanamicro.com>
- <20240416230437.1869024-2-dbarboza@ventanamicro.com>
+ <20240416230437.1869024-3-dbarboza@ventanamicro.com>
 Content-Language: en-US
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <20240416230437.1869024-2-dbarboza@ventanamicro.com>
+In-Reply-To: <20240416230437.1869024-3-dbarboza@ventanamicro.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=115.124.30.112;
+Received-SPF: pass client-ip=115.124.30.101;
  envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-112.freemail.mail.aliyun.com
+ helo=out30-101.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -74,75 +74,46 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 2024/4/17 7:04, Daniel Henrique Barboza wrote:
-> We're not setting (s/m)tval when triggering breakpoints of type 2
-> (mcontrol) and 6 (mcontrol6). According to the debug spec section
-> 5.7.12, "Match Control Type 6":
+> Privileged spec section 4.1.9 mentions:
 >
-> "The Privileged Spec says that breakpoint exceptions that occur on
-> instruction fetches, loads, or stores update the tval CSR with either
-> zero or the faulting virtual address. The faulting virtual address for
-> an mcontrol6 trigger with action = 0 is the address being accessed and
-> which caused that trigger to fire."
+> "When a trap is taken into S-mode, stval is written with
+> exception-specific information to assist software in handling the trap.
+> (...)
 >
-> A similar text is also found in the Debug spec section 5.7.11 w.r.t.
-> mcontrol.
+> If stval is written with a nonzero value when a breakpoint,
+> address-misaligned, access-fault, or page-fault exception occurs on an
+> instruction fetch, load, or store, then stval will contain the faulting
+> virtual address."
 >
-> Note that what we're doing ATM is not violating the spec, but it's
-> simple enough to set mtval/stval and it makes life easier for any
-> software that relies on this info.
+> A similar text is found for mtval in section 3.1.16.
 >
-> Given that we always use action = 0, save the faulting address for the
-> mcontrol and mcontrol6 trigger breakpoints into env->badaddr, which is
-> used as as scratch area for traps with address information. 'tval' is
-> then set during riscv_cpu_do_interrupt().
+> Setting mtval/stval in this scenario is optional, but some softwares read
+> these regs when handling ebreaks.
+>
+> Write 'badaddr' in all ebreak breakpoints to write the appropriate
+> 'tval' during riscv_do_cpu_interrrupt().
 >
 > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 > ---
->   target/riscv/cpu_helper.c | 1 +
->   target/riscv/debug.c      | 3 +++
->   2 files changed, 4 insertions(+)
+>   target/riscv/insn_trans/trans_privileged.c.inc | 2 ++
+>   1 file changed, 2 insertions(+)
 >
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index fc090d729a..f9c6d7053b 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -1717,6 +1717,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
->               tval = env->bins;
->               break;
->           case RISCV_EXCP_BREAKPOINT:
-> +            tval = env->badaddr;
->               if (cs->watchpoint_hit) {
->                   tval = cs->watchpoint_hit->hitaddr;
->                   cs->watchpoint_hit = NULL;
-> diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-> index e30d99cc2f..b110370ea6 100644
-> --- a/target/riscv/debug.c
-> +++ b/target/riscv/debug.c
-> @@ -798,6 +798,7 @@ bool riscv_cpu_debug_check_breakpoint(CPUState *cs)
->                   if ((ctrl & TYPE2_EXEC) && (bp->pc == pc)) {
->                       /* check U/S/M bit against current privilege level */
->                       if ((ctrl >> 3) & BIT(env->priv)) {
-> +                        env->badaddr = pc;
->                           return true;
->                       }
->                   }
-> @@ -810,11 +811,13 @@ bool riscv_cpu_debug_check_breakpoint(CPUState *cs)
->                       if (env->virt_enabled) {
->                           /* check VU/VS bit against current privilege level */
->                           if ((ctrl >> 23) & BIT(env->priv)) {
-> +                            env->badaddr = pc;
->                               return true;
->                           }
->                       } else {
->                           /* check U/S/M bit against current privilege level */
->                           if ((ctrl >> 3) & BIT(env->priv)) {
-> +                            env->badaddr = pc;
->                               return true;
->                           }
->                       }
+> diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/riscv/insn_trans/trans_privileged.c.inc
+> index 620ab54eb0..bc5263a4e0 100644
+> --- a/target/riscv/insn_trans/trans_privileged.c.inc
+> +++ b/target/riscv/insn_trans/trans_privileged.c.inc
+> @@ -62,6 +62,8 @@ static bool trans_ebreak(DisasContext *ctx, arg_ebreak *a)
+>       if (pre == 0x01f01013 && ebreak == 0x00100073 && post == 0x40705013) {
+>           generate_exception(ctx, RISCV_EXCP_SEMIHOST);
+>       } else {
+> +        tcg_gen_st_tl(tcg_constant_tl(ebreak_addr), tcg_env,
+> +                      offsetof(CPURISCVState, badaddr));
 
 Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 
 Zhiwei
 
+>           generate_exception(ctx, RISCV_EXCP_BREAKPOINT);
+>       }
+>       return true;
 
