@@ -4,64 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1E86C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 13:26:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B1E9C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 13:27:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0La0-0001Le-Lo; Fri, 26 Apr 2024 09:25:33 -0400
+	id 1s0LbH-0001l4-QJ; Fri, 26 Apr 2024 09:26:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s0LZu-0001L2-0d
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 09:25:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s0Lb4-0001cq-BR
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 09:26:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s0LZs-0004e7-9o
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 09:25:25 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s0Lb2-0004qO-OX
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 09:26:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714137923;
+ s=mimecast20190719; t=1714137995;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=I637+LmtIYq/f+9+dvIp7PhFNQMjCFlwQl/tIRaFyLI=;
- b=Jv7JJsXrNvKpMmtrYCZREW+gYDkaLg2x9eN6ryPUig9cwN4qs9Mbzhb/2262vjfrQ1GSoW
- zeqedOvCQMj3GVmhAGsIKqhh727HnvDz6GItFjiUZP5r93UBIcru8n4kc0yQa1d3M7vzcU
- xdFUMpeSiUcCYPlloSLeQoeLMqv/NFI=
+ bh=YJvCCO61Jed4eULRcsH6PyIxGJxHjVefwCt+kqsgbfE=;
+ b=SvFoQ24mLPCz9rydq9exwX1BOOdQtVEn5w+R5z/qWf3bZNsVZUr1QaBWuaTJItL9QgB5MN
+ M4r8w01rhGLQj/EcHjNOssxLhFa1SpLgC4J96rzqpe/WuaCU8xMJOTeMXcEIppYWeWb3Sk
+ fxjlrU4S+Dr4ga695sBZEMLclUrhUiY=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-569-YeadyHRUP32_hPaD_d97xA-1; Fri,
- 26 Apr 2024 09:25:21 -0400
-X-MC-Unique: YeadyHRUP32_hPaD_d97xA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-610-Ag8OEEyrNYaKVRMCKyqMTw-1; Fri,
+ 26 Apr 2024 09:26:31 -0400
+X-MC-Unique: Ag8OEEyrNYaKVRMCKyqMTw-1
 Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
  [10.11.54.9])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A7E211C05153;
- Fri, 26 Apr 2024 13:25:20 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6B2B83C0F43C;
+ Fri, 26 Apr 2024 13:26:31 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 7BA8740F569;
- Fri, 26 Apr 2024 13:25:20 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 4B796400EAC;
+ Fri, 26 Apr 2024 13:26:31 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 6EC9B21E6680; Fri, 26 Apr 2024 15:25:19 +0200 (CEST)
+ id 3795321E6680; Fri, 26 Apr 2024 15:26:30 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
  <berrange@redhat.com>,
- Peter Xu <peterx@redhat.com>,  devel@lists.libvirt.org,  Eric Blake
- <eblake@redhat.com>
-Subject: Re: [PATCH 2/6] migration: Remove 'inc' option from migrate command
-In-Reply-To: <20240425150939.19268-3-farosas@suse.de> (Fabiano Rosas's message
- of "Thu, 25 Apr 2024 12:09:35 -0300")
+ Peter Xu <peterx@redhat.com>,  devel@lists.libvirt.org,  Alex
+ =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,  Wainer dos Santos Moschetta
+ <wainersm@redhat.com>,  Beraldo Leal <bleal@redhat.com>,  Eric Blake
+ <eblake@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,  Hanna Reitz
+ <hreitz@redhat.com>
+Subject: Re: [PATCH 3/6] migration: Remove 'blk/-b' option from migrate
+ commands
+In-Reply-To: <20240425150939.19268-4-farosas@suse.de> (Fabiano Rosas's message
+ of "Thu, 25 Apr 2024 12:09:36 -0300")
 References: <20240425150939.19268-1-farosas@suse.de>
- <20240425150939.19268-3-farosas@suse.de>
-Date: Fri, 26 Apr 2024 15:25:19 +0200
-Message-ID: <8734r8tfwg.fsf@pond.sub.org>
+ <20240425150939.19268-4-farosas@suse.de>
+Date: Fri, 26 Apr 2024 15:26:30 +0200
+Message-ID: <87y190s1a1.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -87,81 +94,16 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Fabiano Rosas <farosas@suse.de> writes:
 
-> The block incremental option for block migration has been deprecated
-> in 8.2 in favor of using the block-mirror feature. Remove it now.
+> The block migration is considered obsolete and has been deprecated in
+> 8.2. Remove the migrate command option that enables it. This only
+> affects the QMP and HMP commands, the feature can still be accessed by
+> setting the migration 'block' capability. The whole feature will be
+> removed in a future patch.
 >
-> Deprecation commit 40101f320d ("migration: migrate 'inc' command
+> Deprecation commit 8846b5bfca ("migration: migrate 'blk' command
 > option is deprecated.").
 >
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  docs/about/deprecated.rst       |  9 ------
->  docs/about/removed-features.rst | 14 +++++++++
->  migration/block.c               |  1 -
->  migration/migration-hmp-cmds.c  | 18 ++---------
->  migration/migration.c           | 24 +++++----------
->  migration/options.c             | 30 +-----------------
->  qapi/migration.json             | 54 +++++++--------------------------
->  7 files changed, 35 insertions(+), 115 deletions(-)
->
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index 4d9d6bf2da..25b309dde4 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -488,15 +488,6 @@ option).
->  Migration
->  ---------
->  
-> -``inc`` migrate command option (since 8.2)
-> -''''''''''''''''''''''''''''''''''''''''''
-> -
-> -Use blockdev-mirror with NBD instead.
-> -
-> -As an intermediate step the ``inc`` functionality can be achieved by
-> -setting the ``block-incremental`` migration parameter to ``true``.
-> -But this parameter is also deprecated.
-> -
->  ``blk`` migrate command option (since 8.2)
->  ''''''''''''''''''''''''''''''''''''''''''
->  
-> diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-> index 9873f59bee..e62fc760f1 100644
-> --- a/docs/about/removed-features.rst
-> +++ b/docs/about/removed-features.rst
-> @@ -620,6 +620,13 @@ was superseded by ``sections``.
->  Member ``skipped`` of the ``MigrationStats`` struct hasn't been used
->  for more than 10 years. Removed with no replacement.
->  
-> +``migrate`` command option ``inc`` (removed in 9.1)
-> +'''''''''''''''''''''''''''''''''''''''''''''''''''
-> +
-> +Use blockdev-mirror with NBD instead. See "QMP invocation for live
-> +storage migration with ``blockdev-mirror`` + NBD" in
-> +docs/interop/live-block-operations.rst for a detailed explanation.
-
-You didn't just copy the text from deprecated.rst, you made it more
-useful.  Appreciated!
-
-> +
->  Human Monitor Protocol (HMP) commands
->  -------------------------------------
->  
-> @@ -680,6 +687,13 @@ This command didn't produce any output already. Removed with no replacement.
->  The ``singlestep`` command has been replaced by the ``one-insn-per-tb``
->  command, which has the same behaviour but a less misleading name.
->  
-> +``migrate`` command ``-i`` option (removed in 9.1)
-> +''''''''''''''''''''''''''''''''''''''''''''''''''
-> +
-> +Use blockdev-mirror with NBD instead. See "QMP invocation for live
-> +storage migration with ``blockdev-mirror`` + NBD" in
-> +docs/interop/live-block-operations.rst for a detailed explanation.
-> +
->  Host Architectures
->  ------------------
->  
-
-[...]
 
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
