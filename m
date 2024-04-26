@@ -4,82 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7BFCC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 19:45:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E763C25B10
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 19:45:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0RSv-0000Uw-JF; Fri, 26 Apr 2024 15:42:37 -0400
+	id 1s0RUd-0004RC-0U; Fri, 26 Apr 2024 15:44:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s0RSs-0000Mc-DW
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 15:42:34 -0400
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s0RUH-0002l7-7N
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 15:44:02 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s0RSo-0002qE-T4
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 15:42:34 -0400
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-51abd9fcbf6so4393630e87.1
- for <qemu-devel@nongnu.org>; Fri, 26 Apr 2024 12:42:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s0RU8-0003Fh-MR
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 15:44:00 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a559b919303so328885666b.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Apr 2024 12:43:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714160548; x=1714765348; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714160629; x=1714765429; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=S4r3G1A3uieLAlLtfe4V5hp04cU912Q1LgbF6VzVX8w=;
- b=rtYOCSNPRvlTRkjO3j1jcvOoMrUCNJVjC34gA/YJ6U7r31pVKuFrOTp0gzobW5O91I
- zpdiq55+fWg+lWmYcy8of8j38ElSnSEyxWLNWvRf9ggs2Tv3AcHbnBonAtvk9fc19Zi5
- DVQyFckW1mu4GhW93/EbgwwZXT3XGUOtlc6GxVliT3+m5acn06H7DqWcXj4sEQrM/zwa
- R7G7hqyLIZ9Z71Dnogjta4WHlkSaYXbn3FYbj9axP1k8Zar38Zqz3Bjk84WwNFOueYHj
- imK0e6y0AbiTZ/Chhidv5ho9zV5Sl+mSaGtQEb02rGthluHd7psRihwrvZUI2kzM5ARV
- ZDJw==
+ bh=v7EfD6ZqpZav9ENI55PjcdOF+ptN44Hp+/BctxTPyg4=;
+ b=cJVZOFYXU+L6mWEHIDpfDAq3AKeZQj6D1w6JUy+oatdX/eww/rJactZnOXbwQ2N6xQ
+ 7b6CxLcxrZ2BQa4sJwBtDhsQnNmxPrH77jyE6nkrw2mdibG2VDcMcXeHqdoPy7tGenHP
+ PyNZXT5Cz9WzX18ECn0xlzipATxfGcnRfWkVfO6OsS7pR7iqS/lNhuoda7q2ROjcuUMl
+ +wJFpjpvMGkjwXnZYzkXvENrvbqCRvd6Gcckf7C1Q/RWnQZiXeeeX18DRQGd43Rxoz6R
+ X7+Qe27rRSoDJIFInjKR1w4LtisyYq9F7+EnahRDQxxNMyUbC7eDhP1gb5UTeR+QUKTz
+ v/VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714160548; x=1714765348;
+ d=1e100.net; s=20230601; t=1714160629; x=1714765429;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=S4r3G1A3uieLAlLtfe4V5hp04cU912Q1LgbF6VzVX8w=;
- b=Aa2KjKt/4c4qDD5fEUGX/JuRHT8/t9cx8Koic17NgpNxW5OHNlBCdEh+v+YVes2CoB
- HCugZNRzePuoHN1uCvGIMUZ2R0YL196A6GLC41Jc8/RDlK89oH5Ne9ZJreurQCQqUxYN
- AO+1kvunvovVajzSDSh8koSgbuJHZF/nqGkU2l6l2OhKMk0K9vHBxirKifkmlkhEF29B
- nUDryGVemErOwqAPDInja8V7t5GnF5kTxaLVby3M8+vqGZY4iGQJm+9OnCiDFqer3T+/
- XnjHJvtUS8IgM4oUEf4EHnCrC+LBD64k8sle8wgU702vVpCGlveS9NWZPrVfQFt9MXqO
- laEg==
-X-Gm-Message-State: AOJu0YwRZ8W7/1mhUAC5ybWerfbPS03EoqdU0wFU4fF1DSadTuPV4XFQ
- RyxVKsDfKtqPtH4mxp2H4jBZy+lq+8AyovKlrlmZHRg8aACZacKEAGPeaCd2a953dFy4MOlaRCx
- txyo=
-X-Google-Smtp-Source: AGHT+IHEgQLIyIXgvEtytGPu3bgx9xvrZH5H8bxNMkgnBYf9H4ipD6zo6v2Z9b74Q+Oju52h54anjQ==
-X-Received: by 2002:ac2:483c:0:b0:51c:5570:f570 with SMTP id
- 28-20020ac2483c000000b0051c5570f570mr2916306lft.59.1714160548267; 
- Fri, 26 Apr 2024 12:42:28 -0700 (PDT)
+ bh=v7EfD6ZqpZav9ENI55PjcdOF+ptN44Hp+/BctxTPyg4=;
+ b=ikRBPYWFO8iOpj+iuWkXst5CRT2hwZnjDU22z/CTshmQEkPZ11G4Fy3jFT039RBEyP
+ 71uTJpBaIbuQhxctgzME2iK7ZXrpbXtbDpsd8rkCYGQSoNX64cmOhXbUdpdsMVm/6PAp
+ gAUQd+zF2xFGsauYIDzHBoTZ5iYiOhEbR7Li1kGgaA+Y/ccVBQ9xGPBeRN5UELrMemiO
+ 7qqdzahOTi2+q0R+xCU+cOZVL8jzfA1zSNrfLg/dVQzYkyaZ8nH8HSxnP6+F7qDokHNs
+ oiCgbTolCw+w6wFdTcuv0kt1eHmmy4viHq3u32Lo/Hr4lxUPxupSZwwhklGIGs5ZyJEq
+ SIiQ==
+X-Gm-Message-State: AOJu0YxVdZggNmtROU1vbuvlhOXKW5EOTE+LwpsU9/Rs1Zshbx/0e2W9
+ dOeEKnXWrCvZZmZz6hHY01iEr3Cz/2L/0tBXRQIUgzNwczAfEgX2i2EThsvSnJA9zHpzrpVS99O
+ defQ=
+X-Google-Smtp-Source: AGHT+IEOXlToa21r4yUxiAleA+/mG4rc15QE0VT8GBUb+CHeadQ4/roYWuQ/oB749Wv4bjPrXIvxFA==
+X-Received: by 2002:a17:906:c1d6:b0:a55:bf86:3ccd with SMTP id
+ bw22-20020a170906c1d600b00a55bf863ccdmr2750281ejb.40.1714160629052; 
+ Fri, 26 Apr 2024 12:43:49 -0700 (PDT)
 Received: from m1x-phil.lan (aul93-h02-176-184-11-147.dsl.sta.abo.bbox.fr.
  [176.184.11.147]) by smtp.gmail.com with ESMTPSA id
- r25-20020a170906351900b00a55b5c365dfsm6435433eja.199.2024.04.26.12.42.26
+ lb9-20020a170906adc900b00a5889e8353esm3839625ejb.44.2024.04.26.12.43.47
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 26 Apr 2024 12:42:27 -0700 (PDT)
+ Fri, 26 Apr 2024 12:43:48 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
  qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Warner Losh <imp@bsdimp.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>
-Subject: [PULL 04/38] exec: Expose 'target_page.h' API to user emulation
-Date: Fri, 26 Apr 2024 21:41:24 +0200
-Message-ID: <20240426194200.43723-5-philmd@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 18/38] accel/tcg: Rename load-extract/store-insert headers
+ using .h.inc suffix
+Date: Fri, 26 Apr 2024 21:41:38 +0200
+Message-ID: <20240426194200.43723-19-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240426194200.43723-1-philmd@linaro.org>
 References: <20240426194200.43723-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x134.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,153 +98,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-User-only objects might benefit from the "exec/target_page.h"
-API, which allows to build some objects once for all targets.
+Since commit 139c1837db ("meson: rename included C source files
+to .c.inc"), QEMU standard procedure for included C files is to
+use *.c.inc.
+
+Besides, since commit 6a0057aa22 ("docs/devel: make a statement
+about includes") this is documented in the Coding Style:
+
+  If you do use template header files they should be named with
+  the ``.c.inc`` or ``.h.inc`` suffix to make it clear they are
+  being included for expansion.
+
+Therefore rename 'store-insert-al16.h' as 'store-insert-al16.h.inc'
+and 'load-extract-al16-al8.h' as 'load-extract-al16-al8.h.inc'.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Warner Losh <imp@bsdimp.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20231211212003.21686-3-philmd@linaro.org>
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240424173333.96148-3-philmd@linaro.org>
 ---
- meson.build            |  2 +-
- page-target.c          | 44 ++++++++++++++++++++++++++++++++++++++++++
- system/physmem.c       | 30 ----------------------------
- target/target-common.c | 10 ----------
- target/meson.build     |  2 --
- 5 files changed, 45 insertions(+), 43 deletions(-)
- create mode 100644 page-target.c
- delete mode 100644 target/target-common.c
+ .../{load-extract-al16-al8.h => load-extract-al16-al8.h.inc}  | 0
+ .../host/{store-insert-al16.h => store-insert-al16.h.inc}     | 0
+ .../{load-extract-al16-al8.h => load-extract-al16-al8.h.inc}  | 0
+ .../host/{store-insert-al16.h => store-insert-al16.h.inc}     | 0
+ .../{load-extract-al16-al8.h => load-extract-al16-al8.h.inc}  | 0
+ .../host/{store-insert-al16.h => store-insert-al16.h.inc}     | 0
+ .../{load-extract-al16-al8.h => load-extract-al16-al8.h.inc}  | 0
+ accel/tcg/ldst_atomicity.c.inc                                | 4 ++--
+ 8 files changed, 2 insertions(+), 2 deletions(-)
+ rename host/include/aarch64/host/{load-extract-al16-al8.h => load-extract-al16-al8.h.inc} (100%)
+ rename host/include/aarch64/host/{store-insert-al16.h => store-insert-al16.h.inc} (100%)
+ rename host/include/generic/host/{load-extract-al16-al8.h => load-extract-al16-al8.h.inc} (100%)
+ rename host/include/generic/host/{store-insert-al16.h => store-insert-al16.h.inc} (100%)
+ rename host/include/loongarch64/host/{load-extract-al16-al8.h => load-extract-al16-al8.h.inc} (100%)
+ rename host/include/loongarch64/host/{store-insert-al16.h => store-insert-al16.h.inc} (100%)
+ rename host/include/x86_64/host/{load-extract-al16-al8.h => load-extract-al16-al8.h.inc} (100%)
 
-diff --git a/meson.build b/meson.build
-index 96fdc6dfd2..5db2dbc12e 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3523,7 +3523,7 @@ if get_option('b_lto')
-   pagevary = declare_dependency(link_with: pagevary)
- endif
- common_ss.add(pagevary)
--specific_ss.add(files('page-vary-target.c'))
-+specific_ss.add(files('page-target.c', 'page-vary-target.c'))
+diff --git a/host/include/aarch64/host/load-extract-al16-al8.h b/host/include/aarch64/host/load-extract-al16-al8.h.inc
+similarity index 100%
+rename from host/include/aarch64/host/load-extract-al16-al8.h
+rename to host/include/aarch64/host/load-extract-al16-al8.h.inc
+diff --git a/host/include/aarch64/host/store-insert-al16.h b/host/include/aarch64/host/store-insert-al16.h.inc
+similarity index 100%
+rename from host/include/aarch64/host/store-insert-al16.h
+rename to host/include/aarch64/host/store-insert-al16.h.inc
+diff --git a/host/include/generic/host/load-extract-al16-al8.h b/host/include/generic/host/load-extract-al16-al8.h.inc
+similarity index 100%
+rename from host/include/generic/host/load-extract-al16-al8.h
+rename to host/include/generic/host/load-extract-al16-al8.h.inc
+diff --git a/host/include/generic/host/store-insert-al16.h b/host/include/generic/host/store-insert-al16.h.inc
+similarity index 100%
+rename from host/include/generic/host/store-insert-al16.h
+rename to host/include/generic/host/store-insert-al16.h.inc
+diff --git a/host/include/loongarch64/host/load-extract-al16-al8.h b/host/include/loongarch64/host/load-extract-al16-al8.h.inc
+similarity index 100%
+rename from host/include/loongarch64/host/load-extract-al16-al8.h
+rename to host/include/loongarch64/host/load-extract-al16-al8.h.inc
+diff --git a/host/include/loongarch64/host/store-insert-al16.h b/host/include/loongarch64/host/store-insert-al16.h.inc
+similarity index 100%
+rename from host/include/loongarch64/host/store-insert-al16.h
+rename to host/include/loongarch64/host/store-insert-al16.h.inc
+diff --git a/host/include/x86_64/host/load-extract-al16-al8.h b/host/include/x86_64/host/load-extract-al16-al8.h.inc
+similarity index 100%
+rename from host/include/x86_64/host/load-extract-al16-al8.h
+rename to host/include/x86_64/host/load-extract-al16-al8.h.inc
+diff --git a/accel/tcg/ldst_atomicity.c.inc b/accel/tcg/ldst_atomicity.c.inc
+index 97dae70d53..134da3c1da 100644
+--- a/accel/tcg/ldst_atomicity.c.inc
++++ b/accel/tcg/ldst_atomicity.c.inc
+@@ -9,8 +9,8 @@
+  * See the COPYING file in the top-level directory.
+  */
  
- subdir('backends')
- subdir('disas')
-diff --git a/page-target.c b/page-target.c
-new file mode 100644
-index 0000000000..82211c8593
---- /dev/null
-+++ b/page-target.c
-@@ -0,0 +1,44 @@
-+/*
-+ * QEMU page values getters (target independent)
-+ *
-+ *  Copyright (c) 2003 Fabrice Bellard
-+ *
-+ * SPDX-License-Identifier: LGPL-2.1-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "exec/target_page.h"
-+#include "exec/cpu-defs.h"
-+#include "cpu.h"
-+#include "exec/cpu-all.h"
-+
-+size_t qemu_target_page_size(void)
-+{
-+    return TARGET_PAGE_SIZE;
-+}
-+
-+int qemu_target_page_mask(void)
-+{
-+    return TARGET_PAGE_MASK;
-+}
-+
-+int qemu_target_page_bits(void)
-+{
-+    return TARGET_PAGE_BITS;
-+}
-+
-+int qemu_target_page_bits_min(void)
-+{
-+    return TARGET_PAGE_BITS_MIN;
-+}
-+
-+/* Convert target pages to MiB (2**20). */
-+size_t qemu_target_pages_to_MiB(size_t pages)
-+{
-+    int page_bits = TARGET_PAGE_BITS;
-+
-+    /* So far, the largest (non-huge) page size is 64k, i.e. 16 bits. */
-+    g_assert(page_bits < 20);
-+
-+    return pages >> (20 - page_bits);
-+}
-diff --git a/system/physmem.c b/system/physmem.c
-index c3d04ca921..1a81c226ba 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -3540,36 +3540,6 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
-     return 0;
- }
+-#include "host/load-extract-al16-al8.h"
+-#include "host/store-insert-al16.h"
++#include "host/load-extract-al16-al8.h.inc"
++#include "host/store-insert-al16.h.inc"
  
--/*
-- * Allows code that needs to deal with migration bitmaps etc to still be built
-- * target independent.
-- */
--size_t qemu_target_page_size(void)
--{
--    return TARGET_PAGE_SIZE;
--}
--
--int qemu_target_page_bits(void)
--{
--    return TARGET_PAGE_BITS;
--}
--
--int qemu_target_page_bits_min(void)
--{
--    return TARGET_PAGE_BITS_MIN;
--}
--
--/* Convert target pages to MiB (2**20). */
--size_t qemu_target_pages_to_MiB(size_t pages)
--{
--    int page_bits = TARGET_PAGE_BITS;
--
--    /* So far, the largest (non-huge) page size is 64k, i.e. 16 bits. */
--    g_assert(page_bits < 20);
--
--    return pages >> (20 - page_bits);
--}
--
- bool cpu_physical_memory_is_io(hwaddr phys_addr)
- {
-     MemoryRegion*mr;
-diff --git a/target/target-common.c b/target/target-common.c
-deleted file mode 100644
-index 903b10cfe4..0000000000
---- a/target/target-common.c
-+++ /dev/null
-@@ -1,10 +0,0 @@
--/* SPDX-License-Identifier: GPL-2.0-or-later */
--#include "qemu/osdep.h"
--
--#include "cpu.h"
--#include "exec/target_page.h"
--
--int qemu_target_page_mask(void)
--{
--    return TARGET_PAGE_MASK;
--}
-diff --git a/target/meson.build b/target/meson.build
-index 59b46b2ef4..1c2e6f2b19 100644
---- a/target/meson.build
-+++ b/target/meson.build
-@@ -18,5 +18,3 @@ subdir('sh4')
- subdir('sparc')
- subdir('tricore')
- subdir('xtensa')
--
--specific_ss.add(files('target-common.c'))
+ #ifdef CONFIG_ATOMIC64
+ # define HAVE_al8          true
 -- 
 2.41.0
 
