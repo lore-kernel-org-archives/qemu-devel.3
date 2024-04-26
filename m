@@ -4,146 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CB91C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 15:49:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02EC9C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 15:57:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0Np9-0007xY-B3; Fri, 26 Apr 2024 11:49:19 -0400
+	id 1s0Nvv-0001AC-2y; Fri, 26 Apr 2024 11:56:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s0Np7-0007ty-F8
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 11:49:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1s0Nvs-00015q-Dv
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 11:56:16 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s0Np6-0006H0-4S
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 11:49:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714146554;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=I85afPf8naK0SoR0hGy3wV07d4GZZMzV8GvhiAp+CUk=;
- b=GnBIUsVh3mcGxrLOh5NDudEFRDHp9dB50y0MECvMWfvDF/fFDEC1kVnfzvNj8SVdNun4bp
- J9yfAnabm75y65vcmWh5KaobvXtdhUjpcoKPtq45TrxuloSKbvSt1W5Bhjdzp7vLKfYqjO
- gb6MURiOKePVwL7qONQqRtJwc8biSxM=
-Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
- [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-680-TIgwAcQJOVy3AS-kjB01jQ-1; Fri, 26 Apr 2024 11:49:13 -0400
-X-MC-Unique: TIgwAcQJOVy3AS-kjB01jQ-1
-Received: by mail-lj1-f198.google.com with SMTP id
- 38308e7fff4ca-2dc9b94d01aso16550691fa.2
- for <qemu-devel@nongnu.org>; Fri, 26 Apr 2024 08:49:12 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714146551; x=1714751351;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=I85afPf8naK0SoR0hGy3wV07d4GZZMzV8GvhiAp+CUk=;
- b=XKZSV1Tf6M/b1CzHhH9cNTKsaOdgTLCTnXQAhDKoLzmJhuR6FhU4fnObm3AeMK+wSm
- aQCS4CKgCbOk3vV5Psc+/MpHoYDF+hDO2AMpuovX4JKVNBZI69bZWT1Zae/C/a46IDRK
- kBBHzTZA+dyMN3c6G+vgrEkiByWUnaU2gA+aSuGJoBqW3cSA03vklPegk56p+rDxBeOR
- ZXGRtPN/ZSXIJeyjuwxT1Jl55PCC1j7U+OxZ/DnqzH0pYmfIWYQn1j9lo++ufc1YONwS
- Gs5O43JvRYUG77wcHkWqdbAO4io+8FQYIClPva54Gkd1Y+A3NgR6Xw/YtzrZd65ECPjZ
- ywuQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVqEHow9V1kEE+DqmjqI6LIg6dGJ9TQhlgeQ2ZJhhI0HyRuiCwEZ0ahaHOWoDi+e9SnFN6CaKSSkU95A1pdZip9MmeAjDY=
-X-Gm-Message-State: AOJu0YxEmyrsbIoCnEngFrIzYvXaZiJetYYU+FeEsoTDCAnAMGB8J5s4
- JLwgPIczFh8GAwMoKvnMStkPD6PJ9LsKo/sL/1XgjkPLtcYK0h28xfnbjJXfPqfgJn2kS9jIzVI
- WoB34iDGTkd2WvG9nr2oVIWshpUUGEULzd2UHY9m50/b/He88MzAb
-X-Received: by 2002:ac2:528b:0:b0:51a:be0c:b235 with SMTP id
- q11-20020ac2528b000000b0051abe0cb235mr2444363lfm.64.1714146551771; 
- Fri, 26 Apr 2024 08:49:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEf6SElxiRJQmStThGt2X1V/PwTn7v6Y0D05MBpk/jvTW9mjYm5X8MvZcLjC45pQDejlgCmmA==
-X-Received: by 2002:ac2:528b:0:b0:51a:be0c:b235 with SMTP id
- q11-20020ac2528b000000b0051abe0cb235mr2444332lfm.64.1714146551432; 
- Fri, 26 Apr 2024 08:49:11 -0700 (PDT)
-Received: from [192.168.0.9] (ip-109-43-179-20.web.vodafone.de.
- [109.43.179.20]) by smtp.gmail.com with ESMTPSA id
- g1-20020aa7c841000000b0056e718795f8sm10115385edt.36.2024.04.26.08.49.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Apr 2024 08:49:11 -0700 (PDT)
-Message-ID: <c7fd6065-cd64-4c92-bcd3-397411d1d52b@redhat.com>
-Date: Fri, 26 Apr 2024 17:49:09 +0200
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1s0Nvp-0007Y1-Hc
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 11:56:16 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VQy1l5zt0z6D8YK;
+ Fri, 26 Apr 2024 23:53:31 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 59AD1140594;
+ Fri, 26 Apr 2024 23:55:57 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Fri, 26 Apr
+ 2024 16:55:56 +0100
+Date: Fri, 26 Apr 2024 16:55:55 +0100
+To: Ira Weiny <ira.weiny@intel.com>
+CC: Markus Armbruster <armbru@redhat.com>, <nifan.cxl@gmail.com>,
+ <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
+ <gregory.price@memverge.com>, <dan.j.williams@intel.com>,
+ <a.manzanares@samsung.com>, <dave@stgolabs.net>, <nmtadam.samsung@gmail.com>, 
+ <jim.harris@samsung.com>, <Jorgen.Hansen@wdc.com>, <wj28.lee@gmail.com>, Fan
+ Ni <fan.ni@samsung.com>
+Subject: Re: [PATCH v5 09/13] hw/cxl/events: Add qmp interfaces to
+ add/release dynamic capacity extents
+Message-ID: <20240426165555.0000181b@Huawei.com>
+In-Reply-To: <6629426dcdbb3_e1bea294d8@iweiny-mobl.notmuch>
+References: <20240304194331.1586191-1-nifan.cxl@gmail.com>
+ <20240304194331.1586191-10-nifan.cxl@gmail.com>
+ <87a5livrdr.fsf@pond.sub.org>
+ <6629426dcdbb3_e1bea294d8@iweiny-mobl.notmuch>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] gitlab: remove stale s390x-all-linux-static conf hacks
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Beraldo Leal <bleal@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Joel Stanley <joel@jms.id.au>, qemu-s390x@nongnu.org, qemu-arm@nongnu.org,
- Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>, Cleber Rosa <crosa@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, John Snow <jsnow@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang
- <jiaxun.yang@flygoat.com>, Markus Armbruster <armbru@redhat.com>
-References: <20240426153938.1707723-1-alex.bennee@linaro.org>
- <20240426153938.1707723-4-alex.bennee@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240426153938.1707723-4-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml100002.china.huawei.com (7.191.160.241) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,20 +74,227 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/04/2024 17.39, Alex Bennée wrote:
-> The libssh bug references 18.04 which we are no longer running. We
-> don't need to disable glusterfs because a linux-user build shouldn't
-> be trying to link to it anyway.
+On Wed, 24 Apr 2024 10:33:33 -0700
+Ira Weiny <ira.weiny@intel.com> wrote:
+
+> Markus Armbruster wrote:
+> > nifan.cxl@gmail.com writes:
+> >   
+> > > From: Fan Ni <fan.ni@samsung.com>
+> > >
+> > > Since fabric manager emulation is not supported yet, the change implements
+> > > the functions to add/release dynamic capacity extents as QMP interfaces.  
+> > 
+> > Will fabric manager emulation obsolete these commands?  
 > 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->   .gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml | 4 +---
->   1 file changed, 1 insertion(+), 3 deletions(-)
+> I don't think so.  In the development of the kernel, I see these being
+> valuable to do CI and regression testing without the complexity of an FM.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Fully agree - I also long term see these as the drivers for one
+possible virtualization stack for DCD devices (whether it turns
+out to be the way forwards for that is going to take a while to
+resolve!)
 
+It doesn't make much sense to add a fabric manager into that flow
+or to expose an appropriate (maybe MCTP) interface from QEMU just
+to poke the emulated device.
+
+Jonathan
+
+
+> 
+> Ira
+> 
+> >   
+> > > Note: we skips any FM issued extent release request if the exact extent
+> > > does not exist in the extent list of the device. We will loose the
+> > > restriction later once we have partial release support in the kernel.
+> > >
+> > > 1. Add dynamic capacity extents:
+> > >
+> > > For example, the command to add two continuous extents (each 128MiB long)
+> > > to region 0 (starting at DPA offset 0) looks like below:
+> > >
+> > > { "execute": "qmp_capabilities" }
+> > >
+> > > { "execute": "cxl-add-dynamic-capacity",
+> > >   "arguments": {
+> > >       "path": "/machine/peripheral/cxl-dcd0",
+> > >       "region-id": 0,
+> > >       "extents": [
+> > >       {
+> > >           "dpa": 0,
+> > >           "len": 134217728
+> > >       },
+> > >       {
+> > >           "dpa": 134217728,
+> > >           "len": 134217728
+> > >       }
+> > >       ]
+> > >   }
+> > > }
+> > >
+> > > 2. Release dynamic capacity extents:
+> > >
+> > > For example, the command to release an extent of size 128MiB from region 0
+> > > (DPA offset 128MiB) look like below:
+> > >
+> > > { "execute": "cxl-release-dynamic-capacity",
+> > >   "arguments": {
+> > >       "path": "/machine/peripheral/cxl-dcd0",
+> > >       "region-id": 0,
+> > >       "extents": [
+> > >       {
+> > >           "dpa": 134217728,
+> > >           "len": 134217728
+> > >       }
+> > >       ]
+> > >   }
+> > > }
+> > >
+> > > Signed-off-by: Fan Ni <fan.ni@samsung.com>  
+> > 
+> > [...]
+> >   
+> > > diff --git a/qapi/cxl.json b/qapi/cxl.json
+> > > index 8cc4c72fa9..2645004666 100644
+> > > --- a/qapi/cxl.json
+> > > +++ b/qapi/cxl.json
+> > > @@ -19,13 +19,16 @@
+> > >  #
+> > >  # @fatal: Fatal Event Log
+> > >  #
+> > > +# @dyncap: Dynamic Capacity Event Log
+> > > +#
+> > >  # Since: 8.1
+> > >  ##
+> > >  { 'enum': 'CxlEventLog',
+> > >    'data': ['informational',
+> > >             'warning',
+> > >             'failure',
+> > > -           'fatal']
+> > > +           'fatal',
+> > > +           'dyncap']  
+> > 
+> > We tend to avoid abbreviations in QMP identifiers: dynamic-capacity.
+> >   
+> > >   }
+> > >  
+> > >  ##
+> > > @@ -361,3 +364,59 @@
+> > >  ##
+> > >  {'command': 'cxl-inject-correctable-error',
+> > >   'data': {'path': 'str', 'type': 'CxlCorErrorType'}}
+> > > +
+> > > +##
+> > > +# @CXLDCExtentRecord:  
+> > 
+> > Such traffic jams of capital letters are hard to read.
+> > 
+> > What does DC mean?
+> >   
+> > > +#
+> > > +# Record of a single extent to add/release
+> > > +#
+> > > +# @offset: offset to the start of the region where the extent to be operated  
+> > 
+> > Blank line here, please
+> >   
+> > > +# @len: length of the extent
+> > > +#
+> > > +# Since: 9.0
+> > > +##
+> > > +{ 'struct': 'CXLDCExtentRecord',
+> > > +  'data': {
+> > > +      'offset':'uint64',
+> > > +      'len': 'uint64'
+> > > +  }
+> > > +}
+> > > +
+> > > +##
+> > > +# @cxl-add-dynamic-capacity:
+> > > +#
+> > > +# Command to start add dynamic capacity extents flow. The device will  
+> > 
+> > I think we're missing an article here.  Is it "a flow" or "the flow"?
+> >   
+> > > +# have to acknowledged the acceptance of the extents before they are usable.  
+> > 
+> > to acknowledge
+> > 
+> > docs/devel/qapi-code-gen.rst:
+> > 
+> >     For legibility, wrap text paragraphs so every line is at most 70
+> >     characters long.
+> > 
+> >     Separate sentences with two spaces.
+> >   
+> > > +#
+> > > +# @path: CXL DCD canonical QOM path  
+> > 
+> > What is a CXL DCD?  Is it a device?
+> > 
+> > I'd prefer @qom-path, unless you can make a consistency argument for
+> > @path.
+> >   
+> > > +# @region-id: id of the region where the extent to add  
+> > 
+> > What's a region, and how do they get their IDs?
+> >   
+> > > +# @extents: Extents to add  
+> > 
+> > Blank lines between argument descriptions, please.
+> >   
+> > > +#
+> > > +# Since : 9.0  
+> > 
+> > 9.1
+> >   
+> > > +##
+> > > +{ 'command': 'cxl-add-dynamic-capacity',
+> > > +  'data': { 'path': 'str',
+> > > +            'region-id': 'uint8',
+> > > +            'extents': [ 'CXLDCExtentRecord' ]
+> > > +           }
+> > > +}
+> > > +
+> > > +##
+> > > +# @cxl-release-dynamic-capacity:
+> > > +#
+> > > +# Command to start release dynamic capacity extents flow. The host will  
+> > 
+> > Article again.
+> > 
+> > The host?  In cxl-add-dynamic-capacity's doc comment, it's the device.
+> >   
+> > > +# need to respond to indicate that it has released the capacity before it
+> > > +# is made unavailable for read and write and can be re-added.  
+> > 
+> > Is "and can be re-added" relevant here?
+> >   
+> > > +#
+> > > +# @path: CXL DCD canonical QOM path
+> > > +# @region-id: id of the region where the extent to release
+> > > +# @extents: Extents to release
+> > > +#
+> > > +# Since : 9.0  
+> > 
+> > 9.1
+> >   
+> > > +##
+> > > +{ 'command': 'cxl-release-dynamic-capacity',
+> > > +  'data': { 'path': 'str',
+> > > +            'region-id': 'uint8',
+> > > +            'extents': [ 'CXLDCExtentRecord' ]
+> > > +           }
+> > > +}  
+> >   
+> 
+> 
 
 
