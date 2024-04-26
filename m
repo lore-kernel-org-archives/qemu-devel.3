@@ -4,64 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5358C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 09:29:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC72CC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 09:30:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0HtA-00030Q-Ln; Fri, 26 Apr 2024 05:29:04 -0400
+	id 1s0HtT-00034a-Jq; Fri, 26 Apr 2024 05:29:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1s0Ht6-0002zw-Mu
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 05:29:01 -0400
-Received: from forwardcorp1c.mail.yandex.net
- ([2a02:6b8:c03:500:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1s0HtS-00034C-8o
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 05:29:22 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1s0Ht4-0007w6-02
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 05:29:00 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:c10a:0:640:882f:0])
- by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id 2DAE060BDA;
- Fri, 26 Apr 2024 12:28:51 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:b594::1:3a] (unknown
- [2a02:6b8:b081:b594::1:3a])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id nSJCwH0IdGk0-ymISTKGv; Fri, 26 Apr 2024 12:28:50 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1714123730;
- bh=Gzp96FDW8zkoTvEUJ7bt9kV5blZf10zcO2+8WatJc6Q=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=H6t2Qp62pz4zr+rCcMXsGer/oJRsKP6RaqrmWTjP7aUqs2AG0BK10yTxyZ0OOw5xS
- /WQzjnKHMPqwpYqb+wYP0qZezo8SxJl1Ngdr+T0+r6L0L4UHjrrBzEgJ2RLbeJOEMw
- tDUU/czB4FCO2tqSLyJgpDkuyeP4mYGNYAkHnmaM=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <12428416-e2d6-435e-87fd-9c278b025898@yandex-team.ru>
-Date: Fri, 26 Apr 2024 12:28:46 +0300
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1s0HtP-0007yG-Mt
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 05:29:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1714123760; x=1745659760;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=/R0svYu3l/KTHQmXD0bX6MmojqNw+/p8Ly/1FBSYBSg=;
+ b=fzv/1ORYv53mFKxSY3JV0q0cqLLrjNqBD6aWKV66q0bcdchuIN3aFQOa
+ UQYM/9j0fcTFhgjC6OrvhRydHo/PBZC3sSpQPDroI4DVNai1N6gLeb7BR
+ iLLTUT7ZEsTr2ylEbP8aU9ZyhizuHpOXgBHF5KrETbxXdvgFhPkI03Yqk
+ ca9iCNvPtgz2GHPN+N5gnFjVfqKHILAh1WTM6rcgNbGRnImMYOFQJ3wqM
+ pOheXe6tt6tyRfowEOT1WN+TmESeGu4xoIj58/oa13Ehp09xzRYLWztIl
+ I10J2SYic3gMhtoASo/Wfy7gJkmRckQSCgQGujr6yMpauuqAincBs3a01 w==;
+X-CSE-ConnectionGUID: XOkcqM5CQIaxfkuhvJcZfQ==
+X-CSE-MsgGUID: drQYd6O+SoyWDg3U8/wbyw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11055"; a="27309064"
+X-IronPort-AV: E=Sophos;i="6.07,232,1708416000"; d="scan'208";a="27309064"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Apr 2024 02:29:16 -0700
+X-CSE-ConnectionGUID: 28BPWYlqTAqCkk6AMPhRwA==
+X-CSE-MsgGUID: b7J+VUHCTFesPHPnJbAP3g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,232,1708416000"; d="scan'208";a="56299296"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa002.jf.intel.com with ESMTP; 26 Apr 2024 02:29:14 -0700
+Date: Fri, 26 Apr 2024 17:43:22 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PULL v2 00/63] First batch of i386 and build system patch for
+ QEMU 9.1
+Message-ID: <Zit3OlzAe/sAwNJ+@intel.com>
+References: <20240424081443.75869-1-pbonzini@redhat.com>
+ <7217032f-2d44-4c9b-aa73-1b97787de03e@linaro.org>
+ <CABgObfYAJQS-x6NRnjF5T-i0FmKwJR5eK0XQ8t1HBBTbP2QDkw@mail.gmail.com>
+ <ZitbE46sNJAQN0xk@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mc146818rtc: add a way to generate RTC interrupts via QMP
-To: Markus Armbruster <armbru@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
-References: <20240425133745.464091-1-d-tatianin@yandex-team.ru>
- <87v844y0ul.fsf@pond.sub.org>
-Content-Language: en-US
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
-In-Reply-To: <87v844y0ul.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c03:500:1:45:d181:df01;
- envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZitbE46sNJAQN0xk@intel.com>
+Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -78,118 +86,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/26/24 11:39 AM, Markus Armbruster wrote:
+On Fri, Apr 26, 2024 at 03:43:15PM +0800, Zhao Liu wrote:
+> Date: Fri, 26 Apr 2024 15:43:15 +0800
+> From: Zhao Liu <zhao1.liu@intel.com>
+> Subject: Re: [PULL v2 00/63] First batch of i386 and build system patch for
+>  QEMU 9.1
+> 
+> Hi Paolo,
+> 
+> On Fri, Apr 26, 2024 at 07:21:12AM +0200, Paolo Bonzini wrote:
+> > Date: Fri, 26 Apr 2024 07:21:12 +0200
+> > From: Paolo Bonzini <pbonzini@redhat.com>
+> > Subject: Re: [PULL v2 00/63] First batch of i386 and build system patch for
+> >  QEMU 9.1
+> > 
+> > On Wed, Apr 24, 2024 at 8:49 PM Richard Henderson
+> > <richard.henderson@linaro.org> wrote:
+> > >
+> > > On 4/24/24 01:14, Paolo Bonzini wrote:
+> > > > The following changes since commit 62dbe54c24dbf77051bafe1039c31ddc8f37602d:
+> > > >
+> > > >    Update version for v9.0.0-rc4 release (2024-04-16 18:06:15 +0100)
+> > > >
+> > > > are available in the Git repository at:
+> > > >
+> > > >    https://gitlab.com/bonzini/qemu.git tags/for-upstream
+> > > >
+> > > > for you to fetch changes up to 7653b44534d3267fa63ebc9d7221eaa7b48bf5ae:
+> > > >
+> > > >    target/i386/translate.c: always write 32-bits for SGDT and SIDT (2024-04-23 17:35:26 +0200)
+> > >
+> > > Sorry, I've already merged v1.  You'll need to adjust the fix on top.
+> > 
+> > It's the same tag, so you actually merged v2.
+> 
+> The difference between v2 and v1 is about fixing two of Xiaoyao's
+> comments, right?
+> 
+> Currently in master, luckly the CPUID fix [1] has landed, but another
+> comment fix [2] hasn't land. So Richard merged v1 and helped fix [1],
+> [2] did not catch up with v1 merge window. ;-(
 
-> Daniil Tatianin <d-tatianin@yandex-team.ru> writes:
->
->> This can be used to force-synchronize the time in guest after a long
->> stop-cont pause, which can be useful for serverless-type workload.
->>
->> Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
->> ---
->>   hw/rtc/mc146818rtc.c         | 15 +++++++++++++++
->>   include/hw/rtc/mc146818rtc.h |  1 +
->>   qapi/misc-target.json        | 16 ++++++++++++++++
->>   3 files changed, 32 insertions(+)
->>
->> diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
->> index f4c1869232..6980a78d5f 100644
->> --- a/hw/rtc/mc146818rtc.c
->> +++ b/hw/rtc/mc146818rtc.c
->> @@ -116,6 +116,21 @@ void qmp_rtc_reset_reinjection(Error **errp)
->>       }
->>   }
->>   
->> +void qmp_rtc_notify(Error **errp)
->> +{
->> +    MC146818RtcState *s;
->> +
->> +    /*
->> +     * See:
->> +     * https://www.kernel.org/doc/Documentation/virtual/kvm/timekeeping.txt
->> +     */
->> +    QLIST_FOREACH(s, &rtc_devices, link) {
->> +        s->cmos_data[RTC_REG_B] |= REG_B_UIE;
->> +        s->cmos_data[RTC_REG_C] |= REG_C_IRQF | REG_C_UF;
->> +        qemu_irq_raise(s->irq);
->> +    }
->> +}
->> +
-> Note for later: qmp_rtc_notify() works on all realized mc146818rtc
-> devices.  Other kinds of RTC devices are silently ignored.  Just like
-> qmp_rtc_reset_reinjection().
->
->>   static bool rtc_policy_slew_deliver_irq(MC146818RtcState *s)
->>   {
->>       kvm_reset_irq_delivered();
->> diff --git a/include/hw/rtc/mc146818rtc.h b/include/hw/rtc/mc146818rtc.h
->> index 97cec0b3e8..5229dffbbd 100644
->> --- a/include/hw/rtc/mc146818rtc.h
->> +++ b/include/hw/rtc/mc146818rtc.h
->> @@ -56,5 +56,6 @@ MC146818RtcState *mc146818_rtc_init(ISABus *bus, int base_year,
->>   void mc146818rtc_set_cmos_data(MC146818RtcState *s, int addr, int val);
->>   int mc146818rtc_get_cmos_data(MC146818RtcState *s, int addr);
->>   void qmp_rtc_reset_reinjection(Error **errp);
->> +void qmp_rtc_notify(Error **errp);
->>   
->>   #endif /* HW_RTC_MC146818RTC_H */
->> diff --git a/qapi/misc-target.json b/qapi/misc-target.json
->> index 4e0a6492a9..20457b0acc 100644
->> --- a/qapi/misc-target.json
->> +++ b/qapi/misc-target.json
->> @@ -19,6 +19,22 @@
->     ##
->     # @rtc-reset-reinjection:
->     #
->     # This command will reset the RTC interrupt reinjection backlog.  Can
->     # be used if another mechanism to synchronize guest time is in effect,
->     # for example QEMU guest agent's guest-set-time command.
->     #
->     # Since: 2.1
->     #
->     # Example:
->     #
->     #     -> { "execute": "rtc-reset-reinjection" }
->     #     <- { "return": {} }
->     ##
->>   { 'command': 'rtc-reset-reinjection',
->>     'if': 'TARGET_I386' }
->>   
->> +##
->> +# @rtc-notify:
->> +#
->> +# Generate an RTC interrupt.
-> Our QMP command to generate NMIs is called inject-nmi.  Call this one
-> inject-rtc-irq for consistency?  rtc-inject-irq?
+I misunderstood this and rechecked v2, which also doesn't contain [2].
 
-This makes sense, I'll rename in the next version. Thanks.
-
->> +#
->> +# Since: 9.1
->> +#
->> +# Example:
->> +#
->> +#     -> { "execute": "rtc-notify" }
->> +#     <- { "return": {} }
->> +#
->> +##
->> +{ 'command': 'rtc-notify',
->> +  'if': 'TARGET_I386' }
->> +
-> As noted above, both commands silently ignore RTCs other than
-> mc146818rtc.
->
-> They're only available with TARGET_I386.
->
-> As long as all machines available with TARGET_I386 can only ever contain
-> mc146818rtc RTCs, ignoring other RTCs is a non-problem in practice.
->
-> Feels a bit fragile to me.  Thoughts?
-
-Feels a bit fragile indeed, but this code has been there since 2.1, and 
-I guess no one really found this to be a problem.
-
->>   ##
->>   # @SevState:
->>   #
+> I have a misc kvm cleanup series coming up soon that I can also include
+> [2]'s fix there.
+> 
+> [1]: https://lore.kernel.org/qemu-devel/b9043b52-5fdf-4349-8a56-c1418feb1bbd@intel.com/
+> [2]: https://lore.kernel.org/qemu-devel/2815f0f1-9e20-4985-849c-d74c6cdc94ae@intel.com/
+> 
 
