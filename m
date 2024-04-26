@@ -4,71 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27484C04FFE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23D84C4345F
 	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 07:29:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0G1G-0007W5-9F; Fri, 26 Apr 2024 03:29:18 -0400
+	id 1s0G0S-00070S-4M; Fri, 26 Apr 2024 03:28:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1s0G1C-0007S9-Tn
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 03:29:14 -0400
-Received: from mgamail.intel.com ([198.175.65.11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1s0G1A-0008K7-LM
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 03:29:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1714116553; x=1745652553;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=8CDqikRy8rQu2vPZyFLPE+tRdsZUnZr7MlJ8t6mWajg=;
- b=QyVe7LdaQoMFbFKRxo3lx8O279cIzcA7oRZIM/OVVIU5i4Cy/SYxd5VH
- PS7qnzy7vNbsBG6WhRJnMIIWeCDOUZwwpOeWYP06NRAcB3KNeB7zMyDrd
- Zc/GrlKPoNc3F37jvxBbRnQXl2vEg6y7Ku5Ev1X85KFrGliXyHhEXW7rX
- kgMI72ZV9eNgbydurpqc7RDAR/Evq2a64ZOhQ4G8+NXd0pcbuIR3sBn/u
- ZDxeSqkPlhHQyTRHbqnpPQolD77lR415xZ6nGgTiO5+O1XBvWzcp5AI2Q
- O902MrWKQoYRayXlZttGYWclVa4EMmQGLZKmjCs3y8BjVw79K2WfvIUGe A==;
-X-CSE-ConnectionGUID: oUnkS4ucSIeSrsW1yl7flQ==
-X-CSE-MsgGUID: Sf985lw1T2eVEffPvz34pQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11055"; a="20396544"
-X-IronPort-AV: E=Sophos;i="6.07,231,1708416000"; d="scan'208";a="20396544"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Apr 2024 00:29:09 -0700
-X-CSE-ConnectionGUID: aHOpPkvoTISpXj8MG+kPpQ==
-X-CSE-MsgGUID: aH0gI8DjTGSKZSM5LG/vaQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,231,1708416000"; d="scan'208";a="25382483"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa008.fm.intel.com with ESMTP; 26 Apr 2024 00:29:07 -0700
-Date: Fri, 26 Apr 2024 15:43:15 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Subject: Re: [PULL v2 00/63] First batch of i386 and build system patch for
- QEMU 9.1
-Message-ID: <ZitbE46sNJAQN0xk@intel.com>
-References: <20240424081443.75869-1-pbonzini@redhat.com>
- <7217032f-2d44-4c9b-aa73-1b97787de03e@linaro.org>
- <CABgObfYAJQS-x6NRnjF5T-i0FmKwJR5eK0XQ8t1HBBTbP2QDkw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <xiongyining1480@phytium.com.cn>)
+ id 1s0G0Q-0006zN-4Z; Fri, 26 Apr 2024 03:28:26 -0400
+Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <xiongyining1480@phytium.com.cn>)
+ id 1s0G0N-0008Go-Vo; Fri, 26 Apr 2024 03:28:25 -0400
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwBHJ6yRVytmPFMAAA--.242S2;
+ Fri, 26 Apr 2024 15:28:17 +0800 (CST)
+Received: from phytium.com.cn (unknown [218.76.62.144])
+ by mail (Coremail) with SMTP id AQAAfwCXaEyDVytmqGUAAA--.521S4;
+ Fri, 26 Apr 2024 15:28:08 +0800 (CST)
+From: Xiong Yining <xiongyining1480@phytium.com.cn>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: rad@semihalf.com, peter.maydell@linaro.org, quic_llindhol@quicinc.com,
+ marcin.juszkiewicz@linaro.org,
+ xiongyining1480 <xiongyining1480@phytium.com.cn>
+Subject: [PATCH v3 1/1] hw/arm/sbsa-ref: Enable CPU cluster on ARM sbsa machine
+Date: Fri, 26 Apr 2024 07:27:04 +0000
+Message-Id: <20240426072704.325883-2-xiongyining1480@phytium.com.cn>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240426072704.325883-1-xiongyining1480@phytium.com.cn>
+References: <20240426072704.325883-1-xiongyining1480@phytium.com.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABgObfYAJQS-x6NRnjF5T-i0FmKwJR5eK0XQ8t1HBBTbP2QDkw@mail.gmail.com>
-Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+X-CM-TRANSID: AQAAfwCXaEyDVytmqGUAAA--.521S4
+X-CM-SenderInfo: x0lr0wp1lqx0bjrumio6sk53xlxphulrpou0/1tbiAQAGBmYpXuMFaAAGsY
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=xiongyinin
+ g1480@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoWxZw1fCF45Jw45uF4UGw4xXrb_yoW5CrW8pr
+ 4UKF9avrWUCrnIva1fW3W29FyYgw4Fqw4UAw42k3yrCwnxG34xXFs2vF9Ykr1UWr97uFyY
+ 9Fs7CFyFgayvyr7anT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=162.243.164.118;
+ envelope-from=xiongyining1480@phytium.com.cn;
+ helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,48 +70,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paolo,
+From: xiongyining1480 <xiongyining1480@phytium.com.cn>
 
-On Fri, Apr 26, 2024 at 07:21:12AM +0200, Paolo Bonzini wrote:
-> Date: Fri, 26 Apr 2024 07:21:12 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: Re: [PULL v2 00/63] First batch of i386 and build system patch for
->  QEMU 9.1
-> 
-> On Wed, Apr 24, 2024 at 8:49 PM Richard Henderson
-> <richard.henderson@linaro.org> wrote:
-> >
-> > On 4/24/24 01:14, Paolo Bonzini wrote:
-> > > The following changes since commit 62dbe54c24dbf77051bafe1039c31ddc8f37602d:
-> > >
-> > >    Update version for v9.0.0-rc4 release (2024-04-16 18:06:15 +0100)
-> > >
-> > > are available in the Git repository at:
-> > >
-> > >    https://gitlab.com/bonzini/qemu.git tags/for-upstream
-> > >
-> > > for you to fetch changes up to 7653b44534d3267fa63ebc9d7221eaa7b48bf5ae:
-> > >
-> > >    target/i386/translate.c: always write 32-bits for SGDT and SIDT (2024-04-23 17:35:26 +0200)
-> >
-> > Sorry, I've already merged v1.  You'll need to adjust the fix on top.
-> 
-> It's the same tag, so you actually merged v2.
+Enable CPU cluster support on SbsaQemu platform, so that users can
+specify a 4-level CPU hierarchy sockets/clusters/cores/threads. And
+this topology can be passed to the firmware through DT cpu-map.
 
-The difference between v2 and v1 is about fixing two of Xiaoyao's
-comments, right?
+Signed-off-by: Xiong Yining <xiongyining1480@phytium.com.cn>
+tested-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Change-Id: Iac58c5a0cf6d30c9168c378d78c658c5e0a5116c
+---
+ docs/system/arm/sbsa.rst |  4 ++++
+ hw/arm/sbsa-ref.c        | 35 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 39 insertions(+)
 
-Currently in master, luckly the CPUID fix [1] has landed, but another
-comment fix [2] hasn't land. So Richard merged v1 and helped fix [1],
-[2] did not catch up with v1 merge window. ;-(
-
-I have a misc kvm cleanup series coming up soon that I can also include
-[2]'s fix there.
-
-[1]: https://lore.kernel.org/qemu-devel/b9043b52-5fdf-4349-8a56-c1418feb1bbd@intel.com/
-[2]: https://lore.kernel.org/qemu-devel/2815f0f1-9e20-4985-849c-d74c6cdc94ae@intel.com/
-
-Regards,
-Zhao
+diff --git a/docs/system/arm/sbsa.rst b/docs/system/arm/sbsa.rst
+index 2bf22a1d0b..783b87cad7 100644
+--- a/docs/system/arm/sbsa.rst
++++ b/docs/system/arm/sbsa.rst
+@@ -62,6 +62,7 @@ The devicetree reports:
+    - platform version
+    - GIC addresses
+    - NUMA node id for CPUs and memory
++   - CPU topology information
+ 
+ Platform version
+ ''''''''''''''''
+@@ -88,3 +89,6 @@ Platform version changes:
+ 
+ 0.3
+   The USB controller is an XHCI device, not EHCI.
++
++0.4
++  CPU topology information is present in devicetree
+diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
+index f5709d6c14..5b2c32515d 100644
+--- a/hw/arm/sbsa-ref.c
++++ b/hw/arm/sbsa-ref.c
+@@ -264,9 +264,43 @@ static void create_fdt(SBSAMachineState *sms)
+                 ms->possible_cpus->cpus[cs->cpu_index].props.node_id);
+         }
+ 
++        qemu_fdt_setprop_cell(sms->fdt, nodename, "phandle",
++                        qemu_fdt_alloc_phandle(sms->fdt));
++
+         g_free(nodename);
+     }
+ 
++    /*
++     * Add vCPU topology description through fdt node cpu-map.
++     * See fdt_add_cpu_nodes() on hw/arm/virt.c for longer description.
++     */
++    qemu_fdt_add_subnode(sms->fdt, "/cpus/cpu-map");
++
++    for (cpu = sms->smp_cpus - 1; cpu >= 0; cpu--) {
++        char *cpu_path = g_strdup_printf("/cpus/cpu@%d", cpu);
++        char *map_path;
++
++        if (ms->smp.threads > 1) {
++            map_path = g_strdup_printf(
++                "/cpus/cpu-map/socket%d/cluster%d/core%d/thread%d",
++                cpu / (ms->smp.clusters * ms->smp.cores * ms->smp.threads),
++                (cpu / (ms->smp.cores * ms->smp.threads)) % ms->smp.clusters,
++                (cpu / ms->smp.threads) % ms->smp.cores,
++                cpu % ms->smp.threads);
++        } else {
++            map_path = g_strdup_printf(
++                "/cpus/cpu-map/socket%d/cluster%d/core%d",
++                cpu / (ms->smp.clusters * ms->smp.cores),
++                (cpu / ms->smp.cores) % ms->smp.clusters,
++                cpu % ms->smp.cores);
++        }
++        qemu_fdt_add_path(sms->fdt, map_path);
++        qemu_fdt_setprop_phandle(sms->fdt, map_path, "cpu", cpu_path);
++
++        g_free(map_path);
++        g_free(cpu_path);
++    }
++
+     sbsa_fdt_add_gic_node(sms);
+ }
+ 
+@@ -886,6 +920,7 @@ static void sbsa_ref_class_init(ObjectClass *oc, void *data)
+     mc->default_ram_size = 1 * GiB;
+     mc->default_ram_id = "sbsa-ref.ram";
+     mc->default_cpus = 4;
++    mc->smp_props.clusters_supported = true;
+     mc->possible_cpu_arch_ids = sbsa_ref_possible_cpu_arch_ids;
+     mc->cpu_index_to_instance_props = sbsa_ref_cpu_index_to_props;
+     mc->get_default_cpu_node_id = sbsa_ref_get_default_cpu_node_id;
+-- 
+2.34.1
 
 
