@@ -4,59 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FF59C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 01:41:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62D00C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 02:41:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0AZs-0006WU-Ku; Thu, 25 Apr 2024 21:40:40 -0400
+	id 1s0BVs-0000kz-EV; Thu, 25 Apr 2024 22:40:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1s0AZq-0006Vs-F9; Thu, 25 Apr 2024 21:40:38 -0400
-Received: from out30-101.freemail.mail.aliyun.com ([115.124.30.101])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1s0AZo-0000x3-E9; Thu, 25 Apr 2024 21:40:38 -0400
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s0BVj-0000k6-Ri
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 22:40:28 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s0BVi-0002Oa-BS
+ for qemu-devel@nongnu.org; Thu, 25 Apr 2024 22:40:27 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1e3e84a302eso13391975ad.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Apr 2024 19:40:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1714095630; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=xyLdbbtKso8hxC35XrCJqU4Rihqac2TfwcUJ5+2GB+U=;
- b=SNNJK2Es+rvyA1w+x+SWxJvhkqbN4t3/ZFTP/L/YBSXvZex98Sk4OmmYKk2FCP3ytopTYBtjpTcZtm8qufAuOFPIcObvDClX9UpFg2g+rbJjH/6kLN8lrVwemjClhSJj/p3GCbrn4p8vTROmsjixNiIoJK1od1J+scucGCbkDbc=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R211e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037067112;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=8; SR=0;
- TI=SMTPD_---0W5Gx27t_1714095627; 
-Received: from 30.198.0.212(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0W5Gx27t_1714095627) by smtp.aliyun-inc.com;
- Fri, 26 Apr 2024 09:40:28 +0800
-Message-ID: <027bad4d-e1f5-470a-b7ef-809fc49b15dd@linux.alibaba.com>
-Date: Fri, 26 Apr 2024 09:40:13 +0800
+ d=linaro.org; s=google; t=1714099224; x=1714704024; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=04X97xNqXSjQzBtq1kBERIfdbPW71UeGhld/nCtJCPI=;
+ b=Ib18yg9WR2tzksSkh8F/1JWlPwggF1rE3cHIZGzU+la6uyooQQ5IbRkz7PV2Rm6cx9
+ az9hGvEdm3Yl1/qTV2prE9jhwilqYUM2TT59fFrm/MoM9WVFM1iac1tWjc2Y6J3uQtPU
+ 0LjWX20TXER9E0VKMIeBsR+OlEl5xyCa0TALZtYNRISb8mQIT4sXVLunMpogIpt82TaC
+ AU+QyF6X2HKyMeS782qRXvh6NEzv+9eiB3JhEVVelvW3DAiI2u76Dpwvme7mCCVpnQ8A
+ fqRhOZ79YuoHtGMHerI8e3DB+wNzvLoLbWTAX+PvgOMAjhcF5T5nv8DCM17S9c2wUqOI
+ PkhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714099224; x=1714704024;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=04X97xNqXSjQzBtq1kBERIfdbPW71UeGhld/nCtJCPI=;
+ b=G3pOJdyO9RL5nrSbRLcP7o7T+O2owAV/6RANPjTyiTWGXYxGVI81VzBbdVHeTxi1nB
+ 1WI9MCo2Q361xfPB8jyV5+Icl5VU14Cg0Mxa4hem7nMsS88T+zj/ouecplTtk/GWlOJT
+ UwG4gk2ysM9xcvr42hxihugbIxPp7QW3adJbY4W7pObcdsZGWFUd5iM4fK+TtVVD+6Tk
+ 0XMHxTByZVjkRtZ/RwsbRlFEGoqXeKNLEBTTSdUV+55xrNroqdqOMcMI53oK1vzbbv1J
+ VZrhSJ19sEbrTL79Q/ZdHNlfgeP201INqfouqrPCQPpKUfiB8bkXG0gclzTho0XuTZ4m
+ PZMg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW5bgdnfOGe8lFgjgtQiBAIJFHyLGW2RrlaDHyhVR+/letHNi7v9eXHU8Ji/eNUkYQKx2FIc/ai7Gg1txFQjBwzWzJb1gk=
+X-Gm-Message-State: AOJu0YzvOwDmUcNGWHoQjVHszqtm3OdnOkRInjPpwLASpts9vqJgSySr
+ d36QSKwoMuua3JwoNMjs6jfs1HJtXfJRUzgTpxWVoCAutr6/922KJycJIY6ZarU=
+X-Google-Smtp-Source: AGHT+IGEOMSc1UVGwLZcuiRcQ8qJmOQII0YLsODKXUU9I36/uI1Km5PCSuMhlJT3a+9Kz8sxDpuJxw==
+X-Received: by 2002:a17:902:6b47:b0:1e2:a2d7:9f5a with SMTP id
+ g7-20020a1709026b4700b001e2a2d79f5amr1144690plt.65.1714099224183; 
+ Thu, 25 Apr 2024 19:40:24 -0700 (PDT)
+Received: from [192.168.91.227] ([156.19.246.23])
+ by smtp.gmail.com with ESMTPSA id
+ n18-20020a170902e55200b001db5fc51d71sm14510997plf.160.2024.04.25.19.40.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 25 Apr 2024 19:40:23 -0700 (PDT)
+Message-ID: <5f9b23d5-6552-4b29-83f6-04809512bbad@linaro.org>
+Date: Thu, 25 Apr 2024 19:40:20 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.1 v3 2/2] trans_privileged.c.inc: set (m|s)tval on
- ebreak breakpoint
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, palmer@rivosinc.com, richard.henderson@linaro.org
-References: <20240416230437.1869024-1-dbarboza@ventanamicro.com>
- <20240416230437.1869024-3-dbarboza@ventanamicro.com>
+Subject: Re: [PULL 00/22] Misc HW patches for 2024-04-25
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, qemu-arm@nongnu.org
+References: <20240425110157.20328-1-philmd@linaro.org>
 Content-Language: en-US
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <20240416230437.1869024-3-dbarboza@ventanamicro.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240425110157.20328-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=115.124.30.101;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-101.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,48 +98,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 4/25/24 04:01, Philippe Mathieu-Daudé wrote:
+> The following changes since commit 85b597413d4370cb168f711192eaef2eb70535ac:
+> 
+>    Merge tag 'housekeeping-20240424' ofhttps://github.com/philmd/qemu  into staging (2024-04-24 11:49:57 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://github.com/philmd/qemu.git  tags/hw-misc-20240425
+> 
+> for you to fetch changes up to 098de99aad1aa911b4950b47b55d2e2bcc4f9c0c:
+> 
+>    hw/core: Support module-id in numa configuration (2024-04-25 12:48:12 +0200)
+> 
+> 2 checkpatch issues:
+> 
+> - one spurious:
+> WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
+> 
+> - one deliberately ignored in a python script:
+> ERROR: line over 90 characters
+> 
+> ----------------------------------------------------------------
+> Misc HW patch queue
+> 
+> - Script to compare machines compat_props[] (Maksim)
+> - Introduce 'module' CPU topology level (Zhao)
+> - Various cleanups (Thomas, Zhao, Inès, Bernhard)
 
-On 2024/4/17 7:04, Daniel Henrique Barboza wrote:
-> Privileged spec section 4.1.9 mentions:
->
-> "When a trap is taken into S-mode, stval is written with
-> exception-specific information to assist software in handling the trap.
-> (...)
->
-> If stval is written with a nonzero value when a breakpoint,
-> address-misaligned, access-fault, or page-fault exception occurs on an
-> instruction fetch, load, or store, then stval will contain the faulting
-> virtual address."
->
-> A similar text is found for mtval in section 3.1.16.
->
-> Setting mtval/stval in this scenario is optional, but some softwares read
-> these regs when handling ebreaks.
->
-> Write 'badaddr' in all ebreak breakpoints to write the appropriate
-> 'tval' during riscv_do_cpu_interrrupt().
->
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> ---
->   target/riscv/insn_trans/trans_privileged.c.inc | 2 ++
->   1 file changed, 2 insertions(+)
->
-> diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/riscv/insn_trans/trans_privileged.c.inc
-> index 620ab54eb0..bc5263a4e0 100644
-> --- a/target/riscv/insn_trans/trans_privileged.c.inc
-> +++ b/target/riscv/insn_trans/trans_privileged.c.inc
-> @@ -62,6 +62,8 @@ static bool trans_ebreak(DisasContext *ctx, arg_ebreak *a)
->       if (pre == 0x01f01013 && ebreak == 0x00100073 && post == 0x40705013) {
->           generate_exception(ctx, RISCV_EXCP_SEMIHOST);
->       } else {
-> +        tcg_gen_st_tl(tcg_constant_tl(ebreak_addr), tcg_env,
-> +                      offsetof(CPURISCVState, badaddr));
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 
-Zhiwei
+r~
 
->           generate_exception(ctx, RISCV_EXCP_BREAKPOINT);
->       }
->       return true;
 
