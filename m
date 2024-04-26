@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFDBDC4345F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2BAAC10F15
 	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 09:35:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0HyK-00014H-I2; Fri, 26 Apr 2024 05:34:24 -0400
+	id 1s0HyN-0001N6-4V; Fri, 26 Apr 2024 05:34:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1s0HyI-0000rX-PV
+ id 1s0HyI-0000r5-Ne
  for qemu-devel@nongnu.org; Fri, 26 Apr 2024 05:34:22 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1s0HyF-0001l9-IK
+ (envelope-from <gaosong@loongson.cn>) id 1s0HyF-0001lC-Fx
  for qemu-devel@nongnu.org; Fri, 26 Apr 2024 05:34:22 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8CxJvDCdCtmH2YDAA--.14201S3;
- Fri, 26 Apr 2024 17:32:50 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Dx_+vAdCtmEGYDAA--.14341S3;
+ Fri, 26 Apr 2024 17:32:48 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8BxU1a2dCtm+yUGAA--.2929S19; 
- Fri, 26 Apr 2024 17:32:50 +0800 (CST)
+ AQAAf8BxU1a2dCtm+yUGAA--.2929S14; 
+ Fri, 26 Apr 2024 17:32:47 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org,
 	maobibo@loongson.cn
 Cc: richard.henderson@linaro.org, peter.maydell@linaro.org, philmd@linaro.org,
  zltjiangshi@gmail.com
-Subject: [PATCH v7 17/17] hw/loongarch: Add cells missing from rtc node
-Date: Fri, 26 Apr 2024 17:15:51 +0800
-Message-Id: <20240426091551.2397867-18-gaosong@loongson.cn>
+Subject: [PATCH v7 12/17] hw/loongarch: fdt adds pch_pic Controller
+Date: Fri, 26 Apr 2024 17:15:46 +0800
+Message-Id: <20240426091551.2397867-13-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20240426091551.2397867-1-gaosong@loongson.cn>
 References: <20240426091551.2397867-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8BxU1a2dCtm+yUGAA--.2929S19
+X-CM-TRANSID: AQAAf8BxU1a2dCtm+yUGAA--.2929S14
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,53 +66,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-rtc node need interrupts and interrupt-parent cells.
+fdt adds pch pic controller, we use 'loongson,pch-pic-1.0'
+
+See:
+https://github.com/torvalds/linux/blob/v6.7/drivers/irqchip/irq-loongson-pch-pic.c
+https://lore.kernel.org/r/20200528152757.1028711-4-jiaxun.yang@flygoat.com
 
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Message-Id: <20240307164835.300412-18-gaosong@loongson.cn>
+Message-Id: <20240307164835.300412-13-gaosong@loongson.cn>
 ---
- hw/loongarch/virt.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ include/hw/pci-host/ls7a.h |  1 +
+ hw/loongarch/virt.c        | 30 +++++++++++++++++++++++++++++-
+ 2 files changed, 30 insertions(+), 1 deletion(-)
 
+diff --git a/include/hw/pci-host/ls7a.h b/include/hw/pci-host/ls7a.h
+index e753449593..fe260f0183 100644
+--- a/include/hw/pci-host/ls7a.h
++++ b/include/hw/pci-host/ls7a.h
+@@ -24,6 +24,7 @@
+ #define VIRT_PCH_REG_BASE        0x10000000UL
+ #define VIRT_IOAPIC_REG_BASE     (VIRT_PCH_REG_BASE)
+ #define VIRT_PCH_MSI_ADDR_LOW    0x2FF00000UL
++#define VIRT_PCH_REG_SIZE        0x400
+ 
+ /*
+  * GSI_BASE is hard-coded with 64 in linux kernel, else kernel fails to boot
 diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index dbd7928759..c0999878df 100644
+index 094b9d2e60..5bef161d11 100644
 --- a/hw/loongarch/virt.c
 +++ b/hw/loongarch/virt.c
-@@ -231,7 +231,8 @@ static void fdt_add_flash_node(LoongArchMachineState *lams)
+@@ -148,6 +148,31 @@ static void fdt_add_eiointc_node(LoongArchMachineState *lams,
      g_free(nodename);
  }
  
--static void fdt_add_rtc_node(LoongArchMachineState *lams)
-+static void fdt_add_rtc_node(LoongArchMachineState *lams,
-+                             uint32_t *pch_pic_phandle)
- {
-     char *nodename;
-     hwaddr base = VIRT_RTC_REG_BASE;
-@@ -240,8 +241,13 @@ static void fdt_add_rtc_node(LoongArchMachineState *lams)
- 
-     nodename = g_strdup_printf("/rtc@%" PRIx64, base);
-     qemu_fdt_add_subnode(ms->fdt, nodename);
--    qemu_fdt_setprop_string(ms->fdt, nodename, "compatible", "loongson,ls7a-rtc");
++static void fdt_add_pch_pic_node(LoongArchMachineState *lams,
++                                 uint32_t *eiointc_phandle,
++                                 uint32_t *pch_pic_phandle)
++{
++    MachineState *ms = MACHINE(lams);
++    char *nodename;
++    hwaddr pch_pic_base = VIRT_PCH_REG_BASE;
++    hwaddr pch_pic_size = VIRT_PCH_REG_SIZE;
++
++    *pch_pic_phandle = qemu_fdt_alloc_phandle(ms->fdt);
++    nodename = g_strdup_printf("/platic@%" PRIx64, pch_pic_base);
++    qemu_fdt_add_subnode(ms->fdt, nodename);
++    qemu_fdt_setprop_cell(ms->fdt,  nodename, "phandle", *pch_pic_phandle);
 +    qemu_fdt_setprop_string(ms->fdt, nodename, "compatible",
-+                            "loongson,ls7a-rtc");
-     qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg", 2, base, 2, size);
-+    qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts",
-+                           VIRT_RTC_IRQ - VIRT_GSI_BASE , 0x4);
++                            "loongson,pch-pic-1.0");
++    qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", 0,
++                           pch_pic_base, 0, pch_pic_size);
++    qemu_fdt_setprop(ms->fdt, nodename, "interrupt-controller", NULL, 0);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 2);
 +    qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
-+                          *pch_pic_phandle);
-     g_free(nodename);
- }
++                          *eiointc_phandle);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "loongson,pic-base-vec", 0);
++    g_free(nodename);
++}
++
+ static void fdt_add_flash_node(LoongArchMachineState *lams)
+ {
+     MachineState *ms = MACHINE(lams);
+@@ -570,7 +595,7 @@ static void loongarch_irq_init(LoongArchMachineState *lams)
+     CPULoongArchState *env;
+     CPUState *cpu_state;
+     int cpu, pin, i, start, num;
+-    uint32_t cpuintc_phandle, eiointc_phandle;
++    uint32_t cpuintc_phandle, eiointc_phandle, pch_pic_phandle;
  
-@@ -648,7 +654,7 @@ static void loongarch_devices_init(DeviceState *pch_pic,
-     sysbus_create_simple("ls7a_rtc", VIRT_RTC_REG_BASE,
-                          qdev_get_gpio_in(pch_pic,
-                          VIRT_RTC_IRQ - VIRT_GSI_BASE));
--    fdt_add_rtc_node(lams);
-+    fdt_add_rtc_node(lams, pch_pic_phandle);
+     /*
+      * The connection of interrupts:
+@@ -661,6 +686,9 @@ static void loongarch_irq_init(LoongArchMachineState *lams)
+         qdev_connect_gpio_out(DEVICE(d), i, qdev_get_gpio_in(extioi, i));
+     }
  
-     /* acpi ged */
-     lams->acpi_ged = create_acpi_ged(pch_pic, lams);
++    /* Add PCH PIC node */
++    fdt_add_pch_pic_node(lams, &eiointc_phandle, &pch_pic_phandle);
++
+     pch_msi = qdev_new(TYPE_LOONGARCH_PCH_MSI);
+     start   =  num;
+     num = EXTIOI_IRQS - start;
 -- 
 2.25.1
 
