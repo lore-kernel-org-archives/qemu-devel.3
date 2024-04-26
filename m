@@ -4,142 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38487C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 17:46:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D102AC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 17:54:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0PeW-0007yl-L3; Fri, 26 Apr 2024 13:46:33 -0400
+	id 1s0Pln-0001jj-QK; Fri, 26 Apr 2024 13:53:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1s0Pe0-0007tj-Rl
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 13:46:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=oYEp=L7=kaod.org=clg@ozlabs.org>)
+ id 1s0Pll-0001ig-S4; Fri, 26 Apr 2024 13:53:58 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
+ helo=gandalf.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1s0Pdz-0000VV-77
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 13:45:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714153554;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ChtZIZxu8fL5+Uf7HEfQ8FAU02N9dvvfwsoFl7KSXRU=;
- b=ZVXBn2pMVtYPKgw1xGJfUvmj/bBG19gMDyGQx9q2Z9ewkTgfJ4dVR51VfdAmdFLung4IM7
- f0kbUzhzUC8pBckFYrN7JzMC5sKqWXmhjE3xpWlsbEceZ/ICGpAClcxRHH0roL7wAnzhQS
- UCTWYLeDgfPAuM1SiD4LRMhN5b1zEtQ=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-93-bD6HBxN2P1m-QeoKo_nXOQ-1; Fri, 26 Apr 2024 13:45:52 -0400
-X-MC-Unique: bD6HBxN2P1m-QeoKo_nXOQ-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-41a3369659eso16594595e9.1
- for <qemu-devel@nongnu.org>; Fri, 26 Apr 2024 10:45:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714153551; x=1714758351;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:references:cc:to:from:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=ChtZIZxu8fL5+Uf7HEfQ8FAU02N9dvvfwsoFl7KSXRU=;
- b=eu7OUTn7UdoxcGZjrva3iTu1XMpzaJTAa5sbxnjfsLRS5vosWVxYIIf2d/F/tdZ1d6
- Z7gBrq8TryBvdzXkJnGOjhlAsVchc3lzPc3rNxIZaOPVRNIXmOHarrpODndAcnhum+VJ
- C2QthXa9uS64pdvdNPYKwHPNd63IPZySFhyggFiW4Q2SGMXlhUCEwHIxDwXkao3U9q7Z
- 032yCgJF6GdQYsNXUK+0SHMH+cb3qdyFzcmNRrM/uqWorvhSenh/tIPDNqWuv48f3n6z
- v5iGQUEnMkeaKo/MqHzkUnIdk6h9gIty9b8AAU+sFPhm8bXaw5LCf4+/3IprXq9pmuAZ
- IdUw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXkTBxsYbQgaQdX8ZRtypQt4no+ZUjcf/BYcq6ziijt+X9MfpQ2RqiMWIFVJI/uR4xf+1b4WlCqH86u9yCveIkF0c+PlaQ=
-X-Gm-Message-State: AOJu0YyaLaR6HNfrCN1AiLpu+AI5lf4Ov87sEWLeHxaNr/tDB5HL/glP
- 0r5KY4ocbTgQuS3mXPDLLOH1PRt2Y+1IdXH1DhzxlKgIU/uOD4Zg9lOcTmbDfhrPw8ljfSMtVp+
- N6IF4Taes8aK5pOm8vYfGhp82rJE+jy84xYAKroi2ogmYMA7Fxz5S
-X-Received: by 2002:a05:600c:3151:b0:41b:4caa:554c with SMTP id
- h17-20020a05600c315100b0041b4caa554cmr3523719wmo.2.1714153551429; 
- Fri, 26 Apr 2024 10:45:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFFQqEOzEKHALPWTJ1o7rRbBWEFMsgi/ZPVGdhS5lBLLkWLFG9DBOMWWCgla6yboLHhRJzHeA==
-X-Received: by 2002:a05:600c:3151:b0:41b:4caa:554c with SMTP id
- h17-20020a05600c315100b0041b4caa554cmr3523689wmo.2.1714153550966; 
- Fri, 26 Apr 2024 10:45:50 -0700 (PDT)
-Received: from ?IPV6:2003:cb:c726:6100:20f2:6848:5b74:ca82?
- (p200300cbc726610020f268485b74ca82.dip0.t-ipconnect.de.
- [2003:cb:c726:6100:20f2:6848:5b74:ca82])
- by smtp.gmail.com with ESMTPSA id
- v11-20020a05600c470b00b0041a963bf2cdsm15555112wmo.36.2024.04.26.10.45.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Apr 2024 10:45:50 -0700 (PDT)
-Message-ID: <c5d459eb-c38f-4e8c-a1c3-ba47584e5b2a@redhat.com>
-Date: Fri, 26 Apr 2024 19:45:49 +0200
+ (Exim 4.90_1) (envelope-from <SRS0=oYEp=L7=kaod.org=clg@ozlabs.org>)
+ id 1s0Plj-0001r5-8H; Fri, 26 Apr 2024 13:53:57 -0400
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4VR0hY2gr3z4wyp;
+ Sat, 27 Apr 2024 03:53:49 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4VR0hV4dNmz4wcR;
+ Sat, 27 Apr 2024 03:53:46 +1000 (AEST)
+Message-ID: <74a0e78c-0dd2-4f48-a2f3-c0c4460f28b6@kaod.org>
+Date: Fri, 26 Apr 2024 19:53:43 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] target/s390x: report deprecated-props in
- cpu-model-expansion reply
-From: David Hildenbrand <david@redhat.com>
-To: Collin Walling <walling@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: thuth@redhat.com, wangyanan55@huawei.com, philmd@linaro.org,
- marcel.apfelbaum@gmail.com, eduardo@habkost.net, armbru@redhat.com
-References: <20240424215633.48906-1-walling@linux.ibm.com>
- <20240424215633.48906-2-walling@linux.ibm.com>
- <60cd9494-fe97-4134-a16b-026e14186eed@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <60cd9494-fe97-4134-a16b-026e14186eed@redhat.com>
+Subject: Re: [PATCH v2 03/10] ppc/pnv: Add a Power11 Pnv11Chip, and a Power11
+ Machine
+To: Aditya Gupta <adityag@linux.ibm.com>
+Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
+ <fbarrat@linux.ibm.com>
+References: <20240426110023.733309-1-adityag@linux.ibm.com>
+ <20240426110023.733309-4-adityag@linux.ibm.com>
+ <7ac5fa18-70be-42d2-addb-b35c9355e984@kaod.org>
+ <trxofbh7pgkmmfioku4kw7c7rl4bj3dawe4zakuqcx55tnhujo@fqxgd6s3odvr>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <trxofbh7pgkmmfioku4kw7c7rl4bj3dawe4zakuqcx55tnhujo@fqxgd6s3odvr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=oYEp=L7=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,50 +72,299 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26.04.24 19:44, David Hildenbrand wrote:
-> On 24.04.24 23:56, Collin Walling wrote:
->> Retain a list of deprecated features disjoint from any particular
->> CPU model. A query-cpu-model-expansion reply will now provide a list of
->> properties (i.e. features) that are flagged as deprecated. Example:
+On 4/26/24 19:34, Aditya Gupta wrote:
+> Hello Cédric,
+> 
+>>>
+>>> <...snip...>
+>>>
+>>> - * Multi processor support for POWER8, POWER8NVL and POWER9.
+>>> + * Multi processor support for POWER8, POWER8NVL, POWER9, POWER10 and Power11.
 >>
->>       {
->>         "return": {
->>           "model": {
->>             "name": "z14.2-base",
->>             "deprecated-props": [
->>               "bpb",
->>               "csske"
->>             ],
->>             "props": {
->>               "pfmfi": false,
->>               "exrl": true,
->>               ...a lot more props...
->>               "skey": false,
->>               "vxpdeh2": false
->>             }
->>           }
->>         }
->>       }
+>> POWER10 -> Power10. Don't ask me why.
+> 
+> Sure, got it !
+> 
 >>
->> It is recommended that s390 guests operate with these features
->> explicitly disabled to ensure compatability with future hardware.
+>>>     * XSCOM, serial communication sideband bus to configure chiplets.
+>>>     * Simple LPC Controller.
+>>>     * Processor Service Interface (PSI) Controller.
+>>> - * Interrupt Controller, XICS (POWER8) and XIVE (POWER9) and XIVE2 (Power10).
+>>> + * Interrupt Controller, XICS (POWER8) and XIVE (POWER9) and XIVE2 (Power10 &
+>>> +   Power11).
+>>>     * POWER8 PHB3 PCIe Host bridge and POWER9 PHB4 PCIe Host bridge.
+>>>     * Simple OCC is an on-chip micro-controller used for power management tasks.
+>>>     * iBT device to handle BMC communication, with the internal BMC simulator
+>>> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+>>> index 74e7908e5ffb..06e272f3bdd3 100644
+>>> --- a/hw/ppc/pnv.c
+>>> +++ b/hw/ppc/pnv.c
+>>> @@ -431,13 +431,27 @@ static const uint8_t pa_features_31[] = { 74, 0,
+>>>    static void pnv_chip_power10_dt_populate(PnvChip *chip, void *fdt)
+>>>    {
+>>> -    static const char compat[] = "ibm,power10-xscom\0ibm,xscom";
+>>> +    PnvChipClass *pcc = PNV_CHIP_GET_CLASS(chip);
+>>> +    static const char compat_p10[] = "ibm,power10-xscom\0ibm,xscom";
+>>> +    static const char compat_p11[] = "ibm,power11-xscom\0ibm,xscom";
+>>> +
+>>> +    PnvChipType chip_type = pcc->chip_type;
+>>> +    const char *compat;
+>>> +    int compat_len;
+>>>        int i;
+>>> +    if (chip_type == PNV_TYPE_POWER11) {
+>>> +        compat = compat_p11;
+>>> +        compat_len = sizeof(compat_p11);
+>>> +    } else {
+>>> +        compat = compat_p10;
+>>> +        compat_len = sizeof(compat_p10);
+>>> +    }
+>>
+>> please introduce a pnv_chip_power11_dt_populate() routine instead.
 > 
-> Likely you should only report features that are applicable to a model.
-> that is, if it's part of the full_feat.
+> Okay.
 > 
-> Otherwise, the caller might simply want do set all features to "false",
-> and we'd fail setting a feature that is unknown to a specific CPU
-> generation.
+>>
+>>>        pnv_dt_xscom(chip, fdt, 0,
+>>>                     cpu_to_be64(PNV10_XSCOM_BASE(chip)),
+>>>                     cpu_to_be64(PNV10_XSCOM_SIZE),
+>>> -                 compat, sizeof(compat));
+>>> +                 compat, compat_len);
+>>>        for (i = 0; i < chip->nr_cores; i++) {
+>>>            PnvCore *pnv_core = chip->cores[i];
+>>> @@ -1288,6 +1302,8 @@ static void pnv_chip_power10_intc_print_info(PnvChip *chip, PowerPCCPU *cpu,
+>>>    #define POWER10_CORE_MASK  (0xffffffffffffffull)
+>>> +#define POWER11_CORE_MASK  (0xffffffffffffffull)
+>>> +
+>>>    static void pnv_chip_power8_instance_init(Object *obj)
+>>>    {
+>>>        Pnv8Chip *chip8 = PNV8_CHIP(obj);
+>>> @@ -1838,6 +1854,7 @@ static void pnv_chip_power10_instance_init(Object *obj)
+>>>    static void pnv_chip_power10_quad_realize(Pnv10Chip *chip10, Error **errp)
+>>>    {
+>>>        PnvChip *chip = PNV_CHIP(chip10);
+>>> +    PnvChipClass *chip_class = PNV_CHIP_GET_CLASS(chip);
+>>>        int i;
+>>>        chip10->nr_quads = DIV_ROUND_UP(chip->nr_cores, 4);
+>>> @@ -1846,7 +1863,11 @@ static void pnv_chip_power10_quad_realize(Pnv10Chip *chip10, Error **errp)
+>>>        for (i = 0; i < chip10->nr_quads; i++) {
+>>>            PnvQuad *eq = &chip10->quads[i];
+>>> -        pnv_chip_quad_realize_one(chip, eq, chip->cores[i * 4],
+>>> +        if (chip_class->chip_type == PNV_TYPE_POWER11)
+>>> +            pnv_chip_quad_realize_one(chip, eq, chip->cores[i * 4],
+>>> +                                  PNV_QUAD_TYPE_NAME("power11"));
+>>> +        else
+>>> +            pnv_chip_quad_realize_one(chip, eq, chip->cores[i * 4],
+>>>                                      PNV_QUAD_TYPE_NAME("power10"));
+>>
+>>
+>> Please change introduce a new pnv_chip_quad_realize() routine taking an
+>> extra type_name argument.
 > 
-> That is, you would AND the bitmap with the full_feat of the underlying
-> CPU definition.
+> Sure, can do it. But as it's called from 'pnv_chip_power10_realize',
+> might require a 'pnv_chip_power11_realize' function also, so it can pass
+> type_name as "power11" vs "power10".
 
-Refreshing my memory, I think we can just clear any CPU features. We 
-only bail out when setting them!
+Do the Power11 and Power10 processors have the same XSCOM and MMIO
+address spaces ?
 
--- 
-Cheers,
+> Will do it.
+> 
+>>
+>>
+>>>            pnv_xscom_add_subregion(chip, PNV10_XSCOM_EQ_BASE(eq->quad_id),
+>>> @@ -2116,6 +2137,35 @@ static void pnv_chip_power10_class_init(ObjectClass *klass, void *data)
+>>>                                        &k->parent_realize);
+>>>    }
+>>> +static void pnv_chip_power11_class_init(ObjectClass *klass, void *data)
+>>> +{
+>>> +    DeviceClass *dc = DEVICE_CLASS(klass);
+>>> +    PnvChipClass *k = PNV_CHIP_CLASS(klass);
+>>> +
+>>> +    static const int i2c_ports_per_engine[PNV10_CHIP_MAX_I2C] = {14, 14, 2, 16};
+>>> +
+>>> +    k->chip_cfam_id = 0x120da04900008000ull; /* P11 (with NX) */
+>>> +    k->chip_type = PNV_TYPE_POWER11;
+>>> +    k->cores_mask = POWER11_CORE_MASK;
+>>> +    k->chip_pir = pnv_chip_pir_p10;
+>>> +    k->intc_create = pnv_chip_power10_intc_create;
+>>> +    k->intc_reset = pnv_chip_power10_intc_reset;
+>>> +    k->intc_destroy = pnv_chip_power10_intc_destroy;
+>>> +    k->intc_print_info = pnv_chip_power10_intc_print_info;
+>>> +    k->isa_create = pnv_chip_power10_isa_create;
+>>> +    k->dt_populate = pnv_chip_power10_dt_populate;
+>>> +    k->pic_print_info = pnv_chip_power10_pic_print_info;
+>>> +    k->xscom_core_base = pnv_chip_power10_xscom_core_base;
+>>> +    k->xscom_pcba = pnv_chip_power10_xscom_pcba;
+>>> +    dc->desc = "PowerNV Chip POWER11";
+>>> +    k->num_pecs = PNV10_CHIP_MAX_PEC;
+>>> +    k->i2c_num_engines = PNV10_CHIP_MAX_I2C;
+>>> +    k->i2c_ports_per_engine = i2c_ports_per_engine;
+>>> +
+>>> +    device_class_set_parent_realize(dc, pnv_chip_power10_realize,
+>>> +                                    &k->parent_realize);
+>>> +}
+>>> +
+>>>    static void pnv_chip_core_sanitize(PnvChip *chip, Error **errp)
+>>>    {
+>>>        PnvChipClass *pcc = PNV_CHIP_GET_CLASS(chip);
+>>> @@ -2510,6 +2560,22 @@ static void pnv_machine_p10_rainier_class_init(ObjectClass *oc, void *data)
+>>>        pmc->i2c_init = pnv_rainier_i2c_init;
+>>>    }
+>>> +static void pnv_machine_power11_class_init(ObjectClass *oc, void *data)
+>>> +{
+>>> +    MachineClass *mc = MACHINE_CLASS(oc);
+>>> +    PnvMachineClass *pmc = PNV_MACHINE_CLASS(oc);
+>>> +    static const char compat[] = "qemu,powernv11\0ibm,powernv";
+>>> +
+>>> +    /* do power10_class_init as p11 core is same as p10 */
+>>> +    pnv_machine_p10_common_class_init(oc, data);
+>>> +
+>>> +    mc->desc = "IBM PowerNV (Non-Virtualized) POWER11";
+>>> +    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power11");
+>>
+>> This should be using a versionned CPU "power11_vx.y".
+> 
+> Okay.
+> 
+>>
+>>> +
+>>> +    pmc->compat = compat;
+>>> +    pmc->compat_size = sizeof(compat);
+>>> +}
+>>> +
+>>>    static bool pnv_machine_get_hb(Object *obj, Error **errp)
+>>>    {
+>>>        PnvMachineState *pnv = PNV_MACHINE(obj);
+>>> @@ -2613,7 +2679,23 @@ static void pnv_machine_class_init(ObjectClass *oc, void *data)
+>>>            .parent        = TYPE_PNV10_CHIP,          \
+>>>        }
+>>> +#define DEFINE_PNV11_CHIP_TYPE(type, class_initfn) \
+>>> +    {                                              \
+>>> +        .name          = type,                     \
+>>> +        .class_init    = class_initfn,             \
+>>> +        .parent        = TYPE_PNV11_CHIP,          \
+>>> +    }
+>>> +
+>>>    static const TypeInfo types[] = {
+>>> +    {
+>>> +        .name          = MACHINE_TYPE_NAME("powernv11"),
+>>> +        .parent        = TYPE_PNV_MACHINE,
+>>> +        .class_init    = pnv_machine_power11_class_init,
+>>> +        .interfaces = (InterfaceInfo[]) {
+>>> +            { TYPE_XIVE_FABRIC },
+>>> +            { },
+>>> +        },
+>>> +    },
+>>>        {
+>>>            .name          = MACHINE_TYPE_NAME("powernv10-rainier"),
+>>>            .parent        = MACHINE_TYPE_NAME("powernv10"),
+>>> @@ -2668,6 +2750,16 @@ static const TypeInfo types[] = {
+>>>            .abstract      = true,
+>>>        },
+>>> +    /*
+>>> +     * P11 chip and variants
+>>> +     */
+>>> +    {
+>>> +        .name          = TYPE_PNV11_CHIP,
+>>> +        .parent        = TYPE_PNV10_CHIP,
+>>> +        .instance_size = sizeof(Pnv11Chip),
+>>> +    },
+>>> +    DEFINE_PNV11_CHIP_TYPE(TYPE_PNV_CHIP_POWER11, pnv_chip_power11_class_init),
+>>> +
+>>>        /*
+>>>         * P10 chip and variants
+>>>         */
+>>> diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
+>>> index f40ab721d6fc..4522655793da 100644
+>>> --- a/hw/ppc/pnv_core.c
+>>> +++ b/hw/ppc/pnv_core.c
+>>> @@ -402,7 +402,16 @@ static const TypeInfo pnv_core_infos[] = {
+>>>        DEFINE_PNV_CORE_TYPE(power8, "power8_v2.0"),
+>>>        DEFINE_PNV_CORE_TYPE(power8, "power8nvl_v1.0"),
+>>>        DEFINE_PNV_CORE_TYPE(power9, "power9_v2.2"),
+>>> -    DEFINE_PNV_CORE_TYPE(power10, "power10_v2.0"),
+>>> +    {
+>>> +        .parent = TYPE_PNV_CORE,
+>>> +        .name = PNV_CORE_TYPE_NAME("power10_v2.0"),
+>>> +        .class_init = pnv_core_power10_class_init,
+>>> +        .class_base_init = pnv_core_power10_class_init,
+>>> +    },
+>>
+>> hmm, what is this change ?
+> 
+> I expanded the macro, to add '.class_base_init', as .class_base_init
+> will be run by QEMU during initialisation of any child classes also. And
+> I wanted to let QEMU call 'pnv_core_power10_class_init' when it
+> initialises 'power11' type.
+> 
+>>
+>>
+>>> +    {
+>>> +        .parent = PNV_CORE_TYPE_NAME("power10_v2.0"),
+>>> +        .name = PNV_CORE_TYPE_NAME("power11"),
+>>> +    }
+>>
+>> nope. please use DEFINE_PNV_CORE_TYPE()
+> 
+> Okay, then, should I have a 'pnv_core_power11_class_init' call
+> 'pnv_core_power10_class_init' ?
 
-David / dhildenb
+yes.
+
+
+> 
+>>
+>>>    };
+>>>    DEFINE_TYPES(pnv_core_infos)
+>>> @@ -633,6 +642,11 @@ static const TypeInfo pnv_quad_infos[] = {
+>>>            .parent = TYPE_PNV_QUAD,
+>>>            .name = PNV_QUAD_TYPE_NAME("power10"),
+>>>            .class_init = pnv_quad_power10_class_init,
+>>> +        .class_base_init = pnv_quad_power10_class_init,
+>>> +    },
+>>> +    {
+>>> +        .parent = PNV_QUAD_TYPE_NAME("power10"),
+>>> +        .name = PNV_QUAD_TYPE_NAME("power11"),
+>>
+>> hmm, I'd rather introduce pnv_quad_power11_class_init.
+> 
+> Same, in that case, I can have a 'pnv_quad_power11_class_init' which
+> just calls 'pnv_quad_power10_class_init'.
+
+yes.
+
+
+Thanks,
+
+C.
+
+
+> 
+> Any comments ?
+> 
+>>> <...snip...>
+>>>
+>>> +struct Pnv11Chip {
+>>> +    /*< private >*/
+>>> +    Pnv10Chip      parent_obj;
+>>
+>> Can't you use a typedef instead ?
+> 
+> Yes, makes sense. Thanks Cédric.
+> 
+> - Aditya Gupta
+> 
+>>
+>> Thanks,
+>>
+>> C.
+>>
+>>
+>>> +};
+>>> +
+>>>    struct PnvChipClass {
+>>>        /*< private >*/
+>>>        SysBusDeviceClass parent_class;
+>>
 
 
