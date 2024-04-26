@@ -4,76 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C29DC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 14:16:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6231C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 14:17:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0MMZ-0003wz-Kq; Fri, 26 Apr 2024 10:15:43 -0400
+	id 1s0MNp-0004iY-ME; Fri, 26 Apr 2024 10:17:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s0MMV-0003wP-Ge
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 10:15:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=oYEp=L7=kaod.org=clg@ozlabs.org>)
+ id 1s0MNn-0004ew-4l; Fri, 26 Apr 2024 10:16:59 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s0MMT-0000GF-Sg
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 10:15:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714140937;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=D+GQuGtejKAiA/4qnmLvxONXqZb/q0ZqUTr4GMrmk0I=;
- b=c0L8yaHEgZH6NecMIrQZqqip20c4sCbY1j3IkZZ2zn4AIMnAuXcVFS+n5vmfl5LZlQWf1S
- 7QCJeg6032AAycSYoaGrnC6aRiIchuKAt8GPTe5XPwUUpD7457u2SzNnnfo689kdTS5c9C
- 2rcjKzvB6+IKQxMsN2TAyFWWz+hX4DY=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-637-b64hrSvzMi2EPob2bGMpFA-1; Fri, 26 Apr 2024 10:15:33 -0400
-X-MC-Unique: b64hrSvzMi2EPob2bGMpFA-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
+ (Exim 4.90_1) (envelope-from <SRS0=oYEp=L7=kaod.org=clg@ozlabs.org>)
+ id 1s0MNf-0000L5-C2; Fri, 26 Apr 2024 10:16:58 -0400
+Received: from gandalf.ozlabs.org (mail.ozlabs.org
+ [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4VQvsz5lqpz4xLw;
+ Sat, 27 Apr 2024 00:16:39 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id ED8BB8B5722;
- Fri, 26 Apr 2024 14:15:32 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 897762166B31;
- Fri, 26 Apr 2024 14:15:32 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id AD2AA21E66E5; Fri, 26 Apr 2024 16:15:31 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Peter Xu <peterx@redhat.com>,  devel@lists.libvirt.org,  Paolo Bonzini
- <pbonzini@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Hailiang Zhang <zhanghailiang@xfusion.com>,  Eric
- Blake <eblake@redhat.com>
-Subject: Re: [PATCH 4/6] migration: Remove block migration
-In-Reply-To: <20240425150939.19268-5-farosas@suse.de> (Fabiano Rosas's message
- of "Thu, 25 Apr 2024 12:09:37 -0300")
-References: <20240425150939.19268-1-farosas@suse.de>
- <20240425150939.19268-5-farosas@suse.de>
-Date: Fri, 26 Apr 2024 16:15:31 +0200
-Message-ID: <87cyqcrz0c.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4VQvsx0tFGz4wnv;
+ Sat, 27 Apr 2024 00:16:36 +1000 (AEST)
+Message-ID: <3ea873c8-3548-4a1b-84bd-ffe28ca19fc0@kaod.org>
+Date: Fri, 26 Apr 2024 16:16:32 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 02/10] ppc/pnv: Introduce 'PnvChipClass::chip_type'
+To: Aditya Gupta <adityag@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>
+References: <20240426110023.733309-1-adityag@linux.ibm.com>
+ <20240426110023.733309-3-adityag@linux.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240426110023.733309-3-adityag@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=oYEp=L7=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,77 +69,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
+On 4/26/24 13:00, Aditya Gupta wrote:
+> Introduce 'PnvChipClass::chip_type' to easily get which Power chip is
+> it.
+> This helps generalise similar codes such as *_dt_populate, and removes
+> duplication of code between Power11 and Power10 changes in following
+> patches.
+> 
+> Cc: Cédric Le Goater <clg@kaod.org>
+> Cc: Frédéric Barrat <fbarrat@linux.ibm.com>
+> Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
+> Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+> Cc: Nicholas Piggin <npiggin@gmail.com>
+> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+> ---
+>   hw/ppc/pnv.c              |  5 +++++
+>   include/hw/ppc/pnv_chip.h | 10 ++++++++++
+>   2 files changed, 15 insertions(+)
+> 
+> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+> index 6e3a5ccdec76..74e7908e5ffb 100644
+> --- a/hw/ppc/pnv.c
+> +++ b/hw/ppc/pnv.c
+> @@ -1457,6 +1457,7 @@ static void pnv_chip_power8e_class_init(ObjectClass *klass, void *data)
+>       PnvChipClass *k = PNV_CHIP_CLASS(klass);
+>   
+>       k->chip_cfam_id = 0x221ef04980000000ull;  /* P8 Murano DD2.1 */
+> +    k->chip_type = PNV_TYPE_POWER8E;
+>       k->cores_mask = POWER8E_CORE_MASK;
+>       k->num_phbs = 3;
+>       k->chip_pir = pnv_chip_pir_p8;
+> @@ -1481,6 +1482,7 @@ static void pnv_chip_power8_class_init(ObjectClass *klass, void *data)
+>       PnvChipClass *k = PNV_CHIP_CLASS(klass);
+>   
+>       k->chip_cfam_id = 0x220ea04980000000ull; /* P8 Venice DD2.0 */
+> +    k->chip_type = PNV_TYPE_POWER8;
+>       k->cores_mask = POWER8_CORE_MASK;
+>       k->num_phbs = 3;
+>       k->chip_pir = pnv_chip_pir_p8;
+> @@ -1505,6 +1507,7 @@ static void pnv_chip_power8nvl_class_init(ObjectClass *klass, void *data)
+>       PnvChipClass *k = PNV_CHIP_CLASS(klass);
+>   
+>       k->chip_cfam_id = 0x120d304980000000ull;  /* P8 Naples DD1.0 */
+> +    k->chip_type = PNV_TYPE_POWER8NVL;
+>       k->cores_mask = POWER8_CORE_MASK;
+>       k->num_phbs = 4;
+>       k->chip_pir = pnv_chip_pir_p8;
+> @@ -1779,6 +1782,7 @@ static void pnv_chip_power9_class_init(ObjectClass *klass, void *data)
+>       static const int i2c_ports_per_engine[PNV9_CHIP_MAX_I2C] = {2, 13, 2, 2};
+>   
+>       k->chip_cfam_id = 0x220d104900008000ull; /* P9 Nimbus DD2.0 */
+> +    k->chip_type = PNV_TYPE_POWER9;
+>       k->cores_mask = POWER9_CORE_MASK;
+>       k->chip_pir = pnv_chip_pir_p9;
+>       k->intc_create = pnv_chip_power9_intc_create;
+> @@ -2091,6 +2095,7 @@ static void pnv_chip_power10_class_init(ObjectClass *klass, void *data)
+>       static const int i2c_ports_per_engine[PNV10_CHIP_MAX_I2C] = {14, 14, 2, 16};
+>   
+>       k->chip_cfam_id = 0x120da04900008000ull; /* P10 DD1.0 (with NX) */
+> +    k->chip_type = PNV_TYPE_POWER10;
+>       k->cores_mask = POWER10_CORE_MASK;
+>       k->chip_pir = pnv_chip_pir_p10;
+>       k->intc_create = pnv_chip_power10_intc_create;
+> diff --git a/include/hw/ppc/pnv_chip.h b/include/hw/ppc/pnv_chip.h
+> index 8589f3291ed3..ebfe82b89537 100644
+> --- a/include/hw/ppc/pnv_chip.h
+> +++ b/include/hw/ppc/pnv_chip.h
+> @@ -17,12 +17,21 @@
+>   OBJECT_DECLARE_TYPE(PnvChip, PnvChipClass,
+>                       PNV_CHIP)
+>   
+> +typedef enum PnvChipType {
+> +    PNV_TYPE_POWER8E,     /* AKA Murano (default) */
+> +    PNV_TYPE_POWER8,      /* AKA Venice */
+> +    PNV_TYPE_POWER8NVL,   /* AKA Naples */
+> +    PNV_TYPE_POWER9,      /* AKA Nimbus */
+> +    PNV_TYPE_POWER10,
+> +} PnvChipType;
 
-> The block migration has been considered obsolete since QEMU 8.2 in
-> favor of the more flexible storage migration provided by the
-> blockdev-mirror driver. Two releases have passed so now it's time to
-> remove it.
->
-> Deprecation commit 66db46ca83 ("migration: Deprecate block
-> migration").
->
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Nope.
 
-[...]
+> +
+>   struct PnvChip {
+>       /*< private >*/
+>       SysBusDevice parent_obj;
+>   
+>       /*< public >*/
+>       uint32_t     chip_id;
+> +
+>       uint64_t     ram_start;
+>       uint64_t     ram_size;
+>   
+> @@ -137,6 +146,7 @@ struct PnvChipClass {
+>       SysBusDeviceClass parent_class;
+>   
+>       /*< public >*/
+> +    PnvChipType  chip_type;
+>       uint64_t     chip_cfam_id;
+>       uint64_t     cores_mask;
+>       uint32_t     num_pecs;
 
-> diff --git a/migration/migration.c b/migration/migration.c
-> index a3dc8a7974..0f4df893e5 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
+Adding an enum type under PnvChipClass which is a type already
+looks wrong. Please find another way. It is possible I am sure.
 
-[...]
+Thanks,
 
-> @@ -1997,8 +1983,6 @@ static bool migrate_prepare(MigrationState *s, bool resume, Error **errp)
->          }
->      }
->  
-> -    s->must_remove_block_options = true;
-> -
->      if (migrate_init(s, errp)) {
->          return false;
->      }
-> @@ -2080,7 +2064,6 @@ void qmp_migrate(const char *uri, bool has_channels,
->                     "a valid migration protocol");
->          migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
->                            MIGRATION_STATUS_FAILED);
-> -        block_cleanup_parameters();
->      }
->  
->      if (local_err) {
-> diff --git a/migration/options.c b/migration/options.c
-> index 638eeeb9a0..5049bfb78e 100644
-> --- a/migration/options.c
-> +++ b/migration/options.c
+C.
 
-[...]
-
-> @@ -942,17 +917,6 @@ ZeroPageDetection migrate_zero_page_detection(void)
->  
->  /* parameters helpers */
->  
-> -void block_cleanup_parameters(void)
-> -{
-> -    MigrationState *s = migrate_get_current();
-> -
-> -    if (s->must_remove_block_options) {
-> -        /* setting to false can never fail */
-> -        migrate_cap_set(MIGRATION_CAPABILITY_BLOCK, false, &error_abort);
-> -        s->must_remove_block_options = false;
-> -    }
-> -}
-> -
-
-MigrationState member @must_remove_block_options is now unused.  Please
-delete it.
-
->  AnnounceParameters *migrate_announce_params(void)
->  {
->      static AnnounceParameters ap;
-
-[...]
-
-With that:
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
 
