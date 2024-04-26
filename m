@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87B3AC19F4E
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 07:29:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49126C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 07:36:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0G0T-00070i-3V; Fri, 26 Apr 2024 03:28:29 -0400
+	id 1s0G8B-0001IC-Dy; Fri, 26 Apr 2024 03:36:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiongyining1480@phytium.com.cn>)
- id 1s0G0R-00070A-6l; Fri, 26 Apr 2024 03:28:27 -0400
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
+ id 1s0G85-0001GZ-Uq; Fri, 26 Apr 2024 03:36:22 -0400
+Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <xiongyining1480@phytium.com.cn>)
- id 1s0G0L-0008FB-FJ; Fri, 26 Apr 2024 03:28:26 -0400
+ id 1s0G83-0002TP-Nq; Fri, 26 Apr 2024 03:36:21 -0400
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwCnWAmJVytmQ7X1CQ--.42S2;
- Fri, 26 Apr 2024 15:28:09 +0800 (CST)
+ by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwC3vRFtWStmIcEAAA--.471S2;
+ Fri, 26 Apr 2024 15:36:13 +0800 (CST)
 Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwCXaEyDVytmqGUAAA--.521S3;
- Fri, 26 Apr 2024 15:28:03 +0800 (CST)
+ by mail (Coremail) with SMTP id AQAAfwAH2EtlWStmgmcAAA--.464S3;
+ Fri, 26 Apr 2024 15:36:05 +0800 (CST)
 From: Xiong Yining <xiongyining1480@phytium.com.cn>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: rad@semihalf.com, peter.maydell@linaro.org, quic_llindhol@quicinc.com,
  marcin.juszkiewicz@linaro.org,
  Xiong Yining <xiongyining1480@phytium.com.cn>
-Subject: [PATCH v3 0/1] ARM Sbsa-ref: Enable CPU cluster topology
-Date: Fri, 26 Apr 2024 07:27:03 +0000
-Message-Id: <20240426072704.325883-1-xiongyining1480@phytium.com.cn>
+Subject: [PATCH v4 0/1] ARM Sbsa-ref: Enable CPU cluster topology
+Date: Fri, 26 Apr 2024 07:35:52 +0000
+Message-Id: <20240426073553.326946-1-xiongyining1480@phytium.com.cn>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwCXaEyDVytmqGUAAA--.521S3
-X-CM-SenderInfo: x0lr0wp1lqx0bjrumio6sk53xlxphulrpou0/1tbiAQAGBmYpXuMFaAAEsa
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=xiongyinin
+X-CM-TRANSID: AQAAfwAH2EtlWStmgmcAAA--.464S3
+X-CM-SenderInfo: x0lr0wp1lqx0bjrumio6sk53xlxphulrpou0/1tbiAQAGBmYpXuMFaAAIsW
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=xiongyinin
  g1480@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvdXoW7Wr4kAr45ZF1rZFWUWryxuFg_yoW3Zrc_Ar
- n7Za95Krs7AF4vkay0y3WfCry8ArWYgr15tFn7KF4jqw1fCF4UJrsFk3s3Ar1rWr18W348
- AF48A3yfA34agjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8wcxFpf9Il3svdxBIdaVrnU
+X-Coremail-Antispam: 1Uk129KBjvdXoW7Wr4kAr45ZF1rZFWUWryxuFg_yoWftrc_Ar
+ 1kZa9YgrsrAF1vkay0yF1fJry0krWjgr15GFn2kF45t34Fkr4UJFsrK3s3Aw1rWr1UWw1x
+ Aa1UArWfC34aqjkaLaAFLSUrUUUUbb8apTn2vfkv8UJUUUU8wcxFpf9Il3svdxBIdaVrnU
  Uv73VFW2AGmfu7jjvjm3AaLaJ3UjIYCTnIWjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRUUUUU
  UUUU=
-Received-SPF: pass client-ip=162.243.164.118;
+Received-SPF: pass client-ip=209.97.181.73;
  envelope-from=xiongyining1480@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
+ helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,6 +72,12 @@ Enable CPU cluster support on SbsaQemu platform, so that users can
 specify a 4-level CPU hierarchy sockets/clusters/cores/threads. And this
 topology can be passed to the firmware through DT cpu-map.
 
+Signed-off-by: Xiong Yining <xiongyining1480@phytium.com.cn>
+
+---
+Changes in v4:
+- align the machine-version-minor to 4
+
 Changes in v3:
 - squash the two patches together into one
 - add the DTB information in docs/system/arm/sbsa.rst
@@ -81,13 +87,12 @@ Changes in v2:
 - put this code before sbsa_fdt_add_gic_node().
 - Link to v1: https://lists.gnu.org/archive/html/qemu-devel/2023-12/msg03390.html
 
-
 xiongyining1480 (1):
   hw/arm/sbsa-ref: Enable CPU cluster on ARM sbsa machine
 
  docs/system/arm/sbsa.rst |  4 ++++
- hw/arm/sbsa-ref.c        | 35 +++++++++++++++++++++++++++++++++++
- 2 files changed, 39 insertions(+)
+ hw/arm/sbsa-ref.c        | 37 ++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 40 insertions(+), 1 deletion(-)
 
 -- 
 2.34.1
