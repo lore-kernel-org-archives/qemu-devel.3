@@ -4,61 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6AEFC19F4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 15:40:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ECD0C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 15:41:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0Nfs-0001ma-V5; Fri, 26 Apr 2024 11:39:45 -0400
+	id 1s0Nfy-0001qm-KR; Fri, 26 Apr 2024 11:39:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1s0Nfr-0001mC-Kf
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 11:39:43 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ id 1s0Nft-0001mm-8w
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 11:39:45 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1s0Nfp-0003n0-Uc
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 11:39:43 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a5200afe39eso257177166b.1
- for <qemu-devel@nongnu.org>; Fri, 26 Apr 2024 08:39:40 -0700 (PDT)
+ id 1s0Nfq-0003nB-KH
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 11:39:44 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a559b919303so298168966b.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Apr 2024 08:39:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1714145980; x=1714750780; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=beEy1BaUq1ITnJ2FawCB41NknSvAad6CIwoqmqhNong=;
- b=PoiGMYI32SOmgnuH5Y5ZloNlXYQtUHYSkIEeNALVDp1OFCe+SeorPmDqXrwUvHYBF5
- GknGkv0w/OV7qaTU9zH8MxAMhNGVn1IBlIzRtx30g6QS+althLvCa17uUcu33/gz32mN
- W4KRPCQrO9SmgysU/bT1NLCdvrKNIB6YTjizbaTlZtLARcX/oadw7e3z4UYPh3cRzYjh
- P1HzNSifhci1eRvnEnF9fQ19xrmKaBSermO2jYlICe8b/IRJXfPsDADo24kD0JDaarXt
- kNSa6H3T5stIesBoNQKUlr/H+d9mr6+VkbTzdeIywLLSv0W7kmlMHQnI5a3zMKlFM38i
- cIbQ==
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BQVnWso8WX9bz1gOeDbAO6szOCXlSFLVqMyjg5rVeaw=;
+ b=Ze8/OlkpJC5pNgAXu4Iwb2n87Z3t2Ap5EmFmTwaJoZjzIAZ6LoEFXPHDb9Lr278KYB
+ Y0L134ieafv8IWbKv/dosRFe4g4MtrGoOvZDngDM0MXRJgmdN6TfDsCcFoQha6p9DI0t
+ lDAFPwhj8bwPmFLq55yZEZa/0IHdsmY1cZZsUl7qqGY303pPTWD3pn+wtitI68j6wQbe
+ RrTrgYxZbGW+UOvCB4yrPr9I0HElgLJJOZg8E9kMxQWgSkgr5fW/CjfNXTyo/MeXgbGl
+ x8nLexUeIDC8Ofr8Y9+HXe9XJyJ0qE/zX403RkDXQWk1nHEsNID23dfnrwGvrNgxchgz
+ pR7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1714145980; x=1714750780;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=beEy1BaUq1ITnJ2FawCB41NknSvAad6CIwoqmqhNong=;
- b=uPPxa9EbX7Kb8lBveKYg2TqTfAbqa2Ktng7AxR4KEbit2/nXWK65fMLdtnJd1ftiaK
- gum3HbJ8Z3tv1aux33/KVOAqZ5vV4dzelqPeJgAkrfq5yj7+l0M8S3MaCTz76YCl5AKE
- BOI2Q4xaD3FynZx6wW4e0FR75Dwb3U0UBEYsJMtntWz4Qyzh+BPADtTsn0OixyfhtkX3
- XzUs7HBIfIRQtR0Pz0oNabRJnv8MNUdJ+NCLyPLrUoKnZftlr7V9p2L9rBfnnoEYlVyq
- 8ExQzHECh6HO/uSV90FRohBt19nHvu9N2expqd6wZ80aNHwqyL5eAzXuMJmcwBy0wG6l
- s3ww==
-X-Gm-Message-State: AOJu0YwfPaWEXCWdUKPXHELDfHLNtYnAePCT3UhrG2LgEh9Q+HrxHKAu
- bFbOvSUgs2vLfMsucJqHRj2j0URWu8OdxxBYdFvKVfXbVKSMQEIk2vp8AE3puiM=
-X-Google-Smtp-Source: AGHT+IHy35rhjXSAb644NNlEWsZQxnZUNOs8iuPbE0jtQ5KItWEvHQx+rCrq5TWbHqMCVFt8zCFK4Q==
-X-Received: by 2002:a17:906:aed2:b0:a58:a2f9:d795 with SMTP id
- me18-20020a170906aed200b00a58a2f9d795mr3167429ejb.59.1714145979721; 
- Fri, 26 Apr 2024 08:39:39 -0700 (PDT)
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=BQVnWso8WX9bz1gOeDbAO6szOCXlSFLVqMyjg5rVeaw=;
+ b=U3Xg+eKJBMgJdIKATCFTDni5y3qdijKG1M+SMYHnLljudmjNwzPYngxi9nMDqdEKCB
+ p9cscJf6Lft4+C5OTlQKNbofyUbs9LROHuNk5RaOWvmeANTtrnfGu4WhdqpSWbnBQIYw
+ CvbkP7Rv5OXBNg7+HpvnOReInQIZKxIJJJOX9ZVz/OjahSUzcNxlPV3DVBLMwXRidzfv
+ dBAIWWvgIfBTocCT/bZQcNdJi89AVRVqJpk2up+1/peWNoYq8N9Cj8y++F820dsuFwNk
+ 8DbqMJf0Ep5wG5JN/1HYisBtraV70MhvTLVTNRbVX4uaFgRz7rmrgMZCcKmGov10lYY2
+ dBIw==
+X-Gm-Message-State: AOJu0Ywj7V0Z3ZXVlHo0Y9K5LoiwqFTPg4yd399QZ4f7aaBR2beNVIFQ
+ iJK+eojFts1AUTX1I7HRwJMMqcQ5RMG6H1BJy2Lr/GPD7Fbo6xjEKiCLTgMGJCc=
+X-Google-Smtp-Source: AGHT+IEMyD2P1lpAJ3X+JkD3KFAIJt1AH9wyJZYLRbGjxiCpenmkej3vs4PybaxLaf/MG92cKXkzKA==
+X-Received: by 2002:a17:906:3bd5:b0:a55:3488:f730 with SMTP id
+ v21-20020a1709063bd500b00a553488f730mr2243165ejf.31.1714145980106; 
+ Fri, 26 Apr 2024 08:39:40 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- l18-20020a170906645200b00a55bb18e3d7sm5790936ejn.168.2024.04.26.08.39.39
+ u14-20020a1709063b8e00b00a58de9434ecsm33716ejf.108.2024.04.26.08.39.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 26 Apr 2024 08:39:39 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E3E3E5F882;
- Fri, 26 Apr 2024 16:39:38 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 1C85E5F94B;
+ Fri, 26 Apr 2024 16:39:39 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -78,15 +79,17 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Aurelien Jarno <aurelien@aurel32.net>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH 0/3] testing/next: s390x gitlab updates
-Date: Fri, 26 Apr 2024 16:39:35 +0100
-Message-Id: <20240426153938.1707723-1-alex.bennee@linaro.org>
+Subject: [PATCH 2/3] gitlab: migrate the s390x custom machine to 22.04
+Date: Fri, 26 Apr 2024 16:39:37 +0100
+Message-Id: <20240426153938.1707723-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240426153938.1707723-1-alex.bennee@linaro.org>
+References: <20240426153938.1707723-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,38 +112,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I was asked to update the custom gitlab runner from the aging 20.04 to
-22.04 which has been done. However I needed to update the provisioning
-scripts and clean-up some of the cruft. Sadly this doesn't seem to be
-passing cleanly as we have:
+20.04 is dead (from QEMU's point of view), long live 22.04!
 
-  - qtest-s390x/migration-test ERROR           98.94s   killed by signal 6 SIGABRT
-  - failing TCG tests (on s390x HW)
-     - float_convd fails against a generated reference
-     - clc returns 1
-
-There are also lots of scary DSO warnings:
-
-  BFD: warning: system-supplied DSO at 0x7fedb6479000 has a corrupt string table index
-
-Can I leave that to the respective maintainers to investigate please
-as I have a publishing deadline coming up.
-
-Thanks,
-
-Alex.
-
-Alex Bennée (3):
-  build-environment: make some packages optional
-  gitlab: migrate the s390x custom machine to 22.04
-  gitlab: remove stale s390x-all-linux-static conf hacks
-
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
  .gitlab-ci.d/custom-runners.yml               |  2 +-
- ...20.04-s390x.yml => ubuntu-22.04-s390x.yml} | 32 +++++++++----------
- scripts/ci/setup/build-environment.yml        | 16 ++++++++--
- 3 files changed, 29 insertions(+), 21 deletions(-)
- rename .gitlab-ci.d/custom-runners/{ubuntu-20.04-s390x.yml => ubuntu-22.04-s390x.yml} (80%)
+ ...20.04-s390x.yml => ubuntu-22.04-s390x.yml} | 28 +++++++++----------
+ 2 files changed, 15 insertions(+), 15 deletions(-)
+ rename .gitlab-ci.d/custom-runners/{ubuntu-20.04-s390x.yml => ubuntu-22.04-s390x.yml} (88%)
 
+diff --git a/.gitlab-ci.d/custom-runners.yml b/.gitlab-ci.d/custom-runners.yml
+index a0e79acd39..29e52df283 100644
+--- a/.gitlab-ci.d/custom-runners.yml
++++ b/.gitlab-ci.d/custom-runners.yml
+@@ -29,7 +29,7 @@
+       junit: build/meson-logs/testlog.junit.xml
+ 
+ include:
+-  - local: '/.gitlab-ci.d/custom-runners/ubuntu-20.04-s390x.yml'
++  - local: '/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml'
+   - local: '/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml'
+   - local: '/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch32.yml'
+   - local: '/.gitlab-ci.d/custom-runners/centos-stream-8-x86_64.yml'
+diff --git a/.gitlab-ci.d/custom-runners/ubuntu-20.04-s390x.yml b/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
+similarity index 88%
+rename from .gitlab-ci.d/custom-runners/ubuntu-20.04-s390x.yml
+rename to .gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
+index cdae6c5212..85e2809573 100644
+--- a/.gitlab-ci.d/custom-runners/ubuntu-20.04-s390x.yml
++++ b/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
+@@ -1,13 +1,13 @@
+-# All ubuntu-20.04 jobs should run successfully in an environment
++# All ubuntu-22.04 jobs should run successfully in an environment
+ # setup by the scripts/ci/setup/build-environment.yml task
+-# "Install basic packages to build QEMU on Ubuntu 20.04/20.04"
++# "Install basic packages to build QEMU on Ubuntu 22.04"
+ 
+-ubuntu-20.04-s390x-all-linux-static:
++ubuntu-22.04-s390x-all-linux-static:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_20.04
++ - ubuntu_22.04
+  - s390x
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -23,12 +23,12 @@ ubuntu-20.04-s390x-all-linux-static:
+  - make --output-sync check-tcg
+  - make --output-sync -j`nproc` check
+ 
+-ubuntu-20.04-s390x-all:
++ubuntu-22.04-s390x-all:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_20.04
++ - ubuntu_22.04
+  - s390x
+  timeout: 75m
+  rules:
+@@ -42,12 +42,12 @@ ubuntu-20.04-s390x-all:
+  - make --output-sync -j`nproc`
+  - make --output-sync -j`nproc` check
+ 
+-ubuntu-20.04-s390x-alldbg:
++ubuntu-22.04-s390x-alldbg:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_20.04
++ - ubuntu_22.04
+  - s390x
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -65,12 +65,12 @@ ubuntu-20.04-s390x-alldbg:
+  - make --output-sync -j`nproc`
+  - make --output-sync -j`nproc` check
+ 
+-ubuntu-20.04-s390x-clang:
++ubuntu-22.04-s390x-clang:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_20.04
++ - ubuntu_22.04
+  - s390x
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -87,11 +87,11 @@ ubuntu-20.04-s390x-clang:
+  - make --output-sync -j`nproc`
+  - make --output-sync -j`nproc` check
+ 
+-ubuntu-20.04-s390x-tci:
++ubuntu-22.04-s390x-tci:
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_20.04
++ - ubuntu_22.04
+  - s390x
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -107,12 +107,12 @@ ubuntu-20.04-s390x-tci:
+    || { cat config.log meson-logs/meson-log.txt; exit 1; }
+  - make --output-sync -j`nproc`
+ 
+-ubuntu-20.04-s390x-notcg:
++ubuntu-22.04-s390x-notcg:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_20.04
++ - ubuntu_22.04
+  - s390x
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
 -- 
 2.39.2
 
