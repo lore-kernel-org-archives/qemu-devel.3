@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 520F9C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 19:51:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1295C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Apr 2024 19:51:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0RUl-0005TO-FJ; Fri, 26 Apr 2024 15:44:31 -0400
+	id 1s0RUq-000632-0k; Fri, 26 Apr 2024 15:44:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s0RUH-0002lA-8N
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 15:44:02 -0400
-Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s0RUS-0003HK-9Y
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 15:44:12 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s0RUC-0003KZ-Sg
- for qemu-devel@nongnu.org; Fri, 26 Apr 2024 15:44:00 -0400
-Received: by mail-lj1-x22d.google.com with SMTP id
- 38308e7fff4ca-2dd6a7ae2dcso39845811fa.1
- for <qemu-devel@nongnu.org>; Fri, 26 Apr 2024 12:43:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s0RUO-0003SY-Nu
+ for qemu-devel@nongnu.org; Fri, 26 Apr 2024 15:44:11 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-57225322312so3651116a12.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Apr 2024 12:44:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714160635; x=1714765435; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714160646; x=1714765446; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7TM8vdBJsyiS8N9/BcT+cG9GVrIFZEEoAIJDE88Bqbg=;
- b=arlsN9etaO/ndGX0QWFywtqhnSpWdEOR5KyFtBojbdVzKtuLkEOeCxi2Xr5wz2SNnj
- VBogtvFjVDS83E34Wm40T8hcoJGdIIXosVR2p6pX+Rv8A3TRJnj3EQ2NzJkYXCxASlRb
- RUteAPJzykKnkD0AkCQj9Y5rqXNlTknmhKrL5MQ6Ct3yxsnGbOcablX8AutaxFtniZ/8
- A0LyGA0EA5GZ8V3wkWO0iDMuBlhhh4Ar4XnT2vEGmiZjK+/PoqNYfQbIaKUW81PZkPKs
- SPMitYdt+CM+G0fCiJ/mBo35kilvzxR+e0nQRHdcAtYdjGSlanFPrFHx8iJHbB7znNzC
- WbKA==
+ bh=Yi4qzwVEIokTDVOXJGX3UXAbAGnKr2+Pju6ZmUzQWug=;
+ b=JlxMWkm6oUDxpEPsHc/9FkGba94rEFG08N4HJV7mUv1m0yeOHoU2DJoDRS0OEo4Wca
+ vzahnq5869oMVyWsFAMN88xBj0rMt8hnyO6UanWMpWZLtDHue7x5ubhg3EHfrYjW4DxP
+ Uwa94TyVsLWQkCLPJpxYPsilBxmBNF7Q0FHir+wudK56esIlPMwjhCenbwE4PRUYoeWm
+ jIiYXrSdLzFMbx/OYF4oQQ+3+s3QBfesDzSjCHT3B3JRf2TS5JUVgVS2642G89mloArV
+ 99D9M5jxbDbBSSnFKMp0kjjJ0t78/xhjIMiO2D2SJJIrI3QMQDeIwcr5wwbp2IVNEU0l
+ cP1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714160635; x=1714765435;
+ d=1e100.net; s=20230601; t=1714160646; x=1714765446;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7TM8vdBJsyiS8N9/BcT+cG9GVrIFZEEoAIJDE88Bqbg=;
- b=ohWUHXHIqMtPqNsIB1wqa9qkHV0+7xUoGh91mzJKNVG+56uzb7gjFtVjHgX8N8Rsru
- G6dAUtRp1hnaIuewuncz8YMIxySUwpVzbLgGKpVZQ74rFxbAnYLgTxZltuJU0Bvl5wd3
- G+9scbSIHy683cVEqTT652ZD2Seq1Eui6uXhe1E20jrFS0VaewcYF6BieZE2vK9TwWwe
- Vxzc7+BFgnfPHjrQ8K7lmm2sWolh8H+jbTfatEs+8d+Jj8ggovXhaJn6cSpWhtWq4fhP
- Byga+iBcUxBHestyO8CTaRuqAHrir7GZvVK7xLiKKbmH8oEZoryoacKnlLNdjU0nXSWW
- bmsA==
-X-Gm-Message-State: AOJu0YwqDDDZaAYj8u/oecKj39Xe/JIEjBjvt51r+LW6xA5Dzr1IucWY
- rvanU3wGJ8eSjWBmFC8Dpf83Vm88s4H7HzFlxcVowGfwILrqu8NRRCr/PwKVO2XoMhihf4Vj6co
- pXNU=
-X-Google-Smtp-Source: AGHT+IGgxB7ptdEp6F95JXRMZ1R4geUC72uj9X7EkgteVWQ5sYyMah5qtCC6g9RUYL+EyajPioOPOg==
-X-Received: by 2002:a2e:7d09:0:b0:2de:75de:5b0b with SMTP id
- y9-20020a2e7d09000000b002de75de5b0bmr2771242ljc.18.1714160634772; 
- Fri, 26 Apr 2024 12:43:54 -0700 (PDT)
+ bh=Yi4qzwVEIokTDVOXJGX3UXAbAGnKr2+Pju6ZmUzQWug=;
+ b=NEbvCJ8PRSzwsWNASVcxubew6WXjlAfX9N7K4ol7/ySDCYpC9CTP7iQGCLkhm2pZ8R
+ GH65nWf9F/mxsW1uPzap81faa1hqSHhPP2rIgLLwABQbI3bAvGyo1d8/qoXDF233fS2r
+ ve4ZbMdKv97yj5VpiHVCQRUN0XS4hvd82LKrdQg8CVhA4gGsbg/zXCo8Ntthrz9TTVtV
+ N7BA7/wf6PS8QceURzKzwgnMs0xQDZcfQKhh7tsYdUqldawSjFYD4mhoPW9g6atFxHAM
+ pQMpYP6OvQishojaC58SbpBNW8wIGPcJeXbcZVqiD7zdwUHGN1yIoLBkJoZXSHTWA3xB
+ 83gw==
+X-Gm-Message-State: AOJu0YwXGUFZxQM4d9b/gNrl99RyqVO9JIwb0OCvdpWn2UuwyPLCZ22w
+ 1hZUpPXb2VjoDydYBxkzOVq8wjT0Tu1bqejYhqcWrJhnDllvw9tDQPxqV+8oW9NM8MZOiAVrwyF
+ ZRnM=
+X-Google-Smtp-Source: AGHT+IFXMGCYbRnNfazAzNLEZBwThw+jXzRFYB0Gm2woHPKm9YaOPwh/RhTlp5jRRRkn11wGYFVPfA==
+X-Received: by 2002:a50:8d42:0:b0:56e:2e10:7dad with SMTP id
+ t2-20020a508d42000000b0056e2e107dadmr2804865edt.35.1714160645819; 
+ Fri, 26 Apr 2024 12:44:05 -0700 (PDT)
 Received: from m1x-phil.lan (aul93-h02-176-184-11-147.dsl.sta.abo.bbox.fr.
  [176.184.11.147]) by smtp.gmail.com with ESMTPSA id
- i22-20020a1709061cd600b00a55a10eb070sm7881150ejh.214.2024.04.26.12.43.53
+ bf17-20020a0564021a5100b0056bf6287f32sm10263342edb.26.2024.04.26.12.44.04
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 26 Apr 2024 12:43:54 -0700 (PDT)
+ Fri, 26 Apr 2024 12:44:05 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
  qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 19/38] accel/tcg: Rename helper-head.h -> helper-head.h.inc
-Date: Fri, 26 Apr 2024 21:41:39 +0200
-Message-ID: <20240426194200.43723-20-philmd@linaro.org>
+ Reinoud Zandijk <reinoud@netbsd.org>
+Subject: [PULL 21/38] accel/nvmm: Use accel-specific per-vcpu @dirty field
+Date: Fri, 26 Apr 2024 21:41:41 +0200
+Message-ID: <20240426194200.43723-22-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240426194200.43723-1-philmd@linaro.org>
 References: <20240426194200.43723-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,73 +97,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit 139c1837db ("meson: rename included C source files
-to .c.inc"), QEMU standard procedure for included C files is to
-use *.c.inc.
-
-Besides, since commit 6a0057aa22 ("docs/devel: make a statement
-about includes") this is documented in the Coding Style:
-
-  If you do use template header files they should be named with
-  the ``.c.inc`` or ``.h.inc`` suffix to make it clear they are
-  being included for expansion.
-
-Therefore rename "exec/helper-head.h" as "exec/helper-head.h.inc".
+NVMM has a specific use of the CPUState::vcpu_dirty field
+(CPUState::vcpu_dirty is not used by common code).
+To make this field accel-specific, add and use a new
+@dirty variable in the AccelCPUState structure.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240424173333.96148-4-philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240424174506.326-3-philmd@linaro.org>
 ---
- include/exec/helper-gen.h.inc                     | 2 +-
- include/exec/{helper-head.h => helper-head.h.inc} | 0
- include/exec/helper-proto.h.inc                   | 2 +-
- include/exec/helper-info.c.inc                    | 2 +-
- 4 files changed, 3 insertions(+), 3 deletions(-)
- rename include/exec/{helper-head.h => helper-head.h.inc} (100%)
+ target/i386/nvmm/nvmm-all.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/include/exec/helper-gen.h.inc b/include/exec/helper-gen.h.inc
-index c009641517..d9fd3ed72a 100644
---- a/include/exec/helper-gen.h.inc
-+++ b/include/exec/helper-gen.h.inc
-@@ -8,7 +8,7 @@
+diff --git a/target/i386/nvmm/nvmm-all.c b/target/i386/nvmm/nvmm-all.c
+index 49a3a3b916..f9cced53b3 100644
+--- a/target/i386/nvmm/nvmm-all.c
++++ b/target/i386/nvmm/nvmm-all.c
+@@ -30,6 +30,7 @@ struct AccelCPUState {
+     struct nvmm_vcpu vcpu;
+     uint8_t tpr;
+     bool stop;
++    bool dirty;
  
- #include "tcg/tcg.h"
- #include "tcg/helper-info.h"
--#include "exec/helper-head.h"
-+#include "exec/helper-head.h.inc"
+     /* Window-exiting for INTs/NMIs. */
+     bool int_window_exit;
+@@ -507,7 +508,7 @@ nvmm_io_callback(struct nvmm_io *io)
+     }
  
- #define DEF_HELPER_FLAGS_0(name, flags, ret)                            \
- extern TCGHelperInfo glue(helper_info_, name);                          \
-diff --git a/include/exec/helper-head.h b/include/exec/helper-head.h.inc
-similarity index 100%
-rename from include/exec/helper-head.h
-rename to include/exec/helper-head.h.inc
-diff --git a/include/exec/helper-proto.h.inc b/include/exec/helper-proto.h.inc
-index c3aa666929..f8e57e43ce 100644
---- a/include/exec/helper-proto.h.inc
-+++ b/include/exec/helper-proto.h.inc
-@@ -5,7 +5,7 @@
-  * Define HELPER_H for the header file to be expanded.
-  */
+     /* Needed, otherwise infinite loop. */
+-    current_cpu->vcpu_dirty = false;
++    current_cpu->accel->dirty = false;
+ }
  
--#include "exec/helper-head.h"
-+#include "exec/helper-head.h.inc"
+ static void
+@@ -516,7 +517,7 @@ nvmm_mem_callback(struct nvmm_mem *mem)
+     cpu_physical_memory_rw(mem->gpa, mem->data, mem->size, mem->write);
  
- /*
-  * Work around an issue with --enable-lto, in which GCC's ipa-split pass
-diff --git a/include/exec/helper-info.c.inc b/include/exec/helper-info.c.inc
-index 530d2e6d35..c551736d49 100644
---- a/include/exec/helper-info.c.inc
-+++ b/include/exec/helper-info.c.inc
-@@ -7,7 +7,7 @@
+     /* Needed, otherwise infinite loop. */
+-    current_cpu->vcpu_dirty = false;
++    current_cpu->accel->dirty = false;
+ }
  
- #include "tcg/tcg.h"
- #include "tcg/helper-info.h"
--#include "exec/helper-head.h"
-+#include "exec/helper-head.h.inc"
+ static struct nvmm_assist_callbacks nvmm_callbacks = {
+@@ -726,9 +727,9 @@ nvmm_vcpu_loop(CPUState *cpu)
+      * Inner VCPU loop.
+      */
+     do {
+-        if (cpu->vcpu_dirty) {
++        if (cpu->accel->dirty) {
+             nvmm_set_registers(cpu);
+-            cpu->vcpu_dirty = false;
++            cpu->accel->dirty = false;
+         }
  
- /*
-  * Need one more level of indirection before stringification
+         if (qcpu->stop) {
+@@ -826,32 +827,32 @@ static void
+ do_nvmm_cpu_synchronize_state(CPUState *cpu, run_on_cpu_data arg)
+ {
+     nvmm_get_registers(cpu);
+-    cpu->vcpu_dirty = true;
++    cpu->accel->dirty = true;
+ }
+ 
+ static void
+ do_nvmm_cpu_synchronize_post_reset(CPUState *cpu, run_on_cpu_data arg)
+ {
+     nvmm_set_registers(cpu);
+-    cpu->vcpu_dirty = false;
++    cpu->accel->dirty = false;
+ }
+ 
+ static void
+ do_nvmm_cpu_synchronize_post_init(CPUState *cpu, run_on_cpu_data arg)
+ {
+     nvmm_set_registers(cpu);
+-    cpu->vcpu_dirty = false;
++    cpu->accel->dirty = false;
+ }
+ 
+ static void
+ do_nvmm_cpu_synchronize_pre_loadvm(CPUState *cpu, run_on_cpu_data arg)
+ {
+-    cpu->vcpu_dirty = true;
++    cpu->accel->dirty = true;
+ }
+ 
+ void nvmm_cpu_synchronize_state(CPUState *cpu)
+ {
+-    if (!cpu->vcpu_dirty) {
++    if (!cpu->accel->dirty) {
+         run_on_cpu(cpu, do_nvmm_cpu_synchronize_state, RUN_ON_CPU_NULL);
+     }
+ }
+@@ -981,7 +982,7 @@ nvmm_init_vcpu(CPUState *cpu)
+         }
+     }
+ 
+-    cpu->vcpu_dirty = true;
++    cpu->accel->dirty = true;
+     cpu->accel = qcpu;
+ 
+     return 0;
 -- 
 2.41.0
 
