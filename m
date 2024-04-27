@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FCDDC4345F
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Apr 2024 14:48:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E141AC4345F
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Apr 2024 14:57:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0jL2-0000Xi-5Q; Sat, 27 Apr 2024 10:47:40 -0400
+	id 1s0jTy-0004JH-F9; Sat, 27 Apr 2024 10:56:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s0jKt-0000Ra-KZ
- for qemu-devel@nongnu.org; Sat, 27 Apr 2024 10:47:34 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ id 1s0jTx-0004In-AA
+ for qemu-devel@nongnu.org; Sat, 27 Apr 2024 10:56:53 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s0jKp-0008GC-6k
- for qemu-devel@nongnu.org; Sat, 27 Apr 2024 10:47:30 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-2ac16b59fbeso2689284a91.2
- for <qemu-devel@nongnu.org>; Sat, 27 Apr 2024 07:47:25 -0700 (PDT)
+ id 1s0jTv-0001Oj-FU
+ for qemu-devel@nongnu.org; Sat, 27 Apr 2024 10:56:53 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-1e9451d8b71so27182825ad.0
+ for <qemu-devel@nongnu.org>; Sat, 27 Apr 2024 07:56:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714229244; x=1714834044; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714229810; x=1714834610; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=6wcbJVsApLjFvrfZlLIEnscXA61H/LQylnHzp959vKo=;
- b=Y5HZgU4sA/zjqpsAB3DxRLIjmp/xxad6nzY0c8nHBhWkwBIzk0yewFpM326TZ9m5fy
- VxNPeqH3kC6kAmirVagPg/19NR/aoxtLY38MXM6M6hXrhVSnmrwApVGiFrlqoS5gRzLc
- 4UfvCG2hucuL6uOM07fIPGGKVKSWJJr6weMPNvwNajXm3/ahtsakhAAdLogjyfFIVdMR
- dDZj+UZYlt9ByMYHiWBHQynNZqBMyFO/19GPtqKyGVFACvkHS6BGOCgq3dT4ybDsWFxe
- bsM020t0QFzF7C4sxSRVMqM0lKHX8t+CUC6oObm5ZGuNXbTsiPi3R7ZhyvNxrYQzKU4k
- HDoQ==
+ bh=P7i+j8sQZ7Tw/riqXNghKg1JnYab/QQ1Zk9cKxeYIOo=;
+ b=rlMaZ1PMBhQWEdIoDgSigtP++AqOtgpxIEhTwX+B2l4dA79WbO9nB7D7ot1GVrKVTl
+ l2LT+3jwIbUvN9k3k9QEsXN6mCFZYmNotmY6+IITzfD2va8krMUfuL81jaGAK9eHWU1K
+ +IDYc+/1fpxqpiGkgpp5ksyVQJJPFlX0SncaDEiniQBpLVAlwuBGgoLrddrRe1VQUFFL
+ x4UOpz8ML/zV1EwhMcKoDSX/9upVgvU2Prol7ulLYiIYh1Fv3wErZSif0NUmDkbBa6H7
+ 8N6RLBUQ7JMfIMwSbJ2V+Uf7a8WClegpdwfO/ZhQrbLaKr22jmrQXFHURLepgxwputPm
+ ZZkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714229244; x=1714834044;
+ d=1e100.net; s=20230601; t=1714229810; x=1714834610;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6wcbJVsApLjFvrfZlLIEnscXA61H/LQylnHzp959vKo=;
- b=H9J4K5WOzuEVygNMRm8ppTsNb9RCLwOe5iL+ENrZMnsEQHZqUXNmlUEagNVhtMYt1f
- X+r0odV0RpcTcRv8fZzhZlpfA3yTQFv3n0qTYoXx41DaShzp/fI0112webnVznqweTA6
- Y6ImmTl4BvGd8A/yYsb2Wnnad2NQOrhdiQrZtsurKmp+/XVKBlVZu2OcN5lO+kjsXZbc
- gjnJh4V1jQZts4MUO8NmmENP8BQV6bS0pgk6lCVXwtTHf+ABXA1/akV2jRC6348KPcNC
- j/pZng6iGczW13N8E2oZ3VHgR4jmKMuATswOLXz6cRBHS+qpbWfETujiJR6PVzg/nLZS
- /5fA==
+ bh=P7i+j8sQZ7Tw/riqXNghKg1JnYab/QQ1Zk9cKxeYIOo=;
+ b=nU+wCwu6woCGAPgGnLRFYQk38xQdcTIPaSLPbSpK/r8kNUeN6JLiGpUWmYpcgill4C
+ bk/igd8RrkiK3G2D2SfhbGLQ0/pHV0IfuYaWE6pNf9sW+CzT5tSA5zhjVlAiqmia+Uvi
+ lXrxRt1sFgD6cgysT1QwM/HivRVwlc0IZlNbEX5eFqtsKZpaykU1DeRG/QfjfnpTmzI/
+ e3U4cLLPyvZcMtKA1F+Yf9xMoUoefZF9093tfrVuiDkk3Qgaw/ZWJc073VWA1Xt6do+9
+ YcfIBQ+BRD/A9kEGqa2MZWOrVp3751DVvnSiUTvXUEx0uxwmz6+3F/YiYxST8EoP3HD8
+ yEyA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWNUyQLlhItwIF41BVJpn7n3FvcnqhVLwTSgf1f3cS+LnkjkukkM4hEXVidK0d0aifB5nwfBE5Rk+OGe65RIkUDl0GvIzI=
-X-Gm-Message-State: AOJu0YxSWS2lB+XbVm900XnKr5CkYgseFcwwd1mPkiCaco4GOI+42Tw+
- 4GJzSUfsAgUNIFHWiuLIZVNMtbqISapdiruKQ8pseVYJx6ImmuPIIKUcx2qqDqY=
-X-Google-Smtp-Source: AGHT+IGwse8lYW9T2xG3kSIABHNFoEICjAUgoHEU4XFiqoEAlGWLOn3BoCGIWP5dUiE9RNhhzf9EQA==
-X-Received: by 2002:a17:90a:d78b:b0:2ad:e004:76e6 with SMTP id
- z11-20020a17090ad78b00b002ade00476e6mr5231493pju.7.1714229244449; 
- Sat, 27 Apr 2024 07:47:24 -0700 (PDT)
+ AJvYcCX8Fuff5kecKshxY7RXmYBy+nxaith+34tlFUXzsQEO2k4x8AuJrPAsrSz3kELfULmaRs6oexQULAdXO/ujx0o8BfC23KA=
+X-Gm-Message-State: AOJu0YysrCB3u/Dw+byhrpQwld1JUkyzzkaw7ai1jHTRdq0nIIyK4z9M
+ FTk+nvsBO7u8bfxcQNvqVh4lmg73Vr/bXsC7S4BX0fH7C0sujm05uQXy84xj0yA=
+X-Google-Smtp-Source: AGHT+IGOmgmWHzbf7WpDYBjJ2fbHj4EdF0xHqallk52yBekp8Mas68CJ45cvcvAqKRiR70ucPClQ1w==
+X-Received: by 2002:a17:902:ecc4:b0:1e4:2879:3a38 with SMTP id
+ a4-20020a170902ecc400b001e428793a38mr7130310plh.47.1714229809679; 
+ Sat, 27 Apr 2024 07:56:49 -0700 (PDT)
 Received: from [192.168.91.227] ([75.147.178.105])
  by smtp.gmail.com with ESMTPSA id
- q1-20020a17090a938100b002a706910b05sm16194208pjo.9.2024.04.27.07.47.23
+ w1-20020a1709026f0100b001eb09053245sm3026844plk.131.2024.04.27.07.56.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 27 Apr 2024 07:47:23 -0700 (PDT)
-Message-ID: <040db071-6406-4270-969a-c98d6fb33caf@linaro.org>
-Date: Sat, 27 Apr 2024 07:47:21 -0700
+ Sat, 27 Apr 2024 07:56:49 -0700 (PDT)
+Message-ID: <121029ce-d106-4eb2-bbcb-6b65bd595813@linaro.org>
+Date: Sat, 27 Apr 2024 07:56:46 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/38] Exec / accelerators patches
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Subject: Re: [PATCH] Hexagon: add PC alignment check and exception
+To: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>,
  qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
- qemu-ppc@nongnu.org
-References: <20240426194200.43723-1-philmd@linaro.org>
+Cc: bcain@quicinc.com, sidneym@quicinc.com, ale@rev.ng, anjo@rev.ng,
+ ltaylorsimpson@gmail.com
+References: <c7af62451b02ffdc1d68bc00093b40a8080bc3ff.1714155331.git.quic_mathbern@quicinc.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240426194200.43723-1-philmd@linaro.org>
+In-Reply-To: <c7af62451b02ffdc1d68bc00093b40a8080bc3ff.1714155331.git.quic_mathbern@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
-X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- SUSPICIOUS_RECIPS=2.51 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,38 +99,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/26/24 12:41, Philippe Mathieu-Daudé wrote:
-> The following changes since commit a118c4aff4087eafb68f7132b233ad548cf16376:
+On 4/26/24 11:15, Matheus Tavares Bernardino wrote:
+> The Hexagon Programmer's Reference Manual says that the exception 0x1e
+> should be raised upon an unaligned program counter. Let's implement that
+> and also add tests for both the most common case as well as packets with
+> multiple change-of-flow instructions.
 > 
->    Merge tag 'hw-misc-20240425' ofhttps://github.com/philmd/qemu  into staging (2024-04-25 09:43:29 -0700)
+> Signed-off-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+> ---
+>   target/hexagon/cpu_bits.h                  |  1 +
+>   target/hexagon/translate.h                 |  2 ++
+>   target/hexagon/genptr.c                    | 21 ++++++++++++++++-----
+>   target/hexagon/translate.c                 |  2 +-
+>   tests/tcg/hexagon/Makefile.target          | 13 +++++++++++++
+>   tests/tcg/hexagon/unaligned_pc.S           | 10 ++++++++++
+>   tests/tcg/hexagon/unaligned_pc_multi_cof.S | 13 +++++++++++++
+>   7 files changed, 56 insertions(+), 6 deletions(-)
+>   create mode 100644 tests/tcg/hexagon/unaligned_pc.S
+>   create mode 100644 tests/tcg/hexagon/unaligned_pc_multi_cof.S
 > 
-> are available in the Git repository at:
-> 
->    https://github.com/philmd/qemu.git  tags/accel-20240426
-> 
-> for you to fetch changes up to 671558d290ffb93752d3245e7c5604b04b6dcdf2:
-> 
->    plugins: Include missing 'qemu/bitmap.h' header (2024-04-26 21:36:19 +0200)
-> 
-> Selfish PR, painfully tested commit by commit.
-> ----------------------------------------------------------------
-> Accelerators patches
-> 
-> A lot of trivial cleanups and simplifications (moving methods around,
-> adding/removing #include statements). Most notable changes:
-> 
-> - Rename NEED_CPU_H -> COMPILING_PER_TARGET
-> - Rename few template headers using the '.h.inc' suffix
-> - Extract some definitions / declarations into their own header:
->    - accel/tcg/user-retaddr.h (helper_retaddr)
->    - include/exec/abi_ptr.h (abi_ptr)
->    - include/exec/breakpoint.h (CPUBreakpoint, CPUWatchpoint)
->    - include/exec/mmu-access-type.h (MMUAccessType)
->    - include/user/tswap-target.h (tswapl, bswaptls)
+> diff --git a/target/hexagon/cpu_bits.h b/target/hexagon/cpu_bits.h
+> index 96fef71729..d6900c8bda 100644
+> --- a/target/hexagon/cpu_bits.h
+> +++ b/target/hexagon/cpu_bits.h
+> @@ -23,6 +23,7 @@
+>   #define HEX_EXCP_FETCH_NO_UPAGE  0x012
+>   #define HEX_EXCP_INVALID_PACKET  0x015
+>   #define HEX_EXCP_INVALID_OPCODE  0x015
+> +#define HEX_EXCP_PC_NOT_ALIGNED  0x01e
+>   #define HEX_EXCP_PRIV_NO_UREAD   0x024
+>   #define HEX_EXCP_PRIV_NO_UWRITE  0x025
+>   
+> diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
+> index 4dd59c6726..daf11eb584 100644
+> --- a/target/hexagon/translate.h
+> +++ b/target/hexagon/translate.h
+> @@ -75,6 +75,8 @@ typedef struct DisasContext {
+>       TCGv dczero_addr;
+>   } DisasContext;
+>   
+> +void gen_exception_end_tb(DisasContext *ctx, int excp);
+> +
+>   static inline void ctx_log_pred_write(DisasContext *ctx, int pnum)
+>   {
+>       if (!test_bit(pnum, ctx->pregs_written)) {
+> diff --git a/target/hexagon/genptr.c b/target/hexagon/genptr.c
+> index dbae6c570a..c96edd9379 100644
+> --- a/target/hexagon/genptr.c
+> +++ b/target/hexagon/genptr.c
+> @@ -473,6 +473,7 @@ static void gen_write_new_pc_addr(DisasContext *ctx, TCGv addr,
+>                                     TCGCond cond, TCGv pred)
+>   {
+>       TCGLabel *pred_false = NULL;
+> +    TCGLabel *branch_taken = NULL;
+>       if (cond != TCG_COND_ALWAYS) {
+>           pred_false = gen_new_label();
+>           tcg_gen_brcondi_tl(cond, pred, 0, pred_false);
+> @@ -480,12 +481,22 @@ static void gen_write_new_pc_addr(DisasContext *ctx, TCGv addr,
+>   
+>       if (ctx->pkt->pkt_has_multi_cof) {
+>           /* If there are multiple branches in a packet, ignore the second one */
+> -        tcg_gen_movcond_tl(TCG_COND_NE, hex_gpr[HEX_REG_PC],
+> -                           ctx->branch_taken, tcg_constant_tl(0),
+> -                           hex_gpr[HEX_REG_PC], addr);
+> +        branch_taken = gen_new_label();
+> +        tcg_gen_brcondi_tl(TCG_COND_NE, ctx->branch_taken, 0, branch_taken);
+>           tcg_gen_movi_tl(ctx->branch_taken, 1);
+> -    } else {
+> -        tcg_gen_mov_tl(hex_gpr[HEX_REG_PC], addr);
+> +    }
+> +
+> +    TCGLabel *pc_aligned = gen_new_label();
+> +    TCGv pc_remainder = tcg_temp_new();
+> +    tcg_gen_andi_tl(pc_remainder, addr, PCALIGN_MASK);
+> +    tcg_gen_brcondi_tl(TCG_COND_EQ, pc_remainder, 0, pc_aligned);
+> +    gen_exception_end_tb(ctx, HEX_EXCP_PC_NOT_ALIGNED);
+> +    gen_set_label(pc_aligned);
+> +
+> +    tcg_gen_mov_tl(hex_gpr[HEX_REG_PC], addr);
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+I am suspicious that the exception is raised without the pc being assigned.
+How does the exception handler see the incorrect value?
+
+Also, this is a perfect place to use the new TCG_COND_TSTEQ condition, eliminating the 
+separate andi step and the variable.
 
 
 r~
-
 
