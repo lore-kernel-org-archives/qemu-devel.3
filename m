@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D279C4345F
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Apr 2024 07:28:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCEBFC4345F
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Apr 2024 07:30:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0cTQ-00032j-2Y; Sat, 27 Apr 2024 03:27:52 -0400
+	id 1s0cVR-00045H-Os; Sat, 27 Apr 2024 03:29:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s0cTN-00032U-Fv
- for qemu-devel@nongnu.org; Sat, 27 Apr 2024 03:27:50 -0400
-Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
+ id 1s0cVQ-00044p-92
+ for qemu-devel@nongnu.org; Sat, 27 Apr 2024 03:29:56 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s0cTD-0006El-5j
- for qemu-devel@nongnu.org; Sat, 27 Apr 2024 03:27:40 -0400
-Received: by mail-ot1-x333.google.com with SMTP id
- 46e09a7af769-6eb658ca1ceso2077538a34.2
- for <qemu-devel@nongnu.org>; Sat, 27 Apr 2024 00:27:38 -0700 (PDT)
+ id 1s0cVO-0006ZE-TQ
+ for qemu-devel@nongnu.org; Sat, 27 Apr 2024 03:29:56 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-2a2d248a2e1so2916590a91.0
+ for <qemu-devel@nongnu.org>; Sat, 27 Apr 2024 00:29:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1714202858; x=1714807658;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1714202993; x=1714807793;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=5LRrKLDHx8VtTDLL6dBug/YSiX5Rr4VjwdESRVOVz8E=;
- b=CxkvrZzVq8zfExpE2RngY4yvA4ax/R6VsLp77lNjK46Refjq1ng+c1HCb2XxwJcu+/
- BpNs9k0wdhyOCL1rerPB8iAJkxyYAv1OouXJybJQ+BtiQFVpqrplW25oAzV/JcAplh+l
- zo+vlBXaE06gzNMI+uoRc+ujU2BfqqoS+dgFmbRb7Y7SMh07MGRVjAAS5jiJ/9fkFj5M
- rZeICDf8wRgC+idGqEzb2DNctCGOXDZ7SBCOHIs0VzmSnx4cZnaDY7K9EGyyqA/5FgyA
- anDH+PdKMj0DqrtGUsOBAgM7e2Rf6EhpYDYWrfKp3F0z0Al+QeLR87tbKJB9uVc7gRJg
- 0Lgw==
+ bh=XKy6fmMs4iP30kgtlzlihIZr/vsOZU/fzqqjAR3na/M=;
+ b=JtsufhA1r7wC/HCQflm1XwNMR11g/YrWDjaKmM52igkIdJS6rEujs2ciGHYRpZPK+a
+ a8eo69WF4OGv3zYANtCIczPxvIT89T8nVHew6ZfR1Odr01S54dXEcLRHBfd7uavM3gAr
+ GYaohsag7DMrF8SttA3GbGMlCwR1G2pDh2SuYvKUszSnPjypkSJOhXQSm4Pd7IAj2SjV
+ lFv2dGA0vDEk5ylwhZZUvY8xpqB52CPvQbrfeenNAmH38T8KnkXHLoGUOLOTA1YAYkF2
+ hG4YPBA0KPHrKhAoNEYKvd3vjKuWjd25WTCDsGMJmplRBJMn9JfHzkpCujdtWOD34rxU
+ +4kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714202858; x=1714807658;
+ d=1e100.net; s=20230601; t=1714202993; x=1714807793;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5LRrKLDHx8VtTDLL6dBug/YSiX5Rr4VjwdESRVOVz8E=;
- b=wTj+gHFplexthg9THubqyAJmitgwxErpSRxzvbMLyUQEm9bscM5sAhA6i/LWQrhMw/
- 20h9Lf+GxocC6uMX1aUhCSPtHI1VXWJALtYOtLatthE6fpFHb4kCoKxglsd/WqanGjug
- Dzt9eY7ekkWouaoC/on/JkWelebkTjyl77nmJwOcjTD1ayKWefZ0js8Gi2sI3LUiemsw
- GbOB020zNakE3NKyvSyISHcc8JOoT4JdaQZC2oGw4Rm1yjEr8zi3q657qR0lc8tCLGue
- 0kT60SAcABVAupVSVyA86noDKJqcQIWA1g3yRO+4YosF5/ZonkTNYYPyj4vn8EhoCwIq
- 7wYQ==
-X-Gm-Message-State: AOJu0YyQnL/3kWbvj1mKuFu6S2xnNUmdogRnvzoolXrFrvngP5qbHRLh
- 4GyZ1GoWVdBNCOFjEy6o2bS6mWz/Vfos4+XhxoXqMqhUZe/cSRMfyTynCydn9yM=
-X-Google-Smtp-Source: AGHT+IHKEeM4mG6PSgGm7m1mzKSw8F8A5zfB2Z1z55LnsJpBcwlMkm85rZ5Y2o+cut+lLbFVDd5jIQ==
-X-Received: by 2002:a54:4e8e:0:b0:3c7:85f:7f22 with SMTP id
- c14-20020a544e8e000000b003c7085f7f22mr1904636oiy.30.1714202857706; 
- Sat, 27 Apr 2024 00:27:37 -0700 (PDT)
+ bh=XKy6fmMs4iP30kgtlzlihIZr/vsOZU/fzqqjAR3na/M=;
+ b=lYGtmwhyZ/mlpMUNVsx9QVPEU96BRV2l4hy1xz7NhFRpG0gc4x/R7jcabOUKSYaak2
+ 7tB7FmbxcagF8X0y9ZXk0otIIyOlHZEXghccldCRwxiYO+9FtdubTUq20gDJttSqBD36
+ DKpwq3gM5IG69jDD9HZiWzJ1HUM9a4AiJdIne3fY951ZhbvVdtygvMq4TeFV7G/f3GkW
+ xbDG8fjtlatMfjR50PBreauBdnTSR9DVn9mS3FaUpGBMnI5n6Au9Mb6wqhHkYj9G9rJy
+ se3PaA8sKIURQjG6YXgE/PFGu3KAnLGaoHukHrubz2pGMpXpR0vjp0VmSqMOXGwaDwP1
+ l4/g==
+X-Gm-Message-State: AOJu0Ywz4h+EXDS6ZJqSipw565IuDx/OyLaQfmpjuj60hmGzPc6kdvbW
+ WERSNrFZvPf2S50y/JjgFH+Abg6b+PyHeb7sRADZWEV5vB/gk6P5PG9oexM0GqA=
+X-Google-Smtp-Source: AGHT+IH2N5A+zUbaosrdkg8bO2tJbDH9BikduMCyD2xqC4vbQ8BWHqIa7+LaQI7SLuBUBLasdzEjmw==
+X-Received: by 2002:a17:90b:895:b0:2af:de3:f0e3 with SMTP id
+ bj21-20020a17090b089500b002af0de3f0e3mr6560288pjb.23.1714202993273; 
+ Sat, 27 Apr 2024 00:29:53 -0700 (PDT)
 Received: from [157.82.202.162] ([157.82.202.162])
  by smtp.gmail.com with ESMTPSA id
- 17-20020a056a00073100b006eadc87233dsm15861771pfm.165.2024.04.27.00.27.32
+ ck16-20020a17090afe1000b002a2f6da006csm15646850pjb.52.2024.04.27.00.29.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 27 Apr 2024 00:27:37 -0700 (PDT)
-Message-ID: <ec230507-a728-407c-b477-cf98f99dd7e4@daynix.com>
-Date: Sat, 27 Apr 2024 16:27:31 +0900
+ Sat, 27 Apr 2024 00:29:53 -0700 (PDT)
+Message-ID: <02330b56-da79-49b6-8916-74c3bf68fd75@daynix.com>
+Date: Sat, 27 Apr 2024 16:29:46 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 11/11] migration/virtio: Add virtio-gpu section
+Subject: Re: [PATCH v9 10/11] virtio-gpu: Support Venus context
 Content-Language: en-US
 To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Huang Rui <ray.huang@amd.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
@@ -88,13 +88,13 @@ Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
 References: <20240425154539.2680550-1-dmitry.osipenko@collabora.com>
- <20240425154539.2680550-12-dmitry.osipenko@collabora.com>
+ <20240425154539.2680550-11-dmitry.osipenko@collabora.com>
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240425154539.2680550-12-dmitry.osipenko@collabora.com>
+In-Reply-To: <20240425154539.2680550-11-dmitry.osipenko@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::333;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-ot1-x333.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -117,34 +117,11 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2024/04/26 0:45, Dmitry Osipenko wrote:
-> Document virtio-gpu migration specifics.
+> From: Antonio Caggiano <antonio.caggiano@collabora.com>
 > 
-> Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> ---
->   docs/devel/migration/virtio.rst | 7 +++++++
->   1 file changed, 7 insertions(+)
-> 
-> diff --git a/docs/devel/migration/virtio.rst b/docs/devel/migration/virtio.rst
-> index 611a18b82151..67f5fcfed196 100644
-> --- a/docs/devel/migration/virtio.rst
-> +++ b/docs/devel/migration/virtio.rst
-> @@ -113,3 +113,10 @@ virtio_load() returned (like e.g. code depending on features).
->   Any extension of the state being migrated should be done in subsections
->   added to the core for compatibility reasons. If transport or device specific
->   state is added, core needs to invoke a callback from the new subsection.
-> +
-> +VirtIO-GPU migration
-> +====================
-> +VirtIO-GPU doesn't adhere to a common virtio migration scheme. It doesn't
-> +support save/loading of virtio device state, instead it uses generic device
-> +migration management on top of the virtio core to save/load GPU state.
-> +Migration of virgl and rutabaga states not supported.
+> Request Venus when initializing VirGL and if vulkan=true flag is set for
+> virtio-gpu device.
 
-Sorry for confusion, but I didn't mean to add a subsection to the 
-documentation. I intended to refer to a terminology of migration data 
-structure named subsection, which is documented at: 
-docs/devel/migration/main.rst
-
-A device-specific information is not worth to describe here.
+Naming it vulkan is a bit confusing as there is also GFXSTREAM_VULKAN 
+capset though virgl does not support it. I think you can just name it venus.
 
