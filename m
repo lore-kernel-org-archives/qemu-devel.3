@@ -4,82 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0048C4345F
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Apr 2024 07:24:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D279C4345F
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Apr 2024 07:28:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0cPt-0001mE-JZ; Sat, 27 Apr 2024 03:24:13 -0400
+	id 1s0cTQ-00032j-2Y; Sat, 27 Apr 2024 03:27:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1s0cPr-0001lI-7Z; Sat, 27 Apr 2024 03:24:11 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1s0cPp-0005D6-Cp; Sat, 27 Apr 2024 03:24:10 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2FCC562680;
- Sat, 27 Apr 2024 10:24:13 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 18D1EC04F0;
- Sat, 27 Apr 2024 10:24:04 +0300 (MSK)
-Message-ID: <97934a65-f62f-49e9-820b-07463c3029ed@tls.msk.ru>
-Date: Sat, 27 Apr 2024 10:24:04 +0300
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1s0cTN-00032U-Fv
+ for qemu-devel@nongnu.org; Sat, 27 Apr 2024 03:27:50 -0400
+Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1s0cTD-0006El-5j
+ for qemu-devel@nongnu.org; Sat, 27 Apr 2024 03:27:40 -0400
+Received: by mail-ot1-x333.google.com with SMTP id
+ 46e09a7af769-6eb658ca1ceso2077538a34.2
+ for <qemu-devel@nongnu.org>; Sat, 27 Apr 2024 00:27:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1714202858; x=1714807658;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5LRrKLDHx8VtTDLL6dBug/YSiX5Rr4VjwdESRVOVz8E=;
+ b=CxkvrZzVq8zfExpE2RngY4yvA4ax/R6VsLp77lNjK46Refjq1ng+c1HCb2XxwJcu+/
+ BpNs9k0wdhyOCL1rerPB8iAJkxyYAv1OouXJybJQ+BtiQFVpqrplW25oAzV/JcAplh+l
+ zo+vlBXaE06gzNMI+uoRc+ujU2BfqqoS+dgFmbRb7Y7SMh07MGRVjAAS5jiJ/9fkFj5M
+ rZeICDf8wRgC+idGqEzb2DNctCGOXDZ7SBCOHIs0VzmSnx4cZnaDY7K9EGyyqA/5FgyA
+ anDH+PdKMj0DqrtGUsOBAgM7e2Rf6EhpYDYWrfKp3F0z0Al+QeLR87tbKJB9uVc7gRJg
+ 0Lgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714202858; x=1714807658;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=5LRrKLDHx8VtTDLL6dBug/YSiX5Rr4VjwdESRVOVz8E=;
+ b=wTj+gHFplexthg9THubqyAJmitgwxErpSRxzvbMLyUQEm9bscM5sAhA6i/LWQrhMw/
+ 20h9Lf+GxocC6uMX1aUhCSPtHI1VXWJALtYOtLatthE6fpFHb4kCoKxglsd/WqanGjug
+ Dzt9eY7ekkWouaoC/on/JkWelebkTjyl77nmJwOcjTD1ayKWefZ0js8Gi2sI3LUiemsw
+ GbOB020zNakE3NKyvSyISHcc8JOoT4JdaQZC2oGw4Rm1yjEr8zi3q657qR0lc8tCLGue
+ 0kT60SAcABVAupVSVyA86noDKJqcQIWA1g3yRO+4YosF5/ZonkTNYYPyj4vn8EhoCwIq
+ 7wYQ==
+X-Gm-Message-State: AOJu0YyQnL/3kWbvj1mKuFu6S2xnNUmdogRnvzoolXrFrvngP5qbHRLh
+ 4GyZ1GoWVdBNCOFjEy6o2bS6mWz/Vfos4+XhxoXqMqhUZe/cSRMfyTynCydn9yM=
+X-Google-Smtp-Source: AGHT+IHKEeM4mG6PSgGm7m1mzKSw8F8A5zfB2Z1z55LnsJpBcwlMkm85rZ5Y2o+cut+lLbFVDd5jIQ==
+X-Received: by 2002:a54:4e8e:0:b0:3c7:85f:7f22 with SMTP id
+ c14-20020a544e8e000000b003c7085f7f22mr1904636oiy.30.1714202857706; 
+ Sat, 27 Apr 2024 00:27:37 -0700 (PDT)
+Received: from [157.82.202.162] ([157.82.202.162])
+ by smtp.gmail.com with ESMTPSA id
+ 17-20020a056a00073100b006eadc87233dsm15861771pfm.165.2024.04.27.00.27.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 27 Apr 2024 00:27:37 -0700 (PDT)
+Message-ID: <ec230507-a728-407c-b477-cf98f99dd7e4@daynix.com>
+Date: Sat, 27 Apr 2024 16:27:31 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/1] target/riscv/kvm: fix timebase-frequency when
- using KVM acceleration
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: Andrew Jones <ajones@ventanamicro.com>,
- Yong-Xuan Wang <yongxuan.wang@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
-Cc: greentime.hu@sifive.com, vincent.chen@sifive.com, frank.chang@sifive.com, 
- jim.shu@sifive.com, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20240314061510.9800-1-yongxuan.wang@sifive.com>
- <e841b1ba-1348-48ae-89b7-bfa14ff8e70c@tls.msk.ru>
- <2C907355-C0F4-4C7F-B37C-8B4371A57B00@ventanamicro.com>
- <c174a8cd-4a53-4a28-8688-aa62c7eab45e@tls.msk.ru>
+Subject: Re: [PATCH v9 11/11] migration/virtio: Add virtio-gpu section
 Content-Language: en-US
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <c174a8cd-4a53-4a28-8688-aa62c7eab45e@tls.msk.ru>
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Huang Rui <ray.huang@amd.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony.perard@citrix.com>,
+ Antonio Caggiano <quic_acaggian@quicinc.com>,
+ "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Robert Beckett <bob.beckett@collabora.com>,
+ Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
+ ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
+References: <20240425154539.2680550-1-dmitry.osipenko@collabora.com>
+ <20240425154539.2680550-12-dmitry.osipenko@collabora.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20240425154539.2680550-12-dmitry.osipenko@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::333;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-ot1-x333.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,37 +116,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-27.04.2024 09:59, Michael Tokarev wrote:
-> 27.04.2024 09:23, Andrew Jones wrote:
-...
->> It's possible to cross-compile qemu, so it'd be good to add that to the CI for riscv until we can add native compiling.
+On 2024/04/26 0:45, Dmitry Osipenko wrote:
+> Document virtio-gpu migration specifics.
 > 
-> Yes, definitely.  Qemu is already being cross-compiled on all "other"
-> architectures during CI.  But it is also being *run*, not just compiled.
-> And this is what's broken on riscv64 for almost a year now, and this
-> job has been disabled.  Instead, the *run* part of this job needs to
-> be disabled, but *build* part should be kept.
+> Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> ---
+>   docs/devel/migration/virtio.rst | 7 +++++++
+>   1 file changed, 7 insertions(+)
+> 
+> diff --git a/docs/devel/migration/virtio.rst b/docs/devel/migration/virtio.rst
+> index 611a18b82151..67f5fcfed196 100644
+> --- a/docs/devel/migration/virtio.rst
+> +++ b/docs/devel/migration/virtio.rst
+> @@ -113,3 +113,10 @@ virtio_load() returned (like e.g. code depending on features).
+>   Any extension of the state being migrated should be done in subsections
+>   added to the core for compatibility reasons. If transport or device specific
+>   state is added, core needs to invoke a callback from the new subsection.
+> +
+> +VirtIO-GPU migration
+> +====================
+> +VirtIO-GPU doesn't adhere to a common virtio migration scheme. It doesn't
+> +support save/loading of virtio device state, instead it uses generic device
+> +migration management on top of the virtio core to save/load GPU state.
+> +Migration of virgl and rutabaga states not supported.
 
-Aha. I was wrong. And I was there before too, for sure, - just forgot
-about it. In order to be cross-compiled, the cross-build environment
-needs to have target -dev libraries, not only the cross-compiler.
-And this is where debian riscv64 port is failing.
+Sorry for confusion, but I didn't mean to add a subsection to the 
+documentation. I intended to refer to a terminology of migration data 
+structure named subsection, which is documented at: 
+docs/devel/migration/main.rst
 
-So no, it is not currently possible to cross-compile qemu at least
-on debian without building whole cross-environment with all libraries
-and other necessary stuff.
-
-I'll try to use debian riscv64 porterbox to at least verify the new
-set of patches we'll pick here to fix this breakage, at least compiles
-on riscv64 :)
-
-> 10f86d1b845087d1 isn't sufficient, since it relies on 450bd6618fda3d
-> "target/riscv/kvm: change KVM_REG_RISCV_FP_D to u64".  In the same series
-> there also was 49c211ffca00fdf7c "target/riscv/kvm: change KVM_REG_RISCV_FP_F
-> to u32" - is it also needed?
-
-49c211ffca00fdf7c is also needed.  So it's 3 so far, still not compile-
-tested.  Anything else?
-
-/mjt
+A device-specific information is not worth to describe here.
 
