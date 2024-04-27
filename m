@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 115EFC4345F
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Apr 2024 15:58:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D735C4345F
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Apr 2024 15:58:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0kQt-0002no-Rb; Sat, 27 Apr 2024 11:57:47 -0400
+	id 1s0kQx-0002op-Hn; Sat, 27 Apr 2024 11:57:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s0kQq-0002mK-Ec
- for qemu-devel@nongnu.org; Sat, 27 Apr 2024 11:57:44 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s0kQw-0002oO-16
+ for qemu-devel@nongnu.org; Sat, 27 Apr 2024 11:57:50 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s0kQo-0005Ml-Uk
- for qemu-devel@nongnu.org; Sat, 27 Apr 2024 11:57:44 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-343d2b20c4bso2206074f8f.2
- for <qemu-devel@nongnu.org>; Sat, 27 Apr 2024 08:57:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s0kQu-0005OO-An
+ for qemu-devel@nongnu.org; Sat, 27 Apr 2024 11:57:49 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-41b5e74fa2fso16883585e9.1
+ for <qemu-devel@nongnu.org>; Sat, 27 Apr 2024 08:57:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714233461; x=1714838261; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714233466; x=1714838266; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=78a0G46O2KG7qu7wAjz0eYAxj9N3YLXQHp2WJkN84to=;
- b=cs9ihlaOHc46phQJkmyPpdFylFW627BfSNvB+//LJh/y2bwAjkQ4eeN9zbD+SIqCME
- oSHb+n7fFv48feI31x4oVKTaSydZ0+EeF1oqgtyamJBQTs+Pg1r90elRNiCesTQRnFaU
- PCIgLBYkCeQJDmoRy5Ls3FPgqWjTNPvQ6Yc1nT78XYrVzeSd4KXZ/CXdG+qKTJEhg9Jw
- 1aRtF0JsKF5asvKccui7foC2VLTyTFqkL/pfaWNruTHtmHSBYlpujmSIdMjmTgAn2eDu
- wLu/nCS5ZibjA2WPaAAYmaf760m7e06nA2P/MEa56NpiYckKOMmpTZCtQP1squanFBWI
- t2VQ==
+ bh=P+4yLUAOofyuOllTmkJb4TGA3hpl35wvUcTVB112zyg=;
+ b=dFqn4C+QD63NUz1ypcjv3vIckR+TejO8Gs4IRrfPcqqMi7AsbodS6QFzNt0uOum+IG
+ 3s0QU/BqxKfz77RS3mgE5H10QJ9dryTLb4CzOc1PrWAiV2iBaqHrX6bTuPNklVGaQaDG
+ 3NBHvfFadxV89NZkwZrHpa5IB0adhxoIISYqCCXVL3rWPCHDMTuo0fzbbW439mceXHP5
+ EJ8mW2IRJKUl8qs8yrAojMumOFj2VyZxon8fQiTDYtKjg3kdgcZbrPKIZSg/baBrnwe2
+ +4bNukERoqlYlYAQhqgkVlKzf2TVHfQvdmX8p4I7BP5KPE30SE8iAEAfXqwt8I403tnS
+ 4hKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714233461; x=1714838261;
+ d=1e100.net; s=20230601; t=1714233466; x=1714838266;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=78a0G46O2KG7qu7wAjz0eYAxj9N3YLXQHp2WJkN84to=;
- b=L8hOWdXFm9ZIpTBDupYzg2tchIDAVmGnU+yJoqvCw9s1DK1pPzn1PNHICnLK0nCdDZ
- 2pTF4/jm0ibNtGdJS0F7ANfXAEGln0VfmzbhMM+5IdOocyNYyZB7/HcV4PECeUHKluBm
- ZHQ8gAgvCbe37W9brlMDKwi9eum6WZ5r1lEo4qhKT0VptPntZeLBvgPyAO6hGGlcQZh+
- GdCk2c3YOojO8dYihZm5ZiTXkH4KZaEq4eAz2CkeIQJd+tEurY64Ryy70K2UxhAeIMQL
- yuZh0cMvqyIhe4ADsvD363j4rfM/5huvpr28CoLsWkW3JvZdpGT8f76qZkuLIhTRM1RL
- Wzsg==
-X-Gm-Message-State: AOJu0Yz5DPXvlxPLPqHQbC65O/U2FkDtS/HV1928gIOP8dyFwytVLW0v
- OrI1FbVbjotnFzaU7ZZeOTeVQiNrVG2rj04YoSiUdJtS/BYmK7R0ZjYJMZ6W4HHTMvE1l39etKQ
- wI+4=
-X-Google-Smtp-Source: AGHT+IEEscNpGUrGMsN88FZ9YV2Vn1hpX2pnPnQ4YPZSEQru1jTUIVsTXrLOXyOxxrkMA3XUZS/9/g==
-X-Received: by 2002:adf:e40e:0:b0:34b:3f16:ba9d with SMTP id
- g14-20020adfe40e000000b0034b3f16ba9dmr4108720wrm.23.1714233461184; 
- Sat, 27 Apr 2024 08:57:41 -0700 (PDT)
+ bh=P+4yLUAOofyuOllTmkJb4TGA3hpl35wvUcTVB112zyg=;
+ b=ZH+SFjzrnmUKvbtmVSoBSjFKz++RsSTiJlBHYgfAhPoFP00aSunDK2vFz1DQJSYrJR
+ mUiBzG0rvjE9pk2HMu9k/qK8yPVYoAverTdi5DnSs7IQsRleicJ54dJ4DRVjzm3/X0SY
+ Dd04r7oWzKoiqHrnuu5QbztVikOGj3g8423rqnoud/s/Qsltyh1UEIPicrQuK9tan16k
+ RupBrd1ELA2tj7T09FfO1p1D0/wQy35eAXKWAW/p3dRifkxp28zYv2IkuEsJpVWwoto+
+ qrMdDJu/3Z0iBYH/+CycgtpdcOzbgf0IPcvTR2X3vehCcmWTyttF5D+x0B9y9o/kpe9T
+ ZeyQ==
+X-Gm-Message-State: AOJu0YwjaTPsTDCwbAxlaUnz8Jn15A5VTsKXLIxJe9GaFf8LlfkbD1hN
+ eT5sRLJBVw88XgfVgmDfJ3Ci3/6lUUoAXBfcXjJAQVSwmbXm/HKflHJETrfLImICwjssRHXbRle
+ AJkQ=
+X-Google-Smtp-Source: AGHT+IGJAEArapbFYH+0z81cAAbhOTPNEyjXNpH6Gh0D2N9ktZUYgqrgte4axXyMaZsa0RPUtbVfFQ==
+X-Received: by 2002:a05:600c:3acb:b0:41b:e55c:8e0d with SMTP id
+ d11-20020a05600c3acb00b0041be55c8e0dmr991748wms.14.1714233466389; 
+ Sat, 27 Apr 2024 08:57:46 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.209.2]) by smtp.gmail.com with ESMTPSA id
- h1-20020a5d5481000000b003437a76565asm25091746wrv.25.2024.04.27.08.57.40
+ e8-20020a05600c4e4800b0041bf7da4200sm994699wmq.33.2024.04.27.08.57.45
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 27 Apr 2024 08:57:40 -0700 (PDT)
+ Sat, 27 Apr 2024 08:57:45 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 04/14] exec: Include missing license in 'exec/cpu-common.h'
-Date: Sat, 27 Apr 2024 17:57:04 +0200
-Message-ID: <20240427155714.53669-5-philmd@linaro.org>
+Subject: [PATCH 05/14] exec/cpu: Indent TARGET_PAGE_foo definitions
+Date: Sat, 27 Apr 2024 17:57:05 +0200
+Message-ID: <20240427155714.53669-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240427155714.53669-1-philmd@linaro.org>
 References: <20240427155714.53669-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,34 +93,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 1ad2134f91 ("Hardware convenience library") extracted
-"cpu-common.h" from "cpu-all.h", which uses the LGPL-2.1+ license.
+The TARGET_PAGE_foo definitions are defined with multiple
+level of #ifdef'ry. Indent it a bit for clarity.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/exec/cpu-common.h | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ include/exec/cpu-all.h | 25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index 6d5318895a..8812ba744d 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -1,8 +1,13 @@
-+/*
-+ * CPU interfaces that are target independent.
-+ *
-+ *  Copyright (c) 2003 Fabrice Bellard
-+ *
-+ * SPDX-License-Identifier: LGPL-2.1+
-+ */
- #ifndef CPU_COMMON_H
- #define CPU_COMMON_H
+diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
+index e75ec13cd0..eaa59a5cc1 100644
+--- a/include/exec/cpu-all.h
++++ b/include/exec/cpu-all.h
+@@ -139,19 +139,20 @@ static inline void stl_phys_notdirty(AddressSpace *as, hwaddr addr, uint32_t val
+ #ifdef TARGET_PAGE_BITS_VARY
+ # include "exec/page-vary.h"
+ extern const TargetPageBits target_page;
+-#ifdef CONFIG_DEBUG_TCG
+-#define TARGET_PAGE_BITS   ({ assert(target_page.decided); target_page.bits; })
+-#define TARGET_PAGE_MASK   ({ assert(target_page.decided); \
+-                              (target_long)target_page.mask; })
++# ifdef CONFIG_DEBUG_TCG
++#  define TARGET_PAGE_BITS   ({ assert(target_page.decided); \
++                                target_page.bits; })
++#  define TARGET_PAGE_MASK   ({ assert(target_page.decided); \
++                                (target_long)target_page.mask; })
++# else
++#  define TARGET_PAGE_BITS   target_page.bits
++#  define TARGET_PAGE_MASK   ((target_long)target_page.mask)
++# endif
++# define TARGET_PAGE_SIZE    (-(int)TARGET_PAGE_MASK)
+ #else
+-#define TARGET_PAGE_BITS   target_page.bits
+-#define TARGET_PAGE_MASK   ((target_long)target_page.mask)
+-#endif
+-#define TARGET_PAGE_SIZE   (-(int)TARGET_PAGE_MASK)
+-#else
+-#define TARGET_PAGE_BITS_MIN TARGET_PAGE_BITS
+-#define TARGET_PAGE_SIZE   (1 << TARGET_PAGE_BITS)
+-#define TARGET_PAGE_MASK   ((target_long)-1 << TARGET_PAGE_BITS)
++# define TARGET_PAGE_BITS_MIN TARGET_PAGE_BITS
++# define TARGET_PAGE_SIZE    (1 << TARGET_PAGE_BITS)
++# define TARGET_PAGE_MASK    ((target_long)-1 << TARGET_PAGE_BITS)
+ #endif
  
--/* CPU interfaces that are target independent.  */
--
- #include "exec/vaddr.h"
- #ifndef CONFIG_USER_ONLY
- #include "exec/hwaddr.h"
+ #define TARGET_PAGE_ALIGN(addr) ROUND_UP((addr), TARGET_PAGE_SIZE)
 -- 
 2.41.0
 
