@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52581C4345F
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Apr 2024 15:59:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 193BCC4345F
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Apr 2024 15:59:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0kRC-00033s-3g; Sat, 27 Apr 2024 11:58:06 -0400
+	id 1s0kRU-0003Dw-5H; Sat, 27 Apr 2024 11:58:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s0kR8-0002zB-HW
- for qemu-devel@nongnu.org; Sat, 27 Apr 2024 11:58:03 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s0kRS-0003D2-6J
+ for qemu-devel@nongnu.org; Sat, 27 Apr 2024 11:58:22 -0400
+Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s0kR6-0005SL-TX
- for qemu-devel@nongnu.org; Sat, 27 Apr 2024 11:58:02 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2d8a2cbe1baso42994871fa.0
- for <qemu-devel@nongnu.org>; Sat, 27 Apr 2024 08:57:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s0kRQ-0005a0-KY
+ for qemu-devel@nongnu.org; Sat, 27 Apr 2024 11:58:21 -0400
+Received: by mail-lj1-x22e.google.com with SMTP id
+ 38308e7fff4ca-2d8b2389e73so37450041fa.3
+ for <qemu-devel@nongnu.org>; Sat, 27 Apr 2024 08:58:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714233477; x=1714838277; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714233498; x=1714838298; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=msn7De0lOW3avspGXlkpWl0wQtZAqMJHMMhEd4fx2HQ=;
- b=PXiNsoUgSfCCr4aKbxMJ5qVjP+W7Sg1CaUh6FLRuZFQ6sZ0qjpeqkmySfEiLlCC6c2
- tFcSOUwjHLeWsc18aH1xd9KojgmO0IYpyqGr65JqWb3c9vgFhX5K0yBPpUn2+4mA4+B0
- viNAIQJh1TGbbaqFnWIeoqZSTCmV7/g3j2exk4BDFlFCF2kcQu/Wnqxl4OwcvuuD1Zdt
- NYRB4A8q3qgqtSEupvfFe/a1Aa0Vdr3PNTWNefg7aA3q79rysF/kYyXdvChRsVHWL3jZ
- CKS6yKmiFMYZRG2i3w2g33RzndCWoC3PDftQrsZ+UC6iMqtUnAe9zYoEog7/pO5AJQbk
- ih0A==
+ bh=z1+Wv8QB/miGw++EL4p3GyCE2nTTIsU/1KJBEYJal40=;
+ b=j+pfFeJlXFntuCsnHRy1Luvtyy5r5iSR0KlmkiFxTajTV/NtiZkzPr3/gY5FW2QbWQ
+ IGzzZbuYipyV/jIkvaoNdIiIdWa7VeCURZTVTZcw9SJL7FoVI8ajAcKZ6IeeMU4G8dej
+ r7TaJDSvPNkx5rV3R4yLMRJH1a/YJEBspFqAs/ZcPPrnAWmXHBsvZUg85tnNrJmpWnLA
+ rJQBLzwfL/kgDX7oTKfAWpMxVii5YilchhEM/AsKWfkoDiEpyJ9dIm3v4Sx1WV9oyTxh
+ SYXeeXAOh6AyvaBNHXupmHxzSK05AGvU4vanci5mwvMuaKzTCUM2wJpuPxLYOxqPndDW
+ WS4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714233477; x=1714838277;
+ d=1e100.net; s=20230601; t=1714233498; x=1714838298;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=msn7De0lOW3avspGXlkpWl0wQtZAqMJHMMhEd4fx2HQ=;
- b=YMtZAqXEQDO5zgwvK3Sin6ySFj8iL9nPGi2xJzOwNQC59z2rAitqJiMvJmP3s2AUH3
- 8Wq0eOAbR07bJ8XPSZC57SYNouDj4eLpNimvrevAfWVrhyBYo9hS6TsGdnmRhKgec92S
- ZiMBenbEMeEujWBGJzlsZ49tKkPNV8elpqh0TcDepjXLRdgADmkAkOuAE8VpycbTGpej
- 0F0A7atSaasYxibXuRMN2Og1fAcvQazH44zdIdc5Y+WopOlj5ZL1sJyt1wNWWJsTrptn
- Q8+OqymdVTeTmBORaN4xpyJmwiu5iE23o/rWY6mcKULhiqmmr0r6cy84hEpTuev4hZcm
- xZ3A==
-X-Gm-Message-State: AOJu0YzlfBPBQ1dL5bv6lhOEZI9WiH3Lykp+ZN8bdqGQpH80hYnYPUtS
- zPJ1FAnv55S44syTXRuSNG/oQdgIsWGAU2KR/bzO53cLIPtskkvb+GtIyz30KoC68BY9YLQnHyt
- jTHg=
-X-Google-Smtp-Source: AGHT+IGi/XUlIE/4uTf+/MRtnb7qvLwCeZGp3FkCpFV32jhADQ/YK9fOKHtNy77Of9qa5gN9LGR/aw==
-X-Received: by 2002:a05:651c:10ab:b0:2d9:fde0:86e2 with SMTP id
- k11-20020a05651c10ab00b002d9fde086e2mr4569731ljn.15.1714233476849; 
- Sat, 27 Apr 2024 08:57:56 -0700 (PDT)
+ bh=z1+Wv8QB/miGw++EL4p3GyCE2nTTIsU/1KJBEYJal40=;
+ b=LUIdjP2nfgQmRoUWw/xE7qyRhOqRWwGsMDFYmdPBkzoiBNIpHTreNL5AqbHli7yABp
+ z1KJnnidRweRdklAK6TLudmz71ecEV7ehI8KcxdgMkJWgjFaTIleH6dqJ4amFCdVsdo5
+ U9qThfsLnTzFWHbRIRbPLDEMfRxlUHsNYtEDpGC/k4kZVqOsEGc2mVghpOGNo56DRtUE
+ recG7yhYf95PxKBudXnxwhFef5LqpKokMS5INZSGUJOctrr8FyIwqtCWIZUDtJylTojO
+ AQPRQnWBFpom1xVLqAPXiXHqun26p4vzBYQyKgLUETDpGZbMEe76xptzvDp9KdgelPTN
+ hhnQ==
+X-Gm-Message-State: AOJu0Yz+l3abG7H9UwFceNKo+YTW64ul51wp+hgzEnBDqPtsCbGaQD9B
+ qwT2WumD8Oi6KtiyYjXpSPZBZsyK9xvc6gZDxWSM5JMoG4mDPYCX9Cv9rcV6VvBqYDV3iMPyBIx
+ A20A=
+X-Google-Smtp-Source: AGHT+IHx/07HVOwkILCHRASibA/W9yK6l/mJ/pDLQLSIttEgSmHWJu70KQdcdPGlJAGFAp0IUPB1lg==
+X-Received: by 2002:a2e:9110:0:b0:2de:d4df:4e75 with SMTP id
+ m16-20020a2e9110000000b002ded4df4e75mr3275932ljg.17.1714233497868; 
+ Sat, 27 Apr 2024 08:58:17 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.209.2]) by smtp.gmail.com with ESMTPSA id
- q13-20020a05600c46cd00b0041c02589a7csm377463wmo.40.2024.04.27.08.57.55
+ t11-20020a05600c450b00b0041befc2652csm1499073wmo.31.2024.04.27.08.58.16
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 27 Apr 2024 08:57:56 -0700 (PDT)
+ Sat, 27 Apr 2024 08:58:17 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 07/14] exec/cpu: Remove duplicated PAGE_PASSTHROUGH definition
-Date: Sat, 27 Apr 2024 17:57:07 +0200
-Message-ID: <20240427155714.53669-8-philmd@linaro.org>
+Subject: [PATCH 11/14] accel/tcg: Use cpu_loop_exit_requested() in
+ cpu_loop_exec_tb()
+Date: Sat, 27 Apr 2024 17:57:11 +0200
+Message-ID: <20240427155714.53669-12-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240427155714.53669-1-philmd@linaro.org>
 References: <20240427155714.53669-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,31 +94,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Missed in commit 58771921af ("include/exec: Move PAGE_* macros
-to common header"), PAGE_PASSTHROUGH ended being defined twice.
+Do not open-code cpu_loop_exit_requested().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/exec/cpu-all.h | 6 ------
- 1 file changed, 6 deletions(-)
+ accel/tcg/cpu-exec.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
-index 5ea8c4d3ef..8c3ad7153d 100644
---- a/include/exec/cpu-all.h
-+++ b/include/exec/cpu-all.h
-@@ -157,12 +157,6 @@ extern const TargetPageBits target_page;
- 
- #define TARGET_PAGE_ALIGN(addr) ROUND_UP((addr), TARGET_PAGE_SIZE)
- 
--/*
-- * For linux-user, indicates that the page is mapped with the same semantics
-- * in both guest and host.
-- */
--#define PAGE_PASSTHROUGH 0x0800
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 225e5fbd3e..0329c6423e 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -900,8 +900,6 @@ static inline void cpu_loop_exec_tb(CPUState *cpu, TranslationBlock *tb,
+                                     vaddr pc, TranslationBlock **last_tb,
+                                     int *tb_exit)
+ {
+-    int32_t insns_left;
 -
- #if defined(CONFIG_USER_ONLY)
- void page_dump(FILE *f);
+     trace_exec_tb(tb, pc);
+     tb = cpu_tb_exec(cpu, tb, tb_exit);
+     if (*tb_exit != TB_EXIT_REQUESTED) {
+@@ -910,8 +908,7 @@ static inline void cpu_loop_exec_tb(CPUState *cpu, TranslationBlock *tb,
+     }
  
+     *last_tb = NULL;
+-    insns_left = qatomic_read(&cpu->neg.icount_decr.u32);
+-    if (insns_left < 0) {
++    if (cpu_loop_exit_requested(cpu)) {
+         /* Something asked us to stop executing chained TBs; just
+          * continue round the main loop. Whatever requested the exit
+          * will also have set something else (eg exit_request or
+@@ -925,6 +922,8 @@ static inline void cpu_loop_exec_tb(CPUState *cpu, TranslationBlock *tb,
+     /* Instruction counter expired.  */
+     assert(icount_enabled());
+ #ifndef CONFIG_USER_ONLY
++    int32_t insns_left;
++
+     /* Ensure global icount has gone forward */
+     icount_update(cpu);
+     /* Refill decrementer and continue execution.  */
 -- 
 2.41.0
 
