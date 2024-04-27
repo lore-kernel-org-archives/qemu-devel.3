@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3271C4345F
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Apr 2024 07:01:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0244C4345F
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Apr 2024 07:13:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0c3e-0003bF-34; Sat, 27 Apr 2024 03:01:14 -0400
+	id 1s0cEx-0005Tn-15; Sat, 27 Apr 2024 03:12:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s0c3c-0003Zs-CG
- for qemu-devel@nongnu.org; Sat, 27 Apr 2024 03:01:12 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1s0cEn-0005SS-DT
+ for qemu-devel@nongnu.org; Sat, 27 Apr 2024 03:12:45 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s0c3a-0007tT-IY
- for qemu-devel@nongnu.org; Sat, 27 Apr 2024 03:01:12 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-6ee12766586so2224822b3a.0
- for <qemu-devel@nongnu.org>; Sat, 27 Apr 2024 00:01:10 -0700 (PDT)
+ id 1s0cEk-0002IO-6X
+ for qemu-devel@nongnu.org; Sat, 27 Apr 2024 03:12:45 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-6f07de6ab93so2671226b3a.2
+ for <qemu-devel@nongnu.org>; Sat, 27 Apr 2024 00:12:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1714201269; x=1714806069;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1714201958; x=1714806758;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=yiGMdEE1TWgXuEiZrblVmIxL0BuQwHqNxoRlN9Gbzzo=;
- b=bo7qcXttVfmFaYs3cBn/OVuJSXexiYmaAxnu+p9kHrEBsUC90T602aUa/P2CFfRS73
- uJmBIrXOZk52HjzKXQVWvM3M1q1jCJszu/mdtiVP/OYSVcJlWydzgcLqrQ7zkVB+lp/2
- zJ+xvozuPXK3G+KbFm/zMf1zunIDfjw4Q3JggfZz7IAfHn45jxtOrWxgf8hjc4TLt23W
- ImKvMV+k+E9LFT5HTsxXQkixWvPb13tDN9ZkkDdgzramnalf94mle3yXcYkkN8kjAu+z
- dl5b6bTH+WOOx7LIJwgky9Cp1pgy9tnzgCiE+i1Hvb4mj+EWjxGqxwK8b/XlxHoQ+IH/
- 4TPw==
+ bh=Dyr4Pjmf1PqayEDanF951LmhzodO0Cz+1ukNxa1NGPo=;
+ b=L6vUDYjH22FvIwr0KB05sas6A2eAtkLMa5cSuet17OIyjyqIsJ1QWnroLZJ7asEB9k
+ dTiY2v9kF7dSr7egjqFUNOt0jHvf6WU8Qq2/mVSha95Njjp7gY5a/Wfe4E8+Q04/I0Dl
+ x54uGjgVzxIlPkFMpDT9gt5RdM0GLO51Ho6sqALCXXMwV6Ivo3tiQvEwp4IpD9vEmkAk
+ 6kUVF6BD3ZQ4j3yex7Ri1XbIHfx2JS52Lhx4TBM9msPAGrhIkXGBl+kxrOfrWaN6k8nk
+ FbC75doWq4rTgYWAfBlHslV8iBzusi5areEbDtN05e6DpW6nlNioaZ9O6Do+uFbcrIQG
+ oM/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714201269; x=1714806069;
+ d=1e100.net; s=20230601; t=1714201958; x=1714806758;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yiGMdEE1TWgXuEiZrblVmIxL0BuQwHqNxoRlN9Gbzzo=;
- b=FCo/UvZYyfYNfUmNRMD8LsilY9dcRUk539eYWgo0CZLPCcc0rIQrdpcD07NOBzH0KL
- YQ2rZWOeYo6p3P+b7ShRhgnPcmHDorsYbp0JEdy7kRT55KTeJMpmUh9umC/zlpKWXiLZ
- 5tXdBe0vBv/KepNL2x75tfvWQzGh48+P8CcQYtZczDUTH7CA9wP9W/md03Uw5FA7cDdb
- a0fMUqTB7/yMwqipu5fei5jMhRehXOGrj2jPJ23tz2aRnLmlHnqoGDrL7NqNBF1KSD9F
- 9Dfo5nxXnHw9zRyroN/qcW4kT+DIzPH+ZuUsmmfYp5fJnmoD1rK6Hd1jLvdUsKFrmSXA
- B6RQ==
-X-Gm-Message-State: AOJu0YyMwNw21Pw/LYhzKbUIkwHl7Qlonl4Mtr6kvx5+yXAPsFqRKqJO
- Pe90cfxhqJ+VUsGxT6XV1X6DuUgL62OKRCvVX93/fiE4nZe+NqBx+Y0e7o56PEs=
-X-Google-Smtp-Source: AGHT+IFdMF3F4ccwpK+WJQ9RjYt9aZ1HvGsIUIFzfAGugj1uBZMgYnoh/7LZPx5j/5Ew/Nw3LJsKDQ==
-X-Received: by 2002:a05:6a00:181a:b0:6ea:f43b:b961 with SMTP id
- y26-20020a056a00181a00b006eaf43bb961mr2712952pfa.6.1714201269022; 
- Sat, 27 Apr 2024 00:01:09 -0700 (PDT)
+ bh=Dyr4Pjmf1PqayEDanF951LmhzodO0Cz+1ukNxa1NGPo=;
+ b=ZtoNEMXArm06S7HEx7v4mdJ7Zs9HYwQ7c+V1QSzB0Cu5r+YfwMeedQbpbcQWZvXIhN
+ yqwT8+Nr01WKjhBMsFi7IYich9uAieaUY8RiRPJx3NrinnxSPk2VWVHNgEtZNzIc7aDL
+ Oej9nWvReWaBLEud/WxXXWb6OOBuGYbMk4lET9O//hphFLDR85maPGSaFqeSVHR1UbzZ
+ yOa1oItY65gHEv37oImRBkAhpHQpoxdPItKUMLWXta8KuFZvfPE84sZd0trvAjWEAbUY
+ fNq4YB47iRONCDCtGVHdG9GkW976eqX2/Pozqd35qMev36FQVULEp/rSZT7kOXTklGwf
+ 9EyA==
+X-Gm-Message-State: AOJu0YxfPNYaXBrhBl4FhEiZMMi9LJMZauAB94mwQbkvVP3GHwTfyw/7
+ DGwe56p7SOT6/J4VZ1HRQhM3Fw1dOwNFjahMWAa+p3X22NwRWeJWCCBvIawooCM=
+X-Google-Smtp-Source: AGHT+IF83PsbFXY/qBmXFQnihI1YGH0QyVuNnkXQZoeVQzksuV+AHEpBFHfxVV80ASpQTsFJk03dBw==
+X-Received: by 2002:a05:6a00:3d11:b0:6f3:8468:f9d1 with SMTP id
+ lo17-20020a056a003d1100b006f38468f9d1mr5469663pfb.14.1714201958338; 
+ Sat, 27 Apr 2024 00:12:38 -0700 (PDT)
 Received: from [157.82.202.162] ([157.82.202.162])
  by smtp.gmail.com with ESMTPSA id
- ff20-20020a056a002f5400b006eacefd8fabsm15833389pfb.64.2024.04.27.00.01.04
+ i6-20020a62c106000000b006ed0199bd57sm16983567pfg.177.2024.04.27.00.12.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 27 Apr 2024 00:01:08 -0700 (PDT)
-Message-ID: <0d037703-5832-48fa-a092-a4d334358b7e@daynix.com>
-Date: Sat, 27 Apr 2024 16:01:02 +0900
+ Sat, 27 Apr 2024 00:12:38 -0700 (PDT)
+Message-ID: <557f5ddb-4326-48bc-b34e-bda9d51cadcc@daynix.com>
+Date: Sat, 27 Apr 2024 16:12:31 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 08/11] virtio-gpu: Resource UUID
+Subject: Re: [PATCH v9 09/11] virtio-gpu: Register capsets dynamically
 Content-Language: en-US
 To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Huang Rui <ray.huang@amd.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
@@ -88,13 +88,13 @@ Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
 References: <20240425154539.2680550-1-dmitry.osipenko@collabora.com>
- <20240425154539.2680550-9-dmitry.osipenko@collabora.com>
+ <20240425154539.2680550-10-dmitry.osipenko@collabora.com>
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240425154539.2680550-9-dmitry.osipenko@collabora.com>
+In-Reply-To: <20240425154539.2680550-10-dmitry.osipenko@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::432;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x432.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::431;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -117,17 +117,63 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2024/04/26 0:45, Dmitry Osipenko wrote:
-> From: Antonio Caggiano <antonio.caggiano@collabora.com>
+> From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
 > 
-> Enable resource UUID feature and implement command resource assign UUID.
-> UUID feature availability is mandatory for Vulkan Venus context.
+> virtio_gpu_virgl_get_num_capsets will return "num_capsets", but we can't
+> assume that capset_index 1 is always VIRGL2 once we'll support more capsets,
+> like Venus and DRM capsets. Register capsets dynamically to avoid that problem.
 > 
-> UUID is intended for sharing dmabufs between virtio devices on host. Qemu
-> doesn't have second virtio device for sharing, thus a simple stub UUID
-> implementation is enough. More complete implementation using global UUID
-> resource table might become interesting for a multi-gpu cases.
+> Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> ---
+>   hw/display/virtio-gpu-virgl.c  | 34 +++++++++++++++++++++++-----------
+>   include/hw/virtio/virtio-gpu.h |  2 ++
+>   2 files changed, 25 insertions(+), 11 deletions(-)
+> 
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index de788df155bf..9aa1fd78f1e1 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -597,19 +597,13 @@ static void virgl_cmd_get_capset_info(VirtIOGPU *g,
+>       VIRTIO_GPU_FILL_CMD(info);
+>   
+>       memset(&resp, 0, sizeof(resp));
+> -    if (info.capset_index == 0) {
+> -        resp.capset_id = VIRTIO_GPU_CAPSET_VIRGL;
+> -        virgl_renderer_get_cap_set(resp.capset_id,
+> -                                   &resp.capset_max_version,
+> -                                   &resp.capset_max_size);
+> -    } else if (info.capset_index == 1) {
+> -        resp.capset_id = VIRTIO_GPU_CAPSET_VIRGL2;
+> +
+> +    if (info.capset_index < g->capset_ids->len) {
+> +        resp.capset_id = g_array_index(g->capset_ids, uint32_t,
+> +                                       info.capset_index);
+>           virgl_renderer_get_cap_set(resp.capset_id,
+>                                      &resp.capset_max_version,
+>                                      &resp.capset_max_size);
+> -    } else {
+> -        resp.capset_max_version = 0;
+> -        resp.capset_max_size = 0;
+>       }
+>       resp.hdr.type = VIRTIO_GPU_RESP_OK_CAPSET_INFO;
+>       virtio_gpu_ctrl_response(g, cmd, &resp.hdr, sizeof(resp));
+> @@ -1159,12 +1153,30 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+>       return 0;
+>   }
+>   
+> +static void virtio_gpu_virgl_add_capset(VirtIOGPU *g, uint32_t capset_id)
+> +{
+> +    g_array_append_val(g->capset_ids, capset_id);
+> +}
+> +
+>   int virtio_gpu_virgl_get_num_capsets(VirtIOGPU *g)
+>   {
+>       uint32_t capset2_max_ver, capset2_max_size;
+> +
+> +    if (g->capset_ids) {
 
-This message needs to be updated to clarify that a VM can have a second 
-virtio-gpu device but this implementation does not support sharing 
-between two virtio-gpu devices.
+Move capset_ids initialization to virtio_gpu_virgl_init() to save this 
+conditional. capset_ids also needs to be freed when the device gets 
+unrealized.
 
