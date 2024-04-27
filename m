@@ -4,60 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0F5AC4345F
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Apr 2024 07:59:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FCDDC4345F
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Apr 2024 14:48:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0cxH-0002Gl-Dv; Sat, 27 Apr 2024 03:58:43 -0400
+	id 1s0jL2-0000Xi-5Q; Sat, 27 Apr 2024 10:47:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1s0cxD-0002GS-KP
- for qemu-devel@nongnu.org; Sat, 27 Apr 2024 03:58:40 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1s0cxB-00049G-7h
- for qemu-devel@nongnu.org; Sat, 27 Apr 2024 03:58:39 -0400
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:6401:0:640:7e6f:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 691AE60C64;
- Sat, 27 Apr 2024 10:58:14 +0300 (MSK)
-Received: from d-tatianin-lin.yandex-team.ru (unknown
- [2a02:6b8:b081:b490::1:30])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 8wI4UW0IYiE0-0AY2P5eq; Sat, 27 Apr 2024 10:58:13 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1714204693;
- bh=vwRqRltFgw7zZDNaSw0Y9HMLTNg35Jgz8gQaiYfSK3k=;
- h=Message-Id:Date:Cc:Subject:To:From;
- b=eF+iC5BznNqVygXQn1RlLVzhU9bqGOVXAYPJtkvM2DpHF5BdIQUYIgOGkWOJA7xZB
- HpOcgPLRcINJKmtxUthwvxGfpQ9p8pwq9zQ9OpB4sdv9RPYt3MvylJmVmHoNBtq88X
- qD6JFjAFhEHQxJjQksG7IZDzAlD+lleoIo+pBvxQ=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Daniil Tatianin <d-tatianin@yandex-team.ru>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Subject: [PATCH v1] mc146818rtc: add a way to generate RTC interrupts via QMP
-Date: Sat, 27 Apr 2024 10:58:01 +0300
-Message-Id: <20240427075801.491673-1-d-tatianin@yandex-team.ru>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s0jKt-0000Ra-KZ
+ for qemu-devel@nongnu.org; Sat, 27 Apr 2024 10:47:34 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s0jKp-0008GC-6k
+ for qemu-devel@nongnu.org; Sat, 27 Apr 2024 10:47:30 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-2ac16b59fbeso2689284a91.2
+ for <qemu-devel@nongnu.org>; Sat, 27 Apr 2024 07:47:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714229244; x=1714834044; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=6wcbJVsApLjFvrfZlLIEnscXA61H/LQylnHzp959vKo=;
+ b=Y5HZgU4sA/zjqpsAB3DxRLIjmp/xxad6nzY0c8nHBhWkwBIzk0yewFpM326TZ9m5fy
+ VxNPeqH3kC6kAmirVagPg/19NR/aoxtLY38MXM6M6hXrhVSnmrwApVGiFrlqoS5gRzLc
+ 4UfvCG2hucuL6uOM07fIPGGKVKSWJJr6weMPNvwNajXm3/ahtsakhAAdLogjyfFIVdMR
+ dDZj+UZYlt9ByMYHiWBHQynNZqBMyFO/19GPtqKyGVFACvkHS6BGOCgq3dT4ybDsWFxe
+ bsM020t0QFzF7C4sxSRVMqM0lKHX8t+CUC6oObm5ZGuNXbTsiPi3R7ZhyvNxrYQzKU4k
+ HDoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714229244; x=1714834044;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6wcbJVsApLjFvrfZlLIEnscXA61H/LQylnHzp959vKo=;
+ b=H9J4K5WOzuEVygNMRm8ppTsNb9RCLwOe5iL+ENrZMnsEQHZqUXNmlUEagNVhtMYt1f
+ X+r0odV0RpcTcRv8fZzhZlpfA3yTQFv3n0qTYoXx41DaShzp/fI0112webnVznqweTA6
+ Y6ImmTl4BvGd8A/yYsb2Wnnad2NQOrhdiQrZtsurKmp+/XVKBlVZu2OcN5lO+kjsXZbc
+ gjnJh4V1jQZts4MUO8NmmENP8BQV6bS0pgk6lCVXwtTHf+ABXA1/akV2jRC6348KPcNC
+ j/pZng6iGczW13N8E2oZ3VHgR4jmKMuATswOLXz6cRBHS+qpbWfETujiJR6PVzg/nLZS
+ /5fA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWNUyQLlhItwIF41BVJpn7n3FvcnqhVLwTSgf1f3cS+LnkjkukkM4hEXVidK0d0aifB5nwfBE5Rk+OGe65RIkUDl0GvIzI=
+X-Gm-Message-State: AOJu0YxSWS2lB+XbVm900XnKr5CkYgseFcwwd1mPkiCaco4GOI+42Tw+
+ 4GJzSUfsAgUNIFHWiuLIZVNMtbqISapdiruKQ8pseVYJx6ImmuPIIKUcx2qqDqY=
+X-Google-Smtp-Source: AGHT+IGwse8lYW9T2xG3kSIABHNFoEICjAUgoHEU4XFiqoEAlGWLOn3BoCGIWP5dUiE9RNhhzf9EQA==
+X-Received: by 2002:a17:90a:d78b:b0:2ad:e004:76e6 with SMTP id
+ z11-20020a17090ad78b00b002ade00476e6mr5231493pju.7.1714229244449; 
+ Sat, 27 Apr 2024 07:47:24 -0700 (PDT)
+Received: from [192.168.91.227] ([75.147.178.105])
+ by smtp.gmail.com with ESMTPSA id
+ q1-20020a17090a938100b002a706910b05sm16194208pjo.9.2024.04.27.07.47.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 27 Apr 2024 07:47:23 -0700 (PDT)
+Message-ID: <040db071-6406-4270-969a-c98d6fb33caf@linaro.org>
+Date: Sat, 27 Apr 2024 07:47:21 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/38] Exec / accelerators patches
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
+ qemu-ppc@nongnu.org
+References: <20240426194200.43723-1-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240426194200.43723-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ SUSPICIOUS_RECIPS=2.51 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,102 +99,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This can be used to force-synchronize the time in guest after a long
-stop-cont pause, which can be useful for serverless-type workload.
+On 4/26/24 12:41, Philippe Mathieu-Daudé wrote:
+> The following changes since commit a118c4aff4087eafb68f7132b233ad548cf16376:
+> 
+>    Merge tag 'hw-misc-20240425' ofhttps://github.com/philmd/qemu  into staging (2024-04-25 09:43:29 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://github.com/philmd/qemu.git  tags/accel-20240426
+> 
+> for you to fetch changes up to 671558d290ffb93752d3245e7c5604b04b6dcdf2:
+> 
+>    plugins: Include missing 'qemu/bitmap.h' header (2024-04-26 21:36:19 +0200)
+> 
+> Selfish PR, painfully tested commit by commit.
+> ----------------------------------------------------------------
+> Accelerators patches
+> 
+> A lot of trivial cleanups and simplifications (moving methods around,
+> adding/removing #include statements). Most notable changes:
+> 
+> - Rename NEED_CPU_H -> COMPILING_PER_TARGET
+> - Rename few template headers using the '.h.inc' suffix
+> - Extract some definitions / declarations into their own header:
+>    - accel/tcg/user-retaddr.h (helper_retaddr)
+>    - include/exec/abi_ptr.h (abi_ptr)
+>    - include/exec/breakpoint.h (CPUBreakpoint, CPUWatchpoint)
+>    - include/exec/mmu-access-type.h (MMUAccessType)
+>    - include/user/tswap-target.h (tswapl, bswaptls)
 
-Also add a comment to highlight the fact that this (and one other QMP
-command) only works for the MC146818 RTC controller.
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
-Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
----
 
-Changes since v0:
-- Rename to rtc-inject-irq to match other similar API
-- Add a comment to highlight that this only works for the I386 RTC
-
----
- hw/rtc/mc146818rtc.c         | 20 ++++++++++++++++++++
- include/hw/rtc/mc146818rtc.h |  1 +
- qapi/misc-target.json        | 16 ++++++++++++++++
- 3 files changed, 37 insertions(+)
-
-diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
-index f4c1869232..8501b55cbd 100644
---- a/hw/rtc/mc146818rtc.c
-+++ b/hw/rtc/mc146818rtc.c
-@@ -107,6 +107,11 @@ static void rtc_coalesced_timer_update(MC146818RtcState *s)
- static QLIST_HEAD(, MC146818RtcState) rtc_devices =
-     QLIST_HEAD_INITIALIZER(rtc_devices);
- 
-+/*
-+ * NOTE:
-+ * The two QMP functions below are _only_ implemented for the MC146818.
-+ * All other RTC devices ignore this.
-+ */
- void qmp_rtc_reset_reinjection(Error **errp)
- {
-     MC146818RtcState *s;
-@@ -116,6 +121,21 @@ void qmp_rtc_reset_reinjection(Error **errp)
-     }
- }
- 
-+void qmp_rtc_inject_irq(Error **errp)
-+{
-+    MC146818RtcState *s;
-+
-+    /*
-+     * See:
-+     * https://www.kernel.org/doc/Documentation/virtual/kvm/timekeeping.txt
-+     */
-+    QLIST_FOREACH(s, &rtc_devices, link) {
-+        s->cmos_data[RTC_REG_B] |= REG_B_UIE;
-+        s->cmos_data[RTC_REG_C] |= REG_C_IRQF | REG_C_UF;
-+        qemu_irq_raise(s->irq);
-+    }
-+}
-+
- static bool rtc_policy_slew_deliver_irq(MC146818RtcState *s)
- {
-     kvm_reset_irq_delivered();
-diff --git a/include/hw/rtc/mc146818rtc.h b/include/hw/rtc/mc146818rtc.h
-index 97cec0b3e8..6cd9761d80 100644
---- a/include/hw/rtc/mc146818rtc.h
-+++ b/include/hw/rtc/mc146818rtc.h
-@@ -56,5 +56,6 @@ MC146818RtcState *mc146818_rtc_init(ISABus *bus, int base_year,
- void mc146818rtc_set_cmos_data(MC146818RtcState *s, int addr, int val);
- int mc146818rtc_get_cmos_data(MC146818RtcState *s, int addr);
- void qmp_rtc_reset_reinjection(Error **errp);
-+void qmp_rtc_inject_irq(Error **errp);
- 
- #endif /* HW_RTC_MC146818RTC_H */
-diff --git a/qapi/misc-target.json b/qapi/misc-target.json
-index 4e0a6492a9..d84a5d07a2 100644
---- a/qapi/misc-target.json
-+++ b/qapi/misc-target.json
-@@ -19,6 +19,22 @@
- { 'command': 'rtc-reset-reinjection',
-   'if': 'TARGET_I386' }
- 
-+##
-+# @rtc-inject-irq:
-+#
-+# Inject an RTC interrupt.
-+#
-+# Since: 9.1
-+#
-+# Example:
-+#
-+#     -> { "execute": "rtc-inject-irq" }
-+#     <- { "return": {} }
-+#
-+##
-+{ 'command': 'rtc-inject-irq',
-+  'if': 'TARGET_I386' }
-+
- ##
- # @SevState:
- #
--- 
-2.34.1
+r~
 
 
