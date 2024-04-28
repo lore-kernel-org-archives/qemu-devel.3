@@ -4,75 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCC9EC4345F
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 22:23:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3889EC4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 22:25:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1CvJ-00054u-4E; Sun, 28 Apr 2024 18:23:05 -0400
+	id 1s1CxX-00067z-Ds; Sun, 28 Apr 2024 18:25:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1CvF-00054e-T5
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 18:23:02 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1CxV-00067h-Vj
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 18:25:22 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1CvD-0006jk-J5
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 18:23:01 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-a559b919303so505870366b.1
- for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 15:22:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1CxT-0007MT-Cb
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 18:25:21 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a55bf737cecso449995366b.0
+ for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 15:25:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714342977; x=1714947777; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=n8uuBUO7GENk2RPDInuaO+tkHKxpqAadVpWl7VuOv6U=;
- b=kUewJPh0SKFqSwExEzEHjySecojRV9yPrJm9YOVuNlZ6E7afBtFt/W6j3ZRsbPtebg
- t2ERynVgvh+4qoQQyMCFgkg4nUi9oXcz45G5KdKXiifm2muSeXmM2AYVTdq0fKnqM6tQ
- +JRCCkkXXWDX9YfvgNfIU0zjSJO0EKbSXCGqjEDEsYynPM26aDisw0wXxxdBvAKg6QuH
- t9ViOq6DH9WxekH+GFHV52BNHuDGoDoHGPF+w1y3H0MGBQPivzru9gvyFYnR2yrEsXP2
- ynUtUPfsqO7eeNJ5riHW6e/02Ot4vW9rDCXs/LNwfJUfaTAZiT7XR8oVimRKzJaUD5iC
- 499Q==
+ d=linaro.org; s=google; t=1714343115; x=1714947915; darn=nongnu.org;
+ h=content-transfer-encoding:subject:from:cc:to:content-language
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Ya0jZ8n9WJjJorfzw4j1dNGZnshBnu+wocUnYXirx1o=;
+ b=YxtX2VQZt2UZfr7+S3ex2GAMbSF15q5BkApZ7DkT9o+ohR04ByxxYSKbLiJIoM0iKS
+ yYUc06L6DEw/EIk+APlWqXk1DavpnGHw8zIvbbQDIEm214OO8QNuCvYH9zZRQcGH6iLI
+ p3/hvctz313x6/BSyncSicSPY9ODXM0hn4vgNye6q2RVeUmHaN6aF1l6ZH72KhRaf1QM
+ upqzcyDoqiHTyrmyMKxbVBPKv8z2cpPBMsZ+qJQAEtAGdk1lbPXy/R3cBpZJvoqv/yp+
+ 1aBcNOWejux7jvVJLV1Bn3dBO1mcNP76QW5nsHCDDHoh1SJfPdumzAH7a1s7xEJam+mr
+ jMSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714342977; x=1714947777;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=n8uuBUO7GENk2RPDInuaO+tkHKxpqAadVpWl7VuOv6U=;
- b=M/69v9nd71Q+yI6bL7OIIFZbCer+epL6rmQE92YqdmIzRtv+BzO2oJQN1FUQoD3mgg
- CUn/OWpI6vnVH4NyaIISGXqxdR4pWh/Gb7TIVNtFbCxrsgsvRUkczIaRXk65RBC0fb0c
- nR45huPSxrbIgNQ8grhIaaJRSfj+UpLNyh6Lpg8EKrWTcj1Lep7FPqY6cCMtkMgx3XNY
- u8urj9Zu8bUHZqNAlmfTDVjfjLuMPbI2FCWj+m3gsu2KtohYhNDp0BjmwIokzhHsMCb3
- gAqyOxUH6SoamNdypY6/018POFqc4P8UOFZZjj2H+f3BaeKKxhebekVMkuKxk9s6k6CW
- Tk6w==
-X-Gm-Message-State: AOJu0YyC4BQ2xDIQGHZlXJkicxQ2VWnXcKCSxunNg3dqC1/RBn/gh7Gj
- HhDTX15e4EgYQgfX0vsrPxj9NDF3ajGXRQ+sPraEtbBI5eOmTz62DRnZdoLxGaJrjK7ANjxr8kg
- X
-X-Google-Smtp-Source: AGHT+IElKLeFrpgWWGrz7t9bTQbvkuqGM81yeMbQvNkVJiobsYuUnzkDZobRWpDJNfUw3KRaBYmc8g==
-X-Received: by 2002:a17:906:3896:b0:a55:b7e3:8bf7 with SMTP id
- q22-20020a170906389600b00a55b7e38bf7mr5917647ejd.18.1714342976844; 
- Sun, 28 Apr 2024 15:22:56 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1714343115; x=1714947915;
+ h=content-transfer-encoding:subject:from:cc:to:content-language
+ :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Ya0jZ8n9WJjJorfzw4j1dNGZnshBnu+wocUnYXirx1o=;
+ b=KwibYTYy4ZZWJEZWSeXbxscog0PImSwhq3gPGl5epdNCsVdSmXEBQAAVrPAwyevXJN
+ 81Og1Cha3cAqpNhnPkzNHMA8MyP8B2rreS31pjIkJEyEXhEDp8fx4SABqRTaBEZuzoKk
+ G2zYn+lJ8IqtpSx36xJloTQ5o6HPV0Wjz9gAz8NAwDkQnP0nlEzzFUMbGG5RbRkhRXu5
+ MWSwJ5erL7VhNhxamUQCWB83fGq3CHyKG7XbiOrXzOZp7iNWmHilDXlZ7pXAD5bmMPk1
+ nggKchlvMtLC9owHbXREFud/zMsO2KuJ9MAbcGDkWMAhFtO/tx7VjYHTpXLbi6ZwO90J
+ uXkg==
+X-Gm-Message-State: AOJu0YzW2RwyiyjVNacDceUSvOQUS/pQc/hxXRGpdDMY16W5o7LC5QCs
+ KNzuQ0xNufH37YSVvIK5uROXAFVKrtpEuzHtr1T1Hsq4sMEiwDccGlUhoDe2sjt7BILoPDMzpDc
+ N
+X-Google-Smtp-Source: AGHT+IGBL1LER3mGihGCCvYWWcXvkFyk52j84L0TMsqGrHv9bOFZjswR1HgjGMhvhq3E8ZI9NoM6Og==
+X-Received: by 2002:a17:906:2783:b0:a58:c277:345c with SMTP id
+ j3-20020a170906278300b00a58c277345cmr5880818ejc.7.1714343115221; 
+ Sun, 28 Apr 2024 15:25:15 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.142.130])
  by smtp.gmail.com with ESMTPSA id
- d17-20020a1709063ed100b00a52222f2b21sm13196066ejj.66.2024.04.28.15.22.55
+ cf8-20020a170906b2c800b00a58d14479adsm3158888ejb.59.2024.04.28.15.25.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Apr 2024 15:22:56 -0700 (PDT)
-Message-ID: <c601427f-49e0-4545-8d5e-314271e39c27@linaro.org>
-Date: Mon, 29 Apr 2024 00:22:54 +0200
+ Sun, 28 Apr 2024 15:25:14 -0700 (PDT)
+Message-ID: <b534d873-9be3-4a24-800f-603ed25c0803@linaro.org>
+Date: Mon, 29 Apr 2024 00:25:10 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/24] exec: Rework around CPUState user fields (part 2)
-To: qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20240428221450.26460-1-philmd@linaro.org>
 Content-Language: en-US
+To: QEMU Developers <qemu-devel@nongnu.org>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, afaerber@suse.de,
+ ale@rev.ng, alistair.francis@wdc.com, Anton Johansson <anjo@rev.ng>,
+ armbru@redhat.com, bbauman@redhat.com, bcain@quicinc.com,
+ berrange@redhat.com, Chao Peng <chao.p.peng@linux.intel.com>,
+ cjia@nvidia.com, clg@kaod.org, cw@f00f.org,
+ Damien Hedde <dhedde@kalrayinc.com>, eblake@redhat.com,
+ edgar.iglesias@gmail.com, eduardo@habkost.net,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>, eric.auger@redhat.com,
+ felipe@nutanix.com, iggy@theiggy.com, imp@bsdimp.com, jan.kiszka@web.de,
+ jgg@nvidia.com, jidong.xiao@gmail.com, jim.shu@sifive.com,
+ jjherne@linux.vnet.ibm.com, Joao Martins <joao.m.martins@oracle.com>,
+ konrad.wilk@oracle.com, Luc Michel <luc@lmichel.fr>,
+ mburton@qti.qualcomm.com, mdean@redhat.com, mimu@linux.vnet.ibm.com,
+ paul.walmsley@sifive.com, pbonzini@redhat.com,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ shentey@gmail.com, stefanha@gmail.com, wei.w.wang@intel.com, z.huo@139.com,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com,
+ eblot@rivosinc.com, max.chou@sifive.com
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240428221450.26460-1-philmd@linaro.org>
+Subject: QEMU Community Call Agenda Items (April 30th, 2024)
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,188 +111,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/4/24 00:14, Philippe Mathieu-Daudé wrote:
-> Finish extracting TCG fields from CPUState:
-> - Extract tcg_cpu_exit() from cpu_exit()
-> - Introduce AccelOpsClass::exit_vcpu_thread()
-> - cpu_exit() calls exit_vcpu_thread=tcg_cpu_exit for TCG
-> - Forward declare TaskState and more uses of get_task_state()
-> - Introduce TCG AccelCPUState
-> - Move TCG specific fields from CPUState to AccelCPUState
-> - Restrict "exec/tlb-common.h" to TCG
-> - Restrict iommu_notifiers, icount to system emulation
-> 
-> Based-on: <20240428214915.10339-1-philmd@linaro.org>
+Hi,
 
-The CPUState changes (part 1 & 2) can be resumed as:
+The KVM/QEMU community call is at:
 
-$ git diff master.. -- include/hw/core/cpu.h accel/tcg/vcpu-state.h
--- >8 --
-diff --git a/accel/tcg/vcpu-state.h b/accel/tcg/vcpu-state.h
-new file mode 100644
-index 0000000000..9bb8afac57
---- /dev/null
-+++ b/accel/tcg/vcpu-state.h
-@@ -0,0 +1,45 @@
-+/**
-+ * AccelCPUState:
-+ * @cflags: Pre-computed cflags for this cpu.
-+ * @icount_extra: Instructions until next timer event.
-+ * @mem_io_pc: Host Program Counter at which the memory was accessed.
-+ */
-+struct AccelCPUState {
-+    uint32_t cflags;
-+    uint32_t cflags_next_tb;
-+
-+    sigjmp_buf jmp_env;
-+    CPUJumpCache tb_jmp_cache;
-+
-+#ifdef CONFIG_USER_ONLY
-+    TaskState *ts;
-+#else
-+    int64_t icount_budget;
-+    int64_t icount_extra;
-+
-+    uintptr_t mem_io_pc;
-+
-+    /* track IOMMUs whose translations we've cached in the TCG TLB */
-+    GArray *iommu_notifiers;
-+#endif
-+};
-+#endif
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 46b99a7ea5..bdcb09b464 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -337,15 +337,28 @@ typedef union IcountDecr {
--/*
-- * Elements of CPUState most efficiently accessed from CPUArchState,
-- * via small negative offsets.
-+/**
-+ * CPUNegativeOffsetState: Elements of CPUState most efficiently accessed
-+ *                         from CPUArchState, via small negative offsets.
-+ * @can_do_io: True if memory-mapped IO is allowed.
-+ * @plugin_mem_cbs: active plugin memory callbacks
-+ * @plugin_state: per-CPU plugin state
-   */
-  typedef struct CPUNegativeOffsetState {
-+#ifdef CONFIG_TCG
-      CPUTLB tlb;
-+#ifdef CONFIG_PLUGIN
-+    /*
-+     * The callback pointer are accessed via TCG (see 
-gen_empty_mem_helper).
-+     */
-+    GArray *plugin_mem_cbs;
-+    CPUPluginState *plugin_state;
-+#endif
-      IcountDecr icount_decr;
-      bool can_do_io;
-+#endif
-  } CPUNegativeOffsetState;
+   https://meet.jit.si/kvmcallmeeting
+   @
+   30/4/2024 14:00 UTC
 
-  struct KVMState;
-@@ -383,9 +396,8 @@ struct qemu_work_item;
-   *   to a cluster this will be UNASSIGNED_CLUSTER_INDEX; otherwise it will
-   *   be the same as the cluster-id property of the CPU object's 
-TYPE_CPU_CLUSTER
-   *   QOM parent.
-- *   Under TCG this value is propagated to @tcg_cflags.
-+ *   Under TCG this value is propagated to @accel->cflags.
-   *   See TranslationBlock::TCG CF_CLUSTER_MASK.
-- * @tcg_cflags: Pre-computed cflags for this cpu.
-   * @nr_cores: Number of cores within this CPU package.
-   * @nr_threads: Number of threads within this CPU core.
-   * @running: #true if CPU is currently running (lockless).
-@@ -399,8 +411,6 @@ struct qemu_work_item;
-   * @unplug: Indicates a pending CPU unplug request.
-   * @crash_occurred: Indicates the OS reported a crash (panic) for this CPU
-   * @singlestep_enabled: Flags for single-stepping.
-- * @icount_extra: Instructions until next timer event.
-- * @neg.can_do_io: True if memory-mapped IO is allowed.
-   * @cpu_ases: Pointer to array of CPUAddressSpaces (which define the
-   *            AddressSpaces this CPU has)
-   * @num_ases: number of CPUAddressSpaces in @cpu_ases
-@@ -411,13 +421,10 @@ struct qemu_work_item;
-   * @gdb_num_g_regs: Number of registers in GDB 'g' packets.
-   * @node: QTAILQ of CPUs sharing TB cache.
-   * @opaque: User data.
-- * @mem_io_pc: Host Program Counter at which the memory was accessed.
-   * @accel: Pointer to accelerator specific state.
-   * @kvm_fd: vCPU file descriptor for KVM.
-   * @work_mutex: Lock to prevent multiple access to @work_list.
-   * @work_list: List of pending asynchronous work.
-- * @plugin_mem_cbs: active plugin memory callbacks
-- * @plugin_state: per-CPU plugin state
-   * @ignore_memory_transaction_failures: Cached copy of the MachineState
-   *    flag of the same name: allows the board to suppress calling of the
-   *    CPU do_transaction_failed hook function.
-@@ -460,14 +467,10 @@ struct CPUState {
-      bool crash_occurred;
-      bool exit_request;
-      int exclusive_context_count;
--    uint32_t cflags_next_tb;
-      /* updates protected by BQL */
-      uint32_t interrupt_request;
-      int singlestep_enabled;
--    int64_t icount_budget;
--    int64_t icount_extra;
-      uint64_t random_seed;
--    sigjmp_buf jmp_env;
+Are there any agenda items for the sync-up?
 
-      QemuMutex work_mutex;
-      QSIMPLEQ_HEAD(, qemu_work_item) work_list;
-@@ -477,8 +480,6 @@ struct CPUState {
-      AddressSpace *as;
-      MemoryRegion *memory;
 
--    CPUJumpCache *tb_jmp_cache;
--
-      GArray *gdb_regs;
-      int gdb_num_regs;
-      int gdb_num_g_regs;
-@@ -490,12 +491,9 @@ struct CPUState {
-      QTAILQ_HEAD(, CPUWatchpoint) watchpoints;
-      CPUWatchpoint *watchpoint_hit;
+Alex maintains the invite on our Linaro project calendar here:
 
--    void *opaque;
--
-      /* In order to avoid passing too many arguments to the MMIO helpers,
-       * we store some rarely used information in the CPU context.
-       */
--    uintptr_t mem_io_pc;
+https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=MWd2dWI5NDM1bzdocnJlbTBhMHJhbG5sNWlfMjAyNDAyMjBUMTQwMDAwWiBjX2s1cDJscGd2YnB0ZGlya3U1c2kwMWJsbW5rQGc&tmsrc=c_k5p2lpgvbptdirku5si01blmnk%40group.calendar.google.com&scp=ALL
 
-      /* Only used in KVM */
-      int kvm_fd;
-@@ -510,19 +508,9 @@ struct CPUState {
-      /* Use by accel-block: CPU is executing an ioctl() */
-      QemuLockCnt in_ioctl_lock;
+If you want to be added to the invite list let him know and you can get
+spammed by your calendar app as well 😉
 
--#ifdef CONFIG_PLUGIN
--    /*
--     * The callback pointer stays in the main CPUState as it is
--     * accessed via TCG (see gen_empty_mem_helper).
--     */
--    GArray *plugin_mem_cbs;
--    CPUPluginState *plugin_state;
--#endif
--
-      /* TODO Move common fields from CPUArchState here. */
-      int cpu_index;
-      int cluster_index;
--    uint32_t tcg_cflags;
-      uint32_t halted;
-      int32_t exception_index;
+Regards,
 
-@@ -544,9 +532,6 @@ struct CPUState {
-      /* Used for user-only emulation of prctl(PR_SET_UNALIGN). */
-      bool prctl_unalign_sigbus;
-
--    /* track IOMMUs whose translations we've cached in the TCG TLB */
--    GArray *iommu_notifiers;
--
-      /*
-       * MUST BE LAST in order to minimize the displacement to CPUArchState.
-       */
----
+Phil.
 
