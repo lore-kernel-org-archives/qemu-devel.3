@@ -4,69 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB091C4345F
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 01:35:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C3DAC4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 02:13:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0tRP-0002Ew-Fj; Sat, 27 Apr 2024 21:34:55 -0400
+	id 1s0u1p-0006gI-Kw; Sat, 27 Apr 2024 22:12:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1s0tRL-0002Ed-4K
- for qemu-devel@nongnu.org; Sat, 27 Apr 2024 21:34:51 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
+ (Exim 4.90_1) (envelope-from <xiongyining1480@phytium.com.cn>)
+ id 1s0u1m-0006g2-P7; Sat, 27 Apr 2024 22:12:30 -0400
+Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1s0tRI-0006jd-9C
- for qemu-devel@nongnu.org; Sat, 27 Apr 2024 21:34:50 -0400
-Received: from loongson.cn (unknown [10.20.42.173])
- by gateway (Coremail) with SMTP id _____8BxFvCypy1mnjAEAA--.15711S3;
- Sun, 28 Apr 2024 09:34:42 +0800 (CST)
-Received: from [10.20.42.173] (unknown [10.20.42.173])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8Axz1evpy1mrtoHAA--.17128S3; 
- Sun, 28 Apr 2024 09:34:41 +0800 (CST)
-Subject: Re: [PATCH v7 06/17] hw/loongarch: Init efi_boot_memmap table
-To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, peter.maydell@linaro.org,
- philmd@linaro.org, zltjiangshi@gmail.com
-References: <20240426091551.2397867-1-gaosong@loongson.cn>
- <20240426091551.2397867-7-gaosong@loongson.cn>
-From: maobibo <maobibo@loongson.cn>
-Message-ID: <80152dbe-220d-3d40-862d-9c26c33a0ab4@loongson.cn>
-Date: Sun, 28 Apr 2024 09:34:39 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
-MIME-Version: 1.0
-In-Reply-To: <20240426091551.2397867-7-gaosong@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8Axz1evpy1mrtoHAA--.17128S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3JrW8WF4kWr1DZFy3GF48AFc_yoW7WFWDpF
- 9Iv3Zakrs5JF17XrZ3Xw1jqFn8Zrs7KF12ga47GryFkrnrJr1kWF1fJa4DZFWkJ3y0k3Wq
- vFnY93yUWFsrXwcCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8j-e5UU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -61
-X-Spam_score: -6.2
-X-Spam_bar: ------
-X-Spam_report: (-6.2 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-4.307,
+ (envelope-from <xiongyining1480@phytium.com.cn>)
+ id 1s0u1i-00057g-FS; Sat, 27 Apr 2024 22:12:30 -0400
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwDX3RF9sC1mfwZOAA--.40375S2;
+ Sun, 28 Apr 2024 10:12:13 +0800 (CST)
+Received: from DESKTOP-E65K6PP (unknown [218.76.62.144])
+ by mail (Coremail) with SMTP id AQAAfwDXcDl2sC1mchoAAA--.139S3;
+ Sun, 28 Apr 2024 10:12:06 +0800 (CST)
+Date: Sun, 28 Apr 2024 10:12:06 +0800
+From: "xiongyining1480@phytium.com.cn" <xiongyining1480@phytium.com.cn>
+To: "Richard Henderson" <richard.henderson@linaro.org>, 
+ qemu-arm <qemu-arm@nongnu.org>, qemu-devel <qemu-devel@nongnu.org>
+Cc: rad <rad@semihalf.com>, peter.maydell <peter.maydell@linaro.org>, 
+ quic_llindhol <quic_llindhol@quicinc.com>, 
+ "Marcin Juszkiewicz" <marcin.juszkiewicz@linaro.org>
+Subject: Re: [PATCH v4 1/1] hw/arm/sbsa-ref: Enable CPU cluster on ARM sbsa
+ machine
+References: <20240426073553.326946-1-xiongyining1480@phytium.com.cn>, 
+ <20240426073553.326946-2-xiongyining1480@phytium.com.cn>, 
+ <a25e01c0-5f6e-4568-93ec-970987eb6d07@linaro.org>
+X-Priority: 3
+X-GUID: F05A055B-186E-4EED-9A38-56A6D16D2805
+X-Has-Attach: no
+X-Mailer: Foxmail 7.2.25.228[cn]
+Mime-Version: 1.0
+Message-ID: <2024042810120618268213@phytium.com.cn>
+Content-Type: multipart/alternative;
+ boundary="----=_001_NextPart176011612711_=----"
+X-CM-TRANSID: AQAAfwDXcDl2sC1mchoAAA--.139S3
+X-CM-SenderInfo: x0lr0wp1lqx0bjrumio6sk53xlxphulrpou0/1tbiAQAJBmYtU2QBHQABsv
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=xiongyinin
+ g1480@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoW7tFWUArWxGFW7Jw47Ar4xWFg_yoW8Wr48pr
+ W8Gr98K3ykJ3sFka13Za1xXr1rXr1rAa18Jr1Iqw42vwn8Ga4xKr17Kr4rC3srGry8A3s2
+ 9FWIqa4ruFs8urJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=209.97.181.73;
+ envelope-from=xiongyining1480@phytium.com.cn;
+ helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, HTML_MESSAGE=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,174 +76,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This is a multi-part message in MIME format.
 
+------=_001_NextPart176011612711_=----
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: base64
 
-On 2024/4/26 下午5:15, Song Gao wrote:
+DQoNCg0KDQp4aW9uZ3lpbmluZzE0ODBAcGh5dGl1bS5jb20uY24NCiANCkZyb206IFJpY2hhcmQg
+SGVuZGVyc29uDQpEYXRlOiAyMDI0LTA0LTI3IDAwOjA2DQpUbzogWGlvbmcgWWluaW5nOyBxZW11
+LWFybTsgcWVtdS1kZXZlbA0KQ0M6IHJhZDsgcGV0ZXIubWF5ZGVsbDsgcXVpY19sbGluZGhvbDsg
+bWFyY2luLmp1c3praWV3aWN6DQpTdWJqZWN0OiBSZTogW1BBVENIIHY0IDEvMV0gaHcvYXJtL3Ni
+c2EtcmVmOiBFbmFibGUgQ1BVIGNsdXN0ZXIgb24gQVJNIHNic2EgbWFjaGluZQ0KT24gNC8yNi8y
+NCAwMDozNSwgWGlvbmcgWWluaW5nIHdyb3RlOg0KPiBGcm9tOiB4aW9uZ3lpbmluZzE0ODAgPHhp
+b25neWluaW5nMTQ4MEBwaHl0aXVtLmNvbS5jbj4NCj4gDQo+IEVuYWJsZSBDUFUgY2x1c3RlciBz
+dXBwb3J0IG9uIFNic2FRZW11IHBsYXRmb3JtLCBzbyB0aGF0IHVzZXJzIGNhbg0KPiBzcGVjaWZ5
+IGEgNC1sZXZlbCBDUFUgaGllcmFyY2h5IHNvY2tldHMvY2x1c3RlcnMvY29yZXMvdGhyZWFkcy4g
+QW5kDQo+IHRoaXMgdG9wb2xvZ3kgY2FuIGJlIHBhc3NlZCB0byB0aGUgZmlybXdhcmUgdGhyb3Vn
+aCBEVCBjcHUtbWFwLg0KPiANCj4gU2lnbmVkLW9mZi1ieTogWGlvbmcgWWluaW5nIDx4aW9uZ3lp
+bmluZzE0ODBAcGh5dGl1bS5jb20uY24+DQo+IHRlc3RlZC1ieTogTWFyY2luIEp1c3praWV3aWN6
+IDxtYXJjaW4uanVzemtpZXdpY3pAbGluYXJvLm9yZz4NCj4gLS0tDQo+ICAgZG9jcy9zeXN0ZW0v
+YXJtL3Nic2EucnN0IHwgIDQgKysrKw0KPiAgIGh3L2FybS9zYnNhLXJlZi5jICAgICAgICB8IDM3
+ICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKy0NCj4gICAyIGZpbGVzIGNoYW5n
+ZWQsIDQwIGluc2VydGlvbnMoKyksIDEgZGVsZXRpb24oLSkNCiANCj4gSXNuJ3QgdGhpcyBiYXNp
+Y2FsbHkgd2hhdCBNUElEUl9FTDEgaXMgc3VwcG9zZWQgdG8gaW5kaWNhdGU/DQo+IFdlIGRvIG5v
+dCB5ZXQgaW1wbGVtZW50IGFsbCBvZiB0aGF0IGluIFFFTVUsIGJ1dCBzaG91bGQuDQogDQo+IFdo
+eSBkb2VzIHRoZSBzYW1lIGluZm8gbmVlZCB0byBiZSByZXBsaWNhdGVkIGluIGRldmljZXRyZWU/
+DQogDQpzYnNhIHVzZXMgUFBUVCB0byBpbmRpY2F0ZSB0aGUgY3B1IHRvcG9sb2d5LCBhbmQgT1Mg
+dXNlIHRoZSBBQ1BJIHRvIGdldCBoYXJkd2FyZSBpbmZvbWF0aW9uLiBXZSBhZGQgdGhlIHJlbGF0
+ZWQgaW5mb3JtYXRpb24gaW4gZGV2aWNldHJlZSwgYW5kIFRGLUEgcGFyc2VzIGRldmljZXRyZWUN
+CmFuZCBleHRyYWN0IGRhdGEgZm9ybSBpdCAsIHNvIEVESzIgY2FuIGdhdGhlciBkYXRhIGZvcm0g
+VEYtQSB0byBjcmVhdGUgUFBUVCB0YWJsZXMgdmlhIFNNQyBjYWxscy4gDQoNCk5vdyB0aGUgUFBU
+VCB0YWJsZXMgY3JlYXRlZCBieSBFREsyIGxvc2Ugc29tZSBkZXRhaWxlZCBpbmZvcm1hdGlvbiwg
+c28gdGhlIGNwdSB0b3BvbG9neSBPUyBpZGVudGlmaWVkIGNhbm5vdCBhbGlnbiB3aXRoIHRoZSBx
+ZW11IGNvbmZpZ3VyZS4gV2UgaG9wZSB0byBhZGQgdGhlIHRvcG9sb2d5IA0KaW5mb3JtYXRpb24g
+aW4gZGV2aWNlIHRyZWUsIHNvIEVLRDIgY2FuIGNyZWF0ZSBtb3JlIGRldGFpbGVkIFBQVFQgdGFi
+bGVzLg0KIA0KPiByfg0K
 
-Message test is also missing there :(
+------=_001_NextPart176011612711_=----
+Content-Type: text/html;
+	charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> Message-Id: <20240307164835.300412-7-gaosong@loongson.cn>
-> ---
->   include/hw/loongarch/boot.h | 27 +++++++++++++++++++++++++
->   include/hw/loongarch/virt.h | 10 ++++++++++
->   hw/loongarch/boot.c         | 40 +++++++++++++++++++++++++++++++++++++
->   hw/loongarch/virt.c         | 11 ++--------
->   4 files changed, 79 insertions(+), 9 deletions(-)
-> 
-> diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
-> index cf0e4d4f91..76622af2e2 100644
-> --- a/include/hw/loongarch/boot.h
-> +++ b/include/hw/loongarch/boot.h
-> @@ -21,6 +21,15 @@ typedef struct {
->       uint8_t b[16];
->   } efi_guid_t QEMU_ALIGNED(8);
->   
-> +#define EFI_GUID(a, b, c, d...) (efi_guid_t){ {                                \
-> +        (a) & 0xff, ((a) >> 8) & 0xff, ((a) >> 16) & 0xff, ((a) >> 24) & 0xff, \
-> +        (b) & 0xff, ((b) >> 8) & 0xff,                                         \
-> +        (c) & 0xff, ((c) >> 8) & 0xff, d } }
-> +
-> +#define LINUX_EFI_BOOT_MEMMAP_GUID \
-> +        EFI_GUID(0x800f683f, 0xd08b, 0x423a,  0xa2, 0x93, \
-> +                 0x96, 0x5c, 0x3c, 0x6f, 0xe2, 0xb4)
-> +
->   struct efi_config_table {
->       efi_guid_t guid;
->       uint64_t *ptr;
-> @@ -56,6 +65,24 @@ struct efi_system_table {
->       struct efi_configuration_table *tables;
->   };
->   
-> +typedef struct {
-> +    uint32_t type;
-> +    uint32_t pad;
-> +    uint64_t phys_addr;
-> +    uint64_t virt_addr;
-> +    uint64_t num_pages;
-> +    uint64_t attribute;
-> +} efi_memory_desc_t;
-> +
-> +struct efi_boot_memmap {
-> +    uint64_t map_size;
-> +    uint64_t desc_size;
-> +    uint32_t desc_ver;
-> +    uint64_t map_key;
-> +    uint64_t buff_size;
-> +    efi_memory_desc_t map[32];
-> +};
-> +
->   struct loongarch_boot_info {
->       uint64_t ram_size;
->       const char *kernel_filename;
-> diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-> index d7a074d69f..8a9fe4053d 100644
-> --- a/include/hw/loongarch/virt.h
-> +++ b/include/hw/loongarch/virt.h
-> @@ -35,6 +35,16 @@
->   
->   #define COMMAND_LINE_SIZE       512
->   
-> +extern struct memmap_entry *memmap_table;
-> +extern unsigned memmap_entries;
-> +
-> +struct memmap_entry {
-> +    uint64_t address;
-> +    uint64_t length;
-> +    uint32_t type;
-> +    uint32_t reserved;
-> +};
-> +
->   struct LoongArchMachineState {
->       /*< private >*/
->       MachineState parent_obj;
-> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-> index 46a241a04c..18aae3434d 100644
-> --- a/hw/loongarch/boot.c
-> +++ b/hw/loongarch/boot.c
-> @@ -63,8 +63,41 @@ static const unsigned int slave_boot_code[] = {
->       0x4c000020,   /* jirl       $zero, $ra,0                   */
->   };
->   
-> +static inline void *guidcpy(void *dst, const void *src)
-> +{
-> +    return memcpy(dst, src, sizeof(efi_guid_t));
-> +}
-> +
-> +static void init_efi_boot_memmap(struct efi_system_table *systab,
-> +                                 void *p, void *start)
-> +{
-> +    unsigned i;
-> +    struct efi_boot_memmap *boot_memmap = p;
-> +    efi_guid_t tbl_guid = LINUX_EFI_BOOT_MEMMAP_GUID;
-> +
-> +    /* efi_configuration_table 1 */
-> +    guidcpy(&systab->tables[0].guid, &tbl_guid);
-> +    systab->tables[0].table = (struct efi_configuration_table *)(p - start);
-> +    systab->nr_tables = 1;
-> +
-> +    boot_memmap->desc_size = sizeof(efi_memory_desc_t);
-> +    boot_memmap->desc_ver = 1;
-> +    boot_memmap->map_size = 0;
-> +
-> +    efi_memory_desc_t *map = p + sizeof(struct efi_boot_memmap);
-> +    for (i = 0; i < memmap_entries; i++) {
-> +        map = (void *)boot_memmap + sizeof(*map);
-> +        map[i].type = memmap_table[i].type;
-> +        map[i].phys_addr = ROUND_UP(memmap_table[i].address, 64 * KiB);
-> +        map[i].num_pages = ROUND_DOWN(memmap_table[i].address +
-> +                        memmap_table[i].length - map[i].phys_addr, 64 * KiB);
-> +        p += sizeof(efi_memory_desc_t);
-> +    }
-> +}
-
-Do you verify that memory size of VM is the same with qemu command line 
-setting? I am ok if the test result is the same.
-
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-> +
->   static void init_systab(struct loongarch_boot_info *info, void *p, void *start)
->   {
-> +    void *bp_tables_start;
->       struct efi_system_table *systab = p;
->   
->       info->a2 = (uint64_t)p - (uint64_t)start;
-> @@ -80,6 +113,13 @@ static void init_systab(struct loongarch_boot_info *info, void *p, void *start)
->       p += ROUND_UP(sizeof(struct efi_system_table), 64 * KiB);
->   
->       systab->tables = p;
-> +    bp_tables_start = p;
-> +
-> +    init_efi_boot_memmap(systab, p, start);
-> +    p += ROUND_UP(sizeof(struct efi_boot_memmap) +
-> +                  sizeof(efi_memory_desc_t) * memmap_entries, 64 * KiB);
-> +
-> +    systab->tables = (struct efi_configuration_table *)(bp_tables_start - start);
->   }
->   
->   static void init_cmdline(struct loongarch_boot_info *info, void *p, void *start)
-> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index bfb88aedab..708aa8bc60 100644
-> --- a/hw/loongarch/virt.c
-> +++ b/hw/loongarch/virt.c
-> @@ -378,15 +378,8 @@ static void virt_powerdown_req(Notifier *notifier, void *opaque)
->       acpi_send_event(s->acpi_ged, ACPI_POWER_DOWN_STATUS);
->   }
->   
-> -struct memmap_entry {
-> -    uint64_t address;
-> -    uint64_t length;
-> -    uint32_t type;
-> -    uint32_t reserved;
-> -};
-> -
-> -static struct memmap_entry *memmap_table;
-> -static unsigned memmap_entries;
-> +struct memmap_entry *memmap_table;
-> +unsigned memmap_entries;
->   
->   static void memmap_add_entry(uint64_t address, uint64_t length, uint32_t type)
->   {
-> 
+<html><head><meta http-equiv=3D"content-type" content=3D"text/html; charse=
+t=3DUTF-8"><style>body { line-height: 1.5; }blockquote { margin-top: 0px; =
+margin-bottom: 0px; margin-left: 0.5em; }body { font-size: 14px; font-fami=
+ly: "Microsoft YaHei UI"; color: rgb(0, 0, 0); line-height: 1.5; }</style>=
+</head><body>=0A<div><span></span><br></div>=0A<div><br></div><hr style=3D=
+"width: 210px; height: 1px;" color=3D"#b5c4df" size=3D"1" align=3D"left">=
+=0A<div><span><div style=3D"MARGIN: 10px; FONT-FAMILY: verdana; FONT-SIZE:=
+ 10pt"><div>xiongyining1480@phytium.com.cn</div></div></span></div>=0A<blo=
+ckquote style=3D"margin-Top: 0px; margin-Bottom: 0px; margin-Left: 0.5em; =
+margin-Right: inherit"><div>&nbsp;</div><div style=3D"border:none;border-t=
+op:solid #B5C4DF 1.0pt;padding:3.0pt 0cm 0cm 0cm"><div style=3D"PADDING-RI=
+GHT: 8px; PADDING-LEFT: 8px; FONT-SIZE: 12px;FONT-FAMILY:tahoma;COLOR:#000=
+000; BACKGROUND: #efefef; PADDING-BOTTOM: 8px; PADDING-TOP: 8px"><div><b>F=
+rom:</b>&nbsp;<a href=3D"mailto:richard.henderson@linaro.org">Richard Hend=
+erson</a></div><div><b>Date:</b>&nbsp;2024-04-27&nbsp;00:06</div><div><b>T=
+o:</b>&nbsp;<a href=3D"mailto:xiongyining1480@phytium.com.cn">Xiong Yining=
+</a>; <a href=3D"mailto:qemu-arm@nongnu.org">qemu-arm</a>; <a href=3D"mail=
+to:qemu-devel@nongnu.org">qemu-devel</a></div><div><b>CC:</b>&nbsp;<a href=
+=3D"mailto:rad@semihalf.com">rad</a>; <a href=3D"mailto:peter.maydell@lina=
+ro.org">peter.maydell</a>; <a href=3D"mailto:quic_llindhol@quicinc.com">qu=
+ic_llindhol</a>; <a href=3D"mailto:marcin.juszkiewicz@linaro.org">marcin.j=
+uszkiewicz</a></div><div><b>Subject:</b>&nbsp;Re: [PATCH v4 1/1] hw/arm/sb=
+sa-ref: Enable CPU cluster on ARM sbsa machine</div></div></div><div><div>=
+On 4/26/24 00:35, Xiong Yining wrote:</div>=0A<div>&gt; From: xiongyining1=
+480 &lt;xiongyining1480@phytium.com.cn&gt;</div>=0A<div>&gt; </div>=0A<div=
+>&gt; Enable CPU cluster support on SbsaQemu platform, so that users can</=
+div>=0A<div>&gt; specify a 4-level CPU hierarchy sockets/clusters/cores/th=
+reads. And</div>=0A<div>&gt; this topology can be passed to the firmware t=
+hrough DT cpu-map.</div>=0A<div>&gt; </div>=0A<div>&gt; Signed-off-by: Xio=
+ng Yining &lt;xiongyining1480@phytium.com.cn&gt;</div>=0A<div>&gt; tested-=
+by: Marcin Juszkiewicz &lt;marcin.juszkiewicz@linaro.org&gt;</div>=0A<div>=
+&gt; ---</div>=0A<div>&gt;&nbsp;&nbsp; docs/system/arm/sbsa.rst |&nbsp; 4 =
+++++</div>=0A<div>&gt;&nbsp;&nbsp; hw/arm/sbsa-ref.c&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;&nbsp; | 37 ++++++++++++++++++++++++++++++++++++-</div>=0A<d=
+iv>&gt;&nbsp;&nbsp; 2 files changed, 40 insertions(+), 1 deletion(-)</div>=
+=0A<div>&nbsp;</div>=0A<div>&gt; Isn't this basically what MPIDR_EL1 is su=
+pposed to indicate?</div>=0A<div>&gt; We do not yet implement all of that =
+in QEMU, but should.</div>=0A<div>&nbsp;</div>=0A<div>&gt; Why does the sa=
+me info need to be replicated in devicetree?</div>=0A<div>&nbsp;</div><div=
+><div>sbsa uses PPTT to indicate the cpu topology, and OS use the ACPI to =
+get hardware infomation. We add the related information in devicetree, and=
+ TF-A parses devicetree</div><div>and extract data form it , so EDK2 can g=
+ather data form TF-A to create PPTT tables via SMC calls.&nbsp;</div><div>=
+<br></div><div>Now the PPTT tables created by EDK2 lose some detailed info=
+rmation, so the cpu topology OS identified cannot align with the qemu conf=
+igure. We hope to add the topology&nbsp;</div><div>information in device t=
+ree, so EKD2 can create more detailed PPTT tables.</div></div>=0A<div>&nbs=
+p;</div>=0A<div>&gt; r~</div>=0A</div></blockquote>=0A</body></html>
+------=_001_NextPart176011612711_=------
 
 
