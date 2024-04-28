@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AD11C4345F
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 21:50:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EBAEC25B10
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 21:50:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1CPk-000362-BY; Sun, 28 Apr 2024 17:50:28 -0400
+	id 1s1CPG-00030t-36; Sun, 28 Apr 2024 17:49:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1CPh-00035I-DT
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 17:50:25 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1CPE-000300-Cw
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 17:49:56 -0400
+Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1CPb-0001Je-Kp
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 17:50:24 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-41c1b75ca31so4419245e9.2
- for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 14:50:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1CP9-00015m-3y
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 17:49:56 -0400
+Received: by mail-lf1-x12b.google.com with SMTP id
+ 2adb3069b0e04-51967f75763so4438899e87.2
+ for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 14:49:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714341016; x=1714945816; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714340988; x=1714945788; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PiKDLwE364Pw013trdbS6B+l3BI8G2aZyNTUUJSMStE=;
- b=UcCEgzjqTqWs+LW/8Pp7vqHI9MTjATyg+9KEeyI5SxIwzPXt7jEVHm5sZwrIBEApzF
- OJJNvhxyu3ysg0P8TlLxY3LX4Po/Vl2yQdAM9GAv1S2FZd1Zm5TvJ/QJoRl7+vtqxmR7
- WeKDBclMzLnXvFTcNAqKub+zCERiaWKsWbtT40zkX1aT0YzzNNXqRG+obM+cOoS/f0XH
- BfoIswGjYi/pHOJTxp237aLqAAYDnub5Zz1IMFg2YZSSGYhVGthfeC+a+IRBhHK2l/Dq
- R7QXQ7LBow/mCVNz5Dl47cP+klZMLkkFAtF2umGMac+bY5rHBE17ITxvu9dgosSN9mOU
- 9kpA==
+ bh=flj95bEjqay534/2K5egl4Am1nZLayMjsiqLpMI/BnA=;
+ b=b7kl/U1EuhGPukfW4k3k/JB0LI2qISs1sfTDKAExxXnQKwT9YiFUlExEjCYnEHb65q
+ 7cHG5Fxqyr51NYDxOm43QU/lYP5IKEd8/s0i/SXOXv8g9uHHh+iA21ZlhFz0gN8vxBSX
+ WXwWFagzbXiI+aJXYYT6c+dX6Ht4rEipqvdX5DLG8y37uT7pazh/sjmgd6cLIpSkZSoL
+ qtI30tfSzwm+Mz/txpmJnBYrdjRPTS4YvI4GiaXNdCghgjvbuyNYXg8AYORq+IDMfpaK
+ I1+CVZtLqbKQl/ReZpH33MdESBW3kMJF7xYz4vVF6EuMwp0o8cXJEyXHXJjL/0LLwh+k
+ L5NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714341016; x=1714945816;
+ d=1e100.net; s=20230601; t=1714340988; x=1714945788;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PiKDLwE364Pw013trdbS6B+l3BI8G2aZyNTUUJSMStE=;
- b=g8xs8s5pc2KOImPDnTXWKVS27l9PNS+pTzq2npsTxcP7nj92ol3IqrvXMOoFKwBaCf
- kpv+moBtY8Anxha8OQ991d4i2rIyLeuyI2QU2z4jygoGxYwsms2QONOOtzBDwPY1aRTS
- 803Dm+U+yFGzVAEaIEdTxkqWRgJ/XvLMuYRWqn57plQ2FolI50IaFNyDJQGM674kDK2H
- 1zmyHQMfLzCxJYxzs6jPZy+OoE/9pf+lBZYXayUNcepn7IF8uYWwuxm+Ry4Se5sYIoXR
- m7+H2xh/eAyQhKNI9/hLDEP0O5Hl21DVH3l2VI+MgU8GUWCLDyyZptYe3MtrPWSWNSDB
- Ec2Q==
-X-Gm-Message-State: AOJu0YyzR6CDTJU3hdQlO+ELyj/Wq5vHTkbgumkLC2c1T3g3yqabVOLp
- FrqaO2K3680MqsPicCk6//Svl1tOgyA8rS/nhN+GDCp8BcNhJU6sSfZ+4ltO57Zo/8etNf6baC7
- z
-X-Google-Smtp-Source: AGHT+IGUT5jQwd/Cn4XZf4R8UekYyzYZt42HD65j994dZ/HGdoeuNy1QlyLDwBkw4ORkmAYYakZBxg==
-X-Received: by 2002:a05:600c:501f:b0:41b:b07a:c54c with SMTP id
- n31-20020a05600c501f00b0041bb07ac54cmr5546361wmr.9.1714341016281; 
- Sun, 28 Apr 2024 14:50:16 -0700 (PDT)
+ bh=flj95bEjqay534/2K5egl4Am1nZLayMjsiqLpMI/BnA=;
+ b=Y/L7Yd2iVQpsfFsfIAcrNrKooG8srMU0HvSW9pVHPSxNPwpupR6Jzd8qE5gH1tZI74
+ TvjRiM1mQdNi8kv19hkNeFcGShglGfRiq3J8vqoQNj4U6+CD0blLuOXhTIKYA9sk3V8o
+ 7GQ+QOzgORFRgYAZ1CV5Hx1xdK9PHSMVkDCFcd+5UqJ705dCeu1KadWSRbz5Wh6m/n1Q
+ fN5dxVluY8LUT1g5etdeDPLm8oFbA4CIM+X6jIAXDzQ2jsyCF5jD4IYQBxqBoSEqGNlr
+ AQJXalZ8YCfD2iCqXSW98TAP0Wz7mwt2qM3kf3rbtnQDiLCZMP0uvBbG0xhJrdP+DJTT
+ PaAw==
+X-Gm-Message-State: AOJu0Yy0/a0NZRj9t76ICvZQnETuZNCXmbG/SwgTGMK4CFl7mkFVtsqc
+ GpPIQ/NUJAEaEGhAw8xE82Z920ROVlpYLlU9F98v8iD+ODc1NqmOkMKdn68EBUp96RW46gvcONL
+ A
+X-Google-Smtp-Source: AGHT+IHeXZy3OU4szf47JvKCE66PYpGqtqdHaP2ktrcgN2SDcEsuVSEz5vlKtUZMGVeXhF3UPLtikQ==
+X-Received: by 2002:a05:6512:3983:b0:518:d5c5:7276 with SMTP id
+ j3-20020a056512398300b00518d5c57276mr6934870lfu.58.1714340987787; 
+ Sun, 28 Apr 2024 14:49:47 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.142.130])
  by smtp.gmail.com with ESMTPSA id
- k29-20020a05600c1c9d00b00418948a5eb0sm43150505wms.32.2024.04.28.14.50.15
+ wk14-20020a170907054e00b00a55bd88c98esm8111076ejb.208.2024.04.28.14.49.46
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 28 Apr 2024 14:50:15 -0700 (PDT)
+ Sun, 28 Apr 2024 14:49:46 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 10/12] accel/tcg: Remove pointless initialization of
- cflags_next_tb
-Date: Sun, 28 Apr 2024 23:49:13 +0200
-Message-ID: <20240428214915.10339-11-philmd@linaro.org>
+Subject: [PATCH v2 05/12] exec/cpu: Remove obsolete PAGE_RESERVED definition
+Date: Sun, 28 Apr 2024 23:49:08 +0200
+Message-ID: <20240428214915.10339-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240428214915.10339-1-philmd@linaro.org>
 References: <20240428214915.10339-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,29 +94,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-cflags_next_tb is always re-initialized in the CPU Reset()
-handler in cpu_common_reset_hold(), no need to initialize
-it in cpu_common_initfn().
+We stopped using the PAGE_RESERVED definition in commit
+50d25c8aec ("accel/tcg: Drop PAGE_RESERVED for CONFIG_BSD").
+This completes commit 2e9a5713f0 ("Remove PAGE_RESERVED").
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240427155714.53669-13-philmd@linaro.org>
+Message-Id: <20240427155714.53669-7-philmd@linaro.org>
 ---
- hw/core/cpu-common.c | 1 -
- 1 file changed, 1 deletion(-)
+ include/exec/cpu-all.h | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index a72d48d9e1..c4175cc4b9 100644
---- a/hw/core/cpu-common.c
-+++ b/hw/core/cpu-common.c
-@@ -255,7 +255,6 @@ static void cpu_common_initfn(Object *obj)
-     /* the default value is changed by qemu_init_vcpu() for system-mode */
-     cpu->nr_cores = 1;
-     cpu->nr_threads = 1;
--    cpu->cflags_next_tb = -1;
+diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
+index eaa59a5cc1..5ea8c4d3ef 100644
+--- a/include/exec/cpu-all.h
++++ b/include/exec/cpu-all.h
+@@ -157,10 +157,6 @@ extern const TargetPageBits target_page;
  
-     qemu_mutex_init(&cpu->work_mutex);
-     qemu_lockcnt_init(&cpu->in_ioctl_lock);
+ #define TARGET_PAGE_ALIGN(addr) ROUND_UP((addr), TARGET_PAGE_SIZE)
+ 
+-#if defined(CONFIG_BSD) && defined(CONFIG_USER_ONLY)
+-/* FIXME: Code that sets/uses this is broken and needs to go away.  */
+-#define PAGE_RESERVED  0x0100
+-#endif
+ /*
+  * For linux-user, indicates that the page is mapped with the same semantics
+  * in both guest and host.
 -- 
 2.41.0
 
