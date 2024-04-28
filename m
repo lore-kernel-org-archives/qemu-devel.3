@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4C92C4345F
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 22:15:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19C9CC4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 22:16:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1Cnm-0005ug-Qt; Sun, 28 Apr 2024 18:15:18 -0400
+	id 1s1Cnq-0005w0-I3; Sun, 28 Apr 2024 18:15:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Cni-0005tf-GY
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 18:15:15 -0400
-Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Cnm-0005uj-TI
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 18:15:18 -0400
+Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Cng-0005Ul-Mj
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 18:15:14 -0400
-Received: by mail-lf1-x12c.google.com with SMTP id
- 2adb3069b0e04-516d4d80d00so4881409e87.0
- for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 15:15:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Cnl-0005V5-5N
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 18:15:18 -0400
+Received: by mail-lf1-x131.google.com with SMTP id
+ 2adb3069b0e04-51dc5c0ffdbso263357e87.2
+ for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 15:15:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714342509; x=1714947309; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714342515; x=1714947315; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EC394qSuW4mbz7HKeTozfqIySzPWTIg+XxWvBDEtDQ0=;
- b=TGhJZcceXRQ6GrFka5EFRsFF3/gwKlkQPugCLG/NT/cXvmFwBI6J3VVjwFti5PU/t2
- lSfSDSC1+WOUcIfZId5NtwSrMin1a20CmX6sahHVR//wNWmpNJpChDjUebFLrVrJmHmv
- e4QNw99KXpZb8IqID65aRgmFu4r+zZfOzYJuOIGyqGdVcnJXo9mfB8NOc2DaR6Ioyc32
- AkwQr1hxLTod22KShMY3N1Iaux6YtH22vDUwFknUo1uC/MwwRGQJJ+8OeXkItNcTN6Wm
- 1XdVkGafy1n/BrPHlsdsy72LOkgw9AVt7Am/a3p/5agP1NUAZSDKv/lwRYLGjcymPgJi
- WMaw==
+ bh=X+LV9oUMRwRHrcXmsm53k8GPuSzrV4FPRLpNCNB4qFc=;
+ b=yW7nXVE9UMSNgdIQVYPeILGvKoPj0qqrAemeG/1sGD3dGCVxwk67N82wuHNfZB4yoh
+ euAdsB+ptQGSUeNv04Dft729nhIkch2IwAlTf6ZfJf1wZOGCerRP04ey2oEWNZpAVHK9
+ G+uepxaQ6qlfr84u1KM8dSrfmaU1Jl0UOxLlryZlqItkYDlP2GYSMUdqaDs7hOLKd4Qr
+ 2pamaXiCP5QAAlymKeDHauXFneqAMjWt/2P4QjiVqWcOFGMRG/xrxXEzGPa5MGmW5ho6
+ +as35t2gDImrhAbjzI9aCuuRzvNztgKgxv4D9SaycyEze9qSf+0pFZQepLphuwzkY5RH
+ jQkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714342509; x=1714947309;
+ d=1e100.net; s=20230601; t=1714342515; x=1714947315;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EC394qSuW4mbz7HKeTozfqIySzPWTIg+XxWvBDEtDQ0=;
- b=flVICcaZh36qiICKarBAI2shQwpkSiA2H//QkZISW0TnYsiTUaTCpCW2Fx/QaQ5C3G
- Bwf0F4nk2JohMrpdQlYD1mJJ5ZcSRVKBqRCl1y78zSn5hYRpFzXB6FnGlTanPh8jKI35
- XCEGnh6pPmPksCejEUoyV5Qpfv4UjxzfTJtdEKjOwpQxBBgaUaF9yg3jWZX09elUoDkh
- OWZPkpXLiw4BisRo3h0XgPN02FQU2VxHQwvA9SsadhzdXFNjtsfiH+SXxrlHX/Ki2yCX
- 9BS3/JayEh+xGimcJLtzKcjwYO0Z7vw3BoCpYIGqpSiGSwL3eauP22iK+c6p3o3Zetra
- d8TQ==
-X-Gm-Message-State: AOJu0YyzFDZ84iszfSHfaQLTNAWNyHfEI/zZWyrtFTndBAgfe5Yc6fUy
- +CUCNtylsjzlRXuLbRFF6/kpAYxbOYKbBnYA0kxV4b9NHkymBt9rRRJ1YUDJ0IQUKd47pv3msAY
- 6
-X-Google-Smtp-Source: AGHT+IG06gdHkbUcQaaw/Jh1yxLnNDG1oltU4qR6/u1hWiYZiddIR1+gy02T0aS8pZz0ClVMzeERRA==
-X-Received: by 2002:a05:6512:3983:b0:518:d5c5:7276 with SMTP id
- j3-20020a056512398300b00518d5c57276mr6961240lfu.58.1714342509485; 
- Sun, 28 Apr 2024 15:15:09 -0700 (PDT)
+ bh=X+LV9oUMRwRHrcXmsm53k8GPuSzrV4FPRLpNCNB4qFc=;
+ b=rZJ2nPcPxeVjXDx1YuBe+exWghG4UjGiP3DiStrQiC7h4p5wToWRMRkjhczUjY1BI8
+ R+CWLPm5X87Oc8ya2UHv1SvrO3fpJ8dD7tTMCmgjRIPxx1fI4WzhZ4wVM6MZTINl3Bve
+ wWFc3zupFcg1FsfuxjQMGrSD+d09XG1dFfr/t3HHBWtwOPpld5ZgLlCEjVohE6N2D96L
+ qKWk5dE2o/QCR/+VG/JNvoNQiEc8tBez4ufzbNVjNQDukpmzVhRWfW7tpgyBetilRoIh
+ 49uP2VGclF6nhgEAi4sQUfCz1Nz/+0KbNymfp9YHggvGEOMl8faCcEcvuipMVb51UF6+
+ J7aA==
+X-Gm-Message-State: AOJu0Yyu1TygjS7zICoFTjtYisumDvXL7A1TwRcyaxPJQoAS7Li5VX7g
+ ItH1NiqP8vQhsTIPIGktYvJDJK7ScI2Bw+alFliZ8kEk0YxNicSJ6MKbkCgIBEi5VzVJIGmhy9v
+ D
+X-Google-Smtp-Source: AGHT+IETHybTnbV9iZwvYmsu33kUx/FHmJpY497B1CuxWAgA058EzJkztFn6f763thocIX00+VHiQA==
+X-Received: by 2002:a05:6512:130c:b0:51d:3fe4:c3cc with SMTP id
+ x12-20020a056512130c00b0051d3fe4c3ccmr2919256lfu.0.1714342514869; 
+ Sun, 28 Apr 2024 15:15:14 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.142.130])
  by smtp.gmail.com with ESMTPSA id
- i21-20020a170906091500b00a5216df5d25sm13117569ejd.3.2024.04.28.15.15.08
+ eb16-20020a170907281000b00a58764e6c45sm7413730ejc.173.2024.04.28.15.15.13
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 28 Apr 2024 15:15:09 -0700 (PDT)
+ Sun, 28 Apr 2024 15:15:14 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 03/24] accel/tcg: Move user definition of cpu_interrupt() to
- user-exec.c
-Date: Mon, 29 Apr 2024 00:14:29 +0200
-Message-ID: <20240428221450.26460-4-philmd@linaro.org>
+Subject: [PATCH 04/24] accel/tcg: Duplicate cpu_exit() for user / system
+Date: Mon, 29 Apr 2024 00:14:30 +0200
+Message-ID: <20240428221450.26460-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240428221450.26460-1-philmd@linaro.org>
 References: <20240428221450.26460-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::131;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,58 +95,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+We will introduce a per-accelerator vCPU exit() handler
+for system emulation. Duplicate cpu_exit() because the
+handler won't be accessible from user emulation.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- accel/tcg/translate-all.c | 9 ---------
- accel/tcg/user-exec.c     | 8 ++++++++
- 2 files changed, 8 insertions(+), 9 deletions(-)
+ accel/tcg/user-exec.c | 8 ++++++++
+ hw/core/cpu-common.c  | 8 --------
+ system/cpus.c         | 8 ++++++++
+ 3 files changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
-index 83cc14fbde..fdf6d8ac19 100644
---- a/accel/tcg/translate-all.c
-+++ b/accel/tcg/translate-all.c
-@@ -644,15 +644,6 @@ void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr)
-     cpu_loop_exit_noexc(cpu);
- }
- 
--#else /* CONFIG_USER_ONLY */
--
--void cpu_interrupt(CPUState *cpu, int mask)
--{
--    g_assert(bql_locked());
--    cpu->interrupt_request |= mask;
--    qatomic_set(&cpu->neg.icount_decr.u16.high, -1);
--}
--
- #endif /* CONFIG_USER_ONLY */
- 
- /*
 diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index ca27746fe4..f49435df9d 100644
+index f49435df9d..404d8a145c 100644
 --- a/accel/tcg/user-exec.c
 +++ b/accel/tcg/user-exec.c
-@@ -24,6 +24,7 @@
- #include "qemu/bitops.h"
- #include "qemu/rcu.h"
- #include "exec/cpu_ldst.h"
-+#include "qemu/main-loop.h"
- #include "exec/translate-all.h"
- #include "exec/page-protection.h"
- #include "exec/helper-proto.h"
-@@ -38,6 +39,13 @@ __thread uintptr_t helper_retaddr;
+@@ -46,6 +46,14 @@ void cpu_interrupt(CPUState *cpu, int mask)
+     qatomic_set(&cpu->neg.icount_decr.u16.high, -1);
+ }
  
- //#define DEBUG_SIGNAL
- 
-+void cpu_interrupt(CPUState *cpu, int mask)
++void cpu_exit(CPUState *cpu)
 +{
-+    g_assert(bql_locked());
-+    cpu->interrupt_request |= mask;
++    qatomic_set(&cpu->exit_request, 1);
++    /* Ensure cpu_exec will see the exit request after TCG has exited.  */
++    smp_wmb();
 +    qatomic_set(&cpu->neg.icount_decr.u16.high, -1);
 +}
 +
  /*
   * Adjust the pc to pass to cpu_restore_state; return the memop type.
   */
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index 9b3efba82f..cbafc79033 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -78,14 +78,6 @@ void cpu_reset_interrupt(CPUState *cpu, int mask)
+     }
+ }
+ 
+-void cpu_exit(CPUState *cpu)
+-{
+-    qatomic_set(&cpu->exit_request, 1);
+-    /* Ensure cpu_exec will see the exit request after TCG has exited.  */
+-    smp_wmb();
+-    qatomic_set(&cpu->neg.icount_decr.u16.high, -1);
+-}
+-
+ static int cpu_common_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg)
+ {
+     return 0;
+diff --git a/system/cpus.c b/system/cpus.c
+index 68d161d96b..e0530ad603 100644
+--- a/system/cpus.c
++++ b/system/cpus.c
+@@ -419,6 +419,14 @@ void run_on_cpu(CPUState *cpu, run_on_cpu_func func, run_on_cpu_data data)
+     do_run_on_cpu(cpu, func, data, &bql);
+ }
+ 
++void cpu_exit(CPUState *cpu)
++{
++    qatomic_set(&cpu->exit_request, 1);
++    /* Ensure cpu_exec will see the exit request after TCG has exited.  */
++    smp_wmb();
++    qatomic_set(&cpu->neg.icount_decr.u16.high, -1);
++}
++
+ static void qemu_cpu_stop(CPUState *cpu, bool exit)
+ {
+     g_assert(qemu_cpu_is_self(cpu));
 -- 
 2.41.0
 
