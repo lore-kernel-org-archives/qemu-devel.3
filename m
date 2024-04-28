@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 026C1C25B10
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 22:18:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D917C4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 22:18:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1CqJ-0007WL-0f; Sun, 28 Apr 2024 18:17:55 -0400
+	id 1s1Cov-0000HN-4Z; Sun, 28 Apr 2024 18:16:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1CqE-0006zh-F6
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 18:17:50 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Col-0008Fh-Nc
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 18:16:22 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1CqC-0005tg-RH
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 18:17:50 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-a58d0aea14cso291871166b.2
- for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 15:17:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Coh-0005fy-RE
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 18:16:17 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a58ebdd8b64so112212566b.0
+ for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 15:16:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714342667; x=1714947467; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=qucrbK2hViP6M1Jh6rXQKhaOH45MSaOYAasgcvW/rQw=;
- b=Bk8M28q+S1MgUBbzGk8BU4ymWNPpaHqygLxi2Xx+si3kFC7iTqe6n2BccRSy5wLD0l
- jeuRYTMMTv+2zbE32eg8dRuxFq4TWOOZcBpWQOeIMC0wCbaVLN4VeyZDHVu3EIs2o38S
- xQRn60jy/G3NHCFNSkcu4k1QFDTqeA4X+tb/J73PZA//9d6YW8iMpeztSCXiWck3LtmP
- P1U8Ke2svBnEb4Rh92QtDQPpml/w9kqs5X3SGR/nipJr7UkD6Ye9Dw4dEG8rjMtwgA99
- JYxQw4UrNChJTZy+yMW/K3/XwyfBBaI+FTgYkV5vAY0w/G/Kv/hWHHMRd7RZFkeJR/am
- s+Aw==
+ d=linaro.org; s=google; t=1714342574; x=1714947374; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=h6EbUiH0Q23M0FjKSUv3qw/noMjcf2vJ04Bs/jaSM9I=;
+ b=FbGoi/44IKm7FwtF0l2gYiXnMQlnd6VEBLjOGqyueS2HoA1wVcZ0sv+s5wTembXKdB
+ mIRgRwFpZuSHn8lL6KNWhjswy17JNDfh7owq9maHhSk0OTlCZ/ZbbcmoG+lfG3X4hy1P
+ QsS6qcaawu5u4UogpM00i8rFjcrcuBTqTLFgjUo+A20J7mEJYTeUYgou26IlQJol/YKh
+ jCtwLaHaTGQhbnn3cNQeh6fGHnuodrfqWpGqwRfw5hxE91ZmVj9OkKmiDSIHOIfR+nTz
+ 2JbURZdP6V1xkT6oRBwZQjVRbuzeTbDAeXJfPKEIkkDFGoAqtWHNeQ3eq8E4mkF4+xw3
+ DP1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714342667; x=1714947467;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qucrbK2hViP6M1Jh6rXQKhaOH45MSaOYAasgcvW/rQw=;
- b=DWr82P5u/KKD0M6aHykdeqRw3PyNfq+VB2GtQWSFN1OZ0WY6J10veq08KMuHPibd6z
- FrAv4qIiAE2++AcOSm4njl7bo1TBPaLVOmdouc65pAo8l5vB+hgTaweVtiyNKOGkVG5L
- zi0Gzv0/iORgIAbNU2a6AP0Bx5wYsthxoQbrIiIOxxEMsSroTe5zPGsAJk3cx7UPqyvT
- Du2geELVnsAj8knJLdWIvZYu3h7nu6rMUHSwtztQZXfFqxLslRBqgwAMKwWKNldtGl5f
- 9N7Khiop0shTxsPPfdMLgKPFg7wqdsI10DbD1K+ErLC3fo5Dbw6pQ2zRRaZ8btxvFl4i
- M99w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWVh/E0gNztbq1yxdObsIjMSpneaGaa+MnAGVZsKaWmkXb+RgE51e7oN/CMaBNtvMHh+tXrzQY0TW9FZEgJxCXsFmD2awY=
-X-Gm-Message-State: AOJu0Yxo9cdPHYb2VFWYfiLl+PD8NbOetYZz4xrGnSNX9m+zzlWjjNhJ
- tt6JKJeUfU4Jfp4ziLtqAQ/2Is4rxjFd+vhvLHqGUqGm5aF45J0lH2LMkn7wII4=
-X-Google-Smtp-Source: AGHT+IHgGQ71v8MdYvVZSEacCdi1lyZ9BgjEESVEe0IRU4ubENkrkmn/cmiRZn/0dw+xjFJdetAwGA==
-X-Received: by 2002:a17:906:1c8b:b0:a55:9278:3056 with SMTP id
- g11-20020a1709061c8b00b00a5592783056mr6194442ejh.57.1714342667386; 
- Sun, 28 Apr 2024 15:17:47 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.142.130])
+ d=1e100.net; s=20230601; t=1714342574; x=1714947374;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=h6EbUiH0Q23M0FjKSUv3qw/noMjcf2vJ04Bs/jaSM9I=;
+ b=QkqSgTLdFsxHOVzxifRvTy+9jKkvQW8X+dLTXhJD/pyKrG+jl9GvEljMUQXE9/1sDw
+ uiCiuekYGq4WMjxwGixgCuJj0ASFXGe5zUw2xkjH1+3nfbo9c8lLS2uu7ZKa+tbUWt5X
+ 7srWehsXjXo9JjrMWtbfLYo7i+PYfkJE0yS9a+Nv7VpIa7XcqoqZ+i2K4AibGFxdOvNx
+ 3JqaOMUPb02twNSlvbYYdU9Sp2X4vCva3uzlM5+LoAUqAyISSEKeTyS/Pkz7CxOe6lHT
+ MgRcvG8KvnhBOAfr75lGIvB0IS5NMsozR8bdL0xTIv6lgG2Tk4iSPzB6WqoMFumik004
+ HKlg==
+X-Gm-Message-State: AOJu0Yyugdjk1gjOmg+qockZNUdFu6hKTAjvCAVTFYgQFdbsSfeMbUEA
+ j5sDTVRFDf6/56TNO7wsgw6vwxocmkDUPocJlKMxzAy6csEj1bwMQaocOJtHsAhcS+/Dp21DTMl
+ S
+X-Google-Smtp-Source: AGHT+IGBfz57FjzrEnS/vD5KgRAh78Z57ZFLDXjtIf07SRHZuv+QBR5wHxEWX48G0cyXPukTBcZzNw==
+X-Received: by 2002:a17:906:470d:b0:a52:5925:2a31 with SMTP id
+ y13-20020a170906470d00b00a5259252a31mr5118406ejq.29.1714342574107; 
+ Sun, 28 Apr 2024 15:16:14 -0700 (PDT)
+Received: from m1x-phil.lan ([176.176.142.130])
  by smtp.gmail.com with ESMTPSA id
- bu6-20020a170906a14600b00a57c75871d8sm7735611ejb.106.2024.04.28.15.17.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Apr 2024 15:17:47 -0700 (PDT)
-Message-ID: <92fb184a-9301-4dd0-9271-7c169449e5a5@linaro.org>
-Date: Mon, 29 Apr 2024 00:17:45 +0200
+ dq16-20020a170907735000b00a524318c380sm13190910ejc.80.2024.04.28.15.16.13
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sun, 28 Apr 2024 15:16:13 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 15/24] accel/tcg: Restrict IcountDecr and CPUTLB to TCG
+Date: Mon, 29 Apr 2024 00:14:41 +0200
+Message-ID: <20240428221450.26460-16-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240428221450.26460-1-philmd@linaro.org>
+References: <20240428221450.26460-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/12] accel/tcg: Restrict cpu_loop_exit_requested() to
- TCG
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20240428214915.10339-1-philmd@linaro.org>
- <20240428214915.10339-10-philmd@linaro.org>
- <28f02378-b01a-4986-9dcd-9c397297d25a@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <28f02378-b01a-4986-9dcd-9c397297d25a@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,31 +95,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/4/24 00:08, Richard Henderson wrote:
-> On 4/28/24 14:49, Philippe Mathieu-Daudé wrote:
->> cpu_loop_exit_requested() is specific to TCG, move it
->> to "exec/translate-all.h".
->>
->> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
->> ---
->>   include/exec/exec-all.h       | 17 -----------------
->>   include/exec/translate-all.h  | 20 ++++++++++++++++++++
->>   target/arm/tcg/helper-a64.c   |  1 +
->>   target/s390x/tcg/mem_helper.c |  1 +
->>   4 files changed, 22 insertions(+), 17 deletions(-)
-> 
-> I guess we could dither about whether this is the best place, but I 
-> guess it doesn't matter.  Do you really need the CONFIG_TCG ifdef?
+IcountDecr union, the CPUTLB* structures and the
+"exec/tlb-common.h" header are only required for
+TCG.
 
-Right, actually 50 patches later it ends in "exec/cpu-loop.h",
-and "exec/translate-all.h" is removed. I need to check whether
-or not this patch is required at this stage, maybe not. Otherwise
-I'll directly introduce "exec/cpu-loop.h" I guess.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/exec/tlb-common.h | 4 ++++
+ include/hw/core/cpu.h     | 9 ++++++---
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
-> Either way,
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> 
-> 
-> r~
+diff --git a/include/exec/tlb-common.h b/include/exec/tlb-common.h
+index dc5a5faa0b..a529c9f056 100644
+--- a/include/exec/tlb-common.h
++++ b/include/exec/tlb-common.h
+@@ -19,6 +19,10 @@
+ #ifndef EXEC_TLB_COMMON_H
+ #define EXEC_TLB_COMMON_H 1
+ 
++#ifndef CONFIG_TCG
++#error Can only include this header with TCG
++#endif
++
+ #define CPU_TLB_ENTRY_BITS 5
+ 
+ /* Minimalized TLB entry for use by TCG fast path. */
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index ef8b85b6fe..dc28920bcc 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -27,7 +27,6 @@
+ #include "exec/vaddr.h"
+ #include "exec/memattrs.h"
+ #include "exec/mmu-access-type.h"
+-#include "exec/tlb-common.h"
+ #include "qapi/qapi-types-run-state.h"
+ #include "qemu/bitmap.h"
+ #include "qemu/rcu_queue.h"
+@@ -256,6 +255,9 @@ typedef struct CPUTLBEntryFull {
+     } extra;
+ } CPUTLBEntryFull;
+ 
++#ifdef CONFIG_TCG
++#include "exec/tlb-common.h"
++
+ /*
+  * Data elements that are per MMU mode, minus the bits accessed by
+  * the TCG fast path.
+@@ -311,11 +313,9 @@ typedef struct CPUTLBCommon {
+  * negative offsets are at the end of the struct.
+  */
+ typedef struct CPUTLB {
+-#ifdef CONFIG_TCG
+     CPUTLBCommon c;
+     CPUTLBDesc d[NB_MMU_MODES];
+     CPUTLBDescFast f[NB_MMU_MODES];
+-#endif
+ } CPUTLB;
+ 
+ /*
+@@ -337,6 +337,7 @@ typedef union IcountDecr {
+ #endif
+     } u16;
+ } IcountDecr;
++#endif
+ 
+ /**
+  * CPUNegativeOffsetState: Elements of CPUState most efficiently accessed
+@@ -346,6 +347,7 @@ typedef union IcountDecr {
+  * @plugin_state: per-CPU plugin state
+  */
+ typedef struct CPUNegativeOffsetState {
++#ifdef CONFIG_TCG
+     CPUTLB tlb;
+ #ifdef CONFIG_PLUGIN
+     /*
+@@ -356,6 +358,7 @@ typedef struct CPUNegativeOffsetState {
+ #endif
+     IcountDecr icount_decr;
+     bool can_do_io;
++#endif
+ } CPUNegativeOffsetState;
+ 
+ struct KVMState;
+-- 
+2.41.0
 
 
