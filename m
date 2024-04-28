@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAAB2C4345F
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 22:16:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DED9EC25B10
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 22:16:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1CoK-0006vB-Up; Sun, 28 Apr 2024 18:15:53 -0400
+	id 1s1Co4-0006K3-To; Sun, 28 Apr 2024 18:15:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1CoC-0006Zc-Ul
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 18:15:45 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Co3-0006HS-B8
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 18:15:35 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1CoB-0005dW-77
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 18:15:44 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a5557e3ebcaso642111066b.1
- for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 15:15:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Co1-0005bO-0r
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 18:15:35 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a58872c07d8so868551466b.0
+ for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 15:15:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714342541; x=1714947341; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714342531; x=1714947331; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZwA4gGr9bUP88hrZk3uOFR181roNW8nQo5hO4TYpEMY=;
- b=GwmuzJS9O3ErjeWe35HY0JngSNYtfVGOvx1spgMRk8KlCjUOcczp2tuw/wuTd9T7nF
- YsOKaZ2gmInwTbbMQFqAmjMHB3tZn+LA4YRxZB9ZR876tRC5V2YdhVXWCiZiN2WslPTi
- pmTDdlmPKLLIash+XcVySpFq8Fcqst1by0++dZLyCMPhH5hEPgl73NCYS3pCMg92pqdF
- xkYO7kH5kF0sNVu2LH9vDDhFXZAie6rOlzyL6AdnqhoVXMGn4MkHjHDPvBkEKvQWar6c
- HEWeUINaAoxThU4SR6V2k8LFSheHl6TvwJ83NRViW7D56SHWgkqx3MoSrZASWwLNq6HN
- jTwQ==
+ bh=k0P/VtJjh42zf7hktk88GWMfGQHzmvaE6RmKFsHTdzk=;
+ b=azwa6ccv7KJnDz85n7WCXjG1j1YOcrW3SUdFBuFU5cRzDxM28Gwd598JE03ii381G4
+ dVpaH7aMDMBboR+ZwotgNCTyWd8RpyMXkgCcnQ34uNTEzLLlkLKvE32Ds/zU2Xjte/WP
+ r3dl22KBHLFuLUbxxoVFMsVlaUxoSlRAPGx2DVzAwgj7qgG1K1Tj6NDiIXPUqVsN/7JX
+ jD0OeZqPK/NxZSg7rq/NlscJuWA/E/wYQMPqRaV6zVzg+mE4VG/MNyI67LfConaj1SUX
+ lxv+tbkJajlEM98mTbS5z5qEttyggYuTKx2xlahxpPqASGlJeYZq3MEI8JeulhX5ILfI
+ s/dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714342541; x=1714947341;
+ d=1e100.net; s=20230601; t=1714342531; x=1714947331;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZwA4gGr9bUP88hrZk3uOFR181roNW8nQo5hO4TYpEMY=;
- b=OA7oJ1ZwGKU7QnTlBJDVDNMD5a9YdE008gsIMHoqC5jdkEwTUgP2b6tzkPxanvp4Sp
- m+a7vXYpTaILoYp1OFTrK+tA3p3zUubVDQFo/2hu4Zq/kAYrz/ZpHDVA08QsG8hVJwju
- 0YE59eSQBQZjOorVnhADC0z3+IS3CAYGY/YznBK3zuh48i1q08n5BdnBi4+TNr736RCk
- mw3uQqrhnG7PJM4pEIcXWeRRC0M/KWrg26/F4VjR19BaZsxxM+ljUbEiH8wIcM2t+axL
- Z3+pKU8Rb9frjnfZIKWrZb+eGDVLSZdajrtU2qTmwfv95fX6Lpd7Egfyk8gsvtcGTT0c
- Bl5g==
-X-Gm-Message-State: AOJu0Yzjz/rf0Rw/QbGsvL+XglsaAYcRxL3WUOW4uHlVNLhA3TxzrhCr
- MzV+y3g48fK9ff3smLKi07XFrnlFGqoJJFu4o7x0TWVz78Sn/JRyrurGLOmrtZfKMholTQwZtLC
- H
-X-Google-Smtp-Source: AGHT+IHVav3nKFAKbJ3CalBJ9VRyRe0lBxC/y/PdjZiqztE2QgOa9NCH8v892cBv80DFs7voPHNw+w==
-X-Received: by 2002:a17:906:16da:b0:a58:7e28:b6bc with SMTP id
- t26-20020a17090616da00b00a587e28b6bcmr7246359ejd.17.1714342541564; 
- Sun, 28 Apr 2024 15:15:41 -0700 (PDT)
+ bh=k0P/VtJjh42zf7hktk88GWMfGQHzmvaE6RmKFsHTdzk=;
+ b=FTg37rtvsSdxGJEuWffyuADwntHlxlA2rM1s/VnyesIwgsIoT8rhr85tsxXDdRH7SR
+ 4UinuBVdPm4I6tnTE9mBYjiCCje0mzTFCpHCkyYxcHaa4zZibuSOSgJ+IkQFuryij0PH
+ OJhRp+bz9s7SFAZyU6CcBmszEYyJb8scWBgsvQmT6he1VsRUCxM5ME3zMdJ9Dtmt+9jy
+ 5bZnTBzF9chgRyK6urSFhpbdTshKka+4/+l1qAPXqqy8UwIOt1qa2MyTS6EA90GtKSRn
+ JWM7xfoVRfP6d9xz8ViRnZ+hqCBF1K15nAUz7bPZKFvUWEAs4np3wNCZBMi5ALI4vN0r
+ fnQA==
+X-Gm-Message-State: AOJu0Yxjwuvli3Ked//lfaXR87tIknaJKKlOJXW23j1QdoHvx2sb38AF
+ 2RLfbroyWrz8dVqWO0595zLkky8PDZ+gErPW+duN/gQjCrfOOqyM+DUfG06n5hAO0e9HGFhqg5z
+ M
+X-Google-Smtp-Source: AGHT+IH3D7ibXS4f72tP8OL5W0DjLjospzfedj6pdJgb9TFLCu+3SWTyFjRnL2zBL6W7dge8NGLz6w==
+X-Received: by 2002:a17:906:e17:b0:a58:921a:970d with SMTP id
+ l23-20020a1709060e1700b00a58921a970dmr7426286eji.6.1714342530907; 
+ Sun, 28 Apr 2024 15:15:30 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.142.130])
  by smtp.gmail.com with ESMTPSA id
- bv19-20020a170906b1d300b00a58eabf6082sm2011450ejb.199.2024.04.28.15.15.40
+ g10-20020a1709067c4a00b00a4e5866448bsm13044579ejp.155.2024.04.28.15.15.29
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 28 Apr 2024 15:15:41 -0700 (PDT)
+ Sun, 28 Apr 2024 15:15:30 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 09/24] user: Declare get_task_state() once in
- 'accel/tcg/vcpu-state.h'
-Date: Mon, 29 Apr 2024 00:14:35 +0200
-Message-ID: <20240428221450.26460-10-philmd@linaro.org>
+Subject: [PATCH 07/24] accel/tcg: Implement AccelOpsClass::exit_vcpu_thread()
+ handler
+Date: Mon, 29 Apr 2024 00:14:33 +0200
+Message-ID: <20240428221450.26460-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240428221450.26460-1-philmd@linaro.org>
 References: <20240428221450.26460-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,91 +96,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While each user emulation implentation defines its own
-TaskState structure, both use the same get_task_state()
-declaration, in particular in common code (such gdbstub).
-Declare the method once in "accel/tcg/vcpu-state.h".
+The TCG-specific code from the system generic cpu_exit()
+is equivalent of tcg_cpu_exit(). Define the AccelOpsClass
+exit_vcpu_thread() handler to it, making cpu_exit() generic.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- accel/tcg/vcpu-state.h | 18 ++++++++++++++++++
- bsd-user/qemu.h        |  6 +-----
- linux-user/qemu.h      |  6 +-----
- 3 files changed, 20 insertions(+), 10 deletions(-)
- create mode 100644 accel/tcg/vcpu-state.h
+ accel/tcg/tcg-accel-ops.c | 2 ++
+ system/cpus.c             | 3 ---
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/accel/tcg/vcpu-state.h b/accel/tcg/vcpu-state.h
-new file mode 100644
-index 0000000000..e407d914df
---- /dev/null
-+++ b/accel/tcg/vcpu-state.h
-@@ -0,0 +1,18 @@
-+/*
-+ * SPDX-FileContributor: Philippe Mathieu-Daudé <philmd@linaro.org>
-+ * SPDX-FileCopyrightText: 2023 Linaro Ltd.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef ACCEL_TCG_VCPU_STATE_H
-+#define ACCEL_TCG_VCPU_STATE_H
-+
-+#include "hw/core/cpu.h"
-+
-+#ifdef CONFIG_USER_ONLY
-+static inline TaskState *get_task_state(const CPUState *cs)
-+{
-+    return cs->opaque;
-+}
-+#endif
-+
-+#endif
-diff --git a/bsd-user/qemu.h b/bsd-user/qemu.h
-index be57374b41..65fe95fed1 100644
---- a/bsd-user/qemu.h
-+++ b/bsd-user/qemu.h
-@@ -36,6 +36,7 @@ extern char **environ;
- #include "exec/gdbstub.h"
- #include "exec/page-protection.h"
- #include "qemu/clang-tsa.h"
-+#include "accel/tcg/vcpu-state.h"
+diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
+index 7ac5f0c974..56bbad9fcd 100644
+--- a/accel/tcg/tcg-accel-ops.c
++++ b/accel/tcg/tcg-accel-ops.c
+@@ -43,6 +43,7 @@
+ #include "tcg-accel-ops-mttcg.h"
+ #include "tcg-accel-ops-rr.h"
+ #include "tcg-accel-ops-icount.h"
++#include "internal-common.h"
  
- #include "qemu-os.h"
- /*
-@@ -116,11 +117,6 @@ struct TaskState {
-     struct target_sigaltstack sigaltstack_used;
- } __attribute__((aligned(16)));
+ /* common functionality among all TCG variants */
  
--static inline TaskState *get_task_state(CPUState *cs)
--{
--    return cs->opaque;
--}
--
- void stop_all_tasks(void);
- extern const char *interp_prefix;
- extern const char *qemu_uname_release;
-diff --git a/linux-user/qemu.h b/linux-user/qemu.h
-index 16d9f6ae8c..515af82d8b 100644
---- a/linux-user/qemu.h
-+++ b/linux-user/qemu.h
-@@ -8,6 +8,7 @@
+@@ -218,6 +219,7 @@ static void tcg_accel_ops_init(AccelOpsClass *ops)
+         }
+     }
  
- #include "syscall_defs.h"
- #include "target_syscall.h"
-+#include "accel/tcg/vcpu-state.h"
- 
- /*
-  * This is the size of the host kernel's sigset_t, needed where we make
-@@ -160,11 +161,6 @@ struct TaskState {
-     uint64_t start_boottime;
- };
- 
--static inline TaskState *get_task_state(CPUState *cs)
--{
--    return cs->opaque;
--}
--
- abi_long do_brk(abi_ulong new_brk);
- int do_guest_openat(CPUArchState *cpu_env, int dirfd, const char *pathname,
-                     int flags, mode_t mode, bool safe);
++    ops->exit_vcpu_thread = tcg_cpu_exit;
+     ops->cpu_reset_hold = tcg_cpu_reset_hold;
+     ops->supports_guest_debug = tcg_supports_guest_debug;
+     ops->insert_breakpoint = tcg_insert_breakpoint;
+diff --git a/system/cpus.c b/system/cpus.c
+index d0d585e8b9..3e86b488d3 100644
+--- a/system/cpus.c
++++ b/system/cpus.c
+@@ -422,9 +422,6 @@ void run_on_cpu(CPUState *cpu, run_on_cpu_func func, run_on_cpu_data data)
+ void cpu_exit(CPUState *cpu)
+ {
+     qatomic_set(&cpu->exit_request, 1);
+-    /* Ensure cpu_exec will see the exit request after TCG has exited.  */
+-    smp_wmb();
+-    qatomic_set(&cpu->neg.icount_decr.u16.high, -1);
+     if (cpus_accel->exit_vcpu_thread) {
+         cpus_accel->exit_vcpu_thread(cpu);
+     }
 -- 
 2.41.0
 
