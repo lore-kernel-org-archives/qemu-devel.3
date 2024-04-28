@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 539A6C19F53
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 09:08:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CC71C10F1A
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 09:08:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s10WF-00041t-RN; Sun, 28 Apr 2024 05:08:23 -0400
+	id 1s10WA-0003gI-W7; Sun, 28 Apr 2024 05:08:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1s10WA-0003fC-Gi
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 05:08:18 -0400
+ id 1s10W7-0003T8-Se
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 05:08:15 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1s10W7-0004Gz-Ed
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 05:08:18 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1s10W4-0004E8-IP
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 05:08:15 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8DxV+n9ES5m5FkEAA--.3514S3;
- Sun, 28 Apr 2024 17:08:13 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8CxiOn6ES5m01kEAA--.3418S3;
+ Sun, 28 Apr 2024 17:08:10 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8CxpFb1ES5mmCgIAA--.5818S10; 
- Sun, 28 Apr 2024 17:08:13 +0800 (CST)
+ AQAAf8CxpFb1ES5mmCgIAA--.5818S4; 
+ Sun, 28 Apr 2024 17:08:10 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
 	Bibo Mao <maobibo@loongson.cn>
-Subject: [PULL 08/17] hw/loongarch: Init efi_fdt table
-Date: Sun, 28 Apr 2024 16:51:08 +0800
-Message-Id: <20240428085117.2422473-9-gaosong@loongson.cn>
+Subject: [PULL 02/17] hw/loongarch: Add load initrd
+Date: Sun, 28 Apr 2024 16:51:02 +0800
+Message-Id: <20240428085117.2422473-3-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20240428085117.2422473-1-gaosong@loongson.cn>
 References: <20240428085117.2422473-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8CxpFb1ES5mmCgIAA--.5818S10
+X-CM-TRANSID: AQAAf8CxpFb1ES5mmCgIAA--.5818S4
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,101 +65,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The efi_system_table adds a efi_fdt configuration table.
+we load initrd ramdisk after kernel_high address
 
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Message-Id: <20240426091551.2397867-9-gaosong@loongson.cn>
+Message-Id: <20240426091551.2397867-3-gaosong@loongson.cn>
 ---
- hw/loongarch/boot.c         | 11 +++++++++++
- hw/loongarch/virt.c         |  6 ++----
- include/hw/loongarch/boot.h |  4 ++++
- include/hw/loongarch/virt.h |  2 ++
- 4 files changed, 19 insertions(+), 4 deletions(-)
+ hw/loongarch/boot.c | 29 ++++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
 
 diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-index 1f6cb8ddd7..82d171c318 100644
+index 9feed17db3..a9522d6912 100644
 --- a/hw/loongarch/boot.c
 +++ b/hw/loongarch/boot.c
-@@ -113,6 +113,16 @@ static void init_efi_initrd_table(struct efi_system_table *systab,
-     initrd_table->size = initrd_size;
- }
+@@ -22,7 +22,8 @@ static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
  
-+static void init_efi_fdt_table(struct efi_system_table *systab)
-+{
-+    efi_guid_t tbl_guid = DEVICE_TREE_GUID;
-+
-+    /* efi_configuration_table 3 */
-+    guidcpy(&systab->tables[2].guid, &tbl_guid);
-+    systab->tables[2].table = (void *)FDT_BASE;
-+    systab->nr_tables = 3;
-+}
-+
- static void init_systab(struct loongarch_boot_info *info, void *p, void *start)
+ static int64_t load_kernel_info(struct loongarch_boot_info *info)
  {
-     void *bp_tables_start;
-@@ -138,6 +148,7 @@ static void init_systab(struct loongarch_boot_info *info, void *p, void *start)
-                   sizeof(efi_memory_desc_t) * memmap_entries, 64 * KiB);
-     init_efi_initrd_table(systab, p, start);
-     p += ROUND_UP(sizeof(struct efi_initrd), 64 * KiB);
-+    init_efi_fdt_table(systab);
+-    uint64_t kernel_entry, kernel_low, kernel_high;
++    uint64_t kernel_entry, kernel_low, kernel_high, initrd_size;
++    ram_addr_t initrd_offset;
+     ssize_t kernel_size;
  
-     systab->tables = (struct efi_configuration_table *)(bp_tables_start - start);
+     kernel_size = load_elf(info->kernel_filename, NULL,
+@@ -37,6 +38,32 @@ static int64_t load_kernel_info(struct loongarch_boot_info *info)
+                      load_elf_strerror(kernel_size));
+         exit(1);
+     }
++
++    if (info->initrd_filename) {
++        initrd_size = get_image_size(info->initrd_filename);
++        if (initrd_size > 0) {
++            initrd_offset = ROUND_UP(kernel_high + 4 * kernel_size, 64 * KiB);
++
++            if (initrd_offset + initrd_size > info->ram_size) {
++                error_report("memory too small for initial ram disk '%s'",
++                             info->initrd_filename);
++                exit(1);
++            }
++
++            initrd_size = load_image_targphys(info->initrd_filename, initrd_offset,
++                                              info->ram_size - initrd_offset);
++        }
++
++        if (initrd_size == (target_ulong)-1) {
++            error_report("could not load initial ram disk '%s'",
++                         info->initrd_filename);
++            exit(1);
++        }
++    } else {
++        error_report("Need initrd!");
++        exit(1);
++    }
++
+     return kernel_entry;
  }
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 708aa8bc60..42e5df8a24 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -727,7 +727,6 @@ static void loongarch_init(MachineState *machine)
-     int nb_numa_nodes = machine->numa_state->num_nodes;
-     NodeInfo *numa_info = machine->numa_state->nodes;
-     int i;
--    hwaddr fdt_base;
-     const CPUArchIdList *possible_cpus;
-     MachineClass *mc = MACHINE_GET_CLASS(machine);
-     CPUState *cpu;
-@@ -857,12 +856,11 @@ static void loongarch_init(MachineState *machine)
-      * Put the FDT into the memory map as a ROM image: this will ensure
-      * the FDT is copied again upon reset, even if addr points into RAM.
-      */
--    fdt_base = 1 * MiB;
-     qemu_fdt_dumpdtb(machine->fdt, lams->fdt_size);
--    rom_add_blob_fixed_as("fdt", machine->fdt, lams->fdt_size, fdt_base,
-+    rom_add_blob_fixed_as("fdt", machine->fdt, lams->fdt_size, FDT_BASE,
-                           &address_space_memory);
-     qemu_register_reset_nosnapshotload(qemu_fdt_randomize_seeds,
--            rom_ptr_for_as(&address_space_memory, fdt_base, lams->fdt_size));
-+            rom_ptr_for_as(&address_space_memory, FDT_BASE, lams->fdt_size));
- 
-     lams->bootinfo.ram_size = ram_size;
-     loongarch_load_kernel(machine, &lams->bootinfo);
-diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
-index 42d1ee3663..4ebcc89dcf 100644
---- a/include/hw/loongarch/boot.h
-+++ b/include/hw/loongarch/boot.h
-@@ -34,6 +34,10 @@ typedef struct {
-         EFI_GUID(0x5568e427, 0x68fc, 0x4f3d,  0xac, 0x74, \
-                  0xca, 0x55, 0x52, 0x31, 0xcc, 0x68)
- 
-+#define DEVICE_TREE_GUID \
-+        EFI_GUID(0xb1b621d5, 0xf19c, 0x41a5,  0x83, 0x0b, \
-+                 0xd9, 0x15, 0x2c, 0x69, 0xaa, 0xe0)
-+
- struct efi_config_table {
-     efi_guid_t guid;
-     uint64_t *ptr;
-diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-index 8a9fe4053d..4e14bf6060 100644
---- a/include/hw/loongarch/virt.h
-+++ b/include/hw/loongarch/virt.h
-@@ -35,6 +35,8 @@
- 
- #define COMMAND_LINE_SIZE       512
- 
-+#define FDT_BASE                0x100000
-+
- extern struct memmap_entry *memmap_table;
- extern unsigned memmap_entries;
  
 -- 
 2.25.1
