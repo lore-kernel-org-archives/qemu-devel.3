@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46403C4345F
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 19:46:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D28BC4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 20:12:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1ASd-0007zP-FS; Sun, 28 Apr 2024 15:45:19 -0400
+	id 1s1AsP-0003tt-8Z; Sun, 28 Apr 2024 16:11:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1ASa-0007yj-SN
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 15:45:17 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1AsK-0003tT-Ln
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 16:11:54 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1ASZ-0006e7-AH
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 15:45:16 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-41a1d2a7b81so26436115e9.0
- for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 12:45:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1AsJ-0002Yt-5x
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 16:11:52 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a5557e3ebcaso634124366b.1
+ for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 13:11:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714333513; x=1714938313; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714335109; x=1714939909; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1Gh8GzAcioBNByCYlgjjR4rZlLa9JFmG2fIHRZS+Txg=;
- b=q2YvDOCyoAeFImXBmHr3euH73xBq8RNkn1q8iIQMpcl8OAhyl9iHu9KUl/cgBTBkM9
- riaFsP54gXMXm2OawVEDhp7S7fbYIVjwS0aEYXZvhEp4xBploj6EPUULWSonILzUthF7
- K/2Dl/2ShvwLuPee/hgVrZtRX161GiZqU2tW5QG6tWnZuw5GN4YYTXMpQMpCZMyRPrl9
- 4tR6jQ889K9kEK6xunFIKArbeAVSth7+LT+YNULDZIL3XjEA/1+UeZw3i9UB2xkFdN4Q
- odp05XYfwkkPS3vRerS8uhCP+zx9Wk+XgXVsbVhcS1Y32iRaZK8q7XOQxvQMB1Qy2qbo
- 9pWg==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=dDUr1CIBrHxI9tD6i7tgZ5DleLMhyEllp5AxSqUPCRA=;
+ b=SbRg9quSzrRjc3QNtwybEU5RDd0NQ0GeFwpRroJJOKZga7/mZlA1DLLV3Xt1tCrbmW
+ XI+1w7Clb5qPMkwRzNcFyAPJ4OEIuq5DyG1R6CHi+SCmXF0fJMJjww36bzyFyT17w80O
+ E5OI+WQy2oUF3/K9BQsQVMicUD8glYmB/tuOG9Vf5ZKNT5lZGBr38rT/EOylSdRoiOdZ
+ iGxJnnI6XvtEACBNLPVs8gVgmZEgAkFYB6qQ3sZk1yPuuLsSEjUy40oxu2MHxhX3HRmI
+ LJHl7aa/+wvJI5vwYb7XKMi2Okcbf8+z6KXQNpt47GEFAy5g4EgRpCqkLLZ/Ra/5jiZZ
+ TQIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714333513; x=1714938313;
+ d=1e100.net; s=20230601; t=1714335109; x=1714939909;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1Gh8GzAcioBNByCYlgjjR4rZlLa9JFmG2fIHRZS+Txg=;
- b=VsUn03KPSRpuWoklRmUKwXhTf+0u8RH/TsrcobhKMZzDi1Z180sOEWEBdaKOnYVwaO
- Noh5qHb+x610b7I4BLSYi+n+NH90BtDK76WkjF/TIEMxokeTqls8kInMV+OythIqL30I
- uOOWQefEhO+GlTLy5Jiiy7g+xbQW8YmH2hA4wl7cNbgi8jeHCF2zLlRI0KS/CwgwIx0F
- fRcUiTjKBeWkvrphDCT5cYYI6lI9Kb5axU+sez42VQkAcixhCd37bCfeQir4tPfMTyDx
- cgW/dGjCXKU6LdKn1sP0KFLe2FXNi+hTELhFn0/sCl04k7xzfW1WveXQS1nT7LIgCJeT
- Y7LA==
-X-Gm-Message-State: AOJu0Yx9xaFSk7SByLZeaG0RmJ7vVRLbLqhftGxXkzhRND31mt5H9KFJ
- qG1Q8ag+ICljo4AHhl3bbUPfe9jkaJtAG0dX675omtU195JTzeVSAoHXbST1Zbc=
-X-Google-Smtp-Source: AGHT+IHvWo8DuEKQsFeU2N2suj5PAbjNX8o7KK3fW+y5jcYVjPtdLt330r8fGxwDwiywZhgPUvf+Hw==
-X-Received: by 2002:a05:600c:474c:b0:41b:8041:53c2 with SMTP id
- w12-20020a05600c474c00b0041b804153c2mr7494915wmo.15.1714333512968; 
- Sun, 28 Apr 2024 12:45:12 -0700 (PDT)
+ bh=dDUr1CIBrHxI9tD6i7tgZ5DleLMhyEllp5AxSqUPCRA=;
+ b=AX4LNi3XqtnU8SJDw/PROAUSQ0kTonrii7q2WqEQ1DLCfasNZvI8RDDJRorChstpBc
+ Wvnr5g/HNwk2tw2aMn7uMqiGjgdjy3e/Q/ebzh6uWI7Nfd5hodfEbuPVVS9UgRsG03QD
+ KY/jq9hNcT5Cips9Z490jnJoKJJMkm3hJoF6uqLMFjBDunPFy5WGWB1X4koXRKZmvg65
+ Ll5EvVLTmwH+4+k04GKbMHXEg5xx0pUV0UZkA3gj6Z18OQ99l3Y6aHJvqWx+wIhpwDWK
+ 5AX7hNAZUZovu6a8SibrvNugbk2qQUpPWwdplCaeYndRZhjsKhuXh8SGJsbvUuPlyXIn
+ CljA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXmFgjEiDtzPSbnqLJxlkxlpo7Av/goMESDfFUNLmSvfGL6lc7V8CuOwICcwwzU+T3Do1UmCsIlpfcir1LgHBqteCdxjnQ=
+X-Gm-Message-State: AOJu0YxQmN7351N6gf3uq5iG0Ab8RCLpdDn7FKLuiRWFel+FYMfuA0qq
+ 0gbsm9CtQ8nYRX0aIM8s9f6vkQ2uoAgSkIr6MPW/eII2/5J+pomxFO6+0RBLjhQ=
+X-Google-Smtp-Source: AGHT+IHtJjib/yQFMgIMtchMzW0zIp9PfIt5nwTQY33nvYdHyfy5ql6nVoF7TYHKxYPud68yQFOufA==
+X-Received: by 2002:a17:906:4815:b0:a51:abd8:8621 with SMTP id
+ w21-20020a170906481500b00a51abd88621mr4723525ejq.19.1714335109097; 
+ Sun, 28 Apr 2024 13:11:49 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.142.130])
  by smtp.gmail.com with ESMTPSA id
- n40-20020a05600c502800b0041b4c293f75sm13709769wmr.13.2024.04.28.12.45.11
+ u24-20020a1709060b1800b00a58767c1120sm7290453ejg.10.2024.04.28.13.11.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Apr 2024 12:45:12 -0700 (PDT)
-Message-ID: <0740a98d-dc07-4e39-ae20-08f44facfdc6@linaro.org>
-Date: Sun, 28 Apr 2024 21:45:10 +0200
+ Sun, 28 Apr 2024 13:11:47 -0700 (PDT)
+Message-ID: <36fb38e7-4269-49fb-bcdb-a96d577bd56e@linaro.org>
+Date: Sun, 28 Apr 2024 22:11:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] Revert "hw/net/net_tx_pkt: Fix overrun in
- update_sctp_checksum()"
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, Jason Wang <jasowang@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20240428-iov-v1-0-7b2dd601d80b@daynix.com>
- <20240428-iov-v1-2-7b2dd601d80b@daynix.com>
+Subject: Re: [RFC PATCH 09/14] exec/cpu: Restrict user-specific page
+ definitions
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20240427155714.53669-1-philmd@linaro.org>
+ <20240427155714.53669-10-philmd@linaro.org>
+ <5185c954-a03a-4fa6-ac69-a36001006cf4@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240428-iov-v1-2-7b2dd601d80b@daynix.com>
+In-Reply-To: <5185c954-a03a-4fa6-ac69-a36001006cf4@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,18 +97,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/4/24 13:11, Akihiko Odaki wrote:
-> This reverts commit 83ddb3dbba2ee0f1767442ae6ee665058aeb1093.
+On 28/4/24 20:31, Richard Henderson wrote:
+> On 4/27/24 08:57, Philippe Mathieu-Daudé wrote:
+>> User-specific PAGE definitions shouldn't be used on system emulation.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   include/exec/page-prot-common.h | 8 ++++++++
+>>   1 file changed, 8 insertions(+)
 > 
-> The added check is no longer necessary due to a change of
-> iov_from_buf().
+> Come to that, PAGE_WRITE_INV is system only.
 > 
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->   hw/net/net_tx_pkt.c | 4 ----
->   1 file changed, 4 deletions(-)
+> Does this clarify or simply spread ifdefs around?
+> They aren't particularly common at this point...
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-
+OK, I removed this patch, renamed as "exec/page-protection.h"
+in previous patch and added an entry in the "Overall TCG CPUs"
+section in MAINTAINERS.
 
