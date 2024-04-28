@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31EEFC4345F
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 18:29:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4F31C4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 18:32:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s19HL-0000sM-Rr; Sun, 28 Apr 2024 14:29:36 -0400
+	id 1s19K1-0001hB-GG; Sun, 28 Apr 2024 14:32:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s19HK-0000rv-0g
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 14:29:34 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1s19JS-0001dL-O8
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 14:32:00 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s19HH-0001bk-L1
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 14:29:32 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-6f074520c8cso3704613b3a.0
- for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 11:29:31 -0700 (PDT)
+ id 1s19JP-00026s-TJ
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 14:31:46 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-6f074520c8cso3705321b3a.0
+ for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 11:31:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714328970; x=1714933770; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714329102; x=1714933902; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=D6FNSXjwgeSilkzvfjYcQ77rq8am3hbYDe/BtfdUKaQ=;
- b=GPPQW8dj+OP2PypuTy2cfWs7ApzYLXldT5S4oRayr14fEOItglqxZdTQWHGR2fKwr9
- XBarSbWK/VMF+YD2dP7MDTRZniasXV+NmGSmpNZkvf5tN+4AYou7dg0cpFrztpodhDn4
- bco5f2BwYqTR0izC2RWbs2o8/W3ANoz0GCdEWeLDnxkJHVD7Z8NJ8Tvr6dbjYeqD9oRh
- h42g81cQ7nRUvke0rJ4cRUnCNVKdPiaHFZcLfE8rSTJEFFBkZAUcbg4JArXQtjhoZlQ7
- qvt/j0joW7RPAlIay8/HHpRR7cgG2gVXh238okopiXRrw3EGjNYTqJN2ONMbKT4mQHeR
- +Eig==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=v2r0zZ2gNREk+iN+TLr3EAv8SD2AbhiikuBWmxqVh4U=;
+ b=eJ+F1isTIAuThJi5nGRH8JVuWBZcU4LBZPwCzX/e178q5cdu7uUuR2GzDs0FISFg0z
+ EN/1oynyuQQK6uPj+fIKmsvPaXICMhtHg04mFQyLyEJsHGrch3iKMC/H4YO2pZkhOsNn
+ g8ARZ1D4X8z9EjUI0YQnS/vaDzSI/hLSEMEeiAvvL+mQH0amkAVe5hVqf6mBQMflNucS
+ 2DXvG3YAbwzCuLuTu1bVypPqkpaN+3FvNEfys0rjSPfj5VbtBFCuUebivJtaWOvxMymh
+ K/vEOR4V0JamPANYmgrijbZfhALPllKSRm/XlAy0WoV84qevBieQ5LYg5HpbW3A4mqXh
+ 9Jkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714328970; x=1714933770;
+ d=1e100.net; s=20230601; t=1714329102; x=1714933902;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=D6FNSXjwgeSilkzvfjYcQ77rq8am3hbYDe/BtfdUKaQ=;
- b=PvIraXDzllQgj1hrn7h2bOGYSpACLlhauiG528Husprzv1XvrXb3FJzgT8qIlk4fy8
- bZACsAZgp9w0si7rTsgfoXlabehpIstRC2B+J9jVdYagAve/MtwVvMcDtTNeoUPF8Xpz
- sncScHUOqwlZkRbTJ2fpsJa9VVVwbiNH8gM34xmdIbgvAC/WIaJBBHGWoXthSE9Jj1GB
- 4o1iPfHq93NOrAMqT2MKDtzco+g/RvjPiwfjhGqLf+C0qeQoWreDJPnA07fOOlw4LPMA
- liLZ4UzNEkt6zoP5XX1C5AQ7pZchA6q5yASjUTPe/97aOi6lhsv//qeOIPKwWFgKVGvR
- ggmA==
+ bh=v2r0zZ2gNREk+iN+TLr3EAv8SD2AbhiikuBWmxqVh4U=;
+ b=O/nb6mulYjP9aIRQCX0imeWtwHXOCcT5/E0hCQ2KZNs6C4pD3QdqANvgwsfLePLSSv
+ p/Afhdiv1pWtnHmAyPcTPLQBqrY3pMAsMO0Bz2HcVJYYL4lz+CVwTaaszxADv6i8AwRR
+ NbvmOpJ8RF0SNhcuaiskXOH7Cv+kCN7GT/vmSHwZqCx3LSlfBtSKMMtvKHeHVii3Hz24
+ 8RelNbZiBG30hRmm3sE1n/9yGU+0WtqELEbys5u72zM/b/S4gKzrQAmSZ6UJEKJq3Kd9
+ VX8+02yJ33Qw72nCOrb/vjkHvR62D3Qg6Lm8m13mIDewCj+duJteAhcJjNkf5auqFsZQ
+ Wfdw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXbInbkxePWGQ4tXR+SKXLTjTWrnwq0vCA3h0doY+hi/e+iWyVhAwCU80QXt9wW5nYRnmIAm4WTqFdq/uAHV6h+YqCY2KU=
-X-Gm-Message-State: AOJu0YystQmP+CQlJODCcvgIkPgJHp2qgOc95ej0z3arQiJv3LuWF9wg
- j3fdPSeyLrBKXDZzID62EEpd4WnZvN5bCFSCAbZGhVcFzB9JUfQTZQHYEfy/XU4=
-X-Google-Smtp-Source: AGHT+IESyQO9QIJorQToO2n50p9F+Yq/+Nf6DVszwryoyD/7WiwYheyTuZgrewxV6vArFTZUaTgl+A==
+ AJvYcCVULrScYe7MeY0yk0VvlK4E7VvWhb1drDvFp2dlj5Kh6MM42XNCKHE9PKnHhWjERD4TkGEHEzhGg3b+sIjJCmRO/73Peao=
+X-Gm-Message-State: AOJu0Ywhlnae5te5mDihV6Iwj4z0WxJDSPf5uLUWghxXyZHlyfU7IG07
+ HGRWGeY3etQrqsbhmdzSuP9tk9GvTvSfbhzw4UwhLTtc/AsVmb0kdPgK7o2+Olo=
+X-Google-Smtp-Source: AGHT+IFoKU93mowwnSJ1Ce5WoVem2R2D3DkwQ6KuSv4AqJUTKM131gJv9B7xHeNdl381Gfw8TwyIyQ==
 X-Received: by 2002:a05:6a00:170a:b0:6ed:d3af:1070 with SMTP id
- h10-20020a056a00170a00b006edd3af1070mr11248674pfc.32.1714328970186; 
- Sun, 28 Apr 2024 11:29:30 -0700 (PDT)
+ h10-20020a056a00170a00b006edd3af1070mr11254303pfc.32.1714329102264; 
+ Sun, 28 Apr 2024 11:31:42 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- u12-20020a056a00098c00b006f09d5807ebsm17411528pfg.82.2024.04.28.11.29.29
+ fc20-20020a056a002e1400b006f3e9bdf393sm3222822pfb.8.2024.04.28.11.31.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Apr 2024 11:29:29 -0700 (PDT)
-Message-ID: <476b5074-8e08-4835-8cdf-6307399a9a24@linaro.org>
-Date: Sun, 28 Apr 2024 11:29:28 -0700
+ Sun, 28 Apr 2024 11:31:41 -0700 (PDT)
+Message-ID: <5185c954-a03a-4fa6-ac69-a36001006cf4@linaro.org>
+Date: Sun, 28 Apr 2024 11:31:39 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/14] exec/cpu: Extract page-protection definitions to
- page-prot-common.h
+Subject: Re: [RFC PATCH 09/14] exec/cpu: Restrict user-specific page
+ definitions
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>
 References: <20240427155714.53669-1-philmd@linaro.org>
- <20240427155714.53669-9-philmd@linaro.org>
+ <20240427155714.53669-10-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240427155714.53669-9-philmd@linaro.org>
+In-Reply-To: <20240427155714.53669-10-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,20 +100,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/27/24 08:57, Philippe Mathieu-Daudé wrote:
-> Extract page-protection definitions from "exec/cpu-all.h"
-> to "exec/page-prot-common.h".
+> User-specific PAGE definitions shouldn't be used on system emulation.
 > 
-> The list of files requiring the new header was generated
-> using:
-> 
-> $ git grep -wE \
->    'PAGE_(READ|WRITE|EXEC|BITS|VALID|ANON|RESERVED|TARGET_.|PASSTHROUGH)'
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> Acked-by: Nicholas Piggin<npiggin@gmail.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
+>   include/exec/page-prot-common.h | 8 ++++++++
+>   1 file changed, 8 insertions(+)
 
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
+Come to that, PAGE_WRITE_INV is system only.
+
+Does this clarify or simply spread ifdefs around?
+They aren't particularly common at this point...
+
 
 r~
 
