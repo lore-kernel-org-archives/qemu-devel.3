@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A71BCC10F1A
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 11:12:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DCA3C4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 11:12:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s12Ra-0004VC-MV; Sun, 28 Apr 2024 07:11:42 -0400
+	id 1s12Rh-0004Vs-EK; Sun, 28 Apr 2024 07:11:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s12RY-0004Un-Ci
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 07:11:40 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1s12Re-0004VW-Bt
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 07:11:46 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s12RW-0000Ym-Ca
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 07:11:40 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-6f2f6142d64so3386877b3a.2
- for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 04:11:37 -0700 (PDT)
+ id 1s12Rb-0000ZI-Nb
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 07:11:44 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-60585faa69fso2326967a12.1
+ for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 04:11:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1714302696; x=1714907496;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1714302702; x=1714907502;
  darn=nongnu.org; 
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=/4YH1P7orc/Te98j0BdkDaV2/xgzpkcLw1sCbumgnEw=;
- b=1uI4YQmIv/sdW6ZtMuCb/Qjv105gZod2yS281ZdcDlHX2nn4tHHcCnjhN4WcUS51ZR
- R3YGEY/uori0IRbaX5+TwQRAjxcY/xYy9Ea/QynYHLbW8Hkl6mdXqZRzSYQm3BFHFIB1
- Wll7DT5PJR6CVLuWzBJLSdLiWIBA7YwVgQjaB++TIf6zG203ly42IpsO0gfC6Rrd9vhu
- kI7Jwk9MGPnVlR6KBGCOJqJq/+TvFIOStq9JmMDAfnBnpyEPw6lpTva0B2MdyfYX/6yd
- nbFoA6McVzhBM4AS4qzB4isSqUpqeBKRDwwGmU6LtZ1qWk64Nqx0neStZH0QTt7UzXKt
- 6wMw==
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=oqrT6aUq3cF0ZFgXAGrwdFxl94n9uIRGqQ5UKYpt5V0=;
+ b=q3/fFX6FJNYbNs+DX54WLmCkDNMtVJiyzYBd5o2pJrd33Pl8vXBJ5xOW51RUILHWBG
+ jQ9GAOnNwWjDOG7PXJu7FH16U7ie4ir2ScDhmh+w57KKLF6rHdyQgci0q/oGNr+8gU7e
+ Oi8WSOPs7ZovV7htTqCfrNeFSKNj3yAAbOVON5UKYrCWdwAdmZ5iQIMG3/UfZ5wKsf4P
+ MvfO7FtCO7N0gI13UvIjOhpolbXjT+kLeegpMbI4R3W4rRq5GU2pCJU7vwjdKbpYqq+s
+ NfZgj03NV20Oyt0K1XRbKR7y0vex/685jzqTe78o5HJQGciAN72vDYDFd+8svu7znEAH
+ dDdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714302696; x=1714907496;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/4YH1P7orc/Te98j0BdkDaV2/xgzpkcLw1sCbumgnEw=;
- b=YJAgdNgxakyEXnK3bzpaQPZpMfqAEava8DEjy6P7q3AUJmNmFZ1BlLt0ywkMB0KhlP
- xsnrGt88TLfj0XhBEt5n/a0AkefCJcB/XWHQUoKdoUsVi1ZhDPsact7XwJUU7Vqy+sU2
- 4pwb+2bAY/dYbtS/cya6gOMdYWKkyfL+SPEHl2h2oRqT/0wF3W8BgSGXlNSeEXLXkkEe
- Oep20TH2zhSxNizstyg7cS3Hk8NhtT7BUnWOPWYcTjStYI0QYnbPrjt3ImkWQN5Yyy+a
- kdcIGqn7o/U4RpOP/b8sTysIhgGuIPUyCYl08QaUduaegW+0sCKIaw0+JeXpOptrIUAE
- aRDg==
-X-Gm-Message-State: AOJu0YzodArkTv1fU8s/kfeh4Itrr98dtyoDBpigbHWHoNQsMsw9l59d
- cxWhlA8O1M/0hnZjQ7514T96v87CRsfWaiX57rc1M4crw3odM7isF4WnGTlMJ0A=
-X-Google-Smtp-Source: AGHT+IHk9vxvmhEmjLG9oQZMMmG4zoEd0/k7bnvlpQpbrYEUvWvMKXezdHWS1KL8wMweCfCPD3OXkA==
-X-Received: by 2002:a05:6a20:d428:b0:1a9:ff21:8862 with SMTP id
- il40-20020a056a20d42800b001a9ff218862mr6523177pzb.60.1714302695975; 
- Sun, 28 Apr 2024 04:11:35 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1714302702; x=1714907502;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=oqrT6aUq3cF0ZFgXAGrwdFxl94n9uIRGqQ5UKYpt5V0=;
+ b=sP3VeyGr2obVhbNmhu6OxGsDVVorJfMzbK3evby2qfgH/V64rQotWrZUrSAILxBiTm
+ FVjo3AUwfUyUR1NuZGkcI7BeNdUxwTneIuTbuOAI1rqPDiv9IHkWhqFYRMSu+5PWGZ8y
+ Z8OSRcuhJDA1sL3QLA0Ve2weJPa3NQvgvLgW1y4zgGq6F/EbyKOW/g5XaX57ZIqMct6D
+ qySkZgTpPen33zJ/+I3Hovoh/Jr2TkUR1CFeqJY4x/n0uPZalyPdXBMQSjdHSMcKRKbn
+ P8hqviBwM/7RV7UUZRkgjSX7xRElZ1HsXCAdt1P328doBR+3l0yR7ghFgAptEAbBHIUH
+ xm4Q==
+X-Gm-Message-State: AOJu0YxK0AbT2k6RDYFnKnnpcWJFPJU86JZKQ5wpRp3DbMyMkOLkyJaT
+ 2VTZelKcMIVxNObEHcvB1ZF14df/5kBpQ+M6CxDRODVzLJmMOsBamS3zuf4eBjY=
+X-Google-Smtp-Source: AGHT+IFoqK4NEwJCXyVclBtGbs6d9Z35y71C/0kA6E4Jfjr5kvPsjcfrImecmSBYME49bEwhskVI9A==
+X-Received: by 2002:a17:90b:246:b0:2aa:cadb:d290 with SMTP id
+ fz6-20020a17090b024600b002aacadbd290mr10457226pjb.13.1714302702375; 
+ Sun, 28 Apr 2024 04:11:42 -0700 (PDT)
 Received: from localhost ([157.82.202.162])
  by smtp.gmail.com with UTF8SMTPSA id
- f33-20020a056a000b2100b006ecee611c05sm17542280pfu.182.2024.04.28.04.11.34
+ so13-20020a17090b1f8d00b002aff85b97dfsm5274672pjb.27.2024.04.28.04.11.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Apr 2024 04:11:35 -0700 (PDT)
+ Sun, 28 Apr 2024 04:11:42 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH 0/2] util/iov: Do not assert offset is in iov
-Date: Sun, 28 Apr 2024 20:11:21 +0900
-Message-Id: <20240428-iov-v1-0-7b2dd601d80b@daynix.com>
+Date: Sun, 28 Apr 2024 20:11:23 +0900
+Subject: [PATCH 2/2] Revert "hw/net/net_tx_pkt: Fix overrun in
+ update_sctp_checksum()"
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIANkuLmYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDEyML3cz8Mt1EY0PzJAMjMwPDlGQloMqCotS0zAqwKdGxtbUAg265YVU
- AAAA=
+Message-Id: <20240428-iov-v1-2-7b2dd601d80b@daynix.com>
+References: <20240428-iov-v1-0-7b2dd601d80b@daynix.com>
+In-Reply-To: <20240428-iov-v1-0-7b2dd601d80b@daynix.com>
 To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
  Jason Wang <jasowang@redhat.com>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-01a33
-Received-SPF: none client-ip=2607:f8b0:4864:20::429;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x429.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::535;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -96,43 +96,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-iov_from_buf(), iov_to_buf(), iov_memset(), and iov_copy() asserts
-that the given offset fits in the iov while tolerating the specified
-number of bytes to operate with to be greater than the size of iov.
-This is inconsistent so remove the assertions.
+This reverts commit 83ddb3dbba2ee0f1767442ae6ee665058aeb1093.
 
-Asserting the offset fits in the iov makes sense if it is expected that
-there are other operations that process the content before the offset
-and the content is processed in order. Under this expectation, the
-offset should point to the end of bytes that are previously processed
-and fit in the iov. However, this expectation depends on the details of
-the caller, and did not hold true at least one case and required code to
-check iov_size(), which is added with commit 83ddb3dbba2e
-("hw/net/net_tx_pkt: Fix overrun in update_sctp_checksum()").
-
-Adding such a check is inefficient and error-prone. These functions
-already tolerate the specified number of bytes to operate with to be
-greater than the size of iov to avoid such checks so remove the
-assertions to tolerate invalid offset as well. They return the number of
-bytes they operated with so their callers can still check the returned
-value to ensure there are sufficient space at the given offset.
+The added check is no longer necessary due to a change of
+iov_from_buf().
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
-Akihiko Odaki (2):
-      util/iov: Do not assert offset is in iov
-      Revert "hw/net/net_tx_pkt: Fix overrun in update_sctp_checksum()"
-
- include/qemu/iov.h  | 5 +++--
  hw/net/net_tx_pkt.c | 4 ----
- util/iov.c          | 5 -----
- 3 files changed, 3 insertions(+), 11 deletions(-)
----
-base-commit: fd87be1dada5672f877e03c2ca8504458292c479
-change-id: 20240428-iov-a317b02601dc
+ 1 file changed, 4 deletions(-)
 
-Best regards,
+diff --git a/hw/net/net_tx_pkt.c b/hw/net/net_tx_pkt.c
+index b7b1de816dc5..2134a18c4c90 100644
+--- a/hw/net/net_tx_pkt.c
++++ b/hw/net/net_tx_pkt.c
+@@ -141,10 +141,6 @@ bool net_tx_pkt_update_sctp_checksum(struct NetTxPkt *pkt)
+     uint32_t csum = 0;
+     struct iovec *pl_start_frag = pkt->vec + NET_TX_PKT_PL_START_FRAG;
+ 
+-    if (iov_size(pl_start_frag, pkt->payload_frags) < 8 + sizeof(csum)) {
+-        return false;
+-    }
+-
+     if (iov_from_buf(pl_start_frag, pkt->payload_frags, 8, &csum, sizeof(csum)) < sizeof(csum)) {
+         return false;
+     }
+
 -- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+2.44.0
 
 
