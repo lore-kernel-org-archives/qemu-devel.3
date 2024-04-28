@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5E85C4345F
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 09:09:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5ADDC4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 09:09:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s10WI-0004C7-Qv; Sun, 28 Apr 2024 05:08:26 -0400
+	id 1s10WG-000445-1Y; Sun, 28 Apr 2024 05:08:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1s10W9-0003aw-HY
+ id 1s10W9-0003Zh-Aj
  for qemu-devel@nongnu.org; Sun, 28 Apr 2024 05:08:17 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1s10W7-0004Gb-44
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 05:08:17 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1s10W6-0004Eo-Kk
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 05:08:16 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8BxFvD9ES5m4VkEAA--.15952S3;
- Sun, 28 Apr 2024 17:08:13 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Cxyen7ES5m21kEAA--.3530S3;
+ Sun, 28 Apr 2024 17:08:11 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8CxpFb1ES5mmCgIAA--.5818S9; 
- Sun, 28 Apr 2024 17:08:12 +0800 (CST)
+ AQAAf8CxpFb1ES5mmCgIAA--.5818S6; 
+ Sun, 28 Apr 2024 17:08:11 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
 	Bibo Mao <maobibo@loongson.cn>
-Subject: [PULL 07/17] hw/loongarch: Init efi_initrd table
-Date: Sun, 28 Apr 2024 16:51:07 +0800
-Message-Id: <20240428085117.2422473-8-gaosong@loongson.cn>
+Subject: [PULL 04/17] hw/loongarch: Add init_cmdline
+Date: Sun, 28 Apr 2024 16:51:04 +0800
+Message-Id: <20240428085117.2422473-5-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20240428085117.2422473-1-gaosong@loongson.cn>
 References: <20240428085117.2422473-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8CxpFb1ES5mmCgIAA--.5818S9
+X-CM-TRANSID: AQAAf8CxpFb1ES5mmCgIAA--.5818S6
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,98 +65,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The efi_system_table adds a efi_initrd configuration table.
+Add init_cmline and set boot_info->a0, a1
 
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Message-Id: <20240426091551.2397867-8-gaosong@loongson.cn>
+Message-Id: <20240426091551.2397867-5-gaosong@loongson.cn>
 ---
- hw/loongarch/boot.c         | 23 +++++++++++++++++++++--
- include/hw/loongarch/boot.h |  9 +++++++++
- 2 files changed, 30 insertions(+), 2 deletions(-)
+ hw/loongarch/boot.c         | 30 ++++++++++++++++++++++++++++++
+ include/hw/loongarch/virt.h |  2 ++
+ target/loongarch/cpu.h      |  2 ++
+ 3 files changed, 34 insertions(+)
 
 diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-index 18aae3434d..1f6cb8ddd7 100644
+index d1a8434127..aca5ad388e 100644
 --- a/hw/loongarch/boot.c
 +++ b/hw/loongarch/boot.c
-@@ -15,6 +15,9 @@
- #include "sysemu/reset.h"
- #include "sysemu/qtest.h"
- 
-+ram_addr_t initrd_offset;
-+uint64_t initrd_size;
-+
- static const unsigned int slave_boot_code[] = {
-                   /* Configure reset ebase.                    */
-     0x0400302c,   /* csrwr      $t0, LOONGARCH_CSR_EENTRY      */
-@@ -95,6 +98,21 @@ static void init_efi_boot_memmap(struct efi_system_table *systab,
-     }
- }
- 
-+static void init_efi_initrd_table(struct efi_system_table *systab,
-+                                  void *p, void *start)
-+{
-+    efi_guid_t tbl_guid = LINUX_EFI_INITRD_MEDIA_GUID;
-+    struct efi_initrd *initrd_table  = p;
-+
-+    /* efi_configuration_table 2 */
-+    guidcpy(&systab->tables[1].guid, &tbl_guid);
-+    systab->tables[1].table = (struct efi_configuration_table *)(p - start);
-+    systab->nr_tables = 2;
-+
-+    initrd_table->base = initrd_offset;
-+    initrd_table->size = initrd_size;
-+}
-+
- static void init_systab(struct loongarch_boot_info *info, void *p, void *start)
- {
-     void *bp_tables_start;
-@@ -118,6 +136,8 @@ static void init_systab(struct loongarch_boot_info *info, void *p, void *start)
-     init_efi_boot_memmap(systab, p, start);
-     p += ROUND_UP(sizeof(struct efi_boot_memmap) +
-                   sizeof(efi_memory_desc_t) * memmap_entries, 64 * KiB);
-+    init_efi_initrd_table(systab, p, start);
-+    p += ROUND_UP(sizeof(struct efi_initrd), 64 * KiB);
- 
-     systab->tables = (struct efi_configuration_table *)(bp_tables_start - start);
- }
-@@ -139,8 +159,7 @@ static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
- 
- static int64_t load_kernel_info(struct loongarch_boot_info *info)
- {
--    uint64_t kernel_entry, kernel_low, kernel_high, initrd_size;
--    ram_addr_t initrd_offset;
-+    uint64_t kernel_entry, kernel_low, kernel_high;
-     ssize_t kernel_size;
- 
-     kernel_size = load_elf(info->kernel_filename, NULL,
-diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
-index 76622af2e2..42d1ee3663 100644
---- a/include/hw/loongarch/boot.h
-+++ b/include/hw/loongarch/boot.h
-@@ -30,6 +30,10 @@ typedef struct {
-         EFI_GUID(0x800f683f, 0xd08b, 0x423a,  0xa2, 0x93, \
-                  0x96, 0x5c, 0x3c, 0x6f, 0xe2, 0xb4)
- 
-+#define LINUX_EFI_INITRD_MEDIA_GUID \
-+        EFI_GUID(0x5568e427, 0x68fc, 0x4f3d,  0xac, 0x74, \
-+                 0xca, 0x55, 0x52, 0x31, 0xcc, 0x68)
-+
- struct efi_config_table {
-     efi_guid_t guid;
-     uint64_t *ptr;
-@@ -83,6 +87,11 @@ struct efi_boot_memmap {
-     efi_memory_desc_t map[32];
+@@ -63,6 +63,16 @@ static const unsigned int slave_boot_code[] = {
+     0x4c000020,   /* jirl       $zero, $ra,0                   */
  };
  
-+struct efi_initrd {
-+    uint64_t base;
-+    uint64_t size;
-+};
++static void init_cmdline(struct loongarch_boot_info *info, void *p, void *start)
++{
++    hwaddr cmdline_addr = (hwaddr)p - (hwaddr)start;
 +
- struct loongarch_boot_info {
-     uint64_t ram_size;
-     const char *kernel_filename;
++    info->a0 = 1;
++    info->a1 = cmdline_addr;
++
++    memcpy(p, info->kernel_cmdline, COMMAND_LINE_SIZE);
++}
++
+ static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
+ {
+     return addr & MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS);
+@@ -122,6 +132,10 @@ static void reset_load_elf(void *opaque)
+ 
+     cpu_reset(CPU(cpu));
+     if (env->load_elf) {
++	if (cpu == LOONGARCH_CPU(first_cpu)) {
++            env->gpr[4] = env->boot_info->a0;
++            env->gpr[5] = env->boot_info->a1;
++        }
+         cpu_set_pc(CPU(cpu), env->elf_address);
+     }
+ }
+@@ -159,8 +173,17 @@ static void loongarch_firmware_boot(LoongArchMachineState *lams,
+     fw_cfg_add_kernel_info(info, lams->fw_cfg);
+ }
+ 
++static void init_boot_rom(struct loongarch_boot_info *info, void *p)
++{
++    void *start = p;
++
++    init_cmdline(info, p, start);
++    p += COMMAND_LINE_SIZE;
++}
++
+ static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
+ {
++    void *p, *bp;
+     int64_t kernel_addr = 0;
+     LoongArchCPU *lacpu;
+     CPUState *cs;
+@@ -174,6 +197,12 @@ static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
+         }
+     }
+ 
++    /* Load cmdline and system tables at [0 - 1 MiB] */
++    p = g_malloc0(1 * MiB);
++    bp = p;
++    init_boot_rom(info, p);
++    rom_add_blob_fixed_as("boot_info", bp, 1 * MiB, 0, &address_space_memory);
++
+     /* Load slave boot code at pflash0 . */
+     void *boot_code = g_malloc0(VIRT_FLASH0_SIZE);
+     memcpy(boot_code, &slave_boot_code, sizeof(slave_boot_code));
+@@ -191,6 +220,7 @@ static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
+     }
+ 
+     g_free(boot_code);
++    g_free(bp);
+ }
+ 
+ void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
+diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+index cf2f2bfb19..d7a074d69f 100644
+--- a/include/hw/loongarch/virt.h
++++ b/include/hw/loongarch/virt.h
+@@ -33,6 +33,8 @@
+ #define VIRT_GED_MEM_ADDR       (VIRT_GED_EVT_ADDR + ACPI_GED_EVT_SEL_LEN)
+ #define VIRT_GED_REG_ADDR       (VIRT_GED_MEM_ADDR + MEMORY_HOTPLUG_IO_LEN)
+ 
++#define COMMAND_LINE_SIZE       512
++
+ struct LoongArchMachineState {
+     /*< private >*/
+     MachineState parent_obj;
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index abb01b2cc7..c5722670f5 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -359,6 +359,8 @@ typedef struct CPUArchState {
+     uint32_t mp_state;
+     /* Store ipistate to access from this struct */
+     DeviceState *ipistate;
++
++    struct loongarch_boot_info *boot_info;
+ #endif
+ } CPULoongArchState;
+ 
 -- 
 2.25.1
 
