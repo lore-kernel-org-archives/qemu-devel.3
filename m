@@ -4,83 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AD4FC4345F
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Apr 2024 16:40:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54275C4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 01:16:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0l5e-0004SB-LW; Sat, 27 Apr 2024 12:39:54 -0400
+	id 1s0t8r-0007kh-Jq; Sat, 27 Apr 2024 21:15:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1s0l5a-0004Rn-GZ; Sat, 27 Apr 2024 12:39:50 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1s0l5Y-0003cQ-Bu; Sat, 27 Apr 2024 12:39:50 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 561CB628CB;
- Sat, 27 Apr 2024 19:39:40 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 06ADDC1CF7;
- Sat, 27 Apr 2024 19:39:40 +0300 (MSK)
-Message-ID: <6b154471-abfa-49a9-a269-912188c4730f@tls.msk.ru>
-Date: Sat, 27 Apr 2024 19:39:39 +0300
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1s0t8o-0007kW-Hy
+ for qemu-devel@nongnu.org; Sat, 27 Apr 2024 21:15:42 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1s0t8l-000360-Bn
+ for qemu-devel@nongnu.org; Sat, 27 Apr 2024 21:15:42 -0400
+Received: from loongson.cn (unknown [10.20.42.173])
+ by gateway (Coremail) with SMTP id _____8BxFvAtoy1m4CwEAA--.15676S3;
+ Sun, 28 Apr 2024 09:15:25 +0800 (CST)
+Received: from [10.20.42.173] (unknown [10.20.42.173])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8Cxyt0qoy1mU9QHAA--.21891S3; 
+ Sun, 28 Apr 2024 09:15:24 +0800 (CST)
+Subject: Re: [PATCH v7 03/17] hw/loongarch: Add slave cpu boot_code
+To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, peter.maydell@linaro.org,
+ philmd@linaro.org, zltjiangshi@gmail.com
+References: <20240426091551.2397867-1-gaosong@loongson.cn>
+ <20240426091551.2397867-4-gaosong@loongson.cn>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <1585a9b4-57e1-6f18-34c5-de4bba582c49@loongson.cn>
+Date: Sun, 28 Apr 2024 09:15:22 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/1] target/riscv/kvm: fix timebase-frequency when
- using KVM acceleration
-To: Andrew Jones <ajones@ventanamicro.com>,
- Yong-Xuan Wang <yongxuan.wang@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
-Cc: greentime.hu@sifive.com, vincent.chen@sifive.com, frank.chang@sifive.com, 
- jim.shu@sifive.com, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20240314061510.9800-1-yongxuan.wang@sifive.com>
- <e841b1ba-1348-48ae-89b7-bfa14ff8e70c@tls.msk.ru>
- <2C907355-C0F4-4C7F-B37C-8B4371A57B00@ventanamicro.com>
- <c174a8cd-4a53-4a28-8688-aa62c7eab45e@tls.msk.ru>
- <97934a65-f62f-49e9-820b-07463c3029ed@tls.msk.ru>
- <896AA0CA-E83A-402F-8A07-5BBA7BEF98F5@ventanamicro.com>
+In-Reply-To: <20240426091551.2397867-4-gaosong@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <896AA0CA-E83A-402F-8A07-5BBA7BEF98F5@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8Cxyt0qoy1mU9QHAA--.21891S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxZw1fuw15Gw4fGFy8Wr43twc_yoW5tr1xpF
+ y5Xrn8ur95JryxZwsxtFy5ZrZ8Xay0gFWYg343try8Za1aqrnruw1Uur9FvFWrWrs5ZFyI
+ vFn3Aw1Y9F4DtagCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8xuctUU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -61
+X-Spam_score: -6.2
 X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+X-Spam_report: (-6.2 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-4.307,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,44 +83,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-27.04.2024 18:17, Andrew Jones :
-> I wrote instructions [2] for how to cross-compile without a full environment/container once. It might be better for quick, local testing.
+
+
+On 2024/4/26 下午5:15, Song Gao wrote:
+
+Message text is missing here :(
+
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> Message-Id: <20240307164835.300412-4-gaosong@loongson.cn>
+It is strange that there is "Message-Id:" string. Is it required here?
+
+The others look good to me, especially when bootrom for AP is put at 
+BIOS flash area.
+
+Regards
+Bibo Mao
+
+> ---
+>   hw/loongarch/boot.c | 62 ++++++++++++++++++++++++++++++++++++++++++++-
+>   1 file changed, 61 insertions(+), 1 deletion(-)
 > 
-> [2] https://lore.kernel.org/qemu-riscv/20230726120706.335340-2-ajones@ventanamicro.com/
-
-I just extracted a few packages from debian riscv64 (like libglib & deps)
-in a separate dir and pointed various tools (pkgconf, gcc -I, gcc -L) to
-that dir.
-
-
->> 49c211ffca00fdf7c is also needed.  So it's 3 so far, still not compile-
->> tested.  Anything else?
+> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+> index a9522d6912..d1a8434127 100644
+> --- a/hw/loongarch/boot.c
+> +++ b/hw/loongarch/boot.c
+> @@ -15,6 +15,54 @@
+>   #include "sysemu/reset.h"
+>   #include "sysemu/qtest.h"
+>   
+> +static const unsigned int slave_boot_code[] = {
+> +                  /* Configure reset ebase.                    */
+> +    0x0400302c,   /* csrwr      $t0, LOONGARCH_CSR_EENTRY      */
+> +
+> +                  /* Disable interrupt.                        */
+> +    0x0380100c,   /* ori        $t0, $zero,0x4                 */
+> +    0x04000180,   /* csrxchg    $zero, $t0, LOONGARCH_CSR_CRMD */
+> +
+> +                  /* Clear mailbox.                            */
+> +    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
+> +    0x038081ad,   /* ori        $t1, $t1, CORE_BUF_20  */
+> +    0x06481da0,   /* iocsrwr.d  $zero, $t1                     */
+> +
+> +                  /* Enable IPI interrupt.                     */
+> +    0x1400002c,   /* lu12i.w    $t0, 1(0x1)                    */
+> +    0x0400118c,   /* csrxchg    $t0, $t0, LOONGARCH_CSR_ECFG   */
+> +    0x02fffc0c,   /* addi.d     $t0, $r0,-1(0xfff)             */
+> +    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
+> +    0x038011ad,   /* ori        $t1, $t1, CORE_EN_OFF          */
+> +    0x064819ac,   /* iocsrwr.w  $t0, $t1                       */
+> +    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
+> +    0x038081ad,   /* ori        $t1, $t1, CORE_BUF_20          */
+> +
+> +                  /* Wait for wakeup  <.L11>:                  */
+> +    0x06488000,   /* idle       0x0                            */
+> +    0x03400000,   /* andi       $zero, $zero, 0x0              */
+> +    0x064809ac,   /* iocsrrd.w  $t0, $t1                       */
+> +    0x43fff59f,   /* beqz       $t0, -12(0x7ffff4) # 48 <.L11> */
+> +
+> +                  /* Read and clear IPI interrupt.             */
+> +    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
+> +    0x064809ac,   /* iocsrrd.w  $t0, $t1                       */
+> +    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
+> +    0x038031ad,   /* ori        $t1, $t1, CORE_CLEAR_OFF       */
+> +    0x064819ac,   /* iocsrwr.w  $t0, $t1                       */
+> +
+> +                  /* Disable  IPI interrupt.                   */
+> +    0x1400002c,   /* lu12i.w    $t0, 1(0x1)                    */
+> +    0x04001180,   /* csrxchg    $zero, $t0, LOONGARCH_CSR_ECFG */
+> +
+> +                  /* Read mail buf and jump to specified entry */
+> +    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
+> +    0x038081ad,   /* ori        $t1, $t1, CORE_BUF_20          */
+> +    0x06480dac,   /* iocsrrd.d  $t0, $t1                       */
+> +    0x00150181,   /* move       $ra, $t0                       */
+> +    0x4c000020,   /* jirl       $zero, $ra,0                   */
+> +};
+> +
+>   static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
+>   {
+>       return addr & MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS);
+> @@ -126,11 +174,23 @@ static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
+>           }
+>       }
+>   
+> +    /* Load slave boot code at pflash0 . */
+> +    void *boot_code = g_malloc0(VIRT_FLASH0_SIZE);
+> +    memcpy(boot_code, &slave_boot_code, sizeof(slave_boot_code));
+> +    rom_add_blob_fixed("boot_code", boot_code, VIRT_FLASH0_SIZE, VIRT_FLASH0_BASE);
+> +
+>       CPU_FOREACH(cs) {
+>           lacpu = LOONGARCH_CPU(cs);
+>           lacpu->env.load_elf = true;
+> -        lacpu->env.elf_address = kernel_addr;
+> +        if (cs == first_cpu) {
+> +            lacpu->env.elf_address = kernel_addr;
+> +        } else {
+> +            lacpu->env.elf_address = VIRT_FLASH0_BASE;
+> +        }
+> +        lacpu->env.boot_info = info;
+>       }
+> +
+> +    g_free(boot_code);
+>   }
+>   
+>   void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
 > 
-> Those 3, the first of the series [1], are good. Not sure why it's still not compiling.
-
-Yes, I picked up these 3 I mentioned, in addition to the problematic one
-which is part of 8.2.3.  Once I had the build environment, I tried compiling
-it, and it builds fine.  I wrote it is not compile-TESTED, not as it fails
-to compile.
-
-Also, I tried to build qemu on a real riscv64 hardware (on a debian porterbox),
--- it built fine (with the 3 mentioned changes applied) and is now running
-tests, but it looks like it will be fine too.
-
-> [1] https://lists.gnu.org/archive/html/qemu-devel/2023-12/msg01132.html
-
-So yes, I'm picking these additional 3 from this set, - the ones which
-I already mentioned.
-
-Thanks,
-
-/mjt
-
-
--- 
-GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
-New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
-Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
-Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
 
 
