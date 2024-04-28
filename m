@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79F54C4345F
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 07:01:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19590C4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 07:02:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0yXB-0002Nc-CE; Sun, 28 Apr 2024 03:01:13 -0400
+	id 1s0yXT-0002Py-1A; Sun, 28 Apr 2024 03:01:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s0yX9-0002NR-TC
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 03:01:11 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1s0yXR-0002Pn-O3
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 03:01:30 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s0yX7-0005PC-C0
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 03:01:11 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-1e3e84a302eso26769295ad.0
- for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 00:01:09 -0700 (PDT)
+ id 1s0yXO-0005QD-QL
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 03:01:28 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-6ecec796323so3459663b3a.3
+ for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 00:01:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1714287668; x=1714892468;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1714287684; x=1714892484;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=L2AYryVCXzlfd31eRzritJUeblvvcZ9uKewPEGgWmv8=;
- b=D9E6EJtvQrM9X4f6wtFgntlckrXVwoP5tU4FgFLGvOgpmRvV7T3FLIy81leviFGveq
- jzigKyADCSyXw85cHiim8Syx5xyUKtPX2dXCn05wEED5SQ1jRGKMeTcpUzmDltx2Penl
- IbDzU/bf7zhLUlapuZCCb6V5X4NpA950TbRfIOks4FVPBdI+pIw4iUyFoksbekF8KBUF
- eARU2JpXa/XyPW9Sj+M1GmuxCMKbzt9cI7s7BLwa4zSfV/8k47T3w5gSEXPq3hKzPCe3
- V4LxLudzJffe6hKD0hY4Ahl8hEqcVE7UHiftjG7gbGeWLQEeXnTUVXmSrRlqKr0q0xWq
- lWlA==
+ :reply-to; bh=v3er1ckfxS8VJoewK2JALUlU7LYlW6SDdjuripGnWgk=;
+ b=QECzFaI9pvLNDq2kMMMVc2Qfze5mr7QJQIRrjelmKlaM5y7ZfhfNuhAmsjbl447ujv
+ thVJUz18C+J2Ooue3gmC/5nGTLzHHdOj4et9CpOxdsDuD+lZAnzn5M68lW24DdtkH5tV
+ 0i5q9l2F/oS0kjLjjJspUjpq28nYvCyeLo4Q+Q4HnHHefOxo2ev19l7JguUcM6W864ta
+ +yaY+CisPkQ1Tgn640XbVehkguEjeHe/uK4YH5odziYRPwlyVlYYx8dbkCU1bqNuxKLq
+ 0QnuGLq4BYv/DzLreI1fegBtPL43ffIrH4zsbu/GS5YzVhsfl4OHtdupILEsHe6Md6aS
+ xrVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714287668; x=1714892468;
+ d=1e100.net; s=20230601; t=1714287684; x=1714892484;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=L2AYryVCXzlfd31eRzritJUeblvvcZ9uKewPEGgWmv8=;
- b=Jz4tCcMsra3F8JrJRCmy5BQHXxdmQeOyD9Y5RfoVCDyVQ7eQtMq3AXRHQQlcfts2nb
- 3IWiB3QQRCeMVmv+1Pe3W/OHf81lc40f2qTdBNl4BNVdWS7R7j3NlhQViInXnvSlUmGY
- 2Vq4FwEm0KXO/muSUSWcma3hicFsekrHKunFJha75EdSFe4GICRp9trdEPxPM2zAimwt
- fN4hEtQZ9xu/GM/WSbVIJ/qMYDK2eXNfx3ZpuSYZUzeU3MVQ7hQIoEL4yu2TVDK9SQP3
- hZSl/uPYf4V+BaVhB/uMoJmyXO3GMJtG4SgAJuF8KncQIejSCoUNGwcmzLrAWtuvdrdl
- Fxxg==
-X-Gm-Message-State: AOJu0YxSCF5JzAGzejs5E18sz/YpskxMqQtbal7h8wlMp3Gx+pnjqhyp
- 54YFZj//GgHY6C9ARlbSDwx6KnMbJ7VoYyGgImz2EUIcr+cObI+oQFiWKMcn5pWevFVB0nVD2h9
- wvxY=
-X-Google-Smtp-Source: AGHT+IHZehQ067qxkverGT1RyHWHL2IYAioRfjdAWnH6rl9qT84D2cLDbo9HQ8jeFaNgMMiDEXWmhQ==
-X-Received: by 2002:a17:903:2405:b0:1e0:1a1f:5e4 with SMTP id
- e5-20020a170903240500b001e01a1f05e4mr8608961plo.55.1714287667807; 
- Sun, 28 Apr 2024 00:01:07 -0700 (PDT)
+ bh=v3er1ckfxS8VJoewK2JALUlU7LYlW6SDdjuripGnWgk=;
+ b=cKZ0G0YbgoebNEvjAkffVmkTlkIB3kTON/2XIHqVh/BG/2PyR/Bzd433p43NFZobIi
+ M0zroXp6hx+J8N3nMQhdFtSOaF1m95x0vlBz7M0pEVenCrswtTIxja3irf8kxNCnC2ew
+ q1Y68kVAdlb9V07glOABXmUweC6imyH09eBhciiry7yd84WTnakuIwyJb2yGHqzfge7d
+ 6SS3cmUfP5Wb29IIr2e2VPoOj59PEcfZQComZ+5xCxUJBWJKwA+hZFxxWaBijbnJQvwH
+ 8tSVuQ3AL8W9bc4ShNWv4pZCV2BWXC+t0rYE6I/+7YUHlGyCB8Vq8bI/Bux9h/XXSPUq
+ UKdw==
+X-Gm-Message-State: AOJu0YwDiOIcrZ9Sedks4oO079j4C+3grPZQcum7VWobR3VNSbXO42gq
+ bHrcvKPtdFJ5KwiejT7JrUr+/cYVz/OmrNfN2si6cxVPWGbN3mi/+vqGP8A3vMs=
+X-Google-Smtp-Source: AGHT+IH23zJvVziOL2/KsibP+yls3DC3PsDPV1iogytnu1XdVUSiiLRQIP7FXxfBL6lYKqwxqeVNVw==
+X-Received: by 2002:a05:6a20:ce43:b0:1ad:a8d:dc59 with SMTP id
+ id3-20020a056a20ce4300b001ad0a8ddc59mr7615920pzb.26.1714287684431; 
+ Sun, 28 Apr 2024 00:01:24 -0700 (PDT)
 Received: from localhost ([157.82.202.162])
  by smtp.gmail.com with UTF8SMTPSA id
- p3-20020a170902780300b001e3e09690c6sm18396631pll.199.2024.04.28.00.01.05
+ r8-20020a63fc48000000b005dbd0facb4dsm16781015pgk.61.2024.04.28.00.01.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Apr 2024 00:01:07 -0700 (PDT)
+ Sun, 28 Apr 2024 00:01:24 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sun, 28 Apr 2024 16:00:47 +0900
-Subject: [PATCH v10 04/18] net: Remove receive_raw()
+Date: Sun, 28 Apr 2024 16:00:51 +0900
+Subject: [PATCH v10 08/18] virtio-net: Add only one queue pair when realizing
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240428-rss-v10-4-73cbaa91aeb6@daynix.com>
+Message-Id: <20240428-rss-v10-8-73cbaa91aeb6@daynix.com>
 References: <20240428-rss-v10-0-73cbaa91aeb6@daynix.com>
 In-Reply-To: <20240428-rss-v10-0-73cbaa91aeb6@daynix.com>
 To: Jason Wang <jasowang@redhat.com>, 
@@ -78,8 +77,8 @@ To: Jason Wang <jasowang@redhat.com>,
  Yuri Benditovich <yuri.benditovich@daynix.com>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev
-Received-SPF: none client-ip=2607:f8b0:4864:20::634;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x634.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::430;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -101,86 +100,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While netmap implements virtio-net header, it does not implement
-receive_raw(). Instead of implementing receive_raw for netmap, add
-virtio-net headers in the common code and use receive_iov()/receive()
-instead. This also fixes the buffer size for the virtio-net header.
+Multiqueue usage is not negotiated yet when realizing. If more than
+one queue is added and the guest never requests to enable multiqueue,
+the extra queues will not be deleted when unrealizing and leak.
 
-Fixes: fbbdbddec0 ("tap: allow extended virtio header with hash info")
+Fixes: f9d6dbf0bf6e ("virtio-net: remove virtio queues if the guest doesn't support multiqueue")
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- include/net/net.h |  1 -
- net/net.c         | 18 ++++++++++++------
- net/tap.c         |  1 -
- 3 files changed, 12 insertions(+), 8 deletions(-)
+ hw/net/virtio-net.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/include/net/net.h b/include/net/net.h
-index 6fe5a0aee833..c8f679761bf9 100644
---- a/include/net/net.h
-+++ b/include/net/net.h
-@@ -72,7 +72,6 @@ typedef struct NetClientInfo {
-     NetClientDriver type;
-     size_t size;
-     NetReceive *receive;
--    NetReceive *receive_raw;
-     NetReceiveIOV *receive_iov;
-     NetCanReceive *can_receive;
-     NetStart *start;
-diff --git a/net/net.c b/net/net.c
-index db096765f4b2..6938da05e077 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -787,11 +787,7 @@ static ssize_t nc_sendv_compat(NetClientState *nc, const struct iovec *iov,
-         offset = iov_to_buf(iov, iovcnt, 0, buf, offset);
-     }
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 8ede38aadbbe..e33bdbfd84a5 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -3759,9 +3759,7 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+     n->net_conf.tx_queue_size = MIN(virtio_net_max_tx_queue_size(n),
+                                     n->net_conf.tx_queue_size);
  
--    if (flags & QEMU_NET_PACKET_FLAG_RAW && nc->info->receive_raw) {
--        ret = nc->info->receive_raw(nc, buffer, offset);
--    } else {
--        ret = nc->info->receive(nc, buffer, offset);
+-    for (i = 0; i < n->max_queue_pairs; i++) {
+-        virtio_net_add_queue(n, i);
 -    }
-+    ret = nc->info->receive(nc, buffer, offset);
++    virtio_net_add_queue(n, 0);
  
-     g_free(buf);
-     return ret;
-@@ -806,6 +802,8 @@ static ssize_t qemu_deliver_packet_iov(NetClientState *sender,
-     MemReentrancyGuard *owned_reentrancy_guard;
-     NetClientState *nc = opaque;
-     int ret;
-+    struct virtio_net_hdr_v1_hash vnet_hdr = { };
-+    g_autofree struct iovec *iov_copy = NULL;
- 
- 
-     if (nc->link_down) {
-@@ -824,7 +822,15 @@ static ssize_t qemu_deliver_packet_iov(NetClientState *sender,
-         owned_reentrancy_guard->engaged_in_io = true;
-     }
- 
--    if (nc->info->receive_iov && !(flags & QEMU_NET_PACKET_FLAG_RAW)) {
-+    if ((flags & QEMU_NET_PACKET_FLAG_RAW) && nc->vnet_hdr_len) {
-+        iov_copy = g_new(struct iovec, iovcnt + 1);
-+        iov_copy[0].iov_base = &vnet_hdr;
-+        iov_copy[0].iov_len =  nc->vnet_hdr_len;
-+        memcpy(&iov_copy[1], iov, iovcnt * sizeof(*iov));
-+        iov = iov_copy;
-+    }
-+
-+    if (nc->info->receive_iov) {
-         ret = nc->info->receive_iov(nc, iov, iovcnt);
-     } else {
-         ret = nc_sendv_compat(nc, iov, iovcnt, flags);
-diff --git a/net/tap.c b/net/tap.c
-index 49edf6c2b6e1..99c59ee46881 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -360,7 +360,6 @@ static NetClientInfo net_tap_info = {
-     .type = NET_CLIENT_DRIVER_TAP,
-     .size = sizeof(TAPState),
-     .receive = tap_receive,
--    .receive_raw = tap_receive_raw,
-     .receive_iov = tap_receive_iov,
-     .poll = tap_poll,
-     .cleanup = tap_cleanup,
+     n->ctrl_vq = virtio_add_queue(vdev, 64, virtio_net_handle_ctrl);
+     qemu_macaddr_default_if_unset(&n->nic_conf.macaddr);
 
 -- 
 2.44.0
