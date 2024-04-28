@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE625C4345F
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 22:06:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB2C1C4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 22:09:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1Cep-0003oA-EB; Sun, 28 Apr 2024 18:06:03 -0400
+	id 1s1Chj-0004i0-1q; Sun, 28 Apr 2024 18:09:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s1Cen-0003ne-8a
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 18:06:01 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1s1Chh-0004hm-P3
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 18:09:01 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s1Cel-0003pD-96
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 18:06:00 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-1e3ff14f249so28830615ad.1
- for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 15:05:58 -0700 (PDT)
+ id 1s1Chg-0004NL-AQ
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 18:09:01 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-6ee13f19e7eso3613387b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 15:08:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714341957; x=1714946757; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714342139; x=1714946939; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=f8RcUuZYzJJ51i53MmQws1qt+Wxu1AdZ5KD44y3Jxyk=;
- b=ni2Z2tN0QuUJ299iikXoWiE8bXAp/OfylJoo/dUSdhQiSQyXOrP16Jr/JIJbnpVZ+v
- U1j+pFSddlaWRj67wUHsLBAL8i7T79XjNozHK+OMRFKQUEptxWhu1INkpDZ3PDHtLziL
- xqTS71MmH9wpWQ8iCB6R2D3fgtqUa5b86PZGvlt+TWZbLc9rxKPcIFLWAEZZb1R/O9IS
- 0af9zrl/7FslZNCFdfssneQkLFhGXj+Odo9O7ii1YH751lNdoMTyQTlbSjLKKFIpWICa
- fE1hmPpOSh78CI8xNeduRd3YUwOQArDWN4cgaGuWue+bHfJiScYAcm7eT68MEXnMjpb5
- /GYw==
+ bh=uKhUKot3vzJCZLDAzNqGhj0dvY9BfvFBYllFA3dDmCU=;
+ b=ydIP38dm28MZkwZq9Y+7mZJL3tEamsEX7xmAvoW6LBuKd/BI82TmGMl7pBYHhzjg+v
+ Fp3SBgwN5ttIPoWMT2sAXJXg3yBb6mTAgPpviZPmMo9QG1Qv8RjcSwLQcAmMjjZzhx1s
+ H+pqvBn2ugEpIjC5aYmJ0Yx4eKNRHYfSW0fYXLdsMy5Y4GEF56ECp7lJoDY3NrlQa+FU
+ C3RAF+N4rsRF39bHGfz4UdQTG638VcncGhUKot4jucbX8SKuYs6Q/hIw6gWP7Hk9O4VM
+ eAo04I3V/+aca/kIojK1ErWVocotHla+bFmeviF+KjbDP/8WB0vBlWAEStYi8kSgf7VR
+ FR9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714341957; x=1714946757;
+ d=1e100.net; s=20230601; t=1714342139; x=1714946939;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=f8RcUuZYzJJ51i53MmQws1qt+Wxu1AdZ5KD44y3Jxyk=;
- b=pZcOpXhJHiYecmSzpa48UcXRPYODjDi+B6BKS/sfNmKPPnbdZE/si6kBZj4F+9DuCF
- ZjJ6CghkPYS2ki0myTsnsH/J9EFtoMSm5cb+vDETqmaa7+xKizDCeifBU/Iagag80iKH
- vVTPTTI1JtdH7bDTZfflfIRRrWvcXVXLbc3mtQxIdpxgsMvLd8yKMZsd6RKUWf0vus8o
- kYL27xHhlYUl+EE8c4MLxB02bywl+XZYJwsP5NnuO5YAccQkriRt66E14Z1vRNiiDebR
- oylJaUDe9N1M7uJVq/4qAnXoA5eozYdH6EXBnMYwme5BSeFEKlUY44O6CGjJmMHsnN01
- 9iVQ==
+ bh=uKhUKot3vzJCZLDAzNqGhj0dvY9BfvFBYllFA3dDmCU=;
+ b=aqrI33NeGtWTyk/dog4F0j5SxfFUo6j3PH3Dwv1tYltsuIfzeK+Kjrh2BCYU3pUYyh
+ bQUn6x9rb1fSK8Vqgj6Gg1keyTgUjFMQv11lW3odqND2Dr9qfTW44rI0woTqLFjiIItD
+ auFQwOwKncfWaLtVvdR1d+0H9GGx+ORfhBwtx5NppbUaPQN2zZTWoqK8friIkJ0g2SjZ
+ a+cxjGnay0Ym0EAYM5U0RkBee8I53ZlDPX2niNoIWXjLD5wMQaw5JX1TURtPfYx7oUq8
+ VN8EO0vebBzVhSXBVeLVsXq4FKByCUq0n92wZ/GhJiCOKhqL9cdODf6ipG05GCA4ppci
+ S+ew==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV3vWukC0p20UOXuPcsxqL/O/6JGVFLPcuwXF7pK8uGJEhX+CWJjJEniMRXLt0oNx1Rej8lnLn8Wn65ovZ52yI/p8NzZ80=
-X-Gm-Message-State: AOJu0Yz8nvqEJhEZs3RkNdlQb7PtYsaSLqfGfU1s8/3xkGerIjESNYqI
- UTU1mjZNZUd6FqYljsTRXkhJGK8FzRzygXJbNURGwUTWnwdJNwSF+nFOelVNyr0=
-X-Google-Smtp-Source: AGHT+IGXW5Ul1wDBAyjS8fmBkSBtBuD+Zpt9+6nZD5e8ArSeoIHK3uoPq1bL+P9ojMeN4d7a0B3waw==
-X-Received: by 2002:a17:903:41c2:b0:1e8:7906:5be3 with SMTP id
- u2-20020a17090341c200b001e879065be3mr6670314ple.18.1714341957238; 
- Sun, 28 Apr 2024 15:05:57 -0700 (PDT)
+ AJvYcCVtDfKGj4VfRZ/UuEFfSyQD61kXLTX97IWE1BNJms0M6hVQvy4X9HZnz9td/r3aCeXvhmvGb3j9JlMUh04pjvY6QfG5OMo=
+X-Gm-Message-State: AOJu0YxSfIy90F7zBHH+jmLa8shhlCNCnOQKzKXc6/unp13l/ehTQY3v
+ u6d7AOCdmzhJ3AueC6P0rFpLe5F6KdgP4KvKs+CoXvOiB2Xb38gGq+Ij2xXX+BPRQ+1QbaY5pbt
+ G
+X-Google-Smtp-Source: AGHT+IE/16ZasGAvit6LpoGahFPYkIvJs/YEWsAPmqb36XclUrHooRUra4L2Tr0ilCZBSHljA1uZiA==
+X-Received: by 2002:a05:6a21:32aa:b0:1aa:6100:3b01 with SMTP id
+ yt42-20020a056a2132aa00b001aa61003b01mr10014665pzb.50.1714342138962; 
+ Sun, 28 Apr 2024 15:08:58 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- f21-20020a170902ab9500b001e5119c1923sm18867882plr.71.2024.04.28.15.05.56
+ o10-20020a17090a420a00b002ad059491f6sm14187066pjg.5.2024.04.28.15.08.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Apr 2024 15:05:56 -0700 (PDT)
-Message-ID: <5f78d0f9-6406-4cdf-938b-5ca44a3b50e7@linaro.org>
-Date: Sun, 28 Apr 2024 15:05:55 -0700
+ Sun, 28 Apr 2024 15:08:58 -0700 (PDT)
+Message-ID: <28f02378-b01a-4986-9dcd-9c397297d25a@linaro.org>
+Date: Sun, 28 Apr 2024 15:08:56 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/12] accel/tcg: Use cpu_loop_exit_requested() in
- cpu_loop_exec_tb()
+Subject: Re: [PATCH v2 09/12] accel/tcg: Restrict cpu_loop_exit_requested() to
+ TCG
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20240428214915.10339-1-philmd@linaro.org>
- <20240428214915.10339-9-philmd@linaro.org>
+ <20240428214915.10339-10-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240428214915.10339-9-philmd@linaro.org>
+In-Reply-To: <20240428214915.10339-10-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,14 +101,23 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/28/24 14:49, Philippe Mathieu-Daudé wrote:
-> Do not open-code cpu_loop_exit_requested().
+> cpu_loop_exit_requested() is specific to TCG, move it
+> to "exec/translate-all.h".
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   accel/tcg/cpu-exec.c | 7 ++-----
->   1 file changed, 2 insertions(+), 5 deletions(-)
+>   include/exec/exec-all.h       | 17 -----------------
+>   include/exec/translate-all.h  | 20 ++++++++++++++++++++
+>   target/arm/tcg/helper-a64.c   |  1 +
+>   target/s390x/tcg/mem_helper.c |  1 +
+>   4 files changed, 22 insertions(+), 17 deletions(-)
 
+I guess we could dither about whether this is the best place, but I guess it doesn't 
+matter.  Do you really need the CONFIG_TCG ifdef?
+
+Either way,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
 
 r~
 
