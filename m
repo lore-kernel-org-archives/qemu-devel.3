@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D28BC4345F
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 20:12:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12103C4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 20:13:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1AsP-0003tt-8Z; Sun, 28 Apr 2024 16:11:57 -0400
+	id 1s1Aty-0004Xx-9X; Sun, 28 Apr 2024 16:13:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1AsK-0003tT-Ln
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 16:11:54 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Ats-0004XI-Dm
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 16:13:28 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1AsJ-0002Yt-5x
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 16:11:52 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a5557e3ebcaso634124366b.1
- for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 13:11:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Atq-0002g6-Ld
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 16:13:27 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5726716a006so2019135a12.2
+ for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 13:13:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714335109; x=1714939909; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714335205; x=1714940005; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=dDUr1CIBrHxI9tD6i7tgZ5DleLMhyEllp5AxSqUPCRA=;
- b=SbRg9quSzrRjc3QNtwybEU5RDd0NQ0GeFwpRroJJOKZga7/mZlA1DLLV3Xt1tCrbmW
- XI+1w7Clb5qPMkwRzNcFyAPJ4OEIuq5DyG1R6CHi+SCmXF0fJMJjww36bzyFyT17w80O
- E5OI+WQy2oUF3/K9BQsQVMicUD8glYmB/tuOG9Vf5ZKNT5lZGBr38rT/EOylSdRoiOdZ
- iGxJnnI6XvtEACBNLPVs8gVgmZEgAkFYB6qQ3sZk1yPuuLsSEjUy40oxu2MHxhX3HRmI
- LJHl7aa/+wvJI5vwYb7XKMi2Okcbf8+z6KXQNpt47GEFAy5g4EgRpCqkLLZ/Ra/5jiZZ
- TQIA==
+ bh=O6ndXcjZ1uhjC9iOXqQtViQr00wGjNx4SQ9xRIB4zz0=;
+ b=hHRM+b1GkRiqi7SgOOVesz+lklOUF+b4VXUuPV4/qDyNoCch4I8k+w8ddbuoDy4V70
+ Yizsa/wl9QsZln2rPFdSrySJMu23/v6kzpkd2TOT11g56OoDG4yCF+8ETfzD8fpCf6AH
+ /OsDZckzJrUbKGuCCc6iGf5YwWjvJyCkkcEIM6sli2u37fE2MYwwopz8Pm4+6Nk/sFoH
+ xUQ9p8NTI5jEvBa51WaQJ9ocCIU13aU0aulN1oClWtuSELGPiky0R/GctqA2Pysu61il
+ 9gyfMTbBQmEM2rb4ohgpxXk4N6vfqSRaZYqSze/ZBOeAWyoiO8+FG6/o51+weiJg9dkP
+ jrZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714335109; x=1714939909;
+ d=1e100.net; s=20230601; t=1714335205; x=1714940005;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dDUr1CIBrHxI9tD6i7tgZ5DleLMhyEllp5AxSqUPCRA=;
- b=AX4LNi3XqtnU8SJDw/PROAUSQ0kTonrii7q2WqEQ1DLCfasNZvI8RDDJRorChstpBc
- Wvnr5g/HNwk2tw2aMn7uMqiGjgdjy3e/Q/ebzh6uWI7Nfd5hodfEbuPVVS9UgRsG03QD
- KY/jq9hNcT5Cips9Z490jnJoKJJMkm3hJoF6uqLMFjBDunPFy5WGWB1X4koXRKZmvg65
- Ll5EvVLTmwH+4+k04GKbMHXEg5xx0pUV0UZkA3gj6Z18OQ99l3Y6aHJvqWx+wIhpwDWK
- 5AX7hNAZUZovu6a8SibrvNugbk2qQUpPWwdplCaeYndRZhjsKhuXh8SGJsbvUuPlyXIn
- CljA==
+ bh=O6ndXcjZ1uhjC9iOXqQtViQr00wGjNx4SQ9xRIB4zz0=;
+ b=fk1Ha/5xKacdEA4klNBkldXCIV8SBoU/cJvypHy3DAVg1tlFO5ECxqjZnF7TbqgbXx
+ 9GwDiLV4VJrYpR5ZPvqD01QgrWdLJPhedLTzQJ3yJX0ullvmthC2/krW6JrdKfjTn8xa
+ lJyaZYxdgqsYRpE9FnBaTPOCR4u2HGUKfbNyhYBm1eT7mTmJy5LGiRQBAKA2nYKJzCkt
+ tyaZG7IJb215M0rrAmU2eNv4FSPDVv4ASr8GRdSBefb8V9zXMAkqCxNwSzFkph4MwnLM
+ iNQcUVlVpU8+Hn7vSPvqpBUCoKzzIsjzpFhgKtqY0HdEE8swLyfeP90mP8G2xkDYeeUb
+ 1WwQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXmFgjEiDtzPSbnqLJxlkxlpo7Av/goMESDfFUNLmSvfGL6lc7V8CuOwICcwwzU+T3Do1UmCsIlpfcir1LgHBqteCdxjnQ=
-X-Gm-Message-State: AOJu0YxQmN7351N6gf3uq5iG0Ab8RCLpdDn7FKLuiRWFel+FYMfuA0qq
- 0gbsm9CtQ8nYRX0aIM8s9f6vkQ2uoAgSkIr6MPW/eII2/5J+pomxFO6+0RBLjhQ=
-X-Google-Smtp-Source: AGHT+IHtJjib/yQFMgIMtchMzW0zIp9PfIt5nwTQY33nvYdHyfy5ql6nVoF7TYHKxYPud68yQFOufA==
-X-Received: by 2002:a17:906:4815:b0:a51:abd8:8621 with SMTP id
- w21-20020a170906481500b00a51abd88621mr4723525ejq.19.1714335109097; 
- Sun, 28 Apr 2024 13:11:49 -0700 (PDT)
+ AJvYcCXO9VXL971ez0fjGqJ3xkwCfoPHYY9Y77P5fU3HI1J6ZD3RNaJSan/uZxFBSTIaCutcBurmeaaVEKDyFUiiow3WvWF3X/E=
+X-Gm-Message-State: AOJu0Yx/tupy+hrITCCn3sRGsAgHk3uwuRYufmEFi5E0YKW0FwYkshKs
+ nQyr6IXaflJHrDbu+7zvNJunA7kXBbGeDIw0fp+sE/iP7ItUsQAM3jsS/8ffd4fo99ka6EK9L7M
+ 3
+X-Google-Smtp-Source: AGHT+IFRRryKAyeLUtUJOUzF0l9HFtZuPLj0RMKG6OHnFb+Tnx6dNQuT1LynIy6Bpeu8x+kRJxvJIg==
+X-Received: by 2002:a17:906:81d5:b0:a58:871f:8eb0 with SMTP id
+ e21-20020a17090681d500b00a58871f8eb0mr5984936ejx.7.1714335204551; 
+ Sun, 28 Apr 2024 13:13:24 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.142.130])
  by smtp.gmail.com with ESMTPSA id
- u24-20020a1709060b1800b00a58767c1120sm7290453ejg.10.2024.04.28.13.11.47
+ cf8-20020a170906b2c800b00a58d14479adsm3067736ejb.59.2024.04.28.13.13.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Apr 2024 13:11:47 -0700 (PDT)
-Message-ID: <36fb38e7-4269-49fb-bcdb-a96d577bd56e@linaro.org>
-Date: Sun, 28 Apr 2024 22:11:46 +0200
+ Sun, 28 Apr 2024 13:13:24 -0700 (PDT)
+Message-ID: <47c109cd-a79a-43b1-ae48-38a59435659f@linaro.org>
+Date: Sun, 28 Apr 2024 22:13:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 09/14] exec/cpu: Restrict user-specific page
- definitions
+Subject: Re: [PATCH 10/14] exec/user: Restrict 'syscall-trace.h' to user
+ emulation
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20240427155714.53669-1-philmd@linaro.org>
- <20240427155714.53669-10-philmd@linaro.org>
- <5185c954-a03a-4fa6-ac69-a36001006cf4@linaro.org>
+ <20240427155714.53669-11-philmd@linaro.org>
+ <cef95745-f6f4-4485-be8b-9f833fa49126@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <5185c954-a03a-4fa6-ac69-a36001006cf4@linaro.org>
+In-Reply-To: <cef95745-f6f4-4485-be8b-9f833fa49126@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,21 +98,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/4/24 20:31, Richard Henderson wrote:
+On 28/4/24 20:32, Richard Henderson wrote:
 > On 4/27/24 08:57, Philippe Mathieu-Daudé wrote:
->> User-specific PAGE definitions shouldn't be used on system emulation.
+>> System emulation shouldn't use "user/syscall-trace.h".
 >>
 >> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 >> ---
->>   include/exec/page-prot-common.h | 8 ++++++++
->>   1 file changed, 8 insertions(+)
+>>   include/user/syscall-trace.h | 4 ++++
+>>   1 file changed, 4 insertions(+)
+>>
+>> diff --git a/include/user/syscall-trace.h b/include/user/syscall-trace.h
+>> index b48b2b2d0a..6926434d9a 100644
+>> --- a/include/user/syscall-trace.h
+>> +++ b/include/user/syscall-trace.h
+>> @@ -10,6 +10,10 @@
+>>   #ifndef SYSCALL_TRACE_H
+>>   #define SYSCALL_TRACE_H
+>> +#ifndef CONFIG_USER_ONLY
+>> +#error Cannot include this header from system emulation
+>> +#endif
+>> +
+>>   #include "exec/user/abitypes.h"
+>>   #include "gdbstub/user.h"
+>>   #include "qemu/plugin.h"
 > 
-> Come to that, PAGE_WRITE_INV is system only.
-> 
-> Does this clarify or simply spread ifdefs around?
-> They aren't particularly common at this point...
+> Are we really going to do this for all include/user/ headers?
 
-OK, I removed this patch, renamed as "exec/page-protection.h"
-in previous patch and added an entry in the "Overall TCG CPUs"
-section in MAINTAINERS.
+I'd like to, there are only 2 more files left,
+user/tswap-target.h and user/thunk.h.
+
 
