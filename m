@@ -4,52 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F2D8C4345F
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 09:10:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A71BCC10F1A
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 11:12:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s10Y4-00031f-1S; Sun, 28 Apr 2024 05:10:16 -0400
+	id 1s12Ra-0004VC-MV; Sun, 28 Apr 2024 07:11:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1s10Xv-0002m4-GT
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 05:10:10 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1s10Xs-0004kb-Ex
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 05:10:06 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8CxBev+ES5m61kEAA--.4109S3;
- Sun, 28 Apr 2024 17:08:14 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8CxpFb1ES5mmCgIAA--.5818S14; 
- Sun, 28 Apr 2024 17:08:13 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org,
-	Bibo Mao <maobibo@loongson.cn>
-Subject: [PULL 12/17] hw/loongarch: fdt adds pch_pic Controller
-Date: Sun, 28 Apr 2024 16:51:12 +0800
-Message-Id: <20240428085117.2422473-13-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20240428085117.2422473-1-gaosong@loongson.cn>
-References: <20240428085117.2422473-1-gaosong@loongson.cn>
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1s12RY-0004Un-Ci
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 07:11:40 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1s12RW-0000Ym-Ca
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 07:11:40 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-6f2f6142d64so3386877b3a.2
+ for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 04:11:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1714302696; x=1714907496;
+ darn=nongnu.org; 
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=/4YH1P7orc/Te98j0BdkDaV2/xgzpkcLw1sCbumgnEw=;
+ b=1uI4YQmIv/sdW6ZtMuCb/Qjv105gZod2yS281ZdcDlHX2nn4tHHcCnjhN4WcUS51ZR
+ R3YGEY/uori0IRbaX5+TwQRAjxcY/xYy9Ea/QynYHLbW8Hkl6mdXqZRzSYQm3BFHFIB1
+ Wll7DT5PJR6CVLuWzBJLSdLiWIBA7YwVgQjaB++TIf6zG203ly42IpsO0gfC6Rrd9vhu
+ kI7Jwk9MGPnVlR6KBGCOJqJq/+TvFIOStq9JmMDAfnBnpyEPw6lpTva0B2MdyfYX/6yd
+ nbFoA6McVzhBM4AS4qzB4isSqUpqeBKRDwwGmU6LtZ1qWk64Nqx0neStZH0QTt7UzXKt
+ 6wMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714302696; x=1714907496;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/4YH1P7orc/Te98j0BdkDaV2/xgzpkcLw1sCbumgnEw=;
+ b=YJAgdNgxakyEXnK3bzpaQPZpMfqAEava8DEjy6P7q3AUJmNmFZ1BlLt0ywkMB0KhlP
+ xsnrGt88TLfj0XhBEt5n/a0AkefCJcB/XWHQUoKdoUsVi1ZhDPsact7XwJUU7Vqy+sU2
+ 4pwb+2bAY/dYbtS/cya6gOMdYWKkyfL+SPEHl2h2oRqT/0wF3W8BgSGXlNSeEXLXkkEe
+ Oep20TH2zhSxNizstyg7cS3Hk8NhtT7BUnWOPWYcTjStYI0QYnbPrjt3ImkWQN5Yyy+a
+ kdcIGqn7o/U4RpOP/b8sTysIhgGuIPUyCYl08QaUduaegW+0sCKIaw0+JeXpOptrIUAE
+ aRDg==
+X-Gm-Message-State: AOJu0YzodArkTv1fU8s/kfeh4Itrr98dtyoDBpigbHWHoNQsMsw9l59d
+ cxWhlA8O1M/0hnZjQ7514T96v87CRsfWaiX57rc1M4crw3odM7isF4WnGTlMJ0A=
+X-Google-Smtp-Source: AGHT+IHk9vxvmhEmjLG9oQZMMmG4zoEd0/k7bnvlpQpbrYEUvWvMKXezdHWS1KL8wMweCfCPD3OXkA==
+X-Received: by 2002:a05:6a20:d428:b0:1a9:ff21:8862 with SMTP id
+ il40-20020a056a20d42800b001a9ff218862mr6523177pzb.60.1714302695975; 
+ Sun, 28 Apr 2024 04:11:35 -0700 (PDT)
+Received: from localhost ([157.82.202.162])
+ by smtp.gmail.com with UTF8SMTPSA id
+ f33-20020a056a000b2100b006ecee611c05sm17542280pfu.182.2024.04.28.04.11.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 28 Apr 2024 04:11:35 -0700 (PDT)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Subject: [PATCH 0/2] util/iov: Do not assert offset is in iov
+Date: Sun, 28 Apr 2024 20:11:21 +0900
+Message-Id: <20240428-iov-v1-0-7b2dd601d80b@daynix.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8CxpFb1ES5mmCgIAA--.5818S14
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANkuLmYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDEyML3cz8Mt1EY0PzJAMjMwPDlGQloMqCotS0zAqwKdGxtbUAg265YVU
+ AAAA=
+To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
+ Jason Wang <jasowang@redhat.com>
+Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.14-dev-01a33
+Received-SPF: none client-ip=2607:f8b0:4864:20::429;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,88 +96,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-fdt adds pch pic controller, we use 'loongson,pch-pic-1.0'
+iov_from_buf(), iov_to_buf(), iov_memset(), and iov_copy() asserts
+that the given offset fits in the iov while tolerating the specified
+number of bytes to operate with to be greater than the size of iov.
+This is inconsistent so remove the assertions.
 
-See:
-https://github.com/torvalds/linux/blob/v6.7/drivers/irqchip/irq-loongson-pch-pic.c
-https://lore.kernel.org/r/20200528152757.1028711-4-jiaxun.yang@flygoat.com
+Asserting the offset fits in the iov makes sense if it is expected that
+there are other operations that process the content before the offset
+and the content is processed in order. Under this expectation, the
+offset should point to the end of bytes that are previously processed
+and fit in the iov. However, this expectation depends on the details of
+the caller, and did not hold true at least one case and required code to
+check iov_size(), which is added with commit 83ddb3dbba2e
+("hw/net/net_tx_pkt: Fix overrun in update_sctp_checksum()").
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Message-Id: <20240426091551.2397867-13-gaosong@loongson.cn>
+Adding such a check is inefficient and error-prone. These functions
+already tolerate the specified number of bytes to operate with to be
+greater than the size of iov to avoid such checks so remove the
+assertions to tolerate invalid offset as well. They return the number of
+bytes they operated with so their callers can still check the returned
+value to ensure there are sufficient space at the given offset.
+
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- hw/loongarch/virt.c        | 30 +++++++++++++++++++++++++++++-
- include/hw/pci-host/ls7a.h |  1 +
- 2 files changed, 30 insertions(+), 1 deletion(-)
+Akihiko Odaki (2):
+      util/iov: Do not assert offset is in iov
+      Revert "hw/net/net_tx_pkt: Fix overrun in update_sctp_checksum()"
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 094b9d2e60..5bef161d11 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -148,6 +148,31 @@ static void fdt_add_eiointc_node(LoongArchMachineState *lams,
-     g_free(nodename);
- }
- 
-+static void fdt_add_pch_pic_node(LoongArchMachineState *lams,
-+                                 uint32_t *eiointc_phandle,
-+                                 uint32_t *pch_pic_phandle)
-+{
-+    MachineState *ms = MACHINE(lams);
-+    char *nodename;
-+    hwaddr pch_pic_base = VIRT_PCH_REG_BASE;
-+    hwaddr pch_pic_size = VIRT_PCH_REG_SIZE;
-+
-+    *pch_pic_phandle = qemu_fdt_alloc_phandle(ms->fdt);
-+    nodename = g_strdup_printf("/platic@%" PRIx64, pch_pic_base);
-+    qemu_fdt_add_subnode(ms->fdt, nodename);
-+    qemu_fdt_setprop_cell(ms->fdt,  nodename, "phandle", *pch_pic_phandle);
-+    qemu_fdt_setprop_string(ms->fdt, nodename, "compatible",
-+                            "loongson,pch-pic-1.0");
-+    qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", 0,
-+                           pch_pic_base, 0, pch_pic_size);
-+    qemu_fdt_setprop(ms->fdt, nodename, "interrupt-controller", NULL, 0);
-+    qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 2);
-+    qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
-+                          *eiointc_phandle);
-+    qemu_fdt_setprop_cell(ms->fdt, nodename, "loongson,pic-base-vec", 0);
-+    g_free(nodename);
-+}
-+
- static void fdt_add_flash_node(LoongArchMachineState *lams)
- {
-     MachineState *ms = MACHINE(lams);
-@@ -570,7 +595,7 @@ static void loongarch_irq_init(LoongArchMachineState *lams)
-     CPULoongArchState *env;
-     CPUState *cpu_state;
-     int cpu, pin, i, start, num;
--    uint32_t cpuintc_phandle, eiointc_phandle;
-+    uint32_t cpuintc_phandle, eiointc_phandle, pch_pic_phandle;
- 
-     /*
-      * The connection of interrupts:
-@@ -661,6 +686,9 @@ static void loongarch_irq_init(LoongArchMachineState *lams)
-         qdev_connect_gpio_out(DEVICE(d), i, qdev_get_gpio_in(extioi, i));
-     }
- 
-+    /* Add PCH PIC node */
-+    fdt_add_pch_pic_node(lams, &eiointc_phandle, &pch_pic_phandle);
-+
-     pch_msi = qdev_new(TYPE_LOONGARCH_PCH_MSI);
-     start   =  num;
-     num = EXTIOI_IRQS - start;
-diff --git a/include/hw/pci-host/ls7a.h b/include/hw/pci-host/ls7a.h
-index e753449593..fe260f0183 100644
---- a/include/hw/pci-host/ls7a.h
-+++ b/include/hw/pci-host/ls7a.h
-@@ -24,6 +24,7 @@
- #define VIRT_PCH_REG_BASE        0x10000000UL
- #define VIRT_IOAPIC_REG_BASE     (VIRT_PCH_REG_BASE)
- #define VIRT_PCH_MSI_ADDR_LOW    0x2FF00000UL
-+#define VIRT_PCH_REG_SIZE        0x400
- 
- /*
-  * GSI_BASE is hard-coded with 64 in linux kernel, else kernel fails to boot
+ include/qemu/iov.h  | 5 +++--
+ hw/net/net_tx_pkt.c | 4 ----
+ util/iov.c          | 5 -----
+ 3 files changed, 3 insertions(+), 11 deletions(-)
+---
+base-commit: fd87be1dada5672f877e03c2ca8504458292c479
+change-id: 20240428-iov-a317b02601dc
+
+Best regards,
 -- 
-2.25.1
+Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
