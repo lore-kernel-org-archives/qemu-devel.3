@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E608C4345F
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 09:07:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07111C4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 09:08:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s10UZ-0007jP-44; Sun, 28 Apr 2024 05:06:39 -0400
+	id 1s10UX-0007i1-0e; Sun, 28 Apr 2024 05:06:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s10UW-0007i2-Sy
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 05:06:36 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1s10UU-0007hV-Km
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 05:06:34 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s10UU-0003xt-7V
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 05:06:36 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-6ed01c63657so3438395b3a.2
- for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 02:06:33 -0700 (PDT)
+ id 1s10UP-0003wX-5F
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 05:06:32 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-1eab699fcddso26491045ad.0
+ for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 02:06:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1714295192; x=1714899992;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1714295188; x=1714899988;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=agEvzBa4RHbrJsI2JBzinS8CmNut8NaPKnAYNO+Q2DM=;
- b=jpgz4nN65R37bbTD8IrdFiuetISPfEEWCdveRoUV+FkDqDgcykw6ZRql68NdGTrOWn
- DpCPGpEGSSVMry+51g86Jaa9dPyj585l0bNl+2U6x5S5bVn3Q1AlXBc2Anapco2VT+ZD
- YaJCFtEmQduQf3lYT1ESAYMJwhTkvQJn9soGCc6Oe9VulZAKJRK44eRPF11CV+6FeAMd
- OVmtQqUew16kaRN8ExYMhfCi2GyqroocRJg7rbxqV8jLULP5NrzXqfysSlGvR6B/ZZ4k
- FS5ze7MLKLmlo3TL6LaFvcArrvnOYyYhcYF6FlWzsL2eG0XDJwrytdRv3PGAsvaYK7hD
- Wg5g==
+ :reply-to; bh=KYFokKhXysTWjT3OFitjO+OVj2oTKkLxJ60GTT7+88s=;
+ b=T0YEUizFEav3/K72YYunCUm80NxOxpCriL49W59ZyoEwlI6OglOVGf9iLksizWzKq+
+ q7IHbK25+JzujbpwcCqQqcAet1E2jP3z76zfD6n8X4bIFmPy88VTNaD345Uf6YqANVop
+ oKApDBrZ0GuoFksEBMW6NVVkA2hgygdKVa2rUxlPA3qKR75dMOxUH5FjP/UDj2kHPA8g
+ /lZWjvwLD8h5J6OotBSkOonx6mukVmqcNKfCezjFSwe17W9WsrGLzY5T0heRDrtLkcck
+ YtqIlUGM9v8g3KS3DYT+A3uuuxpneix4oTwhRkPx0vKGCzYR8r7KLjNR9Gh5ccuIVvzd
+ IPNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714295192; x=1714899992;
+ d=1e100.net; s=20230601; t=1714295188; x=1714899988;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=agEvzBa4RHbrJsI2JBzinS8CmNut8NaPKnAYNO+Q2DM=;
- b=LB0UaVVnz/uTi/VPB8vC6kClHrlEMnKz4gzEPOsVx7djudn3TfWbwPurh19HGHWd6j
- lSRx+/eEcADJj0IJEcKJb173bDVmCkA13f1wlmxiC8zouXeCRpQBLA3UrawdKbitK31K
- 2n05tANE1mxqqoQ2pjPPz2VpPEjZv+qIeyaFT6MpKYhyoHd6rNEnUY7fOL6XYRMLEDHe
- v+rA2TSy60wUhjz7iXPyVr8Nu2/X7hxMjPmmMy7tHzLyoUkF1CFTX4/CGIl4QmV+rdJq
- BVl+V/3vEIdXgIGNwiV9dCFsqrhkITY8I3BjcCtlJiAVSaiUOZJRgTxTUgwGVm2mMB83
- tX8A==
-X-Gm-Message-State: AOJu0Yz5+SS9g5TAAomOxDxVO3OnqwiefOnHnVU2oyz6rkVnCKqpiD17
- mrSWp7ArPaj1kTr0TIaQlwEI+8gMyGK9BDXgyBX4sDS/9zKHBO+qchfXQb6au9c=
-X-Google-Smtp-Source: AGHT+IGbTbWS711n0c6sAoeBV+trTnvp8SbIWmZ63HmTOa4PtBTSzTi8mYezMIVy2+mVJArKa8YrqA==
-X-Received: by 2002:a05:6a00:39a1:b0:6ec:db05:36cd with SMTP id
- fi33-20020a056a0039a100b006ecdb0536cdmr5316627pfb.9.1714295192494; 
- Sun, 28 Apr 2024 02:06:32 -0700 (PDT)
+ bh=KYFokKhXysTWjT3OFitjO+OVj2oTKkLxJ60GTT7+88s=;
+ b=S0k7tYAA/GM1GPxsQDnaP4tJOHNuuemsyCpGt8J2g9U+zNIIsvXiA1DYfoFa/Xxchf
+ DE7yOIvMcBVWGwltNaIB2DiHJhCN++HbJD9N0YOuOwIc79YYkPo2sVBZ8axuji6NIfSe
+ NCGupfwE91rS/Tl7roZrDoa7bhm1Qipet/lQvhkB7hxPV+vPKs1W+2qR8w2BLo3Ua8gE
+ tubgejoJbf0B0DU9nPyxdAjbU/cYzED7EqErLzDeHl5JhpIpXGXjh33VRHcQiUKcQr6o
+ rSjge39CBaZQcL+nnUf5hWXG6c1I+QFnb10bqC6odOHBVP8eybxB/xlGA6Mm1p3zOcu8
+ kuzQ==
+X-Gm-Message-State: AOJu0YxijV1++UO545p6CN4QjBc/JcpGeMK6iiFDsxQ2sDSVWQbwgS29
+ 1bcjHrJsUuhzp+7G8R+mhIZXNC0bj7y6jgRzgkOqV+V6DeAnbdVXJ77/3BxAycI=
+X-Google-Smtp-Source: AGHT+IEDMLcOKPVG8HiLsZVvaamd2lro71ACJjACOM7U6z8LlpUPdEr1HX0YliO/Kpvtb2UYESt4Hg==
+X-Received: by 2002:a17:902:ce02:b0:1eb:57cb:4c69 with SMTP id
+ k2-20020a170902ce0200b001eb57cb4c69mr4526854plg.45.1714295187923; 
+ Sun, 28 Apr 2024 02:06:27 -0700 (PDT)
 Received: from localhost ([157.82.202.162])
  by smtp.gmail.com with UTF8SMTPSA id
- v28-20020a63481c000000b005f7536fbebfsm16765604pga.11.2024.04.28.02.06.29
+ bf6-20020a170902b90600b001e86e5dcb81sm18096416plb.283.2024.04.28.02.06.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Apr 2024 02:06:32 -0700 (PDT)
+ Sun, 28 Apr 2024 02:06:27 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sun, 28 Apr 2024 18:05:47 +0900
-Subject: [PATCH RFC v4 7/7] virtio-net: Implement SR-IOV VF
+Date: Sun, 28 Apr 2024 18:05:46 +0900
+Subject: [PATCH RFC v4 6/7] virtio-pci: Implement SR-IOV PF
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240428-sriov-v4-7-ac8ac6212982@daynix.com>
+Message-Id: <20240428-sriov-v4-6-ac8ac6212982@daynix.com>
 References: <20240428-sriov-v4-0-ac8ac6212982@daynix.com>
 In-Reply-To: <20240428-sriov-v4-0-ac8ac6212982@daynix.com>
 To: "Michael S. Tsirkin" <mst@redhat.com>, 
@@ -80,8 +80,8 @@ Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
  Yui Washizu <yui.washidu@gmail.com>, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-a718f
-Received-SPF: none client-ip=2607:f8b0:4864:20::429;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x429.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -103,26 +103,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A virtio-net device can be added as a SR-IOV VF to another virtio-pci
-device that will be the PF.
+Allow user to attach SR-IOV VF to a virtio-pci PF.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- hw/virtio/virtio-net-pci.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/virtio/virtio-pci.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/hw/virtio/virtio-net-pci.c b/hw/virtio/virtio-net-pci.c
-index e03543a70a75..dba4987d6e04 100644
---- a/hw/virtio/virtio-net-pci.c
-+++ b/hw/virtio/virtio-net-pci.c
-@@ -75,6 +75,7 @@ static void virtio_net_pci_class_init(ObjectClass *klass, void *data)
-     k->device_id = PCI_DEVICE_ID_VIRTIO_NET;
-     k->revision = VIRTIO_PCI_ABI_VERSION;
-     k->class_id = PCI_CLASS_NETWORK_ETHERNET;
-+    k->sriov_vf_user_creatable = true;
-     set_bit(DEVICE_CATEGORY_NETWORK, dc->categories);
-     device_class_set_props(dc, virtio_net_properties);
-     vpciklass->realize = virtio_net_pci_realize;
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index eaaf86402cfa..996bb2cbad20 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -2245,6 +2245,12 @@ static void virtio_pci_device_plugged(DeviceState *d, Error **errp)
+         pci_register_bar(&proxy->pci_dev, proxy->legacy_io_bar_idx,
+                          PCI_BASE_ADDRESS_SPACE_IO, &proxy->bar);
+     }
++
++    if (pcie_sriov_pf_init_from_user_created_vfs(&proxy->pci_dev,
++                                                 PCI_CONFIG_SPACE_SIZE,
++                                                 errp)) {
++        virtio_add_feature(&vdev->host_features, VIRTIO_F_SR_IOV);
++    }
+ }
+ 
+ static void virtio_pci_device_unplugged(DeviceState *d)
+@@ -2253,6 +2259,7 @@ static void virtio_pci_device_unplugged(DeviceState *d)
+     bool modern = virtio_pci_modern(proxy);
+     bool modern_pio = proxy->flags & VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY;
+ 
++    pcie_sriov_pf_exit(&proxy->pci_dev);
+     virtio_pci_stop_ioeventfd(proxy);
+ 
+     if (modern) {
 
 -- 
 2.44.0
