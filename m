@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97A92C4345F
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 07:02:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C7A5C41513
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 07:02:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s0yXJ-0002Oo-LU; Sun, 28 Apr 2024 03:01:21 -0400
+	id 1s0yXa-0002Ql-4U; Sun, 28 Apr 2024 03:01:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s0yXI-0002Od-9r
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 03:01:20 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1s0yXV-0002QJ-HB
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 03:01:35 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s0yXF-0005Ph-JM
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 03:01:19 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-2a484f772e2so2332930a91.3
- for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 00:01:17 -0700 (PDT)
+ id 1s0yXS-0005QO-8b
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 03:01:32 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-6f07de6ab93so3236075b3a.2
+ for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 00:01:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1714287676; x=1714892476;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1714287689; x=1714892489;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=lzZZwAvDlZW0POG/57kWL/3/6EoUmB+Yu+cgaQmA+uE=;
- b=Gtm7qzXOVi61quGBOoApDrrsu1g13GlmhNE0Dxg9opJ1Ff3EIbKsqOPwtshcFgRDEw
- jzFOZ9GpvXql/nBEkj0p84mULNCjHuvkMmEvUbErppZn2RlzuR03Q1C5i86ziiiEz6FC
- umM2gkFWmCNpaEOlqUYlyPvzspD98TT9pKJO/uUNl3uDZ9YagKtIOYxD4cs7bTwa/EX/
- pEUepp7oNCqBqVzLpMi2E+01DdwpLYoNEnS/RdRly+xr5c7J/fHXMP8BhoKj0bjHghcs
- sCFz+FSFrH9REwqk4j7JZhI0TkJ6hY3PKT4M65eaFlkWCDyZUz3OKM1idmd2GEZq7HAR
- yBgA==
+ :reply-to; bh=Xe74X6FoQm294awHcG8+aJfTJ6SJKDn+2TXhvqpinSY=;
+ b=ynqnG3oNMxlrrwkn0DdO3R0ow4pUz7or7PIqUCl1mxuTqOOY2a9DM4Vo+DTQygc/55
+ zqpxyZ4PaHACc0TvzxyUnM6oMeeDZEhLJ/VZdBvKNcG8ANetexI+kaPvGoXfTKgXIbJp
+ 1+9D1wS7QbLzw/e/BpHw+dVNmOCQOWyfCzfMxgamD6uHyncibxn7lBCVjldpJmYlgtfX
+ yiW1whzM24wbBs6ntOFLcrJ4ncNWa/OWn7D9gWGRDDhF1Bo6I/gcFad8WjR+7rYVZRd2
+ TRqp1kA+pi7U3oXw8zsWGr12+OGmeD4fbgC2807UoXEYuoguvmEMYiayQM0XjmkMyVAg
+ 9GHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714287676; x=1714892476;
+ d=1e100.net; s=20230601; t=1714287689; x=1714892489;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lzZZwAvDlZW0POG/57kWL/3/6EoUmB+Yu+cgaQmA+uE=;
- b=fwDlox5TAqdifvnVDyw9aVUjP6w0KsDoaaiRm6LJSxqhSIwpo6MyjTSGasP/V/Pug8
- DpiAWUR58yGvDWCRRw6qDyHHhNobaMz6DtDFV5bhbD6dr/iwIELc4iNt55oo6rcMgeuN
- US0/KNgt7eIlLTzE9P2Veg5T9Dty/FNYiMua2Zd7rSl2r92itk60tkT6M5aqhbVqXZIO
- HHHUHDIwbLoZODkF3THQZEzSrOX4EM3gNVvnHFzZrnEZh/+tDpq/q38ka3EuVjKrs/m1
- Mt15K9HBynUKcUyySZJgMq3QEEWdxSpdjLblx8f21KCKmicitk0aplupr4qw/YxZx5he
- zfUg==
-X-Gm-Message-State: AOJu0YwcCj/R0S5+0Yl9H/CrydcsuwQ30O8ev8yHyVur4xOXmhPHrEYf
- Y06t7XPpuxWeVPwK48wrjateDLd5O2IFpr+llkp2fD1DQaAlSEJ9xwZ9hM6LWLU=
-X-Google-Smtp-Source: AGHT+IF8ogqlpOchkq5m6xnyxpXLDoaLe0ys4U29po1ZYBqTxhvJNQEcI/qt0o64i1BTxJpXbnv52A==
-X-Received: by 2002:a17:90a:fd85:b0:2a7:cd5:faa6 with SMTP id
- cx5-20020a17090afd8500b002a70cd5faa6mr6800447pjb.44.1714287676146; 
- Sun, 28 Apr 2024 00:01:16 -0700 (PDT)
+ bh=Xe74X6FoQm294awHcG8+aJfTJ6SJKDn+2TXhvqpinSY=;
+ b=LKBJLfsqhhEWrSZZrvF9WSppxMK3Eelhvl6UYSbKo/IoHUfArIh+CiYsgiG3Ezo6Nf
+ zAHgDlipJyTnLdu3L5oq6ej21+7faKGv8ypmqcYEQr9WETGjo+U+AUcaNz7NA2iGR6w7
+ xd4uLbAK1f6f1nGz/UQcSi9cZ6ZWnuBklLoSiMZFcywWDGprz5De2NiFMcyxGDRV5P+T
+ DbtR2b84aBNcU6VaTpb8ZxtwITdRheH+xEltDEeGvHenwuiD8h6SbKR/vt6CjBFcwy/a
+ jl6HzuH8jKheTXNBxzkxrq3iJhnRtxWlaZlMDYrVh+caqC137WDBgskdhTnrTpQFadWC
+ 3//g==
+X-Gm-Message-State: AOJu0Yw8J86YkbVCzbhU1FzYc5jR11wrjfUv8KL2UFWI1zj6SDdT8eJ2
+ 51p+R/fWQpYHvCKF36xqxlP46QAPrxMZi/ljopCruURkvqoxG5yr1k+sRwFk+IY=
+X-Google-Smtp-Source: AGHT+IE+mOzRZmvBArFzR0f/i6GzUUhTlitUeZMz2b7z5CrhWnMtoPRHk8zq/KztI7l7Zduipd+qhA==
+X-Received: by 2002:a05:6a21:4995:b0:1a7:64dd:ebe8 with SMTP id
+ ax21-20020a056a21499500b001a764ddebe8mr7468787pzc.49.1714287689015; 
+ Sun, 28 Apr 2024 00:01:29 -0700 (PDT)
 Received: from localhost ([157.82.202.162])
  by smtp.gmail.com with UTF8SMTPSA id
- gt5-20020a17090af2c500b002b16f39c917sm449957pjb.50.2024.04.28.00.01.13
+ e10-20020aa7980a000000b006ed38291aebsm17835836pfl.178.2024.04.28.00.01.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Apr 2024 00:01:15 -0700 (PDT)
+ Sun, 28 Apr 2024 00:01:28 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sun, 28 Apr 2024 16:00:49 +0900
-Subject: [PATCH v10 06/18] tap: Shrink zeroed virtio-net header
+Date: Sun, 28 Apr 2024 16:00:52 +0900
+Subject: [PATCH v10 09/18] virtio-net: Copy header only when necessary
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240428-rss-v10-6-73cbaa91aeb6@daynix.com>
+Message-Id: <20240428-rss-v10-9-73cbaa91aeb6@daynix.com>
 References: <20240428-rss-v10-0-73cbaa91aeb6@daynix.com>
 In-Reply-To: <20240428-rss-v10-0-73cbaa91aeb6@daynix.com>
 To: Jason Wang <jasowang@redhat.com>, 
@@ -77,8 +77,8 @@ To: Jason Wang <jasowang@redhat.com>,
  Yuri Benditovich <yuri.benditovich@daynix.com>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev
-Received-SPF: none client-ip=2607:f8b0:4864:20::1033;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1033.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::432;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -100,28 +100,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-tap prepends a zeroed virtio-net header when writing a packet to a
-tap with virtio-net header enabled but not in use. This only happens
-when s->host_vnet_hdr_len == sizeof(struct virtio_net_hdr).
+The copied header is only used for byte swapping.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- net/tap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/net/virtio-net.c | 26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
 
-diff --git a/net/tap.c b/net/tap.c
-index 9825518ff1f3..51f7aec39d9e 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -119,7 +119,7 @@ static ssize_t tap_receive_iov(NetClientState *nc, const struct iovec *iov,
-     TAPState *s = DO_UPCAST(TAPState, nc, nc);
-     const struct iovec *iovp = iov;
-     g_autofree struct iovec *iov_copy = NULL;
--    struct virtio_net_hdr_mrg_rxbuf hdr = { };
-+    struct virtio_net_hdr hdr = { };
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index e33bdbfd84a5..ca0fbf7b7654 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -360,7 +360,8 @@ static void virtio_net_vnet_endian_status(VirtIONet *n, uint8_t status)
+          * can't do it, we fallback onto fixing the headers in the core
+          * virtio-net code.
+          */
+-        n->needs_vnet_hdr_swap = virtio_net_set_vnet_endian(vdev, n->nic->ncs,
++        n->needs_vnet_hdr_swap = n->has_vnet_hdr &&
++                                 virtio_net_set_vnet_endian(vdev, n->nic->ncs,
+                                                             queue_pairs, true);
+     } else if (virtio_net_started(n, vdev->status)) {
+         /* After using the device, we need to reset the network backend to
+@@ -2767,7 +2768,7 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
+             return -EINVAL;
+         }
  
-     if (s->host_vnet_hdr_len && !s->using_vnet_hdr) {
-         iov_copy = g_new(struct iovec, iovcnt + 1);
+-        if (n->has_vnet_hdr) {
++        if (n->needs_vnet_hdr_swap) {
+             if (iov_to_buf(out_sg, out_num, 0, &vhdr, n->guest_hdr_len) <
+                 n->guest_hdr_len) {
+                 virtio_error(vdev, "virtio-net header incorrect");
+@@ -2775,19 +2776,16 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
+                 g_free(elem);
+                 return -EINVAL;
+             }
+-            if (n->needs_vnet_hdr_swap) {
+-                virtio_net_hdr_swap(vdev, (void *) &vhdr);
+-                sg2[0].iov_base = &vhdr;
+-                sg2[0].iov_len = n->guest_hdr_len;
+-                out_num = iov_copy(&sg2[1], ARRAY_SIZE(sg2) - 1,
+-                                   out_sg, out_num,
+-                                   n->guest_hdr_len, -1);
+-                if (out_num == VIRTQUEUE_MAX_SIZE) {
+-                    goto drop;
+-                }
+-                out_num += 1;
+-                out_sg = sg2;
++            virtio_net_hdr_swap(vdev, (void *) &vhdr);
++            sg2[0].iov_base = &vhdr;
++            sg2[0].iov_len = n->guest_hdr_len;
++            out_num = iov_copy(&sg2[1], ARRAY_SIZE(sg2) - 1, out_sg, out_num,
++                               n->guest_hdr_len, -1);
++            if (out_num == VIRTQUEUE_MAX_SIZE) {
++                goto drop;
+             }
++            out_num += 1;
++            out_sg = sg2;
+         }
+         /*
+          * If host wants to see the guest header as is, we can
 
 -- 
 2.44.0
