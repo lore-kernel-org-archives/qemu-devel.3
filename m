@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCAE6C4345F
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 12:40:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30FABC10F1A
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 12:43:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s13oV-0001Wj-V5; Sun, 28 Apr 2024 08:39:28 -0400
+	id 1s13ra-0002wZ-Fd; Sun, 28 Apr 2024 08:42:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1s13oS-0001WU-Nh
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 08:39:24 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1s13rR-0002vG-Nf
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 08:42:29 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1s13oQ-0000Cn-Mr
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 08:39:24 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1s13rP-0000gx-3x
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 08:42:28 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 995FD62AF6;
- Sun, 28 Apr 2024 15:39:11 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5D54C62AF9;
+ Sun, 28 Apr 2024 15:42:26 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 021B5C2EC9;
- Sun, 28 Apr 2024 15:39:09 +0300 (MSK)
-Message-ID: <41d35401-2573-415e-a475-1e81708bdaa4@tls.msk.ru>
-Date: Sun, 28 Apr 2024 15:39:09 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id B628AC2ECE;
+ Sun, 28 Apr 2024 15:42:24 +0300 (MSK)
+Message-ID: <d0f399c8-d765-4ada-8e54-30fb298a0dd1@tls.msk.ru>
+Date: Sun, 28 Apr 2024 15:42:24 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2] migration/colo: Fix bdrv_graph_rdlock_main_loop:
@@ -88,35 +88,6 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 17.04.2024 05:56, Li Zhijian via wrote:
-> bdrv_activate_all() should not be called from the coroutine context, move
-> it to the QEMU thread colo_process_incoming_thread() with the bql_lock
-> protected.
-> 
-> The backtrace is as follows:
->   #4  0x0000561af7948362 in bdrv_graph_rdlock_main_loop () at ../block/graph-lock.c:260
->   #5  0x0000561af7907a68 in graph_lockable_auto_lock_mainloop (x=0x7fd29810be7b) at /patch/to/qemu/include/block/graph-lock.h:259
->   #6  0x0000561af79167d1 in bdrv_activate_all (errp=0x7fd29810bed0) at ../block.c:6906
->   #7  0x0000561af762b4af in colo_incoming_co () at ../migration/colo.c:935
->   #8  0x0000561af7607e57 in process_incoming_migration_co (opaque=0x0) at ../migration/migration.c:793
->   #9  0x0000561af7adbeeb in coroutine_trampoline (i0=-106876144, i1=22042) at ../util/coroutine-ucontext.c:175
->   #10 0x00007fd2a5cf21c0 in  () at /lib64/libc.so.6
-> 
-> CC: Fabiano Rosas <farosas@suse.de>
-> Closes: https://gitlab.com/qemu-project/qemu/-/issues/2277
-> Fixes: 2b3912f135 ("block: Mark bdrv_first_blk() and bdrv_is_root_node() GRAPH_RDLOCK")
-> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-
-Commit 2b3912f135 is in 8.2 (v8.1.0-1575-g2b3912f135).  Is this fix supposed to go
-to stable-8.2 series?  The prob here is that in 8.2, there's no bql_lock/unlock.
-I guess it should use qemu_mutex_lock_iothread() instead, for before
-195801d700c008 "system/cpus: rename qemu_mutex_lock_iothread() to bql_lock()".
-
-Thanks,
-
-/mjt
-
-> diff --git a/migration/colo.c b/migration/colo.c
-> index 84632a603e..5600a43d78 100644
 > --- a/migration/colo.c
 > +++ b/migration/colo.c
 > @@ -835,6 +835,16 @@ static void *colo_process_incoming_thread(void *opaque)
@@ -132,32 +103,19 @@ Thanks,
 > +        return NULL;
 > +    }
 > +    bql_unlock();
-> +
->       failover_init_state();
->   
->       mis->to_src_file = qemu_file_get_return_path(mis->from_src_file);
-> @@ -922,7 +932,6 @@ out:
->   int coroutine_fn colo_incoming_co(void)
->   {
->       MigrationIncomingState *mis = migration_incoming_get_current();
-> -    Error *local_err = NULL;
->       QemuThread th;
->   
->       assert(bql_locked());
-> @@ -931,13 +940,6 @@ int coroutine_fn colo_incoming_co(void)
->           return 0;
->       }
->   
-> -    /* Make sure all file formats throw away their mutable metadata */
-> -    bdrv_activate_all(&local_err);
-> -    if (local_err) {
-> -        error_report_err(local_err);
-> -        return -EINVAL;
-> -    }
-> -
->       qemu_thread_create(&th, "COLO incoming", colo_process_incoming_thread,
->                          mis, QEMU_THREAD_JOINABLE);
->   
+FWIW, this can be simplified as follows:
+
+    bql_lock();
+    bdrv_activate_all(&local_err);
+    bql_unlock();
+    if (local_err) {
+         error_report_err(local_err);
+         return NULL;
+    }
+
+(I know it is already too late)
+
+/mjt
 
 -- 
 GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
