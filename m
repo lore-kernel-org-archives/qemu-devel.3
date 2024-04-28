@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAE27C4345F
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 22:17:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59375C4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 22:18:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1Cnm-0005ub-Dd; Sun, 28 Apr 2024 18:15:18 -0400
+	id 1s1Cpi-0002ze-4r; Sun, 28 Apr 2024 18:17:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Cnc-0005tL-50
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 18:15:13 -0400
-Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1CpS-0001iB-Jk
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 18:17:03 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Cna-0005UD-7R
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 18:15:07 -0400
-Received: by mail-lf1-x129.google.com with SMTP id
- 2adb3069b0e04-51967f75729so4451556e87.0
- for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 15:15:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1CpP-0005lb-P8
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 18:17:02 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-a4702457ccbso513924066b.3
+ for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 15:16:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714342504; x=1714947304; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714342617; x=1714947417; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LCSb64QUO6bStXSl37yEjpM4xadVVio6bpX5EBZUn28=;
- b=byFahhmLXmvc8mW1hPRycUEzGe/axojwrkT8Mj7SGhZTGFNBAYhp3QmS65bjtqDMAb
- MHi8d6MEDmchk3SkmHEtlglngmD0Wj97BZSzTWL8BkfVzgJjKAt7oofx4GdR0bXQYUQU
- 2ujzKk9APcjgTn9u3HJhL+3H/i/5V13yqvDbUTpp3P//UO/YiLbztdyJJZi/LB1pInXy
- kmAAfqqQfcvytqi4LI5Z7PLfFEq4oi8Xl9G/2/tN+JHe8jxVyLjVlLlyg4RA8VDCwy9Q
- +emYvXEtE7arAjCZlBXv3+VHOluNpoWiT4C/4kt0O4G6tLf/Q4Kq1ooU7/PYibK/BK12
- uKQg==
+ bh=5RHFpScpX3RBz3SndWvBFhPouPtIMynd6+ol800GYZ0=;
+ b=PQosyhLwrUJQFw01doa4zBCubWS7sveYWpp4LU4PUcHrajtJrajymsHrWcGcafuTyL
+ Q29c1MylxnA+H+4rY3THl7j3cKPLYKQH4qssxo7q35otlPZghoNNMyY3RV2knd7H1NJd
+ 1f2senut0CBmij0aWfYobLayFKLUJ52USWq0PtZsmC6cARxKWckzm2RhdsW0Ow9q3bWw
+ o9mg98anh0DsXy/xd+jTB3XqA8u5GOfSuvNmCaSkGpF74wg7LDjcNf2qzuFyP9i50Jqd
+ n3peO6jYEWTa9Guvo5Sxk4GM5Y/Wpg5lhoKabJ5G527sz5j1HRkwccUCX1qzdwCIv/5L
+ FbPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714342504; x=1714947304;
+ d=1e100.net; s=20230601; t=1714342617; x=1714947417;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LCSb64QUO6bStXSl37yEjpM4xadVVio6bpX5EBZUn28=;
- b=CWPCB3J6X7l2UAP6OAyPdh5pzy0pzCJQMbh1uw/KhyHYzO2fybe6m1HyELZKVKnBym
- PwgDkVDdbRm+t7J7YiAgll+e6WK2WvV2mhw0Otj3IMDF0wpikDokRDBWJS7uPwHlsGre
- IBagFp6ZPuFEeeTya2vkc7sH/l2rE9+/l0w432lctJZtbp0aOAkKmC3Uu38/b2Q6mscX
- Q3MvoXmoSE5TsJ3fYtDDX3igyBoLjGuGfQWV/wWPglqZ8tBuY0F8qoyQAMjLH9pwm7re
- kIRWd0qK4sHtoA1uiR2QzlfhOkvHvLI3C18eTX1WHDuL8p6ssmSFwTegRZXtLJBZYrPo
- tdqA==
-X-Gm-Message-State: AOJu0YzFQ/Oy6f5GlfFse+vI/oTuveCQ1T5tosYxsph+gtHILravfIm3
- 2rRgFXxjIHl9abvCPRIP70n8Uglbjbz8wmMuTz6WVRC3mGQ5ExrAqY3BFMX3jOsngo0JYEZSkYB
- p
-X-Google-Smtp-Source: AGHT+IH3GiS2sMm7GNUp5H/lEciphSyP19Q2r+sYcddT6HRtKIoB13yLydaTIDLDUfPK5UQtN2LV7A==
-X-Received: by 2002:a19:7508:0:b0:51b:ac8d:3ba3 with SMTP id
- y8-20020a197508000000b0051bac8d3ba3mr4962843lfe.19.1714342504019; 
- Sun, 28 Apr 2024 15:15:04 -0700 (PDT)
+ bh=5RHFpScpX3RBz3SndWvBFhPouPtIMynd6+ol800GYZ0=;
+ b=kYRLSVUKHsS35e9odez6MsHHMrJj7ZDjmK9y23Jl3xnD/LmdxWqgNMC76riYkmT0xJ
+ /IjDPEYMVfIR9U2LZftcuy7B4TuJbv2aOQNYfw1WFyHf9OjOSAehmsyv5Vs/ps6Mv0oc
+ NsnV71cvOC096G8yr13k5MvxdrsFL6sJS1JAbn0T22vKyBdIWaKmTXPqb57JU2TzYUpx
+ xsAHqCBCwFkxx5lfftNfKhFVmJdcCQtH67UW2qdg2uvoZCPuK1ridOvG6avaIuwWsY6L
+ CFkHHq48GOy51MqnZRYyPA3j38cfZVSvuzRI6Loeo4k++cZHc+8TRNp83QreyUWnvx44
+ wy2w==
+X-Gm-Message-State: AOJu0Yz0V/szhKMiot3XzXoAOcCeYXxmZthDeupWpnfNmbOkLeYw8frk
+ NuUjizWBG6rL6vPcR9tCgCN+N9geNQ6Mlvm7ujKj251CUTSk1D+wq63vYkb1T7lTs5kriC9z11X
+ s
+X-Google-Smtp-Source: AGHT+IHYO16h3itZP6zi2uze0HAJDei4v+HVQ9W1kzrCz0v4oqTJACpQpcJuGf6KbTSMMxLTXvbthw==
+X-Received: by 2002:a17:906:2bcd:b0:a58:cd39:d154 with SMTP id
+ n13-20020a1709062bcd00b00a58cd39d154mr4272888ejg.11.1714342617110; 
+ Sun, 28 Apr 2024 15:16:57 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.142.130])
  by smtp.gmail.com with ESMTPSA id
- z12-20020a170906270c00b00a55895c7f50sm11648411ejc.151.2024.04.28.15.15.02
+ p2-20020a170906614200b00a588e0e0d9bsm5903912ejl.93.2024.04.28.15.16.56
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 28 Apr 2024 15:15:03 -0700 (PDT)
+ Sun, 28 Apr 2024 15:16:56 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 02/24] coverity: Update user emulation regexp
-Date: Mon, 29 Apr 2024 00:14:28 +0200
-Message-ID: <20240428221450.26460-3-philmd@linaro.org>
+Subject: [PATCH 23/24] accel/tcg: Restrict icount to system emulation
+Date: Mon, 29 Apr 2024 00:14:49 +0200
+Message-ID: <20240428221450.26460-24-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240428221450.26460-1-philmd@linaro.org>
 References: <20240428221450.26460-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::129;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x129.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,26 +95,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All user emulation headers are now under include/user/.
+So far we don't support icount on user emulation.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- scripts/coverity-scan/COMPONENTS.md | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ accel/tcg/cpu-exec.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/scripts/coverity-scan/COMPONENTS.md b/scripts/coverity-scan/COMPONENTS.md
-index 91be8d1c36..1537e49cd5 100644
---- a/scripts/coverity-scan/COMPONENTS.md
-+++ b/scripts/coverity-scan/COMPONENTS.md
-@@ -121,7 +121,7 @@ usb
-   ~ (/qemu)?(/hw/usb/.*|/include/hw/usb/.*)
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 84fd041aec..1f618f6c2e 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -780,6 +780,9 @@ static inline bool cpu_handle_exception(CPUState *cpu, int *ret)
  
- user
--  ~ (/qemu)?(/linux-user/.*|/bsd-user/.*|/user-exec\.c|/thunk\.c|/include/exec/user/.*)
-+  ~ (/qemu)?(/linux-user/.*|/bsd-user/.*|/user-exec\.c|/thunk\.c|/include/user/.*)
+ static inline bool icount_exit_request(CPUState *cpu)
+ {
++#if defined(CONFIG_USER_ONLY)
++    return false;
++#else
+     if (!icount_enabled()) {
+         return false;
+     }
+@@ -787,6 +790,7 @@ static inline bool icount_exit_request(CPUState *cpu)
+         return false;
+     }
+     return cpu->neg.icount_decr.u16.low + cpu->icount_extra == 0;
++#endif
+ }
  
- util
-   ~ (/qemu)?(/util/.*|/include/qemu/.*)
+ static inline bool cpu_handle_interrupt(CPUState *cpu,
+@@ -801,12 +805,14 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
+         return false;
+     }
+ 
++#if !defined(CONFIG_USER_ONLY)
+     /* Clear the interrupt flag now since we're processing
+      * cpu->interrupt_request and cpu->exit_request.
+      * Ensure zeroing happens before reading cpu->exit_request or
+      * cpu->interrupt_request (see also smp_wmb in cpu_exit())
+      */
+     qatomic_set_mb(&cpu->neg.icount_decr.u16.high, 0);
++#endif /* !CONFIG_USER_ONLY */
+ 
+     if (unlikely(qatomic_read(&cpu->interrupt_request))) {
+         int interrupt_request;
 -- 
 2.41.0
 
