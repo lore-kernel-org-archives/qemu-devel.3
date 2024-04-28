@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D653AC10F1A
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 18:33:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F6BFC4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 18:35:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s19Ki-0002U7-KS; Sun, 28 Apr 2024 14:33:04 -0400
+	id 1s19N7-0003J7-9r; Sun, 28 Apr 2024 14:35:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s19Kg-0002Tg-Tq
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 14:33:02 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1s19N3-0003Ie-1X
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 14:35:29 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s19Kf-0002Zq-GI
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 14:33:02 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-5f415fd71f8so3079021a12.3
- for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 11:33:00 -0700 (PDT)
+ id 1s19Mz-0002ud-Iy
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 14:35:27 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-2a6fa7773d3so3081429a91.3
+ for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 11:35:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714329179; x=1714933979; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714329324; x=1714934124; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=UEKsQH/gh0x9KdkeGPUdBWKIQcK1c1vHkoyErCzn5f4=;
- b=MJAf30UihFrHywQatJu4pjEEQKF5zRU7JzwNqTi6k+bD7tJEQ3UkIShrgKnhc55m0y
- P744bP1hEDRtOb2YR3G8x61vJNqzlJ5z79anDD9ti18K2kfCrRYieC8Y4OfmA60G2pun
- eFIV9MtjjPyZAvdSyVY+SOgWxJsVPSSf6B2K6Yk9407ctvFuakjDoeEb9SbQGeS3Y35g
- cOgoT4m7ETOub+amL7+E4KptMzaJOUIvRee3UFumixnjvbDxcZ1OLkwUuPADx8uhwyRO
- VaO9Q9cZVQ3i6G/EX0cO+uv4ZC9d2AfLlmTdDcTkWI+4SlKH54Mb5p6RKDnv8CUK3lLZ
- IDIA==
+ bh=bTNIx8CkeV+RCgjWY5UL9EgQYbINHLerLJZuyhrTMcc=;
+ b=u4uui7XvCLXiNoN6QLR5btp2Y4mqOYiSkpiG222h7XCbCKTByoz64vuB3qHyVZ23OM
+ +alZHRteabr3Nov+wJ7YSWYytH8E3/cKf+UrwLf0sLugLthwmdu8bb/tJw/6CgHWzTGi
+ 6ZIMxJaIq9hx9ENa7VjDf1j/FW0W2LdcgZ07f87iFZNp/ms728QJPPjw3bWfnp/Y4gow
+ cyNp/m87cZ9J5dErxIerSCwg2piQSytqLbgphz6xoLwfTP/8qsx4WQ0pppS6uzp8LjRJ
+ V33bmOv5C40WzWo4G3goyOq4osXXAReEOypYkXB1IfJ1EjQB+aYlifCFong+ZMNvTVcD
+ 9MFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714329179; x=1714933979;
+ d=1e100.net; s=20230601; t=1714329324; x=1714934124;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UEKsQH/gh0x9KdkeGPUdBWKIQcK1c1vHkoyErCzn5f4=;
- b=PMZA48VSDnRQw58W2Hywfz7DtMphAQvJZrEoykM4NpNoBZgno/BT5lQRDnVsEFiPKj
- Go7ZCeXI56QyppSTvmc9sQ9ZDef/AtDzpcze9qzgNblQCXwB0OiiapSjtGdDD4zNhMjw
- dHFoGf3jlxTtHL9Ox7A4PLHOfRmbaXICz974QvKm8IgsC9W3476TZMuHZGXfwRvTdFSe
- xOYrTILFxdJZh7tUGhkIzjxzfxb3UgOQGSStjnmuieQH+uOYF9TlHXlMDHHxJf1DQzwv
- cWiAeJKe+NOki+ivsscptHwFnF0aBev8X8Fg3Vi+Iuyi/D3qWuLl7qg9kEgvuEID4rzj
- mmkA==
+ bh=bTNIx8CkeV+RCgjWY5UL9EgQYbINHLerLJZuyhrTMcc=;
+ b=CQ9Ndj8LDao+qZ47LtlgoBGSc2JuO0UswrjW9SLiGoxaKQvG17YLOpTaiYqmsJ6f8Y
+ wgXFUwSl44bq4vsLublBmqjMdrSx8WvkER5cf+yfeHBArCwv49A4VotlyCSJ62xbmb5D
+ 3cTNyoi9AuvTuV4Z9eCwkAM5/4OvKm8iJjU/MKsZA7vF6XSf9EnnLGMxtV73e6CCvfZQ
+ Xl5aSabcgzVs2530gX85wyRNAuNJcQYTk8b+IoyEU+mz2OMMmsqWzqzFZmzaPhROuveX
+ UoL6deZgtgaj8gHOdgSQzHhMnSa2mUWkRMaBqMj4+nZxKJOEGqqn+8lVeAfHQ/43kv/a
+ nFLQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXsCiu8IGQHpCTV4scmcnLurpXcejTKW5EXjZST7/sz3ER4Ckn0H3IKNljTt3vIRC5GBzB7mQQ6zB0da17uOBgp3zPBMkQ=
-X-Gm-Message-State: AOJu0Yy74mavDIIRK/226PCwhlhYhdNh6tGr+5SRCB9lnH4Vxz1hHiih
- f8nIy760tH4YNMgAYiRmrLOeFvhlfAjENfq8+/gjw7809hEZ2QwGA8TVCi9X1M2XrxM81vkh2rt
- G
-X-Google-Smtp-Source: AGHT+IHBSf2QEaGssjoclwo9IF14n12IS+gVBHKXxGsEJ1+FHouuxO+JxYH+FYan9+E/bbioXSFJgQ==
-X-Received: by 2002:a05:6a20:4309:b0:1af:45f7:6dff with SMTP id
- h9-20020a056a20430900b001af45f76dffmr2331507pzk.42.1714329179240; 
- Sun, 28 Apr 2024 11:32:59 -0700 (PDT)
+ AJvYcCX2ginlJ+rbnoY0SS/S2N4LU5CxlWhWniIhRpdUej18S1qHjPGA7mAB3Cg1fZaki4lJcr9l34KPNM17zq9PqTs8Nkxdav0=
+X-Gm-Message-State: AOJu0YyxQGz+mSNjUYTGe9HeVCC0RFrAxike8p52QsFrnEzXcPHjUVkc
+ DsnePPP7R/dtPp6GB06FzubIs3sNOFYo4N185QEkHjhlBMaofDGkHnsy4ZyOLz4=
+X-Google-Smtp-Source: AGHT+IHtDpIB59mMNsNxg8LDCMUpkBhscocFL30Ts+ITCHhbCUcaQr7rTsYY70BbH0Lp2z2A/Mnsvg==
+X-Received: by 2002:a17:90a:dac2:b0:2a4:6a31:600c with SMTP id
+ g2-20020a17090adac200b002a46a31600cmr7913211pjx.14.1714329323945; 
+ Sun, 28 Apr 2024 11:35:23 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- f33-20020a056a000b2100b006ecee611c05sm17933141pfu.182.2024.04.28.11.32.58
+ ev16-20020a17090aead000b002ae2579ffeesm11496242pjb.19.2024.04.28.11.35.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Apr 2024 11:32:58 -0700 (PDT)
-Message-ID: <cef95745-f6f4-4485-be8b-9f833fa49126@linaro.org>
-Date: Sun, 28 Apr 2024 11:32:57 -0700
+ Sun, 28 Apr 2024 11:35:23 -0700 (PDT)
+Message-ID: <2ec058f5-dfb1-4ce7-b935-8530a9487394@linaro.org>
+Date: Sun, 28 Apr 2024 11:35:21 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/14] exec/user: Restrict 'syscall-trace.h' to user
- emulation
+Subject: Re: [PATCH 11/14] accel/tcg: Use cpu_loop_exit_requested() in
+ cpu_loop_exec_tb()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20240427155714.53669-1-philmd@linaro.org>
- <20240427155714.53669-11-philmd@linaro.org>
+ <20240427155714.53669-12-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240427155714.53669-11-philmd@linaro.org>
+In-Reply-To: <20240427155714.53669-12-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,30 +100,45 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/27/24 08:57, Philippe Mathieu-Daudé wrote:
-> System emulation shouldn't use "user/syscall-trace.h".
+> Do not open-code cpu_loop_exit_requested().
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/user/syscall-trace.h | 4 ++++
->   1 file changed, 4 insertions(+)
+>   accel/tcg/cpu-exec.c | 7 +++----
+>   1 file changed, 3 insertions(+), 4 deletions(-)
 > 
-> diff --git a/include/user/syscall-trace.h b/include/user/syscall-trace.h
-> index b48b2b2d0a..6926434d9a 100644
-> --- a/include/user/syscall-trace.h
-> +++ b/include/user/syscall-trace.h
-> @@ -10,6 +10,10 @@
->   #ifndef SYSCALL_TRACE_H
->   #define SYSCALL_TRACE_H
+> diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+> index 225e5fbd3e..0329c6423e 100644
+> --- a/accel/tcg/cpu-exec.c
+> +++ b/accel/tcg/cpu-exec.c
+> @@ -900,8 +900,6 @@ static inline void cpu_loop_exec_tb(CPUState *cpu, TranslationBlock *tb,
+>                                       vaddr pc, TranslationBlock **last_tb,
+>                                       int *tb_exit)
+>   {
+> -    int32_t insns_left;
+> -
+>       trace_exec_tb(tb, pc);
+>       tb = cpu_tb_exec(cpu, tb, tb_exit);
+>       if (*tb_exit != TB_EXIT_REQUESTED) {
+> @@ -910,8 +908,7 @@ static inline void cpu_loop_exec_tb(CPUState *cpu, TranslationBlock *tb,
+>       }
 >   
-> +#ifndef CONFIG_USER_ONLY
-> +#error Cannot include this header from system emulation
-> +#endif
+>       *last_tb = NULL;
+> -    insns_left = qatomic_read(&cpu->neg.icount_decr.u32);
+> -    if (insns_left < 0) {
+> +    if (cpu_loop_exit_requested(cpu)) {
+>           /* Something asked us to stop executing chained TBs; just
+>            * continue round the main loop. Whatever requested the exit
+>            * will also have set something else (eg exit_request or
+> @@ -925,6 +922,8 @@ static inline void cpu_loop_exec_tb(CPUState *cpu, TranslationBlock *tb,
+>       /* Instruction counter expired.  */
+>       assert(icount_enabled());
+>   #ifndef CONFIG_USER_ONLY
+> +    int32_t insns_left;
 > +
->   #include "exec/user/abitypes.h"
->   #include "gdbstub/user.h"
->   #include "qemu/plugin.h"
 
-Are we really going to do this for all include/user/ headers?
+If you're going to declare in the middle of a block, you might as well delay until the 
+initialization a few lines down.
 
 
 r~
