@@ -4,84 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B12BBC4345F
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 18:12:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4637C10F1A
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 18:12:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s18zo-0001nB-Ke; Sun, 28 Apr 2024 14:11:28 -0400
+	id 1s190T-0001sH-Ey; Sun, 28 Apr 2024 14:12:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s18zm-0001mY-Qx
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 14:11:27 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s18zl-000765-8A
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 14:11:26 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-1eac92f7c74so27651055ad.3
- for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 11:11:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714327881; x=1714932681; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=yIrnjO/B8q0HO5EXMIKL5C25Kz4a/nZg+FPlbPEYZXo=;
- b=TdqgEuMOlnKb1BPe7u28DXXlhZ7kTc3LQl94X4J8frKQ7l81ypGJRa9489hyPxSL9C
- E+OhJZq0/G+4dg6ipfmqQSP0BKBCZAEpq+xNUbI7oXwG3oVwN4HmifPyef9uW6JGSsqv
- Tu2idoALfQ6Kf213l+urn7tJFnRc9FoR6wvH4d3yKsUWltnyk4jeovpEuLDHpINxh/DY
- eFkijeHtiWqPgZfJ9THgexsfJf84rUR9J1gArXmPVXzWQg0ALBOiVImZ4BbhWTE4kaeQ
- RQBTBa9h3dqv7Um5DNxl94o/28XbTkNWhS8djxNDhA8Aabl5IZMzmDlPxAteRvxWsjiD
- YOcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714327881; x=1714932681;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yIrnjO/B8q0HO5EXMIKL5C25Kz4a/nZg+FPlbPEYZXo=;
- b=UMkgQeTd7puZnctwRcaxRiaLKsSYye7uZcnb1lduCOq9iTumNklHn8gxCoy0x5qLPF
- Twl6f7ZMtSHwe2K3UsKrRlWUSlfasCpt0htCDD6PYUwbK6c6QZA6xZoY/XNSuhVbhpEn
- 7aBFCYf+sJNkczhc8bIr7B+cFxGiZB3BjTFZNwrDw1WWm+EOolEslTbG9o0f4mCPfo4o
- qQvV+QaiML5FgHcGxG/sremAlPo/ttVYA/hOdwxVfk4S9bsnWT5cnGN8CVbPrZh816ib
- Lw5NJbHjb0Qz0UjRB1zf1EWgmulec+zKntiS5ntlgzn912XUcEaulzxOCUGG4pc6jkqx
- 2Ncg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW8eKeabSanWDBtqBZOs8zlD6HS0yQIUDTKzb5ibXZkJG1Eb44St35rYmlXqRpU7NN9z/s0Utoc4OxJManFnHlJALmxrik=
-X-Gm-Message-State: AOJu0YwNKXs2iaYtgfMSstTiSc53RylwtHs6lNt40BmQQy4EP3NsJL99
- p5hRf7m1vJ2AqU7J6W7XcsuLsH9xsmkhsSLFhxnK6qylvPTCwchqrg4tGCyYrqE=
-X-Google-Smtp-Source: AGHT+IFRjjyI7OrHGnZFoovrRwL9dvAz9Z7ESdm7EF3g7lh5iciw5B5FieyYpceInrXDDlBnMNV8pA==
-X-Received: by 2002:a17:903:2342:b0:1eb:4c98:8b15 with SMTP id
- c2-20020a170903234200b001eb4c988b15mr5892057plh.61.1714327881589; 
- Sun, 28 Apr 2024 11:11:21 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
- by smtp.gmail.com with ESMTPSA id
- d15-20020a170902654f00b001dd0d0d26a4sm3986436pln.147.2024.04.28.11.11.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Apr 2024 11:11:20 -0700 (PDT)
-Message-ID: <0c7cd5ed-2256-4f6e-8d71-5a77c3c46252@linaro.org>
-Date: Sun, 28 Apr 2024 11:11:18 -0700
+ (Exim 4.90_1) (envelope-from <adiupina@astralinux.ru>)
+ id 1s190R-0001rY-3T; Sun, 28 Apr 2024 14:12:07 -0400
+Received: from new-mail.astralinux.ru ([51.250.53.244])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adiupina@astralinux.ru>)
+ id 1s190O-0007A3-Qf; Sun, 28 Apr 2024 14:12:06 -0400
+Received: from rbta-msk-lt-302690.astralinux.ru (unknown [10.177.236.220])
+ by new-mail.astralinux.ru (Postfix) with ESMTPA id 4VSF0Q3WpTzlW8L;
+ Sun, 28 Apr 2024 21:11:50 +0300 (MSK)
+From: Alexandra Diupina <adiupina@astralinux.ru>
+To: Alistair Francis <alistair@alistair23.me>
+Cc: Alexandra Diupina <adiupina@astralinux.ru>,
+ "Konrad, Frederic" <Frederic.Konrad@amd.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, sdl.qemu@linuxtesting.org
+Subject: [PATCH v2] fix bit fields extraction and prevent overflow
+Date: Sun, 28 Apr 2024 21:11:31 +0300
+Message-Id: <20240428181131.23801-1-adiupina@astralinux.ru>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/14] target/i386: Simplify get_memio_eip()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20240427155714.53669-1-philmd@linaro.org>
- <20240427155714.53669-2-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240427155714.53669-2-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-DrWeb-SpamScore: -100
+X-DrWeb-SpamState: legit
+X-DrWeb-SpamDetail: gggruggvucftvghtrhhoucdtuddrgedvfedrvdehuddgtddvucetufdoteggodetrfcurfhrohhfihhlvgemucfftfghgfeunecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffoggfgsedtkeertdertddtnecuhfhrohhmpeetlhgvgigrnhgurhgrucffihhuphhinhgruceorgguihhuphhinhgrsegrshhtrhgrlhhinhhugidrrhhuqeenucggtffrrghtthgvrhhnpeduleetfeehffekueeuffektefgudfgffeutdefudfghedvieffheehleeuieehteenucffohhmrghinheplhhinhhugihtvghsthhinhhgrdhorhhgnecukfhppedutddrudejjedrvdefiedrvddvtdenucfrrghrrghmpehhvghloheprhgsthgrqdhmshhkqdhlthdqfedtvdeiledtrdgrshhtrhgrlhhinhhugidrrhhupdhinhgvthepuddtrddujeejrddvfeeirddvvddtmeefvdekkeeipdhmrghilhhfrhhomheprgguihhuphhinhgrsegrshhtrhgrlhhinhhugidrrhhupdhnsggprhgtphhtthhopeekpdhrtghpthhtoheprghlihhsthgrihhrsegrlhhishhtrghirhdvfedrmhgvpdhrtghpthhtoheprgguihhuphhinhgrsegrshhtrhgrlhhinhhugidrrhhupdhrtghpthhtohephfhrvgguvghrihgtrdfmohhnrhgrugesrghmugdrtghomhdprhgtphhtthhopegvughgrghrrdhighhlvghsihgrshesghhmrghilhdrtghomhdprhgtphhtthhope
+ hpvghtvghrrdhmrgihuggvlhhlsehlihhnrghrohdrohhrghdprhgtphhtthhopehqvghmuhdqrghrmhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehsughlrdhqvghmuheslhhinhhugihtvghsthhinhhgrdhorhhg
+X-DrWeb-SpamVersion: Vade Retro 01.423.251#02 AS+AV+AP Profile: DRWEB;
+ Bailout: 300
+X-AntiVirus: Checked by Dr.Web [MailD: 11.1.19.2307031128,
+ SE: 11.1.12.2210241838, Core engine: 7.00.62.01180, Virus records: 12643460,
+ Updated: 2024-Apr-28 16:43:47 UTC]
+Received-SPF: pass client-ip=51.250.53.244;
+ envelope-from=adiupina@astralinux.ru; helo=new-mail.astralinux.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,16 +65,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/27/24 08:57, Philippe Mathieu-Daudé wrote:
-> The single call to get_memio_eip(), in cpu_report_tpr_access(),
-> is protected by a check on tcg_enabled(). Since the call only
-> exists when CONFIG_TCG is defined, we can slightly simplify.
+Add a type cast and use extract64() instead of extract32()
+to avoid integer overflow on addition. Fix bit fields
+extraction according to documentation.
 
-Nack, that's not how things work.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-By wrapping the whole function in an ifdef, the symbol isn't defined without CONFIG_TCG, 
-which means the if (0) { } block cannot compile.
+Fixes: d3c6369a96 ("introduce xlnx-dpdma")
+Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
+---
+v2: fix typo
+ hw/dma/xlnx_dpdma.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
+diff --git a/hw/dma/xlnx_dpdma.c b/hw/dma/xlnx_dpdma.c
+index 1f5cd64ed1..530717d188 100644
+--- a/hw/dma/xlnx_dpdma.c
++++ b/hw/dma/xlnx_dpdma.c
+@@ -175,24 +175,24 @@ static uint64_t xlnx_dpdma_desc_get_source_address(DPDMADescriptor *desc,
+ 
+     switch (frag) {
+     case 0:
+-        addr = desc->source_address
+-            + (extract32(desc->address_extension, 16, 12) << 20);
++        addr = (uint64_t)desc->source_address
++            + (extract64(desc->address_extension, 16, 16) << 32);
+         break;
+     case 1:
+-        addr = desc->source_address2
+-            + (extract32(desc->address_extension_23, 0, 12) << 8);
++        addr = (uint64_t)desc->source_address2
++            + (extract64(desc->address_extension_23, 0, 16) << 32);
+         break;
+     case 2:
+-        addr = desc->source_address3
+-            + (extract32(desc->address_extension_23, 16, 12) << 20);
++        addr = (uint64_t)desc->source_address3
++            + (extract64(desc->address_extension_23, 16, 16) << 32);
+         break;
+     case 3:
+-        addr = desc->source_address4
+-            + (extract32(desc->address_extension_45, 0, 12) << 8);
++        addr = (uint64_t)desc->source_address4
++            + (extract64(desc->address_extension_45, 0, 16) << 32);
+         break;
+     case 4:
+-        addr = desc->source_address5
+-            + (extract32(desc->address_extension_45, 16, 12) << 20);
++        addr = (uint64_t)desc->source_address5
++            + (extract64(desc->address_extension_45, 16, 16) << 32);
+         break;
+     default:
+         addr = 0;
+-- 
+2.30.2
 
-r~
 
