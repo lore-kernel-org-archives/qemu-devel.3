@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2DB7C25B4F
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 21:50:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AD11C4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Apr 2024 21:50:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1COw-0002yC-Ew; Sun, 28 Apr 2024 17:49:38 -0400
+	id 1s1CPk-000362-BY; Sun, 28 Apr 2024 17:50:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1COr-0002xD-S9
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 17:49:34 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1CPh-00035I-DT
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 17:50:25 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1COq-00013b-Df
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 17:49:33 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a55911bff66so469989466b.0
- for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 14:49:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1CPb-0001Je-Kp
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 17:50:24 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-41c1b75ca31so4419245e9.2
+ for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 14:50:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714340970; x=1714945770; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714341016; x=1714945816; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Qe6fMxQCClP86U2E4tekhsNK+cCefDglZXDii44rTHQ=;
- b=HNN+Gq5iIWXjmIIcx5RZ965vgvLYHRaDbv9Bt0h7mhmt+yP4RFxr00v0IXVTUiB0et
- CQjwZn8BzMp287aoI2n78PNqQwQVI8GPXmzwFN94KCutHudh0bAwK5UFRMn/eW6SNYXZ
- 7PfYRgfTNya6QsustMhP2mI0cBhJb4px7YYgWrpYeqbl77xAXNROj2M/dWczsASHZHlV
- b0iEV+Xo6tOzNtYvEC9UYDSgn/L/RQcIcwuad5vduU2YxPVlAGMjt+247gNuA7enqo2o
- L/tp1Z+FHdiXAHwBYiNC+FJCgNPVZLaFz+gu6o4TvowXJpNRS5Z3PXB193iRuv81Z39G
- NvSg==
+ bh=PiKDLwE364Pw013trdbS6B+l3BI8G2aZyNTUUJSMStE=;
+ b=UcCEgzjqTqWs+LW/8Pp7vqHI9MTjATyg+9KEeyI5SxIwzPXt7jEVHm5sZwrIBEApzF
+ OJJNvhxyu3ysg0P8TlLxY3LX4Po/Vl2yQdAM9GAv1S2FZd1Zm5TvJ/QJoRl7+vtqxmR7
+ WeKDBclMzLnXvFTcNAqKub+zCERiaWKsWbtT40zkX1aT0YzzNNXqRG+obM+cOoS/f0XH
+ BfoIswGjYi/pHOJTxp237aLqAAYDnub5Zz1IMFg2YZSSGYhVGthfeC+a+IRBhHK2l/Dq
+ R7QXQ7LBow/mCVNz5Dl47cP+klZMLkkFAtF2umGMac+bY5rHBE17ITxvu9dgosSN9mOU
+ 9kpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714340970; x=1714945770;
+ d=1e100.net; s=20230601; t=1714341016; x=1714945816;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Qe6fMxQCClP86U2E4tekhsNK+cCefDglZXDii44rTHQ=;
- b=BT4yJCjFjmsL96KRk27FY3jjMUYN3HcgzKny77Q+rTMnNLhuisM7wXEdVspf5hq2q/
- 9tu0USFYdUHZf97Cx2HhCiy8ab4v2AeY8YfqawhANn3h/76gwa1gXNfySGvmvwWJZVl0
- C0eD8RVQ17+X2BEOg0Zy2Z4k6FPu4zwHDlxDh/8b8CcPRzGhl3hRQJ2wF5+N70GXakoF
- z7CC5+Kj0Iry7P4/voeXmbqxXGinUVXBOZZZHo6hvU1NtLfedVIRme7nL77zvHeYPT2C
- M6kzepZsBxfYLP0j3nuyuQzMVs33f6tiXC0ge8OLRzyARBgSeG6UNJXo727PUOgIHXTv
- Wtpg==
-X-Gm-Message-State: AOJu0Yxv+jNOaXzzzoPe6AgzdlyL1jDV3miuZzEEKMd9kzlWGuAXKxj8
- L9/+16m4mKFtkTN2BcXT5bs+wSJU5wxpZhfHnIoohhLfedGofFOgyqjAtUFjjGs7OTUwxJLMye2
- O
-X-Google-Smtp-Source: AGHT+IGng6OcAXVm/Zchc9JyUN3zV2k47+wd3lxKFJSuijkiRsziXFU6SmiWNHlQwIAbvZm3kkvqCw==
-X-Received: by 2002:a17:906:c9d8:b0:a55:b25d:9c9e with SMTP id
- hk24-20020a170906c9d800b00a55b25d9c9emr3557962ejb.74.1714340970620; 
- Sun, 28 Apr 2024 14:49:30 -0700 (PDT)
+ bh=PiKDLwE364Pw013trdbS6B+l3BI8G2aZyNTUUJSMStE=;
+ b=g8xs8s5pc2KOImPDnTXWKVS27l9PNS+pTzq2npsTxcP7nj92ol3IqrvXMOoFKwBaCf
+ kpv+moBtY8Anxha8OQ991d4i2rIyLeuyI2QU2z4jygoGxYwsms2QONOOtzBDwPY1aRTS
+ 803Dm+U+yFGzVAEaIEdTxkqWRgJ/XvLMuYRWqn57plQ2FolI50IaFNyDJQGM674kDK2H
+ 1zmyHQMfLzCxJYxzs6jPZy+OoE/9pf+lBZYXayUNcepn7IF8uYWwuxm+Ry4Se5sYIoXR
+ m7+H2xh/eAyQhKNI9/hLDEP0O5Hl21DVH3l2VI+MgU8GUWCLDyyZptYe3MtrPWSWNSDB
+ Ec2Q==
+X-Gm-Message-State: AOJu0YyzR6CDTJU3hdQlO+ELyj/Wq5vHTkbgumkLC2c1T3g3yqabVOLp
+ FrqaO2K3680MqsPicCk6//Svl1tOgyA8rS/nhN+GDCp8BcNhJU6sSfZ+4ltO57Zo/8etNf6baC7
+ z
+X-Google-Smtp-Source: AGHT+IGUT5jQwd/Cn4XZf4R8UekYyzYZt42HD65j994dZ/HGdoeuNy1QlyLDwBkw4ORkmAYYakZBxg==
+X-Received: by 2002:a05:600c:501f:b0:41b:b07a:c54c with SMTP id
+ n31-20020a05600c501f00b0041bb07ac54cmr5546361wmr.9.1714341016281; 
+ Sun, 28 Apr 2024 14:50:16 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.142.130])
  by smtp.gmail.com with ESMTPSA id
- gc24-20020a170906c8d800b00a58f3983635sm1499209ejb.50.2024.04.28.14.49.29
+ k29-20020a05600c1c9d00b00418948a5eb0sm43150505wms.32.2024.04.28.14.50.15
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 28 Apr 2024 14:49:29 -0700 (PDT)
+ Sun, 28 Apr 2024 14:50:15 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 02/12] plugins/api: Only include 'exec/ram_addr.h' with
- system emulation
-Date: Sun, 28 Apr 2024 23:49:05 +0200
-Message-ID: <20240428214915.10339-3-philmd@linaro.org>
+Subject: [PATCH v2 10/12] accel/tcg: Remove pointless initialization of
+ cflags_next_tb
+Date: Sun, 28 Apr 2024 23:49:13 +0200
+Message-ID: <20240428214915.10339-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240428214915.10339-1-philmd@linaro.org>
 References: <20240428214915.10339-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,31 +95,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"exec/ram_addr.h" shouldn't be used with user emulation.
+cflags_next_tb is always re-initialized in the CPU Reset()
+handler in cpu_common_reset_hold(), no need to initialize
+it in cpu_common_initfn().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240427155714.53669-4-philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240427155714.53669-13-philmd@linaro.org>
 ---
- plugins/api.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/core/cpu-common.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/plugins/api.c b/plugins/api.c
-index 8fa5a600ac..eaee344d8e 100644
---- a/plugins/api.c
-+++ b/plugins/api.c
-@@ -42,10 +42,10 @@
- #include "tcg/tcg.h"
- #include "exec/exec-all.h"
- #include "exec/gdbstub.h"
--#include "exec/ram_addr.h"
- #include "disas/disas.h"
- #include "plugin.h"
- #ifndef CONFIG_USER_ONLY
-+#include "exec/ram_addr.h"
- #include "qemu/plugin-memory.h"
- #include "hw/boards.h"
- #else
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index a72d48d9e1..c4175cc4b9 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -255,7 +255,6 @@ static void cpu_common_initfn(Object *obj)
+     /* the default value is changed by qemu_init_vcpu() for system-mode */
+     cpu->nr_cores = 1;
+     cpu->nr_threads = 1;
+-    cpu->cflags_next_tb = -1;
+ 
+     qemu_mutex_init(&cpu->work_mutex);
+     qemu_lockcnt_init(&cpu->in_ioctl_lock);
 -- 
 2.41.0
 
