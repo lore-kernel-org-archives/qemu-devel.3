@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2277CC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 02:49:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C944C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 02:49:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1H3n-00075k-Rs; Sun, 28 Apr 2024 22:48:08 -0400
+	id 1s1H3V-0006T1-KU; Sun, 28 Apr 2024 22:47:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1s1H3d-0006iK-S9
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 22:47:58 -0400
+ id 1s1H3P-0006DF-Vy
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 22:47:45 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1s1H3b-000675-87
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 22:47:57 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1s1H3K-000661-L8
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 22:47:43 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8CxJvBPCi9mJcUEAA--.16557S3;
- Mon, 29 Apr 2024 10:47:43 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Dx_+tICi9mDcUEAA--.16814S3;
+ Mon, 29 Apr 2024 10:47:36 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8BxkFVECi9mp6QJAA--.7424S17; 
- Mon, 29 Apr 2024 10:47:42 +0800 (CST)
+ AQAAf8BxkFVECi9mp6QJAA--.7424S5; 
+ Mon, 29 Apr 2024 10:47:34 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
 	Bibo Mao <maobibo@loongson.cn>
-Subject: [PULL v2 15/17] hw/loongarch: fdt remove unused irqchip node
-Date: Mon, 29 Apr 2024 10:30:41 +0800
-Message-Id: <20240429023043.2607982-16-gaosong@loongson.cn>
+Subject: [PULL v2 03/17] hw/loongarch: Add slave cpu boot_code
+Date: Mon, 29 Apr 2024 10:30:29 +0800
+Message-Id: <20240429023043.2607982-4-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20240429023043.2607982-1-gaosong@loongson.cn>
 References: <20240429023043.2607982-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8BxkFVECi9mp6QJAA--.7424S17
+X-CM-TRANSID: AQAAf8BxkFVECi9mp6QJAA--.7424S5
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,64 +65,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch removes the unused fdt irqchip node.
+Load the slave CPU boot code at pflash0 and set
+the slave CPU elf_address to VIRT_FLASH0_BASE.
 
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Message-Id: <20240426091551.2397867-16-gaosong@loongson.cn>
+Message-Id: <20240426091551.2397867-4-gaosong@loongson.cn>
 ---
- hw/loongarch/virt.c | 31 +------------------------------
- 1 file changed, 1 insertion(+), 30 deletions(-)
+ hw/loongarch/boot.c | 62 ++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 61 insertions(+), 1 deletion(-)
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 91a55a81b6..48f73edd8e 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -446,34 +446,6 @@ static void fdt_add_pcie_node(const LoongArchMachineState *lams,
-     g_free(nodename);
+diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+index a5135fe542..fb6effbaff 100644
+--- a/hw/loongarch/boot.c
++++ b/hw/loongarch/boot.c
+@@ -15,6 +15,54 @@
+ #include "sysemu/reset.h"
+ #include "sysemu/qtest.h"
+ 
++static const unsigned int slave_boot_code[] = {
++                  /* Configure reset ebase.                    */
++    0x0400302c,   /* csrwr      $t0, LOONGARCH_CSR_EENTRY      */
++
++                  /* Disable interrupt.                        */
++    0x0380100c,   /* ori        $t0, $zero,0x4                 */
++    0x04000180,   /* csrxchg    $zero, $t0, LOONGARCH_CSR_CRMD */
++
++                  /* Clear mailbox.                            */
++    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
++    0x038081ad,   /* ori        $t1, $t1, CORE_BUF_20  */
++    0x06481da0,   /* iocsrwr.d  $zero, $t1                     */
++
++                  /* Enable IPI interrupt.                     */
++    0x1400002c,   /* lu12i.w    $t0, 1(0x1)                    */
++    0x0400118c,   /* csrxchg    $t0, $t0, LOONGARCH_CSR_ECFG   */
++    0x02fffc0c,   /* addi.d     $t0, $r0,-1(0xfff)             */
++    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
++    0x038011ad,   /* ori        $t1, $t1, CORE_EN_OFF          */
++    0x064819ac,   /* iocsrwr.w  $t0, $t1                       */
++    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
++    0x038081ad,   /* ori        $t1, $t1, CORE_BUF_20          */
++
++                  /* Wait for wakeup  <.L11>:                  */
++    0x06488000,   /* idle       0x0                            */
++    0x03400000,   /* andi       $zero, $zero, 0x0              */
++    0x064809ac,   /* iocsrrd.w  $t0, $t1                       */
++    0x43fff59f,   /* beqz       $t0, -12(0x7ffff4) # 48 <.L11> */
++
++                  /* Read and clear IPI interrupt.             */
++    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
++    0x064809ac,   /* iocsrrd.w  $t0, $t1                       */
++    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
++    0x038031ad,   /* ori        $t1, $t1, CORE_CLEAR_OFF       */
++    0x064819ac,   /* iocsrwr.w  $t0, $t1                       */
++
++                  /* Disable  IPI interrupt.                   */
++    0x1400002c,   /* lu12i.w    $t0, 1(0x1)                    */
++    0x04001180,   /* csrxchg    $zero, $t0, LOONGARCH_CSR_ECFG */
++
++                  /* Read mail buf and jump to specified entry */
++    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
++    0x038081ad,   /* ori        $t1, $t1, CORE_BUF_20          */
++    0x06480dac,   /* iocsrrd.d  $t0, $t1                       */
++    0x00150181,   /* move       $ra, $t0                       */
++    0x4c000020,   /* jirl       $zero, $ra,0                   */
++};
++
+ static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
+ {
+     return addr & MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS);
+@@ -125,11 +173,23 @@ static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
+         }
+     }
+ 
++    /* Load slave boot code at pflash0 . */
++    void *boot_code = g_malloc0(VIRT_FLASH0_SIZE);
++    memcpy(boot_code, &slave_boot_code, sizeof(slave_boot_code));
++    rom_add_blob_fixed("boot_code", boot_code, VIRT_FLASH0_SIZE, VIRT_FLASH0_BASE);
++
+     CPU_FOREACH(cs) {
+         lacpu = LOONGARCH_CPU(cs);
+         lacpu->env.load_elf = true;
+-        lacpu->env.elf_address = kernel_addr;
++        if (cs == first_cpu) {
++            lacpu->env.elf_address = kernel_addr;
++        } else {
++            lacpu->env.elf_address = VIRT_FLASH0_BASE;
++        }
++        lacpu->env.boot_info = info;
+     }
++
++    g_free(boot_code);
  }
  
--static void fdt_add_irqchip_node(LoongArchMachineState *lams)
--{
--    MachineState *ms = MACHINE(lams);
--    char *nodename;
--    uint32_t irqchip_phandle;
--
--    irqchip_phandle = qemu_fdt_alloc_phandle(ms->fdt);
--    qemu_fdt_setprop_cell(ms->fdt, "/", "interrupt-parent", irqchip_phandle);
--
--    nodename = g_strdup_printf("/intc@%lx", VIRT_IOAPIC_REG_BASE);
--    qemu_fdt_add_subnode(ms->fdt, nodename);
--    qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 3);
--    qemu_fdt_setprop(ms->fdt, nodename, "interrupt-controller", NULL, 0);
--    qemu_fdt_setprop_cell(ms->fdt, nodename, "#address-cells", 0x2);
--    qemu_fdt_setprop_cell(ms->fdt, nodename, "#size-cells", 0x2);
--    qemu_fdt_setprop(ms->fdt, nodename, "ranges", NULL, 0);
--
--    qemu_fdt_setprop_string(ms->fdt, nodename, "compatible",
--                            "loongarch,ls7a");
--
--    qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg",
--                                 2, VIRT_IOAPIC_REG_BASE,
--                                 2, PCH_PIC_ROUTE_ENTRY_OFFSET);
--
--    qemu_fdt_setprop_cell(ms->fdt, nodename, "phandle", irqchip_phandle);
--    g_free(nodename);
--}
--
- static void fdt_add_memory_node(MachineState *ms,
-                                 uint64_t base, uint64_t size, int node_id)
- {
-@@ -1011,8 +983,7 @@ static void loongarch_init(MachineState *machine)
- 
-     /* Initialize the IO interrupt subsystem */
-     loongarch_irq_init(lams);
--    fdt_add_irqchip_node(lams);
--    platform_bus_add_all_fdt_nodes(machine->fdt, "/intc",
-+    platform_bus_add_all_fdt_nodes(machine->fdt, "/platic",
-                                    VIRT_PLATFORM_BUS_BASEADDRESS,
-                                    VIRT_PLATFORM_BUS_SIZE,
-                                    VIRT_PLATFORM_BUS_IRQ);
+ void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
 -- 
 2.25.1
 
