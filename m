@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE92EC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 03:26:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1151EC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 03:26:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1Hdy-000175-Pi; Sun, 28 Apr 2024 23:25:30 -0400
+	id 1s1HdR-0000Qe-0L; Sun, 28 Apr 2024 23:24:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3GBMvZggKCjMhbdhiPUPVddVaT.RdbfTbj-STkTacdcVcj.dgV@flex--smostafa.bounces.google.com>)
- id 1s1Hdv-0000yY-9V
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 23:25:27 -0400
-Received: from mail-yb1-xb49.google.com ([2607:f8b0:4864:20::b49])
+ <3AxMvZggKCh4MGIMN494AIIAF8.6IGK8GO-78P8FHIHAHO.ILA@flex--smostafa.bounces.google.com>)
+ id 1s1HdO-0000Pj-SA
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 23:24:54 -0400
+Received: from mail-wm1-x349.google.com ([2a00:1450:4864:20::349])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3GBMvZggKCjMhbdhiPUPVddVaT.RdbfTbj-STkTacdcVcj.dgV@flex--smostafa.bounces.google.com>)
- id 1s1Hdp-0004FO-80
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 23:25:27 -0400
-Received: by mail-yb1-xb49.google.com with SMTP id
- 3f1490d57ef6-dc743cc50a6so5826939276.2
- for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 20:25:13 -0700 (PDT)
+ <3AxMvZggKCh4MGIMN494AIIAF8.6IGK8GO-78P8FHIHAHO.ILA@flex--smostafa.bounces.google.com>)
+ id 1s1HdN-0003zq-4s
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 23:24:54 -0400
+Received: by mail-wm1-x349.google.com with SMTP id
+ 5b1f17b1804b1-41c23f368e4so2484675e9.0
+ for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 20:24:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1714361112; x=1714965912; darn=nongnu.org;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=/BTFGfZ1d0gsjHHzEN1EL1O2w8u4ar4XUJHJI2pzbXc=;
- b=WayQ60qSEW9WqAAejZ9LkvBxOWEm603YWIxqkkJSfHNuPDfyL4Q2fCjPAUg0Z2F9xu
- 9jYKH2QSx5KmHaXCZKtsoPv+OvB9jmMZgQYwUMiJ49dexpdFsht+LqLs+Jv2NiDdoMfA
- sczf+loYAhWNC8o5ckObEbn+tOo+tFGfk0nwidmE+LxTwJri0gr7zXS/ufvAoC5EqaE3
- 6xYAoC/eua0f9BgAALIjqG/Msqa1V0PrfhozV2M7+tlX42Y7wYI9aWYwzPxuEvExXo9P
- Wcruo6J5kWbBCwTIQs0MQyJGFldQtwRFklSuCrsiIDYYhOGIVFSgqN8W/2IoFMRs8ecG
- T1mA==
+ d=google.com; s=20230601; t=1714361091; x=1714965891; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:from:subject:message-id:references
+ :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+ :reply-to; bh=ZpCcezp9/fTsowCTsySf9fmY/aXn95QjnE0/b0e/YVQ=;
+ b=ygNC5oKBiMUufdxC8bi/VlH/hIn+HYKTYs17Dnz7CjVXRCrdllkvWgq0br+ugEDqQ5
+ p/oh1zu0+EeVM71A+EAPhrp2J1vKvJiY4U9y/pksT+/Y0zisx1C8nuzP9ME4Gc4iYH0r
+ SIo0oxVFeTgDk8Q8If/cPKk3pqEAdMTl7zkr1s5YnfeMLU0qawJJnlW05pXWbjGZKnkQ
+ FODXU5yiW2T7F0V26gFX34bUFD1Cli/JMyxY2Y8pEGAuW2ennCLqe/KpyXqGzCMJb0l6
+ p67pb9a72IBwDT1/wV+EmP1jQYvEPGhmc5V7Pg2mVvsJKN93EWP6J0eJdtanY6Sac6ia
+ jKTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714361112; x=1714965912;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/BTFGfZ1d0gsjHHzEN1EL1O2w8u4ar4XUJHJI2pzbXc=;
- b=TX8v7ndujmq6F9IeSC5k2GvXDXHlZL3jmVVD2HnqYmMP+7igMHvATeaEp0o44O+iK1
- HsWKNCsfpXT20rK3rqCgbRSKC22qrgX/yHXH9ZwOH1Fx3R9Pe00PYzE/MDZV/elFhjmf
- fV/XUDjXa0ogN1jAMzIaI6LTNMdKdR8yaBBN7D3YaTBKVJvqDnqDN42hrAZ+Yjz57CSR
- N4IL/BIRXsvTgQFLI0OTkrQZKR1Zl3wkcgiz/lK9foNU1UUzeKlhNkzOECbViQBoVLUL
- Owd85SEW7QtuFhptx+M2yAlacuaS/Gy8/iaSkK5eXEcvTbSvg56QNJ8ThFYuFbFBSrLs
- kGiQ==
+ d=1e100.net; s=20230601; t=1714361091; x=1714965891;
+ h=content-transfer-encoding:cc:to:from:subject:message-id:references
+ :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=ZpCcezp9/fTsowCTsySf9fmY/aXn95QjnE0/b0e/YVQ=;
+ b=OONb0Ac7J04+EdJo9gOEdtVd2e8cNdLNPwSXn4lLWbD+2gqyYb4NjTYvpFJH/EHYmi
+ 4bYgqE+UE1V5TitmIuEhzzAnRERRkW7gEAxrOzpYnfAmkk6b0w2cJj9nTvTf2qigMBbA
+ KDY+2XAkCcKEYkZlbghozkcnvQ7XxORKXwDYJqDruqu9VDsZc1tzcqa74Wc9yLELlQXW
+ pP3X/40wgpw4yuG6Gl6LdNag0EaBYjqD4XACAwmGXKBfGpopTSu0slmQ21Gg8FSX7ODf
+ 4nQGpTLktt8calpHfp5uou40Ggv7kjgRTZdLMPhbZr8iD6aHQ0JNuyGP5KWA/1pSJ/PD
+ jHkQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXsjmLlm1eFPhJxI+xVfNWZAy3/BjGIwsj3SEvJ6hJ2j4WlnNP6zx4TUGlqwv8WG9y4TEufRLbiF5s+xd/hfVGurFnjAWc=
-X-Gm-Message-State: AOJu0Yy8EfjGy57EjikGzH1oPsusr4/fLcFfh5XVknQOr479CwQPNh2H
- n8Wfbx6azr5H6ml2+n3nHTD+Je7Ptie7r0bPwEx7j8nqWvMpZTbxkRbNSqnitlh5a7z6u5rYUpc
- 7RYTpviv8hQ==
-X-Google-Smtp-Source: AGHT+IFFo+jlYuYjHxKJhkRV7lC/G2aM9qqbB4pNsc3sRMEJ+F0x5yqamojV8kbwertJTfE3LteXYx8IvBJ4lQ==
+ AJvYcCUJoFH9Bo62vlXuxVxuIKP1ThSLMb7fdEX5LQIgNaXYgp45wkS2GeUIB+CJJdQRSl96ZBlHvewzGkAgkRSSKZRJMfgn49Q=
+X-Gm-Message-State: AOJu0YzZm7CDLBOGWUkgsfYssrFUXG+59X//myYxYkBxbmbPjbmjgGLy
+ At7lJB89appTUZdY8hhdJaDaW3o7ypO1Ma9i8OJ1pXz1ZP33cIceKX6Wxj7JS7A2OdJHYYOeoga
+ w3rb54QXUyA==
+X-Google-Smtp-Source: AGHT+IFlmFvm8bFLPkRmQqZHSTw5edCekNmbTGPI6RjgH4IB4gxI0vAC1L48k37Wl9JBTfaWcoeZ653OKbEgJQ==
 X-Received: from mostafa.c.googlers.com
  ([fda3:e722:ac3:cc00:28:9cb1:c0a8:333c])
- (user=smostafa job=sendgmr) by 2002:a05:6902:2b0b:b0:de5:2ce1:b638 with SMTP
- id fi11-20020a0569022b0b00b00de52ce1b638mr1035935ybb.0.1714361112365; Sun, 28
- Apr 2024 20:25:12 -0700 (PDT)
-Date: Mon, 29 Apr 2024 03:24:01 +0000
+ (user=smostafa job=sendgmr) by 2002:a05:600c:2294:b0:418:16b2:a3a4 with SMTP
+ id 20-20020a05600c229400b0041816b2a3a4mr41283wmf.3.1714361091028; Sun, 28 Apr
+ 2024 20:24:51 -0700 (PDT)
+Date: Mon, 29 Apr 2024 03:23:52 +0000
 In-Reply-To: <20240429032403.74910-1-smostafa@google.com>
 Mime-Version: 1.0
 References: <20240429032403.74910-1-smostafa@google.com>
 X-Mailer: git-send-email 2.44.0.769.g3c40516874-goog
-Message-ID: <20240429032403.74910-18-smostafa@google.com>
-Subject: [RFC PATCH v3 17/18] hw/arm/smmuv3: Add property for OAS
+Message-ID: <20240429032403.74910-9-smostafa@google.com>
+Subject: [RFC PATCH v3 08/18] hw/arm/smmu-common: Add support for nested TLB
 From: Mostafa Saleh <smostafa@google.com>
 To: qemu-arm@nongnu.org, eric.auger@redhat.com, peter.maydell@linaro.org, 
  qemu-devel@nongnu.org
@@ -72,14 +73,15 @@ Cc: jean-philippe@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
  nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org, 
  marcin.juszkiewicz@linaro.org, Mostafa Saleh <smostafa@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b49;
- envelope-from=3GBMvZggKCjMhbdhiPUPVddVaT.RdbfTbj-STkTacdcVcj.dgV@flex--smostafa.bounces.google.com;
- helo=mail-yb1-xb49.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::349;
+ envelope-from=3AxMvZggKCh4MGIMN494AIIAF8.6IGK8GO-78P8FHIHAHO.ILA@flex--smostafa.bounces.google.com;
+ helo=mail-wm1-x349.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -97,109 +99,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add property that sets the OAS of the SMMU, this in not used in this
-patch.
+This patch adds support for nested(combined) TLB entries.
+The main function combine_tlb() is not used here but in the next
+patches, but to simplify the patches it is introduced first.
+
+Main changes:
+1) New entry added in the TLB, parent_perm, for nested TLB, holds the
+   stage-2 permission, this can be used to know the origin of a
+   permission fault from a cached entry as caching the =E2=80=9Cand=E2=80=
+=9D of the
+   permissions loses this information.
+
+   SMMUPTWEventInfo is used to hold information about PTW faults so
+   the event can be populated, the value of stage (which maps to S2
+   in the event) used to be set based on the current stage for TLB
+   permission faults, however with the parent_perm, it is now set
+   based on which perm has the missing permission
+
+   When nesting is not enabled it has the same value as perm which
+   doesn't change the logic.
+
+2) As combined TLB implementation is used, the combination logic
+   chooses:
+   - tg and level from the entry which has the smallest addr_mask.
+   - Based on that the iova that would be cached is recalculated.
+   - Translated_addr is chosen from stage-2.
 
 Signed-off-by: Mostafa Saleh <smostafa@google.com>
 ---
- hw/arm/smmuv3-internal.h |  3 ++-
- hw/arm/smmuv3.c          | 29 ++++++++++++++++++++++++++++-
- include/hw/arm/smmuv3.h  |  1 +
- 3 files changed, 31 insertions(+), 2 deletions(-)
+ hw/arm/smmu-common.c         | 32 ++++++++++++++++++++++++++++----
+ include/hw/arm/smmu-common.h |  1 +
+ 2 files changed, 29 insertions(+), 4 deletions(-)
 
-diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
-index 0ebf2eebcf..dd91807624 100644
---- a/hw/arm/smmuv3-internal.h
-+++ b/hw/arm/smmuv3-internal.h
-@@ -111,7 +111,8 @@ REG32(IDR5,                0x14)
-      FIELD(IDR5, VAX,        10, 2);
-      FIELD(IDR5, STALL_MAX,  16, 16);
- 
--#define SMMU_IDR5_OAS 4
-+#define SMMU_IDR5_OAS_DEF 4 /* 44 bits. */
-+#define SMMU_IDR5_OAS_MAX 5 /* 48 bits. */
- 
- REG32(IIDR,                0x18)
- REG32(AIDR,                0x1c)
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index 4ac818cf7a..39d03e7e24 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -299,7 +299,9 @@ static void smmuv3_init_regs(SMMUv3State *s)
-     s->idr[3] = FIELD_DP32(s->idr[3], IDR3, RIL, 1);
-     s->idr[3] = FIELD_DP32(s->idr[3], IDR3, BBML, 2);
- 
--    s->idr[5] = FIELD_DP32(s->idr[5], IDR5, OAS, SMMU_IDR5_OAS); /* 44 bits */
-+    /* PTW doesn't support 52 bits. */
-+    s->oas = MIN(s->oas, SMMU_IDR5_OAS_MAX);
-+    s->idr[5] = FIELD_DP32(s->idr[5], IDR5, OAS, s->oas);
-     /* 4K, 16K and 64K granule support */
-     s->idr[5] = FIELD_DP32(s->idr[5], IDR5, GRAN4K, 1);
-     s->idr[5] = FIELD_DP32(s->idr[5], IDR5, GRAN16K, 1);
-@@ -1901,11 +1903,34 @@ static const VMStateDescription vmstate_gbpa = {
-     }
- };
- 
-+static const VMStateDescription vmstate_oas = {
-+    .name = "smmuv3/oas",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_INT32(oas, SMMUv3State),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static int smmuv3_preload(void *opaque)
+diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+index 21982621c0..0d6945fa54 100644
+--- a/hw/arm/smmu-common.c
++++ b/hw/arm/smmu-common.c
+@@ -394,7 +394,7 @@ static int smmu_ptw_64_s1(SMMUTransCfg *cfg,
+         tlbe->entry.translated_addr =3D gpa;
+         tlbe->entry.iova =3D iova & ~mask;
+         tlbe->entry.addr_mask =3D mask;
+-        tlbe->entry.perm =3D PTE_AP_TO_PERM(ap);
++        tlbe->parent_perm =3D tlbe->entry.perm =3D PTE_AP_TO_PERM(ap);
+         tlbe->level =3D level;
+         tlbe->granule =3D granule_sz;
+         return 0;
+@@ -515,7 +515,7 @@ static int smmu_ptw_64_s2(SMMUTransCfg *cfg,
+         tlbe->entry.translated_addr =3D gpa;
+         tlbe->entry.iova =3D ipa & ~mask;
+         tlbe->entry.addr_mask =3D mask;
+-        tlbe->entry.perm =3D s2ap;
++        tlbe->parent_perm =3D tlbe->entry.perm =3D s2ap;
+         tlbe->level =3D level;
+         tlbe->granule =3D granule_sz;
+         return 0;
+@@ -530,6 +530,27 @@ error:
+     return -EINVAL;
+ }
+=20
++/* combine 2 TLB entries and return in tlbe in nested config. */
++static void __attribute__((unused)) combine_tlb(SMMUTLBEntry *tlbe,
++                                                SMMUTLBEntry *tlbe_s2,
++                                                dma_addr_t iova,
++                                                SMMUTransCfg *cfg)
 +{
-+    SMMUv3State *s = opaque;
++    if (tlbe_s2->entry.addr_mask < tlbe->entry.addr_mask) {
++        tlbe->entry.addr_mask =3D tlbe_s2->entry.addr_mask;
++        tlbe->granule =3D tlbe_s2->granule;
++        tlbe->level =3D tlbe_s2->level;
++    }
 +
-+    /*
-+     * In case it wasn't migrated, use the value used
-+     * by older QEMU.
-+     */
-+    s->oas = SMMU_IDR5_OAS_DEF;
-+    return 0;
++    tlbe->entry.translated_addr =3D CACHED_ENTRY_TO_ADDR(tlbe_s2,
++                                    tlbe->entry.translated_addr);
++
++    tlbe->entry.iova =3D iova & ~tlbe->entry.addr_mask;
++    /* parent_perm has s2 perm while perm has s1 perm. */
++    tlbe->parent_perm =3D tlbe_s2->entry.perm;
++    return;
 +}
 +
- static const VMStateDescription vmstate_smmuv3 = {
-     .name = "smmuv3",
-     .version_id = 1,
-     .minimum_version_id = 1,
-     .priority = MIG_PRI_IOMMU,
-+    .pre_load = smmuv3_preload,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT32(features, SMMUv3State),
-         VMSTATE_UINT8(sid_size, SMMUv3State),
-@@ -1933,6 +1958,7 @@ static const VMStateDescription vmstate_smmuv3 = {
-     },
-     .subsections = (const VMStateDescription * const []) {
-         &vmstate_gbpa,
-+        &vmstate_oas,
-         NULL
-     }
- };
-@@ -1945,6 +1971,7 @@ static Property smmuv3_properties[] = {
-      * Defaults to stage 1
-      */
-     DEFINE_PROP_STRING("stage", SMMUv3State, stage),
-+    DEFINE_PROP_INT32("oas", SMMUv3State, oas, SMMU_IDR5_OAS_DEF),
-     DEFINE_PROP_END_OF_LIST()
- };
- 
-diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
-index d183a62766..00a9eb4467 100644
---- a/include/hw/arm/smmuv3.h
-+++ b/include/hw/arm/smmuv3.h
-@@ -63,6 +63,7 @@ struct SMMUv3State {
-     qemu_irq     irq[4];
-     QemuMutex mutex;
-     char *stage;
-+    int32_t oas;
- };
- 
- typedef enum {
--- 
+ /**
+  * smmu_ptw - Walk the page tables for an IOVA, according to @cfg
+  *
+@@ -607,9 +628,12 @@ SMMUTLBEntry *smmu_translate(SMMUState *bs, SMMUTransC=
+fg *cfg, dma_addr_t addr,
+=20
+     cached_entry =3D smmu_iotlb_lookup(bs, cfg, &tt_combined, aligned_addr=
+);
+     if (cached_entry) {
+-        if ((flag & IOMMU_WO) && !(cached_entry->entry.perm & IOMMU_WO)) {
++        if ((flag & IOMMU_WO) && !(cached_entry->entry.perm &
++            cached_entry->parent_perm & IOMMU_WO)) {
+             info->type =3D SMMU_PTW_ERR_PERMISSION;
+-            info->stage =3D cfg->stage;
++            info->stage =3D !(cached_entry->entry.perm & IOMMU_WO) ?
++                          SMMU_STAGE_1 :
++                          SMMU_STAGE_2;
+             return NULL;
+         }
+         return cached_entry;
+diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
+index 09d3b9e734..1db566d451 100644
+--- a/include/hw/arm/smmu-common.h
++++ b/include/hw/arm/smmu-common.h
+@@ -77,6 +77,7 @@ typedef struct SMMUTLBEntry {
+     IOMMUTLBEntry entry;
+     uint8_t level;
+     uint8_t granule;
++    IOMMUAccessFlags parent_perm;
+ } SMMUTLBEntry;
+=20
+ /* Stage-2 configuration. */
+--=20
 2.44.0.769.g3c40516874-goog
 
 
