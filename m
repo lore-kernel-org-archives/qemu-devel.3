@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02BC5C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 16:03:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9396C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 16:03:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1TMZ-0004xq-4f; Mon, 29 Apr 2024 11:56:20 -0400
+	id 1s1TMZ-0004zT-I4; Mon, 29 Apr 2024 11:56:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s1TMK-0004aI-02
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1s1TMJ-0004aH-Ru
  for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s1TMH-0005Ky-GE
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1s1TMI-0005Gh-2g
  for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714406160;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4AAnRuWD8C2GDGP/Dxv3MHFn8zZkGRM+IwEpQYlOX34=;
- b=Ib794IX9wI3c6wR7bdG+1ffIta7hiUTJd2YJbHjpCTHLJ4pF5txPkPKohUnfPjMrPMra7x
- exMe+eN23rbPBTFtTSBJ2Lf6du3NVfW5zP6hSopZ4Sujw72lSwxbhKjm3CVcCDnDouWzs2
- rZ+gszVPO6HuCe5twl8X6/Apy+4WN4I=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-220-JCuZKY-OPKOmICWwWkKEOQ-1; Mon,
- 29 Apr 2024 11:55:55 -0400
-X-MC-Unique: JCuZKY-OPKOmICWwWkKEOQ-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6E5C21C0C653;
- Mon, 29 Apr 2024 15:55:53 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.132])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 83BD51C060D1;
- Mon, 29 Apr 2024 15:55:45 +0000 (UTC)
-Date: Mon, 29 Apr 2024 16:55:43 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: QEMU Developers <qemu-devel@nongnu.org>,
- Daniil Tatianin <d-tatianin@yandex-team.ru>, armbru@redhat.com,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- afaerber@suse.de, ale@rev.ng, alistair.francis@wdc.com,
- Anton Johansson <anjo@rev.ng>, bbauman@redhat.com,
- bcain@quicinc.com, Chao Peng <chao.p.peng@linux.intel.com>,
- cjia@nvidia.com, clg@kaod.org, cw@f00f.org,
- Damien Hedde <dhedde@kalrayinc.com>, eblake@redhat.com,
- edgar.iglesias@gmail.com, eduardo@habkost.net,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>, eric.auger@redhat.com,
- felipe@nutanix.com, iggy@theiggy.com, imp@bsdimp.com,
- jan.kiszka@web.de, jgg@nvidia.com, jidong.xiao@gmail.com,
- jim.shu@sifive.com, jjherne@linux.vnet.ibm.com,
- Joao Martins <joao.m.martins@oracle.com>, konrad.wilk@oracle.com,
- Luc Michel <luc@lmichel.fr>, mburton@qti.qualcomm.com,
- mdean@redhat.com, mimu@linux.vnet.ibm.com, paul.walmsley@sifive.com,
- pbonzini@redhat.com, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
- shentey@gmail.com, stefanha@gmail.com, wei.w.wang@intel.com,
- z.huo@139.com, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
- zwu.kernel@gmail.com, eblot@rivosinc.com, max.chou@sifive.com
-Subject: Re: QEMU Community Call Agenda Items (April 30th, 2024)
-Message-ID: <Zi_C_xHx33Q7T_96@redhat.com>
-References: <b534d873-9be3-4a24-800f-603ed25c0803@linaro.org>
- <ebdd9766-04d1-4908-996f-e93c0cd4e6d5@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ebdd9766-04d1-4908-996f-e93c0cd4e6d5@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43TFmoK9021820; Mon, 29 Apr 2024 15:55:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
+ h=from : to : cc :
+ subject : date : message-id : in-reply-to : references; s=corp-2023-11-20;
+ bh=5W3Uqi4pt3zRyBqCA3ANso+QnzCYfMdNqiQwmSxIPBU=;
+ b=aPwa47nHVSwmydqNUpY5aAlBcaUI93HussR2INpO4QLt1OMnNVXlylVzYL3p4VwzMAr3
+ 2JGdfEIlN0sddOlTqidc2ger5xjbpXam+L+n1h+IKb1+bxl+PGbBAXTOW1zMpsFzecrm
+ /RZkqjs+k2i+S+XX3r2xc34FSFx8P+/A0AMFqwUwp3LqL8JCBNU4f4JhoCPhg19c7r5C
+ 0x0GWbPkmNNcpecSr57PX4hWWfnCcajqsN32Oe59HbdR0Y0Fi8QtPMX40v+/IEBFpFVO
+ ZjjdeGGZmh3ga59SK7norNg2R8DpSJq1orZ3brI7A84zcDwbceoRM5fd7hbpAgkqioVX cA== 
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xrr54axt8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 29 Apr 2024 15:55:49 +0000
+Received: from pps.filterd
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 43TEuHx5011355; Mon, 29 Apr 2024 15:55:48 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 3xrqt6j6d8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 29 Apr 2024 15:55:47 +0000
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43TFtaGw034442;
+ Mon, 29 Apr 2024 15:55:47 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
+ ESMTP id 3xrqt6j5ys-16; Mon, 29 Apr 2024 15:55:47 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V1 15/26] physmem: hoist host memory allocation
+Date: Mon, 29 Apr 2024 08:55:24 -0700
+Message-Id: <1714406135-451286-16-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
+References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-04-29_14,2024-04-29_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
+ malwarescore=0
+ adultscore=0 mlxscore=0 suspectscore=0 phishscore=0 spamscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2404010000 definitions=main-2404290101
+X-Proofpoint-ORIG-GUID: pMtKRFgkojj0wtNbTsvLIjG0hCQLLpL5
+X-Proofpoint-GUID: pMtKRFgkojj0wtNbTsvLIjG0hCQLLpL5
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,95 +101,147 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 29, 2024 at 05:06:36PM +0200, Philippe Mathieu-Daudé wrote:
-> Hi,
-> 
-> On 29/4/24 00:25, Philippe Mathieu-Daudé wrote:
-> > Hi,
-> > 
-> > The KVM/QEMU community call is at:
-> > 
-> >    https://meet.jit.si/kvmcallmeeting
-> >    @
-> >    30/4/2024 14:00 UTC
-> > 
-> > Are there any agenda items for the sync-up?
-> 
-> I'd like to discuss two issues:
-> 
-> 1/ Stability of QOM path
->    ---------------------
-> 
->   Currently we have 3 QOM containers:
->    - /machine
->      QOM objects properly parented go there
->    - /machine/unattached
->      Orphan QOM objects. Missing parent is usually easy
->      to figure out, but we need to post patches to fix them.
->    - /machine/peripheral[-anon]
->      Devices created at runtime with CLI -device or QAPI device_add.
->      (-anon is for devices with no explicit bus ID).
->    See "Problem 4: The /machine/unattached/ orphanage" in [1].
-> 
->   The /machine and /machine/unattached trees are stable, although
->   by adding parent to orphan objects, their path will change.
-> 
->   Objects in /machine/peripheral[-anon] depend on the order of
->   the device_add commands / arguments used.
-> 
->   In a dynamically created machine, everything depend on how the
->   device_add commands are processed.
-> 
->   How can be expect to easily reference a QOM object by its path?
+Hoist host memory allocation from ram_block_add.
+No functional change.
 
-FYI, for reference libvirt uses a couple of QOM paths
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+---
+ system/physmem.c | 80 +++++++++++++++++++++++++-------------------------------
+ 1 file changed, 36 insertions(+), 44 deletions(-)
 
- * "/machine/unattached/device[0]" - path of first vCPU, but
-   this is an historical artifact - nowdays we query the
-   paths from query-cpus-fast
-
- * "/machine/peripheral/%s/virtio-backend" where '%s' is the
-   ID we give the virtio device, for virtio-blk disks
-
- * /machine/peripheral/%s/%s.0/legacy[0] where both '%s'  are
-   the ID we give the USB defvice, for USB disks
-
- * /machine/peripheral  when enumerating devices we've
-   assigned ID aliases to.
-
- * /machine to get the rtc-time property value
-
-> 2/ Is it safe to broadcast a QAPI event to all type of device/object?
->    ------------------------------------------------------------------
-> 
->    We have QMP commands such @rtc-reset-reinjection or @inject-nmi
->    which expect a single RTC / NMI listener in the machine.
-> 
->    When using heterogeneous machines, we might end with multiple RTC
->    or NMI-aware devices. Should these commands be broadcasted to all
->    devices, or should we explicitly pass a list of paths to devices
->    we want to notify. Maybe we want both options.
-> 
->    See threads around NMI [2] and RTC [3].
-> 
-> [1] https://lore.kernel.org/qemu-devel/87o7d1i7ky.fsf@pond.sub.org/
-> [2] https://lore.kernel.org/qemu-devel/f4a6492b-cff4-439d-8f34-cdf04cb747ee@redhat.com/
-> [3] https://lore.kernel.org/qemu-devel/20240425133745.464091-1-d-tatianin@yandex-team.ru/
-> 
-> Regards,
-> 
-> Phil.
-> 
-
-With regards,
-Daniel
+diff --git a/system/physmem.c b/system/physmem.c
+index ffcf012..b57462d 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -1825,44 +1825,40 @@ static void ram_block_destroy_guest_memfd(RAMBlock *rb)
+     }
+ }
+ 
+-static void ram_block_add(RAMBlock *new_block, Error **errp)
++static void *ram_block_alloc_host(RAMBlock *rb, Error **errp)
++{
++    struct MemoryRegion *mr = rb->mr;
++    uint8_t *host = NULL;
++
++    if (xen_enabled()) {
++        xen_ram_alloc(rb->offset, rb->max_length, mr, errp);
++
++    } else {
++        host = qemu_anon_ram_alloc(rb->max_length, &mr->align,
++                                   qemu_ram_is_shared(rb),
++                                   qemu_ram_is_noreserve(rb));
++        if (!host) {
++            error_setg_errno(errp, errno, "cannot set up guest memory '%s'",
++                             rb->idstr);
++        }
++    }
++
++    if (host) {
++        memory_try_enable_merging(host, rb->max_length);
++    }
++    return host;
++}
++
++static void ram_block_add(RAMBlock *new_block)
+ {
+-    const bool noreserve = qemu_ram_is_noreserve(new_block);
+-    const bool shared = qemu_ram_is_shared(new_block);
+     RAMBlock *block;
+     RAMBlock *last_block = NULL;
+     ram_addr_t old_ram_size, new_ram_size;
+-    Error *err = NULL;
+-
+     old_ram_size = last_ram_page();
+ 
+     qemu_mutex_lock_ramlist();
+     new_block->offset = find_ram_offset(new_block->max_length);
+ 
+-    if (!new_block->host) {
+-        if (xen_enabled()) {
+-            xen_ram_alloc(new_block->offset, new_block->max_length,
+-                          new_block->mr, &err);
+-            if (err) {
+-                error_propagate(errp, err);
+-                qemu_mutex_unlock_ramlist();
+-                return;
+-            }
+-        } else {
+-            new_block->host = qemu_anon_ram_alloc(new_block->max_length,
+-                                                  &new_block->mr->align,
+-                                                  shared, noreserve);
+-            if (!new_block->host) {
+-                error_setg_errno(errp, errno,
+-                                 "cannot set up guest memory '%s'",
+-                                 memory_region_name(new_block->mr));
+-                qemu_mutex_unlock_ramlist();
+-                return;
+-            }
+-            memory_try_enable_merging(new_block->host, new_block->max_length);
+-        }
+-    }
+-
+     new_ram_size = MAX(old_ram_size,
+               (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS);
+     if (new_ram_size > old_ram_size) {
+@@ -1948,7 +1944,6 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
+ {
+     void *host;
+     RAMBlock *new_block;
+-    Error *local_err = NULL;
+     int64_t file_size, file_align;
+ 
+     /* Just support these ram flags by now. */
+@@ -1999,12 +1994,7 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
+     }
+ 
+     new_block->host = host;
+-    ram_block_add(new_block, &local_err);
+-    if (local_err) {
+-        g_free(new_block);
+-        error_propagate(errp, local_err);
+-        return NULL;
+-    }
++    ram_block_add(new_block);
+     return new_block;
+ }
+ 
+@@ -2066,7 +2056,6 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
+                                   MemoryRegion *mr, Error **errp)
+ {
+     RAMBlock *new_block;
+-    Error *local_err = NULL;
+     int align;
+ 
+     assert((ram_flags & ~(RAM_SHARED | RAM_RESIZEABLE | RAM_PREALLOC |
+@@ -2084,14 +2073,17 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
+     }
+     new_block->resized = resized;
+ 
+-    new_block->host = host;
+-    ram_block_add(new_block, &local_err);
+-    if (local_err) {
+-        ram_block_destroy_guest_memfd(new_block);
+-        g_free(new_block);
+-        error_propagate(errp, local_err);
+-        return NULL;
++    if (!host) {
++        host = ram_block_alloc_host(new_block, errp);
++        if (!host) {
++            ram_block_destroy_guest_memfd(new_block);
++            g_free(new_block);
++            return NULL;
++        }
+     }
++
++    new_block->host = host;
++    ram_block_add(new_block);
+     return new_block;
+ }
+ 
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+1.8.3.1
 
 
