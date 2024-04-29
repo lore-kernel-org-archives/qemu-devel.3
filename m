@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB1B0C4345F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0DFBC04FFE
 	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 06:48:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1KnE-0002PW-Qs; Mon, 29 Apr 2024 02:47:20 -0400
+	id 1s1KmU-00023N-QN; Mon, 29 Apr 2024 02:46:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1s1Km1-0001tl-Qf; Mon, 29 Apr 2024 02:46:01 -0400
+ id 1s1Klv-0001rU-Qo; Mon, 29 Apr 2024 02:46:00 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1s1Klx-0006Yl-6a; Mon, 29 Apr 2024 02:46:01 -0400
+ id 1s1Klu-0006Y6-3y; Mon, 29 Apr 2024 02:45:55 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 53C7F62CB8;
+ by isrv.corpit.ru (Postfix) with ESMTP id 2BE6862CB5;
  Mon, 29 Apr 2024 09:45:40 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 5F2D7C33FB;
+ by tsrv.corpit.ru (Postfix) with SMTP id 38501C33F8;
  Mon, 29 Apr 2024 09:45:37 +0300 (MSK)
-Received: (nullmailer pid 238453 invoked by uid 1000);
+Received: (nullmailer pid 238444 invoked by uid 1000);
  Mon, 29 Apr 2024 06:45:36 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 9/9] checkpatch.pl: forbid strerrorname_np()
-Date: Mon, 29 Apr 2024 09:45:36 +0300
-Message-Id: <20240429064536.238392-10-mjt@tls.msk.ru>
+Cc: qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 6/9] backends/cryptodev-builtin: Fix local_error leaks
+Date: Mon, 29 Apr 2024 09:45:33 +0300
+Message-Id: <20240429064536.238392-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240429064536.238392-1-mjt@tls.msk.ru>
 References: <20240429064536.238392-1-mjt@tls.msk.ru>
@@ -61,46 +60,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Li Zhijian via <qemu-devel@nongnu.org>
 
-Commit d424db2354 removed an instance of strerrorname_np() because it
-was breaking building with musl libc. A recent RISC-V patch ended up
-re-introducing it again by accident.
+It seems that this error does not need to be propagated to the upper,
+directly output the error to avoid the leaks
 
-Put this function in the baddies list in checkpatch.pl to avoid this
-situation again. This is what it will look like next time:
-
- $ ./scripts/checkpatch.pl 0001-temp-test.patch
- ERROR: use strerror() instead of strerrorname_np()
- #22: FILE: target/riscv/kvm/kvm-cpu.c:1058:
- +                         strerrorname_np(errno));
-
- total: 1 errors, 0 warnings, 10 lines checked
-
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Closes: https://gitlab.com/qemu-project/qemu/-/issues/2283
+Fixes: 2fda101de07 ("virtio-crypto: Support asynchronous mode")
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: zhenwei pi <pizhenwei@bytedance.com>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- scripts/checkpatch.pl | 3 +++
- 1 file changed, 3 insertions(+)
+ backends/cryptodev-builtin.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index 76a0b79266..ff373a7083 100755
---- a/scripts/checkpatch.pl
-+++ b/scripts/checkpatch.pl
-@@ -3078,6 +3078,9 @@ sub process {
- 		if ($line =~ /\b(g_)?assert\(0\)/) {
- 			ERROR("use g_assert_not_reached() instead of assert(0)\n" . $herecurr);
- 		}
-+		if ($line =~ /\bstrerrorname_np\(/) {
-+			ERROR("use strerror() instead of strerrorname_np()\n" . $herecurr);
-+		}
- 		my $non_exit_glib_asserts = qr{g_assert_cmpstr|
- 						g_assert_cmpint|
- 						g_assert_cmpuint|
+diff --git a/backends/cryptodev-builtin.c b/backends/cryptodev-builtin.c
+index a514bbb310..940104ee55 100644
+--- a/backends/cryptodev-builtin.c
++++ b/backends/cryptodev-builtin.c
+@@ -23,6 +23,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "sysemu/cryptodev.h"
++#include "qemu/error-report.h"
+ #include "qapi/error.h"
+ #include "standard-headers/linux/virtio_crypto.h"
+ #include "crypto/cipher.h"
+@@ -396,8 +397,8 @@ static int cryptodev_builtin_create_session(
+     case VIRTIO_CRYPTO_HASH_CREATE_SESSION:
+     case VIRTIO_CRYPTO_MAC_CREATE_SESSION:
+     default:
+-        error_setg(&local_error, "Unsupported opcode :%" PRIu32 "",
+-                   sess_info->op_code);
++        error_report("Unsupported opcode :%" PRIu32 "",
++                     sess_info->op_code);
+         return -VIRTIO_CRYPTO_NOTSUPP;
+     }
+ 
+@@ -554,8 +555,8 @@ static int cryptodev_builtin_operation(
+ 
+     if (op_info->session_id >= MAX_NUM_SESSIONS ||
+               builtin->sessions[op_info->session_id] == NULL) {
+-        error_setg(&local_error, "Cannot find a valid session id: %" PRIu64 "",
+-                   op_info->session_id);
++        error_report("Cannot find a valid session id: %" PRIu64 "",
++                     op_info->session_id);
+         return -VIRTIO_CRYPTO_INVSESS;
+     }
+ 
 -- 
 2.39.2
 
