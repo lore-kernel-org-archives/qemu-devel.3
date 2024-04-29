@@ -4,61 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32527C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 17:51:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 870B9C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 18:11:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1V9r-0003Jv-2c; Mon, 29 Apr 2024 13:51:19 -0400
+	id 1s1VSm-0007iS-E8; Mon, 29 Apr 2024 14:10:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1s1V9o-0003JK-7q
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 13:51:16 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
+ id 1s1VSl-0007iJ-6C
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 14:10:51 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1s1V9Y-0006sW-T0
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 13:51:15 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VSrQj3KF0z6J9gC;
- Tue, 30 Apr 2024 01:48:13 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 43F44140C98;
- Tue, 30 Apr 2024 01:50:48 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Mon, 29 Apr
- 2024 18:50:47 +0100
-Date: Mon, 29 Apr 2024 18:50:46 +0100
-To: Markus Armbruster <armbru@redhat.com>
-CC: <ankita@nvidia.com>, <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>,
- <mst@redhat.com>, <qemu-devel@nongnu.org>, Dave Jiang <dave.jiang@intel.com>, 
- Huang Ying <ying.huang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- <eduardo@habkost.net>, <imammedo@redhat.com>, <linux-cxl@vger.kernel.org>,
- <linuxarm@huawei.com>, Michael Roth <michael.roth@amd.com>, Ani Sinha
- <anisinha@redhat.com>
-Subject: Re: [PATCH 3/6] hw/acpi: Generic Port Affinity Structure support
-Message-ID: <20240429185046.00002a7c@Huawei.com>
-In-Reply-To: <87r0ewcppm.fsf@pond.sub.org>
-References: <20240403102927.31263-1-Jonathan.Cameron@huawei.com>
- <20240403102927.31263-4-Jonathan.Cameron@huawei.com>
- <87r0ewcppm.fsf@pond.sub.org>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
+ id 1s1VSj-0001yh-6m
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 14:10:50 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43THeIem029617;
+ Mon, 29 Apr 2024 18:10:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ from:to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding:content-type; s=
+ qcppdkim1; bh=24sarxMrfkzmkv4AhpAzVXJpdLV1xO3F8hNNgiYLuUo=; b=Ga
+ PXle7yfo6TUsS8FfeCOrqaDRgwc8/NEfYxuEeKH8qV6mCbEriARs3bzCHqltGl1j
+ em88fuOc9wJWhIKK9r3x3RKspWiwpBU/1paCqViHUiufvJjCT1xyQiah0yyWXxRR
+ 7TlWrpPVy0aMnNEITyjtrNsM0/MwZT6+rKama4Kzd3ew93bhkIM8h263VuF3KbX8
+ vyxNSt6qPsRHsEVRQLAGeagCRT4Zq6gqUfLr0ncAYlIhaxv1WlBbYeWxKQnXY1qN
+ TD9RSFuQIDzQmnqMtydfaeO+Oes0p3QKnR006wRBNDcnHWMXD7x9NXTX5hsvCXqe
+ ncomD2BT2Uz+W+nh0maQ==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xtg51r4vb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Apr 2024 18:10:43 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com
+ [10.47.209.196])
+ by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43TIAgjC013601
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Apr 2024 18:10:42 GMT
+Received: from mathbern-mac.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 29 Apr 2024 11:10:40 -0700
+From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+To: <ltaylorsimpson@gmail.com>
+CC: <quic_mathbern@quicinc.com>, <qemu-devel@nongnu.org>, <bcain@quicinc.com>, 
+ <sidneym@quicinc.com>, <ale@rev.ng>, <anjo@rev.ng>
+Subject: RE: [PATCH] Hexagon: add PC alignment check and exception
+Date: Mon, 29 Apr 2024 15:02:14 -0300
+Message-ID: <20240429181010.2160-1-quic_mathbern@quicinc.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <028e01da9a44_b05d2940_11177bc0_@gmail.com>
+References: <028e01da9a44_b05d2940_11177bc0_@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml100006.china.huawei.com (7.191.160.224) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Proofpoint-GUID: OsBKPikrSKt6pi1QAaKrtXlIJ04IPdA-
+X-Proofpoint-ORIG-GUID: OsBKPikrSKt6pi1QAaKrtXlIJ04IPdA-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-04-29_16,2024-04-29_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0
+ lowpriorityscore=0 adultscore=0 mlxscore=0 spamscore=0 suspectscore=0
+ bulkscore=0 priorityscore=1501 clxscore=1015 phishscore=0 impostorscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404290117
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=quic_mathbern@quicinc.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,142 +97,69 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 23 Apr 2024 12:56:21 +0200
-Markus Armbruster <armbru@redhat.com> wrote:
+Hi, Taylor
 
-> Jonathan Cameron <Jonathan.Cameron@huawei.com> writes:
-> 
-> > These are very similar to the recently added Generic Initiators
-> > but instead of representing an initiator of memory traffic they
-> > represent an edge point beyond which may lie either targets or
-> > initiators.  Here we add these ports such that they may
-> > be targets of hmat_lb records to describe the latency and
-> > bandwidth from host side initiators to the port.  A descoverable
-> > mechanism such as UEFI CDAT read from CXL devices and switches
-> > is used to discover the remainder fo the path and the OS can build
-> > up full latency and bandwidth numbers as need for work and data
-> > placement decisions.
-> >
-> > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+On Mon, 29 Apr 2024 09:51:16 -0500 <ltaylorsimpson@gmail.com> wrote:
+>
+> PS  You should also update the pkt_raises_exception function in translate.c
+> to return true for packets that contain these instructions.  This will
+> ensure that none of the machine state is changed before the check is
+> complete.
+ 
+Will do, thanks.
 
-Hi Markus,
+> > -----Original Message-----
+> > From: ltaylorsimpson@gmail.com <ltaylorsimpson@gmail.com>
+> > 
+> > 
+> > 
+> > > -----Original Message-----
+> > > From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+> > >
+> > >
+> > > --- a/target/hexagon/genptr.c
+> > > +++ b/target/hexagon/genptr.c
+> > > @@ -473,6 +473,7 @@ static void gen_write_new_pc_addr(DisasContext
+> > 
+> > You haven't added the check to gen_write_new_pc_pcrel.  It's not needed
+> > there because the encoding guarantees the target is always aligned -
+> right?
+> > However, there is a call to gen_write_new_pc_addr inside that function.
+> In
+> > this case, we'll add a check that isn't necessary.  Consider adding a
+> parameter
+> > to indicate if the check can be avoided.
 
-I've again managed a bad job of defining an interface - thanks for
-your help!
+Actually, I had missed this spot and I think we do need the check at 
+gen_write_new_pc_pcrel too. The added test `unaligned_pc_multi_cof.S` will
+exercise it with a relative PC addr that is not aligned. I'll fix that, thanks. 
 
-> > ---
-> >  qapi/qom.json                            |  18 +++
-> >  include/hw/acpi/acpi_generic_initiator.h |  18 ++-
-> >  include/hw/pci/pci_bridge.h              |   1 +
-> >  hw/acpi/acpi_generic_initiator.c         | 141 +++++++++++++++++------
-> >  hw/pci-bridge/pci_expander_bridge.c      |   1 -
-> >  5 files changed, 141 insertions(+), 38 deletions(-)
-> >
-> > diff --git a/qapi/qom.json b/qapi/qom.json
-> > index 85e6b4f84a..5480d9ca24 100644
-> > --- a/qapi/qom.json
-> > +++ b/qapi/qom.json
-> > @@ -826,6 +826,22 @@
-> >    'data': { 'pci-dev': 'str',
-> >              'node': 'uint32' } }
-> >  
-> > +
-> > +##
-> > +# @AcpiGenericPortProperties:
-> > +#
-> > +# Properties for acpi-generic-port objects.
-> > +#
-> > +# @pci-bus: PCI bus of the hostbridge associated with this SRAT entry  
-> 
-> What's this exactly?  A QOM path?  A qdev ID?  Something else?
+> > > a/tests/tcg/hexagon/Makefile.target
+> > > b/tests/tcg/hexagon/Makefile.target
+> > > index f839b2c0d5..02d7fff34c 100644
+> > > --- a/tests/tcg/hexagon/Makefile.target
+> > > +++ b/tests/tcg/hexagon/Makefile.target
+> > > @@ -51,6 +51,19 @@ HEX_TESTS += scatter_gather  HEX_TESTS +> hvx_misc
+> > > HEX_TESTS += hvx_histogram  HEX_TESTS += invalid-slots
+> > > +HEX_TESTS += unaligned_pc
+> > > +HEX_TESTS += unaligned_pc_multi_cof
+> > > +
+> > > +run-unaligned_pc: unaligned_pc
+> > > +run-unaligned_pc_multi_cof: unaligned_pc_multi_cof run-unaligned_pc
+> > > +run-unaligned_pc_multi_cof:
+> > > +	$(call run-test, $<, $(QEMU) $< 2> $<.stderr,"$< on
+> > > $(TARGET_NAME)"); \
+> > > +	if [ $$? -ne 1 ] ; then \
+> > > +		return 1; \
+> > > +	fi
+> > > +	$(call quiet-command, \
+> > > +		grep -q "exception 0x1e" $<.stderr, \
+> > > +		"GREP", "exception 0x1e");
+> > 
+> > We should also test endloop instructions.
 
-QOM path I believe as going to call object_resolve_path_type() on it.
-Oddity is it's defined for the bus, not the host bridge that
-we care about as the host bridge doesn't have a convenient id to let
-us identify it.
-
-e.g. It is specified via --device pxb-cxl,id=XXXX
-of TYPE_PXB_CXL_HOST in the command line but ends up on the
-TYPE_PCI_BUS with parent set to the PXB_CXL_HOST.
-Normally we just want this bus for hanging root ports of it.
-
-I can clarify it's the QOM path but I'm struggling a bit to explain
-the relationship without resorting to an example.
-This should also not mention SRAT as at some stage I'd expect DT
-bindings to provide similar functionality.
-
-
-> 
-> > +#
-> > +# @node: numa node associated with the PCI device  
-> 
-> NUMA
-> 
-> Is this a NUMA node ID?
-
-Fair question with a non obvious answer.  ACPI wise it's a proximity domain.
-In every other SRAT entry (which define proximity domains) this does map
-to a NUMA node in an operating system as they contain at least either some
-form of memory access initiator (CPU, Generic Initiator etc) or a target (memory).
-
-A Generic Port is subtly different in that it defines a proximity domain
-that in of itself is not what we'd think of as a NUMA node but
-rather an entity that exists to provide the info to the OS to stitch
-together non discoverable and discoverable buses.
-
-So I should have gone with something more specific. Could add this to
-the parameter docs, or is it too much?
-
-@node: Similar to a NUMA node ID, but instead of providing a reference
-       point used for defining NUMA distances and access characteristics
-       to memory or from an initiator (e.g. CPU), this node defines the
-       boundary point between non discoverable system buses which must be
-       discovered from firmware, and a discoverable bus.  NUMA distances
-       and access characteristics are defined to and from that point,
-       but for system software to establish full initiator to target
-       characteristics this information must be combined with information
-       retrieved form the discoverable part of the path.  An example would
-       use CDAT information read from devices and switches in conjunction
-       with link characteristics read from PCIe Configuration space.
-
-
-
-
-> 
-> > +#
-> > +# Since: 9.1
-> > +##
-> > +{ 'struct': 'AcpiGenericPortProperties',
-> > +  'data': { 'pci-bus': 'str',
-> > +            'node': 'uint32' } }
-> > +
-> >  ##
-> >  # @RngProperties:
-> >  #
-> > @@ -944,6 +960,7 @@
-> >  { 'enum': 'ObjectType',
-> >    'data': [
-> >      'acpi-generic-initiator',
-> > +    'acpi-generic-port',
-> >      'authz-list',
-> >      'authz-listfile',
-> >      'authz-pam',
-> > @@ -1016,6 +1033,7 @@
-> >    'discriminator': 'qom-type',
-> >    'data': {
-> >        'acpi-generic-initiator':     'AcpiGenericInitiatorProperties',
-> > +      'acpi-generic-port':          'AcpiGenericPortProperties',
-> >        'authz-list':                 'AuthZListProperties',
-> >        'authz-listfile':             'AuthZListFileProperties',
-> >        'authz-pam':                  'AuthZPAMProperties',  
-> 
-> [...]
-> 
-> 
-
+Good idea, will do.
 
