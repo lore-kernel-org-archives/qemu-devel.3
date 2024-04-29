@@ -4,59 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F1DFC04FFE
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 11:54:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFDADC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 12:03:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1Pap-0001yk-Ou; Mon, 29 Apr 2024 07:54:48 -0400
+	id 1s1PiB-00076I-Sl; Mon, 29 Apr 2024 08:02:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1s1PaP-0001Tu-93; Mon, 29 Apr 2024 07:54:22 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1s1Pa6-0002FW-T3; Mon, 29 Apr 2024 07:54:20 -0400
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:6401:0:640:7e6f:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id B539D60D5A;
- Mon, 29 Apr 2024 14:53:56 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:b739::1:30] (unknown
- [2a02:6b8:b081:b739::1:30])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id trOZDF1IiW20-JpXJ2mwo; Mon, 29 Apr 2024 14:53:56 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1714391636;
- bh=H9cejtXpUaOvOoOzv9PaQ6zl8lBGLE16mXUXA1v4rpA=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=PtmSSb1h4x7xmK5jJkmIquKNLqIh9qdL/mcwVcHn5yUD4bY0qi8LuV9W5ExDTEpYa
- vIeD8TEoM1m/dmCRuVkcA8/ssTfV0MPcz10P8hEEoJRjw9gpMtnaIl74hvyi+B0g1J
- aztq0y/4bJ9GRiNJ6vcMAgP+O5DOLh3vtIMTtTbA=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <b9b4dff1-816e-4892-8c4b-c342e5e4bb1f@yandex-team.ru>
-Date: Mon, 29 Apr 2024 14:53:55 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Pi9-00075a-O6
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 08:02:21 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Pi6-0004tk-Ty
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 08:02:21 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-41b21ed19f5so30639285e9.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 05:02:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714392136; x=1714996936; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8SaRvyKtjy300TWBNQSammNkKfuq8Y+bP5C2x6p8uzY=;
+ b=lvKOUhh7hXK7YFCh2NO+zbpbgyUScMFJRCxrE9Z+TnzO2Z9MlWC91r68/Cs1I5SGbC
+ mnPzFs7TfOEOvcWlAa6X/flh/1bHI8Prcn4ySMF7g/DPdWOta/gUgSauLBbZaNbAUMtG
+ /116FYaU/Fz6LnDRghrpPGe4lRzXwIgg9Vu6JfjuEvGibQoxDkCnEdGyhVXcvT6HukcB
+ poGTrBVeZNtnB/T5RVJks86O6KCzeCa+ZzpAs4qQNzFfqOWr74bsCqHtyMcdp2AmEWa0
+ Lz4hvFuaRTm5ln6H23mysxcmG0FkOrfwvEayaHoQVJ/vxQ3z4XznJYWkIfbgJNvKIRhj
+ t52g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714392136; x=1714996936;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=8SaRvyKtjy300TWBNQSammNkKfuq8Y+bP5C2x6p8uzY=;
+ b=exJB+yIu1zgeBFSVht61n/IA5zODDHL0VuKPP+jKNxMDFH0holwrXlFX2SiTjLSbvA
+ CVE6HfnpfK9Mqgq0cGF+bthbvGe2TxSAY6oSFbhk0PuGSp2Dsw1eqr3CqKh/sJ9TVYt3
+ b0LNa/jQU0GelbF5wxgTP1tMe2CyWj+47OtKp1MzQesEl/IYbJ8bwLs2lKsXSBu6msOt
+ +Fa+/rKs/v6QHGoiNYEfQR1NyyINuuRQeweARW5o/xhgquFBQXMztixVh6u6TtMjHqFj
+ o5kt9ws6NVb7MZ8haIwJqDeBikRYfexwteR09WaQPjF0GMXekG3Dy85eFLPek1sDLATU
+ u8Sg==
+X-Gm-Message-State: AOJu0YxfelqIpM4MlX5lut2p43MgfbVIq31lxunpfYq9uE3+IuXXrT7+
+ Ab4DItIPQsCxa5Dzmpa0PwvByWiXpvsZU87fi1w9qjOXgepzD/MDur85x/ryo0FCO/J8Imhf/fZ
+ GV7A=
+X-Google-Smtp-Source: AGHT+IGNGCcJU90ACsLPvJfI8bbmsQGUZkT2bRo3mXIjmmMBcpl1oLZkSTbVXUJvHrs6yr5ng9k08Q==
+X-Received: by 2002:a05:600c:1ca2:b0:418:17e9:c23f with SMTP id
+ k34-20020a05600c1ca200b0041817e9c23fmr8106826wms.31.1714392136557; 
+ Mon, 29 Apr 2024 05:02:16 -0700 (PDT)
+Received: from [192.168.69.100] (bny92-h02-176-184-44-142.dsl.sta.abo.bbox.fr.
+ [176.184.44.142]) by smtp.gmail.com with ESMTPSA id
+ v17-20020a05600c445100b0041c130520fbsm5818822wmn.46.2024.04.29.05.02.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Apr 2024 05:02:16 -0700 (PDT)
+Message-ID: <0231a2db-8e99-47bb-bc06-586d94242a6d@linaro.org>
+Date: Mon, 29 Apr 2024 14:02:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/6] Block jobs patches for 2024-04-29
+Subject: Re: [PATCH v2 00/12] exec: Rework around CPUState user fields
 To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org
-References: <20240429115157.2260885-1-vsementsov@yandex-team.ru>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+References: <20240428214915.10339-1-philmd@linaro.org>
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20240429115157.2260885-1-vsementsov@yandex-team.ru>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240428214915.10339-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -73,88 +94,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sorry for too much CC-ing, I've mistakenly added --cc-cmd=./scripts/get_maintainer.pl
+On 28/4/24 23:49, Philippe Mathieu-Daudé wrote:
 
+> Philippe Mathieu-Daudé (12):
+>    plugins: Update stale comment
+>    plugins/api: Only include 'exec/ram_addr.h' with system emulation
+>    exec: Include missing license in 'exec/cpu-common.h'
+>    exec/cpu: Indent TARGET_PAGE_foo definitions
+>    exec/cpu: Remove obsolete PAGE_RESERVED definition
+>    exec/cpu: Remove duplicated PAGE_PASSTHROUGH definition
+>    exec/cpu: Extract page-protection definitions to page-protection.h
+>    accel/tcg: Use cpu_loop_exit_requested() in cpu_loop_exec_tb()
+>    accel/tcg: Restrict cpu_loop_exit_requested() to TCG
+>    accel/tcg: Remove pointless initialization of cflags_next_tb
+>    accel/tcg: Reset TCG specific fields in tcg_cpu_reset_hold()
+>    accel/tcg: Access tcg_cflags with getter / setter
 
-On 29.04.24 14:51, Vladimir Sementsov-Ogievskiy wrote:
-> The following changes since commit fd87be1dada5672f877e03c2ca8504458292c479:
-> 
->    Merge tag 'accel-20240426' of https://github.com/philmd/qemu into staging (2024-04-26 15:28:13 -0700)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/vsementsov/qemu.git tags/pull-block-jobs-2024-04-29
-> 
-> for you to fetch changes up to 2ca7608c6b8d57fd6347b11af12a0f035263efef:
-> 
->    iotests: add backup-discard-source (2024-04-29 13:35:30 +0300)
-> 
-> ----------------------------------------------------------------
-> Block jobs patches for 2024-04-29
-> 
-> - backup: discard-source parameter
-> - blockcommit: Reopen base image as RO after abort
-> 
-> ----------------------------------------------------------------
-> Alexander Ivanov (1):
->        blockcommit: Reopen base image as RO after abort
-> 
-> Vladimir Sementsov-Ogievskiy (5):
->        block/copy-before-write: fix permission
->        block/copy-before-write: support unligned snapshot-discard
->        block/copy-before-write: create block_copy bitmap in filter node
->        qapi: blockdev-backup: add discard-source parameter
->        iotests: add backup-discard-source
-> 
->   block/backup.c                                     |   5 +-
->   block/block-copy.c                                 |  12 +-
->   block/copy-before-write.c                          |  39 +++++--
->   block/copy-before-write.h                          |   1 +
->   block/mirror.c                                     |  11 +-
->   block/replication.c                                |   4 +-
->   blockdev.c                                         |   2 +-
->   include/block/block-common.h                       |   2 +
->   include/block/block-copy.h                         |   2 +
->   include/block/block_int-global-state.h             |   2 +-
->   qapi/block-core.json                               |   4 +
->   tests/qemu-iotests/257.out                         | 112 +++++++++---------
->   tests/qemu-iotests/tests/backup-discard-source     | 152 +++++++++++++++++++++++++
->   tests/qemu-iotests/tests/backup-discard-source.out |   5 +
->   14 files changed, 281 insertions(+), 72 deletions(-)
->   create mode 100755 tests/qemu-iotests/tests/backup-discard-source
->   create mode 100644 tests/qemu-iotests/tests/backup-discard-source.out
-> 
-> Alexander Ivanov (1):
->    blockcommit: Reopen base image as RO after abort
-> 
-> Vladimir Sementsov-Ogievskiy (5):
->    block/copy-before-write: fix permission
->    block/copy-before-write: support unligned snapshot-discard
->    block/copy-before-write: create block_copy bitmap in filter node
->    qapi: blockdev-backup: add discard-source parameter
->    iotests: add backup-discard-source
-> 
->   block/backup.c                                |   5 +-
->   block/block-copy.c                            |  12 +-
->   block/copy-before-write.c                     |  39 ++++-
->   block/copy-before-write.h                     |   1 +
->   block/mirror.c                                |  11 +-
->   block/replication.c                           |   4 +-
->   blockdev.c                                    |   2 +-
->   include/block/block-common.h                  |   2 +
->   include/block/block-copy.h                    |   2 +
->   include/block/block_int-global-state.h        |   2 +-
->   qapi/block-core.json                          |   4 +
->   tests/qemu-iotests/257.out                    | 112 ++++++-------
->   .../qemu-iotests/tests/backup-discard-source  | 152 ++++++++++++++++++
->   .../tests/backup-discard-source.out           |   5 +
->   14 files changed, 281 insertions(+), 72 deletions(-)
->   create mode 100755 tests/qemu-iotests/tests/backup-discard-source
->   create mode 100644 tests/qemu-iotests/tests/backup-discard-source.out
-> 
-
--- 
-Best regards,
-Vladimir
-
+Thanks, series queued.
 
