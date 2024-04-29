@@ -4,105 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6D73C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 19:12:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED5B7C04FFE
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 19:15:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1WPZ-00048I-2s; Mon, 29 Apr 2024 15:11:37 -0400
+	id 1s1WSu-00070c-Ex; Mon, 29 Apr 2024 15:15:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1s1WPT-000478-42; Mon, 29 Apr 2024 15:11:31 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1s1WSs-00070A-5F
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 15:15:02 -0400
+Received: from forwardcorp1c.mail.yandex.net
+ ([2a02:6b8:c03:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1s1WPR-0004aJ-9C; Mon, 29 Apr 2024 15:11:30 -0400
-Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43TJ3Q2C007687; Mon, 29 Apr 2024 19:11:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : to : cc : subject
- : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding; s=pp1;
- bh=3l7a+LtlfYLSSeP8pV1bFtJy9PTMyZYRKayWoEi4qOA=;
- b=OSwkiKCsFWlCvrHBBXgEH3IXblLBy7CYv8dbPVaIAdsPjxaHSC78oaPSHVQjjQ0qxPsG
- 5I8mWxgNWUxiQm9okVVsGoFynrtXBsUucYepvz3SMTBLPHZrDiIldzCxLbdavQFyc/G3
- DDbLtkw4kUGPbe3WG5APASfuqTY8IXA9me7JJ1PGtubIn73e3LV3N1VIQtPimwAFoyNt
- 5u6aUzETbGYonLEjrMjuv974QL8nE1iv/2ye19BU8EJuENq9/1ffgPxOnmmiDUj40Zc6
- 7WYm9Hk56e6nKPCzxwYT06GCRVuvT1qcv8NO+fNQiu13k/nNlHgH00H2pPi35p0w48xf QA== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xthc300q8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Apr 2024 19:11:20 +0000
-Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43TJBK79018885;
- Mon, 29 Apr 2024 19:11:20 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xthc300q6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Apr 2024 19:11:20 +0000
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43TGHef4011742; Mon, 29 Apr 2024 19:11:19 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xsdwm0snt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Apr 2024 19:11:19 +0000
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 43TJBGC127722454
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Apr 2024 19:11:18 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 77B5D5806A;
- Mon, 29 Apr 2024 19:11:16 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D996358056;
- Mon, 29 Apr 2024 19:11:15 +0000 (GMT)
-Received: from li-d664314c-3171-11b2-a85c-fa8047ef35bd.pok.ibm.com (unknown
- [9.12.68.85]) by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 29 Apr 2024 19:11:15 +0000 (GMT)
-From: Collin Walling <walling@linux.ibm.com>
-To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: thuth@redhat.com, david@redhat.com, wangyanan55@huawei.com,
- philmd@linaro.org, marcel.apfelbaum@gmail.com, eduardo@habkost.net,
- armbru@redhat.com, Collin Walling <walling@linux.ibm.com>
-Subject: [PATCH v4 2/2] target/s390x: flag te and cte as deprecated
-Date: Mon, 29 Apr 2024 15:10:59 -0400
-Message-ID: <20240429191059.11806-3-walling@linux.ibm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240429191059.11806-1-walling@linux.ibm.com>
-References: <20240429191059.11806-1-walling@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1s1WSo-0004wG-4d
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 15:15:01 -0400
+Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c10:3196:0:640:fabe:0])
+ by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id AE2B9608DB;
+ Mon, 29 Apr 2024 22:14:52 +0300 (MSK)
+Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:b739::1:30])
+ by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id hEWuLX0IkKo0-BHcg07jD; Mon, 29 Apr 2024 22:14:51 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1714418091;
+ bh=2z/8d84xQggArtwU3uUZ3iiYRgc/4FlRU9BhwIp3dwE=;
+ h=Message-Id:Date:Cc:Subject:To:From;
+ b=n/4v74k+qCXxOqT7mEsIt2+aDihlUSznyakLlDc+DLSLvkyO+kcZ7VZHMB1DQFxhU
+ U9y1IfIh+EQITDCCYCxei45FjQjCDoiwFIbbswDo5Xr11O47Bs1sEXDMMi11RGn2Rk
+ 3RZPRjrQ2/maRestTGMmLUmkdlEuNWT/yuE5kwkk=
+Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: peterx@redhat.com,
+	farosas@suse.de
+Cc: eblake@redhat.com, armbru@redhat.com, pbonzini@redhat.com,
+ qemu-devel@nongnu.org, vsementsov@yandex-team.ru, yc-core@yandex-team.ru
+Subject: [PATCH v5 0/5] migration: do not exit on incoming failure
+Date: Mon, 29 Apr 2024 22:14:21 +0300
+Message-Id: <20240429191426.2327225-1-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 4x1Vtw_BP4ZUmvKW_bIglfs4VrWZPDgZ
-X-Proofpoint-ORIG-GUID: kBcwaJSPo1QQK_a-nGSMAoR9O_27Yyqx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-29_16,2024-04-29_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 phishscore=0
- spamscore=0 mlxscore=0 malwarescore=0 lowpriorityscore=0 bulkscore=0
- priorityscore=1501 mlxlogscore=974 adultscore=0 clxscore=1015
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2404010000 definitions=main-2404290125
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=walling@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2a02:6b8:c03:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -114,29 +73,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the CONSTRAINT_TRANSACTIONAL_EXE (cte) and TRANSACTIONAL_EXE (te)
-to the list of deprecated features.
+Hi all!
 
-Signed-off-by: Collin Walling <walling@linux.ibm.com>
----
- target/s390x/cpu_features.c | 3 +++
- 1 file changed, 3 insertions(+)
+The series brings an option to not immediately exit on incoming
+migration failure, giving a possibility to orchestrator to get the error
+through QAPI and shutdown QEMU by "quit".
 
-diff --git a/target/s390x/cpu_features.c b/target/s390x/cpu_features.c
-index efafc9711c..cb4e2b8920 100644
---- a/target/s390x/cpu_features.c
-+++ b/target/s390x/cpu_features.c
-@@ -218,6 +218,9 @@ void s390_get_deprecated_features(S390FeatBitmap features)
-          /* CSSKE is deprecated on newer generations */
-          S390_FEAT_CONDITIONAL_SSKE,
-          S390_FEAT_BPB,
-+         /* Deprecated on z16 */
-+         S390_FEAT_CONSTRAINT_TRANSACTIONAL_EXE,
-+         S390_FEAT_TRANSACTIONAL_EXE
-     };
-     int i;
- 
+v5:
+- add "migration: process_incoming_migration_co(): fix reporting s->error"
+
+v4:
+- add r-b and a-b by Fabiano and Markus
+- improve wording in 04 as Markus suggested
+
+v3:
+- don't refactor the whole code around setting migration error, it seems
+  too much and necessary for the new feature itself
+- add constant
+- change behavior for HMP command
+- split some things to separate patches
+- and more, by Peter's suggestions
+
+
+New behavior can be demonstrated like this:
+
+bash:
+
+(
+cat <<EOF
+{'execute': 'qmp_capabilities'}
+{'execute': 'migrate-set-capabilities', 'arguments': {'capabilities': [{'capability': 'events', 'state': true}]}}
+{'execute': 'migrate-incoming', 'arguments': {'uri': 'exec:echo x', 'exit-on-error': false}}
+EOF
+sleep 1
+cat <<EOF
+{'execute': 'query-migrate'}
+{'execute': 'quit'}
+EOF
+) | ./build/qemu-system-x86_64 -incoming 'defer' -qmp stdio -nographic -nodefaults
+
+output:
+
+{"QMP": {"version": {"qemu": {"micro": 50, "minor": 0, "major": 9}, "package": "v9.0.0-149-gb6295ad58c"}, "capabilities": ["oob"]}}
+{"return": {}}
+{"return": {}}
+{"timestamp": {"seconds": 1714068847, "microseconds": 263907}, "event": "MIGRATION", "data": {"status": "setup"}}
+{"return": {}}
+{"timestamp": {"seconds": 1714068847, "microseconds": 266696}, "event": "MIGRATION", "data": {"status": "active"}}
+qemu-system-x86_64: Not a migration stream
+{"timestamp": {"seconds": 1714068847, "microseconds": 266766}, "event": "MIGRATION", "data": {"status": "failed"}}
+{"return": {"status": "failed", "error-desc": "load of migration failed: Invalid argument"}}
+{"timestamp": {"seconds": 1714068848, "microseconds": 237187}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
+{"return": {}}
+
+Vladimir Sementsov-Ogievskiy (5):
+  migration: move trace-point from migrate_fd_error to migrate_set_error
+  migration: process_incoming_migration_co(): complete cleanup on
+    failure
+  migration: process_incoming_migration_co(): fix reporting s->error
+  migration: process_incoming_migration_co(): rework error reporting
+  qapi: introduce exit-on-error parameter for migrate-incoming
+
+ migration/migration-hmp-cmds.c |  2 +-
+ migration/migration.c          | 76 +++++++++++++++++++++++-----------
+ migration/migration.h          |  3 ++
+ migration/trace-events         |  2 +-
+ qapi/migration.json            |  7 +++-
+ system/vl.c                    |  3 +-
+ 6 files changed, 64 insertions(+), 29 deletions(-)
+
 -- 
-2.43.0
+2.34.1
 
 
