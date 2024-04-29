@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8DBDC19F53
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 15:56:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0CE5C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 15:56:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1TMJ-0004Zy-Qd; Mon, 29 Apr 2024 11:56:04 -0400
+	id 1s1TMF-0004X3-J5; Mon, 29 Apr 2024 11:55:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1s1TMB-0004Vx-MS
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:55:56 -0400
+ id 1s1TM6-0004TS-5l
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:55:50 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1s1TM4-0005F1-LW
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:55:55 -0400
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ id 1s1TM0-0005De-9K
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:55:46 -0400
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43TFmjb4006712; Mon, 29 Apr 2024 15:55:42 GMT
+ 43TFmlHi021730; Mon, 29 Apr 2024 15:55:38 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
  h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=corp-2023-11-20;
- bh=yo0i2IaEWoAUYk4MxRQWxqRVVF0sXL4SczE0OahgkO0=;
- b=PE63jmzQDU+UPeEli2ouHIbpcnZHEi7eNt0oCzknb9JGodR6oxkyq4I/JrVdnzhlOKR9
- OZzHGFakyJ6iFcmdcO5dkJOAM7E8kc+iToR2ZMP2L4cZnZbEQUYugXxGDA1RDqGjxq8i
- GA+EraQ3UuP2DuyZBLGAEV+R7R0GL6IwGD5zI43NAoFv1BYDxo06wi2n3ebSr71Lr+bX
- 0QOR3+XpikRCMCxARntfu7tMxmiEZYtfqrsoslH9Go/6W492OQlYl9cv5JqMCXkLOuWj
- d+JRtNT75M0EntxfYQTzB7VJppRBXpw1Wz7Hhaui31Qu1dw0VaWp1zJOeuUUgtKRmZXv DA== 
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-type : content-transfer-encoding; s=corp-2023-11-20;
+ bh=APXR9kXyXmqqAjJjI1A0Ctj4zR+Lv7xd+zkmXLq6AjI=;
+ b=XA4RY79X18QR8yX0r0vv1vY4JGRhMXR0CqzLsbktzzcYSIMGtJeBOGsMmNDtiEkhj/kH
+ 1zt3sleRsHAB8aJNzVbwsG6lbKXOpGnycFEe5oRw+VvLrvA0rqHPOYXKHIpno8B6n2hT
+ +t/RaRaelO1tFo5z9ZlZW34WsRZrXqnU0xScYTM8MH7+zFQikssKkY6evv0u+nfI+JQa
+ pt6eA17GaTZ69RzuGsiRF0Nm1S9bAOmWfqOOs+Fp+qP9w/14oiBGBnKtTWPK+aDPKVA6
+ Z59cowPP1eQeblIn+mJRD247R234GXlZ0LQ9xavHxDx5lzSma/djyu0axr/4oJ9huLOs cQ== 
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xrsdejwmp-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xrr54axse-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Apr 2024 15:55:41 +0000
+ Mon, 29 Apr 2024 15:55:38 +0000
 Received: from pps.filterd
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 43TEgWMd011336; Mon, 29 Apr 2024 15:55:40 GMT
+ with ESMTP id 43TEgWMX011336; Mon, 29 Apr 2024 15:55:37 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 3xrqt6j64f-1
+ 3xrqt6j619-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Apr 2024 15:55:40 +0000
+ Mon, 29 Apr 2024 15:55:37 +0000
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43TFtaGc034442;
- Mon, 29 Apr 2024 15:55:39 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43TFtaGU034442;
+ Mon, 29 Apr 2024 15:55:36 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 3xrqt6j5ys-6; Mon, 29 Apr 2024 15:55:39 +0000
+ ESMTP id 3xrqt6j5ys-2; Mon, 29 Apr 2024 15:55:36 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,12 +65,15 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V1 05/26] migration: precreate vmstate
-Date: Mon, 29 Apr 2024 08:55:14 -0700
-Message-Id: <1714406135-451286-6-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V1 01/26] oslib: qemu_clear_cloexec
+Date: Mon, 29 Apr 2024 08:55:10 -0700
+Message-Id: <1714406135-451286-2-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
 References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
  definitions=2024-04-29_14,2024-04-29_01,2023-05-22_02
@@ -78,17 +82,17 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
  adultscore=0 mlxscore=0 suspectscore=0 phishscore=0 spamscore=0
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2404010000 definitions=main-2404290101
-X-Proofpoint-GUID: gMELQzHGA4M0LMoXiVrIZatgWVcZtksl
-X-Proofpoint-ORIG-GUID: gMELQzHGA4M0LMoXiVrIZatgWVcZtksl
+X-Proofpoint-ORIG-GUID: eg93MLnPdshm7l52FbHOTNVga8e6GdBq
+X-Proofpoint-GUID: eg93MLnPdshm7l52FbHOTNVga8e6GdBq
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,172 +108,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Provide the VMStateDescription precreate field to mark objects that must
-be loaded on the incoming side before devices have been created, because
-they provide properties that will be needed at creation time.  They will
-be saved to and loaded from their own QEMUFile, via
-qemu_savevm_precreate_save and qemu_savevm_precreate_load, but these
-functions are not yet called in this patch.  Allow them to be called
-before or after normal migration is active, when current_migration and
-current_incoming are not valid.
+Define qemu_clear_cloexec, analogous to qemu_set_cloexec.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Dr. David Alan Gilbert <dgilbert@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/migration/vmstate.h |  6 ++++
- migration/savevm.c          | 69 +++++++++++++++++++++++++++++++++++++++++----
- migration/savevm.h          |  3 ++
- 3 files changed, 73 insertions(+), 5 deletions(-)
+ include/qemu/osdep.h | 9 +++++++++
+ util/oslib-posix.c   | 9 +++++++++
+ util/oslib-win32.c   | 4 ++++
+ 3 files changed, 22 insertions(+)
 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 294d2d8..4691334 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -198,6 +198,12 @@ struct VMStateDescription {
-      * a QEMU_VM_SECTION_START section.
-      */
-     bool early_setup;
-+
-+    /*
-+     * Send/receive this object in the precreate migration stream.
-+     */
-+    bool precreate;
-+
-     int version_id;
-     int minimum_version_id;
-     MigrationPriority priority;
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 9789823..a30bcd9 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -239,6 +239,7 @@ static SaveState savevm_state = {
+diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+index c7053cd..b58f312 100644
+--- a/include/qemu/osdep.h
++++ b/include/qemu/osdep.h
+@@ -660,6 +660,15 @@ ssize_t qemu_write_full(int fd, const void *buf, size_t count)
  
- #define SAVEVM_FOREACH(se, entry)                                    \
-     QTAILQ_FOREACH(se, &savevm_state.handlers, entry)                \
-+        if (!se->vmsd || !se->vmsd->precreate)
+ void qemu_set_cloexec(int fd);
  
- #define SAVEVM_FOREACH_ALL(se, entry)                                \
-     QTAILQ_FOREACH(se, &savevm_state.handlers, entry)
-@@ -1006,13 +1007,19 @@ static void save_section_header(QEMUFile *f, SaveStateEntry *se,
-     }
++/*
++ * Clear FD_CLOEXEC for a descriptor.
++ *
++ * The caller must guarantee that no other fork+exec's occur before the
++ * exec that is intended to inherit this descriptor, eg by suspending CPUs
++ * and blocking monitor commands.
++ */
++void qemu_clear_cloexec(int fd);
++
+ /* Return a dynamically allocated directory path that is appropriate for storing
+  * local state.
+  *
+diff --git a/util/oslib-posix.c b/util/oslib-posix.c
+index e764416..614c3e5 100644
+--- a/util/oslib-posix.c
++++ b/util/oslib-posix.c
+@@ -272,6 +272,15 @@ int qemu_socketpair(int domain, int type, int protocol, int sv[2])
+     return ret;
  }
  
-+static bool send_section_footer(SaveStateEntry *se)
++void qemu_clear_cloexec(int fd)
 +{
-+    return (se->vmsd && se->vmsd->precreate) ||
-+           migrate_get_current()->send_section_footer;
++    int f;
++    f = fcntl(fd, F_GETFD);
++    assert(f != -1);
++    f = fcntl(fd, F_SETFD, f & ~FD_CLOEXEC);
++    assert(f != -1);
 +}
 +
- /*
-  * Write a footer onto device sections that catches cases misformatted device
-  * sections.
-  */
- static void save_section_footer(QEMUFile *f, SaveStateEntry *se)
+ char *
+ qemu_get_local_state_dir(void)
  {
--    if (migrate_get_current()->send_section_footer) {
-+    if (send_section_footer(se)) {
-         qemu_put_byte(f, QEMU_VM_SECTION_FOOTER);
-         qemu_put_be32(f, se->section_id);
-     }
-@@ -1319,6 +1326,52 @@ int qemu_savevm_state_prepare(Error **errp)
-     return 0;
+diff --git a/util/oslib-win32.c b/util/oslib-win32.c
+index b623830..c3e969a 100644
+--- a/util/oslib-win32.c
++++ b/util/oslib-win32.c
+@@ -222,6 +222,10 @@ void qemu_set_cloexec(int fd)
+ {
  }
  
-+int qemu_savevm_precreate_save(QEMUFile *f, Error **errp)
++void qemu_clear_cloexec(int fd)
 +{
-+    int ret;
-+    SaveStateEntry *se;
-+
-+    qemu_put_be32(f, QEMU_VM_FILE_MAGIC);
-+    qemu_put_be32(f, QEMU_VM_FILE_VERSION);
-+
-+    SAVEVM_FOREACH_ALL(se, entry) {
-+        if (se->vmsd && se->vmsd->precreate) {
-+            ret = vmstate_save(f, se, NULL, errp);
-+            if (ret) {
-+                qemu_file_set_error(f, ret);
-+                return ret;
-+            }
-+        }
-+    }
-+    qemu_fflush(f);
-+    return 0;
 +}
 +
-+int qemu_savevm_precreate_load(QEMUFile *f, Error **errp)
-+{
-+    unsigned int v;
-+    int ret;
-+
-+    v = qemu_get_be32(f);
-+    if (v != QEMU_VM_FILE_MAGIC) {
-+        error_setg(errp, "Not a migration stream");
-+        return -EINVAL;
-+    }
-+
-+    v = qemu_get_be32(f);
-+    if (v != QEMU_VM_FILE_VERSION) {
-+        error_setg(errp, "Unsupported migration stream version");
-+        return -ENOTSUP;
-+    }
-+
-+    ret = qemu_loadvm_state_main(f, NULL);
-+    if (ret) {
-+        error_setg_errno(errp, -ret, "qemu_savevm_precreate_load");
-+    }
-+
-+    return ret;
-+}
-+
- int qemu_savevm_state_setup(QEMUFile *f, Error **errp)
+ int qemu_get_thread_id(void)
  {
-     ERRP_GUARD();
-@@ -2559,7 +2612,7 @@ static bool check_section_footer(QEMUFile *f, SaveStateEntry *se)
-     uint8_t read_mark;
-     uint32_t read_section_id;
- 
--    if (!migrate_get_current()->send_section_footer) {
-+    if (!send_section_footer(se)) {
-         /* No footer to check */
-         return true;
-     }
-@@ -2895,9 +2948,12 @@ retry:
-     while (true) {
-         section_type = qemu_get_byte(f);
- 
--        ret = qemu_file_get_error_obj_any(f, mis->postcopy_qemufile_dst, NULL);
--        if (ret) {
--            break;
-+        if (mis) {
-+            ret = qemu_file_get_error_obj_any(f, mis->postcopy_qemufile_dst,
-+                                              NULL);
-+            if (ret) {
-+                break;
-+            }
-         }
- 
-         trace_qemu_loadvm_state_section(section_type);
-@@ -2936,6 +2992,9 @@ retry:
- out:
-     if (ret < 0) {
-         qemu_file_set_error(f, ret);
-+        if (!mis) {
-+            return ret;
-+        }
- 
-         /* Cancel bitmaps incoming regardless of recovery */
-         dirty_bitmap_mig_cancel_incoming();
-diff --git a/migration/savevm.h b/migration/savevm.h
-index 9ec96a9..6f207b5 100644
---- a/migration/savevm.h
-+++ b/migration/savevm.h
-@@ -70,4 +70,7 @@ int qemu_loadvm_approve_switchover(void);
- int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
-         bool in_postcopy, bool inactivate_disks);
- 
-+int qemu_savevm_precreate_save(QEMUFile *f, Error **errp);
-+int qemu_savevm_precreate_load(QEMUFile *f, Error **errp);
-+
- #endif
+     return GetCurrentThreadId();
 -- 
 1.8.3.1
 
