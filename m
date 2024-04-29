@@ -4,57 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AD5FC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 13:02:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F0C7C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 13:05:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1QdK-00046t-FY; Mon, 29 Apr 2024 09:01:26 -0400
+	id 1s1Qgh-0005Ht-Qj; Mon, 29 Apr 2024 09:04:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <inspurisinspur@126.com>)
- id 1s1Pkw-0008IC-KL
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 08:05:15 -0400
-Received: from m16.mail.126.com ([117.135.210.8])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <inspurisinspur@126.com>) id 1s1Pko-0005Ui-0q
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 08:05:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
- s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=Kr5Aw
- JiRu4XHvmMAClZBlg3SOFLGuN/XLATltf8e3OM=; b=Ezt1QT1cwfcUGatZBCPHl
- aJS6/p235XJMTxK/J1iLeb0qRzEmC9Yu51lJUvquGxdQHKOC8+s9HG2Q3VqfZoev
- Cls+ZawIN/udsEMUJ7tjHlv2FrDue3syKXZrjc3VtMgeFQd0jTxlqzaW2/Yk6LI8
- bL8GhCK7kaFot1ocwTxIko=
-Received: from localhost.localdomain (unknown [117.160.246.157])
- by gzga-smtp-mta-g1-2 (Coremail) with SMTP id _____wDnz0jOjC9m6k3iBA--.23008S4;
- Mon, 29 Apr 2024 20:04:31 +0800 (CST)
-From: inspurisinspur@126.com
-To: qemu-devel@nongnu.org,
-	inspurisinspur@126.com
-Cc: Rock Li <lihongweizz@inspur.com>
-Subject: [RFC] vhost-blk: add a vhost_blk implementation
-Date: Mon, 29 Apr 2024 20:04:26 +0800
-Message-Id: <20240429120426.163189-1-inspurisinspur@126.com>
-X-Mailer: git-send-email 2.27.0
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s1QgX-0005FQ-To
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 09:04:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s1QgU-0001H5-6U
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 09:04:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714395881;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=floVG7IIxPfWtULuJiTwbz4goU11diuw5FLbs/zFZNk=;
+ b=LQ/hG1aKzCka2++7O/7sA7Yty8wI+NH8F9Mz0RngIwKX8cHr//EsOMw/7xTGtFspXmuYPb
+ mQmNEJfG5UsAroGug8TN4vYi/n+fYABCvYEs6ni1BpxHblo4KonKTXfBbvv47/RENp0PQd
+ icH2N5ySEJnIvXfir+CWRKrMBAEUAV8=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-193-WKBSGFPQOamFA61fvNLXdQ-1; Mon,
+ 29 Apr 2024 09:04:35 -0400
+X-MC-Unique: WKBSGFPQOamFA61fvNLXdQ-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id DC39938000AD;
+ Mon, 29 Apr 2024 13:04:34 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 5C6EE2166B31;
+ Mon, 29 Apr 2024 13:04:34 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 45D1D21E66E5; Mon, 29 Apr 2024 15:04:33 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-block@nongnu.org,  raphael@enfabrica.net,  mst@redhat.com,
+ kwolf@redhat.com,  hreitz@redhat.com,  pbonzini@redhat.com,
+ berrange@redhat.com,  eduardo@habkost.net,  dave@treblig.org,
+ eblake@redhat.com,  qemu-devel@nongnu.org,  yc-core@yandex-team.ru
+Subject: Re: [PATCH v3 4/5] qapi: introduce device-sync-config
+In-Reply-To: <a8245017-131c-47c4-b323-0185a08d728b@yandex-team.ru> (Vladimir
+ Sementsov-Ogievskiy's message of "Mon, 29 Apr 2024 15:22:02 +0300")
+References: <20240329183758.3360733-1-vsementsov@yandex-team.ru>
+ <20240329183758.3360733-5-vsementsov@yandex-team.ru>
+ <87plufvv4s.fsf@pond.sub.org>
+ <60a332e2-f18c-4c78-9ea9-344ab49e9b8e@yandex-team.ru>
+ <87le4wjvbl.fsf@pond.sub.org>
+ <a8245017-131c-47c4-b323-0185a08d728b@yandex-team.ru>
+Date: Mon, 29 Apr 2024 15:04:33 +0200
+Message-ID: <87sez4gw0u.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wDnz0jOjC9m6k3iBA--.23008S4
-X-Coremail-Antispam: 1Uf129KBjvAXoW3ZFWUJF48JF18Xw1xCFyUWrg_yoW8WF43Jo
- ZxCr12van5Jry7ua97Wr18Cr4UXF4vkw1DCw1Uu3y2ga1xX34YkF1rKay3J34fCr4fKryx
- Zr4xG3yfJa18KF93n29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7v73VFW2AGmfu7bjvjm3
- AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvjxUUZXrUUUUU
-X-Originating-IP: [117.160.246.157]
-X-CM-SenderInfo: xlqv13pulvx0hvsx2qqrswhudrp/1tbi5hnPQ2VLZem9bAACsC
-Received-SPF: pass client-ip=117.135.210.8;
- envelope-from=inspurisinspur@126.com; helo=m16.mail.126.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 29 Apr 2024 09:01:20 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,591 +89,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Rock Li <lihongweizz@inspur.com>
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-vhost-blk could accelerate io for high-performance devices such as NVME,
-or high end SAN backend. The main benefit is that syscall costs are eliminated
-because vhost-blk could bypass the qemu io processing. This patch works along
-with vhost-blk implementation in kernel.
+> On 29.04.24 13:51, Markus Armbruster wrote:
+>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+>> 
+>>> On 24.04.24 14:48, Markus Armbruster wrote:
+>>>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+>>>>
+>>>>> Add command to sync config from vhost-user backend to the device. It
+>>>>> may be helpful when VHOST_USER_SLAVE_CONFIG_CHANGE_MSG failed or not
+>>>>> triggered interrupt to the guest or just not available (not supported
+>>>>> by vhost-user server).
+>>>>>
+>>>>> Command result is racy if allow it during migration. Let's allow the
+>>>>> sync only in RUNNING state.
+>>>>>
+>>>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> 
+>> [...]
+>> 
+>>>>> diff --git a/include/sysemu/runstate.h b/include/sysemu/runstate.h
+>>>>> index 0117d243c4..296af52322 100644
+>>>>> --- a/include/sysemu/runstate.h
+>>>>> +++ b/include/sysemu/runstate.h
+>>>>> @@ -5,6 +5,7 @@
+>>>>>    #include "qemu/notify.h"
+>>>>>    
+>>>>>    bool runstate_check(RunState state);
+>>>>> +const char *current_run_state_str(void);
+>>>>>    void runstate_set(RunState new_state);
+>>>>>    RunState runstate_get(void);
+>>>>>    bool runstate_is_running(void);
+>>>>> diff --git a/qapi/qdev.json b/qapi/qdev.json
+>>>>> index facaa0bc6a..e8be79c3d5 100644
+>>>>> --- a/qapi/qdev.json
+>>>>> +++ b/qapi/qdev.json
+>>>>> @@ -161,3 +161,24 @@
+>>>>>    ##
+>>>>>    { 'event': 'DEVICE_UNPLUG_GUEST_ERROR',
+>>>>>      'data': { '*device': 'str', 'path': 'str' } }
+>>>>> +
+>>>>> +##
+>>>>> +# @device-sync-config:
+>>>>> +#
+>>>>> +# Synchronize config from backend to the guest. The command notifies
+>>>>> +# re-read the device config from the backend and notifies the guest
+>>>>> +# to re-read the config. The command may be used to notify the guest
+>>>>> +# about block device capcity change. Currently only vhost-user-blk
+>>>>> +# device supports this.
+>>>>
+>>>> I'm not sure I understand this.  To work towards an understanding, I
+>>>> rephrase it, and you point out the errors.
+>>>>
+>>>>        Synchronize device configuration from host to guest part.  First,
+>>>>        copy the configuration from the host part (backend) to the guest
+>>>>        part (frontend).  Then notify guest software that device
+>>>>        configuration changed.
+>>>
+>>> Correct, thanks
+>> 
+>> Perhaps
+>> 
+>>    Synchronize guest-visible device configuration with the backend's
+>>    configuration, and notify guest software that device configuration
+>>    changed.
+>> 
+>>    This may be useful to notify the guest of a block device capacity
+>>    change.  Currenrly, only vhost-user-blk devices support this.
+>
+> Sounds good
 
-Signed-off-by: lihongweizz <lihongweizz@inspur.com>
----
- hw/block/virtio-blk.c          | 406 ++++++++++++++++++++++++++++++++-
- include/hw/virtio/virtio-blk.h |  20 ++
- 2 files changed, 425 insertions(+), 1 deletion(-)
+Except I fat-fingered "Currently".
 
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index bb86e65f65..749e6cde48 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -36,6 +36,27 @@
- #include "hw/virtio/virtio-access.h"
- #include "hw/virtio/virtio-blk-common.h"
- #include "qemu/coroutine.h"
-+#include "hw/virtio/virtio.h"
-+#include "hw/virtio/vhost.h"
-+#include "hw/virtio/vhost-backend.h"
-+#include <linux/vhost.h>
-+#include <sys/ioctl.h>
-+
-+static const int kernel_feature_bits[] = {
-+    VIRTIO_F_NOTIFY_ON_EMPTY,
-+    VIRTIO_RING_F_INDIRECT_DESC,
-+    VIRTIO_RING_F_EVENT_IDX,
-+    VIRTIO_F_VERSION_1,
-+    VIRTIO_BLK_F_SEG_MAX,
-+    VIRTIO_BLK_F_GEOMETRY,
-+    VIRTIO_BLK_F_TOPOLOGY,
-+    VIRTIO_BLK_F_BLK_SIZE,
-+    VIRTIO_BLK_F_MQ,
-+    VIRTIO_BLK_F_RO,
-+    /* VIRTIO_BLK_F_FLUSH == VIRTIO_BLK_F_WCE  */
-+    VIRTIO_BLK_F_FLUSH,
-+    VHOST_INVALID_FEATURE_BIT
-+};
- 
- static void virtio_blk_ioeventfd_attach(VirtIOBlock *s);
- 
-@@ -1145,7 +1166,8 @@ static void virtio_blk_handle_output(VirtIODevice *vdev, VirtQueue *vq)
- {
-     VirtIOBlock *s = (VirtIOBlock *)vdev;
- 
--    if (!s->ioeventfd_disabled && !s->ioeventfd_started) {
-+    if ((!s->ioeventfd_disabled && !s->ioeventfd_started) ||
-+            s->vhost_enabled) {
-         /* Some guests kick before setting VIRTIO_CONFIG_S_DRIVER_OK so start
-          * ioeventfd here instead of waiting for .set_status().
-          */
-@@ -1236,11 +1258,41 @@ static void virtio_blk_dma_restart_cb(void *opaque, bool running,
-     }
- }
- 
-+static void vhost_blk_set_status(VirtIODevice *vdev, uint8_t status);
-+
-+static void vhost_blk_reset(VirtIODevice *vdev)
-+{
-+    VirtIOBlock *s = VIRTIO_BLK(vdev);
-+    int i;
-+
-+    if (!s->vhost_enabled || !s->vhost_acked) {
-+        return;
-+    }
-+
-+    /*
-+     * clear the acked features, and wait for the
-+     * next negotiation.
-+     */
-+    for (i = 0; i < s->conf.num_queues; i++) {
-+        s->vhblk[i].dev.acked_features = 0;
-+    }
-+
-+    vhost_blk_set_status(vdev, 0);
-+
-+    s->vhost_acked = false;
-+}
-+
- static void virtio_blk_reset(VirtIODevice *vdev)
- {
-     VirtIOBlock *s = VIRTIO_BLK(vdev);
-     VirtIOBlockReq *req;
- 
-+    if (s->vhost_enabled) {
-+        vhost_blk_reset(vdev);
-+        blk_set_enable_write_cache(s->blk, s->original_wce);
-+        return;
-+    }
-+
-     /* Dataplane has stopped... */
-     assert(!s->ioeventfd_started);
- 
-@@ -1367,6 +1419,228 @@ static void virtio_blk_set_config(VirtIODevice *vdev, const uint8_t *config)
-     blk_set_enable_write_cache(s->blk, blkcfg.wce != 0);
- }
- 
-+static void vhost_blk_stop_one(VirtIODevice *vdev, unsigned int idx)
-+{
-+    VirtIOBlock *s = VIRTIO_BLK(vdev);
-+    struct vhost_vring_file backend = { .index = 0, .fd = -1 };
-+    vhost_blk *blk = &s->vhblk[idx];
-+    int ret;
-+
-+    if (!blk->dev.started) {
-+        return;
-+    }
-+
-+    ret = ioctl(blk->vhostfd, VHOST_BLK_SET_BACKEND, &backend);
-+    assert(ret >= 0);
-+
-+    vhost_dev_stop(&blk->dev, vdev);
-+    vhost_dev_disable_notifiers(&blk->dev, vdev);
-+}
-+
-+static void vhost_blk_start_one(VirtIODevice *vdev, unsigned int idx)
-+{
-+    VirtIOBlock *s = VIRTIO_BLK(vdev);
-+    struct vhost_vring_file backend = { .index = 0 };
-+    vhost_blk *blk = &s->vhblk[idx];
-+    int ret;
-+
-+    blk->dev.nvqs = 1;
-+    blk->dev.vqs = blk->vqs;
-+
-+    ret = vhost_dev_enable_notifiers(&blk->dev, vdev);
-+    if (ret < 0) {
-+        error_report("Error enabling host notifiers: %d", -ret);
-+        abort();
-+    }
-+
-+    ret = vhost_dev_start(&blk->dev, vdev);
-+    if (ret < 0) {
-+        error_report("Error starting vhost: %d", -ret);
-+        abort();
-+    }
-+
-+    /* set backend file  */
-+    backend.fd = s->blkfd;
-+    ret = ioctl(blk->vhostfd, VHOST_BLK_SET_BACKEND, &backend);
-+    if (ret < 0) {
-+        error_report("Error setting up vq %d backend(%d): fd %d, idx %d",
-+                     idx, -errno, backend.fd, backend.index);
-+        abort();
-+    }
-+}
-+
-+static void vhost_blk_start(VirtIODevice *vdev, uint32_t total_queues)
-+{
-+    BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(vdev)));
-+    VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
-+    int i, ret;
-+
-+    if (!k->set_guest_notifiers) {
-+        error_report("Binding does not support guest notifiers");
-+        abort();
-+    }
-+
-+    ret = k->set_guest_notifiers(qbus->parent, total_queues, true);
-+    if (ret < 0) {
-+        error_report("Error binding guest notifier: %d", -ret);
-+        abort();
-+    }
-+
-+    for (i = 0; i < total_queues; i++) {
-+        vhost_blk_start_one(vdev, i);
-+    }
-+}
-+
-+static void vhost_blk_stop(VirtIODevice *vdev, uint32_t total_queues)
-+{
-+    BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(vdev)));
-+    VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
-+    int ret, i;
-+
-+    for (i = 0; i < total_queues; i++) {
-+        vhost_blk_stop_one(vdev, i);
-+    }
-+
-+    ret = k->set_guest_notifiers(qbus->parent, total_queues, false);
-+    if (ret < 0) {
-+        error_report("vhost guest notifier cleanup failed: %d", ret);
-+    }
-+
-+    assert(ret >= 0);
-+}
-+
-+static bool vhost_blk_started(VirtIODevice *vdev, uint8_t status)
-+{
-+    return (status & VIRTIO_CONFIG_S_DRIVER_OK) && vdev->vm_running;
-+}
-+
-+static int vhost_blk_handle_config_change(struct vhost_dev *dev)
-+{
-+    virtio_notify_config(dev->vdev);
-+    return 0;
-+}
-+
-+const VhostDevConfigOps vhost_blk_ops = {
-+    .vhost_dev_config_notifier = vhost_blk_handle_config_change,
-+};
-+
-+static void vhost_blk_dataplane_create(VirtIODevice *vdev,
-+                                       uint32_t total_queues)
-+{
-+    VirtIOBlock *s = VIRTIO_BLK(vdev);
-+    int i, opened = 0, ret;
-+    vhost_blk *blk;
-+    Error *local_err = NULL;
-+
-+    if (!s->vhost_enabled) {
-+        return;
-+    }
-+
-+    info_report("create vhost dataplane");
-+    for (i = 0; i < total_queues; i++) {
-+        blk = &s->vhblk[i];
-+        blk->dev.max_queues = 1;
-+        blk->dev.nvqs = 1;
-+        blk->dev.vqs = blk->vqs;
-+        /* vhost-user needs vq_index to initiate a specific queue pair */
-+        blk->dev.vq_index = i;
-+        blk->dev.acked_features = 0;
-+        blk->dev.backend_features = 0;
-+        blk->dev.protocol_features = 0;
-+
-+        /*
-+         * this is only used by vhost-user, not used by vhost-kernel,
-+         * but we left it here for learning.
-+         */
-+        vhost_dev_set_config_notifier(&blk->dev, &vhost_blk_ops);
-+
-+        blk->vhostfd = open("/dev/vhost-blk", O_RDWR);
-+        if (blk->vhostfd < 0) {
-+            error_report("vhost-blk: open vhost char device failed");
-+            goto virtio_err;
-+        }
-+
-+        ret = vhost_dev_init(&blk->dev, (void *)(uintptr_t)blk->vhostfd,
-+                             VHOST_BACKEND_TYPE_KERNEL, 0, &local_err);
-+        if (ret < 0) {
-+            close(blk->vhostfd);
-+            error_report_err(local_err);
-+            error_report("vhost-blk: vhost initialization failed: %s",
-+                         strerror(-ret));
-+            goto virtio_err;
-+        }
-+    }
-+    return;
-+
-+virtio_err:
-+    for (i = 0; i < opened; i++) {
-+        vhost_dev_cleanup(&s->vhblk[i].dev);
-+        /* vhostfd is closed by vhost_dev_cleanup */
-+    }
-+    abort();
-+}
-+
-+static void vhost_blk_set_status(VirtIODevice *vdev, uint8_t status)
-+{
-+    VirtIOBlock *s = VIRTIO_BLK(vdev);
-+    int i, total_queues = 0;
-+
-+    if (!s->vhost_enabled) {
-+        return;
-+    }
-+
-+    if (vhost_blk_started(vdev, status) ==
-+        !!s->vhost_started) {
-+        return;
-+    }
-+
-+    if (!s->vhost_started) {
-+        for (i = 0; i < s->conf.num_queues; i++) {
-+            if (virtio_queue_get_desc_addr(vdev, i)) {
-+                total_queues++;
-+           }
-+        }
-+        info_report("start vhost dataplane, total queues %d", total_queues);
-+        s->vhost_started = true;
-+        vhost_blk_start(vdev, total_queues);
-+    } else {
-+        for (i = 0; i < s->conf.num_queues; i++) {
-+            if (s->vhblk[i].dev.started) {
-+                total_queues++;
-+            }
-+        }
-+        info_report("stop vhost dataplane, total queues %d", total_queues);
-+        vhost_blk_stop(vdev, total_queues);
-+        s->vhost_started = false;
-+    }
-+}
-+
-+static void vhost_blk_ack_features(VirtIODevice *vdev, vhost_blk *blk,
-+                                  uint64_t features)
-+{
-+    blk->dev.acked_features = blk->dev.backend_features;
-+    vhost_ack_features(&blk->dev, kernel_feature_bits, features);
-+    info_report("acked features %lxh", blk->dev.acked_features);
-+}
-+
-+static void virtio_blk_set_features(VirtIODevice *vdev, uint64_t features)
-+{
-+    VirtIOBlock *s = VIRTIO_BLK(vdev);
-+    int i;
-+
-+    if (!s->vhost_enabled) {
-+        return;
-+    }
-+
-+    for (i = 0;  i < s->conf.num_queues; i++) {
-+        vhost_blk_ack_features(vdev, &s->vhblk[i], features);
-+    }
-+
-+    /* restart vhost with the new acked features */
-+    vhost_blk_set_status(vdev, 0);
-+    s->vhost_acked = true;
-+}
-+
- static uint64_t virtio_blk_get_features(VirtIODevice *vdev, uint64_t features,
-                                         Error **errp)
- {
-@@ -1401,6 +1675,14 @@ static uint64_t virtio_blk_get_features(VirtIODevice *vdev, uint64_t features,
-         virtio_add_feature(&features, VIRTIO_BLK_F_MQ);
-     }
- 
-+    if (s->vhost_enabled) {
-+        virtio_clear_feature(&features, VIRTIO_BLK_F_SCSI);
-+        /* we are sure thare is one vhost-blk instance at least */
-+        features = vhost_get_features(&s->vhblk[0].dev, kernel_feature_bits,
-+                                      features);
-+        vdev->backend_features = features;
-+    }
-+
-     return features;
- }
- 
-@@ -1408,6 +1690,11 @@ static void virtio_blk_set_status(VirtIODevice *vdev, uint8_t status)
- {
-     VirtIOBlock *s = VIRTIO_BLK(vdev);
- 
-+    /* close vhost backend after saving */
-+    if (!vdev->vm_running) {
-+        vhost_blk_set_status(vdev, 0);
-+    }
-+
-     if (!(status & (VIRTIO_CONFIG_S_DRIVER | VIRTIO_CONFIG_S_DRIVER_OK))) {
-         assert(!s->ioeventfd_started);
-     }
-@@ -1782,6 +2069,11 @@ static int virtio_blk_start_ioeventfd(VirtIODevice *vdev)
-     Error *local_err = NULL;
-     int r;
- 
-+    if (s->vhost_enabled && vdev->vm_running) {
-+        vhost_blk_set_status(vdev, VIRTIO_CONFIG_S_DRIVER_OK);
-+        return 0;
-+    }
-+
-     if (s->ioeventfd_started || s->ioeventfd_starting) {
-         return 0;
-     }
-@@ -1901,6 +2193,10 @@ static void virtio_blk_stop_ioeventfd(VirtIODevice *vdev)
-         return;
-     }
- 
-+    if (!s->vhost_enabled) {
-+        virtio_blk_data_plane_stop(vdev);
-+    }
-+
-     /* Better luck next time. */
-     if (s->ioeventfd_disabled) {
-         s->ioeventfd_disabled = false;
-@@ -1959,6 +2255,80 @@ static void virtio_blk_stop_ioeventfd(VirtIODevice *vdev)
-     s->ioeventfd_stopping = false;
- }
- 
-+static bool virtio_blk_guest_notifier_pending(VirtIODevice *vdev, int idx)
-+{
-+    VirtIOBlock *s = VIRTIO_BLK(vdev);
-+    vhost_blk *blk = &s->vhblk[idx];
-+    assert(s->vhost_started);
-+    return vhost_virtqueue_pending(&blk->dev, idx);
-+}
-+
-+static void virtio_blk_guest_notifier_mask(VirtIODevice *vdev, int idx,
-+                                          bool mask)
-+{
-+    VirtIOBlock *s = VIRTIO_BLK(vdev);
-+    vhost_blk *blk = &s->vhblk[idx];
-+    assert(s->vhost_started);
-+    vhost_virtqueue_mask(&blk->dev, vdev, idx, mask);
-+}
-+
-+static void vhost_blk_device_unrealize(DeviceState *dev)
-+{
-+    VirtIOBlock *s = VIRTIO_BLK(dev);
-+    vhost_blk *blk;
-+    unsigned int i;
-+
-+    if (!s->vhost_enabled) {
-+        return;
-+    }
-+
-+    for (i = 0; i < s->conf.num_queues; i++) {
-+        blk = &s->vhblk[i];
-+        vhost_dev_cleanup(&blk->dev);
-+        /* vhostfd is closed by vhost_dev_cleanup */
-+    }
-+    close(s->blkfd);
-+}
-+
-+
-+static void vhost_blk_device_realize(DeviceState *dev, Error **errp)
-+{
-+    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-+    VirtIOBlock *s = VIRTIO_BLK(dev);
-+    BlockDriverState *bs;
-+    int fd, flags = O_RDWR;
-+
-+    if (!s->vhost_enabled) {
-+        return;
-+    }
-+
-+    bs = blk_bs(s->blk);
-+
-+    if (bs->drv != &bdrv_raw) {
-+        error_setg(errp, "vhost-blk only support raw image now");
-+        return;
-+    }
-+
-+    if (bs->open_flags & BDRV_O_NOCACHE) {
-+        info_report("open backend with direct-io");
-+        flags |= O_DIRECT;
-+    } else {
-+        info_report("open backend with buffer-io");
-+    }
-+
-+    fd = open(bs->filename, flags);
-+    if (fd < 0) {
-+        error_setg_errno(errp, errno, "could not open '%s'", bs->filename);
-+        return;
-+    }
-+
-+    s->blkfd = fd;
-+    vhost_blk_dataplane_create(vdev, s->conf.num_queues);
-+
-+    s->vhost_started = false;
-+    s->vhost_acked = false;
-+}
-+
- static void virtio_blk_device_realize(DeviceState *dev, Error **errp)
- {
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-@@ -2050,6 +2420,19 @@ static void virtio_blk_device_realize(DeviceState *dev, Error **errp)
-     for (i = 0; i < conf->num_queues; i++) {
-         virtio_add_queue(vdev, conf->queue_size, virtio_blk_handle_output);
-     }
-+    if (s->vhost_enabled) {
-+        s->dataplane_disabled = true;
-+        vhost_blk_device_realize(dev, &err);
-+        if (err != NULL) {
-+            error_propagate(errp, err);
-+            for (i = 0; i < conf->num_queues; i++) {
-+                virtio_del_queue(vdev, i);
-+            }
-+            virtio_cleanup(vdev);
-+            return;
-+        }
-+        vdev->use_guest_notifier_mask = true;
-+    }
-     qemu_coroutine_inc_pool_size(conf->num_queues * conf->queue_size / 2);
- 
-     /* Don't start ioeventfd if transport does not support notifiers. */
-@@ -2094,6 +2477,7 @@ static void virtio_blk_device_unrealize(DeviceState *dev)
- 
-     blk_drain(s->blk);
-     del_boot_device_lchs(dev, "/disk@0,0");
-+    vhost_blk_device_unrealize(dev);
-     virtio_blk_vq_aio_context_cleanup(s);
-     for (i = 0; i < conf->num_queues; i++) {
-         virtio_del_queue(vdev, i);
-@@ -2102,6 +2486,9 @@ static void virtio_blk_device_unrealize(DeviceState *dev)
-     qemu_mutex_destroy(&s->rq_lock);
-     blk_ram_registrar_destroy(&s->blk_ram_registrar);
-     qemu_del_vm_change_state_handler(s->change);
-+    if (s->change) {
-+        qemu_del_vm_change_state_handler(s->change);
-+    }
-     blockdev_mark_auto_del(s->blk);
-     virtio_cleanup(vdev);
- }
-@@ -2115,6 +2502,18 @@ static void virtio_blk_instance_init(Object *obj)
-                                   DEVICE(obj));
- }
- 
-+static int virtio_blk_pre_save(void *opaque)
-+{
-+    VirtIOBlock *s = opaque;
-+
-+    /* At this point, backend must be stopped, otherwise
-+     * it might keep writing to memory.
-+     */
-+    assert(!s->vhost_started);
-+
-+    return 0;
-+}
-+
- static const VMStateDescription vmstate_virtio_blk = {
-     .name = "virtio-blk",
-     .minimum_version_id = 2,
-@@ -2123,6 +2522,7 @@ static const VMStateDescription vmstate_virtio_blk = {
-         VMSTATE_VIRTIO_DEVICE,
-         VMSTATE_END_OF_LIST()
-     },
-+    .pre_save = virtio_blk_pre_save,
- };
- 
- static Property virtio_blk_properties[] = {
-@@ -2158,6 +2558,7 @@ static Property virtio_blk_properties[] = {
-                        conf.max_write_zeroes_sectors, BDRV_REQUEST_MAX_SECTORS),
-     DEFINE_PROP_BOOL("x-enable-wce-if-config-wce", VirtIOBlock,
-                      conf.x_enable_wce_if_config_wce, true),
-+    DEFINE_PROP_BOOL("vhost", VirtIOBlock, vhost_enabled, false),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
-@@ -2174,12 +2575,15 @@ static void virtio_blk_class_init(ObjectClass *klass, void *data)
-     vdc->get_config = virtio_blk_update_config;
-     vdc->set_config = virtio_blk_set_config;
-     vdc->get_features = virtio_blk_get_features;
-+    vdc->set_features = virtio_blk_set_features;
-     vdc->set_status = virtio_blk_set_status;
-     vdc->reset = virtio_blk_reset;
-     vdc->save = virtio_blk_save_device;
-     vdc->load = virtio_blk_load_device;
-     vdc->start_ioeventfd = virtio_blk_start_ioeventfd;
-     vdc->stop_ioeventfd = virtio_blk_stop_ioeventfd;
-+    vdc->guest_notifier_mask = virtio_blk_guest_notifier_mask;
-+    vdc->guest_notifier_pending = virtio_blk_guest_notifier_pending;
- }
- 
- static const TypeInfo virtio_blk_info = {
-diff --git a/include/hw/virtio/virtio-blk.h b/include/hw/virtio/virtio-blk.h
-index 5c14110c4b..0edb2d5002 100644
---- a/include/hw/virtio/virtio-blk.h
-+++ b/include/hw/virtio/virtio-blk.h
-@@ -50,6 +50,20 @@ struct VirtIOBlkConf
-     bool x_enable_wce_if_config_wce;
- };
- 
-+typedef struct vhost_blk {
-+    struct vhost_dev dev;
-+    /* vhost-blk only use ONE virtqueue now */
-+    struct vhost_virtqueue vqs[1];
-+    /* fd for chardev /dev/vhost-blk */
-+    int vhostfd;
-+} vhost_blk;
-+
-+/* Attach virtio blk ring to an ocfs2 file with modified dio framework.
-+ * Pass fd -1 to unbind from the file and the backend. This can be used
-+ * to stop the ring (e.g. for migration). */
-+#define VHOST_BLK_SET_BACKEND _IOW(VHOST_VIRTIO, 0x50, struct vhost_vring_file)
-+
-+
- struct VirtIOBlockReq;
- struct VirtIOBlock {
-     VirtIODevice parent_obj;
-@@ -71,6 +85,12 @@ struct VirtIOBlock {
-      */
-     AioContext **vq_aio_context;
- 
-+    int blkfd;
-+    bool vhost_enabled;
-+    bool vhost_started;
-+    bool vhost_acked;
-+    vhost_blk vhblk[VIRTIO_QUEUE_MAX];
-+
-     uint64_t host_features;
-     size_t config_size;
-     BlockRAMRegistrar blk_ram_registrar;
--- 
-2.34.1
+>> 
+>> Next question: what happens when the device *doesn't* support this?
+>
+> An error "device-sync-config is not supported ..."
+
+Okay.
+
+>>>> I wonder how configuration can get out of sync.  Can you explain?
+>>>>
+>>>
+>>> The example (and the original feature, which triggered developing this) is vhost disk resize. If vhost-server (backend) doesn't support VHOST_USER_SLAVE_CONFIG_CHANGE_MSG, neither QEMU nor guest will know that disk capacity changed.
+>> 
+>> Sounds like we wouldn't need this command if we could make the
+>> vhost-server support VHOST_USER_SLAVE_CONFIG_CHANGE_MSG.  Is making it
+>> support it impractical?  Or are there other uses for this command?
+>
+> Qemu's internal vhost-server do support it. But that's not the only vhost-user server) So the command is useful for those servers which doesn't support VHOST_USER_SLAVE_CONFIG_CHANGE_MSG. Note, that this message requires setting up additional channel of server -> client communication. That was the reason, why the "change-msg" solution was rejected in our downstream: it's safer to reuse existing channel (QMP), than to add and support an additional channel.
+>
+> Also, the command may help to debug the system, when VHOST_USER_SLAVE_CONFIG_CHANGE_MSG doesn't work for some reason.
+
+Suggest to work this into the commit message.
+
+>>>>> +#
+>>>>> +# @id: the device's ID or QOM path
+>>>>> +#
+>>>>> +# Features:
+>>>>> +#
+>>>>> +# @unstable: The command is experimental.
+>>>>> +#
+>>>>> +# Since: 9.1
+>>>>> +##
+>>>>> +{ 'command': 'device-sync-config',
+>>>>> +  'features': [ 'unstable' ],
+>>>>> +  'data': {'id': 'str'} }
+>>>>> diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+>>>>> index 7e075d91c1..cb35ea0b86 100644
+>>>>> --- a/system/qdev-monitor.c
+>>>>> +++ b/system/qdev-monitor.c
+>>>>> @@ -23,6 +23,7 @@
+>>>>>   #include "monitor/monitor.h"
+>>>>>   #include "monitor/qdev.h"
+>>>>>   #include "sysemu/arch_init.h"
+>>>>> +#include "sysemu/runstate.h"
+>>>>>   #include "qapi/error.h"
+>>>>>   #include "qapi/qapi-commands-qdev.h"
+>>>>>   #include "qapi/qmp/dispatch.h"
+>>>>> @@ -969,6 +970,52 @@ void qmp_device_del(const char *id, Error **errp)
+>>>>>        }
+>>>>>    }
+>>>>>    
+>>>>> +int qdev_sync_config(DeviceState *dev, Error **errp)
+>>>>> +{
+>>>>> +    DeviceClass *dc = DEVICE_GET_CLASS(dev);
+>>>>> +
+>>>>> +    if (!dc->sync_config) {
+>>>>> +        error_setg(errp, "device-sync-config is not supported for '%s'",
+>>>>> +                   object_get_typename(OBJECT(dev)));
+>>>>> +        return -ENOTSUP;
+>>>>> +    }
+>>>>> +
+>>>>> +    return dc->sync_config(dev, errp);
+>>>>> +}
+>>>>> +
+>>>>> +void qmp_device_sync_config(const char *id, Error **errp)
+>>>>> +{
+>>>>> +    DeviceState *dev;
+>>>>> +
+>>>>> +    /*
+>>>>> +     * During migration there is a race between syncing`config and
+>>>>> +     * migrating it, so let's just not allow it.
+>>>>
+>>>> Can you briefly explain the race?
+>>>
+>>> If at the moment of qmp command, corresponding config already migrated to the target, we'll change only the config on source, but on the target we'll still have outdated config.
+>> 
+>> For RAM, dirty tracking ensures the change gets sent.  But this is
+>> device memory.  Correct?
+>
+> Yes. It's stored in malloced buffer VirtIIODevice::config, and accessed through handlers virtio_pci_config_read()/virtio_pci_config_write(). As I understand, no kind of dirty tracking here..
+>
+> And I see, it's migrated in virtio_save():
+> ...
+>      qemu_put_be32(f, vdev->config_len);
+>      qemu_put_buffer(f, vdev->config, vdev->config_len);
+> ...
+
+Suggest to explain the race in the comment.  Perhaps like this:
+
+  Guest-visible configuration is stored in device memory.  There is a
+  race between updating and migrating it: if we update it before we
+  migrate it, it's migrated fine, but if any later updates are lost.
+
+>>>>> +     *
+>>>>> +     * Moreover, let's not rely on setting up interrupts in paused
+>>>>> +     * state, which may be a part of migration process.
+>>>>
+>>>> What dependence exactly are you avoiding?  Config synchronization
+>>>> depending on guest interrupt delivery?
+>>>
+>>> Right, guest is notified by pci_set_irq.
+>> 
+>> If we allowed it in paused state, the delivery of the interrupt would be
+>> delayed until the guest resumes running.  Correct?
+>
+> I think so. But this will not work, if we do offline migration like pause -> migrate -> resume on target. So I decided that better be more safe. The restrictions may be relaxed in future if needed.
+
+Sounds like we'd make an interrupt pending on the source, but migration
+failed to make it pending on the target as well, so it gets lost.
+
+Is that the case?
+
+If yes, question for migration experts: why isn't this a problem
+elsewhere, too?
+
+[...]
+
+Thanks!
 
 
