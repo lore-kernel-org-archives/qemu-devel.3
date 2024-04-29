@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80F62C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 21:32:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B65AEC19F4F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 21:33:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1YbA-0007Uo-I2; Mon, 29 Apr 2024 17:31:44 -0400
+	id 1s1Yb8-0007Nw-R1; Mon, 29 Apr 2024 17:31:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Yb1-0007Gw-5z
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:31:37 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Yav-0007FJ-Gh
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:31:31 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Yay-0003LK-J4
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:31:34 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-41ba1ba55e8so25917175e9.1
- for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 14:31:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Yan-0003KY-Ck
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:31:26 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-41b794510cdso31088925e9.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 14:31:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714426290; x=1715031090; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714426279; x=1715031079; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Hnf3o4XnFK2bwHRx7vZnChEV3e4FPyGXBQfB4lUUGyk=;
- b=VoTCsT6gy9TroiuqOPYT9hx1xJktA0zfPDstINDygDSZUU19hBOxs8e27+N77yR0Av
- Z9kXoxiN8Y4aLJtC7mD0l9W7DOGaNYVrIZ2XGBKHSA3UEud01NM/Qc97AIt7lkmNPKic
- RScNatR4OoVd92+3iBGus6Y0DGYFfMqlf03BELPUHJI5wzQlBU9py+YIYdyYGzz+tw8y
- ONCl14BdbencIwuK/QqTNRvT3ld39wPZoQF4JQO3pPbTo2BjtbvIfZfhLTbg5AK8eBgo
- 2nqYX548+kHx90WkpMmInyarn8U5JJWanyIWcfss2/G86dN7XTbPXjwTvrMl0aiNqRLr
- AMdw==
+ bh=ooSUJZwGp/lYPuvOeREBaY5/HVZbZHNsZQAPgbRFeRs=;
+ b=sue0DB3EgTzl20AX6XeR/+Phuwu0oeEcA3WSiG4XAyedjldl+4//gVrXYFzzpN6GZ+
+ zPKNDjb0RhBxMFJ+o5UEg1W/RUJhM7t8z/K8lvQHcC2wlkUTYFsxCSjWfEBUEX8oEw1Y
+ dD7Gzf2cGO3fd+Rpo5m2cZfXHmco1WevvBKvC97fQy+CoLbUAIT4xJkK/YxGq2JT++RI
+ h86Ha52FMRLKaCJFl9sAdXlHEvSV+MKVD9EvZBUnCARg/eMuTG+QL1KMWhXXJKhp9sGf
+ WP5mjkO95PegmNquM2xyM9VnVX7TNUQXMppT0F+/3QlSZcvfq9xVzvrkqgFL0ZL9YMJj
+ wgiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714426290; x=1715031090;
+ d=1e100.net; s=20230601; t=1714426279; x=1715031079;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Hnf3o4XnFK2bwHRx7vZnChEV3e4FPyGXBQfB4lUUGyk=;
- b=tki7bpX9G/GBzH0ry7pH71AHdu3rm1Hh2JS5dohiDtpOfDGD6kHSw9lytxqpIaqQEo
- a1jQLfLxms88IDuHFw80zH66YCvr/kBPP5CdXIrGPyj1TvxN6/O6EJ8Mw7znJ5uzsT4x
- 7BJQDAkUUnojt+ARyedFNrO57GEOjX/bRwkNqqG6g10AOM8dxlGib3gyR8iKVN9maGrw
- 1osw0Rn9zKdmIUItIoMPCdMcm+t2oVlmr9L7K9oNP0FpzOYWWt9epRteswIfCivEMUMt
- 35i1dMDGLQ4zNTCm7k9KgrESEZFi3FlcZanzJaa5wWMFkoiS67nJNPfQY01/wwJznNS9
- UZhQ==
-X-Gm-Message-State: AOJu0YzkaAMmLxpW0sBwPGVTfMiBS17ij91Mux3+9aRvoIu0dKMvXgBR
- JrmyV951IyF6a7wxMdcKdvomqeZ0dW/91CGVbgLa8PUeS+TwRuLHIVzrMrcNrCAmes2j0KYC9WP
- 0l5Y=
-X-Google-Smtp-Source: AGHT+IGsTQ5w+J4lZdE0kS6E7TG0UDgkOvzzx899QQeeeZFYBZJUp7idODr/l6K2+kcAuj8lVgySYw==
-X-Received: by 2002:a05:600c:a41:b0:418:fe93:22d0 with SMTP id
- c1-20020a05600c0a4100b00418fe9322d0mr680520wmq.11.1714426289844; 
- Mon, 29 Apr 2024 14:31:29 -0700 (PDT)
+ bh=ooSUJZwGp/lYPuvOeREBaY5/HVZbZHNsZQAPgbRFeRs=;
+ b=G1nGsfHlkB1S5HYVIS17R6rzA42/oCB8TqsSAgNq3tpvWI+DL2NVTWOrXcXSByUudH
+ UIMnD6zyXof6HRldrWGyic4Yhfq6u5Xig21k1+CUNsvN2D1Fjlhk5VsCd7D0xfl9Xc3B
+ Bc1/awxPIkKb/fkxY7i/Wbq06PmFu3lSNvHdKL0pUUOhvM9JIk/suPtmwKJnVwMPsDAk
+ pB4+1UVvt8IrPsMaa0ZTwnomYeF/Bfd/V3iy9/1yfTP6SV+3wVOC9r7V4XSQdfp+75jy
+ pZ65Dcihi4fosmg1bQjvZsn/DLkyC2uMVFUmTK/eB36xbiYY8okzSbiFpGiOgxV02QrI
+ 0yeA==
+X-Gm-Message-State: AOJu0YyIhhHeytOORS7akbya+/WT8MsdxOiuC7nC9Wv7VeNVCcj/ZSWU
+ T6aAJzqdpxaqpbOmr7UhGY6KaRQvqCxUwO/EVrt3h4MdWXAUh7m/rDkf3hY8v+yvkmw0qZ0Pdyj
+ uLtA=
+X-Google-Smtp-Source: AGHT+IHTLhnzJgdX1MLF377SlYnpHOf53mblCsNumTl6t3g4OYyZUac6+HbghKjLZ+dOElKl32HaIA==
+X-Received: by 2002:a05:600c:5025:b0:41a:a4d1:a896 with SMTP id
+ n37-20020a05600c502500b0041aa4d1a896mr752165wmr.16.1714426279546; 
+ Mon, 29 Apr 2024 14:31:19 -0700 (PDT)
 Received: from m1x-phil.lan (bny92-h02-176-184-44-142.dsl.sta.abo.bbox.fr.
  [176.184.44.142]) by smtp.gmail.com with ESMTPSA id
- p6-20020a05600c468600b0041563096e15sm47015125wmo.5.2024.04.29.14.31.28
+ p8-20020a5d48c8000000b0034af40b2efdsm22308632wrs.108.2024.04.29.14.31.18
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 29 Apr 2024 14:31:29 -0700 (PDT)
+ Mon, 29 Apr 2024 14:31:19 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Anton Johansson <anjo@rev.ng>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 07/13] accel/tcg: Move @cflags_next_tb from CPUState to TCG
- AccelCPUState
-Date: Mon, 29 Apr 2024 23:30:44 +0200
-Message-ID: <20240429213050.55177-8-philmd@linaro.org>
+Subject: [PATCH v2 05/13] accel/tcg: Restrict IcountDecr / can_do_io / CPUTLB
+ to TCG
+Date: Mon, 29 Apr 2024 23:30:42 +0200
+Message-ID: <20240429213050.55177-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240429213050.55177-1-philmd@linaro.org>
 References: <20240429213050.55177-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,191 +96,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-@cflags_next_tb is specific to TCG accelerator, move it to
-its AccelCPUState.
+IcountDecr union, the can_do_io field, the CPUTLB* structures
+and the "exec/tlb-common.h" header are only required for TCG.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240428221450.26460-19-philmd@linaro.org>
+Message-Id: <20240428221450.26460-16-philmd@linaro.org>
 ---
- accel/tcg/vcpu-state.h    |  2 ++
- include/hw/core/cpu.h     |  1 -
- accel/tcg/cpu-exec.c      | 12 ++++++------
- accel/tcg/tb-maint.c      |  4 ++--
- accel/tcg/tcg-accel-ops.c |  1 +
- accel/tcg/translate-all.c |  2 +-
- accel/tcg/watchpoint.c    |  5 +++--
- hw/core/cpu-common.c      |  1 -
- 8 files changed, 15 insertions(+), 13 deletions(-)
+ include/exec/tlb-common.h | 4 ++++
+ include/hw/core/cpu.h     | 9 ++++++---
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/accel/tcg/vcpu-state.h b/accel/tcg/vcpu-state.h
-index 3a0ea2d47a..5b09279140 100644
---- a/accel/tcg/vcpu-state.h
-+++ b/accel/tcg/vcpu-state.h
-@@ -13,6 +13,8 @@
-  * @plugin_state: per-CPU plugin state
-  */
- struct AccelCPUState {
-+    uint32_t cflags_next_tb;
-+
-     sigjmp_buf jmp_env;
+diff --git a/include/exec/tlb-common.h b/include/exec/tlb-common.h
+index dc5a5faa0b..a529c9f056 100644
+--- a/include/exec/tlb-common.h
++++ b/include/exec/tlb-common.h
+@@ -19,6 +19,10 @@
+ #ifndef EXEC_TLB_COMMON_H
+ #define EXEC_TLB_COMMON_H 1
  
- #ifdef CONFIG_USER_ONLY
++#ifndef CONFIG_TCG
++#error Can only include this header with TCG
++#endif
++
+ #define CPU_TLB_ENTRY_BITS 5
+ 
+ /* Minimalized TLB entry for use by TCG fast path. */
 diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index f1fe43dbea..97a0baf874 100644
+index 91e793e590..47b499f9f1 100644
 --- a/include/hw/core/cpu.h
 +++ b/include/hw/core/cpu.h
-@@ -468,7 +468,6 @@ struct CPUState {
-     bool crash_occurred;
-     bool exit_request;
-     int exclusive_context_count;
--    uint32_t cflags_next_tb;
-     /* updates protected by BQL */
-     uint32_t interrupt_request;
-     int singlestep_enabled;
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 46ad16f911..55235d3e5e 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -720,7 +720,7 @@ static inline bool cpu_handle_exception(CPUState *cpu, int *ret)
-         if (replay_has_exception()
-             && cpu->neg.icount_decr.u16.low + cpu->icount_extra == 0) {
-             /* Execute just one insn to trigger exception pending in the log */
--            cpu->cflags_next_tb = (curr_cflags(cpu) & ~CF_USE_ICOUNT)
-+            cpu->accel->cflags_next_tb = (curr_cflags(cpu) & ~CF_USE_ICOUNT)
-                 | CF_NOIRQ | 1;
-         }
- #endif
-@@ -783,7 +783,7 @@ static inline bool icount_exit_request(CPUState *cpu)
-     if (!icount_enabled()) {
-         return false;
-     }
--    if (cpu->cflags_next_tb != -1 && !(cpu->cflags_next_tb & CF_USE_ICOUNT)) {
-+    if (!(cpu->accel->cflags_next_tb == -1 || cpu->accel->cflags_next_tb & CF_USE_ICOUNT)) {
-         return false;
-     }
-     return cpu->neg.icount_decr.u16.low + cpu->icount_extra == 0;
-@@ -797,7 +797,7 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
-      * skip checking here. Any pending interrupts will get picked up
-      * by the next TB we execute under normal cflags.
-      */
--    if (cpu->cflags_next_tb != -1 && cpu->cflags_next_tb & CF_NOIRQ) {
-+    if (cpu->accel->cflags_next_tb != -1 && cpu->accel->cflags_next_tb & CF_NOIRQ) {
-         return false;
-     }
+@@ -27,7 +27,6 @@
+ #include "exec/vaddr.h"
+ #include "exec/memattrs.h"
+ #include "exec/mmu-access-type.h"
+-#include "exec/tlb-common.h"
+ #include "qapi/qapi-types-run-state.h"
+ #include "qemu/bitmap.h"
+ #include "qemu/rcu_queue.h"
+@@ -256,6 +255,9 @@ typedef struct CPUTLBEntryFull {
+     } extra;
+ } CPUTLBEntryFull;
  
-@@ -947,7 +947,7 @@ static inline void cpu_loop_exec_tb(CPUState *cpu, TranslationBlock *tb,
-     if (insns_left > 0 && insns_left < tb->icount)  {
-         assert(insns_left <= CF_COUNT_MASK);
-         assert(cpu->icount_extra == 0);
--        cpu->cflags_next_tb = (tb->cflags & ~CF_COUNT_MASK) | insns_left;
-+        cpu->accel->cflags_next_tb = (tb->cflags & ~CF_COUNT_MASK) | insns_left;
-     }
- #endif
- }
-@@ -979,11 +979,11 @@ cpu_exec_loop(CPUState *cpu, SyncClocks *sc)
-              * have CF_INVALID set, -1 is a convenient invalid value that
-              * does not require tcg headers for cpu_common_reset.
-              */
--            cflags = cpu->cflags_next_tb;
-+            cflags = cpu->accel->cflags_next_tb;
-             if (cflags == -1) {
-                 cflags = curr_cflags(cpu);
-             } else {
--                cpu->cflags_next_tb = -1;
-+                cpu->accel->cflags_next_tb = -1;
-             }
- 
-             if (check_for_breakpoints(cpu, pc, &cflags)) {
-diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
-index 19ae6793f3..2d5faca9fd 100644
---- a/accel/tcg/tb-maint.c
-+++ b/accel/tcg/tb-maint.c
-@@ -1084,7 +1084,7 @@ bool tb_invalidate_phys_page_unwind(tb_page_addr_t addr, uintptr_t pc)
-     if (current_tb_modified) {
-         /* Force execution of one insn next time.  */
-         CPUState *cpu = current_cpu;
--        cpu->cflags_next_tb = 1 | CF_NOIRQ | curr_cflags(current_cpu);
-+        cpu->accel->cflags_next_tb = 1 | CF_NOIRQ | curr_cflags(current_cpu);
-         return true;
-     }
-     return false;
-@@ -1154,7 +1154,7 @@ tb_invalidate_phys_page_range__locked(struct page_collection *pages,
-     if (current_tb_modified) {
-         page_collection_unlock(pages);
-         /* Force execution of one insn next time.  */
--        current_cpu->cflags_next_tb = 1 | CF_NOIRQ | curr_cflags(current_cpu);
-+        current_cpu->accel->cflags_next_tb = 1 | CF_NOIRQ | curr_cflags(current_cpu);
-         mmap_unlock();
-         cpu_loop_exit_noexc(current_cpu);
-     }
-diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
-index 56bbad9fcd..d9132a5835 100644
---- a/accel/tcg/tcg-accel-ops.c
-+++ b/accel/tcg/tcg-accel-ops.c
-@@ -89,6 +89,7 @@ static void tcg_cpu_reset_hold(CPUState *cpu)
- 
-     qatomic_set(&cpu->neg.icount_decr.u32, 0);
-     cpu->neg.can_do_io = true;
-+    cpu->accel->cflags_next_tb = -1;
- }
- 
- /* mask must never be zero, except for A20 change call */
-diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
-index b67adce20e..3a8199a761 100644
---- a/accel/tcg/translate-all.c
-+++ b/accel/tcg/translate-all.c
-@@ -631,7 +631,7 @@ void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr)
-      * operations only (which execute after completion) so we don't
-      * double instrument the instruction.
-      */
--    cpu->cflags_next_tb = curr_cflags(cpu) | CF_MEMI_ONLY | n;
-+    cpu->accel->cflags_next_tb = curr_cflags(cpu) | CF_MEMI_ONLY | n;
- 
-     if (qemu_loglevel_mask(CPU_LOG_EXEC)) {
-         vaddr pc = cpu->cc->get_pc(cpu);
-diff --git a/accel/tcg/watchpoint.c b/accel/tcg/watchpoint.c
-index d3aab11458..0a40bfdc85 100644
---- a/accel/tcg/watchpoint.c
-+++ b/accel/tcg/watchpoint.c
-@@ -26,6 +26,7 @@
- #include "sysemu/replay.h"
- #include "hw/core/tcg-cpu-ops.h"
- #include "hw/core/cpu.h"
-+#include "accel/tcg/vcpu-state.h"
++#ifdef CONFIG_TCG
++#include "exec/tlb-common.h"
++
+ /*
+  * Data elements that are per MMU mode, minus the bits accessed by
+  * the TCG fast path.
+@@ -311,11 +313,9 @@ typedef struct CPUTLBCommon {
+  * negative offsets are at the end of the struct.
+  */
+ typedef struct CPUTLB {
+-#ifdef CONFIG_TCG
+     CPUTLBCommon c;
+     CPUTLBDesc d[NB_MMU_MODES];
+     CPUTLBDescFast f[NB_MMU_MODES];
+-#endif
+ } CPUTLB;
  
  /*
-  * Return true if this watchpoint address matches the specified
-@@ -100,7 +101,7 @@ void cpu_check_watchpoint(CPUState *cpu, vaddr addr, vaddr len,
-                  */
-                 if (!cpu->neg.can_do_io) {
-                     /* Force execution of one insn next time.  */
--                    cpu->cflags_next_tb = 1 | CF_NOIRQ | curr_cflags(cpu);
-+                    cpu->accel->cflags_next_tb = 1 | CF_NOIRQ | curr_cflags(cpu);
-                     cpu_loop_exit_restore(cpu, ra);
-                 }
-                 /*
-@@ -132,7 +133,7 @@ void cpu_check_watchpoint(CPUState *cpu, vaddr addr, vaddr len,
-                 cpu_loop_exit(cpu);
-             } else {
-                 /* Force execution of one insn next time.  */
--                cpu->cflags_next_tb = 1 | CF_NOIRQ | curr_cflags(cpu);
-+                cpu->accel->cflags_next_tb = 1 | CF_NOIRQ | curr_cflags(cpu);
-                 mmap_unlock();
-                 cpu_loop_exit_noexc(cpu);
-             }
-diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index 0e5ebbe050..073eb75ad0 100644
---- a/hw/core/cpu-common.c
-+++ b/hw/core/cpu-common.c
-@@ -124,7 +124,6 @@ static void cpu_common_reset_hold(Object *obj, ResetType type)
-     cpu->icount_extra = 0;
-     cpu->exception_index = -1;
-     cpu->crash_occurred = false;
--    cpu->cflags_next_tb = -1;
+@@ -337,6 +337,7 @@ typedef union IcountDecr {
+ #endif
+     } u16;
+ } IcountDecr;
++#endif
  
-     cpu_exec_reset_hold(cpu);
- }
+ /**
+  * CPUNegativeOffsetState: Elements of CPUState most efficiently accessed
+@@ -345,6 +346,7 @@ typedef union IcountDecr {
+  * @plugin_mem_cbs: active plugin memory callbacks
+  */
+ typedef struct CPUNegativeOffsetState {
++#ifdef CONFIG_TCG
+     CPUTLB tlb;
+ #ifdef CONFIG_PLUGIN
+     /*
+@@ -354,6 +356,7 @@ typedef struct CPUNegativeOffsetState {
+ #endif
+     IcountDecr icount_decr;
+     bool can_do_io;
++#endif
+ } CPUNegativeOffsetState;
+ 
+ struct KVMState;
 -- 
 2.41.0
 
