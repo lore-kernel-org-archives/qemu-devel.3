@@ -4,98 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EABCC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 08:16:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98F33C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 08:19:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1MAu-00065c-Gu; Mon, 29 Apr 2024 04:15:48 -0400
+	id 1s1MDi-0007aB-DD; Mon, 29 Apr 2024 04:18:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1s1MAq-000656-Ha
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 04:15:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1s1MDY-0007Y7-VN; Mon, 29 Apr 2024 04:18:34 -0400
+Received: from forwardcorp1c.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1s1MAn-0007LE-Vb
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 04:15:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714378540;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wVg57R5RmMRtSo4MDVlDvZPTbn2V2MerYyeJRwFMF6I=;
- b=MpwaYYFNp+e6QaODsrHjO/jf5kqpuXsi5qLlhehro5SDBQjnowPnbju2JnIZ5yvaYPgKjc
- JigY0KTwOzdyn6fE8xwaYPoZGxKAJeEVc3R/3+cEXsIt1YmTHPwJCI08ZOR+u4tQYi0oPS
- 3bBiUd44kt2DO07oYWrvew42pIBYLME=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-622-fVW7QOWKPCaHN6tHdqMRlA-1; Mon, 29 Apr 2024 04:15:36 -0400
-X-MC-Unique: fVW7QOWKPCaHN6tHdqMRlA-1
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-61ae546adf3so72342597b3.2
- for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 01:15:36 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714378536; x=1714983336;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wVg57R5RmMRtSo4MDVlDvZPTbn2V2MerYyeJRwFMF6I=;
- b=vY2GPEnYmOwhzku1jB8lTuvLp5okSkOmXKSWlZkny1dLUPd5NBp74RVQJLZau0rAB2
- vymydk3e1b+qTLKGHkeeB8f5ZPOcjOroRiXoVzMqVzsOjxwAU8dT78AQRJTgF/ykLfZO
- 8FkFDMtAZeuN0rY1FyGE6tlfBwIttCOg1A/XVgClF1wpaydmFZiGTcnZ5Sm5+x4MjtyD
- 34pCLA4P2Frc/LOv7BEHC5gIMX26FmBDCXB0lofD2o5TnSmpeqz1IWbYBuCW5DBFwI8h
- QzFgLxTOGgV91ykm7AS2X0IwW9TAsp//h/U/9fwHw42VCP30MjYgD9MLqvszkHQ/rtr3
- 3d6A==
-X-Gm-Message-State: AOJu0YyE4eJhrFMZ+DxwgjBfHolgICm7QP35eiOMl62XjV74LVVomyt1
- EHbozg0igp6fp53X555BRh1rzU9xrYlDHBlIgbGb+qTzmO6rSDQ4MhKTpcYFbyIsuwVR1wAP7c5
- dvPf8DqgTbbtgqhBcyA7SM0kjkmtw8oMXLdzRU5pwkiDtSquKpbo0LHLiT2FIUbtWImV6KI8MTr
- IKdEnf2b9Uht9sPaETiXlACj8Xp1o=
-X-Received: by 2002:a05:690c:d84:b0:615:c96:1a8f with SMTP id
- da4-20020a05690c0d8400b006150c961a8fmr10666180ywb.17.1714378535844; 
- Mon, 29 Apr 2024 01:15:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFFXYEfJRbZmfRDJJT/KzMtl/tFss0JvuhSE3uRHzVo1IJDILa8r2TiePN4sl+jfj3l4Iuo/7w4Rwr+rBAoNnM=
-X-Received: by 2002:a05:690c:d84:b0:615:c96:1a8f with SMTP id
- da4-20020a05690c0d8400b006150c961a8fmr10666160ywb.17.1714378535492; Mon, 29
- Apr 2024 01:15:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1s1MDU-0007vX-Kn; Mon, 29 Apr 2024 04:18:31 -0400
+Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c10:3196:0:640:fabe:0])
+ by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id DE7D5609DD;
+ Mon, 29 Apr 2024 11:18:16 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:b739::1:30] (unknown
+ [2a02:6b8:b081:b739::1:30])
+ by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id EIL4BO0IXmI0-Rq2ngdVR; Mon, 29 Apr 2024 11:18:15 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1714378695;
+ bh=dQfKIlNQR2N7eyh3H6ESKYpSmLMdsiMo39noVlh1HIg=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=fCOjopgYhmT7xdq3SGP1ChyQVtHfq5hM0zQI7SjHEljRz+QX1Gm9ZWNs/k+4MBUxP
+ HKXL2EU6PNb0vYbmXjJov5ToMZYjF1noZKVMRFnWXgGA3ALh6YglUdHvFtzPKji+w1
+ iwyxa2+vpBFsKsNj0Upy8tl5F5c3yX5BPTtAJEMg=
+Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <60a332e2-f18c-4c78-9ea9-344ab49e9b8e@yandex-team.ru>
+Date: Mon, 29 Apr 2024 11:18:14 +0300
 MIME-Version: 1.0
-References: <20240410100345.389462-1-eperezma@redhat.com>
- <20240410100345.389462-2-eperezma@redhat.com>
- <558124df-be44-47ae-85b9-0f282fc3889c@oracle.com>
- <CAJaqyWeE3kfgN5Y0=Kj6oCOFwg0H-gQEr4g3TM+3_+5N7mfd=A@mail.gmail.com>
- <450d0da1-3d11-428b-bd89-d09a2964cdb1@oracle.com>
- <CAJaqyWfXNQJQdTcJ9V-mSUrMs9up7rpAMwyK-qB3BuJwbUw+5w@mail.gmail.com>
- <f2dcbc76-f90f-4abe-b5c3-f159befd07bd@oracle.com>
- <CAJaqyWeSrwVt6imakpccieqN_3C85JcOZuj=FR+Xnmr7FKFaAw@mail.gmail.com>
- <9f347cd6-8c18-4253-8a5f-efae08230a62@oracle.com>
-In-Reply-To: <9f347cd6-8c18-4253-8a5f-efae08230a62@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Mon, 29 Apr 2024 10:14:59 +0200
-Message-ID: <CAJaqyWeyfPp5bh9iZrkwZshoStEHZ85P6t4TcEdmR5sDYhG4ug@mail.gmail.com>
-Subject: Re: [RFC 1/2] iova_tree: add an id member to DMAMap
-To: Si-Wei Liu <si-wei.liu@oracle.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Lei Yang <leiyang@redhat.com>, 
- Peter Xu <peterx@redhat.com>, Jonah Palmer <jonah.palmer@oracle.com>, 
- Dragos Tatulea <dtatulea@nvidia.com>, Jason Wang <jasowang@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/5] qapi: introduce device-sync-config
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-block@nongnu.org, raphael@enfabrica.net, mst@redhat.com,
+ kwolf@redhat.com, hreitz@redhat.com, pbonzini@redhat.com,
+ berrange@redhat.com, eduardo@habkost.net, dave@treblig.org,
+ eblake@redhat.com, qemu-devel@nongnu.org, yc-core@yandex-team.ru
+References: <20240329183758.3360733-1-vsementsov@yandex-team.ru>
+ <20240329183758.3360733-5-vsementsov@yandex-team.ru>
+ <87plufvv4s.fsf@pond.sub.org>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <87plufvv4s.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.114,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -107,206 +79,327 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 25, 2024 at 7:44=E2=80=AFPM Si-Wei Liu <si-wei.liu@oracle.com> =
-wrote:
->
->
->
-> On 4/24/2024 12:33 AM, Eugenio Perez Martin wrote:
-> > On Wed, Apr 24, 2024 at 12:21=E2=80=AFAM Si-Wei Liu <si-wei.liu@oracle.=
-com> wrote:
-> >>
-> >>
-> >> On 4/22/2024 1:49 AM, Eugenio Perez Martin wrote:
-> >>> On Sat, Apr 20, 2024 at 1:50=E2=80=AFAM Si-Wei Liu <si-wei.liu@oracle=
-.com> wrote:
-> >>>>
-> >>>> On 4/19/2024 1:29 AM, Eugenio Perez Martin wrote:
-> >>>>> On Thu, Apr 18, 2024 at 10:46=E2=80=AFPM Si-Wei Liu <si-wei.liu@ora=
-cle.com> wrote:
-> >>>>>> On 4/10/2024 3:03 AM, Eugenio P=C3=A9rez wrote:
-> >>>>>>> IOVA tree is also used to track the mappings of virtio-net shadow
-> >>>>>>> virtqueue.  This mappings may not match with the GPA->HVA ones.
-> >>>>>>>
-> >>>>>>> This causes a problem when overlapped regions (different GPA but =
-same
-> >>>>>>> translated HVA) exists in the tree, as looking them by HVA will r=
-eturn
-> >>>>>>> them twice.  To solve this, create an id member so we can assign =
-unique
-> >>>>>>> identifiers (GPA) to the maps.
-> >>>>>>>
-> >>>>>>> Signed-off-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
-> >>>>>>> ---
-> >>>>>>>      include/qemu/iova-tree.h | 5 +++--
-> >>>>>>>      util/iova-tree.c         | 3 ++-
-> >>>>>>>      2 files changed, 5 insertions(+), 3 deletions(-)
-> >>>>>>>
-> >>>>>>> diff --git a/include/qemu/iova-tree.h b/include/qemu/iova-tree.h
-> >>>>>>> index 2a10a7052e..34ee230e7d 100644
-> >>>>>>> --- a/include/qemu/iova-tree.h
-> >>>>>>> +++ b/include/qemu/iova-tree.h
-> >>>>>>> @@ -36,6 +36,7 @@ typedef struct DMAMap {
-> >>>>>>>          hwaddr iova;
-> >>>>>>>          hwaddr translated_addr;
-> >>>>>>>          hwaddr size;                /* Inclusive */
-> >>>>>>> +    uint64_t id;
-> >>>>>>>          IOMMUAccessFlags perm;
-> >>>>>>>      } QEMU_PACKED DMAMap;
-> >>>>>>>      typedef gboolean (*iova_tree_iterator)(DMAMap *map);
-> >>>>>>> @@ -100,8 +101,8 @@ const DMAMap *iova_tree_find(const IOVATree *=
-tree, const DMAMap *map);
-> >>>>>>>       * @map: the mapping to search
-> >>>>>>>       *
-> >>>>>>>       * Search for a mapping in the iova tree that translated_add=
-r overlaps with the
-> >>>>>>> - * mapping range specified.  Only the first found mapping will b=
-e
-> >>>>>>> - * returned.
-> >>>>>>> + * mapping range specified and map->id is equal.  Only the first=
- found
-> >>>>>>> + * mapping will be returned.
-> >>>>>>>       *
-> >>>>>>>       * Return: DMAMap pointer if found, or NULL if not found.  N=
-ote that
-> >>>>>>>       * the returned DMAMap pointer is maintained internally.  Us=
-er should
-> >>>>>>> diff --git a/util/iova-tree.c b/util/iova-tree.c
-> >>>>>>> index 536789797e..0863e0a3b8 100644
-> >>>>>>> --- a/util/iova-tree.c
-> >>>>>>> +++ b/util/iova-tree.c
-> >>>>>>> @@ -97,7 +97,8 @@ static gboolean iova_tree_find_address_iterator=
-(gpointer key, gpointer value,
-> >>>>>>>
-> >>>>>>>          needle =3D args->needle;
-> >>>>>>>          if (map->translated_addr + map->size < needle->translate=
-d_addr ||
-> >>>>>>> -        needle->translated_addr + needle->size < map->translated=
-_addr) {
-> >>>>>>> +        needle->translated_addr + needle->size < map->translated=
-_addr ||
-> >>>>>>> +        needle->id !=3D map->id) {
-> >>>>>> It looks this iterator can also be invoked by SVQ from
-> >>>>>> vhost_svq_translate_addr() -> iova_tree_find_iova(), where guest G=
-PA
-> >>>>>> space will be searched on without passing in the ID (GPA), and exa=
-ct
-> >>>>>> match for the same GPA range is not actually needed unlike the map=
-ping
-> >>>>>> removal case. Could we create an API variant, for the SVQ lookup c=
-ase
-> >>>>>> specifically? Or alternatively, add a special flag, say skip_id_ma=
-tch to
-> >>>>>> DMAMap, and the id match check may look like below:
-> >>>>>>
-> >>>>>> (!needle->skip_id_match && needle->id !=3D map->id)
-> >>>>>>
-> >>>>>> I think vhost_svq_translate_addr() could just call the API variant=
- or
-> >>>>>> pass DMAmap with skip_id_match set to true to svq_iova_tree_find_i=
-ova().
-> >>>>>>
-> >>>>> I think you're totally right. But I'd really like to not complicate
-> >>>>> the API of the iova_tree more.
-> >>>>>
-> >>>>> I think we can look for the hwaddr using memory_region_from_host an=
-d
-> >>>>> then get the hwaddr. It is another lookup though...
-> >>>> Yeah, that will be another means of doing translation without having=
- to
-> >>>> complicate the API around iova_tree. I wonder how the lookup through
-> >>>> memory_region_from_host() may perform compared to the iova tree one,=
- the
-> >>>> former looks to be an O(N) linear search on a linked list while the
-> >>>> latter would be roughly O(log N) on an AVL tree?
-> >>> Even worse, as the reverse lookup (from QEMU vaddr to SVQ IOVA) is
-> >>> linear too. It is not even ordered.
-> >> Oh Sorry, I misread the code and I should look for g_tree_foreach ()
-> >> instead of g_tree_search_node(). So the former is indeed linear
-> >> iteration, but it looks to be ordered?
-> >>
-> >> https://github.com/GNOME/glib/blob/main/glib/gtree.c#L1115
-> > The GPA / IOVA are ordered but we're looking by QEMU's vaddr.
-> >
-> > If we have these translations:
-> > [0x1000, 0x2000] -> [0x10000, 0x11000]
-> > [0x2000, 0x3000] -> [0x6000, 0x7000]
-> >
-> > We will see them in this order, so we cannot stop the search at the fir=
-st node.
-> Yeah, reverse lookup is unordered indeed, anyway.
->
-> >
-> >>> But apart from this detail you're right, I have the same concerns wit=
-h
-> >>> this solution too. If we see a hard performance regression we could g=
-o
-> >>> to more complicated solutions, like maintaining a reverse IOVATree in
-> >>> vhost-iova-tree too. First RFCs of SVQ did that actually.
-> >> Agreed, yeap we can use memory_region_from_host for now.  Any reason w=
-hy
-> >> reverse IOVATree was dropped, lack of users? But now we have one!
-> >>
-> > No, it is just simplicity. We already have an user in the hot patch in
-> > the master branch, vhost_svq_vring_write_descs. But I never profiled
-> > enough to find if it is a bottleneck or not to be honest.
-> Right, without vIOMMU or a lot of virtqueues / mappings, it's hard to
-> profile and see the difference.
-> >
-> > I'll send the new series by today, thank you for finding these issues!
-> Thanks! In case you don't have bandwidth to add back reverse IOVA tree,
-> Jonah (cc'ed) may have interest in looking into it.
->
+On 24.04.24 14:48, Markus Armbruster wrote:
+> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+> 
+>> Add command to sync config from vhost-user backend to the device. It
+>> may be helpful when VHOST_USER_SLAVE_CONFIG_CHANGE_MSG failed or not
+>> triggered interrupt to the guest or just not available (not supported
+>> by vhost-user server).
+>>
+>> Command result is racy if allow it during migration. Let's allow the
+>> sync only in RUNNING state.
+>>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> ---
+>>   hw/block/vhost-user-blk.c | 27 ++++++++++++++++------
+>>   hw/virtio/virtio-pci.c    |  9 ++++++++
+>>   include/hw/qdev-core.h    |  3 +++
+>>   include/sysemu/runstate.h |  1 +
+>>   qapi/qdev.json            | 21 +++++++++++++++++
+>>   system/qdev-monitor.c     | 47 +++++++++++++++++++++++++++++++++++++++
+>>   system/runstate.c         |  5 +++++
+>>   7 files changed, 106 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+>> index 9e6bbc6950..2f301f380c 100644
+>> --- a/hw/block/vhost-user-blk.c
+>> +++ b/hw/block/vhost-user-blk.c
+>> @@ -88,27 +88,39 @@ static void vhost_user_blk_set_config(VirtIODevice *vdev, const uint8_t *config)
+>>       s->blkcfg.wce = blkcfg->wce;
+>>   }
+>>   
+>> +static int vhost_user_blk_sync_config(DeviceState *dev, Error **errp)
+>> +{
+>> +    int ret;
+>> +    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+>> +    VHostUserBlk *s = VHOST_USER_BLK(vdev);
+>> +
+>> +    ret = vhost_dev_get_config(&s->dev, (uint8_t *)&s->blkcfg,
+>> +                               vdev->config_len, errp);
+>> +    if (ret < 0) {
+>> +        return ret;
+>> +    }
+>> +
+>> +    memcpy(vdev->config, &s->blkcfg, vdev->config_len);
+>> +    virtio_notify_config(vdev);
+>> +
+>> +    return 0;
+>> +}
+>> +
+>>   static int vhost_user_blk_handle_config_change(struct vhost_dev *dev)
+>>   {
+>>       int ret;
+>> -    VirtIODevice *vdev = dev->vdev;
+>> -    VHostUserBlk *s = VHOST_USER_BLK(dev->vdev);
+>>       Error *local_err = NULL;
+>>   
+>>       if (!dev->started) {
+>>           return 0;
+>>       }
+>>   
+>> -    ret = vhost_dev_get_config(dev, (uint8_t *)&s->blkcfg,
+>> -                               vdev->config_len, &local_err);
+>> +    ret = vhost_user_blk_sync_config(DEVICE(dev->vdev), &local_err);
+>>       if (ret < 0) {
+>>           error_report_err(local_err);
+>>           return ret;
+>>       }
+>>   
+>> -    memcpy(dev->vdev->config, &s->blkcfg, vdev->config_len);
+>> -    virtio_notify_config(dev->vdev);
+>> -
+>>       return 0;
+>>   }
+> 
+> This factors vhost_user_blk_sync_config() out of
+> vhost_user_blk_handle_config_change() for reuse.  Correct?
 
-Actually, yes. I've tried to solve it using:
-memory_region_get_ram_ptr -> It's hard to get this pointer to work
-without messing a lot with IOVATree.
-memory_region_find -> I'm totally unable to make it return sections
-that make sense
-flatview_for_each_range -> It does not return the same
-MemoryRegionsection as the listener, not sure why.
+Yes. Will split to a separate patch in v4
 
-The only advance I have is that memory_region_from_host is able to
-tell if the vaddr is from the guest or not.
+> 
+>>   
+>> @@ -576,6 +588,7 @@ static void vhost_user_blk_class_init(ObjectClass *klass, void *data)
+>>   
+>>       device_class_set_props(dc, vhost_user_blk_properties);
+>>       dc->vmsd = &vmstate_vhost_user_blk;
+>> +    dc->sync_config = vhost_user_blk_sync_config;
+>>       set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
+>>       vdc->realize = vhost_user_blk_device_realize;
+>>       vdc->unrealize = vhost_user_blk_device_unrealize;
+>> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+>> index eaaf86402c..92afbae71c 100644
+>> --- a/hw/virtio/virtio-pci.c
+>> +++ b/hw/virtio/virtio-pci.c
+>> @@ -2501,6 +2501,14 @@ static void virtio_pci_dc_realize(DeviceState *qdev, Error **errp)
+>>       vpciklass->parent_dc_realize(qdev, errp);
+>>   }
+>>   
+>> +static int virtio_pci_sync_config(DeviceState *dev, Error **errp)
+>> +{
+>> +    VirtIOPCIProxy *proxy = VIRTIO_PCI(dev);
+>> +    VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
+>> +
+>> +    return qdev_sync_config(DEVICE(vdev), errp);
+>> +}
+>> +
+>>   static void virtio_pci_class_init(ObjectClass *klass, void *data)
+>>   {
+>>       DeviceClass *dc = DEVICE_CLASS(klass);
+>> @@ -2517,6 +2525,7 @@ static void virtio_pci_class_init(ObjectClass *klass, void *data)
+>>       device_class_set_parent_realize(dc, virtio_pci_dc_realize,
+>>                                       &vpciklass->parent_dc_realize);
+>>       rc->phases.hold = virtio_pci_bus_reset_hold;
+>> +    dc->sync_config = virtio_pci_sync_config;
+>>   }
+>>   
+> 
+> I tried to follow the callbacks, but quickly gave up.  Leaving to a
+> reviewer who understands virtio.
+> 
+>>   static const TypeInfo virtio_pci_info = {
+>> diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+>> index 9228e96c87..87135bdcdf 100644
+>> --- a/include/hw/qdev-core.h
+>> +++ b/include/hw/qdev-core.h
+>> @@ -95,6 +95,7 @@ typedef void (*DeviceUnrealize)(DeviceState *dev);
+>>   typedef void (*DeviceReset)(DeviceState *dev);
+>>   typedef void (*BusRealize)(BusState *bus, Error **errp);
+>>   typedef void (*BusUnrealize)(BusState *bus);
+>> +typedef int (*DeviceSyncConfig)(DeviceState *dev, Error **errp);
+>>   
+>>   /**
+>>    * struct DeviceClass - The base class for all devices.
+>> @@ -162,6 +163,7 @@ struct DeviceClass {
+>>       DeviceReset reset;
+>>       DeviceRealize realize;
+>>       DeviceUnrealize unrealize;
+>> +    DeviceSyncConfig sync_config;
+>>   
+>>       /**
+>>        * @vmsd: device state serialisation description for
+>> @@ -546,6 +548,7 @@ bool qdev_hotplug_allowed(DeviceState *dev, Error **errp);
+>>    */
+>>   HotplugHandler *qdev_get_hotplug_handler(DeviceState *dev);
+>>   void qdev_unplug(DeviceState *dev, Error **errp);
+>> +int qdev_sync_config(DeviceState *dev, Error **errp);
+>>   void qdev_simple_device_unplug_cb(HotplugHandler *hotplug_dev,
+>>                                     DeviceState *dev, Error **errp);
+>>   void qdev_machine_creation_done(void);
+>> diff --git a/include/sysemu/runstate.h b/include/sysemu/runstate.h
+>> index 0117d243c4..296af52322 100644
+>> --- a/include/sysemu/runstate.h
+>> +++ b/include/sysemu/runstate.h
+>> @@ -5,6 +5,7 @@
+>>   #include "qemu/notify.h"
+>>   
+>>   bool runstate_check(RunState state);
+>> +const char *current_run_state_str(void);
+>>   void runstate_set(RunState new_state);
+>>   RunState runstate_get(void);
+>>   bool runstate_is_running(void);
+>> diff --git a/qapi/qdev.json b/qapi/qdev.json
+>> index facaa0bc6a..e8be79c3d5 100644
+>> --- a/qapi/qdev.json
+>> +++ b/qapi/qdev.json
+>> @@ -161,3 +161,24 @@
+>>   ##
+>>   { 'event': 'DEVICE_UNPLUG_GUEST_ERROR',
+>>     'data': { '*device': 'str', 'path': 'str' } }
+>> +
+>> +##
+>> +# @device-sync-config:
+>> +#
+>> +# Synchronize config from backend to the guest. The command notifies
+>> +# re-read the device config from the backend and notifies the guest
+>> +# to re-read the config. The command may be used to notify the guest
+>> +# about block device capcity change. Currently only vhost-user-blk
+>> +# device supports this.
+> 
+> I'm not sure I understand this.  To work towards an understanding, I
+> rephrase it, and you point out the errors.
+> 
+>       Synchronize device configuration from host to guest part.  First,
+>       copy the configuration from the host part (backend) to the guest
+>       part (frontend).  Then notify guest software that device
+>       configuration changed.
 
-So I'm convinced there must be a way to do it with the memory
-subsystem, but I think the best way to do it ATM is to store a
-parallel tree with GPA-> SVQ IOVA translations. At removal time, if we
-find the entry in this new tree, we can directly remove it by GPA. If
-not, assume it is a host-only address like SVQ vrings, and remove by
-iterating on vaddr as we do now. It is guaranteed the guest does not
-translate to that vaddr and that that vaddr is unique in the tree
-anyway.
+Correct, thanks
 
-Does it sound reasonable? Jonah, would you be interested in moving this for=
-ward?
+> 
+> I wonder how configuration can get out of sync.  Can you explain?
+> 
 
-Thanks!
+The example (and the original feature, which triggered developing this) is vhost disk resize. If vhost-server (backend) doesn't support VHOST_USER_SLAVE_CONFIG_CHANGE_MSG, neither QEMU nor guest will know that disk capacity changed.
 
-> -Siwei
->
->
-> >
-> >> Thanks,
-> >> -Siwei
-> >>> Thanks!
-> >>>
-> >>>> Of course,
-> >>>> memory_region_from_host() won't search out of the guest memory space=
- for
-> >>>> sure. As this could be on the hot data path I have a little bit
-> >>>> hesitance over the potential cost or performance regression this cha=
-nge
-> >>>> could bring in, but maybe I'm overthinking it too much...
-> >>>>
-> >>>> Thanks,
-> >>>> -Siwei
-> >>>>
-> >>>>>> Thanks,
-> >>>>>> -Siwei
-> >>>>>>>              return false;
-> >>>>>>>          }
-> >>>>>>>
->
+>> +#
+>> +# @id: the device's ID or QOM path
+>> +#
+>> +# Features:
+>> +#
+>> +# @unstable: The command is experimental.
+>> +#
+>> +# Since: 9.1
+>> +##
+>> +{ 'command': 'device-sync-config',
+>> +  'features': [ 'unstable' ],
+>> +  'data': {'id': 'str'} }
+>> diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+>> index 7e075d91c1..cb35ea0b86 100644
+>> --- a/system/qdev-monitor.c
+>> +++ b/system/qdev-monitor.c
+>> @@ -23,6 +23,7 @@
+>>   #include "monitor/monitor.h"
+>>   #include "monitor/qdev.h"
+>>   #include "sysemu/arch_init.h"
+>> +#include "sysemu/runstate.h"
+>>   #include "qapi/error.h"
+>>   #include "qapi/qapi-commands-qdev.h"
+>>   #include "qapi/qmp/dispatch.h"
+>> @@ -969,6 +970,52 @@ void qmp_device_del(const char *id, Error **errp)
+>>       }
+>>   }
+>>   
+>> +int qdev_sync_config(DeviceState *dev, Error **errp)
+>> +{
+>> +    DeviceClass *dc = DEVICE_GET_CLASS(dev);
+>> +
+>> +    if (!dc->sync_config) {
+>> +        error_setg(errp, "device-sync-config is not supported for '%s'",
+>> +                   object_get_typename(OBJECT(dev)));
+>> +        return -ENOTSUP;
+>> +    }
+>> +
+>> +    return dc->sync_config(dev, errp);
+>> +}
+>> +
+>> +void qmp_device_sync_config(const char *id, Error **errp)
+>> +{
+>> +    DeviceState *dev;
+>> +
+>> +    /*
+>> +     * During migration there is a race between syncing`config and
+>> +     * migrating it, so let's just not allow it.
+> 
+> Can you briefly explain the race?
+
+If at the moment of qmp command, corresponding config already migrated to the target, we'll change only the config on source, but on the target we'll still have outdated config.
+
+> 
+>> +     *
+>> +     * Moreover, let's not rely on setting up interrupts in paused
+>> +     * state, which may be a part of migration process.
+> 
+> What dependence exactly are you avoiding?  Config synchronization
+> depending on guest interrupt delivery?
+
+Right, guest is notified by pci_set_irq.
+
+> 
+>> +     */
+>> +
+>> +    if (migration_is_running()) {
+>> +        error_setg(errp, "Config synchronization is not allowed "
+>> +                   "during migration.");
+> 
+> qapi/error.h:
+> 
+>       * The resulting message should be a single phrase, with no newline or
+>       * trailing punctuation.
+> 
+> Drop the period, please.
+
+Will do
+
+> 
+>> +        return;
+>> +    }
+>> +
+>> +    if (!runstate_is_running()) {
+>> +        error_setg(errp, "Config synchronization allowed only in '%s' state, "
+>> +                   "current state is '%s'", RunState_str(RUN_STATE_RUNNING),
+>> +                   current_run_state_str());
+>> +        return;
+>> +    }
+>> +
+>> +    dev = find_device_state(id, true, errp);
+>> +    if (!dev) {
+>> +        return;
+>> +    }
+>> +
+>> +    qdev_sync_config(dev, errp);
+>> +}
+>> +
+>>   void hmp_device_add(Monitor *mon, const QDict *qdict)
+>>   {
+>>       Error *err = NULL;
+>> diff --git a/system/runstate.c b/system/runstate.c
+>> index d6ab860eca..8fd89172ae 100644
+>> --- a/system/runstate.c
+>> +++ b/system/runstate.c
+>> @@ -189,6 +189,11 @@ bool runstate_check(RunState state)
+>>       return current_run_state == state;
+>>   }
+>>   
+>> +const char *current_run_state_str(void)
+>> +{
+>> +    return RunState_str(current_run_state);
+>> +}
+>> +
+> 
+> This helper is used just once.  Suggest to use
+> RunState_str(runstate_get()) instead.
+
+OK
+
+> 
+>>   static void runstate_init(void)
+>>   {
+>>       const RunStateTransition *p;
+> 
+
+-- 
+Best regards,
+Vladimir
 
 
