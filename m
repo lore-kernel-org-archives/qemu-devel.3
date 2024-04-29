@@ -4,61 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAA9BC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 01:47:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B081C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 01:54:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1G6b-0007Kh-67; Sun, 28 Apr 2024 21:46:57 -0400
+	id 1s1GDl-0000U7-8V; Sun, 28 Apr 2024 21:54:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dgibson@gandalf.ozlabs.org>)
- id 1s1G6Y-0007KK-Lo; Sun, 28 Apr 2024 21:46:55 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dgibson@gandalf.ozlabs.org>)
- id 1s1G6V-0004oR-7X; Sun, 28 Apr 2024 21:46:54 -0400
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1s1GDi-0000Tg-0S
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 21:54:18 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1s1GDe-0005ZP-PZ
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 21:54:17 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-60585faa69fso2529621a12.1
+ for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 18:52:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gibson.dropbear.id.au; s=202312; t=1714355201;
- bh=YduI4ygNClkx7D0DQALagO/Lvb8EHC6qiw3IVGr0AWQ=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=apktbWaQmyY0achxuUx24Hq4KpF2vi9g6AHmu30+zSQMzYabyX+z8f+JMgjdKD+mE
- ODZ5oF6c9zoCWdy6BTE/bV39gkmCWKjUvRGWejPYCOV/27Ji17A1wCyXUIFB7nxgba
- /rxFA36gXVeAv1X8l8EYR5/qOjBpfknxOE+XJtjxratWBh36FoC4gOqjt1aUPOHfGy
- qXTp0e+obF0Zbl3YNLr7YM+j8jes51lVnnosdXvKkIHAIx++4nwcQ2OgDmO9+0INHF
- Zs/e2FdOTYBzaEDoIgSIHXQWui2VK/vsmQQ1aLrZoxY1ikuVS3+1EFVY8mYEo07b/y
- faw1IyCBygcXA==
-Received: by gandalf.ozlabs.org (Postfix, from userid 1007)
- id 4VSR5F5k41z4wyp; Mon, 29 Apr 2024 11:46:41 +1000 (AEST)
-Date: Mon, 29 Apr 2024 11:44:31 +1000
-From: David Gibson <david@gibson.dropbear.id.au>
-To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>
-Cc: Aditya Gupta <adityag@linux.ibm.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
- =?iso-8859-1?Q?Fr=E9d=E9ric?= Barrat <fbarrat@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: Re: [PATCH v2 09/10] ppc: Make Power11 as default cpu type for
- 'pseries' and 'powernv'
-Message-ID: <Zi77fx1WW0KJRb5o@zatzit>
-References: <20240426110023.733309-1-adityag@linux.ibm.com>
- <20240426110023.733309-10-adityag@linux.ibm.com>
- <3d64c7e6-6128-4723-b7c5-11967b0a7457@kaod.org>
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1714355530; x=1714960330;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=lhKxOU9CLIx5HvZQWdAKl0KiNK+hUmB9271xKsKexQk=;
+ b=eSJLIadj+DAm5tIhmsuYYU8JgMHzYPfPFG55wKqpn5P3X+CJScc0dYihOTHd/vJfO5
+ r9QN40QYH0P3J/rRvaLzxykKtMa+F8yJSumdIAn8PwFo/QrdqgcC7kMfMstnwvvSaU4P
+ 7BH7KEVghjpdaJPseifzRkKMm8eDuC1W/Sey8CKsk9m4lU2Eh8f75zTG4bVq44Vl4uVx
+ 7xbzK6tZrc9dZEEyHsvJWikM17ICHWvVmPWzSESCJt/KqMyA3x2tyjUzOWMWy3KYqgWX
+ GzEr0xHSsxyYnanicph2En3ZHfALLdH7tAoG76S/cZRo8jsh55i5qUasyTUTEJBz20ZZ
+ d4/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714355530; x=1714960330;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=lhKxOU9CLIx5HvZQWdAKl0KiNK+hUmB9271xKsKexQk=;
+ b=bzWHG63MWawoIDWfZDoGC06faLhVKSzmylst0v9hEr0e7kk2AtezNorAE+RyVxXkhZ
+ pmC8cHQRGnThda66fSH00VxcoPBHiej41rmhtARbq+s1/NjRQO5Lt4hD26TRzcBu2yRs
+ s75EqCYUV5u4pb+wtdxoP8c1fa/VwrDBLWwiah4TzbWE9g0Ih74BBW7OIy+z+/xIRJ2e
+ fZGTcSkOqR/eYFoTDDat3tvDnbL3ANqeT7tY3QAz+2rf5+AICTS9xJCTkuYANB4ZcVDQ
+ qXrSKtWC/AwXcbmYaNP4lT1h0nEIZU9kwnRYGhHsUszUm3souS3TSmhUoPuVx6R0yyMS
+ K+CA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXO7qR4+qqQNl4BgMfWJEfas5nTZfYE/lYdUh/aOx6QQxl4122pg+UF9rwfysmew5dbT2HkFkn5mr9DNNcs8QlVnWeQbb0=
+X-Gm-Message-State: AOJu0Yzz57zALP5XjUX9aZ4v3TXNfWexKG+bowJSEFUpLu8Mbw0U8HYM
+ eP3S7JuSpo1Om/XizSTohgUPtS+B94NM9aIZ6PbImQNr0B1XL+BydM5msJrs/qFOOn3VPicmdWf
+ n2IdyePmR32rIG7+IY93GzrYUs+fe2GgrvjPgRODL+soywafuSJ9a3NsL
+X-Google-Smtp-Source: AGHT+IERJcEHnjhYqfT25f1KrJhpCOmOi4w5WD9/8VhCc/+5wHi5nsVjegrJbwOX47X1vH7bxXq9/P4AnpJHzzUq498=
+X-Received: by 2002:a17:90b:400d:b0:2b0:e497:56f2 with SMTP id
+ ie13-20020a17090b400d00b002b0e49756f2mr7028033pjb.10.1714355530039; Sun, 28
+ Apr 2024 18:52:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="ktqjxqf9bcS4kWpb"
-Content-Disposition: inline
-In-Reply-To: <3d64c7e6-6128-4723-b7c5-11967b0a7457@kaod.org>
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=dgibson@gandalf.ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240423091306.754432-1-mii@sfc.wide.ad.jp>
+ <20240423091306.754432-2-mii@sfc.wide.ad.jp> <Zie5Fr3m9BquVpp3@x1n>
+ <CAK9dgmaOOgQ3i2Er5GWz0i0917puSj_4Wt+1KZdJyV2KoazyMw@mail.gmail.com>
+ <9fa52b09-c0ad-4ff4-bd62-cd7b654bd65e@sfc.wide.ad.jp>
+ <e5926adb-deb0-4b32-9543-ea453b44d785@fujitsu.com>
+In-Reply-To: <e5926adb-deb0-4b32-9543-ea453b44d785@fujitsu.com>
+From: Yong Huang <yong.huang@smartx.com>
+Date: Mon, 29 Apr 2024 09:51:53 +0800
+Message-ID: <CAK9dgmasctJC+8HTHXiyy3cPhg9FsT_uGe_LAFKb_dCcfMciRA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] migration/dirtyrate: Fix segmentation fault
+To: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
+Cc: mii <mii@sfc.wide.ad.jp>, Peter Xu <peterx@redhat.com>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Fabiano Rosas <farosas@suse.de>
+Content-Type: multipart/alternative; boundary="000000000000631b3f06173280ed"
+Received-SPF: none client-ip=2607:f8b0:4864:20::530;
+ envelope-from=yong.huang@smartx.com; helo=mail-pg1-x530.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,108 +95,267 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
---ktqjxqf9bcS4kWpb
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+--000000000000631b3f06173280ed
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Apr 26, 2024 at 04:32:18PM +0200, C=E9dric le Goater wrote:
-> On 4/26/24 13:00, Aditya Gupta wrote:
-> > Make Power11 as default cpu type for 'pseries' and 'powernv' machine ty=
-pe,
-> > with Power11 being the newest supported Power processor in QEMU.
->=20
-> This is too early. We should merge Power11 support first, possibly in 9.1,
-> and then change default in a future release, 9.2, 10.0
+On Wed, Apr 24, 2024 at 3:17=E2=80=AFPM Zhijian Li (Fujitsu) <lizhijian@fuj=
+itsu.com>
+wrote:
 
-Additionally, changes to defaults in pseries must be versioned, so
-that the behaviour of existing machine types won't change.
+>
+>
+> On 24/04/2024 12:52, mii wrote:
+> >
+> > On 2024/04/24 10:28, Yong Huang wrote:
+> >>
+> >>
+> >> On Tue, Apr 23, 2024 at 9:35=E2=80=AFPM Peter Xu <peterx@redhat.com> w=
+rote:
+> >>
+> >>     On Tue, Apr 23, 2024 at 09:13:08AM +0000, Masato Imai wrote:
+> >>     > When the KVM acceleration parameter is not set, executing
+> calc_dirty_rate
+> >>     > with the -r or -b option results in a segmentation fault due to
+> accessing
+> >>     > a null kvm_state pointer in the kvm_dirty_ring_enabled function.
+> >>     > This commit adds a check for kvm_enabled to prevent segmentation
+> faults.
+> >>     >
+> >>     > Signed-off-by: Masato Imai <mii@sfc.wide.ad.jp>
+> >>     > ---
+> >>     >  migration/dirtyrate.c | 7 +++++++
+> >>     >  1 file changed, 7 insertions(+)
+> >>     >
+> >>     > diff --git a/migration/dirtyrate.c b/migration/dirtyrate.c
+> >>     > index 1d2e85746f..2a7df52519 100644
+> >>     > --- a/migration/dirtyrate.c
+> >>     > +++ b/migration/dirtyrate.c
+> >>     > @@ -799,6 +799,13 @@ void qmp_calc_dirty_rate(int64_t calc_time,
+> >>     >       * dirty ring mode only works when kvm dirty ring is enable=
+d.
+> >>     >       * on the contrary, dirty bitmap mode is not.
+> >>     >       */
+> >>     > +    if (!kvm_enabled() &&
+> >>     > +        (mode =3D=3D DIRTY_RATE_MEASURE_MODE_DIRTY_RING ||
+> >>     > +         mode =3D=3D DIRTY_RATE_MEASURE_MODE_DIRTY_BITMAP)) {
+> >>     > +        error_setg(errp, "mode %s requires kvm to be enabled.",
+> >>     > +  DirtyRateMeasureMode_str(mode));
+> >>     > +        return;
+> >>     > +    }
+> >>
+> >>     Logically dirty bitmap should work with tcg.  So the other option
+> is to let
+> >>     kvm_dirty_ring_enabled() check kvm_state too and return false if
+> >>     kvm_state=3D=3DNULL?
+> >>
+> >>
+> >> Agree, better solution
+> >>
+> >>
+> >>     >      if (((mode =3D=3D DIRTY_RATE_MEASURE_MODE_DIRTY_RING) &&
+> >>     >          !kvm_dirty_ring_enabled()) ||
+> >>     >          ((mode =3D=3D DIRTY_RATE_MEASURE_MODE_DIRTY_BITMAP) &&
+> >>     > --
+> >>     > 2.34.1
+> >>     >
+> >>
+> >>     --
+> >>     Peter Xu
+> >>
+> >>
+> >> Thanks,
+> >> Yong
+> >>
+> >>
+> >> --
+> >> Best regards
+> >
+> > Thank you for the review. I agree with that solution.
+> >
+> > Update will be like:
+> >
+> > diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> > index 931f74256e..0f8499365d 100644
+> > --- a/accel/kvm/kvm-all.c
+> > +++ b/accel/kvm/kvm-all.c
+> > @@ -2312,6 +2312,9 @@ bool kvm_vcpu_id_is_valid(int vcpu_id)
+> >
+> >   bool kvm_dirty_ring_enabled(void)
+> >   {
+>
+>
+> How about,
+>
+>         return kvm_state && vm_state->kvm_dirty_ring_size;
+>
 
->=20
-> Thanks,
->=20
-> C.
->=20
->=20
->=20
-> >=20
-> > Cc: C=E9dric Le Goater <clg@kaod.org>
-> > Cc: Daniel Henrique Barboza <danielhb413@gmail.com>
-> > Cc: David Gibson <david@gibson.dropbear.id.au>
-> > Cc: Fr=E9d=E9ric Barrat <fbarrat@linux.ibm.com>
-> > Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> > Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
-> > Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-> > Cc: Nicholas Piggin <npiggin@gmail.com>
-> > Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-> > ---
-> >   hw/ppc/pnv.c   | 4 ++--
-> >   hw/ppc/spapr.c | 2 +-
-> >   2 files changed, 3 insertions(+), 3 deletions(-)
-> >=20
-> > diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-> > index 06e272f3bdd3..0c5a6bc424af 100644
-> > --- a/hw/ppc/pnv.c
-> > +++ b/hw/ppc/pnv.c
-> > @@ -2531,8 +2531,6 @@ static void pnv_machine_p10_common_class_init(Obj=
-ectClass *oc, void *data)
-> >       mc->default_cpu_type =3D POWERPC_CPU_TYPE_NAME("power10_v2.0");
-> >       compat_props_add(mc->compat_props, phb_compat, G_N_ELEMENTS(phb_c=
-ompat));
-> > -    mc->alias =3D "powernv";
-> > -
-> >       pmc->compat =3D compat;
-> >       pmc->compat_size =3D sizeof(compat);
-> >       pmc->dt_power_mgt =3D pnv_dt_power_mgt;
-> > @@ -2569,6 +2567,8 @@ static void pnv_machine_power11_class_init(Object=
-Class *oc, void *data)
-> >       /* do power10_class_init as p11 core is same as p10 */
-> >       pnv_machine_p10_common_class_init(oc, data);
-> > +    mc->alias =3D "powernv";
-> > +
-> >       mc->desc =3D "IBM PowerNV (Non-Virtualized) POWER11";
-> >       mc->default_cpu_type =3D POWERPC_CPU_TYPE_NAME("power11");
-> > diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-> > index d2d1e310a3be..1c3e2da8e9e4 100644
-> > --- a/hw/ppc/spapr.c
-> > +++ b/hw/ppc/spapr.c
-> > @@ -4698,7 +4698,7 @@ static void spapr_machine_class_init(ObjectClass =
-*oc, void *data)
-> >       smc->dr_lmb_enabled =3D true;
-> >       smc->update_dt_enabled =3D true;
-> > -    mc->default_cpu_type =3D POWERPC_CPU_TYPE_NAME("power10_v2.0");
-> > +    mc->default_cpu_type =3D POWERPC_CPU_TYPE_NAME("power11");
-> >       mc->has_hotpluggable_cpus =3D true;
-> >       mc->nvdimm_supported =3D true;
-> >       smc->resize_hpt_default =3D SPAPR_RESIZE_HPT_ENABLED;
->=20
+Hi, Masato Imai, would you like to continue this patch with version 3
+as suggested?
+
+
+>
+>
+> Thanks
+> Zhijian
+>
+>
+> > +    if (kvm_state =3D=3D NULL) {
+> > +        return false;
+> > +    }
+> >       return kvm_state->kvm_dirty_ring_size ? true : false;
+> >   }
+> >
+
+
+Thanks,
+Yong
+
 
 --=20
-David Gibson			| I'll have my music baroque, and my code
-david AT gibson.dropbear.id.au	| minimalist, thank you.  NOT _the_ _other_
-				| _way_ _around_!
-http://www.ozlabs.org/~dgibson
+Best regards
 
---ktqjxqf9bcS4kWpb
-Content-Type: application/pgp-signature; name="signature.asc"
+--000000000000631b3f06173280ed
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
------BEGIN PGP SIGNATURE-----
+<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
+t-family:&quot;comic sans ms&quot;,sans-serif"><br></div></div><br><div cla=
+ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Apr 24, 20=
+24 at 3:17=E2=80=AFPM Zhijian Li (Fujitsu) &lt;<a href=3D"mailto:lizhijian@=
+fujitsu.com">lizhijian@fujitsu.com</a>&gt; wrote:<br></div><blockquote clas=
+s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;b=
+order-left-style:solid;border-left-color:rgb(204,204,204);padding-left:1ex"=
+><br>
+<br>
+On 24/04/2024 12:52, mii wrote:<br>
+&gt; <br>
+&gt; On 2024/04/24 10:28, Yong Huang wrote:<br>
+&gt;&gt;<br>
+&gt;&gt;<br>
+&gt;&gt; On Tue, Apr 23, 2024 at 9:35=E2=80=AFPM Peter Xu &lt;<a href=3D"ma=
+ilto:peterx@redhat.com" target=3D"_blank">peterx@redhat.com</a>&gt; wrote:<=
+br>
+&gt;&gt;<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0On Tue, Apr 23, 2024 at 09:13:08AM +0000, Masat=
+o Imai wrote:<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt; When the KVM acceleration parameter is not=
+ set, executing calc_dirty_rate<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt; with the -r or -b option results in a segm=
+entation fault due to accessing<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt; a null kvm_state pointer in the kvm_dirty_=
+ring_enabled function.<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt; This commit adds a check for kvm_enabled t=
+o prevent segmentation faults.<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt; Signed-off-by: Masato Imai &lt;<a href=3D"=
+mailto:mii@sfc.wide.ad.jp" target=3D"_blank">mii@sfc.wide.ad.jp</a>&gt;<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt; ---<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 migration/dirtyrate.c | 7 +++++++<br=
+>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 1 file changed, 7 insertions(+)<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt; diff --git a/migration/dirtyrate.c b/migra=
+tion/dirtyrate.c<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt; index 1d2e85746f..2a7df52519 100644<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt; --- a/migration/dirtyrate.c<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt; +++ b/migration/dirtyrate.c<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt; @@ -799,6 +799,13 @@ void qmp_calc_dirty_r=
+ate(int64_t calc_time,<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0* dirty ring mod=
+e only works when kvm dirty ring is enabled.<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0* on the contrar=
+y, dirty bitmap mode is not.<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt; +=C2=A0 =C2=A0 if (!kvm_enabled() &amp;&am=
+p;<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 (mode =3D=3D =
+DIRTY_RATE_MEASURE_MODE_DIRTY_RING ||<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0mode =
+=3D=3D DIRTY_RATE_MEASURE_MODE_DIRTY_BITMAP)) {<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(er=
+rp, &quot;mode %s requires kvm to be enabled.&quot;,<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt; + =C2=A0DirtyRateMeasureMode_str(mode));<b=
+r>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt; +=C2=A0 =C2=A0 }<br>
+&gt;&gt;<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0Logically dirty bitmap should work with tcg.=C2=
+=A0 So the other option is to let<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0kvm_dirty_ring_enabled() check kvm_state too an=
+d return false if<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0kvm_state=3D=3DNULL?<br>
+&gt;&gt;<br>
+&gt;&gt;<br>
+&gt;&gt; Agree, better solution<br>
+&gt;&gt;<br>
+&gt;&gt;<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 if (((mode =3D=3D DIRT=
+Y_RATE_MEASURE_MODE_DIRTY_RING) &amp;&amp;<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 !kvm_dir=
+ty_ring_enabled()) ||<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ((mode =
+=3D=3D DIRTY_RATE_MEASURE_MODE_DIRTY_BITMAP) &amp;&amp;<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt; --<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt; 2.34.1<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;&gt;<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0-- <br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0Peter Xu<br>
+&gt;&gt;<br>
+&gt;&gt;<br>
+&gt;&gt; Thanks,<br>
+&gt;&gt; Yong<br>
+&gt;&gt;<br>
+&gt;&gt;<br>
+&gt;&gt; -- <br>
+&gt;&gt; Best regards<br>
+&gt; <br>
+&gt; Thank you for the review. I agree with that solution.<br>
+&gt; <br>
+&gt; Update will be like:<br>
+&gt; <br>
+&gt; diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c<br>
+&gt; index 931f74256e..0f8499365d 100644<br>
+&gt; --- a/accel/kvm/kvm-all.c<br>
+&gt; +++ b/accel/kvm/kvm-all.c<br>
+&gt; @@ -2312,6 +2312,9 @@ bool kvm_vcpu_id_is_valid(int vcpu_id)<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0bool kvm_dirty_ring_enabled(void)<br>
+&gt;=C2=A0 =C2=A0{<br>
+<br>
+<br>
+How about,<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return kvm_state &amp;&amp; vm_state-&gt;kvm_di=
+rty_ring_size;<br></blockquote><div><br></div><div><div class=3D"gmail_defa=
+ult"><span style=3D"font-family:&quot;comic sans ms&quot;,sans-serif">Hi</s=
+pan><font face=3D"comic sans ms, sans-serif">,=C2=A0Masato Imai, would you =
+like to continue this patch with version=C2=A03=C2=A0</font></div><div clas=
+s=3D"gmail_default"><span style=3D"font-family:&quot;comic sans ms&quot;,sa=
+ns-serif">as suggested?</span></div></div><div>=C2=A0</div><blockquote clas=
+s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;b=
+order-left-style:solid;border-left-color:rgb(204,204,204);padding-left:1ex"=
+>
+<br>
+<br>
+Thanks<br>
+Zhijian<br>
+<br>
+<br>
+&gt; +=C2=A0=C2=A0=C2=A0 if (kvm_state =3D=3D NULL) {<br>
+&gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return false;<br>
+&gt; +=C2=A0=C2=A0=C2=A0 }<br>
+&gt;=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0 return kvm_state-&gt;kvm_dirty_ring_siz=
+e ? true : false;<br>
+&gt;=C2=A0 =C2=A0}<br>
+&gt; </blockquote></div><div><br></div><div class=3D"gmail_default" style=
+=3D"font-family:&quot;comic sans ms&quot;,sans-serif">Thanks,</div><div cla=
+ss=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&quot;,sans-se=
+rif">Yong</div><br clear=3D"all"><div><br></div><span class=3D"gmail_signat=
+ure_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><div d=
+ir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best regards</font></di=
+v></div></div>
 
-iQIzBAEBCAAdFiEEO+dNsU4E3yXUXRK2zQJF27ox2GcFAmYu+34ACgkQzQJF27ox
-2GcyAQ/7BD08t5JlODjFeiIXpFVGbBEPQ1Qpq5Bf+/MNJCXk5xRg+3J78N0hDjWJ
-nCF6Ld9NCLxIuZaERo5i8fjTs9mwBNW3v9khHKFwbKvFWN3vOdnujblRH/HiI6ef
-R3P4MsT7E4I9MY9WMxf6ftCrdoc8BysLESa7QXM9xMP/0FmDCFbdqXiQQVAdGJ8C
-vAgCwjR2VNo2d4mDjv1fvARZLDVEaxhpDtz+l8yrkcDfyNKb1naXl1d2gHmggS/F
-1U3fa66bXryRGMl54G8WmyilZeTtG7xz3hCeH8ukcU59KufabFWXxN0axz3E5i1j
-qFOAdzexFWcoA/CzpfhMl7uW3bM8s4Qd2BOZuC26c2QqvkIS8oS9n0u8puY9F50l
-XXukxX/z8xt9Vr1Mo04KKacNLw3F/yUxhuPjzjjUB8Bq2no2tW70+q0gjegbkiER
-PfdrflxAxjLPriLN7UTgX4s74cHDQA2urmvVb5M/aOJoNagcjv2x7Q9/KkULvMhR
-l4cW6qMJMoMqjhAlpK9k36ppOn2Kh8DwyWcZOIEuipsPdDLdMiMjjE9TJ3gNGwHe
-ffYOhgae7quLO5Py1USpKeOOmLQHQ9UBotpKUNJuqu97l6CMIa219m9i4S5UCNI+
-cxt0qdE6VPVeSGhhr+6o/sgaPyo1iTa3n8VlbJXRt9qZjFEqdug=
-=d5xE
------END PGP SIGNATURE-----
-
---ktqjxqf9bcS4kWpb--
+--000000000000631b3f06173280ed--
 
