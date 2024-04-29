@@ -4,88 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F11B9C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 13:40:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41EBDC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 13:42:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1REl-0003dc-VA; Mon, 29 Apr 2024 09:40:07 -0400
+	id 1s1RGW-0004hK-0g; Mon, 29 Apr 2024 09:41:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1REi-0003dF-70
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 09:40:05 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1REg-0000qj-1z
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 09:40:03 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-56c5d05128dso4047340a12.0
- for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 06:40:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714398000; x=1715002800; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=FCayGo/UueZ0m9/2yY8GVfnM/jvfBIii0FHoaTwegUs=;
- b=bdw2yN0SDRV+HVlPphNBEKZaULW7nJR1T745mqZFpKf7yQd+gs1SC97FxBZq928iAX
- egMaeFBvw19v57DYxrN2H+eivj/L7eSZib/sg+cTPeSokLY3NT1s+fs8EL7UwELXQt+m
- eBQW8JeztAJ6EktkS8UxcxS43CaI/1ogBAZ9QpyIxZJo0RDXA6cwv7lwowUMyRrvA06/
- iZg1S7it6oi5kaTfe+2ZsbgdWT4jgwqeU4NpiHtkb9JRUUiOmOQM4es4nrtoE2c8uhG0
- P6lyhQZsHit3ixUANGsVn1ySYjOzRoBfRqWCwBvvM5iTFvVE/CRgtgxFXQo8Q1Sfv5d6
- eZpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714398000; x=1715002800;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FCayGo/UueZ0m9/2yY8GVfnM/jvfBIii0FHoaTwegUs=;
- b=pod69WLNaTCHGBtjAbePOVcJyK1z3pXZMftAgdi44bD/fs37poLQds+0KCkZTlFD1X
- LYn9a+BcnUh3vzMQRPgQ1nNj4BPSi0GdrTexnqf4/lhfsyRmDR+CFjOCQY5AmS02s2fC
- yoFQkW4Xfv/RDdwlTQQHB/vK8gxY7gGuUmRBYzV/T/GQnHMqrYoIgNkeyy5DDkeQbhFh
- 45puauMFYgvDEso7YB+eDCwqNTlCiSJgXNfCF4Ao+8jT5RBtm7xoZK/ZCmAt0I9k/SVS
- YVHafrv7vOtnftecZYd9CNalXvjLp3q+z+wtVapHPNWOWxHwF3mInSDLGuTJIf8MKb4h
- vGWA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWPyEx7dFqijbbllYVYZ1kiT7XlOnp8h/9BN2xKzvJb7Uc63in6QTDuq6ZjIoGhsHKjqKcJP2Skeer3j6wVoW8aW/vvSqg=
-X-Gm-Message-State: AOJu0YwU5c8igh3dDrDG5HW+GUbiDhxL4gB1ytnQ8a5bw0paa8zP4lY/
- O05incJoTx9SOeaomSHgfx8SVwklE+isVaMxP8JKrIW2jg52qEpBKgpmpoQ3UQc=
-X-Google-Smtp-Source: AGHT+IES8inFL7lqk67DylQp1ZpXL20aJBi0rh2eLfFAi0eh/wSJ35LSwCYFSPEr8ZBEc4BqbC4kBg==
-X-Received: by 2002:a17:906:c04f:b0:a55:6b76:eedc with SMTP id
- bm15-20020a170906c04f00b00a556b76eedcmr7155637ejb.14.1714397999944; 
- Mon, 29 Apr 2024 06:39:59 -0700 (PDT)
-Received: from [192.168.69.100] (bny92-h02-176-184-44-142.dsl.sta.abo.bbox.fr.
- [176.184.44.142]) by smtp.gmail.com with ESMTPSA id
- q10-20020a170906388a00b00a46aba003eesm13863118ejd.215.2024.04.29.06.39.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Apr 2024 06:39:59 -0700 (PDT)
-Message-ID: <40bee8cc-6cad-4c5b-a319-49dcbb2b82f1@linaro.org>
-Date: Mon, 29 Apr 2024 15:39:57 +0200
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1s1RGT-0004gn-2O
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 09:41:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1s1RGM-0001Lp-RK
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 09:41:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714398104;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=MNWxOlxBbmr/gWxj8okDSWghmT7xubKC0vYU5u91Ea8=;
+ b=i3i1cOWFossf5ntaY2oZFORe9NxK1y4L2pYq+agGxVbCi2LhdO1VM9RFfuB9n8F+gNIesr
+ Lncr4Lpbnc+2bYH6KMCDVpipzL2FItxjj5GMvB5UYxgwVFW+aP5fVpyd3yByiVmLwTlCaH
+ 0B3bdAJy1UBkur8sHfregsRuAm21oaA=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-403-3Ngy_Qj0NKicQv_LPC69kg-1; Mon, 29 Apr 2024 09:41:39 -0400
+X-MC-Unique: 3Ngy_Qj0NKicQv_LPC69kg-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3EF55812C59;
+ Mon, 29 Apr 2024 13:41:39 +0000 (UTC)
+Received: from localhost (unknown [10.39.195.47])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id B25B72166B31;
+ Mon, 29 Apr 2024 13:41:38 +0000 (UTC)
+Date: Mon, 29 Apr 2024 09:41:36 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Jeuk Kim <jeuk20.kim@gmail.com>
+Cc: qemu-devel@nongnu.org, fam@euphon.net, pbonzini@redhat.com,
+ qemu-block@nongnu.org, jeuk20.kim@samsung.com,
+ j-young.choi@samsung.com, zheyuma97@gmail.com
+Subject: Re: [PULL 0/1] ufs queue
+Message-ID: <20240429134136.GA306956@fedora.redhat.com>
+References: <cover.1714360640.git.jeuk20.kim@samsung.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mc146818rtc: add a way to generate RTC interrupts via QMP
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Daniil Tatianin <d-tatianin@yandex-team.ru>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20240425133745.464091-1-d-tatianin@yandex-team.ru>
- <87v844y0ul.fsf@pond.sub.org>
- <11c78645-e87b-4a43-8191-a73540c364a9@linaro.org>
- <87plu8ieut.fsf@pond.sub.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <87plu8ieut.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="G1XgqGIMTWMpUBBy"
+Content-Disposition: inline
+In-Reply-To: <cover.1714360640.git.jeuk20.kim@samsung.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,127 +83,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-(+Peter who has more experience on such design).
 
-On 29/4/24 13:32, Markus Armbruster wrote:
-> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
-> 
->> Hi Daniil, Markus,
->>
->> On 26/4/24 10:39, Markus Armbruster wrote:
->>> Daniil Tatianin <d-tatianin@yandex-team.ru> writes:
->>>
->>>> This can be used to force-synchronize the time in guest after a long
->>>> stop-cont pause, which can be useful for serverless-type workload.
+--G1XgqGIMTWMpUBBy
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-What is a "serverless-type workload"?
+On Mon, Apr 29, 2024 at 12:25:37PM +0900, Jeuk Kim wrote:
+> From: Jeuk Kim <jeuk20.kim@samsung.com>
+>=20
+> The following changes since commit fd87be1dada5672f877e03c2ca8504458292c4=
+79:
+>=20
+>   Merge tag 'accel-20240426' of https://github.com/philmd/qemu into stagi=
+ng (2024-04-26 15:28:13 -0700)
+>=20
+> are available in the Git repository at:
+>=20
+>   https://gitlab.com/jeuk20.kim/qemu.git tags/pull-ufs-20240429
+>=20
+> for you to fetch changes up to f2c8aeb1afefcda92054c448b21fc59cdd99db30:
+>=20
+>   hw/ufs: Fix buffer overflow bug (2024-04-29 12:13:35 +0900)
+>=20
+> ----------------------------------------------------------------
+> ufs queue
+>=20
+> - Fix ufs sanitizer vulnerability
+>=20
+> ----------------------------------------------------------------
+> Jeuk Kim (1):
+>       hw/ufs: Fix buffer overflow bug
+>=20
+>  hw/ufs/ufs.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+>=20
 
->>>> Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
->>>> ---
->>>>    hw/rtc/mc146818rtc.c         | 15 +++++++++++++++
->>>>    include/hw/rtc/mc146818rtc.h |  1 +
->>>>    qapi/misc-target.json        | 16 ++++++++++++++++
->>>>    3 files changed, 32 insertions(+)
->>>>
->>>> diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
->>>> index f4c1869232..6980a78d5f 100644
->>>> --- a/hw/rtc/mc146818rtc.c
->>>> +++ b/hw/rtc/mc146818rtc.c
->>>> @@ -116,6 +116,21 @@ void qmp_rtc_reset_reinjection(Error **errp)
->>>>        }
->>>>    }
->>>>    +void qmp_rtc_notify(Error **errp)
->>>> +{
->>>> +    MC146818RtcState *s;
->>>> +
->>>> +    /*
->>>> +     * See:
->>>> +     * https://www.kernel.org/doc/Documentation/virtual/kvm/timekeeping.txt
+Thanks, applied to my block tree:
+https://gitlab.com/stefanha/qemu/commits/block
 
-What part of this document explains why this change is required?
-I probably missed it. Explaining it here briefly would be more
-useful.
+It will be included in my next block pull request.
 
->>>> +     */
->>>> +    QLIST_FOREACH(s, &rtc_devices, link) {
->>>> +        s->cmos_data[RTC_REG_B] |= REG_B_UIE;
-                                       // Update-ended interrupt enable
+You are welcome to send pull requests directly to the qemu.git/master
+maintainer (Richard Henderson is on duty for this release cycle). If you
+do that, make sure to GPG sign your pull request.
 
->>>> +        s->cmos_data[RTC_REG_C] |= REG_C_IRQF | REG_C_UF;
-                                       // interrupt request flag
-                                       //           update interrupt flag
+Stefan
 
->>>> +        qemu_irq_raise(s->irq);
->>>> +    }
->>>> +}
->>>> +
->>> Note for later: qmp_rtc_notify() works on all realized mc146818rtc
->>> devices.  Other kinds of RTC devices are silently ignored.  Just like
->>> qmp_rtc_reset_reinjection().
->>
->> IMO to avoid any future ambiguity (in heterogeneous machines), this
->> command must take a QOM device path (or a list of) and only notify
->> those.
-> 
-> Let's compare:
-> 
-> • With QOM path:
-> 
->    · You need to know the machine's RTC device(s).
-> 
->      Unfortunately, this is bothersome, as the QOM path is not stable.
+--G1XgqGIMTWMpUBBy
+Content-Type: application/pgp-signature; name="signature.asc"
 
-But we'll need more of that with dynamic machines...
+-----BEGIN PGP SIGNATURE-----
 
->      For Q35, it's generally "/machine/unattached/device[N]/rtc", but N
->      varies with configuration (TCG N=2, KVM N=3 for me), and it might
->      vary with machine type version.  That's because the machine code
->      creates ICH9-LPC without a proper name.  We do that a lot.  I hate
->      it.
-> 
->      Likewise for i440FX with PIIX3 instead of ICH9-LPC.
-> 
->      For isapc, it's /machine/unattached/device[3].  I suspect the 3
->      isn't reliable there, either.
-> 
->      microvm doesn't seem to have an RTC by default.
-> 
->    · If the device so named doesn't support IRQ inject, the command
->      should fail.
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmYvo5AACgkQnKSrs4Gr
+c8jAXQf+In4yzeHFuON6nFs1Vd0MsQx9OunlTBJzfCcYzhoaNAKXrUj0FokxadRb
+A4ayv7HBcNhnHwm33d7jiyh9BN8fq0tyHwjKmNmRhV1S7MnS8M2W8TZRAvg6l1z7
+X07CJBVKKjLTBb8hBZQvOkNfyaCcVkr/Jy9OSbKvxX9uv81MrnvF2654UtdhxR3L
+fu1H6q6TllESgjQMjy70pRDK6DSNOnTfe57bBr42nmDRhtCIhqWFMDKOuSTz6pX3
+WsfPppKuOsdw4+vr9yZxPpzI+f3jLqoK8JfCSHHgx6FS3jDmo3UW7ZowzTbpZFc0
+pP/zoqTzRf8LNTveyQ1ANN/FpE0rZQ==
+=Lb1O
+-----END PGP SIGNATURE-----
 
-Yes, why the management app would want to run this command if there
-are not RTC on the machine?
-
->    · Could be generalized to non-RTC devices when that's useful.
-> 
-> • Broadcast:
-> 
->    · You don't need to know the machine's RTC device(s).
-> 
->    · If there are multiple RTC devices that support IRQ inject, we inject
->      for each of them.  There is no way to select specific RTCs.
-> 
->    · If there is no RTC device that supports IRQ inject, the command does
->      nothing silently.
-> 
->      I don't like silent failures.  It could be made to fail instead.
-> 
-> If it wasn't for the unstable QOM path problem, I'd advise against
-> the broadcast interface.
-> 
-> Thoughts?
-
-Something bugs me in this patch but I couldn't figure out what I am
-missing. The issue is when migrated VM is restored. I don't get why
-the behavior depends on an external decision (via external management
-transport). Don't we have post_load() hooks for such tuning?
-This device implements it in rtc_post_load().
-
-Regards,
-
-Phil.
-
-PD: BTW tomorrow community call could be a good opportunity to discuss
-this.
+--G1XgqGIMTWMpUBBy--
 
 
