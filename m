@@ -4,88 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9C16C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 19:08:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26AE8C04FFE
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 19:12:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1WLo-00035j-Fs; Mon, 29 Apr 2024 15:07:44 -0400
+	id 1s1WPs-0004EV-AI; Mon, 29 Apr 2024 15:11:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s1WLf-00034a-UQ
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 15:07:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1s1WPU-00047M-Fr; Mon, 29 Apr 2024 15:11:33 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s1WLT-0003vQ-6b
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 15:07:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714417641;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3edzH0JvWg5Vo651BGwfUmiryy8Xjv7VeI2KnDG9aHg=;
- b=LjeGZPzFffkuZiQq75fX1tTR4yiGIbGSy70mxApSoMke6lNRYPGMGn2Y43WQ0Ntn2JVrvB
- fq8M8wWgJNzuzX9NIRZe3/XOZzLGs6R6BqUos4VY/8eS/V9S88hbFfstAU0mp2nLadKOnI
- QgpbfksW/RTl6VFSdWYacyd9O+JGlvk=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-689-sTYqwFcCOoCvt6XKcGDAdg-1; Mon, 29 Apr 2024 15:07:19 -0400
-X-MC-Unique: sTYqwFcCOoCvt6XKcGDAdg-1
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-2b265953217so49102a91.0
- for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 12:07:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714417638; x=1715022438;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3edzH0JvWg5Vo651BGwfUmiryy8Xjv7VeI2KnDG9aHg=;
- b=ZBj4cLiayw3j+Psg/RarUn1lZJQriuZ1GD1kQ/XvDVHiB0ClM0kM3OHBBdGA3cunsw
- dBTNxBjLQ/6RGkPwCRbd/MFPInh+v4w7nCAO7PBEGxXTcYbnfPVG6skLwuaJ6i1uFc2z
- p7AREsEOguIxLqvlq1Xo797RBTyDFC+oXg3Ws5PqEA69FhlSYmFSqCdLZDPOSayMdSLz
- qWUl8wwYLn7T9RdCn70j0DURM6GvtoENgvyrRPD90qcLfeJOytrArvIlJ9S2YlVByouW
- C334s+WAsTUvF+lgjtQmS/lZ/2GKDvwIaCpJG02eG1QOPv3CaUL9JjR9sV4JKrxWbi76
- aA1w==
-X-Gm-Message-State: AOJu0YylUBuQL9bK4V/J0K4BtARKqcLy9YSYxVB9tLpvNoR4Db4O0xjQ
- uwJFL8QyUbvcqFREZ41oPe5a7DKdRXGbixMbdTY/JPqmbxcNJ9ZPgaopvNwbVrzsq1Uu79IK+Je
- tu6tHlYlqnaSCGvKmfgc5tr+WhoTuh4Q0eRckDrzEzSVDEEqop5lz
-X-Received: by 2002:a05:6a20:9789:b0:1af:5385:3aff with SMTP id
- hx9-20020a056a20978900b001af53853affmr1632315pzc.3.1714417637943; 
- Mon, 29 Apr 2024 12:07:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGgguPGiUF04UXOnTg7ThOv8OzECqSqdo8/iqTB6Abb4HF9a/YS5MBiTO3GjwXDUkMtC70Yzg==
-X-Received: by 2002:a05:6a20:9789:b0:1af:5385:3aff with SMTP id
- hx9-20020a056a20978900b001af53853affmr1632275pzc.3.1714417637196; 
- Mon, 29 Apr 2024 12:07:17 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- ki14-20020a170903068e00b001e434923462sm20749771plb.50.2024.04.29.12.07.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Apr 2024 12:07:16 -0700 (PDT)
-Date: Mon, 29 Apr 2024 15:07:13 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- devel@lists.libvirt.org
-Subject: Re: [PATCH v2 6/6] migration: Deprecate fd: for file migration
-Message-ID: <Zi_v4XEhSk43z5ey@x1n>
-References: <20240426131408.25410-1-farosas@suse.de>
- <20240426131408.25410-7-farosas@suse.de> <Zi_puGn7Y1ArcLCL@x1n>
- <87zftcdn04.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1s1WPS-0004aT-Eh; Mon, 29 Apr 2024 15:11:32 -0400
+Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43TJ2SG7025694; Mon, 29 Apr 2024 19:11:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=8rvU3L+SOSQqcnC0NXFvJLw6d5FrsDmjaI0fIUEl2nQ=;
+ b=oS3scqVP02TsnFzYx4i4OCBErXhe/CE8QRVawkx+3Zx9k0Xf4QmFkwXevaW2X5nQlQn5
+ YvLY1PH423cnNFhTuEZH6CIf4Qiu0/65OpjeNc7aLIiAnEB2Dnot3TWQERDpDan6EWWV
+ +Ag088dAaFVjjuDz1Ei0ZKXIJd9FpZ73oA0DFSGsLoAVB2rWx1VdobdWiNRMFPhWiWgQ
+ f6H/sYAFjqGBN4oso0dmB4jr+4xGbqy9M1mEMFQKyxz2kseQL6sRAib65z+O2KVmeZKD
+ os7hPSuWICFH9ZpNi8Wj9Sv9PFAymbiq4VEgMjDB/fZXdRzqnob9yQKhVdTKgn3vzIJ3 Lw== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xthbtr0sp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Apr 2024 19:11:19 +0000
+Received: from m0353726.ppops.net (m0353726.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43TJBJ3P007569;
+ Mon, 29 Apr 2024 19:11:19 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xthbtr0sn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Apr 2024 19:11:19 +0000
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43TIDRXH003000; Mon, 29 Apr 2024 19:11:17 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3xscpp9308-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Apr 2024 19:11:17 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 43TJBF4814156322
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 29 Apr 2024 19:11:17 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2446858060;
+ Mon, 29 Apr 2024 19:11:15 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8F5CA58056;
+ Mon, 29 Apr 2024 19:11:14 +0000 (GMT)
+Received: from li-d664314c-3171-11b2-a85c-fa8047ef35bd.pok.ibm.com (unknown
+ [9.12.68.85]) by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 29 Apr 2024 19:11:14 +0000 (GMT)
+From: Collin Walling <walling@linux.ibm.com>
+To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: thuth@redhat.com, david@redhat.com, wangyanan55@huawei.com,
+ philmd@linaro.org, marcel.apfelbaum@gmail.com, eduardo@habkost.net,
+ armbru@redhat.com, Collin Walling <walling@linux.ibm.com>
+Subject: [PATCH v4 0/2] query-cpu-model-expansion: report deprecated features
+Date: Mon, 29 Apr 2024 15:10:57 -0400
+Message-ID: <20240429191059.11806-1-walling@linux.ibm.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87zftcdn04.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: ulh0Rs1wOeXvnMsh3TgJkoFZcIqPjqFi
+X-Proofpoint-GUID: 7OsyLCXpBPZyGZKmGYaqQMHxoDwGBr3R
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-04-29_16,2024-04-29_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 clxscore=1015
+ priorityscore=1501 phishscore=0 malwarescore=0 mlxscore=0
+ lowpriorityscore=0 mlxlogscore=962 impostorscore=0 bulkscore=0 spamscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2404010000 definitions=main-2404290125
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=walling@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,87 +111,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 29, 2024 at 03:47:39PM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> > On Fri, Apr 26, 2024 at 10:14:08AM -0300, Fabiano Rosas wrote:
-> >> The fd: URI can currently trigger two different types of migration, a
-> >> TCP migration using sockets and a file migration using a plain
-> >> file. This is in conflict with the recently introduced (8.2) QMP
-> >> migrate API that takes structured data as JSON-like format. We cannot
-> >> keep the same backend for both types of migration because with the new
-> >> API the code is more tightly coupled to the type of transport. This
-> >> means a TCP migration must use the 'socket' transport and a file
-> >> migration must use the 'file' transport.
-> >> 
-> >> If we keep allowing fd: when using a file, this creates an issue when
-> >> the user converts the old-style (fd:) to the new style ("transport":
-> >> "socket") invocation because the file descriptor in question has
-> >> previously been allowed to be either a plain file or a socket.
-> >> 
-> >> To avoid creating too much confusion, we can simply deprecate the fd:
-> >> + file usage, which is thought to be rarely used currently and instead
-> >> establish a 1:1 correspondence between fd: URI and socket transport,
-> >> and file: URI and file transport.
-> >> 
-> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> >> ---
-> >>  docs/about/deprecated.rst | 14 ++++++++++++++
-> >>  1 file changed, 14 insertions(+)
-> >> 
-> >> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> >> index 0fb5c82640..813f7996fe 100644
-> >> --- a/docs/about/deprecated.rst
-> >> +++ b/docs/about/deprecated.rst
-> >> @@ -464,3 +464,17 @@ both, older and future versions of QEMU.
-> >>  The ``blacklist`` config file option has been renamed to ``block-rpcs``
-> >>  (to be in sync with the renaming of the corresponding command line
-> >>  option).
-> >> +
-> >> +Migration
-> >> +---------
-> >> +
-> >> +``fd:`` URI when used for file migration (since 9.1)
-> >> +''''''''''''''''''''''''''''''''''''''''''''''''''''
-> >> +
-> >> +The ``fd:`` URI can currently provide a file descriptor that
-> >> +references either a socket or a plain file. These are two different
-> >> +types of migration. In order to reduce ambiguity, the ``fd:`` URI
-> >> +usage of providing a file descriptor to a plain file has been
-> >> +deprecated in favor of explicitly using the ``file:`` URI with the
-> >> +file descriptor being passed as an ``fdset``. Refer to the ``add-fd``
-> >> +command documentation for details on the ``fdset`` usage.
-> >
-> > Wanna do some warn_report() when detected non-socket fds alongside?  Looks
-> > like we previously do this for all deprecations.
-> 
-> Yes, good point.
-> 
-> >
-> > What's the plan when it's support removed?  I'm imaginging that we sanity
-> > check fstat() + S_ISSOCK on the fd and fail otherwise?  In that case we can
-> > have the code there, dump warn_report(), then switch to failing qmp migrate
-> > (and incoming side) later on?
-> 
-> Something along those lines. We currently use fd_is_socket():
-> 
-> bool fd_is_socket(int fd)
-> {
->     int optval;
->     socklen_t optlen = sizeof(optval);
->     return !getsockopt(fd, SOL_SOCKET, SO_TYPE, &optval, &optlen);
-> }
-> 
-> I'm thinking of this in fd_start_outgoing_migation():
-> 
->     if (!fd_is_socket(fd)) {
->         warn_report("fd: migration to a file is deprecated."
->                     " Use file: instead.");
->     }
+Changelog
 
-Sounds good, perhaps also in fd_start_incoming_migration().
+    v4
+        - updated cover letter to show example output
+        - deprecated features are now a subset of the full CPU model's
+            list of features
+            - value: 
+                1. no longer listing the deprecated features for CPU
+                     models that never had these features available in the
+                     first place
+                2. deprecated features will not show up for future CPU 
+                     models that out-right drop these features
+        - updated qapi documentation
+            - now reflects that these props are a subset of the full
+                model's definition of properties
+            - added Since: tag to deprecated-props (assuming 9.1)
+
+    v3
+        - removed optional disable-deprecated-feats argument
+        - added deprecated-props array to CpuModelInfo struct
+        - amended cover letter language to reflect design
+
+    v2 
+        - removed "static-recommended" expansion type
+        - implemented optional disable-deprecated-feats argument
+
+---
+
+The current implementation of query-cpu-model-expansion is lacking a way to retrieve
+CPU models with properties (i.e. features) that are flagged as deprecated.  To remedy
+this, a list of deprecated-props has been appended to the CpuModelInfo struct, and
+will currently be reported by a query-cpu-model-expansion.  The features reported in
+the output are a subset of the full CPU model expansion.
+
+Output example with host-model (z14):
+
+{
+  "execute": "query-cpu-model-expansion",
+  "arguments": {
+    "type": "static",
+    "model": {
+      "name": "host"
+    }
+  }
+}
+{
+  "return": {
+    "model": {
+      "name": "z14.2-base",
+      "deprecated-props": [
+        "bpb",
+        "te",
+        "cte",
+        "csske"
+      ],
+      "props": {
+        "aen": true,
+        "cmmnt": true,
+        "aefsi": true,
+        "diag318": true,
+        "mepoch": true,
+        "msa8": true,
+        "msa7": true,
+        "msa6": true,
+        "msa5": true,
+        "msa4": true,
+        "msa3": true,
+        "msa2": true,
+        "msa1": true,
+        "sthyi": true,
+        "edat": true,
+        "ri": true,
+        "edat2": true,
+        "etoken": true,
+        "vx": true,
+        "ipter": true,
+        "mepochptff": true,
+        "ap": true,
+        "vxeh": true,
+        "vxpd": true,
+        "esop": true,
+        "apqi": true,
+        "apft": true,
+        "els": true,
+        "iep": true,
+        "apqci": true,
+        "cte": true,
+        "ais": true,
+        "bpb": true,
+        "ctop": true,
+        "gs": true,
+        "ppa15": true,
+        "zpci": true,
+        "sea_esop2": true,
+        "te": true,
+        "cmm": true
+      }
+    }
+  }
+}
+
+Example output with an older CPU model:
+
+{
+  "execute": "query-cpu-model-expansion",
+  "arguments": {
+    "type": "static",
+    "model": {
+      "name": "z10EC"
+    }
+  }
+}
+{
+  "return": {
+    "model": {
+      "name": "z10EC-base",
+      "deprecated-props": [
+        "bpb",
+        "csske"
+      ],
+      "props": {
+        "msa2": true,
+        "msa1": true,
+        "sthyi": true,
+        "edat": true,
+        "cmm": true
+      }
+    }
+  }
+}
+
+A simple interface is designed that contains an array of feature bits that are flagged
+as deprecated.  This list may be easily populated with more features in the future.
+
+    void s390_get_deprecated_features(S390FeatBitmap features)
+    {
+        static const int feats[] = {
+             /* CSSKE is deprecated on newer generations */
+             S390_FEAT_CONDITIONAL_SSKE,
+             S390_FEAT_BPB,
+             /* Deprecated on z16 */
+             S390_FEAT_CONSTRAINT_TRANSACTIONAL_EXE,
+             S390_FEAT_TRANSACTIONAL_EXE
+        };
+        int i;
+
+        for (i = 0; i < ARRAY_SIZE(feats); i++) {
+            set_bit(feats[i], features);
+        }
+    }
+
+Use case example:
+
+Newer s390 machines may signal the end-of-support for particular CPU features,
+rendering guests operating with older CPU models incapable of running on
+said machines.  A manual effort to disable certain CPU features would be
+required.
+
+Reporting a list of deprecated features allows the user / management app to
+take the next steps to ensure the guest is defined in a way that ensures
+a migration in the future.
+
+Collin L. Walling (2):
+  target/s390x: report deprecated-props in cpu-model-expansion reply
+  target/s390x: flag te and cte as deprecated
+
+ qapi/machine-target.json         |  7 ++++++-
+ target/s390x/cpu_features.c      | 17 +++++++++++++++++
+ target/s390x/cpu_features.h      |  1 +
+ target/s390x/cpu_models_sysemu.c |  8 ++++++++
+ 4 files changed, 32 insertions(+), 1 deletion(-)
 
 -- 
-Peter Xu
+2.43.0
 
 
