@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C7D9C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 14:51:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E341AC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 14:51:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1SBQ-00084E-CV; Mon, 29 Apr 2024 10:40:44 -0400
+	id 1s1SLw-0006Z6-K6; Mon, 29 Apr 2024 10:51:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1s1SBM-00083z-PT
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 10:40:42 -0400
-Received: from mail-oo1-xc2f.google.com ([2607:f8b0:4864:20::c2f])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s1SLu-0006T9-EZ
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 10:51:34 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1s1SBJ-0005XX-Qr
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 10:40:39 -0400
-Received: by mail-oo1-xc2f.google.com with SMTP id
- 006d021491bc7-5afbd1c3ffeso152775eaf.2
- for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 07:40:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s1SLs-0007jI-R0
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 10:51:34 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-6f28bb6d747so3848861b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 07:51:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1714401636; x=1715006436; darn=nongnu.org;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=3WN628YGxItChdkbnkALdWrVvJ3ZzH0wqKObfW8to5s=;
- b=kQ05qw26/bCRu57em27GTXPozaumY0IIKesqUTS3tNnwEl3B9gkrqZEkgf/Kgv7gL/
- yb2MHq1tt+LfLm018Nakcv6vvIbVO+rsUaIn1S1MLgWzRxbZhVbeVxMKPVTS9I34uFpa
- Z+HebKGXNQBDnlH1lwfkvW/pqMCubXq+sbeFS+/GlCuLBEvu0yIwU/C4xSbd9SYFmZ5y
- xHiL9+ho/hGDLYUGiWu5c2dSjPn2cBy+hESxqEptNVTy91p9wZcPwARIJuzIw+pJ7BsU
- sIjKp5tZcYl0TCnOzvIL/DQad0WEYP6muGVi8TCtJd50cjQNDdMrfev24BxB3TMYGvwP
- pRFA==
+ d=linaro.org; s=google; t=1714402291; x=1715007091; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=QwfdFslcn0+t9dFmSrf8MhLx39J14rwdj1BP6IK2Wv0=;
+ b=Bq1L+GROZnKJaev9exbpKzHnstyCTO1sg8npvwn5a1qNssQVEaICcsJ3sfF0f1Ejdj
+ F4JYkJfAx6qo+WfJ4Tz7UNiZ/e8iNdOIadKIg7WAHfdAsQF1lZK1tcLhI20sUjBodXJn
+ OSjdIcEQLnzrjxqHmHGmfRiuTb6mcxwHxh6ebTc7vY1t8EfJMPeUxe/cpyfLGuAjVx2s
+ QYDYrnwgFxUmNPL5Ng9CT1edXZ/O9sZm/EwLlrJMU0l+Da+qUxbrYEUEuPMzZzREWcQ/
+ 8LJ5yo9rNHZCqNPGBq9AOrMSr2cJxFQA4y6y4oM1diPEttgWk4JuTBRTkLJG5vY32WL+
+ DSGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714401636; x=1715006436;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3WN628YGxItChdkbnkALdWrVvJ3ZzH0wqKObfW8to5s=;
- b=Q06arqDEeM6eFhTIyRCal5qj+WFcJKVRIVEHS1WqSkJTdd4mr9Y7n/tLwOt7twmVnh
- h/HCj3CDwIQ5D17kXNHh9RwpuzOBXm6ihihlm6kFO+rMJyi8FjjmNw4McxivAp7SbtYz
- wcUmwckH3QZ4kq1G6gcvhA7nZ1FRmaEEZ+JdZQso0JXdKd3bLDrQ8VWI6F4yxG6z0FmY
- Su7udU8W+1//dtRlEZ0pKsNG4gW0qPIWq4+eH7JxqGgYaGDUfoup1GtXMWMz7YsIKGtx
- ZTrbzjzcDpXW2wlNQxpsSyZCjVnYv9pLjDUXK5IBROsHMYO4LSB8TfFHqYOqHGD23QB6
- keNA==
+ d=1e100.net; s=20230601; t=1714402291; x=1715007091;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=QwfdFslcn0+t9dFmSrf8MhLx39J14rwdj1BP6IK2Wv0=;
+ b=rAh3Rxf5/F/wi9OEVqZx69BkDmsVhPj4csY4NpFXg8w4xo3jV4FjIZ3pV/W7ina3Xx
+ S6lsd59EXbZu8yMBdNYD5IOyXM2nzkYMI9QBVWQaAtBapYvtr7+jc+cAnfihEuOuCWtN
+ /ozp21uuPsUowu34aCT9HaEW2cIOi7Vs/NnqlUMcnENaTJeWhdc9GWCXL9ZDTJTc2h/7
+ awg/N3EfROT0sSboAxqF5I+iMoxvi+/7tXBwikYae83zH6z0n9CTDPUJbx0YP4JMTQFQ
+ BhsSYE55NbNCbOyaszGnIvQwNcRD5NgovZADtfiaS7wwfl0jFtlxWd6y0xtQT+xSUrkX
+ yIiA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV7Fh4nZhbHO8ERbg7lowPxvM/sfKXSWL1h6WVqlkVHH4YaHdD1MShK+ziabxL6Q90eZRozxOKH15BEX1ZHq7KY6X0K6Gg=
-X-Gm-Message-State: AOJu0YxUly4qWoB6/U8wEyO/9zMR8RYIJ5huL4epDdR4OtXDPxtVl1b4
- UwUyCnKMmLjG0xHQBdiqCHPv51/W3ueWeZOOCSw22HETN7Pkggq+
-X-Google-Smtp-Source: AGHT+IHLZu8+CNvbdqD5eONvjuCYL/Olz9QWE4+pqrp+TuZcGcn9f0G+5oefCV4/warXSLlOJPaa3Q==
-X-Received: by 2002:a4a:e6cb:0:b0:5af:73be:72ce with SMTP id
- v11-20020a4ae6cb000000b005af73be72cemr12520703oot.0.1714401636063; 
- Mon, 29 Apr 2024 07:40:36 -0700 (PDT)
-Received: from DESKTOPUU50BPD ([2603:8080:1f00:9c00:2639:f689:1715:fc7b])
+ AJvYcCWDh7dcD5tRM34CbnzI9wngqMxqf6M8kN7dkyqqdVxCiVHr0H+V3EzqqXR+6e9jU2rV02EWOgpAuiS01aPgUIw3Dqoq0mI=
+X-Gm-Message-State: AOJu0YxwE7NeDw9dlnEjS1nSlV5UDc2FGfzt7Q0kiaDNYg0GX+s19Zli
+ 3UWhIfqJG7W/9pUG68wtKePPxI7l1B1MrKLGuCPa5ZigAd6Sdx+gPrmgWQhaiWA=
+X-Google-Smtp-Source: AGHT+IGN4bkkypHX4327A+UF+1jbP8ihG66sWet5L9SiVyNvitw9XbrLxPuBsS532EavLIrFBBafMA==
+X-Received: by 2002:a05:6a20:104a:b0:1a9:b7d0:b6ff with SMTP id
+ gt10-20020a056a20104a00b001a9b7d0b6ffmr9437083pzc.32.1714402290901; 
+ Mon, 29 Apr 2024 07:51:30 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- v23-20020a4a3157000000b005af4ecbcc5csm2377725oog.29.2024.04.29.07.40.34
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 29 Apr 2024 07:40:35 -0700 (PDT)
-From: <ltaylorsimpson@gmail.com>
-To: "'Matheus Tavares Bernardino'" <quic_mathbern@quicinc.com>,
- <qemu-devel@nongnu.org>
-Cc: <bcain@quicinc.com>, <sidneym@quicinc.com>, <ale@rev.ng>, <anjo@rev.ng>
-References: <c7af62451b02ffdc1d68bc00093b40a8080bc3ff.1714155331.git.quic_mathbern@quicinc.com>
-In-Reply-To: <c7af62451b02ffdc1d68bc00093b40a8080bc3ff.1714155331.git.quic_mathbern@quicinc.com>
-Subject: RE: [PATCH] Hexagon: add PC alignment check and exception
-Date: Mon, 29 Apr 2024 09:40:39 -0500
-Message-ID: <028d01da9a43$3503f8b0$9f0bea10$@gmail.com>
+ p9-20020aa79e89000000b006f3efb03841sm3984230pfq.40.2024.04.29.07.51.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Apr 2024 07:51:30 -0700 (PDT)
+Message-ID: <5395a311-d407-4131-9bbf-63a843c416fa@linaro.org>
+Date: Mon, 29 Apr 2024 07:51:28 -0700
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQJzRyC/evNEDGnzkOUKIb6QtlGw1rBN8+vA
-Content-Language: en-us
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2f;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-oo1-xc2f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 16/24] accel/tcg: Move @jmp_env from CPUState to TCG
+ AccelCPUState
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>
+References: <20240428221450.26460-1-philmd@linaro.org>
+ <20240428221450.26460-17-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240428221450.26460-17-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,61 +100,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-> -----Original Message-----
-> From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
-> Sent: Friday, April 26, 2024 1:16 PM
-> To: qemu-devel@nongnu.org
-> Cc: bcain@quicinc.com; sidneym@quicinc.com; ale@rev.ng; anjo@rev.ng;
-> ltaylorsimpson@gmail.com
-> Subject: [PATCH] Hexagon: add PC alignment check and exception
+On 4/28/24 15:14, Philippe Mathieu-Daudé wrote:
+> @jmp_env is specific to TCG accelerator, move it to its AccelCPUState.
 > 
-> The Hexagon Programmer's Reference Manual says that the exception 0x1e
-> should be raised upon an unaligned program counter. Let's implement that
-> and also add tests for both the most common case as well as packets with
-> multiple change-of-flow instructions.
-> 
-> Signed-off-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
+>   accel/tcg/internal-common.h | 1 +
+>   accel/tcg/tcg-accel-ops.h   | 1 +
+>   accel/tcg/vcpu-state.h      | 2 ++
+>   include/hw/core/cpu.h       | 1 -
+>   accel/tcg/cpu-exec-common.c | 2 +-
+>   accel/tcg/cpu-exec.c        | 6 +++---
+>   6 files changed, 8 insertions(+), 5 deletions(-)
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-> --- a/target/hexagon/genptr.c
-> +++ b/target/hexagon/genptr.c
-> @@ -473,6 +473,7 @@ static void gen_write_new_pc_addr(DisasContext
-
-You haven't added the check to gen_write_new_pc_pcrel.  It's not needed
-there because the encoding guarantees the target is always aligned - right?
-However, there is a call to gen_write_new_pc_addr inside that function.  In
-this case, we'll add a check that isn't necessary.  Consider adding a
-parameter to indicate if the check can be avoided.
-
-
-> a/tests/tcg/hexagon/Makefile.target b/tests/tcg/hexagon/Makefile.target
-> index f839b2c0d5..02d7fff34c 100644
-> --- a/tests/tcg/hexagon/Makefile.target
-> +++ b/tests/tcg/hexagon/Makefile.target
-> @@ -51,6 +51,19 @@ HEX_TESTS += scatter_gather  HEX_TESTS += hvx_misc
-> HEX_TESTS += hvx_histogram  HEX_TESTS += invalid-slots
-> +HEX_TESTS += unaligned_pc
-> +HEX_TESTS += unaligned_pc_multi_cof
-> +
-> +run-unaligned_pc: unaligned_pc
-> +run-unaligned_pc_multi_cof: unaligned_pc_multi_cof run-unaligned_pc
-> +run-unaligned_pc_multi_cof:
-> +	$(call run-test, $<, $(QEMU) $< 2> $<.stderr,"$< on
-> $(TARGET_NAME)"); \
-> +	if [ $$? -ne 1 ] ; then \
-> +		return 1; \
-> +	fi
-> +	$(call quiet-command, \
-> +		grep -q "exception 0x1e" $<.stderr, \
-> +		"GREP", "exception 0x1e");
-
-We should also test endloop instructions.
-
-Thanks,
-Taylor
-
-
+r~
 
