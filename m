@@ -4,35 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CE45C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 06:47:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB42EC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 06:48:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1Km1-0001t6-DH; Mon, 29 Apr 2024 02:46:01 -0400
+	id 1s1KnQ-0002qQ-6v; Mon, 29 Apr 2024 02:47:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1s1Klk-0001qA-C8; Mon, 29 Apr 2024 02:45:46 -0400
+ id 1s1Kly-0001rk-MV; Mon, 29 Apr 2024 02:46:00 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1s1Kli-0006WC-5X; Mon, 29 Apr 2024 02:45:43 -0400
+ id 1s1Klx-0006Yj-6t; Mon, 29 Apr 2024 02:45:58 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D66D262CAF;
- Mon, 29 Apr 2024 09:45:39 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4644662CB7;
+ Mon, 29 Apr 2024 09:45:40 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id DC217C33F2;
- Mon, 29 Apr 2024 09:45:36 +0300 (MSK)
-Received: (nullmailer pid 238425 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 517ACC33FA;
+ Mon, 29 Apr 2024 09:45:37 +0300 (MSK)
+Received: (nullmailer pid 238450 invoked by uid 1000);
  Mon, 29 Apr 2024 06:45:36 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-trivial@nongnu.org
-Subject: [PULL 0/9] Trivial patches for 2024-04-29
-Date: Mon, 29 Apr 2024 09:45:27 +0300
-Message-Id: <20240429064536.238392-1-mjt@tls.msk.ru>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 8/9] target/riscv/kvm: remove sneaky strerrorname_np() instance
+Date: Mon, 29 Apr 2024 09:45:35 +0300
+Message-Id: <20240429064536.238392-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240429064536.238392-1-mjt@tls.msk.ru>
+References: <20240429064536.238392-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -58,47 +61,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit fd87be1dada5672f877e03c2ca8504458292c479:
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-  Merge tag 'accel-20240426' of https://github.com/philmd/qemu into staging (2024-04-26 15:28:13 -0700)
+Commit d424db2354 excluded some strerrorname_np() instances because they
+break musl libc builds. Another instance happened to slip by via commit
+d4ff3da8f4.
 
-are available in the Git repository at:
+Remove it before it causes trouble again.
 
-  https://gitlab.com/mjt0k/qemu.git tags/pull-trivial-patches
+Fixes: d4ff3da8f4 (target/riscv/kvm: initialize 'vlenb' via get-reg-list)
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+ target/riscv/kvm/kvm-cpu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-for you to fetch changes up to d2f20c25281908a07bcb8c3dea8292abf68e5c8b:
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 49d2f3ad58..eaa36121c7 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -1054,8 +1054,8 @@ static void kvm_riscv_read_vlenb(RISCVCPU *cpu, KVMScratchCPU *kvmcpu,
+ 
+         ret = ioctl(kvmcpu->cpufd, KVM_GET_ONE_REG, &reg);
+         if (ret != 0) {
+-            error_report("Unable to read vlenb register, error code: %s",
+-                         strerrorname_np(errno));
++            error_report("Unable to read vlenb register, error code: %d",
++                         errno);
+             exit(EXIT_FAILURE);
+         }
+ 
+-- 
+2.39.2
 
-  checkpatch.pl: forbid strerrorname_np() (2024-04-29 09:37:26 +0300)
-
-----------------------------------------------------------------
-trivial patches for 2024-04-29
-
-----------------------------------------------------------------
-Daniel Henrique Barboza (2):
-      target/riscv/kvm: remove sneaky strerrorname_np() instance
-      checkpatch.pl: forbid strerrorname_np()
-
-Li Zhijian via (1):
-      backends/cryptodev-builtin: Fix local_error leaks
-
-Michael Tokarev (1):
-      target/loongarch/cpu.c: typo fix: expection
-
-Philippe Mathieu-Daudé (2):
-      scripts/checkpatch: Avoid author email mangled by qemu-*@nongnu.org
-      scripts/checkpatch: Do not use mailmap
-
-Thomas Huth (3):
-      target/i386/cpu: Remove "x86" prefix from the CPU list
-      target/s390x/cpu_models: Rework the output of "-cpu help"
-      target/ppc/cpu_init: Remove "PowerPC" prefix from the CPU list
-
- backends/cryptodev-builtin.c |  9 +++++----
- scripts/checkpatch.pl        | 11 +++++++----
- target/i386/cpu.c            |  2 +-
- target/loongarch/cpu.c       |  2 +-
- target/ppc/cpu_init.c        |  9 +++++----
- target/riscv/kvm/kvm-cpu.c   |  4 ++--
- target/s390x/cpu_models.c    |  9 +++++----
- 7 files changed, 26 insertions(+), 20 deletions(-)
 
