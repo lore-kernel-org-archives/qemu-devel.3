@@ -4,83 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37CEBC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 21:33:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB802C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 21:35:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1YbX-00080M-T0; Mon, 29 Apr 2024 17:32:08 -0400
+	id 1s1Yeq-0006Do-0A; Mon, 29 Apr 2024 17:35:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1YbG-0007fs-5w
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:31:53 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1YbD-0003MP-LK
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:31:49 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-41c7ac6f635so7038865e9.3
- for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 14:31:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714426306; x=1715031106; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XKYG6Le200XvNAWzyHkVzuEjCu+nWrYe1aCCZD9ag2M=;
- b=gikHS9gfjU9Jp/zfL1yuEAA8iYzSwhfKqqhXzKES4zoZHEILkx+SANp02Vz5iGgdmm
- q/ZmxzQeh2TtS5Ne0jX81XaJXhWbezZIQMtSLSVhX9kBMyrTggMYh0F6MwzELtAWhXo+
- ELM2MoSk+BzCH0/yWjYTvTuYRp+fkvo1x1TEzHixqg/xDZMgYwJkrS8IKI/JD7z0fojL
- 4kLFvMIasjhAE7dSF2J0Lnu3w/oW0srzAlnN1qkfgT4EfBftkNUnZycAlgF4LbILyq8C
- d0sTttNp+648mrH3ElBVlX6TaKLZYDbGhmhoUEX/6htqaviTzxA4QiWSqDw9PQI/rtJY
- qwEQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s1YeU-0005XQ-8j
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:35:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s1YeP-0003uF-Qe
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:35:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714426504;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Hi6DPPPW2Y8F6DlaWvmjHS3TBRFsSBDOI/eK3ak1q3w=;
+ b=F3tPkMLMP7UhKRYsDbauxNdDM1rCrTdevem/8u/mea6DZNs1vMnbzaGBdQZOmLi5QUjADa
+ KRkOPXmjdyZh5mI8AKYtJLPWMOl7tzueKFYa8yjprDn4bOXiCiJkZumsEO8w7PmcorvRiz
+ BayXhyf01a3ZYMkectPQfJP+51k4HMQ=
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-186-AXAFeY5OPduq68I7cyCQFw-1; Mon, 29 Apr 2024 15:51:07 -0400
+X-MC-Unique: AXAFeY5OPduq68I7cyCQFw-1
+Received: by mail-pl1-f200.google.com with SMTP id
+ d9443c01a7336-1e950a46ee4so1783605ad.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 12:51:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714426306; x=1715031106;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=XKYG6Le200XvNAWzyHkVzuEjCu+nWrYe1aCCZD9ag2M=;
- b=WPPHENVLfJ0eh0tL3bZ2uRdZPWwIqscqKIGO7ffXCHr1/0TRzXs1+lGEAZxkTmkBaD
- p8BdY/3P1pSLO9ZnEwOd1ql/iIzG5fez3fdvxmJ6gSuKYB9qNvkivGMoQZ1FWBDtpZFC
- 75JVs1kDodDeraELqaOchVsNeu9DdbjSbjgSX74HnHfkWONEyoPfps4hnzJ/gSPj4dnE
- eCsQNS+/ZL06ZxzVrG9FPW6+C5McSjvWbd7MBsY47/QAMVQPomvuCOu1RPFc9AT80ZVY
- b2wFglJjr6opUoVBnq4t7Rnt/QW2GXRa+liyXTTvuyHYzI0KJbFqtEplL25ZG+8e8zAz
- 6nNA==
-X-Gm-Message-State: AOJu0YyYQrUfU9LMjWBPS+DKpJ0b0mr3WGsib7d78wD43WksnS1hpr6J
- 8ZR62frqwguc4KKnfq+g4XHkNR9NQOflE9s/0vOqDkjPVc9yskMPcjj6RL1sSrCXkK+swgggYd3
- mKzc=
-X-Google-Smtp-Source: AGHT+IG0Xamq0agm5O6t6N2GP52GSmnqeURhlP/GDFMWYWds2SgsSXyjZhy5XiJWl4Z5H7bvCNczvw==
-X-Received: by 2002:a05:600c:474d:b0:41b:f106:bb89 with SMTP id
- w13-20020a05600c474d00b0041bf106bb89mr6756151wmo.18.1714426305814; 
- Mon, 29 Apr 2024 14:31:45 -0700 (PDT)
-Received: from m1x-phil.lan (bny92-h02-176-184-44-142.dsl.sta.abo.bbox.fr.
- [176.184.44.142]) by smtp.gmail.com with ESMTPSA id
- p6-20020a05600c468600b0041563096e15sm47015588wmo.5.2024.04.29.14.31.44
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 29 Apr 2024 14:31:45 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Anton Johansson <anjo@rev.ng>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v2 10/13] accel/tcg: Remove NULL check in tcg_flush_jmp_cache()
-Date: Mon, 29 Apr 2024 23:30:47 +0200
-Message-ID: <20240429213050.55177-11-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240429213050.55177-1-philmd@linaro.org>
-References: <20240429213050.55177-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1714420267; x=1715025067;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Hi6DPPPW2Y8F6DlaWvmjHS3TBRFsSBDOI/eK3ak1q3w=;
+ b=lE3yZ94pKCrdcosXads30ZSEwmOF3MtNXP6Cm6Xe8BhcnIbWO40eQSLJds0WNlrwcP
+ v+5D8DZCOxDkmfgE2dr47XnA5dhXNwBm4ifVgj+rxKlkkkrpLffZxvNiguHIt4Zy6m64
+ AQL5fNE3Kmjo7DFq9SypotbXTcAbl+cizBF8z80Xnb+2z2sHXDd7XGGCny5YT3A+3299
+ DRCABFIQhAn7iHuq8+Ot/111zyl4zIWFAWpZRUVx7kbo1OA3Pq26rxOrbmavPYrf3pGk
+ PooW8ZZzBvgZmvWYiS73aTNHTsCmC6SC8knLDTr4QcJhZUZ6ex/uoG5csuzbd3PFe7no
+ bufQ==
+X-Gm-Message-State: AOJu0YzK403x4i3dJSMaOuiuGmuX44gEdt3ZQwRfmiOGEd+jJFLxHW7N
+ /xhKFPd82aRvwAYrGZDSQJd+a3EHOBxwP2y3dVfpbpk3GB03mUq2QQJy9yPusBmD8l0icBUAIkq
+ 85pATZcNLAvjEZkwpSTXYGApWlOL/uFNMQaOEQdjOaRS2JHF8OhLH
+X-Received: by 2002:a17:902:d4c6:b0:1e5:1138:e28e with SMTP id
+ o6-20020a170902d4c600b001e51138e28emr14096931plg.3.1714420266409; 
+ Mon, 29 Apr 2024 12:51:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHPKYuSzoNFzu2HReZC34Qfwi/CUMJEdHDruEI5z2b+CpVVyBY0S2e7pkv886Csl4S3A5T7Mg==
+X-Received: by 2002:a17:902:d4c6:b0:1e5:1138:e28e with SMTP id
+ o6-20020a170902d4c600b001e51138e28emr14096901plg.3.1714420265777; 
+ Mon, 29 Apr 2024 12:51:05 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ f21-20020a170902ab9500b001e5119c1923sm20714950plr.71.2024.04.29.12.51.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 29 Apr 2024 12:51:04 -0700 (PDT)
+Date: Mon, 29 Apr 2024 15:51:02 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ devel@lists.libvirt.org, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH v2 2/6] migration: Remove 'inc' option from migrate command
+Message-ID: <Zi_6JhnqkdIJU5Ae@x1n>
+References: <20240426131408.25410-1-farosas@suse.de>
+ <20240426131408.25410-3-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240426131408.25410-3-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,41 +101,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I /think/ this check added in commit 4e4fa6c12d ("accel/tcg:
-Complete cpu initialization before registration") is now
-unnecessary, but I don't have the WASM reproducer mentioned
-in:
-https://lore.kernel.org/qemu-devel/20221027141856.w5umjgklawgu7pqv@heavy/
-to confirm. Ilya, do you mind testing? If so, we could
-squash this with the previous patch.
+On Fri, Apr 26, 2024 at 10:14:04AM -0300, Fabiano Rosas wrote:
+> The block incremental option for block migration has been deprecated
+> in 8.2 in favor of using the block-mirror feature. Remove it now.
+> 
+> Deprecation commit 40101f320d ("migration: migrate 'inc' command
+> option is deprecated.").
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- accel/tcg/translate-all.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
-index ca1e193633..9b02f21b23 100644
---- a/accel/tcg/translate-all.c
-+++ b/accel/tcg/translate-all.c
-@@ -652,14 +652,8 @@ void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr)
-  */
- void tcg_flush_jmp_cache(CPUState *cpu)
- {
--    CPUJumpCache *jc;
-+    CPUJumpCache *jc = &cpu->accel->tb_jmp_cache;
- 
--    /* During early initialization, the cache may not yet be allocated. */
--    if (unlikely(cpu->accel == NULL)) {
--        return;
--    }
--
--    jc = &cpu->accel->tb_jmp_cache;
-     for (int i = 0; i < TB_JMP_CACHE_SIZE; i++) {
-         qatomic_set(&jc->array[i].tb, NULL);
-     }
 -- 
-2.41.0
+Peter Xu
 
 
