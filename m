@@ -4,83 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BB1AC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 11:00:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64210C25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 11:05:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1Okc-0003LC-Nc; Mon, 29 Apr 2024 07:00:50 -0400
+	id 1s1OoB-0004rr-2L; Mon, 29 Apr 2024 07:04:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1OkG-0003JG-CR
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 07:00:28 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1OkE-000791-Pk
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 07:00:28 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-34d16d204f4so521599f8f.0
- for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 04:00:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714388424; x=1714993224; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Zwl9VwpNkqe+4ZMDVF8b6vbFpYsp/f3F2rnAGZt6T8Q=;
- b=Sp4PBI2V7dfZ7sjIZScKjbcgViUuirFTY+QdY5aXTED+aX5qu/p9fVEn1RUficBnLR
- XdFkk8E/+dPS2Dihf1uh7aZjfdYkWa41jk8slYXLyrvUyJ+9lVzwHn0n2k2nKPQ8qtAy
- 6cBbLvTEmliD/kNDy++XvEyDz7JJeZTAhwJoQ23IBiDSIpjL0Ft3QelIs1buftiXy9ac
- A07s+1Fkzrv2qLAxhk0ciuHRMR68vLtOxHIZ8HAVksKpQWQOh/CVyKXlV8p79Qo62eCd
- GGbYU+lk0djwVTxeZAAB13rx8mteSj0OQSnE2DSvClo/hY1zYsZK1P5TYIPYzbLsq/xX
- a7yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714388424; x=1714993224;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Zwl9VwpNkqe+4ZMDVF8b6vbFpYsp/f3F2rnAGZt6T8Q=;
- b=JDWg2GdR6IpjHS3vb1T8WvGcXbp8PQU32kSmh8KWdsnNDaor+iFd5GfQ5fQ3EWnnWH
- 9pFAZvR6WfHUhkaJjowlY0AmaADjMVFmIgIVpdNSmwzwhbvfxGXmWi75bl1LPp89M24X
- b7yDeYTVGQwSjaRiiR/m+IaFEAZCPbJWKukx+Ke69giu06ghCDYcBAXiwGt5GsbH8piN
- 2DMJrwCy/+SM+efDtD/F2TgxlRrBufhshjtfZvbixTDbSM1FjlgJ7s4yM61fDAeiZ3Eb
- x6ZGw0kQOlwa3wnEq8jxGFWOGpu37ycyElWa3aVjIPH8IkdDfwzIh7vYKrWrEGmQHPu6
- HQ2A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVeXL/VBfHK6YZha/KmQqOTeY8pFPlIHae/2WCXYWId0mM+9co9zbXRAVJ+G/VufxIMXxTKuyx+bo1RgLosSpWobO0PbnM=
-X-Gm-Message-State: AOJu0YwQfys2qD6Un0zqHTUVT8exWq7uH1sDj4L+oaSLvt5l1e2jkiOx
- EKcw57Azb4Pzc/gtKaYHwaGSRrpPkfhg+V7Pqxz1tdwwd5WGFUa2ayphgo0TRtHBvAV1/LSR4bY
- qmls=
-X-Google-Smtp-Source: AGHT+IHDqz/i/DHz4gLdxjp8cN9xPHqzztz6NPD+oy97eniyq2zkCAZ75jGoi0O5o6rmKrBSxxfV7Q==
-X-Received: by 2002:adf:fe84:0:b0:34c:f0a7:3675 with SMTP id
- l4-20020adffe84000000b0034cf0a73675mr2483117wrr.15.1714388424245; 
- Mon, 29 Apr 2024 04:00:24 -0700 (PDT)
-Received: from [10.79.37.248] ([83.247.137.20])
- by smtp.gmail.com with ESMTPSA id
- b7-20020adff907000000b0034b3394f0e1sm18696162wrr.10.2024.04.29.04.00.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Apr 2024 04:00:23 -0700 (PDT)
-Message-ID: <98245e84-7f18-4a88-a701-9083df9fbb64@linaro.org>
-Date: Mon, 29 Apr 2024 13:00:22 +0200
+ (Exim 4.90_1) (envelope-from <gregkh@linuxfoundation.org>)
+ id 1s1Oo3-0004pK-NB
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 07:04:24 -0400
+Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gregkh@linuxfoundation.org>)
+ id 1s1Onv-0007sG-6e
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 07:04:18 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sin.source.kernel.org (Postfix) with ESMTP id 9E508CE0B08;
+ Mon, 29 Apr 2024 11:04:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A62B7C113CD;
+ Mon, 29 Apr 2024 11:04:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+ s=korg; t=1714388646;
+ bh=dDZJAokPlyONfexGRVyPKTvl3211jYrI0Yo63JDuVng=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=zVjs+rUUwlAowsvyfotajioUzGuQjJ1x+vDst0SWfPtkT743FKpbTB1f3KG38CH8D
+ +VydJU1w2HE2f9H3FxZxeFxSVK1vtyMwxP0IbLExB9CH9AUngCLJSyvJabSBvkOsza
+ 26qu+YoKtHKLvpsoxbK32JwSYcwIcJjUUQCM19HY=
+Date: Mon, 29 Apr 2024 13:04:03 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Konstantin Ovsepian <ovs@ovs.to>
+Cc: stable@vger.kernel.org, davem@davemloft.net, hengqi@linux.alibaba.com,
+ leitao@debian.org, xuanzhuo@linux.alibaba.com, ovs@meta.com,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH 6.1.y] virtio_net: Do not send RSS key if it is not
+ supported
+Message-ID: <2024042953-husked-nurture-4641@gregkh>
+References: <2024041414-humming-alarm-eb41@gregkh>
+ <20240424105704.182708-1-ovs@ovs.to>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 02/20] tcg: Pass function pointer to tcg_gen_call*
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20240424230224.941028-1-richard.henderson@linaro.org>
- <20240424230224.941028-3-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240424230224.941028-3-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240424105704.182708-1-ovs@ovs.to>
+Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
+ envelope-from=gregkh@linuxfoundation.org; helo=sin.source.kernel.org
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.114,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,19 +71,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/4/24 01:02, Richard Henderson wrote:
-> For normal helpers, read the function pointer from the
-> structure earlier.  For plugins, this will allow the
-> function pointer to come from elsewhere.
+On Wed, Apr 24, 2024 at 03:57:04AM -0700, Konstantin Ovsepian wrote:
+> From: Breno Leitao <leitao@debian.org>
 > 
-> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> commit 059a49aa2e25c58f90b50151f109dd3c4cdb3a47 upstream
+> 
+> There is a bug when setting the RSS options in virtio_net that can break
+> the whole machine, getting the kernel into an infinite loop.
+> 
+> Running the following command in any QEMU virtual machine with virtionet
+> will reproduce this problem:
+> 
+>     # ethtool -X eth0  hfunc toeplitz
+> 
+> This is how the problem happens:
+> 
+> 1) ethtool_set_rxfh() calls virtnet_set_rxfh()
+> 
+> 2) virtnet_set_rxfh() calls virtnet_commit_rss_command()
+> 
+> 3) virtnet_commit_rss_command() populates 4 entries for the rss
+> scatter-gather
+> 
+> 4) Since the command above does not have a key, then the last
+> scatter-gatter entry will be zeroed, since rss_key_size == 0.
+> sg_buf_size = vi->rss_key_size;
+> 
+> 5) This buffer is passed to qemu, but qemu is not happy with a buffer
+> with zero length, and do the following in virtqueue_map_desc() (QEMU
+> function):
+> 
+>   if (!sz) {
+>       virtio_error(vdev, "virtio: zero sized buffers are not allowed");
+> 
+> 6) virtio_error() (also QEMU function) set the device as broken
+> 
+>     vdev->broken = true;
+> 
+> 7) Qemu bails out, and do not repond this crazy kernel.
+> 
+> 8) The kernel is waiting for the response to come back (function
+> virtnet_send_command())
+> 
+> 9) The kernel is waiting doing the following :
+> 
+>       while (!virtqueue_get_buf(vi->cvq, &tmp) &&
+> 	     !virtqueue_is_broken(vi->cvq))
+> 	      cpu_relax();
+> 
+> 10) None of the following functions above is true, thus, the kernel
+> loops here forever. Keeping in mind that virtqueue_is_broken() does
+> not look at the qemu `vdev->broken`, so, it never realizes that the
+> vitio is broken at QEMU side.
+> 
+> Fix it by not sending RSS commands if the feature is not available in
+> the device.
+> 
+> Fixes: c7114b1249fa ("drivers/net/virtio_net: Added basic RSS support.")
+> Cc: stable@vger.kernel.org
+> Cc: qemu-devel@nongnu.org
+> Signed-off-by: Breno Leitao <leitao@debian.org>
+> Reviewed-by: Heng Qi <hengqi@linux.alibaba.com>
+> Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+> Signed-off-by: David S. Miller <davem@davemloft.net>
+> (cherry picked from commit 059a49aa2e25c58f90b50151f109dd3c4cdb3a47)
+> Signed-off-by: Konstantin Ovsepian <ovs@ovs.to>
 > ---
->   include/tcg/tcg.h             | 21 +++++++++-------
->   include/exec/helper-gen.h.inc | 24 ++++++++++++-------
->   tcg/tcg.c                     | 45 +++++++++++++++++++----------------
->   3 files changed, 52 insertions(+), 38 deletions(-)
+>  drivers/net/virtio_net.c | 26 ++++++++++++++++++++++----
+>  1 file changed, 22 insertions(+), 4 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Now queued up,t hanks.
 
+greg k-h
 
