@@ -4,78 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1566FC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 04:09:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B5A1C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 05:15:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1IJz-0006it-Ph; Mon, 29 Apr 2024 00:08:55 -0400
+	id 1s1JLP-00037P-4g; Mon, 29 Apr 2024 01:14:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1s1IJp-0006gC-5k; Mon, 29 Apr 2024 00:08:45 -0400
-Received: from mail-vk1-xa36.google.com ([2607:f8b0:4864:20::a36])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1s1IJn-0002DK-GL; Mon, 29 Apr 2024 00:08:44 -0400
-Received: by mail-vk1-xa36.google.com with SMTP id
- 71dfb90a1353d-4dab344ace5so1082708e0c.3; 
- Sun, 28 Apr 2024 21:08:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1714363720; x=1714968520; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iuxX0DfE2ioM8GqORqaUXBJyHlAExjOT5uU/LlQXZqo=;
- b=V1r9GLX0tAxYGPq+voA/73oNi04Z3gAwsft+vSmFnUYmnN7jk/pizNyrpRwKbyrUOP
- 8OWO660SIGXsgAtbCBkHMoQOUn96GDiGtHbjBnk7p2gR6QRri1XE3GXWPPPIKk9XvnOy
- WXFaW1E1okjTtBgAjOdxyWE+EQN/At1FzKhE25/rmwp7TYyCI0J3Pt6HgAJxvYMadd1n
- 7AX+nteUoPm6oIw0iOtJAgchV7wLISgdUcS5JwBhaCY3GSRKfYS1CHtgz9aSR4vMIYFM
- GOPhfobjUR3ofMCkHpBye9x7xsc8UhPiDxKGzfSbdYYOLY6P4BiPd0ofbLIgN1Barjn/
- ZF9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714363720; x=1714968520;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=iuxX0DfE2ioM8GqORqaUXBJyHlAExjOT5uU/LlQXZqo=;
- b=JALl83Ww6cT4Zw/LuB96e1mrjrkq3h8aFnNnG0yPKODmqGTproSNFBA8j3TswKyudg
- gXH5mB/HQeW3ELH7us9AC/y/mL1UczbnFxihJ2w5936oEOItxP0uDqbP2lRVkaqa2Tur
- oQCXGHW8zqeFDUeCKJ5uuVKC1B6lsANN77/qDQ4iyIg9CtndJzUVWK6BXLgek46C4omF
- TKDQxgRdarvNHOX3pFxM5vpDeYevCkhLgELykotchBaYS85PFPJS2o0FWMFu+UjEwkDB
- INirwNzdEhaSNXM7adEPwQZ0cs4mi30Gap6VxXkA29wDEcpSODAdzBSQORU1HGteWfV4
- 0LOw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUS2CwnSTZa1lEPTNEiSmcDeFLDn626UT+ShzNUWtLiu6R4S7y0Ue25NeU9K4SqaMGc4gZc4IvTDR4yHDcDxuNSZ/nx9yM=
-X-Gm-Message-State: AOJu0YxNhr0FNIwQhYHez/Ao5qnr730uU327iulI6YxOU4aIGHogAcLb
- 0eH8RxVnYJw6dRQWugZjkgfT8uL30HwgAxvBM8nLcmsLzHYGrtd7Fn6/0goDCCT10x/4NW8A7Jl
- G7dfPlM2xl6bD8xesn2zMq66PDAQ=
-X-Google-Smtp-Source: AGHT+IF0OMgdKc99hV+4eW+MwVi+AOZ1dieLgXa+RnLtt13e9/CXjbU4iFKQ+PsreHsyro8Oz4Fd5IN/jjiV83yT+TQ=
-X-Received: by 2002:a05:6122:2a0f:b0:4d3:1ef2:c97d with SMTP id
- fw15-20020a0561222a0f00b004d31ef2c97dmr9129665vkb.2.1714363720106; Sun, 28
- Apr 2024 21:08:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1s1JKi-0002uV-73; Mon, 29 Apr 2024 01:13:45 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1s1JKe-0005iM-Tp; Mon, 29 Apr 2024 01:13:43 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43T4wrlk029270; Mon, 29 Apr 2024 05:13:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding; s=pp1;
+ bh=XLF4bijiOIOWa07QxKbcpbnwTozlQcUcaMGf7HqF+Js=;
+ b=Tig/SACTyh7cImLfovLD+2UeUM+MKva9DB7buERMrx86tyPfI4powimw4BwFHxcvH7Bb
+ MOPlVcXl5LQv7YHpLppwYeI521teMfNyVXocMVBQLeJUPGOkp5tyQjEyNSj7eLnhz3qC
+ J8MIWni9zOcJX3wqQAfA8OFTkBQaxZI4VhodJC+8aZTtRjtqxANauPB3H2FTEcpbMew5
+ sgP1zLkz/jiTsnvFZnO0nYMeFZsLlqbaO7chkyspYRae6eBrYuYvQe+XOlg81WhUlXYN
+ iA3zT933GnSTIZ/2W0DWcS67KWDU7HYbQGpCHM1A+Q6oImXaSHH9mgNm17HnowcdImXU 0g== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xt50b80my-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Apr 2024 05:13:39 +0000
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43T5Dcu3016669;
+ Mon, 29 Apr 2024 05:13:38 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xt50b80mx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Apr 2024 05:13:38 +0000
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43T4RFOj003000; Mon, 29 Apr 2024 05:13:37 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3xscpp5e2a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Apr 2024 05:13:37 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 43T5DXJE46203210
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 29 Apr 2024 05:13:36 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D103C2004B;
+ Mon, 29 Apr 2024 05:13:33 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 572A320040;
+ Mon, 29 Apr 2024 05:13:32 +0000 (GMT)
+Received: from localhost.localdomain.com (unknown [9.171.12.153])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 29 Apr 2024 05:13:32 +0000 (GMT)
+From: Chinmay Rath <rathc@linux.ibm.com>
+To: qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
+ richard.henderson@linaro.org, harshpb@linux.ibm.com
+Subject: [PATCH 2/3] target/ppc: Move VMX integer logical instructions to
+ decodetree.
+Date: Mon, 29 Apr 2024 10:43:16 +0530
+Message-Id: <20240429051317.289426-3-rathc@linux.ibm.com>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20240429051317.289426-1-rathc@linux.ibm.com>
+References: <20240429051317.289426-1-rathc@linux.ibm.com>
 MIME-Version: 1.0
-References: <20240314185957.36940-1-hchauhan@ventanamicro.com>
- <20240314185957.36940-3-hchauhan@ventanamicro.com>
-In-Reply-To: <20240314185957.36940-3-hchauhan@ventanamicro.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 29 Apr 2024 14:08:14 +1000
-Message-ID: <CAKmqyKPLh7cOz3orJ0BBihNvR=d7s2X2M+ykY0vrwYKHAKFzMg@mail.gmail.com>
-Subject: Re: [PATCH v7 2/4] target/riscv: Enable mcontrol6 triggers only when
- sdtrig is selected
-To: Himanshu Chauhan <hchauhan@ventanamicro.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, ajones@ventanamicro.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a36;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa36.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: nvfltFaIotfpMMx58xbPNgfuLYKLjTnZ
+X-Proofpoint-GUID: lQA4lAv9gwkXqG1Fyv1AhoHAXc9fPM85
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-04-29_02,2024-04-26_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0
+ priorityscore=1501 malwarescore=0 clxscore=1015 lowpriorityscore=0
+ phishscore=0 mlxscore=0 bulkscore=0 impostorscore=0 adultscore=0
+ suspectscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2404010000 definitions=main-2404290033
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,147 +114,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 15, 2024 at 5:01=E2=80=AFAM Himanshu Chauhan
-<hchauhan@ventanamicro.com> wrote:
->
-> The mcontrol6 triggers are not defined in debug specification v0.13
-> These triggers are defined in sdtrig ISA extension.
->
-> This patch:
->    * Adds ext_sdtrig capability which is used to select mcontrol6 trigger=
-s
->    * Keeps the debug property. All triggers that are defined in v0.13 are
->      exposed.
+Moving the following instructions to decodetree specification:
 
-Thanks for this!
+	v{and, andc, nand, or, orc, nor, xor, eqv}	: VX-form
 
->
-> Signed-off-by: Himanshu Chauhan <hchauhan@ventanamicro.com>
-> ---
->  target/riscv/cpu.c     |  5 +++++
->  target/riscv/cpu_cfg.h |  1 +
->  target/riscv/debug.c   | 30 +++++++++++++++++++++++++-----
->  3 files changed, 31 insertions(+), 5 deletions(-)
->
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index c160b9216b..ab631500ac 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -1008,6 +1008,11 @@ static void riscv_cpu_reset_hold(Object *obj)
->      set_default_nan_mode(1, &env->fp_status);
->
->  #ifndef CONFIG_USER_ONLY
-> +    if (!cpu->cfg.debug && cpu->cfg.ext_sdtrig) {
-> +        warn_report("Enabling 'debug' since 'sdtrig' is enabled.");
+The changes were verified by validating that the tcp ops generated by those
+instructions remain the same, which were captured with the '-d in_asm,op' flag.
 
-I don't think we need the warning. It isn't a problem for the user
+Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+---
+ target/ppc/insn32.decode            | 11 +++++++++++
+ target/ppc/translate/vmx-impl.c.inc | 22 ++++++++++------------
+ target/ppc/translate/vmx-ops.c.inc  | 15 ---------------
+ 3 files changed, 21 insertions(+), 27 deletions(-)
 
-Otherwise
+diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
+index 27655f0d9e..e00bc05381 100644
+--- a/target/ppc/insn32.decode
++++ b/target/ppc/insn32.decode
+@@ -574,6 +574,17 @@ VCMPNEZW        000100 ..... ..... ..... . 0110000111   @VC
+ VCMPSQ          000100 ... -- ..... ..... 00101000001   @VX_bf
+ VCMPUQ          000100 ... -- ..... ..... 00100000001   @VX_bf
+ 
++## Vector Integer Logical Instructions
++
++VAND            000100 ..... ..... ..... 10000000100    @VX
++VANDC           000100 ..... ..... ..... 10001000100    @VX
++VNAND           000100 ..... ..... ..... 10110000100    @VX
++VOR             000100 ..... ..... ..... 10010000100    @VX
++VORC            000100 ..... ..... ..... 10101000100    @VX
++VNOR            000100 ..... ..... ..... 10100000100    @VX
++VXOR            000100 ..... ..... ..... 10011000100    @VX
++VEQV            000100 ..... ..... ..... 11010000100    @VX
++
+ ## Vector Integer Average Instructions
+ 
+ VAVGSB          000100 ..... ..... ..... 10100000010    @VX
+diff --git a/target/ppc/translate/vmx-impl.c.inc b/target/ppc/translate/vmx-impl.c.inc
+index 4d5e743cfe..cefe04127c 100644
+--- a/target/ppc/translate/vmx-impl.c.inc
++++ b/target/ppc/translate/vmx-impl.c.inc
+@@ -205,16 +205,6 @@ static void glue(gen_, name)(DisasContext *ctx)                         \
+            16, 16);                                                     \
+ }
+ 
+-/* Logical operations */
+-GEN_VXFORM_V(vand, MO_64, tcg_gen_gvec_and, 2, 16);
+-GEN_VXFORM_V(vandc, MO_64, tcg_gen_gvec_andc, 2, 17);
+-GEN_VXFORM_V(vor, MO_64, tcg_gen_gvec_or, 2, 18);
+-GEN_VXFORM_V(vxor, MO_64, tcg_gen_gvec_xor, 2, 19);
+-GEN_VXFORM_V(vnor, MO_64, tcg_gen_gvec_nor, 2, 20);
+-GEN_VXFORM_V(veqv, MO_64, tcg_gen_gvec_eqv, 2, 26);
+-GEN_VXFORM_V(vnand, MO_64, tcg_gen_gvec_nand, 2, 22);
+-GEN_VXFORM_V(vorc, MO_64, tcg_gen_gvec_orc, 2, 21);
+-
+ #define GEN_VXFORM(name, opc2, opc3)                                    \
+ static void glue(gen_, name)(DisasContext *ctx)                         \
+ {                                                                       \
+@@ -727,6 +717,16 @@ TRANS_FLAGS(ALTIVEC, VRLH, do_vector_gvec3_VX, MO_16, tcg_gen_gvec_rotlv)
+ TRANS_FLAGS(ALTIVEC, VRLW, do_vector_gvec3_VX, MO_32, tcg_gen_gvec_rotlv)
+ TRANS_FLAGS2(ALTIVEC_207, VRLD, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_rotlv)
+ 
++/* Logical operations */
++TRANS_FLAGS(ALTIVEC, VAND, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_and);
++TRANS_FLAGS(ALTIVEC, VANDC, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_andc);
++TRANS_FLAGS(ALTIVEC, VOR, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_or);
++TRANS_FLAGS(ALTIVEC, VXOR, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_xor);
++TRANS_FLAGS(ALTIVEC, VNOR, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_nor);
++TRANS_FLAGS2(ALTIVEC_207, VEQV, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_eqv);
++TRANS_FLAGS2(ALTIVEC_207, VNAND, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_nand);
++TRANS_FLAGS2(ALTIVEC_207, VORC, do_vector_gvec3_VX, MO_64, tcg_gen_gvec_orc);
++
+ static TCGv_vec do_vrl_mask_vec(unsigned vece, TCGv_vec vrb)
+ {
+     TCGv_vec t0 = tcg_temp_new_vec_matching(vrb),
+@@ -3331,8 +3331,6 @@ TRANS_FLAGS2(ISA310, VMODUQ, do_vx_helper, gen_helper_VMODUQ)
+ #undef DIVS64
+ #undef DIVU64
+ 
+-#undef GEN_VX_LOGICAL
+-#undef GEN_VX_LOGICAL_207
+ #undef GEN_VXFORM
+ #undef GEN_VXFORM_207
+ #undef GEN_VXFORM_DUAL
+diff --git a/target/ppc/translate/vmx-ops.c.inc b/target/ppc/translate/vmx-ops.c.inc
+index 672fba3796..80c5217749 100644
+--- a/target/ppc/translate/vmx-ops.c.inc
++++ b/target/ppc/translate/vmx-ops.c.inc
+@@ -1,18 +1,3 @@
+-#define GEN_VX_LOGICAL(name, tcg_op, opc2, opc3)                        \
+-GEN_HANDLER(name, 0x04, opc2, opc3, 0x00000000, PPC_ALTIVEC)
+-
+-#define GEN_VX_LOGICAL_207(name, tcg_op, opc2, opc3) \
+-GEN_HANDLER_E(name, 0x04, opc2, opc3, 0x00000000, PPC_NONE, PPC2_ALTIVEC_207)
+-
+-GEN_VX_LOGICAL(vand, tcg_gen_and_i64, 2, 16),
+-GEN_VX_LOGICAL(vandc, tcg_gen_andc_i64, 2, 17),
+-GEN_VX_LOGICAL(vor, tcg_gen_or_i64, 2, 18),
+-GEN_VX_LOGICAL(vxor, tcg_gen_xor_i64, 2, 19),
+-GEN_VX_LOGICAL(vnor, tcg_gen_nor_i64, 2, 20),
+-GEN_VX_LOGICAL_207(veqv, tcg_gen_eqv_i64, 2, 26),
+-GEN_VX_LOGICAL_207(vnand, tcg_gen_nand_i64, 2, 22),
+-GEN_VX_LOGICAL_207(vorc, tcg_gen_orc_i64, 2, 21),
+-
+ #define GEN_VXFORM(name, opc2, opc3)                                    \
+ GEN_HANDLER(name, 0x04, opc2, opc3, 0x00000000, PPC_ALTIVEC)
+ 
+-- 
+2.39.3
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-
-Alistair
-
-> +        cpu->cfg.debug =3D true;
-> +    }
-> +
->      if (cpu->cfg.debug) {
->          riscv_trigger_reset_hold(env);
->      }
-> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-> index 2040b90da0..0c57e1acd4 100644
-> --- a/target/riscv/cpu_cfg.h
-> +++ b/target/riscv/cpu_cfg.h
-> @@ -114,6 +114,7 @@ struct RISCVCPUConfig {
->      bool ext_zvfbfwma;
->      bool ext_zvfh;
->      bool ext_zvfhmin;
-> +    bool ext_sdtrig;
->      bool ext_smaia;
->      bool ext_ssaia;
->      bool ext_sscofpmf;
-> diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-> index 5f14b39b06..c40e727e12 100644
-> --- a/target/riscv/debug.c
-> +++ b/target/riscv/debug.c
-> @@ -100,13 +100,16 @@ static trigger_action_t get_trigger_action(CPURISCV=
-State *env,
->      target_ulong tdata1 =3D env->tdata1[trigger_index];
->      int trigger_type =3D get_trigger_type(env, trigger_index);
->      trigger_action_t action =3D DBG_ACTION_NONE;
-> +    const RISCVCPUConfig *cfg =3D riscv_cpu_cfg(env);
->
->      switch (trigger_type) {
->      case TRIGGER_TYPE_AD_MATCH:
->          action =3D (tdata1 & TYPE2_ACTION) >> 12;
->          break;
->      case TRIGGER_TYPE_AD_MATCH6:
-> -        action =3D (tdata1 & TYPE6_ACTION) >> 12;
-> +        if (cfg->ext_sdtrig) {
-> +            action =3D (tdata1 & TYPE6_ACTION) >> 12;
-> +        }
->          break;
->      case TRIGGER_TYPE_INST_CNT:
->      case TRIGGER_TYPE_INT:
-> @@ -727,7 +730,12 @@ void tdata_csr_write(CPURISCVState *env, int tdata_i=
-ndex, target_ulong val)
->          type2_reg_write(env, env->trigger_cur, tdata_index, val);
->          break;
->      case TRIGGER_TYPE_AD_MATCH6:
-> -        type6_reg_write(env, env->trigger_cur, tdata_index, val);
-> +        if (riscv_cpu_cfg(env)->ext_sdtrig) {
-> +            type6_reg_write(env, env->trigger_cur, tdata_index, val);
-> +        } else {
-> +            qemu_log_mask(LOG_UNIMP, "trigger type: %d is not supported\=
-n",
-> +                          trigger_type);
-> +        }
->          break;
->      case TRIGGER_TYPE_INST_CNT:
->          itrigger_reg_write(env, env->trigger_cur, tdata_index, val);
-> @@ -750,9 +758,13 @@ void tdata_csr_write(CPURISCVState *env, int tdata_i=
-ndex, target_ulong val)
->
->  target_ulong tinfo_csr_read(CPURISCVState *env)
->  {
-> -    /* assume all triggers support the same types of triggers */
-> -    return BIT(TRIGGER_TYPE_AD_MATCH) |
-> -           BIT(TRIGGER_TYPE_AD_MATCH6);
-> +    target_ulong ts =3D BIT(TRIGGER_TYPE_AD_MATCH);
-> +
-> +    if (riscv_cpu_cfg(env)->ext_sdtrig) {
-> +        ts |=3D BIT(TRIGGER_TYPE_AD_MATCH6);
-> +    }
-> +
-> +    return ts;
->  }
->
->  void riscv_cpu_debug_excp_handler(CPUState *cs)
-> @@ -803,6 +815,10 @@ bool riscv_cpu_debug_check_breakpoint(CPUState *cs)
->                  }
->                  break;
->              case TRIGGER_TYPE_AD_MATCH6:
-> +                if (!cpu->cfg.ext_sdtrig) {
-> +                    break;
-> +                }
-> +
->                  ctrl =3D env->tdata1[i];
->                  pc =3D env->tdata2[i];
->
-> @@ -869,6 +885,10 @@ bool riscv_cpu_debug_check_watchpoint(CPUState *cs, =
-CPUWatchpoint *wp)
->              }
->              break;
->          case TRIGGER_TYPE_AD_MATCH6:
-> +            if (!cpu->cfg.ext_sdtrig) {
-> +                break;
-> +            }
-> +
->              ctrl =3D env->tdata1[i];
->              addr =3D env->tdata2[i];
->              flags =3D 0;
-> --
-> 2.34.1
->
->
 
