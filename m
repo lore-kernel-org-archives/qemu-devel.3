@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2AB5C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 15:59:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 136C3C19F53
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 15:59:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1TMa-00052h-CY; Mon, 29 Apr 2024 11:56:20 -0400
+	id 1s1TMX-0004wL-Rx; Mon, 29 Apr 2024 11:56:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1s1TMN-0004c0-60
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:07 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ id 1s1TMJ-0004aG-Rk
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:04 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1s1TML-0005Ig-1C
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:06 -0400
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+ id 1s1TMG-0005Kk-UR
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:03 -0400
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43TFmu7n024919; Mon, 29 Apr 2024 15:55:51 GMT
+ 43TFncI6017546; Mon, 29 Apr 2024 15:55:57 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
  h=from : to : cc :
  subject : date : message-id : in-reply-to : references; s=corp-2023-11-20;
- bh=dFAAqcGLASWY0fwkl8wcUig8RTCMMJh3CTyJCKkbWEA=;
- b=YIelEe8WLbHOe2XpwaK3/if7mmGszxLh8Xjk7WViTNxijjHYDSVrTdGzpcPG/ink+3WA
- JPxDweByoRf/2oUh54cGOJHy7+Qn0KMgng7oPKlBJyRgkEbB8twi71dmzcn6UluwXhBz
- aEthyRV46gQrLV3UUY+2/V29jUXaw8AZE1fC/fWypo2m6WYJx9yFp51fBiKahaOehm0y
- WAHuFliypWhamSadAbTLrm7mwEWSqClHiSRECaonx6E8M0t00Dy5Lo4hHjtFKZA5xnqd
- o51I+PwvVZfdEdMNEdw1QE2yHyCKuWF3TFDVxS4qyYTR3BakHreFaqcnQ6e9dgWQU13q Fw== 
+ bh=6/yzYvmrOyiE45IoO54xQG76mwyvh+VmExAEkFTHCAM=;
+ b=D42+6OfjTW27SCvs0i8gK3pIeD63IlspjayYtIZvjo2YHIPWIVLBGxLyehdP65wx7PR1
+ jQ22ZNnPyU7Ij4UsOHcErHWKfFgUvxePPYSsaAzaGvURFjh2c0qLMYafr/AFnIu/Nfc4
+ l2QGw4olRVo5xg1hy7Z4N0PK8HV/kRgrp/1j71ejPKaTERMFlZ+qqYeEuLJ53FCouKwb
+ GTuO70f/O3gakCpErqalYFoDU/I7nxB9GlONbw3zUXxn7dN44wUbvvBAToPF7Pu91qwb
+ zBaPG/w0JHAAdGd/n+lze4YErHTY/aoBf+mhzRJnNPpmWr73qVrb1txG/ooTHDXaU6Pl /A== 
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xrqsetx49-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xrs8cjxdn-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Apr 2024 15:55:51 +0000
+ Mon, 29 Apr 2024 15:55:56 +0000
 Received: from pps.filterd
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 43TFgaep011393; Mon, 29 Apr 2024 15:55:50 GMT
+ with ESMTP id 43TEheoP011366; Mon, 29 Apr 2024 15:55:56 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 3xrqt6j6gq-1
+ 3xrqt6j6pc-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Apr 2024 15:55:50 +0000
+ Mon, 29 Apr 2024 15:55:56 +0000
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43TFtaH4034442;
- Mon, 29 Apr 2024 15:55:49 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43TFtaHK034442;
+ Mon, 29 Apr 2024 15:55:55 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 3xrqt6j5ys-19; Mon, 29 Apr 2024 15:55:49 +0000
+ ESMTP id 3xrqt6j5ys-27; Mon, 29 Apr 2024 15:55:55 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,9 +64,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V1 18/26] migration: cpr-exec-args parameter
-Date: Mon, 29 Apr 2024 08:55:27 -0700
-Message-Id: <1714406135-451286-19-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V1 26/26] migration: only-migratable-modes
+Date: Mon, 29 Apr 2024 08:55:35 -0700
+Message-Id: <1714406135-451286-27-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
 References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
@@ -78,17 +78,17 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
  adultscore=0 mlxscore=0 suspectscore=0 phishscore=0 spamscore=0
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2404010000 definitions=main-2404290101
-X-Proofpoint-ORIG-GUID: _rEh2WqBWliGLL0O96WpdRoKN7qOMHQz
-X-Proofpoint-GUID: _rEh2WqBWliGLL0O96WpdRoKN7qOMHQz
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Proofpoint-GUID: oF8VrummWUdED35UQ2I_pgZRACaZ_gmF
+X-Proofpoint-ORIG-GUID: oF8VrummWUdED35UQ2I_pgZRACaZ_gmF
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,192 +104,251 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Create the cpr-exec-args migration parameter, defined as a list of
-strings.  It will be used for cpr-exec migration mode in a subsequent
-patch.
-
-No functional change, except that cpr-exec-args is shown by the
-'info migrate' command.
+Add the only-migratable-modes option as a generalization of only-migratable.
+Only devices that support all requested modes are allowed.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- hmp-commands.hx                |  2 +-
- migration/migration-hmp-cmds.c | 24 ++++++++++++++++++++++++
- migration/options.c            | 13 +++++++++++++
- qapi/migration.json            | 18 +++++++++++++++---
- 4 files changed, 53 insertions(+), 4 deletions(-)
+ include/migration/misc.h       |  3 +++
+ include/sysemu/sysemu.h        |  1 -
+ migration/migration-hmp-cmds.c | 26 +++++++++++++++++++++++++-
+ migration/migration.c          | 22 +++++++++++++++++-----
+ migration/savevm.c             |  2 +-
+ qemu-options.hx                | 16 ++++++++++++++--
+ system/globals.c               |  1 -
+ system/vl.c                    | 13 ++++++++++++-
+ target/s390x/cpu_models.c      |  4 +++-
+ 9 files changed, 75 insertions(+), 13 deletions(-)
 
-diff --git a/hmp-commands.hx b/hmp-commands.hx
-index 2e2a3bc..39954ae 100644
---- a/hmp-commands.hx
-+++ b/hmp-commands.hx
-@@ -1012,7 +1012,7 @@ ERST
+diff --git a/include/migration/misc.h b/include/migration/misc.h
+index 5b963ba..3ad2cd9 100644
+--- a/include/migration/misc.h
++++ b/include/migration/misc.h
+@@ -119,6 +119,9 @@ bool migration_incoming_postcopy_advised(void);
+ /* True if background snapshot is active */
+ bool migration_in_bg_snapshot(void);
  
-     {
-         .name       = "migrate_set_parameter",
--        .args_type  = "parameter:s,value:s",
-+        .args_type  = "parameter:s,value:S",
-         .params     = "parameter value",
-         .help       = "Set the parameter for migration",
-         .cmd        = hmp_migrate_set_parameter,
++void migration_set_required_mode(MigMode mode);
++bool migration_mode_required(MigMode mode);
++
+ /* migration/block-dirty-bitmap.c */
+ void dirty_bitmap_mig_init(void);
+ 
+diff --git a/include/sysemu/sysemu.h b/include/sysemu/sysemu.h
+index 5b4397e..0a9c4b4 100644
+--- a/include/sysemu/sysemu.h
++++ b/include/sysemu/sysemu.h
+@@ -8,7 +8,6 @@
+ 
+ /* vl.c */
+ 
+-extern int only_migratable;
+ extern const char *qemu_name;
+ extern QemuUUID qemu_uuid;
+ extern bool qemu_uuid_set;
 diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-index 7e96ae6..414c7e8 100644
+index 414c7e8..ca913b7 100644
 --- a/migration/migration-hmp-cmds.c
 +++ b/migration/migration-hmp-cmds.c
-@@ -255,6 +255,18 @@ void hmp_info_migrate_capabilities(Monitor *mon, const QDict *qdict)
-     qapi_free_MigrationCapabilityStatusList(caps);
- }
+@@ -16,6 +16,7 @@
+ #include "qemu/osdep.h"
+ #include "block/qapi.h"
+ #include "migration/snapshot.h"
++#include "migration/misc.h"
+ #include "monitor/hmp.h"
+ #include "monitor/monitor.h"
+ #include "qapi/error.h"
+@@ -33,6 +34,28 @@
+ #include "options.h"
+ #include "migration.h"
  
-+static void monitor_print_cpr_exec_args(Monitor *mon, strList *args)
++static void migration_dump_modes(Monitor *mon)
 +{
-+    monitor_printf(mon, "%s:",
-+        MigrationParameter_str(MIGRATION_PARAMETER_CPR_EXEC_ARGS));
++    int mode, n = 0;
 +
-+    while (args) {
-+        monitor_printf(mon, " %s", args->value);
-+        args = args->next;
++    monitor_printf(mon, "only-migratable-modes: ");
++
++    for (mode = 0; mode < MIG_MODE__MAX; mode++) {
++        if (migration_mode_required(mode)) {
++            if (n++) {
++                monitor_printf(mon, ",");
++            }
++            monitor_printf(mon, "%s", MigMode_str(mode));
++        }
 +    }
-+    monitor_printf(mon, "\n");
++
++    if (!n) {
++        monitor_printf(mon, "none\n");
++    } else {
++        monitor_printf(mon, "\n");
++    }
 +}
 +
- void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
+ static void migration_global_dump(Monitor *mon)
  {
-     MigrationParameters *params;
-@@ -397,6 +409,8 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
-         monitor_printf(mon, "%s: %s\n",
-             MigrationParameter_str(MIGRATION_PARAMETER_MODE),
-             qapi_enum_lookup(&MigMode_lookup, params->mode));
-+        assert(params->has_cpr_exec_args);
-+        monitor_print_cpr_exec_args(mon, params->cpr_exec_args);
-     }
+     MigrationState *ms = migrate_get_current();
+@@ -41,7 +64,7 @@ static void migration_global_dump(Monitor *mon)
+     monitor_printf(mon, "store-global-state: %s\n",
+                    ms->store_global_state ? "on" : "off");
+     monitor_printf(mon, "only-migratable: %s\n",
+-                   only_migratable ? "on" : "off");
++                   migration_mode_required(MIG_MODE_NORMAL) ? "on" : "off");
+     monitor_printf(mon, "send-configuration: %s\n",
+                    ms->send_configuration ? "on" : "off");
+     monitor_printf(mon, "send-section-footer: %s\n",
+@@ -50,6 +73,7 @@ static void migration_global_dump(Monitor *mon)
+                    ms->decompress_error_check ? "on" : "off");
+     monitor_printf(mon, "clear-bitmap-shift: %u\n",
+                    ms->clear_bitmap_shift);
++    migration_dump_modes(mon);
+ }
  
-     qapi_free_MigrationParameters(params);
-@@ -690,6 +704,16 @@ void hmp_migrate_set_parameter(Monitor *mon, const QDict *qdict)
-         p->has_mode = true;
-         visit_type_MigMode(v, param, &p->mode, &err);
-         break;
-+    case MIGRATION_PARAMETER_CPR_EXEC_ARGS: {
-+        g_autofree char **strv = g_strsplit(valuestr ?: "", " ", -1);
-+        strList **tail = &p->cpr_exec_args;
+ void hmp_info_migrate(Monitor *mon, const QDict *qdict)
+diff --git a/migration/migration.c b/migration/migration.c
+index 4984dee..5535b84 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1719,17 +1719,29 @@ static bool is_busy(Error **reasonp, Error **errp)
+     return false;
+ }
+ 
+-static bool is_only_migratable(Error **reasonp, Error **errp, int modes)
++static int migration_modes_required;
 +
-+        for (int i = 0; strv[i]; i++) {
-+            QAPI_LIST_APPEND(tail, strv[i]);
-+        }
-+        p->has_cpr_exec_args = true;
-+        break;
-+    }
-     default:
-         assert(0);
-     }
-diff --git a/migration/options.c b/migration/options.c
-index 239f5ec..89082cc 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -1060,6 +1060,8 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
-     params->mode = s->parameters.mode;
-     params->has_zero_page_detection = true;
-     params->zero_page_detection = s->parameters.zero_page_detection;
-+    params->has_cpr_exec_args = true;
-+    params->cpr_exec_args = QAPI_CLONE(strList, s->parameters.cpr_exec_args);
- 
-     return params;
- }
-@@ -1097,6 +1099,7 @@ void migrate_params_init(MigrationParameters *params)
-     params->has_vcpu_dirty_limit = true;
-     params->has_mode = true;
-     params->has_zero_page_detection = true;
-+    params->has_cpr_exec_args = true;
- }
- 
- /*
-@@ -1416,6 +1419,10 @@ static void migrate_params_test_apply(MigrateSetParameters *params,
-     if (params->has_zero_page_detection) {
-         dest->zero_page_detection = params->zero_page_detection;
-     }
++void migration_set_required_mode(MigMode mode)
++{
++    migration_modes_required |= BIT(mode);
++}
 +
-+    if (params->has_cpr_exec_args) {
-+        dest->cpr_exec_args = params->cpr_exec_args;
-+    }
- }
++bool migration_mode_required(MigMode mode)
++{
++    return !!(migration_modes_required & BIT(mode));
++}
++
++static bool modes_are_required(Error **reasonp, Error **errp, int modes)
+ {
+     ERRP_GUARD();
  
- static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
-@@ -1570,6 +1577,12 @@ static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
-     if (params->has_zero_page_detection) {
-         s->parameters.zero_page_detection = params->zero_page_detection;
+-    if (only_migratable && (modes & BIT(MIG_MODE_NORMAL))) {
++    if (migration_modes_required & modes) {
+         error_propagate_prepend(errp, *reasonp,
+-                                "disallowing migration blocker "
+-                                "(--only-migratable) for: ");
++                                "-only-migratable{-modes}  specified, but: ");
+         *reasonp = NULL;
+         return true;
      }
 +
-+    if (params->has_cpr_exec_args) {
-+        qapi_free_strList(s->parameters.cpr_exec_args);
-+        s->parameters.cpr_exec_args =
-+            QAPI_CLONE(strList, params->cpr_exec_args);
-+    }
+     return false;
  }
  
- void qmp_migrate_set_parameters(MigrateSetParameters *params, Error **errp)
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 8c65b90..49710e7 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -914,6 +914,9 @@
- #     See description in @ZeroPageDetection.  Default is 'multifd'.
- #     (since 9.0)
- #
-+# @cpr-exec-args: Arguments passed to new QEMU for @cpr-exec mode.
-+#    See @cpr-exec for details.  (Since 9.1)
-+#
- # Features:
- #
- # @deprecated: Member @block-incremental is deprecated.  Use
-@@ -948,7 +951,8 @@
-            { 'name': 'x-vcpu-dirty-limit-period', 'features': ['unstable'] },
-            'vcpu-dirty-limit',
-            'mode',
--           'zero-page-detection'] }
-+           'zero-page-detection',
-+           'cpr-exec-args'] }
+@@ -1783,7 +1795,7 @@ int migrate_add_blocker_modes(Error **reasonp, Error **errp, MigMode mode, ...)
+     modes = get_modes(mode, ap);
+     va_end(ap);
  
- ##
- # @MigrateSetParameters:
-@@ -1122,6 +1126,9 @@
- #     See description in @ZeroPageDetection.  Default is 'multifd'.
- #     (since 9.0)
- #
-+# @cpr-exec-args: Arguments passed to new QEMU for @cpr-exec mode.
-+#    See @cpr-exec for details.  (Since 9.1)
-+#
- # Features:
- #
- # @deprecated: Member @block-incremental is deprecated.  Use
-@@ -1176,7 +1183,8 @@
-                                             'features': [ 'unstable' ] },
-             '*vcpu-dirty-limit': 'uint64',
-             '*mode': 'MigMode',
--            '*zero-page-detection': 'ZeroPageDetection'} }
-+            '*zero-page-detection': 'ZeroPageDetection',
-+            '*cpr-exec-args': [ 'str' ]} }
+-    if (is_only_migratable(reasonp, errp, modes)) {
++    if (modes_are_required(reasonp, errp, modes)) {
+         return -EACCES;
+     } else if (is_busy(reasonp, errp)) {
+         return -EBUSY;
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 6087c3a..e53ac84 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -3585,7 +3585,7 @@ void vmstate_register_ram_global(MemoryRegion *mr)
+ bool vmstate_check_only_migratable(const VMStateDescription *vmsd)
+ {
+     /* check needed if --only-migratable is specified */
+-    if (!only_migratable) {
++    if (!migration_mode_required(MIG_MODE_NORMAL)) {
+         return true;
+     }
  
- ##
- # @migrate-set-parameters:
-@@ -1354,6 +1362,9 @@
- #     See description in @ZeroPageDetection.  Default is 'multifd'.
- #     (since 9.0)
- #
-+# @cpr-exec-args: Arguments passed to new QEMU for @cpr-exec mode.
-+#    See @cpr-exec for details.  (Since 9.1)
-+#
- # Features:
- #
- # @deprecated: Member @block-incremental is deprecated.  Use
-@@ -1405,7 +1416,8 @@
-                                             'features': [ 'unstable' ] },
-             '*vcpu-dirty-limit': 'uint64',
-             '*mode': 'MigMode',
--            '*zero-page-detection': 'ZeroPageDetection'} }
-+            '*zero-page-detection': 'ZeroPageDetection',
-+            '*cpr-exec-args': [ 'str' ]} }
+diff --git a/qemu-options.hx b/qemu-options.hx
+index f0dfda5..946d731 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -4807,8 +4807,20 @@ DEF("only-migratable", 0, QEMU_OPTION_only_migratable, \
+     "-only-migratable     allow only migratable devices\n", QEMU_ARCH_ALL)
+ SRST
+ ``-only-migratable``
+-    Only allow migratable devices. Devices will not be allowed to enter
+-    an unmigratable state.
++    Only allow devices that can migrate using normal mode. Devices will not
++    be allowed to enter an unmigratable state.
++ERST
++
++DEF("only-migratable-modes", HAS_ARG, QEMU_OPTION_only_migratable_modes, \
++    "-only-migratable-modes mode1[,...]\n"
++    "                allow only devices that are migratable using mode(s)\n",
++    QEMU_ARCH_ALL)
++SRST
++``-only-migratable-modes mode1[,...]``
++    Only allow devices which are migratable using all modes in the list,
++    which guarantees that migration will not fail due to a blocker.
++    If both only-migratable-modes and only-migratable are specified,
++    or are specified multiple times, then the required modes accumulate.
+ ERST
  
- ##
- # @query-migrate-parameters:
+ DEF("nodefaults", 0, QEMU_OPTION_nodefaults, \
+diff --git a/system/globals.c b/system/globals.c
+index e353584..fdc263e 100644
+--- a/system/globals.c
++++ b/system/globals.c
+@@ -48,7 +48,6 @@ const char *qemu_name;
+ unsigned int nb_prom_envs;
+ const char *prom_envs[MAX_PROM_ENVS];
+ uint8_t *boot_splash_filedata;
+-int only_migratable; /* turn it off unless user states otherwise */
+ int icount_align_option;
+ 
+ /* The bytes in qemu_uuid are in the order specified by RFC4122, _not_ in the
+diff --git a/system/vl.c b/system/vl.c
+index b76881e..7e73be9 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -3458,7 +3458,18 @@ void qemu_init(int argc, char **argv)
+                 incoming = optarg;
+                 break;
+             case QEMU_OPTION_only_migratable:
+-                only_migratable = 1;
++                migration_set_required_mode(MIG_MODE_NORMAL);
++                break;
++            case QEMU_OPTION_only_migratable_modes:
++                {
++                    int i, mode;
++                    g_autofree char **words = g_strsplit(optarg, ",", -1);
++                    for (i = 0; words[i]; i++) {
++                        mode = qapi_enum_parse(&MigMode_lookup, words[i], -1,
++                                               &error_fatal);
++                        migration_set_required_mode(mode);
++                    }
++                }
+                 break;
+             case QEMU_OPTION_nodefaults:
+                 has_defaults = 0;
+diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
+index 8ed3bb6..42ad160 100644
+--- a/target/s390x/cpu_models.c
++++ b/target/s390x/cpu_models.c
+@@ -16,6 +16,7 @@
+ #include "kvm/kvm_s390x.h"
+ #include "sysemu/kvm.h"
+ #include "sysemu/tcg.h"
++#include "migration/misc.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+ #include "qapi/visitor.h"
+@@ -526,7 +527,8 @@ static void check_compatibility(const S390CPUModel *max_model,
+     }
+ 
+ #ifndef CONFIG_USER_ONLY
+-    if (only_migratable && test_bit(S390_FEAT_UNPACK, model->features)) {
++    if (migration_mode_required(MIG_MODE_NORMAL) &&
++        test_bit(S390_FEAT_UNPACK, model->features)) {
+         error_setg(errp, "The unpack facility is not compatible with "
+                    "the --only-migratable option. You must remove either "
+                    "the 'unpack' facility or the --only-migratable option");
 -- 
 1.8.3.1
 
