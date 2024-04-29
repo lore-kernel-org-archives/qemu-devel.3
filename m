@@ -4,69 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74180C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 09:03:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A269C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 09:20:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1Muz-0007tW-SP; Mon, 29 Apr 2024 05:03:25 -0400
+	id 1s1NAh-0004hw-Ce; Mon, 29 Apr 2024 05:19:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1s1Muh-0007s4-7Z; Mon, 29 Apr 2024 05:03:07 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1s1Mua-0000HK-Dd; Mon, 29 Apr 2024 05:03:05 -0400
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:6401:0:640:7e6f:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 5989860BC0;
- Mon, 29 Apr 2024 12:02:53 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:b739::1:30] (unknown
- [2a02:6b8:b081:b739::1:30])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id p2MHiC1IfSw0-FLYZUSs5; Mon, 29 Apr 2024 12:02:52 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1714381372;
- bh=ezRLt4hX+g4eay255xWlbBRIFUqlw8Nx1nTJ8OVXZF4=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=k8/oTauK13+4xfJAjOW9LU3XVod3w9pNk4wmzUhrF1+IZeg7PoQtpGT98KNG430pX
- LcflqGero/WiVUmTsRReCvEAKZGi87Qx2/eKaznLRI1NEyp7HJ7KDMPEn157aZoBqq
- VpQuHSca4cAvqvI/rcjjMOxU2UUNsV30IN81HDr4=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <539ee069-39ab-432e-b6ee-29221d372c0f@yandex-team.ru>
-Date: Mon, 29 Apr 2024 12:02:51 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1NAc-0004gC-4H
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 05:19:34 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1NAZ-0003GE-M1
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 05:19:33 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-41b5e74fa83so27531255e9.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 02:19:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714382365; x=1714987165; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MJ8b4g3seUv7uUos7FZr6jyaqNHB6m9TX8jMWGCsuNE=;
+ b=FNQ95OdFfTAXdH5K6I9wEYq0BnF760LxmRuRZ6jgqAcVUa3DE0B5Ya4C5+XTWRmtDH
+ qcXcIdiCMFDN3hUcM+/vqXF2EI5NMcNgYsZeQA0BJ8/2CNn9yDJcAe3thgR0YvrcE3iZ
+ EcO6Ua2hjQVvsrHYIkiI/hivCjWix7vcluAFMvb6sq2MYHpCUQJBRhsr8PRI60z0Qo3B
+ jdkjZAGdwliS/asbrAfp040V6385ycAZ6Bc/9dJh/RbzHRgsUu6Jwt1jY+Z6ndTgydEy
+ 4qz1ii6hU+SFiHRmmRFuksSoGrZbTS298g42t1Cd3ltjmPTfHOb0LOnI8CI7h/NuLcE3
+ DJkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714382365; x=1714987165;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=MJ8b4g3seUv7uUos7FZr6jyaqNHB6m9TX8jMWGCsuNE=;
+ b=wMEVB/h4Hgc4mF4XXPLjGIOc8dER4OelC4zK/0R0oaDF3OkwgHnneloF5eT/CEZ5Mv
+ Y+JcX0x/IJuxMwJOeOMqLiHbsjhU4cojON52l5RRCk6mq6FhnR/nYNeZBnsX8sv3wv67
+ 1meUgGVemT5cKSllj5Kk/wG2ga4YPLPR2wVKgACCEMwwzQN0/rbpKbSRkJSGQRXhV583
+ g4wJFfV/JGfzKsg/7MhIMca+AVwwlfiy6NTrde2J/ZKxGOOVupvgRdSW5yk+rGwy9C+K
+ B2d2hrgGGof2RB39hlSg2tIQ46dEKBghSoRBMQPKHsAZ9tPcPPNGwaRgWvIuMPBPlKmv
+ aEdw==
+X-Gm-Message-State: AOJu0YxvRonalDLzYeGx2QBsjXJx+Tc5NxszXNMTwdB85AVhVWvLRqoJ
+ 7BjGP0TEaP/gCEVwYxHuzSo9nOiw9graKC9yMxknB0VfjRKOKxY0HC1s7r9hg/PPO2oOVV/wLi+
+ 4/4s=
+X-Google-Smtp-Source: AGHT+IFFgmVwa9R394PE9ymyzBL0/XnUUIHyf2GyjgwZwiCVYioICxIHHMtzbWjWPxPEq5kJFbJQFg==
+X-Received: by 2002:a05:600c:46cf:b0:41c:5eb:4f8f with SMTP id
+ q15-20020a05600c46cf00b0041c05eb4f8fmr3651849wmo.15.1714382365250; 
+ Mon, 29 Apr 2024 02:19:25 -0700 (PDT)
+Received: from localhost.localdomain ([83.247.137.20])
+ by smtp.gmail.com with ESMTPSA id
+ fl23-20020a05600c0b9700b0041bc41287cesm9312838wmb.16.2024.04.29.02.19.24
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 29 Apr 2024 02:19:24 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
+ Sunil Muthuswamy <sunilmut@microsoft.com>,
+ Reinoud Zandijk <reinoud@netbsd.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 1/2] accel/whpx: Fix NULL dereference in whpx_init_vcpu()
+Date: Mon, 29 Apr 2024 11:19:17 +0200
+Message-ID: <20240429091918.27429-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240429091918.27429-1-philmd@linaro.org>
+References: <20240429091918.27429-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/5] qapi: introduce CONFIG_READ event
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-block@nongnu.org, raphael@enfabrica.net, mst@redhat.com,
- kwolf@redhat.com, hreitz@redhat.com, pbonzini@redhat.com,
- berrange@redhat.com, eduardo@habkost.net, dave@treblig.org,
- eblake@redhat.com, qemu-devel@nongnu.org, yc-core@yandex-team.ru
-References: <20240329183758.3360733-1-vsementsov@yandex-team.ru>
- <20240329183758.3360733-6-vsementsov@yandex-team.ru>
- <87a5ljvu3b.fsf@pond.sub.org>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <87a5ljvu3b.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -78,189 +97,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24.04.24 15:11, Markus Armbruster wrote:
-> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
-> 
->> Send a new event when guest reads virtio-pci config after
->> virtio_notify_config() call.
->>
->> That's useful to check that guest fetched modified config, for example
->> after resizing disk backend.
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> ---
->>   hw/virtio/virtio-pci.c |  9 +++++++++
->>   include/monitor/qdev.h |  2 ++
->>   monitor/monitor.c      |  1 +
->>   qapi/qdev.json         | 33 +++++++++++++++++++++++++++++++++
->>   stubs/qdev.c           |  6 ++++++
->>   system/qdev-monitor.c  |  6 ++++++
->>   6 files changed, 57 insertions(+)
->>
->> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
->> index 92afbae71c..c0c158dae2 100644
->> --- a/hw/virtio/virtio-pci.c
->> +++ b/hw/virtio/virtio-pci.c
->> @@ -23,6 +23,7 @@
->>   #include "hw/boards.h"
->>   #include "hw/virtio/virtio.h"
->>   #include "migration/qemu-file-types.h"
->> +#include "monitor/qdev.h"
->>   #include "hw/pci/pci.h"
->>   #include "hw/pci/pci_bus.h"
->>   #include "hw/qdev-properties.h"
->> @@ -530,6 +531,10 @@ static uint64_t virtio_pci_config_read(void *opaque, hwaddr addr,
->>       }
->>       addr -= config;
->>   
->> +    if (vdev->generation > 0) {
->> +        qdev_virtio_config_read_event(DEVICE(proxy));
->> +    }
->> +
->>       switch (size) {
->>       case 1:
->>           val = virtio_config_readb(vdev, addr);
->> @@ -1884,6 +1889,10 @@ static uint64_t virtio_pci_device_read(void *opaque, hwaddr addr,
->>           return UINT64_MAX;
->>       }
->>   
->> +    if (vdev->generation > 0) {
->> +        qdev_virtio_config_read_event(DEVICE(proxy));
->> +    }
->> +
->>       switch (size) {
->>       case 1:
->>           val = virtio_config_modern_readb(vdev, addr);
->> diff --git a/include/monitor/qdev.h b/include/monitor/qdev.h
->> index 1d57bf6577..fc9a834dca 100644
->> --- a/include/monitor/qdev.h
->> +++ b/include/monitor/qdev.h
->> @@ -36,4 +36,6 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
->>    */
->>   const char *qdev_set_id(DeviceState *dev, char *id, Error **errp);
->>   
->> +void qdev_virtio_config_read_event(DeviceState *dev);
->> +
->>   #endif
->> diff --git a/monitor/monitor.c b/monitor/monitor.c
->> index 01ede1babd..5b06146503 100644
->> --- a/monitor/monitor.c
->> +++ b/monitor/monitor.c
->> @@ -316,6 +316,7 @@ static MonitorQAPIEventConf monitor_qapi_event_conf[QAPI_EVENT__MAX] = {
->>       [QAPI_EVENT_VSERPORT_CHANGE]   = { 1000 * SCALE_MS },
->>       [QAPI_EVENT_MEMORY_DEVICE_SIZE_CHANGE] = { 1000 * SCALE_MS },
->>       [QAPI_EVENT_HV_BALLOON_STATUS_REPORT] = { 1000 * SCALE_MS },
->> +    [QAPI_EVENT_VIRTIO_CONFIG_READ] = { 300 * SCALE_MS },
-> 
-> All the other rate-limited events use 1s.  Why 0.3s for this one?
+When mechanically moving the @dirty field to AccelCPUState
+in commit 9ad49538c7, we neglected cpu->accel is still NULL
+when we want to dereference it.
 
-No actual reason, just seemed to me that 1s is too much. Should be better to keep all limits to be the same, until no concrete reason to break it.
+Fixes: 9ad49538c7 ("accel/whpx: Use accel-specific per-vcpu @dirty field")
+Reported-by: Volker Rümelin <vr_qemu@t-online.de>
+Suggested-by: Volker Rümelin <vr_qemu@t-online.de>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/i386/whpx/whpx-all.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> 
->>   };
->>   
->>   /*
->> diff --git a/qapi/qdev.json b/qapi/qdev.json
->> index e8be79c3d5..29a4f47360 100644
->> --- a/qapi/qdev.json
->> +++ b/qapi/qdev.json
->> @@ -182,3 +182,36 @@
->>   { 'command': 'device-sync-config',
->>     'features': [ 'unstable' ],
->>     'data': {'id': 'str'} }
->> +
->> +##
->> +# @VIRTIO_CONFIG_READ:
->> +#
->> +# Emitted whenever guest reads virtio device configuration after
->> +# configuration change.
-> 
-> Is it emitted whenever the guest reads, or only when it reads after a
-> configuration change?
-
-Hmm, it's emitted only when vdev->generation > 0, which generally mean that there was at least one call to virtio_notify_config()... That's not the logic, which could be simply described here.
-
-
-Actually, now I think that event was a premature improvement. In our final downstream solution only the command device-sync-config is used, not the event. I see that the concept of the event is objectionable, I think, I'll better just drop it in v4.
-
-> 
->> +#
->> +# The event may be used in pair with device-sync-config. It shows
->> +# that guest has re-read updated configuration. It doesn't
->> +# guarantee that guest successfully handled it and updated the
->> +# view of the device for the user, but still it's a kind of
->> +# success indicator.
-> 
-> The event is virtio-only.  device-sync-config isn't.  Why?
-> 
->> +#
->> +# @device: device name
->> +#
->> +# @path: device path
->> +#
->> +# Features:
->> +#
->> +# @unstable: The event is experimental.
->> +#
-> 
-> Missing:
-> 
->     # Note: This event is rate-limited.
->     #
-> 
->> +# Since: 9.1
->> +#
->> +# Example:
->> +#
->> +#     <- { "event": "VIRTIO_CONFIG_READ",
->> +#          "data": { "device": "virtio-net-pci-0",
->> +#                    "path": "/machine/peripheral/virtio-net-pci-0" },
->> +#          "timestamp": { "seconds": 1265044230, "microseconds": 450486 } }
->> +##
->> +{ 'event': 'VIRTIO_CONFIG_READ',
->> +  'features': [ 'unstable' ],
->> +  'data': { '*device': 'str', 'path': 'str' } }
->> diff --git a/stubs/qdev.c b/stubs/qdev.c
->> index 6869f6f90a..ab6c4afe0b 100644
->> --- a/stubs/qdev.c
->> +++ b/stubs/qdev.c
->> @@ -26,3 +26,9 @@ void qapi_event_send_device_unplug_guest_error(const char *device,
->>   {
->>       /* Nothing to do. */
->>   }
->> +
->> +void qapi_event_send_virtio_config_read(const char *device,
->> +                                        const char *path)
->> +{
->> +    /* Nothing to do. */
->> +}
->> diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
->> index cb35ea0b86..8a2ca77fde 100644
->> --- a/system/qdev-monitor.c
->> +++ b/system/qdev-monitor.c
->> @@ -26,6 +26,7 @@
->>   #include "sysemu/runstate.h"
->>   #include "qapi/error.h"
->>   #include "qapi/qapi-commands-qdev.h"
->> +#include "qapi/qapi-events-qdev.h"
->>   #include "qapi/qmp/dispatch.h"
->>   #include "qapi/qmp/qdict.h"
->>   #include "qapi/qmp/qerror.h"
->> @@ -1206,3 +1207,8 @@ bool qmp_command_available(const QmpCommand *cmd, Error **errp)
->>       }
->>       return true;
->>   }
->> +
->> +void qdev_virtio_config_read_event(DeviceState *dev)
->> +{
->> +    qapi_event_send_virtio_config_read(dev->id, dev->canonical_path);
->> +}
-> 
-> Which configuration needs the stub?
-> 
-
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index b08e644517..a6674a826d 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -2236,7 +2236,7 @@ int whpx_init_vcpu(CPUState *cpu)
+     }
+ 
+     vcpu->interruptable = true;
+-    cpu->accel->dirty = true;
++    vcpu->dirty = true;
+     cpu->accel = vcpu;
+     max_vcpu_index = max(max_vcpu_index, cpu->cpu_index);
+     qemu_add_vm_change_state_handler(whpx_cpu_update_state, env);
 -- 
-Best regards,
-Vladimir
+2.41.0
 
 
