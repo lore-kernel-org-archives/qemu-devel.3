@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27AA1C10F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 00:52:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D480C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 00:55:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1FFZ-0003is-DC; Sun, 28 Apr 2024 20:52:12 -0400
+	id 1s1FIB-0004bn-M5; Sun, 28 Apr 2024 20:54:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s1FFV-0003hb-S0
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 20:52:05 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1s1FI9-0004bc-Pj
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 20:54:49 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s1FFU-0004de-8F
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 20:52:05 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-6ee13f19e7eso3686440b3a.1
- for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 17:52:03 -0700 (PDT)
+ id 1s1FI8-0004ry-0w
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 20:54:49 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1e8fce77bb2so29935985ad.0
+ for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 17:54:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714351923; x=1714956723; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714352086; x=1714956886; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=mWw95iM9QYiHeT7UsSv+3A9FVgeBiBK+1iRsGtVnHxI=;
- b=Nam+DyzrJRFvEAzVeJuHxCrGMdL8s1VfPReLWdglAa6OiugtfRxD+fg4BvluOm3uv0
- 21gOG7Wz+En9dNtc4iCwbUKbaIhGZIvmI8MAu5W9J5BROE9H0ncUfq99SvZCjeOXHrW8
- zhIOiqKH5J+8pFMso0utC99VG1Y3MeFlFw5PE6UJlRAvOdRSkkz23xGsYK8lbFhTrH+p
- Koj834a/2wjGn/BiQE49tDHDbvD/U0SF30+Rnjp/QDIfULlZUTYgnAfj9dLtQdhYxnqW
- mxSKiugAnkD/Qt9xcweEj5DXiqEtS1cE16MAx3HhEYZI3jmMbTQ/0erf5WSuV3gdFCMt
- vFoQ==
+ bh=F+T4HB4+Xp7MUWCCGKy4m3Gi1G+2agqjGyynN3Q/N6Y=;
+ b=ONzZ3PeCGnjEzOfEdQtUfszQ19VrKEj02nguNdCzvN8KjaGQ/oJhRH2CCHq3CSiXsv
+ CTkCe3qEgUzjggJ3LTcsqoiXSQKctZvx3KNKtqm9+NS9XEcgNfQ+CTgqqgvvHdRVtuhu
+ VHXpSr+7sayvMDrOczYe3Qv9DcnArb/urn8V2WAs9q9Qq/REddGY4bqZTOyDk8rB0aIO
+ Q2w0cCWcYHEQveDX2NgWO/Qc7NTnqaeNNo8Sw8zmSim2Qla22tJsif9ZOxCQsASp2ApX
+ 4uxgbv6aoHrO+TrRJHjIrPJJSlFCex/B3lvhI5kJLgbnKSjJGHhqD6BVARsieCvuwNN4
+ mXjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714351923; x=1714956723;
+ d=1e100.net; s=20230601; t=1714352086; x=1714956886;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mWw95iM9QYiHeT7UsSv+3A9FVgeBiBK+1iRsGtVnHxI=;
- b=jPb6DRducR+3q3OnIEWmLkj6O1+ti3Yvbqv6ysi4SUT8vMmKLy5s8hPXHpiITVhATl
- 2XtxmdNOidzZwR+gQj5h9vKZ3KN92tDg3QQ3NU4lYLGidRYbuxTiVFfErNgy8iMI9dGf
- H4OBG/juDBVC/kdRGo1IRcyzJW0LLfYDX9N6vC1zgR0ElKmPry0QtLVw3Cs6iJxaXJU1
- mBsOxQR694ghffGpkO/hriqCsT2BYuXO67I2EP+6giXDF1tX3Y7UBjo+ddg8AlnAb/g0
- iDnugu0e0VhKaaZIxMX6dwpLFFSsfRzUf1GaGG2ZDbKKWHxR/f4KdJmZfD3Ci6ko2FM6
- L7EA==
+ bh=F+T4HB4+Xp7MUWCCGKy4m3Gi1G+2agqjGyynN3Q/N6Y=;
+ b=HVKRG0b38lF9Gl4DmpOY/eCDXHN9RDtfpA6eGHtxGz8DiiA2KpRJ9pmwVbHNOSI/pP
+ 98Tp/iUkvI6ZooTzoHd+1pcO9ml5WEu+uPw1w6uOnT4jHNW+qmEP94PO2BEaWlIVcOWy
+ tPLwVmr4dAGYZQrMfN5SXjGbWiwBFfd+PeR5+zBQguNeVFp/xXsiLQaJAJCQPe/+CkJY
+ Vqzkm78trR9X/beua+q0ui9mkXf7MsDsTXFp73LFemhpJO7TpLRjM33l3PsB4GYSEZVC
+ Q+oUovfkSOMlWkJK9Q+sITs3f9FkMkNjO3IuDJQNxQvjo2tHlW8wBV+lUZ24DyIqy6zj
+ oxtA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWVagjo8K95nuSvYBcmiOQ0FsUK8qvkgxvl3dr3Q3FB2e+yclgAzrjGV4Tu6KE0T34PO7Xr8RnO9OnR6Bo/gMzd8VEBpBE=
-X-Gm-Message-State: AOJu0Yx74u35CV53jUHRkd3OZcIbQn3LYtQvJ+WuSsvtnuWBjPbWRWMZ
- mjBJ5Co0LwbkOJ4LgTBZPj5wYGs6PKWcTVovHMseYq0IImgvKOYAgMKYtW82+UG8hTw4BmRkF9q
- 4
-X-Google-Smtp-Source: AGHT+IHqu69PbU0CeVJ6ECpQuh3AZ0gqNHt3CRbgUdd2ubePxghWv7sazixeS0kZBsxhrd+6+tJBqA==
-X-Received: by 2002:a05:6a21:99a6:b0:1aa:5e21:17ac with SMTP id
- ve38-20020a056a2199a600b001aa5e2117acmr11155365pzb.6.1714351923020; 
- Sun, 28 Apr 2024 17:52:03 -0700 (PDT)
+ AJvYcCWpZKd+XAfj4xScCpb1bTJIFYWRXEug1pfcYZYKa8QhhYHSlOL6Wn7msLb4IwO69xjjQjWMjdxBGgbXQu9bal20ffPL8Hs=
+X-Gm-Message-State: AOJu0YygSfGSUCIQCSissZVxGo27QAgauKuw4ONdUedCn23FW9U1zVHh
+ LWDgsKEOv7UB1LFrsblz+pO1nbBzaLWEPwVQ3/PrB1xdE3MiODaajrQvCj1igyI=
+X-Google-Smtp-Source: AGHT+IFCF/qwoyyoNFMEra9+4yzTU6tGLbLEdr8HZFqdFuGb8JptaL/3RoOhhLfhJ1alKi10/KLMdA==
+X-Received: by 2002:a17:902:e542:b0:1e2:ae83:3197 with SMTP id
+ n2-20020a170902e54200b001e2ae833197mr11818866plf.10.1714352086450; 
+ Sun, 28 Apr 2024 17:54:46 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- y20-20020a170902ed5400b001e0648dfd68sm19009393plb.296.2024.04.28.17.52.02
+ l11-20020a170903120b00b001e98f928d0fsm13404171plh.10.2024.04.28.17.54.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Apr 2024 17:52:02 -0700 (PDT)
-Message-ID: <856040df-95ff-4704-adac-f5dbe51736de@linaro.org>
-Date: Sun, 28 Apr 2024 17:52:00 -0700
+ Sun, 28 Apr 2024 17:54:46 -0700 (PDT)
+Message-ID: <7acbabe3-2eb6-4b3b-b5cc-01708339f1d4@linaro.org>
+Date: Sun, 28 Apr 2024 17:54:44 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/24] coverity: Update user emulation regexp
+Subject: Re: [PATCH 03/24] accel/tcg: Move user definition of cpu_interrupt()
+ to user-exec.c
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>
 References: <20240428221450.26460-1-philmd@linaro.org>
- <20240428221450.26460-3-philmd@linaro.org>
+ <20240428221450.26460-4-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240428221450.26460-3-philmd@linaro.org>
+In-Reply-To: <20240428221450.26460-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,28 +101,62 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/28/24 15:14, Philippe Mathieu-Daudé wrote:
-> All user emulation headers are now under include/user/.
-> 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   scripts/coverity-scan/COMPONENTS.md | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/scripts/coverity-scan/COMPONENTS.md b/scripts/coverity-scan/COMPONENTS.md
-> index 91be8d1c36..1537e49cd5 100644
-> --- a/scripts/coverity-scan/COMPONENTS.md
-> +++ b/scripts/coverity-scan/COMPONENTS.md
-> @@ -121,7 +121,7 @@ usb
->     ~ (/qemu)?(/hw/usb/.*|/include/hw/usb/.*)
->   
->   user
-> -  ~ (/qemu)?(/linux-user/.*|/bsd-user/.*|/user-exec\.c|/thunk\.c|/include/exec/user/.*)
-> +  ~ (/qemu)?(/linux-user/.*|/bsd-user/.*|/user-exec\.c|/thunk\.c|/include/user/.*)
->   
->   util
->     ~ (/qemu)?(/util/.*|/include/qemu/.*)
+>   accel/tcg/translate-all.c | 9 ---------
+>   accel/tcg/user-exec.c     | 8 ++++++++
+>   2 files changed, 8 insertions(+), 9 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
+
+> 
+> diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+> index 83cc14fbde..fdf6d8ac19 100644
+> --- a/accel/tcg/translate-all.c
+> +++ b/accel/tcg/translate-all.c
+> @@ -644,15 +644,6 @@ void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr)
+>       cpu_loop_exit_noexc(cpu);
+>   }
+>   
+> -#else /* CONFIG_USER_ONLY */
+> -
+> -void cpu_interrupt(CPUState *cpu, int mask)
+> -{
+> -    g_assert(bql_locked());
+> -    cpu->interrupt_request |= mask;
+> -    qatomic_set(&cpu->neg.icount_decr.u16.high, -1);
+> -}
+> -
+>   #endif /* CONFIG_USER_ONLY */
+>   
+>   /*
+> diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
+> index ca27746fe4..f49435df9d 100644
+> --- a/accel/tcg/user-exec.c
+> +++ b/accel/tcg/user-exec.c
+> @@ -24,6 +24,7 @@
+>   #include "qemu/bitops.h"
+>   #include "qemu/rcu.h"
+>   #include "exec/cpu_ldst.h"
+> +#include "qemu/main-loop.h"
+>   #include "exec/translate-all.h"
+>   #include "exec/page-protection.h"
+>   #include "exec/helper-proto.h"
+> @@ -38,6 +39,13 @@ __thread uintptr_t helper_retaddr;
+>   
+>   //#define DEBUG_SIGNAL
+>   
+> +void cpu_interrupt(CPUState *cpu, int mask)
+> +{
+> +    g_assert(bql_locked());
+> +    cpu->interrupt_request |= mask;
+> +    qatomic_set(&cpu->neg.icount_decr.u16.high, -1);
+> +}
+> +
+>   /*
+>    * Adjust the pc to pass to cpu_restore_state; return the memop type.
+>    */
+
 
