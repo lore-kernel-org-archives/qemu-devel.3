@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C944C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 02:49:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F25B4C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 02:49:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1H3V-0006T1-KU; Sun, 28 Apr 2024 22:47:49 -0400
+	id 1s1H53-0004Ak-8R; Sun, 28 Apr 2024 22:49:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1s1H3P-0006DF-Vy
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 22:47:45 -0400
+ id 1s1H51-0003wA-8s
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 22:49:23 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1s1H3K-000661-L8
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 22:47:43 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1s1H4y-0006EF-QZ
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 22:49:22 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Dx_+tICi9mDcUEAA--.16814S3;
- Mon, 29 Apr 2024 10:47:36 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxpOpOCi9mHsUEAA--.4203S3;
+ Mon, 29 Apr 2024 10:47:42 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8BxkFVECi9mp6QJAA--.7424S5; 
- Mon, 29 Apr 2024 10:47:34 +0800 (CST)
+ AQAAf8BxkFVECi9mp6QJAA--.7424S14; 
+ Mon, 29 Apr 2024 10:47:41 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
 	Bibo Mao <maobibo@loongson.cn>
-Subject: [PULL v2 03/17] hw/loongarch: Add slave cpu boot_code
-Date: Mon, 29 Apr 2024 10:30:29 +0800
-Message-Id: <20240429023043.2607982-4-gaosong@loongson.cn>
+Subject: [PULL v2 12/17] hw/loongarch: fdt adds pch_pic Controller
+Date: Mon, 29 Apr 2024 10:30:38 +0800
+Message-Id: <20240429023043.2607982-13-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20240429023043.2607982-1-gaosong@loongson.cn>
 References: <20240429023043.2607982-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8BxkFVECi9mp6QJAA--.7424S5
+X-CM-TRANSID: AQAAf8BxkFVECi9mp6QJAA--.7424S14
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,100 +65,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Load the slave CPU boot code at pflash0 and set
-the slave CPU elf_address to VIRT_FLASH0_BASE.
+fdt adds pch pic controller, we use 'loongson,pch-pic-1.0'
+
+See:
+https://github.com/torvalds/linux/blob/v6.7/drivers/irqchip/irq-loongson-pch-pic.c
+https://lore.kernel.org/r/20200528152757.1028711-4-jiaxun.yang@flygoat.com
 
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Message-Id: <20240426091551.2397867-4-gaosong@loongson.cn>
+Message-Id: <20240426091551.2397867-13-gaosong@loongson.cn>
 ---
- hw/loongarch/boot.c | 62 ++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 61 insertions(+), 1 deletion(-)
+ hw/loongarch/virt.c        | 30 +++++++++++++++++++++++++++++-
+ include/hw/pci-host/ls7a.h |  1 +
+ 2 files changed, 30 insertions(+), 1 deletion(-)
 
-diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-index a5135fe542..fb6effbaff 100644
---- a/hw/loongarch/boot.c
-+++ b/hw/loongarch/boot.c
-@@ -15,6 +15,54 @@
- #include "sysemu/reset.h"
- #include "sysemu/qtest.h"
- 
-+static const unsigned int slave_boot_code[] = {
-+                  /* Configure reset ebase.                    */
-+    0x0400302c,   /* csrwr      $t0, LOONGARCH_CSR_EENTRY      */
-+
-+                  /* Disable interrupt.                        */
-+    0x0380100c,   /* ori        $t0, $zero,0x4                 */
-+    0x04000180,   /* csrxchg    $zero, $t0, LOONGARCH_CSR_CRMD */
-+
-+                  /* Clear mailbox.                            */
-+    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
-+    0x038081ad,   /* ori        $t1, $t1, CORE_BUF_20  */
-+    0x06481da0,   /* iocsrwr.d  $zero, $t1                     */
-+
-+                  /* Enable IPI interrupt.                     */
-+    0x1400002c,   /* lu12i.w    $t0, 1(0x1)                    */
-+    0x0400118c,   /* csrxchg    $t0, $t0, LOONGARCH_CSR_ECFG   */
-+    0x02fffc0c,   /* addi.d     $t0, $r0,-1(0xfff)             */
-+    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
-+    0x038011ad,   /* ori        $t1, $t1, CORE_EN_OFF          */
-+    0x064819ac,   /* iocsrwr.w  $t0, $t1                       */
-+    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
-+    0x038081ad,   /* ori        $t1, $t1, CORE_BUF_20          */
-+
-+                  /* Wait for wakeup  <.L11>:                  */
-+    0x06488000,   /* idle       0x0                            */
-+    0x03400000,   /* andi       $zero, $zero, 0x0              */
-+    0x064809ac,   /* iocsrrd.w  $t0, $t1                       */
-+    0x43fff59f,   /* beqz       $t0, -12(0x7ffff4) # 48 <.L11> */
-+
-+                  /* Read and clear IPI interrupt.             */
-+    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
-+    0x064809ac,   /* iocsrrd.w  $t0, $t1                       */
-+    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
-+    0x038031ad,   /* ori        $t1, $t1, CORE_CLEAR_OFF       */
-+    0x064819ac,   /* iocsrwr.w  $t0, $t1                       */
-+
-+                  /* Disable  IPI interrupt.                   */
-+    0x1400002c,   /* lu12i.w    $t0, 1(0x1)                    */
-+    0x04001180,   /* csrxchg    $zero, $t0, LOONGARCH_CSR_ECFG */
-+
-+                  /* Read mail buf and jump to specified entry */
-+    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
-+    0x038081ad,   /* ori        $t1, $t1, CORE_BUF_20          */
-+    0x06480dac,   /* iocsrrd.d  $t0, $t1                       */
-+    0x00150181,   /* move       $ra, $t0                       */
-+    0x4c000020,   /* jirl       $zero, $ra,0                   */
-+};
-+
- static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
- {
-     return addr & MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS);
-@@ -125,11 +173,23 @@ static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
-         }
-     }
- 
-+    /* Load slave boot code at pflash0 . */
-+    void *boot_code = g_malloc0(VIRT_FLASH0_SIZE);
-+    memcpy(boot_code, &slave_boot_code, sizeof(slave_boot_code));
-+    rom_add_blob_fixed("boot_code", boot_code, VIRT_FLASH0_SIZE, VIRT_FLASH0_BASE);
-+
-     CPU_FOREACH(cs) {
-         lacpu = LOONGARCH_CPU(cs);
-         lacpu->env.load_elf = true;
--        lacpu->env.elf_address = kernel_addr;
-+        if (cs == first_cpu) {
-+            lacpu->env.elf_address = kernel_addr;
-+        } else {
-+            lacpu->env.elf_address = VIRT_FLASH0_BASE;
-+        }
-+        lacpu->env.boot_info = info;
-     }
-+
-+    g_free(boot_code);
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 094b9d2e60..5bef161d11 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -148,6 +148,31 @@ static void fdt_add_eiointc_node(LoongArchMachineState *lams,
+     g_free(nodename);
  }
  
- void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
++static void fdt_add_pch_pic_node(LoongArchMachineState *lams,
++                                 uint32_t *eiointc_phandle,
++                                 uint32_t *pch_pic_phandle)
++{
++    MachineState *ms = MACHINE(lams);
++    char *nodename;
++    hwaddr pch_pic_base = VIRT_PCH_REG_BASE;
++    hwaddr pch_pic_size = VIRT_PCH_REG_SIZE;
++
++    *pch_pic_phandle = qemu_fdt_alloc_phandle(ms->fdt);
++    nodename = g_strdup_printf("/platic@%" PRIx64, pch_pic_base);
++    qemu_fdt_add_subnode(ms->fdt, nodename);
++    qemu_fdt_setprop_cell(ms->fdt,  nodename, "phandle", *pch_pic_phandle);
++    qemu_fdt_setprop_string(ms->fdt, nodename, "compatible",
++                            "loongson,pch-pic-1.0");
++    qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", 0,
++                           pch_pic_base, 0, pch_pic_size);
++    qemu_fdt_setprop(ms->fdt, nodename, "interrupt-controller", NULL, 0);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 2);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
++                          *eiointc_phandle);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "loongson,pic-base-vec", 0);
++    g_free(nodename);
++}
++
+ static void fdt_add_flash_node(LoongArchMachineState *lams)
+ {
+     MachineState *ms = MACHINE(lams);
+@@ -570,7 +595,7 @@ static void loongarch_irq_init(LoongArchMachineState *lams)
+     CPULoongArchState *env;
+     CPUState *cpu_state;
+     int cpu, pin, i, start, num;
+-    uint32_t cpuintc_phandle, eiointc_phandle;
++    uint32_t cpuintc_phandle, eiointc_phandle, pch_pic_phandle;
+ 
+     /*
+      * The connection of interrupts:
+@@ -661,6 +686,9 @@ static void loongarch_irq_init(LoongArchMachineState *lams)
+         qdev_connect_gpio_out(DEVICE(d), i, qdev_get_gpio_in(extioi, i));
+     }
+ 
++    /* Add PCH PIC node */
++    fdt_add_pch_pic_node(lams, &eiointc_phandle, &pch_pic_phandle);
++
+     pch_msi = qdev_new(TYPE_LOONGARCH_PCH_MSI);
+     start   =  num;
+     num = EXTIOI_IRQS - start;
+diff --git a/include/hw/pci-host/ls7a.h b/include/hw/pci-host/ls7a.h
+index e753449593..fe260f0183 100644
+--- a/include/hw/pci-host/ls7a.h
++++ b/include/hw/pci-host/ls7a.h
+@@ -24,6 +24,7 @@
+ #define VIRT_PCH_REG_BASE        0x10000000UL
+ #define VIRT_IOAPIC_REG_BASE     (VIRT_PCH_REG_BASE)
+ #define VIRT_PCH_MSI_ADDR_LOW    0x2FF00000UL
++#define VIRT_PCH_REG_SIZE        0x400
+ 
+ /*
+  * GSI_BASE is hard-coded with 64 in linux kernel, else kernel fails to boot
 -- 
 2.25.1
 
