@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F627C4345F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 710DAC25B4F
 	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 21:32:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1Yal-00078X-QK; Mon, 29 Apr 2024 17:31:19 -0400
+	id 1s1YbC-0007Yv-Fq; Mon, 29 Apr 2024 17:31:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Yaf-000771-FS
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:31:15 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1YbA-0007Vo-My
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:31:44 -0400
+Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Yac-0003Jv-PB
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:31:12 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-41b9dff6be8so24521665e9.3
- for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 14:31:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Yb8-0003Lv-IH
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:31:44 -0400
+Received: by mail-lj1-x22d.google.com with SMTP id
+ 38308e7fff4ca-2dd615b6c44so53508281fa.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 14:31:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714426269; x=1715031069; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714426300; x=1715031100; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=359wWRi32Y2oOVdKpxTRSnqSjs36xauPX3xPDGvVHF0=;
- b=F0uAxXbPnWHIZWxviKtyUwjoL5EK1RsFxgEMUoQCdP08xzunn0iRcmh+c788GM5b0L
- MPh2xZBCv6VnIpv3EbWGaNC6filalxvNRCLKrBLGSwzC/dY2BcP1NhtcL4xcLNc+TJY6
- /DQuDdiJyH/AsUwABJ0OV8Bqugzy2kS83+GPU2OIa5ka/O7TyIghpgLo+SRCALN+YHgg
- 5fkTHE1nfaWKi2ugMxB8+9De69MqMsdogvm9hxYCC1u1FhOFqCv6/6bAl11EjFr6hYKi
- jwJnivvJf8MRsnTDoodwbmj09+TAFwnMc6apyB0xWCXPw3oAl1QlVqxmVFdfzmmhLwxv
- naRA==
+ bh=5OmsnBs/+tQZTXi4xeG0bzNVQxfgpAgsB1myUNRNM74=;
+ b=pD42bxWt58Uf3M9kpmBpLWqOr0/2rQqlVafYY9l7yVHFKMH8ar9ysx1bK2wiR45j6d
+ UEm4KgxMFPkSssKbcjV6jL4XTd5y7VAuB1YAjwGpO3PDbdtTsqVwiRoNemNm7Ahm2fxA
+ /zfvYcgSQb0xn6vyjyprjV74aECmIA9dZ+0zdrN9iKENxDa7C199K2+5D8Y7jzCrrgRP
+ 7ee9HPeikEt5jvOmesuipDVTQP5OcTkVAxv+9z96pdhkkFC2I+IyLbuM0XkGSj3ekCOG
+ k+FFPF5E+iuycUP4TqHhWJ0FU6fVXxv0fLVAJrlfJ5UXGviqkOhyO4sHVPoSdqlYTT3N
+ gjHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714426269; x=1715031069;
+ d=1e100.net; s=20230601; t=1714426300; x=1715031100;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=359wWRi32Y2oOVdKpxTRSnqSjs36xauPX3xPDGvVHF0=;
- b=IfK6w9Sx3dRQP6zUs7DU2Hg9HlLl9e+gUG2S1XqdRfnZjcg3XRWmBkdGyQRUqsgdR3
- 6GOZo+HvRlJpZ5x6mVClsxjwOD5k7QylB8v9yPyeRb2UH4e4530VFhPlIImxnzbfL3RM
- XDB3HTY8fdfSLhM4r00onxSJ7YBJakMtIiEWaR65oQg3Im7QCm7FTC1dE+ltUdxgPi1c
- CFVPRCvGb8cnmELhtJ3roPDzZqQXLsN85LXYl0rECs7OR0/HpuYr17Nsj16s9sdwylVb
- wyoHgUPSdqDKPjin8dxgZeJY+6RaCvrLeqbcLlLkq0e0rp8V6BxUo8x2ZLsBDIYxenZB
- WHaA==
-X-Gm-Message-State: AOJu0Yz+atr6/ly2K9cAvCyMeTpwem4Ecr8hSVbwO551X5p01IDg6+Zi
- RaOF/ezq8q9wuWAgkzcZpqG2oEm6NmCgNHwQwyjcodW1l8myevngovjNVBb5tdjVpJXGoKWIHXo
- CfRM=
-X-Google-Smtp-Source: AGHT+IErxhbSSahcLTMN/ODB/8NDHWHDm1uAlhTeFmZLza4zefq5CZ9ySmanzU751lq/Nszukgghbw==
-X-Received: by 2002:adf:f04e:0:b0:34c:b8fa:9768 with SMTP id
- t14-20020adff04e000000b0034cb8fa9768mr5327988wro.51.1714426268756; 
- Mon, 29 Apr 2024 14:31:08 -0700 (PDT)
+ bh=5OmsnBs/+tQZTXi4xeG0bzNVQxfgpAgsB1myUNRNM74=;
+ b=UX0Rd5jQR4Zj0GAo6FXd6+nF1DPgMb/CKUwI2qJWt2IS3CKWaS7FP45GTawO2L/aRi
+ Byd3PV5+VOGxGZvz4pvMB9gS1IkHsVBWv8t3ea09FhVdq2bgQixONL8n50eOONMH36cs
+ FX0mQREg+S9RJw+o4Y75Fby7u4weGmTBB+Nmv53vegn7KKzEgF5dhSiTs4LtnC6XXSUz
+ fA/oEBoi1Y9Io2oLzwizoyg8Vw2gl+FxqNnA93Wh6t5G6rx0e60PKb1Go0ILNx0Rk/i2
+ FBfe/q6vncSwgtNkTeIgihw9uzhzcazeMxWEGFukl6FEAmdDLn1XH10LTMS2jDMBIbEY
+ c+5A==
+X-Gm-Message-State: AOJu0YwQgUIyN03AMCXI2+qAstEYVWPdlrIwAc+eqX/6RAYdslPODCz8
+ +/aebZXTa/KMP/B01FfkuW7Yoc0Bs4FKpI6AILqMLzHYzuhi6ER4c1NHpfzi+kTrCjuy6PwFgyP
+ dIr0=
+X-Google-Smtp-Source: AGHT+IHz3e3g5eBBT5Om/j8XNn8tda7xBLvGcWxXvL0d1xnCd8Rw+vAtZM8JOGTeSthzWqUHbEWRjw==
+X-Received: by 2002:a2e:9350:0:b0:2da:a3ff:524e with SMTP id
+ m16-20020a2e9350000000b002daa3ff524emr5676951ljh.9.1714426300556; 
+ Mon, 29 Apr 2024 14:31:40 -0700 (PDT)
 Received: from m1x-phil.lan (bny92-h02-176-184-44-142.dsl.sta.abo.bbox.fr.
  [176.184.44.142]) by smtp.gmail.com with ESMTPSA id
- b10-20020a5d4d8a000000b0034cf989dbf5sm4320744wru.44.2024.04.29.14.31.07
+ u5-20020a05600c138500b0041c5151dc1csm4286616wmf.29.2024.04.29.14.31.39
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 29 Apr 2024 14:31:08 -0700 (PDT)
+ Mon, 29 Apr 2024 14:31:40 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Anton Johansson <anjo@rev.ng>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 03/13] accel/tcg: Move @plugin_mem_cbs from CPUState to
- CPUNegativeOffsetState
-Date: Mon, 29 Apr 2024 23:30:40 +0200
-Message-ID: <20240429213050.55177-4-philmd@linaro.org>
+Subject: [PATCH v2 09/13] accel/tcg: Move @tb_jmp_cache from CPUState to TCG
+ AccelCPUState
+Date: Mon, 29 Apr 2024 23:30:46 +0200
+Message-ID: <20240429213050.55177-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240429213050.55177-1-philmd@linaro.org>
 References: <20240429213050.55177-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,121 +96,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-@plugin_mem_cbs is accessed by tcg generated code, move it
-to CPUNegativeOffsetState.
+@tb_jmp_cache is specific to TCG accelerator, move it to
+its AccelCPUState.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240428221450.26460-21-philmd@linaro.org>
 ---
- accel/tcg/internal-common.h |  2 +-
- include/hw/core/cpu.h       | 13 +++++++------
- include/qemu/plugin.h       |  2 +-
- accel/tcg/plugin-gen.c      |  5 +++--
- plugins/core.c              |  2 +-
- 5 files changed, 13 insertions(+), 11 deletions(-)
+ accel/tcg/tb-jmp-cache.h  | 4 ++--
+ accel/tcg/vcpu-state.h    | 2 ++
+ include/hw/core/cpu.h     | 2 --
+ include/qemu/typedefs.h   | 1 -
+ accel/tcg/cpu-exec.c      | 7 +++----
+ accel/tcg/cputlb.c        | 2 +-
+ accel/tcg/tb-maint.c      | 2 +-
+ accel/tcg/translate-all.c | 5 +++--
+ 8 files changed, 12 insertions(+), 13 deletions(-)
 
-diff --git a/accel/tcg/internal-common.h b/accel/tcg/internal-common.h
-index 5061687900..867426500f 100644
---- a/accel/tcg/internal-common.h
-+++ b/accel/tcg/internal-common.h
-@@ -35,7 +35,7 @@ static inline bool cpu_in_serial_context(CPUState *cs)
- static inline bool cpu_plugin_mem_cbs_enabled(const CPUState *cpu)
- {
- #ifdef CONFIG_PLUGIN
--    return !!cpu->plugin_mem_cbs;
-+    return !!cpu->neg.plugin_mem_cbs;
- #else
-     return false;
- #endif
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 55555be618..571ef3e514 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -342,9 +342,16 @@ typedef union IcountDecr {
-  * CPUNegativeOffsetState: Elements of CPUState most efficiently accessed
-  *                         from CPUArchState, via small negative offsets.
-  * @can_do_io: True if memory-mapped IO is allowed.
-+ * @plugin_mem_cbs: active plugin memory callbacks
+diff --git a/accel/tcg/tb-jmp-cache.h b/accel/tcg/tb-jmp-cache.h
+index 184bb3e3e2..c3a505e394 100644
+--- a/accel/tcg/tb-jmp-cache.h
++++ b/accel/tcg/tb-jmp-cache.h
+@@ -22,12 +22,12 @@
+  * non-NULL value of 'tb'.  Strictly speaking pc is only needed for
+  * CF_PCREL, but it's used always for simplicity.
   */
- typedef struct CPUNegativeOffsetState {
-     CPUTLB tlb;
-+#ifdef CONFIG_PLUGIN
-+    /*
-+     * The callback pointer are accessed via TCG (see gen_empty_mem_helper).
-+     */
-+    GArray *plugin_mem_cbs;
-+#endif
-     IcountDecr icount_decr;
-     bool can_do_io;
- } CPUNegativeOffsetState;
-@@ -416,7 +423,6 @@ struct qemu_work_item;
-  * @kvm_fd: vCPU file descriptor for KVM.
-  * @work_mutex: Lock to prevent multiple access to @work_list.
-  * @work_list: List of pending asynchronous work.
-- * @plugin_mem_cbs: active plugin memory callbacks
-  * @plugin_state: per-CPU plugin state
-  * @ignore_memory_transaction_failures: Cached copy of the MachineState
-  *    flag of the same name: allows the board to suppress calling of the
-@@ -509,11 +515,6 @@ struct CPUState {
-     QemuLockCnt in_ioctl_lock;
+-struct CPUJumpCache {
++typedef struct CPUJumpCache {
+     struct rcu_head rcu;
+     struct {
+         TranslationBlock *tb;
+         vaddr pc;
+     } array[TB_JMP_CACHE_SIZE];
+-};
++} CPUJumpCache;
  
- #ifdef CONFIG_PLUGIN
--    /*
--     * The callback pointer stays in the main CPUState as it is
--     * accessed via TCG (see gen_empty_mem_helper).
--     */
--    GArray *plugin_mem_cbs;
-     CPUPluginState *plugin_state;
- #endif
+ #endif /* ACCEL_TCG_TB_JMP_CACHE_H */
+diff --git a/accel/tcg/vcpu-state.h b/accel/tcg/vcpu-state.h
+index 51e54ca535..0cb58ba734 100644
+--- a/accel/tcg/vcpu-state.h
++++ b/accel/tcg/vcpu-state.h
+@@ -7,6 +7,7 @@
+ #define ACCEL_TCG_VCPU_STATE_H
  
-diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
-index 41db748eda..99a32446e9 100644
---- a/include/qemu/plugin.h
-+++ b/include/qemu/plugin.h
-@@ -229,7 +229,7 @@ void qemu_plugin_add_dyn_cb_arr(GArray *arr);
- 
- static inline void qemu_plugin_disable_mem_helpers(CPUState *cpu)
- {
--    cpu->plugin_mem_cbs = NULL;
-+    cpu->neg.plugin_mem_cbs = NULL;
- }
+ #include "hw/core/cpu.h"
++#include "tb-jmp-cache.h"
  
  /**
-diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
-index cd78ef94a1..fd268c79b5 100644
---- a/accel/tcg/plugin-gen.c
-+++ b/accel/tcg/plugin-gen.c
-@@ -178,7 +178,7 @@ static void gen_empty_mem_helper(void)
-     TCGv_ptr ptr = tcg_temp_ebb_new_ptr();
+  * AccelCPUState: vCPU fields specific to TCG accelerator
+@@ -16,6 +17,7 @@ struct AccelCPUState {
+     uint32_t cflags_next_tb;
  
-     tcg_gen_movi_ptr(ptr, 0);
--    tcg_gen_st_ptr(ptr, tcg_env, offsetof(CPUState, plugin_mem_cbs) -
-+    tcg_gen_st_ptr(ptr, tcg_env, offsetof(CPUState, neg.plugin_mem_cbs) -
-                                  offsetof(ArchCPU, env));
-     tcg_temp_free_ptr(ptr);
+     sigjmp_buf jmp_env;
++    CPUJumpCache tb_jmp_cache;
+ 
+ #ifdef CONFIG_USER_ONLY
+     TaskState *ts;
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index f3cbb944eb..6e6e946b66 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -483,8 +483,6 @@ struct CPUState {
+     AddressSpace *as;
+     MemoryRegion *memory;
+ 
+-    CPUJumpCache *tb_jmp_cache;
+-
+     GArray *gdb_regs;
+     int gdb_num_regs;
+     int gdb_num_g_regs;
+diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
+index 36f2825725..daf9009332 100644
+--- a/include/qemu/typedefs.h
++++ b/include/qemu/typedefs.h
+@@ -44,7 +44,6 @@ typedef struct CPUAddressSpace CPUAddressSpace;
+ typedef struct CPUArchState CPUArchState;
+ typedef struct CPUPluginState CPUPluginState;
+ typedef struct CpuInfoFast CpuInfoFast;
+-typedef struct CPUJumpCache CPUJumpCache;
+ typedef struct CPUState CPUState;
+ typedef struct CPUTLBEntryFull CPUTLBEntryFull;
+ typedef struct DeviceListener DeviceListener;
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 55235d3e5e..8f8e1fa948 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -261,7 +261,7 @@ static inline TranslationBlock *tb_lookup(CPUState *cpu, vaddr pc,
+     tcg_debug_assert(!(cflags & CF_INVALID));
+ 
+     hash = tb_jmp_cache_hash_func(pc);
+-    jc = cpu->tb_jmp_cache;
++    jc = &cpu->accel->tb_jmp_cache;
+ 
+     tb = qatomic_read(&jc->array[hash].tb);
+     if (likely(tb &&
+@@ -1004,7 +1004,7 @@ cpu_exec_loop(CPUState *cpu, SyncClocks *sc)
+                  * for the fast lookup
+                  */
+                 h = tb_jmp_cache_hash_func(pc);
+-                jc = cpu->tb_jmp_cache;
++                jc = &cpu->accel->tb_jmp_cache;
+                 jc->array[h].pc = pc;
+                 qatomic_set(&jc->array[h].tb, tb);
+             }
+@@ -1083,7 +1083,6 @@ bool tcg_exec_realizefn(CPUState *cpu, Error **errp)
+         tcg_target_initialized = true;
+     }
+ 
+-    cpu->tb_jmp_cache = g_new0(CPUJumpCache, 1);
+     tlb_init(cpu);
+ #ifndef CONFIG_USER_ONLY
+     tcg_iommu_init_notifier_list(cpu);
+@@ -1101,5 +1100,5 @@ void tcg_exec_unrealizefn(CPUState *cpu)
+ #endif /* !CONFIG_USER_ONLY */
+ 
+     tlb_destroy(cpu);
+-    g_free_rcu(cpu->tb_jmp_cache, rcu);
++    g_free_rcu(&cpu->accel->tb_jmp_cache, rcu);
  }
-@@ -634,7 +634,8 @@ void plugin_gen_disable_mem_helpers(void)
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index cdb3e12dfb..eaa60d1da2 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -156,7 +156,7 @@ static void tlb_window_reset(CPUTLBDesc *desc, int64_t ns,
+ 
+ static void tb_jmp_cache_clear_page(CPUState *cpu, vaddr page_addr)
+ {
+-    CPUJumpCache *jc = cpu->tb_jmp_cache;
++    CPUJumpCache *jc = &cpu->accel->tb_jmp_cache;
+     int i, i0;
+ 
+     if (unlikely(!jc)) {
+diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
+index 2d5faca9fd..83758648f2 100644
+--- a/accel/tcg/tb-maint.c
++++ b/accel/tcg/tb-maint.c
+@@ -888,7 +888,7 @@ static void tb_jmp_cache_inval_tb(TranslationBlock *tb)
+         uint32_t h = tb_jmp_cache_hash_func(tb->pc);
+ 
+         CPU_FOREACH(cpu) {
+-            CPUJumpCache *jc = cpu->tb_jmp_cache;
++            CPUJumpCache *jc = &cpu->accel->tb_jmp_cache;
+ 
+             if (qatomic_read(&jc->array[h].tb) == tb) {
+                 qatomic_set(&jc->array[h].tb, NULL);
+diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+index 3a8199a761..ca1e193633 100644
+--- a/accel/tcg/translate-all.c
++++ b/accel/tcg/translate-all.c
+@@ -652,13 +652,14 @@ void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr)
+  */
+ void tcg_flush_jmp_cache(CPUState *cpu)
+ {
+-    CPUJumpCache *jc = cpu->tb_jmp_cache;
++    CPUJumpCache *jc;
+ 
+     /* During early initialization, the cache may not yet be allocated. */
+-    if (unlikely(jc == NULL)) {
++    if (unlikely(cpu->accel == NULL)) {
          return;
      }
-     tcg_gen_st_ptr(tcg_constant_ptr(NULL), tcg_env,
--                   offsetof(CPUState, plugin_mem_cbs) - offsetof(ArchCPU, env));
-+                   offsetof(CPUState, neg.plugin_mem_cbs) -
-+                   offsetof(ArchCPU, env));
- }
  
- static void plugin_gen_tb_udata(const struct qemu_plugin_tb *ptb,
-diff --git a/plugins/core.c b/plugins/core.c
-index 09c98382f5..a097d02788 100644
---- a/plugins/core.c
-+++ b/plugins/core.c
-@@ -496,7 +496,7 @@ void exec_inline_op(struct qemu_plugin_dyn_cb *cb, int cpu_index)
- void qemu_plugin_vcpu_mem_cb(CPUState *cpu, uint64_t vaddr,
-                              MemOpIdx oi, enum qemu_plugin_mem_rw rw)
- {
--    GArray *arr = cpu->plugin_mem_cbs;
-+    GArray *arr = cpu->neg.plugin_mem_cbs;
-     size_t i;
- 
-     if (arr == NULL) {
++    jc = &cpu->accel->tb_jmp_cache;
+     for (int i = 0; i < TB_JMP_CACHE_SIZE; i++) {
+         qatomic_set(&jc->array[i].tb, NULL);
+     }
 -- 
 2.41.0
 
