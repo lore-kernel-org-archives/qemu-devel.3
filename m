@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47B71C41513
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 15:59:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B1F6C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 16:00:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1TMm-0005Gp-1c; Mon, 29 Apr 2024 11:56:32 -0400
+	id 1s1TMO-0004cT-5Z; Mon, 29 Apr 2024 11:56:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1s1TML-0004bE-J2
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:06 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ id 1s1TMI-0004Y4-2S
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:02 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1s1TMI-0005G8-JD
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:04 -0400
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ id 1s1TMF-0005KS-D8
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:01 -0400
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43TFmnrW023173; Mon, 29 Apr 2024 15:55:48 GMT
+ 43TFnaSJ028140; Mon, 29 Apr 2024 15:55:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
  h=from : to : cc :
  subject : date : message-id : in-reply-to : references; s=corp-2023-11-20;
- bh=36mCyWFnknwNhH0B4xYEyn7ewW0hY0bHUl96xUN213U=;
- b=dXyKY1ylWEmMxTC2H6sppI4Zoq1D6T1QQYUEOj47gwcMB/oTEmdYM9YMp7yxpKlMyxsB
- ZR5e5xt1NsYX4X7flNuKO0+hlzX3sjcLEhQwKOg8QVWPIw6vk6igDutN8znyAHfNHtoT
- pewsHh4DH+fxCqHmn2TGDh/Vxc4p/LSgFul5t4XSGuUYI8iBzFxDKJLjEENGbcRDl+e0
- Nivh0C+TNNieLaO79LWo8+iXoHQsLh6X4pBFUvsxKo/onVIgy9TfYziACx+GSkBMUFcx
- FpeIpQCyEi+nRx7REh+9J+G+Di4EAUQFDR7L42bGgyTUVkDlPYAjGdDNDO7k6weDZYek wg== 
+ bh=fw5vl/gUrGf8tdC1SZLnUmsT4rLdaGW9sQv+fRKn54c=;
+ b=Xm601FTQxdGx5a1MU96jZyMrjHsSJOr2BmCwl42Vscvn5khy98rCS6hEDnjP2Uo27liJ
+ AedR8f0SmOH8aAMGMDx6Q9Ww0HreoV+dykYweGi9ElhLac2mrg7r1CFydmJzfgxR7tRt
+ GyvdlAe0q7XUDhh2QJkb6ObUaPYlcsRqDuW9X4yTs81S0b87qE232Bn7eH8gEYOpmUYh
+ D/k5QMDZvHCWu3/bWkb4/UKjwPqSTttv1T6httpt5zfXGWD/YswD3ZPlZs/17y3TdpWj
+ 8C0j0dtmMAISFxe5oiH0X4b1NP7rPRcSODWlMT9OJUd6arPctKTAETKlMwE255Po1wVK 8Q== 
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xrryv2wby-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xrswvjxsa-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Apr 2024 15:55:48 +0000
+ Mon, 29 Apr 2024 15:55:55 +0000
 Received: from pps.filterd
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 43TFAtv5011379; Mon, 29 Apr 2024 15:55:47 GMT
+ with ESMTP id 43TFtTbm011394; Mon, 29 Apr 2024 15:55:54 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 3xrqt6j6cj-1
+ 3xrqt6j6n7-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Apr 2024 15:55:47 +0000
+ Mon, 29 Apr 2024 15:55:54 +0000
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43TFtaGu034442;
- Mon, 29 Apr 2024 15:55:46 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43TFtaHG034442;
+ Mon, 29 Apr 2024 15:55:54 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 3xrqt6j5ys-15; Mon, 29 Apr 2024 15:55:46 +0000
+ ESMTP id 3xrqt6j5ys-25; Mon, 29 Apr 2024 15:55:54 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,9 +64,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V1 14/26] physmem: hoist guest_memfd creation
-Date: Mon, 29 Apr 2024 08:55:23 -0700
-Message-Id: <1714406135-451286-15-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V1 24/26] seccomp: cpr-exec blocker
+Date: Mon, 29 Apr 2024 08:55:33 -0700
+Message-Id: <1714406135-451286-25-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
 References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
@@ -78,17 +78,17 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
  adultscore=0 mlxscore=0 suspectscore=0 phishscore=0 spamscore=0
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2404010000 definitions=main-2404290101
-X-Proofpoint-GUID: UYhh70tNoRJsC3TSXG4YZQ9ZOG27g5_V
-X-Proofpoint-ORIG-GUID: UYhh70tNoRJsC3TSXG4YZQ9ZOG27g5_V
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Proofpoint-GUID: Eyz1nINE8TlboDT8f6RUbRVTAFCt2zH7
+X-Proofpoint-ORIG-GUID: Eyz1nINE8TlboDT8f6RUbRVTAFCt2zH7
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,170 +104,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Do not modify RAMBlocks in ram_block_add.  The block should be fully
-formed before calling ram_block_add to add it to the block list.  This
-will simplify error handling and be more modular.
-
-Start by hoisting guest_memfd creation to the call sites.
-No functional change.
+cpr-exec mode needs permission to exec.  Block it if permission is denied.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- system/physmem.c | 85 ++++++++++++++++++++++++++++++++------------------------
- 1 file changed, 48 insertions(+), 37 deletions(-)
+ include/sysemu/seccomp.h |  1 +
+ system/qemu-seccomp.c    | 10 ++++++++--
+ system/vl.c              |  6 ++++++
+ 3 files changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/system/physmem.c b/system/physmem.c
-index 6216b14..ffcf012 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -1803,13 +1803,34 @@ static void dirty_memory_extend(ram_addr_t old_ram_size,
-     }
+diff --git a/include/sysemu/seccomp.h b/include/sysemu/seccomp.h
+index fe85989..023c0a1 100644
+--- a/include/sysemu/seccomp.h
++++ b/include/sysemu/seccomp.h
+@@ -22,5 +22,6 @@
+ #define QEMU_SECCOMP_SET_RESOURCECTL (1 << 4)
+ 
+ int parse_sandbox(void *opaque, QemuOpts *opts, Error **errp);
++uint32_t qemu_seccomp_get_opts(void);
+ 
+ #endif
+diff --git a/system/qemu-seccomp.c b/system/qemu-seccomp.c
+index 5c20ac0..0d2a561 100644
+--- a/system/qemu-seccomp.c
++++ b/system/qemu-seccomp.c
+@@ -360,12 +360,18 @@ static int seccomp_start(uint32_t seccomp_opts, Error **errp)
+     return rc < 0 ? -1 : 0;
  }
  
-+static int ram_block_create_guest_memfd(RAMBlock *rb, Error **errp)
++static uint32_t seccomp_opts;
++
++uint32_t qemu_seccomp_get_opts(void)
 +{
-+    assert(kvm_enabled());
-+
-+    if (ram_block_discard_require(true) < 0) {
-+        error_setg_errno(errp, errno,
-+            "cannot set up private guest memory: discard currently blocked");
-+        error_append_hint(errp, "Are you using assigned devices?\n");
-+        return -1;
-+    }
-+
-+    return kvm_create_guest_memfd(rb->max_length, 0, errp);
++    return seccomp_opts;
 +}
 +
-+static void ram_block_destroy_guest_memfd(RAMBlock *rb)
-+{
-+    if (rb->guest_memfd >= 0) {
-+        close(rb->guest_memfd);
-+        ram_block_discard_require(false);
-+    }
-+}
-+
- static void ram_block_add(RAMBlock *new_block, Error **errp)
+ int parse_sandbox(void *opaque, QemuOpts *opts, Error **errp)
  {
-     const bool noreserve = qemu_ram_is_noreserve(new_block);
-     const bool shared = qemu_ram_is_shared(new_block);
-     RAMBlock *block;
-     RAMBlock *last_block = NULL;
--    bool free_on_error = false;
-     ram_addr_t old_ram_size, new_ram_size;
-     Error *err = NULL;
+     if (qemu_opt_get_bool(opts, "enable", false)) {
+-        uint32_t seccomp_opts = QEMU_SECCOMP_SET_DEFAULT
+-                | QEMU_SECCOMP_SET_OBSOLETE;
+         const char *value = NULL;
++        seccomp_opts = QEMU_SECCOMP_SET_DEFAULT | QEMU_SECCOMP_SET_OBSOLETE;
  
-@@ -1839,26 +1860,6 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-                 return;
-             }
-             memory_try_enable_merging(new_block->host, new_block->max_length);
--            free_on_error = true;
--        }
--    }
--
--    if (new_block->flags & RAM_GUEST_MEMFD) {
--        assert(kvm_enabled());
--        assert(new_block->guest_memfd < 0);
--
--        if (ram_block_discard_require(true) < 0) {
--            error_setg_errno(errp, errno,
--                             "cannot set up private guest memory: discard currently blocked");
--            error_append_hint(errp, "Are you using assigned devices?\n");
--            goto out_free;
--        }
--
--        new_block->guest_memfd = kvm_create_guest_memfd(new_block->max_length,
--                                                        0, errp);
--        if (new_block->guest_memfd < 0) {
--            qemu_mutex_unlock_ramlist();
--            goto out_free;
-         }
-     }
- 
-@@ -1910,17 +1911,11 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-         ram_block_notify_add(new_block->host, new_block->used_length,
-                              new_block->max_length);
-     }
--    return;
--
--out_free:
--    if (free_on_error) {
--        qemu_anon_ram_free(new_block->host, new_block->max_length);
--        new_block->host = NULL;
--    }
- }
- 
- static RAMBlock *ram_block_create(MemoryRegion *mr, ram_addr_t size,
--                                  ram_addr_t max_size, uint32_t ram_flags)
-+                                  ram_addr_t max_size, uint32_t ram_flags,
-+                                  Error **errp)
- {
-     RAMBlock *rb = g_malloc0(sizeof(*rb));
- 
-@@ -1930,7 +1925,17 @@ static RAMBlock *ram_block_create(MemoryRegion *mr, ram_addr_t size,
-     rb->flags = ram_flags;
-     rb->page_size = qemu_real_host_page_size();
-     rb->mr = mr;
--    rb->guest_memfd = -1;
-+
-+    if (ram_flags & RAM_GUEST_MEMFD) {
-+        rb->guest_memfd = ram_block_create_guest_memfd(rb, errp);
-+        if (rb->guest_memfd < 0) {
-+            g_free(rb);
-+            return NULL;
+         value = qemu_opt_get(opts, "obsolete");
+         if (value) {
+diff --git a/system/vl.c b/system/vl.c
+index 7252100..b76881e 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -76,6 +76,7 @@
+ #include "hw/block/block.h"
+ #include "hw/i386/x86.h"
+ #include "hw/i386/pc.h"
++#include "migration/blocker.h"
+ #include "migration/cpr.h"
+ #include "migration/misc.h"
+ #include "migration/snapshot.h"
+@@ -2493,6 +2494,11 @@ static void qemu_process_early_options(void)
+     QemuOptsList *olist = qemu_find_opts_err("sandbox", NULL);
+     if (olist) {
+         qemu_opts_foreach(olist, parse_sandbox, NULL, &error_fatal);
++        if (qemu_seccomp_get_opts() & QEMU_SECCOMP_SET_SPAWN) {
++            Error *blocker = NULL;
++            error_setg(&blocker, "-sandbox denies exec for cpr-exec");
++            migrate_add_blocker_mode(&blocker, MIG_MODE_CPR_EXEC, &error_fatal);
 +        }
-+    } else {
-+        rb->guest_memfd = -1;
-+    }
-+
-     trace_ram_block_create(rb->idstr, rb->flags, rb->fd, rb->used_length,
-                            rb->max_length, mr->align);
-     return rb;
-@@ -1981,9 +1986,14 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
-         return NULL;
      }
- 
--    new_block = ram_block_create(mr, size, size, ram_flags);
-+    new_block = ram_block_create(mr, size, size, ram_flags, errp);
-+    if (!new_block) {
-+        return NULL;
-+    }
-+
-     host = file_ram_alloc(new_block, size, fd, !file_size, offset, errp);
-     if (!host) {
-+        ram_block_destroy_guest_memfd(new_block);
-         g_free(new_block);
-         return NULL;
-     }
-@@ -2068,11 +2078,16 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
-     size = ROUND_UP(size, align);
-     max_size = ROUND_UP(max_size, align);
-     assert(max_size >= size);
--    new_block = ram_block_create(mr, size, max_size, ram_flags);
-+    new_block = ram_block_create(mr, size, max_size, ram_flags, errp);
-+    if (!new_block) {
-+        return NULL;
-+    }
-     new_block->resized = resized;
- 
-+    new_block->host = host;
-     ram_block_add(new_block, &local_err);
-     if (local_err) {
-+        ram_block_destroy_guest_memfd(new_block);
-         g_free(new_block);
-         error_propagate(errp, local_err);
-         return NULL;
-@@ -2119,11 +2134,7 @@ static void reclaim_ramblock(RAMBlock *block)
-         qemu_anon_ram_free(block->host, block->max_length);
-     }
- 
--    if (block->guest_memfd >= 0) {
--        close(block->guest_memfd);
--        ram_block_discard_require(false);
--    }
--
-+    ram_block_destroy_guest_memfd(block);
-     g_free(block);
- }
+ #endif
  
 -- 
 1.8.3.1
