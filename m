@@ -4,38 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45BCCC25B10
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4772C25B4F
 	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 10:18:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1O42-0000Mc-K2; Mon, 29 Apr 2024 06:16:50 -0400
+	id 1s1O48-0000Qt-Vp; Mon, 29 Apr 2024 06:16:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1s1O40-0000M3-Fn; Mon, 29 Apr 2024 06:16:48 -0400
-Received: from forwardcorp1c.mail.yandex.net
- ([2a02:6b8:c03:500:1:45:d181:df01])
+ id 1s1O46-0000Pv-L3; Mon, 29 Apr 2024 06:16:54 -0400
+Received: from forwardcorp1c.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1s1O3x-0006wg-SP; Mon, 29 Apr 2024 06:16:48 -0400
+ id 1s1O3y-0006xO-PL; Mon, 29 Apr 2024 06:16:54 -0400
 Received: from mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net
  [IPv6:2a02:6b8:c12:379a:0:640:b005:0])
- by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id E849A60C50;
- Mon, 29 Apr 2024 13:16:38 +0300 (MSK)
+ by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id 6B74160C57;
+ Mon, 29 Apr 2024 13:16:41 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:b739::1:30])
  by mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id PGNBPH1IcW20-LYWI1Lvx; Mon, 29 Apr 2024 13:16:38 +0300
+ ESMTPSA id PGNBPH1IcW20-HMwLTdlf; Mon, 29 Apr 2024 13:16:40 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1714385798;
- bh=7K4NXuHOFh4XBpWjhx11g//rcvfEb8Lsp3WOoXvsGPE=;
- h=Message-Id:Date:Cc:Subject:To:From;
- b=vDUiGyhPoRZMdEseFN+1dS+wZtDNapW7STtBBm27J7trj9M5OuuWLeVnUB6FXnU+v
- 0x8d969UFJe9uEST9s3vnN7VhY7fWvSjCSAZuXV4pH3J5pbgjk0JDBNgS4+R8r1Y6n
- nilOHl6w9IJsYV49eeaWLYHezk0siDO9PiMznH3Q=
+ s=default; t=1714385800;
+ bh=Bqv6r/tYw9FpzFVfwGCi9GAl8LY7A2mCYgvmyiq+WLM=;
+ h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=YkJF+A+XADdnn4MM931/QrGECCmc/s1jWRGUsIbSsVCeZXPx72buzcytvDInC88jK
+ i2MRZy37s97vONzMWDsym4aLEInguTO5W6FIugzuRXf7sgXfR/bCd6mVC1ezexiI+V
+ LKubjgeH+zY29rBT5Y2Dhj0WZOkOieDlbR6cgIYo=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -46,20 +45,23 @@ Cc: qemu-devel@nongnu.org, armbru@redhat.com, eblake@redhat.com,
  eduardo@habkost.net, berrange@redhat.com, pbonzini@redhat.com,
  hreitz@redhat.com, kwolf@redhat.com, vsementsov@yandex-team.ru,
  yc-core@yandex-team.ru
-Subject: [PATCH v4 0/3] vhost-user-blk: live resize additional APIs
-Date: Mon, 29 Apr 2024 13:16:20 +0300
-Message-Id: <20240429101623.1992943-1-vsementsov@yandex-team.ru>
+Subject: [PATCH v4 3/3] qapi: introduce device-sync-config
+Date: Mon, 29 Apr 2024 13:16:23 +0300
+Message-Id: <20240429101623.1992943-4-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240429101623.1992943-1-vsementsov@yandex-team.ru>
+References: <20240429101623.1992943-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c03:500:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.200;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,25 +76,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v4:
-Fixes 01-02 from v3 are already merged.
-02: new, split out from 03
-03: refacting vhost_user_blk_handle_config_change() split out to 02
-    drop current_run_state_str() helper
-    some rewordings (Markus)
+Add command to sync config from vhost-user backend to the device. It
+may be helpful when VHOST_USER_SLAVE_CONFIG_CHANGE_MSG failed or not
+triggered interrupt to the guest or just not available (not supported
+by vhost-user server).
 
-Vladimir Sementsov-Ogievskiy (3):
-  qdev-monitor: add option to report GenericError from find_device_state
-  vhost-user-blk: split vhost_user_blk_sync_config()
-  qapi: introduce device-sync-config
+Command result is racy if allow it during migration. Let's allow the
+sync only in RUNNING state.
 
- hw/block/vhost-user-blk.c | 27 ++++++++++++-----
- hw/virtio/virtio-pci.c    |  9 ++++++
- include/hw/qdev-core.h    |  3 ++
- qapi/qdev.json            | 23 ++++++++++++++
- system/qdev-monitor.c     | 63 ++++++++++++++++++++++++++++++++++++---
- 5 files changed, 114 insertions(+), 11 deletions(-)
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ hw/block/vhost-user-blk.c |  1 +
+ hw/virtio/virtio-pci.c    |  9 ++++++++
+ include/hw/qdev-core.h    |  3 +++
+ qapi/qdev.json            | 23 +++++++++++++++++++
+ system/qdev-monitor.c     | 48 +++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 84 insertions(+)
 
+diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+index 091d2c6acf..2f301f380c 100644
+--- a/hw/block/vhost-user-blk.c
++++ b/hw/block/vhost-user-blk.c
+@@ -588,6 +588,7 @@ static void vhost_user_blk_class_init(ObjectClass *klass, void *data)
+ 
+     device_class_set_props(dc, vhost_user_blk_properties);
+     dc->vmsd = &vmstate_vhost_user_blk;
++    dc->sync_config = vhost_user_blk_sync_config;
+     set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
+     vdc->realize = vhost_user_blk_device_realize;
+     vdc->unrealize = vhost_user_blk_device_unrealize;
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index b1d02f4b3d..0d91e8b5dc 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -2351,6 +2351,14 @@ static void virtio_pci_dc_realize(DeviceState *qdev, Error **errp)
+     vpciklass->parent_dc_realize(qdev, errp);
+ }
+ 
++static int virtio_pci_sync_config(DeviceState *dev, Error **errp)
++{
++    VirtIOPCIProxy *proxy = VIRTIO_PCI(dev);
++    VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
++
++    return qdev_sync_config(DEVICE(vdev), errp);
++}
++
+ static void virtio_pci_class_init(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+@@ -2367,6 +2375,7 @@ static void virtio_pci_class_init(ObjectClass *klass, void *data)
+     device_class_set_parent_realize(dc, virtio_pci_dc_realize,
+                                     &vpciklass->parent_dc_realize);
+     rc->phases.hold = virtio_pci_bus_reset_hold;
++    dc->sync_config = virtio_pci_sync_config;
+ }
+ 
+ static const TypeInfo virtio_pci_info = {
+diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+index 9228e96c87..87135bdcdf 100644
+--- a/include/hw/qdev-core.h
++++ b/include/hw/qdev-core.h
+@@ -95,6 +95,7 @@ typedef void (*DeviceUnrealize)(DeviceState *dev);
+ typedef void (*DeviceReset)(DeviceState *dev);
+ typedef void (*BusRealize)(BusState *bus, Error **errp);
+ typedef void (*BusUnrealize)(BusState *bus);
++typedef int (*DeviceSyncConfig)(DeviceState *dev, Error **errp);
+ 
+ /**
+  * struct DeviceClass - The base class for all devices.
+@@ -162,6 +163,7 @@ struct DeviceClass {
+     DeviceReset reset;
+     DeviceRealize realize;
+     DeviceUnrealize unrealize;
++    DeviceSyncConfig sync_config;
+ 
+     /**
+      * @vmsd: device state serialisation description for
+@@ -546,6 +548,7 @@ bool qdev_hotplug_allowed(DeviceState *dev, Error **errp);
+  */
+ HotplugHandler *qdev_get_hotplug_handler(DeviceState *dev);
+ void qdev_unplug(DeviceState *dev, Error **errp);
++int qdev_sync_config(DeviceState *dev, Error **errp);
+ void qdev_simple_device_unplug_cb(HotplugHandler *hotplug_dev,
+                                   DeviceState *dev, Error **errp);
+ void qdev_machine_creation_done(void);
+diff --git a/qapi/qdev.json b/qapi/qdev.json
+index facaa0bc6a..fc5e125a45 100644
+--- a/qapi/qdev.json
++++ b/qapi/qdev.json
+@@ -161,3 +161,26 @@
+ ##
+ { 'event': 'DEVICE_UNPLUG_GUEST_ERROR',
+   'data': { '*device': 'str', 'path': 'str' } }
++
++##
++# @device-sync-config:
++#
++# Synchronize device configuration from host to guest part.  First,
++# copy the configuration from the host part (backend) to the guest
++# part (frontend).  Then notify guest software that device
++# configuration changed.
++# The command may be used to notify the guest about block device
++# capcity change.  Currently only vhost-user-blk device supports
++# this.
++#
++# @id: the device's ID or QOM path
++#
++# Features:
++#
++# @unstable: The command is experimental.
++#
++# Since: 9.1
++##
++{ 'command': 'device-sync-config',
++  'features': [ 'unstable' ],
++  'data': {'id': 'str'} }
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index 264978aa40..47bfc0506e 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -23,6 +23,7 @@
+ #include "monitor/monitor.h"
+ #include "monitor/qdev.h"
+ #include "sysemu/arch_init.h"
++#include "sysemu/runstate.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-qdev.h"
+ #include "qapi/qmp/dispatch.h"
+@@ -971,6 +972,53 @@ void qmp_device_del(const char *id, Error **errp)
+     }
+ }
+ 
++int qdev_sync_config(DeviceState *dev, Error **errp)
++{
++    DeviceClass *dc = DEVICE_GET_CLASS(dev);
++
++    if (!dc->sync_config) {
++        error_setg(errp, "device-sync-config is not supported for '%s'",
++                   object_get_typename(OBJECT(dev)));
++        return -ENOTSUP;
++    }
++
++    return dc->sync_config(dev, errp);
++}
++
++void qmp_device_sync_config(const char *id, Error **errp)
++{
++    DeviceState *dev;
++
++    /*
++     * During migration there is a race between syncing`configuration and
++     * migrating it (if migrate first, that target would get outdated version),
++     * so let's just not allow it.
++     *
++     * Moreover, let's not rely on setting up interrupts in paused
++     * state, which may be a part of migration process.
++     */
++
++    if (migration_is_running()) {
++        error_setg(errp, "Config synchronization is not allowed "
++                   "during migration");
++        return;
++    }
++
++    if (!runstate_is_running()) {
++        error_setg(errp, "Config synchronization allowed only in '%s' state, "
++                   "current state is '%s'", RunState_str(RUN_STATE_RUNNING),
++                   RunState_str(runstate_get()));
++        return;
++    }
++
++    dev = find_device_state(id, true, errp);
++    if (!dev) {
++        return;
++    }
++
++    qdev_sync_config(dev, errp);
++}
++
+ void hmp_device_add(Monitor *mon, const QDict *qdict)
+ {
+     Error *err = NULL;
 -- 
 2.34.1
 
