@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 448ECC19F4F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 02:49:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 339B7C10F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 02:49:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1H3m-00070T-CO; Sun, 28 Apr 2024 22:48:06 -0400
+	id 1s1H3p-00076f-7g; Sun, 28 Apr 2024 22:48:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1s1H3Q-0006ER-NP
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 22:47:45 -0400
+ id 1s1H3f-0006lj-EM
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 22:48:01 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1s1H3N-00066R-2g
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 22:47:44 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1s1H3d-00067m-0R
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 22:47:59 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8CxZ_BKCi9mFMUEAA--.16650S3;
- Mon, 29 Apr 2024 10:47:38 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8CxZ_BOCi9mH8UEAA--.16652S3;
+ Mon, 29 Apr 2024 10:47:42 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8BxkFVECi9mp6QJAA--.7424S9; 
- Mon, 29 Apr 2024 10:47:38 +0800 (CST)
+ AQAAf8BxkFVECi9mp6QJAA--.7424S13; 
+ Mon, 29 Apr 2024 10:47:41 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
 	Bibo Mao <maobibo@loongson.cn>
-Subject: [PULL v2 07/17] hw/loongarch: Init efi_initrd table
-Date: Mon, 29 Apr 2024 10:30:33 +0800
-Message-Id: <20240429023043.2607982-8-gaosong@loongson.cn>
+Subject: [PULL v2 11/17] hw/loongarch: fdt adds Extend I/O Interrupt Controller
+Date: Mon, 29 Apr 2024 10:30:37 +0800
+Message-Id: <20240429023043.2607982-12-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20240429023043.2607982-1-gaosong@loongson.cn>
 References: <20240429023043.2607982-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8BxkFVECi9mp6QJAA--.7424S9
+X-CM-TRANSID: AQAAf8BxkFVECi9mp6QJAA--.7424S13
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,98 +65,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The efi_system_table adds a efi_initrd configuration table.
+fdt adds Extend I/O Interrupt Controller,
+we use 'loongson,ls2k2000-eiointc'.
+
+See:
+https://github.com/torvalds/linux/blob/v6.7/drivers/irqchip/irq-loongson-eiointc.c
+https://lore.kernel.org/r/764e02d924094580ac0f1d15535f4b98308705c6.1683279769.git.zhoubinbin@loongson.cn
 
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Message-Id: <20240426091551.2397867-8-gaosong@loongson.cn>
+Message-Id: <20240426091551.2397867-12-gaosong@loongson.cn>
 ---
- hw/loongarch/boot.c         | 23 +++++++++++++++++++++--
- include/hw/loongarch/boot.h |  9 +++++++++
- 2 files changed, 30 insertions(+), 2 deletions(-)
+ hw/loongarch/virt.c                | 30 +++++++++++++++++++++++++++++-
+ include/hw/intc/loongarch_extioi.h |  1 +
+ 2 files changed, 30 insertions(+), 1 deletion(-)
 
-diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-index 527fc9c0be..c8b3e742b4 100644
---- a/hw/loongarch/boot.c
-+++ b/hw/loongarch/boot.c
-@@ -15,6 +15,9 @@
- #include "sysemu/reset.h"
- #include "sysemu/qtest.h"
- 
-+ram_addr_t initrd_offset;
-+uint64_t initrd_size;
-+
- static const unsigned int slave_boot_code[] = {
-                   /* Configure reset ebase.                    */
-     0x0400302c,   /* csrwr      $t0, LOONGARCH_CSR_EENTRY      */
-@@ -95,6 +98,21 @@ static void init_efi_boot_memmap(struct efi_system_table *systab,
-     }
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 88cdcb6f91..094b9d2e60 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -123,6 +123,31 @@ static void fdt_add_cpuic_node(LoongArchMachineState *lams,
+     g_free(nodename);
  }
  
-+static void init_efi_initrd_table(struct efi_system_table *systab,
-+                                  void *p, void *start)
++static void fdt_add_eiointc_node(LoongArchMachineState *lams,
++                                  uint32_t *cpuintc_phandle,
++                                  uint32_t *eiointc_phandle)
 +{
-+    efi_guid_t tbl_guid = LINUX_EFI_INITRD_MEDIA_GUID;
-+    struct efi_initrd *initrd_table  = p;
++    MachineState *ms = MACHINE(lams);
++    char *nodename;
++    hwaddr extioi_base = APIC_BASE;
++    hwaddr extioi_size = EXTIOI_SIZE;
 +
-+    /* efi_configuration_table 2 */
-+    guidcpy(&systab->tables[1].guid, &tbl_guid);
-+    systab->tables[1].table = (struct efi_configuration_table *)(p - start);
-+    systab->nr_tables = 2;
-+
-+    initrd_table->base = initrd_offset;
-+    initrd_table->size = initrd_size;
++    *eiointc_phandle = qemu_fdt_alloc_phandle(ms->fdt);
++    nodename = g_strdup_printf("/eiointc@%" PRIx64, extioi_base);
++    qemu_fdt_add_subnode(ms->fdt, nodename);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "phandle", *eiointc_phandle);
++    qemu_fdt_setprop_string(ms->fdt, nodename, "compatible",
++                            "loongson,ls2k2000-eiointc");
++    qemu_fdt_setprop(ms->fdt, nodename, "interrupt-controller", NULL, 0);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 1);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
++                          *cpuintc_phandle);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupts", 3);
++    qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", 0x0,
++                           extioi_base, 0x0, extioi_size);
++    g_free(nodename);
 +}
 +
- static void init_systab(struct loongarch_boot_info *info, void *p, void *start)
+ static void fdt_add_flash_node(LoongArchMachineState *lams)
  {
-     void *bp_tables_start;
-@@ -118,6 +136,8 @@ static void init_systab(struct loongarch_boot_info *info, void *p, void *start)
-     init_efi_boot_memmap(systab, p, start);
-     p += ROUND_UP(sizeof(struct efi_boot_memmap) +
-                   sizeof(efi_memory_desc_t) * memmap_entries, 64 * KiB);
-+    init_efi_initrd_table(systab, p, start);
-+    p += ROUND_UP(sizeof(struct efi_initrd), 64 * KiB);
+     MachineState *ms = MACHINE(lams);
+@@ -545,7 +570,7 @@ static void loongarch_irq_init(LoongArchMachineState *lams)
+     CPULoongArchState *env;
+     CPUState *cpu_state;
+     int cpu, pin, i, start, num;
+-    uint32_t cpuintc_phandle;
++    uint32_t cpuintc_phandle, eiointc_phandle;
  
-     systab->tables = (struct efi_configuration_table *)(bp_tables_start - start);
- }
-@@ -139,8 +159,7 @@ static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
+     /*
+      * The connection of interrupts:
+@@ -614,6 +639,9 @@ static void loongarch_irq_init(LoongArchMachineState *lams)
+         }
+     }
  
- static int64_t load_kernel_info(struct loongarch_boot_info *info)
- {
--    uint64_t kernel_entry, kernel_low, kernel_high, initrd_size;
--    ram_addr_t initrd_offset;
-+    uint64_t kernel_entry, kernel_low, kernel_high;
-     ssize_t kernel_size;
- 
-     kernel_size = load_elf(info->kernel_filename, NULL,
-diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
-index 76622af2e2..42d1ee3663 100644
---- a/include/hw/loongarch/boot.h
-+++ b/include/hw/loongarch/boot.h
-@@ -30,6 +30,10 @@ typedef struct {
-         EFI_GUID(0x800f683f, 0xd08b, 0x423a,  0xa2, 0x93, \
-                  0x96, 0x5c, 0x3c, 0x6f, 0xe2, 0xb4)
- 
-+#define LINUX_EFI_INITRD_MEDIA_GUID \
-+        EFI_GUID(0x5568e427, 0x68fc, 0x4f3d,  0xac, 0x74, \
-+                 0xca, 0x55, 0x52, 0x31, 0xcc, 0x68)
++    /* Add Extend I/O Interrupt Controller node */
++    fdt_add_eiointc_node(lams, &cpuintc_phandle, &eiointc_phandle);
 +
- struct efi_config_table {
-     efi_guid_t guid;
-     uint64_t *ptr;
-@@ -83,6 +87,11 @@ struct efi_boot_memmap {
-     efi_memory_desc_t map[32];
- };
+     pch_pic = qdev_new(TYPE_LOONGARCH_PCH_PIC);
+     num = VIRT_PCH_PIC_IRQ_NUM;
+     qdev_prop_set_uint32(pch_pic, "pch_pic_irq_num", num);
+diff --git a/include/hw/intc/loongarch_extioi.h b/include/hw/intc/loongarch_extioi.h
+index a0a46b888c..410c6e1121 100644
+--- a/include/hw/intc/loongarch_extioi.h
++++ b/include/hw/intc/loongarch_extioi.h
+@@ -39,6 +39,7 @@
+ #define EXTIOI_COREISR_END           (0xB20 - APIC_OFFSET)
+ #define EXTIOI_COREMAP_START         (0xC00 - APIC_OFFSET)
+ #define EXTIOI_COREMAP_END           (0xD00 - APIC_OFFSET)
++#define EXTIOI_SIZE                  0x800
  
-+struct efi_initrd {
-+    uint64_t base;
-+    uint64_t size;
-+};
-+
- struct loongarch_boot_info {
-     uint64_t ram_size;
-     const char *kernel_filename;
+ typedef struct ExtIOICore {
+     uint32_t coreisr[EXTIOI_IRQS_GROUP_COUNT];
 -- 
 2.25.1
 
