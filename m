@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1A91C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 15:57:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75C2EC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 15:57:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1TMF-0004X5-Mi; Mon, 29 Apr 2024 11:55:59 -0400
+	id 1s1TMF-0004X4-JA; Mon, 29 Apr 2024 11:55:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1s1TMB-0004Vs-7U
+ id 1s1TMB-0004Vq-4q
  for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:55:55 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1s1TM5-0005Fb-RE
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:55:53 -0400
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+ id 1s1TM4-0005Et-79
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:55:52 -0400
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43TFml1T021753; Mon, 29 Apr 2024 15:55:46 GMT
+ 43TFmjvP006702; Mon, 29 Apr 2024 15:55:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
  h=from : to : cc :
  subject : date : message-id : in-reply-to : references; s=corp-2023-11-20;
- bh=LzcEoTaqq99sN03X9qX31cStr9peqSwOasAJUDXCZM8=;
- b=kI51nE349QCVJ4sWJyq4jeYPzaVdsQcW09dpM9ZSN6iFj5WNaUhjCLXNIL6qkAG+pMuV
- pEMWqutrIVYh1ZYocwSMATQZe6KEbNbOiWh6JPSNmZUOLd+Gy4gQI2/esQGEnFs/S2Ja
- 7rKs1/zQCNVaZdViaj+buEGcBP8QQgHxCTFl8bDonLjLcGA+Of+KyRPJN0HJRhlz3SB3
- VQ1C/OsXKKgK0IBTGRCPh7M3LaTiUx5mZYlQ/MyZOFzZyE+yXpEgvtGpp751Vivukjhw
- 6h7ttHLl+Q/YP/BUp+wWsQKms7UGTQ9TnLTvxRzMHF5Mwjom7quyQwpp0VhbkoiVfjg+ XA== 
+ bh=AsixATSRLpV+Yop01dX+ts3i0CYeTOgvTvdYJbJ4OQY=;
+ b=lFrt4iZog+GLRgFaBt6eZ6O0H41PuUQZnVNR7uONQCyoY4aETxwNFrT81CuljVEBbMTe
+ eu219Xy3pPOrGZeqlZa46aV8VUHfcXHkJ0RCMYlbB/XO4+JdiwfLq3rNF+wOIGNxrdkj
+ IV8i4/5P4KsLPE5y80umIgsSNm/CSTILyRKuJn3QPxMmVhAcTkcYyX564BqNnr7F/FwY
+ LN3vwGDvVbtpkBVJkh6zMzH6LX890vO644EAdsgCoJMBNEQKUOYXMnRpRarlEgPZJUpP
+ OLKLht07B4DCMxH+tgRFNlVSDcYwgckS/QxnM+lOlr2MvcSFcXrO89/BWY2HSaXAV2AR 2Q== 
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xrr54axsx-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xrsdejwmr-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Apr 2024 15:55:46 +0000
+ Mon, 29 Apr 2024 15:55:42 +0000
 Received: from pps.filterd
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 43TFp3V3011441; Mon, 29 Apr 2024 15:55:45 GMT
+ with ESMTP id 43TEheo5011366; Mon, 29 Apr 2024 15:55:41 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 3xrqt6j69q-1
+ 3xrqt6j64y-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Apr 2024 15:55:45 +0000
+ Mon, 29 Apr 2024 15:55:41 +0000
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43TFtaGo034442;
- Mon, 29 Apr 2024 15:55:44 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43TFtaGe034442;
+ Mon, 29 Apr 2024 15:55:40 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 3xrqt6j5ys-12; Mon, 29 Apr 2024 15:55:44 +0000
+ ESMTP id 3xrqt6j5ys-7; Mon, 29 Apr 2024 15:55:40 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,9 +64,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V1 11/26] migration: vmstate_register at init time
-Date: Mon, 29 Apr 2024 08:55:20 -0700
-Message-Id: <1714406135-451286-12-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V1 06/26] migration: precreate vmstate for exec
+Date: Mon, 29 Apr 2024 08:55:15 -0700
+Message-Id: <1714406135-451286-7-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
 References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
@@ -78,8 +78,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
  adultscore=0 mlxscore=0 suspectscore=0 phishscore=0 spamscore=0
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2404010000 definitions=main-2404290101
-X-Proofpoint-ORIG-GUID: ohXr_sM7tsS6uc2XKKMImGShsoBvCqMc
-X-Proofpoint-GUID: ohXr_sM7tsS6uc2XKKMImGShsoBvCqMc
+X-Proofpoint-GUID: ZbprD0pcIER2DImXWwmIew0YnfdbXrb_
+X-Proofpoint-ORIG-GUID: ZbprD0pcIER2DImXWwmIew0YnfdbXrb_
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -104,112 +104,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define vmstate_register_init to statically declare that a vmstate object
-should be registered during qemu initialization, specifically, in the
-call to vmstate_register_init_all.  This is needed to register objects
-that are not Objects (and hence cannot use the DeviceClass vmsd hook),
-without requiring that qemu call an object-specific initialization function.
+Provide migration_precreate_save for saving precreate vmstate across exec.
+Create a memfd, save its value in the environment, and serialize state
+to it.  Reverse the process in migration_precreate_load.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- include/migration/vmstate.h | 18 ++++++++++++++++++
- migration/savevm.c          | 32 ++++++++++++++++++++++++++++++++
- system/vl.c                 |  3 +++
- 3 files changed, 53 insertions(+)
+ include/migration/misc.h |   5 ++
+ migration/meson.build    |   1 +
+ migration/precreate.c    | 139 +++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 145 insertions(+)
+ create mode 100644 migration/precreate.c
 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 3d71b34..8cb3d2b 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -1255,6 +1255,24 @@ static inline int vmstate_register(VMStateIf *obj, int instance_id,
- }
+diff --git a/include/migration/misc.h b/include/migration/misc.h
+index c9e200f..cf30351 100644
+--- a/include/migration/misc.h
++++ b/include/migration/misc.h
+@@ -56,6 +56,11 @@ AnnounceParameters *migrate_announce_params(void);
  
- /**
-+ * vmstate_register_init() - statically declare a VMSD to be registered when
-+ * QEMU calls vmstate_register_init_all.  This is useful for registering
-+ * objects that are not Objects (and hence cannot use the DeviceClass vmsd
-+ * hook).
+ void dump_vmstate_json_to_file(FILE *out_fp);
+ 
++/* migration/precreate.c */
++int migration_precreate_save(Error **errp);
++void migration_precreate_unsave(void);
++int migration_precreate_load(Error **errp);
++
+ /* migration/migration.c */
+ void migration_object_init(void);
+ void migration_shutdown(void);
+diff --git a/migration/meson.build b/migration/meson.build
+index f76b1ba..50e7cb2 100644
+--- a/migration/meson.build
++++ b/migration/meson.build
+@@ -26,6 +26,7 @@ system_ss.add(files(
+   'ram-compress.c',
+   'options.c',
+   'postcopy-ram.c',
++  'precreate.c',
+   'savevm.c',
+   'socket.c',
+   'tls.c',
+diff --git a/migration/precreate.c b/migration/precreate.c
+new file mode 100644
+index 0000000..0bf5e1f
+--- /dev/null
++++ b/migration/precreate.c
+@@ -0,0 +1,139 @@
++/*
++ * Copyright (c) 2022, 2024 Oracle and/or its affiliates.
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
 + */
-+#define vmstate_register_init(_obj, _id, _vmsd, _opaque)                    \
-+static void __attribute__((constructor)) vmstate_register_ ## _vmsd(void)   \
-+{                                                                           \
-+    vmstate_register_init_add(_obj, _id, &_vmsd, _opaque);                  \
++
++#include "qemu/osdep.h"
++#include "qemu/cutils.h"
++#include "qemu/memfd.h"
++#include "qapi/error.h"
++#include "io/channel-file.h"
++#include "migration/misc.h"
++#include "migration/qemu-file.h"
++#include "migration/savevm.h"
++
++#define PRECREATE_STATE_NAME "QEMU_PRECREATE_STATE"
++
++static QEMUFile *qemu_file_new_fd_input(int fd, const char *name)
++{
++    g_autoptr(QIOChannelFile) fioc = qio_channel_file_new_fd(fd);
++    QIOChannel *ioc = QIO_CHANNEL(fioc);
++    qio_channel_set_name(ioc, name);
++    return qemu_file_new_input(ioc);
 +}
 +
-+void vmstate_register_init_add(VMStateIf *obj, int instance_id,
-+                               const VMStateDescription *vmsd, void *opaque);
-+
-+void vmstate_register_init_all(void);
-+
-+
-+/**
-  * vmstate_replace_hack_for_ppc() - ppc used to abuse vmstate_register
-  *
-  * Don't even think about using this function in new code.
-diff --git a/migration/savevm.c b/migration/savevm.c
-index cd2eabe..ec48da9 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -957,6 +957,38 @@ err:
-     return -1;
- }
- 
-+typedef struct VMStateInit {
-+    VMStateIf *obj;
-+    int instance_id;
-+    const VMStateDescription *vmsd;
-+    void *opaque;
-+    QLIST_ENTRY(VMStateInit) next;
-+} VMStateInit;
-+
-+static QLIST_HEAD(, VMStateInit) vmstate_inits;
-+
-+void vmstate_register_init_add(VMStateIf *obj, int instance_id,
-+                               const VMStateDescription *vmsd, void *opaque)
++static QEMUFile *qemu_file_new_fd_output(int fd, const char *name)
 +{
-+    VMStateInit *v = g_new0(VMStateInit, 1);
-+
-+    v->obj = obj;
-+    v->instance_id = instance_id;
-+    v->vmsd = vmsd;
-+    v->opaque = opaque;
-+    QLIST_INSERT_HEAD(&vmstate_inits, v, next);
++    g_autoptr(QIOChannelFile) fioc = qio_channel_file_new_fd(fd);
++    QIOChannel *ioc = QIO_CHANNEL(fioc);
++    qio_channel_set_name(ioc, name);
++    return qemu_file_new_output(ioc);
 +}
 +
-+void vmstate_register_init_all(void)
++static int memfd_create_named(const char *name, Error **errp)
 +{
-+    VMStateInit *v, *tmp;
++    int mfd;
++    char val[16];
 +
-+    QLIST_FOREACH_SAFE(v, &vmstate_inits, next, tmp) {
-+        vmstate_register(v->obj, v->instance_id, v->vmsd, v->opaque);
-+        QLIST_REMOVE(v, next);
++    mfd = memfd_create(name, 0);
++    if (mfd < 0) {
++        error_setg_errno(errp, errno, "memfd_create failed");
++        return -1;
++    }
++
++    /* Remember mfd in environment for post-exec load */
++    qemu_clear_cloexec(mfd);
++    snprintf(val, sizeof(val), "%d", mfd);
++    g_setenv(name, val, 1);
++
++    return mfd;
++}
++
++static int memfd_find_named(const char *name, int *mfd_p, Error **errp)
++{
++    const char *val = g_getenv(name);
++
++    if (!val) {
++        *mfd_p = -1;
++        return 0;       /* No memfd was created, not an error */
++    }
++    g_unsetenv(name);
++    if (qemu_strtoi(val, NULL, 10, mfd_p)) {
++        error_setg(errp, "Bad %s env value %s", PRECREATE_STATE_NAME, val);
++        return -1;
++    }
++    lseek(*mfd_p, 0, SEEK_SET);
++    return 0;
++}
++
++static void memfd_delete_named(const char *name)
++{
++    int mfd;
++    const char *val = g_getenv(name);
++
++    if (val) {
++        g_unsetenv(name);
++        if (!qemu_strtoi(val, NULL, 10, &mfd)) {
++            close(mfd);
++        }
 +    }
 +}
 +
- void vmstate_unregister(VMStateIf *obj, const VMStateDescription *vmsd,
-                         void *opaque)
- {
-diff --git a/system/vl.c b/system/vl.c
-index c644222..7797206 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -78,6 +78,7 @@
- #include "hw/i386/pc.h"
- #include "migration/misc.h"
- #include "migration/snapshot.h"
-+#include "migration/vmstate.h"
- #include "sysemu/tpm.h"
- #include "sysemu/dma.h"
- #include "hw/audio/soundhw.h"
-@@ -3663,6 +3664,8 @@ void qemu_init(int argc, char **argv)
- 
-     qemu_create_machine(machine_opts_dict);
- 
-+    vmstate_register_init_all();
++static QEMUFile *qemu_file_new_memfd_output(const char *name, Error **errp)
++{
++    int mfd = memfd_create_named(name, errp);
 +
-     suspend_mux_open();
- 
-     qemu_disable_default_devices();
++    if (mfd < 0) {
++        return NULL;
++    }
++
++    return qemu_file_new_fd_output(mfd, name);
++}
++
++static QEMUFile *qemu_file_new_memfd_input(const char *name, Error **errp)
++{
++    int ret, mfd;
++
++    ret = memfd_find_named(name, &mfd, errp);
++    if (ret || mfd < 0) {
++        return NULL;
++    }
++
++    return qemu_file_new_fd_input(mfd, name);
++}
++
++int migration_precreate_save(Error **errp)
++{
++    QEMUFile *f = qemu_file_new_memfd_output(PRECREATE_STATE_NAME, errp);
++
++    if (!f) {
++        return -1;
++    } else if (qemu_savevm_precreate_save(f, errp)) {
++        memfd_delete_named(PRECREATE_STATE_NAME);
++        return -1;
++    } else {
++        /* Do not close f, as mfd must remain open. */
++        return 0;
++    }
++}
++
++void migration_precreate_unsave(void)
++{
++    memfd_delete_named(PRECREATE_STATE_NAME);
++}
++
++int migration_precreate_load(Error **errp)
++{
++    int ret;
++    QEMUFile *f = qemu_file_new_memfd_input(PRECREATE_STATE_NAME, errp);
++
++    if (!f) {
++        return -1;
++    }
++    ret = qemu_savevm_precreate_load(f, errp);
++    qemu_fclose(f);
++    g_unsetenv(PRECREATE_STATE_NAME);
++    return ret;
++}
 -- 
 1.8.3.1
 
