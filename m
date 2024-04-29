@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7CCCC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 03:25:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2723EC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 03:26:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1HdG-0000JW-VI; Sun, 28 Apr 2024 23:24:46 -0400
+	id 1s1Hdw-00011H-5d; Sun, 28 Apr 2024 23:25:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3-RIvZggKChQC68CDuzu08805y.w86Ay6E-xyFy578707E.8B0@flex--smostafa.bounces.google.com>)
- id 1s1HdE-0000Iy-V8
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 23:24:44 -0400
-Received: from mail-yb1-xb4a.google.com ([2607:f8b0:4864:20::b4a])
+ <3GhMvZggKCjUjdfjkRWRXffXcV.TfdhVdl-UVmVcefeXel.fiX@flex--smostafa.bounces.google.com>)
+ id 1s1Hdt-0000tN-4p
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 23:25:25 -0400
+Received: from mail-wr1-x449.google.com ([2a00:1450:4864:20::449])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3-RIvZggKChQC68CDuzu08805y.w86Ay6E-xyFy578707E.8B0@flex--smostafa.bounces.google.com>)
- id 1s1HdD-0003wz-5a
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 23:24:44 -0400
-Received: by mail-yb1-xb4a.google.com with SMTP id
- 3f1490d57ef6-dc647f65573so9566989276.2
- for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 20:24:42 -0700 (PDT)
+ <3GhMvZggKCjUjdfjkRWRXffXcV.TfdhVdl-UVmVcefeXel.fiX@flex--smostafa.bounces.google.com>)
+ id 1s1Hdp-0004Fd-8x
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 23:25:23 -0400
+Received: by mail-wr1-x449.google.com with SMTP id
+ ffacd0b85a97d-3455cbdea2cso2056557f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 20:25:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1714361081; x=1714965881; darn=nongnu.org;
+ d=google.com; s=20230601; t=1714361115; x=1714965915; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=sS5i+v0wHfbx/cskH+Q0YRdI0a2J9wbsy4mW+uWp54g=;
- b=uMxatOG5OKpkoJwsmiJkxUPR3rsKm33vtrnIE6OOymm5C2BqVUZ0xaYZ/eTeL0jiZC
- rq6UMbJICkpnmvJrn88rJPkGWuxA0rNuFJO0Smnddf8OnJI7HEAy4/ifiZwaygXyLj+2
- HnQMFJWE28xvQdbvpPhKQuf1OyvGRJ9pjyjZNj6a0EKhXZz7xz1wx8O2A6zphuqTkHYj
- UTk6LIB0uGIvNPscIGf361Bkv+CHw1UfC3bpdnErzuf4EnxgATwwKaK6DXcnJqTy3qiG
- 2EshNTHoGzwilZEmx1sV+aUTOhmW1GGJ7HLS4GiHcCU7SMjGTibnuM7cV1JmSsrBtivt
- uHdw==
+ bh=mSI5Y10hDHs+a73zrNudbgCqM/hO+BV89BxjmLOp0r4=;
+ b=wjNFlQ0XJnjjwkEhFmkNQgOYQ+mg1o/wLEK81kXaycD/eerG1CO7TLlW798GGGdHzC
+ bmAo6bB5g0wPcdvlya08IesdtAYkdvVqyfqb5mvpukhnt5vCC3ZBPlj193AYFbIen5pS
+ fof5oaZj8Ek+Wsn7MDEigBqGGjF1op4o+Sj0OTQXW93bNu0//UiN8Pazx3aNSG9Kv9DV
+ 54gcVosEZW5+nyFhSdzImWEMH6JVjJwEN5lkpUqD+TJ7a3sBWgLglTuRsyMPnBIm9N3w
+ 7b2RwKGvxoOHEAZFWV5FX92qbu6B2QDaqm6jpnLwNPZVKGoeNepv/U5aO1S2NauQ4mGY
+ tfzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714361081; x=1714965881;
+ d=1e100.net; s=20230601; t=1714361115; x=1714965915;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sS5i+v0wHfbx/cskH+Q0YRdI0a2J9wbsy4mW+uWp54g=;
- b=YuR49jUy+yIOBbXal9nvardgXUwS5x/A+4KrIi5dQczDH91+lIZixNMN+pG1grDoEr
- BcnPRW7lBEcEdWEeqBdHzCxe0BWmLJkF1LlvDoP0Mdrc7myszUGzmN57k2EWd7OZKbLJ
- 6WM0NZMtNcXsrEHfvLh7peCEXkFLgaelnRUPS+aOLZ/FZ0cCH1pnSPoeJOHmqVEHkR25
- k+aI7AocfDuPVIyyfe691TyIQ7o4GhIekRaN1MWldWZL1HcDGQ05lvKJiHt3NhkzyVnD
- pFnEAQDmvKZ/yZfBlP8gXy52CXOW8VeVaZtEb7herRlAMHg/2TonsQt5E3yeADWAwKy9
- hRxg==
+ bh=mSI5Y10hDHs+a73zrNudbgCqM/hO+BV89BxjmLOp0r4=;
+ b=wlvDw4ff8K/Pq6GhI+kwdp26htkpCm91mgSYnoV5WsR8645OhrqL97ajojAzcg33AF
+ 7xzv9Iobr5KPnwL61xpAyjbIStO/Ueo3OerzTBhpji684tllWU6y9VvEop4OqFzkQ/Tz
+ v+1BC6aJvtsTaR0UM3mOy6wYwWdGKdTNi4H07pRGzbaiqmlmXtx1s3GO9ijCgCeQYGGX
+ FBSYxr8cignlFDVyo1wBlfVhTv9eltysHrgCjKvICM7NNGnFa7OEU8w3pjRD2c0ZRhIP
+ NDJ8JJT3l79X99hbY7yEWwPiRUh1UrSndn770R94gPt+QFXy1N+6C5oBRP3+ANhniYe4
+ 5HVg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVpAjbL2t0P7PRl4hto7vT9pCMR1953yCVfmHcBOmOwv5ai5IRXX4tV6+ytToJvcgqGvw6BvberkoyAA5QOmAdRQVcV+YU=
-X-Gm-Message-State: AOJu0YxXgFfzwLW7hoxXiKT+bgUETOnxYhi+m/T5P80cmSHTRzSW5ac3
- IAnMVyW9veWnrSVG7y2OjUte/zVVu0AodlqlIgq9zlgw/J0vIm4ZYhxvspYaMQLrsMcydDJuA7d
- harmd+QiDVA==
-X-Google-Smtp-Source: AGHT+IFM95cyg0UMB7gOlqnXEqYcXrMq9yS3Ex8oiFOWR79pILQV0oTL6eIoyzxus5UUSefJidj/7OOflQ4CEQ==
+ AJvYcCWyCH9j0Bd798VtOSdx+4jKFXV5MoekTHxFaDhAa0tvZXy3F+xSx8jMcu/89ksf6AL7GWEhkKKXEh56UmmRL0jBjvjM0LU=
+X-Gm-Message-State: AOJu0Yyxl4eSFeu03DOIfmDD4rkSt7O5F7+F9IclFFsMMOb+I/1H3dTV
+ Ya8J4TF97Ya1M/0d1M7o1rVVts5bh24dndMarKfMAiMkOXeb/ZnYuVs1WMBMGgnQtzTgeiVlF0s
+ +5LL5kN9bDA==
+X-Google-Smtp-Source: AGHT+IExBhRwz10DGXfUQGJFfnfxKNB9h91NRBBof8jWz4h5F6LHkq8/pmh/Hlht3yc3mRETmvyDUPo7tbxz9Q==
 X-Received: from mostafa.c.googlers.com
  ([fda3:e722:ac3:cc00:28:9cb1:c0a8:333c])
- (user=smostafa job=sendgmr) by 2002:a05:6902:1896:b0:dc6:fec4:1c26 with SMTP
- id cj22-20020a056902189600b00dc6fec41c26mr2684446ybb.1.1714361081551; Sun, 28
- Apr 2024 20:24:41 -0700 (PDT)
-Date: Mon, 29 Apr 2024 03:23:48 +0000
+ (user=smostafa job=sendgmr) by 2002:adf:f64f:0:b0:34b:c3e:5e03 with SMTP id
+ x15-20020adff64f000000b0034b0c3e5e03mr16372wrp.0.1714361114848; Sun, 28 Apr
+ 2024 20:25:14 -0700 (PDT)
+Date: Mon, 29 Apr 2024 03:24:02 +0000
 In-Reply-To: <20240429032403.74910-1-smostafa@google.com>
 Mime-Version: 1.0
 References: <20240429032403.74910-1-smostafa@google.com>
 X-Mailer: git-send-email 2.44.0.769.g3c40516874-goog
-Message-ID: <20240429032403.74910-5-smostafa@google.com>
-Subject: [RFC PATCH v3 04/18] hw/arm/smmu: Use enum for SMMU stage
+Message-ID: <20240429032403.74910-19-smostafa@google.com>
+Subject: [RFC PATCH v3 18/18] hw/arm/virt: Set SMMU OAS based on CPU PARANGE
 From: Mostafa Saleh <smostafa@google.com>
 To: qemu-arm@nongnu.org, eric.auger@redhat.com, peter.maydell@linaro.org, 
  qemu-devel@nongnu.org
@@ -72,9 +72,9 @@ Cc: jean-philippe@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
  nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org, 
  marcin.juszkiewicz@linaro.org, Mostafa Saleh <smostafa@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b4a;
- envelope-from=3-RIvZggKChQC68CDuzu08805y.w86Ay6E-xyFy578707E.8B0@flex--smostafa.bounces.google.com;
- helo=mail-yb1-xb4a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::449;
+ envelope-from=3GhMvZggKCjUjdfjkRWRXffXcV.TfdhVdl-UVmVcefeXel.fiX@flex--smostafa.bounces.google.com;
+ helo=mail-wr1-x449.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -97,182 +97,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, translation stage is represented as an int, where 1 is stage-1 and
-2 is stage-2, when nested is added, 3 would be confusing to represent nesting,
-so we use an enum instead.
-
-While keeping the same values, this is useful for:
- - Doing tricks with bit masks, where BIT(0) is stage-1 and BIT(1) is
-   stage-2 and both is nested.
- - Tracing, as stage is printed as int.
+Use the new SMMU property to make the SMMU OAS match the CPU PARANGE.
+That's according to SMMU manual ARM IHI 0070F.b:
+    6.3.6 SMMU_IDR5, OAS must match the system physical address size.
 
 Signed-off-by: Mostafa Saleh <smostafa@google.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
 ---
- hw/arm/smmu-common.c         | 14 +++++++-------
- hw/arm/smmuv3.c              | 15 ++++++++-------
- include/hw/arm/smmu-common.h | 11 +++++++++--
- 3 files changed, 24 insertions(+), 16 deletions(-)
+ hw/arm/virt.c      | 14 ++++++++++++--
+ target/arm/cpu.h   |  2 ++
+ target/arm/cpu64.c |  5 +++++
+ 3 files changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-index 8a8c718e6b..8a5858f69f 100644
---- a/hw/arm/smmu-common.c
-+++ b/hw/arm/smmu-common.c
-@@ -304,7 +304,7 @@ static int smmu_ptw_64_s1(SMMUTransCfg *cfg,
-                           SMMUTLBEntry *tlbe, SMMUPTWEventInfo *info)
- {
-     dma_addr_t baseaddr, indexmask;
--    int stage = cfg->stage;
-+    SMMUStage stage = cfg->stage;
-     SMMUTransTableInfo *tt = select_tt(cfg, iova);
-     uint8_t level, granule_sz, inputsize, stride;
- 
-@@ -402,7 +402,7 @@ static int smmu_ptw_64_s1(SMMUTransCfg *cfg,
-     info->type = SMMU_PTW_ERR_TRANSLATION;
- 
- error:
--    info->stage = 1;
-+    info->stage = SMMU_STAGE_1;
-     tlbe->entry.perm = IOMMU_NONE;
-     return -EINVAL;
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 3c93c0c0a6..f203b1f8e1 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -252,6 +252,13 @@ static bool ns_el2_virt_timer_present(void)
+         arm_feature(env, ARM_FEATURE_EL2) && cpu_isar_feature(aa64_vh, cpu);
  }
-@@ -425,7 +425,7 @@ static int smmu_ptw_64_s2(SMMUTransCfg *cfg,
-                           dma_addr_t ipa, IOMMUAccessFlags perm,
-                           SMMUTLBEntry *tlbe, SMMUPTWEventInfo *info)
- {
--    const int stage = 2;
-+    const SMMUStage stage = SMMU_STAGE_2;
-     int granule_sz = cfg->s2cfg.granule_sz;
-     /* ARM DDI0487I.a: Table D8-7. */
-     int inputsize = 64 - cfg->s2cfg.tsz;
-@@ -525,7 +525,7 @@ static int smmu_ptw_64_s2(SMMUTransCfg *cfg,
- error_ipa:
-     info->addr = ipa;
- error:
--    info->stage = 2;
-+    info->stage = SMMU_STAGE_2;
-     tlbe->entry.perm = IOMMU_NONE;
-     return -EINVAL;
- }
-@@ -544,9 +544,9 @@ error:
- int smmu_ptw(SMMUTransCfg *cfg, dma_addr_t iova, IOMMUAccessFlags perm,
-              SMMUTLBEntry *tlbe, SMMUPTWEventInfo *info)
- {
--    if (cfg->stage == 1) {
-+    if (cfg->stage == SMMU_STAGE_1) {
-         return smmu_ptw_64_s1(cfg, iova, perm, tlbe, info);
--    } else if (cfg->stage == 2) {
-+    } else if (cfg->stage == SMMU_STAGE_2) {
-         /*
-          * If bypassing stage 1(or unimplemented), the input address is passed
-          * directly to stage 2 as IPA. If the input address of a transaction
-@@ -555,7 +555,7 @@ int smmu_ptw(SMMUTransCfg *cfg, dma_addr_t iova, IOMMUAccessFlags perm,
-          */
-         if (iova >= (1ULL << cfg->oas)) {
-             info->type = SMMU_PTW_ERR_ADDR_SIZE;
--            info->stage = 1;
-+            info->stage = SMMU_STAGE_1;
-             tlbe->entry.perm = IOMMU_NONE;
-             return -EINVAL;
-         }
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index 1eb5b160d2..dab3ad2db9 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -34,7 +34,8 @@
- #include "smmuv3-internal.h"
- #include "smmu-internal.h"
  
--#define PTW_RECORD_FAULT(cfg)   (((cfg)->stage == 1) ? (cfg)->record_faults : \
-+#define PTW_RECORD_FAULT(cfg)   (((cfg)->stage == SMMU_STAGE_1) ? \
-+                                 (cfg)->record_faults : \
-                                  (cfg)->s2cfg.record_faults)
- 
- /**
-@@ -402,7 +403,7 @@ static bool s2_pgtable_config_valid(uint8_t sl0, uint8_t t0sz, uint8_t gran)
- 
- static int decode_ste_s2_cfg(SMMUTransCfg *cfg, STE *ste)
- {
--    cfg->stage = 2;
-+    cfg->stage = SMMU_STAGE_2;
- 
-     if (STE_S2AA64(ste) == 0x0) {
-         qemu_log_mask(LOG_UNIMP,
-@@ -678,7 +679,7 @@ static int decode_cd(SMMUTransCfg *cfg, CD *cd, SMMUEventInfo *event)
- 
-     /* we support only those at the moment */
-     cfg->aa64 = true;
--    cfg->stage = 1;
-+    cfg->stage = SMMU_STAGE_1;
- 
-     cfg->oas = oas2bits(CD_IPS(cd));
-     cfg->oas = MIN(oas2bits(SMMU_IDR5_OAS), cfg->oas);
-@@ -762,7 +763,7 @@ static int smmuv3_decode_config(IOMMUMemoryRegion *mr, SMMUTransCfg *cfg,
-         return ret;
-     }
- 
--    if (cfg->aborted || cfg->bypassed || (cfg->stage == 2)) {
-+    if (cfg->aborted || cfg->bypassed || (cfg->stage == SMMU_STAGE_2)) {
-         return 0;
-     }
- 
-@@ -882,7 +883,7 @@ static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
-         goto epilogue;
-     }
- 
--    if (cfg->stage == 1) {
-+    if (cfg->stage == SMMU_STAGE_1) {
-         /* Select stage1 translation table. */
-         tt = select_tt(cfg, addr);
-         if (!tt) {
-@@ -919,7 +920,7 @@ static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
-              * nesting is not supported. So it is sufficient to check the
-              * translation stage to know the TLB stage for now.
-              */
--            event.u.f_walk_eabt.s2 = (cfg->stage == 2);
-+            event.u.f_walk_eabt.s2 = (cfg->stage == SMMU_STAGE_2);
-             if (PTW_RECORD_FAULT(cfg)) {
-                 event.type = SMMU_EVT_F_PERMISSION;
-                 event.u.f_permission.addr = addr;
-@@ -935,7 +936,7 @@ static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
- 
-     if (smmu_ptw(cfg, aligned_addr, flag, cached_entry, &ptw_info)) {
-         /* All faults from PTW has S2 field. */
--        event.u.f_walk_eabt.s2 = (ptw_info.stage == 2);
-+        event.u.f_walk_eabt.s2 = (ptw_info.stage == SMMU_STAGE_2);
-         g_free(cached_entry);
-         switch (ptw_info.type) {
-         case SMMU_PTW_ERR_WALK_EABT:
-diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
-index 5ec2e6c1a4..b3c881f0ee 100644
---- a/include/hw/arm/smmu-common.h
-+++ b/include/hw/arm/smmu-common.h
-@@ -49,8 +49,15 @@ typedef enum {
-     SMMU_PTW_ERR_PERMISSION,  /* Permission fault */
- } SMMUPTWEventType;
- 
-+/* SMMU Stage */
-+typedef enum {
-+    SMMU_STAGE_1 = 1,
-+    SMMU_STAGE_2,
-+    SMMU_NESTED,
-+} SMMUStage;
++/* We rely on CPU to define system OAS. */
++static int32_t get_system_oas(void)
++{
++    ARMCPU *cpu = ARM_CPU(qemu_get_cpu(0));
++    return cpu_arm_get_oas(cpu);
++}
 +
- typedef struct SMMUPTWEventInfo {
--    int stage;
-+    SMMUStage stage;
-     SMMUPTWEventType type;
-     dma_addr_t addr; /* fetched address that induced an abort, if any */
- } SMMUPTWEventInfo;
-@@ -88,7 +95,7 @@ typedef struct SMMUS2Cfg {
-  */
- typedef struct SMMUTransCfg {
-     /* Shared fields between stage-1 and stage-2. */
--    int stage;                 /* translation stage */
-+    SMMUStage stage;           /* translation stage */
-     bool disabled;             /* smmu is disabled */
-     bool bypassed;             /* translation is bypassed */
-     bool aborted;              /* translation is aborted */
+ static void create_fdt(VirtMachineState *vms)
+ {
+     MachineState *ms = MACHINE(vms);
+@@ -1384,7 +1391,7 @@ static void create_pcie_irq_map(const MachineState *ms,
+ }
+ 
+ static void create_smmu(const VirtMachineState *vms,
+-                        PCIBus *bus)
++                        PCIBus *bus, int32_t oas)
+ {
+     char *node;
+     const char compat[] = "arm,smmu-v3";
+@@ -1404,6 +1411,9 @@ static void create_smmu(const VirtMachineState *vms,
+ 
+     object_property_set_link(OBJECT(dev), "primary-bus", OBJECT(bus),
+                              &error_abort);
++
++    qdev_prop_set_uint64(dev, "oas", oas);
++
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
+     for (i = 0; i < NUM_SMMU_IRQS; i++) {
+@@ -1578,7 +1588,7 @@ static void create_pcie(VirtMachineState *vms)
+ 
+         switch (vms->iommu) {
+         case VIRT_IOMMU_SMMUV3:
+-            create_smmu(vms, vms->bus);
++            create_smmu(vms, vms->bus, get_system_oas());
+             qemu_fdt_setprop_cells(ms->fdt, nodename, "iommu-map",
+                                    0x0, vms->iommu_phandle, 0x0, 0x10000);
+             break;
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 17efc5d565..68261ffbf9 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -3287,4 +3287,6 @@ static inline target_ulong cpu_untagged_addr(CPUState *cs, target_ulong x)
+ }
+ #endif
+ 
++int32_t cpu_arm_get_oas(ARMCPU *cpu);
++
+ #endif
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index 985b1efe16..08da83c082 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -787,6 +787,11 @@ static const gchar *aarch64_gdb_arch_name(CPUState *cs)
+     return "aarch64";
+ }
+ 
++int32_t cpu_arm_get_oas(ARMCPU *cpu)
++{
++    return FIELD_EX64(cpu->isar.id_aa64mmfr0, ID_AA64MMFR0, PARANGE);
++}
++
+ static void aarch64_cpu_class_init(ObjectClass *oc, void *data)
+ {
+     CPUClass *cc = CPU_CLASS(oc);
 -- 
 2.44.0.769.g3c40516874-goog
 
