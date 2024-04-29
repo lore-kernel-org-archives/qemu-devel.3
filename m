@@ -4,72 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A047BC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 03:40:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B128C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 03:42:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1Hrf-0000kK-Ie; Sun, 28 Apr 2024 23:39:39 -0400
+	id 1s1Hts-0001ZJ-JK; Sun, 28 Apr 2024 23:41:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1s1Hrd-0000ja-MH; Sun, 28 Apr 2024 23:39:37 -0400
-Received: from mail-vk1-xa2d.google.com ([2607:f8b0:4864:20::a2d])
+ id 1s1Htr-0001Z7-SG; Sun, 28 Apr 2024 23:41:55 -0400
+Received: from mail-vk1-xa2a.google.com ([2607:f8b0:4864:20::a2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1s1Hrb-0006Gl-Vk; Sun, 28 Apr 2024 23:39:37 -0400
-Received: by mail-vk1-xa2d.google.com with SMTP id
- 71dfb90a1353d-4daab3cf090so1965195e0c.0; 
- Sun, 28 Apr 2024 20:39:31 -0700 (PDT)
+ id 1s1Htp-0006iJ-Pc; Sun, 28 Apr 2024 23:41:55 -0400
+Received: by mail-vk1-xa2a.google.com with SMTP id
+ 71dfb90a1353d-4dac19aa9b5so1544038e0c.2; 
+ Sun, 28 Apr 2024 20:41:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1714361971; x=1714966771; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1714362112; x=1714966912; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tiezn1jCpbisAe/o98fHOK3sIsw3VHybbGzkgvfY9dA=;
- b=eegAamrpRRJbPHq/fV5MEtkfmRugh6cx61+DF5rqu9m5BbIxdxxUVfun8lHJjZj9mM
- hg5W46U7tTxnTmMNrRisnL2VU3YlUmbcGbwYePa/EewQQRUHd/wLx6wFNrSQwPIzmFsH
- +QJ6WQnNyxlS56PwvV+mKj0o638Dl7vzfRZMd74w/AfCqfrEcscJgDZDzGlegoBJBZn/
- uW2Fi8a1ejdESGBF/o0DoMfrW3tJNYlDdfq8KkvfkVfaCsVtHd4by+TuPJsGuD3IJy3v
- 6b9you/zyEXbSHiVtPBpB9nQ1TLWyBY2J9BnGkGt9AKuL32d5jeR2Ru8KEasGNKqmZec
- LzWA==
+ bh=jG0Ai0MBplPdOks9o/0BYh9dWDjNui/d3bqtxfDKLV8=;
+ b=ImFMmvg8eI1n7GsKqIEIJeo4wFlamcNp/eC4SeoLEKU4qcUjeYDiBnX0XNHAbpkSJm
+ pCD2qpilRZ4aURmac41reCWdL3WJ2piHKdplnWQ9U/1Sajf6zCWAuVwULfjt02q5Eg5f
+ ssnIw1fPwoo+dmzhNm9omPoza6krE1wjOzMgQfiYoJO7hqW1bkP28OP163hKnXn0jCp8
+ APJ/gRi5CQXHHdXP4f/mIm2P85PoI731w02O8QFb+LnSmnwkq+b6FAfAS2tM3G/IDQ6T
+ 8M5khTti4vpDIAaTZiXKP0EVvycsUgcADmPkpHkMcic1geEAP9O3sRdabaGH8lMPfxHR
+ 7mRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714361971; x=1714966771;
+ d=1e100.net; s=20230601; t=1714362112; x=1714966912;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tiezn1jCpbisAe/o98fHOK3sIsw3VHybbGzkgvfY9dA=;
- b=QOEsla23jXu7X6xbL0iBmDwq55iUPdvm2swB0bfhQh0BXdXdArql9OMnk2rnJBE5sC
- cxMJBa1ZcW8OmfEtoGOQf/ZKr6Tr5G92zBnpW3JBbhbm5V5ASrxzc8vX1JbE+DBkjfZu
- gE8L3UYvrl7qVFSqasFY7GWQxYrLwfFVFYwMaV1OzVuG6d0c7ghRm+C7Rr9olLCvTZyn
- r5G1GQFWipPR8i+aNGiFD1LBVTLrBQoat6d0Xca3+gFv26vtKNX5nuQlf+y+6xPM2vHf
- PJX62GRfzz7v/8O2Ser+6n64162ihof8WiXrJLuXMqoCmTbruiAHZdKzRNZyaoZtVjKj
- 6tpQ==
+ bh=jG0Ai0MBplPdOks9o/0BYh9dWDjNui/d3bqtxfDKLV8=;
+ b=Hqrb9okxopEY4UwPnCn7ClJJwB7/SVnjBjWLuHNkCknyuKgAQf8+VpFgflVtGJ2h9z
+ ZokCrfDSfuDkhYIrYvXbD5isy0Gnvv8QRxlCwTI09mA7BhdXJi0t2QqoeXxtTb6bCD7l
+ oMLFeIO3bned2vCC76ip91R/QL4r8YZ29izTuHcHBeJuHE7qdGL+UxRNy9kX3AbP9t/W
+ /foFC9v4ABF6m/oQfb7UMblWUAaPwgr1Dzz8n8IeoYl2+vTaeu0eGyEVzXa58LTXVcu/
+ UiWsYk9Z89ph3T56AK+2FhhJev6PI+Mvp3E6GKiH1DTi4pYrOXPBYRKlr3QDMBgf6e4J
+ z/vw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWDAA9rlyFSZPGQQSh2C46+HDhj3YELKSH9rmRUVnPPrc2Np21r+YUrMYpMWGcgDWddX8MIgaNaQqHBHjkvXxoNYVeN9dc=
-X-Gm-Message-State: AOJu0Yx/herqv3ruOsbPCccrcURta2AjsY1I7S75IPlg5+/z0hCLa9zI
- eA8V6VR7B+w9wAOeWuRdph60S+zvcYYaPTgZOmZ/zDJZAgs26z4TH6JvndBeInYtaomd6CjLUXd
- kXgh1KBJd/IkclYwj6F7Odb/MAPw=
-X-Google-Smtp-Source: AGHT+IHPfYyqVQeA4vyjpCx7KH3ymXEhlnYki7sEQrXrI0fybc7FRYTkwlOwSxjk2vUDOZe9rn6fx+FMLcSfoqIC8DU=
-X-Received: by 2002:a05:6122:2011:b0:4d4:34b2:9a89 with SMTP id
- l17-20020a056122201100b004d434b29a89mr10673640vkd.8.1714361970667; Sun, 28
- Apr 2024 20:39:30 -0700 (PDT)
+ AJvYcCVgEkZXSHNKdLG4UaoZWBOhD0l32uN1kRuVUymnsIeerYOhoIuXZHU4JRkAr7vWoyeWwfvXRYQG2HtZ9HajWNjjuCTVilU=
+X-Gm-Message-State: AOJu0Yz0gYtIUSOmmCHTn4S9F3RZPh1WUSBRX91+l6zKzjt+sHu3dbz9
+ DrQuTHBribWs5Qxw6x/XGOy6Fx1OCZky9nPSD6RwMyrJV73bbpbjTQfjWeGHdDr3eLvP81LpiGl
+ JwNWjoHcIgn7lq8xfVRpTU7wXlh0=
+X-Google-Smtp-Source: AGHT+IGcfzLQO9gU2ffCGg5F9LUFAGz60z5S8jJERFKEyMhT4Nu7jBf8RcNC0szXIXWl1E+GNAbaaarW0P590A+rWJ8=
+X-Received: by 2002:a67:e98a:0:b0:47c:3823:63dc with SMTP id
+ b10-20020a67e98a000000b0047c382363dcmr3147963vso.17.1714362111862; Sun, 28
+ Apr 2024 20:41:51 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240325021654.6594-1-eric.huang@linux.alibaba.com>
-In-Reply-To: <20240325021654.6594-1-eric.huang@linux.alibaba.com>
+References: <20240314092158.65866-1-eric.huang@linux.alibaba.com>
+In-Reply-To: <20240314092158.65866-1-eric.huang@linux.alibaba.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 29 Apr 2024 13:39:04 +1000
-Message-ID: <CAKmqyKPJqU=dOsXX=kOPnbJtbOHw63_V_XXkfMFc+26Uh+1MYg@mail.gmail.com>
-Subject: Re: [PATCH v3] target/riscv: Fix the element agnostic function problem
+Date: Mon, 29 Apr 2024 13:41:25 +1000
+Message-ID: <CAKmqyKP7ZJNd-VCj86qKJRiKF2Sx4TvA6M+L1Yj8Z18ecyET+w@mail.gmail.com>
+Subject: Re: [PATCH v4] target/riscv: Implement dynamic establishment of
+ custom decoder
 To: Huang Tao <eric.huang@linux.alibaba.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com,
  dbarboza@ventanamicro.com, liwei1518@gmail.com, bin.meng@windriver.com, 
  alistair.francis@wdc.com, palmer@dabbelt.com, 
+ Christoph Muellner <christoph.muellner@vrull.eu>, 
  Richard Henderson <richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2d;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2a;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -93,75 +95,217 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 25, 2024 at 12:18=E2=80=AFPM Huang Tao <eric.huang@linux.alibab=
-a.com> wrote:
+On Thu, Mar 14, 2024 at 7:23=E2=80=AFPM Huang Tao <eric.huang@linux.alibaba=
+.com> wrote:
 >
-> In RVV and vcrypto instructions, the masked and tail elements are set to =
-1s
-> using vext_set_elems_1s function if the vma/vta bit is set. It is the ele=
-ment
-> agnostic policy.
->
-> However, this function can't deal the big endian situation. This patch fi=
-xes
-> the problem by adding handling of such case.
+> In this patch, we modify the decoder to be a freely composable data
+> structure instead of a hardcoded one. It can be dynamically builded up
+> according to the extensions.
+> This approach has several benefits:
+> 1. Provides support for heterogeneous cpu architectures. As we add decode=
+r in
+>    RISCVCPU, each cpu can have their own decoder, and the decoders can be
+>    different due to cpu's features.
+> 2. Improve the decoding efficiency. We run the guard_func to see if the d=
+ecoder
+>    can be added to the dynamic_decoder when building up the decoder. Ther=
+efore,
+>    there is no need to run the guard_func when decoding each instruction.=
+ It can
+>    improve the decoding efficiency
+> 3. For vendor or dynamic cpus, it allows them to customize their own deco=
+der
+>    functions to improve decoding efficiency, especially when vendor-defin=
+ed
+>    instruction sets increase. Because of dynamic building up, it can skip=
+ the other
+>    decoder guard functions when decoding.
+> 4. Pre patch for allowing adding a vendor decoder before decode_insn32() =
+with minimal
+>    overhead for users that don't need this particular vendor decoder.
 >
 > Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
-> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+> Suggested-by: Christoph Muellner <christoph.muellner@vrull.eu>
+> Co-authored-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Thanks!
-
-Applied to riscv-to-apply.next
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
+> Changes in v4:
+> - fix typo
+> - rename function
+> - add 'if tcg_enable()'
+> - move function to tcg-cpu.c and declarations to tcg-cpu.h
+>
 > Changes in v3:
-> - use "if (HOST_BIG_ENDIAN)" instead of "#if HOST_BIG_ENDIAN"
->
-> Changes in v2:
-> - Keep the api of vext_set_elems_1s
-> - Reduce the number of patches.
+> - use GPtrArray to save decode function poionter list.
 > ---
->  target/riscv/vector_internals.c | 22 ++++++++++++++++++++++
->  1 file changed, 22 insertions(+)
+>  target/riscv/cpu.c         |  1 +
+>  target/riscv/cpu.h         |  1 +
+>  target/riscv/tcg/tcg-cpu.c | 15 +++++++++++++++
+>  target/riscv/tcg/tcg-cpu.h | 15 +++++++++++++++
+>  target/riscv/translate.c   | 31 +++++++++++++++----------------
+>  5 files changed, 47 insertions(+), 16 deletions(-)
 >
-> diff --git a/target/riscv/vector_internals.c b/target/riscv/vector_intern=
-als.c
-> index 12f5964fbb..36635a1138 100644
-> --- a/target/riscv/vector_internals.c
-> +++ b/target/riscv/vector_internals.c
-> @@ -30,6 +30,28 @@ void vext_set_elems_1s(void *base, uint32_t is_agnosti=
-c, uint32_t cnt,
->      if (tot - cnt =3D=3D 0) {
->          return ;
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index c160b9216b..17070b82a7 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -1132,6 +1132,7 @@ void riscv_cpu_finalize_features(RISCVCPU *cpu, Err=
+or **errp)
+>              error_propagate(errp, local_err);
+>              return;
+>          }
+> +        riscv_tcg_cpu_finalize_dynamic_decoder(cpu);
+>      } else if (kvm_enabled()) {
+>          riscv_kvm_cpu_finalize_features(cpu, &local_err);
+>          if (local_err !=3D NULL) {
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 3b1a02b944..48e67410e1 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -457,6 +457,7 @@ struct ArchCPU {
+>      uint32_t pmu_avail_ctrs;
+>      /* Mapping of events to counters */
+>      GHashTable *pmu_event_ctr_map;
+> +    const GPtrArray *decoders;
+>  };
+>
+>  /**
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index ab6db817db..c9ab92ea2f 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -853,6 +853,21 @@ void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, =
+Error **errp)
 >      }
-> +
-> +    if (HOST_BIG_ENDIAN) {
-> +        /*
-> +         * Deal the situation when the elements are insdie
-> +         * only one uint64 block including setting the
-> +         * masked-off element.
-> +         */
-> +        if (((tot - 1) ^ cnt) < 8) {
-> +            memset(base + H1(tot - 1), -1, tot - cnt);
-> +            return;
-> +        }
-> +        /*
-> +         * Otherwise, at least cross two uint64_t blocks.
-> +         * Set first unaligned block.
-> +         */
-> +        if (cnt % 8 !=3D 0) {
-> +            uint32_t j =3D ROUND_UP(cnt, 8);
-> +            memset(base + H1(j - 1), -1, j - cnt);
-> +            cnt =3D j;
-> +        }
-> +        /* Set other 64bit aligend blocks */
-> +    }
->      memset(base + cnt, -1, tot - cnt);
 >  }
 >
+> +void riscv_tcg_cpu_finalize_dynamic_decoder(RISCVCPU *cpu)
+> +{
+> +    GPtrArray *dynamic_decoders;
+> +    dynamic_decoders =3D g_ptr_array_sized_new(decoder_table_size);
+> +    for (size_t i =3D 0; i < decoder_table_size; ++i) {
+> +        if (decoder_table[i].guard_func &&
+> +            decoder_table[i].guard_func(&cpu->cfg)) {
+> +            g_ptr_array_add(dynamic_decoders,
+> +                            (gpointer)decoder_table[i].riscv_cpu_decode_=
+fn);
+> +        }
+> +    }
+> +
+> +    cpu->decoders =3D dynamic_decoders;
+> +}
+> +
+>  bool riscv_cpu_tcg_compatible(RISCVCPU *cpu)
+>  {
+>      return object_dynamic_cast(OBJECT(cpu), TYPE_RISCV_CPU_HOST) =3D=3D =
+NULL;
+> diff --git a/target/riscv/tcg/tcg-cpu.h b/target/riscv/tcg/tcg-cpu.h
+> index f7b32417f8..ce94253fe4 100644
+> --- a/target/riscv/tcg/tcg-cpu.h
+> +++ b/target/riscv/tcg/tcg-cpu.h
+> @@ -26,4 +26,19 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, =
+Error **errp);
+>  void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
+>  bool riscv_cpu_tcg_compatible(RISCVCPU *cpu);
+>
+> +struct DisasContext;
+> +struct RISCVCPUConfig;
+> +typedef struct RISCVDecoder {
+> +    bool (*guard_func)(const struct RISCVCPUConfig *);
+> +    bool (*riscv_cpu_decode_fn)(struct DisasContext *, uint32_t);
+> +} RISCVDecoder;
+> +
+> +typedef bool (*riscv_cpu_decode_fn)(struct DisasContext *, uint32_t);
+> +
+> +extern const size_t decoder_table_size;
+> +
+> +extern const RISCVDecoder decoder_table[];
+> +
+> +void riscv_tcg_cpu_finalize_dynamic_decoder(RISCVCPU *cpu);
+> +
+>  #endif
+> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+> index ea5d52b2ef..bce16d5054 100644
+> --- a/target/riscv/translate.c
+> +++ b/target/riscv/translate.c
+> @@ -37,6 +37,8 @@
+>  #include "exec/helper-info.c.inc"
+>  #undef  HELPER_H
+>
+> +#include "tcg/tcg-cpu.h"
+> +
+>  /* global register indices */
+>  static TCGv cpu_gpr[32], cpu_gprh[32], cpu_pc, cpu_vl, cpu_vstart;
+>  static TCGv_i64 cpu_fpr[32]; /* assume F and D extensions */
+> @@ -117,6 +119,7 @@ typedef struct DisasContext {
+>      bool frm_valid;
+>      /* TCG of the current insn_start */
+>      TCGOp *insn_start;
+> +    const GPtrArray *decoders;
+>  } DisasContext;
+>
+>  static inline bool has_ext(DisasContext *ctx, uint32_t ext)
+> @@ -1120,21 +1123,16 @@ static inline int insn_len(uint16_t first_word)
+>      return (first_word & 3) =3D=3D 3 ? 4 : 2;
+>  }
+>
+> +const RISCVDecoder decoder_table[] =3D {
+> +    { always_true_p, decode_insn32 },
+> +    { has_xthead_p, decode_xthead},
+> +    { has_XVentanaCondOps_p, decode_XVentanaCodeOps},
+> +};
+> +
+> +const size_t decoder_table_size =3D ARRAY_SIZE(decoder_table);
+> +
+>  static void decode_opc(CPURISCVState *env, DisasContext *ctx, uint16_t o=
+pcode)
+>  {
+> -    /*
+> -     * A table with predicate (i.e., guard) functions and decoder functi=
+ons
+> -     * that are tested in-order until a decoder matches onto the opcode.
+> -     */
+> -    static const struct {
+> -        bool (*guard_func)(const RISCVCPUConfig *);
+> -        bool (*decode_func)(DisasContext *, uint32_t);
+> -    } decoders[] =3D {
+> -        { always_true_p,  decode_insn32 },
+> -        { has_xthead_p, decode_xthead },
+> -        { has_XVentanaCondOps_p,  decode_XVentanaCodeOps },
+> -    };
+> -
+>      ctx->virt_inst_excp =3D false;
+>      ctx->cur_insn_len =3D insn_len(opcode);
+>      /* Check for compressed insn */
+> @@ -1155,9 +1153,9 @@ static void decode_opc(CPURISCVState *env, DisasCon=
+text *ctx, uint16_t opcode)
+>                                               ctx->base.pc_next + 2));
+>          ctx->opcode =3D opcode32;
+>
+> -        for (size_t i =3D 0; i < ARRAY_SIZE(decoders); ++i) {
+> -            if (decoders[i].guard_func(ctx->cfg_ptr) &&
+> -                decoders[i].decode_func(ctx, opcode32)) {
+> +        for (guint i =3D 0; i < ctx->decoders->len; ++i) {
+> +            riscv_cpu_decode_fn func =3D g_ptr_array_index(ctx->decoders=
+, i);
+> +            if (func(ctx, opcode32)) {
+>                  return;
+>              }
+>          }
+> @@ -1202,6 +1200,7 @@ static void riscv_tr_init_disas_context(DisasContex=
+tBase *dcbase, CPUState *cs)
+>      ctx->itrigger =3D FIELD_EX32(tb_flags, TB_FLAGS, ITRIGGER);
+>      ctx->zero =3D tcg_constant_tl(0);
+>      ctx->virt_inst_excp =3D false;
+> +    ctx->decoders =3D cpu->decoders;
+>  }
+>
+>  static void riscv_tr_tb_start(DisasContextBase *db, CPUState *cpu)
 > --
 > 2.41.0
 >
