@@ -4,77 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D1D5C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 06:59:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCEC4C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 07:06:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1KuT-0003AH-Rq; Mon, 29 Apr 2024 02:54:45 -0400
+	id 1s1L4g-0006tN-EZ; Mon, 29 Apr 2024 03:05:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s1KuQ-0002wf-3D
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 02:54:42 -0400
-Received: from mgamail.intel.com ([192.198.163.16])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1s1L4f-0006sh-7Z
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 03:05:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s1KuO-0007sZ-2w
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 02:54:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1714373680; x=1745909680;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=B7nXRh7ZojaXtdhNyRfMhv/+nlUrwKMI6CTd3vTaKw0=;
- b=kiUuVVs/if+/kJIuwmm4hI4a3YYfRxBqge7CH3uM8IgoH6z4pvkWf3pf
- snqvXfvX/s6G65PiA3ys5boshlw5H9LSPZLaa8Uc+RMfLo49wiFABmz3K
- poXE+hO/s8RnryqZLcEuNa/OlgDwf3X0P4uhcojNWbpyzFfVljzntgMA+
- VL2ixJa0F/F/qMOkJGR3rXNhArvearbZeEsfCdpLegkpfvls28jw3vQF3
- hW/e2muqwLk2CoL5gOEVAMVAamqi0f9J4e+2eo68JXlz5V0JPPWlIIEk1
- WmLPqEe0wPnG4rPUVfxKwEibaVnqU2bbDcOueTwFJkdH+V12U7GC3nug4 g==;
-X-CSE-ConnectionGUID: ovzbF8GbTRq0j8MZtTDJzA==
-X-CSE-MsgGUID: AJrT3WN8QNSfItH9M5Wtqw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11057"; a="10560765"
-X-IronPort-AV: E=Sophos;i="6.07,239,1708416000"; d="scan'208";a="10560765"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Apr 2024 23:54:29 -0700
-X-CSE-ConnectionGUID: Qmkoz7MDTSCD1IbkcMk3cQ==
-X-CSE-MsgGUID: tWbG6iWHRT6NLUrAX9kk5w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,239,1708416000"; d="scan'208";a="63488389"
-Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.124])
- by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Apr 2024 23:54:25 -0700
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
-To: qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
- mst@redhat.com, peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com,
- nicolinc@nvidia.com, joao.m.martins@oracle.com, kevin.tian@intel.com,
- yi.l.liu@intel.com, chao.p.peng@intel.com,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1s1L4Z-0001Y9-Tl
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 03:05:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714374309;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=AU3OvV0FGZBdlDBgUS/9ZSJ5+OV25xDSllpu0lckNQ0=;
+ b=FlCU08K36T8MMays4geG+nK//VUbDRq7XL2KOY0Qnlgom01igJTCG68gJY3LaIHJdzkdDU
+ 19uxT7al1FUwtAzkgTutMZeroSlQanAgtEnY1zF9TpscJ4LYb2W4xi9wCBqCgSuPWsDGt0
+ QMRCfNnB0R+b0Od1nSkFBfyIlP64710=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-202-sUn-P-6rMYans1NReSz-DQ-1; Mon, 29 Apr 2024 03:05:06 -0400
+X-MC-Unique: sUn-P-6rMYans1NReSz-DQ-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-41bf05377abso5210235e9.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 00:05:06 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714374305; x=1714979105;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=AU3OvV0FGZBdlDBgUS/9ZSJ5+OV25xDSllpu0lckNQ0=;
+ b=g4/d4uo1q7W8LwZcZ1uU1tQmZFSZo8lFjNA0fGIjHKPr75FWBXSkErj9uP1BXuK0kd
+ rC8Sk2GwiD72wI7vHuP9c1SIg4zPwnQDpaUzCOCjTfQ8wBdZuw7iaFE6RhP88p+qX8mF
+ uXYCvhMbM7Kynj8N/7o2krH3JsVlScxtA4Y2LvE5Nh8I2zXG0+23/4sgENINdHJQXkO7
+ nNoHT019tnhLVoqeFtQ2T5xmPLoSFr38L0EwF/Vo6YxGCEiVXnARa7bsos0nLBk8C2Ji
+ uzAZ40zxSvKF1LM6sHqGXm25kN0dI4akN0cy+j/QZ6Qbs5penOJBmt/tCe2MkbgGk0Ke
+ 6cKg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWpqrN6Vv/1ThIQHQnnvZF3ktI1epxhwrzXDY2yhPBQiad8CJuJCeAzpY6wX245UDp5boxOCKCvHIEz9Xgpw9APFboNMAY=
+X-Gm-Message-State: AOJu0Yx2/G0RxOITs24g33QsD58gsvz8F3/F2Z+hNu2NF05zvWyXMNeq
+ w2GnpkCV98lV3doSEl+mkQupRYelOj46AftOHVhQJAPwJJYbdnZc9CicxHLpe4APhT5fHj+7Fzt
+ 0FTyjWaxneiUf3FRZRMbO2JoUewv76ArjcK2ZAsobvA06IDExPLb2
+X-Received: by 2002:a05:600c:1394:b0:41a:8b39:8040 with SMTP id
+ u20-20020a05600c139400b0041a8b398040mr8600762wmf.20.1714374305480; 
+ Mon, 29 Apr 2024 00:05:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFKVm9bW2/soqmIbhxiWWyPWj9u2ybbEd9+0mxqnrmyp/kWIzp3phiIV5TT/tb94AyK8xVe1g==
+X-Received: by 2002:a05:600c:1394:b0:41a:8b39:8040 with SMTP id
+ u20-20020a05600c139400b0041a8b398040mr8600736wmf.20.1714374304949; 
+ Mon, 29 Apr 2024 00:05:04 -0700 (PDT)
+Received: from redhat.com ([212.116.168.114]) by smtp.gmail.com with ESMTPSA id
+ f11-20020a05600c4e8b00b00417ee886977sm44442695wmq.4.2024.04.29.00.05.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 29 Apr 2024 00:05:04 -0700 (PDT)
+Date: Mon, 29 Apr 2024 03:05:01 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Jason Wang <jasowang@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Luigi Rizzo <rizzo@iet.unipi.it>,
+ Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
+ Vincenzo Maffione <v.maffione@gmail.com>,
+ Andrew Melnychenko <andrew@daynix.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH v3 17/19] intel_iommu: Extract out vtd_cap_init() to
- initialize cap/ecap
-Date: Mon, 29 Apr 2024 14:50:44 +0800
-Message-Id: <20240429065046.3688701-18-zhenzhong.duan@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240429065046.3688701-1-zhenzhong.duan@intel.com>
-References: <20240429065046.3688701-1-zhenzhong.duan@intel.com>
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org,
+ 20240428-rss-v10-0-73cbaa91aeb6@daynix.com
+Subject: Re: [PATCH 0/3] virtio-net: Convert feature properties to OnOffAuto
+Message-ID: <20240429030329-mutt-send-email-mst@kernel.org>
+References: <20240428-auto-v1-0-7b012216a120@daynix.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.16;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.114,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240428-auto-v1-0-7b012216a120@daynix.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.114,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,139 +109,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extract cap/ecap initialization in vtd_cap_init() to make code
-cleaner.
+On Sun, Apr 28, 2024 at 04:21:06PM +0900, Akihiko Odaki wrote:
+> Based-on: <20240428-rss-v10-0-73cbaa91aeb6@daynix.com>
+> ("[PATCH v10 00/18] virtio-net RSS/hash report fixes and improvements")
+> 
+> Some features are not always available, and virtio-net used to disable
+> them when not available even if the corresponding properties were
+> explicitly set to "on".
+> 
+> Convert feature properties to OnOffAuto so that the user can explicitly
+> tell QEMU to automatically select the value by setting them "auto".
+> QEMU will give an error if they are set "on".
+> 
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-No functional change intended.
+Should we maybe bite the bullet allow "auto" for all binary/boolean
+properties? Just ignore "auto" if no one cares ATM.
 
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
----
- hw/i386/intel_iommu.c | 93 ++++++++++++++++++++++++-------------------
- 1 file changed, 51 insertions(+), 42 deletions(-)
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index cc8e59674e..519063c8f8 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -3934,30 +3934,10 @@ static void vtd_iommu_replay(IOMMUMemoryRegion *iommu_mr, IOMMUNotifier *n)
-     return;
- }
- 
--/* Do the initialization. It will also be called when reset, so pay
-- * attention when adding new initialization stuff.
-- */
--static void vtd_init(IntelIOMMUState *s)
-+static void vtd_cap_init(IntelIOMMUState *s)
- {
-     X86IOMMUState *x86_iommu = X86_IOMMU_DEVICE(s);
- 
--    memset(s->csr, 0, DMAR_REG_SIZE);
--    memset(s->wmask, 0, DMAR_REG_SIZE);
--    memset(s->w1cmask, 0, DMAR_REG_SIZE);
--    memset(s->womask, 0, DMAR_REG_SIZE);
--
--    s->root = 0;
--    s->root_scalable = false;
--    s->dmar_enabled = false;
--    s->intr_enabled = false;
--    s->iq_head = 0;
--    s->iq_tail = 0;
--    s->iq = 0;
--    s->iq_size = 0;
--    s->qi_enabled = false;
--    s->iq_last_desc_type = VTD_INV_DESC_NONE;
--    s->iq_dw = false;
--    s->next_frcd_reg = 0;
-     s->cap = VTD_CAP_FRO | VTD_CAP_NFR | VTD_CAP_ND |
-              VTD_CAP_MAMV | VTD_CAP_PSI | VTD_CAP_SLLPS |
-              VTD_CAP_MGAW(s->aw_bits);
-@@ -3974,27 +3954,6 @@ static void vtd_init(IntelIOMMUState *s)
-     }
-     s->ecap = VTD_ECAP_QI | VTD_ECAP_IRO;
- 
--    /*
--     * Rsvd field masks for spte
--     */
--    vtd_spte_rsvd[0] = ~0ULL;
--    vtd_spte_rsvd[1] = VTD_SPTE_PAGE_L1_RSVD_MASK(s->aw_bits,
--                                                  x86_iommu->dt_supported);
--    vtd_spte_rsvd[2] = VTD_SPTE_PAGE_L2_RSVD_MASK(s->aw_bits);
--    vtd_spte_rsvd[3] = VTD_SPTE_PAGE_L3_RSVD_MASK(s->aw_bits);
--    vtd_spte_rsvd[4] = VTD_SPTE_PAGE_L4_RSVD_MASK(s->aw_bits);
--
--    vtd_spte_rsvd_large[2] = VTD_SPTE_LPAGE_L2_RSVD_MASK(s->aw_bits,
--                                                         x86_iommu->dt_supported);
--    vtd_spte_rsvd_large[3] = VTD_SPTE_LPAGE_L3_RSVD_MASK(s->aw_bits,
--                                                         x86_iommu->dt_supported);
--
--    if (s->scalable_mode || s->snoop_control) {
--        vtd_spte_rsvd[1] &= ~VTD_SPTE_SNP;
--        vtd_spte_rsvd_large[2] &= ~VTD_SPTE_SNP;
--        vtd_spte_rsvd_large[3] &= ~VTD_SPTE_SNP;
--    }
--
-     if (x86_iommu_ir_supported(x86_iommu)) {
-         s->ecap |= VTD_ECAP_IR | VTD_ECAP_MHMV;
-         if (s->intr_eim == ON_OFF_AUTO_ON) {
-@@ -4027,6 +3986,56 @@ static void vtd_init(IntelIOMMUState *s)
-     if (s->pasid) {
-         s->ecap |= VTD_ECAP_PASID;
-     }
-+}
-+
-+/*
-+ * Do the initialization. It will also be called when reset, so pay
-+ * attention when adding new initialization stuff.
-+ */
-+static void vtd_init(IntelIOMMUState *s)
-+{
-+    X86IOMMUState *x86_iommu = X86_IOMMU_DEVICE(s);
-+
-+    memset(s->csr, 0, DMAR_REG_SIZE);
-+    memset(s->wmask, 0, DMAR_REG_SIZE);
-+    memset(s->w1cmask, 0, DMAR_REG_SIZE);
-+    memset(s->womask, 0, DMAR_REG_SIZE);
-+
-+    s->root = 0;
-+    s->root_scalable = false;
-+    s->dmar_enabled = false;
-+    s->intr_enabled = false;
-+    s->iq_head = 0;
-+    s->iq_tail = 0;
-+    s->iq = 0;
-+    s->iq_size = 0;
-+    s->qi_enabled = false;
-+    s->iq_last_desc_type = VTD_INV_DESC_NONE;
-+    s->iq_dw = false;
-+    s->next_frcd_reg = 0;
-+
-+    vtd_cap_init(s);
-+
-+    /*
-+     * Rsvd field masks for spte
-+     */
-+    vtd_spte_rsvd[0] = ~0ULL;
-+    vtd_spte_rsvd[1] = VTD_SPTE_PAGE_L1_RSVD_MASK(s->aw_bits,
-+                                                  x86_iommu->dt_supported);
-+    vtd_spte_rsvd[2] = VTD_SPTE_PAGE_L2_RSVD_MASK(s->aw_bits);
-+    vtd_spte_rsvd[3] = VTD_SPTE_PAGE_L3_RSVD_MASK(s->aw_bits);
-+    vtd_spte_rsvd[4] = VTD_SPTE_PAGE_L4_RSVD_MASK(s->aw_bits);
-+
-+    vtd_spte_rsvd_large[2] = VTD_SPTE_LPAGE_L2_RSVD_MASK(s->aw_bits,
-+                                                    x86_iommu->dt_supported);
-+    vtd_spte_rsvd_large[3] = VTD_SPTE_LPAGE_L3_RSVD_MASK(s->aw_bits,
-+                                                    x86_iommu->dt_supported);
-+
-+    if (s->scalable_mode || s->snoop_control) {
-+        vtd_spte_rsvd[1] &= ~VTD_SPTE_SNP;
-+        vtd_spte_rsvd_large[2] &= ~VTD_SPTE_SNP;
-+        vtd_spte_rsvd_large[3] &= ~VTD_SPTE_SNP;
-+    }
- 
-     vtd_reset_caches(s);
- 
--- 
-2.34.1
+
+> ---
+> Akihiko Odaki (3):
+>       qdev-properties: Add DEFINE_PROP_ON_OFF_AUTO_BIT64()
+>       virtio-net: Convert feature properties to OnOffAuto
+>       virtio-net: Report RSS warning at device realization
+> 
+>  include/hw/qdev-properties.h   |  18 +++
+>  include/hw/virtio/virtio-net.h |   2 +-
+>  hw/core/qdev-properties.c      |  65 ++++++++++-
+>  hw/net/virtio-net.c            | 259 +++++++++++++++++++++++++----------------
+>  4 files changed, 239 insertions(+), 105 deletions(-)
+> ---
+> base-commit: ec6325eec995018983a3f88f0e78ebf733a47b7e
+> change-id: 20240428-auto-be0dc010dda5
+> 
+> Best regards,
+> -- 
+> Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
