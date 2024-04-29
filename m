@@ -4,65 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4675CC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 10:03:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C147C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 10:09:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1Npd-0003nE-I1; Mon, 29 Apr 2024 06:01:57 -0400
+	id 1s1Nw7-0005sF-6k; Mon, 29 Apr 2024 06:08:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1NpD-0003fc-Ff
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 06:01:33 -0400
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1s1Nw4-0005rr-Vz
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 06:08:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1Np8-0004Bf-Jz
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 06:01:29 -0400
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1s1Nw2-0005cr-Qi
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 06:08:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714384884;
+ s=mimecast20190719; t=1714385312;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=ePjiQ25/JgD2g4NLUdacZ9wox9rxs+1IEtJZh31j7c0=;
- b=LOtsc9m4LPb9K/3J3xt79qXPWWbcvlVyG4TUZ0nRZjKZKIO0jBh6H6EHV8s4zOqj5FR2yh
- 6aipJsEmpPMdsr6H8bvp7LnIZVcZkf7cNj7nGc0/zCMby6gkZJXFUHPQ6QEPXV3mt0t4wu
- THdgffSfSFSFgwNgJOOWiK5TmiSp0Cs=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NVcDQkog+vdLU143HYkdf3JAghOQDbvNwkEsr83xIoQ=;
+ b=a0tX0BG20jh2aiRnDTvuN9vZ0K44CKSOEr1WZU2CSxF0Mo/TYHU2xjnaLIXAoWM5CNwrFN
+ 73qfKqH7MD8kJnkl9hKWFmjMZptp+QawuaQmCNQcMAiUtAfbE30Ru8siQa6GCQFH9SazkG
+ H3uyesqd9nPgbBt+TtlDWDmKi7fHWxI=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-489-mG1MI0WLNT2BgyfRtWY--Q-1; Mon, 29 Apr 2024 06:01:16 -0400
-X-MC-Unique: mG1MI0WLNT2BgyfRtWY--Q-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4D1B6812C56;
- Mon, 29 Apr 2024 10:01:16 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.45])
- by smtp.corp.redhat.com (Postfix) with ESMTP id E6DE22166B32;
- Mon, 29 Apr 2024 10:01:14 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] .gitlab-ci.d/cirrus.yml: Shorten the runtime of the macOS and
- FreeBSD jobs
-Date: Mon, 29 Apr 2024 12:01:13 +0200
-Message-ID: <20240429100113.53357-1-thuth@redhat.com>
+ us-mta-591-B59ng42KOEG6PmhAwuTO0A-1; Mon, 29 Apr 2024 06:08:30 -0400
+X-MC-Unique: B59ng42KOEG6PmhAwuTO0A-1
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-61b3518eb6bso86354947b3.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 03:08:30 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714385310; x=1714990110;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=NVcDQkog+vdLU143HYkdf3JAghOQDbvNwkEsr83xIoQ=;
+ b=r0qRYZDgit5qGCZF+gL00edJFXiOwPzMmfLr4EY7D/ky8lFqxTp1V+TVGTxDPKHH6Z
+ WjOkt0KOzgnKpLXx3FzYa5QoAFJMpdU6IJZ98xflN2MgMok++WAeyuj18bLOTJL3ugIf
+ Mhiou23Rg0b4lr830WIA46hwEOVjxJqJSZcuWjSMYsOvEHT/j5iotJC1yfDh1O1MycvN
+ b+rpXScxCY3zx9/YnkCucfqrBq3dZAmtgqBYLqHNQS0GKFvB3b9ZretNBjOChvFL0e+R
+ 8x7cQvkilUnWYeYgHYCE+IxC0nsVcyeu8oSePttvyQUCsN65qJHFSbPZJ+cK1yr/f7uW
+ 7x5A==
+X-Gm-Message-State: AOJu0YwekMgh+ZKXMAWPL0SLyXxN5LbV8xZ6hVO9QdY/ni8Plmh/A2Is
+ eFcDd8AOdDpsZjyTzkTghxYmDu8lJX4chuQae9Az0Wi9ASQO7DmWcLr0ggzvVUe7TCMd62ZFFXw
+ Mwo+UlMaoWoyOV7LifFLb6Di+TUqC1TxWFog9+njQuaaKbr4LI/2ef2oJMpR3T0j6gKg1iCclrr
+ c/3lDdFUxNSL18rE28HmV6zUrjBz4=
+X-Received: by 2002:a05:690c:28f:b0:61a:e48c:38b7 with SMTP id
+ bf15-20020a05690c028f00b0061ae48c38b7mr7215654ywb.41.1714385310373; 
+ Mon, 29 Apr 2024 03:08:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHSPgTCNUZxV8ELEpIDhO6AfUpOWcjcsbiJzs7Ph9C0Ajz//1vNFMcpWukJUeW5WyDXAaegGmTOl01ZHdhJCJg=
+X-Received: by 2002:a05:690c:28f:b0:61a:e48c:38b7 with SMTP id
+ bf15-20020a05690c028f00b0061ae48c38b7mr7215641ywb.41.1714385310127; Mon, 29
+ Apr 2024 03:08:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+References: <20240426162348.684143-1-thuth@redhat.com>
+In-Reply-To: <20240426162348.684143-1-thuth@redhat.com>
+From: Konstantin Kostiuk <kkostiuk@redhat.com>
+Date: Mon, 29 Apr 2024 13:08:19 +0300
+Message-ID: <CAPMcbCrbcqwPfmbLX-DysAnG2wORYCdW9pr_14Xq3DGXr6y9cg@mail.gmail.com>
+Subject: Re: [PATCH] qga: Re-enable the qga-ssh-test when running without
+ fuzzing
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Content-Type: multipart/alternative; boundary="0000000000006b31330617396f11"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.114,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,39 +99,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cirrus-CI introduced limitations to the free CI minutes. To avoid that
-we are consuming them too fast, let's drop the usual targets that are
-not that important since they are either a subset of another target
-(like i386 or ppc being a subset of x86_64 or ppc64 respectively), or
-since there is still a similar target with the opposite endianness
-(like xtensa/xtensael, microblaze/microblazeel etc.).
+--0000000000006b31330617396f11
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- .gitlab-ci.d/cirrus.yml | 2 ++
- 1 file changed, 2 insertions(+)
+Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
 
-diff --git a/.gitlab-ci.d/cirrus.yml b/.gitlab-ci.d/cirrus.yml
-index 74de2edbb4..75df1273bc 100644
---- a/.gitlab-ci.d/cirrus.yml
-+++ b/.gitlab-ci.d/cirrus.yml
-@@ -57,6 +57,7 @@ x64-freebsd-13-build:
-     CIRRUS_VM_RAM: 8G
-     UPDATE_COMMAND: pkg update; pkg upgrade -y
-     INSTALL_COMMAND: pkg install -y
-+    CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,microblaze-softmmu,mips64el-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4eb-softmmu,xtensa-softmmu
-     TEST_TARGETS: check
- 
- aarch64-macos-13-base-build:
-@@ -72,6 +73,7 @@ aarch64-macos-13-base-build:
-     INSTALL_COMMAND: brew install
-     PATH_EXTRA: /opt/homebrew/ccache/libexec:/opt/homebrew/gettext/bin
-     PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/ncurses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
-+    CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,microblazeel-softmmu,mips64-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4-softmmu,xtensaeb-softmmu
-     TEST_TARGETS: check-unit check-block check-qapi-schema check-softfloat check-qtest-x86_64
- 
- aarch64-macos-14-base-build:
--- 
-2.44.0
+
+
+On Fri, Apr 26, 2024 at 7:23=E2=80=AFPM Thomas Huth <thuth@redhat.com> wrot=
+e:
+
+> According to the comment in qga/meson.build, the test got disabled
+> since there were problems with the fuzzing job. But instead of
+> disabling this test completely, we should still be fine running
+> it when fuzzing is disabled.
+>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  qga/meson.build | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
+>
+> diff --git a/qga/meson.build b/qga/meson.build
+> index 1c3d2a3d1b..46c1d83d7f 100644
+> --- a/qga/meson.build
+> +++ b/qga/meson.build
+> @@ -181,12 +181,11 @@ test_env =3D environment()
+>  test_env.set('G_TEST_SRCDIR', meson.current_source_dir())
+>  test_env.set('G_TEST_BUILDDIR', meson.current_build_dir())
+>
+> -# disable qga-ssh-test for now. glib's G_TEST_OPTION_ISOLATE_DIRS trigge=
+rs
+> +# disable qga-ssh-test with fuzzing: glib's G_TEST_OPTION_ISOLATE_DIRS
+> triggers
+>  # the leak detector in build-oss-fuzz Gitlab CI test. we should re-enabl=
+e
+>  # this when an alternative is implemented or when the underlying glib
+>  # issue is identified/fix
+> -#if host_os !=3D 'windows'
+> -if false
+> +if host_os !=3D 'windows' and not get_option('fuzzing')
+>    srcs =3D [files('commands-posix-ssh.c')]
+>    i =3D 0
+>    foreach output: qga_qapi_outputs
+> --
+> 2.44.0
+>
+>
+
+--0000000000006b31330617396f11
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Reviewed-by: Konstantin Kostiuk &lt;<a href=3D"mailto:kkos=
+tiuk@redhat.com">kkostiuk@redhat.com</a>&gt;<div><div dir=3D"ltr" class=3D"=
+gmail_signature" data-smartmail=3D"gmail_signature"><div dir=3D"ltr"><br></=
+div></div></div><br></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" c=
+lass=3D"gmail_attr">On Fri, Apr 26, 2024 at 7:23=E2=80=AFPM Thomas Huth &lt=
+;<a href=3D"mailto:thuth@redhat.com">thuth@redhat.com</a>&gt; wrote:<br></d=
+iv><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
+er-left:1px solid rgb(204,204,204);padding-left:1ex">According to the comme=
+nt in qga/meson.build, the test got disabled<br>
+since there were problems with the fuzzing job. But instead of<br>
+disabling this test completely, we should still be fine running<br>
+it when fuzzing is disabled.<br>
+<br>
+Signed-off-by: Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com" target=
+=3D"_blank">thuth@redhat.com</a>&gt;<br>
+---<br>
+=C2=A0qga/meson.build | 5 ++---<br>
+=C2=A01 file changed, 2 insertions(+), 3 deletions(-)<br>
+<br>
+diff --git a/qga/meson.build b/qga/meson.build<br>
+index 1c3d2a3d1b..46c1d83d7f 100644<br>
+--- a/qga/meson.build<br>
++++ b/qga/meson.build<br>
+@@ -181,12 +181,11 @@ test_env =3D environment()<br>
+=C2=A0test_env.set(&#39;G_TEST_SRCDIR&#39;, meson.current_source_dir())<br>
+=C2=A0test_env.set(&#39;G_TEST_BUILDDIR&#39;, meson.current_build_dir())<br=
+>
+<br>
+-# disable qga-ssh-test for now. glib&#39;s G_TEST_OPTION_ISOLATE_DIRS trig=
+gers<br>
++# disable qga-ssh-test with fuzzing: glib&#39;s G_TEST_OPTION_ISOLATE_DIRS=
+ triggers<br>
+=C2=A0# the leak detector in build-oss-fuzz Gitlab CI test. we should re-en=
+able<br>
+=C2=A0# this when an alternative is implemented or when the underlying glib=
+<br>
+=C2=A0# issue is identified/fix<br>
+-#if host_os !=3D &#39;windows&#39;<br>
+-if false<br>
++if host_os !=3D &#39;windows&#39; and not get_option(&#39;fuzzing&#39;)<br=
+>
+=C2=A0 =C2=A0srcs =3D [files(&#39;commands-posix-ssh.c&#39;)]<br>
+=C2=A0 =C2=A0i =3D 0<br>
+=C2=A0 =C2=A0foreach output: qga_qapi_outputs<br>
+-- <br>
+2.44.0<br>
+<br>
+</blockquote></div>
+
+--0000000000006b31330617396f11--
 
 
