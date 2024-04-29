@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50F83C19F4F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 453A8C4345F
 	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 21:32:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1Yb9-0007Pf-7M; Mon, 29 Apr 2024 17:31:43 -0400
+	id 1s1Yb3-0007Fz-FK; Mon, 29 Apr 2024 17:31:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Yaz-0007GS-95
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:31:33 -0400
-Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Yak-000788-5J
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:31:19 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Yav-0003Ky-9g
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:31:32 -0400
-Received: by mail-lj1-x230.google.com with SMTP id
- 38308e7fff4ca-2dac77cdf43so63637931fa.2
- for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 14:31:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Yai-0003KB-78
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:31:17 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-41b79451128so28405375e9.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 14:31:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714426285; x=1715031085; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714426274; x=1715031074; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PYPfGXZr1iKLCXnvsM1Vv5K3/IiXPZq2vFweDAU8m9c=;
- b=D07eTFat21zZAYlewc9516MY2EhHb0bl7s/iZyy8PPwhqWtvEzMmac5pjD2IlF0368
- /3T+PHlfwsvBaPnWvragha5+arv91PgdmOG3Z3duilcaY10m/R8S8JwSuzxwsWId76Rq
- oSic/yc5cqMyRt9ICci6+l6pEjFbJsJyqcSiriHRUdL1ONh3L2JHAl6xvx/6gYUp5Gt1
- 977QHJDvLKASTalcUe9ZUcesVwm+wuvAPyNaLQAu8B8Yho41bMUqwvyccOY98LNlyIMm
- OzPP2oKq2vujTcVFphdL0zFq/w3jET2XvyY24lvLbcMnSqKemIVH3CQQYzuHFSRxbQm6
- lwgQ==
+ bh=Q0XtObvwSIJmn1wCbR4xzdf8RtxMxRInH39sdIpqdxw=;
+ b=HAwK5zr1COqgBJfb8WrST3DK0JvJJRg5sRY1c2d2dK9//Te2cuusA52Lw5v/5ToaNc
+ XzxSFNzcetzuElcKs1rXraZJL96IYzJYTLu0VTxIX6P6WGm0peQ4dl1spc6j+qbQa1WB
+ lPNKKfqtFr6BuknBLseja4/RSTbT9oEelcaTXIlT8G5KXVXvtQ1oOOW5vqrYfp/YbyEk
+ cuuzfgXzrhwJTTwyi6yCzWQH3r7MLSOFUfMFfeFWngAIq6bS18fqGiQPDGU0YUSYQUQH
+ YuIi2zg0FwL+HUmyplvaMzaB2Cwwhxt71W82w/TkDQcZO+cXsQR+JSeFLBD8iB5/x1Ky
+ 7CKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714426285; x=1715031085;
+ d=1e100.net; s=20230601; t=1714426274; x=1715031074;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PYPfGXZr1iKLCXnvsM1Vv5K3/IiXPZq2vFweDAU8m9c=;
- b=sfv0rxR/HK/xe9y9zLeEF/2GiBpWV2uVD+hzTNRq33hPfcweH9OnZCaT56HP3QjcDr
- D4Fkt3znGsLmPVNDOqeIFMyYX2cwsBh9ZZ02eEqQYaj7ja4noT5LecF1rzjvg8FMe/c0
- ztBY1ql3EgOBQPq0RgZBxyOrlMg91Y/oMj7vGIDvxYIQcKkBU8fz+a2il8SevGXnIv9W
- bnlkKCwzTXcCIFIcEspLZRXy5gKB+UkyZVPn1qTXQYEjHzCKpdzMKGJ2juWZJWofedxu
- CHjhs4geOHJMxXHItgU7aC3liKIVcoOtTR3W7qtXha5rfP52J2gVlxGjB5yaYJc9W7Y8
- NkDA==
-X-Gm-Message-State: AOJu0Yw4MSX0+VfaWOVp1IftruY9mx8urZEUphk2zVHp/INus5naTeH2
- bJ1Q4Ol/3l2Kk23nyL+7e4Yg+QTyVJK5eDmo8o0Js0YOhg4kV88cGiSZ2K9hKTssZ+OyAFVs5a4
- 0piY=
-X-Google-Smtp-Source: AGHT+IGmN6GQjpyPj47kRc+StCLffY4XShyytKAZ187wz4d7h/kpP+lx0wDnBCbJrFZGMYJv3NPZ1g==
-X-Received: by 2002:a2e:9e07:0:b0:2de:4cb4:2601 with SMTP id
- e7-20020a2e9e07000000b002de4cb42601mr8383973ljk.43.1714426284729; 
- Mon, 29 Apr 2024 14:31:24 -0700 (PDT)
+ bh=Q0XtObvwSIJmn1wCbR4xzdf8RtxMxRInH39sdIpqdxw=;
+ b=HPChCnXcm0IsMdls+AUjsILezi/4ybRkw0IVHsyJCw6aEiOQIS5Qf7+3zXBeDVdpdq
+ HUySvTP2OTVK8qs0wEHDNKaokMX1usaQGcvDmJqHiqF63zAUvLD+s3bZbkfR6jgbMMqa
+ /hx3JTlj6hHDRoyCaJuqX9xtVo4Kf2Xzre1RaEhRJITzNFZm6gj02lzyEdGvmrZbmcd5
+ FDXaVPTbt6wBm+Tpc8ndFRYDKylJthuKULupAZLlYRtyuwULUbT1DUwogA6PzZb9qNCW
+ j/5EWXgG47ka3s7cR4SDBB4eW3QxpvvJIdafTcr/voN1Sws0p2pc5/HJN8bVifaGbCqY
+ MUUg==
+X-Gm-Message-State: AOJu0YwjB9Ygdn3JaErwpFljzXjX+6pKooVtQPE85xvwv9dG8KPIp07g
+ YYcqIeLgc5TDgw+MnrfseweDxhjpwCJ8onwwfKesTqZFhxEgh3GpaH5I0k+WMviYgRC75Ne8IJm
+ 5zvY=
+X-Google-Smtp-Source: AGHT+IFcYrLeczG9GkV0w5GF8ok4qWeja4qYN7QRwis2YmiLzyJ3ORg1Qri14iuc3t+q7sJ/6HD7vg==
+X-Received: by 2002:a05:600c:3ba1:b0:41c:97e:2100 with SMTP id
+ n33-20020a05600c3ba100b0041c097e2100mr4429507wms.3.1714426274120; 
+ Mon, 29 Apr 2024 14:31:14 -0700 (PDT)
 Received: from m1x-phil.lan (bny92-h02-176-184-44-142.dsl.sta.abo.bbox.fr.
  [176.184.44.142]) by smtp.gmail.com with ESMTPSA id
- a9-20020a05600c348900b0041bb11ff5a7sm12390100wmq.8.2024.04.29.14.31.23
+ bg5-20020a05600c3c8500b00419f419236fsm34246626wmb.41.2024.04.29.14.31.12
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 29 Apr 2024 14:31:24 -0700 (PDT)
+ Mon, 29 Apr 2024 14:31:13 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Anton Johansson <anjo@rev.ng>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 06/13] accel/tcg: Move @jmp_env from CPUState to TCG
+Subject: [PATCH v2 04/13] accel/tcg: Move @plugin_state from CPUState to TCG
  AccelCPUState
-Date: Mon, 29 Apr 2024 23:30:43 +0200
-Message-ID: <20240429213050.55177-7-philmd@linaro.org>
+Date: Mon, 29 Apr 2024 23:30:41 +0200
+Message-ID: <20240429213050.55177-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240429213050.55177-1-philmd@linaro.org>
 References: <20240429213050.55177-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::230;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x230.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,111 +96,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-@jmp_env is specific to TCG accelerator, move it to its AccelCPUState.
+@plugin_state is specific to TCG accelerator, move it to
+its AccelCPUState.
 
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240428221450.26460-17-philmd@linaro.org>
 ---
- accel/tcg/internal-common.h | 1 +
- accel/tcg/tcg-accel-ops.h   | 1 +
- accel/tcg/vcpu-state.h      | 2 ++
- include/hw/core/cpu.h       | 1 -
- accel/tcg/cpu-exec-common.c | 2 +-
- accel/tcg/cpu-exec.c        | 6 +++---
- 6 files changed, 8 insertions(+), 5 deletions(-)
+TODO: check dubious include of "accel/tcg/vcpu-state.h" in
+      hw/core/cpu-common.c.
+---
+ accel/tcg/vcpu-state.h | 5 +++++
+ include/hw/core/cpu.h  | 5 -----
+ accel/tcg/plugin-gen.c | 4 +++-
+ hw/core/cpu-common.c   | 3 ++-
+ plugins/core.c         | 7 ++++---
+ 5 files changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/accel/tcg/internal-common.h b/accel/tcg/internal-common.h
-index 867426500f..cb507053f5 100644
---- a/accel/tcg/internal-common.h
-+++ b/accel/tcg/internal-common.h
-@@ -11,6 +11,7 @@
- 
- #include "exec/cpu-common.h"
- #include "exec/translation-block.h"
-+#include "accel/tcg/vcpu-state.h"
- 
- extern int64_t max_delay;
- extern int64_t max_advance;
-diff --git a/accel/tcg/tcg-accel-ops.h b/accel/tcg/tcg-accel-ops.h
-index 44c4079972..ed41a087a3 100644
---- a/accel/tcg/tcg-accel-ops.h
-+++ b/accel/tcg/tcg-accel-ops.h
-@@ -13,6 +13,7 @@
- #define TCG_ACCEL_OPS_H
- 
- #include "sysemu/cpus.h"
-+#include "accel/tcg/vcpu-state.h"
- 
- void tcg_cpu_destroy(CPUState *cpu);
- int tcg_cpu_exec(CPUState *cpu);
 diff --git a/accel/tcg/vcpu-state.h b/accel/tcg/vcpu-state.h
-index 35c2695a77..3a0ea2d47a 100644
+index e30368edae..35c2695a77 100644
 --- a/accel/tcg/vcpu-state.h
 +++ b/accel/tcg/vcpu-state.h
-@@ -13,6 +13,8 @@
-  * @plugin_state: per-CPU plugin state
+@@ -10,11 +10,16 @@
+ 
+ /**
+  * AccelCPUState: vCPU fields specific to TCG accelerator
++ * @plugin_state: per-CPU plugin state
   */
  struct AccelCPUState {
-+    sigjmp_buf jmp_env;
-+
  #ifdef CONFIG_USER_ONLY
      TaskState *ts;
  #endif /* !CONFIG_USER_ONLY */
++
++#ifdef CONFIG_PLUGIN
++    CPUPluginState *plugin_state;
++#endif /* CONFIG_PLUGIN */
+ };
+ 
+ #ifdef CONFIG_USER_ONLY
 diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 47b499f9f1..f1fe43dbea 100644
+index 571ef3e514..91e793e590 100644
 --- a/include/hw/core/cpu.h
 +++ b/include/hw/core/cpu.h
-@@ -475,7 +475,6 @@ struct CPUState {
-     int64_t icount_budget;
-     int64_t icount_extra;
-     uint64_t random_seed;
--    sigjmp_buf jmp_env;
+@@ -423,7 +423,6 @@ struct qemu_work_item;
+  * @kvm_fd: vCPU file descriptor for KVM.
+  * @work_mutex: Lock to prevent multiple access to @work_list.
+  * @work_list: List of pending asynchronous work.
+- * @plugin_state: per-CPU plugin state
+  * @ignore_memory_transaction_failures: Cached copy of the MachineState
+  *    flag of the same name: allows the board to suppress calling of the
+  *    CPU do_transaction_failed hook function.
+@@ -514,10 +513,6 @@ struct CPUState {
+     /* Use by accel-block: CPU is executing an ioctl() */
+     QemuLockCnt in_ioctl_lock;
  
-     QemuMutex work_mutex;
-     QSIMPLEQ_HEAD(, qemu_work_item) work_list;
-diff --git a/accel/tcg/cpu-exec-common.c b/accel/tcg/cpu-exec-common.c
-index bc9b1a260e..ec45482305 100644
---- a/accel/tcg/cpu-exec-common.c
-+++ b/accel/tcg/cpu-exec-common.c
-@@ -38,7 +38,7 @@ void cpu_loop_exit(CPUState *cpu)
-     cpu->neg.can_do_io = true;
-     /* Undo any setting in generated code.  */
-     qemu_plugin_disable_mem_helpers(cpu);
--    siglongjmp(cpu->jmp_env, 1);
-+    siglongjmp(cpu->accel->jmp_env, 1);
- }
+-#ifdef CONFIG_PLUGIN
+-    CPUPluginState *plugin_state;
+-#endif
+-
+     /* TODO Move common fields from CPUArchState here. */
+     int cpu_index;
+     int cluster_index;
+diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
+index fd268c79b5..88d720d549 100644
+--- a/accel/tcg/plugin-gen.c
++++ b/accel/tcg/plugin-gen.c
+@@ -52,6 +52,7 @@
+ #include "exec/plugin-gen.h"
+ #include "exec/translator.h"
+ #include "exec/helper-proto-common.h"
++#include "accel/tcg/vcpu-state.h"
  
- void cpu_loop_exit_restore(CPUState *cpu, uintptr_t pc)
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 9af66bc191..46ad16f911 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -553,7 +553,7 @@ static void cpu_exec_longjmp_cleanup(CPUState *cpu)
-      * support such a thing.  We'd have to properly register unwind info
-      * for the JIT for EH, rather that just for GDB.
-      *
--     * Alternative 2: Set and restore cpu->jmp_env in tb_gen_code to
-+     * Alternative 2: Set and restore cpu->accel->jmp_env in tb_gen_code to
-      * capture the cpu_loop_exit longjmp, perform the cleanup, and
-      * jump again to arrive here.
-      */
-@@ -577,7 +577,7 @@ void cpu_exec_step_atomic(CPUState *cpu)
-     uint32_t flags, cflags;
-     int tb_exit;
- 
--    if (sigsetjmp(cpu->jmp_env, 0) == 0) {
-+    if (sigsetjmp(cpu->accel->jmp_env, 0) == 0) {
-         start_exclusive();
-         g_assert(cpu == current_cpu);
-         g_assert(!cpu->running);
-@@ -1038,7 +1038,7 @@ cpu_exec_loop(CPUState *cpu, SyncClocks *sc)
- static int cpu_exec_setjmp(CPUState *cpu, SyncClocks *sc)
+ #define HELPER_H  "accel/tcg/plugin-helpers.h"
+ #include "exec/helper-info.c.inc"
+@@ -872,7 +873,8 @@ bool plugin_gen_tb_start(CPUState *cpu, const DisasContextBase *db,
  {
-     /* Prepare setjmp context for exception handling. */
--    if (unlikely(sigsetjmp(cpu->jmp_env, 0) != 0)) {
-+    if (unlikely(sigsetjmp(cpu->accel->jmp_env, 0) != 0)) {
-         cpu_exec_longjmp_cleanup(cpu);
+     bool ret = false;
+ 
+-    if (test_bit(QEMU_PLUGIN_EV_VCPU_TB_TRANS, cpu->plugin_state->event_mask)) {
++    if (test_bit(QEMU_PLUGIN_EV_VCPU_TB_TRANS,
++                 cpu->accel->plugin_state->event_mask)) {
+         struct qemu_plugin_tb *ptb = tcg_ctx->plugin_tb;
+         int i;
+ 
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index f2826d0409..0e5ebbe050 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -31,6 +31,7 @@
+ #include "hw/qdev-properties.h"
+ #include "trace.h"
+ #ifdef CONFIG_PLUGIN
++#include "accel/tcg/vcpu-state.h" // ???
+ #include "qemu/plugin.h"
+ #endif
+ 
+@@ -215,7 +216,7 @@ static void cpu_common_realizefn(DeviceState *dev, Error **errp)
+     /* Plugin initialization must wait until the cpu start executing code */
+ #ifdef CONFIG_PLUGIN
+     if (tcg_enabled()) {
+-        cpu->plugin_state = qemu_plugin_create_vcpu_state();
++        cpu->accel->plugin_state = qemu_plugin_create_vcpu_state();
+         async_run_on_cpu(cpu, qemu_plugin_vcpu_init__async, RUN_ON_CPU_NULL);
+     }
+ #endif
+diff --git a/plugins/core.c b/plugins/core.c
+index a097d02788..722224e5d8 100644
+--- a/plugins/core.c
++++ b/plugins/core.c
+@@ -28,6 +28,7 @@
+ #include "exec/tb-flush.h"
+ #include "tcg/tcg.h"
+ #include "tcg/tcg-op.h"
++#include "accel/tcg/vcpu-state.h"
+ #include "plugin.h"
+ 
+ struct qemu_plugin_cb {
+@@ -55,7 +56,7 @@ struct qemu_plugin_ctx *plugin_id_to_ctx_locked(qemu_plugin_id_t id)
+ 
+ static void plugin_cpu_update__async(CPUState *cpu, run_on_cpu_data data)
+ {
+-    bitmap_copy(cpu->plugin_state->event_mask,
++    bitmap_copy(cpu->accel->plugin_state->event_mask,
+                 &data.host_ulong, QEMU_PLUGIN_EV_MAX);
+     tcg_flush_jmp_cache(cpu);
+ }
+@@ -396,7 +397,7 @@ qemu_plugin_vcpu_syscall(CPUState *cpu, int64_t num, uint64_t a1, uint64_t a2,
+     struct qemu_plugin_cb *cb, *next;
+     enum qemu_plugin_event ev = QEMU_PLUGIN_EV_VCPU_SYSCALL;
+ 
+-    if (!test_bit(ev, cpu->plugin_state->event_mask)) {
++    if (!test_bit(ev, cpu->accel->plugin_state->event_mask)) {
+         return;
+     }
+ 
+@@ -418,7 +419,7 @@ void qemu_plugin_vcpu_syscall_ret(CPUState *cpu, int64_t num, int64_t ret)
+     struct qemu_plugin_cb *cb, *next;
+     enum qemu_plugin_event ev = QEMU_PLUGIN_EV_VCPU_SYSCALL_RET;
+ 
+-    if (!test_bit(ev, cpu->plugin_state->event_mask)) {
++    if (!test_bit(ev, cpu->accel->plugin_state->event_mask)) {
+         return;
      }
  
 -- 
