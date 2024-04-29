@@ -4,61 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32E75C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 07:58:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2847C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 07:59:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1LuK-0000B9-CV; Mon, 29 Apr 2024 03:58:40 -0400
+	id 1s1Luc-0000LV-Ob; Mon, 29 Apr 2024 03:58:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
- id 1s1Lu7-000088-Qj; Mon, 29 Apr 2024 03:58:29 -0400
-Received: from out30-124.freemail.mail.aliyun.com ([115.124.30.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s1Luc-0000LJ-2O
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 03:58:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
- id 1s1Lu1-0003x6-43; Mon, 29 Apr 2024 03:58:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1714377487; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=Xr4CT/JJOrRMQTQ4CUpXKgOjqdpcKi4ABUX4eRScyXE=;
- b=JH1DbndWjrK5z4gnn8zFD9jwrRCvbdUZpvnT6BAZUCibVwpTZTjdCCV1fLEse+nDQuoKl/umCtuykVxWwgSVq1Buqkqlaifmo2XKVLKWkkD1NXpE3RFJL3RXidC18RsLR0PaQd+ImA2+858gwEdY7onI4nNymPUPjv46M+kWOb4=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R101e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037067112;
- MF=eric.huang@linux.alibaba.com; NM=1; PH=DS; RN=11; SR=0;
- TI=SMTPD_---0W5TTMML_1714377485; 
-Received: from 30.21.185.170(mailfrom:eric.huang@linux.alibaba.com
- fp:SMTPD_---0W5TTMML_1714377485) by smtp.aliyun-inc.com;
- Mon, 29 Apr 2024 15:58:06 +0800
-Message-ID: <c9fb4c6e-9eae-4302-82cf-b02eacce6d9d@linux.alibaba.com>
-Date: Mon, 29 Apr 2024 15:58:04 +0800
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s1LuZ-00047P-Pe
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 03:58:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714377534;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DO6e9FPjfwOasFz0oyALiZILCAaEmrr/iciRQpcZGxo=;
+ b=PH6hDNwDdsbwz39rgsQsuZLHum5F8LOQfxaPKq6a7bCRe6e6Z4SYYBzdfloYoWvkzAv/oD
+ bMn0BnqXdEYBLy1/EY50jk0uR2XtnwLX0+Mg3+8Ax4oYJUds3pSOk6I1Iajtady0YHVfbR
+ 25pR5RV79e3MEdUM9/wRdkNqUZOBAWc=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-569-xYK8CLzdOc6KJRoaPdfTcw-1; Mon,
+ 29 Apr 2024 03:58:45 -0400
+X-MC-Unique: xYK8CLzdOc6KJRoaPdfTcw-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 52B6229ABA11;
+ Mon, 29 Apr 2024 07:58:44 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 5CD1E2166B32;
+ Mon, 29 Apr 2024 07:58:43 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 506B921E6680; Mon, 29 Apr 2024 09:58:42 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: fan <nifan.cxl@gmail.com>
+Cc: qemu-devel@nongnu.org,  jonathan.cameron@huawei.com,
+ linux-cxl@vger.kernel.org,  gregory.price@memverge.com,
+ ira.weiny@intel.com,  dan.j.williams@intel.com,
+ a.manzanares@samsung.com,  dave@stgolabs.net,  nmtadam.samsung@gmail.com,
+ jim.harris@samsung.com,  Jorgen.Hansen@wdc.com,  wj28.lee@gmail.com,  Fan
+ Ni <fan.ni@samsung.com>
+Subject: Re: [PATCH v7 09/12] hw/cxl/events: Add qmp interfaces to
+ add/release dynamic capacity extents
+In-Reply-To: <Zivk37xBGPsL_yo5@debian> (fan's message of "Fri, 26 Apr 2024
+ 10:31:11 -0700")
+References: <20240418232902.583744-1-fan.ni@samsung.com>
+ <20240418232902.583744-10-fan.ni@samsung.com>
+ <877cgkxzal.fsf@pond.sub.org> <Zivk37xBGPsL_yo5@debian>
+Date: Mon, 29 Apr 2024 09:58:42 +0200
+Message-ID: <87h6fkob0t.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] target/riscv: Implement dynamic establishment of
- custom decoder
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- zhiwei_liu@linux.alibaba.com, dbarboza@ventanamicro.com,
- liwei1518@gmail.com, bin.meng@windriver.com, alistair.francis@wdc.com,
- palmer@dabbelt.com, Christoph Muellner <christoph.muellner@vrull.eu>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20240314092158.65866-1-eric.huang@linux.alibaba.com>
- <CAKmqyKP+=Q4oup1mpWskykfgE3HZRJpaVX_JTk=0=jU_TkgsUQ@mail.gmail.com>
-From: Huang Tao <eric.huang@linux.alibaba.com>
-In-Reply-To: <CAKmqyKP+=Q4oup1mpWskykfgE3HZRJpaVX_JTk=0=jU_TkgsUQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.124;
- envelope-from=eric.huang@linux.alibaba.com;
- helo=out30-124.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.114,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,205 +91,264 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+fan <nifan.cxl@gmail.com> writes:
 
-On 2024/4/29 11:51, Alistair Francis wrote:
-> On Thu, Mar 14, 2024 at 7:23 PM Huang Tao <eric.huang@linux.alibaba.com> wrote:
->> In this patch, we modify the decoder to be a freely composable data
->> structure instead of a hardcoded one. It can be dynamically builded up
->> according to the extensions.
->> This approach has several benefits:
->> 1. Provides support for heterogeneous cpu architectures. As we add decoder in
->>     RISCVCPU, each cpu can have their own decoder, and the decoders can be
->>     different due to cpu's features.
->> 2. Improve the decoding efficiency. We run the guard_func to see if the decoder
->>     can be added to the dynamic_decoder when building up the decoder. Therefore,
->>     there is no need to run the guard_func when decoding each instruction. It can
->>     improve the decoding efficiency
->> 3. For vendor or dynamic cpus, it allows them to customize their own decoder
->>     functions to improve decoding efficiency, especially when vendor-defined
->>     instruction sets increase. Because of dynamic building up, it can skip the other
->>     decoder guard functions when decoding.
->> 4. Pre patch for allowing adding a vendor decoder before decode_insn32() with minimal
->>     overhead for users that don't need this particular vendor decoder.
->>
->> Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
->> Suggested-by: Christoph Muellner <christoph.muellner@vrull.eu>
->> Co-authored-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Do you mind rebasing this on
-> https://github.com/alistair23/qemu/tree/riscv-to-apply.next?
+> On Fri, Apr 26, 2024 at 11:12:50AM +0200, Markus Armbruster wrote:
+>> nifan.cxl@gmail.com writes:
+
+[...]
+
+>> > diff --git a/qapi/cxl.json b/qapi/cxl.json
+>> > index 4281726dec..2dcf03d973 100644
+>> > --- a/qapi/cxl.json
+>> > +++ b/qapi/cxl.json
+>> > @@ -361,3 +361,72 @@
+>> >  ##
+>> >  {'command': 'cxl-inject-correctable-error',
+>> >   'data': {'path': 'str', 'type': 'CxlCorErrorType'}}
+>> > +
+>> > +##
+>> > +# @CXLDCExtentRecord:
+>>=20
+>> Such traffic jams of capital letters are hard to read.  What about
+>> CxlDynamicCapacityExtent?
+>>=20
+>> > +#
+>> > +# Record of a single extent to add/release
+>>=20
+>> Suggest "A dynamic capacity extent."
+>>=20
+>> > +#
+>> > +# @offset: offset to the start of the region where the extent to be o=
+perated
+>>=20
+>> Blank line here, please.
+>>=20
+>>=20
+>>=20
+>> > +# @len: length of the extent
+>> > +#
+>> > +# Since: 9.1
+>> > +##
+>> > +{ 'struct': 'CXLDCExtentRecord',
+>> > +  'data': {
+>> > +      'offset':'uint64',
+>> > +      'len': 'uint64'
+>> > +  }
+>> > +}
+>> > +
+>> > +##
+>> > +# @cxl-add-dynamic-capacity:
+>> > +#
+>> > +# Command to start add dynamic capacity extents flow. The device will
+>> > +# have to acknowledged the acceptance of the extents before they are =
+usable.
+>>=20
+>> This text needs work.  More on that at the end of my review.
 >
-> Alistair
+> Yes. I will work on it for the next version once all the feedbacks
+> are collected and comments are resolved.
+>
+> See below.
+>
+>>=20
+>> docs/devel/qapi-code-gen.rst:
+>>=20
+>>     For legibility, wrap text paragraphs so every line is at most 70
+>>     characters long.
+>>=20
+>>     Separate sentences with two spaces.
+>>=20
+>> More elsewhere.
+>>=20
+>> > +#
+>> > +# @path: CXL DCD canonical QOM path
+>>=20
+>> I'd prefer @qom-path, unless you can make a consistency argument for
+>> @path.
+>>=20
+>> Sure the QOM path needs to be canonical?
+>>=20
+>> If not, what about "path to the CXL dynamic capacity device in the QOM
+>> tree".  Intentionally close to existing descriptions of @qom-path
+>> elsewhere.
+>
+> From the same file, I saw "path" was used for other commands, like
+> "cxl-inject-memory-module-event", so I followed it.
+> DCD is nothing different from "type 3 device" expect it can dynamically
+> change capacity.=20
+> Renaming it to "qom-path" is no problem for me, just want to make sure it
+> will not break the naming consistency.
 
-I will rebase this patch on the latest riscv-to-apply.next.
+Both @path and @qom-path are used (sadly).  @path is used for all kinds
+of paths, whereas @qom-path is only used for QOM paths.  That's why I
+prefer it.
 
-Thanks
+However, you're making a compelling local consistency argument: cxl.json
+uses only @path.  Sticking to that makes sense.
 
->> ---
->> Changes in v4:
->> - fix typo
->> - rename function
->> - add 'if tcg_enable()'
->> - move function to tcg-cpu.c and declarations to tcg-cpu.h
->>
->> Changes in v3:
->> - use GPtrArray to save decode function poionter list.
->> ---
->>   target/riscv/cpu.c         |  1 +
->>   target/riscv/cpu.h         |  1 +
->>   target/riscv/tcg/tcg-cpu.c | 15 +++++++++++++++
->>   target/riscv/tcg/tcg-cpu.h | 15 +++++++++++++++
->>   target/riscv/translate.c   | 31 +++++++++++++++----------------
->>   5 files changed, 47 insertions(+), 16 deletions(-)
->>
->> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
->> index c160b9216b..17070b82a7 100644
->> --- a/target/riscv/cpu.c
->> +++ b/target/riscv/cpu.c
->> @@ -1132,6 +1132,7 @@ void riscv_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
->>               error_propagate(errp, local_err);
->>               return;
->>           }
->> +        riscv_tcg_cpu_finalize_dynamic_decoder(cpu);
->>       } else if (kvm_enabled()) {
->>           riscv_kvm_cpu_finalize_features(cpu, &local_err);
->>           if (local_err != NULL) {
->> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
->> index 3b1a02b944..48e67410e1 100644
->> --- a/target/riscv/cpu.h
->> +++ b/target/riscv/cpu.h
->> @@ -457,6 +457,7 @@ struct ArchCPU {
->>       uint32_t pmu_avail_ctrs;
->>       /* Mapping of events to counters */
->>       GHashTable *pmu_event_ctr_map;
->> +    const GPtrArray *decoders;
->>   };
->>
->>   /**
->> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
->> index ab6db817db..c9ab92ea2f 100644
->> --- a/target/riscv/tcg/tcg-cpu.c
->> +++ b/target/riscv/tcg/tcg-cpu.c
->> @@ -853,6 +853,21 @@ void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
->>       }
->>   }
->>
->> +void riscv_tcg_cpu_finalize_dynamic_decoder(RISCVCPU *cpu)
->> +{
->> +    GPtrArray *dynamic_decoders;
->> +    dynamic_decoders = g_ptr_array_sized_new(decoder_table_size);
->> +    for (size_t i = 0; i < decoder_table_size; ++i) {
->> +        if (decoder_table[i].guard_func &&
->> +            decoder_table[i].guard_func(&cpu->cfg)) {
->> +            g_ptr_array_add(dynamic_decoders,
->> +                            (gpointer)decoder_table[i].riscv_cpu_decode_fn);
->> +        }
->> +    }
->> +
->> +    cpu->decoders = dynamic_decoders;
->> +}
->> +
->>   bool riscv_cpu_tcg_compatible(RISCVCPU *cpu)
->>   {
->>       return object_dynamic_cast(OBJECT(cpu), TYPE_RISCV_CPU_HOST) == NULL;
->> diff --git a/target/riscv/tcg/tcg-cpu.h b/target/riscv/tcg/tcg-cpu.h
->> index f7b32417f8..ce94253fe4 100644
->> --- a/target/riscv/tcg/tcg-cpu.h
->> +++ b/target/riscv/tcg/tcg-cpu.h
->> @@ -26,4 +26,19 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp);
->>   void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
->>   bool riscv_cpu_tcg_compatible(RISCVCPU *cpu);
->>
->> +struct DisasContext;
->> +struct RISCVCPUConfig;
->> +typedef struct RISCVDecoder {
->> +    bool (*guard_func)(const struct RISCVCPUConfig *);
->> +    bool (*riscv_cpu_decode_fn)(struct DisasContext *, uint32_t);
->> +} RISCVDecoder;
->> +
->> +typedef bool (*riscv_cpu_decode_fn)(struct DisasContext *, uint32_t);
->> +
->> +extern const size_t decoder_table_size;
->> +
->> +extern const RISCVDecoder decoder_table[];
->> +
->> +void riscv_tcg_cpu_finalize_dynamic_decoder(RISCVCPU *cpu);
->> +
->>   #endif
->> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
->> index ea5d52b2ef..bce16d5054 100644
->> --- a/target/riscv/translate.c
->> +++ b/target/riscv/translate.c
->> @@ -37,6 +37,8 @@
->>   #include "exec/helper-info.c.inc"
->>   #undef  HELPER_H
->>
->> +#include "tcg/tcg-cpu.h"
->> +
->>   /* global register indices */
->>   static TCGv cpu_gpr[32], cpu_gprh[32], cpu_pc, cpu_vl, cpu_vstart;
->>   static TCGv_i64 cpu_fpr[32]; /* assume F and D extensions */
->> @@ -117,6 +119,7 @@ typedef struct DisasContext {
->>       bool frm_valid;
->>       /* TCG of the current insn_start */
->>       TCGOp *insn_start;
->> +    const GPtrArray *decoders;
->>   } DisasContext;
->>
->>   static inline bool has_ext(DisasContext *ctx, uint32_t ext)
->> @@ -1120,21 +1123,16 @@ static inline int insn_len(uint16_t first_word)
->>       return (first_word & 3) == 3 ? 4 : 2;
->>   }
->>
->> +const RISCVDecoder decoder_table[] = {
->> +    { always_true_p, decode_insn32 },
->> +    { has_xthead_p, decode_xthead},
->> +    { has_XVentanaCondOps_p, decode_XVentanaCodeOps},
->> +};
->> +
->> +const size_t decoder_table_size = ARRAY_SIZE(decoder_table);
->> +
->>   static void decode_opc(CPURISCVState *env, DisasContext *ctx, uint16_t opcode)
->>   {
->> -    /*
->> -     * A table with predicate (i.e., guard) functions and decoder functions
->> -     * that are tested in-order until a decoder matches onto the opcode.
->> -     */
->> -    static const struct {
->> -        bool (*guard_func)(const RISCVCPUConfig *);
->> -        bool (*decode_func)(DisasContext *, uint32_t);
->> -    } decoders[] = {
->> -        { always_true_p,  decode_insn32 },
->> -        { has_xthead_p, decode_xthead },
->> -        { has_XVentanaCondOps_p,  decode_XVentanaCodeOps },
->> -    };
->> -
->>       ctx->virt_inst_excp = false;
->>       ctx->cur_insn_len = insn_len(opcode);
->>       /* Check for compressed insn */
->> @@ -1155,9 +1153,9 @@ static void decode_opc(CPURISCVState *env, DisasContext *ctx, uint16_t opcode)
->>                                                ctx->base.pc_next + 2));
->>           ctx->opcode = opcode32;
->>
->> -        for (size_t i = 0; i < ARRAY_SIZE(decoders); ++i) {
->> -            if (decoders[i].guard_func(ctx->cfg_ptr) &&
->> -                decoders[i].decode_func(ctx, opcode32)) {
->> +        for (guint i = 0; i < ctx->decoders->len; ++i) {
->> +            riscv_cpu_decode_fn func = g_ptr_array_index(ctx->decoders, i);
->> +            if (func(ctx, opcode32)) {
->>                   return;
->>               }
->>           }
->> @@ -1202,6 +1200,7 @@ static void riscv_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
->>       ctx->itrigger = FIELD_EX32(tb_flags, TB_FLAGS, ITRIGGER);
->>       ctx->zero = tcg_constant_tl(0);
->>       ctx->virt_inst_excp = false;
->> +    ctx->decoders = cpu->decoders;
->>   }
->>
->>   static void riscv_tr_tb_start(DisasContextBase *db, CPUState *cpu)
->> --
->> 2.41.0
->>
->>
+>> > +# @hid: host id
+>>=20
+>> @host-id, unless "HID" is established terminology in CXL DCD land.
+>
+> host-id works.
+>>=20
+>> What is a host ID?
+>
+> It is an id identifying the host to which the capacity is being added.
+
+How are these IDs assigned?
+
+>> > +# @selection-policy: policy to use for selecting extents for adding c=
+apacity
+>>=20
+>> Where are selection policies defined?
+>
+> It is defined in CXL specification: Specifies the policy to use for selec=
+ting
+> which extents comprise the added capacity
+
+Include a reference to the spec here?
+
+>> > +# @region-id: id of the region where the extent to add
+>>=20
+>> Is "region ID" the established terminology in CXL DCD land?  Or is
+>> "region number" also used?  I'm asking because "ID" in this QEMU device
+>> context suggests a connection to a qdev ID.
+>>=20
+>> If region number is fine, I'd rename to just @region, and rephrase the
+>> description to avoid "ID".  Perhaps "number of the region the extent is
+>> to be added to".  Not entirely happy with the phrasing, doesn't exactly
+>> roll off the tongue, but "where the extent to add" sounds worse to my
+>> ears.  Mind, I'm not a native speaker.
+>
+> Yes. region number is fine. Will rename it as "region"
+>
+>>=20
+>> > +# @tag: Context field
+>>=20
+>> What is this about?
+>
+> Based on the specification, it is "Context field utilized by implementati=
+ons
+> that make use of the Dynamic Capacity feature.". Basically, it is a
+> string (label) attached to an dynamic capacity extent so we can achieve
+> specific purpose, like identifying or grouping extents.
+
+Include a reference to the spec here?
+
+>> > +# @extents: Extents to add
+>>=20
+>> Blank lines between argument descriptions, please.
+>>=20
+>> > +#
+>> > +# Since : 9.1
+>> > +##
+>> > +{ 'command': 'cxl-add-dynamic-capacity',
+>> > +  'data': { 'path': 'str',
+>> > +            'hid': 'uint16',
+>> > +            'selection-policy': 'uint8',
+>> > +            'region-id': 'uint8',
+>> > +            'tag': 'str',
+>> > +            'extents': [ 'CXLDCExtentRecord' ]
+>> > +           }
+>> > +}
+>> > +
+>> > +##
+>> > +# @cxl-release-dynamic-capacity:
+>> > +#
+>> > +# Command to start release dynamic capacity extents flow. The host wi=
+ll
+>> > +# need to respond to indicate that it has released the capacity befor=
+e it
+>> > +# is made unavailable for read and write and can be re-added.
+>>=20
+>> This text needs work.  More on that at the end of my review.
+>
+> Will do.
+>
+>>=20
+>> > +#
+>> > +# @path: CXL DCD canonical QOM path
+>>=20
+>> My comment on cxl-add-dynamic-capacity applies.
+>>=20
+>> > +# @hid: host id
+>>=20
+>> Likewise.
+>>=20
+>> > +# @flags: bit[3:0] for removal policy, bit[4] for forced removal, bit=
+[5] for
+>> > +#     sanitize on release, bit[7:6] reserved
+>>=20
+>> Where are these flags defined?
+>
+> Defined in the CXL specification, it defines the release behaviour.
+
+Include a reference to the spec here?
+
+Is the numeric encoding of flags appropriate?
+
+In general, we prefer symbolic encodings.  Numeric encodings can make
+sense when
+
+=E2=80=A2 the encoding is stable, and
+
+=E2=80=A2 QEMU doesn't need to decode it, only pass it on to something else=
+, and
+
+=E2=80=A2 both the QMP client and the "something else" prefer a numeric
+  encoding.
+
+>> > +# @region-id: id of the region where the extent to release
+>>=20
+>> My comment on cxl-add-dynamic-capacity applies.
+>>=20
+>> > +# @tag: Context field
+>>=20
+>> Likewise.
+>>=20
+>> > +# @extents: Extents to release
+>> > +#
+>> > +# Since : 9.1
+>> > +##
+>> > +{ 'command': 'cxl-release-dynamic-capacity',
+>> > +  'data': { 'path': 'str',
+>> > +            'hid': 'uint16',
+>> > +            'flags': 'uint8',
+>> > +            'region-id': 'uint8',
+>> > +            'tag': 'str',
+>> > +            'extents': [ 'CXLDCExtentRecord' ]
+>> > +           }
+>> > +}
+>>=20
+>> During review of v5, you wrote:
+>>=20
+>>     For add command, the host will send a mailbox command to response to
+>>     the add request to the device to indicate whether it accepts the add
+>>     capacity offer or not.
+>>=20=20=20=20=20
+>>     For release command, the host send a mailbox command (not always a
+>>     response since the host can proactively release capacity if it does
+>>     not need it any more) to device to ask device release the capacity.
+>>=20
+>> Can you briefly sketch the protocol?  Peers and messages involved.
+>> Possibly as a state diagram.
+>
+> Need to think about it. If we can polish the text nicely, maybe the
+> sketch is not needed. My concern is that the sketch may
+> introduce unwanted complexity as we expose too much details. The two
+> commands provide ways to add/release dynamic capacity to/from a host,
+> that is all. All the other information, like what the host will do, or
+> how the device will react, are consequence of the command, not sure
+> whether we want to include here.
+
+The protocol sketch is for me, not necessarily the doc comment.  I'd
+like to understand at high level how this stuff works, because only then
+can I meaningfully review the docs.
+
+> @Jonathan, Any thoughts on this?
+
+Thanks!
+
 
