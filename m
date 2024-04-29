@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E544C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BE35C19F53
 	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 16:06:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1TMV-0004oN-4s; Mon, 29 Apr 2024 11:56:15 -0400
+	id 1s1TMW-0004ra-0p; Mon, 29 Apr 2024 11:56:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1s1TMH-0004Y1-Vi
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:01 -0400
+ id 1s1TMO-0004cz-NW
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:08 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1s1TMF-0005FB-Ux
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:01 -0400
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+ id 1s1TMN-0005Jt-3K
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:08 -0400
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43TFmlZq021746; Mon, 29 Apr 2024 15:55:44 GMT
+ 43TFmsuG024847; Mon, 29 Apr 2024 15:55:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
  h=from : to : cc :
  subject : date : message-id : in-reply-to : references; s=corp-2023-11-20;
- bh=mfUEBur7xmKrlLkLi6qOQJ8fPpHhzHrrtYVn+a6Puyk=;
- b=i1ifYD+4Amn7wTHZUK7DSc8ql/ht70BhjC1LRoGFGM9qjco5vJOIkXW6ClJZ3SoFDpYK
- hPQUUqr1dwA/1WS1J+7ur6OF9/hY+uFVPSGEWnU2aS1jh5BAzvpl27saWew6+23UjuXF
- pawTTRZQudhu2L0Ftr1B5ucK0xzjEAV3LSv2Dm1AsNk+EHXqwqmDTbNJ3PtUKoEegmbE
- bjob9sODzDM82woWxubH+DKB+Qya5FPtA8VxBT+QnanCHRCJOlH4rZItdpJ5ImyCvvm6
- +TFRJTX9ukQGpA1h/VJi49idWxqOqoImL3LiQAAmu7s4+2GoJU8IAZuWKLuIP0egFKMs IA== 
+ bh=AI42jKlapaNWs243JK/hObQrllWrnyUcajeE/W738TA=;
+ b=FcJS/OuKbUH3kfJcEpWklLhtGQ6m3F1aWB+Fjr2vFGR/kfGL4WF64BH8W1PJo+IIiZS/
+ wB9JnBCnkSlaCGCLg3eeL4e2C7aNiZ5m8MUc7+ZOS1t7etRtkuNEMdw1VK2BJbT2AwEI
+ ZPEGQbbmJDUD5YH2BAjLmDX7MPT/zSU33FiweNH4pk3UMhdKck+48B8OQxwmU4IqYoaZ
+ zxKX+3aSN3VlQ2FM2YcydPAUjBgyAhVcNRhrUNoosaWKj5pG1vuOXAhUDxd5hYaP4coa
+ hhNfwF/PHEXUaN7JEF50zMVoUOb1hgRWL8ThQ27u6v/tporiV24YPss5uBemxUzrQ/5c vw== 
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xrr54axsu-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xrqsetx4g-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Apr 2024 15:55:43 +0000
+ Mon, 29 Apr 2024 15:55:53 +0000
 Received: from pps.filterd
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 43TFGqtP011343; Mon, 29 Apr 2024 15:55:42 GMT
+ with ESMTP id 43TF0EUY011367; Mon, 29 Apr 2024 15:55:52 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 3xrqt6j66j-1
+ 3xrqt6j6kd-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Apr 2024 15:55:42 +0000
+ Mon, 29 Apr 2024 15:55:52 +0000
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43TFtaGi034442;
- Mon, 29 Apr 2024 15:55:42 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43TFtaHA034442;
+ Mon, 29 Apr 2024 15:55:52 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 3xrqt6j5ys-9; Mon, 29 Apr 2024 15:55:41 +0000
+ ESMTP id 3xrqt6j5ys-22; Mon, 29 Apr 2024 15:55:51 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,9 +64,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V1 08/26] migration: vmstate_info_void_ptr
-Date: Mon, 29 Apr 2024 08:55:17 -0700
-Message-Id: <1714406135-451286-9-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V1 21/26] migration: migrate_add_blocker_mode
+Date: Mon, 29 Apr 2024 08:55:30 -0700
+Message-Id: <1714406135-451286-22-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
 References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
@@ -78,8 +78,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
  adultscore=0 mlxscore=0 suspectscore=0 phishscore=0 spamscore=0
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2404010000 definitions=main-2404290101
-X-Proofpoint-ORIG-GUID: DVn4SmJXNGnbMp5mluxbY-_8LL3x95ta
-X-Proofpoint-GUID: DVn4SmJXNGnbMp5mluxbY-_8LL3x95ta
+X-Proofpoint-ORIG-GUID: EIKLcuWjtaMHIii8TcXTb450Qi-Ljg7-
+X-Proofpoint-GUID: EIKLcuWjtaMHIii8TcXTb450Qi-Ljg7-
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -104,90 +104,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define VMSTATE_VOID_PTR so the value of a pointer (but not its target)
-can be saved in the migration stream.  This will be needed for CPR.
+Define a convenience function to add a migration blocker for a single mode.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- include/migration/vmstate.h | 15 +++++++++++++++
- migration/vmstate-types.c   | 24 ++++++++++++++++++++++++
- 2 files changed, 39 insertions(+)
+ include/migration/blocker.h | 7 +++++++
+ migration/migration.c       | 5 +++++
+ stubs/migr-blocker.c        | 5 +++++
+ 3 files changed, 17 insertions(+)
 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index a39c0e6..bb885d9 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -236,6 +236,7 @@ extern const VMStateInfo vmstate_info_uint8;
- extern const VMStateInfo vmstate_info_uint16;
- extern const VMStateInfo vmstate_info_uint32;
- extern const VMStateInfo vmstate_info_uint64;
-+extern const VMStateInfo vmstate_info_void_ptr;
+diff --git a/include/migration/blocker.h b/include/migration/blocker.h
+index a687ac0..5c2e5d4 100644
+--- a/include/migration/blocker.h
++++ b/include/migration/blocker.h
+@@ -94,4 +94,11 @@ int migrate_add_blocker_normal(Error **reasonp, Error **errp);
+  */
+ int migrate_add_blocker_modes(Error **reasonp, Error **errp, MigMode mode, ...);
  
- /** Put this in the stream when migrating a null pointer.*/
- #define VMS_NULLPTR_MARKER (0x30U) /* '0' */
-@@ -326,6 +327,17 @@ extern const VMStateInfo vmstate_info_qlist;
-     .offset       = vmstate_offset_value(_state, _field, _type),     \
++/**
++ * @migrate_add_blocker_mode - prevent a mode of migration from proceeding
++ *
++ * Like migrate_add_blocker_modes, but for a single mode.
++ */
++int migrate_add_blocker_mode(Error **reasonp, MigMode mode, Error **errp);
++
+ #endif
+diff --git a/migration/migration.c b/migration/migration.c
+index 0d91531..4984dee 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1769,6 +1769,11 @@ int migrate_add_blocker_normal(Error **reasonp, Error **errp)
+     return migrate_add_blocker_modes(reasonp, errp, MIG_MODE_NORMAL, -1);
  }
  
-+#define VMSTATE_SINGLE_TEST_NO_CHECK(_field, _state, _test,          \
-+                                     _version, _info, _type) {       \
-+    .name         = (stringify(_field)),                             \
-+    .version_id   = (_version),                                      \
-+    .field_exists = (_test),                                         \
-+    .size         = sizeof(_type),                                   \
-+    .info         = &(_info),                                        \
-+    .flags        = VMS_SINGLE,                                      \
-+    .offset       = offsetof(_state, _field)                         \
++int migrate_add_blocker_mode(Error **reasonp, MigMode mode, Error **errp)
++{
++    return migrate_add_blocker_modes(reasonp, errp, mode, -1);
 +}
 +
- #define VMSTATE_SINGLE_FULL(_field, _state, _test, _version, _info,  \
-                             _type, _err_hint) {                      \
-     .name         = (stringify(_field)),                             \
-@@ -952,6 +964,9 @@ extern const VMStateInfo vmstate_info_qlist;
- #define VMSTATE_UINT64(_f, _s)                                        \
-     VMSTATE_UINT64_V(_f, _s, 0)
+ int migrate_add_blocker_modes(Error **reasonp, Error **errp, MigMode mode, ...)
+ {
+     int modes;
+diff --git a/stubs/migr-blocker.c b/stubs/migr-blocker.c
+index 11cbff2..150eb62 100644
+--- a/stubs/migr-blocker.c
++++ b/stubs/migr-blocker.c
+@@ -16,6 +16,11 @@ int migrate_add_blocker_modes(Error **reasonp, Error **errp, MigMode mode, ...)
+     return 0;
+ }
  
-+#define VMSTATE_VOID_PTR(_f, _s)                                      \
-+    VMSTATE_SINGLE_TEST_NO_CHECK(_f, _s, NULL, 0, vmstate_info_void_ptr, void *)
-+
- #ifdef CONFIG_LINUX
- 
- #define VMSTATE_U8(_f, _s)                                         \
-diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
-index e83bfcc..097ecad 100644
---- a/migration/vmstate-types.c
-+++ b/migration/vmstate-types.c
-@@ -314,6 +314,30 @@ const VMStateInfo vmstate_info_uint64 = {
-     .put  = put_uint64,
- };
- 
-+/* 64 bit pointer */
-+
-+static int get_void_ptr(QEMUFile *f, void *pv, size_t size,
-+                        const VMStateField *field)
++int migrate_add_blocker_mode(Error **reasonp, MigMode mode, Error **errp)
 +{
-+    void **v = pv;
-+    qemu_get_be64s(f, (uint64_t *)v);
 +    return 0;
 +}
 +
-+static int put_void_ptr(QEMUFile *f, void *pv, size_t size,
-+                        const VMStateField *field, JSONWriter *vmdesc)
-+{
-+    void **v = pv;
-+    qemu_put_be64s(f, (uint64_t *)v);
-+    return 0;
-+}
-+
-+const VMStateInfo vmstate_info_void_ptr = {
-+    .name = "void_ptr",
-+    .get  = get_void_ptr,
-+    .put  = put_void_ptr,
-+};
-+
- static int get_nullptr(QEMUFile *f, void *pv, size_t size,
-                        const VMStateField *field)
- 
+ void migrate_del_blocker(Error **reasonp)
+ {
+ }
 -- 
 1.8.3.1
 
