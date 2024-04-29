@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2024AC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 19:22:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12EA6C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 19:23:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1WZ4-0006Ft-TZ; Mon, 29 Apr 2024 15:21:27 -0400
+	id 1s1WaV-0007Ni-Ny; Mon, 29 Apr 2024 15:22:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s1WZ3-0006FZ-M7
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 15:21:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s1WaT-0007Lx-UD
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 15:22:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s1WZ1-0006Q9-Ou
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 15:21:25 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s1WaS-0006ZW-9f
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 15:22:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714418482;
+ s=mimecast20190719; t=1714418570;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Q2ykcfiwNJhnkyEEUnAXKH8Vt1Xuqg/mS5A9Q7VE6zA=;
- b=V7cjSwKKMAj3IqrQTio99Q9Z2PdDsvhbyF0h1k+0sos8zgkiC2MRDOXAD8IkLIXX1NxV4s
- eJQAUIhGX8449Pxak+56bU4H2FA5g42HVTUz3lkrleZXxS6VTbk6Rxok7CuqAZX9JBY4u7
- rqMm3sqcRMNyekE2SIfU48wap3uyehE=
-Received: from mail-oo1-f69.google.com (mail-oo1-f69.google.com
- [209.85.161.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=K94E5wUHFrn/Bu2yYV69Db0P3XBZmasAR7FRTgK6jO0=;
+ b=OucwBuLu8ggnnEURMzQcWUKYyxSWJSuD9JTS+N5wPmh+Tiz1TYoj5H2fGO1m16t8Y7Bdlv
+ ZkfrtVIdWv+0rvnuPnfl7r3fNrt2Gt8m8rmdrJdJdX4N8sp+RYA6LtvbNMcGaD9TavtyqA
+ UNDKnu/EPy4VXE+xCnAzbGteNLm9JYY=
+Received: from mail-oi1-f198.google.com (mail-oi1-f198.google.com
+ [209.85.167.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-343-wScD5bplMhyl4oX0OF8f_g-1; Mon, 29 Apr 2024 15:21:21 -0400
-X-MC-Unique: wScD5bplMhyl4oX0OF8f_g-1
-Received: by mail-oo1-f69.google.com with SMTP id
- 006d021491bc7-5acdbfb5b37so1643253eaf.3
- for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 12:21:20 -0700 (PDT)
+ us-mta-592-WuugO4B9MqmDR06UJ0NOGA-1; Mon, 29 Apr 2024 15:22:48 -0400
+X-MC-Unique: WuugO4B9MqmDR06UJ0NOGA-1
+Received: by mail-oi1-f198.google.com with SMTP id
+ 5614622812f47-3c7533a4a7cso1387598b6e.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 12:22:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714418480; x=1715023280;
+ d=1e100.net; s=20230601; t=1714418568; x=1715023368;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Q2ykcfiwNJhnkyEEUnAXKH8Vt1Xuqg/mS5A9Q7VE6zA=;
- b=uNbJdZW9+m+5ShgJ026znykUenOMBgqpkCfdgF6PhkuR+eUGRt+1hPxesgqBZXMc/6
- qTE9gmGKJN9DZ/T3Tsww2ApKOe/6E4fs/sEYId/uWQjE8Q2sv+sNa/OYbTv2/TdMbFm6
- 2LBFm6h+09VmX5fJeSrPCOVQviBFEOpW+ejI7aSoJaJrztGLTB3xvsIku29hVkebdsD4
- /4Jz931ZzYKRB85q5k7nAon/3Qz05TT5fD//QyuSyAVLVD0pvCEXRCxf7gh2EO/hEs9p
- zkHdag1cDGqHWWVOG47W2K6LEMTuiNplR2VpEtQvBHUM3fiTDUanXLqw97nhkMUjK49d
- ek8A==
+ bh=K94E5wUHFrn/Bu2yYV69Db0P3XBZmasAR7FRTgK6jO0=;
+ b=EmW0+eJh9xEPq+WzNuoT/py48kIvtRpgGib52fZ2il6ffsfq5vJeJKdTMuDoX9r1wN
+ FgSYeoHOg65N6I5Ny1A5FB1VorR3oFOmZQ98C+PZwuX0F9USQIveg4sA1FOktl/PkfIK
+ WZ8Wap+6tM8Q1N3U71qfW3ja4KTxtuRRy6XvWI+ggCzdCixLCcadZGA0kNc/wmDj4lxL
+ Usc7Xt08mK60jXHVbxfAwl+V8kWksl1YMDT5yNmGucEbShyTHOBIOuRSgLBhkCpQSGEK
+ RRtkDCQt60sBV87rvoyK1jdtZVMQcvV2Lyz9CPB/zkFkDLCpwFIjVZeGlH5rhzpCrgWI
+ nXyg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUqa+vt5duKFw3lZ6X4K2eix+4vsXvPvKPZuw8kKNxkWOtHKAKS5yAXcb16h31BZTjS+hKOepsinZPp1VAQvsw2bt1VR4M=
-X-Gm-Message-State: AOJu0YyYi6JZllk0Iqrtm6QwC5L1dDSaOgINpzVe1baN1Uwif5esbqVt
- BtxRlIHXaLS8GZKX7k6fkTqIcGC2NpKhwXmZILFgUp4hoFIvN/MGZv+1aUE2p6/4QPgoYcr9DtU
- 2k6Zz5sd1/9DhFL1Zq+xB2iOQjXDQViAPW1pHM5z+Wq4UYUfvg8Gn
-X-Received: by 2002:a4a:a683:0:b0:5aa:3e4f:f01e with SMTP id
- f3-20020a4aa683000000b005aa3e4ff01emr12580220oom.1.1714418479771; 
- Mon, 29 Apr 2024 12:21:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG18tn6Bym6xwLKkGzjS9y3T8iDx/N8WQjYYGNqQ+rM4iJwEGii+IpSxCOzDWrt1Swpwei4Jg==
-X-Received: by 2002:a4a:a683:0:b0:5aa:3e4f:f01e with SMTP id
- f3-20020a4aa683000000b005aa3e4ff01emr12580201oom.1.1714418479348; 
- Mon, 29 Apr 2024 12:21:19 -0700 (PDT)
+ AJvYcCWLRslfCpAxFFywlPmAYcEj5bRe72IqZXDvBIvlhwJHXTu+Oij6B7khNe4pMtP872xI4IZUtMR3liU/IqJmWXvYfPT7tsk=
+X-Gm-Message-State: AOJu0YwFEyFEUbWLpmcZh2YY8yz8q4pL1lOks78xhYxlhjNHrRBqrKtP
+ 7eshe3tFizkEkSU42gF8seOS4MBD3v3JGQXL9YOoXJSRnUU/KOx9hC+tiUWxBG9O4mh5NOolZbm
+ kWaz/vgIdwJZ01D/iTglQAqTiDT+ag1ezIs4p0NDbD+6q7WrjF4Qb
+X-Received: by 2002:a05:6808:2109:b0:3c8:42f4:91cf with SMTP id
+ r9-20020a056808210900b003c842f491cfmr13180448oiw.3.1714418567725; 
+ Mon, 29 Apr 2024 12:22:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG8VWFGw72K7tfRC/29X67onWOad67BSEOlqonFf+Fcl357RCkASMflRUDfCH43ST3cbshrzw==
+X-Received: by 2002:a05:6808:2109:b0:3c8:42f4:91cf with SMTP id
+ r9-20020a056808210900b003c842f491cfmr13180415oiw.3.1714418567188; 
+ Mon, 29 Apr 2024 12:22:47 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- bb33-20020a056820162100b005acc9e07626sm5083362oob.44.2024.04.29.12.21.18
+ bm43-20020a0568081aab00b003c4f39fb9e7sm3452192oib.36.2024.04.29.12.22.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Apr 2024 12:21:19 -0700 (PDT)
-Date: Mon, 29 Apr 2024 15:21:16 -0400
+ Mon, 29 Apr 2024 12:22:46 -0700 (PDT)
+Date: Mon, 29 Apr 2024 15:22:45 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Cc: farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
  pbonzini@redhat.com, qemu-devel@nongnu.org, yc-core@yandex-team.ru
-Subject: Re: [PATCH v4 1/4] migration: move trace-point from migrate_fd_error
- to migrate_set_error
-Message-ID: <Zi_zLNf2CT3J3BUf@x1n>
-References: <20240429075541.1959050-1-vsementsov@yandex-team.ru>
- <20240429075541.1959050-2-vsementsov@yandex-team.ru>
+Subject: Re: [PATCH v5 2/5] migration: process_incoming_migration_co():
+ complete cleanup on failure
+Message-ID: <Zi_zhQfJsi86_4VU@x1n>
+References: <20240429191426.2327225-1-vsementsov@yandex-team.ru>
+ <20240429191426.2327225-3-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240429075541.1959050-2-vsementsov@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20240429191426.2327225-3-vsementsov@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -102,8 +102,9 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 29, 2024 at 10:55:38AM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> Cover more cases by trace-point.
+On Mon, Apr 29, 2024 at 10:14:23PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> Make call to migration_incoming_state_destroy(), instead of doing only
+> partial of it.
 > 
 > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > Reviewed-by: Fabiano Rosas <farosas@suse.de>
