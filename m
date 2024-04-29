@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C147C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 10:09:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F13ECC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 10:11:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1Nw7-0005sF-6k; Mon, 29 Apr 2024 06:08:39 -0400
+	id 1s1Nxt-0006nw-Kw; Mon, 29 Apr 2024 06:10:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1s1Nw4-0005rr-Vz
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 06:08:37 -0400
+ id 1s1Nxf-0006lS-Sf
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 06:10:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1s1Nw2-0005cr-Qi
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 06:08:36 -0400
+ id 1s1Nxd-0005sR-UI
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 06:10:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714385312;
+ s=mimecast20190719; t=1714385413;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=NVcDQkog+vdLU143HYkdf3JAghOQDbvNwkEsr83xIoQ=;
- b=a0tX0BG20jh2aiRnDTvuN9vZ0K44CKSOEr1WZU2CSxF0Mo/TYHU2xjnaLIXAoWM5CNwrFN
- 73qfKqH7MD8kJnkl9hKWFmjMZptp+QawuaQmCNQcMAiUtAfbE30Ru8siQa6GCQFH9SazkG
- H3uyesqd9nPgbBt+TtlDWDmKi7fHWxI=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qdvMBGWE0yNJfobP3ympOhnHaSassbYD1VdudymPSsI=;
+ b=dtB9YxNXMuDbGEwXiSwKFimivvRzUQIFA3DAoz3sTyN1AcXyMS7viLjcv1U6AtdBlcgumO
+ ZwqokhRNLtbZS6IFdjOb1w2v3np45BOnm8N+bYLgQ074c/EedEjBIv0iPX/9046c3LAFpO
+ HlMADypZemxGFGDBUxI84ChuQFep/00=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-591-B59ng42KOEG6PmhAwuTO0A-1; Mon, 29 Apr 2024 06:08:30 -0400
-X-MC-Unique: B59ng42KOEG6PmhAwuTO0A-1
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-61b3518eb6bso86354947b3.2
- for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 03:08:30 -0700 (PDT)
+ us-mta-637-vqViO0FrOr6LvnaZnAqnJw-1; Mon, 29 Apr 2024 06:10:11 -0400
+X-MC-Unique: vqViO0FrOr6LvnaZnAqnJw-1
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-61b2abd30f9so81164957b3.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 03:10:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714385310; x=1714990110;
+ d=1e100.net; s=20230601; t=1714385410; x=1714990210;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=NVcDQkog+vdLU143HYkdf3JAghOQDbvNwkEsr83xIoQ=;
- b=r0qRYZDgit5qGCZF+gL00edJFXiOwPzMmfLr4EY7D/ky8lFqxTp1V+TVGTxDPKHH6Z
- WjOkt0KOzgnKpLXx3FzYa5QoAFJMpdU6IJZ98xflN2MgMok++WAeyuj18bLOTJL3ugIf
- Mhiou23Rg0b4lr830WIA46hwEOVjxJqJSZcuWjSMYsOvEHT/j5iotJC1yfDh1O1MycvN
- b+rpXScxCY3zx9/YnkCucfqrBq3dZAmtgqBYLqHNQS0GKFvB3b9ZretNBjOChvFL0e+R
- 8x7cQvkilUnWYeYgHYCE+IxC0nsVcyeu8oSePttvyQUCsN65qJHFSbPZJ+cK1yr/f7uW
- 7x5A==
-X-Gm-Message-State: AOJu0YwekMgh+ZKXMAWPL0SLyXxN5LbV8xZ6hVO9QdY/ni8Plmh/A2Is
- eFcDd8AOdDpsZjyTzkTghxYmDu8lJX4chuQae9Az0Wi9ASQO7DmWcLr0ggzvVUe7TCMd62ZFFXw
- Mwo+UlMaoWoyOV7LifFLb6Di+TUqC1TxWFog9+njQuaaKbr4LI/2ef2oJMpR3T0j6gKg1iCclrr
- c/3lDdFUxNSL18rE28HmV6zUrjBz4=
-X-Received: by 2002:a05:690c:28f:b0:61a:e48c:38b7 with SMTP id
- bf15-20020a05690c028f00b0061ae48c38b7mr7215654ywb.41.1714385310373; 
- Mon, 29 Apr 2024 03:08:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHSPgTCNUZxV8ELEpIDhO6AfUpOWcjcsbiJzs7Ph9C0Ajz//1vNFMcpWukJUeW5WyDXAaegGmTOl01ZHdhJCJg=
-X-Received: by 2002:a05:690c:28f:b0:61a:e48c:38b7 with SMTP id
- bf15-20020a05690c028f00b0061ae48c38b7mr7215641ywb.41.1714385310127; Mon, 29
- Apr 2024 03:08:30 -0700 (PDT)
+ bh=qdvMBGWE0yNJfobP3ympOhnHaSassbYD1VdudymPSsI=;
+ b=S+Msy4eQtV/z6+nvfD2oNLoKBtyZUmex5YUK00WNSl5PMfehJMwws+R9hRW1w5tIlU
+ JVZbk2HyjvYS5t3B2WcfJsd/ww0cCyyXylpmYjmJo3g5uFgEg0Wvn76rHaQLCbiQyo47
+ FvKQeTiYXz6Eflt7R42Cqof45zZmVEhDeLqaCg9PSDmlF1o+Efbaa3laWzKJFSuiUsB5
+ sr1BVd6W+K+GBZzkm+CiGNcxrNuDeUeZ5YJD+PPbKTgIgT2rMRO6C3E4+E3ust+wiuSh
+ G147j7JqnUpaNWjJUys0ulpDXPxIoZHIUloVOGoED09twYlplTme0CCygKpENh1Pgey+
+ PQDg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUtsokcI0/AR2KtLl9l6dbhTN88/puNlNwcgszWlYIdXtA5DxMeEWEIAGyrKGZvVlqBJpeQsracvt1T4nIielf6gZKU7Wo=
+X-Gm-Message-State: AOJu0YzWrnBe8rPrrvbSvhRvUBR8np+j2qUDGrl42Vkf5JonZIW9J0iQ
+ hJHd8BZtChubj8DaKfaXTHYLXbSAPZvkIVmuX3kjkx3MDw8XzxYyzfaHBtcsTMczbjs6fR+A69j
+ Db93FI2rqDTrPBagS9Jc3fdK3K5F7Rhi8b39P5nysHLOf62kEtA54rd125vMkNRy6bxuJIR3/hr
+ oj9x+eAp0xAnbrxEiABcDITCs69C0=
+X-Received: by 2002:a05:690c:387:b0:61a:999f:e499 with SMTP id
+ bh7-20020a05690c038700b0061a999fe499mr10495467ywb.22.1714385410745; 
+ Mon, 29 Apr 2024 03:10:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IElfCqvtE+KE4LcVdRO2NWilDRegHoTLMOcLNiRCb/55T1TxmCIbFfWQHsQwlpYDWljW0WoflHy/97nMaSBcb0=
+X-Received: by 2002:a05:690c:387:b0:61a:999f:e499 with SMTP id
+ bh7-20020a05690c038700b0061a999fe499mr10495452ywb.22.1714385410532; Mon, 29
+ Apr 2024 03:10:10 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240426162348.684143-1-thuth@redhat.com>
-In-Reply-To: <20240426162348.684143-1-thuth@redhat.com>
+References: <20240426121347.18843-1-kkostiuk@redhat.com>
+ <20240426121347.18843-2-kkostiuk@redhat.com>
+In-Reply-To: <20240426121347.18843-2-kkostiuk@redhat.com>
 From: Konstantin Kostiuk <kkostiuk@redhat.com>
-Date: Mon, 29 Apr 2024 13:08:19 +0300
-Message-ID: <CAPMcbCrbcqwPfmbLX-DysAnG2wORYCdW9pr_14Xq3DGXr6y9cg@mail.gmail.com>
-Subject: Re: [PATCH] qga: Re-enable the qga-ssh-test when running without
- fuzzing
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000006b31330617396f11"
+Date: Mon, 29 Apr 2024 13:09:59 +0300
+Message-ID: <CAPMcbCrVguBjQzoYNt5ooeU+rBm+dBF8e845uf=H7W8+wVe-FQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] stubs: Add missing qga stubs
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, qemu-devel@nongnu.org, 
+ Thomas Huth <thuth@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000673d2106173975de"
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -99,107 +100,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000006b31330617396f11
+--000000000000673d2106173975de
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+Hi Paolo,
+
+Are you ok if I merge this patch with other QGA patches?
+Or don't you agree with this version of the patch?
+
+Best Regards,
+Konstantin Kostiuk.
 
 
+On Fri, Apr 26, 2024 at 3:15=E2=80=AFPM Konstantin Kostiuk <kkostiuk@redhat=
+.com>
+wrote:
 
-On Fri, Apr 26, 2024 at 7:23=E2=80=AFPM Thomas Huth <thuth@redhat.com> wrot=
-e:
-
-> According to the comment in qga/meson.build, the test got disabled
-> since there were problems with the fuzzing job. But instead of
-> disabling this test completely, we should still be fine running
-> it when fuzzing is disabled.
+> Compilation QGA without system and user fails
+> ./configure --disable-system --disable-user --enable-guest-agent
 >
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> Link failure:
+>   /usr/bin/ld: libqemuutil.a.p/util_main-loop.c.o: in function
+> `os_host_main_loop_wait':
+>    ../util/main-loop.c:303: undefined reference to `replay_mutex_unlock'
+>    /usr/bin/ld: ../util/main-loop.c:307: undefined reference to
+> `replay_mutex_lock'
+>    /usr/bin/ld: libqemuutil.a.p/util_error-report.c.o: in function
+> `error_printf':
+>    ../util/error-report.c:38: undefined reference to `error_vprintf'
+>    /usr/bin/ld: libqemuutil.a.p/util_error-report.c.o: in function
+> `vreport':
+>    ../util/error-report.c:225: undefined reference to `error_vprintf'
+>    /usr/bin/ld: libqemuutil.a.p/util_qemu-timer.c.o: in function
+> `timerlist_run_timers':
+>    ../util/qemu-timer.c:562: undefined reference to `replay_checkpoint'
+>    /usr/bin/ld: ../util/qemu-timer.c:530: undefined reference to
+> `replay_checkpoint'
+>    /usr/bin/ld: ../util/qemu-timer.c:525: undefined reference to
+> `replay_checkpoint'
+>    ninja: build stopped: subcommand failed.
+>
+> Fixes: 3a15604900 ("stubs: include stubs only if needed")
+>
+> Tested-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Signed-off-by: Konstantin Kostiuk <kkostiuk@redhat.com>
 > ---
->  qga/meson.build | 5 ++---
->  1 file changed, 2 insertions(+), 3 deletions(-)
+>  stubs/meson.build | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
 >
-> diff --git a/qga/meson.build b/qga/meson.build
-> index 1c3d2a3d1b..46c1d83d7f 100644
-> --- a/qga/meson.build
-> +++ b/qga/meson.build
-> @@ -181,12 +181,11 @@ test_env =3D environment()
->  test_env.set('G_TEST_SRCDIR', meson.current_source_dir())
->  test_env.set('G_TEST_BUILDDIR', meson.current_build_dir())
+> diff --git a/stubs/meson.build b/stubs/meson.build
+> index 8ee1fd5753..3b9d42023c 100644
+> --- a/stubs/meson.build
+> +++ b/stubs/meson.build
+> @@ -21,12 +21,12 @@ if have_block
+>    stub_ss.add(files('migr-blocker.c'))
+>    stub_ss.add(files('physmem.c'))
+>    stub_ss.add(files('ram-block.c'))
+> -  stub_ss.add(files('replay-tools.c'))
+>    stub_ss.add(files('runstate-check.c'))
+>    stub_ss.add(files('uuid.c'))
+>  endif
 >
-> -# disable qga-ssh-test for now. glib's G_TEST_OPTION_ISOLATE_DIRS trigge=
-rs
-> +# disable qga-ssh-test with fuzzing: glib's G_TEST_OPTION_ISOLATE_DIRS
-> triggers
->  # the leak detector in build-oss-fuzz Gitlab CI test. we should re-enabl=
-e
->  # this when an alternative is implemented or when the underlying glib
->  # issue is identified/fix
-> -#if host_os !=3D 'windows'
-> -if false
-> +if host_os !=3D 'windows' and not get_option('fuzzing')
->    srcs =3D [files('commands-posix-ssh.c')]
->    i =3D 0
->    foreach output: qga_qapi_outputs
+>  if have_block or have_ga
+> +  stub_ss.add(files('replay-tools.c'))
+>    # stubs for hooks in util/main-loop.c, util/async.c etc.
+>    stub_ss.add(files('cpus-get-virtual-clock.c'))
+>    stub_ss.add(files('icount.c'))
+> @@ -45,6 +45,10 @@ if have_block or have_ga
+>    stub_ss.add(files('qmp-quit.c'))
+>  endif
+>
+> +if have_ga
+> +  stub_ss.add(files('error-printf.c'))
+> +endif
+> +
+>  if have_block or have_user
+>    stub_ss.add(files('qtest.c'))
+>    stub_ss.add(files('vm-stop.c'))
 > --
 > 2.44.0
 >
 >
+>
 
---0000000000006b31330617396f11
+--000000000000673d2106173975de
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Reviewed-by: Konstantin Kostiuk &lt;<a href=3D"mailto:kkos=
-tiuk@redhat.com">kkostiuk@redhat.com</a>&gt;<div><div dir=3D"ltr" class=3D"=
-gmail_signature" data-smartmail=3D"gmail_signature"><div dir=3D"ltr"><br></=
-div></div></div><br></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" c=
-lass=3D"gmail_attr">On Fri, Apr 26, 2024 at 7:23=E2=80=AFPM Thomas Huth &lt=
-;<a href=3D"mailto:thuth@redhat.com">thuth@redhat.com</a>&gt; wrote:<br></d=
-iv><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
-er-left:1px solid rgb(204,204,204);padding-left:1ex">According to the comme=
-nt in qga/meson.build, the test got disabled<br>
-since there were problems with the fuzzing job. But instead of<br>
-disabling this test completely, we should still be fine running<br>
-it when fuzzing is disabled.<br>
+<div dir=3D"ltr"><div>Hi Paolo,</div><div><br></div><div>Are you ok if I me=
+rge this patch with other QGA patches?=C2=A0</div><div>Or don&#39;t you agr=
+ee with this version of the patch?</div><div><br></div><div><div><div dir=
+=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signature"><div =
+dir=3D"ltr"><div>Best Regards,</div><div>Konstantin Kostiuk.</div></div></d=
+iv></div><br></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" cl=
+ass=3D"gmail_attr">On Fri, Apr 26, 2024 at 3:15=E2=80=AFPM Konstantin Kosti=
+uk &lt;<a href=3D"mailto:kkostiuk@redhat.com">kkostiuk@redhat.com</a>&gt; w=
+rote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0p=
+x 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Compilatio=
+n QGA without system and user fails<br>
+./configure --disable-system --disable-user --enable-guest-agent<br>
 <br>
-Signed-off-by: Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com" target=
-=3D"_blank">thuth@redhat.com</a>&gt;<br>
+Link failure:<br>
+=C2=A0 /usr/bin/ld: libqemuutil.a.p/util_main-loop.c.o: in function<br>
+`os_host_main_loop_wait&#39;:<br>
+=C2=A0 =C2=A0../util/main-loop.c:303: undefined reference to `replay_mutex_=
+unlock&#39;<br>
+=C2=A0 =C2=A0/usr/bin/ld: ../util/main-loop.c:307: undefined reference to<b=
+r>
+`replay_mutex_lock&#39;<br>
+=C2=A0 =C2=A0/usr/bin/ld: libqemuutil.a.p/util_error-report.c.o: in functio=
+n<br>
+`error_printf&#39;:<br>
+=C2=A0 =C2=A0../util/error-report.c:38: undefined reference to `error_vprin=
+tf&#39;<br>
+=C2=A0 =C2=A0/usr/bin/ld: libqemuutil.a.p/util_error-report.c.o: in functio=
+n<br>
+`vreport&#39;:<br>
+=C2=A0 =C2=A0../util/error-report.c:225: undefined reference to `error_vpri=
+ntf&#39;<br>
+=C2=A0 =C2=A0/usr/bin/ld: libqemuutil.a.p/util_qemu-timer.c.o: in function<=
+br>
+`timerlist_run_timers&#39;:<br>
+=C2=A0 =C2=A0../util/qemu-timer.c:562: undefined reference to `replay_check=
+point&#39;<br>
+=C2=A0 =C2=A0/usr/bin/ld: ../util/qemu-timer.c:530: undefined reference to<=
+br>
+`replay_checkpoint&#39;<br>
+=C2=A0 =C2=A0/usr/bin/ld: ../util/qemu-timer.c:525: undefined reference to<=
+br>
+`replay_checkpoint&#39;<br>
+=C2=A0 =C2=A0ninja: build stopped: subcommand failed.<br>
+<br>
+Fixes: 3a15604900 (&quot;stubs: include stubs only if needed&quot;)<br>
+<br>
+Tested-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.=
+org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
+Reviewed-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linar=
+o.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
+Signed-off-by: Konstantin Kostiuk &lt;<a href=3D"mailto:kkostiuk@redhat.com=
+" target=3D"_blank">kkostiuk@redhat.com</a>&gt;<br>
 ---<br>
-=C2=A0qga/meson.build | 5 ++---<br>
-=C2=A01 file changed, 2 insertions(+), 3 deletions(-)<br>
+=C2=A0stubs/meson.build | 6 +++++-<br>
+=C2=A01 file changed, 5 insertions(+), 1 deletion(-)<br>
 <br>
-diff --git a/qga/meson.build b/qga/meson.build<br>
-index 1c3d2a3d1b..46c1d83d7f 100644<br>
---- a/qga/meson.build<br>
-+++ b/qga/meson.build<br>
-@@ -181,12 +181,11 @@ test_env =3D environment()<br>
-=C2=A0test_env.set(&#39;G_TEST_SRCDIR&#39;, meson.current_source_dir())<br>
-=C2=A0test_env.set(&#39;G_TEST_BUILDDIR&#39;, meson.current_build_dir())<br=
->
+diff --git a/stubs/meson.build b/stubs/meson.build<br>
+index 8ee1fd5753..3b9d42023c 100644<br>
+--- a/stubs/meson.build<br>
++++ b/stubs/meson.build<br>
+@@ -21,12 +21,12 @@ if have_block<br>
+=C2=A0 =C2=A0stub_ss.add(files(&#39;migr-blocker.c&#39;))<br>
+=C2=A0 =C2=A0stub_ss.add(files(&#39;physmem.c&#39;))<br>
+=C2=A0 =C2=A0stub_ss.add(files(&#39;ram-block.c&#39;))<br>
+-=C2=A0 stub_ss.add(files(&#39;replay-tools.c&#39;))<br>
+=C2=A0 =C2=A0stub_ss.add(files(&#39;runstate-check.c&#39;))<br>
+=C2=A0 =C2=A0stub_ss.add(files(&#39;uuid.c&#39;))<br>
+=C2=A0endif<br>
 <br>
--# disable qga-ssh-test for now. glib&#39;s G_TEST_OPTION_ISOLATE_DIRS trig=
-gers<br>
-+# disable qga-ssh-test with fuzzing: glib&#39;s G_TEST_OPTION_ISOLATE_DIRS=
- triggers<br>
-=C2=A0# the leak detector in build-oss-fuzz Gitlab CI test. we should re-en=
-able<br>
-=C2=A0# this when an alternative is implemented or when the underlying glib=
+=C2=A0if have_block or have_ga<br>
++=C2=A0 stub_ss.add(files(&#39;replay-tools.c&#39;))<br>
+=C2=A0 =C2=A0# stubs for hooks in util/main-loop.c, util/async.c etc.<br>
+=C2=A0 =C2=A0stub_ss.add(files(&#39;cpus-get-virtual-clock.c&#39;))<br>
+=C2=A0 =C2=A0stub_ss.add(files(&#39;icount.c&#39;))<br>
+@@ -45,6 +45,10 @@ if have_block or have_ga<br>
+=C2=A0 =C2=A0stub_ss.add(files(&#39;qmp-quit.c&#39;))<br>
+=C2=A0endif<br>
 <br>
-=C2=A0# issue is identified/fix<br>
--#if host_os !=3D &#39;windows&#39;<br>
--if false<br>
-+if host_os !=3D &#39;windows&#39; and not get_option(&#39;fuzzing&#39;)<br=
->
-=C2=A0 =C2=A0srcs =3D [files(&#39;commands-posix-ssh.c&#39;)]<br>
-=C2=A0 =C2=A0i =3D 0<br>
-=C2=A0 =C2=A0foreach output: qga_qapi_outputs<br>
--- <br>
++if have_ga<br>
++=C2=A0 stub_ss.add(files(&#39;error-printf.c&#39;))<br>
++endif<br>
++<br>
+=C2=A0if have_block or have_user<br>
+=C2=A0 =C2=A0stub_ss.add(files(&#39;qtest.c&#39;))<br>
+=C2=A0 =C2=A0stub_ss.add(files(&#39;vm-stop.c&#39;))<br>
+--<br>
 2.44.0<br>
+<br>
 <br>
 </blockquote></div>
 
---0000000000006b31330617396f11--
+--000000000000673d2106173975de--
 
 
