@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C906C04FFE
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 15:58:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43948C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 15:59:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1TMM-0004bw-ME; Mon, 29 Apr 2024 11:56:06 -0400
+	id 1s1TMb-00055E-F1; Mon, 29 Apr 2024 11:56:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1s1TMG-0004XK-IV
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:00 -0400
+ id 1s1TMI-0004Y7-2G
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:02 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1s1TME-0005KG-Ma
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:00 -0400
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ id 1s1TME-0005KM-WD
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:01 -0400
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43TFnZ1C028117; Mon, 29 Apr 2024 15:55:54 GMT
+ 43TFnpqi003604; Mon, 29 Apr 2024 15:55:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
  h=from : to : cc :
  subject : date : message-id : in-reply-to : references; s=corp-2023-11-20;
- bh=JnHkPIVQqTLNiTwWrVL5qrGRdbPYqitNd1sfXn89xic=;
- b=BcUp/ltegDdnTi8MOxY7B4v81QbQO00rQU8z0N/e0kLQj4C6HshcMcXWyP0ufHAIe5S8
- SU5wupBROE6nvltCAMPLp6llG/XVb7HreR06NcOP4kW2MVuh2i0aRtxBMtJTs3Y9Gy+U
- Ne0mrDf9PQR9dw93SXtAMJ4Fo/scoXkelQPlv4O4w8LUkuAuc5a9CdjWDpK9w3xqXQFB
- orJSDD4miq/PhrXKJcuc2B0u1gVohg85pxSpuAC7Y55hYUy5SR2AZTTRRVE+e1tbYiNe
- WwT9W0FLluRpBYH1XI+7jC+9dnnlTNnK7Y33/BnN6JHaeZXwH4ceByeq3lxfEhrXzdYl uQ== 
+ bh=0z80vD9gJHUUN6VSjk6F74K/JUahJKBy+uwGOPFalAc=;
+ b=JmWtfTCsB4t31pozNc6Du5FyR2NY10OE22AO8tKVZnxOxXqiJ1m8ISTZmC51peEbRniq
+ WL1y4nXU+ECeXJoBjsJRIaii2H7XMg55vH6yoy5tc28tCY8WZBAeqwCdg39Ogu9Zv3yq
+ Z4NJ+hkST6eJ33Z650E/HxcfznRaYPG4QahVo8fdBM0Vy521M1MAsKImBrsWK0jhvlq+
+ D2NZ7G3Rdv01FHCEgnw1t1b240Oaga4HUSA+QFtBqq2DmE4ZemkBJlEqzwgzAN3c2X6I
+ EgPMEuVkbqoQSq+JZfpJaca++iFefxKYfDBPyF1Aw0b574G0EamFrQy7O8Q4KMQu9jb5 qQ== 
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xrswvjxs6-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xrr9ck10x-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
  Mon, 29 Apr 2024 15:55:54 +0000
 Received: from pps.filterd
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 43TEgDmZ011440; Mon, 29 Apr 2024 15:55:53 GMT
+ with ESMTP id 43TF1T3C011502; Mon, 29 Apr 2024 15:55:54 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 3xrqt6j6ku-1
+ 3xrqt6j6mg-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
  Mon, 29 Apr 2024 15:55:53 +0000
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43TFtaHC034442;
- Mon, 29 Apr 2024 15:55:52 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43TFtaHE034442;
+ Mon, 29 Apr 2024 15:55:53 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 3xrqt6j5ys-23; Mon, 29 Apr 2024 15:55:52 +0000
+ ESMTP id 3xrqt6j5ys-24; Mon, 29 Apr 2024 15:55:53 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,9 +64,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V1 22/26] migration: ram block cpr-exec blockers
-Date: Mon, 29 Apr 2024 08:55:31 -0700
-Message-Id: <1714406135-451286-23-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V1 23/26] migration: misc cpr-exec blockers
+Date: Mon, 29 Apr 2024 08:55:32 -0700
+Message-Id: <1714406135-451286-24-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
 References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
@@ -78,8 +78,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
  adultscore=0 mlxscore=0 suspectscore=0 phishscore=0 spamscore=0
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2404010000 definitions=main-2404290101
-X-Proofpoint-GUID: j9AmfYAvp19a7BCtisg125IWA-jMyWpt
-X-Proofpoint-ORIG-GUID: j9AmfYAvp19a7BCtisg125IWA-jMyWpt
+X-Proofpoint-GUID: UARJ5-I5Ju3WsUQCfewP7UeGh73cvy83
+X-Proofpoint-ORIG-GUID: UARJ5-I5Ju3WsUQCfewP7UeGh73cvy83
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -20
@@ -104,142 +104,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Unlike cpr-reboot mode, cpr-exec mode cannot save volatile ram blocks in the
-migration stream file and recreate them later, because the physical memory for
-the blocks is pinned and registered for vfio.  Add an exec-mode blocker for
-volatile ram blocks.
-
-Also add a blocker for RAM_GUEST_MEMFD.  Preserving guest_memfd may be
-sufficient for cpr-exec, but it has not been tested yet.
-
-- Steve
+Add blockers for cpr-exec migration mode for devices and options that do
+not support it.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- include/exec/memory.h   |  3 +++
- include/exec/ramblock.h |  1 +
- migration/savevm.c      |  2 ++
- system/physmem.c        | 52 ++++++++++++++++++++++++++++++++++++++++++++++++-
- 4 files changed, 57 insertions(+), 1 deletion(-)
+ accel/xen/xen-all.c    |  5 +++++
+ backends/hostmem-epc.c | 12 ++++++++++--
+ hw/vfio/migration.c    |  3 ++-
+ replay/replay.c        |  6 ++++++
+ 4 files changed, 23 insertions(+), 3 deletions(-)
 
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index dbb1bad..d337737 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -3182,6 +3182,9 @@ bool ram_block_discard_is_disabled(void);
-  */
- bool ram_block_discard_is_required(void);
+diff --git a/accel/xen/xen-all.c b/accel/xen/xen-all.c
+index 0bdefce..9a7ed0f 100644
+--- a/accel/xen/xen-all.c
++++ b/accel/xen/xen-all.c
+@@ -78,6 +78,7 @@ static void xen_setup_post(MachineState *ms, AccelState *accel)
+ static int xen_init(MachineState *ms)
+ {
+     MachineClass *mc = MACHINE_GET_CLASS(ms);
++    Error *blocker = NULL;
  
-+void ram_block_add_cpr_blocker(RAMBlock *rb, Error **errp);
-+void ram_block_del_cpr_blocker(RAMBlock *rb);
+     xen_xc = xc_interface_open(0, 0, 0);
+     if (xen_xc == NULL) {
+@@ -112,6 +113,10 @@ static int xen_init(MachineState *ms)
+     mc->default_ram_id = NULL;
+ 
+     xen_mode = XEN_ATTACH;
 +
- #endif
- 
- #endif
-diff --git a/include/exec/ramblock.h b/include/exec/ramblock.h
-index b492d89..b70ec0c 100644
---- a/include/exec/ramblock.h
-+++ b/include/exec/ramblock.h
-@@ -40,6 +40,7 @@ struct RAMBlock {
-     /* RCU-enabled, writes protected by the ramlist lock */
-     QLIST_ENTRY(RAMBlock) next;
-     QLIST_HEAD(, RAMBlockNotifier) ramblock_notifiers;
-+    Error *cpr_blocker;
-     int fd;
-     uint64_t fd_offset;
-     int guest_memfd;
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 8463ddf..6087c3a 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -3568,11 +3568,13 @@ void vmstate_register_ram(MemoryRegion *mr, DeviceState *dev)
- {
-     qemu_ram_verify_idstr(mr->ram_block, dev);
-     qemu_ram_set_migratable(mr->ram_block);
-+    ram_block_add_cpr_blocker(mr->ram_block, &error_fatal);
++    error_setg(&blocker, "xen does not support cpr exec");
++    migrate_add_blocker_mode(&blocker, MIG_MODE_CPR_EXEC, &error_fatal);
++
+     return 0;
  }
  
- void vmstate_unregister_ram(MemoryRegion *mr, DeviceState *dev)
- {
-     qemu_ram_unset_migratable(mr->ram_block);
-+    ram_block_del_cpr_blocker(mr->ram_block);
- }
- 
- void vmstate_register_ram_global(MemoryRegion *mr)
-diff --git a/system/physmem.c b/system/physmem.c
-index 87ad441..9d44b41 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -69,6 +69,7 @@
- 
- #include "qemu/pmem.h"
- 
+diff --git a/backends/hostmem-epc.c b/backends/hostmem-epc.c
+index 735e2e1..837300f 100644
+--- a/backends/hostmem-epc.c
++++ b/backends/hostmem-epc.c
+@@ -15,6 +15,7 @@
+ #include "qom/object_interfaces.h"
+ #include "qapi/error.h"
+ #include "sysemu/hostmem.h"
 +#include "migration/blocker.h"
- #include "migration/cpr.h"
- #include "migration/vmstate.h"
+ #include "hw/i386/hostmem-epc.h"
  
-@@ -2130,7 +2131,14 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
-             g_free(new_block);
-             return NULL;
-         }
--        if (!(ram_flags & RAM_GUEST_MEMFD)) {
-+        if (ram_flags & RAM_GUEST_MEMFD) {
-+            error_setg(&new_block->cpr_blocker,
-+                       "Memory region %s uses guest_memfd, "
-+                       "which is not supported with CPR.",
-+                       memory_region_name(mr));
-+            migrate_add_blocker_mode(&new_block->cpr_blocker, MIG_MODE_CPR_EXEC,
-+                                     errp);
-+        } else {
-             vmstate_register_named(new_block->idstr, 0, &vmstate_ram_block,
-                                    new_block);
-         }
-@@ -3997,3 +4005,45 @@ bool ram_block_discard_is_required(void)
-     return qatomic_read(&ram_block_discard_required_cnt) ||
-            qatomic_read(&ram_block_coordinated_discard_required_cnt);
- }
-+
-+/*
-+ * Return true if ram contents would be lost during cpr for MIG_MODE_CPR_EXEC.
-+ * Return false for ram_device because it is remapped after exec.  Do not
-+ * exclude rom, even though it is readonly, because the rom file could change
-+ * in the new qemu.  Return false for non-migratable blocks.  They are either
-+ * re-created after exec, or are handled specially, or are covered by a
-+ * device-level cpr blocker.  Return false for an fd, because it is visible and
-+ * can be remapped in the new process.
-+ */
-+static bool ram_is_volatile(RAMBlock *rb)
-+{
-+    MemoryRegion *mr = rb->mr;
-+
-+    return mr &&
-+        memory_region_is_ram(mr) &&
-+        !memory_region_is_ram_device(mr) &&
-+        (!qemu_ram_is_shared(rb) || !qemu_ram_is_named_file(rb)) &&
-+        qemu_ram_is_migratable(rb) &&
-+        rb->fd < 0;
-+}
-+
-+/*
-+ * Add a MIG_MODE_CPR_EXEC blocker for each volatile ram block.
-+ */
-+void ram_block_add_cpr_blocker(RAMBlock *rb, Error **errp)
-+{
-+    if (!ram_is_volatile(rb)) {
-+        return;
+ static bool
+@@ -23,6 +24,7 @@ sgx_epc_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+     g_autofree char *name = NULL;
+     uint32_t ram_flags;
+     int fd;
++    Error *blocker = NULL;
+ 
+     if (!backend->size) {
+         error_setg(errp, "can't create backend with size 0");
+@@ -38,8 +40,14 @@ sgx_epc_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+ 
+     name = object_get_canonical_path(OBJECT(backend));
+     ram_flags = (backend->share ? RAM_SHARED : 0) | RAM_PROTECTED;
+-    return memory_region_init_ram_from_fd(&backend->mr, OBJECT(backend), name,
+-                                          backend->size, ram_flags, fd, 0, errp);
++    if (!memory_region_init_ram_from_fd(&backend->mr, OBJECT(backend),
++                                        name, backend->size, ram_flags,
++                                        fd, 0, errp)) {
++        return false;
 +    }
++    error_setg(&blocker, "memory-backend-epc does not support cpr exec");
++    migrate_add_blocker_mode(&blocker, MIG_MODE_CPR_EXEC, &error_fatal);
++    return true;
+ }
+ 
+ static void sgx_epc_backend_instance_init(Object *obj)
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index 06ae409..b9cd783 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -898,7 +898,8 @@ static int vfio_block_migration(VFIODevice *vbasedev, Error *err, Error **errp)
+     vbasedev->migration_blocker = error_copy(err);
+     error_free(err);
+ 
+-    return migrate_add_blocker_normal(&vbasedev->migration_blocker, errp);
++    return migrate_add_blocker_modes(&vbasedev->migration_blocker, errp,
++                                     MIG_MODE_NORMAL, MIG_MODE_CPR_EXEC, -1);
+ }
+ 
+ /* ---------------------------------------------------------------------- */
+diff --git a/replay/replay.c b/replay/replay.c
+index a2c576c..1bf3f38 100644
+--- a/replay/replay.c
++++ b/replay/replay.c
+@@ -19,6 +19,7 @@
+ #include "qemu/option.h"
+ #include "sysemu/cpus.h"
+ #include "qemu/error-report.h"
++#include "migration/blocker.h"
+ 
+ /* Current version of the replay mechanism.
+    Increase it when file format changes. */
+@@ -339,6 +340,11 @@ G_NORETURN void replay_sync_error(const char *error)
+ static void replay_enable(const char *fname, int mode)
+ {
+     const char *fmode = NULL;
++    Error *blocker = NULL;
 +
-+    error_setg(&rb->cpr_blocker,
-+               "Memory region %s is volatile. A memory-backend-memfd or "
-+               "memory-backend-file with share=on is required.",
-+               memory_region_name(rb->mr));
-+    migrate_add_blocker_mode(&rb->cpr_blocker, MIG_MODE_CPR_EXEC, errp);
-+}
++    error_setg(&blocker, "replay is not compatible with cpr");
++    migrate_add_blocker_mode(&blocker, MIG_MODE_CPR_EXEC, &error_fatal);
 +
-+void ram_block_del_cpr_blocker(RAMBlock *rb)
-+{
-+    migrate_del_blocker(&rb->cpr_blocker);
-+}
+     assert(!replay_file);
+ 
+     switch (mode) {
 -- 
 1.8.3.1
 
