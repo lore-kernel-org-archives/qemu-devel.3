@@ -4,87 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 945C1C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 12:25:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A64DEC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 12:32:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1Q3W-0006wd-I2; Mon, 29 Apr 2024 08:24:26 -0400
+	id 1s1QAG-0001qy-7a; Mon, 29 Apr 2024 08:31:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s1Q3R-0006vR-P5
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 08:24:23 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s1Q3P-0001LI-CA
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 08:24:20 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-6f30f69a958so3718688b3a.1
- for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 05:24:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714393456; x=1714998256; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=pRVgv2WOeah7BJAKrPAXEgqWlL6upqOcFmDDTGRJHY8=;
- b=ihfCFeOxtBRTAb5GFIS5IlKsZ2CiZV8GOV5ohQi9rgO/+CtYtYcxpAEDsZhSXuEmlF
- SV9EQ+PPXzC4XwMVFni+E/qSj2j82I1ciwLhE/3mmrlZ16XaqChSlDqy1UfgrYYdmlN/
- yJmKS8uM86zTiWyIT7H/lFz/MoZtA5atSgm0gUl1WQKMM+nA+Q71YFV+ubA0FqadsEhb
- BhequY0t4jD9mwFzoYJWaGANJVvGs7RVknDqIpo61+AJrGcVS/xU6THLc58nsVxBFHt0
- GEQFhweIJIpQ4rnMPGQUxEluofeCBWr6nJNr55I9oUx/GCnFqAW2Qvxq3W3Iy4oBRcLw
- xJiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714393456; x=1714998256;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pRVgv2WOeah7BJAKrPAXEgqWlL6upqOcFmDDTGRJHY8=;
- b=qiDslLrYgxDUum3uGhGIqP2ppMgNxq6auGZ28x1OZDB83H9uTC7humrh9g4uReQiBF
- TOsLIn21wT3aUrm7Q3xt98GNaZe0/N8XCpZGECJ6PtM1qPONmh6h1aeMIgCKIdUlvukG
- Qkd7aXQTdCYgRryet5bYgq/NWmQqgWY6VHhacz7M1Va+q/CbrzbXaFDsWu2IDsV43Wm9
- 6C5ABI++rNLnzGVqPIGCJ2vFVV30pUjBZf7RBfbc7FvfOXDoKRcbDwQ5VUmkoMz5KKAa
- 5AZopsBY9scGZAyM7jfwQCMMXqD4dMQjcAP6w2RfzUe+UrtvYuMA5JGK2xdTeaU6jTvj
- BrWA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW6p46UJ/fBhfLpDHvl7EaqkAPPNbs32H2z5y9RTi/UjR8v/yJvEA19TqcpMgIr9psHX6doCR1yy/BeNeC0Sfe76zhRePQ=
-X-Gm-Message-State: AOJu0Ywd0Ta5eNz6PT0NNVk+XGIDTmivkVz4/9amqkvKnMRc9o5lQJcR
- G8CXHrLZxHdoslQvcD1dTsgpK8vMjfBJ0iDpkEvds+kaEk3CSTMc7YQ21N5txNI=
-X-Google-Smtp-Source: AGHT+IGrm73KVZJ0VQomk4NUveLxmJKobG4XcWzKGjkFj/lux8+u+gbA6rqW2Zu+PJyZjXyNtheMEg==
-X-Received: by 2002:a05:6a00:3a0b:b0:6e6:970f:a809 with SMTP id
- fj11-20020a056a003a0b00b006e6970fa809mr11745111pfb.20.1714393456412; 
- Mon, 29 Apr 2024 05:24:16 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
- by smtp.gmail.com with ESMTPSA id
- b8-20020a056a000a8800b006f388e6546asm6606256pfl.214.2024.04.29.05.24.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Apr 2024 05:24:15 -0700 (PDT)
-Message-ID: <1fc6ba9b-11aa-4084-8cbc-42a5f2a8d326@linaro.org>
-Date: Mon, 29 Apr 2024 05:24:13 -0700
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1s1QAB-0001qP-Or; Mon, 29 Apr 2024 08:31:22 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1s1QA8-0002rs-0X; Mon, 29 Apr 2024 08:31:18 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 1D82262E1F;
+ Mon, 29 Apr 2024 15:31:14 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id 9DE17C3572;
+ Mon, 29 Apr 2024 15:31:10 +0300 (MSK)
+Received: (nullmailer pid 250727 invoked by uid 1000);
+ Mon, 29 Apr 2024 12:31:10 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: Li Zhijian <lizhijian@fujitsu.com>, qemu-trivial@nongnu.org,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL v2 6/9] backends/cryptodev-builtin: Fix local_error leaks
+Date: Mon, 29 Apr 2024 15:31:10 +0300
+Message-Id: <20240429123110.250689-2-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240429123110.250689-1-mjt@tls.msk.ru>
+References: <20240429123110.250689-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] accel: Fix NULL deref in NVMM / WHPX vCPU init
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Sunil Muthuswamy <sunilmut@microsoft.com>,
- Reinoud Zandijk <reinoud@netbsd.org>
-References: <20240429091918.27429-1-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240429091918.27429-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,12 +61,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/29/24 02:19, Philippe Mathieu-Daudé wrote:
-> Philippe Mathieu-Daudé (2):
->    accel/whpx: Fix NULL dereference in whpx_init_vcpu()
->    accel/nvmm: Fix NULL dereference in nvmm_init_vcpu()
+From: Li Zhijian <lizhijian@fujitsu.com>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+It seems that this error does not need to be propagated to the upper,
+directly output the error to avoid the leaks
 
-r~
+Closes: https://gitlab.com/qemu-project/qemu/-/issues/2283
+Fixes: 2fda101de07 ("virtio-crypto: Support asynchronous mode")
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: zhenwei pi <pizhenwei@bytedance.com>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+ backends/cryptodev-builtin.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/backends/cryptodev-builtin.c b/backends/cryptodev-builtin.c
+index a514bbb310..940104ee55 100644
+--- a/backends/cryptodev-builtin.c
++++ b/backends/cryptodev-builtin.c
+@@ -23,6 +23,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "sysemu/cryptodev.h"
++#include "qemu/error-report.h"
+ #include "qapi/error.h"
+ #include "standard-headers/linux/virtio_crypto.h"
+ #include "crypto/cipher.h"
+@@ -396,8 +397,8 @@ static int cryptodev_builtin_create_session(
+     case VIRTIO_CRYPTO_HASH_CREATE_SESSION:
+     case VIRTIO_CRYPTO_MAC_CREATE_SESSION:
+     default:
+-        error_setg(&local_error, "Unsupported opcode :%" PRIu32 "",
+-                   sess_info->op_code);
++        error_report("Unsupported opcode :%" PRIu32 "",
++                     sess_info->op_code);
+         return -VIRTIO_CRYPTO_NOTSUPP;
+     }
+ 
+@@ -554,8 +555,8 @@ static int cryptodev_builtin_operation(
+ 
+     if (op_info->session_id >= MAX_NUM_SESSIONS ||
+               builtin->sessions[op_info->session_id] == NULL) {
+-        error_setg(&local_error, "Cannot find a valid session id: %" PRIu64 "",
+-                   op_info->session_id);
++        error_report("Cannot find a valid session id: %" PRIu64 "",
++                     op_info->session_id);
+         return -VIRTIO_CRYPTO_INVSESS;
+     }
+ 
+-- 
+2.39.2
+
 
