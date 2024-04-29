@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BFCFC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 21:31:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50F83C19F4F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 21:32:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1Yal-00078N-9E; Mon, 29 Apr 2024 17:31:19 -0400
+	id 1s1Yb9-0007Pf-7M; Mon, 29 Apr 2024 17:31:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Yab-00076W-9z
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:31:12 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Yaz-0007GS-95
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:31:33 -0400
+Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1YaX-0003JJ-Ep
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:31:06 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-41b9dff6be8so24521035e9.3
- for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 14:31:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Yav-0003Ky-9g
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:31:32 -0400
+Received: by mail-lj1-x230.google.com with SMTP id
+ 38308e7fff4ca-2dac77cdf43so63637931fa.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 14:31:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714426263; x=1715031063; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714426285; x=1715031085; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EhMIv0nTX41VJaDT2tW5U63m9lk1MTRg8M20jzTt/L4=;
- b=tC0sfCAnBc8RsG0aWErESMsHQNoIOPjwmKaH1Y45RD7Y6sAvOASMVBTBLwY14T5UHC
- YwEsNYkuQ3WmRRO020HbXr9YKK8v3c84rKavBur7zy1hCLjysEnu79Gx/56CTrN9vgdQ
- LJco/8TYJdowYbxZdfUZJRtQ/NnwjyuVsaqlOBaV9PD4XhvgzBB6o7I31GgXxlxnc8pZ
- ZOLD7kEFb0+/IcNv9fEXVWFxmRzxSfWwa5QpyqGCFr8NzjcdLaZL49j99hi6n4c/6TuM
- RHv79tpHku2G7iYIcospNsgCPb9MV9FUKa3CRdzWgOjLX5EoXoE+BYDeqxfLHsKptfeP
- iwcg==
+ bh=PYPfGXZr1iKLCXnvsM1Vv5K3/IiXPZq2vFweDAU8m9c=;
+ b=D07eTFat21zZAYlewc9516MY2EhHb0bl7s/iZyy8PPwhqWtvEzMmac5pjD2IlF0368
+ /3T+PHlfwsvBaPnWvragha5+arv91PgdmOG3Z3duilcaY10m/R8S8JwSuzxwsWId76Rq
+ oSic/yc5cqMyRt9ICci6+l6pEjFbJsJyqcSiriHRUdL1ONh3L2JHAl6xvx/6gYUp5Gt1
+ 977QHJDvLKASTalcUe9ZUcesVwm+wuvAPyNaLQAu8B8Yho41bMUqwvyccOY98LNlyIMm
+ OzPP2oKq2vujTcVFphdL0zFq/w3jET2XvyY24lvLbcMnSqKemIVH3CQQYzuHFSRxbQm6
+ lwgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714426263; x=1715031063;
+ d=1e100.net; s=20230601; t=1714426285; x=1715031085;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EhMIv0nTX41VJaDT2tW5U63m9lk1MTRg8M20jzTt/L4=;
- b=rFAZXCavGkwf7IKql8S0W5nt5Y3QTvZwlScfOROyd9jEr+dGye43PWhyo7tjgGR9su
- qQqD42UQ/3z5vWRql1hqtU0iLyFpbOLVnfW+Wk1aXIUiEx8rmDDZ0ktKCfRuvnSkp6ab
- Jdi8J0KYvyTvQueumHGEqzQR5AToes8iJQWpW3yVlZzPTCFxHSRggjAurHxeZgBavUI4
- Oo/tOCXXyav0X/+4UxCjrCTkqab1gpNJdGfZOnUnOmW0mRhwQ/JgPFamP9L96vwzlRNB
- Y6AgKnBHCeT6GC5fWD9YT7fO8xVHNxuiuzKLs1NG2v3jVGBNTJizOSBr4s5TAtbSBVxw
- l+dg==
-X-Gm-Message-State: AOJu0Yz+2n/jE5ufKtryKj0kMBMiF18SU5QdkcjtumptZxuA2TVCW1Pk
- pr/6m1qrItytIc2nwJ6Q8wd6/c0QXbmyeEzXdpaxKOhvF7O3d+Nzbd85MZNse9kNzf0GIRjmS0I
- j254=
-X-Google-Smtp-Source: AGHT+IEWJXG9gu8Ew+eJsYjg7wBx7Ck2jDv9C/jKNMJLOn36Xbq9mniwkvfaZrAGp7f+FSIPOgCDPw==
-X-Received: by 2002:a5d:6b08:0:b0:34b:b0ac:c63c with SMTP id
- v8-20020a5d6b08000000b0034bb0acc63cmr6937152wrw.66.1714426263310; 
- Mon, 29 Apr 2024 14:31:03 -0700 (PDT)
+ bh=PYPfGXZr1iKLCXnvsM1Vv5K3/IiXPZq2vFweDAU8m9c=;
+ b=sfv0rxR/HK/xe9y9zLeEF/2GiBpWV2uVD+hzTNRq33hPfcweH9OnZCaT56HP3QjcDr
+ D4Fkt3znGsLmPVNDOqeIFMyYX2cwsBh9ZZ02eEqQYaj7ja4noT5LecF1rzjvg8FMe/c0
+ ztBY1ql3EgOBQPq0RgZBxyOrlMg91Y/oMj7vGIDvxYIQcKkBU8fz+a2il8SevGXnIv9W
+ bnlkKCwzTXcCIFIcEspLZRXy5gKB+UkyZVPn1qTXQYEjHzCKpdzMKGJ2juWZJWofedxu
+ CHjhs4geOHJMxXHItgU7aC3liKIVcoOtTR3W7qtXha5rfP52J2gVlxGjB5yaYJc9W7Y8
+ NkDA==
+X-Gm-Message-State: AOJu0Yw4MSX0+VfaWOVp1IftruY9mx8urZEUphk2zVHp/INus5naTeH2
+ bJ1Q4Ol/3l2Kk23nyL+7e4Yg+QTyVJK5eDmo8o0Js0YOhg4kV88cGiSZ2K9hKTssZ+OyAFVs5a4
+ 0piY=
+X-Google-Smtp-Source: AGHT+IGmN6GQjpyPj47kRc+StCLffY4XShyytKAZ187wz4d7h/kpP+lx0wDnBCbJrFZGMYJv3NPZ1g==
+X-Received: by 2002:a2e:9e07:0:b0:2de:4cb4:2601 with SMTP id
+ e7-20020a2e9e07000000b002de4cb42601mr8383973ljk.43.1714426284729; 
+ Mon, 29 Apr 2024 14:31:24 -0700 (PDT)
 Received: from m1x-phil.lan (bny92-h02-176-184-44-142.dsl.sta.abo.bbox.fr.
  [176.184.44.142]) by smtp.gmail.com with ESMTPSA id
- n4-20020a5d4844000000b00349f098f4a6sm30322098wrs.53.2024.04.29.14.31.02
+ a9-20020a05600c348900b0041bb11ff5a7sm12390100wmq.8.2024.04.29.14.31.23
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 29 Apr 2024 14:31:02 -0700 (PDT)
+ Mon, 29 Apr 2024 14:31:24 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Anton Johansson <anjo@rev.ng>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 02/13] accel/tcg: Restrict cpu_plugin_mem_cbs_enabled() to
- TCG
-Date: Mon, 29 Apr 2024 23:30:39 +0200
-Message-ID: <20240429213050.55177-3-philmd@linaro.org>
+Subject: [PATCH v2 06/13] accel/tcg: Move @jmp_env from CPUState to TCG
+ AccelCPUState
+Date: Mon, 29 Apr 2024 23:30:43 +0200
+Message-ID: <20240429213050.55177-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240429213050.55177-1-philmd@linaro.org>
 References: <20240429213050.55177-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::230;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x230.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,73 +96,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-So far cpu_plugin_mem_cbs_enabled() is only called from
-TCG, so reduce it to accel/tcg/.
+@jmp_env is specific to TCG accelerator, move it to its AccelCPUState.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <5f59c754-44e5-4743-a2dd-87ef8e13eadf@linaro.org>
+Message-Id: <20240428221450.26460-17-philmd@linaro.org>
 ---
- accel/tcg/internal-common.h | 17 +++++++++++++++++
- include/hw/core/cpu.h       | 17 -----------------
- 2 files changed, 17 insertions(+), 17 deletions(-)
+ accel/tcg/internal-common.h | 1 +
+ accel/tcg/tcg-accel-ops.h   | 1 +
+ accel/tcg/vcpu-state.h      | 2 ++
+ include/hw/core/cpu.h       | 1 -
+ accel/tcg/cpu-exec-common.c | 2 +-
+ accel/tcg/cpu-exec.c        | 6 +++---
+ 6 files changed, 8 insertions(+), 5 deletions(-)
 
 diff --git a/accel/tcg/internal-common.h b/accel/tcg/internal-common.h
-index df317e7496..5061687900 100644
+index 867426500f..cb507053f5 100644
 --- a/accel/tcg/internal-common.h
 +++ b/accel/tcg/internal-common.h
-@@ -24,6 +24,23 @@ static inline bool cpu_in_serial_context(CPUState *cs)
-     return !tcg_cflags_has(cs, CF_PARALLEL) || cpu_in_exclusive_context(cs);
- }
+@@ -11,6 +11,7 @@
  
-+/**
-+ * cpu_plugin_mem_cbs_enabled() - are plugin memory callbacks enabled?
-+ * @cs: CPUState pointer
-+ *
-+ * The memory callbacks are installed if a plugin has instrumented an
-+ * instruction for memory. This can be useful to know if you want to
-+ * force a slow path for a series of memory accesses.
-+ */
-+static inline bool cpu_plugin_mem_cbs_enabled(const CPUState *cpu)
-+{
-+#ifdef CONFIG_PLUGIN
-+    return !!cpu->plugin_mem_cbs;
-+#else
-+    return false;
-+#endif
-+}
+ #include "exec/cpu-common.h"
+ #include "exec/translation-block.h"
++#include "accel/tcg/vcpu-state.h"
+ 
+ extern int64_t max_delay;
+ extern int64_t max_advance;
+diff --git a/accel/tcg/tcg-accel-ops.h b/accel/tcg/tcg-accel-ops.h
+index 44c4079972..ed41a087a3 100644
+--- a/accel/tcg/tcg-accel-ops.h
++++ b/accel/tcg/tcg-accel-ops.h
+@@ -13,6 +13,7 @@
+ #define TCG_ACCEL_OPS_H
+ 
+ #include "sysemu/cpus.h"
++#include "accel/tcg/vcpu-state.h"
+ 
+ void tcg_cpu_destroy(CPUState *cpu);
+ int tcg_cpu_exec(CPUState *cpu);
+diff --git a/accel/tcg/vcpu-state.h b/accel/tcg/vcpu-state.h
+index 35c2695a77..3a0ea2d47a 100644
+--- a/accel/tcg/vcpu-state.h
++++ b/accel/tcg/vcpu-state.h
+@@ -13,6 +13,8 @@
+  * @plugin_state: per-CPU plugin state
+  */
+ struct AccelCPUState {
++    sigjmp_buf jmp_env;
 +
- void tcg_cpu_exit(CPUState *cpu);
- 
- #endif
+ #ifdef CONFIG_USER_ONLY
+     TaskState *ts;
+ #endif /* !CONFIG_USER_ONLY */
 diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index beb37342e9..55555be618 100644
+index 47b499f9f1..f1fe43dbea 100644
 --- a/include/hw/core/cpu.h
 +++ b/include/hw/core/cpu.h
-@@ -1109,23 +1109,6 @@ void cpu_watchpoint_remove_by_ref(CPUState *cpu, CPUWatchpoint *watchpoint);
- void cpu_watchpoint_remove_all(CPUState *cpu, int mask);
- #endif
+@@ -475,7 +475,6 @@ struct CPUState {
+     int64_t icount_budget;
+     int64_t icount_extra;
+     uint64_t random_seed;
+-    sigjmp_buf jmp_env;
  
--/**
-- * cpu_plugin_mem_cbs_enabled() - are plugin memory callbacks enabled?
-- * @cs: CPUState pointer
-- *
-- * The memory callbacks are installed if a plugin has instrumented an
-- * instruction for memory. This can be useful to know if you want to
-- * force a slow path for a series of memory accesses.
-- */
--static inline bool cpu_plugin_mem_cbs_enabled(const CPUState *cpu)
--{
--#ifdef CONFIG_PLUGIN
--    return !!cpu->plugin_mem_cbs;
--#else
--    return false;
--#endif
--}
--
- /**
-  * cpu_get_address_space:
-  * @cpu: CPU to get address space from
+     QemuMutex work_mutex;
+     QSIMPLEQ_HEAD(, qemu_work_item) work_list;
+diff --git a/accel/tcg/cpu-exec-common.c b/accel/tcg/cpu-exec-common.c
+index bc9b1a260e..ec45482305 100644
+--- a/accel/tcg/cpu-exec-common.c
++++ b/accel/tcg/cpu-exec-common.c
+@@ -38,7 +38,7 @@ void cpu_loop_exit(CPUState *cpu)
+     cpu->neg.can_do_io = true;
+     /* Undo any setting in generated code.  */
+     qemu_plugin_disable_mem_helpers(cpu);
+-    siglongjmp(cpu->jmp_env, 1);
++    siglongjmp(cpu->accel->jmp_env, 1);
+ }
+ 
+ void cpu_loop_exit_restore(CPUState *cpu, uintptr_t pc)
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 9af66bc191..46ad16f911 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -553,7 +553,7 @@ static void cpu_exec_longjmp_cleanup(CPUState *cpu)
+      * support such a thing.  We'd have to properly register unwind info
+      * for the JIT for EH, rather that just for GDB.
+      *
+-     * Alternative 2: Set and restore cpu->jmp_env in tb_gen_code to
++     * Alternative 2: Set and restore cpu->accel->jmp_env in tb_gen_code to
+      * capture the cpu_loop_exit longjmp, perform the cleanup, and
+      * jump again to arrive here.
+      */
+@@ -577,7 +577,7 @@ void cpu_exec_step_atomic(CPUState *cpu)
+     uint32_t flags, cflags;
+     int tb_exit;
+ 
+-    if (sigsetjmp(cpu->jmp_env, 0) == 0) {
++    if (sigsetjmp(cpu->accel->jmp_env, 0) == 0) {
+         start_exclusive();
+         g_assert(cpu == current_cpu);
+         g_assert(!cpu->running);
+@@ -1038,7 +1038,7 @@ cpu_exec_loop(CPUState *cpu, SyncClocks *sc)
+ static int cpu_exec_setjmp(CPUState *cpu, SyncClocks *sc)
+ {
+     /* Prepare setjmp context for exception handling. */
+-    if (unlikely(sigsetjmp(cpu->jmp_env, 0) != 0)) {
++    if (unlikely(sigsetjmp(cpu->accel->jmp_env, 0) != 0)) {
+         cpu_exec_longjmp_cleanup(cpu);
+     }
+ 
 -- 
 2.41.0
 
