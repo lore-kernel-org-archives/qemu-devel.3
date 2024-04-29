@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBBB3C04FFE
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 16:06:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E544C41513
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 16:06:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1TMW-0004rn-2k; Mon, 29 Apr 2024 11:56:16 -0400
+	id 1s1TMV-0004oN-4s; Mon, 29 Apr 2024 11:56:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1s1TMI-0004YO-6M
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:02 -0400
+ id 1s1TMH-0004Y1-Vi
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:01 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1s1TMF-0005Fq-V6
+ id 1s1TMF-0005FB-Ux
  for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:01 -0400
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43TFmjvS006702; Mon, 29 Apr 2024 15:55:47 GMT
+ 43TFmlZq021746; Mon, 29 Apr 2024 15:55:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
  h=from : to : cc :
  subject : date : message-id : in-reply-to : references; s=corp-2023-11-20;
- bh=on/dHn8yh7blYwmWHlzbl2iCCZvcPBO2UbSOSMfAHcA=;
- b=oWbd01wxZhY6xNw9wFmx+eC0UImOeKSeyNplXNmhZSjkzlT84bY7OvowHaTBtAs3TrrE
- KzR107f/gBiMh3OfmfxElfqWo6kzBTixjUsxklZOTRt38DalCKbodlKyi9e2eG8fp+iH
- Zh0hh6QrZIH5XG8SNAnatPQEvKE1mNiSztR2r9WUx7Owq8L0p/lu4ckp3X4q2CVfnluJ
- kkoIkj1LnpXuoB6M+LeIwcQdQddvm6L9l0ISS4csrCNphrAJ6OrWkNLTse+Cycrx+Dvq
- RRksrnyWROV472UeXbOHQf/o8omzSIL37oOrZ01L7UJNq1tU0nq0VBet8zxn392eujeS NQ== 
+ bh=mfUEBur7xmKrlLkLi6qOQJ8fPpHhzHrrtYVn+a6Puyk=;
+ b=i1ifYD+4Amn7wTHZUK7DSc8ql/ht70BhjC1LRoGFGM9qjco5vJOIkXW6ClJZ3SoFDpYK
+ hPQUUqr1dwA/1WS1J+7ur6OF9/hY+uFVPSGEWnU2aS1jh5BAzvpl27saWew6+23UjuXF
+ pawTTRZQudhu2L0Ftr1B5ucK0xzjEAV3LSv2Dm1AsNk+EHXqwqmDTbNJ3PtUKoEegmbE
+ bjob9sODzDM82woWxubH+DKB+Qya5FPtA8VxBT+QnanCHRCJOlH4rZItdpJ5ImyCvvm6
+ +TFRJTX9ukQGpA1h/VJi49idWxqOqoImL3LiQAAmu7s4+2GoJU8IAZuWKLuIP0egFKMs IA== 
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xrsdejwn3-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xrr54axsu-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Apr 2024 15:55:47 +0000
+ Mon, 29 Apr 2024 15:55:43 +0000
 Received: from pps.filterd
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 43TEj25e011398; Mon, 29 Apr 2024 15:55:46 GMT
+ with ESMTP id 43TFGqtP011343; Mon, 29 Apr 2024 15:55:42 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 3xrqt6j6bf-1
+ 3xrqt6j66j-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Apr 2024 15:55:46 +0000
+ Mon, 29 Apr 2024 15:55:42 +0000
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43TFtaGs034442;
- Mon, 29 Apr 2024 15:55:45 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43TFtaGi034442;
+ Mon, 29 Apr 2024 15:55:42 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 3xrqt6j5ys-14; Mon, 29 Apr 2024 15:55:45 +0000
+ ESMTP id 3xrqt6j5ys-9; Mon, 29 Apr 2024 15:55:41 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,9 +64,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V1 13/26] physmem: ram_block_create
-Date: Mon, 29 Apr 2024 08:55:22 -0700
-Message-Id: <1714406135-451286-14-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V1 08/26] migration: vmstate_info_void_ptr
+Date: Mon, 29 Apr 2024 08:55:17 -0700
+Message-Id: <1714406135-451286-9-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
 References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
@@ -78,8 +78,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
  adultscore=0 mlxscore=0 suspectscore=0 phishscore=0 spamscore=0
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2404010000 definitions=main-2404290101
-X-Proofpoint-GUID: D80zV2ykTrJXFl01qh9wWugF3uyURfRn
-X-Proofpoint-ORIG-GUID: D80zV2ykTrJXFl01qh9wWugF3uyURfRn
+X-Proofpoint-ORIG-GUID: DVn4SmJXNGnbMp5mluxbY-_8LL3x95ta
+X-Proofpoint-GUID: DVn4SmJXNGnbMp5mluxbY-_8LL3x95ta
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -104,123 +104,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Create a common subroutine to allocate a RAMBlock, de-duping the code to
-populate its common fields.  Add a trace point for good measure.
-No functional change.
+Define VMSTATE_VOID_PTR so the value of a pointer (but not its target)
+can be saved in the migration stream.  This will be needed for CPR.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- system/physmem.c    | 47 ++++++++++++++++++++++++++---------------------
- system/trace-events |  3 +++
- 2 files changed, 29 insertions(+), 21 deletions(-)
+ include/migration/vmstate.h | 15 +++++++++++++++
+ migration/vmstate-types.c   | 24 ++++++++++++++++++++++++
+ 2 files changed, 39 insertions(+)
 
-diff --git a/system/physmem.c b/system/physmem.c
-index c3d04ca..6216b14 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -52,6 +52,7 @@
- #include "sysemu/hw_accel.h"
- #include "sysemu/xen-mapcache.h"
- #include "trace/trace-root.h"
-+#include "trace.h"
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index a39c0e6..bb885d9 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -236,6 +236,7 @@ extern const VMStateInfo vmstate_info_uint8;
+ extern const VMStateInfo vmstate_info_uint16;
+ extern const VMStateInfo vmstate_info_uint32;
+ extern const VMStateInfo vmstate_info_uint64;
++extern const VMStateInfo vmstate_info_void_ptr;
  
- #ifdef CONFIG_FALLOCATE_PUNCH_HOLE
- #include <linux/falloc.h>
-@@ -1918,11 +1919,29 @@ out_free:
-     }
+ /** Put this in the stream when migrating a null pointer.*/
+ #define VMS_NULLPTR_MARKER (0x30U) /* '0' */
+@@ -326,6 +327,17 @@ extern const VMStateInfo vmstate_info_qlist;
+     .offset       = vmstate_offset_value(_state, _field, _type),     \
  }
  
-+static RAMBlock *ram_block_create(MemoryRegion *mr, ram_addr_t size,
-+                                  ram_addr_t max_size, uint32_t ram_flags)
-+{
-+    RAMBlock *rb = g_malloc0(sizeof(*rb));
-+
-+    rb->used_length = size;
-+    rb->max_length = max_size;
-+    rb->fd = -1;
-+    rb->flags = ram_flags;
-+    rb->page_size = qemu_real_host_page_size();
-+    rb->mr = mr;
-+    rb->guest_memfd = -1;
-+    trace_ram_block_create(rb->idstr, rb->flags, rb->fd, rb->used_length,
-+                           rb->max_length, mr->align);
-+    return rb;
++#define VMSTATE_SINGLE_TEST_NO_CHECK(_field, _state, _test,          \
++                                     _version, _info, _type) {       \
++    .name         = (stringify(_field)),                             \
++    .version_id   = (_version),                                      \
++    .field_exists = (_test),                                         \
++    .size         = sizeof(_type),                                   \
++    .info         = &(_info),                                        \
++    .flags        = VMS_SINGLE,                                      \
++    .offset       = offsetof(_state, _field)                         \
 +}
 +
- #ifdef CONFIG_POSIX
- RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
-                                  uint32_t ram_flags, int fd, off_t offset,
-                                  Error **errp)
- {
-+    void *host;
-     RAMBlock *new_block;
-     Error *local_err = NULL;
-     int64_t file_size, file_align;
-@@ -1962,19 +1981,14 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
-         return NULL;
-     }
+ #define VMSTATE_SINGLE_FULL(_field, _state, _test, _version, _info,  \
+                             _type, _err_hint) {                      \
+     .name         = (stringify(_field)),                             \
+@@ -952,6 +964,9 @@ extern const VMStateInfo vmstate_info_qlist;
+ #define VMSTATE_UINT64(_f, _s)                                        \
+     VMSTATE_UINT64_V(_f, _s, 0)
  
--    new_block = g_malloc0(sizeof(*new_block));
--    new_block->mr = mr;
--    new_block->used_length = size;
--    new_block->max_length = size;
--    new_block->flags = ram_flags;
--    new_block->guest_memfd = -1;
--    new_block->host = file_ram_alloc(new_block, size, fd, !file_size, offset,
--                                     errp);
--    if (!new_block->host) {
-+    new_block = ram_block_create(mr, size, size, ram_flags);
-+    host = file_ram_alloc(new_block, size, fd, !file_size, offset, errp);
-+    if (!host) {
-         g_free(new_block);
-         return NULL;
-     }
- 
-+    new_block->host = host;
-     ram_block_add(new_block, &local_err);
-     if (local_err) {
-         g_free(new_block);
-@@ -1982,7 +1996,6 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
-         return NULL;
-     }
-     return new_block;
--
- }
- 
- 
-@@ -2054,18 +2067,10 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
-     align = MAX(align, TARGET_PAGE_SIZE);
-     size = ROUND_UP(size, align);
-     max_size = ROUND_UP(max_size, align);
--
--    new_block = g_malloc0(sizeof(*new_block));
--    new_block->mr = mr;
--    new_block->resized = resized;
--    new_block->used_length = size;
--    new_block->max_length = max_size;
-     assert(max_size >= size);
--    new_block->fd = -1;
--    new_block->guest_memfd = -1;
--    new_block->page_size = qemu_real_host_page_size();
--    new_block->host = host;
--    new_block->flags = ram_flags;
-+    new_block = ram_block_create(mr, size, max_size, ram_flags);
-+    new_block->resized = resized;
++#define VMSTATE_VOID_PTR(_f, _s)                                      \
++    VMSTATE_SINGLE_TEST_NO_CHECK(_f, _s, NULL, 0, vmstate_info_void_ptr, void *)
 +
-     ram_block_add(new_block, &local_err);
-     if (local_err) {
-         g_free(new_block);
-diff --git a/system/trace-events b/system/trace-events
-index 69c9044..f0a80ba 100644
---- a/system/trace-events
-+++ b/system/trace-events
-@@ -38,3 +38,6 @@ dirtylimit_state_finalize(void)
- dirtylimit_throttle_pct(int cpu_index, uint64_t pct, int64_t time_us) "CPU[%d] throttle percent: %" PRIu64 ", throttle adjust time %"PRIi64 " us"
- dirtylimit_set_vcpu(int cpu_index, uint64_t quota) "CPU[%d] set dirty page rate limit %"PRIu64
- dirtylimit_vcpu_execute(int cpu_index, int64_t sleep_time_us) "CPU[%d] sleep %"PRIi64 " us"
+ #ifdef CONFIG_LINUX
+ 
+ #define VMSTATE_U8(_f, _s)                                         \
+diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
+index e83bfcc..097ecad 100644
+--- a/migration/vmstate-types.c
++++ b/migration/vmstate-types.c
+@@ -314,6 +314,30 @@ const VMStateInfo vmstate_info_uint64 = {
+     .put  = put_uint64,
+ };
+ 
++/* 64 bit pointer */
 +
-+# physmem.c
-+ram_block_create(const char *name, uint32_t flags, int fd, size_t used_length, size_t max_length, size_t align) "%s, flags %u, fd %d, len %lu, maxlen %lu, align %lu"
++static int get_void_ptr(QEMUFile *f, void *pv, size_t size,
++                        const VMStateField *field)
++{
++    void **v = pv;
++    qemu_get_be64s(f, (uint64_t *)v);
++    return 0;
++}
++
++static int put_void_ptr(QEMUFile *f, void *pv, size_t size,
++                        const VMStateField *field, JSONWriter *vmdesc)
++{
++    void **v = pv;
++    qemu_put_be64s(f, (uint64_t *)v);
++    return 0;
++}
++
++const VMStateInfo vmstate_info_void_ptr = {
++    .name = "void_ptr",
++    .get  = get_void_ptr,
++    .put  = put_void_ptr,
++};
++
+ static int get_nullptr(QEMUFile *f, void *pv, size_t size,
+                        const VMStateField *field)
+ 
 -- 
 1.8.3.1
 
