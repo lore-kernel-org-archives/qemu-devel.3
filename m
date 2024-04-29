@@ -4,77 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18854C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 11:28:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FEDAC04FFE
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 11:30:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1PAd-0008WJ-2O; Mon, 29 Apr 2024 07:27:43 -0400
+	id 1s1PDF-0000ub-Fo; Mon, 29 Apr 2024 07:30:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s1PAb-0008W9-Dv
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 07:27:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s1PAY-0005QZ-QD
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 07:27:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714390056;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ea2DbaRK4pv78u6pvaUFQv2MS7lGi3f0LJRnRM8EvOA=;
- b=M4iuMF0PyMx1lDjIjRdr02LAC9Ajg28qNHdt8yF6sQbK9VKpufgI4ewXT9Dc4B0fpAmTWF
- F5qAfHBKMGTSJZuI//u2V/bZxv1TCGrYwKVNUogySiUjSJONTjaqRuCFU5KB1GR3XeScQU
- 3NV8/WlFYSV9U8bLEmMgzzaAGM9Ipt8=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-425-Zdu3eDfxPquIlX_preXyCg-1; Mon,
- 29 Apr 2024 07:27:32 -0400
-X-MC-Unique: Zdu3eDfxPquIlX_preXyCg-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3B95829AB400;
- Mon, 29 Apr 2024 11:27:32 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id F33962166B32;
- Mon, 29 Apr 2024 11:27:31 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B420421E66C8; Mon, 29 Apr 2024 13:27:27 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Daniil Tatianin <d-tatianin@yandex-team.ru>,  "Michael S. Tsirkin"
- <mst@redhat.com>,  Thomas Huth <thuth@redhat.com>,  Mark Cave-Ayland
- <mark.cave-ayland@ilande.co.uk>,  Paolo Bonzini <pbonzini@redhat.com>,
- Eric Blake <eblake@redhat.com>,  qemu-devel@nongnu.org,  BALATON Zoltan
- <balaton@eik.bme.hu>
-Subject: Re: [PATCH v2] mc146818rtc: add a way to generate RTC interrupts
- via QMP
-In-Reply-To: <8f93b3e3-dc20-4989-940c-20f87a7e3cfd@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Mon, 29 Apr 2024 11:51:07
- +0200")
-References: <20240429094159.514096-1-d-tatianin@yandex-team.ru>
- <8f93b3e3-dc20-4989-940c-20f87a7e3cfd@linaro.org>
-Date: Mon, 29 Apr 2024 13:27:27 +0200
-Message-ID: <877cggjtnk.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <amonakov@ispras.ru>)
+ id 1s1PDD-0000uK-M1
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 07:30:23 -0400
+Received: from mail.ispras.ru ([83.149.199.84])
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <amonakov@ispras.ru>)
+ id 1s1PD9-0005kA-SP
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 07:30:22 -0400
+Received: from [10.10.3.121] (unknown [10.10.3.121])
+ by mail.ispras.ru (Postfix) with ESMTPS id BAE2E4078515;
+ Mon, 29 Apr 2024 11:29:58 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru BAE2E4078515
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
+ s=default; t=1714390198;
+ bh=Xji0r6fnd14ca6ilceNmy9XGbfHKUFBN9/nCcYrphVw=;
+ h=Date:From:To:cc:Subject:In-Reply-To:References:From;
+ b=HtQyUz06C2/5GCIQFsBckvLP03Ipm1JyGibGX6HGarAQfhxJh0u9Onfa+VZVLMY8y
+ 3dUgiMkqYu2AQyCXh6cBi+BSn3JMoaL1h5ztaeW6UwxBSTaJa9sEhg/jEJGk8PYdse
+ +xdL4VxiKpVMdFL1g+9txsiOpZZaPNfDfhXo39dA=
+Date: Mon, 29 Apr 2024 14:29:58 +0300 (MSK)
+From: Alexander Monakov <amonakov@ispras.ru>
+To: =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>
+cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org, 
+ Mikhail Romanov <mmromanov@ispras.ru>
+Subject: Re: [PATCH v6 02/10] util/bufferiszero: Remove AVX512 variant
+In-Reply-To: <Zi-BqBjND3Wcq3Eq@redhat.com>
+Message-ID: <a2606c36-0f8b-5e67-abab-08390c81ad80@ispras.ru>
+References: <20240424225705.929812-1-richard.henderson@linaro.org>
+ <20240424225705.929812-3-richard.henderson@linaro.org>
+ <Zi-BqBjND3Wcq3Eq@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed; boundary="8323328-591192398-1714390198=:27629"
+Received-SPF: pass client-ip=83.149.199.84; envelope-from=amonakov@ispras.ru;
+ helo=mail.ispras.ru
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,68 +67,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> On 29/4/24 11:41, Daniil Tatianin wrote:
->> This can be used to force-synchronize the time in guest after a long
->> stop-cont pause, which can be useful for serverless-type workload.
->> Also add a comment to highlight the fact that this (and one other QMP
->> command) only works for the MC146818 RTC controller.
->> Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
->> ---
->> Changes since v0:
->> - Rename to rtc-inject-irq to match other similar API
->> - Add a comment to highlight that this only works for the I386 RTC
->> Changes since v1:
->> - Added a description below the QMP command to explain how it can be
->>    used and what it does.
+--8323328-591192398-1714390198=:27629
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
-[...]
 
->> diff --git a/qapi/misc-target.json b/qapi/misc-target.json
->> index 4e0a6492a9..0f2479f8f4 100644
->> --- a/qapi/misc-target.json
->> +++ b/qapi/misc-target.json
->> @@ -19,6 +19,24 @@
->>   { 'command': 'rtc-reset-reinjection',
->>     'if': 'TARGET_I386' }
->> +##
->> +# @rtc-inject-irq:
->> +#
->> +# Inject an RTC interrupt. This command forces the guest to synchornize
+On Mon, 29 Apr 2024, Daniel P. Berrangé wrote:
 
-synchronize
+> On Wed, Apr 24, 2024 at 03:56:57PM -0700, Richard Henderson wrote:
+> > From: Alexander Monakov <amonakov@ispras.ru>
+> > 
+> > Thanks to early checks in the inline buffer_is_zero wrapper, the SIMD
+> > routines are invoked much more rarely in normal use when most buffers
+> > are non-zero. This makes use of AVX512 unprofitable, as it incurs extra
+> > frequency and voltage transition periods during which the CPU operates
+> > at reduced performance, as described in
+> > https://travisdowns.github.io/blog/2020/01/17/avxfreq1.html
+> 
+> This is describing limitations of Intel's AVX512 implementation.
+> 
+> AMD's AVX512 implementation is said to not have the kind of
+> power / frequency limitations that Intel's does:
+> 
+>   https://www.mersenneforum.org/showthread.php?p=614191
+> 
+>   "Overall, AMD's AVX512 implementation beat my expectations.
+>    I was expecting something similar to Zen1's "double-pumping"
+>    of AVX with half the register file and cross-lane instructions
+>    being super slow. But this is not the case on Zen4. The lack
+>    of power or thermal issues combined with stellar shuffle support
+>    makes it completely worthwhile to use from a developer standpoint.
+>    If your code can vectorize without excessive wasted computation,
+>    then go all the way to 512-bit. AMD not only made this worthwhile,
+>    but *incentivizes* it with the power savings. And if in the future
+>    AMD decides to widen things up, you may get a 2x speedup for free."
+> 
+> IOW, it sounds like we could be sacrificing performance on modern
+> AMD Genoa generation CPUs by removing the AVX512 impl
 
->> +# the time with RTC. This is useful after a long stop-cont pause, which
->> +# is common for serverless-type workload.
+No, the new implementation saturates load ports, and Genoa runs 512-bit
+AVX instructions at half throughput compared to their 256-bit counterparts
+(so one 512-bit load or two 256-bit loads per cycle), so there's no
+obvious reason why this patch would sacrifice performance there.
 
-docs/devel/qapi-code-gen.rst:
+Maybe it could, indirectly, by lowering the turbo clock limit due to
+higher front-end activity, but I don't have access to a Zen 4 machine
+to check, and even so it would be a few percent, not 2x.
 
-    For legibility, wrap text paragraphs so every line is at most 70
-    characters long.
-
-    Separate sentences with two spaces.
-
->> +#
->> +# Since: 9.1
->> +#
->> +# Example:
->> +#
->> +#     -> { "execute": "rtc-inject-irq" }
->> +#     <- { "return": {} }
->> +#
->> +##
->> +{ 'command': 'rtc-inject-irq',
->> +  'if': 'TARGET_I386' }
->
-> Why is that restricted to x86? Ah, this is specific to the MC146818
-> RTC... Other machines use hw accelerators and the MC146818, aren't
-> we interested in synchronizing them the same way?
->
-> Personally I'd name this command 'mc146818rtc-raise-irq-broadcast',
-> KISS.
-
-I might be wrong, but the *interface* looks general to me, only nobody
-bothered to implement for the other RTCs.
-
+Alexander
+--8323328-591192398-1714390198=:27629--
 
