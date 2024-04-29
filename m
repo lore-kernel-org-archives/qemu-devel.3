@@ -4,69 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2823C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 10:32:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B8FBC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 10:34:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1OIS-0007wW-KJ; Mon, 29 Apr 2024 06:31:44 -0400
+	id 1s1OKv-0000Rb-1Z; Mon, 29 Apr 2024 06:34:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1s1OIO-0007vm-Kv
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 06:31:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1s1OIN-0001Ju-1g
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 06:31:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714386697;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=coTu4c/mDN0xy4qZpUCjoUq9FadfKF2tgUcBQTH8aug=;
- b=Z/NxAATBXyNFUbbBnvehBqVRYxwpP+vZA3WvzcztRGK00s4ELZwFv1ffD6QoaHruVZOOPy
- LomiWuz3BA8wOYljX7UPazYMy8P6veGj+eZb4o8E6qX57HDN0p0bOaiLehhtoFRJLTh6V3
- LclaRkEXRSCHOsLvm8AFH3noCPs6LhA=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-641-2CD7U2H6PTGyZ7FzEVk1Dw-1; Mon, 29 Apr 2024 06:31:33 -0400
-X-MC-Unique: 2CD7U2H6PTGyZ7FzEVk1Dw-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8E9F98059E0;
- Mon, 29 Apr 2024 10:31:33 +0000 (UTC)
-Received: from redhat.com (unknown [10.39.194.34])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id BB3991121306;
- Mon, 29 Apr 2024 10:31:31 +0000 (UTC)
-Date: Mon, 29 Apr 2024 12:31:30 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Miroslav Rezanina <mrezanin@redhat.com>, qemu-block@nongnu.org
-Subject: Re: [PATCH 0/3] Make it possible to compile the x86 binaries without
- FDC
-Message-ID: <Zi93AtlPTdjmpgfu@redhat.com>
-References: <20240425184315.553329-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1OKt-0000RC-Rv
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 06:34:15 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1OKs-0001fO-6k
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 06:34:15 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-41c7ac71996so1059475e9.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 03:34:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714386852; x=1714991652; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=7JSlJwEKVj/fFizETPHLtfULWxyauPdwoD3BnkgEVUM=;
+ b=tzFLorYQ5fg14u7TJdS2bwAhsTJivupKinsKPfrW0q0yo5ou9XGsRRDCIGZ8xES4d8
+ 6g63yCVdWzccLuZQDH7BAVgFDGzMfH97BdW3z+e7w5zEQahhDAO0V876YWIPOHlaPLGH
+ rNhC9IHyalTzO9gFfmgtKcIL2fzBOEvDBD9GgFsUs/xaRwVdByZ9N5qxV7xeLFamKR0C
+ +SVrFjTdh07K5Sc8BNqfKpTRKVKdDKvk74plJMHur5VjhBWW+fw1nqISzWNYtSXWhFRy
+ RBiJKdlqxat02dnXLulvXJBhilQBU3jDjno2m6o0z028uysf1ShWNxR8kvJP05PRuenL
+ AGbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714386852; x=1714991652;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7JSlJwEKVj/fFizETPHLtfULWxyauPdwoD3BnkgEVUM=;
+ b=n7CnQaOJTSdgKcMOF/r0TnFivx/5jssfkGslVlfOoZj7hrwb4sJ8rXr4q8tuwL0CVa
+ NJqZp0dg+rqKKF5Z307hFbdDlY8OHO7Pb2XAegB+JSeqmvyueAfDo67iPLbuthPlVB23
+ n7kCqTbYEXp6AWkfF46XsNmCJAydznEX0Mdj80Bb+KcBsnJUTL5PozKrClDJQZdrKw8Y
+ vvBpgU3O7Svlz3osXzg3FWXQF+wqNrBGP5T/kUlJNJ66Mdl2DoJ6JT7tcdSP+rTxHP9Y
+ y0lAswYVjXTdIU5+83miRZ/YzAb3r4wp6EhPRRjsmbfwOsxTXDFwREjHliNUVjy6FprT
+ Fcfw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWBiQGantBcSA31l7lq6kWzm2cksbepujZ6sizGFqJwDiORUj2iw3/yMX0QJilcnpnRb95tf7iDGkROLlOeH/RaS7c1jzI=
+X-Gm-Message-State: AOJu0Yw64VzIv50/LsmyembgtN7s3CL4skmNzwMHZoDxFChmYThXCbnE
+ P9o3wr4qhZw3NHz57AHnWXc21m7TB3Kqk51Kq0xerELsOsyfH63PMp/8tOMHe6LAmNmD3NZ36h7
+ 9mUk=
+X-Google-Smtp-Source: AGHT+IGspHc04wvX4FZFfwUnmKKpvLU6eTbo5MUV8BeXGfRzcHzBpE5RJWH4sQffJ2VeGRCUdOiy9Q==
+X-Received: by 2002:adf:a4c4:0:b0:34a:e73a:51be with SMTP id
+ h4-20020adfa4c4000000b0034ae73a51bemr7329189wrb.31.1714386852296; 
+ Mon, 29 Apr 2024 03:34:12 -0700 (PDT)
+Received: from [10.79.37.248] ([83.247.137.20])
+ by smtp.gmail.com with ESMTPSA id
+ e3-20020adf9bc3000000b0034c75d07bbdsm7469734wrc.79.2024.04.29.03.34.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Apr 2024 03:34:11 -0700 (PDT)
+Message-ID: <23e1ba1c-cc9c-46b2-a74e-d85734f8c12e@linaro.org>
+Date: Mon, 29 Apr 2024 12:34:10 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240425184315.553329-1-thuth@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 06/33] accel/tcg: Record mmio bytes during translation
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20240424233131.988727-1-richard.henderson@linaro.org>
+ <20240424233131.988727-7-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240424233131.988727-7-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.114,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,39 +96,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-[ Cc: qemu-block ]
+On 25/4/24 01:31, Richard Henderson wrote:
+> This will be able to replace plugin_insn_append, and will
+> be usable for disassembly.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   include/exec/translator.h | 12 ++++++++++++
+>   accel/tcg/translator.c    | 41 +++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 53 insertions(+)
+> 
+> diff --git a/include/exec/translator.h b/include/exec/translator.h
+> index 83fe66cba0..974cc4f9c4 100644
+> --- a/include/exec/translator.h
+> +++ b/include/exec/translator.h
+> @@ -90,6 +90,18 @@ typedef struct DisasContextBase {
+>       bool plugin_enabled;
+>       struct TCGOp *insn_start;
+>       void *host_addr[2];
+> +
+> +    /*
+> +     * Record insn data that we cannot read directly from host memory.
+> +     * There are only two reasons we cannot use host memory:
+> +     * (1) We are executing from I/O,
+> +     * (2) We are executing a synthetic instruction (s390x EX).
+> +     * In both cases we need record exactly one instruction,
+> +     * and thus the maximum amount of data we record is limited.
+> +     */
+> +    int record_start;
+> +    int record_len;
+> +    uint8_t record[32];
 
-Am 25.04.2024 um 20:43 hat Thomas Huth geschrieben:
-> For downstream versions of QEMU, we'd like to be able to compile QEMU
-> without the FDC code included (since it's not required for modern VMs
-> anymore and the FDC code has rather a bad reputation, see the VENOM CVE).
-> 
-> The q35 machine can already be instantiated without FDC, but for being
-> able to link a binary without the FDC code, the Kconfig file needs some
-> tweaks and there are two spots in the pc code that directly call functions
-> from the FDC code - those need to be disabled via #ifdefs.
-> 
-> The third patch changes the i440fx and isapc machine types so that
-> they can work without the FDC device, too, in case it has not been
-> compiled into the binary. It's marked as RFC since I assume that the
-> FDC was originally a fix compononent of these motherboards, so I'm
-> unsure whether we should allow the disablement there. OTOH, it seems
-> to work fine, and the FDC is only disabled when it is not available
-> in the binary, so I hope this patch is fine, too.
-> 
-> Thomas Huth (3):
->   hw/i386/pc: Allow to compile without CONFIG_FDC_ISA
->   hw/i386/Kconfig: Allow to compile Q35 without FDC_ISA
->   hw/i386: Add the possibility to use i440fx and isapc without FDC
-> 
->  hw/i386/pc.c      | 13 +++++++++----
->  hw/i386/pc_piix.c |  6 ++++--
->  hw/i386/Kconfig   |  2 +-
->  3 files changed, 14 insertions(+), 7 deletions(-)
-> 
-> -- 
-> 2.44.0
-> 
-> 
+Alternatively (matter of style):
+
+        struct {
+            unsigned start;
+            unsigned len;
+            uint8_t data[32];
+        }
+
+>   } DisasContextBase;
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
