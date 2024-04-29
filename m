@@ -4,66 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00FE2C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 14:53:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D43FC04FFE
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 14:53:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1SNC-0000EJ-Fm; Mon, 29 Apr 2024 10:52:54 -0400
+	id 1s1S0w-0004g1-NQ; Mon, 29 Apr 2024 10:29:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1s1SN3-00008x-Sm; Mon, 29 Apr 2024 10:52:45 -0400
-Received: from forwardcorp1c.mail.yandex.net
- ([2a02:6b8:c03:500:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1s1SN1-0007s6-1I; Mon, 29 Apr 2024 10:52:45 -0400
-Received: from mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
- [IPv6:2a02:6b8:c12:290f:0:640:2b99:0])
- by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id 9E15C60B7D;
- Mon, 29 Apr 2024 17:52:36 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:b739::1:30] (unknown
- [2a02:6b8:b081:b739::1:30])
- by mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id ZqRkda1IYa60-lWvxGRgd; Mon, 29 Apr 2024 17:52:36 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1714402356;
- bh=jP1AwgraG/qNw7CSc11Q5FYlvHI/uXmTN52mORVCPRw=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=boRX9mGcPWSLvrvynNnlzDH4MPbu019mXQ6I7kgeyhXkM5yugM74iYd8XgQ6gut63
- KnYrY84mPuGhiQb3Ed6CpnWkGnq4YpLGSYCQGx8oqHrpB34oyru6hNLO0GBG95+4mv
- bq3nWX2TxXvXB7Zl8s+9BQBo6EpwFPF+CJT0yhA8=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <ad3b28cb-e7d2-4428-8540-414eb7ec623c@yandex-team.ru>
-Date: Mon, 29 Apr 2024 17:52:35 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1S0u-0004fR-Sc
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 10:29:52 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1S0t-0002tK-8G
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 10:29:52 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-a5883518135so514837166b.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 07:29:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714400989; x=1715005789; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=RVpiZv/vXCeeCon7h+vC8IOmNUbbzhqpvCFWGm+H+Rs=;
+ b=SJp5KD12PbiLKsl3nVIweYOsF0JQsUMeqcf/vWXO5XuWe11FZuyHunD0TdB8RZgtzg
+ 5aB/w33Yq2jtDYFXXXs4lzmZdyxEueiiZ2eQzHU6SKRKFXR4FpxOLjFt7x18ut8lTydq
+ 5szHqyvSogI2PuGCMzYwao6CwdmbPyujc98Imag9RCRYdYSeswSDftCYh/0zgixT3cRD
+ TSwrdRjIBpUOMlvdQiA4RfZeZmM0QRppzn9npqFDcYlJSCGCldRBL7x7JL1SOM/MGdOL
+ 7js5Hjwziex5ND+1crLumbMGUcXbobpjjEAUp8WFwWxF/xlfj5bHnaTnETnFe7ipe5YS
+ NCYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714400989; x=1715005789;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RVpiZv/vXCeeCon7h+vC8IOmNUbbzhqpvCFWGm+H+Rs=;
+ b=rbkdyHDR8TyVJqe8n3ks2pKUy79w+VtALxW4bg7ge2SC9vFf3TJXQfh7b1yRxabofE
+ M4uWIzV5wrVTCgRhREA+fQElqX8aQUnc0gFOjIrteVvwzIEGfpYrCS0CpYnGGbXLUZmO
+ I91kP1uyg3y7js7ezfqPvxQgLbAbyrPavyJZe5aaDY8jamkOSTUBH4mdc+W+kVIy/cTb
+ /5u9wxcJEMHsu1ou2coHjYto2FyeX16Du43OYOFirbfiwfMZyrVTrac1pnb5azwXCAVL
+ ruCsMf8yzNjscKjRybkfFgQEqd6ca09B3XBzfcr0Ee7/kzUpuAJD5EE2PG8duV6EEVsQ
+ ONAg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXd28gG2hs7Sg5VvX7y3DlNHkZayi180QVLjVzHuKnnNX3OmUzmhQBP6AWDlHdWLwWqhtgnVTF8u4Xn7L2Nmq50+bffaYM=
+X-Gm-Message-State: AOJu0YwV1QJq1E81HHFtEgxt7+kFJOWPL67akAb0qAWofkJfL2yvMfXS
+ mIqzHV1q5WwBfQmhjM2wNB5edxDhdIWF4klqU4ZNhBdW+rmo9C12oRqwp+jw7pU=
+X-Google-Smtp-Source: AGHT+IG8rK7njbUt+MECnAH5izY0gYADh/8847cRn6gpQn/f1Z56bJ2V7fPDpeIKUgPZUA90VxUZmg==
+X-Received: by 2002:a17:906:2753:b0:a58:84e9:c669 with SMTP id
+ a19-20020a170906275300b00a5884e9c669mr4082612ejd.52.1714400989449; 
+ Mon, 29 Apr 2024 07:29:49 -0700 (PDT)
+Received: from [192.168.69.100] (bny92-h02-176-184-44-142.dsl.sta.abo.bbox.fr.
+ [176.184.44.142]) by smtp.gmail.com with ESMTPSA id
+ lj25-20020a170906f9d900b00a58d0a68608sm3990256ejb.136.2024.04.29.07.29.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Apr 2024 07:29:47 -0700 (PDT)
+Message-ID: <0d3e039b-5900-4ad1-a103-849b17a380c8@linaro.org>
+Date: Mon, 29 Apr 2024 16:29:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] block/copy-before-write: use uint64_t for timeout in
- nanoseconds
-To: Fiona Ebner <f.ebner@proxmox.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, qemu-stable@nongnu.org, hreitz@redhat.com,
- kwolf@redhat.com, jsnow@redhat.com, f.weber@proxmox.com
-References: <20240429141934.442154-1-f.ebner@proxmox.com>
- <befd2718-526e-4407-8620-476dfa290c48@linaro.org>
- <95aa152a-9858-4d71-aea9-8973e8d03f44@proxmox.com>
+Subject: Re: [PATCH 4/5] target/alpha: Split out gen_pc_disp
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20240424234436.995410-1-richard.henderson@linaro.org>
+ <20240424234436.995410-5-richard.henderson@linaro.org>
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <95aa152a-9858-4d71-aea9-8973e8d03f44@proxmox.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240424234436.995410-5-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c03:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -80,30 +95,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29.04.24 17:46, Fiona Ebner wrote:
-> Am 29.04.24 um 16:36 schrieb Philippe Mathieu-Daudé:
->> Hi Fiona,
->>
->> On 29/4/24 16:19, Fiona Ebner wrote:
->>
->> Not everybody uses an email client that shows the patch content just
->> after the subject (your first lines wasn't making sense at first).
->>
->> Simply duplicating the subject helps to understand:
->>
->>    Use uint64_t for timeout in nanoseconds ...
->>
+On 25/4/24 01:44, Richard Henderson wrote:
+> Prepare for pcrel by not modifying cpu_pc before use,
+> in the case of JSR.
 > 
-> Oh, sorry. I'll try to remember that for the future. Should I re-send as
-> a v2?
-> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/alpha/translate.c | 41 ++++++++++++++++++++++------------------
+>   1 file changed, 23 insertions(+), 18 deletions(-)
 
-Not necessary, I can touch up the message when applying to my block branch.
-
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-
--- 
-Best regards,
-Vladimir
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
