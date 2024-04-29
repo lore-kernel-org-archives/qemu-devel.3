@@ -4,75 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4D2AC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 14:10:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E981C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 14:18:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1Rhr-0005SD-Hz; Mon, 29 Apr 2024 10:10:11 -0400
+	id 1s1Rpd-0008MQ-3A; Mon, 29 Apr 2024 10:18:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Rhp-0005Ro-Ti
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 10:10:09 -0400
-Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s1Rpa-0008Lr-20
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 10:18:10 -0400
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Rho-0006zH-Bj
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 10:10:09 -0400
-Received: by mail-lj1-x229.google.com with SMTP id
- 38308e7fff4ca-2dd041acff1so51734991fa.1
- for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 07:10:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s1RpX-0000Mj-1U
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 10:18:09 -0400
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-2a68a2b3747so3376877a91.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 07:18:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714399806; x=1715004606; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714400285; x=1715005085; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=cIbV/iZyNG2zOjtFz2bOGDKWhz/zXGorU13vwUNvoj8=;
- b=k+zcdabpIWZPvy9fEd5zAauXARmR49wO+vb1zGGZPX7BIOZtfalK8wyP0kd5vaoOxI
- 6V2yS/Evy0QnxvfFbNfz4JXgLmbCgW+gjXYWx6OJxm4aUTpE8CpWwvj8lYOp1DEghjIT
- CD6HAF0YPnEM9bR/j3izZYksFx7ub9h2h5EBo4WyFB38r/7iGgatFyg7IBEpPaglNLxN
- lOqmWnz17j8K/YU7+TdFSurEyxIFPtXC6lRghJr2au0haKY4EGKrlSId1wbUDGlNWy7W
- Xq2ntZHv+tHDEVbVlVlzGZsIwWlZm0ff35Yv4ubEkQC0J91XWh0+jCVBsr5kbvss/Ge2
- PPmA==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=fmTl+yR5HMQdFTJ+B43Ty6U73yAJU+dIZuZUTxG7iv8=;
+ b=KkdlNDxR/3kE5mMARYreWcUiPTYO9Mqa5ybukAjOdhlXQ2vNHRcnmunzYpApjkvU4z
+ uPVDMH1FgLF/YoWvZEAba6gFxQnHaNrCGNihTP6dUt0fzu8PhSbYgIHQw7Yq1/ZymssK
+ zij72WMK6flAU52VXAr52ZKIAISc/CtQ5NEMAyGKW/jyLIXIKqteqDEouN71oyzR29vW
+ O736Rhyl/klgUiDLAYKoOf2trm+H0Upf2nGFadUwk3fXcVKBMemgqrxQdYTCmQfrrsaq
+ Mh3iLFzYW6NWG+sCJD7AXE1VI3qVB619nSM9NSySccF4n70RfDyO1Z1JefDA81QjMh0c
+ lWJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714399806; x=1715004606;
+ d=1e100.net; s=20230601; t=1714400285; x=1715005085;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cIbV/iZyNG2zOjtFz2bOGDKWhz/zXGorU13vwUNvoj8=;
- b=PgutDAy7HSkWzkpfvAb8XBgy8+2FmOuLlf/lGmfaaGjUxDEpP96o+5lWB177DlmuIf
- RQtO28PPmES54k89heNOJ+wmTEUUh05kzyy7qn6ah2IJeTDO6yZnj5oryAXC2Z47f5bv
- W4HpEjnO0ilTHJK8vETSV1b7o3y0pqIbmnpVx1ZEOscvLFSkJ0aAXPgLvwKXJa/Z6oxE
- oRX3vdUoKEVe7apqoQglhF/92I2I8FMmVKvnvvhMB6aNiT+NeZSo8xLwqTCynDh3R33k
- q4CmA5hIeWMFho+QUr9RvXjXcvsciajHImP19lrJHrKHYPMyuCeo1O3a9KlZxK9g258W
- s+jQ==
+ bh=fmTl+yR5HMQdFTJ+B43Ty6U73yAJU+dIZuZUTxG7iv8=;
+ b=t56l/kh9IHopXR4pOXLTq4DnyxW1nriF1tzn+cQSKLOEkjEI6SfRGUBDVuXStURC/f
+ p2EKFSd13435Nhbu3flNYKntNco3t/IxHEm0hInt5zpkVUnFWWYPQeEvWdhs+/Vi3CX8
+ OienO8kz827iWg5RifEcJ5pEus0gqSZdrtdlPBZX4R1Xe6cgUs1coQzJIqPiyDudOKPf
+ oRK6Z22LM7eaHH83yVKYveWR1UI5Wvck6QUP/5HZJs1UsXhyYY2kkT1bySp91EXeiNpo
+ p4gdH/M/JM7AqQ/OrqALKZgBnbbaT3jrWRFtk3OPHDdpEdCjkrm4z/RgGfqwoIp63Pcn
+ NazQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUeglFSOAFuaqEoV4s2b7581iSVG9s/9/90oQ1TJR0ccaewG5O9juCz/bDDgY0nXE9Qz+KNBSQdXxi2p0PpVRhE9Xgn4mQ=
-X-Gm-Message-State: AOJu0YzmTj4JqEaB0pe0MRjgezkCnc8YeTmCx5mptmPfttWRgUIE1LfC
- hVNoxvY1DTklevhaumf9xTiszSeH+/+8wYWJn0Ps0E5w30bOSvYDjtHbJPBJq+k=
-X-Google-Smtp-Source: AGHT+IGmmDI9H7nMmOulpIUtpIY16kGFg2E3oL4iEsu0u/nRNJ/7kAb2AFeciZTZ4DyjMtCPLtSdig==
-X-Received: by 2002:a2e:9003:0:b0:2df:c2b:8c84 with SMTP id
- h3-20020a2e9003000000b002df0c2b8c84mr6799244ljg.1.1714399806379; 
- Mon, 29 Apr 2024 07:10:06 -0700 (PDT)
-Received: from [192.168.69.100] (bny92-h02-176-184-44-142.dsl.sta.abo.bbox.fr.
- [176.184.44.142]) by smtp.gmail.com with ESMTPSA id
- s8-20020a05600c45c800b0041be9cb540esm8511185wmo.18.2024.04.29.07.10.05
+ AJvYcCWxj29V3HjL0tztit3muvVkGpQ/lr+7IrLfMSghRBY5lwjAILnJ/Ia0p6CgdWMi/ZJ5594E8IfxtApBB9cyqMfiNsWhfUo=
+X-Gm-Message-State: AOJu0Yyd0p9iDZLIpt+7uovs9cor+pWPEWxEURh2PNPR3GbTEJuUuBUD
+ MC1zRFFwxYGf7wPS5NzBO16Ly1xv82FNGa+1MzFM2hV6pyMe3hU6eAE3iIYwZV0=
+X-Google-Smtp-Source: AGHT+IG4w8IyWZhv3tBcfGpkLP9EWlA1rALY0BgjZeEvEcDVj2ECs0QsjGFs6mmOm4rl3vSo0zmcjw==
+X-Received: by 2002:a17:90a:4a90:b0:2ae:7f27:82cd with SMTP id
+ f16-20020a17090a4a9000b002ae7f2782cdmr6010020pjh.7.1714400284840; 
+ Mon, 29 Apr 2024 07:18:04 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ by smtp.gmail.com with ESMTPSA id
+ u18-20020a656712000000b005fd81ad7835sm12744488pgf.58.2024.04.29.07.18.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Apr 2024 07:10:05 -0700 (PDT)
-Message-ID: <de42d3e8-8ca2-45e2-b1f4-0a4b38af5725@linaro.org>
-Date: Mon, 29 Apr 2024 16:10:04 +0200
+ Mon, 29 Apr 2024 07:18:04 -0700 (PDT)
+Message-ID: <11fd6cbf-cd8b-4469-aefa-2bfddf5a3ca9@linaro.org>
+Date: Mon, 29 Apr 2024 07:18:02 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] target/alpha: Hoist branch shift to initial decode
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20240424234436.995410-1-richard.henderson@linaro.org>
- <20240424234436.995410-3-richard.henderson@linaro.org>
+Subject: Re: [PULL 6/6] iotests: add backup-discard-source
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+References: <20240429115157.2260885-1-vsementsov@yandex-team.ru>
+ <20240429115157.2260885-7-vsementsov@yandex-team.ru>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240424234436.995410-3-richard.henderson@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240429115157.2260885-7-vsementsov@yandex-team.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::229;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x229.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,12 +100,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/4/24 01:44, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On 4/29/24 04:51, Vladimir Sementsov-Ogievskiy wrote:
+> Add test for a new backup option: discard-source.
+> 
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
+> Tested-by: Fiona Ebner <f.ebner@proxmox.com>
+> Message-Id: <20240313152822.626493-6-vsementsov@yandex-team.ru>
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
->   target/alpha/translate.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
+>   .../qemu-iotests/tests/backup-discard-source  | 152 ++++++++++++++++++
+>   .../tests/backup-discard-source.out           |   5 +
+>   2 files changed, 157 insertions(+)
+>   create mode 100755 tests/qemu-iotests/tests/backup-discard-source
+>   create mode 100644 tests/qemu-iotests/tests/backup-discard-source.out
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+This fails check-python-minreqs
 
+   https://gitlab.com/qemu-project/qemu/-/jobs/6739551782
+
+It appears to be a pylint issue.
+
+
+r~
 
