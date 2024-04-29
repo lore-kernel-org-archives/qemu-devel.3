@@ -4,85 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7493BC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 19:57:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA8F6C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 20:05:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1X7c-0008Ej-Dg; Mon, 29 Apr 2024 15:57:08 -0400
+	id 1s1XEu-0004oM-29; Mon, 29 Apr 2024 16:04:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1s1X7a-0008E4-Q9
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 15:57:06 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1s1X7Y-0004DG-Ud
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 15:57:06 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-6ed627829e6so6014346b3a.1
- for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 12:57:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714420623; x=1715025423; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=PFpSANK/hk/kel6sKsmhcxBLFydeRqaCqMkykkqtP/4=;
- b=dLUJMlI65KStTST0GMt4ezg4TeLLkRu0OrSIdk39eKyfKM5tT55kxfAfjJtTQn7DnP
- dGeDKU6vaPcxWnq1ETVxKgmbfuNoiNu0x0Teu8fwrEFpB72iLQpj5OGZKAFcXsAUsEde
- 0jHsOZD89YZKJ7DtVGRvmDiwhQmjIRAUv3MQDULj41BlWDHcgOCaKaDim/i/UoC4iMNL
- LzSujeLAnECjPd7G8IAiFnXns/q19jxBO2zHXlPbWrKhy5PLA44cUNiJgR52C2aX7hRR
- q10ssMvvgeHq+F65MJTLonmwrb3X+Y63JO+uCCEEZmU+zBHcr9CI8GcODPjO4Vpa8gI1
- tFNw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s1XEs-0004o3-ES
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 16:04:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s1XEq-0005MN-He
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 16:04:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714421075;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=JrMd6fhUhpKRMyd2t2p1MjDqK932PlHgba2SJYJLHoo=;
+ b=HHDsm2ej0WxeEByfnJQHwd3bS2zrnKYL0ty7mdDUudOTIZETkGixzSz6ij/wv2b4zU4bAk
+ 7bKqj4jvSJ4a0r0OKdxF9dYxMb7AAU+IGCZkUT87Z9hrxaPesGiX3Y5fadkihQCWZ1JmIx
+ 0gLo7OcwZflJKZasxCwSARQHI0HhYwQ=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-677-beRIJKeyOziZBVpq3G6WoA-1; Mon, 29 Apr 2024 16:04:33 -0400
+X-MC-Unique: beRIJKeyOziZBVpq3G6WoA-1
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-2a536169eb0so1582156a91.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 13:04:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714420623; x=1715025423;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PFpSANK/hk/kel6sKsmhcxBLFydeRqaCqMkykkqtP/4=;
- b=f3BNGN9Ingr6WbHbvzn2gkFLHoY2OQq7OUeUQiFERPk4u3KPr4Qf+8m9M5KqPsOAQL
- b9SwLkwvAqTQ5jX/wneibjwQrn5G6KpQtvRJpZc1SowffWdQn+FO5lubiLXwfgoXIgx9
- 1FjEdmHzHGdmpV+oGqjyrXfWXF4GLHTaVhbqOnQFQpg4Fksaisr8ZUSaHErLgTwXi/oR
- lGHvJLP7j/uqKFhkNvhNXc8bttNPHFMjed9JsFcrtayziVdhvtoVyAZGo5Faaanyaaq8
- Rg5jeziZm6LHsZU2RFi7ilggKbixVXCcjx8BdwDYvcI5bXDd6GJ0rjoi8Lo7lVKOu0Ob
- r2NQ==
+ d=1e100.net; s=20230601; t=1714421073; x=1715025873;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JrMd6fhUhpKRMyd2t2p1MjDqK932PlHgba2SJYJLHoo=;
+ b=f4ArHCd36EbBnRNaJFCkcfMpQkSpp5Ot8CevEX1osisjsl0cJcAvqEKGH4f8xKnzu3
+ ZaH6niF+8a7NWmK9KF8++OGZlFK/YFPdKHFMFp4gdquBCNyYT5EXDT9LyflmPv2aDSnx
+ E4BAi3KADMyCf2uw8wVuHVUVKJ6QP+8lxY+HtuD4+R4dSK8g39xraGorSZd1zI8lF7fJ
+ IXlBeakgrf/GUshSWM+aCsRWMgXj/MN2C9TmnuQf10kSsJO6xe0Nl98kLB1mKtVVfPJU
+ O6uInoffQKVDlOg1+zy4L2wfwX+cdNfn4eNwAyqq4DTPDfNbyDsli0YX8osGt/thu6Ut
+ ox2g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW1l0fOvohsDrjWfBTANqUxDtVVrIkCoe55+aA037YxnL1cRjo3fps5ArnB+39a5NnQB7ImeyZdNZbZd40ezbp51OXhHZ8=
-X-Gm-Message-State: AOJu0YzGOvwz5s0xaKe6CvXQs5GIVQVqCa9BbFVOR0WyG17Y4GQXQBiK
- r1BVnhJB6tTTOVpqXseV3Y0hxfVdr+G7wBmpNCxEJPeWdhHRqlvwtf+wXigVUVs=
-X-Google-Smtp-Source: AGHT+IE01C7lsFuB+BCH4U3B92lOapB5EsfCzxtCk1/zYKdT2jd+gL8JtOstp3jKWzkmlZD0gMwaTg==
-X-Received: by 2002:a05:6a00:1384:b0:6ea:dfbf:13d4 with SMTP id
- t4-20020a056a00138400b006eadfbf13d4mr16061629pfg.18.1714420623056; 
- Mon, 29 Apr 2024 12:57:03 -0700 (PDT)
-Received: from ?IPV6:2604:3d08:937d:c610::abdb? ([2604:3d08:937d:c610::abdb])
- by smtp.gmail.com with ESMTPSA id
- fj24-20020a056a003a1800b006ea916eac02sm19676896pfb.42.2024.04.29.12.57.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Apr 2024 12:57:02 -0700 (PDT)
-Message-ID: <50d57b33-882b-4027-8014-eeba1d88db00@linaro.org>
-Date: Mon, 29 Apr 2024 12:57:01 -0700
+ AJvYcCW/QD8LoBSHAEh0EZPuV7lJCTxiiGcLi37yXhc8fL1PYxi/8KuVk4wTHHPVtRVnElVzFSwCfH7654msWEa4eA5rlDSvf2Y=
+X-Gm-Message-State: AOJu0YznwV1I/va7dCjI/RDYRAkH+sTRy4SUQRTLh2NAUNTX1BJnDcpZ
+ 7aj2QdKVhQpIGG4pCsa9oIRKv5+/Gz0H/S7qWJo8q9NuVCcapf0mmGFUD73iTicdQfp5uRGnQx1
+ FSNS+NdU4KtmwFy3Fl40r/X7cLnnbBnR9sYzIbREe07K7NApWJ4s2
+X-Received: by 2002:a17:902:ea04:b0:1e2:b3d:8c67 with SMTP id
+ s4-20020a170902ea0400b001e20b3d8c67mr13212448plg.6.1714421072474; 
+ Mon, 29 Apr 2024 13:04:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHD1umAJpqDh1P0pEBYz59vZs0LLLkCZU37HNqRpHYz0y+UC0YVZaFTzo6OFL5BjpoqT8wOOg==
+X-Received: by 2002:a17:902:ea04:b0:1e2:b3d:8c67 with SMTP id
+ s4-20020a170902ea0400b001e20b3d8c67mr13212384plg.6.1714421071657; 
+ Mon, 29 Apr 2024 13:04:31 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ p2-20020a170902e74200b001e223b9eb25sm20776177plf.153.2024.04.29.13.04.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 29 Apr 2024 13:04:31 -0700 (PDT)
+Date: Mon, 29 Apr 2024 16:04:27 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH RFC 23/26] migration/multifd: Device state transfer
+ support - send side
+Message-ID: <Zi_9SyJy__8wJTou@x1n>
+References: <cover.1713269378.git.maciej.szmigiero@oracle.com>
+ <ec2f88766178ab461f19ff4fa1414ce828e9862f.1713269378.git.maciej.szmigiero@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 07/20] plugins: Use emit_before_op for
- PLUGIN_GEN_FROM_TB
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20240424230224.941028-1-richard.henderson@linaro.org>
- <20240424230224.941028-8-richard.henderson@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20240424230224.941028-8-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ec2f88766178ab461f19ff4fa1414ce828e9862f.1713269378.git.maciej.szmigiero@oracle.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,183 +106,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/24/24 16:02, Richard Henderson wrote:
-> By having the qemu_plugin_cb_flags be recorded in the TCGHelperInfo,
-> we no longer need to distinguish PLUGIN_CB_REGULAR from
-> PLUGIN_CB_REGULAR_R, so place all TB callbacks in the same queue.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   accel/tcg/plugin-gen.c | 96 +++++++++++++++++++++++++-----------------
->   plugins/api.c          |  6 +--
->   2 files changed, 58 insertions(+), 44 deletions(-)
-> 
-> diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
-> index 4b02c0bfbf..c803fe8e96 100644
-> --- a/accel/tcg/plugin-gen.c
-> +++ b/accel/tcg/plugin-gen.c
-> @@ -201,6 +201,7 @@ static void plugin_gen_empty_callback(enum plugin_gen_from from)
->   {
->       switch (from) {
->       case PLUGIN_GEN_AFTER_INSN:
-> +    case PLUGIN_GEN_FROM_TB:
->           tcg_gen_plugin_cb(from);
->           break;
->       case PLUGIN_GEN_FROM_INSN:
-> @@ -210,8 +211,6 @@ static void plugin_gen_empty_callback(enum plugin_gen_from from)
->            */
->           gen_wrapped(from, PLUGIN_GEN_ENABLE_MEM_HELPER,
->                       gen_empty_mem_helper);
-> -        /* fall through */
-> -    case PLUGIN_GEN_FROM_TB:
->           gen_wrapped(from, PLUGIN_GEN_CB_UDATA, gen_empty_udata_cb_no_rwg);
->           gen_wrapped(from, PLUGIN_GEN_CB_UDATA_R, gen_empty_udata_cb_no_wg);
->           gen_wrapped(from, PLUGIN_GEN_CB_INLINE, gen_empty_inline_cb);
-> @@ -626,24 +625,6 @@ void plugin_gen_disable_mem_helpers(void)
->                      offsetof(CPUState, plugin_mem_cbs) - offsetof(ArchCPU, env));
->   }
->   
-> -static void plugin_gen_tb_udata(const struct qemu_plugin_tb *ptb,
-> -                                TCGOp *begin_op)
-> -{
-> -    inject_udata_cb(ptb->cbs[PLUGIN_CB_REGULAR], begin_op);
-> -}
-> -
-> -static void plugin_gen_tb_udata_r(const struct qemu_plugin_tb *ptb,
-> -                                  TCGOp *begin_op)
-> -{
-> -    inject_udata_cb(ptb->cbs[PLUGIN_CB_REGULAR_R], begin_op);
-> -}
-> -
-> -static void plugin_gen_tb_inline(const struct qemu_plugin_tb *ptb,
-> -                                 TCGOp *begin_op)
-> -{
-> -    inject_inline_cb(ptb->cbs[PLUGIN_CB_INLINE], begin_op, op_ok);
-> -}
-> -
->   static void plugin_gen_insn_udata(const struct qemu_plugin_tb *ptb,
->                                     TCGOp *begin_op, int insn_idx)
->   {
-> @@ -702,6 +683,41 @@ static void gen_disable_mem_helper(struct qemu_plugin_tb *ptb,
->       }
->   }
->   
-> +static void gen_udata_cb(struct qemu_plugin_dyn_cb *cb)
+On Tue, Apr 16, 2024 at 04:43:02PM +0200, Maciej S. Szmigiero wrote:
+> +bool multifd_queue_page(RAMBlock *block, ram_addr_t offset)
 > +{
-> +    TCGv_i32 cpu_index = tcg_temp_ebb_new_i32();
+> +    g_autoptr(GMutexLocker) locker = NULL;
 > +
-> +    tcg_gen_ld_i32(cpu_index, tcg_env,
-> +                   -offsetof(ArchCPU, env) + offsetof(CPUState, cpu_index));
-> +    tcg_gen_call2(cb->regular.f.vcpu_udata, cb->regular.info, NULL,
-> +                  tcgv_i32_temp(cpu_index),
-> +                  tcgv_ptr_temp(tcg_constant_ptr(cb->userp)));
-> +    tcg_temp_free_i32(cpu_index);
-> +}
-> +
-> +static void gen_inline_cb(struct qemu_plugin_dyn_cb *cb)
-> +{
-> +    GArray *arr = cb->inline_insn.entry.score->data;
-> +    size_t offset = cb->inline_insn.entry.offset;
-> +    TCGv_i32 cpu_index = tcg_temp_ebb_new_i32();
-> +    TCGv_i64 val = tcg_temp_ebb_new_i64();
-> +    TCGv_ptr ptr = tcg_temp_ebb_new_ptr();
-> +
-> +    tcg_gen_ld_i32(cpu_index, tcg_env,
-> +                   -offsetof(ArchCPU, env) + offsetof(CPUState, cpu_index));
-> +    tcg_gen_muli_i32(cpu_index, cpu_index, g_array_get_element_size(arr));
-> +    tcg_gen_ext_i32_ptr(ptr, cpu_index);
-> +    tcg_temp_free_i32(cpu_index);
-> +
-> +    tcg_gen_addi_ptr(ptr, ptr, (intptr_t)arr->data);
-> +    tcg_gen_ld_i64(val, ptr, offset);
-> +    tcg_gen_addi_i64(val, val, cb->inline_insn.imm);
-> +    tcg_gen_st_i64(val, ptr, offset);
-> +
-> +    tcg_temp_free_i64(val);
-> +    tcg_temp_free_ptr(ptr);
-> +}
-> +
->   /* #define DEBUG_PLUGIN_GEN_OPS */
->   static void pr_ops(void)
->   {
-> @@ -780,6 +796,8 @@ static void plugin_gen_inject(struct qemu_plugin_tb *plugin_tb)
->           {
->               enum plugin_gen_from from = op->args[0];
->               struct qemu_plugin_insn *insn = NULL;
-> +            const GArray *cbs;
-> +            int i, n;
->   
->               if (insn_idx >= 0) {
->                   insn = g_ptr_array_index(plugin_tb->insns, insn_idx);
-> @@ -792,6 +810,25 @@ static void plugin_gen_inject(struct qemu_plugin_tb *plugin_tb)
->                   assert(insn != NULL);
->                   gen_disable_mem_helper(plugin_tb, insn);
->                   break;
-> +
-> +            case PLUGIN_GEN_FROM_TB:
-> +                assert(insn == NULL);
-> +
-> +                cbs = plugin_tb->cbs[PLUGIN_CB_REGULAR];
-> +                for (i = 0, n = (cbs ? cbs->len : 0); i < n; i++) {
-> +                    struct qemu_plugin_dyn_cb *cb =
-> +                        &g_array_index(cbs, struct qemu_plugin_dyn_cb, i);
-> +                    gen_udata_cb(cb);
-> +                }
-> +
-> +                cbs = plugin_tb->cbs[PLUGIN_CB_INLINE];
-> +                for (i = 0, n = (cbs ? cbs->len : 0); i < n; i++) {
-> +                    struct qemu_plugin_dyn_cb *cb =
-> +                        &g_array_index(cbs, struct qemu_plugin_dyn_cb, i);
-> +                    gen_inline_cb(cb);
-> +                }
-> +                break;
-> +
->               default:
->                   g_assert_not_reached();
->               }
-> @@ -807,25 +844,6 @@ static void plugin_gen_inject(struct qemu_plugin_tb *plugin_tb)
->               enum plugin_gen_cb type = op->args[1];
->   
->               switch (from) {
-> -            case PLUGIN_GEN_FROM_TB:
-> -            {
-> -                g_assert(insn_idx == -1);
-> -
-> -                switch (type) {
-> -                case PLUGIN_GEN_CB_UDATA:
-> -                    plugin_gen_tb_udata(plugin_tb, op);
-> -                    break;
-> -                case PLUGIN_GEN_CB_UDATA_R:
-> -                    plugin_gen_tb_udata_r(plugin_tb, op);
-> -                    break;
-> -                case PLUGIN_GEN_CB_INLINE:
-> -                    plugin_gen_tb_inline(plugin_tb, op);
-> -                    break;
-> -                default:
-> -                    g_assert_not_reached();
-> -                }
-> -                break;
-> -            }
->               case PLUGIN_GEN_FROM_INSN:
->               {
->                   g_assert(insn_idx >= 0);
-> diff --git a/plugins/api.c b/plugins/api.c
-> index 8fa5a600ac..5d119e8049 100644
-> --- a/plugins/api.c
-> +++ b/plugins/api.c
-> @@ -92,11 +92,7 @@ void qemu_plugin_register_vcpu_tb_exec_cb(struct qemu_plugin_tb *tb,
->                                             void *udata)
->   {
->       if (!tb->mem_only) {
-> -        int index = flags == QEMU_PLUGIN_CB_R_REGS ||
-> -                    flags == QEMU_PLUGIN_CB_RW_REGS ?
-> -                    PLUGIN_CB_REGULAR_R : PLUGIN_CB_REGULAR;
-> -
-> -        plugin_register_dyn_cb__udata(&tb->cbs[index],
-> +        plugin_register_dyn_cb__udata(&tb->cbs[PLUGIN_CB_REGULAR],
->                                         cb, flags, udata);
->       }
->   }
+> +    /*
+> +     * Device state submissions for shared channels can come
+> +     * from multiple threads and conflict with page submissions
+> +     * with respect to multifd_send_state access.
+> +     */
+> +    if (!multifd_send_state->device_state_dedicated_channels) {
+> +        locker = g_mutex_locker_new(&multifd_send_state->queue_job_mutex);
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Haven't read the rest, but suggest to stick with QemuMutex for the whole
+patchset, as that's what we use in the rest migration code, along with
+QEMU_LOCK_GUARD().
+
+> +    }
+> +
+> +    return multifd_queue_page_locked(block, offset);
+> +}
+
+-- 
+Peter Xu
+
 
