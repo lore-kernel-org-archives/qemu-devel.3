@@ -4,75 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B25FC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 21:05:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81A3AC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 21:07:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1YBD-00077a-Vj; Mon, 29 Apr 2024 17:04:55 -0400
+	id 1s1YDu-0008D5-GL; Mon, 29 Apr 2024 17:07:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1YBC-000757-Lq
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:04:54 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s1YDt-0008Cp-7r
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:07:41 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1YBA-0007J9-VN
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:04:54 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-41b21ed19f5so35565005e9.2
- for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 14:04:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s1YDr-0007nt-Su
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:07:41 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-6ece8991654so4645401b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 14:07:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714424691; x=1715029491; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714424858; x=1715029658; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=/wW0mbKsEQfjC4yJaa5rCiPpCJkkT+sgffueDCdT0AA=;
- b=b4dfNDK3Bhyrd2YWHUUF9seLZRSs+7B9MCPlVrC5bLC4a0ADOHSevtsCmjZiAc4Xsg
- fFLO52p0Ds7Ja6lY9Ae+IYqcO1elSgKrYfoi7HUVDXZA9Rc5R00rfugIV6b82Rnb8U7E
- WK89+Gzzz50d8EmYPbzme1Wel+zJRwHuiueu8X6Z9Dtwsad6UkIIug2APZl/Rm3pd7q4
- vkRt6+bfnVC8jod3LbYXM7gHg030ClvjUPTr57uBA9tv9kchtl6vSD4kFozGt22L9AOn
- fKUNMCcEgT0QJW1J3ldE+XZXj1Mwp7Iq5dVPbR1TgMP8UjPDClkif3U4IDmGwPR/6OQ7
- ro2Q==
+ bh=/MUYQvKVGq3TiHbJXL/NJASQeqP98txuJS8qw0laL6A=;
+ b=yeF19G1x9iyFw4jk0RbKtQEstmvPcKHMQP7kOMbZuJ66/Tyb6sI3piWmPh9XMEQdZt
+ r1V2O7+hbe7G6LHoUjpzdyWDdNQRIo8zvyou310ep5Mf00eKlJLs2wJzyrglSq6i2D0k
+ aQH6tE6Otix6S5GXmwSfxx95Q20VF2ZOJkkdnBoQhraXw/C6sU5rJl2Obng2kyfwwkw2
+ Gy9HIkpH+UreCWisp6inylWONF3VeYrv9lZlFZHLspNMvg35gpuoP1z9jk5zMm28OEsf
+ zx+cVFOq5TZIs1L5NQsu91Y3ZIrvvcjgQkl8Eaj4QDbMADZBQ3r2xOCQzjnBDPuQsejX
+ AYQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714424691; x=1715029491;
+ d=1e100.net; s=20230601; t=1714424858; x=1715029658;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/wW0mbKsEQfjC4yJaa5rCiPpCJkkT+sgffueDCdT0AA=;
- b=oWvKka6fUj9vMVVAhg63yNlF5fairdeOXTJNoQV3tLWpI9tvdSOo3N9SulbSS3YNOl
- mQD/ga+I+Itf9tc3Pc6mlbNgRYz9bUjEOrq+FqoiLqo4Y3889fRhr+En+ZQNbI6YSHa8
- 5jjEo1tsQgkHvWAnAmyuhPu2Gg5zxcdXrOo+jmx1C6Yb0Vy9Il+11LI8e5eBEPj63PtV
- TNY2fw8u+blRT24Fd6gIBXV/stb3uQK4gz1Ik3HUFXD/RhUjaEJe25LYbKp/cXspxGNh
- K1uzxuBMQkz3A8Coa+tgHD9kttMl9b5qhHMulRxGbH5PJcIkhsM51O41O1qLeyt3epMW
- p11A==
-X-Gm-Message-State: AOJu0Yy3i44+rQbI5MqkIK9o8yEmf0Zv4i3h+CWNZgt9gsfgOi/v0MhM
- +3wCOfFZ9bt9ul1fnYiRFZWcxSqaBGNfTV/yEGMcsKUjtAD1SiDFO8jPrGXmM2lNNf4O3aYgGpL
- Xwj0=
-X-Google-Smtp-Source: AGHT+IHLEfwOZ3+gvcs/zgYAD6ID1FBVDOw6ioUOSbPzjrmno3ahx1zkKmfam2smlU2KHrnXjCeZmA==
-X-Received: by 2002:a5d:618d:0:b0:346:85a0:20af with SMTP id
- j13-20020a5d618d000000b0034685a020afmr7279228wru.35.1714424690836; 
- Mon, 29 Apr 2024 14:04:50 -0700 (PDT)
-Received: from [192.168.69.100] (bny92-h02-176-184-44-142.dsl.sta.abo.bbox.fr.
- [176.184.44.142]) by smtp.gmail.com with ESMTPSA id
- a16-20020adffb90000000b0034af18ef68csm22561490wrr.5.2024.04.29.14.04.49
+ bh=/MUYQvKVGq3TiHbJXL/NJASQeqP98txuJS8qw0laL6A=;
+ b=uqEAQnih/LjxWgcBEA81iabykWzFlXuFwflx0vMBFUKX/z3wfr5xYMO3p6FcgvM/NY
+ rSHVZdB3m/LiqRjjslr+IyKH/fOfQlrcqizmYCXzMXxdN8IcPegvau8Kzrywssz1yhcv
+ lr8wanUgFOWxlwRf1zqKnCX8TOWyuu5oRTUO8B8kjmgKN+Ub5b2JItTdp6nlxTaRISkp
+ wiCNF4ELuP4tEUn0v3FSq9/Z+vLaQpLrxV9MkxFVJyHJJmGacfV81Nrvg4//NbWbZiwo
+ xWh7KW2VOhX0BUdBlos3KKKIWEPhSGMgJfpn08PNVTEaF4I5qkWapfGWGgLuAYe7RsJg
+ aVqg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU5E5RbljBVlB8kH/2UdFrr+kcDHTFu1USvqBeOt7yE8Rhw0r7xLFTDAbbgHFAhBEFFCD8eDusYmDEUREUuliS/2hxkKkE=
+X-Gm-Message-State: AOJu0Yx2f4IvyPcMFlO2nyORsvCPCho87TvcKOEdpCBkueW7GGPAVkFr
+ 45t9cDvLh5zJd7EKQ6N6Omw3KQ6IXV5j01IUkY8aM4VD0H78hmXNpUZ7Hno2Lr4dZs22OAjXZKU
+ s
+X-Google-Smtp-Source: AGHT+IEHwWvjajOPFra3k8FIVKVviQypZqIHR866mPGfE4DbY6im6ax0dyZnLVe3INCEH9VKrNa7mQ==
+X-Received: by 2002:a05:6a20:c887:b0:1af:50f3:75dd with SMTP id
+ hb7-20020a056a20c88700b001af50f375ddmr4047365pzb.19.1714424858442; 
+ Mon, 29 Apr 2024 14:07:38 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ by smtp.gmail.com with ESMTPSA id
+ gq41-20020a056a003be900b006f0da46c019sm17523543pfb.219.2024.04.29.14.07.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Apr 2024 14:04:50 -0700 (PDT)
-Message-ID: <1ac02538-5aeb-4a4d-a150-1aad084d4f7c@linaro.org>
-Date: Mon, 29 Apr 2024 23:04:48 +0200
+ Mon, 29 Apr 2024 14:07:38 -0700 (PDT)
+Message-ID: <62dde7f6-df8a-440a-a1f4-0063d18af6f6@linaro.org>
+Date: Mon, 29 Apr 2024 14:07:36 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/24] exec: Rework around CPUState user fields (part 2)
-To: qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>,
- Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 23/24] accel/tcg: Restrict icount to system emulation
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>
 References: <20240428221450.26460-1-philmd@linaro.org>
+ <20240428221450.26460-24-philmd@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240428221450.26460-1-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240428221450.26460-24-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,23 +100,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/4/24 00:14, Philippe Mathieu-Daudé wrote:
+On 4/28/24 15:14, Philippe Mathieu-Daudé wrote:
+> So far we don't support icount on user emulation.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   accel/tcg/cpu-exec.c | 6 ++++++
+>   1 file changed, 6 insertions(+)
 
-> Philippe Mathieu-Daudé (24):
->    exec/user: Move 'thunk.h' from 'exec/user' to 'user'
->    coverity: Update user emulation regexp
->    accel/tcg: Move user definition of cpu_interrupt() to user-exec.c
->    accel/tcg: Duplicate cpu_exit() for user / system
->    accel/tcg: Extract tcg_cpu_exit() from cpu_exit()
->    accel: Introduce AccelOpsClass::exit_vcpu_thread() handler
->    accel/tcg: Implement AccelOpsClass::exit_vcpu_thread() handler
->    user: Forward declare TaskState type definition
->    user: Declare get_task_state() once in 'accel/tcg/vcpu-state.h'
->    user: Use get_task_state() helper
->    accel/tcg: Allocate per-vCPU accel state in create_vcpu_thread()
->    accel/tcg: Move TaskState from CPUState to TCG AccelCPUState
->    accel/tcg: Update CPUNegativeOffsetState::can_do_io field
->      documentation
 
-Queuing patches 1-13, thanks!
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+
+r~
 
