@@ -4,81 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE2C4C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 16:59:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 625D7C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 17:19:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1UKl-0007NH-19; Mon, 29 Apr 2024 12:58:31 -0400
+	id 1s1Ueo-0003C9-75; Mon, 29 Apr 2024 13:19:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1UKj-0007Jk-Fc
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 12:58:29 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s1Uef-0003AE-Qf
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 13:19:05 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1UKh-000453-T5
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 12:58:29 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-56e477db7fbso7980675a12.3
- for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 09:58:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714409906; x=1715014706; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=7wBmsNAc3hM0O3wxDRD+tV/PYp1bZfikWlYPgbcrHyQ=;
- b=epqQaV0PmiOuNaXoD2NFF1xZ4jjOJzA0KziLS0oh06HjztwSiNEkMPT01MW2nz4v3H
- Ria4Ak1FJOoHKMRchaiYUjndOlycy+ZchoxYIc/qj1FBz3uBX0r7RR1V2nbTmkfUBQCG
- WmVjMUvTf+mGihSn7+BvW7Fq99jeQ9lnuMT0xlJ9kXqqsbV8ZnbaOplD+MyW6bUy9Y1p
- lmYrCHVAI1P3FV5KlGIeEF+K7CYtLZMb6ONwLPz7b4oOgJpxcrrWKblQTCiL0EjrYNok
- 9MeqUzUjI1GoUz/v2SmC/o9vwBShxnOOJfRpt61z4HHqeVGk8BXbYczNRdqqsr/GaA1O
- Uz2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714409906; x=1715014706;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7wBmsNAc3hM0O3wxDRD+tV/PYp1bZfikWlYPgbcrHyQ=;
- b=c3pzUJBjMfczFfKdfhcqJwlDLVMNnCDhEFA9r8rpZobkYcDUHFsdnBiFIDEniSfuLA
- h81tn7GVN+H4e/3M2hbEtb9wK7n/gDpYYzU5FCaZNklHpgUfOIvEaN4C2p5OzRsL4psW
- 8Zh9B4bpkIxA234ivfDOB25tex6fFzJjDQ3s7NGZL9g5kBZEaimXViUrEi6fxFPzIbWe
- IqdpHvgmbwHyGrS8/owjXuyQPF36Ou7nfhBuAPtUvXTvV2voWQhq7dTgXZaQA3z/mKa6
- y2Iy2Rgc26sSKLR9v2wq/7Nr/9PqcDxHVbatKeIg+zARpFepqWfjrpc+phYgtq0Wgx+A
- Cvsw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVGGwWpgwzJg66vWeN5adKgzO3Gd/xLOFIVAPsQYpei7D0DHx8e/Yx+fnqBRbHzN7aKC4JV5Vad/4uij1xcXAOE3T8niKI=
-X-Gm-Message-State: AOJu0YwPfDLrIsfn51SYf2N7XJQBtqzwraSNkshpB7fAD3Whbnp46Pn/
- 361KtzvD7WQzFQTn4fp76++uvS7LFgZJqSsewdRhIrjQ/rHHKMqGPC+dsgzAuoI=
-X-Google-Smtp-Source: AGHT+IHn5UEM2THq+WBIIKzYldLSUuhXCVF0vMFMKt0dHR+gCr/r9EwXk7k8rxfp9aM1ruo91/JI5g==
-X-Received: by 2002:a50:cdd8:0:b0:56d:c4eb:6328 with SMTP id
- h24-20020a50cdd8000000b0056dc4eb6328mr7358678edj.29.1714409906178; 
- Mon, 29 Apr 2024 09:58:26 -0700 (PDT)
-Received: from [192.168.69.100] (bny92-h02-176-184-44-142.dsl.sta.abo.bbox.fr.
- [176.184.44.142]) by smtp.gmail.com with ESMTPSA id
- a19-20020a50c313000000b005727de1ac2csm1783752edb.54.2024.04.29.09.58.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Apr 2024 09:58:25 -0700 (PDT)
-Message-ID: <19885855-e0e9-4bb8-9155-a694ff9ea1df@linaro.org>
-Date: Mon, 29 Apr 2024 18:58:24 +0200
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s1Uee-0008Nc-1H
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 13:19:05 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 6CA0B222A5;
+ Mon, 29 Apr 2024 17:19:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1714411141; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+v98PA8nDUJi9h4FrO+0iM4soIkAhq04v01zqGumDoA=;
+ b=YaD3q1gxbC1viDi50gBy0qqMCJpky5wLju+G5JHrFxsdPv6c7cZC6k4T2cYpNrtxHC/cLl
+ xZAtEo+9JJTdr1xLPHWZqc0oeOOgo64XGRVXTy7mdDm2YnEjSQSL8g26a1AQ/ZZB4yfrIw
+ m2JCrzcen9zUKMHxvUpWSNW/nUA2qaA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1714411141;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+v98PA8nDUJi9h4FrO+0iM4soIkAhq04v01zqGumDoA=;
+ b=VIaiDrqeKnymETi6KpEoZLTzgh8Q8rYfTTvR3e0NZ+ro44J3PTInblEXM7FapJuf3UcFtr
+ 45FDS3lmBaCYs6Cg==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1714411140; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+v98PA8nDUJi9h4FrO+0iM4soIkAhq04v01zqGumDoA=;
+ b=0paOnTXwl7X3Gj6ahPrcFUUWRnnqQdVMgqg3i5LaGg7LVeHPvQ9MYlJOgUiwJv2I9oj7cA
+ CUxjN4SnUyQDHsp7vacPDwlmt0kMpix1WHmyLa19YfVCW+MSwKjbvWUpPHFnZmhzwY1cdX
+ b7W42O+TN0EAXOeT/N3q3NE0cGeAT08=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1714411140;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+v98PA8nDUJi9h4FrO+0iM4soIkAhq04v01zqGumDoA=;
+ b=J10NlOYOLic1bTho/QGZWWLGt9bgKf7YR1i1mlC26/Wdswfu7muTFbeInBFCt1ExfWAh/M
+ cPR6UmwsVGq+8bDg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E359F138A7;
+ Mon, 29 Apr 2024 17:18:59 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id CKT4KYPWL2agQwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 29 Apr 2024 17:18:59 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ devel@lists.libvirt.org, Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Thomas Huth
+ <thuth@redhat.com>, Wainer
+ dos Santos Moschetta <wainersm@redhat.com>, Beraldo Leal
+ <bleal@redhat.com>, Eric Blake <eblake@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>, Hanna Reitz
+ <hreitz@redhat.com>
+Subject: Re: [PATCH v2 3/6] migration: Remove 'blk/-b' option from migrate
+ commands
+In-Reply-To: <Zi_CNIYAi6UbxJ0j@x1n>
+References: <20240426131408.25410-1-farosas@suse.de>
+ <20240426131408.25410-4-farosas@suse.de> <Zi_CNIYAi6UbxJ0j@x1n>
+Date: Mon, 29 Apr 2024 14:18:57 -0300
+Message-ID: <875xw0f5oe.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] target/alpha: Split out gen_goto_tb
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20240424234436.995410-1-richard.henderson@linaro.org>
- <20240424234436.995410-4-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240424234436.995410-4-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.22 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.12)[-0.599]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ RCPT_COUNT_TWELVE(0.00)[13]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
+ imap1.dmz-prg2.suse.org:rdns]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,26 +125,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/4/24 01:44, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/alpha/translate.c | 61 ++++++++++++++--------------------------
->   1 file changed, 21 insertions(+), 40 deletions(-)
+Peter Xu <peterx@redhat.com> writes:
 
+> On Fri, Apr 26, 2024 at 10:14:05AM -0300, Fabiano Rosas wrote:
+>> @@ -2003,21 +1997,7 @@ static bool migrate_prepare(MigrationState *s, bool blk, bool resume,
+>>          }
+>>      }
+>>  
+>> -    if (blk) {
+>> -        if (migrate_colo()) {
+>> -            error_setg(errp, "No disk migration is required in COLO mode");
+>> -            return false;
+>> -        }
+>> -        if (migrate_block()) {
+>> -            error_setg(errp, "Command options are incompatible with "
+>> -                       "current migration capabilities");
+>> -            return false;
+>> -        }
+>> -        if (!migrate_cap_set(MIGRATION_CAPABILITY_BLOCK, true, errp)) {
+>> -            return false;
+>> -        }
+>> -        s->must_remove_block_options = true;
+>> -    }
+>> +    s->must_remove_block_options = true;
+>
+> Can we drop this var too?  Perhaps with block_cleanup_parameters()?
 
->   static DisasJumpType gen_bdirect(DisasContext *ctx, int ra, int32_t disp)
->   {
-
->       /* Notice branch-to-next; used to initialize RA with the PC.  */
->       if (disp == 0) {
-> -        return 0;
-
-This is the single case in the code base of returning a non-DISAS_foo
-as DisasJumpType :)
-
-> +        return DISAS_NEXT;
->       }
-
->   }
-
+Yes, Markus mentioned it in v1 already. Take a look there. There's
+several other declarations I missed. v3 is coming soon.
 
