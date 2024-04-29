@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D092EC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 15:56:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E914C04FFE
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 15:56:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1TMN-0004cI-QA; Mon, 29 Apr 2024 11:56:07 -0400
+	id 1s1TMQ-0004d3-Ii; Mon, 29 Apr 2024 11:56:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1s1TMI-0004Ya-9Z
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:02 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ id 1s1TMJ-0004aF-Ra
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:04 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1s1TMF-0005FH-V6
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:02 -0400
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ id 1s1TMG-0005Kc-4W
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:03 -0400
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43TFmjb6006712; Mon, 29 Apr 2024 15:55:44 GMT
+ 43TFnajp028150; Mon, 29 Apr 2024 15:55:56 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
  h=from : to : cc :
  subject : date : message-id : in-reply-to : references; s=corp-2023-11-20;
- bh=tY/XgqmbfugZCppNeWrHSHTrYbFcI73pMuTKk9NtCoo=;
- b=og8uEnDik4o9IunnbXEIkAo0ddegTvIJDL1SPrX/fudCdjknuQgfNpTf0UY4xZTkU/o0
- fU4X0ips4EGve5OnlC+GKZVSqss5K8eULOj5wd75fVMkQmeTnmXikcVbQg09at9QEiYz
- p7p0NWiumeaUo0Fyb4jhwEuZih3+0c/262uf2BcK1ax4zqAkCzEaIlaC1k6x4zGtH0qf
- Tp+3wSJ4PptbvvJPKx6Q5oSHy7q1yvITpIWD+HSsdVGise7UF9MrCUFtNIZffxLj79XW
- ojVIYrXG3RQbyaChmhBQWObiNAPrRVbKcGnA7bmkSh6O9d1yPCvbFB+bEDWF3fv5KuKs iA== 
+ bh=VUgeGOjkH5xIbS4LS0QSaGY+st+ceFJUGTwLpgJtyIk=;
+ b=ZmamR6ZdtEuYc2LtZ0Bap9lt2OKIpRknZoBFjuIoUXyhXQdJYuLey21cvWkrEX/8dM+G
+ tGCRVvb91nOH+j0GbseR5lVpTmlKYpG22/M2eBi54Wk6i/Gd7ow/hSQsixDGQtCeiZq3
+ WnX18WSL55V4bpuEjJqiVzndg67TMFpRLzek5uDDEr2QmCJ7717bx1R4AwFp6UUHlHkl
+ 45uP+YKBkLWRvzt9EizBP1G93q06Mq4VcVWF/8Xy5CyqL5zl1CqFkw0jXEju4VtEP0FK
+ RarNd3FSGmmJdq/+MDWyfH6W1anFjioJwlBhHyHkbku1ezovxDiw3PYg4sxdBNt5KQau 2w== 
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xrsdejwmv-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xrswvjxse-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Apr 2024 15:55:44 +0000
+ Mon, 29 Apr 2024 15:55:56 +0000
 Received: from pps.filterd
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 43TEdOSa011469; Mon, 29 Apr 2024 15:55:43 GMT
+ with ESMTP id 43TEt9Hk011467; Mon, 29 Apr 2024 15:55:55 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 3xrqt6j67k-1
+ 3xrqt6j6nt-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Apr 2024 15:55:43 +0000
+ Mon, 29 Apr 2024 15:55:55 +0000
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43TFtaGk034442;
- Mon, 29 Apr 2024 15:55:42 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43TFtaHI034442;
+ Mon, 29 Apr 2024 15:55:54 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 3xrqt6j5ys-10; Mon, 29 Apr 2024 15:55:42 +0000
+ ESMTP id 3xrqt6j5ys-26; Mon, 29 Apr 2024 15:55:54 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,9 +64,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V1 09/26] migration: vmstate_register_named
-Date: Mon, 29 Apr 2024 08:55:18 -0700
-Message-Id: <1714406135-451286-10-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V1 25/26] migration: fix mismatched GPAs during cpr-exec
+Date: Mon, 29 Apr 2024 08:55:34 -0700
+Message-Id: <1714406135-451286-26-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
 References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
@@ -78,17 +78,17 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
  adultscore=0 mlxscore=0 suspectscore=0 phishscore=0 spamscore=0
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2404010000 definitions=main-2404290101
-X-Proofpoint-GUID: WEZZNIVNuHiWFwWOzeazeRuLu8RgV6TC
-X-Proofpoint-ORIG-GUID: WEZZNIVNuHiWFwWOzeazeRuLu8RgV6TC
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Proofpoint-GUID: 2M02lCBcA8F4cIOqPH-NyC-H1zDq86Gl
+X-Proofpoint-ORIG-GUID: 2M02lCBcA8F4cIOqPH-NyC-H1zDq86Gl
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,181 +104,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define vmstate_register_named which takes the instance name as its first
-parameter, instead of generating the name from VMStateIf of the Object.
-This will be needed to register objects that are not Objects.  Pass the
-new name parameter to vmstate_register_with_alias_id.
+For cpr-exec mode, ramblock_is_ignored is always true, and the address of
+each migrated memory region must match the address of the statically
+initialized region on the target.  However, for a PCI rom block, the region
+address is set when the guest writes to a BAR on the source, which does not
+occur on the target, causing a "Mismatched GPAs" error during cpr-exec
+migration.
+
+To fix, unconditionally set the target's address to the source's address
+if the region does not have an address yet.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- hw/core/qdev.c              |  1 +
- hw/intc/apic_common.c       |  2 +-
- include/migration/vmstate.h | 19 +++++++++++++++++--
- migration/savevm.c          | 35 ++++++++++++++++++++++++-----------
- migration/trace-events      |  1 +
- stubs/vmstate.c             |  1 +
- 6 files changed, 45 insertions(+), 14 deletions(-)
+ include/exec/memory.h | 12 ++++++++++++
+ migration/ram.c       | 15 +++++++++------
+ system/memory.c       | 10 ++++++++--
+ 3 files changed, 29 insertions(+), 8 deletions(-)
 
-diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-index 00efaf1..b352e8a 100644
---- a/hw/core/qdev.c
-+++ b/hw/core/qdev.c
-@@ -535,6 +535,7 @@ static void device_set_realized(Object *obj, bool value, Error **errp)
-                                                qdev_get_vmsd(dev), dev,
-                                                dev->instance_id_alias,
-                                                dev->alias_required_for_version,
-+                                               NULL,
-                                                &local_err) < 0) {
-                 goto post_realize_fail;
-             }
-diff --git a/hw/intc/apic_common.c b/hw/intc/apic_common.c
-index d8fc1e2..d6cd293 100644
---- a/hw/intc/apic_common.c
-+++ b/hw/intc/apic_common.c
-@@ -298,7 +298,7 @@ static void apic_common_realize(DeviceState *dev, Error **errp)
-         instance_id = VMSTATE_INSTANCE_ID_ANY;
-     }
-     vmstate_register_with_alias_id(NULL, instance_id, &vmstate_apic_common,
--                                   s, -1, 0, NULL);
-+                                   s, -1, 0, NULL, NULL);
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index d337737..4f654b0 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -801,6 +801,7 @@ struct MemoryRegion {
+     bool unmergeable;
+     uint8_t dirty_log_mask;
+     bool is_iommu;
++    bool has_addr;
+     RAMBlock *ram_block;
+     Object *owner;
+     /* owner as TYPE_DEVICE. Used for re-entrancy checks in MR access hotpath */
+@@ -2402,6 +2403,17 @@ void memory_region_set_enabled(MemoryRegion *mr, bool enabled);
+ void memory_region_set_address(MemoryRegion *mr, hwaddr addr);
  
-     /* APIC LDR in x2APIC mode */
-     s->extended_log_dest = ((s->initial_apic_id >> 4) << 16) |
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index bb885d9..22aa3c6 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -1234,6 +1234,7 @@ int vmstate_register_with_alias_id(VMStateIf *obj, uint32_t instance_id,
-                                    const VMStateDescription *vmsd,
-                                    void *base, int alias_id,
-                                    int required_for_version,
-+                                   const char *instance_name,
-                                    Error **errp);
- 
- /**
-@@ -1250,7 +1251,7 @@ static inline int vmstate_register(VMStateIf *obj, int instance_id,
-                                    void *opaque)
- {
-     return vmstate_register_with_alias_id(obj, instance_id, vmsd,
--                                          opaque, -1, 0, NULL);
-+                                          opaque, -1, 0, NULL, NULL);
- }
- 
- /**
-@@ -1278,7 +1279,21 @@ static inline int vmstate_register_any(VMStateIf *obj,
-                                        void *opaque)
- {
-     return vmstate_register_with_alias_id(obj, VMSTATE_INSTANCE_ID_ANY, vmsd,
--                                          opaque, -1, 0, NULL);
-+                                          opaque, -1, 0, NULL, NULL);
-+}
-+
-+/**
-+ * vmstate_register_named() - pass an instance_name explicitly instead of
-+ * implicitly via VMStateIf get_id().  Needed to register a instance-specific
-+ * VMSD for objects that are not Objects.
+ /*
++ * memory_region_set_address_only: set the address of a region.
++ *
++ * Same as memory_region_set_address, but without causing transaction side
++ * effects.
++ *
++ * @mr: the region to be updated
++ * @addr: new address, relative to container region
 + */
-+static inline int vmstate_register_named(const char *instance_name,
-+                                         int instance_id,
-+                                         const VMStateDescription *vmsd,
-+                                         void *opaque)
-+{
-+    return vmstate_register_with_alias_id(NULL, instance_id, vmsd, opaque,
-+                                          -1, 0, instance_name, NULL);
++void memory_region_set_address_only(MemoryRegion *mr, hwaddr addr);
++
++/*
+  * memory_region_set_size: dynamically update the size of a region.
+  *
+  * Dynamically updates the size of a region.
+diff --git a/migration/ram.c b/migration/ram.c
+index add285b..7b8d7f6 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -4196,12 +4196,15 @@ static int parse_ramblock(QEMUFile *f, RAMBlock *block, ram_addr_t length)
+     }
+     if (migrate_ignore_shared()) {
+         hwaddr addr = qemu_get_be64(f);
+-        if (migrate_ram_is_ignored(block) &&
+-            block->mr->addr != addr) {
+-            error_report("Mismatched GPAs for block %s "
+-                         "%" PRId64 "!= %" PRId64, block->idstr,
+-                         (uint64_t)addr, (uint64_t)block->mr->addr);
+-            return -EINVAL;
++        if (migrate_ram_is_ignored(block)) {
++            if (!block->mr->has_addr) {
++                memory_region_set_address_only(block->mr, addr);
++            } else if (block->mr->addr != addr) {
++                error_report("Mismatched GPAs for block %s "
++                             "%" PRId64 "!= %" PRId64, block->idstr,
++                             (uint64_t)addr, (uint64_t)block->mr->addr);
++                return -EINVAL;
++            }
+         }
+     }
+     ret = rdma_block_notification_handle(f, block->idstr);
+diff --git a/system/memory.c b/system/memory.c
+index ca04a0e..3c72504 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -2665,7 +2665,7 @@ static void memory_region_add_subregion_common(MemoryRegion *mr,
+     for (alias = subregion->alias; alias; alias = alias->alias) {
+         alias->mapped_via_alias++;
+     }
+-    subregion->addr = offset;
++    memory_region_set_address_only(subregion, offset);
+     memory_region_update_container_subregions(subregion);
  }
  
- void vmstate_unregister(VMStateIf *obj, const VMStateDescription *vmsd,
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 9b1a335..86b4c87 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -889,10 +889,20 @@ int vmstate_replace_hack_for_ppc(VMStateIf *obj, int instance_id,
-     return vmstate_register(obj, instance_id, vmsd, opaque);
+@@ -2745,10 +2745,16 @@ static void memory_region_readd_subregion(MemoryRegion *mr)
+     }
  }
  
-+static bool make_new_idstr(VMStateId idstr, const char *id, Error **errp)
++void memory_region_set_address_only(MemoryRegion *mr, hwaddr addr)
 +{
-+    if (snprintf(idstr, sizeof(VMStateId), "%s/", id) >= sizeof(VMStateId)) {
-+        error_setg(errp, "Path too long for VMState (%s)", id);
-+        return false;
-+    }
-+    return true;
++    mr->addr = addr;
++    mr->has_addr = true;
 +}
 +
- int vmstate_register_with_alias_id(VMStateIf *obj, uint32_t instance_id,
-                                    const VMStateDescription *vmsd,
-                                    void *opaque, int alias_id,
-                                    int required_for_version,
-+                                   const char *instance_name,
-                                    Error **errp)
+ void memory_region_set_address(MemoryRegion *mr, hwaddr addr)
  {
-     SaveStateEntry *se;
-@@ -907,19 +917,17 @@ int vmstate_register_with_alias_id(VMStateIf *obj, uint32_t instance_id,
-     se->vmsd = vmsd;
-     se->alias_id = alias_id;
- 
--    if (obj) {
--        char *id = vmstate_if_get_id(obj);
-+    if (instance_name) {
-+        if (!make_new_idstr(se->idstr, instance_name, errp)) {
-+            goto err;
-+        }
-+
-+    } else if (obj) {
-+        g_autofree char *id = vmstate_if_get_id(obj);
-         if (id) {
--            if (snprintf(se->idstr, sizeof(se->idstr), "%s/", id) >=
--                sizeof(se->idstr)) {
--                error_setg(errp, "Path too long for VMState (%s)", id);
--                g_free(id);
--                g_free(se);
--
--                return -1;
-+            if (!make_new_idstr(se->idstr, id, errp)) {
-+                goto err;
-             }
--            g_free(id);
--
-             se->compat = g_new0(CompatEntry, 1);
-             pstrcpy(se->compat->idstr, sizeof(se->compat->idstr), vmsd->name);
-             se->compat->instance_id = instance_id == VMSTATE_INSTANCE_ID_ANY ?
-@@ -941,7 +949,12 @@ int vmstate_register_with_alias_id(VMStateIf *obj, uint32_t instance_id,
+     if (addr != mr->addr) {
+-        mr->addr = addr;
++        memory_region_set_address_only(mr, addr);
+         memory_region_readd_subregion(mr);
      }
-     assert(!se->compat || se->instance_id == 0);
-     savevm_state_handler_insert(se);
-+    trace_vmstate_register(se->idstr, se->instance_id, (void *)vmsd, opaque);
-     return 0;
-+
-+err:
-+    g_free(se);
-+    return -1;
  }
- 
- void vmstate_unregister(VMStateIf *obj, const VMStateDescription *vmsd,
-diff --git a/migration/trace-events b/migration/trace-events
-index f0e1cb8..8647147 100644
---- a/migration/trace-events
-+++ b/migration/trace-events
-@@ -53,6 +53,7 @@ vmstate_downtime_checkpoint(const char *checkpoint) "%s"
- postcopy_pause_incoming(void) ""
- postcopy_pause_incoming_continued(void) ""
- postcopy_page_req_sync(void *host_addr) "sync page req %p"
-+vmstate_register(const char *idstr, int id, void *vmsd, void *opaque) "%s, %d, vmsd %p, opaque %p"
- 
- # vmstate.c
- vmstate_load_field_error(const char *field, int ret) "field \"%s\" load failed, ret = %d"
-diff --git a/stubs/vmstate.c b/stubs/vmstate.c
-index 8513d92..d67506e 100644
---- a/stubs/vmstate.c
-+++ b/stubs/vmstate.c
-@@ -6,6 +6,7 @@ int vmstate_register_with_alias_id(VMStateIf *obj,
-                                    const VMStateDescription *vmsd,
-                                    void *base, int alias_id,
-                                    int required_for_version,
-+                                   const char *instance_name,
-                                    Error **errp)
- {
-     return 0;
 -- 
 1.8.3.1
 
