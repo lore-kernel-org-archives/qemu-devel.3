@@ -4,77 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED4D7C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 13:22:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F11B9C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 13:40:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1QxJ-0005Rn-GI; Mon, 29 Apr 2024 09:22:06 -0400
+	id 1s1REl-0003dc-VA; Mon, 29 Apr 2024 09:40:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1QxA-0005Qz-2R
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 09:22:01 -0400
-Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1REi-0003dF-70
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 09:40:05 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Qx8-0005Bf-3E
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 09:21:55 -0400
-Received: by mail-lf1-x136.google.com with SMTP id
- 2adb3069b0e04-5171a529224so5614799e87.0
- for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 06:21:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1REg-0000qj-1z
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 09:40:03 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-56c5d05128dso4047340a12.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 06:40:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714396911; x=1715001711; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714398000; x=1715002800; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=jljxZJGISWC3e+SDlGvPM/yJwLLe4lClxBEZcWzHTxg=;
- b=y/i2VBSHOqzyNHazAfEXopRx5fa0y3NMeA8+wCa+m4ZhZeeANEdTI12zveQLI23QGX
- MS0x4bU4VtcaXFe5kKEl2MRRhLzWjc7DPBUI68HLVDHwPOuNSlCKRYEDdNIMODVX241P
- yd9BtOPubXEsoSAhS59nn3Eq8nm6yULtmejU8MJNFi9ZnuWpySy8cy6i3raKB6i37E0S
- XMGO5wdMXHkK6kREEEH+q8pin2lgPxaC0sWtQr4L/lN1VMrdn4Zz5VRyJpVKHIjvk38M
- l2IhriZBYmVCl13IddCWsVHvQn2rNtq395J0pAqIYlPmu+bvSbvKx6jBRmIJ/TPC+SRJ
- 0JzA==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=FCayGo/UueZ0m9/2yY8GVfnM/jvfBIii0FHoaTwegUs=;
+ b=bdw2yN0SDRV+HVlPphNBEKZaULW7nJR1T745mqZFpKf7yQd+gs1SC97FxBZq928iAX
+ egMaeFBvw19v57DYxrN2H+eivj/L7eSZib/sg+cTPeSokLY3NT1s+fs8EL7UwELXQt+m
+ eBQW8JeztAJ6EktkS8UxcxS43CaI/1ogBAZ9QpyIxZJo0RDXA6cwv7lwowUMyRrvA06/
+ iZg1S7it6oi5kaTfe+2ZsbgdWT4jgwqeU4NpiHtkb9JRUUiOmOQM4es4nrtoE2c8uhG0
+ P6lyhQZsHit3ixUANGsVn1ySYjOzRoBfRqWCwBvvM5iTFvVE/CRgtgxFXQo8Q1Sfv5d6
+ eZpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714396911; x=1715001711;
+ d=1e100.net; s=20230601; t=1714398000; x=1715002800;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jljxZJGISWC3e+SDlGvPM/yJwLLe4lClxBEZcWzHTxg=;
- b=HEZx5kwWlZmAJ+g4jlGPDmbZCX8Rk+4Sv6xQeiVqg9shN2cvBrCFbMhBalIYUm2NGG
- ucnHiOYOwPaGhJcJQfYlw1PzErgbkhQ6Xp1gCVYeNuiMxlKRVbVEBuNfothYjlG1buDl
- o0GtzesY4E2qDF8M8Y57zTMzmC6q1EBq3fX622irFYEl8d/xSNl1OEG7mg8I61aBSKEs
- d3/wV4mhoh6wbQ0wwX/9VIo5N7O67/xACdmqH1AnKWrsl3888T48Km/DaFtCfJ/d/E7L
- AzQtZdhw6ogOdFOYUbF0nrpwvOI68bBRwPG4GYdc+HlP0BOT8+emUS2HAWXqhfx3g/aI
- HPSw==
+ bh=FCayGo/UueZ0m9/2yY8GVfnM/jvfBIii0FHoaTwegUs=;
+ b=pod69WLNaTCHGBtjAbePOVcJyK1z3pXZMftAgdi44bD/fs37poLQds+0KCkZTlFD1X
+ LYn9a+BcnUh3vzMQRPgQ1nNj4BPSi0GdrTexnqf4/lhfsyRmDR+CFjOCQY5AmS02s2fC
+ yoFQkW4Xfv/RDdwlTQQHB/vK8gxY7gGuUmRBYzV/T/GQnHMqrYoIgNkeyy5DDkeQbhFh
+ 45puauMFYgvDEso7YB+eDCwqNTlCiSJgXNfCF4Ao+8jT5RBtm7xoZK/ZCmAt0I9k/SVS
+ YVHafrv7vOtnftecZYd9CNalXvjLp3q+z+wtVapHPNWOWxHwF3mInSDLGuTJIf8MKb4h
+ vGWA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWm0TkkYXj6B2FMCMprHMpLgHjY41s3CMSgRswugWCpuIVYpxRJC0EqzZ66PPkoOoop9Rtel+afnxLY16ho3m2LVagnSDg=
-X-Gm-Message-State: AOJu0YxaPuYQJ7KYR8cSi4ICxBCrVaIE22BcQ8nYh1faxFoCS1Ca6SgJ
- gUSJPoMGrktI82xuPaENyCHWDm09iX/B9eyqpMl8pF/dYNiATe9vO2JOYcjC1yY=
-X-Google-Smtp-Source: AGHT+IGb9nqz2b5Mgixok5BmHg+gfIR2ST+JuLbQxNfrHAad3ZbKGZgOv7pVtNrWF2MC1eRlbAGKeA==
-X-Received: by 2002:a05:6512:220b:b0:516:a091:db5e with SMTP id
- h11-20020a056512220b00b00516a091db5emr8399950lfu.48.1714396910461; 
- Mon, 29 Apr 2024 06:21:50 -0700 (PDT)
+ AJvYcCWPyEx7dFqijbbllYVYZ1kiT7XlOnp8h/9BN2xKzvJb7Uc63in6QTDuq6ZjIoGhsHKjqKcJP2Skeer3j6wVoW8aW/vvSqg=
+X-Gm-Message-State: AOJu0YwU5c8igh3dDrDG5HW+GUbiDhxL4gB1ytnQ8a5bw0paa8zP4lY/
+ O05incJoTx9SOeaomSHgfx8SVwklE+isVaMxP8JKrIW2jg52qEpBKgpmpoQ3UQc=
+X-Google-Smtp-Source: AGHT+IES8inFL7lqk67DylQp1ZpXL20aJBi0rh2eLfFAi0eh/wSJ35LSwCYFSPEr8ZBEc4BqbC4kBg==
+X-Received: by 2002:a17:906:c04f:b0:a55:6b76:eedc with SMTP id
+ bm15-20020a170906c04f00b00a556b76eedcmr7155637ejb.14.1714397999944; 
+ Mon, 29 Apr 2024 06:39:59 -0700 (PDT)
 Received: from [192.168.69.100] (bny92-h02-176-184-44-142.dsl.sta.abo.bbox.fr.
  [176.184.44.142]) by smtp.gmail.com with ESMTPSA id
- j42-20020a05600c1c2a00b0041bfa2171efsm7359190wms.40.2024.04.29.06.21.49
+ q10-20020a170906388a00b00a46aba003eesm13863118ejd.215.2024.04.29.06.39.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Apr 2024 06:21:50 -0700 (PDT)
-Message-ID: <2f89280f-b26d-434e-8ac1-e48fe13243f1@linaro.org>
-Date: Mon, 29 Apr 2024 15:21:48 +0200
+ Mon, 29 Apr 2024 06:39:59 -0700 (PDT)
+Message-ID: <40bee8cc-6cad-4c5b-a319-49dcbb2b82f1@linaro.org>
+Date: Mon, 29 Apr 2024 15:39:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 06/10] util/bufferiszero: Improve scalar variant
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20240424225705.929812-1-richard.henderson@linaro.org>
- <20240424225705.929812-7-richard.henderson@linaro.org>
- <400f20e7-3c33-4916-897a-0d6b21d572c4@linaro.org>
- <80f07930-e5e5-496b-ba08-6091ebe55c1e@linaro.org>
+Subject: Re: [PATCH] mc146818rtc: add a way to generate RTC interrupts via QMP
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Daniil Tatianin <d-tatianin@yandex-team.ru>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20240425133745.464091-1-d-tatianin@yandex-team.ru>
+ <87v844y0ul.fsf@pond.sub.org>
+ <11c78645-e87b-4a43-8191-a73540c364a9@linaro.org>
+ <87plu8ieut.fsf@pond.sub.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <80f07930-e5e5-496b-ba08-6091ebe55c1e@linaro.org>
+In-Reply-To: <87plu8ieut.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::136;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x136.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,23 +101,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/4/24 14:31, Richard Henderson wrote:
-> On 4/29/24 05:18, Philippe Mathieu-Daudé wrote:
->>> +
->>> +    t = ldq_he_p(buf) | ldq_he_p(buf + len - 8);
->>
->> Here we read #0 and #31, ...
->>
->>> +    p = QEMU_ALIGN_PTR_DOWN(buf + 8, 8);
->>> +    e = QEMU_ALIGN_PTR_DOWN(buf + len - 1, 8);
->>> +
->>> +    /* Read 0 to 31 aligned words from the middle. */
->>
->> ... so here is #1 to #30?
-> 
-> Not indexes, but count.  There may be zero words remaining in the 
-> middle, etc.
+(+Peter who has more experience on such design).
 
-Oh, got it, thanks!
+On 29/4/24 13:32, Markus Armbruster wrote:
+> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
+> 
+>> Hi Daniil, Markus,
+>>
+>> On 26/4/24 10:39, Markus Armbruster wrote:
+>>> Daniil Tatianin <d-tatianin@yandex-team.ru> writes:
+>>>
+>>>> This can be used to force-synchronize the time in guest after a long
+>>>> stop-cont pause, which can be useful for serverless-type workload.
+
+What is a "serverless-type workload"?
+
+>>>> Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+>>>> ---
+>>>>    hw/rtc/mc146818rtc.c         | 15 +++++++++++++++
+>>>>    include/hw/rtc/mc146818rtc.h |  1 +
+>>>>    qapi/misc-target.json        | 16 ++++++++++++++++
+>>>>    3 files changed, 32 insertions(+)
+>>>>
+>>>> diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
+>>>> index f4c1869232..6980a78d5f 100644
+>>>> --- a/hw/rtc/mc146818rtc.c
+>>>> +++ b/hw/rtc/mc146818rtc.c
+>>>> @@ -116,6 +116,21 @@ void qmp_rtc_reset_reinjection(Error **errp)
+>>>>        }
+>>>>    }
+>>>>    +void qmp_rtc_notify(Error **errp)
+>>>> +{
+>>>> +    MC146818RtcState *s;
+>>>> +
+>>>> +    /*
+>>>> +     * See:
+>>>> +     * https://www.kernel.org/doc/Documentation/virtual/kvm/timekeeping.txt
+
+What part of this document explains why this change is required?
+I probably missed it. Explaining it here briefly would be more
+useful.
+
+>>>> +     */
+>>>> +    QLIST_FOREACH(s, &rtc_devices, link) {
+>>>> +        s->cmos_data[RTC_REG_B] |= REG_B_UIE;
+                                       // Update-ended interrupt enable
+
+>>>> +        s->cmos_data[RTC_REG_C] |= REG_C_IRQF | REG_C_UF;
+                                       // interrupt request flag
+                                       //           update interrupt flag
+
+>>>> +        qemu_irq_raise(s->irq);
+>>>> +    }
+>>>> +}
+>>>> +
+>>> Note for later: qmp_rtc_notify() works on all realized mc146818rtc
+>>> devices.  Other kinds of RTC devices are silently ignored.  Just like
+>>> qmp_rtc_reset_reinjection().
+>>
+>> IMO to avoid any future ambiguity (in heterogeneous machines), this
+>> command must take a QOM device path (or a list of) and only notify
+>> those.
+> 
+> Let's compare:
+> 
+> • With QOM path:
+> 
+>    · You need to know the machine's RTC device(s).
+> 
+>      Unfortunately, this is bothersome, as the QOM path is not stable.
+
+But we'll need more of that with dynamic machines...
+
+>      For Q35, it's generally "/machine/unattached/device[N]/rtc", but N
+>      varies with configuration (TCG N=2, KVM N=3 for me), and it might
+>      vary with machine type version.  That's because the machine code
+>      creates ICH9-LPC without a proper name.  We do that a lot.  I hate
+>      it.
+> 
+>      Likewise for i440FX with PIIX3 instead of ICH9-LPC.
+> 
+>      For isapc, it's /machine/unattached/device[3].  I suspect the 3
+>      isn't reliable there, either.
+> 
+>      microvm doesn't seem to have an RTC by default.
+> 
+>    · If the device so named doesn't support IRQ inject, the command
+>      should fail.
+
+Yes, why the management app would want to run this command if there
+are not RTC on the machine?
+
+>    · Could be generalized to non-RTC devices when that's useful.
+> 
+> • Broadcast:
+> 
+>    · You don't need to know the machine's RTC device(s).
+> 
+>    · If there are multiple RTC devices that support IRQ inject, we inject
+>      for each of them.  There is no way to select specific RTCs.
+> 
+>    · If there is no RTC device that supports IRQ inject, the command does
+>      nothing silently.
+> 
+>      I don't like silent failures.  It could be made to fail instead.
+> 
+> If it wasn't for the unstable QOM path problem, I'd advise against
+> the broadcast interface.
+> 
+> Thoughts?
+
+Something bugs me in this patch but I couldn't figure out what I am
+missing. The issue is when migrated VM is restored. I don't get why
+the behavior depends on an external decision (via external management
+transport). Don't we have post_load() hooks for such tuning?
+This device implements it in rtc_post_load().
+
+Regards,
+
+Phil.
+
+PD: BTW tomorrow community call could be a good opportunity to discuss
+this.
 
 
