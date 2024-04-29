@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7EADC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 15:57:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1A91C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 15:57:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1TMU-0004ib-KU; Mon, 29 Apr 2024 11:56:14 -0400
+	id 1s1TMF-0004X5-Mi; Mon, 29 Apr 2024 11:55:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1s1TMJ-0004Zp-Dd
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:03 -0400
+ id 1s1TMB-0004Vs-7U
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:55:55 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1s1TMF-0005Ex-VM
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:03 -0400
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ id 1s1TM5-0005Fb-RE
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:55:53 -0400
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43TFmn2D023135; Mon, 29 Apr 2024 15:55:43 GMT
+ 43TFml1T021753; Mon, 29 Apr 2024 15:55:46 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
  h=from : to : cc :
  subject : date : message-id : in-reply-to : references; s=corp-2023-11-20;
- bh=HZrv1nFWtE6Nl7XyPOcCaiN32/YoQ6R+20VVNPwSEUk=;
- b=bEDLS/LKXmi+P8SBtrIEujkndt551tLiCoCsXxydsfYwtLWU7VTv8wDNvdBOM60lUFJ9
- 8jwYArAlqMB26iURylTQ7C30+XLkuq09hjWc5BM+AsfE7S6QWr5vL1/e/h9rHEBr3Kid
- 8L9aJHHf8HhmWaVCbF4ksKMsurVji5oiiWzv780SqMfTQOpWeC5M+ARDtC91o59EPICG
- UA32KpeT2aidKhOFR3e2eYAIJrwZr6KIo7bgSrzdUVLo+sdWz8LU85w3ccYA70+16KQv
- lrF7CBHe8I+iXnxtgLiuozrvrm9GeoAQtkgurgccb7nBmepFqy5nbGH51srPRsKLm+go 3A== 
+ bh=LzcEoTaqq99sN03X9qX31cStr9peqSwOasAJUDXCZM8=;
+ b=kI51nE349QCVJ4sWJyq4jeYPzaVdsQcW09dpM9ZSN6iFj5WNaUhjCLXNIL6qkAG+pMuV
+ pEMWqutrIVYh1ZYocwSMATQZe6KEbNbOiWh6JPSNmZUOLd+Gy4gQI2/esQGEnFs/S2Ja
+ 7rKs1/zQCNVaZdViaj+buEGcBP8QQgHxCTFl8bDonLjLcGA+Of+KyRPJN0HJRhlz3SB3
+ VQ1C/OsXKKgK0IBTGRCPh7M3LaTiUx5mZYlQ/MyZOFzZyE+yXpEgvtGpp751Vivukjhw
+ 6h7ttHLl+Q/YP/BUp+wWsQKms7UGTQ9TnLTvxRzMHF5Mwjom7quyQwpp0VhbkoiVfjg+ XA== 
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xrryv2wbj-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xrr54axsx-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Apr 2024 15:55:42 +0000
+ Mon, 29 Apr 2024 15:55:46 +0000
 Received: from pps.filterd
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 43TFVc5C011501; Mon, 29 Apr 2024 15:55:42 GMT
+ with ESMTP id 43TFp3V3011441; Mon, 29 Apr 2024 15:55:45 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 3xrqt6j65t-1
+ 3xrqt6j69q-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Apr 2024 15:55:41 +0000
+ Mon, 29 Apr 2024 15:55:45 +0000
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43TFtaGg034442;
- Mon, 29 Apr 2024 15:55:41 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43TFtaGo034442;
+ Mon, 29 Apr 2024 15:55:44 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 3xrqt6j5ys-8; Mon, 29 Apr 2024 15:55:41 +0000
+ ESMTP id 3xrqt6j5ys-12; Mon, 29 Apr 2024 15:55:44 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,9 +64,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V1 07/26] migration: VMStateId
-Date: Mon, 29 Apr 2024 08:55:16 -0700
-Message-Id: <1714406135-451286-8-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V1 11/26] migration: vmstate_register at init time
+Date: Mon, 29 Apr 2024 08:55:20 -0700
+Message-Id: <1714406135-451286-12-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
 References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
@@ -78,8 +78,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
  adultscore=0 mlxscore=0 suspectscore=0 phishscore=0 spamscore=0
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2404010000 definitions=main-2404290101
-X-Proofpoint-GUID: pEkksVTdrNfiyxDXjEK5ht38loEMuz1S
-X-Proofpoint-ORIG-GUID: pEkksVTdrNfiyxDXjEK5ht38loEMuz1S
+X-Proofpoint-ORIG-GUID: ohXr_sM7tsS6uc2XKKMImGShsoBvCqMc
+X-Proofpoint-GUID: ohXr_sM7tsS6uc2XKKMImGShsoBvCqMc
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -104,103 +104,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define a type for the 256 byte id string to guarantee the same length is
-used and enforced everywhere.
+Define vmstate_register_init to statically declare that a vmstate object
+should be registered during qemu initialization, specifically, in the
+call to vmstate_register_init_all.  This is needed to register objects
+that are not Objects (and hence cannot use the DeviceClass vmsd hook),
+without requiring that qemu call an object-specific initialization function.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- include/exec/ramblock.h     | 3 ++-
- include/migration/vmstate.h | 2 ++
- migration/savevm.c          | 8 ++++----
- migration/vmstate.c         | 3 ++-
- 4 files changed, 10 insertions(+), 6 deletions(-)
+ include/migration/vmstate.h | 18 ++++++++++++++++++
+ migration/savevm.c          | 32 ++++++++++++++++++++++++++++++++
+ system/vl.c                 |  3 +++
+ 3 files changed, 53 insertions(+)
 
-diff --git a/include/exec/ramblock.h b/include/exec/ramblock.h
-index 0babd10..61deefe 100644
---- a/include/exec/ramblock.h
-+++ b/include/exec/ramblock.h
-@@ -23,6 +23,7 @@
- #include "cpu-common.h"
- #include "qemu/rcu.h"
- #include "exec/ramlist.h"
-+#include "migration/vmstate.h"
- 
- struct RAMBlock {
-     struct rcu_head rcu;
-@@ -35,7 +36,7 @@ struct RAMBlock {
-     void (*resized)(const char*, uint64_t length, void *host);
-     uint32_t flags;
-     /* Protected by the BQL.  */
--    char idstr[256];
-+    VMStateId idstr;
-     /* RCU-enabled, writes protected by the ramlist lock */
-     QLIST_ENTRY(RAMBlock) next;
-     QLIST_HEAD(, RAMBlockNotifier) ramblock_notifiers;
 diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 4691334..a39c0e6 100644
+index 3d71b34..8cb3d2b 100644
 --- a/include/migration/vmstate.h
 +++ b/include/migration/vmstate.h
-@@ -1210,6 +1210,8 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+@@ -1255,6 +1255,24 @@ static inline int vmstate_register(VMStateIf *obj, int instance_id,
+ }
  
- bool vmstate_section_needed(const VMStateDescription *vmsd, void *opaque);
- 
-+typedef char (VMStateId)[256];
+ /**
++ * vmstate_register_init() - statically declare a VMSD to be registered when
++ * QEMU calls vmstate_register_init_all.  This is useful for registering
++ * objects that are not Objects (and hence cannot use the DeviceClass vmsd
++ * hook).
++ */
++#define vmstate_register_init(_obj, _id, _vmsd, _opaque)                    \
++static void __attribute__((constructor)) vmstate_register_ ## _vmsd(void)   \
++{                                                                           \
++    vmstate_register_init_add(_obj, _id, &_vmsd, _opaque);                  \
++}
 +
- #define  VMSTATE_INSTANCE_ID_ANY  -1
- 
- /* Returns: 0 on success, -1 on failure */
++void vmstate_register_init_add(VMStateIf *obj, int instance_id,
++                               const VMStateDescription *vmsd, void *opaque);
++
++void vmstate_register_init_all(void);
++
++
++/**
+  * vmstate_replace_hack_for_ppc() - ppc used to abuse vmstate_register
+  *
+  * Don't even think about using this function in new code.
 diff --git a/migration/savevm.c b/migration/savevm.c
-index a30bcd9..9b1a335 100644
+index cd2eabe..ec48da9 100644
 --- a/migration/savevm.c
 +++ b/migration/savevm.c
-@@ -197,13 +197,13 @@ const VMStateInfo vmstate_info_timer = {
+@@ -957,6 +957,38 @@ err:
+     return -1;
+ }
  
- 
- typedef struct CompatEntry {
--    char idstr[256];
-+    VMStateId idstr;
-     int instance_id;
- } CompatEntry;
- 
- typedef struct SaveStateEntry {
-     QTAILQ_ENTRY(SaveStateEntry) entry;
--    char idstr[256];
-+    VMStateId idstr;
-     uint32_t instance_id;
-     int alias_id;
-     int version_id;
-@@ -814,7 +814,7 @@ int register_savevm_live(const char *idstr,
- void unregister_savevm(VMStateIf *obj, const char *idstr, void *opaque)
++typedef struct VMStateInit {
++    VMStateIf *obj;
++    int instance_id;
++    const VMStateDescription *vmsd;
++    void *opaque;
++    QLIST_ENTRY(VMStateInit) next;
++} VMStateInit;
++
++static QLIST_HEAD(, VMStateInit) vmstate_inits;
++
++void vmstate_register_init_add(VMStateIf *obj, int instance_id,
++                               const VMStateDescription *vmsd, void *opaque)
++{
++    VMStateInit *v = g_new0(VMStateInit, 1);
++
++    v->obj = obj;
++    v->instance_id = instance_id;
++    v->vmsd = vmsd;
++    v->opaque = opaque;
++    QLIST_INSERT_HEAD(&vmstate_inits, v, next);
++}
++
++void vmstate_register_init_all(void)
++{
++    VMStateInit *v, *tmp;
++
++    QLIST_FOREACH_SAFE(v, &vmstate_inits, next, tmp) {
++        vmstate_register(v->obj, v->instance_id, v->vmsd, v->opaque);
++        QLIST_REMOVE(v, next);
++    }
++}
++
+ void vmstate_unregister(VMStateIf *obj, const VMStateDescription *vmsd,
+                         void *opaque)
  {
-     SaveStateEntry *se, *new_se;
--    char id[256] = "";
-+    VMStateId id = "";
+diff --git a/system/vl.c b/system/vl.c
+index c644222..7797206 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -78,6 +78,7 @@
+ #include "hw/i386/pc.h"
+ #include "migration/misc.h"
+ #include "migration/snapshot.h"
++#include "migration/vmstate.h"
+ #include "sysemu/tpm.h"
+ #include "sysemu/dma.h"
+ #include "hw/audio/soundhw.h"
+@@ -3663,6 +3664,8 @@ void qemu_init(int argc, char **argv)
  
-     if (obj) {
-         char *oid = vmstate_if_get_id(obj);
-@@ -2650,7 +2650,7 @@ qemu_loadvm_section_start_full(QEMUFile *f, uint8_t type)
-     uint32_t instance_id, version_id, section_id;
-     int64_t start_ts, end_ts;
-     SaveStateEntry *se;
--    char idstr[256];
-+    VMStateId idstr;
-     int ret;
+     qemu_create_machine(machine_opts_dict);
  
-     /* Read section start */
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index ef26f26..437f156 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -471,7 +471,8 @@ static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
-     trace_vmstate_subsection_load(vmsd->name);
++    vmstate_register_init_all();
++
+     suspend_mux_open();
  
-     while (qemu_peek_byte(f, 0) == QEMU_VM_SUBSECTION) {
--        char idstr[256], *idstr_ret;
-+        VMStateId idstr;
-+        char *idstr_ret;
-         int ret;
-         uint8_t version_id, len, size;
-         const VMStateDescription *sub_vmsd;
+     qemu_disable_default_devices();
 -- 
 1.8.3.1
 
