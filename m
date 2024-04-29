@@ -4,93 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73F06C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 21:03:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B25FC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 21:05:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1Y9V-0005g9-8E; Mon, 29 Apr 2024 17:03:09 -0400
+	id 1s1YBD-00077a-Vj; Mon, 29 Apr 2024 17:04:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1s1Y9T-0005fw-U4
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:03:07 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1s1Y9S-0007B7-4p
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:03:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=TgzwqTXiIFqKQ0LN3cZqpX6TjDKJzQ4agypMlPmMmi4=; b=J905Bhw6NeLe4dA2cAdVmBJlWK
- OHnRQ7RFTT1yW8BtaZ0ZkrAPhVigk09TwaC+T3GwlSBtOEbdy6eVZJboj33vslWeA6ayuyNawDzGf
- NIoAX0Jl9co2qN41V1evNnblFyMsTHyBOeOHf9cqnBrDThysygclOjI73dfA3QTnS1LpeWtT2GA1D
- k3G1+3ga6IL1vGuYIIKcCZYXBbHWF2fay0Mpx2hCfFEn096Yrg9WFbYK/3Drk65iPBdymuu5jMums
- URzhXy7PW6yjdF0qNOXWUS0AZPdQFYXTVcU6FUM0/lr7o6L9k9G4i9VRaMKF3xB5hMYRf8H+8DY9B
- ml9HOXkdRScdmdV3O4qbFRMZW8XTLSMlnPjrEbPiZDVmydwxVoE6clOQi1igk8RY+ilmGhiHkvalU
- Nx8XeSZ1xZ6dtZt2bNLhLo2gd5rQaY99qmQBKkKI3lFFudaswsILmWwn7BePnNwO+c+jGndT0AyTK
- bglrSVEOKFBg+reX3lYkzSFtlqNQYnkG2c7bTaTpuR7y+NmNnmvXA5WsvzV+Eoz8LumkHLnq0JXEs
- NphLI9HNjGx3Y6rbSu9s8v+59/7/cQ3M8XubQMv0VbOdUxM1QigL5ptfk75kg8ojlVeq8BVFpylko
- YbqWJjxcbSkBzTbydKv0ZCMLJgGvYfrxvV2O2Iv14=;
-Received: from [2a00:23c4:8bb4:4000:1a44:faa7:2c0:9860]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1s1Y8O-000CK6-Ng; Mon, 29 Apr 2024 22:02:01 +0100
-Message-ID: <821def5d-ab57-4c95-b628-4b99c269600a@ilande.co.uk>
-Date: Mon, 29 Apr 2024 22:03:02 +0100
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1YBC-000757-Lq
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:04:54 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1YBA-0007J9-VN
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:04:54 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-41b21ed19f5so35565005e9.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 14:04:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714424691; x=1715029491; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/wW0mbKsEQfjC4yJaa5rCiPpCJkkT+sgffueDCdT0AA=;
+ b=b4dfNDK3Bhyrd2YWHUUF9seLZRSs+7B9MCPlVrC5bLC4a0ADOHSevtsCmjZiAc4Xsg
+ fFLO52p0Ds7Ja6lY9Ae+IYqcO1elSgKrYfoi7HUVDXZA9Rc5R00rfugIV6b82Rnb8U7E
+ WK89+Gzzz50d8EmYPbzme1Wel+zJRwHuiueu8X6Z9Dtwsad6UkIIug2APZl/Rm3pd7q4
+ vkRt6+bfnVC8jod3LbYXM7gHg030ClvjUPTr57uBA9tv9kchtl6vSD4kFozGt22L9AOn
+ fKUNMCcEgT0QJW1J3ldE+XZXj1Mwp7Iq5dVPbR1TgMP8UjPDClkif3U4IDmGwPR/6OQ7
+ ro2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714424691; x=1715029491;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/wW0mbKsEQfjC4yJaa5rCiPpCJkkT+sgffueDCdT0AA=;
+ b=oWvKka6fUj9vMVVAhg63yNlF5fairdeOXTJNoQV3tLWpI9tvdSOo3N9SulbSS3YNOl
+ mQD/ga+I+Itf9tc3Pc6mlbNgRYz9bUjEOrq+FqoiLqo4Y3889fRhr+En+ZQNbI6YSHa8
+ 5jjEo1tsQgkHvWAnAmyuhPu2Gg5zxcdXrOo+jmx1C6Yb0Vy9Il+11LI8e5eBEPj63PtV
+ TNY2fw8u+blRT24Fd6gIBXV/stb3uQK4gz1Ik3HUFXD/RhUjaEJe25LYbKp/cXspxGNh
+ K1uzxuBMQkz3A8Coa+tgHD9kttMl9b5qhHMulRxGbH5PJcIkhsM51O41O1qLeyt3epMW
+ p11A==
+X-Gm-Message-State: AOJu0Yy3i44+rQbI5MqkIK9o8yEmf0Zv4i3h+CWNZgt9gsfgOi/v0MhM
+ +3wCOfFZ9bt9ul1fnYiRFZWcxSqaBGNfTV/yEGMcsKUjtAD1SiDFO8jPrGXmM2lNNf4O3aYgGpL
+ Xwj0=
+X-Google-Smtp-Source: AGHT+IHLEfwOZ3+gvcs/zgYAD6ID1FBVDOw6ioUOSbPzjrmno3ahx1zkKmfam2smlU2KHrnXjCeZmA==
+X-Received: by 2002:a5d:618d:0:b0:346:85a0:20af with SMTP id
+ j13-20020a5d618d000000b0034685a020afmr7279228wru.35.1714424690836; 
+ Mon, 29 Apr 2024 14:04:50 -0700 (PDT)
+Received: from [192.168.69.100] (bny92-h02-176-184-44-142.dsl.sta.abo.bbox.fr.
+ [176.184.44.142]) by smtp.gmail.com with ESMTPSA id
+ a16-20020adffb90000000b0034af18ef68csm22561490wrr.5.2024.04.29.14.04.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Apr 2024 14:04:50 -0700 (PDT)
+Message-ID: <1ac02538-5aeb-4a4d-a150-1aad084d4f7c@linaro.org>
+Date: Mon, 29 Apr 2024 23:04:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Artyom Tarasenko <atar4qemu@gmail.com>
-Cc: Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <20240419084812.504779-1-thuth@redhat.com>
+Subject: Re: [PATCH 00/24] exec: Rework around CPUState user fields (part 2)
+To: qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20240428221450.26460-1-philmd@linaro.org>
 Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20240419084812.504779-1-thuth@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240428221450.26460-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:1a44:faa7:2c0:9860
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v2 0/4] Sparc CPU naming and help text improvements
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,43 +95,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/04/2024 09:48, Thomas Huth wrote:
+On 29/4/24 00:14, Philippe Mathieu-Daudé wrote:
 
-> The Sparc CPU naming and the corresponding help text is somewhat
-> confusing for the users. We should avoid spaces in the Names and
-> provide clear information to the users what can be passed to the
-> "-cpu" option.
-> While we're at it, also remove the "+" from two of the CPU names
-> since this character is now not allowed in device names anymore
-> (and was worked around with an ugly hack in qom/object.c so far).
-> 
-> v2:
-> - Use "Sun-UltraSparc-IIIi-plus" and "Sun-UltraSparc-IV-plus"
->    instead of just adding a "p" at the end
-> - Drop the sentence about NetBSD and OpenBSD in the docs since
->    these problems are likely fixed since a long time already
-> - Added Reviewed-bys from earlier series and updated the patch
->    descriptions a little bit
-> 
-> Thomas Huth (4):
->    target/sparc/cpu: Rename the CPU models with a "+" in their names
->    target/sparc/cpu: Avoid spaces by default in the CPU names
->    docs/system/target-sparc: Improve the Sparc documentation
->    docs/about: Deprecate the old "UltraSparc" CPU names that contain a
->      "+"
-> 
->   docs/about/deprecated.rst    |  9 +++++
->   docs/system/target-sparc.rst | 12 ++++---
->   qom/object.c                 |  8 -----
->   target/sparc/cpu.c           | 66 +++++++++++++++++++++---------------
->   4 files changed, 54 insertions(+), 41 deletions(-)
+> Philippe Mathieu-Daudé (24):
+>    exec/user: Move 'thunk.h' from 'exec/user' to 'user'
+>    coverity: Update user emulation regexp
+>    accel/tcg: Move user definition of cpu_interrupt() to user-exec.c
+>    accel/tcg: Duplicate cpu_exit() for user / system
+>    accel/tcg: Extract tcg_cpu_exit() from cpu_exit()
+>    accel: Introduce AccelOpsClass::exit_vcpu_thread() handler
+>    accel/tcg: Implement AccelOpsClass::exit_vcpu_thread() handler
+>    user: Forward declare TaskState type definition
+>    user: Declare get_task_state() once in 'accel/tcg/vcpu-state.h'
+>    user: Use get_task_state() helper
+>    accel/tcg: Allocate per-vCPU accel state in create_vcpu_thread()
+>    accel/tcg: Move TaskState from CPUState to TCG AccelCPUState
+>    accel/tcg: Update CPUNegativeOffsetState::can_do_io field
+>      documentation
 
-Thanks! I've applied this to my qemu-sparc branch, along with Peter's suggested tweak 
-to the grammar in patch 3.
-
-
-ATB,
-
-Mark.
-
+Queuing patches 1-13, thanks!
 
