@@ -4,51 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C8B4C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 02:50:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C4DCC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 02:53:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1H3V-0006Si-JE; Sun, 28 Apr 2024 22:47:49 -0400
+	id 1s1H8X-0000R0-Qg; Sun, 28 Apr 2024 22:53:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1s1H3P-0006DE-Vy
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 22:47:45 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1s1H3K-00065z-HC
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 22:47:42 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8DxV+lGCi9mCsUEAA--.4220S3;
- Mon, 29 Apr 2024 10:47:35 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8BxkFVECi9mp6QJAA--.7424S4; 
- Mon, 29 Apr 2024 10:47:34 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org,
-	Bibo Mao <maobibo@loongson.cn>
-Subject: [PULL v2 02/17] hw/loongarch: Add load initrd
-Date: Mon, 29 Apr 2024 10:30:28 +0800
-Message-Id: <20240429023043.2607982-3-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20240429023043.2607982-1-gaosong@loongson.cn>
-References: <20240429023043.2607982-1-gaosong@loongson.cn>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1s1H8W-0000QX-5F; Sun, 28 Apr 2024 22:53:00 -0400
+Received: from mail-ua1-x935.google.com ([2607:f8b0:4864:20::935])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1s1H8U-0006g2-Nu; Sun, 28 Apr 2024 22:52:59 -0400
+Received: by mail-ua1-x935.google.com with SMTP id
+ a1e0cc1a2514c-7f04901d456so575961241.0; 
+ Sun, 28 Apr 2024 19:52:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1714359177; x=1714963977; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RWLhC2I3eB516k7TFIaN0g9mrOyGwGsAoC+dvPA7Yic=;
+ b=lPCSWekM9mj6qNwM8RyDOXgcxwFFiJ3L+DyeVZrtDOPb3T0rIPl8jzUEpcBTaikz5T
+ cfXvzyjDYnR/vztpVSLd21SZTFa6SI5shza4d6iVdOx9kA5yuWQHdAwP+/2ij9lnD6dz
+ 5JAAQApr/HuBqTOxm6En+KZPhsyUuQXuNQdueU4a5PmuWQUGbtXxcuk+EgudJUNzjKwE
+ r4pzxAJQErCT7OwiGbqJIL5Rn0fNTqdiDpjqZ6RyotHRqPgc2oJjEaF8TiZavXHwGgoP
+ +pWvvuyxJmqpqkq0/gqayySgfpw1TYVTYUnA8djh3sMiPBc7itvf8pzqtFC6ynRmBz2q
+ l64A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714359177; x=1714963977;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=RWLhC2I3eB516k7TFIaN0g9mrOyGwGsAoC+dvPA7Yic=;
+ b=qq31FOg6lguYZiYPihixAt9tnItYyPdpz1R5COMVoANfP1X8nklBab87xQLz8XJZPE
+ TanP+aIwk9vO0lH/6yciYGrXBAwQC1w95OtGyUgJJNq02fP48yWdhYdPzzgacOTOO7EA
+ JSvqv4lyfiygrZKSMIFAqNHVDuJTfCEgG8uVJpqKjNo+bNGnPTYv1lo/t/lOgJBxdyMV
+ MhhRcrVEYw9UCrWRS+g5rMCGeTEKF6FoRn1OVYMrZTBlTTUrmPMvuICxYdNusBS8b8EQ
+ Mqo88tLhGURQf1MYnD2bpKQXoNYzjO87AsBWB2hgLFYoK/UKjg98zjmG3qiSTfTPaifN
+ AV3Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWsoeX5SGcxs9qlvudCESlslMlha7vESYCRmao9+npvWWhfIMPmOpgrDwmIl3GJYvXRDhKWRq7SCZWzPg+biJ6PQ66bk5vFjzTPjA+tMJtoFurrTu356ewwB7PLMg==
+X-Gm-Message-State: AOJu0YwhnjYBU/TYfID6vItCqtJMPsCAqitMCv9vJgfzSQNRYJ2kzbFp
+ mdXFeR4E6y0FE/8ZRQl+1Loq6DTHFYlYHEZlZrDapyE0kV0UKq3AbGKlwVAi2ay5jbz7SOIp9PA
+ nokkDTS45x5K/4sS0xWrhVNkunwACn6m/
+X-Google-Smtp-Source: AGHT+IFVSJjYVdy+tPZYU5VHaxAjTCUSqIYtjY3YbT/6cdG66kvJcdwiKIJ78cswJ6yn9tRjeBVVIz16EEkkuqXEynU=
+X-Received: by 2002:a05:6122:8d1:b0:4d3:3f2b:dc63 with SMTP id
+ 17-20020a05612208d100b004d33f2bdc63mr6935207vkg.5.1714359177397; Sun, 28 Apr
+ 2024 19:52:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8BxkFVECi9mp6QJAA--.7424S4
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+References: <20240422135840.1959967-1-cleger@rivosinc.com>
+In-Reply-To: <20240422135840.1959967-1-cleger@rivosinc.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 29 Apr 2024 12:52:31 +1000
+Message-ID: <CAKmqyKNOusH57DGjrGuWE1qm1exaZH9i8L3dHosrNsgzCkLgpA@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: change RISCV_EXCP_SEMIHOST exception number
+ to 63
+To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bin.meng@windriver.com>, qemu-riscv@nongnu.org, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::935;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x935.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -65,62 +96,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-we load initrd ramdisk after kernel_high address
+On Mon, Apr 22, 2024 at 11:59=E2=80=AFPM Cl=C3=A9ment L=C3=A9ger <cleger@ri=
+vosinc.com> wrote:
+>
+> The current semihost exception number (16) is a reserved number (range
+> [16-17]). The upcoming double trap specification uses that number for
+> the double trap exception. Since the privileged spec (Table 22) defines
+> ranges for custom uses change the semihosting exception number to 63
+> which belongs to the range [48-63] in order to avoid any future
+> collisions with reserved exception.
+>
+> Signed-off-by: Cl=C3=A9ment L=C3=A9ger <cleger@rivosinc.com>
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Message-Id: <20240426091551.2397867-3-gaosong@loongson.cn>
----
- hw/loongarch/boot.c | 28 +++++++++++++++++++++++++++-
- 1 file changed, 27 insertions(+), 1 deletion(-)
+Thanks!
 
-diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-index 9feed17db3..a5135fe542 100644
---- a/hw/loongarch/boot.c
-+++ b/hw/loongarch/boot.c
-@@ -22,7 +22,8 @@ static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
- 
- static int64_t load_kernel_info(struct loongarch_boot_info *info)
- {
--    uint64_t kernel_entry, kernel_low, kernel_high;
-+    uint64_t kernel_entry, kernel_low, kernel_high, initrd_size;
-+    ram_addr_t initrd_offset;
-     ssize_t kernel_size;
- 
-     kernel_size = load_elf(info->kernel_filename, NULL,
-@@ -37,6 +38,31 @@ static int64_t load_kernel_info(struct loongarch_boot_info *info)
-                      load_elf_strerror(kernel_size));
-         exit(1);
-     }
-+
-+    if (info->initrd_filename) {
-+        initrd_size = get_image_size(info->initrd_filename);
-+        if (initrd_size > 0) {
-+            initrd_offset = ROUND_UP(kernel_high + 4 * kernel_size, 64 * KiB);
-+
-+            if (initrd_offset + initrd_size > info->ram_size) {
-+                error_report("memory too small for initial ram disk '%s'",
-+                             info->initrd_filename);
-+                exit(1);
-+            }
-+
-+            initrd_size = load_image_targphys(info->initrd_filename, initrd_offset,
-+                                              info->ram_size - initrd_offset);
-+        }
-+
-+        if (initrd_size == (target_ulong)-1) {
-+            error_report("could not load initial ram disk '%s'",
-+                         info->initrd_filename);
-+            exit(1);
-+        }
-+    } else {
-+        initrd_size = 0;
-+    }
-+
-     return kernel_entry;
- }
- 
--- 
-2.25.1
+Applied to riscv-to-apply.next
 
+Alistair
+
+>
+> ---
+>  target/riscv/cpu_bits.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+> index fc2068ee4d..74318a925c 100644
+> --- a/target/riscv/cpu_bits.h
+> +++ b/target/riscv/cpu_bits.h
+> @@ -670,11 +670,11 @@ typedef enum RISCVException {
+>      RISCV_EXCP_INST_PAGE_FAULT =3D 0xc, /* since: priv-1.10.0 */
+>      RISCV_EXCP_LOAD_PAGE_FAULT =3D 0xd, /* since: priv-1.10.0 */
+>      RISCV_EXCP_STORE_PAGE_FAULT =3D 0xf, /* since: priv-1.10.0 */
+> -    RISCV_EXCP_SEMIHOST =3D 0x10,
+>      RISCV_EXCP_INST_GUEST_PAGE_FAULT =3D 0x14,
+>      RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT =3D 0x15,
+>      RISCV_EXCP_VIRT_INSTRUCTION_FAULT =3D 0x16,
+>      RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT =3D 0x17,
+> +    RISCV_EXCP_SEMIHOST =3D 0x3f,
+>  } RISCVException;
+>
+>  #define RISCV_EXCP_INT_FLAG                0x80000000
+> --
+> 2.43.0
+>
+>
 
