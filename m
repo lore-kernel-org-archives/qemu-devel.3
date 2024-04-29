@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5564AC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 11:54:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F1DFC04FFE
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 11:54:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1PYa-0008GU-4x; Mon, 29 Apr 2024 07:52:28 -0400
+	id 1s1Pap-0001yk-Ou; Mon, 29 Apr 2024 07:54:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1s1PYV-0008D9-K5; Mon, 29 Apr 2024 07:52:24 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ id 1s1PaP-0001Tu-93; Mon, 29 Apr 2024 07:54:22 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1s1PYQ-0001oB-A9; Mon, 29 Apr 2024 07:52:22 -0400
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:2a2a:0:640:d546:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 9B14960C24;
- Mon, 29 Apr 2024 14:52:13 +0300 (MSK)
-Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:b739::1:30])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 0qOEuD11MuQ0-87SfCP6k; Mon, 29 Apr 2024 14:52:13 +0300
+ id 1s1Pa6-0002FW-T3; Mon, 29 Apr 2024 07:54:20 -0400
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:6401:0:640:7e6f:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id B539D60D5A;
+ Mon, 29 Apr 2024 14:53:56 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:b739::1:30] (unknown
+ [2a02:6b8:b081:b739::1:30])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id trOZDF1IiW20-JpXJ2mwo; Mon, 29 Apr 2024 14:53:56 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1714391533;
- bh=M9bTcVoVVYx1vTw25y9U4yg7TuT7NkouXUR1hv8vs2M=;
- h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=e76JOpLTsC6G/AsTJGKb5fciJVVT8WpQ/bKbepJp6ve0lNFWf3kzT3Kc5R2qg50ZH
- R+uU5EqtI92aAUQPN3j0nqZio2aCHx1bg08szwfb+1NeFJezh07/pPpmdH+EmZxgaQ
- v04Fq5mynojGtA5cbMEFWcZDDX/IULJry6TKO8TI=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ s=default; t=1714391636;
+ bh=H9cejtXpUaOvOoOzv9PaQ6zl8lBGLE16mXUXA1v4rpA=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=PtmSSb1h4x7xmK5jJkmIquKNLqIh9qdL/mcwVcHn5yUD4bY0qi8LuV9W5ExDTEpYa
+ vIeD8TEoM1m/dmCRuVkcA8/ssTfV0MPcz10P8hEEoJRjw9gpMtnaIl74hvyi+B0g1J
+ aztq0y/4bJ9GRiNJ6vcMAgP+O5DOLh3vtIMTtTbA=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, vsementsov@yandex-team.ru,
- Fiona Ebner <f.ebner@proxmox.com>, John Snow <jsnow@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: [PULL 3/6] block/copy-before-write: support unligned snapshot-discard
-Date: Mon, 29 Apr 2024 14:51:54 +0300
-Message-Id: <20240429115157.2260885-4-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240429115157.2260885-1-vsementsov@yandex-team.ru>
-References: <20240429115157.2260885-1-vsementsov@yandex-team.ru>
+Message-ID: <b9b4dff1-816e-4892-8c4b-c342e5e4bb1f@yandex-team.ru>
+Date: Mon, 29 Apr 2024 14:53:55 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/6] Block jobs patches for 2024-04-29
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org
+References: <20240429115157.2260885-1-vsementsov@yandex-team.ru>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20240429115157.2260885-1-vsementsov@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -73,52 +73,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-First thing that crashes on unligned access here is
-bdrv_reset_dirty_bitmap(). Correct way is to align-down the
-snapshot-discard request.
+Sorry for too much CC-ing, I've mistakenly added --cc-cmd=./scripts/get_maintainer.pl
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
-Tested-by: Fiona Ebner <f.ebner@proxmox.com>
-Message-Id: <20240313152822.626493-3-vsementsov@yandex-team.ru>
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- block/copy-before-write.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/block/copy-before-write.c b/block/copy-before-write.c
-index 3e3af30c08..6d89af0b29 100644
---- a/block/copy-before-write.c
-+++ b/block/copy-before-write.c
-@@ -325,14 +325,24 @@ static int coroutine_fn GRAPH_RDLOCK
- cbw_co_pdiscard_snapshot(BlockDriverState *bs, int64_t offset, int64_t bytes)
- {
-     BDRVCopyBeforeWriteState *s = bs->opaque;
-+    uint32_t cluster_size = block_copy_cluster_size(s->bcs);
-+    int64_t aligned_offset = QEMU_ALIGN_UP(offset, cluster_size);
-+    int64_t aligned_end = QEMU_ALIGN_DOWN(offset + bytes, cluster_size);
-+    int64_t aligned_bytes;
-+
-+    if (aligned_end <= aligned_offset) {
-+        return 0;
-+    }
-+    aligned_bytes = aligned_end - aligned_offset;
- 
-     WITH_QEMU_LOCK_GUARD(&s->lock) {
--        bdrv_reset_dirty_bitmap(s->access_bitmap, offset, bytes);
-+        bdrv_reset_dirty_bitmap(s->access_bitmap, aligned_offset,
-+                                aligned_bytes);
-     }
- 
--    block_copy_reset(s->bcs, offset, bytes);
-+    block_copy_reset(s->bcs, aligned_offset, aligned_bytes);
- 
--    return bdrv_co_pdiscard(s->target, offset, bytes);
-+    return bdrv_co_pdiscard(s->target, aligned_offset, aligned_bytes);
- }
- 
- static void GRAPH_RDLOCK cbw_refresh_filename(BlockDriverState *bs)
+On 29.04.24 14:51, Vladimir Sementsov-Ogievskiy wrote:
+> The following changes since commit fd87be1dada5672f877e03c2ca8504458292c479:
+> 
+>    Merge tag 'accel-20240426' of https://github.com/philmd/qemu into staging (2024-04-26 15:28:13 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/vsementsov/qemu.git tags/pull-block-jobs-2024-04-29
+> 
+> for you to fetch changes up to 2ca7608c6b8d57fd6347b11af12a0f035263efef:
+> 
+>    iotests: add backup-discard-source (2024-04-29 13:35:30 +0300)
+> 
+> ----------------------------------------------------------------
+> Block jobs patches for 2024-04-29
+> 
+> - backup: discard-source parameter
+> - blockcommit: Reopen base image as RO after abort
+> 
+> ----------------------------------------------------------------
+> Alexander Ivanov (1):
+>        blockcommit: Reopen base image as RO after abort
+> 
+> Vladimir Sementsov-Ogievskiy (5):
+>        block/copy-before-write: fix permission
+>        block/copy-before-write: support unligned snapshot-discard
+>        block/copy-before-write: create block_copy bitmap in filter node
+>        qapi: blockdev-backup: add discard-source parameter
+>        iotests: add backup-discard-source
+> 
+>   block/backup.c                                     |   5 +-
+>   block/block-copy.c                                 |  12 +-
+>   block/copy-before-write.c                          |  39 +++++--
+>   block/copy-before-write.h                          |   1 +
+>   block/mirror.c                                     |  11 +-
+>   block/replication.c                                |   4 +-
+>   blockdev.c                                         |   2 +-
+>   include/block/block-common.h                       |   2 +
+>   include/block/block-copy.h                         |   2 +
+>   include/block/block_int-global-state.h             |   2 +-
+>   qapi/block-core.json                               |   4 +
+>   tests/qemu-iotests/257.out                         | 112 +++++++++---------
+>   tests/qemu-iotests/tests/backup-discard-source     | 152 +++++++++++++++++++++++++
+>   tests/qemu-iotests/tests/backup-discard-source.out |   5 +
+>   14 files changed, 281 insertions(+), 72 deletions(-)
+>   create mode 100755 tests/qemu-iotests/tests/backup-discard-source
+>   create mode 100644 tests/qemu-iotests/tests/backup-discard-source.out
+> 
+> Alexander Ivanov (1):
+>    blockcommit: Reopen base image as RO after abort
+> 
+> Vladimir Sementsov-Ogievskiy (5):
+>    block/copy-before-write: fix permission
+>    block/copy-before-write: support unligned snapshot-discard
+>    block/copy-before-write: create block_copy bitmap in filter node
+>    qapi: blockdev-backup: add discard-source parameter
+>    iotests: add backup-discard-source
+> 
+>   block/backup.c                                |   5 +-
+>   block/block-copy.c                            |  12 +-
+>   block/copy-before-write.c                     |  39 ++++-
+>   block/copy-before-write.h                     |   1 +
+>   block/mirror.c                                |  11 +-
+>   block/replication.c                           |   4 +-
+>   blockdev.c                                    |   2 +-
+>   include/block/block-common.h                  |   2 +
+>   include/block/block-copy.h                    |   2 +
+>   include/block/block_int-global-state.h        |   2 +-
+>   qapi/block-core.json                          |   4 +
+>   tests/qemu-iotests/257.out                    | 112 ++++++-------
+>   .../qemu-iotests/tests/backup-discard-source  | 152 ++++++++++++++++++
+>   .../tests/backup-discard-source.out           |   5 +
+>   14 files changed, 281 insertions(+), 72 deletions(-)
+>   create mode 100755 tests/qemu-iotests/tests/backup-discard-source
+>   create mode 100644 tests/qemu-iotests/tests/backup-discard-source.out
+> 
+
 -- 
-2.34.1
+Best regards,
+Vladimir
 
 
