@@ -4,41 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EFF2C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 02:47:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A254DC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 02:48:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1H3U-0006Mc-Rd; Sun, 28 Apr 2024 22:47:48 -0400
+	id 1s1H3P-00069y-EJ; Sun, 28 Apr 2024 22:47:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1s1H3S-0006GS-26
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 22:47:46 -0400
+ id 1s1H3K-00063L-HH
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 22:47:38 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1s1H3O-00066f-Ex
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 22:47:45 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1s1H3I-00065i-0o
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 22:47:37 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8CxR+lMCi9mFsUEAA--.4198S3;
- Mon, 29 Apr 2024 10:47:40 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Dx1OpECi9mBsUEAA--.4363S3;
+ Mon, 29 Apr 2024 10:47:32 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8BxkFVECi9mp6QJAA--.7424S10; 
- Mon, 29 Apr 2024 10:47:38 +0800 (CST)
+ AQAAf8BxkFVECi9mp6QJAA--.7424S2; 
+ Mon, 29 Apr 2024 10:47:32 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org,
-	Bibo Mao <maobibo@loongson.cn>
-Subject: [PULL v2 08/17] hw/loongarch: Init efi_fdt table
-Date: Mon, 29 Apr 2024 10:30:34 +0800
-Message-Id: <20240429023043.2607982-9-gaosong@loongson.cn>
+Cc: richard.henderson@linaro.org
+Subject: [PULL v2 00/17] loongarch-to-apply queue
+Date: Mon, 29 Apr 2024 10:30:26 +0800
+Message-Id: <20240429023043.2607982-1-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20240429023043.2607982-1-gaosong@loongson.cn>
-References: <20240429023043.2607982-1-gaosong@loongson.cn>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8BxkFVECi9mp6QJAA--.7424S10
+X-CM-TRANSID: AQAAf8BxkFVECi9mp6QJAA--.7424S2
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,103 +63,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The efi_system_table adds a efi_fdt configuration table.
+The following changes since commit fd87be1dada5672f877e03c2ca8504458292c479:
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Message-Id: <20240426091551.2397867-9-gaosong@loongson.cn>
----
- hw/loongarch/boot.c         | 11 +++++++++++
- hw/loongarch/virt.c         |  6 ++----
- include/hw/loongarch/boot.h |  4 ++++
- include/hw/loongarch/virt.h |  2 ++
- 4 files changed, 19 insertions(+), 4 deletions(-)
+  Merge tag 'accel-20240426' of https://github.com/philmd/qemu into staging (2024-04-26 15:28:13 -0700)
 
-diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-index c8b3e742b4..7d1630b2e7 100644
---- a/hw/loongarch/boot.c
-+++ b/hw/loongarch/boot.c
-@@ -113,6 +113,16 @@ static void init_efi_initrd_table(struct efi_system_table *systab,
-     initrd_table->size = initrd_size;
- }
- 
-+static void init_efi_fdt_table(struct efi_system_table *systab)
-+{
-+    efi_guid_t tbl_guid = DEVICE_TREE_GUID;
-+
-+    /* efi_configuration_table 3 */
-+    guidcpy(&systab->tables[2].guid, &tbl_guid);
-+    systab->tables[2].table = (void *)FDT_BASE;
-+    systab->nr_tables = 3;
-+}
-+
- static void init_systab(struct loongarch_boot_info *info, void *p, void *start)
- {
-     void *bp_tables_start;
-@@ -138,6 +148,7 @@ static void init_systab(struct loongarch_boot_info *info, void *p, void *start)
-                   sizeof(efi_memory_desc_t) * memmap_entries, 64 * KiB);
-     init_efi_initrd_table(systab, p, start);
-     p += ROUND_UP(sizeof(struct efi_initrd), 64 * KiB);
-+    init_efi_fdt_table(systab);
- 
-     systab->tables = (struct efi_configuration_table *)(bp_tables_start - start);
- }
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 708aa8bc60..42e5df8a24 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -727,7 +727,6 @@ static void loongarch_init(MachineState *machine)
-     int nb_numa_nodes = machine->numa_state->num_nodes;
-     NodeInfo *numa_info = machine->numa_state->nodes;
-     int i;
--    hwaddr fdt_base;
-     const CPUArchIdList *possible_cpus;
-     MachineClass *mc = MACHINE_GET_CLASS(machine);
-     CPUState *cpu;
-@@ -857,12 +856,11 @@ static void loongarch_init(MachineState *machine)
-      * Put the FDT into the memory map as a ROM image: this will ensure
-      * the FDT is copied again upon reset, even if addr points into RAM.
-      */
--    fdt_base = 1 * MiB;
-     qemu_fdt_dumpdtb(machine->fdt, lams->fdt_size);
--    rom_add_blob_fixed_as("fdt", machine->fdt, lams->fdt_size, fdt_base,
-+    rom_add_blob_fixed_as("fdt", machine->fdt, lams->fdt_size, FDT_BASE,
-                           &address_space_memory);
-     qemu_register_reset_nosnapshotload(qemu_fdt_randomize_seeds,
--            rom_ptr_for_as(&address_space_memory, fdt_base, lams->fdt_size));
-+            rom_ptr_for_as(&address_space_memory, FDT_BASE, lams->fdt_size));
- 
-     lams->bootinfo.ram_size = ram_size;
-     loongarch_load_kernel(machine, &lams->bootinfo);
-diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
-index 42d1ee3663..4ebcc89dcf 100644
---- a/include/hw/loongarch/boot.h
-+++ b/include/hw/loongarch/boot.h
-@@ -34,6 +34,10 @@ typedef struct {
-         EFI_GUID(0x5568e427, 0x68fc, 0x4f3d,  0xac, 0x74, \
-                  0xca, 0x55, 0x52, 0x31, 0xcc, 0x68)
- 
-+#define DEVICE_TREE_GUID \
-+        EFI_GUID(0xb1b621d5, 0xf19c, 0x41a5,  0x83, 0x0b, \
-+                 0xd9, 0x15, 0x2c, 0x69, 0xaa, 0xe0)
-+
- struct efi_config_table {
-     efi_guid_t guid;
-     uint64_t *ptr;
-diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-index 8a9fe4053d..4e14bf6060 100644
---- a/include/hw/loongarch/virt.h
-+++ b/include/hw/loongarch/virt.h
-@@ -35,6 +35,8 @@
- 
- #define COMMAND_LINE_SIZE       512
- 
-+#define FDT_BASE                0x100000
-+
- extern struct memmap_entry *memmap_table;
- extern unsigned memmap_entries;
- 
--- 
-2.25.1
+are available in the Git repository at:
+
+  https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240429
+
+for you to fetch changes up to 841ef2c9df5317e32de590424b0c5c36fbb4de78:
+
+  hw/loongarch: Add cells missing from rtc node (2024-04-29 10:25:56 +0800)
+
+----------------------------------------------------------------
+Add boot LoongArch elf kernel with FDT
+
+v2: Fix 'make check-tcg' failed.
+
+----------------------------------------------------------------
+Song Gao (17):
+      hw/loongarch: Move boot functions to boot.c
+      hw/loongarch: Add load initrd
+      hw/loongarch: Add slave cpu boot_code
+      hw/loongarch: Add init_cmdline
+      hw/loongarch: Init efi_system_table
+      hw/loongarch: Init efi_boot_memmap table
+      hw/loongarch: Init efi_initrd table
+      hw/loongarch: Init efi_fdt table
+      hw/loongarch: Fix fdt memory node wrong 'reg'
+      hw/loongarch: fdt adds cpu interrupt controller node
+      hw/loongarch: fdt adds Extend I/O Interrupt Controller
+      hw/loongarch: fdt adds pch_pic Controller
+      hw/loongarch: fdt adds pch_msi Controller
+      hw/loongarch: fdt adds pcie irq_map node
+      hw/loongarch: fdt remove unused irqchip node
+      hw/loongarch: Add cells missing from uart node
+      hw/loongarch: Add cells missing from rtc node
+
+ hw/loongarch/boot.c                | 336 ++++++++++++++++++++++++++++++++++
+ hw/loongarch/meson.build           |   1 +
+ hw/loongarch/virt.c                | 365 +++++++++++++++++++++----------------
+ include/hw/intc/loongarch_extioi.h |   1 +
+ include/hw/loongarch/boot.h        | 109 +++++++++++
+ include/hw/loongarch/virt.h        |  16 ++
+ include/hw/pci-host/ls7a.h         |   2 +
+ target/loongarch/cpu.h             |   2 +
+ 8 files changed, 670 insertions(+), 162 deletions(-)
+ create mode 100644 hw/loongarch/boot.c
+ create mode 100644 include/hw/loongarch/boot.h
 
 
