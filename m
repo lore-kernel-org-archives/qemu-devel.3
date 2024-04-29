@@ -4,90 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D522C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 16:02:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02BC5C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 16:03:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1TMH-0004Xv-Es; Mon, 29 Apr 2024 11:56:01 -0400
+	id 1s1TMZ-0004xq-4f; Mon, 29 Apr 2024 11:56:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1s1TMB-0004Vu-7U
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:55:56 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1s1TMK-0004aI-02
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1s1TM5-0005Fo-U3
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:55:53 -0400
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43TFmnhD023131; Mon, 29 Apr 2024 15:55:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
- h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=corp-2023-11-20;
- bh=TtzXAOMSJ+mFPsS060bW1BIYuL+1IqosMX6aAuhUFBc=;
- b=dEFIgmEMytoW7mzIPB9s9NsSaGxgiAVN5FiK6H0awX0hdVZYcIZsIzxpNJyl53UVt8h9
- MZN7isdagMCZldWq6LGYIwd+w6oQW0tsqfq/9QEOeN3XmMePtrlelIxiSXP95KEZTqdG
- CKsUp2WuRB4qUgkmei2hsBMfpAqJvoBvs8wwY7zGcKInC/oreMTrggEGFHgSr3WRw4U7
- dOFyQQO60HfdeARirSPiBPeCSDryvnO94DXP2sI01XKC4rlU6L4xVTkmh1yFb8iY5nLA
- qLJFkSvPIeX4dq8qAkcbjICS5+tr5npwpdZ4J4d/4Jr4jgBfrhTKITDPfr7tbwtm1BsI Yw== 
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xrryv2wbt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Apr 2024 15:55:47 +0000
-Received: from pps.filterd
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 43TEheoD011366; Mon, 29 Apr 2024 15:55:46 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 3xrqt6j6ap-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Apr 2024 15:55:46 +0000
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43TFtaGq034442;
- Mon, 29 Apr 2024 15:55:45 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 3xrqt6j5ys-13; Mon, 29 Apr 2024 15:55:45 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V1 12/26] migration: vmstate factory object
-Date: Mon, 29 Apr 2024 08:55:21 -0700
-Message-Id: <1714406135-451286-13-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
-References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-29_14,2024-04-29_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
- malwarescore=0
- adultscore=0 mlxscore=0 suspectscore=0 phishscore=0 spamscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2404010000 definitions=main-2404290101
-X-Proofpoint-GUID: jCwUEuM3k0csDSnwJbllX2OWoYHJqr47
-X-Proofpoint-ORIG-GUID: jCwUEuM3k0csDSnwJbllX2OWoYHJqr47
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1s1TMH-0005Ky-GE
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714406160;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4AAnRuWD8C2GDGP/Dxv3MHFn8zZkGRM+IwEpQYlOX34=;
+ b=Ib794IX9wI3c6wR7bdG+1ffIta7hiUTJd2YJbHjpCTHLJ4pF5txPkPKohUnfPjMrPMra7x
+ exMe+eN23rbPBTFtTSBJ2Lf6du3NVfW5zP6hSopZ4Sujw72lSwxbhKjm3CVcCDnDouWzs2
+ rZ+gszVPO6HuCe5twl8X6/Apy+4WN4I=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-220-JCuZKY-OPKOmICWwWkKEOQ-1; Mon,
+ 29 Apr 2024 11:55:55 -0400
+X-MC-Unique: JCuZKY-OPKOmICWwWkKEOQ-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6E5C21C0C653;
+ Mon, 29 Apr 2024 15:55:53 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.132])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 83BD51C060D1;
+ Mon, 29 Apr 2024 15:55:45 +0000 (UTC)
+Date: Mon, 29 Apr 2024 16:55:43 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: QEMU Developers <qemu-devel@nongnu.org>,
+ Daniil Tatianin <d-tatianin@yandex-team.ru>, armbru@redhat.com,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ afaerber@suse.de, ale@rev.ng, alistair.francis@wdc.com,
+ Anton Johansson <anjo@rev.ng>, bbauman@redhat.com,
+ bcain@quicinc.com, Chao Peng <chao.p.peng@linux.intel.com>,
+ cjia@nvidia.com, clg@kaod.org, cw@f00f.org,
+ Damien Hedde <dhedde@kalrayinc.com>, eblake@redhat.com,
+ edgar.iglesias@gmail.com, eduardo@habkost.net,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>, eric.auger@redhat.com,
+ felipe@nutanix.com, iggy@theiggy.com, imp@bsdimp.com,
+ jan.kiszka@web.de, jgg@nvidia.com, jidong.xiao@gmail.com,
+ jim.shu@sifive.com, jjherne@linux.vnet.ibm.com,
+ Joao Martins <joao.m.martins@oracle.com>, konrad.wilk@oracle.com,
+ Luc Michel <luc@lmichel.fr>, mburton@qti.qualcomm.com,
+ mdean@redhat.com, mimu@linux.vnet.ibm.com, paul.walmsley@sifive.com,
+ pbonzini@redhat.com, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ shentey@gmail.com, stefanha@gmail.com, wei.w.wang@intel.com,
+ z.huo@139.com, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ zwu.kernel@gmail.com, eblot@rivosinc.com, max.chou@sifive.com
+Subject: Re: QEMU Community Call Agenda Items (April 30th, 2024)
+Message-ID: <Zi_C_xHx33Q7T_96@redhat.com>
+References: <b534d873-9be3-4a24-800f-603ed25c0803@linaro.org>
+ <ebdd9766-04d1-4908-996f-e93c0cd4e6d5@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ebdd9766-04d1-4908-996f-e93c0cd4e6d5@linaro.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,383 +103,95 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-During the precreate phase, we will load migration state that will be used
-to create objects, but those objects have not been created and have not
-registered a vmstate handler yet.  We don't know how many objects will be
-created, or what their names and ids will be, so we don't know what vmstate
-handlers to register.
+On Mon, Apr 29, 2024 at 05:06:36PM +0200, Philippe Mathieu-Daudé wrote:
+> Hi,
+> 
+> On 29/4/24 00:25, Philippe Mathieu-Daudé wrote:
+> > Hi,
+> > 
+> > The KVM/QEMU community call is at:
+> > 
+> >    https://meet.jit.si/kvmcallmeeting
+> >    @
+> >    30/4/2024 14:00 UTC
+> > 
+> > Are there any agenda items for the sync-up?
+> 
+> I'd like to discuss two issues:
+> 
+> 1/ Stability of QOM path
+>    ---------------------
+> 
+>   Currently we have 3 QOM containers:
+>    - /machine
+>      QOM objects properly parented go there
+>    - /machine/unattached
+>      Orphan QOM objects. Missing parent is usually easy
+>      to figure out, but we need to post patches to fix them.
+>    - /machine/peripheral[-anon]
+>      Devices created at runtime with CLI -device or QAPI device_add.
+>      (-anon is for devices with no explicit bus ID).
+>    See "Problem 4: The /machine/unattached/ orphanage" in [1].
+> 
+>   The /machine and /machine/unattached trees are stable, although
+>   by adding parent to orphan objects, their path will change.
+> 
+>   Objects in /machine/peripheral[-anon] depend on the order of
+>   the device_add commands / arguments used.
+> 
+>   In a dynamically created machine, everything depend on how the
+>   device_add commands are processed.
+> 
+>   How can be expect to easily reference a QOM object by its path?
 
-To solve this problem, define the factory object.  A factory object
-is added to the outgoing migration stream as usual, by registering a
-vmsd and opaque pointer.  During incoming migration, it is allocated
-on demand, without relying on a pre-registered object's opaque address.
-Instead, register a factory that knows the object's size.  loadvm receives
-an idstr which contains a factory name, finds the factory, allocates
-the object, then loads the fields as usual.  The object is added to a
-factory_objects list, tagged by name and id, to be found and claimed
-later by object-specific code.
+FYI, for reference libvirt uses a couple of QOM paths
 
-A factory is a registered VMStateDescription with factory=true and
-instance_id VMSTATE_INSTANCE_ID_FACTORY.
+ * "/machine/unattached/device[0]" - path of first vCPU, but
+   this is an historical artifact - nowdays we query the
+   paths from query-cpus-fast
 
-A factory object is registered using the same VMStateDescription, but with
-its own instance_name and instance_id.
+ * "/machine/peripheral/%s/virtio-backend" where '%s' is the
+   ID we give the virtio device, for virtio-blk disks
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
----
- include/migration/vmstate.h | 66 +++++++++++++++++++++++++++++++++++++-
- migration/meson.build       |  1 +
- migration/savevm.c          | 66 ++++++++++++++++++++++++++++++++++++--
- migration/trace-events      |  5 +++
- migration/vmstate-factory.c | 78 +++++++++++++++++++++++++++++++++++++++++++++
- stubs/vmstate.c             |  6 ++++
- 6 files changed, 218 insertions(+), 4 deletions(-)
- create mode 100644 migration/vmstate-factory.c
+ * /machine/peripheral/%s/%s.0/legacy[0] where both '%s'  are
+   the ID we give the USB defvice, for USB disks
 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 8cb3d2b..00ad864 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -204,6 +204,11 @@ struct VMStateDescription {
-      */
-     bool precreate;
- 
-+    /*
-+     * This VMSD is a factory or a factory object.
-+     */
-+    bool factory;
-+
-     int version_id;
-     int minimum_version_id;
-     MigrationPriority priority;
-@@ -1228,6 +1233,17 @@ bool vmstate_section_needed(const VMStateDescription *vmsd, void *opaque);
- typedef char (VMStateId)[256];
- 
- #define  VMSTATE_INSTANCE_ID_ANY  -1
-+#define VMSTATE_INSTANCE_ID_FACTORY -2
-+
-+#include "qemu/queue.h"
-+
-+typedef struct FactoryObject {
-+    char *factory_name;
-+    char *instance_name;
-+    int instance_id;
-+    void *opaque;
-+    QLIST_ENTRY(FactoryObject) next;
-+} FactoryObject;
- 
- /* Returns: 0 on success, -1 on failure */
- int vmstate_register_with_alias_id(VMStateIf *obj, uint32_t instance_id,
-@@ -1266,6 +1282,10 @@ static void __attribute__((constructor)) vmstate_register_ ## _vmsd(void)   \
-     vmstate_register_init_add(_obj, _id, &_vmsd, _opaque);                  \
- }
- 
-+#define vmstate_register_init_factory(_vmsd, _type)                         \
-+    vmstate_register_init(NULL, VMSTATE_INSTANCE_ID_FACTORY,                \
-+                          _vmsd, (void *)sizeof(_type))
-+
- void vmstate_register_init_add(VMStateIf *obj, int instance_id,
-                                const VMStateDescription *vmsd, void *opaque);
- 
-@@ -1301,8 +1321,20 @@ static inline int vmstate_register_any(VMStateIf *obj,
- }
- 
- /**
-+ * vmstate_register_factory() - register a factory name and size, needed to
-+ * recognize incoming factory objects.
-+ */
-+static inline int vmstate_register_factory(const VMStateDescription *vmsd,
-+                                           long size)
-+{
-+    return vmstate_register_with_alias_id(NULL, VMSTATE_INSTANCE_ID_FACTORY,
-+                                          vmsd, (void *)size, -1, 0, NULL,
-+                                          NULL);
-+}
-+
-+/**
-  * vmstate_register_named() - pass an instance_name explicitly instead of
-- * implicitly via VMStateIf get_id().  Needed to register a instance-specific
-+ * implicitly via VMStateIf get_id().  Needed to register an instance-specific
-  * VMSD for objects that are not Objects.
-  */
- static inline int vmstate_register_named(const char *instance_name,
-@@ -1332,4 +1364,36 @@ void vmstate_register_ram_global(struct MemoryRegion *memory);
- 
- bool vmstate_check_only_migratable(const VMStateDescription *vmsd);
- 
-+/*
-+ * Add to the factory object list, called during loadvm.
-+ */
-+void vmstate_add_factory_object(const char *factory_name,
-+                                const char *instance_name,
-+                                int instance_id,
-+                                void *opaque);
-+
-+/*
-+ * Search for and return a factory object.
-+ */
-+void *vmstate_find_factory_object(const char *factory_name,
-+                                  const char *instance_name,
-+                                  int instance_id);
-+
-+/*
-+ * Search for and return a factory object, removing it from the list.
-+ */
-+void *vmstate_claim_factory_object(const char *factory_name,
-+                                   const char *instance_name,
-+                                   int instance_id);
-+
-+typedef int (*vmstate_walk_factory_cb)(FactoryObject *obj, void *opaque);
-+
-+/*
-+ * Search for registered factory objects (ie, outgoing)
-+ * and call cb passing opaque.
-+ */
-+int vmstate_walk_factory_outgoing(const char *factory_name,
-+                                  vmstate_walk_factory_cb cb,
-+                                  void *opaque);
-+
- #endif
-diff --git a/migration/meson.build b/migration/meson.build
-index 50e7cb2..e667b40 100644
---- a/migration/meson.build
-+++ b/migration/meson.build
-@@ -5,6 +5,7 @@ migration_files = files(
-   'xbzrle.c',
-   'vmstate-types.c',
-   'vmstate.c',
-+  'vmstate-factory.c',
-   'qemu-file.c',
-   'yank_functions.c',
- )
-diff --git a/migration/savevm.c b/migration/savevm.c
-index ec48da9..01ed78c 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -1407,7 +1407,8 @@ int qemu_savevm_precreate_save(QEMUFile *f, Error **errp)
-     qemu_put_be32(f, QEMU_VM_FILE_VERSION);
- 
-     SAVEVM_FOREACH_ALL(se, entry) {
--        if (se->vmsd && se->vmsd->precreate) {
-+        if (se->vmsd && se->vmsd->precreate &&
-+            se->instance_id != VMSTATE_INSTANCE_ID_FACTORY) {
-             ret = vmstate_save(f, se, NULL, errp);
-             if (ret) {
-                 qemu_file_set_error(f, ret);
-@@ -1951,6 +1952,45 @@ static SaveStateEntry *find_se(const char *idstr, uint32_t instance_id)
-     return NULL;
- }
- 
-+int vmstate_walk_factory_outgoing(const char *factory_name,
-+                                  vmstate_walk_factory_cb cb, void *cb_data)
-+{
-+    SaveStateEntry *se, *new_se;
-+    int ret, instance_len;
-+    FactoryObject obj;
-+    VMStateId idstr;
-+    char *se_factory_name;
-+
-+    SAVEVM_FOREACH_SAFE_ALL(se, entry, new_se) {
-+        if (!se->vmsd || !se->vmsd->factory) {
-+            continue;
-+        }
-+        if (se->instance_id == VMSTATE_INSTANCE_ID_FACTORY) {
-+            /* This is the factory itself, not a generated instance */
-+            continue;
-+        }
-+
-+        se_factory_name = strrchr(se->idstr, '/');
-+        if (factory_name && strcmp(se_factory_name + 1, factory_name)) {
-+            continue;
-+        }
-+
-+        strcpy(idstr, se->idstr);
-+        instance_len = se_factory_name - se->idstr;
-+        idstr[instance_len] = 0;
-+        obj.factory_name = idstr + instance_len + 1;
-+        obj.instance_name = idstr;
-+        obj.instance_id = se->instance_id;
-+        obj.opaque = se->opaque;
-+
-+        ret = cb(&obj, cb_data);
-+        if (ret) {
-+            return ret;
-+        }
-+    }
-+    return 0;
-+}
-+
- enum LoadVMExitCodes {
-     /* Allow a command to quit all layers of nested loadvm loops */
-     LOADVM_QUIT     =  1,
-@@ -2721,8 +2761,9 @@ qemu_loadvm_section_start_full(QEMUFile *f, uint8_t type)
-     bool trace_downtime = (type == QEMU_VM_SECTION_FULL);
-     uint32_t instance_id, version_id, section_id;
-     int64_t start_ts, end_ts;
--    SaveStateEntry *se;
--    VMStateId idstr;
-+    SaveStateEntry *se, new_se;
-+    VMStateId idstr, instance_name;
-+    char *factory_name = NULL;
-     int ret;
- 
-     /* Read section start */
-@@ -2744,8 +2785,22 @@ qemu_loadvm_section_start_full(QEMUFile *f, uint8_t type)
- 
-     trace_qemu_loadvm_state_section_startfull(section_id, idstr,
-             instance_id, version_id);
-+
-     /* Find savevm section */
-     se = find_se(idstr, instance_id);
-+
-+    if (se == NULL) {
-+        pstrcpy(instance_name, sizeof(idstr), idstr);
-+        factory_name = strrchr(instance_name, '/');
-+        if (factory_name) {
-+            *factory_name++ = 0;
-+            se = find_se(factory_name, VMSTATE_INSTANCE_ID_FACTORY);
-+            new_se = *se;
-+            new_se.opaque = g_malloc((long)se->opaque);
-+            se = &new_se;
-+        }
-+    }
-+
-     if (se == NULL) {
-         error_report("Unknown savevm section or instance '%s' %"PRIu32". "
-                      "Make sure that your current VM setup matches your "
-@@ -2780,6 +2835,11 @@ qemu_loadvm_section_start_full(QEMUFile *f, uint8_t type)
-         return ret;
-     }
- 
-+    if (factory_name) {
-+        vmstate_add_factory_object(factory_name, instance_name, instance_id,
-+                                   se->opaque);
-+    }
-+
-     if (trace_downtime) {
-         end_ts = qemu_clock_get_us(QEMU_CLOCK_REALTIME);
-         trace_vmstate_downtime_load("non-iterable", se->idstr,
-diff --git a/migration/trace-events b/migration/trace-events
-index 1e23238..3b9c292 100644
---- a/migration/trace-events
-+++ b/migration/trace-events
-@@ -72,6 +72,11 @@ vmstate_subsection_save_loop(const char *name, const char *sub) "%s/%s"
- vmstate_subsection_save_top(const char *idstr) "%s"
- vmstate_field_exists(const char *vmsd, const char *name, int field_version, int version, int result) "%s:%s field_version %d version %d result %d"
- 
-+# vmstate-factory.c
-+vmstate_add_factory_object(const char *factory_name, const char *idstr, int instance_id, void *opaque) " %s, %s, %d, %p"
-+vmstate_find_factory_object(const char *factory_name, const char *instance_name, int instance_id, void *opaque) "%s, %s, %d -> %p"
-+vmstate_claim_factory_object(const char *factory_name, const char *instance_name, int instance_id, void *opaque) "%s, %s, %d -> %p"
-+
- # vmstate-types.c
- get_qtailq(const char *name, int version_id) "%s v%d"
- get_qtailq_end(const char *name, const char *reason, int val) "%s %s/%d"
-diff --git a/migration/vmstate-factory.c b/migration/vmstate-factory.c
-new file mode 100644
-index 0000000..e425666
---- /dev/null
-+++ b/migration/vmstate-factory.c
-@@ -0,0 +1,78 @@
-+/*
-+ * Copyright (c) 2024 Oracle and/or its affiliates.
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+#include "qemu/osdep.h"
-+#include "migration/vmstate.h"
-+#include "trace.h"
-+
-+static QLIST_HEAD(, FactoryObject) factory_objects;
-+
-+void vmstate_add_factory_object(const char *factory_name,
-+                                const char *instance_name,
-+                                int instance_id,
-+                                void *opaque)
-+{
-+    FactoryObject *obj = g_new0(FactoryObject, 1);
-+
-+    obj->opaque = opaque;
-+    obj->factory_name = g_strdup(factory_name);
-+    obj->instance_name = g_strdup(instance_name);
-+    obj->instance_id = instance_id;
-+    QLIST_INSERT_HEAD(&factory_objects, obj, next);
-+    trace_vmstate_add_factory_object(factory_name, instance_name, instance_id,
-+                                     opaque);
-+
-+}
-+
-+#define object_match(obj, _factory_name, _instance_name, _instance_id) \
-+    (!strcmp(obj->factory_name, _factory_name) &&                      \
-+     !strcmp(obj->instance_name, _instance_name) &&                    \
-+     obj->instance_id == _instance_id)
-+
-+static FactoryObject *find_object(const char *factory_name,
-+                                  const char *instance_name,
-+                                  int instance_id)
-+{
-+    FactoryObject *obj;
-+
-+    QLIST_FOREACH(obj, &factory_objects, next) {
-+        if (object_match(obj, factory_name, instance_name, instance_id)) {
-+            return obj;
-+        }
-+    }
-+
-+    return NULL;
-+}
-+
-+void *vmstate_find_factory_object(const char *factory_name,
-+                                  const char *instance_name,
-+                                  int instance_id)
-+{
-+    FactoryObject *obj = find_object(factory_name, instance_name, instance_id);
-+    void *opaque = obj ? obj->opaque : NULL;
-+
-+    trace_vmstate_find_factory_object(factory_name, instance_name, instance_id,
-+                                      opaque);
-+    return opaque;
-+}
-+
-+void *vmstate_claim_factory_object(const char *factory_name,
-+                                   const char *instance_name,
-+                                   int instance_id)
-+{
-+    FactoryObject *obj = find_object(factory_name, instance_name, instance_id);
-+    void *opaque = obj ? obj->opaque : NULL;
-+
-+    if (obj) {
-+        g_free(obj->factory_name);
-+        g_free(obj->instance_name);
-+        QLIST_REMOVE(obj, next);
-+    }
-+
-+    trace_vmstate_claim_factory_object(factory_name, instance_name, instance_id,
-+                                       opaque);
-+    return opaque;
-+}
-diff --git a/stubs/vmstate.c b/stubs/vmstate.c
-index eff8be4..0e977e2 100644
---- a/stubs/vmstate.c
-+++ b/stubs/vmstate.c
-@@ -24,6 +24,12 @@ void vmstate_unregister_named(const char *vmsd_name,
- {
- }
- 
-+int vmstate_walk_factory_outgoing(const char *factory_name,
-+                                  vmstate_walk_factory_cb cb, void *cb_data)
-+{
-+    return 1;
-+}
-+
- bool vmstate_check_only_migratable(const VMStateDescription *vmsd)
- {
-     return true;
+ * /machine/peripheral  when enumerating devices we've
+   assigned ID aliases to.
+
+ * /machine to get the rtc-time property value
+
+> 2/ Is it safe to broadcast a QAPI event to all type of device/object?
+>    ------------------------------------------------------------------
+> 
+>    We have QMP commands such @rtc-reset-reinjection or @inject-nmi
+>    which expect a single RTC / NMI listener in the machine.
+> 
+>    When using heterogeneous machines, we might end with multiple RTC
+>    or NMI-aware devices. Should these commands be broadcasted to all
+>    devices, or should we explicitly pass a list of paths to devices
+>    we want to notify. Maybe we want both options.
+> 
+>    See threads around NMI [2] and RTC [3].
+> 
+> [1] https://lore.kernel.org/qemu-devel/87o7d1i7ky.fsf@pond.sub.org/
+> [2] https://lore.kernel.org/qemu-devel/f4a6492b-cff4-439d-8f34-cdf04cb747ee@redhat.com/
+> [3] https://lore.kernel.org/qemu-devel/20240425133745.464091-1-d-tatianin@yandex-team.ru/
+> 
+> Regards,
+> 
+> Phil.
+> 
+
+With regards,
+Daniel
 -- 
-1.8.3.1
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
