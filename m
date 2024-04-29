@@ -4,62 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 138B0C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 15:03:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49EECC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 15:07:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1SXN-0004Sj-1N; Mon, 29 Apr 2024 11:03:25 -0400
+	id 1s1Sae-000627-1a; Mon, 29 Apr 2024 11:06:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1s1SX8-0004RO-Tp
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:03:15 -0400
-Received: from forwardcorp1c.mail.yandex.net ([178.154.239.200])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1s1SX5-0001ul-2w
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:03:10 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:c10a:0:640:882f:0])
- by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id A1A4F60A8A;
- Mon, 29 Apr 2024 18:03:01 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:b739::1:30] (unknown
- [2a02:6b8:b081:b739::1:30])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 03SRob1IkqM0-KHn26Sou; Mon, 29 Apr 2024 18:03:00 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1714402980;
- bh=5IHme+c3+ipm1b7Z+uSlc7ltFHCTRDix/frkX//kk+U=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=q1ctYe4yz6LJtURO9VI/TcV2QbK1W8BOIMzTajWcdGkBojhfjHCLi00AD3KFQNZ+J
- v0lzasacePYTpkvNCE67V1MAWJnhek6UMw48wopEhNSMapMo6InUZ6y6A+QDsOC4hW
- 5X/eTrd0RTfCgXtkaTX8G0ABfCHDzeHjwQdMmFqw=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <fd9e9e0c-2e2e-4c5b-9d65-c67ab63d6660@yandex-team.ru>
-Date: Mon, 29 Apr 2024 18:03:00 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Sac-00061Q-MH
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:06:46 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Saa-0002es-8x
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:06:46 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a5878caeb9eso570973566b.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 08:06:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714403202; x=1715008002; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=MMxatT6mdP/yLDqxHRUe08mP3A6Cixf9hW2JoyRhDrw=;
+ b=BqMCjl7jixE7cOzxi+HT6xJJ2H4n8b7m8d8OMq/9pPGa1ZYOfFsgJRykNahXLkma71
+ Le2dqeZuA8PkU1usfWYBr/OmiQRRQT2g6253gLnz8CSzwyZT/8K8Q78a+B0Mx0KJKy/6
+ IUG3TxQeAls1Z41JWZDrqRtFGtWMr15AtLErYW6Lvk+9Q8JdKqp6MOT+hbVlA9fxr4OR
+ 0Gz7zUwDZZ6CLIfmuedQn6eXM9lG+4SpajLWJWXfPeqvxlqBr2L6nvdWiSMwRK7X6EPw
+ IfohIPXEDTJovXjtnMmJCp5BedipoKb4mHbFVF663G4mRm1fEtMNb3G31Xe8Ri6XtStA
+ mXNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714403202; x=1715008002;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=MMxatT6mdP/yLDqxHRUe08mP3A6Cixf9hW2JoyRhDrw=;
+ b=dBwsUXM/C9FPglfU+sHsQMd3BM8hmITvL+BtG0DmAkZAcMIg7CefkjddFN52c/7wze
+ CjM+vD4nN2wMA3lRywn/jxtQ2kNbymW7L8KQSdmxbjlQOhsL/hnsYIlSoecC+KSV9S68
+ FHcCbtjs25Uk6hX+dv2fxxSoFhE64hsXAjQj6XmYtP3xMV0wUPIiYdPG3D2KzpV7+hkN
+ kiBVTSv0RKlDL9ic+LfOYhnOSX78fpCcJBqsxswibmA21CUN79vDqs0/n/5f/Xpw+h6J
+ a/lwz4jxJMcwu3Fq38iiFjYR42GREi49Bm93xZOuIw6FGqhlEPF3wWVxziOK4o52owXf
+ aKFA==
+X-Gm-Message-State: AOJu0YyrCx2gdIBAZs812PUPHB7atjwUEs/+PWuO69LpIDUVbfGDFdvq
+ YMRgstM1PBY4fhY4jYOV1jp2nQVS9PVv6g5H5NzCFwWFAO5HnfulD5w/fzLNnHL9ho3Cb/IMykR
+ Ez/g=
+X-Google-Smtp-Source: AGHT+IGAZzulQEC8VbWZBHjiSCoME9EpH/Smu/Z4+hRdGyN1tJ7ldySWHRknF0rgmjlteano3CY5Xg==
+X-Received: by 2002:a17:906:1544:b0:a55:5620:675c with SMTP id
+ c4-20020a170906154400b00a555620675cmr5948017ejd.34.1714403202036; 
+ Mon, 29 Apr 2024 08:06:42 -0700 (PDT)
+Received: from [192.168.69.100] (bny92-h02-176-184-44-142.dsl.sta.abo.bbox.fr.
+ [176.184.44.142]) by smtp.gmail.com with ESMTPSA id
+ l9-20020a17090615c900b00a555be38aaasm13918340ejd.164.2024.04.29.08.06.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Apr 2024 08:06:41 -0700 (PDT)
+Message-ID: <ebdd9766-04d1-4908-996f-e93c0cd4e6d5@linaro.org>
+Date: Mon, 29 Apr 2024 17:06:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/4] qapi: introduce exit-on-error parameter for
- migrate-incoming
-To: Fabiano Rosas <farosas@suse.de>, peterx@redhat.com
-Cc: eblake@redhat.com, armbru@redhat.com, pbonzini@redhat.com,
- qemu-devel@nongnu.org, yc-core@yandex-team.ru
-References: <20240425181551.1465739-1-vsementsov@yandex-team.ru>
- <20240425181551.1465739-5-vsementsov@yandex-team.ru> <87r0etgp7e.fsf@suse.de>
- <3b6fe3da-04df-4cd1-a428-4b5cae11510a@yandex-team.ru>
- <87bk5s71y0.fsf@suse.de>
+Subject: Re: QEMU Community Call Agenda Items (April 30th, 2024)
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: QEMU Developers <qemu-devel@nongnu.org>,
+ Daniil Tatianin <d-tatianin@yandex-team.ru>, armbru@redhat.com
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, afaerber@suse.de,
+ ale@rev.ng, alistair.francis@wdc.com, Anton Johansson <anjo@rev.ng>,
+ bbauman@redhat.com, bcain@quicinc.com, berrange@redhat.com,
+ Chao Peng <chao.p.peng@linux.intel.com>, cjia@nvidia.com, clg@kaod.org,
+ cw@f00f.org, Damien Hedde <dhedde@kalrayinc.com>, eblake@redhat.com,
+ edgar.iglesias@gmail.com, eduardo@habkost.net,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>, eric.auger@redhat.com,
+ felipe@nutanix.com, iggy@theiggy.com, imp@bsdimp.com, jan.kiszka@web.de,
+ jgg@nvidia.com, jidong.xiao@gmail.com, jim.shu@sifive.com,
+ jjherne@linux.vnet.ibm.com, Joao Martins <joao.m.martins@oracle.com>,
+ konrad.wilk@oracle.com, Luc Michel <luc@lmichel.fr>,
+ mburton@qti.qualcomm.com, mdean@redhat.com, mimu@linux.vnet.ibm.com,
+ paul.walmsley@sifive.com, pbonzini@redhat.com,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ shentey@gmail.com, stefanha@gmail.com, wei.w.wang@intel.com, z.huo@139.com,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com,
+ eblot@rivosinc.com, max.chou@sifive.com
+References: <b534d873-9be3-4a24-800f-603ed25c0803@linaro.org>
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <87bk5s71y0.fsf@suse.de>
+In-Reply-To: <b534d873-9be3-4a24-800f-603ed25c0803@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -70,6 +101,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -81,37 +113,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29.04.24 16:06, Fabiano Rosas wrote:
-> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+Hi,
+
+On 29/4/24 00:25, Philippe Mathieu-Daudé wrote:
+> Hi,
 > 
->> On 25.04.24 23:30, Fabiano Rosas wrote:
->>>> @@ -797,13 +801,18 @@ fail:
->>>>                          MIGRATION_STATUS_FAILED);
->>>>        migration_incoming_state_destroy();
->>>>    
->>>> -    if (migrate_has_error(s)) {
->>>> -        WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
->>>> -            error_report_err(s->error);
->>>> +    if (mis->exit_on_error) {
->>>> +        if (migrate_has_error(s)) {
->>>> +            WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
->>>> +                error_report_err(s->error);
->>> error_report_err(error_copy(s->error))
->>>
->>> ...because later on you're reading from s->error at
->>> fill_destination_migration_info.
->>
->> No, we immediately do exit() instead. That's just a preexisting behavior, moved into "if (mis->exit_on_error)"
+> The KVM/QEMU community call is at:
 > 
-> I meant later in the patch, not later in the execution. Can't
-> query-migrate be called during process_incoming_migration_co?
+>    https://meet.jit.si/kvmcallmeeting
+>    @
+>    30/4/2024 14:00 UTC
+> 
+> Are there any agenda items for the sync-up?
 
-Hmm.. On the one hand, seems no reason to care about it exactly before exit().. On the other hand, we do care about taking error_mutex. And we do release it, which may trigger another critical section.
+I'd like to discuss two issues:
 
-I'll try to touch up this thing.
+1/ Stability of QOM path
+    ---------------------
 
--- 
-Best regards,
-Vladimir
+   Currently we have 3 QOM containers:
+    - /machine
+      QOM objects properly parented go there
+    - /machine/unattached
+      Orphan QOM objects. Missing parent is usually easy
+      to figure out, but we need to post patches to fix them.
+    - /machine/peripheral[-anon]
+      Devices created at runtime with CLI -device or QAPI device_add.
+      (-anon is for devices with no explicit bus ID).
+    See "Problem 4: The /machine/unattached/ orphanage" in [1].
 
+   The /machine and /machine/unattached trees are stable, although
+   by adding parent to orphan objects, their path will change.
+
+   Objects in /machine/peripheral[-anon] depend on the order of
+   the device_add commands / arguments used.
+
+   In a dynamically created machine, everything depend on how the
+   device_add commands are processed.
+
+   How can be expect to easily reference a QOM object by its path?
+
+2/ Is it safe to broadcast a QAPI event to all type of device/object?
+    ------------------------------------------------------------------
+
+    We have QMP commands such @rtc-reset-reinjection or @inject-nmi
+    which expect a single RTC / NMI listener in the machine.
+
+    When using heterogeneous machines, we might end with multiple RTC
+    or NMI-aware devices. Should these commands be broadcasted to all
+    devices, or should we explicitly pass a list of paths to devices
+    we want to notify. Maybe we want both options.
+
+    See threads around NMI [2] and RTC [3].
+
+[1] https://lore.kernel.org/qemu-devel/87o7d1i7ky.fsf@pond.sub.org/
+[2] 
+https://lore.kernel.org/qemu-devel/f4a6492b-cff4-439d-8f34-cdf04cb747ee@redhat.com/
+[3] 
+https://lore.kernel.org/qemu-devel/20240425133745.464091-1-d-tatianin@yandex-team.ru/
+
+Regards,
+
+Phil.
 
