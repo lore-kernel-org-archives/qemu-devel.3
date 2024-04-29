@@ -4,98 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E5DAC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 18:54:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 884E6C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 18:56:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1W8S-00009v-Ta; Mon, 29 Apr 2024 14:53:56 -0400
+	id 1s1WAH-0000vN-2c; Mon, 29 Apr 2024 14:55:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s1W8R-000080-9H
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 14:53:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s1W8P-00012G-En
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 14:53:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714416832;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Sy776144xV0oqZJKQzybkiRAB8DgdEn3vbj01tReeG8=;
- b=JeHH9HzfzAUePWlzjH2uAkf7Ik8mcEyJFtDnn86osZxdbUpVuxhOQ+alN+x+OHsM5onNUM
- Jl9xfqb+MGCZgmk8NYtse2mVQ4Em9sHrbZGd10hJb27+ha/QRSjxmRNpALttqVhRBhpSZ4
- 6S9O2/ng0Rb6HMGNyrDts2rEZz1E13M=
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
- [209.85.210.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-474-t4nrkT5rMAitaU6OmIHARg-1; Mon, 29 Apr 2024 14:53:50 -0400
-X-MC-Unique: t4nrkT5rMAitaU6OmIHARg-1
-Received: by mail-pf1-f199.google.com with SMTP id
- d2e1a72fcca58-6ecfaccf30aso530077b3a.1
- for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 11:53:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s1WAF-0000vD-KO
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 14:55:47 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s1WAD-0001L0-VO
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 14:55:47 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-2a564ca6f67so4289540a91.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 11:55:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714416944; x=1715021744; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=a8RtbTgZuvpd4sfdnfyEMD88ux9EoqeM+didkSgNM74=;
+ b=Y2pG8x0P8I8okkHvkILkrb3sd24MeCwUSnL2VinZZ1wMOrCy3ONVnwxmiUjgzeB7mn
+ 3N7Q16fFkUU68aiy9eovVXgE8kvpJlfXHYHdkR4IBu7w2bgqxh7iWkbMYF87h3wJ0niz
+ DpG9AMPw78mGXRw1cbrTYRJ+ukzzlAdeGL1RQACc8IGr2tWJkDUV8JCeFvCxabghSSQt
+ JGQMu4rbP3FXfI7o5ohFNjQHAO3s2K//elEeUJzuZ0oqkQ8g7YhgswTEvsu1qic72uxK
+ aQqV2GVrwiTNKPbMiZsnk7Yc2OXmCCBYM/FUwVj0yHGlqM5inxo4IXE6wx1MNIsrKRiv
+ 31EQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714416829; x=1715021629;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Sy776144xV0oqZJKQzybkiRAB8DgdEn3vbj01tReeG8=;
- b=Es8coHktEqD68rdKHQAe9v+LoFo7eu2In4X6Laxg9Sw7+dePITfT63dC2eqiVSHX4p
- 5oxHFRqf1jZJL9ruym/5aJlCdO58t/s5G1xaoKaJ2jMrvat3lH6RDmWksL8vT1kV7uUD
- 9GHZ1KynMWoePjchJDRhTSJGS7zbjkIMmGNZmIVIsnZJV61wk5cG5sBNGkpbSu6o4G4R
- wPHuYchY9zbZ2DvZxVR+zktKVzK5wfG+Q7G38OhFCf2slJskaF/GL1Wd9S9n0tnH4Niq
- 0Wp6BngAgHwrpnk28lIIXlodb0I/UJC7bB4EMrk4uiyQz3mMV8LZCYMMNcTMvsoWxoG6
- fPnw==
-X-Gm-Message-State: AOJu0YxwRVR0bFs3QPEEtOL9q+X11K7h/UdjnRDV9EevCZ331IS+/InL
- 6ch6LP1eOb969DPuUQpqPAymE8b+nfeLTltyEQSNZLjLKtJsFc4FXJ4p9XlPMJmM9qGl5THzeVE
- lcmVE1YzscmK6xvKuugcprnuUXYx8C1ctjwo40Mfs/4RedvM5EnWXZ242ZF+I
-X-Received: by 2002:a05:6a00:987:b0:6ea:df65:ff80 with SMTP id
- u7-20020a056a00098700b006eadf65ff80mr12343537pfg.3.1714416829302; 
- Mon, 29 Apr 2024 11:53:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEwsdKEJo8JImk7g8WhimWzZz3RncPa5MYOW0fJAqGJggSx+eY8eB77IhMWt3z4fP+K9lmTTA==
-X-Received: by 2002:a05:6a00:987:b0:6ea:df65:ff80 with SMTP id
- u7-20020a056a00098700b006eadf65ff80mr12343509pfg.3.1714416828712; 
- Mon, 29 Apr 2024 11:53:48 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- h3-20020a056a00230300b006e6be006637sm19632091pfh.135.2024.04.29.11.53.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Apr 2024 11:53:48 -0700 (PDT)
-Date: Mon, 29 Apr 2024 14:53:44 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- devel@lists.libvirt.org,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH v2 3/6] migration: Remove 'blk/-b' option from migrate
- commands
-Message-ID: <Zi_suPZDZIJ8f6FI@x1n>
-References: <20240426131408.25410-1-farosas@suse.de>
- <20240426131408.25410-4-farosas@suse.de> <Zi_CNIYAi6UbxJ0j@x1n>
- <875xw0f5oe.fsf@suse.de> <Zi_mmpmW4XIKpXmo@x1n>
- <8734r4f25l.fsf@suse.de>
+ d=1e100.net; s=20230601; t=1714416944; x=1715021744;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=a8RtbTgZuvpd4sfdnfyEMD88ux9EoqeM+didkSgNM74=;
+ b=LBNw47Jt3kcwEbJsZZNq5C21MoTrXETlqth16sBNN9fhEmuTwLxX7aHmHF9lBq+xyL
+ m5lQ8RWf3xvGYMbUFT4D8Q2saVVAVkpdTut5gKSu+hx6yusdPcWMM6P7Z8guImPI9ZP9
+ SiR4cafZKVDA6hoKxOx4HDijlaeLYmv73MNA2vtGgirLJaRnuRcLTwOI6NiWI5C1pS4j
+ EDJszBxYoHud9LRps2Xj0neonc+TRbTyXZENnGi9RER9QoTgKITyzMTgAk0T/ArVxG+T
+ J/jwNi3dCtFlgVJQUAHHkgamkm0DCS0rrUn4PZs3aW2gOJuCZZ3dq+islMZdjfcmHCFp
+ O8eg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUUA/rvZPw0TC3mQHQQsVts9U1ow0/tam8Qq0fqpK7b1Y5bDOAaD87TRIU+YDqqtpXU6O9SMOdu3hBAY83L9l/EfAe2rBo=
+X-Gm-Message-State: AOJu0YzZs1GzgPnFZE84I1z+j/b0LgZoe6KcyPj4rkCyrQ6QZX+ALvwJ
+ Ss1Au7llpkA98xgFm4wSUVo6e0j6G8pPXwu7E6RcATseQhHpopOZs3YksFx5oj9aa/T3mmQAfZG
+ v
+X-Google-Smtp-Source: AGHT+IFuApMSB5ZAhvvXVIZAQnrCHGsTe0xd54ljYcsqORhOiJ3UWzg3XLMG9fxbnAOq6I5KFDjZTw==
+X-Received: by 2002:a17:90b:713:b0:2a2:acf3:4108 with SMTP id
+ s19-20020a17090b071300b002a2acf34108mr581312pjz.0.1714416944350; 
+ Mon, 29 Apr 2024 11:55:44 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ by smtp.gmail.com with ESMTPSA id
+ eu6-20020a17090af94600b002aeb05d6e97sm11282670pjb.21.2024.04.29.11.55.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Apr 2024 11:55:43 -0700 (PDT)
+Message-ID: <84e4fd25-8149-44cc-b4d4-cb1b112ffebe@linaro.org>
+Date: Mon, 29 Apr 2024 11:55:42 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <8734r4f25l.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/5] target/alpha: Split out gen_goto_tb
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20240424234436.995410-1-richard.henderson@linaro.org>
+ <20240424234436.995410-4-richard.henderson@linaro.org>
+ <19885855-e0e9-4bb8-9155-a694ff9ea1df@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <19885855-e0e9-4bb8-9155-a694ff9ea1df@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,65 +100,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 29, 2024 at 03:35:02PM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
+On 4/29/24 09:58, Philippe Mathieu-Daudé wrote:
+> On 25/4/24 01:44, Richard Henderson wrote:
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   target/alpha/translate.c | 61 ++++++++++++++--------------------------
+>>   1 file changed, 21 insertions(+), 40 deletions(-)
 > 
-> > On Mon, Apr 29, 2024 at 02:18:57PM -0300, Fabiano Rosas wrote:
-> >> Peter Xu <peterx@redhat.com> writes:
-> >> 
-> >> > On Fri, Apr 26, 2024 at 10:14:05AM -0300, Fabiano Rosas wrote:
-> >> >> @@ -2003,21 +1997,7 @@ static bool migrate_prepare(MigrationState *s, bool blk, bool resume,
-> >> >>          }
-> >> >>      }
-> >> >>  
-> >> >> -    if (blk) {
-
-[1]
-
-> >> >> -        if (migrate_colo()) {
-> >> >> -            error_setg(errp, "No disk migration is required in COLO mode");
-> >> >> -            return false;
-> >> >> -        }
-> >> >> -        if (migrate_block()) {
-> >> >> -            error_setg(errp, "Command options are incompatible with "
-> >> >> -                       "current migration capabilities");
-> >> >> -            return false;
-> >> >> -        }
-> >> >> -        if (!migrate_cap_set(MIGRATION_CAPABILITY_BLOCK, true, errp)) {
-> >> >> -            return false;
-> >> >> -        }
-> >> >> -        s->must_remove_block_options = true;
-> >> >> -    }
-> >> >> +    s->must_remove_block_options = true;
-> >> >
-> >> > Can we drop this var too?  Perhaps with block_cleanup_parameters()?
-> >> 
-> >> Yes, Markus mentioned it in v1 already. Take a look there. There's
-> >> several other declarations I missed. v3 is coming soon.
-> >
-> > Right, noticed that it's removed actually in the next patch.
-> >
-> > But iiuc it can already been removed in this patch.  If we want to remove
-> > it in the next, logically we should set must_remove_block_options=false
-> > here, though..  So maybe easier to just drop it here.
 > 
-> Ah I see what you mean. I thought you're just asking for the removal
-> overall.
+>>   static DisasJumpType gen_bdirect(DisasContext *ctx, int ra, int32_t disp)
+>>   {
 > 
-> But block_cleanup_parameters sets the block capability to false and the
-> whole block migration only goes away in the next patch. I think we need
-> to keep this as true to preserve behavior. In theory, after this patch
-> people could still use the block migration just fine by setting the cap.
+>>       /* Notice branch-to-next; used to initialize RA with the PC.  */
+>>       if (disp == 0) {
+>> -        return 0;
+> 
+> This is the single case in the code base of returning a non-DISAS_foo
+> as DisasJumpType :)
+> 
+>> +        return DISAS_NEXT;
 
-I'm reading this patch the same as "blk==false" always above [1].  In that
-case, only if we keep must_remove_block_options=false could we maintain the
-behavior?  Otherwise at the end of migration (or cancellations) QEMU can
-wrongly clear MIGRATION_CAPABILITY_BLOCK bit if the user set it manually?
+Yes.  Note that DISAS_NEXT == 0, so this worked accidentally.
+But of course using the correct name is better.
 
-(But hey, we're discussing whoever applies this patch only without the
- rest..  definitely not a huge deal :)
+r~
 
--- 
-Peter Xu
+
 
 
