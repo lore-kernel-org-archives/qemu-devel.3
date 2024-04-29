@@ -4,91 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2782C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 14:48:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0173FC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 14:50:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1SId-0003XV-JR; Mon, 29 Apr 2024 10:48:12 -0400
+	id 1s1SKV-0005Lj-6s; Mon, 29 Apr 2024 10:50:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s1SIZ-0003Wg-7y
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 10:48:07 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s1SIW-00070S-OK
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 10:48:06 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-6ed0e9ccca1so4387557b3a.0
- for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 07:48:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714402083; x=1715006883; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Hgo9mtmVYGIPJzeu1XSxfSZQOh0K4+RP9mnvcnoF7Yg=;
- b=JDIEd7vFFG69RLQvbD7NigJcdaZ2ICMXWKsOrY29uDiaf/crxw91lQ82gcidplimdG
- omEz0iE8RBMhqBB8nCq5OMXEcmM4gZpd4PaT5mn4wpjNb3ocksRyEAzIRgrdIDOTCFrS
- 0Ndeq9blOkPZu0hVxEW5YEOV4lgu3rPP8pOw65X3yxunC4Ie/c0yA8wb5qmn4cVV5uHM
- jNXfoAH5TRaY9eNvHZyyj3pqkDtoeQDwqGwEnBmvPxW2c7LVoTSKY1Q/X0w1bGhDmGJK
- GVpDrq07T5OYCMlotcNsJYvmJ8bQ0sZWi+aA2VHTKPDYc5aiVG7yV8YU9jNT5ITDvVjm
- z/PA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714402083; x=1715006883;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Hgo9mtmVYGIPJzeu1XSxfSZQOh0K4+RP9mnvcnoF7Yg=;
- b=pnxGCMUaKRgPmdAcFei96uckWlyVS8romMAfNMOlvwkICwtnySaHKh+qmNhETQmXB2
- D+DEWMeD8tYZ0dsA93VSMbHyXj0yTqtE6fI+rLr6Fy+yUoH5UNZwyYJx9k76PBOObedQ
- JdNQ/ZkTfMMdA5VgA2XukmoVSxyMcxqHisF1GZzrUqxYSfOJJ7qH2zuIJL5y8VPIVIWc
- SPizq0CFQSlm5nnwa9HXltCvZNJMbPCJ20u27rxziP3LvnLcmEh5dSXX9pqsZoHEN622
- UnulNJcYJLZlYatnP8L7wYFyE8Fmyb9juHu/+b9Ra2rtgSkZGlxhFNJxyKdNCeDPqz/k
- hopQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWO6YfzpCgcU9tygT+omQPqS3TVS2p8atTUFs/zoVxnn/KkkNxnAfZohhFmHBc7ZcuAXZ4A4Ya9WWRhybwDRCQaRU6w2HI=
-X-Gm-Message-State: AOJu0YwmN0qoAhvq+h/tPAhEi9LDXGbN9A8akZPtAsXORqU7ZGTPRpo/
- kuShWWt1Hf83iO3EvNKj8sQJ12ASKuD8IFHGDBRzCZoP/aqS+dEDr+0YVthwa04kQ/jDRbXwGJ2
- 5
-X-Google-Smtp-Source: AGHT+IGHKOCk8GJicTIZzQCpvyTQO3NskOpaR/gtgITOVeuccQZQP+CaHSis9GmHRYgCtoaKSbfSIQ==
-X-Received: by 2002:a05:6a21:3e04:b0:1ac:3b6e:3e4a with SMTP id
- bk4-20020a056a213e0400b001ac3b6e3e4amr11909474pzc.9.1714402083086; 
- Mon, 29 Apr 2024 07:48:03 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
- by smtp.gmail.com with ESMTPSA id
- bn9-20020a056a00324900b006eceb4cb828sm19357126pfb.180.2024.04.29.07.48.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Apr 2024 07:48:02 -0700 (PDT)
-Message-ID: <98e9c106-ad7d-46a2-b4ba-17910e8d8cc0@linaro.org>
-Date: Mon, 29 Apr 2024 07:48:00 -0700
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1s1SKO-0005JR-9t; Mon, 29 Apr 2024 10:50:00 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1s1SKJ-0007EH-4e; Mon, 29 Apr 2024 10:49:59 -0400
+Received: from mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
+ [IPv6:2a02:6b8:c12:290f:0:640:2b99:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 0596760C9D;
+ Mon, 29 Apr 2024 17:49:50 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:b739::1:30] (unknown
+ [2a02:6b8:b081:b739::1:30])
+ by mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id lnRqaa1IgmI0-u0FPQU4U; Mon, 29 Apr 2024 17:49:49 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1714402189;
+ bh=80TzZ05IT2ilOW23fr6mFOdtBQfoojkF3gho2EvCj/8=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=mS7smen8mWGCVFXTG4IJ1po4Av2A786PQv0P5xZxulVKRBYwAfpo8QV3SfZSkFAVG
+ hgVMcnseJ0XRGiLUMTd5VWNSVkddUv3mx7ETOZkUr9QdTc9U6MEfVojkRoqomDC7ng
+ ly+/IN0lqZsnP/tcxAUydxo5mb8aZ9kTH9mbpy60=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <6e7e97e7-70d8-4339-896d-cdb6bde0dcb1@yandex-team.ru>
+Date: Mon, 29 Apr 2024 17:49:47 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 15/24] accel/tcg: Restrict IcountDecr and CPUTLB to TCG
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>
-References: <20240428221450.26460-1-philmd@linaro.org>
- <20240428221450.26460-16-philmd@linaro.org>
+Subject: Re: [PATCH v3 4/5] qapi: introduce device-sync-config
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-block@nongnu.org, raphael@enfabrica.net, mst@redhat.com,
+ kwolf@redhat.com, hreitz@redhat.com, pbonzini@redhat.com,
+ berrange@redhat.com, eduardo@habkost.net, dave@treblig.org,
+ eblake@redhat.com, qemu-devel@nongnu.org, yc-core@yandex-team.ru
+References: <20240329183758.3360733-1-vsementsov@yandex-team.ru>
+ <20240329183758.3360733-5-vsementsov@yandex-team.ru>
+ <87plufvv4s.fsf@pond.sub.org>
+ <60a332e2-f18c-4c78-9ea9-344ab49e9b8e@yandex-team.ru>
+ <87le4wjvbl.fsf@pond.sub.org>
+ <a8245017-131c-47c4-b323-0185a08d728b@yandex-team.ru>
+ <87sez4gw0u.fsf@pond.sub.org>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240428221450.26460-16-philmd@linaro.org>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <87sez4gw0u.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -100,38 +83,212 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/28/24 15:14, Philippe Mathieu-Daudé wrote:
-> IcountDecr union, the CPUTLB* structures and the
-> "exec/tlb-common.h" header are only required for
-> TCG.
+On 29.04.24 16:04, Markus Armbruster wrote:
+> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   include/exec/tlb-common.h | 4 ++++
->   include/hw/core/cpu.h     | 9 ++++++---
->   2 files changed, 10 insertions(+), 3 deletions(-)
+>> On 29.04.24 13:51, Markus Armbruster wrote:
+>>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+>>>
+>>>> On 24.04.24 14:48, Markus Armbruster wrote:
+>>>>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+>>>>>
+>>>>>> Add command to sync config from vhost-user backend to the device. It
+>>>>>> may be helpful when VHOST_USER_SLAVE_CONFIG_CHANGE_MSG failed or not
+>>>>>> triggered interrupt to the guest or just not available (not supported
+>>>>>> by vhost-user server).
+>>>>>>
+>>>>>> Command result is racy if allow it during migration. Let's allow the
+>>>>>> sync only in RUNNING state.
+>>>>>>
+>>>>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>>>
+>>> [...]
+>>>
+>>>>>> diff --git a/include/sysemu/runstate.h b/include/sysemu/runstate.h
+>>>>>> index 0117d243c4..296af52322 100644
+>>>>>> --- a/include/sysemu/runstate.h
+>>>>>> +++ b/include/sysemu/runstate.h
+>>>>>> @@ -5,6 +5,7 @@
+>>>>>>     #include "qemu/notify.h"
+>>>>>>     
+>>>>>>     bool runstate_check(RunState state);
+>>>>>> +const char *current_run_state_str(void);
+>>>>>>     void runstate_set(RunState new_state);
+>>>>>>     RunState runstate_get(void);
+>>>>>>     bool runstate_is_running(void);
+>>>>>> diff --git a/qapi/qdev.json b/qapi/qdev.json
+>>>>>> index facaa0bc6a..e8be79c3d5 100644
+>>>>>> --- a/qapi/qdev.json
+>>>>>> +++ b/qapi/qdev.json
+>>>>>> @@ -161,3 +161,24 @@
+>>>>>>     ##
+>>>>>>     { 'event': 'DEVICE_UNPLUG_GUEST_ERROR',
+>>>>>>       'data': { '*device': 'str', 'path': 'str' } }
+>>>>>> +
+>>>>>> +##
+>>>>>> +# @device-sync-config:
+>>>>>> +#
+>>>>>> +# Synchronize config from backend to the guest. The command notifies
+>>>>>> +# re-read the device config from the backend and notifies the guest
+>>>>>> +# to re-read the config. The command may be used to notify the guest
+>>>>>> +# about block device capcity change. Currently only vhost-user-blk
+>>>>>> +# device supports this.
+>>>>>
+>>>>> I'm not sure I understand this.  To work towards an understanding, I
+>>>>> rephrase it, and you point out the errors.
+>>>>>
+>>>>>         Synchronize device configuration from host to guest part.  First,
+>>>>>         copy the configuration from the host part (backend) to the guest
+>>>>>         part (frontend).  Then notify guest software that device
+>>>>>         configuration changed.
+>>>>
+>>>> Correct, thanks
+>>>
+>>> Perhaps
+>>>
+>>>     Synchronize guest-visible device configuration with the backend's
+>>>     configuration, and notify guest software that device configuration
+>>>     changed.
+>>>
+>>>     This may be useful to notify the guest of a block device capacity
+>>>     change.  Currenrly, only vhost-user-blk devices support this.
+>>
+>> Sounds good
+> 
+> Except I fat-fingered "Currently".
+> 
+>>>
+>>> Next question: what happens when the device *doesn't* support this?
+>>
+>> An error "device-sync-config is not supported ..."
+> 
+> Okay.
+> 
+>>>>> I wonder how configuration can get out of sync.  Can you explain?
+>>>>>
+>>>>
+>>>> The example (and the original feature, which triggered developing this) is vhost disk resize. If vhost-server (backend) doesn't support VHOST_USER_SLAVE_CONFIG_CHANGE_MSG, neither QEMU nor guest will know that disk capacity changed.
+>>>
+>>> Sounds like we wouldn't need this command if we could make the
+>>> vhost-server support VHOST_USER_SLAVE_CONFIG_CHANGE_MSG.  Is making it
+>>> support it impractical?  Or are there other uses for this command?
+>>
+>> Qemu's internal vhost-server do support it. But that's not the only vhost-user server) So the command is useful for those servers which doesn't support VHOST_USER_SLAVE_CONFIG_CHANGE_MSG. Note, that this message requires setting up additional channel of server -> client communication. That was the reason, why the "change-msg" solution was rejected in our downstream: it's safer to reuse existing channel (QMP), than to add and support an additional channel.
+>>
+>> Also, the command may help to debug the system, when VHOST_USER_SLAVE_CONFIG_CHANGE_MSG doesn't work for some reason.
+> 
+> Suggest to work this into the commit message.
+> 
+>>>>>> +#
+>>>>>> +# @id: the device's ID or QOM path
+>>>>>> +#
+>>>>>> +# Features:
+>>>>>> +#
+>>>>>> +# @unstable: The command is experimental.
+>>>>>> +#
+>>>>>> +# Since: 9.1
+>>>>>> +##
+>>>>>> +{ 'command': 'device-sync-config',
+>>>>>> +  'features': [ 'unstable' ],
+>>>>>> +  'data': {'id': 'str'} }
+>>>>>> diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+>>>>>> index 7e075d91c1..cb35ea0b86 100644
+>>>>>> --- a/system/qdev-monitor.c
+>>>>>> +++ b/system/qdev-monitor.c
+>>>>>> @@ -23,6 +23,7 @@
+>>>>>>    #include "monitor/monitor.h"
+>>>>>>    #include "monitor/qdev.h"
+>>>>>>    #include "sysemu/arch_init.h"
+>>>>>> +#include "sysemu/runstate.h"
+>>>>>>    #include "qapi/error.h"
+>>>>>>    #include "qapi/qapi-commands-qdev.h"
+>>>>>>    #include "qapi/qmp/dispatch.h"
+>>>>>> @@ -969,6 +970,52 @@ void qmp_device_del(const char *id, Error **errp)
+>>>>>>         }
+>>>>>>     }
+>>>>>>     
+>>>>>> +int qdev_sync_config(DeviceState *dev, Error **errp)
+>>>>>> +{
+>>>>>> +    DeviceClass *dc = DEVICE_GET_CLASS(dev);
+>>>>>> +
+>>>>>> +    if (!dc->sync_config) {
+>>>>>> +        error_setg(errp, "device-sync-config is not supported for '%s'",
+>>>>>> +                   object_get_typename(OBJECT(dev)));
+>>>>>> +        return -ENOTSUP;
+>>>>>> +    }
+>>>>>> +
+>>>>>> +    return dc->sync_config(dev, errp);
+>>>>>> +}
+>>>>>> +
+>>>>>> +void qmp_device_sync_config(const char *id, Error **errp)
+>>>>>> +{
+>>>>>> +    DeviceState *dev;
+>>>>>> +
+>>>>>> +    /*
+>>>>>> +     * During migration there is a race between syncing`config and
+>>>>>> +     * migrating it, so let's just not allow it.
+>>>>>
+>>>>> Can you briefly explain the race?
+>>>>
+>>>> If at the moment of qmp command, corresponding config already migrated to the target, we'll change only the config on source, but on the target we'll still have outdated config.
+>>>
+>>> For RAM, dirty tracking ensures the change gets sent.  But this is
+>>> device memory.  Correct?
+>>
+>> Yes. It's stored in malloced buffer VirtIIODevice::config, and accessed through handlers virtio_pci_config_read()/virtio_pci_config_write(). As I understand, no kind of dirty tracking here..
+>>
+>> And I see, it's migrated in virtio_save():
+>> ...
+>>       qemu_put_be32(f, vdev->config_len);
+>>       qemu_put_buffer(f, vdev->config, vdev->config_len);
+>> ...
+> 
+> Suggest to explain the race in the comment.  Perhaps like this:
+> 
+>    Guest-visible configuration is stored in device memory.  There is a
+>    race between updating and migrating it: if we update it before we
+>    migrate it, it's migrated fine, but if any later updates are lost.
+> 
+>>>>>> +     *
+>>>>>> +     * Moreover, let's not rely on setting up interrupts in paused
+>>>>>> +     * state, which may be a part of migration process.
+>>>>>
+>>>>> What dependence exactly are you avoiding?  Config synchronization
+>>>>> depending on guest interrupt delivery?
+>>>>
+>>>> Right, guest is notified by pci_set_irq.
+>>>
+>>> If we allowed it in paused state, the delivery of the interrupt would be
+>>> delayed until the guest resumes running.  Correct?
+>>
+>> I think so. But this will not work, if we do offline migration like pause -> migrate -> resume on target. So I decided that better be more safe. The restrictions may be relaxed in future if needed.
+> 
+> Sounds like we'd make an interrupt pending on the source, but migration
+> failed to make it pending on the target as well, so it gets lost.
+> 
+> Is that the case?
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Yes, I mean exactly this thing. But probably I was wrong with my doubt, as queued interrupts do migrate:
 
-Though you might mention can_do_io also being restricted:
-
-> @@ -346,6 +347,7 @@ typedef union IcountDecr {
->    * @plugin_state: per-CPU plugin state
->    */
->   typedef struct CPUNegativeOffsetState {
-> +#ifdef CONFIG_TCG
->       CPUTLB tlb;
->   #ifdef CONFIG_PLUGIN
->       /*
-> @@ -356,6 +358,7 @@ typedef struct CPUNegativeOffsetState {
->   #endif
->       IcountDecr icount_decr;
->       bool can_do_io;
-> +#endif
->   } CPUNegativeOffsetState;
->   
->   struct KVMState;
+virtio_save() {
+...
+qemu_put_8s(f, &vdev->isr);
+...
 
 
-r~
+Hmm. And I don't remember now, was it just theoretical doubt, or a real problem. I'll check.
+
+> 
+> If yes, question for migration experts: why isn't this a problem
+> elsewhere, too?
+> 
+> [...]
+> 
+> Thanks!
+> 
+
+-- 
+Best regards,
+Vladimir
+
 
