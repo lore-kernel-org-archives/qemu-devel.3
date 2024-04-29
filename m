@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B8FBC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 10:34:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0370C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 10:36:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1OKv-0000Rb-1Z; Mon, 29 Apr 2024 06:34:17 -0400
+	id 1s1OMi-0001CM-QZ; Mon, 29 Apr 2024 06:36:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1OKt-0000RC-Rv
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 06:34:15 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1OMh-0001CA-CV
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 06:36:07 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1OKs-0001fO-6k
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 06:34:15 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-41c7ac71996so1059475e9.3
- for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 03:34:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1OMf-0002In-Nt
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 06:36:07 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-41ba0bb5837so18460975e9.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 03:36:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714386852; x=1714991652; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714386964; x=1714991764; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=7JSlJwEKVj/fFizETPHLtfULWxyauPdwoD3BnkgEVUM=;
- b=tzFLorYQ5fg14u7TJdS2bwAhsTJivupKinsKPfrW0q0yo5ou9XGsRRDCIGZ8xES4d8
- 6g63yCVdWzccLuZQDH7BAVgFDGzMfH97BdW3z+e7w5zEQahhDAO0V876YWIPOHlaPLGH
- rNhC9IHyalTzO9gFfmgtKcIL2fzBOEvDBD9GgFsUs/xaRwVdByZ9N5qxV7xeLFamKR0C
- +SVrFjTdh07K5Sc8BNqfKpTRKVKdDKvk74plJMHur5VjhBWW+fw1nqISzWNYtSXWhFRy
- RBiJKdlqxat02dnXLulvXJBhilQBU3jDjno2m6o0z028uysf1ShWNxR8kvJP05PRuenL
- AGbA==
+ bh=fM9InGCU6snWGfgvZhrA/Ym9xNPXHBTXHoMKaE0MyV8=;
+ b=z01ZAsgN2lqlc0DIvQOXYKlzx10p/Jgmpg82vQ5DIpGKTDyeDq8zyeRtZBZnFnufOr
+ x+cEbaffROQbZeaXxSgAINwM/MKbMU5p4BgKeNqTjradvFXRp+QRdVQN0daPV4w87oMs
+ ByUKg13IUP2FnDXJ6Ljm7y/MKCuZK15+cNUIkXceM36XPtdLLIOvQibFRweaciNwxOru
+ DiTdAZ1xlmJcfyyeM4o1JXbYNfD3h0SU4/u897g1VTiyUDbc8PiKW/Z9Foo6CSiEqXTL
+ lbdEfWSTPANJVQ7HlIJNW/Aa4DAxTe4zNwS41LDmx7OeFC+zQbhXx46/bWy2l37lN1aC
+ Bzkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714386852; x=1714991652;
+ d=1e100.net; s=20230601; t=1714386964; x=1714991764;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7JSlJwEKVj/fFizETPHLtfULWxyauPdwoD3BnkgEVUM=;
- b=n7CnQaOJTSdgKcMOF/r0TnFivx/5jssfkGslVlfOoZj7hrwb4sJ8rXr4q8tuwL0CVa
- NJqZp0dg+rqKKF5Z307hFbdDlY8OHO7Pb2XAegB+JSeqmvyueAfDo67iPLbuthPlVB23
- n7kCqTbYEXp6AWkfF46XsNmCJAydznEX0Mdj80Bb+KcBsnJUTL5PozKrClDJQZdrKw8Y
- vvBpgU3O7Svlz3osXzg3FWXQF+wqNrBGP5T/kUlJNJ66Mdl2DoJ6JT7tcdSP+rTxHP9Y
- y0lAswYVjXTdIU5+83miRZ/YzAb3r4wp6EhPRRjsmbfwOsxTXDFwREjHliNUVjy6FprT
- Fcfw==
+ bh=fM9InGCU6snWGfgvZhrA/Ym9xNPXHBTXHoMKaE0MyV8=;
+ b=qsLcSKxLQYSbHNVNltMreVkMompJAvzwtIuNfyxUBRJ7u3HKgvT6Ydeof11FS+vhmL
+ KnueNxED71XVAiZoLh9c9vxZkar3OHlwwdnx3xpZCcDoBZ92n6KtDlE3fuhVExXZbksh
+ BbhAN64j8iDilx5CKZynuo6k2p/XVUK95kRf2x+C0tzhkDx059MvNjyPW717bVC1JJOp
+ K25nJM1k5kUeG2pahqV5VLR0L0f1xisHXSd6Una5LA3fMKrnsoQiLVR9xFh2rH65KfWq
+ OBzuUM2W/4yGPBabMTk2gK8jBMo2M/phL/zAFVzqVXsd1H/IyX5hi6u8zGLy0z4ZEYNf
+ Hyhw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWBiQGantBcSA31l7lq6kWzm2cksbepujZ6sizGFqJwDiORUj2iw3/yMX0QJilcnpnRb95tf7iDGkROLlOeH/RaS7c1jzI=
-X-Gm-Message-State: AOJu0Yw64VzIv50/LsmyembgtN7s3CL4skmNzwMHZoDxFChmYThXCbnE
- P9o3wr4qhZw3NHz57AHnWXc21m7TB3Kqk51Kq0xerELsOsyfH63PMp/8tOMHe6LAmNmD3NZ36h7
- 9mUk=
-X-Google-Smtp-Source: AGHT+IGspHc04wvX4FZFfwUnmKKpvLU6eTbo5MUV8BeXGfRzcHzBpE5RJWH4sQffJ2VeGRCUdOiy9Q==
-X-Received: by 2002:adf:a4c4:0:b0:34a:e73a:51be with SMTP id
- h4-20020adfa4c4000000b0034ae73a51bemr7329189wrb.31.1714386852296; 
- Mon, 29 Apr 2024 03:34:12 -0700 (PDT)
+ AJvYcCXhm4vbT00V4SNxQifLRbdoqsqUTUGfZGQ2tSq9A8TJaYfowpWso0Y5gHt4suhpTEF9WH3dEwmPdDh1LN5KDijBjNE+vGM=
+X-Gm-Message-State: AOJu0Yyo5938qhA/gSBZSYhB0tXURQ5XZV/qThvF/t029cPF1Q86emzY
+ 3OJid5QwOrbpeuJ4PXMq9H8yEQfV2KIGTuYOV4vZoDu1Iac8G4DnnGg3y+kuXYo=
+X-Google-Smtp-Source: AGHT+IFphzHECm09b3D59lhCbZNmlrnla7ezYAjQrIIomgk209tdrZkoRWjIziKeO11R4u6QAHjfLA==
+X-Received: by 2002:a05:600c:3b23:b0:41a:bdaf:8d6b with SMTP id
+ m35-20020a05600c3b2300b0041abdaf8d6bmr7535545wms.34.1714386964071; 
+ Mon, 29 Apr 2024 03:36:04 -0700 (PDT)
 Received: from [10.79.37.248] ([83.247.137.20])
  by smtp.gmail.com with ESMTPSA id
- e3-20020adf9bc3000000b0034c75d07bbdsm7469734wrc.79.2024.04.29.03.34.11
+ n18-20020a05600c4f9200b004169836bf9asm44720073wmq.23.2024.04.29.03.36.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Apr 2024 03:34:11 -0700 (PDT)
-Message-ID: <23e1ba1c-cc9c-46b2-a74e-d85734f8c12e@linaro.org>
-Date: Mon, 29 Apr 2024 12:34:10 +0200
+ Mon, 29 Apr 2024 03:36:03 -0700 (PDT)
+Message-ID: <84cc7ce7-6a1b-44bd-bf55-ed7460316da8@linaro.org>
+Date: Mon, 29 Apr 2024 12:36:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/33] accel/tcg: Record mmio bytes during translation
+Subject: Re: [PATCH v2 07/33] accel/tcg: Record when translator_fake_ldb is
+ used
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20240424233131.988727-1-richard.henderson@linaro.org>
- <20240424233131.988727-7-richard.henderson@linaro.org>
+ <20240424233131.988727-8-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240424233131.988727-7-richard.henderson@linaro.org>
+In-Reply-To: <20240424233131.988727-8-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,45 +97,29 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 25/4/24 01:31, Richard Henderson wrote:
-> This will be able to replace plugin_insn_append, and will
-> be usable for disassembly.
-> 
+
+Remove left-over command from commit dcd092a063 ("accel/tcg: Improve
+can_do_io management").
+
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/exec/translator.h | 12 ++++++++++++
->   accel/tcg/translator.c    | 41 +++++++++++++++++++++++++++++++++++++++
->   2 files changed, 53 insertions(+)
+>   include/exec/translator.h | 3 ++-
+>   accel/tcg/translator.c    | 2 ++
+>   2 files changed, 4 insertions(+), 1 deletion(-)
 > 
 > diff --git a/include/exec/translator.h b/include/exec/translator.h
-> index 83fe66cba0..974cc4f9c4 100644
+> index 974cc4f9c4..e92dfba035 100644
 > --- a/include/exec/translator.h
 > +++ b/include/exec/translator.h
-> @@ -90,6 +90,18 @@ typedef struct DisasContextBase {
->       bool plugin_enabled;
->       struct TCGOp *insn_start;
->       void *host_addr[2];
-> +
-> +    /*
-> +     * Record insn data that we cannot read directly from host memory.
-> +     * There are only two reasons we cannot use host memory:
-> +     * (1) We are executing from I/O,
-> +     * (2) We are executing a synthetic instruction (s390x EX).
-> +     * In both cases we need record exactly one instruction,
-> +     * and thus the maximum amount of data we record is limited.
-> +     */
-> +    int record_start;
-> +    int record_len;
-> +    uint8_t record[32];
-
-Alternatively (matter of style):
-
-        struct {
-            unsigned start;
-            unsigned len;
-            uint8_t data[32];
-        }
-
->   } DisasContextBase;
+> @@ -72,8 +72,8 @@ typedef enum DisasJumpType {
+>    * @num_insns: Number of translated instructions (including current).
+>    * @max_insns: Maximum number of instructions to be translated in this TB.
+>    * @singlestep_enabled: "Hardware" single stepping enabled.
+> - * @saved_can_do_io: Known value of cpu->neg.can_do_io, or -1 for unknown.
+>    * @plugin_enabled: TCG plugin enabled in this TB.
+> + * @fake_insn: True if translator_fake_ldb used.
+>    * @insn_start: The last op emitted by the insn_start hook,
+>    *              which is expected to be INDEX_op_insn_start.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
