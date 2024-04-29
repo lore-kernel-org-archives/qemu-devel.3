@@ -4,62 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE47DC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 06:54:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A15FAC19F53
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 06:54:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1KtH-0001Q4-Qa; Mon, 29 Apr 2024 02:53:31 -0400
+	id 1s1KuN-0002gu-91; Mon, 29 Apr 2024 02:54:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s1KtF-0001MM-Nz
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 02:53:29 -0400
+ id 1s1Ku9-00029l-Jr
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 02:54:29 -0400
 Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s1KtC-0007kk-PK
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 02:53:29 -0400
+ id 1s1Ku7-0007m1-P6
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 02:54:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1714373607; x=1745909607;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=HWHTMLjmI+9DUM1ywP09SLD6FzEUZtCSXcN3GPr5zjQ=;
- b=R8Qe4uo7mqeVm4LBT9ojASLReAbEt/3nwrt0h/NHLxgmtJHIRwha2mwK
- IwPHjVwxZlwkIiNAZz2dUD94Y87emsmPj5bOraqGd8g97C00no5q9XGnC
- 54Jln88Hhx4kD/XF6OjN9Ll8nEO0nom1F6OhqrPYOhVNhO69q+u2iE5ll
- Army0OxSKbaD9WTusiSDMyUyiEsC5z6sauMVOgMwMK5cfR2xa8COmauSq
- WmatZaDvDa1SBby+eJf1UOsWjjzfqa5HmajAZ/jfh9cVi00BuHPMINDRW
- DSenjla47FS7B9Vg5ufQ290bSKqxqINdGj6cK0+yvcNjcPMCJyX/8fsqu w==;
-X-CSE-ConnectionGUID: u3BxNX8CQda3KDpUQmQIkw==
-X-CSE-MsgGUID: GgR8GKJ5RPiSD9QN+jrrKw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11057"; a="10560656"
-X-IronPort-AV: E=Sophos;i="6.07,239,1708416000"; d="scan'208";a="10560656"
+ t=1714373664; x=1745909664;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=cq8fXTzgJ7kHNocLmUjDKrOPQxesv37fN7VuB6W7Z9c=;
+ b=mVkfM8xgBBV+2xfJeCzmSqeQ4BW/0O0jblP+dOjRAmYtS3fs2uBo34Eg
+ 12/bn6c3Uo/vOuWPD8JQqLS+eRoGqYCT4UbxS8VQxQnenCYHGHfIINdZN
+ hiXxgaxfU8Otsup6YSHit6O6+AQsY0f2Y3+d3EiZ8+9UvrbhSgSfJ4hfA
+ IgdOJSKcj2fI0YbbSc7JSRtYp2fP0T//NM4YTSvJnwgjdml5+EVNmV41r
+ p2SDrIB1hexLxkRK7VkmXt0FADgTFUvbxAUMEHh8/ArdqbY2MFiex7fmp
+ Orr+nYdG3y2bvEVIRJB8zjPnaJ5sAZaJMuYrGpQt71maMR2v4S+TQa4Q0 Q==;
+X-CSE-ConnectionGUID: RWj+Rx/HS6WyGG4bwBssYA==
+X-CSE-MsgGUID: QS5M4h+8QPWy+3RX/XsRkw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11057"; a="10560754"
+X-IronPort-AV: E=Sophos;i="6.07,239,1708416000"; d="scan'208";a="10560754"
 Received: from orviesa001.jf.intel.com ([10.64.159.141])
  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Apr 2024 23:53:23 -0700
-X-CSE-ConnectionGUID: 2M1NreAeRoiZXnpzgOiinw==
-X-CSE-MsgGUID: g5AtAZBMRLKIWciZTFu36A==
+ 28 Apr 2024 23:54:21 -0700
+X-CSE-ConnectionGUID: I7clq2WERByjqdC6sQ2kOg==
+X-CSE-MsgGUID: 5BmP7l5RT2qEpMqhqAqZhg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,239,1708416000"; d="scan'208";a="63487920"
+X-IronPort-AV: E=Sophos;i="6.07,239,1708416000"; d="scan'208";a="63488323"
 Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.124])
  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Apr 2024 23:53:19 -0700
+ 28 Apr 2024 23:54:17 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  mst@redhat.com, peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com,
  nicolinc@nvidia.com, joao.m.martins@oracle.com, kevin.tian@intel.com,
  yi.l.liu@intel.com, chao.p.peng@intel.com,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v3 00/19] Add a host IOMMU device abstraction to check with
- vIOMMU
-Date: Mon, 29 Apr 2024 14:50:27 +0800
-Message-Id: <20240429065046.3688701-1-zhenzhong.duan@intel.com>
+ Yi Sun <yi.y.sun@linux.intel.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH v3 15/19] hw/pci: Introduce
+ pci_device_[set|unset]_iommu_device()
+Date: Mon, 29 Apr 2024 14:50:42 +0800
+Message-Id: <20240429065046.3688701-16-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240429065046.3688701-1-zhenzhong.duan@intel.com>
+References: <20240429065046.3688701-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.16;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
@@ -85,151 +88,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+From: Yi Liu <yi.l.liu@intel.com>
 
-The most important change in this version is instroducing a common
-HostIOMMUDeviceCaps structure in HostIOMMUDevice and a new interface
-between vIOMMU and HostIOMMUDevice.
+pci_device_[set|unset]_iommu_device() call pci_device_get_iommu_bus_devfn()
+to get iommu_bus->iommu_ops and call [set|unset]_iommu_device callback to
+set/unset HostIOMMUDevice for a given PCI device.
 
-HostIOMMUDeviceClass::realize() is introduced to initialize
-HostIOMMUDeviceCaps and other fields of HostIOMMUDevice variants.
+Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+---
+ include/hw/pci/pci.h | 38 +++++++++++++++++++++++++++++++++++++-
+ hw/pci/pci.c         | 27 +++++++++++++++++++++++++++
+ 2 files changed, 64 insertions(+), 1 deletion(-)
 
-HostIOMMUDeviceClass::check_cap() is introduced to query host IOMMU
-device capabilities.
-
-After the change, part2 is only 3 patches, so merge it with part1 to be
-a single prerequisite series, same for changelog. If anyone doesn't like
-that, I can split again.
-
-The class tree is as below:
-
-                              HostIOMMUDevice
-                                     | .caps
-                                     | .realize()
-                                     | .check_cap()
-                                     |
-            .-----------------------------------------------.
-            |                        |                      |
-HostIOMMUDeviceLegacyVFIO  {HostIOMMUDeviceLegacyVDPA}  HostIOMMUDeviceIOMMUFD
-            | .vdev                  | {.vdev}              | .iommufd
-                                                            | .devid
-                                                            | [.ioas_id]
-                                                            | [.attach_hwpt()]
-                                                            | [.detach_hwpt()]
-                                                            |
-                                          .----------------------.
-                                          |                      |
-                       HostIOMMUDeviceIOMMUFDVFIO  {HostIOMMUDeviceIOMMUFDVDPA}
-                                          | .vdev                | {.vdev}
-
-* The attributes in [] will be implemented in nesting series.
-* The classes in {} will be implemented in future.
-* .vdev in different class points to different agent device,
-* i.e., for VFIO it points to VFIODevice.
-
-PATCH1-4: Introduce HostIOMMUDevice and its sub classes
-PATCH5-11: Introduce HostIOMMUDeviceCaps, implement .realize() and .check_cap() handler
-PATCH12-16: Create HostIOMMUDevice instance and pass to vIOMMU
-PATCH17-19: Implement compatibility check between host IOMMU and vIOMMU(intel_iommu)
-
-Qemu code can be found at:
-https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_nesting_preq_v3
-
-Besides the compatibility check in this series, in nesting series, this
-host IOMMU device is extended for much wider usage. For anyone interested
-on the nesting series, here is the link:
-https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_nesting_rfcv2
-
-Thanks
-Zhenzhong
-
-Changelog:
-v3:
-- refine declaration and doc for HostIOMMUDevice (Cédric, Philippe)
-- introduce HostIOMMUDeviceCaps, .realize() and .check_cap() (Cédric)
-- introduce helper range_get_last_bit() for range operation (Cédric)
-- separate pci_device_get_iommu_bus_devfn() in a prereq patch (Cédric)
-- replace HIOD_ abbreviation with HOST_IOMMU_DEVICE_ (Cédric)
-- add header in include/sysemu/iommufd.h (Cédric)
-
-v2:
-- use QOM to abstract host IOMMU device and its sub-classes (Cédric)
-- move host IOMMU device creation in attach_device() (Cédric)
-- refine pci_device_set/unset_iommu_device doc further (Eric)
-- define host IOMMU info format of different backend
-- implement get_host_iommu_info() for different backend (Cédric)
-- drop cap/ecap update logic (MST)
-- check aw-bits from get_host_iommu_info() in legacy mode
-
-v1:
-- use HostIOMMUDevice handle instead of union in VFIODevice (Eric)
-- change host_iommu_device_init to host_iommu_device_create
-- allocate HostIOMMUDevice in host_iommu_device_create callback
-  and set the VFIODevice base_hdev handle (Eric)
-- refine pci_device_set/unset_iommu_device doc (Eric)
-- use HostIOMMUDevice handle instead of union in VTDHostIOMMUDevice (Eric)
-- convert HostIOMMUDevice to sub object pointer in vtd_check_hdev
-
-rfcv2:
-- introduce common abstract HostIOMMUDevice and sub struct for different BEs (Eric, Cédric)
-- remove iommufd_device.[ch] (Cédric)
-- remove duplicate iommufd/devid define from VFIODevice (Eric)
-- drop the p in aliased_pbus and aliased_pdevfn (Eric)
-- assert devfn and iommu_bus in pci_device_get_iommu_bus_devfn (Cédric, Eric)
-- use errp in iommufd_device_get_info (Eric)
-- split and simplify cap/ecap check/sync code in intel_iommu.c (Cédric)
-- move VTDHostIOMMUDevice declaration to intel_iommu_internal.h (Cédric)
-- make '(vtd->cap_reg >> 16) & 0x3fULL' a MACRO and add missed '+1' (Cédric)
-- block migration if vIOMMU cap/ecap updated based on host IOMMU cap/ecap
-- add R-B
-
-Yi Liu (2):
-  hw/pci: Introduce pci_device_[set|unset]_iommu_device()
-  intel_iommu: Implement [set|unset]_iommu_device() callbacks
-
-Zhenzhong Duan (17):
-  backends: Introduce HostIOMMUDevice abstract
-  vfio/container: Introduce HostIOMMUDeviceLegacyVFIO device
-  backends/iommufd: Introduce abstract HostIOMMUDeviceIOMMUFD device
-  vfio/iommufd: Introduce HostIOMMUDeviceIOMMUFDVFIO device
-  backends/host_iommu_device: Introduce HostIOMMUDeviceCaps
-  range: Introduce range_get_last_bit()
-  vfio/container: Implement HostIOMMUDeviceClass::realize() handler
-  backends/iommufd: Introduce helper function
-    iommufd_backend_get_device_info()
-  vfio/iommufd: Implement HostIOMMUDeviceClass::realize() handler
-  vfio/container: Implement HostIOMMUDeviceClass::check_cap() handler
-  backends/iommufd: Implement HostIOMMUDeviceClass::check_cap() handler
-  vfio: Introduce VFIOIOMMUClass::hiod_typename attribute
-  vfio: Create host IOMMU device instance
-  hw/pci: Introduce helper function pci_device_get_iommu_bus_devfn()
-  vfio/pci: Pass HostIOMMUDevice to vIOMMU
-  intel_iommu: Extract out vtd_cap_init() to initialize cap/ecap
-  intel_iommu: Check compatibility with host IOMMU capabilities
-
- MAINTAINERS                           |   2 +
- hw/i386/intel_iommu_internal.h        |   8 ++
- include/hw/i386/intel_iommu.h         |   3 +
- include/hw/pci/pci.h                  |  38 ++++-
- include/hw/vfio/vfio-common.h         |  26 ++++
- include/hw/vfio/vfio-container-base.h |   3 +
- include/qemu/range.h                  |  11 ++
- include/sysemu/host_iommu_device.h    |  95 +++++++++++++
- include/sysemu/iommufd.h              |  34 +++++
- backends/host_iommu_device.c          |  59 ++++++++
- backends/iommufd.c                    |  75 +++++++---
- hw/i386/intel_iommu.c                 | 197 ++++++++++++++++++++------
- hw/pci/pci.c                          |  75 +++++++++-
- hw/vfio/common.c                      |  18 ++-
- hw/vfio/container.c                   |  49 ++++++-
- hw/vfio/iommufd.c                     |  52 ++++++-
- hw/vfio/pci.c                         |  20 ++-
- backends/Kconfig                      |   5 +
- backends/meson.build                  |   1 +
- 19 files changed, 701 insertions(+), 70 deletions(-)
- create mode 100644 include/sysemu/host_iommu_device.h
- create mode 100644 backends/host_iommu_device.c
-
+diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+index eaa3fc99d8..849e391813 100644
+--- a/include/hw/pci/pci.h
++++ b/include/hw/pci/pci.h
+@@ -3,6 +3,7 @@
+ 
+ #include "exec/memory.h"
+ #include "sysemu/dma.h"
++#include "sysemu/host_iommu_device.h"
+ 
+ /* PCI includes legacy ISA access.  */
+ #include "hw/isa/isa.h"
+@@ -383,10 +384,45 @@ typedef struct PCIIOMMUOps {
+      *
+      * @devfn: device and function number
+      */
+-   AddressSpace * (*get_address_space)(PCIBus *bus, void *opaque, int devfn);
++    AddressSpace * (*get_address_space)(PCIBus *bus, void *opaque, int devfn);
++    /**
++     * @set_iommu_device: attach a HostIOMMUDevice to a vIOMMU
++     *
++     * Optional callback, if not implemented in vIOMMU, then vIOMMU can't
++     * retrieve host information from the associated HostIOMMUDevice.
++     *
++     * @bus: the #PCIBus of the PCI device.
++     *
++     * @opaque: the data passed to pci_setup_iommu().
++     *
++     * @devfn: device and function number of the PCI device.
++     *
++     * @dev: the data structure representing host IOMMU device.
++     *
++     * @errp: pass an Error out only when return false
++     *
++     * Returns: 0 if HostIOMMUDevice is attached, or else <0 with errp set.
++     */
++    int (*set_iommu_device)(PCIBus *bus, void *opaque, int devfn,
++                            HostIOMMUDevice *dev, Error **errp);
++    /**
++     * @unset_iommu_device: detach a HostIOMMUDevice from a vIOMMU
++     *
++     * Optional callback.
++     *
++     * @bus: the #PCIBus of the PCI device.
++     *
++     * @opaque: the data passed to pci_setup_iommu().
++     *
++     * @devfn: device and function number of the PCI device.
++     */
++    void (*unset_iommu_device)(PCIBus *bus, void *opaque, int devfn);
+ } PCIIOMMUOps;
+ 
+ AddressSpace *pci_device_iommu_address_space(PCIDevice *dev);
++int pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice *hiod,
++                                Error **errp);
++void pci_device_unset_iommu_device(PCIDevice *dev);
+ 
+ /**
+  * pci_setup_iommu: Initialize specific IOMMU handlers for a PCIBus
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 02a4bb2af6..c3293e9357 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -2742,6 +2742,33 @@ AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
+     return &address_space_memory;
+ }
+ 
++int pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice *hiod,
++                                Error **errp)
++{
++    PCIBus *iommu_bus;
++
++    /* set_iommu_device requires device's direct BDF instead of aliased BDF */
++    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, NULL, NULL);
++    if (iommu_bus && iommu_bus->iommu_ops->set_iommu_device) {
++        return iommu_bus->iommu_ops->set_iommu_device(pci_get_bus(dev),
++                                                      iommu_bus->iommu_opaque,
++                                                      dev->devfn, hiod, errp);
++    }
++    return 0;
++}
++
++void pci_device_unset_iommu_device(PCIDevice *dev)
++{
++    PCIBus *iommu_bus;
++
++    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, NULL, NULL);
++    if (iommu_bus && iommu_bus->iommu_ops->unset_iommu_device) {
++        return iommu_bus->iommu_ops->unset_iommu_device(pci_get_bus(dev),
++                                                        iommu_bus->iommu_opaque,
++                                                        dev->devfn);
++    }
++}
++
+ void pci_setup_iommu(PCIBus *bus, const PCIIOMMUOps *ops, void *opaque)
+ {
+     /*
 -- 
 2.34.1
 
