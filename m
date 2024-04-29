@@ -4,120 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43A78C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 13:10:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED4D7C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 13:22:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1QlE-0007lu-Hu; Mon, 29 Apr 2024 09:09:38 -0400
+	id 1s1QxJ-0005Rn-GI; Mon, 29 Apr 2024 09:22:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
- id 1s1Qkx-0007kx-R5; Mon, 29 Apr 2024 09:09:21 -0400
-Received: from mx0a-00190b01.pphosted.com ([2620:100:9001:583::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
- id 1s1Qkm-000271-0l; Mon, 29 Apr 2024 09:09:17 -0400
-Received: from pps.filterd (m0122333.ppops.net [127.0.0.1])
- by mx0a-00190b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43TCnsGR006750;
- Mon, 29 Apr 2024 14:08:19 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=
- message-id:date:mime-version:subject:to:cc:references:from
- :in-reply-to:content-type:content-transfer-encoding; s=
- jan2016.eng; bh=GV9SnNHzDXHKX5jlCImjUebP7ZEGbuMwhEHEUbz9asA=; b=
- m3H/JR1KmN1uAlqNqcfdFrJJZp1fJDKVKwrWTHtRfk8EobLWyDw6Em79+LpBufu8
- H7E6NNbLWLcpT+Ko35y0NndTMoq4aMr9Z3C3GyOmg1548T7ZVhpKWheqOQLyJ3bg
- eZFMw2wzD5PJeMpptyxYUiz3Lpg6ejjJovZgsbdX4wryuKUbPxtrgtr1wQF6yJVd
- JVIhymc36d3tyo+RGPTrSdrlAmkVKtOxC/PRGWsuSuuE6fVIhJoTKBHh08v77XcT
- lEQvjkf7o1Os9poceEggy5JiFoPx16rQgTcullQnso/iSIXR1FJhCMJNsBFI1pHO
- itFnINHKQqsNL391g5qrNw==
-Received: from prod-mail-ppoint4
- (a72-247-45-32.deploy.static.akamaitechnologies.com [72.247.45.32] (may be
- forged))
- by mx0a-00190b01.pphosted.com (PPS) with ESMTPS id 3xrrmcdxrf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Apr 2024 14:08:19 +0100 (BST)
-Received: from pps.filterd (prod-mail-ppoint4.akamai.com [127.0.0.1])
- by prod-mail-ppoint4.akamai.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43TAV4sj012275; Mon, 29 Apr 2024 09:08:17 -0400
-Received: from prod-mail-relay19.dfw02.corp.akamai.com ([172.27.165.173])
- by prod-mail-ppoint4.akamai.com (PPS) with ESMTP id 3xrvpy1n26-1;
- Mon, 29 Apr 2024 09:08:17 -0400
-Received: from [100.64.0.1] (prod-aoa-dallas2clt14.dfw02.corp.akamai.com
- [172.27.166.123])
- by prod-mail-relay19.dfw02.corp.akamai.com (Postfix) with ESMTP id 81321637FA; 
- Mon, 29 Apr 2024 13:08:13 +0000 (GMT)
-Message-ID: <46f5e323-632d-7bda-f2c5-3cfa7b1c6b68@akamai.com>
-Date: Mon, 29 Apr 2024 08:08:10 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1QxA-0005Qz-2R
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 09:22:01 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Qx8-0005Bf-3E
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 09:21:55 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-5171a529224so5614799e87.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 06:21:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714396911; x=1715001711; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=jljxZJGISWC3e+SDlGvPM/yJwLLe4lClxBEZcWzHTxg=;
+ b=y/i2VBSHOqzyNHazAfEXopRx5fa0y3NMeA8+wCa+m4ZhZeeANEdTI12zveQLI23QGX
+ MS0x4bU4VtcaXFe5kKEl2MRRhLzWjc7DPBUI68HLVDHwPOuNSlCKRYEDdNIMODVX241P
+ yd9BtOPubXEsoSAhS59nn3Eq8nm6yULtmejU8MJNFi9ZnuWpySy8cy6i3raKB6i37E0S
+ XMGO5wdMXHkK6kREEEH+q8pin2lgPxaC0sWtQr4L/lN1VMrdn4Zz5VRyJpVKHIjvk38M
+ l2IhriZBYmVCl13IddCWsVHvQn2rNtq395J0pAqIYlPmu+bvSbvKx6jBRmIJ/TPC+SRJ
+ 0JzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714396911; x=1715001711;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=jljxZJGISWC3e+SDlGvPM/yJwLLe4lClxBEZcWzHTxg=;
+ b=HEZx5kwWlZmAJ+g4jlGPDmbZCX8Rk+4Sv6xQeiVqg9shN2cvBrCFbMhBalIYUm2NGG
+ ucnHiOYOwPaGhJcJQfYlw1PzErgbkhQ6Xp1gCVYeNuiMxlKRVbVEBuNfothYjlG1buDl
+ o0GtzesY4E2qDF8M8Y57zTMzmC6q1EBq3fX622irFYEl8d/xSNl1OEG7mg8I61aBSKEs
+ d3/wV4mhoh6wbQ0wwX/9VIo5N7O67/xACdmqH1AnKWrsl3888T48Km/DaFtCfJ/d/E7L
+ AzQtZdhw6ogOdFOYUbF0nrpwvOI68bBRwPG4GYdc+HlP0BOT8+emUS2HAWXqhfx3g/aI
+ HPSw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWm0TkkYXj6B2FMCMprHMpLgHjY41s3CMSgRswugWCpuIVYpxRJC0EqzZ66PPkoOoop9Rtel+afnxLY16ho3m2LVagnSDg=
+X-Gm-Message-State: AOJu0YxaPuYQJ7KYR8cSi4ICxBCrVaIE22BcQ8nYh1faxFoCS1Ca6SgJ
+ gUSJPoMGrktI82xuPaENyCHWDm09iX/B9eyqpMl8pF/dYNiATe9vO2JOYcjC1yY=
+X-Google-Smtp-Source: AGHT+IGb9nqz2b5Mgixok5BmHg+gfIR2ST+JuLbQxNfrHAad3ZbKGZgOv7pVtNrWF2MC1eRlbAGKeA==
+X-Received: by 2002:a05:6512:220b:b0:516:a091:db5e with SMTP id
+ h11-20020a056512220b00b00516a091db5emr8399950lfu.48.1714396910461; 
+ Mon, 29 Apr 2024 06:21:50 -0700 (PDT)
+Received: from [192.168.69.100] (bny92-h02-176-184-44-142.dsl.sta.abo.bbox.fr.
+ [176.184.44.142]) by smtp.gmail.com with ESMTPSA id
+ j42-20020a05600c1c2a00b0041bfa2171efsm7359190wms.40.2024.04.29.06.21.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Apr 2024 06:21:50 -0700 (PDT)
+Message-ID: <2f89280f-b26d-434e-8ac1-e48fe13243f1@linaro.org>
+Date: Mon, 29 Apr 2024 15:21:48 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol handling
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 06/10] util/bufferiszero: Improve scalar variant
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20240424225705.929812-1-richard.henderson@linaro.org>
+ <20240424225705.929812-7-richard.henderson@linaro.org>
+ <400f20e7-3c33-4916-897a-0d6b21d572c4@linaro.org>
+ <80f07930-e5e5-496b-ba08-6091ebe55c1e@linaro.org>
 Content-Language: en-US
-To: Yu Zhang <yu.zhang@ionos.com>, Peter Xu <peterx@redhat.com>
-Cc: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>,
- Jinpu Wang <jinpu.wang@ionos.com>, Elmar Gerdes <elmar.gerdes@ionos.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Yuval Shaia <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
- Prasanna Kumar Kalever <prasanna.kalever@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Prasanna Kumar Kalever <prasanna4324@gmail.com>,
- "integration@gluster.org" <integration@gluster.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
- =?UTF-8?Q?Daniel_P=2e_Berrang=c3=a9?= <berrange@redhat.com>,
- "devel@lists.libvirt.org" <devel@lists.libvirt.org>,
- Hanna Reitz <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Eric Blake <eblake@redhat.com>,
- Song Gao <gaosong@loongson.cn>,
- =?UTF-8?Q?Marc-Andr=c3=a9_Lureau?= <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, =?UTF-8?Q?Alex_Benn=c3=a9e?=
- <alex.bennee@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, arei.gonglei@huawei.com,
- pannengyuan@huawei.com
-References: <ef160e75-d4a4-4be0-81f3-77d8b0e76178@linaro.org>
- <9d082daf-acf0-27c5-1758-5a3f2af7ee0f@fujitsu.com>
- <CAHEcVy50AtvDyCjwPa9Hu+x1wiUF6xf5McGOTHL+wdt3WN3pgA@mail.gmail.com>
- <Zgx3brrz8m0V7HS4@x1n>
- <CAMGffE=i+hVCNaX_31h1D1VW7JGJBqoa9T0qEJe2CDcb9BPiAA@mail.gmail.com>
- <ZhQYu3ZnsIGv2qUZ@x1n>
- <CAMGffEm2TWJxOPcNQTQ1Sjytf5395dBzTCMYiKRqfxDzJwSN6A@mail.gmail.com>
- <ZhWa0YeAb9ySVKD1@x1n> <082a21b0-d4d1-9f6c-24b5-bee56263008e@fujitsu.com>
- <ZhaY2_cO6CrQFCt3@x1n> <Zhfxoaz9yNTx8Btd@x1n>
- <CAHEcVy7POArt+CmY8dyNTzLJp3XxXgjh3k8=C=9K+_cw1CSJFA@mail.gmail.com>
-From: Michael Galaxy <mgalaxy@akamai.com>
-In-Reply-To: <CAHEcVy7POArt+CmY8dyNTzLJp3XxXgjh3k8=C=9K+_cw1CSJFA@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <80f07930-e5e5-496b-ba08-6091ebe55c1e@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-29_10,2024-04-29_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
- mlxlogscore=999 spamscore=0
- phishscore=0 adultscore=0 bulkscore=0 suspectscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2404010000
- definitions=main-2404290082
-X-Proofpoint-GUID: 3r461xsC7RHN9oB8HYl-IGWyUgXFScXn
-X-Proofpoint-ORIG-GUID: 3r461xsC7RHN9oB8HYl-IGWyUgXFScXn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-29_10,2024-04-29_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- bulkscore=0 adultscore=0
- mlxlogscore=999 mlxscore=0 malwarescore=0 clxscore=1011 priorityscore=1501
- phishscore=0 spamscore=0 lowpriorityscore=0 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
- definitions=main-2404290082
-Received-SPF: pass client-ip=2620:100:9001:583::1;
- envelope-from=mgalaxy@akamai.com; helo=mx0a-00190b01.pphosted.com
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- NICE_REPLY_A=-1.127, RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,107 +97,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi All (and Peter),
+On 29/4/24 14:31, Richard Henderson wrote:
+> On 4/29/24 05:18, Philippe Mathieu-Daudé wrote:
+>>> +
+>>> +    t = ldq_he_p(buf) | ldq_he_p(buf + len - 8);
+>>
+>> Here we read #0 and #31, ...
+>>
+>>> +    p = QEMU_ALIGN_PTR_DOWN(buf + 8, 8);
+>>> +    e = QEMU_ALIGN_PTR_DOWN(buf + len - 1, 8);
+>>> +
+>>> +    /* Read 0 to 31 aligned words from the middle. */
+>>
+>> ... so here is #1 to #30?
+> 
+> Not indexes, but count.  There may be zero words remaining in the 
+> middle, etc.
 
-My name is Michael Galaxy (formerly Hines). Yes, I changed my last name 
-(highly irregular for a male) and yes, that's my real last name: 
-https://www.linkedin.com/in/mrgalaxy/)
+Oh, got it, thanks!
 
-I'm the original author of the RDMA implementation. I've been discussing 
-with Yu Zhang for a little bit about potentially handing over 
-maintainership of the codebase to his team.
-
-I simply have zero access to RoCE or Infiniband hardware at all, 
-unfortunately. so I've never been able to run tests or use what I wrote 
-at work, and as all of you know, if you don't have a way to test 
-something, then you can't maintain it.
-
-Yu Zhang put a (very kind) proposal forward to me to ask the community 
-if they feel comfortable training his team to maintain the codebase (and 
-run tests) while they learn about it.
-
-If you don't mind, I'd like to let him send over his (very detailed) 
-proposal,
-
-- Michael
-
-On 4/11/24 11:36, Yu Zhang wrote:
->> 1) Either a CI test covering at least the major RDMA paths, or at least
->>      periodically tests for each QEMU release will be needed.
-> We use a batch of regression test cases for the stack, which covers the
-> test for QEMU. I did such test for most of the QEMU releases planned as
-> candidates for rollout.
->
-> The migration test needs a pair of (either physical or virtual) servers with
-> InfiniBand network, which makes it difficult to do on a single server. The
-> nested VM could be a possible approach, for which we may need virtual
-> InfiniBand network. Is SoftRoCE [1] a choice? I will try it and let you know.
->
-> [1]  https://urldefense.com/v3/__https://enterprise-support.nvidia.com/s/article/howto-configure-soft-roce__;!!GjvTz_vk!VEqNfg3Kdf58Oh1FkGL6ErDLfvUXZXPwMTaXizuIQeIgJiywPzuwbqx8wM0KUsyopw_EYQxWvGHE3ig$
->
-> Thanks and best regards!
->
-> On Thu, Apr 11, 2024 at 4:20 PM Peter Xu <peterx@redhat.com> wrote:
->> On Wed, Apr 10, 2024 at 09:49:15AM -0400, Peter Xu wrote:
->>> On Wed, Apr 10, 2024 at 02:28:59AM +0000, Zhijian Li (Fujitsu) via wrote:
->>>>
->>>> on 4/10/2024 3:46 AM, Peter Xu wrote:
->>>>
->>>>>> Is there document/link about the unittest/CI for migration tests, Why
->>>>>> are those tests missing?
->>>>>> Is it hard or very special to set up an environment for that? maybe we
->>>>>> can help in this regards.
->>>>> See tests/qtest/migration-test.c.  We put most of our migration tests
->>>>> there and that's covered in CI.
->>>>>
->>>>> I think one major issue is CI systems don't normally have rdma devices.
->>>>> Can rdma migration test be carried out without a real hardware?
->>>> Yeah,  RXE aka. SOFT-RoCE is able to emulate the RDMA, for example
->>>> $ sudo rdma link add rxe_eth0 type rxe netdev eth0  # on host
->>>> then we can get a new RDMA interface "rxe_eth0".
->>>> This new RDMA interface is able to do the QEMU RDMA migration.
->>>>
->>>> Also, the loopback(lo) device is able to emulate the RDMA interface
->>>> "rxe_lo", however when
->>>> I tried(years ago) to do RDMA migration over this
->>>> interface(rdma:127.0.0.1:3333) , it got something wrong.
->>>> So i gave up enabling the RDMA migration qtest at that time.
->>> Thanks, Zhijian.
->>>
->>> I'm not sure adding an emu-link for rdma is doable for CI systems, though.
->>> Maybe someone more familiar with how CI works can chim in.
->> Some people got dropped on the cc list for unknown reason, I'm adding them
->> back (Fabiano, Peter Maydell, Phil).  Let's make sure nobody is dropped by
->> accident.
->>
->> I'll try to summarize what is still missing, and I think these will be
->> greatly helpful if we don't want to deprecate rdma migration:
->>
->>    1) Either a CI test covering at least the major RDMA paths, or at least
->>       periodically tests for each QEMU release will be needed.
->>
->>    2) Some performance tests between modern RDMA and NIC devices are
->>       welcomed.  The current knowledge is modern NIC can work similarly to
->>       RDMA in performance, then it's debatable why we still maintain so much
->>       rdma specific code.
->>
->>    3) No need to be soild patchsets for this one, but some plan to improve
->>       RDMA migration code so that it is not almost isolated from the rest
->>       protocols.
->>
->>    4) Someone to look after this code for real.
->>
->> For 2) and 3) more info is here:
->>
->> https://urldefense.com/v3/__https://lore.kernel.org/r/ZhWa0YeAb9ySVKD1@x1n__;!!GjvTz_vk!VEqNfg3Kdf58Oh1FkGL6ErDLfvUXZXPwMTaXizuIQeIgJiywPzuwbqx8wM0KUsyopw_EYQxWpIWYBhQ$
->>
->> Here 4) can be the most important as Markus pointed out.  We just didn't
->> get there yet on the discussions, but maybe Markus is right that we should
->> talk that first.
->>
->> Thanks,
->>
->> --
->> Peter Xu
->>
 
