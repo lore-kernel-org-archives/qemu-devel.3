@@ -4,78 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 685E9C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 03:17:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08B28C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 03:25:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1HW8-000799-GX; Sun, 28 Apr 2024 23:17:24 -0400
+	id 1s1Hd9-0000H1-Qg; Sun, 28 Apr 2024 23:24:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1s1HW6-00076F-EM; Sun, 28 Apr 2024 23:17:22 -0400
-Received: from mail-ua1-x92a.google.com ([2607:f8b0:4864:20::92a])
+ (Exim 4.90_1) (envelope-from
+ <38hIvZggKCg05z156nsnt11tyr.p1z3rz7-qr8ry010t07.14t@flex--smostafa.bounces.google.com>)
+ id 1s1Hd8-0000Fg-B8
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 23:24:38 -0400
+Received: from mail-wr1-x449.google.com ([2a00:1450:4864:20::449])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1s1HVu-0002kB-PJ; Sun, 28 Apr 2024 23:17:22 -0400
-Received: by mail-ua1-x92a.google.com with SMTP id
- a1e0cc1a2514c-7efa7296beeso1068481241.3; 
- Sun, 28 Apr 2024 20:17:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from
+ <38hIvZggKCg05z156nsnt11tyr.p1z3rz7-qr8ry010t07.14t@flex--smostafa.bounces.google.com>)
+ id 1s1Hd6-0003vv-Rb
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 23:24:38 -0400
+Received: by mail-wr1-x449.google.com with SMTP id
+ ffacd0b85a97d-34d0be5b688so408635f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 20:24:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1714360624; x=1714965424; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dhixbkRjFCSkFAjX1DDJzZXc6rLVdQVHsbvPH6Vbi0E=;
- b=kOnxMEor/F1jA/x2MuF/hQiFHjDspRwjgd5DOtufgD0SLMp3lzFCfQHewXlC5+YFTb
- IHDpFOrPNICjPjnclJ6CfnVIUzVylDrCr6QBB1C7EhQCjFH1ghg8q7v4mpRqKbmyb9aA
- mVgTCnvNd4Iiu8pNbr1/ZUi+LVaYguJ2c4ByHThsMxSJkn2ERa+g0e+JrFEAjKOh7VzS
- azJDzwedTTgiqxtBEF0o/W57FyYJQUZiaR2r+M8fFE+U5APlCmDeEJMVXZJg32LDPK4x
- ewfi/kAyJ7OYBGyAN5qwpUGveCKgJSKHiG/OK1v/NCpwCFCidQHXM4meSu1p7G3CXCnd
- G61g==
+ d=google.com; s=20230601; t=1714361074; x=1714965874; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:from:subject:message-id:references
+ :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+ :reply-to; bh=t4fDtAqBHvik6c00yf3CE8uzzU6Ock9eQkwSvIwh/JI=;
+ b=VYTsKj1MxfrkE/NB+hB1rpVg5xx+Y19Vh2c67NMRdYj/lci36sT97uuF1cCGyrFCKa
+ 1cyq73A3RsKQHVtiu2InoIsZFufn/2VC745Mmo0ykkilaTpRjd7BTiL6ZE9B1DXRq0xR
+ C6CNJechPAOFUsj8nspJXhOi1QGQEhfbI9MOY4P5jbg+JaCHv3Yj1PwCQ8eFHj3VepsI
+ SbiUqPcHiRurld7ITkkgWz+byvrfNLSFRZ8fHjX4WfLuXNBjK84WghO8kfnPs6CYsNlW
+ vTP8vE+IfMz38uq/e4k6IK0wL6W20UJLkXU2xSmnQQGuj71TK6+WGX04qfEQTjLWU2m4
+ chbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714360624; x=1714965424;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=dhixbkRjFCSkFAjX1DDJzZXc6rLVdQVHsbvPH6Vbi0E=;
- b=MoabYpvw9BoT7c5GqoPDUG4wjRpxe4xqXGIeISDiXU9dupLhHdbDyAGdRGk8Vr5eG9
- GKP/Q7j0LtQ2O3KmNbSph4MVEtQIAkU0tXqJOelJlkxkYvqPJbywGU2HEi5m/C5zSeS5
- 4xriYMtTtH30krIySvjWCmtrNFa526+8rhYKict/UBEaTUk4IxBnjfHLDghd7E3fV5JJ
- VoPrIKRImu3v2GE+UxKhVKv2dFbJcXJ8brNWSzasRv5CC3rvBpNWx1tat5Km7Se5lRmR
- vbf8i+gP8zMpSV3RgEhLv+gg15GkpaNdqHpKdIhhCTW51or3uRZyzCy9DrnI35FMfIW8
- +J2w==
+ d=1e100.net; s=20230601; t=1714361074; x=1714965874;
+ h=content-transfer-encoding:cc:to:from:subject:message-id:references
+ :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=t4fDtAqBHvik6c00yf3CE8uzzU6Ock9eQkwSvIwh/JI=;
+ b=hQZDw/UaPqGLwTzUxgvRlHQ7IbFiYhLNrewQFqfU51BAogI7ucxEgdEaLpZ6dEkMIT
+ Gw/dHyeffwceAVKbTs6XEmrieAix0hkDYw7GVpqAixclQYFrZKeIrrXcXswBSy/X91fB
+ ETpMR6irDQ8DnQjlyctsfhz8hurZFiCk+RCiP8EmCiJe2IjUXYrcb/fZlq8UWbKmS6Ds
+ /AnV1jxEkfbdUDbtPdDwL4X5hZKPuAxOstLN6io8xjlLVD+uuhRYDmMHXrq5hS1gxbN2
+ vXREBQESpZwgIgkp4XfkmM0Ar+u+D+X/iNYC5txFPl4uS9O1VM5bzky69URBHx/KAS7g
+ GGxw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXondh6o4OZA2+qzL7jAHrtGMEVmYMkvQ66CPLRebevQ29e2rinkirF0EGTmBm6y+E3YdfwQv7noyayWFyDA/6sX8k7K74=
-X-Gm-Message-State: AOJu0YyQ4zrIhSaInteo25vTi/FHfZfa/XaJ8UyTrL+Jril/v/Xixo/L
- QLOA32/OMjhaDsCYilVc7tQM99+GiKGZOKro9x/6BbYRy/iQ9Sc1v03x+puOE3mZXmBQk3PTDrF
- wBVu65vtCfHRs5OxJbW6SiljD5lI=
-X-Google-Smtp-Source: AGHT+IHQd1VTpP7pWxn2ZRbBvWz9uLHwyN7gyi8k8YYsUh2qJSKdGhq/JrvbzJxycKSksmjef+QkrnnLAumyLdAdGFw=
-X-Received: by 2002:a05:6122:459d:b0:4c8:e834:6cf2 with SMTP id
- de29-20020a056122459d00b004c8e8346cf2mr8832150vkb.3.1714360624171; Sun, 28
- Apr 2024 20:17:04 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240416230437.1869024-1-dbarboza@ventanamicro.com>
-In-Reply-To: <20240416230437.1869024-1-dbarboza@ventanamicro.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 29 Apr 2024 13:16:38 +1000
-Message-ID: <CAKmqyKNjNfCcLQUzOxKOxswC4m7vZ1n1nVPgEuRaZVZJqt+ynA@mail.gmail.com>
-Subject: Re: [PATCH for-9.1 v3 0/2] target/riscv: set tval in breakpoints
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, richard.henderson@linaro.org
+ AJvYcCWW+UkBEd3qMSVfJvNBTpGc/UsUNysqygwsg2IWIJM3tAIKCHSutR+0ARqj1UBehxGa/IGdkLhp03l1p92/3r5xs/UWOjQ=
+X-Gm-Message-State: AOJu0Yw5VR5Ay4IeIdjfeTAb1p5uuiflwZExm8oZVuW36HLwyEBgFp7B
+ my9rS2eJlLoxzzJpbx9N9UsFkkc7I/FdYj40VJOzrBjjxCTp1pI6AMcloFGA1CBECp62WZevt/V
+ iwL8jTBkyxA==
+X-Google-Smtp-Source: AGHT+IHTewv4ewCx2m33Lu518GlLek76sLkfFW/hEqOUcoHrf5P5HmaSPCpCKExWDpHRXQP+CcFHQkwLBZtonQ==
+X-Received: from mostafa.c.googlers.com
+ ([fda3:e722:ac3:cc00:28:9cb1:c0a8:333c])
+ (user=smostafa job=sendgmr) by 2002:a05:6000:1212:b0:34a:6e5b:6c37 with SMTP
+ id e18-20020a056000121200b0034a6e5b6c37mr19534wrx.10.1714361074056; Sun, 28
+ Apr 2024 20:24:34 -0700 (PDT)
+Date: Mon, 29 Apr 2024 03:23:45 +0000
+In-Reply-To: <20240429032403.74910-1-smostafa@google.com>
+Mime-Version: 1.0
+References: <20240429032403.74910-1-smostafa@google.com>
+X-Mailer: git-send-email 2.44.0.769.g3c40516874-goog
+Message-ID: <20240429032403.74910-2-smostafa@google.com>
+Subject: [RFC PATCH v3 01/18] hw/arm/smmu-common: Add missing size check for
+ stage-1
+From: Mostafa Saleh <smostafa@google.com>
+To: qemu-arm@nongnu.org, eric.auger@redhat.com, peter.maydell@linaro.org, 
+ qemu-devel@nongnu.org
+Cc: jean-philippe@linaro.org, alex.bennee@linaro.org, maz@kernel.org, 
+ nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org, 
+ marcin.juszkiewicz@linaro.org, Mostafa Saleh <smostafa@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92a;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92a.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::449;
+ envelope-from=38hIvZggKCg05z156nsnt11tyr.p1z3rz7-qr8ry010t07.14t@flex--smostafa.bounces.google.com;
+ helo=mail-wr1-x449.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,40 +100,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 17, 2024 at 9:05=E2=80=AFAM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
->
-> Hi,
->
-> This new version has a change suggested by Richard in v2. No other
-> changes made.
->
-> Changes from v2:
-> - patch 2:
->   - use tcg_constant_tl() instead of loading a temp and doing a
->     movi_tl()
-> - v2 link: https://lore.kernel.org/qemu-riscv/20240416194132.1843699-1-db=
-arboza@ventanamicro.com/
->
->
-> Daniel Henrique Barboza (2):
->   target/riscv/debug: set tval=3Dpc in breakpoint exceptions
->   trans_privileged.c.inc: set (m|s)tval on ebreak breakpoint
+According to the SMMU architecture specification (ARM IHI 0070 F.b),
+in =E2=80=9C3.4 Address sizes=E2=80=9D
+    The address output from the translation causes a stage 1 Address Size
+    fault if it exceeds the range of the effective IPA size for the given C=
+D.
 
-Thanks!
+However, this check was missing.
 
-Applied to riscv-to-apply.next
+There is already a similar check for stage-2 against effective PA.
 
-Alistair
+Signed-off-by: Mostafa Saleh <smostafa@google.com>
+---
+ hw/arm/smmu-common.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
->
->  target/riscv/cpu_helper.c                      | 1 +
->  target/riscv/debug.c                           | 3 +++
->  target/riscv/insn_trans/trans_privileged.c.inc | 2 ++
->  3 files changed, 6 insertions(+)
->
-> --
-> 2.44.0
->
->
+diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+index 1ce706bf94..eb2356bc35 100644
+--- a/hw/arm/smmu-common.c
++++ b/hw/arm/smmu-common.c
+@@ -381,6 +381,16 @@ static int smmu_ptw_64_s1(SMMUTransCfg *cfg,
+             goto error;
+         }
+=20
++        /*
++         * The address output from the translation causes a stage 1 Addres=
+s
++         * Size fault if it exceeds the range of the effective IPA size fo=
+r
++         * the given CD.
++         */
++        if (gpa >=3D (1ULL << cfg->oas)) {
++            info->type =3D SMMU_PTW_ERR_ADDR_SIZE;
++            goto error;
++        }
++
+         tlbe->entry.translated_addr =3D gpa;
+         tlbe->entry.iova =3D iova & ~mask;
+         tlbe->entry.addr_mask =3D mask;
+--=20
+2.44.0.769.g3c40516874-goog
+
 
