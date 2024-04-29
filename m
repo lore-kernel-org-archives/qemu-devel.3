@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E914C04FFE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8DBDC19F53
 	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 15:56:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1TMQ-0004d3-Ii; Mon, 29 Apr 2024 11:56:10 -0400
+	id 1s1TMJ-0004Zy-Qd; Mon, 29 Apr 2024 11:56:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1s1TMJ-0004aF-Ra
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:04 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ id 1s1TMB-0004Vx-MS
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:55:56 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1s1TMG-0005Kc-4W
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:56:03 -0400
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ id 1s1TM4-0005F1-LW
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 11:55:55 -0400
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43TFnajp028150; Mon, 29 Apr 2024 15:55:56 GMT
+ 43TFmjb4006712; Mon, 29 Apr 2024 15:55:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
  h=from : to : cc :
  subject : date : message-id : in-reply-to : references; s=corp-2023-11-20;
- bh=VUgeGOjkH5xIbS4LS0QSaGY+st+ceFJUGTwLpgJtyIk=;
- b=ZmamR6ZdtEuYc2LtZ0Bap9lt2OKIpRknZoBFjuIoUXyhXQdJYuLey21cvWkrEX/8dM+G
- tGCRVvb91nOH+j0GbseR5lVpTmlKYpG22/M2eBi54Wk6i/Gd7ow/hSQsixDGQtCeiZq3
- WnX18WSL55V4bpuEjJqiVzndg67TMFpRLzek5uDDEr2QmCJ7717bx1R4AwFp6UUHlHkl
- 45uP+YKBkLWRvzt9EizBP1G93q06Mq4VcVWF/8Xy5CyqL5zl1CqFkw0jXEju4VtEP0FK
- RarNd3FSGmmJdq/+MDWyfH6W1anFjioJwlBhHyHkbku1ezovxDiw3PYg4sxdBNt5KQau 2w== 
+ bh=yo0i2IaEWoAUYk4MxRQWxqRVVF0sXL4SczE0OahgkO0=;
+ b=PE63jmzQDU+UPeEli2ouHIbpcnZHEi7eNt0oCzknb9JGodR6oxkyq4I/JrVdnzhlOKR9
+ OZzHGFakyJ6iFcmdcO5dkJOAM7E8kc+iToR2ZMP2L4cZnZbEQUYugXxGDA1RDqGjxq8i
+ GA+EraQ3UuP2DuyZBLGAEV+R7R0GL6IwGD5zI43NAoFv1BYDxo06wi2n3ebSr71Lr+bX
+ 0QOR3+XpikRCMCxARntfu7tMxmiEZYtfqrsoslH9Go/6W492OQlYl9cv5JqMCXkLOuWj
+ d+JRtNT75M0EntxfYQTzB7VJppRBXpw1Wz7Hhaui31Qu1dw0VaWp1zJOeuUUgtKRmZXv DA== 
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xrswvjxse-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xrsdejwmp-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Apr 2024 15:55:56 +0000
+ Mon, 29 Apr 2024 15:55:41 +0000
 Received: from pps.filterd
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 43TEt9Hk011467; Mon, 29 Apr 2024 15:55:55 GMT
+ with ESMTP id 43TEgWMd011336; Mon, 29 Apr 2024 15:55:40 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 3xrqt6j6nt-1
+ 3xrqt6j64f-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Apr 2024 15:55:55 +0000
+ Mon, 29 Apr 2024 15:55:40 +0000
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43TFtaHI034442;
- Mon, 29 Apr 2024 15:55:54 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43TFtaGc034442;
+ Mon, 29 Apr 2024 15:55:39 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 3xrqt6j5ys-26; Mon, 29 Apr 2024 15:55:54 +0000
+ ESMTP id 3xrqt6j5ys-6; Mon, 29 Apr 2024 15:55:39 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,9 +64,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V1 25/26] migration: fix mismatched GPAs during cpr-exec
-Date: Mon, 29 Apr 2024 08:55:34 -0700
-Message-Id: <1714406135-451286-26-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V1 05/26] migration: precreate vmstate
+Date: Mon, 29 Apr 2024 08:55:14 -0700
+Message-Id: <1714406135-451286-6-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
 References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
@@ -78,16 +78,16 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
  adultscore=0 mlxscore=0 suspectscore=0 phishscore=0 spamscore=0
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2404010000 definitions=main-2404290101
-X-Proofpoint-GUID: 2M02lCBcA8F4cIOqPH-NyC-H1zDq86Gl
-X-Proofpoint-ORIG-GUID: 2M02lCBcA8F4cIOqPH-NyC-H1zDq86Gl
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-GUID: gMELQzHGA4M0LMoXiVrIZatgWVcZtksl
+X-Proofpoint-ORIG-GUID: gMELQzHGA4M0LMoXiVrIZatgWVcZtksl
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,110 +104,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For cpr-exec mode, ramblock_is_ignored is always true, and the address of
-each migrated memory region must match the address of the statically
-initialized region on the target.  However, for a PCI rom block, the region
-address is set when the guest writes to a BAR on the source, which does not
-occur on the target, causing a "Mismatched GPAs" error during cpr-exec
-migration.
-
-To fix, unconditionally set the target's address to the source's address
-if the region does not have an address yet.
+Provide the VMStateDescription precreate field to mark objects that must
+be loaded on the incoming side before devices have been created, because
+they provide properties that will be needed at creation time.  They will
+be saved to and loaded from their own QEMUFile, via
+qemu_savevm_precreate_save and qemu_savevm_precreate_load, but these
+functions are not yet called in this patch.  Allow them to be called
+before or after normal migration is active, when current_migration and
+current_incoming are not valid.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- include/exec/memory.h | 12 ++++++++++++
- migration/ram.c       | 15 +++++++++------
- system/memory.c       | 10 ++++++++--
- 3 files changed, 29 insertions(+), 8 deletions(-)
+ include/migration/vmstate.h |  6 ++++
+ migration/savevm.c          | 69 +++++++++++++++++++++++++++++++++++++++++----
+ migration/savevm.h          |  3 ++
+ 3 files changed, 73 insertions(+), 5 deletions(-)
 
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index d337737..4f654b0 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -801,6 +801,7 @@ struct MemoryRegion {
-     bool unmergeable;
-     uint8_t dirty_log_mask;
-     bool is_iommu;
-+    bool has_addr;
-     RAMBlock *ram_block;
-     Object *owner;
-     /* owner as TYPE_DEVICE. Used for re-entrancy checks in MR access hotpath */
-@@ -2402,6 +2403,17 @@ void memory_region_set_enabled(MemoryRegion *mr, bool enabled);
- void memory_region_set_address(MemoryRegion *mr, hwaddr addr);
- 
- /*
-+ * memory_region_set_address_only: set the address of a region.
-+ *
-+ * Same as memory_region_set_address, but without causing transaction side
-+ * effects.
-+ *
-+ * @mr: the region to be updated
-+ * @addr: new address, relative to container region
-+ */
-+void memory_region_set_address_only(MemoryRegion *mr, hwaddr addr);
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index 294d2d8..4691334 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -198,6 +198,12 @@ struct VMStateDescription {
+      * a QEMU_VM_SECTION_START section.
+      */
+     bool early_setup;
 +
-+/*
-  * memory_region_set_size: dynamically update the size of a region.
-  *
-  * Dynamically updates the size of a region.
-diff --git a/migration/ram.c b/migration/ram.c
-index add285b..7b8d7f6 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -4196,12 +4196,15 @@ static int parse_ramblock(QEMUFile *f, RAMBlock *block, ram_addr_t length)
-     }
-     if (migrate_ignore_shared()) {
-         hwaddr addr = qemu_get_be64(f);
--        if (migrate_ram_is_ignored(block) &&
--            block->mr->addr != addr) {
--            error_report("Mismatched GPAs for block %s "
--                         "%" PRId64 "!= %" PRId64, block->idstr,
--                         (uint64_t)addr, (uint64_t)block->mr->addr);
--            return -EINVAL;
-+        if (migrate_ram_is_ignored(block)) {
-+            if (!block->mr->has_addr) {
-+                memory_region_set_address_only(block->mr, addr);
-+            } else if (block->mr->addr != addr) {
-+                error_report("Mismatched GPAs for block %s "
-+                             "%" PRId64 "!= %" PRId64, block->idstr,
-+                             (uint64_t)addr, (uint64_t)block->mr->addr);
-+                return -EINVAL;
-+            }
-         }
-     }
-     ret = rdma_block_notification_handle(f, block->idstr);
-diff --git a/system/memory.c b/system/memory.c
-index ca04a0e..3c72504 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -2665,7 +2665,7 @@ static void memory_region_add_subregion_common(MemoryRegion *mr,
-     for (alias = subregion->alias; alias; alias = alias->alias) {
-         alias->mapped_via_alias++;
-     }
--    subregion->addr = offset;
-+    memory_region_set_address_only(subregion, offset);
-     memory_region_update_container_subregions(subregion);
- }
++    /*
++     * Send/receive this object in the precreate migration stream.
++     */
++    bool precreate;
++
+     int version_id;
+     int minimum_version_id;
+     MigrationPriority priority;
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 9789823..a30bcd9 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -239,6 +239,7 @@ static SaveState savevm_state = {
  
-@@ -2745,10 +2745,16 @@ static void memory_region_readd_subregion(MemoryRegion *mr)
+ #define SAVEVM_FOREACH(se, entry)                                    \
+     QTAILQ_FOREACH(se, &savevm_state.handlers, entry)                \
++        if (!se->vmsd || !se->vmsd->precreate)
+ 
+ #define SAVEVM_FOREACH_ALL(se, entry)                                \
+     QTAILQ_FOREACH(se, &savevm_state.handlers, entry)
+@@ -1006,13 +1007,19 @@ static void save_section_header(QEMUFile *f, SaveStateEntry *se,
      }
  }
  
-+void memory_region_set_address_only(MemoryRegion *mr, hwaddr addr)
++static bool send_section_footer(SaveStateEntry *se)
 +{
-+    mr->addr = addr;
-+    mr->has_addr = true;
++    return (se->vmsd && se->vmsd->precreate) ||
++           migrate_get_current()->send_section_footer;
 +}
 +
- void memory_region_set_address(MemoryRegion *mr, hwaddr addr)
+ /*
+  * Write a footer onto device sections that catches cases misformatted device
+  * sections.
+  */
+ static void save_section_footer(QEMUFile *f, SaveStateEntry *se)
  {
-     if (addr != mr->addr) {
--        mr->addr = addr;
-+        memory_region_set_address_only(mr, addr);
-         memory_region_readd_subregion(mr);
+-    if (migrate_get_current()->send_section_footer) {
++    if (send_section_footer(se)) {
+         qemu_put_byte(f, QEMU_VM_SECTION_FOOTER);
+         qemu_put_be32(f, se->section_id);
      }
+@@ -1319,6 +1326,52 @@ int qemu_savevm_state_prepare(Error **errp)
+     return 0;
  }
+ 
++int qemu_savevm_precreate_save(QEMUFile *f, Error **errp)
++{
++    int ret;
++    SaveStateEntry *se;
++
++    qemu_put_be32(f, QEMU_VM_FILE_MAGIC);
++    qemu_put_be32(f, QEMU_VM_FILE_VERSION);
++
++    SAVEVM_FOREACH_ALL(se, entry) {
++        if (se->vmsd && se->vmsd->precreate) {
++            ret = vmstate_save(f, se, NULL, errp);
++            if (ret) {
++                qemu_file_set_error(f, ret);
++                return ret;
++            }
++        }
++    }
++    qemu_fflush(f);
++    return 0;
++}
++
++int qemu_savevm_precreate_load(QEMUFile *f, Error **errp)
++{
++    unsigned int v;
++    int ret;
++
++    v = qemu_get_be32(f);
++    if (v != QEMU_VM_FILE_MAGIC) {
++        error_setg(errp, "Not a migration stream");
++        return -EINVAL;
++    }
++
++    v = qemu_get_be32(f);
++    if (v != QEMU_VM_FILE_VERSION) {
++        error_setg(errp, "Unsupported migration stream version");
++        return -ENOTSUP;
++    }
++
++    ret = qemu_loadvm_state_main(f, NULL);
++    if (ret) {
++        error_setg_errno(errp, -ret, "qemu_savevm_precreate_load");
++    }
++
++    return ret;
++}
++
+ int qemu_savevm_state_setup(QEMUFile *f, Error **errp)
+ {
+     ERRP_GUARD();
+@@ -2559,7 +2612,7 @@ static bool check_section_footer(QEMUFile *f, SaveStateEntry *se)
+     uint8_t read_mark;
+     uint32_t read_section_id;
+ 
+-    if (!migrate_get_current()->send_section_footer) {
++    if (!send_section_footer(se)) {
+         /* No footer to check */
+         return true;
+     }
+@@ -2895,9 +2948,12 @@ retry:
+     while (true) {
+         section_type = qemu_get_byte(f);
+ 
+-        ret = qemu_file_get_error_obj_any(f, mis->postcopy_qemufile_dst, NULL);
+-        if (ret) {
+-            break;
++        if (mis) {
++            ret = qemu_file_get_error_obj_any(f, mis->postcopy_qemufile_dst,
++                                              NULL);
++            if (ret) {
++                break;
++            }
+         }
+ 
+         trace_qemu_loadvm_state_section(section_type);
+@@ -2936,6 +2992,9 @@ retry:
+ out:
+     if (ret < 0) {
+         qemu_file_set_error(f, ret);
++        if (!mis) {
++            return ret;
++        }
+ 
+         /* Cancel bitmaps incoming regardless of recovery */
+         dirty_bitmap_mig_cancel_incoming();
+diff --git a/migration/savevm.h b/migration/savevm.h
+index 9ec96a9..6f207b5 100644
+--- a/migration/savevm.h
++++ b/migration/savevm.h
+@@ -70,4 +70,7 @@ int qemu_loadvm_approve_switchover(void);
+ int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
+         bool in_postcopy, bool inactivate_disks);
+ 
++int qemu_savevm_precreate_save(QEMUFile *f, Error **errp);
++int qemu_savevm_precreate_load(QEMUFile *f, Error **errp);
++
+ #endif
 -- 
 1.8.3.1
 
