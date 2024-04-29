@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41832C19F4F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 21:32:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F627C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 21:32:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1Ybf-0008QI-C5; Mon, 29 Apr 2024 17:32:15 -0400
+	id 1s1Yal-00078X-QK; Mon, 29 Apr 2024 17:31:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1YbR-000801-Gy
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:32:03 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Yaf-000771-FS
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:31:15 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1YbP-0003Qk-3e
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:32:01 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-41bab13ca80so23217915e9.0
- for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 14:31:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1Yac-0003Jv-PB
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:31:12 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-41b9dff6be8so24521665e9.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 14:31:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714426316; x=1715031116; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714426269; x=1715031069; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tfSxeazt7Q51HYWou2L26AE+iHM/oq4pGi/blYA/P4Y=;
- b=ICfY/fMgQzNBivJPUrXqqN5v25t0E0Nj7BgaJGGS7k9F/FZOc27jcF9nVbW/WphESH
- IEsArkkSSJuXteHG/bC23DU280ILCOMocLxNLrOCs7H1zWtFKIIw+Yc2nVQrHlmloOxK
- HorkdvPsfRt47ic6zUt2C9XCAO4r30kQ2YHKTpXwSBuwkYudwbtMNolpa6EfaPAe4UzW
- PmM2uPacIutAvXtO0nA9fReWnq3UVInoqT2IBgcba4J/o48sqVlJpwneIYtjtzFLUqF/
- OZiuNrwWVSIBIZf/BX6YIfSWyXXCVX5KH+2gMzn6cd++Ir58Efnytq/OS0brdZAscWNI
- T/GA==
+ bh=359wWRi32Y2oOVdKpxTRSnqSjs36xauPX3xPDGvVHF0=;
+ b=F0uAxXbPnWHIZWxviKtyUwjoL5EK1RsFxgEMUoQCdP08xzunn0iRcmh+c788GM5b0L
+ MPh2xZBCv6VnIpv3EbWGaNC6filalxvNRCLKrBLGSwzC/dY2BcP1NhtcL4xcLNc+TJY6
+ /DQuDdiJyH/AsUwABJ0OV8Bqugzy2kS83+GPU2OIa5ka/O7TyIghpgLo+SRCALN+YHgg
+ 5fkTHE1nfaWKi2ugMxB8+9De69MqMsdogvm9hxYCC1u1FhOFqCv6/6bAl11EjFr6hYKi
+ jwJnivvJf8MRsnTDoodwbmj09+TAFwnMc6apyB0xWCXPw3oAl1QlVqxmVFdfzmmhLwxv
+ naRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714426316; x=1715031116;
+ d=1e100.net; s=20230601; t=1714426269; x=1715031069;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tfSxeazt7Q51HYWou2L26AE+iHM/oq4pGi/blYA/P4Y=;
- b=QXX+iGgo+hoYIU5knbQIDBuVGn2cktugwxA+q37ZGpYTg2f5yIsQo2Gd48JE/FBTzs
- C1yiaIm7r3o8Mrw+K1HwMBAM+PWk+rtArrcP1WLKkdqyiL9YSqcQsnKIXCmTZ4Az79l0
- 7HiiLrWWUf0FKphdgR7qdWD08z2MBW3eagfoZQIaBtvVZcsVTQZpdVYALA0IT/aul+PV
- jPvSyY2u5cZrpKzRhDwNIjGp+yZ69dxkN2WmmkdfdMdJex4+9zvmGpOFfNsy5jnUxasy
- 5sI1theVhnMVpf4JQ8GeBUrRq5soGOOQZx/BgJNCN16Q3Jax1qyQ8bfrnkMvyzph/XQi
- Q+lg==
-X-Gm-Message-State: AOJu0YyjHulAQWcGVk1wvTbPcyIFR415Ns4wpWpleWrBFOtdj4Vkkdet
- 89vsVbAhKRpH3v308KjU800kklM9PXMOY4pOEvnz50c626D6LI6C6rOz6NBACSH+D6CsbkFYXjf
- RMps=
-X-Google-Smtp-Source: AGHT+IE8iSh08CH90dVsvjuLVxjDAp5bMaQPzt39SOvA08+w543WKyWb09aubBDK4W0uM1zhUxh2NQ==
-X-Received: by 2002:a05:600c:4ecb:b0:418:b9fa:43e9 with SMTP id
- g11-20020a05600c4ecb00b00418b9fa43e9mr10427431wmq.29.1714426316239; 
- Mon, 29 Apr 2024 14:31:56 -0700 (PDT)
+ bh=359wWRi32Y2oOVdKpxTRSnqSjs36xauPX3xPDGvVHF0=;
+ b=IfK6w9Sx3dRQP6zUs7DU2Hg9HlLl9e+gUG2S1XqdRfnZjcg3XRWmBkdGyQRUqsgdR3
+ 6GOZo+HvRlJpZ5x6mVClsxjwOD5k7QylB8v9yPyeRb2UH4e4530VFhPlIImxnzbfL3RM
+ XDB3HTY8fdfSLhM4r00onxSJ7YBJakMtIiEWaR65oQg3Im7QCm7FTC1dE+ltUdxgPi1c
+ CFVPRCvGb8cnmELhtJ3roPDzZqQXLsN85LXYl0rECs7OR0/HpuYr17Nsj16s9sdwylVb
+ wyoHgUPSdqDKPjin8dxgZeJY+6RaCvrLeqbcLlLkq0e0rp8V6BxUo8x2ZLsBDIYxenZB
+ WHaA==
+X-Gm-Message-State: AOJu0Yz+atr6/ly2K9cAvCyMeTpwem4Ecr8hSVbwO551X5p01IDg6+Zi
+ RaOF/ezq8q9wuWAgkzcZpqG2oEm6NmCgNHwQwyjcodW1l8myevngovjNVBb5tdjVpJXGoKWIHXo
+ CfRM=
+X-Google-Smtp-Source: AGHT+IErxhbSSahcLTMN/ODB/8NDHWHDm1uAlhTeFmZLza4zefq5CZ9ySmanzU751lq/Nszukgghbw==
+X-Received: by 2002:adf:f04e:0:b0:34c:b8fa:9768 with SMTP id
+ t14-20020adff04e000000b0034cb8fa9768mr5327988wro.51.1714426268756; 
+ Mon, 29 Apr 2024 14:31:08 -0700 (PDT)
 Received: from m1x-phil.lan (bny92-h02-176-184-44-142.dsl.sta.abo.bbox.fr.
  [176.184.44.142]) by smtp.gmail.com with ESMTPSA id
- e7-20020a5d65c7000000b00349eb6eae3esm30745100wrw.4.2024.04.29.14.31.55
+ b10-20020a5d4d8a000000b0034cf989dbf5sm4320744wru.44.2024.04.29.14.31.07
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 29 Apr 2024 14:31:55 -0700 (PDT)
+ Mon, 29 Apr 2024 14:31:08 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Anton Johansson <anjo@rev.ng>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 12/13] accel/tcg: Restrict icount to system emulation
-Date: Mon, 29 Apr 2024 23:30:49 +0200
-Message-ID: <20240429213050.55177-13-philmd@linaro.org>
+Subject: [PATCH v2 03/13] accel/tcg: Move @plugin_mem_cbs from CPUState to
+ CPUNegativeOffsetState
+Date: Mon, 29 Apr 2024 23:30:40 +0200
+Message-ID: <20240429213050.55177-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240429213050.55177-1-philmd@linaro.org>
 References: <20240429213050.55177-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,52 +96,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-So far we don't support icount on user emulation.
+@plugin_mem_cbs is accessed by tcg generated code, move it
+to CPUNegativeOffsetState.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240428221450.26460-24-philmd@linaro.org>
 ---
- accel/tcg/cpu-exec.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ accel/tcg/internal-common.h |  2 +-
+ include/hw/core/cpu.h       | 13 +++++++------
+ include/qemu/plugin.h       |  2 +-
+ accel/tcg/plugin-gen.c      |  5 +++--
+ plugins/core.c              |  2 +-
+ 5 files changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 84fd041aec..1f618f6c2e 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -780,6 +780,9 @@ static inline bool cpu_handle_exception(CPUState *cpu, int *ret)
- 
- static inline bool icount_exit_request(CPUState *cpu)
+diff --git a/accel/tcg/internal-common.h b/accel/tcg/internal-common.h
+index 5061687900..867426500f 100644
+--- a/accel/tcg/internal-common.h
++++ b/accel/tcg/internal-common.h
+@@ -35,7 +35,7 @@ static inline bool cpu_in_serial_context(CPUState *cs)
+ static inline bool cpu_plugin_mem_cbs_enabled(const CPUState *cpu)
  {
-+#if defined(CONFIG_USER_ONLY)
-+    return false;
-+#else
-     if (!icount_enabled()) {
-         return false;
-     }
-@@ -787,6 +790,7 @@ static inline bool icount_exit_request(CPUState *cpu)
-         return false;
-     }
-     return cpu->neg.icount_decr.u16.low + cpu->icount_extra == 0;
+ #ifdef CONFIG_PLUGIN
+-    return !!cpu->plugin_mem_cbs;
++    return !!cpu->neg.plugin_mem_cbs;
+ #else
+     return false;
+ #endif
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index 55555be618..571ef3e514 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -342,9 +342,16 @@ typedef union IcountDecr {
+  * CPUNegativeOffsetState: Elements of CPUState most efficiently accessed
+  *                         from CPUArchState, via small negative offsets.
+  * @can_do_io: True if memory-mapped IO is allowed.
++ * @plugin_mem_cbs: active plugin memory callbacks
+  */
+ typedef struct CPUNegativeOffsetState {
+     CPUTLB tlb;
++#ifdef CONFIG_PLUGIN
++    /*
++     * The callback pointer are accessed via TCG (see gen_empty_mem_helper).
++     */
++    GArray *plugin_mem_cbs;
 +#endif
+     IcountDecr icount_decr;
+     bool can_do_io;
+ } CPUNegativeOffsetState;
+@@ -416,7 +423,6 @@ struct qemu_work_item;
+  * @kvm_fd: vCPU file descriptor for KVM.
+  * @work_mutex: Lock to prevent multiple access to @work_list.
+  * @work_list: List of pending asynchronous work.
+- * @plugin_mem_cbs: active plugin memory callbacks
+  * @plugin_state: per-CPU plugin state
+  * @ignore_memory_transaction_failures: Cached copy of the MachineState
+  *    flag of the same name: allows the board to suppress calling of the
+@@ -509,11 +515,6 @@ struct CPUState {
+     QemuLockCnt in_ioctl_lock;
+ 
+ #ifdef CONFIG_PLUGIN
+-    /*
+-     * The callback pointer stays in the main CPUState as it is
+-     * accessed via TCG (see gen_empty_mem_helper).
+-     */
+-    GArray *plugin_mem_cbs;
+     CPUPluginState *plugin_state;
+ #endif
+ 
+diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
+index 41db748eda..99a32446e9 100644
+--- a/include/qemu/plugin.h
++++ b/include/qemu/plugin.h
+@@ -229,7 +229,7 @@ void qemu_plugin_add_dyn_cb_arr(GArray *arr);
+ 
+ static inline void qemu_plugin_disable_mem_helpers(CPUState *cpu)
+ {
+-    cpu->plugin_mem_cbs = NULL;
++    cpu->neg.plugin_mem_cbs = NULL;
  }
  
- static inline bool cpu_handle_interrupt(CPUState *cpu,
-@@ -801,12 +805,14 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
-         return false;
+ /**
+diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
+index cd78ef94a1..fd268c79b5 100644
+--- a/accel/tcg/plugin-gen.c
++++ b/accel/tcg/plugin-gen.c
+@@ -178,7 +178,7 @@ static void gen_empty_mem_helper(void)
+     TCGv_ptr ptr = tcg_temp_ebb_new_ptr();
+ 
+     tcg_gen_movi_ptr(ptr, 0);
+-    tcg_gen_st_ptr(ptr, tcg_env, offsetof(CPUState, plugin_mem_cbs) -
++    tcg_gen_st_ptr(ptr, tcg_env, offsetof(CPUState, neg.plugin_mem_cbs) -
+                                  offsetof(ArchCPU, env));
+     tcg_temp_free_ptr(ptr);
+ }
+@@ -634,7 +634,8 @@ void plugin_gen_disable_mem_helpers(void)
+         return;
      }
+     tcg_gen_st_ptr(tcg_constant_ptr(NULL), tcg_env,
+-                   offsetof(CPUState, plugin_mem_cbs) - offsetof(ArchCPU, env));
++                   offsetof(CPUState, neg.plugin_mem_cbs) -
++                   offsetof(ArchCPU, env));
+ }
  
-+#if !defined(CONFIG_USER_ONLY)
-     /* Clear the interrupt flag now since we're processing
-      * cpu->interrupt_request and cpu->exit_request.
-      * Ensure zeroing happens before reading cpu->exit_request or
-      * cpu->interrupt_request (see also smp_wmb in cpu_exit())
-      */
-     qatomic_set_mb(&cpu->neg.icount_decr.u16.high, 0);
-+#endif /* !CONFIG_USER_ONLY */
+ static void plugin_gen_tb_udata(const struct qemu_plugin_tb *ptb,
+diff --git a/plugins/core.c b/plugins/core.c
+index 09c98382f5..a097d02788 100644
+--- a/plugins/core.c
++++ b/plugins/core.c
+@@ -496,7 +496,7 @@ void exec_inline_op(struct qemu_plugin_dyn_cb *cb, int cpu_index)
+ void qemu_plugin_vcpu_mem_cb(CPUState *cpu, uint64_t vaddr,
+                              MemOpIdx oi, enum qemu_plugin_mem_rw rw)
+ {
+-    GArray *arr = cpu->plugin_mem_cbs;
++    GArray *arr = cpu->neg.plugin_mem_cbs;
+     size_t i;
  
-     if (unlikely(qatomic_read(&cpu->interrupt_request))) {
-         int interrupt_request;
+     if (arr == NULL) {
 -- 
 2.41.0
 
