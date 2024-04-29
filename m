@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB802C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 21:35:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BE57C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 23:51:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1Yeq-0006Do-0A; Mon, 29 Apr 2024 17:35:33 -0400
+	id 1s1alW-0004xm-PZ; Mon, 29 Apr 2024 19:50:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s1YeU-0005XQ-8j
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:35:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s1YeP-0003uF-Qe
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 17:35:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714426504;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Hi6DPPPW2Y8F6DlaWvmjHS3TBRFsSBDOI/eK3ak1q3w=;
- b=F3tPkMLMP7UhKRYsDbauxNdDM1rCrTdevem/8u/mea6DZNs1vMnbzaGBdQZOmLi5QUjADa
- KRkOPXmjdyZh5mI8AKYtJLPWMOl7tzueKFYa8yjprDn4bOXiCiJkZumsEO8w7PmcorvRiz
- BayXhyf01a3ZYMkectPQfJP+51k4HMQ=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-186-AXAFeY5OPduq68I7cyCQFw-1; Mon, 29 Apr 2024 15:51:07 -0400
-X-MC-Unique: AXAFeY5OPduq68I7cyCQFw-1
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-1e950a46ee4so1783605ad.2
- for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 12:51:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s1alU-0004xX-L3
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 19:50:32 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s1alT-0001me-0S
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 19:50:32 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1eab16dcfd8so43761145ad.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 16:50:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714434629; x=1715039429; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=c4LQ8pQ55yal3w5LVcgzoj300Y4S1ggdaEAav5QLN5o=;
+ b=Lg/DD5DOodDoSma1FrTLwheNvvhre1vB7DESoyMPnK1AL35xLeXnmT9P8MYajawrwp
+ 49VRUU0i6r4wlGz7i5kjGmT8OKmMf+l7dle0i1V6nJR9maEEU3XmF+MfbhYpHlC4wMOG
+ EvWeO27wqf0EVCFvOeB3f3Pivv7AE4XG/EjgdL4pskTtMpoabrGX8zayFYMKqIynShxJ
+ E8796mrVk2W3W86laZNTfMhMbAOCck1tvmwD5vIUxgrQoOg2AYT6/tLUJc2fF3AjjEFv
+ VysuQJUhLvm7SoigBqYYJQqyeaugHidpRtH6XYWZcVRp7BvY0e1OJc0mDv8Rh8ecy3w5
+ 5MQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714420267; x=1715025067;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Hi6DPPPW2Y8F6DlaWvmjHS3TBRFsSBDOI/eK3ak1q3w=;
- b=lE3yZ94pKCrdcosXads30ZSEwmOF3MtNXP6Cm6Xe8BhcnIbWO40eQSLJds0WNlrwcP
- v+5D8DZCOxDkmfgE2dr47XnA5dhXNwBm4ifVgj+rxKlkkkrpLffZxvNiguHIt4Zy6m64
- AQL5fNE3Kmjo7DFq9SypotbXTcAbl+cizBF8z80Xnb+2z2sHXDd7XGGCny5YT3A+3299
- DRCABFIQhAn7iHuq8+Ot/111zyl4zIWFAWpZRUVx7kbo1OA3Pq26rxOrbmavPYrf3pGk
- PooW8ZZzBvgZmvWYiS73aTNHTsCmC6SC8knLDTr4QcJhZUZ6ex/uoG5csuzbd3PFe7no
- bufQ==
-X-Gm-Message-State: AOJu0YzK403x4i3dJSMaOuiuGmuX44gEdt3ZQwRfmiOGEd+jJFLxHW7N
- /xhKFPd82aRvwAYrGZDSQJd+a3EHOBxwP2y3dVfpbpk3GB03mUq2QQJy9yPusBmD8l0icBUAIkq
- 85pATZcNLAvjEZkwpSTXYGApWlOL/uFNMQaOEQdjOaRS2JHF8OhLH
-X-Received: by 2002:a17:902:d4c6:b0:1e5:1138:e28e with SMTP id
- o6-20020a170902d4c600b001e51138e28emr14096931plg.3.1714420266409; 
- Mon, 29 Apr 2024 12:51:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHPKYuSzoNFzu2HReZC34Qfwi/CUMJEdHDruEI5z2b+CpVVyBY0S2e7pkv886Csl4S3A5T7Mg==
-X-Received: by 2002:a17:902:d4c6:b0:1e5:1138:e28e with SMTP id
- o6-20020a170902d4c600b001e51138e28emr14096901plg.3.1714420265777; 
- Mon, 29 Apr 2024 12:51:05 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- f21-20020a170902ab9500b001e5119c1923sm20714950plr.71.2024.04.29.12.51.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Apr 2024 12:51:04 -0700 (PDT)
-Date: Mon, 29 Apr 2024 15:51:02 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- devel@lists.libvirt.org, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v2 2/6] migration: Remove 'inc' option from migrate command
-Message-ID: <Zi_6JhnqkdIJU5Ae@x1n>
-References: <20240426131408.25410-1-farosas@suse.de>
- <20240426131408.25410-3-farosas@suse.de>
+ d=1e100.net; s=20230601; t=1714434629; x=1715039429;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=c4LQ8pQ55yal3w5LVcgzoj300Y4S1ggdaEAav5QLN5o=;
+ b=LuCDbXOnXYY3LGRQxcMxMrPvbEDql/rKaRhhci+NVwBVyCdqwyBj+fu5IbBAoS+4/O
+ 3bxIpABNUk3iHauqRuJndj2PE58fuClINd5fK+xcir4KbPSH4TTo9XxDOPOfcTgrNbKK
+ HznNbuMFYm8GJq8GL1vaB50OZTOVv9SzojkBk7R1iFUF2OkslVHZD2nVgruz4hv124zQ
+ ZQ4CknMWZJZrPnOXskXx3EUzbcGDPoUykMXVfcabb7MSmsC8RTpG+K+u1B4oD3jHeCBy
+ LFVvjHq0W54Pg7dzwib2B5Al2kiwoDYO3lim22tA2hOEvwhNZ2FX8D8xZ2U42wLX21Vp
+ QgwQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVpD80gSwXrsc0goFkWORv14DvxJQbSrhyZx1cRHRlt5W6eakr6lU1mNrByF61m5ZKUFEq/sAW96UBvXUXosWqkKvOviMQ=
+X-Gm-Message-State: AOJu0YxIYgNInmqrz8gTrc85oY7Qay4ufT0BuKFmmP5SQ02tMoLAxts+
+ B9CIqtaIAEzPpMsyOBZ+LoytYl9rmuu9SwW3/c/FX9//wNBYvulEjz4aUeAF5Ks=
+X-Google-Smtp-Source: AGHT+IEu4OoTKhzulvn8GQuYrzTRBjKM3rXZoX27VE8vbhGECZtpnlgjrh+77sPs/24uztzlwcXskQ==
+X-Received: by 2002:a17:902:ce84:b0:1ec:31f5:16d5 with SMTP id
+ f4-20020a170902ce8400b001ec31f516d5mr776387plg.33.1714434628853; 
+ Mon, 29 Apr 2024 16:50:28 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ by smtp.gmail.com with ESMTPSA id
+ h9-20020a170902f54900b001ebd7bdaaffsm2467523plf.288.2024.04.29.16.50.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Apr 2024 16:50:28 -0700 (PDT)
+Message-ID: <aa97b437-cfde-4eb3-bb9b-ba5d85616e79@linaro.org>
+Date: Mon, 29 Apr 2024 16:50:26 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240426131408.25410-3-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/13] accel/tcg: Restrict qemu_plugin_vcpu_exit_hook()
+ to TCG plugins
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>
+References: <20240429213050.55177-1-philmd@linaro.org>
+ <20240429213050.55177-2-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240429213050.55177-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,18 +100,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 26, 2024 at 10:14:04AM -0300, Fabiano Rosas wrote:
-> The block incremental option for block migration has been deprecated
-> in 8.2 in favor of using the block-mirror feature. Remove it now.
+On 4/29/24 14:30, Philippe Mathieu-Daudé wrote:
+> qemu_plugin_vcpu_exit_hook() is specific to TCG plugins,
+> so must be restricted to it in cpu_common_unrealizefn(),
+> similarly to how qemu_plugin_create_vcpu_state() is
+> restricted in the cpu_common_realizefn() counterpart.
 > 
-> Deprecation commit 40101f320d ("migration: migrate 'inc' command
-> option is deprecated.").
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+>   hw/core/cpu-common.c | 4 ++++
+>   1 file changed, 4 insertions(+)
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
--- 
-Peter Xu
-
+r~
 
