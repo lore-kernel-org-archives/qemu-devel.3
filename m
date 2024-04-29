@@ -4,86 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FEF7C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 02:03:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44942C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 02:12:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1GLX-0002KA-0k; Sun, 28 Apr 2024 22:02:23 -0400
+	id 1s1GTr-00057b-Ln; Sun, 28 Apr 2024 22:10:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1s1GLU-0002IX-T7; Sun, 28 Apr 2024 22:02:20 -0400
-Received: from mail-ua1-x931.google.com ([2607:f8b0:4864:20::931])
+ id 1s1GTp-00056t-TL; Sun, 28 Apr 2024 22:10:57 -0400
+Received: from mail-ua1-x930.google.com ([2607:f8b0:4864:20::930])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1s1GLT-0007GS-7c; Sun, 28 Apr 2024 22:02:20 -0400
-Received: by mail-ua1-x931.google.com with SMTP id
- a1e0cc1a2514c-7eb2d7f0efeso1806423241.0; 
- Sun, 28 Apr 2024 19:02:18 -0700 (PDT)
+ id 1s1GTn-0000Jm-N7; Sun, 28 Apr 2024 22:10:57 -0400
+Received: by mail-ua1-x930.google.com with SMTP id
+ a1e0cc1a2514c-7f04901d456so566800241.0; 
+ Sun, 28 Apr 2024 19:10:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1714356137; x=1714960937; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1714356654; x=1714961454; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SwFDl8bE1tlIfuX5MG8P8hS24elpLjSjtpZ0oYqLQFY=;
- b=lJwWf5V/p2WtlMHgAQEujXx411/bxuqieapMy5eTPYuAKVr4vqsbjSzdcfl08dqbTl
- KqslRFJJrPbK6sOoyQe9ACfa0YSkj55QsDHbEZNvdKlTj37Y8laHpaONenwxqbLQu7tZ
- NjXGXln7/UyB20TJrfxpKlJikXdM7QwRhdEQHQQG07Y/oWeNaIIU4GxE5HpYtAlS/W8V
- 6/GugKmcr5jCDOsUKay0J4nwugyKcOXVJYIEL6MCdJhbqy7g/GmeAbz7LP2OdvPGgixv
- sVcZ+l0OvoidjRtRb4wVxqV5/iuAbO9JqfAMCyZKj7E7vqQbsw8brjQaucE2iWGEX6er
- El5A==
+ bh=3Qfo078IOqecPxMhtOgl42tdASc5RQ5+EFF9ErLSarI=;
+ b=gTvTJ74OOhnpz9H1iD30uz3TgnCYtIFBKVHE4uQswUmm3I/IU+SoY8EFJw3Do2UZGz
+ i96ZmlWg7b2Ul8BEQy81uDOzUmaFF+3X6zq9WaAKEErhYa8WpeJyddotT9eIOcghb237
+ eDEveXgnIxI4IUQmNtL6ZtxA9xtYxpAoNbCgjkjJ/ijeS+45BhmN2UgnovXBzqctwb6H
+ FjLKz8YjxZUHBiqYPK1ZFhZ3x3S1IoRQtvn2+8V1YVMJ9LtsJH7bSAkTDnUNYcfN8KGn
+ 6RJz3Hf+LdxP0OoAQSe6rl5gXvf7sQKfLWVbXLQLsOn7tjadx8ldPGXBLnZFpuUrgmG5
+ gtzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714356137; x=1714960937;
+ d=1e100.net; s=20230601; t=1714356654; x=1714961454;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SwFDl8bE1tlIfuX5MG8P8hS24elpLjSjtpZ0oYqLQFY=;
- b=JCVIiuQvkHGOCHwwonDcZz4hzWvsZH3nICHbvAqWvWky4gRjhWMTnapn5FwptFw7J0
- F+3GW3rq/fXB2/svAru19fs2F2sU4r+Pz76+JuUhUQXSEmar0wp9wfKcRM0htq6lnEVG
- 5+sNYWrmG7sUgj/K+7bzoy7J6zjL0H85KcW+kgXHuxAj0fTGCyLRwc95mN2fFbvBOX7h
- EOcvVdcgEhFEgp7CTQ+OxPjE8UtS8V5sWNnBttEFtyN1Xr9HGtRd3GW5TeB/aV9SE0WI
- ncP2rMLwLvecggJZVz/PHJ6LCxhbdB6QEttcqDM78yF2aHVv+t6H6gpr2zd+41EX8qPa
- hTxw==
+ bh=3Qfo078IOqecPxMhtOgl42tdASc5RQ5+EFF9ErLSarI=;
+ b=KDqpJRH82ShdlHW8wzLODcCxGlSWdsYNDhb6M2cVKxlOv7y4n06QLlPb1zyyVLFQcA
+ PHcmUMjWL9E9ZpsFGl3eqUXYMC6nUqVz6WDzsc06ijWTbR2pbyC3M7mpDevL9d/PD0LF
+ oQuXaP5+JRRpamGy7GcPiLNxsJfc5XgBiO/NQVkSDCWgMj0piavo3kVOgstJsXVdICzD
+ 9AmF0q4uRPYRRyjailRFZNSuHTJHzpo0Nc1tkT/d2h9pWKf/yfQt/hQxU0l1RuQ6IByN
+ PWAiThxate3qkwms+RQw8vHefzBCAKGIBy4P7eo2d7OX8tFXeZi8fz4pcsi0R/U+MoUu
+ CcGQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUBlWKbXHRTIxAVVX8CVCe3gQKuj4KXHUK5Ns1vf2oIdAoaNvhCfof4X0226YNuBNKZ9q448+moDPG+HXgj2RZOXIIDtCIt29ztkcQEaOkFohGLE8PEVw8jAtFdslcr6p62rMEkGAWJXPK+wLBwOn07gpGU5Q==
-X-Gm-Message-State: AOJu0Yw23nJ0lVy+TiWdLYD2B7sASrUn1u2zdKjsnJCWmFA9PBnU7aOW
- /YMKShJpFGIiXnhs9hWg9uY33NrpubXEC40ftBvcMzm8XF+BzrJxQwlxy/0nThUmh6Xr2lSuYiK
- sBdJL/Kiw8nqNgb9BF9+KMUD7Few=
-X-Google-Smtp-Source: AGHT+IGNnWg3TiB22ldpgx9AxTOJ5nlPnpG1dCSFVv+xgDlFvl2vfoJWQdfA9RTw3AZE728bX5hv7wuB6HexAXvKIxQ=
-X-Received: by 2002:a05:6102:1628:b0:47b:9290:f903 with SMTP id
- cu40-20020a056102162800b0047b9290f903mr7385418vsb.35.1714356137215; Sun, 28
- Apr 2024 19:02:17 -0700 (PDT)
+ AJvYcCU8vAQDOHjoB08b+Us6s4WHTH92SvB28NoSzomn/6Prim7U9IQjOFGKRQz75vmo3s4x6wYWUNnm6nojYwp0/hr266efMK0=
+X-Gm-Message-State: AOJu0Ywq6BYFsIebNbnSR5TsiYWtQNBqyO471ddlqNkkYyhcIvAi1Qxc
+ RNUnVkUBS5+aB3MbGJxbjURCt3BSnvu/pdTHabKTKWfrO1DzCeetpF4d/Nt2fvmIIsSw1ZwH6BE
+ vIyjOD7zLdHXsUfIFfHKVG+ZrIUU=
+X-Google-Smtp-Source: AGHT+IFIavpE1c6aBqUeX3BUwn2/oHClWrzAmW/0uWqyJ4p2rvulJvGGhB68su1ZhrWorqMhuV/WIdKRhN43hNOuQOM=
+X-Received: by 2002:a05:6122:1825:b0:4de:ca46:92ef with SMTP id
+ ay37-20020a056122182500b004deca4692efmr7306563vkb.10.1714356654123; Sun, 28
+ Apr 2024 19:10:54 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240314061510.9800-1-yongxuan.wang@sifive.com>
- <e841b1ba-1348-48ae-89b7-bfa14ff8e70c@tls.msk.ru>
- <2C907355-C0F4-4C7F-B37C-8B4371A57B00@ventanamicro.com>
- <c174a8cd-4a53-4a28-8688-aa62c7eab45e@tls.msk.ru>
- <97934a65-f62f-49e9-820b-07463c3029ed@tls.msk.ru>
- <896AA0CA-E83A-402F-8A07-5BBA7BEF98F5@ventanamicro.com>
- <6b154471-abfa-49a9-a269-912188c4730f@tls.msk.ru>
-In-Reply-To: <6b154471-abfa-49a9-a269-912188c4730f@tls.msk.ru>
+References: <20240424142808.62936-2-ajones@ventanamicro.com>
+In-Reply-To: <20240424142808.62936-2-ajones@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 29 Apr 2024 12:01:50 +1000
-Message-ID: <CAKmqyKNRyRCqpvii=1JnAQ+=t_TVLiD1oQmFRbk8UkLSqCrDcQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] target/riscv/kvm: fix timebase-frequency when
- using KVM acceleration
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: Andrew Jones <ajones@ventanamicro.com>,
- Yong-Xuan Wang <yongxuan.wang@sifive.com>, 
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- qemu-stable <qemu-stable@nongnu.org>, greentime.hu@sifive.com,
- vincent.chen@sifive.com, frank.chang@sifive.com, jim.shu@sifive.com, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Date: Mon, 29 Apr 2024 12:10:28 +1000
+Message-ID: <CAKmqyKNmCVk=LRNc3C-0eTVEoi7P_38cNv1hrEkc_SnLyh-8mQ@mail.gmail.com>
+Subject: Re: [PATCH v3] target/riscv: Raise exceptions on wrs.nto
+To: Andrew Jones <ajones@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, christoph.muellner@vrull.eu, 
+ palmer@dabbelt.com, alistair.francis@wdc.com, bin.meng@windriver.com, 
+ liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::931;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x931.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::930;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x930.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,67 +92,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Apr 28, 2024 at 2:41=E2=80=AFAM Michael Tokarev <mjt@tls.msk.ru> wr=
-ote:
+On Thu, Apr 25, 2024 at 12:29=E2=80=AFAM Andrew Jones <ajones@ventanamicro.=
+com> wrote:
 >
-> 27.04.2024 18:17, Andrew Jones :
-> > I wrote instructions [2] for how to cross-compile without a full enviro=
-nment/container once. It might be better for quick, local testing.
-> >
-> > [2] https://lore.kernel.org/qemu-riscv/20230726120706.335340-2-ajones@v=
-entanamicro.com/
+> Implementing wrs.nto to always just return is consistent with the
+> specification, as the instruction is permitted to terminate the
+> stall for any reason, but it's not useful for virtualization, where
+> we'd like the guest to trap to the hypervisor in order to allow
+> scheduling of the lock holding VCPU. Change to always immediately
+> raise exceptions when the appropriate conditions are present,
+> otherwise continue to just return. Note, immediately raising
+> exceptions is also consistent with the specification since the
+> time limit that should expire prior to the exception is
+> implementation-specific.
 >
-> I just extracted a few packages from debian riscv64 (like libglib & deps)
-> in a separate dir and pointed various tools (pkgconf, gcc -I, gcc -L) to
-> that dir.
->
->
-> >> 49c211ffca00fdf7c is also needed.  So it's 3 so far, still not compile=
--
-> >> tested.  Anything else?
-> >
-> > Those 3, the first of the series [1], are good. Not sure why it's still=
- not compiling.
->
-> Yes, I picked up these 3 I mentioned, in addition to the problematic one
-> which is part of 8.2.3.  Once I had the build environment, I tried compil=
-ing
-> it, and it builds fine.  I wrote it is not compile-TESTED, not as it fail=
-s
-> to compile.
->
-> Also, I tried to build qemu on a real riscv64 hardware (on a debian porte=
-rbox),
-> -- it built fine (with the 3 mentioned changes applied) and is now runnin=
-g
-> tests, but it looks like it will be fine too.
->
-> > [1] https://lists.gnu.org/archive/html/qemu-devel/2023-12/msg01132.html
->
-> So yes, I'm picking these additional 3 from this set, - the ones which
-> I already mentioned.
+> Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
+> Reviewed-by: Christoph M=C3=BCllner <christoph.muellner@vrull.eu>
 
-Thanks so much for testing that.
-
-I'm not really sure what to do about the RISC-V host builds. I keep
-expecting distros to ship better RISC-V support, but still they don't
-seem to have it
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
+> ---
+> v3:
+>  - Sending again, hoping the =C3=BC remains in M=C3=BCllner
+> v2:
+>  - Added #ifndef CONFIG_USER_ONLY around helper call
 >
-> Thanks,
+>  target/riscv/helper.h                       |  1 +
+>  target/riscv/insn_trans/trans_rvzawrs.c.inc | 29 ++++++++++++++-------
+>  target/riscv/op_helper.c                    | 11 ++++++++
+>  3 files changed, 32 insertions(+), 9 deletions(-)
 >
-> /mjt
+> diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+> index 8a635238514d..451261ce5a4f 100644
+> --- a/target/riscv/helper.h
+> +++ b/target/riscv/helper.h
+> @@ -132,6 +132,7 @@ DEF_HELPER_6(csrrw_i128, tl, env, int, tl, tl, tl, tl=
+)
+>  DEF_HELPER_1(sret, tl, env)
+>  DEF_HELPER_1(mret, tl, env)
+>  DEF_HELPER_1(wfi, void, env)
+> +DEF_HELPER_1(wrs_nto, void, env)
+>  DEF_HELPER_1(tlb_flush, void, env)
+>  DEF_HELPER_1(tlb_flush_all, void, env)
+>  /* Native Debug */
+> diff --git a/target/riscv/insn_trans/trans_rvzawrs.c.inc b/target/riscv/i=
+nsn_trans/trans_rvzawrs.c.inc
+> index 32efbff4d5a5..0eef03383889 100644
+> --- a/target/riscv/insn_trans/trans_rvzawrs.c.inc
+> +++ b/target/riscv/insn_trans/trans_rvzawrs.c.inc
+> @@ -16,7 +16,7 @@
+>   * this program.  If not, see <http://www.gnu.org/licenses/>.
+>   */
 >
+> -static bool trans_wrs(DisasContext *ctx)
+> +static bool trans_wrs_sto(DisasContext *ctx, arg_wrs_sto *a)
+>  {
+>      if (!ctx->cfg_ptr->ext_zawrs) {
+>          return false;
+> @@ -40,12 +40,23 @@ static bool trans_wrs(DisasContext *ctx)
+>      return true;
+>  }
 >
+> -#define GEN_TRANS_WRS(insn)                                     \
+> -static bool trans_ ## insn(DisasContext *ctx, arg_ ## insn *a)  \
+> -{                                                               \
+> -    (void)a;                                                    \
+> -    return trans_wrs(ctx);                                      \
+> -}
+> +static bool trans_wrs_nto(DisasContext *ctx, arg_wrs_nto *a)
+> +{
+> +    if (!ctx->cfg_ptr->ext_zawrs) {
+> +        return false;
+> +    }
+>
+> -GEN_TRANS_WRS(wrs_nto)
+> -GEN_TRANS_WRS(wrs_sto)
+> +    /*
+> +     * Depending on the mode of execution, mstatus.TW and hstatus.VTW, w=
+rs.nto
+> +     * should raise an exception when the implementation-specific bounde=
+d time
+> +     * limit has expired. Our time limit is zero, so we either return
+> +     * immediately, as does our implementation of wrs.sto, or raise an
+> +     * exception, as handled by the wrs.nto helper.
+> +     */
+> +#ifndef CONFIG_USER_ONLY
+> +    gen_helper_wrs_nto(tcg_env);
+> +#endif
+> +
+> +    /* We only get here when helper_wrs_nto() doesn't raise an exception=
+. */
+> +    return trans_wrs_sto(ctx, NULL);
+> +}
+> diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+> index f414aaebdbab..2baf5bc3ca19 100644
+> --- a/target/riscv/op_helper.c
+> +++ b/target/riscv/op_helper.c
+> @@ -380,6 +380,17 @@ void helper_wfi(CPURISCVState *env)
+>      }
+>  }
+>
+> +void helper_wrs_nto(CPURISCVState *env)
+> +{
+> +    if (env->virt_enabled && (env->priv =3D=3D PRV_S || env->priv =3D=3D=
+ PRV_U) &&
+> +        get_field(env->hstatus, HSTATUS_VTW) &&
+> +        !get_field(env->mstatus, MSTATUS_TW)) {
+> +        riscv_raise_exception(env, RISCV_EXCP_VIRT_INSTRUCTION_FAULT, GE=
+TPC());
+> +    } else if (env->priv !=3D PRV_M && get_field(env->mstatus, MSTATUS_T=
+W)) {
+> +        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
+> +    }
+> +}
+> +
+>  void helper_tlb_flush(CPURISCVState *env)
+>  {
+>      CPUState *cs =3D env_cpu(env);
 > --
-> GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
-> New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D=
-98 ECDF 2C8E
-> Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0=
-A0 8044 65C5
-> Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
+> 2.44.0
 >
 >
 
