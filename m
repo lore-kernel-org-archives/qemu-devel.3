@@ -4,87 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77105C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 14:52:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00FE2C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 14:53:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1SLf-0006Pk-Bq; Mon, 29 Apr 2024 10:51:19 -0400
+	id 1s1SNC-0000EJ-Fm; Mon, 29 Apr 2024 10:52:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1s1SLb-0006Mz-Pe
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 10:51:15 -0400
-Received: from mail-oi1-x22c.google.com ([2607:f8b0:4864:20::22c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1s1SLZ-0007hX-Uv
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 10:51:15 -0400
-Received: by mail-oi1-x22c.google.com with SMTP id
- 5614622812f47-3c730f599abso2744222b6e.0
- for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 07:51:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1714402272; x=1715007072; darn=nongnu.org;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=ECDxKUDuwic74OXC+2Os7pKo8zMsuefxi/pkv3IHWnw=;
- b=dqptGucQBrChowOSE0zeFyxx3S1Nfw6CCGoXTqSKdWA8LOICEp1ENzHOGpsvkG4/8u
- Psn/P5eGscIyQA3x2W4MX9yLsBGFvmqNl4eDxyQRX2IxQpAts2ioAug0gBsQSwZjV7OG
- 4zhihF2m1gtj3fsQ0gh+KJJupEU1iho+XzQyZOepC3zoIH14mw+8KC0PtS094wnRD2NM
- NhqvyCOYDH2CUqRC/C+jArVyQ2uUXGxt85+vHXIckKzDw6wJMFd4SE9L5+38PziSr0kA
- feUWN9elUEc5bBZa1oUtHvPTvW3ssIdn1EVgPI/WZexneP4DMwkzIsg1ZUa6okJg842s
- bdRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714402272; x=1715007072;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ECDxKUDuwic74OXC+2Os7pKo8zMsuefxi/pkv3IHWnw=;
- b=FXWzTaFCm5JRM0I15RxqAikFZcTPtV4kGIDxSLWVZeSLd/qrFkHRQlwgcUZWH9P6oq
- 2zqjC6KP3WwzgAc45QXjBhxOP7cepxrGQ0yuhAR9lz7/aEhU2lcXZ2z1uWdtkvz9tywB
- or74E9rTzDRyBsGaVWQygSY8Fnm5nglv0vRC0NZkiiFjqp+QDtXTc9t1Duh7GMub+mqr
- i1kjQ5x2u904S+m/fwsoNOOPehB6lk59rZvZ5YoLYG+P7Vl3M2h7CqY86jkgG8AHrZV0
- 6SzOECIaNIp0mNTwU+WNGiMnnVztl8zBTAh3ku7jTUgesB3VieBAmN1bTNNwCVeoRpf4
- ySTw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXXKjZ0NbXuEd0vnsx0LfEuXrasn4rzGigOM1vYtzdLXGa76PCMipgK3da+0dJpm4dPWQlQFsPk0bSQ0neNxZGpogyZYFU=
-X-Gm-Message-State: AOJu0YwzLuecsHBlPAGqYjSdv9mfX1X70TeZ2V3WeMejhVhkDGRimNUz
- w0u4xDuAOtPBvyGlbukqufxbhGP13h/s06m+TfYH9mR6PwTK9/Xt
-X-Google-Smtp-Source: AGHT+IHD9+OHeYTOFkTswEAMy/RuQNVs/Q8GwVg27pV2CPnYUrKPtDmI3mWsPkQG9QdlD8bVJ9swYg==
-X-Received: by 2002:a05:6808:250:b0:3c8:62fc:2654 with SMTP id
- m16-20020a056808025000b003c862fc2654mr6788207oie.43.1714402272343; 
- Mon, 29 Apr 2024 07:51:12 -0700 (PDT)
-Received: from DESKTOPUU50BPD ([2603:8080:1f00:9c00:2639:f689:1715:fc7b])
- by smtp.gmail.com with ESMTPSA id
- cp22-20020a056808359600b003c60bc31ed9sm3371755oib.17.2024.04.29.07.51.11
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 29 Apr 2024 07:51:11 -0700 (PDT)
-From: <ltaylorsimpson@gmail.com>
-To: "'Matheus Tavares Bernardino'" <quic_mathbern@quicinc.com>,
- <qemu-devel@nongnu.org>
-Cc: <bcain@quicinc.com>, <sidneym@quicinc.com>, <ale@rev.ng>, <anjo@rev.ng>
-References: <c7af62451b02ffdc1d68bc00093b40a8080bc3ff.1714155331.git.quic_mathbern@quicinc.com>
- <028d01da9a43$3503f8b0$9f0bea10$@gmail.com>
-In-Reply-To: <028d01da9a43$3503f8b0$9f0bea10$@gmail.com>
-Subject: RE: [PATCH] Hexagon: add PC alignment check and exception
-Date: Mon, 29 Apr 2024 09:51:16 -0500
-Message-ID: <028e01da9a44$b05d2940$11177bc0$@gmail.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1s1SN3-00008x-Sm; Mon, 29 Apr 2024 10:52:45 -0400
+Received: from forwardcorp1c.mail.yandex.net
+ ([2a02:6b8:c03:500:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1s1SN1-0007s6-1I; Mon, 29 Apr 2024 10:52:45 -0400
+Received: from mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
+ [IPv6:2a02:6b8:c12:290f:0:640:2b99:0])
+ by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id 9E15C60B7D;
+ Mon, 29 Apr 2024 17:52:36 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:b739::1:30] (unknown
+ [2a02:6b8:b081:b739::1:30])
+ by mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id ZqRkda1IYa60-lWvxGRgd; Mon, 29 Apr 2024 17:52:36 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1714402356;
+ bh=jP1AwgraG/qNw7CSc11Q5FYlvHI/uXmTN52mORVCPRw=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=boRX9mGcPWSLvrvynNnlzDH4MPbu019mXQ6I7kgeyhXkM5yugM74iYd8XgQ6gut63
+ KnYrY84mPuGhiQb3Ed6CpnWkGnq4YpLGSYCQGx8oqHrpB34oyru6hNLO0GBG95+4mv
+ bq3nWX2TxXvXB7Zl8s+9BQBo6EpwFPF+CJT0yhA8=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <ad3b28cb-e7d2-4428-8540-414eb7ec623c@yandex-team.ru>
+Date: Mon, 29 Apr 2024 17:52:35 +0300
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQJzRyC/evNEDGnzkOUKIb6QtlGw1gFHrDeIsEO8m2A=
-Content-Language: en-us
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22c;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-oi1-x22c.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] block/copy-before-write: use uint64_t for timeout in
+ nanoseconds
+To: Fiona Ebner <f.ebner@proxmox.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, qemu-stable@nongnu.org, hreitz@redhat.com,
+ kwolf@redhat.com, jsnow@redhat.com, f.weber@proxmox.com
+References: <20240429141934.442154-1-f.ebner@proxmox.com>
+ <befd2718-526e-4407-8620-476dfa290c48@linaro.org>
+ <95aa152a-9858-4d71-aea9-8973e8d03f44@proxmox.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <95aa152a-9858-4d71-aea9-8973e8d03f44@proxmox.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c03:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,85 +80,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PS  You should also update the pkt_raises_exception function in translate.c
-to return true for packets that contain these instructions.  This will
-ensure that none of the machine state is changed before the check is
-complete.
-
-Taylor
-
-
-> -----Original Message-----
-> From: ltaylorsimpson@gmail.com <ltaylorsimpson@gmail.com>
-> Sent: Monday, April 29, 2024 9:41 AM
-> To: 'Matheus Tavares Bernardino' <quic_mathbern@quicinc.com>; qemu-
-> devel@nongnu.org
-> Cc: bcain@quicinc.com; sidneym@quicinc.com; ale@rev.ng; anjo@rev.ng
-> Subject: RE: [PATCH] Hexagon: add PC alignment check and exception
+On 29.04.24 17:46, Fiona Ebner wrote:
+> Am 29.04.24 um 16:36 schrieb Philippe Mathieu-Daudé:
+>> Hi Fiona,
+>>
+>> On 29/4/24 16:19, Fiona Ebner wrote:
+>>
+>> Not everybody uses an email client that shows the patch content just
+>> after the subject (your first lines wasn't making sense at first).
+>>
+>> Simply duplicating the subject helps to understand:
+>>
+>>    Use uint64_t for timeout in nanoseconds ...
+>>
 > 
-> 
-> 
-> > -----Original Message-----
-> > From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
-> > Sent: Friday, April 26, 2024 1:16 PM
-> > To: qemu-devel@nongnu.org
-> > Cc: bcain@quicinc.com; sidneym@quicinc.com; ale@rev.ng; anjo@rev.ng;
-> > ltaylorsimpson@gmail.com
-> > Subject: [PATCH] Hexagon: add PC alignment check and exception
-> >
-> > The Hexagon Programmer's Reference Manual says that the exception
-> 0x1e
-> > should be raised upon an unaligned program counter. Let's implement
-> > that and also add tests for both the most common case as well as
-> > packets with multiple change-of-flow instructions.
-> >
-> > Signed-off-by: Matheus Tavares Bernardino
-> <quic_mathbern@quicinc.com>
-> > ---
-> 
-> 
-> > --- a/target/hexagon/genptr.c
-> > +++ b/target/hexagon/genptr.c
-> > @@ -473,6 +473,7 @@ static void gen_write_new_pc_addr(DisasContext
-> 
-> You haven't added the check to gen_write_new_pc_pcrel.  It's not needed
-> there because the encoding guarantees the target is always aligned -
-right?
-> However, there is a call to gen_write_new_pc_addr inside that function.
-In
-> this case, we'll add a check that isn't necessary.  Consider adding a
-parameter
-> to indicate if the check can be avoided.
-> 
-> 
-> > a/tests/tcg/hexagon/Makefile.target
-> > b/tests/tcg/hexagon/Makefile.target
-> > index f839b2c0d5..02d7fff34c 100644
-> > --- a/tests/tcg/hexagon/Makefile.target
-> > +++ b/tests/tcg/hexagon/Makefile.target
-> > @@ -51,6 +51,19 @@ HEX_TESTS += scatter_gather  HEX_TESTS +=
-> hvx_misc
-> > HEX_TESTS += hvx_histogram  HEX_TESTS += invalid-slots
-> > +HEX_TESTS += unaligned_pc
-> > +HEX_TESTS += unaligned_pc_multi_cof
-> > +
-> > +run-unaligned_pc: unaligned_pc
-> > +run-unaligned_pc_multi_cof: unaligned_pc_multi_cof run-unaligned_pc
-> > +run-unaligned_pc_multi_cof:
-> > +	$(call run-test, $<, $(QEMU) $< 2> $<.stderr,"$< on
-> > $(TARGET_NAME)"); \
-> > +	if [ $$? -ne 1 ] ; then \
-> > +		return 1; \
-> > +	fi
-> > +	$(call quiet-command, \
-> > +		grep -q "exception 0x1e" $<.stderr, \
-> > +		"GREP", "exception 0x1e");
-> 
-> We should also test endloop instructions.
-> 
-> Thanks,
-> Taylor
+> Oh, sorry. I'll try to remember that for the future. Should I re-send as
+> a v2?
 > 
 
+Not necessary, I can touch up the message when applying to my block branch.
+
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+
+-- 
+Best regards,
+Vladimir
 
 
