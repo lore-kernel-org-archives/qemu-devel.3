@@ -4,101 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7031BC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 18:48:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E5DAC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 18:54:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1W2a-00065m-F1; Mon, 29 Apr 2024 14:47:52 -0400
+	id 1s1W8S-00009v-Ta; Mon, 29 Apr 2024 14:53:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s1W2T-0005xU-LP
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 14:47:50 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s1W2R-0000Li-U1
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 14:47:45 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 356E433A22;
- Mon, 29 Apr 2024 18:47:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1714416462; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s1W8R-000080-9H
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 14:53:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s1W8P-00012G-En
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 14:53:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714416832;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=r6QVWdAILr0Y4hV5RI0vcJpGAoRbDZ3D1pqMfejytSo=;
- b=mU5qimqSKGpD9i+wGSzlZgimZnL6+anER1Tx03kLoCfDCGJxo8HvaxdOyKcaDxH4Ws1nnJ
- SqGXAR81fGVq11SyMnZmPyOlEIYRqySIx3xEJDdZXHzZhvGHbfO+BJ3pANMCmgQifHatBH
- 8rBtpwYK8gPDJjpT6UwCbXsO39+4izo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1714416462;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=r6QVWdAILr0Y4hV5RI0vcJpGAoRbDZ3D1pqMfejytSo=;
- b=cDwj+I5HZ6rvm8T404Wui6/2w5CXw8+xaqsqKZB4SJOWAUw39T4lQOMLfkUzPbujlFL6dQ
- +cfXzk9kug2N2yAg==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1714416462; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=r6QVWdAILr0Y4hV5RI0vcJpGAoRbDZ3D1pqMfejytSo=;
- b=mU5qimqSKGpD9i+wGSzlZgimZnL6+anER1Tx03kLoCfDCGJxo8HvaxdOyKcaDxH4Ws1nnJ
- SqGXAR81fGVq11SyMnZmPyOlEIYRqySIx3xEJDdZXHzZhvGHbfO+BJ3pANMCmgQifHatBH
- 8rBtpwYK8gPDJjpT6UwCbXsO39+4izo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1714416462;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=r6QVWdAILr0Y4hV5RI0vcJpGAoRbDZ3D1pqMfejytSo=;
- b=cDwj+I5HZ6rvm8T404Wui6/2w5CXw8+xaqsqKZB4SJOWAUw39T4lQOMLfkUzPbujlFL6dQ
- +cfXzk9kug2N2yAg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B2413138A7;
- Mon, 29 Apr 2024 18:47:41 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id FKsXHk3rL2YUXwAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 29 Apr 2024 18:47:41 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, devel@lists.libvirt.org
-Subject: Re: [PATCH v2 6/6] migration: Deprecate fd: for file migration
-In-Reply-To: <Zi_puGn7Y1ArcLCL@x1n>
+ bh=Sy776144xV0oqZJKQzybkiRAB8DgdEn3vbj01tReeG8=;
+ b=JeHH9HzfzAUePWlzjH2uAkf7Ik8mcEyJFtDnn86osZxdbUpVuxhOQ+alN+x+OHsM5onNUM
+ Jl9xfqb+MGCZgmk8NYtse2mVQ4Em9sHrbZGd10hJb27+ha/QRSjxmRNpALttqVhRBhpSZ4
+ 6S9O2/ng0Rb6HMGNyrDts2rEZz1E13M=
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
+ [209.85.210.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-474-t4nrkT5rMAitaU6OmIHARg-1; Mon, 29 Apr 2024 14:53:50 -0400
+X-MC-Unique: t4nrkT5rMAitaU6OmIHARg-1
+Received: by mail-pf1-f199.google.com with SMTP id
+ d2e1a72fcca58-6ecfaccf30aso530077b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 11:53:50 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714416829; x=1715021629;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Sy776144xV0oqZJKQzybkiRAB8DgdEn3vbj01tReeG8=;
+ b=Es8coHktEqD68rdKHQAe9v+LoFo7eu2In4X6Laxg9Sw7+dePITfT63dC2eqiVSHX4p
+ 5oxHFRqf1jZJL9ruym/5aJlCdO58t/s5G1xaoKaJ2jMrvat3lH6RDmWksL8vT1kV7uUD
+ 9GHZ1KynMWoePjchJDRhTSJGS7zbjkIMmGNZmIVIsnZJV61wk5cG5sBNGkpbSu6o4G4R
+ wPHuYchY9zbZ2DvZxVR+zktKVzK5wfG+Q7G38OhFCf2slJskaF/GL1Wd9S9n0tnH4Niq
+ 0Wp6BngAgHwrpnk28lIIXlodb0I/UJC7bB4EMrk4uiyQz3mMV8LZCYMMNcTMvsoWxoG6
+ fPnw==
+X-Gm-Message-State: AOJu0YxwRVR0bFs3QPEEtOL9q+X11K7h/UdjnRDV9EevCZ331IS+/InL
+ 6ch6LP1eOb969DPuUQpqPAymE8b+nfeLTltyEQSNZLjLKtJsFc4FXJ4p9XlPMJmM9qGl5THzeVE
+ lcmVE1YzscmK6xvKuugcprnuUXYx8C1ctjwo40Mfs/4RedvM5EnWXZ242ZF+I
+X-Received: by 2002:a05:6a00:987:b0:6ea:df65:ff80 with SMTP id
+ u7-20020a056a00098700b006eadf65ff80mr12343537pfg.3.1714416829302; 
+ Mon, 29 Apr 2024 11:53:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEwsdKEJo8JImk7g8WhimWzZz3RncPa5MYOW0fJAqGJggSx+eY8eB77IhMWt3z4fP+K9lmTTA==
+X-Received: by 2002:a05:6a00:987:b0:6ea:df65:ff80 with SMTP id
+ u7-20020a056a00098700b006eadf65ff80mr12343509pfg.3.1714416828712; 
+ Mon, 29 Apr 2024 11:53:48 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ h3-20020a056a00230300b006e6be006637sm19632091pfh.135.2024.04.29.11.53.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 29 Apr 2024 11:53:48 -0700 (PDT)
+Date: Mon, 29 Apr 2024 14:53:44 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ devel@lists.libvirt.org,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Subject: Re: [PATCH v2 3/6] migration: Remove 'blk/-b' option from migrate
+ commands
+Message-ID: <Zi_suPZDZIJ8f6FI@x1n>
 References: <20240426131408.25410-1-farosas@suse.de>
- <20240426131408.25410-7-farosas@suse.de> <Zi_puGn7Y1ArcLCL@x1n>
-Date: Mon, 29 Apr 2024 15:47:39 -0300
-Message-ID: <87zftcdn04.fsf@suse.de>
+ <20240426131408.25410-4-farosas@suse.de> <Zi_CNIYAi6UbxJ0j@x1n>
+ <875xw0f5oe.fsf@suse.de> <Zi_mmpmW4XIKpXmo@x1n>
+ <8734r4f25l.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- RCPT_COUNT_THREE(0.00)[4]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <8734r4f25l.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,80 +111,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On Mon, Apr 29, 2024 at 03:35:02PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
+> 
+> > On Mon, Apr 29, 2024 at 02:18:57PM -0300, Fabiano Rosas wrote:
+> >> Peter Xu <peterx@redhat.com> writes:
+> >> 
+> >> > On Fri, Apr 26, 2024 at 10:14:05AM -0300, Fabiano Rosas wrote:
+> >> >> @@ -2003,21 +1997,7 @@ static bool migrate_prepare(MigrationState *s, bool blk, bool resume,
+> >> >>          }
+> >> >>      }
+> >> >>  
+> >> >> -    if (blk) {
 
-> On Fri, Apr 26, 2024 at 10:14:08AM -0300, Fabiano Rosas wrote:
->> The fd: URI can currently trigger two different types of migration, a
->> TCP migration using sockets and a file migration using a plain
->> file. This is in conflict with the recently introduced (8.2) QMP
->> migrate API that takes structured data as JSON-like format. We cannot
->> keep the same backend for both types of migration because with the new
->> API the code is more tightly coupled to the type of transport. This
->> means a TCP migration must use the 'socket' transport and a file
->> migration must use the 'file' transport.
->> 
->> If we keep allowing fd: when using a file, this creates an issue when
->> the user converts the old-style (fd:) to the new style ("transport":
->> "socket") invocation because the file descriptor in question has
->> previously been allowed to be either a plain file or a socket.
->> 
->> To avoid creating too much confusion, we can simply deprecate the fd:
->> + file usage, which is thought to be rarely used currently and instead
->> establish a 1:1 correspondence between fd: URI and socket transport,
->> and file: URI and file transport.
->> 
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> ---
->>  docs/about/deprecated.rst | 14 ++++++++++++++
->>  1 file changed, 14 insertions(+)
->> 
->> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
->> index 0fb5c82640..813f7996fe 100644
->> --- a/docs/about/deprecated.rst
->> +++ b/docs/about/deprecated.rst
->> @@ -464,3 +464,17 @@ both, older and future versions of QEMU.
->>  The ``blacklist`` config file option has been renamed to ``block-rpcs``
->>  (to be in sync with the renaming of the corresponding command line
->>  option).
->> +
->> +Migration
->> +---------
->> +
->> +``fd:`` URI when used for file migration (since 9.1)
->> +''''''''''''''''''''''''''''''''''''''''''''''''''''
->> +
->> +The ``fd:`` URI can currently provide a file descriptor that
->> +references either a socket or a plain file. These are two different
->> +types of migration. In order to reduce ambiguity, the ``fd:`` URI
->> +usage of providing a file descriptor to a plain file has been
->> +deprecated in favor of explicitly using the ``file:`` URI with the
->> +file descriptor being passed as an ``fdset``. Refer to the ``add-fd``
->> +command documentation for details on the ``fdset`` usage.
->
-> Wanna do some warn_report() when detected non-socket fds alongside?  Looks
-> like we previously do this for all deprecations.
+[1]
 
-Yes, good point.
+> >> >> -        if (migrate_colo()) {
+> >> >> -            error_setg(errp, "No disk migration is required in COLO mode");
+> >> >> -            return false;
+> >> >> -        }
+> >> >> -        if (migrate_block()) {
+> >> >> -            error_setg(errp, "Command options are incompatible with "
+> >> >> -                       "current migration capabilities");
+> >> >> -            return false;
+> >> >> -        }
+> >> >> -        if (!migrate_cap_set(MIGRATION_CAPABILITY_BLOCK, true, errp)) {
+> >> >> -            return false;
+> >> >> -        }
+> >> >> -        s->must_remove_block_options = true;
+> >> >> -    }
+> >> >> +    s->must_remove_block_options = true;
+> >> >
+> >> > Can we drop this var too?  Perhaps with block_cleanup_parameters()?
+> >> 
+> >> Yes, Markus mentioned it in v1 already. Take a look there. There's
+> >> several other declarations I missed. v3 is coming soon.
+> >
+> > Right, noticed that it's removed actually in the next patch.
+> >
+> > But iiuc it can already been removed in this patch.  If we want to remove
+> > it in the next, logically we should set must_remove_block_options=false
+> > here, though..  So maybe easier to just drop it here.
+> 
+> Ah I see what you mean. I thought you're just asking for the removal
+> overall.
+> 
+> But block_cleanup_parameters sets the block capability to false and the
+> whole block migration only goes away in the next patch. I think we need
+> to keep this as true to preserve behavior. In theory, after this patch
+> people could still use the block migration just fine by setting the cap.
 
->
-> What's the plan when it's support removed?  I'm imaginging that we sanity
-> check fstat() + S_ISSOCK on the fd and fail otherwise?  In that case we can
-> have the code there, dump warn_report(), then switch to failing qmp migrate
-> (and incoming side) later on?
+I'm reading this patch the same as "blk==false" always above [1].  In that
+case, only if we keep must_remove_block_options=false could we maintain the
+behavior?  Otherwise at the end of migration (or cancellations) QEMU can
+wrongly clear MIGRATION_CAPABILITY_BLOCK bit if the user set it manually?
 
-Something along those lines. We currently use fd_is_socket():
+(But hey, we're discussing whoever applies this patch only without the
+ rest..  definitely not a huge deal :)
 
-bool fd_is_socket(int fd)
-{
-    int optval;
-    socklen_t optlen = sizeof(optval);
-    return !getsockopt(fd, SOL_SOCKET, SO_TYPE, &optval, &optlen);
-}
+-- 
+Peter Xu
 
-I'm thinking of this in fd_start_outgoing_migation():
-
-    if (!fd_is_socket(fd)) {
-        warn_report("fd: migration to a file is deprecated."
-                    " Use file: instead.");
-    }
 
