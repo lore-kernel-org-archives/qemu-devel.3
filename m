@@ -4,99 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F931C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 12:41:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42984C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 12:46:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1QJM-0004l3-UI; Mon, 29 Apr 2024 08:40:48 -0400
+	id 1s1QOK-0005uL-0Q; Mon, 29 Apr 2024 08:45:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s1QJK-0004kK-MO
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 08:40:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s1QJI-0004nR-FF
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 08:40:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714394441;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6D2a3vGvyPEJ5sHXioTCcxQC31damFpV0mzd8HdSwSo=;
- b=MyQueRBE9LlX4/Ww7SZJHnnNPrDBeQmiMvezW0VHdBX+GKJ/bcXJ5g/YiO29oP1HfzOLS5
- QL0En0pTKMwD+TEKwzF/DNHduYZwEeA2W+ChKcZ+w23ROlF/fr8PCBGOWsEzpDZ97icKYR
- hjrceyLOBWmIqa5F215tn8m0ZZOMmKw=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-426-m0CZ1tZPMtK8aCxOS0yQDg-1; Mon, 29 Apr 2024 08:40:39 -0400
-X-MC-Unique: m0CZ1tZPMtK8aCxOS0yQDg-1
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-43ad0f1a08aso17227201cf.0
- for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 05:40:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1QNu-0005p5-GD
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 08:45:31 -0400
+Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1QNi-0005To-GO
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 08:45:30 -0400
+Received: by mail-lj1-x22c.google.com with SMTP id
+ 38308e7fff4ca-2dd6a7ae2dcso69994641fa.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 05:45:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714394716; x=1714999516; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=4eiya8siX0oHTjaQ0vqttSRYHx0jPgD3TE0e5lvk9YE=;
+ b=yB5rN8Du4NjbUaBK/5RcAQL2oUSVuGeUXsxTKosufbsB5GXzspNOH/9QbN05/19zZe
+ Z0sSIXWs+6VOKv/S1sCoZ6tjuLSXd03ql+SejV8G6Ibzc3cJspq/g9O+qnuh/F12SYdZ
+ oExb6OqVr1UsxCl6cSh+lqahTCqQrohog9BtGJeDi+hmi1Y5z+0L2dsaHFINPwbZnDP7
+ 70lFzCJt/7jqp++h1af+wewVeLM5G0R10Pvd/4PdGqwZDsrATvUcQkk2yUsa4qgZllP0
+ 7GUTWviT5HAW+vNqhbmu8ua7c71MoYX6couRkLDBp5C5sxy9j5Lofexrvl8pX4r/94Nt
+ s15g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714394439; x=1714999239;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1714394716; x=1714999516;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6D2a3vGvyPEJ5sHXioTCcxQC31damFpV0mzd8HdSwSo=;
- b=oBVvsanUdzjca0RPokbwoox0NyYezZn+p81oLpKNTB246fcigLiDovx8Qygu9+exO+
- 7vRNvqH+qDi3W8yOCkoEirtIxqLbTeORNunFekNdCahTUgfV2TozP4nss70W8kOm1fbq
- nWe2aNmFDV2Ce6zSU1zkq4p2ePZ6HPg/15yeEYPeDIbYdCtwSCuM9m1xF1w6rCfEpMwT
- /JwJ7Xf3TNeVJ8V6grURNENczoR9CIBimpc9F2PlfnhB09YGCiwLLayTpF4Ejm8vGRhF
- XnaaA2fNnoI/7fihkykRWriifTijMLCOucDSwwd5My4SaE/EnZRt/ybKBD6Y5qu/kHXn
- Sa0g==
+ bh=4eiya8siX0oHTjaQ0vqttSRYHx0jPgD3TE0e5lvk9YE=;
+ b=cdyxSMUkHiufSVKtdQR5N4TiNyXKf78dEgY8izc5f7bfoy9ag7n9YkHXeJw2oOlg0Z
+ pDU1ardSwsTt1VDdybilGQq99jCn9s30fsTi5Bm0/+i/EZmXG9D+v2vn9YZERfYuSe0k
+ J/D6/4kFZLBhyHyjlW0SSIkY9ywh97Hvv14JGbdYHhrGdfdKLwmAG67Tdq50FRzMk1I5
+ E1y+BHUbDZA218Dr5by6nCYMbrhrnKMGvCNYKOYvYOFXBESFDVelCtMQXAVJyi6V1+E9
+ Sfv5raTLatruL0pC1XRo4O1r0rgVX6CTubVr8xcfoGyF3uV5DlkLCceA8m2um0q0iWJz
+ 3jSQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVa3o4LzDA+zSdAX3uNRCnP6V0I2sbpMVqfY5rMMxP7ORfNbNQwCueapjIIGkCK+DiyBilLfXLGYTdygrZQ0e++3zTgkKo=
-X-Gm-Message-State: AOJu0YwGENyj9f00zhMkPQ2MIXLM2vlpwAmc/0nyyUA147AKoJEUnoj4
- QDaG12zb5zuiMiAGRnEhnYa6jzGoLz/Fw2hNCfddH9U7tqkOLrubgsViZhPFlHyFQ/lcx5p26Tq
- iPKV/kPTyZbInBHsgfe7AvoSe+pWv09V+9ge2J+DPw+/9t+XWHBMP
-X-Received: by 2002:ac8:5ad6:0:b0:43a:ef4e:7b28 with SMTP id
- d22-20020ac85ad6000000b0043aef4e7b28mr3558102qtd.21.1714394439514; 
- Mon, 29 Apr 2024 05:40:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH+6+yZssObbaeBialeUKT9GT3Il2t+xTdj7JPBwoyu19bRWzh7C46GmQYHvJdfmx+jFldVVg==
-X-Received: by 2002:ac8:5ad6:0:b0:43a:ef4e:7b28 with SMTP id
- d22-20020ac85ad6000000b0043aef4e7b28mr3558080qtd.21.1714394439200; 
- Mon, 29 Apr 2024 05:40:39 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- s24-20020ac87598000000b00436440fd8bfsm10368318qtq.3.2024.04.29.05.40.37
+ AJvYcCXF3lu2k/OUtfQ9YY1ERQYOUSq9AfAjJl5WWOxRI7V4cztN/VMSAZo5VjLPJQQ84xv3Dn9CRZyrEPyvYWZFtQc7p06Ta5U=
+X-Gm-Message-State: AOJu0YxXmGwCeA9h8s5QkcdivWxLhu1ww2ADH/KEHaFwJKJtfYusx+wq
+ hA3W43fCdaVDLtE89PDhIZc5+vpJ4RfSh/7iwbiyM56XGSLtGtd6xmy+F0OF6Jc=
+X-Google-Smtp-Source: AGHT+IFaBM7lYXrMwo0WJETvpYiNqB0OfBKrdukHcCD5MG0UyH3jv75neVs9eHUgL6iSGdN4n9AeKw==
+X-Received: by 2002:a2e:9b0d:0:b0:2de:b987:e010 with SMTP id
+ u13-20020a2e9b0d000000b002deb987e010mr7927156lji.0.1714394716153; 
+ Mon, 29 Apr 2024 05:45:16 -0700 (PDT)
+Received: from [192.168.69.100] (bny92-h02-176-184-44-142.dsl.sta.abo.bbox.fr.
+ [176.184.44.142]) by smtp.gmail.com with ESMTPSA id
+ gc24-20020a170906c8d800b00a58f3983635sm2204109ejb.50.2024.04.29.05.45.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Apr 2024 05:40:38 -0700 (PDT)
-Message-ID: <d8cc4405-fe9c-4b47-be76-708a72d4b1a1@redhat.com>
-Date: Mon, 29 Apr 2024 14:40:35 +0200
+ Mon, 29 Apr 2024 05:45:15 -0700 (PDT)
+Message-ID: <87468cc8-312a-4fec-90d7-3794aaec19f6@linaro.org>
+Date: Mon, 29 Apr 2024 14:45:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] vfio/pci: migration: Skip config space check for
- Vendor Specific Information in VSC during restore/load
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-To: Alex Williamson <alex.williamson@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Vinayak Kale <vkale@nvidia.com>, qemu-devel@nongnu.org,
- marcel.apfelbaum@gmail.com, avihaih@nvidia.com, acurrid@nvidia.com,
- cjia@nvidia.com, zhiw@nvidia.com, targupta@nvidia.com, kvm@vger.kernel.org
-References: <20240322064210.1520394-1-vkale@nvidia.com>
- <20240327113915.19f6256c.alex.williamson@redhat.com>
- <20240327161108-mutt-send-email-mst@kernel.org>
- <20240327145235.47338c2b.alex.williamson@redhat.com>
- <10a42156-067e-4dc1-8467-b840595b38fa@redhat.com>
-Content-Language: en-US, fr
-In-Reply-To: <10a42156-067e-4dc1-8467-b840595b38fa@redhat.com>
+Subject: Re: [PATCH v6 09/10] util/bufferiszero: Add simd acceleration for
+ aarch64
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20240424225705.929812-1-richard.henderson@linaro.org>
+ <20240424225705.929812-10-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240424225705.929812-10-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,71 +95,285 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Vinayak,
+On 25/4/24 00:57, Richard Henderson wrote:
+> Because non-embedded aarch64 is expected to have AdvSIMD enabled, merely
+> double-check with the compiler flags for __ARM_NEON and don't bother with
+> a runtime check.  Otherwise, model the loop after the x86 SSE2 function.
+> 
+> Use UMAXV for the vector reduction.  This is 3 cycles on cortex-a76 and
+> 2 cycles on neoverse-n1.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   util/bufferiszero.c | 77 +++++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 77 insertions(+)
+> 
+> diff --git a/util/bufferiszero.c b/util/bufferiszero.c
+> index ff003dc40e..38477a3eac 100644
+> --- a/util/bufferiszero.c
+> +++ b/util/bufferiszero.c
+> @@ -213,7 +213,84 @@ bool test_buffer_is_zero_next_accel(void)
+>       }
+>       return false;
+>   }
+> +
+> +#elif defined(__aarch64__) && defined(__ARM_NEON)
+> +#include <arm_neon.h>
+> +
 
-On 3/28/24 10:30, Cédric Le Goater wrote:
-> On 3/27/24 21:52, Alex Williamson wrote:
->> On Wed, 27 Mar 2024 16:11:37 -0400
->> "Michael S. Tsirkin" <mst@redhat.com> wrote:
->>
->>> On Wed, Mar 27, 2024 at 11:39:15AM -0600, Alex Williamson wrote:
->>>> On Fri, 22 Mar 2024 12:12:10 +0530
->>>> Vinayak Kale <vkale@nvidia.com> wrote:
->>>>> In case of migration, during restore operation, qemu checks config space of the
->>>>> pci device with the config space in the migration stream captured during save
->>>>> operation. In case of config space data mismatch, restore operation is failed.
->>>>>
->>>>> config space check is done in function get_pci_config_device(). By default VSC
->>>>> (vendor-specific-capability) in config space is checked.
->>>>>
->>>>> Due to qemu's config space check for VSC, live migration is broken across NVIDIA
->>>>> vGPU devices in situation where source and destination host driver is different.
->>>>> In this situation, Vendor Specific Information in VSC varies on the destination
->>>>> to ensure vGPU feature capabilities exposed to the guest driver are compatible
->>>>> with destination host.
->>>>>
->>>>> If a vfio-pci device is migration capable and vfio-pci vendor driver is OK with
->>>>> volatile Vendor Specific Info in VSC then qemu should exempt config space check
->>>>> for Vendor Specific Info. It is vendor driver's responsibility to ensure that
->>>>> VSC is consistent across migration. Here consistency could mean that VSC format
->>>>> should be same on source and destination, however actual Vendor Specific Info
->>>>> may not be byte-to-byte identical.
->>>>>
->>>>> This patch skips the check for Vendor Specific Information in VSC for VFIO-PCI
->>>>> device by clearing pdev->cmask[] offsets. Config space check is still enforced
->>>>> for 3 byte VSC header. If cmask[] is not set for an offset, then qemu skips
->>>>> config space check for that offset.
->>>>>
->>>>> Signed-off-by: Vinayak Kale <vkale@nvidia.com>
->>>>> ---
->>>>> Version History
->>>>> v2->v3:
->>>>>      - Config space check skipped only for Vendor Specific Info in VSC, check is
->>>>>        still enforced for 3 byte VSC header.
->>>>>      - Updated commit description with live migration failure scenario.
->>>>> v1->v2:
->>>>>      - Limited scope of change to vfio-pci devices instead of all pci devices.
->>>>>
->>>>>   hw/vfio/pci.c | 24 ++++++++++++++++++++++++
->>>>>   1 file changed, 24 insertions(+)
->>>>
->>>>
->>>> Acked-by: Alex Williamson <alex.williamson@redhat.com>
->>>
->>>
->>> A very reasonable way to do it.
->>>
->>> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
->>>
->>> Merge through the VFIO tree I presume?
->>
->> Yep, Cédric said he´d grab it for 9.1.  Thanks,
+Maybe use the same SSE comment:
 
-Could you please resend an update of this change adding a machine
-compatibility property for migration ?
+/*
+  * Helper for preventing the compiler from reassociating
+  * chains of binary vector operations.
+  */
 
-Thanks,
+> +#define REASSOC_BARRIER(vec0, vec1) asm("" : "+w"(vec0), "+w"(vec1))
 
-C.
+
+> +static unsigned accel_index = 1;
+> +#define INIT_ACCEL buffer_is_zero_simd
+> +
+> +bool test_buffer_is_zero_next_accel(void)
+> +{
+> +    if (accel_index != 0) {
+> +        buffer_is_zero_accel = accel_table[--accel_index];
+> +        return true;
+> +    }
+> +    return false;
+> +}
+
+Alternatively we could initialize accel_index in
+__attribute__((constructor)) init_accel(void) and keep
+a single test_buffer_is_zero_next_accel(), squashing:
+
+-- >8 --
+diff --git a/util/bufferiszero.c b/util/bufferiszero.c
+index 38477a3eac..afb3822251 100644
+--- a/util/bufferiszero.c
++++ b/util/bufferiszero.c
+@@ -82,6 +82,17 @@ static bool buffer_is_zero_int_ge256(const void *buf, 
+size_t len)
+      return t == 0;
+  }
+
++static unsigned accel_index;
++
++bool test_buffer_is_zero_next_accel(void)
++{
++    if (accel_index != 0) {
++        buffer_is_zero_accel = accel_table[--accel_index];
++        return true;
++    }
++    return false;
++}
++
+  #if defined(CONFIG_AVX2_OPT) || defined(__SSE2__)
+  #include <immintrin.h>
+
+@@ -186,7 +197,6 @@ static biz_accel_fn const accel_table[] = {
+      buffer_zero_avx2,
+  #endif
+  };
+-static unsigned accel_index;
+
+  static void __attribute__((constructor)) init_accel(void)
+  {
+@@ -205,15 +215,6 @@ static void __attribute__((constructor)) 
+init_accel(void)
+
+  #define INIT_ACCEL NULL
+
+-bool test_buffer_is_zero_next_accel(void)
+-{
+-    if (accel_index != 0) {
+-        buffer_is_zero_accel = accel_table[--accel_index];
+-        return true;
+-    }
+-    return false;
+-}
+-
+  #elif defined(__aarch64__) && defined(__ARM_NEON)
+  #include <arm_neon.h>
+
+@@ -277,25 +278,15 @@ static biz_accel_fn const accel_table[] = {
+      buffer_is_zero_simd,
+  };
+
+-static unsigned accel_index = 1;
+  #define INIT_ACCEL buffer_is_zero_simd
+
+-bool test_buffer_is_zero_next_accel(void)
++static void __attribute__((constructor)) init_accel(void)
+  {
+-    if (accel_index != 0) {
+-        buffer_is_zero_accel = accel_table[--accel_index];
+-        return true;
+-    }
+-    return false;
++    accel_index = 1;
+  }
+
+  #else
+
+-bool test_buffer_is_zero_next_accel(void)
+-{
+-    return false;
+-}
+-
+  #define INIT_ACCEL buffer_is_zero_int_ge256
+  #endif
+
+---
+
+Or clearer in 2 patches, unifying test_buffer_is_zero_next_accel()
+first:
+
+-- >8 --
+diff --git a/util/bufferiszero.c b/util/bufferiszero.c
+index ff003dc40e..b4da9d5297 100644
+--- a/util/bufferiszero.c
++++ b/util/bufferiszero.c
+@@ -82,6 +82,17 @@ static bool buffer_is_zero_int_ge256(const void *buf, 
+size_t len)
+      return t == 0;
+  }
+
++static unsigned accel_index;
++
++bool test_buffer_is_zero_next_accel(void)
++{
++    if (accel_index != 0) {
++        buffer_is_zero_accel = accel_table[--accel_index];
++        return true;
++    }
++    return false;
++}
++
+  #if defined(CONFIG_AVX2_OPT) || defined(__SSE2__)
+  #include <immintrin.h>
+
+@@ -186,7 +197,6 @@ static biz_accel_fn const accel_table[] = {
+      buffer_zero_avx2,
+  #endif
+  };
+-static unsigned accel_index;
+
+  static void __attribute__((constructor)) init_accel(void)
+  {
+@@ -205,19 +215,7 @@ static void __attribute__((constructor)) 
+init_accel(void)
+
+  #define INIT_ACCEL NULL
+
+-bool test_buffer_is_zero_next_accel(void)
+-{
+-    if (accel_index != 0) {
+-        buffer_is_zero_accel = accel_table[--accel_index];
+-        return true;
+-    }
+-    return false;
+-}
+  #else
+-bool test_buffer_is_zero_next_accel(void)
+-{
+-    return false;
+-}
+
+  #define INIT_ACCEL buffer_is_zero_int_ge256
+  #endif
+
+---
+
+Then this patch becomes:
+
+-- >8 --
+diff --git a/util/bufferiszero.c b/util/bufferiszero.c
+index b4da9d5297..afb3822251 100644
+--- a/util/bufferiszero.c
++++ b/util/bufferiszero.c
+@@ -215,6 +215,76 @@ static void __attribute__((constructor)) 
+init_accel(void)
+
+  #define INIT_ACCEL NULL
+
++#elif defined(__aarch64__) && defined(__ARM_NEON)
++#include <arm_neon.h>
++
++#define REASSOC_BARRIER(vec0, vec1) asm("" : "+w"(vec0), "+w"(vec1))
++
++static bool buffer_is_zero_simd(const void *buf, size_t len)
++{
++    uint32x4_t t0, t1, t2, t3;
++
++    /* Align head/tail to 16-byte boundaries.  */
++    const uint32x4_t *p = QEMU_ALIGN_PTR_DOWN(buf + 16, 16);
++    const uint32x4_t *e = QEMU_ALIGN_PTR_DOWN(buf + len - 1, 16);
++
++    /* Unaligned loads at head/tail.  */
++    t0 = vld1q_u32(buf) | vld1q_u32(buf + len - 16);
++
++    /* Collect a partial block at tail end.  */
++    t1 = e[-7] | e[-6];
++    t2 = e[-5] | e[-4];
++    t3 = e[-3] | e[-2];
++    t0 |= e[-1];
++    REASSOC_BARRIER(t0, t1);
++    REASSOC_BARRIER(t2, t3);
++    t0 |= t1;
++    t2 |= t3;
++    REASSOC_BARRIER(t0, t2);
++    t0 |= t2;
++
++    /*
++     * Loop over complete 128-byte blocks.
++     * With the head and tail removed, e - p >= 14, so the loop
++     * must iterate at least once.
++     */
++    do {
++        /*
++         * Reduce via UMAXV.  Whatever the actual result,
++         * it will only be zero if all input bytes are zero.
++         */
++        if (unlikely(vmaxvq_u32(t0) != 0)) {
++            return false;
++        }
++
++        t0 = p[0] | p[1];
++        t1 = p[2] | p[3];
++        t2 = p[4] | p[5];
++        t3 = p[6] | p[7];
++        REASSOC_BARRIER(t0, t1);
++        REASSOC_BARRIER(t2, t3);
++        t0 |= t1;
++        t2 |= t3;
++        REASSOC_BARRIER(t0, t2);
++        t0 |= t2;
++        p += 8;
++    } while (p < e - 7);
++
++    return vmaxvq_u32(t0) == 0;
++}
++
++static biz_accel_fn const accel_table[] = {
++    buffer_is_zero_int_ge256,
++    buffer_is_zero_simd,
++};
++
++#define INIT_ACCEL buffer_is_zero_simd
++
++static void __attribute__((constructor)) init_accel(void)
++{
++    accel_index = 1;
++}
++
+  #else
+
+  #define INIT_ACCEL buffer_is_zero_int_ge256
+
+---
+
+Anyhow,
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
