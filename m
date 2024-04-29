@@ -4,63 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49E49C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 06:59:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D1D5C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 06:59:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1KtZ-0001ZL-98; Mon, 29 Apr 2024 02:53:49 -0400
+	id 1s1KuT-0003AH-Rq; Mon, 29 Apr 2024 02:54:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s1KtX-0001YI-JV
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 02:53:47 -0400
+ id 1s1KuQ-0002wf-3D
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 02:54:42 -0400
 Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s1KtV-0007m1-UU
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 02:53:47 -0400
+ id 1s1KuO-0007sZ-2w
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 02:54:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1714373626; x=1745909626;
+ t=1714373680; x=1745909680;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=8LxZj6vgZj1xI6LvQ7FwzjFqeUjrZcTWo7n6C5+4LxE=;
- b=l/3ujvMpEQq3O16lj6OttkD2V4V8WhJWz95KR1ZcivGGeaIJk2XsuEQH
- Cco10m/AgwvMFALss3tKhxTUjp4u046qDCYVxnb4IIsVuqm1OzHkUp91O
- J2gg/lvK9CnMqe1tppshhhgob1svgKDQXAr0ZkEJieHEKEecviCsB32/t
- wheALXIGpH9dgIkkaxWl0yrWtAvPiXjex4wiQDVNOzqAVZhXJChjPbBnh
- 4U2FOZyPdyiIZrO7oK1kr7srbrre8OhdvJ3YujcDFX3yuDBSwMyfUR6Dq
- yNIg7nYicXN/q8i3zSTe/Ej/dQXwE5jVtmz+A5OEblerHE0QM7yIpAFGl A==;
-X-CSE-ConnectionGUID: 26bKZOIIS96EeBWHwNK6Eg==
-X-CSE-MsgGUID: tWcKCCKKQpWM5chtUrCm+g==
-X-IronPort-AV: E=McAfee;i="6600,9927,11057"; a="10560694"
-X-IronPort-AV: E=Sophos;i="6.07,239,1708416000"; d="scan'208";a="10560694"
+ bh=B7nXRh7ZojaXtdhNyRfMhv/+nlUrwKMI6CTd3vTaKw0=;
+ b=kiUuVVs/if+/kJIuwmm4hI4a3YYfRxBqge7CH3uM8IgoH6z4pvkWf3pf
+ snqvXfvX/s6G65PiA3ys5boshlw5H9LSPZLaa8Uc+RMfLo49wiFABmz3K
+ poXE+hO/s8RnryqZLcEuNa/OlgDwf3X0P4uhcojNWbpyzFfVljzntgMA+
+ VL2ixJa0F/F/qMOkJGR3rXNhArvearbZeEsfCdpLegkpfvls28jw3vQF3
+ hW/e2muqwLk2CoL5gOEVAMVAamqi0f9J4e+2eo68JXlz5V0JPPWlIIEk1
+ WmLPqEe0wPnG4rPUVfxKwEibaVnqU2bbDcOueTwFJkdH+V12U7GC3nug4 g==;
+X-CSE-ConnectionGUID: ovzbF8GbTRq0j8MZtTDJzA==
+X-CSE-MsgGUID: AJrT3WN8QNSfItH9M5Wtqw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11057"; a="10560765"
+X-IronPort-AV: E=Sophos;i="6.07,239,1708416000"; d="scan'208";a="10560765"
 Received: from orviesa001.jf.intel.com ([10.64.159.141])
  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Apr 2024 23:53:45 -0700
-X-CSE-ConnectionGUID: Ff0OeZ6DQqyQVhS/CpGwAQ==
-X-CSE-MsgGUID: Ii2V5EL+Qg2XLd1RayaxLQ==
+ 28 Apr 2024 23:54:29 -0700
+X-CSE-ConnectionGUID: Qmkoz7MDTSCD1IbkcMk3cQ==
+X-CSE-MsgGUID: tWbG6iWHRT6NLUrAX9kk5w==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,239,1708416000"; d="scan'208";a="63488012"
+X-IronPort-AV: E=Sophos;i="6.07,239,1708416000"; d="scan'208";a="63488389"
 Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.124])
  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Apr 2024 23:53:42 -0700
+ 28 Apr 2024 23:54:25 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  mst@redhat.com, peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com,
  nicolinc@nvidia.com, joao.m.martins@oracle.com, kevin.tian@intel.com,
  yi.l.liu@intel.com, chao.p.peng@intel.com,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v3 06/19] range: Introduce range_get_last_bit()
-Date: Mon, 29 Apr 2024 14:50:33 +0800
-Message-Id: <20240429065046.3688701-7-zhenzhong.duan@intel.com>
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH v3 17/19] intel_iommu: Extract out vtd_cap_init() to
+ initialize cap/ecap
+Date: Mon, 29 Apr 2024 14:50:44 +0800
+Message-Id: <20240429065046.3688701-18-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240429065046.3688701-1-zhenzhong.duan@intel.com>
 References: <20240429065046.3688701-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.16;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
@@ -86,45 +90,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This helper get the highest 1 bit position of the upper bound.
+Extract cap/ecap initialization in vtd_cap_init() to make code
+cleaner.
 
-If the range is empty or upper bound is zero, -1 is returned.
+No functional change intended.
 
-Suggested-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- include/qemu/range.h | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ hw/i386/intel_iommu.c | 93 ++++++++++++++++++++++++-------------------
+ 1 file changed, 51 insertions(+), 42 deletions(-)
 
-diff --git a/include/qemu/range.h b/include/qemu/range.h
-index 205e1da76d..8e05bc1d9f 100644
---- a/include/qemu/range.h
-+++ b/include/qemu/range.h
-@@ -20,6 +20,8 @@
- #ifndef QEMU_RANGE_H
- #define QEMU_RANGE_H
- 
-+#include "qemu/bitops.h"
-+
- /*
-  * Operations on 64 bit address ranges.
-  * Notes:
-@@ -217,6 +219,15 @@ static inline int ranges_overlap(uint64_t first1, uint64_t len1,
-     return !(last2 < first1 || last1 < first2);
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index cc8e59674e..519063c8f8 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -3934,30 +3934,10 @@ static void vtd_iommu_replay(IOMMUMemoryRegion *iommu_mr, IOMMUNotifier *n)
+     return;
  }
  
-+/* Get highest non-zero bit position of a range */
-+static inline int range_get_last_bit(Range *range)
-+{
-+    if (range_is_empty(range) || !range->upb) {
-+        return -1;
-+    }
-+    return find_last_bit(&range->upb, sizeof(range->upb));
+-/* Do the initialization. It will also be called when reset, so pay
+- * attention when adding new initialization stuff.
+- */
+-static void vtd_init(IntelIOMMUState *s)
++static void vtd_cap_init(IntelIOMMUState *s)
+ {
+     X86IOMMUState *x86_iommu = X86_IOMMU_DEVICE(s);
+ 
+-    memset(s->csr, 0, DMAR_REG_SIZE);
+-    memset(s->wmask, 0, DMAR_REG_SIZE);
+-    memset(s->w1cmask, 0, DMAR_REG_SIZE);
+-    memset(s->womask, 0, DMAR_REG_SIZE);
+-
+-    s->root = 0;
+-    s->root_scalable = false;
+-    s->dmar_enabled = false;
+-    s->intr_enabled = false;
+-    s->iq_head = 0;
+-    s->iq_tail = 0;
+-    s->iq = 0;
+-    s->iq_size = 0;
+-    s->qi_enabled = false;
+-    s->iq_last_desc_type = VTD_INV_DESC_NONE;
+-    s->iq_dw = false;
+-    s->next_frcd_reg = 0;
+     s->cap = VTD_CAP_FRO | VTD_CAP_NFR | VTD_CAP_ND |
+              VTD_CAP_MAMV | VTD_CAP_PSI | VTD_CAP_SLLPS |
+              VTD_CAP_MGAW(s->aw_bits);
+@@ -3974,27 +3954,6 @@ static void vtd_init(IntelIOMMUState *s)
+     }
+     s->ecap = VTD_ECAP_QI | VTD_ECAP_IRO;
+ 
+-    /*
+-     * Rsvd field masks for spte
+-     */
+-    vtd_spte_rsvd[0] = ~0ULL;
+-    vtd_spte_rsvd[1] = VTD_SPTE_PAGE_L1_RSVD_MASK(s->aw_bits,
+-                                                  x86_iommu->dt_supported);
+-    vtd_spte_rsvd[2] = VTD_SPTE_PAGE_L2_RSVD_MASK(s->aw_bits);
+-    vtd_spte_rsvd[3] = VTD_SPTE_PAGE_L3_RSVD_MASK(s->aw_bits);
+-    vtd_spte_rsvd[4] = VTD_SPTE_PAGE_L4_RSVD_MASK(s->aw_bits);
+-
+-    vtd_spte_rsvd_large[2] = VTD_SPTE_LPAGE_L2_RSVD_MASK(s->aw_bits,
+-                                                         x86_iommu->dt_supported);
+-    vtd_spte_rsvd_large[3] = VTD_SPTE_LPAGE_L3_RSVD_MASK(s->aw_bits,
+-                                                         x86_iommu->dt_supported);
+-
+-    if (s->scalable_mode || s->snoop_control) {
+-        vtd_spte_rsvd[1] &= ~VTD_SPTE_SNP;
+-        vtd_spte_rsvd_large[2] &= ~VTD_SPTE_SNP;
+-        vtd_spte_rsvd_large[3] &= ~VTD_SPTE_SNP;
+-    }
+-
+     if (x86_iommu_ir_supported(x86_iommu)) {
+         s->ecap |= VTD_ECAP_IR | VTD_ECAP_MHMV;
+         if (s->intr_eim == ON_OFF_AUTO_ON) {
+@@ -4027,6 +3986,56 @@ static void vtd_init(IntelIOMMUState *s)
+     if (s->pasid) {
+         s->ecap |= VTD_ECAP_PASID;
+     }
 +}
 +
- /*
-  * Return -1 if @a < @b, 1 @a > @b, and 0 if they touch or overlap.
-  * Both @a and @b must not be empty.
++/*
++ * Do the initialization. It will also be called when reset, so pay
++ * attention when adding new initialization stuff.
++ */
++static void vtd_init(IntelIOMMUState *s)
++{
++    X86IOMMUState *x86_iommu = X86_IOMMU_DEVICE(s);
++
++    memset(s->csr, 0, DMAR_REG_SIZE);
++    memset(s->wmask, 0, DMAR_REG_SIZE);
++    memset(s->w1cmask, 0, DMAR_REG_SIZE);
++    memset(s->womask, 0, DMAR_REG_SIZE);
++
++    s->root = 0;
++    s->root_scalable = false;
++    s->dmar_enabled = false;
++    s->intr_enabled = false;
++    s->iq_head = 0;
++    s->iq_tail = 0;
++    s->iq = 0;
++    s->iq_size = 0;
++    s->qi_enabled = false;
++    s->iq_last_desc_type = VTD_INV_DESC_NONE;
++    s->iq_dw = false;
++    s->next_frcd_reg = 0;
++
++    vtd_cap_init(s);
++
++    /*
++     * Rsvd field masks for spte
++     */
++    vtd_spte_rsvd[0] = ~0ULL;
++    vtd_spte_rsvd[1] = VTD_SPTE_PAGE_L1_RSVD_MASK(s->aw_bits,
++                                                  x86_iommu->dt_supported);
++    vtd_spte_rsvd[2] = VTD_SPTE_PAGE_L2_RSVD_MASK(s->aw_bits);
++    vtd_spte_rsvd[3] = VTD_SPTE_PAGE_L3_RSVD_MASK(s->aw_bits);
++    vtd_spte_rsvd[4] = VTD_SPTE_PAGE_L4_RSVD_MASK(s->aw_bits);
++
++    vtd_spte_rsvd_large[2] = VTD_SPTE_LPAGE_L2_RSVD_MASK(s->aw_bits,
++                                                    x86_iommu->dt_supported);
++    vtd_spte_rsvd_large[3] = VTD_SPTE_LPAGE_L3_RSVD_MASK(s->aw_bits,
++                                                    x86_iommu->dt_supported);
++
++    if (s->scalable_mode || s->snoop_control) {
++        vtd_spte_rsvd[1] &= ~VTD_SPTE_SNP;
++        vtd_spte_rsvd_large[2] &= ~VTD_SPTE_SNP;
++        vtd_spte_rsvd_large[3] &= ~VTD_SPTE_SNP;
++    }
+ 
+     vtd_reset_caches(s);
+ 
 -- 
 2.34.1
 
