@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DAEDC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 00:50:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27AA1C10F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Apr 2024 00:52:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1FDH-0002wq-F7; Sun, 28 Apr 2024 20:49:47 -0400
+	id 1s1FFZ-0003is-DC; Sun, 28 Apr 2024 20:52:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s1FDG-0002wg-Ef
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 20:49:46 -0400
+ id 1s1FFV-0003hb-S0
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 20:52:05 -0400
 Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s1FDE-0004Bz-V8
- for qemu-devel@nongnu.org; Sun, 28 Apr 2024 20:49:46 -0400
+ id 1s1FFU-0004de-8F
+ for qemu-devel@nongnu.org; Sun, 28 Apr 2024 20:52:05 -0400
 Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-6f043f9e6d7so4061447b3a.3
- for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 17:49:44 -0700 (PDT)
+ d2e1a72fcca58-6ee13f19e7eso3686440b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 28 Apr 2024 17:52:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714351783; x=1714956583; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714351923; x=1714956723; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=+cw7+EJodaKdIYcI1VI/QahJY4ZvCbrrwkB03h30AkA=;
- b=C+2xnTXNlNJmMzpsOqWLi6cUHNGhLEBZk3XwqS4nzl1+sy23aygJLs0JjCmeJwxkRq
- AZ+UHl89sf8ygazJV8v9npWYtaVOWUfmVuYfssoMVk4uHjb6XaEwbhUlMXpFt0G0HL+5
- onVb4j87rEwypdMD9siBrR0tUT1BwzFiYtkDuFMMoIO9vtUfFMjEAMSmnzl+KVJvp4Ux
- X6bwgupU/V9nz8xWZN/M3iSzB67xVPNH0z21qZU7uSpv+LUqhv/uruDV5Sqm8ORhAWCw
- PhRUr3GWi08duewgIpCPnnYkezet7wJEl2rkpMJ88Ntb3dcz4NxwGgWZ/flE3fwG7ezX
- p9/Q==
+ bh=mWw95iM9QYiHeT7UsSv+3A9FVgeBiBK+1iRsGtVnHxI=;
+ b=Nam+DyzrJRFvEAzVeJuHxCrGMdL8s1VfPReLWdglAa6OiugtfRxD+fg4BvluOm3uv0
+ 21gOG7Wz+En9dNtc4iCwbUKbaIhGZIvmI8MAu5W9J5BROE9H0ncUfq99SvZCjeOXHrW8
+ zhIOiqKH5J+8pFMso0utC99VG1Y3MeFlFw5PE6UJlRAvOdRSkkz23xGsYK8lbFhTrH+p
+ Koj834a/2wjGn/BiQE49tDHDbvD/U0SF30+Rnjp/QDIfULlZUTYgnAfj9dLtQdhYxnqW
+ mxSKiugAnkD/Qt9xcweEj5DXiqEtS1cE16MAx3HhEYZI3jmMbTQ/0erf5WSuV3gdFCMt
+ vFoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714351783; x=1714956583;
+ d=1e100.net; s=20230601; t=1714351923; x=1714956723;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+cw7+EJodaKdIYcI1VI/QahJY4ZvCbrrwkB03h30AkA=;
- b=UCbof4Dbyc1ONFyJ4zD2+c1JCgn7xbL3X2WDE4qwT8QFYJ/aV2epR19N+rGrAcsswC
- zyA2kEV1IAxrt7tEoe2c6m2kGgeQWgkwQ6a5DamN2JrPoklzhObqjGeqQ+RPBrNqmrGJ
- yCKEYIGvKeo+kz0TJpxMJDhr9JtCd/M7VGtiCGKuCAirTYznzWhLC0xrwdvi5VK9YYlL
- U4BzQAZo/4oJ6SaHl8hvNG+5HRCYXC1KI7uZS3HcsieKQ0OLEpAWr+5tNgSBLlYGRJea
- nh8AAkMVPqwLdUozG+s2DOfL/2KVCwyCF9qValboIMymGSl+SFT5JiXz3w1FbjVMPbYq
- vHVA==
+ bh=mWw95iM9QYiHeT7UsSv+3A9FVgeBiBK+1iRsGtVnHxI=;
+ b=jPb6DRducR+3q3OnIEWmLkj6O1+ti3Yvbqv6ysi4SUT8vMmKLy5s8hPXHpiITVhATl
+ 2XtxmdNOidzZwR+gQj5h9vKZ3KN92tDg3QQ3NU4lYLGidRYbuxTiVFfErNgy8iMI9dGf
+ H4OBG/juDBVC/kdRGo1IRcyzJW0LLfYDX9N6vC1zgR0ElKmPry0QtLVw3Cs6iJxaXJU1
+ mBsOxQR694ghffGpkO/hriqCsT2BYuXO67I2EP+6giXDF1tX3Y7UBjo+ddg8AlnAb/g0
+ iDnugu0e0VhKaaZIxMX6dwpLFFSsfRzUf1GaGG2ZDbKKWHxR/f4KdJmZfD3Ci6ko2FM6
+ L7EA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUSgzbjdMNFaWLxX+ep5f/IhZNxwipgP7OteqQMWZ5xQspjaYAovbzqnNnDXJFj1qKT87Js4Xs83Rw75uMLhfnAHpCy2eA=
-X-Gm-Message-State: AOJu0YzYzENtXYeRgheXLTiCKp1roqCrQgHEfCOW4yT7v2WL3MWH1cz2
- DMxbZsErg2lRWWvHqQ/4d0sIMZIp5YcV+QdY8xLzyg8V8/0OEVON0Dls/XEqYTs=
-X-Google-Smtp-Source: AGHT+IEKgWf3kSsvfPhx1oMx80lrftxNzvyrzMcylY/YODcKKGA2wOdQYSHwBiEWai7D5UGLu/iU8A==
-X-Received: by 2002:a05:6a00:8a81:b0:6ed:4a97:5dec with SMTP id
- id1-20020a056a008a8100b006ed4a975decmr7880570pfb.20.1714351783115; 
- Sun, 28 Apr 2024 17:49:43 -0700 (PDT)
+ AJvYcCWVagjo8K95nuSvYBcmiOQ0FsUK8qvkgxvl3dr3Q3FB2e+yclgAzrjGV4Tu6KE0T34PO7Xr8RnO9OnR6Bo/gMzd8VEBpBE=
+X-Gm-Message-State: AOJu0Yx74u35CV53jUHRkd3OZcIbQn3LYtQvJ+WuSsvtnuWBjPbWRWMZ
+ mjBJ5Co0LwbkOJ4LgTBZPj5wYGs6PKWcTVovHMseYq0IImgvKOYAgMKYtW82+UG8hTw4BmRkF9q
+ 4
+X-Google-Smtp-Source: AGHT+IHqu69PbU0CeVJ6ECpQuh3AZ0gqNHt3CRbgUdd2ubePxghWv7sazixeS0kZBsxhrd+6+tJBqA==
+X-Received: by 2002:a05:6a21:99a6:b0:1aa:5e21:17ac with SMTP id
+ ve38-20020a056a2199a600b001aa5e2117acmr11155365pzb.6.1714351923020; 
+ Sun, 28 Apr 2024 17:52:03 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- ld2-20020a056a004f8200b006eaf43bbcb5sm18156619pfb.114.2024.04.28.17.49.41
+ y20-20020a170902ed5400b001e0648dfd68sm19009393plb.296.2024.04.28.17.52.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Apr 2024 17:49:42 -0700 (PDT)
-Message-ID: <32c7d43f-0418-4353-bbfe-38b3380f8066@linaro.org>
-Date: Sun, 28 Apr 2024 17:49:40 -0700
+ Sun, 28 Apr 2024 17:52:02 -0700 (PDT)
+Message-ID: <856040df-95ff-4704-adac-f5dbe51736de@linaro.org>
+Date: Sun, 28 Apr 2024 17:52:00 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/24] exec/user: Move 'thunk.h' from 'exec/user' to 'user'
+Subject: Re: [PATCH 02/24] coverity: Update user emulation regexp
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>
 References: <20240428221450.26460-1-philmd@linaro.org>
- <20240428221450.26460-2-philmd@linaro.org>
+ <20240428221450.26460-3-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240428221450.26460-2-philmd@linaro.org>
+In-Reply-To: <20240428221450.26460-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
@@ -100,16 +101,26 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/28/24 15:14, Philippe Mathieu-Daudé wrote:
-> Keep all user emulation headers under the same user/ directory.
+> All user emulation headers are now under include/user/.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   bsd-user/qemu.h                 | 2 +-
->   include/{exec => }/user/thunk.h | 8 ++++++--
->   linux-user/user-internals.h     | 2 +-
->   linux-user/thunk.c              | 2 +-
->   4 files changed, 9 insertions(+), 5 deletions(-)
->   rename include/{exec => }/user/thunk.h (97%)
+>   scripts/coverity-scan/COMPONENTS.md | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/scripts/coverity-scan/COMPONENTS.md b/scripts/coverity-scan/COMPONENTS.md
+> index 91be8d1c36..1537e49cd5 100644
+> --- a/scripts/coverity-scan/COMPONENTS.md
+> +++ b/scripts/coverity-scan/COMPONENTS.md
+> @@ -121,7 +121,7 @@ usb
+>     ~ (/qemu)?(/hw/usb/.*|/include/hw/usb/.*)
+>   
+>   user
+> -  ~ (/qemu)?(/linux-user/.*|/bsd-user/.*|/user-exec\.c|/thunk\.c|/include/exec/user/.*)
+> +  ~ (/qemu)?(/linux-user/.*|/bsd-user/.*|/user-exec\.c|/thunk\.c|/include/user/.*)
+>   
+>   util
+>     ~ (/qemu)?(/util/.*|/include/qemu/.*)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
