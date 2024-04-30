@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E9E5C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 08:58:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E310C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 08:58:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1jIV-0003VK-QH; Tue, 30 Apr 2024 04:57:11 -0400
+	id 1s1jIV-0003V8-MG; Tue, 30 Apr 2024 04:57:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1s1jIS-0003S2-K7
+ id 1s1jIS-0003S3-K8
  for qemu-devel@nongnu.org; Tue, 30 Apr 2024 04:57:08 -0400
 Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1s1jIN-0000wX-1J
+ id 1s1jIN-0000wt-Hy
  for qemu-devel@nongnu.org; Tue, 30 Apr 2024 04:57:08 -0400
 Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:2a2a:0:640:d546:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 3443260D43;
- Tue, 30 Apr 2024 11:57:01 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 1FFB4608DF;
+ Tue, 30 Apr 2024 11:57:02 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:8829::1:3c])
  by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id muME9V11IOs0-HgIYQIOv; Tue, 30 Apr 2024 11:57:00 +0300
+ ESMTPSA id muME9V11IOs0-G5JClCnL; Tue, 30 Apr 2024 11:57:01 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1714467420;
- bh=eF5pqu4NbY0kHC0LeCZzbmITys8AuXp9CImw7ZvBvYw=;
+ s=default; t=1714467421;
+ bh=hPl5qi27J+/Tg/0IfFFrYhoTft2ShBb4TNFFRz0LIM4=;
  h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=OZxeXe22wfTvUF2ABg/BUQb4D3+I1g06zRe2b9iVxCSw5HUrtLarkDdmJ75UCpwZg
- h218FIQhRvqzec/APgbLYHgdcFsuTW42vpA65gfenRbotle4jDacQDaFaQtAXbkjyX
- W0rJ7txiw7yvQ+Z8KthfBf7mGtKnJk1TatBhenJE=
+ b=wfcHTtt60x/XsOJaMUW7haMIF0/7vS5J9XmlSHILYhoEpp7dSkKZPyRRxHyNTafaD
+ 5FidVnwy69oKvxJhVz7PdN5cNiFCHo9O77094xETkry7Vfez+BcKVcV21maCIeGr5z
+ DWj17IcaR2WrR305iewyg6EOPcFfiQe2tyV1ZWKk=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -44,10 +44,10 @@ To: peterx@redhat.com,
 	farosas@suse.de
 Cc: eblake@redhat.com, armbru@redhat.com, pbonzini@redhat.com,
  qemu-devel@nongnu.org, vsementsov@yandex-team.ru, yc-core@yandex-team.ru
-Subject: [PATCH v6 4/5] migration: process_incoming_migration_co(): rework
- error reporting
-Date: Tue, 30 Apr 2024 11:56:45 +0300
-Message-Id: <20240430085646.2359711-5-vsementsov@yandex-team.ru>
+Subject: [PATCH v6 5/5] qapi: introduce exit-on-error parameter for
+ migrate-incoming
+Date: Tue, 30 Apr 2024 11:56:46 +0300
+Message-Id: <20240430085646.2359711-6-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240430085646.2359711-1-vsementsov@yandex-team.ru>
 References: <20240430085646.2359711-1-vsementsov@yandex-team.ru>
@@ -76,75 +76,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Unify error reporting in the function. This simplifies the following
-commit, which will not-exit-on-error behavior variant to the function.
+Now we do set MIGRATION_FAILED state, but don't give a chance to
+orchestrator to query migration state and get the error.
+
+Let's provide a possibility for QMP-based orchestrators to get an error
+like with outgoing migration.
+
+For hmp_migrate_incoming(), let's enable the new behavior: HMP is not
+and ABI, it's mostly intended to use by developer and it makes sense
+not to stop the process.
+
+For x-exit-preconfig, let's keep the old behavior:
+ - it's called from init(), so here we want to keep current behavior by
+   default
+ - it does exit on error by itself as well
+So, if we want to change the behavior of x-exit-preconfig, it should be
+another patch.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Acked-by: Markus Armbruster <armbru@redhat.com>
 ---
- migration/migration.c | 23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ migration/migration-hmp-cmds.c |  2 +-
+ migration/migration.c          | 33 +++++++++++++++++++++++++++------
+ migration/migration.h          |  3 +++
+ qapi/migration.json            |  7 ++++++-
+ system/vl.c                    |  3 ++-
+ 5 files changed, 39 insertions(+), 9 deletions(-)
 
+diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+index 7e96ae6ffd..23181bbee1 100644
+--- a/migration/migration-hmp-cmds.c
++++ b/migration/migration-hmp-cmds.c
+@@ -466,7 +466,7 @@ void hmp_migrate_incoming(Monitor *mon, const QDict *qdict)
+     }
+     QAPI_LIST_PREPEND(caps, g_steal_pointer(&channel));
+ 
+-    qmp_migrate_incoming(NULL, true, caps, &err);
++    qmp_migrate_incoming(NULL, true, caps, true, false, &err);
+     qapi_free_MigrationChannelList(caps);
+ 
+ end:
 diff --git a/migration/migration.c b/migration/migration.c
-index b307a4bc59..a9599838e6 100644
+index a9599838e6..289afa8d85 100644
 --- a/migration/migration.c
 +++ b/migration/migration.c
-@@ -735,14 +735,16 @@ static void process_incoming_migration_bh(void *opaque)
- static void coroutine_fn
- process_incoming_migration_co(void *opaque)
- {
-+    MigrationState *s = migrate_get_current();
-     MigrationIncomingState *mis = migration_incoming_get_current();
-     PostcopyState ps;
-     int ret;
-+    Error *local_err = NULL;
+@@ -72,6 +72,8 @@
+ #define NOTIFIER_ELEM_INIT(array, elem)    \
+     [elem] = NOTIFIER_WITH_RETURN_LIST_INITIALIZER((array)[elem])
  
-     assert(mis->from_src_file);
- 
-     if (compress_threads_load_setup(mis->from_src_file)) {
--        error_report("Failed to setup decompress threads");
-+        error_setg(&local_err, "Failed to setup decompress threads");
-         goto fail;
-     }
- 
-@@ -779,19 +781,12 @@ process_incoming_migration_co(void *opaque)
-     }
- 
-     if (ret < 0) {
--        MigrationState *s = migrate_get_current();
--
--        if (migrate_has_error(s)) {
--            WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
--                error_report_err(s->error);
--                s->error = NULL;
--            }
--        }
--        error_report("load of migration failed: %s", strerror(-ret));
-+        error_setg(&local_err, "load of migration failed: %s", strerror(-ret));
-         goto fail;
-     }
- 
-     if (colo_incoming_co() < 0) {
-+        error_setg(&local_err, "colo incoming failed");
-         goto fail;
-     }
- 
-@@ -800,8 +795,16 @@ process_incoming_migration_co(void *opaque)
- fail:
-     migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
-                       MIGRATION_STATUS_FAILED);
-+    migrate_set_error(s, local_err);
-+    error_free(local_err);
++#define INMIGRATE_DEFAULT_EXIT_ON_ERROR true
 +
+ static NotifierWithReturnList migration_state_notifiers[] = {
+     NOTIFIER_ELEM_INIT(migration_state_notifiers, MIG_MODE_NORMAL),
+     NOTIFIER_ELEM_INIT(migration_state_notifiers, MIG_MODE_CPR_REBOOT),
+@@ -234,6 +236,8 @@ void migration_object_init(void)
+     qemu_cond_init(&current_incoming->page_request_cond);
+     current_incoming->page_requested = g_tree_new(page_request_addr_cmp);
+ 
++    current_incoming->exit_on_error = INMIGRATE_DEFAULT_EXIT_ON_ERROR;
++
+     migration_object_check(current_migration, &error_fatal);
+ 
+     blk_mig_init();
+@@ -800,12 +804,14 @@ fail:
+ 
      migration_incoming_state_destroy();
  
-+    WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
-+        error_report_err(s->error);
-+        s->error = NULL;
+-    WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
+-        error_report_err(s->error);
+-        s->error = NULL;
+-    }
++    if (mis->exit_on_error) {
++        WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
++            error_report_err(s->error);
++            s->error = NULL;
++        }
+ 
+-    exit(EXIT_FAILURE);
++        exit(EXIT_FAILURE);
 +    }
-+
-     exit(EXIT_FAILURE);
  }
  
+ /**
+@@ -1314,6 +1320,15 @@ static void fill_destination_migration_info(MigrationInfo *info)
+         break;
+     }
+     info->status = mis->state;
++
++    if (!info->error_desc) {
++        MigrationState *s = migrate_get_current();
++        QEMU_LOCK_GUARD(&s->error_mutex);
++
++        if (s->error) {
++            info->error_desc = g_strdup(error_get_pretty(s->error));
++        }
++    }
+ }
+ 
+ MigrationInfo *qmp_query_migrate(Error **errp)
+@@ -1797,10 +1812,13 @@ void migrate_del_blocker(Error **reasonp)
+ }
+ 
+ void qmp_migrate_incoming(const char *uri, bool has_channels,
+-                          MigrationChannelList *channels, Error **errp)
++                          MigrationChannelList *channels,
++                          bool has_exit_on_error, bool exit_on_error,
++                          Error **errp)
+ {
+     Error *local_err = NULL;
+     static bool once = true;
++    MigrationIncomingState *mis = migration_incoming_get_current();
+ 
+     if (!once) {
+         error_setg(errp, "The incoming migration has already been started");
+@@ -1815,6 +1833,9 @@ void qmp_migrate_incoming(const char *uri, bool has_channels,
+         return;
+     }
+ 
++    mis->exit_on_error =
++        has_exit_on_error ? exit_on_error : INMIGRATE_DEFAULT_EXIT_ON_ERROR;
++
+     qemu_start_incoming_migration(uri, has_channels, channels, &local_err);
+ 
+     if (local_err) {
+diff --git a/migration/migration.h b/migration/migration.h
+index 8045e39c26..95995a818e 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -227,6 +227,9 @@ struct MigrationIncomingState {
+      * is needed as this field is updated serially.
+      */
+     unsigned int switchover_ack_pending_num;
++
++    /* Do exit on incoming migration failure */
++    bool exit_on_error;
+ };
+ 
+ MigrationIncomingState *migration_incoming_get_current(void);
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 8c65b90328..9feed413b5 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -1837,6 +1837,10 @@
+ # @channels: list of migration stream channels with each stream in the
+ #     list connected to a destination interface endpoint.
+ #
++# @exit-on-error: Exit on incoming migration failure.  Default true.
++#     When set to false, the failure triggers a MIGRATION event, and
++#     error details could be retrieved with query-migrate.  (since 9.1)
++#
+ # Since: 2.3
+ #
+ # Notes:
+@@ -1889,7 +1893,8 @@
+ ##
+ { 'command': 'migrate-incoming',
+              'data': {'*uri': 'str',
+-                      '*channels': [ 'MigrationChannel' ] } }
++                      '*channels': [ 'MigrationChannel' ],
++                      '*exit-on-error': 'bool' } }
+ 
+ ##
+ # @xen-save-devices-state:
+diff --git a/system/vl.c b/system/vl.c
+index 7756eac81e..79cd498395 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -2723,7 +2723,8 @@ void qmp_x_exit_preconfig(Error **errp)
+     if (incoming) {
+         Error *local_err = NULL;
+         if (strcmp(incoming, "defer") != 0) {
+-            qmp_migrate_incoming(incoming, false, NULL, &local_err);
++            qmp_migrate_incoming(incoming, false, NULL, true, true,
++                                 &local_err);
+             if (local_err) {
+                 error_reportf_err(local_err, "-incoming %s: ", incoming);
+                 exit(1);
 -- 
 2.34.1
 
