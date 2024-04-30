@@ -4,82 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B20A2C10F16
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 09:17:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97D93C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 09:23:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1jc0-0005a4-MO; Tue, 30 Apr 2024 05:17:20 -0400
+	id 1s1jhl-0000Du-P0; Tue, 30 Apr 2024 05:23:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1jby-0005Ve-52
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 05:17:18 -0400
-Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1jbr-0000pa-Vt
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 05:17:17 -0400
-Received: by mail-lj1-x230.google.com with SMTP id
- 38308e7fff4ca-2db13ca0363so86862091fa.3
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 02:17:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714468630; x=1715073430; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=gT/tN3TNpN+IUJNtcw//AG97VoYm7us8ctnkUy88qSo=;
- b=shT3AgmjBldslrLx/3gRkaJ4ei0l0IfrmeAXTGUAI0swP0ewk3QXHNhaKI+ZUcd15S
- 9/fLOcFiBhJlC3xjTzj64toUGjxYiUgSsaHQxreQZbZJPuucgvz+mZEXLcAFKlowjc1Y
- h7YC+a7cjL4iMV4c9hfmSgYZjovCSjaZJrZjfge8EFQgbf/K2vpcDd/AIu5+0V4ypoEH
- hQl+qOB6WpHCWaBHAMG7uNw1eLO/uoYr1saMLhWotwr4ZPg+Jik2PM+gMkqawNF3MJlT
- 4mwT5lUoCbZayeZVGOXOvYQZYTegCpl/CsUww5acjGi6ROivmAUhD+NJ900ade1h5Bhj
- 5WTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714468630; x=1715073430;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gT/tN3TNpN+IUJNtcw//AG97VoYm7us8ctnkUy88qSo=;
- b=PGpJ6G0v1IRr6rq4pPuN4FYqVW6AsfWWhFkqDX+Me0fnF/6fn3WQC/ZQyvwzwFPFwy
- WH8tiLkcW2WVP2X7norcCef6qruJYuIL1+x5zGmvdwozPxSUUBDrSha3MzAEAIsi4iDO
- lg5RDUc6Qjh+E2sR2krs2SB7vQ4N43wBJ0RtOwLNwBPOVr8Dp1up9DaVk7WGq9VZ/0Ti
- SbaPFyYRr+OoRkgEFVcEu/M/tbVAKnbFbJNNIm0omrSRpn/dpB+pTRd4HOLLl/qw9uhT
- ftGSqHflrwx+yGqImAiK98Saw+F9nKKN8+9nRXHW/WNuTLVB0SmMANFflMZZThEJgoBg
- dpUg==
-X-Gm-Message-State: AOJu0YwVBJekawZ9CKWYqnBxpj0IbBzX1yjRO9FMuHuvW2uHlndHUSJT
- hU7sCx/JVBVPw8ACQa20FbcJaI7eBIuvMLIW0L0c+gAVVZUokzdlRmVwSMw2jOc=
-X-Google-Smtp-Source: AGHT+IFtrJtEjywOr0Nb0MtqundD/sBgQ2NJSKic96GMYISNDIur/WHjumu+oUqH7K4kHfJYN2Lg3A==
-X-Received: by 2002:a05:651c:14c:b0:2e0:c6ec:bcca with SMTP id
- c12-20020a05651c014c00b002e0c6ecbccamr2306607ljd.48.1714468629931; 
- Tue, 30 Apr 2024 02:17:09 -0700 (PDT)
-Received: from [192.168.69.100] (mab78-h01-176-184-55-179.dsl.sta.abo.bbox.fr.
- [176.184.55.179]) by smtp.gmail.com with ESMTPSA id
- n11-20020a170906b30b00b00a5242e285aesm14728959ejz.184.2024.04.30.02.17.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Apr 2024 02:17:09 -0700 (PDT)
-Message-ID: <207d246d-28bc-4998-9177-7fbd7c1cc9df@linaro.org>
-Date: Tue, 30 Apr 2024 11:17:07 +0200
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1s1jhb-0000Cb-1a; Tue, 30 Apr 2024 05:23:08 -0400
+Received: from forwardcorp1c.mail.yandex.net ([178.154.239.200])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1s1jhX-0002xj-Fi; Tue, 30 Apr 2024 05:23:06 -0400
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:2a2a:0:640:d546:0])
+ by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id 8662E60CE1;
+ Tue, 30 Apr 2024 12:22:57 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:8829::1:3c] (unknown
+ [2a02:6b8:b081:8829::1:3c])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id uMNsTV11RiE0-2gXoAqq4; Tue, 30 Apr 2024 12:22:56 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1714468976;
+ bh=i5zhcTTOSAAWqwjXFbi76tpftIAuFTZOg2McKXy51rw=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=cWypHlDka/ESIa6/Xg6iD820u/da1wVfBTI55DySzKIEbvIe4fqewoj4kuqPp69Gc
+ o1+p9RN92itALUuYZcx4VzXqPN6P+wabNgYmpkt8zmpVBTExSwEYhzFqFMixUR7Fmt
+ RxzjZ/409omtUcIixHiVBpd3biM14JiMyQ7fOxT8=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <b7e0fd5d-4543-4b71-902e-aaae428430d1@yandex-team.ru>
+Date: Tue, 30 Apr 2024 12:22:56 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] iotests/pylintrc: allow up to 10 similar lines
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
- jsnow@redhat.com, f.ebner@proxmox.com
-References: <20240430091329.2365053-1-vsementsov@yandex-team.ru>
+Subject: Re: [PULL 6/6] iotests: add backup-discard-source
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
+ Hanna Reitz <hreitz@redhat.com>, John Snow <jsnow@redhat.com>
+References: <20240429115157.2260885-1-vsementsov@yandex-team.ru>
+ <20240429115157.2260885-7-vsementsov@yandex-team.ru>
+ <11fd6cbf-cd8b-4469-aefa-2bfddf5a3ca9@linaro.org>
+ <4c7cb398-7fb8-4c78-a9e2-aae46920a8b1@yandex-team.ru>
+ <ZjC2RvxoyYc0KW0p@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240430091329.2365053-1-vsementsov@yandex-team.ru>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <ZjC2RvxoyYc0KW0p@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::230;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x230.google.com
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,38 +80,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/4/24 11:13, Vladimir Sementsov-Ogievskiy wrote:
-> We want to have similar QMP objects in different tests. Reworking these
-> objects to make common parts by calling some helper functions doesn't
-> seem good. It's a lot more comfortable to see the whole QAPI request in
-> one place.
+On 30.04.24 12:13, Kevin Wolf wrote:
+> Am 29.04.2024 um 20:39 hat Vladimir Sementsov-Ogievskiy geschrieben:
+>> [Add John]
+>>
+>> On 29.04.24 17:18, Richard Henderson wrote:
+>>> On 4/29/24 04:51, Vladimir Sementsov-Ogievskiy wrote:
+>>>> Add test for a new backup option: discard-source.
+>>>>
+>>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>>>> Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
+>>>> Tested-by: Fiona Ebner <f.ebner@proxmox.com>
+>>>> Message-Id: <20240313152822.626493-6-vsementsov@yandex-team.ru>
+>>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>>>> ---
+>>>>    .../qemu-iotests/tests/backup-discard-source  | 152 ++++++++++++++++++
+>>>>    .../tests/backup-discard-source.out           |   5 +
+>>>>    2 files changed, 157 insertions(+)
+>>>>    create mode 100755 tests/qemu-iotests/tests/backup-discard-source
+>>>>    create mode 100644 tests/qemu-iotests/tests/backup-discard-source.out
+>>>
+>>> This fails check-python-minreqs
+>>>
+>>>     https://gitlab.com/qemu-project/qemu/-/jobs/6739551782
+>>>
+>>> It appears to be a pylint issue.
+>>>
+>>>
+>>
+>> tests/export-incoming-iothread:1:0: R0801: Similar lines in 2 files
+>> ==tests.backup-discard-source:[52:61]
+>> ==tests.copy-before-write:[54:63]
+>>              'file': {
+>>                  'driver': iotests.imgfmt,
+>>                  'file': {
+>>                      'driver': 'file',
+>>                      'filename': source_img,
+>>                  }
+>>              },
+>>              'target': {
+>>                  'driver': iotests.imgfmt, (duplicate-code)
+>>
+>>
+>>
+>> Hmm. I don't think, that something should be changed in code.
+>> splitting out part of this json object to a function? That's a test
+>> for QMP command, and it's good that we see the command as is in one
+>> place. I can swap some lines or rename variables to hack the linter,
+>> but I'd prefer not doing so:)
+>>
+>>
+>> For me that looks like a false-positive: yes it's a duplication, but
+>> it should better be duplication, than complicating raw json objects by
+>> reusing common parts.
+>>
+>>
+>> What to do? As described in 22305c2a081b8b6 "python: Reduce strictness
+>> of pylint's duplicate-code check", this check could be either be
+>> disabled completely, or we can increase min-similarity-lines config
+>> value.
+>>
+>> I'd just disable it completely. Any thoughts?
 > 
-> So, let's increase the limit, to unblock further commit
-> "iotests: add backup-discard-source"
+> I think it would make sense to treat tests differently from real
+> production code. In tests/, some duplication is bound to happen and
+> trying to unify things across test cases (which would mean moving to
+> iotests.py) often doesn't make sense. On the other hand, in python/ we
+> would probably want to unify duplicated code.
 > 
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
-> 
-> Hi all! That's a patch to unblock my PR
-> "[PULL 0/6] Block jobs patches for 2024-04-29"
->    <20240429115157.2260885-1-vsementsov@yandex-team.ru>
->    https://patchew.org/QEMU/20240429115157.2260885-1-vsementsov@yandex-team.ru/
-> 
-> 
->   tests/qemu-iotests/pylintrc | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/tests/qemu-iotests/pylintrc b/tests/qemu-iotests/pylintrc
-> index de2e0c2781..05b75ee59b 100644
-> --- a/tests/qemu-iotests/pylintrc
-> +++ b/tests/qemu-iotests/pylintrc
-> @@ -55,4 +55,4 @@ max-line-length=79
->   
->   [SIMILARITIES]
->   
-> -min-similarity-lines=6
-> +min-similarity-lines=10
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Agree. Happily, it turns out that tests already have separate tests/qemu-iotests/pylintrc file, so that's not a problem. Still I decided to anot disable the check completely, but just bump the limit, see "[PATCH] iotests/pylintrc: allow up to 10 similar lines"
+
+-- 
+Best regards,
+Vladimir
 
 
