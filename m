@@ -4,46 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79FC1C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 12:30:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA086C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 12:30:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1mcw-0001ch-Bo; Tue, 30 Apr 2024 08:30:30 -0400
+	id 1s1mbE-0006G0-36; Tue, 30 Apr 2024 08:28:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1s1mct-0001Kc-Dr
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 08:30:27 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1s1mcq-0001vP-6j
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 08:30:27 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 5D851480F2;
- Tue, 30 Apr 2024 14:30:21 +0200 (CEST)
-Message-ID: <b3215169-005d-4766-ad19-3b649ff0e4c9@proxmox.com>
-Date: Tue, 30 Apr 2024 14:30:19 +0200
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1mbC-0006FW-G2
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 08:28:42 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1mbA-0001mI-Oa
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 08:28:42 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-56e1bbdb362so6035640a12.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 05:28:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714480119; x=1715084919; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9yEYkKsw4zhtRR56kF5ijigZ4qIRFvAlOOJdkN8sEkM=;
+ b=FDsdpwYuc1ksLXcUu5WAgZxg8FYVYXgioenZoKRWSWvm+BXIdYUiUaxs1oIBFI6h3r
+ j6Xjzmn9z/nv5pn9m+p+IyhH8fjPSw8bEG1MtRfZQ7rIo1z40eWOQBrrojmeaUqkD3Wm
+ bKdHw/K+wGqfbtAxBNKgndYhfit8fHqWZSED7tNQ5SbwbJ856Os57BRySmD6jgrEUtOL
+ W4YkqZFz3pERrbJzl+yVcGqwIZ1mSJ+XCFZmMQlQHEEw7JQNaQqBVhDAx+s4dogpAn5a
+ i0YgYVs+8T8UXZ1gT86Uf3CUxel2QE//vmUZfCJIcqLpp3LyEvVhwydPoS9NLsfnJABk
+ miXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714480119; x=1715084919;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9yEYkKsw4zhtRR56kF5ijigZ4qIRFvAlOOJdkN8sEkM=;
+ b=s8Szr1TFtQa49eQNyBzSqlQavLKW9nmu5JYWvB8qtcy5hwWJZxT2OmNXus1IFM438x
+ MeD0+FysmGNTmWeISHE4qwysL9VuBQ8CB63xQq0dC9OxkKXLbJkqW3FHZBvek1XhWJaQ
+ Yo4tw4CqXwDVHbcCxtfYGVwTVRdDvHMcvhIvLY59QWuMm/EX0r2+1n2e6FBj5x/opD08
+ pwqZ3CLjQ9lyCzY1HyGLRPfJucdS2qCMvzw3Eo96JKb9/IIemLjnLFiDZH1PSo0hBBiq
+ 8NDVdUpG0aZMLdacsJMkapq/Gm6FboKOoc769DS+PssSK6UQFIzQDkSw0G/JtIhDxw9J
+ 0YtA==
+X-Gm-Message-State: AOJu0YyHnKEJnEwfvHtSYNENlgJkUlsIzdHun9uZZtqt3RjonIBdBk7s
+ JvyPT6PGeoyRSY3U/nOL14zwDM+xnsBRd2YjNLXHeBgFaBVOq+jmhAbp2zNLXO4AW25dfbDQh8d
+ C
+X-Google-Smtp-Source: AGHT+IHP/Rk64KVTigc6owxsEUulEALFzfOTXFddiC/CUFPFAoZPSVIjg13/p0hLUBb3qz5Sj276fg==
+X-Received: by 2002:a17:906:2318:b0:a59:2e36:16ce with SMTP id
+ l24-20020a170906231800b00a592e3616cemr1330654eja.34.1714480119016; 
+ Tue, 30 Apr 2024 05:28:39 -0700 (PDT)
+Received: from m1x-phil.lan (mab78-h01-176-184-55-179.dsl.sta.abo.bbox.fr.
+ [176.184.55.179]) by smtp.gmail.com with ESMTPSA id
+ ku2-20020a170907788200b00a58c0c48756sm5674974ejc.32.2024.04.30.05.28.37
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 30 Apr 2024 05:28:38 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 05/13] accel/tcg: Restrict cpu_loop_exit_requested() to TCG
+Date: Tue, 30 Apr 2024 14:27:59 +0200
+Message-ID: <20240430122808.72025-6-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240430122808.72025-1-philmd@linaro.org>
+References: <20240430122808.72025-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 5/5] virtio-gpu: fix scanout migration post-load
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Gerd Hoffmann <kraxel@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-References: <20240312140216.313618-1-marcandre.lureau@redhat.com>
- <20240312140216.313618-6-marcandre.lureau@redhat.com>
-Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <20240312140216.313618-6-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -60,72 +95,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 12.03.24 um 15:02 schrieb marcandre.lureau@redhat.com:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> The current post-loading code for scanout has a FIXME: it doesn't take
-> the resource region/rect into account. But there is more, when adding
-> blob migration support in commit f66767f75c9, I didn't realize that blob
-> resources could be used for scanouts. This situationn leads to a crash
-> during post-load, as they don't have an associated res->image.
-> 
-> virtio_gpu_do_set_scanout() handle all cases, but requires the
-> associated virtio_gpu_framebuffer, which is currently not saved during
-> migration.
-> 
-> Add a v2 of "virtio-gpu-one-scanout" with the framebuffer fields, so we
-> can restore blob scanouts, as well as fixing the existing FIXME.
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Reviewed-by: Sebastian Ott <sebott@redhat.com>
+Next commit will restrict IcountDecr to TCG, so the
+inlined cpu_loop_exit_requested(), which is specific
+to TCG, won't compile when TCG is disabled. Move it
+to the new "exec/cpu-loop.h" header.
 
-Hi,
-unfortunately, this broke migration from pre-9.0 to 9.0:
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240428221450.26460-12-philmd@linaro.org>
+---
+ include/exec/cpu-loop.h       | 35 +++++++++++++++++++++++++++++++++++
+ include/exec/exec-all.h       | 17 -----------------
+ accel/tcg/cpu-exec.c          |  1 +
+ target/arm/tcg/helper-a64.c   |  1 +
+ target/s390x/tcg/mem_helper.c |  1 +
+ 5 files changed, 38 insertions(+), 17 deletions(-)
+ create mode 100644 include/exec/cpu-loop.h
 
-> vmstate_load_state_field virtio-gpu:virtio-gpu
-> vmstate_load_state_field virtio-gpu-scanouts:parent_obj.enable
-> vmstate_load_state_field virtio-gpu-scanouts:parent_obj.conf.max_outputs
-> vmstate_load_state_field virtio-gpu-scanouts:parent_obj.scanout
-> vmstate_load_state_field virtio-gpu-one-scanout:resource_id
-> vmstate_load_state_field virtio-gpu-one-scanout:width
-> vmstate_load_state_field virtio-gpu-one-scanout:height
-> vmstate_load_state_field virtio-gpu-one-scanout:x
-> vmstate_load_state_field virtio-gpu-one-scanout:y
-> vmstate_load_state_field virtio-gpu-one-scanout:cursor.resource_id
-> vmstate_load_state_field virtio-gpu-one-scanout:cursor.hot_x
-> vmstate_load_state_field virtio-gpu-one-scanout:cursor.hot_y
-> vmstate_load_state_field virtio-gpu-one-scanout:cursor.pos.x
-> vmstate_load_state_field virtio-gpu-one-scanout:cursor.pos.y
-> vmstate_load_state_field virtio-gpu-one-scanout:fb.format
-> vmstate_load_state_field virtio-gpu-one-scanout:fb.bytes_pp
-> vmstate_load_state_field virtio-gpu-one-scanout:fb.width
-> vmstate_load_state_field virtio-gpu-one-scanout:fb.height
-> vmstate_load_state_field virtio-gpu-one-scanout:fb.stride
-> vmstate_load_state_field virtio-gpu-one-scanout:fb.offset
-> qemu-system-x86_64: Missing section footer for 0000:00:02.0/virtio-gpu
-> qemu-system-x86_64: Error -22 while loading VM state
-
-It wrongly tries to load the fb fields even though they should be
-guarded by version 2.
-
-Looking at it with GDB, in vmstate_load_state(), when we come to
-field->name == parent_obj.scanout, the
-
->                 } else if (field->flags & VMS_STRUCT) {
->                     ret = vmstate_load_state(f, field->vmsd, curr_elem,
->                                              field->vmsd->version_id);
-
-branch will be taken and suddenly we'll have a call to
-vmstate_load_state() for vmsd==vmstate_virtio_gpu_scanout with
-version_id==2 rather than version_id==1, because that is
-field->vmsd->version_id (i.e. the .version_id in VMStateDescription
-vmstate_virtio_gpu_scanout).
-
-Would it have been necessary to version the VMStateDescription
-vmstate_virtio_gpu_scanouts too using VMS_VSTRUCT (or am I
-misinterpreting the use case for that)?
-
-Best Regards,
-Fiona
+diff --git a/include/exec/cpu-loop.h b/include/exec/cpu-loop.h
+new file mode 100644
+index 0000000000..36ce4064fd
+--- /dev/null
++++ b/include/exec/cpu-loop.h
+@@ -0,0 +1,35 @@
++/*
++ *  Translation CPU loop (target agnostic)
++ *
++ *  Copyright (c) 2003 Fabrice Bellard
++ *
++ * SPDX-License-Identifier: LGPL-2.1-or-later
++ */
++#ifndef TRANSLATION_CPU_LOOP_H
++#define TRANSLATION_CPU_LOOP_H
++
++#ifndef CONFIG_TCG
++#error Can only include this header with TCG
++#endif
++
++#include "qemu/atomic.h"
++#include "hw/core/cpu.h"
++
++/**
++ * cpu_loop_exit_requested:
++ * @cpu: The CPU state to be tested
++ *
++ * Indicate if somebody asked for a return of the CPU to the main loop
++ * (e.g., via cpu_exit() or cpu_interrupt()).
++ *
++ * This is helpful for architectures that support interruptible
++ * instructions. After writing back all state to registers/memory, this
++ * call can be used to check if it makes sense to return to the main loop
++ * or to continue executing the interruptible instruction.
++ */
++static inline bool cpu_loop_exit_requested(CPUState *cpu)
++{
++    return (int32_t)qatomic_read(&cpu->neg.icount_decr.u32) < 0;
++}
++
++#endif
+diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+index 2cd7b8f61b..544e35dd24 100644
+--- a/include/exec/exec-all.h
++++ b/include/exec/exec-all.h
+@@ -29,23 +29,6 @@
+ #include "exec/translation-block.h"
+ #include "qemu/clang-tsa.h"
+ 
+-/**
+- * cpu_loop_exit_requested:
+- * @cpu: The CPU state to be tested
+- *
+- * Indicate if somebody asked for a return of the CPU to the main loop
+- * (e.g., via cpu_exit() or cpu_interrupt()).
+- *
+- * This is helpful for architectures that support interruptible
+- * instructions. After writing back all state to registers/memory, this
+- * call can be used to check if it makes sense to return to the main loop
+- * or to continue executing the interruptible instruction.
+- */
+-static inline bool cpu_loop_exit_requested(CPUState *cpu)
+-{
+-    return (int32_t)qatomic_read(&cpu->neg.icount_decr.u32) < 0;
+-}
+-
+ #if !defined(CONFIG_USER_ONLY) && defined(CONFIG_TCG)
+ /* cputlb.c */
+ /**
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 9af66bc191..eedba056ba 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -32,6 +32,7 @@
+ #include "qemu/main-loop.h"
+ #include "sysemu/cpus.h"
+ #include "exec/cpu-all.h"
++#include "exec/cpu-loop.h"
+ #include "sysemu/cpu-timers.h"
+ #include "exec/replay-core.h"
+ #include "sysemu/tcg.h"
+diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
+index 0ea8668ab4..b294f6bfd0 100644
+--- a/target/arm/tcg/helper-a64.c
++++ b/target/arm/tcg/helper-a64.c
+@@ -29,6 +29,7 @@
+ #include "internals.h"
+ #include "qemu/crc32c.h"
+ #include "exec/exec-all.h"
++#include "exec/cpu-loop.h"
+ #include "exec/cpu_ldst.h"
+ #include "qemu/int128.h"
+ #include "qemu/atomic128.h"
+diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
+index 6a308c5553..8435825fa5 100644
+--- a/target/s390x/tcg/mem_helper.c
++++ b/target/s390x/tcg/mem_helper.c
+@@ -26,6 +26,7 @@
+ #include "exec/helper-proto.h"
+ #include "exec/exec-all.h"
+ #include "exec/page-protection.h"
++#include "exec/cpu-loop.h"
+ #include "exec/cpu_ldst.h"
+ #include "hw/core/tcg-cpu-ops.h"
+ #include "qemu/int128.h"
+-- 
+2.41.0
 
 
