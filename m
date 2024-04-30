@@ -4,60 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8D08C10F16
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 11:30:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34431C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 11:55:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1lfl-0004QP-PN; Tue, 30 Apr 2024 07:29:22 -0400
+	id 1s1m4T-0002lM-F8; Tue, 30 Apr 2024 07:54:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gregkh@linuxfoundation.org>)
- id 1s1lfZ-0004Pf-3u
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 07:29:10 -0400
-Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gregkh@linuxfoundation.org>)
- id 1s1lfM-0007ev-SH
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 07:29:08 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 1BE00CE0F7F;
- Tue, 30 Apr 2024 11:28:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C6AC2BBFC;
- Tue, 30 Apr 2024 11:28:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
- s=korg; t=1714476528;
- bh=Y6scN/f6gfKI80HAF7k6NMVT4Ov0pD6EG38opDcY3eg=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=YMp2AXho3G2MY70z85QwWyt0CaYdk2uD+089ahe57TrdW4YJ2b3gBKUKII9WGdV+D
- HB7Lp2latqnx/okeWDJEG5jYyNrUFtdt8n22V1KJfWhZoR9hEav3qAJwo+3GcfkQjM
- kZVhCiJFpebZ5CeQRVUw2MH0sSInCzc/JOeKlbNA=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, patches@lists.linux.dev,
- qemu-devel@nongnu.org, Breno Leitao <leitao@debian.org>,
- Heng Qi <hengqi@linux.alibaba.com>, Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
- "David S. Miller" <davem@davemloft.net>, Konstantin Ovsepian <ovs@ovs.to>
-Subject: [PATCH 6.1 061/110] virtio_net: Do not send RSS key if it is not
- supported
-Date: Tue, 30 Apr 2024 12:40:30 +0200
-Message-ID: <20240430103049.368332554@linuxfoundation.org>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240430103047.561802595@linuxfoundation.org>
-References: <20240430103047.561802595@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s1m4R-0002l3-Me
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 07:54:51 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s1m4P-0003nn-Tf
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 07:54:51 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-5709cb80b03so5704639a12.2
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 04:54:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714478088; x=1715082888; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=/w8ZfqcwLDuaXEK2065a8lJ15TslsQ7OuTKnRb73YNA=;
+ b=fdG1CZAzYkAwvOZUDz+lYca7fTDrrAjatsanBfzofYm2ouvS6rJ1/xdY07OHlrbISL
+ dG12jiFB5io8XIr02AYXCTUoMqVrOXIpH0axADLnv7AsuCk0dTUufdxhzl4rjBXuFiKS
+ TydbWBRScEMHvRBOAT4WfU7XPH9/DYTqJy26vFxydP0QjYs4x72diTwyS2f8ncRQyY4G
+ /AQAMvYysJdbUKv0lwxrZNtSRTSyKDyUik7MSg3ytmd++DkEeYvyUJsGUdmY8P5hujGN
+ utFoPbNnyZwFIMFutWD8cYQhngqsyEd+I9UPh/3wCqvebRGhnm2iifHGIDewTVqbtOwV
+ OvKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714478088; x=1715082888;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/w8ZfqcwLDuaXEK2065a8lJ15TslsQ7OuTKnRb73YNA=;
+ b=iUbbMoieTDi5tffGESxCBtoyoWJ8XCdX2myTBPqKaLTtBWIJsLWN/47igjDi6hCAaQ
+ 85SBSp0PLNNeQDH8DH1SfhXKRO1752kHCk6LbT1V01XvUEzsAQi3FsbkuUGwqxMumAM+
+ RJjyMHrTYlVM28tSPfSriNShftpwuZBI5V8T8SNPdWUAcg3oPOi2bTmvGLAELeCdlEnx
+ A/yDgbU9umRFLFQNXO+bs38OH3LzyHq8gvJn8HBLhhCKj0/odC2xJK1BIyiJbDRXN2fr
+ 5UWSiPdh5JdX4hTeQEfeernK+H8rcZ32BEYXCpZJGoqBBCEJQToM7ceBFvpHNquZ5wYX
+ /Bkg==
+X-Gm-Message-State: AOJu0YxR+lAhpXd/3QFZTMArGf0Y5Y0+qfsDTK8Uy0RbALEu+zWNB83X
+ QubpPyGsUkdsf4qVL38FPAP1ZQulycaAZrlkPhftC8offHnoWpQBMn44xc/x8icnCy8EcqCd5hR
+ mlLEa5f1FS0Nx/cHBFl5HbAN701sFTNStR0RWow==
+X-Google-Smtp-Source: AGHT+IELyCgUqfF8XYS5QA8tJgG1LetZJYN9YpJup//taoTT78/6RlzJCbyTVqiutyHpovf31tM1jmEuGZNtQ9Wh6s8=
+X-Received: by 2002:a50:d555:0:b0:572:a158:8a7c with SMTP id
+ f21-20020a50d555000000b00572a1588a7cmr396552edj.42.1714478087785; Tue, 30 Apr
+ 2024 04:54:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
- envelope-from=gregkh@linuxfoundation.org; helo=sin.source.kernel.org
-X-Spam_score_int: -53
-X-Spam_score: -5.4
-X-Spam_bar: -----
-X-Spam_report: (-5.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+References: <20231114020927.62315-1-j@getutm.app>
+In-Reply-To: <20231114020927.62315-1-j@getutm.app>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 30 Apr 2024 12:54:36 +0100
+Message-ID: <CAFEAcA97U9Z-NAdkJ688EmPWycZtVQR5eP11-pDBBnxyd54b_A@mail.gmail.com>
+Subject: Re: [PATCH v5 00/14] tpm: introduce TPM CRB SysBus device
+To: Joelle van Dyne <j@getutm.app>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,136 +87,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+On Tue, 14 Nov 2023 at 02:10, Joelle van Dyne <j@getutm.app> wrote:
+> The impetus for this patch set is to get TPM 2.0 working on Windows 11 ARM64.
+> Windows' tpm.sys does not seem to work on a TPM TIS device (as verified with
+> VMWare's implementation). However, the current TPM CRB device uses a fixed
+> system bus address that is reserved for RAM in ARM64 Virt machines.
+>
+> In the process of adding the TPM CRB SysBus device, we also went ahead and
+> cleaned up some of the existing TPM hardware code and fixed some bugs. We used
+> the TPM TIS devices as a template for the TPM CRB devices and refactored out
+> common code. We moved the ACPI DSDT generation to the device in order to handle
+> dynamic base address requirements as well as reduce redundent code in different
+> machine ACPI generation. We also changed the tpm_crb device to use the ISA bus
+> instead of depending on the default system bus as the device only was built for
+> the PC configuration.
+>
+> Another change is that the TPM CRB registers are now mapped in the same way that
+> the pflash ROM devices are mapped. It is a memory region whose writes are
+> trapped as MMIO accesses. This was needed because Apple Silicon does not decode
+> LDP (AARCH64 load pair of registers) caused page faults. @agraf suggested that
+> we do this to avoid having to do AARCH64 decoding in the HVF backend's fault
+> handler.
 
-------------------
+I had a conversation about this on IRC a week or so back (though I
+forget who with, sorry) that made me realise there's a problem with this
+approach, and I wanted to write that up for the mailing list.
 
-From: Breno Leitao <leitao@debian.org>
+The problem with turning this into a memory-backed device rather than
+an MMIO backed device is that it breaks KVM on Arm CPUs which don't
+have FEAT_S2FWB (i.e. anything older than Armv8.4). This is because
+without FEAT_S2FWB the guest and host will disagree about the memory
+attributes of the region:
+ * the host knows this is RAM backed and it's normal-cacheable
+   (certainly as far as the mapping that QEMU itself has)
+ * the guest thinks it's real hardware device registers and maps it
+   as Device
+The resulting mismatch in cacheability attributes can cause unexpected
+behaviour where the guest and QEMU views of the memory contents don't
+necessarily match up. (This is the same underlying issue that means
+that you can't use QEMU devices that emulate VGA framebuffers on
+AArch64 KVM without FEAT_S2FWB.)
 
-commit 059a49aa2e25c58f90b50151f109dd3c4cdb3a47 upstream.
+With FEAT_S2FWB the problem goes away because the hypervisor can
+override the guest's specified memory attributes to get rid of
+the attribute mismatch.
 
-There is a bug when setting the RSS options in virtio_net that can break
-the whole machine, getting the kernel into an infinite loop.
+So given that this would cause a regression for KVM, my preference
+is to stick with the current "the device is backed by MMIO read
+and write functions in the normal way". If a particular guest is
+trying to access it with LDP/STP that is best fixed in the guest.
 
-Running the following command in any QEMU virtual machine with virtionet
-will reproduce this problem:
+Potentially we could emulate (interpret) some subset of complex
+load/store insns in QEMU at the point where we get the "took a
+data abort but no syndrome information". This ought to be doable
+in a way that's shareable between hvf and KVM, and we can write
+a decodetree file for the insns we want to interpret. (I would
+not try to share with TCG decodetree, though the patterns can
+probably be copied across.)
 
-    # ethtool -X eth0  hfunc toeplitz
-
-This is how the problem happens:
-
-1) ethtool_set_rxfh() calls virtnet_set_rxfh()
-
-2) virtnet_set_rxfh() calls virtnet_commit_rss_command()
-
-3) virtnet_commit_rss_command() populates 4 entries for the rss
-scatter-gather
-
-4) Since the command above does not have a key, then the last
-scatter-gatter entry will be zeroed, since rss_key_size == 0.
-sg_buf_size = vi->rss_key_size;
-
-5) This buffer is passed to qemu, but qemu is not happy with a buffer
-with zero length, and do the following in virtqueue_map_desc() (QEMU
-function):
-
-  if (!sz) {
-      virtio_error(vdev, "virtio: zero sized buffers are not allowed");
-
-6) virtio_error() (also QEMU function) set the device as broken
-
-    vdev->broken = true;
-
-7) Qemu bails out, and do not repond this crazy kernel.
-
-8) The kernel is waiting for the response to come back (function
-virtnet_send_command())
-
-9) The kernel is waiting doing the following :
-
-      while (!virtqueue_get_buf(vi->cvq, &tmp) &&
-	     !virtqueue_is_broken(vi->cvq))
-	      cpu_relax();
-
-10) None of the following functions above is true, thus, the kernel
-loops here forever. Keeping in mind that virtqueue_is_broken() does
-not look at the qemu `vdev->broken`, so, it never realizes that the
-vitio is broken at QEMU side.
-
-Fix it by not sending RSS commands if the feature is not available in
-the device.
-
-Fixes: c7114b1249fa ("drivers/net/virtio_net: Added basic RSS support.")
-Cc: stable@vger.kernel.org
-Cc: qemu-devel@nongnu.org
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Heng Qi <hengqi@linux.alibaba.com>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Konstantin Ovsepian <ovs@ovs.to>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/net/virtio_net.c |   26 ++++++++++++++++++++++----
- 1 file changed, 22 insertions(+), 4 deletions(-)
-
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -2948,19 +2948,35 @@ static int virtnet_get_rxfh(struct net_d
- static int virtnet_set_rxfh(struct net_device *dev, const u32 *indir, const u8 *key, const u8 hfunc)
- {
- 	struct virtnet_info *vi = netdev_priv(dev);
-+	bool update = false;
- 	int i;
- 
- 	if (hfunc != ETH_RSS_HASH_NO_CHANGE && hfunc != ETH_RSS_HASH_TOP)
- 		return -EOPNOTSUPP;
- 
- 	if (indir) {
-+		if (!vi->has_rss)
-+			return -EOPNOTSUPP;
-+
- 		for (i = 0; i < vi->rss_indir_table_size; ++i)
- 			vi->ctrl->rss.indirection_table[i] = indir[i];
-+		update = true;
- 	}
--	if (key)
-+
-+	if (key) {
-+		/* If either _F_HASH_REPORT or _F_RSS are negotiated, the
-+		 * device provides hash calculation capabilities, that is,
-+		 * hash_key is configured.
-+		 */
-+		if (!vi->has_rss && !vi->has_rss_hash_report)
-+			return -EOPNOTSUPP;
-+
- 		memcpy(vi->ctrl->rss.key, key, vi->rss_key_size);
-+		update = true;
-+	}
- 
--	virtnet_commit_rss_command(vi);
-+	if (update)
-+		virtnet_commit_rss_command(vi);
- 
- 	return 0;
- }
-@@ -3852,13 +3868,15 @@ static int virtnet_probe(struct virtio_d
- 	if (virtio_has_feature(vdev, VIRTIO_NET_F_HASH_REPORT))
- 		vi->has_rss_hash_report = true;
- 
--	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS))
-+	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS)) {
- 		vi->has_rss = true;
- 
--	if (vi->has_rss || vi->has_rss_hash_report) {
- 		vi->rss_indir_table_size =
- 			virtio_cread16(vdev, offsetof(struct virtio_net_config,
- 				rss_max_indirection_table_length));
-+	}
-+
-+	if (vi->has_rss || vi->has_rss_hash_report) {
- 		vi->rss_key_size =
- 			virtio_cread8(vdev, offsetof(struct virtio_net_config, rss_max_key_size));
- 
-
-
+thanks
+-- PMM
 
