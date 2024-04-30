@@ -4,101 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA30AC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 12:16:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6538FC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 12:29:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1mOv-0002gD-Fg; Tue, 30 Apr 2024 08:16:01 -0400
+	id 1s1mb0-0006Dz-Am; Tue, 30 Apr 2024 08:28:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s1mOj-0002bB-Sr
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 08:15:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s1mOg-0007r4-TB
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 08:15:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714479345;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4v595rZg2XxHllqWyjNJv89TVARlrrOv96avZypDAoI=;
- b=QQZ08xG8/l77QSUJxhVETaauHpxFna2r2wX5lKSjkihcDzoKgOI3cb2tjroC12tmB7JUNE
- Pp4XX8vpRV4O82zDhyF3AZRvVcwwLM7dnAafpEj9xLtxo3+3PFHpEn/yGW8H1K4oBOME4v
- JUdKjP3dw/CIYetNPeT683bWAAfUBjA=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-635-8me35XRFO2KXWH77PAN_kA-1; Tue, 30 Apr 2024 08:15:44 -0400
-X-MC-Unique: 8me35XRFO2KXWH77PAN_kA-1
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-51d6630a5ebso2123496e87.0
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 05:15:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1maw-0006DX-VQ
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 08:28:27 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1mat-0001lX-VZ
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 08:28:25 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-57232e47a81so9169050a12.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 05:28:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714480102; x=1715084902; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EhMIv0nTX41VJaDT2tW5U63m9lk1MTRg8M20jzTt/L4=;
+ b=e4irXKU/y8vJ+jqQR4tKQdlZWKjHdnfUJ2wjGcgQaLevApi1ZFTWhun4ZwDHS0PBKZ
+ seDIB1Al2Cv67i5JKJ7u/SQghsOYxqGHbX9hce08nViy2lZtDXU9hVVfciAWT3pEr+KS
+ bLb4ikD7pxi1rPMdiE0lcL/0ruOeAtkWuZGDcWjAr/I/W/0h6yuneKUzP35ttwoOxesK
+ ph4Xn71vT/AVoK4jE0vSBR8E81LLm3gEZpSEWXHATvrpr8RTaq690NUS3jTlxmAYzTtr
+ wIv71vT+vPcNdnmuQAgdm+DKx2vs53KoslWek8VnlY2+2pjVML+xky9NJ+0TfaG5P1SN
+ VwnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714479343; x=1715084143;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4v595rZg2XxHllqWyjNJv89TVARlrrOv96avZypDAoI=;
- b=nQL7TTBTK7zsfqUSWvu9BQRGmIEuizyeBnbL8VFOGiUA/+Gd5Mj6MhQBeFmaPndjrI
- o9lwqPr/cG+MhbZmZUl40BHWqxPeIDbo4uMBckJrvY8kMy4U0JHIeRWvR1g/p6ao+rGc
- v5u3oOu2KGbQIcfrEl+IUUFtSLQ4L5lDMdmRGhU7LL41/cjNv5gcpiZ+Rl4TadGap6Y7
- t8aOZp9QAK93vzKrbPTryd4QkPO+C211oFS9fhDPxTmViCYMrFDoqUMhiVi2CmMMtaoh
- 2EV8yIkHvd1VdSm3xaSioH7vvOnVTtds5UjWd2794v3ign5et6pGniEavTUPBnXX3vy9
- 1wdQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVHh0LbZ+L+0ZIsACvHHAIwsHXy+shiqs2QysounkX68TUIirm0fJPeqbTOPt38sG55G6PGB6m84wDjHLOC8Y+5Z5B+qbY=
-X-Gm-Message-State: AOJu0Yy7yhUyUef5mTrDFXJSviTZoAlO98rn0ws09V19R0aMKQNmzhnA
- eBBLrpOzXG6gtqz9C6pLxauTBqlnmSbUJHiQSyix4Uo/SofqPHKfzIxh21X+To7BFsXmQi66AYK
- FSMPZdw0+LQy3dfwuXoQ13aFbGzomonbPGCC2VHUJwsdY7Hgmo+XG
-X-Received: by 2002:a05:6512:448:b0:519:6e94:9b4d with SMTP id
- y8-20020a056512044800b005196e949b4dmr9213475lfk.48.1714479342827; 
- Tue, 30 Apr 2024 05:15:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFhR3wPdEKNC/weyH/1Oad3jgUfDynTqQP/sAlZRsSF+8QdgnKVfRGF/U/MNBXs+FgXGTGdHQ==
-X-Received: by 2002:a05:6512:448:b0:519:6e94:9b4d with SMTP id
- y8-20020a056512044800b005196e949b4dmr9213456lfk.48.1714479342467; 
- Tue, 30 Apr 2024 05:15:42 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- c4-20020a056402100400b005720caa01easm9598710edu.69.2024.04.30.05.15.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Apr 2024 05:15:41 -0700 (PDT)
-Message-ID: <cd129c89-c21d-450b-ab5e-61745cdd165b@redhat.com>
-Date: Tue, 30 Apr 2024 14:15:40 +0200
+ d=1e100.net; s=20230601; t=1714480102; x=1715084902;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=EhMIv0nTX41VJaDT2tW5U63m9lk1MTRg8M20jzTt/L4=;
+ b=jO3YkaWgupqcrh9QTR+aSg5eo7zBN+gaj/aSeU2LOC2Pr/HJ6V551bv110npnIRP90
+ 4UMeJJj8vPHLNDqry+GSt/gsD0b93wGB2fd+OSH7FVwC8p9vvjiwQJqzc/nhNriEdJLO
+ lcK/dD7Zw8XgzaI9A0tlJhGHMwMnA5+aZMhf+OU/iU6tp638KoS+pmzeaD7sm/poo7xE
+ U7IIG2Q299w75HsSG6qF3zkpXhpg+LUS3AsIEFm8wgi/VrZ1KtY4W6SVvcVJLfiv++Vi
+ 6rlo1/wCAjmJt9lWbwOiO5jU2doZJc8Mtf7tY6FN9cQ5kIsHqo+j1AApkXra4ZclDuKR
+ GILQ==
+X-Gm-Message-State: AOJu0YzlqxbdmtJA4hTkg3uuMGbBcUk0zYyAZJPGWqSYBZRCrKQ9ntH0
+ PgNasvzOm21WPGiQEMPaXVAVAixemupGUq9ANT169UukYRYeUyE8MATBINZmCpclA3Cjlc8h3X0
+ h
+X-Google-Smtp-Source: AGHT+IGW6ChIGzYhHlljIYcQapjkWL32bq8Gw8LrxJYLaC6vJAImlRGmolk4FhfR43qwwOOXnv1PvA==
+X-Received: by 2002:a05:6402:1343:b0:572:940a:dc11 with SMTP id
+ y3-20020a056402134300b00572940adc11mr2416392edw.0.1714480102134; 
+ Tue, 30 Apr 2024 05:28:22 -0700 (PDT)
+Received: from m1x-phil.lan (mab78-h01-176-184-55-179.dsl.sta.abo.bbox.fr.
+ [176.184.55.179]) by smtp.gmail.com with ESMTPSA id
+ c8-20020a50d648000000b0057232df2e5dsm7131513edj.32.2024.04.30.05.28.21
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 30 Apr 2024 05:28:21 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 02/13] accel/tcg: Restrict cpu_plugin_mem_cbs_enabled() to
+ TCG
+Date: Tue, 30 Apr 2024 14:27:56 +0200
+Message-ID: <20240430122808.72025-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240430122808.72025-1-philmd@linaro.org>
+References: <20240430122808.72025-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 13/19] vfio: Create host IOMMU device instance
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "mst@redhat.com" <mst@redhat.com>, "peterx@redhat.com" <peterx@redhat.com>,
- "jasowang@redhat.com" <jasowang@redhat.com>, "jgg@nvidia.com"
- <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
- "Peng, Chao P" <chao.p.peng@intel.com>
-References: <20240429065046.3688701-1-zhenzhong.duan@intel.com>
- <20240429065046.3688701-14-zhenzhong.duan@intel.com>
- <0ca17106-a529-4d54-989f-9b9b47c6b8a7@redhat.com>
- <SJ0PR11MB6744AA5CBB630EB00AFCC04A921A2@SJ0PR11MB6744.namprd11.prod.outlook.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <SJ0PR11MB6744AA5CBB630EB00AFCC04A921A2@SJ0PR11MB6744.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,80 +96,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/30/24 12:16, Duan, Zhenzhong wrote:
-> 
-> 
->> -----Original Message-----
->> From: Cédric Le Goater <clg@redhat.com>
->> Subject: Re: [PATCH v3 13/19] vfio: Create host IOMMU device instance
->>
->> On 4/29/24 08:50, Zhenzhong Duan wrote:
->>> Create host IOMMU device instance in vfio_attach_device() and call
->>> .realize() to initialize it further.
->>>
->>> Suggested-by: Cédric Le Goater <clg@redhat.com>
->>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
->>> ---
->>>    include/hw/vfio/vfio-common.h |  1 +
->>>    hw/vfio/common.c              | 18 +++++++++++++++++-
->>>    2 files changed, 18 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-
->> common.h
->>> index 0943add3bc..b204b93a55 100644
->>> --- a/include/hw/vfio/vfio-common.h
->>> +++ b/include/hw/vfio/vfio-common.h
->>> @@ -126,6 +126,7 @@ typedef struct VFIODevice {
->>>        OnOffAuto pre_copy_dirty_page_tracking;
->>>        bool dirty_pages_supported;
->>>        bool dirty_tracking;
->>> +    HostIOMMUDevice *hiod;
->>>        int devid;
->>>        IOMMUFDBackend *iommufd;
->>>    } VFIODevice;
->>> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
->>> index 8f9cbdc026..0be8b70ebd 100644
->>> --- a/hw/vfio/common.c
->>> +++ b/hw/vfio/common.c
->>> @@ -1497,6 +1497,8 @@ int vfio_attach_device(char *name, VFIODevice
->> *vbasedev,
->>>    {
->>>        const VFIOIOMMUClass *ops =
->>>
->> VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_LEGACY));
->>> +    HostIOMMUDevice *hiod;
->>> +    int ret;
->>>
->>>        if (vbasedev->iommufd) {
->>>            ops =
->> VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_IOMMUF
->> D));
->>> @@ -1504,7 +1506,20 @@ int vfio_attach_device(char *name,
->> VFIODevice *vbasedev,
->>>
->>>        assert(ops);
->>>
->>> -    return ops->attach_device(name, vbasedev, as, errp);
->>> +    ret = ops->attach_device(name, vbasedev, as, errp);
->>> +    if (ret < 0) {
->>> +        return ret;
->>
->>
->> hmm, I wonder if we should change the return value of vfio_attach_device()
->> to be a bool.
-> 
-> I see, also VFIOIOMMUClass:: setup and VFIOIOMMUClass::add_window.
-> I can add cleanup patches to fix them if you have no other plan.
+So far cpu_plugin_mem_cbs_enabled() is only called from
+TCG, so reduce it to accel/tcg/.
 
-Yes please. I don't have plans for changes in that area. The only pending
-patches are from the series "[v4] migration: Improve error reporting" [*].
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <5f59c754-44e5-4743-a2dd-87ef8e13eadf@linaro.org>
+---
+ accel/tcg/internal-common.h | 17 +++++++++++++++++
+ include/hw/core/cpu.h       | 17 -----------------
+ 2 files changed, 17 insertions(+), 17 deletions(-)
 
-Thanks,
-
-C.
-
-
-[*] https://lore.kernel.org/qemu-devel/20240306133441.2351700-1-clg@redhat.com/
-
+diff --git a/accel/tcg/internal-common.h b/accel/tcg/internal-common.h
+index df317e7496..5061687900 100644
+--- a/accel/tcg/internal-common.h
++++ b/accel/tcg/internal-common.h
+@@ -24,6 +24,23 @@ static inline bool cpu_in_serial_context(CPUState *cs)
+     return !tcg_cflags_has(cs, CF_PARALLEL) || cpu_in_exclusive_context(cs);
+ }
+ 
++/**
++ * cpu_plugin_mem_cbs_enabled() - are plugin memory callbacks enabled?
++ * @cs: CPUState pointer
++ *
++ * The memory callbacks are installed if a plugin has instrumented an
++ * instruction for memory. This can be useful to know if you want to
++ * force a slow path for a series of memory accesses.
++ */
++static inline bool cpu_plugin_mem_cbs_enabled(const CPUState *cpu)
++{
++#ifdef CONFIG_PLUGIN
++    return !!cpu->plugin_mem_cbs;
++#else
++    return false;
++#endif
++}
++
+ void tcg_cpu_exit(CPUState *cpu);
+ 
+ #endif
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index beb37342e9..55555be618 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -1109,23 +1109,6 @@ void cpu_watchpoint_remove_by_ref(CPUState *cpu, CPUWatchpoint *watchpoint);
+ void cpu_watchpoint_remove_all(CPUState *cpu, int mask);
+ #endif
+ 
+-/**
+- * cpu_plugin_mem_cbs_enabled() - are plugin memory callbacks enabled?
+- * @cs: CPUState pointer
+- *
+- * The memory callbacks are installed if a plugin has instrumented an
+- * instruction for memory. This can be useful to know if you want to
+- * force a slow path for a series of memory accesses.
+- */
+-static inline bool cpu_plugin_mem_cbs_enabled(const CPUState *cpu)
+-{
+-#ifdef CONFIG_PLUGIN
+-    return !!cpu->plugin_mem_cbs;
+-#else
+-    return false;
+-#endif
+-}
+-
+ /**
+  * cpu_get_address_space:
+  * @cpu: CPU to get address space from
+-- 
+2.41.0
 
 
