@@ -4,69 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09BBAC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 19:43:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40900C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 19:43:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1tNV-00070V-K9; Tue, 30 Apr 2024 15:43:01 -0400
+	id 1s1tNV-0006zR-4K; Tue, 30 Apr 2024 15:43:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s1tNU-0006we-4L
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 15:43:00 -0400
+ id 1s1tNT-0006vw-UW
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 15:42:59 -0400
 Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s1tNS-0006jz-4k
+ id 1s1tNS-0006k4-0p
  for qemu-devel@nongnu.org; Tue, 30 Apr 2024 15:42:59 -0400
 Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-6f07de6ab93so5736445b3a.2
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 12:42:56 -0700 (PDT)
+ d2e1a72fcca58-6ee0642f718so156252b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 12:42:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714506175; x=1715110975; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=9tTrPpSr33ydLoAnD+UnU5Z4fD5tn694jmjy2cqw5Ig=;
- b=xEd5LIujyVWMyf3Pr6V/iBvi1O8f+xB7dj2u76wDVa8vdTlLj79VX68yCc/JVlrzmw
- EByLxnD5JdbHW+NQpUYYnmmZO2pc4X+WNSd3SAoD4+L1PYk7LexpM0hqrB1Z4+A+Zy2e
- NetCgLdD0aR/RdGvLVn+kK0fRobDcFekHXCJE8M7mUtBUWxa/MNfd7QKXSPzlqWLx0it
- xRcKAtr2mxUEB92zKT7hf/Bsz7eQP3XVQPv3vz/3LvLxSbyWvQU4i+I08KBvHiThoc1g
- gnJ55B+E6qRG9f+Y1D3lVHoAtRicsBB7b1T1D5lkUQWPcnPKFoyt2LMYpBwttbrI24xj
- 24tA==
+ d=linaro.org; s=google; t=1714506176; x=1715110976; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=r70v09Z1jYUdUmudZIEve8pIi40latYcxErAtIALfYA=;
+ b=jyrlgSxyJz4WA3y0n8yczB1a1uw4UoXPRQKHoOAnOf08P2rE73TqGRS+pETOAc7uDu
+ Qt/Ei9UYr1XdeA5hiVKFbslLaHG3oPk+MjwxBN9DBv9oeg6UtPGBYWGw2gcKk+dHE7Gb
+ e+YIRgJ4qNnNLHXvOx/FR1pWwlNAwYEN86Hp9XW4srF4XwUhk40S8veQL8QkDBhdo3rp
+ SaDB/YSlxVCOH24ljqKjets5R2lkD3ypzZN7jpOu683KL1eyXGbPTs8I0XeB3+P4bq4p
+ yoa1rgPPD32pkOnsofGjQrwhG0cUmc57JUeB6ghDpgXdg8ZL6jtjKPY2OlRvIO7CRYDp
+ lcvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714506175; x=1715110975;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9tTrPpSr33ydLoAnD+UnU5Z4fD5tn694jmjy2cqw5Ig=;
- b=etu/bbKvvOKJgGGW8Pbd0PmJ3Q0G6QqfwTqkuSSjK5NJup6KvSZ8LHgDcOCnues/l8
- VHsXcG5OrE+TyEQL8Du9ytVM3PkRsh0voTmgqMzUm4DbSwyp+yKncHQEK3oCkZq9ZzFI
- tWcZlVhJIzk5zOQQz7TzSD5pRRiPTYZ1aFfsBEsOyBjTF3BT6xJS7r2cKHycJ34XlDAw
- 1ucf5IxxKKY74HcPi2RseODeRgCtH5RC2VvJoVZD48mSIyQYdJTpNj0jeq/jMh6lJL+j
- gZbsS8X6yDdmdqsz7gbkgXsFCL29uuECw+1IU7tJ5l9Ac7I/qE8i6tJKFUd4Ogjo3ChU
- VusA==
-X-Gm-Message-State: AOJu0YwtphFC7N95TBj1tW6HWyFzLpDLr2x7h4/cXmyWuNxtl75ysA2R
- 4Gw2EmXFQ5BAwdXviicuTbmtD48fzz7pMUa8BqeKnUhNTCM/MwP+2rK+1k4kiMgU0YMOlXieoKG
- c
-X-Google-Smtp-Source: AGHT+IHnM3VfEQM2SC9yvUajo75WMdypny/zGchPsQrh53GCDzInm1esY6qmeDh2J3VcSq6gRT3jJQ==
-X-Received: by 2002:a05:6a00:244a:b0:6ed:1012:9565 with SMTP id
- d10-20020a056a00244a00b006ed10129565mr700803pfj.15.1714506175243; 
- Tue, 30 Apr 2024 12:42:55 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1714506176; x=1715110976;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=r70v09Z1jYUdUmudZIEve8pIi40latYcxErAtIALfYA=;
+ b=k39JDDmRGdAo5ITxMPeQOiKexHZCEIcMrcjP/g478ZE4wEJl6fb8yIEJFtLB1oyyA5
+ plYoKckonBTpPZE7fHLIow91UKPz4+rF8NU4+heemsDkIt36SBnrtDMDdAwhhculR11l
+ h1dzV7JVzdmCWYVCkXcUpX82nSqQRkKGoNkKhOLY2li/TL5ZVrPsuPw4msWfANLMAhAO
+ dUvOXM+4UlOToEvCmlj76o4/6HLQklHy7gaWAd0S1qA+5Yv+09dzuOYdz5op7totagnL
+ T/rcbK3o7reRQXFPRHTiyKrUMHp/aDSQ7OqV97XMmaNgmHBVJzErLuPRY6lRcMd03t5Y
+ N3IQ==
+X-Gm-Message-State: AOJu0YzYf1otlUtoHc6NtbYs2alpwPaLAkeCmU2/hpbUpNM+kELU0BNC
+ XT8WNbINZLGhm2vywhIpchqEG4M58/iL0T3uVsIyDimzNK4PFOgKYxwszMKfZQkQ+ZcvAIP0rBf
+ l
+X-Google-Smtp-Source: AGHT+IFEI62dj90nSR4ObKwfMFT8hluPpIYlQNhS+Oi6PZ784OBf+esmXv7MvzqaNh+R/cSgCPaazQ==
+X-Received: by 2002:a05:6a20:7f99:b0:1af:37bf:d7de with SMTP id
+ d25-20020a056a207f9900b001af37bfd7demr1320087pzj.7.1714506176156; 
+ Tue, 30 Apr 2024 12:42:56 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- d12-20020a63360c000000b005d880b41598sm20861523pga.94.2024.04.30.12.42.54
+ d12-20020a63360c000000b005d880b41598sm20861523pga.94.2024.04.30.12.42.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Apr 2024 12:42:54 -0700 (PDT)
+ Tue, 30 Apr 2024 12:42:55 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org
-Subject: [PATCH v7 00/10] 
-Date: Tue, 30 Apr 2024 12:42:43 -0700
-Message-Id: <20240430194253.904768-1-richard.henderson@linaro.org>
+Cc: philmd@linaro.org, Alexander Monakov <amonakov@ispras.ru>,
+ Mikhail Romanov <mmromanov@ispras.ru>
+Subject: [PATCH v7 01/10] util/bufferiszero: Remove SSE4.1 variant
+Date: Tue, 30 Apr 2024 12:42:44 -0700
+Message-Id: <20240430194253.904768-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240430194253.904768-1-richard.henderson@linaro.org>
+References: <20240430194253.904768-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
  envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
@@ -92,37 +95,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v3: https://patchew.org/QEMU/20240206204809.9859-1-amonakov@ispras.ru/
-v6: https://patchew.org/QEMU/20240424225705.929812-1-richard.henderson@linaro.org/
+From: Alexander Monakov <amonakov@ispras.ru>
 
-Changes for v7:
-  - Generalize test_buffer_is_zero_next_accel and initialization (phil)
+The SSE4.1 variant is virtually identical to the SSE2 variant, except
+for using 'PTEST+JNZ' in place of 'PCMPEQB+PMOVMSKB+CMP+JNE' for testing
+if an SSE register is all zeroes. The PTEST instruction decodes to two
+uops, so it can be handled only by the complex decoder, and since
+CMP+JNE are macro-fused, both sequences decode to three uops. The uops
+comprising the PTEST instruction dispatch to p0 and p5 on Intel CPUs, so
+PCMPEQB+PMOVMSKB is comparatively more flexible from dispatch
+standpoint.
 
+Hence, the use of PTEST brings no benefit from throughput standpoint.
+Its latency is not important, since it feeds only a conditional jump,
+which terminates the dependency chain.
 
-r~
+I never observed PTEST variants to be faster on real hardware.
 
+Signed-off-by: Alexander Monakov <amonakov@ispras.ru>
+Signed-off-by: Mikhail Romanov <mmromanov@ispras.ru>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240206204809.9859-2-amonakov@ispras.ru>
+---
+ util/bufferiszero.c | 29 -----------------------------
+ 1 file changed, 29 deletions(-)
 
-Alexander Monakov (5):
-  util/bufferiszero: Remove SSE4.1 variant
-  util/bufferiszero: Remove AVX512 variant
-  util/bufferiszero: Reorganize for early test for acceleration
-  util/bufferiszero: Remove useless prefetches
-  util/bufferiszero: Optimize SSE2 and AVX2 variants
-
-Richard Henderson (5):
-  util/bufferiszero: Improve scalar variant
-  util/bufferiszero: Introduce biz_accel_fn typedef
-  util/bufferiszero: Simplify test_buffer_is_zero_next_accel
-  util/bufferiszero: Add simd acceleration for aarch64
-  tests/bench: Add bufferiszero-bench
-
- include/qemu/cutils.h            |  32 ++-
- tests/bench/bufferiszero-bench.c |  47 ++++
- util/bufferiszero.c              | 465 ++++++++++++++++---------------
- tests/bench/meson.build          |   1 +
- 4 files changed, 324 insertions(+), 221 deletions(-)
- create mode 100644 tests/bench/bufferiszero-bench.c
-
+diff --git a/util/bufferiszero.c b/util/bufferiszero.c
+index 3e6a5dfd63..f5a3634f9a 100644
+--- a/util/bufferiszero.c
++++ b/util/bufferiszero.c
+@@ -100,34 +100,6 @@ buffer_zero_sse2(const void *buf, size_t len)
+ }
+ 
+ #ifdef CONFIG_AVX2_OPT
+-static bool __attribute__((target("sse4")))
+-buffer_zero_sse4(const void *buf, size_t len)
+-{
+-    __m128i t = _mm_loadu_si128(buf);
+-    __m128i *p = (__m128i *)(((uintptr_t)buf + 5 * 16) & -16);
+-    __m128i *e = (__m128i *)(((uintptr_t)buf + len) & -16);
+-
+-    /* Loop over 16-byte aligned blocks of 64.  */
+-    while (likely(p <= e)) {
+-        __builtin_prefetch(p);
+-        if (unlikely(!_mm_testz_si128(t, t))) {
+-            return false;
+-        }
+-        t = p[-4] | p[-3] | p[-2] | p[-1];
+-        p += 4;
+-    }
+-
+-    /* Finish the aligned tail.  */
+-    t |= e[-3];
+-    t |= e[-2];
+-    t |= e[-1];
+-
+-    /* Finish the unaligned tail.  */
+-    t |= _mm_loadu_si128(buf + len - 16);
+-
+-    return _mm_testz_si128(t, t);
+-}
+-
+ static bool __attribute__((target("avx2")))
+ buffer_zero_avx2(const void *buf, size_t len)
+ {
+@@ -221,7 +193,6 @@ select_accel_cpuinfo(unsigned info)
+ #endif
+ #ifdef CONFIG_AVX2_OPT
+         { CPUINFO_AVX2,    128, buffer_zero_avx2 },
+-        { CPUINFO_SSE4,     64, buffer_zero_sse4 },
+ #endif
+         { CPUINFO_SSE2,     64, buffer_zero_sse2 },
+         { CPUINFO_ALWAYS,    0, buffer_zero_int },
 -- 
 2.34.1
 
