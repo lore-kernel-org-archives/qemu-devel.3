@@ -4,80 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABF2CC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 10:49:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAA09C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 10:54:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1l2R-0000aL-Az; Tue, 30 Apr 2024 06:48:43 -0400
+	id 1s1l7h-0002he-64; Tue, 30 Apr 2024 06:54:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1l2O-0000Zl-7Y
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 06:48:40 -0400
-Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1l2M-000059-I0
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 06:48:39 -0400
-Received: by mail-lf1-x130.google.com with SMTP id
- 2adb3069b0e04-516ef30b16eso6274355e87.3
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 03:48:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714474116; x=1715078916; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=5Wxgct4ui4g9Wvlaph5wUmRgy7/1l6XnBwBGChAdhpQ=;
- b=xFJ/nKnhk+sX2wBeZcu52nbeYbHaOnJcPSGx6ed1xCGACwf2WxB1alTGSXLCyLZSxn
- jLVNIGaTcKHa+ZbKRHjXpKIJngAUS1vDh5pYewP0cVN+WHWdyLwz770ujpK9bzxJEvtU
- uJgiE5Wc0IM07/+cce4e1lqjHAIIM7LtYpcxhE/doeN+t/W+YM05w7wsuUW2aL3KivKl
- nxW1qZCVcokcjyfOlQkNn/8aM/5rZZyrzrrZLE8m2+fbzQplVbYvupqppcrwQg4crAcn
- nk0t8pEQPo0Ys0ZmkJc9f1fW6DhQ77hHB6iKObhrLt4XOXGreYOsWoUbdpkepCOmun7S
- j+UQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714474116; x=1715078916;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=5Wxgct4ui4g9Wvlaph5wUmRgy7/1l6XnBwBGChAdhpQ=;
- b=ZvPlD9cs74wNe7WPD7jOAVfBWEuvKX+2zdpyMgkH7sXVMQCXudf6LEKq08oF4HA78d
- 1XBnPNpmS4I5jQuT7THMlU6mqZv+IjaMJtQuQlCQsLW1OmL3ZwkwJRVqDXzMHrIxvXHT
- FLcXFNqKU+BzimUt+hyJpS3P0PdHpfPlaHk4244wVnrlXL7IjpQt1pDcz1hL/qW3VPiJ
- EL0/MnywfCqG3MICD/tr5f3unNdVvuUqO9XMhmirhDof1/Fi60Wa48mN/xJMxWPL4VsA
- p8a0XbinY3M5gh/BFS3Uws/QUSi5fERQLJJOMnmZnnewTb7ftm0Q3T4eGrOolB8u4yBg
- 4Xuw==
-X-Gm-Message-State: AOJu0YwvnCF3/3S0WK03cvE3wzPJK7n38ZDmSwa2afvOnBvx8KEZmICL
- +57OT3uIg6ZTLW/UoWy2fJqyd0KbMnZFTTM0yKKsB3Yq6t2PC2m9FQnudaL4FPbmWIjqqeRnudm
- NeVU=
-X-Google-Smtp-Source: AGHT+IGQoOpJqicDWyy5U9V70HqdDhS29t193jreIciLmaVdvhCIP8tVDgL+Xclu10oX1SGK02xqcw==
-X-Received: by 2002:a19:7014:0:b0:51a:c207:12b with SMTP id
- h20-20020a197014000000b0051ac207012bmr1396473lfc.37.1714474115990; 
- Tue, 30 Apr 2024 03:48:35 -0700 (PDT)
-Received: from m1x-phil.lan (mab78-h01-176-184-55-179.dsl.sta.abo.bbox.fr.
- [176.184.55.179]) by smtp.gmail.com with ESMTPSA id
- m9-20020a05600c4f4900b0041bed36e23csm11452467wmq.39.2024.04.30.03.48.34
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Apr 2024 03:48:35 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <adobriyan@yandex-team.ru>)
+ id 1s1l7e-0002h0-4V
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 06:54:06 -0400
+Received: from forwardcorp1c.mail.yandex.net ([178.154.239.200])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adobriyan@yandex-team.ru>)
+ id 1s1l7a-00011t-Bu
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 06:54:05 -0400
+Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c16:1680:0:640:d42f:0])
+ by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id E1A0960BEB;
+ Tue, 30 Apr 2024 13:53:54 +0300 (MSK)
+Received: from adobriyan-nix.yandex.net (unknown
+ [2a02:6b8:82:e04:e5b2:61da:4dba:91a5])
+ by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id brOMh32Rpa60-Tum9qEaI; Tue, 30 Apr 2024 13:53:54 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1714474434;
+ bh=inOxdMhfrUMcS5L0UmHhsn9Yffjnx2Gukkbqn83LBEs=;
+ h=Message-Id:Date:Cc:Subject:To:From;
+ b=gITvv0D8YDifGG5yaM8NlrLVBKsIYktawkm0H9GqgcLRDZUON3211FvTQIEmHNYN8
+ o1OG+uO+ftCHab44ALq09/yqaFQYsM45iMER8wnyHeiRKYGbSsH5jOfY/S4m+SFPTX
+ ago2ToMNfywX7MERoHtASygtygTSRlfwd9+B4muc=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Alexey Dobriyan <adobriyan@yandex-team.ru>
 To: qemu-devel@nongnu.org
-Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-stable@nongnu.org, Paul Cercueil <paul@crapouillou.net>
-Subject: [PATCH] target/sh4: Fix ADDV opcode
-Date: Tue, 30 Apr 2024 12:48:33 +0200
-Message-ID: <20240430104833.69600-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
+Cc: adobriyan@gmail.com, adobriyan@yandex-team.ru, mst@redhat.com,
+ jasowang@redhat.com, vsementsov@yandex-team.ru
+Subject: [PATCH RESEND] virtio-net: fix bug 1451 aka
+ "assert(!virtio_net_get_subqueue(nc)->async_tx.elem); "
+Date: Tue, 30 Apr 2024 13:53:33 +0300
+Message-Id: <20240430105333.23377-1-adobriyan@yandex-team.ru>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::130;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x130.google.com
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=adobriyan@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,39 +74,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The documentation says:
+Reproducer from https://gitlab.com/qemu-project/qemu/-/issues/1451
+creates small packet (1 segment, len = 10 == n->guest_hdr_len),
+then destroys queue.
 
-  ADDV Rm, Rn        Rn + Rm -> Rn, overflow -> T
+"if (n->host_hdr_len != n->guest_hdr_len)" is triggered, if body creates
+zero length/zero segment packet as there is nothing after guest header.
 
-But QEMU implementation was:
+qemu_sendv_packet_async() tries to send it.
 
-  ADDV Rm, Rn        Rn + Rm -> Rm, overflow -> T
+slirp discards it because it is smaller than Ethernet header,
+but returns 0 because tx hooks are supposed to return total length of data.
 
-Fix by filling the correct Rm register.
+0 is propagated upwards and is interpreted as "packet has been sent"
+which is terrible because queue is being destroyed, nobody is waiting for TX
+to complete and assert it triggered.
 
-Cc: qemu-stable@nongnu.org
-Fixes: ad8d25a11f ("target-sh4: implement addv and subv using TCG")
-Reported-by: Paul Cercueil <paul@crapouillou.net>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2317
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Fix is discard such empty packets instead of sending them.
+
+Length 1 packets will go via different codepath:
+
+	virtqueue_push(q->tx_vq, elem, 0);
+	virtio_notify(vdev, q->tx_vq);
+	g_free(elem);
+
+and aren't problematic.
+
+Signed-off-by: Alexey Dobriyan <adobriyan@yandex-team.ru>
 ---
- target/sh4/translate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/sh4/translate.c b/target/sh4/translate.c
-index ebb6c901bf..4a1dd0d1f4 100644
---- a/target/sh4/translate.c
-+++ b/target/sh4/translate.c
-@@ -714,7 +714,7 @@ static void _decode_opc(DisasContext * ctx)
-             tcg_gen_xor_i32(t2, REG(B7_4), REG(B11_8));
-             tcg_gen_andc_i32(cpu_sr_t, t1, t2);
-             tcg_gen_shri_i32(cpu_sr_t, cpu_sr_t, 31);
--            tcg_gen_mov_i32(REG(B7_4), t0);
-+            tcg_gen_mov_i32(REG(B11_8), t0);
+	hopefully better changelog.
+	use "if (out_num < 1)" so that discard doesn't calculate iov length
+
+ hw/net/virtio-net.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
+
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 24e5e7d347..3644bfd91b 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -2749,18 +2749,14 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
+         out_sg = elem->out_sg;
+         if (out_num < 1) {
+             virtio_error(vdev, "virtio-net header not in first element");
+-            virtqueue_detach_element(q->tx_vq, elem, 0);
+-            g_free(elem);
+-            return -EINVAL;
++            goto detach;
          }
-         return;
-     case 0x2009: /* and Rm,Rn */
+ 
+         if (n->has_vnet_hdr) {
+             if (iov_to_buf(out_sg, out_num, 0, &vhdr, n->guest_hdr_len) <
+                 n->guest_hdr_len) {
+                 virtio_error(vdev, "virtio-net header incorrect");
+-                virtqueue_detach_element(q->tx_vq, elem, 0);
+-                g_free(elem);
+-                return -EINVAL;
++                goto detach;
+             }
+             if (n->needs_vnet_hdr_swap) {
+                 virtio_net_hdr_swap(vdev, (void *) &vhdr);
+@@ -2791,6 +2787,11 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
+                              n->guest_hdr_len, -1);
+             out_num = sg_num;
+             out_sg = sg;
++
++            if (out_num < 1) {
++                virtio_error(vdev, "virtio-net nothing to send");
++                goto detach;
++            }
+         }
+ 
+         ret = qemu_sendv_packet_async(qemu_get_subqueue(n->nic, queue_index),
+@@ -2811,6 +2812,11 @@ drop:
+         }
+     }
+     return num_packets;
++
++detach:
++    virtqueue_detach_element(q->tx_vq, elem, 0);
++    g_free(elem);
++    return -EINVAL;
+ }
+ 
+ static void virtio_net_tx_timer(void *opaque);
 -- 
-2.41.0
+2.34.1
 
 
