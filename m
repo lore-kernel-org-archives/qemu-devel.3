@@ -4,71 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06CADC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 08:05:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A340C19F4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 08:06:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1iTV-0001SK-UA; Tue, 30 Apr 2024 04:04:29 -0400
+	id 1s1iVj-0002MR-Ic; Tue, 30 Apr 2024 04:06:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1iTU-0001S4-9z
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 04:04:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1s1iVY-0002Lg-Hr
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 04:06:40 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1iTS-00008r-Jh
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 04:04:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714464265;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=M57vhfbB6+tyXe4U2kBkXS0xThABRy9xFAKBlDYVoGs=;
- b=G+M1B5rStNZzLDyVUyeJ1synecWHKNM8MAV+IepY+FHogb7w6TNqpYylQRZDR5LGTnaion
- cs7ocCKbwhS7d2kTDCs8bEeIAFC/VLrZKDgNPiRvjh44SwodkPqZq1zxabZ3jwQmEyFGly
- iR1y1oxZFjYV0gBeWZ0G1bMDRtjw6tE=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-156-pVxeXepEPOmCkAzjqcWL_g-1; Tue,
- 30 Apr 2024 04:04:20 -0400
-X-MC-Unique: pVxeXepEPOmCkAzjqcWL_g-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0C3D929AC011;
- Tue, 30 Apr 2024 08:04:20 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.193.79])
- by smtp.corp.redhat.com (Postfix) with ESMTP id E98E52166B34;
- Tue, 30 Apr 2024 08:04:16 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-s390x@nongnu.org,
-	Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH] hw/s390x: Attach the sclpconsole to the /machine/sclp node
-Date: Tue, 30 Apr 2024 10:04:08 +0200
-Message-ID: <20240430080408.415890-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1s1iVU-0000Yp-L5
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 04:06:35 -0400
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:2a2a:0:640:d546:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 75C0D60C45;
+ Tue, 30 Apr 2024 11:06:24 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:8829::1:3c] (unknown
+ [2a02:6b8:b081:8829::1:3c])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id N6MDRU11L4Y0-J6TIcHd5; Tue, 30 Apr 2024 11:06:23 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1714464383;
+ bh=aGaBToN79q3ga8yRnIrUXwluf0uCA1Xztp7mcQ/WIeg=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=tpfu9xftOJ2nJ/9O72/w/+yCz9AKC+cgT/DdzT7PEaAtPn/fI33a1ui8iIKvN6zzd
+ jOHQmap6kPT8jEnwzICaG6dI0mRy3Xb7QWuoPG2OPFuRzwjvn529Umi8QgrJV+de1j
+ CkQYJzzizOgwZko6kmCZbgL6FanUJAQZ+mlT5XOg=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <b357680e-d45e-435d-b5d6-8d7c688cf972@yandex-team.ru>
+Date: Tue, 30 Apr 2024 11:06:23 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 3/5] migration: process_incoming_migration_co(): fix
+ reporting s->error
+To: Peter Xu <peterx@redhat.com>
+Cc: farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
+ pbonzini@redhat.com, qemu-devel@nongnu.org, yc-core@yandex-team.ru
+References: <20240429191426.2327225-1-vsementsov@yandex-team.ru>
+ <20240429191426.2327225-4-vsementsov@yandex-team.ru> <Zi_15NLonFVFjQQP@x1n>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <Zi_15NLonFVFjQQP@x1n>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -80,95 +79,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The sclpconsole currently does not have a proper parent in the QOM
-tree, so it shows up under /machine/unattached - which is somewhat
-ugly. Let's attach it to /machine/sclp instead.
+On 29.04.24 22:32, Peter Xu wrote:
+> On Mon, Apr 29, 2024 at 10:14:24PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>> It's bad idea to leave critical section with error object freed, but
+>> s->error still set, this theoretically may lead to use-after-free
+>> crash. Let's avoid it.
+>>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> ---
+>>   migration/migration.c | 24 ++++++++++++------------
+>>   1 file changed, 12 insertions(+), 12 deletions(-)
+>>
+>> diff --git a/migration/migration.c b/migration/migration.c
+>> index 0d26db47f7..58fd5819bc 100644
+>> --- a/migration/migration.c
+>> +++ b/migration/migration.c
+>> @@ -732,9 +732,19 @@ static void process_incoming_migration_bh(void *opaque)
+>>       migration_incoming_state_destroy();
+>>   }
+>>   
+>> +static void migrate_error_free(MigrationState *s)
+>> +{
+>> +    QEMU_LOCK_GUARD(&s->error_mutex);
+>> +    if (s->error) {
+>> +        error_free(s->error);
+>> +        s->error = NULL;
+>> +    }
+>> +}
+>> +
+>>   static void coroutine_fn
+>>   process_incoming_migration_co(void *opaque)
+>>   {
+>> +    MigrationState *s = migrate_get_current();
+>>       MigrationIncomingState *mis = migration_incoming_get_current();
+>>       PostcopyState ps;
+>>       int ret;
+>> @@ -779,11 +789,9 @@ process_incoming_migration_co(void *opaque)
+>>       }
+>>   
+>>       if (ret < 0) {
+>> -        MigrationState *s = migrate_get_current();
+>> -
+>>           if (migrate_has_error(s)) {
+>>               WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
+>> -                error_report_err(s->error);
+>> +                error_report_err(error_copy(s->error));
+> 
+> This looks like a bugfix, agreed.
+> 
+>>               }
+>>           }
+>>           error_report("load of migration failed: %s", strerror(-ret));
+>> @@ -801,6 +809,7 @@ fail:
+>>                         MIGRATION_STATUS_FAILED);
+>>       migration_incoming_state_destroy();
+>>   
+>> +    migrate_error_free(s);
+> 
+> Would migration_incoming_state_destroy() be a better place?
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- include/hw/s390x/sclp.h    |  2 +-
- hw/s390x/s390-virtio-ccw.c | 11 +++++++----
- hw/s390x/sclp.c            |  4 +++-
- 3 files changed, 11 insertions(+), 6 deletions(-)
+Hmm. But we want to call migration_incoming_state_destroy() in case when exit-on-error=false too. And in this case we want to keep the error for further query-migrate commands.
 
-diff --git a/include/hw/s390x/sclp.h b/include/hw/s390x/sclp.h
-index b405a387b6..abfd6d8868 100644
---- a/include/hw/s390x/sclp.h
-+++ b/include/hw/s390x/sclp.h
-@@ -222,7 +222,7 @@ static inline int sccb_data_len(SCCB *sccb)
- }
- 
- 
--void s390_sclp_init(void);
-+Object *s390_sclp_init(void);
- void sclp_service_interrupt(uint32_t sccb);
- void raise_irq_cpu_hotplug(void);
- int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code);
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index 4dcc213820..e2f9206ded 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -237,11 +237,13 @@ static void s390_create_virtio_net(BusState *bus, const char *name)
-     }
- }
- 
--static void s390_create_sclpconsole(const char *type, Chardev *chardev)
-+static void s390_create_sclpconsole(Object *sclp, const char *type,
-+                                    Chardev *chardev)
- {
-     DeviceState *dev;
- 
-     dev = qdev_new(type);
-+    object_property_add_child(sclp, type, OBJECT(dev));
-     qdev_prop_set_chr(dev, "chardev", chardev);
-     qdev_realize_and_unref(dev, sclp_get_event_facility_bus(), &error_fatal);
- }
-@@ -252,8 +254,9 @@ static void ccw_init(MachineState *machine)
-     int ret;
-     VirtualCssBus *css_bus;
-     DeviceState *dev;
-+    Object *sclp;
- 
--    s390_sclp_init();
-+    sclp = s390_sclp_init();
-     /* init memory + setup max page size. Required for the CPU model */
-     s390_memory_init(machine->ram);
- 
-@@ -302,10 +305,10 @@ static void ccw_init(MachineState *machine)
- 
-     /* init consoles */
-     if (serial_hd(0)) {
--        s390_create_sclpconsole("sclpconsole", serial_hd(0));
-+        s390_create_sclpconsole(sclp, "sclpconsole", serial_hd(0));
-     }
-     if (serial_hd(1)) {
--        s390_create_sclpconsole("sclplmconsole", serial_hd(1));
-+        s390_create_sclpconsole(sclp, "sclplmconsole", serial_hd(1));
-     }
- 
-     /* init the TOD clock */
-diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
-index 893e71a41b..75d45fb184 100644
---- a/hw/s390x/sclp.c
-+++ b/hw/s390x/sclp.c
-@@ -379,13 +379,15 @@ void sclp_service_interrupt(uint32_t sccb)
- 
- /* qemu object creation and initialization functions */
- 
--void s390_sclp_init(void)
-+Object *s390_sclp_init(void)
- {
-     Object *new = object_new(TYPE_SCLP);
- 
-     object_property_add_child(qdev_get_machine(), TYPE_SCLP, new);
-     object_unref(new);
-     qdev_realize(DEVICE(new), NULL, &error_fatal);
-+
-+    return new;
- }
- 
- static void sclp_realize(DeviceState *dev, Error **errp)
+> 
+> One thing weird is we actually reuses MigrationState*'s error for incoming
+> too, but so far it looks ok as long as QEMU can't be both src & dst.  Then
+> calling migrate_error_free even in incoming_state_destroy() looks ok.
+> 
+> This patch still looks like containing two changes.  Better split them (or
+> just fix the bug only)?
+> 
+> Thanks,
+> 
+>>       exit(EXIT_FAILURE);
+>>   }
+>>   
+>> @@ -1433,15 +1442,6 @@ bool migrate_has_error(MigrationState *s)
+>>       return qatomic_read(&s->error);
+>>   }
+>>   
+>> -static void migrate_error_free(MigrationState *s)
+>> -{
+>> -    QEMU_LOCK_GUARD(&s->error_mutex);
+>> -    if (s->error) {
+>> -        error_free(s->error);
+>> -        s->error = NULL;
+>> -    }
+>> -}
+>> -
+>>   static void migrate_fd_error(MigrationState *s, const Error *error)
+>>   {
+>>       assert(s->to_dst_file == NULL);
+>> -- 
+>> 2.34.1
+>>
+> 
+
 -- 
-2.44.0
+Best regards,
+Vladimir
 
 
