@@ -4,93 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6AAEC10F16
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 17:35:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 569CBC19F4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 17:39:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1rMu-0002Y9-NQ; Tue, 30 Apr 2024 13:34:16 -0400
+	id 1s1rRQ-0006p1-Nv; Tue, 30 Apr 2024 13:38:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marmarek@invisiblethingslab.com>)
- id 1s1rMs-0002Xg-EL
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 13:34:14 -0400
-Received: from wfout6-smtp.messagingengine.com ([64.147.123.149])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marmarek@invisiblethingslab.com>)
- id 1s1rMq-0007vt-CT
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 13:34:14 -0400
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
- by mailfout.west.internal (Postfix) with ESMTP id 9D9FB1C00143;
- Tue, 30 Apr 2024 13:34:08 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute5.internal (MEProxy); Tue, 30 Apr 2024 13:34:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- invisiblethingslab.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:from:from:in-reply-to
- :message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
- t=1714498448; x=1714584848; bh=WeGqWSH3Ql0/UUTBACI5OChTrfYb4YhZ
- sRvfkZTj+GY=; b=3mxz6f6jog5W03cvLHlsE62OdCF6yTK7DnZsWlz4oiBYheIC
- BGiNKTMAeATtTaWcqI5M0xLm4n3U4FkOqXRx5EQDwMu/XGMI3kAbfE6xSUKzZdBd
- KJ438xgkvEE2DJ5SDWUKb0i8A56Xshqdql0QY3yPj5YvmWuzTdzjOnyMbJnnkTTE
- aehk4RzU1zdAwACd6UGfYZwQWYHixFT8h2IX85wv9vyh6kiGk9yiMSMrQjWk2zzl
- +51jtbFOPVU3psNoXqC7H/IciRHXS0c5czKd86OcvhFyvzIge5n8oARyNz07j4eD
- 3mismrEkMKu6FYyq30//02PbcotovbpvBG3ifw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm3; t=1714498448; x=1714584848; bh=WeGqWSH3Ql0/U
- UTBACI5OChTrfYb4YhZsRvfkZTj+GY=; b=BlAGQGxPcVAIqPrAY7EpvB5jgY+pT
- NApxQ2P16DZm3WVJQUZDwi0tfB5DKtwNlSk99SSOW/pQHchkGHAM2oB5QRqsc2+3
- YVEOQTtTDL2w8CI+K4NvwqxhJ0s/1Tc1bCODmUX2NPDwGHsEj/8/vREUWMjX+CTS
- +npZHNk5bCpqL0z+/0QY0V949nIgMs8X/S9HXfdFaiofq68u1piJBt7Yzdw7utRl
- aqLHcsNLreGOX+/Xo8F45NlVpqDrCgZqlXUPO/V89zPNGhO7Tvw15nZqq4V4enUk
- 92d8kUdNeXAeK6DDBzVI5vfcCXW3Jo6eCh4Hiu4/dIQzvcvaNL/5/7VZQ==
-X-ME-Sender: <xms:jysxZh_iXHNCNw-YZ_178xJCRxqRMw0CfkQKZ2NqSl3RMtXPTUFY8A>
- <xme:jysxZls9PjCLW77qf-tAkihNH3MZbZSxAdw3EJj3WYr0edZOfDGlsZ_nXlnTYIrO9
- c6o1n0yLuKkOQ>
-X-ME-Received: <xmr:jysxZvA55OYHasHAIBOAjn6YAOWBk5gXkiVlyoRuxbY6D5vC7MWIUATfFIgOTHtlUtxfG1BO>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddufedguddufecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
- necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofggtgfgsehtke
- ertdertdejnecuhfhrohhmpeforghrvghkucforghrtgiihihkohifshhkihdqifpkrhgv
- tghkihcuoehmrghrmhgrrhgvkhesihhnvhhishhisghlvghthhhinhhgshhlrggsrdgtoh
- hmqeenucggtffrrghtthgvrhhnpeelkefhudelteelleelteetveeffeetffekteetjeeh
- lefggeekleeghefhtdehvdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
- grihhlfhhrohhmpehmrghrmhgrrhgvkhesihhnvhhishhisghlvghthhhinhhgshhlrggs
- rdgtohhm
-X-ME-Proxy: <xmx:jysxZle3XSnMXMNlz8AIbf-k_UyJDQHpOT7nmf03YRpTpyj9jaU1qg>
- <xmx:kCsxZmP-FoKIO7KJgKiCh0H8Ue097ceU_wQstF7mdodvUmAM0FVs6Q>
- <xmx:kCsxZnnegerD3GUl1oACQ8WVRvOPc1imIkG80drZdAqL2CqSGobLOA>
- <xmx:kCsxZgsBVv9F1WUQT6vOxC88qyRDRhQhapig1l5tWiN-khb7cOEqog>
- <xmx:kCsxZo223S0O567oFT374yn4_bTr5U-fKiiLzRESKPLg_UIoTbtSEXPh>
-Feedback-ID: i1568416f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Apr 2024 13:34:07 -0400 (EDT)
-From: =?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?=
- <marmarek@invisiblethingslab.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?=
- <marmarek@invisiblethingslab.com>
-Subject: [PATCH v2 0/3] Fix MSI-X handling for Xen HVM
-Date: Tue, 30 Apr 2024 19:33:08 +0200
-Message-ID: <cover.ea761e8c87cc41550b01d6fbc1cd1116af55e288.1714498385.git-series.marmarek@invisiblethingslab.com>
-X-Mailer: git-send-email 2.44.0
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s1rRL-0006oE-8q
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 13:38:51 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s1rRJ-0000vf-G5
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 13:38:51 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-6ece8991654so5546638b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 10:38:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714498726; x=1715103526; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=uVyv5hRg6B037RfNy6Jiaqghy84UvaDe+kTUw/jD0qU=;
+ b=AJirJJ+NrIqwZ4Tv3vVabXnqBI98d7jW5889ZqBY9ck9WWxI2z2z4cpB/DuXLY0T3n
+ zbZxYOmrAMN2QhP0Qjb9W6qDCEv/CHSmyDr761+IVwfuKxTlGtQGOci2M9a5ClANnIun
+ vhh32eA8ZVZFZ7nEtQteyfUlZ9Z78qnF2GR+DEykbSS2sG5t5vnnfGHvVkFFVn5wjE/A
+ 3sRFOd7kqRqBYByM9oV9k+nt5nRU9P4tXq6zYpwbmozCTEeN3m5jUiapSep8V225YqIm
+ jwXdgbyY0iaBaKMdQksvHTk5+X/FhN3GKgw6IAQtlE3J0Q+8a9KNsh5XZnoF6lqBRolF
+ MEMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714498726; x=1715103526;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=uVyv5hRg6B037RfNy6Jiaqghy84UvaDe+kTUw/jD0qU=;
+ b=WShedbYqsgCxH8Qps0GCvRMOVLv6QvZYDvxbxnRzr/RUlVOW8Z7pXyIAOz9W+qG6Sg
+ NtExEBrF/lAWDqMImeITb1fRJPzuUZE4F7G5YwjTdmDB/vM4CICSM7F57n1o7mykj6pP
+ yZII3sOugWpHZQuNdKbcALsI2Ke84t9ceMECbZRSJeX9ZBwaxI9rUEaorrZYObJCPNO0
+ EBkfn6X5UcP7/TkDGTIEH9EGi3LZS2A3wir+Xki370dYbtfEUgA10Mwaogv0f0URHDNi
+ NM5dwcMREwbBrddGv0SaFM4evi89v5MSKfY4wKgxZIjjG0DHAbhnwucD76nYe5KKbJ0T
+ iVBw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWtm7o/jj1joWcRO4YDmEOypNxr2u1vmZ+Yc1LrjT3vtkC533x/n01Jv9DQ1oLGen18eKXh445IU+xDCTDaGDDpyKVnUNU=
+X-Gm-Message-State: AOJu0YzLl7bS6m8J1Ay11ImS15fX63toruLzQf8hxSqsn7HlGYpM5IwB
+ +23Qn4xS7R5iZ7OX+VnKJ6mDk3dLAzy653ifQVhoafVojHajmLthRy4eQAaUO88=
+X-Google-Smtp-Source: AGHT+IHSKYG4Dav9MCEd9I5UUO+08nmgNKNY0vsk3if9XqqC2/0/9W1cFI4K+ocZGmAuivchjOaKxw==
+X-Received: by 2002:a05:6a21:9204:b0:1aa:282e:8dac with SMTP id
+ tl4-20020a056a21920400b001aa282e8dacmr779203pzb.0.1714498726640; 
+ Tue, 30 Apr 2024 10:38:46 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ by smtp.gmail.com with ESMTPSA id
+ n66-20020a632745000000b0060fc94219b0sm6304555pgn.45.2024.04.30.10.38.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 30 Apr 2024 10:38:46 -0700 (PDT)
+Message-ID: <38c57237-665d-4016-a6c6-ba8ceb04b24d@linaro.org>
+Date: Tue, 30 Apr 2024 10:38:44 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=64.147.123.149;
- envelope-from=marmarek@invisiblethingslab.com;
- helo=wfout6-smtp.messagingengine.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] accel/tcg: Make TCGCPUOps::cpu_exec_halt return bool
+ for whether to halt
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20240430140035.3889879-1-peter.maydell@linaro.org>
+ <20240430140035.3889879-2-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240430140035.3889879-2-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001, SPF_NONE=0.001,
- URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,36 +100,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series fixes handling MSI-X when device model is running in a stubdomain.
-The main part is to avoid accessing /dev/mem, which also fixes running dom0
-with lockdown enabled.
+On 4/30/24 07:00, Peter Maydell wrote:
+> The TCGCPUOps::cpu_exec_halt method is called from cpu_handle_halt()
+> when the CPU is halted, so that a target CPU emulation can do
+> anything target-specific it needs to do.  (At the moment we only use
+> this on i386.)
+> 
+> The current specification of the method doesn't allow the target
+> specific code to do something different if the CPU is about to come
+> out of the halt state, because cpu_handle_halt() only determines this
+> after the method has returned.  (If the method called cpu_has_work()
+> itself this would introduce a potential race if an interrupt arrived
+> between the target's method implementation checking and
+> cpu_handle_halt() repeating the check.)
+> 
+> Change the definition of the method so that it returns a bool to
+> tell cpu_handle_halt() whether to stay in halt or not.
+> 
+> We will want this for the Arm target, where FEAT_WFxT wants to do
+> some work only for the case where the CPU is in halt but about to
+> leave it.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   include/hw/core/tcg-cpu-ops.h       | 11 +++++++++--
+>   target/i386/tcg/helper-tcg.h        |  2 +-
+>   accel/tcg/cpu-exec.c                |  7 +++++--
+>   target/i386/tcg/sysemu/seg_helper.c |  3 ++-
+>   4 files changed, 17 insertions(+), 6 deletions(-)
 
-It depends on a behavior change of Xen that was just comitted, and signaled
-with a feature flag. If Xen is too old (and XENFEAT_dm_msix_all_writes flag is
-not set), fallback to the old behavior.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-The other part is a fix to enforce read-only registers in the config space.
-This fixes MSI-X setup for iwlwifi Linux driver, as it happen to write to MSI-X
-capability id reg (as a workaround for some older device which has another
-register there). It should be no-op, but due to a bug in xen_pt code,
-it broke MSI-X detection.
+I like Alex's suggested rename.
 
-All those patches have been shipped in Qubes OS 4.2 already, and prove to fix
-the issue.
+> --- a/accel/tcg/cpu-exec.c
+> +++ b/accel/tcg/cpu-exec.c
+> @@ -669,11 +669,14 @@ static inline bool cpu_handle_halt(CPUState *cpu)
+>   #ifndef CONFIG_USER_ONLY
+>       if (cpu->halted) {
+>           const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
+> +        bool leave_halt;
+>   
+>           if (tcg_ops->cpu_exec_halt) {
+> -            tcg_ops->cpu_exec_halt(cpu);
+> +            leave_halt = tcg_ops->cpu_exec_halt(cpu);
+> +        } else {
+> +            leave_halt = cpu_has_work(cpu);
+>           }
+> -        if (!cpu_has_work(cpu)) {
+> +        if (!leave_halt) {
+>               return true;
+>           }
 
-See individual commit messages for details.
+As a followup, I would also suggest making implementation of the hook mandatory.
+We already require the has_work hook to be set; it would simply be a matter of copying the 
+function pointer to the second slot.
 
-Marek Marczykowski-Górecki (3):
-  hw/xen/xen_pt: Save back data only for declared registers
-  Update Xen's features.h header
-  Do not access /dev/mem in MSI-X PCI passthrough on Xen
+Also, the assert in cpu_has_work could be moved to startup, as Phil has started to do with 
+some of the other hooks.
 
- hw/xen/xen_pt.c                     | 24 +++++++-
- hw/xen/xen_pt_msi.c                 | 94 ++++++++++++++++++------------
- include/hw/xen/interface/features.h | 17 +++++-
- 3 files changed, 99 insertions(+), 36 deletions(-)
 
-base-commit: 2358f1b60f73287fe606c7ff48043b4f9e1c2d0f
--- 
-git-series 0.9.1
+r~
+
 
