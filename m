@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B687CC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 14:35:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C7B6C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 14:35:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1oZf-0007vS-V8; Tue, 30 Apr 2024 10:35:16 -0400
+	id 1s1oZm-0007wU-Do; Tue, 30 Apr 2024 10:35:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <paul@crapouillou.net>)
- id 1s1nFd-00043N-Hf; Tue, 30 Apr 2024 09:10:30 -0400
+ id 1s1oHL-0002fT-RZ; Tue, 30 Apr 2024 10:16:19 -0400
 Received: from aposti.net ([89.234.176.197])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <paul@crapouillou.net>)
- id 1s1nFb-0000gJ-R0; Tue, 30 Apr 2024 09:10:29 -0400
+ id 1s1oH9-0005sG-Pj; Tue, 30 Apr 2024 10:16:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=crapouillou.net;
- s=mail; t=1714482622;
+ s=mail; t=1714486565;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=L11LylNAsm08CAc4r4VflhYc6URkkvPybYidQ+31FTU=;
- b=vVi6bZUk4/aT0GZtD6T5boEXmzkYCpBlVA3RBTpUrBWVoPIvQzAeFx9OhgPFX6OaBIGROH
- hNJneqIF4vtFfvn1p1RI/JP/u6irt/43cJnXE7RgUe2+F7VmU5eFoYjKqvLpEEoPFin6AB
- cbPFGSzP5xhG5HPUhBe9Q5Ep6gHWdww=
-Message-ID: <f83f10fe154da03fa4704c2255f0fa0ce4fc4dcb.camel@crapouillou.net>
+ bh=kyySLrCRbN7WSvlOZwP04Z6m9Gn7w2FLreR0q9YdJj8=;
+ b=j81LLeTxHoLDO7WbBnNdgazsTdNNcttavWRx+UgEYmVCDTzd06dpR8NdBAHlyIX/zrH+kN
+ yHrw/NA2Pp++2NnFLu4yWjSyr0JPg4Tl11GuYprN7UgDpWeCh+nfOP/xkI/j86PRW60oKX
+ 8wb8jGGZifY81cES9C7/4RCZW9rLJn0=
+Message-ID: <e21812c1594771f0a396e7ab14a1cb4b05324387.camel@crapouillou.net>
 Subject: Re: [RFC PATCH] target/sh4: Fix SUBV opcode
 From: Paul Cercueil <paul@crapouillou.net>
 To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>, 
  qemu-devel@nongnu.org
 Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>, Yoshinori Sato
  <ysato@users.sourceforge.jp>, qemu-stable@nongnu.org
-Date: Tue, 30 Apr 2024 15:10:21 +0200
+Date: Tue, 30 Apr 2024 16:16:03 +0200
 In-Reply-To: <20240430120650.70539-1-philmd@linaro.org>
 References: <20240430120650.70539-1-philmd@linaro.org>
 Autocrypt: addr=paul@crapouillou.net; prefer-encrypt=mutual;
@@ -73,7 +73,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 30 Apr 2024 10:35:14 -0400
+X-Mailman-Approved-At: Tue, 30 Apr 2024 10:35:19 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,6 +90,24 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi Philippe,
 
+If I'm not mistaken, the overflow / underflow can be calculated like
+this:
+
+T =3D ((Rn ^ Rm) & (Result ^ Rn)) >> 31
+
+Looking at what Qemu does (before this patch), it was doing this:
+T =3D ((Rn ^ Rm) & (Result ^ Rm)) >> 31
+
+I changed line 936 to this, and overflow / underflow with SUBV now seem
+to work fine:
+
+tcg_gen_xor_i32(t1, t0, REG(B11_8));
+
+So a change from REG(B7_B4) to REG(B11_8).
+
+Cheers,
+-Paul
+
 Le mardi 30 avril 2024 =C3=A0 14:06 +0200, Philippe Mathieu-Daud=C3=A9 a =
 =C3=A9crit=C2=A0:
 > The documentation says:
@@ -102,17 +120,6 @@ n, underflow -> T
 >=20
 > While we can check the high xored bit for overflow, for
 > underflow we need to check the xored value is not negative.
-
-This fix still does not work properly; it will incorrectly set the
-underflow bit when the sign changes from positive to negative.
-
-e.g. Rn =3D=3D 0 and Rm =3D=3D 2, the result will be Rn =3D=3D -2, without =
-any
-underflow.
-
-Cheers,
--Paul
-
 >=20
 > Cc: qemu-stable@nongnu.org
 > Fixes: ad8d25a11f ("target-sh4: implement addv and subv using TCG")
