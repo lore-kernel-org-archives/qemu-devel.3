@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2A44C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 10:13:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5347EC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 10:14:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1kTT-0005C7-Lt; Tue, 30 Apr 2024 06:12:35 -0400
+	id 1s1kV7-0006Cw-Cf; Tue, 30 Apr 2024 06:14:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1s1kTQ-0005BV-HY
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 06:12:32 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1s1kV5-0006BK-4K
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 06:14:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1s1kTP-0002mA-2d
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 06:12:32 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1s1kUM-0002oR-Pg
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 06:13:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714471950;
+ s=mimecast20190719; t=1714472008;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=GktRINYaOly7gHuG1dF2HwqoJVkVeok+L3YEGUOR4g0=;
- b=HT2DoiXA0LUglEP02OmdFIuC/3aIYeTEkFTr5vgWUC7Nk+65Bvq5AJ5Hg6sDrDac7tmsoy
- /kJX9e0oSjJnwKIyPK6mlSOMTinhp/pxqlp2nqENpTatnuL31seU9pZTeWKKtRf2TV2iMA
- MXSLyxn8i0DrOv3qoQQsbO2bVockiRg=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0BufbMVVg+T5x+4aqilXqIFa90FRMFl1Vq/1pNJOM14=;
+ b=f3DDRoWRKtQw211yCX20Q4aKezkEdmxxQBpkX8ESIJnzDa/Cd3fR0gHC69ct3+BoN/LFAq
+ TBDI8bMBz3ZBWM8cOHoKust/TxThqdJtGtDQJeM+ZI/AewWbat//MUlzCDLNUGOcIXt8d7
+ 4fZeeQjiAUBiYjSRgFyHqBu3VljAzFY=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-678-lXaMvxP-PYSYBIzgFiliDw-1; Tue, 30 Apr 2024 06:12:28 -0400
-X-MC-Unique: lXaMvxP-PYSYBIzgFiliDw-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-41c01902e60so11675995e9.3
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 03:12:27 -0700 (PDT)
+ us-mta-156-tVOliMpqO2mm1SbYhYzlig-1; Tue, 30 Apr 2024 06:13:27 -0400
+X-MC-Unique: tVOliMpqO2mm1SbYhYzlig-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-41bf6751b28so13489995e9.2
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 03:13:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714471947; x=1715076747;
+ d=1e100.net; s=20230601; t=1714472006; x=1715076806;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GktRINYaOly7gHuG1dF2HwqoJVkVeok+L3YEGUOR4g0=;
- b=atwkhITv8O0nG1lbgGinCg8GT7zrMyOHs5X/K/474L6goOjFcvh3Wla1cuX0H8ct+g
- Qs5G8AScBpPp5jcbrHsWK2ovbonQ2Kvf64YGUhg20lNkr3GlSVhDBrpSkwuw054FRGoH
- Ugw17Dmd36uKrNWSbv/AG69u1IbQxNIqkaBv1yBcm8fv5KDDbYlZd+L8U9S5Xx4Hif7B
- Px4CNtqmpUGBjJBsj0R+LDvZZPWzEimrtNf00HDmj+X4LaU04wB+MJbGEZZdWAQAQnzJ
- /seCX9E7UVZvmmfWhe61oqS31kwd6XauIPtWCmSKNXIhe4u0E8oEVfJlsmS9xLluSYH9
- Z2DA==
+ bh=0BufbMVVg+T5x+4aqilXqIFa90FRMFl1Vq/1pNJOM14=;
+ b=EP6f+ZWgA0puajgYUYH9o2bKDsDEeqSx3mGp/lQjcGPFUP7jVFQ4PMk+EV7PEA99mD
+ 8J7xG4MqmWYWuMnsuY4tyRy7d0jZkDIQF6me146DDku+PTwvFFlMZvntkT1LWNa2aaIN
+ ND5B1R4tv+Tq3daQnjHFUGRlm+nvqCFY4D4oH5SNHaMTQ1eP63J9KMvBMXQ4A3J8ZPIQ
+ eWVitk3xXH6wc6PG4+Yp0vJwT+GeDshitmvabJw6r/T/yxPg4QA/H4AqljYb+trZVKOi
+ u0By/1wbx7cv8HROFXP+atWEOE8toVacDVAES1Ai6iYvrCsOoZlGMRvRzWTQkmONtwIW
+ au2A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVticVPm+vvPdRpyZgI5FRrnliWAU9qebgfOiXM3qixuw/E0VJgxyrYSaH7X9rK5UxbbaOvLdI2SIHgN5xenAv3oq3/aI4=
-X-Gm-Message-State: AOJu0YznkrsLk5GeKYeeaDUYmWSeaVB9QaL1Wq31DbrHxqsfJvZjx8EE
- D0nOuHGf5v/XDwhS7k6fNY2vHC43J5I/ZpBQu6YnrvfbIsVNEKNdE7COJ8/85Vj+M1UYVtnSVFW
- URaEwT1PRO0iOyIuAOHvjXxEAbm0fxOr5IhCF3K6h5E7fCMusbDpZ
-X-Received: by 2002:a05:600c:4587:b0:41c:15d:98ac with SMTP id
- r7-20020a05600c458700b0041c015d98acmr5819214wmo.11.1714471947068; 
- Tue, 30 Apr 2024 03:12:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEdpzFK3zIiE7jPU2kxgkNef/Ds5aaPgx9vzUZle7VTcLFiLCJi0woR/WNHejW944Otl65YKA==
-X-Received: by 2002:a05:600c:4587:b0:41c:15d:98ac with SMTP id
- r7-20020a05600c458700b0041c015d98acmr5819191wmo.11.1714471946695; 
- Tue, 30 Apr 2024 03:12:26 -0700 (PDT)
+ AJvYcCUY8XsD3hp+qZXbxICcY0rmyaLIaJJDPdS6tVvlVovdOT7b6M8M6DzMDBccwi7uYI5ZxHGYDJ3rGVyHYeQIoVft1NgERj0=
+X-Gm-Message-State: AOJu0YxfW/Y13dueFWzqzEw8bQ8sU7OFkUuNgeFsd5l1at9OmBS06kUO
+ fQ71yXfNt6SK4KGxeUAAeUhWz5NlJxUdc+kl9RwDiHrHrp14br7pzxpSVM5wXwdADIBubvitPAf
+ p13xyGDaJXa9R7IiW8tkHWzr0bb1waBz0p/jXkwJhDWKIx1wfvngz
+X-Received: by 2002:a05:600c:3548:b0:41b:bb90:4b9 with SMTP id
+ i8-20020a05600c354800b0041bbb9004b9mr7592919wmq.4.1714472006019; 
+ Tue, 30 Apr 2024 03:13:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFokTY7LUol4CAj1+AO/F4+QUU3KCIAF6b4qxe101JX+qVkuGy8W1HxmU9JuELCjw/MThd+Gg==
+X-Received: by 2002:a05:600c:3548:b0:41b:bb90:4b9 with SMTP id
+ i8-20020a05600c354800b0041bbb9004b9mr7592908wmq.4.1714472005624; 
+ Tue, 30 Apr 2024 03:13:25 -0700 (PDT)
 Received: from ?IPV6:2a09:80c0:192:0:5dac:bf3d:c41:c3e7?
  ([2a09:80c0:192:0:5dac:bf3d:c41:c3e7])
  by smtp.gmail.com with ESMTPSA id
- j42-20020a05600c1c2a00b0041bfa2171efsm10432610wms.40.2024.04.30.03.12.25
+ n18-20020a05600c4f9200b004169836bf9asm48306342wmq.23.2024.04.30.03.13.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Apr 2024 03:12:26 -0700 (PDT)
-Message-ID: <bc229c6a-1b06-47fb-b0bd-ab29b9e5d5da@redhat.com>
-Date: Tue, 30 Apr 2024 12:12:25 +0200
+ Tue, 30 Apr 2024 03:13:25 -0700 (PDT)
+Message-ID: <da071e57-27d6-455e-b2a9-ffd2ea946857@redhat.com>
+Date: Tue, 30 Apr 2024 12:13:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/2] target/s390x: flag te and cte as deprecated
+Subject: Re: [PATCH v4 1/2] target/s390x: report deprecated-props in
+ cpu-model-expansion reply
 To: Collin Walling <walling@linux.ibm.com>, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org
 Cc: thuth@redhat.com, wangyanan55@huawei.com, philmd@linaro.org,
  marcel.apfelbaum@gmail.com, eduardo@habkost.net, armbru@redhat.com
 References: <20240429191059.11806-1-walling@linux.ibm.com>
- <20240429191059.11806-3-walling@linux.ibm.com>
+ <20240429191059.11806-2-walling@linux.ibm.com>
 Content-Language: en-US
 From: David Hildenbrand <david@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
@@ -125,7 +126,7 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <20240429191059.11806-3-walling@linux.ibm.com>
+In-Reply-To: <20240429191059.11806-2-walling@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
@@ -135,8 +136,8 @@ X-Spam_score: -3.1
 X-Spam_bar: ---
 X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,28 +154,34 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 29.04.24 21:10, Collin Walling wrote:
-> Add the CONSTRAINT_TRANSACTIONAL_EXE (cte) and TRANSACTIONAL_EXE (te)
-> to the list of deprecated features.
+> Retain a list of deprecated features disjoint from any particular
+> CPU model. A query-cpu-model-expansion reply will now provide a list of
+> properties (i.e. features) that are flagged as deprecated. Example:
+> 
+>      {
+>        "return": {
+>          "model": {
+>            "name": "z14.2-base",
+>            "deprecated-props": [
+>              "bpb",
+>              "csske"
+>            ],
+>            "props": {
+>              "pfmfi": false,
+>              "exrl": true,
+>              ...a lot more props...
+>              "skey": false,
+>              "vxpdeh2": false
+>            }
+>          }
+>        }
+>      }
+> 
+> It is recommended that s390 guests operate with these features
+> explicitly disabled to ensure compatability with future hardware.
 > 
 > Signed-off-by: Collin Walling <walling@linux.ibm.com>
-> ---
->   target/s390x/cpu_features.c | 3 +++
->   1 file changed, 3 insertions(+)
-> 
-> diff --git a/target/s390x/cpu_features.c b/target/s390x/cpu_features.c
-> index efafc9711c..cb4e2b8920 100644
-> --- a/target/s390x/cpu_features.c
-> +++ b/target/s390x/cpu_features.c
-> @@ -218,6 +218,9 @@ void s390_get_deprecated_features(S390FeatBitmap features)
->            /* CSSKE is deprecated on newer generations */
->            S390_FEAT_CONDITIONAL_SSKE,
->            S390_FEAT_BPB,
-> +         /* Deprecated on z16 */
-> +         S390_FEAT_CONSTRAINT_TRANSACTIONAL_EXE,
-> +         S390_FEAT_TRANSACTIONAL_EXE
->       };
->       int i;
->   
+
 
 Reviewed-by: David Hildenbrand <david@redhat.com>
 
