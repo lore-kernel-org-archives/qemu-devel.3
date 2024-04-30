@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 532A1C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 12:01:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 351D2C10F16
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 12:01:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1mAL-0005KB-Pn; Tue, 30 Apr 2024 08:00:57 -0400
+	id 1s1mAl-0005Uy-2f; Tue, 30 Apr 2024 08:01:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s1mA4-0005CT-Q7
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 08:00:41 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s1mAd-0005Pz-KU
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 08:01:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s1mA2-0005A3-Am
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 08:00:39 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s1mAb-0005Hd-Vj
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 08:01:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714478437;
+ s=mimecast20190719; t=1714478473;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xxn5vd70PoDihUywOAfN2UG3vJf75Kt+J44ZVfm6OMY=;
- b=HuY8Z9bXGJhcEK/c0Hr5bk3aC81YGzl/aLAfEwr9+M796Qm4CiOjAE8W1dxggJXr/dYmcy
- eILPxQrEoRTOdIqreqc6OZhdATLPzC7nzDKoR+TItrdmLEhevjTiszw9LvTMn32E/5iSAq
- Al35brsYI6NTqKA19kHXnr5Ik2nyp6k=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=u5PEPN8p9RoMorNGIsS96jkDCIi8kixvdWvyJ6qnGLQ=;
+ b=PH37LV+NxF8QcMH5a9R2n8Uw8bRDgplFL7BZNj/zyVpO1OpcpSRq8uYawfN3N9l+TpRHLK
+ sXgM5uv3hNgoK4/dI1AMOlHuvnIleSRCwVaD/b+8gY4SoeLhdsq1wfP//Nh6rz0MW0e9Tz
+ TvydErqDkNpl1sLXvGP8cjdZ4+qx504=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-648-Mnjha6KpM96WzTUAAH5iWw-1; Tue, 30 Apr 2024 08:00:35 -0400
-X-MC-Unique: Mnjha6KpM96WzTUAAH5iWw-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6a0dedea1d0so7760656d6.3
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 05:00:35 -0700 (PDT)
+ us-mta-494-4S5ZoZD3N1mZvrP570rnow-1; Tue, 30 Apr 2024 08:01:11 -0400
+X-MC-Unique: 4S5ZoZD3N1mZvrP570rnow-1
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-439ff4e2cf0so71735641cf.2
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 05:01:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714478435; x=1715083235;
+ d=1e100.net; s=20230601; t=1714478471; x=1715083271;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xxn5vd70PoDihUywOAfN2UG3vJf75Kt+J44ZVfm6OMY=;
- b=i9NysoItf8X7ej5brIepLtEyc+0oZC4fYSFA+lGpGKYu5yz71uZAkbiwx4OliOiprB
- KAPf9JATFDlRs84rJL30PzA3hS06A8BC55WV1XYb6Vjkze24KA0googrT4DWdU7MdipN
- 85vwZKmXMVrXLVaBVTbBipcCunbT15SvGdFkxoK8YOtVX6lbkPywVXYnJH825yJG7s9z
- 6Iy/UP1eDiegTDaOEscVaDjmlF5L+Znf8/cX/705YDijMV2uiSuE7I8yvuAmL7izpN4y
- gfNObfvJxYhRVRl7VZgBG2uhNTPWxnr38wiDnv5CRTn7jVm851d8W95fIgZ3XnSCXO5o
- xPuA==
+ bh=u5PEPN8p9RoMorNGIsS96jkDCIi8kixvdWvyJ6qnGLQ=;
+ b=PwVb67YRtXGOtloMwylfc7iRaj12TJqAcbpINjcbiTIFjzCwYVq0Mjw5nlhXI4YhUA
+ vZeR9S79B+NpXBIfKxAcwtnQKYhQmnLQP4DuAcbi9PXGxWmUrTqm6nAqLo8XLfpOQ85N
+ LSOP75kh2zcSFIiB9hLPIC9KxDBY9L5Yc2mVI2jGne+Cw7wmKQK8Rf1guAU0oPdZy4K6
+ HOu5Q/ux+qmcxwmNdMZM+WuuHcvASv8D5YmDFQ0IPQZsHdZM2zFs8Ei6sHJ/bPV2tr59
+ MeYRDimWKdzGraPohaLu/LRT2YUBmneu2CcPaw1otqcWxCaw8fP2mhNoWxAsAwYoyIPS
+ yZhA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVitG+udu1df5LgwvhKrwHL3bcZ35rcwhUz1K7VNfZhq2FqwwDYmjnE44iuhYsoGP6vzhLlDGKoC0iWe9mL6kHoILoZSEc=
-X-Gm-Message-State: AOJu0Yz8QNyLCzKmxoaAuTratKg9izdjKQZnqJ2Vb/2rderl/UXPrIaP
- 0150qiMH98jLUKNyN6kRZKlR5OKfx09hTKth+HVyA00EwxM9igDAe0yPLlEyPMPYfmuPqSEBfLb
- +tL314JijcHC1ljGj2nQ2rO9uu4hnOG/EgeJXvKGSeywxqkqtxfjv
-X-Received: by 2002:a05:620a:24c6:b0:790:f573:3fce with SMTP id
- m6-20020a05620a24c600b00790f5733fcemr3030167qkn.4.1714478434905; 
- Tue, 30 Apr 2024 05:00:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFPDl+2WIlBL7BLgvLV1mz8MvuEX3ZWDwGV/+TOmups/zbggNCquFf+CldiFkZws6N16SEGoA==
-X-Received: by 2002:a05:620a:24c6:b0:790:f573:3fce with SMTP id
- m6-20020a05620a24c600b00790f5733fcemr3030129qkn.4.1714478434487; 
- Tue, 30 Apr 2024 05:00:34 -0700 (PDT)
+ AJvYcCUteXFjhIOwkFdiz3ZAVejZXz5jDfw9Bvf1ARvvapUWXiQiicZpwnOElT51C2SvUxpxqoCzZuvtO4hKTjh03OcTogH16gE=
+X-Gm-Message-State: AOJu0Yy0ke8Hn1gnJjgwYvGNfWKe+Vd7z6qEXGrBpGcVJ8jdabfuKZJ+
+ PTsaA030a6YC+mQ2F2INIrqQpQOUePsG1t1ELb2e3xOirXD5flkW3RnEMncqaumPVgNiXRB+exU
+ oeJn73k4+yWEPd6FoYSHETF4urBBTm7hprpPLbGLS0LB41ycB/MXU
+X-Received: by 2002:ac8:5805:0:b0:43a:c0c7:a223 with SMTP id
+ g5-20020ac85805000000b0043ac0c7a223mr2590661qtg.48.1714478470970; 
+ Tue, 30 Apr 2024 05:01:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF7BUN5mFkeVoa69TqaWk5CSlZ6xWB3PhCDrLyKM1CInqK/zn1EsHyXXg4JMNCw/1QNFmlEnA==
+X-Received: by 2002:ac8:5805:0:b0:43a:c0c7:a223 with SMTP id
+ g5-20020ac85805000000b0043ac0c7a223mr2590619qtg.48.1714478470400; 
+ Tue, 30 Apr 2024 05:01:10 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- vr2-20020a05620a55a200b00790a2e12dc8sm4543966qkn.116.2024.04.30.05.00.32
+ o2-20020ac872c2000000b00439bb9c454bsm7883506qtp.56.2024.04.30.05.01.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Apr 2024 05:00:33 -0700 (PDT)
-Message-ID: <c0620278-f8b9-478d-bd24-b23fba42e0bf@redhat.com>
-Date: Tue, 30 Apr 2024 14:00:30 +0200
+ Tue, 30 Apr 2024 05:01:09 -0700 (PDT)
+Message-ID: <60b835fe-3e69-4ade-b25f-a2649d6cdaa9@redhat.com>
+Date: Tue, 30 Apr 2024 14:01:06 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 02/19] vfio/container: Introduce
- HostIOMMUDeviceLegacyVFIO device
+Subject: Re: [PATCH v3 05/19] backends/host_iommu_device: Introduce
+ HostIOMMUDeviceCaps
 To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
  "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
 Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
@@ -83,12 +83,12 @@ Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
  "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
  "Peng, Chao P" <chao.p.peng@intel.com>
 References: <20240429065046.3688701-1-zhenzhong.duan@intel.com>
- <20240429065046.3688701-3-zhenzhong.duan@intel.com>
- <5160adfc-9630-49f0-a2a4-f6987c819bc5@redhat.com>
- <SJ0PR11MB6744D20165F8D9F8383CA115921A2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <20240429065046.3688701-6-zhenzhong.duan@intel.com>
+ <1495f7b1-d3f3-4bd9-93de-34767cfa5b26@redhat.com>
+ <SJ0PR11MB6744A11C683EA4242EADB730921A2@SJ0PR11MB6744.namprd11.prod.outlook.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <SJ0PR11MB6744D20165F8D9F8383CA115921A2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+In-Reply-To: <SJ0PR11MB6744A11C683EA4242EADB730921A2@SJ0PR11MB6744.namprd11.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -115,38 +115,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/30/24 11:13, Duan, Zhenzhong wrote:
+On 4/30/24 11:55, Duan, Zhenzhong wrote:
 > 
 > 
 >> -----Original Message-----
 >> From: Cédric Le Goater <clg@redhat.com>
->> Subject: Re: [PATCH v3 02/19] vfio/container: Introduce
->> HostIOMMUDeviceLegacyVFIO device
+>> Subject: Re: [PATCH v3 05/19] backends/host_iommu_device: Introduce
+>> HostIOMMUDeviceCaps
 >>
 >> On 4/29/24 08:50, Zhenzhong Duan wrote:
->>> HostIOMMUDeviceLegacyVFIO represents a host IOMMU device under
->> VFIO
->>> legacy container backend.
+>>> HostIOMMUDeviceCaps's elements map to the host IOMMU's capabilities.
+>>> Different platform IOMMU can support different elements.
 >>>
->>> It includes a link to VFIODevice.
+>>> Currently only two elements, type and aw_bits, type hints the host
+>>> platform IOMMU type, i.e., INTEL vtd, ARM smmu, etc; aw_bits hints
+>>> host IOMMU address width.
+>>>
+>>> Introduce .check_cap() handler to check if
+>> HOST_IOMMU_DEVICE_CAP_XXX
+>>> is supported.
+>>>
+>>> Introduce a HostIOMMUDevice API host_iommu_device_check_cap()
+>> which
+>>> is a wrapper of .check_cap().
+>>>
+>>> Introduce a HostIOMMUDevice API
+>> host_iommu_device_check_cap_common()
+>>> to check common capabalities of different host platform IOMMUs.
+>>>
+>>> Suggested-by: Cédric Le Goater <clg@redhat.com>
+>>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>>> ---
+>>>    include/sysemu/host_iommu_device.h | 44
+>> ++++++++++++++++++++++++++++++
+>>>    backends/host_iommu_device.c       | 29 ++++++++++++++++++++
+>>>    2 files changed, 73 insertions(+)
+>>>
+>>> diff --git a/include/sysemu/host_iommu_device.h
+>> b/include/sysemu/host_iommu_device.h
+>>> index 2b58a94d62..12b6afb463 100644
+>>> --- a/include/sysemu/host_iommu_device.h
+>>> +++ b/include/sysemu/host_iommu_device.h
+>>> @@ -14,12 +14,27 @@
+>>>
+>>>    #include "qom/object.h"
+>>>    #include "qapi/error.h"
+>>> +#include "linux/iommufd.h"
+>>> +
+>>> +/**
+>>> + * struct HostIOMMUDeviceCaps - Define host IOMMU device capabilities.
+>>> + *
+>>> + * @type: host platform IOMMU type.
+>>> + *
+>>> + * @aw_bits: host IOMMU address width. 0xff if no limitation.
+>>> + */
+>>> +typedef struct HostIOMMUDeviceCaps {
+>>> +    enum iommu_hw_info_type type;
+>>> +    uint8_t aw_bits;
+>>> +} HostIOMMUDeviceCaps;
+>>>
+>>>    #define TYPE_HOST_IOMMU_DEVICE "host-iommu-device"
+>>>    OBJECT_DECLARE_TYPE(HostIOMMUDevice, HostIOMMUDeviceClass,
+>> HOST_IOMMU_DEVICE)
+>>>
+>>>    struct HostIOMMUDevice {
+>>>        Object parent_obj;
+>>> +
+>>> +    HostIOMMUDeviceCaps caps;
+>>>    };
+>>>
+>>>    /**
+>>> @@ -47,5 +62,34 @@ struct HostIOMMUDeviceClass {
+>>>         * Returns: true on success, false on failure.
+>>>         */
+>>>        bool (*realize)(HostIOMMUDevice *hiod, void *opaque, Error **errp);
+>>> +    /**
+>>> +     * @check_cap: check if a host IOMMU device capability is supported.
+>>> +     *
+>>> +     * Optional callback, if not implemented, hint not supporting query
+>>> +     * of @cap.
+>>> +     *
+>>> +     * @hiod: pointer to a host IOMMU device instance.
+>>> +     *
+>>> +     * @cap: capability to check.
+>>> +     *
+>>> +     * @errp: pass an Error out when fails to query capability.
+>>> +     *
+>>> +     * Returns: <0 on failure, 0 if a @cap is unsupported, or else
+>>> +     * 1 or some positive value for some special @cap,
+>>> +     * i.e., HOST_IOMMU_DEVICE_CAP_AW_BITS.
+>>> +     */
+>>> +    int (*check_cap)(HostIOMMUDevice *hiod, int cap, Error **errp);
+>>>    };
+>>> +
+>>> +/*
+>>> + * Host IOMMU device capability list.
+>>> + */
+>>> +#define HOST_IOMMU_DEVICE_CAP_IOMMUFD       0
+>>> +#define HOST_IOMMU_DEVICE_CAP_IOMMU_TYPE    1
+>>> +#define HOST_IOMMU_DEVICE_CAP_AW_BITS       2
+>>> +
+>>> +
+>>> +int host_iommu_device_check_cap(HostIOMMUDevice *hiod, int cap,
+>> Error **errp);
+>>> +int host_iommu_device_check_cap_common(HostIOMMUDevice *hiod,
+>> int cap,
+>>> +                                       Error **errp);
+>>>    #endif
+>>> diff --git a/backends/host_iommu_device.c
+>> b/backends/host_iommu_device.c
+>>> index 41f2fdce20..b97d008cc7 100644
+>>> --- a/backends/host_iommu_device.c
+>>> +++ b/backends/host_iommu_device.c
+>>> @@ -28,3 +28,32 @@ static void host_iommu_device_init(Object *obj)
+>>>    static void host_iommu_device_finalize(Object *obj)
+>>>    {
+>>>    }
+>>> +
+>>> +/* Wrapper of HostIOMMUDeviceClass:check_cap */
+>>> +int host_iommu_device_check_cap(HostIOMMUDevice *hiod, int cap,
+>> Error **errp)
 >>
->> I don't see any use of this attribute. May be introduce later when needed.
+>> Since we have an 'Error **errp', we could return a bool instead,
+>> unless this is a 'get_cap' routine ?
 > 
-> Indeed, will remove.
-> 
-> Then 'struct HostIOMMUDeviceLegacyVFIO' is same as
-> struct HostIOMMUDevice.
-> 
-> Not clear if it's preferred to remove 'struct HostIOMMUDeviceLegacyVFIO'
-> and use HostIOMMUDevice instead. Something like:
-> 
-> OBJECT_DECLARE_SIMPLE_TYPE(HostIOMMUDevice,
->                                              HOST_IOMMU_DEVICE_LEGACY_VFIO)
+> Maybe better to name it host_iommu_device_get_cap()?
+> Because not all results are bool, some are integer, i.e., aw_bits.
 
-I would. The simpler the better.
+LGTM.
+
 
 Thanks,
 
 C.
+
+
 
 
