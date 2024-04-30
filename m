@@ -4,95 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0957AC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 17:56:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 608A3C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 18:01:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1ri4-0004nL-I6; Tue, 30 Apr 2024 13:56:08 -0400
+	id 1s1rml-0005w5-GF; Tue, 30 Apr 2024 14:00:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1s1rhr-0004m8-Av
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 13:55:56 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1s1rhp-0004uL-9S
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 13:55:55 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43UHMvWd016691; Tue, 30 Apr 2024 17:55:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=date : from : to : cc :
- subject : message-id : references : content-type : in-reply-to :
- content-transfer-encoding : mime-version; s=pp1;
- bh=0EAyBGkbFfYSBfZ/BtCpY+jKs6wGGm/hRVTqznX8UJk=;
- b=a65KiJCzyfxVzAVRwJ8yGWfgeoMEsYgfhaIgfvdMBQWIcEERd1wMWPdOYjnA9plsw3oN
- PCYcrLcYr8f9/ixrJcGoYmkilnm+jfsLtnvFlTtV9//nZYYf9rwla7hNXvhkKMlJvz9+
- bhhpfGN+/45pHsz4cdFP8Ei5I6txuPc4ng5Rel6qFXn8TxhDyBtNJCvRFgoi6tQql0ZR
- CnzLOF15Yb3wPzMPlY9xF0KuSOrmElzXkE3CcFtdL4tQTjfSn+OKWSaG5sshuPX74qPM
- sdnzjY9M+PaKY0WCu+Y1FPUTuS8BtulHSVWiVf2BvZaCsBmuMz77IFvhGEf+VecS+58r Fw== 
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xu508r3b5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Apr 2024 17:55:50 +0000
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43UEeq5B011750; Tue, 30 Apr 2024 17:55:49 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xsdwm62n6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Apr 2024 17:55:49 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 43UHtkaG27656954
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 30 Apr 2024 17:55:48 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F1CDD20049;
- Tue, 30 Apr 2024 17:55:45 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9E58820040;
- Tue, 30 Apr 2024 17:55:45 +0000 (GMT)
-Received: from heavy (unknown [9.171.51.254])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 30 Apr 2024 17:55:45 +0000 (GMT)
-Date: Tue, 30 Apr 2024 19:55:44 +0200
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH v3 00/13] exec: Rework around CPUState user fields (part 2)
-Message-ID: <363wwielvdpy37h7cqo7jo5luyys2aqmfgeb4t3wypsb3myqxg@kvasyjy4e767>
-References: <20240430122808.72025-1-philmd@linaro.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <20240430122808.72025-1-philmd@linaro.org>
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: sAn-GWhFAIwEoWFeAIWn-QeKwQ5bXNO8
-X-Proofpoint-GUID: sAn-GWhFAIwEoWFeAIWn-QeKwQ5bXNO8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1s1rmj-0005vw-KM
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 14:00:57 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1s1rmf-0005lK-O9
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 14:00:56 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1e51398cc4eso53648235ad.2
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 11:00:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1714500050; x=1715104850; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=KIrs7j4YMFww+dcXVrYn4lShSCWiAn2OjEdShWaBO+E=;
+ b=afqRcZMa3G9QTLfyAS05Dx5yT7E58/PQ39PcvTziTzpze/bKGM+mX0zL+Q5QHoZ3GS
+ cZaoc7migiE20+XpnnsuLQOVnyYrMthlfxVtISLmfLZeJLCE76/XdVSkTCcFBDRyI0Nd
+ dO0tI/uBdjQGzpvjETjruA5qoZ/0noMNRCwqU1+meotiiAAeX0LC4kxyvqCwapTK6mgB
+ 11bWCIeZVh0U1UDp3aVgWFz5r7erG/kEC9J73A14VS1wsLuuE4m3YcZDgboSicj3soGk
+ k48OhBl0OSAFDvVLE4LqF/hkLrZvVyPAJV4R7T6So2aw0x6soBYCTGgcgWnJOvExO0aG
+ AVqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714500050; x=1715104850;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=KIrs7j4YMFww+dcXVrYn4lShSCWiAn2OjEdShWaBO+E=;
+ b=MPecs+DWjHKSeeDuaoUdrBTmnP9gABN8fTvb5vLtfYRKg1q5COGJGMjfg+N3nKetnN
+ aF1MK+sCLjaoktjQL4/iWPjfcRLGCYMiMJEnklBZGGVhea9uSekMkgiBkVi6y42NmRU6
+ wrlgwTj5QqXtbDXJIeBsGMNBwfyh4w7atnhh5YEaqH54I6TgcFfKrINSJFilMqGznp84
+ IpK0LlC3RmTmY3+S4Q91bVG81phK5umfNtYEWKg2ftrwXXhim3aeKckq2sNm/DV+/o70
+ oudidUsoL8qGi/FIi+qbP+T5fTcvR162l2UHCf0geS8V6XqNGoUDZaK95VEpA5yFbhXc
+ rWSQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV/KoTaU+zQraH5zE4qjJUomb3xNVv1SDWfVuGOcKx5lJOd8jd4CQTOzBb68dt9MoavOwVZbhDxxG1BaoOD3YVwhRKNTpY=
+X-Gm-Message-State: AOJu0YzT4ylNhWUrMYI2ILMJCl5DvNBfFIeMCtN3JycyUrTQHmgVCq4F
+ 4k1koCcJVzka6MJiTqE475t5XwJdZ7gFAMBwFSptNzawMI5m7ebZ8J6i7F63kvU=
+X-Google-Smtp-Source: AGHT+IHPt9s5I3RNterSAWM5NQ2/6YSGDk88/zZQ/BZ0n4TxKKtKrb1nU/7QsSL6+5Mr663Z5WiUYw==
+X-Received: by 2002:a17:902:b948:b0:1e5:4f5:7fa7 with SMTP id
+ h8-20020a170902b94800b001e504f57fa7mr158459pls.21.1714500050318; 
+ Tue, 30 Apr 2024 11:00:50 -0700 (PDT)
+Received: from [192.168.68.110] ([187.11.154.208])
+ by smtp.gmail.com with ESMTPSA id
+ t6-20020a170902e84600b001e604438791sm22695768plg.156.2024.04.30.11.00.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 30 Apr 2024 11:00:49 -0700 (PDT)
+Message-ID: <d672ec9d-eaa0-48c1-9f99-d94cf06e7aac@ventanamicro.com>
+Date: Tue, 30 Apr 2024 15:00:45 -0300
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-30_10,2024-04-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0
- lowpriorityscore=0 suspectscore=0 adultscore=0 bulkscore=0 mlxscore=0
- impostorscore=0 priorityscore=1501 clxscore=1015 mlxlogscore=999
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2404010000 definitions=main-2404300128
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] target/riscv: Save counter values during countinhibit
+ update
+Content-Language: en-US
+To: Atish Patra <atishp@rivosinc.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: palmer@dabbelt.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ bin.meng@windriver.com, alistair.francis@wdc.com,
+ Andrew Jones <ajones@ventanamicro.com>
+References: <20240429-countinhibit_fix-v1-0-802ec1e99133@rivosinc.com>
+ <20240429-countinhibit_fix-v1-1-802ec1e99133@rivosinc.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20240429-countinhibit_fix-v1-1-802ec1e99133@rivosinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,115 +102,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 30, 2024 at 02:27:54PM +0200, Philippe Mathieu-Daudé wrote:
-> Missing WASM testing by Ilya (branch available at
-> https://gitlab.com/philmd/qemu/-/commits/tcg_flush_jmp_cache)
 
-Hmm, it dies very early now:
 
-  # gdb --args ./qemu-s390x -L /usr/s390x-linux-gnu /build/wasmtime/target/s390x-unknown-linux-gnu/debug/deps/component_fuzz_util-d10a3a6b4ad8af47
-
-  Thread 1 "qemu-s390x" received signal SIGSEGV, Segmentation fault.
-  0x000055555559b718 in cpu_common_realizefn (dev=0x5555557c28c0, errp=<optimized out>) at ../home/iii/myrepos/qemu/hw/core/cpu-common.c:217
-  217             cpu->accel->plugin_state = qemu_plugin_create_vcpu_state();
-
-  (gdb) bt
-  #0  0x000055555559b718 in cpu_common_realizefn (dev=0x5555557c28c0, errp=<optimized out>) at ../home/iii/myrepos/qemu/hw/core/cpu-common.c:217
-  #1  0x000055555559f59a in s390_cpu_realizefn (dev=0x5555557c28c0, errp=0x7fffffffe1a0) at ../home/iii/myrepos/qemu/target/s390x/cpu.c:284
-  #2  0x000055555563f76b in device_set_realized (obj=<optimized out>, value=<optimized out>, errp=0x7fffffffe2e0) at ../home/iii/myrepos/qemu/hw/core/qdev.c:510
-  #3  0x000055555564363d in property_set_bool (obj=0x5555557c28c0, v=<optimized out>, name=<optimized out>, opaque=0x5555557a9140, errp=0x7fffffffe2e0) at ../home/iii/myrepos/qemu/qom/object.c:2362
-  #4  0x0000555555646b9b in object_property_set (obj=obj@entry=0x5555557c28c0, name=name@entry=0x5555556e8ae2 "realized", v=v@entry=0x5555557c6650, errp=errp@entry=0x7fffffffe2e0)
-      at ../home/iii/myrepos/qemu/qom/object.c:1471
-  #5  0x000055555564a43f in object_property_set_qobject (obj=obj@entry=0x5555557c28c0, name=name@entry=0x5555556e8ae2 "realized", value=value@entry=0x5555557a7a90, errp=errp@entry=0x7fffffffe2e0)
-      at ../home/iii/myrepos/qemu/qom/qom-qobject.c:28
-  #6  0x0000555555647204 in object_property_set_bool (obj=0x5555557c28c0, name=name@entry=0x5555556e8ae2 "realized", value=value@entry=true, errp=errp@entry=0x7fffffffe2e0)
-      at ../home/iii/myrepos/qemu/qom/object.c:1541
-  #7  0x000055555564025c in qdev_realize (dev=<optimized out>, bus=bus@entry=0x0, errp=errp@entry=0x7fffffffe2e0) at ../home/iii/myrepos/qemu/hw/core/qdev.c:291
-  #8  0x000055555559bbb4 in cpu_create (typename=<optimized out>) at ../home/iii/myrepos/qemu/hw/core/cpu-common.c:61
-  #9  0x000055555559a467 in main (argc=4, argv=0x7fffffffeaa8, envp=<optimized out>) at ../home/iii/myrepos/qemu/linux-user/main.c:811
-
-  (gdb) p cpu
-  $1 = (CPUState *) 0x5555557c28c0
-  (gdb) p cpu->accel
-  $2 = (AccelCPUState *) 0x0
-
-Configured with: '/home/iii/myrepos/qemu/configure' '--target-list=s390x-linux-user' '--disable-tools' '--disable-slirp' '--disable-fdt' '--disable-capstone' '--disable-docs'
-
-If you don't see what can be wrong here right away, I can debug this.
-
-> Since v2:
-> - Move cpu_loop_exit_requested() to "exec/cpu-loop.h"
-> - Added R-b tags
+On 4/29/24 16:28, Atish Patra wrote:
+> Currently, if a counter monitoring cycle/instret is stopped via
+> mcountinhibit we just update the state while the value is saved
+> during the next read. This is not accurate as the read may happen
+> many cycles after the counter is stopped. Ideally, the read should
+> return the value saved when the counter is stopped.
 > 
-> Since v1:
-> - First 13 patches queued
-> - Restrict qemu_plugin_vcpu_exit_hook() to (TCG) plugins
-> - Restrict cpu_plugin_mem_cbs_enabled() to TCG (plugins)
-> - Addressed Richard review comments on the others:
->   - Move cpu_plugin_mem_cbs_enabled()
->   - Do not move mem_io_pc, waiting for [*]
->   - Mention can_do_io restricted
+> Thus, save the value of the counter during the inhibit update
+> operation and return that value during the read if corresponding bit
+> in mcountihibit is set.
 > 
-> Finish extracting TCG fields from CPUState:
-> - Extract tcg_cpu_exit() from cpu_exit()
-> - Introduce AccelOpsClass::exit_vcpu_thread()
-> - cpu_exit() calls exit_vcpu_thread=tcg_cpu_exit for TCG
-> - Forward declare TaskState and more uses of get_task_state()
-> - Introduce TCG AccelCPUState
-> - Move TCG specific fields from CPUState to AccelCPUState
-> - Restrict "exec/tlb-common.h" to TCG
-> - Restrict iommu_notifiers, icount to system emulation
+> Signed-off-by: Atish Patra <atishp@rivosinc.com>
+> ---
+>   target/riscv/cpu.h     |  1 -
+>   target/riscv/csr.c     | 32 ++++++++++++++++++++------------
+>   target/riscv/machine.c |  1 -
+>   3 files changed, 20 insertions(+), 14 deletions(-)
 > 
-> [*] https://lore.kernel.org/qemu-devel/20240416040609.1313605-3-richard.henderson@linaro.org/
-> 
-> Based-on: https://gitlab.com/philmd/qemu/-/commits/accel-next
-> 
-> Philippe Mathieu-Daudé (13):
->   accel/tcg: Restrict qemu_plugin_vcpu_exit_hook() to TCG plugins
->   accel/tcg: Restrict cpu_plugin_mem_cbs_enabled() to TCG
->   accel/tcg: Move @plugin_mem_cbs from CPUState to
->     CPUNegativeOffsetState
->   accel/tcg: Move @plugin_state from CPUState to TCG AccelCPUState
->   accel/tcg: Restrict cpu_loop_exit_requested() to TCG
->   accel/tcg: Restrict IcountDecr / can_do_io / CPUTLB to TCG
->   accel/tcg: Move @jmp_env from CPUState to TCG AccelCPUState
->   accel/tcg: Move @cflags_next_tb from CPUState to TCG AccelCPUState
->   accel/tcg: Move @iommu_notifiers from CPUState to TCG AccelCPUState
->   accel/tcg: Move @tcg_cflags from CPUState to TCG AccelCPUState
->   accel/tcg: Restrict icount to system emulation
->   accel/tcg: Move icount fields from CPUState to TCG AccelCPUState
->   accel/tcg: Move @tb_jmp_cache from CPUState to TCG AccelCPUState
-> 
->  accel/tcg/internal-common.h      | 18 ++++++++++
->  accel/tcg/tb-jmp-cache.h         |  4 +--
->  accel/tcg/tcg-accel-ops.h        |  1 +
->  accel/tcg/vcpu-state.h           | 20 +++++++++++
->  include/exec/cpu-loop.h          | 35 +++++++++++++++++++
->  include/exec/exec-all.h          | 17 ----------
->  include/exec/tlb-common.h        |  4 +++
->  include/hw/core/cpu.h            | 58 ++++++++------------------------
->  include/qemu/plugin.h            |  2 +-
->  include/qemu/typedefs.h          |  1 -
->  accel/tcg/cpu-exec-common.c      |  2 +-
->  accel/tcg/cpu-exec.c             | 52 +++++++++++++++-------------
->  accel/tcg/cputlb.c               |  2 +-
->  accel/tcg/icount-common.c        |  7 ++--
->  accel/tcg/plugin-gen.c           |  9 +++--
->  accel/tcg/tb-maint.c             |  6 ++--
->  accel/tcg/tcg-accel-ops-icount.c | 14 ++++----
->  accel/tcg/tcg-accel-ops.c        |  2 ++
->  accel/tcg/translate-all.c        |  9 ++---
->  accel/tcg/watchpoint.c           |  5 +--
->  hw/core/cpu-common.c             |  9 +++--
->  linux-user/main.c                |  2 +-
->  plugins/core.c                   |  9 ++---
->  system/physmem.c                 | 37 +++++++++++++++-----
->  target/arm/tcg/helper-a64.c      |  1 +
->  target/s390x/tcg/mem_helper.c    |  1 +
->  26 files changed, 195 insertions(+), 132 deletions(-)
->  create mode 100644 include/exec/cpu-loop.h
-> 
-> -- 
-> 2.41.0
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 3b1a02b9449a..09bbf7ce9880 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -153,7 +153,6 @@ typedef struct PMUCTRState {
+>       target_ulong mhpmcounter_prev;
+>       /* Snapshort value of a counter in RV32 */
+>       target_ulong mhpmcounterh_prev;
+> -    bool started;
+>       /* Value beyond UINT32_MAX/UINT64_MAX before overflow interrupt trigger */
+>       target_ulong irq_overflow_left;
+>   } PMUCTRState;
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index 726096444fae..68ca31aff47d 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -929,17 +929,11 @@ static RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
+>   
+>       if (get_field(env->mcountinhibit, BIT(ctr_idx))) {
+>           /*
+> -         * Counter should not increment if inhibit bit is set. We can't really
+> -         * stop the icount counting. Just return the counter value written by
+> -         * the supervisor to indicate that counter was not incremented.
+> +         * Counter should not increment if inhibit bit is set. Just return the
+> +         * current counter value.
+>            */
+> -        if (!counter->started) {
+> -            *val = ctr_val;
+> -            return RISCV_EXCP_NONE;
+> -        } else {
+> -            /* Mark that the counter has been stopped */
+> -            counter->started = false;
+> -        }
+> +         *val = ctr_val;
+> +         return RISCV_EXCP_NONE;
+>       }
+>   
+>       /*
+> @@ -1973,9 +1967,23 @@ static RISCVException write_mcountinhibit(CPURISCVState *env, int csrno,
+>   
+>       /* Check if any other counter is also monitoring cycles/instructions */
+>       for (cidx = 0; cidx < RV_MAX_MHPMCOUNTERS; cidx++) {
+> -        if (!get_field(env->mcountinhibit, BIT(cidx))) {
+>               counter = &env->pmu_ctrs[cidx];
+> -            counter->started = true;
+> +        if (get_field(env->mcountinhibit, BIT(cidx)) && (val & BIT(cidx))) {
+> +	    /*
+> +             * Update the counter value for cycle/instret as we can't stop the
+> +             * host ticks. But we should show the current value at this moment.
+> +             */
+> +            if (riscv_pmu_ctr_monitor_cycles(env, cidx) ||
+> +                riscv_pmu_ctr_monitor_instructions(env, cidx)) {
+> +                counter->mhpmcounter_val = get_ticks(false) -
+> +                                           counter->mhpmcounter_prev +
+> +                                           counter->mhpmcounter_val;
+> +                if (riscv_cpu_mxl(env) == MXL_RV32) {
+> +                    counter->mhpmcounterh_val = get_ticks(false) -
+> +                                                counter->mhpmcounterh_prev +
+> +                                                counter->mhpmcounterh_val;
+> +		}
+> +            }
+>           }
+>       }
+>   
+> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+> index 76f2150f78b5..3e0f2dd2ce2a 100644
+> --- a/target/riscv/machine.c
+> +++ b/target/riscv/machine.c
+> @@ -328,7 +328,6 @@ static const VMStateDescription vmstate_pmu_ctr_state = {
+>           VMSTATE_UINTTL(mhpmcounterh_val, PMUCTRState),
+>           VMSTATE_UINTTL(mhpmcounter_prev, PMUCTRState),
+>           VMSTATE_UINTTL(mhpmcounterh_prev, PMUCTRState),
+> -        VMSTATE_BOOL(started, PMUCTRState),
+
+Unfortunately we can't remove fields from the VMStateDescription without breaking
+migration backward compatibility. Older QEMUs will attempt to read a field that
+doesn't exist and migration will fail.
+
+I'm assuming that we care about backward compat. If we're not up to this point yet
+then we can just bump the version_id of vmstate_pmu_ctr_state and be done with it.
+This is fine to do unless someone jumps in and complains that we broke a migration
+case for the 'virt' board. Granted, we don't have versioned boards yet so I'm unsure
+if someone would actually have a base to complain. Alistair, Drew, care to comment?
+
+
+Now, if we care about backward migration compat, we'll need to do as described in
+devel/migration/main.rst, section "Not sending existing elements". An example on
+how we need to proceed can also be seen in commit 6cc88d6bf9. But in short we
+would need to:
+
+- add a dummy property, e.g. a 'mig_started' bool
+
+- use a slightly different macro in vmstate:
+
+> -        VMSTATE_BOOL(started, PMUCTRState),
+> +        VMSTATE_BOOL_TEST(mig_started, PMUCTRState),
+
+- add hooks in pre_load()/post_load() to load the 'started' field
+
+
+
+Thanks,
+
+Daniel
+
+>           VMSTATE_END_OF_LIST()
+>       }
+>   };
 > 
 
