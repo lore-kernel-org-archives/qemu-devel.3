@@ -4,99 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84641C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 21:29:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19B8CC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 21:43:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1v1z-00061T-9q; Tue, 30 Apr 2024 17:28:55 -0400
+	id 1s1vFN-00081i-Um; Tue, 30 Apr 2024 17:42:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1s1v1x-00061J-H9
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 17:28:53 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1s1vFL-00081O-Lp
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 17:42:43 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1s1v1v-0008EC-1Q
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 17:28:53 -0400
-Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1s1vFI-0001p6-VQ
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 17:42:43 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43UKviHo010125; Tue, 30 Apr 2024 21:28:48 GMT
+ 43ULcbH9020107; Tue, 30 Apr 2024 21:42:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- subject : to : cc : references : from : in-reply-to : content-type :
+ h=date : from : to : cc :
+ subject : message-id : references : content-type : in-reply-to :
  content-transfer-encoding : mime-version; s=pp1;
- bh=WQ0fGuz1V77JvFff2Di9C9Rc/joON5eNRhThx/SAMMI=;
- b=PWDd8wfLD4POAHt/sqeocOGzpXNPfXhgZ2a6TXa8JA+QS1e7+SWIIRIhQP7G54W9O3P0
- zVW35HIv3NX6U10Zyjl4Z7XdLVlWkwijyx69EoMXJCrocGb+RboBeWxBb3Ugbr3Tbthg
- ta8FoaMyonSwJe44k5A6YSkHOaBxiMDuRKPte/yuqUV5lgrPJDKOrcHmpE2/TcTh7I0r
- xITHiTM1B1kmPjMW//Hu0g4/xNw35StEv2dnguB2z3rKE5wfxfJDyT80cKWPpgQ3A2ZO
- 1MgQFzbKWcTxX9yxxgGTxZjNxo3VKW4abmSxJOcqvzm7qv1eAc1YEt8/k67UkJZlPU3m ig== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xu84kr2fn-1
+ bh=ZWO69h3VUntzSl7aG7BagrCNAg45iGlHQSMeAD8T/Gg=;
+ b=L2farsm9v1GWzpW/hmj71eTDJNksXd8QP4T8HL0c2vVJtqmcpZblyGw694AXf/QzJWCY
+ b78nZZFsDaVXiAuHKk1kLjuf75qy/wQ0u1uepiIUx0kr5mLd6C7mseJi2GMDyHdhKru/
+ 5YWsGPKsudwtD5Yg4SA8ml2yIr8PUl+U/I/eUC68Im4SuEJnwdY5KHMxEyBqYl6jUWDU
+ pCK8JH7tBUs5YUOjFF71ZjXTKZr9l/rAiFiR1O1D3mBICD6kU3JBPZ3gB9OLgc3qlFpz
+ M1hsINyTHxlGrvfT1/DYCZ0n9Tul9GoNwuZ1Yp0HWyTLQQac/JoSjCCuhPiYKO+TEDAh Ow== 
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xu8qw805r-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Apr 2024 21:28:47 +0000
-Received: from m0353726.ppops.net (m0353726.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43ULSla4028568;
- Tue, 30 Apr 2024 21:28:47 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xu84kr2f9-2
+ Tue, 30 Apr 2024 21:42:31 +0000
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43UJ0sUj001433; Tue, 30 Apr 2024 21:42:30 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xsbptyk8r-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Apr 2024 21:28:47 +0000
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43UKfTMh022258; Tue, 30 Apr 2024 21:02:16 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3xsd6mq2b5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Apr 2024 21:02:16 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 43UL2DNN26346174
+ Tue, 30 Apr 2024 21:42:30 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 43ULgRYF34669090
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 30 Apr 2024 21:02:15 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A65DD58066;
- Tue, 30 Apr 2024 21:02:11 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5C31558064;
- Tue, 30 Apr 2024 21:02:11 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 30 Apr 2024 21:02:11 +0000 (GMT)
-Message-ID: <72bc9ea8-5492-425e-a797-f0139f369a4a@linux.ibm.com>
-Date: Tue, 30 Apr 2024 17:02:10 -0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 0/2] tpm: add mssim backend
-To: James Bottomley <James.Bottomley@HansenPartnership.com>,
+ Tue, 30 Apr 2024 21:42:29 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 21B1C2004D;
+ Tue, 30 Apr 2024 21:42:27 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C41A020040;
+ Tue, 30 Apr 2024 21:42:26 +0000 (GMT)
+Received: from heavy (unknown [9.171.51.254])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 30 Apr 2024 21:42:26 +0000 (GMT)
+Date: Tue, 30 Apr 2024 23:42:25 +0200
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-References: <20240430190855.2811-1-James.Bottomley@HansenPartnership.com>
-Content-Language: en-US
-From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <20240430190855.2811-1-James.Bottomley@HansenPartnership.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: Anton Johansson <anjo@rev.ng>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v3 00/13] exec: Rework around CPUState user fields (part 2)
+Message-ID: <uuuk6a2vo24yrrqrchjxaeko3utqshrdu6txcnqziokpg7dkom@4l4kd3dqh6jc>
+References: <20240430122808.72025-1-philmd@linaro.org>
+ <363wwielvdpy37h7cqo7jo5luyys2aqmfgeb4t3wypsb3myqxg@kvasyjy4e767>
+ <2a5e3a10-cc9a-44ff-8241-484d17b1f9cb@linaro.org>
+ <90e4b6c6-2bc4-4f4a-ac65-8141c2eb4cb5@linaro.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <90e4b6c6-2bc4-4f4a-ac65-8141c2eb4cb5@linaro.org>
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: bhD7AVzEdOHivaVuRoHMYZqWMjJYGHKH
-X-Proofpoint-GUID: u_iLqNXLNfjffm8F9D7maPSTy4kpAYQR
-Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: UI_5BLe2kwoLJipD4tOvKBydsNqblkD8
+X-Proofpoint-ORIG-GUID: UI_5BLe2kwoLJipD4tOvKBydsNqblkD8
+Content-Transfer-Encoding: 8bit
 X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
  definitions=2024-04-30_13,2024-04-30_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0
- clxscore=1015 suspectscore=0 malwarescore=0 priorityscore=1501
- mlxlogscore=816 mlxscore=0 spamscore=0 lowpriorityscore=0 phishscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2404010000 definitions=main-2404300154
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ clxscore=1015 impostorscore=0
+ spamscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0 bulkscore=0
+ adultscore=0 mlxscore=0 malwarescore=0 mlxlogscore=999 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2404010000
+ definitions=main-2404300155
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -119,69 +112,243 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 4/30/24 15:08, James Bottomley wrote:
-> The requested feedback was to convert the tpmdev handler to being json
-> based, which requires rethreading all the backends.  The good news is
-> this reduced quite a bit of code (especially as I converted it to
-> error_fatal handling as well, which removes the return status
-> threading).  The bad news is I can't test any of the conversions.
-> swtpm still isn't building on opensuse and, apparently, passthrough
-
-It does build and packages are available:
-- 
-https://app.travis-ci.com/github/stefanberger/swtpm-distro-compile/jobs/621150390
-- https://software.opensuse.org/package/swtpm
-
-> doesn't like my native TPM because it doesn't allow cancellation.
+On Tue, Apr 30, 2024 at 09:00:17PM +0200, Philippe Mathieu-Daudé wrote:
+> On 30/4/24 20:45, Philippe Mathieu-Daudé wrote:
+> > Hi Ilya,
+> > 
+> > On 30/4/24 19:55, Ilya Leoshkevich wrote:
+> > > On Tue, Apr 30, 2024 at 02:27:54PM +0200, Philippe Mathieu-Daudé wrote:
+> > > > Missing WASM testing by Ilya (branch available at
+> > > > https://gitlab.com/philmd/qemu/-/commits/tcg_flush_jmp_cache)
+> > > 
+> > > Hmm, it dies very early now:
+> > > 
+> > >    # gdb --args ./qemu-s390x -L /usr/s390x-linux-gnu /build/wasmtime/target/s390x-unknown-linux-gnu/debug/deps/component_fuzz_util-d10a3a6b4ad8af47
+> > > 
+> > >    Thread 1 "qemu-s390x" received signal SIGSEGV, Segmentation fault.
+> > >    0x000055555559b718 in cpu_common_realizefn (dev=0x5555557c28c0,
+> > > errp=<optimized out>) at
+> > > ../home/iii/myrepos/qemu/hw/core/cpu-common.c:217
+> > >    217             cpu->accel->plugin_state =
+> > > qemu_plugin_create_vcpu_state();
+> > > 
+> > >    (gdb) bt
+> > >    #0  0x000055555559b718 in cpu_common_realizefn
+> > > (dev=0x5555557c28c0, errp=<optimized out>) at
+> > > ../home/iii/myrepos/qemu/hw/core/cpu-common.c:217
+> > >    #1  0x000055555559f59a in s390_cpu_realizefn (dev=0x5555557c28c0,
+> > > errp=0x7fffffffe1a0) at
+> > > ../home/iii/myrepos/qemu/target/s390x/cpu.c:284
+> > >    #2  0x000055555563f76b in device_set_realized (obj=<optimized
+> > > out>, value=<optimized out>, errp=0x7fffffffe2e0) at
+> > > ../home/iii/myrepos/qemu/hw/core/qdev.c:510
+> > >    #3  0x000055555564363d in property_set_bool (obj=0x5555557c28c0,
+> > > v=<optimized out>, name=<optimized out>, opaque=0x5555557a9140,
+> > > errp=0x7fffffffe2e0) at ../home/iii/myrepos/qemu/qom/object.c:2362
+> > >    #4  0x0000555555646b9b in object_property_set
+> > > (obj=obj@entry=0x5555557c28c0, name=name@entry=0x5555556e8ae2
+> > > "realized", v=v@entry=0x5555557c6650,
+> > > errp=errp@entry=0x7fffffffe2e0)
+> > >        at ../home/iii/myrepos/qemu/qom/object.c:1471
+> > >    #5  0x000055555564a43f in object_property_set_qobject
+> > > (obj=obj@entry=0x5555557c28c0, name=name@entry=0x5555556e8ae2
+> > > "realized", value=value@entry=0x5555557a7a90,
+> > > errp=errp@entry=0x7fffffffe2e0)
+> > >        at ../home/iii/myrepos/qemu/qom/qom-qobject.c:28
+> > >    #6  0x0000555555647204 in object_property_set_bool
+> > > (obj=0x5555557c28c0, name=name@entry=0x5555556e8ae2 "realized",
+> > > value=value@entry=true, errp=errp@entry=0x7fffffffe2e0)
+> > >        at ../home/iii/myrepos/qemu/qom/object.c:1541
+> > >    #7  0x000055555564025c in qdev_realize (dev=<optimized out>,
+> > > bus=bus@entry=0x0, errp=errp@entry=0x7fffffffe2e0) at
+> > > ../home/iii/myrepos/qemu/hw/core/qdev.c:291
+> > >    #8  0x000055555559bbb4 in cpu_create (typename=<optimized out>)
+> > > at ../home/iii/myrepos/qemu/hw/core/cpu-common.c:61
+> > >    #9  0x000055555559a467 in main (argc=4, argv=0x7fffffffeaa8,
+> > > envp=<optimized out>) at
+> > > ../home/iii/myrepos/qemu/linux-user/main.c:811
+> > > 
+> > >    (gdb) p cpu
+> > >    $1 = (CPUState *) 0x5555557c28c0
+> > >    (gdb) p cpu->accel
+> > >    $2 = (AccelCPUState *) 0x0
+> > > 
+> > > Configured with: '/home/iii/myrepos/qemu/configure'
+> > > '--target-list=s390x-linux-user' '--disable-tools' '--disable-slirp'
+> > > '--disable-fdt' '--disable-capstone' '--disable-docs'
+> > > 
+> > > If you don't see what can be wrong here right away, I can debug this.
 > 
-> v3 pulls out more unneeded code in the visitor conversion, makes
-> migration work on external state preservation of the simulator and
-> adds documentation
+> I added this commit in the same branch:
 > 
-> v4 puts back the wrapper options (but doesn't add any for mssim since
-> it post dates the necessity)
+> -- >8 --
+> Author: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Date:   Tue Apr 30 20:57:15 2024 +0200
 > 
-> v5 rebases to the latest master branch and adjusts for removed use_FOO ptrs
+>     accel/tcg: Initialize TCG plugins in cpu-target.c
 > 
-> v5 updates help to exit zero; does some checkpatch tidying
+>     Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > 
-> v7 merge review feedback and add acks.
+> diff --git a/cpu-target.c b/cpu-target.c
+> index 5af120e8aa..585533cfa3 100644
+> --- a/cpu-target.c
+> +++ b/cpu-target.c
+> @@ -46,6 +46,10 @@
+>  #include "hw/core/accel-cpu.h"
+>  #include "trace/trace-root.h"
+>  #include "qemu/accel.h"
+> +#ifdef CONFIG_PLUGIN
+> +#include "accel/tcg/vcpu-state.h"
+> +#include "qemu/plugin.h"
+> +#endif
 > 
-> v8 adds better error handling, more code tidies and adds command
->     socket disconnection/reconnection (instead of trying to keep the
->     socket open the whole time).  This adds overhead, but makes
->     debugging guest kernel TPM issues much easier.
+>  #ifndef CONFIG_USER_ONLY
+>  static int cpu_common_post_load(void *opaque, int version_id)
+> @@ -131,6 +135,13 @@ const VMStateDescription vmstate_cpu_common = {
+>  };
+>  #endif
 > 
-> v9 Fix merge conflict with optarg->optstr conversion
+> +#ifdef CONFIG_PLUGIN
+> +static void qemu_plugin_vcpu_init__async(CPUState *cpu, run_on_cpu_data
+> unused)
+> +{
+> +    qemu_plugin_vcpu_init_hook(cpu);
+> +}
+> +#endif
+> +
+>  bool cpu_exec_realizefn(CPUState *cpu, Error **errp)
+>  {
+>      /* cache the cpu class for the hotpath */
+> @@ -143,6 +154,15 @@ bool cpu_exec_realizefn(CPUState *cpu, Error **errp)
+>      /* Wait until cpu initialization complete before exposing cpu. */
+>      cpu_list_add(cpu);
 > 
-> v10 Fix more merge conflicts and update API versions
+> +#ifdef CONFIG_PLUGIN
+> +    assert(cpu->accel);
+> +    /* Plugin initialization must wait until the cpu start executing code
+> */
+> +    if (tcg_enabled()) {
+> +        cpu->accel->plugin_state = qemu_plugin_create_vcpu_state();
+> +        async_run_on_cpu(cpu, qemu_plugin_vcpu_init__async,
+> RUN_ON_CPU_NULL);
+> +    }
+> +#endif
+> +
+>  #ifdef CONFIG_USER_ONLY
+>      assert(qdev_get_vmsd(DEVICE(cpu)) == NULL ||
+>             qdev_get_vmsd(DEVICE(cpu))->unmigratable);
+> @@ -171,6 +191,13 @@ void cpu_exec_unrealizefn(CPUState *cpu)
+>      }
+>  #endif
 > 
-> James
+> +#ifdef CONFIG_PLUGIN
+> +    /* Call the plugin hook before clearing the cpu is fully unrealized */
+> +    if (tcg_enabled()) {
+> +        qemu_plugin_vcpu_exit_hook(cpu);
+> +    }
+> +#endif
+> +
+>      cpu_list_remove(cpu);
+>      /*
+>       * Now that the vCPU has been removed from the RCU list, we can call
+> diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+> index e03d31876f..cd8bd99131 100644
+> --- a/hw/core/cpu-common.c
+> +++ b/hw/core/cpu-common.c
+> @@ -30,10 +30,6 @@
+>  #include "hw/boards.h"
+>  #include "hw/qdev-properties.h"
+>  #include "trace.h"
+> -#ifdef CONFIG_PLUGIN
+> -#include "accel/tcg/vcpu-state.h"
+> -#include "qemu/plugin.h"
+> -#endif
 > 
+>  CPUState *cpu_by_arch_id(int64_t id)
+>  {
+> @@ -181,13 +177,6 @@ static void cpu_common_parse_features(const char
+> *typename, char *features,
+>      }
+>  }
+> 
+> -#ifdef CONFIG_PLUGIN
+> -static void qemu_plugin_vcpu_init__async(CPUState *cpu, run_on_cpu_data
+> unused)
+> -{
+> -    qemu_plugin_vcpu_init_hook(cpu);
+> -}
+> -#endif
+> -
+>  static void cpu_common_realizefn(DeviceState *dev, Error **errp)
+>  {
+>      CPUState *cpu = CPU(dev);
+> @@ -211,14 +200,6 @@ static void cpu_common_realizefn(DeviceState *dev,
+> Error **errp)
+>          cpu_resume(cpu);
+>      }
+> 
+> -    /* Plugin initialization must wait until the cpu start executing code
+> */
+> -#ifdef CONFIG_PLUGIN
+> -    if (tcg_enabled()) {
+> -        cpu->accel->plugin_state = qemu_plugin_create_vcpu_state();
+> -        async_run_on_cpu(cpu, qemu_plugin_vcpu_init__async,
+> RUN_ON_CPU_NULL);
+> -    }
+> -#endif
+> -
+>      /* NOTE: latest generic point where the cpu is fully realized */
+>  }
+> 
+> @@ -226,13 +207,6 @@ static void cpu_common_unrealizefn(DeviceState *dev)
+>  {
+>      CPUState *cpu = CPU(dev);
+> 
+> -    /* Call the plugin hook before clearing the cpu is fully unrealized */
+> -#ifdef CONFIG_PLUGIN
+> -    if (tcg_enabled()) {
+> -        qemu_plugin_vcpu_exit_hook(cpu);
+> -    }
+> -#endif
+> -
+>      /* NOTE: latest generic point before the cpu is fully unrealized */
+>      cpu_exec_unrealizefn(cpu);
+>  }
 > ---
 > 
-> James Bottomley (2):
->    tpm: convert tpmdev options processing to new visitor format
->    tpm: add backend for mssim
-> 
->   MAINTAINERS                    |   6 +
->   backends/tpm/Kconfig           |   5 +
->   backends/tpm/meson.build       |   1 +
->   backends/tpm/tpm_emulator.c    |  25 ++-
->   backends/tpm/tpm_mssim.c       | 319 +++++++++++++++++++++++++++++++++
->   backends/tpm/tpm_mssim.h       |  44 +++++
->   backends/tpm/tpm_passthrough.c |  23 +--
->   docs/specs/tpm.rst             |  39 ++++
->   include/sysemu/tpm.h           |   5 +-
->   include/sysemu/tpm_backend.h   |   2 +-
->   qapi/tpm.json                  |  50 +++++-
->   system/tpm-hmp-cmds.c          |   9 +
->   system/tpm.c                   |  91 ++++------
->   system/vl.c                    |  19 +-
->   14 files changed, 530 insertions(+), 108 deletions(-)
->   create mode 100644 backends/tpm/tpm_mssim.c
->   create mode 100644 backends/tpm/tpm_mssim.h
-> 
+> Totally untested here because it is late (only built...).
+
+Now I get:
+
+  Thread 1 "qemu-s390x" received signal SIGABRT, Aborted.
+  __pthread_kill_implementation (threadid=<optimized out>, signo=signo@entry=6, no_tid=no_tid@entry=0) at ./nptl/pthread_kill.c:44
+  44      ./nptl/pthread_kill.c: No such file or directory.
+  (gdb) bt
+  #0  __pthread_kill_implementation (threadid=<optimized out>, signo=signo@entry=6, no_tid=no_tid@entry=0) at ./nptl/pthread_kill.c:44
+  #1  0x00007ffff7c41e8f in __pthread_kill_internal (signo=6, threadid=<optimized out>) at ./nptl/pthread_kill.c:78
+  #2  0x00007ffff7bf2fb2 in __GI_raise (sig=sig@entry=6) at ../sysdeps/posix/raise.c:26
+  #3  0x00007ffff7bdd472 in __GI_abort () at ./stdlib/abort.c:79
+  #4  0x00007ffff7bdd395 in __assert_fail_base (fmt=0x7ffff7d51a90 "%s%s%s:%u: %s%sAssertion `%s' failed.\n%n", assertion=assertion@entry=0x5555556d71b8 "cpu->accel", 
+      file=file@entry=0x5555556d70e0 "../home/iii/myrepos/qemu/cpu-target.c", line=line@entry=158, function=function@entry=0x5555556d7260 <__PRETTY_FUNCTION__.3> "cpu_exec_realizefn") at ./assert/assert.c:92
+  #5  0x00007ffff7bebeb2 in __GI___assert_fail (assertion=assertion@entry=0x5555556d71b8 "cpu->accel", file=file@entry=0x5555556d70e0 "../home/iii/myrepos/qemu/cpu-target.c", line=line@entry=158, 
+      function=function@entry=0x5555556d7260 <__PRETTY_FUNCTION__.3> "cpu_exec_realizefn") at ./assert/assert.c:101
+  #6  0x00005555555d44ca in cpu_exec_realizefn (cpu=cpu@entry=0x5555557c28c0, errp=errp@entry=0x7fffffffe140) at ../home/iii/myrepos/qemu/cpu-target.c:158
+  #7  0x000055555559f50b in s390_cpu_realizefn (dev=0x5555557c28c0, errp=0x7fffffffe1a0) at ../home/iii/myrepos/qemu/target/s390x/cpu.c:261
+  #8  0x000055555563f78b in device_set_realized (obj=<optimized out>, value=<optimized out>, errp=0x7fffffffe2e0) at ../home/iii/myrepos/qemu/hw/core/qdev.c:510
+  #9  0x000055555564365d in property_set_bool (obj=0x5555557c28c0, v=<optimized out>, name=<optimized out>, opaque=0x5555557a9140, errp=0x7fffffffe2e0) at ../home/iii/myrepos/qemu/qom/object.c:2362
+  #10 0x0000555555646bbb in object_property_set (obj=obj@entry=0x5555557c28c0, name=name@entry=0x5555556e8ae2 "realized", v=v@entry=0x5555557c6650, errp=errp@entry=0x7fffffffe2e0)
+      at ../home/iii/myrepos/qemu/qom/object.c:1471
+  #11 0x000055555564a45f in object_property_set_qobject (obj=obj@entry=0x5555557c28c0, name=name@entry=0x5555556e8ae2 "realized", value=value@entry=0x5555557a7a90, errp=errp@entry=0x7fffffffe2e0)
+      at ../home/iii/myrepos/qemu/qom/qom-qobject.c:28
+  #12 0x0000555555647224 in object_property_set_bool (obj=0x5555557c28c0, name=name@entry=0x5555556e8ae2 "realized", value=value@entry=true, errp=errp@entry=0x7fffffffe2e0)
+      at ../home/iii/myrepos/qemu/qom/object.c:1541
+  #13 0x000055555564027c in qdev_realize (dev=<optimized out>, bus=bus@entry=0x0, errp=errp@entry=0x7fffffffe2e0) at ../home/iii/myrepos/qemu/hw/core/qdev.c:291
+  #14 0x000055555559bb54 in cpu_create (typename=<optimized out>) at ../home/iii/myrepos/qemu/hw/core/cpu-common.c:57
+  #15 0x000055555559a467 in main (argc=4, argv=0x7fffffffeaa8, envp=<optimized out>) at ../home/iii/myrepos/qemu/linux-user/main.c:811
+
+Here is the executable file: http://0x0.st/XXHp.gz
+sha256sum: 58eb8d2a90c08f772ae94e20a7a8c7567bd886fe022a6b9e117912cc13acbd82
+
+Best regards,
+Ilya
 
