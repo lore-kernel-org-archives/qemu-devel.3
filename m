@@ -4,85 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E68ACC10F16
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 14:26:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BE4BC19F53
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 14:28:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1oQS-0005cY-0O; Tue, 30 Apr 2024 10:25:44 -0400
+	id 1s1oT0-0007Az-MH; Tue, 30 Apr 2024 10:28:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
- id 1s1oQP-0005c3-Or
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:25:41 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
- id 1s1oQN-00083D-46
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:25:41 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43U84itT018368;
- Tue, 30 Apr 2024 14:25:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
- from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding:content-type; s=qcppdkim1; bh=UbDbPJ4
- AbZvRHaYiiYZ+W8m9vYLatVR9HU8dYm+WddY=; b=QwJsbfu6us3fzCWzTPOeWCS
- qrr8SL05Cnvp5hbnd+I+BuhFtY2bUXc4KhQself4oF03twjxiTNyXx1lkuOgyHHq
- 8RZEtbSEqO/zexPFP9bBUtSuVIS3XrS2Z0uBMog/yNRmwe71rQU9BpkfOoHvNk88
- eqn3kCUl5C1lroUDPVSXU5MdVPunZx4fJcVqd2ubFqQx5rJY9X9Oe8dLWZPrCHQD
- zqL6XJ7h219aL7u2S/QYGy3Rqjemh6I7S/DipRYq8Rh3RcYqiUiXuEjYpTfN9RI/
- LJd5Ku668TVg4u/B7vyEUL68IvD1+MJmAE/QqD+rtXd8K8X0eC2SNohTSrHQY4A=
- =
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com
- [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xtsnm9fnr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Apr 2024 14:25:33 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com
- [10.47.209.196])
- by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43UEPWT6016321
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Apr 2024 14:25:32 GMT
-Received: from hu-mathbern-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 30 Apr 2024 07:25:32 -0700
-From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
-To: <qemu-devel@nongnu.org>
-CC: <bcain@quicinc.com>, <sidneym@quicinc.com>, <ale@rev.ng>, <anjo@rev.ng>,
- <ltaylorsimpson@gmail.com>, <richard.henderson@linaro.org>, Laurent Vivier
- <laurent@vivier.eu>
-Subject: [PATCH v3] Hexagon: add PC alignment check and exception
-Date: Tue, 30 Apr 2024 11:25:22 -0300
-Message-ID: <5c90567ec28723865e144f386b36f5b676b7a5d3.1714486874.git.quic_mathbern@quicinc.com>
-X-Mailer: git-send-email 2.37.2
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s1oSw-0007Ac-E4
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:28:18 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s1oSs-0000AA-KA
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:28:16 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 036E11F7D2;
+ Tue, 30 Apr 2024 14:28:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1714487293; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=9t27U8Bm4PpH+Pcb/zMQs/WMNnFsKccJ6LBxoVF685U=;
+ b=NaudfsA5bdZ9/PO+MkeIU4yKDRVSJyDfD+j5Qlbbi4tlq2hlw9fntoFO2lWYP5lP4EP7Py
+ 4Djef4xRzeFbFq347eA1Cg/cho7h3sRQVb3b/xC8YR2GWe6J0KW4Za64aTsayxHsTmhI3I
+ Z0DaenMjRxK3JqHE/37MqR1v29vUJP0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1714487293;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=9t27U8Bm4PpH+Pcb/zMQs/WMNnFsKccJ6LBxoVF685U=;
+ b=CJGg0saL1a64lfXY6BlhG6eyeTaJqop8LZie/eEInAtoE/OPBYOGBRBcfHmpXbr71CqbMy
+ yVtABfOe1V4rhiDQ==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=NaudfsA5;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=CJGg0saL
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1714487293; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=9t27U8Bm4PpH+Pcb/zMQs/WMNnFsKccJ6LBxoVF685U=;
+ b=NaudfsA5bdZ9/PO+MkeIU4yKDRVSJyDfD+j5Qlbbi4tlq2hlw9fntoFO2lWYP5lP4EP7Py
+ 4Djef4xRzeFbFq347eA1Cg/cho7h3sRQVb3b/xC8YR2GWe6J0KW4Za64aTsayxHsTmhI3I
+ Z0DaenMjRxK3JqHE/37MqR1v29vUJP0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1714487293;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=9t27U8Bm4PpH+Pcb/zMQs/WMNnFsKccJ6LBxoVF685U=;
+ b=CJGg0saL1a64lfXY6BlhG6eyeTaJqop8LZie/eEInAtoE/OPBYOGBRBcfHmpXbr71CqbMy
+ yVtABfOe1V4rhiDQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 99B0F133A7;
+ Tue, 30 Apr 2024 14:28:11 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([10.150.64.162])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id LEbWF/v/MGZjSQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 30 Apr 2024 14:28:11 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Xu <peterx@redhat.com>, devel@lists.libvirt.org
+Subject: [PATCH v3 0/6] migration removals & deprecations
+Date: Tue, 30 Apr 2024 11:27:31 -0300
+Message-Id: <20240430142737.29066-1-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
- signatures=585085
-X-Proofpoint-GUID: vt5Wy8Y3jSB15Odcq-NgCcG083iOskkN
-X-Proofpoint-ORIG-GUID: vt5Wy8Y3jSB15Odcq-NgCcG083iOskkN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-30_08,2024-04-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 mlxscore=0
- suspectscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
- impostorscore=0 adultscore=0 mlxlogscore=999 phishscore=0 bulkscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404300102
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=quic_mathbern@quicinc.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 036E11F7D2
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-5.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ DWL_DNSWL_MED(-2.00)[suse.de:dkim];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; ARC_NA(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCPT_COUNT_THREE(0.00)[4];
+ RCVD_COUNT_TWO(0.00)[2]; DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,259 +117,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Hexagon Programmer's Reference Manual says that the exception 0x1e
-should be raised upon an unaligned program counter. Let's implement that
-and also add some tests.
+since v2:
 
-Signed-off-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
----
-v2: https://lore.kernel.org/qemu-devel/e559b521d1920f804df10244c8c07564431aeba5.1714419461.git.quic_mathbern@quicinc.com/
+- removed some more stuff which I missed:
+   blk/inc options from hmp-commands.hx
+   the entire ram-compress.h
+   unused declarations from options.h
+   unused compression functions from qemu-file.c
 
-Thanks for the comments, Richard and Taylor!
+- removed must_remove_block_options earlier in the 'blk' patch
 
-Changed in v3:
-- Removed now unnecessary pkt_raises_exception addition.
-- Added HEX_EXCP_PC_NOT_ALIGNED handling at
-  linux-user/hexagon/cpu_loop.c.
-- Merged all tests into a C file that uses signal handler to check
-  that the exception was raised.
+- added a deprecation warning to outgoing/incoming fd
 
- target/hexagon/cpu.h                       |  7 ++
- target/hexagon/cpu_bits.h                  |  4 +
- target/hexagon/macros.h                    |  3 -
- linux-user/hexagon/cpu_loop.c              |  4 +
- target/hexagon/op_helper.c                 |  9 +--
- tests/tcg/hexagon/unaligned_pc.c           | 85 ++++++++++++++++++++++
- tests/tcg/hexagon/Makefile.target          |  4 +
- tests/tcg/hexagon/unaligned_pc_multi_cof.S |  5 ++
- 8 files changed, 113 insertions(+), 8 deletions(-)
- create mode 100644 tests/tcg/hexagon/unaligned_pc.c
- create mode 100644 tests/tcg/hexagon/unaligned_pc_multi_cof.S
+CI run: https://gitlab.com/farosas/qemu/-/pipelines/1272385260
 
-diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
-index 3eef58fe8f..764f3c38cc 100644
---- a/target/hexagon/cpu.h
-+++ b/target/hexagon/cpu.h
-@@ -134,6 +134,10 @@ struct ArchCPU {
- 
- FIELD(TB_FLAGS, IS_TIGHT_LOOP, 0, 1)
- 
-+G_NORETURN void hexagon_raise_exception_err(CPUHexagonState *env,
-+                                            uint32_t exception,
-+                                            uintptr_t pc);
-+
- static inline void cpu_get_tb_cpu_state(CPUHexagonState *env, vaddr *pc,
-                                         uint64_t *cs_base, uint32_t *flags)
- {
-@@ -144,6 +148,9 @@ static inline void cpu_get_tb_cpu_state(CPUHexagonState *env, vaddr *pc,
-         hex_flags = FIELD_DP32(hex_flags, TB_FLAGS, IS_TIGHT_LOOP, 1);
-     }
-     *flags = hex_flags;
-+    if (*pc & PCALIGN_MASK) {
-+        hexagon_raise_exception_err(env, HEX_EXCP_PC_NOT_ALIGNED, 0);
-+    }
- }
- 
- typedef HexagonCPU ArchCPU;
-diff --git a/target/hexagon/cpu_bits.h b/target/hexagon/cpu_bits.h
-index 96fef71729..4279281a71 100644
---- a/target/hexagon/cpu_bits.h
-+++ b/target/hexagon/cpu_bits.h
-@@ -20,9 +20,13 @@
- 
- #include "qemu/bitops.h"
- 
-+#define PCALIGN 4
-+#define PCALIGN_MASK (PCALIGN - 1)
-+
- #define HEX_EXCP_FETCH_NO_UPAGE  0x012
- #define HEX_EXCP_INVALID_PACKET  0x015
- #define HEX_EXCP_INVALID_OPCODE  0x015
-+#define HEX_EXCP_PC_NOT_ALIGNED  0x01e
- #define HEX_EXCP_PRIV_NO_UREAD   0x024
- #define HEX_EXCP_PRIV_NO_UWRITE  0x025
- 
-diff --git a/target/hexagon/macros.h b/target/hexagon/macros.h
-index 1376d6ccc1..f375471a98 100644
---- a/target/hexagon/macros.h
-+++ b/target/hexagon/macros.h
-@@ -22,9 +22,6 @@
- #include "hex_regs.h"
- #include "reg_fields.h"
- 
--#define PCALIGN 4
--#define PCALIGN_MASK (PCALIGN - 1)
--
- #define GET_FIELD(FIELD, REGIN) \
-     fEXTRACTU_BITS(REGIN, reg_field_info[FIELD].width, \
-                    reg_field_info[FIELD].offset)
-diff --git a/linux-user/hexagon/cpu_loop.c b/linux-user/hexagon/cpu_loop.c
-index 7f1499ed28..d41159e52a 100644
---- a/linux-user/hexagon/cpu_loop.c
-+++ b/linux-user/hexagon/cpu_loop.c
-@@ -60,6 +60,10 @@ void cpu_loop(CPUHexagonState *env)
-                 env->gpr[0] = ret;
-             }
-             break;
-+        case HEX_EXCP_PC_NOT_ALIGNED:
-+            force_sig_fault(TARGET_SIGBUS, TARGET_BUS_ADRALN,
-+                            env->gpr[HEX_REG_R31]);
-+            break;
-         case EXCP_ATOMIC:
-             cpu_exec_step_atomic(cs);
-             break;
-diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
-index da10ac5847..ae5a605513 100644
---- a/target/hexagon/op_helper.c
-+++ b/target/hexagon/op_helper.c
-@@ -36,10 +36,9 @@
- #define SF_MANTBITS    23
- 
- /* Exceptions processing helpers */
--static G_NORETURN
--void do_raise_exception_err(CPUHexagonState *env,
--                            uint32_t exception,
--                            uintptr_t pc)
-+G_NORETURN void hexagon_raise_exception_err(CPUHexagonState *env,
-+                                            uint32_t exception,
-+                                            uintptr_t pc)
- {
-     CPUState *cs = env_cpu(env);
-     qemu_log_mask(CPU_LOG_INT, "%s: %d\n", __func__, exception);
-@@ -49,7 +48,7 @@ void do_raise_exception_err(CPUHexagonState *env,
- 
- G_NORETURN void HELPER(raise_exception)(CPUHexagonState *env, uint32_t excp)
- {
--    do_raise_exception_err(env, excp, 0);
-+    hexagon_raise_exception_err(env, excp, 0);
- }
- 
- void log_store32(CPUHexagonState *env, target_ulong addr,
-diff --git a/tests/tcg/hexagon/unaligned_pc.c b/tests/tcg/hexagon/unaligned_pc.c
-new file mode 100644
-index 0000000000..1add2d0d99
---- /dev/null
-+++ b/tests/tcg/hexagon/unaligned_pc.c
-@@ -0,0 +1,85 @@
-+#include <stdio.h>
-+#include <signal.h>
-+#include <setjmp.h>
-+#include <stdlib.h>
-+
-+/* will be changed in signal handler */
-+volatile sig_atomic_t completed_tests;
-+static jmp_buf after_test;
-+static int nr_tests;
-+
-+void __attribute__((naked)) test_return(void)
-+{
-+    asm volatile(
-+        "allocframe(#0x8)\n"
-+        "r0 = #0xffffffff\n"
-+        "framekey = r0\n"
-+        "dealloc_return\n"
-+        : : : "r0");
-+}
-+
-+void test_endloop(void)
-+{
-+    asm volatile(
-+        "loop0(1f, #2)\n"
-+        "1: r0 = #0x3\n"
-+        "sa0 = r0\n"
-+        "{ nop }:endloop0\n"
-+        : : : "r0");
-+}
-+
-+void test_multi_cof(void)
-+{
-+    asm volatile(
-+        "p0 = cmp.eq(r0, r0)\n"
-+        "{\n"
-+        "    if (p0) jump test_multi_cof_unaligned\n"
-+        "    jump 1f\n"
-+        "}\n"
-+        "1: nop\n"
-+        : : : "p0");
-+}
-+
-+void sigbus_handler(int signum)
-+{
-+    /* retore framekey after test_return */
-+    asm volatile(
-+        "r0 = #0\n"
-+        "framekey = r0\n"
-+        : : : "r0");
-+    printf("Test %d complete\n", completed_tests);
-+    completed_tests++;
-+    siglongjmp(after_test, 1);
-+}
-+
-+void test_done(void)
-+{
-+    int err = (completed_tests != nr_tests);
-+    puts(err ? "FAIL" : "PASS");
-+    exit(err);
-+}
-+
-+typedef void (*test_fn)(void);
-+
-+int main()
-+{
-+    test_fn tests[] = { test_return, test_endloop, test_multi_cof, test_done };
-+    nr_tests = (sizeof(tests) / sizeof(tests[0])) - 1;
-+
-+    struct sigaction sa = {
-+        .sa_sigaction = sigbus_handler,
-+        .sa_flags = SA_SIGINFO
-+    };
-+
-+    if (sigaction(SIGBUS, &sa, NULL) < 0) {
-+        perror("sigaction");
-+        return EXIT_FAILURE;
-+    }
-+
-+    sigsetjmp(after_test, 1);
-+    tests[completed_tests]();
-+
-+    /* should never get here */
-+    puts("FAIL");
-+    return 1;
-+}
-diff --git a/tests/tcg/hexagon/Makefile.target b/tests/tcg/hexagon/Makefile.target
-index f839b2c0d5..75139e731c 100644
---- a/tests/tcg/hexagon/Makefile.target
-+++ b/tests/tcg/hexagon/Makefile.target
-@@ -51,6 +51,7 @@ HEX_TESTS += scatter_gather
- HEX_TESTS += hvx_misc
- HEX_TESTS += hvx_histogram
- HEX_TESTS += invalid-slots
-+HEX_TESTS += unaligned_pc
- 
- run-and-check-exception = $(call run-test,$2,$3 2>$2.stderr; \
- 	test $$? -eq 1 && grep -q "exception $(strip $1)" $2.stderr)
-@@ -108,6 +109,9 @@ preg_alias: preg_alias.c hex_test.h
- read_write_overlap: read_write_overlap.c hex_test.h
- reg_mut: reg_mut.c hex_test.h
- 
-+unaligned_pc: unaligned_pc.c unaligned_pc_multi_cof.S
-+	$(CC) $(CFLAGS) $(CROSS_CC_GUEST_CFLAGS) -mv73 $^ -o $@ $(LDFLAGS)
-+
- # This test has to be compiled for the -mv67t target
- usr: usr.c hex_test.h
- 	$(CC) $(CFLAGS) -mv67t -O2 -Wno-inline-asm -Wno-expansion-to-defined $< -o $@ $(LDFLAGS)
-diff --git a/tests/tcg/hexagon/unaligned_pc_multi_cof.S b/tests/tcg/hexagon/unaligned_pc_multi_cof.S
-new file mode 100644
-index 0000000000..10accd0057
---- /dev/null
-+++ b/tests/tcg/hexagon/unaligned_pc_multi_cof.S
-@@ -0,0 +1,5 @@
-+.org 0x3
-+.global test_multi_cof_unaligned
-+test_multi_cof_unaligned:
-+	nop
-+	jumpr r31
+v2:
+https://lore.kernel.org/r/20240426131408.25410-1-farosas@suse.de
+v1:
+https://lore.kernel.org/r/20240425150939.19268-1-farosas@suse.de
+
+Hi everyone,
+
+Here's some cleaning up of deprecated code. It removes the old block
+migration and compression code. Both have suitable replacements in the
+form of the blockdev-mirror driver and multifd compression,
+respectively.
+
+There's also a deprecation for fd: + file to cope with the fact that
+the new MigrationAddress API defines transports instead of protocols
+(loose terms) like the old string API did. So we cannot map 1:1 from
+fd: to any transport because fd: allows *both* file migration and
+socket migration.
+
+Fabiano Rosas (6):
+  migration: Remove 'skipped' field from MigrationStats
+  migration: Remove 'inc' option from migrate command
+  migration: Remove 'blk/-b' option from migrate commands
+  migration: Remove block migration
+  migration: Remove non-multifd compression
+  migration: Deprecate fd: for file migration
+
+ .gitlab-ci.d/buildtest.yml       |    2 +-
+ MAINTAINERS                      |    1 -
+ docs/about/deprecated.rst        |   51 +-
+ docs/about/removed-features.rst  |  103 +++
+ docs/devel/migration/main.rst    |    2 +-
+ hmp-commands.hx                  |   17 +-
+ hw/core/machine.c                |    1 -
+ include/migration/misc.h         |    6 -
+ meson.build                      |    2 -
+ meson_options.txt                |    2 -
+ migration/block.c                | 1019 ------------------------------
+ migration/block.h                |   52 --
+ migration/colo.c                 |    1 -
+ migration/fd.c                   |   12 +
+ migration/meson.build            |    4 -
+ migration/migration-hmp-cmds.c   |   97 +--
+ migration/migration.c            |   70 +-
+ migration/migration.h            |   11 -
+ migration/options.c              |  229 -------
+ migration/options.h              |   13 -
+ migration/qemu-file.c            |   78 ---
+ migration/qemu-file.h            |    4 -
+ migration/ram-compress.c         |  564 -----------------
+ migration/ram-compress.h         |   77 ---
+ migration/ram.c                  |  169 +----
+ migration/savevm.c               |    5 -
+ qapi/migration.json              |  205 +-----
+ scripts/meson-buildoptions.sh    |    4 -
+ tests/qemu-iotests/183           |  147 -----
+ tests/qemu-iotests/183.out       |   66 --
+ tests/qemu-iotests/common.filter |    7 -
+ tests/qtest/migration-test.c     |  139 ----
+ 32 files changed, 147 insertions(+), 3013 deletions(-)
+ delete mode 100644 migration/block.c
+ delete mode 100644 migration/block.h
+ delete mode 100644 migration/ram-compress.c
+ delete mode 100644 migration/ram-compress.h
+ delete mode 100755 tests/qemu-iotests/183
+ delete mode 100644 tests/qemu-iotests/183.out
+
+
+base-commit: fd87be1dada5672f877e03c2ca8504458292c479
 -- 
-2.37.2
+2.35.3
 
 
