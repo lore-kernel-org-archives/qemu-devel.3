@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85221C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 15:09:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F6BDC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 15:31:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1p6c-0003lq-Jv; Tue, 30 Apr 2024 11:09:20 -0400
+	id 1s1pQL-0001VK-7B; Tue, 30 Apr 2024 11:29:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s1p6Q-0003Gt-Gd
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 11:09:06 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1pQJ-0001Uz-7y
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 11:29:39 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s1p6N-0000yS-Gp
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 11:09:06 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-56e37503115so6297391a12.1
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 08:09:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1pQH-0004vC-PH
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 11:29:38 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-41b5e74fa2fso36601765e9.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 08:29:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714489742; x=1715094542; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kstWA/A41b+HIEwe5CE0/GXOQwIeOb+3kH17kJQI4m4=;
- b=n+7c+GKC2s9kUBlJF3dHpvWu4yf8p8ewYTJusuHfkRP3YTDLw2vTYhgQrA5SPcc+o3
- b3OLWHKCaprLzgcR5WVPW9Z10ABdbZ8Z3pmb/E14H63+3jLH47MkjlAEgp4DKHhaFEYL
- hoIIGPjZkBhV2gtrXQFS98IzN9G0fFw+ADVKsqZMRQz2KO5Ei3DL7NiWt/t3Ge6+oC0s
- FhNVFcal4G/m9RVAiCZ7ibLb58BPgIy0omrBRkHnvnqlawaTILIN1OOKAxag2hOh0huK
- h1OfAzWeXaIMpDVr2K5VZn7UTqOBxsHn7M/Ag+JUtOcSf2NSpY+kFUINPW0t7b3NySC5
- Wjcg==
+ d=linaro.org; s=google; t=1714490976; x=1715095776; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=RbLqkgZxG89yShak1b3w96c9QZ8C9P6q/DYUKKV3xUk=;
+ b=VPgBG4JlMJGV4VnxXdKE3duwQzw1rrJUEe8kBqLjv3L3g5ThkDmzmYwGYb67LEOvg5
+ as5CFluMpchfTpohj8hh7WevG4yBtfGO01jazZRkjEObZX6Auo8YmFS/UjxRdCnBIgMW
+ lEntJVW6SFoacJvzyoDCDTMPlULtO4XdB259WT1pnQO9HeroajwYejS1vJLNRV0rq4t8
+ vn74Pw9gUu373fKIYSaPSeBQfZb/98mo2tmSKaYEYM1cU/BRMf/6tExI0kgPXFyvDqxb
+ Flbhs6r/71KzyLQ/0F3juLthrQfjqDKxBfjBhTj9I++G7JbupG5ACYTwsdwyaExEMR8S
+ SXFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714489742; x=1715094542;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kstWA/A41b+HIEwe5CE0/GXOQwIeOb+3kH17kJQI4m4=;
- b=WWIkgZsi1R+TkYh6XGu1LytpNfhPRanNkClf9rwIU6xzpDyyxg41BfOxzQ2RrvNOQ+
- 0OyOQlPZcncah2LnLdpDQg7cw8aJqvxA+gO/2YF554Y7EHQMemruwLdRSAr/bGl26bfw
- eATi27ap685QjPU51Lx0ks3OdawiEnRNyrfWun/X0TyijWiaa0RCm7vB7Z1KNs0rIOxq
- Fg6BccrpDYtyYaYbr7FJNrccOMetWd9fnQ6WRgIpdn/Nm7EvAmn9JUkBce5gQWEoC/u4
- dEyDUDyGmgCv6L61JwsCroL9FGt8DeoYGXe28ucQ/OxbEs7MDE2g678NLbK4oGWfDHqP
- x1/g==
-X-Gm-Message-State: AOJu0YxzfHKIONdmVPKlVu8iDTg2MA0t8uliii1owYNY2PwrXlNYke1A
- e/lTpkxwJlai4TBsMsPP4qfmCvOPH5aESKZewt+Y9PYGy0lS1FY04mLAT2l5botH7nlpYKUVogh
- zeL/LIeXsqZfR2SXI+jy2+J+s6ng9wP7fL7lRxQ==
-X-Google-Smtp-Source: AGHT+IF6gYi4OIpotj3DhL/Y78FmeK6gT1FkpgXfKWFWVRk7GQ+4VFsgPdmCu1ACT72f6q4Prt9nkhgKz6SPDr75T74=
-X-Received: by 2002:a50:8d5a:0:b0:572:7bae:7e74 with SMTP id
- t26-20020a508d5a000000b005727bae7e74mr47119edt.32.1714489741704; Tue, 30 Apr
- 2024 08:09:01 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1714490976; x=1715095776;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RbLqkgZxG89yShak1b3w96c9QZ8C9P6q/DYUKKV3xUk=;
+ b=BNaU8L3TUsqqxMdQP9ALAZgY/mMmIdaPWpumkG3nZ0mFeJx8l+m1eG0HDlZWlzZw0N
+ zvc5j7CVCU+E9m9B3Z0jBnzZjYgqhywg9uhlMv4NqLOYGj5UwHJ6Y7ETtE+fD8fLSeV3
+ D1b/xkSxkWUOvq6olJgOki5RS104PBMy9qxs3RuZToFgEdRboYzXEa0HnnmnSx0dlFIL
+ qgV4Ma2b98yfbEmz5ss4l1LEHhbcBxYGmk8XAk+G6Rb1TBwZ9fU8wW6cofXxq52r7cNo
+ 5y7P++Wpz1Cmj21xJ9zs3IBV9dPhz1wViGBMh50ASd8WNdMarxo1HWm5cOmsomlrWlC0
+ voLQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVq/SQuGtEmiJMXnrdzbWveCiXUsTda9Ov1MZDtWIvu38ECJEJnDpfhYM4dlZyeuwjTzVld2tUa4c8mES0vXujgkgb5IPk=
+X-Gm-Message-State: AOJu0YwUDEOyHU/uka3RXYHo6Kq/+V1MRxArgMAugjp3Cmhm/oqwarQI
+ U6FCjna0zVNRwUBit1Zjp+YKeEuGeeb6KBIsxFQNlwcRtyT9PceOsUw7WElxvwY=
+X-Google-Smtp-Source: AGHT+IEFmPLc3bM2kwPdTi2h8Jx+/gU5sSmugzJ82/nreCJrS5Vw/869WkH5TlhnTnkbUhzrS/r9Rw==
+X-Received: by 2002:a05:600c:4e54:b0:41b:dabe:8633 with SMTP id
+ e20-20020a05600c4e5400b0041bdabe8633mr7691591wmq.21.1714490975736; 
+ Tue, 30 Apr 2024 08:29:35 -0700 (PDT)
+Received: from [192.168.69.100] (mab78-h01-176-184-55-179.dsl.sta.abo.bbox.fr.
+ [176.184.55.179]) by smtp.gmail.com with ESMTPSA id
+ n3-20020a05600c4f8300b0041be58cdf83sm12619254wmq.4.2024.04.30.08.29.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 30 Apr 2024 08:29:35 -0700 (PDT)
+Message-ID: <0d9ec2ff-ac42-48fa-8cf6-f51ed0766eaa@linaro.org>
+Date: Tue, 30 Apr 2024 17:29:31 +0200
 MIME-Version: 1.0
-References: <20240424200929.240921-1-ines.varhol@telecom-paris.fr>
-In-Reply-To: <20240424200929.240921-1-ines.varhol@telecom-paris.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 30 Apr 2024 16:08:50 +0100
-Message-ID: <CAFEAcA9ssyX3knVnJAi3N6_aGgQ6HQYw-5iPxirWweJFkd64NQ@mail.gmail.com>
-Subject: Re: [PATCH v6 0/5] Add device DM163 (led driver, matrix colors shield
- & display)
-To: =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Samuel Tardieu <sam@rfc1149.net>, qemu-arm@nongnu.org,
- Thomas Huth <thuth@redhat.com>, 
- Arnaud Minier <arnaud.minier@telecom-paris.fr>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/6] hw/i386/x86: Don't leak "isa-bios" memory regions
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Sergio Lopez <slp@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Michael Roth <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20240430150643.111976-1-shentey@gmail.com>
+ <20240430150643.111976-4-shentey@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240430150643.111976-4-shentey@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,21 +100,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 24 Apr 2024 at 21:09, In=C3=A8s Varhol <ines.varhol@telecom-paris.f=
-r> wrote:
->
-> This device implements the IM120417002 colors shield v1.1 for Arduino
-> (which relies on the DM163 8x3-channel led driving logic) and features
-> a simple display of an 8x8 RGB matrix. This color shield can be plugged
-> on the Arduino board (or the B-L475E-IOT01A board) to drive an 8x8
-> RGB led matrix. This RGB led matrix takes advantage of retinal persistanc=
-e
-> to seemingly display different colors in each row.
->
+On 30/4/24 17:06, Bernhard Beschow wrote:
+> Fix the leaking in x86_bios_rom_init() and pc_isa_bios_init() by adding an
+> "isa_bios" attribute to X86MachineState.
+> 
+> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> ---
+>   include/hw/i386/x86.h | 2 ++
+>   hw/i386/pc_sysfw.c    | 7 +++----
+>   hw/i386/x86.c         | 9 ++++-----
+>   3 files changed, 9 insertions(+), 9 deletions(-)
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-
-Applied to target-arm.next, thanks.
-
--- PMM
 
