@@ -4,84 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12DB0C10F16
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 16:51:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35127C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 16:51:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1qhA-0000BA-Uq; Tue, 30 Apr 2024 12:51:10 -0400
+	id 1s1qf1-0002Lr-Q0; Tue, 30 Apr 2024 12:48:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1s1qgX-0006K2-V6
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:50:37 -0400
-Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s1qey-0002E4-Ej
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:48:52 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1s1qgQ-00061u-5W
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:50:28 -0400
-Received: by mail-lf1-x12a.google.com with SMTP id
- 2adb3069b0e04-5196fe87775so6617984e87.3
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 09:50:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s1qev-0005bj-I6
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:48:52 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-41a72f3a20dso42023275e9.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 09:48:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1714495819; x=1715100619; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714495725; x=1715100525; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tHpYiWdb1lRh1fu1PHA0f9wMvB4Yb/LL+pZsTJlPtLc=;
- b=MOTLlKnPP2IEzdDDJu82cv7i1LDljQn2lzoqggOqoMupkMK5YyY3LdFJP/B+AsN2eC
- 4HqjxdcDYRSpldegV0l8Dt/8xY4d7awG7luGgmqKP+P+bn8VHY1CIdScVNiEdze3+Tt0
- nk8UgYPdKI5o1KEq3gCwtqx3rxmdGwv5OS6yZOuUShr2undRu+W358Wb4N6ua3/oxex1
- 0JnhlbP2H6hRSFHxt3H3bWiMAP9NhMIs9OIn/WhX56IPJFryg/FyjS9cos3SkoF9M3d7
- C4zuIroUS0xssSvP5K7h2aYuRoq1gDI52HyDa83Sn/6WXxKm8HMb9UEFnt760oDuMz+J
- FZtw==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=irKefQelxCnFURnwBGv7uVNaBVY2VWGSKuE2g+7S4BA=;
+ b=LOO/N4IGLWZQlAdFaEOPGRNaJ+FjgYh2APCiNrJ6z+jORWGrh96+fU0X7yIl6K6GSe
+ qB6pZTFtGsBWeWMgrtcQIRAdc1/WvHEY8QnafV3ACxsDYBnlsE/naJS8bKOUQvycav48
+ L6uAQqJG3bRme8bUMMyPf2tJuV3Bi3Y9ffBGXh+lTKApQqyghe8YsRZaDtcu7SC0dbNI
+ VvJe7dWDDrIkDGh5zlR51A4wuEYeyQiCr4ULUNseI/tBimTfK7ZH8siFVgyACnv4uMjk
+ rkTnYSl5qGNB53Olokx/cjcg2V97/QlONfjRTu5jTYjanAZUheGvYdwFE8HLmDaLRyOt
+ LgQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714495819; x=1715100619;
+ d=1e100.net; s=20230601; t=1714495725; x=1715100525;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tHpYiWdb1lRh1fu1PHA0f9wMvB4Yb/LL+pZsTJlPtLc=;
- b=H5u6I3Y/VLICawpIKhkZbxrvDnmfVbOXFK1Ib7dLnV823he2XLHSf9DyrVUM63cQ7+
- L2oU/Auej0IRz3We/73rlzYxsQMh2iwxWLipAq+m+VDdb/J9lrnft8IV2/hn+WAqQ1o5
- YXPRrLQL1uXETNachy0Yk/euscsKzYJgf2NadCEt3Ttb2bB/sRG+E67Rq+aN15rhW5ux
- c/eo77Fs0ejbHYWemeimSjUMRVBwiZGFxYZOv6FutRu0j75h8bCK6j4SAd9h7OM+1t9w
- 4Pl6fTqbjOKTKKkMshe+op+GsZ0KcHI1gFHgLWLB6etLoc1Ywt42EdXOWfcU/BRrzvAY
- MyGQ==
-X-Gm-Message-State: AOJu0Yw0EbvmSsup9zuKrptZ2wvOdPNtOx3v1hulBYXZW47skKTmQP/y
- dmNAlun98FYrR20J0OpuXClq73blQG1nibDE2WYliKTIND2s0wX2YyRLrmwP
-X-Google-Smtp-Source: AGHT+IEpEAlJbJJD0/i+Lg344tcB9Tgltle5Mn6nu5CvyosHwr7HnsfYB92Ti4D7O/r40axqDFX0Iw==
-X-Received: by 2002:a05:6512:3981:b0:51b:f224:7025 with SMTP id
- j1-20020a056512398100b0051bf2247025mr20846lfu.59.1714495819141; 
- Tue, 30 Apr 2024 09:50:19 -0700 (PDT)
-Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
+ bh=irKefQelxCnFURnwBGv7uVNaBVY2VWGSKuE2g+7S4BA=;
+ b=b892ugu0DdR9AsVc4ZFz5igKXfQ/AOnZ5N2E/sC6U8xOMF3RWsw8Ny+PkoF/Tvr2ZH
+ Pt4DR80O1AdqMlKmOUjKVzPEB5qqTMXfiBAzhdIbqgHGK8NpQJsqPn9Ctcd5hrbLL3cv
+ aIfx/PFcb2/Ridlm0vpQVXfnD2OCS7mBs3EeboPs3bqYgHajoPNm19Re+TxMrEMY+Psj
+ 7E8wFFKcKc5pio+J21N4QkBeANUO59JY0hZaEhM9HAarvr8LfoA79oSrhKV4fFcjQSn7
+ ue2MCyaurHzDv7WGRon1/jjuzIY3bZ/fh9b7MayGKvIECtEyZxqFnma3o3vMJfIMHUNv
+ WXLw==
+X-Gm-Message-State: AOJu0YyxP0exNGoR97LmLZeADK3glFFPQEp2vSdzvutZtmX1OGhiDBqC
+ T47s3PcRBjJLaJXm1b5urnMOQm/V26kh43WorWr+H5IB0UwKGwCDeL5K7+HxFaMfPX1cZYxId7H
+ y
+X-Google-Smtp-Source: AGHT+IGTbtO05Q3TJnEgx3D0KE8+KceaUrihjfyXUJTY6AkQ/UvoZryQr95AJFAnJGBWcYFlaWuQPQ==
+X-Received: by 2002:a05:600c:c05:b0:41a:bdaf:8d6b with SMTP id
+ fm5-20020a05600c0c0500b0041abdaf8d6bmr58729wmb.34.1714495724740; 
+ Tue, 30 Apr 2024 09:48:44 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- y26-20020ac2421a000000b0051aada24366sm4312545lfh.66.2024.04.30.09.50.18
+ b6-20020a05600c4e0600b0041be3383a2fsm12920384wmq.19.2024.04.30.09.48.44
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Apr 2024 09:50:18 -0700 (PDT)
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+ Tue, 30 Apr 2024 09:48:44 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: edgar.iglesias@gmail.com, sstabellini@kernel.org, jgross@suse.com,
- "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
- Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
- xen-devel@lists.xenproject.org
-Subject: [PATCH v4 05/17] xen: mapcache: Refactor xen_remap_bucket for
- multi-instance
-Date: Tue, 30 Apr 2024 18:49:27 +0200
-Message-Id: <20240430164939.925307-6-edgar.iglesias@gmail.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20240430164939.925307-1-edgar.iglesias@gmail.com>
-References: <20240430164939.925307-1-edgar.iglesias@gmail.com>
+Subject: [PULL 01/21] hw/core/clock: allow clock_propagate on child clocks
+Date: Tue, 30 Apr 2024 17:48:22 +0100
+Message-Id: <20240430164842.4074734-2-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240430164842.4074734-1-peter.maydell@linaro.org>
+References: <20240430164842.4074734-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x12a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,59 +93,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+From: Raphael Poggi <raphael.poggi@lynxleap.co.uk>
 
-Add MapCache argument to xen_remap_bucket in preparation
-to support multiple map caches.
+clock_propagate() has an assert that clk->source is NULL, i.e. that
+you are calling it on a clock which has no source clock.  This made
+sense in the original design where the only way for a clock's
+frequency to change if it had a source clock was when that source
+clock changed.  However, we subsequently added multiplier/divider
+support, but didn't look at what that meant for propagation.
 
-No functional changes.
+If a clock-management device changes the multiplier or divider value
+on a clock, it needs to propagate that change down to child clocks,
+even if the clock has a source clock set.  So the assertion is now
+incorrect.
 
-Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Remove the assertion.
+
+Signed-off-by: Raphael Poggi <raphael.poggi@lynxleap.co.uk>
+Message-id: 20240419162951.23558-1-raphael.poggi@lynxleap.co.uk
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+[PMM: Rewrote the commit message]
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/xen/xen-mapcache.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ hw/core/clock.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-index 896021d86f..326a9b61ca 100644
---- a/hw/xen/xen-mapcache.c
-+++ b/hw/xen/xen-mapcache.c
-@@ -139,7 +139,8 @@ void xen_map_cache_init(phys_offset_to_gaddr_t f, void *opaque)
-     mapcache->entry = g_malloc0(size);
+diff --git a/hw/core/clock.c b/hw/core/clock.c
+index a19c7db7df9..e212865307b 100644
+--- a/hw/core/clock.c
++++ b/hw/core/clock.c
+@@ -108,7 +108,6 @@ static void clock_propagate_period(Clock *clk, bool call_callbacks)
+ 
+ void clock_propagate(Clock *clk)
+ {
+-    assert(clk->source == NULL);
+     trace_clock_propagate(CLOCK_PATH(clk));
+     clock_propagate_period(clk, true);
  }
- 
--static void xen_remap_bucket(MapCacheEntry *entry,
-+static void xen_remap_bucket(MapCache *mc,
-+                             MapCacheEntry *entry,
-                              void *vaddr,
-                              hwaddr size,
-                              hwaddr address_index,
-@@ -313,14 +314,14 @@ tryagain:
-     if (!entry) {
-         entry = g_new0(MapCacheEntry, 1);
-         pentry->next = entry;
--        xen_remap_bucket(entry, NULL, cache_size, address_index, dummy);
-+        xen_remap_bucket(mc, entry, NULL, cache_size, address_index, dummy);
-     } else if (!entry->lock) {
-         if (!entry->vaddr_base || entry->paddr_index != address_index ||
-                 entry->size != cache_size ||
-                 !test_bits(address_offset >> XC_PAGE_SHIFT,
-                     test_bit_size >> XC_PAGE_SHIFT,
-                     entry->valid_mapping)) {
--            xen_remap_bucket(entry, NULL, cache_size, address_index, dummy);
-+            xen_remap_bucket(mc, entry, NULL, cache_size, address_index, dummy);
-         }
-     }
- 
-@@ -587,7 +588,7 @@ static uint8_t *xen_replace_cache_entry_unlocked(hwaddr old_phys_addr,
- 
-     trace_xen_replace_cache_entry_dummy(old_phys_addr, new_phys_addr);
- 
--    xen_remap_bucket(entry, entry->vaddr_base,
-+    xen_remap_bucket(mapcache, entry, entry->vaddr_base,
-                      cache_size, address_index, false);
-     if (!test_bits(address_offset >> XC_PAGE_SHIFT,
-                 test_bit_size >> XC_PAGE_SHIFT,
 -- 
-2.40.1
+2.34.1
 
 
