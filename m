@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A39A0C19F4F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CCEFC4345F
 	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 16:49:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1qf2-0002OA-LP; Tue, 30 Apr 2024 12:48:56 -0400
+	id 1s1qeC-0001xR-2H; Tue, 30 Apr 2024 12:48:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s1qf0-0002Hg-Kb
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:48:54 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <dario.binacchi@amarulasolutions.com>)
+ id 1s1qe9-0001ww-Lr
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:48:01 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s1qev-0005cD-J0
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:48:54 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-41b79451145so35703845e9.3
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 09:48:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dario.binacchi@amarulasolutions.com>)
+ id 1s1qe7-0005Mp-OY
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:48:01 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-34d0aa589a4so1645535f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 09:47:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714495727; x=1715100527; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=c6JJbqohxseNO79U2Bdi9j1VL8AGsp3zzZqnjvDFGr0=;
- b=y84HdGzKyGNZRSWKWnLtnPb93jMCwT2hKVw3V+ccIOum83flams7aqpk1NbyCZHPci
- l1FggY1Yiik59+pfnoeX4Mg/CqZOivAx7Qz9rJoC5ukPqK4EV39Us+Wi47863HoSKFrg
- 10scOZXPDvCPyU8yMyuApQJMINGfKoYdRwgSZWpjmLk35xD7xBkYM9zL70AYySpfrVou
- GLZrDkFHMGhQ7E3e1r4ux9xgWySkAMTtP4e19sdjzS6qUmOJ7VVR46jSubp7gb0nsFRj
- zKg5XOifR3d5xhBq/nU2Zy/36oyoS3ndYfKRxqzs465sSUiRtvt9GBOLT2oHXpahGyXh
- 4wgg==
+ d=amarulasolutions.com; s=google; t=1714495677; x=1715100477; darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=gkIQ267nvYf/ERCHKUNUMSvISDvAspB8i+k6G7ljsdc=;
+ b=iOW+o5jXr+1pW8+CLu5FgRcwxJLmfS2EBDG4TtEd4UGuyAgBvPHtLQswq6Jo2riyD+
+ c5WnLPgqq2jshrHToXfC8ZHwh2eEWxIqtIk3Ijly/gSScYeXTPLG5DJB0JlyFDjX82Z+
+ d2ikJRuXtgXVmCw9jNWflKu7HKR/p8MRJfkeg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714495727; x=1715100527;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=c6JJbqohxseNO79U2Bdi9j1VL8AGsp3zzZqnjvDFGr0=;
- b=lN/WrplsIELTy2QGs3pHsLim9GGNwtxVMYU6oAemD46etO07LYw8pHi1m0CT3zMBo9
- uau1o44mJRBntijClnCXCOqspmt5h7nJ6S/8f9uqjXZqJ+9/551ytk8ppPY8RZNr8oH/
- VGIW4C7F3AxsdN+0Sg/R0SmH7DcRyQT6v+ZA6GLknExkv3hs/vChO56JlP9ndiLgG68l
- xK1D/F8b3GvmJhovychodxI/wraZtgtgtXkd5lza/lW5/tYuvk9OjeW6hZ8IsapeagHQ
- k0panXI8PVBule/g+3vLLyjH859Finpg9C1AT/LKN0vB8jWCpAXZqxkciYCtUFJBoFJF
- gvzw==
-X-Gm-Message-State: AOJu0Yz08EEIbfNlVwkF2NdEr3t430Bd65YroBv8yUJBS1M5M4qmyDZo
- /8ST1WOtnQZy+i6ZRad8pf9K7aUs9YPUqRgq6JbxUi1wF7GrVsftE+zF0KmhGYd9pG+EcuokHza
- X
-X-Google-Smtp-Source: AGHT+IF6j+bL1mzBkMypGlpNub//3eQy/hVfHnbfJ911ZKR+ZVmNF+DoJZVqRnOQcvrwnABjHFBzsQ==
-X-Received: by 2002:a05:600c:3b02:b0:418:f991:8ad4 with SMTP id
- m2-20020a05600c3b0200b00418f9918ad4mr79671wms.6.1714495727034; 
- Tue, 30 Apr 2024 09:48:47 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- b6-20020a05600c4e0600b0041be3383a2fsm12920384wmq.19.2024.04.30.09.48.46
- for <qemu-devel@nongnu.org>
+ d=1e100.net; s=20230601; t=1714495677; x=1715100477;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=gkIQ267nvYf/ERCHKUNUMSvISDvAspB8i+k6G7ljsdc=;
+ b=lVUpdbE3nr48wx1mTgXiDxSLiLTv5B0L/3WjfJxmgyLc50OQFoDsXFGfCmAi755Hhx
+ 8Lx7P/Lj1zJJ57iCNxZuLSa8Bw6Ywi+50OUR5GY6YsoSfYDhHgevMwQ04h8gucIiS6BX
+ mIKAv4s9ozXt/quSIy55G4hv73HjYdRUwG8SF4MVeEOX3k+dB9g0SiS1Mu7bTwdv0rUl
+ OyfeTIJSWndDg+6oKTKX87Q8w5UWd75HIzHMtjpFVPk89Ogc0ZUA+qhXpmiGW4Everei
+ 5HQg5/oxKCv2KSoXCWNa5Gb88mxIxWNGHttdwngxWpCyMQmROe0J9y5vSxfAlF0UKQPJ
+ rRLQ==
+X-Gm-Message-State: AOJu0YyqE2vSVYAhp+t/TQY+K+o+qawdu5nywEz3qzmegVNY11jVzAyu
+ 5vyjZN9m5Qa0TJr+TD5i1y+LCen6ataiogPOoVBOwZwjNogn7cO3yqHE/UQ2IsThjst4QQMMah+
+ EyiM=
+X-Google-Smtp-Source: AGHT+IFLG0YqlwzcSClbhqPLlhjBZMF7GsQGOQ2fItavzkqGjvdyFB4N89eUNoSUBYWDCeJSNQxS7w==
+X-Received: by 2002:a5d:614f:0:b0:345:be70:191c with SMTP id
+ y15-20020a5d614f000000b00345be70191cmr161859wrt.37.1714495676884; 
+ Tue, 30 Apr 2024 09:47:56 -0700 (PDT)
+Received: from dario-ThinkPad-T14s-Gen-2i.amarulasolutions.com
+ ([176.201.29.105]) by smtp.gmail.com with ESMTPSA id
+ d24-20020adfa418000000b0034ca8cdc594sm9057503wra.76.2024.04.30.09.47.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Apr 2024 09:48:46 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
+ Tue, 30 Apr 2024 09:47:56 -0700 (PDT)
+From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/21] target/arm: Enable FEAT_ETS2 for -cpu max
-Date: Tue, 30 Apr 2024 17:48:27 +0100
-Message-Id: <20240430164842.4074734-7-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240430164842.4074734-1-peter.maydell@linaro.org>
-References: <20240430164842.4074734-1-peter.maydell@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, michael@amarulasolutions.com,
+ linux-amarula@amarulasolutions.com,
+ Dario Binacchi <dario.binacchi@amarulasolutions.com>
+Subject: [PATCH 1/1] tests/fp/meson: don't build fp-bench test if fenv.h is
+ missing
+Date: Tue, 30 Apr 2024 18:47:52 +0200
+Message-ID: <20240430164752.645521-1-dario.binacchi@amarulasolutions.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=dario.binacchi@amarulasolutions.com;
+ helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,81 +95,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-FEAT_ETS2 is a tighter set of guarantees about memory ordering
-involving translation table walks than the old FEAT_ETS; FEAT_ETS has
-been retired from the Arm ARM and the old ID_AA64MMFR1.ETS == 1
-now gives no greater guarantees than ETS == 0.
+The fp-bench test (i. e. tests/fp/fp-bench.c) use fenv.h that is not
+always provided by the libc (uClibc). The patch disables its compilation
+in case the header is not available.
 
-FEAT_ETS2 requires:
- * the virtual address of a load or store that appears in program
-   order after a DSB cannot be translated until after the DSB
-   completes (section B2.10.9)
- * TLB maintenance operations that only affect translations without
-   execute permission are guaranteed complete after a DSB
-   (R_BLDZX)
- * if a memory access RW2 is ordered-before memory access RW2,
-   then RW1 is also ordered-before any translation table walk
-   generated by RW2 that generates a Translation, Address size
-   or Access flag fault (R_NNFPF, I_CLGHP)
+The patch is based on a suggestion from Paolo Bonzini, which you can
+find at the following link.
 
-As with FEAT_ETS, QEMU is already compliant, because we do not
-reorder translation table walk memory accesses relative to other
-memory accesses, and we always guarantee to have finished TLB
-maintenance as soon as the TLB op is done.
-
-Update the documentation to list FEAT_ETS2 instead of the
-no-longer-existent FEAT_ETS, and update the 'max' CPU ID registers.
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20240418152004.2106516-4-peter.maydell@linaro.org
+Link: https://lists.nongnu.org/archive/html/qemu-devel/2021-03/msg00492.html
+Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 ---
- docs/system/arm/emulation.rst | 2 +-
- target/arm/tcg/cpu32.c        | 2 +-
- target/arm/tcg/cpu64.c        | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ tests/fp/meson.build | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index d70b66f7530..307539cff91 100644
---- a/docs/system/arm/emulation.rst
-+++ b/docs/system/arm/emulation.rst
-@@ -50,7 +50,7 @@ the following architecture extensions:
- - FEAT_EL2 (Support for execution at EL2)
- - FEAT_EL3 (Support for execution at EL3)
- - FEAT_EPAC (Enhanced pointer authentication)
--- FEAT_ETS (Enhanced Translation Synchronization)
-+- FEAT_ETS2 (Enhanced Translation Synchronization)
- - FEAT_EVT (Enhanced Virtualization Traps)
- - FEAT_F32MM (Single-precision Matrix Multiplication)
- - FEAT_F64MM (Double-precision Matrix Multiplication)
-diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
-index de8f2be9416..b5a60682fa6 100644
---- a/target/arm/tcg/cpu32.c
-+++ b/target/arm/tcg/cpu32.c
-@@ -67,7 +67,7 @@ void aa32_max_features(ARMCPU *cpu)
-     cpu->isar.id_mmfr4 = t;
+diff --git a/tests/fp/meson.build b/tests/fp/meson.build
+index 114b4b483ea7..0e1237be54ed 100644
+--- a/tests/fp/meson.build
++++ b/tests/fp/meson.build
+@@ -126,12 +126,14 @@ test('fp-test-mulAdd', fptest,
+            ['f16_mulAdd', 'f32_mulAdd', 'f64_mulAdd', 'f128_mulAdd'],
+      suite: ['softfloat-slow', 'softfloat-ops-slow', 'slow'], timeout: 180)
  
-     t = cpu->isar.id_mmfr5;
--    t = FIELD_DP32(t, ID_MMFR5, ETS, 1);          /* FEAT_ETS */
-+    t = FIELD_DP32(t, ID_MMFR5, ETS, 2);          /* FEAT_ETS2 */
-     cpu->isar.id_mmfr5 = t;
+-executable(
+-  'fp-bench',
+-  ['fp-bench.c', '../../fpu/softfloat.c'],
+-  dependencies: [qemuutil, libtestfloat, libsoftfloat],
+-  c_args: fpcflags,
+-)
++if cc.has_header('fenv.h')
++  executable(
++    'fp-bench',
++    ['fp-bench.c', '../../fpu/softfloat.c'],
++    dependencies: [qemuutil, libtestfloat, libsoftfloat],
++    c_args: fpcflags,
++  )
++endif
  
-     t = cpu->isar.id_pfr0;
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index 8ad05c53e8d..ebb585afd85 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -1196,7 +1196,7 @@ void aarch64_max_tcg_initfn(Object *obj)
-     t = FIELD_DP64(t, ID_AA64MMFR1, LO, 1);       /* FEAT_LOR */
-     t = FIELD_DP64(t, ID_AA64MMFR1, PAN, 3);      /* FEAT_PAN3 */
-     t = FIELD_DP64(t, ID_AA64MMFR1, XNX, 1);      /* FEAT_XNX */
--    t = FIELD_DP64(t, ID_AA64MMFR1, ETS, 1);      /* FEAT_ETS */
-+    t = FIELD_DP64(t, ID_AA64MMFR1, ETS, 2);      /* FEAT_ETS2 */
-     t = FIELD_DP64(t, ID_AA64MMFR1, HCX, 1);      /* FEAT_HCX */
-     t = FIELD_DP64(t, ID_AA64MMFR1, TIDCP1, 1);   /* FEAT_TIDCP1 */
-     cpu->isar.id_aa64mmfr1 = t;
+ fptestlog2 = executable(
+   'fp-test-log2',
 -- 
-2.34.1
+2.43.0
 
 
