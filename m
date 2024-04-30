@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C01CEC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 07:15:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1268C10F16
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 07:15:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1hgc-0000hU-MJ; Tue, 30 Apr 2024 03:13:58 -0400
+	id 1s1hgp-00012q-1V; Tue, 30 Apr 2024 03:14:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1hga-0000gr-3y
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 03:13:56 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1hgj-0000tm-J5
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 03:14:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1hgY-0008Kw-Al
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 03:13:55 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1hgh-0008Pi-S7
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 03:14:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714461233;
+ s=mimecast20190719; t=1714461243;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PyE/YM70aKyc4a3mwxYwnc9EiX20cEcKWdcCnAsoeb4=;
- b=egCY+1UCm5B6qwYzjZS1Uy1hRD/sT0Juw1Mu110UgqhwBZxKgc5G0NjIjv6xCCikYXqCRM
- M7L8O/RMXZOCNtvihAl4ROyNE6AayOgAPRt3KyPeXblqBmOdCgJh7Z5GE8AyREvc0yAYmc
- 2GHCqB7ARViUjYe0T2FbhBpYbqAId6E=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-554-Fae5nGc8NU22Oue763R8JA-1; Tue,
- 30 Apr 2024 03:13:51 -0400
-X-MC-Unique: Fae5nGc8NU22Oue763R8JA-1
+ bh=/JmZN2kTcTDZJ50d2NsMjDgbsSWIiw0AqDPZau+AXCw=;
+ b=GHU0B8V+5ReUxbRQ33SDMSQna/Z/MgFBFTj86zNjGDqlX2KAWII7wRrBhfpnypqB9iQuVo
+ wigS7vD+8Xu7YzM7oJmlfhRHLJ/VTfMt+aMlbeY7T3Ezajs13lvEUbaBu8cxYKI2W9jfaj
+ KLKgk3+6NVTgUjjdUVjXyBTFWRi6yjY=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-668-VEPFPp79OJ-XFW0uVv64ug-1; Tue, 30 Apr 2024 03:13:57 -0400
+X-MC-Unique: VEPFPp79OJ-XFW0uVv64ug-1
 Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
  [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 480053C0F18A;
- Tue, 30 Apr 2024 07:13:51 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 284B489A7E4;
+ Tue, 30 Apr 2024 07:13:57 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.79])
- by smtp.corp.redhat.com (Postfix) with ESMTP id E8DA340C6DAE;
- Tue, 30 Apr 2024 07:13:49 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id A20D040B4979;
+ Tue, 30 Apr 2024 07:13:55 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 05/19] target/s390x/cpu_models: Make kvm_s390_apply_cpu_model()
- return boolean
-Date: Tue, 30 Apr 2024 09:13:26 +0200
-Message-ID: <20240430071340.413305-6-thuth@redhat.com>
+Cc: Chris Friedt <chrisfriedt@gmail.com>,
+	Chris Friedt <cfriedt@meta.com>
+Subject: [PULL 08/19] hw: misc: edu: rename local vars in edu_check_range
+Date: Tue, 30 Apr 2024 09:13:29 +0200
+Message-ID: <20240430071340.413305-9-thuth@redhat.com>
 In-Reply-To: <20240430071340.413305-1-thuth@redhat.com>
 References: <20240430071340.413305-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -80,111 +80,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: Chris Friedt <chrisfriedt@gmail.com>
 
-As error.h suggested, the best practice for callee is to return
-something to indicate success / failure.
+This serves to make the local variables a bit less ambiguous.
 
-So make kvm_s390_apply_cpu_model() return boolean and check the
-returned boolean in apply_cpu_model() instead of accessing @err.
+The latter two arguments are named to match DMA_START, and
+DMA_SIZE.
 
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20240425031232.1586401-7-zhao1.liu@intel.com>
+Signed-off-by: Chris Friedt <cfriedt@meta.com>
+Message-ID: <20221018122551.94567-2-cfriedt@meta.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- target/s390x/cpu_models.h        |  2 +-
- target/s390x/cpu_models_sysemu.c |  3 +--
- target/s390x/kvm/kvm.c           | 15 ++++++++-------
- 3 files changed, 10 insertions(+), 10 deletions(-)
+ hw/misc/edu.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/target/s390x/cpu_models.h b/target/s390x/cpu_models.h
-index c14aff6c10..71d4bc2dd4 100644
---- a/target/s390x/cpu_models.h
-+++ b/target/s390x/cpu_models.h
-@@ -116,6 +116,6 @@ S390CPUDef const *s390_find_cpu_def(uint16_t type, uint8_t gen, uint8_t ec_ga,
- 
- bool kvm_s390_cpu_models_supported(void);
- bool kvm_s390_get_host_cpu_model(S390CPUModel *model, Error **errp);
--void kvm_s390_apply_cpu_model(const S390CPUModel *model,  Error **errp);
-+bool kvm_s390_apply_cpu_model(const S390CPUModel *model,  Error **errp);
- 
- #endif /* TARGET_S390X_CPU_MODELS_H */
-diff --git a/target/s390x/cpu_models_sysemu.c b/target/s390x/cpu_models_sysemu.c
-index 2d99218069..bf855c659d 100644
---- a/target/s390x/cpu_models_sysemu.c
-+++ b/target/s390x/cpu_models_sysemu.c
-@@ -405,8 +405,7 @@ void apply_cpu_model(const S390CPUModel *model, Error **errp)
-     }
- 
-     if (kvm_enabled()) {
--        kvm_s390_apply_cpu_model(model, &err);
--        if (err) {
-+        if (!kvm_s390_apply_cpu_model(model, &err)) {
-             error_propagate(errp, err);
-             return;
-         }
-diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-index 2c3e05cae3..1b494ecc20 100644
---- a/target/s390x/kvm/kvm.c
-+++ b/target/s390x/kvm/kvm.c
-@@ -2543,7 +2543,7 @@ static void kvm_s390_configure_apie(bool interpret)
+diff --git a/hw/misc/edu.c b/hw/misc/edu.c
+index 14250e0ac3..e1cb443438 100644
+--- a/hw/misc/edu.c
++++ b/hw/misc/edu.c
+@@ -103,24 +103,24 @@ static void edu_lower_irq(EduState *edu, uint32_t val)
      }
  }
  
--void kvm_s390_apply_cpu_model(const S390CPUModel *model, Error **errp)
-+bool kvm_s390_apply_cpu_model(const S390CPUModel *model, Error **errp)
+-static void edu_check_range(uint64_t addr, uint64_t size1,
+-                uint64_t start, uint64_t size2)
++static void edu_check_range(uint64_t xfer_start, uint64_t xfer_size,
++                uint64_t dma_start, uint64_t dma_size)
  {
-     struct kvm_s390_vm_cpu_processor prop  = {
-         .fac_list = { 0 },
-@@ -2560,11 +2560,11 @@ void kvm_s390_apply_cpu_model(const S390CPUModel *model, Error **errp)
-         if (kvm_s390_cmma_available()) {
-             kvm_s390_enable_cmma();
-         }
--        return;
-+        return true;
+-    uint64_t end1 = addr + size1;
+-    uint64_t end2 = start + size2;
++    uint64_t xfer_end = xfer_start + xfer_size;
++    uint64_t dma_end = dma_start + dma_size;
+ 
+     /*
+      * 1. ensure we aren't overflowing
+-     * 2. ensure that [addr, end1) is within [start, size2)
++     * 2. ensure that xfer is within dma address range
+      */
+-    if (end2 >= start && end1 >= addr &&
+-        addr >= start && end1 <= end2) {
++    if (dma_end >= dma_start && xfer_end >= xfer_start &&
++        xfer_start >= dma_start && xfer_end <= dma_end) {
+         return;
      }
-     if (!kvm_s390_cpu_models_supported()) {
-         error_setg(errp, "KVM doesn't support CPU models");
--        return;
-+        return false;
-     }
-     prop.cpuid = s390_cpuid_from_cpu_model(model);
-     prop.ibc = s390_ibc_from_cpu_model(model);
-@@ -2574,19 +2574,19 @@ void kvm_s390_apply_cpu_model(const S390CPUModel *model, Error **errp)
-     rc = kvm_vm_ioctl(kvm_state, KVM_SET_DEVICE_ATTR, &attr);
-     if (rc) {
-         error_setg(errp, "KVM: Error configuring the CPU model: %d", rc);
--        return;
-+        return false;
-     }
-     /* configure cpu features indicated e.g. via SCLP */
-     rc = configure_cpu_feat(model->features);
-     if (rc) {
-         error_setg(errp, "KVM: Error configuring CPU features: %d", rc);
--        return;
-+        return false;
-     }
-     /* configure cpu subfunctions indicated via query / test bit */
-     rc = configure_cpu_subfunc(model->features);
-     if (rc) {
-         error_setg(errp, "KVM: Error configuring CPU subfunctions: %d", rc);
--        return;
-+        return false;
-     }
-     /* enable CMM via CMMA */
-     if (test_bit(S390_FEAT_CMM, model->features)) {
-@@ -2601,8 +2601,9 @@ void kvm_s390_apply_cpu_model(const S390CPUModel *model, Error **errp)
-     rc = configure_uv_feat_guest(model->features);
-     if (rc) {
-         error_setg(errp, "KVM: Error configuring CPU UV features %d", rc);
--        return;
-+        return false;
-     }
-+    return true;
+ 
+     hw_error("EDU: DMA range 0x%016"PRIx64"-0x%016"PRIx64
+              " out of bounds (0x%016"PRIx64"-0x%016"PRIx64")!",
+-            addr, end1 - 1, start, end2 - 1);
++            xfer_start, xfer_end - 1, dma_start, dma_end - 1);
  }
  
- void kvm_s390_restart_interrupt(S390CPU *cpu)
+ static dma_addr_t edu_clamp_addr(const EduState *edu, dma_addr_t addr)
 -- 
 2.44.0
 
