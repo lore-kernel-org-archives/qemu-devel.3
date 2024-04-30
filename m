@@ -4,53 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 264C0C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 07:14:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C09ADC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 07:15:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1hgo-00012K-0X; Tue, 30 Apr 2024 03:14:10 -0400
+	id 1s1hh2-0001Vn-Vi; Tue, 30 Apr 2024 03:14:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1hgj-0000tl-ER
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 03:14:06 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1hgz-0001Ov-S1
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 03:14:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1hgh-0008Pm-Sy
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 03:14:05 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1hgy-0008Tx-2c
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 03:14:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714461243;
+ s=mimecast20190719; t=1714461259;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XvQAqWLE4bZMMlG6excdTC5v9yBUmN935gA/qF9agFo=;
- b=gMyiPhjy0Bt1UsI/YfVxF7A3skaiDYsef3fPd8A+LDR7sstCdtrmEYv+ZKaHei2/Jq+pZj
- rttENuP8fYR+60IMdxKUWXELzh5APmsbgmboBuXmUN30OUMAd3yLfpEk8lbf115Q0iyU2a
- P8KWlQL44nWccgsHyGcGBsbHPaVQjL8=
+ bh=6okfwh37Ygz08OhCRrVgdxLTl0QALtsA+vWXX2pfzjI=;
+ b=ayyCGlwmx96Gvrb6SlrjPGTwYvmIiEAA20GlABQazJW0q5jMtnL8q0n7aIrllZUldBxGrb
+ vnzB06eKjgbiBIT07pcNbsuVOAKnxDHKPkKT+63Z0D5H6RDRPwkNg1g2rRys3B1mxQp8Kh
+ dTHLuuYdb1ukDWqpKUcx+QyydWF21gE=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-657-V9koSCvAOEqxlbQsbfdyfQ-1; Tue,
- 30 Apr 2024 03:13:59 -0400
-X-MC-Unique: V9koSCvAOEqxlbQsbfdyfQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-63-vq90ZyC3N1ezmMbcQVxbCw-1; Tue,
+ 30 Apr 2024 03:14:15 -0400
+X-MC-Unique: vq90ZyC3N1ezmMbcQVxbCw-1
 Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
  [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id AF65B3C0F18B;
- Tue, 30 Apr 2024 07:13:58 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1419F29ABA0E;
+ Tue, 30 Apr 2024 07:14:14 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.79])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 67EC940C141D;
- Tue, 30 Apr 2024 07:13:57 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id DF78B40C141D;
+ Tue, 30 Apr 2024 07:14:12 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Cc: Chris Friedt <chrisfriedt@gmail.com>,
-	Chris Friedt <cfriedt@meta.com>
-Subject: [PULL 09/19] hw: misc: edu: use qemu_log_mask instead of hw_error
-Date: Tue, 30 Apr 2024 09:13:30 +0200
-Message-ID: <20240430071340.413305-10-thuth@redhat.com>
+Subject: [PULL 19/19] .gitlab-ci.d/cirrus: Remove the netbsd and openbsd jobs
+Date: Tue, 30 Apr 2024 09:13:40 +0200
+Message-ID: <20240430071340.413305-20-thuth@redhat.com>
 In-Reply-To: <20240430071340.413305-1-thuth@redhat.com>
 References: <20240430071340.413305-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -80,56 +78,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Chris Friedt <chrisfriedt@gmail.com>
+During the past months, the netbsd and openbsd jobs in the Cirrus-CI
+were broken most of the time - the setup to run a BSD in KVM on Cirrus-CI
+from gitlab via the cirrus-run script was very fragile, and since the
+jobs were not run by default, it used to bitrot very fast.
 
-Log a guest error instead of a hardware error when
-the guest tries to DMA to / from an invalid address.
+Now Cirrus-CI also introduce a limit on the amount of free CI minutes
+that you get there, so it is not appealing at all anymore to run
+these BSDs in this setup - it's better to run the checks locally via
+"make vm-build-openbsd" and "make vm-build-netbsd" instead. Thus let's
+remove these CI jobs now.
 
-Signed-off-by: Chris Friedt <cfriedt@meta.com>
-Message-ID: <20221018122551.94567-3-cfriedt@meta.com>
-[thuth: Add missing #include statement, fix error reported by checkpatch.pl]
+Message-ID: <20240426113742.654748-1-thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/misc/edu.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ .gitlab-ci.d/cirrus.yml           | 37 -------------------------------
+ .gitlab-ci.d/cirrus/kvm-build.yml | 31 --------------------------
+ 2 files changed, 68 deletions(-)
+ delete mode 100644 .gitlab-ci.d/cirrus/kvm-build.yml
 
-diff --git a/hw/misc/edu.c b/hw/misc/edu.c
-index e1cb443438..fa052c44db 100644
---- a/hw/misc/edu.c
-+++ b/hw/misc/edu.c
-@@ -23,6 +23,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/log.h"
- #include "qemu/units.h"
- #include "hw/pci/pci.h"
- #include "hw/hw.h"
-@@ -118,9 +119,10 @@ static void edu_check_range(uint64_t xfer_start, uint64_t xfer_size,
-         return;
-     }
- 
--    hw_error("EDU: DMA range 0x%016"PRIx64"-0x%016"PRIx64
--             " out of bounds (0x%016"PRIx64"-0x%016"PRIx64")!",
--            xfer_start, xfer_end - 1, dma_start, dma_end - 1);
-+    qemu_log_mask(LOG_GUEST_ERROR,
-+                  "EDU: DMA range 0x%016"PRIx64"-0x%016"PRIx64
-+                  " out of bounds (0x%016"PRIx64"-0x%016"PRIx64")!",
-+                  xfer_start, xfer_end - 1, dma_start, dma_end - 1);
- }
- 
- static dma_addr_t edu_clamp_addr(const EduState *edu, dma_addr_t addr)
-@@ -128,7 +130,9 @@ static dma_addr_t edu_clamp_addr(const EduState *edu, dma_addr_t addr)
-     dma_addr_t res = addr & edu->dma_mask;
- 
-     if (addr != res) {
--        printf("EDU: clamping DMA %#.16"PRIx64" to %#.16"PRIx64"!\n", addr, res);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "EDU: clamping DMA 0x%016"PRIx64" to 0x%016"PRIx64"!",
-+                      addr, res);
-     }
- 
-     return res;
+diff --git a/.gitlab-ci.d/cirrus.yml b/.gitlab-ci.d/cirrus.yml
+index 49f86fadaf..75df1273bc 100644
+--- a/.gitlab-ci.d/cirrus.yml
++++ b/.gitlab-ci.d/cirrus.yml
+@@ -91,40 +91,3 @@ aarch64-macos-14-base-build:
+     PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/ncurses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
+     TEST_TARGETS: check-unit check-block check-qapi-schema check-softfloat check-qtest-x86_64
+     QEMU_JOB_OPTIONAL: 1
+-
+-
+-# The following jobs run VM-based tests via KVM on a Linux-based Cirrus-CI job
+-.cirrus_kvm_job:
+-  extends: .base_job_template
+-  stage: build
+-  image: registry.gitlab.com/libvirt/libvirt-ci/cirrus-run:master
+-  needs: []
+-  timeout: 80m
+-  script:
+-    - sed -e "s|[@]CI_REPOSITORY_URL@|$CI_REPOSITORY_URL|g"
+-          -e "s|[@]CI_COMMIT_REF_NAME@|$CI_COMMIT_REF_NAME|g"
+-          -e "s|[@]CI_COMMIT_SHA@|$CI_COMMIT_SHA|g"
+-          -e "s|[@]NAME@|$NAME|g"
+-          -e "s|[@]CONFIGURE_ARGS@|$CONFIGURE_ARGS|g"
+-          -e "s|[@]TEST_TARGETS@|$TEST_TARGETS|g"
+-      <.gitlab-ci.d/cirrus/kvm-build.yml >.gitlab-ci.d/cirrus/$NAME.yml
+-    - cat .gitlab-ci.d/cirrus/$NAME.yml
+-    - cirrus-run -v --show-build-log always .gitlab-ci.d/cirrus/$NAME.yml
+-  variables:
+-    QEMU_JOB_CIRRUS: 1
+-    QEMU_JOB_OPTIONAL: 1
+-
+-
+-x86-netbsd:
+-  extends: .cirrus_kvm_job
+-  variables:
+-    NAME: netbsd
+-    CONFIGURE_ARGS: --target-list=x86_64-softmmu,ppc64-softmmu,aarch64-softmmu
+-    TEST_TARGETS: check
+-
+-x86-openbsd:
+-  extends: .cirrus_kvm_job
+-  variables:
+-    NAME: openbsd
+-    CONFIGURE_ARGS: --target-list=i386-softmmu,riscv64-softmmu,mips64-softmmu
+-    TEST_TARGETS: check
+diff --git a/.gitlab-ci.d/cirrus/kvm-build.yml b/.gitlab-ci.d/cirrus/kvm-build.yml
+deleted file mode 100644
+index a93881aa8b..0000000000
+--- a/.gitlab-ci.d/cirrus/kvm-build.yml
++++ /dev/null
+@@ -1,31 +0,0 @@
+-container:
+-  image: fedora:35
+-  cpu: 4
+-  memory: 8Gb
+-  kvm: true
+-
+-env:
+-  CIRRUS_CLONE_DEPTH: 1
+-  CI_REPOSITORY_URL: "@CI_REPOSITORY_URL@"
+-  CI_COMMIT_REF_NAME: "@CI_COMMIT_REF_NAME@"
+-  CI_COMMIT_SHA: "@CI_COMMIT_SHA@"
+-
+-@NAME@_task:
+-  @NAME@_vm_cache:
+-    folder: $HOME/.cache/qemu-vm
+-  install_script:
+-    - dnf update -y
+-    - dnf install -y git make openssh-clients qemu-img qemu-system-x86 wget meson
+-  clone_script:
+-    - git clone --depth 100 "$CI_REPOSITORY_URL" .
+-    - git fetch origin "$CI_COMMIT_REF_NAME"
+-    - git reset --hard "$CI_COMMIT_SHA"
+-  build_script:
+-    - if [ -f $HOME/.cache/qemu-vm/images/@NAME@.img ]; then
+-        make vm-build-@NAME@ J=$(getconf _NPROCESSORS_ONLN)
+-          EXTRA_CONFIGURE_OPTS="@CONFIGURE_ARGS@"
+-          BUILD_TARGET="@TEST_TARGETS@" ;
+-      else
+-        make vm-build-@NAME@ J=$(getconf _NPROCESSORS_ONLN) BUILD_TARGET=help
+-          EXTRA_CONFIGURE_OPTS="--disable-system --disable-user --disable-tools" ;
+-      fi
 -- 
 2.44.0
 
