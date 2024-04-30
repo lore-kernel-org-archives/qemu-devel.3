@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81363C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 16:33:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A39A0C19F4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 16:49:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1qOs-0004HZ-Ee; Tue, 30 Apr 2024 12:32:14 -0400
+	id 1s1qf2-0002OA-LP; Tue, 30 Apr 2024 12:48:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1qOa-0004D3-78
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:31:57 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s1qf0-0002Hg-Kb
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:48:54 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1qOQ-0001Ms-6w
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:31:52 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-41b782405d5so48497615e9.2
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 09:31:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s1qev-0005cD-J0
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:48:54 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-41b79451145so35703845e9.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 09:48:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714494704; x=1715099504; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714495727; x=1715100527; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=y3Dvy0wvVxKNBXh21IDmsrC5sWJZyoTg3iWrcJY72Ng=;
- b=kLr90zxLjOBy+I8pNRg+k+iYhUpFVWF5nvx+AI4r8SqYHk9l5mGNzoCXC9qziiMCxG
- RPcIGC7eVP4zgYbjLM751VcUQ/6g6fjTYVNt8EcFBNHOI5qyJZ1kv9fUsH9Y3vDcPrR1
- ljuL3SoEPriv8sn40D8TuaDlpzNvwW1HDY8aKOFTU3KiA94mMVenzKr80qO8RHze4Tm+
- BKE9cowxQ1Ev+fXigeHr9zW6ioIEp2Y7FgHNhVVNU8cWzyq2rUT72aSvuKsdLtQWy68S
- ME4irtvIqNbheMlUiUV4bmSWCmbVx9HTf6+FgzAy2wpPEQ9T+b07zR36uEO9sNuaKGX+
- sEzg==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=c6JJbqohxseNO79U2Bdi9j1VL8AGsp3zzZqnjvDFGr0=;
+ b=y84HdGzKyGNZRSWKWnLtnPb93jMCwT2hKVw3V+ccIOum83flams7aqpk1NbyCZHPci
+ l1FggY1Yiik59+pfnoeX4Mg/CqZOivAx7Qz9rJoC5ukPqK4EV39Us+Wi47863HoSKFrg
+ 10scOZXPDvCPyU8yMyuApQJMINGfKoYdRwgSZWpjmLk35xD7xBkYM9zL70AYySpfrVou
+ GLZrDkFHMGhQ7E3e1r4ux9xgWySkAMTtP4e19sdjzS6qUmOJ7VVR46jSubp7gb0nsFRj
+ zKg5XOifR3d5xhBq/nU2Zy/36oyoS3ndYfKRxqzs465sSUiRtvt9GBOLT2oHXpahGyXh
+ 4wgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714494704; x=1715099504;
+ d=1e100.net; s=20230601; t=1714495727; x=1715100527;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=y3Dvy0wvVxKNBXh21IDmsrC5sWJZyoTg3iWrcJY72Ng=;
- b=uCWUlOjUOebcIQxGzBL173DtnZLZ0yJ1fPkNljGe22dqHjVhazush21HdXB2vouLcw
- cEJp73NpFkljotjE62G2lnlRyjlAATXJ43CdFRlrsnA4+jxZJcKA5LrNc3p083lENGbq
- rwXru3zGRDQShxtcp+rfOw2SsT2Bnaar+OPUdhM+qI4aubcYHNr8CTQabvuZQqWg3rKb
- IaOwowBb6yI3j/UQ4B8CEXACi+rDQQJOtIc6BRDKd7JsdDk15K++ctSrxYtvyfsja2cK
- IBsEKhc9ViUW+aCjoO+B4w9a4935sRjw6dSk6bHtliPtrv/tMIxdY/owIpdHTMMqy8UT
- BV4g==
-X-Gm-Message-State: AOJu0Yy4d+xkucjmvJFe5kLz8ahLZKBrrABtH2V3nukooFULtxRFBvz3
- JLrGIFxjpoi6kfNYjxeAVh6E7AzzLnloVfJTpuwpqTkK+V0tbQfjHn/7fkxPJzfImmFY3lP21fV
- P
-X-Google-Smtp-Source: AGHT+IGhhXF0l5OMACQKTVhNESdbFWWNdjxBRaneM6YJOl8WeYVM3/XfHQT9LSLiWbU2n5VA5mD+UQ==
-X-Received: by 2002:a05:600c:4e11:b0:41c:8754:8793 with SMTP id
- b17-20020a05600c4e1100b0041c87548793mr21902wmq.41.1714494703775; 
- Tue, 30 Apr 2024 09:31:43 -0700 (PDT)
-Received: from m1x-phil.lan (mab78-h01-176-184-55-179.dsl.sta.abo.bbox.fr.
- [176.184.55.179]) by smtp.gmail.com with ESMTPSA id
- n7-20020a05600c500700b0041bc412899fsm14286158wmr.42.2024.04.30.09.31.42
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Apr 2024 09:31:43 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ bh=c6JJbqohxseNO79U2Bdi9j1VL8AGsp3zzZqnjvDFGr0=;
+ b=lN/WrplsIELTy2QGs3pHsLim9GGNwtxVMYU6oAemD46etO07LYw8pHi1m0CT3zMBo9
+ uau1o44mJRBntijClnCXCOqspmt5h7nJ6S/8f9uqjXZqJ+9/551ytk8ppPY8RZNr8oH/
+ VGIW4C7F3AxsdN+0Sg/R0SmH7DcRyQT6v+ZA6GLknExkv3hs/vChO56JlP9ndiLgG68l
+ xK1D/F8b3GvmJhovychodxI/wraZtgtgtXkd5lza/lW5/tYuvk9OjeW6hZ8IsapeagHQ
+ k0panXI8PVBule/g+3vLLyjH859Finpg9C1AT/LKN0vB8jWCpAXZqxkciYCtUFJBoFJF
+ gvzw==
+X-Gm-Message-State: AOJu0Yz08EEIbfNlVwkF2NdEr3t430Bd65YroBv8yUJBS1M5M4qmyDZo
+ /8ST1WOtnQZy+i6ZRad8pf9K7aUs9YPUqRgq6JbxUi1wF7GrVsftE+zF0KmhGYd9pG+EcuokHza
+ X
+X-Google-Smtp-Source: AGHT+IF6j+bL1mzBkMypGlpNub//3eQy/hVfHnbfJ911ZKR+ZVmNF+DoJZVqRnOQcvrwnABjHFBzsQ==
+X-Received: by 2002:a05:600c:3b02:b0:418:f991:8ad4 with SMTP id
+ m2-20020a05600c3b0200b00418f9918ad4mr79671wms.6.1714495727034; 
+ Tue, 30 Apr 2024 09:48:47 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ b6-20020a05600c4e0600b0041be3383a2fsm12920384wmq.19.2024.04.30.09.48.46
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 30 Apr 2024 09:48:46 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Yoshinori Sato <ysato@users.sourceforge.jp>,
- John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
- Paul Cercueil <paul@crapouillou.net>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v4 2/4] target/sh4: Fix SUBV opcode
-Date: Tue, 30 Apr 2024 18:31:23 +0200
-Message-ID: <20240430163125.77430-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240430163125.77430-1-philmd@linaro.org>
-References: <20240430163125.77430-1-philmd@linaro.org>
+Subject: [PULL 06/21] target/arm: Enable FEAT_ETS2 for -cpu max
+Date: Tue, 30 Apr 2024 17:48:27 +0100
+Message-Id: <20240430164842.4074734-7-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240430164842.4074734-1-peter.maydell@linaro.org>
+References: <20240430164842.4074734-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,97 +94,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The documentation says:
+FEAT_ETS2 is a tighter set of guarantees about memory ordering
+involving translation table walks than the old FEAT_ETS; FEAT_ETS has
+been retired from the Arm ARM and the old ID_AA64MMFR1.ETS == 1
+now gives no greater guarantees than ETS == 0.
 
-  SUBV Rm, Rn        Rn - Rm -> Rn, underflow -> T
+FEAT_ETS2 requires:
+ * the virtual address of a load or store that appears in program
+   order after a DSB cannot be translated until after the DSB
+   completes (section B2.10.9)
+ * TLB maintenance operations that only affect translations without
+   execute permission are guaranteed complete after a DSB
+   (R_BLDZX)
+ * if a memory access RW2 is ordered-before memory access RW2,
+   then RW1 is also ordered-before any translation table walk
+   generated by RW2 that generates a Translation, Address size
+   or Access flag fault (R_NNFPF, I_CLGHP)
 
-The overflow / underflow can be calculated as:
+As with FEAT_ETS, QEMU is already compliant, because we do not
+reorder translation table walk memory accesses relative to other
+memory accesses, and we always guarantee to have finished TLB
+maintenance as soon as the TLB op is done.
 
-  T = ((Rn ^ Rm) & (Result ^ Rn)) >> 31
+Update the documentation to list FEAT_ETS2 instead of the
+no-longer-existent FEAT_ETS, and update the 'max' CPU ID registers.
 
-However we were using the incorrect:
-
-  T = ((Rn ^ Rm) & (Result ^ Rm)) >> 31
-
-Fix by using the Rn register instead of Rm.
-
-Add tests provided by Paul Cercueil.
-
-Cc: qemu-stable@nongnu.org
-Fixes: ad8d25a11f ("target-sh4: implement addv and subv using TCG")
-Reported-by: Paul Cercueil <paul@crapouillou.net>
-Suggested-by: Paul Cercueil <paul@crapouillou.net>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2318
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20240418152004.2106516-4-peter.maydell@linaro.org
 ---
- target/sh4/translate.c        |  2 +-
- tests/tcg/sh4/test-subv.c     | 30 ++++++++++++++++++++++++++++++
- tests/tcg/sh4/Makefile.target |  3 +++
- 3 files changed, 34 insertions(+), 1 deletion(-)
- create mode 100644 tests/tcg/sh4/test-subv.c
+ docs/system/arm/emulation.rst | 2 +-
+ target/arm/tcg/cpu32.c        | 2 +-
+ target/arm/tcg/cpu64.c        | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/target/sh4/translate.c b/target/sh4/translate.c
-index 4a1dd0d1f4..3e013b7c7c 100644
---- a/target/sh4/translate.c
-+++ b/target/sh4/translate.c
-@@ -933,7 +933,7 @@ static void _decode_opc(DisasContext * ctx)
-             t0 = tcg_temp_new();
-             tcg_gen_sub_i32(t0, REG(B11_8), REG(B7_4));
-             t1 = tcg_temp_new();
--            tcg_gen_xor_i32(t1, t0, REG(B7_4));
-+            tcg_gen_xor_i32(t1, t0, REG(B11_8));
-             t2 = tcg_temp_new();
-             tcg_gen_xor_i32(t2, REG(B11_8), REG(B7_4));
-             tcg_gen_and_i32(t1, t1, t2);
-diff --git a/tests/tcg/sh4/test-subv.c b/tests/tcg/sh4/test-subv.c
-new file mode 100644
-index 0000000000..0dd8fcdaac
---- /dev/null
-+++ b/tests/tcg/sh4/test-subv.c
-@@ -0,0 +1,30 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include <limits.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+
-+static void subv(const int a, const int b, const int res, const int carry)
-+{
-+    int o = a, c;
-+
-+    asm volatile("subv %2,%0\n"
-+                 "movt %1\n"
-+                 : "+r"(o), "=r"(c) : "r"(b) :);
-+
-+    if (c != carry || o != res) {
-+        printf("SUBV %d, %d = %d/%d [T = %d/%d]\n", a, b, o, res, c, carry);
-+        abort();
-+    }
-+}
-+
-+int main(void)
-+{
-+    subv(INT_MIN, 1, INT_MAX, 1);
-+    subv(INT_MAX, -1, INT_MIN, 1);
-+    subv(INT_MAX, 1, INT_MAX - 1, 0);
-+    subv(0, 1, -1, 0);
-+    subv(-1, -1, 0, 0);
-+
-+    return 0;
-+}
-diff --git a/tests/tcg/sh4/Makefile.target b/tests/tcg/sh4/Makefile.target
-index 521b8b0a76..7852fa62d8 100644
---- a/tests/tcg/sh4/Makefile.target
-+++ b/tests/tcg/sh4/Makefile.target
-@@ -20,3 +20,6 @@ TESTS += test-macw
+diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+index d70b66f7530..307539cff91 100644
+--- a/docs/system/arm/emulation.rst
++++ b/docs/system/arm/emulation.rst
+@@ -50,7 +50,7 @@ the following architecture extensions:
+ - FEAT_EL2 (Support for execution at EL2)
+ - FEAT_EL3 (Support for execution at EL3)
+ - FEAT_EPAC (Enhanced pointer authentication)
+-- FEAT_ETS (Enhanced Translation Synchronization)
++- FEAT_ETS2 (Enhanced Translation Synchronization)
+ - FEAT_EVT (Enhanced Virtualization Traps)
+ - FEAT_F32MM (Single-precision Matrix Multiplication)
+ - FEAT_F64MM (Double-precision Matrix Multiplication)
+diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
+index de8f2be9416..b5a60682fa6 100644
+--- a/target/arm/tcg/cpu32.c
++++ b/target/arm/tcg/cpu32.c
+@@ -67,7 +67,7 @@ void aa32_max_features(ARMCPU *cpu)
+     cpu->isar.id_mmfr4 = t;
  
- test-addv: CFLAGS += -O -g
- TESTS += test-addv
-+
-+test-subv: CFLAGS += -O -g
-+TESTS += test-subv
+     t = cpu->isar.id_mmfr5;
+-    t = FIELD_DP32(t, ID_MMFR5, ETS, 1);          /* FEAT_ETS */
++    t = FIELD_DP32(t, ID_MMFR5, ETS, 2);          /* FEAT_ETS2 */
+     cpu->isar.id_mmfr5 = t;
+ 
+     t = cpu->isar.id_pfr0;
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index 8ad05c53e8d..ebb585afd85 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1196,7 +1196,7 @@ void aarch64_max_tcg_initfn(Object *obj)
+     t = FIELD_DP64(t, ID_AA64MMFR1, LO, 1);       /* FEAT_LOR */
+     t = FIELD_DP64(t, ID_AA64MMFR1, PAN, 3);      /* FEAT_PAN3 */
+     t = FIELD_DP64(t, ID_AA64MMFR1, XNX, 1);      /* FEAT_XNX */
+-    t = FIELD_DP64(t, ID_AA64MMFR1, ETS, 1);      /* FEAT_ETS */
++    t = FIELD_DP64(t, ID_AA64MMFR1, ETS, 2);      /* FEAT_ETS2 */
+     t = FIELD_DP64(t, ID_AA64MMFR1, HCX, 1);      /* FEAT_HCX */
+     t = FIELD_DP64(t, ID_AA64MMFR1, TIDCP1, 1);   /* FEAT_TIDCP1 */
+     cpu->isar.id_aa64mmfr1 = t;
 -- 
-2.41.0
+2.34.1
 
 
