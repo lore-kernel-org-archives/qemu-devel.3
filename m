@@ -4,53 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C454C4345F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBD63C10F16
 	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 07:15:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1hgr-00017t-8y; Tue, 30 Apr 2024 03:14:13 -0400
+	id 1s1hgs-0001BQ-6N; Tue, 30 Apr 2024 03:14:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1hgo-00013G-GO
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 03:14:10 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1hgp-00013f-64
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 03:14:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1hgm-0008SR-T9
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1hgi-0008Qk-Uo
  for qemu-devel@nongnu.org; Tue, 30 Apr 2024 03:14:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714461248;
+ s=mimecast20190719; t=1714461244;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bXIZYgPkcIorI3xyCCUJmXMpv16nMsQpx8/JoTKtyJo=;
- b=hlwn1L9jA0Af/3lBxEt04HJLKysY2onV1LdCC9q+XWY8IH5iv5UNwydA54pQs2t1vWstUa
- m3MKdIZhvfua1eujuPTLpaohVwLIeBtd5154VZxUWrzDHW9jSDAfz8MD45W7GgcFfneykr
- Vmb/+eYTiuxr5p7AdJjC9m2+n16aJfE=
+ bh=FzmButXz+sBDibCDdMHuvj80UwLwW64bHhmg5e9RJMY=;
+ b=AAwXac7FNyfzEHbdVeOOAMc/CBu005tFNtK0m5V9liTAgAD+2/kldvQ7h3SFK9DJNWbCJz
+ pA1Riq7uEUKLRuuizw0RQzB5bSO8uRyfr0MrvDpL/0BFC2oh/XDYHB69mw0CNgT+Y6ROB3
+ U2CHM/JYtKGf14Zv1TqHBH3iyM5pxrw=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-620-F0OOrxTuN4mqE9e7Z7a77Q-1; Tue, 30 Apr 2024 03:14:03 -0400
-X-MC-Unique: F0OOrxTuN4mqE9e7Z7a77Q-1
+ us-mta-652-yOsZnpaOPou1cASFHjCTwg-1; Tue, 30 Apr 2024 03:14:02 -0400
+X-MC-Unique: yOsZnpaOPou1cASFHjCTwg-1
 Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
  [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 924EE89A7E3;
- Tue, 30 Apr 2024 07:14:03 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C17CA182ED64;
+ Tue, 30 Apr 2024 07:14:01 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.79])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 45C8040C6CC0;
- Tue, 30 Apr 2024 07:14:02 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 6313340C6CC0;
+ Tue, 30 Apr 2024 07:14:00 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 12/19] hw/char/stm32l4x5_usart: Fix memory corruption by adding
- correct class_size
-Date: Tue, 30 Apr 2024 09:13:33 +0200
-Message-ID: <20240430071340.413305-13-thuth@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>
+Subject: [PULL 11/19] qga: Re-enable the qga-ssh-test when running without
+ fuzzing
+Date: Tue, 30 Apr 2024 09:13:32 +0200
+Message-ID: <20240430071340.413305-12-thuth@redhat.com>
 In-Reply-To: <20240430071340.413305-1-thuth@redhat.com>
 References: <20240430071340.413305-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -81,32 +82,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"make check-qtest-aarch64" recently started failing on FreeBSD builds,
-and valgrind on Linux also detected that there is something fishy with
-the new stm32l4x5-usart: The code forgot to set the correct class_size
-here, so the various class_init functions in this file wrote beyond
-the allocated buffer when setting the subc->type field.
+According to the comment in qga/meson.build, the test got disabled
+since there were problems with the fuzzing job. But instead of
+disabling this test completely, we should still be fine running
+it when fuzzing is disabled.
 
-Fixes: 4fb37aea7e ("hw/char: Implement STM32L4x5 USART skeleton")
-Message-ID: <20240429075908.36302-1-thuth@redhat.com>
+Message-ID: <20240426162348.684143-1-thuth@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/char/stm32l4x5_usart.c | 1 +
- 1 file changed, 1 insertion(+)
+ qga/meson.build | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/hw/char/stm32l4x5_usart.c b/hw/char/stm32l4x5_usart.c
-index 2627aab832..02f666308c 100644
---- a/hw/char/stm32l4x5_usart.c
-+++ b/hw/char/stm32l4x5_usart.c
-@@ -617,6 +617,7 @@ static const TypeInfo stm32l4x5_usart_types[] = {
-         .parent         = TYPE_SYS_BUS_DEVICE,
-         .instance_size  = sizeof(Stm32l4x5UsartBaseState),
-         .instance_init  = stm32l4x5_usart_base_init,
-+        .class_size     = sizeof(Stm32l4x5UsartBaseClass),
-         .class_init     = stm32l4x5_usart_base_class_init,
-         .abstract       = true,
-     }, {
+diff --git a/qga/meson.build b/qga/meson.build
+index 1c3d2a3d1b..46c1d83d7f 100644
+--- a/qga/meson.build
++++ b/qga/meson.build
+@@ -181,12 +181,11 @@ test_env = environment()
+ test_env.set('G_TEST_SRCDIR', meson.current_source_dir())
+ test_env.set('G_TEST_BUILDDIR', meson.current_build_dir())
+ 
+-# disable qga-ssh-test for now. glib's G_TEST_OPTION_ISOLATE_DIRS triggers
++# disable qga-ssh-test with fuzzing: glib's G_TEST_OPTION_ISOLATE_DIRS triggers
+ # the leak detector in build-oss-fuzz Gitlab CI test. we should re-enable
+ # this when an alternative is implemented or when the underlying glib
+ # issue is identified/fix
+-#if host_os != 'windows'
+-if false
++if host_os != 'windows' and not get_option('fuzzing')
+   srcs = [files('commands-posix-ssh.c')]
+   i = 0
+   foreach output: qga_qapi_outputs
 -- 
 2.44.0
 
