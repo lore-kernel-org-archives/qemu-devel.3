@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CCEFC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 16:49:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3090AC10F16
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 16:49:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1qeC-0001xR-2H; Tue, 30 Apr 2024 12:48:04 -0400
+	id 1s1qf3-0002OX-41; Tue, 30 Apr 2024 12:48:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dario.binacchi@amarulasolutions.com>)
- id 1s1qe9-0001ww-Lr
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:48:01 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s1qf1-0002Lq-O2
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:48:55 -0400
+Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dario.binacchi@amarulasolutions.com>)
- id 1s1qe7-0005Mp-OY
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:48:01 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-34d0aa589a4so1645535f8f.1
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 09:47:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s1qev-0005cT-MX
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:48:55 -0400
+Received: by mail-lj1-x22e.google.com with SMTP id
+ 38308e7fff4ca-2e01d666c88so30611061fa.2
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 09:48:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amarulasolutions.com; s=google; t=1714495677; x=1715100477; darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=gkIQ267nvYf/ERCHKUNUMSvISDvAspB8i+k6G7ljsdc=;
- b=iOW+o5jXr+1pW8+CLu5FgRcwxJLmfS2EBDG4TtEd4UGuyAgBvPHtLQswq6Jo2riyD+
- c5WnLPgqq2jshrHToXfC8ZHwh2eEWxIqtIk3Ijly/gSScYeXTPLG5DJB0JlyFDjX82Z+
- d2ikJRuXtgXVmCw9jNWflKu7HKR/p8MRJfkeg=
+ d=linaro.org; s=google; t=1714495728; x=1715100528; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=YAE2Z85EDqslfi/H8Lhz9sH1xLHpAncNnbrwHz0FrVY=;
+ b=q0mHB3aviro4nIIByUz3/Tz6waAHuG/YfEs/1bMryFgGZwURhW/knlIQvE4Y4z4D3q
+ rnqLjc3WkLHzzw3Zp7iebaUygdhhhCzKf7XlkTD2rNIBc5PosgLqtdu8jzzJglMVXPjm
+ lwPq+0gPuD1cqhHwKMNQJWdfBjFjHbRg90txY4tfjco+8eBazIYy48KxSHQBzxH2RCJW
+ NBna05jPMA6LgoJNykFSnbqeMFBONboUoy2c8IP5b2D+GsuHOytYuTjqqR6uzKqko8vV
+ lq9xHEP0Nkwadszk298MjzHiuowEN7RFHCrinhMHaZjU3yPs/WB7lvcXRkxyVXJqodSO
+ rgEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714495677; x=1715100477;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gkIQ267nvYf/ERCHKUNUMSvISDvAspB8i+k6G7ljsdc=;
- b=lVUpdbE3nr48wx1mTgXiDxSLiLTv5B0L/3WjfJxmgyLc50OQFoDsXFGfCmAi755Hhx
- 8Lx7P/Lj1zJJ57iCNxZuLSa8Bw6Ywi+50OUR5GY6YsoSfYDhHgevMwQ04h8gucIiS6BX
- mIKAv4s9ozXt/quSIy55G4hv73HjYdRUwG8SF4MVeEOX3k+dB9g0SiS1Mu7bTwdv0rUl
- OyfeTIJSWndDg+6oKTKX87Q8w5UWd75HIzHMtjpFVPk89Ogc0ZUA+qhXpmiGW4Everei
- 5HQg5/oxKCv2KSoXCWNa5Gb88mxIxWNGHttdwngxWpCyMQmROe0J9y5vSxfAlF0UKQPJ
- rRLQ==
-X-Gm-Message-State: AOJu0YyqE2vSVYAhp+t/TQY+K+o+qawdu5nywEz3qzmegVNY11jVzAyu
- 5vyjZN9m5Qa0TJr+TD5i1y+LCen6ataiogPOoVBOwZwjNogn7cO3yqHE/UQ2IsThjst4QQMMah+
- EyiM=
-X-Google-Smtp-Source: AGHT+IFLG0YqlwzcSClbhqPLlhjBZMF7GsQGOQ2fItavzkqGjvdyFB4N89eUNoSUBYWDCeJSNQxS7w==
-X-Received: by 2002:a5d:614f:0:b0:345:be70:191c with SMTP id
- y15-20020a5d614f000000b00345be70191cmr161859wrt.37.1714495676884; 
- Tue, 30 Apr 2024 09:47:56 -0700 (PDT)
-Received: from dario-ThinkPad-T14s-Gen-2i.amarulasolutions.com
- ([176.201.29.105]) by smtp.gmail.com with ESMTPSA id
- d24-20020adfa418000000b0034ca8cdc594sm9057503wra.76.2024.04.30.09.47.55
+ d=1e100.net; s=20230601; t=1714495728; x=1715100528;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=YAE2Z85EDqslfi/H8Lhz9sH1xLHpAncNnbrwHz0FrVY=;
+ b=VDnYBlm41Vm2NxC1QxlFCUe8b9wQnZESFCrjdg2DPt7IFXpe706Bymf2x9r0K2I/JB
+ ty0YjkvsldC25Rgl5LiYslh827cfUkX2xMYMpTuAd7dSuccnrVsKdF3KgQqBLaSQ3Dn5
+ HdLMvdlBCLfpZCM+LLmfHzp+8gsTxk2bFV+6TXo0cRqijUwt/RxekbZsA2ZNsz5aDAX8
+ 48AIidLGrC4Ohy3M6/LPD99M+URHGtAAe9jqEUvWY/kbRtBnXKNoJKnSPwro/sdrM6AZ
+ JYEntt6AROiPGWNy5qN8Gc1/Vtm6KUE32Dlk0iaQlbADBVfV/5Hop38XeHEgiKKip9wB
+ pD2g==
+X-Gm-Message-State: AOJu0YxLow9QEB8SSQ6N7X8IHyW1is7Yr6oPq6Rzt96DjVGePEHtQhdb
+ amr1pUvIur8gqNw1Mja2BR0GEI692JnPSpnVbJp7BGztxjApz6os+gcsiXuRwBYEnugyncj5Ax2
+ P
+X-Google-Smtp-Source: AGHT+IF0SDXgHJx2ynA87F4cZDdEUVIW6flC/hLFqCXfkcKzlr7RdQ0E97eHRfzbf0LLDyunsoB2JQ==
+X-Received: by 2002:a2e:9602:0:b0:2d8:5a5e:7c5e with SMTP id
+ v2-20020a2e9602000000b002d85a5e7c5emr184167ljh.22.1714495728082; 
+ Tue, 30 Apr 2024 09:48:48 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ b6-20020a05600c4e0600b0041be3383a2fsm12920384wmq.19.2024.04.30.09.48.47
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Apr 2024 09:47:56 -0700 (PDT)
-From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+ Tue, 30 Apr 2024 09:48:47 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, michael@amarulasolutions.com,
- linux-amarula@amarulasolutions.com,
- Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Subject: [PATCH 1/1] tests/fp/meson: don't build fp-bench test if fenv.h is
- missing
-Date: Tue, 30 Apr 2024 18:47:52 +0200
-Message-ID: <20240430164752.645521-1-dario.binacchi@amarulasolutions.com>
-X-Mailer: git-send-email 2.43.0
+Subject: [PULL 08/21] target/arm: Enable FEAT_Spec_FPACC for -cpu max
+Date: Tue, 30 Apr 2024 17:48:29 +0100
+Message-Id: <20240430164842.4074734-9-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240430164842.4074734-1-peter.maydell@linaro.org>
+References: <20240430164842.4074734-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=dario.binacchi@amarulasolutions.com;
- helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,46 +94,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The fp-bench test (i. e. tests/fp/fp-bench.c) use fenv.h that is not
-always provided by the libc (uClibc). The patch disables its compilation
-in case the header is not available.
+FEAT_Spec_FPACC is a feature describing speculative behaviour in the
+event of a PAC authontication failure when FEAT_FPACCOMBINE is
+implemented.  FEAT_Spec_FPACC means that the speculative use of
+pointers processed by a PAC Authentication is not materially
+different in terms of the impact on cached microarchitectural state
+(caches, TLBs, etc) between passing and failing of the PAC
+Authentication.
 
-The patch is based on a suggestion from Paolo Bonzini, which you can
-find at the following link.
+QEMU doesn't do speculative execution, so we can advertise
+this feature.
 
-Link: https://lists.nongnu.org/archive/html/qemu-devel/2021-03/msg00492.html
-Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20240418152004.2106516-6-peter.maydell@linaro.org
 ---
- tests/fp/meson.build | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ docs/system/arm/emulation.rst | 1 +
+ target/arm/tcg/cpu64.c        | 4 ++++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/tests/fp/meson.build b/tests/fp/meson.build
-index 114b4b483ea7..0e1237be54ed 100644
---- a/tests/fp/meson.build
-+++ b/tests/fp/meson.build
-@@ -126,12 +126,14 @@ test('fp-test-mulAdd', fptest,
-            ['f16_mulAdd', 'f32_mulAdd', 'f64_mulAdd', 'f128_mulAdd'],
-      suite: ['softfloat-slow', 'softfloat-ops-slow', 'slow'], timeout: 180)
+diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+index 307539cff91..7fcea54d8db 100644
+--- a/docs/system/arm/emulation.rst
++++ b/docs/system/arm/emulation.rst
+@@ -61,6 +61,7 @@ the following architecture extensions:
+ - FEAT_FP16 (Half-precision floating-point data processing)
+ - FEAT_FPAC (Faulting on AUT* instructions)
+ - FEAT_FPACCOMBINE (Faulting on combined pointer authentication instructions)
++- FEAT_FPACC_SPEC (Speculative behavior of combined pointer authentication instructions)
+ - FEAT_FRINTTS (Floating-point to integer instructions)
+ - FEAT_FlagM (Flag manipulation instructions v2)
+ - FEAT_FlagM2 (Enhancements to flag manipulation instructions)
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index ebb585afd85..443cffe3a85 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1217,6 +1217,10 @@ void aarch64_max_tcg_initfn(Object *obj)
+     t = FIELD_DP64(t, ID_AA64MMFR2, E0PD, 1);     /* FEAT_E0PD */
+     cpu->isar.id_aa64mmfr2 = t;
  
--executable(
--  'fp-bench',
--  ['fp-bench.c', '../../fpu/softfloat.c'],
--  dependencies: [qemuutil, libtestfloat, libsoftfloat],
--  c_args: fpcflags,
--)
-+if cc.has_header('fenv.h')
-+  executable(
-+    'fp-bench',
-+    ['fp-bench.c', '../../fpu/softfloat.c'],
-+    dependencies: [qemuutil, libtestfloat, libsoftfloat],
-+    c_args: fpcflags,
-+  )
-+endif
- 
- fptestlog2 = executable(
-   'fp-test-log2',
++    t = cpu->isar.id_aa64mmfr3;
++    t = FIELD_DP64(t, ID_AA64MMFR3, SPEC_FPACC, 1); /* FEAT_FPACC_SPEC */
++    cpu->isar.id_aa64mmfr3 = t;
++
+     t = cpu->isar.id_aa64zfr0;
+     t = FIELD_DP64(t, ID_AA64ZFR0, SVEVER, 1);
+     t = FIELD_DP64(t, ID_AA64ZFR0, AES, 2);       /* FEAT_SVE_PMULL128 */
 -- 
-2.43.0
+2.34.1
 
 
