@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABA75C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 23:02:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7049C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 23:02:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1wTD-0007S3-5X; Tue, 30 Apr 2024 19:01:07 -0400
+	id 1s1wU9-0007iX-4d; Tue, 30 Apr 2024 19:02:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s1wTB-0007Rf-E1
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 19:01:05 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1s1wU4-0007hN-MS
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 19:02:00 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s1wT7-00076v-9A
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 19:01:05 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-6f043f9e6d7so6391857b3a.3
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 16:01:00 -0700 (PDT)
+ id 1s1wTy-0007Dm-Vh
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 19:02:00 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-6f26588dd5eso5354524b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 16:01:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714518059; x=1715122859; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714518113; x=1715122913; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=LNMjvbmMxz9F4bqWKdFpgvaWR2eMcNcNwxhNNItpZjc=;
- b=ZlA0KdzmE99Hh1sHRRtqPciJnu9P88pal+joi14KRolsTw0DHGJkAOJt4mO/GvpQ4R
- 8PfhxtzCi4egN8x36TYI7lN9GJG5EBmOPWCTzYeUh7K8AZO4tPUG4M5yzHWbAqFK8W7C
- z0Bq98WLtlnvmCkEkuUCFQfGODLIRj7sfIk2xiqyjxjVGfambRMLVn3kvMtDGt0O0UJx
- DLTtg4rntlgcrT3suYYjx/hdwt1986tdBDfosK3fmGHHtAQhfmIQ4E+8fbWooyomxz4a
- jzuYXaA015LQfSZwTTFJT2PRSKa6S7squSgLuDeKTS0X9QamvaGRe0jaGcTJNuJqOLUn
- +FrQ==
+ bh=GT28dIlm00nmvPFYTKfVLKxpdFdz+PopsyCVy4D06vo=;
+ b=E6uVOFyKOujqs8mhHWC7ZMz+Hu8XY0qziMnw2NhB3IKCXeJr33KYMsuaSNm/4qv8c/
+ uHaj4LZM/fvCJnxzCL7ak/1Swl3AFLOttRSKYteshH+Zt85QssBfJFHEQdsSkEF4Lb0a
+ bJItg99QUlCKalowcPPJxLbhH8wQmhdXrAqUEAta1Oszcj1RiC81P/YUYmRs1fkApCJu
+ ZZrElFi0mmQvkavgFHRSBVHjwQVYimDDkFlPrR9P0g9LIAR9qaYbcOAmKmoYDuswttze
+ /RbevDGscHA0BNLKnDJLhY72a7cWhw7UkFgi2GpWEKbW72iaYvxE0KKC6VW8K7iFEhog
+ I9mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714518059; x=1715122859;
+ d=1e100.net; s=20230601; t=1714518113; x=1715122913;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LNMjvbmMxz9F4bqWKdFpgvaWR2eMcNcNwxhNNItpZjc=;
- b=GDyjvKwJqb+qo2DwCByhGnag/Kx/8hm+shlVk0Z6FC5Pyyjx1C1KUU7WQ9X+MtB4MX
- oWEmXFVI0a3g7eowyo5mhJ8MrgKypuvyw3NCp8CASJ2rS6tqtw8kwjgCTLY/ET9q73Jk
- +AMJl+f/1EFn1YSYHc3nkyZu/yej/Q/2EjyzWbt5hDsGXlrk342P+5Qi409uQlK5yoL9
- LyLjHdydnAeXE9ZdpBUpgMWPIncuqF1AhVf6kGDM+ok85vCFmfSy7tFE+Mea8niv3W5c
- li2BS0ItgaMCbRIIPVgmJUQ9tX2W95+fsAD0gBtT8Q9iJoDExgPPwSMcwW1k1mijfgCw
- esIg==
+ bh=GT28dIlm00nmvPFYTKfVLKxpdFdz+PopsyCVy4D06vo=;
+ b=BZlk7F1H7POR/Z52NDSaeRu8dON4/eD4AGCZKeUNXiIYQWCwsL5r8bHPmd+cKhh3QJ
+ GfLGz/8nha6o/g6DWBaNu4xUoFVeH+620D1iMVniH64w42HVI3Brb2ZftIu9Vkt9qlEE
+ 3mCtDUodTkmEcrq4A+Tx0ac28Qu3azCprxk5jPYHL0WNad0DlL79CBavo4vP6OljZK6O
+ M8JbU5n3jaf88BvchDnkpm9G/e2IdBpT+uKrDu4n4JYclMSiiFip8IjZuFlauYwZSFx/
+ d0ZBLK3qKJxYmkL4noSgtgEN/265tpBgQuYbdKmIQuleDJ4IMDUIEhxANpGCmEiZgZF0
+ 4GHg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU0xHbYa0BI6Rc8Uk8r2VjVL+nLu+QbI1A2wJY93o3qP0AT3muySM5AWjOzdKem9IutJMaMZAuaIGIpiN1lvm8DQIFLTJA=
-X-Gm-Message-State: AOJu0YxPGLBxCN8CvLfGuRwfuRtdxbrN+S7En7aaAhL0UFT2GFxH8rLh
- N70Ergu3rPE9SQW80POnfSQBOZFG8Os1GIsDSZbo0UMONPcMJzcPeGdQxL8STmU=
-X-Google-Smtp-Source: AGHT+IHxh+TgR4HrvcEic8XVEL6XJDD8kdQuJHxQE5kiHEPY1iUKk+3xkDd+ggwlQ6pdeBxgRe7OkQ==
-X-Received: by 2002:a05:6a20:3d90:b0:1a7:7818:720e with SMTP id
- s16-20020a056a203d9000b001a77818720emr1546000pzi.21.1714518059308; 
- Tue, 30 Apr 2024 16:00:59 -0700 (PDT)
+ AJvYcCV1n3Ddqcqq8thO38n19D0rmb4EK13gjprZ+8w6Sg++mea12f1VASo4q7AyBSP88atnQgzjhcE0/8qVR/NJhxto3BY5B1Y=
+X-Gm-Message-State: AOJu0YyQ5f81yPcP/NtmmddvL9WDVH+sRcAgqmcXRtcyFumUo0KnoNxN
+ DqpmlNiS44+FH5y/q60p2GjuLiJczvoDskIESi61RvHZ2LoPXbUAdIgAftLnANtvWbUR2hRseot
+ 2
+X-Google-Smtp-Source: AGHT+IGm6ClBiDyUQ1FyJg+aSNnyn1xIPbvsiqaECVpYlJsmEx2Z5gti4rybj8SJ/0SFrWQPL5/I4Q==
+X-Received: by 2002:a05:6a21:2d05:b0:1af:3a17:6545 with SMTP id
+ tw5-20020a056a212d0500b001af3a176545mr911482pzb.12.1714518113592; 
+ Tue, 30 Apr 2024 16:01:53 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- n7-20020aa78a47000000b006edd9339917sm21600292pfa.58.2024.04.30.16.00.58
+ c5-20020a170903234500b001ec36b6b28csm2213914plh.266.2024.04.30.16.01.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Apr 2024 16:00:58 -0700 (PDT)
-Message-ID: <cec58d31-b737-4af3-8552-d46c039e8f1f@linaro.org>
-Date: Tue, 30 Apr 2024 16:00:56 -0700
+ Tue, 30 Apr 2024 16:01:53 -0700 (PDT)
+Message-ID: <a32a6245-8cef-4ef7-8d9e-39b289bb4191@linaro.org>
+Date: Tue, 30 Apr 2024 16:01:51 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/19] Misc patches (s390x clean-ups, fixes for crashes,
- ...)
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-References: <20240430071340.413305-1-thuth@redhat.com>
+Subject: Re: [PULL 00/21] target-arm queue
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+References: <20240430164842.4074734-1-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240430071340.413305-1-thuth@redhat.com>
+In-Reply-To: <20240430164842.4074734-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,8 +97,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/30/24 00:13, Thomas Huth wrote:
->   Hi Richard!
+On 4/30/24 09:48, Peter Maydell wrote:
+> Here's another arm pullreq; nothing too exciting in here I think.
+> 
+> thanks
+> -- PMM
 > 
 > The following changes since commit 5fee33d97a7f2e95716417bd164f2f5264acd976:
 > 
@@ -106,25 +109,25 @@ On 4/30/24 00:13, Thomas Huth wrote:
 > 
 > are available in the Git repository at:
 > 
->    https://gitlab.com/thuth/qemu.git  tags/pull-request-2024-04-30
+>    https://git.linaro.org/people/pmaydell/qemu-arm.git  tags/pull-target-arm-20240430
 > 
-> for you to fetch changes up to cc6cb422e09592158586279fddeef107df05ecbb:
+> for you to fetch changes up to a0c325c4b05cf7815739d6a84e567b95c8c5be7e:
 > 
->    .gitlab-ci.d/cirrus: Remove the netbsd and openbsd jobs (2024-04-30 07:09:22 +0200)
+>    tests/qtest : Add testcase for DM163 (2024-04-30 16:05:08 +0100)
 > 
 > ----------------------------------------------------------------
-> * Clean-ups for "errp" handling in s390x cpu_model code
-> * Fix a possible abort in the "edu" device
-> * Add missing qga stubs for stand-alone qga builds and re-enable qga-ssh-test
-
-Just an fyi, this test failed the first time around in the gcov job, but passed on the 
-second attempt.  I'll keep an eye on it, but it may not be stable enough.
-
-
-> * Fix memory corruption caused by the stm32l4x5 uart device
-> * Update the s390x custom runner to Ubuntu 22.04
-> * Fix READ NATIVE MAX ADDRESS IDE commands to avoid a possible crash
-> * Shorten the runtime of Cirrus-CI jobs
+> target-arm queue:
+>   * hw/core/clock: allow clock_propagate on child clocks
+>   * hvf: arm: Remove unused PL1_WRITE_MASK define
+>   * target/arm: Restrict translation disabled alignment check to VMSA
+>   * docs/system/arm/emulation.rst: Add missing implemented features
+>   * target/arm: Enable FEAT_CSV2_3, FEAT_ETS2, FEAT_Spec_FPACC for 'max'
+>   * tests/avocado: update sunxi kernel from armbian to 6.6.16
+>   * target/arm: Make new CPUs default to 1GHz generic timer
+>   * hw/dmax/xlnx_dpdma: fix handling of address_extension descriptor fields
+>   * hw/char/stm32l4x5_usart: Fix memory corruption by adding correct class_size
+>   * hw/arm/npcm7xx: Store derivative OTP fuse key in little endian
+>   * hw/arm: Add DM163 display to B-L475E-IOT01A board
 
 Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
