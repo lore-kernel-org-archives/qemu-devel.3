@@ -4,89 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB5A2C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 14:41:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0838FC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 14:43:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1ofk-0002Jo-QR; Tue, 30 Apr 2024 10:41:32 -0400
+	id 1s1ohR-0003Sb-JF; Tue, 30 Apr 2024 10:43:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yuri.benditovich@daynix.com>)
- id 1s1ofg-0002JN-IM
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:41:29 -0400
-Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yuri.benditovich@daynix.com>)
- id 1s1ofe-0003KH-Kt
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:41:28 -0400
-Received: by mail-qt1-x832.google.com with SMTP id
- d75a77b69052e-4376e3fd7e4so32834991cf.2
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 07:41:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1714488084; x=1715092884;
- darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EcnPkBhDZ4Y0K9Sin/tS2wE+zVONULAgK7EIQTeVkBs=;
- b=GfIJfGziEDoPsAxGOhbBa0eEg5LAFdQzkgcupXY+J0emXbEgx9hJFVDucMs8YAQZci
- hrXspqMEFvKrAD5rFovF3yYa50U14c0D9K3gqPvYdyKWSl4xgZtXgiai4wmwNbRQ+v17
- 16wxM8hguKFRuk4VuHn2LY+5sMjwGMESGVFkKobi5Y/d4n6XhiFBl5NAzGowNfRVLgYS
- XIgvNEG4yUjERKJW67NMjGXZOkuyEmpxnTr7ByaPyMAhV5K7aXXFQdUDh1iAjZdNMdXh
- b7Cgw8bGaePRasSi83LnWm21bkHOgF+Gfy47zMfZc5Mwk2YS2wxHhCTfap8phVQk8hXr
- BZIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714488084; x=1715092884;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=EcnPkBhDZ4Y0K9Sin/tS2wE+zVONULAgK7EIQTeVkBs=;
- b=aTzKwBPfvmrtANAITgLNmFG+CZKM4sDElEMM4ChxjsXRdQNA/r2YUfMCcCJMmaEpTo
- psl2t1wH6eVk2jDYKymepzXneufViv3DGizyvHe2Ot0U89FAggUPYaneGBG5E91u6jSA
- AChoXRepR3MsUC9HbtLsUrJtjuJpVaZj6DdShY5pmtxzYiezXfRYUHJttPLUiZI0oDi8
- HjdT8XLHiO8IwHw4Piai/XXhyngzcdnjh7tKoEUfeIxPc/rGSDTIWBBSBObEY05A/J+O
- GHxvYFJI5uCGXL463lyf6gbwHcCS46/1C+fZqDhvyLdEJ3rxVLsvM9wclwzLBO45UZa7
- DcRw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUISgjGtABE1mKtxF76o+O0UfN5NH4sFCztPT+A7bxQq6cQBivSD1gGWLSygz4SN5X5wVspALIhtH16NmLTnzydS7EOvJY=
-X-Gm-Message-State: AOJu0YwrwIi58n0XkKQ55TkpfbCC0ZAdKIYOSoDfI+VInl9VT0SkPZ9M
- 7yGLsyWqALCYQ1T96u09m9O/l9a6Vo+7mr2Pzl+mJ3eFLrKITJRC/itOIVnm8T0zLzi6TkTorOk
- q64KH4syXzETlrVPGUbD18tvsGjhM19WE665Rgw==
-X-Google-Smtp-Source: AGHT+IELVyBcMuVn3gYF2ihJPxi8HgfDFPR3iRYKiYrDWTcb2bZKch8P5fmm5ACYXnCIKPDaD4ectVwogHDjcKefKfc=
-X-Received: by 2002:a05:622a:164d:b0:43b:1472:166d with SMTP id
- y13-20020a05622a164d00b0043b1472166dmr3845809qtj.51.1714488084231; Tue, 30
- Apr 2024 07:41:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1s1ohP-0003SC-QV
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:43:16 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1s1ohM-0003cJ-E9
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:43:15 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VTNGM0Y53z6DB69;
+ Tue, 30 Apr 2024 22:42:51 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 20728140A08;
+ Tue, 30 Apr 2024 22:43:09 +0800 (CST)
+Received: from localhost (10.122.247.231) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Tue, 30 Apr
+ 2024 15:43:08 +0100
+Date: Tue, 30 Apr 2024 15:43:07 +0100
+To: "Xingtao Yao (Fujitsu)" <yaoxt.fnst@fujitsu.com>
+CC: "fan.ni@samsung.com" <fan.ni@samsung.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v2] mem/cxl_type3: support 3, 6, 12 and 16 interleave ways
+Message-ID: <20240430154307.00002879@huawei.com>
+In-Reply-To: <OSZPR01MB6453EAAAA6C5CDCF87422A588D102@OSZPR01MB6453.jpnprd01.prod.outlook.com>
+References: <20240407030642.24861-1-yaoxt.fnst@fujitsu.com>
+ <OSZPR01MB6453EAAAA6C5CDCF87422A588D102@OSZPR01MB6453.jpnprd01.prod.outlook.com>
+Organization: Huawei Technologies R&D (UK) Ltd.
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.29; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <20240428-auto-v1-0-7b012216a120@daynix.com>
- <20240428-auto-v1-1-7b012216a120@daynix.com>
-In-Reply-To: <20240428-auto-v1-1-7b012216a120@daynix.com>
-From: Yuri Benditovich <yuri.benditovich@daynix.com>
-Date: Tue, 30 Apr 2024 17:41:13 +0300
-Message-ID: <CAOEp5Oe-uO+Q+btn0bqs1tA-zCc9qth7ngR-fVzDGnSE41yJfg@mail.gmail.com>
-Subject: Re: [PATCH 1/3] qdev-properties: Add DEFINE_PROP_ON_OFF_AUTO_BIT64()
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Jason Wang <jasowang@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Luigi Rizzo <rizzo@iet.unipi.it>, Giuseppe Lettieri <g.lettieri@iet.unipi.it>, 
- Vincenzo Maffione <v.maffione@gmail.com>,
- Andrew Melnychenko <andrew@daynix.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org, 
- 20240428-rss-v10-0-73cbaa91aeb6@daynix.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: none client-ip=2607:f8b0:4864:20::832;
- envelope-from=yuri.benditovich@daynix.com; helo=mail-qt1-x832.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="iso-2022-jp"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.122.247.231]
+X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,160 +67,91 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Apr 28, 2024 at 10:21=E2=80=AFAM Akihiko Odaki <akihiko.odaki@dayni=
-x.com> wrote:
->
-> DEFINE_PROP_ON_OFF_AUTO_BIT64() corresponds to DEFINE_PROP_ON_OFF_AUTO()
-> as DEFINE_PROP_BIT64() corresponds to DEFINE_PROP_BOOL(). The difference
-> is that DEFINE_PROP_ON_OFF_AUTO_BIT64() exposes OnOffAuto instead of
-> bool.
->
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->  include/hw/qdev-properties.h | 18 ++++++++++++
->  hw/core/qdev-properties.c    | 65 ++++++++++++++++++++++++++++++++++++++=
-+++++-
->  2 files changed, 82 insertions(+), 1 deletion(-)
->
-> diff --git a/include/hw/qdev-properties.h b/include/hw/qdev-properties.h
-> index 09aa04ca1e27..afec53a48470 100644
-> --- a/include/hw/qdev-properties.h
-> +++ b/include/hw/qdev-properties.h
-> @@ -43,11 +43,22 @@ struct PropertyInfo {
->      ObjectPropertyRelease *release;
->  };
->
-> +/**
-> + * struct OnOffAutoBit64 - OnOffAuto storage with 64 elements.
-> + * @on_bits: Bitmap of elements with "on".
-> + * @auto_bits: Bitmap of elements with "auto".
-> + */
-> +typedef struct OnOffAutoBit64 {
-> +    uint64_t on_bits;
-> +    uint64_t auto_bits;
-> +} OnOffAutoBit64;
-> +
->
->  /*** qdev-properties.c ***/
->
->  extern const PropertyInfo qdev_prop_bit;
->  extern const PropertyInfo qdev_prop_bit64;
-> +extern const PropertyInfo qdev_prop_on_off_auto_bit64;
->  extern const PropertyInfo qdev_prop_bool;
->  extern const PropertyInfo qdev_prop_enum;
->  extern const PropertyInfo qdev_prop_uint8;
-> @@ -100,6 +111,13 @@ extern const PropertyInfo qdev_prop_link;
->                  .set_default =3D true,                              \
->                  .defval.u  =3D (bool)_defval)
->
-> +#define DEFINE_PROP_ON_OFF_AUTO_BIT64(_name, _state, _field, _bit, _defv=
-al) \
-> +    DEFINE_PROP(_name, _state, _field, qdev_prop_on_off_auto_bit64,     =
-    \
-> +                OnOffAutoBit64,                                         =
-    \
-> +                .bitnr    =3D (_bit),                                   =
-      \
-> +                .set_default =3D true,                                  =
-      \
-> +                .defval.i =3D (OnOffAuto)_defval)
-> +
->  #define DEFINE_PROP_BOOL(_name, _state, _field, _defval)     \
->      DEFINE_PROP(_name, _state, _field, qdev_prop_bool, bool, \
->                  .set_default =3D true,                         \
-> diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-> index 7d6fa726fdf2..b96f54a1b912 100644
-> --- a/hw/core/qdev-properties.c
-> +++ b/hw/core/qdev-properties.c
-> @@ -188,7 +188,8 @@ const PropertyInfo qdev_prop_bit =3D {
->
->  static uint64_t qdev_get_prop_mask64(Property *prop)
->  {
-> -    assert(prop->info =3D=3D &qdev_prop_bit64);
-> +    assert(prop->info =3D=3D &qdev_prop_bit64 ||
-> +           prop->info =3D=3D &qdev_prop_on_off_auto_bit64);
->      return 0x1ull << prop->bitnr;
->  }
->
-> @@ -233,6 +234,68 @@ const PropertyInfo qdev_prop_bit64 =3D {
->      .set_default_value =3D set_default_value_bool,
->  };
->
-> +static void prop_get_on_off_auto_bit64(Object *obj, Visitor *v,
-> +                                       const char *name, void *opaque,
-> +                                       Error **errp)
-> +{
-> +    Property *prop =3D opaque;
-> +    OnOffAutoBit64 *p =3D object_field_prop_ptr(obj, prop);
-> +    int value;
-> +    uint64_t mask =3D qdev_get_prop_mask64(prop);
-> +
-> +    if (p->auto_bits & mask) {
-> +        value =3D ON_OFF_AUTO_AUTO;
-> +    } else if (p->on_bits & mask) {
-> +        value =3D ON_OFF_AUTO_ON;
-> +    } else {
-> +        value =3D ON_OFF_AUTO_OFF;
-> +    }
-> +
-> +    visit_type_enum(v, name, &value, &OnOffAuto_lookup, errp);
-> +}
-> +
-> +static void prop_set_on_off_auto_bit64(Object *obj, Visitor *v,
-> +                                       const char *name, void *opaque,
-> +                                       Error **errp)
-> +{
-> +    Property *prop =3D opaque;
-> +    OnOffAutoBit64 *p =3D object_field_prop_ptr(obj, prop);
-> +    int value;
-> +    uint64_t mask =3D qdev_get_prop_mask64(prop);
-> +
-> +    if (!visit_type_enum(v, name, &value, &OnOffAuto_lookup, errp)) {
-> +        return;
-> +    }
-> +
-> +    switch (value) {
-> +    case ON_OFF_AUTO_AUTO:
-> +        p->on_bits &=3D ~mask;
-> +        p->auto_bits |=3D mask;
-> +        break;
-> +
-> +    case ON_OFF_AUTO_ON:
-> +        p->on_bits |=3D mask;
-> +        p->auto_bits &=3D ~mask;
-> +        break;
-> +
-> +    case ON_OFF_AUTO_OFF:
-> +        p->on_bits &=3D ~mask;
-> +        p->auto_bits &=3D ~mask;
-> +        break;
-> +    }
-> +}
-> +
-> +const PropertyInfo qdev_prop_on_off_auto_bit64 =3D {
-> +    .name  =3D "bool",
+On Wed, 24 Apr 2024 01:36:56 +0000
+"Xingtao Yao (Fujitsu)" <yaoxt.fnst@fujitsu.com> wrote:
 
-Does it mean that the name of this tristate type is "bool"? Or I miss somet=
-hing?
+> ping.
+> 
+> > -----Original Message-----
+> > From: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+> > Sent: Sunday, April 7, 2024 11:07 AM
+> > To: jonathan.cameron@huawei.com; fan.ni@samsung.com
+> > Cc: qemu-devel@nongnu.org; Yao, Xingtao/姚 幸涛 <yaoxt.fnst@fujitsu.com>
+> > Subject: [PATCH v2] mem/cxl_type3: support 3, 6, 12 and 16 interleave ways
+> > 
+> > Since the kernel does not check the interleave capability, a
+> > 3-way, 6-way, 12-way or 16-way region can be create normally.
+> > 
+> > Applications can access the memory of 16-way region normally because
+> > qemu can convert hpa to dpa correctly for the power of 2 interleave
+> > ways, after kernel implementing the check, this kind of region will
+> > not be created any more.
+> > 
+> > For non power of 2 interleave ways, applications could not access the
+> > memory normally and may occur some unexpected behaviors, such as
+> > segmentation fault.
+> > 
+> > So implements this feature is needed.
+> > 
+> > Link:
+> > https://lore.kernel.org/linux-cxl/3e84b919-7631-d1db-3e1d-33000f3f3868@fujits
+> > u.com/
+> > Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+> > ---
+> >  hw/mem/cxl_type3.c | 18 ++++++++++++++----
+> >  1 file changed, 14 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> > index b0a7e9f11b..d6ef784e96 100644
+> > --- a/hw/mem/cxl_type3.c
+> > +++ b/hw/mem/cxl_type3.c
+> > @@ -805,10 +805,17 @@ static bool cxl_type3_dpa(CXLType3Dev *ct3d, hwaddr
+> > host_addr, uint64_t *dpa)
+> >              continue;
+> >          }
+> > 
+> > -        *dpa = dpa_base +
+> > -            ((MAKE_64BIT_MASK(0, 8 + ig) & hpa_offset) |
+> > -             ((MAKE_64BIT_MASK(8 + ig + iw, 64 - 8 - ig - iw) & hpa_offset)  
+> > -              >> iw));  
+> > +        if (iw < 8) {
+> > +            *dpa = dpa_base +
+> > +                ((MAKE_64BIT_MASK(0, 8 + ig) & hpa_offset) |
+> > +                 ((MAKE_64BIT_MASK(8 + ig + iw, 64 - 8 - ig - iw) & hpa_offset)
+> > +                  >> iw));
+> > +        } else {
+> > +            *dpa = dpa_base +
+> > +                ((MAKE_64BIT_MASK(0, 8 + ig) & hpa_offset) |
+> > +                 ((((MAKE_64BIT_MASK(ig + iw, 64 - ig - iw) & hpa_offset)
+> > +                   >> (ig + iw)) / 3) << (ig + 8)));
+> > +        }
+> > 
+> >          return true;
+> >      }
+> > @@ -906,6 +913,9 @@ static void ct3d_reset(DeviceState *dev)
+> >      uint32_t *write_msk = ct3d->cxl_cstate.crb.cache_mem_regs_write_mask;
+> > 
+> >      cxl_component_register_init_common(reg_state, write_msk,
+> > CXL2_TYPE3_DEVICE);
+> > +    ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY,
+> > 3_6_12_WAY, 1);
+> > +    ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY,
+> > 16_WAY, 1);
+> > +
 
-> +    .description =3D "on/off/auto",
-> +    .enum_table =3D &OnOffAuto_lookup,
-> +    .get =3D qdev_propinfo_get_enum,
-> +    .set =3D qdev_propinfo_set_enum,
-> +    .get =3D prop_get_on_off_auto_bit64,
-> +    .set =3D prop_set_on_off_auto_bit64,
-> +    .set_default_value =3D qdev_propinfo_set_default_value_enum,
-> +};
-> +
->  /* --- bool --- */
->
->  static void get_bool(Object *obj, Visitor *v, const char *name, void *op=
-aque,
->
-> --
-> 2.44.0
->
+Why here rather than in hdm_reg_init_common()?
+It's constant data and is currently being set to 0 in there.
+
+> >      cxl_device_register_init_t3(ct3d);
+> > 
+> >      /*
+> > --
+> > 2.37.3  
+> 
+
 
