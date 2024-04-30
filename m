@@ -4,136 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E115DC10F16
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 08:20:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48C6AC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 08:21:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1iiJ-0007QO-RE; Tue, 30 Apr 2024 04:19:47 -0400
+	id 1s1ik8-0000sA-BX; Tue, 30 Apr 2024 04:21:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1s1ii7-0007Of-VE
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 04:19:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1s1ii6-0002WD-Fa
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 04:19:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714465168;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Fsht7l++aoKi7zO9LbKl1lH/u9UhHPHqBZffuoUW3Vg=;
- b=ghzguYUmjYg3mBPwkAJIpwvr2Enh4HnV/YLymUlhuyUqw7SBHcxeLVntZAXv8QeoRI/Cq7
- c9Eg71oht/t64Gmzk/+F4Bk/DytDUsrcl6fPPNvnkiwF1D3h0QlLH6RvP5WnqqiC57v7ns
- kPZPhnQvuMWdrpbg29CIbvIQRh1fcws=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-471-pS_L4371NweNo1ts_LO2Iw-1; Tue, 30 Apr 2024 04:19:26 -0400
-X-MC-Unique: pS_L4371NweNo1ts_LO2Iw-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-41ab7cdccd2so23188915e9.1
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 01:19:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714465165; x=1715069965;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=Fsht7l++aoKi7zO9LbKl1lH/u9UhHPHqBZffuoUW3Vg=;
- b=KjcfYe3fCM0OkrwqwuUt1UtnrM1Q6dKbDmQuoOmPoiYSyMMLzsrY1QLyVzlw+tqWhz
- irdIImwUz1/yOT05AbbLHXvclhWee1B30IoZcLIE+n0cnSR8Rl/j9YAtldeudNEHHKeI
- N/NsTDCVTufqyImX1jW+jq+dt6+KyuW6txeYhrNi0kXmdVEnEP/jsnXuGuad1+9/H89g
- FmpEVFT3G9ae6M/PMr4JcvdSnwqLb2+iKyw1A8QIN67uHbuFdUS3r22BFgTOOj55Khj8
- oLL6nZIUvftsiZxs6tHm99jfykaopfMN1pxY7c8VDB1NgBUYiWliBzVo2YF4YJo2gVsn
- Dwjw==
-X-Gm-Message-State: AOJu0Yw0L4XnnTTbZ5pTYLxjoK8o6A77cREn9EUIXYlnDAJH/YmN4vxE
- jNCj6UJWA2yACw+15+bZEoBOVLj+au/HF95Xqj3w5u4JYO1AgDH7ngdWO8j7KDPlF9lFmRaC7Hm
- rK2Mqq6bFEyjZv+WcJknimaKAjcCrWkGdCm31q8iDqTL+AliNIo/H
-X-Received: by 2002:a05:600c:4e54:b0:41b:dabe:8633 with SMTP id
- e20-20020a05600c4e5400b0041bdabe8633mr6788690wmq.21.1714465165493; 
- Tue, 30 Apr 2024 01:19:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGALyAEWaPU6+0JTYZ31eVapkXIUatmUHUMpm89K9ke5avpDc3/nbXMu7mK4f8BfxITs4Asew==
-X-Received: by 2002:a05:600c:4e54:b0:41b:dabe:8633 with SMTP id
- e20-20020a05600c4e5400b0041bdabe8633mr6788673wmq.21.1714465165066; 
- Tue, 30 Apr 2024 01:19:25 -0700 (PDT)
-Received: from ?IPV6:2a09:80c0:192:0:5dac:bf3d:c41:c3e7?
- ([2a09:80c0:192:0:5dac:bf3d:c41:c3e7])
- by smtp.gmail.com with ESMTPSA id
- i4-20020a05600c354400b0041902ebc87esm41031925wmq.35.2024.04.30.01.19.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Apr 2024 01:19:24 -0700 (PDT)
-Message-ID: <ac8c665b-a7a0-45ee-9b3e-baef521812cc@redhat.com>
-Date: Tue, 30 Apr 2024 10:19:23 +0200
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1s1ik5-0000r7-RB
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 04:21:38 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1s1ik2-0003A8-Nx
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 04:21:37 -0400
+Received: from loongson.cn (unknown [10.20.42.173])
+ by gateway (Coremail) with SMTP id _____8CxLOsEqjBm4VUFAA--.11051S3;
+ Tue, 30 Apr 2024 16:21:25 +0800 (CST)
+Received: from [10.20.42.173] (unknown [10.20.42.173])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8AxndwBqjBmifUKAA--.26376S3; 
+ Tue, 30 Apr 2024 16:21:23 +0800 (CST)
+Subject: Re: [PATCH 0/5] hw/loongarch: Refine numa memory map
+To: gaosong <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org
+References: <20240318080121.2836548-1-maobibo@loongson.cn>
+ <1f480301-996c-f314-e41e-55d842d934e9@loongson.cn>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <89f96ba4-35bd-2f6e-efb6-462cbff02504@loongson.cn>
+Date: Tue, 30 Apr 2024 16:21:21 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/s390x: Attach the sclpconsole to the /machine/sclp node
-To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
- Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20240430080408.415890-1-thuth@redhat.com>
-From: David Hildenbrand <david@redhat.com>
+In-Reply-To: <1f480301-996c-f314-e41e-55d842d934e9@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20240430080408.415890-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8AxndwBqjBmifUKAA--.26376S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxJr17ur45uw1Dtr4kXw4UZFc_yoW8Zr1xpw
+ sayF1YkrW0yF9ayr1fG3srWFyYy3WxGwnrXFy2vFykCr43Ar10vr4rZryv9F9xX3y8Jr1I
+ gF18Kw17uF17J3gCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1CP
+ fJUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -29
+X-Spam_score: -3.0
 X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.127,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -150,20 +82,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30.04.24 10:04, Thomas Huth wrote:
-> The sclpconsole currently does not have a proper parent in the QOM
-> tree, so it shows up under /machine/unattached - which is somewhat
-> ugly. Let's attach it to /machine/sclp instead.
+Sure, I will rebase and send the new version.
+
+Regards
+Bibo Mao
+
+On 2024/4/30 下午4:15, gaosong wrote:
+> Hi,
+> 
+> 在 2024/3/18 下午4:01, Bibo Mao 写道:
+>> One LoongArch virt machine platform, there is limitation for memory
+>> map information. The minimum memory size is 256M and minimum memory
+>> size for numa node0 is 256M also. With qemu numa qtest, it is possible
+>> that memory size of numa node0 is 128M.
+>>
+>> Limitations for minimum memory size for both total memory and numa
+>> node0 is removed here, including acpi srat table, fadt memory map table
+>> and fw_cfg memory map table.
+>>
+>> Also remove numa node about memory region, there is only low memory
+>> region and how memory region.
+> For this series,
+> Reviewed-by: Song Gao <gaosong@loongson.cn>
+> 
+> After PR[1] merge in, patch3 and patch4 need Rebase.
+> Also, how about enabling LoongArch architecture numa-test?
+> 
+> like this:
+> 
+>     --- a/tests/qtest/meson.build
+>     +++ b/tests/qtest/meson.build
+>     @@ -127,6 +127,8 @@ else
+>         dbus_vmstate1 = []
+>       endif
+> 
+>     +qtests_loongarch64 = ['numa-test'] + qtests_filter
+>     +
+>       qtests_x86_64 = qtests_i386
+> 
+>       qtests_alpha = ['boot-serial-test'] + \
 > 
 > 
-
-IIRC, this should not affect migration
-
-Reviewed-by: David Hildenbrand <david@redhat.com>
-
--- 
-Cheers,
-
-David / dhildenb
+> [1] https://patchew.org/QEMU/20240429023043.2607982-1-gaosong@loongson.cn/
+> 
+> 
+> Thanks.
+> Song Gao
+>> Bibo Mao (5):
+>>    hw/loongarch: Refine acpi srat table for numa memory
+>>    hw/loongarch: Refine fadt memory table for numa memory
+>>    hw/loongarch: Refine fwcfg memory map
+>>    hw/loongarch: Refine system dram memory region
+>>    hw/loongarch: Remove minimum and default memory size
+>>
+>>   hw/loongarch/acpi-build.c |  58 +++++++------
+>>   hw/loongarch/virt.c       | 168 ++++++++++++++++++++++++++------------
+>>   2 files changed, 152 insertions(+), 74 deletions(-)
+>>
+>>
+>> base-commit: ba49d760eb04630e7b15f423ebecf6c871b8f77b
+> 
 
 
