@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2918C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 12:30:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2D4DC19F53
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 12:31:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1mbl-0006r9-Cl; Tue, 30 Apr 2024 08:29:17 -0400
+	id 1s1mbn-0006zy-1H; Tue, 30 Apr 2024 08:29:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1mbT-0006ij-ST
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 08:29:01 -0400
-Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1mbb-0006k7-4p
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 08:29:07 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1mbR-0001oL-Og
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 08:28:59 -0400
-Received: by mail-lf1-x132.google.com with SMTP id
- 2adb3069b0e04-51b526f0fc4so7069691e87.1
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 05:28:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1mbY-0001of-4I
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 08:29:05 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a58872c07d8so1154699466b.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 05:29:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714480135; x=1715084935; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714480141; x=1715084941; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Y/XVft3u1TnXcfWULCA1fWxoECDnyMfyO72+jOrBPL4=;
- b=FLcKm/y5sS1wVYDhI6NyD3FR/EuSIeaT+NKRJL7g7gtZZLtdfsZ8kyIqnodOQ/vVwS
- fq52cMEvDGz/NUUKjlyZhs2qLRrQS2tWpu638FeJeKULZuBfxx00XcactMNrODwK5b9V
- wpm3xYWfMxxvFZ3OMly4h1ttX1PO9uHf+KJoFAoMuxp862CESH0vSsGyeA8SzaQIuTKL
- IZ8vFW79O8LpQ9F6EPnBpoEK2sOJyWBvu/DNkNOipn/i0ruw3BC4F+jDrNhmau9OGUk+
- ntWIL7jyE/5lgffyxQv9kVg6uWyNleadmgmD/KvzPjTjt2sjERzpl096VGGxXp/kU3gB
- F/lg==
+ bh=BBGkki3XoBfIeLSBwHuc796dXQHmu3Ot2VHczarNrMY=;
+ b=kqRLcn5YLQQQhtF8RBWNWErFNPj75UFb7cBIZq7h3uM6XBTHqCMROG10TniACieJNf
+ S4zTOsuMgczfhyo2j+lJK6cO2QNIWJiZ/uo7aRNn51sgWgPchgTEgYnIpL8wVF9UI2F+
+ lDYUHV0bhlw9FU+JpCHSq9f6PVzCrp36V7oL3JPQifDqiLtUo8aT2z4NIdbln2JmISrA
+ MYgAhUHp3Zmrsgvyj98Udg2GSPikcrL5bjpF42+Gd8gOB0YlYEtIleNNm5/ybyymIsWz
+ e89tpqW6/gbup/lieMdn+yj6JMe1FgV9Ippr4Q4OegnNlMlypi1PyJMpjiz6CajTTR2W
+ HkGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714480135; x=1715084935;
+ d=1e100.net; s=20230601; t=1714480141; x=1715084941;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Y/XVft3u1TnXcfWULCA1fWxoECDnyMfyO72+jOrBPL4=;
- b=FeguuF2EAXDc/bydnlO16FYievyZBQjw9+aD+u9BKoG/qvgSysf2oxqlTXDP5N+StB
- RGx7ggS5XGOsXk8u7UUGgm4MoUSu6Bt6ZXsCcBo3/0xOWmlEzVaDIBBIiSg3HyaVvbds
- x/4NG+IKaBfFBD5qYu4evlQqoODfI90YNKsrOKN8r6LxBmxQXds1v+n3QAatlG2oC7jY
- +hGqyA8CouYhYoNELuY3ZlDoLv65mLD/FdVkLxuYF2r2Q35eieV56Wc1XtvZ4PVpMuOf
- tZsGOC7snyQyD6Sv89mZ74zQOCP4xBm5wVQXvKWmo2cVGHL1D9w5fSfiMR5KQUW2PHi0
- Z1Cg==
-X-Gm-Message-State: AOJu0Yz5lh7eaJQaqGFwLoIyzkOodJYdKERFvigLfV0QtiAkELXb/hCq
- oGLgXT+bv2Vy3BTTeXwrHsenQv03wd5LcqLT0pwio/mZe2NrGqoS2gN1cw496OWmB0h5C5+KneD
- L
-X-Google-Smtp-Source: AGHT+IGlbPpfglTIHu9qPV598dFthJMmRuG7AWoCKx8JQsZBH7OSUL4m0KLTGtVqOYSdB06y+Eyddg==
-X-Received: by 2002:a19:ad0b:0:b0:516:d448:b42a with SMTP id
- t11-20020a19ad0b000000b00516d448b42amr1657561lfc.26.1714480135516; 
- Tue, 30 Apr 2024 05:28:55 -0700 (PDT)
+ bh=BBGkki3XoBfIeLSBwHuc796dXQHmu3Ot2VHczarNrMY=;
+ b=uMiu3ivuRt6s25WaSf+zeuljrZ1TCk1DI7v6RxnxpNKdqU3vMwxUb+Z5nTV6v1GdFN
+ Ln4sfVVBRILOw3HyjWHh20o9SJx2H5qOws9i4+pHUjGEUzywvrQBHOo2V+HHLINS/qVx
+ l2xh6/WKdjLs68bca23SUqCbM+uCe9FOJA2Z+ZTFUSmY01L5HKvDkInOPsAmVMdg9LZO
+ hc1uZndJSMUT/7kQgEZIHhpB+aFbhEyKdnBa7gbVDGe/HQttpoYoMGqqniv3/RQtohYd
+ s5WWDN3Enu/pBMFLyyNyqmEBHwu8MXYSGweW48uLfAfYv7dgRdY6y+vzcsoGyUlTRrqr
+ LOcA==
+X-Gm-Message-State: AOJu0YyQ/azdRKOcVtvopJuhpkxDERnpKcAZJkS74qH9a9c1cwx7hteL
+ EAppI9YFc/fPO0k2dlldYTLNgS3kkXTkXd2yjpU747fPchxNEqyNSoGfPnymSeYg3/luwqlUgUd
+ V
+X-Google-Smtp-Source: AGHT+IH2muPDunWpQvLAG1KhhAyuKsaVLoPnDczmVIgryUBO4+ACGZQsloBkOfw8yO1/berAhBciFw==
+X-Received: by 2002:a17:907:1704:b0:a55:5698:3ea6 with SMTP id
+ le4-20020a170907170400b00a5556983ea6mr2404261ejc.29.1714480141176; 
+ Tue, 30 Apr 2024 05:29:01 -0700 (PDT)
 Received: from m1x-phil.lan (mab78-h01-176-184-55-179.dsl.sta.abo.bbox.fr.
  [176.184.55.179]) by smtp.gmail.com with ESMTPSA id
- mc11-20020a170906eb4b00b00a5256d8c956sm14996887ejb.61.2024.04.30.05.28.54
+ a7-20020a170906670700b00a522bef9f06sm15005420ejp.181.2024.04.30.05.28.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Apr 2024 05:28:55 -0700 (PDT)
+ Tue, 30 Apr 2024 05:29:00 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>, Ilya Leoshkevich <iii@linux.ibm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 08/13] accel/tcg: Move @cflags_next_tb from CPUState to TCG
- AccelCPUState
-Date: Tue, 30 Apr 2024 14:28:02 +0200
-Message-ID: <20240430122808.72025-9-philmd@linaro.org>
+Subject: [PATCH v3 09/13] accel/tcg: Move @iommu_notifiers from CPUState to
+ TCG AccelCPUState
+Date: Tue, 30 Apr 2024 14:28:03 +0200
+Message-ID: <20240430122808.72025-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240430122808.72025-1-philmd@linaro.org>
 References: <20240430122808.72025-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::132;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x132.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,191 +96,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-@cflags_next_tb is specific to TCG accelerator, move it to
-its AccelCPUState.
+@iommu_notifiers is specific to TCG system emulation, move it to
+AccelCPUState.
+
+Restrict TCG specific code in system/physmem.c, adding an empty
+stub for tcg_register_iommu_notifier().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240428221450.26460-19-philmd@linaro.org>
+Message-Id: <20240428221450.26460-20-philmd@linaro.org>
 ---
- accel/tcg/vcpu-state.h    |  2 ++
- include/hw/core/cpu.h     |  1 -
- accel/tcg/cpu-exec.c      | 12 ++++++------
- accel/tcg/tb-maint.c      |  4 ++--
- accel/tcg/tcg-accel-ops.c |  1 +
- accel/tcg/translate-all.c |  2 +-
- accel/tcg/watchpoint.c    |  5 +++--
- hw/core/cpu-common.c      |  1 -
- 8 files changed, 15 insertions(+), 13 deletions(-)
+ accel/tcg/vcpu-state.h |  3 +++
+ include/hw/core/cpu.h  |  3 ---
+ system/physmem.c       | 37 ++++++++++++++++++++++++++++---------
+ 3 files changed, 31 insertions(+), 12 deletions(-)
 
 diff --git a/accel/tcg/vcpu-state.h b/accel/tcg/vcpu-state.h
-index 3a0ea2d47a..5b09279140 100644
+index 5b09279140..51e54ca535 100644
 --- a/accel/tcg/vcpu-state.h
 +++ b/accel/tcg/vcpu-state.h
-@@ -13,6 +13,8 @@
-  * @plugin_state: per-CPU plugin state
-  */
- struct AccelCPUState {
-+    uint32_t cflags_next_tb;
-+
-     sigjmp_buf jmp_env;
+@@ -19,6 +19,9 @@ struct AccelCPUState {
  
  #ifdef CONFIG_USER_ONLY
+     TaskState *ts;
++#else
++    /* track IOMMUs whose translations we've cached in the TCG TLB */
++    GArray *iommu_notifiers;
+ #endif /* !CONFIG_USER_ONLY */
+ 
+ #ifdef CONFIG_PLUGIN
 diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index f1fe43dbea..97a0baf874 100644
+index 97a0baf874..f3cbb944eb 100644
 --- a/include/hw/core/cpu.h
 +++ b/include/hw/core/cpu.h
-@@ -468,7 +468,6 @@ struct CPUState {
-     bool crash_occurred;
-     bool exit_request;
-     int exclusive_context_count;
--    uint32_t cflags_next_tb;
-     /* updates protected by BQL */
-     uint32_t interrupt_request;
-     int singlestep_enabled;
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 443b688c01..2edfad78b3 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -721,7 +721,7 @@ static inline bool cpu_handle_exception(CPUState *cpu, int *ret)
-         if (replay_has_exception()
-             && cpu->neg.icount_decr.u16.low + cpu->icount_extra == 0) {
-             /* Execute just one insn to trigger exception pending in the log */
--            cpu->cflags_next_tb = (curr_cflags(cpu) & ~CF_USE_ICOUNT)
-+            cpu->accel->cflags_next_tb = (curr_cflags(cpu) & ~CF_USE_ICOUNT)
-                 | CF_NOIRQ | 1;
-         }
- #endif
-@@ -784,7 +784,7 @@ static inline bool icount_exit_request(CPUState *cpu)
-     if (!icount_enabled()) {
-         return false;
-     }
--    if (cpu->cflags_next_tb != -1 && !(cpu->cflags_next_tb & CF_USE_ICOUNT)) {
-+    if (!(cpu->accel->cflags_next_tb == -1 || cpu->accel->cflags_next_tb & CF_USE_ICOUNT)) {
-         return false;
-     }
-     return cpu->neg.icount_decr.u16.low + cpu->icount_extra == 0;
-@@ -798,7 +798,7 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
-      * skip checking here. Any pending interrupts will get picked up
-      * by the next TB we execute under normal cflags.
+@@ -539,9 +539,6 @@ struct CPUState {
+     /* Used for user-only emulation of prctl(PR_SET_UNALIGN). */
+     bool prctl_unalign_sigbus;
+ 
+-    /* track IOMMUs whose translations we've cached in the TCG TLB */
+-    GArray *iommu_notifiers;
+-
+     /*
+      * MUST BE LAST in order to minimize the displacement to CPUArchState.
       */
--    if (cpu->cflags_next_tb != -1 && cpu->cflags_next_tb & CF_NOIRQ) {
-+    if (cpu->accel->cflags_next_tb != -1 && cpu->accel->cflags_next_tb & CF_NOIRQ) {
-         return false;
-     }
+diff --git a/system/physmem.c b/system/physmem.c
+index 44e477a1a5..1e003e42bb 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -27,6 +27,8 @@
+ #include "qemu/madvise.h"
  
-@@ -948,7 +948,7 @@ static inline void cpu_loop_exec_tb(CPUState *cpu, TranslationBlock *tb,
-     if (insns_left > 0 && insns_left < tb->icount)  {
-         assert(insns_left <= CF_COUNT_MASK);
-         assert(cpu->icount_extra == 0);
--        cpu->cflags_next_tb = (tb->cflags & ~CF_COUNT_MASK) | insns_left;
-+        cpu->accel->cflags_next_tb = (tb->cflags & ~CF_COUNT_MASK) | insns_left;
-     }
- #endif
- }
-@@ -980,11 +980,11 @@ cpu_exec_loop(CPUState *cpu, SyncClocks *sc)
-              * have CF_INVALID set, -1 is a convenient invalid value that
-              * does not require tcg headers for cpu_common_reset.
-              */
--            cflags = cpu->cflags_next_tb;
-+            cflags = cpu->accel->cflags_next_tb;
-             if (cflags == -1) {
-                 cflags = curr_cflags(cpu);
-             } else {
--                cpu->cflags_next_tb = -1;
-+                cpu->accel->cflags_next_tb = -1;
-             }
- 
-             if (check_for_breakpoints(cpu, pc, &cflags)) {
-diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
-index 19ae6793f3..2d5faca9fd 100644
---- a/accel/tcg/tb-maint.c
-+++ b/accel/tcg/tb-maint.c
-@@ -1084,7 +1084,7 @@ bool tb_invalidate_phys_page_unwind(tb_page_addr_t addr, uintptr_t pc)
-     if (current_tb_modified) {
-         /* Force execution of one insn next time.  */
-         CPUState *cpu = current_cpu;
--        cpu->cflags_next_tb = 1 | CF_NOIRQ | curr_cflags(current_cpu);
-+        cpu->accel->cflags_next_tb = 1 | CF_NOIRQ | curr_cflags(current_cpu);
-         return true;
-     }
-     return false;
-@@ -1154,7 +1154,7 @@ tb_invalidate_phys_page_range__locked(struct page_collection *pages,
-     if (current_tb_modified) {
-         page_collection_unlock(pages);
-         /* Force execution of one insn next time.  */
--        current_cpu->cflags_next_tb = 1 | CF_NOIRQ | curr_cflags(current_cpu);
-+        current_cpu->accel->cflags_next_tb = 1 | CF_NOIRQ | curr_cflags(current_cpu);
-         mmap_unlock();
-         cpu_loop_exit_noexc(current_cpu);
-     }
-diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
-index 56bbad9fcd..d9132a5835 100644
---- a/accel/tcg/tcg-accel-ops.c
-+++ b/accel/tcg/tcg-accel-ops.c
-@@ -89,6 +89,7 @@ static void tcg_cpu_reset_hold(CPUState *cpu)
- 
-     qatomic_set(&cpu->neg.icount_decr.u32, 0);
-     cpu->neg.can_do_io = true;
-+    cpu->accel->cflags_next_tb = -1;
- }
- 
- /* mask must never be zero, except for A20 change call */
-diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
-index b67adce20e..3a8199a761 100644
---- a/accel/tcg/translate-all.c
-+++ b/accel/tcg/translate-all.c
-@@ -631,7 +631,7 @@ void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr)
-      * operations only (which execute after completion) so we don't
-      * double instrument the instruction.
-      */
--    cpu->cflags_next_tb = curr_cflags(cpu) | CF_MEMI_ONLY | n;
-+    cpu->accel->cflags_next_tb = curr_cflags(cpu) | CF_MEMI_ONLY | n;
- 
-     if (qemu_loglevel_mask(CPU_LOG_EXEC)) {
-         vaddr pc = cpu->cc->get_pc(cpu);
-diff --git a/accel/tcg/watchpoint.c b/accel/tcg/watchpoint.c
-index d3aab11458..0a40bfdc85 100644
---- a/accel/tcg/watchpoint.c
-+++ b/accel/tcg/watchpoint.c
-@@ -26,6 +26,7 @@
- #include "sysemu/replay.h"
- #include "hw/core/tcg-cpu-ops.h"
- #include "hw/core/cpu.h"
+ #ifdef CONFIG_TCG
++#include "exec/translate-all.h"
 +#include "accel/tcg/vcpu-state.h"
+ #include "hw/core/tcg-cpu-ops.h"
+ #endif /* CONFIG_TCG */
  
- /*
-  * Return true if this watchpoint address matches the specified
-@@ -100,7 +101,7 @@ void cpu_check_watchpoint(CPUState *cpu, vaddr addr, vaddr len,
-                  */
-                 if (!cpu->neg.can_do_io) {
-                     /* Force execution of one insn next time.  */
--                    cpu->cflags_next_tb = 1 | CF_NOIRQ | curr_cflags(cpu);
-+                    cpu->accel->cflags_next_tb = 1 | CF_NOIRQ | curr_cflags(cpu);
-                     cpu_loop_exit_restore(cpu, ra);
-                 }
-                 /*
-@@ -132,7 +133,7 @@ void cpu_check_watchpoint(CPUState *cpu, vaddr addr, vaddr len,
-                 cpu_loop_exit(cpu);
-             } else {
-                 /* Force execution of one insn next time.  */
--                cpu->cflags_next_tb = 1 | CF_NOIRQ | curr_cflags(cpu);
-+                cpu->accel->cflags_next_tb = 1 | CF_NOIRQ | curr_cflags(cpu);
-                 mmap_unlock();
-                 cpu_loop_exit_noexc(cpu);
-             }
-diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index ea342213d6..b6631b6245 100644
---- a/hw/core/cpu-common.c
-+++ b/hw/core/cpu-common.c
-@@ -124,7 +124,6 @@ static void cpu_common_reset_hold(Object *obj, ResetType type)
-     cpu->icount_extra = 0;
-     cpu->exception_index = -1;
-     cpu->crash_occurred = false;
--    cpu->cflags_next_tb = -1;
- 
-     cpu_exec_reset_hold(cpu);
+@@ -578,6 +580,8 @@ MemoryRegion *flatview_translate(FlatView *fv, hwaddr addr, hwaddr *xlat,
+     return mr;
  }
+ 
++#ifdef CONFIG_TCG
++
+ typedef struct TCGIOMMUNotifier {
+     IOMMUNotifier n;
+     MemoryRegion *mr;
+@@ -614,17 +618,20 @@ static void tcg_register_iommu_notifier(CPUState *cpu,
+     TCGIOMMUNotifier *notifier = NULL;
+     int i;
+ 
+-    for (i = 0; i < cpu->iommu_notifiers->len; i++) {
+-        notifier = g_array_index(cpu->iommu_notifiers, TCGIOMMUNotifier *, i);
++    for (i = 0; i < cpu->accel->iommu_notifiers->len; i++) {
++        notifier = g_array_index(cpu->accel->iommu_notifiers,
++                                 TCGIOMMUNotifier *, i);
+         if (notifier->mr == mr && notifier->iommu_idx == iommu_idx) {
+             break;
+         }
+     }
+-    if (i == cpu->iommu_notifiers->len) {
++    if (i == cpu->accel->iommu_notifiers->len) {
+         /* Not found, add a new entry at the end of the array */
+-        cpu->iommu_notifiers = g_array_set_size(cpu->iommu_notifiers, i + 1);
++        cpu->accel->iommu_notifiers = g_array_set_size(cpu->accel->iommu_notifiers,
++                                                       i + 1);
+         notifier = g_new0(TCGIOMMUNotifier, 1);
+-        g_array_index(cpu->iommu_notifiers, TCGIOMMUNotifier *, i) = notifier;
++        g_array_index(cpu->accel->iommu_notifiers,
++                      TCGIOMMUNotifier *, i) = notifier;
+ 
+         notifier->mr = mr;
+         notifier->iommu_idx = iommu_idx;
+@@ -656,19 +663,31 @@ void tcg_iommu_free_notifier_list(CPUState *cpu)
+     int i;
+     TCGIOMMUNotifier *notifier;
+ 
+-    for (i = 0; i < cpu->iommu_notifiers->len; i++) {
+-        notifier = g_array_index(cpu->iommu_notifiers, TCGIOMMUNotifier *, i);
++    for (i = 0; i < cpu->accel->iommu_notifiers->len; i++) {
++        notifier = g_array_index(cpu->accel->iommu_notifiers,
++                                 TCGIOMMUNotifier *, i);
+         memory_region_unregister_iommu_notifier(notifier->mr, &notifier->n);
+         g_free(notifier);
+     }
+-    g_array_free(cpu->iommu_notifiers, true);
++    g_array_free(cpu->accel->iommu_notifiers, true);
+ }
+ 
+ void tcg_iommu_init_notifier_list(CPUState *cpu)
+ {
+-    cpu->iommu_notifiers = g_array_new(false, true, sizeof(TCGIOMMUNotifier *));
++    cpu->accel->iommu_notifiers = g_array_new(false, true,
++                                              sizeof(TCGIOMMUNotifier *));
+ }
+ 
++#else
++
++static void tcg_register_iommu_notifier(CPUState *cpu,
++                                        IOMMUMemoryRegion *iommu_mr,
++                                        int iommu_idx)
++{
++}
++
++#endif
++
+ /* Called from RCU critical section */
+ MemoryRegionSection *
+ address_space_translate_for_iotlb(CPUState *cpu, int asidx, hwaddr orig_addr,
 -- 
 2.41.0
 
