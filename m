@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41761C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 14:45:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AC1DC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 14:46:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1ojc-0004oW-7L; Tue, 30 Apr 2024 10:45:32 -0400
+	id 1s1okM-0005Z8-JY; Tue, 30 Apr 2024 10:46:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s1ojZ-0004nD-Kv
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:45:29 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ id 1s1okB-0005SY-2p
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:46:09 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s1ojX-0004GG-4y
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:45:29 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-56e1f3462caso7517135a12.3
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 07:45:25 -0700 (PDT)
+ id 1s1ok9-0004YA-FF
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:46:06 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-56e1f3462caso7518548a12.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 07:46:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714488324; x=1715093124; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714488364; x=1715093164; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Vrpc54sucJbvI/K5I+Zr3ZBUWB1TIumeG6ND+o/VUJk=;
- b=gdsFZOSlxPDDC7DGKpMhHH9Z3zFbrPF6Xk5LnbIOLprk0fztxDdEnyhHtvbRxK2un0
- ZRH5KwV8YiPOltIbiiJJCFMCltj3ci+i6IWw+0jim7fsTrjgrfQj7gCtqrABlQmGVdPb
- fKDVdr/5eJuvpSbgsRrr/xib702nh7kVtVEeTlMu9jNyqxhJ624mzyVekf46zvSdGCGh
- BOV6lFKDwKDHIJF65iWGzXywZFbHt73gy6JMBdGsTnaYG1AD0WPf9NRhYO9EQwIOGC8o
- 3wJjyatP33zk1D9Vqlao0K0OCbFPSJay8kDwzxIn04xOx8+cCCi5AYoilhr7TGMT0G1a
- Eu+w==
+ bh=2BufZs0kEfZhSREW2kr3ncdJ656wrt8XpmqX2L/UqWo=;
+ b=GaYIN1/hq0qxVu9pQEnpwp4SMssjaEVxeW5S10ssOodUjR1Kr7qHZqmfJlU4t5G0O2
+ iLGBoJlYZaPQrK3P4/4LuoPaOVVl6H8/B62IbReYYax+5KDr6PCldnrhVwuxEBgon055
+ VdIeyfnDh7Pv4NvOdMXlviHwhhXJfreFmpWvUOZmMqJKNlj3hOC/ys6A8nIr4jwanXhk
+ p6ixdVBAazAl1gTl9BGgAEBh+JyysIpbhs3wQUA8OuXdeYtIYvHJxuHut/9kLV9crWS3
+ i8zd6poy6PUWlsvsu37ujh69QzM4HuocJ+BE/eOaUx6LLwvnuYe1CKodD69wUGTvPxBw
+ U/qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714488324; x=1715093124;
+ d=1e100.net; s=20230601; t=1714488364; x=1715093164;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Vrpc54sucJbvI/K5I+Zr3ZBUWB1TIumeG6ND+o/VUJk=;
- b=IIQOg3y0LO9MINJubJnIbe4ct771Bj46TYizkdx9mwYg3pex6XO74O1cJh4fN+8a+F
- IjNOx/Ce+WPFrZAsCV8ZwVc8l1UDVruLnicUDT5WIAJSIfO/dLjjwRxGVFfyVdbas8iX
- wZSRhFBtlA84EmdTk1jfejoLcdrWuI9UD9KtB+qTwrEucbq4U2Dk++hfehOvKFI0SMuC
- 889ysLo/FmF2gtHmjp3mOu6ZtcCXHrj7xL6oB8DNquoRTJhdd1XfV5m8KlMijzcxcZYv
- K2P5mzn+W50UJcZuGCyT8sB2zJAXu71vImGGiC8LZYaEsGuA8PDidA03jd83JXzI+bSi
- 2YYg==
+ bh=2BufZs0kEfZhSREW2kr3ncdJ656wrt8XpmqX2L/UqWo=;
+ b=EqFqFupfKpljVOxYfLVb4y5JgXZizuFjbCpTehCYukZEj87GAcW7CiJ6ftJu3oEzhO
+ AWRJACQ31yDIIAWqDc5IGy1L7SpCU1YW1hjxvbmpLgnX6oW3fVt98osoUaBZin0ivrzL
+ hStNhrVQD9JAo+YjRlBfgfKrc+xbRZTbAJ1tAubn6ReoTuQ0nKue27q4y83Xce1ndU7y
+ kMXsJeUhQSznUyo60tSbuOrBiATHy/eRrRDiovahhsFY9fWAt5BBV5HhislrcQ94otSv
+ S3uL+aUaiL/2Vf1+bmRugMNpU1BBT/VdCGj+fRiRgpJEpwR4REpbOq1bhj45UMxA13pQ
+ 00IQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVBjYcyQ3CRvhxT8ojXNpBJcGdhHgHx5a1NLFfb6SLfiN6TAXENF3ceLVBkHvKlf7SEoevk5D4UzY5zslbhmfN2OwLGz38=
-X-Gm-Message-State: AOJu0YxG3mmx/UZkLJTEcCS2iRj13YB2qG6zuBDuH0rbV/EWBdcWBc2b
- cSlngDbjyU1PsiPZAd0BhHcadeLCp9VqHW5k4cX7E5cvOY3PZ2HtR4idZb7m6UBoE7JbSPYkQTV
- dQpETz09wYD2WhBuhMB6i7YFz1oPuzDPGG/5ANw==
-X-Google-Smtp-Source: AGHT+IE8ZO0h5Bnbqz6SomZB9YvvXufwiT9HlYwFQYuRCboBKokuzXm/jbYQCEK98bhN8mua01Io7PtLMg0EMgCEdoo=
-X-Received: by 2002:a50:931a:0:b0:572:1625:ae99 with SMTP id
- m26-20020a50931a000000b005721625ae99mr2456eda.31.1714488324066; Tue, 30 Apr
- 2024 07:45:24 -0700 (PDT)
+ AJvYcCWLjBS7PX1FHcGAm+/ybNuOBLBkKj8CJyOrzKgNtD/tFt1vJIAL6e901y1aBp+U/dEgPUOisMH4gOptZVScb1KRWPD6cTo=
+X-Gm-Message-State: AOJu0YzeBUhZ1ApYL0V2G/7LmfKi2N1mL0SywzrH/TvPgPfcGR/i1ayT
+ fxbzzg1qwl3qlzkVQVTN9t4qvXqohnQctIod1g0Vipc8cNGK2TzLn3FQTvc6A3FfXzwqDmDwQ/D
+ WqX8qtWAB8VM/p4qWrgbZ3Q/9XYiQda5jK2XOKg==
+X-Google-Smtp-Source: AGHT+IGJU1wHKt/JnsN7b16H8JhUza2iUYDxSWI13nQW5yTA2oM1fDNwBqvz84EzY1Z8NRv3Oht3C5A9QWoEirBLZkw=
+X-Received: by 2002:a50:9b11:0:b0:56e:603:9fc9 with SMTP id
+ o17-20020a509b11000000b0056e06039fc9mr19388edi.3.1714488364071; Tue, 30 Apr
+ 2024 07:46:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240428181131.23801-1-adiupina@astralinux.ru>
-In-Reply-To: <20240428181131.23801-1-adiupina@astralinux.ru>
+References: <20240429075908.36302-1-thuth@redhat.com>
+In-Reply-To: <20240429075908.36302-1-thuth@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 30 Apr 2024 15:45:12 +0100
-Message-ID: <CAFEAcA9Zkh6xi2VvMi1mSjvAnSexrQFjVamES-z34Wh9gTuRUg@mail.gmail.com>
-Subject: Re: [PATCH v2] fix bit fields extraction and prevent overflow
-To: Alexandra Diupina <adiupina@astralinux.ru>
-Cc: Alistair Francis <alistair@alistair23.me>, "Konrad,
- Frederic" <Frederic.Konrad@amd.com>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, sdl.qemu@linuxtesting.org
+Date: Tue, 30 Apr 2024 15:45:52 +0100
+Message-ID: <CAFEAcA8iUvPfsESA4+1iA4uvjDorj-99WxhV8rN4-dHkrsB8SQ@mail.gmail.com>
+Subject: Re: [PATCH] hw/char/stm32l4x5_usart: Fix memory corruption by adding
+ correct class_size
+To: Thomas Huth <thuth@redhat.com>
+Cc: Arnaud Minier <arnaud.minier@telecom-paris.fr>, 
+ =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>, 
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,21 +92,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 28 Apr 2024 at 19:11, Alexandra Diupina <adiupina@astralinux.ru> wrote:
+On Mon, 29 Apr 2024 at 08:59, Thomas Huth <thuth@redhat.com> wrote:
 >
-> Add a type cast and use extract64() instead of extract32()
-> to avoid integer overflow on addition. Fix bit fields
-> extraction according to documentation.
+> "make check-qtest-aarch64" recently started failing on FreeBSD builds,
+> and valgrind on Linux also detected that there is something fishy with
+> the new stm32l4x5-usart: The code forgot to set the correct class_size
+> here, so the various class_init functions in this file wrote beyond
+> the allocated buffer when setting the subc->type field.
 >
-> Found by Linux Verification Center (linuxtesting.org) with SVACE.
->
-> Fixes: d3c6369a96 ("introduce xlnx-dpdma")
-> Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
+> Fixes: 4fb37aea7e ("hw/char: Implement STM32L4x5 USART skeleton")
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
 
-Thanks; I've applied this to target-arm.next, and it'll go into
-a pullreq sometime this week. (I tweaked the commit message to
-add a bit of the context and the docs URL from the other
-email thread.)
+
+
+Applied to target-arm.next, thanks.
 
 -- PMM
 
