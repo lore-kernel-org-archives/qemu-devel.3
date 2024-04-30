@@ -4,82 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19DB8C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 12:30:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79FC1C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 12:30:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1mbn-00071d-KU; Tue, 30 Apr 2024 08:29:19 -0400
+	id 1s1mcw-0001ch-Bo; Tue, 30 Apr 2024 08:30:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1mbf-0006ko-Bi
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 08:29:15 -0400
-Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1mbd-0001p0-JD
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 08:29:11 -0400
-Received: by mail-lf1-x136.google.com with SMTP id
- 2adb3069b0e04-51aa6a8e49aso6917402e87.3
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 05:29:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714480147; x=1715084947; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=09Seekt4NtHu4QpViHBSYG/Y3RTFIcJPKW9xHjJqbt8=;
- b=RaQ7rHdAnNdsbVjSgEanIOGzX9YdcBoV8LGnHVlTqPdaHJwacl5Y80zICatFFssadQ
- /xynp7KrgT5daA+BaTEjCQxjZrTRgni74waTwqpcAD6hh3tYEDU/HPmqIiqzglnQBhju
- 88l/ZuxUqK3BhohFkjS8RX01v64mgJTFZgsb6lyR2+76fLnT+cVTsEw8qQDzVTqm4UEi
- qOAQhSZyIIOSCEMrLUtPGzPxzoXy2qMjr6HLs3jXKV/ZJ+lrLgc36fg3ulDfZryRb9SL
- m64G77DvvEKqFf0avGKUSQbtc1OwEVdO1aI+g7LoGR2mfig11gENDSrRbqz+EImFn97E
- ji+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714480147; x=1715084947;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=09Seekt4NtHu4QpViHBSYG/Y3RTFIcJPKW9xHjJqbt8=;
- b=n3+41sRw+KEo4VfZKik+Q04PCQyji9C8REX9LRBWmEcSQsr0k83v5ubzn50CRWjJsR
- g4U+WRxImm3C9Lx7lGzcc1aTMTPYnQvXRSnmF2YvSSX8HXphik1GpXzje5tVGupBsBOU
- Xyk2/CJ/5RI7n5Yn7nhWM/iALfX2psqjlYmUmn2FoMM4XvWBaoxkphq5IQQLk7fPu7tn
- yhkoVhOi8CvfLQ326qzhfq+zRpwjHv/6FdVlfnF0Bg9fN05opkUp1lz3jWxgEmsE1yK3
- DOIIJbaKvx9z8ufd8wjOaBRViZRfqz36h/r6l0xTzb8IOvftarzsulfs4/XC1w24IJLf
- oI1w==
-X-Gm-Message-State: AOJu0YyxwWtEG1v/DAgQ9qihO58yZmrOEIG/mzXYiFVGk1VAzjpA/IO0
- Uc+eTTr/50U2rS+R29+ePzIk848HfnCLdU8hezFA66XLBIZIlAGPzdIGHEETYa98AvwNpn1QAOf
- 4
-X-Google-Smtp-Source: AGHT+IGTnXcAZsDup7XOQOMcHugY6PXJAk9K0b61r23h354XMXEThiF9ck7ycCpIsi7HtLFNXG8cBw==
-X-Received: by 2002:ac2:4542:0:b0:51c:66eb:8a66 with SMTP id
- j2-20020ac24542000000b0051c66eb8a66mr7387954lfm.67.1714480146743; 
- Tue, 30 Apr 2024 05:29:06 -0700 (PDT)
-Received: from m1x-phil.lan (mab78-h01-176-184-55-179.dsl.sta.abo.bbox.fr.
- [176.184.55.179]) by smtp.gmail.com with ESMTPSA id
- er1-20020a170907738100b00a58bf5ebc68sm5907046ejc.146.2024.04.30.05.29.05
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Apr 2024 05:29:06 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 10/13] accel/tcg: Move @tcg_cflags from CPUState to TCG
- AccelCPUState
-Date: Tue, 30 Apr 2024 14:28:04 +0200
-Message-ID: <20240430122808.72025-11-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240430122808.72025-1-philmd@linaro.org>
-References: <20240430122808.72025-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1s1mct-0001Kc-Dr
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 08:30:27 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1s1mcq-0001vP-6j
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 08:30:27 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 5D851480F2;
+ Tue, 30 Apr 2024 14:30:21 +0200 (CEST)
+Message-ID: <b3215169-005d-4766-ad19-3b649ff0e4c9@proxmox.com>
+Date: Tue, 30 Apr 2024 14:30:19 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 5/5] virtio-gpu: fix scanout migration post-load
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, Gerd Hoffmann <kraxel@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+References: <20240312140216.313618-1-marcandre.lureau@redhat.com>
+ <20240312140216.313618-6-marcandre.lureau@redhat.com>
+Content-Language: en-US
+From: Fiona Ebner <f.ebner@proxmox.com>
+In-Reply-To: <20240312140216.313618-6-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::136;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,97 +60,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-@tcg_cflags is specific to TCG accelerator, move it to
-its AccelCPUState.
+Am 12.03.24 um 15:02 schrieb marcandre.lureau@redhat.com:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> The current post-loading code for scanout has a FIXME: it doesn't take
+> the resource region/rect into account. But there is more, when adding
+> blob migration support in commit f66767f75c9, I didn't realize that blob
+> resources could be used for scanouts. This situationn leads to a crash
+> during post-load, as they don't have an associated res->image.
+> 
+> virtio_gpu_do_set_scanout() handle all cases, but requires the
+> associated virtio_gpu_framebuffer, which is currently not saved during
+> migration.
+> 
+> Add a v2 of "virtio-gpu-one-scanout" with the framebuffer fields, so we
+> can restore blob scanouts, as well as fixing the existing FIXME.
+> 
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Reviewed-by: Sebastian Ott <sebott@redhat.com>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240428221450.26460-23-philmd@linaro.org>
----
- accel/tcg/vcpu-state.h | 2 ++
- include/hw/core/cpu.h  | 4 +---
- accel/tcg/cpu-exec.c   | 6 +++---
- linux-user/main.c      | 2 +-
- 4 files changed, 7 insertions(+), 7 deletions(-)
+Hi,
+unfortunately, this broke migration from pre-9.0 to 9.0:
 
-diff --git a/accel/tcg/vcpu-state.h b/accel/tcg/vcpu-state.h
-index 51e54ca535..008fe847b4 100644
---- a/accel/tcg/vcpu-state.h
-+++ b/accel/tcg/vcpu-state.h
-@@ -10,9 +10,11 @@
- 
- /**
-  * AccelCPUState: vCPU fields specific to TCG accelerator
-+ * @cflags: Pre-computed cflags for this cpu.
-  * @plugin_state: per-CPU plugin state
-  */
- struct AccelCPUState {
-+    uint32_t cflags;
-     uint32_t cflags_next_tb;
- 
-     sigjmp_buf jmp_env;
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index f3cbb944eb..e546e67f4d 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -394,9 +394,8 @@ struct qemu_work_item;
-  *   to a cluster this will be UNASSIGNED_CLUSTER_INDEX; otherwise it will
-  *   be the same as the cluster-id property of the CPU object's TYPE_CPU_CLUSTER
-  *   QOM parent.
-- *   Under TCG this value is propagated to @tcg_cflags.
-+ *   Under TCG this value is propagated to @accel->cflags.
-  *   See TranslationBlock::TCG CF_CLUSTER_MASK.
-- * @tcg_cflags: Pre-computed cflags for this cpu.
-  * @nr_cores: Number of cores within this CPU package.
-  * @nr_threads: Number of threads within this CPU core.
-  * @running: #true if CPU is currently running (lockless).
-@@ -517,7 +516,6 @@ struct CPUState {
-     /* TODO Move common fields from CPUArchState here. */
-     int cpu_index;
-     int cluster_index;
--    uint32_t tcg_cflags;
-     uint32_t halted;
-     int32_t exception_index;
- 
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 2edfad78b3..2af0e964c1 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -150,17 +150,17 @@ static void init_delay_params(SyncClocks *sc, const CPUState *cpu)
- 
- bool tcg_cflags_has(CPUState *cpu, uint32_t flags)
- {
--    return cpu->tcg_cflags & flags;
-+    return cpu->accel->cflags & flags;
- }
- 
- void tcg_cflags_set(CPUState *cpu, uint32_t flags)
- {
--    cpu->tcg_cflags |= flags;
-+    cpu->accel->cflags |= flags;
- }
- 
- uint32_t curr_cflags(CPUState *cpu)
- {
--    uint32_t cflags = cpu->tcg_cflags;
-+    uint32_t cflags = cpu->accel->cflags;
- 
-     /*
-      * Record gdb single-step.  We should be exiting the TB by raising
-diff --git a/linux-user/main.c b/linux-user/main.c
-index 5f7f03f4b0..8be06627da 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -241,7 +241,7 @@ CPUArchState *cpu_copy(CPUArchState *env)
-     /* Reset non arch specific state */
-     cpu_reset(new_cpu);
- 
--    new_cpu->tcg_cflags = cpu->tcg_cflags;
-+    new_cpu->accel->cflags = cpu->accel->cflags;
-     memcpy(new_env, env, sizeof(CPUArchState));
- #if defined(TARGET_I386) || defined(TARGET_X86_64)
-     new_env->gdt.base = target_mmap(0, sizeof(uint64_t) * TARGET_GDT_ENTRIES,
--- 
-2.41.0
+> vmstate_load_state_field virtio-gpu:virtio-gpu
+> vmstate_load_state_field virtio-gpu-scanouts:parent_obj.enable
+> vmstate_load_state_field virtio-gpu-scanouts:parent_obj.conf.max_outputs
+> vmstate_load_state_field virtio-gpu-scanouts:parent_obj.scanout
+> vmstate_load_state_field virtio-gpu-one-scanout:resource_id
+> vmstate_load_state_field virtio-gpu-one-scanout:width
+> vmstate_load_state_field virtio-gpu-one-scanout:height
+> vmstate_load_state_field virtio-gpu-one-scanout:x
+> vmstate_load_state_field virtio-gpu-one-scanout:y
+> vmstate_load_state_field virtio-gpu-one-scanout:cursor.resource_id
+> vmstate_load_state_field virtio-gpu-one-scanout:cursor.hot_x
+> vmstate_load_state_field virtio-gpu-one-scanout:cursor.hot_y
+> vmstate_load_state_field virtio-gpu-one-scanout:cursor.pos.x
+> vmstate_load_state_field virtio-gpu-one-scanout:cursor.pos.y
+> vmstate_load_state_field virtio-gpu-one-scanout:fb.format
+> vmstate_load_state_field virtio-gpu-one-scanout:fb.bytes_pp
+> vmstate_load_state_field virtio-gpu-one-scanout:fb.width
+> vmstate_load_state_field virtio-gpu-one-scanout:fb.height
+> vmstate_load_state_field virtio-gpu-one-scanout:fb.stride
+> vmstate_load_state_field virtio-gpu-one-scanout:fb.offset
+> qemu-system-x86_64: Missing section footer for 0000:00:02.0/virtio-gpu
+> qemu-system-x86_64: Error -22 while loading VM state
+
+It wrongly tries to load the fb fields even though they should be
+guarded by version 2.
+
+Looking at it with GDB, in vmstate_load_state(), when we come to
+field->name == parent_obj.scanout, the
+
+>                 } else if (field->flags & VMS_STRUCT) {
+>                     ret = vmstate_load_state(f, field->vmsd, curr_elem,
+>                                              field->vmsd->version_id);
+
+branch will be taken and suddenly we'll have a call to
+vmstate_load_state() for vmsd==vmstate_virtio_gpu_scanout with
+version_id==2 rather than version_id==1, because that is
+field->vmsd->version_id (i.e. the .version_id in VMStateDescription
+vmstate_virtio_gpu_scanout).
+
+Would it have been necessary to version the VMStateDescription
+vmstate_virtio_gpu_scanouts too using VMS_VSTRUCT (or am I
+misinterpreting the use case for that)?
+
+Best Regards,
+Fiona
 
 
