@@ -4,80 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2422C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 12:07:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BA84C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 12:13:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1mGG-0007fW-6X; Tue, 30 Apr 2024 08:07:04 -0400
+	id 1s1mM1-00017Z-R4; Tue, 30 Apr 2024 08:13:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1mGB-0007eh-2U
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 08:06:59 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1mG8-0006Sz-6K
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 08:06:58 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a524ecaf215so701509466b.2
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 05:06:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714478813; x=1715083613; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=uTQRceNnn6uCHAOc357hIl651YqkYlEsO+7VBE6zFf8=;
- b=N4bL5BSnFzf4XCWJAQMBx/U9jge7EIqnHzA65yc2bmNfEkPb9ienwQLuqeX3s3uG1g
- JNGcAdLnoEyRJ4H96LkJpGPMnTtXAoTdXX+LHUcoy+bYDTtMmyphlsz3ewUgZ4s9Qj4r
- 0oiYRghmxEnZ71Kvg7PmRsIk+duqUHfVwZZwqZnfaGvi/86i8n4qxkwxRMSjcBIgAvA/
- LCTZXAfUkQDXVb+aKI8z5DB7rz0+ue4UIjYnWUplZcZqgBTVNKQYLvRnuiiQ6b6V8R2/
- YycQGCPUMNDl5tz90w0svLCS0nMZDMKto+EKwaUYa4I9k0QyuLrgQMXrxh1rKSPemxE3
- vpiQ==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s1mLz-00017F-Rs
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 08:13:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s1mLl-0007ZO-Ir
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 08:12:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714479162;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ud0XM2vA0VI3RDCIHTBNeHqQT4GBHoZWSuov7oJIvqw=;
+ b=gE7DbU1BLKvoEB0cBNJ/MVLZAED4UgXnF2RZOdj1Xg4uVQY+Fp76W7Wm3qSL0ItR4tjt0f
+ SXqlPA+x5ZODIouscNyML9maeANIfV6ysKT8dHOQf+5axCZfWZcpPRsupKV8TnY87u02Nn
+ Q3o15natBM8q8IqSJgf6Vg8/DkEI9BI=
+Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
+ [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-474-jKY3kss6Mk-PA6hNbiVV9w-1; Tue, 30 Apr 2024 08:12:40 -0400
+X-MC-Unique: jKY3kss6Mk-PA6hNbiVV9w-1
+Received: by mail-lj1-f199.google.com with SMTP id
+ 38308e7fff4ca-2db6fbc1dedso54022391fa.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 05:12:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714478813; x=1715083613;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=uTQRceNnn6uCHAOc357hIl651YqkYlEsO+7VBE6zFf8=;
- b=FlbkIUeBY21Bmr57lRu85HAM5WTcG/dS0dwWIyMFYwLbbE/nmsmfw12kI/ZgGsDyd1
- mKx1e9LVInAQRboH4vrQA6vOCHHk6o9TIe9vnryRoXRrX/rwS9K29DEdg7Lif45RL5c1
- JDQcEuSnLdy9CaajmHyVhzrKkyhNSHj7HBmTzkl6OfoNBI3zg6iykYnXjQTiA8kuuvzl
- IA1H3wK1Q1ftH7LeVr/8iPgj0y1elTwp2BwoHwY6Mdy+TmXoTrPx5NN/N+zMk91/W5bU
- +hxp1wVN3p81h05n6KWkmd62UoiKmZElgJv1Sk2oP5UrQ5X2LlVuNUknhI1gLjE6HcvO
- R2tQ==
-X-Gm-Message-State: AOJu0Ywjr1fXsgMGnjheqGraE2ufLd39muqrlZ7G+zf1WWD/FzkoYp9Z
- S1YQWI1X0ZcXogOKkWkF+lgOVQOfraSgd787gh1d8m7M8kxetTZ7F5w/T2lgrPExJGeXlaPOk1q
- e
-X-Google-Smtp-Source: AGHT+IGgzum9bjnMaeAd1tUH53yqqYi6a1KDSF1q6goq+JNCWCMwiM1GRzQ/4jc+MgaMqjEJR8ytzQ==
-X-Received: by 2002:a17:906:3b0f:b0:a55:b3d8:a0c8 with SMTP id
- g15-20020a1709063b0f00b00a55b3d8a0c8mr9282216ejf.42.1714478813085; 
- Tue, 30 Apr 2024 05:06:53 -0700 (PDT)
-Received: from m1x-phil.lan (mab78-h01-176-184-55-179.dsl.sta.abo.bbox.fr.
- [176.184.55.179]) by smtp.gmail.com with ESMTPSA id
- gx20-20020a1709068a5400b00a5885a7cb8csm8295656ejc.119.2024.04.30.05.06.51
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Apr 2024 05:06:52 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-stable@nongnu.org, Paul Cercueil <paul@crapouillou.net>
-Subject: [RFC PATCH] target/sh4: Fix SUBV opcode
-Date: Tue, 30 Apr 2024 14:06:50 +0200
-Message-ID: <20240430120650.70539-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
+ d=1e100.net; s=20230601; t=1714479159; x=1715083959;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ud0XM2vA0VI3RDCIHTBNeHqQT4GBHoZWSuov7oJIvqw=;
+ b=q3YBivY0N74NeRXxRvjM1cwCFTfwjm/AlcskXGBQV0pbQUv/EbMVxLzmYATlBEQ3MJ
+ GO03QCVv5kzEU99Ks4s1sJHcjZvsvTz+jeL1t+1MR95Td+UpBOOZDlajMhz26Xm1EPaM
+ 06c2hSh4t1THArXvBgvA+bxTfG6w8PfMI2w3AADas8EkDSDo8tljBM0HqfchjCPJpKov
+ fkU7OLE+c5xTK6Vc/L/O7z1RFikTdmouM0unZ744Mx77wQ5FQuQMtF7mNb2RZ0QRv0Dz
+ j26G6TZb5FBwaEjUB3R9ix4tRqYMCzfZs6JEHIN4U0KDzyqw6NbnH1HXw+yaAhgV964l
+ ia8Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWcC+7526/9uLy+GjPWXaBQ5TMSgQSSQi4/IbRp50ABnuTFYGQckgg0tvmhaCJ+Rk8jJSwhrnOx3V3uWLT+8qKr51kHv4A=
+X-Gm-Message-State: AOJu0YzKL/A3NufaMNSJHtzL0jUY319EDdUosxzYoa2q9nqBuR9d2Ndw
+ 0wQ1lMwT3gplm6jEg/05PVnzZjPDa8dZELuz2vFSzhCpMQEc6ZF+/ulebhvh3h3ok+9dVt7eYWp
+ PSe69xY5xK5fm9XWUTk/MbMBW33jzRZKyorm+XHGUu/rpuOBWZ7h1
+X-Received: by 2002:a2e:2c18:0:b0:2d8:7d1a:1118 with SMTP id
+ s24-20020a2e2c18000000b002d87d1a1118mr11201198ljs.23.1714479159058; 
+ Tue, 30 Apr 2024 05:12:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE9nTIaD6Za9Jn+S5LDKdvdZdzKA2MuEH8KeCeLzCTSjcwQmXX+Eq9SXnS942q6f7qP4hsGMw==
+X-Received: by 2002:a2e:2c18:0:b0:2d8:7d1a:1118 with SMTP id
+ s24-20020a2e2c18000000b002d87d1a1118mr11201166ljs.23.1714479158599; 
+ Tue, 30 Apr 2024 05:12:38 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ n5-20020a2e9045000000b002d85e57fa3dsm3777013ljg.104.2024.04.30.05.12.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 30 Apr 2024 05:12:37 -0700 (PDT)
+Message-ID: <47877e84-cf7d-4b51-997a-f61cd208a55c@redhat.com>
+Date: Tue, 30 Apr 2024 14:12:35 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 11/19] backends/iommufd: Implement
+ HostIOMMUDeviceClass::check_cap() handler
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "mst@redhat.com" <mst@redhat.com>, "peterx@redhat.com" <peterx@redhat.com>,
+ "jasowang@redhat.com" <jasowang@redhat.com>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
+ "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
+ "Peng, Chao P" <chao.p.peng@intel.com>
+References: <20240429065046.3688701-1-zhenzhong.duan@intel.com>
+ <20240429065046.3688701-12-zhenzhong.duan@intel.com>
+ <dccbba66-57c9-45de-9fa9-beb7b528e0b1@redhat.com>
+ <SJ0PR11MB6744DC907835CB7FEF992EA7921A2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <SJ0PR11MB6744DC907835CB7FEF992EA7921A2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,39 +114,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The documentation says:
+On 4/30/24 12:06, Duan, Zhenzhong wrote:
+> 
+> 
+>> -----Original Message-----
+>> From: Cédric Le Goater <clg@redhat.com>
+>> Subject: Re: [PATCH v3 11/19] backends/iommufd: Implement
+>> HostIOMMUDeviceClass::check_cap() handler
+>>
+>> On 4/29/24 08:50, Zhenzhong Duan wrote:
+>>> Suggested-by: Cédric Le Goater <clg@redhat.com>
+>>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>>> ---
+>>>    backends/iommufd.c | 18 ++++++++++++++++++
+>>>    1 file changed, 18 insertions(+)
+>>>
+>>> diff --git a/backends/iommufd.c b/backends/iommufd.c
+>>> index d61209788a..28faec528e 100644
+>>> --- a/backends/iommufd.c
+>>> +++ b/backends/iommufd.c
+>>> @@ -233,6 +233,23 @@ int
+>> iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+>>>        return ret;
+>>>    }
+>>>
+>>> +static int hiod_iommufd_check_cap(HostIOMMUDevice *hiod, int cap,
+>> Error **errp)
+>>> +{
+>>> +    switch (cap) {
+>>> +    case HOST_IOMMU_DEVICE_CAP_IOMMUFD:
+>>> +        return 1;
+>>
+>> I don't understand this value.
+> 
+> 1 means this host iommu device is attached to IOMMUFD backend,
+> or else 0 if attached to legacy backend.
 
-  SUBV Rm, Rn        Rn - Rm -> Rn, underflow -> T
+Hmm, this looks hacky to me and it is not used anywhere in the patchset.
+Let's reconsider when there is actually a use for it. Until then, please
+drop. My feeling is that a new HostIOMMUDeviceClass handler/attributed
+should be introduced instead.
 
-While correctly performing the substraction, the underflow
-is not detected.
 
-While we can check the high xored bit for overflow, for
-underflow we need to check the xored value is not negative.
+Thanks,
 
-Cc: qemu-stable@nongnu.org
-Fixes: ad8d25a11f ("target-sh4: implement addv and subv using TCG")
-Reported-by: Paul Cercueil <paul@crapouillou.net>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2318
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/sh4/translate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+C.
 
-diff --git a/target/sh4/translate.c b/target/sh4/translate.c
-index 4a1dd0d1f4..1c48d8ebea 100644
---- a/target/sh4/translate.c
-+++ b/target/sh4/translate.c
-@@ -937,7 +937,7 @@ static void _decode_opc(DisasContext * ctx)
-             t2 = tcg_temp_new();
-             tcg_gen_xor_i32(t2, REG(B11_8), REG(B7_4));
-             tcg_gen_and_i32(t1, t1, t2);
--            tcg_gen_shri_i32(cpu_sr_t, t1, 31);
-+            tcg_gen_setcondi_i32(TCG_COND_GE, cpu_sr_t, t1, 0);
-             tcg_gen_mov_i32(REG(B11_8), t0);
-         }
-         return;
--- 
-2.41.0
+
+
+> Strictly speaking, HOST_IOMMU_DEVICE_CAP_IOMMUFD is not a
+> hardware capability, I'm trying to put all(sw/hw) in CAPs checking
+> framework just like KVM<->qemu CAPs does.
+> 
+> Thanks
+> Zhenzhong
+> 
+>>
+>>
+>> Thanks,
+>>
+>> C.
+>>
+>>
+>>> +    default:
+>>> +        return host_iommu_device_check_cap_common(hiod, cap, errp);
+>>> +    }
+>>> +}
+>>> +
+>>> +static void hiod_iommufd_class_init(ObjectClass *oc, void *data)
+>>> +{
+>>> +    HostIOMMUDeviceClass *hioc = HOST_IOMMU_DEVICE_CLASS(oc);
+>>> +
+>>> +    hioc->check_cap = hiod_iommufd_check_cap;
+>>> +};
+>>> +
+>>>    static const TypeInfo types[] = {
+>>>        {
+>>>            .name = TYPE_IOMMUFD_BACKEND,
+>>> @@ -251,6 +268,7 @@ static const TypeInfo types[] = {
+>>>            .parent = TYPE_HOST_IOMMU_DEVICE,
+>>>            .instance_size = sizeof(HostIOMMUDeviceIOMMUFD),
+>>>            .class_size = sizeof(HostIOMMUDeviceIOMMUFDClass),
+>>> +        .class_init = hiod_iommufd_class_init,
+>>>            .abstract = true,
+>>>        }
+>>>    };
+> 
 
 
