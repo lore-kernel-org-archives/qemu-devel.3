@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC7E7C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 14:49:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2737C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 14:56:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1omK-0006lf-KF; Tue, 30 Apr 2024 10:48:20 -0400
+	id 1s1ou6-0002vb-P4; Tue, 30 Apr 2024 10:56:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s1omD-0006kF-R3
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:48:13 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1ou4-0002v7-Io
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:56:20 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s1omC-0004pK-EH
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:48:13 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-56e56ee8d5cso7410496a12.2
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 07:48:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1ou3-0006bp-33
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:56:20 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-34d8f6cfe5bso450515f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 07:56:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714488491; x=1715093291; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zslvtlR4SmnG5iJpymh5rbyidbaYiK8CTF1oZEqGzGU=;
- b=Pc0prIRO97cwE/E3JkPpqqZrvn6QkwNJZ4gq8PLCW2I2DM1GPVHg8TINONfjYugDlB
- RrP2cDKZblHtVc04HMukfAVB19migm8OiGXgbcvGR3noYvms8xNxSEa03+eyI1uu5GGx
- 2M4imBk2zBpMq9Avnp/8+kssA+pzrzMwh2bbKRgRafkNQd9HRNUhkMfP+Gvfo2bpsW12
- Yl09ktGF6KQFkCSEgV9kEf7XoeCStfxqg3Abhw7L0rpDljS7Yt1MIBsBTsHLn10JAlUK
- zoFNINI5YBM1k0YXMEmK2JB7CBM+Vwp9z549vfApTdvMpWs80svNHoqszye1Plfi/kQA
- CVwQ==
+ d=linaro.org; s=google; t=1714488977; x=1715093777; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=CULYJvYm82GTRYuuP5o23sVkVHkMsAV2mUU3SOLa208=;
+ b=dJsKObDjHYruxy0VPQga6YE3mXtmhu/06SUdEkYovZdgikyD7l4Axg22X9vI46Ur0A
+ xrse/llIMMKtFn78To4guALh7KpXgN3cRFkYXh/7nUqr58I/1W3lSXMq8iydLceS9N8t
+ F41SQBztnpkX/NF4JwAYHpCRHjRJedlO7Y7gYAdEJvVI8J1ejFsVz1E1Mte+3zbZyhkB
+ PO5Z20ICeISG5lA41sJEaBb7AbjUS3t95v/v3Hxn75Mw0KjTfy+U+uFQnsNwWh9m4mj8
+ AERk5BDQKenhAks7Y3wLHz8tEEATT5Ona3ga43rX2wFjQypcYCMC/YF8sbFVLY+yO40v
+ bkUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714488491; x=1715093291;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zslvtlR4SmnG5iJpymh5rbyidbaYiK8CTF1oZEqGzGU=;
- b=cubMpTZHhJGHcLIpAb4afj4nMr3xHGIbVhxcaqxKdhtAmGBAYxQj/+I9Gz+BsjVbEQ
- fCeYhDR0Gt+DDoVghedFwr5tGoATdiPj3ztKCdPc1g2Ucbk3k/CvCTmysaaiW0oZSmez
- e0jvTJyNXYW3VK+Ee+b718hzafo+0nLFK9oEmBehsFVGZJVzAOILbQvSqENR54mUD08+
- T+cJJNvV7eQ/ipVF9B1M9xA+Zv3fOIOvp5ukfhjQMW0kbsVHKqgLrwRTNKX5wBzFko+/
- UEHWbos3nMCzhoqXFk8YFOxVXbSeR65CqE5DJB18MiSi/aslF3FJsCvRpDFE9T50jKTm
- C1Ew==
-X-Gm-Message-State: AOJu0Yz2lhZFAZNhbsLqzhf11awNhj9yHjJy7Ap4DIEufCBPmNxysDGh
- u5hBPiP6n0WaYV/8USwaE4LnLvZWlhUxOxfkLipqQ8I4MfcTY+dSEmlu+7siy0aYUxIVEQrK/jl
- p3Sgiwvg2/6BtpEnoOtep2je25TTLu5B9D+ANZYHYhQhXR4ih
-X-Google-Smtp-Source: AGHT+IFJEPe89t7nbL9vEowcD6G6yNI34fQllVt2+C/5xe6VXQ2czW/FfH5BpoweavqqjwC3N2eGjgZzPsqK2uZE6xA=
-X-Received: by 2002:a50:9313:0:b0:572:a723:f1f4 with SMTP id
- m19-20020a509313000000b00572a723f1f4mr38264eda.3.1714488490789; Tue, 30 Apr
- 2024 07:48:10 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1714488977; x=1715093777;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CULYJvYm82GTRYuuP5o23sVkVHkMsAV2mUU3SOLa208=;
+ b=i54OeIxJ/1z0Lg4jtS3DXbZ/4nHediqkmtUhpOlxqurYnVBWwqiQYO2pqtzarAcRBe
+ QhgtKtp40+yXeNQ18T6tAaMTR47LgGrXh0JMFu7KhiXOeLP2iJHl8Xr2ltkyeggVuhKs
+ Ax4z8INmfYF3eeeddBpGh8GMOCE0vTHWXk3jYkRGMvz0o64bwAx2NEV54EEtCcrBxP3H
+ cwzPFWRBJvBJpI0I5rJiV2YY69R8wTJxX3tQdHqvzgNlBTi3Owb8+SUPt+oEQknjEVCD
+ 7wESO8e3V82Aid27alos5VCx54r7F85uil7hsS13xuKiAMi338voizmkRmqWN+S/DPp7
+ wdrA==
+X-Gm-Message-State: AOJu0YzvXFLoVJQkGQDn6NHR/sDELkqz3x1ZpAx/k/4sWgejUSRhJxsw
+ Q0ICHJv3sEKOcXv3iVmbrud3r1pNYddKyhrKKir4c9bUg8nvCdoRyLr6MwfgUUiB6xmp2k5L3cZ
+ J
+X-Google-Smtp-Source: AGHT+IE9TYdVShN4Yo4YjgWoF4UACQ9uzBnltovDNM/fuzneOigy7s9x4K72ZL4qPWhMwKcO0upx7w==
+X-Received: by 2002:adf:e111:0:b0:345:ca71:5ddb with SMTP id
+ t17-20020adfe111000000b00345ca715ddbmr7041951wrz.66.1714488976923; 
+ Tue, 30 Apr 2024 07:56:16 -0700 (PDT)
+Received: from m1x-phil.lan (mab78-h01-176-184-55-179.dsl.sta.abo.bbox.fr.
+ [176.184.55.179]) by smtp.gmail.com with ESMTPSA id
+ y18-20020adff152000000b0034d7a555047sm1954429wro.96.2024.04.30.07.56.15
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 30 Apr 2024 07:56:16 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Paul Cercueil <paul@crapouillou.net>,
+ John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+ Philippe =?unknown-8bit?q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 0/4] target/sh4: Fix ADDV/SUBV opcodes
+Date: Tue, 30 Apr 2024 16:56:10 +0200
+Message-ID: <20240430145614.76475-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-References: <20240422125813.1403-1-philmd@linaro.org>
-In-Reply-To: <20240422125813.1403-1-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 30 Apr 2024 15:47:59 +0100
-Message-ID: <CAFEAcA-AiyEgpeBqAH4L+qZTHPn9T6EOV3N9sNZB9dn2RvzGXA@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm/npcm7xx: Store derivative OTP fuse key in little
- endian
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Tyrone Ting <kfting@nuvoton.com>, 
- Havard Skinnemoen <hskinnemoen@google.com>, Hao Wu <wuhaotsh@google.com>,
- qemu-arm@nongnu.org, 
- qemu-stable@nongnu.org, Avi Fishman <Avi.Fishman@nuvoton.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,19 +93,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 22 Apr 2024 at 13:58, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> Use little endian for derivative OTP fuse key.
->
-> Cc: qemu-stable@nongnu.org
-> Fixes: c752bb079b ("hw/nvram: NPCM7xx OTP device model")
-> Suggested-by: Avi Fishman <Avi.Fishman@nuvoton.com>
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+Since v2:
+- Add tests (Paul)
+- Rename TCGv variables as in manual
 
+Philippe Mathieu-Daudé (4):
+  target/sh4: Fix ADDV opcode
+  target/sh4: Fix SUBV opcode
+  target/sh4: Rename TCGv variables as manual for ADDV opcode
+  target/sh4: Rename TCGv variables as manual for SUBV opcode
 
+ target/sh4/translate.c        | 32 ++++++++++++++++++++------------
+ tests/tcg/sh4/test-addv.c     | 23 +++++++++++++++++++++++
+ tests/tcg/sh4/test-subv.c     | 26 ++++++++++++++++++++++++++
+ tests/tcg/sh4/Makefile.target |  6 ++++++
+ 4 files changed, 75 insertions(+), 12 deletions(-)
+ create mode 100644 tests/tcg/sh4/test-addv.c
+ create mode 100644 tests/tcg/sh4/test-subv.c
 
-Applied to target-arm.next, thanks.
+-- 
+2.41.0
 
--- PMM
 
