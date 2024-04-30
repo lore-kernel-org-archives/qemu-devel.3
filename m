@@ -4,84 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0CBAC4345F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA20CC19F4F
 	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 16:52:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1qgm-00070w-7M; Tue, 30 Apr 2024 12:50:44 -0400
+	id 1s1qfQ-0002oN-6U; Tue, 30 Apr 2024 12:49:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1s1qgM-00065g-Tr
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:50:18 -0400
-Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s1qf3-0002Oe-Gg
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:48:58 -0400
+Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1s1qgL-000613-5i
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:50:18 -0400
-Received: by mail-lf1-x12e.google.com with SMTP id
- 2adb3069b0e04-516d4d80d00so7533226e87.0
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 09:50:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s1qew-0005cb-NE
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:48:57 -0400
+Received: by mail-lj1-x22f.google.com with SMTP id
+ 38308e7fff4ca-2dfb4ea2bbfso41739371fa.2
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 09:48:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1714495814; x=1715100614; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714495729; x=1715100529; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fwamhPCUJY+N7YTIaqBuMDMNKLfZW1hiEtgPXWAFdNA=;
- b=KHu8E7Ce3mzwBSP6a12asR/K7jlppdxkI3tLleB/xYy4PkNQ+yQVotHXda2CuCa8wt
- Zys0CTE2f6CUaQV9quzqkSpHjteOxjo9BcWa2hSq81v4udc76KUGP3cbifpM0DckJutn
- c6e7VMA85fsVwrkKG+69Hpc1OsGzL6ICrZZ22j79PZvs0djzxVKBt8EpSEYZFzHgNgFa
- TMSS20DkBHMXs1ty9yPkTYj1IHr/D6C78AOFxo8TJWTWqBMnZvvampFhyvXh6qWq3eru
- HLbotiVsTbnw8dGLsRBBYbaPpjWPgOxH1eFhUXAuAUp8CJpqwuLqyZu4D27DS5U1VUPw
- 7uow==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=8ybX+f9OWY45lhLb2oST3kDQoeWzOe+ZNsl1K+EOruA=;
+ b=JFzQgNhA5Kho8Ps/Yl3nBspWrK1kFH/ER2zweeALj/RkAUy/aZS1L4aMn/qOVbwbx/
+ ZDdjMRL+q2NLRSPFJUyiaWUuPbvzUnRV05kmAY1+awkv24yNLVi8gBGoZa9435poFfyt
+ DyRL4Si/YwjMxLqSG19KjbMMZm/hP063TobEcxiqCejsHSYR+nlE+JHySPM4PlyYwy8o
+ u9qjgOjsN7pzy3JyZzf8tdCQ+tokjtHvvQqfT0i7087X4gFp0rkno0N5fBl23QGX7bCf
+ XjndvCBgOelnMZw6PTL0CnO8DHLFTetrSu3JA/FUynLGos+g9Ery+yJBdWEfjAc4YamQ
+ NufQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714495814; x=1715100614;
+ d=1e100.net; s=20230601; t=1714495729; x=1715100529;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fwamhPCUJY+N7YTIaqBuMDMNKLfZW1hiEtgPXWAFdNA=;
- b=MxuNycirDClUFwcIoaWMH0mX9qQ7Y9fYrkPKSyqxxA0rIQvn26StXVyxU8QSI0qlnd
- dovbFSaGPWW6DHtsufJvFN4nJuATGZy2w0QuI1htp6FOl7eM9MXHzTDBDf6JeUvJjg4m
- Gz6ID8foNLTD36nh8CaAvgdy/lQkujfSRAdp2Rcfm9Pe+2QC35YR1hNNL3ywJXptRJW8
- VerKvkU16TcDMqiNHoXH3UF2xaKy8tA2d12oxsHoiFWxPCkwXpk9XDLKtav76VxluXaD
- bbMI9BJqb8bq8zxUZvMrpFMz0TXfB9+cDUEF5fCVuHHGI9nZQ0tEHB26YqdB3t+AA/nK
- 8o3A==
-X-Gm-Message-State: AOJu0Yw+au6n1tyPKXnHl3hdycNnMi+JNQRQlJDOjwv5zBWmyvoSq/mm
- D170GM0vNHurSGq/VdeE9Zy+uLe7dMFKsWUB1EKaHIUOAkQV3GGXDQ0gB9i+
-X-Google-Smtp-Source: AGHT+IHoJlSMsC6sfM5UXupD/S6braHFg22PmZ7CRhw+67o7aWoTbAdWexTYOX7plCeimOm047+9GQ==
-X-Received: by 2002:ac2:5a5b:0:b0:519:6a93:ed3a with SMTP id
- r27-20020ac25a5b000000b005196a93ed3amr25393lfn.23.1714495812082; 
- Tue, 30 Apr 2024 09:50:12 -0700 (PDT)
-Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
+ bh=8ybX+f9OWY45lhLb2oST3kDQoeWzOe+ZNsl1K+EOruA=;
+ b=MNLRU7cqzmGThvZYMPE0+r1MnzyTpKcdtscEXAPqb3U9InH4O0e/SDU+GUNJ/Df9Uc
+ VH7+mESGPQ+ZXK6jU5V3yISv6Sc+QwUO9nZLWGqFD42ARn3z62FtTNH4zXmD7aMND/zf
+ ag2jFW5vXbBvh5+UIcwGxeMduqFRSis+xXsg1S2Bg2BueFISti91SYw0x/amNj4ugQS6
+ g/loNZvaetvqShEYzUU8TBpBBfta6C2S18sZSQxV8mdUwcdC+m31kt+g3lEP6bjCNwhY
+ bLjA8h7Im7Tb6lQ02xo4HW24rSWtNiR1A5xpuGLlhoU/Ga/GXov3oXwC/SDOqtlMfnPm
+ +n5w==
+X-Gm-Message-State: AOJu0YzgiwogIJUWByr2585TmOEws9AXzhnGQQz4mztNexsz3sYunWM8
+ HyfV8cA9Pf2ww7uWhrqK1eDR9iyPtKbRR3vcPGegNj3orn9DMnh1ZIQbG3qke2qPjzWpkr41TXv
+ P
+X-Google-Smtp-Source: AGHT+IG05y1Q+h5mQ522BnICErxBCN/vmR8JLiHT4Z1+5dd5NCeTbcj1lxD1gNvziZI6KoSfdZ+oGQ==
+X-Received: by 2002:a2e:8515:0:b0:2d5:9703:263c with SMTP id
+ j21-20020a2e8515000000b002d59703263cmr202574lji.4.1714495729135; 
+ Tue, 30 Apr 2024 09:48:49 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- g5-20020a19e045000000b0051bf283570dsm2372896lfj.254.2024.04.30.09.50.10
+ b6-20020a05600c4e0600b0041be3383a2fsm12920384wmq.19.2024.04.30.09.48.48
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Apr 2024 09:50:10 -0700 (PDT)
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+ Tue, 30 Apr 2024 09:48:48 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: edgar.iglesias@gmail.com, sstabellini@kernel.org, jgross@suse.com,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
- xen-devel@lists.xenproject.org
-Subject: [PATCH v4 02/17] xen: let xen_ram_addr_from_mapcache() return -1 in
- case of not found entry
-Date: Tue, 30 Apr 2024 18:49:24 +0200
-Message-Id: <20240430164939.925307-3-edgar.iglesias@gmail.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20240430164939.925307-1-edgar.iglesias@gmail.com>
-References: <20240430164939.925307-1-edgar.iglesias@gmail.com>
+Subject: [PULL 10/21] target/arm: Refactor default generic timer frequency
+ handling
+Date: Tue, 30 Apr 2024 17:48:31 +0100
+Message-Id: <20240430164842.4074734-11-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240430164842.4074734-1-peter.maydell@linaro.org>
+References: <20240430164842.4074734-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x12e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,51 +95,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Juergen Gross <jgross@suse.com>
+The generic timer frequency is settable by board code via a QOM
+property "cntfrq", but otherwise defaults to 62.5MHz.  The way this
+is done includes some complication resulting from how this was
+originally a fixed value with no QOM property.  Clean it up:
 
-Today xen_ram_addr_from_mapcache() will either abort() or return 0 in
-case it can't find a matching entry for a pointer value. Both cases
-are bad, so change that to return an invalid address instead.
+ * always set cpu->gt_cntfrq_hz to some sensible value, whether
+   the CPU has the generic timer or not, and whether it's system
+   or user-only emulation
+ * this means we can always use gt_cntfrq_hz, and never need
+   the old GTIMER_SCALE define
+ * set the default value in exactly one place, in the realize fn
 
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+The aim here is to pave the way for handling the ARMv8.6 requirement
+that the generic timer frequency is always 1GHz.  We're going to do
+that by having old CPU types keep their legacy-in-QEMU behaviour and
+having the default for any new CPU types be a 1GHz rather han 62.5MHz
+cntfrq, so we want the point where the default is decided to be in
+one place, and in code, not in a DEFINE_PROP_UINT64() initializer.
+
+This commit should have no behavioural changes.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240426122913.3427983-2-peter.maydell@linaro.org
 ---
- hw/xen/xen-mapcache.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ target/arm/internals.h |  7 ++++---
+ target/arm/cpu.c       | 31 +++++++++++++++++--------------
+ target/arm/helper.c    | 16 ++++++++--------
+ 3 files changed, 29 insertions(+), 25 deletions(-)
 
-diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-index 7f59080ba7..b7cefb78f7 100644
---- a/hw/xen/xen-mapcache.c
-+++ b/hw/xen/xen-mapcache.c
-@@ -394,13 +394,8 @@ ram_addr_t xen_ram_addr_from_mapcache(void *ptr)
-         }
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index e40ec453d56..b6c78db0243 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -60,10 +60,11 @@ static inline bool excp_is_internal(int excp)
+         || excp == EXCP_SEMIHOST;
+ }
+ 
+-/* Scale factor for generic timers, ie number of ns per tick.
+- * This gives a 62.5MHz timer.
++/*
++ * Default frequency for the generic timer, in Hz.
++ * This is 62.5MHz, which gives a 16 ns tick period.
+  */
+-#define GTIMER_SCALE 16
++#define GTIMER_DEFAULT_HZ 62500000
+ 
+ /* Bit definitions for the v7M CONTROL register */
+ FIELD(V7M_CONTROL, NPRIV, 0, 1)
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index a152def2413..9f2ca6633a1 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -1506,9 +1506,12 @@ static void arm_cpu_initfn(Object *obj)
      }
-     if (!found) {
--        trace_xen_ram_addr_from_mapcache_not_found(ptr);
--        QTAILQ_FOREACH(reventry, &mapcache->locked_entries, next) {
--            trace_xen_ram_addr_from_mapcache_found(reventry->paddr_index,
--                                                   reventry->vaddr_req);
--        }
--        abort();
--        return 0;
-+        mapcache_unlock();
-+        return RAM_ADDR_INVALID;
+ }
+ 
++/*
++ * 0 means "unset, use the default value". That default might vary depending
++ * on the CPU type, and is set in the realize fn.
++ */
+ static Property arm_cpu_gt_cntfrq_property =
+-            DEFINE_PROP_UINT64("cntfrq", ARMCPU, gt_cntfrq_hz,
+-                               NANOSECONDS_PER_SECOND / GTIMER_SCALE);
++            DEFINE_PROP_UINT64("cntfrq", ARMCPU, gt_cntfrq_hz, 0);
+ 
+ static Property arm_cpu_reset_cbar_property =
+             DEFINE_PROP_UINT64("reset-cbar", ARMCPU, reset_cbar, 0);
+@@ -1954,6 +1957,17 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+         return;
      }
  
-     entry = &mapcache->entry[paddr_index % mapcache->nr_buckets];
-@@ -409,7 +404,7 @@ ram_addr_t xen_ram_addr_from_mapcache(void *ptr)
++    if (!cpu->gt_cntfrq_hz) {
++        /*
++         * 0 means "the board didn't set a value, use the default".
++         * The default value of the generic timer frequency (as seen in
++         * CNTFRQ_EL0) is 62.5MHz, which corresponds to a period of 16ns.
++         * This is what you get (a) for a CONFIG_USER_ONLY CPU (b) if the
++         * board doesn't set it.
++         */
++        cpu->gt_cntfrq_hz = GTIMER_DEFAULT_HZ;
++    }
++
+ #ifndef CONFIG_USER_ONLY
+     /* The NVIC and M-profile CPU are two halves of a single piece of
+      * hardware; trying to use one without the other is a command line
+@@ -2002,18 +2016,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
      }
-     if (!entry) {
-         trace_xen_ram_addr_from_mapcache_not_in_cache(ptr);
--        raddr = 0;
-+        raddr = RAM_ADDR_INVALID;
-     } else {
-         raddr = (reventry->paddr_index << MCACHE_BUCKET_SHIFT) +
-              ((unsigned long) ptr - (unsigned long) entry->vaddr_base);
+ 
+     {
+-        uint64_t scale;
+-
+-        if (arm_feature(env, ARM_FEATURE_GENERIC_TIMER)) {
+-            if (!cpu->gt_cntfrq_hz) {
+-                error_setg(errp, "Invalid CNTFRQ: %"PRId64"Hz",
+-                           cpu->gt_cntfrq_hz);
+-                return;
+-            }
+-            scale = gt_cntfrq_period_ns(cpu);
+-        } else {
+-            scale = GTIMER_SCALE;
+-        }
++        uint64_t scale = gt_cntfrq_period_ns(cpu);
+ 
+         cpu->gt_timer[GTIMER_PHYS] = timer_new(QEMU_CLOCK_VIRTUAL, scale,
+                                                arm_gt_ptimer_cb, cpu);
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index bb0e1baf628..75876359608 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -2474,6 +2474,13 @@ static const ARMCPRegInfo v6k_cp_reginfo[] = {
+       .resetvalue = 0 },
+ };
+ 
++static void arm_gt_cntfrq_reset(CPUARMState *env, const ARMCPRegInfo *opaque)
++{
++    ARMCPU *cpu = env_archcpu(env);
++
++    cpu->env.cp15.c14_cntfrq = cpu->gt_cntfrq_hz;
++}
++
+ #ifndef CONFIG_USER_ONLY
+ 
+ static CPAccessResult gt_cntfrq_access(CPUARMState *env, const ARMCPRegInfo *ri,
+@@ -3228,13 +3235,6 @@ void arm_gt_hvtimer_cb(void *opaque)
+     gt_recalc_timer(cpu, GTIMER_HYPVIRT);
+ }
+ 
+-static void arm_gt_cntfrq_reset(CPUARMState *env, const ARMCPRegInfo *opaque)
+-{
+-    ARMCPU *cpu = env_archcpu(env);
+-
+-    cpu->env.cp15.c14_cntfrq = cpu->gt_cntfrq_hz;
+-}
+-
+ static const ARMCPRegInfo generic_timer_cp_reginfo[] = {
+     /*
+      * Note that CNTFRQ is purely reads-as-written for the benefit
+@@ -3514,7 +3514,7 @@ static const ARMCPRegInfo generic_timer_cp_reginfo[] = {
+       .opc0 = 3, .opc1 = 3, .crn = 14, .crm = 0, .opc2 = 0,
+       .type = ARM_CP_CONST, .access = PL0_R /* no PL1_RW in linux-user */,
+       .fieldoffset = offsetof(CPUARMState, cp15.c14_cntfrq),
+-      .resetvalue = NANOSECONDS_PER_SECOND / GTIMER_SCALE,
++      .resetfn = arm_gt_cntfrq_reset,
+     },
+     { .name = "CNTVCT_EL0", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 3, .crn = 14, .crm = 0, .opc2 = 2,
 -- 
-2.40.1
+2.34.1
 
 
