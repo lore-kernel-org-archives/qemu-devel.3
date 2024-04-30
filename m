@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8E31C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 16:51:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73AA2C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 16:51:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1qgs-0007j4-Mg; Tue, 30 Apr 2024 12:50:50 -0400
+	id 1s1qgq-0007fs-N0; Tue, 30 Apr 2024 12:50:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1s1qgU-0006HS-3s
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:50:32 -0400
-Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
+ id 1s1qgd-0006R2-D5
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:50:37 -0400
+Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1s1qgR-000622-Tg
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:50:25 -0400
-Received: by mail-lf1-x135.google.com with SMTP id
- 2adb3069b0e04-51ab4ee9df8so7531140e87.1
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 09:50:22 -0700 (PDT)
+ id 1s1qgX-00062T-Lx
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:50:32 -0400
+Received: by mail-lf1-x132.google.com with SMTP id
+ 2adb3069b0e04-516d2600569so7363413e87.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 09:50:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1714495821; x=1715100621; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1714495826; x=1715100626; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6Ebca77e5IYL9WEAaF2UYa4r/GkVpnh2Kl3ta9A5c+4=;
- b=msClK3kX2jHfgGigTJzGxYDXa1R4plXADb2JeN+CbN80faeQB1oKFtxSETJnQ0WNA5
- PtB3WP79tlmzKVSCVswwPOrrgZWxnjFOVN+4SC9NBYyHks83c/50WOqwiDnyqkbmcDan
- 55Xo6IxRUYnja6B6JE1z1P1U5GS9cJ7MJnOd1A61J0fUOlB+BN5g/xLvPtK4804azvSw
- vKpA+nKN+4v9J8FFGSOx3laIPgdtrEpwFFWaVkafDh0dE5RCAOcsQSnmnWc49xg71Vra
- 4j6M1vTnzzv4piVyY6XvrK6L1ZnXogJm+7p1edZrOg4GMfBaQY5uXy3ebJTNsqAoFZAi
- Y2qQ==
+ bh=kom/SHDfVUZpmIZv8oD+sehGVIlmksQJn6703to5aOw=;
+ b=BKzV8L/ZbU8k0t+UCnLCHRhG/69tFqUuWWD9nWrcz6Kvx+DZRVoqB85ADB6oc57ONL
+ aKzxzZiChLptuN4fAnddeXaLkJpH7ia/0FGFdIVyvF7OKIEMlqWyV2FnxA+2Hxxl5ce0
+ BqJd/rlLQVM1L9uGILDM3e8Rs2vZKXyFPBTdkv1bfQJNMECVWGlxaXe8FnJXgIYt/IfJ
+ /CjLfYvwteuuAflfTcOyVlOPYWq586HYlXKBnCWNGuP53R0pmBabfJ38vflmUf1fa3MR
+ k7NwO91fzUqIxlXuqTyUh6c8vPnr/yBZXC0NjCnd4eISudntD0Qy1k4QRTifk+KsT7bW
+ 6kfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714495821; x=1715100621;
+ d=1e100.net; s=20230601; t=1714495826; x=1715100626;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6Ebca77e5IYL9WEAaF2UYa4r/GkVpnh2Kl3ta9A5c+4=;
- b=F2tnSIFWx8C/PIkHDK2k9RTinlJ2dY4NM8iFfMF6b5y+7woCxa4x8t2g3e/mNXB3QN
- 50Pb74M6gbvULEN9TTMxj8HKhtJ6fDhn+JUdxOxMpF6AjM/vfqgmb9UBITZTQh4UOK9W
- tCGTaA2HC0kk8GKl8v2HGNW7SvOX/T0kbe/d/f+IyVvLE3hDWxYMUyaL5sJ8hHCIoNNP
- lDSLDJQzb399JYvo2P85j8g80jviNNCKxrZHM2ncn+6LEfKVgsXlcbSk7iYpbF4UYWkD
- ebWzreMIzdN11OdQoemwSW6qmOFnLJkXhKYTfWXvg85lJT+/LCfJVJYa3Z3bu4gYYsfJ
- O+sw==
-X-Gm-Message-State: AOJu0Ywaqp/YAjUM/61rU4Xn5VwscyPw8mZMRT4kFm2S+R+mRFGNsYaf
- F38xwrqDyzRitHir7+bZIZ6+3Ext+wZz3wbSbVD7nQM4X81gQtBjPSGin+MK
-X-Google-Smtp-Source: AGHT+IEM3Jz9S/DKrWu5RICfZqu5IuAbuhDXbfyJpfQLWPTCw63HqZI9CE91kUAd3S8w9gG9YoAS8w==
-X-Received: by 2002:a05:6512:1386:b0:516:cc06:fa03 with SMTP id
- fc6-20020a056512138600b00516cc06fa03mr23704lfb.56.1714495821221; 
- Tue, 30 Apr 2024 09:50:21 -0700 (PDT)
+ bh=kom/SHDfVUZpmIZv8oD+sehGVIlmksQJn6703to5aOw=;
+ b=kRk2hfDXkUnLkytzDsGg5t5qzHVJP/M9QZl4fRDgBYbZNjWnyy0SR/Dv9UjxBeUswC
+ bjaCcPbdDgScbBb6ZgJUoh04fen4x2QJts4lYzvexKhHMk1Om/O/g8mU5+qGvPRs7cxS
+ 0D6PdIhOrpk1gM3fSEkOVBzDzaNAf5Pf6R95k/XJRY10MtXqdHaZnZExsGYVwM48tris
+ x24b9yMSqgx58v9unv4gJJ//YunfeKADGfN1OXHbYatW5/7fh9bXiGQlHEkYniptIXvX
+ vPxXJcRZyxfOJgS8mIggjK2mm+8pgrDQT1ZqxxKXEwH0EkRV3N2TS1hu+jLGNx+kZhz9
+ CdAg==
+X-Gm-Message-State: AOJu0Yz5LejvGApVHYhA2atHSf39UMFeEeY1llwzpGHCxTB/5oNx/kZk
+ OcUwfiE+0kgerBkzWkkiv/hTM1GSHUiQmMCDJwHGVhfHKPu68dW6Xc1ZN8rU
+X-Google-Smtp-Source: AGHT+IFL7xixQZzyY4IgwLtRiYEyYk+uUHOVAzj9b5xqr6eOpzsgiDsvBW99qrlkBchrQCMFWP2fRg==
+X-Received: by 2002:ac2:5a50:0:b0:51c:f898:60cb with SMTP id
+ r16-20020ac25a50000000b0051cf89860cbmr15984lfn.35.1714495826099; 
+ Tue, 30 Apr 2024 09:50:26 -0700 (PDT)
 Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
  by smtp.gmail.com with ESMTPSA id
- k3-20020a05651210c300b0051d7d7a21d7sm1000646lfg.308.2024.04.30.09.50.19
+ y24-20020a197518000000b00518b91e8fd7sm4495626lfe.235.2024.04.30.09.50.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Apr 2024 09:50:19 -0700 (PDT)
+ Tue, 30 Apr 2024 09:50:25 -0700 (PDT)
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: edgar.iglesias@gmail.com, sstabellini@kernel.org, jgross@suse.com,
  "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
  Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
  xen-devel@lists.xenproject.org
-Subject: [PATCH v4 06/17] xen: mapcache: Break out
- xen_ram_addr_from_mapcache_single
-Date: Tue, 30 Apr 2024 18:49:28 +0200
-Message-Id: <20240430164939.925307-7-edgar.iglesias@gmail.com>
+Subject: [PATCH v4 09/17] xen: mapcache: Break out
+ xen_invalidate_map_cache_single()
+Date: Tue, 30 Apr 2024 18:49:31 +0200
+Message-Id: <20240430164939.925307-10-edgar.iglesias@gmail.com>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20240430164939.925307-1-edgar.iglesias@gmail.com>
 References: <20240430164939.925307-1-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::135;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x135.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::132;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,71 +99,71 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 
-Break out xen_ram_addr_from_mapcache_single(), a multi-cache
-aware version of xen_ram_addr_from_mapcache.
+Break out xen_invalidate_map_cache_single().
 
 No functional changes.
 
 Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 ---
- hw/xen/xen-mapcache.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ hw/xen/xen-mapcache.c | 25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
 diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-index 326a9b61ca..d2deff70c8 100644
+index 34454da2f6..dd08cd296b 100644
 --- a/hw/xen/xen-mapcache.c
 +++ b/hw/xen/xen-mapcache.c
-@@ -377,7 +377,7 @@ uint8_t *xen_map_cache(hwaddr phys_addr, hwaddr size,
-     return p;
+@@ -512,17 +512,14 @@ void coroutine_mixed_fn xen_invalidate_map_cache_entry(uint8_t *buffer)
+     }
  }
  
--ram_addr_t xen_ram_addr_from_mapcache(void *ptr)
-+static ram_addr_t xen_ram_addr_from_mapcache_single(MapCache *mc, void *ptr)
+-void xen_invalidate_map_cache(void)
++static void xen_invalidate_map_cache_single(MapCache *mc)
  {
-     MapCacheEntry *entry = NULL;
+     unsigned long i;
      MapCacheRev *reventry;
-@@ -386,8 +386,8 @@ ram_addr_t xen_ram_addr_from_mapcache(void *ptr)
-     ram_addr_t raddr;
-     int found = 0;
  
+-    /* Flush pending AIO before destroying the mapcache */
+-    bdrv_drain_all();
+-
 -    mapcache_lock(mapcache);
--    QTAILQ_FOREACH(reventry, &mapcache->locked_entries, next) {
 +    mapcache_lock(mc);
+ 
+-    QTAILQ_FOREACH(reventry, &mapcache->locked_entries, next) {
 +    QTAILQ_FOREACH(reventry, &mc->locked_entries, next) {
-         if (reventry->vaddr_req == ptr) {
-             paddr_index = reventry->paddr_index;
-             size = reventry->size;
-@@ -396,11 +396,11 @@ ram_addr_t xen_ram_addr_from_mapcache(void *ptr)
+         if (!reventry->dma) {
+             continue;
          }
-     }
-     if (!found) {
--        mapcache_unlock(mapcache);
-+        mapcache_unlock(mc);
-         return RAM_ADDR_INVALID;
+@@ -530,8 +527,8 @@ void xen_invalidate_map_cache(void)
+                                        reventry->vaddr_req);
      }
  
--    entry = &mapcache->entry[paddr_index % mapcache->nr_buckets];
-+    entry = &mc->entry[paddr_index % mc->nr_buckets];
-     while (entry && (entry->paddr_index != paddr_index || entry->size != size)) {
-         entry = entry->next;
+-    for (i = 0; i < mapcache->nr_buckets; i++) {
+-        MapCacheEntry *entry = &mapcache->entry[i];
++    for (i = 0; i < mc->nr_buckets; i++) {
++        MapCacheEntry *entry = &mc->entry[i];
+ 
+         if (entry->vaddr_base == NULL) {
+             continue;
+@@ -552,9 +549,17 @@ void xen_invalidate_map_cache(void)
+         entry->valid_mapping = NULL;
      }
-@@ -411,10 +411,15 @@ ram_addr_t xen_ram_addr_from_mapcache(void *ptr)
-         raddr = (reventry->paddr_index << MCACHE_BUCKET_SHIFT) +
-              ((unsigned long) ptr - (unsigned long) entry->vaddr_base);
-     }
+ 
+-    mapcache->last_entry = NULL;
++    mc->last_entry = NULL;
+ 
 -    mapcache_unlock(mapcache);
 +    mapcache_unlock(mc);
-     return raddr;
- }
- 
-+ram_addr_t xen_ram_addr_from_mapcache(void *ptr)
-+{
-+    return xen_ram_addr_from_mapcache_single(mapcache, ptr);
 +}
 +
- static void xen_invalidate_map_cache_entry_unlocked(uint8_t *buffer)
- {
-     MapCacheEntry *entry = NULL, *pentry = NULL;
++void xen_invalidate_map_cache(void)
++{
++    /* Flush pending AIO before destroying the mapcache */
++    bdrv_drain_all();
++
++    xen_invalidate_map_cache_single(mapcache);
+ }
+ 
+ static uint8_t *xen_replace_cache_entry_unlocked(MapCache *mc,
 -- 
 2.40.1
 
