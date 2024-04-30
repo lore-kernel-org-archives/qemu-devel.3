@@ -4,75 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42003C10F16
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 11:17:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8D08C10F16
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 11:30:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1lTE-0008Px-4Y; Tue, 30 Apr 2024 07:16:24 -0400
+	id 1s1lfl-0004QP-PN; Tue, 30 Apr 2024 07:29:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s1lTB-0008OA-Pf
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 07:16:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <gregkh@linuxfoundation.org>)
+ id 1s1lfZ-0004Pf-3u
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 07:29:10 -0400
+Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s1lT9-0004tP-W2
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 07:16:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714475779;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Xn3psMRettsiwEkjxHMlaszxT/PcG8xOOrto5+1tM5U=;
- b=JVjM5ro4vJ5uqibwXJIegpBEPbtwCaUFq+2hNFvsbzc47dXu+cREKwUDCFJm+DZ+5U7L7U
- qbRgAOr2g6+gEtQ5oxADx71/+FG36n+nEVYDa+jqjPezZv01maQQaQt/EemSvZAiA/EVqv
- +oblwCAguTuXaZwmn5/j2tUqz62fPXs=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-128-5k3KpysaOFS6IzIYy7OeHg-1; Tue, 30 Apr 2024 07:16:15 -0400
-X-MC-Unique: 5k3KpysaOFS6IzIYy7OeHg-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5D0F38032FA;
- Tue, 30 Apr 2024 11:16:15 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 06AF0EC681;
- Tue, 30 Apr 2024 11:16:15 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 0CD4321E66C8; Tue, 30 Apr 2024 13:16:14 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: Markus Armbruster <armbru@redhat.com>,  qemu-block@nongnu.org,
- raphael@enfabrica.net,  mst@redhat.com,  qemu-devel@nongnu.org,
- eblake@redhat.com,  eduardo@habkost.net,  berrange@redhat.com,
- pbonzini@redhat.com,  hreitz@redhat.com,  kwolf@redhat.com,
- yc-core@yandex-team.ru
-Subject: Re: [PATCH v4 2/3] vhost-user-blk: split vhost_user_blk_sync_config()
-In-Reply-To: <3c146e4c-8197-457e-99fc-9301879bf41b@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Tue, 30 Apr 2024 11:27:58 +0300")
-References: <20240429101623.1992943-1-vsementsov@yandex-team.ru>
- <20240429101623.1992943-3-vsementsov@yandex-team.ru>
- <87edanclky.fsf@pond.sub.org>
- <3c146e4c-8197-457e-99fc-9301879bf41b@yandex-team.ru>
-Date: Tue, 30 Apr 2024 13:16:14 +0200
-Message-ID: <87a5lb9k3l.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <gregkh@linuxfoundation.org>)
+ id 1s1lfM-0007ev-SH
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 07:29:08 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sin.source.kernel.org (Postfix) with ESMTP id 1BE00CE0F7F;
+ Tue, 30 Apr 2024 11:28:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C6AC2BBFC;
+ Tue, 30 Apr 2024 11:28:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+ s=korg; t=1714476528;
+ bh=Y6scN/f6gfKI80HAF7k6NMVT4Ov0pD6EG38opDcY3eg=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=YMp2AXho3G2MY70z85QwWyt0CaYdk2uD+089ahe57TrdW4YJ2b3gBKUKII9WGdV+D
+ HB7Lp2latqnx/okeWDJEG5jYyNrUFtdt8n22V1KJfWhZoR9hEav3qAJwo+3GcfkQjM
+ kZVhCiJFpebZ5CeQRVUw2MH0sSInCzc/JOeKlbNA=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, patches@lists.linux.dev,
+ qemu-devel@nongnu.org, Breno Leitao <leitao@debian.org>,
+ Heng Qi <hengqi@linux.alibaba.com>, Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+ "David S. Miller" <davem@davemloft.net>, Konstantin Ovsepian <ovs@ovs.to>
+Subject: [PATCH 6.1 061/110] virtio_net: Do not send RSS key if it is not
+ supported
+Date: Tue, 30 Apr 2024 12:40:30 +0200
+Message-ID: <20240430103049.368332554@linuxfoundation.org>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240430103047.561802595@linuxfoundation.org>
+References: <20240430103047.561802595@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
+ envelope-from=gregkh@linuxfoundation.org; helo=sin.source.kernel.org
+X-Spam_score_int: -53
+X-Spam_score: -5.4
+X-Spam_bar: -----
+X-Spam_report: (-5.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,81 +74,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
-> On 30.04.24 11:15, Markus Armbruster wrote:
->> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
->> 
->>> Split vhost_user_blk_sync_config() out from
->>> vhost_user_blk_handle_config_change(), to be reused in the following
->>> commit.
->>>
->>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->>> ---
->>>   hw/block/vhost-user-blk.c | 26 +++++++++++++++++++-------
->>>   1 file changed, 19 insertions(+), 7 deletions(-)
->>>
->>> diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
->>> index 9e6bbc6950..091d2c6acf 100644
->>> --- a/hw/block/vhost-user-blk.c
->>> +++ b/hw/block/vhost-user-blk.c
->>> @@ -88,27 +88,39 @@ static void vhost_user_blk_set_config(VirtIODevice *vdev, const uint8_t *config)
->>>       s->blkcfg.wce = blkcfg->wce;
->>>   }
->>>   +static int vhost_user_blk_sync_config(DeviceState *dev, Error **errp)
->>> +{
->>> +    int ret;
->>> +    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
->>
->> Note for later: all this function does with paramter @dev is cast it to
->> VirtIODevice *.
->> 
->>> +    VHostUserBlk *s = VHOST_USER_BLK(vdev);
->>> +
->>> +    ret = vhost_dev_get_config(&s->dev, (uint8_t *)&s->blkcfg,
->>> +                               vdev->config_len, errp);
->>> +    if (ret < 0) {
->>> +        return ret;
->>> +    }
->>> +
->>> +    memcpy(vdev->config, &s->blkcfg, vdev->config_len);
->>> +    virtio_notify_config(vdev);
->>> +
->>> +    return 0;
->>> +}
->>> +
->>>  static int vhost_user_blk_handle_config_change(struct vhost_dev *dev)
->>>  {
->>>      int ret;
->>> -    VirtIODevice *vdev = dev->vdev;
->>> -    VHostUserBlk *s = VHOST_USER_BLK(dev->vdev);
->>>      Error *local_err = NULL;
->>>
->>>      if (!dev->started) {
->>>          return 0;
->>>      }
->>>
->>> -    ret = vhost_dev_get_config(dev, (uint8_t *)&s->blkcfg,
->>> -                               vdev->config_len, &local_err);
->>> +    ret = vhost_user_blk_sync_config(DEVICE(dev->vdev), &local_err);
->>
->> dev->vdev is a VirtIODevice *.  You cast it to DeviceState * for
->> vhost_user_blk_sync_config(), which casts it right back.
->> Could you simply pass it as is instead?
->
-> vhost_user_blk_sync_config() is generic handler, which will be used as ->sync_config() in the following commit, so it's good and convenient for it to have DeviceState* argument.
+------------------
 
-Ah, that's what I missed.
+From: Breno Leitao <leitao@debian.org>
 
->>>      if (ret < 0) {
->>>          error_report_err(local_err);
->>>          return ret;
->>>      }
->>>
->>> -    memcpy(dev->vdev->config, &s->blkcfg, vdev->config_len);
->>> -    virtio_notify_config(dev->vdev);
->>> -
->>>      return 0;
->>>  }
+commit 059a49aa2e25c58f90b50151f109dd3c4cdb3a47 upstream.
+
+There is a bug when setting the RSS options in virtio_net that can break
+the whole machine, getting the kernel into an infinite loop.
+
+Running the following command in any QEMU virtual machine with virtionet
+will reproduce this problem:
+
+    # ethtool -X eth0  hfunc toeplitz
+
+This is how the problem happens:
+
+1) ethtool_set_rxfh() calls virtnet_set_rxfh()
+
+2) virtnet_set_rxfh() calls virtnet_commit_rss_command()
+
+3) virtnet_commit_rss_command() populates 4 entries for the rss
+scatter-gather
+
+4) Since the command above does not have a key, then the last
+scatter-gatter entry will be zeroed, since rss_key_size == 0.
+sg_buf_size = vi->rss_key_size;
+
+5) This buffer is passed to qemu, but qemu is not happy with a buffer
+with zero length, and do the following in virtqueue_map_desc() (QEMU
+function):
+
+  if (!sz) {
+      virtio_error(vdev, "virtio: zero sized buffers are not allowed");
+
+6) virtio_error() (also QEMU function) set the device as broken
+
+    vdev->broken = true;
+
+7) Qemu bails out, and do not repond this crazy kernel.
+
+8) The kernel is waiting for the response to come back (function
+virtnet_send_command())
+
+9) The kernel is waiting doing the following :
+
+      while (!virtqueue_get_buf(vi->cvq, &tmp) &&
+	     !virtqueue_is_broken(vi->cvq))
+	      cpu_relax();
+
+10) None of the following functions above is true, thus, the kernel
+loops here forever. Keeping in mind that virtqueue_is_broken() does
+not look at the qemu `vdev->broken`, so, it never realizes that the
+vitio is broken at QEMU side.
+
+Fix it by not sending RSS commands if the feature is not available in
+the device.
+
+Fixes: c7114b1249fa ("drivers/net/virtio_net: Added basic RSS support.")
+Cc: stable@vger.kernel.org
+Cc: qemu-devel@nongnu.org
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Heng Qi <hengqi@linux.alibaba.com>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Konstantin Ovsepian <ovs@ovs.to>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/net/virtio_net.c |   26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
+
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -2948,19 +2948,35 @@ static int virtnet_get_rxfh(struct net_d
+ static int virtnet_set_rxfh(struct net_device *dev, const u32 *indir, const u8 *key, const u8 hfunc)
+ {
+ 	struct virtnet_info *vi = netdev_priv(dev);
++	bool update = false;
+ 	int i;
+ 
+ 	if (hfunc != ETH_RSS_HASH_NO_CHANGE && hfunc != ETH_RSS_HASH_TOP)
+ 		return -EOPNOTSUPP;
+ 
+ 	if (indir) {
++		if (!vi->has_rss)
++			return -EOPNOTSUPP;
++
+ 		for (i = 0; i < vi->rss_indir_table_size; ++i)
+ 			vi->ctrl->rss.indirection_table[i] = indir[i];
++		update = true;
+ 	}
+-	if (key)
++
++	if (key) {
++		/* If either _F_HASH_REPORT or _F_RSS are negotiated, the
++		 * device provides hash calculation capabilities, that is,
++		 * hash_key is configured.
++		 */
++		if (!vi->has_rss && !vi->has_rss_hash_report)
++			return -EOPNOTSUPP;
++
+ 		memcpy(vi->ctrl->rss.key, key, vi->rss_key_size);
++		update = true;
++	}
+ 
+-	virtnet_commit_rss_command(vi);
++	if (update)
++		virtnet_commit_rss_command(vi);
+ 
+ 	return 0;
+ }
+@@ -3852,13 +3868,15 @@ static int virtnet_probe(struct virtio_d
+ 	if (virtio_has_feature(vdev, VIRTIO_NET_F_HASH_REPORT))
+ 		vi->has_rss_hash_report = true;
+ 
+-	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS))
++	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS)) {
+ 		vi->has_rss = true;
+ 
+-	if (vi->has_rss || vi->has_rss_hash_report) {
+ 		vi->rss_indir_table_size =
+ 			virtio_cread16(vdev, offsetof(struct virtio_net_config,
+ 				rss_max_indirection_table_length));
++	}
++
++	if (vi->has_rss || vi->has_rss_hash_report) {
+ 		vi->rss_key_size =
+ 			virtio_cread8(vdev, offsetof(struct virtio_net_config, rss_max_key_size));
+ 
+
 
 
