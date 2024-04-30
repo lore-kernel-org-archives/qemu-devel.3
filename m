@@ -4,95 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12B21C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 09:42:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 337DAC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 09:44:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1jzV-0004as-E5; Tue, 30 Apr 2024 05:41:43 -0400
+	id 1s1k2O-0000wE-Fl; Tue, 30 Apr 2024 05:44:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s1jzO-0004Zv-5I
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 05:41:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s1jzM-0005t9-Fl
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 05:41:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714470086;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FVxdtptPhaXvdA5cUFAh+H+Sz0QkNwx/0vKjtoz67sM=;
- b=cYCiv5YdFp7qit+m+Gi/2kN6iIzF0E5NaYKpvEkiGloztkNmuUDAZgaRn/C1rBtzn+J9Bj
- E4HZBwTIlAmWcVspfsAvIvbPkBuxmA8LVHTUEht2/0NxkNfemKv1shutUaihtDuHqJGRjj
- 4QHBZZ0BeqvyyK6g2XDBXSVckUcew/U=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-489-_fSrMQohMxGsyZO_038uQQ-1; Tue, 30 Apr 2024 05:41:23 -0400
-X-MC-Unique: _fSrMQohMxGsyZO_038uQQ-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-5704900f94fso3478081a12.1
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 02:41:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s1k2M-0000vw-UV
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 05:44:34 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s1k2L-0006YY-Am
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 05:44:34 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-572669fd9f9so4464880a12.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 02:44:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714470271; x=1715075071; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KCMfKZAGNmI/PtFOZQwGD9xZljZQvoZow3JJeS0YYVQ=;
+ b=vuUlsKkbwf0F2MDlvg2o3EK6DGTFqga50aqM/7uBI344QoFv+/IEiQmu8toOZ+ASdW
+ CP3NVovIKfZb33FWoUfFW6nQF02V+l+CRJqG/sf84YXHUjGweQBRf33W6ScLPtRoDXgb
+ M3BOh2BSAajjd4agn5wj5C1+ym8aT2yo84hrKq4GnSqbwseTPlPh6tZwzZTe9RIF1jI0
+ Mc/TjMA+hb2hAAVjP1MLMV3g6ZMO3aEFEHMp8/ZEL0R62wkA+PFHkfTUJOp217DRIR2z
+ MqQLDLJDhrTwEla0wS1FAzszO0qgFNsYlBcQ2qBsywy7rK9uBK3d+pP/P8P/eRBaKOk3
+ eAsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714470082; x=1715074882;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:subject:from:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FVxdtptPhaXvdA5cUFAh+H+Sz0QkNwx/0vKjtoz67sM=;
- b=KZAHt7nhxqrsUzZ1iZDj1emujz56PN+7XBfrPsyW4ON4FNZtdQFK0mI+55bNPYbsVN
- S5hPbp0uHma1MuHm5lmszmtGmQXzGemb0dMJ9/lD5e/AxMd3S3Ph7m8QlYmluXTvwBOV
- zOAaPsGFIt1lft2g/xizLTSZq6LZR0TjfwV3TVPcxR7w82DySBjh++2XKutCF5RmHCc4
- xd0uvCGLtfUUnNhB0e/5L4yBR9eX//AHV0WQpGmPZ2dvvbVKo4hlflLDsszslpUPOdNF
- GIYjkqA/HcfBxOwLVREROwst1pFx/he+rQ3P0j2fayFXDdR1fooVNSkkghQtsbhlpOh6
- foOA==
+ d=1e100.net; s=20230601; t=1714470271; x=1715075071;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=KCMfKZAGNmI/PtFOZQwGD9xZljZQvoZow3JJeS0YYVQ=;
+ b=Fl5oQxlLE+Pw7HKDzoPmmq9CI3qGwihOQ0X8yCK5i065xIa35c+LznqxVXtyNxuRDr
+ jGQNC4g8QufbRcmfTgfG6JEmXTcj74vQ/uZkgn29ycI6CkugY4hh+NLGStwW46O253j+
+ s6coTbBnnjUegxnJxCSTSuZhpbIMLlUy9h1ibCdD7XV4yfTCZ7r2fBL4MmjUbIhiFYuD
+ iAW+SnLVW9AoQW7cLYZnlNo7o0O+sbwFCaOR0EQ4zdICDGwaQje7JAIP5oMF8fJAIvMs
+ ihwxX0Xfw2+Mu7x/ZSfSlGGTB+RVsydW/5LB6Y3jALdtCs/8S1SB3A5zWOz+1gUzZusO
+ sH+A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX0Se5RPA9+vioqHVrXgN1V4pRXyZCzBydy3+jaws4BVAR8aQviUL0hmT9wicwMVXg8/eHpAe1ntt+pM6IvogFxYTtaabU=
-X-Gm-Message-State: AOJu0YyUunP/egxLpGeC7AZkfHjWHjR05c+valRdCMHGTWptrn7K4QcA
- rPs67a3jNnWxxMWXrnZEDm6HuIbbBq9DoOjPM2FMx1Tea1qdHxms/e0IUw0aSkEFWDACVdEZzZU
- wQaSLng+x+PEudhzVBKgI0F4UyGYfGEUfiLWW0TrCTr5TxMhNtWx4AReyJw4q
-X-Received: by 2002:a17:906:4115:b0:a52:58a7:11cf with SMTP id
- j21-20020a170906411500b00a5258a711cfmr10344097ejk.2.1714470081914; 
- Tue, 30 Apr 2024 02:41:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHQSz/VR3C/4kvvED5Radc7CcO+S3d+Zre6dWW9JYBr/65UNfjfTOhPes/c02CcqSOqL+/Ztg==
-X-Received: by 2002:a17:906:4115:b0:a52:58a7:11cf with SMTP id
- j21-20020a170906411500b00a5258a711cfmr10344080ejk.2.1714470081535; 
- Tue, 30 Apr 2024 02:41:21 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- q23-20020a170906771700b00a590f9c1db3sm1169503ejm.150.2024.04.30.02.41.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Apr 2024 02:41:20 -0700 (PDT)
-Message-ID: <6a24df9b-9851-4304-b962-a98a65758a00@redhat.com>
-Date: Tue, 30 Apr 2024 11:41:19 +0200
+ AJvYcCWEROSMhIhKF+yUYUbGNQYrLNwotA5hT78Oxk5XLrAIfjp4X+o8HkqJNSkXjz6HPtvYdmhC3hg5eXaKIBR1beHmtq6sAmg=
+X-Gm-Message-State: AOJu0YwBv0vGXQ+lK+oxO6PDTcxS0CvPlxb5Mdzc8rbDtx9cpqdKds0u
+ mBoMddK4XxpkuSXz+HBnOGJcNE2F1m6P3UQSQBLJqR6Ew6ZdfjwsI0A3Z1soa4aP6awJCSE+1Xv
+ kYuhwLK9WbxUWxhCg/b7xS0CfZGIlj3y7PNkwGQ==
+X-Google-Smtp-Source: AGHT+IH6FssOWWBfhPrgpynkrGQCO/em/xoUSkGGqAZ404w5X1+ajBKTsEKpWLo3siwB/6xLTgOgabiawHvIz1s0CBg=
+X-Received: by 2002:a50:9e06:0:b0:572:475c:a47c with SMTP id
+ z6-20020a509e06000000b00572475ca47cmr9317690ede.22.1714470271506; Tue, 30 Apr
+ 2024 02:44:31 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Subject: Re: [PATCH v3 07/19] vfio/container: Implement
- HostIOMMUDeviceClass::realize() handler
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
- peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
- joao.m.martins@oracle.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com
-References: <20240429065046.3688701-1-zhenzhong.duan@intel.com>
- <20240429065046.3688701-8-zhenzhong.duan@intel.com>
-Content-Language: en-US, fr
-In-Reply-To: <20240429065046.3688701-8-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <b534d873-9be3-4a24-800f-603ed25c0803@linaro.org>
+ <ebdd9766-04d1-4908-996f-e93c0cd4e6d5@linaro.org>
+ <Zi_C_xHx33Q7T_96@redhat.com> <87v83zcnfc.fsf@pond.sub.org>
+In-Reply-To: <87v83zcnfc.fsf@pond.sub.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 30 Apr 2024 10:44:20 +0100
+Message-ID: <CAFEAcA9P+axwCS+aaA1K2rVzBsNquRG0-pNTncZemaOsXi=GyA@mail.gmail.com>
+Subject: Re: QEMU Community Call Agenda Items (April 30th, 2024)
+To: Markus Armbruster <armbru@redhat.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ QEMU Developers <qemu-devel@nongnu.org>,
+ Daniil Tatianin <d-tatianin@yandex-team.ru>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, afaerber@suse.de, 
+ ale@rev.ng, alistair.francis@wdc.com, Anton Johansson <anjo@rev.ng>,
+ bbauman@redhat.com, 
+ bcain@quicinc.com, Chao Peng <chao.p.peng@linux.intel.com>, cjia@nvidia.com, 
+ clg@kaod.org, cw@f00f.org, Damien Hedde <dhedde@kalrayinc.com>,
+ eblake@redhat.com, edgar.iglesias@gmail.com, eduardo@habkost.net, 
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>, eric.auger@redhat.com,
+ felipe@nutanix.com, 
+ iggy@theiggy.com, imp@bsdimp.com, jan.kiszka@web.de, jgg@nvidia.com, 
+ jidong.xiao@gmail.com, jim.shu@sifive.com, jjherne@linux.vnet.ibm.com, 
+ Joao Martins <joao.m.martins@oracle.com>, konrad.wilk@oracle.com, 
+ Luc Michel <luc@lmichel.fr>, mburton@qti.qualcomm.com, mdean@redhat.com, 
+ mimu@linux.vnet.ibm.com, paul.walmsley@sifive.com, pbonzini@redhat.com, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ shentey@gmail.com, 
+ stefanha@gmail.com, wei.w.wang@intel.com, z.huo@139.com, 
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com,
+ eblot@rivosinc.com, max.chou@sifive.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,70 +115,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/29/24 08:50, Zhenzhong Duan wrote:
-> Utilize range_get_last_bit() to get host IOMMU address width and
-> package it in HostIOMMUDeviceCaps for query with .check_cap().
-> 
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->   hw/vfio/container.c | 29 +++++++++++++++++++++++++++++
->   1 file changed, 29 insertions(+)
-> 
-> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-> index 3b6826996a..863eec3943 100644
-> --- a/hw/vfio/container.c
-> +++ b/hw/vfio/container.c
-> @@ -1143,6 +1143,34 @@ static void vfio_iommu_legacy_class_init(ObjectClass *klass, void *data)
->       vioc->pci_hot_reset = vfio_legacy_pci_hot_reset;
->   };
->   
-> +static bool hiod_legacy_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
-> +                                     Error **errp)
-> +{
-> +    VFIODevice *vdev = opaque;
-> +    /* iova_ranges is a sorted list */
-> +    GList *l = g_list_last(vdev->bcontainer->iova_ranges);
-> +
-> +    /* There is no VFIO uAPI to query host platform IOMMU type */
-> +    hiod->caps.type = IOMMU_HW_INFO_TYPE_NONE;
-> +    HOST_IOMMU_DEVICE_IOMMUFD_VFIO(hiod)->vdev = vdev;
+On Tue, 30 Apr 2024 at 08:36, Markus Armbruster <armbru@redhat.com> wrote:
+>
+> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+> >  * /machine to get the rtc-time property value
+>
+> This is an alias to the RTC device's "rtc-time" property.  Only some
+> machines define it.  Useful because the actual property depends on
+> machine type and configuration.  For q35, it's
+> /machine/unattached/device[N]/rtc/date, where N can vary.
+>
+> If we moved the southbridge out of the /machine/unattached dump, we'd
+> have something like /machine/q35/ich9-lpc/rtc/date.  Stable, but you
+> have to know the machine type to find it.
 
-cast uses the wrong type and I am not sure the ->vdev is useful.
+Do we really want to call that stable, though? If we ever
+wanted to refactor the devices internally it might change.
 
+My gut feeling is that exposing something we want to
+be stable as a specific "this is obviously an externally
+exposed identifier" (e.g. in the way we do by having an
+rtc-time property alias on the machine object) is more
+likely to be reliable than trusting that a QOM path all
+the way down to a specific device is never going to be
+rearranged.
 
-Thanks,
-
-C.
-
-  
-> +
-> +    if (l) {
-> +        Range *range = l->data;
-> +        hiod->caps.aw_bits = range_get_last_bit(range) + 1;
-> +    } else {
-> +        hiod->caps.aw_bits = 0xff;
-> +    }
-> +
-> +    return true;
-> +}
-> +
-> +static void hiod_legacy_vfio_class_init(ObjectClass *oc, void *data)
-> +{
-> +    HostIOMMUDeviceClass *hioc = HOST_IOMMU_DEVICE_CLASS(oc);
-> +
-> +    hioc->realize = hiod_legacy_vfio_realize;
-> +};
-> +
->   static const TypeInfo types[] = {
->       {
->           .name = TYPE_VFIO_IOMMU_LEGACY,
-> @@ -1152,6 +1180,7 @@ static const TypeInfo types[] = {
->           .name = TYPE_HOST_IOMMU_DEVICE_LEGACY_VFIO,
->           .parent = TYPE_HOST_IOMMU_DEVICE,
->           .instance_size = sizeof(HostIOMMUDeviceLegacyVFIO),
-> +        .class_init = hiod_legacy_vfio_class_init,
->       }
->   };
->   
-
+thanks
+-- PMM
 
