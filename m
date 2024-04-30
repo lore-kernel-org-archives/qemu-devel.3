@@ -4,88 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49BD5C19F53
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 09:41:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B099BC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 09:41:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1jym-0004BM-LR; Tue, 30 Apr 2024 05:40:52 -0400
+	id 1s1jzk-00054T-0i; Tue, 30 Apr 2024 05:41:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1jyl-0004AO-FJ
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 05:40:51 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1jyi-0005n4-G2
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 05:40:50 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-a55b93f5540so737397466b.1
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 02:40:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714470045; x=1715074845; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=WCW36M2OPMJQEyyFgNdC/dGiDwonm3j21cpSR92e9XQ=;
- b=Fe7Dr6i3g5W0z0fornJOMxTr0GSlCQcEvfmpIlGMgQ03Vy5TaG7hn4ybHqyVS3Ywvr
- S09HGRosGRSrIY81NvACesJDU/kqIOrudthgPc3DrrhoL3g2z8uszheSRmYmOOBQXjbm
- p4DiIaMUYh9neqIXcAvsp5JAvrzYr7nHnUjgZ2ZaerhXLaZ51XTH0YDE30IWns++zeQu
- zzfErEcZlOzY+0+p9cDmcyfSVlspfebQNTWfXfslydUdBrdB9wZlJ1us+shxb/JW1URt
- 1ogs79o0cxhKHf4n2GYwT3Orne1elooxM+jorHHJP25+vKVDxzSWdDRpdFgp36NG49R7
- efnA==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s1jze-0004hd-Fy
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 05:41:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s1jzc-0005uk-Hp
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 05:41:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714470101;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=xlL7Qzo9mZNyJ6Z1TuQkziJBsHMvA966HXlmzEgDbyw=;
+ b=Fa+DTEP6wxGuw+0lb2OZYuMMtFfkVa1wkeWHn0X3ol27vVTGn4yZ6U5DDKgQbv3YeopSXn
+ kn38LikIjoxirurFcnQ5kdNLUmuIWuC0cY7Ncr3Xergo/wUFluDPTR1k1TQ1D5q7LxFYaK
+ t1jokgYsEdwC9d2jlr5e4gtajNPWQSw=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-39-LUNP8gZiNI6aoHAL2Dp7vg-1; Tue, 30 Apr 2024 05:41:39 -0400
+X-MC-Unique: LUNP8gZiNI6aoHAL2Dp7vg-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a5872678bd2so299050466b.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 02:41:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714470045; x=1715074845;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1714470098; x=1715074898;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:subject:from:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WCW36M2OPMJQEyyFgNdC/dGiDwonm3j21cpSR92e9XQ=;
- b=BCFC/8J4rZs+u2NiLZ7O6vUEKA1+hl3JQ5tdhBZWPciCZEvXoaLjK3yDsOW52w9kxp
- pSCxo5ctUKjp6VsnYP13snMhmm8mrWRYGWwJ8L4OwvoUtPSMSwSwyIaccmZgvQ5/VWN7
- jHenAv5SZolWml4ene1d0uZWinCj5OQ/9uwNRETEY5LgopnO6Mo7o9+VguTwyIZXtm2u
- 0pwUBvWQwO3Ie5RWfdE+3LRH3AoScHn38TtVZLVG+oF32H8mjtkTpGQ2C2hKqGq3Kc8G
- yeVBL1YYSHMOE578uEtGDIFmnjYeG5uoz2ziUFM52AyrHrDzno03CoP4MgC47u5lu+tF
- jr4Q==
+ bh=xlL7Qzo9mZNyJ6Z1TuQkziJBsHMvA966HXlmzEgDbyw=;
+ b=sYF/zaCGV39qjCLFwTbcdryscWJIbB03B8tNJOrGJB0/OftiGnjlvXpTC0tMCqo1QG
+ TWgf/OhPAKCK6RXGS7KSjxnaqOgC9OlYoQLr821JqAQnrwLGHI9W4YGp5DgVO7aRt5yV
+ Ian2QocCTC5CCFctuGQdYsXyHRQ+6sISp9c21SBoO77jZfLEDCcSdOoPEJp2gkBJZ2Ho
+ XZppL8ejufdcU/xFvZw/W7zVs5HSc2j7jWJ9/VFUwjbTLZpznWlhjUZOo+dc/nXcXn0s
+ 9hoMblPYP0Z/5vf+WK6JsXMtu+k06J09eY88B0AWJLYi8LOfjhkCfCbgSJgsHlOEU1pp
+ GO6Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX8DOycVOn4jsS8AyMmVpw94cd3vM30EgNyN8QJ6RtG5IRwneQ9a6ZnyMWgmj+hsQWNhn2rZyLm5yC8gd/l3LcSvaI0GP0=
-X-Gm-Message-State: AOJu0Yx1xGOgKZ7QTLygwvqHh3nZdD52Tm4tskHtiRT4FoEFMLTcdAX7
- q8N9Fwf7Wh9PoDJeKypsyw80LmuEglwxYhebKe6CkfR5E+MRRPh8zejDpbwe4VA=
-X-Google-Smtp-Source: AGHT+IG7XLmwO7QxuzgXq2SVqqslj4FXwQzCThn2wfkH4A9JCUY6sNp/icquTpaem+8tzcmU+J8LRg==
-X-Received: by 2002:a17:906:5851:b0:a58:7ce0:8e13 with SMTP id
- h17-20020a170906585100b00a587ce08e13mr1469299ejs.34.1714470044921; 
- Tue, 30 Apr 2024 02:40:44 -0700 (PDT)
-Received: from [192.168.69.100] (mab78-h01-176-184-55-179.dsl.sta.abo.bbox.fr.
- [176.184.55.179]) by smtp.gmail.com with ESMTPSA id
- x10-20020a170906298a00b00a58ed644d6dsm3526332eje.127.2024.04.30.02.40.43
+ AJvYcCX+56598KzFmOjh15ZyWXa8RXu1Ryc1GkuhauqxCTFp+fyrP8MtPcREpG9m9wI9l0QcjoZ56LNmm3MBYYHqLgbgnP30aOg=
+X-Gm-Message-State: AOJu0YxixINmmmBylysBacdEQQSgm7o3nHf6QiJ7VxGBhn/MOEhrYPfb
+ hrewh/7lE1BUWRmy2olX87+3gk2C49vqGYuIehAQdq/sYJhz8eZrMlKiOho48d/+UikZ+jbilTd
+ SFEEjoQ87iHjhVxW2WzEFQhvoHjKghTUdTAHmR3z+vsYmt2m7k0z/
+X-Received: by 2002:a17:906:7f03:b0:a52:6435:ef09 with SMTP id
+ d3-20020a1709067f0300b00a526435ef09mr8602340ejr.76.1714470098462; 
+ Tue, 30 Apr 2024 02:41:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEXsIM/BUKSIXZyJROdcuOL0Mj/aTocRr2DirGyexTPp0ti8oYacIOXCEOG9NOt+LSV2ponTg==
+X-Received: by 2002:a17:906:7f03:b0:a52:6435:ef09 with SMTP id
+ d3-20020a1709067f0300b00a526435ef09mr8602331ejr.76.1714470098219; 
+ Tue, 30 Apr 2024 02:41:38 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ gl20-20020a170906e0d400b00a5889ee66d6sm7803905ejb.45.2024.04.30.02.41.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Apr 2024 02:40:44 -0700 (PDT)
-Message-ID: <e0e836cf-f080-45f4-a71b-060dd2c90279@linaro.org>
-Date: Tue, 30 Apr 2024 11:40:42 +0200
+ Tue, 30 Apr 2024 02:41:37 -0700 (PDT)
+Message-ID: <dccbba66-57c9-45de-9fa9-beb7b528e0b1@redhat.com>
+Date: Tue, 30 Apr 2024 11:41:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs/about: Automatically deprecate versioned machine
- types older than 6 years
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: devel@lists.libvirt.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Laurent Vivier <laurent@vivier.eu>,
- qemu-s390x@nongnu.org, qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-References: <20240430064529.411699-1-thuth@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240430064529.411699-1-thuth@redhat.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Subject: Re: [PATCH v3 11/19] backends/iommufd: Implement
+ HostIOMMUDeviceClass::check_cap() handler
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
+ peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
+ joao.m.martins@oracle.com, kevin.tian@intel.com, yi.l.liu@intel.com,
+ chao.p.peng@intel.com
+References: <20240429065046.3688701-1-zhenzhong.duan@intel.com>
+ <20240429065046.3688701-12-zhenzhong.duan@intel.com>
+Content-Language: en-US, fr
+In-Reply-To: <20240429065046.3688701-12-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,53 +108,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Thomas,
-
-On 30/4/24 08:45, Thomas Huth wrote:
-> Old machine types often have bugs or work-arounds that affect our
-> possibilities to move forward with the QEMU code base (see for example
-> https://gitlab.com/qemu-project/qemu/-/issues/2213 for a bug that likely
-> cannot be fixed without breaking live migration with old machine types,
-> or https://lists.gnu.org/archive/html/qemu-devel/2018-12/msg04516.html or
-> commit ea985d235b86). So instead of going through the process of manually
-> deprecating old machine types again and again, let's rather add an entry
-> that can stay, which declares that machine types older than 6 years are
-> considered as deprecated automatically. Six years should be sufficient to
-> support the release cycles of most Linux distributions.
-
-Thanks for taking that out of my plate :)
-
-IIRC 6 years was because of some old RHEL version, otherwise could
-5 years be enough? (maybe it could be good enough for this old RHEL
-version as of QEMU v10.0).
-
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+On 4/29/24 08:50, Zhenzhong Duan wrote:
+> Suggested-by: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 > ---
->   docs/about/deprecated.rst | 11 +++++++++++
->   1 file changed, 11 insertions(+)
+>   backends/iommufd.c | 18 ++++++++++++++++++
+>   1 file changed, 18 insertions(+)
 > 
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index 6d595de3b6..fe69e2d44c 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -220,6 +220,17 @@ is a chance the code will bitrot without anyone noticing.
->   System emulator machines
->   ------------------------
+> diff --git a/backends/iommufd.c b/backends/iommufd.c
+> index d61209788a..28faec528e 100644
+> --- a/backends/iommufd.c
+> +++ b/backends/iommufd.c
+> @@ -233,6 +233,23 @@ int iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+>       return ret;
+>   }
 >   
-> +Versioned machine types older than 6 years
-> +''''''''''''''''''''''''''''''''''''''''''
+> +static int hiod_iommufd_check_cap(HostIOMMUDevice *hiod, int cap, Error **errp)
+> +{
+> +    switch (cap) {
+> +    case HOST_IOMMU_DEVICE_CAP_IOMMUFD:
+> +        return 1;
+
+I don't understand this value.
+
+
+Thanks,
+
+C.
+
+
+> +    default:
+> +        return host_iommu_device_check_cap_common(hiod, cap, errp);
+> +    }
+> +}
 > +
-> +Starting with the release of QEMU 10.0, versioned machine types older than
-
-Why can't we start with QEMU 9.1?
-
-> +6 years will automatically be considered as deprecated and might be due to
-> +removal without furthor notice. For example, this affects machine types like
-> +pc-i440fx-X.Y, pc-q35-X.Y, pseries-X.Y, s390-ccw-virtio-X.Y or virt-X.Y where
-> +X is the major number and Y is the minor number of the old QEMU version.
-> +If you are still using machine types from QEMU versions older than 6 years,
-> +please update your setting to use a newer versioned machine type instead.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> +static void hiod_iommufd_class_init(ObjectClass *oc, void *data)
+> +{
+> +    HostIOMMUDeviceClass *hioc = HOST_IOMMU_DEVICE_CLASS(oc);
+> +
+> +    hioc->check_cap = hiod_iommufd_check_cap;
+> +};
+> +
+>   static const TypeInfo types[] = {
+>       {
+>           .name = TYPE_IOMMUFD_BACKEND,
+> @@ -251,6 +268,7 @@ static const TypeInfo types[] = {
+>           .parent = TYPE_HOST_IOMMU_DEVICE,
+>           .instance_size = sizeof(HostIOMMUDeviceIOMMUFD),
+>           .class_size = sizeof(HostIOMMUDeviceIOMMUFDClass),
+> +        .class_init = hiod_iommufd_class_init,
+>           .abstract = true,
+>       }
+>   };
 
 
