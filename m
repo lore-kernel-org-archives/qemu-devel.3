@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 330C4C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 16:52:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE038C10F16
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 16:52:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1qhJ-0000mo-3U; Tue, 30 Apr 2024 12:51:17 -0400
+	id 1s1qfO-0002hf-Lz; Tue, 30 Apr 2024 12:49:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1s1qgf-0006Tm-HS
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:50:39 -0400
-Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s1qf3-0002Od-9f
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:48:58 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1s1qgZ-00063t-Oh
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:50:35 -0400
-Received: by mail-lf1-x132.google.com with SMTP id
- 2adb3069b0e04-51abf1a9332so8147592e87.3
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 09:50:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s1qex-0005ch-5O
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:48:57 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-41c011bb920so17360185e9.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 09:48:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1714495829; x=1715100629; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714495729; x=1715100529; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yOBKxxu7GyLSVYEkd97aCGdSreO6dnD3GZWBKg4jO3k=;
- b=kyqRgbDcGHfzSSPPytWeWi8QakY0NqOwDDfp8Vpy8r4gA767FMPmMeeBtaak9IVS8S
- GuRhCnsv2Gq5QB/X5C1LxYjkmMkoo+vH05/4H8kkUR2Oz1L29iSCtyQVAh9RFSsJR4Aa
- uqSP+5dT0ttoAQRLwNW/jA1ynLCBTE++JHFbNCwSrc7N7hItu2RhW2qa8dwYwpYTgp8n
- h6T0YUj6P11VcPlqpHcPIDikQBO69LP03XdlfJEq3012HbJqFEa1VTjrOofp62u+AfUQ
- lwKOTPj/ImjY+dwUgTEP5Je7oFraeGNrmNxiNs5zVLCDub7Xkjd4ke4kuphZnEluuHfE
- rTlA==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=1X3KDYbraVKCKoUyzCUTAqrQ2WBUY6nJhep+vymKNJo=;
+ b=v8hcm6YMeTWKkpCVzRagK5XBUxb8gjKv7Y5EFHzsAkikIrJ7bx59i51I2Ia8aQVD4v
+ VXjhXBeGPiPQgn7t05DF4dM7n6pYybD2kFomA38xnXbh4/qxypUArdujCTzXIGXRJT7G
+ kO5Bw2Q2GYnbkNSiURJSJVf6RDpMiDBS98iVaaTYFOAaphua9KMg8NgJ6G8y42EBiibf
+ ZdLCnR6wUaLmy7N/HnCiPbBhI4nuXMu04aAQKHl2XEm9t8FkPOihr4852JgG24djyvhC
+ WkU09/F0o75OkVtNJ9F9A5PzZCJzTr3cCyVIYBVXLRWO004qdB9pDzX8eeFSDTWuc+Il
+ ahXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714495829; x=1715100629;
+ d=1e100.net; s=20230601; t=1714495729; x=1715100529;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yOBKxxu7GyLSVYEkd97aCGdSreO6dnD3GZWBKg4jO3k=;
- b=mYZnK3X96TbyNmTG4IAOOIKM3Z3hs8I22TSSlY3N1ZuHLk9jB2TjCYPRSXKWBTzQtC
- 6zuNKb6AK8041XU7z7l4JZjSkPrsDCl4nBSc+x0Wk+EIQJUHg9IgdOOlcKS3cLscaY6T
- PPNeH1t34BzLW2bm/oSTcDisVM437lSXA902+5bIn0DcPNz51jMrlSa62qqk2KIBW3SK
- M2dnnMSnydn6WBUcJTa3WLwUSuim4TQfYIwuAtasrbcFKgz4wDM0mPTgLKb8RhmvHYE/
- rMNcCP7PAOh/BSCrbQMmDaEA+pRk99PENNB+B26jq4c2W+iTFO2h/xwSgiRXF+sAyWtg
- 9qfQ==
-X-Gm-Message-State: AOJu0YyMAlh/Kw3n+xy/Cq3oS403zKeisCHHshqZQxfdU7kYqDWnughz
- dbfBj1TV5okTlSKjIBogIdHcxk6pH4VBHvqOBE/9qWYMmOsz9HaWBG2ePLIt
-X-Google-Smtp-Source: AGHT+IG1D0QzmbnS0ErFMJ7lJMDglr0F3Y/2LZElzamvzuLYF8jqyCZc9cG7FMYyaCBToshoVVfqkw==
-X-Received: by 2002:ac2:5327:0:b0:513:1a9c:ae77 with SMTP id
- f7-20020ac25327000000b005131a9cae77mr26233lfh.52.1714495829133; 
- Tue, 30 Apr 2024 09:50:29 -0700 (PDT)
-Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
+ bh=1X3KDYbraVKCKoUyzCUTAqrQ2WBUY6nJhep+vymKNJo=;
+ b=tP6TTmUs8XxSHMnpjq5OHVeI0iKWsjHzM1/FXHQHoyA6D6D/RWS+tzQJ4xNkPDZqhL
+ Q309MNc4iEHdb4JQzk7r7fjLfHUudjFq6iFgFvkChpV+xDQW7+b3O6eoUP3AFZXuj4VL
+ 7whnJXd4+ypCwg6I9kquX3/Obavs2nifpMp5FMBX3KqtNkX7TgvRjJj8OiPm1+yV4QES
+ nGSM1IZCfVZgWaVq5XQ1t6l45aRmjp+wSJ7QfyTgW/ujMCMyEP3uL6DMyQs1dK0xjjXQ
+ UavQ8b8Kez6nZYVccdf21mHwbuDaEog3I6hyVhJEahB0L0waCkyn7ApIm8tDyTJS13kG
+ PUZw==
+X-Gm-Message-State: AOJu0Yy1JkKjgvzVkAEpSFchPiJq6SH5JT7NBZf19DjL/zfTeuDBtpxt
+ Tth6DPJT+LbLsDDS2uGKCnC17z5nQzQMVUwJw9BYZ1X4y9WFmtoMj3RC3FVQC+ffI+ReG/PCCP1
+ I
+X-Google-Smtp-Source: AGHT+IEcLKRkl5M+ClFbEoDiaVEjb3NNosw713ne5tkMSnELVSrfG4S5HrkZtOVeSv1BI9AHSFCB9Q==
+X-Received: by 2002:a05:600c:35ca:b0:41b:9427:562e with SMTP id
+ r10-20020a05600c35ca00b0041b9427562emr385077wmq.12.1714495729646; 
+ Tue, 30 Apr 2024 09:48:49 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- b1-20020ac25621000000b00518b294570asm4561021lff.135.2024.04.30.09.50.28
+ b6-20020a05600c4e0600b0041be3383a2fsm12920384wmq.19.2024.04.30.09.48.49
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Apr 2024 09:50:28 -0700 (PDT)
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+ Tue, 30 Apr 2024 09:48:49 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: edgar.iglesias@gmail.com, sstabellini@kernel.org, jgross@suse.com,
- "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
- Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
- xen-devel@lists.xenproject.org
-Subject: [PATCH v4 11/17] xen: mapcache: Make MCACHE_BUCKET_SHIFT runtime
- configurable
-Date: Tue, 30 Apr 2024 18:49:33 +0200
-Message-Id: <20240430164939.925307-12-edgar.iglesias@gmail.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20240430164939.925307-1-edgar.iglesias@gmail.com>
-References: <20240430164939.925307-1-edgar.iglesias@gmail.com>
+Subject: [PULL 11/21] hw/arm/sbsa-ref: Force CPU generic timer to 62.5MHz
+Date: Tue, 30 Apr 2024 17:48:32 +0100
+Message-Id: <20240430164842.4074734-12-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240430164842.4074734-1-peter.maydell@linaro.org>
+References: <20240430164842.4074734-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::132;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x132.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -97,175 +94,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+Currently QEMU CPUs always run with a generic timer counter frequency
+of 62.5MHz, but ARMv8.6 CPUs will run at 1GHz.  For older versions of
+the TF-A firmware that sbsa-ref runs, the frequency of the generic
+timer is hardcoded into the firmware, and so if the CPU actually has
+a different frequency then timers in the guest will be set
+incorrectly.
 
-Make MCACHE_BUCKET_SHIFT runtime configurable per cache instance.
+The default frequency used by the 'max' CPU is about to change, so
+make the sbsa-ref board force the CPU frequency to the value which
+the firmware expects.
 
-Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Newer versions of TF-A will read the frequency from the CPU's
+CNTFRQ_EL0 register:
+ https://github.com/ARM-software/arm-trusted-firmware/commit/4c77fac98dac0bebc63798aae9101ac865b87148
+so in the longer term we could make this board use the 1GHz
+frequency. We will need to make sure we update the binaries used
+by our avocado test
+ Aarch64SbsarefMachine.test_sbsaref_alpine_linux_max_pauth_impdef
+before we can do that.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Message-id: 20240426122913.3427983-3-peter.maydell@linaro.org
 ---
- hw/xen/xen-mapcache.c | 52 ++++++++++++++++++++++++++-----------------
- 1 file changed, 31 insertions(+), 21 deletions(-)
+ hw/arm/sbsa-ref.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-index 72a7e25e3e..4f98d284dd 100644
---- a/hw/xen/xen-mapcache.c
-+++ b/hw/xen/xen-mapcache.c
-@@ -23,13 +23,10 @@
+diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
+index f5709d6c141..36f6f717b4b 100644
+--- a/hw/arm/sbsa-ref.c
++++ b/hw/arm/sbsa-ref.c
+@@ -60,6 +60,19 @@
+ #define NUM_SMMU_IRQS   4
+ #define NUM_SATA_PORTS  6
  
- 
- #if HOST_LONG_BITS == 32
--#  define MCACHE_BUCKET_SHIFT 16
- #  define MCACHE_MAX_SIZE     (1UL<<31) /* 2GB Cap */
- #else
--#  define MCACHE_BUCKET_SHIFT 20
- #  define MCACHE_MAX_SIZE     (1UL<<35) /* 32GB Cap */
- #endif
--#define MCACHE_BUCKET_SIZE (1UL << MCACHE_BUCKET_SHIFT)
- 
- /* This is the size of the virtual address space reserve to QEMU that will not
-  * be use by MapCache.
-@@ -65,7 +62,8 @@ typedef struct MapCache {
-     /* For most cases (>99.9%), the page address is the same. */
-     MapCacheEntry *last_entry;
-     unsigned long max_mcache_size;
--    unsigned int mcache_bucket_shift;
-+    unsigned int bucket_shift;
-+    unsigned long bucket_size;
- 
-     phys_offset_to_gaddr_t phys_offset_to_gaddr;
-     QemuMutex lock;
-@@ -95,6 +93,7 @@ static inline int test_bits(int nr, int size, const unsigned long *addr)
- 
- static MapCache *xen_map_cache_init_single(phys_offset_to_gaddr_t f,
-                                            void *opaque,
-+                                           unsigned int bucket_shift,
-                                            unsigned long max_size)
- {
-     unsigned long size;
-@@ -108,12 +107,14 @@ static MapCache *xen_map_cache_init_single(phys_offset_to_gaddr_t f,
- 
-     QTAILQ_INIT(&mc->locked_entries);
- 
-+    mc->bucket_shift = bucket_shift;
-+    mc->bucket_size = 1UL << bucket_shift;
-     mc->max_mcache_size = max_size;
- 
-     mc->nr_buckets =
-         (((mc->max_mcache_size >> XC_PAGE_SHIFT) +
--          (1UL << (MCACHE_BUCKET_SHIFT - XC_PAGE_SHIFT)) - 1) >>
--         (MCACHE_BUCKET_SHIFT - XC_PAGE_SHIFT));
-+          (1UL << (bucket_shift - XC_PAGE_SHIFT)) - 1) >>
-+         (bucket_shift - XC_PAGE_SHIFT));
- 
-     size = mc->nr_buckets * sizeof(MapCacheEntry);
-     size = (size + XC_PAGE_SIZE - 1) & ~(XC_PAGE_SIZE - 1);
-@@ -126,6 +127,13 @@ void xen_map_cache_init(phys_offset_to_gaddr_t f, void *opaque)
- {
-     struct rlimit rlimit_as;
-     unsigned long max_mcache_size;
-+    unsigned int bucket_shift;
++/*
++ * Generic timer frequency in Hz (which drives both the CPU generic timers
++ * and the SBSA watchdog-timer). Older versions of the TF-A firmware
++ * typically used with sbsa-ref (including the binaries in our Avocado test
++ * Aarch64SbsarefMachine.test_sbsaref_alpine_linux_max_pauth_impdef
++ * assume it is this value.
++ *
++ * TODO: this value is not architecturally correct for an Armv8.6 or
++ * better CPU, so we should move to 1GHz once the TF-A fix above has
++ * made it into a release and into our Avocado test.
++ */
++#define SBSA_GTIMER_HZ 62500000
 +
-+    if (HOST_LONG_BITS == 32) {
-+        bucket_shift = 16;
-+    } else {
-+        bucket_shift = 20;
-+    }
- 
-     if (geteuid() == 0) {
-         rlimit_as.rlim_cur = RLIM_INFINITY;
-@@ -146,7 +154,9 @@ void xen_map_cache_init(phys_offset_to_gaddr_t f, void *opaque)
+ enum {
+     SBSA_FLASH,
+     SBSA_MEM,
+@@ -767,6 +780,8 @@ static void sbsa_ref_init(MachineState *machine)
+                                     &error_abort);
          }
-     }
  
--    mapcache = xen_map_cache_init_single(f, opaque, max_mcache_size);
-+    mapcache = xen_map_cache_init_single(f, opaque,
-+                                         bucket_shift,
-+                                         max_mcache_size);
-     setrlimit(RLIMIT_AS, &rlimit_as);
- }
- 
-@@ -195,7 +205,7 @@ static void xen_remap_bucket(MapCache *mc,
-     entry->valid_mapping = NULL;
- 
-     for (i = 0; i < nb_pfn; i++) {
--        pfns[i] = (address_index << (MCACHE_BUCKET_SHIFT-XC_PAGE_SHIFT)) + i;
-+        pfns[i] = (address_index << (mc->bucket_shift - XC_PAGE_SHIFT)) + i;
-     }
- 
-     /*
-@@ -266,8 +276,8 @@ static uint8_t *xen_map_cache_unlocked(MapCache *mc,
-     bool dummy = false;
- 
- tryagain:
--    address_index  = phys_addr >> MCACHE_BUCKET_SHIFT;
--    address_offset = phys_addr & (MCACHE_BUCKET_SIZE - 1);
-+    address_index  = phys_addr >> mc->bucket_shift;
-+    address_offset = phys_addr & (mc->bucket_size - 1);
- 
-     trace_xen_map_cache(phys_addr);
- 
-@@ -294,14 +304,14 @@ tryagain:
-         return mc->last_entry->vaddr_base + address_offset;
-     }
- 
--    /* size is always a multiple of MCACHE_BUCKET_SIZE */
-+    /* size is always a multiple of mc->bucket_size */
-     if (size) {
-         cache_size = size + address_offset;
--        if (cache_size % MCACHE_BUCKET_SIZE) {
--            cache_size += MCACHE_BUCKET_SIZE - (cache_size % MCACHE_BUCKET_SIZE);
-+        if (cache_size % mc->bucket_size) {
-+            cache_size += mc->bucket_size - (cache_size % mc->bucket_size);
-         }
-     } else {
--        cache_size = MCACHE_BUCKET_SIZE;
-+        cache_size = mc->bucket_size;
-     }
- 
-     entry = &mc->entry[address_index % mc->nr_buckets];
-@@ -419,7 +429,7 @@ static ram_addr_t xen_ram_addr_from_mapcache_single(MapCache *mc, void *ptr)
-         trace_xen_ram_addr_from_mapcache_not_in_cache(ptr);
-         raddr = RAM_ADDR_INVALID;
-     } else {
--        raddr = (reventry->paddr_index << MCACHE_BUCKET_SHIFT) +
-+        raddr = (reventry->paddr_index << mc->bucket_shift) +
-              ((unsigned long) ptr - (unsigned long) entry->vaddr_base);
-     }
-     mapcache_unlock(mc);
-@@ -582,8 +592,8 @@ static uint8_t *xen_replace_cache_entry_unlocked(MapCache *mc,
-     hwaddr address_index, address_offset;
-     hwaddr test_bit_size, cache_size = size;
- 
--    address_index  = old_phys_addr >> MCACHE_BUCKET_SHIFT;
--    address_offset = old_phys_addr & (MCACHE_BUCKET_SIZE - 1);
-+    address_index  = old_phys_addr >> mc->bucket_shift;
-+    address_offset = old_phys_addr & (mc->bucket_size - 1);
- 
-     assert(size);
-     /* test_bit_size is always a multiple of XC_PAGE_SIZE */
-@@ -592,8 +602,8 @@ static uint8_t *xen_replace_cache_entry_unlocked(MapCache *mc,
-         test_bit_size += XC_PAGE_SIZE - (test_bit_size % XC_PAGE_SIZE);
-     }
-     cache_size = size + address_offset;
--    if (cache_size % MCACHE_BUCKET_SIZE) {
--        cache_size += MCACHE_BUCKET_SIZE - (cache_size % MCACHE_BUCKET_SIZE);
-+    if (cache_size % mc->bucket_size) {
-+        cache_size += mc->bucket_size - (cache_size % mc->bucket_size);
-     }
- 
-     entry = &mc->entry[address_index % mc->nr_buckets];
-@@ -606,8 +616,8 @@ static uint8_t *xen_replace_cache_entry_unlocked(MapCache *mc,
-         return NULL;
-     }
- 
--    address_index  = new_phys_addr >> MCACHE_BUCKET_SHIFT;
--    address_offset = new_phys_addr & (MCACHE_BUCKET_SIZE - 1);
-+    address_index  = new_phys_addr >> mc->bucket_shift;
-+    address_offset = new_phys_addr & (mc->bucket_size - 1);
- 
-     trace_xen_replace_cache_entry_dummy(old_phys_addr, new_phys_addr);
++        object_property_set_int(cpuobj, "cntfrq", SBSA_GTIMER_HZ, &error_abort);
++
+         object_property_set_link(cpuobj, "memory", OBJECT(sysmem),
+                                  &error_abort);
  
 -- 
-2.40.1
+2.34.1
 
 
