@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DF50C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 16:52:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 330C4C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 16:52:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1qgm-00070i-4d; Tue, 30 Apr 2024 12:50:44 -0400
+	id 1s1qhJ-0000mo-3U; Tue, 30 Apr 2024 12:51:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1s1qgP-0006D7-H3
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:50:23 -0400
-Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
+ id 1s1qgf-0006Tm-HS
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:50:39 -0400
+Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1s1qgM-00061B-LF
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:50:20 -0400
-Received: by mail-lj1-x22f.google.com with SMTP id
- 38308e7fff4ca-2dae975d0dcso72618391fa.1
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 09:50:17 -0700 (PDT)
+ id 1s1qgZ-00063t-Oh
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:50:35 -0400
+Received: by mail-lf1-x132.google.com with SMTP id
+ 2adb3069b0e04-51abf1a9332so8147592e87.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 09:50:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1714495816; x=1715100616; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1714495829; x=1715100629; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CIVDaUdlQrWMVCAAwSwRQuE7c0313SXxgYK41vL15nU=;
- b=WGHc1IOHdKp6ljtNS/SNsLAJGk6Qb8uw7+EnTkqeppp6fqRXtdb4ZnMtwN4oZQa6kx
- JNEndBQiXcUYtHXrpeabUa7FOMYzdg7+9wPfHsFaZ1EuCMJCZcgZP/pywqSpZIZJNm5R
- fRzXPfpJsgI6q8jb3sp3csDdaBGJ0nqxVNzamOXPX1/G4IFNYJpqVhXEP2mM7DkVkcw2
- zz6SgTtyRAcgVjI5/V/q0CUNY50PdZ7zLjqLiy7HoVZ/d3W5qDMBG4TCUeE2IJGf86Lh
- 2ytuCJc5kOxZW9wvYSe8ooscOHjKfvVrGdXBinMzk1dzc/PKK+FcNIju9wZduU8j3pQ2
- ZJRg==
+ bh=yOBKxxu7GyLSVYEkd97aCGdSreO6dnD3GZWBKg4jO3k=;
+ b=kyqRgbDcGHfzSSPPytWeWi8QakY0NqOwDDfp8Vpy8r4gA767FMPmMeeBtaak9IVS8S
+ GuRhCnsv2Gq5QB/X5C1LxYjkmMkoo+vH05/4H8kkUR2Oz1L29iSCtyQVAh9RFSsJR4Aa
+ uqSP+5dT0ttoAQRLwNW/jA1ynLCBTE++JHFbNCwSrc7N7hItu2RhW2qa8dwYwpYTgp8n
+ h6T0YUj6P11VcPlqpHcPIDikQBO69LP03XdlfJEq3012HbJqFEa1VTjrOofp62u+AfUQ
+ lwKOTPj/ImjY+dwUgTEP5Je7oFraeGNrmNxiNs5zVLCDub7Xkjd4ke4kuphZnEluuHfE
+ rTlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714495816; x=1715100616;
+ d=1e100.net; s=20230601; t=1714495829; x=1715100629;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CIVDaUdlQrWMVCAAwSwRQuE7c0313SXxgYK41vL15nU=;
- b=hT6PhfiuM5b+qK3HuOcT4Rvhy3+LpmUtrQwCWuL4tV1UhNU5Ipv4bdd98tB7fr20jH
- HZmLfTzYkvZLkUvzdYaeXG2OiVcSW0Xb/NSC3CQBiwKUnrQ2aJbcm32Kbfyp9nbtkSJW
- ygimL5oAbf6/iOivKYXAdIq7YkSHpbWkBwYWgQwhlq+Wg8HrpmITYSyZqYkzd+ORIhCi
- WGG2awPxYnkRoJma9C2XUTIGmcQJQNEkPrvine0jiPo1/7v2mjfzOeuM611AnV1hSWRr
- vIRNsho/wGYwM+uXc02akYPUnlfx0Fpy4qge4DoR2juobLotOfFj15I0upVpizxsXpxR
- g7ZQ==
-X-Gm-Message-State: AOJu0YylP1xqEbQR4xOlMObFivTMbwyWqEIKhhYGsbGzhoJBgsFS9F3Q
- k39BtpKseVTXUzthqoC9cZD7TV00gv5MTiE8tMi8j+ZHLWc2KebfWtsCRKet
-X-Google-Smtp-Source: AGHT+IEhqhmi+/uuFz1Fbog5DE/AV1r+HDsD1UwlwkpNuWJf7wobBS9AqtJFN1Xw/CHLkbbpd70bvw==
-X-Received: by 2002:a2e:bc0a:0:b0:2d8:4c1d:10fc with SMTP id
- b10-20020a2ebc0a000000b002d84c1d10fcmr1419744ljf.18.1714495816046; 
- Tue, 30 Apr 2024 09:50:16 -0700 (PDT)
+ bh=yOBKxxu7GyLSVYEkd97aCGdSreO6dnD3GZWBKg4jO3k=;
+ b=mYZnK3X96TbyNmTG4IAOOIKM3Z3hs8I22TSSlY3N1ZuHLk9jB2TjCYPRSXKWBTzQtC
+ 6zuNKb6AK8041XU7z7l4JZjSkPrsDCl4nBSc+x0Wk+EIQJUHg9IgdOOlcKS3cLscaY6T
+ PPNeH1t34BzLW2bm/oSTcDisVM437lSXA902+5bIn0DcPNz51jMrlSa62qqk2KIBW3SK
+ M2dnnMSnydn6WBUcJTa3WLwUSuim4TQfYIwuAtasrbcFKgz4wDM0mPTgLKb8RhmvHYE/
+ rMNcCP7PAOh/BSCrbQMmDaEA+pRk99PENNB+B26jq4c2W+iTFO2h/xwSgiRXF+sAyWtg
+ 9qfQ==
+X-Gm-Message-State: AOJu0YyMAlh/Kw3n+xy/Cq3oS403zKeisCHHshqZQxfdU7kYqDWnughz
+ dbfBj1TV5okTlSKjIBogIdHcxk6pH4VBHvqOBE/9qWYMmOsz9HaWBG2ePLIt
+X-Google-Smtp-Source: AGHT+IG1D0QzmbnS0ErFMJ7lJMDglr0F3Y/2LZElzamvzuLYF8jqyCZc9cG7FMYyaCBToshoVVfqkw==
+X-Received: by 2002:ac2:5327:0:b0:513:1a9c:ae77 with SMTP id
+ f7-20020ac25327000000b005131a9cae77mr26233lfh.52.1714495829133; 
+ Tue, 30 Apr 2024 09:50:29 -0700 (PDT)
 Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
  by smtp.gmail.com with ESMTPSA id
- w18-20020a2e9992000000b002d43737e2d7sm4149404lji.30.2024.04.30.09.50.14
+ b1-20020ac25621000000b00518b294570asm4561021lff.135.2024.04.30.09.50.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Apr 2024 09:50:14 -0700 (PDT)
+ Tue, 30 Apr 2024 09:50:28 -0700 (PDT)
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: edgar.iglesias@gmail.com, sstabellini@kernel.org, jgross@suse.com,
  "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
  Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
  xen-devel@lists.xenproject.org
-Subject: [PATCH v4 03/17] xen: mapcache: Refactor lock functions for
- multi-instance
-Date: Tue, 30 Apr 2024 18:49:25 +0200
-Message-Id: <20240430164939.925307-4-edgar.iglesias@gmail.com>
+Subject: [PATCH v4 11/17] xen: mapcache: Make MCACHE_BUCKET_SHIFT runtime
+ configurable
+Date: Tue, 30 Apr 2024 18:49:33 +0200
+Message-Id: <20240430164939.925307-12-edgar.iglesias@gmail.com>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20240430164939.925307-1-edgar.iglesias@gmail.com>
 References: <20240430164939.925307-1-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x22f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::132;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,131 +99,172 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 
-Make the lock functions take MapCache * as argument. This is
-in preparation for supporting multiple caches.
-
-No functional changes.
+Make MCACHE_BUCKET_SHIFT runtime configurable per cache instance.
 
 Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 ---
- hw/xen/xen-mapcache.c | 34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+ hw/xen/xen-mapcache.c | 52 ++++++++++++++++++++++++++-----------------
+ 1 file changed, 31 insertions(+), 21 deletions(-)
 
 diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-index b7cefb78f7..3f11562075 100644
+index 72a7e25e3e..4f98d284dd 100644
 --- a/hw/xen/xen-mapcache.c
 +++ b/hw/xen/xen-mapcache.c
-@@ -74,14 +74,14 @@ typedef struct MapCache {
+@@ -23,13 +23,10 @@
  
- static MapCache *mapcache;
  
--static inline void mapcache_lock(void)
-+static inline void mapcache_lock(MapCache *mc)
+ #if HOST_LONG_BITS == 32
+-#  define MCACHE_BUCKET_SHIFT 16
+ #  define MCACHE_MAX_SIZE     (1UL<<31) /* 2GB Cap */
+ #else
+-#  define MCACHE_BUCKET_SHIFT 20
+ #  define MCACHE_MAX_SIZE     (1UL<<35) /* 32GB Cap */
+ #endif
+-#define MCACHE_BUCKET_SIZE (1UL << MCACHE_BUCKET_SHIFT)
+ 
+ /* This is the size of the virtual address space reserve to QEMU that will not
+  * be use by MapCache.
+@@ -65,7 +62,8 @@ typedef struct MapCache {
+     /* For most cases (>99.9%), the page address is the same. */
+     MapCacheEntry *last_entry;
+     unsigned long max_mcache_size;
+-    unsigned int mcache_bucket_shift;
++    unsigned int bucket_shift;
++    unsigned long bucket_size;
+ 
+     phys_offset_to_gaddr_t phys_offset_to_gaddr;
+     QemuMutex lock;
+@@ -95,6 +93,7 @@ static inline int test_bits(int nr, int size, const unsigned long *addr)
+ 
+ static MapCache *xen_map_cache_init_single(phys_offset_to_gaddr_t f,
+                                            void *opaque,
++                                           unsigned int bucket_shift,
+                                            unsigned long max_size)
  {
--    qemu_mutex_lock(&mapcache->lock);
-+    qemu_mutex_lock(&mc->lock);
- }
+     unsigned long size;
+@@ -108,12 +107,14 @@ static MapCache *xen_map_cache_init_single(phys_offset_to_gaddr_t f,
  
--static inline void mapcache_unlock(void)
-+static inline void mapcache_unlock(MapCache *mc)
+     QTAILQ_INIT(&mc->locked_entries);
+ 
++    mc->bucket_shift = bucket_shift;
++    mc->bucket_size = 1UL << bucket_shift;
+     mc->max_mcache_size = max_size;
+ 
+     mc->nr_buckets =
+         (((mc->max_mcache_size >> XC_PAGE_SHIFT) +
+-          (1UL << (MCACHE_BUCKET_SHIFT - XC_PAGE_SHIFT)) - 1) >>
+-         (MCACHE_BUCKET_SHIFT - XC_PAGE_SHIFT));
++          (1UL << (bucket_shift - XC_PAGE_SHIFT)) - 1) >>
++         (bucket_shift - XC_PAGE_SHIFT));
+ 
+     size = mc->nr_buckets * sizeof(MapCacheEntry);
+     size = (size + XC_PAGE_SIZE - 1) & ~(XC_PAGE_SIZE - 1);
+@@ -126,6 +127,13 @@ void xen_map_cache_init(phys_offset_to_gaddr_t f, void *opaque)
  {
--    qemu_mutex_unlock(&mapcache->lock);
-+    qemu_mutex_unlock(&mc->lock);
- }
+     struct rlimit rlimit_as;
+     unsigned long max_mcache_size;
++    unsigned int bucket_shift;
++
++    if (HOST_LONG_BITS == 32) {
++        bucket_shift = 16;
++    } else {
++        bucket_shift = 20;
++    }
  
- static inline int test_bits(int nr, int size, const unsigned long *addr)
-@@ -369,9 +369,9 @@ uint8_t *xen_map_cache(hwaddr phys_addr, hwaddr size,
- {
-     uint8_t *p;
- 
--    mapcache_lock();
-+    mapcache_lock(mapcache);
-     p = xen_map_cache_unlocked(phys_addr, size, lock, dma);
--    mapcache_unlock();
-+    mapcache_unlock(mapcache);
-     return p;
- }
- 
-@@ -384,7 +384,7 @@ ram_addr_t xen_ram_addr_from_mapcache(void *ptr)
-     ram_addr_t raddr;
-     int found = 0;
- 
--    mapcache_lock();
-+    mapcache_lock(mapcache);
-     QTAILQ_FOREACH(reventry, &mapcache->locked_entries, next) {
-         if (reventry->vaddr_req == ptr) {
-             paddr_index = reventry->paddr_index;
-@@ -394,7 +394,7 @@ ram_addr_t xen_ram_addr_from_mapcache(void *ptr)
+     if (geteuid() == 0) {
+         rlimit_as.rlim_cur = RLIM_INFINITY;
+@@ -146,7 +154,9 @@ void xen_map_cache_init(phys_offset_to_gaddr_t f, void *opaque)
          }
      }
-     if (!found) {
--        mapcache_unlock();
-+        mapcache_unlock(mapcache);
-         return RAM_ADDR_INVALID;
+ 
+-    mapcache = xen_map_cache_init_single(f, opaque, max_mcache_size);
++    mapcache = xen_map_cache_init_single(f, opaque,
++                                         bucket_shift,
++                                         max_mcache_size);
+     setrlimit(RLIMIT_AS, &rlimit_as);
+ }
+ 
+@@ -195,7 +205,7 @@ static void xen_remap_bucket(MapCache *mc,
+     entry->valid_mapping = NULL;
+ 
+     for (i = 0; i < nb_pfn; i++) {
+-        pfns[i] = (address_index << (MCACHE_BUCKET_SHIFT-XC_PAGE_SHIFT)) + i;
++        pfns[i] = (address_index << (mc->bucket_shift - XC_PAGE_SHIFT)) + i;
      }
  
-@@ -409,7 +409,7 @@ ram_addr_t xen_ram_addr_from_mapcache(void *ptr)
-         raddr = (reventry->paddr_index << MCACHE_BUCKET_SHIFT) +
+     /*
+@@ -266,8 +276,8 @@ static uint8_t *xen_map_cache_unlocked(MapCache *mc,
+     bool dummy = false;
+ 
+ tryagain:
+-    address_index  = phys_addr >> MCACHE_BUCKET_SHIFT;
+-    address_offset = phys_addr & (MCACHE_BUCKET_SIZE - 1);
++    address_index  = phys_addr >> mc->bucket_shift;
++    address_offset = phys_addr & (mc->bucket_size - 1);
+ 
+     trace_xen_map_cache(phys_addr);
+ 
+@@ -294,14 +304,14 @@ tryagain:
+         return mc->last_entry->vaddr_base + address_offset;
+     }
+ 
+-    /* size is always a multiple of MCACHE_BUCKET_SIZE */
++    /* size is always a multiple of mc->bucket_size */
+     if (size) {
+         cache_size = size + address_offset;
+-        if (cache_size % MCACHE_BUCKET_SIZE) {
+-            cache_size += MCACHE_BUCKET_SIZE - (cache_size % MCACHE_BUCKET_SIZE);
++        if (cache_size % mc->bucket_size) {
++            cache_size += mc->bucket_size - (cache_size % mc->bucket_size);
+         }
+     } else {
+-        cache_size = MCACHE_BUCKET_SIZE;
++        cache_size = mc->bucket_size;
+     }
+ 
+     entry = &mc->entry[address_index % mc->nr_buckets];
+@@ -419,7 +429,7 @@ static ram_addr_t xen_ram_addr_from_mapcache_single(MapCache *mc, void *ptr)
+         trace_xen_ram_addr_from_mapcache_not_in_cache(ptr);
+         raddr = RAM_ADDR_INVALID;
+     } else {
+-        raddr = (reventry->paddr_index << MCACHE_BUCKET_SHIFT) +
++        raddr = (reventry->paddr_index << mc->bucket_shift) +
               ((unsigned long) ptr - (unsigned long) entry->vaddr_base);
      }
--    mapcache_unlock();
-+    mapcache_unlock(mapcache);
-     return raddr;
- }
+     mapcache_unlock(mc);
+@@ -582,8 +592,8 @@ static uint8_t *xen_replace_cache_entry_unlocked(MapCache *mc,
+     hwaddr address_index, address_offset;
+     hwaddr test_bit_size, cache_size = size;
  
-@@ -480,9 +480,9 @@ static void xen_invalidate_map_cache_entry_bh(void *opaque)
- {
-     XenMapCacheData *data = opaque;
+-    address_index  = old_phys_addr >> MCACHE_BUCKET_SHIFT;
+-    address_offset = old_phys_addr & (MCACHE_BUCKET_SIZE - 1);
++    address_index  = old_phys_addr >> mc->bucket_shift;
++    address_offset = old_phys_addr & (mc->bucket_size - 1);
  
--    mapcache_lock();
-+    mapcache_lock(mapcache);
-     xen_invalidate_map_cache_entry_unlocked(data->buffer);
--    mapcache_unlock();
-+    mapcache_unlock(mapcache);
- 
-     aio_co_wake(data->co);
- }
-@@ -498,9 +498,9 @@ void coroutine_mixed_fn xen_invalidate_map_cache_entry(uint8_t *buffer)
-                                 xen_invalidate_map_cache_entry_bh, &data);
-         qemu_coroutine_yield();
-     } else {
--        mapcache_lock();
-+        mapcache_lock(mapcache);
-         xen_invalidate_map_cache_entry_unlocked(buffer);
--        mapcache_unlock();
-+        mapcache_unlock(mapcache);
+     assert(size);
+     /* test_bit_size is always a multiple of XC_PAGE_SIZE */
+@@ -592,8 +602,8 @@ static uint8_t *xen_replace_cache_entry_unlocked(MapCache *mc,
+         test_bit_size += XC_PAGE_SIZE - (test_bit_size % XC_PAGE_SIZE);
      }
- }
+     cache_size = size + address_offset;
+-    if (cache_size % MCACHE_BUCKET_SIZE) {
+-        cache_size += MCACHE_BUCKET_SIZE - (cache_size % MCACHE_BUCKET_SIZE);
++    if (cache_size % mc->bucket_size) {
++        cache_size += mc->bucket_size - (cache_size % mc->bucket_size);
+     }
  
-@@ -512,7 +512,7 @@ void xen_invalidate_map_cache(void)
-     /* Flush pending AIO before destroying the mapcache */
-     bdrv_drain_all();
+     entry = &mc->entry[address_index % mc->nr_buckets];
+@@ -606,8 +616,8 @@ static uint8_t *xen_replace_cache_entry_unlocked(MapCache *mc,
+         return NULL;
+     }
  
--    mapcache_lock();
-+    mapcache_lock(mapcache);
+-    address_index  = new_phys_addr >> MCACHE_BUCKET_SHIFT;
+-    address_offset = new_phys_addr & (MCACHE_BUCKET_SIZE - 1);
++    address_index  = new_phys_addr >> mc->bucket_shift;
++    address_offset = new_phys_addr & (mc->bucket_size - 1);
  
-     QTAILQ_FOREACH(reventry, &mapcache->locked_entries, next) {
-         if (!reventry->dma) {
-@@ -546,7 +546,7 @@ void xen_invalidate_map_cache(void)
+     trace_xen_replace_cache_entry_dummy(old_phys_addr, new_phys_addr);
  
-     mapcache->last_entry = NULL;
- 
--    mapcache_unlock();
-+    mapcache_unlock(mapcache);
- }
- 
- static uint8_t *xen_replace_cache_entry_unlocked(hwaddr old_phys_addr,
-@@ -606,8 +606,8 @@ uint8_t *xen_replace_cache_entry(hwaddr old_phys_addr,
- {
-     uint8_t *p;
- 
--    mapcache_lock();
-+    mapcache_lock(mapcache);
-     p = xen_replace_cache_entry_unlocked(old_phys_addr, new_phys_addr, size);
--    mapcache_unlock();
-+    mapcache_unlock(mapcache);
-     return p;
- }
 -- 
 2.40.1
 
