@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EE9FC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 17:08:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C6F9C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 17:17:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1qxg-0000Fi-Nf; Tue, 30 Apr 2024 13:08:12 -0400
+	id 1s1r5P-0002CL-1W; Tue, 30 Apr 2024 13:16:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1s1qxd-0000E7-08
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 13:08:09 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ id 1s1r5I-0002Af-Ku
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 13:16:09 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1s1qxb-0001Cp-EV
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 13:08:08 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-56e78970853so54143a12.0
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 10:08:06 -0700 (PDT)
+ id 1s1r5F-00038U-31
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 13:16:03 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-a58eb9a42d9so444136066b.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 10:16:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714496886; x=1715101686; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714497359; x=1715102159; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:references
  :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=+5EWkn1V/7JbQNikcmhRTSibEcnep6bZwCKE+4NwtzU=;
- b=SnEOJYLPP5V5W6nZk7YBhm/NyPKKYWhqAOQ55x0dhRGKtlKzq4i3J3tXHdOx8aUjEx
- 7COVaR8/PH8nkDFBMDvJpakAPS/LTMtwouKfRJGO5v/z7r1xbaXRbQXq7lah/pRNkcAe
- LK8bPA5CC70N89XNyJhnW3uTUD8IisIDGb6B+lqNP2FyE7dZ88K8Ljq2GJyHgQd+jm2N
- bN4iPZ5PMezessmdyqCvEwdqmPHDIHMJqiUgIrFnUvlyCefD4zZLjxega2nfLQjXldLt
- f3QYxpSZyC3gqTO2sWxmntVK7LSQR8sANR4iSYyOqUUlFWGXFAmGJRQMDHaVmTE8Fq5f
- Y3pg==
+ :reply-to; bh=yJNrL/6SvwXBHGcA1ZFaRqo9PBInYVWOnUcTki0yH9s=;
+ b=o8nRs6DOftjRONHPEcQxjg/e5gnUBS4hHpiXGjzUlNzzl8jKhQn9g4xf28Sfn69bDl
+ vg07VlLXVmkJ/X+hUqm2RLDpLgH8NrNT87q4lYu9uQkk9rdXbdOCSpo0foXXWK8LLGUt
+ NQOQUtLZDvdnjcw3Sb6JqVVu5sTA7xvOgcCwtlxFE9CZ7xJR+wfkCh+nEVIlLj2ONrsF
+ k335LoGUywx0y1VgU2OgA2XqGLLXiSFqdybChk8BjSZGb3xUENzieu1NsY4iDxBmkLRi
+ 7cbZnszJ6Ej26j6pefbvgMWXkKDJrc24ColI247qbax3gstND5zMHQexteQjVrcTvje7
+ TpKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714496886; x=1715101686;
+ d=1e100.net; s=20230601; t=1714497359; x=1715102159;
  h=content-transfer-encoding:mime-version:message-id:date:references
  :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+5EWkn1V/7JbQNikcmhRTSibEcnep6bZwCKE+4NwtzU=;
- b=amSabj80o9ziSxuH8SKSho055o14ITAx1rbDjZJjIkgRODBqoaLqI69aALGeQNd3cm
- xM1jdk1FEa1BVm6FSdxa+7JdnF3qYVQy+oDDR7M1RgF+fRnX5jgIAI1HNInMbx4+La7A
- qDnAo9vhGp6yHYzSCYW+CJgYdAjeBg1fWh4O1/ZYHM9zekf08zFZREYDHjSnkweW/sUS
- KKUk/tvPLzPUVa+G33CX2df/4/ygmS1qV3g4KUGxT+z7PsngeVRSDfPc482+gCZs5NuC
- whE3OYz5T0tr5JSngV0yqgoRNPeCYiEPzBUHqQFSAoir4Enw69yq9Q5WFUcMW+uJbbHX
- Orqw==
+ bh=yJNrL/6SvwXBHGcA1ZFaRqo9PBInYVWOnUcTki0yH9s=;
+ b=LYCWpfoFOhr9e1Kru+KHF48ee3go+2gK0tcXmrnyiUUodxuQ6kMxcdveKhZR/qKf/m
+ M8UpECn0outK8dmlzEuuoPS5Kq2wlDzSfdHSPS71gD+ht+wE7rEr3IUQ10HxSBtdMy6y
+ cegjP8eD14QVreyuyfSx1wDnx6ZqctHkCxS8HyGLy7FfmJX8ZvkcJ40IqtqcBPFO6hA8
+ EjrcydlIZQm9Ozdu3oyjhQyGcjSkJ2iOhwZMElmYeFZ6csbDqL7WntyUVL32O1AbP0nK
+ UvUIeectMO8omaW+Lf6gAWHHZmiAYYpJ4RjxGW2ZDF42UaPXL2pSxOsI1AYn5PFz8tTP
+ NVCw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUv11Eh4WxJP0lz56HgC8oSNruE99GgJZlZj7qACDU2he3lOIEUKywvSypJJST3mcwMvkOMUAfEaAb3xEzv3uclIEfYm8c=
-X-Gm-Message-State: AOJu0Yx/Hg+afp/f7klrAJXvfn0mwXE6/zaye4C2UPLyDur4vdqoSA8s
- Gra4K+JEXABC19nu4PnvPHdSFHeN9vcU33hZ8n+H/5div5+hTwssXvg2qqwqEvc=
-X-Google-Smtp-Source: AGHT+IFnGb6rFkcn9mOacaEE2Zj/cyCgmKX6tVBCfAVqUb1HA31p715zAsuszOOY0fsvd6PR3MxHlg==
-X-Received: by 2002:a17:906:a0c2:b0:a58:c550:a102 with SMTP id
- bh2-20020a170906a0c200b00a58c550a102mr364615ejb.29.1714496885700; 
- Tue, 30 Apr 2024 10:08:05 -0700 (PDT)
+ AJvYcCVPgWbhhcss8ZPafaguI436kZuuz27KznpvqcMLwenTGWddci1qoCLgNrPkNAWM7Od0wd7xxKag2Wc6Jld6rDD+5KedUEg=
+X-Gm-Message-State: AOJu0YwkbsHI/DL+C6XEvOfYwm1wNuESctbDdS7bGvmvRWP3dxNWiL+d
+ auKSFwAS7dvmrnKsjO2ysKOkuvh25JRzXAj80O6gewfhZiQnQzVRfgE2GJsrEHI=
+X-Google-Smtp-Source: AGHT+IFc5ODU7GTggPM/FZ/Cjdzip7pEteG3zCtN227ukbSI44ZcmoNmc2p/INAF9ANrjwLqHOmpGg==
+X-Received: by 2002:a17:906:787:b0:a52:4edb:6db7 with SMTP id
+ l7-20020a170906078700b00a524edb6db7mr250533ejc.54.1714497359251; 
+ Tue, 30 Apr 2024 10:15:59 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- bb6-20020a1709070a0600b00a55b020a821sm11403279ejc.13.2024.04.30.10.08.05
+ j21-20020a170906431500b00a521e5856f6sm15395091ejm.51.2024.04.30.10.15.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Apr 2024 10:08:05 -0700 (PDT)
+ Tue, 30 Apr 2024 10:15:59 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D54E45F7A7;
- Tue, 30 Apr 2024 18:08:04 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 51F685F7A7;
+ Tue, 30 Apr 2024 18:15:58 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Alexandra Diupina <adiupina@astralinux.ru>
-Cc: Alistair Francis <alistair@alistair23.me>,  "Konrad, Frederic"
- <Frederic.Konrad@amd.com>,  "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>,  Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org,  qemu-devel@nongnu.org,  sdl.qemu@linuxtesting.org
-Subject: Re: [PATCH v4] fix endianness bug
-In-Reply-To: <20240428181156.24071-1-adiupina@astralinux.ru> (Alexandra
- Diupina's message of "Sun, 28 Apr 2024 21:11:56 +0300")
-References: <20240428181156.24071-1-adiupina@astralinux.ru>
-Date: Tue, 30 Apr 2024 18:08:04 +0100
-Message-ID: <87y18u3hjf.fsf@draig.linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org,  qemu-devel@nongnu.org
+Subject: Re: [PATCH 1/2] accel/tcg: Make TCGCPUOps::cpu_exec_halt return
+ bool for whether to halt
+In-Reply-To: <20240430140035.3889879-2-peter.maydell@linaro.org> (Peter
+ Maydell's message of "Tue, 30 Apr 2024 15:00:34 +0100")
+References: <20240430140035.3889879-1-peter.maydell@linaro.org>
+ <20240430140035.3889879-2-peter.maydell@linaro.org>
+Date: Tue, 30 Apr 2024 18:15:58 +0100
+Message-ID: <87ttji3h69.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,21 +99,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alexandra Diupina <adiupina@astralinux.ru> writes:
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-As the subject is what ends up in the shortlog it is useful to prefix
-the subsystem to make it easier to see what was touched when reviewing
-log files. So maybe:
+> The TCGCPUOps::cpu_exec_halt method is called from cpu_handle_halt()
+> when the CPU is halted, so that a target CPU emulation can do
+> anything target-specific it needs to do.  (At the moment we only use
+> this on i386.)
+>
+> The current specification of the method doesn't allow the target
+> specific code to do something different if the CPU is about to come
+> out of the halt state, because cpu_handle_halt() only determines this
+> after the method has returned.  (If the method called cpu_has_work()
+> itself this would introduce a potential race if an interrupt arrived
+> between the target's method implementation checking and
+> cpu_handle_halt() repeating the check.)
+>
+> Change the definition of the method so that it returns a bool to
+> tell cpu_handle_halt() whether to stay in halt or not.
+>
+> We will want this for the Arm target, where FEAT_WFxT wants to do
+> some work only for the case where the CPU is in halt but about to
+> leave it.
+>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>  include/hw/core/tcg-cpu-ops.h       | 11 +++++++++--
+>  target/i386/tcg/helper-tcg.h        |  2 +-
+>  accel/tcg/cpu-exec.c                |  7 +++++--
+>  target/i386/tcg/sysemu/seg_helper.c |  3 ++-
+>  4 files changed, 17 insertions(+), 6 deletions(-)
+>
+> diff --git a/include/hw/core/tcg-cpu-ops.h b/include/hw/core/tcg-cpu-ops.h
+> index dc1f16a9777..f3ac76e6f6d 100644
+> --- a/include/hw/core/tcg-cpu-ops.h
+> +++ b/include/hw/core/tcg-cpu-ops.h
+> @@ -111,8 +111,15 @@ struct TCGCPUOps {
+>      void (*do_interrupt)(CPUState *cpu);
+>      /** @cpu_exec_interrupt: Callback for processing interrupts in cpu_e=
+xec */
+>      bool (*cpu_exec_interrupt)(CPUState *cpu, int interrupt_request);
+> -    /** @cpu_exec_halt: Callback for handling halt in cpu_exec */
+> -    void (*cpu_exec_halt)(CPUState *cpu);
+> +    /**
+> +     * @cpu_exec_halt: Callback for handling halt in cpu_exec.
+> +     *
+> +     * Return true to indicate that the CPU should now leave halt, false
+> +     * if it should remain in the halted state.
+> +     * If this method is not provided, the default is to leave halt
+> +     * if cpu_has_work() returns true.
+> +     */
+> +    bool (*cpu_exec_halt)(CPUState *cpu);
 
-xlnx_dpdma: fix endianness bug
+Would it be too much to rename the method to cpu_exec_leave_halt() to
+make it clearer on use the sense of the return value?
 
-or even:
+>      /**
+>       * @tlb_fill: Handle a softmmu tlb miss
+>       *
+> diff --git a/target/i386/tcg/helper-tcg.h b/target/i386/tcg/helper-tcg.h
+> index effc2c1c984..85957943bf3 100644
+> --- a/target/i386/tcg/helper-tcg.h
+> +++ b/target/i386/tcg/helper-tcg.h
+> @@ -39,7 +39,7 @@ QEMU_BUILD_BUG_ON(TCG_PHYS_ADDR_BITS > TARGET_PHYS_ADDR=
+_SPACE_BITS);
+>   */
+>  void x86_cpu_do_interrupt(CPUState *cpu);
+>  #ifndef CONFIG_USER_ONLY
+> -void x86_cpu_exec_halt(CPUState *cpu);
+> +bool x86_cpu_exec_halt(CPUState *cpu);
+>  bool x86_need_replay_interrupt(int interrupt_request);
+>  bool x86_cpu_exec_interrupt(CPUState *cpu, int int_req);
+>  #endif
+> diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+> index 5c70748060a..550f93b19ce 100644
+> --- a/accel/tcg/cpu-exec.c
+> +++ b/accel/tcg/cpu-exec.c
+> @@ -669,11 +669,14 @@ static inline bool cpu_handle_halt(CPUState *cpu)
+>  #ifndef CONFIG_USER_ONLY
+>      if (cpu->halted) {
+>          const TCGCPUOps *tcg_ops =3D cpu->cc->tcg_ops;
+> +        bool leave_halt;
+>=20=20
+>          if (tcg_ops->cpu_exec_halt) {
+> -            tcg_ops->cpu_exec_halt(cpu);
+> +            leave_halt =3D tcg_ops->cpu_exec_halt(cpu);
+> +        } else {
+> +            leave_halt =3D cpu_has_work(cpu);
+>          }
+> -        if (!cpu_has_work(cpu)) {
+> +        if (!leave_halt) {
+>              return true;
+>          }
+>=20=20
+> diff --git a/target/i386/tcg/sysemu/seg_helper.c b/target/i386/tcg/sysemu=
+/seg_helper.c
+> index 2db8083748e..9ba94deb3aa 100644
+> --- a/target/i386/tcg/sysemu/seg_helper.c
+> +++ b/target/i386/tcg/sysemu/seg_helper.c
+> @@ -128,7 +128,7 @@ void x86_cpu_do_interrupt(CPUState *cs)
+>      }
+>  }
+>=20=20
+> -void x86_cpu_exec_halt(CPUState *cpu)
+> +bool x86_cpu_exec_halt(CPUState *cpu)
+>  {
+>      if (cpu->interrupt_request & CPU_INTERRUPT_POLL) {
+>          X86CPU *x86_cpu =3D X86_CPU(cpu);
+> @@ -138,6 +138,7 @@ void x86_cpu_exec_halt(CPUState *cpu)
+>          cpu_reset_interrupt(cpu, CPU_INTERRUPT_POLL);
+>          bql_unlock();
+>      }
+> +    return cpu_has_work(cpu);
 
-xlnx_dpdma: fix descriptor endianness bug
+The x86 version is essentially being called for side effects. Do we want
+to document this usage in the method?
 
-as we have space within the 60 or so chars recommended for subject lines ;-)
-
-<snip>
+>  }
+>=20=20
+>  bool x86_need_replay_interrupt(int interrupt_request)
 
 --=20
 Alex Benn=C3=A9e
