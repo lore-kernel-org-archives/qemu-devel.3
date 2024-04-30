@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ED4EC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 07:13:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E503C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 07:14:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1hfS-0000JY-Tq; Tue, 30 Apr 2024 03:12:47 -0400
+	id 1s1hgb-0000hB-OU; Tue, 30 Apr 2024 03:13:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1s1hfB-0000If-AI
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 03:12:30 -0400
-Received: from forwardcorp1c.mail.yandex.net
- ([2a02:6b8:c03:500:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1hgZ-0000gh-IQ
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 03:13:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1s1hf1-00088I-N9
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 03:12:26 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:c10a:0:640:882f:0])
- by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id 32D0760BBD;
- Tue, 30 Apr 2024 10:12:13 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:8829::1:3c] (unknown
- [2a02:6b8:b081:8829::1:3c])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id BCL91t1Ig4Y0-2vgDUCj1; Tue, 30 Apr 2024 10:12:12 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1714461132;
- bh=2CxjzaLC2mkFFLI/VUKEuHKIQy56+jUCYi7/VYSgJ4s=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=wEqCGTmU1ubpoQtf7KgHiJcVSYHSH6UuXIqf3LT9S+I8K2VT03WYseAyHHutnvAMo
- u8FSxpYhyFj5FnO2aUXZhfaF/DwlBsZ/I/rxBLd78WdJqpwMTtfT1W9O8YNQrND2CC
- iyTD6a9viDrpT/DVxSi3qSc9pIUfpllEqv2ixf5g=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <219e42b7-8c1b-4a75-9235-f5f0f39fc185@yandex-team.ru>
-Date: Tue, 30 Apr 2024 10:12:11 +0300
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1hgY-0008Ku-1A
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 03:13:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714461233;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=UOwQuub82LV7nNQPgWIoepCWsAwvWQzeBGT6WryU3MQ=;
+ b=gcgQ/K7IUh5K1sInpDHGrKm+CRu50506pb9qqRC/0CjWGQbqAVRl82uMWeEqgYUSf7iWt8
+ C616GW/oTbJP7AvrwRstYYCVykeViP1qRFF5uRfQ6xOfrK/ymDEGR/1+BVSdv7KWo+awSO
+ RTA1LX3po9D1ZPuOxwZ5KpdB6+LL0GY=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-638-3wOfkjraNS2ZZujvRoOQeQ-1; Tue,
+ 30 Apr 2024 03:13:49 -0400
+X-MC-Unique: 3wOfkjraNS2ZZujvRoOQeQ-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7A6643C0F190;
+ Tue, 30 Apr 2024 07:13:49 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.193.79])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 7601F40C6CC0;
+ Tue, 30 Apr 2024 07:13:48 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org,
+	Richard Henderson <richard.henderson@linaro.org>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 04/19] target/s390x/cpu_models: Drop local @err in
+ get_max_cpu_model()
+Date: Tue, 30 Apr 2024 09:13:25 +0200
+Message-ID: <20240430071340.413305-5-thuth@redhat.com>
+In-Reply-To: <20240430071340.413305-1-thuth@redhat.com>
+References: <20240430071340.413305-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/5] migration: process_incoming_migration_co(): rework
- error reporting
-To: Peter Xu <peterx@redhat.com>
-Cc: farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
- pbonzini@redhat.com, qemu-devel@nongnu.org, yc-core@yandex-team.ru
-References: <20240429191426.2327225-1-vsementsov@yandex-team.ru>
- <20240429191426.2327225-5-vsementsov@yandex-team.ru> <Zi_3iEr3imN4C80_@x1n>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <Zi_3iEr3imN4C80_@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c03:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -79,94 +80,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29.04.24 22:39, Peter Xu wrote:
-> On Mon, Apr 29, 2024 at 10:14:25PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> Unify error reporting in the function. This simplifies the following
->> commit, which will not-exit-on-error behavior variant to the function.
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> Reviewed-by: Fabiano Rosas <farosas@suse.de>
->> ---
->>   migration/migration.c | 17 ++++++++++-------
->>   1 file changed, 10 insertions(+), 7 deletions(-)
->>
->> diff --git a/migration/migration.c b/migration/migration.c
->> index 58fd5819bc..5489ff96df 100644
->> --- a/migration/migration.c
->> +++ b/migration/migration.c
->> @@ -748,11 +748,12 @@ process_incoming_migration_co(void *opaque)
->>       MigrationIncomingState *mis = migration_incoming_get_current();
->>       PostcopyState ps;
->>       int ret;
->> +    Error *local_err = NULL;
->>   
->>       assert(mis->from_src_file);
->>   
->>       if (compress_threads_load_setup(mis->from_src_file)) {
->> -        error_report("Failed to setup decompress threads");
->> +        error_setg(&local_err, "Failed to setup decompress threads");
->>           goto fail;
->>       }
->>   
->> @@ -789,16 +790,12 @@ process_incoming_migration_co(void *opaque)
->>       }
->>   
->>       if (ret < 0) {
->> -        if (migrate_has_error(s)) {
->> -            WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
->> -                error_report_err(error_copy(s->error));
->> -            }
->> -        }
->> -        error_report("load of migration failed: %s", strerror(-ret));
->> +        error_setg(&local_err, "load of migration failed: %s", strerror(-ret));
->>           goto fail;
->>       }
->>   
->>       if (colo_incoming_co() < 0) {
->> +        error_setg(&local_err, "colo incoming failed");
->>           goto fail;
->>       }
->>   
->> @@ -809,6 +806,12 @@ fail:
->>                         MIGRATION_STATUS_FAILED);
->>       migration_incoming_state_destroy();
->>   
->> +    if (migrate_has_error(s)) {
->> +        WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
->> +            error_report_err(error_copy(s->error));
->> +        }
->> +    }
->> +    error_report_err(local_err);
-> 
-> Here migrate_has_error() will always return true?  If so we can drop it.
-> 
-> Meanwhile, IMHO it's easier we simply always keep the earliest error we see
-> and report that only, local_err is just one of the errors and whoever
-> reaches first will be reported.  Something like:
-> 
->    migrate_set_error(local_err);
->    WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
->        error_report_err(error_copy(s->error));
->    }
->    exit(EXIT_FAILURE);
-> 
-> Then when with the exit-on-error thing:
-> 
->    migrate_set_error(local_err);
->    if (exit_on_error) {
->      WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
->        error_report_err(error_copy(s->error));
->      }
->      exit(EXIT_FAILURE);
->    }
-> 
-> Would this looks slightly cleaner?
-> 
+From: Zhao Liu <zhao1.liu@intel.com>
 
-Yes, looks better, will do so
+Use @errp to fetch error information directly and drop the local
+variable @err.
 
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20240425031232.1586401-6-zhao1.liu@intel.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ target/s390x/cpu_models.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
+index a0e4acb707..aae452cfd3 100644
+--- a/target/s390x/cpu_models.c
++++ b/target/s390x/cpu_models.c
+@@ -551,7 +551,6 @@ static bool check_compatibility(const S390CPUModel *max_model,
+ 
+ S390CPUModel *get_max_cpu_model(Error **errp)
+ {
+-    Error *err = NULL;
+     static S390CPUModel max_model;
+     static bool cached;
+ 
+@@ -560,8 +559,7 @@ S390CPUModel *get_max_cpu_model(Error **errp)
+     }
+ 
+     if (kvm_enabled()) {
+-        if (!kvm_s390_get_host_cpu_model(&max_model, &err)) {
+-            error_propagate(errp, err);
++        if (!kvm_s390_get_host_cpu_model(&max_model, errp)) {
+             return NULL;
+         }
+     } else {
 -- 
-Best regards,
-Vladimir
+2.44.0
 
 
