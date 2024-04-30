@@ -4,134 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCEFAC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 14:25:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E68ACC10F16
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 14:26:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1oPD-0004yr-9i; Tue, 30 Apr 2024 10:24:27 -0400
+	id 1s1oQS-0005cY-0O; Tue, 30 Apr 2024 10:25:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1oPA-0004yU-Bi
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:24:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
+ id 1s1oQP-0005c3-Or
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:25:41 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1oP1-0007dv-BH
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:24:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714487054;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=kct1NqAqBgxk43O08pP+Qrn7gCN7biaBcNYB3Z+nVTY=;
- b=Gh8b6gCI2dz9HPUc0e+7FICsaWOcYP992309CvqKkfPN7csi3VA9eeqXkGQanCkoL3QMID
- k3yFe+gToLC2ZJtfXv4O+qRmRnGl/b+xfNcosZkm+jhcGpD/GaZGyUZc0ua8IpPyUWbDoO
- 1EaNFGiT9w0gD4RA/b2MScybEESCd6s=
-Received: from mail-ot1-f71.google.com (mail-ot1-f71.google.com
- [209.85.210.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-538-JoHNlUoBMymwZlOcXYEpPw-1; Tue, 30 Apr 2024 10:24:12 -0400
-X-MC-Unique: JoHNlUoBMymwZlOcXYEpPw-1
-Received: by mail-ot1-f71.google.com with SMTP id
- 46e09a7af769-6ef88ce1ef9so457873a34.3
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 07:24:12 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714487052; x=1715091852;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=kct1NqAqBgxk43O08pP+Qrn7gCN7biaBcNYB3Z+nVTY=;
- b=J7A+S0QOw6J8mh2qS0QJ/h8CWCX46SOZZo1NPsUHvXFPnjEvZuDAi4bhxU3XvR7fn7
- //3HFd8DVO7p//TvKoFoewNYWY0KIQPMBgiyvAeaeBxxxq/u9TRiz03nMIqtfcFzrR4C
- r5wB9SFJOpjU4rfq21qrRIkNSHxrd08w7bsYKA9h2Ms/dQC6f3u9Xp77JzYHZAE0kmZ8
- CcbSoyFPZgU0veF45R9fRE7VxVLGdcxK+WEHRsi7hlAWIpdOWDNCFyYsmE6RT317uR3F
- AQoM0y3ItpKvKPCsX+9XJpAm2uGeZO5vbBjJIElHq+Fyos15zy6XIVlH3WlY43PZrZMs
- 2iPQ==
-X-Gm-Message-State: AOJu0Yzz3mptosVJJW3ox1yNFTKTSkXmxNvrG166jXu0e2YislX5dw4O
- gEx+wpYRTj6MvsLQG3pnkudK8YopkN8qtYokrBZXBnjbjSkYInuVmy6d3vCoYdhI/05V4n/xhuJ
- WQ2u/9Ejg9LYMLV5xo2GdlqgTY1k8P/NMH1fVcFCD69lyCnJCIdFr
-X-Received: by 2002:a05:6830:2006:b0:6ee:29d3:81bc with SMTP id
- e6-20020a056830200600b006ee29d381bcmr7300324otp.2.1714487051787; 
- Tue, 30 Apr 2024 07:24:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEVm5Dv43JAds6PsA9nLHnY/wEM6JGCxDZDRI338CkfI+F8zec30moWFUkJ9wEO7cTrbVxp1A==
-X-Received: by 2002:a05:6830:2006:b0:6ee:29d3:81bc with SMTP id
- e6-20020a056830200600b006ee29d381bcmr7300303otp.2.1714487051522; 
- Tue, 30 Apr 2024 07:24:11 -0700 (PDT)
-Received: from [192.168.0.9] (ip-109-43-179-34.web.vodafone.de.
- [109.43.179.34]) by smtp.gmail.com with ESMTPSA id
- b10-20020a0cf04a000000b006986c3f3d21sm11417482qvl.116.2024.04.30.07.24.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Apr 2024 07:24:11 -0700 (PDT)
-Message-ID: <f958af03-00d3-4d3a-b54b-f060c8fc70df@redhat.com>
-Date: Tue, 30 Apr 2024 16:24:07 +0200
+ (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
+ id 1s1oQN-00083D-46
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:25:41 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43U84itT018368;
+ Tue, 30 Apr 2024 14:25:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding:content-type; s=qcppdkim1; bh=UbDbPJ4
+ AbZvRHaYiiYZ+W8m9vYLatVR9HU8dYm+WddY=; b=QwJsbfu6us3fzCWzTPOeWCS
+ qrr8SL05Cnvp5hbnd+I+BuhFtY2bUXc4KhQself4oF03twjxiTNyXx1lkuOgyHHq
+ 8RZEtbSEqO/zexPFP9bBUtSuVIS3XrS2Z0uBMog/yNRmwe71rQU9BpkfOoHvNk88
+ eqn3kCUl5C1lroUDPVSXU5MdVPunZx4fJcVqd2ubFqQx5rJY9X9Oe8dLWZPrCHQD
+ zqL6XJ7h219aL7u2S/QYGy3Rqjemh6I7S/DipRYq8Rh3RcYqiUiXuEjYpTfN9RI/
+ LJd5Ku668TVg4u/B7vyEUL68IvD1+MJmAE/QqD+rtXd8K8X0eC2SNohTSrHQY4A=
+ =
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xtsnm9fnr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Apr 2024 14:25:33 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com
+ [10.47.209.196])
+ by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43UEPWT6016321
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Apr 2024 14:25:32 GMT
+Received: from hu-mathbern-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 30 Apr 2024 07:25:32 -0700
+From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+To: <qemu-devel@nongnu.org>
+CC: <bcain@quicinc.com>, <sidneym@quicinc.com>, <ale@rev.ng>, <anjo@rev.ng>,
+ <ltaylorsimpson@gmail.com>, <richard.henderson@linaro.org>, Laurent Vivier
+ <laurent@vivier.eu>
+Subject: [PATCH v3] Hexagon: add PC alignment check and exception
+Date: Tue, 30 Apr 2024 11:25:22 -0300
+Message-ID: <5c90567ec28723865e144f386b36f5b676b7a5d3.1714486874.git.quic_mathbern@quicinc.com>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/s390x: Attach the sclpconsole to the /machine/sclp node
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clegoate@redhat.com>,
- qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20240430080408.415890-1-thuth@redhat.com>
- <e6954259-a211-4fa3-9093-3675b97c4a5c@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <e6954259-a211-4fa3-9093-3675b97c4a5c@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Proofpoint-GUID: vt5Wy8Y3jSB15Odcq-NgCcG083iOskkN
+X-Proofpoint-ORIG-GUID: vt5Wy8Y3jSB15Odcq-NgCcG083iOskkN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-04-30_08,2024-04-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 mlxscore=0
+ suspectscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
+ impostorscore=0 adultscore=0 mlxlogscore=999 phishscore=0 bulkscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404300102
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=quic_mathbern@quicinc.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -148,76 +99,259 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/04/2024 13.58, Cédric Le Goater wrote:
-> On 4/30/24 10:04, Thomas Huth wrote:
->> The sclpconsole currently does not have a proper parent in the QOM
->> tree, so it shows up under /machine/unattached - which is somewhat
->> ugly. Let's attach it to /machine/sclp instead.
->>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   include/hw/s390x/sclp.h    |  2 +-
->>   hw/s390x/s390-virtio-ccw.c | 11 +++++++----
->>   hw/s390x/sclp.c            |  4 +++-
->>   3 files changed, 11 insertions(+), 6 deletions(-)
->>
->> diff --git a/include/hw/s390x/sclp.h b/include/hw/s390x/sclp.h
->> index b405a387b6..abfd6d8868 100644
->> --- a/include/hw/s390x/sclp.h
->> +++ b/include/hw/s390x/sclp.h
->> @@ -222,7 +222,7 @@ static inline int sccb_data_len(SCCB *sccb)
->>   }
->> -void s390_sclp_init(void);
->> +Object *s390_sclp_init(void);
->>   void sclp_service_interrupt(uint32_t sccb);
->>   void raise_irq_cpu_hotplug(void);
->>   int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code);
->> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
->> index 4dcc213820..e2f9206ded 100644
->> --- a/hw/s390x/s390-virtio-ccw.c
->> +++ b/hw/s390x/s390-virtio-ccw.c
->> @@ -237,11 +237,13 @@ static void s390_create_virtio_net(BusState *bus, 
->> const char *name)
->>       }
->>   }
->> -static void s390_create_sclpconsole(const char *type, Chardev *chardev)
->> +static void s390_create_sclpconsole(Object *sclp, const char *type,
->> +                                    Chardev *chardev)
->>   {
->>       DeviceState *dev;
->>       dev = qdev_new(type);
->> +    object_property_add_child(sclp, type, OBJECT(dev));
->>       qdev_prop_set_chr(dev, "chardev", chardev);
->>       qdev_realize_and_unref(dev, sclp_get_event_facility_bus(), 
->> &error_fatal);
->>   }
->> @@ -252,8 +254,9 @@ static void ccw_init(MachineState *machine)
->>       int ret;
->>       VirtualCssBus *css_bus;
->>       DeviceState *dev;
->> +    Object *sclp;
->> -    s390_sclp_init();
->> +    sclp = s390_sclp_init();
-> 
-> I would simply drop s390_sclp_init(), same for :
-> 
->    void s390_init_tod(void);
->    void s390_init_ap(void);
->    void s390_stattrib_init(void);
->    void s390_skeys_init(void);
->    void s390_flic_init(void);
-> 
-> These routines all do the same and are not very useful TBH, and I would
-> add pointers under the s390x MachineState possibly.
+The Hexagon Programmer's Reference Manual says that the exception 0x1e
+should be raised upon an unaligned program counter. Let's implement that
+and also add some tests.
 
-Some of them seem to do a little bit more things, like checking whether the 
-feature is available or not, e.g. s390_init_ap() ... IMHO it makes sense to 
-keep at least those?
+Signed-off-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+---
+v2: https://lore.kernel.org/qemu-devel/e559b521d1920f804df10244c8c07564431aeba5.1714419461.git.quic_mathbern@quicinc.com/
 
-But for s390_sclp_init ... it could be inlined, indeed, especially if we 
-also switch the object_unref + qdev_realize in there into 
-qdev_realize_and_unref. Let me try to do that in a v2 ...
+Thanks for the comments, Richard and Taylor!
 
-  Thomas
+Changed in v3:
+- Removed now unnecessary pkt_raises_exception addition.
+- Added HEX_EXCP_PC_NOT_ALIGNED handling at
+  linux-user/hexagon/cpu_loop.c.
+- Merged all tests into a C file that uses signal handler to check
+  that the exception was raised.
+
+ target/hexagon/cpu.h                       |  7 ++
+ target/hexagon/cpu_bits.h                  |  4 +
+ target/hexagon/macros.h                    |  3 -
+ linux-user/hexagon/cpu_loop.c              |  4 +
+ target/hexagon/op_helper.c                 |  9 +--
+ tests/tcg/hexagon/unaligned_pc.c           | 85 ++++++++++++++++++++++
+ tests/tcg/hexagon/Makefile.target          |  4 +
+ tests/tcg/hexagon/unaligned_pc_multi_cof.S |  5 ++
+ 8 files changed, 113 insertions(+), 8 deletions(-)
+ create mode 100644 tests/tcg/hexagon/unaligned_pc.c
+ create mode 100644 tests/tcg/hexagon/unaligned_pc_multi_cof.S
+
+diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
+index 3eef58fe8f..764f3c38cc 100644
+--- a/target/hexagon/cpu.h
++++ b/target/hexagon/cpu.h
+@@ -134,6 +134,10 @@ struct ArchCPU {
+ 
+ FIELD(TB_FLAGS, IS_TIGHT_LOOP, 0, 1)
+ 
++G_NORETURN void hexagon_raise_exception_err(CPUHexagonState *env,
++                                            uint32_t exception,
++                                            uintptr_t pc);
++
+ static inline void cpu_get_tb_cpu_state(CPUHexagonState *env, vaddr *pc,
+                                         uint64_t *cs_base, uint32_t *flags)
+ {
+@@ -144,6 +148,9 @@ static inline void cpu_get_tb_cpu_state(CPUHexagonState *env, vaddr *pc,
+         hex_flags = FIELD_DP32(hex_flags, TB_FLAGS, IS_TIGHT_LOOP, 1);
+     }
+     *flags = hex_flags;
++    if (*pc & PCALIGN_MASK) {
++        hexagon_raise_exception_err(env, HEX_EXCP_PC_NOT_ALIGNED, 0);
++    }
+ }
+ 
+ typedef HexagonCPU ArchCPU;
+diff --git a/target/hexagon/cpu_bits.h b/target/hexagon/cpu_bits.h
+index 96fef71729..4279281a71 100644
+--- a/target/hexagon/cpu_bits.h
++++ b/target/hexagon/cpu_bits.h
+@@ -20,9 +20,13 @@
+ 
+ #include "qemu/bitops.h"
+ 
++#define PCALIGN 4
++#define PCALIGN_MASK (PCALIGN - 1)
++
+ #define HEX_EXCP_FETCH_NO_UPAGE  0x012
+ #define HEX_EXCP_INVALID_PACKET  0x015
+ #define HEX_EXCP_INVALID_OPCODE  0x015
++#define HEX_EXCP_PC_NOT_ALIGNED  0x01e
+ #define HEX_EXCP_PRIV_NO_UREAD   0x024
+ #define HEX_EXCP_PRIV_NO_UWRITE  0x025
+ 
+diff --git a/target/hexagon/macros.h b/target/hexagon/macros.h
+index 1376d6ccc1..f375471a98 100644
+--- a/target/hexagon/macros.h
++++ b/target/hexagon/macros.h
+@@ -22,9 +22,6 @@
+ #include "hex_regs.h"
+ #include "reg_fields.h"
+ 
+-#define PCALIGN 4
+-#define PCALIGN_MASK (PCALIGN - 1)
+-
+ #define GET_FIELD(FIELD, REGIN) \
+     fEXTRACTU_BITS(REGIN, reg_field_info[FIELD].width, \
+                    reg_field_info[FIELD].offset)
+diff --git a/linux-user/hexagon/cpu_loop.c b/linux-user/hexagon/cpu_loop.c
+index 7f1499ed28..d41159e52a 100644
+--- a/linux-user/hexagon/cpu_loop.c
++++ b/linux-user/hexagon/cpu_loop.c
+@@ -60,6 +60,10 @@ void cpu_loop(CPUHexagonState *env)
+                 env->gpr[0] = ret;
+             }
+             break;
++        case HEX_EXCP_PC_NOT_ALIGNED:
++            force_sig_fault(TARGET_SIGBUS, TARGET_BUS_ADRALN,
++                            env->gpr[HEX_REG_R31]);
++            break;
+         case EXCP_ATOMIC:
+             cpu_exec_step_atomic(cs);
+             break;
+diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
+index da10ac5847..ae5a605513 100644
+--- a/target/hexagon/op_helper.c
++++ b/target/hexagon/op_helper.c
+@@ -36,10 +36,9 @@
+ #define SF_MANTBITS    23
+ 
+ /* Exceptions processing helpers */
+-static G_NORETURN
+-void do_raise_exception_err(CPUHexagonState *env,
+-                            uint32_t exception,
+-                            uintptr_t pc)
++G_NORETURN void hexagon_raise_exception_err(CPUHexagonState *env,
++                                            uint32_t exception,
++                                            uintptr_t pc)
+ {
+     CPUState *cs = env_cpu(env);
+     qemu_log_mask(CPU_LOG_INT, "%s: %d\n", __func__, exception);
+@@ -49,7 +48,7 @@ void do_raise_exception_err(CPUHexagonState *env,
+ 
+ G_NORETURN void HELPER(raise_exception)(CPUHexagonState *env, uint32_t excp)
+ {
+-    do_raise_exception_err(env, excp, 0);
++    hexagon_raise_exception_err(env, excp, 0);
+ }
+ 
+ void log_store32(CPUHexagonState *env, target_ulong addr,
+diff --git a/tests/tcg/hexagon/unaligned_pc.c b/tests/tcg/hexagon/unaligned_pc.c
+new file mode 100644
+index 0000000000..1add2d0d99
+--- /dev/null
++++ b/tests/tcg/hexagon/unaligned_pc.c
+@@ -0,0 +1,85 @@
++#include <stdio.h>
++#include <signal.h>
++#include <setjmp.h>
++#include <stdlib.h>
++
++/* will be changed in signal handler */
++volatile sig_atomic_t completed_tests;
++static jmp_buf after_test;
++static int nr_tests;
++
++void __attribute__((naked)) test_return(void)
++{
++    asm volatile(
++        "allocframe(#0x8)\n"
++        "r0 = #0xffffffff\n"
++        "framekey = r0\n"
++        "dealloc_return\n"
++        : : : "r0");
++}
++
++void test_endloop(void)
++{
++    asm volatile(
++        "loop0(1f, #2)\n"
++        "1: r0 = #0x3\n"
++        "sa0 = r0\n"
++        "{ nop }:endloop0\n"
++        : : : "r0");
++}
++
++void test_multi_cof(void)
++{
++    asm volatile(
++        "p0 = cmp.eq(r0, r0)\n"
++        "{\n"
++        "    if (p0) jump test_multi_cof_unaligned\n"
++        "    jump 1f\n"
++        "}\n"
++        "1: nop\n"
++        : : : "p0");
++}
++
++void sigbus_handler(int signum)
++{
++    /* retore framekey after test_return */
++    asm volatile(
++        "r0 = #0\n"
++        "framekey = r0\n"
++        : : : "r0");
++    printf("Test %d complete\n", completed_tests);
++    completed_tests++;
++    siglongjmp(after_test, 1);
++}
++
++void test_done(void)
++{
++    int err = (completed_tests != nr_tests);
++    puts(err ? "FAIL" : "PASS");
++    exit(err);
++}
++
++typedef void (*test_fn)(void);
++
++int main()
++{
++    test_fn tests[] = { test_return, test_endloop, test_multi_cof, test_done };
++    nr_tests = (sizeof(tests) / sizeof(tests[0])) - 1;
++
++    struct sigaction sa = {
++        .sa_sigaction = sigbus_handler,
++        .sa_flags = SA_SIGINFO
++    };
++
++    if (sigaction(SIGBUS, &sa, NULL) < 0) {
++        perror("sigaction");
++        return EXIT_FAILURE;
++    }
++
++    sigsetjmp(after_test, 1);
++    tests[completed_tests]();
++
++    /* should never get here */
++    puts("FAIL");
++    return 1;
++}
+diff --git a/tests/tcg/hexagon/Makefile.target b/tests/tcg/hexagon/Makefile.target
+index f839b2c0d5..75139e731c 100644
+--- a/tests/tcg/hexagon/Makefile.target
++++ b/tests/tcg/hexagon/Makefile.target
+@@ -51,6 +51,7 @@ HEX_TESTS += scatter_gather
+ HEX_TESTS += hvx_misc
+ HEX_TESTS += hvx_histogram
+ HEX_TESTS += invalid-slots
++HEX_TESTS += unaligned_pc
+ 
+ run-and-check-exception = $(call run-test,$2,$3 2>$2.stderr; \
+ 	test $$? -eq 1 && grep -q "exception $(strip $1)" $2.stderr)
+@@ -108,6 +109,9 @@ preg_alias: preg_alias.c hex_test.h
+ read_write_overlap: read_write_overlap.c hex_test.h
+ reg_mut: reg_mut.c hex_test.h
+ 
++unaligned_pc: unaligned_pc.c unaligned_pc_multi_cof.S
++	$(CC) $(CFLAGS) $(CROSS_CC_GUEST_CFLAGS) -mv73 $^ -o $@ $(LDFLAGS)
++
+ # This test has to be compiled for the -mv67t target
+ usr: usr.c hex_test.h
+ 	$(CC) $(CFLAGS) -mv67t -O2 -Wno-inline-asm -Wno-expansion-to-defined $< -o $@ $(LDFLAGS)
+diff --git a/tests/tcg/hexagon/unaligned_pc_multi_cof.S b/tests/tcg/hexagon/unaligned_pc_multi_cof.S
+new file mode 100644
+index 0000000000..10accd0057
+--- /dev/null
++++ b/tests/tcg/hexagon/unaligned_pc_multi_cof.S
+@@ -0,0 +1,5 @@
++.org 0x3
++.global test_multi_cof_unaligned
++test_multi_cof_unaligned:
++	nop
++	jumpr r31
+-- 
+2.37.2
 
 
