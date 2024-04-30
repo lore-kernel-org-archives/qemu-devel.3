@@ -4,64 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68C90C4345F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E115DC10F16
 	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 08:20:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1iiO-0007Wf-7q; Tue, 30 Apr 2024 04:19:52 -0400
+	id 1s1iiJ-0007QO-RE; Tue, 30 Apr 2024 04:19:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s1iiG-0007QM-Lk
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 04:19:46 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1s1ii7-0007Of-VE
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 04:19:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s1iiC-0002Wh-KM
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 04:19:42 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1s1ii6-0002WD-Fa
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 04:19:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714465180;
+ s=mimecast20190719; t=1714465168;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=uO//olb4+eASICal0010LBnYnskJaQvOgDr4LIleKfs=;
- b=E1z9YB267jFcapVchoFo25VAJ0MCTopA24WHFBQ8sSAXqnypUKe0AJSWb5qyFsY5NXYiy0
- AhJMBu+8VGH+EjnzlGa3HvqxGNyTCXTLdGPcYuvMfyFOeOvb6DCMkHm5h36Sy6Wgdddn8K
- ZDqdBD83ytb3uJZty+T/pRRjXFZHR74=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Fsht7l++aoKi7zO9LbKl1lH/u9UhHPHqBZffuoUW3Vg=;
+ b=ghzguYUmjYg3mBPwkAJIpwvr2Enh4HnV/YLymUlhuyUqw7SBHcxeLVntZAXv8QeoRI/Cq7
+ c9Eg71oht/t64Gmzk/+F4Bk/DytDUsrcl6fPPNvnkiwF1D3h0QlLH6RvP5WnqqiC57v7ns
+ kPZPhnQvuMWdrpbg29CIbvIQRh1fcws=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-531-8VqLkmUAOoSZtDuMOZM0RA-1; Tue, 30 Apr 2024 04:19:35 -0400
-X-MC-Unique: 8VqLkmUAOoSZtDuMOZM0RA-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A044F18065B2;
- Tue, 30 Apr 2024 08:19:34 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 4C41840C6DAE;
- Tue, 30 Apr 2024 08:19:34 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7097B21E66C8; Tue, 30 Apr 2024 10:19:33 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-block@nongnu.org,  raphael@enfabrica.net,  mst@redhat.com,
- qemu-devel@nongnu.org,  armbru@redhat.com,  eblake@redhat.com,
- eduardo@habkost.net,  berrange@redhat.com,  pbonzini@redhat.com,
- hreitz@redhat.com,  kwolf@redhat.com,  yc-core@yandex-team.ru
-Subject: Re: [PATCH v4 3/3] qapi: introduce device-sync-config
-In-Reply-To: <20240429101623.1992943-4-vsementsov@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Mon, 29 Apr 2024 13:16:23 +0300")
-References: <20240429101623.1992943-1-vsementsov@yandex-team.ru>
- <20240429101623.1992943-4-vsementsov@yandex-team.ru>
-Date: Tue, 30 Apr 2024 10:19:33 +0200
-Message-ID: <877cgfcley.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ us-mta-471-pS_L4371NweNo1ts_LO2Iw-1; Tue, 30 Apr 2024 04:19:26 -0400
+X-MC-Unique: pS_L4371NweNo1ts_LO2Iw-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-41ab7cdccd2so23188915e9.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 01:19:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714465165; x=1715069965;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=Fsht7l++aoKi7zO9LbKl1lH/u9UhHPHqBZffuoUW3Vg=;
+ b=KjcfYe3fCM0OkrwqwuUt1UtnrM1Q6dKbDmQuoOmPoiYSyMMLzsrY1QLyVzlw+tqWhz
+ irdIImwUz1/yOT05AbbLHXvclhWee1B30IoZcLIE+n0cnSR8Rl/j9YAtldeudNEHHKeI
+ N/NsTDCVTufqyImX1jW+jq+dt6+KyuW6txeYhrNi0kXmdVEnEP/jsnXuGuad1+9/H89g
+ FmpEVFT3G9ae6M/PMr4JcvdSnwqLb2+iKyw1A8QIN67uHbuFdUS3r22BFgTOOj55Khj8
+ oLL6nZIUvftsiZxs6tHm99jfykaopfMN1pxY7c8VDB1NgBUYiWliBzVo2YF4YJo2gVsn
+ Dwjw==
+X-Gm-Message-State: AOJu0Yw0L4XnnTTbZ5pTYLxjoK8o6A77cREn9EUIXYlnDAJH/YmN4vxE
+ jNCj6UJWA2yACw+15+bZEoBOVLj+au/HF95Xqj3w5u4JYO1AgDH7ngdWO8j7KDPlF9lFmRaC7Hm
+ rK2Mqq6bFEyjZv+WcJknimaKAjcCrWkGdCm31q8iDqTL+AliNIo/H
+X-Received: by 2002:a05:600c:4e54:b0:41b:dabe:8633 with SMTP id
+ e20-20020a05600c4e5400b0041bdabe8633mr6788690wmq.21.1714465165493; 
+ Tue, 30 Apr 2024 01:19:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGALyAEWaPU6+0JTYZ31eVapkXIUatmUHUMpm89K9ke5avpDc3/nbXMu7mK4f8BfxITs4Asew==
+X-Received: by 2002:a05:600c:4e54:b0:41b:dabe:8633 with SMTP id
+ e20-20020a05600c4e5400b0041bdabe8633mr6788673wmq.21.1714465165066; 
+ Tue, 30 Apr 2024 01:19:25 -0700 (PDT)
+Received: from ?IPV6:2a09:80c0:192:0:5dac:bf3d:c41:c3e7?
+ ([2a09:80c0:192:0:5dac:bf3d:c41:c3e7])
+ by smtp.gmail.com with ESMTPSA id
+ i4-20020a05600c354400b0041902ebc87esm41031925wmq.35.2024.04.30.01.19.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 30 Apr 2024 01:19:24 -0700 (PDT)
+Message-ID: <ac8c665b-a7a0-45ee-9b3e-baef521812cc@redhat.com>
+Date: Tue, 30 Apr 2024 10:19:23 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/s390x: Attach the sclpconsole to the /machine/sclp node
+To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
+ Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20240430080408.415890-1-thuth@redhat.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20240430080408.415890-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -69,7 +134,7 @@ X-Spam_bar: ---
 X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,201 +150,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+On 30.04.24 10:04, Thomas Huth wrote:
+> The sclpconsole currently does not have a proper parent in the QOM
+> tree, so it shows up under /machine/unattached - which is somewhat
+> ugly. Let's attach it to /machine/sclp instead.
+> 
+> 
 
-> Add command to sync config from vhost-user backend to the device. It
-> may be helpful when VHOST_USER_SLAVE_CONFIG_CHANGE_MSG failed or not
-> triggered interrupt to the guest or just not available (not supported
-> by vhost-user server).
->
-> Command result is racy if allow it during migration. Let's allow the
-> sync only in RUNNING state.
->
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->  hw/block/vhost-user-blk.c |  1 +
->  hw/virtio/virtio-pci.c    |  9 ++++++++
->  include/hw/qdev-core.h    |  3 +++
->  qapi/qdev.json            | 23 +++++++++++++++++++
->  system/qdev-monitor.c     | 48 +++++++++++++++++++++++++++++++++++++++
->  5 files changed, 84 insertions(+)
->
-> diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-> index 091d2c6acf..2f301f380c 100644
-> --- a/hw/block/vhost-user-blk.c
-> +++ b/hw/block/vhost-user-blk.c
-> @@ -588,6 +588,7 @@ static void vhost_user_blk_class_init(ObjectClass *klass, void *data)
->  
->      device_class_set_props(dc, vhost_user_blk_properties);
->      dc->vmsd = &vmstate_vhost_user_blk;
-> +    dc->sync_config = vhost_user_blk_sync_config;
->      set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
->      vdc->realize = vhost_user_blk_device_realize;
->      vdc->unrealize = vhost_user_blk_device_unrealize;
-> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> index b1d02f4b3d..0d91e8b5dc 100644
-> --- a/hw/virtio/virtio-pci.c
-> +++ b/hw/virtio/virtio-pci.c
-> @@ -2351,6 +2351,14 @@ static void virtio_pci_dc_realize(DeviceState *qdev, Error **errp)
->      vpciklass->parent_dc_realize(qdev, errp);
->  }
->  
-> +static int virtio_pci_sync_config(DeviceState *dev, Error **errp)
-> +{
-> +    VirtIOPCIProxy *proxy = VIRTIO_PCI(dev);
-> +    VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
-> +
-> +    return qdev_sync_config(DEVICE(vdev), errp);
-> +}
-> +
->  static void virtio_pci_class_init(ObjectClass *klass, void *data)
->  {
->      DeviceClass *dc = DEVICE_CLASS(klass);
-> @@ -2367,6 +2375,7 @@ static void virtio_pci_class_init(ObjectClass *klass, void *data)
->      device_class_set_parent_realize(dc, virtio_pci_dc_realize,
->                                      &vpciklass->parent_dc_realize);
->      rc->phases.hold = virtio_pci_bus_reset_hold;
-> +    dc->sync_config = virtio_pci_sync_config;
->  }
->  
->  static const TypeInfo virtio_pci_info = {
-> diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
-> index 9228e96c87..87135bdcdf 100644
-> --- a/include/hw/qdev-core.h
-> +++ b/include/hw/qdev-core.h
-> @@ -95,6 +95,7 @@ typedef void (*DeviceUnrealize)(DeviceState *dev);
->  typedef void (*DeviceReset)(DeviceState *dev);
->  typedef void (*BusRealize)(BusState *bus, Error **errp);
->  typedef void (*BusUnrealize)(BusState *bus);
-> +typedef int (*DeviceSyncConfig)(DeviceState *dev, Error **errp);
->  
->  /**
->   * struct DeviceClass - The base class for all devices.
-> @@ -162,6 +163,7 @@ struct DeviceClass {
->      DeviceReset reset;
->      DeviceRealize realize;
->      DeviceUnrealize unrealize;
-> +    DeviceSyncConfig sync_config;
->  
->      /**
->       * @vmsd: device state serialisation description for
-> @@ -546,6 +548,7 @@ bool qdev_hotplug_allowed(DeviceState *dev, Error **errp);
->   */
->  HotplugHandler *qdev_get_hotplug_handler(DeviceState *dev);
->  void qdev_unplug(DeviceState *dev, Error **errp);
-> +int qdev_sync_config(DeviceState *dev, Error **errp);
->  void qdev_simple_device_unplug_cb(HotplugHandler *hotplug_dev,
->                                    DeviceState *dev, Error **errp);
->  void qdev_machine_creation_done(void);
-> diff --git a/qapi/qdev.json b/qapi/qdev.json
-> index facaa0bc6a..fc5e125a45 100644
-> --- a/qapi/qdev.json
-> +++ b/qapi/qdev.json
-> @@ -161,3 +161,26 @@
->  ##
->  { 'event': 'DEVICE_UNPLUG_GUEST_ERROR',
->    'data': { '*device': 'str', 'path': 'str' } }
-> +
-> +##
-> +# @device-sync-config:
-> +#
-> +# Synchronize device configuration from host to guest part.  First,
-> +# copy the configuration from the host part (backend) to the guest
-> +# part (frontend).  Then notify guest software that device
-> +# configuration changed.
+IIRC, this should not affect migration
 
-Blank line here, please.
+Reviewed-by: David Hildenbrand <david@redhat.com>
 
-> +# The command may be used to notify the guest about block device
-> +# capcity change.  Currently only vhost-user-blk device supports
-> +# this.
-> +#
-> +# @id: the device's ID or QOM path
-> +#
-> +# Features:
-> +#
-> +# @unstable: The command is experimental.
-> +#
-> +# Since: 9.1
-> +##
-> +{ 'command': 'device-sync-config',
-> +  'features': [ 'unstable' ],
-> +  'data': {'id': 'str'} }
-> diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-> index 264978aa40..47bfc0506e 100644
-> --- a/system/qdev-monitor.c
-> +++ b/system/qdev-monitor.c
-> @@ -23,6 +23,7 @@
->  #include "monitor/monitor.h"
->  #include "monitor/qdev.h"
->  #include "sysemu/arch_init.h"
-> +#include "sysemu/runstate.h"
->  #include "qapi/error.h"
->  #include "qapi/qapi-commands-qdev.h"
->  #include "qapi/qmp/dispatch.h"
-> @@ -971,6 +972,53 @@ void qmp_device_del(const char *id, Error **errp)
->      }
->  }
->  
-> +int qdev_sync_config(DeviceState *dev, Error **errp)
-> +{
-> +    DeviceClass *dc = DEVICE_GET_CLASS(dev);
-> +
-> +    if (!dc->sync_config) {
-> +        error_setg(errp, "device-sync-config is not supported for '%s'",
-> +                   object_get_typename(OBJECT(dev)));
-> +        return -ENOTSUP;
-> +    }
-> +
-> +    return dc->sync_config(dev, errp);
-> +}
-> +
-> +void qmp_device_sync_config(const char *id, Error **errp)
-> +{
-> +    DeviceState *dev;
-> +
-> +    /*
-> +     * During migration there is a race between syncing`configuration and
-> +     * migrating it (if migrate first, that target would get outdated version),
-> +     * so let's just not allow it.
+-- 
+Cheers,
 
-Wrap comment lines around column 70 for legibility, please.
-
-> +     *
-> +     * Moreover, let's not rely on setting up interrupts in paused
-> +     * state, which may be a part of migration process.
-
-We discussed this in review of v3.  You wanted to check whether the
-problem is real.  Is it?
-
-> +     */
-> +
-> +    if (migration_is_running()) {
-> +        error_setg(errp, "Config synchronization is not allowed "
-> +                   "during migration");
-> +        return;
-> +    }
-> +
-> +    if (!runstate_is_running()) {
-> +        error_setg(errp, "Config synchronization allowed only in '%s' state, "
-
-Suggest a line break after errp,
-
-> +                   "current state is '%s'", RunState_str(RUN_STATE_RUNNING),
-> +                   RunState_str(runstate_get()));
-> +        return;
-> +    }
-> +
-> +    dev = find_device_state(id, true, errp);
-> +    if (!dev) {
-> +        return;
-> +    }
-> +
-> +    qdev_sync_config(dev, errp);
-> +}
-> +
->  void hmp_device_add(Monitor *mon, const QDict *qdict)
->  {
->      Error *err = NULL;
+David / dhildenb
 
 
