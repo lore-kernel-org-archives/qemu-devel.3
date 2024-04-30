@@ -4,81 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 157BBC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 14:13:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEC9EC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 14:13:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1oDl-0008KD-Ih; Tue, 30 Apr 2024 10:12:37 -0400
+	id 1s1oEQ-00009K-Ce; Tue, 30 Apr 2024 10:13:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s1oDj-0008Jn-Qg
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:12:35 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s1oDh-0005Dn-6d
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:12:35 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-56e6affdd21so2291432a12.3
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 07:12:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714486351; x=1715091151; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=+c0a+HMJqB2l8tJ8VFh7s1TOI4yHvMqGBFIiTJbQjlo=;
- b=rOGsmx/tGPJ3PvBsDkfhG1ADT2+NwtZh+vQOI+fWpZY/clKYsYcwc/UedUg+8szwoB
- p93OP/ZMm5qDvq74ARW7o9ncrKpeRgA68dG9L+ACcFBGARe7qiR0ynYRA9GqtfpjtO73
- OSPx8VUUxTFKaf8EG0TJszxVSbG5lwXoeBNC0VYvf9Qtw6kq42Y1+o/M+VKtGnj78sFI
- 6csEwczczFpfDHluDQjBCCHTXoWcf2w3y7ARTXgNR2+QnUOvtScqaUMYANvJpOZ9nplm
- eB3zXYqnuOWj3MBIfBUJzYA0Rbtd6Dvj/2+ZbXwZ3wiaag76/nkwBMLNpSgmxCeiMa16
- tmnw==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s1oEO-00007e-H3
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:13:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s1oEM-0005Iy-Gr
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:13:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714486392;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=YPywCFL7SwgckxTCrjAwx1deaVMHtzsOHtqvJs4c064=;
+ b=Pab6c4xfIVhg7bVIaeOtiaF2sqlCV5Y/SSwbSZ943kc1edVN1rnKkLddqwyIio1a2s1MEb
+ wBYjdvRctuc6+yqUhl/M5eSXQ4N27pTxPXe5rH5NdtiWl4e3CMawhRTMkZOQudlS7ZlC++
+ OFz0TddsUtbfb552VV2QJ9qxRGw851c=
+Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
+ [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-187-9gUYp5l-Nzal2A3nmGh4kw-1; Tue, 30 Apr 2024 10:13:09 -0400
+X-MC-Unique: 9gUYp5l-Nzal2A3nmGh4kw-1
+Received: by mail-lj1-f197.google.com with SMTP id
+ 38308e7fff4ca-2d87dad1640so52402061fa.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 07:13:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714486351; x=1715091151;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+c0a+HMJqB2l8tJ8VFh7s1TOI4yHvMqGBFIiTJbQjlo=;
- b=StUqvkE5s4mCGkgkBCcqh/sl0oQOgOhcBuGkNvPmau9nY+4MuazKeVV3+8ZUZccNsu
- xzGX0QdPSJQKYo3YLOxRGv8pShPIpVB1RbXDLd7pj0z7YJty2lGzUCP9tZEY6Ph+Q+RO
- RI1Feua5g/7TPmRsuoYjX7g4eoi878QCwn923M/syR6hN5bqa2LIG4Lzo8dMw40uzw3C
- nPzx7mV+njfEMEreIkaqxEwLT47VUGARnFjLBK2EfHSQ2+1G5fGFfkn3/BiCn3m/1fbE
- kfn7+5QclxSlsROwyoGII2jjt2U7yQY7hooqpyIEdilfPP0rmHS5CgRa9Sx6CT6TuZpK
- lHDQ==
+ d=1e100.net; s=20230601; t=1714486388; x=1715091188;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=YPywCFL7SwgckxTCrjAwx1deaVMHtzsOHtqvJs4c064=;
+ b=OORzfgf/8XAovOkodrLQQ6aS/FQxFBVsLj90CfNbK3mGKjU3I2AWwS0rUmo1gHPJQX
+ k7gxXLUKRwiMYc+ZOcV9XPbmFJak+pUZwzTDgo5Ki+vQUMPQ0Scdl5tc277IWupVH35z
+ aW86xUBwC9sfR6R8tbzT5iw3FFzDXHWSl1/+Gf1aCys5RfCRToM4ZbJTaSR+YPRlgCxJ
+ D1Bb3lsXZoPGz5ppfCicnSne3hnwfdn9ZBCna8w5vdZ8rtNzNdsdtAzpkfLUVhljmc50
+ uhZNqOMbK+c05jR+JNblHlQvOmvaC9Y7jsw1p0YzVGMEiMYpUzpqtCjrZWWki4UGdEL7
+ aF6g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU1rSQ45fdDH8NdQvyu9P8Ct9hYtckTGjIQO1rZ5DY0MuHpv/ZbXNWTtqGMbA60LSzkVyzZnRe51fnNYziDRM9oYoFjjiI=
-X-Gm-Message-State: AOJu0Yxh3kVWrMjVInp+n+7KfhJwEeq+Vgl9L8maRR6D5rl5wMzaQlWN
- eU5lTQZIVVxFU5mPeqanyxAs6jzCCNsG/ZAZZhtmzpHZiIqWQq/UJp/pi3LjTObcFkVzknz11M4
- G4dO7fJ/HK7SM/VDJThN0MSqEvQra+ngNEUPStA==
-X-Google-Smtp-Source: AGHT+IFn1ssdxRjyP0eKordp6842dVgwri0kXUuLwWyurvmp2MYNqQ2W/RG9E2lDNrpzBpn8ZzsaEvjWdEQeptHAlMo=
-X-Received: by 2002:a50:9e87:0:b0:572:7d75:a70e with SMTP id
- a7-20020a509e87000000b005727d75a70emr6457454edf.25.1714486351368; Tue, 30 Apr
- 2024 07:12:31 -0700 (PDT)
+ AJvYcCUjiK435CHdF9fNL1eMOkzNhyof6OgB5xxv+TR27Vw/ZvCIq98PuYs+ytZ+1RqZdaGj+NFhHixJP8LNuuu+mDwrV/6sjF4=
+X-Gm-Message-State: AOJu0YzxcZvqpDk5CkvJZwWzt+jIH1IcKgY4OJm+LbhwiAKDfe55E2o7
+ MjXhnDU8zayEpifDkLkbrx8GwkgZ9aOUX1AcYaWXWbjmS3v8cDqQ+00TmQw3xdXRfbZ7/pvYnqr
+ 43WFuUavSJD0CuK5FHze+FB+eARFfM3AJO3DF6KL4f/xOYpdAk4a0
+X-Received: by 2002:a05:6512:4882:b0:51d:3675:6a08 with SMTP id
+ eq2-20020a056512488200b0051d36756a08mr1887752lfb.66.1714486388084; 
+ Tue, 30 Apr 2024 07:13:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH/kfcLrfl7CGZDcEWCtKEZJ9eBMpu+6CNlpWX7Lci4wJLS0rNnxqLYwxynA584dnLfXA8k8g==
+X-Received: by 2002:a05:6512:4882:b0:51d:3675:6a08 with SMTP id
+ eq2-20020a056512488200b0051d36756a08mr1887728lfb.66.1714486387618; 
+ Tue, 30 Apr 2024 07:13:07 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ h9-20020a5d4309000000b0034c78001f6asm10301225wrq.109.2024.04.30.07.13.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 30 Apr 2024 07:13:07 -0700 (PDT)
+Message-ID: <9e15abd9-f824-4f11-9532-b0dcb7b521dd@redhat.com>
+Date: Tue, 30 Apr 2024 16:13:03 +0200
 MIME-Version: 1.0
-References: <20240415151845.1564201-1-peter.maydell@linaro.org>
- <CAFEAcA86Frw=GcWdjOgXsbP+9dgGjQpxP79k=nKshPm9LK0QVQ@mail.gmail.com>
- <CABtshVRrPv8uUuX3C2k1BPkS4-_0HQH6aKiMFmLr1B1bck-+Pg@mail.gmail.com>
- <CAPan3Wp7jzm+ErEi0LR+F0acOggt94FPfJCYb-VEUGriiZnPtw@mail.gmail.com>
-In-Reply-To: <CAPan3Wp7jzm+ErEi0LR+F0acOggt94FPfJCYb-VEUGriiZnPtw@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 30 Apr 2024 15:12:19 +0100
-Message-ID: <CAFEAcA8FS=6mn754LGs6KGDahm0vyifiK9P2i57i_TsKvPqUOw@mail.gmail.com>
-Subject: Re: [PATCH] tests/avocado: update sunxi kernel from armbian to 6.6.16
-To: Niek Linnenbank <nieklinnenbank@gmail.com>
-Cc: Strahinja Jankovic <strahinjapjankovic@gmail.com>, qemu-arm@nongnu.org, 
- qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
- Beniamino Galvani <b.galvani@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH intel_iommu 0/7] FLTS for VT-d
+To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "jasowang@redhat.com" <jasowang@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>, "Tian, Kevin"
+ <kevin.tian@intel.com>, Liu Yi L <yi.l.liu@intel.com>,
+ Joao Martins <joao.m.martins@oracle.com>, Peter Xu <peterx@redhat.com>
+References: <20240422155236.129179-1-clement.mathieu--drif@eviden.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240422155236.129179-1-clement.mathieu--drif@eviden.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,43 +107,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 29 Apr 2024 at 21:40, Niek Linnenbank <nieklinnenbank@gmail.com> wrote:
->
-> Hi Peter, Strahinja,
->
-> I can confirm that the orangepi-pc and cubieboard based tests are working OK using the newer kernel 6.6.16:
->
->   $ ARMBIAN_ARTIFACTS_CACHED=yes AVOCADO_ALLOW_LARGE_STORAGE=yes ./build/pyvenv/bin/avocado --show=app,console run -t machine:orangepi-pc -t machine:cubieboard tests/avocado/boot_linux_console.py
->   ...
->   RESULTS    : PASS 7 | ERROR 0 | FAIL 0 | SKIP 0 | WARN 0 | INTERRUPT 0 | CANCEL 1
->   JOB TIME   : 177.65 s
->
-> So for this patch:
-> Reviewed-by: Niek Linnenbank <nieklinnenbank@gmail.com>
-> Tested-by: Niek Linnenbank <nieklinnenbank@gmail.com>
+Hello,
 
-Great, thanks. (I'll put this patch into an upcoming arm pullreq.)
+Adding a few people in Cc: who are familiar with the Intel IOMMU.
 
-> About the BootLinuxConsole.test_arm_orangepi_bionic_20_08 test, I'd be happy to provide a patch to revive that test.
-> Since that test is no longer working without having the image available, this could also be a good moment to re-consider if armbian is really the best input for testing
-> the orangepi-pc board. The image is relatively larger and slower compared to other images, like the two openwrt based tests for cubieboard and bpim2u.
->
-> After some searching I've found that Openwrt also has orangepi-pc support:
->   https://openwrt.org/toh/xunlong/orange_pi_pc
->
-> That image works fine with our emulated orangepi-pc board:
->
-> $ qemu-system-arm -M orangepi-pc -sd openwrt-23.05.0-sunxi-cortexa7-xunlong_orangepi-pc-ext4-sdcard.img -nographic
+Thanks,
 
-> Using openwrt also for the orangepi-pc test instead of armbian also gives some consistency between the various tests, to some degree. What are you opinions on this?
+C.
 
-Yeah, seems reasonable. My main thing to think about would be
-that to understand what extra coverage this gives us that we
-don't already have (there's no point running a ton of tests
-which all amount to "boot a Linux kernel to a shell prompt").
-It looks like what we get from this one is that we are testing
-the "boot off an SD card image via u-boot" flow -- is that right?
 
-thanks
--- PMM
+
+
+On 4/22/24 17:52, CLEMENT MATHIEU--DRIF wrote:
+> This series is the first of a list that add support for SVM in the Intel IOMMU.
+> 
+> Here, we implement support for first-stage translation in VT-d.
+> The PASID-based IOTLB invalidation is also added in this series as it is a
+> requirement of FLTS.
+> 
+> The last patch introduces the 'flts' option to enable the feature from
+> the command line.
+> Once enabled, several drivers of the Linux kernel use this feature.
+> 
+> This work is based on the VT-d specification version 4.1 (March 2023)
+> 
+> Here is a link to a GitHub repository where you can find the following elements :
+>      - Qemu with all the patches for SVM
+>          - ATS
+>          - PRI
+>          - PASID based IOTLB invalidation
+>          - Device IOTLB invalidations
+>          - First-stage translations
+>          - Requests with already translated addresses
+>      - A demo device
+>      - A simple driver for the demo device
+>      - A userspace program (for testing and demonstration purposes)
+> 
+> https://github.com/BullSequana/Qemu-in-guest-SVM-demo
+> 
+> Clément Mathieu--Drif (7):
+>    intel_iommu: fix FRCD construction macro.
+>    intel_iommu: rename slpte to pte before adding FLTS
+>    intel_iommu: make types match
+>    intel_iommu: add support for first-stage translation
+>    intel_iommu: extract device IOTLB invalidation logic
+>    intel_iommu: add PASID-based IOTLB invalidation
+>    intel_iommu: add a CLI option to enable FLTS
+> 
+>   hw/i386/intel_iommu.c          | 655 ++++++++++++++++++++++++++-------
+>   hw/i386/intel_iommu_internal.h | 114 ++++--
+>   include/hw/i386/intel_iommu.h  |   3 +-
+>   3 files changed, 609 insertions(+), 163 deletions(-)
+> 
+
 
