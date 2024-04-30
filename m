@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3032FC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 07:16:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88DFAC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 07:17:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1hgy-0001Nn-47; Tue, 30 Apr 2024 03:14:20 -0400
+	id 1s1hgq-00015j-Eh; Tue, 30 Apr 2024 03:14:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1hgw-0001MD-Db
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 03:14:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1hgn-00012X-U4
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 03:14:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1hgu-0008TW-RV
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 03:14:18 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1hgm-0008SN-9s
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 03:14:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714461256;
+ s=mimecast20190719; t=1714461247;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VASDeVyKHpvEH7J2Q5TVqloiw1u+C8/hjy+8eNt4gh0=;
- b=fMvb7nnwJOtjY+nqcKgiuNtxcPk/Z5VfXxUELlPfMZEhrX8re0NlPEamevZmaCjYpfxhst
- tZnsFBYgCYrS/Ptc3uITizlc+/MLiAk3ghcoy4KNF0VEFf0iZI6yCMeOkxEIMtYgAl+EG8
- iZrPL9MA44fY+lT6ujakeG1vDdX1rvw=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-264-33yU4QoTP3yZBcFUOhRtdA-1; Tue,
- 30 Apr 2024 03:14:12 -0400
-X-MC-Unique: 33yU4QoTP3yZBcFUOhRtdA-1
+ bh=V0/55EwLMD8Br/Sk0xX5w07o3dRMXJIZvd13GfK82/4=;
+ b=Qw9LJyMgJETxZ5lbpZQvh8H8zQpWEVGFNIWzJ3x+K/wwTT0br8OseauET1raXNGWXGMr//
+ tfrjEN4SMD1mqQolTzG6UzcRMt3PSUUJxgxskIkOL4wNUWB93aHJAYEiB0jwWghOU9O9aI
+ VGXdFZ8Ip8Qe9FSuWU/l6vv44o58obg=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-9-CkkNoU7ROWWYD0NG6F44nQ-1; Tue, 30 Apr 2024 03:14:05 -0400
+X-MC-Unique: CkkNoU7ROWWYD0NG6F44nQ-1
 Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
  [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 860761C031A0;
- Tue, 30 Apr 2024 07:14:12 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5CEF389A7E0;
+ Tue, 30 Apr 2024 07:14:05 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.79])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 7811F40C140B;
- Tue, 30 Apr 2024 07:14:11 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 12948400D280;
+ Tue, 30 Apr 2024 07:14:03 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 18/19] .gitlab-ci.d/cirrus.yml: Shorten the runtime of the
- macOS and FreeBSD jobs
-Date: Tue, 30 Apr 2024 09:13:39 +0200
-Message-ID: <20240430071340.413305-19-thuth@redhat.com>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 13/19] build-environment: make some packages optional
+Date: Tue, 30 Apr 2024 09:13:34 +0200
+Message-ID: <20240430071340.413305-14-thuth@redhat.com>
 In-Reply-To: <20240430071340.413305-1-thuth@redhat.com>
 References: <20240430071340.413305-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -79,39 +80,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cirrus-CI introduced limitations to the free CI minutes. To avoid that
-we are consuming them too fast, let's drop the usual targets that are
-not that important since they are either a subset of another target
-(like i386 or ppc being a subset of x86_64 or ppc64 respectively), or
-since there is still a similar target with the opposite endianness
-(like xtensa/xtensael, microblaze/microblazeel etc.).
+From: Alex Bennée <alex.bennee@linaro.org>
 
-Message-ID: <20240429100113.53357-1-thuth@redhat.com>
+Upgrading the s390x runner exposed some packages are not available for
+it. Add an additional optional stage we only enable for arm64/x86_64
+for now.
+
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20240426153938.1707723-2-alex.bennee@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- .gitlab-ci.d/cirrus.yml | 2 ++
- 1 file changed, 2 insertions(+)
+ scripts/ci/setup/build-environment.yml | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/.gitlab-ci.d/cirrus.yml b/.gitlab-ci.d/cirrus.yml
-index 4671f069c3..49f86fadaf 100644
---- a/.gitlab-ci.d/cirrus.yml
-+++ b/.gitlab-ci.d/cirrus.yml
-@@ -57,6 +57,7 @@ x64-freebsd-13-build:
-     CIRRUS_VM_RAM: 8G
-     UPDATE_COMMAND: pkg update; pkg upgrade -y
-     INSTALL_COMMAND: pkg install -y
-+    CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,microblaze-softmmu,mips64el-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4eb-softmmu,xtensa-softmmu
-     TEST_TARGETS: check
+diff --git a/scripts/ci/setup/build-environment.yml b/scripts/ci/setup/build-environment.yml
+index f344d1a850..de0d866a1e 100644
+--- a/scripts/ci/setup/build-environment.yml
++++ b/scripts/ci/setup/build-environment.yml
+@@ -95,7 +95,6 @@
+           - libpam0g-dev
+           - libpcre2-dev
+           - libpixman-1-dev
+-          - libpmem-dev
+           - libpng-dev
+           - libpulse-dev
+           - librbd-dev
+@@ -107,7 +106,6 @@
+           - libslirp-dev
+           - libsnappy-dev
+           - libspice-protocol-dev
+-          - libspice-server-dev
+           - libssh-dev
+           - libsystemd-dev
+           - libtasn1-6-dev
+@@ -119,7 +117,6 @@
+           - libvdeplug-dev
+           - libvirglrenderer-dev
+           - libvte-2.91-dev
+-          - libxen-dev
+           - libxml2-dev
+           - libzstd-dev
+           - llvm
+@@ -156,6 +153,19 @@
+         - ansible_facts['distribution'] == 'Ubuntu'
+         - ansible_facts['distribution_version'] == '22.04'
  
- aarch64-macos-13-base-build:
-@@ -72,6 +73,7 @@ aarch64-macos-13-base-build:
-     INSTALL_COMMAND: brew install
-     PATH_EXTRA: /opt/homebrew/ccache/libexec:/opt/homebrew/gettext/bin
-     PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/ncurses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
-+    CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,microblazeel-softmmu,mips64-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4-softmmu,xtensaeb-softmmu
-     TEST_TARGETS: check-unit check-block check-qapi-schema check-softfloat check-qtest-x86_64
- 
- aarch64-macos-14-base-build:
++    # not all packages are available for all architectures
++    - name: Install additional packages to build QEMU on Ubuntu 22.04
++      package:
++        name:
++          - libpmem-dev
++          - libspice-server-dev
++          - libxen-dev
++        state: present
++      when:
++        - ansible_facts['distribution'] == 'Ubuntu'
++        - ansible_facts['distribution_version'] == '22.04'
++        - ansible_facts['architecture'] == 'aarch64' or ansible_facts['architecture'] == 'x86_64'
++
+     - name: Install armhf cross-compile packages to build QEMU on AArch64 Ubuntu 22.04
+       package:
+         name:
 -- 
 2.44.0
 
