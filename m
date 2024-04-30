@@ -4,57 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C09ADC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 07:15:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C01CEC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 07:15:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1hh2-0001Vn-Vi; Tue, 30 Apr 2024 03:14:25 -0400
+	id 1s1hgc-0000hU-MJ; Tue, 30 Apr 2024 03:13:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1hgz-0001Ov-S1
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 03:14:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1hga-0000gr-3y
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 03:13:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1hgy-0008Tx-2c
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 03:14:21 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1hgY-0008Kw-Al
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 03:13:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714461259;
+ s=mimecast20190719; t=1714461233;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6okfwh37Ygz08OhCRrVgdxLTl0QALtsA+vWXX2pfzjI=;
- b=ayyCGlwmx96Gvrb6SlrjPGTwYvmIiEAA20GlABQazJW0q5jMtnL8q0n7aIrllZUldBxGrb
- vnzB06eKjgbiBIT07pcNbsuVOAKnxDHKPkKT+63Z0D5H6RDRPwkNg1g2rRys3B1mxQp8Kh
- dTHLuuYdb1ukDWqpKUcx+QyydWF21gE=
+ bh=PyE/YM70aKyc4a3mwxYwnc9EiX20cEcKWdcCnAsoeb4=;
+ b=egCY+1UCm5B6qwYzjZS1Uy1hRD/sT0Juw1Mu110UgqhwBZxKgc5G0NjIjv6xCCikYXqCRM
+ M7L8O/RMXZOCNtvihAl4ROyNE6AayOgAPRt3KyPeXblqBmOdCgJh7Z5GE8AyREvc0yAYmc
+ 2GHCqB7ARViUjYe0T2FbhBpYbqAId6E=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-63-vq90ZyC3N1ezmMbcQVxbCw-1; Tue,
- 30 Apr 2024 03:14:15 -0400
-X-MC-Unique: vq90ZyC3N1ezmMbcQVxbCw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-554-Fae5nGc8NU22Oue763R8JA-1; Tue,
+ 30 Apr 2024 03:13:51 -0400
+X-MC-Unique: Fae5nGc8NU22Oue763R8JA-1
 Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
  [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1419F29ABA0E;
- Tue, 30 Apr 2024 07:14:14 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 480053C0F18A;
+ Tue, 30 Apr 2024 07:13:51 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.79])
- by smtp.corp.redhat.com (Postfix) with ESMTP id DF78B40C141D;
- Tue, 30 Apr 2024 07:14:12 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id E8DA340C6DAE;
+ Tue, 30 Apr 2024 07:13:49 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 19/19] .gitlab-ci.d/cirrus: Remove the netbsd and openbsd jobs
-Date: Tue, 30 Apr 2024 09:13:40 +0200
-Message-ID: <20240430071340.413305-20-thuth@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 05/19] target/s390x/cpu_models: Make kvm_s390_apply_cpu_model()
+ return boolean
+Date: Tue, 30 Apr 2024 09:13:26 +0200
+Message-ID: <20240430071340.413305-6-thuth@redhat.com>
 In-Reply-To: <20240430071340.413305-1-thuth@redhat.com>
 References: <20240430071340.413305-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -78,107 +80,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-During the past months, the netbsd and openbsd jobs in the Cirrus-CI
-were broken most of the time - the setup to run a BSD in KVM on Cirrus-CI
-from gitlab via the cirrus-run script was very fragile, and since the
-jobs were not run by default, it used to bitrot very fast.
+From: Zhao Liu <zhao1.liu@intel.com>
 
-Now Cirrus-CI also introduce a limit on the amount of free CI minutes
-that you get there, so it is not appealing at all anymore to run
-these BSDs in this setup - it's better to run the checks locally via
-"make vm-build-openbsd" and "make vm-build-netbsd" instead. Thus let's
-remove these CI jobs now.
+As error.h suggested, the best practice for callee is to return
+something to indicate success / failure.
 
-Message-ID: <20240426113742.654748-1-thuth@redhat.com>
+So make kvm_s390_apply_cpu_model() return boolean and check the
+returned boolean in apply_cpu_model() instead of accessing @err.
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20240425031232.1586401-7-zhao1.liu@intel.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- .gitlab-ci.d/cirrus.yml           | 37 -------------------------------
- .gitlab-ci.d/cirrus/kvm-build.yml | 31 --------------------------
- 2 files changed, 68 deletions(-)
- delete mode 100644 .gitlab-ci.d/cirrus/kvm-build.yml
+ target/s390x/cpu_models.h        |  2 +-
+ target/s390x/cpu_models_sysemu.c |  3 +--
+ target/s390x/kvm/kvm.c           | 15 ++++++++-------
+ 3 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/.gitlab-ci.d/cirrus.yml b/.gitlab-ci.d/cirrus.yml
-index 49f86fadaf..75df1273bc 100644
---- a/.gitlab-ci.d/cirrus.yml
-+++ b/.gitlab-ci.d/cirrus.yml
-@@ -91,40 +91,3 @@ aarch64-macos-14-base-build:
-     PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/ncurses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
-     TEST_TARGETS: check-unit check-block check-qapi-schema check-softfloat check-qtest-x86_64
-     QEMU_JOB_OPTIONAL: 1
--
--
--# The following jobs run VM-based tests via KVM on a Linux-based Cirrus-CI job
--.cirrus_kvm_job:
--  extends: .base_job_template
--  stage: build
--  image: registry.gitlab.com/libvirt/libvirt-ci/cirrus-run:master
--  needs: []
--  timeout: 80m
--  script:
--    - sed -e "s|[@]CI_REPOSITORY_URL@|$CI_REPOSITORY_URL|g"
--          -e "s|[@]CI_COMMIT_REF_NAME@|$CI_COMMIT_REF_NAME|g"
--          -e "s|[@]CI_COMMIT_SHA@|$CI_COMMIT_SHA|g"
--          -e "s|[@]NAME@|$NAME|g"
--          -e "s|[@]CONFIGURE_ARGS@|$CONFIGURE_ARGS|g"
--          -e "s|[@]TEST_TARGETS@|$TEST_TARGETS|g"
--      <.gitlab-ci.d/cirrus/kvm-build.yml >.gitlab-ci.d/cirrus/$NAME.yml
--    - cat .gitlab-ci.d/cirrus/$NAME.yml
--    - cirrus-run -v --show-build-log always .gitlab-ci.d/cirrus/$NAME.yml
--  variables:
--    QEMU_JOB_CIRRUS: 1
--    QEMU_JOB_OPTIONAL: 1
--
--
--x86-netbsd:
--  extends: .cirrus_kvm_job
--  variables:
--    NAME: netbsd
--    CONFIGURE_ARGS: --target-list=x86_64-softmmu,ppc64-softmmu,aarch64-softmmu
--    TEST_TARGETS: check
--
--x86-openbsd:
--  extends: .cirrus_kvm_job
--  variables:
--    NAME: openbsd
--    CONFIGURE_ARGS: --target-list=i386-softmmu,riscv64-softmmu,mips64-softmmu
--    TEST_TARGETS: check
-diff --git a/.gitlab-ci.d/cirrus/kvm-build.yml b/.gitlab-ci.d/cirrus/kvm-build.yml
-deleted file mode 100644
-index a93881aa8b..0000000000
---- a/.gitlab-ci.d/cirrus/kvm-build.yml
-+++ /dev/null
-@@ -1,31 +0,0 @@
--container:
--  image: fedora:35
--  cpu: 4
--  memory: 8Gb
--  kvm: true
--
--env:
--  CIRRUS_CLONE_DEPTH: 1
--  CI_REPOSITORY_URL: "@CI_REPOSITORY_URL@"
--  CI_COMMIT_REF_NAME: "@CI_COMMIT_REF_NAME@"
--  CI_COMMIT_SHA: "@CI_COMMIT_SHA@"
--
--@NAME@_task:
--  @NAME@_vm_cache:
--    folder: $HOME/.cache/qemu-vm
--  install_script:
--    - dnf update -y
--    - dnf install -y git make openssh-clients qemu-img qemu-system-x86 wget meson
--  clone_script:
--    - git clone --depth 100 "$CI_REPOSITORY_URL" .
--    - git fetch origin "$CI_COMMIT_REF_NAME"
--    - git reset --hard "$CI_COMMIT_SHA"
--  build_script:
--    - if [ -f $HOME/.cache/qemu-vm/images/@NAME@.img ]; then
--        make vm-build-@NAME@ J=$(getconf _NPROCESSORS_ONLN)
--          EXTRA_CONFIGURE_OPTS="@CONFIGURE_ARGS@"
--          BUILD_TARGET="@TEST_TARGETS@" ;
--      else
--        make vm-build-@NAME@ J=$(getconf _NPROCESSORS_ONLN) BUILD_TARGET=help
--          EXTRA_CONFIGURE_OPTS="--disable-system --disable-user --disable-tools" ;
--      fi
+diff --git a/target/s390x/cpu_models.h b/target/s390x/cpu_models.h
+index c14aff6c10..71d4bc2dd4 100644
+--- a/target/s390x/cpu_models.h
++++ b/target/s390x/cpu_models.h
+@@ -116,6 +116,6 @@ S390CPUDef const *s390_find_cpu_def(uint16_t type, uint8_t gen, uint8_t ec_ga,
+ 
+ bool kvm_s390_cpu_models_supported(void);
+ bool kvm_s390_get_host_cpu_model(S390CPUModel *model, Error **errp);
+-void kvm_s390_apply_cpu_model(const S390CPUModel *model,  Error **errp);
++bool kvm_s390_apply_cpu_model(const S390CPUModel *model,  Error **errp);
+ 
+ #endif /* TARGET_S390X_CPU_MODELS_H */
+diff --git a/target/s390x/cpu_models_sysemu.c b/target/s390x/cpu_models_sysemu.c
+index 2d99218069..bf855c659d 100644
+--- a/target/s390x/cpu_models_sysemu.c
++++ b/target/s390x/cpu_models_sysemu.c
+@@ -405,8 +405,7 @@ void apply_cpu_model(const S390CPUModel *model, Error **errp)
+     }
+ 
+     if (kvm_enabled()) {
+-        kvm_s390_apply_cpu_model(model, &err);
+-        if (err) {
++        if (!kvm_s390_apply_cpu_model(model, &err)) {
+             error_propagate(errp, err);
+             return;
+         }
+diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
+index 2c3e05cae3..1b494ecc20 100644
+--- a/target/s390x/kvm/kvm.c
++++ b/target/s390x/kvm/kvm.c
+@@ -2543,7 +2543,7 @@ static void kvm_s390_configure_apie(bool interpret)
+     }
+ }
+ 
+-void kvm_s390_apply_cpu_model(const S390CPUModel *model, Error **errp)
++bool kvm_s390_apply_cpu_model(const S390CPUModel *model, Error **errp)
+ {
+     struct kvm_s390_vm_cpu_processor prop  = {
+         .fac_list = { 0 },
+@@ -2560,11 +2560,11 @@ void kvm_s390_apply_cpu_model(const S390CPUModel *model, Error **errp)
+         if (kvm_s390_cmma_available()) {
+             kvm_s390_enable_cmma();
+         }
+-        return;
++        return true;
+     }
+     if (!kvm_s390_cpu_models_supported()) {
+         error_setg(errp, "KVM doesn't support CPU models");
+-        return;
++        return false;
+     }
+     prop.cpuid = s390_cpuid_from_cpu_model(model);
+     prop.ibc = s390_ibc_from_cpu_model(model);
+@@ -2574,19 +2574,19 @@ void kvm_s390_apply_cpu_model(const S390CPUModel *model, Error **errp)
+     rc = kvm_vm_ioctl(kvm_state, KVM_SET_DEVICE_ATTR, &attr);
+     if (rc) {
+         error_setg(errp, "KVM: Error configuring the CPU model: %d", rc);
+-        return;
++        return false;
+     }
+     /* configure cpu features indicated e.g. via SCLP */
+     rc = configure_cpu_feat(model->features);
+     if (rc) {
+         error_setg(errp, "KVM: Error configuring CPU features: %d", rc);
+-        return;
++        return false;
+     }
+     /* configure cpu subfunctions indicated via query / test bit */
+     rc = configure_cpu_subfunc(model->features);
+     if (rc) {
+         error_setg(errp, "KVM: Error configuring CPU subfunctions: %d", rc);
+-        return;
++        return false;
+     }
+     /* enable CMM via CMMA */
+     if (test_bit(S390_FEAT_CMM, model->features)) {
+@@ -2601,8 +2601,9 @@ void kvm_s390_apply_cpu_model(const S390CPUModel *model, Error **errp)
+     rc = configure_uv_feat_guest(model->features);
+     if (rc) {
+         error_setg(errp, "KVM: Error configuring CPU UV features %d", rc);
+-        return;
++        return false;
+     }
++    return true;
+ }
+ 
+ void kvm_s390_restart_interrupt(S390CPU *cpu)
 -- 
 2.44.0
 
