@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D805AC10F16
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 15:36:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 696C7C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 15:39:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1pWf-0005Gc-5T; Tue, 30 Apr 2024 11:36:13 -0400
+	id 1s1pZo-0006i6-Qe; Tue, 30 Apr 2024 11:39:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1pWb-0005FS-Aa
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 11:36:09 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1pZn-0006hO-84
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 11:39:27 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1pWY-00069d-ME
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 11:36:09 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-34d7a32bdd3so583161f8f.0
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 08:36:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1pZl-0006aT-I6
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 11:39:26 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-41a72f3a20dso41475255e9.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 08:39:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714491365; x=1715096165; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714491564; x=1715096364; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=MVfgG4w0J2VEeYTe+v0ETDoSX+XOiQtFa7QqT+A8Iao=;
- b=VjWba1JspIwzDv1X5Zed/Addmo6eS4aWnCBpzBWgHqRZmJ7fKKVxrGHsliEQuHElx5
- 0E46pr96i4CZ8ArjKQ8fBBt3TcY5NnwqlgxQsQtsU0iyOoPGMDSWetLBC5mg5sPu2WLZ
- QZxiSZQocy+QpuUdFxbNEhjT+nMNCkDFU1Dkv5YspjWi8VNz9t4fk+IItOVfpzQdNtAG
- yGWMSoRPnF/GpizvcxLEbazLnM6tBJjXKvqln2+VDq82xqWe/YlFhJxNXb9PT3rYwa9M
- EPHkqodgneyGVnXH3ysXBGE3mU+4AvcbPBZJjztYmr3kLGmvvqXSu6vzjbq4Sylghf/E
- ZP/A==
+ bh=ro5JFSGgzEkgdJg8C7TXv2B8QW+b5qGmICAHuqQZ8Uw=;
+ b=Vki0DQs43DC5m9sBFac3QCOAQ7KwLHQzRLMI1M+AVvZysWjEqOiOIGKG1a+wKE99CX
+ +4TTWqJ+1cvluLSfi39JTm7hJL79KImPlE1uHxm5fkGr4muGZXpdvxfhQvvo6y8z+RJI
+ Lf04w8/aVneXHo6tDPdSiOr34D9A8OgRQM0fPkUN/p1NC1DKNqU+l9rzzvDpXr7H+Xsu
+ Aq/TsdPUgSfcBzg9Ur+hi6lKiYRQtEdP2bfnXs9nDXziEBbHCfZhl+ndIqJoKP/FgG99
+ WBPOYikRxLl7Guq+VU+VDlnFLF7NKWkDanS+ehaOFW8RjoN8+De654xcxOv2ZCX7wUc1
+ 4O1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714491365; x=1715096165;
+ d=1e100.net; s=20230601; t=1714491564; x=1715096364;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MVfgG4w0J2VEeYTe+v0ETDoSX+XOiQtFa7QqT+A8Iao=;
- b=X9NKdo4T0yUQk/buDOiWft+fTju/W4jB/fM7FBZpU9KpTcp4gFS2p9dwWEp6YjJD9K
- 3ZvbcE26fx5nfVnFTn5e83Y5SucD66k0nVuajGmEYndlA/key4PSkZSt2wz9i9DqFeRL
- +Mjhe87+EBbUfKgsp5e4GNI5hlFrsAuw49baBfOdGW27xpYIB5MHGaqp/3Gqz4Q40bDy
- a8acDNJ7kT29kEhaQ8MORhiYUM6UczIlmfss0uN6K6m8FXSqG9jwOdg4zPPaLN9qlM/w
- DaVypVwUDXEyzW90YtRLEOJvpkVNAynn2KuSaNPGm7HyRUsxDdmsB7gBqubRaA7efkp6
- Waug==
+ bh=ro5JFSGgzEkgdJg8C7TXv2B8QW+b5qGmICAHuqQZ8Uw=;
+ b=VKfOk/YHYZvgp4ORR4lnlHeEIz9pxUBQQgr102N/tdVnrSGkM+0PQbV80cIji6DOlJ
+ OQ91DqpJdQKSKeROzdH5lbnhPg+DyqwbjnyLIlIjgKoC0U/4kO7RrXRYlP3bwlKqGj6L
+ e++RdffAqPbAy0e+0fLcuGBZNqFTSUgHGOWB0b8ftyX1h5Dcitny96wIsrrFtCZXHSQb
+ 2imGCk4KcQxuFNOUwroslfaGHiVOkFXuSZGWfFY5pYTIVm+zbG0UZ0oUEBh/4DK/9K/k
+ bqJr3KPz7LPmL2UlViLlUmJUx+LMHE/dSxSdzUHCOHrnIh8KfOFRIrtOfe9KsBdoUjJq
+ wSjQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX+IM2LFjb2idMM7AjyJmwtgPf57tAE6xWzJcEzGbIwt2hXJsMFvjiyCCA/d5gMRK/pQd6mMAJwePlI0FKhANEiFEUvNa4=
-X-Gm-Message-State: AOJu0YxsnfLFx5FIS1ldq46hBcoOtfROvNnJ86AWAw/NzY3yYyU6WvVD
- hwoIXBJ/GxncJFvlONM1ZOLmCu1KEcyOY07zVV4nhoAEDLeEwzTE6vYkdi5pkHk=
-X-Google-Smtp-Source: AGHT+IG+BuP1jr5EBu+SSQBgCq+sUntJWIc24kJu62iajVcrM/pDc6IesLIXy3BATzTPyfxmlvX2EQ==
-X-Received: by 2002:a5d:570b:0:b0:34a:2852:f119 with SMTP id
- a11-20020a5d570b000000b0034a2852f119mr47873wrv.36.1714491364797; 
- Tue, 30 Apr 2024 08:36:04 -0700 (PDT)
+ AJvYcCXujYidKd97x1tv+IQyXK2nDyYrnx9Yfb1EKbz/Iy2hTVNfIzJIis4jhp2pJnRYEdUC+wAkpGyNfvHhgz25JE2SAod+vAo=
+X-Gm-Message-State: AOJu0YyeLZKiPkRbup+m3oLWT0uT0sghUdPwvU9swr31XZ+GRMDRy0Wv
+ EE7K0KZAvi4CjPdgTbBL+x0/mtqalq2i1HrfX5oyOREgI7alP1GCKYlAC6qxrFU=
+X-Google-Smtp-Source: AGHT+IEKAVVjctccWEcnDHTddz7qyilitnzuf5BMCdj1KRvL4TNcwpi/W2TZa7BxE57KfrTvr8vRMA==
+X-Received: by 2002:a05:600c:1ca2:b0:418:17e9:c23f with SMTP id
+ k34-20020a05600c1ca200b0041817e9c23fmr10889732wms.31.1714491564000; 
+ Tue, 30 Apr 2024 08:39:24 -0700 (PDT)
 Received: from [192.168.69.100] (mab78-h01-176-184-55-179.dsl.sta.abo.bbox.fr.
  [176.184.55.179]) by smtp.gmail.com with ESMTPSA id
- d4-20020a5d6dc4000000b00341ce80ea66sm32206114wrz.82.2024.04.30.08.36.03
+ n26-20020a05600c3b9a00b0041bf87e702asm11441235wms.10.2024.04.30.08.39.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Apr 2024 08:36:04 -0700 (PDT)
-Message-ID: <d7e69e3e-4991-4629-9d76-f7adcc7398ba@linaro.org>
-Date: Tue, 30 Apr 2024 17:36:01 +0200
+ Tue, 30 Apr 2024 08:39:23 -0700 (PDT)
+Message-ID: <65316058-d2e1-4250-91e6-4da22c1279ed@linaro.org>
+Date: Tue, 30 Apr 2024 17:39:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/6] hw/i386: Have x86_bios_rom_init() take
- X86MachineState rather than MachineState
+Subject: Re: [PATCH v2 6/6] hw/i386/pc_sysfw: Alias rather than copy isa-bios
+ region
 To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -71,14 +71,14 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Michael Roth <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>
 References: <20240430150643.111976-1-shentey@gmail.com>
- <20240430150643.111976-3-shentey@gmail.com>
+ <20240430150643.111976-7-shentey@gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240430150643.111976-3-shentey@gmail.com>
+In-Reply-To: <20240430150643.111976-7-shentey@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,17 +102,54 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 30/4/24 17:06, Bernhard Beschow wrote:
-> The function creates and leaks two MemoryRegion objects regarding the BIOS which
-> will be moved into X86MachineState in the next steps to avoid the leakage.
+> In the -bios case the "isa-bios" memory region is an alias to the BIOS mapped
+> to the top of the 4G memory boundary. Do the same in the -pflash case, but only
+> for new machine versions for migration compatibility. This establishes common
+> behavior and makes pflash commands work in the "isa-bios" region which some
+> real-world legacy bioses rely on.
+
+Can you amend a diff of 'info mtree' here to see how the layout changes?
+
+> Note that in the sev_enabled() case, the "isa-bios" memory region in the -pflash
+> case will now also point to encrypted memory, just like it already does in the
+> -bios case.
 > 
 > Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 > ---
->   include/hw/i386/x86.h | 2 +-
->   hw/i386/microvm.c     | 2 +-
->   hw/i386/pc_sysfw.c    | 4 ++--
->   hw/i386/x86.c         | 4 ++--
->   4 files changed, 6 insertions(+), 6 deletions(-)
+>   include/hw/i386/pc.h | 1 +
+>   hw/i386/pc.c         | 1 +
+>   hw/i386/pc_piix.c    | 3 +++
+>   hw/i386/pc_q35.c     | 2 ++
+>   hw/i386/pc_sysfw.c   | 8 +++++++-
+>   5 files changed, 14 insertions(+), 1 deletion(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+I'm still not convinced we need a migration back compat for this...
+
+> diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+> index 82d37cb376..ac88ad4eb9 100644
+> --- a/hw/i386/pc_sysfw.c
+> +++ b/hw/i386/pc_sysfw.c
+> @@ -135,6 +135,7 @@ static void pc_system_flash_map(PCMachineState *pcms,
+>                                   MemoryRegion *rom_memory)
+>   {
+>       X86MachineState *x86ms = X86_MACHINE(pcms);
+> +    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
+>       hwaddr total_size = 0;
+>       int i;
+>       BlockBackend *blk;
+> @@ -184,7 +185,12 @@ static void pc_system_flash_map(PCMachineState *pcms,
+>   
+>           if (i == 0) {
+>               flash_mem = pflash_cfi01_get_memory(system_flash);
+> -            pc_isa_bios_init(&x86ms->isa_bios, rom_memory, flash_mem);
+> +            if (pcmc->isa_bios_alias) {
+> +                x86_isa_bios_init(&x86ms->isa_bios, rom_memory, flash_mem,
+> +                                  true);
+> +            } else {
+> +                pc_isa_bios_init(&x86ms->isa_bios, rom_memory, flash_mem);
+> +            }
+>   
+>               /* Encrypt the pflash boot ROM */
+>               if (sev_enabled()) {
 
 
