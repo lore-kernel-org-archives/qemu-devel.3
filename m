@@ -4,98 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08690C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 17:21:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8086C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 17:22:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1r9n-0005r6-DM; Tue, 30 Apr 2024 13:20:43 -0400
+	id 1s1rAt-0006kN-WE; Tue, 30 Apr 2024 13:21:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1s1r9l-0005qW-QK
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 13:20:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1s1rAq-0006iT-R7
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 13:21:49 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1s1r9j-0004Tl-CH
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 13:20:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714497638;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rlf9Mz6Rgd4hHRcVKo7FIGejjXysvi4n5fo8I6S7vis=;
- b=DeCqL0wmU1cT+5MNgWbQY0eI6BnZ00nogiLRuairXbq81pgUSK6tUaQ7RVBIgJ9vNR9OHw
- bhaQ+6uMY6djYqzJYFrULvoAxjY8QUkA+r3fVDGvCg+Xb7irNWA2iNcBkt8yHFbbSV9Htj
- YzzC4XNpUAcy1lreELRjcmZOOUCETLs=
-Received: from mail-yb1-f199.google.com (mail-yb1-f199.google.com
- [209.85.219.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-383-lrrHyHCMNam2uxUT8okC5A-1; Tue, 30 Apr 2024 13:20:36 -0400
-X-MC-Unique: lrrHyHCMNam2uxUT8okC5A-1
-Received: by mail-yb1-f199.google.com with SMTP id
- 3f1490d57ef6-dc6dbdcfd39so12476398276.2
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 10:20:36 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714497636; x=1715102436;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=rlf9Mz6Rgd4hHRcVKo7FIGejjXysvi4n5fo8I6S7vis=;
- b=VX9gKnKtcDqUUVONp3j03wvgrFsUIC5kwa223YYkSB3WUIVEnZNwQSNU2L2hTanSyR
- v0s2NPsIA+Nb4zVGbPyik23uBklqk74qHK1kY2SJ8DCN7u0PsUAJFbv5qvQcX1NqaQpA
- ZA17g87TLP+Ierbm8QCNhGrcIBt1dBrB6GrWo0NhtyZpzgk1ZfUGOacW7tQLYAMLRixS
- Gd4JqZZak33xvrGi6miOSw2S2g5Ucc0aWa5QdrR7jwlXg8M1y4ZOJNSNq22o1E+idYUA
- P/2Z9PQxQCBG+pa08ztnYj+UrdjDIeExvdxBaw5cTdbWTI/snks966eEnf+EvRSbLPXO
- TP+g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW5A3my2nXuGwRXSfD108HQ8WUvMWZEdCzc8O6CfZ2G9XmxtIJWthC+qzFVI5yxy5b2ZtVHrRmKQHrltOwRYQ4xEtNu8B8=
-X-Gm-Message-State: AOJu0Yyy244AifT4sZ0LjJOciYLcqL0qR+lpaRGDFJxUdg41ara8/jL7
- jNQ1/KHg9ZQnaTpKR7c4/o6WLrmS1NbxvY6tgrVep/jcEX3Hjn8sMKvxaYw/fC85N/2f2922VhG
- XT13kgutBPoDUwvtZQqIx7NB8AJgbutJNSVS9P2eLUEZgS50LM2katzi8iQqdrFBcPg3hkFreWD
- UE48Wy3gVbBFNuN+NYQq+cB8eulB8=
-X-Received: by 2002:a5b:50b:0:b0:de5:4b29:b733 with SMTP id
- o11-20020a5b050b000000b00de54b29b733mr239191ybp.24.1714497635957; 
- Tue, 30 Apr 2024 10:20:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEXEQcDaHZQysMgXbnxmJFB70LFnSIIkx9AaQLbeWGF3jiEv2BqRZDHUboiNa0ciMxyc/RJlXIt++rj0L7FeX4=
-X-Received: by 2002:a5b:50b:0:b0:de5:4b29:b733 with SMTP id
- o11-20020a5b050b000000b00de54b29b733mr239173ybp.24.1714497635622; Tue, 30 Apr
- 2024 10:20:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1s1rAn-0004vN-7Z
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 13:21:48 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VTRnD3pzXz6K8yJ;
+ Wed,  1 May 2024 01:21:20 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id C03CC140518;
+ Wed,  1 May 2024 01:21:38 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Tue, 30 Apr
+ 2024 18:21:38 +0100
+Date: Tue, 30 Apr 2024 18:21:37 +0100
+To: Markus Armbruster <armbru@redhat.com>
+CC: fan <nifan.cxl@gmail.com>, <qemu-devel@nongnu.org>,
+ <linux-cxl@vger.kernel.org>, <gregory.price@memverge.com>,
+ <ira.weiny@intel.com>, <dan.j.williams@intel.com>,
+ <a.manzanares@samsung.com>, <dave@stgolabs.net>, <nmtadam.samsung@gmail.com>, 
+ <jim.harris@samsung.com>, <Jorgen.Hansen@wdc.com>, <wj28.lee@gmail.com>, Fan
+ Ni <fan.ni@samsung.com>
+Subject: Re: [PATCH v7 09/12] hw/cxl/events: Add qmp interfaces to
+ add/release dynamic capacity extents
+Message-ID: <20240430182137.00006417@Huawei.com>
+In-Reply-To: <87h6fkob0t.fsf@pond.sub.org>
+References: <20240418232902.583744-1-fan.ni@samsung.com>
+ <20240418232902.583744-10-fan.ni@samsung.com>
+ <877cgkxzal.fsf@pond.sub.org> <Zivk37xBGPsL_yo5@debian>
+ <87h6fkob0t.fsf@pond.sub.org>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <20240410100345.389462-1-eperezma@redhat.com>
- <20240410100345.389462-2-eperezma@redhat.com>
- <558124df-be44-47ae-85b9-0f282fc3889c@oracle.com>
- <CAJaqyWeE3kfgN5Y0=Kj6oCOFwg0H-gQEr4g3TM+3_+5N7mfd=A@mail.gmail.com>
- <450d0da1-3d11-428b-bd89-d09a2964cdb1@oracle.com>
- <CAJaqyWfXNQJQdTcJ9V-mSUrMs9up7rpAMwyK-qB3BuJwbUw+5w@mail.gmail.com>
- <f2dcbc76-f90f-4abe-b5c3-f159befd07bd@oracle.com>
- <CAJaqyWeSrwVt6imakpccieqN_3C85JcOZuj=FR+Xnmr7FKFaAw@mail.gmail.com>
- <9f347cd6-8c18-4253-8a5f-efae08230a62@oracle.com>
- <CAJaqyWeyfPp5bh9iZrkwZshoStEHZ85P6t4TcEdmR5sDYhG4ug@mail.gmail.com>
- <f6c63253-57bf-4e7a-8178-667a577784d5@oracle.com>
-In-Reply-To: <f6c63253-57bf-4e7a-8178-667a577784d5@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Tue, 30 Apr 2024 19:19:59 +0200
-Message-ID: <CAJaqyWdheH4MoHMOQjPmbOpODswE53w09LkfeaDNWdys3qUFLw@mail.gmail.com>
-Subject: Re: [RFC 1/2] iova_tree: add an id member to DMAMap
-To: Si-Wei Liu <si-wei.liu@oracle.com>
-Cc: Jonah Palmer <jonah.palmer@oracle.com>, qemu-devel@nongnu.org, 
- "Michael S. Tsirkin" <mst@redhat.com>, Lei Yang <leiyang@redhat.com>,
- Peter Xu <peterx@redhat.com>, 
- Dragos Tatulea <dtatulea@nvidia.com>, Jason Wang <jasowang@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml100006.china.huawei.com (7.191.160.224) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,274 +74,305 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 30, 2024 at 7:55=E2=80=AFAM Si-Wei Liu <si-wei.liu@oracle.com> =
-wrote:
->
->
->
-> On 4/29/2024 1:14 AM, Eugenio Perez Martin wrote:
-> > On Thu, Apr 25, 2024 at 7:44=E2=80=AFPM Si-Wei Liu <si-wei.liu@oracle.c=
-om> wrote:
-> >>
-> >>
-> >> On 4/24/2024 12:33 AM, Eugenio Perez Martin wrote:
-> >>> On Wed, Apr 24, 2024 at 12:21=E2=80=AFAM Si-Wei Liu <si-wei.liu@oracl=
-e.com> wrote:
-> >>>>
-> >>>> On 4/22/2024 1:49 AM, Eugenio Perez Martin wrote:
-> >>>>> On Sat, Apr 20, 2024 at 1:50=E2=80=AFAM Si-Wei Liu <si-wei.liu@orac=
-le.com> wrote:
-> >>>>>> On 4/19/2024 1:29 AM, Eugenio Perez Martin wrote:
-> >>>>>>> On Thu, Apr 18, 2024 at 10:46=E2=80=AFPM Si-Wei Liu <si-wei.liu@o=
-racle.com> wrote:
-> >>>>>>>> On 4/10/2024 3:03 AM, Eugenio P=C3=A9rez wrote:
-> >>>>>>>>> IOVA tree is also used to track the mappings of virtio-net shad=
-ow
-> >>>>>>>>> virtqueue.  This mappings may not match with the GPA->HVA ones.
-> >>>>>>>>>
-> >>>>>>>>> This causes a problem when overlapped regions (different GPA bu=
-t same
-> >>>>>>>>> translated HVA) exists in the tree, as looking them by HVA will=
- return
-> >>>>>>>>> them twice.  To solve this, create an id member so we can assig=
-n unique
-> >>>>>>>>> identifiers (GPA) to the maps.
-> >>>>>>>>>
-> >>>>>>>>> Signed-off-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
-> >>>>>>>>> ---
-> >>>>>>>>>       include/qemu/iova-tree.h | 5 +++--
-> >>>>>>>>>       util/iova-tree.c         | 3 ++-
-> >>>>>>>>>       2 files changed, 5 insertions(+), 3 deletions(-)
-> >>>>>>>>>
-> >>>>>>>>> diff --git a/include/qemu/iova-tree.h b/include/qemu/iova-tree.=
-h
-> >>>>>>>>> index 2a10a7052e..34ee230e7d 100644
-> >>>>>>>>> --- a/include/qemu/iova-tree.h
-> >>>>>>>>> +++ b/include/qemu/iova-tree.h
-> >>>>>>>>> @@ -36,6 +36,7 @@ typedef struct DMAMap {
-> >>>>>>>>>           hwaddr iova;
-> >>>>>>>>>           hwaddr translated_addr;
-> >>>>>>>>>           hwaddr size;                /* Inclusive */
-> >>>>>>>>> +    uint64_t id;
-> >>>>>>>>>           IOMMUAccessFlags perm;
-> >>>>>>>>>       } QEMU_PACKED DMAMap;
-> >>>>>>>>>       typedef gboolean (*iova_tree_iterator)(DMAMap *map);
-> >>>>>>>>> @@ -100,8 +101,8 @@ const DMAMap *iova_tree_find(const IOVATree=
- *tree, const DMAMap *map);
-> >>>>>>>>>        * @map: the mapping to search
-> >>>>>>>>>        *
-> >>>>>>>>>        * Search for a mapping in the iova tree that translated_=
-addr overlaps with the
-> >>>>>>>>> - * mapping range specified.  Only the first found mapping will=
- be
-> >>>>>>>>> - * returned.
-> >>>>>>>>> + * mapping range specified and map->id is equal.  Only the fir=
-st found
-> >>>>>>>>> + * mapping will be returned.
-> >>>>>>>>>        *
-> >>>>>>>>>        * Return: DMAMap pointer if found, or NULL if not found.=
-  Note that
-> >>>>>>>>>        * the returned DMAMap pointer is maintained internally. =
- User should
-> >>>>>>>>> diff --git a/util/iova-tree.c b/util/iova-tree.c
-> >>>>>>>>> index 536789797e..0863e0a3b8 100644
-> >>>>>>>>> --- a/util/iova-tree.c
-> >>>>>>>>> +++ b/util/iova-tree.c
-> >>>>>>>>> @@ -97,7 +97,8 @@ static gboolean iova_tree_find_address_iterat=
-or(gpointer key, gpointer value,
-> >>>>>>>>>
-> >>>>>>>>>           needle =3D args->needle;
-> >>>>>>>>>           if (map->translated_addr + map->size < needle->transl=
-ated_addr ||
-> >>>>>>>>> -        needle->translated_addr + needle->size < map->translat=
-ed_addr) {
-> >>>>>>>>> +        needle->translated_addr + needle->size < map->translat=
-ed_addr ||
-> >>>>>>>>> +        needle->id !=3D map->id) {
-> >>>>>>>> It looks this iterator can also be invoked by SVQ from
-> >>>>>>>> vhost_svq_translate_addr() -> iova_tree_find_iova(), where guest=
- GPA
-> >>>>>>>> space will be searched on without passing in the ID (GPA), and e=
-xact
-> >>>>>>>> match for the same GPA range is not actually needed unlike the m=
-apping
-> >>>>>>>> removal case. Could we create an API variant, for the SVQ lookup=
- case
-> >>>>>>>> specifically? Or alternatively, add a special flag, say skip_id_=
-match to
-> >>>>>>>> DMAMap, and the id match check may look like below:
-> >>>>>>>>
-> >>>>>>>> (!needle->skip_id_match && needle->id !=3D map->id)
-> >>>>>>>>
-> >>>>>>>> I think vhost_svq_translate_addr() could just call the API varia=
-nt or
-> >>>>>>>> pass DMAmap with skip_id_match set to true to svq_iova_tree_find=
-_iova().
-> >>>>>>>>
-> >>>>>>> I think you're totally right. But I'd really like to not complica=
-te
-> >>>>>>> the API of the iova_tree more.
-> >>>>>>>
-> >>>>>>> I think we can look for the hwaddr using memory_region_from_host =
-and
-> >>>>>>> then get the hwaddr. It is another lookup though...
-> >>>>>> Yeah, that will be another means of doing translation without havi=
-ng to
-> >>>>>> complicate the API around iova_tree. I wonder how the lookup throu=
-gh
-> >>>>>> memory_region_from_host() may perform compared to the iova tree on=
-e, the
-> >>>>>> former looks to be an O(N) linear search on a linked list while th=
-e
-> >>>>>> latter would be roughly O(log N) on an AVL tree?
-> >>>>> Even worse, as the reverse lookup (from QEMU vaddr to SVQ IOVA) is
-> >>>>> linear too. It is not even ordered.
-> >>>> Oh Sorry, I misread the code and I should look for g_tree_foreach ()
-> >>>> instead of g_tree_search_node(). So the former is indeed linear
-> >>>> iteration, but it looks to be ordered?
-> >>>>
-> >>>> https://github.com/GNOME/glib/blob/main/glib/gtree.c#L1115
-> >>> The GPA / IOVA are ordered but we're looking by QEMU's vaddr.
-> >>>
-> >>> If we have these translations:
-> >>> [0x1000, 0x2000] -> [0x10000, 0x11000]
-> >>> [0x2000, 0x3000] -> [0x6000, 0x7000]
-> >>>
-> >>> We will see them in this order, so we cannot stop the search at the f=
-irst node.
-> >> Yeah, reverse lookup is unordered indeed, anyway.
-> >>
-> >>>>> But apart from this detail you're right, I have the same concerns w=
-ith
-> >>>>> this solution too. If we see a hard performance regression we could=
- go
-> >>>>> to more complicated solutions, like maintaining a reverse IOVATree =
-in
-> >>>>> vhost-iova-tree too. First RFCs of SVQ did that actually.
-> >>>> Agreed, yeap we can use memory_region_from_host for now.  Any reason=
- why
-> >>>> reverse IOVATree was dropped, lack of users? But now we have one!
-> >>>>
-> >>> No, it is just simplicity. We already have an user in the hot patch i=
-n
-> >>> the master branch, vhost_svq_vring_write_descs. But I never profiled
-> >>> enough to find if it is a bottleneck or not to be honest.
-> >> Right, without vIOMMU or a lot of virtqueues / mappings, it's hard to
-> >> profile and see the difference.
-> >>> I'll send the new series by today, thank you for finding these issues=
-!
-> >> Thanks! In case you don't have bandwidth to add back reverse IOVA tree=
-,
-> >> Jonah (cc'ed) may have interest in looking into it.
-> >>
-> > Actually, yes. I've tried to solve it using:
-> > memory_region_get_ram_ptr -> It's hard to get this pointer to work
-> > without messing a lot with IOVATree.
-> > memory_region_find -> I'm totally unable to make it return sections
-> > that make sense
-> > flatview_for_each_range -> It does not return the same
-> > MemoryRegionsection as the listener, not sure why.
-> Ouch, thank you for the summary of attempts that were done earlier.
-> > The only advance I have is that memory_region_from_host is able to
-> > tell if the vaddr is from the guest or not.
-> Hmmm, then it won't be too useful without a direct means to identifying
-> the exact memory region associated with the iova that is being mapped.
-> And, this additional indirection seems introduce a tiny bit of more
-> latency in the reverse lookup routine (should not be a scalability issue
-> though if it's a linear search)?
->
+On Mon, 29 Apr 2024 09:58:42 +0200
+Markus Armbruster <armbru@redhat.com> wrote:
 
-I didn't measure, but I guess yes it might. OTOH these structs may be
-cached because virtqueue_pop just looked for them.
-
-> > So I'm convinced there must be a way to do it with the memory
-> > subsystem, but I think the best way to do it ATM is to store a
-> > parallel tree with GPA-> SVQ IOVA translations. At removal time, if we
-> > find the entry in this new tree, we can directly remove it by GPA. If
-> > not, assume it is a host-only address like SVQ vrings, and remove by
-> > iterating on vaddr as we do now.
-> Yeah, this could work I think. On the other hand, given that we are now
-> trying to improve it, I wonder if possible to come up with a fast
-> version for the SVQ (host-only address) case without having to look up
-> twice? SVQ callers should be able to tell apart from the guest case
-> where GPA -> IOVA translation doesn't exist? Or just maintain a parallel
-> tree with HVA -> IOVA translations for SVQ reverse lookup only? I feel
-> SVQ mappings may be worth a separate fast lookup path - unlike guest
-> mappings, the insertion, lookup and removal for SVQ mappings seem
-> unavoidable during the migration downtime path.
->
-
-I think the ideal order is the opposite actually. So:
-1) Try for the NIC to support _F_VRING_ASID, no translation needed by QEMU
-2) Try reverse lookup from HVA to GPA. Since dataplane should fit
-this, we should test this first
-3) Look in SVQ host-only entries (SVQ, current shadow CVQ). It is the
-control VQ, speed is not so important.
-
-Overlapping regions may return the wrong SVQ IOVA though. We should
-take extra care to make sure these are correctly handled. I mean,
-there are valid translations in the tree unless the driver is buggy,
-just may need to span many translations.
-
-> >   It is guaranteed the guest does not
-> > translate to that vaddr and that that vaddr is unique in the tree
-> > anyway.
+> fan <nifan.cxl@gmail.com> writes:
+>=20
+> > On Fri, Apr 26, 2024 at 11:12:50AM +0200, Markus Armbruster wrote: =20
+> >> nifan.cxl@gmail.com writes: =20
+>=20
+> [...]
+>=20
+> >> > diff --git a/qapi/cxl.json b/qapi/cxl.json
+> >> > index 4281726dec..2dcf03d973 100644
+> >> > --- a/qapi/cxl.json
+> >> > +++ b/qapi/cxl.json
+> >> > @@ -361,3 +361,72 @@
+> >> >  ##
+> >> >  {'command': 'cxl-inject-correctable-error',
+> >> >   'data': {'path': 'str', 'type': 'CxlCorErrorType'}}
+> >> > +
+> >> > +##
+> >> > +# @CXLDCExtentRecord: =20
+> >>=20
+> >> Such traffic jams of capital letters are hard to read.  What about
+> >> CxlDynamicCapacityExtent?
+> >>  =20
+> >> > +#
+> >> > +# Record of a single extent to add/release =20
+> >>=20
+> >> Suggest "A dynamic capacity extent."
+> >>  =20
+> >> > +#
+> >> > +# @offset: offset to the start of the region where the extent to be=
+ operated =20
+> >>=20
+> >> Blank line here, please.
+> >>=20
+> >>=20
+> >>  =20
+> >> > +# @len: length of the extent
+> >> > +#
+> >> > +# Since: 9.1
+> >> > +##
+> >> > +{ 'struct': 'CXLDCExtentRecord',
+> >> > +  'data': {
+> >> > +      'offset':'uint64',
+> >> > +      'len': 'uint64'
+> >> > +  }
+> >> > +}
+> >> > +
+> >> > +##
+> >> > +# @cxl-add-dynamic-capacity:
+> >> > +#
+> >> > +# Command to start add dynamic capacity extents flow. The device wi=
+ll
+> >> > +# have to acknowledged the acceptance of the extents before they ar=
+e usable. =20
+> >>=20
+> >> This text needs work.  More on that at the end of my review. =20
 > >
-> > Does it sound reasonable? Jonah, would you be interested in moving this=
- forward?
-> My thought would be that the reverse IOVA tree stuff can be added as a
-> follow-up optimization right after for extended scalability, but for now
-> as the interim, we may still need some form of simple fix, so as to
-> quickly unblock the other dependent work built on top of this one and
-> the early pinning series [1]. With it said, I'm completely fine if
-> performing the reverse lookup through linear tree walk e.g.
-> g_tree_foreach(), that should suffice small VM configs with just a
-> couple of queues and limited number of memory regions. Going forward, to
-> address the scalability bottleneck, Jonah could just replace the
-> corresponding API call with the one built on top of reverse IOVA tree (I
-> presume the use of these iova tree APIs is kind of internal that only
-> limits to SVQ and vhost-vdpa subsystems) once he gets there, and then
-> eliminate the other API variants that will no longer be in use. What do
-> you think about this idea / plan?
->
-
-Yeah it makes sense to me. Hopefully we can even get rid of the id member.
-
-> Thanks,
-> -Siwei
->
-> [1] https://lists.nongnu.org/archive/html/qemu-devel/2024-04/msg00079.htm=
-l
->
+> > Yes. I will work on it for the next version once all the feedbacks
+> > are collected and comments are resolved.
 > >
-> > Thanks!
+> > See below.
+> > =20
+> >>=20
+> >> docs/devel/qapi-code-gen.rst:
+> >>=20
+> >>     For legibility, wrap text paragraphs so every line is at most 70
+> >>     characters long.
+> >>=20
+> >>     Separate sentences with two spaces.
+> >>=20
+> >> More elsewhere.
+> >>  =20
+> >> > +#
+> >> > +# @path: CXL DCD canonical QOM path =20
+> >>=20
+> >> I'd prefer @qom-path, unless you can make a consistency argument for
+> >> @path.
+> >>=20
+> >> Sure the QOM path needs to be canonical?
+> >>=20
+> >> If not, what about "path to the CXL dynamic capacity device in the QOM
+> >> tree".  Intentionally close to existing descriptions of @qom-path
+> >> elsewhere. =20
 > >
-> >> -Siwei
-> >>
-> >>
-> >>>> Thanks,
-> >>>> -Siwei
-> >>>>> Thanks!
-> >>>>>
-> >>>>>> Of course,
-> >>>>>> memory_region_from_host() won't search out of the guest memory spa=
-ce for
-> >>>>>> sure. As this could be on the hot data path I have a little bit
-> >>>>>> hesitance over the potential cost or performance regression this c=
-hange
-> >>>>>> could bring in, but maybe I'm overthinking it too much...
-> >>>>>>
-> >>>>>> Thanks,
-> >>>>>> -Siwei
-> >>>>>>
-> >>>>>>>> Thanks,
-> >>>>>>>> -Siwei
-> >>>>>>>>>               return false;
-> >>>>>>>>>           }
-> >>>>>>>>>
->
+> > From the same file, I saw "path" was used for other commands, like
+> > "cxl-inject-memory-module-event", so I followed it.
+> > DCD is nothing different from "type 3 device" expect it can dynamically
+> > change capacity.=20
+> > Renaming it to "qom-path" is no problem for me, just want to make sure =
+it
+> > will not break the naming consistency. =20
+>=20
+> Both @path and @qom-path are used (sadly).  @path is used for all kinds
+> of paths, whereas @qom-path is only used for QOM paths.  That's why I
+> prefer it.
+>=20
+> However, you're making a compelling local consistency argument: cxl.json
+> uses only @path.  Sticking to that makes sense.
+>=20
+> >> > +# @hid: host id =20
+> >>=20
+> >> @host-id, unless "HID" is established terminology in CXL DCD land. =20
+> >
+> > host-id works. =20
+> >>=20
+> >> What is a host ID? =20
+> >
+> > It is an id identifying the host to which the capacity is being added. =
+=20
+>=20
+> How are these IDs assigned?
+
+Right now there is only 1 option.  We can drop this for now and introduce
+it when needed (Default of 0 will be fine).  Multi head device patches
+that will need this are on list though I haven't read them yet :(
+
+>=20
+> >> > +# @selection-policy: policy to use for selecting extents for adding=
+ capacity =20
+> >>=20
+> >> Where are selection policies defined? =20
+> >
+> > It is defined in CXL specification: Specifies the policy to use for sel=
+ecting
+> > which extents comprise the added capacity =20
+>=20
+> Include a reference to the spec here?
+>=20
+> >> > +# @region-id: id of the region where the extent to add =20
+> >>=20
+> >> Is "region ID" the established terminology in CXL DCD land?  Or is
+> >> "region number" also used?  I'm asking because "ID" in this QEMU device
+> >> context suggests a connection to a qdev ID.
+> >>=20
+> >> If region number is fine, I'd rename to just @region, and rephrase the
+> >> description to avoid "ID".  Perhaps "number of the region the extent is
+> >> to be added to".  Not entirely happy with the phrasing, doesn't exactly
+> >> roll off the tongue, but "where the extent to add" sounds worse to my
+> >> ears.  Mind, I'm not a native speaker. =20
+> >
+> > Yes. region number is fine. Will rename it as "region"
+> > =20
+> >>  =20
+> >> > +# @tag: Context field =20
+> >>=20
+> >> What is this about? =20
+> >
+> > Based on the specification, it is "Context field utilized by implementa=
+tions
+> > that make use of the Dynamic Capacity feature.". Basically, it is a
+> > string (label) attached to an dynamic capacity extent so we can achieve
+> > specific purpose, like identifying or grouping extents. =20
+>=20
+> Include a reference to the spec here?
+
+Agreed - that is the best we can do. It'sa  magic value.
+
+>=20
+> >> > +# @extents: Extents to add =20
+> >>=20
+> >> Blank lines between argument descriptions, please.
+> >>  =20
+> >> > +#
+> >> > +# Since : 9.1
+> >> > +##
+> >> > +{ 'command': 'cxl-add-dynamic-capacity',
+> >> > +  'data': { 'path': 'str',
+> >> > +            'hid': 'uint16',
+> >> > +            'selection-policy': 'uint8',
+> >> > +            'region-id': 'uint8',
+> >> > +            'tag': 'str',
+> >> > +            'extents': [ 'CXLDCExtentRecord' ]
+> >> > +           }
+> >> > +}
+> >> > +
+> >> > +##
+> >> > +# @cxl-release-dynamic-capacity:
+> >> > +#
+> >> > +# Command to start release dynamic capacity extents flow. The host =
+will
+> >> > +# need to respond to indicate that it has released the capacity bef=
+ore it
+> >> > +# is made unavailable for read and write and can be re-added. =20
+> >>=20
+> >> This text needs work.  More on that at the end of my review. =20
+> >
+> > Will do.
+> > =20
+> >>  =20
+> >> > +#
+> >> > +# @path: CXL DCD canonical QOM path =20
+> >>=20
+> >> My comment on cxl-add-dynamic-capacity applies.
+> >>  =20
+> >> > +# @hid: host id =20
+> >>=20
+> >> Likewise.
+> >>  =20
+> >> > +# @flags: bit[3:0] for removal policy, bit[4] for forced removal, b=
+it[5] for
+> >> > +#     sanitize on release, bit[7:6] reserved =20
+> >>=20
+> >> Where are these flags defined? =20
+> >
+> > Defined in the CXL specification, it defines the release behaviour. =20
+>=20
+> Include a reference to the spec here?
+>=20
+> Is the numeric encoding of flags appropriate?
+
+Could definitely break them out as a bunch of flags / symbolic for
+the policy.
+
+>=20
+> In general, we prefer symbolic encodings.  Numeric encodings can make
+> sense when
+>=20
+> =E2=80=A2 the encoding is stable, and
+>=20
+> =E2=80=A2 QEMU doesn't need to decode it, only pass it on to something el=
+se, and
+>=20
+> =E2=80=A2 both the QMP client and the "something else" prefer a numeric
+>   encoding.
+
+I don't think that really applies here - though Gregory's shim from
+MCTP to this will have to go through a simple dance to fill them in.
+
+>=20
+> >> > +# @region-id: id of the region where the extent to release =20
+> >>=20
+> >> My comment on cxl-add-dynamic-capacity applies.
+> >>  =20
+> >> > +# @tag: Context field =20
+> >>=20
+> >> Likewise.
+> >>  =20
+> >> > +# @extents: Extents to release
+> >> > +#
+> >> > +# Since : 9.1
+> >> > +##
+> >> > +{ 'command': 'cxl-release-dynamic-capacity',
+> >> > +  'data': { 'path': 'str',
+> >> > +            'hid': 'uint16',
+> >> > +            'flags': 'uint8',
+> >> > +            'region-id': 'uint8',
+> >> > +            'tag': 'str',
+> >> > +            'extents': [ 'CXLDCExtentRecord' ]
+> >> > +           }
+> >> > +} =20
+> >>=20
+> >> During review of v5, you wrote:
+> >>=20
+> >>     For add command, the host will send a mailbox command to response =
+to
+> >>     the add request to the device to indicate whether it accepts the a=
+dd
+> >>     capacity offer or not.
+> >>    =20
+> >>     For release command, the host send a mailbox command (not always a
+> >>     response since the host can proactively release capacity if it does
+> >>     not need it any more) to device to ask device release the capacity.
+> >>=20
+> >> Can you briefly sketch the protocol?  Peers and messages involved.
+> >> Possibly as a state diagram. =20
+> >
+> > Need to think about it. If we can polish the text nicely, maybe the
+> > sketch is not needed. My concern is that the sketch may
+> > introduce unwanted complexity as we expose too much details. The two
+> > commands provide ways to add/release dynamic capacity to/from a host,
+> > that is all. All the other information, like what the host will do, or
+> > how the device will react, are consequence of the command, not sure
+> > whether we want to include here. =20
+>=20
+> The protocol sketch is for me, not necessarily the doc comment.  I'd
+> like to understand at high level how this stuff works, because only then
+> can I meaningfully review the docs.
+>=20
+> > @Jonathan, Any thoughts on this?=20
+Makes sense to have a bit of artwork to explain what is going on.
+Suitable stuff for the cover letter or patch description for v8
+as well as in reply here.  Simple flows should be enough, we don't
+need to worry on the messy corner cases (hopefully)
+
+1) Offer extents to a host  + it accepts.
+2) Ask for it back, it gives it back.
+
+I can put my non existent artistic talents on it later in the
+week if Fan doesn't get there first.
+
+>=20
+> Thanks!
+>=20
 
 
