@@ -4,85 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2D29C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 19:01:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52F86C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 19:07:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1siP-0001bL-JZ; Tue, 30 Apr 2024 15:00:33 -0400
+	id 1s1soB-0003Ja-Tr; Tue, 30 Apr 2024 15:06:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1siG-0001Vm-79
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 15:00:27 -0400
-Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1siE-0008Bl-46
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 15:00:23 -0400
-Received: by mail-lf1-x12e.google.com with SMTP id
- 2adb3069b0e04-51dc5c0ffdbso3017172e87.2
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 12:00:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714503620; x=1715108420; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=/WojhfZdmUedf8K4tVSS5CFnyf5yCb3p3+Wl9G3u2pI=;
- b=GjpowHyFHdMZBPElB0e4pC0+DPEltd14Acg7Lvvwf/uLo4RybLyVjsN/IpmhuiJFQH
- Akzf+224nfdvWg9p40DFj/oBZeUkLjK62mvA4l277wCM1Xv3By8kXPRtY4YiP6Ew/j2I
- +kjSNquvWTDb3km+q8FUWsY4I2gJs1CcuxPFX2LMoUaV+nRvyoaW5G0LuAjhaCyROsnK
- JpcFImd11+cumPxoo3oYio0xcEkieQD7aXrqCPZvFtOr6C9eLYkWhofbEmQeE8LFpSu9
- hmz5OBqSXGBOJqh238GFt8haSTLYjbqp0mT2hNTk8twCNi7NEnOi8fyHle7DTGFKgxE+
- fyQg==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1so9-0003JF-S0
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 15:06:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s1so7-0000pg-Nb
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 15:06:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714503982;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=idA994zUAkyXNdYTuuSFRCgTn38s+Xn+H8JL7r7rAq0=;
+ b=c9nePHB/KCLTpfKyANe2zNgG7d5Ez1smgcdj/7LN4VZjvPDwRx28qy9oz6QMQ5WmifCUBw
+ U+w6W2BK4n+/AfF/vbZybiOQx8DUsZmWXM0vVf74i4b1L4rEHlmPvobe2bdkB5tNFDH/5V
+ 9/Xda27d0p47JmSWaIBFXQcUYzApNqE=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-68-uYdeG0lqOuOzTou_ACuCgg-1; Tue, 30 Apr 2024 15:06:20 -0400
+X-MC-Unique: uYdeG0lqOuOzTou_ACuCgg-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-41c01902e60so14226335e9.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 12:06:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714503620; x=1715108420;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/WojhfZdmUedf8K4tVSS5CFnyf5yCb3p3+Wl9G3u2pI=;
- b=XlCE0ff5PKo3604SiAGstykBLofrEDqh/ol7SZLDP8/uo092Vqx9GefNkp75Zwmnm0
- 6k1ChLFjK+ECaJkJcvbRn3jnbtc865HqKmIxVb73Dw32hpN6HN0MAiRu2kcaMOXNaWPx
- 2ekLXxjY8Yvl0JeGPawPsH7K8PxUXU6QMd/X9l17pfA3+41KKOuYuhPTydG6XBqWCJ2Q
- h+VDRM0Vw8lDuxSZo4TfZoZFmIIgeFYaJ5qZnGaDlmKMtlR+YuPUK4QPtMDYjOTkFw+O
- mLwrtS+4rt9folLEuP0cC5LEgSVlmhT98rK+kwgiwFmGhLZ8zay9FdVPf1j+L7iXwcU/
- tHrA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWkyGD1mU1YNXWZEHhpxynpXCe1zpNzWDZHny4CydP2sFvODx0PpV3S0JSQ0CHOjlRFB1OWSuW1blrGWJQZ9Y0hlL0OCHE=
-X-Gm-Message-State: AOJu0YxzY83bYQr7im7r+Ot7qYk7x+x2BKOwOnYUD4HKsqFZ/SRE5pq+
- hA0h+aW5LxCHIWM08/Sw4sQlRSQFOF1ifjBRB44Q/WE20yzyKL09U37b9lWV1Es=
-X-Google-Smtp-Source: AGHT+IG/7BJjevR2iLXCtyxAoCjDs4wosGMk8XzW3nmF+QLxm34v/n6bOlKMeh4ONOFhGXEKAQ20hw==
-X-Received: by 2002:a19:c207:0:b0:51d:f5c7:309e with SMTP id
- l7-20020a19c207000000b0051df5c7309emr222833lfc.22.1714503620015; 
- Tue, 30 Apr 2024 12:00:20 -0700 (PDT)
-Received: from [192.168.69.100] (mab78-h01-176-184-55-179.dsl.sta.abo.bbox.fr.
- [176.184.55.179]) by smtp.gmail.com with ESMTPSA id
- gc24-20020a170906c8d800b00a58f3983635sm3749698ejb.50.2024.04.30.12.00.18
+ d=1e100.net; s=20230601; t=1714503979; x=1715108779;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=idA994zUAkyXNdYTuuSFRCgTn38s+Xn+H8JL7r7rAq0=;
+ b=RJahw8TGsszxi2jNQp6Ox6c/LVsX0Wx7R7IWm00Htytl75bq3MKu1n+964M97AzfwN
+ zmYaIVhbac65+S69YwXj6ZHq9B2bdLheFOMwYsfqrXtGdXTvxy8IrydcSrRk6u3wvf0J
+ SZN9Jn5zenya78vi3fm8I6Ph2rwD/JyaoV0ObSQj1Sb6PnpUGEaItn9h2UK6zKYWwwy6
+ k5PcELQtJkZNh53IEgzBbOBySuPOARuQC8JGkTHKMIMrJ1zokaBfRWoqcgqSzpdLX2Wr
+ 8XslguugTbFexX3mAEA63TqrgNz5i3ll4I2ba84i9XBB5EVC0d1lJ4CxZWkXa0nfVbvl
+ 5iRg==
+X-Gm-Message-State: AOJu0YxdzXKKBAvMHjHvuNyCybnhIKqPOhFAHz0JvGkyf/1guAHYdwOG
+ AB2SVgr/Ud2cuhgY/TZO3nCnTRmEbmbqkhEDj2k3gFA5JP5rX5XsxniUkfZAIhVPQqdFhW9wsrc
+ v+AD56iTaW2sTRrWXbMix518YS2U2rb3+kDdeYOpdUXk5iDomP0U2
+X-Received: by 2002:a05:600c:1c83:b0:41b:aa11:29b3 with SMTP id
+ k3-20020a05600c1c8300b0041baa1129b3mr316086wms.35.1714503979568; 
+ Tue, 30 Apr 2024 12:06:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEGfIXGFOikR8FmYf2wCDpc0g+QVQVlpVDRF/rdv0lKlEyYVSbX2YF33Okm6jN7iSpEEtHdtw==
+X-Received: by 2002:a05:600c:1c83:b0:41b:aa11:29b3 with SMTP id
+ k3-20020a05600c1c8300b0041baa1129b3mr316073wms.35.1714503979234; 
+ Tue, 30 Apr 2024 12:06:19 -0700 (PDT)
+Received: from [192.168.0.9] (ip-109-43-179-34.web.vodafone.de.
+ [109.43.179.34]) by smtp.gmail.com with ESMTPSA id
+ fl23-20020a05600c0b9700b0041bc41287cesm14652962wmb.16.2024.04.30.12.06.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Apr 2024 12:00:19 -0700 (PDT)
-Message-ID: <90e4b6c6-2bc4-4f4a-ac65-8141c2eb4cb5@linaro.org>
-Date: Tue, 30 Apr 2024 21:00:17 +0200
+ Tue, 30 Apr 2024 12:06:18 -0700 (PDT)
+Message-ID: <cf84dff2-b2d9-481e-8e54-8fb78dc214b3@redhat.com>
+Date: Tue, 30 Apr 2024 21:06:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/13] exec: Rework around CPUState user fields (part 2)
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Ilya Leoshkevich <iii@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20240430122808.72025-1-philmd@linaro.org>
- <363wwielvdpy37h7cqo7jo5luyys2aqmfgeb4t3wypsb3myqxg@kvasyjy4e767>
- <2a5e3a10-cc9a-44ff-8241-484d17b1f9cb@linaro.org>
+Subject: Re: [PATCH] hw/s390x: Attach the sclpconsole to the /machine/sclp node
+From: Thomas Huth <thuth@redhat.com>
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clegoate@redhat.com>,
+ qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20240430080408.415890-1-thuth@redhat.com>
+ <e6954259-a211-4fa3-9093-3675b97c4a5c@redhat.com>
+ <f958af03-00d3-4d3a-b54b-f060c8fc70df@redhat.com>
 Content-Language: en-US
-In-Reply-To: <2a5e3a10-cc9a-44ff-8241-484d17b1f9cb@linaro.org>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <f958af03-00d3-4d3a-b54b-f060c8fc70df@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,206 +149,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/4/24 20:45, Philippe Mathieu-Daudé wrote:
-> Hi Ilya,
+On 30/04/2024 16.24, Thomas Huth wrote:
+> On 30/04/2024 13.58, Cédric Le Goater wrote:
+>> On 4/30/24 10:04, Thomas Huth wrote:
+>>> The sclpconsole currently does not have a proper parent in the QOM
+>>> tree, so it shows up under /machine/unattached - which is somewhat
+>>> ugly. Let's attach it to /machine/sclp instead.
+>>>
+>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>> ---
+>>>   include/hw/s390x/sclp.h    |  2 +-
+>>>   hw/s390x/s390-virtio-ccw.c | 11 +++++++----
+>>>   hw/s390x/sclp.c            |  4 +++-
+>>>   3 files changed, 11 insertions(+), 6 deletions(-)
+>>>
+>>> diff --git a/include/hw/s390x/sclp.h b/include/hw/s390x/sclp.h
+>>> index b405a387b6..abfd6d8868 100644
+>>> --- a/include/hw/s390x/sclp.h
+>>> +++ b/include/hw/s390x/sclp.h
+>>> @@ -222,7 +222,7 @@ static inline int sccb_data_len(SCCB *sccb)
+>>>   }
+>>> -void s390_sclp_init(void);
+>>> +Object *s390_sclp_init(void);
+>>>   void sclp_service_interrupt(uint32_t sccb);
+>>>   void raise_irq_cpu_hotplug(void);
+>>>   int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code);
+>>> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+>>> index 4dcc213820..e2f9206ded 100644
+>>> --- a/hw/s390x/s390-virtio-ccw.c
+>>> +++ b/hw/s390x/s390-virtio-ccw.c
+>>> @@ -237,11 +237,13 @@ static void s390_create_virtio_net(BusState *bus, 
+>>> const char *name)
+>>>       }
+>>>   }
+>>> -static void s390_create_sclpconsole(const char *type, Chardev *chardev)
+>>> +static void s390_create_sclpconsole(Object *sclp, const char *type,
+>>> +                                    Chardev *chardev)
+>>>   {
+>>>       DeviceState *dev;
+>>>       dev = qdev_new(type);
+>>> +    object_property_add_child(sclp, type, OBJECT(dev));
+>>>       qdev_prop_set_chr(dev, "chardev", chardev);
+>>>       qdev_realize_and_unref(dev, sclp_get_event_facility_bus(), 
+>>> &error_fatal);
+>>>   }
+>>> @@ -252,8 +254,9 @@ static void ccw_init(MachineState *machine)
+>>>       int ret;
+>>>       VirtualCssBus *css_bus;
+>>>       DeviceState *dev;
+>>> +    Object *sclp;
+>>> -    s390_sclp_init();
+>>> +    sclp = s390_sclp_init();
+>>
+>> I would simply drop s390_sclp_init(), same for :
+>>
+>>    void s390_init_tod(void);
+>>    void s390_init_ap(void);
+>>    void s390_stattrib_init(void);
+>>    void s390_skeys_init(void);
+>>    void s390_flic_init(void);
+>>
+>> These routines all do the same and are not very useful TBH, and I would
+>> add pointers under the s390x MachineState possibly.
 > 
-> On 30/4/24 19:55, Ilya Leoshkevich wrote:
->> On Tue, Apr 30, 2024 at 02:27:54PM +0200, Philippe Mathieu-Daudé wrote:
->>> Missing WASM testing by Ilya (branch available at
->>> https://gitlab.com/philmd/qemu/-/commits/tcg_flush_jmp_cache)
->>
->> Hmm, it dies very early now:
->>
->>    # gdb --args ./qemu-s390x -L /usr/s390x-linux-gnu 
->> /build/wasmtime/target/s390x-unknown-linux-gnu/debug/deps/component_fuzz_util-d10a3a6b4ad8af47
->>
->>    Thread 1 "qemu-s390x" received signal SIGSEGV, Segmentation fault.
->>    0x000055555559b718 in cpu_common_realizefn (dev=0x5555557c28c0, 
->> errp=<optimized out>) at 
->> ../home/iii/myrepos/qemu/hw/core/cpu-common.c:217
->>    217             cpu->accel->plugin_state = 
->> qemu_plugin_create_vcpu_state();
->>
->>    (gdb) bt
->>    #0  0x000055555559b718 in cpu_common_realizefn (dev=0x5555557c28c0, 
->> errp=<optimized out>) at 
->> ../home/iii/myrepos/qemu/hw/core/cpu-common.c:217
->>    #1  0x000055555559f59a in s390_cpu_realizefn (dev=0x5555557c28c0, 
->> errp=0x7fffffffe1a0) at ../home/iii/myrepos/qemu/target/s390x/cpu.c:284
->>    #2  0x000055555563f76b in device_set_realized (obj=<optimized out>, 
->> value=<optimized out>, errp=0x7fffffffe2e0) at 
->> ../home/iii/myrepos/qemu/hw/core/qdev.c:510
->>    #3  0x000055555564363d in property_set_bool (obj=0x5555557c28c0, 
->> v=<optimized out>, name=<optimized out>, opaque=0x5555557a9140, 
->> errp=0x7fffffffe2e0) at ../home/iii/myrepos/qemu/qom/object.c:2362
->>    #4  0x0000555555646b9b in object_property_set 
->> (obj=obj@entry=0x5555557c28c0, name=name@entry=0x5555556e8ae2 
->> "realized", v=v@entry=0x5555557c6650, errp=errp@entry=0x7fffffffe2e0)
->>        at ../home/iii/myrepos/qemu/qom/object.c:1471
->>    #5  0x000055555564a43f in object_property_set_qobject 
->> (obj=obj@entry=0x5555557c28c0, name=name@entry=0x5555556e8ae2 
->> "realized", value=value@entry=0x5555557a7a90, 
->> errp=errp@entry=0x7fffffffe2e0)
->>        at ../home/iii/myrepos/qemu/qom/qom-qobject.c:28
->>    #6  0x0000555555647204 in object_property_set_bool 
->> (obj=0x5555557c28c0, name=name@entry=0x5555556e8ae2 "realized", 
->> value=value@entry=true, errp=errp@entry=0x7fffffffe2e0)
->>        at ../home/iii/myrepos/qemu/qom/object.c:1541
->>    #7  0x000055555564025c in qdev_realize (dev=<optimized out>, 
->> bus=bus@entry=0x0, errp=errp@entry=0x7fffffffe2e0) at 
->> ../home/iii/myrepos/qemu/hw/core/qdev.c:291
->>    #8  0x000055555559bbb4 in cpu_create (typename=<optimized out>) at 
->> ../home/iii/myrepos/qemu/hw/core/cpu-common.c:61
->>    #9  0x000055555559a467 in main (argc=4, argv=0x7fffffffeaa8, 
->> envp=<optimized out>) at ../home/iii/myrepos/qemu/linux-user/main.c:811
->>
->>    (gdb) p cpu
->>    $1 = (CPUState *) 0x5555557c28c0
->>    (gdb) p cpu->accel
->>    $2 = (AccelCPUState *) 0x0
->>
->> Configured with: '/home/iii/myrepos/qemu/configure' 
->> '--target-list=s390x-linux-user' '--disable-tools' '--disable-slirp' 
->> '--disable-fdt' '--disable-capstone' '--disable-docs'
->>
->> If you don't see what can be wrong here right away, I can debug this.
+> Some of them seem to do a little bit more things, like checking whether the 
+> feature is available or not, e.g. s390_init_ap() ... IMHO it makes sense to 
+> keep at least those?
+> 
+> But for s390_sclp_init ... it could be inlined, indeed, especially if we 
+> also switch the object_unref + qdev_realize in there into 
+> qdev_realize_and_unref. Let me try to do that in a v2 ...
 
-I added this commit in the same branch:
+Actually, after looking at the code a little bit longer, it seems to me like 
+the sclpconsole should be attached to /machine/sclp/s390-sclp-event-facility
+instead of just /machine/sclp, since the other devices of type 
+TYPE_SCLP_EVENT are also located there. That makes the patch even easier 
+since we already have the pointer from sclp_get_event_facility_bus() in that 
+function.
 
--- >8 --
-Author: Philippe Mathieu-Daudé <philmd@linaro.org>
-Date:   Tue Apr 30 20:57:15 2024 +0200
+  Thomas
 
-     accel/tcg: Initialize TCG plugins in cpu-target.c
 
-     Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-diff --git a/cpu-target.c b/cpu-target.c
-index 5af120e8aa..585533cfa3 100644
---- a/cpu-target.c
-+++ b/cpu-target.c
-@@ -46,6 +46,10 @@
-  #include "hw/core/accel-cpu.h"
-  #include "trace/trace-root.h"
-  #include "qemu/accel.h"
-+#ifdef CONFIG_PLUGIN
-+#include "accel/tcg/vcpu-state.h"
-+#include "qemu/plugin.h"
-+#endif
-
-  #ifndef CONFIG_USER_ONLY
-  static int cpu_common_post_load(void *opaque, int version_id)
-@@ -131,6 +135,13 @@ const VMStateDescription vmstate_cpu_common = {
-  };
-  #endif
-
-+#ifdef CONFIG_PLUGIN
-+static void qemu_plugin_vcpu_init__async(CPUState *cpu, run_on_cpu_data 
-unused)
-+{
-+    qemu_plugin_vcpu_init_hook(cpu);
-+}
-+#endif
-+
-  bool cpu_exec_realizefn(CPUState *cpu, Error **errp)
-  {
-      /* cache the cpu class for the hotpath */
-@@ -143,6 +154,15 @@ bool cpu_exec_realizefn(CPUState *cpu, Error **errp)
-      /* Wait until cpu initialization complete before exposing cpu. */
-      cpu_list_add(cpu);
-
-+#ifdef CONFIG_PLUGIN
-+    assert(cpu->accel);
-+    /* Plugin initialization must wait until the cpu start executing 
-code */
-+    if (tcg_enabled()) {
-+        cpu->accel->plugin_state = qemu_plugin_create_vcpu_state();
-+        async_run_on_cpu(cpu, qemu_plugin_vcpu_init__async, 
-RUN_ON_CPU_NULL);
-+    }
-+#endif
-+
-  #ifdef CONFIG_USER_ONLY
-      assert(qdev_get_vmsd(DEVICE(cpu)) == NULL ||
-             qdev_get_vmsd(DEVICE(cpu))->unmigratable);
-@@ -171,6 +191,13 @@ void cpu_exec_unrealizefn(CPUState *cpu)
-      }
-  #endif
-
-+#ifdef CONFIG_PLUGIN
-+    /* Call the plugin hook before clearing the cpu is fully unrealized */
-+    if (tcg_enabled()) {
-+        qemu_plugin_vcpu_exit_hook(cpu);
-+    }
-+#endif
-+
-      cpu_list_remove(cpu);
-      /*
-       * Now that the vCPU has been removed from the RCU list, we can call
-diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index e03d31876f..cd8bd99131 100644
---- a/hw/core/cpu-common.c
-+++ b/hw/core/cpu-common.c
-@@ -30,10 +30,6 @@
-  #include "hw/boards.h"
-  #include "hw/qdev-properties.h"
-  #include "trace.h"
--#ifdef CONFIG_PLUGIN
--#include "accel/tcg/vcpu-state.h"
--#include "qemu/plugin.h"
--#endif
-
-  CPUState *cpu_by_arch_id(int64_t id)
-  {
-@@ -181,13 +177,6 @@ static void cpu_common_parse_features(const char 
-*typename, char *features,
-      }
-  }
-
--#ifdef CONFIG_PLUGIN
--static void qemu_plugin_vcpu_init__async(CPUState *cpu, run_on_cpu_data 
-unused)
--{
--    qemu_plugin_vcpu_init_hook(cpu);
--}
--#endif
--
-  static void cpu_common_realizefn(DeviceState *dev, Error **errp)
-  {
-      CPUState *cpu = CPU(dev);
-@@ -211,14 +200,6 @@ static void cpu_common_realizefn(DeviceState *dev, 
-Error **errp)
-          cpu_resume(cpu);
-      }
-
--    /* Plugin initialization must wait until the cpu start executing 
-code */
--#ifdef CONFIG_PLUGIN
--    if (tcg_enabled()) {
--        cpu->accel->plugin_state = qemu_plugin_create_vcpu_state();
--        async_run_on_cpu(cpu, qemu_plugin_vcpu_init__async, 
-RUN_ON_CPU_NULL);
--    }
--#endif
--
-      /* NOTE: latest generic point where the cpu is fully realized */
-  }
-
-@@ -226,13 +207,6 @@ static void cpu_common_unrealizefn(DeviceState *dev)
-  {
-      CPUState *cpu = CPU(dev);
-
--    /* Call the plugin hook before clearing the cpu is fully unrealized */
--#ifdef CONFIG_PLUGIN
--    if (tcg_enabled()) {
--        qemu_plugin_vcpu_exit_hook(cpu);
--    }
--#endif
--
-      /* NOTE: latest generic point before the cpu is fully unrealized */
-      cpu_exec_unrealizefn(cpu);
-  }
----
-
-Totally untested here because it is late (only built...).
 
