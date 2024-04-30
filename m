@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE073C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 08:28:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00227C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 08:32:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1iqS-0003vW-79; Tue, 30 Apr 2024 04:28:12 -0400
+	id 1s1itt-0004vQ-Sc; Tue, 30 Apr 2024 04:31:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1s1iqQ-0003v4-LR; Tue, 30 Apr 2024 04:28:10 -0400
+ id 1s1itZ-0004tW-KT; Tue, 30 Apr 2024 04:31:27 -0400
 Received: from forwardcorp1b.mail.yandex.net
  ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1s1iqM-00048p-NZ; Tue, 30 Apr 2024 04:28:10 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:c10a:0:640:882f:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 3D2B660A8D;
- Tue, 30 Apr 2024 11:28:00 +0300 (MSK)
+ id 1s1itX-0004d2-EV; Tue, 30 Apr 2024 04:31:25 -0400
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:2a2a:0:640:d546:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 901C560AE5;
+ Tue, 30 Apr 2024 11:31:20 +0300 (MSK)
 Received: from [IPV6:2a02:6b8:b081:8829::1:3c] (unknown
  [2a02:6b8:b081:8829::1:3c])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id wRM1Ju1IdOs0-z2DtAN6k; Tue, 30 Apr 2024 11:27:59 +0300
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id JVMskU11N4Y0-hAGjxcVZ; Tue, 30 Apr 2024 11:31:19 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1714465679;
- bh=sqPjVVoyz2TngqouqpSyXkZFAx8LmV+r/MynyCFBB84=;
+ s=default; t=1714465879;
+ bh=fjmpZZyiodcq2uGg7CtD3m7nTGKv/fn58VVXEAvyC4U=;
  h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=vMFgMBYvI6Aqb8UJZMsY7MLLMHJLkO601fbSweyn9Bk0KEW2D6TNtnpkbE/+hPn8U
- 78yHUW3kN7de9OsHiHsHbWAhpWjdRwPb3KUsZmWw2n5GGhixgh2F+c5sQbjluRq0EX
- qPq6tEvO4ZVzfZpQzLBoc8wRfosBFbis+Sl0kwMo=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ b=OuT+Qv4Tfzz52zUn5lu9K/wFHWMCP8wTqWrnXqYlNKNNTw/OqtJXzHr1FicFbkNpU
+ HFkx/nOnMBhVhVwe8AF1tU/ATJ63BuILnjg0HevgROpUazkad9hB95fp1WRDivXPqf
+ MPN+aaX24AMxYA4XNK4HpIig2FcqxSpvKoXZhbXs=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-Message-ID: <3c146e4c-8197-457e-99fc-9301879bf41b@yandex-team.ru>
-Date: Tue, 30 Apr 2024 11:27:58 +0300
+Message-ID: <2f3f4354-7a98-48e9-84fa-4962f129a26f@yandex-team.ru>
+Date: Tue, 30 Apr 2024 11:31:19 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/3] vhost-user-blk: split vhost_user_blk_sync_config()
+Subject: Re: [PATCH v4 3/3] qapi: introduce device-sync-config
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-block@nongnu.org, raphael@enfabrica.net, mst@redhat.com,
  qemu-devel@nongnu.org, eblake@redhat.com, eduardo@habkost.net,
  berrange@redhat.com, pbonzini@redhat.com, hreitz@redhat.com,
  kwolf@redhat.com, yc-core@yandex-team.ru
 References: <20240429101623.1992943-1-vsementsov@yandex-team.ru>
- <20240429101623.1992943-3-vsementsov@yandex-team.ru>
- <87edanclky.fsf@pond.sub.org>
+ <20240429101623.1992943-4-vsementsov@yandex-team.ru>
+ <877cgfcley.fsf@pond.sub.org>
 Content-Language: en-US
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <87edanclky.fsf@pond.sub.org>
+In-Reply-To: <877cgfcley.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
@@ -80,81 +80,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30.04.24 11:15, Markus Armbruster wrote:
+On 30.04.24 11:19, Markus Armbruster wrote:
 > Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 > 
->> Split vhost_user_blk_sync_config() out from
->> vhost_user_blk_handle_config_change(), to be reused in the following
->> commit.
+>> Add command to sync config from vhost-user backend to the device. It
+>> may be helpful when VHOST_USER_SLAVE_CONFIG_CHANGE_MSG failed or not
+>> triggered interrupt to the guest or just not available (not supported
+>> by vhost-user server).
+>>
+>> Command result is racy if allow it during migration. Let's allow the
+>> sync only in RUNNING state.
 >>
 >> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 >> ---
->>   hw/block/vhost-user-blk.c | 26 +++++++++++++++++++-------
->>   1 file changed, 19 insertions(+), 7 deletions(-)
+>>   hw/block/vhost-user-blk.c |  1 +
+>>   hw/virtio/virtio-pci.c    |  9 ++++++++
+>>   include/hw/qdev-core.h    |  3 +++
+>>   qapi/qdev.json            | 23 +++++++++++++++++++
+>>   system/qdev-monitor.c     | 48 +++++++++++++++++++++++++++++++++++++++
+>>   5 files changed, 84 insertions(+)
 >>
 >> diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
->> index 9e6bbc6950..091d2c6acf 100644
+>> index 091d2c6acf..2f301f380c 100644
 >> --- a/hw/block/vhost-user-blk.c
 >> +++ b/hw/block/vhost-user-blk.c
->> @@ -88,27 +88,39 @@ static void vhost_user_blk_set_config(VirtIODevice *vdev, const uint8_t *config)
->>       s->blkcfg.wce = blkcfg->wce;
+>> @@ -588,6 +588,7 @@ static void vhost_user_blk_class_init(ObjectClass *klass, void *data)
+>>   
+>>       device_class_set_props(dc, vhost_user_blk_properties);
+>>       dc->vmsd = &vmstate_vhost_user_blk;
+>> +    dc->sync_config = vhost_user_blk_sync_config;
+>>       set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
+>>       vdc->realize = vhost_user_blk_device_realize;
+>>       vdc->unrealize = vhost_user_blk_device_unrealize;
+>> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+>> index b1d02f4b3d..0d91e8b5dc 100644
+>> --- a/hw/virtio/virtio-pci.c
+>> +++ b/hw/virtio/virtio-pci.c
+>> @@ -2351,6 +2351,14 @@ static void virtio_pci_dc_realize(DeviceState *qdev, Error **errp)
+>>       vpciklass->parent_dc_realize(qdev, errp);
 >>   }
 >>   
->> +static int vhost_user_blk_sync_config(DeviceState *dev, Error **errp)
+>> +static int virtio_pci_sync_config(DeviceState *dev, Error **errp)
 >> +{
->> +    int ret;
->> +    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-> 
-> Note for later: all this function does with paramter @dev is cast it to
-> VirtIODevice *.
-> 
->> +    VHostUserBlk *s = VHOST_USER_BLK(vdev);
+>> +    VirtIOPCIProxy *proxy = VIRTIO_PCI(dev);
+>> +    VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
 >> +
->> +    ret = vhost_dev_get_config(&s->dev, (uint8_t *)&s->blkcfg,
->> +                               vdev->config_len, errp);
->> +    if (ret < 0) {
->> +        return ret;
->> +    }
->> +
->> +    memcpy(vdev->config, &s->blkcfg, vdev->config_len);
->> +    virtio_notify_config(vdev);
->> +
->> +    return 0;
+>> +    return qdev_sync_config(DEVICE(vdev), errp);
 >> +}
 >> +
->>   static int vhost_user_blk_handle_config_change(struct vhost_dev *dev)
+>>   static void virtio_pci_class_init(ObjectClass *klass, void *data)
 >>   {
->>       int ret;
->> -    VirtIODevice *vdev = dev->vdev;
->> -    VHostUserBlk *s = VHOST_USER_BLK(dev->vdev);
->>       Error *local_err = NULL;
->>   
->>       if (!dev->started) {
->>           return 0;
->>       }
->>   
->> -    ret = vhost_dev_get_config(dev, (uint8_t *)&s->blkcfg,
->> -                               vdev->config_len, &local_err);
->> +    ret = vhost_user_blk_sync_config(DEVICE(dev->vdev), &local_err);
-> 
-> dev->vdev is a VirtIODevice *.  You cast it to DeviceState * for
-> vhost_user_blk_sync_config(), which casts it right back.
-> 
-> Could you simply pass it as is instead?
-
-vhost_user_blk_sync_config() is generic handler, which will be used as ->sync_config() in the following commit, so it's good and convenient for it to have DeviceState* argument.
-
-> 
->>       if (ret < 0) {
->>           error_report_err(local_err);
->>           return ret;
->>       }
->>   
->> -    memcpy(dev->vdev->config, &s->blkcfg, vdev->config_len);
->> -    virtio_notify_config(dev->vdev);
->> -
->>       return 0;
+>>       DeviceClass *dc = DEVICE_CLASS(klass);
+>> @@ -2367,6 +2375,7 @@ static void virtio_pci_class_init(ObjectClass *klass, void *data)
+>>       device_class_set_parent_realize(dc, virtio_pci_dc_realize,
+>>                                       &vpciklass->parent_dc_realize);
+>>       rc->phases.hold = virtio_pci_bus_reset_hold;
+>> +    dc->sync_config = virtio_pci_sync_config;
 >>   }
+>>   
+>>   static const TypeInfo virtio_pci_info = {
+>> diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+>> index 9228e96c87..87135bdcdf 100644
+>> --- a/include/hw/qdev-core.h
+>> +++ b/include/hw/qdev-core.h
+>> @@ -95,6 +95,7 @@ typedef void (*DeviceUnrealize)(DeviceState *dev);
+>>   typedef void (*DeviceReset)(DeviceState *dev);
+>>   typedef void (*BusRealize)(BusState *bus, Error **errp);
+>>   typedef void (*BusUnrealize)(BusState *bus);
+>> +typedef int (*DeviceSyncConfig)(DeviceState *dev, Error **errp);
+>>   
+>>   /**
+>>    * struct DeviceClass - The base class for all devices.
+>> @@ -162,6 +163,7 @@ struct DeviceClass {
+>>       DeviceReset reset;
+>>       DeviceRealize realize;
+>>       DeviceUnrealize unrealize;
+>> +    DeviceSyncConfig sync_config;
+>>   
+>>       /**
+>>        * @vmsd: device state serialisation description for
+>> @@ -546,6 +548,7 @@ bool qdev_hotplug_allowed(DeviceState *dev, Error **errp);
+>>    */
+>>   HotplugHandler *qdev_get_hotplug_handler(DeviceState *dev);
+>>   void qdev_unplug(DeviceState *dev, Error **errp);
+>> +int qdev_sync_config(DeviceState *dev, Error **errp);
+>>   void qdev_simple_device_unplug_cb(HotplugHandler *hotplug_dev,
+>>                                     DeviceState *dev, Error **errp);
+>>   void qdev_machine_creation_done(void);
+>> diff --git a/qapi/qdev.json b/qapi/qdev.json
+>> index facaa0bc6a..fc5e125a45 100644
+>> --- a/qapi/qdev.json
+>> +++ b/qapi/qdev.json
+>> @@ -161,3 +161,26 @@
+>>   ##
+>>   { 'event': 'DEVICE_UNPLUG_GUEST_ERROR',
+>>     'data': { '*device': 'str', 'path': 'str' } }
+>> +
+>> +##
+>> +# @device-sync-config:
+>> +#
+>> +# Synchronize device configuration from host to guest part.  First,
+>> +# copy the configuration from the host part (backend) to the guest
+>> +# part (frontend).  Then notify guest software that device
+>> +# configuration changed.
+> 
+> Blank line here, please.
+> 
+>> +# The command may be used to notify the guest about block device
+>> +# capcity change.  Currently only vhost-user-blk device supports
+>> +# this.
+>> +#
+>> +# @id: the device's ID or QOM path
+>> +#
+>> +# Features:
+>> +#
+>> +# @unstable: The command is experimental.
+>> +#
+>> +# Since: 9.1
+>> +##
+>> +{ 'command': 'device-sync-config',
+>> +  'features': [ 'unstable' ],
+>> +  'data': {'id': 'str'} }
+>> diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+>> index 264978aa40..47bfc0506e 100644
+>> --- a/system/qdev-monitor.c
+>> +++ b/system/qdev-monitor.c
+>> @@ -23,6 +23,7 @@
+>>   #include "monitor/monitor.h"
+>>   #include "monitor/qdev.h"
+>>   #include "sysemu/arch_init.h"
+>> +#include "sysemu/runstate.h"
+>>   #include "qapi/error.h"
+>>   #include "qapi/qapi-commands-qdev.h"
+>>   #include "qapi/qmp/dispatch.h"
+>> @@ -971,6 +972,53 @@ void qmp_device_del(const char *id, Error **errp)
+>>       }
+>>   }
+>>   
+>> +int qdev_sync_config(DeviceState *dev, Error **errp)
+>> +{
+>> +    DeviceClass *dc = DEVICE_GET_CLASS(dev);
+>> +
+>> +    if (!dc->sync_config) {
+>> +        error_setg(errp, "device-sync-config is not supported for '%s'",
+>> +                   object_get_typename(OBJECT(dev)));
+>> +        return -ENOTSUP;
+>> +    }
+>> +
+>> +    return dc->sync_config(dev, errp);
+>> +}
+>> +
+>> +void qmp_device_sync_config(const char *id, Error **errp)
+>> +{
+>> +    DeviceState *dev;
+>> +
+>> +    /*
+>> +     * During migration there is a race between syncing`configuration and
+>> +     * migrating it (if migrate first, that target would get outdated version),
+>> +     * so let's just not allow it.
+> 
+> Wrap comment lines around column 70 for legibility, please.
+> 
+>> +     *
+>> +     * Moreover, let's not rely on setting up interrupts in paused
+>> +     * state, which may be a part of migration process.
+> 
+> We discussed this in review of v3.  You wanted to check whether the
+> problem is real.  Is it?
+
+We discussed it later than I've sent v4 :) No, I didn't check yet.
+
+> 
+>> +     */
+>> +
+>> +    if (migration_is_running()) {
+>> +        error_setg(errp, "Config synchronization is not allowed "
+>> +                   "during migration");
+>> +        return;
+>> +    }
+>> +
+>> +    if (!runstate_is_running()) {
+>> +        error_setg(errp, "Config synchronization allowed only in '%s' state, "
+> 
+> Suggest a line break after errp,
+> 
+>> +                   "current state is '%s'", RunState_str(RUN_STATE_RUNNING),
+>> +                   RunState_str(runstate_get()));
+>> +        return;
+>> +    }
+>> +
+>> +    dev = find_device_state(id, true, errp);
+>> +    if (!dev) {
+>> +        return;
+>> +    }
+>> +
+>> +    qdev_sync_config(dev, errp);
+>> +}
+>> +
+>>   void hmp_device_add(Monitor *mon, const QDict *qdict)
+>>   {
+>>       Error *err = NULL;
 > 
 
 -- 
