@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81CCFC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 12:30:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34340C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 12:30:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1mcC-0007fg-EO; Tue, 30 Apr 2024 08:29:45 -0400
+	id 1s1mcJ-0007iv-Ey; Tue, 30 Apr 2024 08:29:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1mbv-0007Es-MX
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1mbv-0007Ev-Sa
  for qemu-devel@nongnu.org; Tue, 30 Apr 2024 08:29:28 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1mbr-0001pT-88
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1mbt-0001pw-MT
  for qemu-devel@nongnu.org; Tue, 30 Apr 2024 08:29:27 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-57222fc625aso6361680a12.3
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 05:29:19 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-56e1bbdb362so6036272a12.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 05:29:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714480158; x=1715084958; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714480164; x=1715084964; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fzwfr/wTeB46SuXanUOeFcxVvZg85d/Fb55ijGv7nN4=;
- b=XkW0i1vL2J7FLbpXfazTF2XdHDNNOdaj282PI2K3bfSz2kkddawPZTQSI64GXU6SMq
- tTK4ICh+vYSPjtoY/XZeV/KjEbAh2DoLTfpybGQ5YGKsvRz4KQzBl9vlWEhGgGEeu1XB
- bmZxRcnZWcRbPZg8uaLWxibFeEcS9eRmVOrHeR3RuZZysiP/fpqkGupqew3uPp4kt6Cw
- BERFkXK2xmkotGbviLEfpd0ni6Rnn3i8hG0cKk1OVA6gQjv3WWcJfl33nGGiztgwyGox
- ZTk3dbwYKThMmeJv0n/5xDJwAIgL+jsHuELHjvGsi1l6rWCDy0e1fP4rx8RtVFc7zXmJ
- M26Q==
+ bh=PBJVq2+6UkUPok0cTSz4FPYy6QLevZUsxobHr1lZ+c8=;
+ b=J/6FuXeF/lztwLPYB9gqZbZ5f6HSv8/s2r06wg+32TKHzH5qmbBZ8RimyG/eO32y3g
+ X/dGJu2+bnSyEvrWAlZokDqqVKPWqlJaVpXtGHf6WxjWmzu1UDA6YcJXQUMhqybXzZV5
+ OoDmoeDqaMRW4ZA60wMm1MzoKzB7HOwF+mENdc/Em5LJNgZBgHeqGE7o4fKXg/rl2kgv
+ cBwMeOhS//ckQZIgBXKt2nTiXqlA+zY58bhQwx/7YjYrQXYx6ZrLQO5F0omogPftS7Gb
+ 4E89bp/6kNgBPkC2tBuyC/Gj2Xs3LsGXcEAIAI0LcaXrbDMTwsMOv7S1+Gn4pSVqBxpi
+ Lt+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714480158; x=1715084958;
+ d=1e100.net; s=20230601; t=1714480164; x=1715084964;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fzwfr/wTeB46SuXanUOeFcxVvZg85d/Fb55ijGv7nN4=;
- b=AlSWz3EqFFSmf7L5zX+qzDtz26Z9cgty1TAoeOeKNjMUlCKPdUhr5j/rBVHLxHBD+a
- f3w5SL1WthlNsTUBGYtPLnQMkVOA0p7PZvgDYvWYnUkD5Yvw7S8CcFqicTETRdhtybqZ
- grzgAoy83G5hjNVdPxhHGxQkI1cyXASpk1UF1v689czr4wmsedorPW4iLBMk6jX6tc4Q
- TaoN0MHwHvF/58lk1dSQCcOzU+qQRKaG1efwLVi4Rl3MuxmYePpNIFNjreZ3XjjMMb9N
- HyYxBAlrKmUjKm4A+Jz7m+wsxmD+Bw+XYyJStNRnz/m2tGb5ajEohHhwT0TdYAarMPkU
- jTvw==
-X-Gm-Message-State: AOJu0Yy7zRwUoGhRaJUCRPiBUfke6Qd7I6dzbUCKcJiv0dKo0FDJutfS
- bfF5V3F5yCHr51V2YbLuM1KWgr2AdIma1l7vPrWWKzRYp3JsN0hPXuPvPKsCr2WMUiX/NlrMOke
- Z
-X-Google-Smtp-Source: AGHT+IFYVta8F8IoY4I/NGLdQDhVs3fEFUWZBj6QjpijrLY+ltBBajYSgH3pSjUiTlXLuAw5ypV1PA==
-X-Received: by 2002:a50:8e0f:0:b0:571:bed1:3a36 with SMTP id
- 15-20020a508e0f000000b00571bed13a36mr11183710edw.38.1714480158255; 
- Tue, 30 Apr 2024 05:29:18 -0700 (PDT)
+ bh=PBJVq2+6UkUPok0cTSz4FPYy6QLevZUsxobHr1lZ+c8=;
+ b=w7oCxj+TX2DeLM+j3l+m+LTDlkkGG5iZWZnWfUOjBD+xkS4wTehCXll7I85RP4vnn+
+ 5W4n1BGYOsl4k3DYi5QOsWI0LkSXrX93Sp9hW+rOm/ZdwGHITee2w6EV48ekRdUWMUT7
+ L9epPkA+XtC9P7rtRDf3+OMdRG2aoTaosS2iQtnZRsEEPyelfgt0GMEbL8oYfNWnwCQq
+ d+UjiBa+xImwwX1xZ8vNByiMQ7ymlGlsXmEwMUXItWionWV9KrxlxLPYOxXI2EKc0p1Y
+ H4tVEw4wDm+oynXra/Gt5DoipJJlZwHKO267+ibpcPani3TjuTLH/BSAatiUHLXI6lnO
+ ccNg==
+X-Gm-Message-State: AOJu0Yxp8oi76Jr5MFv2R32g76gE5CtlHJ3F0uvqQmDlXvSqHowvXcNJ
+ Dkt0WRDQrj+Ev1qP4byz5LHe2jsvr0k+QrGD2vMrjLo5wpcMTNLjOBPSC9sm393D6wQaAy7P68n
+ G
+X-Google-Smtp-Source: AGHT+IEovet6ktpAa9UgFPwNuPUakXTaWuaEZNKog6fZ0miX7/bp7ju29aVS5NEnCImtvwIRAuCdCA==
+X-Received: by 2002:a17:907:94c3:b0:a58:eba0:b358 with SMTP id
+ dn3-20020a17090794c300b00a58eba0b358mr9681285ejc.53.1714480163739; 
+ Tue, 30 Apr 2024 05:29:23 -0700 (PDT)
 Received: from m1x-phil.lan (mab78-h01-176-184-55-179.dsl.sta.abo.bbox.fr.
  [176.184.55.179]) by smtp.gmail.com with ESMTPSA id
- ev9-20020a056402540900b005725de35790sm4419784edb.61.2024.04.30.05.29.16
+ g10-20020a17090613ca00b00a58ee5b1d18sm3639943ejc.160.2024.04.30.05.29.22
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Apr 2024 05:29:17 -0700 (PDT)
+ Tue, 30 Apr 2024 05:29:23 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>, Ilya Leoshkevich <iii@linux.ibm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 12/13] accel/tcg: Move icount fields from CPUState to TCG
+Subject: [PATCH v3 13/13] accel/tcg: Move @tb_jmp_cache from CPUState to TCG
  AccelCPUState
-Date: Tue, 30 Apr 2024 14:28:06 +0200
-Message-ID: <20240430122808.72025-13-philmd@linaro.org>
+Date: Tue, 30 Apr 2024 14:28:07 +0200
+Message-ID: <20240430122808.72025-14-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240430122808.72025-1-philmd@linaro.org>
 References: <20240430122808.72025-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,219 +96,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Both @icount_budget and @icount_extra fields are specific
-to TCG accelerator, move them to its AccelCPUState.
+@tb_jmp_cache is specific to TCG accelerator, move it to its
+AccelCPUState. Remove the NULL check in tcg_flush_jmp_cache().
 
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240428221450.26460-25-philmd@linaro.org>
+Message-Id: <20240428221450.26460-21-philmd@linaro.org>
 ---
- accel/tcg/vcpu-state.h           |  4 ++++
- include/hw/core/cpu.h            |  3 ---
- accel/tcg/cpu-exec.c             | 14 +++++++-------
- accel/tcg/icount-common.c        |  7 ++++---
- accel/tcg/tcg-accel-ops-icount.c | 14 +++++++-------
- accel/tcg/tcg-accel-ops.c        |  1 +
- hw/core/cpu-common.c             |  1 -
- 7 files changed, 23 insertions(+), 21 deletions(-)
+ accel/tcg/tb-jmp-cache.h  | 4 ++--
+ accel/tcg/vcpu-state.h    | 2 ++
+ include/hw/core/cpu.h     | 2 --
+ include/qemu/typedefs.h   | 1 -
+ accel/tcg/cpu-exec.c      | 7 +++----
+ accel/tcg/cputlb.c        | 2 +-
+ accel/tcg/tb-maint.c      | 2 +-
+ accel/tcg/translate-all.c | 7 +------
+ 8 files changed, 10 insertions(+), 17 deletions(-)
 
+diff --git a/accel/tcg/tb-jmp-cache.h b/accel/tcg/tb-jmp-cache.h
+index 184bb3e3e2..c3a505e394 100644
+--- a/accel/tcg/tb-jmp-cache.h
++++ b/accel/tcg/tb-jmp-cache.h
+@@ -22,12 +22,12 @@
+  * non-NULL value of 'tb'.  Strictly speaking pc is only needed for
+  * CF_PCREL, but it's used always for simplicity.
+  */
+-struct CPUJumpCache {
++typedef struct CPUJumpCache {
+     struct rcu_head rcu;
+     struct {
+         TranslationBlock *tb;
+         vaddr pc;
+     } array[TB_JMP_CACHE_SIZE];
+-};
++} CPUJumpCache;
+ 
+ #endif /* ACCEL_TCG_TB_JMP_CACHE_H */
 diff --git a/accel/tcg/vcpu-state.h b/accel/tcg/vcpu-state.h
-index 008fe847b4..716a0119c4 100644
+index 716a0119c4..7fff5413e9 100644
 --- a/accel/tcg/vcpu-state.h
 +++ b/accel/tcg/vcpu-state.h
-@@ -11,6 +11,7 @@
+@@ -7,6 +7,7 @@
+ #define ACCEL_TCG_VCPU_STATE_H
+ 
+ #include "hw/core/cpu.h"
++#include "tb-jmp-cache.h"
+ 
  /**
   * AccelCPUState: vCPU fields specific to TCG accelerator
-  * @cflags: Pre-computed cflags for this cpu.
-+ * @icount_extra: Instructions until next timer event.
-  * @plugin_state: per-CPU plugin state
-  */
- struct AccelCPUState {
-@@ -22,6 +23,9 @@ struct AccelCPUState {
+@@ -19,6 +20,7 @@ struct AccelCPUState {
+     uint32_t cflags_next_tb;
+ 
+     sigjmp_buf jmp_env;
++    CPUJumpCache tb_jmp_cache;
+ 
  #ifdef CONFIG_USER_ONLY
      TaskState *ts;
- #else
-+    int64_t icount_budget;
-+    int64_t icount_extra;
-+
-     /* track IOMMUs whose translations we've cached in the TCG TLB */
-     GArray *iommu_notifiers;
- #endif /* !CONFIG_USER_ONLY */
 diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index e546e67f4d..f06bb1e93a 100644
+index f06bb1e93a..c0c28befd3 100644
 --- a/include/hw/core/cpu.h
 +++ b/include/hw/core/cpu.h
-@@ -409,7 +409,6 @@ struct qemu_work_item;
-  * @unplug: Indicates a pending CPU unplug request.
-  * @crash_occurred: Indicates the OS reported a crash (panic) for this CPU
-  * @singlestep_enabled: Flags for single-stepping.
-- * @icount_extra: Instructions until next timer event.
-  * @cpu_ases: Pointer to array of CPUAddressSpaces (which define the
-  *            AddressSpaces this CPU has)
-  * @num_ases: number of CPUAddressSpaces in @cpu_ases
-@@ -470,8 +469,6 @@ struct CPUState {
-     /* updates protected by BQL */
-     uint32_t interrupt_request;
-     int singlestep_enabled;
--    int64_t icount_budget;
--    int64_t icount_extra;
-     uint64_t random_seed;
+@@ -479,8 +479,6 @@ struct CPUState {
+     AddressSpace *as;
+     MemoryRegion *memory;
  
-     QemuMutex work_mutex;
+-    CPUJumpCache *tb_jmp_cache;
+-
+     GArray *gdb_regs;
+     int gdb_num_regs;
+     int gdb_num_g_regs;
+diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
+index 36f2825725..daf9009332 100644
+--- a/include/qemu/typedefs.h
++++ b/include/qemu/typedefs.h
+@@ -44,7 +44,6 @@ typedef struct CPUAddressSpace CPUAddressSpace;
+ typedef struct CPUArchState CPUArchState;
+ typedef struct CPUPluginState CPUPluginState;
+ typedef struct CpuInfoFast CpuInfoFast;
+-typedef struct CPUJumpCache CPUJumpCache;
+ typedef struct CPUState CPUState;
+ typedef struct CPUTLBEntryFull CPUTLBEntryFull;
+ typedef struct DeviceListener DeviceListener;
 diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 49b4b57a56..a491278082 100644
+index a491278082..f813c68d1e 100644
 --- a/accel/tcg/cpu-exec.c
 +++ b/accel/tcg/cpu-exec.c
-@@ -75,7 +75,7 @@ static void align_clocks(SyncClocks *sc, CPUState *cpu)
-         return;
+@@ -262,7 +262,7 @@ static inline TranslationBlock *tb_lookup(CPUState *cpu, vaddr pc,
+     tcg_debug_assert(!(cflags & CF_INVALID));
+ 
+     hash = tb_jmp_cache_hash_func(pc);
+-    jc = cpu->tb_jmp_cache;
++    jc = &cpu->accel->tb_jmp_cache;
+ 
+     tb = qatomic_read(&jc->array[hash].tb);
+     if (likely(tb &&
+@@ -1011,7 +1011,7 @@ cpu_exec_loop(CPUState *cpu, SyncClocks *sc)
+                  * for the fast lookup
+                  */
+                 h = tb_jmp_cache_hash_func(pc);
+-                jc = cpu->tb_jmp_cache;
++                jc = &cpu->accel->tb_jmp_cache;
+                 jc->array[h].pc = pc;
+                 qatomic_set(&jc->array[h].tb, tb);
+             }
+@@ -1090,7 +1090,6 @@ bool tcg_exec_realizefn(CPUState *cpu, Error **errp)
+         tcg_target_initialized = true;
      }
  
--    cpu_icount = cpu->icount_extra + cpu->neg.icount_decr.u16.low;
-+    cpu_icount = cpu->accel->icount_extra + cpu->neg.icount_decr.u16.low;
-     sc->diff_clk += icount_to_ns(sc->last_cpu_icount - cpu_icount);
-     sc->last_cpu_icount = cpu_icount;
- 
-@@ -126,7 +126,7 @@ static void init_delay_params(SyncClocks *sc, CPUState *cpu)
-     sc->realtime_clock = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL_RT);
-     sc->diff_clk = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) - sc->realtime_clock;
-     sc->last_cpu_icount
--        = cpu->icount_extra + cpu->neg.icount_decr.u16.low;
-+        = cpu->accel->icount_extra + cpu->neg.icount_decr.u16.low;
-     if (sc->diff_clk < max_delay) {
-         max_delay = sc->diff_clk;
-     }
-@@ -719,7 +719,7 @@ static inline bool cpu_handle_exception(CPUState *cpu, int *ret)
-     if (cpu->exception_index < 0) {
+-    cpu->tb_jmp_cache = g_new0(CPUJumpCache, 1);
+     tlb_init(cpu);
  #ifndef CONFIG_USER_ONLY
-         if (replay_has_exception()
--            && cpu->neg.icount_decr.u16.low + cpu->icount_extra == 0) {
-+            && cpu->neg.icount_decr.u16.low + cpu->accel->icount_extra == 0) {
-             /* Execute just one insn to trigger exception pending in the log */
-             cpu->accel->cflags_next_tb = (curr_cflags(cpu) & ~CF_USE_ICOUNT)
-                 | CF_NOIRQ | 1;
-@@ -790,7 +790,7 @@ static inline bool icount_exit_request(CPUState *cpu)
-     if (!(cpu->accel->cflags_next_tb == -1 || cpu->accel->cflags_next_tb & CF_USE_ICOUNT)) {
-         return false;
-     }
--    return cpu->neg.icount_decr.u16.low + cpu->icount_extra == 0;
-+    return cpu->neg.icount_decr.u16.low + cpu->accel->icount_extra == 0;
- #endif
+     tcg_iommu_init_notifier_list(cpu);
+@@ -1108,5 +1107,5 @@ void tcg_exec_unrealizefn(CPUState *cpu)
+ #endif /* !CONFIG_USER_ONLY */
+ 
+     tlb_destroy(cpu);
+-    g_free_rcu(cpu->tb_jmp_cache, rcu);
++    g_free_rcu(&cpu->accel->tb_jmp_cache, rcu);
  }
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index cdb3e12dfb..eaa60d1da2 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -156,7 +156,7 @@ static void tlb_window_reset(CPUTLBDesc *desc, int64_t ns,
  
-@@ -942,9 +942,9 @@ static inline void cpu_loop_exec_tb(CPUState *cpu, TranslationBlock *tb,
-     /* Ensure global icount has gone forward */
-     icount_update(cpu);
-     /* Refill decrementer and continue execution.  */
--    int32_t insns_left = MIN(0xffff, cpu->icount_budget);
-+    int32_t insns_left = MIN(0xffff, cpu->accel->icount_budget);
-     cpu->neg.icount_decr.u16.low = insns_left;
--    cpu->icount_extra = cpu->icount_budget - insns_left;
-+    cpu->accel->icount_extra = cpu->accel->icount_budget - insns_left;
+ static void tb_jmp_cache_clear_page(CPUState *cpu, vaddr page_addr)
+ {
+-    CPUJumpCache *jc = cpu->tb_jmp_cache;
++    CPUJumpCache *jc = &cpu->accel->tb_jmp_cache;
+     int i, i0;
  
-     /*
-      * If the next tb has more instructions than we have left to
-@@ -953,7 +953,7 @@ static inline void cpu_loop_exec_tb(CPUState *cpu, TranslationBlock *tb,
-      */
-     if (insns_left > 0 && insns_left < tb->icount)  {
-         assert(insns_left <= CF_COUNT_MASK);
--        assert(cpu->icount_extra == 0);
-+        assert(cpu->accel->icount_extra == 0);
-         cpu->accel->cflags_next_tb = (tb->cflags & ~CF_COUNT_MASK) | insns_left;
-     }
- #endif
-diff --git a/accel/tcg/icount-common.c b/accel/tcg/icount-common.c
-index 8d3d3a7e9d..ff503f8e96 100644
---- a/accel/tcg/icount-common.c
-+++ b/accel/tcg/icount-common.c
-@@ -38,6 +38,7 @@
- #include "sysemu/cpu-timers.h"
- #include "sysemu/cpu-throttle.h"
- #include "sysemu/cpu-timers-internal.h"
-+#include "accel/tcg/vcpu-state.h"
+     if (unlikely(!jc)) {
+diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
+index 2d5faca9fd..83758648f2 100644
+--- a/accel/tcg/tb-maint.c
++++ b/accel/tcg/tb-maint.c
+@@ -888,7 +888,7 @@ static void tb_jmp_cache_inval_tb(TranslationBlock *tb)
+         uint32_t h = tb_jmp_cache_hash_func(tb->pc);
  
- /*
-  * ICOUNT: Instruction Counter
-@@ -71,8 +72,8 @@ static void icount_enable_adaptive(void)
+         CPU_FOREACH(cpu) {
+-            CPUJumpCache *jc = cpu->tb_jmp_cache;
++            CPUJumpCache *jc = &cpu->accel->tb_jmp_cache;
+ 
+             if (qatomic_read(&jc->array[h].tb) == tb) {
+                 qatomic_set(&jc->array[h].tb, NULL);
+diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+index 3a8199a761..9b02f21b23 100644
+--- a/accel/tcg/translate-all.c
++++ b/accel/tcg/translate-all.c
+@@ -652,12 +652,7 @@ void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr)
   */
- static int64_t icount_get_executed(CPUState *cpu)
+ void tcg_flush_jmp_cache(CPUState *cpu)
  {
--    return (cpu->icount_budget -
--            (cpu->neg.icount_decr.u16.low + cpu->icount_extra));
-+    return (cpu->accel->icount_budget -
-+            (cpu->neg.icount_decr.u16.low + cpu->accel->icount_extra));
- }
+-    CPUJumpCache *jc = cpu->tb_jmp_cache;
+-
+-    /* During early initialization, the cache may not yet be allocated. */
+-    if (unlikely(jc == NULL)) {
+-        return;
+-    }
++    CPUJumpCache *jc = &cpu->accel->tb_jmp_cache;
  
- /*
-@@ -83,7 +84,7 @@ static int64_t icount_get_executed(CPUState *cpu)
- static void icount_update_locked(CPUState *cpu)
- {
-     int64_t executed = icount_get_executed(cpu);
--    cpu->icount_budget -= executed;
-+    cpu->accel->icount_budget -= executed;
- 
-     qatomic_set_i64(&timers_state.qemu_icount,
-                     timers_state.qemu_icount + executed);
-diff --git a/accel/tcg/tcg-accel-ops-icount.c b/accel/tcg/tcg-accel-ops-icount.c
-index 9e1ae66f65..75073ec23f 100644
---- a/accel/tcg/tcg-accel-ops-icount.c
-+++ b/accel/tcg/tcg-accel-ops-icount.c
-@@ -112,16 +112,16 @@ void icount_prepare_for_run(CPUState *cpu, int64_t cpu_budget)
-      * asynchronously by cpu_exit/cpu_interrupt/tcg_handle_interrupt
-      */
-     g_assert(cpu->neg.icount_decr.u16.low == 0);
--    g_assert(cpu->icount_extra == 0);
-+    g_assert(cpu->accel->icount_extra == 0);
- 
-     replay_mutex_lock();
- 
--    cpu->icount_budget = MIN(icount_get_limit(), cpu_budget);
--    insns_left = MIN(0xffff, cpu->icount_budget);
-+    cpu->accel->icount_budget = MIN(icount_get_limit(), cpu_budget);
-+    insns_left = MIN(0xffff, cpu->accel->icount_budget);
-     cpu->neg.icount_decr.u16.low = insns_left;
--    cpu->icount_extra = cpu->icount_budget - insns_left;
-+    cpu->accel->icount_extra = cpu->accel->icount_budget - insns_left;
- 
--    if (cpu->icount_budget == 0) {
-+    if (cpu->accel->icount_budget == 0) {
-         /*
-          * We're called without the BQL, so must take it while
-          * we're calling timer handlers.
-@@ -139,8 +139,8 @@ void icount_process_data(CPUState *cpu)
- 
-     /* Reset the counters */
-     cpu->neg.icount_decr.u16.low = 0;
--    cpu->icount_extra = 0;
--    cpu->icount_budget = 0;
-+    cpu->accel->icount_extra = 0;
-+    cpu->accel->icount_budget = 0;
- 
-     replay_account_executed_instructions();
- 
-diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
-index d9132a5835..3b28cab0b5 100644
---- a/accel/tcg/tcg-accel-ops.c
-+++ b/accel/tcg/tcg-accel-ops.c
-@@ -89,6 +89,7 @@ static void tcg_cpu_reset_hold(CPUState *cpu)
- 
-     qatomic_set(&cpu->neg.icount_decr.u32, 0);
-     cpu->neg.can_do_io = true;
-+    cpu->accel->icount_extra = 0;
-     cpu->accel->cflags_next_tb = -1;
- }
- 
-diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index b6631b6245..e03d31876f 100644
---- a/hw/core/cpu-common.c
-+++ b/hw/core/cpu-common.c
-@@ -121,7 +121,6 @@ static void cpu_common_reset_hold(Object *obj, ResetType type)
-     cpu->interrupt_request = 0;
-     cpu->halted = cpu->start_powered_off;
-     cpu->mem_io_pc = 0;
--    cpu->icount_extra = 0;
-     cpu->exception_index = -1;
-     cpu->crash_occurred = false;
- 
+     for (int i = 0; i < TB_JMP_CACHE_SIZE; i++) {
+         qatomic_set(&jc->array[i].tb, NULL);
 -- 
 2.41.0
 
