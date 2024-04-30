@@ -4,83 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9E92C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 16:53:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C19FBC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 16:54:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1qgo-0007HW-CE; Tue, 30 Apr 2024 12:50:46 -0400
+	id 1s1qkV-0002NR-08; Tue, 30 Apr 2024 12:54:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1s1qgi-0006Zy-KW
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:50:41 -0400
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1s1qgf-00064t-6E
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:50:40 -0400
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-2de2f5ca076so67933021fa.0
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 09:50:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1714495831; x=1715100631; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yU40+YVWxkJADy+Z4l2CwzlxvDSuLGvZgzgju3wrOiw=;
- b=Rbu1zNCaQsUcFY+ry1YphfcA+1qLkxp/QcIOcEBLJbgyVQN21mTFE1m4jSuRrtO4as
- krRX/zwRamD+EKQP8OE9w9A7A02f0OuKvtKZ3IYjpFN5oiRLLptILiKTcCUqGWYoqyIh
- rB6lpqB3F7/gogmnlh054SVms3w2G7tPIcS/Rq5At5ur052D5oMvjKlERSK79DzRBFIK
- sN/0dP4D5lp82GniqGy9ML65o0E77PpqzDOMYOOLgPGSsSeKKdltaVMBCyyOmDQ0NYmg
- SZVDlb/zkm8/zNINrpl8Bfd3PQOjLYzWqVyDgL9Rob4AXhSeZATfSaX/JPMu9ZC32i3f
- RpCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714495831; x=1715100631;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=yU40+YVWxkJADy+Z4l2CwzlxvDSuLGvZgzgju3wrOiw=;
- b=pzHRrxDSGT/lVi8W+haJh3cqYUiNv3metZNxgoCawwJenSn3RWu8EZPxAIjfzRDS0G
- s9Nry7yxdzBxVo/r/+QABpBytHLxix5RTmzlQoHB1laAZevhK4YdG+S3VTZY+G0WCo7J
- 0qXTJqFVXTaKtyp4TsWMn8i2dKuvCCr8hzG6ZJwCi0Rt6D9sbwP5+c19Xs/ZVsD5ENxU
- yY/uwKR+TpmMS979x9MikTaOtqAhpZfP7tpRZiwDxJnyo+zEcJgyXo2XJf3p+/ajhBgF
- o0VkiB4yJPmH9129ZOtKvXbTw0gzaoqNcIz3dudTsr6sNN1cpQUsR8GtZqLFKF9Jtc7h
- KcyQ==
-X-Gm-Message-State: AOJu0YyLYhcrqjEwwkPrhKnPZ9KolK5/PRlL60tau4R97o/lX2wa84xO
- 5C6PRbDpNWBX6t9R1qMzO1W9D+x9rVm1AtYckkdW6cb1/eD6ayIBWXxOCJDL
-X-Google-Smtp-Source: AGHT+IF7NEHMVH11qhcbPGrROL4h9vPrTZ7L+HcLgKWakMJjuqsmWO3glx5CsV2GXCvTV6HEwqtzvg==
-X-Received: by 2002:ac2:4984:0:b0:51c:c1a3:a4f9 with SMTP id
- f4-20020ac24984000000b0051cc1a3a4f9mr13762lfl.64.1714495831228; 
- Tue, 30 Apr 2024 09:50:31 -0700 (PDT)
-Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
- by smtp.gmail.com with ESMTPSA id
- f13-20020a056512360d00b0051ad4552454sm3943178lfs.148.2024.04.30.09.50.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Apr 2024 09:50:30 -0700 (PDT)
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: edgar.iglesias@gmail.com, sstabellini@kernel.org, jgross@suse.com,
- "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
- Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
- xen-devel@lists.xenproject.org
-Subject: [PATCH v4 12/17] xen: mapcache: Unmap first entries in buckets
-Date: Tue, 30 Apr 2024 18:49:34 +0200
-Message-Id: <20240430164939.925307-13-edgar.iglesias@gmail.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20240430164939.925307-1-edgar.iglesias@gmail.com>
-References: <20240430164939.925307-1-edgar.iglesias@gmail.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1s1qkT-0002M4-Oo
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:54:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1s1qkS-0006Ui-2b
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:54:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714496071;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=lCyskhAIpRLBQGrfOTVqz2y+o19Ke66o+fFMq5zx9yA=;
+ b=GRxg/l1SP0O9iI/TwH4fDysysVHjl3XcqJawyf9SOTBwm2/l2pYoYOkUeJ+rIQzwvGLkPP
+ 15ikVSD7+2JMXE8cpRg2INb7ayeZ+dFB0NscN0P00BV0eocPjfcl4pdrOQk9KJO8rFeky0
+ vmu/V4h46qZxyF1ZInoWRzNiwyMqco0=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-417-gorT3wfaNfqapfGCHOp6Og-1; Tue,
+ 30 Apr 2024 12:54:26 -0400
+X-MC-Unique: gorT3wfaNfqapfGCHOp6Og-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6DE2929AC013;
+ Tue, 30 Apr 2024 16:54:25 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.59])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 6F5F240C5C2;
+ Tue, 30 Apr 2024 16:54:23 +0000 (UTC)
+Date: Tue, 30 Apr 2024 17:54:21 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ devel@lists.libvirt.org,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, qemu-s390x@nongnu.org,
+ qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH] docs/about: Automatically deprecate versioned machine
+ types older than 6 years
+Message-ID: <ZjEiPTfzeELC3qIX@redhat.com>
+References: <20240430064529.411699-1-thuth@redhat.com>
+ <ZjDAGuONZ_Zem3fL@redhat.com>
+ <05cab8d3-bda0-4452-92d7-061f4719eba7@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x232.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <05cab8d3-bda0-4452-92d7-061f4719eba7@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,54 +89,72 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+On Tue, Apr 30, 2024 at 12:29:14PM +0200, Thomas Huth wrote:
+> On 30/04/2024 11.55, Daniel P. Berrangé wrote:
+> > On Tue, Apr 30, 2024 at 08:45:29AM +0200, Thomas Huth wrote:
+> > > Old machine types often have bugs or work-arounds that affect our
+> > > possibilities to move forward with the QEMU code base (see for example
+> > > https://gitlab.com/qemu-project/qemu/-/issues/2213 for a bug that likely
+> > > cannot be fixed without breaking live migration with old machine types,
+> > > or https://lists.gnu.org/archive/html/qemu-devel/2018-12/msg04516.html or
+> > > commit ea985d235b86). So instead of going through the process of manually
+> > > deprecating old machine types again and again, let's rather add an entry
+> > > that can stay, which declares that machine types older than 6 years are
+> > > considered as deprecated automatically. Six years should be sufficient to
+> > > support the release cycles of most Linux distributions.
+> > 
+> > Reading this again, I think we're mixing two concepts here.
+> > 
+> > With this 6 year cut off, we're declaring the actual *removal* date,
+> > not the deprecation date.
+> > 
+> > A deprecation is something that happens prior to removal normally,
+> > to give people a warning of /future/ removal, as a suggestion
+> > that they stop using it.
+> > 
+> > If we never set the 'deprecation_reason' on a machine type, then
+> > unless someone reads this doc, they'll never realize they are on
+> > a deprecated machine.
+> > 
+> > When it comes to machine types, I see deprecation as a way to tell
+> > people they should not deploy a /new/ VM on a machine type, only
+> > use it for back compat (incoming migration / restore from saved
+> > image) with existing deployed VMs.
+> > 
+> > If we delete a machine on the 6 year anniversary, then users
+> > don't want to be deploying /new/ VMs using that on the
+> > 5 year anniversary as it only gives a 1 year upgrade window.
+> > 
+> > So how long far back do we consider it reasonable for a user
+> > to deploy a /new/ VM on an old machine type ? 1 year, 2 years,
+> > 3 years ?
+> > 
+> > 
+> > How about picking the half way point ?  3 years ?
+> > 
+> > ie, set deprecation_reason for any machine that is 3 years
+> > old, but declare that our deprecation cycle lasts for
+> > 3 years, instead of the normal 1 year, when applied to
+> > machine types.
+> > 
+> > This would give a strong hint that users should get off the
+> > old machine type, several years before its finally deleted.
+> 
+> Sounds like a good idea, too! Since I have to drop this patch here anyway,
+> could you maybe write such a new patch? (or do you want me to try to
+> formulate this?)
 
-When invalidating memory ranges, if we happen to hit the first
-entry in a bucket we were never unmapping it. This was harmless
-for foreign mappings but now that we're looking to reuse the
-mapcache for transient grant mappings, we must unmap entries
-when invalidated.
+Yes, I'll send something for discussion soon.
 
-Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
----
- hw/xen/xen-mapcache.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
-
-diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-index 4f98d284dd..0365311788 100644
---- a/hw/xen/xen-mapcache.c
-+++ b/hw/xen/xen-mapcache.c
-@@ -486,18 +486,22 @@ static void xen_invalidate_map_cache_entry_unlocked(MapCache *mc,
-         return;
-     }
-     entry->lock--;
--    if (entry->lock > 0 || pentry == NULL) {
-+    if (entry->lock > 0) {
-         return;
-     }
- 
--    pentry->next = entry->next;
-     ram_block_notify_remove(entry->vaddr_base, entry->size, entry->size);
-     if (munmap(entry->vaddr_base, entry->size) != 0) {
-         perror("unmap fails");
-         exit(-1);
-     }
--    g_free(entry->valid_mapping);
--    g_free(entry);
-+    if (pentry) {
-+        pentry->next = entry->next;
-+        g_free(entry->valid_mapping);
-+        g_free(entry);
-+    } else {
-+        memset(entry, 0, sizeof *entry);
-+    }
- }
- 
- typedef struct XenMapCacheData {
+With regards,
+Daniel
 -- 
-2.40.1
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
