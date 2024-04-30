@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44F57C25B5C
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 16:52:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F6D2C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 16:52:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1qhH-0000cP-W5; Tue, 30 Apr 2024 12:51:16 -0400
+	id 1s1qfa-0003z4-8e; Tue, 30 Apr 2024 12:49:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1s1qgk-0006nr-9Z
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:50:43 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s1qfY-0003qU-GY
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:49:28 -0400
+Received: from mail-oo1-xc2b.google.com ([2607:f8b0:4864:20::c2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1s1qgh-00065B-5L
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:50:41 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-51ca95db667so5702737e87.0
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 09:50:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s1qfW-0005hy-P8
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 12:49:28 -0400
+Received: by mail-oo1-xc2b.google.com with SMTP id
+ 006d021491bc7-5aa241232faso4319525eaf.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 09:49:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1714495833; x=1715100633; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DU0xtzI9Cm5N5WksUYgPVqXR4B2xCZmxh2qO529TbRk=;
- b=ZQNnnBvdj4R9M70zfuHqHMAalF+cPBVom1jP4zTWFeOLkJa2iJunutXx4BY3Fq7YeT
- mp1ZFirYZT6pRS9wnm1sUpLpIDkEGihTrVW+pP5TEmcQBm880LFzp7OKVgc5Oz1uQHWZ
- s6ax08qfczEwdfEwxJFiy23pk+9fWcyNG5uroM15A74mvhUt37ruLtvp6SpB7sYjmXU1
- 4H+Ye2QFdyoyze3Farobia4+DliWEhFm2HKr43opJFl1fp7kdnjddClJh+RVmuhdKvlj
- 6UnjWolWNJwIdKl9k71L+Fdk9SI4DQFSvrLVELl/tC90gUP6mo6+lXR6tpJ+jnzAvKSl
- 5pLg==
+ d=linaro.org; s=google; t=1714495765; x=1715100565; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Ff0KPF3ZIkyPDZf1ILo/pDe8qY1FeD4uNmY1vpTgzhc=;
+ b=n1dyNTC3Yd857KH/mQ2iXn8flIubzndphkUBCXVQv3HuGDvgeAOmq4ctodJGjCariW
+ It8kvaImBnCp/VZf0RfzYdKEnX64LYElFNpuyCRem42aNqgq5Dag82Ci6ShTxGvoIa/8
+ ff/x9fwRYJpmlMihVBY+1adTdlmYYPMzdAQEpsZ3gaBiBhaC0pPOinHTEzilS3afytTH
+ 3xsz/+dM/EVRojC1Q6D6MCCh2TmO0DFALumDkpjhYjVDPhdkG3yamhb4st2q0AWl6rCo
+ LgunEghKMolRurEk+ySaD27CVRY5yVIbBOVNKcuk30ouIK3Uk3tOGz3oi4xGZ9VKAu6/
+ jfyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714495833; x=1715100633;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=DU0xtzI9Cm5N5WksUYgPVqXR4B2xCZmxh2qO529TbRk=;
- b=gRUVDRAZnzxSfNYg4DIEJAk8x2hityuWBH/eBpQUZGDi3UvNGZgQ0VdC4FoytCIRGv
- EqbIT3ctMr+LXf0iCYMiUS1iDlMIasHWqfKlqbm2tuiXksQXYtp6MnNi5vRK0Soo9kWB
- FCEFDnpBUgVaFunkspG+jdsCXZiaChYUlrtOlFTq7x8u+nD9SDA3IsWKGCz0wHMyQH5t
- s3S54MoXi6e5Fxd8Hiv6E4bZoM0ApzVwH0MBszdGg7vdDxXH6r/2RPqTZpGPqAUa2y+F
- nr2cyUeLparI341XOmmyMZpWVneANj76+NWt6HdRQPilt7tDlEF7d2jUpqeyUJ06ExCk
- sbRw==
-X-Gm-Message-State: AOJu0YxqbSNx++RB2aqdG0fFeGtVdnrdUnYOUIaYTDpuRvXn2LjgluNH
- 4xekQ/bIbKyp9z9gy8f873sIRzTSXUbCyHkStihbU5Wm3iLPOEtTiUZqVlqw
-X-Google-Smtp-Source: AGHT+IH5mCn6s8y3JJfLC094G9xqUv22UPPMyi0CQHk4jd06RZgbi6+GzYUXShvTx3wLunuX1iTX8w==
-X-Received: by 2002:ac2:4852:0:b0:515:a8c9:6e99 with SMTP id
- 18-20020ac24852000000b00515a8c96e99mr42447lfy.5.1714495833071; 
- Tue, 30 Apr 2024 09:50:33 -0700 (PDT)
-Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
+ d=1e100.net; s=20230601; t=1714495765; x=1715100565;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Ff0KPF3ZIkyPDZf1ILo/pDe8qY1FeD4uNmY1vpTgzhc=;
+ b=OAJfSci6djuCr3/6oGIMUVSVoFCzKn7rkKMFJG9vQNqjMAZkTh83Y9y7akwJCKTTfy
+ P64JDx+4FMpty88YB/aGHHh3+LGD6uOoFxUvrHGTvRb0Lpjj7Y311TNsJxvO80Gx5OpI
+ hjjyikmDyDg0GBImezjzCDyIEJ1dLmcYfyWvxbJ2XEAFWonjSsCuTWhp+l03h1Gf0ZJD
+ 5IJ3HfIIldgT8sPrAlcidld5f9Ojd3Lc09QVKxti6L6qd32QCHK6/zJvFpvX90MfazKq
+ nFVwn6ff43I71HQqKUmFnwDL7gt+9+cpuVK8d6R64Pd+3Hh6ZmHppeMzOGaeHpKwflEq
+ 0R8Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVNBCv6UZTn9PHNozxXBgwwzBBmOAR0+YL/wdJRaieMNdQjdGxvB4HkXNRfcsqy6Hm4SdNwp1bL55Xpuy5aCq/Ixz9zuzU=
+X-Gm-Message-State: AOJu0YyJM+w+OHEdGFlKqkHgvA2BlH0YTqZCxs4PD86UmUS8UBblBFle
+ MKXbowhPgnY8ea38jt6SGYVi2PTJKO639/AfWBFi/Cz9lct02RV3kM/2EeGQYRuyBRDFNnsKcE2
+ s
+X-Google-Smtp-Source: AGHT+IFtK2XmTDiCSmcAyBqkE/5Vs3yiLGIx6I/9fvmnYm1+JkXwr5m1845MovzcgI+7Etd5rY5l8Q==
+X-Received: by 2002:a05:6358:e49d:b0:18d:8172:60b6 with SMTP id
+ by29-20020a056358e49d00b0018d817260b6mr460573rwb.11.1714495765248; 
+ Tue, 30 Apr 2024 09:49:25 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- f15-20020a19380f000000b0051aaf26f4a0sm4359741lfa.101.2024.04.30.09.50.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Apr 2024 09:50:32 -0700 (PDT)
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: edgar.iglesias@gmail.com, sstabellini@kernel.org, jgross@suse.com,
- "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
- Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- xen-devel@lists.xenproject.org
-Subject: [PATCH v4 13/17] softmmu: Pass RAM MemoryRegion and is_write
- xen_map_cache()
-Date: Tue, 30 Apr 2024 18:49:35 +0200
-Message-Id: <20240430164939.925307-14-edgar.iglesias@gmail.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20240430164939.925307-1-edgar.iglesias@gmail.com>
-References: <20240430164939.925307-1-edgar.iglesias@gmail.com>
+ f4-20020a656284000000b005c6617b52e6sm18789500pgv.5.2024.04.30.09.49.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 30 Apr 2024 09:49:24 -0700 (PDT)
+Message-ID: <5a530f2c-a210-412e-af81-1fbca90d1855@linaro.org>
+Date: Tue, 30 Apr 2024 09:49:23 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x133.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL v2 00/17] loongarch-to-apply queue
+To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
+References: <20240429023043.2607982-1-gaosong@loongson.cn>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240429023043.2607982-1-gaosong@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,174 +97,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+On 4/28/24 19:30, Song Gao wrote:
+> The following changes since commit fd87be1dada5672f877e03c2ca8504458292c479:
+> 
+>    Merge tag 'accel-20240426' ofhttps://github.com/philmd/qemu  into staging (2024-04-26 15:28:13 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/gaosong/qemu.git  tags/pull-loongarch-20240429
+> 
+> for you to fetch changes up to 841ef2c9df5317e32de590424b0c5c36fbb4de78:
+> 
+>    hw/loongarch: Add cells missing from rtc node (2024-04-29 10:25:56 +0800)
+> 
+> ----------------------------------------------------------------
+> Add boot LoongArch elf kernel with FDT
+> 
+> v2: Fix 'make check-tcg' failed.
 
-Propagate MR and is_write to xen_map_cache().
-This is in preparation for adding support for grant mappings.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-No functional change.
-
-Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
----
- hw/xen/xen-mapcache.c         | 10 ++++++----
- include/sysemu/xen-mapcache.h | 11 +++++++----
- system/physmem.c              | 31 +++++++++++++++++++++++--------
- 3 files changed, 36 insertions(+), 16 deletions(-)
-
-diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-index 0365311788..09b5f36d9c 100644
---- a/hw/xen/xen-mapcache.c
-+++ b/hw/xen/xen-mapcache.c
-@@ -264,7 +264,7 @@ static void xen_remap_bucket(MapCache *mc,
- 
- static uint8_t *xen_map_cache_unlocked(MapCache *mc,
-                                        hwaddr phys_addr, hwaddr size,
--                                       uint8_t lock, bool dma)
-+                                       uint8_t lock, bool dma, bool is_write)
- {
-     MapCacheEntry *entry, *pentry = NULL,
-                   *free_entry = NULL, *free_pentry = NULL;
-@@ -387,13 +387,15 @@ tryagain:
-     return mc->last_entry->vaddr_base + address_offset;
- }
- 
--uint8_t *xen_map_cache(hwaddr phys_addr, hwaddr size,
--                       uint8_t lock, bool dma)
-+uint8_t *xen_map_cache(MemoryRegion *mr,
-+                       hwaddr phys_addr, hwaddr size,
-+                       uint8_t lock, bool dma,
-+                       bool is_write)
- {
-     uint8_t *p;
- 
-     mapcache_lock(mapcache);
--    p = xen_map_cache_unlocked(mapcache, phys_addr, size, lock, dma);
-+    p = xen_map_cache_unlocked(mapcache, phys_addr, size, lock, dma, is_write);
-     mapcache_unlock(mapcache);
-     return p;
- }
-diff --git a/include/sysemu/xen-mapcache.h b/include/sysemu/xen-mapcache.h
-index 10c2e3082a..1ec9e66752 100644
---- a/include/sysemu/xen-mapcache.h
-+++ b/include/sysemu/xen-mapcache.h
-@@ -18,8 +18,9 @@ typedef hwaddr (*phys_offset_to_gaddr_t)(hwaddr phys_offset,
- 
- void xen_map_cache_init(phys_offset_to_gaddr_t f,
-                         void *opaque);
--uint8_t *xen_map_cache(hwaddr phys_addr, hwaddr size,
--                       uint8_t lock, bool dma);
-+uint8_t *xen_map_cache(MemoryRegion *mr, hwaddr phys_addr, hwaddr size,
-+                       uint8_t lock, bool dma,
-+                       bool is_write);
- ram_addr_t xen_ram_addr_from_mapcache(void *ptr);
- void xen_invalidate_map_cache_entry(uint8_t *buffer);
- void xen_invalidate_map_cache(void);
-@@ -33,10 +34,12 @@ static inline void xen_map_cache_init(phys_offset_to_gaddr_t f,
- {
- }
- 
--static inline uint8_t *xen_map_cache(hwaddr phys_addr,
-+static inline uint8_t *xen_map_cache(MemoryRegion *mr,
-+                                     hwaddr phys_addr,
-                                      hwaddr size,
-                                      uint8_t lock,
--                                     bool dma)
-+                                     bool dma,
-+                                     bool is_write)
- {
-     abort();
- }
-diff --git a/system/physmem.c b/system/physmem.c
-index f114b972a5..ad7a8c7d95 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -2190,11 +2190,22 @@ void qemu_ram_remap(ram_addr_t addr, ram_addr_t length)
- 
- /*
-  * Return a host pointer to guest's ram.
-+ * For Xen, foreign mappings get created if they don't already exist.
-+ *
-+ * @block: block for the RAM to lookup (optional and may be NULL).
-+ * @addr: address within the memory region.
-+ * @size: pointer to requested size (optional and may be NULL).
-+ *        size may get modified and return a value smaller than
-+ *        what was requested.
-+ * @lock: wether to lock the mapping in xen-mapcache until invalidated.
-+ * @is_write: hint wether to map RW or RO in the xen-mapcache.
-+ *            (optional and may always be set to true).
-  *
-  * Called within RCU critical section.
-  */
- static void *qemu_ram_ptr_length(RAMBlock *block, ram_addr_t addr,
--                                 hwaddr *size, bool lock)
-+                                 hwaddr *size, bool lock,
-+                                 bool is_write)
- {
-     hwaddr len = 0;
- 
-@@ -2217,10 +2228,13 @@ static void *qemu_ram_ptr_length(RAMBlock *block, ram_addr_t addr,
-          * In that case just map the requested area.
-          */
-         if (block->offset == 0) {
--            return xen_map_cache(addr, len, lock, lock);
-+            return xen_map_cache(block->mr, addr, len, lock, lock,
-+                                 is_write);
-         }
- 
--        block->host = xen_map_cache(block->offset, block->max_length, 1, lock);
-+        block->host = xen_map_cache(block->mr, block->offset,
-+                                    block->max_length, 1,
-+                                    lock, is_write);
-     }
- 
-     return ramblock_ptr(block, addr);
-@@ -2236,7 +2250,7 @@ static void *qemu_ram_ptr_length(RAMBlock *block, ram_addr_t addr,
-  */
- void *qemu_map_ram_ptr(RAMBlock *ram_block, ram_addr_t addr)
- {
--    return qemu_ram_ptr_length(ram_block, addr, NULL, false);
-+    return qemu_ram_ptr_length(ram_block, addr, NULL, false, true);
- }
- 
- /* Return the offset of a hostpointer within a ramblock */
-@@ -2746,7 +2760,7 @@ static MemTxResult flatview_write_continue_step(MemTxAttrs attrs,
-     } else {
-         /* RAM case */
-         uint8_t *ram_ptr = qemu_ram_ptr_length(mr->ram_block, mr_addr, l,
--                                               false);
-+                                               false, true);
- 
-         memmove(ram_ptr, buf, *l);
-         invalidate_and_set_dirty(mr, mr_addr, *l);
-@@ -2839,7 +2853,7 @@ static MemTxResult flatview_read_continue_step(MemTxAttrs attrs, uint8_t *buf,
-     } else {
-         /* RAM case */
-         uint8_t *ram_ptr = qemu_ram_ptr_length(mr->ram_block, mr_addr, l,
--                                               false);
-+                                               false, false);
- 
-         memcpy(buf, ram_ptr, *l);
- 
-@@ -3233,7 +3247,7 @@ void *address_space_map(AddressSpace *as,
-     *plen = flatview_extend_translation(fv, addr, len, mr, xlat,
-                                         l, is_write, attrs);
-     fuzz_dma_read_cb(addr, *plen, mr);
--    return qemu_ram_ptr_length(mr->ram_block, xlat, plen, true);
-+    return qemu_ram_ptr_length(mr->ram_block, xlat, plen, true, is_write);
- }
- 
- /* Unmaps a memory region previously mapped by address_space_map().
-@@ -3329,7 +3343,8 @@ int64_t address_space_cache_init(MemoryRegionCache *cache,
-         l = flatview_extend_translation(cache->fv, addr, len, mr,
-                                         cache->xlat, l, is_write,
-                                         MEMTXATTRS_UNSPECIFIED);
--        cache->ptr = qemu_ram_ptr_length(mr->ram_block, cache->xlat, &l, true);
-+        cache->ptr = qemu_ram_ptr_length(mr->ram_block, cache->xlat, &l, true,
-+                                         is_write);
-     } else {
-         cache->ptr = NULL;
-     }
--- 
-2.40.1
-
+r~
 
