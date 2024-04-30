@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 394E9C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 00:08:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EEF5C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 00:18:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1b1z-00007t-US; Mon, 29 Apr 2024 20:07:35 -0400
+	id 1s1bBv-00024w-J4; Mon, 29 Apr 2024 20:17:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s1b1x-00007G-FZ
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 20:07:33 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1s1bBs-00024f-NL
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 20:17:48 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s1b1s-0004Kz-B3
- for qemu-devel@nongnu.org; Mon, 29 Apr 2024 20:07:31 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1eab16dcfd8so43871805ad.0
- for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 17:07:26 -0700 (PDT)
+ id 1s1bBq-00060M-QR
+ for qemu-devel@nongnu.org; Mon, 29 Apr 2024 20:17:48 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-6eddff25e4eso4367793b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Apr 2024 17:17:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714435645; x=1715040445; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714436265; x=1715041065; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=XUDriNETMncADa0SBoq7q089QiuFOsHX3zk9yKFnu+0=;
- b=Peo1XnbnVaKPW3Xsm6a61zoCLw8BWcLqzzOqGSWj4rT5ZaUesDmrXQriO2QPFAe05q
- 3cSOLcj9t918I+h5gON4mKhdHAtnS59QdBlJvuvOsMAZCqnuJA0EkARM4DruLlCxuH/P
- 4VpOUJsw5aoxSNXl8wxFesGU0eUxM3UHuANa1WBC5grGkXWc6+AlPFYNL/FRNtB+svgj
- 5ouJgMRlhcmxxgJS1X3IgoBSYhSoCHk5M+K6zo+tkFGzkg454yqH1F33xOUx7Z08QVQx
- +6d5vL7jBcB3lFuYxCBI89cXBoANnrWu5WZhFcvCBQHCbyXzQj9KL6YUBLYYkiCpHV8o
- Yzjw==
+ bh=AgR1/XUMVEQyP7MatblKbnL6sTfup+07/myKTvRuViU=;
+ b=tqdi5ReCAGqQl+j+xhLlht3c7dmcBrSHfm0y6ZB3XJhkPgR9T7gkc2hAcsorzs94Qt
+ QuQoR9WAlbk+qC0S52lA/Vd9/MOCLvSQJqdxJih7mYRpR57IuESmZ5F206+yxukdk3zI
+ Sp8fiVB0VK4+Uuv7Qfh/hFR3vi43IbO8zHlBbK4Tt5ScRPuGB3U8QLdvyC5oAdCdlf2E
+ ieIpsezG4R9f/PVt+7NFH41TI08rnLYptxL9OloW+0KLUKKltDMKdiUQrpCfKECfDjfP
+ 6n2koESCqgUj9gFqrGoJKS49IwjpmO3BDrhxRE9h+sT2ymTX+GSHQbQmbcL7tfB55nit
+ L83Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714435645; x=1715040445;
+ d=1e100.net; s=20230601; t=1714436265; x=1715041065;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XUDriNETMncADa0SBoq7q089QiuFOsHX3zk9yKFnu+0=;
- b=Jxuab4jbi9NC4VtmADOR93uZqpJuTrj/rXVb1E0szpC/b20sUWnfQ+4b/XGv6Y2s7U
- Lx923NPsI6dDCgV+a/UomBOkwOJ12fmQc796WVqpAUQRLGemN9gMV/2Czm8loIwYtjTW
- l4y3EGbGysTRkk2vGB3BP5vpMSr6ZbunQxMxDw4KQKBfbp9CJ7bcovwrBCm/KRY6luki
- EoJYMm8/HqKvzDVqwP17sXgX0Z8ax3c8O7VWcZm6MFgeWaMNESNaxqwMZMcB23+M96Fv
- e5z7wwdctCOcnVg3FfbFTZ0oXQ552hkQPVZ6ykLsGBeqhRyzIKaHlQLbbML8w1Em1t61
- kv7A==
+ bh=AgR1/XUMVEQyP7MatblKbnL6sTfup+07/myKTvRuViU=;
+ b=jYFmLjuK4S+ytFxYQ2TVlZ4S+ion3N2HHvKL+DRTYKkDw/8fzT6aPe6U+rB625F2cS
+ dwejQu276boQsUBRfI90QMtgpwKryi5e0mXYFCdBsi7WloQmw7IK7BdHKziU6WdQFf/M
+ 37G0GmEJhpcA+hmgVBXUjVz+ElPYw6p5HamZU1TWjWy5Uz9ufJeO6xVNS22LswwD4h1C
+ K3kh8SStq0xZLEKOLOHHd1UB89AxnvZIFU4wQQYyHTSFRCtgAFVHYLkYB/g1dj6LIwjL
+ hbx9N5CUU2DdBZ2v44Iz0VVbrAKzxqkeyoykvMEkmG0KJH28oMR4TGi7Q54nCZCmDE+y
+ iKZg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVfWPPlrz93p5cScXhymwbSc2FhBbI4ZgLCo/osgdZjC5UsnV4cQHnxz4g9ZGDThXMVT1v8PBDhbimZf5BNkopj4u7NwVo=
-X-Gm-Message-State: AOJu0YxkSdK1J95MaTuOVj5/uFg8+UsMlII3BHuCsRQuwgxSnOQlVqMr
- BAn9qGsWbkeucb0q5eH+ju2B4Tjq/Lmqp2xBhI8psivC5bgUqep5QCzy6UCz3YY=
-X-Google-Smtp-Source: AGHT+IGs+k/S8g8vDhj8bnY5Bpl1+SAQh4jRigtFBMlSuy/4PAvhuKIN7V8iXmqvoYjz9edfaaDS+w==
-X-Received: by 2002:a17:902:f64c:b0:1e4:c07b:a8e0 with SMTP id
- m12-20020a170902f64c00b001e4c07ba8e0mr11409925plg.66.1714435645046; 
- Mon, 29 Apr 2024 17:07:25 -0700 (PDT)
+ AJvYcCUeQDeg/6Sam+adzst/00ikK5WBP7Y3Bt9dPPznx+Kme+X4RmUW0BpUUNR4irU3k8yPMHiiqXPJhqufF8eepJX8Bmwcn/w=
+X-Gm-Message-State: AOJu0YybpfRw5KDO+FXn9wSqnBjK8Kvj6mHVWXI6cx/89bklMC0nQ3mz
+ 6Lb7TrXdfuI4fA8F44PkQtVKvEIHEA3VEV2NG4DBm41Vq3wxiDEB/vZsUbC6zWc=
+X-Google-Smtp-Source: AGHT+IFEOVu3WaSf+3WqQ14vDqhby5jWXrsPog44M3q1n+uB4SRA2h78+r2zc7RQbCGHxpA76Y1b0g==
+X-Received: by 2002:a05:6a00:2403:b0:6ed:4f2e:ef22 with SMTP id
+ z3-20020a056a00240300b006ed4f2eef22mr1193405pfh.31.1714436264975; 
+ Mon, 29 Apr 2024 17:17:44 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- q5-20020a17090311c500b001d8f81ecea1sm21041206plh.172.2024.04.29.17.07.24
+ a20-20020a056a0011d400b006ecec1f4b08sm19848765pfu.118.2024.04.29.17.17.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Apr 2024 17:07:24 -0700 (PDT)
-Message-ID: <4abc948c-99c9-4617-a6ee-839c51e81f14@linaro.org>
-Date: Mon, 29 Apr 2024 17:07:22 -0700
+ Mon, 29 Apr 2024 17:17:44 -0700 (PDT)
+Message-ID: <46836849-4a23-4b7d-9940-5d3ce1f63a12@linaro.org>
+Date: Mon, 29 Apr 2024 17:17:42 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/1] net/slirp: Use newer slirp_*_hostxfwd API
-To: Samuel Thibault <samuel.thibault@ens-lyon.org>, qemu-devel@nongnu.org,
- peter.maydell@linaro.org
-Cc: stefanha@redhat.com, jan.kiszka@siemens.com,
- thomas.weissschuh@linutronix.de
-References: <20240429001042.2171151-1-samuel.thibault@ens-lyon.org>
+Subject: Re: [PULL 1/1] hw/ufs: Fix buffer overflow bug
+To: Jeuk Kim <jeuk20.kim@gmail.com>, qemu-devel@nongnu.org, stefanha@redhat.com
+Cc: fam@euphon.net, pbonzini@redhat.com, qemu-block@nongnu.org,
+ jeuk20.kim@samsung.com, j-young.choi@samsung.com, zheyuma97@gmail.com
+References: <cover.1714360640.git.jeuk20.kim@samsung.com>
+ <f2c8aeb1afefcda92054c448b21fc59cdd99db30.1714360640.git.jeuk20.kim@samsung.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240429001042.2171151-1-samuel.thibault@ens-lyon.org>
+In-Reply-To: <f2c8aeb1afefcda92054c448b21fc59cdd99db30.1714360640.git.jeuk20.kim@samsung.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,31 +99,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/28/24 17:10, Samuel Thibault wrote:
-> The following changes since commit 03555199b63aa1fbce24d16287e141c33f572a24:
+On 4/28/24 20:25, Jeuk Kim wrote:
+> From: Jeuk Kim <jeuk20.kim@samsung.com>
 > 
->    net/slirp: Use newer slirp_*_hostxfwd API (2024-04-29 02:04:58 +0200)
+> It fixes the buffer overflow vulnerability in the ufs device.
+> The bug was detected by sanitizers.
 > 
-> are available in the Git repository at:
+> You can reproduce it by:
 > 
->    https://people.debian.org/~sthibault/qemu.git tags/samuel-thibault
+> cat << EOF |\
+> qemu-system-x86_64 \
+> -display none -machine accel=qtest -m 512M -M q35 -nodefaults -drive \
+> file=null-co://,if=none,id=disk0 -device ufs,id=ufs_bus -device \
+> ufs-lu,drive=disk0,bus=ufs_bus -qtest stdio
+> outl 0xcf8 0x80000810
+> outl 0xcfc 0xe0000000
+> outl 0xcf8 0x80000804
+> outw 0xcfc 0x06
+> write 0xe0000058 0x1 0xa7
+> write 0xa 0x1 0x50
+> EOF
 > 
-> for you to fetch changes up to 03555199b63aa1fbce24d16287e141c33f572a24:
-> 
->    net/slirp: Use newer slirp_*_hostxfwd API (2024-04-29 02:04:58 +0200)
-> 
-> ----------------------------------------------------------------
-> slirp: Use newer slirp_*_hostxfwd API
-> 
-> Nicholas Ngai (1):
->    net/slirp: Use newer slirp_*_hostxfwd API
-> 
-> ----------------------------------------------------------------
-> 
+> Resolves: #2299
+> Fixes: 329f16624499 ("hw/ufs: Support for Query Transfer Requests")
+> Reported-by: Zheyu Ma <zheyuma97@gmail.com>
+> Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
+> ---
+>   hw/ufs/ufs.c | 8 ++++++++
+>   1 file changed, 8 insertions(+)
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+For some reason this appears to cause failures on s390x:
+
+   https://gitlab.com/qemu-project/qemu/-/jobs/6740883283
+
+All of the timeouts are new with this patch alone applied,
+and go away when reverted.
+
+I wasn't aware that these tests used ufs, but I have no
+other explanation...
 
 
 r~
-
 
