@@ -4,95 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D776EC10F16
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 09:41:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49BD5C19F53
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 09:41:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1jzB-0004NL-Lv; Tue, 30 Apr 2024 05:41:19 -0400
+	id 1s1jym-0004BM-LR; Tue, 30 Apr 2024 05:40:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s1jz9-0004LO-Ez
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 05:41:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s1jz5-0005qv-3i
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 05:41:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714470070;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PSXs9HmHDRtiS8JnCSht0QSlfU9qaWhyWI7WPDLQjos=;
- b=GbxbOLt+UkuNWOWIHVI6ALqBxQ0C4ybnt5jq03zZWVBfmQsjqCmXWdy74U+Ro0RO8zvJVZ
- w5xvyEMCU4gD2933KK1KETsKF6Juf3o2WuLnykRzhIzPEPQe+YufsborG8fg2xsJD45N4n
- iMo6C3LB5KFGjTk0wEFj5QCTYOFgV+A=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-264-xDhMRyatNQupOpsYsolxRQ-1; Tue, 30 Apr 2024 05:41:08 -0400
-X-MC-Unique: xDhMRyatNQupOpsYsolxRQ-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-572a0c5ece9so109752a12.2
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 02:41:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1jyl-0004AO-FJ
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 05:40:51 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s1jyi-0005n4-G2
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 05:40:50 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a55b93f5540so737397466b.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 02:40:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714470045; x=1715074845; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=WCW36M2OPMJQEyyFgNdC/dGiDwonm3j21cpSR92e9XQ=;
+ b=Fe7Dr6i3g5W0z0fornJOMxTr0GSlCQcEvfmpIlGMgQ03Vy5TaG7hn4ybHqyVS3Ywvr
+ S09HGRosGRSrIY81NvACesJDU/kqIOrudthgPc3DrrhoL3g2z8uszheSRmYmOOBQXjbm
+ p4DiIaMUYh9neqIXcAvsp5JAvrzYr7nHnUjgZ2ZaerhXLaZ51XTH0YDE30IWns++zeQu
+ zzfErEcZlOzY+0+p9cDmcyfSVlspfebQNTWfXfslydUdBrdB9wZlJ1us+shxb/JW1URt
+ 1ogs79o0cxhKHf4n2GYwT3Orne1elooxM+jorHHJP25+vKVDxzSWdDRpdFgp36NG49R7
+ efnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714470067; x=1715074867;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:subject:from:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1714470045; x=1715074845;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PSXs9HmHDRtiS8JnCSht0QSlfU9qaWhyWI7WPDLQjos=;
- b=s6dRMe5mgEoNbCK1T75CXmOmFYSIWpX2MmkIKuDoBxG7p6RLX4446GM2Q+nBszDXhM
- VlcpRFn7Ot6PvXvX45md3Y6jhffU5gV7WaDNKUKUqbuJesFH5/Tiy4bs9ldeh7IZ6Eji
- 6m++9ABsQ6MfCr+duTLAKUNiabb+e3cK+7VFaolAQyIYVtJkjXSOYn5xK6oHURHVzWdO
- dhJN6vijXOxd7RKtzVhWqrhUV0HIkN5qbH7MFsYbFB1qQZcgX4B07heAhl1lcXtOPyLA
- Oky1MxUcJfd+COuSGizzkj4wFpGswnUPZ2HB83LpbxR1Uz92bSW9gK5xGc5pBjDdvu/j
- PimQ==
+ bh=WCW36M2OPMJQEyyFgNdC/dGiDwonm3j21cpSR92e9XQ=;
+ b=BCFC/8J4rZs+u2NiLZ7O6vUEKA1+hl3JQ5tdhBZWPciCZEvXoaLjK3yDsOW52w9kxp
+ pSCxo5ctUKjp6VsnYP13snMhmm8mrWRYGWwJ8L4OwvoUtPSMSwSwyIaccmZgvQ5/VWN7
+ jHenAv5SZolWml4ene1d0uZWinCj5OQ/9uwNRETEY5LgopnO6Mo7o9+VguTwyIZXtm2u
+ 0pwUBvWQwO3Ie5RWfdE+3LRH3AoScHn38TtVZLVG+oF32H8mjtkTpGQ2C2hKqGq3Kc8G
+ yeVBL1YYSHMOE578uEtGDIFmnjYeG5uoz2ziUFM52AyrHrDzno03CoP4MgC47u5lu+tF
+ jr4Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU2aDI6oCnkaUXPYL5oLszhgqsROhvT9XxTTLwrHuaUObfw3zVJHUHEZvMZaE+Qe1vIf8SFoeROdekwRCUmaKv7lal4cFA=
-X-Gm-Message-State: AOJu0Yw5Fq0BWcMoAxPhRGIBHYMI5Rytufi2FsqsrL37EzjClCOwj7C4
- SFNaGm0+rTfftJdxhGNMp9m1aZUAOcLRm2iE3OlyH2pG1j/cztb4/3zb/ped3AGmdCfNoPZPNHO
- W6FrufDLECsfmd2xA7njf3/nRjTQZLMARBlzfP+EJJxkz9FEe50kE
-X-Received: by 2002:a50:c34f:0:b0:56e:42e0:e53c with SMTP id
- q15-20020a50c34f000000b0056e42e0e53cmr6942791edb.34.1714470067177; 
- Tue, 30 Apr 2024 02:41:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHhHmVK2kauYAUDy0sWt4SY7PE9qA38Qe+PgyD0n7Pkhi9YDrgidAPs14zzCFlvUYewjWkSaw==
-X-Received: by 2002:a50:c34f:0:b0:56e:42e0:e53c with SMTP id
- q15-20020a50c34f000000b0056e42e0e53cmr6942772edb.34.1714470066760; 
- Tue, 30 Apr 2024 02:41:06 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- h9-20020a0564020e0900b005729337f955sm838975edh.97.2024.04.30.02.41.05
+ AJvYcCX8DOycVOn4jsS8AyMmVpw94cd3vM30EgNyN8QJ6RtG5IRwneQ9a6ZnyMWgmj+hsQWNhn2rZyLm5yC8gd/l3LcSvaI0GP0=
+X-Gm-Message-State: AOJu0Yx1xGOgKZ7QTLygwvqHh3nZdD52Tm4tskHtiRT4FoEFMLTcdAX7
+ q8N9Fwf7Wh9PoDJeKypsyw80LmuEglwxYhebKe6CkfR5E+MRRPh8zejDpbwe4VA=
+X-Google-Smtp-Source: AGHT+IG7XLmwO7QxuzgXq2SVqqslj4FXwQzCThn2wfkH4A9JCUY6sNp/icquTpaem+8tzcmU+J8LRg==
+X-Received: by 2002:a17:906:5851:b0:a58:7ce0:8e13 with SMTP id
+ h17-20020a170906585100b00a587ce08e13mr1469299ejs.34.1714470044921; 
+ Tue, 30 Apr 2024 02:40:44 -0700 (PDT)
+Received: from [192.168.69.100] (mab78-h01-176-184-55-179.dsl.sta.abo.bbox.fr.
+ [176.184.55.179]) by smtp.gmail.com with ESMTPSA id
+ x10-20020a170906298a00b00a58ed644d6dsm3526332eje.127.2024.04.30.02.40.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Apr 2024 02:41:06 -0700 (PDT)
-Message-ID: <1495f7b1-d3f3-4bd9-93de-34767cfa5b26@redhat.com>
-Date: Tue, 30 Apr 2024 11:41:04 +0200
+ Tue, 30 Apr 2024 02:40:44 -0700 (PDT)
+Message-ID: <e0e836cf-f080-45f4-a71b-060dd2c90279@linaro.org>
+Date: Tue, 30 Apr 2024 11:40:42 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Subject: Re: [PATCH v3 05/19] backends/host_iommu_device: Introduce
- HostIOMMUDeviceCaps
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
- peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
- joao.m.martins@oracle.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com
-References: <20240429065046.3688701-1-zhenzhong.duan@intel.com>
- <20240429065046.3688701-6-zhenzhong.duan@intel.com>
-Content-Language: en-US, fr
-In-Reply-To: <20240429065046.3688701-6-zhenzhong.duan@intel.com>
+Subject: Re: [PATCH] docs/about: Automatically deprecate versioned machine
+ types older than 6 years
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: devel@lists.libvirt.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Laurent Vivier <laurent@vivier.eu>,
+ qemu-s390x@nongnu.org, qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+References: <20240430064529.411699-1-thuth@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240430064529.411699-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,142 +101,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/29/24 08:50, Zhenzhong Duan wrote:
-> HostIOMMUDeviceCaps's elements map to the host IOMMU's capabilities.
-> Different platform IOMMU can support different elements.
-> 
-> Currently only two elements, type and aw_bits, type hints the host
-> platform IOMMU type, i.e., INTEL vtd, ARM smmu, etc; aw_bits hints
-> host IOMMU address width.
-> 
-> Introduce .check_cap() handler to check if HOST_IOMMU_DEVICE_CAP_XXX
-> is supported.
-> 
-> Introduce a HostIOMMUDevice API host_iommu_device_check_cap() which
-> is a wrapper of .check_cap().
-> 
-> Introduce a HostIOMMUDevice API host_iommu_device_check_cap_common()
-> to check common capabalities of different host platform IOMMUs.
-> 
-> Suggested-by: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Hi Thomas,
+
+On 30/4/24 08:45, Thomas Huth wrote:
+> Old machine types often have bugs or work-arounds that affect our
+> possibilities to move forward with the QEMU code base (see for example
+> https://gitlab.com/qemu-project/qemu/-/issues/2213 for a bug that likely
+> cannot be fixed without breaking live migration with old machine types,
+> or https://lists.gnu.org/archive/html/qemu-devel/2018-12/msg04516.html or
+> commit ea985d235b86). So instead of going through the process of manually
+> deprecating old machine types again and again, let's rather add an entry
+> that can stay, which declares that machine types older than 6 years are
+> considered as deprecated automatically. Six years should be sufficient to
+> support the release cycles of most Linux distributions.
+
+Thanks for taking that out of my plate :)
+
+IIRC 6 years was because of some old RHEL version, otherwise could
+5 years be enough? (maybe it could be good enough for this old RHEL
+version as of QEMU v10.0).
+
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->   include/sysemu/host_iommu_device.h | 44 ++++++++++++++++++++++++++++++
->   backends/host_iommu_device.c       | 29 ++++++++++++++++++++
->   2 files changed, 73 insertions(+)
+>   docs/about/deprecated.rst | 11 +++++++++++
+>   1 file changed, 11 insertions(+)
 > 
-> diff --git a/include/sysemu/host_iommu_device.h b/include/sysemu/host_iommu_device.h
-> index 2b58a94d62..12b6afb463 100644
-> --- a/include/sysemu/host_iommu_device.h
-> +++ b/include/sysemu/host_iommu_device.h
-> @@ -14,12 +14,27 @@
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index 6d595de3b6..fe69e2d44c 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -220,6 +220,17 @@ is a chance the code will bitrot without anyone noticing.
+>   System emulator machines
+>   ------------------------
 >   
->   #include "qom/object.h"
->   #include "qapi/error.h"
-> +#include "linux/iommufd.h"
+> +Versioned machine types older than 6 years
+> +''''''''''''''''''''''''''''''''''''''''''
 > +
-> +/**
-> + * struct HostIOMMUDeviceCaps - Define host IOMMU device capabilities.
-> + *
-> + * @type: host platform IOMMU type.
-> + *
-> + * @aw_bits: host IOMMU address width. 0xff if no limitation.
-> + */
-> +typedef struct HostIOMMUDeviceCaps {
-> +    enum iommu_hw_info_type type;
-> +    uint8_t aw_bits;
-> +} HostIOMMUDeviceCaps;
->   
->   #define TYPE_HOST_IOMMU_DEVICE "host-iommu-device"
->   OBJECT_DECLARE_TYPE(HostIOMMUDevice, HostIOMMUDeviceClass, HOST_IOMMU_DEVICE)
->   
->   struct HostIOMMUDevice {
->       Object parent_obj;
-> +
-> +    HostIOMMUDeviceCaps caps;
->   };
->   
->   /**
-> @@ -47,5 +62,34 @@ struct HostIOMMUDeviceClass {
->        * Returns: true on success, false on failure.
->        */
->       bool (*realize)(HostIOMMUDevice *hiod, void *opaque, Error **errp);
-> +    /**
-> +     * @check_cap: check if a host IOMMU device capability is supported.
-> +     *
-> +     * Optional callback, if not implemented, hint not supporting query
-> +     * of @cap.
-> +     *
-> +     * @hiod: pointer to a host IOMMU device instance.
-> +     *
-> +     * @cap: capability to check.
-> +     *
-> +     * @errp: pass an Error out when fails to query capability.
-> +     *
-> +     * Returns: <0 on failure, 0 if a @cap is unsupported, or else
-> +     * 1 or some positive value for some special @cap,
-> +     * i.e., HOST_IOMMU_DEVICE_CAP_AW_BITS.
-> +     */
-> +    int (*check_cap)(HostIOMMUDevice *hiod, int cap, Error **errp);
->   };
-> +
-> +/*
-> + * Host IOMMU device capability list.
-> + */
-> +#define HOST_IOMMU_DEVICE_CAP_IOMMUFD       0
-> +#define HOST_IOMMU_DEVICE_CAP_IOMMU_TYPE    1
-> +#define HOST_IOMMU_DEVICE_CAP_AW_BITS       2
-> +
-> +
-> +int host_iommu_device_check_cap(HostIOMMUDevice *hiod, int cap, Error **errp);
-> +int host_iommu_device_check_cap_common(HostIOMMUDevice *hiod, int cap,
-> +                                       Error **errp);
->   #endif
-> diff --git a/backends/host_iommu_device.c b/backends/host_iommu_device.c
-> index 41f2fdce20..b97d008cc7 100644
-> --- a/backends/host_iommu_device.c
-> +++ b/backends/host_iommu_device.c
-> @@ -28,3 +28,32 @@ static void host_iommu_device_init(Object *obj)
->   static void host_iommu_device_finalize(Object *obj)
->   {
->   }
-> +
-> +/* Wrapper of HostIOMMUDeviceClass:check_cap */
-> +int host_iommu_device_check_cap(HostIOMMUDevice *hiod, int cap, Error **errp)
+> +Starting with the release of QEMU 10.0, versioned machine types older than
 
-Since we have an 'Error **errp', we could return a bool instead,
-unless this is a 'get_cap' routine ?
+Why can't we start with QEMU 9.1?
 
-Thanks,
+> +6 years will automatically be considered as deprecated and might be due to
+> +removal without furthor notice. For example, this affects machine types like
+> +pc-i440fx-X.Y, pc-q35-X.Y, pseries-X.Y, s390-ccw-virtio-X.Y or virt-X.Y where
+> +X is the major number and Y is the minor number of the old QEMU version.
+> +If you are still using machine types from QEMU versions older than 6 years,
+> +please update your setting to use a newer versioned machine type instead.
 
-C.
-
-
-> +{
-> +    HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_GET_CLASS(hiod);
-> +    if (!hiodc->check_cap) {
-> +        error_setg(errp, ".check_cap() not implemented");
-> +        return -EINVAL;
-> +    }
-> +
-> +    return hiodc->check_cap(hiod, cap, errp);
-> +}
-> +
-> +/* Implement check on common IOMMU capabilities */
-> +int host_iommu_device_check_cap_common(HostIOMMUDevice *hiod, int cap,
-> +                                       Error **errp)
-> +{
-> +    HostIOMMUDeviceCaps *caps = &hiod->caps;
-> +
-> +    switch (cap) {
-> +    case HOST_IOMMU_DEVICE_CAP_IOMMU_TYPE:
-> +        return caps->type;
-> +    case HOST_IOMMU_DEVICE_CAP_AW_BITS:
-> +        return caps->aw_bits;
-> +    default:
-> +        error_setg(errp, "Not support query cap %x", cap);
-> +        return -EINVAL;
-> +    }
-> +}
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
