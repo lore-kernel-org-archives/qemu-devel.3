@@ -4,72 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE6E9C10F16
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 14:01:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D01BC19F53
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 14:02:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1o2b-0002YL-Di; Tue, 30 Apr 2024 10:01:06 -0400
+	id 1s1o2g-0002eW-W1; Tue, 30 Apr 2024 10:01:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s1o2H-0002W6-Rm
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:00:46 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1s1o2U-0002Yv-7u
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:01:05 -0400
+Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s1o2C-0002sx-Mp
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:00:41 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-34c90082dd7so2891541f8f.1
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 07:00:39 -0700 (PDT)
+ id 1s1o2O-0002uI-MS
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 10:00:54 -0400
+Received: by mail-lj1-x22c.google.com with SMTP id
+ 38308e7fff4ca-2d858501412so73687181fa.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 07:00:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714485637; x=1715090437; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=4wO2taePM39TZMTxZs3nc+Rdb9ASnlYWd4vuIaOr/ws=;
- b=uBlcm1Xo68uho6bR3Ork6iV6Mv9wT9B3QX7VB5xYqrTPvV5RZSnr8nc5mrV75cKo4W
- 3NUBTe8lh1+Aebzh14sVCulvldS1W2lhAAUGjWQLqLjjLUidG8YDhWDHSgYiFvGsfqHA
- iHtz+kKbSE6c7EvMk+HetRfPFTaLMJ9J+f6LdfkWp+C/I3Ozhdbui6KprbA2/ebEbB/8
- lQvl3dKTHUk3nJpWicHkWvrZJYQvQB82iyROc2SeT/ZLb+nvaKRTGbzv8U8F37wKOGMx
- iWGoXEs0f05m6L82x/NC3QiAAtdoUlxO5qeKXTghZZ+/aOUzZ3KiCH7ZsXSzhPbca+4+
- T79w==
+ d=linaro.org; s=google; t=1714485649; x=1715090449; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=pdw4e1T+XOnjRYbe6abw8/6ufHXzK4jmHY6mtjifRb8=;
+ b=COx0NkUKj6lNJihspMIjN8j+xzj7zsugmcVCAO++jt7IcUNHfCUBJDIkQHBJ512o/B
+ oIZRL33quWqdEwO6FQf+gp6yV9am0IwyucIedOefLzxzTZGKcc5iXQMDwGQoULYfN6OX
+ OTWkvuBBQBzUYs/7w/ye/ytXk2fl2vN9hq5ts10qRcqUPqmHIVKSsH61vxNxWb3PM9hx
+ cSS83+/t/H6RfheAaoHw+dfYinfJlxJtfAjnNI6AMVhyxm2NDErdYkYuILCfzOhuR5gq
+ HREh2J8+BlOLTM48TS6r8m3BVXVJ/0VGgn2VwgzJnmjKMuRSzuzO+8Qeo/EwdicxGxdS
+ YCkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714485637; x=1715090437;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4wO2taePM39TZMTxZs3nc+Rdb9ASnlYWd4vuIaOr/ws=;
- b=Irm+v26T1wUrVN9cra/vDHmuYBtMXkppfRnDsLXtJ+3RYerOGi1LjQ9z/dpzUzEYjZ
- ys6TojGjgIlMxeUiWFnZe9W/IPRp4AnaLfFJVzJC/bopW/KQxJxl6hY6g0AsuLsYlg18
- sRpiIQYYe6LdeW1sl3TA9VVqMhDBr/POQfu8FY6V9JcdSwHofAQGLmUXvpC46G1oQ3+b
- apKIyggDf8Agcvb000WdX2CRNGpY2TrLDWT5iEtVKUrxcwHPSIBSa15adXaCgAKyeWeu
- 9th2uTDFSRZOQvhXrGPvR6QsMLK9fuze9DROFv+Pb1XgShtfmCvmLK+syO3xeuzUJKNK
- +kNw==
+ d=1e100.net; s=20230601; t=1714485649; x=1715090449;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=pdw4e1T+XOnjRYbe6abw8/6ufHXzK4jmHY6mtjifRb8=;
+ b=cRTfF2pJWg+Qsm2DHA1LRfy7pBvBDr9ZnRIMeVNpsELkL32IFS1Q9zzZoDM7yz4d8J
+ N3YjIUDP5wtJ7qn3tNCMwTvrEHIC1q/vCaTPEWSvB9JMXK1OBlurJb1Z3AML9xoiYrJN
+ gvbmteO+1mo8T+ORCnrCrpvGdms3tNEZ7uHtJvRLxRXTZrpXSVHpmrFOyl5Jlbtfk7/R
+ l9UxL97SOqsKfiSUi8sCQV5R71F2Ka7aX7SM9cSwKyLVNWMcVivadqfHDpkjxlRzGPtS
+ hsZ+UATafShlGIhLtloqXdMVPlpKr2Vr1+ttVVwnmsqdgIvBa/07lbuOhn/qaM2ktChh
+ h+Mg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXai6B2+2njENnzf5ZbTDUrBZdkf5e7josvrBZunMq2KbUlm1M1ktTRDXbTh9gf67Mrt/ovkf8tS89J4v1QPj2ZUPHFjQA=
-X-Gm-Message-State: AOJu0YxOrvLnArpdS1pXTeChI/P/58SuqkFaIXaqn3IvTlUzLMoeswvs
- 8hky6EDlmC+PcpglDbYenHvcuFIscrhqaL5a0Qj7FOgZfO9ELLVx1n4VPLP81YwS8/4eJpjjxcF
- S
-X-Google-Smtp-Source: AGHT+IF+WjE48ro0UcCi0IGpblRRziS0JDviFmXK+otoGhYJawD3gJWfw3xaNVYr/U+ssdS3zrB7nw==
-X-Received: by 2002:adf:f906:0:b0:34c:4b26:cf7f with SMTP id
- b6-20020adff906000000b0034c4b26cf7fmr10152242wrr.67.1714485637220; 
- Tue, 30 Apr 2024 07:00:37 -0700 (PDT)
+ AJvYcCXAZpl/uI26GybRENxmE/C1cw6Do2lpc+xcAc0W4BQO/n5nbI4LOocVnrdAf5jS6/CzsCQRRv8RG0Alc/s6etjrNIzdlsw=
+X-Gm-Message-State: AOJu0YwvCA2fxVARhSr+QN4DJpCW8x1IRhT/x8EGYg00HnRp0bH2CR5Y
+ T5vUt/NXxaRO2Xjfr6ju/E0Jj06dQe+7isDkuz4fW/A7UdYnboiE9qNsRKWln2s=
+X-Google-Smtp-Source: AGHT+IEsTGmMapbltK7kkGYZNFd1bpQf4P7h2Jf6zSs3cOqpuxYS8Rya8Gr+z5du5uXvZHlzLK4fOg==
+X-Received: by 2002:a2e:8750:0:b0:2de:25e2:6187 with SMTP id
+ q16-20020a2e8750000000b002de25e26187mr1967189ljj.23.1714485639231; 
+ Tue, 30 Apr 2024 07:00:39 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- v10-20020a05600c470a00b0041bfa349cadsm11062705wmo.16.2024.04.30.07.00.36
+ v10-20020a05600c470a00b0041bfa349cadsm11062705wmo.16.2024.04.30.07.00.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Apr 2024 07:00:36 -0700 (PDT)
+ Tue, 30 Apr 2024 07:00:37 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 0/2] target/arm: Implement FEAT_WFxT
-Date: Tue, 30 Apr 2024 15:00:33 +0100
-Message-Id: <20240430140035.3889879-1-peter.maydell@linaro.org>
+Subject: [PATCH 1/2] accel/tcg: Make TCGCPUOps::cpu_exec_halt return bool for
+ whether to halt
+Date: Tue, 30 Apr 2024 15:00:34 +0100
+Message-Id: <20240430140035.3889879-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240430140035.3889879-1-peter.maydell@linaro.org>
+References: <20240430140035.3889879-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,43 +95,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-FEAT_WFxT introduces new instructions WFIT and WFET, which are like
-the existing WFI and WFE but allow the guest to pass a timeout value
-in a register.  The instructions will wait for an interrupt/event as
-usual, but will also stop waiting when the value of CNTVCT_EL0 is
-greater than or equal to the specified timeout value.
+The TCGCPUOps::cpu_exec_halt method is called from cpu_handle_halt()
+when the CPU is halted, so that a target CPU emulation can do
+anything target-specific it needs to do.  (At the moment we only use
+this on i386.)
 
-This series implements this and enables it for '-cpu max'.
-Patch 1 is a tweak to the TCGCPUOps::cpu_exec_halt method
-so that we can use it in patch 2 for "do some work when we
-are going to leave the halt state".
+The current specification of the method doesn't allow the target
+specific code to do something different if the CPU is about to come
+out of the halt state, because cpu_handle_halt() only determines this
+after the method has returned.  (If the method called cpu_has_work()
+itself this would introduce a potential race if an interrupt arrived
+between the target's method implementation checking and
+cpu_handle_halt() repeating the check.)
 
-thanks
--- PMM
+Change the definition of the method so that it returns a bool to
+tell cpu_handle_halt() whether to stay in halt or not.
 
-Peter Maydell (2):
-  accel/tcg: Make TCGCPUOps::cpu_exec_halt return bool for whether to
-    halt
-  target/arm: Implement FEAT WFxT and enable for '-cpu max'
+We will want this for the Arm target, where FEAT_WFxT wants to do
+some work only for the case where the CPU is in halt but about to
+leave it.
 
- docs/system/arm/emulation.rst       |  1 +
- include/hw/core/tcg-cpu-ops.h       | 11 ++++--
- target/arm/cpu-features.h           |  5 +++
- target/arm/cpu.h                    |  3 ++
- target/arm/helper.h                 |  1 +
- target/arm/internals.h              |  8 +++++
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ include/hw/core/tcg-cpu-ops.h       | 11 +++++++++--
  target/i386/tcg/helper-tcg.h        |  2 +-
- target/arm/tcg/a64.decode           |  4 +++
- accel/tcg/cpu-exec.c                |  7 ++--
- target/arm/cpu.c                    | 38 ++++++++++++++++++++
- target/arm/helper.c                 |  4 +--
- target/arm/machine.c                | 20 +++++++++++
- target/arm/tcg/cpu64.c              |  1 +
- target/arm/tcg/op_helper.c          | 54 +++++++++++++++++++++++++++++
- target/arm/tcg/translate-a64.c      | 41 ++++++++++++++++++++++
- target/i386/tcg/sysemu/seg_helper.c |  3 +-
- 16 files changed, 195 insertions(+), 8 deletions(-)
+ accel/tcg/cpu-exec.c                |  7 +++++--
+ target/i386/tcg/sysemu/seg_helper.c |  3 ++-
+ 4 files changed, 17 insertions(+), 6 deletions(-)
 
+diff --git a/include/hw/core/tcg-cpu-ops.h b/include/hw/core/tcg-cpu-ops.h
+index dc1f16a9777..f3ac76e6f6d 100644
+--- a/include/hw/core/tcg-cpu-ops.h
++++ b/include/hw/core/tcg-cpu-ops.h
+@@ -111,8 +111,15 @@ struct TCGCPUOps {
+     void (*do_interrupt)(CPUState *cpu);
+     /** @cpu_exec_interrupt: Callback for processing interrupts in cpu_exec */
+     bool (*cpu_exec_interrupt)(CPUState *cpu, int interrupt_request);
+-    /** @cpu_exec_halt: Callback for handling halt in cpu_exec */
+-    void (*cpu_exec_halt)(CPUState *cpu);
++    /**
++     * @cpu_exec_halt: Callback for handling halt in cpu_exec.
++     *
++     * Return true to indicate that the CPU should now leave halt, false
++     * if it should remain in the halted state.
++     * If this method is not provided, the default is to leave halt
++     * if cpu_has_work() returns true.
++     */
++    bool (*cpu_exec_halt)(CPUState *cpu);
+     /**
+      * @tlb_fill: Handle a softmmu tlb miss
+      *
+diff --git a/target/i386/tcg/helper-tcg.h b/target/i386/tcg/helper-tcg.h
+index effc2c1c984..85957943bf3 100644
+--- a/target/i386/tcg/helper-tcg.h
++++ b/target/i386/tcg/helper-tcg.h
+@@ -39,7 +39,7 @@ QEMU_BUILD_BUG_ON(TCG_PHYS_ADDR_BITS > TARGET_PHYS_ADDR_SPACE_BITS);
+  */
+ void x86_cpu_do_interrupt(CPUState *cpu);
+ #ifndef CONFIG_USER_ONLY
+-void x86_cpu_exec_halt(CPUState *cpu);
++bool x86_cpu_exec_halt(CPUState *cpu);
+ bool x86_need_replay_interrupt(int interrupt_request);
+ bool x86_cpu_exec_interrupt(CPUState *cpu, int int_req);
+ #endif
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 5c70748060a..550f93b19ce 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -669,11 +669,14 @@ static inline bool cpu_handle_halt(CPUState *cpu)
+ #ifndef CONFIG_USER_ONLY
+     if (cpu->halted) {
+         const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
++        bool leave_halt;
+ 
+         if (tcg_ops->cpu_exec_halt) {
+-            tcg_ops->cpu_exec_halt(cpu);
++            leave_halt = tcg_ops->cpu_exec_halt(cpu);
++        } else {
++            leave_halt = cpu_has_work(cpu);
+         }
+-        if (!cpu_has_work(cpu)) {
++        if (!leave_halt) {
+             return true;
+         }
+ 
+diff --git a/target/i386/tcg/sysemu/seg_helper.c b/target/i386/tcg/sysemu/seg_helper.c
+index 2db8083748e..9ba94deb3aa 100644
+--- a/target/i386/tcg/sysemu/seg_helper.c
++++ b/target/i386/tcg/sysemu/seg_helper.c
+@@ -128,7 +128,7 @@ void x86_cpu_do_interrupt(CPUState *cs)
+     }
+ }
+ 
+-void x86_cpu_exec_halt(CPUState *cpu)
++bool x86_cpu_exec_halt(CPUState *cpu)
+ {
+     if (cpu->interrupt_request & CPU_INTERRUPT_POLL) {
+         X86CPU *x86_cpu = X86_CPU(cpu);
+@@ -138,6 +138,7 @@ void x86_cpu_exec_halt(CPUState *cpu)
+         cpu_reset_interrupt(cpu, CPU_INTERRUPT_POLL);
+         bql_unlock();
+     }
++    return cpu_has_work(cpu);
+ }
+ 
+ bool x86_need_replay_interrupt(int interrupt_request)
 -- 
 2.34.1
 
