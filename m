@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEBE3C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 20:48:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23A50C10F1A
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 20:52:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2GsX-0004iF-Lu; Wed, 01 May 2024 16:48:38 -0400
+	id 1s2Gvk-0006vA-8Z; Wed, 01 May 2024 16:51:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
- id 1s2GsQ-0004fR-5q
- for qemu-devel@nongnu.org; Wed, 01 May 2024 16:48:30 -0400
+ id 1s2Gvi-0006ud-O0
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 16:51:54 -0400
 Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
- id 1s2GsO-0001Sd-IQ
- for qemu-devel@nongnu.org; Wed, 01 May 2024 16:48:29 -0400
+ id 1s2Gvg-00021x-3g
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 16:51:54 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 7214FCE139C;
- Wed,  1 May 2024 20:48:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BA10C072AA;
- Wed,  1 May 2024 20:48:21 +0000 (UTC)
+ by sin.source.kernel.org (Postfix) with ESMTP id D12F2CE138D;
+ Wed,  1 May 2024 20:51:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42476C4AF14;
+ Wed,  1 May 2024 20:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1714596504;
- bh=uB6XjGflA6a/Z9KWVzsfz+aOYvxcUGxBLL/TwR9pkFs=;
+ s=k20201202; t=1714596707;
+ bh=HR+a7o2ZkxIM6jzJQZXWaVSl9k5NgRnHGAuDGSr6slg=;
  h=Date:From:To:cc:Subject:In-Reply-To:References:From;
- b=iwekIfW4ncfiIJmnmkdKgjvkep1Mtu/5PqdNUKPK4DjotSAhdrFGNF15yY5//N7/e
- K1VxqOgnLkfoPkk7xTCOf3hqRoMNcNOp7lygw2QHtsdXBJxT6I2yvkqJ2Wo3nyYrk7
- tPfeP5kbp9W0CJMn/JyMClbtqLB8fh0JTlQB+1ENg3lBinJIuSiqRZK8dxkT1IubrX
- G89QC/1Yvu1uwQOGTyG1nnNkHcRIFpYGCoknkppuwhJhH5Oem/i8Lf5XIX+flZ7aeM
- MIs9DuoSsHZ/Oejv41Dd4d6wxqPf4Pxldgze/ZZp1BayZUT/v86E5WlG5NS2gPUX8A
- vNR0wxzo+Fi2Q==
-Date: Wed, 1 May 2024 13:48:20 -0700 (PDT)
+ b=ALDUNZnM70fk4wzKcV3eCENzn3/uRATGRYE9br0E6W/ZkmBon8cgKpqJAmU9vbObQ
+ WlS/uOTMmhm1sKXutTcz4jFYzdWB+MgZzttC9peCq3XBbJ3/NDy+rYmH5YDqrvC+M2
+ AO8nSPOOA7xV9fbNpjAxhNiNxhjaEHkGD7xVT+tJnTWAhGEZysQEGOlIpHg2hBLl3d
+ 5OSFAGdVu+ZqvWwC8XYYX/qBrXeYHYq2sII0WXKkIzG+IuGxK4/ZfLcfdZIbQtBGYs
+ b1lin2VhOMhQVDLPERnDqnzZsZslla+hsEZCFgvqDKhta23jaqJrc9HEQ46K9xZqtm
+ iE74nsTNQYaNg==
+Date: Wed, 1 May 2024 13:51:44 -0700 (PDT)
 From: Stefano Stabellini <sstabellini@kernel.org>
 X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
 To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
@@ -43,12 +43,12 @@ cc: qemu-devel@nongnu.org, sstabellini@kernel.org, jgross@suse.com,
  "Edgar E. Iglesias" <edgar.iglesias@amd.com>, 
  Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>, 
  xen-devel@lists.xenproject.org
-Subject: Re: [PATCH v4 09/17] xen: mapcache: Break out
- xen_invalidate_map_cache_single()
-In-Reply-To: <20240430164939.925307-10-edgar.iglesias@gmail.com>
-Message-ID: <alpine.DEB.2.22.394.2405011348130.497719@ubuntu-linux-20-04-desktop>
+Subject: Re: [PATCH v4 10/17] xen: mapcache: Break out
+ xen_map_cache_init_single()
+In-Reply-To: <20240430164939.925307-11-edgar.iglesias@gmail.com>
+Message-ID: <alpine.DEB.2.22.394.2405011351380.497719@ubuntu-linux-20-04-desktop>
 References: <20240430164939.925307-1-edgar.iglesias@gmail.com>
- <20240430164939.925307-10-edgar.iglesias@gmail.com>
+ <20240430164939.925307-11-edgar.iglesias@gmail.com>
 User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -79,9 +79,8 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Tue, 30 Apr 2024, Edgar E. Iglesias wrote:
 > From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 > 
-> Break out xen_invalidate_map_cache_single().
-> 
-> No functional changes.
+> Break out xen_map_cache_init_single() in preparation for
+> adding multiple map caches.
 > 
 > Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 
@@ -89,65 +88,94 @@ Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
 
 
 > ---
->  hw/xen/xen-mapcache.c | 25 +++++++++++++++----------
->  1 file changed, 15 insertions(+), 10 deletions(-)
+>  hw/xen/xen-mapcache.c | 53 ++++++++++++++++++++++++++-----------------
+>  1 file changed, 32 insertions(+), 21 deletions(-)
 > 
 > diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-> index 34454da2f6..dd08cd296b 100644
+> index dd08cd296b..72a7e25e3e 100644
 > --- a/hw/xen/xen-mapcache.c
 > +++ b/hw/xen/xen-mapcache.c
-> @@ -512,17 +512,14 @@ void coroutine_mixed_fn xen_invalidate_map_cache_entry(uint8_t *buffer)
->      }
+> @@ -93,23 +93,44 @@ static inline int test_bits(int nr, int size, const unsigned long *addr)
+>          return 0;
 >  }
 >  
-> -void xen_invalidate_map_cache(void)
-> +static void xen_invalidate_map_cache_single(MapCache *mc)
+> -void xen_map_cache_init(phys_offset_to_gaddr_t f, void *opaque)
+> +static MapCache *xen_map_cache_init_single(phys_offset_to_gaddr_t f,
+> +                                           void *opaque,
+> +                                           unsigned long max_size)
 >  {
->      unsigned long i;
->      MapCacheRev *reventry;
+>      unsigned long size;
+> -    struct rlimit rlimit_as;
+> +    MapCache *mc;
+> +
+> +    mc = g_new0(MapCache, 1);
+> +
+> +    mc->phys_offset_to_gaddr = f;
+> +    mc->opaque = opaque;
+> +    qemu_mutex_init(&mc->lock);
+> +
+> +    QTAILQ_INIT(&mc->locked_entries);
 >  
-> -    /* Flush pending AIO before destroying the mapcache */
-> -    bdrv_drain_all();
-> -
-> -    mapcache_lock(mapcache);
-> +    mapcache_lock(mc);
+> -    mapcache = g_new0(MapCache, 1);
+> +    mc->max_mcache_size = max_size;
 >  
-> -    QTAILQ_FOREACH(reventry, &mapcache->locked_entries, next) {
-> +    QTAILQ_FOREACH(reventry, &mc->locked_entries, next) {
->          if (!reventry->dma) {
->              continue;
->          }
-> @@ -530,8 +527,8 @@ void xen_invalidate_map_cache(void)
->                                         reventry->vaddr_req);
->      }
+> -    mapcache->phys_offset_to_gaddr = f;
+> -    mapcache->opaque = opaque;
+> -    qemu_mutex_init(&mapcache->lock);
+> +    mc->nr_buckets =
+> +        (((mc->max_mcache_size >> XC_PAGE_SHIFT) +
+> +          (1UL << (MCACHE_BUCKET_SHIFT - XC_PAGE_SHIFT)) - 1) >>
+> +         (MCACHE_BUCKET_SHIFT - XC_PAGE_SHIFT));
 >  
-> -    for (i = 0; i < mapcache->nr_buckets; i++) {
-> -        MapCacheEntry *entry = &mapcache->entry[i];
-> +    for (i = 0; i < mc->nr_buckets; i++) {
-> +        MapCacheEntry *entry = &mc->entry[i];
->  
->          if (entry->vaddr_base == NULL) {
->              continue;
-> @@ -552,9 +549,17 @@ void xen_invalidate_map_cache(void)
->          entry->valid_mapping = NULL;
->      }
->  
-> -    mapcache->last_entry = NULL;
-> +    mc->last_entry = NULL;
->  
-> -    mapcache_unlock(mapcache);
-> +    mapcache_unlock(mc);
+> -    QTAILQ_INIT(&mapcache->locked_entries);
+> +    size = mc->nr_buckets * sizeof(MapCacheEntry);
+> +    size = (size + XC_PAGE_SIZE - 1) & ~(XC_PAGE_SIZE - 1);
+> +    trace_xen_map_cache_init(mc->nr_buckets, size);
+> +    mc->entry = g_malloc0(size);
+> +    return mc;
 > +}
 > +
-> +void xen_invalidate_map_cache(void)
+> +void xen_map_cache_init(phys_offset_to_gaddr_t f, void *opaque)
 > +{
-> +    /* Flush pending AIO before destroying the mapcache */
-> +    bdrv_drain_all();
-> +
-> +    xen_invalidate_map_cache_single(mapcache);
+> +    struct rlimit rlimit_as;
+> +    unsigned long max_mcache_size;
+>  
+>      if (geteuid() == 0) {
+>          rlimit_as.rlim_cur = RLIM_INFINITY;
+>          rlimit_as.rlim_max = RLIM_INFINITY;
+> -        mapcache->max_mcache_size = MCACHE_MAX_SIZE;
+> +        max_mcache_size = MCACHE_MAX_SIZE;
+>      } else {
+>          getrlimit(RLIMIT_AS, &rlimit_as);
+>          rlimit_as.rlim_cur = rlimit_as.rlim_max;
+> @@ -119,24 +140,14 @@ void xen_map_cache_init(phys_offset_to_gaddr_t f, void *opaque)
+>                          " memory is not infinity");
+>          }
+>          if (rlimit_as.rlim_max < MCACHE_MAX_SIZE + NON_MCACHE_MEMORY_SIZE) {
+> -            mapcache->max_mcache_size = rlimit_as.rlim_max -
+> -                NON_MCACHE_MEMORY_SIZE;
+> +            max_mcache_size = rlimit_as.rlim_max - NON_MCACHE_MEMORY_SIZE;
+>          } else {
+> -            mapcache->max_mcache_size = MCACHE_MAX_SIZE;
+> +            max_mcache_size = MCACHE_MAX_SIZE;
+>          }
+>      }
+>  
+> +    mapcache = xen_map_cache_init_single(f, opaque, max_mcache_size);
+>      setrlimit(RLIMIT_AS, &rlimit_as);
+> -
+> -    mapcache->nr_buckets =
+> -        (((mapcache->max_mcache_size >> XC_PAGE_SHIFT) +
+> -          (1UL << (MCACHE_BUCKET_SHIFT - XC_PAGE_SHIFT)) - 1) >>
+> -         (MCACHE_BUCKET_SHIFT - XC_PAGE_SHIFT));
+> -
+> -    size = mapcache->nr_buckets * sizeof (MapCacheEntry);
+> -    size = (size + XC_PAGE_SIZE - 1) & ~(XC_PAGE_SIZE - 1);
+> -    trace_xen_map_cache_init(mapcache->nr_buckets, size);
+> -    mapcache->entry = g_malloc0(size);
 >  }
 >  
->  static uint8_t *xen_replace_cache_entry_unlocked(MapCache *mc,
+>  static void xen_remap_bucket(MapCache *mc,
 > -- 
 > 2.40.1
 > 
