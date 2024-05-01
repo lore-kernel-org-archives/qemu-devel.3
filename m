@@ -4,35 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C500FC4345F
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 12:56:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 275EDC4345F
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 13:05:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s29VL-0007rW-5X; Wed, 01 May 2024 08:56:11 -0400
+	id 1s29dT-0001wY-P9; Wed, 01 May 2024 09:04:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ysato@users.sourceforge.jp>)
- id 1s29VI-0007qq-Gl; Wed, 01 May 2024 08:56:08 -0400
+ id 1s29dS-0001wN-Hj
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 09:04:34 -0400
 Received: from ik1-413-38519.vs.sakura.ne.jp ([153.127.30.23]
  helo=sakura.ysato.name) by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <ysato@users.sourceforge.jp>)
- id 1s29VF-0004BB-RY; Wed, 01 May 2024 08:56:08 -0400
+ (envelope-from <ysato@users.sourceforge.jp>) id 1s29dQ-0005q4-CB
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 09:04:34 -0400
 Received: from SIOS1075.ysato.ml (ZM005235.ppp.dion.ne.jp [222.8.5.235])
- by sakura.ysato.name (Postfix) with ESMTPSA id 051531C01DF;
- Wed,  1 May 2024 21:56:03 +0900 (JST)
-Date: Wed, 01 May 2024 21:56:03 +0900
-Message-ID: <87sez1ady4.wl-ysato@users.sourceforge.jp>
+ by sakura.ysato.name (Postfix) with ESMTPSA id 63CF31C028A;
+ Wed,  1 May 2024 22:04:26 +0900 (JST)
+Date: Wed, 01 May 2024 22:04:25 +0900
+Message-ID: <87r0eladk6.wl-ysato@users.sourceforge.jp>
 From: Yoshinori Sato <ysato@users.sourceforge.jp>
 To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org,
  John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
- Paul Cercueil <paul@crapouillou.net>, qemu-stable@nongnu.org,
+ Paul Cercueil <paul@crapouillou.net>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH v4 2/4] target/sh4: Fix SUBV opcode
-In-Reply-To: <20240430163125.77430-3-philmd@linaro.org>
+Subject: Re: [PATCH v4 3/4] target/sh4: Rename TCGv variables as manual for
+ ADDV opcode
+In-Reply-To: <20240430163125.77430-4-philmd@linaro.org>
 References: <20240430163125.77430-1-philmd@linaro.org>
- <20240430163125.77430-3-philmd@linaro.org>
+ <20240430163125.77430-4-philmd@linaro.org>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
  Emacs/28.2 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -61,101 +63,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 01 May 2024 01:31:23 +0900,
+On Wed, 01 May 2024 01:31:24 +0900,
 Philippe Mathieu-Daud=E9 wrote:
 >=20
-> The documentation says:
+> To easily compare with the SH4 manual, rename:
 >=20
->   SUBV Rm, Rn        Rn - Rm -> Rn, underflow -> T
+>   REG(B11_8) -> Rn
+>   REG(B7_4) -> Rm
+>   t0 -> result
 >=20
-> The overflow / underflow can be calculated as:
+> Mention how overflow is calculated.
 >=20
->   T =3D ((Rn ^ Rm) & (Result ^ Rn)) >> 31
->=20
-> However we were using the incorrect:
->=20
->   T =3D ((Rn ^ Rm) & (Result ^ Rm)) >> 31
->=20
-> Fix by using the Rn register instead of Rm.
->=20
-> Add tests provided by Paul Cercueil.
->=20
-> Cc: qemu-stable@nongnu.org
-> Fixes: ad8d25a11f ("target-sh4: implement addv and subv using TCG")
-> Reported-by: Paul Cercueil <paul@crapouillou.net>
-> Suggested-by: Paul Cercueil <paul@crapouillou.net>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2318
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > Signed-off-by: Philippe Mathieu-Daud=E9 <philmd@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  target/sh4/translate.c        |  2 +-
->  tests/tcg/sh4/test-subv.c     | 30 ++++++++++++++++++++++++++++++
->  tests/tcg/sh4/Makefile.target |  3 +++
->  3 files changed, 34 insertions(+), 1 deletion(-)
->  create mode 100644 tests/tcg/sh4/test-subv.c
+>  target/sh4/translate.c | 16 ++++++++++------
+>  1 file changed, 10 insertions(+), 6 deletions(-)
 >=20
 > diff --git a/target/sh4/translate.c b/target/sh4/translate.c
-> index 4a1dd0d1f4..3e013b7c7c 100644
+> index 3e013b7c7c..47c0f3404e 100644
 > --- a/target/sh4/translate.c
 > +++ b/target/sh4/translate.c
-> @@ -933,7 +933,7 @@ static void _decode_opc(DisasContext * ctx)
->              t0 =3D tcg_temp_new();
->              tcg_gen_sub_i32(t0, REG(B11_8), REG(B7_4));
+> @@ -705,16 +705,20 @@ static void _decode_opc(DisasContext * ctx)
+>          return;
+>      case 0x300f: /* addv Rm,Rn */
+>          {
+> -            TCGv t0, t1, t2;
+> -            t0 =3D tcg_temp_new();
+> -            tcg_gen_add_i32(t0, REG(B7_4), REG(B11_8));
+> +            TCGv Rn =3D REG(B11_8);
+> +            TCGv Rm =3D REG(B7_4);
+> +            TCGv result, t1, t2;
+> +
+> +            result =3D tcg_temp_new();
 >              t1 =3D tcg_temp_new();
-> -            tcg_gen_xor_i32(t1, t0, REG(B7_4));
-> +            tcg_gen_xor_i32(t1, t0, REG(B11_8));
+> -            tcg_gen_xor_i32(t1, t0, REG(B11_8));
 >              t2 =3D tcg_temp_new();
->              tcg_gen_xor_i32(t2, REG(B11_8), REG(B7_4));
->              tcg_gen_and_i32(t1, t1, t2);
-> diff --git a/tests/tcg/sh4/test-subv.c b/tests/tcg/sh4/test-subv.c
-> new file mode 100644
-> index 0000000000..0dd8fcdaac
-> --- /dev/null
-> +++ b/tests/tcg/sh4/test-subv.c
-> @@ -0,0 +1,30 @@
-> +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> +
-> +#include <limits.h>
-> +#include <stdio.h>
-> +#include <stdlib.h>
-> +
-> +static void subv(const int a, const int b, const int res, const int carr=
-y)
-> +{
-> +    int o =3D a, c;
-> +
-> +    asm volatile("subv %2,%0\n"
-> +                 "movt %1\n"
-> +                 : "+r"(o), "=3Dr"(c) : "r"(b) :);
-> +
-> +    if (c !=3D carry || o !=3D res) {
-> +        printf("SUBV %d, %d =3D %d/%d [T =3D %d/%d]\n", a, b, o, res, c,=
- carry);
-> +        abort();
-> +    }
-> +}
-> +
-> +int main(void)
-> +{
-> +    subv(INT_MIN, 1, INT_MAX, 1);
-> +    subv(INT_MAX, -1, INT_MIN, 1);
-> +    subv(INT_MAX, 1, INT_MAX - 1, 0);
-> +    subv(0, 1, -1, 0);
-> +    subv(-1, -1, 0, 0);
-> +
-> +    return 0;
-> +}
-> diff --git a/tests/tcg/sh4/Makefile.target b/tests/tcg/sh4/Makefile.target
-> index 521b8b0a76..7852fa62d8 100644
-> --- a/tests/tcg/sh4/Makefile.target
-> +++ b/tests/tcg/sh4/Makefile.target
-> @@ -20,3 +20,6 @@ TESTS +=3D test-macw
-> =20
->  test-addv: CFLAGS +=3D -O -g
->  TESTS +=3D test-addv
-> +
-> +test-subv: CFLAGS +=3D -O -g
-> +TESTS +=3D test-subv
+> -            tcg_gen_xor_i32(t2, REG(B7_4), REG(B11_8));
+> +            tcg_gen_add_i32(result, Rm, Rn);
+> +            /* T =3D ((Rn ^ Rm) & (Result ^ Rn)) >> 31 */
+> +            tcg_gen_xor_i32(t1, result, Rn);
+> +            tcg_gen_xor_i32(t2, Rm, Rn);
+>              tcg_gen_andc_i32(cpu_sr_t, t1, t2);
+>              tcg_gen_shri_i32(cpu_sr_t, cpu_sr_t, 31);
+> -            tcg_gen_mov_i32(REG(B11_8), t0);
+> +            tcg_gen_mov_i32(Rn, result);
+>          }
+>          return;
+>      case 0x2009: /* and Rm,Rn */
 > --=20
 > 2.41.0
 >=20
