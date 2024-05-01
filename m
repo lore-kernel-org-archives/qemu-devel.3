@@ -4,94 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92F2BC4345F
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 07:21:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 690B0C19F53
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 07:44:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s24Go-0004U2-W2; Wed, 01 May 2024 03:20:51 -0400
+	id 1s24dB-0000rM-P0; Wed, 01 May 2024 03:43:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s24Gn-0004Tg-4A
- for qemu-devel@nongnu.org; Wed, 01 May 2024 03:20:49 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s24Gl-0000Fa-1J
- for qemu-devel@nongnu.org; Wed, 01 May 2024 03:20:48 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-1eac92f7c74so52995995ad.3
- for <qemu-devel@nongnu.org>; Wed, 01 May 2024 00:20:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1714548045; x=1715152845;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=pMe0tkEnY+Zd6bwkQi+nZwM4FerHeDV0HnpSEBEZIHw=;
- b=XL3/97FmGlwF3EVauXlUokXDj1+LfgmtnGsPOxuUHwQBvEtBy+QUrcnosynzH26hi6
- T6tHoMJqirlyk06yKW1ix4WR8Mziq2Ot/4Qw9yFKwWmvpphJklHKuEX8vS3nggwM/hNz
- yjwyH02dXzc9fmaAwABIY4Hevlh8XWgPeSs2KMJOkT+s1w+c4H3Pq6A6AzPQtVPNmmWZ
- k7Amm382pfxZx5oUopbG7KuojiDtusxf4jjCC/XAPujm5oN3mSOtLK89ZmQjmzh/WkJH
- 10Zb2hYcd6yu/t3mB/jcevliRiiIA3QKJS0h1nf1ef/HwXNtV25gWIJXHKodVSHfmx6q
- oikw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714548045; x=1715152845;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pMe0tkEnY+Zd6bwkQi+nZwM4FerHeDV0HnpSEBEZIHw=;
- b=KwSu+VIUavSMdnJ7sTkKDXuu6de8rGskCVtLhCVkrdMvfPll8nsln4PerKcPv5wAdD
- 1HbwfxvuCAtAwKLDWResYXUYd3ce4+sT4CxTUUft7h1tOv3T4ZvFMPtDZrTxdfHaJ8xl
- 6Kn5cxahbl1hOr57b1ljLb0oRylbTkhW2sjdtF3qp2iKYkbSf1/QQTYtkcl66aBjfhmT
- fxlhoei7TkzPMAukVVCU6eHeH5qq5xV+xsXO8Vf43C6krKLIlK8QdVWZHtaeRHBAeRB1
- aLyJ79acTloDFUOIwXcJ/UAuWfx3Gt6LDIIYhVhmp41A2695b4v4PbgRmdzjm41pq/bG
- c3Kw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUx3Ec2fcLdh+mPTqAS50FBubHreiqTKIOqaqc+pOricCAc1HGdNtPUHtsTi0qx4PHt5lyIw6BDkWg84WWj+DcFYErjAKQ=
-X-Gm-Message-State: AOJu0Yx/2ZchApvf9JMxuNjx5AGzj0zYN+rHx4bJ4NF9YtcmU3Q7En5c
- newroMn7fTZFBzRfXc9UfW4Af29jrelQopJaFwnlCwsJ9eeI4lrXziW2qOMY3xM=
-X-Google-Smtp-Source: AGHT+IFmTiBoBwhQcZBRgixAxuyYk3BXPfjXJ2t30wv3Q13FoaAuwe/3d4FpacvSuz1emtVz+xrCkQ==
-X-Received: by 2002:a17:902:d34b:b0:1e4:6232:367a with SMTP id
- l11-20020a170902d34b00b001e46232367amr1486413plk.22.1714548045457; 
- Wed, 01 May 2024 00:20:45 -0700 (PDT)
-Received: from [157.82.202.162] ([157.82.202.162])
- by smtp.gmail.com with ESMTPSA id
- cp1-20020a170902e78100b001ec7d91f1cfsm1070193plb.14.2024.05.01.00.20.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 May 2024 00:20:45 -0700 (PDT)
-Message-ID: <e7b29a10-addf-4fed-9092-73652cb16cce@daynix.com>
-Date: Wed, 1 May 2024 16:20:41 +0900
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1s24dA-0000ql-Hj
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 03:43:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1s24d8-0003aW-NY
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 03:43:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714549434;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7ownYj/qlgNbv9VvIzzLsn6x+0ehrNzewTvcneFeFHA=;
+ b=giWd3Bs3fed2C7i0mTHIQE3X9gmt/HraeCBVTA60S+oTSEE7YgJ92A0zz7pMfCwvuuGMgz
+ /oN5NLse3m2PZILVkHjVKGf3kRQ2cpsxgZtbL5iG219uRn211G9G9sQ2eyn/oIbC5S1CVR
+ QNmCLkUPTqVZeJVjkZ1UpNqS8rBGLao=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-647-cp-O5migNWWmGz11JWzTMw-1; Wed,
+ 01 May 2024 03:43:52 -0400
+X-MC-Unique: cp-O5migNWWmGz11JWzTMw-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2D080380621E;
+ Wed,  1 May 2024 07:43:52 +0000 (UTC)
+Received: from srv1.redhat.com (unknown [10.45.224.97])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 349B740C5C2;
+ Wed,  1 May 2024 07:43:51 +0000 (UTC)
+From: Konstantin Kostiuk <kkostiuk@redhat.com>
+To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 7/9] qga/commands-posix: qmp_guest_set_user_password: use
+ ga_run_command helper
+Date: Wed,  1 May 2024 10:43:38 +0300
+Message-ID: <20240501074340.19641-8-kkostiuk@redhat.com>
+In-Reply-To: <20240501074340.19641-1-kkostiuk@redhat.com>
+References: <20240501074340.19641-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] virtio-net: Convert feature properties to OnOffAuto
-Content-Language: en-US
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Jason Wang <jasowang@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Luigi Rizzo <rizzo@iet.unipi.it>, Giuseppe Lettieri
- <g.lettieri@iet.unipi.it>, Vincenzo Maffione <v.maffione@gmail.com>,
- Andrew Melnychenko <andrew@daynix.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- qemu-devel@nongnu.org, 20240428-rss-v10-0-73cbaa91aeb6@daynix.com
-References: <20240428-auto-v1-0-7b012216a120@daynix.com>
- <20240429030329-mutt-send-email-mst@kernel.org>
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240429030329-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::632;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,32 +82,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/04/29 16:05, Michael S. Tsirkin wrote:
-> On Sun, Apr 28, 2024 at 04:21:06PM +0900, Akihiko Odaki wrote:
->> Based-on: <20240428-rss-v10-0-73cbaa91aeb6@daynix.com>
->> ("[PATCH v10 00/18] virtio-net RSS/hash report fixes and improvements")
->>
->> Some features are not always available, and virtio-net used to disable
->> them when not available even if the corresponding properties were
->> explicitly set to "on".
->>
->> Convert feature properties to OnOffAuto so that the user can explicitly
->> tell QEMU to automatically select the value by setting them "auto".
->> QEMU will give an error if they are set "on".
->>
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> 
-> Should we maybe bite the bullet allow "auto" for all binary/boolean
-> properties? Just ignore "auto" if no one cares ATM.
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 
-It is not always obvious whether "auto" should be considered as "on" or 
-"off" for existing boolean properties. The properties this patch deals 
-with are to enable features so "auto" should be considered as "on" if 
-possible. However, other properties may mean to disable features, and in 
-such a case, "auto" should be considered as "off".
+There's no need to check for the existence of the "chpasswd", "pw"
+executables, as the exec() call will do that for us.
 
-It may still make sense to accept "auto" for all virtio-net feature bits 
-for consistency. In particular, I left guest_rsc_ext property boolean 
-since nobody cares "auto" for that feature, but this can be converted to 
-OnOffAuto.
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+Link: https://lore.kernel.org/r/20240320161648.158226-8-andrey.drobyshev@virtuozzo.com
+Signed-off-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+---
+ qga/commands-posix.c | 96 ++++++--------------------------------------
+ 1 file changed, 13 insertions(+), 83 deletions(-)
+
+diff --git a/qga/commands-posix.c b/qga/commands-posix.c
+index 9910957ff5..7a065c4085 100644
+--- a/qga/commands-posix.c
++++ b/qga/commands-posix.c
+@@ -2151,14 +2151,8 @@ void qmp_guest_set_user_password(const char *username,
+                                  Error **errp)
+ {
+     Error *local_err = NULL;
+-    char *passwd_path = NULL;
+-    pid_t pid;
+-    int status;
+-    int datafd[2] = { -1, -1 };
+-    char *rawpasswddata = NULL;
++    g_autofree char *rawpasswddata = NULL;
+     size_t rawpasswdlen;
+-    char *chpasswddata = NULL;
+-    size_t chpasswdlen;
+ 
+     rawpasswddata = (char *)qbase64_decode(password, -1, &rawpasswdlen, errp);
+     if (!rawpasswddata) {
+@@ -2169,95 +2163,31 @@ void qmp_guest_set_user_password(const char *username,
+ 
+     if (strchr(rawpasswddata, '\n')) {
+         error_setg(errp, "forbidden characters in raw password");
+-        goto out;
++        return;
+     }
+ 
+     if (strchr(username, '\n') ||
+         strchr(username, ':')) {
+         error_setg(errp, "forbidden characters in username");
+-        goto out;
++        return;
+     }
+ 
+ #ifdef __FreeBSD__
+-    chpasswddata = g_strdup(rawpasswddata);
+-    passwd_path = g_find_program_in_path("pw");
++    g_autofree char *chpasswdata = g_strdup(rawpasswddata);
++    const char *crypt_flag = crypted ? "-H" : "-h";
++    const char *argv[] = {"pw", "usermod", "-n", username,
++                          crypt_flag, "0", NULL};
+ #else
+-    chpasswddata = g_strdup_printf("%s:%s\n", username, rawpasswddata);
+-    passwd_path = g_find_program_in_path("chpasswd");
++    g_autofree char *chpasswddata = g_strdup_printf("%s:%s\n", username,
++                                                    rawpasswddata);
++    const char *crypt_flag = crypted ? "-e" : NULL;
++    const char *argv[] = {"chpasswd", crypt_flag, NULL};
+ #endif
+ 
+-    chpasswdlen = strlen(chpasswddata);
+-
+-    if (!passwd_path) {
+-        error_setg(errp, "cannot find 'passwd' program in PATH");
+-        goto out;
+-    }
+-
+-    if (!g_unix_open_pipe(datafd, FD_CLOEXEC, NULL)) {
+-        error_setg(errp, "cannot create pipe FDs");
+-        goto out;
+-    }
+-
+-    pid = fork();
+-    if (pid == 0) {
+-        close(datafd[1]);
+-        /* child */
+-        setsid();
+-        dup2(datafd[0], 0);
+-        reopen_fd_to_null(1);
+-        reopen_fd_to_null(2);
+-
+-#ifdef __FreeBSD__
+-        const char *h_arg;
+-        h_arg = (crypted) ? "-H" : "-h";
+-        execl(passwd_path, "pw", "usermod", "-n", username, h_arg, "0", NULL);
+-#else
+-        if (crypted) {
+-            execl(passwd_path, "chpasswd", "-e", NULL);
+-        } else {
+-            execl(passwd_path, "chpasswd", NULL);
+-        }
+-#endif
+-        _exit(EXIT_FAILURE);
+-    } else if (pid < 0) {
+-        error_setg_errno(errp, errno, "failed to create child process");
+-        goto out;
+-    }
+-    close(datafd[0]);
+-    datafd[0] = -1;
+-
+-    if (qemu_write_full(datafd[1], chpasswddata, chpasswdlen) != chpasswdlen) {
+-        error_setg_errno(errp, errno, "cannot write new account password");
+-        goto out;
+-    }
+-    close(datafd[1]);
+-    datafd[1] = -1;
+-
+-    ga_wait_child(pid, &status, &local_err);
++    ga_run_command(argv, chpasswddata, "set user password", &local_err);
+     if (local_err) {
+         error_propagate(errp, local_err);
+-        goto out;
+-    }
+-
+-    if (!WIFEXITED(status)) {
+-        error_setg(errp, "child process has terminated abnormally");
+-        goto out;
+-    }
+-
+-    if (WEXITSTATUS(status)) {
+-        error_setg(errp, "child process has failed to set user password");
+-        goto out;
+-    }
+-
+-out:
+-    g_free(chpasswddata);
+-    g_free(rawpasswddata);
+-    g_free(passwd_path);
+-    if (datafd[0] != -1) {
+-        close(datafd[0]);
+-    }
+-    if (datafd[1] != -1) {
+-        close(datafd[1]);
++        return;
+     }
+ }
+ #else /* __linux__ || __FreeBSD__ */
+-- 
+2.44.0
+
 
