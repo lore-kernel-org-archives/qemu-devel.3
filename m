@@ -4,74 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56BD8C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 14:39:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 119B4C10F1A
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 14:39:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2B6I-0002wR-GY; Wed, 01 May 2024 10:38:27 -0400
+	id 1s2B5v-0002io-HW; Wed, 01 May 2024 10:38:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s2B5s-0002i3-1r
- for qemu-devel@nongnu.org; Wed, 01 May 2024 10:38:00 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1s2B5h-0002fC-Lv
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 10:37:50 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s2B5q-0002BA-9u
- for qemu-devel@nongnu.org; Wed, 01 May 2024 10:37:59 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1e834159f40so54901245ad.2
- for <qemu-devel@nongnu.org>; Wed, 01 May 2024 07:37:57 -0700 (PDT)
+ id 1s2B5f-00027D-Oz
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 10:37:49 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-1e3ff14f249so6734715ad.1
+ for <qemu-devel@nongnu.org>; Wed, 01 May 2024 07:37:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714574277; x=1715179077; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714574265; x=1715179065; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LosuIyCzAc9oB5OxDPZNgW94mh4MJImjLMLCS31GDcs=;
- b=vTCB5tQvM50YpdBeVz8D6pebQI80Q+7T455w0ay2f0krxCo2D/Dn6uyWahXq3s0+EN
- 07BGdZzCraE2Eki8QbZXK7omRAKirB8k+DRfGdPgTr0NEELmoU9LQwhupvmn+0do72eb
- Zbpq/st4Y8Yvy2Gq5kFYMxzZ+irkdkf+7WlLCJO9+tHb9SNcsxjWYUeHB+TC2AAtWr+C
- js/hrmHOpigU4H/F2Mv+xxN7UCXvQlcrX0J20BDUgKeHzx1VmQj2Fnwx/fhYkjv1gCiE
- rV5EmG1CDnEuhpuDjGLGV9aTrVeJZKbK7OrYEUgPRrkLG6keXO/mbK+cg5Lo4/JTU1zE
- VDrQ==
+ bh=/mvFgQ07uq/6Zxz3YFl1o78VrbR/mo0c+cULSy+Rk10=;
+ b=EwjoVwFSu9jfsHy+CqztVHWyH1ZeYYwbupbWBiWem9Mm+8WNhzhbRElgoeRCt12d2s
+ 6Bor6Ed0j6Fgr4kGEF6ladCk437DCBO1VzRYAHXqKWhtSSJJoFOy4D224RcFKx9mTzKr
+ zArymvBcSz2p8Bu0nmCLN0n67JbMsoFhT4xs3iZel9AR55fICfSAVp3IYZjn92k+Mefp
+ Bh0I/cyVDNSWSeD/KZuAI5c6gXbW3YICOL4c9i7Fy2iNMnZnPuj0gkJtoaKK9qYINnyC
+ JLzgxXLLELqEfrdbhNVv2h0Am+SF791y/gndnX2R7zQr6oGk9/NEC1d+NJlun4R+kScz
+ AWlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714574277; x=1715179077;
+ d=1e100.net; s=20230601; t=1714574265; x=1715179065;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LosuIyCzAc9oB5OxDPZNgW94mh4MJImjLMLCS31GDcs=;
- b=ZsoF6Mtw2UH8lTsY2vl19SAi/MpDmtt8L9Fm2Wv57nQr4OMEevev6CUZEKfHLrYMwp
- anKfkYtAxcBMB+COW1cwKZZRQPcAOc+hgZORtmkZML0mr0yQ+1c/YBVlH8VMAPv6nJ3K
- VrFL7v3jpET6hjbs1HqqWp1FworGFJv+VoORRfJoHcx04H6xljGZm5f81qpQ1GoHSEXe
- vx9HUf2B1nMKoU7uPLbfppOAT3AAjnh3ZlB7GQjKS8+UohKPYkKMkLABayLGCh+rb73N
- LzZNvP8ElsrNtcJ5JLb8ikZnnUTmdHh/PXPffNjy/Evm1Z7oXZY+EYRnLypDsefMO/HP
- 0ZUA==
-X-Gm-Message-State: AOJu0Yx+qQcwrETPXYHQmwD87cmgavoGlznlabpQbySiRw565O4URTpH
- xDwU6PsFJjR8ozONYH8U6JbM3E/xpSs8NImnGYsqI3IKhzcKM4q743YQeNMYEQc2jYZE6IgT/vv
- j
-X-Google-Smtp-Source: AGHT+IF+y7oen/nC5CMg+KmtOnc7dTRsuA7S5HcdrsUy4BA6fz3On2HA/UmBGQ7nUn9tYRvTFsx3rQ==
-X-Received: by 2002:a17:903:1d1:b0:1e4:d548:81a0 with SMTP id
- e17-20020a17090301d100b001e4d54881a0mr2275720plh.67.1714574276973; 
- Wed, 01 May 2024 07:37:56 -0700 (PDT)
+ bh=/mvFgQ07uq/6Zxz3YFl1o78VrbR/mo0c+cULSy+Rk10=;
+ b=aKcBxJ9ZR+4Dr+KFLmAKN4RKYrIkWhX+gIkFNpwtHDiIt0KbXQiKJ7b66nrewe5FZO
+ H63I+ErPO+NhwgEpig1W29RRzmqpQ1mXHwbrwCz2pLtK8JgD/AFWPfAiN/kpk92NVqje
+ 7+Un2OzLjwZhWCfY4KX2w+D6scaP6+qlymsWGRiHZMDY6tI89t5FjuS5CkgSWhTktZlN
+ 49Kue75zCF77WpQywneQ3fsLy74EW/rKUOYTp/eK1nYWrOV8NMfVPiqAAfNkeeTWyIa9
+ rmfWWLbf/eSSDLg4/szvdn/NuLxn/iPtW+as5FL/0C2LwlyFEboTte3EQXeaIa/0vCTv
+ eg7Q==
+X-Gm-Message-State: AOJu0YwJPcTLMazZjiqFR9ZMNmOHHDmwpFvA+xfgilgdwmt5AmY+llbo
+ 05D7uax0hMgyfGZUrchUzeJ3K5lsx2tQqVA+GZzAXeDkYmGnm0i7QGbu18LfBw9Qrj67iynSYXj
+ p
+X-Google-Smtp-Source: AGHT+IG3jqMerkYk8wAuggrmDNnIUatle76IkFxNkTKAdsP5Oihdglgx2ppk/HC0s4poY/LIbn01fA==
+X-Received: by 2002:a17:903:1105:b0:1e2:58f:7ed4 with SMTP id
+ n5-20020a170903110500b001e2058f7ed4mr4736772plh.5.1714574265288; 
+ Wed, 01 May 2024 07:37:45 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- h12-20020a170902f54c00b001ebd73f61fcsm5751573plf.121.2024.05.01.07.37.56
+ h12-20020a170902f54c00b001ebd73f61fcsm5751573plf.121.2024.05.01.07.37.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 May 2024 07:37:56 -0700 (PDT)
+ Wed, 01 May 2024 07:37:44 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 17/20] plugins: Split out common cb expanders
-Date: Wed,  1 May 2024 07:37:36 -0700
-Message-Id: <20240501143739.10541-18-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 04/20] plugins: Move function pointer in qemu_plugin_dyn_cb
+Date: Wed,  1 May 2024 07:37:23 -0700
+Message-Id: <20240501143739.10541-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240501143739.10541-1-richard.henderson@linaro.org>
 References: <20240501143739.10541-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,138 +96,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+The out-of-line function pointer is mutually exclusive
+with inline expansion, so move it into the union.
+Wrap the pointer in a structure named 'regular' to match
+PLUGIN_CB_REGULAR.
+
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/plugin-gen.c | 84 +++++++++++++++++++++---------------------
- 1 file changed, 41 insertions(+), 43 deletions(-)
+ include/qemu/plugin.h  | 4 +++-
+ accel/tcg/plugin-gen.c | 4 ++--
+ plugins/core.c         | 8 ++++----
+ 3 files changed, 9 insertions(+), 7 deletions(-)
 
+diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
+index 41db748eda..5676ab5ef2 100644
+--- a/include/qemu/plugin.h
++++ b/include/qemu/plugin.h
+@@ -85,13 +85,15 @@ enum plugin_dyn_cb_subtype {
+  * instance of a callback to be called upon the execution of a particular TB.
+  */
+ struct qemu_plugin_dyn_cb {
+-    union qemu_plugin_cb_sig f;
+     void *userp;
+     enum plugin_dyn_cb_subtype type;
+     /* @rw applies to mem callbacks only (both regular and inline) */
+     enum qemu_plugin_mem_rw rw;
+     /* fields specific to each dyn_cb type go here */
+     union {
++        struct {
++            union qemu_plugin_cb_sig f;
++        } regular;
+         struct {
+             qemu_plugin_u64 entry;
+             enum qemu_plugin_op op;
 diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
-index 49d9b07438..5b63b93114 100644
+index cd78ef94a1..4b488943ff 100644
 --- a/accel/tcg/plugin-gen.c
 +++ b/accel/tcg/plugin-gen.c
-@@ -187,6 +187,37 @@ static void gen_mem_cb(struct qemu_plugin_dyn_cb *cb,
-     tcg_temp_free_i32(cpu_index);
+@@ -425,7 +425,7 @@ static TCGOp *append_udata_cb(const struct qemu_plugin_dyn_cb *cb,
+     }
+ 
+     /* call */
+-    op = copy_call(&begin_op, op, cb->f.vcpu_udata, cb_idx);
++    op = copy_call(&begin_op, op, cb->regular.f.vcpu_udata, cb_idx);
+ 
+     return op;
+ }
+@@ -473,7 +473,7 @@ static TCGOp *append_mem_cb(const struct qemu_plugin_dyn_cb *cb,
+ 
+     if (type == PLUGIN_GEN_CB_MEM) {
+         /* call */
+-        op = copy_call(&begin_op, op, cb->f.vcpu_udata, cb_idx);
++        op = copy_call(&begin_op, op, cb->regular.f.vcpu_udata, cb_idx);
+     }
+ 
+     return op;
+diff --git a/plugins/core.c b/plugins/core.c
+index 4487cb7c48..837c373690 100644
+--- a/plugins/core.c
++++ b/plugins/core.c
+@@ -342,7 +342,7 @@ void plugin_register_dyn_cb__udata(GArray **arr,
+ 
+     dyn_cb->userp = udata;
+     /* Note flags are discarded as unused. */
+-    dyn_cb->f.vcpu_udata = cb;
++    dyn_cb->regular.f.vcpu_udata = cb;
+     dyn_cb->type = PLUGIN_CB_REGULAR;
  }
  
-+static void inject_cb(struct qemu_plugin_dyn_cb *cb)
-+
-+{
-+    switch (cb->type) {
-+    case PLUGIN_CB_REGULAR:
-+        gen_udata_cb(cb);
-+        break;
-+    case PLUGIN_CB_INLINE:
-+        gen_inline_cb(cb);
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+}
-+
-+static void inject_mem_cb(struct qemu_plugin_dyn_cb *cb,
-+                          enum qemu_plugin_mem_rw rw,
-+                          qemu_plugin_meminfo_t meminfo, TCGv_i64 addr)
-+{
-+    if (cb->rw & rw) {
-+        switch (cb->type) {
-+        case PLUGIN_CB_MEM_REGULAR:
-+            gen_mem_cb(cb, meminfo, addr);
-+            break;
-+        default:
-+            inject_cb(cb);
-+            break;
-+        }
-+    }
-+}
-+
- static void plugin_gen_inject(struct qemu_plugin_tb *plugin_tb)
- {
-     TCGOp *op, *next;
-@@ -248,19 +279,8 @@ static void plugin_gen_inject(struct qemu_plugin_tb *plugin_tb)
+@@ -359,7 +359,7 @@ void plugin_register_vcpu_mem_cb(GArray **arr,
+     /* Note flags are discarded as unused. */
+     dyn_cb->type = PLUGIN_CB_REGULAR;
+     dyn_cb->rw = rw;
+-    dyn_cb->f.generic = cb;
++    dyn_cb->regular.f.vcpu_mem = cb;
+ }
  
-                 cbs = plugin_tb->cbs;
-                 for (i = 0, n = (cbs ? cbs->len : 0); i < n; i++) {
--                    struct qemu_plugin_dyn_cb *cb =
--                        &g_array_index(cbs, struct qemu_plugin_dyn_cb, i);
--
--                    switch (cb->type) {
--                    case PLUGIN_CB_REGULAR:
--                        gen_udata_cb(cb);
--                        break;
--                    case PLUGIN_CB_INLINE:
--                        gen_inline_cb(cb);
--                        break;
--                    default:
--                        g_assert_not_reached();
--                    }
-+                    inject_cb(
-+                        &g_array_index(cbs, struct qemu_plugin_dyn_cb, i));
-                 }
-                 break;
- 
-@@ -271,19 +291,8 @@ static void plugin_gen_inject(struct qemu_plugin_tb *plugin_tb)
- 
-                 cbs = insn->insn_cbs;
-                 for (i = 0, n = (cbs ? cbs->len : 0); i < n; i++) {
--                    struct qemu_plugin_dyn_cb *cb =
--                        &g_array_index(cbs, struct qemu_plugin_dyn_cb, i);
--
--                    switch (cb->type) {
--                    case PLUGIN_CB_REGULAR:
--                        gen_udata_cb(cb);
--                        break;
--                    case PLUGIN_CB_INLINE:
--                        gen_inline_cb(cb);
--                        break;
--                    default:
--                        g_assert_not_reached();
--                    }
-+                    inject_cb(
-+                        &g_array_index(cbs, struct qemu_plugin_dyn_cb, i));
-                 }
-                 break;
- 
-@@ -300,33 +309,22 @@ static void plugin_gen_inject(struct qemu_plugin_tb *plugin_tb)
-         {
-             TCGv_i64 addr = temp_tcgv_i64(arg_temp(op->args[0]));
-             qemu_plugin_meminfo_t meminfo = op->args[1];
-+            enum qemu_plugin_mem_rw rw =
-+                (qemu_plugin_mem_is_store(meminfo)
-+                 ? QEMU_PLUGIN_MEM_W : QEMU_PLUGIN_MEM_R);
-             struct qemu_plugin_insn *insn;
-             const GArray *cbs;
--            int i, n, rw;
-+            int i, n;
- 
-             assert(insn_idx >= 0);
-             insn = g_ptr_array_index(plugin_tb->insns, insn_idx);
--            rw = qemu_plugin_mem_is_store(meminfo) ? 2 : 1;
- 
-             tcg_ctx->emit_before_op = op;
- 
-             cbs = insn->mem_cbs;
-             for (i = 0, n = (cbs ? cbs->len : 0); i < n; i++) {
--                struct qemu_plugin_dyn_cb *cb =
--                    &g_array_index(cbs, struct qemu_plugin_dyn_cb, i);
--
--                if (cb->rw & rw) {
--                    switch (cb->type) {
--                    case PLUGIN_CB_MEM_REGULAR:
--                        gen_mem_cb(cb, meminfo, addr);
--                        break;
--                    case PLUGIN_CB_INLINE:
--                        gen_inline_cb(cb);
--                        break;
--                    default:
--                        g_assert_not_reached();
--                    }
--                }
-+                inject_mem_cb(&g_array_index(cbs, struct qemu_plugin_dyn_cb, i),
-+                              rw, meminfo, addr);
-             }
- 
-             tcg_ctx->emit_before_op = NULL;
+ /*
+@@ -511,8 +511,8 @@ void qemu_plugin_vcpu_mem_cb(CPUState *cpu, uint64_t vaddr,
+         }
+         switch (cb->type) {
+         case PLUGIN_CB_REGULAR:
+-            cb->f.vcpu_mem(cpu->cpu_index, make_plugin_meminfo(oi, rw),
+-                           vaddr, cb->userp);
++            cb->regular.f.vcpu_mem(cpu->cpu_index, make_plugin_meminfo(oi, rw),
++                                   vaddr, cb->userp);
+             break;
+         case PLUGIN_CB_INLINE:
+             exec_inline_op(cb, cpu->cpu_index);
 -- 
 2.34.1
 
