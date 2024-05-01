@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5644C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 23:48:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66165C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 23:48:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2Jbe-00028S-Cf; Wed, 01 May 2024 19:43:22 -0400
+	id 1s2Jc5-0002UJ-5c; Wed, 01 May 2024 19:43:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s2Jbb-00026M-Uv; Wed, 01 May 2024 19:43:20 -0400
+ id 1s2Jbt-0002Q0-73; Wed, 01 May 2024 19:43:37 -0400
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s2JbZ-0004zd-Bx; Wed, 01 May 2024 19:43:19 -0400
+ id 1s2Jbr-00053n-D6; Wed, 01 May 2024 19:43:36 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E15804E6040;
- Thu, 02 May 2024 01:43:12 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id F0CAF4E6041;
+ Thu, 02 May 2024 01:43:32 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id Irote1dMBxbJ; Thu,  2 May 2024 01:43:10 +0200 (CEST)
+ with ESMTP id ZEHiDkzAuh3v; Thu,  2 May 2024 01:43:31 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id EE28B4E6041; Thu, 02 May 2024 01:43:10 +0200 (CEST)
-Message-Id: <c60019daaf0218b64205ba2ec4d5f8edca20776a.1714606359.git.balaton@eik.bme.hu>
+ id 0E4284E602D; Thu, 02 May 2024 01:43:31 +0200 (CEST)
+Message-Id: <cd05e33ea86d301cf64aa3925a6302b92249ee3c.1714606359.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1714606359.git.balaton@eik.bme.hu>
 References: <cover.1714606359.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v2 05/28] target/ppc/mmu_common.c: Move calculation of a value
- closer to its usage
+Subject: [PATCH v2 24/28] target/ppc/mmu_common.c: Remove BookE handling from
+ get_physical_address_wtlb()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,7 +40,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Thu, 02 May 2024 01:43:10 +0200 (CEST)
+Date: Thu, 02 May 2024 01:43:31 +0200 (CEST)
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
  envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -63,45 +63,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In mmubooke_check_tlb() prot2 is calculated first but only used after
-an unrelated check that can return before tha value is used. Move the
-calculation after the check, closer to where it is used, to keep them
-together and avoid computing it when not needed.
+This function is no longer called for BookE MMU model so remove parts
+related to it. This has uncovered a few may be used uninitialised
+warnings that are also fixed.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- target/ppc/mmu_common.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ target/ppc/mmu_common.c | 25 +++++--------------------
+ 1 file changed, 5 insertions(+), 20 deletions(-)
 
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 751403f1c8..168ff842a5 100644
+index a1f98f8de4..d61c41d8c9 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -634,12 +634,6 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppcemb_tlb_t *tlb,
-         return -1;
+@@ -684,12 +684,10 @@ static int mmubooke_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
+         ret = mmubooke_check_tlb(env, tlb, &raddr, &ctx->prot, address,
+                                  access_type, i);
+         if (ret != -1) {
+-            if (ret >= 0) {
+-                ctx->raddr = raddr;
+-            }
+             break;
+         }
      }
++    ctx->raddr = raddr;
+     qemu_log_mask(CPU_LOG_MMU,
+                   "%s: access %s " TARGET_FMT_lx " => " HWADDR_FMT_plx
+                   " %d %d\n", __func__, ret < 0 ? "refused" : "granted",
+@@ -897,9 +895,6 @@ static int mmubooke206_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
+             ret = mmubooke206_check_tlb(env, tlb, &raddr, &ctx->prot, address,
+                                         access_type, mmu_idx);
+             if (ret != -1) {
+-                if (ret >= 0) {
+-                    ctx->raddr = raddr;
+-                }
+                 goto found_tlb;
+             }
+         }
+@@ -907,6 +902,7 @@ static int mmubooke206_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
  
--    if (FIELD_EX64(env->msr, MSR, PR)) {
--        prot2 = tlb->prot & 0xF;
--    } else {
--        prot2 = (tlb->prot >> 4) & 0xF;
+ found_tlb:
+ 
++    ctx->raddr = raddr;
+     qemu_log_mask(CPU_LOG_MMU, "%s: access %s " TARGET_FMT_lx " => "
+                   HWADDR_FMT_plx " %d %d\n", __func__,
+                   ret < 0 ? "refused" : "granted", address, raddr,
+@@ -1163,20 +1159,9 @@ static int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
+                                      MMUAccessType access_type, int type,
+                                      int mmu_idx)
+ {
+-    bool real_mode;
+-
+-    if (env->mmu_model == POWERPC_MMU_BOOKE) {
+-        return mmubooke_get_physical_address(env, ctx, eaddr, access_type);
+-    } else if (env->mmu_model == POWERPC_MMU_BOOKE206) {
+-        return mmubooke206_get_physical_address(env, ctx, eaddr, access_type,
+-                                                mmu_idx);
 -    }
 -
-     /* Check the address space */
-     if ((access_type == MMU_INST_FETCH ?
-         FIELD_EX64(env->msr, MSR, IR) :
-@@ -648,6 +642,11 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppcemb_tlb_t *tlb,
-         return -1;
-     }
- 
-+    if (FIELD_EX64(env->msr, MSR, PR)) {
-+        prot2 = tlb->prot & 0xF;
-+    } else {
-+        prot2 = (tlb->prot >> 4) & 0xF;
-+    }
-     *prot = prot2;
-     if (prot2 & prot_for_access_type(access_type)) {
-         qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
+-    real_mode = (type == ACCESS_CODE) ? !FIELD_EX64(env->msr, MSR, IR)
+-                                      : !FIELD_EX64(env->msr, MSR, DR);
+-    if (real_mode && (env->mmu_model == POWERPC_MMU_SOFT_6xx ||
+-                      env->mmu_model == POWERPC_MMU_SOFT_4xx ||
+-                      env->mmu_model == POWERPC_MMU_REAL)) {
++    bool real_mode = (type == ACCESS_CODE) ? !FIELD_EX64(env->msr, MSR, IR)
++                                           : !FIELD_EX64(env->msr, MSR, DR);
++    if (real_mode) {
+         memset(ctx, 0, sizeof(*ctx));
+         ctx->raddr = eaddr;
+         ctx->prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
 -- 
 2.30.9
 
