@@ -4,75 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54238C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 14:39:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9C48C25B10
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 14:39:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2B6F-0002qh-K5; Wed, 01 May 2024 10:38:23 -0400
+	id 1s2B5e-0002eb-OH; Wed, 01 May 2024 10:37:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s2B5g-0002el-7J
- for qemu-devel@nongnu.org; Wed, 01 May 2024 10:37:48 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1s2B5c-0002dq-W0
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 10:37:45 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s2B5d-00026o-Oq
- for qemu-devel@nongnu.org; Wed, 01 May 2024 10:37:47 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1e51398cc4eso60800885ad.2
- for <qemu-devel@nongnu.org>; Wed, 01 May 2024 07:37:45 -0700 (PDT)
+ id 1s2B5b-000263-61
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 10:37:44 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-1e86d56b3bcso62718995ad.1
+ for <qemu-devel@nongnu.org>; Wed, 01 May 2024 07:37:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714574264; x=1715179064; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=luXE4K25FW6HOCJ1kHOE0xkHZzSsFeoNOQtESvbBF/8=;
- b=cK9RlXqZlJ/cxNAF1uxSjKcLYeTlh8rVuLVg6xRE2MAg1l0pV0efStmVlC6kTjKxsF
- 4dbxbi38ipibRY8/dYzndLiGWoFlZj/w74loJVROhdk/T2zyAJbWu2I1zFlZQfDlNlCn
- HK2kj9lPmIamH/nvPgJ5jWJ3mKNROliFPvdbfCRaWw/txBirUDzVji8Qt3AtRZamu0rT
- p5K7rwgl9PnPnMCiPFNfozXDqpQRbsshcqTkefmnge110Zy1KnFYZcYEWJFLZudSezki
- 7y6OY2H4Q4IfaLp87/oUlQNyHsC8YBw24QaUIXpZa01C5Vzcw1qowwQDftOc4hE1LEUV
- OHZQ==
+ d=linaro.org; s=google; t=1714574261; x=1715179061; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=furAQd7XvwfV8SmRUgHo1DaisvSn979/g0ik4ge2VWo=;
+ b=mtJtf8CPdCJ1I1G0wQU/fjmfJY/ga96YH8lGeAqFkAwbLIbK8TgKktDy1R+ulrMOLT
+ qp7KdfBE/R5eykihyR/d0OxF21Dc/T03NbyoiSJxgVbRS1WJ50dMEBdMJLGCX6jd3s+A
+ py7wiIXs2MwWLupFU9SxArJH9ac6Ef6Egkc7lMjUsZdUVMOJnSDa7E8JoMNBSoyTQW2S
+ 27GE/749nnbc5aZ0FWx6AV2l1K+bwlhgfrdI5S1KtSK85cGdkT6Da+Zznki3x671tHjZ
+ yH8H8Ml7tzkMMhSnXetNnbMT9gmrUO3r4aJDe0oyIBsaBKj5ERfMO4xTXEiHA7wznogK
+ C6AQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714574264; x=1715179064;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=luXE4K25FW6HOCJ1kHOE0xkHZzSsFeoNOQtESvbBF/8=;
- b=oCGfN1UrFQR29aaeJlhCn1tl+ncRVqPxScOWG+DSQozU46KQurZYp7XQ7BNE/z5WpE
- DEOJsp0/ktumD89BHirqSX5EJtoB82p9Z4mEhd3EMlw5CwXDHvZYyOm3oOsqTpNPzrM6
- HkMw1kgnZNuh1rvIuohSys0LpqaqtZHg9BWit5nd5CAudZQn+di2akQ0PiJJJmprY9CZ
- /rOE5d5wm3mr92ELVndXIYtwiZZosTKP/BPfgDIzDOEtBLzmZ5DOfONTSTJ0Wv4DDLNP
- VwICOJhEB80yU4v//HxBow/bhvpKMYumHDjW/enuRoHA58aMHJbuFLgC1/43g4YON26H
- giyw==
-X-Gm-Message-State: AOJu0Yz+izIS3bIAct97bNE44xd7VSJp22nmKaX1621zF+yjlTmjqQmQ
- nQCx7V6UEqk9TYCUYY5ilfcKNPBot+0JwanZIV3nYKIqMmicNcO3R3a+GbXpvvbkMoB7eQn5myz
- C
-X-Google-Smtp-Source: AGHT+IGWl8nSjQVZSMAEUmVtCLpOn77iheK9Kbd7T8LX1T5iCtCmyyZp9ASIZ+ygMdUf7p3byq1QVg==
-X-Received: by 2002:a17:903:40c9:b0:1e7:d482:9d96 with SMTP id
- t9-20020a17090340c900b001e7d4829d96mr3120107pld.10.1714574264387; 
- Wed, 01 May 2024 07:37:44 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1714574261; x=1715179061;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=furAQd7XvwfV8SmRUgHo1DaisvSn979/g0ik4ge2VWo=;
+ b=rUq+3dkxscvUbMJehzK7pufP0iQIGS5/fh7qDpd0IdNCDTtvmPlPBjK20+QeawRAj7
+ qTBDqZs+esxh/V1Iz/DfNSTfhumEd1CIpZRUEsPkqWmulmNpOA7RPOa3Zo3gLwlqdaiY
+ 4Es/A+9MB5/zAkySrkQPDTdofP3+v+Uv+IQpjfPA58XObvHW77trQG4sK/68pCxabu9O
+ ghbZ2pqOdnZN+HmY5zhuKz0QgaQP2DF55DRanENxIrfiivN0rDPAvg7Zbrd2qPWaooHA
+ BVSux8X3n+08FggIa6bZaPOUiOPdSsdXl+YH9YGbZf3R4tgXa/LOBYOawinU4PPOftjp
+ kEQA==
+X-Gm-Message-State: AOJu0Yz2MHjXooOsstxSp0l4ihj42rQzN9zqjGVP/1z5nBWOT+FS/ZdH
+ Kfv8rFd/lIreiQCK7427w2627BfTgPDr95Z48EvdowBLOpqK6Orwxri9/bU26GaNoCX1la5CG1h
+ B
+X-Google-Smtp-Source: AGHT+IE03E/2ipB/fDznNSm6g+0TpYntAEvrgqVBcA6SIQJKN8BGNmggVz5TshMmpUHKvaiUfH9OUw==
+X-Received: by 2002:a17:902:f7cc:b0:1e7:b7a7:9f20 with SMTP id
+ h12-20020a170902f7cc00b001e7b7a79f20mr2313764plw.59.1714574261215; 
+ Wed, 01 May 2024 07:37:41 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- h12-20020a170902f54c00b001ebd73f61fcsm5751573plf.121.2024.05.01.07.37.43
+ h12-20020a170902f54c00b001ebd73f61fcsm5751573plf.121.2024.05.01.07.37.40
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 May 2024 07:37:44 -0700 (PDT)
+ Wed, 01 May 2024 07:37:40 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 03/20] plugins: Zero new qemu_plugin_dyn_cb entries
-Date: Wed,  1 May 2024 07:37:22 -0700
-Message-Id: <20240501143739.10541-4-richard.henderson@linaro.org>
+Subject: [PULL 00/20] tcg patch queue
+Date: Wed,  1 May 2024 07:37:19 -0700
+Message-Id: <20240501143739.10541-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240501143739.10541-1-richard.henderson@linaro.org>
-References: <20240501143739.10541-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,26 +91,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- plugins/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The following changes since commit 9c6c079bc6723da8061ccfb44361d67b1dd785dd:
 
-diff --git a/plugins/core.c b/plugins/core.c
-index 11ca20e626..4487cb7c48 100644
---- a/plugins/core.c
-+++ b/plugins/core.c
-@@ -307,7 +307,7 @@ static struct qemu_plugin_dyn_cb *plugin_get_dyn_cb(GArray **arr)
-     GArray *cbs = *arr;
- 
-     if (!cbs) {
--        cbs = g_array_sized_new(false, false,
-+        cbs = g_array_sized_new(false, true,
-                                 sizeof(struct qemu_plugin_dyn_cb), 1);
-         *arr = cbs;
-     }
--- 
-2.34.1
+  Merge tag 'pull-target-arm-20240430' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-04-30 09:58:54 -0700)
 
+are available in the Git repository at:
+
+  https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20240501
+
+for you to fetch changes up to 917d7f8d948d706e275c9f33169b9dd0149ded1e:
+
+  plugins: Update the documentation block for plugin-gen.c (2024-04-30 16:12:05 -0700)
+
+----------------------------------------------------------------
+plugins: Rewrite plugin tcg expansion
+
+----------------------------------------------------------------
+Richard Henderson (20):
+      tcg: Make tcg/helper-info.h self-contained
+      tcg: Pass function pointer to tcg_gen_call*
+      plugins: Zero new qemu_plugin_dyn_cb entries
+      plugins: Move function pointer in qemu_plugin_dyn_cb
+      plugins: Create TCGHelperInfo for all out-of-line callbacks
+      plugins: Use emit_before_op for PLUGIN_GEN_AFTER_INSN
+      plugins: Use emit_before_op for PLUGIN_GEN_FROM_TB
+      plugins: Add PLUGIN_GEN_AFTER_TB
+      plugins: Use emit_before_op for PLUGIN_GEN_FROM_INSN
+      plugins: Use emit_before_op for PLUGIN_GEN_FROM_MEM
+      plugins: Remove plugin helpers
+      tcg: Remove TCG_CALL_PLUGIN
+      tcg: Remove INDEX_op_plugin_cb_{start,end}
+      plugins: Simplify callback queues
+      plugins: Introduce PLUGIN_CB_MEM_REGULAR
+      plugins: Replace pr_ops with a proper debug dump flag
+      plugins: Split out common cb expanders
+      plugins: Merge qemu_plugin_tb_insn_get to plugin-gen.c
+      plugins: Inline plugin_gen_empty_callback
+      plugins: Update the documentation block for plugin-gen.c
+
+ accel/tcg/plugin-helpers.h         |    5 -
+ include/exec/helper-gen-common.h   |    4 -
+ include/exec/helper-proto-common.h |    4 -
+ include/exec/plugin-gen.h          |    4 -
+ include/qemu/log.h                 |    1 +
+ include/qemu/plugin.h              |   67 +--
+ include/tcg/helper-info.h          |    3 +
+ include/tcg/tcg-op-common.h        |    4 +-
+ include/tcg/tcg-opc.h              |    4 +-
+ include/tcg/tcg.h                  |   26 +-
+ include/exec/helper-gen.h.inc      |   24 +-
+ accel/tcg/plugin-gen.c             | 1007 +++++++++---------------------------
+ plugins/api.c                      |   26 +-
+ plugins/core.c                     |   61 ++-
+ tcg/tcg-op-ldst.c                  |    6 +-
+ tcg/tcg-op.c                       |    8 +-
+ tcg/tcg.c                          |   78 ++-
+ tcg/tci.c                          |    1 +
+ util/log.c                         |    4 +
+ 19 files changed, 399 insertions(+), 938 deletions(-)
+ delete mode 100644 accel/tcg/plugin-helpers.h
 
