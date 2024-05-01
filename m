@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88A66C25B5F
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 23:49:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C259EC4345F
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 23:50:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2JcL-0002vM-CS; Wed, 01 May 2024 19:44:05 -0400
+	id 1s2Jbn-0002KC-TZ; Wed, 01 May 2024 19:43:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s2JcG-0002oh-BL; Wed, 01 May 2024 19:44:00 -0400
+ id 1s2Jbm-0002IJ-Fm; Wed, 01 May 2024 19:43:30 -0400
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s2JcE-00054V-No; Wed, 01 May 2024 19:44:00 -0400
+ id 1s2Jbb-00050T-Kw; Wed, 01 May 2024 19:43:30 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 295E84E6056;
- Thu, 02 May 2024 01:43:37 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 2D6C14E602D;
+ Thu, 02 May 2024 01:43:18 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 7m8bG9PRqHY2; Thu,  2 May 2024 01:43:35 +0200 (CEST)
+ with ESMTP id eYr6ChIWpkQ8; Thu,  2 May 2024 01:43:16 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 3FBFA4E6055; Thu, 02 May 2024 01:43:35 +0200 (CEST)
-Message-Id: <a99aeec44ad192f842d66f7514702bd5d5f912ad.1714606359.git.balaton@eik.bme.hu>
+ id 3EDC54E602F; Thu, 02 May 2024 01:43:16 +0200 (CEST)
+Message-Id: <af31ebb6090c4875472b2e31a41569bf0e40ba37.1714606359.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1714606359.git.balaton@eik.bme.hu>
 References: <cover.1714606359.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v2 28/28] target/ppc: Split off common 4xx TLB init
+Subject: [PATCH v2 10/28] target/ppc/mmu_common.c: Introduce
+ mmu6xx_get_physical_address()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -39,7 +40,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Thu, 02 May 2024 01:43:35 +0200 (CEST)
+Date: Thu, 02 May 2024 01:43:16 +0200 (CEST)
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
  envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -62,105 +63,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Several 4xx related CPUs have the same TLB settings. Split it off in a
-common function in cpu_init.
+Repurpose get_segment_6xx_tlb() to do the whole address translation
+for POWERPC_MMU_SOFT_6xx MMU model by moving the BAT check there and
+renaming it to match other similar functions. These are only called
+once together so no need to keep these separate functions and
+combining them simplifies the caller allowing further restructuring.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- target/ppc/cpu_init.c | 46 ++++++++++++++++---------------------------
- 1 file changed, 17 insertions(+), 29 deletions(-)
+ target/ppc/mmu_common.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 07ad788e54..d7e85c1b07 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -2107,18 +2107,22 @@ static int check_pow_hid0_74xx(CPUPPCState *env)
-     return 0;
+diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+index 98730035b1..ef1669b01d 100644
+--- a/target/ppc/mmu_common.c
++++ b/target/ppc/mmu_common.c
+@@ -359,19 +359,25 @@ static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
+     return ret;
  }
  
-+static void init_tlbs_4xx(CPUPPCState *env)
-+{
-+#ifndef CONFIG_USER_ONLY
-+    env->nb_tlb = 64;
-+    env->nb_ways = 1;
-+    env->tlb_type = TLB_EMB;
-+#endif
-+}
-+
- static void init_proc_405(CPUPPCState *env)
+-/* Perform segment based translation */
+-static int get_segment_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
+-                               target_ulong eaddr, MMUAccessType access_type,
+-                               int type)
++static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
++                                       target_ulong eaddr,
++                                       MMUAccessType access_type, int type)
  {
-     register_40x_sprs(env);
-     register_405_sprs(env);
-     register_usprgh_sprs(env);
+     PowerPCCPU *cpu = env_archcpu(env);
+     hwaddr hash;
+-    target_ulong vsid;
+-    int ds, target_page_bits;
++    target_ulong vsid, sr, pgidx;
+     bool pr;
+-    int ret;
+-    target_ulong sr, pgidx;
++    int ds, target_page_bits, ret = -1;
  
--    /* Memory management */
--#if !defined(CONFIG_USER_ONLY)
--    env->nb_tlb = 64;
--    env->nb_ways = 1;
--    env->tlb_type = TLB_EMB;
--#endif
-+    init_tlbs_4xx(env);
-     init_excp_4xx(env);
-     env->dcache_line_size = 32;
-     env->icache_line_size = 32;
-@@ -2185,12 +2189,8 @@ static void init_proc_440EP(CPUPPCState *env)
-                  SPR_NOACCESS, SPR_NOACCESS,
-                  &spr_read_generic, &spr_write_generic,
-                  0x00000000);
--    /* Memory management */
--#if !defined(CONFIG_USER_ONLY)
--    env->nb_tlb = 64;
--    env->nb_ways = 1;
--    env->tlb_type = TLB_EMB;
--#endif
++    /* First try to find a BAT entry if there are any */
++    if (env->nb_BATs != 0) {
++        ret = get_bat_6xx_tlb(env, ctx, eaddr, access_type);
++    }
++    if (ret >= 0) {
++        return ret;
++    }
 +
-+    init_tlbs_4xx(env);
-     init_excp_BookE(env);
-     env->dcache_line_size = 32;
-     env->icache_line_size = 32;
-@@ -2282,12 +2282,7 @@ static void init_proc_440GP(CPUPPCState *env)
-     register_440_sprs(env);
-     register_usprgh_sprs(env);
++    /* Perform segment based translation when no BATs matched */
+     pr = FIELD_EX64(env->msr, MSR, PR);
+     ctx->eaddr = eaddr;
  
--    /* Memory management */
--#if !defined(CONFIG_USER_ONLY)
--    env->nb_tlb = 64;
--    env->nb_ways = 1;
--    env->tlb_type = TLB_EMB;
--#endif
-+    init_tlbs_4xx(env);
-     init_excp_BookE(env);
-     env->dcache_line_size = 32;
-     env->icache_line_size = 32;
-@@ -2355,12 +2350,8 @@ static void init_proc_440x5(CPUPPCState *env)
-                  SPR_NOACCESS, SPR_NOACCESS,
-                  &spr_read_generic, &spr_write_generic,
-                  0x00000000);
--    /* Memory management */
--#if !defined(CONFIG_USER_ONLY)
--    env->nb_tlb = 64;
--    env->nb_ways = 1;
--    env->tlb_type = TLB_EMB;
--#endif
-+
-+    init_tlbs_4xx(env);
-     init_excp_BookE(env);
-     env->dcache_line_size = 32;
-     env->icache_line_size = 32;
-@@ -2717,11 +2708,8 @@ static void init_proc_e200(CPUPPCState *env)
-                  SPR_NOACCESS, SPR_NOACCESS,
-                  &spr_read_generic, &spr_write_generic,
-                  0x00000000);
--#if !defined(CONFIG_USER_ONLY)
--    env->nb_tlb = 64;
--    env->nb_ways = 1;
--    env->tlb_type = TLB_EMB;
--#endif
-+
-+    init_tlbs_4xx(env);
-     init_excp_e200(env, 0xFFFF0000UL);
-     env->dcache_line_size = 32;
-     env->icache_line_size = 32;
+@@ -1193,14 +1199,8 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
+         if (real_mode) {
+             ret = check_physical(env, ctx, eaddr, access_type);
+         } else {
+-            /* Try to find a BAT */
+-            if (env->nb_BATs != 0) {
+-                ret = get_bat_6xx_tlb(env, ctx, eaddr, access_type);
+-            }
+-            if (ret < 0) {
+-                /* We didn't match any BAT entry or don't have BATs */
+-                ret = get_segment_6xx_tlb(env, ctx, eaddr, access_type, type);
+-            }
++            ret = mmu6xx_get_physical_address(env, ctx, eaddr, access_type,
++                                              type);
+         }
+         break;
+ 
 -- 
 2.30.9
 
