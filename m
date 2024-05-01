@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24DE0C25B5C
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 23:46:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5377AC25B5C
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 23:46:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2JcS-0002zy-5h; Wed, 01 May 2024 19:44:12 -0400
+	id 1s2Jbt-0002PN-4T; Wed, 01 May 2024 19:43:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s2JcP-0002zY-O0; Wed, 01 May 2024 19:44:10 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ id 1s2Jbq-0002NQ-Kg; Wed, 01 May 2024 19:43:34 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s2JcD-00054K-Mb; Wed, 01 May 2024 19:44:09 -0400
+ id 1s2Jbo-00053F-D5; Wed, 01 May 2024 19:43:33 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 289E24E603A;
- Thu, 02 May 2024 01:43:36 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id E1EAB4E6056;
+ Thu, 02 May 2024 01:43:30 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id qUaXUIEhh8-r; Thu,  2 May 2024 01:43:34 +0200 (CEST)
+ with ESMTP id 1HHeoly10UHp; Thu,  2 May 2024 01:43:28 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 353684E6054; Thu, 02 May 2024 01:43:34 +0200 (CEST)
-Message-Id: <5a24db3d48babe4e855707a01954b1827712772f.1714606359.git.balaton@eik.bme.hu>
+ id EE6924E602F; Thu, 02 May 2024 01:43:28 +0200 (CEST)
+Message-Id: <cc6221f9333bae65037c42ca9ba0540f9e96c493.1714606359.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1714606359.git.balaton@eik.bme.hu>
 References: <cover.1714606359.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v2 27/28] target/ppc: Remove id_tlbs flag from CPU env
+Subject: [PATCH v2 22/28] target/ppc: Remove ppc_hash32_pp_prot() and reuse
+ common function
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -39,9 +40,9 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Thu, 02 May 2024 01:43:34 +0200 (CEST)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
+Date: Thu, 02 May 2024 01:43:28 +0200 (CEST)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -62,195 +63,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This flag for split instruction/data TLBs is only set for 6xx soft TLB
-MMU model and not used otherwise so no need to have a separate flag
-for that.
+The ppc_hash32_pp_prot() function in mmu-hash32.c is the same as
+pp_check() in mmu_common.c. Rename the latter to ppc_pte_prot() and
+merge with ppc_hash32_pp_prot() to remove duplicated code.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/ppc/pegasos2.c        |  2 +-
- target/ppc/cpu.h         |  1 -
- target/ppc/cpu_init.c    | 19 +++++--------------
- target/ppc/helper_regs.c |  1 -
- target/ppc/mmu_common.c  | 10 ++--------
- target/ppc/mmu_helper.c  | 12 ++----------
- 6 files changed, 10 insertions(+), 35 deletions(-)
+ target/ppc/internal.h   |  2 +-
+ target/ppc/mmu-hash32.c | 47 +----------------------------------------
+ target/ppc/mmu_common.c | 19 +++++++++--------
+ 3 files changed, 12 insertions(+), 56 deletions(-)
 
-diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
-index 04d6decb2b..dfc6fab180 100644
---- a/hw/ppc/pegasos2.c
-+++ b/hw/ppc/pegasos2.c
-@@ -984,7 +984,7 @@ static void *build_fdt(MachineState *machine, int *fdt_size)
-                           cpu->env.icache_line_size);
-     qemu_fdt_setprop_cell(fdt, cp, "i-cache-line-size",
-                           cpu->env.icache_line_size);
--    if (cpu->env.id_tlbs) {
-+    if (cpu->env.tlb_type == TLB_6XX) {
-         qemu_fdt_setprop_cell(fdt, cp, "i-tlb-sets", cpu->env.nb_ways);
-         qemu_fdt_setprop_cell(fdt, cp, "i-tlb-size", cpu->env.tlb_per_way);
-         qemu_fdt_setprop_cell(fdt, cp, "d-tlb-sets", cpu->env.nb_ways);
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index 0ac55d6b25..21e12a4f0d 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -1260,7 +1260,6 @@ struct CPUArchState {
-     int tlb_per_way; /* Speed-up helper: used to avoid divisions at run time */
-     int nb_ways;     /* Number of ways in the TLB set */
-     int last_way;    /* Last used way used to allocate TLB in a LRU way */
--    int id_tlbs;     /* If 1, MMU has separated TLBs for instructions & data */
-     int nb_pids;     /* Number of available PID registers */
-     int tlb_type;    /* Type of TLB we're dealing with */
-     ppc_tlb_t tlb;   /* TLB is optional. Allocate them only if needed */
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index c11a69fd90..07ad788e54 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -2117,7 +2117,6 @@ static void init_proc_405(CPUPPCState *env)
- #if !defined(CONFIG_USER_ONLY)
-     env->nb_tlb = 64;
-     env->nb_ways = 1;
--    env->id_tlbs = 0;
-     env->tlb_type = TLB_EMB;
- #endif
-     init_excp_4xx(env);
-@@ -2190,7 +2189,6 @@ static void init_proc_440EP(CPUPPCState *env)
- #if !defined(CONFIG_USER_ONLY)
-     env->nb_tlb = 64;
-     env->nb_ways = 1;
--    env->id_tlbs = 0;
-     env->tlb_type = TLB_EMB;
- #endif
-     init_excp_BookE(env);
-@@ -2288,7 +2286,6 @@ static void init_proc_440GP(CPUPPCState *env)
- #if !defined(CONFIG_USER_ONLY)
-     env->nb_tlb = 64;
-     env->nb_ways = 1;
--    env->id_tlbs = 0;
-     env->tlb_type = TLB_EMB;
- #endif
-     init_excp_BookE(env);
-@@ -2362,7 +2359,6 @@ static void init_proc_440x5(CPUPPCState *env)
- #if !defined(CONFIG_USER_ONLY)
-     env->nb_tlb = 64;
-     env->nb_ways = 1;
--    env->id_tlbs = 0;
-     env->tlb_type = TLB_EMB;
- #endif
-     init_excp_BookE(env);
-@@ -2724,7 +2720,6 @@ static void init_proc_e200(CPUPPCState *env)
- #if !defined(CONFIG_USER_ONLY)
-     env->nb_tlb = 64;
-     env->nb_ways = 1;
--    env->id_tlbs = 0;
-     env->tlb_type = TLB_EMB;
- #endif
-     init_excp_e200(env, 0xFFFF0000UL);
-@@ -2843,7 +2838,6 @@ static void init_proc_e500(CPUPPCState *env, int version)
-     /* Memory management */
-     env->nb_pids = 3;
-     env->nb_ways = 2;
--    env->id_tlbs = 0;
-     switch (version) {
-     case fsl_e500v1:
-         tlbncfg[0] = register_tlbncfg(2, 1, 1, 0, 256);
-@@ -6800,20 +6794,17 @@ static void init_ppc_proc(PowerPCCPU *cpu)
-     }
-     /* Allocate TLBs buffer when needed */
- #if !defined(CONFIG_USER_ONLY)
--    if (env->nb_tlb != 0) {
--        int nb_tlb = env->nb_tlb;
--        if (env->id_tlbs != 0) {
--            nb_tlb *= 2;
+diff --git a/target/ppc/internal.h b/target/ppc/internal.h
+index 61c2aadd0d..d7c923b017 100644
+--- a/target/ppc/internal.h
++++ b/target/ppc/internal.h
+@@ -255,7 +255,7 @@ static inline int prot_for_access_type(MMUAccessType access_type)
+ #ifndef CONFIG_USER_ONLY
+ 
+ /* PowerPC MMU emulation */
+-
++int ppc_pte_prot(int key, int pp, int nx);
+ bool ppc_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
+                       hwaddr *raddrp, int *psizep, int *protp,
+                       int mmu_idx, bool guest_visible);
+diff --git a/target/ppc/mmu-hash32.c b/target/ppc/mmu-hash32.c
+index 3976416840..ee9df351ae 100644
+--- a/target/ppc/mmu-hash32.c
++++ b/target/ppc/mmu-hash32.c
+@@ -42,51 +42,6 @@ struct mmu_ctx_hash32 {
+     int key;                       /* Access key                */
+ };
+ 
+-static int ppc_hash32_pp_prot(int key, int pp, int nx)
+-{
+-    int prot;
+-
+-    if (key == 0) {
+-        switch (pp) {
+-        case 0x0:
+-        case 0x1:
+-        case 0x2:
+-            prot = PAGE_READ | PAGE_WRITE;
+-            break;
+-
+-        case 0x3:
+-            prot = PAGE_READ;
+-            break;
+-
+-        default:
+-            abort();
 -        }
-+    if (env->nb_tlb) {
-         switch (env->tlb_type) {
-         case TLB_6XX:
--            env->tlb.tlb6 = g_new0(ppc6xx_tlb_t, nb_tlb);
-+            /* 6xx has separate TLBs for instructions and data hence times 2 */
-+            env->tlb.tlb6 = g_new0(ppc6xx_tlb_t, 2 * env->nb_tlb);
-             break;
-         case TLB_EMB:
--            env->tlb.tlbe = g_new0(ppcemb_tlb_t, nb_tlb);
-+            env->tlb.tlbe = g_new0(ppcemb_tlb_t, env->nb_tlb);
-             break;
-         case TLB_MAS:
--            env->tlb.tlbm = g_new0(ppcmas_tlb_t, nb_tlb);
-+            env->tlb.tlbm = g_new0(ppcmas_tlb_t, env->nb_tlb);
-             break;
-         }
-         /* Pre-compute some useful values */
-diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
-index 25258986e3..ed583fe9b3 100644
---- a/target/ppc/helper_regs.c
-+++ b/target/ppc/helper_regs.c
-@@ -693,7 +693,6 @@ void register_6xx_7xx_soft_tlb(CPUPPCState *env, int nb_tlbs, int nb_ways)
- #if !defined(CONFIG_USER_ONLY)
-     env->nb_tlb = nb_tlbs;
-     env->nb_ways = nb_ways;
--    env->id_tlbs = 1;
-     env->tlb_type = TLB_6XX;
-     spr_register(env, SPR_DMISS, "DMISS",
-                  SPR_NOACCESS, SPR_NOACCESS,
+-    } else {
+-        switch (pp) {
+-        case 0x0:
+-            prot = 0;
+-            break;
+-
+-        case 0x1:
+-        case 0x3:
+-            prot = PAGE_READ;
+-            break;
+-
+-        case 0x2:
+-            prot = PAGE_READ | PAGE_WRITE;
+-            break;
+-
+-        default:
+-            abort();
+-        }
+-    }
+-    if (nx == 0) {
+-        prot |= PAGE_EXEC;
+-    }
+-
+-    return prot;
+-}
+-
+ static int ppc_hash32_pte_prot(int mmu_idx,
+                                target_ulong sr, ppc_hash_pte32_t pte)
+ {
+@@ -95,7 +50,7 @@ static int ppc_hash32_pte_prot(int mmu_idx,
+     key = !!(mmuidx_pr(mmu_idx) ? (sr & SR32_KP) : (sr & SR32_KS));
+     pp = pte.pte1 & HPTE32_R_PP;
+ 
+-    return ppc_hash32_pp_prot(key, pp, !!(sr & SR32_NX));
++    return ppc_pte_prot(key, pp, !!(sr & SR32_NX));
+ }
+ 
+ static target_ulong hash32_bat_size(int mmu_idx,
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 204b8af455..a0b34f9637 100644
+index 41ef174ab4..0ce5c1e841 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -130,8 +130,8 @@ int ppc6xx_tlb_getnum(CPUPPCState *env, target_ulong eaddr,
-     nr = (eaddr >> TARGET_PAGE_BITS) & (env->tlb_per_way - 1);
-     /* Select TLB way */
-     nr += env->tlb_per_way * way;
--    /* 6xx have separate TLBs for instructions and data */
--    if (is_code && env->id_tlbs == 1) {
-+    /* 6xx has separate TLBs for instructions and data */
-+    if (is_code) {
-         nr += env->nb_tlb;
-     }
+@@ -75,22 +75,23 @@ void ppc_store_sdr1(CPUPPCState *env, target_ulong value)
+ /*****************************************************************************/
+ /* PowerPC MMU emulation */
  
-@@ -1246,13 +1246,7 @@ static void mmu6xx_dump_mmu(CPUPPCState *env)
-     mmu6xx_dump_BATs(env, ACCESS_INT);
-     mmu6xx_dump_BATs(env, ACCESS_CODE);
- 
--    if (env->id_tlbs != 1) {
--        qemu_printf("ERROR: 6xx MMU should have separated TLB"
--                    " for code and data\n");
--    }
--
-     qemu_printf("\nTLBs                       [EPN    EPN + SIZE]\n");
--
-     for (type = 0; type < 2; type++) {
-         for (way = 0; way < env->nb_ways; way++) {
-             for (entry = env->nb_tlb * type + env->tlb_per_way * way;
-diff --git a/target/ppc/mmu_helper.c b/target/ppc/mmu_helper.c
-index 817836b731..87c611888b 100644
---- a/target/ppc/mmu_helper.c
-+++ b/target/ppc/mmu_helper.c
-@@ -44,14 +44,8 @@
- static inline void ppc6xx_tlb_invalidate_all(CPUPPCState *env)
+-static int pp_check(int key, int pp, int nx)
++int ppc_pte_prot(int key, int pp, int nx)
  {
-     ppc6xx_tlb_t *tlb;
--    int nr, max;
-+    int nr, max = 2 * env->nb_tlb;
+     int access;
  
--    /* LOG_SWTLB("Invalidate all TLBs\n"); */
--    /* Invalidate all defined software TLB */
--    max = env->nb_tlb;
--    if (env->id_tlbs == 1) {
--        max *= 2;
--    }
-     for (nr = 0; nr < max; nr++) {
-         tlb = &env->tlb.tlb6[nr];
-         pte_invalidate(&tlb->pte0);
-@@ -307,9 +301,7 @@ void ppc_tlb_invalidate_one(CPUPPCState *env, target_ulong addr)
-     switch (env->mmu_model) {
-     case POWERPC_MMU_SOFT_6xx:
-         ppc6xx_tlb_invalidate_virt(env, addr, 0);
--        if (env->id_tlbs == 1) {
--            ppc6xx_tlb_invalidate_virt(env, addr, 1);
--        }
-+        ppc6xx_tlb_invalidate_virt(env, addr, 1);
-         break;
-     case POWERPC_MMU_32B:
-         /*
+     /* Compute access rights */
+-    access = 0;
+     if (key == 0) {
+         switch (pp) {
+         case 0x0:
+         case 0x1:
+         case 0x2:
+-            access |= PAGE_WRITE;
+-            /* fall through */
++            access = PAGE_READ | PAGE_WRITE;
++            break;
+         case 0x3:
+-            access |= PAGE_READ;
++            access = PAGE_READ;
+             break;
++        default:
++            g_assert_not_reached();
+         }
+     } else {
+         switch (pp) {
+@@ -104,6 +105,8 @@ static int pp_check(int key, int pp, int nx)
+         case 0x2:
+             access = PAGE_READ | PAGE_WRITE;
+             break;
++        default:
++            g_assert_not_reached();
+         }
+     }
+     if (nx == 0) {
+@@ -140,7 +143,7 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
+                                 MMUAccessType access_type)
+ {
+     target_ulong ptem, mmask;
+-    int access, ret, pteh, ptev, pp;
++    int ret, pteh, ptev, pp;
+ 
+     ret = -1;
+     /* Check validity and table match */
+@@ -159,11 +162,9 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
+                     return -3;
+                 }
+             }
+-            /* Compute access rights */
+-            access = pp_check(ctx->key, pp, ctx->nx);
+             /* Keep the matching PTE information */
+             ctx->raddr = pte1;
+-            ctx->prot = access;
++            ctx->prot = ppc_pte_prot(ctx->key, pp, ctx->nx);
+             ret = check_prot(ctx->prot, access_type);
+             if (ret == 0) {
+                 /* Access granted */
 -- 
 2.30.9
 
