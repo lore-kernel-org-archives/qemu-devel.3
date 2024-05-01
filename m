@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92F08C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 23:49:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41E3FC10F1A
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 23:49:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2Jbd-00027l-Mg; Wed, 01 May 2024 19:43:21 -0400
+	id 1s2JcM-0002xI-KF; Wed, 01 May 2024 19:44:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s2Jba-00023v-Lv; Wed, 01 May 2024 19:43:18 -0400
+ id 1s2JcF-0002oU-Rf; Wed, 01 May 2024 19:44:00 -0400
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s2JbV-0004yw-Sl; Wed, 01 May 2024 19:43:17 -0400
+ id 1s2JcC-00054D-KM; Wed, 01 May 2024 19:43:58 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 97DCB4E603A;
- Thu, 02 May 2024 01:43:08 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 169AB4E6040;
+ Thu, 02 May 2024 01:43:35 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id Es2ihNabPT2q; Thu,  2 May 2024 01:43:06 +0200 (CEST)
+ with ESMTP id UHQr-fxQ_NX7; Thu,  2 May 2024 01:43:33 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id A0D6C4E602E; Thu, 02 May 2024 01:43:06 +0200 (CEST)
-Message-Id: <b0108fa07b84dfeb0fd0337b88c38f34d8d16cfc.1714606359.git.balaton@eik.bme.hu>
+ id 232204E603A; Thu, 02 May 2024 01:43:33 +0200 (CEST)
+Message-Id: <d5d70791bdf598cd28ee70fd058f51c257a2b969.1714606359.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1714606359.git.balaton@eik.bme.hu>
 References: <cover.1714606359.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v2 01/28] target/ppc: Fix gen_sc to use correct nip
+Subject: [PATCH v2 26/28] target/ppc/mmu_common.c: Move BookE MMU functions
+ together
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -39,7 +40,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Thu, 02 May 2024 01:43:06 +0200 (CEST)
+Date: Thu, 02 May 2024 01:43:33 +0200 (CEST)
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
  envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -62,154 +63,329 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Most exceptions are raised with nip pointing to the faulting
-instruction but the sc instruction generating a syscall exception
-leaves nip pointing to next instruction. Fix gen_sc to not use
-gen_exception_err() which sets nip back but correctly set nip to
-pc_next so we don't have to patch this in the exception handlers.
-
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- target/ppc/excp_helper.c | 43 ++--------------------------------------
- target/ppc/translate.c   | 15 ++++++--------
- 2 files changed, 8 insertions(+), 50 deletions(-)
+ target/ppc/mmu_common.c | 300 ++++++++++++++++++++--------------------
+ 1 file changed, 150 insertions(+), 150 deletions(-)
 
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 0712098cf7..92fe535815 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -116,7 +116,7 @@ static void dump_syscall(CPUPPCState *env)
-                   ppc_dump_gpr(env, 0), ppc_dump_gpr(env, 3),
-                   ppc_dump_gpr(env, 4), ppc_dump_gpr(env, 5),
-                   ppc_dump_gpr(env, 6), ppc_dump_gpr(env, 7),
--                  ppc_dump_gpr(env, 8), env->nip);
-+                  ppc_dump_gpr(env, 8), env->nip - 4);
+diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+index b76611da80..204b8af455 100644
+--- a/target/ppc/mmu_common.c
++++ b/target/ppc/mmu_common.c
+@@ -910,6 +910,156 @@ found_tlb:
+     return ret;
  }
  
- static void dump_hcall(CPUPPCState *env)
-@@ -131,7 +131,7 @@ static void dump_hcall(CPUPPCState *env)
-                   ppc_dump_gpr(env, 7), ppc_dump_gpr(env, 8),
-                   ppc_dump_gpr(env, 9), ppc_dump_gpr(env, 10),
-                   ppc_dump_gpr(env, 11), ppc_dump_gpr(env, 12),
--                  env->nip);
-+                  env->nip - 4);
++static void booke206_update_mas_tlb_miss(CPUPPCState *env, target_ulong address,
++                                         MMUAccessType access_type, int mmu_idx)
++{
++    uint32_t epid;
++    bool as, pr;
++    uint32_t missed_tid = 0;
++    bool use_epid = mmubooke206_get_as(env, mmu_idx, &epid, &as, &pr);
++
++    if (access_type == MMU_INST_FETCH) {
++        as = FIELD_EX64(env->msr, MSR, IR);
++    }
++    env->spr[SPR_BOOKE_MAS0] = env->spr[SPR_BOOKE_MAS4] & MAS4_TLBSELD_MASK;
++    env->spr[SPR_BOOKE_MAS1] = env->spr[SPR_BOOKE_MAS4] & MAS4_TSIZED_MASK;
++    env->spr[SPR_BOOKE_MAS2] = env->spr[SPR_BOOKE_MAS4] & MAS4_WIMGED_MASK;
++    env->spr[SPR_BOOKE_MAS3] = 0;
++    env->spr[SPR_BOOKE_MAS6] = 0;
++    env->spr[SPR_BOOKE_MAS7] = 0;
++
++    /* AS */
++    if (as) {
++        env->spr[SPR_BOOKE_MAS1] |= MAS1_TS;
++        env->spr[SPR_BOOKE_MAS6] |= MAS6_SAS;
++    }
++
++    env->spr[SPR_BOOKE_MAS1] |= MAS1_VALID;
++    env->spr[SPR_BOOKE_MAS2] |= address & MAS2_EPN_MASK;
++
++    if (!use_epid) {
++        switch (env->spr[SPR_BOOKE_MAS4] & MAS4_TIDSELD_PIDZ) {
++        case MAS4_TIDSELD_PID0:
++            missed_tid = env->spr[SPR_BOOKE_PID];
++            break;
++        case MAS4_TIDSELD_PID1:
++            missed_tid = env->spr[SPR_BOOKE_PID1];
++            break;
++        case MAS4_TIDSELD_PID2:
++            missed_tid = env->spr[SPR_BOOKE_PID2];
++            break;
++        }
++        env->spr[SPR_BOOKE_MAS6] |= env->spr[SPR_BOOKE_PID] << 16;
++    } else {
++        missed_tid = epid;
++        env->spr[SPR_BOOKE_MAS6] |= missed_tid << 16;
++    }
++    env->spr[SPR_BOOKE_MAS1] |= (missed_tid << MAS1_TID_SHIFT);
++
++
++    /* next victim logic */
++    env->spr[SPR_BOOKE_MAS0] |= env->last_way << MAS0_ESEL_SHIFT;
++    env->last_way++;
++    env->last_way &= booke206_tlb_ways(env, 0) - 1;
++    env->spr[SPR_BOOKE_MAS0] |= env->last_way << MAS0_NV_SHIFT;
++}
++
++static bool ppc_booke_xlate(PowerPCCPU *cpu, vaddr eaddr,
++                            MMUAccessType access_type,
++                            hwaddr *raddrp, int *psizep, int *protp,
++                            int mmu_idx, bool guest_visible)
++{
++    CPUState *cs = CPU(cpu);
++    CPUPPCState *env = &cpu->env;
++    mmu_ctx_t ctx;
++    int ret;
++
++    if (env->mmu_model == POWERPC_MMU_BOOKE206) {
++        ret = mmubooke206_get_physical_address(env, &ctx, eaddr, access_type,
++                                               mmu_idx);
++    } else {
++        ret = mmubooke_get_physical_address(env, &ctx, eaddr, access_type);
++    }
++    if (ret == 0) {
++        *raddrp = ctx.raddr;
++        *protp = ctx.prot;
++        *psizep = TARGET_PAGE_BITS;
++        return true;
++    } else if (!guest_visible) {
++        return false;
++    }
++
++    log_cpu_state_mask(CPU_LOG_MMU, cs, 0);
++    env->error_code = 0;
++    if (env->mmu_model == POWERPC_MMU_BOOKE206 && ret == -1) {
++        booke206_update_mas_tlb_miss(env, eaddr, access_type, mmu_idx);
++    }
++    if (access_type == MMU_INST_FETCH) {
++        if (ret == -1) {
++            /* No matches in page tables or TLB */
++            cs->exception_index = POWERPC_EXCP_ITLB;
++            env->spr[SPR_BOOKE_DEAR] = eaddr;
++            env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
++        } else {
++            cs->exception_index = POWERPC_EXCP_ISI;
++            if (ret == -3) {
++                /* No execute protection violation */
++                env->spr[SPR_BOOKE_ESR] = 0;
++            }
++        }
++        return false;
++    }
++
++    switch (ret) {
++    case -1:
++        /* No matches in page tables or TLB */
++        cs->exception_index = POWERPC_EXCP_DTLB;
++        env->spr[SPR_BOOKE_DEAR] = eaddr;
++        env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
++        break;
++    case -2:
++        /* Access rights violation */
++        cs->exception_index = POWERPC_EXCP_DSI;
++        env->spr[SPR_BOOKE_DEAR] = eaddr;
++        env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
++        break;
++    case -4:
++        /* Direct store exception */
++        env->spr[SPR_DAR] = eaddr;
++        switch (env->access_type) {
++        case ACCESS_FLOAT:
++            /* Floating point load/store */
++            cs->exception_index = POWERPC_EXCP_ALIGN;
++            env->error_code = POWERPC_EXCP_ALIGN_FP;
++            break;
++        case ACCESS_RES:
++            /* lwarx, ldarx or stwcx. */
++            cs->exception_index = POWERPC_EXCP_DSI;
++            if (access_type == MMU_DATA_STORE) {
++                env->spr[SPR_DSISR] = 0x06000000;
++            } else {
++                env->spr[SPR_DSISR] = 0x04000000;
++            }
++            break;
++        case ACCESS_EXT:
++            /* eciwx or ecowx */
++            cs->exception_index = POWERPC_EXCP_DSI;
++            if (access_type == MMU_DATA_STORE) {
++                env->spr[SPR_DSISR] = 0x06100000;
++            } else {
++                env->spr[SPR_DSISR] = 0x04100000;
++            }
++            break;
++        default:
++            printf("DSI: invalid exception (%d)\n", ret);
++            cs->exception_index = POWERPC_EXCP_PROGRAM;
++            env->error_code = POWERPC_EXCP_INVAL | POWERPC_EXCP_INVAL_INVAL;
++            break;
++        }
++    }
++    return false;
++}
++
+ static const char *book3e_tsize_to_str[32] = {
+     "1K", "2K", "4K", "8K", "16K", "32K", "64K", "128K", "256K", "512K",
+     "1M", "2M", "4M", "8M", "16M", "32M", "64M", "128M", "256M", "512M",
+@@ -1181,156 +1331,6 @@ static int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
+     }
  }
  
- #ifdef CONFIG_TCG
-@@ -516,12 +516,6 @@ static void powerpc_excp_40x(PowerPCCPU *cpu, int excp)
-         break;
-     case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
-         dump_syscall(env);
+-static void booke206_update_mas_tlb_miss(CPUPPCState *env, target_ulong address,
+-                                         MMUAccessType access_type, int mmu_idx)
+-{
+-    uint32_t epid;
+-    bool as, pr;
+-    uint32_t missed_tid = 0;
+-    bool use_epid = mmubooke206_get_as(env, mmu_idx, &epid, &as, &pr);
 -
--        /*
--         * We need to correct the NIP which in this case is supposed
--         * to point to the next instruction
--         */
--        env->nip += 4;
-         break;
-     case POWERPC_EXCP_FIT:       /* Fixed-interval timer interrupt           */
-         trace_ppc_excp_print("FIT");
-@@ -632,12 +626,6 @@ static void powerpc_excp_6xx(PowerPCCPU *cpu, int excp)
-         break;
-     case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
-         dump_syscall(env);
+-    if (access_type == MMU_INST_FETCH) {
+-        as = FIELD_EX64(env->msr, MSR, IR);
+-    }
+-    env->spr[SPR_BOOKE_MAS0] = env->spr[SPR_BOOKE_MAS4] & MAS4_TLBSELD_MASK;
+-    env->spr[SPR_BOOKE_MAS1] = env->spr[SPR_BOOKE_MAS4] & MAS4_TSIZED_MASK;
+-    env->spr[SPR_BOOKE_MAS2] = env->spr[SPR_BOOKE_MAS4] & MAS4_WIMGED_MASK;
+-    env->spr[SPR_BOOKE_MAS3] = 0;
+-    env->spr[SPR_BOOKE_MAS6] = 0;
+-    env->spr[SPR_BOOKE_MAS7] = 0;
 -
--        /*
--         * We need to correct the NIP which in this case is supposed
--         * to point to the next instruction
--         */
--        env->nip += 4;
-         break;
-     case POWERPC_EXCP_FPU:       /* Floating-point unavailable exception     */
-     case POWERPC_EXCP_DECR:      /* Decrementer exception                    */
-@@ -780,13 +768,6 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
-         } else {
-             dump_syscall(env);
-         }
+-    /* AS */
+-    if (as) {
+-        env->spr[SPR_BOOKE_MAS1] |= MAS1_TS;
+-        env->spr[SPR_BOOKE_MAS6] |= MAS6_SAS;
+-    }
 -
--        /*
--         * We need to correct the NIP which in this case is supposed
--         * to point to the next instruction
--         */
--        env->nip += 4;
+-    env->spr[SPR_BOOKE_MAS1] |= MAS1_VALID;
+-    env->spr[SPR_BOOKE_MAS2] |= address & MAS2_EPN_MASK;
 -
-         /*
-          * The Virtual Open Firmware (VOF) relies on the 'sc 1'
-          * instruction to communicate with QEMU. The pegasos2 machine
-@@ -932,13 +913,6 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
-         } else {
-             dump_syscall(env);
-         }
+-    if (!use_epid) {
+-        switch (env->spr[SPR_BOOKE_MAS4] & MAS4_TIDSELD_PIDZ) {
+-        case MAS4_TIDSELD_PID0:
+-            missed_tid = env->spr[SPR_BOOKE_PID];
+-            break;
+-        case MAS4_TIDSELD_PID1:
+-            missed_tid = env->spr[SPR_BOOKE_PID1];
+-            break;
+-        case MAS4_TIDSELD_PID2:
+-            missed_tid = env->spr[SPR_BOOKE_PID2];
+-            break;
+-        }
+-        env->spr[SPR_BOOKE_MAS6] |= env->spr[SPR_BOOKE_PID] << 16;
+-    } else {
+-        missed_tid = epid;
+-        env->spr[SPR_BOOKE_MAS6] |= missed_tid << 16;
+-    }
+-    env->spr[SPR_BOOKE_MAS1] |= (missed_tid << MAS1_TID_SHIFT);
 -
--        /*
--         * We need to correct the NIP which in this case is supposed
--         * to point to the next instruction
--         */
--        env->nip += 4;
 -
-         /*
-          * The Virtual Open Firmware (VOF) relies on the 'sc 1'
-          * instruction to communicate with QEMU. The pegasos2 machine
-@@ -1098,12 +1072,6 @@ static void powerpc_excp_booke(PowerPCCPU *cpu, int excp)
-         break;
-     case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
-         dump_syscall(env);
+-    /* next victim logic */
+-    env->spr[SPR_BOOKE_MAS0] |= env->last_way << MAS0_ESEL_SHIFT;
+-    env->last_way++;
+-    env->last_way &= booke206_tlb_ways(env, 0) - 1;
+-    env->spr[SPR_BOOKE_MAS0] |= env->last_way << MAS0_NV_SHIFT;
+-}
 -
--        /*
--         * We need to correct the NIP which in this case is supposed
--         * to point to the next instruction
--         */
--        env->nip += 4;
-         break;
-     case POWERPC_EXCP_FPU:       /* Floating-point unavailable exception     */
-     case POWERPC_EXCP_APU:       /* Auxiliary processor unavailable          */
-@@ -1428,13 +1396,6 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
-         } else {
-             dump_syscall(env);
-         }
+-static bool ppc_booke_xlate(PowerPCCPU *cpu, vaddr eaddr,
+-                            MMUAccessType access_type,
+-                            hwaddr *raddrp, int *psizep, int *protp,
+-                            int mmu_idx, bool guest_visible)
+-{
+-    CPUState *cs = CPU(cpu);
+-    CPUPPCState *env = &cpu->env;
+-    mmu_ctx_t ctx;
+-    int ret;
 -
--        /*
--         * We need to correct the NIP which in this case is supposed
--         * to point to the next instruction
--         */
--        env->nip += 4;
+-    if (env->mmu_model == POWERPC_MMU_BOOKE206) {
+-        ret = mmubooke206_get_physical_address(env, &ctx, eaddr, access_type,
+-                                               mmu_idx);
+-    } else {
+-        ret = mmubooke_get_physical_address(env, &ctx, eaddr, access_type);
+-    }
+-    if (ret == 0) {
+-        *raddrp = ctx.raddr;
+-        *protp = ctx.prot;
+-        *psizep = TARGET_PAGE_BITS;
+-        return true;
+-    } else if (!guest_visible) {
+-        return false;
+-    }
 -
-         /* "PAPR mode" built-in hypercall emulation */
-         if (lev == 1 && books_vhyp_handles_hcall(cpu)) {
-             PPCVirtualHypervisorClass *vhc =
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 93ffec787c..e112c44a02 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -4472,22 +4472,19 @@ static void gen_hrfid(DisasContext *ctx)
- #endif
- 
- /* sc */
--#if defined(CONFIG_USER_ONLY)
--#define POWERPC_SYSCALL POWERPC_EXCP_SYSCALL_USER
--#else
--#define POWERPC_SYSCALL POWERPC_EXCP_SYSCALL
--#endif
- static void gen_sc(DisasContext *ctx)
- {
--    uint32_t lev;
+-    log_cpu_state_mask(CPU_LOG_MMU, cs, 0);
+-    env->error_code = 0;
+-    if (env->mmu_model == POWERPC_MMU_BOOKE206 && ret == -1) {
+-        booke206_update_mas_tlb_miss(env, eaddr, access_type, mmu_idx);
+-    }
+-    if (access_type == MMU_INST_FETCH) {
+-        if (ret == -1) {
+-            /* No matches in page tables or TLB */
+-            cs->exception_index = POWERPC_EXCP_ITLB;
+-            env->spr[SPR_BOOKE_DEAR] = eaddr;
+-            env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
+-        } else {
+-            cs->exception_index = POWERPC_EXCP_ISI;
+-            if (ret == -3) {
+-                /* No execute protection violation */
+-                env->spr[SPR_BOOKE_ESR] = 0;
+-            }
+-        }
+-        return false;
+-    }
 -
-     /*
-      * LEV is a 7-bit field, but the top 6 bits are treated as a reserved
-      * field (i.e., ignored). ISA v3.1 changes that to 5 bits, but that is
-      * for Ultravisor which TCG does not support, so just ignore the top 6.
-      */
--    lev = (ctx->opcode >> 5) & 0x1;
--    gen_exception_err(ctx, POWERPC_SYSCALL, lev);
-+    uint32_t lev = (ctx->opcode >> 5) & 0x1;
-+#ifdef CONFIG_USER_ONLY
-+    gen_exception_err(ctx, POWERPC_EXCP_SYSCALL_USER, lev);
-+#else
-+    gen_exception_err_nip(ctx, POWERPC_EXCP_SYSCALL, lev, ctx->base.pc_next);
-+#endif
- }
- 
- #if defined(TARGET_PPC64)
+-    switch (ret) {
+-    case -1:
+-        /* No matches in page tables or TLB */
+-        cs->exception_index = POWERPC_EXCP_DTLB;
+-        env->spr[SPR_BOOKE_DEAR] = eaddr;
+-        env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
+-        break;
+-    case -2:
+-        /* Access rights violation */
+-        cs->exception_index = POWERPC_EXCP_DSI;
+-        env->spr[SPR_BOOKE_DEAR] = eaddr;
+-        env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
+-        break;
+-    case -4:
+-        /* Direct store exception */
+-        env->spr[SPR_DAR] = eaddr;
+-        switch (env->access_type) {
+-        case ACCESS_FLOAT:
+-            /* Floating point load/store */
+-            cs->exception_index = POWERPC_EXCP_ALIGN;
+-            env->error_code = POWERPC_EXCP_ALIGN_FP;
+-            break;
+-        case ACCESS_RES:
+-            /* lwarx, ldarx or stwcx. */
+-            cs->exception_index = POWERPC_EXCP_DSI;
+-            if (access_type == MMU_DATA_STORE) {
+-                env->spr[SPR_DSISR] = 0x06000000;
+-            } else {
+-                env->spr[SPR_DSISR] = 0x04000000;
+-            }
+-            break;
+-        case ACCESS_EXT:
+-            /* eciwx or ecowx */
+-            cs->exception_index = POWERPC_EXCP_DSI;
+-            if (access_type == MMU_DATA_STORE) {
+-                env->spr[SPR_DSISR] = 0x06100000;
+-            } else {
+-                env->spr[SPR_DSISR] = 0x04100000;
+-            }
+-            break;
+-        default:
+-            printf("DSI: invalid exception (%d)\n", ret);
+-            cs->exception_index = POWERPC_EXCP_PROGRAM;
+-            env->error_code = POWERPC_EXCP_INVAL | POWERPC_EXCP_INVAL_INVAL;
+-            break;
+-        }
+-    }
+-    return false;
+-}
+-
+ /* Perform address translation */
+ /* TODO: Split this by mmu_model. */
+ static bool ppc_jumbo_xlate(PowerPCCPU *cpu, vaddr eaddr,
 -- 
 2.30.9
 
