@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 515B6C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 23:44:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 407FFC10F1A
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 23:44:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2JbZ-00023Y-7d; Wed, 01 May 2024 19:43:17 -0400
+	id 1s2Jbh-0002Cd-Ig; Wed, 01 May 2024 19:43:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s2JbY-000235-4L; Wed, 01 May 2024 19:43:16 -0400
+ id 1s2Jbf-000298-7b; Wed, 01 May 2024 19:43:23 -0400
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s2JbV-0004z6-Re; Wed, 01 May 2024 19:43:15 -0400
+ id 1s2Jbd-000513-PA; Wed, 01 May 2024 19:43:22 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id B1C2B4E6039;
- Thu, 02 May 2024 01:43:10 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 4F5344E6057;
+ Thu, 02 May 2024 01:43:20 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id L02NHpThvY1W; Thu,  2 May 2024 01:43:08 +0200 (CEST)
+ with ESMTP id YBEEFFWe3bdX; Thu,  2 May 2024 01:43:18 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id BEE864E602D; Thu, 02 May 2024 01:43:08 +0200 (CEST)
-Message-Id: <dece7b0eddc18ed8350b1a2c8d2a9f966ecc2fbc.1714606359.git.balaton@eik.bme.hu>
+ id 61E7E4E602E; Thu, 02 May 2024 01:43:18 +0200 (CEST)
+Message-Id: <6e9441212a1146fde2bd3a120d6c426cd2a1792e.1714606359.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1714606359.git.balaton@eik.bme.hu>
 References: <cover.1714606359.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v2 03/28] target/ppc: Simplify syscall exception handlers
+Subject: [PATCH v2 12/28] target/ppc/mmu_common.c: Split out BookE cases
+ before checking real mode
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -39,7 +40,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Thu, 02 May 2024 01:43:08 +0200 (CEST)
+Date: Thu, 02 May 2024 01:43:18 +0200 (CEST)
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
  envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -62,81 +63,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-After previous changes the hypercall handling in 7xx and 74xx
-exception handlers can be folded into one if statement to simplify
-this code. Also add "unlikely" to mark the less frequently used branch
-for the compiler.
+BookE does not have real mode so split off and handle it first in
+get_physical_address_wtlb() before checking for real mode for other
+MMU models.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- target/ppc/excp_helper.c | 22 ++++++----------------
- 1 file changed, 6 insertions(+), 16 deletions(-)
+ target/ppc/mmu_common.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 5aa84bccd2..d19212f772 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -762,26 +762,21 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
-     case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
-     {
-         int lev = env->error_code;
--
--        if (lev == 1 && cpu->vhyp) {
--            dump_hcall(env);
--        } else {
--            dump_syscall(env);
--        }
-         /*
-          * The Virtual Open Firmware (VOF) relies on the 'sc 1'
-          * instruction to communicate with QEMU. The pegasos2 machine
-          * uses VOF and the 7xx CPUs, so although the 7xx don't have
-          * HV mode, we need to keep hypercall support.
-          */
--        if (lev == 1 && cpu->vhyp) {
-+        if (unlikely(lev == 1 && cpu->vhyp)) {
-             PPCVirtualHypervisorClass *vhc =
-                 PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-+            dump_hcall(env);
-             vhc->hypercall(cpu->vhyp, cpu);
-             powerpc_reset_excp_state(cpu);
-             return;
+diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+index a069e4083f..24a9b9ef19 100644
+--- a/target/ppc/mmu_common.c
++++ b/target/ppc/mmu_common.c
+@@ -1191,6 +1191,13 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
+     int ret = -1;
+     bool real_mode;
+ 
++    if (env->mmu_model == POWERPC_MMU_BOOKE) {
++        return mmubooke_get_physical_address(env, ctx, eaddr, access_type);
++    } else if (env->mmu_model == POWERPC_MMU_BOOKE206) {
++        return mmubooke206_get_physical_address(env, ctx, eaddr, access_type,
++                                                mmu_idx);
++    }
++
+     real_mode = (type == ACCESS_CODE) ? !FIELD_EX64(env->msr, MSR, IR)
+                                       : !FIELD_EX64(env->msr, MSR, DR);
+ 
+@@ -1211,13 +1218,6 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
+             ret = mmu40x_get_physical_address(env, ctx, eaddr, access_type);
          }
--
-+        dump_syscall(env);
          break;
-     }
-     case POWERPC_EXCP_FPU:       /* Floating-point unavailable exception     */
-@@ -907,26 +902,21 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
-     case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
-     {
-         int lev = env->error_code;
--
--        if (lev == 1 && cpu->vhyp) {
--            dump_hcall(env);
--        } else {
--            dump_syscall(env);
--        }
-         /*
-          * The Virtual Open Firmware (VOF) relies on the 'sc 1'
-          * instruction to communicate with QEMU. The pegasos2 machine
-          * uses VOF and the 74xx CPUs, so although the 74xx don't have
-          * HV mode, we need to keep hypercall support.
-          */
--        if (lev == 1 && cpu->vhyp) {
-+        if (unlikely(lev == 1 && cpu->vhyp)) {
-             PPCVirtualHypervisorClass *vhc =
-                 PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-+            dump_hcall(env);
-             vhc->hypercall(cpu->vhyp, cpu);
-             powerpc_reset_excp_state(cpu);
-             return;
-         }
--
-+        dump_syscall(env);
-         break;
-     }
-     case POWERPC_EXCP_FPU:       /* Floating-point unavailable exception     */
+-    case POWERPC_MMU_BOOKE:
+-        ret = mmubooke_get_physical_address(env, ctx, eaddr, access_type);
+-        break;
+-    case POWERPC_MMU_BOOKE206:
+-        ret = mmubooke206_get_physical_address(env, ctx, eaddr, access_type,
+-                                               mmu_idx);
+-        break;
+     case POWERPC_MMU_REAL:
+         if (real_mode) {
+             ret = check_physical(env, ctx, eaddr, access_type);
 -- 
 2.30.9
 
