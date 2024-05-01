@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30CEAC41513
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 07:46:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31030C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 07:46:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s24dA-0000qb-6O; Wed, 01 May 2024 03:43:56 -0400
+	id 1s24dD-0000sQ-U2; Wed, 01 May 2024 03:43:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1s24d8-0000pv-CT
- for qemu-devel@nongnu.org; Wed, 01 May 2024 03:43:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1s24dB-0000rQ-Vw
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 03:43:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1s24d6-0003Xr-16
- for qemu-devel@nongnu.org; Wed, 01 May 2024 03:43:54 -0400
+ id 1s24dA-0003bU-0Y
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 03:43:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714549431;
+ s=mimecast20190719; t=1714549435;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xda9vZ/4orUHg9RUs409tFjFC6HKizyWCmMyjF5kot0=;
- b=d3N2fJY6udmE343LImKJxHdQh1U12nMjHykCR4/YpV/Q1yD2Vzbwt+y/YGuUB+XXMvcO4m
- H2z2LbY2rNOFMUw2I2Jf7ra06ZSCY9KLU9vTvwGiE428VuWBxJeP1XWTj33M0n+ssqFVLL
- Q2l4sABJmGKUDOfnTCCtSuAkNJ58bco=
+ bh=K8UPukpeq7culmPO9Ed8TR0loPb2uyArjRKae+2zKzk=;
+ b=Xp2mvgzIWqp/6C9hHeDJTpfx7akfWZKo+MYkocbk4vuEcauEnH2bgrIYgpK+qMvsAEBFHR
+ QYQybebrpnl85bHpcItQr+JssIkFQnQljgJ0DShY3JWt2zrrdTAliDS0zCkJcOYzVBOHwB
+ wo/4tb2YOvAVsAiVd1AHfzFgUl8YlPk=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-593-jKoAtm4SMpSzinv62u3C9A-1; Wed, 01 May 2024 03:43:47 -0400
-X-MC-Unique: jKoAtm4SMpSzinv62u3C9A-1
+ us-mta-494-BTl6b01sOgm8WIldMvhRKA-1; Wed, 01 May 2024 03:43:53 -0400
+X-MC-Unique: BTl6b01sOgm8WIldMvhRKA-1
 Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
  [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 24B6018065B2;
- Wed,  1 May 2024 07:43:47 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6B83E8002EA;
+ Wed,  1 May 2024 07:43:53 +0000 (UTC)
 Received: from srv1.redhat.com (unknown [10.45.224.97])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 2C7BF477F80;
- Wed,  1 May 2024 07:43:46 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 72B11492BC7;
+ Wed,  1 May 2024 07:43:52 +0000 (UTC)
 From: Konstantin Kostiuk <kkostiuk@redhat.com>
 To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 3/9] qga/commands-posix: qmp_guest_shutdown: use ga_run_command
- helper
-Date: Wed,  1 May 2024 10:43:34 +0300
-Message-ID: <20240501074340.19641-4-kkostiuk@redhat.com>
+Subject: [PULL 8/9] qga: Refactor common SSH functions
+Date: Wed,  1 May 2024 10:43:39 +0300
+Message-ID: <20240501074340.19641-9-kkostiuk@redhat.com>
 In-Reply-To: <20240501074340.19641-1-kkostiuk@redhat.com>
 References: <20240501074340.19641-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -82,94 +81,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+From: aidaleuc <aidan_leuck@selinc.com>
 
-Also remove the G_GNUC_UNUSED attribute added in the previous commit from
-the helper.
+Message-Id: <20240424144029.30665-2-aidan_leuck@selinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+In preparation of a Windows implementation, move the
+non-POSIX specific code to commands-common-ssh.
+
+Signed-off-by: Aidan Leuck <aidan_leuck@selinc.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Dehan Meng <demeng@redhat.com>
 Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
-Link: https://lore.kernel.org/r/20240320161648.158226-4-andrey.drobyshev@virtuozzo.com
+Link: https://lore.kernel.org/r/20240424144029.30665-2-aidan_leuck@selinc.com
 Signed-off-by: Konstantin Kostiuk <kkostiuk@redhat.com>
 ---
- qga/commands-posix.c | 39 ++++++---------------------------------
- 1 file changed, 6 insertions(+), 33 deletions(-)
+ qga/commands-common-ssh.c | 50 +++++++++++++++++++++++++++++++++++++++
+ qga/commands-common-ssh.h | 10 ++++++++
+ qga/commands-posix-ssh.c  | 47 +-----------------------------------
+ qga/meson.build           |  3 ++-
+ 4 files changed, 63 insertions(+), 47 deletions(-)
+ create mode 100644 qga/commands-common-ssh.c
+ create mode 100644 qga/commands-common-ssh.h
 
-diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index 9b1bdf194c..cb9eed9a0b 100644
---- a/qga/commands-posix.c
-+++ b/qga/commands-posix.c
-@@ -108,7 +108,6 @@ static ssize_t ga_pipe_read_str(int fd[2], char **str)
-  * sending string to stdin and taking error message from
-  * stdout/err.
-  */
--G_GNUC_UNUSED
- static int ga_run_command(const char *argv[], const char *in_str,
-                           const char *action, Error **errp)
- {
-@@ -230,8 +229,6 @@ void qmp_guest_shutdown(const char *mode, Error **errp)
- {
-     const char *shutdown_flag;
-     Error *local_err = NULL;
--    pid_t pid;
--    int status;
+diff --git a/qga/commands-common-ssh.c b/qga/commands-common-ssh.c
+new file mode 100644
+index 0000000000..537869fb98
+--- /dev/null
++++ b/qga/commands-common-ssh.c
+@@ -0,0 +1,50 @@
++/*
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "commands-common-ssh.h"
++
++GStrv read_authkeys(const char *path, Error **errp)
++{
++    g_autoptr(GError) err = NULL;
++    g_autofree char *contents = NULL;
++
++    if (!g_file_get_contents(path, &contents, NULL, &err)) {
++        error_setg(errp, "failed to read '%s': %s", path, err->message);
++        return NULL;
++    }
++
++    return g_strsplit(contents, "\n", -1);
++}
++
++bool check_openssh_pub_keys(strList *keys, size_t *nkeys, Error **errp)
++{
++    size_t n = 0;
++    strList *k;
++
++    for (k = keys; k != NULL; k = k->next) {
++        if (!check_openssh_pub_key(k->value, errp)) {
++            return false;
++        }
++        n++;
++    }
++
++    if (nkeys) {
++        *nkeys = n;
++    }
++    return true;
++}
++
++bool check_openssh_pub_key(const char *key, Error **errp)
++{
++    /* simple sanity-check, we may want more? */
++    if (!key || key[0] == '#' || strchr(key, '\n')) {
++        error_setg(errp, "invalid OpenSSH public key: '%s'", key);
++        return false;
++    }
++
++    return true;
++}
+diff --git a/qga/commands-common-ssh.h b/qga/commands-common-ssh.h
+new file mode 100644
+index 0000000000..14d955fa84
+--- /dev/null
++++ b/qga/commands-common-ssh.h
+@@ -0,0 +1,10 @@
++/*
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
++
++#include "qapi/qapi-builtin-types.h"
++
++GStrv read_authkeys(const char *path, Error **errp);
++bool check_openssh_pub_keys(strList *keys, size_t *nkeys, Error **errp);
++bool check_openssh_pub_key(const char *key, Error **errp);
+diff --git a/qga/commands-posix-ssh.c b/qga/commands-posix-ssh.c
+index 236f80de44..dd2ecb453a 100644
+--- a/qga/commands-posix-ssh.c
++++ b/qga/commands-posix-ssh.c
+@@ -9,6 +9,7 @@
+ #include <locale.h>
+ #include <pwd.h>
  
- #ifdef CONFIG_SOLARIS
-     const char *powerdown_flag = "-i5";
-@@ -260,46 +257,22 @@ void qmp_guest_shutdown(const char *mode, Error **errp)
-         return;
-     }
++#include "commands-common-ssh.h"
+ #include "qapi/error.h"
+ #include "qga-qapi-commands.h"
  
--    pid = fork();
--    if (pid == 0) {
--        /* child, start the shutdown */
--        setsid();
--        reopen_fd_to_null(0);
--        reopen_fd_to_null(1);
--        reopen_fd_to_null(2);
--
-+    const char *argv[] = {"/sbin/shutdown",
- #ifdef CONFIG_SOLARIS
--        execl("/sbin/shutdown", "shutdown", shutdown_flag, "-g0", "-y",
--              "hypervisor initiated shutdown", (char *)NULL);
-+                          shutdown_flag, "-g0", "-y",
- #elif defined(CONFIG_BSD)
--        execl("/sbin/shutdown", "shutdown", shutdown_flag, "+0",
--               "hypervisor initiated shutdown", (char *)NULL);
-+                          shutdown_flag, "+0",
- #else
--        execl("/sbin/shutdown", "shutdown", "-h", shutdown_flag, "+0",
--               "hypervisor initiated shutdown", (char *)NULL);
-+                          "-h", shutdown_flag, "+0",
- #endif
--        _exit(EXIT_FAILURE);
--    } else if (pid < 0) {
--        error_setg_errno(errp, errno, "failed to create child process");
--        return;
--    }
-+                          "hypervisor initiated shutdown", (char *) NULL};
- 
--    ga_wait_child(pid, &status, &local_err);
-+    ga_run_command(argv, NULL, "shutdown", &local_err);
-     if (local_err) {
-         error_propagate(errp, local_err);
-         return;
-     }
- 
--    if (!WIFEXITED(status)) {
--        error_setg(errp, "child process has terminated abnormally");
--        return;
--    }
--
--    if (WEXITSTATUS(status)) {
--        error_setg(errp, "child process has failed to shutdown");
--        return;
--    }
--
-     /* succeeded */
+@@ -80,37 +81,6 @@ mkdir_for_user(const char *path, const struct passwd *p,
+     return true;
  }
  
+-static bool
+-check_openssh_pub_key(const char *key, Error **errp)
+-{
+-    /* simple sanity-check, we may want more? */
+-    if (!key || key[0] == '#' || strchr(key, '\n')) {
+-        error_setg(errp, "invalid OpenSSH public key: '%s'", key);
+-        return false;
+-    }
+-
+-    return true;
+-}
+-
+-static bool
+-check_openssh_pub_keys(strList *keys, size_t *nkeys, Error **errp)
+-{
+-    size_t n = 0;
+-    strList *k;
+-
+-    for (k = keys; k != NULL; k = k->next) {
+-        if (!check_openssh_pub_key(k->value, errp)) {
+-            return false;
+-        }
+-        n++;
+-    }
+-
+-    if (nkeys) {
+-        *nkeys = n;
+-    }
+-    return true;
+-}
+-
+ static bool
+ write_authkeys(const char *path, const GStrv keys,
+                const struct passwd *p, Error **errp)
+@@ -139,21 +109,6 @@ write_authkeys(const char *path, const GStrv keys,
+     return true;
+ }
+ 
+-static GStrv
+-read_authkeys(const char *path, Error **errp)
+-{
+-    g_autoptr(GError) err = NULL;
+-    g_autofree char *contents = NULL;
+-
+-    if (!g_file_get_contents(path, &contents, NULL, &err)) {
+-        error_setg(errp, "failed to read '%s': %s", path, err->message);
+-        return NULL;
+-    }
+-
+-    return g_strsplit(contents, "\n", -1);
+-
+-}
+-
+ void
+ qmp_guest_ssh_add_authorized_keys(const char *username, strList *keys,
+                                   bool has_reset, bool reset,
+diff --git a/qga/meson.build b/qga/meson.build
+index 46c1d83d7f..bc5ffb54ba 100644
+--- a/qga/meson.build
++++ b/qga/meson.build
+@@ -66,6 +66,7 @@ qga_ss.add(files(
+   'guest-agent-command-state.c',
+   'main.c',
+   'cutils.c',
++  'commands-common-ssh.c'
+ ))
+ if host_os == 'windows'
+   qga_ss.add(files(
+@@ -186,7 +187,7 @@ test_env.set('G_TEST_BUILDDIR', meson.current_build_dir())
+ # this when an alternative is implemented or when the underlying glib
+ # issue is identified/fix
+ if host_os != 'windows' and not get_option('fuzzing')
+-  srcs = [files('commands-posix-ssh.c')]
++  srcs = [files('commands-common-ssh.c', 'commands-posix-ssh.c')]
+   i = 0
+   foreach output: qga_qapi_outputs
+     if output.startswith('qga-qapi-types') or output.startswith('qga-qapi-visit')
 -- 
 2.44.0
 
