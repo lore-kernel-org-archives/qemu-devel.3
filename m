@@ -4,34 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41584C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 23:46:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B10F9C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 23:46:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2JcI-0002qu-Ga; Wed, 01 May 2024 19:44:02 -0400
+	id 1s2Jbb-00024N-01; Wed, 01 May 2024 19:43:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s2JcE-0002lj-C9; Wed, 01 May 2024 19:43:58 -0400
+ id 1s2JbY-000236-3G; Wed, 01 May 2024 19:43:16 -0400
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s2JcC-00053q-EK; Wed, 01 May 2024 19:43:58 -0400
+ id 1s2JbV-0004yv-QP; Wed, 01 May 2024 19:43:15 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 0A6944E602D;
- Thu, 02 May 2024 01:43:34 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id AD3D84E602F;
+ Thu, 02 May 2024 01:43:07 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id kdJ1YfbE5Stx; Thu,  2 May 2024 01:43:32 +0200 (CEST)
+ with ESMTP id tshgcsGF_JRE; Thu,  2 May 2024 01:43:05 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 1773D4E6040; Thu, 02 May 2024 01:43:32 +0200 (CEST)
-Message-Id: <b3caa952ce91c07bcc958a3662349418c5716673.1714606359.git.balaton@eik.bme.hu>
-In-Reply-To: <cover.1714606359.git.balaton@eik.bme.hu>
-References: <cover.1714606359.git.balaton@eik.bme.hu>
+ id 952844E602D; Thu, 02 May 2024 01:43:05 +0200 (CEST)
+Message-Id: <cover.1714606359.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v2 25/28] target/ppc/mmu_common.c: Simplify ppc_booke_xlate()
+Subject: [PATCH v2 00/28] Misc PPC exception and BookE MMU clean ups
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -39,7 +37,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Thu, 02 May 2024 01:43:32 +0200 (CEST)
+Date: Thu, 02 May 2024 01:43:05 +0200 (CEST)
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
  envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -62,178 +60,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
- target/ppc/mmu_common.c | 147 +++++++++++++++-------------------------
- 1 file changed, 56 insertions(+), 91 deletions(-)
+This series does some further clean up mostly around BookE MMU to
+untangle it from other MMU models. It also contains some other changes
+that I've come up with while working on this. The first 3 patches are
+from the last exception handling clean up series that were dropped due
+to some error on CI but I'm not sure if that was because of some CI
+infrastructure problem or some problem with the patches as the error
+did not make much sense. So these patches are only rebased now, I made
+no other change to them until the issue is understood better. The rest
+are new patches I've added since tha last series. Please review.
 
-diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index d61c41d8c9..b76611da80 100644
---- a/target/ppc/mmu_common.c
-+++ b/target/ppc/mmu_common.c
-@@ -1261,106 +1261,71 @@ static bool ppc_booke_xlate(PowerPCCPU *cpu, vaddr eaddr,
-     }
- 
-     log_cpu_state_mask(CPU_LOG_MMU, cs, 0);
-+    env->error_code = 0;
-+    if (env->mmu_model == POWERPC_MMU_BOOKE206 && ret == -1) {
-+        booke206_update_mas_tlb_miss(env, eaddr, access_type, mmu_idx);
-+    }
-     if (access_type == MMU_INST_FETCH) {
--        switch (ret) {
--        case -1:
-+        if (ret == -1) {
-             /* No matches in page tables or TLB */
--            switch (env->mmu_model) {
--            case POWERPC_MMU_BOOKE206:
--                booke206_update_mas_tlb_miss(env, eaddr, access_type, mmu_idx);
--                /* fall through */
--            case POWERPC_MMU_BOOKE:
--                cs->exception_index = POWERPC_EXCP_ITLB;
--                env->error_code = 0;
--                env->spr[SPR_BOOKE_DEAR] = eaddr;
--                env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
--                break;
--            default:
--                g_assert_not_reached();
--            }
--            break;
--        case -2:
--            /* Access rights violation */
--            cs->exception_index = POWERPC_EXCP_ISI;
--            env->error_code = 0;
--            break;
--        case -3:
--            /* No execute protection violation */
--            cs->exception_index = POWERPC_EXCP_ISI;
--            env->spr[SPR_BOOKE_ESR] = 0;
--            env->error_code = 0;
--            break;
--        case -4:
--            /* Direct store exception */
--            /* No code fetch is allowed in direct-store areas */
-+            cs->exception_index = POWERPC_EXCP_ITLB;
-+            env->spr[SPR_BOOKE_DEAR] = eaddr;
-+            env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
-+        } else {
-             cs->exception_index = POWERPC_EXCP_ISI;
--            env->error_code = 0;
--            break;
--        }
--    } else {
--        switch (ret) {
--        case -1:
--            /* No matches in page tables or TLB */
--            switch (env->mmu_model) {
--            case POWERPC_MMU_BOOKE206:
--                booke206_update_mas_tlb_miss(env, eaddr, access_type, mmu_idx);
--                /* fall through */
--            case POWERPC_MMU_BOOKE:
--                cs->exception_index = POWERPC_EXCP_DTLB;
--                env->error_code = 0;
--                env->spr[SPR_BOOKE_DEAR] = eaddr;
--                env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
--                break;
--            default:
--                g_assert_not_reached();
-+            if (ret == -3) {
-+                /* No execute protection violation */
-+                env->spr[SPR_BOOKE_ESR] = 0;
-             }
-+        }
-+        return false;
-+    }
-+
-+    switch (ret) {
-+    case -1:
-+        /* No matches in page tables or TLB */
-+        cs->exception_index = POWERPC_EXCP_DTLB;
-+        env->spr[SPR_BOOKE_DEAR] = eaddr;
-+        env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
-+        break;
-+    case -2:
-+        /* Access rights violation */
-+        cs->exception_index = POWERPC_EXCP_DSI;
-+        env->spr[SPR_BOOKE_DEAR] = eaddr;
-+        env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
-+        break;
-+    case -4:
-+        /* Direct store exception */
-+        env->spr[SPR_DAR] = eaddr;
-+        switch (env->access_type) {
-+        case ACCESS_FLOAT:
-+            /* Floating point load/store */
-+            cs->exception_index = POWERPC_EXCP_ALIGN;
-+            env->error_code = POWERPC_EXCP_ALIGN_FP;
-             break;
--        case -2:
--            /* Access rights violation */
-+        case ACCESS_RES:
-+            /* lwarx, ldarx or stwcx. */
-             cs->exception_index = POWERPC_EXCP_DSI;
--            env->error_code = 0;
--            env->spr[SPR_BOOKE_DEAR] = eaddr;
--            env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
-+            if (access_type == MMU_DATA_STORE) {
-+                env->spr[SPR_DSISR] = 0x06000000;
-+            } else {
-+                env->spr[SPR_DSISR] = 0x04000000;
-+            }
-             break;
--        case -4:
--            /* Direct store exception */
--            switch (env->access_type) {
--            case ACCESS_FLOAT:
--                /* Floating point load/store */
--                cs->exception_index = POWERPC_EXCP_ALIGN;
--                env->error_code = POWERPC_EXCP_ALIGN_FP;
--                env->spr[SPR_DAR] = eaddr;
--                break;
--            case ACCESS_RES:
--                /* lwarx, ldarx or stwcx. */
--                cs->exception_index = POWERPC_EXCP_DSI;
--                env->error_code = 0;
--                env->spr[SPR_DAR] = eaddr;
--                if (access_type == MMU_DATA_STORE) {
--                    env->spr[SPR_DSISR] = 0x06000000;
--                } else {
--                    env->spr[SPR_DSISR] = 0x04000000;
--                }
--                break;
--            case ACCESS_EXT:
--                /* eciwx or ecowx */
--                cs->exception_index = POWERPC_EXCP_DSI;
--                env->error_code = 0;
--                env->spr[SPR_DAR] = eaddr;
--                if (access_type == MMU_DATA_STORE) {
--                    env->spr[SPR_DSISR] = 0x06100000;
--                } else {
--                    env->spr[SPR_DSISR] = 0x04100000;
--                }
--                break;
--            default:
--                printf("DSI: invalid exception (%d)\n", ret);
--                cs->exception_index = POWERPC_EXCP_PROGRAM;
--                env->error_code = POWERPC_EXCP_INVAL | POWERPC_EXCP_INVAL_INVAL;
--                env->spr[SPR_DAR] = eaddr;
--                break;
-+        case ACCESS_EXT:
-+            /* eciwx or ecowx */
-+            cs->exception_index = POWERPC_EXCP_DSI;
-+            if (access_type == MMU_DATA_STORE) {
-+                env->spr[SPR_DSISR] = 0x06100000;
-+            } else {
-+                env->spr[SPR_DSISR] = 0x04100000;
-             }
-             break;
-+        default:
-+            printf("DSI: invalid exception (%d)\n", ret);
-+            cs->exception_index = POWERPC_EXCP_PROGRAM;
-+            env->error_code = POWERPC_EXCP_INVAL | POWERPC_EXCP_INVAL_INVAL;
-+            break;
-         }
-     }
-     return false;
+v2:
+- Fix user mode issue in patch 1 by keeping old behaviour for user mode
+- Add some more MMU clean up patches
+
+Regards,
+BALATON Zoltan
+
+BALATON Zoltan (28):
+  target/ppc: Fix gen_sc to use correct nip
+  target/ppc: Move patching nip from exception handler to helper_scv
+  target/ppc: Simplify syscall exception handlers
+  target/ppc: Remove unused helper
+  target/ppc/mmu_common.c: Move calculation of a value closer to its
+    usage
+  target/ppc/mmu_common.c: Move calculation of a value closer to its
+    usage
+  target/ppc/mmu_common.c: Remove unneeded local variable
+  target/ppc/mmu_common.c: Simplify checking for real mode
+  target/ppc/mmu_common.c: Drop cases for unimplemented MPC8xx MMU
+  target/ppc/mmu_common.c: Introduce mmu6xx_get_physical_address()
+  target/ppc/mmu_common.c: Rename get_bat_6xx_tlb()
+  target/ppc/mmu_common.c: Split out BookE cases before checking real
+    mode
+  target/ppc/mmu_common.c: Split off real mode cases in
+    get_physical_address_wtlb()
+  target/ppc/mmu_common.c: Inline and remove check_physical()
+  target/ppc/mmu_common.c: Simplify mmubooke_get_physical_address()
+  target/ppc/mmu_common.c: Simplify mmubooke206_get_physical_address()
+  target/ppc/mmu_common.c: Fix misindented qemu_log_mask() calls
+  target/ppc/mmu_common.c: Deindent ppc_jumbo_xlate()
+  target/ppc/mmu_common.c: Replace hard coded constants in
+    ppc_jumbo_xlate()
+  target/ppc/mmu_common.c: Make get_physical_address_wtlb() static
+  target/ppc: Move mmu_ctx_t definition to mmu_common.c
+  target/ppc: Remove ppc_hash32_pp_prot() and reuse common function
+  target/ppc/mmu_common.c: Split off BookE handling from
+    ppc_jumbo_xlate()
+  target/ppc/mmu_common.c: Remove BookE handling from
+    get_physical_address_wtlb()
+  target/ppc/mmu_common.c: Simplify ppc_booke_xlate()
+  target/ppc/mmu_common.c: Move BookE MMU functions together
+  target/ppc: Remove id_tlbs flag from CPU env
+  target/ppc: Split off common 4xx TLB init
+
+ hw/ppc/pegasos2.c        |   2 +-
+ target/ppc/cpu.h         |   1 -
+ target/ppc/cpu_init.c    |  65 ++--
+ target/ppc/excp_helper.c |  67 +---
+ target/ppc/helper.h      |   2 -
+ target/ppc/helper_regs.c |   1 -
+ target/ppc/internal.h    |  19 +-
+ target/ppc/mmu-hash32.c  |  47 +--
+ target/ppc/mmu_common.c  | 792 +++++++++++++++++++--------------------
+ target/ppc/mmu_helper.c  |  36 +-
+ target/ppc/translate.c   |  21 +-
+ 11 files changed, 438 insertions(+), 615 deletions(-)
+
 -- 
 2.30.9
 
