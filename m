@@ -4,72 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 825ABC19F53
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 07:19:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92F2BC4345F
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 07:21:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s24FK-0003gI-Vy; Wed, 01 May 2024 03:19:19 -0400
+	id 1s24Go-0004U2-W2; Wed, 01 May 2024 03:20:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1s24FJ-0003ft-3z
- for qemu-devel@nongnu.org; Wed, 01 May 2024 03:19:17 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1s24FF-00083o-Ci
- for qemu-devel@nongnu.org; Wed, 01 May 2024 03:19:16 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:c10a:0:640:882f:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 59BA860913;
- Wed,  1 May 2024 10:19:05 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:8829::1:3c] (unknown
- [2a02:6b8:b081:8829::1:3c])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 3JMJnL2IcCg0-zpu2fnMm; Wed, 01 May 2024 10:19:04 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1714547944;
- bh=7HlKSkGfM0l+IMv2cI33pr5SqA88FgEh+n1LIJvK0+I=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=aXiQEW4qpKtY0MoJ0NUXd9IhVndR0QQtxK53X3iC293f05kV9KBohXzblpSWXtayw
- mNHnbyD7nUosf6xAuE/6ORoI5TkJ47ba/yrAwuMy+5Xrpm0LRddPmi/TNtjUKddRdY
- WBPj0p0ry2u7QhR143Ut2mphqdyJqEi9CNcxF+3I=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <c1fe136a-92f8-4f57-b2c7-934bab6ac6a8@yandex-team.ru>
-Date: Wed, 1 May 2024 10:19:03 +0300
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1s24Gn-0004Tg-4A
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 03:20:49 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1s24Gl-0000Fa-1J
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 03:20:48 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1eac92f7c74so52995995ad.3
+ for <qemu-devel@nongnu.org>; Wed, 01 May 2024 00:20:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1714548045; x=1715152845;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=pMe0tkEnY+Zd6bwkQi+nZwM4FerHeDV0HnpSEBEZIHw=;
+ b=XL3/97FmGlwF3EVauXlUokXDj1+LfgmtnGsPOxuUHwQBvEtBy+QUrcnosynzH26hi6
+ T6tHoMJqirlyk06yKW1ix4WR8Mziq2Ot/4Qw9yFKwWmvpphJklHKuEX8vS3nggwM/hNz
+ yjwyH02dXzc9fmaAwABIY4Hevlh8XWgPeSs2KMJOkT+s1w+c4H3Pq6A6AzPQtVPNmmWZ
+ k7Amm382pfxZx5oUopbG7KuojiDtusxf4jjCC/XAPujm5oN3mSOtLK89ZmQjmzh/WkJH
+ 10Zb2hYcd6yu/t3mB/jcevliRiiIA3QKJS0h1nf1ef/HwXNtV25gWIJXHKodVSHfmx6q
+ oikw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714548045; x=1715152845;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=pMe0tkEnY+Zd6bwkQi+nZwM4FerHeDV0HnpSEBEZIHw=;
+ b=KwSu+VIUavSMdnJ7sTkKDXuu6de8rGskCVtLhCVkrdMvfPll8nsln4PerKcPv5wAdD
+ 1HbwfxvuCAtAwKLDWResYXUYd3ce4+sT4CxTUUft7h1tOv3T4ZvFMPtDZrTxdfHaJ8xl
+ 6Kn5cxahbl1hOr57b1ljLb0oRylbTkhW2sjdtF3qp2iKYkbSf1/QQTYtkcl66aBjfhmT
+ fxlhoei7TkzPMAukVVCU6eHeH5qq5xV+xsXO8Vf43C6krKLIlK8QdVWZHtaeRHBAeRB1
+ aLyJ79acTloDFUOIwXcJ/UAuWfx3Gt6LDIIYhVhmp41A2695b4v4PbgRmdzjm41pq/bG
+ c3Kw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUx3Ec2fcLdh+mPTqAS50FBubHreiqTKIOqaqc+pOricCAc1HGdNtPUHtsTi0qx4PHt5lyIw6BDkWg84WWj+DcFYErjAKQ=
+X-Gm-Message-State: AOJu0Yx/2ZchApvf9JMxuNjx5AGzj0zYN+rHx4bJ4NF9YtcmU3Q7En5c
+ newroMn7fTZFBzRfXc9UfW4Af29jrelQopJaFwnlCwsJ9eeI4lrXziW2qOMY3xM=
+X-Google-Smtp-Source: AGHT+IFmTiBoBwhQcZBRgixAxuyYk3BXPfjXJ2t30wv3Q13FoaAuwe/3d4FpacvSuz1emtVz+xrCkQ==
+X-Received: by 2002:a17:902:d34b:b0:1e4:6232:367a with SMTP id
+ l11-20020a170902d34b00b001e46232367amr1486413plk.22.1714548045457; 
+ Wed, 01 May 2024 00:20:45 -0700 (PDT)
+Received: from [157.82.202.162] ([157.82.202.162])
+ by smtp.gmail.com with ESMTPSA id
+ cp1-20020a170902e78100b001ec7d91f1cfsm1070193plb.14.2024.05.01.00.20.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 01 May 2024 00:20:45 -0700 (PDT)
+Message-ID: <e7b29a10-addf-4fed-9092-73652cb16cce@daynix.com>
+Date: Wed, 1 May 2024 16:20:41 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 4/5] migration: process_incoming_migration_co(): rework
- error reporting
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- peterx@redhat.com, farosas@suse.de
-Cc: eblake@redhat.com, armbru@redhat.com, pbonzini@redhat.com,
- qemu-devel@nongnu.org, yc-core@yandex-team.ru
-References: <20240430085646.2359711-1-vsementsov@yandex-team.ru>
- <20240430085646.2359711-5-vsementsov@yandex-team.ru>
- <e318d8dd-64de-4d22-a11f-76e8c2678c88@linaro.org>
+Subject: Re: [PATCH 0/3] virtio-net: Convert feature properties to OnOffAuto
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <e318d8dd-64de-4d22-a11f-76e8c2678c88@linaro.org>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Jason Wang <jasowang@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Luigi Rizzo <rizzo@iet.unipi.it>, Giuseppe Lettieri
+ <g.lettieri@iet.unipi.it>, Vincenzo Maffione <v.maffione@gmail.com>,
+ Andrew Melnychenko <andrew@daynix.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ qemu-devel@nongnu.org, 20240428-rss-v10-0-73cbaa91aeb6@daynix.com
+References: <20240428-auto-v1-0-7b012216a120@daynix.com>
+ <20240429030329-mutt-send-email-mst@kernel.org>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20240429030329-mutt-send-email-mst@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::632;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -81,86 +107,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30.04.24 12:16, Philippe Mathieu-Daudé wrote:
-> On 30/4/24 10:56, Vladimir Sementsov-Ogievskiy wrote:
->> Unify error reporting in the function. This simplifies the following
->> commit, which will not-exit-on-error behavior variant to the function.
+On 2024/04/29 16:05, Michael S. Tsirkin wrote:
+> On Sun, Apr 28, 2024 at 04:21:06PM +0900, Akihiko Odaki wrote:
+>> Based-on: <20240428-rss-v10-0-73cbaa91aeb6@daynix.com>
+>> ("[PATCH v10 00/18] virtio-net RSS/hash report fixes and improvements")
 >>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> ---
->>   migration/migration.c | 23 +++++++++++++----------
->>   1 file changed, 13 insertions(+), 10 deletions(-)
+>> Some features are not always available, and virtio-net used to disable
+>> them when not available even if the corresponding properties were
+>> explicitly set to "on".
 >>
->> diff --git a/migration/migration.c b/migration/migration.c
->> index b307a4bc59..a9599838e6 100644
->> --- a/migration/migration.c
->> +++ b/migration/migration.c
->> @@ -735,14 +735,16 @@ static void process_incoming_migration_bh(void *opaque)
->>   static void coroutine_fn
->>   process_incoming_migration_co(void *opaque)
->>   {
->> +    MigrationState *s = migrate_get_current();
+>> Convert feature properties to OnOffAuto so that the user can explicitly
+>> tell QEMU to automatically select the value by setting them "auto".
+>> QEMU will give an error if they are set "on".
+>>
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > 
-> (see below)
-> 
->>       MigrationIncomingState *mis = migration_incoming_get_current();
->>       PostcopyState ps;
->>       int ret;
->> +    Error *local_err = NULL;
->>       assert(mis->from_src_file);
->>       if (compress_threads_load_setup(mis->from_src_file)) {
->> -        error_report("Failed to setup decompress threads");
->> +        error_setg(&local_err, "Failed to setup decompress threads");
->>           goto fail;
->>       }
->> @@ -779,19 +781,12 @@ process_incoming_migration_co(void *opaque)
->>       }
->>       if (ret < 0) {
->> -        MigrationState *s = migrate_get_current();
->> -
->> -        if (migrate_has_error(s)) {
->> -            WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
->> -                error_report_err(s->error);
->> -                s->error = NULL;
->> -            }
->> -        }
->> -        error_report("load of migration failed: %s", strerror(-ret));
->> +        error_setg(&local_err, "load of migration failed: %s", strerror(-ret));
->>           goto fail;
->>       }
->>       if (colo_incoming_co() < 0) {
->> +        error_setg(&local_err, "colo incoming failed");
->>           goto fail;
->>       }
->> @@ -800,8 +795,16 @@ process_incoming_migration_co(void *opaque)
->>   fail:
-> 
-> Maybe just assign @s in error path here?
-> 
->         s = migrate_get_current();
+> Should we maybe bite the bullet allow "auto" for all binary/boolean
+> properties? Just ignore "auto" if no one cares ATM.
 
-I'd keep as is. If continue improving the function, I'd better split the logic to seperate function with classic "Error **errp" argument. And keep reporting error in caller.
+It is not always obvious whether "auto" should be considered as "on" or 
+"off" for existing boolean properties. The properties this patch deals 
+with are to enable features so "auto" should be considered as "on" if 
+possible. However, other properties may mean to disable features, and in 
+such a case, "auto" should be considered as "off".
 
-> 
->>       migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
->>                         MIGRATION_STATUS_FAILED);
->> +    migrate_set_error(s, local_err);
->> +    error_free(local_err);
->> +
->>       migration_incoming_state_destroy();
->> +    WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
->> +        error_report_err(s->error);
->> +        s->error = NULL;
->> +    }
->> +
->>       exit(EXIT_FAILURE);
->>   }
-> 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
-
--- 
-Best regards,
-Vladimir
-
+It may still make sense to accept "auto" for all virtio-net feature bits 
+for consistency. In particular, I left guest_rsc_ext property boolean 
+since nobody cares "auto" for that feature, but this can be converted to 
+OnOffAuto.
 
