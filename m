@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A4B6C10F1A
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 14:41:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59545C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 14:41:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2B6E-0002oC-QI; Wed, 01 May 2024 10:38:22 -0400
+	id 1s2B6D-0002ku-93; Wed, 01 May 2024 10:38:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s2B5w-0002j2-Fu
- for qemu-devel@nongnu.org; Wed, 01 May 2024 10:38:04 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1s2B5q-0002hL-If
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 10:37:58 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s2B5u-0002Cp-VT
- for qemu-devel@nongnu.org; Wed, 01 May 2024 10:38:04 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1ec4dd8525cso14160435ad.3
- for <qemu-devel@nongnu.org>; Wed, 01 May 2024 07:38:02 -0700 (PDT)
+ id 1s2B5o-0002AV-Dc
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 10:37:58 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1ec69e3dbe5so12751645ad.0
+ for <qemu-devel@nongnu.org>; Wed, 01 May 2024 07:37:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714574282; x=1715179082; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714574275; x=1715179075; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nSa2977I3Rq8Xc+67Y2/yCKgEWXvHU4DRnUfHiUzUVE=;
- b=rsygncj/EIs54VAIMitaOr+b5vCZO0u/NZRd5gZ8lT/EO5bHydgJR75xk05soDnZUL
- 2NPkbU5BcbWVS5MuZBL0uBzzFkzsxqvVqCY6YW3YUwN02u6uMEgTh9bw9QNZ4SYr1fvi
- SP/fPEY5dxgKAopcJZL9gIJwL5wH4aLZ/MrPn4gxXJBRciVoKSBGyR15FTGlLebOC3Kb
- sNtNMDtpcHdx2mGwDWjSwtjQDTn+K4GQR8MJWMfIp0VOtWaXsFS0IqOGxWXMWLCoiKcf
- W9Q4SUw7kI69swJAEPCA2WOmlncju1wnlLZlEBq1KzNWnrPhvn+bOMNGyHjWSo5H7NOH
- k2jw==
+ bh=kmUmHZTNzNBMvvIGWmKaQ5oKXKcaA0ppcXgwQeTRE2E=;
+ b=IP7uYznmdhLf/uUTUbA+D7r3jkMCKsUwfvjSW55jlB/c/3yjTgntNXHww0170KQZrn
+ gAJr6v0AESLtORYf+/reFDiqWFCwFityfosJhSS1qomvAycGLzudZ7C1bV8wgHAHN2o8
+ TtQeSvtEDaW5RkNeJZ45RcM9ujwkPmoP3tmajzL7COnuWZybUk6CyNGvkMCJCiiDLxpz
+ DoXa2aGZFelFFLspCWAq/0SSVaXE40e5Asy5+s1miCJwZ+SmmeWuTOYwLrdn8y3q+8+K
+ K5uZ1A92fBhoWiK9CL/Wxb0Ukl92E2rCOpPxlKCHVDH3v4jakMMAAC/Nn/sw9uqaIkS5
+ IZLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714574282; x=1715179082;
+ d=1e100.net; s=20230601; t=1714574275; x=1715179075;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nSa2977I3Rq8Xc+67Y2/yCKgEWXvHU4DRnUfHiUzUVE=;
- b=mIsESqxKiGZR2cIlq4UGuM7t/4OROxu3Hvvf9jYaeAGOn/8G430B897BETXHkbug1C
- CFp94FDrttauD73UDeRirk5LKasYQb8qvmqMVFp0lii/MFWywtOyOqTrI72b9IeAnpu1
- iVSqeE7iIQd9L0w2tFIOgO9ga+uOVGwRTI0/xRyEGrI5wT757PeyHIWoRY9c3blEmSzM
- 2aEbZ+cyfRo70fnyYs3espFcifQIWRogP4FKCEudkrS0LSNfj6HZ9VrQTOyyQULX4ap6
- 0j2+90e2lShU1d8+8/c8yGtELJxFHNXnfm4bUo+H4AqlxKfwJjYtbVdnJbctNohV/yRd
- YO3Q==
-X-Gm-Message-State: AOJu0Yxef6cxCbNs6cIg19OaiqoRn191XwZhBtemkbIagS4h2aSGaxkh
- 8zCa1JAQFKoQo2Vjlj/CsUr4avMamOD5MAdzAw9WTqB2cmoMC+HuUoPqGx/WcAV/867CaS8p+aI
- t
-X-Google-Smtp-Source: AGHT+IG3rrt57oezORmWHKV4ZjKep5JW8havgmDbFFXwwHckvoYCKrhLdWTc7wQxKW5DQyJanwpLZg==
-X-Received: by 2002:a17:902:c185:b0:1e4:60d4:916b with SMTP id
- d5-20020a170902c18500b001e460d4916bmr2355319pld.64.1714574281733; 
- Wed, 01 May 2024 07:38:01 -0700 (PDT)
+ bh=kmUmHZTNzNBMvvIGWmKaQ5oKXKcaA0ppcXgwQeTRE2E=;
+ b=ht3/IFW/4238z7DXDIf5YOVEPTTzFlDIUBUNBx+jN48vv6CGdE2lRkv3wpl9CqxMe6
+ 8OyjzBRccxbf8XcxG3mQMXq0b8QqckWIiCj5nqZwKd5hogi2KHlcdyPcr32hM6YXrU0C
+ PH5moBmOgrfzyNxQTmB+IB7hAdQEvaF3NrBE6vSBfdMa+kghoVHLXMyuMZ6APUWc4UCJ
+ ukr0a0b67eLLfSPpueTVZMNZEhN28bglv8hQXSn6mo3Q9vpWETnV3wlRvgkUoXzT9XZa
+ V565LESWvfn1aoIcUrmBcrC86eVZLyUUlEaamOIf+wUeQ7nPKYq1nvv5HQVW8qYZUPHv
+ LQog==
+X-Gm-Message-State: AOJu0Yw7uffGRFqraSCcffZeo1YuU0dJWzRyMGDOX8M/tZFEsFjCO9hb
+ 7sp91zeWfmXHFvxFvDvVvRuvGPWK6UP0KI46Qfa0l0ZUvMxGmeDBX6Lc9wsGwKkKZ90URgpaAms
+ O
+X-Google-Smtp-Source: AGHT+IFUcCNbcEWdI2sF0OwbCkZMfkwuprth1MJHIM1jpfD+xVeTXW3EHuDDTehuuCFgduyK8oDmOw==
+X-Received: by 2002:a17:903:2c9:b0:1ec:a6e4:dc9c with SMTP id
+ s9-20020a17090302c900b001eca6e4dc9cmr1648750plk.50.1714574275156; 
+ Wed, 01 May 2024 07:37:55 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- h12-20020a170902f54c00b001ebd73f61fcsm5751573plf.121.2024.05.01.07.38.00
+ h12-20020a170902f54c00b001ebd73f61fcsm5751573plf.121.2024.05.01.07.37.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 May 2024 07:38:01 -0700 (PDT)
+ Wed, 01 May 2024 07:37:54 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 19/20] plugins: Inline plugin_gen_empty_callback
-Date: Wed,  1 May 2024 07:37:38 -0700
-Message-Id: <20240501143739.10541-20-richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 15/20] plugins: Introduce PLUGIN_CB_MEM_REGULAR
+Date: Wed,  1 May 2024 07:37:34 -0700
+Message-Id: <20240501143739.10541-16-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240501143739.10541-1-richard.henderson@linaro.org>
 References: <20240501143739.10541-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,62 +94,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Each caller can use tcg_gen_plugin_cb directly.
+Use different enumerators for vcpu_udata and vcpu_mem callbacks.
 
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/plugin-gen.c | 19 +++----------------
- 1 file changed, 3 insertions(+), 16 deletions(-)
+ include/qemu/plugin.h  | 1 +
+ accel/tcg/plugin-gen.c | 2 +-
+ plugins/core.c         | 4 ++--
+ 3 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
-index c0cbc26984..d914d64de0 100644
---- a/accel/tcg/plugin-gen.c
-+++ b/accel/tcg/plugin-gen.c
-@@ -60,19 +60,6 @@ enum plugin_gen_from {
-     PLUGIN_GEN_AFTER_TB,
+diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
+index b679a22bae..f5a08b1220 100644
+--- a/include/qemu/plugin.h
++++ b/include/qemu/plugin.h
+@@ -68,6 +68,7 @@ union qemu_plugin_cb_sig {
+ 
+ enum plugin_dyn_cb_type {
+     PLUGIN_CB_REGULAR,
++    PLUGIN_CB_MEM_REGULAR,
+     PLUGIN_CB_INLINE,
  };
  
--static void plugin_gen_empty_callback(enum plugin_gen_from from)
--{
--    switch (from) {
--    case PLUGIN_GEN_AFTER_INSN:
--    case PLUGIN_GEN_FROM_TB:
--    case PLUGIN_GEN_FROM_INSN:
--        tcg_gen_plugin_cb(from);
--        break;
--    default:
--        g_assert_not_reached();
--    }
--}
--
- /* called before finishing a TB with exit_tb, goto_tb or goto_ptr */
- void plugin_gen_disable_mem_helpers(void)
- {
-@@ -362,7 +349,7 @@ bool plugin_gen_tb_start(CPUState *cpu, const DisasContextBase *db,
-         ptb->mem_only = mem_only;
-         ptb->mem_helper = false;
+diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
+index e77ff2a565..c545303956 100644
+--- a/accel/tcg/plugin-gen.c
++++ b/accel/tcg/plugin-gen.c
+@@ -361,7 +361,7 @@ static void plugin_gen_inject(struct qemu_plugin_tb *plugin_tb)
  
--        plugin_gen_empty_callback(PLUGIN_GEN_FROM_TB);
-+        tcg_gen_plugin_cb(PLUGIN_GEN_FROM_TB);
-     }
+                 if (cb->rw & rw) {
+                     switch (cb->type) {
+-                    case PLUGIN_CB_REGULAR:
++                    case PLUGIN_CB_MEM_REGULAR:
+                         gen_mem_cb(cb, meminfo, addr);
+                         break;
+                     case PLUGIN_CB_INLINE:
+diff --git a/plugins/core.c b/plugins/core.c
+index b0615f1e7f..0213513ec6 100644
+--- a/plugins/core.c
++++ b/plugins/core.c
+@@ -391,7 +391,7 @@ void plugin_register_vcpu_mem_cb(GArray **arr,
  
-     tcg_ctx->plugin_insn = NULL;
-@@ -419,12 +406,12 @@ void plugin_gen_insn_start(CPUState *cpu, const DisasContextBase *db)
-         insn->haddr = ptb->haddr2 + pc - ptb->vaddr2;
-     }
+     struct qemu_plugin_dyn_cb *dyn_cb = plugin_get_dyn_cb(arr);
+     dyn_cb->userp = udata;
+-    dyn_cb->type = PLUGIN_CB_REGULAR;
++    dyn_cb->type = PLUGIN_CB_MEM_REGULAR;
+     dyn_cb->rw = rw;
+     dyn_cb->regular.f.vcpu_mem = cb;
  
--    plugin_gen_empty_callback(PLUGIN_GEN_FROM_INSN);
-+    tcg_gen_plugin_cb(PLUGIN_GEN_FROM_INSN);
- }
- 
- void plugin_gen_insn_end(void)
- {
--    plugin_gen_empty_callback(PLUGIN_GEN_AFTER_INSN);
-+    tcg_gen_plugin_cb(PLUGIN_GEN_AFTER_INSN);
- }
- 
- /*
+@@ -547,7 +547,7 @@ void qemu_plugin_vcpu_mem_cb(CPUState *cpu, uint64_t vaddr,
+                 break;
+         }
+         switch (cb->type) {
+-        case PLUGIN_CB_REGULAR:
++        case PLUGIN_CB_MEM_REGULAR:
+             cb->regular.f.vcpu_mem(cpu->cpu_index, make_plugin_meminfo(oi, rw),
+                                    vaddr, cb->userp);
+             break;
 -- 
 2.34.1
 
