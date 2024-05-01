@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81A66C10F1A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B4D3C4345F
 	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 16:49:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2D8R-0004jq-0L; Wed, 01 May 2024 12:48:47 -0400
+	id 1s2D8e-0004rY-P0; Wed, 01 May 2024 12:49:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s2D8O-0004jU-Ri
- for qemu-devel@nongnu.org; Wed, 01 May 2024 12:48:44 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s2D8c-0004rG-3a
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 12:48:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s2D8N-0002wl-BY
- for qemu-devel@nongnu.org; Wed, 01 May 2024 12:48:44 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s2D8a-0002xW-2p
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 12:48:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714582122;
+ s=mimecast20190719; t=1714582135;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=W0rqb1II+fEQyts8xj8PiGw705f1XoyimiMNElU/2to=;
- b=dWFocAyQ1uBJUXpMQXUM+Lr7o8SeePIgi/KB9n0gsaALVP0+jy8KMyEWrQ0SK9nYOiIpf0
- RbOAtGkrVBm6ftwEe5yHaM47sxzyWuVNDdKOnVP/ITId8LHD95gvvokp6wKsz1IICBtsHo
- M72l5Z1e0NwEzNzzsgJ9gR+yeC5f9Pg=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=2ohNGIUj4BzMtbo59hT8sI2kZRGTTjj2YaBysqXDsOI=;
+ b=Vdch5PfKQLTX7O08VXD0WkOuu7yOaOgR6GighvkMXZy/b3vf34ZRLYESrqZN7ZUmB4B137
+ yb/Jz+tGygct7oZ5N4xWCGBkLnsS+W6C7WK8mxBMKcaAzBs6pRfCxEpYzTRmMohCwkfpv0
+ Y4L40pD1egkFdAkJZITxhhh9Z/iDfqU=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-310-1MJN5om4PbywXoZDCyXdTg-1; Wed, 01 May 2024 12:48:39 -0400
-X-MC-Unique: 1MJN5om4PbywXoZDCyXdTg-1
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-43a3632d56aso28221491cf.1
- for <qemu-devel@nongnu.org>; Wed, 01 May 2024 09:48:38 -0700 (PDT)
+ us-mta-306-UGaZDI3GOfOUpiminVM--g-1; Wed, 01 May 2024 12:48:54 -0400
+X-MC-Unique: UGaZDI3GOfOUpiminVM--g-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-69b37bbded3so18134666d6.0
+ for <qemu-devel@nongnu.org>; Wed, 01 May 2024 09:48:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714582118; x=1715186918;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=W0rqb1II+fEQyts8xj8PiGw705f1XoyimiMNElU/2to=;
- b=KH3CaFn1LlJ/ok2xk9uK/kr7bpBgaCUIAKc3w+Tdj4Hpxm3hGon6ESYuWVVH3gk1+8
- OnKuTYloT2fMToGgsyHmISRQSG1tlcuLrL9c4H0R7GCTV8YdG1B/CqnvS9mbYJ+7izLY
- XJcCsD8+N0mL5E+tya9YNSdNVoZInuV18cyqhmd+cDET5t1vlzJ2G0tok1i+nmCUGG8h
- g2dYMkH5AHj6P9r5VtGCJgtiqvHYExGQhWEhVlcxkZgVH02pDkxASv1E7KaIsapYe4nZ
- pIVYyvMmCKmDvX4bl+GVAtxP/13xr3zPUrh/Aa8UbwhYbnWa7TVnAe/sfxDj7vXXXc8B
- asKg==
-X-Gm-Message-State: AOJu0YwzcegrWEFTinQy9BHaihIncIfmKcko7KM5iMnq1IHYb4BpXA5X
- TagXT/ZVLUxS5htbMshorFnWOJRrZ3Dz58zZ/lz6CIvZqJlO7kBddzbJJRaVbA9s7yxFryqxrTj
- xtdqCwbLoe1Ihu418GVRwzEiKBnRkDy2ri/i8y1ZkO8RCZLGplgsB
-X-Received: by 2002:a05:622a:454:b0:43b:e8:3858 with SMTP id
- o20-20020a05622a045400b0043b00e83858mr3335561qtx.5.1714582118215; 
- Wed, 01 May 2024 09:48:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGlczwLQ1ydCbZMNGW1G2sQPdaOKLA7HRYhsgku2nl0OuzRoK0kJ+YcZfu1hxBiGpLYl+M3KQ==
-X-Received: by 2002:a05:622a:454:b0:43b:e8:3858 with SMTP id
- o20-20020a05622a045400b0043b00e83858mr3335525qtx.5.1714582117703; 
- Wed, 01 May 2024 09:48:37 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1714582134; x=1715186934;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=2ohNGIUj4BzMtbo59hT8sI2kZRGTTjj2YaBysqXDsOI=;
+ b=Ll3rbRp2FO7VQY7zvi3rBwu06piGFI1KSUEsZlTmLlOYgZit08K3HqpVVtneBic6Wn
+ jg6ywlMUVtqj1QNWNzzM7wb6wrbNIHKopLE2SIp9JywU3ddGwWjwSifoEpjbV8rkHzRc
+ luLEyZD/S7ZaBSfKe6o3T2yc+tves5NSMKQkOtKxNrrhH7O4GudY0ceULx4W6+ogOHSY
+ DYQW/Q8jSzSWR5yWedqWgGfYD9S4TLiSxmawy49w+XWFgaWpXyZxQt1+50QKPBEJ3V22
+ 9QtpFcL4mM3IplWbsuFQdsyHb0cpsA5kE0Iyzg+ECW/l2639//Y2dxwKho7/uAfyuPKN
+ e6Iw==
+X-Gm-Message-State: AOJu0YwaSZeAoIqYva/f4Q5U2bN3TF4iQN7R7gUXOjaGsZak8QtfAP5N
+ Q/MVOMq92Jp2zTSzrjWo6Vw1ihA1DVSKWb8tfd54cV6eFfkq3HJ3rJ6V36/H9w3wOS5Xz55RxrC
+ mkTJrMUY6DtmtRkqYwALuYWwSl4pRsojPaWONVsbbRxqwtLBrmdqm
+X-Received: by 2002:a05:620a:1a83:b0:790:e856:7cc9 with SMTP id
+ bl3-20020a05620a1a8300b00790e8567cc9mr3254828qkb.1.1714582133476; 
+ Wed, 01 May 2024 09:48:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEj2on9s0wynIY3ZWohtmwo2ehBk2NmeS1RYGS7nP58MDlYJZhQos/YRzc6iPzwvnQJDqdIgA==
+X-Received: by 2002:a05:620a:1a83:b0:790:e856:7cc9 with SMTP id
+ bl3-20020a05620a1a8300b00790e8567cc9mr3254804qkb.1.1714582132699; 
+ Wed, 01 May 2024 09:48:52 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- h2-20020ac85142000000b00439a1bdb6e5sm9468549qtn.17.2024.05.01.09.48.36
+ wh13-20020a05620a56cd00b007906ab7b0b5sm9964736qkn.11.2024.05.01.09.48.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 May 2024 09:48:37 -0700 (PDT)
-Date: Wed, 1 May 2024 12:48:35 -0400
+ Wed, 01 May 2024 09:48:52 -0700 (PDT)
+Date: Wed, 1 May 2024 12:48:50 -0400
 From: Peter Xu <peterx@redhat.com>
 To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 Cc: qemu-devel@nongnu.org, sstabellini@kernel.org, jgross@suse.com,
- "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
- Anthony Perard <anthony.perard@citrix.com>,
- Paul Durrant <paul@xen.org>, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- xen-devel@lists.xenproject.org
-Subject: Re: [PATCH v4 13/17] softmmu: Pass RAM MemoryRegion and is_write
- xen_map_cache()
-Message-ID: <ZjJyYzr-Qq9Y71BM@x1n>
+ Vikram Garhwal <vikram.garhwal@amd.com>,
+ "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v4 01/17] softmmu: let qemu_map_ram_ptr() use
+ qemu_ram_ptr_length()
+Message-ID: <ZjJycn-MfBIpK5fT@x1n>
 References: <20240430164939.925307-1-edgar.iglesias@gmail.com>
- <20240430164939.925307-14-edgar.iglesias@gmail.com>
+ <20240430164939.925307-2-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240430164939.925307-14-edgar.iglesias@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240430164939.925307-2-edgar.iglesias@gmail.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -29
@@ -105,17 +106,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 30, 2024 at 06:49:35PM +0200, Edgar E. Iglesias wrote:
-> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+On Tue, Apr 30, 2024 at 06:49:23PM +0200, Edgar E. Iglesias wrote:
+> From: Juergen Gross <jgross@suse.com>
 > 
-> Propagate MR and is_write to xen_map_cache().
-> This is in preparation for adding support for grant mappings.
+> qemu_map_ram_ptr() and qemu_ram_ptr_length() share quite some code, so
+> modify qemu_ram_ptr_length() a little bit and use it for
+> qemu_map_ram_ptr(), too.
 > 
-> No functional change.
-> 
+> Signed-off-by: Juergen Gross <jgross@suse.com>
+> Signed-off-by: Vikram Garhwal <vikram.garhwal@amd.com>
 > Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+> Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+> Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 
-Acked-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
 -- 
 Peter Xu
