@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF6E7C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 22:15:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1097C10F1A
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 22:16:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2IEj-0006st-AK; Wed, 01 May 2024 18:15:37 -0400
+	id 1s2IEk-0006um-Qu; Wed, 01 May 2024 18:15:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s2IEa-0006qJ-3p
- for qemu-devel@nongnu.org; Wed, 01 May 2024 18:15:30 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1s2IER-0006o2-UY
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 18:15:23 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s2IEV-00078B-4U
- for qemu-devel@nongnu.org; Wed, 01 May 2024 18:15:26 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-6ee12766586so994609b3a.0
- for <qemu-devel@nongnu.org>; Wed, 01 May 2024 15:15:22 -0700 (PDT)
+ id 1s2IEK-00076P-7R
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 18:15:19 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-1eb66b6953cso40141015ad.2
+ for <qemu-devel@nongnu.org>; Wed, 01 May 2024 15:15:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714601721; x=1715206521; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714601705; x=1715206505; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=XQlmYy0YIE7T85BfOwuecrIQle7FWuqWO+1dZVtK4l0=;
- b=Z8NxA5pN78aVMtQzhzY65jYoOF9B3BcxyvS4r7/bw95HdgEow29gNsDl8PV/YpUPM1
- 4cNn6F2uRjHsTdYrsOZNLgasd4O12orp0XksHtn+w8r9RU/ud6jopHQCLNoqroljb5Nx
- LnganRprhtZZcvpBjE7TGqmS/u5iwzDE91hRvdIeg6wzjrf4E5+CRI2X8z1V3lP+ZcKl
- HXkKr7hUf9DbXH7J4XLacm+jFdcy3itExc2XNffR3RHNujGXzHZoeVHcFZskYQ93lomN
- MmS+VEOBf2wN8yMvl7WQGxUD0nT4e7hCuLC4Hh19uKD8X9G8jA17IBa8+xU4z+5yHY/Q
- siSw==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=T0awCXyDmREBAF6pJPlOwHbfM1ESTmiQiJ3UpgpYVqw=;
+ b=AzvYovs8q+haB+aJkzus4IJGDqm9bFA1maVlQ5v3QDc2ufK8OerG2xD322xse/v133
+ vlr3ItgqekWYDSlFwj9/K36+0/KenxE9eQaDwgrlHn7GHCf8hQ+qimfpA5gnVr0CTPc5
+ /P/qb2gahyaOuc1KhvhaoBJdwkBE/7wm0/Ld4B6wILSdLv6l+uRO5U4lLZkXos3NaQP3
+ e4bGGZoMUD8iBpC4pO2pVIHP6lSERjWyHMMhsQzEBj+uku0E98WHSNwVlBRCB2AEC+BR
+ HDfQ7hWNi/iMGE1y0sCz7vItpV72yTqGqlbywV1s8A0oUCBQZebcc96HaHkX114VidC6
+ lWfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714601721; x=1715206521;
+ d=1e100.net; s=20230601; t=1714601705; x=1715206505;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XQlmYy0YIE7T85BfOwuecrIQle7FWuqWO+1dZVtK4l0=;
- b=uIVtE5j66u7b7M+itvlUiByRT8E7NKXwwnCRrrsfer01r+ajHkW3RNPFTnXRCWIyaT
- r9039YaZp2j0yNRDIbh4vmO/9t0GP2vywoUjLdM1O/JZrgMBw9sEa84RWMgdh5Jm90vU
- HUiY+yllCTmMKfYWbBmYvFASgCRIEmQX+anpMZqoqCs1cj7bf2lBLr8xO/jHJJbhybyI
- UJeYSen81WTsUyD9IxD8Bk2gjlUf/aZyClAk5rEcPF0lYMviE89+zPQMK3wvTgyVYu7m
- 5byzs4FBKj/4yF99RIstlKEkDgIQK80eqQB7P8ZBlgeNGHTKX2DVX1VXA5BToC2qqfT2
- o4mA==
+ bh=T0awCXyDmREBAF6pJPlOwHbfM1ESTmiQiJ3UpgpYVqw=;
+ b=pMVVScQwyNQVgR/wJGyOirJonBmJECNZKjM7dpZ774YMezNeQlUtfjlBhqGdVMM5A7
+ FTOw87jPdcf+wneWSVbngOxpAFGH9VL/1JPDn7Vaq1XmtcjhGfSXrjZsHrUOntm2Aywq
+ 5L0XW2jpY7iUtXleQb+aWZrsv5tylATJ1as7lE3bqG4wSt+yJzPYxqet3JoW8S1waE4R
+ mL5gCsxKpIe3eLO5KBEw/RTpt1orcdHFbmbZ4y/XQ2390jmat7hMqAtoPaK0cdTYz2lB
+ gNjJxmKL0UFalnsPS1noBUupS28xQtjXnADaLRKVjk+X70H2m4k01TQJqEPaCtpJUY3g
+ 4u7A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUyPvUJLPyaCAHqy2SURNyySzen81BFgkl93KYD2F/brkOCwrA9i1PZSnkqvQllWsFLmO1063eGvPFMwQbwca9Wch27P3M=
-X-Gm-Message-State: AOJu0YzZtLygmIGnEtpyGjA3NFu0g/Paxq8Z0XFhC0/GUgTH2lwL2dDq
- hYunJjSaRl8iVfIFp3t0EwAvpnZ1sklRQomrxf89rQkEhiEdI0KkPsRLN160E7i6vA7I/naTeDr
- 0
-X-Google-Smtp-Source: AGHT+IHetZmCWR9x3mpYr7iMi0hHh32vQnkeB2HICfp/qPjWBENkFxexdhhewIT0WEu8UyUHeW0mCw==
-X-Received: by 2002:a05:6a00:1795:b0:6ec:ebe0:e4ba with SMTP id
- s21-20020a056a00179500b006ecebe0e4bamr1347223pfg.9.1714601721182; 
- Wed, 01 May 2024 15:15:21 -0700 (PDT)
+ AJvYcCUOxjDDnG8CT5YyCm5h7cJoRE3WiaukdKcmHhbEu1NjYnFBXkprq9DN00vpUH026XRmYNXs/Da/DIO/zbAhN6BXZw/50D0=
+X-Gm-Message-State: AOJu0YyFAXmbjPEyQ+p1bNyVzbOxayG8kML46nCTmoYkJ7hbI5ugeKMN
+ lIdTAGm+10scp7lXYUfZAzcJUgWle8zZNUkW1DNA5ExIvjXlkn+jgf2QRLvuz3Q=
+X-Google-Smtp-Source: AGHT+IE9X6iaHXylnqWA9OlmTxScWH2TuLH1WbJIZUTiMPxXIPWHDvr9yNIxZ9OWC5DVAkgVb/YYxw==
+X-Received: by 2002:a17:903:26c5:b0:1e3:e39a:2e49 with SMTP id
+ jg5-20020a17090326c500b001e3e39a2e49mr3288537plb.18.1714601704764; 
+ Wed, 01 May 2024 15:15:04 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- m2-20020a638c02000000b005e857e39b10sm23154925pgd.56.2024.05.01.15.15.20
+ d15-20020a170902654f00b001dd0d0d26a4sm9934647pln.147.2024.05.01.15.15.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 May 2024 15:15:20 -0700 (PDT)
-Message-ID: <aeb7cc0d-8823-4f81-a135-795a4d45886c@linaro.org>
-Date: Wed, 1 May 2024 15:15:18 -0700
+ Wed, 01 May 2024 15:15:04 -0700 (PDT)
+Message-ID: <66a98cd0-d489-447a-9494-37be34802f33@linaro.org>
+Date: Wed, 1 May 2024 15:15:02 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/9] QGA misc changes for 2024-05-01
-To: Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-devel@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-References: <20240501074340.19641-1-kkostiuk@redhat.com>
+Subject: Re: [PULL 0/1] ufs queue
+To: Jeuk Kim <jeuk20.kim@gmail.com>, qemu-devel@nongnu.org, stefanha@redhat.com
+Cc: fam@euphon.net, pbonzini@redhat.com, qemu-block@nongnu.org,
+ jeuk20.kim@samsung.com, j-young.choi@samsung.com, zheyuma97@gmail.com
+References: <cover.1714360640.git.jeuk20.kim@samsung.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240501074340.19641-1-kkostiuk@redhat.com>
+In-Reply-To: <cover.1714360640.git.jeuk20.kim@samsung.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,21 +98,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/1/24 00:43, Konstantin Kostiuk wrote:
-> The following changes since commit 9c6c079bc6723da8061ccfb44361d67b1dd785dd:
+On 4/28/24 20:25, Jeuk Kim wrote:
+> From: Jeuk Kim<jeuk20.kim@samsung.com>
 > 
->    Merge tag 'pull-target-arm-20240430' ofhttps://git.linaro.org/people/pmaydell/qemu-arm  into staging (2024-04-30 09:58:54 -0700)
+> The following changes since commit fd87be1dada5672f877e03c2ca8504458292c479:
+> 
+>    Merge tag 'accel-20240426' ofhttps://github.com/philmd/qemu  into staging (2024-04-26 15:28:13 -0700)
 > 
 > are available in the Git repository at:
 > 
->    https://github.com/kostyanf14/qemu.git  tags/qga-pull-2024-05-01
+>    https://gitlab.com/jeuk20.kim/qemu.git  tags/pull-ufs-20240429
 > 
-> for you to fetch changes up to 6b9296ba7a9cf7adb157c51c124ca522d2180739:
+> for you to fetch changes up to f2c8aeb1afefcda92054c448b21fc59cdd99db30:
 > 
->    qga: Implement SSH commands for Windows (2024-05-01 10:35:45 +0300)
+>    hw/ufs: Fix buffer overflow bug (2024-04-29 12:13:35 +0900)
 > 
 > ----------------------------------------------------------------
-> qga-pull-2024-05-01
+> ufs queue
+> 
+> - Fix ufs sanitizer vulnerability
 
 Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
