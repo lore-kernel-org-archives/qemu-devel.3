@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 407FFC10F1A
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 23:44:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 914E4C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 23:45:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2Jbh-0002Cd-Ig; Wed, 01 May 2024 19:43:25 -0400
+	id 1s2Jbf-00029s-Jk; Wed, 01 May 2024 19:43:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s2Jbf-000298-7b; Wed, 01 May 2024 19:43:23 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1s2Jbe-00028Q-9y; Wed, 01 May 2024 19:43:22 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s2Jbd-000513-PA; Wed, 01 May 2024 19:43:22 -0400
+ id 1s2Jbc-00050e-R4; Wed, 01 May 2024 19:43:22 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 4F5344E6057;
- Thu, 02 May 2024 01:43:20 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 3CC744E602F;
+ Thu, 02 May 2024 01:43:19 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id YBEEFFWe3bdX; Thu,  2 May 2024 01:43:18 +0200 (CEST)
+ with ESMTP id wf8MWE8K6bPw; Thu,  2 May 2024 01:43:17 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 61E7E4E602E; Thu, 02 May 2024 01:43:18 +0200 (CEST)
-Message-Id: <6e9441212a1146fde2bd3a120d6c426cd2a1792e.1714606359.git.balaton@eik.bme.hu>
+ id 505684E6056; Thu, 02 May 2024 01:43:17 +0200 (CEST)
+Message-Id: <400affc638d56c4669abe2e20bf9a22c18ea29fe.1714606359.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1714606359.git.balaton@eik.bme.hu>
 References: <cover.1714606359.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v2 12/28] target/ppc/mmu_common.c: Split out BookE cases
- before checking real mode
+Subject: [PATCH v2 11/28] target/ppc/mmu_common.c: Rename get_bat_6xx_tlb()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,9 +39,9 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Thu, 02 May 2024 01:43:18 +0200 (CEST)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Date: Thu, 02 May 2024 01:43:17 +0200 (CEST)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -63,47 +62,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-BookE does not have real mode so split off and handle it first in
-get_physical_address_wtlb() before checking for real mode for other
-MMU models.
+Rename to ppc6xx_tlb_get_bat() to match other similar names in the
+same file.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- target/ppc/mmu_common.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ target/ppc/mmu_common.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index a069e4083f..24a9b9ef19 100644
+index ef1669b01d..a069e4083f 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -1191,6 +1191,13 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
-     int ret = -1;
-     bool real_mode;
+@@ -288,8 +288,8 @@ static inline void bat_size_prot(CPUPPCState *env, target_ulong *blp,
+     *protp = prot;
+ }
  
-+    if (env->mmu_model == POWERPC_MMU_BOOKE) {
-+        return mmubooke_get_physical_address(env, ctx, eaddr, access_type);
-+    } else if (env->mmu_model == POWERPC_MMU_BOOKE206) {
-+        return mmubooke206_get_physical_address(env, ctx, eaddr, access_type,
-+                                                mmu_idx);
-+    }
-+
-     real_mode = (type == ACCESS_CODE) ? !FIELD_EX64(env->msr, MSR, IR)
-                                       : !FIELD_EX64(env->msr, MSR, DR);
+-static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
+-                           target_ulong virtual, MMUAccessType access_type)
++static int ppc6xx_tlb_get_bat(CPUPPCState *env, mmu_ctx_t *ctx,
++                              target_ulong virtual, MMUAccessType access_type)
+ {
+     target_ulong *BATlt, *BATut, *BATu, *BATl;
+     target_ulong BEPIl, BEPIu, bl;
+@@ -371,7 +371,7 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
  
-@@ -1211,13 +1218,6 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
-             ret = mmu40x_get_physical_address(env, ctx, eaddr, access_type);
-         }
-         break;
--    case POWERPC_MMU_BOOKE:
--        ret = mmubooke_get_physical_address(env, ctx, eaddr, access_type);
--        break;
--    case POWERPC_MMU_BOOKE206:
--        ret = mmubooke206_get_physical_address(env, ctx, eaddr, access_type,
--                                               mmu_idx);
--        break;
-     case POWERPC_MMU_REAL:
-         if (real_mode) {
-             ret = check_physical(env, ctx, eaddr, access_type);
+     /* First try to find a BAT entry if there are any */
+     if (env->nb_BATs != 0) {
+-        ret = get_bat_6xx_tlb(env, ctx, eaddr, access_type);
++        ret = ppc6xx_tlb_get_bat(env, ctx, eaddr, access_type);
+     }
+     if (ret >= 0) {
+         return ret;
 -- 
 2.30.9
 
