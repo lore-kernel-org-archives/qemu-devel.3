@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA85EC4345F
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 19:39:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D64A2C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 19:53:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2Fmu-0004nj-Lh; Wed, 01 May 2024 15:38:44 -0400
+	id 1s2G0E-0007KF-AF; Wed, 01 May 2024 15:52:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1s2Fmt-0004nT-KX
- for qemu-devel@nongnu.org; Wed, 01 May 2024 15:38:43 -0400
+ id 1s2G0C-0007Ju-Dy
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 15:52:28 -0400
 Received: from madrid.collaboradmins.com ([2a00:1098:ed:100::25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1s2Fms-0006tu-05
- for qemu-devel@nongnu.org; Wed, 01 May 2024 15:38:43 -0400
+ id 1s2G0A-0000zv-Uv
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 15:52:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
- s=mail; t=1714592319;
- bh=4Sz2VGYkTfwU7xkoy8J0t4adJRX+9fGe5XsNB+G7Ug8=;
+ s=mail; t=1714593144;
+ bh=rgXCEk7E0aZlKU5fvxPriFR12/SRtJ/2EJOxMdt2j4M=;
  h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
- b=wLIlAitKdufGy6lgrxQLSVD7FcEBqHXNtOxP9b3QH80sXpMPaVvgnzgR0fMumasxP
- elx/b6pQm7jcUtMng/Sio2Z90sCT4U6RcDR9sT2RxbaB3DBFMNvijRK4y+qWZELbaU
- tj7bRImGxMCyTdOG1YK6zPpjhVhn4f7MLphw7yT2IOvQQFSJ2qul24GAAcvpstq1LD
- UcX5AaS50tGO0is+KFZpplVxGYCzfpTVgMrHb2s2+VXFC2YhdjfLVd8XUtY3+x12yy
- W9COAYeBTisLDrACLil6Q9a36wxSg7ftyfUraP4Z8tATy5iTIZlfx9WLiuwdC1AUBn
- NsXeAwGx6si/Q==
+ b=nVVdmv8XGk6SCGVue46wKCsOyZjo89xwyFDqaPMKq6Aj+ukCTDgvH48Eq08Fov/vz
+ kBk5HHt88Er9NYaF55pTtTwtbmjunK/5X8YY3ZWjPVTIpM4AVBcrP3+o7dJGkAQFXB
+ orOtLdQ3PsNKHIAeM83TTSX1hO7TIVf2TAYZInFAzjayHC/YIv9LtHiWSeDMyUPQ6s
+ iSxpN/Pto6XpRBbTVOAAWu+gTLASfVUBKzkziM0REEcg08mtmX9FkTWy8Aa0da37iJ
+ Qx4t+3WEaSdsMrtmipVY9/odwvaTVVaYnHSKPwmfHx6J6zoJNv1Tfhyuz/sWF9V+SK
+ gQEQ/+uloY4NQ==
 Received: from [100.109.49.129] (cola.collaboradmins.com [195.201.22.229])
  (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
  (Authenticated sender: dmitry.osipenko)
- by madrid.collaboradmins.com (Postfix) with ESMTPSA id 07AE13780629;
- Wed,  1 May 2024 19:38:36 +0000 (UTC)
-Message-ID: <66cd0301-7e92-4c0c-9dfa-fb1a4a13b607@collabora.com>
-Date: Wed, 1 May 2024 22:38:34 +0300
+ by madrid.collaboradmins.com (Postfix) with ESMTPSA id CB6B83780629;
+ Wed,  1 May 2024 19:52:22 +0000 (UTC)
+Message-ID: <25e07a71-c597-43f9-b800-dde16ecfc358@collabora.com>
+Date: Wed, 1 May 2024 22:52:20 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v9 09/11] virtio-gpu: Register capsets dynamically
@@ -68,8 +68,9 @@ References: <20240425154539.2680550-1-dmitry.osipenko@collabora.com>
  <20240425154539.2680550-10-dmitry.osipenko@collabora.com>
  <557f5ddb-4326-48bc-b34e-bda9d51cadcc@daynix.com>
  <490016a8-965b-497b-9c12-5202d135407a@collabora.com>
+ <66cd0301-7e92-4c0c-9dfa-fb1a4a13b607@collabora.com>
 Content-Language: en-US
-In-Reply-To: <490016a8-965b-497b-9c12-5202d135407a@collabora.com>
+In-Reply-To: <66cd0301-7e92-4c0c-9dfa-fb1a4a13b607@collabora.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1098:ed:100::25;
@@ -95,24 +96,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/1/24 22:31, Dmitry Osipenko wrote:
-> On 4/27/24 10:12, Akihiko Odaki wrote:
->>>   int virtio_gpu_virgl_get_num_capsets(VirtIOGPU *g)
->>>   {
->>>       uint32_t capset2_max_ver, capset2_max_size;
->>> +
->>> +    if (g->capset_ids) {
+On 5/1/24 22:38, Dmitry Osipenko wrote:
+> On 5/1/24 22:31, Dmitry Osipenko wrote:
+>> On 4/27/24 10:12, Akihiko Odaki wrote:
+>>>>   int virtio_gpu_virgl_get_num_capsets(VirtIOGPU *g)
+>>>>   {
+>>>>       uint32_t capset2_max_ver, capset2_max_size;
+>>>> +
+>>>> +    if (g->capset_ids) {
+>>>
+>>> Move capset_ids initialization to virtio_gpu_virgl_init() to save this
+>>> conditional.
 >>
->> Move capset_ids initialization to virtio_gpu_virgl_init() to save this
->> conditional.
+>> Capsets are used before virgl is inited. At first guest queries virtio
+>> device features and then enables virgl only if capset is available.
+>> While virgl itself is initialized when first virtio command is
+>> processed. I.e. it's not possible to move to virtio_gpu_virgl_init.
 > 
-> Capsets are used before virgl is inited. At first guest queries virtio
-> device features and then enables virgl only if capset is available.
-> While virgl itself is initialized when first virtio command is
-> processed. I.e. it's not possible to move to virtio_gpu_virgl_init.
+> Though no, capsets aren't part of device features. I'll move it to
+> virtio_gpu_virgl_init, thanks.
+> 
 
-Though no, capsets aren't part of device features. I'll move it to
-virtio_gpu_virgl_init, thanks.
+Number of capsets actually is a part of generic virtio device cfg
+descriptor. Capsets initialization can't be moved without probing
+capsets twice, i.e. not worthwhile.
 
 -- 
 Best regards,
