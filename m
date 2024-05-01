@@ -4,83 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7049C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Apr 2024 23:02:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C96FDC4345F
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 03:47:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s1wU9-0007iX-4d; Tue, 30 Apr 2024 19:02:05 -0400
+	id 1s20vV-0003hW-3S; Tue, 30 Apr 2024 23:46:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s1wU4-0007hN-MS
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 19:02:00 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s1wTy-0007Dm-Vh
- for qemu-devel@nongnu.org; Tue, 30 Apr 2024 19:02:00 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-6f26588dd5eso5354524b3a.0
- for <qemu-devel@nongnu.org>; Tue, 30 Apr 2024 16:01:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714518113; x=1715122913; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=GT28dIlm00nmvPFYTKfVLKxpdFdz+PopsyCVy4D06vo=;
- b=E6uVOFyKOujqs8mhHWC7ZMz+Hu8XY0qziMnw2NhB3IKCXeJr33KYMsuaSNm/4qv8c/
- uHaj4LZM/fvCJnxzCL7ak/1Swl3AFLOttRSKYteshH+Zt85QssBfJFHEQdsSkEF4Lb0a
- bJItg99QUlCKalowcPPJxLbhH8wQmhdXrAqUEAta1Oszcj1RiC81P/YUYmRs1fkApCJu
- ZZrElFi0mmQvkavgFHRSBVHjwQVYimDDkFlPrR9P0g9LIAR9qaYbcOAmKmoYDuswttze
- /RbevDGscHA0BNLKnDJLhY72a7cWhw7UkFgi2GpWEKbW72iaYvxE0KKC6VW8K7iFEhog
- I9mQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714518113; x=1715122913;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GT28dIlm00nmvPFYTKfVLKxpdFdz+PopsyCVy4D06vo=;
- b=BZlk7F1H7POR/Z52NDSaeRu8dON4/eD4AGCZKeUNXiIYQWCwsL5r8bHPmd+cKhh3QJ
- GfLGz/8nha6o/g6DWBaNu4xUoFVeH+620D1iMVniH64w42HVI3Brb2ZftIu9Vkt9qlEE
- 3mCtDUodTkmEcrq4A+Tx0ac28Qu3azCprxk5jPYHL0WNad0DlL79CBavo4vP6OljZK6O
- M8JbU5n3jaf88BvchDnkpm9G/e2IdBpT+uKrDu4n4JYclMSiiFip8IjZuFlauYwZSFx/
- d0ZBLK3qKJxYmkL4noSgtgEN/265tpBgQuYbdKmIQuleDJ4IMDUIEhxANpGCmEiZgZF0
- 4GHg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV1n3Ddqcqq8thO38n19D0rmb4EK13gjprZ+8w6Sg++mea12f1VASo4q7AyBSP88atnQgzjhcE0/8qVR/NJhxto3BY5B1Y=
-X-Gm-Message-State: AOJu0YyQ5f81yPcP/NtmmddvL9WDVH+sRcAgqmcXRtcyFumUo0KnoNxN
- DqpmlNiS44+FH5y/q60p2GjuLiJczvoDskIESi61RvHZ2LoPXbUAdIgAftLnANtvWbUR2hRseot
- 2
-X-Google-Smtp-Source: AGHT+IGm6ClBiDyUQ1FyJg+aSNnyn1xIPbvsiqaECVpYlJsmEx2Z5gti4rybj8SJ/0SFrWQPL5/I4Q==
-X-Received: by 2002:a05:6a21:2d05:b0:1af:3a17:6545 with SMTP id
- tw5-20020a056a212d0500b001af3a176545mr911482pzb.12.1714518113592; 
- Tue, 30 Apr 2024 16:01:53 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
- by smtp.gmail.com with ESMTPSA id
- c5-20020a170903234500b001ec36b6b28csm2213914plh.266.2024.04.30.16.01.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Apr 2024 16:01:53 -0700 (PDT)
-Message-ID: <a32a6245-8cef-4ef7-8d9e-39b289bb4191@linaro.org>
-Date: Tue, 30 Apr 2024 16:01:51 -0700
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1s20vT-0003hG-Nn
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 23:46:35 -0400
+Received: from mgamail.intel.com ([192.198.163.10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1s20vQ-0001o2-QH
+ for qemu-devel@nongnu.org; Tue, 30 Apr 2024 23:46:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1714535192; x=1746071192;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=WS8qD5SPYu1hOTahbrL1UD5TvXtq5h2Os4YX6aEILew=;
+ b=QB3AAiQ+pCw8St04QXNvw6sQRtZ7fUO363MOo3lS+/nCE+Slfsx/Jpiz
+ ZYi6L2z+PXPFVytmjnoggZou7n7jTkFbgV+gwu9lfck6geaxxG07rAeBZ
+ xUt//67P+txvqFmUWfTriDkndglCZpftATX0X0dmI6Zn8v5l7R/FysYsK
+ TPezARAW6N74GzRfXL8c4ySvsWYkptz75Uh9Ig55nD8GRGcUW+r5MRg7N
+ QX5jnWu5zVhotZUV3v4kpVebTFzLfsV/DjpMhnKCeH4TfhSwFT4+MMpU7
+ A/n83AevZBjlv3FwaboDjqlzkkH1jvkEgxUdS1ALxHQzo0yQgWx+wVGn4 Q==;
+X-CSE-ConnectionGUID: z/IyXFy/Q52eVy/a2n/V6w==
+X-CSE-MsgGUID: 435/vRqzRNq9Lb2dXncJyA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11060"; a="21669422"
+X-IronPort-AV: E=Sophos;i="6.07,244,1708416000"; d="scan'208";a="21669422"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 30 Apr 2024 20:46:29 -0700
+X-CSE-ConnectionGUID: 8k+VWQGMQOOL55ghsjztWg==
+X-CSE-MsgGUID: hJ+gZqTwSjuWVHjdYxgV0A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,244,1708416000"; d="scan'208";a="26701143"
+Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.129.124])
+ by orviesa009.jf.intel.com with ESMTP; 30 Apr 2024 20:46:29 -0700
+From: dongwon.kim@intel.com
+To: qemu-devel@nongnu.org
+Cc: kraxel@redhat.com,
+	marcandre.lureau@redhat.com
+Subject: [PATCH] ui/gtk: Explicitly set the default size of new window when
+ untabifying
+Date: Tue, 30 Apr 2024 20:41:33 -0700
+Message-Id: <20240501034133.167321-1-dongwon.kim@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/21] target-arm queue
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-References: <20240430164842.4074734-1-peter.maydell@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240430164842.4074734-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.10;
+ envelope-from=dongwon.kim@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -53
+X-Spam_score: -5.4
+X-Spam_bar: -----
+X-Spam_report: (-5.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,41 +81,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/30/24 09:48, Peter Maydell wrote:
-> Here's another arm pullreq; nothing too exciting in here I think.
-> 
-> thanks
-> -- PMM
-> 
-> The following changes since commit 5fee33d97a7f2e95716417bd164f2f5264acd976:
-> 
->    Merge tag 'samuel-thibault' ofhttps://people.debian.org/~sthibault/qemu  into staging (2024-04-29 14:34:25 -0700)
-> 
-> are available in the Git repository at:
-> 
->    https://git.linaro.org/people/pmaydell/qemu-arm.git  tags/pull-target-arm-20240430
-> 
-> for you to fetch changes up to a0c325c4b05cf7815739d6a84e567b95c8c5be7e:
-> 
->    tests/qtest : Add testcase for DM163 (2024-04-30 16:05:08 +0100)
-> 
-> ----------------------------------------------------------------
-> target-arm queue:
->   * hw/core/clock: allow clock_propagate on child clocks
->   * hvf: arm: Remove unused PL1_WRITE_MASK define
->   * target/arm: Restrict translation disabled alignment check to VMSA
->   * docs/system/arm/emulation.rst: Add missing implemented features
->   * target/arm: Enable FEAT_CSV2_3, FEAT_ETS2, FEAT_Spec_FPACC for 'max'
->   * tests/avocado: update sunxi kernel from armbian to 6.6.16
->   * target/arm: Make new CPUs default to 1GHz generic timer
->   * hw/dmax/xlnx_dpdma: fix handling of address_extension descriptor fields
->   * hw/char/stm32l4x5_usart: Fix memory corruption by adding correct class_size
->   * hw/arm/npcm7xx: Store derivative OTP fuse key in little endian
->   * hw/arm: Add DM163 display to B-L475E-IOT01A board
+From: Dongwon Kim <dongwon.kim@intel.com>
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+When untabifying, the default size of the new window was inadvertently
+set to the size smaller than quarter of the primary window size due
+to lack of explicit configuration. This commit addresses the issue by
+ensuring that the size of untabified windows is set to match the surface
+size.
 
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+---
+ ui/gtk.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-r~
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 810d7fc796..269b8207d7 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -1395,6 +1395,9 @@ static void gd_menu_untabify(GtkMenuItem *item, void *opaque)
+     if (!vc->window) {
+         gtk_widget_set_sensitive(vc->menu_item, false);
+         vc->window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
++        gtk_window_set_default_size(GTK_WINDOW(vc->window),
++                                    surface_width(vc->gfx.ds),
++                                    surface_height(vc->gfx.ds));
+ #if defined(CONFIG_OPENGL)
+         if (vc->gfx.esurface) {
+             eglDestroySurface(qemu_egl_display, vc->gfx.esurface);
+-- 
+2.34.1
 
 
