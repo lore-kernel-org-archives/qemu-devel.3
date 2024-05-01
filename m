@@ -4,98 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37A6AC4345F
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 07:07:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 825ABC19F53
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 07:19:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s243C-0000yo-Lm; Wed, 01 May 2024 03:06:46 -0400
+	id 1s24FK-0003gI-Vy; Wed, 01 May 2024 03:19:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s243B-0000yd-09
- for qemu-devel@nongnu.org; Wed, 01 May 2024 03:06:45 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s2439-000673-78
- for qemu-devel@nongnu.org; Wed, 01 May 2024 03:06:44 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1ec4b2400b6so13241485ad.3
- for <qemu-devel@nongnu.org>; Wed, 01 May 2024 00:06:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1714547201; x=1715152001;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=KPSTrIfQLlKlE2Y5kcC1q5aZAAoFOn80Cx2b2G9gn0c=;
- b=cW0BUsUtzyCdSu4kJ1Je5TadVvQh+P7Xgl0N878KMbESw8+k8QwnOM06HXooc0URZB
- nItmv3+sdeh/BKN3kepngchq7FgKwc3fHnDQFG1u2yvpOjSTkn9EgC50hbkMAlJad4Aw
- O1zX3eRmvEGhryLL5kpWbitaQ7NcGOElK1a8BZ1EQjcLoSbE4nyQpaHw9TfId9vDP+c9
- 9W/sRMdr7EtjxBl2aVwWlw6tKySBjjSME8vhFNIzVTiJhRSsTBdg5BtqZ/x60SR6nqdt
- xK6VUgjFohh50Je6tnO2Npb05D3H9gCw6Uget1/pb8cPVIPFsLnw3ut3mwfwXKICe+Jj
- ENMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714547201; x=1715152001;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KPSTrIfQLlKlE2Y5kcC1q5aZAAoFOn80Cx2b2G9gn0c=;
- b=dSe6ic052BFgXLUdna/7kxUk9maE1S7qNUl0V/7A+UOYP9DGRv/L4St9d7GQmNpvcX
- U1YKXsS0SB4glHkePuv+bQxi4A1zTHriX9BWLe3jZ/eZsRXPVXg0gQiUA8uRgSUGjWkE
- 9LnbPUzClcwzFXQvIsq0g8IxvH5k+Q2m0d3GV6wf2BsPWLAvRdsCAreglpJVa1SbR1cK
- oN8zBDPW8dJmVOSjZptCukfkNU3EF9aMGIvusDW2zEj/aPGQsrLma8U2Sh1LhM4gbCjD
- etusg6ebZag2I2e2AT5klV6YjSF0RkkYj0mvBhks3w8CRBgxuZEKYqvLqEcj2wiECV/r
- 6L1Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV75Chmgcpin/ok6VcBc2Jgjtx0Vs5pf7BakmFaIewJw9TPb2JMXv7qHi6uRXYp2ddwqvLPpfSOKMLouu/FRA+jltF8GeE=
-X-Gm-Message-State: AOJu0YxIHLwQq/VkYhIblojbdKwn47O5egnzhn9YxwgLzmAwckZAag1S
- xpxjbC2Z/3pBmUmVz3RAMs5MEkdeIkunivLCBKKajVCk6hL4Oie4aoAhaYI3aMM=
-X-Google-Smtp-Source: AGHT+IENJE2MqYYegAErVTUgJk4cpXG5Fyx4iU0rfmmLPTAeN133tVtRQJu+U5k3sTgwcuwsAn1C3w==
-X-Received: by 2002:a17:903:124d:b0:1e6:7700:1698 with SMTP id
- u13-20020a170903124d00b001e677001698mr1701339plh.35.1714547201590; 
- Wed, 01 May 2024 00:06:41 -0700 (PDT)
-Received: from [157.82.202.162] ([157.82.202.162])
- by smtp.gmail.com with ESMTPSA id
- l8-20020a170903244800b001ea9580e6a0sm11842684pls.20.2024.05.01.00.06.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 May 2024 00:06:41 -0700 (PDT)
-Message-ID: <3c0aef43-2460-4a32-90ff-295ca3558449@daynix.com>
-Date: Wed, 1 May 2024 16:06:37 +0900
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1s24FJ-0003ft-3z
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 03:19:17 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1s24FF-00083o-Ci
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 03:19:16 -0400
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:c10a:0:640:882f:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 59BA860913;
+ Wed,  1 May 2024 10:19:05 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:8829::1:3c] (unknown
+ [2a02:6b8:b081:8829::1:3c])
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 3JMJnL2IcCg0-zpu2fnMm; Wed, 01 May 2024 10:19:04 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1714547944;
+ bh=7HlKSkGfM0l+IMv2cI33pr5SqA88FgEh+n1LIJvK0+I=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=aXiQEW4qpKtY0MoJ0NUXd9IhVndR0QQtxK53X3iC293f05kV9KBohXzblpSWXtayw
+ mNHnbyD7nUosf6xAuE/6ORoI5TkJ47ba/yrAwuMy+5Xrpm0LRddPmi/TNtjUKddRdY
+ WBPj0p0ry2u7QhR143Ut2mphqdyJqEi9CNcxF+3I=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <c1fe136a-92f8-4f57-b2c7-934bab6ac6a8@yandex-team.ru>
+Date: Wed, 1 May 2024 10:19:03 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] virtio-net: Convert feature properties to OnOffAuto
+Subject: Re: [PATCH v6 4/5] migration: process_incoming_migration_co(): rework
+ error reporting
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ peterx@redhat.com, farosas@suse.de
+Cc: eblake@redhat.com, armbru@redhat.com, pbonzini@redhat.com,
+ qemu-devel@nongnu.org, yc-core@yandex-team.ru
+References: <20240430085646.2359711-1-vsementsov@yandex-team.ru>
+ <20240430085646.2359711-5-vsementsov@yandex-team.ru>
+ <e318d8dd-64de-4d22-a11f-76e8c2678c88@linaro.org>
 Content-Language: en-US
-To: Yuri Benditovich <yuri.benditovich@daynix.com>
-Cc: Jason Wang <jasowang@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>,
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
- Vincenzo Maffione <v.maffione@gmail.com>,
- Andrew Melnychenko <andrew@daynix.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org
-References: <20240428-auto-v1-0-7b012216a120@daynix.com>
- <20240428-auto-v1-2-7b012216a120@daynix.com>
- <CAOEp5OcvLRvCVsGcC=8Y-P1tzJ4Tn+21Y6rJe_2ZVK-cDzePxw@mail.gmail.com>
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CAOEp5OcvLRvCVsGcC=8Y-P1tzJ4Tn+21Y6rJe_2ZVK-cDzePxw@mail.gmail.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <e318d8dd-64de-4d22-a11f-76e8c2678c88@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::62b;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -107,19 +81,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/05/01 0:02, Yuri Benditovich wrote:
-> Question:
-> How will libvirt (as an example) work with this change. In the
-> existing semantic of libvirt profile the "on" means "on if possible"
-> and using existing profile after qemu update will still use "on" with
-> meaning "force"? > Typically this is solved by machine type - if libvirt uses
-> 'machine='pc-q35-8.1'' this will be backward-compatible.
-> How will this change be accepted?
+On 30.04.24 12:16, Philippe Mathieu-Daudé wrote:
+> On 30/4/24 10:56, Vladimir Sementsov-Ogievskiy wrote:
+>> Unify error reporting in the function. This simplifies the following
+>> commit, which will not-exit-on-error behavior variant to the function.
+>>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> ---
+>>   migration/migration.c | 23 +++++++++++++----------
+>>   1 file changed, 13 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/migration/migration.c b/migration/migration.c
+>> index b307a4bc59..a9599838e6 100644
+>> --- a/migration/migration.c
+>> +++ b/migration/migration.c
+>> @@ -735,14 +735,16 @@ static void process_incoming_migration_bh(void *opaque)
+>>   static void coroutine_fn
+>>   process_incoming_migration_co(void *opaque)
+>>   {
+>> +    MigrationState *s = migrate_get_current();
+> 
+> (see below)
+> 
+>>       MigrationIncomingState *mis = migration_incoming_get_current();
+>>       PostcopyState ps;
+>>       int ret;
+>> +    Error *local_err = NULL;
+>>       assert(mis->from_src_file);
+>>       if (compress_threads_load_setup(mis->from_src_file)) {
+>> -        error_report("Failed to setup decompress threads");
+>> +        error_setg(&local_err, "Failed to setup decompress threads");
+>>           goto fail;
+>>       }
+>> @@ -779,19 +781,12 @@ process_incoming_migration_co(void *opaque)
+>>       }
+>>       if (ret < 0) {
+>> -        MigrationState *s = migrate_get_current();
+>> -
+>> -        if (migrate_has_error(s)) {
+>> -            WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
+>> -                error_report_err(s->error);
+>> -                s->error = NULL;
+>> -            }
+>> -        }
+>> -        error_report("load of migration failed: %s", strerror(-ret));
+>> +        error_setg(&local_err, "load of migration failed: %s", strerror(-ret));
+>>           goto fail;
+>>       }
+>>       if (colo_incoming_co() < 0) {
+>> +        error_setg(&local_err, "colo incoming failed");
+>>           goto fail;
+>>       }
+>> @@ -800,8 +795,16 @@ process_incoming_migration_co(void *opaque)
+>>   fail:
+> 
+> Maybe just assign @s in error path here?
+> 
+>         s = migrate_get_current();
 
-The reasoning here is that this patch only changes the configuration 
-validation and, once the validation passes, QEMU can load the state of a 
-machine created with an old version of QEMU.
+I'd keep as is. If continue improving the function, I'd better split the logic to seperate function with classic "Error **errp" argument. And keep reporting error in caller.
 
-It is still a good idea to add a compatibility property. I'll do so in 
-the next version.
+> 
+>>       migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
+>>                         MIGRATION_STATUS_FAILED);
+>> +    migrate_set_error(s, local_err);
+>> +    error_free(local_err);
+>> +
+>>       migration_incoming_state_destroy();
+>> +    WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
+>> +        error_report_err(s->error);
+>> +        s->error = NULL;
+>> +    }
+>> +
+>>       exit(EXIT_FAILURE);
+>>   }
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+
+-- 
+Best regards,
+Vladimir
+
 
