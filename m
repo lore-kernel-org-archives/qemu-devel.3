@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81633C10F1A
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 23:45:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 651E8C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 23:45:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2Jbb-00026H-Rf; Wed, 01 May 2024 19:43:20 -0400
+	id 1s2Jbi-0002C2-Lu; Wed, 01 May 2024 19:43:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s2JbZ-00023b-Fj; Wed, 01 May 2024 19:43:17 -0400
+ id 1s2Jbb-00026N-Vt; Wed, 01 May 2024 19:43:20 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s2JbV-0004zB-Vc; Wed, 01 May 2024 19:43:17 -0400
+ id 1s2Jba-0004zf-DT; Wed, 01 May 2024 19:43:19 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id C43844E602D;
- Thu, 02 May 2024 01:43:11 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id E910E4E6041;
+ Thu, 02 May 2024 01:43:13 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id cQI6GC_7fvlR; Thu,  2 May 2024 01:43:09 +0200 (CEST)
+ with ESMTP id NcIB0Ex5fDl1; Thu,  2 May 2024 01:43:12 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id D7CC44E6040; Thu, 02 May 2024 01:43:09 +0200 (CEST)
-Message-Id: <747ae7cc484e0d9387fd7647381009005cd81833.1714606359.git.balaton@eik.bme.hu>
+ id 0733F4E6054; Thu, 02 May 2024 01:43:12 +0200 (CEST)
+Message-Id: <41b1a7009a742d88a4338da8ba2335e657f18f91.1714606359.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1714606359.git.balaton@eik.bme.hu>
 References: <cover.1714606359.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v2 04/28] target/ppc: Remove unused helper
+Subject: [PATCH v2 06/28] target/ppc/mmu_common.c: Move calculation of a value
+ closer to its usage
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -39,7 +40,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Thu, 02 May 2024 01:43:09 +0200 (CEST)
+Date: Thu, 02 May 2024 01:43:12 +0200 (CEST)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -62,63 +63,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The helper_rac function is defined but not used, remove it.
+In mmubooke206_check_tlb() prot2 is calculated first but only used
+after an unrelated check that can return before tha value is used.
+Move the calculation after the check, closer to where it is used, to
+keep them together and avoid computing it when not needed.
 
-Fixes: 005b69fdcc (target/ppc: Remove PowerPC 601 CPUs)
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- target/ppc/helper.h     |  2 --
- target/ppc/mmu_helper.c | 24 ------------------------
- 2 files changed, 26 deletions(-)
+ target/ppc/mmu_common.c | 25 ++++++++++++-------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
 
-diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-index 86f97ee1e7..f769e01c3d 100644
---- a/target/ppc/helper.h
-+++ b/target/ppc/helper.h
-@@ -700,8 +700,6 @@ DEF_HELPER_2(book3s_msgclr, void, env, tl)
+diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+index 168ff842a5..b0aca8ec02 100644
+--- a/target/ppc/mmu_common.c
++++ b/target/ppc/mmu_common.c
+@@ -828,6 +828,18 @@ static int mmubooke206_check_tlb(CPUPPCState *env, ppcmas_tlb_t *tlb,
  
- DEF_HELPER_4(dlmzb, tl, env, tl, tl, i32)
- #if !defined(CONFIG_USER_ONLY)
--DEF_HELPER_2(rac, tl, env, tl)
--
- DEF_HELPER_2(load_dcr, tl, env, tl)
- DEF_HELPER_3(store_dcr, void, env, tl, tl)
- #endif
-diff --git a/target/ppc/mmu_helper.c b/target/ppc/mmu_helper.c
-index c071b4d5e2..817836b731 100644
---- a/target/ppc/mmu_helper.c
-+++ b/target/ppc/mmu_helper.c
-@@ -595,30 +595,6 @@ void helper_6xx_tlbi(CPUPPCState *env, target_ulong EPN)
-     do_6xx_tlb(env, EPN, 1);
- }
+ found_tlb:
  
--/*****************************************************************************/
--/* PowerPC 601 specific instructions (POWER bridge) */
++    /* Check the address space and permissions */
++    if (access_type == MMU_INST_FETCH) {
++        /* There is no way to fetch code using epid load */
++        assert(!use_epid);
++        as = FIELD_EX64(env->msr, MSR, IR);
++    }
++
++    if (as != ((tlb->mas1 & MAS1_TS) >> MAS1_TS_SHIFT)) {
++        qemu_log_mask(CPU_LOG_MMU, "%s: AS doesn't match\n", __func__);
++        return -1;
++    }
++
+     if (pr) {
+         if (tlb->mas7_3 & MAS3_UR) {
+             prot2 |= PAGE_READ;
+@@ -849,19 +861,6 @@ found_tlb:
+             prot2 |= PAGE_EXEC;
+         }
+     }
 -
--target_ulong helper_rac(CPUPPCState *env, target_ulong addr)
--{
--    mmu_ctx_t ctx;
--    int nb_BATs;
--    target_ulong ret = 0;
--
--    /*
--     * We don't have to generate many instances of this instruction,
--     * as rac is supervisor only.
--     *
--     * XXX: FIX THIS: Pretend we have no BAT
--     */
--    nb_BATs = env->nb_BATs;
--    env->nb_BATs = 0;
--    if (get_physical_address_wtlb(env, &ctx, addr, 0, ACCESS_INT, 0) == 0) {
--        ret = ctx.raddr;
+-    /* Check the address space and permissions */
+-    if (access_type == MMU_INST_FETCH) {
+-        /* There is no way to fetch code using epid load */
+-        assert(!use_epid);
+-        as = FIELD_EX64(env->msr, MSR, IR);
 -    }
--    env->nb_BATs = nb_BATs;
--    return ret;
--}
 -
- static inline target_ulong booke_tlb_to_page_size(int size)
- {
-     return 1024 << (2 * size);
+-    if (as != ((tlb->mas1 & MAS1_TS) >> MAS1_TS_SHIFT)) {
+-        qemu_log_mask(CPU_LOG_MMU, "%s: AS doesn't match\n", __func__);
+-        return -1;
+-    }
+-
+     *prot = prot2;
+     if (prot2 & prot_for_access_type(access_type)) {
+         qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
 -- 
 2.30.9
 
