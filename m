@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC7F8C10F1A
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 14:38:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54238C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 14:39:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2B5g-0002en-Gr; Wed, 01 May 2024 10:37:48 -0400
+	id 1s2B6F-0002qh-K5; Wed, 01 May 2024 10:38:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s2B5d-0002dx-70
- for qemu-devel@nongnu.org; Wed, 01 May 2024 10:37:45 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1s2B5g-0002el-7J
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 10:37:48 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s2B5b-00026F-Mn
- for qemu-devel@nongnu.org; Wed, 01 May 2024 10:37:44 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-1ec4dd8525cso14157525ad.3
- for <qemu-devel@nongnu.org>; Wed, 01 May 2024 07:37:43 -0700 (PDT)
+ id 1s2B5d-00026o-Oq
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 10:37:47 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1e51398cc4eso60800885ad.2
+ for <qemu-devel@nongnu.org>; Wed, 01 May 2024 07:37:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714574262; x=1715179062; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714574264; x=1715179064; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=w0VoQ2qkKN/RYQvDr68owMd+LBRx3HOf412+iIHwvUA=;
- b=tLNv+QX3Z0KgyxF+r0rhdhom+mqpVD0E7nGJ3CwqeF2HhRn0KigF0pB2sGxDGGekh9
- FHCwzCL5KB5TBqyW3eJIKpBnOuyfSxvy6+j2yOP+WLKM9lP5/ks6QRUGoCuOKJuD+qfb
- 4eN1yieIEFCSTrYrnj91UShqbfrZjYv9rriQ7mmtl3nZmv0u3MabCQ0FYKB87O0zg0Fa
- FieU3SyJhoXi5KYpA+cOUNoZUatXIYB5dXNxqc9noj3e/+M2wPFy15zt1bNMeVRpp/Bg
- NR06SDN9+5KmUhP/4fUSGD+gFRrMowVNOp/aQrUKIl3i9rsEr7j11XZnClvgiy/OZ0Bd
- f7NA==
+ bh=luXE4K25FW6HOCJ1kHOE0xkHZzSsFeoNOQtESvbBF/8=;
+ b=cK9RlXqZlJ/cxNAF1uxSjKcLYeTlh8rVuLVg6xRE2MAg1l0pV0efStmVlC6kTjKxsF
+ 4dbxbi38ipibRY8/dYzndLiGWoFlZj/w74loJVROhdk/T2zyAJbWu2I1zFlZQfDlNlCn
+ HK2kj9lPmIamH/nvPgJ5jWJ3mKNROliFPvdbfCRaWw/txBirUDzVji8Qt3AtRZamu0rT
+ p5K7rwgl9PnPnMCiPFNfozXDqpQRbsshcqTkefmnge110Zy1KnFYZcYEWJFLZudSezki
+ 7y6OY2H4Q4IfaLp87/oUlQNyHsC8YBw24QaUIXpZa01C5Vzcw1qowwQDftOc4hE1LEUV
+ OHZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714574262; x=1715179062;
+ d=1e100.net; s=20230601; t=1714574264; x=1715179064;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=w0VoQ2qkKN/RYQvDr68owMd+LBRx3HOf412+iIHwvUA=;
- b=JpBS2eowvbIbXPIKqgknwWVBtoCNxA/vVTFDX7ZqhGZELW00zhg5j+x8NdIQ45U/Wq
- rG6Y+lAjVBi0fX+Kx10athkL22bEDZOzHXPGUzgaweZz2xnVqNmOaQza55UoTn8Pgkns
- OJ6a5pGBdEPGg2oeu67bWTD70h20zqJid+TIID6GXskhqgV+N41gl+tw0JJ1Ba9RHq7y
- iWYYOkx++FtDfVSRhGNKGn16ewodsk6kBMciCDxKZKmvvaKamWCEGBaIH2B8q1XTZjpY
- zxmxsnXfE4eo7/lDDsH2tTT3tarLFA8bE4V6MC4eW3RQ9VqDv9trVZnzXBPi9zbx+wr5
- k7/Q==
-X-Gm-Message-State: AOJu0YybLlFX/e+qS0Ed3srDKJdYAH/kak1LqmLFG+22sBZfl980Lwac
- SM8vmZr7U8F9cPrdelVtB9TUi3eVt36uznuFTy0LBU0ny20sJNif8/RciIiRDUCcI91ewz4bUuc
- S
-X-Google-Smtp-Source: AGHT+IGoO+BS41jlSnKUW9oSlaIkqQ37bF7o7jNs+g2jfZE9TVk42vYFpyyvNcWyIQHRlGsHNFaFcg==
-X-Received: by 2002:a17:902:c411:b0:1e2:9aa7:fd21 with SMTP id
- k17-20020a170902c41100b001e29aa7fd21mr2820860plk.54.1714574262287; 
- Wed, 01 May 2024 07:37:42 -0700 (PDT)
+ bh=luXE4K25FW6HOCJ1kHOE0xkHZzSsFeoNOQtESvbBF/8=;
+ b=oCGfN1UrFQR29aaeJlhCn1tl+ncRVqPxScOWG+DSQozU46KQurZYp7XQ7BNE/z5WpE
+ DEOJsp0/ktumD89BHirqSX5EJtoB82p9Z4mEhd3EMlw5CwXDHvZYyOm3oOsqTpNPzrM6
+ HkMw1kgnZNuh1rvIuohSys0LpqaqtZHg9BWit5nd5CAudZQn+di2akQ0PiJJJmprY9CZ
+ /rOE5d5wm3mr92ELVndXIYtwiZZosTKP/BPfgDIzDOEtBLzmZ5DOfONTSTJ0Wv4DDLNP
+ VwICOJhEB80yU4v//HxBow/bhvpKMYumHDjW/enuRoHA58aMHJbuFLgC1/43g4YON26H
+ giyw==
+X-Gm-Message-State: AOJu0Yz+izIS3bIAct97bNE44xd7VSJp22nmKaX1621zF+yjlTmjqQmQ
+ nQCx7V6UEqk9TYCUYY5ilfcKNPBot+0JwanZIV3nYKIqMmicNcO3R3a+GbXpvvbkMoB7eQn5myz
+ C
+X-Google-Smtp-Source: AGHT+IGWl8nSjQVZSMAEUmVtCLpOn77iheK9Kbd7T8LX1T5iCtCmyyZp9ASIZ+ygMdUf7p3byq1QVg==
+X-Received: by 2002:a17:903:40c9:b0:1e7:d482:9d96 with SMTP id
+ t9-20020a17090340c900b001e7d4829d96mr3120107pld.10.1714574264387; 
+ Wed, 01 May 2024 07:37:44 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- h12-20020a170902f54c00b001ebd73f61fcsm5751573plf.121.2024.05.01.07.37.41
+ h12-20020a170902f54c00b001ebd73f61fcsm5751573plf.121.2024.05.01.07.37.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 May 2024 07:37:41 -0700 (PDT)
+ Wed, 01 May 2024 07:37:44 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 01/20] tcg: Make tcg/helper-info.h self-contained
-Date: Wed,  1 May 2024 07:37:20 -0700
-Message-Id: <20240501143739.10541-2-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 03/20] plugins: Zero new qemu_plugin_dyn_cb entries
+Date: Wed,  1 May 2024 07:37:22 -0700
+Message-Id: <20240501143739.10541-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240501143739.10541-1-richard.henderson@linaro.org>
 References: <20240501143739.10541-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,57 +95,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move MAX_CALL_IARGS from tcg.h and include for
-the define of TCG_TARGET_REG_BITS.
-
 Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/tcg/helper-info.h | 3 +++
- include/tcg/tcg.h         | 2 --
- tcg/tci.c                 | 1 +
- 3 files changed, 4 insertions(+), 2 deletions(-)
+ plugins/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/tcg/helper-info.h b/include/tcg/helper-info.h
-index 7c27d6164a..909fe73afa 100644
---- a/include/tcg/helper-info.h
-+++ b/include/tcg/helper-info.h
-@@ -12,6 +12,9 @@
- #ifdef CONFIG_TCG_INTERPRETER
- #include <ffi.h>
- #endif
-+#include "tcg-target-reg-bits.h"
-+
-+#define MAX_CALL_IARGS  7
+diff --git a/plugins/core.c b/plugins/core.c
+index 11ca20e626..4487cb7c48 100644
+--- a/plugins/core.c
++++ b/plugins/core.c
+@@ -307,7 +307,7 @@ static struct qemu_plugin_dyn_cb *plugin_get_dyn_cb(GArray **arr)
+     GArray *cbs = *arr;
  
- /*
-  * Describe the calling convention of a given argument type.
-diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
-index 05a1912f8a..e4c598428d 100644
---- a/include/tcg/tcg.h
-+++ b/include/tcg/tcg.h
-@@ -39,8 +39,6 @@
- /* XXX: make safe guess about sizes */
- #define MAX_OP_PER_INSTR 266
- 
--#define MAX_CALL_IARGS  7
--
- #define CPU_TEMP_BUF_NLONGS 128
- #define TCG_STATIC_FRAME_SIZE  (CPU_TEMP_BUF_NLONGS * sizeof(long))
- 
-diff --git a/tcg/tci.c b/tcg/tci.c
-index 39adcb7d82..3afb223528 100644
---- a/tcg/tci.c
-+++ b/tcg/tci.c
-@@ -19,6 +19,7 @@
- 
- #include "qemu/osdep.h"
- #include "tcg/tcg.h"
-+#include "tcg/helper-info.h"
- #include "tcg/tcg-ldst.h"
- #include <ffi.h>
- 
+     if (!cbs) {
+-        cbs = g_array_sized_new(false, false,
++        cbs = g_array_sized_new(false, true,
+                                 sizeof(struct qemu_plugin_dyn_cb), 1);
+         *arr = cbs;
+     }
 -- 
 2.34.1
 
