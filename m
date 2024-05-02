@@ -4,88 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC493C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 20:49:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 799B5C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 20:54:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2dM0-0007YW-Pv; Thu, 02 May 2024 16:48:33 -0400
+	id 1s2dRj-0001j1-1G; Thu, 02 May 2024 16:54:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1s2dLy-0007YM-EI
- for qemu-devel@nongnu.org; Thu, 02 May 2024 16:48:30 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1s2dLr-0007Me-I7
- for qemu-devel@nongnu.org; Thu, 02 May 2024 16:48:30 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-2b387e2e355so994321a91.3
- for <qemu-devel@nongnu.org>; Thu, 02 May 2024 13:48:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714682898; x=1715287698; darn=nongnu.org;
- h=content-transfer-encoding:content-language:in-reply-to:mime-version
- :user-agent:date:message-id:references:to:from:subject:from:to:cc
- :subject:date:message-id:reply-to;
- bh=uM7v/cEzO1jGRhCUU/FgZXqzFxJhk+NVI87h9oi6SDk=;
- b=NIh0GvEsA4rYa34ul5zc4YJTAH0/pHxH9x9ym18u5iy9EN1nBprqf3vniSHWSQaC8y
- rtteahCwzAxr+BjeoZ8Ik9QLsjQ6/2wceEZxVk8MVg4IvrXwf/FJznLzlkDZL2Vb5S3x
- Q93aDvnOTeSEMI49nyDp8rmavnL4at3TE5xetoDNGOZkaVtKvwNohdSS7/rrZKS+EuKw
- 5YKEdsSYO08iYGrBZOB64+tlylOX29lYv544EW5h0xwcgthz91sEcBegwD3fIYtsmC/l
- eUo8Sx9DtBR7ShNvX0Gk/TD7WNT5rD1YAzoYlRplFw4vjyOJa53zLXT8xIWIJikGIwm3
- gFxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714682898; x=1715287698;
- h=content-transfer-encoding:content-language:in-reply-to:mime-version
- :user-agent:date:message-id:references:to:from:subject
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uM7v/cEzO1jGRhCUU/FgZXqzFxJhk+NVI87h9oi6SDk=;
- b=CRkLkYpbI3yfMeHb13+3vSWxbm/4kaXy0P61M7ZEmlRIhZEOqmADabIfPv3ISjELBr
- WcIyDk4yUZRCqWEAf2Bpf1hWGBEnceov+FhAXOMxOZbl7Eo/seFUaQWh1RCP4yoza4t5
- 2wIVDejC9DX2LG5i0awlWk6LuHAl83qACjO7ORwrKF7IQ8g2herYSXxMW8Fs1mbVimHE
- oyrbtUSvjbD+dxmCiWCydqQA6cTRSDWRuYpNCYM40ob7St7KylipMXK+oYP4cJMlQgW2
- NLHqvMhtTmOcGqEVUK/KPMxKOdcy3/Zc++T8sQHH8UxHaTJannt7icdcke4q1WZj5Bso
- Jy3w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVrL4ZDBnd19gXJFwZ7PRV6jqF5pfkH0TDZy8W0WoC3PxyvSs7kIVwI5VsUnWI9SpQ/I9YHGQO33DLV3ktNWnj6LrJE7rA=
-X-Gm-Message-State: AOJu0YxZnO3o8zoI18kkabXOLXkbcSVQ6X0tq0QoS17alZqsTCOcGNOB
- Q62Wo+dioLBxmOGvjRMkvluFZp1FnxDGs0CRZ/VFsYF9mZf2b9/4vXmVOhvVYWFYfe9k1fPDNgg
- s
-X-Google-Smtp-Source: AGHT+IH/Nbv3ddtIF8IfkFtX7JDm4RMQh4ooYGQdGSq6LRtyrxD4X8etd3oKt9WX3JFYMXbuoDElqQ==
-X-Received: by 2002:a17:90a:628b:b0:2b3:6d3b:ca1 with SMTP id
- d11-20020a17090a628b00b002b36d3b0ca1mr892398pjj.28.1714682898034; 
- Thu, 02 May 2024 13:48:18 -0700 (PDT)
-Received: from [192.168.0.102] (201-1-51-131.dsl.telesp.net.br. [201.1.51.131])
- by smtp.gmail.com with ESMTPSA id
- lw5-20020a17090b180500b002a6e67e197dsm1679800pjb.45.2024.05.02.13.48.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 May 2024 13:48:17 -0700 (PDT)
-Subject: Re: [PATCH v5 0/9] TCG plugins new inline operations
-From: Gustavo Romero <gustavo.romero@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-References: <20240502180847.287673-1-pierrick.bouvier@linaro.org>
- <b78563fd-1c06-8ee1-5508-39b3e83249cf@linaro.org>
- <b083716a-dd1e-4edb-ba57-530c7661305f@linaro.org>
- <b3474554-0333-27c2-df47-146e5ef317d9@linaro.org>
-Message-ID: <6f37fbce-9fcc-ab7d-08fc-cfd8bb470f9b@linaro.org>
-Date: Thu, 2 May 2024 17:48:14 -0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1s2dRd-0001ib-9v; Thu, 02 May 2024 16:54:21 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1s2dRb-000882-4U; Thu, 02 May 2024 16:54:21 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 04CEE63A0C;
+ Thu,  2 May 2024 23:54:26 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id EDB9CC552D;
+ Thu,  2 May 2024 23:54:15 +0300 (MSK)
+Message-ID: <34584520-cf5d-47c8-a8a2-ca177a89edef@tls.msk.ru>
+Date: Thu, 2 May 2024 23:54:15 +0300
 MIME-Version: 1.0
-In-Reply-To: <b3474554-0333-27c2-df47-146e5ef317d9@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Re-enable riscv64-debian-cross-container (debian riscv64
+ is finally usable again!)
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20240502194046.830825-1-mjt@tls.msk.ru>
+ <3ce937fb-afb9-4ea2-97ab-b8dc0952e9be@linaro.org>
+ <9969663a-0f00-435b-b507-fb6a429cb4db@tls.msk.ru>
+ <2cdaeac2-d57b-4daa-826e-d57d55d5dad0@linaro.org>
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pj1-x1033.google.com
-X-Spam_score_int: -53
-X-Spam_score: -5.4
-X-Spam_bar: -----
-X-Spam_report: (-5.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-3.296,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <2cdaeac2-d57b-4daa-826e-d57d55d5dad0@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,105 +89,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Pierrick,
-
-On 5/2/24 5:09 PM, Gustavo Romero wrote:
-> On 5/2/24 4:45 PM, Pierrick Bouvier wrote:
->> Hi Gustavo,
->>
->> On 5/2/24 12:16, Gustavo Romero wrote:
->>> Hi Pierrick,
->>>
->>> On 5/2/24 3:08 PM, Pierrick Bouvier wrote:
->>>> This series implement two new operations for plugins:
->>>> - Store inline allows to write a specific value to a scoreboard.
->>>> - Conditional callback executes a callback only when a given condition is true.
->>>>     The condition is evaluated inline.
->>>>
->>>> It's possible to mix various inline operations (add, store) with conditional
->>>> callbacks, allowing efficient "trap" based counters.
->>>>
->>>> It builds on top of new scoreboard API, introduced in the previous series.
->>>>
->>>> NOTE: Two patches still need review
->>>>
->>>> v2
->>>> -- 
->>>>
->>>> - fixed issue with udata not being passed to conditional callback
->>>> - added specific test for this in tests/plugin/inline.c (udata was NULL before).
->>>>
->>>> v3
->>>> -- 
->>>>
->>>> - rebased on top of "plugins: Rewrite plugin code generation":
->>>>     20240316015720.3661236-1-richard.henderson@linaro.org
->>>> - single pass code generation
->>>> - small cleanups for code generation
->>>>
->>>> v4
->>>> -- 
->>>>
->>>> - remove op field from qemu_plugin_inline_cb
->>>> - use tcg_constant_i64 to load immediate value to store
->>>>
->>>> v5
->>>> -- 
->>>>
->>>> - rebase on top of master now that Richard's series was merged
->>>>
->>>> Pierrick Bouvier (9):
->>>>     plugins: prepare introduction of new inline ops
->>>>     plugins: extract generate ptr for qemu_plugin_u64
->>>>     plugins: add new inline op STORE_U64
->>>>     tests/plugin/inline: add test for STORE_U64 inline op
->>>>     plugins: conditional callbacks
->>>>     tests/plugin/inline: add test for conditional callback
->>>>     plugins: distinct types for callbacks
->>>>     plugins: extract cpu_index generate
->>>>     plugins: remove op from qemu_plugin_inline_cb
->>>>
->>>>    include/qemu/plugin.h        |  42 +++++++----
->>>>    include/qemu/qemu-plugin.h   |  80 ++++++++++++++++++++-
->>>>    plugins/plugin.h             |  12 +++-
->>>>    accel/tcg/plugin-gen.c       | 136 +++++++++++++++++++++++++++--------
->>>>    plugins/api.c                |  39 ++++++++++
->>>>    plugins/core.c               | 109 ++++++++++++++++++++--------
->>>>    tests/plugin/inline.c        | 130 +++++++++++++++++++++++++++++++--
->>>>    plugins/qemu-plugins.symbols |   2 +
->>>>    8 files changed, 466 insertions(+), 84 deletions(-)
->>>
->>> The description in the commit message of patches 1/9, 2/9, 6/9, 7/9, and 8/9 is missing.
->>>
->>> Is this intentional?
->>>
->>
->> Do you mean there is no multiline commit message for those changes?
->> Indeed, for some of those patches, the change is a single line commit message.
+02.05.2024 23:41, Richard Henderson wrote:
+> On 5/2/24 13:08, Michael Tokarev wrote:
+>> This thing works now with sid/unstable, this is what this patch is about.
 > 
-> I just see a commit title and the Signed-off-by. For example, in 8/9
-> I see the following on git log:
-> 
-> commit f518898aa09b42e317b887237bb75a432b477c6d
-> Author: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Date:   Thu May 2 11:08:46 2024 -0700
-> 
->      plugins: extract cpu_index generate
->      Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->      Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> 
-> It has only the title: "plugins: extract cpu_index generate"
-> and R-b and S-b, so no description about the changes.
+> It worked when first introduced, then failed, then worked...
+> Sid is too unstable for our usage as a gating test.
 
-The description (the body of the commit message) is mentioned here:
+unstable can be unstable at times.  Generally it works, and can fail
+during short periods.
 
-https://www.qemu.org/docs/master/devel/submitting-a-patch.html#write-a-meaningful-commit-message
+riscv64 didn't work since it got promoted to release arch last year, due
+to non-working multiarch because many riscv64 packages in debian had
+different version numbers compared to other architectures (due to rebuilds
+of binaries).  Later on whole sid was broken by a large time64 transition
+and a lot of breakages in this area.  This is now being completed and
+is migrated to testing, which is finally available for riscv64 too as
+a release arch.
 
-After quickly looking at the committed logs, I do notice some commits missing it,
-but I really believe it's important to have it for the reasons outlined in these
-guidelines.
+I wouldn't switch to testing just yet, because at this point, unstable
+will usually be more stable, or, rather, it will be broken for much
+shorter periods of time than testing, due to migration delays.
 
+It will take some more time for debian testing to become more or less
+stable in this context.  But lack of riscv testing already cost me a
+*stable* release which failed to *build* (8.2.3 fails to build on
+riscv64).  So I think it is more important to run this job on sid
+than not to run it at all.
 
-Cheers,
-Gustavo
+Thanks,
+
+/mjt
+-- 
+GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
+New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
+Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
+Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
+
 
