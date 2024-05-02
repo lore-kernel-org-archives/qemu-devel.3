@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF75FC04FFE
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 15:55:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93687C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 15:55:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2YlP-0001RH-GK; Thu, 02 May 2024 11:54:27 -0400
+	id 1s2Yky-0000u1-Sp; Thu, 02 May 2024 11:54:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s2YlB-00013G-CU
- for qemu-devel@nongnu.org; Thu, 02 May 2024 11:54:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1s2Yks-0000rK-3b
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 11:53:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s2Yl8-0002Oj-I3
- for qemu-devel@nongnu.org; Thu, 02 May 2024 11:54:12 -0400
+ id 1s2Ykq-0002N3-Mh
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 11:53:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714665248;
+ s=mimecast20190719; t=1714665232;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NFofCkIX6ZCOAYjcqWsduwPTtWRGt+ZtQlacHrjsajI=;
- b=Tnk7fnQu57LGF+YF34g3/ux9JVCVdjTuuLlmaEE7PBv59p/dms+RB1vrfUxFc7uU34+W4+
- xjz58Z4uDYiNIEd2of3ibUkGthnYf2eWVP0LngbvUDngrZAkr2yhYczkoHQgzkJ1aJvFqp
- lQHr5wy2pF/T+apZormEoyqJavPSGtQ=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=OLWU8wT2XoRQ7J5Z8lyNBtluwjetfKCt3lDqz8dxc20=;
+ b=Z8WkU8NuGqU4ihs9XVogwLH7c6mxrRlJr+hA4puFjkWoVUm2Cw6O/n7hxHZL9WCBEJMHMD
+ 3uweP+kvvHJ+dMw4KUdIxapBp4rWYwaAvUeejL/T0iSF9n+bM7SeK3RVPJssk5Gfcld9YI
+ atYgIW/+uZigYbTBwGuUcRQTnrowxp8=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-479-H09UaJtrOLW_JDS5E0CiLQ-1; Thu, 02 May 2024 11:54:07 -0400
-X-MC-Unique: H09UaJtrOLW_JDS5E0CiLQ-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a58bca80981so439737166b.0
- for <qemu-devel@nongnu.org>; Thu, 02 May 2024 08:54:07 -0700 (PDT)
+ us-mta-644-VbLlttJDO2aSY4AZpRirHQ-1; Thu, 02 May 2024 11:53:50 -0400
+X-MC-Unique: VbLlttJDO2aSY4AZpRirHQ-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-572b993d8ffso669030a12.0
+ for <qemu-devel@nongnu.org>; Thu, 02 May 2024 08:53:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714665246; x=1715270046;
+ d=1e100.net; s=20230601; t=1714665229; x=1715270029;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NFofCkIX6ZCOAYjcqWsduwPTtWRGt+ZtQlacHrjsajI=;
- b=YmFh9rmgrT0q/Ut2K/J//Hu1wJIz2iABO3kzrtpu5wYNMzBpvmu/JYLVABAmdTKKuR
- 306cSOC0J94aKykiHBbU1Wt1GjnaYRspb4fhOw5wNKKOcKPCkiKiQIyzxF5/7SzjeZoJ
- ckEomehJspHF38/JAel45JOIJ2wP/Fk2TzGxIKtCfoRO8BN0J85m8GXmJqdHZ0MVRiVg
- UIdXLm7qVtzepCiE2TmQqQX6pIzeD1VUE91mF3009CTj5O3wcZT0fSqpgzpvX8oL3iUk
- dgJUsjl0/7s6BuLvZvg74fGI2eiu6RKOdK/BJey8bCsrX/ChnIdeKIhR6cL+3FF7rUah
- vSVA==
-X-Gm-Message-State: AOJu0YwhPaR+5heB4c2Jzzbe6Ph9CjScAvX+ZofekOvaKoAGtXYRh6gI
- CChNlXKAuwQpcliVUuGjNUN/pO+YJYgsH3pqfo2eqfGmhz5qfIKidciUBMHffVJz7p37yn3JR8S
- 4RA3egNkktOrsQu3Rl5yj97xNEEKfmK5Na3nuwXr6WG1QHTPhGPxGU/r2vpI/w+7JGk6FTliCzL
- +zdtVHdn5ylIjtHi/F5rDnrUws1bq3ZTiGbM7W
-X-Received: by 2002:a17:906:37c8:b0:a58:849f:4d18 with SMTP id
- o8-20020a17090637c800b00a58849f4d18mr4304485ejc.35.1714665245944; 
- Thu, 02 May 2024 08:54:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEy2xl4oXlR5Uy/S1LKZDYXexegjbuDZq6qyaXqbSNnWvLJNEoK1oNy43kalRgsPt0Sipp5tw==
-X-Received: by 2002:a17:906:37c8:b0:a58:849f:4d18 with SMTP id
- o8-20020a17090637c800b00a58849f4d18mr4304476ejc.35.1714665245563; 
- Thu, 02 May 2024 08:54:05 -0700 (PDT)
+ bh=OLWU8wT2XoRQ7J5Z8lyNBtluwjetfKCt3lDqz8dxc20=;
+ b=Y87lEp2i8Y/wNkTOaB6+JV5douHS2Ras085o0wPXuX/dxIC6h7hIG/e9cx+iHWoaW6
+ DC6FCOzzXXjgG4YMOlCAvdfeJmIrNEpojiag99Qb+ukxtXgx+BHTL0flAklu1iOXYuh7
+ K/EZKYJDDce1pBqdBtR6rGrlpS06U2tw9PHDGzD80rLxWzLQcEN3J/y3LDGx19PmsgW3
+ AaF+GCiWNhvukcg4hTTHd+PFi/yQfJBx8ExTuW5Nsy4DtI9ZmBVqXD1cmi4/2XqFnGFb
+ Ksnxo2NVfIxSYH7iV6qq1EZ9re5qRxcoZAPgb4/cp/pqHqsgwQWM/0VWBGDXlvAOt2Rj
+ lfag==
+X-Gm-Message-State: AOJu0YxZc4Mysf/2JVYWStuH0YA+4KQgcfv/RkDoQd4cBlTaYPKDZNOe
+ 4mSEHfcPtowO9i01qWI3k92ZACHNVyx5LidyXYe0Wanvl+/JEkxDyRgSXTkcP1xjslAEaNP1dob
+ KU9Q8X/xfq/Qsp049yf/7uSAnbIJj6Z9fCo91zs8sLhH5iwLFFzUy08iWzZ9K6MvZh8SXxgnJlh
+ 21P3nnrReui2O/bRiH4kBbnAcf9pYeHKXI0Zyy
+X-Received: by 2002:a50:d5c2:0:b0:571:bed1:3a36 with SMTP id
+ g2-20020a50d5c2000000b00571bed13a36mr1914865edj.38.1714665229289; 
+ Thu, 02 May 2024 08:53:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IExy1Fa3bDNdmUFc2NqUJ4TZq1DBcJiqLtXDCK8R0XoRRC2bGdRXiIA/yrZ4SBZB4pjHY9EEQ==
+X-Received: by 2002:a50:d5c2:0:b0:571:bed1:3a36 with SMTP id
+ g2-20020a50d5c2000000b00571bed13a36mr1914854edj.38.1714665229010; 
+ Thu, 02 May 2024 08:53:49 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- mj17-20020a170906af9100b00a58f1eff266sm690173ejb.189.2024.05.02.08.54.04
+ g21-20020aa7c595000000b005729337f955sm644797edq.97.2024.05.02.08.53.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 May 2024 08:54:05 -0700 (PDT)
+ Thu, 02 May 2024 08:53:48 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 12/13] tcg: remove CPU* types from typedefs.h
-Date: Thu,  2 May 2024 17:53:30 +0200
-Message-ID: <20240502155331.109297-13-pbonzini@redhat.com>
+Subject: [PATCH 06/13] intc: remove PICCommonState from typedefs.h
+Date: Thu,  2 May 2024 17:53:24 +0200
+Message-ID: <20240502155331.109297-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240502155331.109297-1-pbonzini@redhat.com>
 References: <20240502155331.109297-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -102,107 +102,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-hw/core/cpu.h is already using struct forward declarations in some cases
-to avoid inclusions, and otherwise CPUAddressSpace and CPUJumpCache
-are only used together with their definition.  CPUTLBEntryFull is
-always used when their definition is available.  Remove all three
-from typedefs.h.
+Move it to the existing "PIC related things" header, hw/intc/i8259.h.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- accel/tcg/tb-jmp-cache.h |  4 ++--
- include/hw/core/cpu.h    | 10 ++++++++--
- include/qemu/typedefs.h  |  3 ---
- system/physmem.c         |  4 ++--
- 4 files changed, 12 insertions(+), 9 deletions(-)
+ include/hw/intc/i8259.h | 2 ++
+ include/qemu/typedefs.h | 1 -
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/accel/tcg/tb-jmp-cache.h b/accel/tcg/tb-jmp-cache.h
-index 184bb3e3e2e..c3a505e394a 100644
---- a/accel/tcg/tb-jmp-cache.h
-+++ b/accel/tcg/tb-jmp-cache.h
-@@ -22,12 +22,12 @@
-  * non-NULL value of 'tb'.  Strictly speaking pc is only needed for
-  * CF_PCREL, but it's used always for simplicity.
-  */
--struct CPUJumpCache {
-+typedef struct CPUJumpCache {
-     struct rcu_head rcu;
-     struct {
-         TranslationBlock *tb;
-         vaddr pc;
-     } array[TB_JMP_CACHE_SIZE];
--};
-+} CPUJumpCache;
+diff --git a/include/hw/intc/i8259.h b/include/hw/intc/i8259.h
+index c4125757753..1f2420231f1 100644
+--- a/include/hw/intc/i8259.h
++++ b/include/hw/intc/i8259.h
+@@ -3,6 +3,8 @@
  
- #endif /* ACCEL_TCG_TB_JMP_CACHE_H */
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index a23d39f6a0c..1382a986158 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -85,6 +85,12 @@ DECLARE_CLASS_CHECKERS(CPUClass, CPU,
+ /* i8259.c */
  
- typedef struct CPUWatchpoint CPUWatchpoint;
- 
-+/* see physmem.c */
-+struct CPUAddressSpace;
++typedef struct PICCommonState PICCommonState;
 +
-+/* see accel/tcg/tb-jmp-cache.h */
-+struct CPUJumpCache;
-+
- /* see accel-cpu.h */
- struct AccelCPUClass;
+ extern PICCommonState *isa_pic;
  
-@@ -473,12 +479,12 @@ struct CPUState {
-     QemuMutex work_mutex;
-     QSIMPLEQ_HEAD(, qemu_work_item) work_list;
- 
--    CPUAddressSpace *cpu_ases;
-+    struct CPUAddressSpace *cpu_ases;
-     int num_ases;
-     AddressSpace *as;
-     MemoryRegion *memory;
- 
--    CPUJumpCache *tb_jmp_cache;
-+    struct CPUJumpCache *tb_jmp_cache;
- 
-     GArray *gdb_regs;
-     int gdb_num_regs;
+ /*
 diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
-index 7e3597e94c5..d23020ed232 100644
+index 4519f0cd613..090e219248a 100644
 --- a/include/qemu/typedefs.h
 +++ b/include/qemu/typedefs.h
-@@ -38,12 +38,9 @@ typedef struct BusState BusState;
- typedef struct Chardev Chardev;
- typedef struct Clock Clock;
- typedef struct ConfidentialGuestSupport ConfidentialGuestSupport;
--typedef struct CPUAddressSpace CPUAddressSpace;
- typedef struct CPUArchState CPUArchState;
- typedef struct CPUPluginState CPUPluginState;
--typedef struct CPUJumpCache CPUJumpCache;
- typedef struct CPUState CPUState;
--typedef struct CPUTLBEntryFull CPUTLBEntryFull;
- typedef struct DeviceState DeviceState;
- typedef struct DirtyBitmapSnapshot DirtyBitmapSnapshot;
- typedef struct DisplayChangeListener DisplayChangeListener;
-diff --git a/system/physmem.c b/system/physmem.c
-index 1a81c226bae..6dc58b34bbb 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -158,12 +158,12 @@ static void tcg_commit(MemoryListener *listener);
-  * @memory_dispatch: its dispatch pointer (cached, RCU protected)
-  * @tcg_as_listener: listener for tracking changes to the AddressSpace
-  */
--struct CPUAddressSpace {
-+typedef struct CPUAddressSpace {
-     CPUState *cpu;
-     AddressSpace *as;
-     struct AddressSpaceDispatch *memory_dispatch;
-     MemoryListener tcg_as_listener;
--};
-+} CPUAddressSpace;
- 
- struct DirtyBitmapSnapshot {
-     ram_addr_t start;
+@@ -96,7 +96,6 @@ typedef struct PCIExpressDevice PCIExpressDevice;
+ typedef struct PCIExpressHost PCIExpressHost;
+ typedef struct PCIHostDeviceAddress PCIHostDeviceAddress;
+ typedef struct PCIHostState PCIHostState;
+-typedef struct PICCommonState PICCommonState;
+ typedef struct PostcopyDiscardState PostcopyDiscardState;
+ typedef struct Property Property;
+ typedef struct PropertyInfo PropertyInfo;
 -- 
 2.44.0
 
