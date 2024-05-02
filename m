@@ -4,74 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1941BC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 16:56:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF5D1C04FFE
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 16:56:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2Zis-0001Az-BP; Thu, 02 May 2024 12:55:54 -0400
+	id 1s2Ziq-0000xe-GE; Thu, 02 May 2024 12:55:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s2Zia-0000uB-U2
+ id 1s2Zia-0000tH-Ag
  for qemu-devel@nongnu.org; Thu, 02 May 2024 12:55:37 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s2ZiY-0005vD-65
- for qemu-devel@nongnu.org; Thu, 02 May 2024 12:55:36 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-6f3f6aa1437so4474541b3a.3
- for <qemu-devel@nongnu.org>; Thu, 02 May 2024 09:55:31 -0700 (PDT)
+ id 1s2ZiV-0005uc-AU
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 12:55:33 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-6f44390e328so498928b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 02 May 2024 09:55:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714668930; x=1715273730; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jgzvSrD01ShseB2w23SZ5Lugpibg8re+4HHYOhUXpgk=;
- b=nMKwkHNUmt2Gj+/l2gNvzY4+Ls6pPx8dF5JMf4lUTtgSwqkP4WfUbirotWD5dXkUOd
- e1xOjZ8HFeNkOyxAUlFwdfbMteqAcjMWSQnzhnVCAkUOVcztMsuafpXjZxx3gJY47sM4
- AGZZhLOvyRBTilBFZHTkNRqkjsQQ6LVYIe7U2bBw4OexZae5qXVitUbK2lu2aBhxy2C3
- pHhf2x04Mg0acZZFD3JRHvhnOwT0Yfaauh8+a/cq0b15K7SO2kL5EUeNAR666qnymZzJ
- 8mrRmT9lF3Wfe88ZJHa0cr0hzSXT9TNhUEyrdnHvqJDEm8JPvuZ+Buc/sUKkXWQ4Q3K4
- p7Hg==
+ d=linaro.org; s=google; t=1714668929; x=1715273729; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=jboQhdCbtWFTds253ujt0GVfvWL308kDLSJJ/VKt72k=;
+ b=e9qqFwonp0+emfvk3pewX9nB2m3cufZ6lkrUniMt00krVPuQBVLKLXHN3kTcK3y6Dc
+ BkAK3Kqv9D7+rGjdmOrCS9w0hBjXawTmGLZrI5RCXTcICISiPiZXBVx5ndf9Si8f0qZY
+ 3QR5dAyD9vyPqgiK95ZY8b9gwNyqP4GkrsEbsHq2AzPydxF1Tr6xVd66LqjETnXoh+el
+ OOBXs/5CpXt/3GJ/caxK5MKdc3Q+/jyvCYwQVXrGLO4EBRRIOHAhNzOmLKuXzraMkoZA
+ g9DD2GQtbY76lfH8+0Usx+w/HoVrKbuU/UwlC7Z/14WHk836ivbDL9c7uGsLwa4brgvW
+ m9nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714668930; x=1715273730;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jgzvSrD01ShseB2w23SZ5Lugpibg8re+4HHYOhUXpgk=;
- b=K+wJKfiokr5I51fdpskERCHyw044jtu8Z/1SEDaTYaOkZWoqb5u8nQ1XiLoUoP4z9W
- O4VOUXVtwPhRxxoZDHWIXoleMoZNJ6xs2ddXAWoHjWHlYo6GPbjVb1pnsThXQH1uL8wP
- O682D0jb7uXwCg0JFnolqLNM+4iUKAoX18pCLGiBqjEulBcxkeJ4g3xw1UThrq9onZHp
- +gZnf63MR2bAOnks4AFY/kq2C3Hrsx4mWSN5FbQINSADLBUU6kr0jnFs8jSUgkgBz2/7
- 8IF3+ZsJmWBOdXfKhVFhy/yyJM1YE1m2FfaNF9Z/voqsKZmIjigHssPT/0ZEfwFGK76u
- n/Xw==
-X-Gm-Message-State: AOJu0Yx5KfTDTAtwwiz6VZwWar2zatYUeERT1pkojnZs5YzWShKk2njf
- x1+Q0USWimXhobtpjpDL8H4oynLLEZVqDbsvKBCek6rosbD+LHcmWy7LHs6Uz1k/5u1meaZRPDh
- z
-X-Google-Smtp-Source: AGHT+IHBOhz5P/T9biC1d8ykEnnNEY2blGNKJ4QWvyht606rPSXX4wpZUNHc/GV22C1rcafBnoC0uw==
-X-Received: by 2002:a05:6a21:2d8a:b0:1a7:4944:d49 with SMTP id
- ty10-20020a056a212d8a00b001a749440d49mr409898pzb.0.1714668930627; 
- Thu, 02 May 2024 09:55:30 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1714668929; x=1715273729;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jboQhdCbtWFTds253ujt0GVfvWL308kDLSJJ/VKt72k=;
+ b=mqRd8eM2eITu7gZZql/hPmahAxaBhzqTXpb5se2EZ86gGWRFcR9a19UPZrsmVwclw0
+ AYeLc2ShORzl4hJH58qUl7aA2pZ5rh3ds4nU+6yyD7NyCUpSGHb+Jza8CYECex+zX9hA
+ RrbEo2sdXIX5KFREae/CyQVx9Ncc1qeYEwjSIe81YBiEC3kB3oVXMlDm3zltBR0pC6TT
+ 1+C4VtaRypliUisDSlpUHkjuwKGh1ikrSI1JjvC9BXV6BLjI9M33MKi2mc/L87uangkQ
+ /vohWLnAAJ5yCrnsNjokjj4Li+nD4aQjG/+j9YOnP9Ak0VY2VjfFxbKCUL1DVxY9rOnR
+ NXxg==
+X-Gm-Message-State: AOJu0YwvPqDiO5LbH05YNxOkgNblVw2BCAzrhEW99gCMW8MW+5EC49JK
+ 7m/w85PQZ1no22aVeMW9DyceR3Tpize3HDxt/C9tgsBr+SupjiB3PovD8j3+Erw8PzUapXAqQnW
+ e
+X-Google-Smtp-Source: AGHT+IEA5GtiSISWuusDmsEVaVzLY1f8O4ryy2k7BJCTLrgag0AClE4R2NNpPOQoBbdpJkbqTm3QVQ==
+X-Received: by 2002:a05:6a20:a105:b0:1ad:1168:a417 with SMTP id
+ q5-20020a056a20a10500b001ad1168a417mr350679pzk.28.1714668929636; 
+ Thu, 02 May 2024 09:55:29 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
  j13-20020aa783cd000000b006eb058b2703sm1464598pfn.187.2024.05.02.09.55.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 May 2024 09:55:30 -0700 (PDT)
+ Thu, 02 May 2024 09:55:29 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH v2 1/7] linux-user/sparc: Add more hwcap bits for sparc64
-Date: Thu,  2 May 2024 09:55:22 -0700
-Message-Id: <20240502165528.244004-2-richard.henderson@linaro.org>
+Subject: [PATCH v2 0/7] target/sparc: vis fixes
+Date: Thu,  2 May 2024 09:55:21 -0700
+Message-Id: <20240502165528.244004-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240502165528.244004-1-richard.henderson@linaro.org>
-References: <20240502165528.244004-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,77 +91,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Supply HWCAP_SPARC_V8PLUS, HWCAP_SPARC_MUL32, HWCAP_SPARC_DIV32,
-HWCAP_SPARC_POPC, HWCAP_SPARC_FSMULD, HWCAP_SPARC_VIS, HWCAP_SPARC_VIS2.
+Split out from my vis4 patch set, with just the bug fixes.
+I've fixed the issue in patch 6, as noticed by Mark, but
+include the follow-up that cleans up all of the macros by
+removing them.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/elfload.c | 48 +++++++++++++++++++++++++++++++-------------
- 1 file changed, 34 insertions(+), 14 deletions(-)
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index f9461d2844..14f08b64a1 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -968,24 +968,44 @@ const char *elf_hwcap2_str(uint32_t bit)
- #endif /* TARGET_ARM */
- 
- #ifdef TARGET_SPARC
--#ifdef TARGET_SPARC64
- 
--#define ELF_HWCAP  (HWCAP_SPARC_FLUSH | HWCAP_SPARC_STBAR | HWCAP_SPARC_SWAP \
--                    | HWCAP_SPARC_MULDIV | HWCAP_SPARC_V9)
--#ifndef TARGET_ABI32
--#define elf_check_arch(x) ( (x) == EM_SPARCV9 || (x) == EM_SPARC32PLUS )
-+#ifndef TARGET_SPARC64
-+# define ELF_CLASS  ELFCLASS32
-+# define ELF_ARCH   EM_SPARC
-+#elif defined(TARGET_ABI32)
-+# define ELF_CLASS  ELFCLASS32
-+# define elf_check_arch(x) ((x) == EM_SPARC32PLUS || (x) == EM_SPARC)
- #else
--#define elf_check_arch(x) ( (x) == EM_SPARC32PLUS || (x) == EM_SPARC )
-+# define ELF_CLASS  ELFCLASS64
-+# define ELF_ARCH   EM_SPARCV9
- #endif
- 
--#define ELF_CLASS   ELFCLASS64
--#define ELF_ARCH    EM_SPARCV9
--#else
--#define ELF_HWCAP  (HWCAP_SPARC_FLUSH | HWCAP_SPARC_STBAR | HWCAP_SPARC_SWAP \
--                    | HWCAP_SPARC_MULDIV)
--#define ELF_CLASS   ELFCLASS32
--#define ELF_ARCH    EM_SPARC
--#endif /* TARGET_SPARC64 */
-+#include "elf.h"
-+
-+#define ELF_HWCAP get_elf_hwcap()
-+
-+static uint32_t get_elf_hwcap(void)
-+{
-+    /* There are not many sparc32 hwcap bits -- we have all of them. */
-+    uint32_t r = HWCAP_SPARC_FLUSH | HWCAP_SPARC_STBAR |
-+                 HWCAP_SPARC_SWAP | HWCAP_SPARC_MULDIV;
-+
-+#ifdef TARGET_SPARC64
-+    CPUSPARCState *env = cpu_env(thread_cpu);
-+    uint32_t features = env->def.features;
-+
-+    r |= HWCAP_SPARC_V9 | HWCAP_SPARC_V8PLUS;
-+    /* 32x32 multiply and divide are efficient. */
-+    r |= HWCAP_SPARC_MUL32 | HWCAP_SPARC_DIV32;
-+    /* We don't have an internal feature bit for this. */
-+    r |= HWCAP_SPARC_POPC;
-+    r |= features & CPU_FEATURE_FSMULD ? HWCAP_SPARC_FSMULD : 0;
-+    r |= features & CPU_FEATURE_VIS1 ? HWCAP_SPARC_VIS : 0;
-+    r |= features & CPU_FEATURE_VIS2 ? HWCAP_SPARC_VIS2 : 0;
-+#endif
-+
-+    return r;
-+}
- 
- static inline void init_thread(struct target_pt_regs *regs,
-                                struct image_info *infop)
+r~
+
+
+Richard Henderson (7):
+  linux-user/sparc: Add more hwcap bits for sparc64
+  target/sparc: Fix FEXPAND
+  target/sparc: Fix FMUL8x16
+  target/sparc: Fix FMUL8x16A{U,L}
+  target/sparc: Fix FMULD8*X16
+  target/sparc: Fix FPMERGE
+  target/sparc: Split out do_ms16b
+
+ target/sparc/helper.h     |  11 +--
+ target/sparc/insns.decode |   2 +-
+ linux-user/elfload.c      |  48 +++++++---
+ target/sparc/translate.c  | 129 ++++++++++++++++++++++---
+ target/sparc/vis_helper.c | 195 ++++++++++----------------------------
+ 5 files changed, 207 insertions(+), 178 deletions(-)
+
 -- 
 2.34.1
 
