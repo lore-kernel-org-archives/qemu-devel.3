@@ -4,132 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6382DC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 06:20:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AB02C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 06:28:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2Pn9-000446-OG; Thu, 02 May 2024 02:19:39 -0400
+	id 1s2Pun-0007qK-NM; Thu, 02 May 2024 02:27:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s2Pn4-00041Y-I5
- for qemu-devel@nongnu.org; Thu, 02 May 2024 02:19:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1s2Pul-0007pm-CG; Thu, 02 May 2024 02:27:31 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s2Pn1-0000ab-Ro
- for qemu-devel@nongnu.org; Thu, 02 May 2024 02:19:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714630767;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=0hhpvFz34NIsNZjsa53wiOVBBictsSGAv+H1j2VyQzM=;
- b=UPYh3CeSbjOJjOFEFk1P1W3cgbCkcxeamlGxoobB0dJjFvV58zop1i1Xn6iy80D5QlFsiF
- hb0jiLwH1KZZNonihm8kn/ZYq6aEmvBt7KbDueuYesODaG9pdsVR1YrhvBdQwh+dL/aQtm
- LXxVwBgCNGLHBY1y1dnQgQyofl0ls9w=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-421-t2lcY3p_MrmW4NLazzOoLA-1; Thu, 02 May 2024 02:19:25 -0400
-X-MC-Unique: t2lcY3p_MrmW4NLazzOoLA-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6a0e10bddd6so30057486d6.3
- for <qemu-devel@nongnu.org>; Wed, 01 May 2024 23:19:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714630765; x=1715235565;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0hhpvFz34NIsNZjsa53wiOVBBictsSGAv+H1j2VyQzM=;
- b=CuRzZqBI3RSeb2SqI+eou04rvhUi6+UBcG+gV3p8W4YwSlWulIugKz6rkcpbuTFuiX
- bdhT6wlB63MeALn8hf2pMYNYxYUyYpI3xgXnkRw4daxpJa1sWgv/2QfVgBtG3o9YaHSI
- jQDT9EpHAjBwV0WguUyilTwdZQptstFMr+YJXp6ibhtPEHGt+eh+qacW6gubHAFGLra4
- XKLeeRPHHkTuKY88KYLa+M3NOOSveER3KHFLO5NvoxTzURK/Inlb1D3/Yddr/H6+odMo
- M+TmnN3vHJLQ/WfTXOr0tckRZ89EMFTEG5S/78TJi6m7w3SyrSz1rOdk3kfhCZrKTy2P
- scBg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV0KQqya+dWUM3BFymtQl9AjDO6+FNy3bSFf33fhlK+djbtwjGJixSi1Rv8Ekl85FFbFQxIQFJnmPHZgUwm9zgVlyyR75k=
-X-Gm-Message-State: AOJu0YzBn9tnZLB9FXCSPXxJzdVN0r77lBkRf0bZ24DU94rLHjou32XL
- 7NCVpT48KAg48lprpneHdt+opn/53LoQ75QUYzVJbx0koRUsucdhpSHIkAHuJW002vwjmpuacDQ
- RbTiaHVm/puxfrbw5Y15XLXjZnvny9VENvSya2EbxLKnwz8GRSHps
-X-Received: by 2002:a05:6214:628:b0:6a0:9e07:cb5a with SMTP id
- a8-20020a056214062800b006a09e07cb5amr5192984qvx.35.1714630765187; 
- Wed, 01 May 2024 23:19:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFjR8QLCvQDEOZn2yZN5dKLyr+AUHuoBJI161+MUqPIsryi77JPMts2Zdxl9xgVQTrtWlsm+A==
-X-Received: by 2002:a05:6214:628:b0:6a0:9e07:cb5a with SMTP id
- a8-20020a056214062800b006a09e07cb5amr5192960qvx.35.1714630764666; 
- Wed, 01 May 2024 23:19:24 -0700 (PDT)
-Received: from [192.168.0.9] (ip-109-43-179-34.web.vodafone.de.
- [109.43.179.34]) by smtp.gmail.com with ESMTPSA id
- lg18-20020a056214549200b0069b4cc9780fsm128329qvb.2.2024.05.01.23.19.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 May 2024 23:19:24 -0700 (PDT)
-Message-ID: <e04bd44b-8a91-48c0-9fbf-223d1b28e7cd@redhat.com>
-Date: Thu, 2 May 2024 08:19:18 +0200
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1s2Puj-0002aj-Ac; Thu, 02 May 2024 02:27:31 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 4426RF0a007475; Thu, 2 May 2024 06:27:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-type :
+ content-transfer-encoding; s=pp1;
+ bh=eP1Rnz19SPtW0UnhjgsT9bWgHO1j5H2BJwWu67RZm2o=;
+ b=pmlSs80fXLcpo+Sg8++E7sxuerdvAIgz5lM3wUT3Ly3lqj6Xdoyd0M6d6xIKhaLVq8Dx
+ GoQ+Rj9sSX5NYmkkrQWdYxT5XUEKmNXuTknjad0SK6zeQw4nzVyKufL+r/WjtpUulO2/
+ 5lj0Ej2jyRQzIhLGHQWOzmNdFU/Sbu7QiC39vyDTvhrEfOnShfa+LC5vHGUWrsrrsirp
+ n+EL9siIqaTO7tWrLlIcCNZkNDJjswrhIeQzgEcf9gLtdlo5q2qGpvtDJ+k0xMiRGz0C
+ m2MMphVxXt67HBRd2/ncALt/UKafvuo42nurqfV95jk4pDnMi3caoRBBeEXmTQpGqQD5 1Q== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xv5jtg00f-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 May 2024 06:27:15 +0000
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4426REFQ007459;
+ Thu, 2 May 2024 06:27:14 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xv5jtg00c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 May 2024 06:27:14 +0000
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44247aob003622; Thu, 2 May 2024 06:27:13 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3xscppph8x-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 May 2024 06:27:12 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4426R7ND49152508
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 2 May 2024 06:27:09 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 107A520040;
+ Thu,  2 May 2024 06:27:07 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F18DD20043;
+ Thu,  2 May 2024 06:27:03 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com.com (unknown
+ [9.171.49.201]) by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  2 May 2024 06:27:03 +0000 (GMT)
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
+Subject: [PATCH] ppc/pnv: Update Power10's cfam id to use Power10 DD2
+Date: Thu,  2 May 2024 11:57:01 +0530
+Message-ID: <20240502062701.1379833-1-adityag@linux.ibm.com>
+X-Mailer: git-send-email 2.44.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: QEMU headers in C++
-To: Roman Kiryanov <rkir@google.com>, QEMU Developers <qemu-devel@nongnu.org>
-Cc: JP Cottin <jpcottin@google.com>, Erwin Jansen <jansene@google.com>
-References: <CAOGAQeq+Wu9wiBj+tF0PJHMZS-F4KnVBOXCyXhYQsm+REyLUpg@mail.gmail.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
- yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
- 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
- tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
- 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
- O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
- 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
- gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
- 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
- zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
- aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
- QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
- EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
- 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
- eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
- ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
- zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
- tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
- WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
- UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
- BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
- 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
- +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
- 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
- gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
- WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
- VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
- knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
- cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
- X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
- AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
- ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
- fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
- 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
- cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
- ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
- Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
- oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
- IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
- yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <CAOGAQeq+Wu9wiBj+tF0PJHMZS-F4KnVBOXCyXhYQsm+REyLUpg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.897,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: SEQJafuUzjk2wlm98G6W48eJt2s12u50
+X-Proofpoint-GUID: 2AysfFp6R2JDHv9YYJlgRmEPNK-Xhgyx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-01_16,2024-05-02_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0
+ mlxlogscore=999 spamscore=0 adultscore=0 suspectscore=0 mlxscore=0
+ priorityscore=1501 phishscore=0 lowpriorityscore=0 malwarescore=0
+ clxscore=1015 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2404010000 definitions=main-2405020035
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,24 +118,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02/05/2024 06.40, Roman Kiryanov wrote:
-> Hi QEMU,
-> 
-> I work in Android Studio Emulator and we would like to develop devices
-> in C++. Unfortunately, QEMU headers cannot be used with C++ as is
-> (e.g. they use C++ keywords as variable names or implicitly cast void*
-> to T*).
+Power10 DD1.0 was dropped in:
 
-Can't you simply use something like:
+    commit 8f054d9ee825 ("ppc: Drop support for POWER9 and POWER10 DD1 chips")
 
-extern "C" {
-#include <foo.h>
-}
+Use the newer Power10 DD2 chips cfam id.
 
-to include the QEMU headers?
+Cc: Cédric Le Goater <clg@kaod.org>
+Cc: David Gibson <david@gibson.dropbear.id.au>
+Cc: Frédéric Barrat <fbarrat@linux.ibm.com>
+Cc: Laurent Vivier <lvivier@redhat.com>
+Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+---
+ hw/ppc/pnv.c            | 2 +-
+ tests/qtest/pnv-xscom.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-  Thomas
-
-
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 6e3a5ccdec76..06a4e4d13948 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -2090,7 +2090,7 @@ static void pnv_chip_power10_class_init(ObjectClass *klass, void *data)
+     PnvChipClass *k = PNV_CHIP_CLASS(klass);
+     static const int i2c_ports_per_engine[PNV10_CHIP_MAX_I2C] = {14, 14, 2, 16};
+ 
+-    k->chip_cfam_id = 0x120da04900008000ull; /* P10 DD1.0 (with NX) */
++    k->chip_cfam_id = 0x220da04980000000ull; /* P10 DD2.0 (with NX) */
+     k->cores_mask = POWER10_CORE_MASK;
+     k->chip_pir = pnv_chip_pir_p10;
+     k->intc_create = pnv_chip_power10_intc_create;
+diff --git a/tests/qtest/pnv-xscom.h b/tests/qtest/pnv-xscom.h
+index 6f62941744a6..5aa1701ea768 100644
+--- a/tests/qtest/pnv-xscom.h
++++ b/tests/qtest/pnv-xscom.h
+@@ -56,7 +56,7 @@ static const PnvChip pnv_chips[] = {
+         .chip_type  = PNV_CHIP_POWER10,
+         .cpu_model  = "POWER10",
+         .xscom_base = 0x000603fc00000000ull,
+-        .cfam_id    = 0x120da04900008000ull,
++        .cfam_id    = 0x220da04980000000ull,
+         .first_core = 0x0,
+         .num_i2c    = 4,
+     },
+-- 
+2.44.0
 
 
