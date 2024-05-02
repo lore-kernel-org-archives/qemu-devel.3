@@ -4,57 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96DA1C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 08:49:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D6A7C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 09:06:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2S6n-0001YK-MS; Thu, 02 May 2024 04:48:08 -0400
+	id 1s2SO7-0008FB-SK; Thu, 02 May 2024 05:05:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=l4T0=MF=kaod.org=clg@ozlabs.org>)
- id 1s2S6a-0001Xb-Sa; Thu, 02 May 2024 04:47:53 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
- helo=gandalf.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=l4T0=MF=kaod.org=clg@ozlabs.org>)
- id 1s2S6Y-0005rM-VH; Thu, 02 May 2024 04:47:52 -0400
-Received: from gandalf.ozlabs.org (mail.ozlabs.org
- [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4VVSHj2Sc1z4x0w;
- Thu,  2 May 2024 18:47:45 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4VVSHg25C9z4xFg;
- Thu,  2 May 2024 18:47:42 +1000 (AEST)
-Message-ID: <272a9f32-8d32-4681-b25b-9d45c6c787b5@kaod.org>
-Date: Thu, 2 May 2024 10:47:40 +0200
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2SO6-0008EV-Fz
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 05:05:58 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2SO0-0000gO-Tv
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 05:05:58 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-41dc9f98e8dso3472515e9.1
+ for <qemu-devel@nongnu.org>; Thu, 02 May 2024 02:05:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714640751; x=1715245551; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=m6hdX/QShEyoevdHWJVmo9TQTgWa7HYlW/pBH8IIc94=;
+ b=r3RrTnZvmNDhxCi9Vuee2lmDPFzvN2uex91lm+Ssmk2ROrcZR0MAemPuLo1gKDiz2t
+ +lhqK7zzLWRlWMWYfFkc88h+OC5119HAB/jPTeTCMD9sCWh5cxkW/XFAMGXDWWIFBzIR
+ sf+Qj7L6mQ5aWAlpAuk1BJRom3f4DERCEt2aHZNRHmlt/ExYvFwi8MAglKf0CuqKqZDh
+ JvG5YRWBdqdd0YVe4EXLMwF8OnnR1kjaobpEeJG1PUcTF4orWfSHQnyNEATejd3gkO2/
+ Ol9UdVnOGxyVUrjf7id7ZPnuGwrTPO9rtFhbIGcrqYFL+SkVF/rHAqqdi426Xbv03lTE
+ KrNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714640751; x=1715245551;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=m6hdX/QShEyoevdHWJVmo9TQTgWa7HYlW/pBH8IIc94=;
+ b=N8Nll2QcdYmf7RqsP9DO8FHmmL5O5yfGToiCr9oiwfnp2izHO4SShx7K/IxQfUmqRK
+ 9uaO2wl+bpXPm5bX+h3fCELLdgwNqthHl/kzZ1luuzwEmkMhHsj+rR/rIvFS1YZwUSqK
+ 2kbHDi0TvZHaoTYs0V5yAbSrgFs97wNNHqPKo7H1TILklQD4Nb49W5HSKONYGjEK5H76
+ tUDimX1uxxdu+/D1fZhaWhFqo01Lz8pVeiza+jmOIXuN+6+yD1cnTyKytyJHRukOMfpi
+ eQUFEG+489E4WIozSszaQ5Oz7rzR1zU0MWxkA5h18dlyga7D+yjFiY5hqVkSY2/QHq9j
+ UoWw==
+X-Gm-Message-State: AOJu0YwXoRCTnlZEHASHX8h51ItpFoGH6Pdv/AeC0oV+p/zudXLv9pei
+ L2yeY1yqv8xE1/05YUFZ4MZcZgHcs1fuYY1kZT3Dd6/qvCQQ9xZLoZG8tsVlpyIIn3J+qzoDVHg
+ O
+X-Google-Smtp-Source: AGHT+IF9e3B4t4KUsaF9I1B+VX4Qg01xgoSe06CGyBo5WLah5E8ZZBY/F7M2OIVhPwbXePh6WffstA==
+X-Received: by 2002:a5d:4b83:0:b0:34d:9b4d:2a43 with SMTP id
+ b3-20020a5d4b83000000b0034d9b4d2a43mr1748734wrt.0.1714640750205; 
+ Thu, 02 May 2024 02:05:50 -0700 (PDT)
+Received: from m1x-phil.lan ([176.187.215.106])
+ by smtp.gmail.com with ESMTPSA id
+ y10-20020a5d620a000000b0034ddb760da2sm753549wru.79.2024.05.02.02.05.48
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 02 May 2024 02:05:49 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Yu Zhang <yu.zhang@ionos.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Jack Wang <jack.wang@ionos.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Michael Galaxy <mgalaxy@akamai.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] migration/rdma: Allow building without on-demand paging
+ support
+Date: Thu,  2 May 2024 11:05:47 +0200
+Message-ID: <20240502090547.87824-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] ppc/pnv: Begin a more complete ADU LPC model for
- POWER9/10
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
- <fbarrat@linux.ibm.com>, Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-References: <20240417110215.808926-1-npiggin@gmail.com>
- <20240417110215.808926-2-npiggin@gmail.com>
- <577fd77f-a6b9-41f5-8193-f2cc80503a7d@kaod.org>
- <D0YBCHP9K12V.3JU88W5WITYRM@gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <D0YBCHP9K12V.3JU88W5WITYRM@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=l4T0=MF=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,69 +97,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/1/24 14:39, Nicholas Piggin wrote:
-> On Wed Apr 17, 2024 at 9:25 PM AEST, Cédric Le Goater wrote:
->> Hello Nick,
->>
->> On 4/17/24 13:02, Nicholas Piggin wrote:
->>> This implements a framework for an ADU unit model.
->>>
->>> The ADU unit actually implements XSCOM, which is the bridge between MMIO
->>> and PIB. However it also includes control and status registers and other
->>> functions that are exposed as PIB (xscom) registers.
->>>
->>> To keep things simple, pnv_xscom.c remains the XSCOM bridge
->>> implementation, and pnv_adu.c implements the ADU registers and other
->>> functions.
->>>
->>> So far, just the ADU no-op registers in the pnv_xscom.c default handler
->>> are moved over to the adu model.
->>>
->>> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
->>> ---
->>>    include/hw/ppc/pnv_adu.h   |  34 ++++++++++++
->>>    include/hw/ppc/pnv_chip.h  |   3 +
->>>    include/hw/ppc/pnv_xscom.h |   6 ++
->>>    hw/ppc/pnv.c               |  16 ++++++
->>>    hw/ppc/pnv_adu.c           | 111 +++++++++++++++++++++++++++++++++++++
->>>    hw/ppc/pnv_xscom.c         |   9 ---
->>>    hw/ppc/meson.build         |   1 +
->>>    hw/ppc/trace-events        |   4 ++
->>>    8 files changed, 175 insertions(+), 9 deletions(-)
->>>    create mode 100644 include/hw/ppc/pnv_adu.h
->>>    create mode 100644 hw/ppc/pnv_adu.c
->>>
->>> diff --git a/include/hw/ppc/pnv_adu.h b/include/hw/ppc/pnv_adu.h
->>> new file mode 100644
->>> index 0000000000..9dc91857a9
->>> --- /dev/null
->>> +++ b/include/hw/ppc/pnv_adu.h
->>> @@ -0,0 +1,34 @@
->>> +/*
->>> + * QEMU PowerPC PowerNV Emulation of some ADU behaviour
->>> + *
->>> + * Copyright (c) 2024, IBM Corporation.
->>> + *
->>> + * SPDX-License-Identifier: LGPL-2.1-or-later
->>
->>
->> Did you mean GPL-2.0-or-later ?
-> 
-> Hey Cedric,
-> 
-> Thanks for reviewing, I've been away so sorry for the late reply.
-> 
-> It just came from one of the headers I copied which was LGPL. But
-> there's really nothing much in it and could find a GPL header to
-> copy. Is GPL-2.0-or-later preferred?
+On-demand paging support was added in libibverbs v1.2.0 in
+commit https://github.com/linux-rdma/rdma-core/commit/e500adc7b1
 
-I would since all pnv models are GPL.
+We don't check the libibverbs, so add a meson check on the
+IBV_ACCESS_ON_DEMAND symbol, and define HAVE_IBV_ACCESS_ON_DEMAND
+if found. Restrict rdma_support_odp() so it returns %false when
+on-demand paging is not supported.
 
-I think some parts of QEMU were initially LGPL (there used to be
-a library, may be that's the reason ?) and other parts are relaxed
-to LGPL because they are reused in libraries.
+This fixes:
 
-Thanks,
+  migration/rdma.c: In function 'rdma_support_odp':
+  migration/rdma.c:1133:12: error: variable 'attr' has initializer but incomplete type
+   1133 |     struct ibv_device_attr_ex attr = {0};
+        |            ^~~~~~~~~~~~~~~~~~
+  migration/rdma.c:1135:9: warning: implicit declaration of function 'ibv_query_device_ex'; did you mean 'ibv_query_device'? [-Wimplicit-function-declaration]
+   1135 |     if (ibv_query_device_ex(dev, NULL, &attr)) {
+        |         ^~~~~~~~~~~~~~~~~~~
+        |         ibv_query_device
+  migration/rdma.c:1135:9: warning: nested extern declaration of 'ibv_query_device_ex' [-Wnested-externs]
+  migration/rdma.c:1139:38: error: 'IBV_ODP_SUPPORT' undeclared (first use in this function); did you mean 'IBV_QP_PORT'?
+   1139 |     if (attr.odp_caps.general_caps & IBV_ODP_SUPPORT) {
+        |                                      ^~~~~~~~~~~~~~~
+        |                                      IBV_QP_PORT
+  migration/rdma.c: In function 'qemu_rdma_reg_whole_ram_blocks':
+  migration/rdma.c:1189:27: error: 'IBV_ACCESS_ON_DEMAND' undeclared (first use in this function); did you mean 'IBV_ACCESS_MW_BIND'?
+   1189 |                 access |= IBV_ACCESS_ON_DEMAND;
+        |                           ^~~~~~~~~~~~~~~~~~~~
+        |                           IBV_ACCESS_MW_BIND
+  ninja: build stopped: subcommand failed.
 
-C.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ meson.build      | 3 +++
+ migration/rdma.c | 6 ++++++
+ 2 files changed, 9 insertions(+)
+
+diff --git a/meson.build b/meson.build
+index 837a2bdb56..7c6436ac9e 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2410,6 +2410,9 @@ if rdma.found()
+                        cc.has_function('ibv_advise_mr',
+                                        dependencies: rdma,
+                                        prefix: '#include <infiniband/verbs.h>'))
++  config_host_data.set('HAVE_IBV_ACCESS_ON_DEMAND',
++                       cc.has_header_symbol('infiniband/verbs.h',
++                                            'IBV_ACCESS_ON_DEMAND'))
+ endif
+ 
+ have_asan_fiber = false
+diff --git a/migration/rdma.c b/migration/rdma.c
+index 855753c671..4717fb3143 100644
+--- a/migration/rdma.c
++++ b/migration/rdma.c
+@@ -1127,9 +1127,14 @@ static int qemu_rdma_alloc_qp(RDMAContext *rdma)
+     return 0;
+ }
+ 
++#ifndef HAVE_IBV_ACCESS_ON_DEMAND
++#define IBV_ACCESS_ON_DEMAND 0
++#endif
++
+ /* Check whether On-Demand Paging is supported by RDAM device */
+ static bool rdma_support_odp(struct ibv_context *dev)
+ {
++#ifdef HAVE_IBV_ACCESS_ON_DEMAND
+     struct ibv_device_attr_ex attr = {0};
+ 
+     if (ibv_query_device_ex(dev, NULL, &attr)) {
+@@ -1139,6 +1144,7 @@ static bool rdma_support_odp(struct ibv_context *dev)
+     if (attr.odp_caps.general_caps & IBV_ODP_SUPPORT) {
+         return true;
+     }
++#endif
+ 
+     return false;
+ }
+-- 
+2.41.0
+
 
