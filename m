@@ -4,54 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 879EEC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 08:33:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA0CAC25B10
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 08:36:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2RsL-0004ve-Q7; Thu, 02 May 2024 04:33:09 -0400
+	id 1s2RvE-0006NS-8E; Thu, 02 May 2024 04:36:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=l4T0=MF=kaod.org=clg@ozlabs.org>)
- id 1s2RsH-0004vF-TP; Thu, 02 May 2024 04:33:05 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s2RvC-0006Mz-Bw
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 04:36:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=l4T0=MF=kaod.org=clg@ozlabs.org>)
- id 1s2RsG-0002sa-7Z; Thu, 02 May 2024 04:33:05 -0400
-Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4VVRyf1dmYz4wck;
- Thu,  2 May 2024 18:32:58 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s2Rv9-0003eQ-Nx
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 04:36:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714638962;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=mqAhxicxksET7XeX1SBGmkK553H3lWnTjKCamVjFZn8=;
+ b=cqEOffTbZ4SYg3lDClHV1IlB2oXawiuedP0gQfC/nfjudtpavcff/eRdR/Y49C6dJJ9uYW
+ 9exWThc/xt2wFLEzq/7QtnVhHuVVroSV36UHWsNi3uhHSibXnflCJX6paWwlUcwhqlj1Av
+ qEeWlGW/4UXLFyli62MygvVhd8ORk9Q=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-128-OSvBLYNsNuqzoJefzDVDEw-1; Thu, 02 May 2024 04:35:57 -0400
+X-MC-Unique: OSvBLYNsNuqzoJefzDVDEw-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4VVRyb5YBTz4xFg;
- Thu,  2 May 2024 18:32:55 +1000 (AEST)
-Message-ID: <1911763b-53ba-4816-96b8-f8720b8c5634@kaod.org>
-Date: Thu, 2 May 2024 10:32:53 +0200
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 27CAA810431;
+ Thu,  2 May 2024 08:35:57 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 0622C2166B31;
+ Thu,  2 May 2024 08:35:56 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 1287321E6811; Thu,  2 May 2024 10:35:56 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: James Bottomley <James.Bottomley@HansenPartnership.com>
+Cc: qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>, Stefan Berger <stefanb@linux.ibm.com>
+Subject: Re: [PATCH v10 1/2] tpm: convert tpmdev options processing to new
+ visitor format
+In-Reply-To: <20240430190855.2811-2-James.Bottomley@HansenPartnership.com>
+ (James Bottomley's message of "Tue, 30 Apr 2024 15:08:54 -0400")
+References: <20240430190855.2811-1-James.Bottomley@HansenPartnership.com>
+ <20240430190855.2811-2-James.Bottomley@HansenPartnership.com>
+Date: Thu, 02 May 2024 10:35:56 +0200
+Message-ID: <87sez0pq4z.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] ppc/pnv: Implement ADU access to LPC space
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
- <fbarrat@linux.ibm.com>, Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-References: <20240417110215.808926-1-npiggin@gmail.com>
- <20240417110215.808926-3-npiggin@gmail.com>
- <f8b689f4-50b0-4f96-bd64-21b9eda6862e@kaod.org>
- <D0YBEWF2CP6Q.121MBJ0QG4HS1@gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <D0YBEWF2CP6Q.121MBJ0QG4HS1@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=l4T0=MF=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.897,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,39 +84,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Nick,
+James Bottomley <James.Bottomley@HansenPartnership.com> writes:
+
+> Instead of processing the tpmdev options using the old qemu options,
+> convert to the new visitor format which also allows the passing of
+> json on the command line.
+>
+> Signed-off-by: James Bottomley <James.Bottomley@HansenPartnership.com>
+> Tested-by: Stefan Berger <stefanb@linux.ibm.com>
+> Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+
+[...]
+
+> diff --git a/qapi/tpm.json b/qapi/tpm.json
+> index 1577b5c259..5604553b7d 100644
+> --- a/qapi/tpm.json
+> +++ b/qapi/tpm.json
+> @@ -142,6 +142,27 @@
+>              'emulator': 'TPMEmulatorOptionsWrapper' },
+>    'if': 'CONFIG_TPM' }
+>  
+> +##
+> +# @TpmCreateOptions:
+> +#
+> +# A union referencing different TPM backend types' configuration options
+> +#   without the wrapper to be usable by visitors.
+
+reST trap: this is a definition list.  Delete the second line's
+indentation to make it a paragraph:
+
+   # A union referencing different TPM backend types' configuration
+   # options without the wrapper to be usable by visitors.
 
 
->>> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
->>> index 5869aac89a..eb9dbc62dd 100644
->>> --- a/hw/ppc/pnv.c
->>> +++ b/hw/ppc/pnv.c
->>> @@ -1642,6 +1642,8 @@ static void pnv_chip_power9_realize(DeviceState *dev, Error **errp)
->>>        }
->>>    
->>>        /* ADU */
->>> +    object_property_set_link(OBJECT(&chip9->adu), "lpc", OBJECT(&chip9->lpc),
->>> +                             &error_abort);
->>
->> I would add an assert on the lpc pointer in the ADU realize routine.
-> 
-> A assert != NULL, in case this failed to link correctly? (Maybe if it
-> was called before lpc object was realized). I will do.
+> +#
+> +# @type: - 'passthrough' The configuration options for the TPM passthrough type
+> +#        - 'emulator' The configuration options for TPM emulator backend type
 
-It is to make sure that an ADU object is not "realized" without
-the pointer '->lpc' being set before, since it is a must-have for
-the implementation to operate (and do LPC transactions).
+docs/devel/qapi-code-gen.rst:
 
-There are several :
+    Descriptions start with '\@name:'.  The description text must be
+    indented like this::
 
-    assert(s->chip);
+     # @name: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+     #     do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
-in the pnv models for the same kind of purpose.
+You indent more to make the '-' line up.  Hmm.
 
-Thanks,
+Let's indent this like @TpmTypeOptions right above, namely
 
-C.
+    # @type:
+    #     - 'passthrough' The configuration options for the TPM
+    #       passthrough type
+    #     - 'emulator' The configuration options for TPM emulator backend
+    #       type
 
+> +#
+> +# @id: The Id of the TPM
 
+What kind of Id is this?
+
+> +#
+> +# Since: 9.0
+
+9.1
+
+> +##
+> +{ 'union': 'TpmCreateOptions',
+> +  'base': { 'type': 'TpmType',
+> +            'id' : 'str' },
+> +  'discriminator': 'type',
+> +  'data': { 'passthrough' : 'TPMPassthroughOptions',
+> +            'emulator': 'TPMEmulatorOptions' },
+> +  'if': 'CONFIG_TPM' }
+> +
+
+This is a flattened version of TpmTypeOptions with additional member
+@id.
+
+Flattened: the union branches use Foo instead of FooWrapper.
+
+@id: Iguess query-tpm has it one level up, in TPMInfo.
+
+Okay.
+
+>  ##
+>  # @TPMInfo:
+>  #
+
+[...]
 
 
