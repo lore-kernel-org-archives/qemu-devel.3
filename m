@@ -4,48 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8345C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 May 2024 23:50:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEEBDC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 00:18:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2Jbr-0002Oq-At; Wed, 01 May 2024 19:43:35 -0400
+	id 1s2K8M-0000It-RQ; Wed, 01 May 2024 20:17:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s2Jbn-0002Jx-NF; Wed, 01 May 2024 19:43:31 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s2Jbk-00052K-6T; Wed, 01 May 2024 19:43:31 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A4A5E4E6041;
- Thu, 02 May 2024 01:43:26 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 3Toum0VHKsbr; Thu,  2 May 2024 01:43:24 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id AE4BC4E602E; Thu, 02 May 2024 01:43:24 +0200 (CEST)
-Message-Id: <a35ae0f50258d4c4b8b6381bec9933f17105091a.1714606359.git.balaton@eik.bme.hu>
-In-Reply-To: <cover.1714606359.git.balaton@eik.bme.hu>
-References: <cover.1714606359.git.balaton@eik.bme.hu>
-From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v2 18/28] target/ppc/mmu_common.c: Deindent ppc_jumbo_xlate()
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s2K8L-0000IV-OL
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 20:17:09 -0400
+Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s2K8K-0001z6-6P
+ for qemu-devel@nongnu.org; Wed, 01 May 2024 20:17:09 -0400
+Received: by mail-oa1-x2a.google.com with SMTP id
+ 586e51a60fabf-234db9dde9bso3132843fac.1
+ for <qemu-devel@nongnu.org>; Wed, 01 May 2024 17:17:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714609026; x=1715213826; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=75uTeGVmMeSa8zwPqloLaRC9fOP9T0eokl39jYzKJPo=;
+ b=hDdpm9vLdzU/ApGLVbIZRBg6n0KfX7K9C9OxI+3ZkwUgqypGEaZ7Gl7WWe329YnexV
+ Ce4FObXkNy0ZMbJSMUbvEwpump/4EKxuHtaSbk/bA9KHm8MkNaOIfrXEi+D5vt6hnIXf
+ pPDDBBoBtgQqlTfvlG0ZK8jj+abbYXWUl51Ziw/jOS2jtkYLgoT24vqF/lBZON6YUf07
+ C+qzAlt4seLHDNoGMqHIWK2vddipybOd1IGEuDzdp4SzgGoX8lk1cKW7cfglnHAtiXEi
+ UATRBo6h5Jy57aaO/J/RPsY/8AJvyDGJjfFKdta3yBwb4zE8kzEsg0iHh5a/o/YLstvZ
+ Ilew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714609026; x=1715213826;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=75uTeGVmMeSa8zwPqloLaRC9fOP9T0eokl39jYzKJPo=;
+ b=lWP+xBeilR1hm/h25eAHmmjyL+M5yuV1NM+vR5cfuhvEno2Xfbi0lBg9KFZdKcMLzi
+ js1sC4zYAL7HkIS+FwkLo1JJ/Jl1VuKucHbot4te6XWizccXhZ8mPvKLf46DnKU7GqJg
+ 4gtpaO3t+HWN3YAvPVYh0cvRioYzBIOmBBBboDQjxaFwv/TYSwUZnxsy/Bz3cA3ylVOA
+ FEDTthgZaDELsuA56FvP/wVpgFMhcC7Kfv95FyoCdP2+L4Sn3PGraVpvUX8Lg3xTsTBu
+ g287epqFSig7dXieM4uEN3wXgW69CCx1I7UOgwCfzeb34YQt6yI3TOoEKHAR863ReGAs
+ A9YQ==
+X-Gm-Message-State: AOJu0YyDpVrIiH2rAYivRSn2iay4fm7+PVDsqIRvOcFRjhm6Rrgp5ac4
+ Vv0Dro3AdSbboCXmBjsBAvuKJExe7lCkh3b4LxAaVGDcdx6i09XUZUlmXj4mmjhQMnZib56gOtl
+ a
+X-Google-Smtp-Source: AGHT+IFPMHTjAiBr9eM6Pfxcyre4p7k27Wulk0nkK10IkITWZDcFwLFgLsJZBhG+iTcQlnxAJL2M2A==
+X-Received: by 2002:a05:6870:8a0f:b0:220:873d:dbcc with SMTP id
+ p15-20020a0568708a0f00b00220873ddbccmr769475oaq.49.1714609026305; 
+ Wed, 01 May 2024 17:17:06 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ by smtp.gmail.com with ESMTPSA id
+ 81-20020a630254000000b005f80080586asm20842079pgc.93.2024.05.01.17.17.05
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 01 May 2024 17:17:05 -0700 (PDT)
+Message-ID: <b6d1892f-d84c-4960-b913-80b984fb4b26@linaro.org>
+Date: Wed, 1 May 2024 17:17:03 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: qemu-devel@nongnu.org,
-    qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Thu, 02 May 2024 01:43:24 +0200 (CEST)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/20] tcg patch queue
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+References: <20240501143739.10541-1-richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20240501143739.10541-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2001:4860:4864:20::2a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -62,366 +96,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instead of putting a large block of code in an if, invert the
-condition and return early to be able to deindent the code block.
+On 5/1/24 07:37, Richard Henderson wrote:
+> The following changes since commit 9c6c079bc6723da8061ccfb44361d67b1dd785dd:
+> 
+>    Merge tag 'pull-target-arm-20240430' ofhttps://git.linaro.org/people/pmaydell/qemu-arm  into staging (2024-04-30 09:58:54 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/rth7680/qemu.git  tags/pull-tcg-20240501
+> 
+> for you to fetch changes up to 917d7f8d948d706e275c9f33169b9dd0149ded1e:
+> 
+>    plugins: Update the documentation block for plugin-gen.c (2024-04-30 16:12:05 -0700)
+> 
+> ----------------------------------------------------------------
+> plugins: Rewrite plugin tcg expansion
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
- target/ppc/mmu_common.c | 319 ++++++++++++++++++++--------------------
- 1 file changed, 159 insertions(+), 160 deletions(-)
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
-diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 28847c32f2..2487b4deff 100644
---- a/target/ppc/mmu_common.c
-+++ b/target/ppc/mmu_common.c
-@@ -1265,187 +1265,186 @@ static bool ppc_jumbo_xlate(PowerPCCPU *cpu, vaddr eaddr,
-         *protp = ctx.prot;
-         *psizep = TARGET_PAGE_BITS;
-         return true;
-+    } else if (!guest_visible) {
-+        return false;
-     }
- 
--    if (guest_visible) {
--        log_cpu_state_mask(CPU_LOG_MMU, cs, 0);
--        if (type == ACCESS_CODE) {
--            switch (ret) {
--            case -1:
--                /* No matches in page tables or TLB */
--                switch (env->mmu_model) {
--                case POWERPC_MMU_SOFT_6xx:
--                    cs->exception_index = POWERPC_EXCP_IFTLB;
--                    env->error_code = 1 << 18;
--                    env->spr[SPR_IMISS] = eaddr;
--                    env->spr[SPR_ICMP] = 0x80000000 | ctx.ptem;
--                    goto tlb_miss;
--                case POWERPC_MMU_SOFT_4xx:
--                    cs->exception_index = POWERPC_EXCP_ITLB;
--                    env->error_code = 0;
--                    env->spr[SPR_40x_DEAR] = eaddr;
--                    env->spr[SPR_40x_ESR] = 0x00000000;
--                    break;
--                case POWERPC_MMU_BOOKE206:
--                    booke206_update_mas_tlb_miss(env, eaddr, 2, mmu_idx);
--                    /* fall through */
--                case POWERPC_MMU_BOOKE:
--                    cs->exception_index = POWERPC_EXCP_ITLB;
--                    env->error_code = 0;
--                    env->spr[SPR_BOOKE_DEAR] = eaddr;
--                    env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, MMU_DATA_LOAD);
--                    break;
--                case POWERPC_MMU_REAL:
--                    cpu_abort(cs, "PowerPC in real mode should never raise "
--                              "any MMU exceptions\n");
--                default:
--                    cpu_abort(cs, "Unknown or invalid MMU model\n");
--                }
-+    log_cpu_state_mask(CPU_LOG_MMU, cs, 0);
-+    if (type == ACCESS_CODE) {
-+        switch (ret) {
-+        case -1:
-+            /* No matches in page tables or TLB */
-+            switch (env->mmu_model) {
-+            case POWERPC_MMU_SOFT_6xx:
-+                cs->exception_index = POWERPC_EXCP_IFTLB;
-+                env->error_code = 1 << 18;
-+                env->spr[SPR_IMISS] = eaddr;
-+                env->spr[SPR_ICMP] = 0x80000000 | ctx.ptem;
-+                goto tlb_miss;
-+            case POWERPC_MMU_SOFT_4xx:
-+                cs->exception_index = POWERPC_EXCP_ITLB;
-+                env->error_code = 0;
-+                env->spr[SPR_40x_DEAR] = eaddr;
-+                env->spr[SPR_40x_ESR] = 0x00000000;
-                 break;
--            case -2:
--                /* Access rights violation */
--                cs->exception_index = POWERPC_EXCP_ISI;
--                if ((env->mmu_model == POWERPC_MMU_BOOKE) ||
--                    (env->mmu_model == POWERPC_MMU_BOOKE206)) {
--                    env->error_code = 0;
--                } else {
--                    env->error_code = 0x08000000;
--                }
-+            case POWERPC_MMU_BOOKE206:
-+                booke206_update_mas_tlb_miss(env, eaddr, 2, mmu_idx);
-+                /* fall through */
-+            case POWERPC_MMU_BOOKE:
-+                cs->exception_index = POWERPC_EXCP_ITLB;
-+                env->error_code = 0;
-+                env->spr[SPR_BOOKE_DEAR] = eaddr;
-+                env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, MMU_DATA_LOAD);
-                 break;
--            case -3:
--                /* No execute protection violation */
--                if ((env->mmu_model == POWERPC_MMU_BOOKE) ||
--                    (env->mmu_model == POWERPC_MMU_BOOKE206)) {
--                    env->spr[SPR_BOOKE_ESR] = 0x00000000;
--                    env->error_code = 0;
-+            case POWERPC_MMU_REAL:
-+                cpu_abort(cs, "PowerPC in real mode should never raise "
-+                              "any MMU exceptions\n");
-+            default:
-+                cpu_abort(cs, "Unknown or invalid MMU model\n");
-+            }
-+            break;
-+        case -2:
-+            /* Access rights violation */
-+            cs->exception_index = POWERPC_EXCP_ISI;
-+            if ((env->mmu_model == POWERPC_MMU_BOOKE) ||
-+                (env->mmu_model == POWERPC_MMU_BOOKE206)) {
-+                env->error_code = 0;
-+            } else {
-+                env->error_code = 0x08000000;
-+            }
-+            break;
-+        case -3:
-+            /* No execute protection violation */
-+            if ((env->mmu_model == POWERPC_MMU_BOOKE) ||
-+                (env->mmu_model == POWERPC_MMU_BOOKE206)) {
-+                env->spr[SPR_BOOKE_ESR] = 0x00000000;
-+                env->error_code = 0;
-+            } else {
-+                env->error_code = 0x10000000;
-+            }
-+            cs->exception_index = POWERPC_EXCP_ISI;
-+            break;
-+        case -4:
-+            /* Direct store exception */
-+            /* No code fetch is allowed in direct-store areas */
-+            cs->exception_index = POWERPC_EXCP_ISI;
-+            if ((env->mmu_model == POWERPC_MMU_BOOKE) ||
-+                (env->mmu_model == POWERPC_MMU_BOOKE206)) {
-+                env->error_code = 0;
-+            } else {
-+                env->error_code = 0x10000000;
-+            }
-+            break;
-+        }
-+    } else {
-+        switch (ret) {
-+        case -1:
-+            /* No matches in page tables or TLB */
-+            switch (env->mmu_model) {
-+            case POWERPC_MMU_SOFT_6xx:
-+                if (access_type == MMU_DATA_STORE) {
-+                    cs->exception_index = POWERPC_EXCP_DSTLB;
-+                    env->error_code = 1 << 16;
-                 } else {
--                    env->error_code = 0x10000000;
-+                    cs->exception_index = POWERPC_EXCP_DLTLB;
-+                    env->error_code = 0;
-                 }
--                cs->exception_index = POWERPC_EXCP_ISI;
-+                env->spr[SPR_DMISS] = eaddr;
-+                env->spr[SPR_DCMP] = 0x80000000 | ctx.ptem;
-+            tlb_miss:
-+                env->error_code |= ctx.key << 19;
-+                env->spr[SPR_HASH1] = ppc_hash32_hpt_base(cpu) +
-+                  get_pteg_offset32(cpu, ctx.hash[0]);
-+                env->spr[SPR_HASH2] = ppc_hash32_hpt_base(cpu) +
-+                  get_pteg_offset32(cpu, ctx.hash[1]);
-                 break;
--            case -4:
--                /* Direct store exception */
--                /* No code fetch is allowed in direct-store areas */
--                cs->exception_index = POWERPC_EXCP_ISI;
--                if ((env->mmu_model == POWERPC_MMU_BOOKE) ||
--                    (env->mmu_model == POWERPC_MMU_BOOKE206)) {
--                    env->error_code = 0;
-+            case POWERPC_MMU_SOFT_4xx:
-+                cs->exception_index = POWERPC_EXCP_DTLB;
-+                env->error_code = 0;
-+                env->spr[SPR_40x_DEAR] = eaddr;
-+                if (access_type == MMU_DATA_STORE) {
-+                    env->spr[SPR_40x_ESR] = 0x00800000;
-                 } else {
--                    env->error_code = 0x10000000;
-+                    env->spr[SPR_40x_ESR] = 0x00000000;
-                 }
-                 break;
--            }
--        } else {
--            switch (ret) {
--            case -1:
--                /* No matches in page tables or TLB */
--                switch (env->mmu_model) {
--                case POWERPC_MMU_SOFT_6xx:
--                    if (access_type == MMU_DATA_STORE) {
--                        cs->exception_index = POWERPC_EXCP_DSTLB;
--                        env->error_code = 1 << 16;
--                    } else {
--                        cs->exception_index = POWERPC_EXCP_DLTLB;
--                        env->error_code = 0;
--                    }
--                    env->spr[SPR_DMISS] = eaddr;
--                    env->spr[SPR_DCMP] = 0x80000000 | ctx.ptem;
--                tlb_miss:
--                    env->error_code |= ctx.key << 19;
--                    env->spr[SPR_HASH1] = ppc_hash32_hpt_base(cpu) +
--                        get_pteg_offset32(cpu, ctx.hash[0]);
--                    env->spr[SPR_HASH2] = ppc_hash32_hpt_base(cpu) +
--                        get_pteg_offset32(cpu, ctx.hash[1]);
--                    break;
--                case POWERPC_MMU_SOFT_4xx:
--                    cs->exception_index = POWERPC_EXCP_DTLB;
--                    env->error_code = 0;
--                    env->spr[SPR_40x_DEAR] = eaddr;
--                    if (access_type == MMU_DATA_STORE) {
--                        env->spr[SPR_40x_ESR] = 0x00800000;
--                    } else {
--                        env->spr[SPR_40x_ESR] = 0x00000000;
--                    }
--                    break;
--                case POWERPC_MMU_BOOKE206:
--                    booke206_update_mas_tlb_miss(env, eaddr, access_type, mmu_idx);
--                    /* fall through */
--                case POWERPC_MMU_BOOKE:
--                    cs->exception_index = POWERPC_EXCP_DTLB;
--                    env->error_code = 0;
--                    env->spr[SPR_BOOKE_DEAR] = eaddr;
--                    env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
--                    break;
--                case POWERPC_MMU_REAL:
--                    cpu_abort(cs, "PowerPC in real mode should never raise "
-+            case POWERPC_MMU_BOOKE206:
-+                booke206_update_mas_tlb_miss(env, eaddr, access_type, mmu_idx);
-+                /* fall through */
-+            case POWERPC_MMU_BOOKE:
-+                cs->exception_index = POWERPC_EXCP_DTLB;
-+                env->error_code = 0;
-+                env->spr[SPR_BOOKE_DEAR] = eaddr;
-+                env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
-+                break;
-+            case POWERPC_MMU_REAL:
-+                cpu_abort(cs, "PowerPC in real mode should never raise "
-                               "any MMU exceptions\n");
--                default:
--                    cpu_abort(cs, "Unknown or invalid MMU model\n");
-+            default:
-+                cpu_abort(cs, "Unknown or invalid MMU model\n");
-+            }
-+            break;
-+        case -2:
-+            /* Access rights violation */
-+            cs->exception_index = POWERPC_EXCP_DSI;
-+            env->error_code = 0;
-+            if (env->mmu_model == POWERPC_MMU_SOFT_4xx) {
-+                env->spr[SPR_40x_DEAR] = eaddr;
-+                if (access_type == MMU_DATA_STORE) {
-+                    env->spr[SPR_40x_ESR] |= 0x00800000;
-                 }
-+            } else if ((env->mmu_model == POWERPC_MMU_BOOKE) ||
-+                       (env->mmu_model == POWERPC_MMU_BOOKE206)) {
-+                env->spr[SPR_BOOKE_DEAR] = eaddr;
-+                env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
-+            } else {
-+                env->spr[SPR_DAR] = eaddr;
-+                if (access_type == MMU_DATA_STORE) {
-+                    env->spr[SPR_DSISR] = 0x0A000000;
-+                } else {
-+                    env->spr[SPR_DSISR] = 0x08000000;
-+                }
-+            }
-+            break;
-+        case -4:
-+            /* Direct store exception */
-+            switch (type) {
-+            case ACCESS_FLOAT:
-+                /* Floating point load/store */
-+                cs->exception_index = POWERPC_EXCP_ALIGN;
-+                env->error_code = POWERPC_EXCP_ALIGN_FP;
-+                env->spr[SPR_DAR] = eaddr;
-                 break;
--            case -2:
--                /* Access rights violation */
-+            case ACCESS_RES:
-+                /* lwarx, ldarx or stwcx. */
-                 cs->exception_index = POWERPC_EXCP_DSI;
-                 env->error_code = 0;
--                if (env->mmu_model == POWERPC_MMU_SOFT_4xx) {
--                    env->spr[SPR_40x_DEAR] = eaddr;
--                    if (access_type == MMU_DATA_STORE) {
--                        env->spr[SPR_40x_ESR] |= 0x00800000;
--                    }
--                } else if ((env->mmu_model == POWERPC_MMU_BOOKE) ||
--                           (env->mmu_model == POWERPC_MMU_BOOKE206)) {
--                    env->spr[SPR_BOOKE_DEAR] = eaddr;
--                    env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
-+                env->spr[SPR_DAR] = eaddr;
-+                if (access_type == MMU_DATA_STORE) {
-+                    env->spr[SPR_DSISR] = 0x06000000;
-                 } else {
--                    env->spr[SPR_DAR] = eaddr;
--                    if (access_type == MMU_DATA_STORE) {
--                        env->spr[SPR_DSISR] = 0x0A000000;
--                    } else {
--                        env->spr[SPR_DSISR] = 0x08000000;
--                    }
-+                    env->spr[SPR_DSISR] = 0x04000000;
-                 }
-                 break;
--            case -4:
--                /* Direct store exception */
--                switch (type) {
--                case ACCESS_FLOAT:
--                    /* Floating point load/store */
--                    cs->exception_index = POWERPC_EXCP_ALIGN;
--                    env->error_code = POWERPC_EXCP_ALIGN_FP;
--                    env->spr[SPR_DAR] = eaddr;
--                    break;
--                case ACCESS_RES:
--                    /* lwarx, ldarx or stwcx. */
--                    cs->exception_index = POWERPC_EXCP_DSI;
--                    env->error_code = 0;
--                    env->spr[SPR_DAR] = eaddr;
--                    if (access_type == MMU_DATA_STORE) {
--                        env->spr[SPR_DSISR] = 0x06000000;
--                    } else {
--                        env->spr[SPR_DSISR] = 0x04000000;
--                    }
--                    break;
--                case ACCESS_EXT:
--                    /* eciwx or ecowx */
--                    cs->exception_index = POWERPC_EXCP_DSI;
--                    env->error_code = 0;
--                    env->spr[SPR_DAR] = eaddr;
--                    if (access_type == MMU_DATA_STORE) {
--                        env->spr[SPR_DSISR] = 0x06100000;
--                    } else {
--                        env->spr[SPR_DSISR] = 0x04100000;
--                    }
--                    break;
--                default:
--                    printf("DSI: invalid exception (%d)\n", ret);
--                    cs->exception_index = POWERPC_EXCP_PROGRAM;
--                    env->error_code =
--                        POWERPC_EXCP_INVAL | POWERPC_EXCP_INVAL_INVAL;
--                    env->spr[SPR_DAR] = eaddr;
--                    break;
-+            case ACCESS_EXT:
-+                /* eciwx or ecowx */
-+                cs->exception_index = POWERPC_EXCP_DSI;
-+                env->error_code = 0;
-+                env->spr[SPR_DAR] = eaddr;
-+                if (access_type == MMU_DATA_STORE) {
-+                    env->spr[SPR_DSISR] = 0x06100000;
-+                } else {
-+                    env->spr[SPR_DSISR] = 0x04100000;
-                 }
-                 break;
-+            default:
-+                printf("DSI: invalid exception (%d)\n", ret);
-+                cs->exception_index = POWERPC_EXCP_PROGRAM;
-+                env->error_code = POWERPC_EXCP_INVAL | POWERPC_EXCP_INVAL_INVAL;
-+                env->spr[SPR_DAR] = eaddr;
-+                break;
-             }
-+            break;
-         }
-     }
-     return false;
--- 
-2.30.9
+
+r~
 
 
