@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDC5DC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 07:35:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4982CC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 07:42:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2QyA-00068w-TA; Thu, 02 May 2024 03:35:06 -0400
+	id 1s2R4x-0008Di-Ic; Thu, 02 May 2024 03:42:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1s2QyA-00068n-0S
- for qemu-devel@nongnu.org; Thu, 02 May 2024 03:35:06 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2R4v-0008D1-JE
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 03:42:05 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1s2Qy7-0007L4-Fg
- for qemu-devel@nongnu.org; Thu, 02 May 2024 03:35:05 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-57232e47a81so2534471a12.0
- for <qemu-devel@nongnu.org>; Thu, 02 May 2024 00:35:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2R4t-0000Ir-Gr
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 03:42:05 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-34de61b7ca4so700823f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 02 May 2024 00:42:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1714635300; x=1715240100; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=AlUMOnUMKElu43V8N8NXHih/16FRYsa+DT2aHHqwJNE=;
- b=QikVbhPSf5xJeBmICbQU7E9caCnERHZ3vUF/vIsPADeiKc5ZOL2+Y89mrQ8RXpY8rz
- i9u2cD2ngs1AUrZdTvwwiCMkbqwySnSyd/Hgxd2zHkJ8q+KruxBOy+Ad4JQKlgBi79HB
- mNloFOhILXTE4vIe7IKnkCdVZKJLT5a+jZ6DsCLAGxeuLntLMF7j6X3BKrU3D2JhoTDf
- YwwGQyIABu9klKYQU56ioL7Hap3ZVDd2NyCJZSUxKlA/HyJ6VTecDwNFv2/690627UKy
- TNkvhX2WQXZV/C0luC74veeRiHL1IpkKkhbrlVYCkdLGhJQ8DhNQvTmcDJm7cbG76LD3
- JuMw==
+ d=linaro.org; s=google; t=1714635721; x=1715240521; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=uJqQFQLxnDneJQpNwePbjyQtotXX3ciG0fz6r7EnZkI=;
+ b=BOeuon0KpcB/2NusDzgya7gRV36zYV8NiblZBvjvArI7CMzfCvoepBpcIHF15kiBCu
+ lXAhyuyeYozCFedk8ikU8haNaQeMB6okb8a3R5Cb5wIft0Ue+Yl+Ss/mfe8TLOw8MSYH
+ TplMSurF5D5X2nGJwpEjA//Hp7gFwIVAtEcCTenZgmwatZf8N6dXQIXVMy5KNuYcBFxH
+ AT56i0rdKq3pFS2rF6z2GIr0+DnUVzmqNDfNfs2XSzO/Ba4Gyl5Sfat/MLqhWuCciQfU
+ nY+1nkWWkAsQKAf327GWqX/xHz9o+CfDVPUrxxeJTf728kxTgzQu2Ld3BIv4UEXg7/+D
+ kK6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714635300; x=1715240100;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=AlUMOnUMKElu43V8N8NXHih/16FRYsa+DT2aHHqwJNE=;
- b=TahMiH48ufBWFHKtAkdLlzYT6fzR9bSubKx990YhFlz/5O1gZ34cIhtuiyPu3wgGMK
- I035Ms0meP0q96HPMEGWuNmTd+8hUs5ASVlWKC9UJBE+s8GDREWp/o3X3IhNS/1hsrPk
- fXp96w2wxhZYOFhfcyfCvJLIRggaVCJnN5C+qLrSoN+sBqgT5HZdAcqpPxk6tmVTK5cM
- dFZWYLrD4P0+kPnHLmkK9ppp2k6D6UXtLYitv3TwD8gGfavcXGmvcX21GsW1KiaU+VWt
- RvTm3OeBJtSrO2DU67z/1lEto6Q/4TwePOLbcIsRIrDNu40QCD42snQQoVFZpDFMr+w3
- bUJA==
-X-Gm-Message-State: AOJu0YxomWCG8pedQWCMgL6WmUuT/eOmvSJ8+D5tDuOXFVh/eg4QNM5a
- EKHYwKL+V95FUxcf6zcAzMGmWPh79s4CqjS0Kw0hKohzEDBIwxmu/R7RbhDBEAkhpm/WH7w+LmT
- 2HXsrpnH1Fc++BtmbFdRyR05cI2hD+dTJ
-X-Google-Smtp-Source: AGHT+IFeFt+Pbra3NifN8rs1UXcD8UP6ZmjUZHfOEsk+O2tSlQVe5lCGAJsT/L6+37rrO+XVhxWqsOTvvoJ6Jvn3MsI=
-X-Received: by 2002:a50:cd53:0:b0:570:4aea:4e1e with SMTP id
- d19-20020a50cd53000000b005704aea4e1emr1859829edj.15.1714635299936; Thu, 02
- May 2024 00:34:59 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240430164939.925307-1-edgar.iglesias@gmail.com>
- <20240430164939.925307-13-edgar.iglesias@gmail.com>
-In-Reply-To: <20240430164939.925307-13-edgar.iglesias@gmail.com>
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Date: Thu, 2 May 2024 09:34:47 +0200
-Message-ID: <CAJy5ezrJ2YYgAXFhcyAVosnKL3a5E96oJCfkuS4y2OGSxdU0Fw@mail.gmail.com>
-Subject: Re: [PATCH v4 12/17] xen: mapcache: Unmap first entries in buckets
+ d=1e100.net; s=20230601; t=1714635721; x=1715240521;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=uJqQFQLxnDneJQpNwePbjyQtotXX3ciG0fz6r7EnZkI=;
+ b=WWndejR7aHJ8k3UKpXkuTB7siFoLEJ6+rjEGVFKwi6SqvII2PzTigEu0KP3ObjzwjB
+ xgQsPeLiDS/udPgGBK2Vi0CPbbZ32pWrQguLX0nuM9pjOsv1mt0JP7e0k3cUKX97bifJ
+ 1GT4ag/04hVWw3IKfdX4WFBxeNkwj7DhW+OiY78VKk34HXm8Hobbfw236tzR6VT+HLDv
+ A0NV8LC966BnjUfKYWZxH64Mu7HR35602dRuoW0FCsg5ZtTPojXYI/4UNSzlUBmTalHJ
+ tKfC8KWU9O9E5gh+MK24MHwFxmEpBKr09utZWWxRgOISupoJopy9HwPKQOTVXr/RrWaC
+ bQJQ==
+X-Gm-Message-State: AOJu0YxGKfBYC/ldedMyFBTDXs09Ad/eJCmw63rqg5ucB2hR7HiaWL3l
+ GKUF/Yk7yINCBXT9B014NWC42ATGdttiRThwwxvhr0/Fo6YSbDc+ngBRhsB955kT7zyQo6pM+9X
+ Q
+X-Google-Smtp-Source: AGHT+IGfqwAWToqP3C4WtRycIOROP/6SCh3cnTGtwUCaAaemV+q7UjF022wAksQ1sPQFcPcGqLIW8g==
+X-Received: by 2002:a5d:6ac4:0:b0:34c:fa17:f4fe with SMTP id
+ u4-20020a5d6ac4000000b0034cfa17f4femr1168832wrw.21.1714635721145; 
+ Thu, 02 May 2024 00:42:01 -0700 (PDT)
+Received: from m1x-phil.lan ([176.187.215.106])
+ by smtp.gmail.com with ESMTPSA id
+ v23-20020a5d5917000000b00346ceb9e060sm556455wrd.103.2024.05.02.00.41.59
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 02 May 2024 00:42:00 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: sstabellini@kernel.org, jgross@suse.com, 
- "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
- Anthony Perard <anthony.perard@citrix.com>, 
- Paul Durrant <paul@xen.org>, xen-devel@lists.xenproject.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-ed1-x529.google.com
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] hw/input/tsc2005: Fix -Wchar-subscripts warning in
+ tsc2005_txrx()
+Date: Thu,  2 May 2024 09:41:58 +0200
+Message-ID: <20240502074158.85800-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,64 +92,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 30, 2024 at 6:50=E2=80=AFPM Edgar E. Iglesias
-<edgar.iglesias@gmail.com> wrote:
->
-> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
->
-> When invalidating memory ranges, if we happen to hit the first
-> entry in a bucket we were never unmapping it. This was harmless
-> for foreign mappings but now that we're looking to reuse the
-> mapcache for transient grant mappings, we must unmap entries
-> when invalidated.
->
-> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-> ---
->  hw/xen/xen-mapcache.c | 12 ++++++++----
->  1 file changed, 8 insertions(+), 4 deletions(-)
->
-> diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-> index 4f98d284dd..0365311788 100644
-> --- a/hw/xen/xen-mapcache.c
-> +++ b/hw/xen/xen-mapcache.c
-> @@ -486,18 +486,22 @@ static void xen_invalidate_map_cache_entry_unlocked=
-(MapCache *mc,
->          return;
->      }
->      entry->lock--;
-> -    if (entry->lock > 0 || pentry =3D=3D NULL) {
-> +    if (entry->lock > 0) {
->          return;
->      }
->
-> -    pentry->next =3D entry->next;
->      ram_block_notify_remove(entry->vaddr_base, entry->size, entry->size)=
-;
->      if (munmap(entry->vaddr_base, entry->size) !=3D 0) {
->          perror("unmap fails");
->          exit(-1);
->      }
-> -    g_free(entry->valid_mapping);
-> -    g_free(entry);
-> +    if (pentry) {
-> +        pentry->next =3D entry->next;
-> +        g_free(entry->valid_mapping);
-> +        g_free(entry);
-> +    } else {
-> +        memset(entry, 0, sizeof *entry);
+Check the function index is not negative and use an unsigned
+variable to avoid the following warning with GCC 13.2.0:
 
-I noticed that we're leaking entry->valid_mapping here. I'll fix this for v=
-5.
+  [666/5358] Compiling C object libcommon.fa.p/hw_input_tsc2005.c.o
+  hw/input/tsc2005.c: In function 'tsc2005_timer_tick':
+  hw/input/tsc2005.c:416:26: warning: array subscript has type 'char' [-Wchar-subscripts]
+    416 |     s->dav |= mode_regs[s->function];
+        |                         ~^~~~~~~~~~
 
-Cheers,
-Edgar
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/input/tsc2005.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
+diff --git a/hw/input/tsc2005.c b/hw/input/tsc2005.c
+index 941f163d36..fa93eb5d25 100644
+--- a/hw/input/tsc2005.c
++++ b/hw/input/tsc2005.c
+@@ -406,6 +406,7 @@ uint32_t tsc2005_txrx(void *opaque, uint32_t value, int len)
+ static void tsc2005_timer_tick(void *opaque)
+ {
+     TSC2005State *s = opaque;
++    unsigned func_idx;
+ 
+     /* Timer ticked -- a set of conversions has been finished.  */
+ 
+@@ -413,7 +414,9 @@ static void tsc2005_timer_tick(void *opaque)
+         return;
+ 
+     s->busy = false;
+-    s->dav |= mode_regs[s->function];
++    assert(s->function >= 0);
++    func_idx = s->function;
++    s->dav |= mode_regs[func_idx];
+     s->function = -1;
+     tsc2005_pin_update(s);
+ }
+-- 
+2.41.0
 
-> +    }
->  }
->
->  typedef struct XenMapCacheData {
-> --
-> 2.40.1
->
 
