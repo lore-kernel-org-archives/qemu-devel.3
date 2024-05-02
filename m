@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 843E5C25B10
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 09:12:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 156FAC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 09:19:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2STz-0003EQ-Kz; Thu, 02 May 2024 05:12:03 -0400
+	id 1s2Sal-0006eO-TX; Thu, 02 May 2024 05:19:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2STx-0003Bw-4F
- for qemu-devel@nongnu.org; Thu, 02 May 2024 05:12:01 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s2Sag-0006dd-DL
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 05:18:58 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2STv-00021W-80
- for qemu-devel@nongnu.org; Thu, 02 May 2024 05:12:00 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-51f40b5e059so272592e87.0
- for <qemu-devel@nongnu.org>; Thu, 02 May 2024 02:11:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s2Sad-0002vt-Gb
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 05:18:58 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-56e56ee8d5cso9839858a12.2
+ for <qemu-devel@nongnu.org>; Thu, 02 May 2024 02:18:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714641117; x=1715245917; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=KwPuA4LiwHXGAeo5UtAtK2eqZQuqxtbamMEaWsTSPVU=;
- b=iQTEm6CY0LPYsG29xHRFXBpzYP/tHuzVgQjuG2DIGV/LCAYwZu68XiIRGNEF8UakQG
- xU/suF2ZxD4GcCPh9wwIiA6tpEjKNNKUg3yNZMvCO1fxc8ZJmFdGWtMTM04gplbupSO/
- fg5qd/zi723Jo19/ualUj4Cz9f5R0MZHxKucHHZjGH1zqknUnoZPXWFi8I06aUdAPmPK
- L1UEZA6/WL+p3YGNEGtmmKWX45qHrvtI1XgLMcRaDyl1eMr+xlU5+kgeA3QpaqjEWY2N
- GGOtJKDGph6QUSHc3e90cajq+7FUeaZ2RfG2pSSTektjM2BA/No1POfciuPe4OM02cqq
- L00g==
+ d=linaro.org; s=google; t=1714641534; x=1715246334; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=lMTlOuXw/w8ul+1mfZsUesTfYYUEXYhKpfU4N/4QUK8=;
+ b=M2xL8WjzBFjGnDsPgNM/LRdblGzORr8dvFd4VVZHYnepN4ehDJkMqN0MjGW4j9HtM9
+ YzJBgSzxgdg29U8xE5/xUF4P+aDsRUo3h+99DJ5C8S8rblyNBU42t9mlTeyI+mfmirUb
+ snvqLTioY3TguX8ADXwkH4P9yNEwIStHS1hXhdMZm3G/PJvIkZV+YoqQV4dYpcTo+yM3
+ otbHODtRnDHcdsPKQWj6nMR5lI9/Lcw22jAaqgVCxILUCG6wtGX7A1tBdktCQBuhBI1g
+ lt/SV/zRFDT6ffzrC+wER0MXyRRuyW90JVfZd7v8FjQRqInJ1mhObDeFKNi3DVfjbr3h
+ 916w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714641117; x=1715245917;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KwPuA4LiwHXGAeo5UtAtK2eqZQuqxtbamMEaWsTSPVU=;
- b=hqueNMytHqNePX8iNLRfYKRwbMvXrKagXn2BUBbAS+GPjK+LffgEmJD57VtSGQcv64
- NLBCjyRgX4J6nUy1v83c/H8c311eNd5GIp5lPiymSjmaL06lYHZFq99tUGgdobtUrQqg
- w+07smP352AO3uLOe02V3FxyLMUijRy4uIzf1fkk6ywSr+mF4BOLeqIsxr2OLuNAP5ZH
- qj1N8KxQO242rZrHyUuJl9l+kAD7HDUjniki4iTghMhUahLP4q97i8OFPYz4G1LyO4c/
- lYzqyw9TLGPZmd54FYp+tqLw3ad03Xt7cUPQk6YcS+q/3utqbgWYFF5+rt57Xvw7k8dx
- UY3A==
+ d=1e100.net; s=20230601; t=1714641534; x=1715246334;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=lMTlOuXw/w8ul+1mfZsUesTfYYUEXYhKpfU4N/4QUK8=;
+ b=rKWAkVKaDn8fnCyZs2spD3QDbRDXj3slJWAiYhExrku/AjSdXnkmZfOTF1H5AcPaZN
+ QSy7qzThzQqYAYTHJm7URjkGEMEGnlAzWpzJxMpvuHweTyc5utjKYgDaikZ/RbndTHB8
+ KRjrYzZN95iWoGIVV/BnP3QpcXiCanHzVJGYY3dWdGjr+O/uAOvaqG8xwL14sCue97P5
+ csdvcHRVWNFjXgJSwbqxDUOmtarwjpyw85qdE/99/zfRQ2xR517+B40ZSDkiIp68+Shx
+ /jhKjAXCTVEV/ShIN9YkltapizKMtotgxRW1CPLfZU93BV4Rr5/je3OxZDqqRIgi+G3y
+ bV0w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVuve+PgG9UOcZrmQDhXUsXe7wrfsR82vZPQC6jZ1ZwM5L9cbCEaIZVLZwuNSvWNvpvekQIslwBTXMiKS7p3qhakaoSt28=
-X-Gm-Message-State: AOJu0YyTcXHzadU4s1OjQq6fIiA6qtCTUybydGp5iK8Yo74C6ANQ2xkO
- 6QvNXOUNDtTY5MuV6C1dRLNckALEO+541mpWKxAVNXG0Z8QMaoy8sfzXbn+G3gQ=
-X-Google-Smtp-Source: AGHT+IF7Js3wt3Q3xkLNTbfJpswvzQgjIkB/nU/cZufrZ/j7XPTgiklkxxmPsQNNiaFwjbtHpaNl3w==
-X-Received: by 2002:a05:6512:32b8:b0:516:582:2348 with SMTP id
- q24-20020a05651232b800b0051605822348mr3079161lfe.54.1714641115515; 
- Thu, 02 May 2024 02:11:55 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.215.106])
- by smtp.gmail.com with ESMTPSA id
- h11-20020a05600c314b00b00418f72d9027sm4989009wmo.18.2024.05.02.02.11.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 May 2024 02:11:55 -0700 (PDT)
-Message-ID: <4e0d411a-675c-42bf-a472-1dd27de842e7@linaro.org>
-Date: Thu, 2 May 2024 11:11:52 +0200
+ AJvYcCWKhjNNrsGVUSQW2NNqhApkg0w5SMxyTI2L4pw2cGNX4XkjAqkX+HPPdo1zEULw7gTfix/8ET65rjSJAVo7Mq7NGcUqjxg=
+X-Gm-Message-State: AOJu0Ywk19NNwYT96YuDx385C7wQEXLWt+Q2GRC595mbnxlhQYeyVp1d
+ 95hResbNjuEjK6qm4OBMN1mM+ic8q8rn5U+jbF8WSwRdYxgvD89p7GQf/mx6EC0F3/SrMm08eLb
+ hgi5hk+KFd5Aih/HqAgpjCUmuWqqEz2snBQAtwA==
+X-Google-Smtp-Source: AGHT+IFf1m6yKAKc2SGjbWTwuJ4aovFbr6TnpT35iuSgSDHlIHqSIPH5R/AmsnceDqUpu8uqJOrvfd6oOFF+ZwMA3+E=
+X-Received: by 2002:a50:cd15:0:b0:568:1882:651f with SMTP id
+ z21-20020a50cd15000000b005681882651fmr998821edi.25.1714641533837; Thu, 02 May
+ 2024 02:18:53 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: Update the reviewers for RDMA migration
-To: Yu Zhang <yu.zhang@ionos.com>, qemu-devel@nongnu.org
-Cc: mgalaxy@akamai.com, lizhijian@fujitsu.com, peterx@redhat.com,
- jinpu.wang@ionos.com, elmar.gerdes@ionos.com, armbru@redhat.com,
- berrange@redhat.com, Jinpu Wang <jinpu.wang@ionos.com>
-References: <20240502074414.236284-1-yu.zhang@ionos.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240502074414.236284-1-yu.zhang@ionos.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x133.google.com
+References: <20240502051233.50749-1-jeeheng.sia@starfivetech.com>
+In-Reply-To: <20240502051233.50749-1-jeeheng.sia@starfivetech.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 2 May 2024 10:18:43 +0100
+Message-ID: <CAFEAcA_FO7BvUDbnJdUTkuatFse7bWR2mjL2OQ_vsB_dLdKbow@mail.gmail.com>
+Subject: Re: [PATCH v1 0/2] Upgrade ACPI SPCR table to support SPCR table
+ version 4 format
+To: Sia Jee Heng <jeeheng.sia@starfivetech.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com, 
+ shannon.zhaosl@gmail.com, sunilvl@ventanamicro.com, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, bin.meng@windriver.com, liwei1518@gmail.com, 
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,74 +94,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On Thu, 2 May 2024 at 06:12, Sia Jee Heng <jeeheng.sia@starfivetech.com> wrote:
+>
+> Update the SPCR table to accommodate the SPCR Table version 4 [1].
+> The SPCR table has been modified to adhere to the version 4 format [2].
+>
+> Meanwhile, the virt SPCR golden reference files have been updated to
+> accommodate the SPCR Table version 4.
+>
+> [1]: https://learn.microsoft.com/en-us/windows-hardware/drivers/serports/serial-port-console-redirection-table
+> [2]: https://github.com/acpica/acpica/pull/931
+>
+> Sia Jee Heng (2):
+>   tests/qtest/bios-tables-test: Update virt SPCR golden references
+>   hw/acpi: Upgrade ACPI SPCR table to support SPCR table version 4
+>     format
 
-On 2/5/24 09:44, Yu Zhang wrote:
-> As the links [1][2] below stated, QEMU development community is currently
-> having some difficulties in maintaining the RDMA migration subsystem due
-> to the lack of resources (maintainers, test cases, test environment etc.)
-> and considering to deprecate it.
-> 
-> According to our user experience in the recent two years, we observed that
-> RDMA is capable of providing higher migration speed and lower performance
-> impact to a running VM, which can significantly improve the end-user's
-> experience during the VM live migration. We believe that RDMA still plays
-> a key role for the QoS and can't yet be replaced by TCP/IP for VM migration
-> at the moment.
-> 
-> Jinpu Wang is the upstream maintainer of RNBD/RTRS. He is experienced in
-> RDMA programming, and Yu Zhang maintains the downstream QEMU for IONOS
-> cloud in production.
-> 
-> With the consent and supports from Michael Galaxy, who has developed this
-> feature for QEMU, we would like to take over the maintainer's role and
-> create the necessary resources to maintain it further for the community.
-> 
-> [1] https://mail.gnu.org/archive/html/qemu-devel/2024-04/msg00001.html
-> [2] https://mail.gnu.org/archive/html/qemu-devel/2024-04/msg00228.html
-> 
-> Signed-off-by: Yu Zhang <yu.zhang@ionos.com>
-> Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
-> Reviewed-by: Michael Galaxy <mgalaxy@akamai.com>
-> Cc: Li Zhijian <lizhijian@fujitsu.com>
-> Cc: Peter Xu <peterx@redhat.com>
-> ---
->   MAINTAINERS | 3 +++
->   1 file changed, 3 insertions(+)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index f1f692202519..fa9c62aae3e1 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3425,7 +3425,10 @@ F: util/userfaultfd.c
->   X: migration/rdma*
->   
->   RDMA Migration
-> +R: Yu Zhang <yu.zhang@ionos.com>
-> +R: Jack Wang <jack.wang@ionos.com>
+This isn't the right way to make a change that requires
+updates to the bios-tables-test reference files, because
+"make check" will fail after patch 1 but before patch 2.
 
-I'm getting:
+You need a three-patch approach. How to do that is documented
+in the comment at the top of bios-tables-test.c. The resulting
+three patches should look like:
+ * patch 1 updates bios-tables-test-allowed-diff.h to
+   mark the affected test or tests as "OK to fail"
+ * patch 2 makes the changes to QEMU that alter the
+   required table output
+ * patch 3 updates the reference files and removes the
+   tests from the allowed-diff file
 
-   Your message wasn't delivered to jack.wang@ionos.com because
-   the address couldn't be found or is unable to receive email.
+See for instance commits 6c1c2e912fcf9, 1ec896fe7ca938,
+ea2fde5bccc514 as an example.
 
-   The response from the remote server was:
+Side note: if riscv virt has APCI tables now, maybe we
+should add testing of them to the bios-tables-test ?
 
-   550 unrouteable address
-
-In 
-https://lore.kernel.org/qemu-devel/CAHEcVy50AtvDyCjwPa9Hu+x1wiUF6xf5McGOTHL+wdt3WN3pgA@mail.gmail.com/
-you added:
-   Jinpu Wang <jinpu.wang@ionos.com>
-   Elmar Gerdes <elmar.gerdes@ionos.com>
-
-Please correct the email address you want, otherwise,
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
->   R: Li Zhijian <lizhijian@fujitsu.com>
-> +R: Michael Galaxy <mgalaxy@akamai.com>
->   R: Peter Xu <peterx@redhat.com>
->   S: Odd Fixes
->   F: migration/rdma*
-
+thanks
+-- PMM
 
