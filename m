@@ -4,85 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0860C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 07:23:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3249EC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 07:25:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2Qm1-0007Pv-Qw; Thu, 02 May 2024 03:22:33 -0400
+	id 1s2Qoc-0000Ao-Dp; Thu, 02 May 2024 03:25:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1s2Qlz-0007PC-Mc
- for qemu-devel@nongnu.org; Thu, 02 May 2024 03:22:31 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1s2Qlx-00056X-Gs
- for qemu-devel@nongnu.org; Thu, 02 May 2024 03:22:31 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-5709cb80b03so8049363a12.2
- for <qemu-devel@nongnu.org>; Thu, 02 May 2024 00:22:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1714634548; x=1715239348; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TBJFJ5wMx1BtKIT2P03my37zyaWn91PkqyxuO5aXPNk=;
- b=MUSCul4j0Qyc9/sl9uKlbA8FaOnBzHRdoFqnwZnvh1g/p1ESIwpSbTeDC3NW/0Qs8m
- SYSf6tQCMsoYofWrxMEyxbEMaKYE4bk84xBFwJSH8/gfDYCsY+A3nT8yl1aX8WkD3ewp
- b5TT9u7OErp+258XvlTRhWftKPH+0JyfasWNe+oSQ/1NkMqCDC6tKiyUO5unSSpGVmiu
- ARf/Mmo6MeEQ5bCNkJsVQDnsSQFaRTmk+bgkYc5ZccSyrdsoT6G8DYYeIcrFe16Pcx49
- BO/CBEqZBqKAzaeVu8SQUNwJ8/6MdNBpPeLsa6wNZXv7xsXSG0qOY3eD1m0dGNR4xt3V
- aKrw==
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1s2QoS-000072-NK
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 03:25:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1s2QoP-0005LG-Sr
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 03:25:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714634700;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=cVr6/WyBfNaOaFW1NnhNL8WBGrtCboTC6NZ9VaDLEH0=;
+ b=AhN0Wy+5aZ31+loXyMb9j70BzPqhTgM4v6PaeqRDY4Dwbmhp5BGVIRsbR5OeKYfgRvbI+I
+ pbvxJHiXwYl8iOY00I/wThfN7v8km0YetrcjjmLl7SGX6gIb1m5vWgh4cga+ULA3hkz0ry
+ W+a7rkm5I5ybTYXf7bdA6MEu/qmy+1o=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-596-fCWxQghiNwqPw0coJJXXjA-1; Thu, 02 May 2024 03:24:57 -0400
+X-MC-Unique: fCWxQghiNwqPw0coJJXXjA-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-41c05442f92so23755075e9.2
+ for <qemu-devel@nongnu.org>; Thu, 02 May 2024 00:24:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714634548; x=1715239348;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=TBJFJ5wMx1BtKIT2P03my37zyaWn91PkqyxuO5aXPNk=;
- b=HUK5dRThac+yR8bqWV3BAFf0FLXDKa1P0pJcJnl8DPMHPxhi0MqK/CoBhekXbtwImf
- arnHvvXZ8W5KEmQVFG9GDKyFeK+8vZgLfkM4zPGq9cLcNC1X4N4QxpY+Rahu/AYCcGPn
- psjfWgMinki36EfliSu4OhSSjVJ5mEvg98o1DUFM8Kq76YVFpfozZ1Wz6X1Z0NumjVXR
- JV4hxluj4+vrvkyf4K/SPV93aRdfxkc4BCsmeYfgkY2CEbXSdbmqnkGQATjOz6RVMLgO
- cRxdofGEGnU7IY0YBheVjm+qOAvB4welAX4jJkoS7wpNVFwc2YTvXfv/o3KC18oSo68Q
- tdFg==
-X-Gm-Message-State: AOJu0YynQdpwQ/J/kbqdGWGFKin2aExDlhWkeTD7koLskzJ4GnL33OEi
- FZj/BLrHniGlVv8+5Ugius8E5/IqPnN200D33fqda5vL/LyVQyZ7PfahRnvblgZrz9ZMQFkMpUH
- n5JRCINzMVoh6XI6kmFxndttSc44=
-X-Google-Smtp-Source: AGHT+IHSlb8IZgbXfdiILZJA/hvGebr0LK4P+w6/TsM+AJ6nYP9B3xdfVB6EUd55X8OzdH8lqoW18BT4TFiV4dMG2EU=
-X-Received: by 2002:a50:bb26:0:b0:572:4faf:ed68 with SMTP id
- y35-20020a50bb26000000b005724fafed68mr3115003ede.27.1714634547567; Thu, 02
- May 2024 00:22:27 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1714634696; x=1715239496;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=cVr6/WyBfNaOaFW1NnhNL8WBGrtCboTC6NZ9VaDLEH0=;
+ b=NCl6IrrKcno2xedMOufnPMSJOPCySk8icpuxI0MKYIJgTHZpPwo2u/63unBafMoz85
+ ochqaygL7hvOdqZO3xuBkTq5NKx0gyCvhMXJn4fG63DL9CVHpHrGl4iDAUXkWhJDy0vk
+ wQsMLPWFLDXaZ0LFkKyDZK5S2Q89zbB99kUIfXfUhBazWexj75k/2KtFQ+74Me6SuczB
+ 1Ulvq/6rHMszT4n43JyeQEQK/WR8WG9P+wkV7O841h0vRWNuOhFD/EUREKUylBi1S03b
+ N4LlO7nzcXXDhtCrH7g46VuGhfdM64IbDCFirLM1yUPc8uKeffx0uE75QWg0LlZSCu6N
+ akew==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWsRlPxRPjdmFUVjLR30YZAuKv9w+2La6yNVzGNCJJqLSGU11U0Kwiur1jfTWngzT0B7GsaDm8491hMyYj+VOgh2OfmKqE=
+X-Gm-Message-State: AOJu0YzxDV2THAxl2QdkHhf2EG4gkBGZ8uZdRHwjfrNun5Hf54RuBNfb
+ Q4WqqlEjXK2Ifx343inkNZwFZQlA//hKv1kwXrO/VoVF3qzt0JbWon63HMbsWz4LBHHJ9asjc9A
+ 7ywk6c8H/4mUnN1r7le2dStrYD+tU9ZMxllURPA5V/OKDy4PAqTFK
+X-Received: by 2002:a05:600c:46cc:b0:41b:eaf2:f7da with SMTP id
+ q12-20020a05600c46cc00b0041beaf2f7damr1051582wmo.6.1714634696497; 
+ Thu, 02 May 2024 00:24:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHAqD4icNunxfUpJGhVol0TOZfVPB7oj7bLkW3rBwu0G9HXbzU4JQedlaQW2eoh7DwWWRwQKA==
+X-Received: by 2002:a05:600c:46cc:b0:41b:eaf2:f7da with SMTP id
+ q12-20020a05600c46cc00b0041beaf2f7damr1051563wmo.6.1714634696110; 
+ Thu, 02 May 2024 00:24:56 -0700 (PDT)
+Received: from ?IPV6:2003:cb:c71e:bf00:eba1:3ab9:ab0f:d676?
+ (p200300cbc71ebf00eba13ab9ab0fd676.dip0.t-ipconnect.de.
+ [2003:cb:c71e:bf00:eba1:3ab9:ab0f:d676])
+ by smtp.gmail.com with ESMTPSA id
+ z5-20020a05600c0a0500b0041bd85cd3f2sm917097wmp.19.2024.05.02.00.24.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 02 May 2024 00:24:55 -0700 (PDT)
+Message-ID: <7172c93c-8c25-4934-b1d8-de0658c6f50f@redhat.com>
+Date: Thu, 2 May 2024 09:24:54 +0200
 MIME-Version: 1.0
-References: <20240430164939.925307-1-edgar.iglesias@gmail.com>
- <20240430164939.925307-16-edgar.iglesias@gmail.com>
- <alpine.DEB.2.22.394.2405011414320.497719@ubuntu-linux-20-04-desktop>
-In-Reply-To: <alpine.DEB.2.22.394.2405011414320.497719@ubuntu-linux-20-04-desktop>
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Date: Thu, 2 May 2024 09:22:15 +0200
-Message-ID: <CAJy5ezoQ4Q6kc9T8_P3nEU6N20e6Pvr3K_zuM0j95RcG-hDgfw@mail.gmail.com>
-Subject: Re: [PATCH v4 15/17] xen: mapcache: Remove assumption of RAMBlock
- with 0 offset
-To: Stefano Stabellini <sstabellini@kernel.org>
-Cc: qemu-devel@nongnu.org, jgross@suse.com, 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 13/17] softmmu: Pass RAM MemoryRegion and is_write
+ xen_map_cache()
+To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org
+Cc: sstabellini@kernel.org, jgross@suse.com,
  "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
- Anthony Perard <anthony.perard@citrix.com>, 
- Paul Durrant <paul@xen.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  xen-devel@lists.xenproject.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240430164939.925307-1-edgar.iglesias@gmail.com>
+ <20240430164939.925307-14-edgar.iglesias@gmail.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20240430164939.925307-14-edgar.iglesias@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.897,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,252 +157,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 1, 2024 at 11:24=E2=80=AFPM Stefano Stabellini
-<sstabellini@kernel.org> wrote:
->
-> On Tue, 30 Apr 2024, Edgar E. Iglesias wrote:
-> > From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-> >
-> > The current mapcache assumes that all memory is mapped
-> > in a single RAM MR (the first one with offset 0). Remove
-> > this assumption and propagate the offset to the mapcache
-> > so it can do reverse mappings (from hostptr -> ram_addr).
-> >
-> > This is in preparation for adding grant mappings.
-> >
-> > Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
->
->
-> Looking at xen_remap_bucket, it is only using address_index (without
-> adding ram_offset) to map foreign memory. From xen_remap_bucket, I would
-> understand that address_index already includes the ram_offset.
->
-> Meaning that if we want to map foreign mapping at address 0x5000, then
-> address_index would be 0x5000, even if ram_offset is 0x1000.
->
-> But then looking xen_ram_addr_from_mapcache_single ram_offset is added
-> to paddr_index to calculate the physical address. So in that case we
-> would want address_index to be 0x4000 and ram_offset to be 0x1000. But
-> xen_remap_bucket would have to sum address_index and ram_offset to map
-> foreign memory.
->
-> So I am a bit confused, did I get it wrong? One more comment below.
->
+On 30.04.24 18:49, Edgar E. Iglesias wrote:
+> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+> 
+> Propagate MR and is_write to xen_map_cache().
 
-Thanks Stefano,
+I'm pretty sure the patch subject is missing a "to" :)
 
-I think the confusion is that this ram_addr_offset is not related to
-guest address-space.
-It's a QEMU internal thing and it shouldn't be included in the address
-used to map foreign memory.
-The mapcache can treat this ram_addr offset like a cookie that we keep
-around to be able to do
-reverse mappings from host pointers into ram_addr space
-(xen_ram_addr_from_mapcache).
+> This is in preparation for adding support for grant mappings.
+> 
+> No functional change.
+> 
 
-The current mapcache implementation works because we've really only
-been using foreign mappings
-on RAMBlocks with offset 0. We're also creating RAM's such that the
-offset into the RAM is also
-the guest physical address, for x86 this is natural since RAM starts
-at zero (for lowmem) but for
-ARM we're creating larger than needed RAM's (GUEST_RAM0_BASE + ram-size) to
-make this assumption true. Anyway, In this series I'm not addressing
-this second assumption.
-
-There's a second call in physmem.c to xen_map_cache using the
-block->offset as an address.
-I was considering removing that second call since I can't see how it can wo=
-rk
-(except perhaps in some specific use-case by luck?). Anyway, for now
-I've left it unmodified.
-
-
->
-> > ---
-> >  hw/xen/xen-mapcache.c         | 25 ++++++++++++++++++-------
-> >  include/sysemu/xen-mapcache.h |  2 ++
-> >  system/physmem.c              |  8 ++++----
-> >  3 files changed, 24 insertions(+), 11 deletions(-)
-> >
-> > diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-> > index 09b5f36d9c..1b32d0c003 100644
-> > --- a/hw/xen/xen-mapcache.c
-> > +++ b/hw/xen/xen-mapcache.c
-> > @@ -43,6 +43,9 @@ typedef struct MapCacheEntry {
-> >  #define XEN_MAPCACHE_ENTRY_DUMMY (1 << 0)
-> >      uint8_t flags;
-> >      hwaddr size;
-> > +
-> > +    /* Keep ram_addr offset for reverse mappings (hostptr -> ram_addr)=
-.  */
-> > +    ram_addr_t ram_offset;
-> >      struct MapCacheEntry *next;
-> >  } MapCacheEntry;
-> >
-> > @@ -165,7 +168,8 @@ static void xen_remap_bucket(MapCache *mc,
-> >                               void *vaddr,
-> >                               hwaddr size,
-> >                               hwaddr address_index,
-> > -                             bool dummy)
-> > +                             bool dummy,
-> > +                             ram_addr_t ram_offset)
-> >  {
-> >      uint8_t *vaddr_base;
-> >      xen_pfn_t *pfns;
-> > @@ -244,6 +248,7 @@ static void xen_remap_bucket(MapCache *mc,
-> >      entry->size =3D size;
-> >      entry->valid_mapping =3D g_new0(unsigned long,
-> >                                    BITS_TO_LONGS(size >> XC_PAGE_SHIFT)=
-);
-> > +    entry->ram_offset =3D ram_offset;
-> >
-> >      if (dummy) {
-> >          entry->flags |=3D XEN_MAPCACHE_ENTRY_DUMMY;
-> > @@ -264,6 +269,7 @@ static void xen_remap_bucket(MapCache *mc,
-> >
-> >  static uint8_t *xen_map_cache_unlocked(MapCache *mc,
-> >                                         hwaddr phys_addr, hwaddr size,
-> > +                                       ram_addr_t ram_offset,
-> >                                         uint8_t lock, bool dma, bool is=
-_write)
-> >  {
-> >      MapCacheEntry *entry, *pentry =3D NULL,
-> > @@ -335,14 +341,16 @@ tryagain:
-> >      if (!entry) {
-> >          entry =3D g_new0(MapCacheEntry, 1);
-> >          pentry->next =3D entry;
-> > -        xen_remap_bucket(mc, entry, NULL, cache_size, address_index, d=
-ummy);
-> > +        xen_remap_bucket(mc, entry, NULL, cache_size, address_index, d=
-ummy,
-> > +                         ram_offset);
-> >      } else if (!entry->lock) {
-> >          if (!entry->vaddr_base || entry->paddr_index !=3D address_inde=
-x ||
-> >                  entry->size !=3D cache_size ||
-> >                  !test_bits(address_offset >> XC_PAGE_SHIFT,
-> >                      test_bit_size >> XC_PAGE_SHIFT,
-> >                      entry->valid_mapping)) {
-> > -            xen_remap_bucket(mc, entry, NULL, cache_size, address_inde=
-x, dummy);
-> > +            xen_remap_bucket(mc, entry, NULL, cache_size, address_inde=
-x, dummy,
-> > +                             ram_offset);
-> >          }
-> >      }
-> >
-> > @@ -389,13 +397,15 @@ tryagain:
-> >
-> >  uint8_t *xen_map_cache(MemoryRegion *mr,
-> >                         hwaddr phys_addr, hwaddr size,
-> > +                       ram_addr_t ram_addr_offset,
-> >                         uint8_t lock, bool dma,
-> >                         bool is_write)
-> >  {
-> >      uint8_t *p;
-> >
-> >      mapcache_lock(mapcache);
-> > -    p =3D xen_map_cache_unlocked(mapcache, phys_addr, size, lock, dma,=
- is_write);
-> > +    p =3D xen_map_cache_unlocked(mapcache, phys_addr, size, ram_addr_o=
-ffset,
-> > +                               lock, dma, is_write);
-> >      mapcache_unlock(mapcache);
-> >      return p;
-> >  }
-> > @@ -432,7 +442,8 @@ static ram_addr_t xen_ram_addr_from_mapcache_single=
-(MapCache *mc, void *ptr)
-> >          raddr =3D RAM_ADDR_INVALID;
-> >      } else {
-> >          raddr =3D (reventry->paddr_index << mc->bucket_shift) +
-> > -             ((unsigned long) ptr - (unsigned long) entry->vaddr_base)=
-;
-> > +             ((unsigned long) ptr - (unsigned long) entry->vaddr_base)=
- +
-> > +             entry->ram_offset;
-> >      }
-> >      mapcache_unlock(mc);
-> >      return raddr;
-> > @@ -627,8 +638,8 @@ static uint8_t *xen_replace_cache_entry_unlocked(Ma=
-pCache *mc,
-> >
-> >      trace_xen_replace_cache_entry_dummy(old_phys_addr, new_phys_addr);
-> >
-> > -    xen_remap_bucket(mapcache, entry, entry->vaddr_base,
-> > -                     cache_size, address_index, false);
-> > +    xen_remap_bucket(mc, entry, entry->vaddr_base,
-> > +                     cache_size, address_index, false, entry->ram_offs=
-et);
-> >      if (!test_bits(address_offset >> XC_PAGE_SHIFT,
-> >                  test_bit_size >> XC_PAGE_SHIFT,
-> >                  entry->valid_mapping)) {
-> > diff --git a/include/sysemu/xen-mapcache.h b/include/sysemu/xen-mapcach=
-e.h
-> > index 1ec9e66752..b5e3ea1bc0 100644
-> > --- a/include/sysemu/xen-mapcache.h
-> > +++ b/include/sysemu/xen-mapcache.h
-> > @@ -19,6 +19,7 @@ typedef hwaddr (*phys_offset_to_gaddr_t)(hwaddr phys_=
-offset,
-> >  void xen_map_cache_init(phys_offset_to_gaddr_t f,
-> >                          void *opaque);
-> >  uint8_t *xen_map_cache(MemoryRegion *mr, hwaddr phys_addr, hwaddr size=
-,
-> > +                       ram_addr_t ram_addr_offset,
-> >                         uint8_t lock, bool dma,
-> >                         bool is_write);
-> >  ram_addr_t xen_ram_addr_from_mapcache(void *ptr);
-> > @@ -37,6 +38,7 @@ static inline void xen_map_cache_init(phys_offset_to_=
-gaddr_t f,
-> >  static inline uint8_t *xen_map_cache(MemoryRegion *mr,
-> >                                       hwaddr phys_addr,
-> >                                       hwaddr size,
-> > +                                     ram_addr_t ram_addr_offset,
-> >                                       uint8_t lock,
-> >                                       bool dma,
-> >                                       bool is_write)
-> > diff --git a/system/physmem.c b/system/physmem.c
-> > index 1a5ffcba2a..5b16eeccca 100644
-> > --- a/system/physmem.c
-> > +++ b/system/physmem.c
-> > @@ -2228,13 +2228,13 @@ static void *qemu_ram_ptr_length(RAMBlock *bloc=
-k, ram_addr_t addr,
-> >           * In that case just map the requested area.
-> >           */
-> >          if (xen_mr_is_memory(block->mr)) {
-> > -            return xen_map_cache(block->mr, addr, len, lock, lock,
-> > -                                 is_write);
-> > +            return xen_map_cache(block->mr, addr, len, block->offset,
-> > +                                 lock, lock, is_write);
->
-> Have you considered not tracking offset and address separately and
-> simply do this?
->
->             return xen_map_cache(block->mr, addr + block->offset, len,
->                                  lock, lock, is_write);
->
-
-Unfortunately this won't work since block->offset is not related to where t=
-his
-ram is mapped in guest address-space. In the case of grant's, we'd get the
-wrong grant ref. See my previous comment.
-
+Reviewed-by: David Hildenbrand <david@redhat.com>
+-- 
 Cheers,
-Edgar
 
+David / dhildenb
 
->
-> >          }
-> >
-> >          block->host =3D xen_map_cache(block->mr, block->offset,
-> > -                                    block->max_length, 1,
-> > -                                    lock, is_write);
-> > +                                    block->max_length, 0,
-> > +                                    1, lock, is_write);
-> >      }
-> >
-> >      return ramblock_ptr(block, addr);
-> > --
-> > 2.40.1
-> >
 
