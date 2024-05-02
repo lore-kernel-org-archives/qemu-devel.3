@@ -4,81 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDBC3C04FFE
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 16:56:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB218C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 17:06:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2Ziu-0001Mm-NW; Thu, 02 May 2024 12:55:56 -0400
+	id 1s2ZsO-0000Vm-DQ; Thu, 02 May 2024 13:05:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s2Zib-0000v4-Pg
- for qemu-devel@nongnu.org; Thu, 02 May 2024 12:55:37 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s2ZiY-0005va-6M
- for qemu-devel@nongnu.org; Thu, 02 May 2024 12:55:37 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-6f44881ad9eso137556b3a.3
- for <qemu-devel@nongnu.org>; Thu, 02 May 2024 09:55:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714668932; x=1715273732; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JJIohk8gDQsUtWfZD6O/rKhQO02QyqWEocuP7xflwZc=;
- b=g1ZAHCCIwa/+S5xgikjaoA9LLxIIklzgdOBm0ef0Z1IFhquytgD/wntaT7snt1SzSA
- g8X6XXPqT9EVi60a3KS6eWWgYMhyJZ8ZRj+XryNFzhQ6fHOzLArZGUThZb/jCjJst3xG
- S9ZVvY/dU8nnpoL/h44v1lYmFPw9QLrkrHkMuBqnynZ9EcHFlQlkiVwoOQ4qLBmU992r
- f9nQ6Q1Q1fpnOHo/lNewC0KGWj1IE8VtRNlKLBCNMnQ9EVe+UK+tsKL3SPBHOXJCMeFH
- mauaxQ+hP1yORzaQj/ZzpdyFwqZ0WLxc3hwet+PwWmDEdU1KDJgfdeDQ0KEVnw99Pl3v
- A/ww==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s2ZsM-0000Tp-Lr
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 13:05:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s2ZsK-0000sM-Mh
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 13:05:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714669517;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=VBpT7Pm0L6cDpmaxFFQOjOS2vc/kzMxULXJQG3/6rVo=;
+ b=jDo1eRcalnWlSU/cndAWwQq9kHR13p55ccg/jO24zb/CznKT5OmumY8Nce2/qXYhjKf4n5
+ 6tnlxbD3LOx0Eezh/H1VJnvbrVJH/5YkrLWXHEJxuz+ObOTRZC0nZ5Ro+ZgYpVTZUgDubX
+ XUQJ1qPf1WlOlnoRI2btP+z1P7b0jgI=
+Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
+ [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-694-s5IrJzhSPEeqwGy6kCGehw-1; Thu, 02 May 2024 13:04:28 -0400
+X-MC-Unique: s5IrJzhSPEeqwGy6kCGehw-1
+Received: by mail-lj1-f197.google.com with SMTP id
+ 38308e7fff4ca-2d88271f485so61933951fa.1
+ for <qemu-devel@nongnu.org>; Thu, 02 May 2024 10:04:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714668932; x=1715273732;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JJIohk8gDQsUtWfZD6O/rKhQO02QyqWEocuP7xflwZc=;
- b=Jb0tHozbqrOP1G6/cy4NzU12d4UetdSU3wmmp8cIAGErjWx0yBrndMmq24Rl4n/E7l
- zZzDAcn/07xC4G/bt5J5OWxmRByaGtiwez6jRDKzv2x3kRvGKWaZBT0clMOUqwcuOxOO
- GNKn9toUgijbv/OWH6xx/MHXbveUMP76KIPewvZ32OADwRZT4DQ/0BtG8ohSrTu+jPR+
- U1RppTuYNG4yUsLoF1eUxrf4QSZV+Go50zhuTfxL2/5LA29RppSsE0I3Fx4fJeVb7tAd
- 03ppXGhpxAER+3lJovwpDTN9FZxITFcogwCKMeUwo5c9J6+K2I3hwX1WKjU73ohzOk1V
- b5Fw==
-X-Gm-Message-State: AOJu0YwrpVHmfEtWb76M/0fMOPHttZDMH7EfSGBAP5HZEFVZDhEMunOT
- o8dr3SjStYNNYeaelmMh065H2su+aHvyTAHalppyEyw+Gem1YmH4HOolrnx7GqvP484uhJ5krj8
- H
-X-Google-Smtp-Source: AGHT+IERLgFvOn5triLKvxUnmZpWfW6ihYdh+s/lhxPX1OkJfkasevb1CF4xYSFWGNXR2FHjdWRnJw==
-X-Received: by 2002:a05:6a20:d428:b0:1a7:427b:8216 with SMTP id
- il40-20020a056a20d42800b001a7427b8216mr217697pzb.55.1714668932275; 
- Thu, 02 May 2024 09:55:32 -0700 (PDT)
-Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
- by smtp.gmail.com with ESMTPSA id
- j13-20020aa783cd000000b006eb058b2703sm1464598pfn.187.2024.05.02.09.55.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 May 2024 09:55:31 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH v2 3/7] target/sparc: Fix FMUL8x16
-Date: Thu,  2 May 2024 09:55:24 -0700
-Message-Id: <20240502165528.244004-4-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240502165528.244004-1-richard.henderson@linaro.org>
-References: <20240502165528.244004-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1714669466; x=1715274266;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VBpT7Pm0L6cDpmaxFFQOjOS2vc/kzMxULXJQG3/6rVo=;
+ b=DkObKaUHsyHyjyDaqJYgHeGwI97ChoiYs9se4CS+g7TBnlS+4jJMlg4Ai66Dj+9zAb
+ K7T1UuW9cnnToWM3f7gC7KPfJD0tl/AaqZ6L3n/NAwCsgKW95d9411NtiCidhvu8t8tp
+ EgDT1T1iRqwda7kcLpZjDh6mR3N99r/1QDzHN2dnHuVk6er1yXB4h/Uzrl5mzEDpvfaR
+ uoPkgNqUYu2ROi312ajIxbtgTcsLRlopNgcD4uLapad71XmWrGDv4wckDbBR+R+byRoB
+ Msm8goZ42jfNsTVYqs2iPQpSshsHofTSUBfJdltYPm5mURe93ukANb6gbxqdC9NOxA+E
+ Xftg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXpFr+o7dfTmj4ejNwQ8o1aCdF/PrRAEjzBjDwhkEIuI06brAR4O6SGG2aS3MuFkDa2UfxXPxOtdGwNdmZIvZm9lVXyolI=
+X-Gm-Message-State: AOJu0YwVwlMUMCkJRu06NnuS6J9mPVy/LxsQdD7Y5ekbWoVStaYOLYCI
+ t5kO6vYc4/VR5470iSBISYaKR60gD7RCSL8KkoctIhx9bZe6uKKqVHJrbeoS2i3vWGyNpE/XwEo
+ F2db5sezi7x6ATOMHNEH9mlfXyDWaw/VR7nghh83QpYKh3yDrwL30
+X-Received: by 2002:ac2:456e:0:b0:51d:ab55:f2db with SMTP id
+ k14-20020ac2456e000000b0051dab55f2dbmr260449lfm.10.1714669465804; 
+ Thu, 02 May 2024 10:04:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEByGAkfDsCzr0SqL5hjqjBihPaaR1gbuSJykpN9NtokktLvMm38bp8ijpbAJxCaHGJF/SEmg==
+X-Received: by 2002:ac2:456e:0:b0:51d:ab55:f2db with SMTP id
+ k14-20020ac2456e000000b0051dab55f2dbmr260439lfm.10.1714669465314; 
+ Thu, 02 May 2024 10:04:25 -0700 (PDT)
+Received: from [192.168.0.9] (ip-109-43-179-34.web.vodafone.de.
+ [109.43.179.34]) by smtp.gmail.com with ESMTPSA id
+ ef14-20020a05640228ce00b00572678527e6sm715747edb.59.2024.05.02.10.04.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 02 May 2024 10:04:24 -0700 (PDT)
+Message-ID: <f95c1709-7d98-47e3-ba1b-22188c546e8e@redhat.com>
+Date: Thu, 2 May 2024 19:04:21 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] s390x: Introduce a SCLPDevice pointer under the
+ machine
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>
+References: <20240502131533.377719-1-clg@redhat.com>
+ <20240502131533.377719-2-clg@redhat.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
+ yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
+ 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
+ tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
+ 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
+ O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
+ 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
+ gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
+ 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
+ zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
+ aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
+ QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
+ EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
+ 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
+ eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
+ ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
+ zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
+ tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
+ WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
+ UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
+ BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
+ 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
+ +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
+ 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
+ gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
+ WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
+ VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
+ knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
+ cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
+ X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
+ AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
+ ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
+ fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
+ 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
+ cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
+ ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
+ Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
+ oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
+ IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
+ yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
+In-Reply-To: <20240502131533.377719-2-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.476,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,96 +152,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This instruction has f32 as source1, which alters the
-decoding of the register number, which means we've been
-passing the wrong data for odd register numbers.
+On 02/05/2024 15.15, Cédric Le Goater wrote:
+> Initialize directly SCLPDevice from the machine init handler and
+> remove s390_sclp_init(). We will use the SCLPDevice pointer later to
+> create the consoles.
+> 
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/sparc/helper.h     |  2 +-
- target/sparc/translate.c  | 21 ++++++++++++++++++++-
- target/sparc/vis_helper.c |  9 +++++----
- 3 files changed, 26 insertions(+), 6 deletions(-)
-
-diff --git a/target/sparc/helper.h b/target/sparc/helper.h
-index 57ab755ffd..27dc604cac 100644
---- a/target/sparc/helper.h
-+++ b/target/sparc/helper.h
-@@ -95,7 +95,7 @@ DEF_HELPER_FLAGS_2(fdtox, TCG_CALL_NO_WG, s64, env, f64)
- DEF_HELPER_FLAGS_2(fqtox, TCG_CALL_NO_WG, s64, env, i128)
- 
- DEF_HELPER_FLAGS_2(fpmerge, TCG_CALL_NO_RWG_SE, i64, i64, i64)
--DEF_HELPER_FLAGS_2(fmul8x16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
-+DEF_HELPER_FLAGS_2(fmul8x16, TCG_CALL_NO_RWG_SE, i64, i32, i64)
- DEF_HELPER_FLAGS_2(fmul8x16al, TCG_CALL_NO_RWG_SE, i64, i64, i64)
- DEF_HELPER_FLAGS_2(fmul8x16au, TCG_CALL_NO_RWG_SE, i64, i64, i64)
- DEF_HELPER_FLAGS_2(fmul8sux16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
-diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index dfcfe855a1..c4adc148d2 100644
---- a/target/sparc/translate.c
-+++ b/target/sparc/translate.c
-@@ -4583,6 +4583,26 @@ TRANS(FSUBs, ALL, do_env_fff, a, gen_helper_fsubs)
- TRANS(FMULs, ALL, do_env_fff, a, gen_helper_fmuls)
- TRANS(FDIVs, ALL, do_env_fff, a, gen_helper_fdivs)
- 
-+static bool do_dfd(DisasContext *dc, arg_r_r_r *a,
-+                   void (*func)(TCGv_i64, TCGv_i32, TCGv_i64))
-+{
-+    TCGv_i64 dst, src2;
-+    TCGv_i32 src1;
-+
-+    if (gen_trap_ifnofpu(dc)) {
-+        return true;
-+    }
-+
-+    dst = gen_dest_fpr_D(dc, a->rd);
-+    src1 = gen_load_fpr_F(dc, a->rs1);
-+    src2 = gen_load_fpr_D(dc, a->rs2);
-+    func(dst, src1, src2);
-+    gen_store_fpr_D(dc, a->rd, dst);
-+    return advance_pc(dc);
-+}
-+
-+TRANS(FMUL8x16, VIS1, do_dfd, a, gen_helper_fmul8x16)
-+
- static bool do_ddd(DisasContext *dc, arg_r_r_r *a,
-                    void (*func)(TCGv_i64, TCGv_i64, TCGv_i64))
- {
-@@ -4600,7 +4620,6 @@ static bool do_ddd(DisasContext *dc, arg_r_r_r *a,
-     return advance_pc(dc);
- }
- 
--TRANS(FMUL8x16, VIS1, do_ddd, a, gen_helper_fmul8x16)
- TRANS(FMUL8x16AU, VIS1, do_ddd, a, gen_helper_fmul8x16au)
- TRANS(FMUL8x16AL, VIS1, do_ddd, a, gen_helper_fmul8x16al)
- TRANS(FMUL8SUx16, VIS1, do_ddd, a, gen_helper_fmul8sux16)
-diff --git a/target/sparc/vis_helper.c b/target/sparc/vis_helper.c
-index db2e6dd6c1..7728ffe9c6 100644
---- a/target/sparc/vis_helper.c
-+++ b/target/sparc/vis_helper.c
-@@ -94,16 +94,17 @@ uint64_t helper_fpmerge(uint64_t src1, uint64_t src2)
-     return d.ll;
- }
- 
--uint64_t helper_fmul8x16(uint64_t src1, uint64_t src2)
-+uint64_t helper_fmul8x16(uint32_t src1, uint64_t src2)
- {
--    VIS64 s, d;
-+    VIS64 d;
-+    VIS32 s;
-     uint32_t tmp;
- 
--    s.ll = src1;
-+    s.l = src1;
-     d.ll = src2;
- 
- #define PMUL(r)                                                 \
--    tmp = (int32_t)d.VIS_SW64(r) * (int32_t)s.VIS_B64(r);       \
-+    tmp = (int32_t)d.VIS_SW64(r) * (int32_t)s.VIS_B32(r);       \
-     if ((tmp & 0xff) > 0x7f) {                                  \
-         tmp += 0x100;                                           \
-     }                                                           \
--- 
-2.34.1
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
