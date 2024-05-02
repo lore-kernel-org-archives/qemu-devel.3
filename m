@@ -4,73 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9461C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 14:31:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE5DBC04FFE
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 14:40:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2XSg-0001Eq-PG; Thu, 02 May 2024 10:31:02 -0400
+	id 1s2XaT-0003r7-K8; Thu, 02 May 2024 10:39:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s2XSd-0001EM-Vj
- for qemu-devel@nongnu.org; Thu, 02 May 2024 10:30:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
+ id 1s2XaP-0003qP-9y
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 10:39:02 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s2XSc-00024k-Df
- for qemu-devel@nongnu.org; Thu, 02 May 2024 10:30:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714660257;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=CltSPHu2UmmNZlcAe1OZUeDX9g7WX74NFQjtuxh45EU=;
- b=Zhim0cvH8BYV9m3C3VCZQPKLmW6KUh7ApEWBUe44UTsi6NzSV29PrreUoIIyVUZE1qOjRO
- rcAEaPSFCKt2CuYYTg+A5gWv/RM2mGsjzYT61qOBLwu0B2OxO1VdCHHDJf2mxGCfdwiLVG
- wc2a9yYbaZZRlW9U3Lbd5sIsrtDrKKM=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-349-VsgXTC6INz6Uj9fEUGr6tQ-1; Thu,
- 02 May 2024 10:30:52 -0400
-X-MC-Unique: VsgXTC6INz6Uj9fEUGr6tQ-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E849B1C0005E;
- Thu,  2 May 2024 14:30:51 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.138])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id A04E01C0666A;
- Thu,  2 May 2024 14:30:50 +0000 (UTC)
-Date: Thu, 2 May 2024 15:30:47 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: Re: [PATCH] ui/cocoa.m: Drop old macOS-10.12-and-earlier compat ifdefs
-Message-ID: <ZjOjlwgbVqRzPR6V@redhat.com>
-References: <20240502142904.62644-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
+ id 1s2XaJ-000483-Bd
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 10:39:00 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 442DGmPB022047;
+ Thu, 2 May 2024 14:38:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ from:to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding:content-type; s=
+ qcppdkim1; bh=E8o15yCWWcgbLk/lxdIWGDyyT239rl7gS0h7n1hyfJI=; b=Fu
+ Qhu2ncxfBMWJqtrrvXQ5/Aj/FAIEnBjHkc5v4lLKLNL60UTVO2KW8/AW0uuchBWp
+ vM0tS26yJElXWeKbyF4wEMnkPpVflJAIjJ2tFv5FkbneTA2YmGpkAdveVxmu8W9H
+ 3hKw+fgY+ZQg+x21LHz2l0wGdzKAG6mqyggANyRP3k+VVQJGPCLlH7RZEutQFUgS
+ 7zgGlVa6015W0pEkE/DlW/xY7MAJloapU/p8aZlkFsyOUYz/K2H1TvSleLz+Egev
+ /IrwHwrj8irxItrUEGRtC5zNzLBXCIvIddOpIgtxbVNvIxzg2Qg2gUU+S1ag32D1
+ oc2LMUeq0oryV0e3xg/A==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xup5ktnb6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 May 2024 14:38:48 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com
+ [10.47.209.196])
+ by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 442EclaQ025338
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 2 May 2024 14:38:47 GMT
+Received: from mathbern-mac.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 2 May 2024 07:38:44 -0700
+From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+To: <richard.henderson@linaro.org>
+CC: <quic_mathbern@quicinc.com>, <qemu-devel@nongnu.org>, <bcain@quicinc.com>, 
+ <sidneym@quicinc.com>, <ale@rev.ng>, <anjo@rev.ng>,
+ <ltaylorsimpson@gmail.com>, <laurent@vivier.eu>
+Subject: Re: [PATCH v3] Hexagon: add PC alignment check and exception
+Date: Thu, 2 May 2024 11:35:09 -0300
+Message-ID: <20240502143831.51821-1-quic_mathbern@quicinc.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <29135846-744f-471b-9e21-ec5a6309bacc@linaro.org>
+References: <29135846-744f-471b-9e21-ec5a6309bacc@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240502142904.62644-1-peter.maydell@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.476,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Proofpoint-ORIG-GUID: VuKw_QZwytLwx4lmYnwGIJmXETfn-dec
+X-Proofpoint-GUID: VuKw_QZwytLwx4lmYnwGIJmXETfn-dec
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-02_05,2024-05-02_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0
+ priorityscore=1501 suspectscore=0 adultscore=0 clxscore=1015
+ impostorscore=0 spamscore=0 mlxlogscore=777 lowpriorityscore=0 bulkscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2405020093
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=quic_mathbern@quicinc.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,32 +98,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 02, 2024 at 03:29:04PM +0100, Peter Maydell wrote:
-> We only support the most recent two versions of macOS (currently
-> macOS 13 Ventura and macOS 14 Sonoma), and our ui/cocoa.m code
-> already assumes at least macOS 12 Monterey or better, because it uses
-> NSScreen safeAreaInsets, which is 12.0-or-newer.
+On Tue, 30 Apr 2024 08:52:36 -0700 Richard Henderson <richard.henderson@linaro.org> wrote:
+>
+> On 4/30/24 07:25, Matheus Tavares Bernardino wrote:
+> > +void test_multi_cof(void)
+> > +{
+> > +    asm volatile(
+> > +        "p0 = cmp.eq(r0, r0)\n"
+> > +        "{\n"
+> > +        "    if (p0) jump test_multi_cof_unaligned\n"
+> > +        "    jump 1f\n"
+> > +        "}\n"
+> > +        "1: nop\n"
+> > +        : : : "p0");
+> > +}
 > 
-> Remove the ifdefs that were providing backwards compatibility for
-> building on 10.12 and earlier versions.
+> I will say you could just add the label to the end of the asm here, like
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->  ui/cocoa.m | 13 -------------
->  1 file changed, 13 deletions(-)
+> 	.byte 0
+> test_multi_cof_unaligned:
+> 
+> rather than use a separate source file.
+>
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+That would be nice, but unfortunately that doesn't work because the label gets
+aligned by the assembler :( 
 
+diff --git a/tests/tcg/hexagon/unaligned_pc.c b/tests/tcg/hexagon/unaligned_pc.c
+index 1add2d0d99..3772947a86 100644
+--- a/tests/tcg/hexagon/unaligned_pc.c
++++ b/tests/tcg/hexagon/unaligned_pc.c
+@@ -33,10 +33,12 @@ void test_multi_cof(void)
+     asm volatile(
+         "p0 = cmp.eq(r0, r0)\n"
+         "{\n"
+-        "    if (p0) jump test_multi_cof_unaligned\n"
++        "    if (p0) jump 2f\n"
+         "    jump 1f\n"
+         "}\n"
+         "1: nop\n"
++        ".byte 0\n"
++        "2: nop\n"
+         : : : "p0");
+ }
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Ends up producing:
 
+00020dc0 <test_multi_cof>:
+   20dc0:       00 c0 9d a0     a09dc000 {      allocframe(#0x0) }
+   20dc4:       00 c0 00 f2     f200c000 {      p0 = cmp.eq(r0,r0) }
+   20dc8:       06 40 00 5c     5c004006 {      if (p0) jump:nt 0x20dd4 <test_multi_cof+0x14>
+   20dcc:       04 c0 00 58     5800c004        jump 0x20dd0 <test_multi_cof+0x10> }
+   20dd0:       00 c0 00 7f     7f00c000 {      nop }
+   20dd4:       00 00 c0 00 <unknown>
 
