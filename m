@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE16DC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 11:07:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C34CDC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 11:14:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2UHD-0007N1-3x; Thu, 02 May 2024 07:06:59 -0400
+	id 1s2UNK-0001k1-9R; Thu, 02 May 2024 07:13:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s2UHB-0007Io-UZ
- for qemu-devel@nongnu.org; Thu, 02 May 2024 07:06:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s2UNG-0001ji-PX
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 07:13:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s2UH7-0004aF-Jd
- for qemu-devel@nongnu.org; Thu, 02 May 2024 07:06:56 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s2UN5-0005rd-7D
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 07:13:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714648012;
+ s=mimecast20190719; t=1714648382;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Q7kzzadqrntfpos9nisK+4dYLEVosfqKSlrzGaMi2Q0=;
- b=Rty6tjiPPyGkUMfDM7xAZteBv0TiankE/z2DstbzhplOdMKH1T11AGSG7xNzh9wOkv8gqs
- uJvLXWl04jWIywhQRQX3NBUxukF7Omog06m90/ZSgR0VR/yfH4YBlNQKJmjCPDudSeFkAh
- BUD/SuvISccV1/9in0BL8NuF3RVEAKI=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=6LyOjJL6iQ4wQDKacGY/TJa6doBybJw4Jr5QAokNUkA=;
+ b=ZP6XV3mQfEZGOi7hNX6LcoGjBN5fXTar/OwtDhDVSl3xw3WxED9cK0lnG/tQllAuOMmGq/
+ KELJ61TsKsf9NH+TBRdZEKV6nWr0qy1FXbFlz+xyJ2lrs+tz4y2kyFSIb6dOUrPe1EUjEY
+ WT9PMr6/tNOi1ln+QjShPNbSkvguoFM=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-73-NxXkAs-GMCCIHD0APyA1bg-1; Thu, 02 May 2024 07:06:50 -0400
-X-MC-Unique: NxXkAs-GMCCIHD0APyA1bg-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4190b0735d1so32933845e9.1
- for <qemu-devel@nongnu.org>; Thu, 02 May 2024 04:06:50 -0700 (PDT)
+ us-mta-538-wABXkm5INZKlUyDmVGG3rg-1; Thu, 02 May 2024 07:13:01 -0400
+X-MC-Unique: wABXkm5INZKlUyDmVGG3rg-1
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-439e8824c7dso96156591cf.0
+ for <qemu-devel@nongnu.org>; Thu, 02 May 2024 04:13:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714648009; x=1715252809;
+ d=1e100.net; s=20230601; t=1714648380; x=1715253180;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Q7kzzadqrntfpos9nisK+4dYLEVosfqKSlrzGaMi2Q0=;
- b=MG7Hm5u7doLFqGOlFrRSO/GXxpHFuLObDv0iLoXN3KdwVxgWODB72YW/J7i6RFWU99
- zwf1vkGDB0b7qOytM6xwNFlV22TmpEy+jilQgfSM5hcY5EaoFq1TiduA6NEkwskVvX42
- tGJp8kFib9MNVYfm1118vEmIu1b7nPTzqrn6dfVrrB0DWfixqvq3BEQlwb7Jc55EyMN4
- QcNxSSdvBLTv6TLs9PnWNRDmMnTJNs0byq92P523aPxzWr5plLif6vSGLkABLLYgLwf2
- uNUYZSa9YQju6aArfdcIuvju2bR8VXMjimd8QSupSW8/azLYzi0/GpbnC/QBmTnWXKTZ
- 1UzA==
+ bh=6LyOjJL6iQ4wQDKacGY/TJa6doBybJw4Jr5QAokNUkA=;
+ b=Ixa/WIwa6+jvpwP37BJMVM/zmD5Z8UyUgJ/h1TngzuXt03Ox63RVsj9e5TMXoi4WzY
+ q2mNAtHSngUeA9nmEqNJx7YG+kysQ+2PgTRiGknyu9euEAeNVJLbwfDi5ti5UZmZLnp5
+ f/hZ32HKcQwtm6bOlsnqOGj4ydBC8f/Wkcl0XeXHE50vTXK1dfd6ORj7VbSY8cZ83io+
+ p60mb8AZbM455kADC307Zlfcu7u9YRIY5Zlw69mb7+yWuPRplJCAoFrkeZjutPegYmAN
+ B0tXcAh9FkkgA/1lfwfnSU3sG/GrAHBaxboijky+VtatruL9si5XioJvccwJdRLBXWA3
+ EFrw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXFjrWdGqr5KDnRlXZVK4zZXYrZqKnflHrjEu02fWa/BwrjeEbcfYFJj7cm+NZyVdxix4Ohp7iR/4shjNwXFBtOlApRLIc=
-X-Gm-Message-State: AOJu0YxQNJ142ug0qed6oyNllAgPjOaofO5YOWc7fNGsUsXQwESUtfXy
- bshV53eUY0LuqEJsn5MoqRbVxWYYE3IH5MPEwny/iY+CiQ16ucYJos2NzBK/sEZtvfWihN7dOCL
- +ozC6wRzaMH+4fu+PY9FXLqjqFOfYypci97Kz1oaMgYyoYZSN3DTn
-X-Received: by 2002:a05:600c:35c5:b0:419:f3f9:8ed6 with SMTP id
- r5-20020a05600c35c500b00419f3f98ed6mr3628466wmq.4.1714648009467; 
- Thu, 02 May 2024 04:06:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGiuIohlGzdE9ijK7+axaNEM81Vo37YljC+zc8fMDQBzejtLj2HQO6FQNmPxmItfriFmbYfyQ==
-X-Received: by 2002:a05:600c:35c5:b0:419:f3f9:8ed6 with SMTP id
- r5-20020a05600c35c500b00419f3f98ed6mr3628441wmq.4.1714648009120; 
- Thu, 02 May 2024 04:06:49 -0700 (PDT)
+ AJvYcCXKsLlk9cmWy1VMWfDKmYDSvyYi+KuMdtdLG2y7qCg2z6AyXb+cY8RlTKX18sEO6fVRa8U+qBCKM15pvTK750y6op97UUE=
+X-Gm-Message-State: AOJu0YzGH6NZ3V+U2B3pha6Kb2CqZ7MOvqCRyBpjXsa9LjSM9H9y6QI6
+ di8S62GKd1yNMdsDpa2fRtDyFqfVj1koApIjm1uxgN9qBS9itIKxzUfnqOlKVrAF1JIoyioz3+F
+ PaVHWM37BT1LZxl0L5kJ451bpdH0t7PT+hYFf84cJ0JPrJpyl869R
+X-Received: by 2002:ac8:590e:0:b0:43a:fd5a:9706 with SMTP id
+ 14-20020ac8590e000000b0043afd5a9706mr6605695qty.59.1714648380305; 
+ Thu, 02 May 2024 04:13:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFIFXUa4/2STNdKw6SE1dOlCFMVpz72IPCbHXzw7U1nCYjANWH+53zrkzYyQDmMBwqE363waw==
+X-Received: by 2002:ac8:590e:0:b0:43a:fd5a:9706 with SMTP id
+ 14-20020ac8590e000000b0043afd5a9706mr6605671qty.59.1714648379964; 
+ Thu, 02 May 2024 04:12:59 -0700 (PDT)
 Received: from [192.168.0.9] (ip-109-43-179-34.web.vodafone.de.
  [109.43.179.34]) by smtp.gmail.com with ESMTPSA id
- z11-20020a05600c0a0b00b0041c097e20f9sm5313590wmp.25.2024.05.02.04.06.47
+ jr9-20020a05622a800900b0043c728156fcsm364281qtb.93.2024.05.02.04.12.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 May 2024 04:06:48 -0700 (PDT)
-Message-ID: <2dbe2a6f-a706-421a-aae4-5afd933f2fd9@redhat.com>
-Date: Thu, 2 May 2024 13:06:47 +0200
+ Thu, 02 May 2024 04:12:59 -0700 (PDT)
+Message-ID: <85df15c5-a8cb-479e-a2de-9fce1103d75e@redhat.com>
+Date: Thu, 2 May 2024 13:12:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/14] hw: set deprecation info for all versioned machine
- types
+Subject: Re: [PATCH 03/14] hw/s390x: convert 'ccw' machine definitions to use
+ new macros
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>,
@@ -90,7 +90,7 @@ Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org
 References: <20240501182759.2934195-1-berrange@redhat.com>
- <20240501182759.2934195-11-berrange@redhat.com>
+ <20240501182759.2934195-4-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -135,17 +135,16 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240501182759.2934195-11-berrange@redhat.com>
+In-Reply-To: <20240501182759.2934195-4-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
 X-Spam_bar: ---
 X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.476,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -163,19 +162,22 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 01/05/2024 20.27, Daniel P. Berrangé wrote:
-> This calls the MACHINE_VER_DEPRECATION() macro in the definition of
-> all machine type classes which support versioning. This ensures
-> that they will automatically get deprecation info set when they
-> reach the appropriate point in their lifecycle.
+> This changes the DEFINE_CCW_MACHINE macro to use the common
+> helpers for constructing versioned symbol names and strings,
+> bringing greater consistency across targets.
+> 
+> The added benefit is that it avoids the need to repeat the
+> version number twice in two different formats in the calls
+> to DEFINE_CCW_MACHINE.
+> 
+> A DEFINE_CCW_MACHINE_AS_LATEST helper is added so that it
+> is not required to pass 'false' for every single historical
+> machine type.
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   hw/arm/virt.c              | 1 +
->   hw/m68k/virt.c             | 1 +
->   hw/ppc/spapr.c             | 1 +
->   hw/s390x/s390-virtio-ccw.c | 1 +
->   include/hw/i386/pc.h       | 1 +
->   5 files changed, 5 insertions(+)
+>   hw/s390x/s390-virtio-ccw.c | 96 +++++++++++++++++++++-----------------
+>   1 file changed, 53 insertions(+), 43 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
