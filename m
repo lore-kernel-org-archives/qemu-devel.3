@@ -4,78 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48FF8C04FFE
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 07:31:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDC5DC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 07:35:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2Quo-0004TL-JS; Thu, 02 May 2024 03:31:38 -0400
+	id 1s2QyA-00068w-TA; Thu, 02 May 2024 03:35:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1s2Quk-0004RJ-BN
- for qemu-devel@nongnu.org; Thu, 02 May 2024 03:31:35 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ id 1s2QyA-00068n-0S
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 03:35:06 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1s2Qui-0006fF-FI
- for qemu-devel@nongnu.org; Thu, 02 May 2024 03:31:34 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-572ad86dc8aso1649675a12.3
- for <qemu-devel@nongnu.org>; Thu, 02 May 2024 00:31:31 -0700 (PDT)
+ id 1s2Qy7-0007L4-Fg
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 03:35:05 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-57232e47a81so2534471a12.0
+ for <qemu-devel@nongnu.org>; Thu, 02 May 2024 00:35:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1714635090; x=1715239890; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1714635300; x=1715240100; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=J6K+vQgBEJa5RBagBtZnrylNM7yhfiFaLALvIlNSgfg=;
- b=KVgaF1vbYugNMmw6jaCD9FfPjQH4Rfko+Y0+pHtAe2PRVfLiDerJBjoOjWj8jVhB/2
- mLhBFQhB2OAjYipP8DS0INg7H1NuyA+k4VHS7SMCkYGNn1qBSS1Rr3BL3h8vKIEBqcfy
- jnAUxhg+6oHuXiXaQYseRDlHYwBPuM9X2WvRSH8P6vgT6ehhWlLbSDH9mW34V30GHpL7
- yuJaOCmxYqRjQc9Q49PHDB95OJ/0rVoFVd0y5IqnNYVKdOzpd78xoin5ID+Wk23004O/
- N7aOA2knH2iSm2T5jwMTE0ZP2TdYW0IH+PjVSu1bI6uVw8KPb2ccDRxs0Tr78KsKp/BK
- fgzA==
+ bh=AlUMOnUMKElu43V8N8NXHih/16FRYsa+DT2aHHqwJNE=;
+ b=QikVbhPSf5xJeBmICbQU7E9caCnERHZ3vUF/vIsPADeiKc5ZOL2+Y89mrQ8RXpY8rz
+ i9u2cD2ngs1AUrZdTvwwiCMkbqwySnSyd/Hgxd2zHkJ8q+KruxBOy+Ad4JQKlgBi79HB
+ mNloFOhILXTE4vIe7IKnkCdVZKJLT5a+jZ6DsCLAGxeuLntLMF7j6X3BKrU3D2JhoTDf
+ YwwGQyIABu9klKYQU56ioL7Hap3ZVDd2NyCJZSUxKlA/HyJ6VTecDwNFv2/690627UKy
+ TNkvhX2WQXZV/C0luC74veeRiHL1IpkKkhbrlVYCkdLGhJQ8DhNQvTmcDJm7cbG76LD3
+ JuMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714635090; x=1715239890;
+ d=1e100.net; s=20230601; t=1714635300; x=1715240100;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=J6K+vQgBEJa5RBagBtZnrylNM7yhfiFaLALvIlNSgfg=;
- b=KoNni+cVVdIz+sm3UBBzOpJhUCYpxEAR2Nb9iVIx/I9sGeuqh8R2LHptJ1LAaN06pn
- P4Gy1wbyep4r5xlFPvC8oJRW5G6L2ztyOZu01aeOCUhScfao3eN7AEwnw0tif4sb/pjn
- D2TkLqZAdtNavDxdtMVMXtGek/HqvfPmpF8ruoCU8P/ffmN25XUT1JK+cC6xnhS22Q5U
- IWW55jCRdq1mdC/IgbRi9CTe/6GphWkd9pIJk13t1kpgX7BptBtu+wkIXAybenFXCDUJ
- nMlWsfFIgWTbxC5mVOmdoiezsS3OMeU9c+gDSc/zYg/w+Z29ElE6zgIwMnZ9q7SGxDTY
- CUfg==
-X-Gm-Message-State: AOJu0YwH6mwYDasAR9QlYB8mgG/5rDXtGme6mCKM0SCsMvga7Hhj/m8O
- aousYBOCzOztHPa7dgyVjva24uLAC+HjYXDH0AZeBg2iJHkFRvBb4Phga+Ma1FXaZ0FkO53Dr8c
- E1/1guO3QpzvUPpOzDZJgHZQ+qsk=
-X-Google-Smtp-Source: AGHT+IGMHAiiyj/igyCydtEDbXlM1aLJwGa5/OER2+/iX842FcrCPNtsDsqsmkDTMJpWU8WX/JeJCxlIf+/12u8L+4k=
-X-Received: by 2002:a50:aade:0:b0:571:c0e6:233c with SMTP id
- r30-20020a50aade000000b00571c0e6233cmr3365370edc.37.1714635089557; Thu, 02
- May 2024 00:31:29 -0700 (PDT)
+ bh=AlUMOnUMKElu43V8N8NXHih/16FRYsa+DT2aHHqwJNE=;
+ b=TahMiH48ufBWFHKtAkdLlzYT6fzR9bSubKx990YhFlz/5O1gZ34cIhtuiyPu3wgGMK
+ I035Ms0meP0q96HPMEGWuNmTd+8hUs5ASVlWKC9UJBE+s8GDREWp/o3X3IhNS/1hsrPk
+ fXp96w2wxhZYOFhfcyfCvJLIRggaVCJnN5C+qLrSoN+sBqgT5HZdAcqpPxk6tmVTK5cM
+ dFZWYLrD4P0+kPnHLmkK9ppp2k6D6UXtLYitv3TwD8gGfavcXGmvcX21GsW1KiaU+VWt
+ RvTm3OeBJtSrO2DU67z/1lEto6Q/4TwePOLbcIsRIrDNu40QCD42snQQoVFZpDFMr+w3
+ bUJA==
+X-Gm-Message-State: AOJu0YxomWCG8pedQWCMgL6WmUuT/eOmvSJ8+D5tDuOXFVh/eg4QNM5a
+ EKHYwKL+V95FUxcf6zcAzMGmWPh79s4CqjS0Kw0hKohzEDBIwxmu/R7RbhDBEAkhpm/WH7w+LmT
+ 2HXsrpnH1Fc++BtmbFdRyR05cI2hD+dTJ
+X-Google-Smtp-Source: AGHT+IFeFt+Pbra3NifN8rs1UXcD8UP6ZmjUZHfOEsk+O2tSlQVe5lCGAJsT/L6+37rrO+XVhxWqsOTvvoJ6Jvn3MsI=
+X-Received: by 2002:a50:cd53:0:b0:570:4aea:4e1e with SMTP id
+ d19-20020a50cd53000000b005704aea4e1emr1859829edj.15.1714635299936; Thu, 02
+ May 2024 00:34:59 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240430164939.925307-1-edgar.iglesias@gmail.com>
- <20240430164939.925307-14-edgar.iglesias@gmail.com>
- <7172c93c-8c25-4934-b1d8-de0658c6f50f@redhat.com>
-In-Reply-To: <7172c93c-8c25-4934-b1d8-de0658c6f50f@redhat.com>
+ <20240430164939.925307-13-edgar.iglesias@gmail.com>
+In-Reply-To: <20240430164939.925307-13-edgar.iglesias@gmail.com>
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Date: Thu, 2 May 2024 09:31:17 +0200
-Message-ID: <CAJy5ezrP0OQU7ZOfZUDg2QgVZ+zcicrACk=UoL68BWEhOaQWsQ@mail.gmail.com>
-Subject: Re: [PATCH v4 13/17] softmmu: Pass RAM MemoryRegion and is_write
- xen_map_cache()
-To: David Hildenbrand <david@redhat.com>
-Cc: qemu-devel@nongnu.org, sstabellini@kernel.org, jgross@suse.com, 
+Date: Thu, 2 May 2024 09:34:47 +0200
+Message-ID: <CAJy5ezrJ2YYgAXFhcyAVosnKL3a5E96oJCfkuS4y2OGSxdU0Fw@mail.gmail.com>
+Subject: Re: [PATCH v4 12/17] xen: mapcache: Unmap first entries in buckets
+To: qemu-devel@nongnu.org
+Cc: sstabellini@kernel.org, jgross@suse.com, 
  "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
  Anthony Perard <anthony.perard@citrix.com>, 
- Paul Durrant <paul@xen.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- xen-devel@lists.xenproject.org
+ Paul Durrant <paul@xen.org>, xen-devel@lists.xenproject.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-ed1-x536.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,32 +93,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 2, 2024 at 9:24=E2=80=AFAM David Hildenbrand <david@redhat.com>=
- wrote:
+On Tue, Apr 30, 2024 at 6:50=E2=80=AFPM Edgar E. Iglesias
+<edgar.iglesias@gmail.com> wrote:
 >
-> On 30.04.24 18:49, Edgar E. Iglesias wrote:
-> > From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-> >
-> > Propagate MR and is_write to xen_map_cache().
+> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 >
-> I'm pretty sure the patch subject is missing a "to" :)
+> When invalidating memory ranges, if we happen to hit the first
+> entry in a bucket we were never unmapping it. This was harmless
+> for foreign mappings but now that we're looking to reuse the
+> mapcache for transient grant mappings, we must unmap entries
+> when invalidated.
+>
+> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+> ---
+>  hw/xen/xen-mapcache.c | 12 ++++++++----
+>  1 file changed, 8 insertions(+), 4 deletions(-)
+>
+> diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
+> index 4f98d284dd..0365311788 100644
+> --- a/hw/xen/xen-mapcache.c
+> +++ b/hw/xen/xen-mapcache.c
+> @@ -486,18 +486,22 @@ static void xen_invalidate_map_cache_entry_unlocked=
+(MapCache *mc,
+>          return;
+>      }
+>      entry->lock--;
+> -    if (entry->lock > 0 || pentry =3D=3D NULL) {
+> +    if (entry->lock > 0) {
+>          return;
+>      }
+>
+> -    pentry->next =3D entry->next;
+>      ram_block_notify_remove(entry->vaddr_base, entry->size, entry->size)=
+;
+>      if (munmap(entry->vaddr_base, entry->size) !=3D 0) {
+>          perror("unmap fails");
+>          exit(-1);
+>      }
+> -    g_free(entry->valid_mapping);
+> -    g_free(entry);
+> +    if (pentry) {
+> +        pentry->next =3D entry->next;
+> +        g_free(entry->valid_mapping);
+> +        g_free(entry);
+> +    } else {
+> +        memset(entry, 0, sizeof *entry);
 
-Thanks David! I'll fix it in v5!
+I noticed that we're leaking entry->valid_mapping here. I'll fix this for v=
+5.
 
 Cheers,
 Edgar
 
 
+> +    }
+>  }
 >
-> > This is in preparation for adding support for grant mappings.
-> >
-> > No functional change.
-> >
->
-> Reviewed-by: David Hildenbrand <david@redhat.com>
+>  typedef struct XenMapCacheData {
 > --
-> Cheers,
->
-> David / dhildenb
+> 2.40.1
 >
 
