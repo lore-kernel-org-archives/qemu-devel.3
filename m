@@ -4,80 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 085B2C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 07:44:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD4C9C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 07:58:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2R7C-00011E-Rq; Thu, 02 May 2024 03:44:26 -0400
+	id 1s2RK2-0005vD-Ga; Thu, 02 May 2024 03:57:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yu.zhang@ionos.com>)
- id 1s2R7B-000112-9y
- for qemu-devel@nongnu.org; Thu, 02 May 2024 03:44:25 -0400
-Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yu.zhang@ionos.com>)
- id 1s2R79-0000dF-Hr
- for qemu-devel@nongnu.org; Thu, 02 May 2024 03:44:25 -0400
-Received: by mail-lf1-x136.google.com with SMTP id
- 2adb3069b0e04-51f0b6b682fso664762e87.1
- for <qemu-devel@nongnu.org>; Thu, 02 May 2024 00:44:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ionos.com; s=google; t=1714635859; x=1715240659; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=1bvDu5ryWwLxWUvD92C2hlRURrOrB5Fy/Vxgc6TZ4wc=;
- b=e7Ukx3SJsrbAZenZVAoWAybHMi736e5c8JaHQn9K8PhpDPfd/nxMeQ4poUQn4+DGpk
- WCqSXN8lgtsn0ZDCeyB8vARbeF/Iv2pQq+AuC9LmZC6VxuqdtObG2K0MBIylGEFogbTA
- v+RKBuuje4HCX49GCy/loEu7sueHBoB6QARHjNCO2P9k0TG1zMYGr/fTJPVNEPmr98Rq
- oxK/jfAxhNFpnMbxfA43rBHETw7rFbqeV0XjtrqG2p9zzc2Gx8HXxek0KnUTQZMZmZcL
- V00WzYUl9uBB+qAsjBOTXwYLJLNRyTX08J5ERIjr7HTfiUzMHGBBIuVZkqBtl8PIPv4r
- OrRg==
+ (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
+ id 1s2RJv-0005tJ-Fk
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 03:57:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
+ id 1s2RJq-0003KL-SL
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 03:57:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714636649;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=fjnV+aAwgTElHzDp5N/p+uQ6DcDbydhs0bhvq7UkLMY=;
+ b=fDpSuq9DNBQYILRkfCmJkGqV42W5lSYOcbYybo75h4XSOzk6nNwBSohEi1mUKLX7SEANl+
+ XbMSXd+mzuwGx2WUJR8908ScPsm45Ouk+qs79QJlSgVbe5+oe+o1xltxyHvTZP8g9uuwc0
+ isphMa2HdWFScgk4WTZcKfeKbNT2Kvg=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-454-HiAFUq0OO5eWHPes2-o7jA-1; Thu, 02 May 2024 03:57:28 -0400
+X-MC-Unique: HiAFUq0OO5eWHPes2-o7jA-1
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-5192d01f465so7500327e87.1
+ for <qemu-devel@nongnu.org>; Thu, 02 May 2024 00:57:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714635859; x=1715240659;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1bvDu5ryWwLxWUvD92C2hlRURrOrB5Fy/Vxgc6TZ4wc=;
- b=PEeDvj0kDH/Z5D+UVUOrskBc8SGOeUnjgT6Zx4CzY3IEh93Wx+IAwlrSSd1ejDJXNr
- 3z/LU3oup8fPlNSD1xepoFk/3k63cZND6zbIhBdgKUAtsqcY488y62MfDbDk6wqvxwzZ
- /30dAOcSGZcXBZtzFI4Pn5TqnYIDubkEPJxirLHdjlyskdi+7+w+emZZHzVW/9bHIfI+
- w2h5q/2ZwofLpyL/JnnP4iiVCiI/ofjT/O5/TjLx+j9/s2xmbi93NaxXbeseXPYLIVft
- mU45jjaGQDRrVi10+5ACtJw/nDxaWmK/UYpD2g2vZRFiEqJWCGrlvuM1RuxHfFBczHfT
- VnUQ==
-X-Gm-Message-State: AOJu0YwmUfiaDNAlUyvatxGwfwAnEd57KSCB8Eqpv9/AXIveMAVjtQgK
- HdvltCl1DmZuZyjXL3W8G3CLgpDxhjmxF6X59gzEQF998sVyOnqPJCI8kn8uoIRiIZ3u3xfyN/Y
- 3
-X-Google-Smtp-Source: AGHT+IGrSBoyq67aWJNFhg+ERE2Lk81zCkCIW5g4GbagoHzHed3nzkolkIarXlW74A03SVPgWHD5jg==
-X-Received: by 2002:ac2:4c42:0:b0:518:eef0:45c0 with SMTP id
- o2-20020ac24c42000000b00518eef045c0mr1031255lfk.48.1714635859637; 
- Thu, 02 May 2024 00:44:19 -0700 (PDT)
-Received: from lb01805.fkb.profitbricks.net ([212.227.34.98])
+ d=1e100.net; s=20230601; t=1714636646; x=1715241446;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=fjnV+aAwgTElHzDp5N/p+uQ6DcDbydhs0bhvq7UkLMY=;
+ b=MtvxuiBO6QbpO3WqT3xE4oa4w4ip7AC1i1MRwFQzRgmYoOIFcIm/bEe8YWrkUqWH4I
+ D4anPO+hDFC5V+KmsUlZE7ZGDYrVVfKzRJnw3ychilsVejkzDt40vM90TGVf6G26ZBSj
+ 9pg1GQulUTe6bMGJOoCkbYD0eUMAlTTBOYBT/c5eFv932kpmlak8UQEhKtmhmi3w569d
+ yKk3rPEbJZYaoMsr7/DBG2YPgmQOqiT+a1+EQVR4vripdF/egC5jQT7ToiEM16Ocudyc
+ wzFmbQumUwDhOlwNo9vKc118un2Ram7Sy4osGhJTKM4xhNP0I3wGWMh9F/u2py+WOXhm
+ rd/g==
+X-Gm-Message-State: AOJu0Yx39+dmJ7m4sXx157LKIUEZJpuO+MrRvgmX7U5Vra/Tp/H9baRg
+ ukOJyildmCtYAIIB8b7dBV8EES6uGCaWUfjzo1Cum0HGlClVencTFtcep0XMhtMpkyZUOCD1maU
+ sscwZkuFlrZ46w9OIrrT2CBK8mYihE/OWDEcVcZQJuOa0f5mL0j6g
+X-Received: by 2002:a05:6512:1042:b0:51d:9e46:6cfe with SMTP id
+ c2-20020a056512104200b0051d9e466cfemr3049657lfb.42.1714636646569; 
+ Thu, 02 May 2024 00:57:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEPrrWhi6qxUPQ+ykDuuIMUGuxdG5LlFkYS6ZYGzX+hVUhy+mRxG2d5FHdfzAuDzotrAqmoCw==
+X-Received: by 2002:a05:6512:1042:b0:51d:9e46:6cfe with SMTP id
+ c2-20020a056512104200b0051d9e466cfemr3049634lfb.42.1714636646145; 
+ Thu, 02 May 2024 00:57:26 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- l17-20020adfe591000000b0034dac7e5f7bsm569465wrm.50.2024.05.02.00.44.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 May 2024 00:44:19 -0700 (PDT)
-From: Yu Zhang <yu.zhang@ionos.com>
-To: qemu-devel@nongnu.org
-Cc: mgalaxy@akamai.com, lizhijian@fujitsu.com, peterx@redhat.com,
- jinpu.wang@ionos.com, elmar.gerdes@ionos.com, armbru@redhat.com,
- berrange@redhat.com, Yu Zhang <yu.zhang@ionos.com>
-Subject: [PATCH] MAINTAINERS: Update the reviewers for RDMA migration
-Date: Thu,  2 May 2024 09:44:14 +0200
-Message-Id: <20240502074414.236284-1-yu.zhang@ionos.com>
-X-Mailer: git-send-email 2.25.1
+ dn2-20020a0560000c0200b0034e14d59f07sm594369wrb.73.2024.05.02.00.57.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 02 May 2024 00:57:25 -0700 (PDT)
+Message-ID: <d4aa4852-196f-42bd-884f-5234f72bfad8@redhat.com>
+Date: Thu, 2 May 2024 09:57:23 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hw/s390x: Attach the sclpconsole to
+ /machine/sclp/s390-sclp-event-facility
+To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
+ Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20240430190843.453903-1-thuth@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clegoate@redhat.com>
+In-Reply-To: <20240430190843.453903-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: permerror client-ip=2a00:1450:4864:20::136;
- envelope-from=yu.zhang@ionos.com; helo=mail-lf1-x136.google.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clegoate@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,54 +109,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As the links [1][2] below stated, QEMU development community is currently
-having some difficulties in maintaining the RDMA migration subsystem due
-to the lack of resources (maintainers, test cases, test environment etc.)
-and considering to deprecate it.
+On 4/30/24 21:08, Thomas Huth wrote:
+> The sclpconsole currently does not have a proper parent in the QOM
+> tree, so it shows up under /machine/unattached - which is somewhat
+> ugly. We should rather attach it to /machine/sclp/s390-sclp-event-facility
+> where the other devices of type TYPE_SCLP_EVENT already reside.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
-According to our user experience in the recent two years, we observed that
-RDMA is capable of providing higher migration speed and lower performance
-impact to a running VM, which can significantly improve the end-user's
-experience during the VM live migration. We believe that RDMA still plays
-a key role for the QoS and can't yet be replaced by TCP/IP for VM migration
-at the moment.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-Jinpu Wang is the upstream maintainer of RNBD/RTRS. He is experienced in
-RDMA programming, and Yu Zhang maintains the downstream QEMU for IONOS
-cloud in production.
+> ---
+>   hw/s390x/s390-virtio-ccw.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+> index 5c83d1ea17..41be8bf857 100644
+> --- a/hw/s390x/s390-virtio-ccw.c
+> +++ b/hw/s390x/s390-virtio-ccw.c
+> @@ -242,11 +242,13 @@ static void s390_create_virtio_net(BusState *bus, const char *name)
+>   
+>   static void s390_create_sclpconsole(const char *type, Chardev *chardev)
+>   {
+> +    BusState *ev_fac_bus = sclp_get_event_facility_bus();
 
-With the consent and supports from Michael Galaxy, who has developed this
-feature for QEMU, we would like to take over the maintainer's role and
-create the necessary resources to maintain it further for the community.
+This routine sclp_get_event_facility_bus() which scans all the machine
+could be avoided and even removed. For that, SCLPDevice should be an
+attribute of the machine. This means reshuffling definitions and
+object instanciations a little in the code. Would you be OK with that ?
 
-[1] https://mail.gnu.org/archive/html/qemu-devel/2024-04/msg00001.html
-[2] https://mail.gnu.org/archive/html/qemu-devel/2024-04/msg00228.html
+Other machine units/models could undergo the same kind of changes.
 
-Signed-off-by: Yu Zhang <yu.zhang@ionos.com>
-Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
-Reviewed-by: Michael Galaxy <mgalaxy@akamai.com>
-Cc: Li Zhijian <lizhijian@fujitsu.com>
-Cc: Peter Xu <peterx@redhat.com>
----
- MAINTAINERS | 3 +++
- 1 file changed, 3 insertions(+)
+Thanks,
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index f1f692202519..fa9c62aae3e1 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3425,7 +3425,10 @@ F: util/userfaultfd.c
- X: migration/rdma*
- 
- RDMA Migration
-+R: Yu Zhang <yu.zhang@ionos.com>
-+R: Jack Wang <jack.wang@ionos.com>
- R: Li Zhijian <lizhijian@fujitsu.com>
-+R: Michael Galaxy <mgalaxy@akamai.com>
- R: Peter Xu <peterx@redhat.com>
- S: Odd Fixes
- F: migration/rdma*
--- 
-2.34.1
+C.
+
+>       DeviceState *dev;
+>   
+>       dev = qdev_new(type);
+> +    object_property_add_child(OBJECT(ev_fac_bus->parent), type, OBJECT(dev));
+>       qdev_prop_set_chr(dev, "chardev", chardev);
+> -    qdev_realize_and_unref(dev, sclp_get_event_facility_bus(), &error_fatal);
+> +    qdev_realize_and_unref(dev, ev_fac_bus, &error_fatal);
+>   }
+>   
+>   static void ccw_init(MachineState *machine)
 
 
