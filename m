@@ -4,136 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3249EC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 07:25:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFB60C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 07:26:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2Qoc-0000Ao-Dp; Thu, 02 May 2024 03:25:14 -0400
+	id 1s2QpN-0000lb-It; Thu, 02 May 2024 03:26:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1s2QoS-000072-NK
- for qemu-devel@nongnu.org; Thu, 02 May 2024 03:25:08 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s2Qoy-0000L8-Rq
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 03:25:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1s2QoP-0005LG-Sr
- for qemu-devel@nongnu.org; Thu, 02 May 2024 03:25:03 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s2Qox-0005cB-CT
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 03:25:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714634700;
+ s=mimecast20190719; t=1714634733;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=cVr6/WyBfNaOaFW1NnhNL8WBGrtCboTC6NZ9VaDLEH0=;
- b=AhN0Wy+5aZ31+loXyMb9j70BzPqhTgM4v6PaeqRDY4Dwbmhp5BGVIRsbR5OeKYfgRvbI+I
- pbvxJHiXwYl8iOY00I/wThfN7v8km0YetrcjjmLl7SGX6gIb1m5vWgh4cga+ULA3hkz0ry
- W+a7rkm5I5ybTYXf7bdA6MEu/qmy+1o=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=1l8jGXxGY9bCK1OlWriGupGmabEoHJdF+Uq2Rm63FmY=;
+ b=iTqPw9lDgtar4G68UeHGOxGikWdNRHel3GwILMSYHrX9KAUa0vgyjgcHolmrch1s7sWFh9
+ D0wi/wP2fMADSlpFu0obGcCd7qLoBtPPIgglpVLrsPDdZE1VM3mrWOPPekCvufL5hOA16D
+ /oWj08YbzrO+EhfIkKNPeoCjhl8Kxk0=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-596-fCWxQghiNwqPw0coJJXXjA-1; Thu, 02 May 2024 03:24:57 -0400
-X-MC-Unique: fCWxQghiNwqPw0coJJXXjA-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-41c05442f92so23755075e9.2
- for <qemu-devel@nongnu.org>; Thu, 02 May 2024 00:24:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714634696; x=1715239496;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=cVr6/WyBfNaOaFW1NnhNL8WBGrtCboTC6NZ9VaDLEH0=;
- b=NCl6IrrKcno2xedMOufnPMSJOPCySk8icpuxI0MKYIJgTHZpPwo2u/63unBafMoz85
- ochqaygL7hvOdqZO3xuBkTq5NKx0gyCvhMXJn4fG63DL9CVHpHrGl4iDAUXkWhJDy0vk
- wQsMLPWFLDXaZ0LFkKyDZK5S2Q89zbB99kUIfXfUhBazWexj75k/2KtFQ+74Me6SuczB
- 1Ulvq/6rHMszT4n43JyeQEQK/WR8WG9P+wkV7O841h0vRWNuOhFD/EUREKUylBi1S03b
- N4LlO7nzcXXDhtCrH7g46VuGhfdM64IbDCFirLM1yUPc8uKeffx0uE75QWg0LlZSCu6N
- akew==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWsRlPxRPjdmFUVjLR30YZAuKv9w+2La6yNVzGNCJJqLSGU11U0Kwiur1jfTWngzT0B7GsaDm8491hMyYj+VOgh2OfmKqE=
-X-Gm-Message-State: AOJu0YzxDV2THAxl2QdkHhf2EG4gkBGZ8uZdRHwjfrNun5Hf54RuBNfb
- Q4WqqlEjXK2Ifx343inkNZwFZQlA//hKv1kwXrO/VoVF3qzt0JbWon63HMbsWz4LBHHJ9asjc9A
- 7ywk6c8H/4mUnN1r7le2dStrYD+tU9ZMxllURPA5V/OKDy4PAqTFK
-X-Received: by 2002:a05:600c:46cc:b0:41b:eaf2:f7da with SMTP id
- q12-20020a05600c46cc00b0041beaf2f7damr1051582wmo.6.1714634696497; 
- Thu, 02 May 2024 00:24:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHAqD4icNunxfUpJGhVol0TOZfVPB7oj7bLkW3rBwu0G9HXbzU4JQedlaQW2eoh7DwWWRwQKA==
-X-Received: by 2002:a05:600c:46cc:b0:41b:eaf2:f7da with SMTP id
- q12-20020a05600c46cc00b0041beaf2f7damr1051563wmo.6.1714634696110; 
- Thu, 02 May 2024 00:24:56 -0700 (PDT)
-Received: from ?IPV6:2003:cb:c71e:bf00:eba1:3ab9:ab0f:d676?
- (p200300cbc71ebf00eba13ab9ab0fd676.dip0.t-ipconnect.de.
- [2003:cb:c71e:bf00:eba1:3ab9:ab0f:d676])
- by smtp.gmail.com with ESMTPSA id
- z5-20020a05600c0a0500b0041bd85cd3f2sm917097wmp.19.2024.05.02.00.24.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 May 2024 00:24:55 -0700 (PDT)
-Message-ID: <7172c93c-8c25-4934-b1d8-de0658c6f50f@redhat.com>
-Date: Thu, 2 May 2024 09:24:54 +0200
+ us-mta-608-mKuPZ5MDPTOq18Dbgclumg-1; Thu, 02 May 2024 03:25:27 -0400
+X-MC-Unique: mKuPZ5MDPTOq18Dbgclumg-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6CCBB812C39;
+ Thu,  2 May 2024 07:25:27 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 292D8492BC7;
+ Thu,  2 May 2024 07:25:27 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 19C9521E6811; Thu,  2 May 2024 09:25:26 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-block@nongnu.org,  raphael@enfabrica.net,  mst@redhat.com,
+ qemu-devel@nongnu.org,  eblake@redhat.com,  eduardo@habkost.net,
+ berrange@redhat.com,  pbonzini@redhat.com,  hreitz@redhat.com,
+ kwolf@redhat.com,  yc-core@yandex-team.ru
+Subject: Re: [PATCH v4 3/3] qapi: introduce device-sync-config
+In-Reply-To: <a5993c67-6631-4fd0-a67b-c9dd52596030@yandex-team.ru> (Vladimir
+ Sementsov-Ogievskiy's message of "Wed, 1 May 2024 11:50:12 +0300")
+References: <20240429101623.1992943-1-vsementsov@yandex-team.ru>
+ <20240429101623.1992943-4-vsementsov@yandex-team.ru>
+ <877cgfcley.fsf@pond.sub.org>
+ <2f3f4354-7a98-48e9-84fa-4962f129a26f@yandex-team.ru>
+ <a5993c67-6631-4fd0-a67b-c9dd52596030@yandex-team.ru>
+Date: Thu, 02 May 2024 09:25:26 +0200
+Message-ID: <87ikzwr7yx.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 13/17] softmmu: Pass RAM MemoryRegion and is_write
- xen_map_cache()
-To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org
-Cc: sstabellini@kernel.org, jgross@suse.com,
- "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
- Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- xen-devel@lists.xenproject.org
-References: <20240430164939.925307-1-edgar.iglesias@gmail.com>
- <20240430164939.925307-14-edgar.iglesias@gmail.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
- dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
- QZLQMzNE74ap+GDK0wnacPQFpcG1AE9RMq3aeErY5tujekBS32jfC/7AnH7I0v1v1TbbK3Gp
- XNeiN4QroO+5qaSr0ID2sz5jtBLRb15RMre27E1ImpaIv2Jw8NJgW0k/D1RyKCwaTsgRdwuK
- Kx/Y91XuSBdz0uOyU/S8kM1+ag0wvsGlpBVxRR/xw/E8M7TEwuCZQArqqTCmkG6HGcXFT0V9
- PXFNNgV5jXMQRwU0O/ztJIQqsE5LsUomE//bLwzj9IVsaQpKDqW6TAPjcdBDPLHvriq7kGjt
- WhVhdl0qEYB8lkBEU7V2Yb+SYhmhpDrti9Fq1EsmhiHSkxJcGREoMK/63r9WLZYI3+4W2rAc
- UucZa4OT27U5ZISjNg3Ev0rxU5UH2/pT4wJCfxwocmqaRr6UYmrtZmND89X0KigoFD/XSeVv
- jwBRNjPAubK9/k5NoRrYqztM9W6sJqrH8+UWZ1Idd/DdmogJh0gNC0+N42Za9yBRURfIdKSb
- B3JfpUqcWwE7vUaYrHG1nw54pLUoPG6sAA7Mehl3nd4pZUALHwARAQABzSREYXZpZCBIaWxk
- ZW5icmFuZCA8ZGF2aWRAcmVkaGF0LmNvbT7CwZgEEwEIAEICGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAhkBFiEEG9nKrXNcTDpGDfzKTd4Q9wD/g1oFAl8Ox4kFCRKpKXgACgkQTd4Q
- 9wD/g1oHcA//a6Tj7SBNjFNM1iNhWUo1lxAja0lpSodSnB2g4FCZ4R61SBR4l/psBL73xktp
- rDHrx4aSpwkRP6Epu6mLvhlfjmkRG4OynJ5HG1gfv7RJJfnUdUM1z5kdS8JBrOhMJS2c/gPf
- wv1TGRq2XdMPnfY2o0CxRqpcLkx4vBODvJGl2mQyJF/gPepdDfcT8/PY9BJ7FL6Hrq1gnAo4
- 3Iv9qV0JiT2wmZciNyYQhmA1V6dyTRiQ4YAc31zOo2IM+xisPzeSHgw3ONY/XhYvfZ9r7W1l
- pNQdc2G+o4Di9NPFHQQhDw3YTRR1opJaTlRDzxYxzU6ZnUUBghxt9cwUWTpfCktkMZiPSDGd
- KgQBjnweV2jw9UOTxjb4LXqDjmSNkjDdQUOU69jGMUXgihvo4zhYcMX8F5gWdRtMR7DzW/YE
- BgVcyxNkMIXoY1aYj6npHYiNQesQlqjU6azjbH70/SXKM5tNRplgW8TNprMDuntdvV9wNkFs
- 9TyM02V5aWxFfI42+aivc4KEw69SE9KXwC7FSf5wXzuTot97N9Phj/Z3+jx443jo2NR34XgF
- 89cct7wJMjOF7bBefo0fPPZQuIma0Zym71cP61OP/i11ahNye6HGKfxGCOcs5wW9kRQEk8P9
- M/k2wt3mt/fCQnuP/mWutNPt95w9wSsUyATLmtNrwccz63XOwU0EVcufkQEQAOfX3n0g0fZz
- Bgm/S2zF/kxQKCEKP8ID+Vz8sy2GpDvveBq4H2Y34XWsT1zLJdvqPI4af4ZSMxuerWjXbVWb
- T6d4odQIG0fKx4F8NccDqbgHeZRNajXeeJ3R7gAzvWvQNLz4piHrO/B4tf8svmRBL0ZB5P5A
- 2uhdwLU3NZuK22zpNn4is87BPWF8HhY0L5fafgDMOqnf4guJVJPYNPhUFzXUbPqOKOkL8ojk
- CXxkOFHAbjstSK5Ca3fKquY3rdX3DNo+EL7FvAiw1mUtS+5GeYE+RMnDCsVFm/C7kY8c2d0G
- NWkB9pJM5+mnIoFNxy7YBcldYATVeOHoY4LyaUWNnAvFYWp08dHWfZo9WCiJMuTfgtH9tc75
- 7QanMVdPt6fDK8UUXIBLQ2TWr/sQKE9xtFuEmoQGlE1l6bGaDnnMLcYu+Asp3kDT0w4zYGsx
- 5r6XQVRH4+5N6eHZiaeYtFOujp5n+pjBaQK7wUUjDilPQ5QMzIuCL4YjVoylWiBNknvQWBXS
- lQCWmavOT9sttGQXdPCC5ynI+1ymZC1ORZKANLnRAb0NH/UCzcsstw2TAkFnMEbo9Zu9w7Kv
- AxBQXWeXhJI9XQssfrf4Gusdqx8nPEpfOqCtbbwJMATbHyqLt7/oz/5deGuwxgb65pWIzufa
- N7eop7uh+6bezi+rugUI+w6DABEBAAHCwXwEGAEIACYCGwwWIQQb2cqtc1xMOkYN/MpN3hD3
- AP+DWgUCXw7HsgUJEqkpoQAKCRBN3hD3AP+DWrrpD/4qS3dyVRxDcDHIlmguXjC1Q5tZTwNB
- boaBTPHSy/Nksu0eY7x6HfQJ3xajVH32Ms6t1trDQmPx2iP5+7iDsb7OKAb5eOS8h+BEBDeq
- 3ecsQDv0fFJOA9ag5O3LLNk+3x3q7e0uo06XMaY7UHS341ozXUUI7wC7iKfoUTv03iO9El5f
- XpNMx/YrIMduZ2+nd9Di7o5+KIwlb2mAB9sTNHdMrXesX8eBL6T9b+MZJk+mZuPxKNVfEQMQ
- a5SxUEADIPQTPNvBewdeI80yeOCrN+Zzwy/Mrx9EPeu59Y5vSJOx/z6OUImD/GhX7Xvkt3kq
- Er5KTrJz3++B6SH9pum9PuoE/k+nntJkNMmQpR4MCBaV/J9gIOPGodDKnjdng+mXliF3Ptu6
- 3oxc2RCyGzTlxyMwuc2U5Q7KtUNTdDe8T0uE+9b8BLMVQDDfJjqY0VVqSUwImzTDLX9S4g/8
- kC4HRcclk8hpyhY2jKGluZO0awwTIMgVEzmTyBphDg/Gx7dZU1Xf8HFuE+UZ5UDHDTnwgv7E
- th6RC9+WrhDNspZ9fJjKWRbveQgUFCpe1sa77LAw+XFrKmBHXp9ZVIe90RMe2tRL06BGiRZr
- jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20240430164939.925307-14-edgar.iglesias@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -29
 X-Spam_score: -3.0
@@ -157,22 +90,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30.04.24 18:49, Edgar E. Iglesias wrote:
-> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-> 
-> Propagate MR and is_write to xen_map_cache().
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-I'm pretty sure the patch subject is missing a "to" :)
+> On 30.04.24 11:31, Vladimir Sementsov-Ogievskiy wrote:
+>> On 30.04.24 11:19, Markus Armbruster wrote:
+>>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+>>>
+>>>> Add command to sync config from vhost-user backend to the device. It
+>>>> may be helpful when VHOST_USER_SLAVE_CONFIG_CHANGE_MSG failed or not
+>>>> triggered interrupt to the guest or just not available (not supported
+>>>> by vhost-user server).
+>>>>
+>>>> Command result is racy if allow it during migration. Let's allow the
+>>>> sync only in RUNNING state.
+>>>>
+>>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-> This is in preparation for adding support for grant mappings.
-> 
-> No functional change.
-> 
+[...]
 
-Reviewed-by: David Hildenbrand <david@redhat.com>
--- 
-Cheers,
+>>>> diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+>>>> index 264978aa40..47bfc0506e 100644
+>>>> --- a/system/qdev-monitor.c
+>>>> +++ b/system/qdev-monitor.c
+>>>> @@ -23,6 +23,7 @@
+>>>> =C2=A0 #include "monitor/monitor.h"
+>>>> =C2=A0 #include "monitor/qdev.h"
+>>>> =C2=A0 #include "sysemu/arch_init.h"
+>>>> +#include "sysemu/runstate.h"
+>>>> =C2=A0 #include "qapi/error.h"
+>>>> =C2=A0 #include "qapi/qapi-commands-qdev.h"
+>>>> =C2=A0 #include "qapi/qmp/dispatch.h"
+>>>> @@ -971,6 +972,53 @@ void qmp_device_del(const char *id, Error **errp)
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0 }
+>>>>  }
+>>>>
+>>>> +int qdev_sync_config(DeviceState *dev, Error **errp)
+>>>> +{
+>>>> +=C2=A0=C2=A0=C2=A0 DeviceClass *dc =3D DEVICE_GET_CLASS(dev);
+>>>> +
+>>>> +=C2=A0=C2=A0=C2=A0 if (!dc->sync_config) {
+>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 error_setg(errp, "device-s=
+ync-config is not supported for '%s'",
+>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 object_get_typename(OBJECT(dev)));
+>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return -ENOTSUP;
+>>>> +=C2=A0=C2=A0=C2=A0 }
+>>>> +
+>>>> +=C2=A0=C2=A0=C2=A0 return dc->sync_config(dev, errp);
+>>>> +}
+>>>> +
+>>>> +void qmp_device_sync_config(const char *id, Error **errp)
+>>>> +{
+>>>> +=C2=A0=C2=A0=C2=A0 DeviceState *dev;
+>>>> +
+>>>> +=C2=A0=C2=A0=C2=A0 /*
+>>>> +=C2=A0=C2=A0=C2=A0=C2=A0 * During migration there is a race between s=
+yncing`configuration and
+>>>> +=C2=A0=C2=A0=C2=A0=C2=A0 * migrating it (if migrate first, that targe=
+t would get outdated version),
+>>>> +=C2=A0=C2=A0=C2=A0=C2=A0 * so let's just not allow it.
+>>>
+>>> Wrap comment lines around column 70 for legibility, please.
+>>>
+>>>> +=C2=A0=C2=A0=C2=A0=C2=A0 *
+>>>> +=C2=A0=C2=A0=C2=A0=C2=A0 * Moreover, let's not rely on setting up int=
+errupts in paused
+>>>> +=C2=A0=C2=A0=C2=A0=C2=A0 * state, which may be a part of migration pr=
+ocess.
+>>>
+>>> We discussed this in review of v3.=C2=A0 You wanted to check whether the
+>>> problem is real.=C2=A0 Is it?
+>>
+>> We discussed it later than I've sent v4 :) No, I didn't check yet.
+>
+> Checked. Seems this works (in scheme pause -> migrate -> resume, interrup=
+ts are migrated and triggered on target after resume), so my doubt was wron=
+g.
 
-David / dhildenb
+Thanks!
+
+[...]
 
 
