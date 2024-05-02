@@ -4,54 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC09EC04FFE
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 14:18:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E66DC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 14:24:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2XFM-0002v2-2Q; Thu, 02 May 2024 10:17:16 -0400
+	id 1s2XLL-0005Qs-IL; Thu, 02 May 2024 10:23:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adiupina@astralinux.ru>)
- id 1s2XFG-0002uG-Ck; Thu, 02 May 2024 10:17:10 -0400
-Received: from new-mail.astralinux.ru ([51.250.53.244])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1s2XLK-0005Qj-8U
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 10:23:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adiupina@astralinux.ru>)
- id 1s2XFB-0007KH-OS; Thu, 02 May 2024 10:17:09 -0400
-Received: from rbta-msk-lt-302690.astralinux.ru (unknown [10.177.234.226])
- by new-mail.astralinux.ru (Postfix) with ESMTPA id 4VVbbQ6mlnzlVth;
- Thu,  2 May 2024 17:16:50 +0300 (MSK)
-From: Alexandra Diupina <adiupina@astralinux.ru>
-To: Alistair Francis <alistair@alistair23.me>
-Cc: Alexandra Diupina <adiupina@astralinux.ru>,
- "Konrad, Frederic" <Frederic.Konrad@amd.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, sdl.qemu@linuxtesting.org
-Subject: [PATCH v5] xlnx_dpdma: fix descriptor endianness bug
-Date: Thu,  2 May 2024 17:16:28 +0300
-Message-Id: <20240502141628.28103-1-adiupina@astralinux.ru>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <87y18u3hjf.fsf@draig.linaro.org>
-References: 
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1s2XLI-0000Si-R1
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 10:23:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714659803;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=B2npMCPC3kw1vod5yhIIQEQeXn1drBrxUNH/LbqaxFA=;
+ b=cPvWKbHQzzwT9+KvVkQirxTwV7lYbe6nj5N5AI/3TK3w26kXRxLUDOHe9Om9iw+kiIjqJS
+ URwkBWMf2x1QGnTtvrQ/dqLl27Qv1I8iK1sVQP+Vu3c/RYA5fkBgfVgGXI4PovT3f/IDu9
+ bhx7HeJyaXP2GaoZ5qWth0e9blakDiM=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-202-6bkYm8DiMyym2nLtmL3yNg-1; Thu, 02 May 2024 10:23:20 -0400
+X-MC-Unique: 6bkYm8DiMyym2nLtmL3yNg-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a598111be0fso1712966b.1
+ for <qemu-devel@nongnu.org>; Thu, 02 May 2024 07:23:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714659799; x=1715264599;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=B2npMCPC3kw1vod5yhIIQEQeXn1drBrxUNH/LbqaxFA=;
+ b=uEfLdy2vp/NLIZBIus+SToRIU4eAbiatZ6GuOTnlKlgV9m5IZ6MYF9vtZRqEn0gT40
+ YWSMDj0kfl3a0XwoMT9e9alEw2sBdin7h7E+81+piMBxXXhZksfKH3RAjPSgdF3wqnfu
+ bFNt2Jo7TCWLSb/VnJxOTHR9rQBfpeMC8GH025I+6bCRr73dg1OUpqMtjAR2MFZ+nZ6L
+ GxrzmS+LMQRB7SxEg6T5Ut7jBMoWcyFmEtimUb8tXBhvsZvJ1EZAULGOk/ZBwzPsX4ER
+ htmOaCXA/rIOhCT+2D4df9sh4CqBJ5NnHNUi2VP9liSsDLCG1nK+gvRI9wv3PFghGyVS
+ JS5g==
+X-Gm-Message-State: AOJu0Yxbwqjqs7AW/uYQhQBNQQB/TdfYcMnyFB1ANxDCvGRQH5Rmol9p
+ GfNa97p2yxYr8oPHvTSXBRMo267wQfd84WqPkfPn/dn5jyJ63iND1RsoF1bEdtuk7ro+o1dOpUU
+ /C9QJkI14xhIIPmYzfHFbW1SV0ws5uYYFExAfFgKOJoH8hWIQ9c3v2U7QZCTGOI1LUVUd4UIA95
+ vHei09PtpVCvDVP7u2Hc/5oe+Oh4lw0Hf+pdAg
+X-Received: by 2002:a17:906:7c50:b0:a55:b2da:3e92 with SMTP id
+ g16-20020a1709067c5000b00a55b2da3e92mr1755685ejp.68.1714659798753; 
+ Thu, 02 May 2024 07:23:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGURnWOGjReh1DsJYEXi1hQjcfjokkHtgdL93hhIAU+jZ2Xi8TsR31tsf9wPM0w0knjQdv76Q==
+X-Received: by 2002:a17:906:7c50:b0:a55:b2da:3e92 with SMTP id
+ g16-20020a1709067c5000b00a55b2da3e92mr1755666ejp.68.1714659798314; 
+ Thu, 02 May 2024 07:23:18 -0700 (PDT)
+Received: from avogadro.local ([151.95.155.52])
+ by smtp.gmail.com with ESMTPSA id
+ fx24-20020a170906b75800b00a5910978816sm605835ejb.121.2024.05.02.07.23.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 02 May 2024 07:23:17 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, Roman Kiryanov <rkir@google.com>,
+ Daniel Berrange <berrange@redhat.com>
+Subject: [PATCH] bitmap: Use g_try_new0/g_renew
+Date: Thu,  2 May 2024 16:23:16 +0200
+Message-ID: <20240502142316.44012-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.44.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-DrWeb-SpamScore: -100
-X-DrWeb-SpamState: legit
-X-DrWeb-SpamDetail: gggruggvucftvghtrhhoucdtuddrgedvfedrvdehuddgtddvucetufdoteggodetrfcurfhrohhfihhlvgemucfftfghgfeunecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeetlhgvgigrnhgurhgrucffihhuphhinhgruceorgguihhuphhinhgrsegrshhtrhgrlhhinhhugidrrhhuqeenucggtffrrghtthgvrhhnpeefkedufedvkeffuedtgfdugeeutdegvdffffejfffgleffieduhfejvdelffdvudenucffohhmrghinheplhhinhhugihtvghsthhinhhgrdhorhhgnecukfhppedutddrudejjedrvdefgedrvddvieenucfrrghrrghmpehhvghloheprhgsthgrqdhmshhkqdhlthdqfedtvdeiledtrdgrshhtrhgrlhhinhhugidrrhhupdhinhgvthepuddtrddujeejrddvfeegrddvvdeimeegudehfeegpdhmrghilhhfrhhomheprgguihhuphhinhgrsegrshhtrhgrlhhinhhugidrrhhupdhnsggprhgtphhtthhopeekpdhrtghpthhtoheprghlihhsthgrihhrsegrlhhishhtrghirhdvfedrmhgvpdhrtghpthhtoheprgguihhuphhinhgrsegrshhtrhgrlhhinhhugidrrhhupdhrtghpthhtohephfhrvgguvghrihgtrdfmohhnrhgrugesrghmugdrtghomhdprhgtphhtthhopegvughgrghrrdhighhlvghsihgrshesghhmrghilhdrtghomhdprhgtphhtth
- hopehpvghtvghrrdhmrgihuggvlhhlsehlihhnrghrohdrohhrghdprhgtphhtthhopehqvghmuhdqrghrmhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehsughlrdhqvghmuheslhhinhhugihtvghsthhinhhgrdhorhhg
-X-DrWeb-SpamVersion: Vade Retro 01.423.251#02 AS+AV+AP Profile: DRWEB;
- Bailout: 300
-X-AntiVirus: Checked by Dr.Web [MailD: 11.1.19.2307031128,
- SE: 11.1.12.2210241838, Core engine: 7.00.62.01180, Virus records: 12656802,
- Updated: 2024-May-02 12:36:40 UTC]
-Received-SPF: pass client-ip=51.250.53.244;
- envelope-from=adiupina@astralinux.ru; helo=new-mail.astralinux.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.476,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,118 +100,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add xlnx_dpdma_read_descriptor() and
-xlnx_dpdma_write_descriptor() functions.
-xlnx_dpdma_read_descriptor() combines reading a
-descriptor from desc_addr by calling dma_memory_read()
-and swapping the desc fields from guest memory order
-to host memory order. xlnx_dpdma_write_descriptor()
-performs similar actions when writing a descriptor.
+Avoids an explicit use of sizeof().  The GLib allocation macros
+ensure that the multiplication by the size of the element
+uses the right type and does not overflow.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: d3c6369a96 ("introduce xlnx-dpdma")
-Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
+Cc: qemu-trivial@nongnu.org
+Cc: Roman Kiryanov <rkir@google.com>
+Cc: Daniel Berrange <berrange@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
-v5: fix subject and make xlnx_dpdma_write_descriptor() not void
-v4: remove rewriting desc in place
-v3: add xlnx_dpdma_write_descriptor()
-v2: minor changes in xlnx_dpdma_read_descriptor()
- hw/dma/xlnx_dpdma.c | 66 ++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 62 insertions(+), 4 deletions(-)
+ include/qemu/bitmap.h | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/hw/dma/xlnx_dpdma.c b/hw/dma/xlnx_dpdma.c
-index 1f5cd64ed1..f582c1a085 100644
---- a/hw/dma/xlnx_dpdma.c
-+++ b/hw/dma/xlnx_dpdma.c
-@@ -614,6 +614,63 @@ static void xlnx_dpdma_register_types(void)
-     type_register_static(&xlnx_dpdma_info);
+diff --git a/include/qemu/bitmap.h b/include/qemu/bitmap.h
+index 97806811eeb..c4363b1d324 100644
+--- a/include/qemu/bitmap.h
++++ b/include/qemu/bitmap.h
+@@ -92,8 +92,8 @@ long slow_bitmap_count_one(const unsigned long *bitmap, long nbits);
+ 
+ static inline unsigned long *bitmap_try_new(long nbits)
+ {
+-    long len = BITS_TO_LONGS(nbits) * sizeof(unsigned long);
+-    return g_try_malloc0(len);
++    long nelem = BITS_TO_LONGS(nbits);
++    return g_try_new0(unsigned long, nelem);
  }
  
-+static MemTxResult xlnx_dpdma_read_descriptor(XlnxDPDMAState *s,
-+                                    uint64_t desc_addr, DPDMADescriptor *desc)
-+{
-+    MemTxResult res = dma_memory_read(&address_space_memory, desc_addr,
-+                &desc, sizeof(DPDMADescriptor), MEMTXATTRS_UNSPECIFIED);
-+    if (res) {
-+        return res;
-+    }
-+
-+    /* Convert from LE into host endianness.  */
-+    desc->control = le32_to_cpu(desc->control);
-+    desc->descriptor_id = le32_to_cpu(desc->descriptor_id);
-+    desc->xfer_size = le32_to_cpu(desc->xfer_size);
-+    desc->line_size_stride = le32_to_cpu(desc->line_size_stride);
-+    desc->timestamp_lsb = le32_to_cpu(desc->timestamp_lsb);
-+    desc->timestamp_msb = le32_to_cpu(desc->timestamp_msb);
-+    desc->address_extension = le32_to_cpu(desc->address_extension);
-+    desc->next_descriptor = le32_to_cpu(desc->next_descriptor);
-+    desc->source_address = le32_to_cpu(desc->source_address);
-+    desc->address_extension_23 = le32_to_cpu(desc->address_extension_23);
-+    desc->address_extension_45 = le32_to_cpu(desc->address_extension_45);
-+    desc->source_address2 = le32_to_cpu(desc->source_address2);
-+    desc->source_address3 = le32_to_cpu(desc->source_address3);
-+    desc->source_address4 = le32_to_cpu(desc->source_address4);
-+    desc->source_address5 = le32_to_cpu(desc->source_address5);
-+    desc->crc = le32_to_cpu(desc->crc);
-+
-+    return res;
-+}
-+
-+static MemTxResult xlnx_dpdma_write_descriptor(uint64_t desc_addr,
-+                                                DPDMADescriptor *desc)
-+{
-+    DPDMADescriptor tmp_desc = *desc;
-+
-+    /* Convert from host endianness into LE.  */
-+    tmp_desc.control = cpu_to_le32(tmp_desc.control);
-+    tmp_desc.descriptor_id = cpu_to_le32(tmp_desc.descriptor_id);
-+    tmp_desc.xfer_size = cpu_to_le32(tmp_desc.xfer_size);
-+    tmp_desc.line_size_stride = cpu_to_le32(tmp_desc.line_size_stride);
-+    tmp_desc.timestamp_lsb = cpu_to_le32(tmp_desc.timestamp_lsb);
-+    tmp_desc.timestamp_msb = cpu_to_le32(tmp_desc.timestamp_msb);
-+    tmp_desc.address_extension = cpu_to_le32(tmp_desc.address_extension);
-+    tmp_desc.next_descriptor = cpu_to_le32(tmp_desc.next_descriptor);
-+    tmp_desc.source_address = cpu_to_le32(tmp_desc.source_address);
-+    tmp_desc.address_extension_23 = cpu_to_le32(tmp_desc.address_extension_23);
-+    tmp_desc.address_extension_45 = cpu_to_le32(tmp_desc.address_extension_45);
-+    tmp_desc.source_address2 = cpu_to_le32(tmp_desc.source_address2);
-+    tmp_desc.source_address3 = cpu_to_le32(tmp_desc.source_address3);
-+    tmp_desc.source_address4 = cpu_to_le32(tmp_desc.source_address4);
-+    tmp_desc.source_address5 = cpu_to_le32(tmp_desc.source_address5);
-+    tmp_desc.crc = cpu_to_le32(tmp_desc.crc);
-+
-+    return dma_memory_write(&address_space_memory, desc_addr, &tmp_desc,
-+                            sizeof(DPDMADescriptor), MEMTXATTRS_UNSPECIFIED);
-+}
-+
- size_t xlnx_dpdma_start_operation(XlnxDPDMAState *s, uint8_t channel,
-                                     bool one_desc)
+ static inline unsigned long *bitmap_new(long nbits)
+@@ -265,10 +265,10 @@ unsigned long bitmap_find_next_zero_area(unsigned long *map,
+ static inline unsigned long *bitmap_zero_extend(unsigned long *old,
+                                                 long old_nbits, long new_nbits)
  {
-@@ -651,8 +708,7 @@ size_t xlnx_dpdma_start_operation(XlnxDPDMAState *s, uint8_t channel,
-             desc_addr = xlnx_dpdma_descriptor_next_address(s, channel);
-         }
+-    long new_len = BITS_TO_LONGS(new_nbits) * sizeof(unsigned long);
+-    unsigned long *new = g_realloc(old, new_len);
+-    bitmap_clear(new, old_nbits, new_nbits - old_nbits);
+-    return new;
++    long new_nelem = BITS_TO_LONGS(new_nbits);
++    unsigned long *ptr = g_renew(unsigned long, old, new_nelem);
++    bitmap_clear(ptr, old_nbits, new_nbits - old_nbits);
++    return ptr;
+ }
  
--        if (dma_memory_read(&address_space_memory, desc_addr, &desc,
--                            sizeof(DPDMADescriptor), MEMTXATTRS_UNSPECIFIED)) {
-+        if (xlnx_dpdma_read_descriptor(s, desc_addr, &desc)) {
-             s->registers[DPDMA_EISR] |= ((1 << 1) << channel);
-             xlnx_dpdma_update_irq(s);
-             s->operation_finished[channel] = true;
-@@ -755,8 +811,10 @@ size_t xlnx_dpdma_start_operation(XlnxDPDMAState *s, uint8_t channel,
-             /* The descriptor need to be updated when it's completed. */
-             DPRINTF("update the descriptor with the done flag set.\n");
-             xlnx_dpdma_desc_set_done(&desc);
--            dma_memory_write(&address_space_memory, desc_addr, &desc,
--                             sizeof(DPDMADescriptor), MEMTXATTRS_UNSPECIFIED);
-+            if (xlnx_dpdma_write_descriptor(desc_addr, &desc)) {
-+                DPRINTF("Can't write the descriptor.\n");
-+                break;
-+            }
-         }
- 
-         if (xlnx_dpdma_desc_completion_interrupt(&desc)) {
+ void bitmap_to_le(unsigned long *dst, const unsigned long *src,
 -- 
-2.30.2
+2.44.0
 
 
