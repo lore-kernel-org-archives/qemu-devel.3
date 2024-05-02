@@ -4,83 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5568FC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 12:16:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A273AC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 12:25:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2VM7-0008UL-8O; Thu, 02 May 2024 08:16:07 -0400
+	id 1s2VTm-000390-IU; Thu, 02 May 2024 08:24:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s2VM4-0008So-8u
- for qemu-devel@nongnu.org; Thu, 02 May 2024 08:16:04 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s2VTk-00038V-CY
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 08:24:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s2VLu-0001RS-OM
- for qemu-devel@nongnu.org; Thu, 02 May 2024 08:16:01 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s2VTi-0002k2-EI
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 08:24:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714652153;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1714652637;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=dMYitP7Vq+BpFO1f6Ueqlnu4u7GGKKaZQULRhMdXP4o=;
- b=HUQd13iw7wtoxz/qv6NcLpW5/2Nv8svPgOw9U1roMq5wg3DGozB7m8+5xBfNavLyrEVQ03
- LjDNYRisiCxUlvcqnAfUOd4zjBrYICHV4/VVwbWDO5nnZJOCLeD7gd71CxneecpoEpKu2+
- 9GKXF80EW1FGpfGIBdttY+osNfsDn4U=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-43-JDDgPq6LMye7SwQfj6dGwA-1; Thu,
- 02 May 2024 08:15:50 -0400
-X-MC-Unique: JDDgPq6LMye7SwQfj6dGwA-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
+ bh=xMQVy7oJq8SdNlUsNwqEI1Z9p1RrdR2ZtYybwfpuUg0=;
+ b=RAo5t+Z7S65fqyENZRgpjA39rUilTIuY+9dFq/TqgA5Rlfl7CbD67Rb0mAlFO43BZ3+7Cq
+ 6tvWjtvhv1+sG7cPB+3fq+Jg9Nne/+fkuAg5OKDiTfdayKD9Org64F4pTcaqPy1ZpJodYs
+ 8DNZ9N/O2bFPu4t2sR1YrhDjeLLStts=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-461-c34bWZKJN1Sunee46VzyBw-1; Thu, 02 May 2024 08:23:56 -0400
+X-MC-Unique: c34bWZKJN1Sunee46VzyBw-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A728B299E746;
- Thu,  2 May 2024 12:15:49 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.138])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 3F916492BC7;
- Thu,  2 May 2024 12:15:46 +0000 (UTC)
-Date: Thu, 2 May 2024 13:15:44 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clegoate@redhat.com>,
- Halil Pasic <pasic@linux.ibm.com>,
- Laurent Vivier <laurent@vivier.eu>, qemu-arm@nongnu.org,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-ppc@nongnu.org,
- David Gibson <david@gibson.dropbear.id.au>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org
-Subject: Re: [PATCH 13/14] hw/i386: remove obsolete manual deprecation reason
- string of i440fx machines
-Message-ID: <ZjOD8CpDVRV_OW-F@redhat.com>
-References: <20240501182759.2934195-1-berrange@redhat.com>
- <20240501182759.2934195-14-berrange@redhat.com>
- <500cec2c-a598-4185-b275-a1435a848c88@redhat.com>
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id F1FB38021A4;
+ Thu,  2 May 2024 12:23:55 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id B74EE40B4979;
+ Thu,  2 May 2024 12:23:55 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id C6C2A21E6811; Thu,  2 May 2024 14:23:54 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Steve Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Fabiano Rosas
+ <farosas@suse.de>,  David Hildenbrand <david@redhat.com>,  Igor Mammedov
+ <imammedo@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,  Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>,  Philippe Mathieu-Daude
+ <philmd@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>,  "Daniel P.
+ Berrange" <berrange@redhat.com>
+Subject: Re: [PATCH V1 20/26] migration: cpr-exec mode
+In-Reply-To: <1714406135-451286-21-git-send-email-steven.sistare@oracle.com>
+ (Steve Sistare's message of "Mon, 29 Apr 2024 08:55:29 -0700")
+References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
+ <1714406135-451286-21-git-send-email-steven.sistare@oracle.com>
+Date: Thu, 02 May 2024 14:23:54 +0200
+Message-ID: <87bk5o7679.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <500cec2c-a598-4185-b275-a1435a848c88@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -101,62 +84,116 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 02, 2024 at 02:08:58PM +0200, Thomas Huth wrote:
-> On 01/05/2024 20.27, Daniel P. Berrangé wrote:
-> > The automatic deprecation mechanism introduced in the preceeding patches
-> > will mark every i440fx machine upto and including 2.12 as deprecated. As
-> > such we can revert the manually added deprecation which was a subset:
-> > 
-> >    commit c7437f0ddb8ee45bf96d949ddfcbb7697ae3d415
-> >    Author: Thomas Huth <thuth@redhat.com>
-> >    Date:   Fri Oct 6 09:52:47 2023 +0200
-> > 
-> >      docs/about: Mark the old pc-i440fx-2.0 - 2.3 machine types as deprecated
-> > 
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > ---
-> >   hw/i386/pc_piix.c | 1 -
-> >   1 file changed, 1 deletion(-)
-> > 
-> > diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-> > index 9f92504cc4..4137e03f6f 100644
-> > --- a/hw/i386/pc_piix.c
-> > +++ b/hw/i386/pc_piix.c
-> > @@ -812,7 +812,6 @@ static void pc_i440fx_machine_2_3_options(MachineClass *m)
-> >   {
-> >       pc_i440fx_machine_2_4_options(m);
-> >       m->hw_version = "2.3.0";
-> > -    m->deprecation_reason = "old and unattended - use a newer version instead";
-> >       compat_props_add(m->compat_props, hw_compat_2_3, hw_compat_2_3_len);
-> >       compat_props_add(m->compat_props, pc_compat_2_3, pc_compat_2_3_len);
-> >   }
-> 
-> This will conflict with Philippe's "hw/i386: Remove deprecated pc-i440fx-2.0
-> -> 2.3 machines" patch series (which should easy to resolve, though).
+Steve Sistare <steven.sistare@oracle.com> writes:
 
-Yep, there are a few places in my series which will conflict with
-that.
+> Add the cpr-exec migration mode.  Usage:
+>   qemu-system-$arch -machine memfd-alloc=on ...
+>   migrate_set_parameter mode cpr-exec
+>   migrate_set_parameter cpr-exec-args \
+>     <arg1> <arg2> ... -incoming <uri>
+>   migrate -d <uri>
+>
+> The migrate command stops the VM, saves state to the URI,
+> directly exec's a new version of QEMU on the same host,
+> replacing the original process while retaining its PID, and
+> loads state from the URI.  Guest RAM is preserved in place,
+> albeit with new virtual addresses.
+>
+> Arguments for the new QEMU process are taken from the
+> @cpr-exec-args parameter.  The first argument should be the
+> path of a new QEMU binary, or a prefix command that exec's the
+> new QEMU binary.
+>
+> Because old QEMU terminates when new QEMU starts, one cannot
+> stream data between the two, so the URI must be a type, such as
+> a file, that reads all data before old QEMU exits.
+>
+> Memory backend objects must have the share=on attribute, and
+> must be mmap'able in the new QEMU process.  For example,
+> memory-backend-file is acceptable, but memory-backend-ram is
+> not.
+>
+> The VM must be started with the '-machine memfd-alloc=on'
+> option.  This causes implicit ram blocks (those not explicitly
+> described by a memory-backend object) to be allocated by
+> mmap'ing a memfd.  Examples include VGA, ROM, and even guest
+> RAM when it is specified without a memory-backend object.
+>
+> The implementation saves precreate vmstate at the end of normal
+> migration in migrate_fd_cleanup, and tells the main loop to call
+> cpr_exec.  Incoming qemu loads preceate state early, before objects
+> are created.  The memfds are kept open across exec by clearing the
+> close-on-exec flag, their values are saved in precreate vmstate,
+> and they are mmap'd in new qemu.
+>
+> Note that the memfd-alloc option is not related to memory-backend-memfd.
+> Later patches add support for memory-backend-memfd, and for additional
+> devices, including vfio, chardev, and more.
+>
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 
-I've just looked at Philippe's code and everything has at least
-one R-b. I had a minor comment but I could address that in this
-series.
+[...]
 
-IOW, ideally we could merge Philippe's series now, to reduce
-code in flight touching the same areas.
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index 49710e7..7c5f45f 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -665,9 +665,37 @@
+>  #     or COLO.
+>  #
+>  #     (since 8.2)
+> +#
+> +# @cpr-exec: The migrate command stops the VM, saves state to the URI,
+> +#     directly exec's a new version of QEMU on the same host,
+> +#     replacing the original process while retaining its PID, and
+> +#     loads state from the URI.  Guest RAM is preserved in place,
+> +#     albeit with new virtual addresses.
 
-> Anyway:
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> 
+Do you mean the virtual addresses of guest RAM may differ betwen old and
+new QEMU process?
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> +#
+> +#     Arguments for the new QEMU process are taken from the
+> +#     @cpr-exec-args parameter.  The first argument should be the
+> +#     path of a new QEMU binary, or a prefix command that exec's the
+> +#     new QEMU binary.
+
+What's a "prefix command"?  A wrapper script, perhaps?
+
+> +#
+> +#     Because old QEMU terminates when new QEMU starts, one cannot
+> +#     stream data between the two, so the URI must be a type, such as
+> +#     a file, that reads all data before old QEMU exits.
+
+What happens when you specify a URI that doesn't?
+
+> +#
+> +#     Memory backend objects must have the share=on attribute, and
+> +#     must be mmap'able in the new QEMU process.  For example,
+> +#     memory-backend-file is acceptable, but memory-backend-ram is
+> +#     not.
+> +#
+> +#     The VM must be started with the '-machine memfd-alloc=on'
+
+What happens when you don't?
+
+> +#     option.  This causes implicit ram blocks -- those not explicitly
+> +#     described by a memory-backend object -- to be allocated by
+> +#     mmap'ing a memfd.  Examples include VGA, ROM, and even guest
+> +#     RAM when it is specified without a memory-backend object.
+> +#
+> +#     (since 9.1)
+>  ##
+>  { 'enum': 'MigMode',
+> -  'data': [ 'normal', 'cpr-reboot' ] }
+> +  'data': [ 'normal', 'cpr-reboot', 'cpr-exec' ] }
+>  
+>  ##
+>  # @ZeroPageDetection:
+
+[...]
 
 
