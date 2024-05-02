@@ -4,83 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEEBDC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 00:18:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 480CBC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 04:41:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2K8M-0000It-RQ; Wed, 01 May 2024 20:17:10 -0400
+	id 1s2OFT-0002YH-LN; Thu, 02 May 2024 00:40:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s2K8L-0000IV-OL
- for qemu-devel@nongnu.org; Wed, 01 May 2024 20:17:09 -0400
-Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
+ (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1s2OFD-0002VE-Vz
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 00:40:37 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s2K8K-0001z6-6P
- for qemu-devel@nongnu.org; Wed, 01 May 2024 20:17:09 -0400
-Received: by mail-oa1-x2a.google.com with SMTP id
- 586e51a60fabf-234db9dde9bso3132843fac.1
- for <qemu-devel@nongnu.org>; Wed, 01 May 2024 17:17:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1s2OFC-0008Na-EA
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 00:40:31 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1ec76185cb3so71245ad.0
+ for <qemu-devel@nongnu.org>; Wed, 01 May 2024 21:40:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714609026; x=1715213826; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to;
- bh=75uTeGVmMeSa8zwPqloLaRC9fOP9T0eokl39jYzKJPo=;
- b=hDdpm9vLdzU/ApGLVbIZRBg6n0KfX7K9C9OxI+3ZkwUgqypGEaZ7Gl7WWe329YnexV
- Ce4FObXkNy0ZMbJSMUbvEwpump/4EKxuHtaSbk/bA9KHm8MkNaOIfrXEi+D5vt6hnIXf
- pPDDBBoBtgQqlTfvlG0ZK8jj+abbYXWUl51Ziw/jOS2jtkYLgoT24vqF/lBZON6YUf07
- C+qzAlt4seLHDNoGMqHIWK2vddipybOd1IGEuDzdp4SzgGoX8lk1cKW7cfglnHAtiXEi
- UATRBo6h5Jy57aaO/J/RPsY/8AJvyDGJjfFKdta3yBwb4zE8kzEsg0iHh5a/o/YLstvZ
- Ilew==
+ d=google.com; s=20230601; t=1714624828; x=1715229628; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=FMldyZ00zhWwtKqcvYDWqTEZmUZ2VdDp8APQQdWXVDc=;
+ b=sqyRMYMipcH1DZAvTOqVsGoEepx0OQYqSjHNaW+rPw8FgQdcGGolTrysdt8IQyrUpk
+ pZ60w6zoSKIaLsEekEwev1G0LL8CFSAxTf8MRJI/EH9cVikwXDZ1u80S6iek+fnUv5s0
+ 6o5dkk3CtODVU7/h8XP/Rwm+5xwV4u0tIwGigxkEODxNRxthNmWmUsBjijghEZQ5eDuv
+ W7z6Js+tK6Yq9DIVljLsR42+uvGM88Do5QShNnd5lMtZvrNoWeV2QYHtnUc1e0hMqVjg
+ jYIhgywhIjZykl5is8TZP1yK6OQ284voaR4r3BUmwRGIe5PqxJrf3lCTVqY30pk8UUHX
+ cB5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714609026; x=1715213826;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=75uTeGVmMeSa8zwPqloLaRC9fOP9T0eokl39jYzKJPo=;
- b=lWP+xBeilR1hm/h25eAHmmjyL+M5yuV1NM+vR5cfuhvEno2Xfbi0lBg9KFZdKcMLzi
- js1sC4zYAL7HkIS+FwkLo1JJ/Jl1VuKucHbot4te6XWizccXhZ8mPvKLf46DnKU7GqJg
- 4gtpaO3t+HWN3YAvPVYh0cvRioYzBIOmBBBboDQjxaFwv/TYSwUZnxsy/Bz3cA3ylVOA
- FEDTthgZaDELsuA56FvP/wVpgFMhcC7Kfv95FyoCdP2+L4Sn3PGraVpvUX8Lg3xTsTBu
- g287epqFSig7dXieM4uEN3wXgW69CCx1I7UOgwCfzeb34YQt6yI3TOoEKHAR863ReGAs
- A9YQ==
-X-Gm-Message-State: AOJu0YyDpVrIiH2rAYivRSn2iay4fm7+PVDsqIRvOcFRjhm6Rrgp5ac4
- Vv0Dro3AdSbboCXmBjsBAvuKJExe7lCkh3b4LxAaVGDcdx6i09XUZUlmXj4mmjhQMnZib56gOtl
- a
-X-Google-Smtp-Source: AGHT+IFPMHTjAiBr9eM6Pfxcyre4p7k27Wulk0nkK10IkITWZDcFwLFgLsJZBhG+iTcQlnxAJL2M2A==
-X-Received: by 2002:a05:6870:8a0f:b0:220:873d:dbcc with SMTP id
- p15-20020a0568708a0f00b00220873ddbccmr769475oaq.49.1714609026305; 
- Wed, 01 May 2024 17:17:06 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
- by smtp.gmail.com with ESMTPSA id
- 81-20020a630254000000b005f80080586asm20842079pgc.93.2024.05.01.17.17.05
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 May 2024 17:17:05 -0700 (PDT)
-Message-ID: <b6d1892f-d84c-4960-b913-80b984fb4b26@linaro.org>
-Date: Wed, 1 May 2024 17:17:03 -0700
+ d=1e100.net; s=20230601; t=1714624828; x=1715229628;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=FMldyZ00zhWwtKqcvYDWqTEZmUZ2VdDp8APQQdWXVDc=;
+ b=iNPE2yS75r2RDON5e6ts0GA6dTydtnElSOKf/f8DS3RLwA1aMesZ6SpLrJx9ZnFzTT
+ oPSoSCzqjfWWd2K3nEi6W3TNYMaxaQd2qDuO7O2bVDLxk52Lmu/4dGM8uSbGEmofoiCa
+ TJ+yqk5t0M1HXLR9eZxKMpu6g+cD2ILrAKLMHSvKg5uAxs0zbG58tJegqYbJG6PkZGNW
+ 3bLYaklhnxHAN22qpAo4+uovO6qryctgr2Zt8NtW0BFEuIxxmRVfZFPDRqPdjLrxMjvd
+ kEWep8RbYKAnRJCRvEvh3+cZuu5fhKARVxAUF6vKM/Wggbn4t7vOuQgXEnTZZ34sdm8f
+ pdug==
+X-Gm-Message-State: AOJu0YyokgIIha5rpK8mVVgahyj1t0BeNRyUdymstIApj1pfJroclDgc
+ UkUoMrbMwvUWMNhuKPnaQ/W8ZJlzUv+TYcnFjbRl3GfmYtc+cBManQ3pVYbxoagwsKvEMfPP5aC
+ BL90E/Of19NuwYpDXL+S6y82iMEspK9qNjIynrMqKAXCH/Spt48iH
+X-Google-Smtp-Source: AGHT+IEB9ILeRa1dNePHcF8NF56daMBueQHxdqLc+al/7oF2C8Tdut1x3jo80/2zUWLgK3aXLVL9Yfi49lDCp+gMjv0=
+X-Received: by 2002:a17:902:e746:b0:1e5:5c7a:6a4e with SMTP id
+ d9443c01a7336-1ecdc3a2e25mr1472265ad.2.1714624827619; Wed, 01 May 2024
+ 21:40:27 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/20] tcg patch queue
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-References: <20240501143739.10541-1-richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20240501143739.10541-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2a;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Roman Kiryanov <rkir@google.com>
+Date: Wed, 1 May 2024 21:40:16 -0700
+Message-ID: <CAOGAQeq+Wu9wiBj+tF0PJHMZS-F4KnVBOXCyXhYQsm+REyLUpg@mail.gmail.com>
+Subject: QEMU headers in C++
+To: QEMU Developers <qemu-devel@nongnu.org>
+Cc: JP Cottin <jpcottin@google.com>, Erwin Jansen <jansene@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=rkir@google.com; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,25 +83,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/1/24 07:37, Richard Henderson wrote:
-> The following changes since commit 9c6c079bc6723da8061ccfb44361d67b1dd785dd:
-> 
->    Merge tag 'pull-target-arm-20240430' ofhttps://git.linaro.org/people/pmaydell/qemu-arm  into staging (2024-04-30 09:58:54 -0700)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/rth7680/qemu.git  tags/pull-tcg-20240501
-> 
-> for you to fetch changes up to 917d7f8d948d706e275c9f33169b9dd0149ded1e:
-> 
->    plugins: Update the documentation block for plugin-gen.c (2024-04-30 16:12:05 -0700)
-> 
-> ----------------------------------------------------------------
-> plugins: Rewrite plugin tcg expansion
+Hi QEMU,
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+I work in Android Studio Emulator and we would like to develop devices
+in C++. Unfortunately, QEMU headers cannot be used with C++ as is
+(e.g. they use C++ keywords as variable names or implicitly cast void*
+to T*).
 
+Will QEMU be open to accept patches from us to make QEMU headers C++ compatible?
 
-r~
+Thank you.
 
+Regards,
+Roman.
 
