@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DB33C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 10:36:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BEDEC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 10:38:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2Tn3-0001r2-Qx; Thu, 02 May 2024 06:35:49 -0400
+	id 1s2Toz-00036w-95; Thu, 02 May 2024 06:37:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yu.zhang@ionos.com>)
- id 1s2Tn2-0001lE-Bp
- for qemu-devel@nongnu.org; Thu, 02 May 2024 06:35:48 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s2Tox-00036Z-CU
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 06:37:47 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yu.zhang@ionos.com>)
- id 1s2Tn0-00082b-Gc
- for qemu-devel@nongnu.org; Thu, 02 May 2024 06:35:47 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-41b4ff362a8so72492985e9.0
- for <qemu-devel@nongnu.org>; Thu, 02 May 2024 03:35:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s2Tor-0008GV-Lq
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 06:37:46 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-a5883518135so873758366b.3
+ for <qemu-devel@nongnu.org>; Thu, 02 May 2024 03:37:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ionos.com; s=google; t=1714646144; x=1715250944; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=k60kSKhKOu32QTj3W7nCKe69dYinBE5sEG/imqfx1iY=;
- b=hnteuhinF+oWxODGaBRe7SFKgKq9z1YZdcfhN/wSMgAIglTX0EO38MZRaj+DqM/tZ8
- R8nPThggpP+3wC7g/CKJ3V4saVOsrWSZfu8bUWnhxw/3CgAirtb+XyvRVSHkl5oI/qZF
- /SATJPVieOHhrLmnDptsPxQ9evc9Gpg+l1HAK5jIvodH6xsyxkRzzAqBixKWyR3MICed
- cqMBu8qOQmBmbb4/wQV5tmtImncYrQa9wxyZjmYtktEgjpJ+3RGfcWj+KBYtDOKsl5yX
- c7tMD0ZNF4PBfL37ciAMm0k0AHC1pBiQ0S20LfggYUNNE7Y+BwFtzEt34cU9fV0Fehu6
- UsjQ==
+ d=linaro.org; s=google; t=1714646260; x=1715251060; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=jwmdkreHFVl+O7wxHZLFM6WfWZrk3E53VhqxpIwqvkw=;
+ b=u8rMRGUuBhHnkQXUgiHaHZ8wHSZh0ZVBQWCrl4IiZsmXVcucov6cm9MvadRSuDjI+S
+ i0Ex/NLcZpkB7+dGENbFj79rAexWkwsyOt5GcyNqSbNr8cS8djfBacw9qb19eWJvO0Sa
+ FtWrasZrpNya5v4x6X0q26RuTdAcAe6gQyu+liuwVcuDJgYEpE+0FS+8TVxDuPIBsAmh
+ qVz9B7u31TSbwuQ7Q43hDspRaM5zlXJEHvfUDBHVpVhuZUIx0PtZfcxGyGfQNckQ1LuB
+ ez8pyr3yw2jXmzw/Zj9QNSW8XVhzT11R2vLg2Nh0GiWS9mRpq9TO9om2b35ZFOkwtUEt
+ y/Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714646144; x=1715250944;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1714646260; x=1715251060;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=k60kSKhKOu32QTj3W7nCKe69dYinBE5sEG/imqfx1iY=;
- b=fJ5kL1RrYpGlS6K7MZJoS+k2ZDzzV5MrGWHdWxsQOUXn0nRoJy/iOei3DPgL/R3akO
- BEf1KxNlq1IIXEWZdzAt2LhLMfypRZ7UZg6k6i3Cn+YyyCn3EGneYa8vYZVctE283B9F
- q3ZiuFQCKftVHNfvpEze15z+BOzmJGPQAcGeyrf9K54GVLd+e47aCTJmPLv25ZGirwX6
- 3Hcv/JH4T+Tm5FKESSg9dPoZgTq8Vh3ArPhMEIrfNDUVn4sGIvr0hFeWkCZ/UUFXgQcd
- rj90NL0t7o15op87sGKxfGHBavJxpKwJz2nT63dh7Gs3NbG+VuAEUgVbsdeaHo/egtY2
- GFMg==
-X-Gm-Message-State: AOJu0YxUCNJ7nwpbQBx8zNkqMIMV6/2cwc6dNdP7oJ1NYnsFRK1+sjNq
- ZkeA3IKgpeEQ6YnyGJNnsCg8EIwJpw7tp9mE5jcKa3DOuca4GMglQiI7QJyOaDnleutWelOdJds
- Q
-X-Google-Smtp-Source: AGHT+IGRkht5JXV/wLgcQh38HcrykHBDhr8+jlcy4Nhya6jr4BeiuaWxR+633GgSqvWO9FY6VrMgzQ==
-X-Received: by 2002:a05:600c:19cd:b0:419:f911:680a with SMTP id
- u13-20020a05600c19cd00b00419f911680amr4978210wmq.1.1714646143745; 
- Thu, 02 May 2024 03:35:43 -0700 (PDT)
-Received: from lb01805.fkb.profitbricks.net ([212.227.34.98])
- by smtp.gmail.com with ESMTPSA id
- fc20-20020a05600c525400b00418accde252sm1476136wmb.30.2024.05.02.03.35.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 May 2024 03:35:43 -0700 (PDT)
-From: Yu Zhang <yu.zhang@ionos.com>
-To: qemu-devel@nongnu.org
-Cc: mgalaxy@akamai.com, lizhijian@fujitsu.com, peterx@redhat.com,
- jinpu.wang@ionos.com, elmar.gerdes@ionos.com, armbru@redhat.com,
- berrange@redhat.com, Yu Zhang <yu.zhang@ionos.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2] MAINTAINERS: Update the reviewers for RDMA migration
-Date: Thu,  2 May 2024 12:35:38 +0200
-Message-Id: <20240502103538.243789-1-yu.zhang@ionos.com>
-X-Mailer: git-send-email 2.25.1
+ bh=jwmdkreHFVl+O7wxHZLFM6WfWZrk3E53VhqxpIwqvkw=;
+ b=RMjRPAz/MihkNRY/LP+4Zu0iGF+4wN62ntSBuFD/3Lw5s0gZBIZmgdXIFJe79AevMj
+ LrrkJr/6IplCKwdRWf28jrK5GMajZOYDonibDZvY6NQSyUMZd4qmGV5l+cMgCXesTdh1
+ SYndThBarporRDduDWV9+g8E6vhQsuB9EfcWKYAhE0eJ1ZJDAwby/DVy6kMtg6GbcOoi
+ J4eVqDlBVMsqlKQJIvlhHZhxdUhgSDWs6mabXY2p6oP2LRtLBt3vspYSXjppEVsEbYLq
+ NAHxTb8RbsoExz7ZT+qHdsfYBkTMtBn6i6ZU6oRH7NklzFmy5rHlH9HElOCiz6tlf1qS
+ BpyQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUVS7p9hppKQER6hGW9GmmMwAPQ7ENnJ3bP9mUi56NZNyv/ieTZ2rU8ooRh4M5nz/UmCM4yTK8G++6jo/bmFmOd0vej6YE=
+X-Gm-Message-State: AOJu0Yxbg2otOjRKCZFkkwfCecfOfTd+5qoIqfsBB/0qAHcn3dZCvDMY
+ GWMVQDI/1L+s3i1zV9y68woDtj7jSXzbP8H03CUZ0XAbHJxM6+BHrfvxWrSt9q1vhrhu4Qe46fR
+ FkLICB3Lwu8XBcXqWkEtne6/Al7gGYUluHL65zA==
+X-Google-Smtp-Source: AGHT+IHXVs2egWEpf7+796aq42I3oVKEoRwtUVHtREEbXOcsOtWjfhc414TMmhxXekLlI5ObWl+ZlokNVgBO9TbQNiU=
+X-Received: by 2002:a50:a6d8:0:b0:572:707f:1a99 with SMTP id
+ f24-20020a50a6d8000000b00572707f1a99mr3658456edc.25.1714646259892; Thu, 02
+ May 2024 03:37:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: permerror client-ip=2a00:1450:4864:20::333;
- envelope-from=yu.zhang@ionos.com; helo=mail-wm1-x333.google.com
+References: <20240419183135.12276-1-dorjoychy111@gmail.com>
+ <f397f267-06d9-46c1-8acc-1c9ebf9c3773@linaro.org>
+ <CAFEAcA8i_wU+RSRk+D1L8YKy72zHz4YFV20r2Z7m+3ARfzb51w@mail.gmail.com>
+ <CAFEAcA_kHDGWVic=xRm4xOsi-cQC-fF5Z2FWRCrwe_E35KBmNw@mail.gmail.com>
+ <753b3a55-9589-4dcb-b656-8b3025e847df@linaro.org>
+ <cb2d4f21-8853-47af-a78f-e0db65460f46@linaro.org>
+ <CAFEAcA_aN8ntxKuGPJ=M_Y3dLNjYEV-v--wK1hK8PyOxKSt=zA@mail.gmail.com>
+In-Reply-To: <CAFEAcA_aN8ntxKuGPJ=M_Y3dLNjYEV-v--wK1hK8PyOxKSt=zA@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 2 May 2024 11:37:28 +0100
+Message-ID: <CAFEAcA8+C1JcvF1WBN3ZkqbROZVTM9+UDnA5OaTNoOcKuBa4OQ@mail.gmail.com>
+Subject: Re: [PATCH] target/arm: fix MPIDR value for ARM CPUs with SMT
+To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Dorjoy Chowdhury <dorjoychy111@gmail.com>, 
+ qemu-devel@nongnu.org, Leif Lindholm <quic_llindhol@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,58 +97,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As the links [1][2] below stated, QEMU development community is currently
-having some difficulties in maintaining the RDMA migration subsystem due
-to the lack of resources (maintainers, test cases, test environment etc.)
-and considering to deprecate it.
+On Thu, 2 May 2024 at 10:11, Peter Maydell <peter.maydell@linaro.org> wrote:
+> On the QEMU side I guess we should strive to set up the MPIDR
+> fields to something plausibly matching the topology as defined
+> by the user on the command line. Unanswered questions:
+>
+>  * I guess we need some kind of back-compat thing where for
+>    old machine types we continue to report the old MPIDR
+>  * what are the constraints on the Aff* fields (eg that kernel
+>    commit suggests Aff0 shouldn't be > 15)?
 
-According to our user experience in the recent two years, we observed that
-RDMA is capable of providing higher migration speed and lower performance
-impact to a running VM, which can significantly improve the end-user's
-experience during the VM live migration. We believe that RDMA still plays
-a key role for the QoS and can't yet be replaced by TCP/IP for VM migration
-at the moment.
+This one is apparently related to GICv3 -- if the GIC doesn't
+implement RangeSelector support in ICC_SGI0R_EL1 and other
+places (advertised via GICD_TYPER.RSS and ICC_CTLR_EL1.SS) then
+there's no way to send an SGI to a CPU whose Aff0 is outside
+[0..15], and so you shouldn't build a system with Aff0 > 15.
+QEMU's GICv3 doesn't implement the RSS functionality (though it
+wouldn't be hard to add if we really cared), so we should also
+keep Aff0 in [0..15].
 
-Jinpu Wang is the upstream maintainer of RNBD/RTRS. He is experienced in
-RDMA programming, and Yu Zhang maintains the downstream QEMU for IONOS
-cloud in production.
+We have ARM_DEFAULT_CPUS_PER_CLUSTER = 8, which does keep us
+in that range. I don't think there's really a good reason for
+it to be 8 rather than 16: this might be legacy from GICv2?
 
-With the consent and supports from Michael Galaxy, who has developed this
-feature for QEMU, we would like to take over the maintainer's role and
-create the necessary resources to maintain it further for the community.
-
-[1] https://mail.gnu.org/archive/html/qemu-devel/2024-04/msg00001.html
-[2] https://mail.gnu.org/archive/html/qemu-devel/2024-04/msg00228.html
-
-Signed-off-by: Yu Zhang <yu.zhang@ionos.com>
-Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
-Reviewed-by: Michael Galaxy <mgalaxy@akamai.com>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Li Zhijian <lizhijian@fujitsu.com>
-Cc: Peter Xu <peterx@redhat.com>
----
-v2:
-- fixed an email address
-- added "Tested-by: "
- MAINTAINERS | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index f1f692202519..fa9c62aae3e1 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3425,7 +3425,10 @@ F: util/userfaultfd.c
- X: migration/rdma*
- 
- RDMA Migration
-+R: Yu Zhang <yu.zhang@ionos.com>
-+R: Jack Wang <jinpu.wang@ionos.com>
- R: Li Zhijian <lizhijian@fujitsu.com>
-+R: Michael Galaxy <mgalaxy@akamai.com>
- R: Peter Xu <peterx@redhat.com>
- S: Odd Fixes
- F: migration/rdma*
--- 
-2.34.1
-
+-- PMM
 
