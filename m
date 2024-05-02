@@ -4,58 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 808AEC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 08:21:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 348EFC04FFE
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 08:22:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2Rh8-0007vm-AE; Thu, 02 May 2024 04:21:34 -0400
+	id 1s2Rhl-0008NV-L0; Thu, 02 May 2024 04:22:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=l4T0=MF=kaod.org=clg@ozlabs.org>)
- id 1s2Rh6-0007uo-L1; Thu, 02 May 2024 04:21:32 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
- helo=gandalf.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=l4T0=MF=kaod.org=clg@ozlabs.org>)
- id 1s2Rh4-0000B9-SO; Thu, 02 May 2024 04:21:32 -0400
-Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4VVRjG3Lbtz4xFg;
- Thu,  2 May 2024 18:21:22 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4VVRjB2LDWz4xM7;
- Thu,  2 May 2024 18:21:17 +1000 (AEST)
-Message-ID: <a1e529e9-32b2-438a-b50d-10117296d4e1@kaod.org>
-Date: Thu, 2 May 2024 10:21:13 +0200
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2Rhj-0008K4-Es
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 04:22:11 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2Rhg-0000GO-9A
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 04:22:11 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-34d7d04808bso1473626f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 02 May 2024 01:22:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714638125; x=1715242925; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=EHY18lh0BUVGF0HFA0xXc+cjO6AHTJfJWccfF6f/gR0=;
+ b=R48ZAalggbVySECk7Za6mVeR5YlUMnzdaFuk5onHsG64/9wvPta3gxVSdfCLYTZpN+
+ 6MiDzB7jBUF2YVuL8X84Y+3cUAyG+NTUtGqw9VQBg09WKCGMv5OeGuMMbU/KjeMl7TA4
+ QfiV+3Kczfq5FmLQ8OoUUoI+iKNKiygbMoKsTCs9lwpf1wCFKnsjEdHZXUfloz9pqPI6
+ kgfHHLM2wDyIVHBa2yDBduP8GVP97CGozLAn3hNtER41svE8VIcgMuwZGS5RxQhVV2UN
+ utHaEe48QQE/+9DUP+rEq3pRFQyBqaaLJJe3QcgAhVydkXSyvuSdNSvH/Z2sJe6J976H
+ ht8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714638125; x=1715242925;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=EHY18lh0BUVGF0HFA0xXc+cjO6AHTJfJWccfF6f/gR0=;
+ b=fOQwS64Qu3gTOVOmjse/p5X4U963gMsTDlCA7yl7sNxoFZqTk5UZFxZwxJJPFaZW+v
+ BSLzvK9iHVZFDUyz5BX+Z9P831El+cLWq06HO2FOMJRO7BPxjfZszHtmA2AKZ4mkGmxb
+ aLJ3MDxihASyehGCVAqN2kwHWRqSK0r/g+fy26USfmDQi2hzBVriImQWoZFAbRY4pIFr
+ z4+wT1/vzwqAkYNiYKzsQBNzKIea1kvx8K5Lu0pFlsC7yNnTC1y1zQMdr4e1l7fMvziE
+ lEM+gD5DJq6dBVi30W8+GGv3vzUuRlxPCCoGsrHideSGbclzhAEEluMvkcWDpCFnRTPx
+ MStg==
+X-Gm-Message-State: AOJu0YzJeF/nIHPQgKOJtKZQiclc7NaxCKXsG73KrSGTKE3y8wpMsCP0
+ FVXsdkIf8cuMcDZX8EX5/LEFS+0yI1xdV4l03fECB+1T9Af5pmu5lqPsg4aC3dB847w6ws/4XFn
+ h
+X-Google-Smtp-Source: AGHT+IEdzuqVSoxv6aG3LhmNDECIviYecXTTUSd2D8tqOfQscUT0ht2PjHN26Zx2b6MBGGWUeuqmEA==
+X-Received: by 2002:a5d:5405:0:b0:34d:ac04:5aed with SMTP id
+ g5-20020a5d5405000000b0034dac045aedmr1054814wrv.66.1714638125284; 
+ Thu, 02 May 2024 01:22:05 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.215.106])
+ by smtp.gmail.com with ESMTPSA id
+ l7-20020a5d5267000000b0034dd13d7a5esm644531wrc.65.2024.05.02.01.22.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 02 May 2024 01:22:04 -0700 (PDT)
+Message-ID: <d67338f5-a13a-4663-b77d-f9dac2b2936c@linaro.org>
+Date: Thu, 2 May 2024 10:22:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ppc/pnv: Update Power10's cfam id to use Power10 DD2
-To: Aditya Gupta <adityag@linux.ibm.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- David Gibson <david@gibson.dropbear.id.au>,
- =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-References: <20240502062701.1379833-1-adityag@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240502062701.1379833-1-adityag@linux.ibm.com>
+Subject: Re: [PATCH] crypto: Allow building with GnuTLS but without Libtasn1
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <20240502081144.86599-1-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240502081144.86599-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=l4T0=MF=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,62 +97,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/2/24 08:27, Aditya Gupta wrote:
-> Power10 DD1.0 was dropped in:
+On 2/5/24 10:11, Philippe Mathieu-Daudé wrote:
+> We only use Libtasn1 in unit tests. As noted in commit d47b83b118
+> ("tests: add migration tests of TLS with x509 credentials"), having
+> GnuTLS without Libtasn1 is a valid configuration, so do not require
+> Libtasn1, to avoid:
 > 
->      commit 8f054d9ee825 ("ppc: Drop support for POWER9 and POWER10 DD1 chips")
+>    Dependency gnutls found: YES 3.7.1 (cached)
+>    Run-time dependency libtasn1 found: NO (tried pkgconfig)
 > 
-> Use the newer Power10 DD2 chips cfam id.
+>    ../meson.build:1914:10: ERROR: Dependency "libtasn1" not found, tried pkgconfig
 > 
-> Cc: Cédric Le Goater <clg@kaod.org>
-> Cc: David Gibson <david@gibson.dropbear.id.au>
-> Cc: Frédéric Barrat <fbarrat@linux.ibm.com>
-> Cc: Laurent Vivier <lvivier@redhat.com>
-> Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
-> Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-> Cc: Nicholas Piggin <npiggin@gmail.com>
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Cc: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+> Restrict the unit test pkix_asn1_tab[] variable to CONFIG_TASN1.
 
+Otherwise we get:
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+   In file included from tests/unit/crypto-tls-psk-helpers.c:23:
+   tests/unit/crypto-tls-x509-helpers.h:26:10: fatal error:
+   libtasn1.h: No such file or directory
+      26 | #include <libtasn1.h>
+         |          ^~~~~~~~~~~~
+   compilation terminated.
 
-Thanks,
-
-C.
-
-
+> Fixes: ba7ed407e6 ("configure, meson: convert libtasn1 detection to meson")
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/ppc/pnv.c            | 2 +-
->   tests/qtest/pnv-xscom.h | 2 +-
->   2 files changed, 2 insertions(+), 2 deletions(-)
+>   meson.build                          | 1 +
+>   tests/unit/crypto-tls-x509-helpers.h | 4 +++-
+>   2 files changed, 4 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-> index 6e3a5ccdec76..06a4e4d13948 100644
-> --- a/hw/ppc/pnv.c
-> +++ b/hw/ppc/pnv.c
-> @@ -2090,7 +2090,7 @@ static void pnv_chip_power10_class_init(ObjectClass *klass, void *data)
->       PnvChipClass *k = PNV_CHIP_CLASS(klass);
->       static const int i2c_ports_per_engine[PNV10_CHIP_MAX_I2C] = {14, 14, 2, 16};
+> diff --git a/meson.build b/meson.build
+> index 5db2dbc12e..837a2bdb56 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -1912,6 +1912,7 @@ endif
+>   tasn1 = not_found
+>   if gnutls.found()
+>     tasn1 = dependency('libtasn1',
+> +                     required: false,
+>                        method: 'pkg-config')
+>   endif
+>   keyutils = not_found
+> diff --git a/tests/unit/crypto-tls-x509-helpers.h b/tests/unit/crypto-tls-x509-helpers.h
+> index 247e7160eb..bddf00d392 100644
+> --- a/tests/unit/crypto-tls-x509-helpers.h
+> +++ b/tests/unit/crypto-tls-x509-helpers.h
+> @@ -23,7 +23,6 @@
 >   
-> -    k->chip_cfam_id = 0x120da04900008000ull; /* P10 DD1.0 (with NX) */
-> +    k->chip_cfam_id = 0x220da04980000000ull; /* P10 DD2.0 (with NX) */
->       k->cores_mask = POWER10_CORE_MASK;
->       k->chip_pir = pnv_chip_pir_p10;
->       k->intc_create = pnv_chip_power10_intc_create;
-> diff --git a/tests/qtest/pnv-xscom.h b/tests/qtest/pnv-xscom.h
-> index 6f62941744a6..5aa1701ea768 100644
-> --- a/tests/qtest/pnv-xscom.h
-> +++ b/tests/qtest/pnv-xscom.h
-> @@ -56,7 +56,7 @@ static const PnvChip pnv_chips[] = {
->           .chip_type  = PNV_CHIP_POWER10,
->           .cpu_model  = "POWER10",
->           .xscom_base = 0x000603fc00000000ull,
-> -        .cfam_id    = 0x120da04900008000ull,
-> +        .cfam_id    = 0x220da04980000000ull,
->           .first_core = 0x0,
->           .num_i2c    = 4,
->       },
+>   #include <gnutls/gnutls.h>
+>   #include <gnutls/x509.h>
+> -#include <libtasn1.h>
+>   
+>   
+>   #define QCRYPTO_TLS_TEST_CLIENT_NAME "ACME QEMU Client"
+> @@ -171,6 +170,9 @@ void test_tls_cleanup(const char *keyfile);
+>       };                                                                  \
+>       test_tls_generate_cert(&varname, cavarname.crt)
+>   
+> +#ifdef CONFIG_TASN1
+> +#include <libtasn1.h>
+>   extern const asn1_static_node pkix_asn1_tab[];
+> +#endif
+>   
+>   #endif
 
 
