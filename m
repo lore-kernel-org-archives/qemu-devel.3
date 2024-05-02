@@ -4,78 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7E5DC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 16:05:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2BA1C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 16:09:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2Yvi-0001f8-1H; Thu, 02 May 2024 12:05:07 -0400
+	id 1s2Yz7-0003rl-FN; Thu, 02 May 2024 12:08:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1s2YvW-0001TN-Tb
- for qemu-devel@nongnu.org; Thu, 02 May 2024 12:04:57 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1s2YvR-0004Pz-FD
- for qemu-devel@nongnu.org; Thu, 02 May 2024 12:04:52 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-1ec76185c0fso188825ad.1
- for <qemu-devel@nongnu.org>; Thu, 02 May 2024 09:04:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1714665885; x=1715270685; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EDAXiO0gxua2B3ePNjjeSETOIpIhXW1c82rRYksCXxU=;
- b=PkeVAEq3C8kdHnFVu5aVO/CJENDq8t4lQh2IxfoEfU4IVzJJYKoScH2mwLTauA9CHx
- TbF8pKCxrHkYlK8tXnC2LOK7Ji56BDCeRn8mZV7MQfcb+2YJxW9u8hBB/1XKTCGO0nbH
- P9sudNqoYL3SEQrlWTuzNkTBJNW244bf9wHo9lKuXwL9nfMe3FYTpaQyD4e+52CjZXiv
- Doptxwh5ggDI+TOiv+6Bf4JDe/I/m0tzUV1mADwHXeivUZh1qA5DlUWvAOa7moZCXjRG
- Kbb4MZ3TY4E7g6+oeFdnJPdV7RnY1SXv+FWQYHc5gvkioQ+AM3rOpN8TdOqXEqWVCtRD
- W5KQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s2Yyu-0003p1-Jb
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 12:08:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s2Yys-00050O-Bn
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 12:08:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714666100;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=gG4WaHKnvZvbUTAgY6ELVXY3qEaB2xuIBuG0iDdebyQ=;
+ b=ehBWtgkeL/ihAvrgGsEYkLZxpKQF4vH2ooZARWhIAMm2vOGaLc5DpmB3EXGMV8skPi73ps
+ FHRinpYKzIJITnN2NHv+jo5Wp/K6iDHgCqlRXsp2zT4VFHX0Z5LaHIgdok6suDRSd6507T
+ JXS9fQmo4Lc/OmLctF4wzgX71KflAwI=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-613-fzdxR7wJOiKk32CmyjjDGw-1; Thu, 02 May 2024 12:08:18 -0400
+X-MC-Unique: fzdxR7wJOiKk32CmyjjDGw-1
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6a103d524fdso447466d6.0
+ for <qemu-devel@nongnu.org>; Thu, 02 May 2024 09:08:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714665885; x=1715270685;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=EDAXiO0gxua2B3ePNjjeSETOIpIhXW1c82rRYksCXxU=;
- b=RnDlxjl9k+JvXNVtthPTEtbUT9YN0/HFSmKHnVWgmWvn4wPq5Wwj42EJ9RFWl8qHqS
- +AodofsHaUdaYzeYcrSRLnnGBgzlYk07OV1tTPyzujKQAd+AoJ07rMCYagsSIvNDwKa1
- bbhnAHIJ3fEU+yYQFeDetjYZedAOdhuEEgJHYujDSB7GGaD870DrVBKfesMKF0cj8Va2
- Y/V771x05msh/gkcHbJKVND1ECJlTwKYi4C8ZqgKJ3b2TZHuU6OjVFgxO+UumNGHTtl9
- aaIahjHU3fc57z5k5k2fGh5ojreaAv/0zHkHXbAURWva4CeWK9E50pNMpRsSv82Zqv+I
- vO5A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXVfwWFQZ0ITLL1bk42nVxgwtL8ciBuVa30f9uCNuZ+QCajie83AhCsGiJiwABiQPvziyU+JA3i3bXrgMqrnalBbTh3zus=
-X-Gm-Message-State: AOJu0YxDPJdRz/hefEvq+YsNgG9CEwo5jTqX5g7I/Rii4LGBcNDr8Rzc
- rc3WQOxOgHUeoSYxzwyDxMrs5B7QIa0XOscH+75ZyDLIScXsheiEkxlIAD7ZFt6L00lStteWXje
- p0tU8OhgN/GSK2XUcOlUpotc4i8Rr6Z/kCfmV
-X-Google-Smtp-Source: AGHT+IEtxj39gWWnVDMO7pF+iuHgUKcJ+nROT50wWvpJRkKM11Z6Je37XMJdSW0d2mkAavvMuisr2MmVLGy5scf/QXo=
-X-Received: by 2002:a17:903:2306:b0:1ea:2838:e599 with SMTP id
- d9443c01a7336-1ece5b48fcdmr2261255ad.17.1714665885215; Thu, 02 May 2024
- 09:04:45 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1714666098; x=1715270898;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=gG4WaHKnvZvbUTAgY6ELVXY3qEaB2xuIBuG0iDdebyQ=;
+ b=AbV/oSYA2cI4jemAdj+wPPkrzFx6eEsVy2GdOCffwY85DjUvqiGz/NHYJATx/84IqT
+ SyzrUFcfy4Jd3W/NQi5TaeZAhHemVp2AlTkCpImGKb3WT05lgGkH/1jLN3zTRYh3Xg0s
+ PE95KPWKYwin3a92xO5HaTyfeZ3d36BPg8hJCMPLrGnIHPaS0SzzN/wU982p0hePJ9GK
+ S+UoxhRCe2a+qAFIm/tuFMMGBnvi1L1NaqlnpsUnQIqMca/1C3Evp2j05x+4IbGWDCE3
+ wePLC0GMUB0IbgURf+GggwF9OGtHLdwGEvowQQyMsatp7shEjxM+mynzfQEYtHUWQNI8
+ 5ffQ==
+X-Gm-Message-State: AOJu0YxottZlqOXHnBtyprb2c540He9BOn9J9G2BHtQivmCUcNxyv12k
+ 9rQvqQWagqSR2VUVma6Nf4rhZh7Lp3kpyQ6r5jcBlJoAopnPlNrIBO5G41JHdaYbewQ8xAXuP2r
+ JHNYqytjvMHJ4O14H5ip8hs0WTEUQOl0bdvUqCaxLcccc7rHTdK/7
+X-Received: by 2002:a05:6214:d4f:b0:6a0:b3ec:8ff2 with SMTP id
+ 15-20020a0562140d4f00b006a0b3ec8ff2mr6057629qvr.5.1714666097525; 
+ Thu, 02 May 2024 09:08:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGSqXHI3njkf/BGvLCzFkxOkuakb0iAyLMPE323EHbMbn5AHpvULdpZAL1m+KIE+cYG47SCBA==
+X-Received: by 2002:a05:6214:d4f:b0:6a0:b3ec:8ff2 with SMTP id
+ 15-20020a0562140d4f00b006a0b3ec8ff2mr6057565qvr.5.1714666096712; 
+ Thu, 02 May 2024 09:08:16 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ k9-20020a056214024900b006a0fbcab221sm457157qvt.3.2024.05.02.09.08.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 02 May 2024 09:08:15 -0700 (PDT)
+Date: Thu, 2 May 2024 12:08:14 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Yu Zhang <yu.zhang@ionos.com>
+Cc: qemu-devel@nongnu.org, mgalaxy@akamai.com, lizhijian@fujitsu.com,
+ jinpu.wang@ionos.com, elmar.gerdes@ionos.com, armbru@redhat.com,
+ berrange@redhat.com,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v2] MAINTAINERS: Update the reviewers for RDMA migration
+Message-ID: <ZjO6bi52Egfw_01G@x1n>
+References: <20240502103538.243789-1-yu.zhang@ionos.com>
 MIME-Version: 1.0
-References: <4ead608e-7ab6-44b6-8712-fcf2e7ce6f51@redhat.com>
-In-Reply-To: <4ead608e-7ab6-44b6-8712-fcf2e7ce6f51@redhat.com>
-From: Roman Kiryanov <rkir@google.com>
-Date: Thu, 2 May 2024 09:04:34 -0700
-Message-ID: <CAOGAQeq5Mj5rpOeA5P+FiyPRN0LPE5EaU1u08s6=NjMWB-=0NQ@mail.gmail.com>
-Subject: Re: QEMU headers in C++
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Daniel Berrange <berrange@redhat.com>, qemu-devel <qemu-devel@nongnu.org>, 
- JP Cottin <jpcottin@google.com>, Erwin Jansen <jansene@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=rkir@google.com; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240502103538.243789-1-yu.zhang@ionos.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.476,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,29 +102,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paolo, thank you for looking.
+On Thu, May 02, 2024 at 12:35:38PM +0200, Yu Zhang wrote:
+> As the links [1][2] below stated, QEMU development community is currently
+> having some difficulties in maintaining the RDMA migration subsystem due
+> to the lack of resources (maintainers, test cases, test environment etc.)
+> and considering to deprecate it.
 
-On Thu, May 2, 2024 at 8:19=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com> =
-wrote:
->
-> Anyway, just out of curiosity I tried to see what it would take to
-> compile edu.c as C++ code, which I think lets us give a more informed
-> answer.
->
-> There were a bunch of conflicts with C++ keyword, especially "new",
-> ...
->
-> would not be a huge deal.
+This is true.
 
-Yes, this is what I am talking about.
+> 
+> According to our user experience in the recent two years, we observed that
+> RDMA is capable of providing higher migration speed and lower performance
+> impact to a running VM, which can significantly improve the end-user's
+> experience during the VM live migration. We believe that RDMA still plays
+> a key role for the QoS and can't yet be replaced by TCP/IP for VM migration
+> at the moment.
 
-> So my answer is that we can't guarantee that QEMU is compilable as C++,
-> but some of the changes are an improvement in general and some are a
-> wash.  I think accepting the latter is a small price for Google working
-> on upstreaming the changes and contributing the former.
+We need numbers, and that's also what I was requesting.  Per my
+understanding this is not yet compared, so IMHO we shouldn't state that
+before we have some test results.
 
-Sure, we will send the patches.
+Note that I'm not NIC provider, I don't sell cards, I don't earn anything
+out of it.  However I want to make sure commit messages are true and fair
+when I review a patch.  It also matters when I want to provide more
+information to future QEMU users to not misguide on how they should see
+RDMA under any doc of migration section.  IMHO we can continue the
+discussion in the other thread to finish it, rather than rushing on a
+MAINTAINERS file update; nobody is going to remove the code without
+finishing the discussion so no worry.
 
-Regards,
-Roman.
+Besides, there's also what Dan used to ask on the possibility of wrapping
+RDMA channels with QIOChannels.  I thought it won't easily work, but again
+definitely be nice if you can help to double check with your RDMA expertises.
+
+> 
+> Jinpu Wang is the upstream maintainer of RNBD/RTRS. He is experienced in
+> RDMA programming, and Yu Zhang maintains the downstream QEMU for IONOS
+> cloud in production.
+> 
+> With the consent and supports from Michael Galaxy, who has developed this
+> feature for QEMU, we would like to take over the maintainer's role and
+> create the necessary resources to maintain it further for the community.
+
+So I suppose this patch is not yet ready for merge, either we need to wait
+for a true test results coming, or we just need some refinement on the
+statements.
+
+I hope I'm not asking too much here, but would you mind also provide a RDMA
+documentation patch too?  It's under docs/migration/ currently, and now any
+new feature is required to have such for migration:
+
+https://www.qemu.org/docs/master/devel/migration/features.html
+
+RDMA is not a new one, but if we want to keep it, let's make it serious.
+IMHO it'll be nice to provide suggestions to user on when an user should
+consider using RDMA migrations, or if it's only in maintenance stage we can
+also mention there so we suggest people stick with TCP.  Basically we have
+a place to provide a summary of all our discussions, so somehow we can
+consolidate such discussion there.
+
+Last important thing: you may want to copy Fabiano, he's going to take
+whatever patch coming for 9.1.
+
+Thanks,
+
+> 
+> [1] https://mail.gnu.org/archive/html/qemu-devel/2024-04/msg00001.html
+> [2] https://mail.gnu.org/archive/html/qemu-devel/2024-04/msg00228.html
+> 
+> Signed-off-by: Yu Zhang <yu.zhang@ionos.com>
+> Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
+> Reviewed-by: Michael Galaxy <mgalaxy@akamai.com>
+> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Cc: Li Zhijian <lizhijian@fujitsu.com>
+> Cc: Peter Xu <peterx@redhat.com>
+> ---
+> v2:
+> - fixed an email address
+> - added "Tested-by: "
+>  MAINTAINERS | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index f1f692202519..fa9c62aae3e1 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -3425,7 +3425,10 @@ F: util/userfaultfd.c
+>  X: migration/rdma*
+>  
+>  RDMA Migration
+> +R: Yu Zhang <yu.zhang@ionos.com>
+> +R: Jack Wang <jinpu.wang@ionos.com>
+>  R: Li Zhijian <lizhijian@fujitsu.com>
+> +R: Michael Galaxy <mgalaxy@akamai.com>
+>  R: Peter Xu <peterx@redhat.com>
+>  S: Odd Fixes
+>  F: migration/rdma*
+> -- 
+> 2.34.1
+> 
+
+-- 
+Peter Xu
+
 
