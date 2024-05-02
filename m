@@ -4,86 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02917C04FFE
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 12:40:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14F29C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 12:47:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2Vj1-0001OQ-PZ; Thu, 02 May 2024 08:39:47 -0400
+	id 1s2Vot-0004Ti-Ri; Thu, 02 May 2024 08:45:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1s2Viy-0001O7-1O
- for qemu-devel@nongnu.org; Thu, 02 May 2024 08:39:44 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s2Vor-0004T2-FW
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 08:45:49 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1s2Viv-00059Q-HN
- for qemu-devel@nongnu.org; Thu, 02 May 2024 08:39:43 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a51addddbd4so878657366b.0
- for <qemu-devel@nongnu.org>; Thu, 02 May 2024 05:39:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1714653579; x=1715258379; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=XtYzsznNjgXFGwWxCNrrkFvPY6of5sv4Lpp6+h15FKA=;
- b=WKkDoWPuD7hyt5aEyo7P/myOyXvuhrMn0QFLXxdSBYbt13gy0K9hmJpZYQVprbVv4O
- +s4PLmqEjX+yiF5N0YSwUrdk0Ju9c/iiPPsS46qVilw8ua6UZqhRvyjdG3hfyEbqo9TW
- CpF5Q0p3uK8tz1yvYHA+rYe1XBXvTFR/Fs4y0Vthy8iDdMHMX5yuiUIKSLUc53oOun0H
- 2krItQxm+4N6Lpgx8Tb9MOMGmlIWctXjA2JvWmitN2Nay1HJs9EsoxzmnkgqRzC1SuTD
- 3c1xEGliKzS71/qb56z6Lcy1Q5ONV00pc9/IZSmMoWxHYjB5p1Vdgrf2VAfm5Wr6hNbd
- 0ipQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714653579; x=1715258379;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XtYzsznNjgXFGwWxCNrrkFvPY6of5sv4Lpp6+h15FKA=;
- b=mlPz6W/7V/tLIQ8LDBKtFvCEEIzNmia+WpoH77hEZNHvzqXrep8St8yX2v2Bi6VZl9
- A7aqY73s0tmTqjOwFBjbfOnC26mM5t91CrsxRQz3TZDe8kcBPkWL/WfkLcZchfEHAFHj
- bWyV8t0bSGC5iWA0MVj2seJws0XVGomdy06/eDWv4EtjitgkEjYrcqenFVME/dxjzS2Y
- R7FMn25VFOMAx8qupsr9rAym1SdbWaIaLpWbrCEw9Qm9GfhbT8EriL7i5aF4Gmo7QewS
- zMCU9TXi0bz3drZxUa/GIHw49AiluuFkHkaWcQK//kM7vhUxuz0Ex+ruJ6noWIno3iwv
- cNbw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUOPlv4XOnZ7ugq5de+1pAJ3gEdFJ5iEByxgLzaPAyMz/GJTGlgdP8I4Gd5Awr32Jc4LjikbyFA53WZAlsvarFaZt0T9Zg=
-X-Gm-Message-State: AOJu0YzIJvbCsBs0rO13H6XYpMWq0j8dK+F/mIYWe8SZPnvTjBBMq9P3
- pgJZRtZaj2vaQ6x90QwwrtO5nLaWI/PGZVabpTeci7WvMSDLDfHXo3pvpmQucIU=
-X-Google-Smtp-Source: AGHT+IEGkc+s89qdKLoT3eWuk6nkUxxNwpXKN10KrxjEQGkXdZLkg9/DT7Z74fFsHLOickC72NIQiA==
-X-Received: by 2002:a17:906:c02:b0:a58:cd39:d154 with SMTP id
- s2-20020a1709060c0200b00a58cd39d154mr1232393ejf.11.1714653579313; 
- Thu, 02 May 2024 05:39:39 -0700 (PDT)
-Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
- [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
- by smtp.gmail.com with ESMTPSA id
- k25-20020a1709061c1900b00a58db23f174sm511734ejg.87.2024.05.02.05.39.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 May 2024 05:39:38 -0700 (PDT)
-Date: Thu, 2 May 2024 14:39:37 +0200
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: Atish Patra <atishp@rivosinc.com>, qemu-riscv@nongnu.org, 
- qemu-devel@nongnu.org, palmer@dabbelt.com, liwei1518@gmail.com, 
- zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com, alistair.francis@wdc.com
-Subject: Re: [PATCH 1/3] target/riscv: Save counter values during
- countinhibit update
-Message-ID: <20240502-8a8ecc74a81a9fa33bf8c9b1@orel>
-References: <20240429-countinhibit_fix-v1-0-802ec1e99133@rivosinc.com>
- <20240429-countinhibit_fix-v1-1-802ec1e99133@rivosinc.com>
- <d672ec9d-eaa0-48c1-9f99-d94cf06e7aac@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s2Vop-0006LF-BF
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 08:45:49 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 2441122C14;
+ Thu,  2 May 2024 12:45:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1714653943; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/lfPy3UgMGJmLNXbfawJ8gGTzIcwZ/EErPqISE/ilpQ=;
+ b=XLMVRP3ulDWICoE3g2tNHKBwk4iEDBbwittI60UOsZCXgqO+6oOWiuDDmmmT3nB6Jnd0Ec
+ ZakPWNA92zgKjadZ2pitIW/S7nRbehL6cFVjQ8h6vD2ifPSzlfk+fQOj7P74Fpv4R/s+Vi
+ 9Q1rUsf8f/VOeAICgEz9cSzAGVCc9F4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1714653943;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/lfPy3UgMGJmLNXbfawJ8gGTzIcwZ/EErPqISE/ilpQ=;
+ b=u4O6N7sV31teBcF3Hfsj1Tw7gcVsiQXQJeN58kqG5bOkv5UvpsY979QUmKIyKUpcB+v3oN
+ 6KjvdXVp1b3cC7Dg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=XLMVRP3u;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=u4O6N7sV
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1714653943; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/lfPy3UgMGJmLNXbfawJ8gGTzIcwZ/EErPqISE/ilpQ=;
+ b=XLMVRP3ulDWICoE3g2tNHKBwk4iEDBbwittI60UOsZCXgqO+6oOWiuDDmmmT3nB6Jnd0Ec
+ ZakPWNA92zgKjadZ2pitIW/S7nRbehL6cFVjQ8h6vD2ifPSzlfk+fQOj7P74Fpv4R/s+Vi
+ 9Q1rUsf8f/VOeAICgEz9cSzAGVCc9F4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1714653943;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/lfPy3UgMGJmLNXbfawJ8gGTzIcwZ/EErPqISE/ilpQ=;
+ b=u4O6N7sV31teBcF3Hfsj1Tw7gcVsiQXQJeN58kqG5bOkv5UvpsY979QUmKIyKUpcB+v3oN
+ 6KjvdXVp1b3cC7Dg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A47931386E;
+ Thu,  2 May 2024 12:45:42 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 6q7cGvaKM2Z2QAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 02 May 2024 12:45:42 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Song Gao
+ <gaosong@loongson.cn>, qemu-devel@nongnu.org, Tianrui Zhao
+ <zhaotianrui@loongson.cn>, pbonzini@redhat.com, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, maobibo@loongson.cn, lixianglai@loongso.cn
+Subject: Re: [PATCH] target/loongarch/kvm: Fix VM recovery from disk failures
+In-Reply-To: <ZjJjl2fIU1s24uFD@x1n>
+References: <20240430012356.2620763-1-gaosong@loongson.cn>
+ <f9956c18-3530-4fc2-8150-beba7b673f89@linaro.org> <87edanlzlz.fsf@suse.de>
+ <ZjJjl2fIU1s24uFD@x1n>
+Date: Thu, 02 May 2024 09:45:40 -0300
+Message-ID: <87o79oo00b.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d672ec9d-eaa0-48c1-9f99-d94cf06e7aac@ventanamicro.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=ajones@ventanamicro.com; helo=mail-ej1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; RCPT_COUNT_SEVEN(0.00)[10];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 2441122C14
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,123 +133,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 30, 2024 at 03:00:45PM GMT, Daniel Henrique Barboza wrote:
-> 
-> 
-> On 4/29/24 16:28, Atish Patra wrote:
-> > Currently, if a counter monitoring cycle/instret is stopped via
-> > mcountinhibit we just update the state while the value is saved
-> > during the next read. This is not accurate as the read may happen
-> > many cycles after the counter is stopped. Ideally, the read should
-> > return the value saved when the counter is stopped.
-> > 
-> > Thus, save the value of the counter during the inhibit update
-> > operation and return that value during the read if corresponding bit
-> > in mcountihibit is set.
-> > 
-> > Signed-off-by: Atish Patra <atishp@rivosinc.com>
-> > ---
-> >   target/riscv/cpu.h     |  1 -
-> >   target/riscv/csr.c     | 32 ++++++++++++++++++++------------
-> >   target/riscv/machine.c |  1 -
-> >   3 files changed, 20 insertions(+), 14 deletions(-)
-> > 
-> > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> > index 3b1a02b9449a..09bbf7ce9880 100644
-> > --- a/target/riscv/cpu.h
-> > +++ b/target/riscv/cpu.h
-> > @@ -153,7 +153,6 @@ typedef struct PMUCTRState {
-> >       target_ulong mhpmcounter_prev;
-> >       /* Snapshort value of a counter in RV32 */
-> >       target_ulong mhpmcounterh_prev;
-> > -    bool started;
-> >       /* Value beyond UINT32_MAX/UINT64_MAX before overflow interrupt trigger */
-> >       target_ulong irq_overflow_left;
-> >   } PMUCTRState;
-> > diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> > index 726096444fae..68ca31aff47d 100644
-> > --- a/target/riscv/csr.c
-> > +++ b/target/riscv/csr.c
-> > @@ -929,17 +929,11 @@ static RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
-> >       if (get_field(env->mcountinhibit, BIT(ctr_idx))) {
-> >           /*
-> > -         * Counter should not increment if inhibit bit is set. We can't really
-> > -         * stop the icount counting. Just return the counter value written by
-> > -         * the supervisor to indicate that counter was not incremented.
-> > +         * Counter should not increment if inhibit bit is set. Just return the
-> > +         * current counter value.
-> >            */
-> > -        if (!counter->started) {
-> > -            *val = ctr_val;
-> > -            return RISCV_EXCP_NONE;
-> > -        } else {
-> > -            /* Mark that the counter has been stopped */
-> > -            counter->started = false;
-> > -        }
-> > +         *val = ctr_val;
-> > +         return RISCV_EXCP_NONE;
-> >       }
-> >       /*
-> > @@ -1973,9 +1967,23 @@ static RISCVException write_mcountinhibit(CPURISCVState *env, int csrno,
-> >       /* Check if any other counter is also monitoring cycles/instructions */
-> >       for (cidx = 0; cidx < RV_MAX_MHPMCOUNTERS; cidx++) {
-> > -        if (!get_field(env->mcountinhibit, BIT(cidx))) {
-> >               counter = &env->pmu_ctrs[cidx];
-> > -            counter->started = true;
-> > +        if (get_field(env->mcountinhibit, BIT(cidx)) && (val & BIT(cidx))) {
-> > +	    /*
-> > +             * Update the counter value for cycle/instret as we can't stop the
-> > +             * host ticks. But we should show the current value at this moment.
-> > +             */
-> > +            if (riscv_pmu_ctr_monitor_cycles(env, cidx) ||
-> > +                riscv_pmu_ctr_monitor_instructions(env, cidx)) {
-> > +                counter->mhpmcounter_val = get_ticks(false) -
-> > +                                           counter->mhpmcounter_prev +
-> > +                                           counter->mhpmcounter_val;
-> > +                if (riscv_cpu_mxl(env) == MXL_RV32) {
-> > +                    counter->mhpmcounterh_val = get_ticks(false) -
-> > +                                                counter->mhpmcounterh_prev +
-> > +                                                counter->mhpmcounterh_val;
-> > +		}
-> > +            }
-> >           }
-> >       }
-> > diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> > index 76f2150f78b5..3e0f2dd2ce2a 100644
-> > --- a/target/riscv/machine.c
-> > +++ b/target/riscv/machine.c
-> > @@ -328,7 +328,6 @@ static const VMStateDescription vmstate_pmu_ctr_state = {
-> >           VMSTATE_UINTTL(mhpmcounterh_val, PMUCTRState),
-> >           VMSTATE_UINTTL(mhpmcounter_prev, PMUCTRState),
-> >           VMSTATE_UINTTL(mhpmcounterh_prev, PMUCTRState),
-> > -        VMSTATE_BOOL(started, PMUCTRState),
-> 
-> Unfortunately we can't remove fields from the VMStateDescription without breaking
-> migration backward compatibility. Older QEMUs will attempt to read a field that
-> doesn't exist and migration will fail.
-> 
-> I'm assuming that we care about backward compat. If we're not up to this point yet
-> then we can just bump the version_id of vmstate_pmu_ctr_state and be done with it.
-> This is fine to do unless someone jumps in and complains that we broke a migration
-> case for the 'virt' board. Granted, we don't have versioned boards yet so I'm unsure
-> if someone would actually have a base to complain. Alistair, Drew, care to comment?
+Peter Xu <peterx@redhat.com> writes:
 
-Without versioning boards, then we shouldn't expect migrations to work for
-anything other than between QEMUs of the same version. We're delaying the
-versioning until it's reasonable to expect users to prefer to migrate
-their guests, rather than reboot them, when updating the QEMU the guests
-are running on. I'm not sure how we'll know when that is, but I think we
-can wait until somebody shouts or at least until we see that the tooling
-which makes migration easy (libvirt, etc.) is present.
+> On Tue, Apr 30, 2024 at 11:00:24AM -0300, Fabiano Rosas wrote:
+>> Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+>>=20
+>> > (Cc'ing migration maintainers)
+>> >
+>> > On 30/4/24 03:23, Song Gao wrote:
+>> >> vmstate does not save kvm_state_conter,
+>> >> which can cause VM recovery from disk to fail.
+>> >
+>> > Cc: qemu-stable@nongnu.org
+>> > Fixes: d11681c94f ("target/loongarch: Implement kvm_arch_init_vcpu")
+>> >
+>> >> Signed-off-by: Song Gao <gaosong@loongson.cn>
+>> >> ---
+>> >>   target/loongarch/machine.c | 2 ++
+>> >>   1 file changed, 2 insertions(+)
+>> >>=20
+>> >> diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
+>> >> index c7029fb9b4..4cd1bf06ff 100644
+>> >> --- a/target/loongarch/machine.c
+>> >> +++ b/target/loongarch/machine.c
+>> >> @@ -191,6 +191,8 @@ const VMStateDescription vmstate_loongarch_cpu =
+=3D {
+>> >>           VMSTATE_STRUCT_ARRAY(env.tlb, LoongArchCPU, LOONGARCH_TLB_M=
+AX,
+>> >>                                0, vmstate_tlb, LoongArchTLB),
+>> >>=20=20=20
+>> >> +        VMSTATE_UINT64(kvm_state_counter, LoongArchCPU),
+>> >> +
+>> >>           VMSTATE_END_OF_LIST()
+>> >>       },
+>> >>       .subsections =3D (const VMStateDescription * const []) {
+>> >
+>> > The migration stream is versioned, so you should increase it,
+>> > but this field is only relevant for KVM (it shouldn't be there
+>> > in non-KVM builds). IMHO the correct migration way to fix that
+>> > is (untested):
+>> >
+>> > -- >8 --
+>> > diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
+>> > index c7029fb9b4..08032c6d71 100644
+>> > --- a/target/loongarch/machine.c
+>> > +++ b/target/loongarch/machine.c
+>> > @@ -8,8 +8,27 @@
+>> >   #include "qemu/osdep.h"
+>> >   #include "cpu.h"
+>> >   #include "migration/cpu.h"
+>> > +#include "sysemu/kvm.h"
+>> >   #include "vec.h"
+>> >
+>> > +#ifdef CONFIG_KVM
+>> > +static bool kvmcpu_needed(void *opaque)
+>> > +{
+>> > +    return kvm_enabled();
+>> > +}
+>> > +
+>> > +static const VMStateDescription vmstate_kvmtimer =3D {
+>> > +    .name =3D "cpu/kvmtimer",
+>> > +    .version_id =3D 1,
+>> > +    .minimum_version_id =3D 1,
+>> > +    .needed =3D kvmcpu_needed,
+>> > +    .fields =3D (const VMStateField[]) {
+>> > +        VMSTATE_UINT64(kvm_state_counter, LoongArchCPU),
+>> > +        VMSTATE_END_OF_LIST()
+>> > +    }
+>> > +};
+>> > +#endif /* CONFIG_KVM */
+>> > +
+>> >   static const VMStateDescription vmstate_fpu_reg =3D {
+>> >       .name =3D "fpu_reg",
+>> >       .version_id =3D 1,
+>> > @@ -194,6 +213,9 @@ const VMStateDescription vmstate_loongarch_cpu =3D=
+ {
+>> >           VMSTATE_END_OF_LIST()
+>> >       },
+>> >       .subsections =3D (const VMStateDescription * const []) {
+>> > +#ifdef CONFIG_KVM
+>> > +        &vmstate_kvmcpu,
+>> > +#endif
+>> >           &vmstate_fpu,
+>> >           &vmstate_lsx,
+>> >           &vmstate_lasx,
+>> > ---
+>>=20
+>> LGTM, I'd just leave only the .needed function under CONFIG_KVM instead
+>> of the whole subsection.
+>
+> But when !KVM it means there's no ".needed" and it'll still be migrated?
 
-Regarding this patch, I'm curious what the current status is of migration.
-If we can currently migrate from a QEMU with the latest released version
-to a QEMU built from the current upstream, and then back again, then I
-think this patch should be written in a way to preserve that. If we
-already fail that ping-pong migration, then, as this patch doesn't make
-things worse, we might as well save ourselves from the burden of the
-compat code.
+I expressed myself poorly, I meant put the return from .needed under
+CONFIG_KVM. But that is not even necessary, kvm_enabled() is enough.
 
-Thanks,
-drew
+>
+> IMHO it depends on whether loongarch is in the state already of trying to
+> keep its ABI at all.  I think we should still try to enjoy the time when
+> that ABI is not required, then we can simply add whatever fields, and let
+> things break with no big deal.
+>
+> Note that if with CONFIG_KVM it means it can break migration between kvm
+> v.s. tcg when only one qemu enabled kvm when compile.  Considering the
+> patch is from the maintainer (which seems to say "breaking that is all
+> fine!") I'd say the original patch looks good actually, as it allows kvm /
+> tcg migrations too as a baseline.
+
+I'm fine with this approach as well.
+
+>
+> Thanks,
 
