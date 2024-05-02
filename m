@@ -4,86 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 511C8C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 14:58:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CC1DC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 15:15:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2XsZ-0004iW-DZ; Thu, 02 May 2024 10:57:47 -0400
+	id 1s2Y9B-0004cx-B4; Thu, 02 May 2024 11:14:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1s2XsX-0004ey-Pt
- for qemu-devel@nongnu.org; Thu, 02 May 2024 10:57:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s2Y96-0004bs-US
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 11:14:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1s2XsP-0007ur-Sn
- for qemu-devel@nongnu.org; Thu, 02 May 2024 10:57:45 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s2Y91-0002v1-Mh
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 11:14:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714661853;
+ s=mimecast20190719; t=1714662886;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oZVjeHVD/CL+nzKGkD+pCwIH+ZB9KHcsJ5PGMvWTld8=;
- b=Q8+GbJjyj436krTeeKh1GsV1fb7LYKs73PIa2SIbC9mT9bhaZWHVUViFOZpJpEBprfhRka
- U98h7NrFndh2oI8EdzxR3OOYZ/UTUZF5KqaJEBTrFOgE9ql/OXk53ciGc//mXPy3uz+9Kc
- w6fc+UogvEupR7N3Kyh6oC2bQjf5Ivk=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-111-CgyvIKI-OViInfa36XgqXw-1; Thu,
- 02 May 2024 10:57:30 -0400
-X-MC-Unique: CgyvIKI-OViInfa36XgqXw-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B69D93C02740;
- Thu,  2 May 2024 14:57:27 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.204])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 50AE71C060D0;
- Thu,  2 May 2024 14:57:23 +0000 (UTC)
-Date: Thu, 2 May 2024 09:57:21 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Peter Maydell <peter.maydell@linaro.org>, Nicholas Piggin <npiggin@gmail.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, 
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, 
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clegoate@redhat.com>,
- Halil Pasic <pasic@linux.ibm.com>, 
- Laurent Vivier <laurent@vivier.eu>, qemu-arm@nongnu.org, 
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-ppc@nongnu.org, 
- David Gibson <david@gibson.dropbear.id.au>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ bh=EJTQqWPOyJ8sDHL5pJBbP32cGnX19o1HvB+FiO+etWQ=;
+ b=FeVnWFhWhw36eXupDB2fU+M4HH/vgFwWzNy9vmnOXtgtPvWllxsjGCZZHpeAdDPyXidsOl
+ vPFpktkBzGUka0lWv3gYShkOweGm8ivE1PejT/MwMl2Rm6uQd8flWOie7cK0yGJkm9Esnf
+ UnM7fEmFYy2p072qoiUYYXHRaUkwBK0=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-152-jIkovUhYO9O4JSuZrADi_Q-1; Thu, 02 May 2024 11:14:44 -0400
+X-MC-Unique: jIkovUhYO9O4JSuZrADi_Q-1
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-437618f53f0so15046941cf.3
+ for <qemu-devel@nongnu.org>; Thu, 02 May 2024 08:14:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714662884; x=1715267684;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EJTQqWPOyJ8sDHL5pJBbP32cGnX19o1HvB+FiO+etWQ=;
+ b=bxcA/75ZAG6ibbEmmb8NQQNnUYsJPpTEPavRQLlsbpg62+Yfrxb3DzaZIVtVNqE1SH
+ BWTy7AoZwiWMhLVhKCbSr7yt2bXVG5JCwUVX3kAdgONvNS7LyRp/rCRflDN6BEWAgEKx
+ yuZefLMbHEJQBQjwxjhM2OxahXPO+RwMjnl/Nw87FxyBnblTWlzD1lLxSOtTo8Nc2Z/A
+ rawu7h8I0IfyTdpYdHzAoYCVur1Jk+WN4DcWNrC2GhHtbqishbuoXtW/uI73l8l8hinl
+ +Cvhvln8bFdeoK6NpPK/IULUb8GdiylDIsWmgnFLhpm62B17GjxAzDuTa3z3JSsRoA0f
+ 0DDg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUsvYe9K8KGi4qmUvXKJs3JF8WWKoSO8pc16Iaarq7eYy7JnYPK4ckzOYOyYNy+SlLFlg8OmgWAmvzrig+yNfAEVBBw7MU=
+X-Gm-Message-State: AOJu0YykOrdV/g9xVjGmz271fSagazuYMvrAPVnf+xswDVRNV4S6f2qQ
+ sqHKxxQ6wXrJRYG9jaQeRLMSSPVSUJYG4Y4dyE4oa4PzS1QRO1XbnNImz2TPzcto1FHAs/JoqNW
+ lqDVQGoA5vcv0bQkOxQosr4zthzmhu13w1VRNGI3IJXYlm8PmEsQO
+X-Received: by 2002:a05:622a:1a0a:b0:43a:88bd:c0f3 with SMTP id
+ f10-20020a05622a1a0a00b0043a88bdc0f3mr6513166qtb.3.1714662884020; 
+ Thu, 02 May 2024 08:14:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFO/HFSTpg2dQrO9eiTKSsX6gfYDMlmdUCrXdogqJ47pPaNxPj4cpXT5wXOAtzxVYXGptzHyA==
+X-Received: by 2002:a05:622a:1a0a:b0:43a:88bd:c0f3 with SMTP id
+ f10-20020a05622a1a0a00b0043a88bdc0f3mr6513106qtb.3.1714662883220; 
+ Thu, 02 May 2024 08:14:43 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ ep12-20020a05622a548c00b0043718ece8dfsm559876qtb.12.2024.05.02.08.14.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 02 May 2024 08:14:42 -0700 (PDT)
+Date: Thu, 2 May 2024 11:14:41 -0400
+From: Peter Xu <peterx@redhat.com>
+To: John Levon <levon@movementarian.org>
+Cc: Mattias Nissler <mnissler@rivosinc.com>, stefanha@redhat.com,
+ jag.raman@oracle.com, qemu-devel@nongnu.org,
+ David Hildenbrand <david@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org
-Subject: Re: [PATCH 01/14] include/hw: add helpers for defining versioned
- machine types
-Message-ID: <6lfkvaovs4tz5nep43zw5ueudqy2zrns6fttu4bmq3q5wqvgqx@hxnvw7sqsyzo>
-References: <20240501182759.2934195-1-berrange@redhat.com>
- <20240501182759.2934195-2-berrange@redhat.com>
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v6 0/5] Support message-based DMA in vfio-user server
+Message-ID: <ZjOt4dDzNXTtn8Yp@x1n>
+References: <20231101131611.775299-1-mnissler@rivosinc.com>
+ <ZjOp1X40WuhKo+bl@movementarian.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240501182759.2934195-2-berrange@redhat.com>
-User-Agent: NeoMutt/20240201
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
+In-Reply-To: <ZjOp1X40WuhKo+bl@movementarian.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.476,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.476,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,75 +108,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 01, 2024 at 07:27:46PM +0100, Daniel P. Berrangé wrote:
-> The various targets which define versioned machine types have
-> a bunch of obfuscated macro code for defining unique function
-> and variable names using string concatenation.
+On Thu, May 02, 2024 at 03:57:25PM +0100, John Levon wrote:
+> On Wed, Nov 01, 2023 at 06:16:06AM -0700, Mattias Nissler wrote:
 > 
-> This addes a couple of helpers to improve the clarity of such
-> code macro.
+> > This series adds basic support for message-based DMA in qemu's vfio-user
 > 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->  include/hw/boards.h | 166 ++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 166 insertions(+)
-> 
-> diff --git a/include/hw/boards.h b/include/hw/boards.h
-> index 2fa800f11a..47ca450fca 100644
-> --- a/include/hw/boards.h
-> +++ b/include/hw/boards.h
-> @@ -414,6 +414,172 @@ struct MachineState {
->      struct NumaState *numa_state;
->  };
->  
-> +/*
-> + * The macros which follow are intended to facilitate the
-> + * definition of versioned machine types, using a somewhat
-> + * similar pattern across targets:
-> + *
-> + *  #define DEFINE_VIRT_MACHINE_IMPL(latest, ...) \
-> + *      static void MACHINE_VER_SYM(class_init, virt, __VA_ARGS__)( \
-> + *          ObjectClass *oc, \
-> + *          void *data) \
-> + *      { \
-> + *          MachineClass *mc = MACHINE_CLASS(oc); \
-> + *          MACHINE_VER_SYM(options, virt, __VA_ARGS__)(mc); \
+> Now qemu 9.0 is out, any reason not to get this series merged?
 
-Nice to include example usage of the macros.  __VA_ARGS__ is getting
-expanded quite a few times here, but I don't see that as being too
-much of a problem.
+It looks like all patches are properly reviewed with at least 1 ACK, and it
+looks all reasonable and useful to me.
 
-> + *  // Normal 2 digit eg 'virt-9.0'
-> + *  #define DEFINE_VIRT_MACHINE(major, minor) \
-> + *      DEFINE_VIRT_MACHINE_IMPL(false, major, minor)
-> + *
-> + *  // Bugfix 3 digit  eg 'virt-9.0.1'
+I can send a pull for this one.  I'll hold off until next Monday to wait
+for a final round of objections or comments.  I hope everyone is in the loop.
 
-Inconsistent on whether you are using one or two spaces before 'eg'.
+Btw, this is an old version, the target is v8.
 
-> +
-> +#define _MACHINE_VER_PICK(x1, x2, x3, x4, x5, x6, ...) x6
+https://lore.kernel.org/r/20240304100554.1143763-1-mnissler@rivosinc.com
 
-This helper macro is powerful; it may be worth a short comment, maybe
-along the lines of:
-
-/* Helper macro used to pick the right macro name based on the number
- * of extra arguments passed to the containing macro; usage:
- *
- *  _MACHINE_VER_PICK(__VA_ARGS__, \
- *                    MACRO_FOR_5_ARGS, \
- *                    MACRO_FOR_4_ARGS, \
- *                    MACRO_FOR_3_ARGS, \
- *                    MACRO_FOR_2_ARGS)(optional prefix args, __VA_ARGS__)
- */
-
-But once understood, I see it comes in handy in several places below.
-
-Reviewed-by: Eric Blake <eblake@redhat.com>
+Thanks,
 
 -- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+Peter Xu
 
 
