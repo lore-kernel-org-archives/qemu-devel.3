@@ -4,71 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF5D1C04FFE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFF90C4345F
 	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 16:56:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2Ziq-0000xe-GE; Thu, 02 May 2024 12:55:52 -0400
+	id 1s2Ziv-0001No-19; Thu, 02 May 2024 12:55:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s2Zia-0000tH-Ag
- for qemu-devel@nongnu.org; Thu, 02 May 2024 12:55:37 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1s2Zid-0000ws-RM
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 12:55:43 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s2ZiV-0005uc-AU
- for qemu-devel@nongnu.org; Thu, 02 May 2024 12:55:33 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-6f44390e328so498928b3a.2
- for <qemu-devel@nongnu.org>; Thu, 02 May 2024 09:55:30 -0700 (PDT)
+ id 1s2Zib-0005wV-O9
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 12:55:39 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-6ee13f19e7eso7521374b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 02 May 2024 09:55:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714668929; x=1715273729; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=jboQhdCbtWFTds253ujt0GVfvWL308kDLSJJ/VKt72k=;
- b=e9qqFwonp0+emfvk3pewX9nB2m3cufZ6lkrUniMt00krVPuQBVLKLXHN3kTcK3y6Dc
- BkAK3Kqv9D7+rGjdmOrCS9w0hBjXawTmGLZrI5RCXTcICISiPiZXBVx5ndf9Si8f0qZY
- 3QR5dAyD9vyPqgiK95ZY8b9gwNyqP4GkrsEbsHq2AzPydxF1Tr6xVd66LqjETnXoh+el
- OOBXs/5CpXt/3GJ/caxK5MKdc3Q+/jyvCYwQVXrGLO4EBRRIOHAhNzOmLKuXzraMkoZA
- g9DD2GQtbY76lfH8+0Usx+w/HoVrKbuU/UwlC7Z/14WHk836ivbDL9c7uGsLwa4brgvW
- m9nw==
+ d=linaro.org; s=google; t=1714668936; x=1715273736; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/SGeZv/4hYREHrq3/2i2w291gTT4MaAZ/Mhj+P3eA68=;
+ b=g6UbyFPX9QAkgvfquYp7rJutN74RjLnOVpZoz1Ssw/4X9AFbp57Crz4y8E/z7jaKaz
+ WG5GXtOnFldbAH0zf0dr21W9Ac26oa5wOEesIR9moQ76uZGyvQZoD19Ny9eSL9pdEIUy
+ q7p18AQAZRzpCMoNsuvEwlB/e6VNjQPe/v09GWILIVJ2rimp7f1deACm8oPLrX42Be6Z
+ TXTRAqbcbcHsQKWMJjoXdG17hBDJH8+oqaMlB4FvqflYFOD6t79TIiKLQKo3iPi0AjOQ
+ W/W6qUIc9aI7t1KIEDQQhTl6BAsZku2VShuKE3elNJQGfnER/X4+VNE3Hg9WPH41b2l0
+ z0Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714668929; x=1715273729;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jboQhdCbtWFTds253ujt0GVfvWL308kDLSJJ/VKt72k=;
- b=mqRd8eM2eITu7gZZql/hPmahAxaBhzqTXpb5se2EZ86gGWRFcR9a19UPZrsmVwclw0
- AYeLc2ShORzl4hJH58qUl7aA2pZ5rh3ds4nU+6yyD7NyCUpSGHb+Jza8CYECex+zX9hA
- RrbEo2sdXIX5KFREae/CyQVx9Ncc1qeYEwjSIe81YBiEC3kB3oVXMlDm3zltBR0pC6TT
- 1+C4VtaRypliUisDSlpUHkjuwKGh1ikrSI1JjvC9BXV6BLjI9M33MKi2mc/L87uangkQ
- /vohWLnAAJ5yCrnsNjokjj4Li+nD4aQjG/+j9YOnP9Ak0VY2VjfFxbKCUL1DVxY9rOnR
- NXxg==
-X-Gm-Message-State: AOJu0YwvPqDiO5LbH05YNxOkgNblVw2BCAzrhEW99gCMW8MW+5EC49JK
- 7m/w85PQZ1no22aVeMW9DyceR3Tpize3HDxt/C9tgsBr+SupjiB3PovD8j3+Erw8PzUapXAqQnW
- e
-X-Google-Smtp-Source: AGHT+IEA5GtiSISWuusDmsEVaVzLY1f8O4ryy2k7BJCTLrgag0AClE4R2NNpPOQoBbdpJkbqTm3QVQ==
-X-Received: by 2002:a05:6a20:a105:b0:1ad:1168:a417 with SMTP id
- q5-20020a056a20a10500b001ad1168a417mr350679pzk.28.1714668929636; 
- Thu, 02 May 2024 09:55:29 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1714668936; x=1715273736;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/SGeZv/4hYREHrq3/2i2w291gTT4MaAZ/Mhj+P3eA68=;
+ b=IIdm+w4XV10H4R/+UR6Jvj5w1X+T7TdXDS11x0JS2miDTLWJj2bV2iQomaEABEIetW
+ 1+/v6R8W2+xgmIVNsxEF6sZhNlsWfNpSIdInLplbf1Dcgrp8hwS+mFnYcHQ7gDO16Iw3
+ nuCuUuU9Dur7RGmE5OuTHmibZUfEiW2wLOGjbBFcw1Qep6Oi949hQ879zLlPZN+NSyD7
+ Nu2yivfDH2ZXKbC0o45di6i6Z+m0fP9IokbrHYc/vgom/vwXivYhYukkFNta6S/w/6sL
+ gwmr6/WoXATeg5xJaJjQ3nXA0JNmP7O9ebFo3679qJMH9nprj4z7fX6dyrX+C0zuX5FX
+ GEmw==
+X-Gm-Message-State: AOJu0Yw564DE9JxsGQpEgWahtxrNtCdpBM8I8oz09eQNIWclAom9WqJZ
+ 2gY3/8BdevI6ZJfspO7f1ePytQj4xae1zH4Ks4u6tiPMdkSRW3Bm1nvGoSeIpX1JdX4XefkVe4m
+ G
+X-Google-Smtp-Source: AGHT+IHUioA94ZfHRxrQPpAAzlvoQ+Ve2+Pd5+gPNd88Eccf2Ig8YRtedZh2LRSL8/S6PXKaIIwTAg==
+X-Received: by 2002:a05:6a00:1904:b0:6ed:d5f5:869 with SMTP id
+ y4-20020a056a00190400b006edd5f50869mr153919pfi.3.1714668935866; 
+ Thu, 02 May 2024 09:55:35 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- j13-20020aa783cd000000b006eb058b2703sm1464598pfn.187.2024.05.02.09.55.29
+ j13-20020aa783cd000000b006eb058b2703sm1464598pfn.187.2024.05.02.09.55.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 May 2024 09:55:29 -0700 (PDT)
+ Thu, 02 May 2024 09:55:35 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH v2 0/7] target/sparc: vis fixes
-Date: Thu,  2 May 2024 09:55:21 -0700
-Message-Id: <20240502165528.244004-1-richard.henderson@linaro.org>
+Subject: [PATCH v2 7/7] target/sparc: Split out do_ms16b
+Date: Thu,  2 May 2024 09:55:28 -0700
+Message-Id: <20240502165528.244004-8-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240502165528.244004-1-richard.henderson@linaro.org>
+References: <20240502165528.244004-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,31 +94,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Split out from my vis4 patch set, with just the bug fixes.
-I've fixed the issue in patch 6, as noticed by Mark, but
-include the follow-up that cleans up all of the macros by
-removing them.
+The unit operation for fmul8x16 and friends is described in the
+manual as "MS16b".  Split that out for clarity.  Improve rounding
+with an unconditional addition of 0.5 as a fixed-point integer.
 
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/sparc/vis_helper.c | 78 ++++++++++++---------------------------
+ 1 file changed, 24 insertions(+), 54 deletions(-)
 
-r~
-
-
-Richard Henderson (7):
-  linux-user/sparc: Add more hwcap bits for sparc64
-  target/sparc: Fix FEXPAND
-  target/sparc: Fix FMUL8x16
-  target/sparc: Fix FMUL8x16A{U,L}
-  target/sparc: Fix FMULD8*X16
-  target/sparc: Fix FPMERGE
-  target/sparc: Split out do_ms16b
-
- target/sparc/helper.h     |  11 +--
- target/sparc/insns.decode |   2 +-
- linux-user/elfload.c      |  48 +++++++---
- target/sparc/translate.c  | 129 ++++++++++++++++++++++---
- target/sparc/vis_helper.c | 195 ++++++++++----------------------------
- 5 files changed, 207 insertions(+), 178 deletions(-)
-
+diff --git a/target/sparc/vis_helper.c b/target/sparc/vis_helper.c
+index 14c665cad6..e15c6bb34e 100644
+--- a/target/sparc/vis_helper.c
++++ b/target/sparc/vis_helper.c
+@@ -44,6 +44,7 @@ target_ulong helper_array8(target_ulong pixel_addr, target_ulong cubesize)
+ 
+ #if HOST_BIG_ENDIAN
+ #define VIS_B64(n) b[7 - (n)]
++#define VIS_SB64(n) sb[7 - (n)]
+ #define VIS_W64(n) w[3 - (n)]
+ #define VIS_SW64(n) sw[3 - (n)]
+ #define VIS_L64(n) l[1 - (n)]
+@@ -51,6 +52,7 @@ target_ulong helper_array8(target_ulong pixel_addr, target_ulong cubesize)
+ #define VIS_W32(n) w[1 - (n)]
+ #else
+ #define VIS_B64(n) b[n]
++#define VIS_SB64(n) sb[n]
+ #define VIS_W64(n) w[n]
+ #define VIS_SW64(n) sw[n]
+ #define VIS_L64(n) l[n]
+@@ -60,6 +62,7 @@ target_ulong helper_array8(target_ulong pixel_addr, target_ulong cubesize)
+ 
+ typedef union {
+     uint8_t b[8];
++    int8_t sb[8];
+     uint16_t w[4];
+     int16_t sw[4];
+     uint32_t l[2];
+@@ -95,27 +98,23 @@ uint64_t helper_fpmerge(uint32_t src1, uint32_t src2)
+     return d.ll;
+ }
+ 
++static inline int do_ms16b(int x, int y)
++{
++    return ((x * y) + 0x80) >> 8;
++}
++
+ uint64_t helper_fmul8x16(uint32_t src1, uint64_t src2)
+ {
+     VIS64 d;
+     VIS32 s;
+-    uint32_t tmp;
+ 
+     s.l = src1;
+     d.ll = src2;
+ 
+-#define PMUL(r)                                                 \
+-    tmp = (int32_t)d.VIS_SW64(r) * (int32_t)s.VIS_B32(r);       \
+-    if ((tmp & 0xff) > 0x7f) {                                  \
+-        tmp += 0x100;                                           \
+-    }                                                           \
+-    d.VIS_W64(r) = tmp >> 8;
+-
+-    PMUL(0);
+-    PMUL(1);
+-    PMUL(2);
+-    PMUL(3);
+-#undef PMUL
++    d.VIS_W64(0) = do_ms16b(s.VIS_B32(0), d.VIS_SW64(0));
++    d.VIS_W64(1) = do_ms16b(s.VIS_B32(1), d.VIS_SW64(1));
++    d.VIS_W64(2) = do_ms16b(s.VIS_B32(2), d.VIS_SW64(2));
++    d.VIS_W64(3) = do_ms16b(s.VIS_B32(3), d.VIS_SW64(3));
+ 
+     return d.ll;
+ }
+@@ -124,25 +123,14 @@ uint64_t helper_fmul8x16a(uint32_t src1, int32_t src2)
+ {
+     VIS32 s;
+     VIS64 d;
+-    uint32_t tmp;
+ 
+     s.l = src1;
+     d.ll = 0;
+ 
+-#define PMUL(r)                                \
+-    do {                                       \
+-        tmp = src2 * (int32_t)s.VIS_B32(r);    \
+-        if ((tmp & 0xff) > 0x7f) {             \
+-            tmp += 0x100;                      \
+-        }                                      \
+-        d.VIS_W64(r) = tmp >> 8;               \
+-    } while (0)
+-
+-    PMUL(0);
+-    PMUL(1);
+-    PMUL(2);
+-    PMUL(3);
+-#undef PMUL
++    d.VIS_W64(0) = do_ms16b(s.VIS_B32(0), src2);
++    d.VIS_W64(1) = do_ms16b(s.VIS_B32(1), src2);
++    d.VIS_W64(2) = do_ms16b(s.VIS_B32(2), src2);
++    d.VIS_W64(3) = do_ms16b(s.VIS_B32(3), src2);
+ 
+     return d.ll;
+ }
+@@ -150,23 +138,14 @@ uint64_t helper_fmul8x16a(uint32_t src1, int32_t src2)
+ uint64_t helper_fmul8sux16(uint64_t src1, uint64_t src2)
+ {
+     VIS64 s, d;
+-    uint32_t tmp;
+ 
+     s.ll = src1;
+     d.ll = src2;
+ 
+-#define PMUL(r)                                                         \
+-    tmp = (int32_t)d.VIS_SW64(r) * ((int32_t)s.VIS_SW64(r) >> 8);       \
+-    if ((tmp & 0xff) > 0x7f) {                                          \
+-        tmp += 0x100;                                                   \
+-    }                                                                   \
+-    d.VIS_W64(r) = tmp >> 8;
+-
+-    PMUL(0);
+-    PMUL(1);
+-    PMUL(2);
+-    PMUL(3);
+-#undef PMUL
++    d.VIS_W64(0) = do_ms16b(s.VIS_SB64(1), d.VIS_SW64(0));
++    d.VIS_W64(1) = do_ms16b(s.VIS_SB64(3), d.VIS_SW64(1));
++    d.VIS_W64(2) = do_ms16b(s.VIS_SB64(5), d.VIS_SW64(2));
++    d.VIS_W64(3) = do_ms16b(s.VIS_SB64(7), d.VIS_SW64(3));
+ 
+     return d.ll;
+ }
+@@ -174,23 +153,14 @@ uint64_t helper_fmul8sux16(uint64_t src1, uint64_t src2)
+ uint64_t helper_fmul8ulx16(uint64_t src1, uint64_t src2)
+ {
+     VIS64 s, d;
+-    uint32_t tmp;
+ 
+     s.ll = src1;
+     d.ll = src2;
+ 
+-#define PMUL(r)                                                         \
+-    tmp = (int32_t)d.VIS_SW64(r) * ((uint32_t)s.VIS_B64(r * 2));        \
+-    if ((tmp & 0xff) > 0x7f) {                                          \
+-        tmp += 0x100;                                                   \
+-    }                                                                   \
+-    d.VIS_W64(r) = tmp >> 8;
+-
+-    PMUL(0);
+-    PMUL(1);
+-    PMUL(2);
+-    PMUL(3);
+-#undef PMUL
++    d.VIS_W64(0) = do_ms16b(s.VIS_B64(0), d.VIS_SW64(0));
++    d.VIS_W64(1) = do_ms16b(s.VIS_B64(2), d.VIS_SW64(1));
++    d.VIS_W64(2) = do_ms16b(s.VIS_B64(4), d.VIS_SW64(2));
++    d.VIS_W64(3) = do_ms16b(s.VIS_B64(6), d.VIS_SW64(3));
+ 
+     return d.ll;
+ }
 -- 
 2.34.1
 
