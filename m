@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6534C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 15:50:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FC23C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 15:53:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2YhH-0007tJ-NC; Thu, 02 May 2024 11:50:11 -0400
+	id 1s2Ykg-0000l8-6I; Thu, 02 May 2024 11:53:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s2YhE-0007si-Bb
- for qemu-devel@nongnu.org; Thu, 02 May 2024 11:50:08 -0400
+ id 1s2Ykd-0000kw-2T
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 11:53:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s2YhC-0001iK-G7
- for qemu-devel@nongnu.org; Thu, 02 May 2024 11:50:08 -0400
+ id 1s2Ykb-0002Jy-Ga
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 11:53:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714665005;
+ s=mimecast20190719; t=1714665216;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding;
- bh=FZqkYH2xV60DtnOIeX+F6KC+s+0/Oyj82Gs+VdqvN3E=;
- b=YaO7ULHADIakSlKd0E8FAuvs6VFUTa+D9BWM8n0upX2HCvlv4h+0yFaRz9jEDF/3leed0R
- /87d4DeWBK1rixmJSJfGodPD1VYSAL1CxSF3L4Nxccft6ycokTsgcdlkgEO3isDgvkNVLg
- kak+pRhEL0hwAnN1f+/J84jrBuvPhRw=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=n/L7WZ5CHIKopU4zqOsTMz8o56zSGHiLVboWpUfN+mg=;
+ b=ShyUE1QgL44jUQYjNEVHs7sS1HFazpYshUYJ7K5lgPWQHqBbIKgjXQu15/OvBuppWsCEaS
+ wE6CDjC865a86PY/UJekm6fKWEIZiXgA8oPyFxmwoejIlYZ+VoscVuM/UDtdKYRMhSYhsX
+ gLLzohA6g1iQuKuoxmn+E5rgUl/20is=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-290-35arZaLsOZqrnO8TFsarQQ-1; Thu, 02 May 2024 11:50:04 -0400
-X-MC-Unique: 35arZaLsOZqrnO8TFsarQQ-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a55a8c841e8so427258766b.2
- for <qemu-devel@nongnu.org>; Thu, 02 May 2024 08:50:03 -0700 (PDT)
+ us-mta-316-_dQFMQ00M16D7AeBHJ85qg-1; Thu, 02 May 2024 11:53:35 -0400
+X-MC-Unique: _dQFMQ00M16D7AeBHJ85qg-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a55a8c841e8so427508666b.2
+ for <qemu-devel@nongnu.org>; Thu, 02 May 2024 08:53:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714665002; x=1715269802;
+ d=1e100.net; s=20230601; t=1714665214; x=1715270014;
  h=content-transfer-encoding:mime-version:message-id:date:subject:to
  :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FZqkYH2xV60DtnOIeX+F6KC+s+0/Oyj82Gs+VdqvN3E=;
- b=M/SMYxGhm0RII2QZxJMZoa+kGsGQB2tP84CBk3Gdk7AmhWj1e0faWjX7hBh2yOVrDv
- jV2KR8OZmaueI9reb53gGpZhqIVOGZQI5CoSCSBwfr38rm0oG5wc1JXToe2c7u57EZ3I
- qAFRy7pBuDoFF9jYGO5lWnPx3L8Oou9Yh/ZRHLw0T7Oj48FqV9mfjiwgJgje1nIdSRV/
- H9W5EBFx4RSKkU5SAV+6k0ccjo8IbEsGoL+N93YuVm6AFmRVtVon0Ig5Ldh9bImasWto
- gEGHnQoPcTBx02RNLSyPbJNEcaAM2Gih3kRVQL64WON1mLVEYfbCw2AEgkoL0G4rs1NJ
- mQeA==
-X-Gm-Message-State: AOJu0Yy8rBEfUV+h8AzJ0rA038tj0Mal/QYxMU+bTKAGD8uraWsZXVVY
- w4aZOdjyDhX6IC628RQeSibZRWxKpOSt6sqbiUWMz4oWtu9ifI7RQc7XPmZuyED3qGnDXezGnLw
- xzE8bwB5Fuc7ABjOfzxJ3nIUiI68LSJOo9/LRSEZVs0hXIcAzqRIRthbzZW8voZhHAzXpJT2kmE
- D8uLp/uROAaYK6xSoQXoR5eecETFWXQ6XBqMpl
-X-Received: by 2002:a17:906:4ed1:b0:a58:ea69:97e2 with SMTP id
- i17-20020a1709064ed100b00a58ea6997e2mr2209522ejv.6.1714665002439; 
- Thu, 02 May 2024 08:50:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEd42Vm/kj6Nv8UzdFwgK8wCrTkvILJORbzKWFv3wY6kW/wHbLNSc7oJyusotE9ljzpiRKD+g==
-X-Received: by 2002:a17:906:4ed1:b0:a58:ea69:97e2 with SMTP id
- i17-20020a1709064ed100b00a58ea6997e2mr2209496ejv.6.1714665001811; 
- Thu, 02 May 2024 08:50:01 -0700 (PDT)
+ bh=n/L7WZ5CHIKopU4zqOsTMz8o56zSGHiLVboWpUfN+mg=;
+ b=e+if/OcgklIJQ+FqbTbH9bZvmnYn4VIdtcyHxdDYZr87AdZIvUqTn/BTBWe/9if03J
+ V3HZDBH6f0JWnUCsLS6lHpu3O/QlaA6LTgyeJN7lReMkDI1xVe41lF6FzFHOLsi7H/rW
+ XtZRCVKgAx6PdgH+fTqujq6uaWBRbA7acoqaK8di0iRd7VROdz9ioHUuTkt3jV51Npjc
+ kNEsoJG7bVJW/b1SMD6PzvUtqAeKHK7bs2enA47U+NfWaMaZ+t1rO40hN+n8oliVshf4
+ rViAGfkStzA/gZwqNtHzvyKLRByB9oe1Oc4/Rqyyp3913ZGwMdAKFRepldoDI4AL3w30
+ vO7Q==
+X-Gm-Message-State: AOJu0Yy8MahbvtTQDJsreFGe63XNluftYZu76YpRwG5g9PbXNhCU2//i
+ 1EDAgP4GJlxeP6k9aMJhVnzH1N9tZrclI8oVLQ/binauT8qxQ62zLlR1g5VSkfw2mKNThqV7rRW
+ yLQi4yYbKgGmAp5gl2m2S306QPCwkOvGD/hYgJd/EAm0+KnhOglOZliLVt5lLrP1z3sTRvv7JJv
+ CqoSDl9z33z1QucqanBq1UiLBSsvw6STgRm0qO
+X-Received: by 2002:a17:906:c789:b0:a58:f143:b4af with SMTP id
+ cw9-20020a170906c78900b00a58f143b4afmr2206556ejb.60.1714665213921; 
+ Thu, 02 May 2024 08:53:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFS4Hk0QuPT9BuJDzqTSU6It43xFTUjNytPhRxh1nPHdjlwf5gkHDOHGXU8GuIq0wAxifbSjw==
+X-Received: by 2002:a17:906:c789:b0:a58:f143:b4af with SMTP id
+ cw9-20020a170906c78900b00a58f143b4afmr2206537ejb.60.1714665213468; 
+ Thu, 02 May 2024 08:53:33 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- s20-20020a170906061400b00a52274ee0a7sm700137ejb.171.2024.05.02.08.50.01
+ z3-20020a170906270300b00a55bb18e3d7sm684102ejc.168.2024.05.02.08.53.32
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 May 2024 08:50:01 -0700 (PDT)
+ Thu, 02 May 2024 08:53:33 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH] kvm: move target-dependent interrupt routing out of kvm-all.c
-Date: Thu,  2 May 2024 17:49:59 +0200
-Message-ID: <20240502154959.108165-1-pbonzini@redhat.com>
+Subject: [PATCH 00/13] remove some types from typedefs.h
+Date: Thu,  2 May 2024 17:53:18 +0200
+Message-ID: <20240502155331.109297-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.44.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -98,212 +98,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Let hw/hyperv/hyperv.c and hw/intc/s390_flic.c handle (respectively)
-SynIC and adapter routes, removing the code from target-independent
-files.  This also removes the only occurrence of AdapterInfo outside
-s390 code, so remove that from typedefs.h.
+The main reason for typedefs.h to exist is to avoid the need for
+"struct Foo;" forward declarations of types that are needed in function
+prototypes.  It avoids the infamous "struct declared inside parameter list
+will not be visible outside of this definition or declaration" warning.
+Another less common use is when the struct is used as a pointer in
+another struct (when the struct is embedded by value, the typedef is
+obviously not enough).
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- include/qemu/typedefs.h |  1 -
- include/sysemu/kvm.h    |  5 ++--
- accel/kvm/kvm-all.c     | 62 ++---------------------------------------
- hw/hyperv/hyperv.c      | 25 +++++++++++++++++
- hw/intc/s390_flic.c     | 28 +++++++++++++++++++
- 5 files changed, 59 insertions(+), 62 deletions(-)
+This series is a first pass removing unnecessary typedefs.  In most
+cases, the users are actually already including it.  In a few patches
+towards the end, new includes are introduced but not in files that
+already "rebuild the world" when changed.
 
-diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
-index 5d999e20d7c..2ff50bf5970 100644
---- a/include/qemu/typedefs.h
-+++ b/include/qemu/typedefs.h
-@@ -23,7 +23,6 @@
-  */
- typedef struct AccelCPUState AccelCPUState;
- typedef struct AccelState AccelState;
--typedef struct AdapterInfo AdapterInfo;
- typedef struct AddressSpace AddressSpace;
- typedef struct AioContext AioContext;
- typedef struct Aml Aml;
-diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
-index eaf801bc934..c31d9c73566 100644
---- a/include/sysemu/kvm.h
-+++ b/include/sysemu/kvm.h
-@@ -470,10 +470,11 @@ static inline void kvm_irqchip_commit_route_changes(KVMRouteChange *c)
-     }
- }
- 
-+int kvm_irqchip_get_virq(KVMState *s);
- void kvm_irqchip_release_virq(KVMState *s, int virq);
- 
--int kvm_irqchip_add_adapter_route(KVMState *s, AdapterInfo *adapter);
--int kvm_irqchip_add_hv_sint_route(KVMState *s, uint32_t vcpu, uint32_t sint);
-+void kvm_add_routing_entry(KVMState *s,
-+                           struct kvm_irq_routing_entry *entry);
- 
- int kvm_irqchip_add_irqfd_notifier_gsi(KVMState *s, EventNotifier *n,
-                                        EventNotifier *rn, int virq);
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index d7281b93f3b..c0be9f5eedb 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -1909,8 +1909,8 @@ void kvm_irqchip_commit_routes(KVMState *s)
-     assert(ret == 0);
- }
- 
--static void kvm_add_routing_entry(KVMState *s,
--                                  struct kvm_irq_routing_entry *entry)
-+void kvm_add_routing_entry(KVMState *s,
-+                           struct kvm_irq_routing_entry *entry)
- {
-     struct kvm_irq_routing_entry *new;
-     int n, size;
-@@ -2007,7 +2007,7 @@ void kvm_irqchip_change_notify(void)
-     notifier_list_notify(&kvm_irqchip_change_notifiers, NULL);
- }
- 
--static int kvm_irqchip_get_virq(KVMState *s)
-+int kvm_irqchip_get_virq(KVMState *s)
- {
-     int next_virq;
- 
-@@ -2165,62 +2165,6 @@ static int kvm_irqchip_assign_irqfd(KVMState *s, EventNotifier *event,
-     return kvm_vm_ioctl(s, KVM_IRQFD, &irqfd);
- }
- 
--int kvm_irqchip_add_adapter_route(KVMState *s, AdapterInfo *adapter)
--{
--    struct kvm_irq_routing_entry kroute = {};
--    int virq;
--
--    if (!kvm_gsi_routing_enabled()) {
--        return -ENOSYS;
--    }
--
--    virq = kvm_irqchip_get_virq(s);
--    if (virq < 0) {
--        return virq;
--    }
--
--    kroute.gsi = virq;
--    kroute.type = KVM_IRQ_ROUTING_S390_ADAPTER;
--    kroute.flags = 0;
--    kroute.u.adapter.summary_addr = adapter->summary_addr;
--    kroute.u.adapter.ind_addr = adapter->ind_addr;
--    kroute.u.adapter.summary_offset = adapter->summary_offset;
--    kroute.u.adapter.ind_offset = adapter->ind_offset;
--    kroute.u.adapter.adapter_id = adapter->adapter_id;
--
--    kvm_add_routing_entry(s, &kroute);
--
--    return virq;
--}
--
--int kvm_irqchip_add_hv_sint_route(KVMState *s, uint32_t vcpu, uint32_t sint)
--{
--    struct kvm_irq_routing_entry kroute = {};
--    int virq;
--
--    if (!kvm_gsi_routing_enabled()) {
--        return -ENOSYS;
--    }
--    if (!kvm_check_extension(s, KVM_CAP_HYPERV_SYNIC)) {
--        return -ENOSYS;
--    }
--    virq = kvm_irqchip_get_virq(s);
--    if (virq < 0) {
--        return virq;
--    }
--
--    kroute.gsi = virq;
--    kroute.type = KVM_IRQ_ROUTING_HV_SINT;
--    kroute.flags = 0;
--    kroute.u.hv_sint.vcpu = vcpu;
--    kroute.u.hv_sint.sint = sint;
--
--    kvm_add_routing_entry(s, &kroute);
--    kvm_irqchip_commit_routes(s);
--
--    return virq;
--}
--
- #else /* !KVM_CAP_IRQ_ROUTING */
- 
- void kvm_init_irq_routing(KVMState *s)
-diff --git a/hw/hyperv/hyperv.c b/hw/hyperv/hyperv.c
-index 3ea54ba818b..3d85573efa3 100644
---- a/hw/hyperv/hyperv.c
-+++ b/hw/hyperv/hyperv.c
-@@ -373,6 +373,31 @@ int hyperv_set_event_flag(HvSintRoute *sint_route, unsigned eventno)
-     return ret;
- }
- 
-+int kvm_irqchip_add_hv_sint_route(KVMState *s, uint32_t vcpu, uint32_t sint)
-+{
-+    struct kvm_irq_routing_entry kroute = {};
-+    int virq;
-+
-+    if (!kvm_gsi_routing_enabled()) {
-+        return -ENOSYS;
-+    }
-+    virq = kvm_irqchip_get_virq(s);
-+    if (virq < 0) {
-+        return virq;
-+    }
-+
-+    kroute.gsi = virq;
-+    kroute.type = KVM_IRQ_ROUTING_HV_SINT;
-+    kroute.flags = 0;
-+    kroute.u.hv_sint.vcpu = vcpu;
-+    kroute.u.hv_sint.sint = sint;
-+
-+    kvm_add_routing_entry(s, &kroute);
-+    kvm_irqchip_commit_routes(s);
-+
-+    return virq;
-+}
-+
- HvSintRoute *hyperv_sint_route_new(uint32_t vp_index, uint32_t sint,
-                                    HvSintMsgCb cb, void *cb_data)
- {
-diff --git a/hw/intc/s390_flic.c b/hw/intc/s390_flic.c
-index f4a848460b8..a658252fc8a 100644
---- a/hw/intc/s390_flic.c
-+++ b/hw/intc/s390_flic.c
-@@ -23,6 +23,34 @@
- #include "qapi/error.h"
- #include "hw/s390x/s390-virtio-ccw.h"
- 
-+static int kvm_irqchip_add_adapter_route(KVMState *s, AdapterInfo *adapter)
-+{
-+    struct kvm_irq_routing_entry kroute = {};
-+    int virq;
-+
-+    if (!kvm_gsi_routing_enabled()) {
-+        return -ENOSYS;
-+    }
-+
-+    virq = kvm_irqchip_get_virq(s);
-+    if (virq < 0) {
-+        return virq;
-+    }
-+
-+    kroute.gsi = virq;
-+    kroute.type = KVM_IRQ_ROUTING_S390_ADAPTER;
-+    kroute.flags = 0;
-+    kroute.u.adapter.summary_addr = adapter->summary_addr;
-+    kroute.u.adapter.ind_addr = adapter->ind_addr;
-+    kroute.u.adapter.summary_offset = adapter->summary_offset;
-+    kroute.u.adapter.ind_offset = adapter->ind_offset;
-+    kroute.u.adapter.adapter_id = adapter->adapter_id;
-+
-+    kvm_add_routing_entry(s, &kroute);
-+
-+    return virq;
-+}
-+
- S390FLICStateClass *s390_get_flic_class(S390FLICState *fs)
- {
-     static S390FLICStateClass *class;
+Personally, I think that in many cases the uses are so limited
+(often they only appear only in the few non-qdev boards that are
+left) that they could use forward declarations of structs.  I did
+that for patch 12 (tcg) because there are already a couple of
+forward declataions in include/hw/core/cpu.h, but that's more as
+food for thought than anything else.
+
+Paolo
+
+Paolo Bonzini (13):
+  fw_cfg: remove useless declarations from typedefs.h
+  qdev-core: remove DeviceListener from typedefs.h
+  numa: remove types from typedefs.h
+  net: remove AnnounceTimer from typedefs.h
+  qemu-option: remove QemuOpt from typedefs.h
+  intc: remove PICCommonState from typedefs.h
+  lockable: remove QemuLockable from typedefs.h
+  migration: remove PostcopyDiscardState from typedefs.h
+  monitor: remove MonitorDef from typedefs.h
+  qapi/machine: remove types from typedefs.h
+  display: remove GraphicHwOps from typedefs.h
+  tcg: remove CPU* types from typedefs.h
+  pci: remove some types from typedefs.h
+
+ accel/tcg/tb-jmp-cache.h     |  4 ++--
+ hw/display/vga_int.h         |  1 +
+ include/hw/core/cpu.h        | 11 +++++++++--
+ include/hw/intc/i8259.h      |  2 ++
+ include/hw/nvram/fw_cfg.h    |  2 ++
+ include/hw/pci/pcie.h        |  3 +++
+ include/hw/pci/pcie_aer.h    | 38 ++++++++++++++++++------------------
+ include/hw/pci/pcie_sriov.h  |  8 ++++----
+ include/hw/qdev-core.h       |  1 +
+ include/monitor/hmp-target.h | 11 +++++++----
+ include/net/announce.h       |  4 ++--
+ include/qemu/coroutine.h     |  4 ++--
+ include/qemu/lockable.h      |  4 ++--
+ include/qemu/option.h        |  2 ++
+ include/qemu/typedefs.h      | 23 ----------------------
+ include/sysemu/numa.h        |  8 ++++----
+ migration/postcopy-ram.c     |  4 ++--
+ stubs/target-monitor-defs.c  |  3 +--
+ system/physmem.c             |  4 ++--
+ 19 files changed, 67 insertions(+), 70 deletions(-)
+
 -- 
 2.44.0
 
