@@ -4,81 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C93B0C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 12:14:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9EC7C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 12:15:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2VKB-0006TD-GT; Thu, 02 May 2024 08:14:07 -0400
+	id 1s2VLO-0007sP-Hf; Thu, 02 May 2024 08:15:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s2VK7-0006FF-OZ
- for qemu-devel@nongnu.org; Thu, 02 May 2024 08:14:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s2VJy-00015K-Ds
- for qemu-devel@nongnu.org; Thu, 02 May 2024 08:13:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714652027;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=hMfa/XrGYhegbpAwndAKxgfT1VHN5XMhQpu8iMYZ4Ng=;
- b=BADHBOMcBoO4KjZfQM/HEL19fx44Svz5H/opXQ1RAqqcW1kwaPe8whKj+O01g61TFAxg8R
- Mtpci/ZKDrzP3492bf38KaklteUpQleZQBqM/rxtXq38ROzrFddLV8t6DWWKN2msw+/sKh
- xe2CxuclXPMKOC06LxUrlfITPHDWCgQ=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-130-xzCSHd0QOYiKA7j74SUk4w-1; Thu,
- 02 May 2024 08:13:45 -0400
-X-MC-Unique: xzCSHd0QOYiKA7j74SUk4w-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3924C1C4C3E1;
- Thu,  2 May 2024 12:13:45 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.138])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 0B43E1C0654B;
- Thu,  2 May 2024 12:13:41 +0000 (UTC)
-Date: Thu, 2 May 2024 13:13:40 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-riscv@nongnu.org,
- David Hildenbrand <david@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, kvm@vger.kernel.org,
- qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: Re: [PATCH v4 20/22] hw/i386/pc: Remove deprecated pc-i440fx-2.3
- machine
-Message-ID: <ZjODdLACORiQ0Kfm@redhat.com>
-References: <20240416185939.37984-1-philmd@linaro.org>
- <20240416185939.37984-21-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1s2VL0-0007mK-1q
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 08:15:05 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1s2VKw-0001HH-62
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 08:14:56 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-a52223e004dso865940866b.2
+ for <qemu-devel@nongnu.org>; Thu, 02 May 2024 05:14:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714652088; x=1715256888; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=sSL3pGTMQlm7IP/X66VH7ZW6vD/svFwsuz+4xiwLQsQ=;
+ b=rd0UvXF8idhqsYSBmqRX+brLfqxD3nBKIzYYuqxkcvmwuAYzFoAcnLxxPJNrEMw3gq
+ RThaTS+tliv05zNyta5UyP68M/nin6mpLN71kbcAPYkn5sBgsP0P8xBdkEF+64XTDRU0
+ XT7WNeeFtqLbz+lgOmfl3BNcssaVqfEQ0OpEZLPEwVPDuGtuy3EKvm/c7r2BAtRWzvKk
+ pBQv78d0lVAxFCYqIMtSQV+cfDYuzsmy/TefvVXHoH8oknHcSe/CagpZ28ECGP4DiMvF
+ WgYmwFUZ9QAAzHdUk4aVscgNICKQSXsFzITuKvUdJSdG6oCtii5LrEMxyBiz597YnNVf
+ ZPAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714652088; x=1715256888;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=sSL3pGTMQlm7IP/X66VH7ZW6vD/svFwsuz+4xiwLQsQ=;
+ b=p1ny91KQ7FKiVUsMJqKmY4FtrMav4lIYnmjGbp3dD5Cw6s6KcwycjUWfAPuDVptw9S
+ bvEsGq2chMpY4zTS3MQeaScKqOVS3GJspfvlD8KuOxBPebWaa8SlrizB/i03DscgB1lH
+ 4FvZY5gJnVSp/LrSYd8iS3ty9AboPlnQYITwV2AsTpmuvWCjDkz/wbrMl1tYjYhipB7m
+ eAk4tdUe5VIzZINQ/CbF0dtGVFINpL6ZkDionV/fYKqOnPVShd26FtmUgmGancecUSCE
+ 5GepyIdpBgHXkBedi8mL9TSYcMud06f2Bn+0QH5ziQvDqfkxyAi3Ikff5Y9xW6/eIK3t
+ 19bw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXL60qy6VVE7qAtxWS1FDq8OUTl7gEc3nvD7Q/+MQaM1FMIzNAZ49dhm8MLFGBu8rYhYIZKe/fK1kHoXfiSsp8MJdSBvRg=
+X-Gm-Message-State: AOJu0Yw1Ckg0ygjktGdxqQgy6anFdjwVssBr1zBpbhq5lsI+DdI/Mjf9
+ iiCPhkP1AQmkF6EPJzNlk8vNW2Poe9Kqc2RREQ+UFV6DC4COI5Y79+JHmx29xzkCmZUKdmPtPHy
+ xrD+n2Q==
+X-Google-Smtp-Source: AGHT+IFrZ2SRXYWD78aiQRKBJohDDNX7VMLi1k1RpQOLHtmXt2qClo8dHgM163n4Er1Zrn7WJ5GXwA==
+X-Received: by 2002:a17:906:640d:b0:a56:e555:3ea6 with SMTP id
+ d13-20020a170906640d00b00a56e5553ea6mr1530689ejm.55.1714652088477; 
+ Thu, 02 May 2024 05:14:48 -0700 (PDT)
+Received: from [192.168.200.106] (83.11.37.15.ipv4.supernova.orange.pl.
+ [83.11.37.15]) by smtp.gmail.com with ESMTPSA id
+ hz18-20020a1709072cf200b00a597bd55982sm11984ejc.130.2024.05.02.05.14.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 02 May 2024 05:14:47 -0700 (PDT)
+Message-ID: <7c6f66bf-2610-494c-9389-b558a11f8c5f@linaro.org>
+Date: Thu, 2 May 2024 14:14:46 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/arm: fix MPIDR value for ARM CPUs with SMT
+To: Dorjoy Chowdhury <dorjoychy111@gmail.com>, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+References: <20240419183135.12276-1-dorjoychy111@gmail.com>
+From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Content-Language: pl-PL, en-GB, en-HK
+Organization: Linaro
+In-Reply-To: <20240419183135.12276-1-dorjoychy111@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240416185939.37984-21-philmd@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.476,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-ej1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,74 +97,28 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 16, 2024 at 08:59:36PM +0200, Philippe Mathieu-Daudé wrote:
-> The pc-i440fx-2.3 machine was deprecated for the 8.2
-> release (see commit c7437f0ddb "docs/about: Mark the
-> old pc-i440fx-2.0 - 2.3 machine types as deprecated"),
-> time to remove it.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->  docs/about/deprecated.rst       |  4 ++--
->  docs/about/removed-features.rst |  2 +-
->  hw/i386/pc.c                    | 25 -------------------------
->  hw/i386/pc_piix.c               | 19 -------------------
->  4 files changed, 3 insertions(+), 47 deletions(-)
+W dniu 19.04.2024 o 20:31, Dorjoy Chowdhury pisze:
+> -uint64_t arm_build_mp_affinity(int idx, uint8_t clustersz)
+> +uint64_t arm_build_mp_affinity(ARMCPU *cpu, int idx, uint8_t clustersz)
+>   {
+> +    if (cpu->has_smt) {
+> +        /*
+> +         * Right now, the ARM CPUs with SMT supported by QEMU only have
+> +         * one thread per core. So Aff0 is always 0.
+> +         */
+> +        uint32_t Aff2 = idx / clustersz;
+> +        uint32_t Aff1 = idx % clustersz;
+> +        uint32_t Aff0 = 0;
+> +        return (Aff2 << ARM_AFF2_SHIFT) | (Aff1 << ARM_AFF1_SHIFT) | Aff0;
+> +    }
 
+Should "return" also have "(1 << 24) |" to have MT=1 set?
 
-> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-> index 30bcd86ee6..370d130a6d 100644
-> --- a/hw/i386/pc_piix.c
-> +++ b/hw/i386/pc_piix.c
-> @@ -421,14 +421,6 @@ static void pc_set_south_bridge(Object *obj, int value, Error **errp)
->   * hw_compat_*, pc_compat_*, or * pc_*_machine_options().
->   */
+Otherwise MPIDR_EL1 = 0x000100 can mean core0 in cluster1 or core1 in 
+cluster0.
 
-The comment that is just out of sight in the diff is now obsolete
-and should be removed too.
-
->  
-> -static void pc_compat_2_3_fn(MachineState *machine)
-> -{
-> -    X86MachineState *x86ms = X86_MACHINE(machine);
-> -    if (kvm_enabled()) {
-> -        x86ms->smm = ON_OFF_AUTO_OFF;
-> -    }
-> -}
-> -
->  #ifdef CONFIG_ISAPC
->  static void pc_init_isa(MachineState *machine)
->  {
-> @@ -812,17 +804,6 @@ static void pc_i440fx_2_4_machine_options(MachineClass *m)
->  DEFINE_I440FX_MACHINE(v2_4, "pc-i440fx-2.4", NULL,
->                        pc_i440fx_2_4_machine_options)
->  
-> -static void pc_i440fx_2_3_machine_options(MachineClass *m)
-> -{
-> -    pc_i440fx_2_4_machine_options(m);
-> -    m->hw_version = "2.3.0";
-> -    compat_props_add(m->compat_props, hw_compat_2_3, hw_compat_2_3_len);
-> -    compat_props_add(m->compat_props, pc_compat_2_3, pc_compat_2_3_len);
-> -}
-> -
-> -DEFINE_I440FX_MACHINE(v2_3, "pc-i440fx-2.3", pc_compat_2_3_fn,
-> -                      pc_i440fx_2_3_machine_options);
-
-This is the last DEFINE_I440FX_MACHINE call that provides a
-non-NULL 3rd parameter.
-
-IOW, there could be a further patch removing the 3rd 'compatfn'
-parameter now it is finally obsolete.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Value 0x1000100 shows MT=1 so thread0 in core1 in cluster0.
 
