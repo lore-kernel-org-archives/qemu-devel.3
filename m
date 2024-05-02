@@ -4,72 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B523AC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 13:16:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FE11C25B5C
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 13:24:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2WHt-00011N-2L; Thu, 02 May 2024 09:15:49 -0400
+	id 1s2WPA-0006DS-Nq; Thu, 02 May 2024 09:23:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s2WHq-0000ya-MF
- for qemu-devel@nongnu.org; Thu, 02 May 2024 09:15:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
+ id 1s2WP4-0006CR-Sb; Thu, 02 May 2024 09:23:14 -0400
+Received: from mx0b-00190b01.pphosted.com ([67.231.157.127])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s2WHo-0003VM-S7
- for qemu-devel@nongnu.org; Thu, 02 May 2024 09:15:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714655743;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TRhTL59lsMRXTLWXvlCyCB/kuFdN39oX2TwZHEnGiG0=;
- b=M0UmqHc/flxop3H2C4roY4ll5Xgovu6B+kO+v/NIKBI/jJlo95lzuuWkYXXJvzyXZ9hKld
- Tf+DeIU7r9+FPWGLgV/0ixbV2QL5MAw2I+Xue+gJCpnpWnVzyX7xAUde0q/RggkY+YyLZe
- ThpwrugLW8mKSIaUOfKfXmHmW62NYjE=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-240-Sx8q9wgRMw-DTSWyYwf3pQ-1; Thu, 02 May 2024 09:15:39 -0400
-X-MC-Unique: Sx8q9wgRMw-DTSWyYwf3pQ-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C6813101152C;
- Thu,  2 May 2024 13:15:38 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.39.192.112])
- by smtp.corp.redhat.com (Postfix) with ESMTP id EE0131C0666B;
- Thu,  2 May 2024 13:15:36 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-s390x@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH 1/3] s390x: Introduce a SCLPDevice pointer under the machine
-Date: Thu,  2 May 2024 15:15:31 +0200
-Message-ID: <20240502131533.377719-2-clg@redhat.com>
-In-Reply-To: <20240502131533.377719-1-clg@redhat.com>
-References: <20240502131533.377719-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
+ id 1s2WP2-0004p3-2I; Thu, 02 May 2024 09:23:14 -0400
+Received: from pps.filterd (m0409410.ppops.net [127.0.0.1])
+ by m0409410.ppops.net-00190b01. (8.18.1.2/8.18.1.2) with ESMTP id
+ 4425kFFZ030419; Thu, 2 May 2024 14:22:30 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=
+ jan2016.eng; bh=GtGaqU/gbvUP10DibhX9/KSUJTpSyAHdN8JvO1O8wuI=; b=
+ SGgU0Zy42wXIlWw2JOsKBKstnBCnKP29I1w0jr732GGNOG2IVss3v+Scu1Vdgd32
+ JfLNXQOerM5pub5V6ar51Wt9T1c3hajjLMRZQcykx2+2W2dxednaltvftpvCs4LK
+ U1eUzZ98AxhmOFQjY4c7E5e66W6JsbZvN8+ohlSJDQW9E/okTYdv7lHHV8FRlHiI
+ /kp9avnJ3UlrIAfScrFup9g17om4Qf+SRh74HSOi3cpBVsulTLvATlK8o8/9aGaS
+ N5LkkF4qMrPpHHmgdFUFpM7u6IheVTy4Bhb3YUsC/Goe+gr/aurroRssAivkMM7P
+ RApJY0b4Ww6WadvlAmcmgQ==
+Received: from prod-mail-ppoint7
+ (a72-247-45-33.deploy.static.akamaitechnologies.com [72.247.45.33] (may be
+ forged))
+ by m0409410.ppops.net-00190b01. (PPS) with ESMTPS id 3xv26q2u4n-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 May 2024 14:22:30 +0100 (BST)
+Received: from pps.filterd (prod-mail-ppoint7.akamai.com [127.0.0.1])
+ by prod-mail-ppoint7.akamai.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 442CrSf0005808; Thu, 2 May 2024 09:22:29 -0400
+Received: from prod-mail-relay19.dfw02.corp.akamai.com ([172.27.165.173])
+ by prod-mail-ppoint7.akamai.com (PPS) with ESMTP id 3xrvpyupf8-1;
+ Thu, 02 May 2024 09:22:29 -0400
+Received: from [100.64.0.1] (prod-aoa-dallas2clt14.dfw02.corp.akamai.com
+ [172.27.166.123])
+ by prod-mail-relay19.dfw02.corp.akamai.com (Postfix) with ESMTP id 7C3A9638E5; 
+ Thu,  2 May 2024 13:22:25 +0000 (GMT)
+Message-ID: <ac86d9a7-02c6-9a07-4135-8327d17aca6b@akamai.com>
+Date: Thu, 2 May 2024 08:22:24 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol handling
+To: Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Daniel_P=2e_Berrang=c3=a9?=
+ <berrange@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>, Yu Zhang <yu.zhang@ionos.com>,
+ "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>,
+ Jinpu Wang <jinpu.wang@ionos.com>, Elmar Gerdes <elmar.gerdes@ionos.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Yuval Shaia <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
+ Prasanna Kumar Kalever <prasanna.kalever@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Prasanna Kumar Kalever <prasanna4324@gmail.com>,
+ "integration@gluster.org" <integration@gluster.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
+ "devel@lists.libvirt.org" <devel@lists.libvirt.org>,
+ Hanna Reitz <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Song Gao <gaosong@loongson.cn>,
+ =?UTF-8?Q?Marc-Andr=c3=a9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=c3=a9e?= <alex.bennee@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, arei.gonglei@huawei.com,
+ pannengyuan@huawei.com
+References: <082a21b0-d4d1-9f6c-24b5-bee56263008e@fujitsu.com>
+ <ZhaY2_cO6CrQFCt3@x1n> <Zhfxoaz9yNTx8Btd@x1n>
+ <CAHEcVy7POArt+CmY8dyNTzLJp3XxXgjh3k8=C=9K+_cw1CSJFA@mail.gmail.com>
+ <46f5e323-632d-7bda-f2c5-3cfa7b1c6b68@akamai.com> <Zi-1OvxA5MIHjklU@x1n>
+ <877cgfe2yw.fsf@pond.sub.org> <ZjClMb-6MddpvHqQ@redhat.com>
+ <ZjJgQcPQ29HJsTpY@x1n> <ZjJm6rcqS5EhoKgK@redhat.com> <ZjJqwg1H2nZbcekb@x1n>
+Content-Language: en-US
+From: Michael Galaxy <mgalaxy@akamai.com>
+In-Reply-To: <ZjJqwg1H2nZbcekb@x1n>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.476,
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-02_02,2024-05-02_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ phishscore=0
+ mlxlogscore=999 spamscore=0 adultscore=0 bulkscore=0 malwarescore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2404010000 definitions=main-2405020085
+X-Proofpoint-ORIG-GUID: kpjeY50XG6kvwQCv0RrcerjEhgDFzFRf
+X-Proofpoint-GUID: kpjeY50XG6kvwQCv0RrcerjEhgDFzFRf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-02_02,2024-05-02_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ priorityscore=1501
+ mlxscore=0 phishscore=0 spamscore=0 clxscore=1015 mlxlogscore=999
+ suspectscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2405020085
+Received-SPF: pass client-ip=67.231.157.127; envelope-from=mgalaxy@akamai.com;
+ helo=mx0b-00190b01.pphosted.com
+X-Spam_score_int: -75
+X-Spam_score: -7.6
+X-Spam_bar: -------
+X-Spam_report: (-7.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.476,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ NICE_REPLY_A=-3.296, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,95 +130,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Initialize directly SCLPDevice from the machine init handler and
-remove s390_sclp_init(). We will use the SCLPDevice pointer later to
-create the consoles.
+Yu Zhang / Jinpu,
 
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- include/hw/s390x/s390-virtio-ccw.h |  3 +++
- include/hw/s390x/sclp.h            |  2 --
- hw/s390x/s390-virtio-ccw.c         |  6 +++++-
- hw/s390x/sclp.c                    | 10 ----------
- 4 files changed, 8 insertions(+), 13 deletions(-)
+Any possibility (at your lesiure, and within the disclosure rules of 
+your company, IONOS) if you could share any of your performance 
+information to educate the group?
 
-diff --git a/include/hw/s390x/s390-virtio-ccw.h b/include/hw/s390x/s390-virtio-ccw.h
-index c1d46e78af8524802225fb192ffd9f6a5bc4434e..7605d06bff18a6075728f3bb462284eaf211b3cb 100644
---- a/include/hw/s390x/s390-virtio-ccw.h
-+++ b/include/hw/s390x/s390-virtio-ccw.h
-@@ -13,6 +13,7 @@
- 
- #include "hw/boards.h"
- #include "qom/object.h"
-+#include "hw/s390x/sclp.h"
- 
- #define TYPE_S390_CCW_MACHINE               "s390-ccw-machine"
- 
-@@ -28,6 +29,8 @@ struct S390CcwMachineState {
-     bool dea_key_wrap;
-     bool pv;
-     uint8_t loadparm[8];
-+
-+    SCLPDevice *sclp;
- };
- 
- #define S390_PTF_REASON_NONE (0x00 << 8)
-diff --git a/include/hw/s390x/sclp.h b/include/hw/s390x/sclp.h
-index b405a387b6780ea8f11a062fc02296f633171676..d32f6180e0d3e7ecca09e97ce4b9740360a69692 100644
---- a/include/hw/s390x/sclp.h
-+++ b/include/hw/s390x/sclp.h
-@@ -221,8 +221,6 @@ static inline int sccb_data_len(SCCB *sccb)
-     return be16_to_cpu(sccb->h.length) - sizeof(sccb->h);
- }
- 
--
--void s390_sclp_init(void);
- void sclp_service_interrupt(uint32_t sccb);
- void raise_irq_cpu_hotplug(void);
- int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code);
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index 726c2ab4363be30fe6b674d1ee697bb7d2e6352d..159f67d05c1e534800427ce46afcdaa526fd5902 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -251,11 +251,15 @@ static void s390_create_sclpconsole(const char *type, Chardev *chardev)
- static void ccw_init(MachineState *machine)
- {
-     MachineClass *mc = MACHINE_GET_CLASS(machine);
-+    S390CcwMachineState *ms = S390_CCW_MACHINE(machine);
-     int ret;
-     VirtualCssBus *css_bus;
-     DeviceState *dev;
- 
--    s390_sclp_init();
-+    ms->sclp = SCLP(object_new(TYPE_SCLP));
-+    object_property_add_child(OBJECT(machine), TYPE_SCLP, OBJECT(ms->sclp));
-+    qdev_realize_and_unref(DEVICE(ms->sclp), NULL, &error_fatal);
-+
-     /* init memory + setup max page size. Required for the CPU model */
-     s390_memory_init(machine->ram);
- 
-diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
-index 893e71a41b2ddd88a007bd7d395895fc4d444540..d236dbaf0bdd15c3fc07749a98a5813e05cfb9a1 100644
---- a/hw/s390x/sclp.c
-+++ b/hw/s390x/sclp.c
-@@ -378,16 +378,6 @@ void sclp_service_interrupt(uint32_t sccb)
- }
- 
- /* qemu object creation and initialization functions */
--
--void s390_sclp_init(void)
--{
--    Object *new = object_new(TYPE_SCLP);
--
--    object_property_add_child(qdev_get_machine(), TYPE_SCLP, new);
--    object_unref(new);
--    qdev_realize(DEVICE(new), NULL, &error_fatal);
--}
--
- static void sclp_realize(DeviceState *dev, Error **errp)
- {
-     MachineState *machine = MACHINE(qdev_get_machine());
--- 
-2.44.0
+NICs have indeed changed, but not everybody has 100ge mellanox cards at 
+their disposal. Some people don't.
 
+- Michael
+
+On 5/1/24 11:16, Peter Xu wrote:
+> On Wed, May 01, 2024 at 04:59:38PM +0100, Daniel P. Berrangé wrote:
+>> On Wed, May 01, 2024 at 11:31:13AM -0400, Peter Xu wrote:
+>>> What I worry more is whether this is really what we want to keep rdma in
+>>> qemu, and that's also why I was trying to request for some serious
+>>> performance measurements comparing rdma v.s. nics.  And here when I said
+>>> "we" I mean both QEMU community and any company that will support keeping
+>>> rdma around.
+>>>
+>>> The problem is if NICs now are fast enough to perform at least equally
+>>> against rdma, and if it has a lower cost of overall maintenance, does it
+>>> mean that rdma migration will only be used by whoever wants to keep them in
+>>> the products and existed already?  In that case we should simply ask new
+>>> users to stick with tcp, and rdma users should only drop but not increase.
+>>>
+>>> It seems also destined that most new migration features will not support
+>>> rdma: see how much we drop old features in migration now (which rdma
+>>> _might_ still leverage, but maybe not), and how much we add mostly multifd
+>>> relevant which will probably not apply to rdma at all.  So in general what
+>>> I am worrying is a both-loss condition, if the company might be easier to
+>>> either stick with an old qemu (depending on whether other new features are
+>>> requested to be used besides RDMA alone), or do periodic rebase with RDMA
+>>> downstream only.
+>> I don't know much about the originals of RDMA support in QEMU and why
+>> this particular design was taken. It is indeed a huge maint burden to
+>> have a completely different code flow for RDMA with 4000+ lines of
+>> custom protocol signalling which is barely understandable.
+>>
+>> I would note that /usr/include/rdma/rsocket.h provides a higher level
+>> API that is a 1-1 match of the normal kernel 'sockets' API. If we had
+>> leveraged that, then QIOChannelSocket class and the QAPI SocketAddress
+>> type could almost[1] trivially have supported RDMA. There would have
+>> been almost no RDMA code required in the migration subsystem, and all
+>> the modern features like compression, multifd, post-copy, etc would
+>> "just work".
+>>
+>> I guess the 'rsocket.h' shim may well limit some of the possible
+>> performance gains, but it might still have been a better tradeoff
+>> to have not quite so good peak performance, but with massively
+>> less maint burden.
+> My understanding so far is RDMA is sololy for performance but nothing else,
+> then it's a question on whether rdma existing users would like to do so if
+> it will run slower.
+>
+> Jinpu mentioned on the explicit usages of ib verbs but I am just mostly
+> quotting that word as I don't really know such details:
+>
+> https://urldefense.com/v3/__https://lore.kernel.org/qemu-devel/CAMGffEm2TWJxOPcNQTQ1Sjytf5395dBzTCMYiKRqfxDzJwSN6A@mail.gmail.com/__;!!GjvTz_vk!W6-HGWM-XkF_52am249DrLIDQeZctVOHg72LvOHGUcwxqQM5mY0GNYYl-yNJslN7A5GfLOew9oW_kg$
+>
+> So not sure whether that applies here too, in that having qiochannel
+> wrapper may not allow direct access to those ib verbs.
+>
+> Thanks,
+>
+>> With regards,
+>> Daniel
+>>
+>> [1] "almost" trivially, because the poll() integration for rsockets
+>>      requires a bit more magic sauce since rsockets FDs are not
+>>      really FDs from the kernel's POV. Still, QIOCHannel likely can
+>>      abstract that probme.
+>> -- 
+>> |: https://urldefense.com/v3/__https://berrange.com__;!!GjvTz_vk!W6-HGWM-XkF_52am249DrLIDQeZctVOHg72LvOHGUcwxqQM5mY0GNYYl-yNJslN7A5GfLOfyTmFFUQ$       -o-    https://urldefense.com/v3/__https://www.flickr.com/photos/dberrange__;!!GjvTz_vk!W6-HGWM-XkF_52am249DrLIDQeZctVOHg72LvOHGUcwxqQM5mY0GNYYl-yNJslN7A5GfLOf8A5OC0Q$  :|
+>> |: https://urldefense.com/v3/__https://libvirt.org__;!!GjvTz_vk!W6-HGWM-XkF_52am249DrLIDQeZctVOHg72LvOHGUcwxqQM5mY0GNYYl-yNJslN7A5GfLOf3gffAdg$          -o-            https://urldefense.com/v3/__https://fstop138.berrange.com__;!!GjvTz_vk!W6-HGWM-XkF_52am249DrLIDQeZctVOHg72LvOHGUcwxqQM5mY0GNYYl-yNJslN7A5GfLOfPMofYqw$  :|
+>> |: https://urldefense.com/v3/__https://entangle-photo.org__;!!GjvTz_vk!W6-HGWM-XkF_52am249DrLIDQeZctVOHg72LvOHGUcwxqQM5mY0GNYYl-yNJslN7A5GfLOeQ5jjAeQ$     -o-    https://urldefense.com/v3/__https://www.instagram.com/dberrange__;!!GjvTz_vk!W6-HGWM-XkF_52am249DrLIDQeZctVOHg72LvOHGUcwxqQM5mY0GNYYl-yNJslN7A5GfLOfhaDF9WA$  :|
+>>
 
