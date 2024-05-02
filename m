@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB218C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 17:06:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C564C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 17:11:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2ZsO-0000Vm-DQ; Thu, 02 May 2024 13:05:44 -0400
+	id 1s2Zxf-0004Nd-Ef; Thu, 02 May 2024 13:11:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s2ZsM-0000Tp-Lr
- for qemu-devel@nongnu.org; Thu, 02 May 2024 13:05:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s2Zxd-0004Ma-T5
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 13:11:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s2ZsK-0000sM-Mh
- for qemu-devel@nongnu.org; Thu, 02 May 2024 13:05:42 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s2Zxc-0001qm-2e
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 13:11:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714669517;
+ s=mimecast20190719; t=1714669866;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=VBpT7Pm0L6cDpmaxFFQOjOS2vc/kzMxULXJQG3/6rVo=;
- b=jDo1eRcalnWlSU/cndAWwQq9kHR13p55ccg/jO24zb/CznKT5OmumY8Nce2/qXYhjKf4n5
- 6tnlxbD3LOx0Eezh/H1VJnvbrVJH/5YkrLWXHEJxuz+ObOTRZC0nZ5Ro+ZgYpVTZUgDubX
- XUQJ1qPf1WlOlnoRI2btP+z1P7b0jgI=
-Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
- [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VW0fFVpGYoNhmXoBndEnHfu1XTjlkYv0hLWM+XxuPy0=;
+ b=BYgqcf2dYUwaM1rnfELYjQI0soG0dmO47eCoD8u8BYiKnXyj83u8hhL4pcuj7nlT/tn2Bv
+ 3PAOIkqWW2j7JHMBSMyV35EftMPQGzmLaMTcm4UQrr74Nk2U3yeQKr5QWPrH95oGcT4fns
+ xFNJ8KXv0a8Ujk0C2xMNmzP/9iUw3oQ=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-694-s5IrJzhSPEeqwGy6kCGehw-1; Thu, 02 May 2024 13:04:28 -0400
-X-MC-Unique: s5IrJzhSPEeqwGy6kCGehw-1
-Received: by mail-lj1-f197.google.com with SMTP id
- 38308e7fff4ca-2d88271f485so61933951fa.1
- for <qemu-devel@nongnu.org>; Thu, 02 May 2024 10:04:27 -0700 (PDT)
+ us-mta-621-_sIbKUcLNSSopFrUyZwwdQ-1; Thu, 02 May 2024 13:11:04 -0400
+X-MC-Unique: _sIbKUcLNSSopFrUyZwwdQ-1
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-56bf2d59fceso1510571a12.3
+ for <qemu-devel@nongnu.org>; Thu, 02 May 2024 10:11:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714669466; x=1715274266;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VBpT7Pm0L6cDpmaxFFQOjOS2vc/kzMxULXJQG3/6rVo=;
- b=DkObKaUHsyHyjyDaqJYgHeGwI97ChoiYs9se4CS+g7TBnlS+4jJMlg4Ai66Dj+9zAb
- K7T1UuW9cnnToWM3f7gC7KPfJD0tl/AaqZ6L3n/NAwCsgKW95d9411NtiCidhvu8t8tp
- EgDT1T1iRqwda7kcLpZjDh6mR3N99r/1QDzHN2dnHuVk6er1yXB4h/Uzrl5mzEDpvfaR
- uoPkgNqUYu2ROi312ajIxbtgTcsLRlopNgcD4uLapad71XmWrGDv4wckDbBR+R+byRoB
- Msm8goZ42jfNsTVYqs2iPQpSshsHofTSUBfJdltYPm5mURe93ukANb6gbxqdC9NOxA+E
- Xftg==
+ d=1e100.net; s=20230601; t=1714669863; x=1715274663;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=VW0fFVpGYoNhmXoBndEnHfu1XTjlkYv0hLWM+XxuPy0=;
+ b=qdPh0H1E/PRMuz7PuU3wVaXCWvAtABS2so5NOpQehWEqGSVXH8Lp0hhEqPbkvFRvB7
+ NwNpHeuvAFKxLAge9wC5VNmuOsR90iBYnZFWlFXbXcrxcPXqd4SHLTekEMqWu9Gh13Ae
+ ykvTtLApOgCtvQZYgUCNaObGJzeYCtRX4us3ZXezX2bKMNqYCH3H/nP69oUsTkupfqNZ
+ 3IrZmWA8p1nVBk4rH7mx0ZKUpFsiRt3hLdlW4gDRUTpfa6MNV4Svupx4wWnWojdntqTg
+ +KhnIShR3Pvx0oHoGxqzWqpPPWQasnQvHlZagC8BaCBZ2puLKC4k62KTM7rUvUklRBW8
+ bKmw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXpFr+o7dfTmj4ejNwQ8o1aCdF/PrRAEjzBjDwhkEIuI06brAR4O6SGG2aS3MuFkDa2UfxXPxOtdGwNdmZIvZm9lVXyolI=
-X-Gm-Message-State: AOJu0YwVwlMUMCkJRu06NnuS6J9mPVy/LxsQdD7Y5ekbWoVStaYOLYCI
- t5kO6vYc4/VR5470iSBISYaKR60gD7RCSL8KkoctIhx9bZe6uKKqVHJrbeoS2i3vWGyNpE/XwEo
- F2db5sezi7x6ATOMHNEH9mlfXyDWaw/VR7nghh83QpYKh3yDrwL30
-X-Received: by 2002:ac2:456e:0:b0:51d:ab55:f2db with SMTP id
- k14-20020ac2456e000000b0051dab55f2dbmr260449lfm.10.1714669465804; 
- Thu, 02 May 2024 10:04:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEByGAkfDsCzr0SqL5hjqjBihPaaR1gbuSJykpN9NtokktLvMm38bp8ijpbAJxCaHGJF/SEmg==
-X-Received: by 2002:ac2:456e:0:b0:51d:ab55:f2db with SMTP id
- k14-20020ac2456e000000b0051dab55f2dbmr260439lfm.10.1714669465314; 
- Thu, 02 May 2024 10:04:25 -0700 (PDT)
+ AJvYcCWEnsg3dplIVwdSwNkdkKPqll1l5bB/Ln77xXY/P8veaUBBcFXHJGY/Q2hLk1//tv7dhLph1c3b8F9umjX+gzJ2rNyQuno=
+X-Gm-Message-State: AOJu0YwemszygnarjHvyrTwxcqk5Jwdyhg1OJ8P0FP9GRIxnZtbEUsFV
+ hm+gpnX3LbSORfora894wkVJXAZRQh1sfaGmkrbavrVfOIBvaW1Vm4dknwKAEeqzAA+KB1BpIg+
+ qxHczznzJThIpXZq78ReNcE5hv2iGP4H6GcJi4OBnLX5v/GC3qSO1
+X-Received: by 2002:a50:9f8f:0:b0:56e:2ebc:5c4 with SMTP id
+ c15-20020a509f8f000000b0056e2ebc05c4mr53750edf.20.1714669863642; 
+ Thu, 02 May 2024 10:11:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHKv/s+wsL6cASpWnc410/de9/3oLWMO8Rz7pEO1nqOzdYK7ioGVVrDPFnHYaka7hTcKYKvbA==
+X-Received: by 2002:a50:9f8f:0:b0:56e:2ebc:5c4 with SMTP id
+ c15-20020a509f8f000000b0056e2ebc05c4mr53739edf.20.1714669863258; 
+ Thu, 02 May 2024 10:11:03 -0700 (PDT)
 Received: from [192.168.0.9] (ip-109-43-179-34.web.vodafone.de.
  [109.43.179.34]) by smtp.gmail.com with ESMTPSA id
- ef14-20020a05640228ce00b00572678527e6sm715747edb.59.2024.05.02.10.04.23
+ bt9-20020a0564020a4900b005729c4c2501sm718670edb.24.2024.05.02.10.11.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 May 2024 10:04:24 -0700 (PDT)
-Message-ID: <f95c1709-7d98-47e3-ba1b-22188c546e8e@redhat.com>
-Date: Thu, 2 May 2024 19:04:21 +0200
+ Thu, 02 May 2024 10:11:02 -0700 (PDT)
+Message-ID: <a22a20c7-2675-4848-a2d6-a2bbf5c105ad@redhat.com>
+Date: Thu, 2 May 2024 19:11:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] s390x: Introduce a SCLPDevice pointer under the
- machine
+Subject: Re: [PATCH 2/3] s390x/event-facility: Simplify
+ sclp_get_event_facility_bus()
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
  qemu-s390x@nongnu.org, qemu-devel@nongnu.org
 Cc: Halil Pasic <pasic@linux.ibm.com>,
@@ -80,9 +80,9 @@ Cc: Halil Pasic <pasic@linux.ibm.com>,
  David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
  Eric Farman <farman@linux.ibm.com>
 References: <20240502131533.377719-1-clg@redhat.com>
- <20240502131533.377719-2-clg@redhat.com>
-Content-Language: en-US
+ <20240502131533.377719-3-clg@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -125,10 +125,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240502131533.377719-2-clg@redhat.com>
+In-Reply-To: <20240502131533.377719-3-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -136,7 +136,7 @@ X-Spam_bar: ---
 X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.476,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,12 +153,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 02/05/2024 15.15, Cédric Le Goater wrote:
-> Initialize directly SCLPDevice from the machine init handler and
-> remove s390_sclp_init(). We will use the SCLPDevice pointer later to
-> create the consoles.
+> sclp_get_event_facility_bus() scans the whole machine to find a
+> TYPE_SCLP_EVENTS_BUS object. The SCLPDevice instance is now available
+> under the machine state, use it to simplify the lookup and adjust the
+> creation of the consoles.
 > 
 > Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
+>   include/hw/s390x/event-facility.h |  2 +-
+>   hw/s390x/event-facility.c         | 13 ++-----------
+>   hw/s390x/s390-virtio-ccw.c        | 12 +++++++-----
+>   3 files changed, 10 insertions(+), 17 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
