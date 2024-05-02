@@ -4,69 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 465E3C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 07:31:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48FF8C04FFE
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 07:31:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2QuS-0004Hs-1z; Thu, 02 May 2024 03:31:16 -0400
+	id 1s2Quo-0004TL-JS; Thu, 02 May 2024 03:31:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1s2Qu4-0004E4-9B
- for qemu-devel@nongnu.org; Thu, 02 May 2024 03:30:59 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1s2Qtz-0006Zc-3n
- for qemu-devel@nongnu.org; Thu, 02 May 2024 03:30:50 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:c10a:0:640:882f:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id C471660BF4;
- Thu,  2 May 2024 10:30:39 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:8910::1:a] (unknown
- [2a02:6b8:b081:8910::1:a])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id cUNHom2IdCg0-yPOTIFRN; Thu, 02 May 2024 10:30:39 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1714635039;
- bh=yKjIBp6lkkYGWypBc0uboZPDd/H0TET1EdgGHVSgUTI=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=VhV6IW2hYcXF+JFK+FdFMzEfA+lm04VtisgWdm69/luOcRvBi2smDae1cBo+71g4V
- 8ZmfgcoyoQUFXZsEzNU7w8jgqk8X0t2Wf6mdU7iHPTiRPtk2QX8rsCjPk+TOthuab/
- RWKi9QeKoRU5f78LFlsGyaLzGaYWMM97T4yKMaRg=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <4942e46a-3ab0-46bd-8a21-90f9b3c1c592@yandex-team.ru>
-Date: Thu, 2 May 2024 10:30:38 +0300
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1s2Quk-0004RJ-BN
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 03:31:35 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1s2Qui-0006fF-FI
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 03:31:34 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-572ad86dc8aso1649675a12.3
+ for <qemu-devel@nongnu.org>; Thu, 02 May 2024 00:31:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1714635090; x=1715239890; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=J6K+vQgBEJa5RBagBtZnrylNM7yhfiFaLALvIlNSgfg=;
+ b=KVgaF1vbYugNMmw6jaCD9FfPjQH4Rfko+Y0+pHtAe2PRVfLiDerJBjoOjWj8jVhB/2
+ mLhBFQhB2OAjYipP8DS0INg7H1NuyA+k4VHS7SMCkYGNn1qBSS1Rr3BL3h8vKIEBqcfy
+ jnAUxhg+6oHuXiXaQYseRDlHYwBPuM9X2WvRSH8P6vgT6ehhWlLbSDH9mW34V30GHpL7
+ yuJaOCmxYqRjQc9Q49PHDB95OJ/0rVoFVd0y5IqnNYVKdOzpd78xoin5ID+Wk23004O/
+ N7aOA2knH2iSm2T5jwMTE0ZP2TdYW0IH+PjVSu1bI6uVw8KPb2ccDRxs0Tr78KsKp/BK
+ fgzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714635090; x=1715239890;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=J6K+vQgBEJa5RBagBtZnrylNM7yhfiFaLALvIlNSgfg=;
+ b=KoNni+cVVdIz+sm3UBBzOpJhUCYpxEAR2Nb9iVIx/I9sGeuqh8R2LHptJ1LAaN06pn
+ P4Gy1wbyep4r5xlFPvC8oJRW5G6L2ztyOZu01aeOCUhScfao3eN7AEwnw0tif4sb/pjn
+ D2TkLqZAdtNavDxdtMVMXtGek/HqvfPmpF8ruoCU8P/ffmN25XUT1JK+cC6xnhS22Q5U
+ IWW55jCRdq1mdC/IgbRi9CTe/6GphWkd9pIJk13t1kpgX7BptBtu+wkIXAybenFXCDUJ
+ nMlWsfFIgWTbxC5mVOmdoiezsS3OMeU9c+gDSc/zYg/w+Z29ElE6zgIwMnZ9q7SGxDTY
+ CUfg==
+X-Gm-Message-State: AOJu0YwH6mwYDasAR9QlYB8mgG/5rDXtGme6mCKM0SCsMvga7Hhj/m8O
+ aousYBOCzOztHPa7dgyVjva24uLAC+HjYXDH0AZeBg2iJHkFRvBb4Phga+Ma1FXaZ0FkO53Dr8c
+ E1/1guO3QpzvUPpOzDZJgHZQ+qsk=
+X-Google-Smtp-Source: AGHT+IGMHAiiyj/igyCydtEDbXlM1aLJwGa5/OER2+/iX842FcrCPNtsDsqsmkDTMJpWU8WX/JeJCxlIf+/12u8L+4k=
+X-Received: by 2002:a50:aade:0:b0:571:c0e6:233c with SMTP id
+ r30-20020a50aade000000b00571c0e6233cmr3365370edc.37.1714635089557; Thu, 02
+ May 2024 00:31:29 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mc146818rtc: add a way to generate RTC interrupts via QMP
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-References: <20240425133745.464091-1-d-tatianin@yandex-team.ru>
- <87v844y0ul.fsf@pond.sub.org>
- <11c78645-e87b-4a43-8191-a73540c364a9@linaro.org>
- <87plu8ieut.fsf@pond.sub.org>
- <40bee8cc-6cad-4c5b-a319-49dcbb2b82f1@linaro.org>
-Content-Language: en-US
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
-In-Reply-To: <40bee8cc-6cad-4c5b-a319-49dcbb2b82f1@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+References: <20240430164939.925307-1-edgar.iglesias@gmail.com>
+ <20240430164939.925307-14-edgar.iglesias@gmail.com>
+ <7172c93c-8c25-4934-b1d8-de0658c6f50f@redhat.com>
+In-Reply-To: <7172c93c-8c25-4934-b1d8-de0658c6f50f@redhat.com>
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Date: Thu, 2 May 2024 09:31:17 +0200
+Message-ID: <CAJy5ezrP0OQU7ZOfZUDg2QgVZ+zcicrACk=UoL68BWEhOaQWsQ@mail.gmail.com>
+Subject: Re: [PATCH v4 13/17] softmmu: Pass RAM MemoryRegion and is_write
+ xen_map_cache()
+To: David Hildenbrand <david@redhat.com>
+Cc: qemu-devel@nongnu.org, sstabellini@kernel.org, jgross@suse.com, 
+ "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
+ Anthony Perard <anthony.perard@citrix.com>, 
+ Paul Durrant <paul@xen.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ xen-devel@lists.xenproject.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,151 +98,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/29/24 4:39 PM, Philippe Mathieu-Daudé wrote:
-
-> (+Peter who has more experience on such design).
+On Thu, May 2, 2024 at 9:24=E2=80=AFAM David Hildenbrand <david@redhat.com>=
+ wrote:
 >
-> On 29/4/24 13:32, Markus Armbruster wrote:
->> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
->>
->>> Hi Daniil, Markus,
->>>
->>> On 26/4/24 10:39, Markus Armbruster wrote:
->>>> Daniil Tatianin <d-tatianin@yandex-team.ru> writes:
->>>>
->>>>> This can be used to force-synchronize the time in guest after a long
->>>>> stop-cont pause, which can be useful for serverless-type workload.
+> On 30.04.24 18:49, Edgar E. Iglesias wrote:
+> > From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+> >
+> > Propagate MR and is_write to xen_map_cache().
 >
-> What is a "serverless-type workload"?
+> I'm pretty sure the patch subject is missing a "to" :)
 
-That's when your VM instance only runs on demand for a few seconds 
-before going to sleep again
-until the next user request comes in.
+Thanks David! I'll fix it in v5!
 
->>>>> Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
->>>>> ---
->>>>>    hw/rtc/mc146818rtc.c         | 15 +++++++++++++++
->>>>>    include/hw/rtc/mc146818rtc.h |  1 +
->>>>>    qapi/misc-target.json        | 16 ++++++++++++++++
->>>>>    3 files changed, 32 insertions(+)
->>>>>
->>>>> diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
->>>>> index f4c1869232..6980a78d5f 100644
->>>>> --- a/hw/rtc/mc146818rtc.c
->>>>> +++ b/hw/rtc/mc146818rtc.c
->>>>> @@ -116,6 +116,21 @@ void qmp_rtc_reset_reinjection(Error **errp)
->>>>>        }
->>>>>    }
->>>>>    +void qmp_rtc_notify(Error **errp)
->>>>> +{
->>>>> +    MC146818RtcState *s;
->>>>> +
->>>>> +    /*
->>>>> +     * See:
->>>>> +     * 
->>>>> https://www.kernel.org/doc/Documentation/virtual/kvm/timekeeping.txt
->
-> What part of this document explains why this change is required?
-> I probably missed it. Explaining it here briefly would be more
-> useful.
+Cheers,
+Edgar
 
-Sure, will do!
 
 >
->>>>> +     */
->>>>> +    QLIST_FOREACH(s, &rtc_devices, link) {
->>>>> +        s->cmos_data[RTC_REG_B] |= REG_B_UIE;
->                                       // Update-ended interrupt enable
+> > This is in preparation for adding support for grant mappings.
+> >
+> > No functional change.
+> >
 >
->>>>> +        s->cmos_data[RTC_REG_C] |= REG_C_IRQF | REG_C_UF;
->                                       // interrupt request flag
->                                       //           update interrupt flag
+> Reviewed-by: David Hildenbrand <david@redhat.com>
+> --
+> Cheers,
 >
->>>>> +        qemu_irq_raise(s->irq);
->>>>> +    }
->>>>> +}
->>>>> +
->>>> Note for later: qmp_rtc_notify() works on all realized mc146818rtc
->>>> devices.  Other kinds of RTC devices are silently ignored. Just like
->>>> qmp_rtc_reset_reinjection().
->>>
->>> IMO to avoid any future ambiguity (in heterogeneous machines), this
->>> command must take a QOM device path (or a list of) and only notify
->>> those.
->>
->> Let's compare:
->>
->> • With QOM path:
->>
->>    · You need to know the machine's RTC device(s).
->>
->>      Unfortunately, this is bothersome, as the QOM path is not stable.
->
-> But we'll need more of that with dynamic machines...
->
->>      For Q35, it's generally "/machine/unattached/device[N]/rtc", but N
->>      varies with configuration (TCG N=2, KVM N=3 for me), and it might
->>      vary with machine type version.  That's because the machine code
->>      creates ICH9-LPC without a proper name.  We do that a lot. I hate
->>      it.
->>
->>      Likewise for i440FX with PIIX3 instead of ICH9-LPC.
->>
->>      For isapc, it's /machine/unattached/device[3].  I suspect the 3
->>      isn't reliable there, either.
->>
->>      microvm doesn't seem to have an RTC by default.
->>
->>    · If the device so named doesn't support IRQ inject, the command
->>      should fail.
->
-> Yes, why the management app would want to run this command if there
-> are not RTC on the machine?
->
->>    · Could be generalized to non-RTC devices when that's useful.
->>
->> • Broadcast:
->>
->>    · You don't need to know the machine's RTC device(s).
->>
->>    · If there are multiple RTC devices that support IRQ inject, we 
->> inject
->>      for each of them.  There is no way to select specific RTCs.
->>
->>    · If there is no RTC device that supports IRQ inject, the command 
->> does
->>      nothing silently.
->>
->>      I don't like silent failures.  It could be made to fail instead.
->>
->> If it wasn't for the unstable QOM path problem, I'd advise against
->> the broadcast interface.
->>
->> Thoughts?
->
-> Something bugs me in this patch but I couldn't figure out what I am
-> missing. The issue is when migrated VM is restored. I don't get why
-> the behavior depends on an external decision (via external management
-> transport). Don't we have post_load() hooks for such tuning?
-> This device implements it in rtc_post_load().
-
-This isn't really related to migration though. Serverless is based on 
-constantly stopping and resuming the VM on e.g. every HTTP request to an 
-endpoint.
-
-As far as Markus' comment goes, I propose we go the broadcast route, and 
-just add the -broadcast suffix to the current command name.
-
-If everyone is okay with that, I will submit a v3.
-
-Thank you!
-
->
-> Regards,
->
-> Phil.
->
-> PD: BTW tomorrow community call could be a good opportunity to discuss
-> this.
+> David / dhildenb
 >
 
