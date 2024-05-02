@@ -4,86 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A166BC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 20:09:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3F10C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 20:24:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2ck1-0002oN-QW; Thu, 02 May 2024 16:09:17 -0400
+	id 1s2cxp-0007un-Ux; Thu, 02 May 2024 16:23:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1s2ck0-0002o5-8e
- for qemu-devel@nongnu.org; Thu, 02 May 2024 16:09:16 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s2cxj-0007tK-5t
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 16:23:27 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1s2cjy-0000Ee-JG
- for qemu-devel@nongnu.org; Thu, 02 May 2024 16:09:15 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1e4bf0b3e06so83916955ad.1
- for <qemu-devel@nongnu.org>; Thu, 02 May 2024 13:09:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714680552; x=1715285352; darn=nongnu.org;
- h=content-transfer-encoding:content-language:in-reply-to:mime-version
- :user-agent:date:message-id:from:references:to:subject:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ctirnUZtwJNhEsaEPHZYXoCIMzmJS10JxknRdDITcSc=;
- b=tDCMd9uFm1egb7/2kBSa/JNt1f9z23LA9ut7ASU5wZ2aJp6oMSj7LzEq/Gz3cNwPCF
- CkORFRLTDmE88OtNHh3maW57regYSY5xOy5EeKK5JEKBcJATooNQK41LXDD9wx+g9JIq
- 8nNaMTQ1TT0fxEZ1FbV/AzKeeSRijn8Cy2O84YEqIgPFfZPAp8H/bXfWV4JswaQFJaWy
- RbiWMmvbdlYhpgLLyclIa86mZGjTVBnQGhTTabVV7LirkucKPqeSWo4tNdprYCXkYctX
- QobfmtA4L6ee5yWqwnJ5HPUsSMNv3cEO5sXie3o+Pt87P4btFOGvpt05bnoNtS1i2kza
- MG1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714680552; x=1715285352;
- h=content-transfer-encoding:content-language:in-reply-to:mime-version
- :user-agent:date:message-id:from:references:to:subject
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ctirnUZtwJNhEsaEPHZYXoCIMzmJS10JxknRdDITcSc=;
- b=ZhxdEWSwnTaXmAEoKVtZQYa4rOcTawoOZgpul7/pe3WgTsSFRwam9mZ5NvntWi8XVs
- LKzY8rPUmdCFcb2oSbGAqo3gvjs/mFXIa53E3xmNLNiiLudqrylcH/M7+dz1jKhNv+H4
- 5oepuQRyC9cTYVu7pReXJxQ3eN2eET0Fhb/wfPBl1RnXLpuZ0eWz+2JJ0b9YfaXmjGE1
- z4+DFAD/HT+E0NfyifDXGL4qoQ3TbX8+FuKUs7v0XTZOFJJlDgQQIq8zVRJn4svOhn0h
- 9TRJd1acOUmQQcg9fQLtvjFQ7lAQUB80cpt2N9tIJapI24cP4at2yvCygDtbQ1vdTMjd
- tIkA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU7+sWDS3E2zFHfU2Y6DNoTtjP1iWczk5moK2NcRcT6O/YcUZdSVfVLcbEQCBwXVF+iP91MkfuVSlTiOILLW3LUW9u/5iQ=
-X-Gm-Message-State: AOJu0YyedUibFmSPZesdey3N/tiK1IMovZ1yZe55VarnLvAr47xg2fXm
- fDQj83UvtT1tt6wd9ufqTMj+i3uH8yIDLVJ5Ddj2Y9/4+EthBbAMTEQV3lgeZHq3aCyCaPxRX4W
- L
-X-Google-Smtp-Source: AGHT+IHf+nYTb7Q8cwZFViha2AaBPWCnCPGdojUzg/Fs5s2/+svp04GG1S6E7yy1/uoEOHUU+W1bAA==
-X-Received: by 2002:a17:903:249:b0:1eb:d70c:e69f with SMTP id
- j9-20020a170903024900b001ebd70ce69fmr747839plh.63.1714680551787; 
- Thu, 02 May 2024 13:09:11 -0700 (PDT)
-Received: from [192.168.0.102] (201-1-51-131.dsl.telesp.net.br. [201.1.51.131])
- by smtp.gmail.com with ESMTPSA id
- s7-20020a170902ea0700b001ec6db9356bsm1732939plg.204.2024.05.02.13.09.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 May 2024 13:09:10 -0700 (PDT)
-Subject: Re: [PATCH v5 0/9] TCG plugins new inline operations
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-References: <20240502180847.287673-1-pierrick.bouvier@linaro.org>
- <b78563fd-1c06-8ee1-5508-39b3e83249cf@linaro.org>
- <b083716a-dd1e-4edb-ba57-530c7661305f@linaro.org>
-From: Gustavo Romero <gustavo.romero@linaro.org>
-Message-ID: <b3474554-0333-27c2-df47-146e5ef317d9@linaro.org>
-Date: Thu, 2 May 2024 17:09:07 -0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s2cxh-0002mt-5m
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 16:23:26 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id E45821FD16;
+ Thu,  2 May 2024 20:23:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1714681401; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=NN3JX0vWv3PeUyF5U9ZmHuod2sogS2KvaQSZY3qUjUk=;
+ b=nox7UyeYjnw0YhbwZ5igXawsjGokWcngUGglpY4Tyqn5ZjA63kViPBn2u3vRya1+ob6M1o
+ HL1+RH0yupWFm3eO2bZ3UB9SY6krBxpTsqcBCcX8OSCvE9WtwVJA5Y4F88Hjv/K4t0N8gK
+ lDuYFlu2ZuvrazrgHGl9pzBZTYs5PSs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1714681401;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=NN3JX0vWv3PeUyF5U9ZmHuod2sogS2KvaQSZY3qUjUk=;
+ b=V8FyQEZwbQWhDSr1i9W6GVmlnbIfcE+FLfcE3XLXc5eW3k7T1lfMGjKuRjEonEksvJ52t8
+ 1c6FG9P5UxvKtxCQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1714681400; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=NN3JX0vWv3PeUyF5U9ZmHuod2sogS2KvaQSZY3qUjUk=;
+ b=WXroNFHVrzul3H0rvm4OGKM3xXNr3f4OHZA/9r++4JLR/pRSqolw/wRrRu1fXDKFNAxKi5
+ Dq5VAPPj7i2dCGxvUMBkk2nmvsM3tLXAtOfLPt+MeqrKtPzUInh1fmxyiUtajWxwmFLa7J
+ wB8pZg1rVCkmaB9fYDO3fkty/sM1P8c=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1714681400;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=NN3JX0vWv3PeUyF5U9ZmHuod2sogS2KvaQSZY3qUjUk=;
+ b=QvuKgCdqD7yL48rZ5Zi10kqYgBTCf86Ay2+/Gn4AJ71mvoEDOUI5t2JNhU4HGwd0kXdbPC
+ d+QDg8HTxsvUwsDw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0245513957;
+ Thu,  2 May 2024 20:23:19 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([10.150.64.162])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id PWLiLjf2M2ZZUQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 02 May 2024 20:23:19 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 00/13] Migration patches for 2024-05-02
+Date: Thu,  2 May 2024 17:23:03 -0300
+Message-Id: <20240502202316.29924-1-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
-In-Reply-To: <b083716a-dd1e-4edb-ba57-530c7661305f@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -53
-X-Spam_score: -5.4
-X-Spam_bar: -----
-X-Spam_report: (-5.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-3.296,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCPT_COUNT_TWO(0.00)[2];
+ RCVD_TLS_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ TO_DN_SOME(0.00)[]; FROM_HAS_DN(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
+ imap1.dmz-prg2.suse.org:rdns]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,95 +113,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/2/24 4:45 PM, Pierrick Bouvier wrote:
-> Hi Gustavo,
-> 
-> On 5/2/24 12:16, Gustavo Romero wrote:
->> Hi Pierrick,
->>
->> On 5/2/24 3:08 PM, Pierrick Bouvier wrote:
->>> This series implement two new operations for plugins:
->>> - Store inline allows to write a specific value to a scoreboard.
->>> - Conditional callback executes a callback only when a given condition is true.
->>>     The condition is evaluated inline.
->>>
->>> It's possible to mix various inline operations (add, store) with conditional
->>> callbacks, allowing efficient "trap" based counters.
->>>
->>> It builds on top of new scoreboard API, introduced in the previous series.
->>>
->>> NOTE: Two patches still need review
->>>
->>> v2
->>> -- 
->>>
->>> - fixed issue with udata not being passed to conditional callback
->>> - added specific test for this in tests/plugin/inline.c (udata was NULL before).
->>>
->>> v3
->>> -- 
->>>
->>> - rebased on top of "plugins: Rewrite plugin code generation":
->>>     20240316015720.3661236-1-richard.henderson@linaro.org
->>> - single pass code generation
->>> - small cleanups for code generation
->>>
->>> v4
->>> -- 
->>>
->>> - remove op field from qemu_plugin_inline_cb
->>> - use tcg_constant_i64 to load immediate value to store
->>>
->>> v5
->>> -- 
->>>
->>> - rebase on top of master now that Richard's series was merged
->>>
->>> Pierrick Bouvier (9):
->>>     plugins: prepare introduction of new inline ops
->>>     plugins: extract generate ptr for qemu_plugin_u64
->>>     plugins: add new inline op STORE_U64
->>>     tests/plugin/inline: add test for STORE_U64 inline op
->>>     plugins: conditional callbacks
->>>     tests/plugin/inline: add test for conditional callback
->>>     plugins: distinct types for callbacks
->>>     plugins: extract cpu_index generate
->>>     plugins: remove op from qemu_plugin_inline_cb
->>>
->>>    include/qemu/plugin.h        |  42 +++++++----
->>>    include/qemu/qemu-plugin.h   |  80 ++++++++++++++++++++-
->>>    plugins/plugin.h             |  12 +++-
->>>    accel/tcg/plugin-gen.c       | 136 +++++++++++++++++++++++++++--------
->>>    plugins/api.c                |  39 ++++++++++
->>>    plugins/core.c               | 109 ++++++++++++++++++++--------
->>>    tests/plugin/inline.c        | 130 +++++++++++++++++++++++++++++++--
->>>    plugins/qemu-plugins.symbols |   2 +
->>>    8 files changed, 466 insertions(+), 84 deletions(-)
->>
->> The description in the commit message of patches 1/9, 2/9, 6/9, 7/9, and 8/9 is missing.
->>
->> Is this intentional?
->>
-> 
-> Do you mean there is no multiline commit message for those changes?
-> Indeed, for some of those patches, the change is a single line commit message.
+The following changes since commit 4977ce198d2390bff8c71ad5cb1a5f6aa24b56fb:
 
-I just see a commit title and the Signed-off-by. For example, in 8/9
-I see the following on git log:
+  Merge tag 'pull-tcg-20240501' of https://gitlab.com/rth7680/qemu into staging (2024-05-01 15:15:33 -0700)
 
-commit f518898aa09b42e317b887237bb75a432b477c6d
-Author: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Date:   Thu May 2 11:08:46 2024 -0700
+are available in the Git repository at:
 
-     plugins: extract cpu_index generate
-     
-     Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-     Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+  https://gitlab.com/farosas/qemu.git tags/migration-20240502-pull-request
 
-It has only the title: "plugins: extract cpu_index generate"
-and R-b and S-b, so no description about the changes.
+for you to fetch changes up to 4f9f85a5e223fd488b4deb6d9449576e7dbe6819:
 
+  hmp/migration: Fix documents for "migrate" command (2024-05-02 14:45:07 -0300)
 
-Cheers,
-Gustavo
+----------------------------------------------------------------
+Migration pull request
+
+- Will's WITH_QEMU_LOCK_GUARD cleanup
+- Vladimir's new exit-on-error parameter
+- Fabiano's removals and deprecations series
+  (block migration and non-multifd compression removed)
+- Peter's documentation fix for HMP migrate command
+
+----------------------------------------------------------------
+Fabiano Rosas (6):
+      migration: Remove 'skipped' field from MigrationStats
+      migration: Remove 'inc' option from migrate command
+      migration: Remove 'blk/-b' option from migrate commands
+      migration: Remove block migration
+      migration: Remove non-multifd compression
+      migration: Deprecate fd: for file migration
+
+Peter Xu (1):
+      hmp/migration: Fix documents for "migrate" command
+
+Vladimir Sementsov-Ogievskiy (5):
+      migration: move trace-point from migrate_fd_error to migrate_set_error
+      migration: process_incoming_migration_co(): complete cleanup on failure
+      migration: process_incoming_migration_co(): fix reporting s->error
+      migration: process_incoming_migration_co(): rework error reporting
+      qapi: introduce exit-on-error parameter for migrate-incoming
+
+Will Gyda (1):
+      migration/ram.c: API Conversion qemu_mutex_lock(), and qemu_mutex_unlock() to WITH_QEMU_LOCK_GUARD macro
+
+ .gitlab-ci.d/buildtest.yml       |    2 +-
+ MAINTAINERS                      |    1 -
+ docs/about/deprecated.rst        |   51 +-
+ docs/about/removed-features.rst  |  103 ++++
+ docs/devel/migration/main.rst    |    2 +-
+ hmp-commands.hx                  |   22 +-
+ hw/core/machine.c                |    1 -
+ include/migration/misc.h         |    6 -
+ meson.build                      |    2 -
+ meson_options.txt                |    2 -
+ migration/block.c                | 1019 --------------------------------------
+ migration/block.h                |   52 --
+ migration/colo.c                 |    1 -
+ migration/fd.c                   |   12 +
+ migration/meson.build            |    4 -
+ migration/migration-hmp-cmds.c   |   99 +---
+ migration/migration.c            |  121 ++---
+ migration/migration.h            |   14 +-
+ migration/options.c              |  229 ---------
+ migration/options.h              |   13 -
+ migration/qemu-file.c            |   78 ---
+ migration/qemu-file.h            |    4 -
+ migration/ram-compress.c         |  564 ---------------------
+ migration/ram-compress.h         |   77 ---
+ migration/ram.c                  |  181 +------
+ migration/savevm.c               |    5 -
+ migration/trace-events           |    2 +-
+ qapi/migration.json              |  212 +-------
+ scripts/meson-buildoptions.sh    |    4 -
+ system/vl.c                      |    3 +-
+ tests/qemu-iotests/183           |  147 ------
+ tests/qemu-iotests/183.out       |   66 ---
+ tests/qemu-iotests/common.filter |    7 -
+ tests/qtest/migration-test.c     |  139 ------
+ 34 files changed, 209 insertions(+), 3036 deletions(-)
+ delete mode 100644 migration/block.c
+ delete mode 100644 migration/block.h
+ delete mode 100644 migration/ram-compress.c
+ delete mode 100644 migration/ram-compress.h
+ delete mode 100755 tests/qemu-iotests/183
+ delete mode 100644 tests/qemu-iotests/183.out
+
+Fabiano Rosas (6):
+  migration: Remove 'skipped' field from MigrationStats
+  migration: Remove 'inc' option from migrate command
+  migration: Remove 'blk/-b' option from migrate commands
+  migration: Remove block migration
+  migration: Remove non-multifd compression
+  migration: Deprecate fd: for file migration
+
+Peter Xu (1):
+  hmp/migration: Fix documents for "migrate" command
+
+Vladimir Sementsov-Ogievskiy (5):
+  migration: move trace-point from migrate_fd_error to migrate_set_error
+  migration: process_incoming_migration_co(): complete cleanup on
+    failure
+  migration: process_incoming_migration_co(): fix reporting s->error
+  migration: process_incoming_migration_co(): rework error reporting
+  qapi: introduce exit-on-error parameter for migrate-incoming
+
+Will Gyda (1):
+  migration/ram.c: API Conversion qemu_mutex_lock(), and
+    qemu_mutex_unlock() to WITH_QEMU_LOCK_GUARD macro
+
+ .gitlab-ci.d/buildtest.yml       |    2 +-
+ MAINTAINERS                      |    1 -
+ docs/about/deprecated.rst        |   51 +-
+ docs/about/removed-features.rst  |  103 +++
+ docs/devel/migration/main.rst    |    2 +-
+ hmp-commands.hx                  |   22 +-
+ hw/core/machine.c                |    1 -
+ include/migration/misc.h         |    6 -
+ meson.build                      |    2 -
+ meson_options.txt                |    2 -
+ migration/block.c                | 1019 ------------------------------
+ migration/block.h                |   52 --
+ migration/colo.c                 |    1 -
+ migration/fd.c                   |   12 +
+ migration/meson.build            |    4 -
+ migration/migration-hmp-cmds.c   |   99 +--
+ migration/migration.c            |  121 ++--
+ migration/migration.h            |   14 +-
+ migration/options.c              |  229 -------
+ migration/options.h              |   13 -
+ migration/qemu-file.c            |   78 ---
+ migration/qemu-file.h            |    4 -
+ migration/ram-compress.c         |  564 -----------------
+ migration/ram-compress.h         |   77 ---
+ migration/ram.c                  |  181 +-----
+ migration/savevm.c               |    5 -
+ migration/trace-events           |    2 +-
+ qapi/migration.json              |  212 +------
+ scripts/meson-buildoptions.sh    |    4 -
+ system/vl.c                      |    3 +-
+ tests/qemu-iotests/183           |  147 -----
+ tests/qemu-iotests/183.out       |   66 --
+ tests/qemu-iotests/common.filter |    7 -
+ tests/qtest/migration-test.c     |  139 ----
+ 34 files changed, 209 insertions(+), 3036 deletions(-)
+ delete mode 100644 migration/block.c
+ delete mode 100644 migration/block.h
+ delete mode 100644 migration/ram-compress.c
+ delete mode 100644 migration/ram-compress.h
+ delete mode 100755 tests/qemu-iotests/183
+ delete mode 100644 tests/qemu-iotests/183.out
+
+-- 
+2.35.3
+
 
