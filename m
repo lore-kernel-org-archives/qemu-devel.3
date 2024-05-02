@@ -4,85 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A531C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 18:11:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E23CC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 18:16:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2arx-0003GK-BI; Thu, 02 May 2024 14:09:21 -0400
+	id 1s2ayV-0002qw-UO; Thu, 02 May 2024 14:16:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1s2ari-0003Ac-2L
- for qemu-devel@nongnu.org; Thu, 02 May 2024 14:09:06 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1s2arg-0003QQ-AL
- for qemu-devel@nongnu.org; Thu, 02 May 2024 14:09:05 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-1ec486198b6so27785315ad.1
- for <qemu-devel@nongnu.org>; Thu, 02 May 2024 11:09:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714673342; x=1715278142; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NSeK0Xfs9eq2wodWsR8+v2lG4Bqi0BcZDktPkPqvPZ4=;
- b=ITM8h7I19+wZVExADKEgl8wzT7M0YGxxU2lL4LydCd/FDwR5CBQFE1dN7/1t4rD3Qe
- xLaJChoQXqUYmUcRRDLWPzk90Omt7w55+/QImzntxru9zdkM83CO23GGvkgkU+v/YcBA
- M/MEBf04lvgD4QaTUMgG6Uq6VnyDDmTyUWaeYuEt2eSa5RQAsvVs6bbPSSLKNheG+ioe
- txmKqsvA+F1C220O0VYO65meU9ChNNFjfqA6IUjyx67WFLL/zJIcBCxCRhf2yU/eewbX
- pxLJ0yL2YQKkV2boEYWczXFR018u0jJflDMfJHkG0yO+P2RmggYHAI8A25lZRaUkpWzt
- FMVA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s2ayU-0002py-It
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 14:16:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s2ayS-0004lP-UH
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 14:16:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714673763;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZRCtS1amFyjxNEySTALuzbwtEToDCwdFv8S1fiEIBms=;
+ b=ERa6FFEHhLMBfwxnNA10yOhJpjTccmOPWWeExyYmnkizcPi0R5AIdI78XbwhSyUatjpkhh
+ GExLmK395RpNtZ/t0Az6+Sox0oDIKT7SSsNeAcMrTNNEiEVURUqp7d+OgRTWTTlOqyXAze
+ TELm4QlXXTxTPJcfIsMIPE6BKLgxkXw=
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
+ [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-692-VKQsHiQtNKSah1b7UZKsnQ-1; Thu, 02 May 2024 14:16:02 -0400
+X-MC-Unique: VKQsHiQtNKSah1b7UZKsnQ-1
+Received: by mail-oi1-f199.google.com with SMTP id
+ 5614622812f47-3c73b31c4e4so507534b6e.3
+ for <qemu-devel@nongnu.org>; Thu, 02 May 2024 11:16:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714673342; x=1715278142;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=NSeK0Xfs9eq2wodWsR8+v2lG4Bqi0BcZDktPkPqvPZ4=;
- b=jbhM1GJL9q9gdrvmTY272f+XZcYQScA5/oZggRso5545aIc1FnUrWU7hfQFWhaJiEW
- Xnubbcy3dLEGuouwFbUMlHT+mCXwzZMcreOulpxMDnfK5YFTxyyaEiFHjqvhfQFP1DTc
- I+XT6Wr78Uwaq6pc1VM3uAaB9ovLOVQveQcBgeiLHQq/RRQtYVn5KSF5qZpeGegksI8D
- 37ET0GLr4cvHi9CnbC5JGNMakLx3kL8koiX68H3Xr9DT9wskGwVYTbS+LOcrsFYh+KUI
- dW/01kUGVNafAMWJFtZyHWLtmJoVmWPm8K7Uyw846TIvj33tUrzudXMENV75s2mpi6Yg
- EHNQ==
-X-Gm-Message-State: AOJu0Yx6D4e68VkzrJw3WYYaCEn/9rROyhJtLaVMSISXrwSHpH+PWU8+
- giSW2Zbv7v5Ei/8ww0XbIZKP+uFqolVNswOakG4pVUAmvmPZxtMFrmawmShmKuKm77S4obER3wG
- dF4I=
-X-Google-Smtp-Source: AGHT+IEpVC+JZXkj7gICkZ0tf53b0d9kWdMUGp8gqhUA86Iuok6vaNdYBfGlV7cc23HN/K2b9EtKMw==
-X-Received: by 2002:a17:903:2487:b0:1e4:c07b:a8e0 with SMTP id
- p7-20020a170903248700b001e4c07ba8e0mr401748plw.66.1714673342454; 
- Thu, 02 May 2024 11:09:02 -0700 (PDT)
-Received: from linaro.vn.shawcable.net ([2604:3d08:9384:1d00::ecd0])
- by smtp.gmail.com with ESMTPSA id
- c17-20020a170902d49100b001ebd73f61fcsm1615605plg.121.2024.05.02.11.09.01
+ d=1e100.net; s=20230601; t=1714673762; x=1715278562;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZRCtS1amFyjxNEySTALuzbwtEToDCwdFv8S1fiEIBms=;
+ b=KHtv0aR02xt1uSsgkBd4GQYaOqo1fWN8zoqoLoSHQ7INqcNNQGBrxajMZ0vviz9lpx
+ yy0GjXZwRge6wdXP1u1gGCqCNsuZLSPlVZNOnOaqBTGmYMfVv2lG9mgmrcUGytTzc5nU
+ STpm96Fp5cX1X2YziK2SE10j5om3gOxZeJQlpUjZKNTJZ1oXHKKr6czkE2IGq+wkkmw7
+ HzsahJx6njETtOXzV3Zzg4bJJ9nKon8E+qUriwQnqOcbJ/u+9Od8+2SvvuwioyYFVmy6
+ wMCqfFXvglslXFI/IKXZ6dItC6aIfEyA/ZN5wXyW19Trss/QU1L0UachkZj0CO5+LML6
+ Kh4A==
+X-Gm-Message-State: AOJu0YwPf6sEFutTncNiJY8cchQQmh4eDIFvMF9nlpUB6tSSqmMpiZ3r
+ Gv0YAIGkHvjkyk/gUqe4GaETITkWo442amVsr0GLL3eVicZrsQ2wMifIbZYgAct5bFLSiOkARrn
+ 0zTanbZfX1EbR2yqsUE6Kx2e+6dGhNBuMO58Zp1bk0j8RE8MXjiiR
+X-Received: by 2002:a05:6808:bd3:b0:3c8:4227:4fb0 with SMTP id
+ o19-20020a0568080bd300b003c842274fb0mr691434oik.2.1714673761447; 
+ Thu, 02 May 2024 11:16:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF/03QHc8oSHTpinD7jlmPgDLW6WQPIi0jU5rb+0UcBia42ktoBHOv7bHtn3EbVozU2fwNn1w==
+X-Received: by 2002:a05:6808:bd3:b0:3c8:4227:4fb0 with SMTP id
+ o19-20020a0568080bd300b003c842274fb0mr691404oik.2.1714673760913; 
+ Thu, 02 May 2024 11:16:00 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ cp9-20020a056808358900b003c5fa8c0e8dsm229916oib.37.2024.05.02.11.15.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 May 2024 11:09:02 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v5 3/9] plugins: add new inline op STORE_U64
-Date: Thu,  2 May 2024 11:08:41 -0700
-Message-Id: <20240502180847.287673-4-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240502180847.287673-1-pierrick.bouvier@linaro.org>
-References: <20240502180847.287673-1-pierrick.bouvier@linaro.org>
+ Thu, 02 May 2024 11:16:00 -0700 (PDT)
+Date: Thu, 2 May 2024 14:15:58 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: cpr-exec doc (was Re: [PATCH V1 00/26] Live update: cpr-exec)
+Message-ID: <ZjPYXtvefbppOGJu@x1n>
+References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
+ <19796c1c-4832-47f2-a221-106ae456b264@oracle.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <19796c1c-4832-47f2-a221-106ae456b264@oracle.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.476,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,109 +105,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- include/qemu/plugin.h      |  1 +
- include/qemu/qemu-plugin.h |  4 ++--
- accel/tcg/plugin-gen.c     | 13 +++++++++++++
- plugins/core.c             |  6 ++++++
- 4 files changed, 22 insertions(+), 2 deletions(-)
+On Thu, May 02, 2024 at 12:13:17PM -0400, Steven Sistare wrote:
+> On 4/29/2024 11:55 AM, Steve Sistare wrote:
+> > This patch series adds the live migration cpr-exec mode.
+> 
+> Here is the text I plan to add to docs/devel/migration/CPR.rst.  It is
+> premature for me to submit this as a patch, because it includes all
+> the functionality I plan to add in this and future series, but it may
+> help you while reviewing this series.
 
-diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
-index bee1647cfc4..0c5df7fa90a 100644
---- a/include/qemu/plugin.h
-+++ b/include/qemu/plugin.h
-@@ -70,6 +70,7 @@ enum plugin_dyn_cb_type {
-     PLUGIN_CB_REGULAR,
-     PLUGIN_CB_MEM_REGULAR,
-     PLUGIN_CB_INLINE_ADD_U64,
-+    PLUGIN_CB_INLINE_STORE_U64,
- };
- 
- /*
-diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-index 4fc6c3739b2..c5cac897a0b 100644
---- a/include/qemu/qemu-plugin.h
-+++ b/include/qemu/qemu-plugin.h
-@@ -305,12 +305,12 @@ void qemu_plugin_register_vcpu_tb_exec_cb(struct qemu_plugin_tb *tb,
-  * enum qemu_plugin_op - describes an inline op
-  *
-  * @QEMU_PLUGIN_INLINE_ADD_U64: add an immediate value uint64_t
-- *
-- * Note: currently only a single inline op is supported.
-+ * @QEMU_PLUGIN_INLINE_STORE_U64: store an immediate value uint64_t
-  */
- 
- enum qemu_plugin_op {
-     QEMU_PLUGIN_INLINE_ADD_U64,
-+    QEMU_PLUGIN_INLINE_STORE_U64,
- };
- 
- /**
-diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
-index 8e2c3ef94f6..a5313cbbb2f 100644
---- a/accel/tcg/plugin-gen.c
-+++ b/accel/tcg/plugin-gen.c
-@@ -145,6 +145,16 @@ static void gen_inline_add_u64_cb(struct qemu_plugin_dyn_cb *cb)
-     tcg_temp_free_ptr(ptr);
- }
- 
-+static void gen_inline_store_u64_cb(struct qemu_plugin_dyn_cb *cb)
-+{
-+    TCGv_ptr ptr = gen_plugin_u64_ptr(cb->inline_insn.entry);
-+    TCGv_i64 val = tcg_constant_i64(cb->inline_insn.imm);
-+
-+    tcg_gen_st_i64(val, ptr, 0);
-+
-+    tcg_temp_free_ptr(ptr);
-+}
-+
- static void gen_mem_cb(struct qemu_plugin_dyn_cb *cb,
-                        qemu_plugin_meminfo_t meminfo, TCGv_i64 addr)
- {
-@@ -170,6 +180,9 @@ static void inject_cb(struct qemu_plugin_dyn_cb *cb)
-     case PLUGIN_CB_INLINE_ADD_U64:
-         gen_inline_add_u64_cb(cb);
-         break;
-+    case PLUGIN_CB_INLINE_STORE_U64:
-+        gen_inline_store_u64_cb(cb);
-+        break;
-     default:
-         g_assert_not_reached();
-     }
-diff --git a/plugins/core.c b/plugins/core.c
-index a8557b54ff7..e1bf0dc3717 100644
---- a/plugins/core.c
-+++ b/plugins/core.c
-@@ -321,6 +321,8 @@ static enum plugin_dyn_cb_type op_to_cb_type(enum qemu_plugin_op op)
-     switch (op) {
-     case QEMU_PLUGIN_INLINE_ADD_U64:
-         return PLUGIN_CB_INLINE_ADD_U64;
-+    case QEMU_PLUGIN_INLINE_STORE_U64:
-+        return PLUGIN_CB_INLINE_STORE_U64;
-     default:
-         g_assert_not_reached();
-     }
-@@ -535,6 +537,9 @@ void exec_inline_op(struct qemu_plugin_dyn_cb *cb, int cpu_index)
-     case QEMU_PLUGIN_INLINE_ADD_U64:
-         *val += cb->inline_insn.imm;
-         break;
-+    case QEMU_PLUGIN_INLINE_STORE_U64:
-+        *val = cb->inline_insn.imm;
-+        break;
-     default:
-         g_assert_not_reached();
-     }
-@@ -562,6 +567,7 @@ void qemu_plugin_vcpu_mem_cb(CPUState *cpu, uint64_t vaddr,
-                                    vaddr, cb->userp);
-             break;
-         case PLUGIN_CB_INLINE_ADD_U64:
-+        case PLUGIN_CB_INLINE_STORE_U64:
-             exec_inline_op(cb, cpu->cpu_index);
-             break;
-         default:
+I haven't reached this series at all yet but thanks for sending this,
+definitely helpful for reviews.  I almost tried to ask for it. :)
+
+I don't think it's an issue to send doc updates without full
+implementations ready.  We can still mark things as BTD even in doc IMHO,
+and it may help to provide a better picture of the whole thing if e.g. this
+series only implemented part of them, to either reviewers or users (for the
+latter, if the partially impl feature can already be consumed).
+
+Thanks,
+
 -- 
-2.39.2
+Peter Xu
 
 
