@@ -4,69 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62A28C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 08:03:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61E6AC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 08:13:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2ROn-0000BR-T5; Thu, 02 May 2024 04:02:37 -0400
+	id 1s2RY6-0004Bk-Rt; Thu, 02 May 2024 04:12:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s2ROa-0008Vp-Gy
- for qemu-devel@nongnu.org; Thu, 02 May 2024 04:02:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s2ROU-0004Ou-Cx
- for qemu-devel@nongnu.org; Thu, 02 May 2024 04:02:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714636937;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=sTYqKAsLt+lilyQHaj+g3hcdqUQUcGZgiXD8ewuOT88=;
- b=hVzN8AgBTEPV4P2B8iYVL+B23M+6Rwf8Wu/gbuqrwgiSJyEevG34u/DVZDeeVvePgLxTFg
- vMwwb8FovjMTV7zjUfrOC7UP789nyGjyOn5o7Xa/Orv+YGr3xQ97ySTb6EursMMWrUx8Hq
- WYbg5/YTwju5EzxiaGpulliARzsnnC0=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-664-59-R1eyhP2CJpiJAt-LJBQ-1; Thu, 02 May 2024 04:02:13 -0400
-X-MC-Unique: 59-R1eyhP2CJpiJAt-LJBQ-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 67E4381F454;
- Thu,  2 May 2024 08:02:13 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.138])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 8964E40ED31;
- Thu,  2 May 2024 08:02:12 +0000 (UTC)
-Date: Thu, 2 May 2024 09:02:10 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Roman Kiryanov <rkir@google.com>
-Cc: QEMU Developers <qemu-devel@nongnu.org>,
- JP Cottin <jpcottin@google.com>, Erwin Jansen <jansene@google.com>
-Subject: Re: QEMU headers in C++
-Message-ID: <ZjNIOfJdmLGAJnKh@redhat.com>
-References: <CAOGAQeq+Wu9wiBj+tF0PJHMZS-F4KnVBOXCyXhYQsm+REyLUpg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2RXu-0004Ax-NU
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 04:12:03 -0400
+Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2RXi-0006YV-4N
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 04:12:02 -0400
+Received: by mail-lj1-x230.google.com with SMTP id
+ 38308e7fff4ca-2df848f9325so64912681fa.1
+ for <qemu-devel@nongnu.org>; Thu, 02 May 2024 01:11:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714637507; x=1715242307; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=3Q5YSO6K1f+WJxekQ1Tyf6qsNXu5BvlWnLkuvxc6h5Q=;
+ b=cwf2zwKGMIaUiWNEboTI0ogSaiGZpg3Td2lgdfy2DQ3ljGH65ILalJNyTieCOj3J86
+ 3iDT9fW6SFid6X5IeMK9i+d0EIITlF0Z29ygyi8qCKFrEmO3RIiM/DpTrSTgE8UzHwcw
+ hXS25ZFCOqeM+fTKigC3gq1C7NXNm2g+qGRCTit0VYzsLDJqghvk9iUm781br5BW/pzH
+ PAZXw7EGf3ERRlvj8Fg1oJOLdk/kOwFHhLzW3bopuy5bXbaQyr3EYaZVV2o+KXeJXpJG
+ c55/jmfeTFDW9RRHqgqD8Aw8Q8sXglWKkZywLZDaBN3hU5ofCJdCAGB70ssFyJ+/au5m
+ yAeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714637507; x=1715242307;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=3Q5YSO6K1f+WJxekQ1Tyf6qsNXu5BvlWnLkuvxc6h5Q=;
+ b=wtJ0wPZcNqF1J70VT4dZTRatZU/XyDLQe+iguppngRtMmeDYtWIEc4HxcvGJwrkQXl
+ NBffd9yY8ZPb/lnqidlAJMTYzfpc6TxMhJ4SsYIrA4ibo6RNTUXgcmODErrgUvejh5Pl
+ j9WgZ51thOlZVOXqOl7Rim2E+q96rOjzg4mREibK3htoNIpWEdXGvRgoW6B4F4rrL/SA
+ ex9od5OFcAbaMgWjZPDpKN3L+0VCXiwXTYnD+d5ppzhceQClQ8ToRvW0mrUhUuPYA5JC
+ DA+5FcG11C/DjGeX46n/DO0cN4k7ADPbYhWaOZaOJqfvR21tbbhv6DgPqE0VN6IzFhDp
+ 6jOw==
+X-Gm-Message-State: AOJu0YwxZIQywBT+8ZAapPRqGS6b0xL1V/gFs1tbalrL1EYjFUmVZCm3
+ y66IEjouZ6j4Euj+DL1Ey86RTVE1cNWIcLAVp+t04HYXO0feR7f8yCqZnCS+qTmsom+vJDuWH8w
+ c
+X-Google-Smtp-Source: AGHT+IFXskFx1d+zwTVYaBklbprk0A2VLszpAO3KcJLEuVpUevWvDodYbkSpDJ+5EaPiZZq+PyUmdg==
+X-Received: by 2002:a05:651c:b13:b0:2dd:b190:241f with SMTP id
+ b19-20020a05651c0b1300b002ddb190241fmr1170795ljr.39.1714637507490; 
+ Thu, 02 May 2024 01:11:47 -0700 (PDT)
+Received: from m1x-phil.lan ([176.187.215.106])
+ by smtp.gmail.com with ESMTPSA id
+ dh18-20020a0560000a9200b003439d2a5f99sm627768wrb.55.2024.05.02.01.11.46
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 02 May 2024 01:11:47 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH] crypto: Allow building with GnuTLS but without Libtasn1
+Date: Thu,  2 May 2024 10:11:44 +0200
+Message-ID: <20240502081144.86599-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAOGAQeq+Wu9wiBj+tF0PJHMZS-F4KnVBOXCyXhYQsm+REyLUpg@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::230;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x230.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,40 +90,63 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 01, 2024 at 09:40:16PM -0700, Roman Kiryanov wrote:
-> Hi QEMU,
-> 
-> I work in Android Studio Emulator and we would like to develop devices
-> in C++. Unfortunately, QEMU headers cannot be used with C++ as is
-> (e.g. they use C++ keywords as variable names or implicitly cast void*
-> to T*).
+We only use Libtasn1 in unit tests. As noted in commit d47b83b118
+("tests: add migration tests of TLS with x509 credentials"), having
+GnuTLS without Libtasn1 is a valid configuration, so do not require
+Libtasn1, to avoid:
 
-NB, in recent past QEMU explicitly eliminated almost[1] all C++ code from
-the tree, because the consensus was to be exlcusively a C project. 
+  Dependency gnutls found: YES 3.7.1 (cached)
+  Run-time dependency libtasn1 found: NO (tried pkgconfig)
 
-> Will QEMU be open to accept patches from us to make QEMU headers C++
-> compatible?
+  ../meson.build:1914:10: ERROR: Dependency "libtasn1" not found, tried pkgconfig
 
-Personally I think that'd be a retrograde step. Any downstream development
-fork that made use of that facility would be not be able to feed changes
-/ additions back into upstream QEMU codebase at a later date, without QEMU
-accepting C++ code once again.
+Restrict the unit test pkix_asn1_tab[] variable to CONFIG_TASN1.
 
-We'll never control what forks can do, and many will never feed back code
-regardless, but IMHO we should be steering external developers in a way
-that keeps open the door for their changes to be merged back upstream.
+Fixes: ba7ed407e6 ("configure, meson: convert libtasn1 detection to meson")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ meson.build                          | 1 +
+ tests/unit/crypto-tls-x509-helpers.h | 4 +++-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-With regards,
-Daniel
-
-[1] Only some minor windows installer code remains C++.
+diff --git a/meson.build b/meson.build
+index 5db2dbc12e..837a2bdb56 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1912,6 +1912,7 @@ endif
+ tasn1 = not_found
+ if gnutls.found()
+   tasn1 = dependency('libtasn1',
++                     required: false,
+                      method: 'pkg-config')
+ endif
+ keyutils = not_found
+diff --git a/tests/unit/crypto-tls-x509-helpers.h b/tests/unit/crypto-tls-x509-helpers.h
+index 247e7160eb..bddf00d392 100644
+--- a/tests/unit/crypto-tls-x509-helpers.h
++++ b/tests/unit/crypto-tls-x509-helpers.h
+@@ -23,7 +23,6 @@
+ 
+ #include <gnutls/gnutls.h>
+ #include <gnutls/x509.h>
+-#include <libtasn1.h>
+ 
+ 
+ #define QCRYPTO_TLS_TEST_CLIENT_NAME "ACME QEMU Client"
+@@ -171,6 +170,9 @@ void test_tls_cleanup(const char *keyfile);
+     };                                                                  \
+     test_tls_generate_cert(&varname, cavarname.crt)
+ 
++#ifdef CONFIG_TASN1
++#include <libtasn1.h>
+ extern const asn1_static_node pkix_asn1_tab[];
++#endif
+ 
+ #endif
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.41.0
 
 
