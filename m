@@ -4,78 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50933C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 13:14:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A134C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 13:16:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2WFh-0007fb-Sb; Thu, 02 May 2024 09:13:33 -0400
+	id 1s2WHu-00012N-AX; Thu, 02 May 2024 09:15:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s2WFg-0007ee-CH
- for qemu-devel@nongnu.org; Thu, 02 May 2024 09:13:32 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s2WFV-00034n-Qh
- for qemu-devel@nongnu.org; Thu, 02 May 2024 09:13:32 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a58ebdd8b64so659138266b.0
- for <qemu-devel@nongnu.org>; Thu, 02 May 2024 06:13:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714655600; x=1715260400; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=biYJRxw98f02rvGThOtlgZW56Gc/37SIHdCST+2pD8Y=;
- b=lGXhea4UogToRe5iRtQjqhnQqDo8A/xyQX1IPiZImlfOlm/pp5KyhTact4qK+H7rEy
- fb0yhX8HGZXk6HMZHRlfcUOTD0iD4Y9+3BO8NqWLa26fJIHWAgerFF3cT/6pw8yAa5vd
- IHbsXVgmU4JlnKdYQ8TpU538dk8Z70xGWLExBPWmVs87c4MPMfCcErkKjypkx/DSRIiF
- txAJXDuj7Kotkb3RvkWGSlb2IeO258oIBa3AG2DPyeeV6/qMDe+c9wQMQUMiyOc/7o3b
- vwSHKaSj9QZQ33XjWAOLG16WJnaXlKHeeZFa1liVvLmvBhKxzMTTMotKiVCuhioLwMSC
- Tp/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714655600; x=1715260400;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=biYJRxw98f02rvGThOtlgZW56Gc/37SIHdCST+2pD8Y=;
- b=CozhCPkhaKZPX04HtoZpOnAekRUbHNKVQtglXMc6eTehewL5IuBISmURK0tOnSlNdU
- 3sIWy4uFRsd+ZL9OkuFNqI+UYOFuicBvU0OWYuqBAOGfNejHfrQ8WBdLz+lycQupDBfq
- q/ZftCNOMFMoF06Lf0OuyyUHVh45j/zMNTcQNVL9t2EzjFn6g1XA2NPYighZX2P+OaHZ
- V68ZEBKNVmuqWsPbeRCG2Q8D1B5VzSn83mJzWJHKFuD/6kyyK5TNv5yjX47hqZEzXZet
- LmfIFWC9f1Akqzs3W56Ql2ehIPjgg2Q94HLHVmSqloKfxw1PKFm57qrmL4S/nC2czmmt
- 5K1w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUFXOI/z20l0LbBPbl8WphVsmS285otAoXykYnJ+5vpDsqluc2tzDYNNja4x7rwghTA8xMpHR+q0jdeMf4TDm1ZdvybTZo=
-X-Gm-Message-State: AOJu0YyibRmXifzhuprjp0B7CB5bJkWx3bIIpUcN3pqxEnQ5BP4KBMty
- WGHsb/lOEhbXFt3p79sd+Fdh928NW/wGr1GwGzAziPzlRNj1EQz5VVK1iAolM8mFoioqw8gc20i
- V5uv1t1qABa5PcY0a8fZq2bSSbJehb3vm/gWLfw==
-X-Google-Smtp-Source: AGHT+IEQncjjT0ZaiK1ki6dalSH5dIMCRcWflCm+/zAlum9yM+i+yxGPMDNZZnpPUfvg5kiXNixdaUnVvOeBDUfM0HE=
-X-Received: by 2002:a50:bb41:0:b0:572:719f:b44f with SMTP id
- y59-20020a50bb41000000b00572719fb44fmr3917131ede.9.1714655600208; Thu, 02 May
- 2024 06:13:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s2WHs-00010D-5G
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 09:15:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s2WHq-0003Vt-4O
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 09:15:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714655745;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7/qlljcrlaSquzEVIXfDf0EMPOwczBiYwTYI43Z2NpA=;
+ b=cki10pr240X/K9Jr9WhGt07JRWGlyC0/2C8IKL+SwAKpQ3zR8yjQNNdpUu6a6YopGpDZze
+ S1Y0UsASkalYUs/BAUPijY9bzvmayowetU0CQ6o4qboDsxPquCvv3yKykaOIiuX411/TPm
+ eM7xMDkPpHV+MBUPAcc8N2gD/+cIv+k=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-322-qE0dGT9TMYG1pEMUXV-MfA-1; Thu,
+ 02 May 2024 09:15:41 -0400
+X-MC-Unique: qE0dGT9TMYG1pEMUXV-MfA-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D2BA43816B44;
+ Thu,  2 May 2024 13:15:40 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.39.192.112])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 06C8E1C0654E;
+ Thu,  2 May 2024 13:15:38 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-s390x@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH 2/3] s390x/event-facility: Simplify
+ sclp_get_event_facility_bus()
+Date: Thu,  2 May 2024 15:15:32 +0200
+Message-ID: <20240502131533.377719-3-clg@redhat.com>
+In-Reply-To: <20240502131533.377719-1-clg@redhat.com>
+References: <20240502131533.377719-1-clg@redhat.com>
 MIME-Version: 1.0
-References: <20240419183135.12276-1-dorjoychy111@gmail.com>
- <7c6f66bf-2610-494c-9389-b558a11f8c5f@linaro.org>
- <CAFfO_h6-RXettxqnCYciDrq6ivsTHtM55FcksJSUNnLdbio4mg@mail.gmail.com>
- <c696603d-b8dc-4fed-96f0-da40c6ce8287@linaro.org>
-In-Reply-To: <c696603d-b8dc-4fed-96f0-da40c6ce8287@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 2 May 2024 14:13:09 +0100
-Message-ID: <CAFEAcA__6PJwdYLTuGbf01YOaV4t67dtRtbAbnP1eL7dd0YH0g@mail.gmail.com>
-Subject: Re: [PATCH] target/arm: fix MPIDR value for ARM CPUs with SMT
-To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Cc: Dorjoy Chowdhury <dorjoychy111@gmail.com>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.476,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,32 +86,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2 May 2024 at 14:11, Marcin Juszkiewicz
-<marcin.juszkiewicz@linaro.org> wrote:
->
-> W dniu 2.05.2024 o 15:04, Dorjoy Chowdhury pisze:
-> >> Should "return" also have "(1 << 24) |" to have MT=1 set?
-> >>
-> >> Otherwise MPIDR_EL1 = 0x000100 can mean core0 in cluster1 or core1 in
-> >> cluster0.
-> >>
-> >> Value 0x1000100 shows MT=1 so thread0 in core1 in cluster0.
->
-> > I don't know all the details but from what I understand the
-> > "arm_build_mp_afiinity" is used to set the "mp_affinity" member
-> > variable which I assume is about affinity, not the whole MPIDR
-> > register value. That is what I assumed because the Uniprocessor
-> > indication bit(30) is being set only in the "mpidr_read_val" function.
-> > In the patch, the MT bit is also being set in the "mpidr_read_val"
-> > function based on the SMT status (has_smt) of the CPU.
->
-> mpidr_read_val() is used only to set VMPIDR and VMPIDR_EL2 registers.
->
-> So setting MT bit for MPIDR_EL1 needs to be added somewhere.
+sclp_get_event_facility_bus() scans the whole machine to find a
+TYPE_SCLP_EVENTS_BUS object. The SCLPDevice instance is now available
+under the machine state, use it to simplify the lookup and adjust the
+creation of the consoles.
 
-The readfn for MPIDR_EL1 is mpidr_read(), which calls
-mpidr_read_val().
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ include/hw/s390x/event-facility.h |  2 +-
+ hw/s390x/event-facility.c         | 13 ++-----------
+ hw/s390x/s390-virtio-ccw.c        | 12 +++++++-----
+ 3 files changed, 10 insertions(+), 17 deletions(-)
 
-thanks
--- PMM
+diff --git a/include/hw/s390x/event-facility.h b/include/hw/s390x/event-facility.h
+index 3ffd575d8ff09863e17f96d1bdb56a2ca6c2aa56..ff874e792d32ffa4089bb4cb40ab9eb34c889b0c 100644
+--- a/include/hw/s390x/event-facility.h
++++ b/include/hw/s390x/event-facility.h
+@@ -203,6 +203,6 @@ struct SCLPEventFacilityClass {
+     bool (*event_pending)(SCLPEventFacility *ef);
+ };
+ 
+-BusState *sclp_get_event_facility_bus(void);
++BusState *sclp_get_event_facility_bus(SCLPEventFacility *ef);
+ 
+ #endif
+diff --git a/hw/s390x/event-facility.c b/hw/s390x/event-facility.c
+index f9829de9532b65466a65443cecd9609198c5c026..06c1da0ecedcb307c77672097323954c6e7ccaf2 100644
+--- a/hw/s390x/event-facility.c
++++ b/hw/s390x/event-facility.c
+@@ -523,16 +523,7 @@ static void register_types(void)
+ 
+ type_init(register_types)
+ 
+-BusState *sclp_get_event_facility_bus(void)
++BusState *sclp_get_event_facility_bus(SCLPEventFacility *ef)
+ {
+-    Object *busobj;
+-    SCLPEventsBus *sbus;
+-
+-    busobj = object_resolve_path_type("", TYPE_SCLP_EVENTS_BUS, NULL);
+-    sbus = OBJECT_CHECK(SCLPEventsBus, busobj, TYPE_SCLP_EVENTS_BUS);
+-    if (!sbus) {
+-        return NULL;
+-    }
+-
+-    return &sbus->qbus;
++    return BUS(&ef->sbus);
+ }
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index 159f67d05c1e534800427ce46afcdaa526fd5902..2afaf45ce606b2bf7e67dc890339f6c5dd917eca 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -237,13 +237,15 @@ static void s390_create_virtio_net(BusState *bus, const char *name)
+     }
+ }
+ 
+-static void s390_create_sclpconsole(const char *type, Chardev *chardev)
++static void s390_create_sclpconsole(SCLPDevice *sclp,
++                                    const char *type, Chardev *chardev)
+ {
+-    BusState *ev_fac_bus = sclp_get_event_facility_bus();
++    SCLPEventFacility *ef = sclp->event_facility;
++    BusState *ev_fac_bus = sclp_get_event_facility_bus(ef);
+     DeviceState *dev;
+ 
+     dev = qdev_new(type);
+-    object_property_add_child(OBJECT(ev_fac_bus->parent), type, OBJECT(dev));
++    object_property_add_child(OBJECT(ef), type, OBJECT(dev));
+     qdev_prop_set_chr(dev, "chardev", chardev);
+     qdev_realize_and_unref(dev, ev_fac_bus, &error_fatal);
+ }
+@@ -308,10 +310,10 @@ static void ccw_init(MachineState *machine)
+ 
+     /* init consoles */
+     if (serial_hd(0)) {
+-        s390_create_sclpconsole("sclpconsole", serial_hd(0));
++        s390_create_sclpconsole(ms->sclp, "sclpconsole", serial_hd(0));
+     }
+     if (serial_hd(1)) {
+-        s390_create_sclpconsole("sclplmconsole", serial_hd(1));
++        s390_create_sclpconsole(ms->sclp, "sclplmconsole", serial_hd(1));
+     }
+ 
+     /* init the TOD clock */
+-- 
+2.44.0
+
 
