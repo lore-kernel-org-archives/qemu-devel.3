@@ -4,81 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEB51C04FFE
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 09:22:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89151C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 09:27:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2SdH-0008UE-Pt; Thu, 02 May 2024 05:21:39 -0400
+	id 1s2Si7-0002X1-9z; Thu, 02 May 2024 05:26:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2SdF-0008TR-CW
- for qemu-devel@nongnu.org; Thu, 02 May 2024 05:21:37 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2Si1-0002Uv-HP
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 05:26:34 -0400
+Received: from mail-qt1-x831.google.com ([2607:f8b0:4864:20::831])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2SdD-0003iu-MA
- for qemu-devel@nongnu.org; Thu, 02 May 2024 05:21:37 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-a5883518135so855159266b.3
- for <qemu-devel@nongnu.org>; Thu, 02 May 2024 02:21:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2Shz-0004NF-9V
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 05:26:33 -0400
+Received: by mail-qt1-x831.google.com with SMTP id
+ d75a77b69052e-4375ddb9eaeso47950031cf.3
+ for <qemu-devel@nongnu.org>; Thu, 02 May 2024 02:26:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714641694; x=1715246494; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=oAbYGWt5zjYYzH2pNkpcFQLfB9E0YHfm9bg1vc9Zmw4=;
- b=mxbHvvf+K+1ZjrtpUza43hR8A8Fr5p4kZYKunmIeReKTPIMk3F8loL3VTV81kd3wno
- 0YznCpPamDWg6qkEuOuQrssMCNzyAf0gazHblZ7fj4lnZr5vffCmt/Q9LFDJbi5PUCsh
- 51Zsbp2mFySWj4H3rVG+2JLbHJ/Ll5tZp19SUwoKgdNq8To/MN/In2cTgEQAdOQj6C4c
- 5LjPt7EfTDz4nMkXiHC9AFPncw1u6MB8ATgroDhKu5NXRiNDrrktmpIkRT4GaNKGREXg
- VM9/VnUweOBv6geKkqdTfQUloLJ/ipaErsvMo6qcetGdZO6RYSuowv5UuSci6/w6mqZs
- nnJg==
+ d=linaro.org; s=google; t=1714641988; x=1715246788; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=TbOTRUl7TFKgvJnukP4K6diYww+Pm6wVeTRlc0HWXD4=;
+ b=yHvJ14mZn4xsZ0mB8fjBRiBZ+GgfGzkz9yJZGDZTpVapRLg/KxUpY9I1F+ny/VvYDk
+ P7a4iCC4w/mQ9C2WBLG3sM/xc3b++SO98khIOmRlTOq9FWyxKOJXQsO2wwb+8ciwrSha
+ Q1vR2RkjBUKXmmVo0XdWTg6BRYpUNpLN4ctNLFOQIT4tBYutKvkeUIyPIDmgvsq6FsMX
+ 48VhjKgy4VEsdrtARg9F8iCQuWm9RWIr0kBgSoDVJeYYjodrz06RPzYrthKaXedWsj62
+ rl63oFQtKy9rux2AoqCZE9crAYqUl1Oy2BzF97nQJtwzMdhqwk6QBQ2Z2e0FB/jvoFYf
+ gLzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714641694; x=1715246494;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1714641988; x=1715246788;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oAbYGWt5zjYYzH2pNkpcFQLfB9E0YHfm9bg1vc9Zmw4=;
- b=V3EACo2TDAQNmr7eU0S4hZHUMKBuhbThmN+Tf/P3c7gLdk2Nk85vkYEQmYxQJvlPvx
- zNxbaDxspgnf5mnXLoGc6gq0LlW+NmzwqLNMyKzrS/SX2wLe1DaWVI0D3z6zXNIF39dD
- kMtno8aWrULE5t9YnfzdNoNdq7rl1uT98wN2F4piSvNryfJ6uKffGgBUHoqMbZbSTyum
- 8d9TfhGoUp01Kg/uzOvzLaDPM0AUpK1Xj9jZb+ECqFWsnZ+sgVxHFpXp5BOh1pT8Lkv8
- E/SJwtgu8CMjiBOzWuSkWspRyes+9jzzmFHyRDHtKKrKMGcbXWC8rBrSE1aiX/7lIi/d
- t2hg==
-X-Gm-Message-State: AOJu0YywUxaY/6SsYnB01+pt3yQNxU525dzbT7RsMJuIDORDkF/UXPWi
- 1s6KoV8E2WLKPaMjFN5Iaz7vPMcff1m8POvGhl3+hsTYTUwtfNWUuFU3Bnfs0+s=
-X-Google-Smtp-Source: AGHT+IHrJKnbMeTLPbEE7VovkA6bkUcRbHwLK5fxk24Frv+I9oTgnEQAKGbyIoPFpa8PXsFOJvRzfw==
-X-Received: by 2002:a17:906:f84c:b0:a52:71bf:925c with SMTP id
- ks12-20020a170906f84c00b00a5271bf925cmr3356256ejb.62.1714641694075; 
- Thu, 02 May 2024 02:21:34 -0700 (PDT)
+ bh=TbOTRUl7TFKgvJnukP4K6diYww+Pm6wVeTRlc0HWXD4=;
+ b=ZD+YML2ofyGUzTmOHCJ7RJ0sXn4GBIu4SF+fxtYMEUrOhYCxyROdbokNukUg3Il+R2
+ ES00vGSiDYb9WV+623XWBLdAKH3Iz9MHl31uICbeUjTfB45sckg9/OY70UJ5LfeIYbzR
+ x7fjZVEYiSnWJf0eQA28okQldvS5JY8kb2stVXFaY48sQVD3kSZA+P56QSOR5FujuyZ8
+ 653nL43/jF7Acdo6myRPUwCRsTwhfDbPG8YN2vzVPSI1aYCqlHE3SfCfAT4eLTkvEyG/
+ MZhyfm9YvhKOBWIeohPr3OURy9EKrsn5pHtWnqmpvM8GwBdKeq67XnS45iTtU+urPwaU
+ njUw==
+X-Gm-Message-State: AOJu0YxJdhHLfoFQ1vChGCjdIeCtYWDIjlZpkUydi1v4M9It0LxRhCj5
+ g+Kx8uRV0bOtGAzch1RAdniqQZ/ReU60kcLxVLpemmslXKg108mcji0ZrqpZsUM=
+X-Google-Smtp-Source: AGHT+IHMHc4N2Va2oikHPiaDr4YPbh9MJA/RLEXoCPz+2d5sBHdHGPdKpzow8k90U/jPL/AqjhmHaA==
+X-Received: by 2002:a05:622a:178a:b0:43a:bcd9:5d5d with SMTP id
+ s10-20020a05622a178a00b0043abcd95d5dmr5673454qtk.19.1714641988181; 
+ Thu, 02 May 2024 02:26:28 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.215.106])
  by smtp.gmail.com with ESMTPSA id
- bj22-20020a170906b05600b00a5903973662sm323410ejb.29.2024.05.02.02.21.32
+ ff22-20020a05622a4d9600b0043a0acc96e4sm301329qtb.30.2024.05.02.02.26.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 May 2024 02:21:33 -0700 (PDT)
-Message-ID: <fc6ef6ae-f380-4096-bdfd-094d1a7a3aaf@linaro.org>
-Date: Thu, 2 May 2024 11:21:31 +0200
+ Thu, 02 May 2024 02:26:27 -0700 (PDT)
+Message-ID: <26211a43-24de-4222-936a-259f22f052d1@linaro.org>
+Date: Thu, 2 May 2024 11:26:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] migration/rdma: Allow building without on-demand paging
- support
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH] crypto: Allow building with GnuTLS but without Libtasn1
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
- Yu Zhang <yu.zhang@ionos.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Jack Wang <jack.wang@ionos.com>,
- Li Zhijian <lizhijian@fujitsu.com>,
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Michael Galaxy <mgalaxy@akamai.com>
-References: <20240502090547.87824-1-philmd@linaro.org>
- <ZjNYhGQTFBQHZgga@redhat.com>
- <8c487804-a706-4149-abb3-c2495247f09f@linaro.org>
+ Thomas Huth <thuth@redhat.com>
+References: <20240502081144.86599-1-philmd@linaro.org>
+ <d67338f5-a13a-4663-b77d-f9dac2b2936c@linaro.org>
+ <ZjNOGBnv4UeaFSLI@redhat.com>
 Content-Language: en-US
-In-Reply-To: <8c487804-a706-4149-abb3-c2495247f09f@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <ZjNOGBnv4UeaFSLI@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::831;
+ envelope-from=philmd@linaro.org; helo=mail-qt1-x831.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,24 +97,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/5/24 11:19, Philippe Mathieu-Daudé wrote:
-> On 2/5/24 11:10, Daniel P. Berrangé wrote:
->> On Thu, May 02, 2024 at 11:05:47AM +0200, Philippe Mathieu-Daudé wrote:
->>> On-demand paging support was added in libibverbs v1.2.0 in
->>> commit https://github.com/linux-rdma/rdma-core/commit/e500adc7b1
+On 2/5/24 10:26, Daniel P. Berrangé wrote:
+> On Thu, May 02, 2024 at 10:22:02AM +0200, Philippe Mathieu-Daudé wrote:
+>> On 2/5/24 10:11, Philippe Mathieu-Daudé wrote:
+>>> We only use Libtasn1 in unit tests. As noted in commit d47b83b118
+>>> ("tests: add migration tests of TLS with x509 credentials"), having
+>>> GnuTLS without Libtasn1 is a valid configuration, so do not require
+>>> Libtasn1, to avoid:
+>>>
+>>>     Dependency gnutls found: YES 3.7.1 (cached)
+>>>     Run-time dependency libtasn1 found: NO (tried pkgconfig)
+>>>
+>>>     ../meson.build:1914:10: ERROR: Dependency "libtasn1" not found, tried pkgconfig
+>>>
+>>> Restrict the unit test pkix_asn1_tab[] variable to CONFIG_TASN1.
 >>
->> That is 9 years old, so I'm surprised any distro we target still
->> is so outdated. Can you say what distro you're seeing a problem
->> on and what version it has ?
+>> Otherwise we get:
+>>
+>>    In file included from tests/unit/crypto-tls-psk-helpers.c:23:
+>>    tests/unit/crypto-tls-x509-helpers.h:26:10: fatal error:
+>>    libtasn1.h: No such file or directory
+>>       26 | #include <libtasn1.h>
+>>          |          ^~~~~~~~~~~~
+>>    compilation terminated.
 > 
-> This is Oracle Solaris 11.4 SRU, released 2 weeks ago:
-> https://support.oracle.com/knowledge/Sun%20Microsystems/2433412_1.html
-> 
-> I'm not sure how to detect the version, I'm seeing downstream
-> patches applied on top.
+> I'd say that crypto-tls-psk-helpers.c shouldn't be including
+> crypto-tls-x509-helpers.h at all, as PSK auth does not depend
+> on X509 code
 
-Regardless, we can't expect any rdma library version to work,
-either we ask for some version, or we check that symbol is there
-and reject if not as "your rdma is too old", so the user can
-choose to build with --disable-rdma.
+I agree, I tried the "less code churn" path first :)
+
 
