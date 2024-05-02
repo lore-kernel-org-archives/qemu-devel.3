@@ -4,86 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B1A4C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 11:41:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3E80C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 11:54:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2UoV-0005BD-0d; Thu, 02 May 2024 07:41:23 -0400
+	id 1s2V0H-0000Wp-30; Thu, 02 May 2024 07:53:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s2UoA-0005AF-BK
- for qemu-devel@nongnu.org; Thu, 02 May 2024 07:41:03 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s2Uo5-0003Ce-MW
- for qemu-devel@nongnu.org; Thu, 02 May 2024 07:41:01 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a51a80b190bso507181366b.3
- for <qemu-devel@nongnu.org>; Thu, 02 May 2024 04:40:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714650055; x=1715254855; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=JhJewUJoVLdrFN5sneQZXJ5z8Fn//kckeRZg9V9cBh4=;
- b=N+idCJxS0IBNNr5ytvQZjIZPSc2KzzvxF/3m2ggHMXigORSSuTdQgG86pcx29KdN+V
- oYnX1B745YRkstIEv7kvELE3YkSTQlbhv8i0YW6x39OlI6k2+gNDZpR3kpkNsSFYCDMV
- D8mW0dKEJBY7VdD1x5jjpOrHvZAry2KIsLluXzYlsQUXjCxvDwOsl0mlpYpqOanj22ki
- YFw30rKpbrkHspNnnGUZcitzKNbiepaBrvM5uaJ2R9a1q/9XUD9AQ5LBd4sAwjWCrVwQ
- RGiPxbuA6jxKmlN9m6UWHNrUjTQnv7VSwZPS/2avuD2S30sZ9vc6Q5j4CTkdAxQKb04n
- HVZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714650055; x=1715254855;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JhJewUJoVLdrFN5sneQZXJ5z8Fn//kckeRZg9V9cBh4=;
- b=pcaOw6QKvdCrS3KcOVDdt7iPimjd6S6c75ahc7aczzyJ49gFjV/06KX8K6+HdflFj0
- If0VTEghaMYPfAZIk9lQINSxdEBC3b69VDLdTyKNFKK+9MRFX3KCo0QfbzlXc/1Q/Arz
- 0/3Dbr+P4Xy2YI4MSeLeWDhDey3HKQ1P5YVVEpW6IUDbz8nNAaFgbL/D/y86fdrmKtkD
- Bd8VKyAAB3qmqWlEbE4KwUMCNZWyzDgCTDOoQksUdn0cvXxeXQerd3oaBhwdWFBPk7AB
- 37v9RbUwzxNN7+/q6fL9NecUYQEt1n+1am68cpXFq7O6mhoYrDLfJRHbIiPSzbe1/c3D
- s4GQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWw5hjB3WQLK13Okuwac2uGa+FcGA8DvUupsH2KECyEq5GRpyGC7/L8erek1FwyjpHGQ8ocDhIQxR436EHcBcATRAcyp8E=
-X-Gm-Message-State: AOJu0YxM9+FN9vhcsjQXCZygY2FULyZGn34Nnpqk3Koh9IXkYRgCDj9l
- 1AtoU40zreJQCuQRj7NP1Ru1ioISVaTL6Uwfg9fU/GJfq6h9KoxKB/bmmpQ7pL8HPk8VpSp04hu
- BO+SHHd6INsuNF8+Hy2P33IyedWUtdAC1NT4nag==
-X-Google-Smtp-Source: AGHT+IHk2U1K0WF0QAE5EXgB7FclqhdFFzNV4RG6KUUbfr0YkFr5RRuFJQ37/Og0uQC2a4AVTK6OJFxxYShsgaI2Rh8=
-X-Received: by 2002:a50:9b19:0:b0:572:4f:4efd with SMTP id
- o25-20020a509b19000000b00572004f4efdmr4242566edi.21.1714650055157; 
- Thu, 02 May 2024 04:40:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s2V0B-0000Tk-4n
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 07:53:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s2V08-0005Mr-Rp
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 07:53:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714650803;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VFYzTiIYnjTlO2S60NhTNUnRRSemmcyNKdgoXg6Nsqs=;
+ b=V9dUQ8iLmIYD6P3b4yXt14Rk78++/82HKuYJj0KYYc/2yQ16coDVsbpVY7nB9vLLVbYm5Q
+ ejKw8rtpgWylJ/au+TKZyaC2QIbv5OzntxQdGFNqM6gsGo8sOLxS9IwClHDGq32ojceBTu
+ 3LcuaXJiodVT9xTeihDKm3kU5DhAIcE=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-373-lmNEliEyNBiyfxem281fZg-1; Thu, 02 May 2024 07:53:19 -0400
+X-MC-Unique: lmNEliEyNBiyfxem281fZg-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 40EC918065AD;
+ Thu,  2 May 2024 11:53:19 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 0E6432033A43;
+ Thu,  2 May 2024 11:53:19 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id C3BC521E6811; Thu,  2 May 2024 13:53:17 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Peter Xu <peterx@redhat.com>,  devel@lists.libvirt.org,  Markus
+ Armbruster <armbru@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Thomas Huth
+ <thuth@redhat.com>,  Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>,  "Dr. David Alan Gilbert"
+ <dave@treblig.org>,  Eric Blake <eblake@redhat.com>,  Kevin Wolf
+ <kwolf@redhat.com>,  Hanna Reitz <hreitz@redhat.com>
+Subject: Re: [PATCH v3 3/6] migration: Remove 'blk/-b' option from migrate
+ commands
+In-Reply-To: <20240430142737.29066-4-farosas@suse.de> (Fabiano Rosas's message
+ of "Tue, 30 Apr 2024 11:27:34 -0300")
+References: <20240430142737.29066-1-farosas@suse.de>
+ <20240430142737.29066-4-farosas@suse.de>
+Date: Thu, 02 May 2024 13:53:17 +0200
+Message-ID: <87y18s77ma.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20240419183135.12276-1-dorjoychy111@gmail.com>
- <f397f267-06d9-46c1-8acc-1c9ebf9c3773@linaro.org>
- <CAFEAcA8i_wU+RSRk+D1L8YKy72zHz4YFV20r2Z7m+3ARfzb51w@mail.gmail.com>
- <CAFEAcA_kHDGWVic=xRm4xOsi-cQC-fF5Z2FWRCrwe_E35KBmNw@mail.gmail.com>
- <753b3a55-9589-4dcb-b656-8b3025e847df@linaro.org>
- <cb2d4f21-8853-47af-a78f-e0db65460f46@linaro.org>
- <CAFEAcA_aN8ntxKuGPJ=M_Y3dLNjYEV-v--wK1hK8PyOxKSt=zA@mail.gmail.com>
- <CAFEAcA8+C1JcvF1WBN3ZkqbROZVTM9+UDnA5OaTNoOcKuBa4OQ@mail.gmail.com>
- <5da6dcc6-2c00-483f-bf33-cbeb3d931f2e@linaro.org>
-In-Reply-To: <5da6dcc6-2c00-483f-bf33-cbeb3d931f2e@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 2 May 2024 12:40:43 +0100
-Message-ID: <CAFEAcA-mwRWTe_getRR5Ap3ycY+BvpyyVuCOFQABHvJMWv5KgA@mail.gmail.com>
-Subject: Re: [PATCH] target/arm: fix MPIDR value for ARM CPUs with SMT
-To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Dorjoy Chowdhury <dorjoychy111@gmail.com>, 
- qemu-devel@nongnu.org, Leif Lindholm <quic_llindhol@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.476,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,28 +92,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2 May 2024 at 11:56, Marcin Juszkiewicz
-<marcin.juszkiewicz@linaro.org> wrote:
->
-> W dniu 2.05.2024 o 12:37, Peter Maydell pisze:
-> >>   * what are the constraints on the Aff* fields (eg that kernel
-> >>     commit suggests Aff0 shouldn't be > 15)?
->
-> > This one is apparently related to GICv3 -- if the GIC doesn't
-> > implement RangeSelector support in ICC_SGI0R_EL1 and other
-> > places (advertised via GICD_TYPER.RSS and ICC_CTLR_EL1.SS) then
-> > there's no way to send an SGI to a CPU whose Aff0 is outside
-> > [0..15], and so you shouldn't build a system with Aff0 > 15.
-> > QEMU's GICv3 doesn't implement the RSS functionality (though it
-> > wouldn't be hard to add if we really cared), so we should also
-> > keep Aff0 in [0..15].
->
-> Arm/virt uses 8 cores/cluster on GICv2 and 16 cores/cluster on GICv3 as
-> this is amount of SGI target-list bits available.
+Fabiano Rosas <farosas@suse.de> writes:
 
-You can't have more than 8 cores full stop on GICv2, though,
-so you'll never be able to go beyond 8 cores/cluster
-even if we didn't impose that limit.
+> The block migration is considered obsolete and has been deprecated in
+> 8.2. Remove the migrate command option that enables it. This only
+> affects the QMP and HMP commands, the feature can still be accessed by
+> setting the migration 'block' capability. The whole feature will be
+> removed in a future patch.
+>
+> Deprecation commit 8846b5bfca ("migration: migrate 'blk' command
+> option is deprecated.").
+>
+> Reviewed-by: Markus Armbruster <armbru@redhat.com>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
--- PMM
+[...]
+
+> diff --git a/hmp-commands.hx b/hmp-commands.hx
+> index 7978302949..ebca2cdced 100644
+> --- a/hmp-commands.hx
+> +++ b/hmp-commands.hx
+> @@ -909,21 +909,17 @@ ERST
+>  
+>      {
+>          .name       = "migrate",
+> -        .args_type  = "detach:-d,blk:-b,resume:-r,uri:s",
+> -        .params     = "[-d] [-b] [-r] uri",
+> +        .args_type  = "detach:-d,resume:-r,uri:s",
+> +        .params     = "[-d] [-r] uri",
+>          .help       = "migrate to URI (using -d to not wait for completion)"
+> -		      "\n\t\t\t -b for migration without shared storage with"
+> -		      " full copy of disk\n\t\t\t -r to resume a paused migration",
+> +		      "\n\t\t\t -r to resume a paused migration",
+>          .cmd        = hmp_migrate,
+>      },
+>  
+>  
+>  SRST
+> -``migrate [-d] [-b]`` *uri*
+> +``migrate [-d]`` *uri*
+>    Migrate to *uri* (using -d to not wait for completion).
+> -
+> -  ``-b``
+> -    for migration with full copy of disk
+>  ERST
+
+Not this patch's fault, but here goes anyway: -r is undocumented here.
+
+>  
+>      {
+
+[...]
+
 
