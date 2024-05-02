@@ -4,61 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D1EDC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 19:18:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCBE8C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 19:21:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2bwh-0002Qg-Na; Thu, 02 May 2024 15:18:19 -0400
+	id 1s2byu-0004dJ-Lj; Thu, 02 May 2024 15:20:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
- id 1s2bwg-0002QL-Fb
- for qemu-devel@nongnu.org; Thu, 02 May 2024 15:18:18 -0400
-Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
+ (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
+ id 1s2byr-0004cv-Dl
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 15:20:33 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
- id 1s2bwd-0007h5-K4
- for qemu-devel@nongnu.org; Thu, 02 May 2024 15:18:18 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 91139CE1791;
- Thu,  2 May 2024 19:18:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 278C8C113CC;
- Thu,  2 May 2024 19:18:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1714677490;
- bh=x9X9JAlQJrR7tb6OdOoyjzyrYN9440N5cC/SzcgJewQ=;
- h=Date:From:To:cc:Subject:In-Reply-To:References:From;
- b=gms6kZdc2jftebu2v69jaOz0bCewYaSGpkhmKkztDo80a+HZaCyREJMX+nh9odIrI
- dynCuUuXMd+rZezP2zhEu5BtVtdH8ia0tqQY3Qbpw5abxS/VsM77Yy3OGj1poT1ZVO
- MzJbWYiQ5oBwkBvq0XZTxQfkLH6iHJ2NGfyYco/M1XfMLN9W3wlo1GJSKbkuLg4rcK
- Y1QMyb+dociJM4CEDoIVUHsi2H73P8i0Zkl564WZXVhwY0rQv9zfxcI5eMcjow65HN
- AeXcjELc1Zg9BXIRDAQWHOTWXsWe5yCBj4ekHXMVhWSLXSwT5j6bYFdETrxU+eugwd
- AIo2b2pMop5fA==
-Date: Thu, 2 May 2024 12:18:07 -0700 (PDT)
-From: Stefano Stabellini <sstabellini@kernel.org>
-X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
-To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-cc: qemu-devel@nongnu.org, sstabellini@kernel.org, jgross@suse.com, 
- "Edgar E. Iglesias" <edgar.iglesias@amd.com>, 
- Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>, 
- xen-devel@lists.xenproject.org
-Subject: Re: [PATCH v4 16/17] xen: mapcache: Add support for grant mappings
-In-Reply-To: <20240430164939.925307-17-edgar.iglesias@gmail.com>
-Message-ID: <alpine.DEB.2.22.394.2405021156440.624854@ubuntu-linux-20-04-desktop>
-References: <20240430164939.925307-1-edgar.iglesias@gmail.com>
- <20240430164939.925307-17-edgar.iglesias@gmail.com>
-User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
+ (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
+ id 1s2byo-000890-5G
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 15:20:33 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 442JGYIk005810;
+ Thu, 2 May 2024 19:20:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding:content-type; s=qcppdkim1; bh=HHP2M+B
+ hzZuMZydzodl/3bSD/naqoppZfPzCqJqqjJc=; b=MdkrfQvhi4tCHcOib/5lj+j
+ db/NnUAAemLESo5CflOVcDJOAa4a6lM+4qjDji25LfNNGm/qLibbdDt5vRLAWciS
+ CnLkR1k83jw9fNdAhdmmSW7jIEBYBySU+92Gumlj3NJi9COH63ZXOww/dslRvCUu
+ HqAoS+Ky3uRHoR6yRJe8JMPPs02G0lrFdkzZjFcC9PAnquUnx8+dK6kQ9FL9a+AY
+ +Y/gaXEaEZIuy9R4YNMvXTiFUbxgWE2VgvCl2tWoJmn4RdSUT1KCjvMtAdaOxlYf
+ EyUVwsmxZTn95sv3Ik9hmZ03bX/u629q9/ouXf6LXpbAFiiaEZqXshqriJF1+3Q=
+ =
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xvawbgyc0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 May 2024 19:20:24 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com
+ [10.47.209.196])
+ by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 442JKNYb021580
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 2 May 2024 19:20:23 GMT
+Received: from hu-mathbern-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 2 May 2024 12:20:23 -0700
+From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+To: <qemu-devel@nongnu.org>
+CC: <bcain@quicinc.com>, <sidneym@quicinc.com>, <ale@rev.ng>, <anjo@rev.ng>,
+ <ltaylorsimpson@gmail.com>, <richard.henderson@linaro.org>, Laurent Vivier
+ <laurent@vivier.eu>
+Subject: [PATCH v5] Hexagon: add PC alignment check and exception
+Date: Thu, 2 May 2024 16:20:13 -0300
+Message-ID: <1b9cf61fb615d081f480b3f4a8ef1ef26fd4aeb4.1714677574.git.quic_mathbern@quicinc.com>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
- envelope-from=sstabellini@kernel.org; helo=sin.source.kernel.org
-X-Spam_score_int: -58
-X-Spam_score: -5.9
-X-Spam_bar: -----
-X-Spam_report: (-5.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.476,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Proofpoint-GUID: XaBObm6qXnFpD9ATxCZe5Ms4jt2qiAgK
+X-Proofpoint-ORIG-GUID: XaBObm6qXnFpD9ATxCZe5Ms4jt2qiAgK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-02_11,2024-05-02_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 phishscore=0
+ malwarescore=0 bulkscore=0 suspectscore=0 priorityscore=1501
+ impostorscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015 adultscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2405020127
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=quic_mathbern@quicinc.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,446 +99,251 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 30 Apr 2024, Edgar E. Iglesias wrote:
-> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-> 
-> Add a second mapcache for grant mappings. The mapcache for
-> grants needs to work with XC_PAGE_SIZE granularity since
-> we can't map larger ranges than what has been granted to us.
-> 
-> Like with foreign mappings (xen_memory), machines using grants
-> are expected to initialize the xen_grants MR and map it
-> into their address-map accordingly.
-> 
-> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-> ---
->  hw/xen/xen-hvm-common.c         |  12 ++-
->  hw/xen/xen-mapcache.c           | 158 +++++++++++++++++++++++++-------
->  include/hw/xen/xen-hvm-common.h |   3 +
->  include/sysemu/xen.h            |   7 ++
->  4 files changed, 145 insertions(+), 35 deletions(-)
-> 
-> diff --git a/hw/xen/xen-hvm-common.c b/hw/xen/xen-hvm-common.c
-> index 0267b88d26..fdec400491 100644
-> --- a/hw/xen/xen-hvm-common.c
-> +++ b/hw/xen/xen-hvm-common.c
-> @@ -10,12 +10,18 @@
->  #include "hw/boards.h"
->  #include "hw/xen/arch_hvm.h"
->  
-> -MemoryRegion xen_memory;
-> +MemoryRegion xen_memory, xen_grants;
->  
-> -/* Check for xen memory.  */
-> +/* Check for any kind of xen memory, foreign mappings or grants.  */
->  bool xen_mr_is_memory(MemoryRegion *mr)
->  {
-> -    return mr == &xen_memory;
-> +    return mr == &xen_memory || mr == &xen_grants;
-> +}
-> +
-> +/* Check specifically for grants.  */
-> +bool xen_mr_is_grants(MemoryRegion *mr)
-> +{
-> +    return mr == &xen_grants;
->  }
->  
->  void xen_ram_alloc(ram_addr_t ram_addr, ram_addr_t size, MemoryRegion *mr,
-> diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-> index 1b32d0c003..96cd68e28d 100644
-> --- a/hw/xen/xen-mapcache.c
-> +++ b/hw/xen/xen-mapcache.c
-> @@ -14,6 +14,7 @@
->  
->  #include <sys/resource.h>
->  
-> +#include "hw/xen/xen-hvm-common.h"
->  #include "hw/xen/xen_native.h"
->  #include "qemu/bitmap.h"
->  
-> @@ -21,6 +22,8 @@
->  #include "sysemu/xen-mapcache.h"
->  #include "trace.h"
->  
-> +#include <xenevtchn.h>
-> +#include <xengnttab.h>
->  
->  #if HOST_LONG_BITS == 32
->  #  define MCACHE_MAX_SIZE     (1UL<<31) /* 2GB Cap */
-> @@ -41,6 +44,7 @@ typedef struct MapCacheEntry {
->      unsigned long *valid_mapping;
->      uint32_t lock;
->  #define XEN_MAPCACHE_ENTRY_DUMMY (1 << 0)
-> +#define XEN_MAPCACHE_ENTRY_GRANT (1 << 1)
->      uint8_t flags;
->      hwaddr size;
->  
-> @@ -74,6 +78,8 @@ typedef struct MapCache {
->  } MapCache;
->  
->  static MapCache *mapcache;
-> +static MapCache *mapcache_grants;
-> +static xengnttab_handle *xen_region_gnttabdev;
->  
->  static inline void mapcache_lock(MapCache *mc)
->  {
-> @@ -132,6 +138,12 @@ void xen_map_cache_init(phys_offset_to_gaddr_t f, void *opaque)
->      unsigned long max_mcache_size;
->      unsigned int bucket_shift;
->  
-> +    xen_region_gnttabdev = xengnttab_open(NULL, 0);
-> +    if (xen_region_gnttabdev == NULL) {
-> +        error_report("mapcache: Failed to open gnttab device");
-> +        exit(EXIT_FAILURE);
-> +    }
-> +
->      if (HOST_LONG_BITS == 32) {
->          bucket_shift = 16;
->      } else {
-> @@ -160,6 +172,15 @@ void xen_map_cache_init(phys_offset_to_gaddr_t f, void *opaque)
->      mapcache = xen_map_cache_init_single(f, opaque,
->                                           bucket_shift,
->                                           max_mcache_size);
-> +
-> +    /*
-> +     * Grant mappings must use XC_PAGE_SIZE granularity since we can't
-> +     * map anything beyond the number of pages granted to us.
-> +     */
-> +    mapcache_grants = xen_map_cache_init_single(f, opaque,
-> +                                                XC_PAGE_SHIFT,
-> +                                                max_mcache_size);
-> +
->      setrlimit(RLIMIT_AS, &rlimit_as);
->  }
->  
-> @@ -169,17 +190,25 @@ static void xen_remap_bucket(MapCache *mc,
->                               hwaddr size,
->                               hwaddr address_index,
->                               bool dummy,
-> +                             bool grant,
-> +                             bool grant_is_write,
-> +                             hwaddr grant_ref,
->                               ram_addr_t ram_offset)
+The Hexagon Programmer's Reference Manual says that the exception 0x1e
+should be raised upon an unaligned program counter. Let's implement that
+and also add some tests.
 
-Any chance we could pass grant_ref as address_index ?
+Signed-off-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+---
+Changes in v5:
+- Merged asm and C test files into a single file.
 
-Also instead of grant_is_write we could have a generic is_write that
-applies to both.
+ target/hexagon/cpu.h              |  7 +++
+ target/hexagon/cpu_bits.h         |  4 ++
+ target/hexagon/macros.h           |  3 -
+ linux-user/hexagon/cpu_loop.c     |  4 ++
+ target/hexagon/op_helper.c        |  9 ++-
+ tests/tcg/hexagon/unaligned_pc.c  | 98 +++++++++++++++++++++++++++++++
+ tests/tcg/hexagon/Makefile.target |  2 +
+ 7 files changed, 119 insertions(+), 8 deletions(-)
+ create mode 100644 tests/tcg/hexagon/unaligned_pc.c
 
-I am not sure about this, but instead of bool grant, we could check on
-address_index using XEN_GRANT_ADDR_OFF? This one might not work.
+diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
+index 3eef58fe8f..764f3c38cc 100644
+--- a/target/hexagon/cpu.h
++++ b/target/hexagon/cpu.h
+@@ -134,6 +134,10 @@ struct ArchCPU {
+ 
+ FIELD(TB_FLAGS, IS_TIGHT_LOOP, 0, 1)
+ 
++G_NORETURN void hexagon_raise_exception_err(CPUHexagonState *env,
++                                            uint32_t exception,
++                                            uintptr_t pc);
++
+ static inline void cpu_get_tb_cpu_state(CPUHexagonState *env, vaddr *pc,
+                                         uint64_t *cs_base, uint32_t *flags)
+ {
+@@ -144,6 +148,9 @@ static inline void cpu_get_tb_cpu_state(CPUHexagonState *env, vaddr *pc,
+         hex_flags = FIELD_DP32(hex_flags, TB_FLAGS, IS_TIGHT_LOOP, 1);
+     }
+     *flags = hex_flags;
++    if (*pc & PCALIGN_MASK) {
++        hexagon_raise_exception_err(env, HEX_EXCP_PC_NOT_ALIGNED, 0);
++    }
+ }
+ 
+ typedef HexagonCPU ArchCPU;
+diff --git a/target/hexagon/cpu_bits.h b/target/hexagon/cpu_bits.h
+index 96fef71729..4279281a71 100644
+--- a/target/hexagon/cpu_bits.h
++++ b/target/hexagon/cpu_bits.h
+@@ -20,9 +20,13 @@
+ 
+ #include "qemu/bitops.h"
+ 
++#define PCALIGN 4
++#define PCALIGN_MASK (PCALIGN - 1)
++
+ #define HEX_EXCP_FETCH_NO_UPAGE  0x012
+ #define HEX_EXCP_INVALID_PACKET  0x015
+ #define HEX_EXCP_INVALID_OPCODE  0x015
++#define HEX_EXCP_PC_NOT_ALIGNED  0x01e
+ #define HEX_EXCP_PRIV_NO_UREAD   0x024
+ #define HEX_EXCP_PRIV_NO_UWRITE  0x025
+ 
+diff --git a/target/hexagon/macros.h b/target/hexagon/macros.h
+index 1376d6ccc1..f375471a98 100644
+--- a/target/hexagon/macros.h
++++ b/target/hexagon/macros.h
+@@ -22,9 +22,6 @@
+ #include "hex_regs.h"
+ #include "reg_fields.h"
+ 
+-#define PCALIGN 4
+-#define PCALIGN_MASK (PCALIGN - 1)
+-
+ #define GET_FIELD(FIELD, REGIN) \
+     fEXTRACTU_BITS(REGIN, reg_field_info[FIELD].width, \
+                    reg_field_info[FIELD].offset)
+diff --git a/linux-user/hexagon/cpu_loop.c b/linux-user/hexagon/cpu_loop.c
+index 7f1499ed28..d41159e52a 100644
+--- a/linux-user/hexagon/cpu_loop.c
++++ b/linux-user/hexagon/cpu_loop.c
+@@ -60,6 +60,10 @@ void cpu_loop(CPUHexagonState *env)
+                 env->gpr[0] = ret;
+             }
+             break;
++        case HEX_EXCP_PC_NOT_ALIGNED:
++            force_sig_fault(TARGET_SIGBUS, TARGET_BUS_ADRALN,
++                            env->gpr[HEX_REG_R31]);
++            break;
+         case EXCP_ATOMIC:
+             cpu_exec_step_atomic(cs);
+             break;
+diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
+index da10ac5847..ae5a605513 100644
+--- a/target/hexagon/op_helper.c
++++ b/target/hexagon/op_helper.c
+@@ -36,10 +36,9 @@
+ #define SF_MANTBITS    23
+ 
+ /* Exceptions processing helpers */
+-static G_NORETURN
+-void do_raise_exception_err(CPUHexagonState *env,
+-                            uint32_t exception,
+-                            uintptr_t pc)
++G_NORETURN void hexagon_raise_exception_err(CPUHexagonState *env,
++                                            uint32_t exception,
++                                            uintptr_t pc)
+ {
+     CPUState *cs = env_cpu(env);
+     qemu_log_mask(CPU_LOG_INT, "%s: %d\n", __func__, exception);
+@@ -49,7 +48,7 @@ void do_raise_exception_err(CPUHexagonState *env,
+ 
+ G_NORETURN void HELPER(raise_exception)(CPUHexagonState *env, uint32_t excp)
+ {
+-    do_raise_exception_err(env, excp, 0);
++    hexagon_raise_exception_err(env, excp, 0);
+ }
+ 
+ void log_store32(CPUHexagonState *env, target_ulong addr,
+diff --git a/tests/tcg/hexagon/unaligned_pc.c b/tests/tcg/hexagon/unaligned_pc.c
+new file mode 100644
+index 0000000000..de50e5be9d
+--- /dev/null
++++ b/tests/tcg/hexagon/unaligned_pc.c
+@@ -0,0 +1,98 @@
++#include <stdio.h>
++#include <signal.h>
++#include <setjmp.h>
++#include <stdlib.h>
++
++/* will be changed in signal handler */
++volatile sig_atomic_t completed_tests;
++static jmp_buf after_test;
++static int nr_tests;
++
++void __attribute__((naked)) test_return(void)
++{
++    asm volatile(
++        "allocframe(#0x8)\n"
++        "r0 = #0xffffffff\n"
++        "framekey = r0\n"
++        "dealloc_return\n"
++        :
++        :
++        : "r0", "r29", "r30", "r31", "framekey");
++}
++
++void test_endloop(void)
++{
++    asm volatile(
++        "loop0(1f, #2)\n"
++        "1: r0 = #0x3\n"
++        "sa0 = r0\n"
++        "{ nop }:endloop0\n"
++        :
++        :
++        : "r0", "sa0", "lc0", "usr");
++}
++
++asm(".org 0x3\n"
++    ".global test_multi_cof_unaligned\n"
++    "test_multi_cof_unaligned:\n"
++    "   jumpr r31\n");
++
++void test_multi_cof(void)
++{
++    asm volatile(
++        "p0 = cmp.eq(r0, r0)\n"
++        "{\n"
++        "    if (p0) jump test_multi_cof_unaligned\n"
++        "    if (!p0) jump 1f\n"
++        "}\n"
++        "1: nop\n"
++        :
++        :
++        : "p0");
++}
++
++void sigbus_handler(int signum)
++{
++    /* retore framekey after test_return */
++    asm volatile(
++        "r0 = #0\n"
++        "framekey = r0\n"
++        :
++        :
++        : "r0", "framekey");
++    printf("Test %d complete\n", completed_tests);
++    completed_tests++;
++    siglongjmp(after_test, 1);
++}
++
++void test_done(void)
++{
++    int err = (completed_tests != nr_tests);
++    puts(err ? "FAIL" : "PASS");
++    exit(err);
++}
++
++typedef void (*test_fn)(void);
++
++int main()
++{
++    test_fn tests[] = { test_return, test_endloop, test_multi_cof, test_done };
++    nr_tests = (sizeof(tests) / sizeof(tests[0])) - 1;
++
++    struct sigaction sa = {
++        .sa_sigaction = sigbus_handler,
++        .sa_flags = SA_SIGINFO
++    };
++
++    if (sigaction(SIGBUS, &sa, NULL) < 0) {
++        perror("sigaction");
++        return EXIT_FAILURE;
++    }
++
++    sigsetjmp(after_test, 1);
++    tests[completed_tests]();
++
++    /* should never get here */
++    puts("FAIL");
++    return 1;
++}
+diff --git a/tests/tcg/hexagon/Makefile.target b/tests/tcg/hexagon/Makefile.target
+index f839b2c0d5..e5182c01d8 100644
+--- a/tests/tcg/hexagon/Makefile.target
++++ b/tests/tcg/hexagon/Makefile.target
+@@ -51,6 +51,7 @@ HEX_TESTS += scatter_gather
+ HEX_TESTS += hvx_misc
+ HEX_TESTS += hvx_histogram
+ HEX_TESTS += invalid-slots
++HEX_TESTS += unaligned_pc
+ 
+ run-and-check-exception = $(call run-test,$2,$3 2>$2.stderr; \
+ 	test $$? -eq 1 && grep -q "exception $(strip $1)" $2.stderr)
+@@ -107,6 +108,7 @@ overflow: overflow.c hex_test.h
+ preg_alias: preg_alias.c hex_test.h
+ read_write_overlap: read_write_overlap.c hex_test.h
+ reg_mut: reg_mut.c hex_test.h
++unaligned_pc: unaligned_pc.c
+ 
+ # This test has to be compiled for the -mv67t target
+ usr: usr.c hex_test.h
+-- 
+2.37.2
 
-I admit that there is no real advantage on these suggestions except to
-consolidate the parameters and make them look a bit more similar in the
-two cases.
-
-
-
->  {
->      uint8_t *vaddr_base;
-> -    xen_pfn_t *pfns;
-> +    uint32_t *refs = NULL;
-> +    xen_pfn_t *pfns = NULL;
->      int *err;
->      unsigned int i;
->      hwaddr nb_pfn = size >> XC_PAGE_SHIFT;
->  
->      trace_xen_remap_bucket(address_index);
->  
-> -    pfns = g_new0(xen_pfn_t, nb_pfn);
-> +    if (grant) {
-> +        refs = g_new0(uint32_t, nb_pfn);
-> +    } else {
-> +        pfns = g_new0(xen_pfn_t, nb_pfn);
-> +    }
->      err = g_new0(int, nb_pfn);
->  
->      if (entry->vaddr_base != NULL) {
-> @@ -208,21 +237,45 @@ static void xen_remap_bucket(MapCache *mc,
->      g_free(entry->valid_mapping);
->      entry->valid_mapping = NULL;
->  
-> -    for (i = 0; i < nb_pfn; i++) {
-> -        pfns[i] = (address_index << (mc->bucket_shift - XC_PAGE_SHIFT)) + i;
-> +    if (grant) {
-> +        for (i = 0; i < nb_pfn; i++) {
-> +            refs[i] = grant_ref + i;
-> +        }
-> +    } else {
-> +        for (i = 0; i < nb_pfn; i++) {
-> +            pfns[i] = (address_index << (mc->bucket_shift - XC_PAGE_SHIFT)) + i;
-> +        }
->      }
->  
-> -    /*
-> -     * If the caller has requested the mapping at a specific address use
-> -     * MAP_FIXED to make sure it's honored.
-> -     */
-> +    entry->flags &= ~XEN_MAPCACHE_ENTRY_GRANT;
-> +
->      if (!dummy) {
-> -        vaddr_base = xenforeignmemory_map2(xen_fmem, xen_domid, vaddr,
-> -                                           PROT_READ | PROT_WRITE,
-> -                                           vaddr ? MAP_FIXED : 0,
-> -                                           nb_pfn, pfns, err);
-> +        if (grant) {
-> +            int prot = PROT_READ;
-> +
-> +            if (grant_is_write) {
-> +                prot |= PROT_WRITE;
-> +            }
-> +
-> +            entry->flags |= XEN_MAPCACHE_ENTRY_GRANT;
-> +            assert(vaddr == NULL);
-> +            vaddr_base = xengnttab_map_domain_grant_refs(xen_region_gnttabdev,
-> +                                                         nb_pfn,
-> +                                                         xen_domid, refs,
-> +                                                         prot);
-> +        } else {
-> +            /*
-> +             * If the caller has requested the mapping at a specific address use
-> +             * MAP_FIXED to make sure it's honored.
-> +             */
-> +            vaddr_base = xenforeignmemory_map2(xen_fmem, xen_domid, vaddr,
-> +                                               PROT_READ | PROT_WRITE,
-> +                                               vaddr ? MAP_FIXED : 0,
-> +                                               nb_pfn, pfns, err);
-> +        }
->          if (vaddr_base == NULL) {
-> -            perror("xenforeignmemory_map2");
-> +            perror(grant ? "xengnttab_map_domain_grant_refs"
-> +                           : "xenforeignmemory_map2");
->              exit(-1);
->          }
->      } else {
-> @@ -263,6 +316,7 @@ static void xen_remap_bucket(MapCache *mc,
->          }
->      }
->  
-> +    g_free(refs);
->      g_free(pfns);
->      g_free(err);
->  }
-> @@ -270,10 +324,12 @@ static void xen_remap_bucket(MapCache *mc,
->  static uint8_t *xen_map_cache_unlocked(MapCache *mc,
->                                         hwaddr phys_addr, hwaddr size,
->                                         ram_addr_t ram_offset,
-> -                                       uint8_t lock, bool dma, bool is_write)
-> +                                       uint8_t lock, bool dma,
-> +                                       bool grant, bool is_write)
->  {
->      MapCacheEntry *entry, *pentry = NULL,
->                    *free_entry = NULL, *free_pentry = NULL;
-> +    hwaddr grant_ref = phys_addr >> XC_PAGE_SHIFT;
->      hwaddr address_index;
->      hwaddr address_offset;
->      hwaddr cache_size = size;
-> @@ -342,7 +398,7 @@ tryagain:
->          entry = g_new0(MapCacheEntry, 1);
->          pentry->next = entry;
->          xen_remap_bucket(mc, entry, NULL, cache_size, address_index, dummy,
-> -                         ram_offset);
-> +                         grant, is_write, grant_ref, ram_offset);
->      } else if (!entry->lock) {
->          if (!entry->vaddr_base || entry->paddr_index != address_index ||
->                  entry->size != cache_size ||
-> @@ -350,7 +406,7 @@ tryagain:
->                      test_bit_size >> XC_PAGE_SHIFT,
->                      entry->valid_mapping)) {
->              xen_remap_bucket(mc, entry, NULL, cache_size, address_index, dummy,
-> -                             ram_offset);
-> +                             grant, is_write, grant_ref, ram_offset);
->          }
->      }
->  
-> @@ -401,12 +457,28 @@ uint8_t *xen_map_cache(MemoryRegion *mr,
->                         uint8_t lock, bool dma,
->                         bool is_write)
->  {
-> +    bool grant = xen_mr_is_grants(mr);
-> +    MapCache *mc = grant ? mapcache_grants : mapcache;
->      uint8_t *p;
->  
-> -    mapcache_lock(mapcache);
-> -    p = xen_map_cache_unlocked(mapcache, phys_addr, size, ram_addr_offset,
-> -                               lock, dma, is_write);
-> -    mapcache_unlock(mapcache);
-> +    if (grant) {
-> +        /*
-> +         * Grants are only supported via address_space_map(). Anything
-> +         * else is considered a user/guest error.
-> +         *
-> +         * QEMU generally doesn't expect these mappings to ever fail, so
-> +         * if this happens we report an error message and abort().
-> +         */
-> +        if (!lock) {
-> +            error_report("Trying access a grant reference without mapping it.");
-> +            abort();
-> +        }
-> +    }
-> +
-> +    mapcache_lock(mc);
-> +    p = xen_map_cache_unlocked(mc, phys_addr, size, ram_addr_offset,
-> +                               lock, dma, grant, is_write);
-> +    mapcache_unlock(mc);
->      return p;
->  }
->  
-> @@ -451,7 +523,14 @@ static ram_addr_t xen_ram_addr_from_mapcache_single(MapCache *mc, void *ptr)
->  
->  ram_addr_t xen_ram_addr_from_mapcache(void *ptr)
->  {
-> -    return xen_ram_addr_from_mapcache_single(mapcache, ptr);
-> +    ram_addr_t addr;
-> +
-> +    addr = xen_ram_addr_from_mapcache_single(mapcache, ptr);
-> +    if (addr == RAM_ADDR_INVALID) {
-> +        addr = xen_ram_addr_from_mapcache_single(mapcache_grants, ptr);
-> +    }
-> +
-> +    return addr;
->  }
->  
->  static void xen_invalidate_map_cache_entry_unlocked(MapCache *mc,
-> @@ -504,9 +583,14 @@ static void xen_invalidate_map_cache_entry_unlocked(MapCache *mc,
->      }
->  
->      ram_block_notify_remove(entry->vaddr_base, entry->size, entry->size);
-> -    if (munmap(entry->vaddr_base, entry->size) != 0) {
-> -        perror("unmap fails");
-> -        exit(-1);
-> +    if (entry->flags & XEN_MAPCACHE_ENTRY_GRANT) {
-> +        xengnttab_unmap(xen_region_gnttabdev, entry->vaddr_base,
-> +                    (entry->size + mc->bucket_size - 1) >> mc->bucket_shift);
-
-Am I getting this right that the + mc->bucket_size - 1 is unnecessary
-because the bucket size is PAGE_SIZE and we can only map at page
-granularity?
-
-Also can we check for return errors?
-
-
-> +    } else {
-> +        if (munmap(entry->vaddr_base, entry->size) != 0) {
-> +            perror("unmap fails");
-> +            exit(-1);
-> +        }
->      }
->      if (pentry) {
->          pentry->next = entry->next;
-> @@ -522,14 +606,24 @@ typedef struct XenMapCacheData {
->      uint8_t *buffer;
->  } XenMapCacheData;
->  
-> +static void xen_invalidate_map_cache_entry_single(MapCache *mc, uint8_t *buffer)
-> +{
-> +    mapcache_lock(mc);
-> +    xen_invalidate_map_cache_entry_unlocked(mc, buffer);
-> +    mapcache_unlock(mc);
-> +}
-> +
-> +static void xen_invalidate_map_cache_entry_all(uint8_t *buffer)
-> +{
-> +    xen_invalidate_map_cache_entry_single(mapcache, buffer);
-> +    xen_invalidate_map_cache_entry_single(mapcache_grants, buffer);
-> +}
-> +
->  static void xen_invalidate_map_cache_entry_bh(void *opaque)
->  {
->      XenMapCacheData *data = opaque;
->  
-> -    mapcache_lock(mapcache);
-> -    xen_invalidate_map_cache_entry_unlocked(mapcache, data->buffer);
-> -    mapcache_unlock(mapcache);
-> -
-> +    xen_invalidate_map_cache_entry_all(data->buffer);
->      aio_co_wake(data->co);
->  }
->  
-> @@ -544,9 +638,7 @@ void coroutine_mixed_fn xen_invalidate_map_cache_entry(uint8_t *buffer)
->                                  xen_invalidate_map_cache_entry_bh, &data);
->          qemu_coroutine_yield();
->      } else {
-> -        mapcache_lock(mapcache);
-> -        xen_invalidate_map_cache_entry_unlocked(mapcache, buffer);
-> -        mapcache_unlock(mapcache);
-> +        xen_invalidate_map_cache_entry_all(buffer);
->      }
->  }
->  
-> @@ -598,6 +690,7 @@ void xen_invalidate_map_cache(void)
->      bdrv_drain_all();
->  
->      xen_invalidate_map_cache_single(mapcache);
-> +    xen_invalidate_map_cache_single(mapcache_grants);
->  }
->  
->  static uint8_t *xen_replace_cache_entry_unlocked(MapCache *mc,
-> @@ -639,7 +732,8 @@ static uint8_t *xen_replace_cache_entry_unlocked(MapCache *mc,
->      trace_xen_replace_cache_entry_dummy(old_phys_addr, new_phys_addr);
->  
->      xen_remap_bucket(mc, entry, entry->vaddr_base,
-> -                     cache_size, address_index, false, entry->ram_offset);
-> +                     cache_size, address_index, false,
-> +                     false, false, 0, entry->ram_offset);
-
-If I understand correctly, xen_replace_cache_entry_unlocked cannot be
-called on grants because xen_replace_cache_entry_unlocked is always
-called on unlocked entries while grants are always locked. Should we
-have an assert on !entry->lock and/or !(entry->flags & XEN_MAPCACHE_ENTRY_GRANT)?
-
-
-
->      if (!test_bits(address_offset >> XC_PAGE_SHIFT,
->                  test_bit_size >> XC_PAGE_SHIFT,
->                  entry->valid_mapping)) {
-> diff --git a/include/hw/xen/xen-hvm-common.h b/include/hw/xen/xen-hvm-common.h
-> index 65a51aac2e..3d796235dc 100644
-> --- a/include/hw/xen/xen-hvm-common.h
-> +++ b/include/hw/xen/xen-hvm-common.h
-> @@ -16,6 +16,7 @@
->  #include <xen/hvm/ioreq.h>
->  
->  extern MemoryRegion xen_memory;
-> +extern MemoryRegion xen_grants;
->  extern MemoryListener xen_io_listener;
->  extern DeviceListener xen_device_listener;
->  
-> @@ -29,6 +30,8 @@ extern DeviceListener xen_device_listener;
->      do { } while (0)
->  #endif
->  
-> +#define XEN_GRANT_ADDR_OFF (1ULL << 63)
-> +
->  static inline uint32_t xen_vcpu_eport(shared_iopage_t *shared_page, int i)
->  {
->      return shared_page->vcpu_ioreq[i].vp_eport;
-> diff --git a/include/sysemu/xen.h b/include/sysemu/xen.h
-> index dc72f83bcb..19dccf4d71 100644
-> --- a/include/sysemu/xen.h
-> +++ b/include/sysemu/xen.h
-> @@ -35,6 +35,7 @@ void xen_ram_alloc(ram_addr_t ram_addr, ram_addr_t size,
->                     struct MemoryRegion *mr, Error **errp);
->  
->  bool xen_mr_is_memory(MemoryRegion *mr);
-> +bool xen_mr_is_grants(MemoryRegion *mr);
->  
->  #else /* !CONFIG_XEN_IS_POSSIBLE */
->  
-> @@ -55,6 +56,12 @@ static inline bool xen_mr_is_memory(MemoryRegion *mr)
->      return false;
->  }
->  
-> +static inline bool xen_mr_is_grants(MemoryRegion *mr)
-> +{
-> +    g_assert_not_reached();
-> +    return false;
-> +}
-> +
->  #endif /* CONFIG_XEN_IS_POSSIBLE */
->  
->  #endif
-> -- 
-> 2.40.1
-> 
 
