@@ -4,100 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 490EEC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 06:46:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C287C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 06:57:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2QBv-0004kP-Ea; Thu, 02 May 2024 02:45:15 -0400
+	id 1s2QNV-0000S6-IE; Thu, 02 May 2024 02:57:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1s2QBt-0004ju-7s
- for qemu-devel@nongnu.org; Thu, 02 May 2024 02:45:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1s2QBq-0005ql-IA
- for qemu-devel@nongnu.org; Thu, 02 May 2024 02:45:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714632307;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YFFhc+Brv75ul2xGPo7fSFrkNMruwWXBKJSJyvFuijY=;
- b=hFeEKnZ7N2UmBrf83R0XCeFUebkHNkgEO2DAjKzjkbQLIOjIM1/Y/WIOuiydOdbLCSGupH
- hNw7M1DefbZrTMz5wYZwHSEfUp3fscBXrJzX9ba3IZqHKEYTphOOE19Ho5M149+z07NfqF
- xdAjbT2K89DPpHKi7f/ztB9DDAXBAWA=
-Received: from mail-yb1-f199.google.com (mail-yb1-f199.google.com
- [209.85.219.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-328-HNFX_1OWO3CYCIjO7hVH7Q-1; Thu, 02 May 2024 02:45:04 -0400
-X-MC-Unique: HNFX_1OWO3CYCIjO7hVH7Q-1
-Received: by mail-yb1-f199.google.com with SMTP id
- 3f1490d57ef6-de59e612376so11936912276.3
- for <qemu-devel@nongnu.org>; Wed, 01 May 2024 23:45:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <abhi97.rajmane@gmail.com>)
+ id 1s2QNP-0000R2-7a
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 02:57:08 -0400
+Received: from mail-oa1-x35.google.com ([2001:4860:4864:20::35])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <abhi97.rajmane@gmail.com>)
+ id 1s2QNL-0008Ih-Jb
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 02:57:07 -0400
+Received: by mail-oa1-x35.google.com with SMTP id
+ 586e51a60fabf-234db9dde9bso3246836fac.1
+ for <qemu-devel@nongnu.org>; Wed, 01 May 2024 23:57:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1714633021; x=1715237821; darn=nongnu.org;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DtJevLNU5MfvnmlvzvbCE3rjt9cdpoUeFsbwRtaPukc=;
+ b=O2BtYntXlu9L3ibQwrVSJmbdBoNSP8ZgLjf4HDiB39FFSWLO5CqFfYFR7kCwOZJb1C
+ RS6v0M27WSOuzkY3HtCQHHUGIW3cmxNP2SZ05fAjQMEnWvlj2fAa4ftkmwX9a8KI0/TR
+ FDXF4weQsPOnC5vn2MZhj1tZYflfUpvjHSOTXaXjAfq+jLsS45b7PIrXd4pU+kOY4fNY
+ f4DrPM5Mo/aEegaQoIEFWJ27YN4aWvXJLKBYo1lkn37TsbMsvtcMS3t2qS+IKG/NsIW2
+ kZzYjX8Mh5YYbWX0yqSASysZQBih3zv3OHsJHiOJvr1FmvF2JlSgKM9Yb/omlBZ9UpMJ
+ O0mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714632303; x=1715237103;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=YFFhc+Brv75ul2xGPo7fSFrkNMruwWXBKJSJyvFuijY=;
- b=wFvt3xubeq4OK2UytqSyKu0QvM0Fuqla6l+V7m7kgrUSXsUvlhLDQYrAnxZJJWsAWR
- h7+3qFt4EugVbJLOkFwJ9+twy5pefzOV1lcr6Pd1W4Z9LwlR7Z1kfoFtyn7GgCzWXoYU
- nU7/meBjC2RqiLx36PH+52e2PHYZS5ZKZsH90tlJP6x/R8GGv4OOO0GFxYyMLACUiIBO
- iV0DMmNFykGrwa6/oQ5SUIIEtsHBYkfNZUdaw0uq67Fr24e5m5sbkkLQ4k8O0spt5Uhi
- ZSJc6nz1N08L7hR597RFQsERUw7ch9TFgU5JFJFUW8mePlt7i+THFv66M8hUsPaR1H3D
- ClsA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXnyk0mwzXKHWxkDmwYa9G3ybhQX8nNyqcs8vLug5PBKRewLuk/GU00otZtP9OIgoMqp+dmCibTQjghVxqoCixLkSbatB8=
-X-Gm-Message-State: AOJu0Yx99QqTdAOBy5YnkzEUWFWBCu1yHRrkCSFbGeU0jgcccO1zJrlf
- 56MxIJoWuXd9qeQi95hi69TVZn0mFOwUwG+KnHs5U0hcyLap0afpQJSQ3xrY/0oILLzwfV76UmC
- 3hDbluYDPvFBRVDZjW3OxkmXaEKzfJbRGeM1PMQAm3u/BYBlFaJE1GKdJHqbonvJMgGGiFmARIr
- 5+LO29nJwpKl0XIOjxPV3eYhgReyw=
-X-Received: by 2002:a05:6902:218d:b0:dcc:dbb8:ba73 with SMTP id
- dl13-20020a056902218d00b00dccdbb8ba73mr5994063ybb.9.1714632303364; 
- Wed, 01 May 2024 23:45:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHV0hGTO7pF9PXRzuugSaq3nuMauMjUszhpQ5bfaexQJDIftdSAp3CHQpcP0zitXN8wn+yujm8RY9mEGTPcOqs=
-X-Received: by 2002:a05:6902:218d:b0:dcc:dbb8:ba73 with SMTP id
- dl13-20020a056902218d00b00dccdbb8ba73mr5994035ybb.9.1714632302640; Wed, 01
- May 2024 23:45:02 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1714633021; x=1715237821;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DtJevLNU5MfvnmlvzvbCE3rjt9cdpoUeFsbwRtaPukc=;
+ b=faJhI6YUGR27uRKyx9WVSK8sdmaTUKWHB/G/zkoq3KfduY1hojO+FeuQ/WKxhLsmEl
+ cvB72pEedBQNihTN1rHBan7/GboKk62sEazZbI5rhRvQno/bw75+oKg/4wcU2jHMarLJ
+ 7B6RP4q54Tv19HKbYT0Ezbj0qHGI+9y+GLPFsmReS8Udv5tFvszHl8Fng+84Fjg1nMJW
+ 0EHyKZeuXTZlHmfYbL0bdAczq1xsn/UB+7NQpbx0js2TBQMqRVDX6JOlBJNFwQxiRv2X
+ bwXYCqebKeBV/TY8IKQfKIDiRIYItIGsx/ehs3M/r29JW5/B7qoxOQrzGFoCD4NkTAmT
+ Lr1Q==
+X-Gm-Message-State: AOJu0YyMPeGWH+VoDG/tBJfGJUeNFkpva0gOefIfRmZc0D5M3GW1sRjC
+ lODgMTT/086RbYwEOn43akO7vQjB2ZtUhTYbGCG0uxs3SqT8ZOLcqmb5CPyYStoMgLAFBBrmnCt
+ fTUElUqa6J89NKrDfTpN8WTQ1Kp7V5Jk=
+X-Google-Smtp-Source: AGHT+IG/dabE4fKvx11yNVt7qfDEDPV9ClhHjc1b7kKW9POd9AI8Zd32eoxrb25V2hg1HqkjrgtbGnkthEPmtV+e8xk=
+X-Received: by 2002:a05:6870:3926:b0:221:96b2:5a4e with SMTP id
+ b38-20020a056870392600b0022196b25a4emr1559544oap.58.1714633020621; Wed, 01
+ May 2024 23:57:00 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240410100345.389462-1-eperezma@redhat.com>
- <20240410100345.389462-2-eperezma@redhat.com>
- <558124df-be44-47ae-85b9-0f282fc3889c@oracle.com>
- <CAJaqyWeE3kfgN5Y0=Kj6oCOFwg0H-gQEr4g3TM+3_+5N7mfd=A@mail.gmail.com>
- <450d0da1-3d11-428b-bd89-d09a2964cdb1@oracle.com>
- <CAJaqyWfXNQJQdTcJ9V-mSUrMs9up7rpAMwyK-qB3BuJwbUw+5w@mail.gmail.com>
- <f2dcbc76-f90f-4abe-b5c3-f159befd07bd@oracle.com>
- <CAJaqyWeSrwVt6imakpccieqN_3C85JcOZuj=FR+Xnmr7FKFaAw@mail.gmail.com>
- <9f347cd6-8c18-4253-8a5f-efae08230a62@oracle.com>
- <CAJaqyWeyfPp5bh9iZrkwZshoStEHZ85P6t4TcEdmR5sDYhG4ug@mail.gmail.com>
- <f6c63253-57bf-4e7a-8178-667a577784d5@oracle.com>
- <CAJaqyWdheH4MoHMOQjPmbOpODswE53w09LkfeaDNWdys3qUFLw@mail.gmail.com>
- <86670db8-604c-4bad-9022-a59b8363e5ca@oracle.com>
-In-Reply-To: <86670db8-604c-4bad-9022-a59b8363e5ca@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Thu, 2 May 2024 08:44:26 +0200
-Message-ID: <CAJaqyWf1iPgKbp8-SfFGeMxJ2E-1y5dLLkOxLLNa6rm4tQgPGA@mail.gmail.com>
-Subject: Re: [RFC 1/2] iova_tree: add an id member to DMAMap
-To: Si-Wei Liu <si-wei.liu@oracle.com>
-Cc: Jonah Palmer <jonah.palmer@oracle.com>, qemu-devel@nongnu.org, 
- "Michael S. Tsirkin" <mst@redhat.com>, Lei Yang <leiyang@redhat.com>,
- Peter Xu <peterx@redhat.com>, 
- Dragos Tatulea <dtatulea@nvidia.com>, Jason Wang <jasowang@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.897,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <CANJXYHH_CPc40eR6AWU0pKVgX9LkOg_2DbdOmZ=F1+cKaQwrsA@mail.gmail.com>
+In-Reply-To: <CANJXYHH_CPc40eR6AWU0pKVgX9LkOg_2DbdOmZ=F1+cKaQwrsA@mail.gmail.com>
+From: abhijeet rajmane <abhi97.rajmane@gmail.com>
+Date: Thu, 2 May 2024 12:28:05 +0530
+Message-ID: <CANJXYHGU2kdx0Qu7YvKS-Rv4Yc-6oTSiZfhi8pzCxtaPs6UJbQ@mail.gmail.com>
+Subject: Re: xlnx-versal-virt machine in qemu
+To: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000001d4cb80617731cb5"
+Received-SPF: pass client-ip=2001:4860:4864:20::35;
+ envelope-from=abhi97.rajmane@gmail.com; helo=mail-oa1-x35.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,342 +85,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 2, 2024 at 1:16=E2=80=AFAM Si-Wei Liu <si-wei.liu@oracle.com> w=
-rote:
+--0000000000001d4cb80617731cb5
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+I am using the following command to boot "xlnx-versal-virt" board with
+"canbus" and connect it to host machine using "canbus"
+
+$ qemu-system-aarch64 -M xlnx-versal-virt -m 4G -serial mon:stdio -display
+none -kernel ~/linux_kernel/linux-5.15.157/arch/arm64/boot/Image \
+
+-device virtio-rng-device,bus=3Dvirtio-mmio-bus.0 -drive
+if=3Dnone,index=3D0,file=3Drootfs.img,format=3Draw,id=3Dhd0 \
+
+-device virtio-blk-device,drive=3Dhd0 -append root=3D/dev/vda -nic user \
+
+-object can-bus,id=3Dcanbus0 -machine canbus0=3Dcanbus0 -object
+can-bus,id=3Dcanbus1 -machine canbus1=3Dcanbus1 \
+
+-object can-host-socketcan,id=3Dsocketcan0,if=3Dvcan0,canbus=3Dcanbus0
+
+
+
+->I am using the cansend and candump application to test it.
+
+->After sending certain packets the buffer is getting full. I am seeing
+that while ":request_irq" from xilinc_can driver gets called it should
+invoke "xcan_interrupt" function. I have added prints in those functions.
+"xcan_interrupt" function is not getting called.
+
+->If i check the interrupts on cpu for 'can' interface the count is 0.
+
+
+
+Thank You in Advance!!
+
+On Sat, Apr 20, 2024 at 11:43=E2=80=AFPM abhijeet rajmane <abhi97.rajmane@g=
+mail.com>
+wrote:
+
+> Hi,
+> I have booted up the xlnx-versal-virt machine using qemu-system-aarch64. =
+I
+> wanted to work with can device that has been modelled with this device. I
+> have used the xilinx_can.c driver for this device and can see two can
+> controllers. The problem is I am not able to see any interrupts in
+> /proc/interrupts for both can devices. I have set them up and running. I
+> have also connected the canbus device to host to transmit and receive can
+> packets. I am seeing qemu_set_irq() getting called. Am I missing somethin=
+g?
 >
->
->
-> On 4/30/2024 10:19 AM, Eugenio Perez Martin wrote:
-> > On Tue, Apr 30, 2024 at 7:55=E2=80=AFAM Si-Wei Liu <si-wei.liu@oracle.c=
-om> wrote:
-> >>
-> >>
-> >> On 4/29/2024 1:14 AM, Eugenio Perez Martin wrote:
-> >>> On Thu, Apr 25, 2024 at 7:44=E2=80=AFPM Si-Wei Liu <si-wei.liu@oracle=
-.com> wrote:
-> >>>>
-> >>>> On 4/24/2024 12:33 AM, Eugenio Perez Martin wrote:
-> >>>>> On Wed, Apr 24, 2024 at 12:21=E2=80=AFAM Si-Wei Liu <si-wei.liu@ora=
-cle.com> wrote:
-> >>>>>> On 4/22/2024 1:49 AM, Eugenio Perez Martin wrote:
-> >>>>>>> On Sat, Apr 20, 2024 at 1:50=E2=80=AFAM Si-Wei Liu <si-wei.liu@or=
-acle.com> wrote:
-> >>>>>>>> On 4/19/2024 1:29 AM, Eugenio Perez Martin wrote:
-> >>>>>>>>> On Thu, Apr 18, 2024 at 10:46=E2=80=AFPM Si-Wei Liu <si-wei.liu=
-@oracle.com> wrote:
-> >>>>>>>>>> On 4/10/2024 3:03 AM, Eugenio P=C3=A9rez wrote:
-> >>>>>>>>>>> IOVA tree is also used to track the mappings of virtio-net sh=
-adow
-> >>>>>>>>>>> virtqueue.  This mappings may not match with the GPA->HVA one=
-s.
-> >>>>>>>>>>>
-> >>>>>>>>>>> This causes a problem when overlapped regions (different GPA =
-but same
-> >>>>>>>>>>> translated HVA) exists in the tree, as looking them by HVA wi=
-ll return
-> >>>>>>>>>>> them twice.  To solve this, create an id member so we can ass=
-ign unique
-> >>>>>>>>>>> identifiers (GPA) to the maps.
-> >>>>>>>>>>>
-> >>>>>>>>>>> Signed-off-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
-> >>>>>>>>>>> ---
-> >>>>>>>>>>>        include/qemu/iova-tree.h | 5 +++--
-> >>>>>>>>>>>        util/iova-tree.c         | 3 ++-
-> >>>>>>>>>>>        2 files changed, 5 insertions(+), 3 deletions(-)
-> >>>>>>>>>>>
-> >>>>>>>>>>> diff --git a/include/qemu/iova-tree.h b/include/qemu/iova-tre=
-e.h
-> >>>>>>>>>>> index 2a10a7052e..34ee230e7d 100644
-> >>>>>>>>>>> --- a/include/qemu/iova-tree.h
-> >>>>>>>>>>> +++ b/include/qemu/iova-tree.h
-> >>>>>>>>>>> @@ -36,6 +36,7 @@ typedef struct DMAMap {
-> >>>>>>>>>>>            hwaddr iova;
-> >>>>>>>>>>>            hwaddr translated_addr;
-> >>>>>>>>>>>            hwaddr size;                /* Inclusive */
-> >>>>>>>>>>> +    uint64_t id;
-> >>>>>>>>>>>            IOMMUAccessFlags perm;
-> >>>>>>>>>>>        } QEMU_PACKED DMAMap;
-> >>>>>>>>>>>        typedef gboolean (*iova_tree_iterator)(DMAMap *map);
-> >>>>>>>>>>> @@ -100,8 +101,8 @@ const DMAMap *iova_tree_find(const IOVATr=
-ee *tree, const DMAMap *map);
-> >>>>>>>>>>>         * @map: the mapping to search
-> >>>>>>>>>>>         *
-> >>>>>>>>>>>         * Search for a mapping in the iova tree that translat=
-ed_addr overlaps with the
-> >>>>>>>>>>> - * mapping range specified.  Only the first found mapping wi=
-ll be
-> >>>>>>>>>>> - * returned.
-> >>>>>>>>>>> + * mapping range specified and map->id is equal.  Only the f=
-irst found
-> >>>>>>>>>>> + * mapping will be returned.
-> >>>>>>>>>>>         *
-> >>>>>>>>>>>         * Return: DMAMap pointer if found, or NULL if not fou=
-nd.  Note that
-> >>>>>>>>>>>         * the returned DMAMap pointer is maintained internall=
-y.  User should
-> >>>>>>>>>>> diff --git a/util/iova-tree.c b/util/iova-tree.c
-> >>>>>>>>>>> index 536789797e..0863e0a3b8 100644
-> >>>>>>>>>>> --- a/util/iova-tree.c
-> >>>>>>>>>>> +++ b/util/iova-tree.c
-> >>>>>>>>>>> @@ -97,7 +97,8 @@ static gboolean iova_tree_find_address_iter=
-ator(gpointer key, gpointer value,
-> >>>>>>>>>>>
-> >>>>>>>>>>>            needle =3D args->needle;
-> >>>>>>>>>>>            if (map->translated_addr + map->size < needle->tra=
-nslated_addr ||
-> >>>>>>>>>>> -        needle->translated_addr + needle->size < map->transl=
-ated_addr) {
-> >>>>>>>>>>> +        needle->translated_addr + needle->size < map->transl=
-ated_addr ||
-> >>>>>>>>>>> +        needle->id !=3D map->id) {
-> >>>>>>>>>> It looks this iterator can also be invoked by SVQ from
-> >>>>>>>>>> vhost_svq_translate_addr() -> iova_tree_find_iova(), where gue=
-st GPA
-> >>>>>>>>>> space will be searched on without passing in the ID (GPA), and=
- exact
-> >>>>>>>>>> match for the same GPA range is not actually needed unlike the=
- mapping
-> >>>>>>>>>> removal case. Could we create an API variant, for the SVQ look=
-up case
-> >>>>>>>>>> specifically? Or alternatively, add a special flag, say skip_i=
-d_match to
-> >>>>>>>>>> DMAMap, and the id match check may look like below:
-> >>>>>>>>>>
-> >>>>>>>>>> (!needle->skip_id_match && needle->id !=3D map->id)
-> >>>>>>>>>>
-> >>>>>>>>>> I think vhost_svq_translate_addr() could just call the API var=
-iant or
-> >>>>>>>>>> pass DMAmap with skip_id_match set to true to svq_iova_tree_fi=
-nd_iova().
-> >>>>>>>>>>
-> >>>>>>>>> I think you're totally right. But I'd really like to not compli=
-cate
-> >>>>>>>>> the API of the iova_tree more.
-> >>>>>>>>>
-> >>>>>>>>> I think we can look for the hwaddr using memory_region_from_hos=
-t and
-> >>>>>>>>> then get the hwaddr. It is another lookup though...
-> >>>>>>>> Yeah, that will be another means of doing translation without ha=
-ving to
-> >>>>>>>> complicate the API around iova_tree. I wonder how the lookup thr=
-ough
-> >>>>>>>> memory_region_from_host() may perform compared to the iova tree =
-one, the
-> >>>>>>>> former looks to be an O(N) linear search on a linked list while =
-the
-> >>>>>>>> latter would be roughly O(log N) on an AVL tree?
-> >>>>>>> Even worse, as the reverse lookup (from QEMU vaddr to SVQ IOVA) i=
-s
-> >>>>>>> linear too. It is not even ordered.
-> >>>>>> Oh Sorry, I misread the code and I should look for g_tree_foreach =
-()
-> >>>>>> instead of g_tree_search_node(). So the former is indeed linear
-> >>>>>> iteration, but it looks to be ordered?
-> >>>>>>
-> >>>>>> https://github.com/GNOME/glib/blob/main/glib/gtree.c#L1115
-> >>>>> The GPA / IOVA are ordered but we're looking by QEMU's vaddr.
-> >>>>>
-> >>>>> If we have these translations:
-> >>>>> [0x1000, 0x2000] -> [0x10000, 0x11000]
-> >>>>> [0x2000, 0x3000] -> [0x6000, 0x7000]
-> >>>>>
-> >>>>> We will see them in this order, so we cannot stop the search at the=
- first node.
-> >>>> Yeah, reverse lookup is unordered indeed, anyway.
-> >>>>
-> >>>>>>> But apart from this detail you're right, I have the same concerns=
- with
-> >>>>>>> this solution too. If we see a hard performance regression we cou=
-ld go
-> >>>>>>> to more complicated solutions, like maintaining a reverse IOVATre=
-e in
-> >>>>>>> vhost-iova-tree too. First RFCs of SVQ did that actually.
-> >>>>>> Agreed, yeap we can use memory_region_from_host for now.  Any reas=
-on why
-> >>>>>> reverse IOVATree was dropped, lack of users? But now we have one!
-> >>>>>>
-> >>>>> No, it is just simplicity. We already have an user in the hot patch=
- in
-> >>>>> the master branch, vhost_svq_vring_write_descs. But I never profile=
-d
-> >>>>> enough to find if it is a bottleneck or not to be honest.
-> >>>> Right, without vIOMMU or a lot of virtqueues / mappings, it's hard t=
-o
-> >>>> profile and see the difference.
-> >>>>> I'll send the new series by today, thank you for finding these issu=
-es!
-> >>>> Thanks! In case you don't have bandwidth to add back reverse IOVA tr=
-ee,
-> >>>> Jonah (cc'ed) may have interest in looking into it.
-> >>>>
-> >>> Actually, yes. I've tried to solve it using:
-> >>> memory_region_get_ram_ptr -> It's hard to get this pointer to work
-> >>> without messing a lot with IOVATree.
-> >>> memory_region_find -> I'm totally unable to make it return sections
-> >>> that make sense
-> >>> flatview_for_each_range -> It does not return the same
-> >>> MemoryRegionsection as the listener, not sure why.
-> >> Ouch, thank you for the summary of attempts that were done earlier.
-> >>> The only advance I have is that memory_region_from_host is able to
-> >>> tell if the vaddr is from the guest or not.
-> >> Hmmm, then it won't be too useful without a direct means to identifyin=
-g
-> >> the exact memory region associated with the iova that is being mapped.
-> >> And, this additional indirection seems introduce a tiny bit of more
-> >> latency in the reverse lookup routine (should not be a scalability iss=
-ue
-> >> though if it's a linear search)?
-> >>
-> > I didn't measure, but I guess yes it might. OTOH these structs may be
-> > cached because virtqueue_pop just looked for them.
-> Oh, right, that's a good point.
-> >
-> >>> So I'm convinced there must be a way to do it with the memory
-> >>> subsystem, but I think the best way to do it ATM is to store a
-> >>> parallel tree with GPA-> SVQ IOVA translations. At removal time, if w=
-e
-> >>> find the entry in this new tree, we can directly remove it by GPA. If
-> >>> not, assume it is a host-only address like SVQ vrings, and remove by
-> >>> iterating on vaddr as we do now.
-> >> Yeah, this could work I think. On the other hand, given that we are no=
-w
-> >> trying to improve it, I wonder if possible to come up with a fast
-> >> version for the SVQ (host-only address) case without having to look up
-> >> twice? SVQ callers should be able to tell apart from the guest case
-> >> where GPA -> IOVA translation doesn't exist? Or just maintain a parall=
-el
-> >> tree with HVA -> IOVA translations for SVQ reverse lookup only? I feel
-> >> SVQ mappings may be worth a separate fast lookup path - unlike guest
-> >> mappings, the insertion, lookup and removal for SVQ mappings seem
-> >> unavoidable during the migration downtime path.
-> >>
-> > I think the ideal order is the opposite actually. So:
-> > 1) Try for the NIC to support _F_VRING_ASID, no translation needed by Q=
-EMU
-> Right, that's the case for _F_VRING_ASID, which is simple and easy to
-> deal with. Though I think this is an edge case across all vendor
-> devices, as most likely only those no-chip IOMMU parents may support it.
-> It's a luxury for normal device to steal another VF for this ASID feature=
-...
->
-> > 2) Try reverse lookup from HVA to GPA. Since dataplane should fit
-> > this, we should test this first
-> So instead of a direct lookup from HVA to IOVA, the purpose of the extra
-> reverse lookup from HVA to GPA is to verify the validity of GPA (avoid
-> from being mistakenly picked from the overlapped region)? But this would
-> seem require scanning the entire GPA space to identify possible GPA
-> ranges that are potentially overlapped? I wonder if there exists
-> possibility to simplify this assumption, could we go this extra layer of
-> GPA wide scan and validation, *only* when overlap is indeed detected
-> during memory listerner's region_add (say during which we try to insert
-> a duplicate / overlapped HVA into the HVA -> IOVA tree)? Or simply put,
-> the first match on the reverse lookup would mostly suffice, since we
-> know virtio driver can't use guest memory from these overlapped regions?
-
-The first match should be enough, but maybe we need more than one
-match. Let me put an example:
-
-The buffer is (vaddr =3D 0x1000, size=3D0x3000). Now the tree contains two
-overlapped entries: (vaddr=3D0x1000, size=3D0x2000), and (vaddr=3D0x1000,
-size=3D0x3000).
-
-Assuming we go through the reverse IOVA tree, we had bad luck and we
-stored the small entry plus the big entry. The first search returns
-the small entry then, (vaddr=3D0x1000, size=3D0x2000),. Calling code must
-detect it, and then look for vaddr =3D 0x1000 + 0x2000. That gives us
-the next entry.
-
-You can see that virtqueue_map_desc translates this way if
-dma_memory_map returns a translation shorter than the length of the
-buffer, for example.
-
-> You may say this assumption is too bold, but do we have other means to
-> guarantee the first match will always hit under SVQ lookup? Given that
-> we don't receive an instance of issue report until we move the memory
-> listener registration upfront to device initialization, I guess there
-> should be some point or under certain condition that the non-overlapped
-> 1:1 translation and lookup can be satisfied. Don't you agree?
+> Thanks ,
+> Abhijeet, India
 >
 
-To be able to build the shorter is desirable, yes. Maybe it can be
-done in this series, but I find it hard to solve some situations. For
-example, is it possible to have three overlapping regions (A, B, C)
-where regions A and B do not overlap but C overlaps both of them?
+--0000000000001d4cb80617731cb5
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-That's why I think it is better to delay that to a future series, but
-we can do it with one shot if it is simple enough for sure.
+<div dir=3D"ltr"><p style=3D"box-sizing:border-box;margin:0px;padding:0px;c=
+olor:rgb(51,51,51);font-family:Roboto,sans-serif;font-size:13px"><span dir=
+=3D"ltr" class=3D"gmail-uiOutputText" style=3D"box-sizing:border-box">I am =
+using the following command to boot &quot;xlnx-versal-virt&quot; board with=
+ &quot;canbus&quot; and connect it to host machine using &quot;canbus&quot;=
+</span></p><p style=3D"box-sizing:border-box;margin:0px;padding:0px;color:r=
+gb(51,51,51);font-family:Roboto,sans-serif;font-size:13px"><span dir=3D"ltr=
+" class=3D"gmail-uiOutputText" style=3D"box-sizing:border-box">$ qemu-syste=
+m-aarch64 -M xlnx-versal-virt -m 4G -serial mon:stdio -display none -kernel=
+ ~/linux_kernel/linux-5.15.157/arch/arm64/boot/Image=C2=A0\</span></p><p st=
+yle=3D"box-sizing:border-box;margin:0px;padding:0px;color:rgb(51,51,51);fon=
+t-family:Roboto,sans-serif;font-size:13px"><span dir=3D"ltr" class=3D"gmail=
+-uiOutputText" style=3D"box-sizing:border-box">-device virtio-rng-device,bu=
+s=3Dvirtio-mmio-bus.0 -drive if=3Dnone,index=3D0,file=3Drootfs.img,format=
+=3Draw,id=3Dhd0=C2=A0\</span></p><p style=3D"box-sizing:border-box;margin:0=
+px;padding:0px;color:rgb(51,51,51);font-family:Roboto,sans-serif;font-size:=
+13px"><span dir=3D"ltr" class=3D"gmail-uiOutputText" style=3D"box-sizing:bo=
+rder-box">-device virtio-blk-device,drive=3Dhd0 -append root=3D/dev/vda -ni=
+c user=C2=A0\</span></p><p style=3D"box-sizing:border-box;margin:0px;paddin=
+g:0px;color:rgb(51,51,51);font-family:Roboto,sans-serif;font-size:13px"><sp=
+an dir=3D"ltr" class=3D"gmail-uiOutputText" style=3D"box-sizing:border-box"=
+>-object can-bus,id=3Dcanbus0 -machine canbus0=3Dcanbus0 -object can-bus,id=
+=3Dcanbus1 -machine canbus1=3Dcanbus1=C2=A0\</span></p><p style=3D"box-sizi=
+ng:border-box;margin:0px;padding:0px;color:rgb(51,51,51);font-family:Roboto=
+,sans-serif;font-size:13px"><span dir=3D"ltr" class=3D"gmail-uiOutputText" =
+style=3D"box-sizing:border-box">-object can-host-socketcan,id=3Dsocketcan0,=
+if=3Dvcan0,canbus=3Dcanbus0</span></p><p style=3D"box-sizing:border-box;mar=
+gin:0px;padding:0px;color:rgb(51,51,51);font-family:Roboto,sans-serif;font-=
+size:13px"><span dir=3D"ltr" class=3D"gmail-uiOutputText" style=3D"box-sizi=
+ng:border-box">=C2=A0</span></p><p style=3D"box-sizing:border-box;margin:0p=
+x;padding:0px;color:rgb(51,51,51);font-family:Roboto,sans-serif;font-size:1=
+3px"><span dir=3D"ltr" class=3D"gmail-uiOutputText" style=3D"box-sizing:bor=
+der-box">-&gt;I am using the cansend and candump application to test it.</s=
+pan></p><p style=3D"box-sizing:border-box;margin:0px;padding:0px;color:rgb(=
+51,51,51);font-family:Roboto,sans-serif;font-size:13px"><span dir=3D"ltr" c=
+lass=3D"gmail-uiOutputText" style=3D"box-sizing:border-box">-&gt;After send=
+ing certain packets the buffer is getting full. I am seeing that while &quo=
+t;:request_irq&quot; from xilinc_can driver gets called it should invoke &q=
+uot;xcan_interrupt&quot; function. I have added prints in those functions. =
+&quot;xcan_interrupt&quot; function is not getting called.</span></p><p sty=
+le=3D"box-sizing:border-box;margin:0px;padding:0px;color:rgb(51,51,51);font=
+-family:Roboto,sans-serif;font-size:13px"><span dir=3D"ltr" class=3D"gmail-=
+uiOutputText" style=3D"box-sizing:border-box">-&gt;If i check the interrupt=
+s on cpu for &#39;can&#39; interface the count is 0.</span></p><p style=3D"=
+box-sizing:border-box;margin:0px;padding:0px;color:rgb(51,51,51);font-famil=
+y:Roboto,sans-serif;font-size:13px"><span dir=3D"ltr" class=3D"gmail-uiOutp=
+utText" style=3D"box-sizing:border-box">=C2=A0</span></p><p style=3D"box-si=
+zing:border-box;margin:0px;padding:0px;color:rgb(51,51,51);font-family:Robo=
+to,sans-serif;font-size:13px"><span dir=3D"ltr" class=3D"gmail-uiOutputText=
+" style=3D"box-sizing:border-box">Thank You in Advance!!</span></p></div><b=
+r><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, =
+Apr 20, 2024 at 11:43=E2=80=AFPM abhijeet rajmane &lt;<a href=3D"mailto:abh=
+i97.rajmane@gmail.com">abhi97.rajmane@gmail.com</a>&gt; wrote:<br></div><bl=
+ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
+t:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr">Hi,<div><sp=
+an style=3D"color:rgb(51,51,51);font-family:Roboto,sans-serif;font-size:13p=
+x">I have booted up the xlnx-versal-virt machine using qemu-system-aarch64.=
+ I wanted to work with can device that has been modelled with this device. =
+I have used the xilinx_can.c driver for this device and can see two can con=
+trollers. The problem is I am not able to see any interrupts in /proc/inter=
+rupts for both can devices. I have set them up and running. I have also con=
+nected the canbus device to host to transmit and receive can packets. I am =
+seeing qemu_set_irq() getting called. Am I=C2=A0missing something?</span><b=
+r></div><div><span style=3D"color:rgb(51,51,51);font-family:Roboto,sans-ser=
+if;font-size:13px"><br></span></div><div><span style=3D"color:rgb(51,51,51)=
+;font-family:Roboto,sans-serif;font-size:13px">Thanks ,</span></div><div><f=
+ont color=3D"#333333" face=3D"Roboto, sans-serif">Abhijeet, India</font></d=
+iv></div>
+</blockquote></div>
 
-Thanks!
-
-> Thanks,
-> -Siwei
-> > 3) Look in SVQ host-only entries (SVQ, current shadow CVQ). It is the
-> > control VQ, speed is not so important.
-> >
-> > Overlapping regions may return the wrong SVQ IOVA though. We should
-> > take extra care to make sure these are correctly handled. I mean,
-> > there are valid translations in the tree unless the driver is buggy,
-> > just may need to span many translations.
-> >
-> >>>    It is guaranteed the guest does not
-> >>> translate to that vaddr and that that vaddr is unique in the tree
-> >>> anyway.
-> >>>
-> >>> Does it sound reasonable? Jonah, would you be interested in moving th=
-is forward?
-> >> My thought would be that the reverse IOVA tree stuff can be added as a
-> >> follow-up optimization right after for extended scalability, but for n=
-ow
-> >> as the interim, we may still need some form of simple fix, so as to
-> >> quickly unblock the other dependent work built on top of this one and
-> >> the early pinning series [1]. With it said, I'm completely fine if
-> >> performing the reverse lookup through linear tree walk e.g.
-> >> g_tree_foreach(), that should suffice small VM configs with just a
-> >> couple of queues and limited number of memory regions. Going forward, =
-to
-> >> address the scalability bottleneck, Jonah could just replace the
-> >> corresponding API call with the one built on top of reverse IOVA tree =
-(I
-> >> presume the use of these iova tree APIs is kind of internal that only
-> >> limits to SVQ and vhost-vdpa subsystems) once he gets there, and then
-> >> eliminate the other API variants that will no longer be in use. What d=
-o
-> >> you think about this idea / plan?
-> >>
-> > Yeah it makes sense to me. Hopefully we can even get rid of the id memb=
-er.
-> >
-> >> Thanks,
-> >> -Siwei
-> >>
-> >> [1] https://lists.nongnu.org/archive/html/qemu-devel/2024-04/msg00079.=
-html
-> >>
-> >>> Thanks!
-> >>>
-> >>>> -Siwei
-> >>>>
-> >>>>
-> >>>>>> Thanks,
-> >>>>>> -Siwei
-> >>>>>>> Thanks!
-> >>>>>>>
-> >>>>>>>> Of course,
-> >>>>>>>> memory_region_from_host() won't search out of the guest memory s=
-pace for
-> >>>>>>>> sure. As this could be on the hot data path I have a little bit
-> >>>>>>>> hesitance over the potential cost or performance regression this=
- change
-> >>>>>>>> could bring in, but maybe I'm overthinking it too much...
-> >>>>>>>>
-> >>>>>>>> Thanks,
-> >>>>>>>> -Siwei
-> >>>>>>>>
-> >>>>>>>>>> Thanks,
-> >>>>>>>>>> -Siwei
-> >>>>>>>>>>>                return false;
-> >>>>>>>>>>>            }
-> >>>>>>>>>>>
->
-
+--0000000000001d4cb80617731cb5--
 
