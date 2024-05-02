@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EB17C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 13:35:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FA95C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 13:51:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2Wal-0003mG-GV; Thu, 02 May 2024 09:35:19 -0400
+	id 1s2Wq4-0000XA-SE; Thu, 02 May 2024 09:51:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2Waj-0003lM-CY
- for qemu-devel@nongnu.org; Thu, 02 May 2024 09:35:17 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1s2Wpu-0000Th-DI
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 09:51:03 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2Wah-00073S-KP
- for qemu-devel@nongnu.org; Thu, 02 May 2024 09:35:17 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-41a1d88723bso56075575e9.0
- for <qemu-devel@nongnu.org>; Thu, 02 May 2024 06:35:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1s2Wpr-0002O1-DI
+ for qemu-devel@nongnu.org; Thu, 02 May 2024 09:50:56 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a58ebdd8b64so673269866b.0
+ for <qemu-devel@nongnu.org>; Thu, 02 May 2024 06:50:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714656914; x=1715261714; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=navvtQMAII48l2qClK+Ufo/574aAb9S091cV2u33lic=;
- b=E48m/ERwPwVsUoIjExgEm5CvLOOeIir3gwM4/IJnIsGu1pwnRP34o5hd0FezMm4OoO
- /zEe/kRI2FSs9yc5zKwpA36hc6ZVa8SVs3JHajB2XZXVY3EtNC8l1yCwDx3uL7IPddwW
- QXt9eK9xqlyJS8m7Rlzzq0qwZf6P8Nam3cjvslBBNGPvKYQcF8lols1QnMZf9BKmhw8B
- Dzo4wgqqh0+TxPw1W3wTu6oyuPORfA3HEtaTaXm+a6C8gmUdPjPawEONKFhY8RCDKIbk
- YcH+iaHvXFN7AfwEI4Sqf3epJyMWGbaAyxu0Cy/p3OvQucVNhzM6UujX7inTFgutl+2Y
- LpmA==
+ d=linaro.org; s=google; t=1714657853; x=1715262653; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=ADYzzK7sfQhc2Nsz3fX7168QnixktK27LoNnMXAIJPA=;
+ b=nxwvLwNGIGvhyUPeB/jN9Jof6SjKUdqpcDxKOVydjr78hd3TutKAaKyJYeQZO2lTyC
+ 9qogtIYjIZju7L3oX93ShFBTcYbDul7ujFmmEmIK3KkHsXjScGfvl+VGRkcsPkPl0Vqf
+ c7QiHqvX1Nmax91s92985vShLCVg6AIgj4T9rxYQzfT9gvX9W+UD1143TofGMjNd5TLJ
+ nUz9+CvYaHw3MxNKSW1gttPkS+f72u/NFOyPN4TvNoVfvjCD4LDNX7a4nxk8q5OhhSeZ
+ 8JHpWX6XTLmHSNFlm5BQ+XIMSNW/Zyi6QB/6kZM3ETP2akNB1AIy088mlICVyT0IMhtI
+ 2khQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714656914; x=1715261714;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=navvtQMAII48l2qClK+Ufo/574aAb9S091cV2u33lic=;
- b=MmY6JEC1mS2zHOtTxFtMz0aBpBLrEkCiHLq3mqbz1a5ObFsSqqXEQkj9wBq1Q/lbp8
- ivVwWuNdxFMgejEFm416KZAIF84Nye59oWPoul77gVsYm3fqq/bp+ZHCxLH6TyoJdnYA
- ExeqteuYU9jW2E5lP7ZGxcX5+HnXI9bAyT51E2b7jkgCUjjcZVqD+kuDi9ACMfOJH6WD
- eUY4c12vIM+O4FC7bdiZXBMeoGyF154ztcp1FboZwGs9Laz1AlJkpoJxEqOVHnRpUWkP
- hebGCbjrHoq1hkW3cLqH5LGQ2CJ1tTrTh2EOmK0eWtAhYDHgD9pw3zg+A6BUvDbmJzKJ
- RaVQ==
+ d=1e100.net; s=20230601; t=1714657853; x=1715262653;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ADYzzK7sfQhc2Nsz3fX7168QnixktK27LoNnMXAIJPA=;
+ b=E7s2K+dbXLDusFoVv0P3345WWOQwBPTnRlOAAF6y428XrpNEK19ZB7HIbEY9h1Kkhe
+ DPCrK0SwakwHCzTvkscpSFEOt4ZwHNbtx6XUs4CVAlSQiKl7IqivubfprCKFhcw4PpUz
+ 5iD26A9dftDAYR009U78Sc+9rumb7gCLaWNyVlDdnGn+n2Us47cEXJe/N/zhgEwaW0hg
+ AY4AwcZ1iq8cRyHh/j2AmGpsT9ji1FbV5HxyrLxTVL2tWATdv1OjvcmOoEfOJVCw5f5w
+ B6Gv6AAZ29BG/MCHkMeARyUiuaX4jkSZBWuLb0uj6+oP8nLFI6+KqWJoRi31T8SLAHdA
+ auOg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUceeEJgSUhW2m6G3NawIJyF6vb0b7KS2338BbApUJZRDYoaBjUBNw+4+HZq2nXOYgs+fjXBkY0Ffupe3Qk1yiLQV2uXZk=
-X-Gm-Message-State: AOJu0YwBAocXal6aKFS3cBAWk+4xbG1xO7LqqF3IXjme9Y3RhMD6HOhK
- E0dn0tSnSbGGnTzkhZw6euoKOG14nBTRwHnwhtORz/7eItS8/0mvWr33lgwdiFY=
-X-Google-Smtp-Source: AGHT+IFSYANR9X3WhJwymIdYjItr3qHIRFLxOI+NOJo6D0PIhHSIfJgfhIofK77qAyPYlP0yS2m12A==
-X-Received: by 2002:a05:600c:1d8c:b0:41a:fa9a:d86b with SMTP id
- p12-20020a05600c1d8c00b0041afa9ad86bmr3753710wms.11.1714656913980; 
- Thu, 02 May 2024 06:35:13 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.215.106])
- by smtp.gmail.com with ESMTPSA id
- s7-20020a05600c384700b0041c12324eb6sm5777006wmr.22.2024.05.02.06.35.12
+ AJvYcCU9TFTOygv45fyUAEkYC8kUTKZAbkVa2EWs5H5hhraJL0SyNfvnC1W8sqMUcltTtF/zsCUy4Y6lM1MsswyhyIuAjog6V/4=
+X-Gm-Message-State: AOJu0YzKSFSh5wyOJqCJmyIjmwHzR8E4KtLdd6dWWoDKD9VpUShIgZo2
+ dG/sSDzgLTSo15yOs8/XKTUTlAZWqWpEqhy5aIOLxTo0JZawwd3RacezI6hgPws=
+X-Google-Smtp-Source: AGHT+IFB1rnuS5QAmnIHOSyBb9Ljp483G4l3pHNEH0rXn3o/KPRc1qJO6Qs75P1CNh4xSlrVT2++1Q==
+X-Received: by 2002:a17:906:c10b:b0:a59:5592:37cf with SMTP id
+ do11-20020a170906c10b00b00a59559237cfmr3721999ejc.5.1714657852800; 
+ Thu, 02 May 2024 06:50:52 -0700 (PDT)
+Received: from [192.168.200.106] (83.11.37.15.ipv4.supernova.orange.pl.
+ [83.11.37.15]) by smtp.gmail.com with ESMTPSA id
+ p25-20020a170906141900b00a55a5384986sm585494ejc.24.2024.05.02.06.50.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 May 2024 06:35:13 -0700 (PDT)
-Message-ID: <acb2ce05-a6a1-4a82-8db0-9248c05b6550@linaro.org>
-Date: Thu, 2 May 2024 15:35:11 +0200
+ Thu, 02 May 2024 06:50:52 -0700 (PDT)
+Message-ID: <88e97ffd-f308-49db-aba6-ea3b9c308d21@linaro.org>
+Date: Thu, 2 May 2024 15:50:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/13] exec: Rework around CPUState user fields (part 2)
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Ilya Leoshkevich <iii@linux.ibm.com>, qemu-devel@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: Anton Johansson <anjo@rev.ng>, Peter Maydell <peter.maydell@linaro.org>
-References: <20240430122808.72025-1-philmd@linaro.org>
- <363wwielvdpy37h7cqo7jo5luyys2aqmfgeb4t3wypsb3myqxg@kvasyjy4e767>
- <2a5e3a10-cc9a-44ff-8241-484d17b1f9cb@linaro.org>
- <90e4b6c6-2bc4-4f4a-ac65-8141c2eb4cb5@linaro.org>
- <uuuk6a2vo24yrrqrchjxaeko3utqshrdu6txcnqziokpg7dkom@4l4kd3dqh6jc>
- <0f147b71-a013-4c72-a860-d12636a45d22@linaro.org>
-Content-Language: en-US
-In-Reply-To: <0f147b71-a013-4c72-a860-d12636a45d22@linaro.org>
+Subject: Re: [PATCH] target/arm: fix MPIDR value for ARM CPUs with SMT
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Dorjoy Chowdhury <dorjoychy111@gmail.com>, qemu-devel@nongnu.org
+References: <20240419183135.12276-1-dorjoychy111@gmail.com>
+ <7c6f66bf-2610-494c-9389-b558a11f8c5f@linaro.org>
+ <CAFfO_h6-RXettxqnCYciDrq6ivsTHtM55FcksJSUNnLdbio4mg@mail.gmail.com>
+ <c696603d-b8dc-4fed-96f0-da40c6ce8287@linaro.org>
+ <CAFEAcA__6PJwdYLTuGbf01YOaV4t67dtRtbAbnP1eL7dd0YH0g@mail.gmail.com>
+From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Content-Language: pl-PL, en-GB, en-HK
+Organization: Linaro
+In-Reply-To: <CAFEAcA__6PJwdYLTuGbf01YOaV4t67dtRtbAbnP1eL7dd0YH0g@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,88 +103,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/5/24 12:27, Philippe Mathieu-Daudé wrote:
-> On 30/4/24 23:42, Ilya Leoshkevich wrote:
->> On Tue, Apr 30, 2024 at 09:00:17PM +0200, Philippe Mathieu-Daudé wrote:
->>> On 30/4/24 20:45, Philippe Mathieu-Daudé wrote:
->>>> Hi Ilya,
->>>>
->>>> On 30/4/24 19:55, Ilya Leoshkevich wrote:
->>>>> On Tue, Apr 30, 2024 at 02:27:54PM +0200, Philippe Mathieu-Daudé 
->>>>> wrote:
->>>>>> Missing WASM testing by Ilya (branch available at
->>>>>> https://gitlab.com/philmd/qemu/-/commits/tcg_flush_jmp_cache)
->>>>>
->>>>> Hmm, it dies very early now:
->>>>>
->>>>>     # gdb --args ./qemu-s390x -L /usr/s390x-linux-gnu 
->>>>> /build/wasmtime/target/s390x-unknown-linux-gnu/debug/deps/component_fuzz_util-d10a3a6b4ad8af47
->>>>>
->>>>>     Thread 1 "qemu-s390x" received signal SIGSEGV, Segmentation fault.
->>>>>     0x000055555559b718 in cpu_common_realizefn (dev=0x5555557c28c0,
->>>>> errp=<optimized out>) at
->>>>> ../home/iii/myrepos/qemu/hw/core/cpu-common.c:217
->>>>>     217             cpu->accel->plugin_state =
->>>>> qemu_plugin_create_vcpu_state();
->>>>>
->>>>>     (gdb) bt
->>>>>     #0  0x000055555559b718 in cpu_common_realizefn
->>>>> (dev=0x5555557c28c0, errp=<optimized out>) at
->>>>> ../home/iii/myrepos/qemu/hw/core/cpu-common.c:217
->>>>>     #1  0x000055555559f59a in s390_cpu_realizefn (dev=0x5555557c28c0,
->>>>> errp=0x7fffffffe1a0) at
-
-
->>>>>     (gdb) p cpu
->>>>>     $1 = (CPUState *) 0x5555557c28c0
->>>>>     (gdb) p cpu->accel
->>>>>     $2 = (AccelCPUState *) 0x0
->>>>>
->>>>> Configured with: '/home/iii/myrepos/qemu/configure'
->>>>> '--target-list=s390x-linux-user' '--disable-tools' '--disable-slirp'
->>>>> '--disable-fdt' '--disable-capstone' '--disable-docs'
->>>>>
-> 
-> 
->> Now I get:
+W dniu 2.05.2024 o 15:13, Peter Maydell pisze:
+> On Thu, 2 May 2024 at 14:11, Marcin Juszkiewicz
+> <marcin.juszkiewicz@linaro.org> wrote:
 >>
->>    Thread 1 "qemu-s390x" received signal SIGABRT, Aborted.
->>    __pthread_kill_implementation (threadid=<optimized out>, 
->> signo=signo@entry=6, no_tid=no_tid@entry=0) at ./nptl/pthread_kill.c:44
->>    44      ./nptl/pthread_kill.c: No such file or directory.
->>    (gdb) bt
->>    #0  __pthread_kill_implementation (threadid=<optimized out>, 
->> signo=signo@entry=6, no_tid=no_tid@entry=0) at ./nptl/pthread_kill.c:44
->>    #1  0x00007ffff7c41e8f in __pthread_kill_internal (signo=6, 
->> threadid=<optimized out>) at ./nptl/pthread_kill.c:78
->>    #2  0x00007ffff7bf2fb2 in __GI_raise (sig=sig@entry=6) at 
->> ../sysdeps/posix/raise.c:26
->>    #3  0x00007ffff7bdd472 in __GI_abort () at ./stdlib/abort.c:79
->>    #4  0x00007ffff7bdd395 in __assert_fail_base (fmt=0x7ffff7d51a90 
->> "%s%s%s:%u: %s%sAssertion `%s' failed.\n%n", 
->> assertion=assertion@entry=0x5555556d71b8 "cpu->accel",
->>        file=file@entry=0x5555556d70e0 
->> "../home/iii/myrepos/qemu/cpu-target.c", line=line@entry=158, 
->> function=function@entry=0x5555556d7260 <__PRETTY_FUNCTION__.3> 
->> "cpu_exec_realizefn") at ./assert/assert.c:92
->>    #5  0x00007ffff7bebeb2 in __GI___assert_fail 
->> (assertion=assertion@entry=0x5555556d71b8 "cpu->accel", 
->> file=file@entry=0x5555556d70e0 
->> "../home/iii/myrepos/qemu/cpu-target.c", line=line@entry=158,
->>        function=function@entry=0x5555556d7260 <__PRETTY_FUNCTION__.3> 
->> "cpu_exec_realizefn") at ./assert/assert.c:101
->>    #6  0x00005555555d44ca in cpu_exec_realizefn 
->> (cpu=cpu@entry=0x5555557c28c0, errp=errp@entry=0x7fffffffe140) at 
->> ../home/iii/myrepos/qemu/cpu-target.c:158
->>    #7  0x000055555559f50b in s390_cpu_realizefn (dev=0x5555557c28c0, 
->> errp=0x7fffffffe1a0) at ../home/iii/myrepos/qemu/target/s390x/cpu.c:261
+>> W dniu 2.05.2024 o 15:04, Dorjoy Chowdhury pisze:
+>>>> Should "return" also have "(1 << 24) |" to have MT=1 set?
+>>>>
+>>>> Otherwise MPIDR_EL1 = 0x000100 can mean core0 in cluster1 or core1 in
+>>>> cluster0.
+>>>>
+>>>> Value 0x1000100 shows MT=1 so thread0 in core1 in cluster0.
+>>
+>>> I don't know all the details but from what I understand the
+>>> "arm_build_mp_afiinity" is used to set the "mp_affinity" member
+>>> variable which I assume is about affinity, not the whole MPIDR
+>>> register value. That is what I assumed because the Uniprocessor
+>>> indication bit(30) is being set only in the "mpidr_read_val" function.
+>>> In the patch, the MT bit is also being set in the "mpidr_read_val"
+>>> function based on the SMT status (has_smt) of the CPU.
+>>
+>> mpidr_read_val() is used only to set VMPIDR and VMPIDR_EL2 registers.
+>>
+>> So setting MT bit for MPIDR_EL1 needs to be added somewhere.
+> 
+> The readfn for MPIDR_EL1 is mpidr_read(), which calls
+> mpidr_read_val().
 
->  From code review I think the problem is my commit bb6cf6f016
-> ("accel/tcg: Factor tcg_cpu_reset_hold() out") which wanted
-> to restrict tlb_flush() to system emulation, but inadvertently
-> also restricted tcg_flush_jmp_cache(), which was before called
-> via Realize -> Reset -> cpu_common_reset_hold(). Apparently
-> now this code can't happen on user emulation.
+My mistake.
 
-This is indeed the root cause, I'll post a series fixing it.
+Both hw/arm/sbsa-ref.c and hw/arm/virt.c build cpu information in 
+DeviceTree using "arm_build_mp_afinnity()" function. So if firmware 
+parses it then it gets wrong values.
+
+Firmware should probably read MPIDR_EL1 directly instead but what with 
+those who read DT and rely on this value already?
+
 
