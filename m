@@ -4,104 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFE69C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 06:41:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18E57C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 06:46:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2mao-0004r3-7f; Fri, 03 May 2024 02:40:26 -0400
+	id 1s2mgD-00065r-6R; Fri, 03 May 2024 02:46:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jinpu.wang@ionos.com>)
- id 1s2mai-0004qE-65
- for qemu-devel@nongnu.org; Fri, 03 May 2024 02:40:21 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jinpu.wang@ionos.com>)
- id 1s2maf-0002Fg-BZ
- for qemu-devel@nongnu.org; Fri, 03 May 2024 02:40:19 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-a5894c1d954so385411466b.1
- for <qemu-devel@nongnu.org>; Thu, 02 May 2024 23:40:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ionos.com; s=google; t=1714718415; x=1715323215; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/sj+GA1zYtQp4fFTqGR5vZIGd2AeshcfO5BrmoknVWY=;
- b=hhZYPsAYos73nn59z/jDRjIWar9red7D3g++Rln/BeY/C4IhI7IfG2W5pc8ELeb1Zg
- B4zFyj2vEpkkQMEl/k05NF/Hx2FesJGEGlqHrIYBNWYBi5fsU2oScHGPJVJ/yIS00vL7
- LmSjZZLfFQ6zaJUekUT+Pg/rfQQ05Obgzzxs7cxShI5GyXHSnEZDJ6HbbsWzG/oBTybe
- qOWC41zE4YTrbFmmdX7hAfcXZbiN2Wtk2yqO904qLchpw66su2yhjNW0zZ9QlGAHlNNw
- SOgn4LDXIIbj3JZADlE/ubCs+x/vNkI5nTOXWav2R87ozD9i5Qvq1wcjR7CkBCzrgOVc
- BjRA==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s2mfw-00064a-0E
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 02:45:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s2mfu-0003Xu-44
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 02:45:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714718739;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=I/GE0N5VVYivTvZwfJAccEioqsvNvBQA7s9yMrgl4gg=;
+ b=WPNm3jpPwqxHpXmQEv9Igd7hOghmoyk8ebuNoFQ8PfhkJkQgxPGIaPxDAPAi2mEuEDP3ui
+ 4iecHrljUISTpgneN12TLBqec/sMPmC2Joo25fabM6R2JwmNW64QcFWUp7AyFBF2YgwOqT
+ u4UtvWyLq/aT5WiFGIKHN3yMUarOeeg=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-317-9rTFgvvbN1Ou6LD8rGOahA-1; Fri, 03 May 2024 02:45:38 -0400
+X-MC-Unique: 9rTFgvvbN1Ou6LD8rGOahA-1
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-790f62cb748so540799285a.1
+ for <qemu-devel@nongnu.org>; Thu, 02 May 2024 23:45:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714718415; x=1715323215;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/sj+GA1zYtQp4fFTqGR5vZIGd2AeshcfO5BrmoknVWY=;
- b=fquVNlP5Z1q8mLCPYUDw2cQ2P6GxD/XnZgQnF1xO1sxOEsMZ8H8oyX6OBmkCNl9ERd
- nrhHgpoiQJs+6//N1OhGRcMlS91kXorXslUvc2GtXsi+rGydpVpVwpQmJXVBSra2QFci
- b2o2PfzEt01ARotMRnNpl1kEp4AAO+Qf6vff468Mne7pPXAzyFP2P5fNyDs+5tVlUry1
- aOjVfjZVz6c5o6PtIOWDJJ/8QWgYPYZajPAKYzfbAeivd5GCg6BlfehZf4hQNKCvBE6z
- edMXn0i+Av0WRNmEbL3MokswIhgviwyYxWc1ooxBjiahOtpu4k2Q+iUsiTplWQZq03Ki
- ns1Q==
+ d=1e100.net; s=20230601; t=1714718738; x=1715323538;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=I/GE0N5VVYivTvZwfJAccEioqsvNvBQA7s9yMrgl4gg=;
+ b=P43y65WeMxkhPZXRpgbqGcabkCegItwavg+vdjzVEkgtDrE1/tvQ98HJKXbWvxBqF0
+ xFvLD0Nhst6rmOntEcb8jbojUVj1/cC8fiMIMasuAYH3/xu868fEHisvrke2fEfjgek/
+ 8ohz0/HMCIOYoxcw7o/DiH/jRJVHb4t0SUpxIoBaq9viGLiue7Xvvylp80OP3ONN+iKB
+ fJWUqJKw/w3WWT7PJkbwI7WOYkxoouZu1iGuK/oY9Xwi5mCMPIJSpv3nP52J+I1TssBv
+ WR2D0pTWv4jL3ITOuxlLczLIoJHV3bfT0duoMTs8wVo9vVhMmsrqSpE8zooXah7iu4aA
+ YQRw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUN3Vh7EH7+Bo0zvYOt5DAO5GqM9aN7ejtVLaaDCcad4YQk07cE/ECBNSkZdWUFruX29BmZiS/6kKC0BTwYxcZiU80HeUQ=
-X-Gm-Message-State: AOJu0YyVi3ik0K9awgmLkF+nZYvlQiZqjOZS2H5HKMrPf7EXOBw0DcFQ
- aacwVTKigihScja8NbsVWXdaosNJD3VPHn4cemSpXUpyZJNM5vGxa1bff6hk4ynjXo/oR9tcvKf
- uljC2pdDr+cwZx0QMIaep2ykOkHLhA/CXLu9H6g==
-X-Google-Smtp-Source: AGHT+IEW/FzR1sO7iiktKo+si8Pdnx1op06cCH8kxdJOaJdgxHgsmd5bQt7971PlcewksAsRd/wi7ejSmRAjFqfMpJA=
-X-Received: by 2002:a50:d601:0:b0:572:47be:831d with SMTP id
- x1-20020a50d601000000b0057247be831dmr1131595edi.20.1714718414906; Thu, 02 May
- 2024 23:40:14 -0700 (PDT)
+ AJvYcCViddg9QSAxBFv0UF5UXEvGPKI7rRasmii2FSVXH+B3+whzHlqd7ansqcqUkCWW4A0liwSOB3d7OHprnr5lGZWqEFekc7Y=
+X-Gm-Message-State: AOJu0YzcX9ECvpeE8tMfJZ6h3sRfOA2SVb7e2RAwSe+eeMEn6tPGhcNE
+ cImxZgWUFmHk3Q1y2UYRGcJXnn5PfWxKERDPjG1ltgixMyxkBRVNBrwTvl3NM4VXprvrYd2AVZe
+ 1bOyCyxXeHBZX+qgI01YWjPbCPsKVqgI3AM41brXftPbmVDjiRCwG
+X-Received: by 2002:a05:620a:2790:b0:792:7f5d:46c6 with SMTP id
+ g16-20020a05620a279000b007927f5d46c6mr965846qkp.16.1714718738005; 
+ Thu, 02 May 2024 23:45:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHJsIcKxkzoBo7AXEcxFC33fxX56MGXmqZd6aJCzcgr+BOC726RE1ZSDVS8tBrbNiD3xsW3Hg==
+X-Received: by 2002:a05:620a:2790:b0:792:7f5d:46c6 with SMTP id
+ g16-20020a05620a279000b007927f5d46c6mr965829qkp.16.1714718737559; 
+ Thu, 02 May 2024 23:45:37 -0700 (PDT)
+Received: from [192.168.0.9] (ip-109-43-179-34.web.vodafone.de.
+ [109.43.179.34]) by smtp.gmail.com with ESMTPSA id
+ g3-20020a05620a218300b0078ebe12976dsm987183qka.19.2024.05.02.23.45.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 02 May 2024 23:45:37 -0700 (PDT)
+Message-ID: <0ea35d63-c6fa-4ad6-b1af-5c0dca2a3e80@redhat.com>
+Date: Fri, 3 May 2024 08:45:34 +0200
 MIME-Version: 1.0
-References: <ZhWa0YeAb9ySVKD1@x1n>
- <082a21b0-d4d1-9f6c-24b5-bee56263008e@fujitsu.com>
- <ZhaY2_cO6CrQFCt3@x1n> <Zhfxoaz9yNTx8Btd@x1n>
- <CAHEcVy7POArt+CmY8dyNTzLJp3XxXgjh3k8=C=9K+_cw1CSJFA@mail.gmail.com>
- <46f5e323-632d-7bda-f2c5-3cfa7b1c6b68@akamai.com> <Zi-1OvxA5MIHjklU@x1n>
- <877cgfe2yw.fsf@pond.sub.org> <ZjClMb-6MddpvHqQ@redhat.com>
- <ZjJgQcPQ29HJsTpY@x1n> <ZjJm6rcqS5EhoKgK@redhat.com>
-In-Reply-To: <ZjJm6rcqS5EhoKgK@redhat.com>
-From: Jinpu Wang <jinpu.wang@ionos.com>
-Date: Fri, 3 May 2024 08:40:03 +0200
-Message-ID: <CAMGffEnj54q1GAtB84dWGVR0hLPzfR1W8Fa2TeP22y2zTBRNeQ@mail.gmail.com>
-Subject: Re: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol handling
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- Michael Galaxy <mgalaxy@akamai.com>, Yu Zhang <yu.zhang@ionos.com>, 
- "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>,
- Elmar Gerdes <elmar.gerdes@ionos.com>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Yuval Shaia <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
- Prasanna Kumar Kalever <prasanna.kalever@redhat.com>, 
- Cornelia Huck <cohuck@redhat.com>, Michael Roth <michael.roth@amd.com>, 
- Prasanna Kumar Kalever <prasanna4324@gmail.com>, 
- "integration@gluster.org" <integration@gluster.org>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
- "devel@lists.libvirt.org" <devel@lists.libvirt.org>, 
- Hanna Reitz <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Thomas Huth <thuth@redhat.com>, 
- Eric Blake <eblake@redhat.com>, Song Gao <gaosong@loongson.cn>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, arei.gonglei@huawei.com, 
- pannengyuan@huawei.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: permerror client-ip=2a00:1450:4864:20::62b;
- envelope-from=jinpu.wang@ionos.com; helo=mail-ej1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 7/9] qga/commands-posix: qmp_guest_set_user_password: use
+ ga_run_command helper
+To: Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+References: <20240501074340.19641-1-kkostiuk@redhat.com>
+ <20240501074340.19641-8-kkostiuk@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240501074340.19641-8-kkostiuk@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.476,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,87 +149,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Daniel,
+On 01/05/2024 09.43, Konstantin Kostiuk wrote:
+> From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+> 
+> There's no need to check for the existence of the "chpasswd", "pw"
+> executables, as the exec() call will do that for us.
+> 
+> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+> Link: https://lore.kernel.org/r/20240320161648.158226-8-andrey.drobyshev@virtuozzo.com
+> Signed-off-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+> ---
+>   qga/commands-posix.c | 96 ++++++--------------------------------------
+>   1 file changed, 13 insertions(+), 83 deletions(-)
+> 
+> diff --git a/qga/commands-posix.c b/qga/commands-posix.c
+> index 9910957ff5..7a065c4085 100644
+> --- a/qga/commands-posix.c
+> +++ b/qga/commands-posix.c
+> @@ -2151,14 +2151,8 @@ void qmp_guest_set_user_password(const char *username,
+>                                    Error **errp)
+>   {
+>       Error *local_err = NULL;
+> -    char *passwd_path = NULL;
+> -    pid_t pid;
+> -    int status;
+> -    int datafd[2] = { -1, -1 };
+> -    char *rawpasswddata = NULL;
+> +    g_autofree char *rawpasswddata = NULL;
+>       size_t rawpasswdlen;
+> -    char *chpasswddata = NULL;
+> -    size_t chpasswdlen;
+>   
+>       rawpasswddata = (char *)qbase64_decode(password, -1, &rawpasswdlen, errp);
+>       if (!rawpasswddata) {
+> @@ -2169,95 +2163,31 @@ void qmp_guest_set_user_password(const char *username,
+>   
+>       if (strchr(rawpasswddata, '\n')) {
+>           error_setg(errp, "forbidden characters in raw password");
+> -        goto out;
+> +        return;
+>       }
+>   
+>       if (strchr(username, '\n') ||
+>           strchr(username, ':')) {
+>           error_setg(errp, "forbidden characters in username");
+> -        goto out;
+> +        return;
+>       }
+>   
+>   #ifdef __FreeBSD__
+> -    chpasswddata = g_strdup(rawpasswddata);
+> -    passwd_path = g_find_program_in_path("pw");
+> +    g_autofree char *chpasswdata = g_strdup(rawpasswddata);
 
-On Wed, May 1, 2024 at 6:00=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
-dhat.com> wrote:
->
-> On Wed, May 01, 2024 at 11:31:13AM -0400, Peter Xu wrote:
-> > What I worry more is whether this is really what we want to keep rdma i=
-n
-> > qemu, and that's also why I was trying to request for some serious
-> > performance measurements comparing rdma v.s. nics.  And here when I sai=
-d
-> > "we" I mean both QEMU community and any company that will support keepi=
-ng
-> > rdma around.
-> >
-> > The problem is if NICs now are fast enough to perform at least equally
-> > against rdma, and if it has a lower cost of overall maintenance, does i=
-t
-> > mean that rdma migration will only be used by whoever wants to keep the=
-m in
-> > the products and existed already?  In that case we should simply ask ne=
-w
-> > users to stick with tcp, and rdma users should only drop but not increa=
-se.
-> >
-> > It seems also destined that most new migration features will not suppor=
-t
-> > rdma: see how much we drop old features in migration now (which rdma
-> > _might_ still leverage, but maybe not), and how much we add mostly mult=
-ifd
-> > relevant which will probably not apply to rdma at all.  So in general w=
-hat
-> > I am worrying is a both-loss condition, if the company might be easier =
-to
-> > either stick with an old qemu (depending on whether other new features =
-are
-> > requested to be used besides RDMA alone), or do periodic rebase with RD=
-MA
-> > downstream only.
->
-> I don't know much about the originals of RDMA support in QEMU and why
-> this particular design was taken. It is indeed a huge maint burden to
-> have a completely different code flow for RDMA with 4000+ lines of
-> custom protocol signalling which is barely understandable.
->
-> I would note that /usr/include/rdma/rsocket.h provides a higher level
-> API that is a 1-1 match of the normal kernel 'sockets' API. If we had
-> leveraged that, then QIOChannelSocket class and the QAPI SocketAddress
-> type could almost[1] trivially have supported RDMA. There would have
-> been almost no RDMA code required in the migration subsystem, and all
-> the modern features like compression, multifd, post-copy, etc would
-> "just work".
-I guess at the time rsocket is less mature, and less performant
-compared to using uverbs directly.
+  Hi!
 
+This broke compilation on FreeBSD:
 
+  https://gitlab.com/qemu-project/qemu/-/jobs/6760232764#L7125
 
->
-> I guess the 'rsocket.h' shim may well limit some of the possible
-> performance gains, but it might still have been a better tradeoff
-> to have not quite so good peak performance, but with massively
-> less maint burden.
-I had a brief check in the rsocket changelog, there seems some
-improvement over time,
- might be worth revisiting this. due to socket abstraction, we can't
-use some feature like
- ODP, it won't be a small and easy task.
-> With regards,
-> Daniel
-Thanks for the suggestion.
->
-> [1] "almost" trivially, because the poll() integration for rsockets
->     requires a bit more magic sauce since rsockets FDs are not
->     really FDs from the kernel's POV. Still, QIOCHannel likely can
->     abstract that probme.
-> --
-> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
-ge :|
-> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
-om :|
-> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
-ge :|
->
+Looks like a typo in the variable name?
+
+  Thomas
+
 
