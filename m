@@ -4,82 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD22DC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 12:57:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8E96C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 13:00:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2sSt-00040B-Iq; Fri, 03 May 2024 08:56:39 -0400
+	id 1s2sWU-0005Nh-AG; Fri, 03 May 2024 09:00:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2sSr-0003zd-RT
- for qemu-devel@nongnu.org; Fri, 03 May 2024 08:56:37 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s2sWP-0005NH-HN
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 09:00:18 -0400
+Received: from mail-oa1-x2d.google.com ([2001:4860:4864:20::2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2sSp-0007FC-Mx
- for qemu-devel@nongnu.org; Fri, 03 May 2024 08:56:37 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-41dc9c83e57so11490645e9.0
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 05:56:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s2sWM-0007oH-Ro
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 09:00:17 -0400
+Received: by mail-oa1-x2d.google.com with SMTP id
+ 586e51a60fabf-23d175cea45so2037626fac.1
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 06:00:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714740994; x=1715345794; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714741210; x=1715346010; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=lxaYcWb+xBzcc9VX7AuLafdW78gfD1N26Mu9ghbppO4=;
- b=cEEuEprw8zDr2cAWeXQmatk853HdQ0vfQ6QMkIVoVXVn4rcG87xTFq5QW/PDlTu3L1
- vHOXT8iB4iplujTHs+dWvJkpaN9KRm7mXh5Vcm3GZvOm+tRv3lTf3YjbaF0rY3IUiWMe
- GQihV31mhvxcJ7YKzeyZFN9C4nvbmjhJWOCFrfvljptIJ43xeXGeRPNsfmhC0zFEf9Zn
- S5ZkDOQgTxOAdJCuoex8OF3tiMxOxXZ92Z6T+Pla2XBT1Ww7pRmf5iFcpkmOEdlLEKmF
- 2K69bXrj7pn06O/bEVIGTS2gcbBRwta5in+TgMhygC0opCAvkkg5Qac1vkCcELLbjkjg
- YsBQ==
+ bh=KSYRKl6qnCPQGEGDoHXB2IT55HLFPg7YrtUx+Y+iDIM=;
+ b=l+0k6QkR/aQKnNAmYPQFhHpLmv0GDu0/2M7g3XL+OBhwuTdojRjopoz4jAS0bI0Hq2
+ Jp/O47zWs0AMv+1CxHZnCnZxR8hfZG1P4v7tz3s7UC6B2426EVeziMUSe1+lOEvHz0F9
+ /xBWDP26iLTRNXQwcKufGmGc/3xrNjGfQ8OiPZ9glyits2ayWJYPqg1BJDhPEQDwixBL
+ 87XJ0CCdXAsVfh7svxVTn25mZMJRkbenSq27tt+gs6BNBgziPIxdkF/SaNQ8rWs/JQRh
+ 58Syza23OvxmMrA8n8dNByYPmHPqjEGWXjnsJ4NijzQJTYTKBaeymIjKvgvfUcfsS6Gs
+ dOHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714740994; x=1715345794;
+ d=1e100.net; s=20230601; t=1714741210; x=1715346010;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lxaYcWb+xBzcc9VX7AuLafdW78gfD1N26Mu9ghbppO4=;
- b=cD7Q+B7ck80H7vSxI1gHm21Q2UUyYAlHNUh28PCVvcgo2rNxJ0GcBAGvKZPjZCwYeD
- hPdfvcKjRWAyBENSl1gHigTTr/xgmQVx/P/mhNJsk2znnKFeSliqsFSTcf9gpQcV8vvX
- Nv3PFqRgww1FvONdlA0e6UuNzk4g3CJg2CB0e7PAaMEYMW6E/ZVfPc1ZuBC0heoIf68N
- MTZCTpQu9H+7DXIuX/peIcMpVxLayjLSNI64EaM4kZJ/ipnMo9ItRZkA84kjXpC/z3ww
- MKagiX7MimuPCcNw0lEBThmi++KGBeH+GBD5dttTGRRqUN8PiYTcXTGRGHIfF9CzG4c5
- jgVA==
+ bh=KSYRKl6qnCPQGEGDoHXB2IT55HLFPg7YrtUx+Y+iDIM=;
+ b=BPL0zaF6M3Yi2yNCxYdc3/jtVqFG9RbLhMvxEvAnKz/nIM+9xeoXyA3zIKmlWxJcMW
+ EFmkSe74QIcVfgVWTblM50G8jvD0ugruNph1pPMZc1aYAhArQoxsb5tzDxInZprP83lQ
+ 0I1uG+DlCxpBH6HUHjqST5YfwIygVBVci2FFQoMoIavNcfaFgkHuTeKay9RAsK9UDGww
+ 3DS48oYORC3Tc/ApNSPZ8vng/oBU7Zhbt1w5ossBWkETRsdxv3dhMo3rojpEz3uejKC3
+ xIPSbVpJjm5gJqGHJXQklV7njvttnu6BNwBBVIbGGfNw0oqwG7rQ1EeKdEaXERutHOz8
+ dEKg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVR/mR62rtZnzRc7k0kvhsonUAIiKnmoyJ13UJt5lO6YhrBbyl57SI0HzSW4k3IeOQDDf/mLcnNFfgUQ1Rve8jVilrsxx8=
-X-Gm-Message-State: AOJu0YwXYiYJ9CM8K1upijdfMEuquP7iKeGRHbGpedzNBW8PvqCbnrBw
- o05HqusbfGAx/10ESTsPYBxFTArd4xnX4rBD2BbzxlBXmxbuGw+90htMavZSFL0=
-X-Google-Smtp-Source: AGHT+IGjgkuM2400IXhyb4mZtHljeXHcKMz8kCvkPdJYwdp7Pvy2eyt9MCWdXupNK/EdbAWDhW7qDw==
-X-Received: by 2002:adf:a309:0:b0:343:cee1:cbc1 with SMTP id
- c9-20020adfa309000000b00343cee1cbc1mr4981739wrb.14.1714740993871; 
- Fri, 03 May 2024 05:56:33 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.179.187])
+ AJvYcCVJC2+SFMuYt7AilWDWtWc58LO4N+mAuCgDlGzOJYeZmKV6Xezu2Lvxo/fCT7UQJaWUzboOzHg+Hqo2iD8Xpmzxx9gTy6Y=
+X-Gm-Message-State: AOJu0YxxGKnXklD0C7ZQzcExpHK5GaUiBeJgmaHyrocTfNWVgVAgPTvB
+ xnhiU/EbL90khavljIeUUfq0DiVP8buut/MSMx8G2ZOxOuAfCs7YmjqfyOyW4sA=
+X-Google-Smtp-Source: AGHT+IEu6HbfXJFeU6MDVpIG3PLmiUlf78qUz4g98EK/hZ9jBLC/IEUCItS98RScfjMVb1l/5IdgSw==
+X-Received: by 2002:a05:6870:a918:b0:23c:ca14:bdd with SMTP id
+ eq24-20020a056870a91800b0023cca140bddmr3162204oab.47.1714741210011; 
+ Fri, 03 May 2024 06:00:10 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- m3-20020adffa03000000b0034db974d7a1sm3705170wrr.81.2024.05.03.05.56.32
+ p27-20020a637f5b000000b0061da540631csm1147494pgn.33.2024.05.03.06.00.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 May 2024 05:56:33 -0700 (PDT)
-Message-ID: <41d1f49a-5a2d-496e-859c-341b1abc1aa8@linaro.org>
-Date: Fri, 3 May 2024 14:56:31 +0200
+ Fri, 03 May 2024 06:00:09 -0700 (PDT)
+Message-ID: <a2cdbdbe-b4f9-455b-af5a-90f907ffed97@linaro.org>
+Date: Fri, 3 May 2024 06:00:06 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ui/cocoa.m: Drop old macOS-10.12-and-earlier compat ifdefs
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
-References: <20240502142904.62644-1-peter.maydell@linaro.org>
+Subject: Re: [PATCH] exec/user: Move 'abitypes.h' from 'exec/user' to 'user'
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Warner Losh <imp@bsdimp.com>,
+ Riku Voipio <riku.voipio@iki.fi>, Kyle Evans <kevans@freebsd.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20240503125202.35667-1-philmd@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240502142904.62644-1-peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240503125202.35667-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2001:4860:4864:20::2d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,19 +100,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/5/24 16:29, Peter Maydell wrote:
-> We only support the most recent two versions of macOS (currently
-> macOS 13 Ventura and macOS 14 Sonoma), and our ui/cocoa.m code
-> already assumes at least macOS 12 Monterey or better, because it uses
-> NSScreen safeAreaInsets, which is 12.0-or-newer.
+On 5/3/24 05:52, Philippe Mathieu-Daudé wrote:
+> Keep all user emulation headers under the same user/ directory.
 > 
-> Remove the ifdefs that were providing backwards compatibility for
-> building on 10.12 and earlier versions.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   ui/cocoa.m | 13 -------------
->   1 file changed, 13 deletions(-)
+> Forgot to include this patch in "exec: Rework around CPUState user fields"
+> https://lore.kernel.org/qemu-devel/20240428221450.26460-1-philmd@linaro.org/
+> ---
+>   bsd-user/qemu.h                    | 2 +-
+>   include/exec/cpu-all.h             | 2 +-
+>   include/exec/user/thunk.h          | 2 +-
+>   include/{exec => }/user/abitypes.h | 4 ++--
+>   include/user/syscall-trace.h       | 2 +-
+>   linux-user/qemu.h                  | 2 +-
+>   6 files changed, 7 insertions(+), 7 deletions(-)
+>   rename include/{exec => }/user/abitypes.h (97%)
 
-Thanks, patch queued.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+r~
 
