@@ -4,86 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B71CBC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 14:04:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0E56C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 14:09:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2tWg-00082B-IY; Fri, 03 May 2024 10:04:38 -0400
+	id 1s2tau-0001BQ-Du; Fri, 03 May 2024 10:09:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s2tWe-00080f-JK
- for qemu-devel@nongnu.org; Fri, 03 May 2024 10:04:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s2tas-0001B8-G8
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 10:08:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s2tWc-0002rn-Ms
- for qemu-devel@nongnu.org; Fri, 03 May 2024 10:04:36 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s2taq-0003ik-9h
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 10:08:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714745073;
+ s=mimecast20190719; t=1714745331;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tePEu0PuIEhNFx8obtsXhlF6CfDfIErPKrS8LLaqoz8=;
- b=Q9M5LAeENwvEs7FgjcsAWwpST5VlRxNUeuZgz6rTaSCkAgW6Dzq0yYKokij+JHzU61scCx
- xHohwp8ZeUmt18xREJxfYV+gfqf0tedpJYt5DWHpizYmlYiGUE7DpVmim1fjS7tDri7Jjm
- b9L/XGPTPqcaCYGAlRbdqldYJCMa+Mo=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-641-a5ucR5F8N9yAJaWcYivP9A-1; Fri, 03 May 2024 10:04:31 -0400
-X-MC-Unique: a5ucR5F8N9yAJaWcYivP9A-1
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6a0ddfee0aaso54314126d6.2
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 07:04:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714745070; x=1715349870;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tePEu0PuIEhNFx8obtsXhlF6CfDfIErPKrS8LLaqoz8=;
- b=M38m016CE0Hm1xDKPcGC5GyynrnX1CHIBHADHOg3/hicLlSKVUgifNEXMqJ0q6H3+9
- FQ3iUj/rhU/M1yB7UvLwsXZW/wKVuz6iVxee9BmRr36/P9IJrpfgT6ZhIZw/U/Lw2kZR
- Lqt7kcWXgdcIku8SIqi42TdgF2zBtefFfbA2qtuxCF5NLFWhh3brbnk+yac7tGrA9W9x
- Pf0a7SHOrVqUlROBtXLWEtL/9364eVl+p9SJAIK0JxDNfxbmGuLg/JddVBz/6j1Ns0/M
- /SKeE3zVxkHLdi59jo99CZyF48/awk6/XS72AaVy4kikQIaPudt5B6Pq6s09nEsdzJB1
- U++Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW89rMKtLY+JSoVcP8y9a9ZVLtcpOoGjdY8FnmnA1RTm3cVCaA6DLvr28oDZZfnjAPIQ1KP8a2B89LMtHd+cLKzCVFuXFw=
-X-Gm-Message-State: AOJu0Yy8/Et0Aw2iUMN4flGO3tE+X2UAGm80XTjHIZkFxGE8yQykq55w
- RF0/7NV6JFcjHavGnvpbE7EdPf3E+O737CC06GgeGKxtj47ZSdhKIK7NgPx1zdfNKxAtg9qe95C
- EeUTcHDoWxMVIqOSUdrH3lHcnxXB6ogwh/M1NTkTzkRQc57Qb1pDGP7CrFN+1
-X-Received: by 2002:ad4:4ee3:0:b0:6a0:76fa:a323 with SMTP id
- dv3-20020ad44ee3000000b006a076faa323mr3191466qvb.4.1714745070009; 
- Fri, 03 May 2024 07:04:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG2FoyIlbKFy0+x++gkMMpdd3+mjBWZq6iRxWygECzmT/IVPTFN913BxErEoq1WmkIT4qG43A==
-X-Received: by 2002:ad4:4ee3:0:b0:6a0:76fa:a323 with SMTP id
- dv3-20020ad44ee3000000b006a076faa323mr3191433qvb.4.1714745069642; 
- Fri, 03 May 2024 07:04:29 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- y1-20020ad445a1000000b006a0f1d8f718sm1238087qvu.92.2024.05.03.07.04.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 May 2024 07:04:28 -0700 (PDT)
-Message-ID: <c245b234-60d5-4ee6-a947-c7526d58698e@redhat.com>
-Date: Fri, 3 May 2024 16:04:25 +0200
+ bh=mBxsi6I5ypGBAgRAq/NHPwOAg6qHnv+PCMWN4qMPlVE=;
+ b=fB9F199lTrl8nLqm8ozu6YU+1KPgd76u3r+vfgU+ZkeLLvLwNjUv1ApwKZDdTvKKX9t4pv
+ gFadl4sskCT32Nr0OqIfpoyeozjUNxPSTez2K0LCi82jPBmOiIBKT8Nwz87GQRdv/i3l1i
+ KewGZctiEtrU3XCZOB4vxWgbH3vCkHA=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-182-lXb4h0pjPvm2iwNctYLnlw-1; Fri,
+ 03 May 2024 10:08:47 -0400
+X-MC-Unique: lXb4h0pjPvm2iwNctYLnlw-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E1DB7380009D;
+ Fri,  3 May 2024 14:08:46 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 94920EC680;
+ Fri,  3 May 2024 14:08:46 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 85E8F21E6811; Fri,  3 May 2024 16:08:45 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org,  "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH] hmp/migration: Fix documents for "migrate" command
+In-Reply-To: <ZjTsouwxaJ8S5Icf@x1n> (Peter Xu's message of "Fri, 3 May 2024
+ 09:54:42 -0400")
+References: <20240502154729.370938-1-peterx@redhat.com>
+ <87fruz1iwu.fsf@pond.sub.org> <ZjTsouwxaJ8S5Icf@x1n>
+Date: Fri, 03 May 2024 16:08:45 +0200
+Message-ID: <87h6ffvvgy.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/19] Add a host IOMMU device abstraction to check
- with vIOMMU
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
- peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
- joao.m.martins@oracle.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com
-References: <20240429065046.3688701-1-zhenzhong.duan@intel.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240429065046.3688701-1-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -107,90 +83,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/29/24 08:50, Zhenzhong Duan wrote:
-> Hi,
-> 
-> The most important change in this version is instroducing a common
-> HostIOMMUDeviceCaps structure in HostIOMMUDevice and a new interface
-> between vIOMMU and HostIOMMUDevice.
-> 
-> HostIOMMUDeviceClass::realize() is introduced to initialize
-> HostIOMMUDeviceCaps and other fields of HostIOMMUDevice variants.
-> 
-> HostIOMMUDeviceClass::check_cap() is introduced to query host IOMMU
-> device capabilities.
-> 
-> After the change, part2 is only 3 patches, so merge it with part1 to be
-> a single prerequisite series, same for changelog. If anyone doesn't like
-> that, I can split again.
-> 
-> The class tree is as below:
-> 
->                                HostIOMMUDevice
->                                       | .caps
->                                       | .realize()
->                                       | .check_cap()
->                                       |
->              .-----------------------------------------------.
->              |                        |                      |
-> HostIOMMUDeviceLegacyVFIO  {HostIOMMUDeviceLegacyVDPA}  HostIOMMUDeviceIOMMUFD
->              | .vdev                  | {.vdev}              | .iommufd
->                                                              | .devid
->                                                              | [.ioas_id]
->                                                              | [.attach_hwpt()]
->                                                              | [.detach_hwpt()]
->                                                              |
->                                            .----------------------.
->                                            |                      |
->                         HostIOMMUDeviceIOMMUFDVFIO  {HostIOMMUDeviceIOMMUFDVDPA}
->                                            | .vdev                | {.vdev}
-> 
-> * The attributes in [] will be implemented in nesting series.
-> * The classes in {} will be implemented in future.
-> * .vdev in different class points to different agent device,
-> * i.e., for VFIO it points to VFIODevice.
-> 
-> PATCH1-4: Introduce HostIOMMUDevice and its sub classes
-> PATCH5-11: Introduce HostIOMMUDeviceCaps, implement .realize() and .check_cap() handler
-> PATCH12-16: Create HostIOMMUDevice instance and pass to vIOMMU
-> PATCH17-19: Implement compatibility check between host IOMMU and vIOMMU(intel_iommu)
-> 
-> Qemu code can be found at:
-> https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_nesting_preq_v3
-> 
-> Besides the compatibility check in this series, in nesting series, this
-> host IOMMU device is extended for much wider usage. For anyone interested
-> on the nesting series, here is the link:
-> https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_nesting_rfcv2
+If there's still time, suggest to tweak the subject to
 
+    hmp/migration: Fix "migrate" command's documentation
 
-v4 should be a good candidate, we will need feedback from the vIOMMU
-maintainers though.
+Peter Xu <peterx@redhat.com> writes:
 
-However, have you considered another/complementary approach which
-would be to create an host IOMMU (iommufd) backend object and a vIOMMU
-device object together for each vfio-pci device being plugged in the
-machine ?
+> On Fri, May 03, 2024 at 08:58:09AM +0200, Markus Armbruster wrote:
+>> Peter Xu <peterx@redhat.com> writes:
+>> 
+>> > Peter missed the Sphinx HMP document for the "resume/-r" flag in commit
+>> > 7a4da28b26 ("qmp: hmp: add migrate "resume" option").  Add it.  Avoid
+>> > adding a Fixes to make life easier for the stable maintainer.
+>> 
+>> I'm curious: how does not adding Fixes: make life easier?
+>
+> Because if I attach Fixes then IIUC Michael will read it through and judge
+> whether it should apply to stable, where I want to skip that for him
+> because I think this doesn't apply to stable.  Reasons:
+>
+>   - This is a document update, IIUC we normally only keep the latest
+>     document uptodate, not all the stable versions (especiailly for HMP,
+>     which isn't a stable ABI)?  I assume it applies the same when a qtest
+>     case got a slight fixup.
+>
+>   - This patch is even more special as it will need explicit backport due
+>     to the removal of block migration, and I really don't think any of us
+>     should spend time on that..
 
-Something like,
-     
-     -device pcie-root-port,port=23,chassis=8,id=pci.8,bus=pcie.0 \
-     -object iommufd,id=iommufd1 \
-     -device intel-iommu,intremap=on,device-iotlb=on,caching-mode=on,iommufd=iommufd1 \
-     -device vfio-pci,host=0000:08:10.0,bus=pci.1,iommufd=iommufd0
+Right.  But Fixes: is also for downstreams, who may want to make their
+own decisions.
 
-The vIOMMU device would be linked to the host IOMMU (iommufd) backend
-object at realize time and it would simplify the discovery of the host
-IOMMU properties. The implementation would be more straight forward.
+I think I'd always add Fixes:.  When I think there's a need to steer
+stable away from it, I'd say so in the commit message.  I doubt needed
+here, as the subject states it's just a doc fix for HMP.
 
-That said, I didn't study deeply what needs to be done. The vIOMMU
-implementation is not ready yet to support multiple instances and some
-massaging is needed to change that first.
+>> > When at it, slightly cleanup the lines, move "detach/-d" to a separate
+>> > section rather than appending it at the end of the command description.
+>> >
+>> > Cc: Dr. David Alan Gilbert <dave@treblig.org>
+>> > Cc: Fabiano Rosas <farosas@suse.de>
+>> > Cc: Markus Armbruster <armbru@redhat.com>
+>> > Signed-off-by: Peter Xu <peterx@redhat.com>
+>> > ---
+>> >
+>> > Based-on: <20240430142737.29066-1-farosas@suse.de>
+>> > ("[PATCH v3 0/6] migration removals & deprecations")
+>> > ---
+>> >  hmp-commands.hx | 9 +++++++--
+>> >  1 file changed, 7 insertions(+), 2 deletions(-)
+>> >
+>> > diff --git a/hmp-commands.hx b/hmp-commands.hx
+>> > index ebca2cdced..484a8a1c3a 100644
+>> > --- a/hmp-commands.hx
+>> > +++ b/hmp-commands.hx
+>> > @@ -918,8 +918,13 @@ ERST
+>>        {
+>>            .name       = "migrate",
+>>            .args_type  = "detach:-d,blk:-b,inc:-i,resume:-r,uri:s",
+>>            .params     = "[-d] [-b] [-i] [-r] uri",
+>>            .help       = "migrate to URI (using -d to not wait for completion)"
+>>                          "\n\t\t\t -b for migration without shared storage with"
+>>                          " full copy of disk\n\t\t\t -i for migration without "
+>>                          "shared storage with incremental copy of disk "
+>>                          "(base image shared between src and destination)"
+>>                          "\n\t\t\t -r to resume a paused migration",
+>>            .cmd        = hmp_migrate,
+>>        },
+>> >  
+>> >  
+>> >  SRST
+>> > -``migrate [-d]`` *uri*
+>> > -  Migrate to *uri* (using -d to not wait for completion).
+>> > +``migrate [-d] [-r]`` *uri*
+>> > +  Migrate the current VM to *uri*.
+>> 
+>> Could there be any other VM than the current one?  Scratch "current"?
+>
+> I didn't have "current" until I generated the doc and read, then I see
+> right below "migrate_cancel" has it:
+>
+> SRST
+> ``migrate_cancel``
+>   Cancel the current VM migration.
+> ERST
+>
+> But maybe it means "current migration", not "current VM".. So yeah I can
+> drop it.
+>
+>> 
+>> > +
+>> > +  ``-d``
+>> > +    Run this command asynchronously, so that the command doesn't wait for completion.
+>> 
+>> What is run asynchronously, and what isn't waiting?  These are two
+>> different entities, aren't they?  Calling them "this command" and "the
+>> command" is confusing :)
+>> 
+>> Perhaps
+>> 
+>>        Start the migration process, but do not wait for its completion.
+>> 
+>> Maybe add a hint on how to wait or poll for completion?
+>
+> Yes this reads better; I will add the hint too.
+>
+>> 
+>> > +  ``-r``
+>> > +    Resume a paused postcopy migration.
+>> 
+>> .help doesn't have "postcopy".  Should it?
+>
+> It should.
+>
+> This is the fixup I'll squash when sending v2, let me know if there's other
+> early comments, thanks.
+>
+> ===8<===
+>
+> diff --git a/hmp-commands.hx b/hmp-commands.hx
+> index 484a8a1c3a..06746f0afc 100644
+> --- a/hmp-commands.hx
+> +++ b/hmp-commands.hx
+> @@ -912,17 +912,18 @@ ERST
+>          .args_type  = "detach:-d,resume:-r,uri:s",
+>          .params     = "[-d] [-r] uri",
+>          .help       = "migrate to URI (using -d to not wait for completion)"
+> -                     "\n\t\t\t -r to resume a paused migration",
+> +                     "\n\t\t\t -r to resume a paused postcopy migration",
+>          .cmd        = hmp_migrate,
+>      },
+>  
+>  
+>  SRST
+>  ``migrate [-d] [-r]`` *uri*
+> -  Migrate the current VM to *uri*.
+> +  Migrate the VM to *uri*.
+>  
+>    ``-d``
+> -    Run this command asynchronously, so that the command doesn't wait for completion.
+> +    Start the migration process, but do not wait for its completion.  To
+> +    query an ongoing migration process, use "info migrate".
+>    ``-r``
+>      Resume a paused postcopy migration.
+>  ERST
 
-Thanks,
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
-C.
-
-       
+Thanks!
 
 
