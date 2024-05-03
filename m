@@ -4,70 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40430C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 06:59:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A434C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 07:17:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2mtH-0008UX-7G; Fri, 03 May 2024 02:59:31 -0400
+	id 1s2nAD-0005pb-PB; Fri, 03 May 2024 03:17:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s2mtF-0008UI-Bi
- for qemu-devel@nongnu.org; Fri, 03 May 2024 02:59:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1s2nAA-0005ia-47; Fri, 03 May 2024 03:16:58 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s2mtD-0005ih-Rp
- for qemu-devel@nongnu.org; Fri, 03 May 2024 02:59:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714719567;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=GktZvf0zWeykJzrZ74i3CPU4uxKKcwv6MHsiyt9tFWU=;
- b=NA7GEscTNOE6t0coK7nSKLqskslzZ5+QYN9dh2vRUgnpBXQIq7FUKEkf3NGZ1gnGUMrO/v
- TFyMJ5MufyObfEL2nLn+N9i3x09MAa95obspjivBSC+Z9ihRzpuL4Bgcy36PYNmRXWsFrh
- lhcWIq+ib3TnBUWzKxfQf5TPeJj7ilU=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-573-HlefVUrwMpeK0r159a202g-1; Fri,
- 03 May 2024 02:59:25 -0400
-X-MC-Unique: HlefVUrwMpeK0r159a202g-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 99A0B3820EA1;
- Fri,  3 May 2024 06:59:24 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 7A1D320296D3;
- Fri,  3 May 2024 06:59:24 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 8847021E66E5; Fri,  3 May 2024 08:59:23 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,  Richard Henderson
- <richard.henderson@linaro.org>,  Peter Xu <peterx@redhat.com>,  "Dr .
- David Alan Gilbert" <dave@treblig.org>
-Subject: Re: [PULL 13/13] hmp/migration: Fix documents for "migrate" command
-In-Reply-To: <20240502202316.29924-14-farosas@suse.de> (Fabiano Rosas's
- message of "Thu, 2 May 2024 17:23:16 -0300")
-References: <20240502202316.29924-1-farosas@suse.de>
- <20240502202316.29924-14-farosas@suse.de>
-Date: Fri, 03 May 2024 08:59:23 +0200
-Message-ID: <87bk5n1ius.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1s2nA1-0000ZG-KO; Fri, 03 May 2024 03:16:53 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 6AD2063BB8;
+ Fri,  3 May 2024 10:16:52 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id 8ACCAC5911;
+ Fri,  3 May 2024 10:16:41 +0300 (MSK)
+Received: (nullmailer pid 841122 invoked by uid 1000);
+ Fri, 03 May 2024 07:16:41 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-trivial@nongnu.org,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2] Re-enable riscv64-debian-cross-container (debian riscv64
+ is finally usable again!)
+Date: Fri,  3 May 2024 10:16:34 +0300
+Message-Id: <20240503071634.841103-1-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.476,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,48 +61,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
+Revert "gitlab-ci: Disable the riscv64-debian-cross-container by default"
+This reverts commit f51f90c65ed7706c3c4f7a889ce3d6b7ab75ef6a.
 
-> From: Peter Xu <peterx@redhat.com>
->
-> Peter missed the Sphinx HMP document for the "resume/-r" flag in commit
-> 7a4da28b26 ("qmp: hmp: add migrate "resume" option").  Add it.  Avoid
-> adding a Fixes to make life easier for the stable maintainer.
->
-> When at it, slightly cleanup the lines, move "detach/-d" to a separate
-> section rather than appending it at the end of the command description.
->
-> Cc: Dr. David Alan Gilbert <dave@treblig.org>
-> Cc: Fabiano Rosas <farosas@suse.de>
-> Cc: Markus Armbruster <armbru@redhat.com>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  hmp-commands.hx | 9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
->
-> diff --git a/hmp-commands.hx b/hmp-commands.hx
-> index ebca2cdced..484a8a1c3a 100644
-> --- a/hmp-commands.hx
-> +++ b/hmp-commands.hx
-> @@ -918,8 +918,13 @@ ERST
->  
->  
->  SRST
-> -``migrate [-d]`` *uri*
-> -  Migrate to *uri* (using -d to not wait for completion).
-> +``migrate [-d] [-r]`` *uri*
-> +  Migrate the current VM to *uri*.
-> +
-> +  ``-d``
-> +    Run this command asynchronously, so that the command doesn't wait for completion.
-> +  ``-r``
-> +    Resume a paused postcopy migration.
->  ERST
->  
->      {
+riscv64 in debian has been non-functioning for almost a year, after the
+architecture has been promoted to release architecture and all binary
+packages started to be re-built, making the port not multi-arch-co-installable
+for a long time (in debian, multi-arch packages must be of the same version,
+but when a package is rebuilt on one architecture it gets a version bump too).
+Later on, debiah had a long time64_t transition which made sid unusable for
+quite some time too.  Both such events happens in debian very rarely (like,
+once in 10 years or so - for example, previous big transition like that was
+libc5 => libc6 transition).  Now both of these are finished (where qemu is
+concerned anyway).
 
-I have questions on this one.
+Hopefully debian unstable wont be very unstable.  At the very least it is
+better to have sporadic CI failures here than no riscv64 coverage at all.
+
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+v2: drop a TODO comment which turned out to be confused, replacing it
+ with the description why debian riscv64 were unusable.
+
+ .gitlab-ci.d/container-cross.yml | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/.gitlab-ci.d/container-cross.yml b/.gitlab-ci.d/container-cross.yml
+index e3103940a0..dbffed3f21 100644
+--- a/.gitlab-ci.d/container-cross.yml
++++ b/.gitlab-ci.d/container-cross.yml
+@@ -77,7 +77,6 @@ riscv64-debian-cross-container:
+   allow_failure: true
+   variables:
+     NAME: debian-riscv64-cross
+-    QEMU_JOB_OPTIONAL: 1
+ 
+ s390x-debian-cross-container:
+   extends: .container_job_template
+-- 
+2.39.2
 
 
