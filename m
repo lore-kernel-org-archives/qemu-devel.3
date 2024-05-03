@@ -4,86 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F19BDC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 05:07:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E34CC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 05:35:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2l7k-0000aS-9M; Fri, 03 May 2024 01:06:20 -0400
+	id 1s2lZ0-0007gA-0V; Fri, 03 May 2024 01:34:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s2l7h-0000Zg-RD
- for qemu-devel@nongnu.org; Fri, 03 May 2024 01:06:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s2lYy-0007fq-H8
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 01:34:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s2l7d-00029A-FZ
- for qemu-devel@nongnu.org; Fri, 03 May 2024 01:06:15 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s2lYw-00073p-Tx
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 01:34:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714712771;
+ s=mimecast20190719; t=1714714461;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=B/YnInj8chcBoZZ0HqJV1t/xZwg2JEzweIEyl179rkA=;
- b=Y2LIUN3cF3LHCe2/Xdn5L1zaFErAsKXC4Ar+cdQz4nu2hfQ0X4f530v0cPPP+gxwAN6jqm
- gXpEI1Bm2+FSsDnzTRhwbpSXVWype2JyIxwYw+x6EjAHpyubrRNq+21TY5hViKuVfmG1pE
- Jmou9EvP5leyStYHJD8WR4ecLSkdbas=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=krD6JicZM4YRS/cykSEKYnGxpc0RCnDX190zhWxtPVA=;
+ b=Rs4y/2M4eVMc30umzaWcF+Z8EJvOwhhAhDXfSKaEMjfsRfjiSyFlfYqno4dXR6IGhyC6pB
+ znWn6IrVcdjTo+Wk2j12cpuGcd8hoPgGnEPFIGegoafbhD27V8z0EWqn05obROkq5LRkiJ
+ VviTdvRJ+iscR49ZVMitKppf1+6v1Ik=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-441-iArDmkDdOQCiXSKJtA1ADg-1; Fri, 03 May 2024 01:06:09 -0400
-X-MC-Unique: iArDmkDdOQCiXSKJtA1ADg-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6a0a0eb9cd9so99005606d6.2
- for <qemu-devel@nongnu.org>; Thu, 02 May 2024 22:06:09 -0700 (PDT)
+ us-mta-332-w2QWxXWwMBSxF3P84ZToGA-1; Fri, 03 May 2024 01:34:20 -0400
+X-MC-Unique: w2QWxXWwMBSxF3P84ZToGA-1
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-4365ab4c663so80222851cf.0
+ for <qemu-devel@nongnu.org>; Thu, 02 May 2024 22:34:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714712768; x=1715317568;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=B/YnInj8chcBoZZ0HqJV1t/xZwg2JEzweIEyl179rkA=;
- b=wDX5AFeH7Wkb53Mfus3Z15TBv5N5TLWqzNf5FmbHk8J3ieXa4+7nKMu6j4YrVPAQjD
- 7la46SQozWfmxVl8CFrOhQuehz3jxE369mhm8Fq5N7vfbENgUu8JZndHS+fFKb1ydz6D
- T3rJgVF6G+6j//zA/n41k8BfEjb2zTVfc3SuPQ/xmaQY91V4rnlrPW5aTux7rJkTRBI7
- VchPqKF8ltwsYKByWi+lgAUK6bmMwWSX78dkBpRuYwvRejVARDzNzKKsvnCrTYLeJ2P/
- HJHNmo71lBLVb2KsBVTKDI0mq7Z8gfv2Jv/wF4kEf7FyNckKfBFBq+brUOBhZKPOLUSE
- oT2A==
+ d=1e100.net; s=20230601; t=1714714459; x=1715319259;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=krD6JicZM4YRS/cykSEKYnGxpc0RCnDX190zhWxtPVA=;
+ b=YeHn+OC6JEFvZKpllcnbRAWHsD0sWBVKb80H+aukKoj+u6uEkqR8pzYlGMEohGI1/Y
+ CK+nxC0V3Ee1TYUHIWBgejQDOCHKfpW6b3ENeHWMczRkudUetLHeAktfjwjD+rpPSEtt
+ /e+gv/QFGYvWTbwKHMZnOug5JoTuumKSljv05uVFNK2pE30QWMa29WjxAEwDpXTmvYbR
+ s60tb/IjnyheXEcL6t1tnW99Tujgp1vsHtahY/+u7jvbTgubnnJGu/CIH41RfNR8cTKM
+ ACrozjC5knI8guuLL/Yevc0ze5i4AFjve/BD9eTjSD3DQ+7/CJOKZib0HgqDMGYMSkog
+ KqJA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXcUpGZ9j05eh9g3nRxkFEsAo5OLGdkRxlTxNh6upPd+xuTkLjmSBCr+NO3dKp4+bvofKSdS2n24CYTMVvi6YlTEqMSAEE=
-X-Gm-Message-State: AOJu0YzAaGoNqY6rNdYnE16rTMGzLKohIZ2NeTILcewYPP48D+XEzcVx
- JwXcepsqy5tDVR8M/nAT+ESks0/Q08z+J0ndOHQJ5fPecKlpIbS5AnSeaeHp4lrebiRKT5YeZyj
- b4sJ6Ic44pNme1ckVCGNqg56WRAxAHIXGPy51vPOlpOearzpSCQ2b
-X-Received: by 2002:ad4:5fcf:0:b0:6a0:b0e3:3571 with SMTP id
- jq15-20020ad45fcf000000b006a0b0e33571mr1807341qvb.19.1714712768395; 
- Thu, 02 May 2024 22:06:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEAv0CtNhD7OjgDoeiGsdNLgNZkpKiEWxERRRmln9BpNmpAsj+HmvB8qesiS43d45XpvuveQg==
-X-Received: by 2002:ad4:5fcf:0:b0:6a0:b0e3:3571 with SMTP id
- jq15-20020ad45fcf000000b006a0b0e33571mr1807326qvb.19.1714712767910; 
- Thu, 02 May 2024 22:06:07 -0700 (PDT)
+ AJvYcCUiAhQe25paZsKFbC2R3zs+1tfIjeXplNzh4+ICwO0dRdCJTUHo+OGUA4ZzgJgjbHm70oNtEB9Z8ILOw4dsjfPzEIeRA6s=
+X-Gm-Message-State: AOJu0Yz1Q9OJWsW38iGax56yGxNQihv6WiZNiL3lbuQ8r6QJ2NQbkVaL
+ lFXF5mz6UIXA3jG29SnobAtD1wsmedX2GvAympouTCKBuJJm/M7eufZtjZBz2TppVAY/bkMT/Pu
+ NbfDHx8FVI9QzuRjTDOBBKGJADmE16ghKDxLwvuTm3KV8ot1hfzSz
+X-Received: by 2002:a05:622a:1ba7:b0:43a:d899:79a6 with SMTP id
+ bp39-20020a05622a1ba700b0043ad89979a6mr1782387qtb.7.1714714459341; 
+ Thu, 02 May 2024 22:34:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGyO67SxGY15vgYFtM1h72ms3S35xrh3esGf5lbIUNZb3C0R+ysgfZaWCRXTaV1BMO58XIjGA==
+X-Received: by 2002:a05:622a:1ba7:b0:43a:d899:79a6 with SMTP id
+ bp39-20020a05622a1ba700b0043ad89979a6mr1782372qtb.7.1714714458897; 
+ Thu, 02 May 2024 22:34:18 -0700 (PDT)
 Received: from [192.168.0.9] (ip-109-43-179-34.web.vodafone.de.
  [109.43.179.34]) by smtp.gmail.com with ESMTPSA id
- mm23-20020a0562145e9700b006a0d21ba03asm901928qvb.60.2024.05.02.22.06.04
+ u8-20020a05622a17c800b00434ec509ce9sm1193456qtk.46.2024.05.02.22.34.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 May 2024 22:06:07 -0700 (PDT)
-Message-ID: <7047048b-7ab2-4283-a1d1-f8e033d6f7d9@redhat.com>
-Date: Fri, 3 May 2024 07:06:03 +0200
+ Thu, 02 May 2024 22:34:18 -0700 (PDT)
+Message-ID: <663ecadc-4e80-4f7e-a020-f8dfd9cd3f55@redhat.com>
+Date: Fri, 3 May 2024 07:34:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Re-enable riscv64-debian-cross-container (debian riscv64
- is finally usable again!)
-To: Michael Tokarev <mjt@tls.msk.ru>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, "Daniel P. Berrange" <berrange@redhat.com>,
- Andrea Bolognani <abologna@redhat.com>, Erik Skultety <eskultet@redhat.com>,
- Michal Privoznik <mprivozn@redhat.com>
-References: <20240502194046.830825-1-mjt@tls.msk.ru>
- <3ce937fb-afb9-4ea2-97ab-b8dc0952e9be@linaro.org>
- <9969663a-0f00-435b-b507-fb6a429cb4db@tls.msk.ru>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH 02/14] target/s390x: Move cpu_get_tb_cpu_state out of line
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, iii@linux.ibm.com, david@redhat.com
+References: <20240502054417.234340-1-richard.henderson@linaro.org>
+ <20240502054417.234340-3-richard.henderson@linaro.org>
 Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -126,10 +119,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <9969663a-0f00-435b-b507-fb6a429cb4db@tls.msk.ru>
+In-Reply-To: <20240502054417.234340-3-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -154,61 +147,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02/05/2024 22.08, Michael Tokarev wrote:
-> 02.05.2024 23:05, Richard Henderson wrote:
->> On 5/2/24 12:40, Michael Tokarev wrote:
->>> Revert "gitlab-ci: Disable the riscv64-debian-cross-container by default"
->>> This reverts commit f51f90c65ed7706c3c4f7a889ce3d6b7ab75ef6a.
->>>
->>> Hopefully it wont be very unstable.
->>>
->>> Since riscv64 is now a release architecture in debian, we can try switching
->>> to debian testing instead of debian sid.  Also, debian-ports part of the
->>> archive isn't needed anymore.
->>
->> So... please update debian-riscv64-cross.docker.
-> 
-> debian-riscv64-cross.docker is generated by lcitool.
-> It looks like lcitool has to be updated for this.
+On 02/05/2024 07.44, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/s390x/cpu.h | 23 ++---------------------
+>   target/s390x/cpu.c | 22 ++++++++++++++++++++++
+>   2 files changed, 24 insertions(+), 21 deletions(-)
 
-Updating lcitool isn't too hard. Simply type "make lcitool-refresh" in your 
-build directory - this should initialize the tests/lcitool/libvirt-ci 
-submodule and regenerate the dockerfiles. Then you can do your change in 
-tests/lcitool/libvirt-ci and run the refresh command again to update the 
-dockerfiles. Once you're happy with the results, fork 
-https://gitlab.com/libvirt/libvirt-ci on gitlab, push your changes into your 
-fork and then open a merge request against the upstream libvirt-ci repository.
-
->>> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
->>> ---
->>>   .gitlab-ci.d/container-cross.yml | 1 -
->>>   1 file changed, 1 deletion(-)
->>>
->>> diff --git a/.gitlab-ci.d/container-cross.yml 
->>> b/.gitlab-ci.d/container-cross.yml
->>> index e3103940a0..dbffed3f21 100644
->>> --- a/.gitlab-ci.d/container-cross.yml
->>> +++ b/.gitlab-ci.d/container-cross.yml
->>> @@ -77,7 +77,6 @@ riscv64-debian-cross-container:
->>>     allow_failure: true
->>>     variables:
->>>       NAME: debian-riscv64-cross
->>> -    QEMU_JOB_OPTIONAL: 1
->>
->> But you can't do this until the above is done.
-> 
-> I don't see a reason why not.  Adding debian-ports archive does nothing
-> and doesn't hurt either.
-> 
-> Switching to testing is a different matter.
-> 
-> This thing works now with sid/unstable, this is what this patch is about.
-
-But this doesn't match the patch description - there you talk about 
-switching to testing and that the ports are not needed anymore, so this is 
-confusing. I'd suggest to update at least the patch description if we 
-continue with sid.
-
-  Thomas
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
