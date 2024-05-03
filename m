@@ -4,90 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F10C7C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 11:55:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DFA9C25B5C
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 12:16:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2rVV-00006o-3u; Fri, 03 May 2024 07:55:19 -0400
+	id 1s2roY-0000dS-PU; Fri, 03 May 2024 08:14:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1s2rVN-0008Jg-28
- for qemu-devel@nongnu.org; Fri, 03 May 2024 07:55:09 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s2roW-0000bk-Mp
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 08:14:56 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1s2rVK-0002XK-JK
- for qemu-devel@nongnu.org; Fri, 03 May 2024 07:55:08 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-a5966ea4fafso352533966b.0
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 04:55:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s2roH-0006jp-Jw
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 08:14:56 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-a599a298990so96716466b.2
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 05:14:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1714737303; x=1715342103; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=XPmmVB2NIQMrFdtHs/DkWgUhXnPTMJp4eJItgyjhvcI=;
- b=Kku6VBMH3mgV+bRJS2M2HVdhoS8lHaYHC/IwnVY67xbdLcD2KmsOPa6+NXCUDG17zN
- nLu3ZtYGd3/mCga1OmPHEHO8gkz14hN2EoN5jibLR4ADGoI+DazDBr9O13g4tpP0kTc9
- 568yFfLh5Bir9VhpTtAcMOLw8xrFvI1WbqnfwUq34CXbP4wzpKs1twmObza/iRtt9LJL
- bLTeDdkAk5Uy7xdlpHfdST8fQq/OIeNgJmjDU+mJj9MiqLZ3JXEyPWUYtp1lU4PUrew9
- LPGS48WbLy7RBeNHFp+BNRsjUq5QprFpxwiFN/oKeiWcDHda/kbsIIQTOZUx8pTql6yt
- a0LA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714737303; x=1715342103;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1714738479; x=1715343279; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XPmmVB2NIQMrFdtHs/DkWgUhXnPTMJp4eJItgyjhvcI=;
- b=uZcTtSs1i0qNGz2dSdhSevTEh+bSzKC8SyDODZCRANqXbesPxHgQK1mOydbtee0GJd
- iUxy5w94M/ws0Wf/g3nB/0OZNQYnwAAO27hvF6+2ZS9RHZhkqAIoieUafgxrU8FHLbjR
- CO4ou5xW+VpAoUFZymH0+qvr96L/aGZZx+6Dhbp0oPIjQ2rwU6scmhG1x0DggufnwFtA
- kdS4cJt/bcq5lS2YYn98ukFgCQ8xRPloNM6oMONDh/GrcI+6+xM8Aew4mkdhYv1QIVcu
- YuvNyxl50pyJbDmUOV1JQiTS/VeYdmUgWKQ+SvvP4NwBlhNKqxUddM4FquONSE/q4n3u
- r+ew==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWF8KtUfNDvTqnz76AgJTuOb4zBlQbIqy1jm8I2b1Mzm92hCcJpNdCwLulz/zd/ReLLGIMAkgBft+jjqYvUsIC2hmYqx5M=
-X-Gm-Message-State: AOJu0YxXbG0GWct1HkCbOBIUpvv0ig024NQ+UOhAm0TSMJZnKq8DJKzi
- X8a7qDaYxgHGy2IwiiGIcWwjQv+Nj6eRbA2HxbChO07PbxeQ7ADqNk81kxUo6Oc=
-X-Google-Smtp-Source: AGHT+IHabr4V0on42EpFuBZCtspfGWwMqtfKlMFysjY56S+e5VICmjD/MWpwfpxrs05KG8PBE266sA==
-X-Received: by 2002:a17:906:309b:b0:a59:9c2f:c7d4 with SMTP id
- 27-20020a170906309b00b00a599c2fc7d4mr338918ejv.19.1714737303572; 
- Fri, 03 May 2024 04:55:03 -0700 (PDT)
-Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
- [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
- by smtp.gmail.com with ESMTPSA id
- g2-20020a1709061c8200b00a59937ec4c4sm518079ejh.87.2024.05.03.04.55.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 03 May 2024 04:55:02 -0700 (PDT)
-Date: Fri, 3 May 2024 13:55:01 +0200
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Aleksei Filippov <alexei.filippov@syntacore.com>
-Cc: alistair.francis@wdc.com, alistair23@gmail.com, 
- apatel@ventanamicro.com, bin.meng@windriver.com, dbarboza@ventanamicro.com, 
- liwei1518@gmail.com, palmer@dabbelt.com, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com
-Subject: Re: [PATCH v6] target/riscv/kvm/kvm-cpu.c: kvm_riscv_handle_sbi()
- fail with vendor-specific SBI
-Message-ID: <20240503-1417868a079951810dadb71c@orel>
-References: <20240422-e78b28f00a168518c5d4937a@orel>
- <20240422114254.13839-1-alexei.filippov@syntacore.com>
- <20240422-fd9fc07462257b6da42d8eb5@orel>
- <20240425-7ae473e720f2879f34c957f6@orel>
- <e7acd34f-956c-47ea-acfd-0b9ef82ff90c@syntacore.com>
+ bh=50yuEz0hGDCIwoiq3GTP9VO4htj2JLkjzp/bmPCAGW0=;
+ b=x92bio9fjwjY1TfxZzKBLXVTA9jkCzP3SBbbRB+UFsBSGf84ArGxupLWQIeFP7D35P
+ lW+gwcaiTVbyq7EkY3c/dwdC8oXenXtcb2IdVY4PQOeA+FjH8HVuyCgV6vwT7iEg3PmB
+ YLBh9/T8O1JQCw5BqFw1G1To5oxPhZYMQj57PRk5B56fyN54+ApFy/Q9ca7mMyf3axTI
+ 3t1NnWWGU9DzKBOxBkuAqcxJFMiq0xb5Kp9tC/WTS0rl40D6c88GXQMj+Yy+THbxlJgo
+ QFIotpZqLwcjrRW/s5GDQGKnDevB1uDNVM5iraUSmSrq+Rs6P3DhRO/hE0gMs7fN8Zmt
+ HSzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714738479; x=1715343279;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=50yuEz0hGDCIwoiq3GTP9VO4htj2JLkjzp/bmPCAGW0=;
+ b=EseYq+F66S006795UU5YoA7TMGr34FRSIw5LV5xK49HNvXQ4ZvLPmKkvOTZ8u2GvZP
+ EsR2nxdEh2qg6IbdS5xg7tgXf0DxCGFlcFdvCt5rapy0vJK5d4PImMa1fwesljSj4VCd
+ zAuCifxfKbtsIXcxYUugzreS2dmJtAiR7KWAy65XiTyw3zvB5yQwSawjGg0XVzoBD3iS
+ Let5Q0UXMdZzyqOaZ6T3JZoDE7mltV0CAtHrAPKGjJLclCRm8/pWkzvOQJKf35E0BPZE
+ 4FfXmAVmPZBvafF0KLnPr/IsamW/+z9EEYGznV9bZRaS3e0wF0rPvkiBUYwotf3uqUFW
+ GQqw==
+X-Gm-Message-State: AOJu0YymGJ/8IPZPB0OH1r06LpJ8KuT5mz7h/gmWsqgHXc0sSO7Z7b5Q
+ hWUcSHsTOnYWbVJQ5c8bY+NU+9JIDIPLKTZYo6OF1fVMlk3iFPCjdZ6C3/Rr3Wqq5zlnb0fkzkY
+ ZiQU0a7qlKtDI+tbmbkkEns9VNQnp1BXN+da9WA==
+X-Google-Smtp-Source: AGHT+IESgQukHb6rprC1H2LZzKBzIhjmjRYaZ2xb/HgnsXz2pEIOqSDAqZ8Lk+sdmM7f08XhhvVZTdN6sQujLnvSfHs=
+X-Received: by 2002:a50:d581:0:b0:572:71b2:e200 with SMTP id
+ v1-20020a50d581000000b0057271b2e200mr1529037edi.22.1714738479509; Fri, 03 May
+ 2024 05:14:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e7acd34f-956c-47ea-acfd-0b9ef82ff90c@syntacore.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=ajones@ventanamicro.com; helo=mail-ej1-x632.google.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
-X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20240501182759.2934195-1-berrange@redhat.com>
+In-Reply-To: <20240501182759.2934195-1-berrange@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 3 May 2024 13:14:27 +0100
+Message-ID: <CAFEAcA9LTsdjHpip1F=BPhrRUbH++3eW4HjjH4Xn6yN18pHtjQ@mail.gmail.com>
+Subject: Re: [PATCH 00/14] hw: define and enforce a standard lifecycle for
+ versioned machines
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Nicholas Piggin <npiggin@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clegoate@redhat.com>, 
+ Halil Pasic <pasic@linux.ibm.com>, Laurent Vivier <laurent@vivier.eu>,
+ qemu-arm@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>, qemu-ppc@nongnu.org, 
+ David Gibson <david@gibson.dropbear.id.au>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,117 +105,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 03, 2024 at 01:39:32PM GMT, Aleksei Filippov wrote:
-> 
-> 
-> On 25.04.2024 12:21, Andrew Jones wrote:
-> > On Mon, Apr 22, 2024 at 02:31:36PM +0200, Andrew Jones wrote:
-> > > On Mon, Apr 22, 2024 at 02:42:54PM +0300, Alexei Filippov wrote:
-> > > > kvm_riscv_handle_sbi() may return not supported return code to not
-> > > > trigger qemu abort with vendor-specific sbi.
-> > > > 
-> > > > Add new error path to provide proper error in case of
-> > > > qemu_chr_fe_read_all() may not return sizeof(ch).
-> > > 
-> > > I think something more along the lines of what I wrote in my previous
-> > > reply will help clarify this more. Here's what I wrote
-> > > 
-> > > """
-> > > Exactly zero just means we failed to read input, which can happen, so
-> > > telling the SBI caller we failed to read, but telling the caller of this
-> > > function that we successfully emulated the SBI call, is correct. However,
-> > > anything else, other than sizeof(ch), means something unexpected happened,
-> > > so we should indeed return an error from this function.
-> > > """
-> > > 
-> > > Thanks,
-> > > drew
-> > > 
-> > > > 
-> > > > Added SBI related return code's defines.
-> > > > 
-> > > > Signed-off-by: Alexei Filippov <alexei.filippov@syntacore.com>
-> > > > ---
-> > > > Changes since v4-5:
-> > > > 		-Added new error path in case of qemu_chr_fe_read_all() may not
-> > > > 		return sizeof(ch).
-> > > > 		-Added more comments in commit message.
-> > > >   target/riscv/kvm/kvm-cpu.c         | 10 ++++++----
-> > > >   target/riscv/sbi_ecall_interface.h | 12 ++++++++++++
-> > > >   2 files changed, 18 insertions(+), 4 deletions(-)
-> > > > 
-> > > > diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> > > > index f9dbc18a76..5bb7b74d03 100644
-> > > > --- a/target/riscv/kvm/kvm-cpu.c
-> > > > +++ b/target/riscv/kvm/kvm-cpu.c
-> > > > @@ -1173,16 +1173,18 @@ static int kvm_riscv_handle_sbi(CPUState *cs, struct kvm_run *run)
-> > > >           ret = qemu_chr_fe_read_all(serial_hd(0)->be, &ch, sizeof(ch));
-> > > >           if (ret == sizeof(ch)) {
-> > > >               run->riscv_sbi.ret[0] = ch;
-> > > > +            ret = 0;
-> > > > +        } else if (ret == 0) {
-> > > > +            run->riscv_sbi.ret[0] = SBI_ERR_FAILURE;
-> > 
-> > I'd prefer we still explicitly assign ret[0] to -1 here since that's what
-> > the spec explicitly says.
-> > 
-> > Thanks,
-> > drew
-> 
-> Can you please explain it a little bit more, cz I believe SBI_ERR_FAILURE is
-> -1 anyway. Defines was added at first place just to came along with Linux
-> kernel SBI related defines.
+On Wed, 1 May 2024 at 19:28, Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
+wrote:
+> I wonder, however, whether we would benefit from changing how we
+> update the VERSION file.
+>
+> eg instead of re-using the micro digit to indicate a dev or rc
+> snapshot, represent those explicitly. eg "9.1.0-dev" and
+> "9.1.0-rc1", "9.1.0-rc2", etc in VERSION.
+>
+> We don't use the full QEMU_VERSION in the code in all that many
+> places. It appears in some help messages for command line tools,
+> and in QMP query-version response, and in a few other misc places.
+> At a glance it appears all of those places would easily handle a
+> tagged version.
+>
+> For release candidates in particular I think it would be saner
+> to show the user the actual version the release is about to become,
+> rather than the previous release's version. This would make the
+> reported version match the rc tarball naming too which would be
+> nice.
 
-Legacy SBI calls like SBI_EXT_0_1_CONSOLE_GETCHAR don't return a struct
-sbiret, they only return a function-specific long. The spec says for
-Getchar that it returns "...the byte on success, or -1 for failure."
-So we should explicitly set failure to -1, especially since
-SBI_ERR_FAILURE isn't defined for legacy SBI calls.
+I think the theory behind the VERSION file is that we want
+to be able to express the version:
+ * purely numerically
+ * in a strictly ascending order
 
-Thanks,
-drew
+We expose the assumption of numeric versions in places like
+QMP's query-version command, which reports it as a set of ints.
 
-> -- 
-> Sincerely,
-> Aleksei Filippov
-> 
-> > > >           } else {
-> > > > -            run->riscv_sbi.ret[0] = -1;
-> > > > +            ret = -1;
-> > > >           }
-> > > > -        ret = 0;
-> > > >           break;
-> > > >       default:
-> > > >           qemu_log_mask(LOG_UNIMP,
-> > > > -                      "%s: un-handled SBI EXIT, specific reasons is %lu\n",
-> > > > +                      "%s: Unhandled SBI exit with extension-id %lu\n"
-> > > >                         __func__, run->riscv_sbi.extension_id);
-> > > > -        ret = -1;
-> > > > +        run->riscv_sbi.ret[0] = SBI_ERR_NOT_SUPPORTED;
-> > > >           break;
-> > > >       }
-> > > >       return ret;
-> > > > diff --git a/target/riscv/sbi_ecall_interface.h b/target/riscv/sbi_ecall_interface.h
-> > > > index 43899d08f6..a2e21d9b8c 100644
-> > > > --- a/target/riscv/sbi_ecall_interface.h
-> > > > +++ b/target/riscv/sbi_ecall_interface.h
-> > > > @@ -69,4 +69,16 @@
-> > > >   #define SBI_EXT_VENDOR_END              0x09FFFFFF
-> > > >   /* clang-format on */
-> > > > +/* SBI return error codes */
-> > > > +#define SBI_SUCCESS                  0
-> > > > +#define SBI_ERR_FAILURE             -1
-> > > > +#define SBI_ERR_NOT_SUPPORTED       -2
-> > > > +#define SBI_ERR_INVALID_PARAM       -3
-> > > > +#define SBI_ERR_DENIED              -4
-> > > > +#define SBI_ERR_INVALID_ADDRESS     -5
-> > > > +#define SBI_ERR_ALREADY_AVAILABLE   -6
-> > > > +#define SBI_ERR_ALREADY_STARTED     -7
-> > > > +#define SBI_ERR_ALREADY_STOPPED     -8
-> > > > +#define SBI_ERR_NO_SHMEM            -9
-> > > > +
-> > > >   #endif
-> > > > -- 
-> > > > 2.34.1
-> > > > 
+I think there's probably scope for making the "human friendly"
+version string be surfaced instead of the strictly-numeric
+one in more places, but I worry that breaking the "always
+numeric and ascending" rule might have subtle breakage for
+us or for downstream uses...
+
+thanks
+-- PMM
 
