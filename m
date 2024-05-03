@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B797AC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 21:57:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F14DC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 22:18:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s30tS-0003Ht-Jw; Fri, 03 May 2024 17:56:38 -0400
+	id 1s31DF-0000Ii-DK; Fri, 03 May 2024 18:17:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s30tR-0003HX-Lm
- for qemu-devel@nongnu.org; Fri, 03 May 2024 17:56:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s31DC-0000I8-Uk
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 18:17:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s30tO-0003uD-OH
- for qemu-devel@nongnu.org; Fri, 03 May 2024 17:56:37 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s31DA-0007TY-W9
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 18:17:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714773393;
+ s=mimecast20190719; t=1714774619;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=EZT8c9tbv0nRKXRHM0Dpq+fMayhzDz9lUewdV0yp42k=;
- b=hA652cu1PE78iITrPb68l1aQ51Fgy9TvCq1Q3kvLLjko4B/bAt/a55TUnlyrndFIfpO12x
- 1evWqubu19xWGqOwkdDoUwnX66esa8Z5O7Nuc2KZHGQCcMGPT4ul4eaw/UOOmfFZ26ZvGg
- QsE4xY1QNDesPEy1xD17jKa/9IpIZ3o=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=di9VvHdEplo4sNxBWVyhq/7CPmtSjfq3bdcNcj0/xZE=;
+ b=NVCUeOQm2+RBfFK0neFfLxQSbd4z70R3sxXXRuBJZ41jcZ5OunL+DQEcUpCpvxr+gfog4H
+ 6Zuwm7dCG3k0caXABZFBYNKuxpLcloGvP+k18EVWS+fuxUkTvj0OTAajxVE3NmQ23nE7mH
+ v9vNncKVmcWM7ozgbVl/nO1swehmQ6Y=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-361-9lcPGMuUNqukelyHjwAVMQ-1; Fri, 03 May 2024 17:56:32 -0400
-X-MC-Unique: 9lcPGMuUNqukelyHjwAVMQ-1
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-2b1373224acso38051a91.2
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 14:56:32 -0700 (PDT)
+ us-mta-626-BQV4pTTdPGKD6eDEP8gBWw-1; Fri, 03 May 2024 18:16:56 -0400
+X-MC-Unique: BQV4pTTdPGKD6eDEP8gBWw-1
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-2b2c8a007f2so37913a91.0
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 15:16:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714773391; x=1715378191;
+ d=1e100.net; s=20230601; t=1714774615; x=1715379415;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EZT8c9tbv0nRKXRHM0Dpq+fMayhzDz9lUewdV0yp42k=;
- b=ZgXKpRU7o4H7IME6lDMhSLt5qlAUQ5Uwp442gH404+rl0WSyg1MrLQdZULy0OHxLem
- 32RY8UVDWgGMLXkEI57rVp9sYuoMIc7QTduxNtbNDuAR+S0GPVeBv4YOGzMOXYeDO3hu
- /EtNkdHAQdojU+wREry7fokeho2HmM5hR2TQP+N6RD3a+94WxDX7oNKLKCje49FeOsMj
- qLaZfyhFZFQe8JDzftalIs+2eQKLQon1GeG/7Ndq29cLH6RtPlWJfRY/r15soXSulZdn
- W4XmjGk261aXbdbd6WSZ7cLAKz0tXIry+pV88lShAC4dz8OvC5h2YGeLVWndQ5DJNkW1
- GBNQ==
-X-Gm-Message-State: AOJu0YwF/7By4X+timwdqNT4VufkrwNzzMwDjmUQleKb8O18Vonw7KLu
- Z1e8TvH8UBw81mx4A2lIrdpIf2H3QktswzAmKhpo/XwRIly2Jrq2p57qn9IVw5URDqvB11TUX55
- RIUKxmBGFnOaVJAbK4TqYv0bQkpj5brbGCw9dSPsOL/vUizU6qSk4
-X-Received: by 2002:a05:6a00:2f55:b0:6f4:10ab:4c4f with SMTP id
- ff21-20020a056a002f5500b006f410ab4c4fmr3941048pfb.2.1714773390804; 
- Fri, 03 May 2024 14:56:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHj7D2TDuyL0dEo5EQbkRGShhT2jG2ModV/ZLJLyRpTH+M4DA3Hz5mQm4FF5qoAh4lJHv4xtA==
-X-Received: by 2002:a05:6a00:2f55:b0:6f4:10ab:4c4f with SMTP id
- ff21-20020a056a002f5500b006f410ab4c4fmr3941025pfb.2.1714773390182; 
- Fri, 03 May 2024 14:56:30 -0700 (PDT)
+ bh=di9VvHdEplo4sNxBWVyhq/7CPmtSjfq3bdcNcj0/xZE=;
+ b=lYH6+9ZYzlSrizkOCruevoIVSpBm1G3yO5PPARMluriiJXJaFYAnjNQf8OWNVhertq
+ prG2kr3ROKrQiuXJ0X51SxE65vbs1vG0RIBwO6EMkEi+FcBuws/DuWn02AayT8dvSL1T
+ 1OGi/EzwGw5Qv53fZac2wI6w+DXWfEf/Dpjnh5yu6bZ+rURQLx3bRteU3BFwXBTP97Cd
+ FhOaiuQN6vz3q7bnNeCiK8XNi3nkYv45K5RXu/PgYTVW1hWPUXrfC8kGSm18Wq/pVtsz
+ geMqDteEsxOU+FtnrxotU1nyBNh0xg2fGnNwSYYbEhW0n7zGL47ahCHdLWrUobN21X1Z
+ FQ1A==
+X-Gm-Message-State: AOJu0Yz2P8mGxT6u4P50c9YJg+WvIWYKRlT9rcf2xH+pK0zr6Bh5fFj+
+ mfcF0PAOWiODixpdDHE5onvDLZUpY30QqOAotw0V5MEhN8Tn4IT4msamf9R56cbL9k7ieFXWIbU
+ yoHjbzVNKsv4f3IwtSuObjygxejv21C7hf+ARQRVCxQhuKFPKjlEm
+X-Received: by 2002:a05:6a20:5654:b0:1ae:3504:c5e with SMTP id
+ is20-20020a056a20565400b001ae35040c5emr3615486pzc.4.1714774614703; 
+ Fri, 03 May 2024 15:16:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHAsUv5nC96DpliB1Q++1T8hnOp5fPeHTsq4tWxlwrRT15qCd381fTrnC/at9TL42sHJ/5lUg==
+X-Received: by 2002:a05:6a20:5654:b0:1ae:3504:c5e with SMTP id
+ is20-20020a056a20565400b001ae35040c5emr3615443pzc.4.1714774613876; 
+ Fri, 03 May 2024 15:16:53 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- s3-20020a056a0008c300b006ecd942161fsm3533851pfu.190.2024.05.03.14.56.28
+ w11-20020aa7858b000000b006efd89cea71sm3554423pfn.84.2024.05.03.15.16.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 03 May 2024 14:56:29 -0700 (PDT)
-Date: Fri, 3 May 2024 17:56:26 -0400
+ Fri, 03 May 2024 15:16:53 -0700 (PDT)
+Date: Fri, 3 May 2024 18:16:50 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
  Claudio Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>
-Subject: Re: [PATCH 2/9] migration: Fix file migration with fdset
-Message-ID: <ZjVdipRzAJMOAtfI@x1n>
+Subject: Re: [PATCH 7/9] monitor: fdset: Match against O_DIRECT
+Message-ID: <ZjViUjq2mV-XmH4C@x1n>
 References: <20240426142042.14573-1-farosas@suse.de>
- <20240426142042.14573-3-farosas@suse.de> <ZjUPl6XwB3Zt3cKR@x1n>
- <87a5l6oejr.fsf@suse.de> <ZjVRS6yT6n7_wb0V@x1n>
- <87plu2mvl1.fsf@suse.de>
+ <20240426142042.14573-8-farosas@suse.de> <ZjUyta-q8GuTDDjJ@x1n>
+ <87seyymw4d.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87plu2mvl1.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <87seyymw4d.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -101,108 +100,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 03, 2024 at 06:31:06PM -0300, Fabiano Rosas wrote:
+On Fri, May 03, 2024 at 06:19:30PM -0300, Fabiano Rosas wrote:
 > Peter Xu <peterx@redhat.com> writes:
 > 
-> > On Fri, May 03, 2024 at 04:56:08PM -0300, Fabiano Rosas wrote:
-> >> Peter Xu <peterx@redhat.com> writes:
+> > On Fri, Apr 26, 2024 at 11:20:40AM -0300, Fabiano Rosas wrote:
+> >> We're about to enable the use of O_DIRECT in the migration code and
+> >> due to the alignment restrictions imposed by filesystems we need to
+> >> make sure the flag is only used when doing aligned IO.
 > >> 
-> >> > On Fri, Apr 26, 2024 at 11:20:35AM -0300, Fabiano Rosas wrote:
-> >> >> When the migration using the "file:" URI was implemented, I don't
-> >> >> think any of us noticed that if you pass in a file name with the
-> >> >> format "/dev/fdset/N", this allows a file descriptor to be passed in
-> >> >> to QEMU and that behaves just like the "fd:" URI. So the "file:"
-> >> >> support has been added without regard for the fdset part and we got
-> >> >> some things wrong.
-> >> >> 
-> >> >> The first issue is that we should not truncate the migration file if
-> >> >> we're allowing an fd + offset. We need to leave the file contents
-> >> >> untouched.
-> >> >
-> >> > I'm wondering whether we can use fallocate() instead on the ranges so that
-> >> > we always don't open() with O_TRUNC.  Before that..  could you remind me
-> >> > why do we need to truncate in the first place?  I definitely missed
-> >> > something else here too.
+> >> The migration will do parallel IO to different regions of a file, so
+> >> we need to use more than one file descriptor. Those cannot be obtained
+> >> by duplicating (dup()) since duplicated file descriptors share the
+> >> file status flags, including O_DIRECT. If one migration channel does
+> >> unaligned IO while another sets O_DIRECT to do aligned IO, the
+> >> filesystem would fail the unaligned operation.
 > >> 
-> >> AFAIK, just to avoid any issues if the file is pre-existing. I don't see
-> >> the difference between O_TRUNC and fallocate in this case.
+> >> The add-fd QMP command along with the fdset code are specifically
+> >> designed to allow the user to pass a set of file descriptors with
+> >> different access flags into QEMU to be later fetched by code that
+> >> needs to alternate between those flags when doing IO.
+> >> 
+> >> Extend the fdset matching to behave the same with the O_DIRECT flag.
+> >> 
+> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> >> ---
+> >>  monitor/fds.c | 7 ++++++-
+> >>  1 file changed, 6 insertions(+), 1 deletion(-)
+> >> 
+> >> diff --git a/monitor/fds.c b/monitor/fds.c
+> >> index 4ec3b7eea9..62e324fcec 100644
+> >> --- a/monitor/fds.c
+> >> +++ b/monitor/fds.c
+> >> @@ -420,6 +420,11 @@ int monitor_fdset_dup_fd_add(int64_t fdset_id, int flags)
+> >>          int fd = -1;
+> >>          int dup_fd;
+> >>          int mon_fd_flags;
+> >> +        int mask = O_ACCMODE;
+> >> +
+> >> +#ifdef O_DIRECT
+> >> +        mask |= O_DIRECT;
+> >> +#endif
+> >>  
+> >>          if (mon_fdset->id != fdset_id) {
+> >>              continue;
+> >> @@ -431,7 +436,7 @@ int monitor_fdset_dup_fd_add(int64_t fdset_id, int flags)
+> >>                  return -1;
+> >>              }
+> >>  
+> >> -            if ((flags & O_ACCMODE) == (mon_fd_flags & O_ACCMODE)) {
+> >> +            if ((flags & mask) == (mon_fd_flags & mask)) {
+> >>                  fd = mon_fdset_fd->fd;
+> >>                  break;
+> >>              }
 > >
-> > Then, shall we avoid truncations at all, leaving all the feasibility to
-> > user (also errors prone to make)?
+> > I think I see what you wanted to do, picking out the right fd out of two
+> > when qemu_open_old(), which makes sense.
+> >
+> > However what happens if the mgmt app only passes in 1 fd to the fdset?  The
+> > issue is we have a "fallback dup()" plan right after this chunk of code:
 > >
 > 
-> Is this a big deal? I'd rather close that possible gap and avoid the bug
-> reports.
+> I'm validating the fdset at file_parse_fdset() beforehand. If there's
+> anything else than 2 fds then we'll error out:
+> 
+>     if (nfds != 2) {
+>         error_setg(errp, "Outgoing migration needs two fds in the fdset, "
+>                    "got %d", nfds);
+>         qmp_remove_fd(*id, false, -1, NULL);
+>         *id = -1;
+>         return false;
+>     }
+> 
+> >         dup_fd = qemu_dup_flags(fd, flags);
+> >         if (dup_fd == -1) {
+> >             return -1;
+> >         }
+> >
+> >         mon_fdset_fd_dup = g_malloc0(sizeof(*mon_fdset_fd_dup));
+> >         mon_fdset_fd_dup->fd = dup_fd;
+> >         QLIST_INSERT_HEAD(&mon_fdset->dup_fds, mon_fdset_fd_dup, next);
+> >
+> > I think it means even if the mgmt app only passes in 1 fd (rather than 2,
+> > one with O_DIRECT, one without), QEMU can always successfully call
+> > qemu_open_old() twice for each case, even though silently the two FDs will
+> > actually impact on each other.  This doesn't look ideal if it's true.
+> >
+> > But I also must confess I don't really understand this code at all: we
+> > dup(), then we try F_SETFL on all the possible flags got passed in.
+> > However AFAICT due to the fact that dup()ed FDs will share "struct file" it
+> > means mostly all flags will be shared, except close-on-exec.  I don't ever
+> > see anything protecting that F_SETFL to only touch close-on-exec, I think
+> > it means it'll silently change file status flags for the other fd which we
+> > dup()ed from.  Does it mean that we have issue already with such dup() usage?
+> 
+> I think you're right, but I also think there's a requirement even from
+> this code that the fds in the fdset cannot be dup()ed. I don't see it
+> enforced anywhere, but maybe that's a consequence of the larger use-case
+> for which this feature was introduced.
 
-No possible of such report if the user uses Libvirt or even more virt
-stacks, am I right?  While this is only for whoever uses QEMU directly, and
-only if the one forgot to remove a leftover image file?
-
-I'd not worry about those people who use QEMU directly - they aren't the
-people we need to care too much about, imho (and I'm definitely one of
-them..).  The problem is I feel it an overkill introducing a migration
-global var just for this purpose.
-
-No strong opinions, if you feel strongly like so I'm ok with it.  But if
-one day if we want to remove FileOutgoingArgs I'll also leave that to you
-as a trade-off. :-)
+I think that's the thing we need to figure out for add-fd usages.  The bad
+thing is there're too many qemu_open_internal() users... so we can't easily
+tell what we're looking for. May need some time reading the code or the
+history.. pretty sad.  I hope someone can chim in.
 
 > 
-> >> 
-> >> >
-> >> >> 
-> >> >> The second issue is that there's an expectation that QEMU removes the
-> >> >> fd after the migration has finished. That's what the "fd:" code
-> >> >> does. Otherwise a second migration on the same VM could attempt to
-> >> >> provide an fdset with the same name and QEMU would reject it.
-> >> >
-> >> > Let me check what we do when with "fd:" and when migration completes or
-> >> > cancels.
-> >> >
-> >> > IIUC it's qio_channel_file_close() that does the final cleanup work on
-> >> > e.g. to_dst_file, right?  Then there's qemu_close(), and it has:
-> >> >
-> >> >     /* Close fd that was dup'd from an fdset */
-> >> >     fdset_id = monitor_fdset_dup_fd_find(fd);
-> >> >     if (fdset_id != -1) {
-> >> >         int ret;
-> >> >
-> >> >         ret = close(fd);
-> >> >         if (ret == 0) {
-> >> >             monitor_fdset_dup_fd_remove(fd);
-> >> >         }
-> >> >
-> >> >         return ret;
-> >> >     }
-> >> >
-> >> > Shouldn't this done the work already?
-> >> 
-> >> That removes the mon_fdset_fd_dup->fd, we want to remove the
-> >> mon_fdset_fd->fd.
-> >
-> > What I read so far is when we are removing the dup-fds, we'll do one more
-> > thing:
-> >
-> > monitor_fdset_dup_fd_find_remove():
-> >                     if (QLIST_EMPTY(&mon_fdset->dup_fds)) {
-> >                         monitor_fdset_cleanup(mon_fdset);
-> >                     }
-> >
-> > It means if we removed all the dup-fds correctly, we should also remove the
-> > whole fdset, which includes the ->fds, IIUC.
-> >
-> 
-> Since mon_fdset_fd->removed == false, we hit the runstate_is_running()
-> problem. I'm not sure, but probably mon_refcount > 0 as well. So the fd
-> would not be removed.
-> 
-> But I'll retest this on Monday just be sure, it's been a while since I
-> wrote some parts of this.
+> For our scenario, the open() man page says one can use kcmp() to compare
+> the fds and determine if they are a result of dup(). Maybe we should do
+> that extra check? We're defining a pretty rigid interface between QEMU
+> and the management layer, so not likely to break once it's written. I'm
+> also not sure how bad would it be to call syscall() directly from QEMU
+> (kcmp has no libc wrapper).
 
-Thanks.  And I hope we can also get some more clues too when you dig out
-more out of the whole add-fd API; I hope we don't pile up more complicated
-logics on top of a mistery.  I feel like this is the time we figure things
-out.
+That should be all fine, see:
+
+$ git grep " syscall(" | wc -l
+28
+
+And if we want we can also do fcntl(F_GETFL) on both fds later, making sure
+they have proper flags (one must have O_DIRECT, one must not).
 
 -- 
 Peter Xu
