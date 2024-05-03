@@ -4,84 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93A2EC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 May 2024 21:17:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28C37C10F16
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 04:48:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2dmK-0008LT-7P; Thu, 02 May 2024 17:15:44 -0400
+	id 1s2kpD-0002pg-4v; Fri, 03 May 2024 00:47:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1s2dmJ-0008Ku-EU
- for qemu-devel@nongnu.org; Thu, 02 May 2024 17:15:43 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1s2kou-0002o0-KC; Fri, 03 May 2024 00:46:53 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1s2dmH-0002oU-Mo
- for qemu-devel@nongnu.org; Thu, 02 May 2024 17:15:43 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-6f447976de7so528434b3a.1
- for <qemu-devel@nongnu.org>; Thu, 02 May 2024 14:15:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1s2kop-000715-3r; Fri, 03 May 2024 00:46:52 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-2ab1ddfded1so7505678a91.1; 
+ Thu, 02 May 2024 21:46:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714684540; x=1715289340; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1714711604; x=1715316404; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=V/rxl0DFSSivsJa4rLu0a/ciqRjYxWdYfAVWic0qz6E=;
- b=Lct03jKkdvHEj906xnP3L7p591Z/mqVeH+RxkXLaJNOt2Gptk44PNTEx+SRzSzhfj1
- GasQek0viuSTLd20PvrOL4vmJCwm6mseiVVYt4VZ1eupP65w/ROFEsxO45pLrBn/1+th
- RyT/VOTV07714ym21CTczpNlH4b0IXkVFqPRcZFo3kqqOI1uR38/lt7yIR3+FQIz0qL/
- RSsy9Yd0hx9nX/asass4GzJQ9pZGw5lYYDye480pjJ+pTx6ATdycH3hduryGcagiE56x
- 2IymjADdj64aUZwddx26z57iPbGwwOE74lfG8Rckb6KT4xzrFYxqqk0WVZwvQNvDxVPj
- Pk0A==
+ bh=2nLS0kQnSWCitBKKgUPaN9NajP8s8UZrbebLEcSaDrM=;
+ b=V90zbi55iaBKoemNHnRJHF37yxd/szgFc4xU5baXaEwHSgXdOS156Dyk0hlv+Y2dc/
+ PtoVIO3N1nP3fZntxb3zMEgUtwo5chOU0WhPVzf7/qDBVtIw8xYvkj5QKfGu2on/+kyb
+ GeLHNneRscedA73i44+8l6F6NDUhjX1AHkT7gn5x4MzCKVf9D/JA2a56m2NiG9kSsIz1
+ XF1zshT9OcrqUY/SHUho5cb3ed8j3xGTj1N8FGsAIAYc6iD1iGq5wmnWFecBfIx4WRec
+ MSR/Xpn8Q+OFFHLDD1YpHQ8sabem/A0IE2FcKneFnoyoK3tti7lN0/2HajdrgBnvSv9Q
+ FeGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714684540; x=1715289340;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=V/rxl0DFSSivsJa4rLu0a/ciqRjYxWdYfAVWic0qz6E=;
- b=Kbxm1OsC5BUJvQTywqT9v07SkinJVuKZ46jrrUJABB9c2CleRbWf/gugBs60CHcDn+
- 6O8rzE4jhG2DvRAVbmPdhME0FTNFoTqecLySTN5Wxk5ebKhoYULz/QODI0zAWdAkP3Qt
- PuCF6BRHmV/cbA4rCn0hideoCQ9QwMHabfD3dwST2Ahs7AGbhqOXNTkWlO+0K36mU/Ps
- pzftHgUBUv776z34oaLZ4uythdiBrcxJKpQYHjXQWPuTJIHw6h/FTPgPVXYim4ahU1UC
- pMq5liOo1wnDMrQllXafZhS3Zw/vauU55z+XA3lo9Rjytn+hvNJPrury3nWHUiOSNRtB
- 8J7A==
-X-Gm-Message-State: AOJu0YzaKJAuttd3aDM60WAB/pYRkKLL4rm+l4iDXIQygABgS2OQQjC5
- NvKnFgbLrxe0A7aNCTYoRXiqAupS376TU/fqut/mFB1NzrmVwCwlljB4vOLnNGI84yMusSuwNrs
- HP2s=
-X-Google-Smtp-Source: AGHT+IHAGT89bf8pO9saMSslxemPUuGQwbSJuo4mgZ15v5UzvwBuYM6gZXg+AwShg1au9/oL5hn7iQ==
-X-Received: by 2002:a05:6a20:979b:b0:1ad:9358:25a7 with SMTP id
- hx27-20020a056a20979b00b001ad935825a7mr847090pzc.15.1714684539836; 
- Thu, 02 May 2024 14:15:39 -0700 (PDT)
-Received: from linaro.vn.shawcable.net ([2604:3d08:9384:1d00::ecd0])
- by smtp.gmail.com with ESMTPSA id
- d14-20020a63f24e000000b0060063c4be3bsm1700915pgk.14.2024.05.02.14.15.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 May 2024 14:15:38 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v6 3/9] plugins: add new inline op STORE_U64
-Date: Thu,  2 May 2024 14:15:16 -0700
-Message-Id: <20240502211522.346467-4-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240502211522.346467-1-pierrick.bouvier@linaro.org>
-References: <20240502211522.346467-1-pierrick.bouvier@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42b.google.com
+ d=1e100.net; s=20230601; t=1714711604; x=1715316404;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=2nLS0kQnSWCitBKKgUPaN9NajP8s8UZrbebLEcSaDrM=;
+ b=P1x2JP/xsbgo+9IRascIzQH0KCtXTxxbXEtdApXpKl8hAU8K60/KKg4GhR/IJHbMJr
+ 0DrLcbfSUrdzMzi7JnByKZfQTpxzA2oQrfWBiAMceNfDveKsmXo4hqPlIH0+Vtce+DRo
+ nar1PEXiWDEJ/9R5bMatoqwnzrEIoerlc5UUaL/nGe67qoyM2NP6hWrZ3QmUh27KSQQd
+ ozv3zl/JpBCHjT9aROkr+hX/ro8pSqBdX5InYTvio5XndLUHvOtkoaLj6SWT5n5FxmzE
+ H/ut5011vcBQO3insc8mfkmvpZXfOD/TsFDTOfZCWRSGDkoXHdtuu7jGfqcJqsq/YSXp
+ Nqqg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWXedRCG911JUESeSN0AaKeFwQWuh/dExQ6hnRKr3hspSSn7I6opB51TUOynrSMkcU/2azaidq8KtXiPHr84XiXdNJmDrI=
+X-Gm-Message-State: AOJu0YzpB7Zi3ExEfclkXY2Pokd0g4Q09RZZNYy762RVL4Q7AY2NwPIn
+ g7Wz0PAChAQQ5MyAWpKOfGjR5QjwbjMj9hV71ieoubbT68LtVnMw
+X-Google-Smtp-Source: AGHT+IH4R78qjWRf/tmKXhJVGp1QBLZr5XjUdb3cbrTKWrUli3N7SZHvLjmyJjp0jCOknS1J3C380A==
+X-Received: by 2002:a17:90a:a888:b0:2b4:3669:8b87 with SMTP id
+ h8-20020a17090aa88800b002b436698b87mr793290pjq.4.1714711604173; 
+ Thu, 02 May 2024 21:46:44 -0700 (PDT)
+Received: from localhost ([1.146.23.181]) by smtp.gmail.com with ESMTPSA id
+ gz13-20020a17090b0ecd00b002b143417622sm2192703pjb.12.2024.05.02.21.46.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 02 May 2024 21:46:43 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 03 May 2024 14:46:38 +1000
+Message-Id: <D0ZQJ5JD4FF1.WSLV5C6W8A4H@gmail.com>
+Cc: <qemu-ppc@nongnu.org>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH] ppc/pnv: Introduce pnv_chip_foreach_cpu()
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ =?utf-8?q?Fr=C3=A9d=C3=A9ric_Barrat?= <fbarrat@linux.ibm.com>
+X-Mailer: aerc 0.17.0
+References: <20240424093048.180966-1-clg@redhat.com>
+In-Reply-To: <20240424093048.180966-1-clg@redhat.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,112 +95,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This new operation can store an immediate u64 value to a given
-scoreboard.
+On Wed Apr 24, 2024 at 7:30 PM AEST, C=C3=A9dric Le Goater wrote:
+> This helper routine uses the machine definition, sockets, cores and
+> threads, to loop on all CPUs of the machine. Replace CPU_FOREACH()
+> with it.
+>
+> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- include/qemu/plugin.h      |  1 +
- include/qemu/qemu-plugin.h |  4 ++--
- accel/tcg/plugin-gen.c     | 13 +++++++++++++
- plugins/core.c             |  6 ++++++
- 4 files changed, 22 insertions(+), 2 deletions(-)
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
-diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
-index bee1647cfc4..0c5df7fa90a 100644
---- a/include/qemu/plugin.h
-+++ b/include/qemu/plugin.h
-@@ -70,6 +70,7 @@ enum plugin_dyn_cb_type {
-     PLUGIN_CB_REGULAR,
-     PLUGIN_CB_MEM_REGULAR,
-     PLUGIN_CB_INLINE_ADD_U64,
-+    PLUGIN_CB_INLINE_STORE_U64,
- };
- 
- /*
-diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-index 4fc6c3739b2..c5cac897a0b 100644
---- a/include/qemu/qemu-plugin.h
-+++ b/include/qemu/qemu-plugin.h
-@@ -305,12 +305,12 @@ void qemu_plugin_register_vcpu_tb_exec_cb(struct qemu_plugin_tb *tb,
-  * enum qemu_plugin_op - describes an inline op
-  *
-  * @QEMU_PLUGIN_INLINE_ADD_U64: add an immediate value uint64_t
-- *
-- * Note: currently only a single inline op is supported.
-+ * @QEMU_PLUGIN_INLINE_STORE_U64: store an immediate value uint64_t
-  */
- 
- enum qemu_plugin_op {
-     QEMU_PLUGIN_INLINE_ADD_U64,
-+    QEMU_PLUGIN_INLINE_STORE_U64,
- };
- 
- /**
-diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
-index 8e2c3ef94f6..a5313cbbb2f 100644
---- a/accel/tcg/plugin-gen.c
-+++ b/accel/tcg/plugin-gen.c
-@@ -145,6 +145,16 @@ static void gen_inline_add_u64_cb(struct qemu_plugin_dyn_cb *cb)
-     tcg_temp_free_ptr(ptr);
- }
- 
-+static void gen_inline_store_u64_cb(struct qemu_plugin_dyn_cb *cb)
-+{
-+    TCGv_ptr ptr = gen_plugin_u64_ptr(cb->inline_insn.entry);
-+    TCGv_i64 val = tcg_constant_i64(cb->inline_insn.imm);
-+
-+    tcg_gen_st_i64(val, ptr, 0);
-+
-+    tcg_temp_free_ptr(ptr);
-+}
-+
- static void gen_mem_cb(struct qemu_plugin_dyn_cb *cb,
-                        qemu_plugin_meminfo_t meminfo, TCGv_i64 addr)
- {
-@@ -170,6 +180,9 @@ static void inject_cb(struct qemu_plugin_dyn_cb *cb)
-     case PLUGIN_CB_INLINE_ADD_U64:
-         gen_inline_add_u64_cb(cb);
-         break;
-+    case PLUGIN_CB_INLINE_STORE_U64:
-+        gen_inline_store_u64_cb(cb);
-+        break;
-     default:
-         g_assert_not_reached();
-     }
-diff --git a/plugins/core.c b/plugins/core.c
-index a8557b54ff7..e1bf0dc3717 100644
---- a/plugins/core.c
-+++ b/plugins/core.c
-@@ -321,6 +321,8 @@ static enum plugin_dyn_cb_type op_to_cb_type(enum qemu_plugin_op op)
-     switch (op) {
-     case QEMU_PLUGIN_INLINE_ADD_U64:
-         return PLUGIN_CB_INLINE_ADD_U64;
-+    case QEMU_PLUGIN_INLINE_STORE_U64:
-+        return PLUGIN_CB_INLINE_STORE_U64;
-     default:
-         g_assert_not_reached();
-     }
-@@ -535,6 +537,9 @@ void exec_inline_op(struct qemu_plugin_dyn_cb *cb, int cpu_index)
-     case QEMU_PLUGIN_INLINE_ADD_U64:
-         *val += cb->inline_insn.imm;
-         break;
-+    case QEMU_PLUGIN_INLINE_STORE_U64:
-+        *val = cb->inline_insn.imm;
-+        break;
-     default:
-         g_assert_not_reached();
-     }
-@@ -562,6 +567,7 @@ void qemu_plugin_vcpu_mem_cb(CPUState *cpu, uint64_t vaddr,
-                                    vaddr, cb->userp);
-             break;
-         case PLUGIN_CB_INLINE_ADD_U64:
-+        case PLUGIN_CB_INLINE_STORE_U64:
-             exec_inline_op(cb, cpu->cpu_index);
-             break;
-         default:
--- 
-2.39.2
+> ---
+>  hw/ppc/pnv.c | 48 ++++++++++++++++++++++++++++++++++++------------
+>  1 file changed, 36 insertions(+), 12 deletions(-)
+>
+> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+> index 6e3a5ccdec764c8f6cbd076e27f59c7082e64876..5f400ed127921c4c3a45bc548=
+63b2cafa53e7030 100644
+> --- a/hw/ppc/pnv.c
+> +++ b/hw/ppc/pnv.c
+> @@ -2264,6 +2264,21 @@ PowerPCCPU *pnv_chip_find_cpu(PnvChip *chip, uint3=
+2_t pir)
+>      return NULL;
+>  }
+> =20
+> +static void pnv_chip_foreach_cpu(PnvChip *chip,
+> +                   void (*fn)(PnvChip *chip, PowerPCCPU *cpu, void *opaq=
+ue),
+> +                   void *opaque)
+> +{
+> +    int i, j;
+> +
+> +    for (i =3D 0; i < chip->nr_cores; i++) {
+> +        PnvCore *pc =3D chip->cores[i];
+> +
+> +        for (j =3D 0; j < CPU_CORE(pc)->nr_threads; j++) {
+> +            fn(chip, pc->threads[j], opaque);
+> +        }
+> +    }
+> +}
+> +
+>  static ICSState *pnv_ics_get(XICSFabric *xi, int irq)
+>  {
+>      PnvMachineState *pnv =3D PNV_MACHINE(xi);
+> @@ -2332,23 +2347,26 @@ static ICPState *pnv_icp_get(XICSFabric *xi, int =
+pir)
+>      return cpu ? ICP(pnv_cpu_state(cpu)->intc) : NULL;
+>  }
+> =20
+> +static void pnv_pic_intc_print_info(PnvChip *chip, PowerPCCPU *cpu,
+> +                                    void *opaque)
+> +{
+> +    PNV_CHIP_GET_CLASS(chip)->intc_print_info(chip, cpu, opaque);
+> +}
+> +
+>  static void pnv_pic_print_info(InterruptStatsProvider *obj,
+>                                 Monitor *mon)
+>  {
+>      PnvMachineState *pnv =3D PNV_MACHINE(obj);
+>      int i;
+> -    CPUState *cs;
+> =20
+> -    CPU_FOREACH(cs) {
+> -        PowerPCCPU *cpu =3D POWERPC_CPU(cs);
+> +    for (i =3D 0; i < pnv->num_chips; i++) {
+> +        PnvChip *chip =3D pnv->chips[i];
+> =20
+> -        /* XXX: loop on each chip/core/thread instead of CPU_FOREACH() *=
+/
+> -        PNV_CHIP_GET_CLASS(pnv->chips[0])->intc_print_info(pnv->chips[0]=
+, cpu,
+> -                                                           mon);
+> -    }
+> +        /* First CPU presenters */
+> +        pnv_chip_foreach_cpu(chip, pnv_pic_intc_print_info, mon);
+> =20
+> -    for (i =3D 0; i < pnv->num_chips; i++) {
+> -        PNV_CHIP_GET_CLASS(pnv->chips[i])->pic_print_info(pnv->chips[i],=
+ mon);
+> +        /* Then other devices, PHB, PSI, XIVE */
+> +        PNV_CHIP_GET_CLASS(chip)->pic_print_info(chip, mon);
+>      }
+>  }
+> =20
+> @@ -2549,12 +2567,18 @@ static void pnv_cpu_do_nmi_on_cpu(CPUState *cs, r=
+un_on_cpu_data arg)
+>      }
+>  }
+> =20
+> +static void pnv_cpu_do_nmi(PnvChip *chip, PowerPCCPU *cpu, void *opaque)
+> +{
+> +    async_run_on_cpu(CPU(cpu), pnv_cpu_do_nmi_on_cpu, RUN_ON_CPU_NULL);
+> +}
+> +
+>  static void pnv_nmi(NMIState *n, int cpu_index, Error **errp)
+>  {
+> -    CPUState *cs;
+> +    PnvMachineState *pnv =3D PNV_MACHINE(qdev_get_machine());
+> +    int i;
+> =20
+> -    CPU_FOREACH(cs) {
+> -        async_run_on_cpu(cs, pnv_cpu_do_nmi_on_cpu, RUN_ON_CPU_NULL);
+> +    for (i =3D 0; i < pnv->num_chips; i++) {
+> +        pnv_chip_foreach_cpu(pnv->chips[i], pnv_cpu_do_nmi, NULL);
+>      }
+>  }
+> =20
 
 
