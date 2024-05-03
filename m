@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46C34C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 12:16:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76E08C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 12:22:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2rp5-0000rS-Cy; Fri, 03 May 2024 08:15:31 -0400
+	id 1s2rv0-0003tc-Tq; Fri, 03 May 2024 08:21:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s2rox-0000mp-3u
- for qemu-devel@nongnu.org; Fri, 03 May 2024 08:15:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s2ros-0006pL-DR
- for qemu-devel@nongnu.org; Fri, 03 May 2024 08:15:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714738517;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=s4DvSUKViypdg4PBIo4khwTjt6DHzg9hai78TXVwSuA=;
- b=Sz/YYgooO3WkXgAIpGIot1gJeFFMwW+7+CDvH6rbRu4gGJs2CGxhgp+uVDuG3jtJx7kgDv
- WZTNELkENznEJcBzhnS/leGiBNpNX09M2QldlWp3WXcHi2Jb7pifmhUV7H+tZOwr2X9Mp/
- MzoxswUtP592DQt2reMhFgJgCjNLaFs=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-641-JWWoqHO0P52uot_TfDr8OA-1; Fri, 03 May 2024 08:15:14 -0400
-X-MC-Unique: JWWoqHO0P52uot_TfDr8OA-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a599dffe736so8336266b.1
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 05:15:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2ruy-0003tE-RF
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 08:21:36 -0400
+Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2ruw-0008Vi-Co
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 08:21:36 -0400
+Received: by mail-lj1-x22d.google.com with SMTP id
+ 38308e7fff4ca-2e09138a2b1so68702161fa.3
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 05:21:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714738892; x=1715343692; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/WhA8PWmZFguuR+94hT9+dK8WwdgBURR3x26GDG6l34=;
+ b=uazbWUF5dVfJpF8emTPiFUfB5NcBGxXbxKKJPS4o7FmCVx+FRsmxvhshB0/nLnJegU
+ 2E1NV1UN+5svNlH+r/ZmMy3NzYjZBH88NxFBbR/P5O3MkL69vySBW0zzyWUjmhSKflPH
+ TzQRuNWwWB4/mElCyRgEn7FkZ/kizoTDMXydZ7zL2MRUMBoXa6gmxlhExtfnvZS/U7RU
+ asMPo6yfcGzFg7dijPuIbxofyUZ+Ab+1eNuabjc/nY2o3eQx1M7BWOxOdctB3HZjC1A7
+ y6C5Kbd2hST9d6UmzSUzCpXWkRabYMRttKuY6vsHGi7Frg4JwcfoQTubK1ztjbaN1fX6
+ SE5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714738512; x=1715343312;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=s4DvSUKViypdg4PBIo4khwTjt6DHzg9hai78TXVwSuA=;
- b=VVri7+/8eUBoM5juXvMKydfnoPlqDqKXmOOYeqbSk6AeECY2gecTqCMWtZT3l9Z8Nq
- 8MfjX9/8jN4l+a/pHPjrZc8aAe500X8uDzB0Ng64whKL45DpOLOj7C1q02/iVLrl6D4d
- O3aPyheKcA9xfEGi2fxLgezN+wQ7JnMJ1oJR6tdgyWBvflaaj9gAHjuD281Xzy6wuP4J
- xMY/2EPzisqenoUWmP1E+JfOD3i+vTZWUIqvg2f1ZVCADWHZskmGUW3OYoQv5G4eaB30
- 8BPiKIPNaXdTiV64MBgKTJ51D7MGY7sklywAp6YrfInNjffHX9jBS0/NGjPGUoE+zZEA
- lygA==
-X-Gm-Message-State: AOJu0YwtRlMqF2hGpkKVpeyib4JAzOjf458dexlBPHMLk7wngDsbvO0R
- +2rRVFZSk1i0F7++kix3mwCsc0x+UrvZN13ODO42rPKTWaCQHK22ZPI6OVeDMxZEs4vl6eFBtlc
- iXgX2s8kHW0IIhVKskkgiZsAGZKi7ZUvM/vO7OLhqMZ1mW6lie2YzZKjFRFPm8Bz+T1+KQCaJ/F
- sfLaVdJsdOwyOKf9UypsHNqBYlSQ7CW0T1YyxR
-X-Received: by 2002:a17:906:4892:b0:a55:8631:b673 with SMTP id
- v18-20020a170906489200b00a558631b673mr2236799ejq.8.1714738511801; 
- Fri, 03 May 2024 05:15:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFxaPGsArRwF5fkFmKwsERnw7i4EDy1UYC11w5sZ8JS25xJ4MH5gONgI2lX8jACXoxmKNwiUQ==
-X-Received: by 2002:a17:906:4892:b0:a55:8631:b673 with SMTP id
- v18-20020a170906489200b00a558631b673mr2236780ejq.8.1714738511271; 
- Fri, 03 May 2024 05:15:11 -0700 (PDT)
-Received: from avogadro.local ([151.95.155.52])
+ d=1e100.net; s=20230601; t=1714738892; x=1715343692;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/WhA8PWmZFguuR+94hT9+dK8WwdgBURR3x26GDG6l34=;
+ b=RVi3ERj7mJsrs+ISkS1YK/qmUl2cTuCx7g/fdROLd8D5/OHXJ1UAF59Ifbk1A8qmJy
+ h40LpDKKy/bbVXRJ1OvGHHaZ9ayetzemy7pDTSXf0BOQ50Rymqdk9W8feRXauhFNFahp
+ 68EQwDrcZFv5HHSjPvuIXzhMaL4Ao0N+3+y7f+rV5I/rdMaVEck/yKCnEN9J00/eO/Ty
+ 5cJ90ULiBUo/fO3mg57+L2fB1CQONRfc+mEwyG46EAZdwT2Y2CivgRHnYW7SxuwkqmN1
+ fMzK7HzVqmgM7PxoKw69IN5TBDhE0XkFOETjUL6Kj+qnTqpsgc35ar8VcdVRXRwpCnaB
+ 9tbg==
+X-Gm-Message-State: AOJu0YwhyQl97G1dV69OCg94aDUK2E3VyrHh9VEfDJdTsSBlK+Yl2XfH
+ UXsRiZUFBOPhqxcF8IOoilU862fh+xGvWaspnS+M6Po2tFWJ1jWC+3+VFOwAFlE=
+X-Google-Smtp-Source: AGHT+IH0u79X8htM0WanVpOOinvbiFKfqO9T3SD35Mb7/Tm064KyxXoRxYh65/82NMALMNd/QXwOKQ==
+X-Received: by 2002:a05:651c:553:b0:2dc:d2c5:ee9 with SMTP id
+ q19-20020a05651c055300b002dcd2c50ee9mr1979052ljp.2.1714738892038; 
+ Fri, 03 May 2024 05:21:32 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.179.187])
  by smtp.gmail.com with ESMTPSA id
- f23-20020a170906561700b00a599623b07bsm468853ejq.206.2024.05.03.05.15.10
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 03 May 2024 05:15:10 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PATCH] gitlab-ci: adjust msys2-64bit to be able to run qtest
-Date: Fri,  3 May 2024 14:15:09 +0200
-Message-ID: <20240503121509.219567-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.44.0
+ r20-20020a2eb614000000b002e0e3467465sm515941ljn.12.2024.05.03.05.21.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 03 May 2024 05:21:31 -0700 (PDT)
+Message-ID: <da078202-63b4-49ff-b7c2-526b940687a4@linaro.org>
+Date: Fri, 3 May 2024 14:21:28 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/5] accel/tcg: Simplify meson.build using subdir_done()
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Warner Losh <imp@bsdimp.com>,
+ Laurent Vivier <laurent@vivier.eu>, Riku Voipio <riku.voipio@iki.fi>,
+ Kyle Evans <kevans@freebsd.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20240503091657.26468-1-philmd@linaro.org>
+ <20240503091657.26468-2-philmd@linaro.org>
+ <CABgObfb7QQYdc5iqLME+eBhZG6nay0oacYFz+ANO2eenQOonqg@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CABgObfb7QQYdc5iqLME+eBhZG6nay0oacYFz+ANO2eenQOonqg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.483,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,31 +98,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-sparc-softmmu is able to run a subset of qtests when compiled --without-default-devices,
-so use it instead of x86_64-softmmu for the msys2 run.
+On 3/5/24 13:16, Paolo Bonzini wrote:
+> On Fri, May 3, 2024 at 11:17 AM Philippe Mathieu-Daudé
+> <philmd@linaro.org> wrote:
+>>
+>> If CONFIG_TCG is not defined, skip this directory calling
+>> subdir_done(). Then since we know CONFIG_TCG is defined,
+>> we don't need to check for it.
+> 
+> You can only remove the check if you assume that TCG (unlike e.g. KVM)
+> is enabled for all targets. Of course this assumption is true right
+> now, but in principle it does not have to be - a long time ago,
+> qemu-kvm had ia64 as a KVM-only target for example.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- .gitlab-ci.d/windows.yml | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+Got it, thanks.
 
-diff --git a/.gitlab-ci.d/windows.yml b/.gitlab-ci.d/windows.yml
-index 94834269ec7..d26dbdd0c0d 100644
---- a/.gitlab-ci.d/windows.yml
-+++ b/.gitlab-ci.d/windows.yml
-@@ -24,10 +24,7 @@ msys2-64bit:
-     # changed to compile QEMU with the --without-default-devices switch
-     # for this job, because otherwise the build could not complete within
-     # the project timeout.
--    CONFIGURE_ARGS:  --target-list=x86_64-softmmu --without-default-devices -Ddebug=false -Doptimization=0
--    # qTests don't run successfully with "--without-default-devices",
--    # so let's exclude the qtests from CI for now.
--    TEST_ARGS: --no-suite qtest
-+    CONFIGURE_ARGS:  --target-list=sparc-softmmu --without-default-devices -Ddebug=false -Doptimization=0
-     # The Windows git is a bit older so override the default
-     GIT_FETCH_EXTRA_FLAGS: --no-tags --prune --quiet
-   artifacts:
--- 
-2.44.0
+> So I'm not sure this patch is a good idea. A lot of it is just
+> replacing tcg_specific_ss with specific_ss.
+> 
+> Paolo
+> 
 
 
