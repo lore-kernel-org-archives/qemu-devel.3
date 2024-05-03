@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E0FBC25B10
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 04:48:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67851C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 04:52:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2kpO-0002rm-A4; Fri, 03 May 2024 00:47:22 -0400
+	id 1s2ku8-0004nX-JM; Fri, 03 May 2024 00:52:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s2kpM-0002rE-Ho; Fri, 03 May 2024 00:47:20 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1s2kto-0004lp-7x; Fri, 03 May 2024 00:52:00 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s2kpK-00072G-Tt; Fri, 03 May 2024 00:47:20 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-6ecec796323so8409347b3a.3; 
- Thu, 02 May 2024 21:47:18 -0700 (PDT)
+ id 1s2ktl-0007jq-Qe; Fri, 03 May 2024 00:51:55 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-2ab1ddfded1so7507835a91.1; 
+ Thu, 02 May 2024 21:51:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1714711637; x=1715316437; darn=nongnu.org;
- h=in-reply-to:references:subject:cc:to:from:message-id:date
+ d=gmail.com; s=20230601; t=1714711911; x=1715316711; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4TsX9RuDUKXFIq/RmTc1B8ohJFIJNTcVT0EVfTQknp4=;
- b=WPNrkwUMjWV3qzoumj4FBVSA2agUVMw86FPgOIub3iCYdTgQyBzaLd4Yfpds0nypb0
- s1R5zZjwh0Xv0IzCUOYsHyHKT59snrmFa27AClYd1nroaM/WcWfD13/f+GBfABZs6hVC
- AuXmAitJJh0uXzxhJgZnx3lUFRX8ZsXkZpNc4cLZfaQU3a8Im4QvfAC1AvUdOI1N4tqz
- l+ncxy2Vq8++eFITtQNWuNGzKIQMVapln8vGER2A/KvkZcyCuTVf3sEJq4653H8Ngd8x
- HmVD9bj2mrqhKHQ1mNFQAQy529ex5cK4534p1MmWqcAPPN8gT+JhEJ9fBeoH0AY/Re/z
- FB6w==
+ bh=j10eyXPBUCpEdF7wae1fx+mAKO5/3gI4cTsZpLUfY3I=;
+ b=gad3wpxauDqoUOoC+OoLvR50y2uknvqZQffbwe6RGmy/bTUC3SGERvYZclPb8GkITU
+ TARoZUd/lfF19EAqQgKT8bIIwgrAYTjhzC4P5g+ezL38ai+W+pSWADjyqL02YyIcbLgk
+ 7EWcEtGKruYIrRrgCtxgYLk6htTL56670xIsjw1fuUEa+oQViWqSfqXKzECzCRC9Ut5f
+ 6fnN/j5wvjdL4+ggBHML4XIhN/qs3urrkzQip3WF+Y3UE8CKJxytpS+7HFTjneVwZ6n8
+ N6JhKRObIXvgsULhcfpraxJ6b6uaAdfv+4cX5CzWbLXN7E3uWScKa/A4XNn/JFdFKBf4
+ qsMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714711637; x=1715316437;
- h=in-reply-to:references:subject:cc:to:from:message-id:date
+ d=1e100.net; s=20230601; t=1714711911; x=1715316711;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=4TsX9RuDUKXFIq/RmTc1B8ohJFIJNTcVT0EVfTQknp4=;
- b=qjT8qUHfS+1nJJnf2EV9qPBZ9rvOvEiCSqqi7ZD9iUsfQEnNmea3DXsDrmAQ/AG2TS
- 7bMSPAZjWmd45KlGIT1q4aUJMI80YUItHEwjGWyyox7Z6N2YLSrQYNv+jSArIPUSdcOm
- a3UfeKjovsEm+BdPu81xAph4QdfRIBwFKbadVT+OiaqitAoc7dvBrCCWrEdVpVv6VjEz
- y54IvRCQ+iZNREcx2kQkvU2kKEjLZKehsy1/Xv5eojHB6Gdbw1rSHEECrlLmbMTpvWms
- fEx+nEhYt315Bibqid7Gljn11wamGVlUodq7nTxvOihO+nTdtfEAUD93ne6DzLNYpGyQ
- TNqQ==
+ bh=j10eyXPBUCpEdF7wae1fx+mAKO5/3gI4cTsZpLUfY3I=;
+ b=dhd7i1E0gk6IB1B5PXyCCPQLyctDZyD1pl3XSIaycD31NmaxFdhO/n1h6dHume67TS
+ xspHjFXAfUXwzCQldtsbSK9RyjZLOVFUPkpBoZJemnEDk6TcZYEyA4fZw5xPf+/wQuFa
+ bo6aq8cAd2S4PWcs9c9W9l4G86zUTV+RtCiSGzPRBjCArCgNHGVwblKfxCPyUNhrBKOz
+ EcR3nRP+ix3VJFvVPcW5Mn2/7xbqFFGBBQBARgzYeRL19byqRol2O16IlbCnNKjXfFE7
+ 3k063H9pHoPeFQR2MrdOWlPIuZTH0j4q1Do6LO3PUnrrCFUdJE4xtxb2+zwaxCVgn6fD
+ 8rvA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX2tqjDVZGX50p4lEzNCvs0qP9Or68zmdylsz1BgCnIyP+5Z1ANUMCC/sS1fltGiJJmNyozZVRipkv17tiBVsm7MfjH
-X-Gm-Message-State: AOJu0YyLr59weBb8j0gKiEVG8uzqKTuvUre9CML70/4J4x4qN14xR4XC
- QGmHNKCQt05ATUj+HvbMpbL/wGK+6yrvEybhCP/sP4L8A1QZllFD
-X-Google-Smtp-Source: AGHT+IHWlKPOpWSPWdr/Ufpl316XZaC4O24Tz4JX/ydd+VUNvGK0dIicVG+AcBg3r4HZJkcpW7fSSQ==
-X-Received: by 2002:a05:6a20:745:b0:1a7:549e:ab80 with SMTP id
- l5-20020a056a20074500b001a7549eab80mr1350617pzl.47.1714711636792; 
- Thu, 02 May 2024 21:47:16 -0700 (PDT)
+ AJvYcCWJ1XLgXswPPTu4Vkr9rlzEKla0nTgjM+fshoKyh8R6x+ZKGig9EuKiuZaB1X7O4AElKP20m5P8wFNPA4C4qCv4ZqdA
+X-Gm-Message-State: AOJu0YwxhJub+yjs6g8KXnHq0jKvYngFkrBang0EOyIGdedknc4S9Xw1
+ CUWdvVTUpE5fNb+XAn5dEgas4d0peKJSxDvrmAFPTS9aUGZ41CBt
+X-Google-Smtp-Source: AGHT+IHarciw1b+g+1u5v2nTzgWHxKRrut0Kk+Nw2eV40pdZKfSNMIHq3SsRJSlHGVspH8fSXY4GHA==
+X-Received: by 2002:a17:90b:3148:b0:2b4:32ae:9932 with SMTP id
+ ip8-20020a17090b314800b002b432ae9932mr1024796pjb.17.1714711911341; 
+ Thu, 02 May 2024 21:51:51 -0700 (PDT)
 Received: from localhost ([1.146.23.181]) by smtp.gmail.com with ESMTPSA id
- x6-20020a170902a38600b001ed3702f786sm524682pla.169.2024.05.02.21.47.13
+ g4-20020a17090a128400b002b1581a0fccsm3713246pja.44.2024.05.02.21.51.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 May 2024 21:47:16 -0700 (PDT)
+ Thu, 02 May 2024 21:51:51 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Fri, 03 May 2024 14:47:10 +1000
-Message-Id: <D0ZQJK6S2OV1.1S3QIS1VZYH0A@gmail.com>
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, <qemu-ppc@nongnu.org>
+Date: Fri, 03 May 2024 14:51:46 +1000
+Message-Id: <D0ZQN2YAQ28S.3FGETJPE6XVC8@gmail.com>
 Cc: <qemu-devel@nongnu.org>, =?utf-8?q?Fr=C3=A9d=C3=A9ric_Barrat?=
  <fbarrat@linux.ibm.com>, "Saif Abrar" <saif.abrar@linux.vnet.ibm.com>
-Subject: Re: [PATCH 2/2] ppc/pnv: Implement ADU access to LPC space
+Subject: Re: [PATCH 1/2] ppc/pnv: Begin a more complete ADU LPC model for
+ POWER9/10
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, <qemu-ppc@nongnu.org>
 X-Mailer: aerc 0.17.0
 References: <20240417110215.808926-1-npiggin@gmail.com>
- <20240417110215.808926-3-npiggin@gmail.com>
- <f8b689f4-50b0-4f96-bd64-21b9eda6862e@kaod.org>
- <D0YBEWF2CP6Q.121MBJ0QG4HS1@gmail.com>
- <1911763b-53ba-4816-96b8-f8720b8c5634@kaod.org>
-In-Reply-To: <1911763b-53ba-4816-96b8-f8720b8c5634@kaod.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42b.google.com
+ <20240417110215.808926-2-npiggin@gmail.com>
+ <577fd77f-a6b9-41f5-8193-f2cc80503a7d@kaod.org>
+ <D0YBCHP9K12V.3JU88W5WITYRM@gmail.com>
+ <272a9f32-8d32-4681-b25b-9d45c6c787b5@kaod.org>
+In-Reply-To: <272a9f32-8d32-4681-b25b-9d45c6c787b5@kaod.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,39 +99,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu May 2, 2024 at 6:32 PM AEST, C=C3=A9dric Le Goater wrote:
-> Hello Nick,
->
->
-> >>> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-> >>> index 5869aac89a..eb9dbc62dd 100644
-> >>> --- a/hw/ppc/pnv.c
-> >>> +++ b/hw/ppc/pnv.c
-> >>> @@ -1642,6 +1642,8 @@ static void pnv_chip_power9_realize(DeviceState=
- *dev, Error **errp)
-> >>>        }
-> >>>   =20
-> >>>        /* ADU */
-> >>> +    object_property_set_link(OBJECT(&chip9->adu), "lpc", OBJECT(&chi=
-p9->lpc),
-> >>> +                             &error_abort);
+On Thu May 2, 2024 at 6:47 PM AEST, C=C3=A9dric Le Goater wrote:
+> On 5/1/24 14:39, Nicholas Piggin wrote:
+> > On Wed Apr 17, 2024 at 9:25 PM AEST, C=C3=A9dric Le Goater wrote:
+> >> Hello Nick,
 > >>
-> >> I would add an assert on the lpc pointer in the ADU realize routine.
+> >> On 4/17/24 13:02, Nicholas Piggin wrote:
+> >>> This implements a framework for an ADU unit model.
+> >>>
+> >>> The ADU unit actually implements XSCOM, which is the bridge between M=
+MIO
+> >>> and PIB. However it also includes control and status registers and ot=
+her
+> >>> functions that are exposed as PIB (xscom) registers.
+> >>>
+> >>> To keep things simple, pnv_xscom.c remains the XSCOM bridge
+> >>> implementation, and pnv_adu.c implements the ADU registers and other
+> >>> functions.
+> >>>
+> >>> So far, just the ADU no-op registers in the pnv_xscom.c default handl=
+er
+> >>> are moved over to the adu model.
+> >>>
+> >>> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> >>> ---
+> >>>    include/hw/ppc/pnv_adu.h   |  34 ++++++++++++
+> >>>    include/hw/ppc/pnv_chip.h  |   3 +
+> >>>    include/hw/ppc/pnv_xscom.h |   6 ++
+> >>>    hw/ppc/pnv.c               |  16 ++++++
+> >>>    hw/ppc/pnv_adu.c           | 111 +++++++++++++++++++++++++++++++++=
+++++
+> >>>    hw/ppc/pnv_xscom.c         |   9 ---
+> >>>    hw/ppc/meson.build         |   1 +
+> >>>    hw/ppc/trace-events        |   4 ++
+> >>>    8 files changed, 175 insertions(+), 9 deletions(-)
+> >>>    create mode 100644 include/hw/ppc/pnv_adu.h
+> >>>    create mode 100644 hw/ppc/pnv_adu.c
+> >>>
+> >>> diff --git a/include/hw/ppc/pnv_adu.h b/include/hw/ppc/pnv_adu.h
+> >>> new file mode 100644
+> >>> index 0000000000..9dc91857a9
+> >>> --- /dev/null
+> >>> +++ b/include/hw/ppc/pnv_adu.h
+> >>> @@ -0,0 +1,34 @@
+> >>> +/*
+> >>> + * QEMU PowerPC PowerNV Emulation of some ADU behaviour
+> >>> + *
+> >>> + * Copyright (c) 2024, IBM Corporation.
+> >>> + *
+> >>> + * SPDX-License-Identifier: LGPL-2.1-or-later
+> >>
+> >>
+> >> Did you mean GPL-2.0-or-later ?
 > >=20
-> > A assert !=3D NULL, in case this failed to link correctly? (Maybe if it
-> > was called before lpc object was realized). I will do.
+> > Hey Cedric,
+> >=20
+> > Thanks for reviewing, I've been away so sorry for the late reply.
+> >=20
+> > It just came from one of the headers I copied which was LGPL. But
+> > there's really nothing much in it and could find a GPL header to
+> > copy. Is GPL-2.0-or-later preferred?
 >
-> It is to make sure that an ADU object is not "realized" without
-> the pointer '->lpc' being set before, since it is a must-have for
-> the implementation to operate (and do LPC transactions).
->
-> There are several :
->
->     assert(s->chip);
->
-> in the pnv models for the same kind of purpose.
+> I would since all pnv models are GPL.
 
-Makes sense.
+Some of pnv is actually LGPL. That's okay I'll change to GPL.
+
+> I think some parts of QEMU were initially LGPL (there used to be
+> a library, may be that's the reason ?) and other parts are relaxed
+> to LGPL because they are reused in libraries.
 
 Thanks,
 Nick
