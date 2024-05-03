@@ -4,89 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32A83C10F16
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 11:38:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E02D6C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 11:47:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2rET-0000jQ-Q9; Fri, 03 May 2024 07:37:41 -0400
+	id 1s2rNK-0003lW-BI; Fri, 03 May 2024 07:46:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
- id 1s2rES-0000jE-Fi
- for qemu-devel@nongnu.org; Fri, 03 May 2024 07:37:40 -0400
-Received: from esa3.hc1455-7.c3s2.iphmx.com ([207.54.90.49])
+ (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
+ id 1s2rNA-0003i6-Gy
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 07:46:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
- id 1s2rEL-0006p7-6d
- for qemu-devel@nongnu.org; Fri, 03 May 2024 07:37:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
- t=1714736253; x=1746272253;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=dxkrvDCZNoTH6UzikNB5h5QEWMplJ94dcTU6BIAt1iM=;
- b=HiXnqK5U9Q6rC0wxMjo9ZEGjbvyI13VZt4y4TJQ8u4DAWb9BehC1xAkY
- XxZ+5AlE/E7H/VCC8N/CdnjKpxxH6YN4rcdAsZU027MSgFMdnrdJqHy98
- A1aHeobU1firv8JRRv9vwNAok19ZSeMvGE/FAvms3VGpAm8gCODHOS/eE
- IhSrxjzNYWMBwK3na17RZC1Y7tNEMw3HLEExvDRgFBMchaism+rQyixhd
- 7GzBQCQQrG40g/T0qyjIxkoC/FREomkqioF4eBh9qMWWrzdOkdRRW1GEF
- dUNOzcDv34ZmlbEVjHF3ZvHGk0qK+YWHtu7InsIzZ/m1poNiB67LdtaMZ g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11062"; a="157295852"
-X-IronPort-AV: E=Sophos;i="6.07,251,1708354800"; d="scan'208";a="157295852"
-Received: from unknown (HELO yto-r2.gw.nic.fujitsu.com) ([218.44.52.218])
- by esa3.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 May 2024 20:37:30 +0900
-Received: from yto-m3.gw.nic.fujitsu.com (yto-nat-yto-m3.gw.nic.fujitsu.com
- [192.168.83.66])
- by yto-r2.gw.nic.fujitsu.com (Postfix) with ESMTP id CF596C6909
- for <qemu-devel@nongnu.org>; Fri,  3 May 2024 20:37:27 +0900 (JST)
-Received: from kws-ab3.gw.nic.fujitsu.com (kws-ab3.gw.nic.fujitsu.com
- [192.51.206.21])
- by yto-m3.gw.nic.fujitsu.com (Postfix) with ESMTP id 0DA8920806
- for <qemu-devel@nongnu.org>; Fri,  3 May 2024 20:37:27 +0900 (JST)
-Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
- by kws-ab3.gw.nic.fujitsu.com (Postfix) with ESMTP id 901FE2008BCE1
- for <qemu-devel@nongnu.org>; Fri,  3 May 2024 20:37:26 +0900 (JST)
-Received: from [10.193.128.195] (unknown [10.193.128.195])
- by edo.cn.fujitsu.com (Postfix) with ESMTP id EC6DE1A0002;
- Fri,  3 May 2024 19:37:25 +0800 (CST)
-Message-ID: <f9e1c047-192b-4d50-8588-5a90bfe7e96b@fujitsu.com>
-Date: Fri, 3 May 2024 19:37:25 +0800
+ (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
+ id 1s2rN5-0000xL-29
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 07:46:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714736792;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2uvasta9I+i7UwShPVPO1nVQS1rJRHFdQYPNeS/VWv0=;
+ b=YYaIF2wt07gbW/bFGoKxxd+EUwDciFMMBEtGJYIr5jdSWm3vRw6fz9uN5iuSMkuAL/hcsO
+ NPfjZ6YOWamPCJOfLjzns4mhpHm3AgD+p5VvyjIz5m359RFon3NU4kf/O0fnFkJs3qqkhV
+ bT0RAGkxxZgHQAeIJZ1JRgPrAfIF21E=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-651-wdl-8P7hM1WesEdRQTBTZA-1; Fri, 03 May 2024 07:46:31 -0400
+X-MC-Unique: wdl-8P7hM1WesEdRQTBTZA-1
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7927071f933so370232985a.1
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 04:46:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714736791; x=1715341591;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=2uvasta9I+i7UwShPVPO1nVQS1rJRHFdQYPNeS/VWv0=;
+ b=mojrabW4frMvmCwztgzAynr93HuCORCPXYwjmA+ZcpsSXHrkA1yc+EqYRAj/ACi3dk
+ S2LF5ARNy8xIYo2mG71QuHdihXeZP1O/TDxVEUnAl5AEvmVBnLCgPSuiAdc/MrrdpB6f
+ DG+YkSNC/MqnGo/M80wZ9xh413WlRz0BHIIo9ef6yAALKz4peEX5p7LfjsDpBiBrTWzx
+ Bo4KEXQpfFu0QMJFn0s8DBdKO1TGIvH1/0yfCFO9mAFbX8qTqflH1aY1poAtIbxSNP/9
+ FTnqdA162xLQQ9JHHOBqMF2QwzbjSIYC85g32slkT2dLUyehM5dr6JbJrEonTv7eKjb0
+ ttdQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU1BxJUD2vtX0zEB8TkmUZ1LawDkgvobDzh5mZiNr2hRcJXiCzxN88jURIZXq1pAt1hippoW0DXcf0Z4AEknyNyA6JGalI=
+X-Gm-Message-State: AOJu0YwBAGI2A6B/S3xWwOCldoZPIr8JMZjWOfDlKUIbYQwZwnmuD7mJ
+ mwkWD9vEsE1vqbSGVqkXC1ihiG+ThSycWeiszIioo/mHOLZt0wR1EJRnCyir3qDyRzgZKX70lGP
+ dnxYxqPqa9WXFtuIVG7ZdEvGrQ8tFmnR/j1h0M47zq+akfGPsYDv9
+X-Received: by 2002:a05:620a:158f:b0:78e:bd5d:8d7b with SMTP id
+ d15-20020a05620a158f00b0078ebd5d8d7bmr4193322qkk.14.1714736790698; 
+ Fri, 03 May 2024 04:46:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGJC3X5Xn9GnRho4+gg9+JMqRuz8waDWfsajVRpwTseVkejMd0U7f/UraohjumNyb7OmApZAQ==
+X-Received: by 2002:a05:620a:158f:b0:78e:bd5d:8d7b with SMTP id
+ d15-20020a05620a158f00b0078ebd5d8d7bmr4193275qkk.14.1714736790247; 
+ Fri, 03 May 2024 04:46:30 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ y22-20020a05620a09d600b0078d5f7b9a2dsm1156452qky.15.2024.05.03.04.46.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 03 May 2024 04:46:29 -0700 (PDT)
+Message-ID: <919d07f5-ecf7-4ce1-9508-7ac8f8f6e7e4@redhat.com>
+Date: Fri, 3 May 2024 13:46:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] cxl/core: correct length of DPA field masks
-To: Alison Schofield <alison.schofield@intel.com>
-Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org
-References: <20240417075053.3273543-1-ruansy.fnst@fujitsu.com>
- <20240417075053.3273543-2-ruansy.fnst@fujitsu.com>
- <ZjFb7p4wn9bcUrzU@aschofie-mobl2>
-In-Reply-To: <ZjFb7p4wn9bcUrzU@aschofie-mobl2>
+Subject: Re: [PATCH 00/14] hw: define and enforce a standard lifecycle for
+ versioned machines
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Nicholas Piggin
+ <npiggin@gmail.com>, Richard Henderson <richard.henderson@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Laurent Vivier <laurent@vivier.eu>, qemu-arm@nongnu.org,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>, qemu-ppc@nongnu.org,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org
+References: <20240501182759.2934195-1-berrange@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clegoate@redhat.com>
+In-Reply-To: <20240501182759.2934195-1-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28358.007
-X-TM-AS-User-Approved-Sender: Yes
-X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28358.007
-X-TMASE-Result: 10--8.932000-10.000000
-X-TMASE-MatchedRID: 5U6uFEJz7+qPvrMjLFD6eHchRkqzj/bEC/ExpXrHizw0tugJQ9Wdwwvz
- nYJVXoOYa/8aZGNpfqY65m9meG/WS9fk7hbCEuNogvmNrsT46HIQARQHZYEjpND0fCJzqdHb1a9
- Gw6X1fIgreMjPCBtKqxPT4WWiXjYzIQPGoj5DOk5f2SdIdby5dcdvO1Rp+sgmqRTAHcwAECdm2e
- 55IVZ1oM2JZjaQ73l9ZcW/i2O53DhdInhzedP5B1hRyidsElYkRYYm6fbhZvXRnp8Qx+pp65hj4
- 4rNETuJIvrftAIhWmLy9zcRSkKate2aXYCZD9Vi3IFFT9wqfr19LQinZ4QefNQdB5NUNSsiDrBA
- jvbPhh50HSe131POnsZW5ai5WKlyS8vbBiSyYXmfus/r6APjpOYSCtCVlxicSPNjBqdf6x+OGgM
- 3MsQ7s35uyI/OFesN886gGzbqib5WV8McR6Zfhr93LmVDgtT58wykF/dkuej3FzhuUqY+wb77j9
- TR8omKbFWdBw/YcNq7b6knBzvluw==
-X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
-Received-SPF: pass client-ip=207.54.90.49;
- envelope-from=ruansy.fnst@fujitsu.com; helo=esa3.hc1455-7.c3s2.iphmx.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clegoate@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.483,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,79 +119,120 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shiyang Ruan <ruansy.fnst@fujitsu.com>
-From:  Shiyang Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-在 2024/5/1 5:00, Alison Schofield 写道:
-> On Wed, Apr 17, 2024 at 03:50:52PM +0800, Shiyang Ruan wrote:
->> The length of Physical Address in General Media Event Record/DRAM Event
->> Record is 64-bit, so the field mask should be defined as such length.
->> Otherwise, this causes cxl_general_media and cxl_dram tracepoints to
->> mask off the upper-32-bits of DPA addresses. The cxl_poison event is
->> unaffected.
->>
->> If userspace was doing its own DPA-to-HPA translation this could lead to
->> incorrect page retirement decisions, but there is no known consumer
->> (like rasdaemon) of this event today.
->>
->> Fixes: d54a531a430b ("cxl/mem: Trace General Media Event Record")
->> Cc: <stable@vger.kernel.org>
->> Cc: Dan Williams <dan.j.williams@intel.com>
->> Cc: Davidlohr Bueso <dave@stgolabs.net>
->> Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
->> Cc: Ira Weiny <ira.weiny@intel.com>
->> Signed-off-by: Shiyang Ruan <ruansy.fnst@fujitsu.com>
+On 5/1/24 20:27, Daniel P. Berrangé wrote:
+> Thomas proposed a new deprecation and removal policy for versioned
+> machine types that would see them liable for deletion after 6 years:
 > 
-> Hi Ruan,
+>    https://lists.nongnu.org/archive/html/qemu-devel/2024-04/msg04683.html
 > 
-> This fixup is important for the Event DPA->HPA translation work, so I
-> grabbed it, updated it with most* of the review comments, and posted
-> with that set. I expect you saw that in your mailbox.
-
-Yes, I saw that.  Nice fix!
-
+> This suggest was met with broad approval, however, I suggested that we
+> could take it further and actually mark them deprecated sooner, at the
+> 3 year timeframe, and also fully automate the enablement of the runtime
+> deprecation warning without developer intervention on every release
+> cycle.
 > 
-> DaveJ queued it in a topic branch for 6.10 here:
-> https://git.kernel.org/pub/scm/linux/kernel/git/cxl/cxl.git/log/?h=for-6.10/dpa-to-hpa
+> This series implements my suggestions.
 > 
+> The first patch introduces some helper macros and documents a standard
+> code pattern for defining versioned machine types across targets.
+> 
+> The next 6 patches convert existing targets with versioned machine
+> types (arm, s390x, ppc, m68k, i386) to use the new helper macros and
+> code patterns.
+> 
+> A further patch introduces some helper macros for automating the
+> handling of deprecation and deletion of versioned machine types.
+> 
+> Two more patches then enable the deprecation and deletion logic
+> across all versioned machines
+> 
+> Finally we do some cleanup and document the new policy.
+> 
+> ........a tangent about VERSION file handling.......
+> 
+> One oddity here, is that during the development and release
+> candidate phases the automatic logic in this series has an off-by-1
+> error.
+> 
+> This is because when we, for example, add the "9.1" machine type
+> versions, the VERSION file is still reporting '9.0.50', and then
+> '9.0.9{1,2,3,4}'.
+> 
+> IOW, during development and in rc candidates, we fail to deprecate
+> and delete 1 machine type. We should already have deprecated the
+> 6.1 machine types, but the most recently deprecated is 6.0.
+> This is pretty harmless since the final release does the right
+> thing.
+> 
+> I wonder, however, whether we would benefit from changing how we
+> update the VERSION file.
+> 
+> eg instead of re-using the micro digit to indicate a dev or rc
+> snapshot, represent those explicitly. eg "9.1.0-dev" and
+> "9.1.0-rc1", "9.1.0-rc2", etc in VERSION.
+> 
+> We don't use the full QEMU_VERSION in the code in all that many
+> places. It appears in some help messages for command line tools,
+> and in QMP query-version response, and in a few other misc places.
+> At a glance it appears all of those places would easily handle a
+> tagged version.
+> 
+> For release candidates in particular I think it would be saner
+> to show the user the actual version the release is about to become,
+> rather than the previous release's version. This would make the
+> reported version match the rc tarball naming too which would be
+> nice.
+> 
+> Anyway, this isn't a blocker for this machine type versioning
+> proposal, just a thought....
 
-That's good!
+I would agree with such a change. The version numbers always confused
+me. AFAICT, only QEMU_VERSION_MICRO would need some massaging. It
+shouldn't be too complex.
 
-> *I did not create a common mask for events and poison because I wanted to
-> limit the changes. If you'd like to make that change it would be welcomed.
+For the series,
 
-Ok~
+Tested-by: Cédric Le Goater <clg@redhat.com>
 
-
---
 Thanks,
-Ruan.
+
+C.
+
+
 
 > 
-> -- Alison
+> Daniel P. Berrangé (14):
+>    include/hw: add helpers for defining versioned machine types
+>    hw/arm: convert 'virt' machine definitions to use new macros
+>    hw/s390x: convert 'ccw' machine definitions to use new macros
+>    hw/ppc: convert 'spapr' machine definitions to use new macros
+>    hw/m68k: convert 'virt' machine definitions to use new macros
+>    hw/i386: convert 'i440fx' machine definitions to use new macros
+>    hw/i386: convert 'q35' machine definitions to use new macros
+>    include/hw: add macros for deprecation & removal of versioned machines
+>    hw: temporarily disable deletion of versioned machine types
+>    hw: set deprecation info for all versioned machine types
+>    hw: skip registration of outdated versioned machine types
+>    hw/ppc: remove obsolete manual deprecation reason string of spapr
+>      machines
+>    hw/i386: remove obsolete manual deprecation reason string of i440fx
+>      machines
+>    docs: document special exception for machine type deprecation &
+>      removal
 > 
->> ---
->>   drivers/cxl/core/trace.h | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/cxl/core/trace.h b/drivers/cxl/core/trace.h
->> index e5f13260fc52..cdfce932d5b1 100644
->> --- a/drivers/cxl/core/trace.h
->> +++ b/drivers/cxl/core/trace.h
->> @@ -253,7 +253,7 @@ TRACE_EVENT(cxl_generic_event,
->>    * DRAM Event Record
->>    * CXL rev 3.0 section 8.2.9.2.1.2; Table 8-44
->>    */
->> -#define CXL_DPA_FLAGS_MASK			0x3F
->> +#define CXL_DPA_FLAGS_MASK			0x3FULL
->>   #define CXL_DPA_MASK				(~CXL_DPA_FLAGS_MASK)
->>   
->>   #define CXL_DPA_VOLATILE			BIT(0)
->> -- 
->> 2.34.1
->>
+>   docs/about/deprecated.rst  |  12 ++
+>   hw/arm/virt.c              |  30 +++--
+>   hw/i386/pc_piix.c          | 252 +++++++++++++++-------------------
+>   hw/i386/pc_q35.c           | 215 +++++++++++++----------------
+>   hw/m68k/virt.c             |  53 +++++---
+>   hw/ppc/spapr.c             |  96 +++++++------
+>   hw/s390x/s390-virtio-ccw.c |  98 ++++++++------
+>   include/hw/boards.h        | 268 +++++++++++++++++++++++++++++++++++++
+>   include/hw/i386/pc.h       |  32 +++++
+>   9 files changed, 666 insertions(+), 390 deletions(-)
+> 
+
 
