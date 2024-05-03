@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21224C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 15:14:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10D02C10F16
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 15:14:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2ubI-0005nP-UR; Fri, 03 May 2024 11:13:28 -0400
+	id 1s2ucb-0008QS-Tf; Fri, 03 May 2024 11:14:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s2ubE-0005js-9o
- for qemu-devel@nongnu.org; Fri, 03 May 2024 11:13:25 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2uca-0008BE-66
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 11:14:48 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s2ubB-00075T-Im
- for qemu-devel@nongnu.org; Fri, 03 May 2024 11:13:24 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-1e5c7d087e1so80051375ad.0
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 08:13:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2ucY-0007E7-4H
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 11:14:47 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-34db9a38755so2907864f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 08:14:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714749200; x=1715354000; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RPMJ9Fq7Hagw2E+aglC+ITwqURcRV1FccXRLb5FLQFU=;
- b=xqMN0+92TlmXuJGGogFlVfpExHPOiiw3S3BMIqq9X5Cw7mI4fC2To0ZbE59wVLIeZZ
- D9CbH1RNsHdVE9riIZFjjWyCR2/oTQ2iVkJKdm1+UXMsdULZZfVDtFn+Xy2Z6rMQ/cEv
- GwyLUBJFexZJvA/hdyIRCThcbGw9ReBFrLs3W7r9bC+xJLo9VtLc0J/5CqyjLeOKP2rW
- LQVY3H0SDUFgExEVHyySnVRPfk9BTFWsLgcIz62xB4ZEbPq0SWSbQEdeje3ybmvwtCwY
- glCz39W3x+1wY5xamsr/QAm1neov/B8f9O1G91I0LAt9KT8VuEj8X2KG3j2ZlJuQ958A
- WdmQ==
+ d=linaro.org; s=google; t=1714749284; x=1715354084; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=3j0xFl8oKFR8mdSxmKo8qchQMG5/VsIZgpcMfzHX9A0=;
+ b=l1PuebJbvyJmYfgJbEuwnbr7J+apZBPRzuTnSTwTxhRwdptCsxO2oGStuXqRvmDV9c
+ KEc9YHIPSpStC8OT+YRrwtm471kI+bM7r7j3i14fNtIJA3BqzYd1nJurFZH8eGbzj6TI
+ 0rYaytlXHZ/6IqbzVsTmX454kS32qSZD4aUJF++wTRvV4dwG/wCFG4ceXdhjkoKGamw0
+ 53CC2e0pjbDKD5cHVuryD4g8yhSguYq7IcTpF47SBoRDsYRM9wrEA+5/ddeADaiBHP7R
+ wsdU5PEJN2LL6KJKarxTQKMCJ1FrWOSINokRraJcGb1tcAp3yvJYWgw+ymUUfb1aB/bG
+ v7AQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714749200; x=1715354000;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=RPMJ9Fq7Hagw2E+aglC+ITwqURcRV1FccXRLb5FLQFU=;
- b=itF0BiPxW1MkcuCP437HaGubivxisGew5XYsFlMZHGHRTnMa/EcS15XA2bbtZVT1lT
- FLjwFugmN3erVCu5IwxzJS/q9xSUH913Pa6dqZ+Wlx3Egdp9//rGuLBIGsy36s2s7s7M
- EJQaklrDLqihCeGhzSHD4viH2nnU+eHNW/p+7HdhDjtKcV8Xzl30FedVmiZCfly/pO0y
- ld8r+A8RERR0jhZ0c96f0EjAK0aOss1ufm+Xb0g9toRY1thWntV8YbyWauRCllWGdd8X
- mnIhmHwuwEXPZxxLa3kFJqn4Badaegzihjsn/peTJPQlGsEU9Jn1ZWMC9HA/D8ZQFvfy
- p9tA==
-X-Gm-Message-State: AOJu0YwIkw5BVD0nkH59PZ/laHN66ToYWKPHMNgDHyHg7g93eCaSdVW1
- ct1VWuqL1MCPEn+bE+1b4ixg6rFEVP8qz0JP3C9eBiWtCL/9ljRHtq1uKnLCf8eyVRH8TyuNkTH
- s
-X-Google-Smtp-Source: AGHT+IELNnEjz/zZNRaYVV4/ef0T9UqiTKF8aYggfcgL6a2obiYBio8TppBi2bT/luxzOQ4xlHy/7w==
-X-Received: by 2002:a17:903:2b07:b0:1e4:c8b3:dbaf with SMTP id
- mc7-20020a1709032b0700b001e4c8b3dbafmr3106172plb.33.1714749200063; 
- Fri, 03 May 2024 08:13:20 -0700 (PDT)
-Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ d=1e100.net; s=20230601; t=1714749284; x=1715354084;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3j0xFl8oKFR8mdSxmKo8qchQMG5/VsIZgpcMfzHX9A0=;
+ b=s7FQ6VKf0k/asENObiBczPlwq6o/AirfzKL6aFdOngkTRj83th0Ab6lyUoVrtH8AZ7
+ XR+1ZXdq0plN1Dm4NbiqnSCi3TEYMSyBLIBriYwqL/rmeFZyktPrF7pj1zSJnsJa+Pel
+ FtKdKfL9SxTuLQD3B/Z2VVSOwm8Yio9bc7scNwJck4VVIbBlOrES4g9FvbUysvWSfpy8
+ LuKvGpgE3hUD/uwH/Jt/wmjPyxxj7YZOjmilLxMlcZq3Hs+TF4oZD7wqH5gc+6KPAyoy
+ IQkoGK0aG/Lrphm/UUl3fCNUnsuxDiyOUKDn7nzYWp+b4JNphUrrEUMD7fiPuaEkPb9Q
+ Bf5A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCURLIT5gaJbXIS1pIT+V3P0wHpbm4wcx9rQAUJb9y/whgfzRgyD8F2EsG7HIXnHjGmDok/WUL3kg+qczuUyH0gb0DFXf/g=
+X-Gm-Message-State: AOJu0Yz7NNdxfOvsM0Xd2T+7TjYi5252Iz3xP9j3yiUFtylcB4l5JtgC
+ H13EvgVxD9jb9P68hm5Onr05adEG7ZRsDztfCQoDMNS8QdZaLo5uwqLUjTylDX6BiYluZGtqz+g
+ G
+X-Google-Smtp-Source: AGHT+IEH4Z2Uzw+s7OUolJ0HOAVQh2CYKez0KX8mROomAgnAhU7hEJqg45Ai0f6LohJ0qP4DEoVr2Q==
+X-Received: by 2002:adf:ef0d:0:b0:34c:6382:290c with SMTP id
+ e13-20020adfef0d000000b0034c6382290cmr2878647wro.39.1714749284368; 
+ Fri, 03 May 2024 08:14:44 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.179.187])
  by smtp.gmail.com with ESMTPSA id
- p10-20020a170902c70a00b001e81c778784sm3366611plp.67.2024.05.03.08.13.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 03 May 2024 08:13:19 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Alexander Monakov <amonakov@ispras.ru>,
- Mikhail Romanov <mmromanov@ispras.ru>
-Subject: [PULL 04/10] util/bufferiszero: Remove useless prefetches
-Date: Fri,  3 May 2024 08:13:08 -0700
-Message-Id: <20240503151314.336357-5-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240503151314.336357-1-richard.henderson@linaro.org>
-References: <20240503151314.336357-1-richard.henderson@linaro.org>
+ r8-20020a5d4988000000b0034cceee9051sm3965883wrq.105.2024.05.03.08.14.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 03 May 2024 08:14:43 -0700 (PDT)
+Message-ID: <bd3d819b-2bf1-4451-8f34-75385b8b342a@linaro.org>
+Date: Fri, 3 May 2024 17:14:42 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] kvm: ppc: disable sPAPR code if CONFIG_PSERIES is disabled
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20240503134918.232633-1-pbonzini@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240503134918.232633-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,56 +95,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Monakov <amonakov@ispras.ru>
+On 3/5/24 15:49, Paolo Bonzini wrote:
+> target/ppc/kvm.c calls out to code in hw/ppc/spapr*.c; that code is
+> not present and fails to link if CONFIG_PSERIES is not enabled.
+> Adjust kvm.c to depend on CONFIG_PSERIES instead of TARGET_PPC64,
+> and compile out anything that requires cap_papr, because only
+> the pseries machine will call kvmppc_set_papr().
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   target/ppc/kvm.c | 17 +++++++++++++----
+>   1 file changed, 13 insertions(+), 4 deletions(-)
 
-Use of prefetching in bufferiszero.c is quite questionable:
-
-- prefetches are issued just a few CPU cycles before the corresponding
-  line would be hit by demand loads;
-
-- they are done for simple access patterns, i.e. where hardware
-  prefetchers can perform better;
-
-- they compete for load ports in loops that should be limited by load
-  port throughput rather than ALU throughput.
-
-Signed-off-by: Alexander Monakov <amonakov@ispras.ru>
-Signed-off-by: Mikhail Romanov <mmromanov@ispras.ru>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240206204809.9859-5-amonakov@ispras.ru>
----
- util/bufferiszero.c | 3 ---
- 1 file changed, 3 deletions(-)
-
-diff --git a/util/bufferiszero.c b/util/bufferiszero.c
-index 972f394cbd..00118d649e 100644
---- a/util/bufferiszero.c
-+++ b/util/bufferiszero.c
-@@ -50,7 +50,6 @@ static bool buffer_is_zero_integer(const void *buf, size_t len)
-         const uint64_t *e = (uint64_t *)(((uintptr_t)buf + len) & -8);
- 
-         for (; p + 8 <= e; p += 8) {
--            __builtin_prefetch(p + 8);
-             if (t) {
-                 return false;
-             }
-@@ -80,7 +79,6 @@ buffer_zero_sse2(const void *buf, size_t len)
- 
-     /* Loop over 16-byte aligned blocks of 64.  */
-     while (likely(p <= e)) {
--        __builtin_prefetch(p);
-         t = _mm_cmpeq_epi8(t, zero);
-         if (unlikely(_mm_movemask_epi8(t) != 0xFFFF)) {
-             return false;
-@@ -111,7 +109,6 @@ buffer_zero_avx2(const void *buf, size_t len)
- 
-     /* Loop over 32-byte aligned blocks of 128.  */
-     while (p <= e) {
--        __builtin_prefetch(p);
-         if (unlikely(!_mm256_testz_si256(t, t))) {
-             return false;
-         }
--- 
-2.34.1
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
