@@ -4,74 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B28DDC25B10
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 15:38:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D169C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 15:38:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2uyN-0003iC-Qh; Fri, 03 May 2024 11:37:19 -0400
+	id 1s2uyp-0005Uf-BV; Fri, 03 May 2024 11:37:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2uy7-0003H9-LC
- for qemu-devel@nongnu.org; Fri, 03 May 2024 11:37:05 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2uye-0004dP-Vk
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 11:37:38 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2uy6-0002ke-3P
- for qemu-devel@nongnu.org; Fri, 03 May 2024 11:37:03 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a556d22fa93so1171399666b.3
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 08:37:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2uyc-0002oZ-I4
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 11:37:36 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a597c192246so167224466b.0
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 08:37:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714750620; x=1715355420; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714750652; x=1715355452; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WlnSWxk2ckicORZmY3MYyhbs7CkzbKWbFMF7/22EQlk=;
- b=QY77vbzuo/L4noxT8m+Z3aT6G+HxboxSVbS/o9ZhA+qLlWp7utgXhTm4pYoXSyedPj
- Qc5NFSKM5vosYPniyyyTxQ/zrP6mZvZhcvl1g8IRhtLJooUP3e4eTBSRQInQUXyO6sWy
- 4mF/DJbQ+1n/etO5CbcBtahZLd794o1Gt5mVdek4lySpCvRgttTHooBz8jlqmzuljg0u
- qFpAIb0m8J30gw2BvThprYy0N/D0uVKczgz6p1b3EX62b/0yfNCVLizfQEugw3YBbUdM
- rk03rvEV3x+QgT24DpG7p6Yv7wnaMWQxcZ7ecd6BgUperm/20sMIN+EKGk7jm8QKcdJG
- oDLw==
+ bh=kpo/S5Ob+DXg1pnPA7+b6elSHA1T4ch7nUT4NXQUXUE=;
+ b=rAQ6Bt+iD2RvsbVqeBUYkPMU38vW4EThxoXylUVDedaxWbIBzh8/Chhyl4s1MrLN9s
+ /76jimm6PjNqnCe+UIqltlAeU7C/F0mcXz44euT6crs7hEuZKmQV2yVjT3xlZ4g0ThQc
+ Mtiyt1JodJoxjxzBLpjzMCDs0WyUFGaqHhy0nhbM8ZSm9amHPPGELY3f2+3Lt2KRd7dW
+ z1ypMhGyL+HXRrD3KutA2gWmp4w/WixdwIgc+aOhQnfXsmW5t60+usGUP4Fy+X4Ip1pA
+ SG3Fi/7cK4Evsv3EP9LNdwVQPLso29NQMexqx+GAjcs99TEpXYyO53UO0soOg+G8FhvP
+ xMwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714750620; x=1715355420;
+ d=1e100.net; s=20230601; t=1714750652; x=1715355452;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WlnSWxk2ckicORZmY3MYyhbs7CkzbKWbFMF7/22EQlk=;
- b=LWJFBt/9ZiRHPdZJvfemeCh4wmP7R24hEXO2nQueQypmwoV9aLi/vcb4Q1RwQelIzB
- 01No3gkIIuybL+lJF6B4htBL/64Nv4wQBjTNo2DUKpH/SEbGO3Q80QB8oDu5S0ecxs++
- Sv+HZUlICXH3pH01iwu4ZZFHy6ZiZjEOb1/VabzcXFatQ37PMSUJXjieaa+BBJWGj+Q0
- H6CZHFjk93/7G0pSpYnPaRrY5u7oOHNUOQtLhLcoitECKdMMGn4RJHkL68ypUBj7WaNu
- txvmZM36uuuY5LXYMhIkBq9Ci9RlISgQdZ5QpAficGnNXY7GSsALbJEFta3NsCzW57Qk
- B0AQ==
-X-Gm-Message-State: AOJu0Yx+mJCjyEJWJHvvF2H0md1gM4KVWnTUjNLjJktoydPJ5ImJ4V3d
- XDuO4hBkecHbX/j+kBMosOvMIZYvm/KiNv7DfsWdjmA0ViHOKCY7Nj2cy48bCOBkN18UFMiS9qO
- M
-X-Google-Smtp-Source: AGHT+IG2v/TkD232kbxZ4sbwld86DlpKEL0TpPFek3f/Rflb6q63KQobkHyp4fDpFgPUD+xhnZHKDQ==
-X-Received: by 2002:a17:906:3811:b0:a59:3eef:122e with SMTP id
- v17-20020a170906381100b00a593eef122emr1977695ejc.36.1714750620130; 
- Fri, 03 May 2024 08:37:00 -0700 (PDT)
+ bh=kpo/S5Ob+DXg1pnPA7+b6elSHA1T4ch7nUT4NXQUXUE=;
+ b=kpmCtrLAzWjdXFQxhjZ+ps4EWH+i8aVJiIseqAG2fl5IjBpULwltg55bOoyZQh2EKi
+ h9sTVlTA01Uz8VulMKeO5djdJJCQ44RZNLV2wqel5EbHxTfteo5ClnWT7bT4F05ux17R
+ f/gESKfiFzZhPpPVYA3jMLno2miCCTbI+SmYNHg4QcKRaLFo07dWYN+yS82GfZRFYqqA
+ q1oOtDEHISb+MZz+xwfLGnZHJEBvygHV1bIOgaSC5+vVxqxz+A0WYybebx4sTJscNU92
+ MaOEhs2TAzPcP9XFqG600eRGaivZItE3Otej8EZmvDXG+9FqhUO9uOAhe+VuEXpBgInL
+ B/ZA==
+X-Gm-Message-State: AOJu0YyHwhfbvnopeQh/cEI3GhOecUL2ggU+T6kD2Zb5Tp7gCpVY+U9F
+ HSCkZnSrpzvX+dM+4qMgKEvHhCEvHpMGQ0TT9pRF3zCZ69XlIOgdmFT0P1xZsfOXHT44U5dMXcu
+ G
+X-Google-Smtp-Source: AGHT+IEdOrQfPYrGmnpPhox0c2f/cfc4oVvMA+UytGeKLHbj/BYto03kl6zHbh+tVXBuk0hTV5eFHQ==
+X-Received: by 2002:a50:f613:0:b0:572:689f:6380 with SMTP id
+ c19-20020a50f613000000b00572689f6380mr2418621edn.3.1714750652674; 
+ Fri, 03 May 2024 08:37:32 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.179.187])
  by smtp.gmail.com with ESMTPSA id
- mc20-20020a170906eb5400b00a599a85777dsm483492ejb.153.2024.05.03.08.36.59
+ g11-20020a056402320b00b0057203242f31sm1806814eda.11.2024.05.03.08.37.31
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 03 May 2024 08:36:59 -0700 (PDT)
+ Fri, 03 May 2024 08:37:32 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 08/14] plugins: Update stale comment
-Date: Fri,  3 May 2024 17:36:07 +0200
-Message-ID: <20240503153613.38709-9-philmd@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 14/14] ui/cocoa.m: Drop old macOS-10.12-and-earlier compat
+ ifdefs
+Date: Fri,  3 May 2024 17:36:13 +0200
+Message-ID: <20240503153613.38709-15-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240503153613.38709-1-philmd@linaro.org>
 References: <20240503153613.38709-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,29 +96,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"plugin_mask" was renamed as "event_mask" in commit c006147122
-("plugins: create CPUPluginState and migrate plugin_mask").
+From: Peter Maydell <peter.maydell@linaro.org>
 
+We only support the most recent two versions of macOS (currently
+macOS 13 Ventura and macOS 14 Sonoma), and our ui/cocoa.m code
+already assumes at least macOS 12 Monterey or better, because it uses
+NSScreen safeAreaInsets, which is 12.0-or-newer.
+
+Remove the ifdefs that were providing backwards compatibility for
+building on 10.12 and earlier versions.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20240502142904.62644-1-peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240427155714.53669-3-philmd@linaro.org>
 ---
- plugins/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ ui/cocoa.m | 13 -------------
+ 1 file changed, 13 deletions(-)
 
-diff --git a/plugins/core.c b/plugins/core.c
-index 11ca20e626..09c98382f5 100644
---- a/plugins/core.c
-+++ b/plugins/core.c
-@@ -373,7 +373,7 @@ void qemu_plugin_tb_trans_cb(CPUState *cpu, struct qemu_plugin_tb *tb)
-     struct qemu_plugin_cb *cb, *next;
-     enum qemu_plugin_event ev = QEMU_PLUGIN_EV_VCPU_TB_TRANS;
+diff --git a/ui/cocoa.m b/ui/cocoa.m
+index 25e0db9dd0..981615a8b9 100644
+--- a/ui/cocoa.m
++++ b/ui/cocoa.m
+@@ -50,23 +50,10 @@
+ #include <Carbon/Carbon.h>
+ #include "hw/core/cpu.h"
  
--    /* no plugin_mask check here; caller should have checked */
-+    /* no plugin_state->event_mask check here; caller should have checked */
+-#ifndef MAC_OS_X_VERSION_10_13
+-#define MAC_OS_X_VERSION_10_13 101300
+-#endif
+-
+ #ifndef MAC_OS_VERSION_14_0
+ #define MAC_OS_VERSION_14_0 140000
+ #endif
  
-     QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
-         qemu_plugin_vcpu_tb_trans_cb_t func = cb->f.vcpu_tb_trans;
+-/* 10.14 deprecates NSOnState and NSOffState in favor of
+- * NSControlStateValueOn/Off, which were introduced in 10.13.
+- * Define for older versions
+- */
+-#if MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_13
+-#define NSControlStateValueOn NSOnState
+-#define NSControlStateValueOff NSOffState
+-#endif
+-
+ //#define DEBUG
+ 
+ #ifdef DEBUG
 -- 
 2.41.0
 
