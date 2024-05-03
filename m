@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72032C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 15:37:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42DD6C10F16
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 15:37:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2uyN-0003g3-ER; Fri, 03 May 2024 11:37:19 -0400
+	id 1s2uxj-0002kl-L2; Fri, 03 May 2024 11:36:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2uy0-0003Ff-3X
- for qemu-devel@nongnu.org; Fri, 03 May 2024 11:36:57 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2uxi-0002ft-1S
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 11:36:38 -0400
+Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2uxy-0002k3-CX
- for qemu-devel@nongnu.org; Fri, 03 May 2024 11:36:55 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a524ecaf215so1332580166b.2
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 08:36:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2uxg-0002io-9o
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 11:36:37 -0400
+Received: by mail-lf1-x131.google.com with SMTP id
+ 2adb3069b0e04-51ae2e37a87so11228868e87.2
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 08:36:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714750609; x=1715355409; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714750593; x=1715355393; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LrZUKaXvCoLZb05WO8svoXk2q630F/QIOO635ivl1JA=;
- b=nJ4PhqveMsb2CWcCBTUY7HHUHzGzJ6Gi5aCTSd3KD0EkkKnX8WVZ3QCxQCdL2YHlvT
- h+t1wzDvoLXbox4hOxLo0yyu9Zse6G6WtewLddAyEDp9GpCnX7RCL869QcAbxUENX+Sm
- 4XkfKh8aqTE5R7gwc5WDAlGCGhltqz1uW3CWwxEErTM44ovGdCvqvEJpnEI+GV9IMTYH
- ZlBdvdAk2MpvChCuL0Y6ap9/AJ+mtr05I/l7BXpm6/FHwogMnf9En91MCDKE4ltlj+ax
- es/vHi6ir7WE5EME/QiVpv10VXMhBQlObyVH/ugta51DnimwvLifzXj8DghO6VcZSp/6
- Nm+Q==
+ bh=k1ZHl3KtBDD8F5IDAshvr2j1UwCpx77YSs6aZ7LDCz8=;
+ b=zuFBYJ5I4l4nXNTz3+RHdYe5A3Fuv8M8MnFCzWidfUgfdOm/c6mipyReBYp2Q6IIQw
+ F26h/FlG+jMLpT+7i7BrX46LWY32HcW4fJX9mAng9iydakRZMcMayk2TicnE/kdzdgrH
+ dWi0zm6BIMAO/6eT+bhGZYuEIIL4vyuV77CsbGgnVPsDxGe1ucnXaCB3fysO9sce/JhR
+ QKEeKxw67azX2oRbVRAsruoMd5VPgIgXEPquilVBqk0iFulwGIOg+bCD3TplExt16ex3
+ 2OMvQBJkWjAW3ahLMBys4EACdPzNevkKWBRlOpxal0Ko30ojPsHDqEytRH+1TuQL5KjJ
+ lX2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714750609; x=1715355409;
+ d=1e100.net; s=20230601; t=1714750593; x=1715355393;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LrZUKaXvCoLZb05WO8svoXk2q630F/QIOO635ivl1JA=;
- b=UqSoK0ugTXGV4K5YdcCt6Jc62VD+fr53U7P617SLfkAPrnzAtfpfOf+0p4DRXJYcNn
- HmiSLxKTkR5qwqliTcQ+ofG/aF/EcWh5XEG9hCDp/nXjNYPcd9w4NqTi/bMjh0/PxjV8
- n6KVxobSmgEnKU/3seia+Q5gJIchyk5uR26GcNRmbuYBaj/oiUjTj4jOY88aiBnShzRT
- Od5eAaudG2LvyC3jT7Ep90bhfG59jSWph1T4rLRHPg8GtZR+sf5BXjVmjbU2t+ZwfJQo
- iJioaFXW18z9EQsyHYjKqRf4CSdqm0cMtFZFFJjT1RPlTc+fw28U1cvX69eBTj2RTRL0
- Pezw==
-X-Gm-Message-State: AOJu0YwF1ClIWzHgwq9YuEYPH4HDATr0egre2FhuDj4a3l0qg6RmbIop
- 1sBwPwr+BHSO3i/pOV7mBHsjBJET9RTLPp/bfmBUm5Uk6kt7t537y4KCLfNfIiE5SJdnqKE9gCN
- C
-X-Google-Smtp-Source: AGHT+IFLVFozUZfLPUxfKAyHg/U/u7wAGWbKtEQ/XkhQsUTRn1xbEXDo3LGkKl0bhVsky5TAjUNElg==
-X-Received: by 2002:a17:906:d8c9:b0:a55:63d3:7499 with SMTP id
- re9-20020a170906d8c900b00a5563d37499mr1984275ejb.59.1714750609659; 
- Fri, 03 May 2024 08:36:49 -0700 (PDT)
+ bh=k1ZHl3KtBDD8F5IDAshvr2j1UwCpx77YSs6aZ7LDCz8=;
+ b=HS/A+3NpdOBtAu/FTJyLOD4ApujyWPE84i4xfFkxopGejWQbIWMhtIkZXTLpoKo0i2
+ FCxp0+ARFUsR2TzYMdfiX/jSLxWNGOgqG9hY+YBYKfKC9rKt2HkUP892sR9F73wMNMkZ
+ xzi7JvtZRCIY05H7AOdkI2ZuWfFhNoPf9WVNR6opakt+xE6YhdNWiFucBWAiFXpgiZTW
+ v0C5j6ZEw8cYA78XGelPuRxfhNxj7t94Cnd53za21jLmu+PZU899o4sCzxhAXFFgAHm3
+ CCDTkdrRBg7xqWobGwlcsvEBX/H0+0aerNpaTq6DQ5fQNfVKOyGWOO6EVzrHGVFsF0wz
+ GIQw==
+X-Gm-Message-State: AOJu0Yxanbp3P3d5Zb4QLa85Vav/wAE4kLoWhlkRqomULyvSwbcFEMYA
+ jtSlZ7eUv3oPVPmRtJ/vZp1v2CiauFhRiThwdKDJi5mTYMCE3RXCPmwJKQK+iab5xwSR2Kf8lCY
+ G
+X-Google-Smtp-Source: AGHT+IELLF+Ss/gxvtOx2AuKrofkaAeOEqaHud+hJpklhx3fOY1QsfImgkP9QdXCpwT4bW9nPkKwyQ==
+X-Received: by 2002:ac2:4114:0:b0:51c:fd0a:7e34 with SMTP id
+ b20-20020ac24114000000b0051cfd0a7e34mr2094125lfi.22.1714750592384; 
+ Fri, 03 May 2024 08:36:32 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.179.187])
  by smtp.gmail.com with ESMTPSA id
- w19-20020a17090633d300b00a5965ba49cdsm1789020eja.109.2024.05.03.08.36.48
+ j21-20020a170906051500b00a59291b5551sm1820311eja.63.2024.05.03.08.36.31
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 03 May 2024 08:36:49 -0700 (PDT)
+ Fri, 03 May 2024 08:36:31 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 06/14] coverity: Update user emulation regexp
-Date: Fri,  3 May 2024 17:36:05 +0200
-Message-ID: <20240503153613.38709-7-philmd@linaro.org>
+Subject: [PULL 03/14] exec: Include missing license in 'exec/cpu-common.h'
+Date: Fri,  3 May 2024 17:36:02 +0200
+Message-ID: <20240503153613.38709-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240503153613.38709-1-philmd@linaro.org>
 References: <20240503153613.38709-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::131;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,28 +94,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All user emulation headers are now under include/user/.
+Commit 1ad2134f91 ("Hardware convenience library") extracted
+"cpu-common.h" from "cpu-all.h", which uses the LGPL-2.1+ license.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240428221450.26460-3-philmd@linaro.org>
+Message-Id: <20240427155714.53669-5-philmd@linaro.org>
 ---
- scripts/coverity-scan/COMPONENTS.md | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/exec/cpu-common.h | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/coverity-scan/COMPONENTS.md b/scripts/coverity-scan/COMPONENTS.md
-index 91be8d1c36..1537e49cd5 100644
---- a/scripts/coverity-scan/COMPONENTS.md
-+++ b/scripts/coverity-scan/COMPONENTS.md
-@@ -121,7 +121,7 @@ usb
-   ~ (/qemu)?(/hw/usb/.*|/include/hw/usb/.*)
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index 6d5318895a..8812ba744d 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -1,8 +1,13 @@
++/*
++ * CPU interfaces that are target independent.
++ *
++ *  Copyright (c) 2003 Fabrice Bellard
++ *
++ * SPDX-License-Identifier: LGPL-2.1+
++ */
+ #ifndef CPU_COMMON_H
+ #define CPU_COMMON_H
  
- user
--  ~ (/qemu)?(/linux-user/.*|/bsd-user/.*|/user-exec\.c|/thunk\.c|/include/exec/user/.*)
-+  ~ (/qemu)?(/linux-user/.*|/bsd-user/.*|/user-exec\.c|/thunk\.c|/include/user/.*)
- 
- util
-   ~ (/qemu)?(/util/.*|/include/qemu/.*)
+-/* CPU interfaces that are target independent.  */
+-
+ #include "exec/vaddr.h"
+ #ifndef CONFIG_USER_ONLY
+ #include "exec/hwaddr.h"
 -- 
 2.41.0
 
