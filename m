@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 220CDC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 14:42:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F8FEC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 14:58:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2u6Q-0006ju-Ld; Fri, 03 May 2024 10:41:34 -0400
+	id 1s2uLV-0003qw-Al; Fri, 03 May 2024 10:57:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s2u6O-0006jW-Uh
- for qemu-devel@nongnu.org; Fri, 03 May 2024 10:41:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s2u6N-0000jB-D4
- for qemu-devel@nongnu.org; Fri, 03 May 2024 10:41:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714747290;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=1lgRhC17EQyi1s/6qiW8IKWsPRbKRSeSDhd+BWwKf4I=;
- b=IjZHXVDLcDakDzNj6PelqLG51wz2QRseztMYqG4SCf5cE4noNFTG7v/f9q8qxD9NtYFrl0
- E2iyUUm4a58UdbiI8dCtH5jDWTCcSeMo0MzB1HuQwWdioYsJe0cAv071YyYheD08HRHM7N
- YBahGay8E0AbbJTPUDMldFET6EooQzA=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-39-Xcr9oy87OYGTIngbM7LLtg-1; Fri, 03 May 2024 10:41:29 -0400
-X-MC-Unique: Xcr9oy87OYGTIngbM7LLtg-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6a0e5402962so12114466d6.2
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 07:41:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s2uLS-0003pu-TC
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 10:57:06 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s2uLP-0003gh-2I
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 10:57:04 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1e4bf0b3e06so91493295ad.1
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 07:57:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714748219; x=1715353019; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=OLX1EpLepR6jPESgXBFSn2SlHVmWjXY9QLHhdTdk4Do=;
+ b=DfPw/0MGZXrIN77wnU/mCmQxbeiow3Rr7HbbtcOYOZhLrmyXdudGn2NeznKIPqlaB5
+ 3WncHuoZ2pZACjZYW4h5R3ZQL7I/hpzeESh7cyngu+BRssqbHDdQWS98CKTeYyqUsz9r
+ TyXsVMxaL0QimsmKT6jyjDTkEm/jcewjN4+0T0G85N4pM5+DobLtvgWebivf3Y99TyK2
+ d8Hc3eqRkNYnZ+3d2DAZH6kt18q32qqUOi+hvVA0nj/LzJQXP6riBcY1GdlP3kS2+CGv
+ kvt47fMbvRrMT+aaYO+MZkeqAbu6lBPxn+N6sf2nZplhrLwI27ynpqiVyrNtJ0ODGReE
+ niFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714747289; x=1715352089;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1lgRhC17EQyi1s/6qiW8IKWsPRbKRSeSDhd+BWwKf4I=;
- b=EQVI082So8CvJ+Dv6PYvpRTwgZdgx+gV+nC4gbBbuM7M8gwYLx3ZmXs0AvaKVKAfGO
- s0ou6mu4+8iudAmKLkamK+LHM50uIIWTqBphpL/lgcnQNyqjC1KyP9ChwjueyaYnA3FI
- WEUxkL+yJtPHtI1hqmFv1C2DSr+OfG6hjTIobr/6lDzGGEgEPkw8/IlGVnbNHi2mmOam
- ISCOiZZn/wQW6l9YuBKfUQWZbqBxBfFom17CI/6ibpO2TU679jBBse166g0AfaGRp6IO
- hqujWaF4JG2NaZRz0rH/OzJxb10muc0ewFnCxCqFJs4TmNN31aCj2eSnytt3Kw+ho1uh
- 6zRA==
-X-Gm-Message-State: AOJu0YzP3irvDfgU1lYBZxMjFb52H/KqyoC08XKyOdspzgYk7cQTrv3Y
- By+P9ISMGZL47TePdbDJMmpuPcqMflw28H29Byak2matmCOCseeSM/afQxv/ZCcfs8G9ht3lhSB
- px3HeIdo2aKeZwQ/DpJ0EoRqdGc5zlfIIfrNKhfhwKf9HYpn+Ku7mMBp8DG4vnn65DXmGsWPHAd
- bTWxj0zw7I+OMwDKO7fKcyBNL4Zig2Vh2GzQ==
-X-Received: by 2002:ac8:7d13:0:b0:439:9377:3aed with SMTP id
- g19-20020ac87d13000000b0043993773aedmr2873662qtb.3.1714747288557; 
- Fri, 03 May 2024 07:41:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IETlwGkJjDrTxrjg39kLCfpyl0TkRLFk7NJHtoFNpMqE5BHSK/sBQqRC3huDNwOFexUyj8AwQ==
-X-Received: by 2002:ac8:7d13:0:b0:439:9377:3aed with SMTP id
- g19-20020ac87d13000000b0043993773aedmr2873602qtb.3.1714747287665; 
- Fri, 03 May 2024 07:41:27 -0700 (PDT)
-Received: from x1n.redhat.com (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- cj14-20020a05622a258e00b0043a5edf024dsm1646254qtb.35.2024.05.03.07.41.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 03 May 2024 07:41:27 -0700 (PDT)
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, "Dr . David Alan Gilbert" <dave@treblig.org>,
- Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v2] hmp/migration: Fix "migrate" command's documentation
-Date: Fri,  3 May 2024 10:41:26 -0400
-Message-ID: <20240503144126.396597-1-peterx@redhat.com>
-X-Mailer: git-send-email 2.44.0
+ d=1e100.net; s=20230601; t=1714748219; x=1715353019;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=OLX1EpLepR6jPESgXBFSn2SlHVmWjXY9QLHhdTdk4Do=;
+ b=fNiHzrbczbgWQykRIjcnQZJlhFb/9v1XUpMSxSypd76U0+YMEdEH3SsUmxBVYvagC5
+ f/y6s7fMMnIVjTOVSryGPpP1QRe9Uc/ngr0iCdttgSigJdvAlXIg3pWGbhNnZGqIrKmI
+ PnLaVILYpt9Cua/tyknYe1qEzKe9WbpLLH2nQYA2E84FY0Kv7M6h+4omVp1gZpGUqN5y
+ v6ZnQDpl9JVD8SzWmiw7IuSbl2BqqqXgBCjtwdQOHrJ59Fn/0Hc888WMDcC38+x4Yn7W
+ SQknGtwlAheT7GKY57mB5/FRDGU6bo3YeRBMq+ORqI35aF4wEP+fwgMfpPWsMGNS+Gt7
+ BOMw==
+X-Gm-Message-State: AOJu0YxaP6NMJdHJXsW654+MNwtWDMLBiqXVcRHTkwu+sExfZj5qXvHb
+ WG8qPIVcXQJcaayUoaYDlXrIq9mQVIKFg9q9Vxwr/SH9thjKaJfkIlf+Ms1e070=
+X-Google-Smtp-Source: AGHT+IH0zpfBXYxQ3A5Fhd8+caeiMXLEisvJMVTazD9FKm5zJForMcu+gIXqATOrtNMCY265NPjFKQ==
+X-Received: by 2002:a17:903:2349:b0:1e0:ca47:4d96 with SMTP id
+ c9-20020a170903234900b001e0ca474d96mr3063243plh.3.1714748219273; 
+ Fri, 03 May 2024 07:56:59 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ by smtp.gmail.com with ESMTPSA id
+ o5-20020a170902d4c500b001ea02c8412asm3329500plg.119.2024.05.03.07.56.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 03 May 2024 07:56:58 -0700 (PDT)
+Message-ID: <d394161d-9e88-45dc-9f72-e07e4d8803e2@linaro.org>
+Date: Fri, 3 May 2024 07:56:56 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5] Hexagon: add PC alignment check and exception
+To: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+Cc: qemu-devel@nongnu.org, bcain@quicinc.com, sidneym@quicinc.com,
+ ale@rev.ng, anjo@rev.ng, ltaylorsimpson@gmail.com, laurent@vivier.eu
+References: <c5613f05-5cfe-4f8a-b5b2-0d62ea1cf808@linaro.org>
+ <20240503134635.78067-1-quic_mathbern@quicinc.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240503134635.78067-1-quic_mathbern@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.483,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,60 +97,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter missed the Sphinx HMP document for the "resume/-r" flag in commit
-7a4da28b26 ("qmp: hmp: add migrate "resume" option").  Add it.
+On 5/3/24 06:38, Matheus Tavares Bernardino wrote:
+> On Thu, 2 May 2024 13:00:34 -0700 Richard Henderson <richard.henderson@linaro.org> wrote:
+>>
+>> On 5/2/24 12:20, Matheus Tavares Bernardino wrote:
+>>>
+>>> +
+>>> +void test_multi_cof(void)
+>>> +{
+>>> +    asm volatile(
+>>> +        "p0 = cmp.eq(r0, r0)\n"
+>>> +        "{\n"
+>>> +        "    if (p0) jump test_multi_cof_unaligned\n"
+>>> +        "    if (!p0) jump 1f\n"
+>>> +        "}\n"
+>>> +        "1: nop\n"
+>>
+>> Does it work to write "jump 1f+1" or something?
+> 
+> Unfortunately no :( The assembler will align the address when encoding the
+> instruction. The only working examples I could think of is using a separated
+> file, like before, or manually encoding the instruction with a misaligned
+> address and place it with a `.word` directive... Any preferences, or other
+> suggestions?
 
-When at it, slightly cleanup the lines around:
+Oof.  The assembler is being too helpful.  :-P
 
-  - Move "detach/-d" to a separate section rather than appending it at the
-  end of the command description. Add a hint for how to query the migration
-  results in detached mode.
+Perhaps using a different section could solve the fragility issue:
 
-  - Add "postcopy" keyword to "resume/-r" help messages, as it only applies
-  to postcopy.
+asm("
+	.pushsection .text.evil
+	.org 3
+	...
+	.popsection
+");
 
-Cc: Dr. David Alan Gilbert <dave@treblig.org>
-Cc: Fabiano Rosas <farosas@suse.de>
-Fixes: 7a4da28b26 ("qmp: hmp: add migrate "resume" option")
-Reported-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
-Based-on: <20240430142737.29066-1-farosas@suse.de>
-("[PATCH v3 0/6] migration removals & deprecations")
----
- hmp-commands.hx | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+(adjusting syntax as necessary for correctness), then it doesn't matter where in the 
+output assembly the fragment lands.
 
-diff --git a/hmp-commands.hx b/hmp-commands.hx
-index ebca2cdced..06746f0afc 100644
---- a/hmp-commands.hx
-+++ b/hmp-commands.hx
-@@ -912,14 +912,20 @@ ERST
-         .args_type  = "detach:-d,resume:-r,uri:s",
-         .params     = "[-d] [-r] uri",
-         .help       = "migrate to URI (using -d to not wait for completion)"
--		      "\n\t\t\t -r to resume a paused migration",
-+		      "\n\t\t\t -r to resume a paused postcopy migration",
-         .cmd        = hmp_migrate,
-     },
- 
- 
- SRST
--``migrate [-d]`` *uri*
--  Migrate to *uri* (using -d to not wait for completion).
-+``migrate [-d] [-r]`` *uri*
-+  Migrate the VM to *uri*.
-+
-+  ``-d``
-+    Start the migration process, but do not wait for its completion.  To
-+    query an ongoing migration process, use "info migrate".
-+  ``-r``
-+    Resume a paused postcopy migration.
- ERST
- 
-     {
--- 
-2.44.0
 
+r~
 
