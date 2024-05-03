@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1997FC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 15:11:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98487C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 15:13:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2uZE-0004GM-0W; Fri, 03 May 2024 11:11:20 -0400
+	id 1s2ubJ-0005oF-8H; Fri, 03 May 2024 11:13:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2uZB-00047F-HP
- for qemu-devel@nongnu.org; Fri, 03 May 2024 11:11:17 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s2ubG-0005lD-Es
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 11:13:26 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2uZ9-0006ss-Mo
- for qemu-devel@nongnu.org; Fri, 03 May 2024 11:11:17 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-34e0d47bd98so1259314f8f.0
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 08:11:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s2ubE-00076W-OT
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 11:13:26 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-1e3ca546d40so80478805ad.3
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 08:13:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714749073; x=1715353873; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=iWQu0vn7bWg8b4EBgJzp9H8e2CETaI73TY3LETBvTBA=;
- b=HKTHszbnyOKqdMETAwNwf6OJQowYyC8I74R4QMVKZXpYmbQ+w7uz1su9Bb0iJyH9IR
- UdyT3plaC+eKquTngjEVCeWgc/Atji/TYsyoosY7U9wclFgT7uojYVAndoa86HHuFXCQ
- zKQcPPqqCh5RraskU1ddEvyGNgSUfYjK2R6pHlNz18wMjyyEnXRrZUebKnMpqxfdYpzT
- ts9sFDN6nskJz4tc8sk5DpjiRQ3y24GQmfgTBmM8bXFr8xcaZgqV4id73IsscBmD0FI3
- bI1JVuNFy9A4csfMLkWUpN0bVB5agsKAkxjQU4YWN9jY8bhP9VhEOG9TDkH056oMOBAU
- Tv8A==
+ d=linaro.org; s=google; t=1714749203; x=1715354003; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=j2qk0rBcBkKKFEgVV+rMjuUu0W/Dg2i9vyIUDLqamH4=;
+ b=BIE5RkmNEdnNaZkd0yv5E3GlkPOEyXoWOE+xt/mAEXv8pC90L7FFw+uFZtMg2BENaX
+ 2RumZrpG65+41G14yWfkJm8MFNuyEnLXgZjQCST8u7KoZyZ2T0fYHAawLUTTSnT+pcXp
+ INNq0ynkd6Wl4xikOxfwXQaRxxbm6vabRYz7dag+RnzKllCvlwzKEubxOmVOVWfx8B4w
+ +MYEFTvmBLFLwaPSTymwpv1cc+kjveuQHSDUzROingC0zx+KwBnR9MubSwF5MgBgftWO
+ u6MTDKWKRIcQo/hShmQJg/DaEeRdSqx3fX0QIvIYQ1Y0Cwh4hYH6iEJSpL8G0maob8Ie
+ trbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714749073; x=1715353873;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iWQu0vn7bWg8b4EBgJzp9H8e2CETaI73TY3LETBvTBA=;
- b=TP896KtsJfVSA3Mc8bj8VJ2Mg7GtswGM2hn9apJCunQYKTX81hxDB/nmDHpWiNJpqs
- lIvTe48yzdhYykc3exozdfHZItDJwmAK9l5qN1bbOJLY620U0laPF0KoS93pU5W9XRsK
- WFlLweMIzOsyHwDW5jOdByQw5FOchAw9qyz102ip4BTh7Ks1d1Se4oi7t0dC0RkIQSMK
- a2UIj+yf9lpVLmIoNthg5xqs0Ma2paBrIy5JNBJCsvZRdv3Tq3FentKkw5GcJno8C3Uv
- bugy8sGg2n7TJsfWOB+TuzOs2giQ9buEgEc1cotjXnQGY6J/2HLNuJLmdZRCUjYWwFK3
- o9DA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU28TjWtQmnv1G4jmP0LDuNM7/1WwPov71tWcbK6E6CeCUHiHPbELqFGNW514zqd3EPelK5kX9/6tWmMzA8msR2bwRNX4k=
-X-Gm-Message-State: AOJu0YzOeYk2uV4nvn619hf485SPSrHQewWXJYOS7krFeLHTE/xPgO0I
- NNeMbOiySFFZr5bY1orGGLu+mPB8RVW9ldcM9fcUbJkzGjiGtbIrdqlRdLR71gDaHKntjMA1fsM
- C
-X-Google-Smtp-Source: AGHT+IEgavh8L2OVH7JtIYhrrJlaYDqGDpSw+2dbtb1W4j67rnU4dtBFMJOmmDmlTD9fEtnqAcvRcA==
-X-Received: by 2002:a5d:6d82:0:b0:346:47a6:e77e with SMTP id
- l2-20020a5d6d82000000b0034647a6e77emr6800133wrs.27.1714749073636; 
- Fri, 03 May 2024 08:11:13 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.179.187])
+ d=1e100.net; s=20230601; t=1714749203; x=1715354003;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=j2qk0rBcBkKKFEgVV+rMjuUu0W/Dg2i9vyIUDLqamH4=;
+ b=qlshUi0hmz4MMxfSdEGJ/DVodBglGh4ImhmSfxKqr3Tsi1+JKDY2kdp5K1lTbpG/JG
+ bR0YN8rNTMuP4OuKiEJAZz5/1vF9ujMT3CHTNJZPHQmj4ZWTX9yRNJL7rIQnF6ClZbNJ
+ L2sx4c04YBLZfzUX1LdyoqDm20JGrMdSvw9zEMDxWAzhvuMzOhymmSQY9KR7qLxvlcgg
+ ewMQ3y0RIj1cko4uMR31eQKB7URR1hh0pCK2MUqEZ9axAnWCM3TaYgM9sMOFagto2b7+
+ 4jOLBuJAr8k/k31fEwi8p/iSDjyLHT83dXZUV+4VPSHSS4JMo3yox8e3+9DKv5HbPt4k
+ FzXg==
+X-Gm-Message-State: AOJu0YzbB5uc887Babp+1oKhQvQ8ePegTsi6NxQ60KyL1sbMGXBP2GXK
+ RnnRwhfHQlqC3yne+LomoDmfP5LUTFn8QoxiImfNzUVD4vFF098hagpa6+/42sYXG8De40oZUlG
+ W
+X-Google-Smtp-Source: AGHT+IEXRSKnBTz6oqGwJR8uM2WDbBCAMaq4Ef7p0eLFDF30TKAzoaLgm0AuoTcb3UBZWNjxGyyGrQ==
+X-Received: by 2002:a17:903:11d0:b0:1e5:5bd7:87a4 with SMTP id
+ q16-20020a17090311d000b001e55bd787a4mr3582066plh.16.1714749203332; 
+ Fri, 03 May 2024 08:13:23 -0700 (PDT)
+Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- s14-20020adfe00e000000b0034e553f6174sm2456415wrh.98.2024.05.03.08.11.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 May 2024 08:11:13 -0700 (PDT)
-Message-ID: <1fb3b93a-0d5d-4a7e-9246-8d46c0caf249@linaro.org>
-Date: Fri, 3 May 2024 17:11:11 +0200
+ p10-20020a170902c70a00b001e81c778784sm3366611plp.67.2024.05.03.08.13.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 03 May 2024 08:13:22 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 08/10] util/bufferiszero: Simplify
+ test_buffer_is_zero_next_accel
+Date: Fri,  3 May 2024 08:13:12 -0700
+Message-Id: <20240503151314.336357-9-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240503151314.336357-1-richard.henderson@linaro.org>
+References: <20240503151314.336357-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/33] accel/tcg: Record DisasContextBase in tcg_ctx
- for plugins
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20240424233131.988727-1-richard.henderson@linaro.org>
- <20240424233131.988727-9-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240424233131.988727-9-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,13 +96,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/4/24 01:31, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   include/tcg/tcg.h      | 1 +
->   accel/tcg/plugin-gen.c | 1 +
->   2 files changed, 2 insertions(+)
+Because the three alternatives are monotonic, we don't need
+to keep a couple of bitmasks, just identify the strongest
+alternative at startup.
+
+Generalize test_buffer_is_zero_next_accel and init_accel
+by always defining an accel_table array.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ util/bufferiszero.c | 81 ++++++++++++++++++++-------------------------
+ 1 file changed, 35 insertions(+), 46 deletions(-)
+
+diff --git a/util/bufferiszero.c b/util/bufferiszero.c
+index f9af7841ba..7218154a13 100644
+--- a/util/bufferiszero.c
++++ b/util/bufferiszero.c
+@@ -27,7 +27,6 @@
+ #include "host/cpuinfo.h"
+ 
+ typedef bool (*biz_accel_fn)(const void *, size_t);
+-static biz_accel_fn buffer_is_zero_accel;
+ 
+ static bool buffer_is_zero_int_lt256(const void *buf, size_t len)
+ {
+@@ -179,60 +178,35 @@ buffer_zero_avx2(const void *buf, size_t len)
+ }
+ #endif /* CONFIG_AVX2_OPT */
+ 
+-static unsigned __attribute__((noinline))
+-select_accel_cpuinfo(unsigned info)
+-{
+-    /* Array is sorted in order of algorithm preference. */
+-    static const struct {
+-        unsigned bit;
+-        biz_accel_fn fn;
+-    } all[] = {
++static biz_accel_fn const accel_table[] = {
++    buffer_is_zero_int_ge256,
++    buffer_zero_sse2,
+ #ifdef CONFIG_AVX2_OPT
+-        { CPUINFO_AVX2,    buffer_zero_avx2 },
++    buffer_zero_avx2,
+ #endif
+-        { CPUINFO_SSE2,    buffer_zero_sse2 },
+-        { CPUINFO_ALWAYS,  buffer_is_zero_int_ge256 },
+-    };
++};
+ 
+-    for (unsigned i = 0; i < ARRAY_SIZE(all); ++i) {
+-        if (info & all[i].bit) {
+-            buffer_is_zero_accel = all[i].fn;
+-            return all[i].bit;
+-        }
++static unsigned best_accel(void)
++{
++    unsigned info = cpuinfo_init();
++
++#ifdef CONFIG_AVX2_OPT
++    if (info & CPUINFO_AVX2) {
++        return 2;
+     }
+-    return 0;
++#endif
++    return info & CPUINFO_SSE2 ? 1 : 0;
+ }
+ 
+-static unsigned used_accel;
+-
+-static void __attribute__((constructor)) init_accel(void)
+-{
+-    used_accel = select_accel_cpuinfo(cpuinfo_init());
+-}
+-
+-#define INIT_ACCEL NULL
+-
+-bool test_buffer_is_zero_next_accel(void)
+-{
+-    /*
+-     * Accumulate the accelerators that we've already tested, and
+-     * remove them from the set to test this round.  We'll get back
+-     * a zero from select_accel_cpuinfo when there are no more.
+-     */
+-    unsigned used = select_accel_cpuinfo(cpuinfo & ~used_accel);
+-    used_accel |= used;
+-    return used;
+-}
+ #else
+-bool test_buffer_is_zero_next_accel(void)
+-{
+-    return false;
+-}
+-
+-#define INIT_ACCEL buffer_is_zero_int_ge256
++#define best_accel() 0
++static biz_accel_fn const accel_table[1] = {
++    buffer_is_zero_int_ge256
++};
+ #endif
+ 
+-static biz_accel_fn buffer_is_zero_accel = INIT_ACCEL;
++static biz_accel_fn buffer_is_zero_accel;
++static unsigned accel_index;
+ 
+ bool buffer_is_zero_ool(const void *buf, size_t len)
+ {
+@@ -257,3 +231,18 @@ bool buffer_is_zero_ge256(const void *buf, size_t len)
+ {
+     return buffer_is_zero_accel(buf, len);
+ }
++
++bool test_buffer_is_zero_next_accel(void)
++{
++    if (accel_index != 0) {
++        buffer_is_zero_accel = accel_table[--accel_index];
++        return true;
++    }
++    return false;
++}
++
++static void __attribute__((constructor)) init_accel(void)
++{
++    accel_index = best_accel();
++    buffer_is_zero_accel = accel_table[accel_index];
++}
+-- 
+2.34.1
 
 
