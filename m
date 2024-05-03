@@ -4,114 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEFDFC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 21:05:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B6D6C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 21:09:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s305x-0007Jx-Dd; Fri, 03 May 2024 17:05:29 -0400
+	id 1s309E-0000mu-Ue; Fri, 03 May 2024 17:08:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s305u-0007JZ-UZ
- for qemu-devel@nongnu.org; Fri, 03 May 2024 17:05:27 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s305s-0003GA-4y
- for qemu-devel@nongnu.org; Fri, 03 May 2024 17:05:26 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 4E4AA2079A;
- Fri,  3 May 2024 21:05:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1714770322; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s309B-0000ly-AH
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 17:08:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s3099-0003dK-F9
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 17:08:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714770526;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=FA+oSBebhGIc0eAolIhwy4tsrFKVk6iu1t/nD6VnTFk=;
- b=fODSTPORgsdgD6s689xTtf0nZe8CZOBZIDTXfIjTmhIH1BX00F2nlr5CFB7kq6LUCD4AxA
- WKRZKFYeGqJRNxHRXFpdzIXPis/fkvhDL2hNpkSnGEceK8Yt9zfgwzWbPsagTEJKUB+DDC
- KPn7BiYrPq3pUfDGXegs8vZabxK4fGg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1714770322;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=FA+oSBebhGIc0eAolIhwy4tsrFKVk6iu1t/nD6VnTFk=;
- b=VOZAVaveOSGGbDzicr0/S4GdStFpK4phhvbuRP1HCk3lXZYcyG6Deo31avs6A27g/i6p+K
- B9/jjh+0UDLXRIAA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=fODSTPOR;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=VOZAVave
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1714770322; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=FA+oSBebhGIc0eAolIhwy4tsrFKVk6iu1t/nD6VnTFk=;
- b=fODSTPORgsdgD6s689xTtf0nZe8CZOBZIDTXfIjTmhIH1BX00F2nlr5CFB7kq6LUCD4AxA
- WKRZKFYeGqJRNxHRXFpdzIXPis/fkvhDL2hNpkSnGEceK8Yt9zfgwzWbPsagTEJKUB+DDC
- KPn7BiYrPq3pUfDGXegs8vZabxK4fGg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1714770322;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=FA+oSBebhGIc0eAolIhwy4tsrFKVk6iu1t/nD6VnTFk=;
- b=VOZAVaveOSGGbDzicr0/S4GdStFpK4phhvbuRP1HCk3lXZYcyG6Deo31avs6A27g/i6p+K
- B9/jjh+0UDLXRIAA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id BE62D13991;
- Fri,  3 May 2024 21:05:21 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id JVnNIJFRNWabDQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 03 May 2024 21:05:21 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com, Claudio
- Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>, Thomas Huth
- <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>
-Subject: Re: [PATCH 6/9] tests/qtest/migration: Add tests for file migration
- with direct-io
-In-Reply-To: <ZjUvHjBOicENBbva@x1n>
+ bh=MIAghM6vcD0wv2ZSbxeh2JSuDWi+gIXoS5r8+1PTAc8=;
+ b=L2f0CvvPRKUMnX4Ao9WOQPi7/48P68yCP5qvVvjBKSpr+lbbE8SNrX490XNc/HdBa0WyRZ
+ cZ+uzHicJ27EcEs0xu2Ip6ayKH3kLoFQ9TpYTig9vfsFfjpusN2Ays1Z9wBvrXzbyuH84C
+ txSnJjh9pNwLApwcwLfKWPD6lKKhsH0=
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-450-OwQtt-PDOXGrnTkVlxSXWw-1; Fri, 03 May 2024 17:08:45 -0400
+X-MC-Unique: OwQtt-PDOXGrnTkVlxSXWw-1
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-1ec7cb6942cso210465ad.1
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 14:08:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714770524; x=1715375324;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MIAghM6vcD0wv2ZSbxeh2JSuDWi+gIXoS5r8+1PTAc8=;
+ b=l3QTH6/vq2SPNuxmGwiSJNR3kBL5F8TTsYAfeUulvb3JZONlWLMqBsiEdQ5Q/3+SvE
+ uHcqHmDkAbS1u5Pe5B8cPWVrGTEtS2VKgtqmH8mKXuDaPQYoteYbqwMkcjLTPaXbSdlk
+ KhYElQu7FKUeaFdpzx45pZYvalYR2eSlEWCKqzLhInKaoYdw6uHW2OBNiYLFm8xnInzg
+ gsS+ZflaguZIdZxbxQDntAsXP32f+5uYc+n/A5gCug+Qt5iHzs8xl4peExYZsBfUxNap
+ JGMogVGZZzBiCwpGCDGRT3Tt6svBsLYcv0mXdeocZdkxAOTkxMh+4PQRTM8J6IkNMVIc
+ t/fA==
+X-Gm-Message-State: AOJu0YxRp87Lo6K4LAnHJBX9FTSge4GYIxWW52emvwlPW5gURuhZDHpS
+ n0UkFbo1YsbQipoKXHSm0JLhjL3f3DdcaWlpu2vLMXpOGZyUs0wkYnGlGc1yEWFsihgQmTxW3OU
+ rnl7SAGlBFybpYpCVLgareSIi+tc8fs44oRH8CtYkfJV0c4UWhKNS
+X-Received: by 2002:a05:6a20:5530:b0:1af:66a6:d37d with SMTP id
+ ko48-20020a056a20553000b001af66a6d37dmr3689380pzb.1.1714770523980; 
+ Fri, 03 May 2024 14:08:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHZvDgbGCfvlx+hBvmm/2pkzeg3NQgZAN2jE2r7655SZAQREXGbxgfiUxGRmrEMvFefqcfb2w==
+X-Received: by 2002:a05:6a20:5530:b0:1af:66a6:d37d with SMTP id
+ ko48-20020a056a20553000b001af66a6d37dmr3689361pzb.1.1714770523230; 
+ Fri, 03 May 2024 14:08:43 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ e14-20020a62ee0e000000b006e724ccdc3esm3498257pfi.55.2024.05.03.14.08.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 03 May 2024 14:08:42 -0700 (PDT)
+Date: Fri, 3 May 2024 17:08:39 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
+ Claudio Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>,
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 3/9] tests/qtest/migration: Fix file migration offset check
+Message-ID: <ZjVSV5Xy6yQSMaSr@x1n>
 References: <20240426142042.14573-1-farosas@suse.de>
- <20240426142042.14573-7-farosas@suse.de> <ZjUvHjBOicENBbva@x1n>
-Date: Fri, 03 May 2024 18:05:19 -0300
-Message-ID: <87v83umws0.fsf@suse.de>
+ <20240426142042.14573-4-farosas@suse.de> <ZjUVKEJq7LBU57Rf@x1n>
+ <874jbeocno.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 4E4AA2079A
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
- ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; RCPT_COUNT_SEVEN(0.00)[9];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <874jbeocno.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.483,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,172 +103,208 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On Fri, May 03, 2024 at 05:36:59PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
+> 
+> > On Fri, Apr 26, 2024 at 11:20:36AM -0300, Fabiano Rosas wrote:
+> >> When doing file migration, QEMU accepts an offset that should be
+> >> skipped when writing the migration stream to the file. The purpose of
+> >> the offset is to allow the management layer to put its own metadata at
+> >> the start of the file.
+> >> 
+> >> We have tests for this in migration-test, but only testing that the
+> >> migration stream starts at the correct offset and not that it actually
+> >> leaves the data intact. Unsurprisingly, there's been a bug in that
+> >> area that the tests didn't catch.
+> >> 
+> >> Fix the tests to write some data to the offset region and check that
+> >> it's actually there after the migration.
+> >> 
+> >> Fixes: 3dc35470c8 ("tests/qtest: migration-test: Add tests for file-based migration")
+> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> >> ---
+> >>  tests/qtest/migration-test.c | 70 +++++++++++++++++++++++++++++++++---
+> >>  1 file changed, 65 insertions(+), 5 deletions(-)
+> >> 
+> >> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+> >> index 5d6d8cd634..7b177686b4 100644
+> >> --- a/tests/qtest/migration-test.c
+> >> +++ b/tests/qtest/migration-test.c
+> >> @@ -2081,6 +2081,63 @@ static void test_precopy_file(void)
+> >>      test_file_common(&args, true);
+> >>  }
+> >>  
+> >> +#ifndef _WIN32
+> >> +static void file_dirty_offset_region(void)
+> >> +{
+> >> +#if defined(__linux__)
+> >
+> > Hmm, what's the case to cover when !_WIN32 && __linux__?  Can we remove one
+> > layer of ifdef?
+> >
+> > I'm also wondering why it can't work on win32?  I thought win32 has all
+> > these stuff we used here, but I may miss something.
+> >
+> 
+> __linux__ is because of mmap, !_WIN32 is because of the passing of
+> fds. We might be able to keep !_WIN32 only, I'll check.
 
-> On Fri, Apr 26, 2024 at 11:20:39AM -0300, Fabiano Rosas wrote:
->> The tests are only allowed to run in systems that know about the
->> O_DIRECT flag and in filesystems which support it.
->> 
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->
-> Mostly:
->
-> Reviewed-by: Peter Xu <peterx@redhat.com>
->
-> Two trivial comments below.
->
->> ---
->>  tests/qtest/migration-helpers.c | 42 +++++++++++++++++++++++++++++++++
->>  tests/qtest/migration-helpers.h |  1 +
->>  tests/qtest/migration-test.c    | 42 +++++++++++++++++++++++++++++++++
->>  3 files changed, 85 insertions(+)
->> 
->> diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
->> index ce6d6615b5..356cd4fa8c 100644
->> --- a/tests/qtest/migration-helpers.c
->> +++ b/tests/qtest/migration-helpers.c
->> @@ -473,3 +473,45 @@ void migration_test_add(const char *path, void (*fn)(void))
->>      qtest_add_data_func_full(path, test, migration_test_wrapper,
->>                               migration_test_destroy);
->>  }
->> +
->> +#ifdef O_DIRECT
->> +/*
->> + * Probe for O_DIRECT support on the filesystem. Since this is used
->> + * for tests, be conservative, if anything fails, assume it's
->> + * unsupported.
->> + */
->> +bool probe_o_direct_support(const char *tmpfs)
->> +{
->> +    g_autofree char *filename = g_strdup_printf("%s/probe-o-direct", tmpfs);
->> +    int fd, flags = O_CREAT | O_RDWR | O_TRUNC | O_DIRECT;
->> +    void *buf;
->> +    ssize_t ret, len;
->> +    uint64_t offset;
->> +
->> +    fd = open(filename, flags, 0660);
->> +    if (fd < 0) {
->> +        unlink(filename);
->> +        return false;
->> +    }
->> +
->> +    /*
->> +     * Assuming 4k should be enough to satisfy O_DIRECT alignment
->> +     * requirements. The migration code uses 1M to be conservative.
->> +     */
->> +    len = 0x100000;
->> +    offset = 0x100000;
->> +
->> +    buf = aligned_alloc(len, len);
->
-> This is the first usage of aligned_alloc() in qemu.  IIUC it's just a newer
-> posix_memalign(), which QEMU has one use of, and it's protected with:
->
-> #if defined(CONFIG_POSIX_MEMALIGN)
->     int ret;
->     ret = posix_memalign(&ptr, alignment, size);
->     ...
-> #endif
->
-> Didn't check deeper.  Just keep this in mind if you see any compilation
-> issues in future CIs, or simply switch to similar pattern.
->
->> +    g_assert(buf);
->> +
->> +    ret = pwrite(fd, buf, len, offset);
->> +    unlink(filename);
->> +    g_free(buf);
->> +
->> +    if (ret < 0) {
->> +        return false;
->> +    }
->> +
->> +    return true;
->> +}
->> +#endif
->> diff --git a/tests/qtest/migration-helpers.h b/tests/qtest/migration-helpers.h
->> index 1339835698..d827e16145 100644
->> --- a/tests/qtest/migration-helpers.h
->> +++ b/tests/qtest/migration-helpers.h
->> @@ -54,5 +54,6 @@ char *find_common_machine_version(const char *mtype, const char *var1,
->>                                    const char *var2);
->>  char *resolve_machine_version(const char *alias, const char *var1,
->>                                const char *var2);
->> +bool probe_o_direct_support(const char *tmpfs);
->>  void migration_test_add(const char *path, void (*fn)(void));
->>  #endif /* MIGRATION_HELPERS_H */
->> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
->> index 7b177686b4..512b7ede8b 100644
->> --- a/tests/qtest/migration-test.c
->> +++ b/tests/qtest/migration-test.c
->> @@ -2295,6 +2295,43 @@ static void test_multifd_file_mapped_ram(void)
->>      test_file_common(&args, true);
->>  }
->>  
->> +#ifdef O_DIRECT
->> +static void *migrate_mapped_ram_dio_start(QTestState *from,
->> +                                                 QTestState *to)
->> +{
->> +    migrate_mapped_ram_start(from, to);
->
-> This line seems redundant, migrate_multifd_mapped_ram_start() should cover that.
->
+Thanks, or simply use __linux__; we don't lose that much if test less on
+very special hosts.  Just feel a bit over-engineer to use two ifdefs for
+one such test.
 
-This is an artifact of another patch that adds direct-io + mapped-ram
-without multifd. I'm bringing that back on v2. We were having a
-discussion[1] about it in the libvirt mailing list. Having direct-io
-even without multifd might still be useful for libvirt.
+> 
+> >> +    g_autofree char *path = g_strdup_printf("%s/%s", tmpfs, FILE_TEST_FILENAME);
+> >> +    size_t size = FILE_TEST_OFFSET;
+> >> +    uintptr_t *addr, *p;
+> >> +    int fd;
+> >> +
+> >> +    fd = open(path, O_CREAT | O_RDWR, 0660);
+> >> +    g_assert(fd != -1);
+> >> +
+> >> +    g_assert(!ftruncate(fd, size));
+> >> +
+> >> +    addr = mmap(NULL, size, PROT_WRITE, MAP_SHARED, fd, 0);
+> >> +    g_assert(addr != MAP_FAILED);
+> >> +
+> >> +    /* ensure the skipped offset contains some data */
+> >> +    p = addr;
+> >> +    while (p < addr + FILE_TEST_OFFSET / sizeof(uintptr_t)) {
+> >> +        *p = (unsigned long) FILE_TEST_FILENAME;
+> >
+> > This is fine, but not as clear what is assigned..  I think here we assigned
+> > is the pointer pointing to the binary's RO section (rather than the chars).
+> 
+> Haha you're right, I was assigning the FILE_TEST_OFFSET previously and
+> just switched to the FILENAME without thinking. I'll fix it up.
 
-1- https://lists.libvirt.org/archives/list/devel@lists.libvirt.org/thread/K4BDDJDMJ22XMJEFAUE323H5S5E47VQX/
+:)
 
->> +    migrate_set_parameter_bool(from, "direct-io", true);
->> +    migrate_set_parameter_bool(to, "direct-io", true);
->> +
->> +    return NULL;
->> +}
->> +
->> +static void *migrate_multifd_mapped_ram_dio_start(QTestState *from,
->> +                                                 QTestState *to)
->> +{
->> +    migrate_multifd_mapped_ram_start(from, to);
->> +    return migrate_mapped_ram_dio_start(from, to);
->> +}
->> +
->> +static void test_multifd_file_mapped_ram_dio(void)
->> +{
->> +    g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs,
->> +                                           FILE_TEST_FILENAME);
->> +    MigrateCommon args = {
->> +        .connect_uri = uri,
->> +        .listen_uri = "defer",
->> +        .start_hook = migrate_multifd_mapped_ram_dio_start,
->> +    };
->> +
->> +    if (!probe_o_direct_support(tmpfs)) {
->> +        g_test_skip("Filesystem does not support O_DIRECT");
->> +        return;
->> +    }
->> +
->> +    test_file_common(&args, true);
->> +}
->> +
->> +#endif /* O_DIRECT */
->>  
->>  static void test_precopy_tcp_plain(void)
->>  {
->> @@ -3719,6 +3756,11 @@ int main(int argc, char **argv)
->>      migration_test_add("/migration/multifd/file/mapped-ram/live",
->>                         test_multifd_file_mapped_ram_live);
->>  
->> +#ifdef O_DIRECT
->> +    migration_test_add("/migration/multifd/file/mapped-ram/dio",
->> +                       test_multifd_file_mapped_ram_dio);
->> +#endif
->> +
->>  #ifdef CONFIG_GNUTLS
->>      migration_test_add("/migration/precopy/unix/tls/psk",
->>                         test_precopy_unix_tls_psk);
->> -- 
->> 2.35.3
->> 
+> 
+> > Maybe using some random numbers would be more straightforward, but no
+> > strong opinions.
+> >
+> >> +        p++;
+> >> +    }
+> >> +
+> >> +    munmap(addr, size);
+> >> +    fsync(fd);
+> >> +    close(fd);
+> >> +#endif
+> >> +}
+> >> +
+> >> +static void *file_offset_start_hook(QTestState *from, QTestState *to)
+> >> +{
+> >> +    g_autofree char *file = g_strdup_printf("%s/%s", tmpfs, FILE_TEST_FILENAME);
+> >> +    int src_flags = O_WRONLY;
+> >> +    int dst_flags = O_RDONLY;
+> >> +    int fds[2];
+> >> +
+> >> +    file_dirty_offset_region();
+> >> +
+> >> +    fds[0] = open(file, src_flags, 0660);
+> >> +    assert(fds[0] != -1);
+> >> +
+> >> +    fds[1] = open(file, dst_flags, 0660);
+> >> +    assert(fds[1] != -1);
+> >> +
+> >> +    qtest_qmp_fds_assert_success(from, &fds[0], 1, "{'execute': 'add-fd', "
+> >> +                                 "'arguments': {'fdset-id': 1}}");
+> >> +
+> >> +    qtest_qmp_fds_assert_success(to, &fds[1], 1, "{'execute': 'add-fd', "
+> >> +                                 "'arguments': {'fdset-id': 1}}");
+> >> +
+> >> +    close(fds[0]);
+> >> +    close(fds[1]);
+> >> +
+> >> +    return NULL;
+> >> +}
+> >> +
+> >>  static void file_offset_finish_hook(QTestState *from, QTestState *to,
+> >>                                      void *opaque)
+> >>  {
+> >> @@ -2096,12 +2153,12 @@ static void file_offset_finish_hook(QTestState *from, QTestState *to,
+> >>      g_assert(addr != MAP_FAILED);
+> >>  
+> >>      /*
+> >> -     * Ensure the skipped offset contains zeros and the migration
+> >> -     * stream starts at the right place.
+> >> +     * Ensure the skipped offset region's data has not been touched
+> >> +     * and the migration stream starts at the right place.
+> >>       */
+> >>      p = addr;
+> >>      while (p < addr + FILE_TEST_OFFSET / sizeof(uintptr_t)) {
+> >> -        g_assert(*p == 0);
+> >> +        g_assert_cmpstr((char *) *p, ==, FILE_TEST_FILENAME);
+> >>          p++;
+> >>      }
+> >>      g_assert_cmpint(cpu_to_be64(*p) >> 32, ==, QEMU_VM_FILE_MAGIC);
+> >> @@ -2113,17 +2170,18 @@ static void file_offset_finish_hook(QTestState *from, QTestState *to,
+> >>  
+> >>  static void test_precopy_file_offset(void)
+> >>  {
+> >> -    g_autofree char *uri = g_strdup_printf("file:%s/%s,offset=%d", tmpfs,
+> >> -                                           FILE_TEST_FILENAME,
+> >> +    g_autofree char *uri = g_strdup_printf("file:/dev/fdset/1,offset=%d",
+> >>                                             FILE_TEST_OFFSET);
+> >
+> > Do we want to keep both tests to cover both normal file and fdsets?
+> >
+> 
+> I think the fdset + offset is the most complex in terms of requirements,
+> so I don't think we need to test the other one.
+
+They will still cover different qemu code paths, right?  Even if only
+slightly different.
+
+> 
+> I'm actually already a bit concerned about the amount of tests we
+> have. I was even thinking of starting playing with some code coverage
+> tools and prune some of the tests if possible.
+
+IMHO we don't need to drop any test, but if / when we find it runs too
+slow, we either:
+
+  - try to speed it up - I never tried, but I _feel_ like I can make it
+    faster in some way, just like when Dan used to do with reducing
+    migration-test runtimes, perhaps from different angles, or
+
+  - mark more tests optional to run by default, then we use getenv() to
+    select those.
+
+Said that, what you're exploring sounds interesting irrelevant.
+
+> 
+> >>      MigrateCommon args = {
+> >>          .connect_uri = uri,
+> >>          .listen_uri = "defer",
+> >> +        .start_hook = file_offset_start_hook,
+> >>          .finish_hook = file_offset_finish_hook,
+> >>      };
+> >>  
+> >>      test_file_common(&args, false);
+> >>  }
+> >> +#endif
+> >>  
+> >>  static void test_precopy_file_offset_bad(void)
+> >>  {
+> >> @@ -3636,8 +3694,10 @@ int main(int argc, char **argv)
+> >>  
+> >>      migration_test_add("/migration/precopy/file",
+> >>                         test_precopy_file);
+> >> +#ifndef _WIN32
+> >>      migration_test_add("/migration/precopy/file/offset",
+> >>                         test_precopy_file_offset);
+> >> +#endif
+> >>      migration_test_add("/migration/precopy/file/offset/bad",
+> >>                         test_precopy_file_offset_bad);
+> >>  
+> >> -- 
+> >> 2.35.3
+> >> 
+> 
+
+-- 
+Peter Xu
+
 
