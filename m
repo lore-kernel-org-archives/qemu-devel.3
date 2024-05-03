@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73E2CC41513
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 17:30:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73F46C10F1A
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 17:31:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s57ao-0001kn-6b; Thu, 09 May 2024 13:30:06 -0400
+	id 1s57al-0001jo-DV; Thu, 09 May 2024 13:30:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1s57ak-0001je-NU
- for qemu-devel@nongnu.org; Thu, 09 May 2024 13:30:02 -0400
-Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
+ id 1s57ab-0001i2-IF
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 13:29:56 -0400
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1s57ai-0003h4-8V
- for qemu-devel@nongnu.org; Thu, 09 May 2024 13:30:02 -0400
-Received: by mail-lf1-x12e.google.com with SMTP id
- 2adb3069b0e04-51f60817e34so1435990e87.2
- for <qemu-devel@nongnu.org>; Thu, 09 May 2024 10:29:59 -0700 (PDT)
+ id 1s57aZ-0003Z4-O6
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 13:29:53 -0400
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2e0a34b2899so16713091fa.3
+ for <qemu-devel@nongnu.org>; Thu, 09 May 2024 10:29:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715275798; x=1715880598; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1715275788; x=1715880588; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PjxS9Se2SHC9m/lZ6uD/ahAlHp9nRH2Q1MtnYySD9v0=;
- b=nBSeStFY80YwWWTShZOMZG63ccYjUXmdxmDBAUETl8qEmUc1VHQm6N7L8hCU0uLxho
- Qse5+6/+j2QS3PZo7Eqw30n0NJJT0YS/2DR3FPfX9mQeUaw90PbwkvqXTgB0iLKsu0qV
- vwCw6a6HZ95m0PeFmHHb3fpI5H9orJlRH5pBs3neMiN4D5lZXYoNd1mA91dGtYeeMqRT
- AnS4qhpS2J9uIApc8ahTE/ftZcS9WcVXKYzUdjU/+NVeJwivvsXmBI4n/a0SpPDtB92O
- aF4L8D602xo2MLNBYKs76Eev6hgolnMsPmt6x6lsgpY0DNRBKK5L/DMVQ7BU62i8jHmM
- gJlw==
+ bh=oKmmum6z28VcY8ouSg3YJA3bHZvP87XkBXtO/hd8PR8=;
+ b=noYTZ+BWRHqNLW5P3yi04bUxHYeCx87JsGVMBod+CAxH4ElLpLJUHigOa1TKYwjsni
+ cZ6fvOEzgsRel1Xg4PL5ohYOkKkbNg2NyC9iWcSFh2u4TZB5at82V4+4oYqsNSW/LSLz
+ YoPBME3TeklFvioMSO6gvae5M7OAjz7oWIEsvL539RCS4o0XFhGOM/kdFC3RPGVshidA
+ yR4ALNpsELLwMSrNrH91vSh3UMvJTRVbtrUuJrj46nKKCwPAEQp1/jPxZlGiosDIUXvG
+ VgQE0kN5Hzshy40wLRbOw3YQZ9lzWSeBZ97paKrU+1Qhb4hsrTiGRpFSnHZwSVrYsVcl
+ 7qVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715275798; x=1715880598;
+ d=1e100.net; s=20230601; t=1715275788; x=1715880588;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PjxS9Se2SHC9m/lZ6uD/ahAlHp9nRH2Q1MtnYySD9v0=;
- b=mGzJBYP3+Bd/Rpk+osGoTebrofPZn/28ynBmFTumCVRBbOVHnLJ/28Dbu+EUdMlRG9
- 8Oy6yLTGmUxI1UKdnLe/8cSjOCtxPNzStkGN3LYuExD9m0hc+tIyJ4shNPU+fTeCEhgF
- N+DqtXnSBbwvVFTOK1cHMWuj8dtCtedTjnpjBVCg+kfitGjauBwJ+6SNWcjO9h5hTgJL
- fmP+qKtBc5iHNlOg7ISbqsDwuRuUOms1hxFoUcaehk7aa7ZfyaL2D/3tDlA1YBLFz70e
- k4XPuyJmsGWYCekSjmvsO5yIwdCuSM/PP5Te6Ov4tz4uji5scMsx1tyng5pyov7Ul/6l
- HTUA==
-X-Gm-Message-State: AOJu0Yx7+en/f80WGAAjh6mvxFWevsVsobt/HtSo1Um2U5tH1vsu4A52
- 1SZC1NBY7EZW2BZv5VY+7JHIhPsa3RuUPj26za2uhdILPTL+Cw/RdJ5iggMU
-X-Google-Smtp-Source: AGHT+IGRcD9VdYxUVdFG81QPXGUJhDXoOaVerBAJyHXQpyPwC5eKutgVITtAb83XqX4DbciXEEMQrg==
-X-Received: by 2002:a05:6512:3091:b0:51e:e703:d11c with SMTP id
- 2adb3069b0e04-5220fa71891mr166903e87.12.1715275797539; 
- Thu, 09 May 2024 10:29:57 -0700 (PDT)
+ bh=oKmmum6z28VcY8ouSg3YJA3bHZvP87XkBXtO/hd8PR8=;
+ b=b6GTq7pPrfOGyy+N2lsEvmAKOnGsfFPYRA1d3o1ckQO4uMMaKcL7uUK79b1+VVHDhR
+ Z3vwbOp/kUYFLE+YRRLvlTrrN5xW998K5hdwx3MRDs2BVjrYYsSmscXqX1EZFTX3rC96
+ ilES+Egc6oMWcbC5CG6sZ45CHiABW+8P0ZaisfW6RmGFHrc6ivjTdDBXXOa+SLefYA3B
+ YFR+HbfUYbm/9S26/EqLSrFbCpRKfTqX/BSQWoRJ/Mq8ckI9ake81FrrZRBF5htAgGQu
+ z4yOeUk0d5XO0x7tJrQ5LHLlhSmwQli0BX0jZJPfSAuXUsD3a4ymoXGNkn3GIbsQnG12
+ 30Qw==
+X-Gm-Message-State: AOJu0Yy2NnpXxI027ZQDbqS8Onv5jF5KFkH3Lay+CdTeutijBqL1CTNN
+ JT3K2iUjoAWHA2cD4+Vx93Xgqm3lLTW4Bty+sMKV49BasFHalqwAh/lq33dH
+X-Google-Smtp-Source: AGHT+IHeG8OvDdp1Hd81Fpds95oiK0KakPxNqX9S4bKF8EhIHxH47+4gyRALZxXJUz32rN+uwgkC3w==
+X-Received: by 2002:a19:4358:0:b0:521:b42f:2674 with SMTP id
+ 2adb3069b0e04-52210277c35mr145762e87.63.1715275788076; 
+ Thu, 09 May 2024 10:29:48 -0700 (PDT)
 Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
  by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-521f39d33ccsm368544e87.293.2024.05.09.10.29.56
+ 2adb3069b0e04-521f35ad6aasm380187e87.46.2024.05.09.10.29.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 May 2024 10:29:56 -0700 (PDT)
+ Thu, 09 May 2024 10:29:47 -0700 (PDT)
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: edgar.iglesias@gmail.com, sstabellini@kernel.org, jgross@suse.com,
  "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
  Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
  xen-devel@lists.xenproject.org
-Subject: [PATCH v5 7/8] xen: mapcache: Add support for grant mappings
-Date: Fri,  3 May 2024 03:44:48 +0200
-Message-Id: <20240503014449.1046238-8-edgar.iglesias@gmail.com>
+Subject: [PATCH v5 1/8] xen: mapcache: Make MCACHE_BUCKET_SHIFT runtime
+ configurable
+Date: Fri,  3 May 2024 03:44:42 +0200
+Message-Id: <20240503014449.1046238-2-edgar.iglesias@gmail.com>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20240503014449.1046238-1-edgar.iglesias@gmail.com>
 References: <20240503014449.1046238-1-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x12e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x234.google.com
 X-Spam_score_int: 13
 X-Spam_score: 1.3
 X-Spam_bar: +
@@ -98,426 +99,180 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 
-Add a second mapcache for grant mappings. The mapcache for
-grants needs to work with XC_PAGE_SIZE granularity since
-we can't map larger ranges than what has been granted to us.
-
-Like with foreign mappings (xen_memory), machines using grants
-are expected to initialize the xen_grants MR and map it
-into their address-map accordingly.
+Make MCACHE_BUCKET_SHIFT runtime configurable per cache instance.
 
 Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
 ---
- hw/xen/xen-hvm-common.c         |  12 ++-
- hw/xen/xen-mapcache.c           | 163 ++++++++++++++++++++++++++------
- include/hw/xen/xen-hvm-common.h |   3 +
- include/sysemu/xen.h            |   7 ++
- 4 files changed, 152 insertions(+), 33 deletions(-)
+ hw/xen/xen-mapcache.c | 54 ++++++++++++++++++++++++++-----------------
+ 1 file changed, 33 insertions(+), 21 deletions(-)
 
-diff --git a/hw/xen/xen-hvm-common.c b/hw/xen/xen-hvm-common.c
-index c94f1990c5..7a1e2ce4b3 100644
---- a/hw/xen/xen-hvm-common.c
-+++ b/hw/xen/xen-hvm-common.c
-@@ -10,12 +10,18 @@
- #include "hw/boards.h"
- #include "hw/xen/arch_hvm.h"
- 
--MemoryRegion xen_memory;
-+MemoryRegion xen_memory, xen_grants;
- 
--/* Check for xen memory.  */
-+/* Check for any kind of xen memory, foreign mappings or grants.  */
- bool xen_mr_is_memory(MemoryRegion *mr)
- {
--    return mr == &xen_memory;
-+    return mr == &xen_memory || mr == &xen_grants;
-+}
-+
-+/* Check specifically for grants.  */
-+bool xen_mr_is_grants(MemoryRegion *mr)
-+{
-+    return mr == &xen_grants;
- }
- 
- void xen_ram_alloc(ram_addr_t ram_addr, ram_addr_t size, MemoryRegion *mr,
 diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-index 26bc38a9e3..25041ab02d 100644
+index fa6813b1ad..bc860f4373 100644
 --- a/hw/xen/xen-mapcache.c
 +++ b/hw/xen/xen-mapcache.c
-@@ -14,6 +14,7 @@
+@@ -23,13 +23,10 @@
  
- #include <sys/resource.h>
- 
-+#include "hw/xen/xen-hvm-common.h"
- #include "hw/xen/xen_native.h"
- #include "qemu/bitmap.h"
- 
-@@ -21,6 +22,8 @@
- #include "sysemu/xen-mapcache.h"
- #include "trace.h"
- 
-+#include <xenevtchn.h>
-+#include <xengnttab.h>
  
  #if HOST_LONG_BITS == 32
+-#  define MCACHE_BUCKET_SHIFT 16
  #  define MCACHE_MAX_SIZE     (1UL<<31) /* 2GB Cap */
-@@ -41,6 +44,7 @@ typedef struct MapCacheEntry {
-     unsigned long *valid_mapping;
-     uint32_t lock;
- #define XEN_MAPCACHE_ENTRY_DUMMY (1 << 0)
-+#define XEN_MAPCACHE_ENTRY_GRANT (1 << 1)
-     uint8_t flags;
-     hwaddr size;
-     struct MapCacheEntry *next;
-@@ -71,6 +75,8 @@ typedef struct MapCache {
- } MapCache;
+ #else
+-#  define MCACHE_BUCKET_SHIFT 20
+ #  define MCACHE_MAX_SIZE     (1UL<<35) /* 32GB Cap */
+ #endif
+-#define MCACHE_BUCKET_SIZE (1UL << MCACHE_BUCKET_SHIFT)
  
- static MapCache *mapcache;
-+static MapCache *mapcache_grants;
-+static xengnttab_handle *xen_region_gnttabdev;
- 
- static inline void mapcache_lock(MapCache *mc)
- {
-@@ -131,6 +137,12 @@ void xen_map_cache_init(phys_offset_to_gaddr_t f, void *opaque)
+ /* This is the size of the virtual address space reserve to QEMU that will not
+  * be use by MapCache.
+@@ -65,7 +62,8 @@ typedef struct MapCache {
+     /* For most cases (>99.9%), the page address is the same. */
+     MapCacheEntry *last_entry;
      unsigned long max_mcache_size;
-     unsigned int bucket_shift;
+-    unsigned int mcache_bucket_shift;
++    unsigned int bucket_shift;
++    unsigned long bucket_size;
  
-+    xen_region_gnttabdev = xengnttab_open(NULL, 0);
-+    if (xen_region_gnttabdev == NULL) {
-+        error_report("mapcache: Failed to open gnttab device");
-+        exit(EXIT_FAILURE);
+     phys_offset_to_gaddr_t phys_offset_to_gaddr;
+     QemuMutex lock;
+@@ -95,11 +93,14 @@ static inline int test_bits(int nr, int size, const unsigned long *addr)
+ 
+ static MapCache *xen_map_cache_init_single(phys_offset_to_gaddr_t f,
+                                            void *opaque,
++                                           unsigned int bucket_shift,
+                                            unsigned long max_size)
+ {
+     unsigned long size;
+     MapCache *mc;
+ 
++    assert(bucket_shift >= XC_PAGE_SHIFT);
++
+     mc = g_new0(MapCache, 1);
+ 
+     mc->phys_offset_to_gaddr = f;
+@@ -108,12 +109,14 @@ static MapCache *xen_map_cache_init_single(phys_offset_to_gaddr_t f,
+ 
+     QTAILQ_INIT(&mc->locked_entries);
+ 
++    mc->bucket_shift = bucket_shift;
++    mc->bucket_size = 1UL << bucket_shift;
+     mc->max_mcache_size = max_size;
+ 
+     mc->nr_buckets =
+         (((mc->max_mcache_size >> XC_PAGE_SHIFT) +
+-          (1UL << (MCACHE_BUCKET_SHIFT - XC_PAGE_SHIFT)) - 1) >>
+-         (MCACHE_BUCKET_SHIFT - XC_PAGE_SHIFT));
++          (1UL << (bucket_shift - XC_PAGE_SHIFT)) - 1) >>
++         (bucket_shift - XC_PAGE_SHIFT));
+ 
+     size = mc->nr_buckets * sizeof(MapCacheEntry);
+     size = (size + XC_PAGE_SIZE - 1) & ~(XC_PAGE_SIZE - 1);
+@@ -126,6 +129,13 @@ void xen_map_cache_init(phys_offset_to_gaddr_t f, void *opaque)
+ {
+     struct rlimit rlimit_as;
+     unsigned long max_mcache_size;
++    unsigned int bucket_shift;
++
++    if (HOST_LONG_BITS == 32) {
++        bucket_shift = 16;
++    } else {
++        bucket_shift = 20;
 +    }
-+
-     if (HOST_LONG_BITS == 32) {
-         bucket_shift = 16;
-     } else {
-@@ -159,6 +171,15 @@ void xen_map_cache_init(phys_offset_to_gaddr_t f, void *opaque)
-     mapcache = xen_map_cache_init_single(f, opaque,
-                                          bucket_shift,
-                                          max_mcache_size);
-+
-+    /*
-+     * Grant mappings must use XC_PAGE_SIZE granularity since we can't
-+     * map anything beyond the number of pages granted to us.
-+     */
-+    mapcache_grants = xen_map_cache_init_single(f, opaque,
-+                                                XC_PAGE_SHIFT,
-+                                                max_mcache_size);
-+
+ 
+     if (geteuid() == 0) {
+         rlimit_as.rlim_cur = RLIM_INFINITY;
+@@ -146,7 +156,9 @@ void xen_map_cache_init(phys_offset_to_gaddr_t f, void *opaque)
+         }
+     }
+ 
+-    mapcache = xen_map_cache_init_single(f, opaque, max_mcache_size);
++    mapcache = xen_map_cache_init_single(f, opaque,
++                                         bucket_shift,
++                                         max_mcache_size);
      setrlimit(RLIMIT_AS, &rlimit_as);
  }
  
-@@ -168,17 +189,24 @@ static void xen_remap_bucket(MapCache *mc,
-                              hwaddr size,
-                              hwaddr address_index,
-                              bool dummy,
-+                             bool grant,
-+                             bool is_write,
-                              ram_addr_t ram_offset)
- {
-     uint8_t *vaddr_base;
--    xen_pfn_t *pfns;
-+    uint32_t *refs = NULL;
-+    xen_pfn_t *pfns = NULL;
-     int *err;
-     unsigned int i;
-     hwaddr nb_pfn = size >> XC_PAGE_SHIFT;
- 
-     trace_xen_remap_bucket(address_index);
- 
--    pfns = g_new0(xen_pfn_t, nb_pfn);
-+    if (grant) {
-+        refs = g_new0(uint32_t, nb_pfn);
-+    } else {
-+        pfns = g_new0(xen_pfn_t, nb_pfn);
-+    }
-     err = g_new0(int, nb_pfn);
- 
-     if (entry->vaddr_base != NULL) {
-@@ -207,21 +235,51 @@ static void xen_remap_bucket(MapCache *mc,
-     g_free(entry->valid_mapping);
+@@ -195,7 +207,7 @@ static void xen_remap_bucket(MapCache *mc,
      entry->valid_mapping = NULL;
  
--    for (i = 0; i < nb_pfn; i++) {
--        pfns[i] = (address_index << (mc->bucket_shift - XC_PAGE_SHIFT)) + i;
-+    if (grant) {
-+        hwaddr grant_base = address_index - (ram_offset >> XC_PAGE_SHIFT);
-+
-+        for (i = 0; i < nb_pfn; i++) {
-+            refs[i] = grant_base + i;
-+        }
-+    } else {
-+        for (i = 0; i < nb_pfn; i++) {
-+            pfns[i] = (address_index << (mc->bucket_shift - XC_PAGE_SHIFT)) + i;
-+        }
+     for (i = 0; i < nb_pfn; i++) {
+-        pfns[i] = (address_index << (MCACHE_BUCKET_SHIFT-XC_PAGE_SHIFT)) + i;
++        pfns[i] = (address_index << (mc->bucket_shift - XC_PAGE_SHIFT)) + i;
      }
  
--    /*
--     * If the caller has requested the mapping at a specific address use
--     * MAP_FIXED to make sure it's honored.
--     */
-+    entry->flags &= ~XEN_MAPCACHE_ENTRY_GRANT;
-+
-     if (!dummy) {
--        vaddr_base = xenforeignmemory_map2(xen_fmem, xen_domid, vaddr,
--                                           PROT_READ | PROT_WRITE,
--                                           vaddr ? MAP_FIXED : 0,
--                                           nb_pfn, pfns, err);
-+        if (grant) {
-+            int prot = PROT_READ;
-+
-+            if (is_write) {
-+                prot |= PROT_WRITE;
-+            }
-+
-+            entry->flags |= XEN_MAPCACHE_ENTRY_GRANT;
-+            assert(vaddr == NULL);
-+            vaddr_base = xengnttab_map_domain_grant_refs(xen_region_gnttabdev,
-+                                                         nb_pfn,
-+                                                         xen_domid, refs,
-+                                                         prot);
-+        } else {
-+            /*
-+             * If the caller has requested the mapping at a specific address use
-+             * MAP_FIXED to make sure it's honored.
-+             *
-+             * We don't yet support upgrading mappings from RO to RW, to handle
-+             * models using ordinary address_space_rw(), foreign mappings ignore
-+             * is_write and are always mapped RW.
-+             */
-+            vaddr_base = xenforeignmemory_map2(xen_fmem, xen_domid, vaddr,
-+                                               PROT_READ | PROT_WRITE,
-+                                               vaddr ? MAP_FIXED : 0,
-+                                               nb_pfn, pfns, err);
-+        }
-         if (vaddr_base == NULL) {
--            perror("xenforeignmemory_map2");
-+            perror(grant ? "xengnttab_map_domain_grant_refs"
-+                           : "xenforeignmemory_map2");
-             exit(-1);
+     /*
+@@ -266,8 +278,8 @@ static uint8_t *xen_map_cache_unlocked(MapCache *mc,
+     bool dummy = false;
+ 
+ tryagain:
+-    address_index  = phys_addr >> MCACHE_BUCKET_SHIFT;
+-    address_offset = phys_addr & (MCACHE_BUCKET_SIZE - 1);
++    address_index  = phys_addr >> mc->bucket_shift;
++    address_offset = phys_addr & (mc->bucket_size - 1);
+ 
+     trace_xen_map_cache(phys_addr);
+ 
+@@ -294,14 +306,14 @@ tryagain:
+         return mc->last_entry->vaddr_base + address_offset;
+     }
+ 
+-    /* size is always a multiple of MCACHE_BUCKET_SIZE */
++    /* size is always a multiple of mc->bucket_size */
+     if (size) {
+         cache_size = size + address_offset;
+-        if (cache_size % MCACHE_BUCKET_SIZE) {
+-            cache_size += MCACHE_BUCKET_SIZE - (cache_size % MCACHE_BUCKET_SIZE);
++        if (cache_size % mc->bucket_size) {
++            cache_size += mc->bucket_size - (cache_size % mc->bucket_size);
          }
      } else {
-@@ -261,6 +319,7 @@ static void xen_remap_bucket(MapCache *mc,
-         }
+-        cache_size = MCACHE_BUCKET_SIZE;
++        cache_size = mc->bucket_size;
      }
  
-+    g_free(refs);
-     g_free(pfns);
-     g_free(err);
- }
-@@ -268,7 +327,8 @@ static void xen_remap_bucket(MapCache *mc,
- static uint8_t *xen_map_cache_unlocked(MapCache *mc,
-                                        hwaddr phys_addr, hwaddr size,
-                                        ram_addr_t ram_offset,
--                                       uint8_t lock, bool dma, bool is_write)
-+                                       uint8_t lock, bool dma,
-+                                       bool grant, bool is_write)
- {
-     MapCacheEntry *entry, *pentry = NULL,
-                   *free_entry = NULL, *free_pentry = NULL;
-@@ -340,7 +400,7 @@ tryagain:
-         entry = g_new0(MapCacheEntry, 1);
-         pentry->next = entry;
-         xen_remap_bucket(mc, entry, NULL, cache_size, address_index, dummy,
--                         ram_offset);
-+                         grant, is_write, ram_offset);
-     } else if (!entry->lock) {
-         if (!entry->vaddr_base || entry->paddr_index != address_index ||
-                 entry->size != cache_size ||
-@@ -348,7 +408,7 @@ tryagain:
-                     test_bit_size >> XC_PAGE_SHIFT,
-                     entry->valid_mapping)) {
-             xen_remap_bucket(mc, entry, NULL, cache_size, address_index, dummy,
--                             ram_offset);
-+                             grant, is_write, ram_offset);
-         }
-     }
- 
-@@ -399,12 +459,28 @@ uint8_t *xen_map_cache(MemoryRegion *mr,
-                        uint8_t lock, bool dma,
-                        bool is_write)
- {
-+    bool grant = xen_mr_is_grants(mr);
-+    MapCache *mc = grant ? mapcache_grants : mapcache;
-     uint8_t *p;
- 
--    mapcache_lock(mapcache);
--    p = xen_map_cache_unlocked(mapcache, phys_addr, size, ram_addr_offset,
--                               lock, dma, is_write);
--    mapcache_unlock(mapcache);
-+    if (grant) {
-+        /*
-+         * Grants are only supported via address_space_map(). Anything
-+         * else is considered a user/guest error.
-+         *
-+         * QEMU generally doesn't expect these mappings to ever fail, so
-+         * if this happens we report an error message and abort().
-+         */
-+        if (!lock) {
-+            error_report("Trying access a grant reference without mapping it.");
-+            abort();
-+        }
-+    }
-+
-+    mapcache_lock(mc);
-+    p = xen_map_cache_unlocked(mc, phys_addr, size, ram_addr_offset,
-+                               lock, dma, grant, is_write);
-+    mapcache_unlock(mc);
-     return p;
- }
- 
-@@ -449,7 +525,14 @@ static ram_addr_t xen_ram_addr_from_mapcache_single(MapCache *mc, void *ptr)
- 
- ram_addr_t xen_ram_addr_from_mapcache(void *ptr)
- {
--    return xen_ram_addr_from_mapcache_single(mapcache, ptr);
-+    ram_addr_t addr;
-+
-+    addr = xen_ram_addr_from_mapcache_single(mapcache, ptr);
-+    if (addr == RAM_ADDR_INVALID) {
-+        addr = xen_ram_addr_from_mapcache_single(mapcache_grants, ptr);
-+    }
-+
-+    return addr;
- }
- 
- static void xen_invalidate_map_cache_entry_unlocked(MapCache *mc,
-@@ -460,6 +543,7 @@ static void xen_invalidate_map_cache_entry_unlocked(MapCache *mc,
-     hwaddr paddr_index;
-     hwaddr size;
-     int found = 0;
-+    int rc;
- 
-     QTAILQ_FOREACH(reventry, &mc->locked_entries, next) {
-         if (reventry->vaddr_req == buffer) {
-@@ -502,7 +586,14 @@ static void xen_invalidate_map_cache_entry_unlocked(MapCache *mc,
-     }
- 
-     ram_block_notify_remove(entry->vaddr_base, entry->size, entry->size);
--    if (munmap(entry->vaddr_base, entry->size) != 0) {
-+    if (entry->flags & XEN_MAPCACHE_ENTRY_GRANT) {
-+        rc = xengnttab_unmap(xen_region_gnttabdev, entry->vaddr_base,
-+                             entry->size >> mc->bucket_shift);
-+    } else {
-+        rc = munmap(entry->vaddr_base, entry->size);
-+    }
-+
-+    if (rc) {
-         perror("unmap fails");
-         exit(-1);
-     }
-@@ -521,14 +612,24 @@ typedef struct XenMapCacheData {
-     uint8_t *buffer;
- } XenMapCacheData;
- 
-+static void xen_invalidate_map_cache_entry_single(MapCache *mc, uint8_t *buffer)
-+{
-+    mapcache_lock(mc);
-+    xen_invalidate_map_cache_entry_unlocked(mc, buffer);
-+    mapcache_unlock(mc);
-+}
-+
-+static void xen_invalidate_map_cache_entry_all(uint8_t *buffer)
-+{
-+    xen_invalidate_map_cache_entry_single(mapcache, buffer);
-+    xen_invalidate_map_cache_entry_single(mapcache_grants, buffer);
-+}
-+
- static void xen_invalidate_map_cache_entry_bh(void *opaque)
- {
-     XenMapCacheData *data = opaque;
- 
--    mapcache_lock(mapcache);
--    xen_invalidate_map_cache_entry_unlocked(mapcache, data->buffer);
--    mapcache_unlock(mapcache);
--
-+    xen_invalidate_map_cache_entry_all(data->buffer);
-     aio_co_wake(data->co);
- }
- 
-@@ -543,9 +644,7 @@ void coroutine_mixed_fn xen_invalidate_map_cache_entry(uint8_t *buffer)
-                                 xen_invalidate_map_cache_entry_bh, &data);
-         qemu_coroutine_yield();
+     entry = &mc->entry[address_index % mc->nr_buckets];
+@@ -422,7 +434,7 @@ static ram_addr_t xen_ram_addr_from_mapcache_single(MapCache *mc, void *ptr)
+         trace_xen_ram_addr_from_mapcache_not_in_cache(ptr);
+         raddr = RAM_ADDR_INVALID;
      } else {
--        mapcache_lock(mapcache);
--        xen_invalidate_map_cache_entry_unlocked(mapcache, buffer);
--        mapcache_unlock(mapcache);
-+        xen_invalidate_map_cache_entry_all(buffer);
+-        raddr = (reventry->paddr_index << MCACHE_BUCKET_SHIFT) +
++        raddr = (reventry->paddr_index << mc->bucket_shift) +
+              ((unsigned long) ptr - (unsigned long) entry->vaddr_base);
      }
- }
+     mapcache_unlock(mc);
+@@ -585,8 +597,8 @@ static uint8_t *xen_replace_cache_entry_unlocked(MapCache *mc,
+     hwaddr address_index, address_offset;
+     hwaddr test_bit_size, cache_size = size;
  
-@@ -597,6 +696,7 @@ void xen_invalidate_map_cache(void)
-     bdrv_drain_all();
+-    address_index  = old_phys_addr >> MCACHE_BUCKET_SHIFT;
+-    address_offset = old_phys_addr & (MCACHE_BUCKET_SIZE - 1);
++    address_index  = old_phys_addr >> mc->bucket_shift;
++    address_offset = old_phys_addr & (mc->bucket_size - 1);
  
-     xen_invalidate_map_cache_single(mapcache);
-+    xen_invalidate_map_cache_single(mapcache_grants);
- }
+     assert(size);
+     /* test_bit_size is always a multiple of XC_PAGE_SIZE */
+@@ -595,8 +607,8 @@ static uint8_t *xen_replace_cache_entry_unlocked(MapCache *mc,
+         test_bit_size += XC_PAGE_SIZE - (test_bit_size % XC_PAGE_SIZE);
+     }
+     cache_size = size + address_offset;
+-    if (cache_size % MCACHE_BUCKET_SIZE) {
+-        cache_size += MCACHE_BUCKET_SIZE - (cache_size % MCACHE_BUCKET_SIZE);
++    if (cache_size % mc->bucket_size) {
++        cache_size += mc->bucket_size - (cache_size % mc->bucket_size);
+     }
  
- static uint8_t *xen_replace_cache_entry_unlocked(MapCache *mc,
-@@ -632,13 +732,16 @@ static uint8_t *xen_replace_cache_entry_unlocked(MapCache *mc,
+     entry = &mc->entry[address_index % mc->nr_buckets];
+@@ -609,8 +621,8 @@ static uint8_t *xen_replace_cache_entry_unlocked(MapCache *mc,
          return NULL;
      }
  
-+    assert((entry->flags & XEN_MAPCACHE_ENTRY_GRANT) == 0);
-+
-     address_index  = new_phys_addr >> mc->bucket_shift;
-     address_offset = new_phys_addr & (mc->bucket_size - 1);
+-    address_index  = new_phys_addr >> MCACHE_BUCKET_SHIFT;
+-    address_offset = new_phys_addr & (MCACHE_BUCKET_SIZE - 1);
++    address_index  = new_phys_addr >> mc->bucket_shift;
++    address_offset = new_phys_addr & (mc->bucket_size - 1);
  
      trace_xen_replace_cache_entry_dummy(old_phys_addr, new_phys_addr);
  
-     xen_remap_bucket(mc, entry, entry->vaddr_base,
--                     cache_size, address_index, false, new_phys_addr);
-+                     cache_size, address_index, false,
-+                     false, false, new_phys_addr);
-     if (!test_bits(address_offset >> XC_PAGE_SHIFT,
-                 test_bit_size >> XC_PAGE_SHIFT,
-                 entry->valid_mapping)) {
-diff --git a/include/hw/xen/xen-hvm-common.h b/include/hw/xen/xen-hvm-common.h
-index 65a51aac2e..3d796235dc 100644
---- a/include/hw/xen/xen-hvm-common.h
-+++ b/include/hw/xen/xen-hvm-common.h
-@@ -16,6 +16,7 @@
- #include <xen/hvm/ioreq.h>
- 
- extern MemoryRegion xen_memory;
-+extern MemoryRegion xen_grants;
- extern MemoryListener xen_io_listener;
- extern DeviceListener xen_device_listener;
- 
-@@ -29,6 +30,8 @@ extern DeviceListener xen_device_listener;
-     do { } while (0)
- #endif
- 
-+#define XEN_GRANT_ADDR_OFF (1ULL << 63)
-+
- static inline uint32_t xen_vcpu_eport(shared_iopage_t *shared_page, int i)
- {
-     return shared_page->vcpu_ioreq[i].vp_eport;
-diff --git a/include/sysemu/xen.h b/include/sysemu/xen.h
-index dc72f83bcb..19dccf4d71 100644
---- a/include/sysemu/xen.h
-+++ b/include/sysemu/xen.h
-@@ -35,6 +35,7 @@ void xen_ram_alloc(ram_addr_t ram_addr, ram_addr_t size,
-                    struct MemoryRegion *mr, Error **errp);
- 
- bool xen_mr_is_memory(MemoryRegion *mr);
-+bool xen_mr_is_grants(MemoryRegion *mr);
- 
- #else /* !CONFIG_XEN_IS_POSSIBLE */
- 
-@@ -55,6 +56,12 @@ static inline bool xen_mr_is_memory(MemoryRegion *mr)
-     return false;
- }
- 
-+static inline bool xen_mr_is_grants(MemoryRegion *mr)
-+{
-+    g_assert_not_reached();
-+    return false;
-+}
-+
- #endif /* CONFIG_XEN_IS_POSSIBLE */
- 
- #endif
 -- 
 2.40.1
 
