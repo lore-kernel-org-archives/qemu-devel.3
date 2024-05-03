@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCA63C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 15:37:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A9ECC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 15:38:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2uyM-0003Hn-Ay; Fri, 03 May 2024 11:37:18 -0400
+	id 1s2uyT-0004M9-6c; Fri, 03 May 2024 11:37:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2uxs-00036g-8v
- for qemu-devel@nongnu.org; Fri, 03 May 2024 11:36:49 -0400
-Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2uyK-0003ZH-BQ
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 11:37:18 -0400
+Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2uxq-0002jo-IR
- for qemu-devel@nongnu.org; Fri, 03 May 2024 11:36:48 -0400
-Received: by mail-lf1-x12a.google.com with SMTP id
- 2adb3069b0e04-51f1b378ca5so3539412e87.1
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 08:36:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2uyH-0002lL-Rn
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 11:37:16 -0400
+Received: by mail-lf1-x12e.google.com with SMTP id
+ 2adb3069b0e04-51f17ac14daso2698298e87.1
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 08:37:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714750604; x=1715355404; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714750631; x=1715355431; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=z1hVAWqle0Mz/JboTJUAwXdqwQ9y68NGrGd6TXjKRdw=;
- b=A4zkzidb+D7JH8jZcQlQ8T1o1uDcPsyR65X3dg9hOb6fibUyNFB3z+MDB0KxliJWsx
- 39CdS5VEosvV2o7WY9XAAy3xY7LSmunmky7pJw8N3O0mgPXiu+9RcVDOuX/T8OoEYa4f
- ybFuW3WG1RLQHFqMtQ/lBg/K6BEQmvzM3PDEXBaByZKw9x1KLE8j+aOAuMnACVq4bhro
- 86GiLaLOSPC/DG6QF0EA09xaxjgYFy2PdOZL6NjETextGAhjKM06f8na9s6AZMwJPEwD
- TrLrXnztuEJVVnGDTr/p8RZ3qOL47675+70ZULZbyEbTxMgW6+Sw1L1UedTK+UJ97BBO
- pc/g==
+ bh=TYufu7DpgZYDotR1hfS1ObeVUHdd9gyKuKm2GZNB3KM=;
+ b=DV38KcXL/X+UoUlb5HiTv8w/1ifHxahE4ykG+4w2ilY95PoKQJ3IwcRaMMz1g1VgVa
+ tUgDTLYpHl+L7SpACTRBhL/RmLbFc4Pfl33OYLlxPGuDP9XWPViIBnTnZhCrJIy/+mEr
+ jUlrfvYxryflSooS4YWR5DIsLTR06AwpWRzHtlGSm6B1let4m6N49ZcW0e6Dqt9Y2tpw
+ Cx4HpZjNUd9NUpefbrPmnUdppbkfBILP3QOCJkjqCYJAbWQxarpHPZAuqWc49oKKVA8m
+ uYx+lhYFMSlUWh0/fALJEVypouvh7FondHhXDybK2g7h2sEIvl6Nrs2VSWwiresjB7H0
+ JXTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714750604; x=1715355404;
+ d=1e100.net; s=20230601; t=1714750631; x=1715355431;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=z1hVAWqle0Mz/JboTJUAwXdqwQ9y68NGrGd6TXjKRdw=;
- b=ah7kYzR0BHYBxK3tAZjgaLwiVuGBe76pAalOyxOCUu0o70+gv/fREltJNdF9CkzeCV
- vzmpYJPYt9KMb5K1bKT/rSl9kC9ePDavIiwq24E1BLKk+3UCpkGkqreGdoHPhUPV4RVM
- pwpkrXhXUEIXBLWXlUQ+IUHcHcgyz3nzjVNjqdTMBFuaGNhU6woPehpjX4QLJOfReJ1v
- a9pEeCdVb5Gh+TDAW0lPD8KjkQ7439oUAifqQo3pzHgMMQborYosL3z8UOwUMvl2LyiO
- Yb+/ytyIpbXyzoo72KwaNNZOYQNDzuHH4lpCHigDiG5UVI9YtUBayuiQnmRLborsBEwZ
- qErQ==
-X-Gm-Message-State: AOJu0YxE/YCpelpjeQ19i1r9DN4z4rRGgKiis3URlNiXEpKqtKJKmp1n
- MbtKc0ZHx5RE8izulkWgWZ1rqMM/YjLbLOqJ/KVjfX8Wcyo3hyMvcTvbU64EtOMw60vS3LPCOhR
- H
-X-Google-Smtp-Source: AGHT+IGQHu71mGmPbza/1iJRgncgeGQbQrF8epAxL5Pk8NczWyd1FSRr4NqFETROkSgYWt9O/We3Hg==
-X-Received: by 2002:ac2:51b0:0:b0:51a:c3b8:b9cf with SMTP id
- f16-20020ac251b0000000b0051ac3b8b9cfmr2381768lfk.69.1714750604395; 
- Fri, 03 May 2024 08:36:44 -0700 (PDT)
+ bh=TYufu7DpgZYDotR1hfS1ObeVUHdd9gyKuKm2GZNB3KM=;
+ b=ibifW9W6txN7Su+EX53HSv8goFtgNyXlA23MixjwWH+l107O56szTKTZIxvzG74Lyf
+ Y6VGrk4w79smNHs2Co+5sjjoV/eAyhZbRFUVDWw+Ic5bFQDRI72zYcdqi3uDXUPenWqi
+ zMY4+nQEnejGKCfpQStJbq7gZWB2Ne/yeVb+5zFamS6y9HXo0x4THKb26vFtN8fN1AYp
+ QTI+tldHU4YAgsHkqnPFmpj6FAQtqbexrQoPeal8KsHQbvC3cXSCmMwC5+NlFSKEoFsh
+ QF+dYY68bTgp+BfBxhLMn65jhhXHk0hjljif+1SP3XZ0nZf+Bh90KVwcqiEu8KHwL9ui
+ P9Dg==
+X-Gm-Message-State: AOJu0YwGO4q66vz2fYq5Xwlldi4KBuhqf8xCHmsdWC5BrgZEuPvakjAM
+ HznQB3mX03NjTP+f+3+LBbN/KdBFF6AOn9X0axOEkl+xYNF5Efv9UH0nvvBzCNLNEoMmHgvIHit
+ N
+X-Google-Smtp-Source: AGHT+IHCWClKP9jgJfQd/v1RHoSkIyY4j+j65Ej5E6qWegcYSihkBWGCxzZFpGjYgUeNzf8hvC0BSw==
+X-Received: by 2002:ac2:5483:0:b0:51c:85b:bb72 with SMTP id
+ t3-20020ac25483000000b0051c085bbb72mr1974905lfk.26.1714750630996; 
+ Fri, 03 May 2024 08:37:10 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.179.187])
  by smtp.gmail.com with ESMTPSA id
- xo16-20020a170907bb9000b00a55b1253fe5sm1814337ejc.194.2024.05.03.08.36.43
+ s20-20020a170906061400b00a52274ee0a7sm1843364ejb.171.2024.05.03.08.37.09
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 03 May 2024 08:36:43 -0700 (PDT)
+ Fri, 03 May 2024 08:37:10 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 05/14] user: Move 'thunk.h' from 'exec/user' to 'user'
-Date: Fri,  3 May 2024 17:36:04 +0200
-Message-ID: <20240503153613.38709-6-philmd@linaro.org>
+ qemu-stable@nongnu.org, Paul Cercueil <paul@crapouillou.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>
+Subject: [PULL 10/14] target/sh4: Fix ADDV opcode
+Date: Fri,  3 May 2024 17:36:09 +0200
+Message-ID: <20240503153613.38709-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240503153613.38709-1-philmd@linaro.org>
 References: <20240503153613.38709-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,93 +96,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Keep all user emulation headers under the same user/ directory.
+The documentation says:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+  ADDV Rm, Rn        Rn + Rm -> Rn, overflow -> T
+
+But QEMU implementation was:
+
+  ADDV Rm, Rn        Rn + Rm -> Rm, overflow -> T
+
+Fix by filling the correct Rm register.
+
+Add tests provided by Paul Cercueil.
+
+Cc: qemu-stable@nongnu.org
+Fixes: ad8d25a11f ("target-sh4: implement addv and subv using TCG")
+Reported-by: Paul Cercueil <paul@crapouillou.net>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2317
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240428221450.26460-2-philmd@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Yoshinori Sato <ysato@users.sourceforge.jp>
+Message-Id: <20240430163125.77430-2-philmd@linaro.org>
 ---
- MAINTAINERS                     | 1 -
- bsd-user/qemu.h                 | 2 +-
- include/{exec => }/user/thunk.h | 8 ++++++--
- linux-user/user-internals.h     | 2 +-
- linux-user/thunk.c              | 2 +-
- 5 files changed, 9 insertions(+), 6 deletions(-)
- rename include/{exec => }/user/thunk.h (97%)
+ target/sh4/translate.c        |  2 +-
+ tests/tcg/sh4/test-addv.c     | 27 +++++++++++++++++++++++++++
+ tests/tcg/sh4/Makefile.target |  3 +++
+ 3 files changed, 31 insertions(+), 1 deletion(-)
+ create mode 100644 tests/tcg/sh4/test-addv.c
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 302b6fd00c..96411e6adf 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3692,7 +3692,6 @@ Overall usermode emulation
- M: Riku Voipio <riku.voipio@iki.fi>
- S: Maintained
- F: accel/tcg/user-exec*.c
--F: include/exec/user/
- F: include/user/
- F: common-user/
- 
-diff --git a/bsd-user/qemu.h b/bsd-user/qemu.h
-index a0c1ad7efa..a916724de9 100644
---- a/bsd-user/qemu.h
-+++ b/bsd-user/qemu.h
-@@ -26,7 +26,7 @@
- 
- extern char **environ;
- 
--#include "exec/user/thunk.h"
-+#include "user/thunk.h"
- #include "target_arch.h"
- #include "syscall_defs.h"
- #include "target_syscall.h"
-diff --git a/include/exec/user/thunk.h b/include/user/thunk.h
-similarity index 97%
-rename from include/exec/user/thunk.h
-rename to include/user/thunk.h
-index 9f35c888f9..2a2104b568 100644
---- a/include/exec/user/thunk.h
-+++ b/include/user/thunk.h
-@@ -17,8 +17,12 @@
-  * License along with this library; if not, see <http://www.gnu.org/licenses/>.
-  */
- 
--#ifndef THUNK_H
--#define THUNK_H
-+#ifndef USER_THUNK_H
-+#define USER_THUNK_H
+diff --git a/target/sh4/translate.c b/target/sh4/translate.c
+index ebb6c901bf..4a1dd0d1f4 100644
+--- a/target/sh4/translate.c
++++ b/target/sh4/translate.c
+@@ -714,7 +714,7 @@ static void _decode_opc(DisasContext * ctx)
+             tcg_gen_xor_i32(t2, REG(B7_4), REG(B11_8));
+             tcg_gen_andc_i32(cpu_sr_t, t1, t2);
+             tcg_gen_shri_i32(cpu_sr_t, cpu_sr_t, 31);
+-            tcg_gen_mov_i32(REG(B7_4), t0);
++            tcg_gen_mov_i32(REG(B11_8), t0);
+         }
+         return;
+     case 0x2009: /* and Rm,Rn */
+diff --git a/tests/tcg/sh4/test-addv.c b/tests/tcg/sh4/test-addv.c
+new file mode 100644
+index 0000000000..ca87fe746a
+--- /dev/null
++++ b/tests/tcg/sh4/test-addv.c
+@@ -0,0 +1,27 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
 +
-+#ifndef CONFIG_USER_ONLY
-+#error Cannot include this header from system emulation
-+#endif
++#include <limits.h>
++#include <stdio.h>
++#include <stdlib.h>
++
++static void addv(const int a, const int b, const int res, const int carry)
++{
++    int o = a, c;
++
++    asm volatile("addv %2,%0\n"
++                 "movt %1\n"
++                 : "+r"(o), "=r"(c) : "r"(b) : );
++
++    if (c != carry || o != res) {
++        printf("ADDV %d, %d = %d/%d [T = %d/%d]\n", a, b, o, res, c, carry);
++        abort();
++    }
++}
++
++int main(void)
++{
++    addv(INT_MAX, 1, INT_MIN, 1);
++    addv(INT_MAX - 1, 1, INT_MAX, 0);
++
++    return 0;
++}
+diff --git a/tests/tcg/sh4/Makefile.target b/tests/tcg/sh4/Makefile.target
+index 4d09291c0c..521b8b0a76 100644
+--- a/tests/tcg/sh4/Makefile.target
++++ b/tests/tcg/sh4/Makefile.target
+@@ -17,3 +17,6 @@ TESTS += test-macl
  
- #include "cpu.h"
- #include "user/abitypes.h"
-diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
-index ce11d9e21c..5c7f173ceb 100644
---- a/linux-user/user-internals.h
-+++ b/linux-user/user-internals.h
-@@ -18,7 +18,7 @@
- #ifndef LINUX_USER_USER_INTERNALS_H
- #define LINUX_USER_USER_INTERNALS_H
- 
--#include "exec/user/thunk.h"
-+#include "user/thunk.h"
- #include "exec/exec-all.h"
- #include "exec/tb-flush.h"
- #include "qemu/log.h"
-diff --git a/linux-user/thunk.c b/linux-user/thunk.c
-index 071aad4b5f..3cd19e79c6 100644
---- a/linux-user/thunk.c
-+++ b/linux-user/thunk.c
-@@ -20,7 +20,7 @@
- #include "qemu/log.h"
- 
- #include "qemu.h"
--#include "exec/user/thunk.h"
-+#include "user/thunk.h"
- 
- //#define DEBUG
- 
+ test-macw: CFLAGS += -O -g
+ TESTS += test-macw
++
++test-addv: CFLAGS += -O -g
++TESTS += test-addv
 -- 
 2.41.0
 
