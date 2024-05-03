@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3277C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 12:55:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD22DC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 12:57:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2sR3-0002qb-DZ; Fri, 03 May 2024 08:54:45 -0400
+	id 1s2sSt-00040B-Iq; Fri, 03 May 2024 08:56:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2sR1-0002of-MF
- for qemu-devel@nongnu.org; Fri, 03 May 2024 08:54:44 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2sSr-0003zd-RT
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 08:56:37 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2sQo-0006Ra-H8
- for qemu-devel@nongnu.org; Fri, 03 May 2024 08:54:42 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-41ba1ba5592so50204045e9.1
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 05:54:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2sSp-0007FC-Mx
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 08:56:37 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-41dc9c83e57so11490645e9.0
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 05:56:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714740865; x=1715345665; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714740994; x=1715345794; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=qTrGKWfHdwUoDIhLTj4+dEcr+/0OGfFnRrF8zcB+0vQ=;
- b=JQ3XWPNMxL44DuLO+TBEY7n4oxBCMQh0qCcCMX5xLUn8ZC836ub/FTltk2gcVsbRB1
- 7Ni4Cy/xUTq2MrkeUl6OKFKGPhcBytZuNAENa2v14ojyWMkMZWw0sqDodOM7K8Sa+SH7
- fGT/ES7k5ydrNiNKh5MuAtCnsMa+5qVrTrDubkhyYqp4bJ/dY00Ej+3lqTU/J9PQMBkQ
- jT/Ou+AIJQpwzmS5OBf3v5rAKeFjaaZwUM5RgR1FVR1/gLbxilqgDPgIPsZfUvh3F+IY
- RpgFuBwSAN6RtH5jZ/YNh4fWVPmTgtpFR7SEV5qNtdcUG6KISHFuAweCwfPhbet5Z54z
- KhcA==
+ bh=lxaYcWb+xBzcc9VX7AuLafdW78gfD1N26Mu9ghbppO4=;
+ b=cEEuEprw8zDr2cAWeXQmatk853HdQ0vfQ6QMkIVoVXVn4rcG87xTFq5QW/PDlTu3L1
+ vHOXT8iB4iplujTHs+dWvJkpaN9KRm7mXh5Vcm3GZvOm+tRv3lTf3YjbaF0rY3IUiWMe
+ GQihV31mhvxcJ7YKzeyZFN9C4nvbmjhJWOCFrfvljptIJ43xeXGeRPNsfmhC0zFEf9Zn
+ S5ZkDOQgTxOAdJCuoex8OF3tiMxOxXZ92Z6T+Pla2XBT1Ww7pRmf5iFcpkmOEdlLEKmF
+ 2K69bXrj7pn06O/bEVIGTS2gcbBRwta5in+TgMhygC0opCAvkkg5Qac1vkCcELLbjkjg
+ YsBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714740865; x=1715345665;
+ d=1e100.net; s=20230601; t=1714740994; x=1715345794;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qTrGKWfHdwUoDIhLTj4+dEcr+/0OGfFnRrF8zcB+0vQ=;
- b=B8F30F5w5SdBSDKQfW7DHcONIO4Inqh/+Becf2M3mGXUCkUwjy9zA21+VIwFqdAT6s
- C+PjfUeyh29Uh6QB2NIJ9rj1lc3jRaTZIBJGRHYOzIUQHN5rKeuCsLew5UoPMORYlv6T
- Vv8LC8ueyorucD5Cpbo3DxVHaZs/r/fXMVOALhxlv6kYkgZ0cVcnddp6+15cJMiZxy6D
- m8u5snK91wcPfnj4joLg8jPXhQt5FZyflzt48HvyXBZzNVbl3L5IKYDhWKx9wsVjZYe2
- g2O3ed3gdoMVMRqbL++q+9sE06MsdBkajyxtvqmyB09U9Aa36PxHLtKGzNYJpXZI1kim
- tERg==
-X-Gm-Message-State: AOJu0YxGCxb8wfvK9Xtn8Dh3CitrWy3OaoRnnpO+icLd+MgxWAcwhBn5
- r++yGncmVK6Wxg/D84pxzA8HuNdeAqYm7Q19MSRqGvmZoTShaRDOeSZA7+u1E2tof/7pzC6TDeU
- n
-X-Google-Smtp-Source: AGHT+IGQLYWrGbyPpnbyTZdhgPkr2DrRwDG71DJ2r6Ua+xmEHUHM6PQZiRpsmk1Ujc3kYffVNrw+Vg==
-X-Received: by 2002:a05:600c:a01:b0:417:caa8:c3f4 with SMTP id
- z1-20020a05600c0a0100b00417caa8c3f4mr2544098wmp.34.1714740865531; 
- Fri, 03 May 2024 05:54:25 -0700 (PDT)
+ bh=lxaYcWb+xBzcc9VX7AuLafdW78gfD1N26Mu9ghbppO4=;
+ b=cD7Q+B7ck80H7vSxI1gHm21Q2UUyYAlHNUh28PCVvcgo2rNxJ0GcBAGvKZPjZCwYeD
+ hPdfvcKjRWAyBENSl1gHigTTr/xgmQVx/P/mhNJsk2znnKFeSliqsFSTcf9gpQcV8vvX
+ Nv3PFqRgww1FvONdlA0e6UuNzk4g3CJg2CB0e7PAaMEYMW6E/ZVfPc1ZuBC0heoIf68N
+ MTZCTpQu9H+7DXIuX/peIcMpVxLayjLSNI64EaM4kZJ/ipnMo9ItRZkA84kjXpC/z3ww
+ MKagiX7MimuPCcNw0lEBThmi++KGBeH+GBD5dttTGRRqUN8PiYTcXTGRGHIfF9CzG4c5
+ jgVA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVR/mR62rtZnzRc7k0kvhsonUAIiKnmoyJ13UJt5lO6YhrBbyl57SI0HzSW4k3IeOQDDf/mLcnNFfgUQ1Rve8jVilrsxx8=
+X-Gm-Message-State: AOJu0YwXYiYJ9CM8K1upijdfMEuquP7iKeGRHbGpedzNBW8PvqCbnrBw
+ o05HqusbfGAx/10ESTsPYBxFTArd4xnX4rBD2BbzxlBXmxbuGw+90htMavZSFL0=
+X-Google-Smtp-Source: AGHT+IGjgkuM2400IXhyb4mZtHljeXHcKMz8kCvkPdJYwdp7Pvy2eyt9MCWdXupNK/EdbAWDhW7qDw==
+X-Received: by 2002:adf:a309:0:b0:343:cee1:cbc1 with SMTP id
+ c9-20020adfa309000000b00343cee1cbc1mr4981739wrb.14.1714740993871; 
+ Fri, 03 May 2024 05:56:33 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.179.187])
  by smtp.gmail.com with ESMTPSA id
- n20-20020a05600c501400b0041aa79f27a0sm5553086wmr.38.2024.05.03.05.54.24
+ m3-20020adffa03000000b0034db974d7a1sm3705170wrr.81.2024.05.03.05.56.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 May 2024 05:54:25 -0700 (PDT)
-Message-ID: <f26bb21c-77e7-4366-ae34-062283478a63@linaro.org>
-Date: Fri, 3 May 2024 14:54:23 +0200
+ Fri, 03 May 2024 05:56:33 -0700 (PDT)
+Message-ID: <41d1f49a-5a2d-496e-859c-341b1abc1aa8@linaro.org>
+Date: Fri, 3 May 2024 14:56:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/4] target/sh4: Fix ADDV/SUBV opcodes
-To: qemu-devel@nongnu.org
-Cc: Yoshinori Sato <ysato@users.sourceforge.jp>,
- John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
- Paul Cercueil <paul@crapouillou.net>
-References: <20240430163125.77430-1-philmd@linaro.org>
+Subject: Re: [PATCH] ui/cocoa.m: Drop old macOS-10.12-and-earlier compat ifdefs
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
+References: <20240502142904.62644-1-peter.maydell@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240430163125.77430-1-philmd@linaro.org>
+In-Reply-To: <20240502142904.62644-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,14 +95,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/4/24 18:31, Philippe Mathieu-Daudé wrote:
+On 2/5/24 16:29, Peter Maydell wrote:
+> We only support the most recent two versions of macOS (currently
+> macOS 13 Ventura and macOS 14 Sonoma), and our ui/cocoa.m code
+> already assumes at least macOS 12 Monterey or better, because it uses
+> NSScreen safeAreaInsets, which is 12.0-or-newer.
+> 
+> Remove the ifdefs that were providing backwards compatibility for
+> building on 10.12 and earlier versions.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   ui/cocoa.m | 13 -------------
+>   1 file changed, 13 deletions(-)
 
-> Philippe Mathieu-Daudé (4):
->    target/sh4: Fix ADDV opcode
->    target/sh4: Fix SUBV opcode
->    target/sh4: Rename TCGv variables as manual for ADDV opcode
->    target/sh4: Rename TCGv variables as manual for SUBV opcode
-
-Series queued, thanks.
-
+Thanks, patch queued.
 
