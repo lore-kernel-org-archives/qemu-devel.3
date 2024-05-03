@@ -4,98 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F72DC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 14:30:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF7DFC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 14:33:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2tv7-000178-Ji; Fri, 03 May 2024 10:29:54 -0400
+	id 1s2tyf-00033F-Ro; Fri, 03 May 2024 10:33:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s2tv3-00011K-Cx
- for qemu-devel@nongnu.org; Fri, 03 May 2024 10:29:49 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s2tyd-00032R-Uo
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 10:33:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s2tv1-0006uh-G5
- for qemu-devel@nongnu.org; Fri, 03 May 2024 10:29:49 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s2tyY-0007kH-Hr
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 10:33:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714746586;
+ s=mimecast20190719; t=1714746805;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=t6YRglGSEvHtPQQxrBeb8HU2Ly7fxSw+r00txKDyHcw=;
- b=KG089KVsyoSUgl0Dapz/mHFSUDhiPEe1RPYQskiZN+HoEONnCkpEcqUHDdBMe0yM328Jt2
- DyLMWqW86eW6haaizNLo91aRam+VTBStiooKsFek1t4E5c0IAV42pZRnu2kercs1BcIXtH
- NC7M4IHZIWwsx+uHJlWNh+a5b/VliuM=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=lrp038+BnCCIcL2uudlEhxcEnD1UXWGK6w8wIqAzDqs=;
+ b=c4lh5kbjZwNsG9jFFeFnSGEThKiXJZYxe4LchhIUr7F/wzoDVNlYVULd1avQ6Vcf7lfb3G
+ YYKUtEWUnENyLnCallGbnd54kdwpuOrl4O+42ztoCoURsAnwM//EGbfLM9mnkQSZsytaKp
+ uKr+E/s6kcQFFBmD5q3pdSwvhXgWW+4=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-340-ECGLAmxBMb-7uGhmkDBUJA-1; Fri, 03 May 2024 10:29:45 -0400
-X-MC-Unique: ECGLAmxBMb-7uGhmkDBUJA-1
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-78ed22211c4so1219222485a.1
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 07:29:45 -0700 (PDT)
+ us-mta-522-B-l3FBsmP0C1aow4USJsPg-1; Fri, 03 May 2024 10:33:24 -0400
+X-MC-Unique: B-l3FBsmP0C1aow4USJsPg-1
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-434ed2e412fso27328851cf.0
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 07:33:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714746584; x=1715351384;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=t6YRglGSEvHtPQQxrBeb8HU2Ly7fxSw+r00txKDyHcw=;
- b=FmD1KiG3qReoUz+NWNyFBE2kAPW66gFaouj2ZbmwyQu3ZDBZOsYCO5IRY/D66eOF2e
- YlRqo4yrAZcr3dSLycXWCD8HmlVXmMDD8Wq4k8fltdMPLv3euip20N0wKaI7noz3N5Nu
- /ecXX44SL0oaNAvPzd+TVhFyZ5BbVEuVOjBTgbOw+DdeyUFwk3B33xc/XHlzT6KELRMY
- xhwTVXTbCNGBTrP1tw2eP6xT8DK/BmpQXptq5RmcziS9xT+HUMKJtbe2SGeIeD/No/QZ
- EGFSTTx7eUPH6aNI1TAIrUHkd9txL+Fuy/3NrjF+ZxOLmG2Uag81RIElE0uj8GgQZDGE
- RHpQ==
+ d=1e100.net; s=20230601; t=1714746804; x=1715351604;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lrp038+BnCCIcL2uudlEhxcEnD1UXWGK6w8wIqAzDqs=;
+ b=pvcTtU7dA9ZNxchs686U2yZO6OAjDNJ/3ENNSYrGRkfN5M6BLb1MVFwovQ8LgVjOAX
+ WHxGigEb6FTH/Qn3riSrVyS6OP3zF6JmDcxztUZ14GUkwg8jWYwOcjCW4BVBS4ZraCgy
+ VjtLISCw1EQXZ+p7XFPvDCLEQHAdf5Hu4y1eEhucPHOIyf0h2/3AxYOVaVMEaZ9gm69b
+ fRBOFLZmpAPdlQkT/KmvNT4oWNflkybPF1PHKbrt66gT+T3eTbcueogQpptpKs8EJx9g
+ HVZxruV09DzhOZCo7DtfyH1rHSrlABXDoFBeaqVb8EJ6int6v52JrKzbzzKurwptitGX
+ S8Ww==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXIg0tmDujXh9Psnj/V9Jy5lQ+7qDAZXP9FeElpORx6ao9gPc3PEdqSup9y16DZFfonEmYljBULKnrt9x8qPiPijqpVY9I=
-X-Gm-Message-State: AOJu0YzYrvvv8EYixMqet0SpwRNnjNXGWmkHyN6etrkIK97eHjXI8nfY
- m33ZiFmFR5zkZGnfnSvgsh7sc8vTCB9wuxW8e8S4ebTyZKM9jN4GPIxtLQRwf+fLevbNmEjaelt
- hZQK9m9/qugadDIHo3vLOY4g+Pw8sWSgvi+oBkOEinw+5EpC1ki+iOdbhOIf7
-X-Received: by 2002:a05:6214:21a7:b0:6a0:5592:4a44 with SMTP id
- t7-20020a05621421a700b006a055924a44mr2883497qvc.34.1714746584127; 
- Fri, 03 May 2024 07:29:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEonXxs5x9Wu56OKlv+qAw08iUXKQvycSX4v9w7PF0ORhtnIRJZv/PIgS+bwk31bnSxunHIwg==
-X-Received: by 2002:a05:6214:21a7:b0:6a0:5592:4a44 with SMTP id
- t7-20020a05621421a700b006a055924a44mr2883476qvc.34.1714746583829; 
- Fri, 03 May 2024 07:29:43 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- o6-20020a056214108600b006a0e529642csm1258747qvr.80.2024.05.03.07.29.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 May 2024 07:29:43 -0700 (PDT)
-Message-ID: <8ae366d9-57c0-42d3-9362-05cf850f9cf2@redhat.com>
-Date: Fri, 3 May 2024 16:29:40 +0200
+ AJvYcCWvBGSzKgGrBgMR2QtCBqH65cZJIiSk1UrQGoHgJEmcIzFntyM/vas+54fvxZPTKqCDhNsG9xm95Xg/yiFSbcSJqbncwWE=
+X-Gm-Message-State: AOJu0YyNVDC26LmS1jMMZHHDBdTZd1WudhXNJ+Lkouagh3gMT9fb7puv
+ oI3OYHzPpkcQgog48PoM2Kuw9ZXJLpZor0vfq0pUOu/Gtn4nkORHDXiY5NA6TUcWZOHQZ6jJdjp
+ wUrEyE0fa73cpWBgnb3hNYOcYgStElQQGJV58FEtkyOuJoJHlefeJ
+X-Received: by 2002:a05:6214:e8b:b0:6a0:a44e:c59c with SMTP id
+ hf11-20020a0562140e8b00b006a0a44ec59cmr2989430qvb.1.1714746803390; 
+ Fri, 03 May 2024 07:33:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGodvUHODPNbDin7oqzMGN/CTREVThpW0lw6b1vBf2DdZxDC6J8qfzO6SZFWIqLus4TwudmEQ==
+X-Received: by 2002:a05:6214:e8b:b0:6a0:a44e:c59c with SMTP id
+ hf11-20020a0562140e8b00b006a0a44ec59cmr2989381qvb.1.1714746802838; 
+ Fri, 03 May 2024 07:33:22 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ d3-20020ad450a3000000b006a0d22f23c0sm1247820qvq.61.2024.05.03.07.33.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 03 May 2024 07:33:22 -0700 (PDT)
+Date: Fri, 3 May 2024 10:33:20 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Jinpu Wang <jinpu.wang@ionos.com>
+Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Michael Galaxy <mgalaxy@akamai.com>, Yu Zhang <yu.zhang@ionos.com>,
+ "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>,
+ Elmar Gerdes <elmar.gerdes@ionos.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Yuval Shaia <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
+ Prasanna Kumar Kalever <prasanna.kalever@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Prasanna Kumar Kalever <prasanna4324@gmail.com>,
+ "integration@gluster.org" <integration@gluster.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
+ "devel@lists.libvirt.org" <devel@lists.libvirt.org>,
+ Hanna Reitz <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Song Gao <gaosong@loongson.cn>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, arei.gonglei@huawei.com,
+ pannengyuan@huawei.com
+Subject: Re: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol handling
+Message-ID: <ZjT1sPh5OaByQmAB@x1n>
+References: <ZhaY2_cO6CrQFCt3@x1n> <Zhfxoaz9yNTx8Btd@x1n>
+ <CAHEcVy7POArt+CmY8dyNTzLJp3XxXgjh3k8=C=9K+_cw1CSJFA@mail.gmail.com>
+ <46f5e323-632d-7bda-f2c5-3cfa7b1c6b68@akamai.com>
+ <Zi-1OvxA5MIHjklU@x1n> <877cgfe2yw.fsf@pond.sub.org>
+ <ZjClMb-6MddpvHqQ@redhat.com> <ZjJgQcPQ29HJsTpY@x1n>
+ <ZjJm6rcqS5EhoKgK@redhat.com>
+ <CAMGffEnj54q1GAtB84dWGVR0hLPzfR1W8Fa2TeP22y2zTBRNeQ@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/19] Add a host IOMMU device abstraction to check
- with vIOMMU
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org,
- alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
- peterx@redhat.com, jasowang@redhat.com, nicolinc@nvidia.com,
- joao.m.martins@oracle.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com
-References: <20240429065046.3688701-1-zhenzhong.duan@intel.com>
- <c245b234-60d5-4ee6-a947-c7526d58698e@redhat.com>
- <20240503141024.GE3341011@nvidia.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240503141024.GE3341011@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAMGffEnj54q1GAtB84dWGVR0hLPzfR1W8Fa2TeP22y2zTBRNeQ@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.483,
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.483,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,29 +127,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/3/24 16:10, Jason Gunthorpe wrote:
-> On Fri, May 03, 2024 at 04:04:25PM +0200, Cédric Le Goater wrote:
->> However, have you considered another/complementary approach which
->> would be to create an host IOMMU (iommufd) backend object and a vIOMMU
->> device object together for each vfio-pci device being plugged in the
->> machine ?
->>
->> Something like,
->>      -device pcie-root-port,port=23,chassis=8,id=pci.8,bus=pcie.0 \
->>      -object iommufd,id=iommufd1 \
->>      -device intel-iommu,intremap=on,device-iotlb=on,caching-mode=on,iommufd=iommufd1 \
->>      -device vfio-pci,host=0000:08:10.0,bus=pci.1,iommufd=iommufd0
-> 
-> ? The main point of this is to have a single iommufd FD open in
-> qemu. Not multiple.
+On Fri, May 03, 2024 at 08:40:03AM +0200, Jinpu Wang wrote:
+> I had a brief check in the rsocket changelog, there seems some
+> improvement over time,
+>  might be worth revisiting this. due to socket abstraction, we can't
+> use some feature like
+>  ODP, it won't be a small and easy task.
 
-oups. The above example should have the same IOMMUFD object device
-instance: iommufd0.
+It'll be good to know whether Dan's suggestion would work first, without
+rewritting everything yet so far.  Not sure whether some perf test could
+help with the rsocket APIs even without QEMU's involvements (or looking for
+test data supporting / invalidate such conversions).
 
-This is bogus copy-paste of a command line with multiple vfio-pci
-devices, each using its own IOMMUFD object device instance. That's
-where the idea comes from. Sorry for the noise.
+Thanks,
 
-C.
+-- 
+Peter Xu
 
 
