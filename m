@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D169C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 15:38:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C278C10F16
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 15:38:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2uyp-0005Uf-BV; Fri, 03 May 2024 11:37:47 -0400
+	id 1s2uyn-00057R-3q; Fri, 03 May 2024 11:37:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2uye-0004dP-Vk
- for qemu-devel@nongnu.org; Fri, 03 May 2024 11:37:38 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2uyY-0004Wg-MD
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 11:37:31 -0400
 Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2uyc-0002oZ-I4
- for qemu-devel@nongnu.org; Fri, 03 May 2024 11:37:36 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2uyX-0002o7-0m
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 11:37:30 -0400
 Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-a597c192246so167224466b.0
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 08:37:34 -0700 (PDT)
+ a640c23a62f3a-a519e1b0e2dso1369678466b.2
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 08:37:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714750652; x=1715355452; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714750647; x=1715355447; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kpo/S5Ob+DXg1pnPA7+b6elSHA1T4ch7nUT4NXQUXUE=;
- b=rAQ6Bt+iD2RvsbVqeBUYkPMU38vW4EThxoXylUVDedaxWbIBzh8/Chhyl4s1MrLN9s
- /76jimm6PjNqnCe+UIqltlAeU7C/F0mcXz44euT6crs7hEuZKmQV2yVjT3xlZ4g0ThQc
- Mtiyt1JodJoxjxzBLpjzMCDs0WyUFGaqHhy0nhbM8ZSm9amHPPGELY3f2+3Lt2KRd7dW
- z1ypMhGyL+HXRrD3KutA2gWmp4w/WixdwIgc+aOhQnfXsmW5t60+usGUP4Fy+X4Ip1pA
- SG3Fi/7cK4Evsv3EP9LNdwVQPLso29NQMexqx+GAjcs99TEpXYyO53UO0soOg+G8FhvP
- xMwA==
+ bh=a7vgoVsqHzfmK76y1aCdJ7NQoyMwbf/Tg31Ldi1SHrk=;
+ b=fjDJ1eaREp8S61eKv6ySeGpdsOO6aZoAXuH6+TU+rkyZtdwFJQdwuiNnWAA4GyqyEi
+ eztYD9FjHQfRUNK13XJlXcna4R9KhE51WlRfL7c+mlvj46bRncNvFbz/32LbdZAtwS0k
+ l2jeGR5MPlYLcybJMnPeRAOEh0NofHIBOaXiTP2n0J7dbTSFfU5n7lW9oI5qyHOHhksL
+ e/mAvS7dx9Vd0aGwW917K2f8pw9hH13QHM+n1h6jYcsRd1KdqkUNaP9xGZFOdMvw+Z4k
+ bxMK7boyxAFsIzLWCyvztZoRnw+ELwFeITHWUXjjm8RYtel6iNhLxhOoyemca3FO4tWI
+ jZeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714750652; x=1715355452;
+ d=1e100.net; s=20230601; t=1714750647; x=1715355447;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kpo/S5Ob+DXg1pnPA7+b6elSHA1T4ch7nUT4NXQUXUE=;
- b=kpmCtrLAzWjdXFQxhjZ+ps4EWH+i8aVJiIseqAG2fl5IjBpULwltg55bOoyZQh2EKi
- h9sTVlTA01Uz8VulMKeO5djdJJCQ44RZNLV2wqel5EbHxTfteo5ClnWT7bT4F05ux17R
- f/gESKfiFzZhPpPVYA3jMLno2miCCTbI+SmYNHg4QcKRaLFo07dWYN+yS82GfZRFYqqA
- q1oOtDEHISb+MZz+xwfLGnZHJEBvygHV1bIOgaSC5+vVxqxz+A0WYybebx4sTJscNU92
- MaOEhs2TAzPcP9XFqG600eRGaivZItE3Otej8EZmvDXG+9FqhUO9uOAhe+VuEXpBgInL
- B/ZA==
-X-Gm-Message-State: AOJu0YyHwhfbvnopeQh/cEI3GhOecUL2ggU+T6kD2Zb5Tp7gCpVY+U9F
- HSCkZnSrpzvX+dM+4qMgKEvHhCEvHpMGQ0TT9pRF3zCZ69XlIOgdmFT0P1xZsfOXHT44U5dMXcu
- G
-X-Google-Smtp-Source: AGHT+IEdOrQfPYrGmnpPhox0c2f/cfc4oVvMA+UytGeKLHbj/BYto03kl6zHbh+tVXBuk0hTV5eFHQ==
-X-Received: by 2002:a50:f613:0:b0:572:689f:6380 with SMTP id
- c19-20020a50f613000000b00572689f6380mr2418621edn.3.1714750652674; 
- Fri, 03 May 2024 08:37:32 -0700 (PDT)
+ bh=a7vgoVsqHzfmK76y1aCdJ7NQoyMwbf/Tg31Ldi1SHrk=;
+ b=uhyhNlDDmOaclHMuoGR9A1cQ75hlKTBTDFn1hcmgxuIgjwzWEhWB4ckb23OwfVGK0m
+ N+6Ov5KIM4f1tqLSMYq76NwLPDbeJ+iHqo7815xvGdjVEZJyh8GnaUI17ujWQWVpmsh8
+ 3sucW9XrBX8LvQdoY6qPBIHJ1owPIyUGPo6M+gAOYZ9hpXjPYgTASV5j8uLAghlDDUsv
+ JZJDg0KbFZn8w7cPlmn7P7qKmg7mV8iHah8vIuBEGyt/kdHF1qDIqNQ/THlqxIRkivpi
+ 07vfd544msx9u2StFfFwYWtW2ZPQv8CC2gPw+fOjFlAqIVSMowVUuSdYC22RadkA6R6t
+ b8ag==
+X-Gm-Message-State: AOJu0YwLerWY5IC5/suT2EUGXkhz0dCAJdFqLL7HI+Jhf4WbXvFTZYRX
+ uuNCJq/B5M9rSYWOlpl58ddDSa7xDtWHFE5BecD5kQSLi+9ayv+fJAVdVob4hJ3XwRPJ31WHiwk
+ s
+X-Google-Smtp-Source: AGHT+IFR+4Zuao0MN6F/jozyG1+IvmrxnadgWxyOvsroVfL4jAsBOD5EPWfgyudvhWd0vefe4juNwg==
+X-Received: by 2002:a50:aa92:0:b0:56e:22bd:7e90 with SMTP id
+ q18-20020a50aa92000000b0056e22bd7e90mr1502646edc.40.1714750647317; 
+ Fri, 03 May 2024 08:37:27 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.179.187])
  by smtp.gmail.com with ESMTPSA id
- g11-20020a056402320b00b0057203242f31sm1806814eda.11.2024.05.03.08.37.31
+ l11-20020a056402028b00b00572bba6745esm1771484edv.81.2024.05.03.08.37.26
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 03 May 2024 08:37:32 -0700 (PDT)
+ Fri, 03 May 2024 08:37:26 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 14/14] ui/cocoa.m: Drop old macOS-10.12-and-earlier compat
- ifdefs
-Date: Fri,  3 May 2024 17:36:13 +0200
-Message-ID: <20240503153613.38709-15-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 13/14] target/sh4: Rename TCGv variables as manual for SUBV
+ opcode
+Date: Fri,  3 May 2024 17:36:12 +0200
+Message-ID: <20240503153613.38709-14-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240503153613.38709-1-philmd@linaro.org>
 References: <20240503153613.38709-1-philmd@linaro.org>
@@ -96,52 +95,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+To easily compare with the SH4 manual, rename:
 
-We only support the most recent two versions of macOS (currently
-macOS 13 Ventura and macOS 14 Sonoma), and our ui/cocoa.m code
-already assumes at least macOS 12 Monterey or better, because it uses
-NSScreen safeAreaInsets, which is 12.0-or-newer.
+  REG(B11_8) -> Rn
+  REG(B7_4) -> Rm
+  t0 -> result
 
-Remove the ifdefs that were providing backwards compatibility for
-building on 10.12 and earlier versions.
+Mention how underflow is calculated.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20240502142904.62644-1-peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20240430163125.77430-5-philmd@linaro.org>
 ---
- ui/cocoa.m | 13 -------------
- 1 file changed, 13 deletions(-)
+ target/sh4/translate.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/ui/cocoa.m b/ui/cocoa.m
-index 25e0db9dd0..981615a8b9 100644
---- a/ui/cocoa.m
-+++ b/ui/cocoa.m
-@@ -50,23 +50,10 @@
- #include <Carbon/Carbon.h>
- #include "hw/core/cpu.h"
- 
--#ifndef MAC_OS_X_VERSION_10_13
--#define MAC_OS_X_VERSION_10_13 101300
--#endif
--
- #ifndef MAC_OS_VERSION_14_0
- #define MAC_OS_VERSION_14_0 140000
- #endif
- 
--/* 10.14 deprecates NSOnState and NSOffState in favor of
-- * NSControlStateValueOn/Off, which were introduced in 10.13.
-- * Define for older versions
-- */
--#if MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_13
--#define NSControlStateValueOn NSOnState
--#define NSControlStateValueOff NSOffState
--#endif
--
- //#define DEBUG
- 
- #ifdef DEBUG
+diff --git a/target/sh4/translate.c b/target/sh4/translate.c
+index 47c0f3404e..e599ab9d1a 100644
+--- a/target/sh4/translate.c
++++ b/target/sh4/translate.c
+@@ -933,16 +933,20 @@ static void _decode_opc(DisasContext * ctx)
+         return;
+     case 0x300b: /* subv Rm,Rn */
+         {
+-            TCGv t0, t1, t2;
+-            t0 = tcg_temp_new();
+-            tcg_gen_sub_i32(t0, REG(B11_8), REG(B7_4));
++            TCGv Rn = REG(B11_8);
++            TCGv Rm = REG(B7_4);
++            TCGv result, t1, t2;
++
++            result = tcg_temp_new();
+             t1 = tcg_temp_new();
+-            tcg_gen_xor_i32(t1, t0, REG(B11_8));
+             t2 = tcg_temp_new();
+-            tcg_gen_xor_i32(t2, REG(B11_8), REG(B7_4));
++            tcg_gen_sub_i32(result, Rn, Rm);
++            /* T = ((Rn ^ Rm) & (Result ^ Rn)) >> 31 */
++            tcg_gen_xor_i32(t1, result, Rn);
++            tcg_gen_xor_i32(t2, Rn, Rm);
+             tcg_gen_and_i32(t1, t1, t2);
+             tcg_gen_shri_i32(cpu_sr_t, t1, 31);
+-            tcg_gen_mov_i32(REG(B11_8), t0);
++            tcg_gen_mov_i32(Rn, result);
+         }
+         return;
+     case 0x2008: /* tst Rm,Rn */
 -- 
 2.41.0
 
