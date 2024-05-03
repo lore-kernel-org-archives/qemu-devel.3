@@ -4,119 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21CC3C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 21:31:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9297C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 21:34:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s30V2-0002m3-49; Fri, 03 May 2024 17:31:24 -0400
+	id 1s30Y5-0004Q8-9Y; Fri, 03 May 2024 17:34:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s30Ux-0002jh-DC
- for qemu-devel@nongnu.org; Fri, 03 May 2024 17:31:20 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1s30Y3-0004PW-Hd; Fri, 03 May 2024 17:34:31 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s30Uu-0007rs-GG
- for qemu-devel@nongnu.org; Fri, 03 May 2024 17:31:19 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 7C004207DA;
- Fri,  3 May 2024 21:31:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1714771870; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JV5HwJLA7mTLW+xOGeaI2GhAlmw4TYp6JGcKOjzMB4c=;
- b=I7dgdEjpgWwDA2YtamKGktlR3gRYxB1qtTWTNTyz7m/lMey+9njjLTBiEa1qm/v7Yc4uJK
- 93IEm1HJuXk+IhDctg+VCHvRUKXMl161kraBIYGyt6N60q6DjEktuFwxKIZVL2mmxzDySp
- SQbpyb58pLIEEqOyJhGKBSUU3nOczk8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1714771870;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JV5HwJLA7mTLW+xOGeaI2GhAlmw4TYp6JGcKOjzMB4c=;
- b=ExbS9J69dtrtN5292C84QQo7As5P85rjwPSpU2jo/isxQjiql36zzfHEOfWA3XA8ZCZQjN
- j5+beDuE4kbw1yAg==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="QT/sqkIf";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=M4n0DNJn
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1714771869; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JV5HwJLA7mTLW+xOGeaI2GhAlmw4TYp6JGcKOjzMB4c=;
- b=QT/sqkIfxuG/I+UIHAfFOcevRscJfbLUq/Q8IaRGPwYIXzSwBjQnVTmUAO2nAxwQnbgFa+
- P8g7JByLw/9/K0WPL1tqVEKD4MLhZ0MG0daHuPo7HglAk/MrrG6yfN892B0cE7njHKWaWr
- GKfLa1bowW8+qBy16t/0xAos/lhC8+c=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1714771869;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JV5HwJLA7mTLW+xOGeaI2GhAlmw4TYp6JGcKOjzMB4c=;
- b=M4n0DNJnpdYYoctW5n2Lbv4dYYAmB2mahrZtGt5LaiZi8w+XCywWzQ5/e5fRCnK0caZ2go
- VoLK+pUkmie4mVCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 089B2139CB;
- Fri,  3 May 2024 21:31:08 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 7nkZMJxXNWaoEwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 03 May 2024 21:31:08 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com, Claudio
- Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>
-Subject: Re: [PATCH 2/9] migration: Fix file migration with fdset
-In-Reply-To: <ZjVRS6yT6n7_wb0V@x1n>
-References: <20240426142042.14573-1-farosas@suse.de>
- <20240426142042.14573-3-farosas@suse.de> <ZjUPl6XwB3Zt3cKR@x1n>
- <87a5l6oejr.fsf@suse.de> <ZjVRS6yT6n7_wb0V@x1n>
-Date: Fri, 03 May 2024 18:31:06 -0300
-Message-ID: <87plu2mvl1.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1s30Y1-0008Vn-Er; Fri, 03 May 2024 17:34:31 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-6f4551f2725so171050b3a.1; 
+ Fri, 03 May 2024 14:34:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1714772067; x=1715376867; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:sender
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9cuB/Nzb4bHjX6ATZRWLN6DKTHAQ3nrs6TEr9bPHTk0=;
+ b=alsuyA5aG3zIaZJdYbbRKa9CbHrhQX4ofCVFMIFCqe18yU0BEXmy1ey7DwZmxccDKf
+ UFcM8KdzUJ14PIuV7J20K+49RfF+VBGdLrJQbNvZir9u6/sAU+T8EB4RyxNxZJkzzya4
+ 0VSP1z79kG47SmOnte6MrZ9h16FNVWMy7tI2SZkqwNEJWJ9WmqRg4hQI/XxDGQZa6Gl1
+ wKgR5jj9V14X/aav8LexPeaMiZ7S8lDSE2TGI+ZtXMRIWmCbA9/FTkpkjbt3AktqyWrG
+ V7JlsWhuFbYO2FqGcHoyt+4TL7Gb9GC9YBRA1+7uj2fJb8sDL1TlGYDdIuxjL0sej2Ie
+ WGFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714772067; x=1715376867;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:sender
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9cuB/Nzb4bHjX6ATZRWLN6DKTHAQ3nrs6TEr9bPHTk0=;
+ b=kQ5nvmACjX4PrL60poH24/cpN+g9N0dGVWkWZ+xp6fpCr9886MLHnX+atCAQ97Ap0D
+ a+Pchm21CFQEj0x3v7h+4qguEaxt24yhedj1X/xu0dNYzSkQ1XI6LdJj4n4L1aPEuvAk
+ fafYOwYlNS63ldTlsyKu5OR+5Ne7MjdpPKmUs4R2XdmJ6GSawVYIQQ4uHq/o4B+WTY8A
+ lgFQjQiWo9wFSIggCZW8ZRyZyDOLmG6Xpk8Ft0VpjetAHl6GchLkUAt1qSpFOiKLqjsC
+ sBptX+X41Ve9e0qI+GYJCzwbk/yG9LNiGIY5TGTeApTABNvtQSBDpVrf5VxEoG3kA6np
+ s2OQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUddxsBRC/jw/atucKI0NUjS3BMEDYgxkkf9mh1eNp0KYNhhKd1B8AmCX5yZw2/6t1Bhi8rXgz31qkdNLDRD4Vl36IkbpVPD9XPZHvZv199yLysGpuiUUNxuOk=
+X-Gm-Message-State: AOJu0YxiYtNm7yUqfkyQcDKu0aBDyOpG5tLIdFyhlaWwL7C33qS/LX+8
+ /kjtGzujUiiHRjFB5PcVDkZbEGPsBrYsMPfelkVXhutP1d2OHleA
+X-Google-Smtp-Source: AGHT+IHpEK21vkgZxVejAH61IV3+WgOddIqlX8pmGgM5qIuK2gEzSg5kV/zHhn9LDdSOcwdMbSP+Zg==
+X-Received: by 2002:a05:6a00:114d:b0:6ec:e785:98b9 with SMTP id
+ b13-20020a056a00114d00b006ece78598b9mr4557687pfm.27.1714772066889; 
+ Fri, 03 May 2024 14:34:26 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id
+ kp4-20020a056a00464400b006e580678dfbsm3519065pfb.193.2024.05.03.14.34.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 03 May 2024 14:34:26 -0700 (PDT)
+Date: Fri, 3 May 2024 14:34:24 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Zhao Liu <zhao1.liu@linux.intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
+ John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Magnus Damm <magnus.damm@gmail.com>
+Subject: Re: [PATCH v3 07/11] hw/sh4/r2d: Realize IDE controller before
+ accessing it
+Message-ID: <3434b32e-036a-485c-b3c2-3dd111e6152d@roeck-us.net>
+References: <20240208181245.96617-1-philmd@linaro.org>
+ <20240208181245.96617-8-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 7C004207DA
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
- MISSING_XM_UA(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MID_RHS_MATCH_FROM(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,treblig.org:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,linaro.org:email];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240208181245.96617-8-philmd@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=groeck7@gmail.com; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,267 +105,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Hi,
 
-> On Fri, May 03, 2024 at 04:56:08PM -0300, Fabiano Rosas wrote:
->> Peter Xu <peterx@redhat.com> writes:
->>=20
->> > On Fri, Apr 26, 2024 at 11:20:35AM -0300, Fabiano Rosas wrote:
->> >> When the migration using the "file:" URI was implemented, I don't
->> >> think any of us noticed that if you pass in a file name with the
->> >> format "/dev/fdset/N", this allows a file descriptor to be passed in
->> >> to QEMU and that behaves just like the "fd:" URI. So the "file:"
->> >> support has been added without regard for the fdset part and we got
->> >> some things wrong.
->> >>=20
->> >> The first issue is that we should not truncate the migration file if
->> >> we're allowing an fd + offset. We need to leave the file contents
->> >> untouched.
->> >
->> > I'm wondering whether we can use fallocate() instead on the ranges so =
-that
->> > we always don't open() with O_TRUNC.  Before that..  could you remind =
-me
->> > why do we need to truncate in the first place?  I definitely missed
->> > something else here too.
->>=20
->> AFAIK, just to avoid any issues if the file is pre-existing. I don't see
->> the difference between O_TRUNC and fallocate in this case.
->
-> Then, shall we avoid truncations at all, leaving all the feasibility to
-> user (also errors prone to make)?
->
+On Thu, Feb 08, 2024 at 07:12:40PM +0100, Philippe Mathieu-Daudé wrote:
+> We should not wire IRQs on unrealized device.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> Reviewed-by: Yoshinori Sato <ysato@users.sourceforge.jp>
 
-Is this a big deal? I'd rather close that possible gap and avoid the bug
-reports.
+qemu 9.0 fails to boot Linux from ide/ata drives with the sh4
+and sh4eb emulations. Error log is as follows.
 
->>=20
->> >
->> >>=20
->> >> The second issue is that there's an expectation that QEMU removes the
->> >> fd after the migration has finished. That's what the "fd:" code
->> >> does. Otherwise a second migration on the same VM could attempt to
->> >> provide an fdset with the same name and QEMU would reject it.
->> >
->> > Let me check what we do when with "fd:" and when migration completes or
->> > cancels.
->> >
->> > IIUC it's qio_channel_file_close() that does the final cleanup work on
->> > e.g. to_dst_file, right?  Then there's qemu_close(), and it has:
->> >
->> >     /* Close fd that was dup'd from an fdset */
->> >     fdset_id =3D monitor_fdset_dup_fd_find(fd);
->> >     if (fdset_id !=3D -1) {
->> >         int ret;
->> >
->> >         ret =3D close(fd);
->> >         if (ret =3D=3D 0) {
->> >             monitor_fdset_dup_fd_remove(fd);
->> >         }
->> >
->> >         return ret;
->> >     }
->> >
->> > Shouldn't this done the work already?
->>=20
->> That removes the mon_fdset_fd_dup->fd, we want to remove the
->> mon_fdset_fd->fd.
->
-> What I read so far is when we are removing the dup-fds, we'll do one more
-> thing:
->
-> monitor_fdset_dup_fd_find_remove():
->                     if (QLIST_EMPTY(&mon_fdset->dup_fds)) {
->                         monitor_fdset_cleanup(mon_fdset);
->                     }
->
-> It means if we removed all the dup-fds correctly, we should also remove t=
-he
-> whole fdset, which includes the ->fds, IIUC.
->
+ata1.00: ATA-7: QEMU HARDDISK, 2.5+, max UDMA/100
+ata1.00: 16384 sectors, multi 16: LBA48
+ata1.00: configured for PIO
+scsi 0:0:0:0: Direct-Access     ATA      QEMU HARDDISK    2.5+ PQ: 0 ANSI: 5
+sd 0:0:0:0: [sda] 16384 512-byte logical blocks: (8.39 MB/8.00 MiB)
+sd 0:0:0:0: [sda] Write Protect is off
+sd 0:0:0:0: [sda] Write cache: enabled, read cache: enabled, doesn't support DPO or FUA
+ata1: lost interrupt (Status 0x58)
 
-Since mon_fdset_fd->removed =3D=3D false, we hit the runstate_is_running()
-problem. I'm not sure, but probably mon_refcount > 0 as well. So the fd
-would not be removed.
+[ and more similar errors ]
 
-But I'll retest this on Monday just be sure, it's been a while since I
-wrote some parts of this.
+qemu command line:
 
->>=20
->> >
->> > Off topic: I think this code is over complicated too, maybe I missed
->> > something, but afaict we don't need monitor_fdset_dup_fd_find at all..=
- we
->> > simply walk the list and remove stuff..  I attach a patch at the end t=
-hat I
->> > tried to clean that up, just in case there's early comments.  But we c=
-an
->> > ignore that so we don't get side-tracked, and focus on the direct-io
->> > issues.
->>=20
->> Well, I'm not confident touching this code. This is more than a decade
->> old, I have no idea what the original motivations were. The possible
->> interactions with the user via command-line (-add-fd), QMP (add-fd) and
->> the monitor lifetime make me confused. Not to mention the fdset part
->> being plumbed into the guts of a widely used qemu_open_internal() that
->> very misleadingly presents itself as just a wrapper for open().
->
-> If to make QEMU long live, we'll probably need to touch it at some
-> point.. or at least discuss about it and figure things out. We pay tech
-> debts like this when there's no good comment / docs to refer in this case,
-> then the earlier, perhaps also the better.. to try taking the stab, imho.
->
-> Definitely not a request to clean everything up. :) Let's see whether
-> others can chim in with better knowledge of the history.
->
->>=20
->> >
->> > Thanks,
->> >
->> > =3D=3D=3D=3D=3D=3D=3D
->> >
->> > From 2f6b6d1224486d8ee830a7afe34738a07003b863 Mon Sep 17 00:00:00 2001
->> > From: Peter Xu <peterx@redhat.com>
->> > Date: Fri, 3 May 2024 11:27:20 -0400
->> > Subject: [PATCH] monitor: Drop monitor_fdset_dup_fd_add()
->> > MIME-Version: 1.0
->> > Content-Type: text/plain; charset=3DUTF-8
->> > Content-Transfer-Encoding: 8bit
->> >
->> > This function is not needed, one remove function should already work.
->> > Clean it up.
->> >
->> > Here the code doesn't really care about whether we need to keep that d=
-upfd
->> > around if close() failed: when that happens something got very wrong,
->> > keeping the dup_fd around the fdsets may not help that situation so fa=
-r.
->> >
->> > Cc: Dr. David Alan Gilbert <dave@treblig.org>
->> > Cc: Markus Armbruster <armbru@redhat.com>
->> > Cc: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->> > Cc: Paolo Bonzini <pbonzini@redhat.com>
->> > Cc: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->> > Signed-off-by: Peter Xu <peterx@redhat.com>
->> > ---
->> >  include/monitor/monitor.h |  1 -
->> >  monitor/fds.c             | 27 +++++----------------------
->> >  stubs/fdset.c             |  5 -----
->> >  util/osdep.c              | 15 +--------------
->> >  4 files changed, 6 insertions(+), 42 deletions(-)
->> >
->> > diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
->> > index 965f5d5450..fd9b3f538c 100644
->> > --- a/include/monitor/monitor.h
->> > +++ b/include/monitor/monitor.h
->> > @@ -53,7 +53,6 @@ AddfdInfo *monitor_fdset_add_fd(int fd, bool has_fds=
-et_id, int64_t fdset_id,
->> >                                  const char *opaque, Error **errp);
->> >  int monitor_fdset_dup_fd_add(int64_t fdset_id, int flags);
->> >  void monitor_fdset_dup_fd_remove(int dup_fd);
->> > -int64_t monitor_fdset_dup_fd_find(int dup_fd);
->> >=20=20
->> >  void monitor_register_hmp(const char *name, bool info,
->> >                            void (*cmd)(Monitor *mon, const QDict *qdic=
-t));
->> > diff --git a/monitor/fds.c b/monitor/fds.c
->> > index d86c2c674c..d5aecfb70e 100644
->> > --- a/monitor/fds.c
->> > +++ b/monitor/fds.c
->> > @@ -458,7 +458,7 @@ int monitor_fdset_dup_fd_add(int64_t fdset_id, int=
- flags)
->> >  #endif
->> >  }
->> >=20=20
->> > -static int64_t monitor_fdset_dup_fd_find_remove(int dup_fd, bool remo=
-ve)
->> > +void monitor_fdset_dup_fd_remove(int dup_fd)
->> >  {
->> >      MonFdset *mon_fdset;
->> >      MonFdsetFd *mon_fdset_fd_dup;
->> > @@ -467,31 +467,14 @@ static int64_t monitor_fdset_dup_fd_find_remove(=
-int dup_fd, bool remove)
->> >      QLIST_FOREACH(mon_fdset, &mon_fdsets, next) {
->> >          QLIST_FOREACH(mon_fdset_fd_dup, &mon_fdset->dup_fds, next) {
->> >              if (mon_fdset_fd_dup->fd =3D=3D dup_fd) {
->> > -                if (remove) {
->> > -                    QLIST_REMOVE(mon_fdset_fd_dup, next);
->> > -                    g_free(mon_fdset_fd_dup);
->> > -                    if (QLIST_EMPTY(&mon_fdset->dup_fds)) {
->> > -                        monitor_fdset_cleanup(mon_fdset);
->> > -                    }
->> > -                    return -1;
->> > -                } else {
->> > -                    return mon_fdset->id;
->> > +                QLIST_REMOVE(mon_fdset_fd_dup, next);
->> > +                g_free(mon_fdset_fd_dup);
->> > +                if (QLIST_EMPTY(&mon_fdset->dup_fds)) {
->> > +                    monitor_fdset_cleanup(mon_fdset);
->> >                  }
->> >              }
->> >          }
->> >      }
->> > -
->> > -    return -1;
->> > -}
->> > -
->> > -int64_t monitor_fdset_dup_fd_find(int dup_fd)
->> > -{
->> > -    return monitor_fdset_dup_fd_find_remove(dup_fd, false);
->> > -}
->> > -
->> > -void monitor_fdset_dup_fd_remove(int dup_fd)
->> > -{
->> > -    monitor_fdset_dup_fd_find_remove(dup_fd, true);
->> >  }
->> >=20=20
->> >  int monitor_fd_param(Monitor *mon, const char *fdname, Error **errp)
->> > diff --git a/stubs/fdset.c b/stubs/fdset.c
->> > index d7c39a28ac..389e368a29 100644
->> > --- a/stubs/fdset.c
->> > +++ b/stubs/fdset.c
->> > @@ -9,11 +9,6 @@ int monitor_fdset_dup_fd_add(int64_t fdset_id, int fl=
-ags)
->> >      return -1;
->> >  }
->> >=20=20
->> > -int64_t monitor_fdset_dup_fd_find(int dup_fd)
->> > -{
->> > -    return -1;
->> > -}
->> > -
->> >  void monitor_fdset_dup_fd_remove(int dupfd)
->> >  {
->> >  }
->> > diff --git a/util/osdep.c b/util/osdep.c
->> > index e996c4744a..2d9749d060 100644
->> > --- a/util/osdep.c
->> > +++ b/util/osdep.c
->> > @@ -393,21 +393,8 @@ int qemu_open_old(const char *name, int flags, ..=
-.)
->> >=20=20
->> >  int qemu_close(int fd)
->> >  {
->> > -    int64_t fdset_id;
->> > -
->> >      /* Close fd that was dup'd from an fdset */
->> > -    fdset_id =3D monitor_fdset_dup_fd_find(fd);
->> > -    if (fdset_id !=3D -1) {
->> > -        int ret;
->> > -
->> > -        ret =3D close(fd);
->> > -        if (ret =3D=3D 0) {
->> > -            monitor_fdset_dup_fd_remove(fd);
->> > -        }
->> > -
->> > -        return ret;
->> > -    }
->> > -
->> > +    monitor_fdset_dup_fd_remove(fd);
->> >      return close(fd);
->> >  }
->> >=20=20
->> > --=20
->> > 2.44.0
->>=20
+qemu-system-sh4eb -M r2d -kernel arch/sh/boot/zImage \
+	-snapshot -drive file=rootfs.ext2,format=raw,if=ide \
+	-append "root=/dev/sda console=ttySC1,115200 noiotrap" \
+	-serial null -serial stdio -monitor null -nographic -no-reboot
+
+Bisect points to this patch (see below). Reverting it fixes the problem.
+
+Guenter
+
+---
+bisect log:
+
+# bad: [c25df57ae8f9fe1c72eee2dab37d76d904ac382e] Update version for 9.0.0 release
+# good: [1600b9f46b1bd08b00fe86c46ef6dbb48cbe10d6] Update version for v8.2.0 release
+git bisect start 'v9.0.0' 'v8.2.0'
+# good: [62357c047a5abc6ede992159ed7c0aaaeb50617a] Merge tag 'qemu-sparc-20240213' of https://github.com/mcayland/qemu into staging
+git bisect good 62357c047a5abc6ede992159ed7c0aaaeb50617a
+# bad: [d65f1ed7de1559534d0a1fabca5bdd81c594c7ca] docs/acpi/bits: add some clarity and details while also improving formating
+git bisect bad d65f1ed7de1559534d0a1fabca5bdd81c594c7ca
+# bad: [99e1c1137b6f339be1e4b76e243ad7b7c3d3cb8c] hw/i386/pc: Populate RTC attribute directly
+git bisect bad 99e1c1137b6f339be1e4b76e243ad7b7c3d3cb8c
+# bad: [760b4dcdddba4a40b9fa0eb78fdfc7eda7cb83d0] Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging
+git bisect bad 760b4dcdddba4a40b9fa0eb78fdfc7eda7cb83d0
+# good: [f2b4a98930c122648e9dc494e49cea5dffbcc2be] target/arm: Allow access to SPSR_hyp from hyp mode
+git bisect good f2b4a98930c122648e9dc494e49cea5dffbcc2be
+# bad: [1a8e2f58c5dd721086284f827326b370d19ad9eb] hw/i386/q35: Use DEVICE() cast macro with PCIDevice object
+git bisect bad 1a8e2f58c5dd721086284f827326b370d19ad9eb
+# good: [59ae6bcddc3651b55b96c2bf05a6cd4312e46d10] hw/ppc/prep: Realize ISA bridge before accessing it
+git bisect good 59ae6bcddc3651b55b96c2bf05a6cd4312e46d10
+# bad: [7ed9a5f626a6c932a8c869a91e6a8b3e2029f5ef] hw/intc/grlib_irqmp: implements the multiprocessor status register
+git bisect bad 7ed9a5f626a6c932a8c869a91e6a8b3e2029f5ef
+# bad: [d08b7af3f7f27f6f3da8446756bf0b9352026b1d] target/sparc: Provide hint about CPUSPARCState::irq_manager member
+git bisect bad d08b7af3f7f27f6f3da8446756bf0b9352026b1d
+# bad: [5e37bc4997c32a1c9a6621a060462c84df9f1b8f] hw/dma: Pass parent object to i8257_dma_init()
+git bisect bad 5e37bc4997c32a1c9a6621a060462c84df9f1b8f
+# bad: [3c5f86a22686ef475a8259c0d8ee714f61c770c9] hw/sh4/r2d: Realize IDE controller before accessing it
+git bisect bad 3c5f86a22686ef475a8259c0d8ee714f61c770c9
+# good: [fc432ba0f58343c8912b80e9056315bb9bd8df92] hw/misc/macio: Realize IDE controller before accessing it
+git bisect good fc432ba0f58343c8912b80e9056315bb9bd8df92
+# first bad commit: [3c5f86a22686ef475a8259c0d8ee714f61c770c9] hw/sh4/r2d: Realize IDE controller before accessing it
 
