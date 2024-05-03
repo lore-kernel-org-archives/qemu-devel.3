@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8E96C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 13:00:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B70DBC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 13:11:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2sWU-0005Nh-AG; Fri, 03 May 2024 09:00:22 -0400
+	id 1s2sgP-0007cG-JW; Fri, 03 May 2024 09:10:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s2sWP-0005NH-HN
- for qemu-devel@nongnu.org; Fri, 03 May 2024 09:00:18 -0400
-Received: from mail-oa1-x2d.google.com ([2001:4860:4864:20::2d])
+ id 1s2sgO-0007c2-4i
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 09:10:36 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s2sWM-0007oH-Ro
- for qemu-devel@nongnu.org; Fri, 03 May 2024 09:00:17 -0400
-Received: by mail-oa1-x2d.google.com with SMTP id
- 586e51a60fabf-23d175cea45so2037626fac.1
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 06:00:10 -0700 (PDT)
+ id 1s2sgM-0001PA-Jm
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 09:10:35 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-6f44ed6e82fso311037b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 06:10:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714741210; x=1715346010; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714741833; x=1715346633; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=KSYRKl6qnCPQGEGDoHXB2IT55HLFPg7YrtUx+Y+iDIM=;
- b=l+0k6QkR/aQKnNAmYPQFhHpLmv0GDu0/2M7g3XL+OBhwuTdojRjopoz4jAS0bI0Hq2
- Jp/O47zWs0AMv+1CxHZnCnZxR8hfZG1P4v7tz3s7UC6B2426EVeziMUSe1+lOEvHz0F9
- /xBWDP26iLTRNXQwcKufGmGc/3xrNjGfQ8OiPZ9glyits2ayWJYPqg1BJDhPEQDwixBL
- 87XJ0CCdXAsVfh7svxVTn25mZMJRkbenSq27tt+gs6BNBgziPIxdkF/SaNQ8rWs/JQRh
- 58Syza23OvxmMrA8n8dNByYPmHPqjEGWXjnsJ4NijzQJTYTKBaeymIjKvgvfUcfsS6Gs
- dOHA==
+ bh=I/qd8oZ2HnJZTizzNiciGt3jRN4Q26fbAbnpLDb7B0M=;
+ b=xwYPtMUIStPFIJESDdpdkUi+SXp2O7wVWQyMLW0dnZt5Rjiehdkt/noNLdOFp2WkYi
+ 2DCeXsm4LLjwlEYGw1CG3mTRu7RaTMUDvi1wJkl3AwLaPms1R9e00UpDYZ/Ls+eed1eA
+ JTYjs5SAZWbcc/MzCncQLFD3LuzBa8c4OarqNlZfZTM9ma8Xcf5WtD2UkH092zQ94CPZ
+ 5zYFIQVgOcQfNjrX7DIy5sWWnSBdUVfg0jbKLcwdo00qr+pRXjK6AbQInueRJClGFaCe
+ +QPcuPocVjJAKbvei5tnTTmtHJgvQBQ1L0f3z3hlOc40HYg4qchCuqsTN/d3Q1v2IOFI
+ CPGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714741210; x=1715346010;
+ d=1e100.net; s=20230601; t=1714741833; x=1715346633;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KSYRKl6qnCPQGEGDoHXB2IT55HLFPg7YrtUx+Y+iDIM=;
- b=BPL0zaF6M3Yi2yNCxYdc3/jtVqFG9RbLhMvxEvAnKz/nIM+9xeoXyA3zIKmlWxJcMW
- EFmkSe74QIcVfgVWTblM50G8jvD0ugruNph1pPMZc1aYAhArQoxsb5tzDxInZprP83lQ
- 0I1uG+DlCxpBH6HUHjqST5YfwIygVBVci2FFQoMoIavNcfaFgkHuTeKay9RAsK9UDGww
- 3DS48oYORC3Tc/ApNSPZ8vng/oBU7Zhbt1w5ossBWkETRsdxv3dhMo3rojpEz3uejKC3
- xIPSbVpJjm5gJqGHJXQklV7njvttnu6BNwBBVIbGGfNw0oqwG7rQ1EeKdEaXERutHOz8
- dEKg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVJC2+SFMuYt7AilWDWtWc58LO4N+mAuCgDlGzOJYeZmKV6Xezu2Lvxo/fCT7UQJaWUzboOzHg+Hqo2iD8Xpmzxx9gTy6Y=
-X-Gm-Message-State: AOJu0YxxGKnXklD0C7ZQzcExpHK5GaUiBeJgmaHyrocTfNWVgVAgPTvB
- xnhiU/EbL90khavljIeUUfq0DiVP8buut/MSMx8G2ZOxOuAfCs7YmjqfyOyW4sA=
-X-Google-Smtp-Source: AGHT+IEu6HbfXJFeU6MDVpIG3PLmiUlf78qUz4g98EK/hZ9jBLC/IEUCItS98RScfjMVb1l/5IdgSw==
-X-Received: by 2002:a05:6870:a918:b0:23c:ca14:bdd with SMTP id
- eq24-20020a056870a91800b0023cca140bddmr3162204oab.47.1714741210011; 
- Fri, 03 May 2024 06:00:10 -0700 (PDT)
+ bh=I/qd8oZ2HnJZTizzNiciGt3jRN4Q26fbAbnpLDb7B0M=;
+ b=FEcSYgXDykNOQY7zEBBJDLX4//IaMIO37igW4m+DO4aehaBobUmvw7D4TT7fIbmNWn
+ 78R99ZYo5IB9S5eqe4HMA+EtIA71buU7jSz5gC9PkbLOHnLpUPI9XxK94jAH+aIuKaQs
+ 4iwYMBSuP5ohtxQV2CYeDXTQXFFgIxNSfusF5JfR3nSPEq0NRixc/sPCTviokUhUJjqV
+ k2mG3CAF555O+zMz8nEMwUFhIs7InXbQFygvxyuBmLJXmLPzOct/74rQj/b9P12UdSUh
+ FmiQMaTGpAAzQ7BIhnOkzGbRehuB2+6S09tihS2+qCO9INPAatkoZzj/25x1KiY5Ae1M
+ 5HCQ==
+X-Gm-Message-State: AOJu0YwuF6dvmGiwTMjkipzr5c0ev9am7tTBr8GU4aLNiW8A8L56xAF5
+ 7aJVSDuVJZyfYtLjWbrRzVsNfSMKp43lg1cQB1cZyfUchH6Ghsy4ZVYHebyj+nY=
+X-Google-Smtp-Source: AGHT+IF0/hUfzjonRG2t6X+ybcznJAPkDk/TYS2tpKkdXh5NSRNSl7hcVmpy3EjaagoH9pCJQ9bYDg==
+X-Received: by 2002:a05:6a00:2411:b0:6f4:41f2:b869 with SMTP id
+ z17-20020a056a00241100b006f441f2b869mr2491381pfh.21.1714741832966; 
+ Fri, 03 May 2024 06:10:32 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- p27-20020a637f5b000000b0061da540631csm1147494pgn.33.2024.05.03.06.00.08
+ e9-20020aa78249000000b006f43480dac7sm3003731pfn.59.2024.05.03.06.10.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 May 2024 06:00:09 -0700 (PDT)
-Message-ID: <a2cdbdbe-b4f9-455b-af5a-90f907ffed97@linaro.org>
-Date: Fri, 3 May 2024 06:00:06 -0700
+ Fri, 03 May 2024 06:10:32 -0700 (PDT)
+Message-ID: <4c683c02-64fa-47b8-882c-bd19c90897de@linaro.org>
+Date: Fri, 3 May 2024 06:10:30 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] exec/user: Move 'abitypes.h' from 'exec/user' to 'user'
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Warner Losh <imp@bsdimp.com>,
- Riku Voipio <riku.voipio@iki.fi>, Kyle Evans <kevans@freebsd.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20240503125202.35667-1-philmd@linaro.org>
+Subject: Re: [PULL 13/13] hmp/migration: Fix documents for "migrate" command
+To: Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>
+References: <20240502202316.29924-1-farosas@suse.de>
+ <20240502202316.29924-14-farosas@suse.de> <87bk5n1ius.fsf@pond.sub.org>
+ <87cyq3njnr.fsf@suse.de>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240503125202.35667-1-philmd@linaro.org>
+In-Reply-To: <87cyq3njnr.fsf@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2d;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2d.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,24 +98,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/3/24 05:52, Philippe Mathieu-Daudé wrote:
-> Keep all user emulation headers under the same user/ directory.
+On 5/3/24 05:51, Fabiano Rosas wrote:
+> Markus Armbruster <armbru@redhat.com> writes:
 > 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
-> Forgot to include this patch in "exec: Rework around CPUState user fields"
-> https://lore.kernel.org/qemu-devel/20240428221450.26460-1-philmd@linaro.org/
-> ---
->   bsd-user/qemu.h                    | 2 +-
->   include/exec/cpu-all.h             | 2 +-
->   include/exec/user/thunk.h          | 2 +-
->   include/{exec => }/user/abitypes.h | 4 ++--
->   include/user/syscall-trace.h       | 2 +-
->   linux-user/qemu.h                  | 2 +-
->   6 files changed, 7 insertions(+), 7 deletions(-)
->   rename include/{exec => }/user/abitypes.h (97%)
+>> Fabiano Rosas <farosas@suse.de> writes:
+>>
+>>> From: Peter Xu <peterx@redhat.com>
+>>>
+>>> Peter missed the Sphinx HMP document for the "resume/-r" flag in commit
+>>> 7a4da28b26 ("qmp: hmp: add migrate "resume" option").  Add it.  Avoid
+>>> adding a Fixes to make life easier for the stable maintainer.
+>>>
+>>> When at it, slightly cleanup the lines, move "detach/-d" to a separate
+>>> section rather than appending it at the end of the command description.
+>>>
+>>> Cc: Dr. David Alan Gilbert <dave@treblig.org>
+>>> Cc: Fabiano Rosas <farosas@suse.de>
+>>> Cc: Markus Armbruster <armbru@redhat.com>
+>>> Signed-off-by: Peter Xu <peterx@redhat.com>
+>>> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+>>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>>> ---
+>>>   hmp-commands.hx | 9 +++++++--
+>>>   1 file changed, 7 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/hmp-commands.hx b/hmp-commands.hx
+>>> index ebca2cdced..484a8a1c3a 100644
+>>> --- a/hmp-commands.hx
+>>> +++ b/hmp-commands.hx
+>>> @@ -918,8 +918,13 @@ ERST
+>>>   
+>>>   
+>>>   SRST
+>>> -``migrate [-d]`` *uri*
+>>> -  Migrate to *uri* (using -d to not wait for completion).
+>>> +``migrate [-d] [-r]`` *uri*
+>>> +  Migrate the current VM to *uri*.
+>>> +
+>>> +  ``-d``
+>>> +    Run this command asynchronously, so that the command doesn't wait for completion.
+>>> +  ``-r``
+>>> +    Resume a paused postcopy migration.
+>>>   ERST
+>>>   
+>>>       {
+>>
+>> I have questions on this one.
+> 
+> Yep, I should have waited longer before queuing this one, my bad.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Ok, I will not process this pull request.
+
 
 r~
 
