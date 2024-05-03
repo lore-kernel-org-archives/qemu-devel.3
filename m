@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76E08C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 12:22:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B215EC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 12:26:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2rv0-0003tc-Tq; Fri, 03 May 2024 08:21:38 -0400
+	id 1s2ryy-0006iq-De; Fri, 03 May 2024 08:25:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2ruy-0003tE-RF
- for qemu-devel@nongnu.org; Fri, 03 May 2024 08:21:36 -0400
-Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2ryp-0006hc-2T
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 08:25:35 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2ruw-0008Vi-Co
- for qemu-devel@nongnu.org; Fri, 03 May 2024 08:21:36 -0400
-Received: by mail-lj1-x22d.google.com with SMTP id
- 38308e7fff4ca-2e09138a2b1so68702161fa.3
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 05:21:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2rym-0000mj-1M
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 08:25:33 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5724e69780bso100319a12.0
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 05:25:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714738892; x=1715343692; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/WhA8PWmZFguuR+94hT9+dK8WwdgBURR3x26GDG6l34=;
- b=uazbWUF5dVfJpF8emTPiFUfB5NcBGxXbxKKJPS4o7FmCVx+FRsmxvhshB0/nLnJegU
- 2E1NV1UN+5svNlH+r/ZmMy3NzYjZBH88NxFBbR/P5O3MkL69vySBW0zzyWUjmhSKflPH
- TzQRuNWwWB4/mElCyRgEn7FkZ/kizoTDMXydZ7zL2MRUMBoXa6gmxlhExtfnvZS/U7RU
- asMPo6yfcGzFg7dijPuIbxofyUZ+Ab+1eNuabjc/nY2o3eQx1M7BWOxOdctB3HZjC1A7
- y6C5Kbd2hST9d6UmzSUzCpXWkRabYMRttKuY6vsHGi7Frg4JwcfoQTubK1ztjbaN1fX6
- SE5Q==
+ d=linaro.org; s=google; t=1714739130; x=1715343930; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=+QGJqXeLI9zJ+dCJcjdAIgwiwSsVYyEzcO/p9kZSdPY=;
+ b=ZnY588yneAvzsjAEzo9Se7UX8eP1pgTKMKjD2sInjC8uqw0zvB8fiCJYo6ta300Ozm
+ ZiILfeSsG/ryBafOUNP1IWrCG+MvURXztBYVAdkJxhEdgWukyxlANfXOqx0FCKfb1VaN
+ TY+8+ulY3PIVfnBUb0FUNoItDh/8Wy2kOAgadpVvbdAglqfvQX9a50fNleNbDwkJYl60
+ mO+jYbEk3Sx0IYULHCvDsbCGTWu5K9AdBn4FbF64crjjJbMkkfNGPEWVoFKjKRmJG+EJ
+ wAzxlTzJscNHXAyZpTw/SdSboEQx0gHVXBHKzq0TUjgVQ/yeHVhNYOJ+Hi6MfN4lSbED
+ 7HWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714738892; x=1715343692;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/WhA8PWmZFguuR+94hT9+dK8WwdgBURR3x26GDG6l34=;
- b=RVi3ERj7mJsrs+ISkS1YK/qmUl2cTuCx7g/fdROLd8D5/OHXJ1UAF59Ifbk1A8qmJy
- h40LpDKKy/bbVXRJ1OvGHHaZ9ayetzemy7pDTSXf0BOQ50Rymqdk9W8feRXauhFNFahp
- 68EQwDrcZFv5HHSjPvuIXzhMaL4Ao0N+3+y7f+rV5I/rdMaVEck/yKCnEN9J00/eO/Ty
- 5cJ90ULiBUo/fO3mg57+L2fB1CQONRfc+mEwyG46EAZdwT2Y2CivgRHnYW7SxuwkqmN1
- fMzK7HzVqmgM7PxoKw69IN5TBDhE0XkFOETjUL6Kj+qnTqpsgc35ar8VcdVRXRwpCnaB
- 9tbg==
-X-Gm-Message-State: AOJu0YwhyQl97G1dV69OCg94aDUK2E3VyrHh9VEfDJdTsSBlK+Yl2XfH
- UXsRiZUFBOPhqxcF8IOoilU862fh+xGvWaspnS+M6Po2tFWJ1jWC+3+VFOwAFlE=
-X-Google-Smtp-Source: AGHT+IH0u79X8htM0WanVpOOinvbiFKfqO9T3SD35Mb7/Tm064KyxXoRxYh65/82NMALMNd/QXwOKQ==
-X-Received: by 2002:a05:651c:553:b0:2dc:d2c5:ee9 with SMTP id
- q19-20020a05651c055300b002dcd2c50ee9mr1979052ljp.2.1714738892038; 
- Fri, 03 May 2024 05:21:32 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.179.187])
+ d=1e100.net; s=20230601; t=1714739130; x=1715343930;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+QGJqXeLI9zJ+dCJcjdAIgwiwSsVYyEzcO/p9kZSdPY=;
+ b=K33iKH46s4CjDXKRuIt0G3RVP6fZexNA8Vq1eYasCOP6MAvwUnTtLETvTZjIh6iahX
+ dDgsSo9FIhs6dohIsrWKaxfSixBGRDcCr7CwMJrPMsAGRGyDxfPBpM89LR5/pm7p029w
+ DRC08l+YkfwORZAy6XMyyVoX+XYyBTrrV8TvLWhz3ZWe03QQb2JnRGD0yiMeM2IqkiLd
+ Y+nyPpL3DoBrcDfABFTI6TUaqQwDct2ezmsDcNOPEaDi8Pqfj+HRqUUJM/S6Jp9Ql0ox
+ nSOEBS8Qn9uZTITE0BhaZnzDjKUbLLUmX6Kyv5Mya+TMYiAGc6l3UcwfT1UHPInoN+1h
+ 8z3Q==
+X-Gm-Message-State: AOJu0YyhXI8mVzlnNW3Uy4qJ2WYKbpYbJvw6ourWUMZO3W0qnkeTX4Es
+ czNvau4x1lg+d1CNnCBPqpaSm/v3BRgxUbKZUtOSRiLRMbyFzwKFq6XaU2spiqYPQQEJGltl+R9
+ N
+X-Google-Smtp-Source: AGHT+IEJTOwJBu/n5yRGw1bD8h5jDnYzSQr/lmtGJQbHkt/eOwEcuJok9JAmKiQhC0eq+H2Br57gzQ==
+X-Received: by 2002:a50:ab5e:0:b0:570:1de6:8a2d with SMTP id
+ t30-20020a50ab5e000000b005701de68a2dmr1499368edc.10.1714739129513; 
+ Fri, 03 May 2024 05:25:29 -0700 (PDT)
+Received: from m1x-phil.lan ([176.176.179.187])
  by smtp.gmail.com with ESMTPSA id
- r20-20020a2eb614000000b002e0e3467465sm515941ljn.12.2024.05.03.05.21.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 May 2024 05:21:31 -0700 (PDT)
-Message-ID: <da078202-63b4-49ff-b7c2-526b940687a4@linaro.org>
-Date: Fri, 3 May 2024 14:21:28 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] accel/tcg: Simplify meson.build using subdir_done()
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Warner Losh <imp@bsdimp.com>,
- Laurent Vivier <laurent@vivier.eu>, Riku Voipio <riku.voipio@iki.fi>,
+ t17-20020a05640203d100b00572c15aba54sm1615099edw.17.2024.05.03.05.25.28
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 03 May 2024 05:25:29 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Kyle Evans <kevans@freebsd.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20240503091657.26468-1-philmd@linaro.org>
- <20240503091657.26468-2-philmd@linaro.org>
- <CABgObfb7QQYdc5iqLME+eBhZG6nay0oacYFz+ANO2eenQOonqg@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CABgObfb7QQYdc5iqLME+eBhZG6nay0oacYFz+ANO2eenQOonqg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Warner Losh <imp@bsdimp.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Riku Voipio <riku.voipio@iki.fi>,
+ Philippe =?unknown-8bit?q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 0/4] accel/tcg: Call tcg_flush_jmp_cache() again when
+ creating user-mode cpu
+Date: Fri,  3 May 2024 14:25:22 +0200
+Message-ID: <20240503122526.28312-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,25 +96,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/5/24 13:16, Paolo Bonzini wrote:
-> On Fri, May 3, 2024 at 11:17 AM Philippe Mathieu-Daudé
-> <philmd@linaro.org> wrote:
->>
->> If CONFIG_TCG is not defined, skip this directory calling
->> subdir_done(). Then since we know CONFIG_TCG is defined,
->> we don't need to check for it.
-> 
-> You can only remove the check if you assume that TCG (unlike e.g. KVM)
-> is enabled for all targets. Of course this assumption is true right
-> now, but in principle it does not have to be - a long time ago,
-> qemu-kvm had ia64 as a KVM-only target for example.
+Since v1:
+- Dropped patch #1 (use meson subdir_done)
 
-Got it, thanks.
+Fix a bug introduced during a refactor in commit bb6cf6f016
+("accel/tcg: Factor tcg_cpu_reset_hold() out"), affecting
+user emulation. (cpu_reset is called during thread creation,
+after cpu_realize).
 
-> So I'm not sure this patch is a good idea. A lot of it is just
-> replacing tcg_specific_ss with specific_ss.
-> 
-> Paolo
-> 
+This issue was noticed by Ilya when running WASM:
+https://lore.kernel.org/qemu-devel/20221027141856.w5umjgklawgu7pqv@heavy/
+
+Philippe Mathieu-Daudé (4):
+  accel/tcg: Move system emulation files under sysemu/ subdirectory
+  accel/tcg: Do not define cpu_exec_reset_hold() as stub
+  accel/tcg: Introduce common tcg_exec_cpu_reset_hold() method
+  accel/tcg: Always call tcg_flush_jmp_cache() on reset
+
+ accel/tcg/internal-common.h                   |  2 ++
+ accel/tcg/{ => sysemu}/tcg-accel-ops-icount.h |  0
+ accel/tcg/{ => sysemu}/tcg-accel-ops-mttcg.h  |  0
+ accel/tcg/{ => sysemu}/tcg-accel-ops-rr.h     |  0
+ accel/tcg/{ => sysemu}/tcg-accel-ops.h        |  0
+ accel/tcg/cpu-exec.c                          |  6 ++++++
+ accel/tcg/{ => sysemu}/icount-common.c        |  0
+ accel/tcg/{ => sysemu}/monitor.c              |  4 ++--
+ accel/tcg/{ => sysemu}/tcg-accel-ops-icount.c |  0
+ accel/tcg/{ => sysemu}/tcg-accel-ops-mttcg.c  |  0
+ accel/tcg/{ => sysemu}/tcg-accel-ops-rr.c     |  0
+ accel/tcg/{ => sysemu}/tcg-accel-ops.c        |  5 ++---
+ accel/tcg/translate-all.c                     |  5 -----
+ accel/tcg/user-exec-stub.c                    |  4 ----
+ accel/tcg/user-exec.c                         |  5 +++++
+ accel/tcg/meson.build                         | 14 ++------------
+ accel/tcg/sysemu/meson.build                  | 11 +++++++++++
+ 17 files changed, 30 insertions(+), 26 deletions(-)
+ rename accel/tcg/{ => sysemu}/tcg-accel-ops-icount.h (100%)
+ rename accel/tcg/{ => sysemu}/tcg-accel-ops-mttcg.h (100%)
+ rename accel/tcg/{ => sysemu}/tcg-accel-ops-rr.h (100%)
+ rename accel/tcg/{ => sysemu}/tcg-accel-ops.h (100%)
+ rename accel/tcg/{ => sysemu}/icount-common.c (100%)
+ rename accel/tcg/{ => sysemu}/monitor.c (99%)
+ rename accel/tcg/{ => sysemu}/tcg-accel-ops-icount.c (100%)
+ rename accel/tcg/{ => sysemu}/tcg-accel-ops-mttcg.c (100%)
+ rename accel/tcg/{ => sysemu}/tcg-accel-ops-rr.c (100%)
+ rename accel/tcg/{ => sysemu}/tcg-accel-ops.c (99%)
+ create mode 100644 accel/tcg/sysemu/meson.build
+
+-- 
+2.41.0
 
 
