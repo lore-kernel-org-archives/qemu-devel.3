@@ -4,109 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E02D6C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 11:47:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F10C7C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 11:55:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2rNK-0003lW-BI; Fri, 03 May 2024 07:46:50 -0400
+	id 1s2rVV-00006o-3u; Fri, 03 May 2024 07:55:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
- id 1s2rNA-0003i6-Gy
- for qemu-devel@nongnu.org; Fri, 03 May 2024 07:46:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
- id 1s2rN5-0000xL-29
- for qemu-devel@nongnu.org; Fri, 03 May 2024 07:46:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714736792;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2uvasta9I+i7UwShPVPO1nVQS1rJRHFdQYPNeS/VWv0=;
- b=YYaIF2wt07gbW/bFGoKxxd+EUwDciFMMBEtGJYIr5jdSWm3vRw6fz9uN5iuSMkuAL/hcsO
- NPfjZ6YOWamPCJOfLjzns4mhpHm3AgD+p5VvyjIz5m359RFon3NU4kf/O0fnFkJs3qqkhV
- bT0RAGkxxZgHQAeIJZ1JRgPrAfIF21E=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-651-wdl-8P7hM1WesEdRQTBTZA-1; Fri, 03 May 2024 07:46:31 -0400
-X-MC-Unique: wdl-8P7hM1WesEdRQTBTZA-1
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7927071f933so370232985a.1
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 04:46:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1s2rVN-0008Jg-28
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 07:55:09 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1s2rVK-0002XK-JK
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 07:55:08 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a5966ea4fafso352533966b.0
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 04:55:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1714737303; x=1715342103; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=XPmmVB2NIQMrFdtHs/DkWgUhXnPTMJp4eJItgyjhvcI=;
+ b=Kku6VBMH3mgV+bRJS2M2HVdhoS8lHaYHC/IwnVY67xbdLcD2KmsOPa6+NXCUDG17zN
+ nLu3ZtYGd3/mCga1OmPHEHO8gkz14hN2EoN5jibLR4ADGoI+DazDBr9O13g4tpP0kTc9
+ 568yFfLh5Bir9VhpTtAcMOLw8xrFvI1WbqnfwUq34CXbP4wzpKs1twmObza/iRtt9LJL
+ bLTeDdkAk5Uy7xdlpHfdST8fQq/OIeNgJmjDU+mJj9MiqLZ3JXEyPWUYtp1lU4PUrew9
+ LPGS48WbLy7RBeNHFp+BNRsjUq5QprFpxwiFN/oKeiWcDHda/kbsIIQTOZUx8pTql6yt
+ a0LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714736791; x=1715341591;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2uvasta9I+i7UwShPVPO1nVQS1rJRHFdQYPNeS/VWv0=;
- b=mojrabW4frMvmCwztgzAynr93HuCORCPXYwjmA+ZcpsSXHrkA1yc+EqYRAj/ACi3dk
- S2LF5ARNy8xIYo2mG71QuHdihXeZP1O/TDxVEUnAl5AEvmVBnLCgPSuiAdc/MrrdpB6f
- DG+YkSNC/MqnGo/M80wZ9xh413WlRz0BHIIo9ef6yAALKz4peEX5p7LfjsDpBiBrTWzx
- Bo4KEXQpfFu0QMJFn0s8DBdKO1TGIvH1/0yfCFO9mAFbX8qTqflH1aY1poAtIbxSNP/9
- FTnqdA162xLQQ9JHHOBqMF2QwzbjSIYC85g32slkT2dLUyehM5dr6JbJrEonTv7eKjb0
- ttdQ==
+ d=1e100.net; s=20230601; t=1714737303; x=1715342103;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XPmmVB2NIQMrFdtHs/DkWgUhXnPTMJp4eJItgyjhvcI=;
+ b=uZcTtSs1i0qNGz2dSdhSevTEh+bSzKC8SyDODZCRANqXbesPxHgQK1mOydbtee0GJd
+ iUxy5w94M/ws0Wf/g3nB/0OZNQYnwAAO27hvF6+2ZS9RHZhkqAIoieUafgxrU8FHLbjR
+ CO4ou5xW+VpAoUFZymH0+qvr96L/aGZZx+6Dhbp0oPIjQ2rwU6scmhG1x0DggufnwFtA
+ kdS4cJt/bcq5lS2YYn98ukFgCQ8xRPloNM6oMONDh/GrcI+6+xM8Aew4mkdhYv1QIVcu
+ YuvNyxl50pyJbDmUOV1JQiTS/VeYdmUgWKQ+SvvP4NwBlhNKqxUddM4FquONSE/q4n3u
+ r+ew==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU1BxJUD2vtX0zEB8TkmUZ1LawDkgvobDzh5mZiNr2hRcJXiCzxN88jURIZXq1pAt1hippoW0DXcf0Z4AEknyNyA6JGalI=
-X-Gm-Message-State: AOJu0YwBAGI2A6B/S3xWwOCldoZPIr8JMZjWOfDlKUIbYQwZwnmuD7mJ
- mwkWD9vEsE1vqbSGVqkXC1ihiG+ThSycWeiszIioo/mHOLZt0wR1EJRnCyir3qDyRzgZKX70lGP
- dnxYxqPqa9WXFtuIVG7ZdEvGrQ8tFmnR/j1h0M47zq+akfGPsYDv9
-X-Received: by 2002:a05:620a:158f:b0:78e:bd5d:8d7b with SMTP id
- d15-20020a05620a158f00b0078ebd5d8d7bmr4193322qkk.14.1714736790698; 
- Fri, 03 May 2024 04:46:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGJC3X5Xn9GnRho4+gg9+JMqRuz8waDWfsajVRpwTseVkejMd0U7f/UraohjumNyb7OmApZAQ==
-X-Received: by 2002:a05:620a:158f:b0:78e:bd5d:8d7b with SMTP id
- d15-20020a05620a158f00b0078ebd5d8d7bmr4193275qkk.14.1714736790247; 
- Fri, 03 May 2024 04:46:30 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ AJvYcCWF8KtUfNDvTqnz76AgJTuOb4zBlQbIqy1jm8I2b1Mzm92hCcJpNdCwLulz/zd/ReLLGIMAkgBft+jjqYvUsIC2hmYqx5M=
+X-Gm-Message-State: AOJu0YxXbG0GWct1HkCbOBIUpvv0ig024NQ+UOhAm0TSMJZnKq8DJKzi
+ X8a7qDaYxgHGy2IwiiGIcWwjQv+Nj6eRbA2HxbChO07PbxeQ7ADqNk81kxUo6Oc=
+X-Google-Smtp-Source: AGHT+IHabr4V0on42EpFuBZCtspfGWwMqtfKlMFysjY56S+e5VICmjD/MWpwfpxrs05KG8PBE266sA==
+X-Received: by 2002:a17:906:309b:b0:a59:9c2f:c7d4 with SMTP id
+ 27-20020a170906309b00b00a599c2fc7d4mr338918ejv.19.1714737303572; 
+ Fri, 03 May 2024 04:55:03 -0700 (PDT)
+Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
+ [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
  by smtp.gmail.com with ESMTPSA id
- y22-20020a05620a09d600b0078d5f7b9a2dsm1156452qky.15.2024.05.03.04.46.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 May 2024 04:46:29 -0700 (PDT)
-Message-ID: <919d07f5-ecf7-4ce1-9508-7ac8f8f6e7e4@redhat.com>
-Date: Fri, 3 May 2024 13:46:24 +0200
+ g2-20020a1709061c8200b00a59937ec4c4sm518079ejh.87.2024.05.03.04.55.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 03 May 2024 04:55:02 -0700 (PDT)
+Date: Fri, 3 May 2024 13:55:01 +0200
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Aleksei Filippov <alexei.filippov@syntacore.com>
+Cc: alistair.francis@wdc.com, alistair23@gmail.com, 
+ apatel@ventanamicro.com, bin.meng@windriver.com, dbarboza@ventanamicro.com, 
+ liwei1518@gmail.com, palmer@dabbelt.com, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com
+Subject: Re: [PATCH v6] target/riscv/kvm/kvm-cpu.c: kvm_riscv_handle_sbi()
+ fail with vendor-specific SBI
+Message-ID: <20240503-1417868a079951810dadb71c@orel>
+References: <20240422-e78b28f00a168518c5d4937a@orel>
+ <20240422114254.13839-1-alexei.filippov@syntacore.com>
+ <20240422-fd9fc07462257b6da42d8eb5@orel>
+ <20240425-7ae473e720f2879f34c957f6@orel>
+ <e7acd34f-956c-47ea-acfd-0b9ef82ff90c@syntacore.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/14] hw: define and enforce a standard lifecycle for
- versioned machines
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Peter Maydell <peter.maydell@linaro.org>, Nicholas Piggin
- <npiggin@gmail.com>, Richard Henderson <richard.henderson@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Laurent Vivier <laurent@vivier.eu>, qemu-arm@nongnu.org,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-ppc@nongnu.org,
- David Gibson <david@gibson.dropbear.id.au>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org
-References: <20240501182759.2934195-1-berrange@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clegoate@redhat.com>
-In-Reply-To: <20240501182759.2934195-1-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clegoate@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.483,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e7acd34f-956c-47ea-acfd-0b9ef82ff90c@syntacore.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=ajones@ventanamicro.com; helo=mail-ej1-x632.google.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,117 +103,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/1/24 20:27, Daniel P. Berrangé wrote:
-> Thomas proposed a new deprecation and removal policy for versioned
-> machine types that would see them liable for deletion after 6 years:
+On Fri, May 03, 2024 at 01:39:32PM GMT, Aleksei Filippov wrote:
 > 
->    https://lists.nongnu.org/archive/html/qemu-devel/2024-04/msg04683.html
 > 
-> This suggest was met with broad approval, however, I suggested that we
-> could take it further and actually mark them deprecated sooner, at the
-> 3 year timeframe, and also fully automate the enablement of the runtime
-> deprecation warning without developer intervention on every release
-> cycle.
+> On 25.04.2024 12:21, Andrew Jones wrote:
+> > On Mon, Apr 22, 2024 at 02:31:36PM +0200, Andrew Jones wrote:
+> > > On Mon, Apr 22, 2024 at 02:42:54PM +0300, Alexei Filippov wrote:
+> > > > kvm_riscv_handle_sbi() may return not supported return code to not
+> > > > trigger qemu abort with vendor-specific sbi.
+> > > > 
+> > > > Add new error path to provide proper error in case of
+> > > > qemu_chr_fe_read_all() may not return sizeof(ch).
+> > > 
+> > > I think something more along the lines of what I wrote in my previous
+> > > reply will help clarify this more. Here's what I wrote
+> > > 
+> > > """
+> > > Exactly zero just means we failed to read input, which can happen, so
+> > > telling the SBI caller we failed to read, but telling the caller of this
+> > > function that we successfully emulated the SBI call, is correct. However,
+> > > anything else, other than sizeof(ch), means something unexpected happened,
+> > > so we should indeed return an error from this function.
+> > > """
+> > > 
+> > > Thanks,
+> > > drew
+> > > 
+> > > > 
+> > > > Added SBI related return code's defines.
+> > > > 
+> > > > Signed-off-by: Alexei Filippov <alexei.filippov@syntacore.com>
+> > > > ---
+> > > > Changes since v4-5:
+> > > > 		-Added new error path in case of qemu_chr_fe_read_all() may not
+> > > > 		return sizeof(ch).
+> > > > 		-Added more comments in commit message.
+> > > >   target/riscv/kvm/kvm-cpu.c         | 10 ++++++----
+> > > >   target/riscv/sbi_ecall_interface.h | 12 ++++++++++++
+> > > >   2 files changed, 18 insertions(+), 4 deletions(-)
+> > > > 
+> > > > diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> > > > index f9dbc18a76..5bb7b74d03 100644
+> > > > --- a/target/riscv/kvm/kvm-cpu.c
+> > > > +++ b/target/riscv/kvm/kvm-cpu.c
+> > > > @@ -1173,16 +1173,18 @@ static int kvm_riscv_handle_sbi(CPUState *cs, struct kvm_run *run)
+> > > >           ret = qemu_chr_fe_read_all(serial_hd(0)->be, &ch, sizeof(ch));
+> > > >           if (ret == sizeof(ch)) {
+> > > >               run->riscv_sbi.ret[0] = ch;
+> > > > +            ret = 0;
+> > > > +        } else if (ret == 0) {
+> > > > +            run->riscv_sbi.ret[0] = SBI_ERR_FAILURE;
+> > 
+> > I'd prefer we still explicitly assign ret[0] to -1 here since that's what
+> > the spec explicitly says.
+> > 
+> > Thanks,
+> > drew
 > 
-> This series implements my suggestions.
-> 
-> The first patch introduces some helper macros and documents a standard
-> code pattern for defining versioned machine types across targets.
-> 
-> The next 6 patches convert existing targets with versioned machine
-> types (arm, s390x, ppc, m68k, i386) to use the new helper macros and
-> code patterns.
-> 
-> A further patch introduces some helper macros for automating the
-> handling of deprecation and deletion of versioned machine types.
-> 
-> Two more patches then enable the deprecation and deletion logic
-> across all versioned machines
-> 
-> Finally we do some cleanup and document the new policy.
-> 
-> ........a tangent about VERSION file handling.......
-> 
-> One oddity here, is that during the development and release
-> candidate phases the automatic logic in this series has an off-by-1
-> error.
-> 
-> This is because when we, for example, add the "9.1" machine type
-> versions, the VERSION file is still reporting '9.0.50', and then
-> '9.0.9{1,2,3,4}'.
-> 
-> IOW, during development and in rc candidates, we fail to deprecate
-> and delete 1 machine type. We should already have deprecated the
-> 6.1 machine types, but the most recently deprecated is 6.0.
-> This is pretty harmless since the final release does the right
-> thing.
-> 
-> I wonder, however, whether we would benefit from changing how we
-> update the VERSION file.
-> 
-> eg instead of re-using the micro digit to indicate a dev or rc
-> snapshot, represent those explicitly. eg "9.1.0-dev" and
-> "9.1.0-rc1", "9.1.0-rc2", etc in VERSION.
-> 
-> We don't use the full QEMU_VERSION in the code in all that many
-> places. It appears in some help messages for command line tools,
-> and in QMP query-version response, and in a few other misc places.
-> At a glance it appears all of those places would easily handle a
-> tagged version.
-> 
-> For release candidates in particular I think it would be saner
-> to show the user the actual version the release is about to become,
-> rather than the previous release's version. This would make the
-> reported version match the rc tarball naming too which would be
-> nice.
-> 
-> Anyway, this isn't a blocker for this machine type versioning
-> proposal, just a thought....
+> Can you please explain it a little bit more, cz I believe SBI_ERR_FAILURE is
+> -1 anyway. Defines was added at first place just to came along with Linux
+> kernel SBI related defines.
 
-I would agree with such a change. The version numbers always confused
-me. AFAICT, only QEMU_VERSION_MICRO would need some massaging. It
-shouldn't be too complex.
-
-For the series,
-
-Tested-by: Cédric Le Goater <clg@redhat.com>
+Legacy SBI calls like SBI_EXT_0_1_CONSOLE_GETCHAR don't return a struct
+sbiret, they only return a function-specific long. The spec says for
+Getchar that it returns "...the byte on success, or -1 for failure."
+So we should explicitly set failure to -1, especially since
+SBI_ERR_FAILURE isn't defined for legacy SBI calls.
 
 Thanks,
+drew
 
-C.
-
-
-
+> -- 
+> Sincerely,
+> Aleksei Filippov
 > 
-> Daniel P. Berrangé (14):
->    include/hw: add helpers for defining versioned machine types
->    hw/arm: convert 'virt' machine definitions to use new macros
->    hw/s390x: convert 'ccw' machine definitions to use new macros
->    hw/ppc: convert 'spapr' machine definitions to use new macros
->    hw/m68k: convert 'virt' machine definitions to use new macros
->    hw/i386: convert 'i440fx' machine definitions to use new macros
->    hw/i386: convert 'q35' machine definitions to use new macros
->    include/hw: add macros for deprecation & removal of versioned machines
->    hw: temporarily disable deletion of versioned machine types
->    hw: set deprecation info for all versioned machine types
->    hw: skip registration of outdated versioned machine types
->    hw/ppc: remove obsolete manual deprecation reason string of spapr
->      machines
->    hw/i386: remove obsolete manual deprecation reason string of i440fx
->      machines
->    docs: document special exception for machine type deprecation &
->      removal
-> 
->   docs/about/deprecated.rst  |  12 ++
->   hw/arm/virt.c              |  30 +++--
->   hw/i386/pc_piix.c          | 252 +++++++++++++++-------------------
->   hw/i386/pc_q35.c           | 215 +++++++++++++----------------
->   hw/m68k/virt.c             |  53 +++++---
->   hw/ppc/spapr.c             |  96 +++++++------
->   hw/s390x/s390-virtio-ccw.c |  98 ++++++++------
->   include/hw/boards.h        | 268 +++++++++++++++++++++++++++++++++++++
->   include/hw/i386/pc.h       |  32 +++++
->   9 files changed, 666 insertions(+), 390 deletions(-)
-> 
-
+> > > >           } else {
+> > > > -            run->riscv_sbi.ret[0] = -1;
+> > > > +            ret = -1;
+> > > >           }
+> > > > -        ret = 0;
+> > > >           break;
+> > > >       default:
+> > > >           qemu_log_mask(LOG_UNIMP,
+> > > > -                      "%s: un-handled SBI EXIT, specific reasons is %lu\n",
+> > > > +                      "%s: Unhandled SBI exit with extension-id %lu\n"
+> > > >                         __func__, run->riscv_sbi.extension_id);
+> > > > -        ret = -1;
+> > > > +        run->riscv_sbi.ret[0] = SBI_ERR_NOT_SUPPORTED;
+> > > >           break;
+> > > >       }
+> > > >       return ret;
+> > > > diff --git a/target/riscv/sbi_ecall_interface.h b/target/riscv/sbi_ecall_interface.h
+> > > > index 43899d08f6..a2e21d9b8c 100644
+> > > > --- a/target/riscv/sbi_ecall_interface.h
+> > > > +++ b/target/riscv/sbi_ecall_interface.h
+> > > > @@ -69,4 +69,16 @@
+> > > >   #define SBI_EXT_VENDOR_END              0x09FFFFFF
+> > > >   /* clang-format on */
+> > > > +/* SBI return error codes */
+> > > > +#define SBI_SUCCESS                  0
+> > > > +#define SBI_ERR_FAILURE             -1
+> > > > +#define SBI_ERR_NOT_SUPPORTED       -2
+> > > > +#define SBI_ERR_INVALID_PARAM       -3
+> > > > +#define SBI_ERR_DENIED              -4
+> > > > +#define SBI_ERR_INVALID_ADDRESS     -5
+> > > > +#define SBI_ERR_ALREADY_AVAILABLE   -6
+> > > > +#define SBI_ERR_ALREADY_STARTED     -7
+> > > > +#define SBI_ERR_ALREADY_STOPPED     -8
+> > > > +#define SBI_ERR_NO_SHMEM            -9
+> > > > +
+> > > >   #endif
+> > > > -- 
+> > > > 2.34.1
+> > > > 
 
