@@ -4,83 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B97BC10F16
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 19:13:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A000AC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 19:37:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2yL7-0001Mo-26; Fri, 03 May 2024 15:13:02 -0400
+	id 1s2yhd-0006Y1-GJ; Fri, 03 May 2024 15:36:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2yKs-0001FM-MA
- for qemu-devel@nongnu.org; Fri, 03 May 2024 15:12:47 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2yKq-0001np-QC
- for qemu-devel@nongnu.org; Fri, 03 May 2024 15:12:46 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-41b869326daso435375e9.0
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 12:12:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714763563; x=1715368363; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=gmp0PVmm2lIG1cghi5u5AQ2w1/nS0HVMNY1RpuMvmv4=;
- b=DQk+XYfVucBbHsOk2z7kEIEVhpibHHRS6zVsecQYccIG1vmuTp6JQXKLt/tcyONFwQ
- tSMIDObLkFAIMEYEvxQJ+RAyQZL2ElF/0XwKu9HTt17Lc/d72aWOCNzGewht8eqczKcG
- qO0MspcJ3WS9e2v+B4EXQMGExYojKE7PlxlxeOSLsEUlRDPQzYHUR4vR2XIRtFmbgdU0
- gwxV0td0CTns4b8hgWRqXLOBkABrrr/Cmf/bRVjkXny2CJUPaDNqXAg6YreZY0qEHhJp
- vYO2C3Zn5vRgVRwnptoiwTtrsI/LStgpdZ68dYuAJZJn0ClVWwVWU8lVVdDlgmae/te/
- EP6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714763563; x=1715368363;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gmp0PVmm2lIG1cghi5u5AQ2w1/nS0HVMNY1RpuMvmv4=;
- b=gy+IPDlqhPu8LfREKF1OnU2yFC1qx105ZigQvCqgg6+NtQHDlySWCETLaosmp+dEiq
- t5wo+31TfmE7A34DpvNi+5SK2urx6spAJjD02F/pFvRP1aN+iNnWhY8J3Oyr5HEHyKng
- eBeC83rXn8i5lQHojZlHIWJGdC3yUKQuc4p1koilOjuQX01Kyyff7j3efRopE20FqTyr
- GLiLc2JUA7+i6RpbQP9ousq/UYbDcD2A43UM8Z+XPxdkr9Ed6K5U3JYKEkh/u+zKQ7MO
- xr3F1khlEpEARU3+vPBvv9f0i9zvVlCAuP1v18Iw6Er1lL3eFYp0PQSe5UJX0P64FPU8
- y1NQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVaEOAfiqZat6mCYO85JPzkCCoNT5TK0SWpPFuft0/LF3tDFcpDxc/C+Zh+htkQUF9WpuQ62zma4c/OOACjTtQnah1NYqI=
-X-Gm-Message-State: AOJu0Yy7nNTf20drQhHb4giuIWmaxEDi3QoE5gioX1CWvhcWfwm+Gm1H
- Y6/ZV++GEWgBd5M+T9Mjt1bmqSwzOpGG+Auu5OrLvE8Ghc8uoF37tBAzlcDGc+k=
-X-Google-Smtp-Source: AGHT+IF7StSjDXIc8csjdv46Bt4r7bDqInS8dTfrO+cksZWnCm7ygj9DOH5Qu+uEhDGkpvkOxe2Pwg==
-X-Received: by 2002:a05:600c:4453:b0:41b:e2f6:afc2 with SMTP id
- v19-20020a05600c445300b0041be2f6afc2mr3310994wmn.16.1714763562812; 
- Fri, 03 May 2024 12:12:42 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.179.187])
- by smtp.gmail.com with ESMTPSA id
- d1-20020a05600c34c100b0041c130520f3sm10367537wmq.6.2024.05.03.12.12.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 May 2024 12:12:42 -0700 (PDT)
-Message-ID: <04d8919d-4fcf-4fc5-839a-6d08947b87f8@linaro.org>
-Date: Fri, 3 May 2024 21:12:40 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/7] target/sparc: Split out do_ms16b
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: mark.cave-ayland@ilande.co.uk
-References: <20240502165528.244004-1-richard.henderson@linaro.org>
- <20240502165528.244004-8-richard.henderson@linaro.org>
- <fc03eef5-ab39-4684-b89a-4d690ad4217e@linaro.org>
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1s2yha-0006XF-Hf; Fri, 03 May 2024 15:36:14 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1s2yhX-0005Sf-Ol; Fri, 03 May 2024 15:36:14 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VWLcn6wcSz6K6g0;
+ Sat,  4 May 2024 03:35:37 +0800 (CST)
+Received: from lhrpeml100004.china.huawei.com (unknown [7.191.162.219])
+ by mail.maildlp.com (Postfix) with ESMTPS id B9D5D140B54;
+ Sat,  4 May 2024 03:36:00 +0800 (CST)
+Received: from lhrpeml500001.china.huawei.com (7.191.163.213) by
+ lhrpeml100004.china.huawei.com (7.191.162.219) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Fri, 3 May 2024 20:36:00 +0100
+Received: from lhrpeml500001.china.huawei.com ([7.191.163.213]) by
+ lhrpeml500001.china.huawei.com ([7.191.163.213]) with mapi id 15.01.2507.039; 
+ Fri, 3 May 2024 20:36:00 +0100
+To: Vishnu Pajjuri <vishnu@amperemail.onmicrosoft.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>
+CC: "maz@kernel.org" <maz@kernel.org>, "jean-philippe@linaro.org"
+ <jean-philippe@linaro.org>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "lpieralisi@kernel.org" <lpieralisi@kernel.org>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
+ <richard.henderson@linaro.org>, "imammedo@redhat.com" <imammedo@redhat.com>,
+ "andrew.jones@linux.dev" <andrew.jones@linux.dev>, "david@redhat.com"
+ <david@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, "oliver.upton@linux.dev"
+ <oliver.upton@linux.dev>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "mst@redhat.com" <mst@redhat.com>, "will@kernel.org" <will@kernel.org>,
+ "gshan@redhat.com" <gshan@redhat.com>, "rafael@kernel.org"
+ <rafael@kernel.org>, "alex.bennee@linaro.org" <alex.bennee@linaro.org>,
+ "linux@armlinux.org.uk" <linux@armlinux.org.uk>,
+ "darren@os.amperecomputing.com" <darren@os.amperecomputing.com>,
+ "ilkka@os.amperecomputing.com" <ilkka@os.amperecomputing.com>,
+ "vishnu@os.amperecomputing.com" <vishnu@os.amperecomputing.com>,
+ "karl.heubaum@oracle.com" <karl.heubaum@oracle.com>, "miguel.luis@oracle.com"
+ <miguel.luis@oracle.com>, "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>,
+ zhukeqian <zhukeqian1@huawei.com>, "wangxiongfeng (C)"
+ <wangxiongfeng2@huawei.com>, "wangyanan (Y)" <wangyanan55@huawei.com>,
+ "jiakernel2@gmail.com" <jiakernel2@gmail.com>, "maobibo@loongson.cn"
+ <maobibo@loongson.cn>, "lixianglai@loongson.cn" <lixianglai@loongson.cn>,
+ Linuxarm <linuxarm@huawei.com>, "gankulkarni@os.amperecomputing.com"
+ <gankulkarni@os.amperecomputing.com>
+Subject: RE: [PATCH V8 7/8] gdbstub: Add helper function to unregister GDB
+ register space
+Thread-Topic: [PATCH V8 7/8] gdbstub: Add helper function to unregister GDB
+ register space
+Thread-Index: AQHadCFhTRuMleCuw0qaMYaEBMUPxLFYOFYAgC33MmA=
+Date: Fri, 3 May 2024 19:36:00 +0000
+Message-ID: <2e0f85f252fe4c8b913c0fad45e60575@huawei.com>
+References: <20240312020000.12992-1-salil.mehta@huawei.com>
+ <20240312020000.12992-8-salil.mehta@huawei.com>
+ <884099cd-f57f-417e-aff9-52a7d77dab31@amperemail.onmicrosoft.com>
+In-Reply-To: <884099cd-f57f-417e-aff9-52a7d77dab31@amperemail.onmicrosoft.com>
+Accept-Language: en-US
 Content-Language: en-US
-In-Reply-To: <fc03eef5-ab39-4684-b89a-4d690ad4217e@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.48.152.25]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,100 +97,56 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Salil Mehta <salil.mehta@huawei.com>
+From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/5/24 21:11, Philippe Mathieu-Daudé wrote:
-> On 2/5/24 18:55, Richard Henderson wrote:
->> The unit operation for fmul8x16 and friends is described in the
->> manual as "MS16b".  Split that out for clarity.  Improve rounding
->> with an unconditional addition of 0.5 as a fixed-point integer.
->>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   target/sparc/vis_helper.c | 78 ++++++++++++---------------------------
->>   1 file changed, 24 insertions(+), 54 deletions(-)
-> 
-> 
->> @@ -150,23 +138,14 @@ uint64_t helper_fmul8x16a(uint32_t src1, int32_t 
->> src2)
->>   uint64_t helper_fmul8sux16(uint64_t src1, uint64_t src2)
->>   {
->>       VIS64 s, d;
->> -    uint32_t tmp;
->>       s.ll = src1;
->>       d.ll = src2;
->> -#define 
->> PMUL(r)                                                         \
->> -    tmp = (int32_t)d.VIS_SW64(r) * ((int32_t)s.VIS_SW64(r) >> 
->> 8);       \
->> -    if ((tmp & 0xff) > 0x7f) 
->> {                                          \
->> -        tmp += 
->> 0x100;                                                   \
->> -    
->> }                                                                   \
->> -    d.VIS_W64(r) = tmp >> 8;
->> -
->> -    PMUL(0);
->> -    PMUL(1);
->> -    PMUL(2);
->> -    PMUL(3);
->> -#undef PMUL
->> +    d.VIS_W64(0) = do_ms16b(s.VIS_SB64(1), d.VIS_SW64(0));
-> 
-> s.VIS_SB64(1) = upper bit, OK.
-
-I meant "bits" (plural)!
-
-> 
->> +    d.VIS_W64(1) = do_ms16b(s.VIS_SB64(3), d.VIS_SW64(1));
->> +    d.VIS_W64(2) = do_ms16b(s.VIS_SB64(5), d.VIS_SW64(2));
->> +    d.VIS_W64(3) = do_ms16b(s.VIS_SB64(7), d.VIS_SW64(3));
->>       return d.ll;
->>   }
->> @@ -174,23 +153,14 @@ uint64_t helper_fmul8sux16(uint64_t src1, 
->> uint64_t src2)
->>   uint64_t helper_fmul8ulx16(uint64_t src1, uint64_t src2)
->>   {
->>       VIS64 s, d;
->> -    uint32_t tmp;
->>       s.ll = src1;
->>       d.ll = src2;
->> -#define 
->> PMUL(r)                                                         \
->> -    tmp = (int32_t)d.VIS_SW64(r) * ((uint32_t)s.VIS_B64(r * 
->> 2));        \
->> -    if ((tmp & 0xff) > 0x7f) 
->> {                                          \
->> -        tmp += 
->> 0x100;                                                   \
->> -    
->> }                                                                   \
->> -    d.VIS_W64(r) = tmp >> 8;
->> -
->> -    PMUL(0);
->> -    PMUL(1);
->> -    PMUL(2);
->> -    PMUL(3);
->> -#undef PMUL
->> +    d.VIS_W64(0) = do_ms16b(s.VIS_B64(0), d.VIS_SW64(0));
-> 
-> s.VIS_B64(0) for lower bit, OK.
-
-Ditto.
-
-> 
->> +    d.VIS_W64(1) = do_ms16b(s.VIS_B64(2), d.VIS_SW64(1));
->> +    d.VIS_W64(2) = do_ms16b(s.VIS_B64(4), d.VIS_SW64(2));
->> +    d.VIS_W64(3) = do_ms16b(s.VIS_B64(6), d.VIS_SW64(3));
->>       return d.ll;
->>   }
-> 
-> Maybe add a comment for high/low bits in fmul8sux16/fmul8ulx16,
-> as it was not obvious at first. Otherwise,
-> 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
-
+SGkgVmlzaG51LA0KU29ycnkgZm9yIHRoZSBkZWxheSBpbiByZXBseS4gU3RpbGwgY2F0Y2hpbmcg
+dXAuDQoNCj4gIEZyb206IFZpc2hudSBQYWpqdXJpIDx2aXNobnVAYW1wZXJlbWFpbC5vbm1pY3Jv
+c29mdC5jb20+IA0KPiAgU2VudDogVGh1cnNkYXksIEFwcmlsIDQsIDIwMjQgMzowMiBQTQ0KPiAg
+VG86IFNhbGlsIE1laHRhIDxzYWxpbC5tZWh0YUBodWF3ZWkuY29tPjsgcWVtdS1kZXZlbEBub25n
+bnUub3JnOyBxZW11LWFybUBub25nbnUub3JnDQo+ICANCj4gIEhpIFNhbGlsLA0KPiAgT24gMTIt
+MDMtMjAyNCAwNzoyOSwgU2FsaWwgTWVodGEgd3JvdGU6DQo+PiAgQWRkIGNvbW1vbiBmdW5jdGlv
+biB0byBoZWxwIHVucmVnaXN0ZXIgdGhlIEdEQiByZWdpc3RlciBzcGFjZS4gVGhpcyBzaGFsbCBi
+ZQ0KPj4gIGRvbmUgaW4gY29udGV4dCB0byB0aGUgQ1BVIHVucmVhbGl6YXRpb24uDQo+PiAgDQo+
+PiAgU2lnbmVkLW9mZi1ieTogU2FsaWwgTWVodGEgbWFpbHRvOnNhbGlsLm1laHRhQGh1YXdlaS5j
+b20NCj4+ICBUZXN0ZWQtYnk6IFZpc2hudSBQYWpqdXJpIG1haWx0bzp2aXNobnVAb3MuYW1wZXJl
+Y29tcHV0aW5nLmNvbQ0KPj4gIFJldmlld2VkLWJ5OiBHYXZpbiBTaGFuIG1haWx0bzpnc2hhbkBy
+ZWRoYXQuY29tDQo+PiAgVGVzdGVkLWJ5OiBYaWFuZ2xhaSBMaSBtYWlsdG86bGl4aWFuZ2xhaUBs
+b29uZ3Nvbi5jbg0KPj4gIFRlc3RlZC1ieTogTWlndWVsIEx1aXMgbWFpbHRvOm1pZ3VlbC5sdWlz
+QG9yYWNsZS5jb20NCj4+ICBSZXZpZXdlZC1ieTogU2hhb3FpbiBIdWFuZyBtYWlsdG86c2hhaHVh
+bmdAcmVkaGF0LmNvbQ0KPj4gIC0tLQ0KPj4gICBnZGJzdHViL2dkYnN0dWIuYz4gIHwgMTIgKysr
+KysrKysrKysrDQo+PiAgIGluY2x1ZGUvZXhlYy9nZGJzdHViLmggfCAgNiArKysrKysNCj4+ICAg
+MiBmaWxlcyBjaGFuZ2VkLCAxOCBpbnNlcnRpb25zKCspDQo+PiAgDQo+PiAgZGlmZiAtLWdpdCBh
+L2dkYnN0dWIvZ2Ric3R1Yi5jIGIvZ2Ric3R1Yi9nZGJzdHViLmMNCj4+ICBpbmRleCAxN2VmY2Fl
+MGQwLi5hODQ0OWRjMzA5IDEwMDY0NA0KPj4gIC0tLSBhL2dkYnN0dWIvZ2Ric3R1Yi5jDQo+PiAg
+KysrIGIvZ2Ric3R1Yi9nZGJzdHViLmMNCj4+ICBAQCAtNjE1LDYgKzYxNSwxOCBAQCB2b2lkIGdk
+Yl9yZWdpc3Rlcl9jb3Byb2Nlc3NvcihDUFVTdGF0ZSAqY3B1LA0KPj4gICAgICAgfQ0KPj4gICB9
+DQo+PiAgIA0KPj4gICt2b2lkIGdkYl91bnJlZ2lzdGVyX2NvcHJvY2Vzc29yX2FsbChDUFVTdGF0
+ZSAqY3B1KQ0KPj4gICt7DQo+PiAgKyAgICAvKg0KPj4gICsgICAgICogU2FmZSB0byBudWtlIGV2
+ZXJ5dGhpbmcuIEdEQlJlZ2lzdGVyU3RhdGU6OnhtbCBpcyBzdGF0aWMgY29uc3QgY2hhciBzbw0K
+Pj4gICsgICAgICogaXQgd29uJ3QgYmUgZnJlZWQNCj4+ICArICAgICAqLw0KPj4gICsgICAgZ19h
+cnJheV9mcmVlKGNwdS0+Z2RiX3JlZ3MsIHRydWUpOw0KPj4gICsNCj4+ICArICAgIGNwdS0+Z2Ri
+X3JlZ3MgPSBOVUxMOw0KPj4gICsgICAgY3B1LT5nZGJfbnVtX2dfcmVncyA9IDA7DQo+ICBMaWtl
+d2lzZSwgeW91IG1heSBuZWVkIHRvIHNldCBnZGJfbnVtX3JlZ3MgdG8gemVybyBhcyB3ZWxsLg0K
+DQoNClN1cmUsIHRoYW5rcy4NCg0KDQo+PiAgK30NCj4+ICArDQo+PiAgIHN0YXRpYyB2b2lkIGdk
+Yl9wcm9jZXNzX2JyZWFrcG9pbnRfcmVtb3ZlX2FsbChHREJQcm9jZXNzICpwKQ0KPj4gICB7DQo+
+PiAgICAgICBDUFVTdGF0ZSAqY3B1ID0gZ2RiX2dldF9maXJzdF9jcHVfaW5fcHJvY2VzcyhwKTsN
+Cj4+ICBkaWZmIC0tZ2l0IGEvaW5jbHVkZS9leGVjL2dkYnN0dWIuaCBiL2luY2x1ZGUvZXhlYy9n
+ZGJzdHViLmgNCj4+ICBpbmRleCBlYjE0YjkxMTM5Li4yNDlkNGQ0YmM4IDEwMDY0NA0KPj4gIC0t
+LSBhL2luY2x1ZGUvZXhlYy9nZGJzdHViLmgNCj4+ICArKysgYi9pbmNsdWRlL2V4ZWMvZ2Ric3R1
+Yi5oDQo+PiAgQEAgLTQ5LDYgKzQ5LDEyIEBAIHZvaWQgZ2RiX3JlZ2lzdGVyX2NvcHJvY2Vzc29y
+KENQVVN0YXRlICpjcHUsDQo+PiAgPiAgPiAgPiAgPiAgPiAgIGdkYl9nZXRfcmVnX2NiIGdldF9y
+ZWcsIGdkYl9zZXRfcmVnX2NiIHNldF9yZWcsDQo+PiAgPiAgPiAgPiAgPiAgPiAgIGNvbnN0IEdE
+QkZlYXR1cmUgKmZlYXR1cmUsIGludCBnX3Bvcyk7DQo+PiAgIA0KPj4gICsvKioNCj4+ICArICog
+Z2RiX3VucmVnaXN0ZXJfY29wcm9jZXNzb3JfYWxsKCkgLSB1bnJlZ2lzdGVycyBzdXBwbGVtZW50
+YWwgc2V0IG9mIHJlZ2lzdGVycw0KPj4gICsgKiBAY3B1IC0gdGhlIENQVSBhc3NvY2lhdGVkIHdp
+dGggcmVnaXN0ZXJzDQo+PiAgKyAqLw0KPj4gICt2b2lkIGdkYl91bnJlZ2lzdGVyX2NvcHJvY2Vz
+c29yX2FsbChDUFVTdGF0ZSAqY3B1KTsNCj4+ICArDQo+PiAgIC8qKg0KPj4gICAgKiBnZGJzZXJ2
+ZXJfc3RhcnQ6IHN0YXJ0IHRoZSBnZGIgc2VydmVyDQo+PiAgICAqIEBwb3J0X29yX2RldmljZTog
+Y29ubmVjdGlvbiBzcGVjIGZvciBnZGINCj4+ICBPdGhlcndpc2UsIExvb2tzIGdvb2QgdG8gbWUu
+ICBGZWVsIGZyZWUgdG8gYWRkDQo+PiAgUmV2aWV3ZWQtYnk6ICJWaXNobnUgUGFqanVyaSIgbWFp
+bHRvOnZpc2hudUBvcy5hbXBlcmVjb21wdXRpbmcuY29tDQoNClRoYW5rcw0KU2FsaWwuDQoNCg0K
+Pj4gIFJlZ2FyZHMsDQo+PiAgLVZpc2hudQ0KDQo=
 
