@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C8F7C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 12:46:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7016C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 12:51:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2sIh-0006DL-PC; Fri, 03 May 2024 08:46:07 -0400
+	id 1s2sNP-0008E9-0I; Fri, 03 May 2024 08:50:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s2sIa-0006Bu-Mw
- for qemu-devel@nongnu.org; Fri, 03 May 2024 08:46:02 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ id 1s2sNM-0008DV-Ba
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 08:50:56 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s2sIQ-0004nv-OF
- for qemu-devel@nongnu.org; Fri, 03 May 2024 08:45:58 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-a599a3b233cso51084766b.3
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 05:45:50 -0700 (PDT)
+ id 1s2sNK-0005d9-GF
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 08:50:56 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-a595199cb9bso462973866b.3
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 05:50:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714740348; x=1715345148; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714740652; x=1715345452; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=81/SzfK2ki8CXYvnsIczrSoQ6fsrU9n/ep797CFCWgE=;
- b=vgF7nhQdr/iSAtxyQQniFJjbwVw2ArpEjCQpfPT59a0b32FU3qJmfJl1nnYBoU/IRL
- TNNtnY6WMCTbWa8Bc8QNZZTvDnE857B6Wkgo/QEPVLR1F2svhpzyVnG0bFHJ35twd90+
- V9ij82qEmQHemrnr6kJG9RlEqenJWpMfOPR0tf4DgoxUdFBzO8vgjNVTl9cMscBH89Ap
- W5LRaCiO38nYkpEM0aTyTWQr99i8qsMlq3UzKA1/n6O0ZOY6/Jnlp9YK7ACXmM3T1NkE
- b7iXMkL63I3BpGIJ0zQOVh0yM3kGCa6kc/9wOp1YwsTffA2yHEGOtg4MumWPEXLUT7sH
- /S6w==
+ bh=ETsEuXWkbdZU6HzMd0bGeQZo4WUCHUxUaaxOhcft2bk=;
+ b=VmmJMwxt/AaoO/qHJRJ4O8XSZl7j82LCZP8CE/ONEXke5LoePLvQAi2DXvYgzgnspn
+ ZbtTTdWmbl6tUqYQW4fLNrKkSmq/m1YWplJVerbDKXGRHzz69o7e58oDZbdUJkjO/VwF
+ V2sjWHJw0caJGkz90YoRG4iJCfkR9aHONgEpxS52u3rLT2Mqta+9CYIOTmxhDHjIYNtw
+ n8oMVaCFfibA5JnQgmMixbA2wj8+CcgjozZbQeb+/GlwUjHYSobUxhFSUYL25ZDoH7lu
+ pOcMHtJvWbqvINwQMv8QBVl7lTGk+TA7KRZ/tWncmeZz+mUwV0KNCtviuX1yETBBgfY9
+ DIvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714740348; x=1715345148;
+ d=1e100.net; s=20230601; t=1714740652; x=1715345452;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=81/SzfK2ki8CXYvnsIczrSoQ6fsrU9n/ep797CFCWgE=;
- b=XDXkNJscYxn5RT2SFSHNFsS7AgNFNqEZELNT+S2VkgCmgkHsIy0UkkOkkv247uhXPA
- 39t0+X2V6xXsxZouaHvQx/TwyaZZbnGPP9BnDBut7izYYGoZzOS7W66VbZakh8RhnXoa
- WiDctX7EbIrr1GPJgGGGo05f0KnsBbA00r4I2rtZ8kyzL6tp/OvlyySr5ri6IERJqcZN
- TWKvqipCjok3Fb6/EqeunlQ3Qef+gQAbXQNaaqTFoe/yjK0vWxP4dqaW0bVSv6ZYN/Ng
- CIZ/a0eLWbmTvXghAz+M6PMnyhIw5lhkz1oW6xLYewoOBW19nNCacsNHWEackZrmgv0y
- TvCA==
-X-Gm-Message-State: AOJu0YygfhJ4EupF21JD4yWGNlkIB4pRwgHwr35wr+O4vFNB61rCSePA
- uvNbkCPv5e6KsMZXILKlaEWnWxapRV+JVsHe7LurJRwuTuKNAoFtAWAA/26T4PejIFfZs9dwh/3
- Q3bTAvIbrRC52+xjuTD0uhj5wsZr0r2AE8joxbK9yE/TX/ZH0
-X-Google-Smtp-Source: AGHT+IGHP50HP4bW09ZbAqWkF1zyIH3ewTjKgYy6BQ8psp0T0305GxHPlaULMxefjqtjgv3+VIn+CQhWop0pFA2xbwA=
-X-Received: by 2002:a50:a693:0:b0:56e:2cb6:480e with SMTP id
- e19-20020a50a693000000b0056e2cb6480emr1976183edc.38.1714740348510; Fri, 03
- May 2024 05:45:48 -0700 (PDT)
+ bh=ETsEuXWkbdZU6HzMd0bGeQZo4WUCHUxUaaxOhcft2bk=;
+ b=UkN2C6iBV2iE4su9hcDg+JMp6Z4YBz9fMQBWmCOOY1af/i+xD3CunHm1NnZsgZT3CX
+ i/qUFYkZ0VzW4rnEhwt7FeV4PygCuX8WMQN1ciqLdLRLi86q2RO+Z2OH6ePsJNXP/Oeq
+ gvaT3gtwfC6b0qmLjFDw2vAQ+IXymEIXdKyspq0WwFQtKBc/rPv0LHgjJ1MIdfAAS3+R
+ 8JafOBlhcypO8dSW+kxOvFrh/pCmmXH4ZxMT5GZSOBwgUkqSz8pvdhMLkg9alxLHgKjF
+ Rsj1Ljn9pmBiPMymiak9MCgpmJrm6WP6m2y6fcqGwyhYp680sQSooAgjwrIud2HD1yb3
+ lxLg==
+X-Gm-Message-State: AOJu0Yyr5P/laAlO/xcd0q68ZQZhw73WbRdF/YkpphM983OEOhgNBiGP
+ 6N6MkxqYNRP96bjj86JIU+25BPz3E9q9m2wfHuBkffDir2Qeg+qK9Q+VWY2rBHgpiUgJrFtCIxS
+ OxDCo+L9Ad0F1CcApXtCtUQmcI9+S+r7+9noU2aWVa+CTQVRo
+X-Google-Smtp-Source: AGHT+IH8FiyAbNbB82dKKkN8BVrDBrY3da7tBorCMoqnZoHKyIpPDTXenOrkcWRAtF6s9W3uwQUyeUlkylNd3gfJOaw=
+X-Received: by 2002:a50:875e:0:b0:572:1b5a:2a07 with SMTP id
+ 30-20020a50875e000000b005721b5a2a07mr1357663edv.32.1714740652605; Fri, 03 May
+ 2024 05:50:52 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1687782442.git.mst@redhat.com>
- <6bda41a69bdcee8ff7dcf75df2f9647ce55908ab.1687782442.git.mst@redhat.com>
-In-Reply-To: <6bda41a69bdcee8ff7dcf75df2f9647ce55908ab.1687782442.git.mst@redhat.com>
+References: <20230616100158.1845239-1-gaosong@loongson.cn>
+ <20230616100158.1845239-4-gaosong@loongson.cn>
+In-Reply-To: <20230616100158.1845239-4-gaosong@loongson.cn>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 3 May 2024 13:45:37 +0100
-Message-ID: <CAFEAcA-EbD2GLMuS-t_qeDFYM5z3NT-_zCKRNZ8TqjWRiRD+Ww@mail.gmail.com>
-Subject: Re: [PULL 04/53] hw/cxl: Add clear poison mailbox command support.
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Jonathan Cameron <Jonathan.Cameron@huawei.com>, 
- Fan Ni <fan.ni@samsung.com>, Ira Weiny <ira.weiny@intel.com>
+Date: Fri, 3 May 2024 13:50:41 +0100
+Message-ID: <CAFEAcA_iu05EA+XZ4ENW_5QZ4uxLNzmY5FV9W_Ev1KFaZaJ+hw@mail.gmail.com>
+Subject: Re: [PULL 3/5] hw/loongarch: Add numa support
+To: Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, 
+ Tianrui Zhao <zhaotianrui@loongson.cn>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,67 +89,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 26 Jun 2023 at 13:28, Michael S. Tsirkin <mst@redhat.com> wrote:
+On Fri, 16 Jun 2023 at 11:03, Song Gao <gaosong@loongson.cn> wrote:
 >
-> From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> From: Tianrui Zhao <zhaotianrui@loongson.cn>
 >
-> Current implementation is very simple so many of the corner
-> cases do not exist (e.g. fragmenting larger poison list entries)
+> 1. Implement some functions for LoongArch numa support;
+> 2. Implement fdt_add_memory_node() for fdt;
+> 3. build_srat() fills node_id and adds build numa memory.
+>
+> Reviewed-by: Song Gao <gaosong@loongson.cn>
+> Signed-off-by: Tianrui Zhao <zhaotianrui@loongson.cn>
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> Message-Id: <20230613122613.2471743-1-zhaotianrui@loongson.cn>
 
-Hi; Coverity has just spotted what looks like a bug in this
-function (CID 1544772) where we write bogus data from the host
-stack into guest memory):
+Hi; Coverity has pointed out a memory leak in this commit
+(CID 1544773):
 
-> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> index ab600735eb..d751803188 100644
-> --- a/hw/mem/cxl_type3.c
-> +++ b/hw/mem/cxl_type3.c
-> @@ -947,6 +947,42 @@ static void set_lsa(CXLType3Dev *ct3d, const void *buf, uint64_t size,
->       */
->  }
->
-> +static bool set_cacheline(CXLType3Dev *ct3d, uint64_t dpa_offset, uint8_t *data)
-> +{
-> +    MemoryRegion *vmr = NULL, *pmr = NULL;
-> +    AddressSpace *as;
+> @@ -799,17 +823,43 @@ static void loongarch_init(MachineState *machine)
+>          machine->possible_cpus->cpus[i].cpu = OBJECT(cpu);
+>      }
+>      fdt_add_cpu_nodes(lams);
+> -    /* Add memory region */
+> -    memory_region_init_alias(&lams->lowmem, NULL, "loongarch.lowram",
+> -                             machine->ram, 0, 256 * MiB);
+> -    memory_region_add_subregion(address_space_mem, offset, &lams->lowmem);
+> -    offset += 256 * MiB;
+> -    memmap_add_entry(0, 256 * MiB, 1);
+> -    highram_size = ram_size - 256 * MiB;
+> -    memory_region_init_alias(&lams->highmem, NULL, "loongarch.highmem",
+> -                             machine->ram, offset, highram_size);
+> -    memory_region_add_subregion(address_space_mem, 0x90000000, &lams->highmem);
+> -    memmap_add_entry(0x90000000, highram_size, 1);
 > +
-> +    if (ct3d->hostvmem) {
-> +        vmr = host_memory_backend_get_memory(ct3d->hostvmem);
-> +    }
-> +    if (ct3d->hostpmem) {
-> +        pmr = host_memory_backend_get_memory(ct3d->hostpmem);
-> +    }
+> +    /* Node0 memory */
+> +    memmap_add_entry(VIRT_LOWMEM_BASE, VIRT_LOWMEM_SIZE, 1);
+> +    fdt_add_memory_node(machine, VIRT_LOWMEM_BASE, VIRT_LOWMEM_SIZE, 0);
+> +    memory_region_init_alias(&lams->lowmem, NULL, "loongarch.node0.lowram",
+> +                             machine->ram, offset, VIRT_LOWMEM_SIZE);
+> +    memory_region_add_subregion(address_space_mem, phyAddr, &lams->lowmem);
 > +
-> +    if (!vmr && !pmr) {
-> +        return false;
-> +    }
-> +
-> +    if (dpa_offset + CXL_CACHE_LINE_SIZE > ct3d->cxl_dstate.mem_size) {
-> +        return false;
-> +    }
-> +
-> +    if (vmr) {
-> +        if (dpa_offset < memory_region_size(vmr)) {
-> +            as = &ct3d->hostvmem_as;
-> +        } else {
-> +            as = &ct3d->hostpmem_as;
-> +            dpa_offset -= memory_region_size(vmr);
-> +        }
+> +    offset += VIRT_LOWMEM_SIZE;
+> +    if (nb_numa_nodes > 0) {
+> +        assert(numa_info[0].node_mem > VIRT_LOWMEM_SIZE);
+> +        highram_size = numa_info[0].node_mem - VIRT_LOWMEM_SIZE;
 > +    } else {
-> +        as = &ct3d->hostpmem_as;
+> +        highram_size = ram_size - VIRT_LOWMEM_SIZE;
 > +    }
+> +    phyAddr = VIRT_HIGHMEM_BASE;
+> +    memmap_add_entry(phyAddr, highram_size, 1);
+> +    fdt_add_memory_node(machine, phyAddr, highram_size, 0);
+> +    memory_region_init_alias(&lams->highmem, NULL, "loongarch.node0.highram",
+> +                              machine->ram, offset, highram_size);
+> +    memory_region_add_subregion(address_space_mem, phyAddr, &lams->highmem);
 > +
-> +    address_space_write(as, dpa_offset, MEMTXATTRS_UNSPECIFIED, &data,
-> +                        CXL_CACHE_LINE_SIZE);
+> +    /* Node1 - Nodemax memory */
+> +    offset += highram_size;
+> +    phyAddr += highram_size;
+> +
+> +    for (i = 1; i < nb_numa_nodes; i++) {
+> +        MemoryRegion *nodemem = g_new(MemoryRegion, 1);
+> +        ramName = g_strdup_printf("loongarch.node%d.ram", i);
+> +        memory_region_init_alias(nodemem, NULL, ramName, machine->ram,
+> +                                 offset,  numa_info[i].node_mem);
+> +        memory_region_add_subregion(address_space_mem, phyAddr, nodemem);
+> +        memmap_add_entry(phyAddr, numa_info[i].node_mem, 1);
+> +        fdt_add_memory_node(machine, phyAddr, numa_info[i].node_mem, i);
+> +        offset += numa_info[i].node_mem;
+> +        phyAddr += numa_info[i].node_mem;
 
-We've passed '&data' to address_space_write(), which means
-"read from the address on the stack where the function
-argument 'data' lives", so instead of writing 64 bytes of
-data to the guest , we'll write 64 bytes which start with
-a host pointer value and then continue with whatever happens
-to be on the host stack after that.
-
-I assume the intention was "data", not "&data"...
+In this loop, we allocate memory via g_strdup_printf(),
+but never free it. The nicest fix for this is to use the
+g_autofree mechanism so that the memory is automatically
+freed when execution reaches the end of the block:
+   g_autofree ramName = g_strdup_printf("....", ...);
 
 thanks
 -- PMM
