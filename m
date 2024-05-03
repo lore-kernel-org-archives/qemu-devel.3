@@ -4,84 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5B2FC10F16
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 12:43:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C8F7C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 12:46:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2sFi-0004VG-Nw; Fri, 03 May 2024 08:43:02 -0400
+	id 1s2sIh-0006DL-PC; Fri, 03 May 2024 08:46:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1s2sFg-0004UR-87
- for qemu-devel@nongnu.org; Fri, 03 May 2024 08:43:00 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s2sIa-0006Bu-Mw
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 08:46:02 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1s2sFe-0004FR-Hf
- for qemu-devel@nongnu.org; Fri, 03 May 2024 08:43:00 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1e5c7d087e1so78400805ad.0
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 05:42:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s2sIQ-0004nv-OF
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 08:45:58 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a599a3b233cso51084766b.3
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 05:45:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1714740176; x=1715344976; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Qlq6VIfdJwHqA6caJ5U7ZheAGyyg3EvLsPCnl6bh4q0=;
- b=SdUd7pf/tjMD+c8LiO0apipjRqoadvbF+yP9T8KA03LmLZiK+n0IZ8dLQhA5YWgbpJ
- 84/2wrxtQjsLW8QXWLX8UtXI5x1qUrYiOp0DX5vC+oOtyHYxrov2SWIXZXSLx7ofg6EL
- vzSlk6zbH0OKVgzenLwoiocS1OB55MQGHnCUMS0paeftZwInf0UyGn1F9EIArwFLpNfq
- e7Xux8bjzoD3tO+OIX44WngVakmttw16reY37E9brSG6KJwv6SWYPSvfhiVfKyDIYFUy
- ou8PoxE9Joz1v/plk76tHeZWwEZgkFYzO5t+Wtx6sLxJ6//A8h/pceBiN6B3MOOLGjA4
- lPkw==
+ d=linaro.org; s=google; t=1714740348; x=1715345148; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=81/SzfK2ki8CXYvnsIczrSoQ6fsrU9n/ep797CFCWgE=;
+ b=vgF7nhQdr/iSAtxyQQniFJjbwVw2ArpEjCQpfPT59a0b32FU3qJmfJl1nnYBoU/IRL
+ TNNtnY6WMCTbWa8Bc8QNZZTvDnE857B6Wkgo/QEPVLR1F2svhpzyVnG0bFHJ35twd90+
+ V9ij82qEmQHemrnr6kJG9RlEqenJWpMfOPR0tf4DgoxUdFBzO8vgjNVTl9cMscBH89Ap
+ W5LRaCiO38nYkpEM0aTyTWQr99i8qsMlq3UzKA1/n6O0ZOY6/Jnlp9YK7ACXmM3T1NkE
+ b7iXMkL63I3BpGIJ0zQOVh0yM3kGCa6kc/9wOp1YwsTffA2yHEGOtg4MumWPEXLUT7sH
+ /S6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714740176; x=1715344976;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Qlq6VIfdJwHqA6caJ5U7ZheAGyyg3EvLsPCnl6bh4q0=;
- b=rgevhPbkMYpkIGKHiFkUBr+5Dkr5PVtG+MljvkUAOcj0cv+tQd27xh1s607Dm+Uuvh
- 8lVR53NmHZG8N+f5dTTh5+oebdU9UXEXoayv4RT4tU3fm28ccvBTwsm+vC4KOUBpSdVt
- gN70kQco1D+Exit3SUAZF/7w0gDmehj2SRQSt95XYsNlTkp80o+JyGlv7DjtYUkihDR2
- vgdEPiCZnqKFozqNnsj9Ipi77E+1Ay9L4C2DCRX10mKPnEGvUT48zUjRpF0i3C5PN5R7
- ogaU8Q/IeczrvP6TJyIYJT3OwsGVZSO3xcCSrOY7ydBn5OOZAEjaoc9DvQfFaCuKQOoQ
- NkLA==
-X-Gm-Message-State: AOJu0Yz2dR5R1jbL3wJRI4ElEpO2GYwQjax5G1eaVlorDAOwFyyF1fw2
- e3QBnreLmbvgGqeMO4zGtSpbMzNWdWvd1Y0ElHl9mGHvXztPE+SFXd6HV9gy8ZWw4jfSSF+lwKC
- p
-X-Google-Smtp-Source: AGHT+IG1gM9agUJ/dMjKSSzwJ/2JXinRdi05iPmfbctwguryaSSRIQjYW1RhD46nd4+5RcDajyeBjQ==
-X-Received: by 2002:a17:902:da90:b0:1eb:5c0f:6e78 with SMTP id
- j16-20020a170902da9000b001eb5c0f6e78mr2922553plx.11.1714740175702; 
- Fri, 03 May 2024 05:42:55 -0700 (PDT)
-Received: from grind.. ([187.11.154.208]) by smtp.gmail.com with ESMTPSA id
- f7-20020a170902684700b001e3cee88212sm3192998pln.230.2024.05.03.05.42.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 03 May 2024 05:42:55 -0700 (PDT)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- ajones@ventanamicro.com, kraxel@redhat.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [RFC PATCH 1/1] pci-ids.rst: add Red Hat pci-id for generic IOMMU
- device
-Date: Fri,  3 May 2024 09:42:44 -0300
-Message-ID: <20240503124244.8804-2-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240503124244.8804-1-dbarboza@ventanamicro.com>
-References: <20240503124244.8804-1-dbarboza@ventanamicro.com>
+ d=1e100.net; s=20230601; t=1714740348; x=1715345148;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=81/SzfK2ki8CXYvnsIczrSoQ6fsrU9n/ep797CFCWgE=;
+ b=XDXkNJscYxn5RT2SFSHNFsS7AgNFNqEZELNT+S2VkgCmgkHsIy0UkkOkkv247uhXPA
+ 39t0+X2V6xXsxZouaHvQx/TwyaZZbnGPP9BnDBut7izYYGoZzOS7W66VbZakh8RhnXoa
+ WiDctX7EbIrr1GPJgGGGo05f0KnsBbA00r4I2rtZ8kyzL6tp/OvlyySr5ri6IERJqcZN
+ TWKvqipCjok3Fb6/EqeunlQ3Qef+gQAbXQNaaqTFoe/yjK0vWxP4dqaW0bVSv6ZYN/Ng
+ CIZ/a0eLWbmTvXghAz+M6PMnyhIw5lhkz1oW6xLYewoOBW19nNCacsNHWEackZrmgv0y
+ TvCA==
+X-Gm-Message-State: AOJu0YygfhJ4EupF21JD4yWGNlkIB4pRwgHwr35wr+O4vFNB61rCSePA
+ uvNbkCPv5e6KsMZXILKlaEWnWxapRV+JVsHe7LurJRwuTuKNAoFtAWAA/26T4PejIFfZs9dwh/3
+ Q3bTAvIbrRC52+xjuTD0uhj5wsZr0r2AE8joxbK9yE/TX/ZH0
+X-Google-Smtp-Source: AGHT+IGHP50HP4bW09ZbAqWkF1zyIH3ewTjKgYy6BQ8psp0T0305GxHPlaULMxefjqtjgv3+VIn+CQhWop0pFA2xbwA=
+X-Received: by 2002:a50:a693:0:b0:56e:2cb6:480e with SMTP id
+ e19-20020a50a693000000b0056e2cb6480emr1976183edc.38.1714740348510; Fri, 03
+ May 2024 05:45:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x636.google.com
+References: <cover.1687782442.git.mst@redhat.com>
+ <6bda41a69bdcee8ff7dcf75df2f9647ce55908ab.1687782442.git.mst@redhat.com>
+In-Reply-To: <6bda41a69bdcee8ff7dcf75df2f9647ce55908ab.1687782442.git.mst@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 3 May 2024 13:45:37 +0100
+Message-ID: <CAFEAcA-EbD2GLMuS-t_qeDFYM5z3NT-_zCKRNZ8TqjWRiRD+Ww@mail.gmail.com>
+Subject: Re: [PULL 04/53] hw/cxl: Add clear poison mailbox command support.
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Jonathan Cameron <Jonathan.Cameron@huawei.com>, 
+ Fan Ni <fan.ni@samsung.com>, Ira Weiny <ira.weiny@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,41 +89,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reserve an id to be used by the RISC-V IOMMU PCI device.
+On Mon, 26 Jun 2023 at 13:28, Michael S. Tsirkin <mst@redhat.com> wrote:
+>
+> From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+>
+> Current implementation is very simple so many of the corner
+> cases do not exist (e.g. fragmenting larger poison list entries)
 
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- docs/specs/pci-ids.rst | 2 ++
- include/hw/pci/pci.h   | 1 +
- 2 files changed, 3 insertions(+)
+Hi; Coverity has just spotted what looks like a bug in this
+function (CID 1544772) where we write bogus data from the host
+stack into guest memory):
 
-diff --git a/docs/specs/pci-ids.rst b/docs/specs/pci-ids.rst
-index c0a3dec2e7..a89a9d0939 100644
---- a/docs/specs/pci-ids.rst
-+++ b/docs/specs/pci-ids.rst
-@@ -94,6 +94,8 @@ PCI devices (other than virtio):
-   PCI ACPI ERST device (``-device acpi-erst``)
- 1b36:0013
-   PCI UFS device (``-device ufs``)
-+1b36:0014
-+  PCI RISC-V IOMMU device
- 
- All these devices are documented in :doc:`index`.
- 
-diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-index eaa3fc99d8..462aed1503 100644
---- a/include/hw/pci/pci.h
-+++ b/include/hw/pci/pci.h
-@@ -115,6 +115,7 @@ extern bool pci_available;
- #define PCI_DEVICE_ID_REDHAT_PVPANIC     0x0011
- #define PCI_DEVICE_ID_REDHAT_ACPI_ERST   0x0012
- #define PCI_DEVICE_ID_REDHAT_UFS         0x0013
-+#define PCI_DEVICE_ID_REDHAT_RISCV_IOMMU 0x0014
- #define PCI_DEVICE_ID_REDHAT_QXL         0x0100
- 
- #define FMT_PCIBUS                      PRIx64
--- 
-2.44.0
+> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> index ab600735eb..d751803188 100644
+> --- a/hw/mem/cxl_type3.c
+> +++ b/hw/mem/cxl_type3.c
+> @@ -947,6 +947,42 @@ static void set_lsa(CXLType3Dev *ct3d, const void *buf, uint64_t size,
+>       */
+>  }
+>
+> +static bool set_cacheline(CXLType3Dev *ct3d, uint64_t dpa_offset, uint8_t *data)
+> +{
+> +    MemoryRegion *vmr = NULL, *pmr = NULL;
+> +    AddressSpace *as;
+> +
+> +    if (ct3d->hostvmem) {
+> +        vmr = host_memory_backend_get_memory(ct3d->hostvmem);
+> +    }
+> +    if (ct3d->hostpmem) {
+> +        pmr = host_memory_backend_get_memory(ct3d->hostpmem);
+> +    }
+> +
+> +    if (!vmr && !pmr) {
+> +        return false;
+> +    }
+> +
+> +    if (dpa_offset + CXL_CACHE_LINE_SIZE > ct3d->cxl_dstate.mem_size) {
+> +        return false;
+> +    }
+> +
+> +    if (vmr) {
+> +        if (dpa_offset < memory_region_size(vmr)) {
+> +            as = &ct3d->hostvmem_as;
+> +        } else {
+> +            as = &ct3d->hostpmem_as;
+> +            dpa_offset -= memory_region_size(vmr);
+> +        }
+> +    } else {
+> +        as = &ct3d->hostpmem_as;
+> +    }
+> +
+> +    address_space_write(as, dpa_offset, MEMTXATTRS_UNSPECIFIED, &data,
+> +                        CXL_CACHE_LINE_SIZE);
 
+We've passed '&data' to address_space_write(), which means
+"read from the address on the stack where the function
+argument 'data' lives", so instead of writing 64 bytes of
+data to the guest , we'll write 64 bytes which start with
+a host pointer value and then continue with whatever happens
+to be on the host stack after that.
+
+I assume the intention was "data", not "&data"...
+
+thanks
+-- PMM
 
