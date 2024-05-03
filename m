@@ -4,76 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80625C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 09:22:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00ADBC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 09:41:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2p74-0005iv-Kg; Fri, 03 May 2024 05:21:54 -0400
+	id 1s2pP1-0001A8-4p; Fri, 03 May 2024 05:40:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s2p72-0005i8-V7
- for qemu-devel@nongnu.org; Fri, 03 May 2024 05:21:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s2p71-00043w-80
- for qemu-devel@nongnu.org; Fri, 03 May 2024 05:21:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714728109;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OCOR+fvrvU4+yuZ2wEb/ubktbSdstrDPnOI1ZRfnG0Q=;
- b=PcuFMUfFJLm5O3uzo5nbiUkGVR5zJc9fb16LTqbQmdflLTmASGqSfi1519FGJsgLRU4caN
- d88GIimW2YFn84TQGPiwM3yMD5NazKHcPAsUHktfmubmsWrL0cRQwjFkhTfN4O4PcX9Nst
- SIQQkLQl+V/7Mdq2wx0Hi3Rxpf9Z0W8=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-647-Ka8FtfaXMYOqShq7PkAeVw-1; Fri,
- 03 May 2024 05:21:45 -0400
-X-MC-Unique: Ka8FtfaXMYOqShq7PkAeVw-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1A44528EC107;
- Fri,  3 May 2024 09:21:45 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.62])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id D6C9040C6CC0;
- Fri,  3 May 2024 09:21:39 +0000 (UTC)
-Date: Fri, 3 May 2024 10:21:04 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
- qemu-trivial@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH v2] Re-enable riscv64-debian-cross-container (debian
- riscv64 is finally usable again!)
-Message-ID: <ZjSsgHEz9zR6YSdT@redhat.com>
-References: <20240503071634.841103-1-mjt@tls.msk.ru>
- <ZjSbRsOpJsTdTh6l@redhat.com>
- <e8db4fec-5c7c-42d5-bba7-a85b09f0a358@linaro.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2pOx-00019i-95
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 05:40:23 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2pOr-00075G-Cq
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 05:40:22 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a599c55055dso10272966b.0
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 02:40:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714729214; x=1715334014; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+aYukAFjSkKANGHcVIV8wuIMZB/UvTg/F4UINqCVkZU=;
+ b=vqUAEpKjwWtXpWLIq/OqhwiqqP0kH8Jv6sXZvkXiq0BkZrClakN+6Sx2nnWWt3EmA2
+ +4yZCPp+PkMXWuy6oPu0+iuBmhSuWG7hs512Cfxz1li4SgHprqEjm0zNXz7dyg8cWVow
+ WPIJst8adgrE3E7bVnzT52v0JKC8xkjm2xT+jO4LlDyfZAXGj1HvFn0aq9B+3KV4B0DC
+ i/wyinkWp69wdPCIPR8LyjqqEcBZkyLyQP5kiOZUb3DYL0LxhQBjbfQYt8sbw5Bi3izH
+ 7LW7bzehicAbjJkHgRZDhGQVM2RqBqdxKhPppJjzxP0pSeAiahDebH944bbqdKJXc5bD
+ wDGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714729214; x=1715334014;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+aYukAFjSkKANGHcVIV8wuIMZB/UvTg/F4UINqCVkZU=;
+ b=jvOlDutwpX+V/qsYqa+gPS8cjQwQr14ffhhoV9gOCt1+qp7arR6P4M05nAPg9YMIb+
+ RuX7bB634BgicIYU4zKa1qFpRAMMO1eK9TBwfXczjUZQlrFBO7wCjITZw7YX364h1cAE
+ CvbLaoKYNMcG8AvOQWFQYagzm3tdUjyWaTWK1BXUIFK6z2aLe751RhBCKySQD1x6WRCR
+ sW1IZLkdrrn7XoCT7ngcLsWBblwRQVaquqENlsqTX/XhNdqyKnCdOh0lCj6fL83EZc0u
+ tQdIJ0p9jXBOKqEsWgXAbCbsN8jRu1n9oUAMq5DcXTc6t/nCMFsK5Yiuw2imCcF1Groi
+ K4nw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVasa782+5vfGhM/Fp2A/gM+QlxpLmWphP07vQIydfnMJ27UCTgyQaH4L02cmrBYQClDj3tWQCaz2XDtUXskaO9JDdRMzA=
+X-Gm-Message-State: AOJu0YyPX4et8I4z6bxJL4cp/iu1SDlWc7MGIe3bYR0+XYNmD8xzKEb6
+ iGN6EfKSJRLw5CKuQv4GhAf31ffl82uWXVs7c7fF7zTD8wirC+isfPC7DR9ESCA=
+X-Google-Smtp-Source: AGHT+IHIToLEnpdNruYrQBoTyWj2gFK1Cz1QmwFWVv+7gCqdsuJSn9RcpPNSSbr6WOuF0nFrhPsslw==
+X-Received: by 2002:a17:907:1b06:b0:a59:9a68:7283 with SMTP id
+ mp6-20020a1709071b0600b00a599a687283mr489708ejc.12.1714729214279; 
+ Fri, 03 May 2024 02:40:14 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.179.187])
+ by smtp.gmail.com with ESMTPSA id
+ ay20-20020a170906d29400b00a58aff25d77sm1496488ejb.193.2024.05.03.02.40.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 03 May 2024 02:40:13 -0700 (PDT)
+Message-ID: <9747db79-4444-4d31-b014-8c368936cab4@linaro.org>
+Date: Fri, 3 May 2024 11:40:09 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <e8db4fec-5c7c-42d5-bba7-a85b09f0a358@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.476,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V8 1/8] accel/kvm: Extract common KVM vCPU
+ {creation,parking} code
+To: Salil Mehta <salil.mehta@huawei.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org
+Cc: maz@kernel.org, jean-philippe@linaro.org, jonathan.cameron@huawei.com,
+ lpieralisi@kernel.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, imammedo@redhat.com, andrew.jones@linux.dev,
+ david@redhat.com, eric.auger@redhat.com, oliver.upton@linux.dev,
+ pbonzini@redhat.com, mst@redhat.com, will@kernel.org, gshan@redhat.com,
+ rafael@kernel.org, alex.bennee@linaro.org, linux@armlinux.org.uk,
+ darren@os.amperecomputing.com, ilkka@os.amperecomputing.com,
+ vishnu@os.amperecomputing.com, karl.heubaum@oracle.com,
+ miguel.luis@oracle.com, salil.mehta@opnsrc.net, zhukeqian1@huawei.com,
+ wangxiongfeng2@huawei.com, wangyanan55@huawei.com, jiakernel2@gmail.com,
+ maobibo@loongson.cn, lixianglai@loongson.cn, linuxarm@huawei.com
+References: <20240312020000.12992-1-salil.mehta@huawei.com>
+ <20240312020000.12992-2-salil.mehta@huawei.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240312020000.12992-2-salil.mehta@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,64 +105,96 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 03, 2024 at 10:51:57AM +0200, Philippe Mathieu-Daudé wrote:
-> On 3/5/24 10:07, Daniel P. Berrangé wrote:
-> > On Fri, May 03, 2024 at 10:16:34AM +0300, Michael Tokarev wrote:
-> > > Revert "gitlab-ci: Disable the riscv64-debian-cross-container by default"
-> > > This reverts commit f51f90c65ed7706c3c4f7a889ce3d6b7ab75ef6a.
-> > > 
-> > > riscv64 in debian has been non-functioning for almost a year, after the
-> > > architecture has been promoted to release architecture and all binary
-> > > packages started to be re-built, making the port not multi-arch-co-installable
-> > > for a long time (in debian, multi-arch packages must be of the same version,
-> > > but when a package is rebuilt on one architecture it gets a version bump too).
-> > > Later on, debiah had a long time64_t transition which made sid unusable for
-> 
-> "debian" (even "Debian")
-> 
-> > > quite some time too.  Both such events happens in debian very rarely (like,
-> > > once in 10 years or so - for example, previous big transition like that was
-> > > libc5 => libc6 transition).  Now both of these are finished (where qemu is
-> 
-> ("QEMU")
-> 
-> > > concerned anyway).
-> > > 
-> > > Hopefully debian unstable wont be very unstable.  At the very least it is
-> > > better to have sporadic CI failures here than no riscv64 coverage at all.
-> > 
-> > IME of running Debian sid in CI pipelines for libvirt, it is
-> > way too unstable to be used as a gating job. There are periods
-> > weeks-long when packages fail to install, even for relatively
-> > mainstream arch targets like x86, let alone a new target like
-> > riscv.
-> > 
-> > Running the job by default is sane, but it should not be made
-> > gating until in a formal Debian release IMHO.
-> 
-> So it is waste of resources, and each time maintainers will look
-> for failure and notice "oh this is still this broken image" and
-> skip. Hard to see the gain of bringing that back TBH.
+Hi Salil,
 
-Michael has indicated he wants to see the result of testing of riscv,
-to validate stable releases don't regress.
+On 12/3/24 02:59, Salil Mehta wrote:
+> KVM vCPU creation is done once during the vCPU realization when Qemu vCPU thread
+> is spawned. This is common to all the architectures as of now.
+> 
+> Hot-unplug of vCPU results in destruction of the vCPU object in QOM but the
+> corresponding KVM vCPU object in the Host KVM is not destroyed as KVM doesn't
+> support vCPU removal. Therefore, its representative KVM vCPU object/context in
+> Qemu is parked.
+> 
+> Refactor architecture common logic so that some APIs could be reused by vCPU
+> Hotplug code of some architectures likes ARM, Loongson etc. Update new/old APIs
+> with trace events instead of DPRINTF. No functional change is intended here.
+> 
+> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
+> Reviewed-by: Gavin Shan <gshan@redhat.com>
+> Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
+> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Tested-by: Xianglai Li <lixianglai@loongson.cn>
+> Tested-by: Miguel Luis <miguel.luis@oracle.com>
+> Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
+> ---
+>   accel/kvm/kvm-all.c    | 64 ++++++++++++++++++++++++++++++++----------
+>   accel/kvm/trace-events |  5 +++-
+>   include/sysemu/kvm.h   | 16 +++++++++++
+>   3 files changed, 69 insertions(+), 16 deletions(-)
+> 
+> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> index a8cecd040e..3bc3207bda 100644
+> --- a/accel/kvm/kvm-all.c
+> +++ b/accel/kvm/kvm-all.c
+> @@ -126,6 +126,7 @@ static QemuMutex kml_slots_lock;
+>   #define kvm_slots_unlock()  qemu_mutex_unlock(&kml_slots_lock)
+>   
+>   static void kvm_slot_init_dirty_bitmap(KVMSlot *mem);
+> +static int kvm_get_vcpu(KVMState *s, unsigned long vcpu_id);
+>   
+>   static inline void kvm_resample_fd_remove(int gsi)
+>   {
+> @@ -314,14 +315,53 @@ err:
+>       return ret;
+>   }
+>   
+> +void kvm_park_vcpu(CPUState *cpu)
+> +{
+> +    struct KVMParkedVcpu *vcpu;
+> +
+> +    trace_kvm_park_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
+> +
+> +    vcpu = g_malloc0(sizeof(*vcpu));
+> +    vcpu->vcpu_id = kvm_arch_vcpu_id(cpu);
+> +    vcpu->kvm_fd = cpu->kvm_fd;
+> +    QLIST_INSERT_HEAD(&kvm_state->kvm_parked_vcpus, vcpu, node);
+> +}
+> +
+> +int kvm_create_vcpu(CPUState *cpu)
+> +{
+> +    unsigned long vcpu_id = kvm_arch_vcpu_id(cpu);
+> +    KVMState *s = kvm_state;
+> +    int kvm_fd;
+> +
+> +    trace_kvm_create_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
+> +
+> +    /* check if the KVM vCPU already exist but is parked */
+> +    kvm_fd = kvm_get_vcpu(s, vcpu_id);
+> +    if (kvm_fd < 0) {
+> +        /* vCPU not parked: create a new KVM vCPU */
+> +        kvm_fd = kvm_vm_ioctl(s, KVM_CREATE_VCPU, vcpu_id);
+> +        if (kvm_fd < 0) {
+> +            error_report("KVM_CREATE_VCPU IOCTL failed for vCPU %lu", vcpu_id);
+> +            return kvm_fd;
+> +        }
+> +    }
+> +
+> +    cpu->kvm_fd = kvm_fd;
+> +    cpu->kvm_state = s;
+> +    cpu->vcpu_dirty = true;
+> +    cpu->dirty_pages = 0;
+> +    cpu->throttle_us_per_full = 0;
+> +
+> +    return 0;
+> +}
 
-Having it non-gating allows the possibility to look at the job and
-evaluate whether a failure is due to genuine bugs, or distro problems.
+This seems generic enough to be implemented for all accelerators.
 
-Having it gating guarantees the the pipeline overall is going to be
-marked failed whenever distro problems hit, which is worse as it
-impacts everyone using CI.
+See AccelOpsClass in include/sysemu/accel-ops.h.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+That said, can be done later on top.
 
