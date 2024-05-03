@@ -4,71 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA5C5C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 07:20:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18868C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 07:21:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2nDS-0000lb-LL; Fri, 03 May 2024 03:20:22 -0400
+	id 1s2nDl-0000vy-Kj; Fri, 03 May 2024 03:20:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2nDQ-0000lP-Ta
- for qemu-devel@nongnu.org; Fri, 03 May 2024 03:20:20 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2nDg-0000qc-WE
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 03:20:37 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2nDP-0001Ed-9u
- for qemu-devel@nongnu.org; Fri, 03 May 2024 03:20:20 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2db7c6b5598so113156911fa.1
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 00:20:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2nDf-0001Jv-Fy
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 03:20:36 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-41bab13ca4eso47319245e9.1
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 00:20:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714720817; x=1715325617; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=UVi2/lBwGMlU7cAoTgtyiExKPhec9x+jnIKMxcEwUS0=;
- b=lkngX/r1TiJ4NzZvsShY8s7mh612J/XqYMzEB1KD+AyfyiBxKpi9IuDgyHIY2Dg831
- AqgqgCJMyqP/51X667Cyim+mSuWHoR8L9WU90fm9lCM5SOIPhTBP9s398Mngvk2itbxv
- uhquVt22Tua1fxaxG3aRXF6zmx/OVgwE8AYWy6fmIZ37YBuepyIO4S3xwLkVUgRfhTAI
- 6SKi1GXhmAXfEtkCWWYS8hS72Inhys/mLTqQREhV10Xpf5tYaHN15BsrdXsTnHt56m91
- bdgZIi5SJ7mUj0f4wLnEqIMaJCx3CMlOzYMQoXHWEUDKHySnbL39lET/MXUjg82uRcBo
- /XWw==
+ d=linaro.org; s=google; t=1714720833; x=1715325633; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NsUohuRZS7qAWRTP4Ddk/BzlIY+4ubmA4ImrHbv8aR0=;
+ b=wDtQuuOqJM0npisIlpNYTH+InvckwZLRz1xOeD0vGVuUCAmK1ttuDmLUS7Xs+kquXO
+ clOdj6QUBPGc+i/2ZjdKSo87hAAOguXmltknGOZ2HoSFkKOcDTnMVzSF9sn7/S1a5sXZ
+ J5uqT8iqqhwygFoBahDQoF5XhKm+XvXzTKaZz5r0YwWzW9s5NP1q9piqr5js1MqsdnUF
+ T5Ial6H1jUjH2hniSk/VrWx3C/MgYPNCcgMV/6haKgPGmFfwY6UMuzclUZZh/3xifcig
+ jVfAKVsGvKQpDcIO3+4Du6ozz87RMOcNXU/m0++X05e+u6FHGVbewNoExYiVyvj5KKym
+ naEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714720817; x=1715325617;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=UVi2/lBwGMlU7cAoTgtyiExKPhec9x+jnIKMxcEwUS0=;
- b=DceEVd5p6tBTwbkmL06BSlzQMz5pfIiCWVYXPMn19uz5pNVxXA9bDhbTc3LJnTR44J
- 9JjijUUVEvyp88KexFYgjXjFyosfvLfdNq3UfLyDfBzbd0hsOMc2WJNe01jlAaT5tCGv
- 8IcEUp9rVBU/A2cVrDsQCQdZ4YIyzo61fbHFDMi3UZ8Ap0a32b47PIokmk0FuG1Vne6h
- hb6eQAp1E1kCxbc/RjQ3pOwDLo6XVr7zUlndDT0Mvj1gXYXCFASvNPZkR72XdM/dt1TD
- SQFfpsaADatPLS8G/djNm/Lqd9v49LgV3VZPuDUyc49M6tH+e92fafsZ1c8zpVNh4+sl
- L2xw==
-X-Gm-Message-State: AOJu0YwfebveS7zAegfGVI08Y15qLGhA/YC1/gyADNvpGeqWhboLKuHb
- Cqj/WFh7+Koe66nw//xn4DGiuJkz76M9Pn4q7FW1JedhWjMzZhL6PdCTBdTXcXznVSjiz5Rm/ep
- V
-X-Google-Smtp-Source: AGHT+IG8pvS7OjdfvSIdVy3KrqHqft9VSymUlhHaYbriZQPFAyq9L4MxmWnEbXVFWU1fM52inQLxXg==
-X-Received: by 2002:a2e:80d4:0:b0:2d7:17e0:ff56 with SMTP id
- r20-20020a2e80d4000000b002d717e0ff56mr1238689ljg.18.1714720816778; 
- Fri, 03 May 2024 00:20:16 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1714720833; x=1715325633;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NsUohuRZS7qAWRTP4Ddk/BzlIY+4ubmA4ImrHbv8aR0=;
+ b=YuZuGWIQLB9FWBSxMMdA6siyhyBAEc2z8royL4WJPKYMDMZCux0KGeSuIld5Ra0Iga
+ JOCvaNyLiYhGLChG3wWSGaaqXzH/diIPfSJouMGbKUv5km3y/vJoc+qwqWl/tOEFUK5b
+ +c16S2DVxPkp0oaZMQNB9Rj+PB/ETrkaFy5QP/BJI5MAd8iVBP7uMhdk0JRjTYeveOoH
+ 6Mysp5FnXR18gYVwUfUjrdDV4CnkjWteLQ2o0k3QrlN1R0XNi6CuGpIIcjOx53eU3ffb
+ +KNdVxu9VuoZViBt5+xBN2R+Ue6wh6pDda9cv6AB684e9B3VXS7d9k7AQh7PdxRxed0a
+ qe1w==
+X-Gm-Message-State: AOJu0Yxghya53lZMft36vC9KlzPQ3Vc/0OjOWuYMd3RBjYpaKt4WqX4G
+ AosHOSlnPi2mFMkjdXjzxGfPbDwn8tg9K0wGz6RxjP3J5y135aB+yWuc2MiCboLpYiR/tHibRZM
+ H
+X-Google-Smtp-Source: AGHT+IGGTxiOEu9QkkOju77VfPTN6btJoBaOvWPRgotA53tTtRDavLH0FimYCkTGSjRL+cheVmLh/A==
+X-Received: by 2002:a05:600c:5118:b0:41a:34c3:2297 with SMTP id
+ o24-20020a05600c511800b0041a34c32297mr1356974wms.5.1714720833657; 
+ Fri, 03 May 2024 00:20:33 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.179.187])
  by smtp.gmail.com with ESMTPSA id
- k7-20020a7bc407000000b0041674bf7d4csm8251830wmi.48.2024.05.03.00.20.15
+ c7-20020a05600c0a4700b0041ba0439a78sm8317697wmq.45.2024.05.03.00.20.32
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 03 May 2024 00:20:16 -0700 (PDT)
+ Fri, 03 May 2024 00:20:33 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- Philippe =?unknown-8bit?q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 0/9] target/alpha: Implement CF_PCREL
-Date: Fri,  3 May 2024 09:20:04 +0200
-Message-ID: <20240503072014.24751-1-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 3/9] target/alpha: Use DISAS_NEXT definition instead of
+ magic '0' value
+Date: Fri,  3 May 2024 09:20:07 +0200
+Message-ID: <20240503072014.24751-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240503072014.24751-1-philmd@linaro.org>
+References: <20240503072014.24751-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,29 +95,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since v1:
-- Split complex patch 4 in 5 simpler ones (Phil)
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Implement pc-relative tcg code generation.
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240424234436.995410-4-richard.henderson@linaro.org>
+[PMD: Split bigger patch, part 1/5]
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/alpha/translate.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-Philippe Mathieu-Daudé (1):
-  target/alpha: Simplify gen_bcond_internal()
-
-Richard Henderson (8):
-  target/alpha: Use cpu_env in preference to ALPHA_CPU
-  target/alpha: Hoist branch shift to initial decode
-  target/alpha: Use DISAS_NEXT definition instead of magic '0' value
-  target/alpha: Inline DISAS_PC_UPDATED and return DISAS_NORETURN
-  target/alpha: Return DISAS_NORETURN once
-  target/alpha: Split out gen_goto_tb
-  target/alpha: Split out gen_pc_disp
-  target/alpha: Implement CF_PCREL
-
- target/alpha/cpu.c       |  32 ++++++++---
- target/alpha/helper.c    |   8 +--
- target/alpha/translate.c | 117 +++++++++++++++++++++------------------
- 3 files changed, 91 insertions(+), 66 deletions(-)
-
+diff --git a/target/alpha/translate.c b/target/alpha/translate.c
+index 52c2e6248b..9ad7bf6e5f 100644
+--- a/target/alpha/translate.c
++++ b/target/alpha/translate.c
+@@ -440,8 +440,10 @@ static DisasJumpType gen_bdirect(DisasContext *ctx, int ra, int32_t disp)
+ 
+     /* Notice branch-to-next; used to initialize RA with the PC.  */
+     if (disp == 0) {
+-        return 0;
+-    } else if (use_goto_tb(ctx, dest)) {
++        return DISAS_NEXT;
++    }
++
++    if (use_goto_tb(ctx, dest)) {
+         tcg_gen_goto_tb(0);
+         tcg_gen_movi_i64(cpu_pc, dest);
+         tcg_gen_exit_tb(ctx->base.tb, 0);
 -- 
 2.41.0
 
