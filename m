@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 649F5C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 08:51:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01C19C10F16
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 08:52:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2odW-0002HG-KZ; Fri, 03 May 2024 04:51:22 -0400
+	id 1s2oeD-0002jG-3j; Fri, 03 May 2024 04:52:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s2odO-0002Fz-KP
- for qemu-devel@nongnu.org; Fri, 03 May 2024 04:51:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s2odM-0007R0-96
- for qemu-devel@nongnu.org; Fri, 03 May 2024 04:51:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714726269;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=hgzzAOP1rWfV7F6hU3+OZxbNE/reBXCgjqwJf/VqjhQ=;
- b=N4xF10Le6cy5P/9+h9cwUELiK6suLyzpzNQCGO6b8nheanUQhC/y8Gou9RigKFt6S6x/W6
- MEd/kIade518FoYkFLiI/FQ3yeoLjPbefkT9S/Boy/OozCFiIse/A8RHWhuQy6feAVwEbj
- /x5nYD/RCbRchkX29GdJomQjI4fFK2Y=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-519-w3EBsqp6NSS5gpAHfl46HQ-1; Fri, 03 May 2024 04:51:08 -0400
-X-MC-Unique: w3EBsqp6NSS5gpAHfl46HQ-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-572babec6c6so1848968a12.0
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 01:51:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2oeB-0002dA-JU
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 04:52:03 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2oe9-0007aw-S9
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 04:52:03 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-a58c89bda70so1030154566b.3
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 01:52:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714726320; x=1715331120; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1m1GRsehWy4YzYAHEJnp3cq6p3zxnFV0T98qEc+lhF4=;
+ b=L0g2DU9saGCUU+1AReN26tKRths7sKKYoGx7iuPqxXeKMbP4HwbyZr5HsgUFfgGo0d
+ GNmnS9visfFVJqti8He5z3QvCFMTRR1gyrNR7BvA+zUxGfCmC7FgYkvdAgQmNGa6sCUn
+ +mS1tGsAOcnsRh/nxh8sPLrInghn/zVuWqqLvDhJUFMCugoj7hq9gpEh9zHb2nkJmVTA
+ jhdUZoQpUah7NtJ26onCMm4OOTWdCuR5pWSt5q6n0UJctdgfgwI46L8Of1+FLZ9lrFV2
+ wtXTDQdJSP4fX86z43lvFY9P9OxMUx0oIWi7xZxn3Zq9eUC7Uo7MW4AJPbSnB2SQNVAU
+ R48w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714726266; x=1715331066;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hgzzAOP1rWfV7F6hU3+OZxbNE/reBXCgjqwJf/VqjhQ=;
- b=Rt9Ea/7jNrKwG4xYKWzE/7gPJz2j6i4jl0QfFizt7LTKaYKnFEOawh7+dxIkUvWHZk
- s5gQWykgiX02VeJj6cODc9Va1uvEuPg1y/FnHqzlgkY/LSE3Pb49lPFrrnx0ijTT4THZ
- V8FA28pLOCFApnX4Nyr+MJxGP+kLeMzy/Hzdluqn80iszkHw8EY7ykrbIrR6P5y6+kho
- EREZKwbbh5ZHhCsx/PjW85z8inLhiGDhbhnjCPlZRpXia55tCTRSSk57hblSmMMbqt6l
- QyVlTbWamzyhmncr7ZIKbmEVE3W1wYErB4od3eKahgG169KgrwANOduEzBb8fmIDxWn7
- nPhw==
-X-Gm-Message-State: AOJu0YzxaybDg9B1tPT4Mqt/G5RcyWrWV3nj1eQzfYdslJgiof/6fIpL
- kBAblt0UALmETPRbCuXE2m+giwls88kCoYtzoZsT1ydE4YTjdVFQYtqbn9nYlc/sX0qe6jyqlYC
- c9HJ6P/uHjcN9x046hgQj62GcK65ebiLdtnG1yEuBmi5Dylp0CCshu9BpOCe7peCVRtJmrgw3Z8
- CZAUlYeRou9mjoJ3vQwA3iEXp9sZfh8Ot5/1oQ
-X-Received: by 2002:a50:8d53:0:b0:572:67de:5fd2 with SMTP id
- t19-20020a508d53000000b0057267de5fd2mr1779693edt.0.1714726266495; 
- Fri, 03 May 2024 01:51:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHuugCCYa3zCfx5tu6lSlXSpUBB/RqFFDjvdOf2Mhl1uFg5F81MtYLl122WTGlum2rxqfAmkQ==
-X-Received: by 2002:a50:8d53:0:b0:572:67de:5fd2 with SMTP id
- t19-20020a508d53000000b0057267de5fd2mr1779678edt.0.1714726266032; 
- Fri, 03 May 2024 01:51:06 -0700 (PDT)
-Received: from avogadro.local ([151.95.155.52])
+ d=1e100.net; s=20230601; t=1714726320; x=1715331120;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1m1GRsehWy4YzYAHEJnp3cq6p3zxnFV0T98qEc+lhF4=;
+ b=cl5vnQEep+3SpOSn3oqav4zLM7wmA4iWSYmqVr2yFOaYJPqLAhd9VGhuis0+j2rG1v
+ hF06A8fUUymUPCMGj2eW59uIInkCAEt+v3AT8dBThD42w0hKXlb2VA46sBSc2Fzdgp0w
+ JooqSbcQs3v6OlWgpNJoCShFqXe61krY9qQrTVgxcVR6zh1Xh9Kt8NfBnspc8pd2W47R
+ R6E51JkobXGZeAhpA4cFIUu+Rm3Y+ZnU2U5hkpL5xisDCxC225sAZV8JUyZd2alrrFmE
+ bBhGBgp6E3UknCKmU0AK7asR5Ulfk7CduQfkXd0/JMZJ/cHRAYZe7IKDzDECVhfRF0zi
+ 7gcw==
+X-Gm-Message-State: AOJu0YyJTZw7vpzyvRztvvfNu8dNwXwuEucDsrKa+wyhMLhxGdTanfRG
+ mtzU30ThMk2bH4Hq9Ba2STD4Uv0IST2VT9/PD51urWomD1xyHrZ8hJtky7nUbVs=
+X-Google-Smtp-Source: AGHT+IGJlU7KEg/+T5YIZe+P6PtHQq8wNA1cvPv3Uq2fQANqxXEubiIAljAwoPiSRjy7iZxd3Ik2Lg==
+X-Received: by 2002:a17:906:dfc2:b0:a58:c6b2:7885 with SMTP id
+ jt2-20020a170906dfc200b00a58c6b27885mr1109323ejc.5.1714726319925; 
+ Fri, 03 May 2024 01:51:59 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.179.187])
  by smtp.gmail.com with ESMTPSA id
- a9-20020aa7d909000000b00572aa4a75a6sm1431540edr.83.2024.05.03.01.51.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 03 May 2024 01:51:05 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH] tests/qtest: skip m48t59-test if the machine is not absent
-Date: Fri,  3 May 2024 10:51:04 +0200
-Message-ID: <20240503085104.187538-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.44.0
+ by17-20020a170906a2d100b00a5816a7381bsm1491639ejb.141.2024.05.03.01.51.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 03 May 2024 01:51:59 -0700 (PDT)
+Message-ID: <e8db4fec-5c7c-42d5-bba7-a85b09f0a358@linaro.org>
+Date: Fri, 3 May 2024 10:51:57 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] Re-enable riscv64-debian-cross-container (debian
+ riscv64 is finally usable again!)
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org,
+ Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+References: <20240503071634.841103-1-mjt@tls.msk.ru>
+ <ZjSbRsOpJsTdTh6l@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <ZjSbRsOpJsTdTh6l@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.476,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,38 +98,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Together with the series at https://patchew.org/QEMU/20240423131612.28362-1-pbonzini@redhat.com/,
-this allows adding sparc-softmmu to the target list of the
-build-without-defaults CI job.
+On 3/5/24 10:07, Daniel P. Berrangé wrote:
+> On Fri, May 03, 2024 at 10:16:34AM +0300, Michael Tokarev wrote:
+>> Revert "gitlab-ci: Disable the riscv64-debian-cross-container by default"
+>> This reverts commit f51f90c65ed7706c3c4f7a889ce3d6b7ab75ef6a.
+>>
+>> riscv64 in debian has been non-functioning for almost a year, after the
+>> architecture has been promoted to release architecture and all binary
+>> packages started to be re-built, making the port not multi-arch-co-installable
+>> for a long time (in debian, multi-arch packages must be of the same version,
+>> but when a package is rebuilt on one architecture it gets a version bump too).
+>> Later on, debiah had a long time64_t transition which made sid unusable for
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- tests/qtest/m48t59-test.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+"debian" (even "Debian")
 
-diff --git a/tests/qtest/m48t59-test.c b/tests/qtest/m48t59-test.c
-index b9cd209165a..605797ab785 100644
---- a/tests/qtest/m48t59-test.c
-+++ b/tests/qtest/m48t59-test.c
-@@ -262,11 +262,12 @@ int main(int argc, char **argv)
-     base_setup();
- 
-     g_test_init(&argc, &argv, NULL);
--
--    if (g_test_slow()) {
--        /* Do not run this in timing-sensitive environments */
--        qtest_add_func("/rtc/bcd-check-time", bcd_check_time);
-+    if (qtest_has_machine(base_machine)) {
-+        if (g_test_slow()) {
-+            /* Do not run this in timing-sensitive environments */
-+            qtest_add_func("/rtc/bcd-check-time", bcd_check_time);
-+        }
-+        qtest_add_func("/rtc/fuzz-registers", fuzz_registers);
-     }
--    qtest_add_func("/rtc/fuzz-registers", fuzz_registers);
-     return g_test_run();
- }
--- 
-2.44.0
+>> quite some time too.  Both such events happens in debian very rarely (like,
+>> once in 10 years or so - for example, previous big transition like that was
+>> libc5 => libc6 transition).  Now both of these are finished (where qemu is
 
+("QEMU")
+
+>> concerned anyway).
+>>
+>> Hopefully debian unstable wont be very unstable.  At the very least it is
+>> better to have sporadic CI failures here than no riscv64 coverage at all.
+> 
+> IME of running Debian sid in CI pipelines for libvirt, it is
+> way too unstable to be used as a gating job. There are periods
+> weeks-long when packages fail to install, even for relatively
+> mainstream arch targets like x86, let alone a new target like
+> riscv.
+> 
+> Running the job by default is sane, but it should not be made
+> gating until in a formal Debian release IMHO.
+
+So it is waste of resources, and each time maintainers will look
+for failure and notice "oh this is still this broken image" and
+skip. Hard to see the gain of bringing that back TBH.
 
