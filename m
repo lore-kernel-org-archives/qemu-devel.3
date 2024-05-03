@@ -4,92 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DFA9C25B5C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46C34C4345F
 	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 12:16:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2roY-0000dS-PU; Fri, 03 May 2024 08:14:58 -0400
+	id 1s2rp5-0000rS-Cy; Fri, 03 May 2024 08:15:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s2roW-0000bk-Mp
- for qemu-devel@nongnu.org; Fri, 03 May 2024 08:14:56 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s2roH-0006jp-Jw
- for qemu-devel@nongnu.org; Fri, 03 May 2024 08:14:56 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a599a298990so96716466b.2
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 05:14:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714738479; x=1715343279; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=50yuEz0hGDCIwoiq3GTP9VO4htj2JLkjzp/bmPCAGW0=;
- b=x92bio9fjwjY1TfxZzKBLXVTA9jkCzP3SBbbRB+UFsBSGf84ArGxupLWQIeFP7D35P
- lW+gwcaiTVbyq7EkY3c/dwdC8oXenXtcb2IdVY4PQOeA+FjH8HVuyCgV6vwT7iEg3PmB
- YLBh9/T8O1JQCw5BqFw1G1To5oxPhZYMQj57PRk5B56fyN54+ApFy/Q9ca7mMyf3axTI
- 3t1NnWWGU9DzKBOxBkuAqcxJFMiq0xb5Kp9tC/WTS0rl40D6c88GXQMj+Yy+THbxlJgo
- QFIotpZqLwcjrRW/s5GDQGKnDevB1uDNVM5iraUSmSrq+Rs6P3DhRO/hE0gMs7fN8Zmt
- HSzg==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1s2rox-0000mp-3u
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 08:15:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1s2ros-0006pL-DR
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 08:15:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714738517;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=s4DvSUKViypdg4PBIo4khwTjt6DHzg9hai78TXVwSuA=;
+ b=Sz/YYgooO3WkXgAIpGIot1gJeFFMwW+7+CDvH6rbRu4gGJs2CGxhgp+uVDuG3jtJx7kgDv
+ WZTNELkENznEJcBzhnS/leGiBNpNX09M2QldlWp3WXcHi2Jb7pifmhUV7H+tZOwr2X9Mp/
+ MzoxswUtP592DQt2reMhFgJgCjNLaFs=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-641-JWWoqHO0P52uot_TfDr8OA-1; Fri, 03 May 2024 08:15:14 -0400
+X-MC-Unique: JWWoqHO0P52uot_TfDr8OA-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a599dffe736so8336266b.1
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 05:15:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714738479; x=1715343279;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=50yuEz0hGDCIwoiq3GTP9VO4htj2JLkjzp/bmPCAGW0=;
- b=EseYq+F66S006795UU5YoA7TMGr34FRSIw5LV5xK49HNvXQ4ZvLPmKkvOTZ8u2GvZP
- EsR2nxdEh2qg6IbdS5xg7tgXf0DxCGFlcFdvCt5rapy0vJK5d4PImMa1fwesljSj4VCd
- zAuCifxfKbtsIXcxYUugzreS2dmJtAiR7KWAy65XiTyw3zvB5yQwSawjGg0XVzoBD3iS
- Let5Q0UXMdZzyqOaZ6T3JZoDE7mltV0CAtHrAPKGjJLclCRm8/pWkzvOQJKf35E0BPZE
- 4FfXmAVmPZBvafF0KLnPr/IsamW/+z9EEYGznV9bZRaS3e0wF0rPvkiBUYwotf3uqUFW
- GQqw==
-X-Gm-Message-State: AOJu0YymGJ/8IPZPB0OH1r06LpJ8KuT5mz7h/gmWsqgHXc0sSO7Z7b5Q
- hWUcSHsTOnYWbVJQ5c8bY+NU+9JIDIPLKTZYo6OF1fVMlk3iFPCjdZ6C3/Rr3Wqq5zlnb0fkzkY
- ZiQU0a7qlKtDI+tbmbkkEns9VNQnp1BXN+da9WA==
-X-Google-Smtp-Source: AGHT+IESgQukHb6rprC1H2LZzKBzIhjmjRYaZ2xb/HgnsXz2pEIOqSDAqZ8Lk+sdmM7f08XhhvVZTdN6sQujLnvSfHs=
-X-Received: by 2002:a50:d581:0:b0:572:71b2:e200 with SMTP id
- v1-20020a50d581000000b0057271b2e200mr1529037edi.22.1714738479509; Fri, 03 May
- 2024 05:14:39 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1714738512; x=1715343312;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=s4DvSUKViypdg4PBIo4khwTjt6DHzg9hai78TXVwSuA=;
+ b=VVri7+/8eUBoM5juXvMKydfnoPlqDqKXmOOYeqbSk6AeECY2gecTqCMWtZT3l9Z8Nq
+ 8MfjX9/8jN4l+a/pHPjrZc8aAe500X8uDzB0Ng64whKL45DpOLOj7C1q02/iVLrl6D4d
+ O3aPyheKcA9xfEGi2fxLgezN+wQ7JnMJ1oJR6tdgyWBvflaaj9gAHjuD281Xzy6wuP4J
+ xMY/2EPzisqenoUWmP1E+JfOD3i+vTZWUIqvg2f1ZVCADWHZskmGUW3OYoQv5G4eaB30
+ 8BPiKIPNaXdTiV64MBgKTJ51D7MGY7sklywAp6YrfInNjffHX9jBS0/NGjPGUoE+zZEA
+ lygA==
+X-Gm-Message-State: AOJu0YwtRlMqF2hGpkKVpeyib4JAzOjf458dexlBPHMLk7wngDsbvO0R
+ +2rRVFZSk1i0F7++kix3mwCsc0x+UrvZN13ODO42rPKTWaCQHK22ZPI6OVeDMxZEs4vl6eFBtlc
+ iXgX2s8kHW0IIhVKskkgiZsAGZKi7ZUvM/vO7OLhqMZ1mW6lie2YzZKjFRFPm8Bz+T1+KQCaJ/F
+ sfLaVdJsdOwyOKf9UypsHNqBYlSQ7CW0T1YyxR
+X-Received: by 2002:a17:906:4892:b0:a55:8631:b673 with SMTP id
+ v18-20020a170906489200b00a558631b673mr2236799ejq.8.1714738511801; 
+ Fri, 03 May 2024 05:15:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFxaPGsArRwF5fkFmKwsERnw7i4EDy1UYC11w5sZ8JS25xJ4MH5gONgI2lX8jACXoxmKNwiUQ==
+X-Received: by 2002:a17:906:4892:b0:a55:8631:b673 with SMTP id
+ v18-20020a170906489200b00a558631b673mr2236780ejq.8.1714738511271; 
+ Fri, 03 May 2024 05:15:11 -0700 (PDT)
+Received: from avogadro.local ([151.95.155.52])
+ by smtp.gmail.com with ESMTPSA id
+ f23-20020a170906561700b00a599623b07bsm468853ejq.206.2024.05.03.05.15.10
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 03 May 2024 05:15:10 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: [PATCH] gitlab-ci: adjust msys2-64bit to be able to run qtest
+Date: Fri,  3 May 2024 14:15:09 +0200
+Message-ID: <20240503121509.219567-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.44.0
 MIME-Version: 1.0
-References: <20240501182759.2934195-1-berrange@redhat.com>
-In-Reply-To: <20240501182759.2934195-1-berrange@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 3 May 2024 13:14:27 +0100
-Message-ID: <CAFEAcA9LTsdjHpip1F=BPhrRUbH++3eW4HjjH4Xn6yN18pHtjQ@mail.gmail.com>
-Subject: Re: [PATCH 00/14] hw: define and enforce a standard lifecycle for
- versioned machines
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Nicholas Piggin <npiggin@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clegoate@redhat.com>, 
- Halil Pasic <pasic@linux.ibm.com>, Laurent Vivier <laurent@vivier.eu>,
- qemu-arm@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-ppc@nongnu.org, 
- David Gibson <david@gibson.dropbear.id.au>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.483,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,41 +98,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 1 May 2024 at 19:28, Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
-wrote:
-> I wonder, however, whether we would benefit from changing how we
-> update the VERSION file.
->
-> eg instead of re-using the micro digit to indicate a dev or rc
-> snapshot, represent those explicitly. eg "9.1.0-dev" and
-> "9.1.0-rc1", "9.1.0-rc2", etc in VERSION.
->
-> We don't use the full QEMU_VERSION in the code in all that many
-> places. It appears in some help messages for command line tools,
-> and in QMP query-version response, and in a few other misc places.
-> At a glance it appears all of those places would easily handle a
-> tagged version.
->
-> For release candidates in particular I think it would be saner
-> to show the user the actual version the release is about to become,
-> rather than the previous release's version. This would make the
-> reported version match the rc tarball naming too which would be
-> nice.
+sparc-softmmu is able to run a subset of qtests when compiled --without-default-devices,
+so use it instead of x86_64-softmmu for the msys2 run.
 
-I think the theory behind the VERSION file is that we want
-to be able to express the version:
- * purely numerically
- * in a strictly ascending order
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ .gitlab-ci.d/windows.yml | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-We expose the assumption of numeric versions in places like
-QMP's query-version command, which reports it as a set of ints.
+diff --git a/.gitlab-ci.d/windows.yml b/.gitlab-ci.d/windows.yml
+index 94834269ec7..d26dbdd0c0d 100644
+--- a/.gitlab-ci.d/windows.yml
++++ b/.gitlab-ci.d/windows.yml
+@@ -24,10 +24,7 @@ msys2-64bit:
+     # changed to compile QEMU with the --without-default-devices switch
+     # for this job, because otherwise the build could not complete within
+     # the project timeout.
+-    CONFIGURE_ARGS:  --target-list=x86_64-softmmu --without-default-devices -Ddebug=false -Doptimization=0
+-    # qTests don't run successfully with "--without-default-devices",
+-    # so let's exclude the qtests from CI for now.
+-    TEST_ARGS: --no-suite qtest
++    CONFIGURE_ARGS:  --target-list=sparc-softmmu --without-default-devices -Ddebug=false -Doptimization=0
+     # The Windows git is a bit older so override the default
+     GIT_FETCH_EXTRA_FLAGS: --no-tags --prune --quiet
+   artifacts:
+-- 
+2.44.0
 
-I think there's probably scope for making the "human friendly"
-version string be surfaced instead of the strictly-numeric
-one in more places, but I worry that breaking the "always
-numeric and ascending" rule might have subtle breakage for
-us or for downstream uses...
-
-thanks
--- PMM
 
