@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B33E1C25B5C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 997DDC4345F
 	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 13:16:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2slv-0002is-CV; Fri, 03 May 2024 09:16:19 -0400
+	id 1s2sld-0002YA-AD; Fri, 03 May 2024 09:16:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s2slt-0002iW-Cq
- for qemu-devel@nongnu.org; Fri, 03 May 2024 09:16:17 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1s2slb-0002Xh-Rt
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 09:15:59 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s2slr-0002P4-Ru
- for qemu-devel@nongnu.org; Fri, 03 May 2024 09:16:17 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-6f0aeee172dso2161935b3a.1
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 06:16:15 -0700 (PDT)
+ id 1s2slU-00026q-Nd
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 09:15:59 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-6f450f43971so224069b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 06:15:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714742174; x=1715346974; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714742151; x=1715346951; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=aUEJ+Ribw+pf8pUVEyjlKtGjVkNVSuMpH67I6hHGQTI=;
- b=dMB3MpLhfd5xRln+T/5npDCbp7vmqxk+1w+HiWq6rt9IeSXiN63EMrGTOQodqySPPE
- 9/8YiPKEZsCLFhHX6vRVKX9ICEpPZuTXYdtkAcGTMWoBSSJZqiHnj4nNWKdb9f955oDH
- zViDmP6MKEcBL3wc0rsvJcN+fMjDJ24WmRfzPUWApGok+SCGoBeQ2blLzz5FCs8W3w7Q
- 61lJhgra9eHK85HtXo2MEJahrlIy4N/MGYLm55euTkZ2u39nkHdWGi3GBAu6k/I+aAmf
- DBcXtPp/bHnn9BJVXQiy0EhenKF1EgVkGd5AquYgZMxaBDPbz4dWmlhBZx5P1+jKvHn9
- mjAQ==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=3r2UsCbl1pjB5ghw8OOKO21wDRMjUTv0dCjpAQXQIoQ=;
+ b=LS+yb93xBlyQfkHlS0ZzwGolp7JBJRHx5oADKhBGGUxhBhO8DukbTccPEYp1+1dmDt
+ RPHnSx8Goo3fOz4eEgWci/B05JXSdIG9rWMyel06ugIJFf9/ozHOV9x2AXvjvHlRD6yG
+ /kBJgqGKRLQJen/s5xs2KCYC5NIeb5yQywV6u8TeRG+GH2WI/IwoWWI8QJ3l9j7HapFr
+ yia1AvEJ7ZKhP2BZAHJuLz2KxdRb7fFv/JFE8uT19O97zxldlzDgMdDyJGDi/9OyMHKN
+ D4xigxCmDktkdK1kkMFQG1ANCLIhSMG6DraxQqo5rXqtdHVGX4JmJHh3+pDRMFLNvWIo
+ wsnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714742174; x=1715346974;
+ d=1e100.net; s=20230601; t=1714742151; x=1715346951;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aUEJ+Ribw+pf8pUVEyjlKtGjVkNVSuMpH67I6hHGQTI=;
- b=D8o7Iv9FrEmMznUANDnDkXHMR44Xyw1yR3UrcJ67HxTOn2Rd1EzujLmzAEt2UUnBDo
- 2Jq+3MeX+8bPqVm85rdgfowUrWVfzetgqu1d69VKj/ZLG/Q6PQ00OhB+MM+q82xotNNk
- fW/78qcUpoSu0RfNFKJ1pIdDhz0Es41Ryj1qUhaeyEUC26BZ68lq+pyTBpSZMFHon4vp
- Kqu0SkDYWrqbQQQKdfiOdUFHIsb/imqfYvRT4JitBeY/7Ruu8w8HSgoXIKZ5zGKS8zLM
- TPYgJI3/KmpoTKZDNuonOAcEp+v2Xqkp1Z8k08gvyBqS/gtU+OfjPhSxDIQU9we7DGYO
- 38Tg==
+ bh=3r2UsCbl1pjB5ghw8OOKO21wDRMjUTv0dCjpAQXQIoQ=;
+ b=XHxx70lZXELIJsBM/zmujcv7EdRvOLL3ky/mJ2JR5vDVvePUPOWoYfriACHboNx6Sg
+ tjpIgWFSsNFTI+4xkYJk7Qe6YdlQOhFHWQfnz7zMY3q1TSfkRedDUS9e06g3kh4K1wP0
+ f3MS4zFLQ31k9Oi4cCp6MUu9Han1fS64j0GOFz//HnWtBPfnolKDsNbFO9vI6qTQNiGd
+ hkvcMKpGtFtoanjV5Vb4cpWQVqm2ZIor4VHsvbyBZ7eRQ6bfdnrBjHEgaghUZ6C7O5Lq
+ QEVOOuofsFM2IyPAoN35DIgBjZJ6APi06J2ohKavIgAY0c12N7xhIxRW5o2CYuDak6ua
+ ZRmg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXqPVh58qfcLXEv/ybmExUg9IkPxySsiqpSZm4nLIiPXtva4fQchIc4Rm2SLLox/qZ9SkF3SK/hH50rB3eCbpuFwTkN4DQ=
-X-Gm-Message-State: AOJu0YzYaZXWtX5UjP83xxHTdFAEpNdKkcBvvaYjH6WmMuYY5PQ4DVpX
- 74qUIkRTNNaHuqcKcpdZwfUbI9ae9EnzNcnIJE54BWlTTIlawkUKzDBJnfk+8A0=
-X-Google-Smtp-Source: AGHT+IFRnRUlknxewPEpnfO+w/OUgRZXQS6C110jpaq+tYf0VBZYVYIRgeLSqdE2jD8M4QitNZ7Ppg==
-X-Received: by 2002:a05:6a00:3c86:b0:6f0:b67e:dcfb with SMTP id
- lm6-20020a056a003c8600b006f0b67edcfbmr7998578pfb.7.1714742174029; 
- Fri, 03 May 2024 06:16:14 -0700 (PDT)
+ AJvYcCUCgLCYV4aioGtEbiQ60hHsHefazWtuoj6a6FOP5MR9pjblvIwhFnp+CEyjqLW+4B9ccpTp+s2EI6Z8ZkcNareYTSos7OY=
+X-Gm-Message-State: AOJu0Yxk4OxVNQh7WS7h1GTFvrTp/g92n7QtKsqHLCvUsDro9Cncnaxd
+ bLvz1lna70R2lxfzKXdSOdEMXdDVS3IQZePdj4Jj6T0ixuo3k+vSWGJzBy2W4YI=
+X-Google-Smtp-Source: AGHT+IFYxkjxZsYPclV1iVxdlLvJYyhr4V7GzNM3AnBeFnkzc8hpBFmI/FRje7rMSTg1w1ChrscUCA==
+X-Received: by 2002:a05:6a20:748f:b0:1a7:919f:2b60 with SMTP id
+ p15-20020a056a20748f00b001a7919f2b60mr3138161pzd.37.1714742151224; 
+ Fri, 03 May 2024 06:15:51 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- g2-20020a056a000b8200b006f4547cbd1asm112705pfj.5.2024.05.03.06.16.13
+ e5-20020aa78245000000b006f44e845915sm944530pfn.74.2024.05.03.06.15.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 May 2024 06:16:13 -0700 (PDT)
-Message-ID: <d7f1c5cb-56f5-4f70-a200-c7b2a9c7bcb2@linaro.org>
-Date: Fri, 3 May 2024 06:16:11 -0700
+ Fri, 03 May 2024 06:15:50 -0700 (PDT)
+Message-ID: <bc36cf5c-45d0-45a0-adb0-801b6ec61c7a@linaro.org>
+Date: Fri, 3 May 2024 06:15:48 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] migration: do not include coroutine_int.h
+Subject: Re: [PATCH] tests/qtest: skip m48t59-test if the machine is not absent
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20240503090349.193319-1-pbonzini@redhat.com>
+Cc: mark.cave-ayland@ilande.co.uk
+References: <20240503085104.187538-1-pbonzini@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240503090349.193319-1-pbonzini@redhat.com>
+In-Reply-To: <20240503085104.187538-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,16 +97,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/3/24 02:03, Paolo Bonzini wrote:
-> Migration code needs no private fields of the coroutine backend.
-> Include the "regular" coroutine.h header.
+On 5/3/24 01:51, Paolo Bonzini wrote:
+> Together with the series at https://patchew.org/QEMU/20240423131612.28362-1-pbonzini@redhat.com/,
+> this allows adding sparc-softmmu to the target list of the
+> build-without-defaults CI job.
 > 
-> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   migration/migration.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   tests/qtest/m48t59-test.c | 11 ++++++-----
+>   1 file changed, 6 insertions(+), 5 deletions(-)
+
+s/absent/present/ in subject.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
+
+> 
+> diff --git a/tests/qtest/m48t59-test.c b/tests/qtest/m48t59-test.c
+> index b9cd209165a..605797ab785 100644
+> --- a/tests/qtest/m48t59-test.c
+> +++ b/tests/qtest/m48t59-test.c
+> @@ -262,11 +262,12 @@ int main(int argc, char **argv)
+>       base_setup();
+>   
+>       g_test_init(&argc, &argv, NULL);
+> -
+> -    if (g_test_slow()) {
+> -        /* Do not run this in timing-sensitive environments */
+> -        qtest_add_func("/rtc/bcd-check-time", bcd_check_time);
+> +    if (qtest_has_machine(base_machine)) {
+> +        if (g_test_slow()) {
+> +            /* Do not run this in timing-sensitive environments */
+> +            qtest_add_func("/rtc/bcd-check-time", bcd_check_time);
+> +        }
+> +        qtest_add_func("/rtc/fuzz-registers", fuzz_registers);
+>       }
+> -    qtest_add_func("/rtc/fuzz-registers", fuzz_registers);
+>       return g_test_run();
+>   }
+
 
