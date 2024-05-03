@@ -4,75 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7016C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 12:51:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70807C25B5C
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 12:51:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2sNP-0008E9-0I; Fri, 03 May 2024 08:50:59 -0400
+	id 1s2sNf-0008Qu-FM; Fri, 03 May 2024 08:51:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s2sNM-0008DV-Ba
- for qemu-devel@nongnu.org; Fri, 03 May 2024 08:50:56 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s2sNd-0008PM-TH
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 08:51:13 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s2sNK-0005d9-GF
- for qemu-devel@nongnu.org; Fri, 03 May 2024 08:50:56 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a595199cb9bso462973866b.3
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 05:50:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714740652; x=1715345452; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ETsEuXWkbdZU6HzMd0bGeQZo4WUCHUxUaaxOhcft2bk=;
- b=VmmJMwxt/AaoO/qHJRJ4O8XSZl7j82LCZP8CE/ONEXke5LoePLvQAi2DXvYgzgnspn
- ZbtTTdWmbl6tUqYQW4fLNrKkSmq/m1YWplJVerbDKXGRHzz69o7e58oDZbdUJkjO/VwF
- V2sjWHJw0caJGkz90YoRG4iJCfkR9aHONgEpxS52u3rLT2Mqta+9CYIOTmxhDHjIYNtw
- n8oMVaCFfibA5JnQgmMixbA2wj8+CcgjozZbQeb+/GlwUjHYSobUxhFSUYL25ZDoH7lu
- pOcMHtJvWbqvINwQMv8QBVl7lTGk+TA7KRZ/tWncmeZz+mUwV0KNCtviuX1yETBBgfY9
- DIvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714740652; x=1715345452;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ETsEuXWkbdZU6HzMd0bGeQZo4WUCHUxUaaxOhcft2bk=;
- b=UkN2C6iBV2iE4su9hcDg+JMp6Z4YBz9fMQBWmCOOY1af/i+xD3CunHm1NnZsgZT3CX
- i/qUFYkZ0VzW4rnEhwt7FeV4PygCuX8WMQN1ciqLdLRLi86q2RO+Z2OH6ePsJNXP/Oeq
- gvaT3gtwfC6b0qmLjFDw2vAQ+IXymEIXdKyspq0WwFQtKBc/rPv0LHgjJ1MIdfAAS3+R
- 8JafOBlhcypO8dSW+kxOvFrh/pCmmXH4ZxMT5GZSOBwgUkqSz8pvdhMLkg9alxLHgKjF
- Rsj1Ljn9pmBiPMymiak9MCgpmJrm6WP6m2y6fcqGwyhYp680sQSooAgjwrIud2HD1yb3
- lxLg==
-X-Gm-Message-State: AOJu0Yyr5P/laAlO/xcd0q68ZQZhw73WbRdF/YkpphM983OEOhgNBiGP
- 6N6MkxqYNRP96bjj86JIU+25BPz3E9q9m2wfHuBkffDir2Qeg+qK9Q+VWY2rBHgpiUgJrFtCIxS
- OxDCo+L9Ad0F1CcApXtCtUQmcI9+S+r7+9noU2aWVa+CTQVRo
-X-Google-Smtp-Source: AGHT+IH8FiyAbNbB82dKKkN8BVrDBrY3da7tBorCMoqnZoHKyIpPDTXenOrkcWRAtF6s9W3uwQUyeUlkylNd3gfJOaw=
-X-Received: by 2002:a50:875e:0:b0:572:1b5a:2a07 with SMTP id
- 30-20020a50875e000000b005721b5a2a07mr1357663edv.32.1714740652605; Fri, 03 May
- 2024 05:50:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s2sNb-0005pF-Fn
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 08:51:13 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 66CC522971;
+ Fri,  3 May 2024 12:51:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1714740667; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=57f8EdNmG54LhggCVkZU/4EzRjA4Ih9/KEx9zZ5psaI=;
+ b=kdMF4vsC4rurLVpj9BlCVTVSAXBU6qaRbsIKNB1CLn8DdcE5o+aB1IMjKTcsuiZaF8YmEw
+ Cw1g1vcGyPReSOhN5IeqnaY5jSBijQkAtNxtkiX04zoyqHMvlh8s7zjBH+zIwUBf1CkxOx
+ u1AhKkEAh2hrq5efQC+IcFdRb09rdek=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1714740667;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=57f8EdNmG54LhggCVkZU/4EzRjA4Ih9/KEx9zZ5psaI=;
+ b=G/jhUVCnlwT6kzh/8NX06DIc5PUFEWcDQf2qtjx9ruCznCi1uAl2GKs4QY0DwwYipUNYdG
+ PkyT6SzJ5TBG/BCg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=kdMF4vsC;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="G/jhUVCn"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1714740667; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=57f8EdNmG54LhggCVkZU/4EzRjA4Ih9/KEx9zZ5psaI=;
+ b=kdMF4vsC4rurLVpj9BlCVTVSAXBU6qaRbsIKNB1CLn8DdcE5o+aB1IMjKTcsuiZaF8YmEw
+ Cw1g1vcGyPReSOhN5IeqnaY5jSBijQkAtNxtkiX04zoyqHMvlh8s7zjBH+zIwUBf1CkxOx
+ u1AhKkEAh2hrq5efQC+IcFdRb09rdek=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1714740667;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=57f8EdNmG54LhggCVkZU/4EzRjA4Ih9/KEx9zZ5psaI=;
+ b=G/jhUVCnlwT6kzh/8NX06DIc5PUFEWcDQf2qtjx9ruCznCi1uAl2GKs4QY0DwwYipUNYdG
+ PkyT6SzJ5TBG/BCg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E671F13991;
+ Fri,  3 May 2024 12:51:06 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id vaDzKrrdNGYidQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 03 May 2024 12:51:06 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Peter Xu <peterx@redhat.com>, "Dr . David Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PULL 13/13] hmp/migration: Fix documents for "migrate" command
+In-Reply-To: <87bk5n1ius.fsf@pond.sub.org>
+References: <20240502202316.29924-1-farosas@suse.de>
+ <20240502202316.29924-14-farosas@suse.de> <87bk5n1ius.fsf@pond.sub.org>
+Date: Fri, 03 May 2024 09:51:04 -0300
+Message-ID: <87cyq3njnr.fsf@suse.de>
 MIME-Version: 1.0
-References: <20230616100158.1845239-1-gaosong@loongson.cn>
- <20230616100158.1845239-4-gaosong@loongson.cn>
-In-Reply-To: <20230616100158.1845239-4-gaosong@loongson.cn>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 3 May 2024 13:50:41 +0100
-Message-ID: <CAFEAcA_iu05EA+XZ4ENW_5QZ4uxLNzmY5FV9W_Ev1KFaZaJ+hw@mail.gmail.com>
-Subject: Re: [PULL 3/5] hw/loongarch: Add numa support
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, 
- Tianrui Zhao <zhaotianrui@loongson.cn>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 66CC522971
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MISSING_XM_UA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim]; RCVD_TLS_ALL(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:email];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,80 +124,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 16 Jun 2023 at 11:03, Song Gao <gaosong@loongson.cn> wrote:
+Markus Armbruster <armbru@redhat.com> writes:
+
+> Fabiano Rosas <farosas@suse.de> writes:
 >
-> From: Tianrui Zhao <zhaotianrui@loongson.cn>
+>> From: Peter Xu <peterx@redhat.com>
+>>
+>> Peter missed the Sphinx HMP document for the "resume/-r" flag in commit
+>> 7a4da28b26 ("qmp: hmp: add migrate "resume" option").  Add it.  Avoid
+>> adding a Fixes to make life easier for the stable maintainer.
+>>
+>> When at it, slightly cleanup the lines, move "detach/-d" to a separate
+>> section rather than appending it at the end of the command description.
+>>
+>> Cc: Dr. David Alan Gilbert <dave@treblig.org>
+>> Cc: Fabiano Rosas <farosas@suse.de>
+>> Cc: Markus Armbruster <armbru@redhat.com>
+>> Signed-off-by: Peter Xu <peterx@redhat.com>
+>> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>  hmp-commands.hx | 9 +++++++--
+>>  1 file changed, 7 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hmp-commands.hx b/hmp-commands.hx
+>> index ebca2cdced..484a8a1c3a 100644
+>> --- a/hmp-commands.hx
+>> +++ b/hmp-commands.hx
+>> @@ -918,8 +918,13 @@ ERST
+>>  
+>>  
+>>  SRST
+>> -``migrate [-d]`` *uri*
+>> -  Migrate to *uri* (using -d to not wait for completion).
+>> +``migrate [-d] [-r]`` *uri*
+>> +  Migrate the current VM to *uri*.
+>> +
+>> +  ``-d``
+>> +    Run this command asynchronously, so that the command doesn't wait for completion.
+>> +  ``-r``
+>> +    Resume a paused postcopy migration.
+>>  ERST
+>>  
+>>      {
 >
-> 1. Implement some functions for LoongArch numa support;
-> 2. Implement fdt_add_memory_node() for fdt;
-> 3. build_srat() fills node_id and adds build numa memory.
->
-> Reviewed-by: Song Gao <gaosong@loongson.cn>
-> Signed-off-by: Tianrui Zhao <zhaotianrui@loongson.cn>
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> Message-Id: <20230613122613.2471743-1-zhaotianrui@loongson.cn>
+> I have questions on this one.
 
-Hi; Coverity has pointed out a memory leak in this commit
-(CID 1544773):
-
-> @@ -799,17 +823,43 @@ static void loongarch_init(MachineState *machine)
->          machine->possible_cpus->cpus[i].cpu = OBJECT(cpu);
->      }
->      fdt_add_cpu_nodes(lams);
-> -    /* Add memory region */
-> -    memory_region_init_alias(&lams->lowmem, NULL, "loongarch.lowram",
-> -                             machine->ram, 0, 256 * MiB);
-> -    memory_region_add_subregion(address_space_mem, offset, &lams->lowmem);
-> -    offset += 256 * MiB;
-> -    memmap_add_entry(0, 256 * MiB, 1);
-> -    highram_size = ram_size - 256 * MiB;
-> -    memory_region_init_alias(&lams->highmem, NULL, "loongarch.highmem",
-> -                             machine->ram, offset, highram_size);
-> -    memory_region_add_subregion(address_space_mem, 0x90000000, &lams->highmem);
-> -    memmap_add_entry(0x90000000, highram_size, 1);
-> +
-> +    /* Node0 memory */
-> +    memmap_add_entry(VIRT_LOWMEM_BASE, VIRT_LOWMEM_SIZE, 1);
-> +    fdt_add_memory_node(machine, VIRT_LOWMEM_BASE, VIRT_LOWMEM_SIZE, 0);
-> +    memory_region_init_alias(&lams->lowmem, NULL, "loongarch.node0.lowram",
-> +                             machine->ram, offset, VIRT_LOWMEM_SIZE);
-> +    memory_region_add_subregion(address_space_mem, phyAddr, &lams->lowmem);
-> +
-> +    offset += VIRT_LOWMEM_SIZE;
-> +    if (nb_numa_nodes > 0) {
-> +        assert(numa_info[0].node_mem > VIRT_LOWMEM_SIZE);
-> +        highram_size = numa_info[0].node_mem - VIRT_LOWMEM_SIZE;
-> +    } else {
-> +        highram_size = ram_size - VIRT_LOWMEM_SIZE;
-> +    }
-> +    phyAddr = VIRT_HIGHMEM_BASE;
-> +    memmap_add_entry(phyAddr, highram_size, 1);
-> +    fdt_add_memory_node(machine, phyAddr, highram_size, 0);
-> +    memory_region_init_alias(&lams->highmem, NULL, "loongarch.node0.highram",
-> +                              machine->ram, offset, highram_size);
-> +    memory_region_add_subregion(address_space_mem, phyAddr, &lams->highmem);
-> +
-> +    /* Node1 - Nodemax memory */
-> +    offset += highram_size;
-> +    phyAddr += highram_size;
-> +
-> +    for (i = 1; i < nb_numa_nodes; i++) {
-> +        MemoryRegion *nodemem = g_new(MemoryRegion, 1);
-> +        ramName = g_strdup_printf("loongarch.node%d.ram", i);
-> +        memory_region_init_alias(nodemem, NULL, ramName, machine->ram,
-> +                                 offset,  numa_info[i].node_mem);
-> +        memory_region_add_subregion(address_space_mem, phyAddr, nodemem);
-> +        memmap_add_entry(phyAddr, numa_info[i].node_mem, 1);
-> +        fdt_add_memory_node(machine, phyAddr, numa_info[i].node_mem, i);
-> +        offset += numa_info[i].node_mem;
-> +        phyAddr += numa_info[i].node_mem;
-
-In this loop, we allocate memory via g_strdup_printf(),
-but never free it. The nicest fix for this is to use the
-g_autofree mechanism so that the memory is automatically
-freed when execution reaches the end of the block:
-   g_autofree ramName = g_strdup_printf("....", ...);
-
-thanks
--- PMM
+Yep, I should have waited longer before queuing this one, my bad.
 
