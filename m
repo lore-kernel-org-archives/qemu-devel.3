@@ -4,78 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F402EC25B10
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 17:30:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63223C10F1A
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 17:30:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s57al-0001jr-K3; Thu, 09 May 2024 13:30:04 -0400
+	id 1s57am-0001jv-1v; Thu, 09 May 2024 13:30:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1s57af-0001iB-MF
- for qemu-devel@nongnu.org; Thu, 09 May 2024 13:29:59 -0400
-Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
+ id 1s57aa-0001hy-5Y
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 13:29:56 -0400
+Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1s57ad-0003dj-E8
- for qemu-devel@nongnu.org; Thu, 09 May 2024 13:29:56 -0400
-Received: by mail-lf1-x12f.google.com with SMTP id
- 2adb3069b0e04-51f174e316eso1404533e87.0
- for <qemu-devel@nongnu.org>; Thu, 09 May 2024 10:29:55 -0700 (PDT)
+ id 1s57aX-0003YX-Nm
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 13:29:51 -0400
+Received: by mail-lj1-x231.google.com with SMTP id
+ 38308e7fff4ca-2e27277d2c1so14487711fa.2
+ for <qemu-devel@nongnu.org>; Thu, 09 May 2024 10:29:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715275793; x=1715880593; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4Lu12U4WovTW3hf1eOudpLM8QHHuwL/cl/TS4TvBDsA=;
- b=gTHhFZAIvRCgkqnxnVNiKVOazw++i7bdtI4pBkBYWJNYQ+wZDKNAGjBwSjLfKj/o2K
- Ugb6kJOC6UxMze4IwZtqRzzE1arxSGW1+s5TDUDGU1/knxIwAJq1Dta5BcV9NqX6eRxd
- 9SBrDckN6xy7SKNQj3610Rc4HbP22J+GGrUcISSQADzSAZ4FOjd9bxbvh9mtTZin5m1a
- kb2Xh8zw0SUdurqJzyerMkWjN8GQBuLv6Kc2Fvf2m21HENzqIETNctof4qaFx1e8T/2Q
- r98EcRcWAprJ/oBmfkR+rl+a6UQdYGlgQIbyyZDMFz7LrCbM2g8H+iHMUdppWJsBOh3P
- e0qw==
+ d=gmail.com; s=20230601; t=1715275787; x=1715880587; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=9gxZi8Kxunmjw0xqkHld/SfRNQJr5iGjZkmVGJhY1Pc=;
+ b=DIueN/bW+APipWVm0VOXbdYUVM49Ly22kS14jVKK26wSsOVZdCgeckdpDHd8K2U/EB
+ RNc8KxZImgCBV0k2v1E2Pjup56As7i8x+sSOL+vZjunozGFxxGVFIjGhB5l0pgcRcjlq
+ CW69rHjglYBM1Z6M2aiSHKa9g9P6kNYgeXdmtJXoydOPDaaJFaUJ6OX8nTDK1o3ZUtVm
+ 5m9KxnitBucbtHoRaO8oTbZ7g14Qh9fHsIWLL0/PuDMyCyH8B7EyAVsJlKk7ZjFS0DZs
+ i05RQiqj5GKuHdzP+vcQ+yM5bk6k8ZIDz71yUD6ig6MzMaGUWnr5pAciNjz6RAr8lwWG
+ Tf2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715275793; x=1715880593;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4Lu12U4WovTW3hf1eOudpLM8QHHuwL/cl/TS4TvBDsA=;
- b=OGw1R5w3fGwH8Z8w43WmmDW3S0ROKAvG+4bkAq/Q+6AVu5A54+o7L/Xg4t3IrYbqxs
- CMQDsiPHZgQB4u4IGg5Q2OT/hSJrLMvbp0AXQNIhEk6E5wvQRKVUwhzWPaX/dJomiYig
- aHuexhHvyar4JqycSCeffXZO8fuJBmriBbiyvHLPDYlzQW7Vhu/VqdPCeWZWAeDFUn66
- tTZANe1dNCV1iq4v/A0S8u0bCXum72W6wD/jYwF70EkwCo6wesuQeR8xwtTBRY7nMmsu
- jdK44ISJbLJH02Wwgs59YnqzTx8/cyjAFc+xnIpwpmigWh1acmZ3soSGy/BCQrJsRib0
- XA5g==
-X-Gm-Message-State: AOJu0YwD/NswbyjBPaVNlaSO9BOBVI9PiZ/X+uwamoCIZbWQm46t8cdk
- QiDmFpo4ir9+PzrcmmiT9CjOuK6WRDtLIcWnaRQt0bvEMc8oSX/kY5AMhunR
-X-Google-Smtp-Source: AGHT+IFpUN2UJ5Y05+XgtMWXD1dZLnsMtTgxcLNFyRg8yefE+FmcaLhEFX2t+nfVa9EMZmhaMtK/gQ==
-X-Received: by 2002:a05:6512:3494:b0:516:be80:178f with SMTP id
- 2adb3069b0e04-5220fe7934bmr127564e87.43.1715275792802; 
- Thu, 09 May 2024 10:29:52 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1715275787; x=1715880587;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9gxZi8Kxunmjw0xqkHld/SfRNQJr5iGjZkmVGJhY1Pc=;
+ b=k9JDXeOycyz23evqLkTCC0hbo/Mw9JsgE0XOIIBeFGw6c1zYL3/DAKRMpcH5JOCdZg
+ ftTtkS7fB+XgAhqYVBaTNYxI3NG7CjB3YsEgb+kHAp5DegSi28WSXOwEgg7PoKxVkPtX
+ o218FBpwx52p0eKz2P3efPE33HsAYOedkeutHMyTgN4MtV3LyplJVq7Fi1BlxvYTDDIg
+ kUpkQakWO0bhd7rf5o06lRGqY6lhPOnFfjKqiJAUKJxJaJ2Xr3TsadKePFPOsc9KuI71
+ 6wXMkA4XR3/nkl5eWcyBRPaDhrkKDXnoM6DmxjMrqoiNzbvs4RJwOUKs6ZikShwz7VNc
+ X1zA==
+X-Gm-Message-State: AOJu0YyMjw5RWTfcWSZydBIBMhi9A+jpqnaat6zucz9MzJk7eWkuSi0x
+ /qRx78viOkRwGsZkrymWKJBB8nyZnQ65ywBo810yjrQwjnJ6n1Nq8ZIAiVLg
+X-Google-Smtp-Source: AGHT+IHs5xnu5c2xGbOBr4n7Me7bFXR19SRenqLxh5Xp2IkHaTBQ1HcYWjTe6yiah+PMw8F7yGpmuA==
+X-Received: by 2002:a2e:b8c9:0:b0:2e1:f199:3853 with SMTP id
+ 38308e7fff4ca-2e5204cc91amr787251fa.47.1715275786645; 
+ Thu, 09 May 2024 10:29:46 -0700 (PDT)
 Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
  by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-521f35ba80fsm374153e87.93.2024.05.09.10.29.51
+ 38308e7fff4ca-2e4d15155fdsm2557011fa.83.2024.05.09.10.29.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 May 2024 10:29:51 -0700 (PDT)
+ Thu, 09 May 2024 10:29:46 -0700 (PDT)
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: edgar.iglesias@gmail.com, sstabellini@kernel.org, jgross@suse.com,
- "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v5 4/8] softmmu: xen: Always pass offset + addr to
- xen_map_cache
-Date: Fri,  3 May 2024 03:44:45 +0200
-Message-Id: <20240503014449.1046238-5-edgar.iglesias@gmail.com>
+ "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+Subject: [PATCH v5 0/8] xen: Support grant mappings
+Date: Fri,  3 May 2024 03:44:41 +0200
+Message-Id: <20240503014449.1046238-1-edgar.iglesias@gmail.com>
 X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20240503014449.1046238-1-edgar.iglesias@gmail.com>
-References: <20240503014449.1046238-1-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x12f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::231;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x231.google.com
 X-Spam_score_int: 13
 X-Spam_score: 1.3
 X-Spam_bar: +
@@ -100,31 +93,83 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 
-Always pass address with offset to xen_map_cache().
-This is in preparation for support for grant mappings.
+Hi,
 
-Since this is within a block that checks for offset == 0,
-this has no functional changes.
+Grant mappings are a mechanism in Xen for guests to grant each other
+permissions to map and share pages. These grants can be temporary
+so both map and unmaps must be respected. See here for more info:
+https://github.com/xen-project/xen/blob/master/docs/misc/grant-tables.txt
 
-Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
----
- system/physmem.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Currently, the primary use-case for grants in QEMU, is with VirtIO backends.
+Grant mappings will only work with models that use the address_space_map/unmap
+interfaces, any other access will fail with appropriate error messages.
 
-diff --git a/system/physmem.c b/system/physmem.c
-index 342b7a8fd4..5e6257ef65 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -2230,7 +2230,8 @@ static void *qemu_ram_ptr_length(RAMBlock *block, ram_addr_t addr,
-          * In that case just map the requested area.
-          */
-         if (block->offset == 0) {
--            return xen_map_cache(block->mr, addr, len, lock, lock,
-+            return xen_map_cache(block->mr, block->offset + addr,
-+                                 len, lock, lock,
-                                  is_write);
-         }
- 
+In response to feedback we got on v3, later version switch approach
+from adding new MemoryRegion types and map/unmap hooks to instead reusing
+the existing xen_map_cache() hooks (with extensions). Almost all of the
+changes are now contained to the Xen modules.
+
+This approach also refactors the mapcache to support multiple instances
+(one for existing foreign mappings and another for grant mappings).
+
+I've only enabled grants for the ARM PVH machine since that is what
+I can currently test on.
+
+Cheers,
+Edgar
+
+ChangeLog:
+
+v4 -> v5:
+* Compute grant_ref from address_index to xen_remap_bucket().
+* Rename grant_is_write to is_write and comment on why foreign
+  mappings don't yet use it.
+* Remove unnecessary + mc->bucket_size - 1 in
+  xen_invalidate_map_cache_entry_unlocked().
+* Remove use of global mapcache in refactor of
+  xen_replace_cache_entry_unlocked().
+* Add error checking for xengnttab_unmap().
+* Add assert in xen_replace_cache_entry_unlocked() against grant mappings.
+* Fix memory leak when freeing first entry in mapcache buckets.
+* Assert that bucket_shift is >= XC_PAGE_SHIFT when creating mapcache.
+* Add missing use of xen_mr_is_memory() in hw/xen/xen-hvm-common.c.
+* Rebase with master.
+
+v3 -> v4:
+* Reuse existing xen_map_cache hooks.
+* Reuse existing map-cache for both foreign and grant mappings.
+* Only enable grants for the ARM PVH machine (removed i386).
+
+v2 -> v3:
+* Drop patch 1/7. This was done because device unplug is an x86-only case.
+* Add missing qemu_mutex_unlock() before return.
+
+v1 -> v2:
+* Split patch 2/7 to keep phymem.c changes in a separate.
+* In patch "xen: add map and unmap callbacks for grant" add check for total
+  allowed grant < XEN_MAX_VIRTIO_GRANTS.
+* Fix formatting issues and re-based with master latest.
+
+
+Edgar E. Iglesias (8):
+  xen: mapcache: Make MCACHE_BUCKET_SHIFT runtime configurable
+  xen: mapcache: Unmap first entries in buckets
+  xen: Add xen_mr_is_memory()
+  softmmu: xen: Always pass offset + addr to xen_map_cache
+  softmmu: Replace check for RAMBlock offset 0 with xen_mr_is_memory
+  xen: mapcache: Pass the ram_addr offset to xen_map_cache()
+  xen: mapcache: Add support for grant mappings
+  hw/arm: xen: Enable use of grant mappings
+
+ hw/arm/xen_arm.c                |   5 +
+ hw/xen/xen-hvm-common.c         |  18 ++-
+ hw/xen/xen-mapcache.c           | 232 ++++++++++++++++++++++++--------
+ include/hw/xen/xen-hvm-common.h |   3 +
+ include/sysemu/xen-mapcache.h   |   2 +
+ include/sysemu/xen.h            |  15 +++
+ system/physmem.c                |  12 +-
+ 7 files changed, 226 insertions(+), 61 deletions(-)
+
 -- 
 2.40.1
 
