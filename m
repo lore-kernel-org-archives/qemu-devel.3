@@ -4,74 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAD89C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 07:20:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA5C5C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 07:20:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2nDY-0000mz-J3; Fri, 03 May 2024 03:20:28 -0400
+	id 1s2nDS-0000lb-LL; Fri, 03 May 2024 03:20:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2nDW-0000mW-JX
- for qemu-devel@nongnu.org; Fri, 03 May 2024 03:20:26 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2nDQ-0000lP-Ta
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 03:20:20 -0400
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2nDU-0001Ev-Rj
- for qemu-devel@nongnu.org; Fri, 03 May 2024 03:20:26 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-41dc9c83e57so9514845e9.0
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 00:20:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2nDP-0001Ed-9u
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 03:20:20 -0400
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2db7c6b5598so113156911fa.1
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 00:20:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714720822; x=1715325622; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oukcdiVQUJdJhgIgSZBe2+14jjl41PU9P9dpGWfTjTk=;
- b=dcYmfF/EtOphQuIq3jWxJ4YtudV6e9gc1wVOLZUax7vj+JMabRayq4zCf2rGDUFita
- jUzjy/iREpX0tU6pJ1XXlKYLCol3kVXa1+Dlv+wvnbLRlquwDB7Zj163FYEZIm2YTy9S
- tPC4BSxU2Fn9jeJJPuzLdc21j2KTLSPjCLaKdKKzSDFDVFe6oSZcutl5AgL7aJ3mBno2
- m0o9nPUDJFPZeJeqpIZ9BdPoS10NgmPrXzbv65haxukKaLRLW7ZXtQII2IwqA7OTZw7t
- Sx+IE95540L3saj0RxjEUmZ4RjKyAj/wZ83ScvwY+N4KoqGvb/BCoIWBE8mbP3J14EEX
- MlmQ==
+ d=linaro.org; s=google; t=1714720817; x=1715325617; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=UVi2/lBwGMlU7cAoTgtyiExKPhec9x+jnIKMxcEwUS0=;
+ b=lkngX/r1TiJ4NzZvsShY8s7mh612J/XqYMzEB1KD+AyfyiBxKpi9IuDgyHIY2Dg831
+ AqgqgCJMyqP/51X667Cyim+mSuWHoR8L9WU90fm9lCM5SOIPhTBP9s398Mngvk2itbxv
+ uhquVt22Tua1fxaxG3aRXF6zmx/OVgwE8AYWy6fmIZ37YBuepyIO4S3xwLkVUgRfhTAI
+ 6SKi1GXhmAXfEtkCWWYS8hS72Inhys/mLTqQREhV10Xpf5tYaHN15BsrdXsTnHt56m91
+ bdgZIi5SJ7mUj0f4wLnEqIMaJCx3CMlOzYMQoXHWEUDKHySnbL39lET/MXUjg82uRcBo
+ /XWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714720822; x=1715325622;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oukcdiVQUJdJhgIgSZBe2+14jjl41PU9P9dpGWfTjTk=;
- b=noPATPhO+EKAVJbSjBCcqf3hF9Y/YfPmhUrjMBv6lM2ZuTd2XX2bJfNvb0y4cTvzu/
- XZJaH5TlAX73gNNqWRhDVtJVmuiS+iA70FGg8hBwBtes26lcoE7ae8+RjKCSWiSh/sQe
- v9S/spyB5utKxoYOcw5Iga+ZIe31YBuv7DL4Vq2yuv0+n8rjCMJxGnlG32yFANUCP/WU
- CvbZlRhBwIN9hX7RuEQSPy5KZH1Gl/juGbmPtRwV6Nt/b/svgY/0U+f55noL5AlCE0mF
- Zz7kpmHDOGz3mFnkWMKz7cigiJ6XxZA6RDvP01C7kNJUpawB949ogalKUdPF3VXojJUK
- O8dQ==
-X-Gm-Message-State: AOJu0YwuWyvd1FEv2Loek9lUVsoiyqGwiQcs0mAfrrkX0NwIv7kSBf68
- Q9lSkE2Xr+qEyD2TzlWXNxcW0c7UBC+WPhVvU422VlREmgYyYNWyAiLdQOxkQMZhQ0edKeqUzKm
- K
-X-Google-Smtp-Source: AGHT+IF+yYBvz2+rAu6snEmmeAWQ6Kp5GRIEJzmeLgwZY24GezuB4EMpbDefaeDlz25DADJNsrIHGw==
-X-Received: by 2002:a05:600c:4508:b0:417:eb5d:281b with SMTP id
- t8-20020a05600c450800b00417eb5d281bmr4361515wmo.17.1714720822399; 
- Fri, 03 May 2024 00:20:22 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1714720817; x=1715325617;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UVi2/lBwGMlU7cAoTgtyiExKPhec9x+jnIKMxcEwUS0=;
+ b=DceEVd5p6tBTwbkmL06BSlzQMz5pfIiCWVYXPMn19uz5pNVxXA9bDhbTc3LJnTR44J
+ 9JjijUUVEvyp88KexFYgjXjFyosfvLfdNq3UfLyDfBzbd0hsOMc2WJNe01jlAaT5tCGv
+ 8IcEUp9rVBU/A2cVrDsQCQdZ4YIyzo61fbHFDMi3UZ8Ap0a32b47PIokmk0FuG1Vne6h
+ hb6eQAp1E1kCxbc/RjQ3pOwDLo6XVr7zUlndDT0Mvj1gXYXCFASvNPZkR72XdM/dt1TD
+ SQFfpsaADatPLS8G/djNm/Lqd9v49LgV3VZPuDUyc49M6tH+e92fafsZ1c8zpVNh4+sl
+ L2xw==
+X-Gm-Message-State: AOJu0YwfebveS7zAegfGVI08Y15qLGhA/YC1/gyADNvpGeqWhboLKuHb
+ Cqj/WFh7+Koe66nw//xn4DGiuJkz76M9Pn4q7FW1JedhWjMzZhL6PdCTBdTXcXznVSjiz5Rm/ep
+ V
+X-Google-Smtp-Source: AGHT+IG8pvS7OjdfvSIdVy3KrqHqft9VSymUlhHaYbriZQPFAyq9L4MxmWnEbXVFWU1fM52inQLxXg==
+X-Received: by 2002:a2e:80d4:0:b0:2d7:17e0:ff56 with SMTP id
+ r20-20020a2e80d4000000b002d717e0ff56mr1238689ljg.18.1714720816778; 
+ Fri, 03 May 2024 00:20:16 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.179.187])
  by smtp.gmail.com with ESMTPSA id
- s7-20020a05600c384700b0041c12324eb6sm8377191wmr.22.2024.05.03.00.20.21
+ k7-20020a7bc407000000b0041674bf7d4csm8251830wmi.48.2024.05.03.00.20.15
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 03 May 2024 00:20:21 -0700 (PDT)
+ Fri, 03 May 2024 00:20:16 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 1/9] target/alpha: Use cpu_env in preference to ALPHA_CPU
-Date: Fri,  3 May 2024 09:20:05 +0200
-Message-ID: <20240503072014.24751-2-philmd@linaro.org>
+ Philippe =?unknown-8bit?q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 0/9] target/alpha: Implement CF_PCREL
+Date: Fri,  3 May 2024 09:20:04 +0200
+Message-ID: <20240503072014.24751-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240503072014.24751-1-philmd@linaro.org>
-References: <20240503072014.24751-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,81 +91,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+Since v1:
+- Split complex patch 4 in 5 simpler ones (Phil)
 
-ALPHA_CPU has a dynamic object type assert, which is
-unnecessary considering that these are all class hooks.
+Implement pc-relative tcg code generation.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/alpha/cpu.c    | 15 ++++++---------
- target/alpha/helper.c |  8 ++++----
- 2 files changed, 10 insertions(+), 13 deletions(-)
+Philippe Mathieu-Daudé (1):
+  target/alpha: Simplify gen_bcond_internal()
 
-diff --git a/target/alpha/cpu.c b/target/alpha/cpu.c
-index 05f9ee41e9..f98d022671 100644
---- a/target/alpha/cpu.c
-+++ b/target/alpha/cpu.c
-@@ -28,25 +28,22 @@
- 
- static void alpha_cpu_set_pc(CPUState *cs, vaddr value)
- {
--    AlphaCPU *cpu = ALPHA_CPU(cs);
--
--    cpu->env.pc = value;
-+    CPUAlphaState *env = cpu_env(cs);
-+    env->pc = value;
- }
- 
- static vaddr alpha_cpu_get_pc(CPUState *cs)
- {
--    AlphaCPU *cpu = ALPHA_CPU(cs);
--
--    return cpu->env.pc;
-+    CPUAlphaState *env = cpu_env(cs);
-+    return env->pc;
- }
- 
- static void alpha_restore_state_to_opc(CPUState *cs,
-                                        const TranslationBlock *tb,
-                                        const uint64_t *data)
- {
--    AlphaCPU *cpu = ALPHA_CPU(cs);
--
--    cpu->env.pc = data[0];
-+    CPUAlphaState *env = cpu_env(cs);
-+    env->pc = data[0];
- }
- 
- static bool alpha_cpu_has_work(CPUState *cs)
-diff --git a/target/alpha/helper.c b/target/alpha/helper.c
-index d6d4353edd..c5e4958f8b 100644
---- a/target/alpha/helper.c
-+++ b/target/alpha/helper.c
-@@ -124,7 +124,7 @@ void alpha_cpu_record_sigsegv(CPUState *cs, vaddr address,
-                               MMUAccessType access_type,
-                               bool maperr, uintptr_t retaddr)
- {
--    AlphaCPU *cpu = ALPHA_CPU(cs);
-+    CPUAlphaState *env = cpu_env(cs);
-     target_ulong mmcsr, cause;
- 
-     /* Assuming !maperr, infer the missing protection. */
-@@ -155,9 +155,9 @@ void alpha_cpu_record_sigsegv(CPUState *cs, vaddr address,
-     }
- 
-     /* Record the arguments that PALcode would give to the kernel. */
--    cpu->env.trap_arg0 = address;
--    cpu->env.trap_arg1 = mmcsr;
--    cpu->env.trap_arg2 = cause;
-+    env->trap_arg0 = address;
-+    env->trap_arg1 = mmcsr;
-+    env->trap_arg2 = cause;
- }
- #else
- /* Returns the OSF/1 entMM failure indication, or -1 on success.  */
+Richard Henderson (8):
+  target/alpha: Use cpu_env in preference to ALPHA_CPU
+  target/alpha: Hoist branch shift to initial decode
+  target/alpha: Use DISAS_NEXT definition instead of magic '0' value
+  target/alpha: Inline DISAS_PC_UPDATED and return DISAS_NORETURN
+  target/alpha: Return DISAS_NORETURN once
+  target/alpha: Split out gen_goto_tb
+  target/alpha: Split out gen_pc_disp
+  target/alpha: Implement CF_PCREL
+
+ target/alpha/cpu.c       |  32 ++++++++---
+ target/alpha/helper.c    |   8 +--
+ target/alpha/translate.c | 117 +++++++++++++++++++++------------------
+ 3 files changed, 91 insertions(+), 66 deletions(-)
+
 -- 
 2.41.0
 
