@@ -4,114 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F395C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 19:57:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65172C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 19:58:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2z12-0004rj-Hr; Fri, 03 May 2024 15:56:20 -0400
+	id 1s2z2X-0005Z7-AF; Fri, 03 May 2024 15:57:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s2z10-0004rB-3W
- for qemu-devel@nongnu.org; Fri, 03 May 2024 15:56:18 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <nieklinnenbank@gmail.com>)
+ id 1s2z2V-0005YC-6o; Fri, 03 May 2024 15:57:51 -0400
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s2z0x-0000Z2-6B
- for qemu-devel@nongnu.org; Fri, 03 May 2024 15:56:17 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 7492420733;
- Fri,  3 May 2024 19:56:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1714766171; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2CgVL+YwPmPHXWsMkH1wldRykV7ugO7jpmlCGrNfBwk=;
- b=NcNBWaTqP1WjV0efBIIyqw5XJHDAAdgGC5udGexRrmP9cjzhFQ08MXCK6Es75G/Hl/6RKs
- 16yhfqQGhrQjLU/8ox+t3YybHNn/G3GcQObDHcAnrZXwWe335L2x8F6IUODPvJc5eSTbFc
- zH7NVYQuXwpvMYkRpowgjqfMpdCDZIQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1714766171;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2CgVL+YwPmPHXWsMkH1wldRykV7ugO7jpmlCGrNfBwk=;
- b=MYveP5k9wU2wS4PLvEYy1Lb7yY/zx8M6ao8rjnTxS3J+Hgc56eGtpAsjg1lm5fBkPqdKc+
- z2900J+IuNdkD7Cw==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=NcNBWaTq;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=MYveP5k9
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1714766171; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2CgVL+YwPmPHXWsMkH1wldRykV7ugO7jpmlCGrNfBwk=;
- b=NcNBWaTqP1WjV0efBIIyqw5XJHDAAdgGC5udGexRrmP9cjzhFQ08MXCK6Es75G/Hl/6RKs
- 16yhfqQGhrQjLU/8ox+t3YybHNn/G3GcQObDHcAnrZXwWe335L2x8F6IUODPvJc5eSTbFc
- zH7NVYQuXwpvMYkRpowgjqfMpdCDZIQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1714766171;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2CgVL+YwPmPHXWsMkH1wldRykV7ugO7jpmlCGrNfBwk=;
- b=MYveP5k9wU2wS4PLvEYy1Lb7yY/zx8M6ao8rjnTxS3J+Hgc56eGtpAsjg1lm5fBkPqdKc+
- z2900J+IuNdkD7Cw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F356E139E2;
- Fri,  3 May 2024 19:56:10 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id p1YbLlpBNWa4egAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 03 May 2024 19:56:10 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com, Claudio
- Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>
-Subject: Re: [PATCH 2/9] migration: Fix file migration with fdset
-In-Reply-To: <ZjUPl6XwB3Zt3cKR@x1n>
-References: <20240426142042.14573-1-farosas@suse.de>
- <20240426142042.14573-3-farosas@suse.de> <ZjUPl6XwB3Zt3cKR@x1n>
-Date: Fri, 03 May 2024 16:56:08 -0300
-Message-ID: <87a5l6oejr.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <nieklinnenbank@gmail.com>)
+ id 1s2z2T-00012c-AF; Fri, 03 May 2024 15:57:50 -0400
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-6153d85053aso101787b3.0; 
+ Fri, 03 May 2024 12:57:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1714766267; x=1715371067; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Cxy5I3qFqegg9o6TUkAnNa/wB20b3zBgd4M5pvNyG88=;
+ b=XmcT7tAt1bdduy55E1J2oPQ/PbVYFXuc3H63Fh3cIdK2gkQLz0dTYsqC3zZCdRk3LH
+ 7O1NQZAR58sZdcF2eVSNyiJ2BpICEDlEkX+beK1i+4PDGU+r4x0tSgxT7sYeXkaZ08rq
+ Ri0jp1+BxHLd41rtZfunhyxY8XEB48UV8sNAYw4UfrfRCLgClB15K1sGwJ0hCSLQ3aor
+ 4fI9G4qwS/lLOIJkgWAlkCvD9g0tj/6an5Ow2EP5ibngu218jnjkMvKp17vYfZ4jCtdB
+ eA6WysmHW5azPIVtsL4J44R1ww/h8C/5dDH1dOESsWugDWgdAV5aBOOY2JP5IG+i28C1
+ wrgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714766267; x=1715371067;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Cxy5I3qFqegg9o6TUkAnNa/wB20b3zBgd4M5pvNyG88=;
+ b=e2f4QT19crXTdJ13UBISakc2t/RpH3KEqQW6D4byKVciOTWdZcoALpXu+3aZqxhbT7
+ qbCPFIejG4XY2kCk0u+rN4BXhzQyalD5B9EnfNtoQtJ5j+M83K+l+z+OBh3yaNVx3SU7
+ b8ctvfQk/H63NK+Jw7IyPp0eftGcKIroEHvlhYBXenCumyjtKns+PhFKKunV/tkdiIKP
+ v/JHtji99Tuy2eJgt8oXi2QkUcm5zdWI/ko/HOAFkNZj9L5aXo5ptokdKr+cZ2l6B7Hx
+ 79p2YIscgkKCiS+V7rmub+feKACO4eU1XVi1Fdw3LRvguZp/7m5p2r0YiTex7jciWqC0
+ oHNA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXHXTmdOe1Kkxmd+cejjOtg5uDycEpOKVjffKG90IiOZjTeN1viztQnYCPexLmMsa+hzkFcVmeHjoo+PPifok2N/Dm6l8hD7kkbQI3MN5vvYP1GN+zNMb1/e+pwatzS3uxyRV7Q7UFQN3KAEMW00gBhmdc=
+X-Gm-Message-State: AOJu0YyAE5ByR+yOVKruG86f5o7mtLYDmvtQojxGSfw/OwKtoL8FhKz8
+ xMypFEd/+PkKKdDA9YU2gnsFMHKugOG2Li7vCsz4SzkxjN76HPldJ2uERvSOmH2KSQ70tCQfus5
+ Qt0aO0vik2aYNUyXI/Irx7OqMKRk=
+X-Google-Smtp-Source: AGHT+IHvBLqIUtLtGVmhAxc4cfveAHJnXHjojAt4dMDpjpEpMbXLrRAdzD5RxpAjaBF4SK/GidysDPCVqb3FUTC0imE=
+X-Received: by 2002:a81:a041:0:b0:61a:b0bc:934c with SMTP id
+ x62-20020a81a041000000b0061ab0bc934cmr3669080ywg.3.1714766267097; Fri, 03 May
+ 2024 12:57:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 7492420733
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCVD_TLS_ALL(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
- MISSING_XM_UA(0.00)[]; TO_DN_SOME(0.00)[];
- DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCPT_COUNT_FIVE(0.00)[6];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+References: <20240415151845.1564201-1-peter.maydell@linaro.org>
+ <CAFEAcA86Frw=GcWdjOgXsbP+9dgGjQpxP79k=nKshPm9LK0QVQ@mail.gmail.com>
+ <CABtshVRrPv8uUuX3C2k1BPkS4-_0HQH6aKiMFmLr1B1bck-+Pg@mail.gmail.com>
+ <CAPan3Wp7jzm+ErEi0LR+F0acOggt94FPfJCYb-VEUGriiZnPtw@mail.gmail.com>
+ <CAFEAcA8FS=6mn754LGs6KGDahm0vyifiK9P2i57i_TsKvPqUOw@mail.gmail.com>
+In-Reply-To: <CAFEAcA8FS=6mn754LGs6KGDahm0vyifiK9P2i57i_TsKvPqUOw@mail.gmail.com>
+From: Niek Linnenbank <nieklinnenbank@gmail.com>
+Date: Fri, 3 May 2024 21:57:36 +0200
+Message-ID: <CAPan3Wrkm+hJKoxXa_Q6WtQHvsZWOB819UWS-CBeeAzpvb44NQ@mail.gmail.com>
+Subject: Re: [PATCH] tests/avocado: update sunxi kernel from armbian to 6.6.16
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Strahinja Jankovic <strahinjapjankovic@gmail.com>, qemu-arm@nongnu.org, 
+ qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
+ Beniamino Galvani <b.galvani@gmail.com>
+Content-Type: multipart/alternative; boundary="00000000000039292d06179222f3"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=nieklinnenbank@gmail.com; helo=mail-yw1-x112f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,215 +93,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+--00000000000039292d06179222f3
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> On Fri, Apr 26, 2024 at 11:20:35AM -0300, Fabiano Rosas wrote:
->> When the migration using the "file:" URI was implemented, I don't
->> think any of us noticed that if you pass in a file name with the
->> format "/dev/fdset/N", this allows a file descriptor to be passed in
->> to QEMU and that behaves just like the "fd:" URI. So the "file:"
->> support has been added without regard for the fdset part and we got
->> some things wrong.
->>=20
->> The first issue is that we should not truncate the migration file if
->> we're allowing an fd + offset. We need to leave the file contents
->> untouched.
->
-> I'm wondering whether we can use fallocate() instead on the ranges so that
-> we always don't open() with O_TRUNC.  Before that..  could you remind me
-> why do we need to truncate in the first place?  I definitely missed
-> something else here too.
+On Tue, Apr 30, 2024 at 4:12=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
+.org>
+wrote:
 
-AFAIK, just to avoid any issues if the file is pre-existing. I don't see
-the difference between O_TRUNC and fallocate in this case.
+> On Mon, 29 Apr 2024 at 21:40, Niek Linnenbank <nieklinnenbank@gmail.com>
+> wrote:
+> >
+> > Hi Peter, Strahinja,
+> >
+> > I can confirm that the orangepi-pc and cubieboard based tests are
+> working OK using the newer kernel 6.6.16:
+> >
+> >   $ ARMBIAN_ARTIFACTS_CACHED=3Dyes AVOCADO_ALLOW_LARGE_STORAGE=3Dyes
+> ./build/pyvenv/bin/avocado --show=3Dapp,console run -t machine:orangepi-p=
+c -t
+> machine:cubieboard tests/avocado/boot_linux_console.py
+> >   ...
+> >   RESULTS    : PASS 7 | ERROR 0 | FAIL 0 | SKIP 0 | WARN 0 | INTERRUPT =
+0
+> | CANCEL 1
+> >   JOB TIME   : 177.65 s
+> >
+> > So for this patch:
+> > Reviewed-by: Niek Linnenbank <nieklinnenbank@gmail.com>
+> > Tested-by: Niek Linnenbank <nieklinnenbank@gmail.com>
+>
+> Great, thanks. (I'll put this patch into an upcoming arm pullreq.)
+>
+> > About the BootLinuxConsole.test_arm_orangepi_bionic_20_08 test, I'd be
+> happy to provide a patch to revive that test.
+> > Since that test is no longer working without having the image available=
+,
+> this could also be a good moment to re-consider if armbian is really the
+> best input for testing
+> > the orangepi-pc board. The image is relatively larger and slower
+> compared to other images, like the two openwrt based tests for cubieboard
+> and bpim2u.
+> >
+> > After some searching I've found that Openwrt also has orangepi-pc
+> support:
+> >   https://openwrt.org/toh/xunlong/orange_pi_pc
+> >
+> > That image works fine with our emulated orangepi-pc board:
+> >
+> > $ qemu-system-arm -M orangepi-pc -sd
+> openwrt-23.05.0-sunxi-cortexa7-xunlong_orangepi-pc-ext4-sdcard.img
+> -nographic
+>
+> > Using openwrt also for the orangepi-pc test instead of armbian also
+> gives some consistency between the various tests, to some degree. What ar=
+e
+> you opinions on this?
+>
+> Yeah, seems reasonable. My main thing to think about would be
+> that to understand what extra coverage this gives us that we
+> don't already have (there's no point running a ton of tests
+> which all amount to "boot a Linux kernel to a shell prompt").
+> It looks like what we get from this one is that we are testing
+> the "boot off an SD card image via u-boot" flow -- is that right?
+>
+
+Yes, correct.
+Okey, I'll try to find some time the coming days to prepare a patch that
+replaces test_arm_orangepi_bionic_20_08 with a test that uses openwrt
+instead.
+
+Niek
+
+
 
 >
->>=20
->> The second issue is that there's an expectation that QEMU removes the
->> fd after the migration has finished. That's what the "fd:" code
->> does. Otherwise a second migration on the same VM could attempt to
->> provide an fdset with the same name and QEMU would reject it.
+> thanks
+> -- PMM
 >
-> Let me check what we do when with "fd:" and when migration completes or
-> cancels.
->
-> IIUC it's qio_channel_file_close() that does the final cleanup work on
-> e.g. to_dst_file, right?  Then there's qemu_close(), and it has:
->
->     /* Close fd that was dup'd from an fdset */
->     fdset_id =3D monitor_fdset_dup_fd_find(fd);
->     if (fdset_id !=3D -1) {
->         int ret;
->
->         ret =3D close(fd);
->         if (ret =3D=3D 0) {
->             monitor_fdset_dup_fd_remove(fd);
->         }
->
->         return ret;
->     }
->
-> Shouldn't this done the work already?
 
-That removes the mon_fdset_fd_dup->fd, we want to remove the
-mon_fdset_fd->fd.
 
->
-> Off topic: I think this code is over complicated too, maybe I missed
-> something, but afaict we don't need monitor_fdset_dup_fd_find at all.. we
-> simply walk the list and remove stuff..  I attach a patch at the end that=
- I
-> tried to clean that up, just in case there's early comments.  But we can
-> ignore that so we don't get side-tracked, and focus on the direct-io
-> issues.
+--=20
+Niek Linnenbank
 
-Well, I'm not confident touching this code. This is more than a decade
-old, I have no idea what the original motivations were. The possible
-interactions with the user via command-line (-add-fd), QMP (add-fd) and
-the monitor lifetime make me confused. Not to mention the fdset part
-being plumbed into the guts of a widely used qemu_open_internal() that
-very misleadingly presents itself as just a wrapper for open().
+--00000000000039292d06179222f3
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
->
-> Thanks,
->
-> =3D=3D=3D=3D=3D=3D=3D
->
-> From 2f6b6d1224486d8ee830a7afe34738a07003b863 Mon Sep 17 00:00:00 2001
-> From: Peter Xu <peterx@redhat.com>
-> Date: Fri, 3 May 2024 11:27:20 -0400
-> Subject: [PATCH] monitor: Drop monitor_fdset_dup_fd_add()
-> MIME-Version: 1.0
-> Content-Type: text/plain; charset=3DUTF-8
-> Content-Transfer-Encoding: 8bit
->
-> This function is not needed, one remove function should already work.
-> Clean it up.
->
-> Here the code doesn't really care about whether we need to keep that dupfd
-> around if close() failed: when that happens something got very wrong,
-> keeping the dup_fd around the fdsets may not help that situation so far.
->
-> Cc: Dr. David Alan Gilbert <dave@treblig.org>
-> Cc: Markus Armbruster <armbru@redhat.com>
-> Cc: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Cc: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  include/monitor/monitor.h |  1 -
->  monitor/fds.c             | 27 +++++----------------------
->  stubs/fdset.c             |  5 -----
->  util/osdep.c              | 15 +--------------
->  4 files changed, 6 insertions(+), 42 deletions(-)
->
-> diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
-> index 965f5d5450..fd9b3f538c 100644
-> --- a/include/monitor/monitor.h
-> +++ b/include/monitor/monitor.h
-> @@ -53,7 +53,6 @@ AddfdInfo *monitor_fdset_add_fd(int fd, bool has_fdset_=
-id, int64_t fdset_id,
->                                  const char *opaque, Error **errp);
->  int monitor_fdset_dup_fd_add(int64_t fdset_id, int flags);
->  void monitor_fdset_dup_fd_remove(int dup_fd);
-> -int64_t monitor_fdset_dup_fd_find(int dup_fd);
->=20=20
->  void monitor_register_hmp(const char *name, bool info,
->                            void (*cmd)(Monitor *mon, const QDict *qdict));
-> diff --git a/monitor/fds.c b/monitor/fds.c
-> index d86c2c674c..d5aecfb70e 100644
-> --- a/monitor/fds.c
-> +++ b/monitor/fds.c
-> @@ -458,7 +458,7 @@ int monitor_fdset_dup_fd_add(int64_t fdset_id, int fl=
-ags)
->  #endif
->  }
->=20=20
-> -static int64_t monitor_fdset_dup_fd_find_remove(int dup_fd, bool remove)
-> +void monitor_fdset_dup_fd_remove(int dup_fd)
->  {
->      MonFdset *mon_fdset;
->      MonFdsetFd *mon_fdset_fd_dup;
-> @@ -467,31 +467,14 @@ static int64_t monitor_fdset_dup_fd_find_remove(int=
- dup_fd, bool remove)
->      QLIST_FOREACH(mon_fdset, &mon_fdsets, next) {
->          QLIST_FOREACH(mon_fdset_fd_dup, &mon_fdset->dup_fds, next) {
->              if (mon_fdset_fd_dup->fd =3D=3D dup_fd) {
-> -                if (remove) {
-> -                    QLIST_REMOVE(mon_fdset_fd_dup, next);
-> -                    g_free(mon_fdset_fd_dup);
-> -                    if (QLIST_EMPTY(&mon_fdset->dup_fds)) {
-> -                        monitor_fdset_cleanup(mon_fdset);
-> -                    }
-> -                    return -1;
-> -                } else {
-> -                    return mon_fdset->id;
-> +                QLIST_REMOVE(mon_fdset_fd_dup, next);
-> +                g_free(mon_fdset_fd_dup);
-> +                if (QLIST_EMPTY(&mon_fdset->dup_fds)) {
-> +                    monitor_fdset_cleanup(mon_fdset);
->                  }
->              }
->          }
->      }
-> -
-> -    return -1;
-> -}
-> -
-> -int64_t monitor_fdset_dup_fd_find(int dup_fd)
-> -{
-> -    return monitor_fdset_dup_fd_find_remove(dup_fd, false);
-> -}
-> -
-> -void monitor_fdset_dup_fd_remove(int dup_fd)
-> -{
-> -    monitor_fdset_dup_fd_find_remove(dup_fd, true);
->  }
->=20=20
->  int monitor_fd_param(Monitor *mon, const char *fdname, Error **errp)
-> diff --git a/stubs/fdset.c b/stubs/fdset.c
-> index d7c39a28ac..389e368a29 100644
-> --- a/stubs/fdset.c
-> +++ b/stubs/fdset.c
-> @@ -9,11 +9,6 @@ int monitor_fdset_dup_fd_add(int64_t fdset_id, int flags)
->      return -1;
->  }
->=20=20
-> -int64_t monitor_fdset_dup_fd_find(int dup_fd)
-> -{
-> -    return -1;
-> -}
-> -
->  void monitor_fdset_dup_fd_remove(int dupfd)
->  {
->  }
-> diff --git a/util/osdep.c b/util/osdep.c
-> index e996c4744a..2d9749d060 100644
-> --- a/util/osdep.c
-> +++ b/util/osdep.c
-> @@ -393,21 +393,8 @@ int qemu_open_old(const char *name, int flags, ...)
->=20=20
->  int qemu_close(int fd)
->  {
-> -    int64_t fdset_id;
-> -
->      /* Close fd that was dup'd from an fdset */
-> -    fdset_id =3D monitor_fdset_dup_fd_find(fd);
-> -    if (fdset_id !=3D -1) {
-> -        int ret;
-> -
-> -        ret =3D close(fd);
-> -        if (ret =3D=3D 0) {
-> -            monitor_fdset_dup_fd_remove(fd);
-> -        }
-> -
-> -        return ret;
-> -    }
-> -
-> +    monitor_fdset_dup_fd_remove(fd);
->      return close(fd);
->  }
->=20=20
-> --=20
-> 2.44.0
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
+<div dir=3D"ltr" class=3D"gmail_attr">On Tue, Apr 30, 2024 at 4:12=E2=80=AF=
+PM Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linaro.org">peter.mayd=
+ell@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" st=
+yle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padd=
+ing-left:1ex">On Mon, 29 Apr 2024 at 21:40, Niek Linnenbank &lt;<a href=3D"=
+mailto:nieklinnenbank@gmail.com" target=3D"_blank">nieklinnenbank@gmail.com=
+</a>&gt; wrote:<br>
+&gt;<br>
+&gt; Hi Peter, Strahinja,<br>
+&gt;<br>
+&gt; I can confirm that the orangepi-pc and cubieboard based tests are work=
+ing OK using the newer kernel 6.6.16:<br>
+&gt;<br>
+&gt;=C2=A0 =C2=A0$ ARMBIAN_ARTIFACTS_CACHED=3Dyes AVOCADO_ALLOW_LARGE_STORA=
+GE=3Dyes ./build/pyvenv/bin/avocado --show=3Dapp,console run -t machine:ora=
+ngepi-pc -t machine:cubieboard tests/avocado/boot_linux_console.py<br>
+&gt;=C2=A0 =C2=A0...<br>
+&gt;=C2=A0 =C2=A0RESULTS=C2=A0 =C2=A0 : PASS 7 | ERROR 0 | FAIL 0 | SKIP 0 =
+| WARN 0 | INTERRUPT 0 | CANCEL 1<br>
+&gt;=C2=A0 =C2=A0JOB TIME=C2=A0 =C2=A0: 177.65 s<br>
+&gt;<br>
+&gt; So for this patch:<br>
+&gt; Reviewed-by: Niek Linnenbank &lt;<a href=3D"mailto:nieklinnenbank@gmai=
+l.com" target=3D"_blank">nieklinnenbank@gmail.com</a>&gt;<br>
+&gt; Tested-by: Niek Linnenbank &lt;<a href=3D"mailto:nieklinnenbank@gmail.=
+com" target=3D"_blank">nieklinnenbank@gmail.com</a>&gt;<br>
+<br>
+Great, thanks. (I&#39;ll put this patch into an upcoming arm pullreq.)<br>
+<br>
+&gt; About the BootLinuxConsole.test_arm_orangepi_bionic_20_08 test, I&#39;=
+d be happy to provide a patch to revive that test.<br>
+&gt; Since that test is no longer working without having the image availabl=
+e, this could also be a good moment to re-consider if armbian is really the=
+ best input for testing<br>
+&gt; the orangepi-pc board. The image is relatively larger and slower compa=
+red to other images, like the two openwrt based tests for cubieboard and bp=
+im2u.<br>
+&gt;<br>
+&gt; After some searching I&#39;ve found that Openwrt also has orangepi-pc =
+support:<br>
+&gt;=C2=A0 =C2=A0<a href=3D"https://openwrt.org/toh/xunlong/orange_pi_pc" r=
+el=3D"noreferrer" target=3D"_blank">https://openwrt.org/toh/xunlong/orange_=
+pi_pc</a><br>
+&gt;<br>
+&gt; That image works fine with our emulated orangepi-pc board:<br>
+&gt;<br>
+&gt; $ qemu-system-arm -M orangepi-pc -sd openwrt-23.05.0-sunxi-cortexa7-xu=
+nlong_orangepi-pc-ext4-sdcard.img -nographic<br>
+<br>
+&gt; Using openwrt also for the orangepi-pc test instead of armbian also gi=
+ves some consistency between the various tests, to some degree. What are yo=
+u opinions on this?<br>
+<br>
+Yeah, seems reasonable. My main thing to think about would be<br>
+that to understand what extra coverage this gives us that we<br>
+don&#39;t already have (there&#39;s no point running a ton of tests<br>
+which all amount to &quot;boot a Linux kernel to a shell prompt&quot;).<br>
+It looks like what we get from this one is that we are testing<br>
+the &quot;boot off an SD card image via u-boot&quot; flow -- is that right?=
+<br></blockquote><div><br></div><div>Yes, correct.</div><div>Okey, I&#39;ll=
+ try to find some time the coming days to prepare a patch that replaces tes=
+t_arm_orangepi_bionic_20_08 with a test that uses openwrt instead.</div><di=
+v><br></div><div>Niek<br></div><div><br></div><div>=C2=A0</div><blockquote =
+class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px sol=
+id rgb(204,204,204);padding-left:1ex">
+<br>
+thanks<br>
+-- PMM<br>
+</blockquote></div><br clear=3D"all"><br><span class=3D"gmail_signature_pre=
+fix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><div dir=3D"l=
+tr"><div>Niek Linnenbank<br><br></div></div></div></div>
+
+--00000000000039292d06179222f3--
 
