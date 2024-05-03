@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7462C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 08:41:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 202FDC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 08:43:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2oTg-0005Bz-NY; Fri, 03 May 2024 04:41:13 -0400
+	id 1s2oWA-00065P-Jv; Fri, 03 May 2024 04:43:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2oTe-0005Ba-MQ
- for qemu-devel@nongnu.org; Fri, 03 May 2024 04:41:11 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2oW8-00064r-FV
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 04:43:44 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2oTc-0005xj-QH
- for qemu-devel@nongnu.org; Fri, 03 May 2024 04:41:10 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-34d8f6cfe5bso2473530f8f.3
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 01:41:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2oW6-0006FE-Rb
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 04:43:44 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-34d8f6cfe5bso2475268f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 01:43:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714725665; x=1715330465; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714725820; x=1715330620; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=2G/GmwK6YsHJZ2uqLTo27IyV0S3lTgKqdhOsDH6DO40=;
- b=h4PZwMi7Ov4hnir5RJ9ONF0uBzMQ3N/PUYPVdg6yrhfd/83WQbJ5+rL2cZfWlVX+4v
- +QXyrKPBMQYdDTRL+XJmMwXx3rM/uQVwU4Xr7BEf1UMUO8U+ojFWbhl0s7Iu+uLLRzOS
- 8rzWDPIElQrzgcwKHpnRWV6nwvJqkKoeGr2ag1FL09kXJ1TI1CCgpKfnPYm+2q0QzmAw
- kdHFZAbxRyTwrn5KTB/t+zLtdf47lJjdQKwu0Tk5V9d449IrGcFfufgwldZ3ZlUS3xPV
- tvo9Yu6nCkX6SB2LhuvAEynokB/hXo+AAIxjzLRkgnF3s1SUMhGAJEvLiXNFjODl68O6
- jYhQ==
+ bh=e5n6xiekzPtwoeW++o5yLAXJS0ob0+4JFG3O1yY727U=;
+ b=mkfqpdj+/12MPtgDvEIRNBHgunGPmzK8hVAjZ5DzXKUynZnhUD99bflGzPaZBAh8IQ
+ 1FNeOt9GPGIUBatiqcEIHqUdnsnLCyU0oltVYQSq49J+eNRPB7MWny0J9HyMfwXGLLQB
+ WzkpYm2naCPSp3Ltyl7Cwir5NmYj9Lwinf6Lj5N1xqlIrDWxV5QtqSF/ZswGA4LhAd5K
+ IfKbg88RHeIMIVuLczVawQD8tqiobCZv+/KD2c9vuW/oMEfx0CeFKccAoH+ahQpIPD6a
+ swgZuR4v2EBj5gAdMv/cJfc5JCeVM6UP1SbTOcxFKPgf/j6VlU2it5lKjuc6MIzOxpsd
+ 2KPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714725665; x=1715330465;
+ d=1e100.net; s=20230601; t=1714725820; x=1715330620;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2G/GmwK6YsHJZ2uqLTo27IyV0S3lTgKqdhOsDH6DO40=;
- b=Ttkble4onYpE9xVcbWgzVZHMkVVao+JxNT1l84JK1vk+/00hpB0WdS9WzFx8HJk3Ft
- F6Al7CWFWwfsoFeXlZaRlZYuWHC8/8Q8pA2F1Jy210MvJ02328oZGX0yG9d8/VGVg5h0
- Jx8Qfu8J7505g3Atz1DDU3VuywjsZK9PL7usPH7Jmy0fD65Ul2P+Gb/U13pZ1Nf1V9Jw
- cOq/r5yT0TeNaG0naBuYnmHHI/Fx1N/OTM2aGVnyIKGc5wLolFhTqDY+XacNHqZ2ecBk
- 0zXSNCTpjczZT9KinmcXyDiqBNN1u7rEPs3fIT2oNqaGPjulT37BMYM628EoQ5ErdaaN
- ToCQ==
+ bh=e5n6xiekzPtwoeW++o5yLAXJS0ob0+4JFG3O1yY727U=;
+ b=UhyACJ14UpU9/daTFwE/LGFNmWhMhWoIr/zUU+2TDqfAD9gS6qN3JGhhrG4xuKpUfD
+ uc5pILZWwX9+8Z5eCbC4CaTlSRLfSeViPW24E+ijqpM6FCVlKsn0UD5ShPOeOgxZ51Wz
+ r98NYUMUZqa4NyVe1juSlpFqbRzJkM7SKLX2Jd2/NFClHqsKdGfEjCCZHEfXcaRgxDvs
+ lnlalais0OcZtul60X89dpMM0d78imi/yLkgm1zR8RAhsOjwdkmE8cOyGQEymfq0ZSEQ
+ xo6Utxe1HxcHmSzOXIp6Jk2PzB3GgigUNQlrnbzRYazvkohagpjqoFoyoYj/KnL3WIz/
+ /M3w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWMznqadcktl2D6RrtBR870pdxb/SjbvQVulISrSkCX19Q0qBRPkUjZ/hTZm2HYN8iNBizOuv7qHlpIy7KdHmSsM3hMUjo=
-X-Gm-Message-State: AOJu0YyGDOSny9vDi66UhQ5unT4P4a2G+4lj/hVChV+1FiGSimEUFjXT
- qzLAOxK7g9hRtub+oHLQX44syzRn+vE6nNhjrvMcPnHd2tGWC/YhfBHrMkZQn1w=
-X-Google-Smtp-Source: AGHT+IH3+XzVcwn1P2oSBQoJwb+OoNY076A+F+c4kY0MJH8IH1xKd7jJVmP9d5WglxJ47l3vC+ZrXg==
-X-Received: by 2002:a05:6000:235:b0:345:ca71:5ddb with SMTP id
- l21-20020a056000023500b00345ca715ddbmr1277418wrz.66.1714725665620; 
- Fri, 03 May 2024 01:41:05 -0700 (PDT)
+ AJvYcCUZIWo0M38C1uINoVK8uMP+KufA9TF7i9um34Vjs3wwVuLhnVfn1T9e7dHunfCqK7uEcS3whwuIZKt0cg+x+kAR7DbtTfo=
+X-Gm-Message-State: AOJu0YxObWsIo0TD8vBIKvPQFIApwluk1Putrygt/2fV4GH7i3tehBF5
+ 4DYcWyOWifoQ3ZYxSOjMoafIoplDdRL6CdnS2hkbB+xwu4uxBXdZR7F/iuV1u1ougdXjBIuxWGd
+ r
+X-Google-Smtp-Source: AGHT+IEOAAy06yk9ykUtzNoLcenpIBMkZMdxTMHz/FLyRFWTTL0f8TAibfsKeuMp5VIDAQbFt31/Ow==
+X-Received: by 2002:a05:6000:87:b0:34c:5f6e:1720 with SMTP id
+ m7-20020a056000008700b0034c5f6e1720mr1500323wrx.60.1714725820186; 
+ Fri, 03 May 2024 01:43:40 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.179.187])
  by smtp.gmail.com with ESMTPSA id
- s16-20020a5d4ed0000000b003436cb45f7esm3187558wrv.90.2024.05.03.01.41.04
+ dz1-20020a0560000e8100b0034ccb43dbbbsm3195537wrb.38.2024.05.03.01.43.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 May 2024 01:41:05 -0700 (PDT)
-Message-ID: <975de3d0-5e12-4ef8-85bc-5749e5f17d35@linaro.org>
-Date: Fri, 3 May 2024 10:41:04 +0200
+ Fri, 03 May 2024 01:43:39 -0700 (PDT)
+Message-ID: <27024999-170b-45b5-aa13-9288b950b4a7@linaro.org>
+Date: Fri, 3 May 2024 10:43:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/13] lockable: remove QemuLockable from typedefs.h
+Subject: Re: [PATCH 06/13] intc: remove PICCommonState from typedefs.h
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 References: <20240502155331.109297-1-pbonzini@redhat.com>
- <20240502155331.109297-8-pbonzini@redhat.com>
+ <20240502155331.109297-7-pbonzini@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240502155331.109297-8-pbonzini@redhat.com>
+In-Reply-To: <20240502155331.109297-7-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,37 +97,34 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/5/24 17:53, Paolo Bonzini wrote:
-> Using QemuLockable almost always requires going through QEMU_MAKE_LOCKABLE().
-> Therefore, there is little point in having the typedef always present.  Move
-> it to lockable.h, with only a small adjustment to coroutine.h (which has
-> a tricky co-dependency with lockable.h due to defining CoMutex *and*
-> using QemuLockable as a part of the CoQueue API).
+> Move it to the existing "PIC related things" header, hw/intc/i8259.h.
 > 
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   include/qemu/coroutine.h | 4 ++--
->   include/qemu/lockable.h  | 4 ++--
->   include/qemu/typedefs.h  | 1 -
->   3 files changed, 4 insertions(+), 5 deletions(-)
+>   include/hw/intc/i8259.h | 2 ++
+>   include/qemu/typedefs.h | 1 -
+>   2 files changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/include/hw/intc/i8259.h b/include/hw/intc/i8259.h
+> index c4125757753..1f2420231f1 100644
+> --- a/include/hw/intc/i8259.h
+> +++ b/include/hw/intc/i8259.h
+> @@ -3,6 +3,8 @@
+>   
+>   /* i8259.c */
+>   
+> +typedef struct PICCommonState PICCommonState;
 
-Possibly squash:
+I'd rather move from "hw/isa/i8259_internal.h" to here:
 
--- >8 --
-diff --git a/tests/unit/test-coroutine.c b/tests/unit/test-coroutine.c
-index 49d4d9b251..32f2f5a746 100644
---- a/tests/unit/test-coroutine.c
-+++ b/tests/unit/test-coroutine.c
-@@ -13,6 +13,7 @@
+#define TYPE_PIC_COMMON "pic-common"
+OBJECT_DECLARE_TYPE(PICCommonState, PICCommonClass, PIC_COMMON)
 
-  #include "qemu/osdep.h"
-  #include "qemu/coroutine_int.h"
-+#include "qemu/lockable.h"
+struct PICCommonState {
+    ...
+};
 
-  /*
-   * Check that qemu_in_coroutine() works
----
-
-to avoid the implicit inclusion via "qemu/coroutine_int.h".
+Can be done later, so meanwhile:
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
