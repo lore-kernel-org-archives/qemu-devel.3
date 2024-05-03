@@ -4,72 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92DC6C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 15:36:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADCCAC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 15:37:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2uxh-0002fQ-Se; Fri, 03 May 2024 11:36:37 -0400
+	id 1s2uxX-0002RX-5A; Fri, 03 May 2024 11:36:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2uxe-0002dJ-ON
- for qemu-devel@nongnu.org; Fri, 03 May 2024 11:36:34 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2uxU-0002Of-DZ
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 11:36:24 -0400
 Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2uxU-0002gu-RM
- for qemu-devel@nongnu.org; Fri, 03 May 2024 11:36:34 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s2uxS-0002ge-KU
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 11:36:24 -0400
 Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-a598e483ad1so201169466b.1
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 08:36:24 -0700 (PDT)
+ a640c23a62f3a-a58fbbcd77aso928255466b.2
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 08:36:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714750581; x=1715355381; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qelxLGP2VCXMcEaYFfotFC/hB/WzQHtK8MoPoOxRZLk=;
- b=SWG7IwiF0hlbTzKfHggGbvPMrDm2eq+V2hDWynWlf71l1HEMpkjkvJZ953/WpJNqvl
- sE+oKstxVoAHqapwzYgfF4yy35JfgxAM3LTLHaeVxPLJ6syCh7fVxTE6oHzZtOporS21
- +vqts7ObvVFxBxmLmdUPI6Zx0fFrJ0IJdlI1OL4eRu2pGiIlg6Eczmc8WfELBedEKD16
- glE/aT8RtC2ShGjCsH8OcoTThwW9KP5fE4HHWH2VsWhN+YadhZETQ6YrurgrFEHudGVv
- rG/uYkRztR+pbXEAEN099Paga7O4psHbPkaA0QNnkDD+mQQVsA/rm+ZjRR8CdWGmId62
- jv9Q==
+ d=linaro.org; s=google; t=1714750576; x=1715355376; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=zvz7ETr3ntE3slsyyBiQtPL/DAqR4yC2HaL2gy45cQQ=;
+ b=VWi/pVYt2rucUABnKs2vAng5Yd7ZiEeFNqPeQxCaAIbHo3yBByG4xlOO0CyExikNVQ
+ ZQPfSScv8SKIYXKzBN+33ScXjSbuuWXuMu5UUIEzOfC9HV+z2Z9LelBwXK+rkS/lDQuM
+ kZ1nL1u07Xe74E2vGlEcKxA/8qy4ggFGyrtUx2Eq2CbKnYkzTcMhmRsLqAmwzjBWLcri
+ lEpIyWO1jgdou8ooRYZmT7tidp4ThqnogLioFc3Zlb83PHrS78sSoAhXH4B5JD7nVq6Y
+ SPRRjXkDqYqJk8CajFYdquK3LDVjs1hxghkEC9WboxQ7X/ZSuOayVgSWhenugg4vix2Y
+ Ee3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714750581; x=1715355381;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qelxLGP2VCXMcEaYFfotFC/hB/WzQHtK8MoPoOxRZLk=;
- b=xNAkCdHc2+wOHNwwXsDgPFeATVhp15bppO9Ay4cWChYBxXe8Kj1UyPAL1vq3DMhcQZ
- X70oMhAESt28ZMgB/DXkNclnk8/cz7AQUnAQazV+yT7RO5nDPbY2aPB8oCKbwJ1ey2rR
- AYK6tgG150te4143BdpqeIimboUC49fyhljrjWO3t8B0uu+dMSYLDYOjkUrEITE97vKa
- 6p4IuSZyhcWXJwOKn3fMP6Yr3q9/g8NWKAtGOn6Ds4aW6XFmWt8iIEN/Vw81BAz2tx8j
- l5LKu6Jf24zePfxvHoiIOZk7Y9VcK8PldUL0PX9UenGH6f+3OVV+zq9c95TgCjmVs7JV
- 8FuQ==
-X-Gm-Message-State: AOJu0YwBEWSv+PWqH3RZikcaK4IwI5M5T9LD6RdTylTefGU3kI7dXfsD
- yttJcFkmnyjtS686CsYnsSlGNmoYa++ECoobAqF8WztJ2m3uzuVUJqSdt45q5H3GqIlOqsW4E65
- I
-X-Google-Smtp-Source: AGHT+IHP8UgbbxZJkY2wPsKk10m+06Fv5PmLStsZ2jm39BEBjX6hxZnELZdZjJRlxNGSwgNNkwXtjQ==
-X-Received: by 2002:a50:cccf:0:b0:56e:2cfc:1d3d with SMTP id
- b15-20020a50cccf000000b0056e2cfc1d3dmr1662067edj.16.1714750580994; 
- Fri, 03 May 2024 08:36:20 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1714750576; x=1715355376;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zvz7ETr3ntE3slsyyBiQtPL/DAqR4yC2HaL2gy45cQQ=;
+ b=Otnp0Tbzo6c8b4u/ywAIMqUXhyj1ncKI4E6PJaRH3pIf03WO2yyQnuYntSemsoAoZ8
+ o8GXKUMTB6/FKQJ2kvEEWlRtpfs+kGeyeaaPMFbWnfsZRD7EzZjJG1Eg5TRwwt6lA92e
+ xpOHIsZ+4rJikhGu/slbLL6hM6I94z7HhS6eLLOApHt/49R6CChEyf4w5Rvi3nXp7w3d
+ W46+Ocnb+0/9mYIYH8/R0xqaLLsl1H5TH9Cr6/sfiM5ZxoCoWWK+UYan1xgIMfI569ew
+ 0rQcWdh96XBiBSfg2U+CwiRRBDDeOYvlCNLpTScdylVzyp9VaBl88MfzsJ6jAdmv9EK4
+ ITWg==
+X-Gm-Message-State: AOJu0Yyp52z9FtJMlhKb+K+zlVRzUUQGSgxD8QqHSsp4t0FR2Au3vIJE
+ u5ORaBVNqaeu7vTNqbOuAQNICZsy4OnDwmrnxet8Yy7zEwOFyUlG0yfWLTRv9HZokV5ZWNtmULT
+ a
+X-Google-Smtp-Source: AGHT+IFfUcIHUptFsto3Dl7hLEbEjOT69c1J7lHzefrPxlqPhrmxKlZFlfJDPspKMqeq83Ws5cw1cw==
+X-Received: by 2002:a17:906:415:b0:a58:ec3c:d2fa with SMTP id
+ d21-20020a170906041500b00a58ec3cd2famr1830510eja.57.1714750575741; 
+ Fri, 03 May 2024 08:36:15 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.179.187])
  by smtp.gmail.com with ESMTPSA id
- p4-20020a056402074400b00572b2ad900fsm1763494edy.46.2024.05.03.08.36.20
+ s2-20020a170906c30200b00a55b2f9a2e2sm1811127ejz.105.2024.05.03.08.36.14
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 03 May 2024 08:36:20 -0700 (PDT)
+ Fri, 03 May 2024 08:36:15 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 01/14] accel/nvmm: Fix NULL dereference in nvmm_init_vcpu()
-Date: Fri,  3 May 2024 17:36:00 +0200
-Message-ID: <20240503153613.38709-2-philmd@linaro.org>
+Cc: Philippe =?unknown-8bit?q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 00/14] Accel / SH4 / UI patches for 2024-05-03
+Date: Fri,  3 May 2024 17:35:59 +0200
+Message-ID: <20240503153613.38709-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240503153613.38709-1-philmd@linaro.org>
-References: <20240503153613.38709-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
  envelope-from=philmd@linaro.org; helo=mail-ej1-x62b.google.com
@@ -78,8 +73,8 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,33 +90,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When mechanically moving the @dirty field to AccelCPUState
-in commit 79f1926b2d, we neglected cpu->accel is still NULL
-when we want to dereference it.
+The following changes since commit fd87be1dada5672f877e03c2ca8504458292c479:
 
-Reported-by: Volker Rümelin <vr_qemu@t-online.de>
-Suggested-by: Volker Rümelin <vr_qemu@t-online.de>
-Fixes: 79f1926b2d ("accel/nvmm: Use accel-specific per-vcpu @dirty field")
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240429091918.27429-3-philmd@linaro.org>
----
- target/i386/nvmm/nvmm-all.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+  Merge tag 'accel-20240426' of https://github.com/philmd/qemu into staging (2024-04-26 15:28:13 -0700)
 
-diff --git a/target/i386/nvmm/nvmm-all.c b/target/i386/nvmm/nvmm-all.c
-index f9cced53b3..65768aca03 100644
---- a/target/i386/nvmm/nvmm-all.c
-+++ b/target/i386/nvmm/nvmm-all.c
-@@ -982,7 +982,7 @@ nvmm_init_vcpu(CPUState *cpu)
-         }
-     }
- 
--    cpu->accel->dirty = true;
-+    qcpu->dirty = true;
-     cpu->accel = qcpu;
- 
-     return 0;
+are available in the Git repository at:
+
+  https://github.com/philmd/qemu.git tags/accel-sh4-ui-20240503
+
+for you to fetch changes up to 2d27c91e2b72ac7a65504ac207c89262d92464eb:
+
+  ui/cocoa.m: Drop old macOS-10.12-and-earlier compat ifdefs (2024-05-03 17:33:26 +0200)
+
+----------------------------------------------------------------
+- Fix NULL dereference in NVMM & WHPX init_vcpu()
+- Move user emulation headers "exec/user" to "user"
+- Fix SH-4 ADDV / SUBV opcodes
+- Drop Cocoa compatility on macOS <= 10.12
+- Update Anthony PERARD email
+
+----------------------------------------------------------------
+
+Anthony PERARD (1):
+  MAINTAINERS: Update my email address
+
+Peter Maydell (1):
+  ui/cocoa.m: Drop old macOS-10.12-and-earlier compat ifdefs
+
+Philippe Mathieu-Daudé (12):
+  accel/nvmm: Fix NULL dereference in nvmm_init_vcpu()
+  accel/whpx: Fix NULL dereference in whpx_init_vcpu()
+  exec: Include missing license in 'exec/cpu-common.h'
+  user: Move 'abitypes.h' from 'exec/user' to 'user'
+  user: Move 'thunk.h' from 'exec/user' to 'user'
+  coverity: Update user emulation regexp
+  plugins/api: Only include 'exec/ram_addr.h' with system emulation
+  plugins: Update stale comment
+  target/sh4: Fix ADDV opcode
+  target/sh4: Fix SUBV opcode
+  target/sh4: Rename TCGv variables as manual for ADDV opcode
+  target/sh4: Rename TCGv variables as manual for SUBV opcode
+
+ MAINTAINERS                         |  3 +--
+ bsd-user/qemu.h                     |  4 ++--
+ include/exec/cpu-all.h              |  2 +-
+ include/exec/cpu-common.h           |  9 ++++++--
+ include/{exec => }/user/abitypes.h  |  4 ++--
+ include/user/syscall-trace.h        |  2 +-
+ include/{exec => }/user/thunk.h     | 10 ++++++---
+ linux-user/qemu.h                   |  2 +-
+ linux-user/user-internals.h         |  2 +-
+ linux-user/thunk.c                  |  2 +-
+ plugins/api.c                       |  2 +-
+ plugins/core.c                      |  2 +-
+ target/i386/nvmm/nvmm-all.c         |  2 +-
+ target/i386/whpx/whpx-all.c         |  2 +-
+ target/sh4/translate.c              | 32 ++++++++++++++++++-----------
+ tests/tcg/sh4/test-addv.c           | 27 ++++++++++++++++++++++++
+ tests/tcg/sh4/test-subv.c           | 30 +++++++++++++++++++++++++++
+ scripts/coverity-scan/COMPONENTS.md |  2 +-
+ tests/tcg/sh4/Makefile.target       |  6 ++++++
+ ui/cocoa.m                          | 13 ------------
+ 20 files changed, 112 insertions(+), 46 deletions(-)
+ rename include/{exec => }/user/abitypes.h (97%)
+ rename include/{exec => }/user/thunk.h (97%)
+ create mode 100644 tests/tcg/sh4/test-addv.c
+ create mode 100644 tests/tcg/sh4/test-subv.c
+
 -- 
 2.41.0
 
