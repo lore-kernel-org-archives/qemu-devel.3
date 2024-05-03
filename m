@@ -4,84 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E29DC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 20:00:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 236D8C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 20:04:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2z4I-0006Zd-1s; Fri, 03 May 2024 15:59:42 -0400
+	id 1s2z8f-0007iP-QM; Fri, 03 May 2024 16:04:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1s2z4G-0006Z5-4a; Fri, 03 May 2024 15:59:40 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1s2z4C-0001EA-QX; Fri, 03 May 2024 15:59:39 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VWM555CgXz67VkC;
- Sat,  4 May 2024 03:56:41 +0800 (CST)
-Received: from lhrpeml500006.china.huawei.com (unknown [7.191.161.198])
- by mail.maildlp.com (Postfix) with ESMTPS id CE790140B54;
- Sat,  4 May 2024 03:59:32 +0800 (CST)
-Received: from lhrpeml500001.china.huawei.com (7.191.163.213) by
- lhrpeml500006.china.huawei.com (7.191.161.198) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Fri, 3 May 2024 20:59:32 +0100
-Received: from lhrpeml500001.china.huawei.com ([7.191.163.213]) by
- lhrpeml500001.china.huawei.com ([7.191.163.213]) with mapi id 15.01.2507.039; 
- Fri, 3 May 2024 20:59:32 +0100
-To: Zhao Liu <zhao1.liu@intel.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "maz@kernel.org" <maz@kernel.org>,
- "jean-philippe@linaro.org" <jean-philippe@linaro.org>, Jonathan Cameron
- <jonathan.cameron@huawei.com>, "lpieralisi@kernel.org"
- <lpieralisi@kernel.org>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
- <richard.henderson@linaro.org>, "imammedo@redhat.com" <imammedo@redhat.com>,
- "andrew.jones@linux.dev" <andrew.jones@linux.dev>, "david@redhat.com"
- <david@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "oliver.upton@linux.dev"
- <oliver.upton@linux.dev>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "mst@redhat.com" <mst@redhat.com>, "will@kernel.org" <will@kernel.org>,
- "gshan@redhat.com" <gshan@redhat.com>, "rafael@kernel.org"
- <rafael@kernel.org>, "alex.bennee@linaro.org" <alex.bennee@linaro.org>,
- "linux@armlinux.org.uk" <linux@armlinux.org.uk>,
- "darren@os.amperecomputing.com" <darren@os.amperecomputing.com>,
- "ilkka@os.amperecomputing.com" <ilkka@os.amperecomputing.com>,
- "vishnu@os.amperecomputing.com" <vishnu@os.amperecomputing.com>,
- "karl.heubaum@oracle.com" <karl.heubaum@oracle.com>, "miguel.luis@oracle.com"
- <miguel.luis@oracle.com>, "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>,
- zhukeqian <zhukeqian1@huawei.com>, "wangxiongfeng (C)"
- <wangxiongfeng2@huawei.com>, "wangyanan (Y)" <wangyanan55@huawei.com>,
- "jiakernel2@gmail.com" <jiakernel2@gmail.com>, "maobibo@loongson.cn"
- <maobibo@loongson.cn>, "lixianglai@loongson.cn" <lixianglai@loongson.cn>,
- Linuxarm <linuxarm@huawei.com>
-Subject: RE: [PATCH V8 3/8] hw/acpi: Update ACPI GED framework to support vCPU
- Hotplug
-Thread-Topic: [PATCH V8 3/8] hw/acpi: Update ACPI GED framework to support
- vCPU Hotplug
-Thread-Index: AQHadCE2/9My+8CRgUW+VfhEC8BhG7E1MwcAgFEMEIA=
-Date: Fri, 3 May 2024 19:59:32 +0000
-Message-ID: <6acc5b10128d431ca8bfa26ec45ae0f6@huawei.com>
-References: <20240312020000.12992-1-salil.mehta@huawei.com>
- <20240312020000.12992-4-salil.mehta@huawei.com> <ZfFEKgpRiEOZo9xd@intel.com>
-In-Reply-To: <ZfFEKgpRiEOZo9xd@intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.48.152.25]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s2z8e-0007iF-4J
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 16:04:12 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s2z8b-0001vb-6w
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 16:04:11 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 2C6E32073C;
+ Fri,  3 May 2024 20:04:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1714766647; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=spYlMQ62M2+tL4SmlIZaGWZVEXLliOljz+NLm8Q8oW0=;
+ b=VmIobldQf8IT2vrGT5l39OIunF7hGH4gNYNmAng3aAkQeMmWkVs82depUYYByRxsVtjZNS
+ 4v9ln7nCEq1Xxzcmq/IUD3wLKollI9AzLCGuQCz553d4kVs3orPJ17Sh6Ium/il8skVSXA
+ mz4p7BnS2TMuIe6+iAubGOCzIfvLwT0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1714766647;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=spYlMQ62M2+tL4SmlIZaGWZVEXLliOljz+NLm8Q8oW0=;
+ b=qL75QNpiBukgIWbiWBFoEhprwRGEtoLZoloVlNxINpsI3jipbbpQqgQU5GdRC/b8knmuRb
+ znp7PTil0Yx9suAg==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=VmIobldQ;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=qL75QNpi
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1714766647; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=spYlMQ62M2+tL4SmlIZaGWZVEXLliOljz+NLm8Q8oW0=;
+ b=VmIobldQf8IT2vrGT5l39OIunF7hGH4gNYNmAng3aAkQeMmWkVs82depUYYByRxsVtjZNS
+ 4v9ln7nCEq1Xxzcmq/IUD3wLKollI9AzLCGuQCz553d4kVs3orPJ17Sh6Ium/il8skVSXA
+ mz4p7BnS2TMuIe6+iAubGOCzIfvLwT0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1714766647;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=spYlMQ62M2+tL4SmlIZaGWZVEXLliOljz+NLm8Q8oW0=;
+ b=qL75QNpiBukgIWbiWBFoEhprwRGEtoLZoloVlNxINpsI3jipbbpQqgQU5GdRC/b8knmuRb
+ znp7PTil0Yx9suAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A0E21139CB;
+ Fri,  3 May 2024 20:04:06 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id TX0SGjZDNWYNfQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 03 May 2024 20:04:06 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, Steven Sistare
+ <steven.sistare@oracle.com>, QEMU Devel Mailing List
+ <qemu-devel@nongnu.org>
+Cc: Markus Armbruster <armbru@redhat.com>, Het Gala <het.gala@nutanix.com>
+Subject: Re: More doc updates needed for new migrate argument @channels
+In-Reply-To: <ZjU26faJBrt9Gb-G@x1n>
+References: <87ttjf1jk8.fsf@pond.sub.org> <87fruznjqf.fsf@suse.de>
+ <31a8bb06-5270-4fbb-b8f1-39cd06687c34@oracle.com> <ZjU26faJBrt9Gb-G@x1n>
+Date: Fri, 03 May 2024 17:03:52 -0300
+Message-ID: <877cgaoe6v.fsf@suse.de>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
+Content-Type: text/plain
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 2C6E32073C
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ MISSING_XM_UA(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
+ ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim];
+ TO_DN_ALL(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,97 +122,134 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Salil Mehta <salil.mehta@huawei.com>
-From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+Peter Xu <peterx@redhat.com> writes:
 
-Sorry, I missed this earlier.
+> On Fri, May 03, 2024 at 09:13:27AM -0400, Steven Sistare wrote:
+>> On 5/3/2024 8:49 AM, Fabiano Rosas wrote:
+>> > Markus Armbruster <armbru@redhat.com> writes:
+>> > 
+>> > > Commit 074dbce5fcce (migration: New migrate and migrate-incoming
+>> > > argument 'channels') and its fixup commit 57fd4b4e1075 made command
+>> > > migrate argument @uri optional and mutually exclusive with @channels.
+>> > > 
+>> > > But documentation still talks about "the migration URI" in several
+>> > > places.
+>> > > 
+>> > > * MigrationCapability @mapped-ram:
+>> > > 
+>> > >      # @mapped-ram: Migrate using fixed offsets in the migration file for
+>> > >      #     each RAM page.  Requires a migration URI that supports seeking,
+>> > >      #     such as a file.  (since 9.0)
+>> > > 
+>> > >    I guess it requires the migration destination (@uri or @channels) to
+>> > >    support seeking.
+>> > 
+>> > This is ambiguous. The migration destination is usually the VM at the
+>> > end of the migration, not the medium to where the migration stream is
+>> > written to.
+>> > 
+>> > One option is to just add the mention to channel all around: "Requires a
+>> > migration URI or channel that supports seeking".
+>> > 
+>> > > 
+>> > > * MigMode @cpr-reboot:
+>> > > 
+>> > >      # @cpr-reboot: The migrate command stops the VM and saves state to the
+>> > >      #     URI.  After quitting QEMU, the user resumes by running QEMU
+>> > >      #     -incoming.
+>> > >      #
+>> > >      #     This mode allows the user to quit QEMU, optionally update and
+>> > >      #     reboot the OS, and restart QEMU.  If the user reboots, the URI
+>> > >      #     must persist across the reboot, such as by using a file.
+>> > > 
+>> > >    I guess this saves to the migration destination (@uri or @channels).
+>> > > 
+>> > > * Migration Parameter @tls-hostname and its two buddies
+>> > > 
+>> > >      # @tls-hostname: migration target's hostname for validating the
+>> > >      #     server's x509 certificate identity.  If empty, QEMU will use the
+>> > >      #     hostname from the migration URI, if any.  A non-empty value is
+>> > >      #     required when using x509 based TLS credentials and the migration
+>> > >      #     URI does not include a hostname, such as fd: or exec: based
+>> > >      #     migration.  (Since 2.7)
+>> > >      #
+>> > >      #     Note: empty value works only since 2.9.
+>> > > 
+>> > >    What's the default when we're using @channels instead of @uri?
+>> > 
+>> > The same, both URI and channels get put in the same structure before
+>> > taking the hostname.
+>> > 
+>> > > 
+>> > > * migrate-recover
+>> > > 
+>> > >      ##
+>> > >      # @migrate-recover:
+>> > >      #
+>> > >      # Provide a recovery migration stream URI.
+>> > >      #
+>> > >      # @uri: the URI to be used for the recovery of migration stream.
+>> > > 
+>> > >    Should this command be extended to accept @channels?
+>> > 
+>> > Yes.
+>> > 
+>> > > 
+>> > > * docs/devel/migration/CPR.rst
+>> > > 
+>> > >    Didn't look closely.  Let's discuss the others first, then come back
+>> > >    to this one.
+>> > > 
+>> > > * HMP migrate
+>> > > 
+>> > >    Fine, because this still only supports URI syntax.
+>> > > 
+>> > > * CLI option "-incoming defer"
+>> > > 
+>> > >          "-incoming defer\n" \
+>> > >          "                wait for the URI to be specified via migrate_incoming\n",
+>> > > 
+>> > >    and
+>> > > 
+>> > >      ``-incoming defer``
+>> > >          Wait for the URI to be specified via migrate\_incoming. The monitor
+>> > >          can be used to change settings (such as migration parameters) prior
+>> > >          to issuing the migrate\_incoming to allow the migration to begin.
+>> > > 
+>> > >    I figure we should call it "the migration source" instead of "the URI"
+>> > >    here.
+>> > 
+>> > I think it's worse. We need a proper way to refer exclusively to "the
+>> > thing that the user passes as an argument to the migrate command".
+>> 
+>> Agreed.  My thoughts:
+>> 
+>> "migration URI" -> "migration URI/channel"
+>> or
+>> "migration URI" -> "migration stream"
+>
+> "stream" might imply more on the protocol itself to me, e.g. how the
+> migration headers are defined, rather than the entity / fabric we use to
+> send the data stream?
+>
+> Maybe we can simply do s/URI/channel/? As "channel" can also imply the URI
+> in this case as yet another (old) format to specify the migration channels.
+> It's like we always use QIOChannels underneath whatever way we specify the
+> channels (either URI or the new "channels" API).
 
->  From: Zhao Liu <zhao1.liu@intel.com>
->  Sent: Wednesday, March 13, 2024 6:14 AM
->  To: Salil Mehta <salil.mehta@huawei.com>
-> =20
->  Hi Salil,
-> =20
->  It seems my comment [1] in v7 was missed, but I still hit the same issue=
-. Pls
->  let me paste the previous comment here again.
-> =20
->  [1]: https://lore.kernel.org/qemu-devel/ZXCqp32ggIFvUweu@intel.com/
+I'm fine with just "channel". "URI/channel" is ok as well.
 
-Yes, I have this in my mind.=20
+Do we intend to deprecate the URI usage via QMP? Or are going to support
+the two ways indefinitely? Keep URI for HMP-only?
 
-> =20
->  [snip]
-> =20
->  > @@ -400,6 +411,12 @@ static void acpi_ged_initfn(Object *obj)
->  >      memory_region_init_io(&ged_st->regs, obj, &ged_regs_ops, ged_st,
->  >                            TYPE_ACPI_GED "-regs", ACPI_GED_REG_COUNT);
->  >      sysbus_init_mmio(sbd, &ged_st->regs);
->  > +
->  > +    memory_region_init(&s->container_cpuhp, OBJECT(dev), "cpuhp
->  container",
->  > +                       ACPI_CPU_HOTPLUG_REG_LEN);
->  > +    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->container_cpuhp);
->  > +    cpu_hotplug_hw_init(&s->container_cpuhp, OBJECT(dev),
->  > +                        &s->cpuhp_state, 0);
->  >  }
->  >
-> =20
->  I find this cpu_hotplug_hw_init() can still cause qtest errors (for v8) =
-on x86
->  platforms as you mentioned in v6:
->  https://lore.kernel.org/qemu-devel/15e70616-6abb-63a4-17d0-
->  820f4a254607@opnsrc.net/T/#m108f102b2fe92b7dd7218f2f942f7b233a9d6a
->  f3
-> =20
->  IIUC, microvm machine has its own 'possible_cpus_arch_ids' and that is
->  inherited from its parent x86 machine.
-> =20
->  The above error is because device-introspect-test sets the none-machine:
-> =20
->  # starting QEMU: exec ./qemu-system-i386 -qtest unix:/tmp/qtest-
->  3094820.sock -qtest-log /dev/null -chardev socket,path=3D/tmp/qtest-
->  3094820.qmp,id=3Dchar0 -mon chardev=3Dchar0,mode=3Dcontrol -display none=
- -
->  audio none -nodefaults -machine none -accel qtest
-> =20
->  So what about just checking mc->possible_cpu_arch_ids instead of an
->  assert in cpu_hotplug_hw_init()?
-> =20
->  diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c index
->  4b24a2500361..303f1f1f57bc 100644
->  --- a/hw/acpi/cpu.c
->  +++ b/hw/acpi/cpu.c
->  @@ -221,7 +221,10 @@ void cpu_hotplug_hw_init(MemoryRegion *as,
->  Object *owner,
->       const CPUArchIdList *id_list;
->       int i;
-> =20
->  -    assert(mc->possible_cpu_arch_ids);
->  +    if (!mc->possible_cpu_arch_ids) {
->  +        return;
->  +    }
->  +
+If the MigrationAddress API ends up being the only one, then maybe it
+makes sense to stop using URI all over.
 
-
-Yes, we can do this with some debug print or trace maybe.
-
-
->       id_list =3D mc->possible_cpu_arch_ids(machine);
->       state->dev_count =3D id_list->len;
->       state->devs =3D g_new0(typeof(*state->devs), state->dev_count);
-> =20
->  This check seems to be acceptable in the general code path? Not all
->  machines have possible_cpu_arch_ids, after all.
-
-True. BTW, have you tested this with Qtest?
-
-Thanks
-Salil.
-
-
+>
+> I also copied qemu-devel starting from now.
+>
+> Thanks,
 
