@@ -4,88 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5623FC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 16:48:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B80C1C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 16:53:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s2w4Z-00033m-76; Fri, 03 May 2024 12:47:47 -0400
+	id 1s2w9p-0004OQ-8f; Fri, 03 May 2024 12:53:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s2w4X-00033G-JK
- for qemu-devel@nongnu.org; Fri, 03 May 2024 12:47:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s2w4V-0000Go-PL
- for qemu-devel@nongnu.org; Fri, 03 May 2024 12:47:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714754862;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=8ocLndKNrtu4onlcXVBlN95FxwVyB1sS5qCzhdPgjMA=;
- b=QLRlmYodXf/5EPBkNIxHL5i5FKhLp2yJY8SisKjVuELS0oxS4RP941BekTmWc4Q0R/FBx2
- IbBoSgg/DfhG9qcXiGuOnAa4y3xbhVap53F8PFxbvOfr/uFX8A0s4z9G9fc4HkcTy6HK91
- vx6o2J+WBmWRQTx8V/tnj8Vr8RHBgng=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-519-41m5sL2HMEuRBQlxqkW0Bw-1; Fri, 03 May 2024 12:47:40 -0400
-X-MC-Unique: 41m5sL2HMEuRBQlxqkW0Bw-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6a0eff9efc1so5729216d6.2
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 09:47:40 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714754860; x=1715359660;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1s2w9n-0004O9-JG
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 12:53:11 -0400
+Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1s2w9l-0001Bu-Tm
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 12:53:11 -0400
+Received: by mail-lj1-x22e.google.com with SMTP id
+ 38308e7fff4ca-2df83058d48so85386941fa.1
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 09:53:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1714755187; x=1715359987; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8ocLndKNrtu4onlcXVBlN95FxwVyB1sS5qCzhdPgjMA=;
- b=ZgAFfiyIAlsuZH9ZrzNlDFef6YlkUr014TMXbB6xAYL7dxvcLV9tiuk2VJDeLrtUzH
- /ZdjMXdG/xtoETy9rkDMiI8M3+MsEwYhcEhQQu8MkfwtNobqA+8jP8cmTq3K/E+prjJh
- NAPBdiqS5aNcupRS6zDI7INiptg8VS0ujxOv7Ta+K6tQ/GoRx99AS9L6d65wO1XUDEqX
- WRez+Fpv89P0dRj1rGRhFyUsNcPd0qJgRBKj0GvcKg9lK0vlsYzk+hbcv9VuDrMf0fVW
- /yojmpGEPyu6fjAPOPkyW0gaTHiW4t56rCKd92PH3U8lvKkpfZeOfOHDkGC92Ks7UemV
- CwJA==
-X-Gm-Message-State: AOJu0Yxgmc9dg+yYPbce65EW6svBxE+eQnmDHkXhga96FsMSaWj1wS0u
- 0ABqIFkpMsCZBB3qJTVS2nn63j5eqf1aSu2PWx/vRbd32ajFeKrs8slXvdgWT/6ShVI4NWVy+WW
- t7QZ82Nei4Wx4RKn35kiFlaJwEM0AoAA3Fyo1tjOgiWdcIO6AREqh
-X-Received: by 2002:a05:6214:501d:b0:696:b235:f39 with SMTP id
- jo29-20020a056214501d00b00696b2350f39mr3181027qvb.6.1714754860052; 
- Fri, 03 May 2024 09:47:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF6pFxAZJaahTiPUks25IfqTAPFcl/MmwI2Sa82sOgY5RnaAtjeoi1WpmvzoCbI5UFfbUsD7Q==
-X-Received: by 2002:a05:6214:501d:b0:696:b235:f39 with SMTP id
- jo29-20020a056214501d00b00696b2350f39mr3180996qvb.6.1714754859385; 
- Fri, 03 May 2024 09:47:39 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- n9-20020ad444a9000000b006a0fe3cdc2csm1345989qvt.81.2024.05.03.09.47.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 03 May 2024 09:47:38 -0700 (PDT)
-Date: Fri, 3 May 2024 12:47:36 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
- Claudio Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 3/9] tests/qtest/migration: Fix file migration offset check
-Message-ID: <ZjUVKEJq7LBU57Rf@x1n>
-References: <20240426142042.14573-1-farosas@suse.de>
- <20240426142042.14573-4-farosas@suse.de>
+ bh=J4K2NK95hJk3SMYf+83MeWc3awsgLGmBJJ3K5eqJ6nU=;
+ b=Ia8KsyzFVn0+eM376qRtQQ74TN+gunfkdJwgVitRSnkSx9IRKAsOinhMjTLWKFHXpo
+ VcU2+Qj73O3IR6+A6nxRe+YuRvu2ltprXL8m6GAjU+Gq73bXWq7Pcv6xMjlVX2g6GFJi
+ BlBqL9z2EmVeeaNq9IhoyrHCvNvxcjgqXQtuo6EbccIH3MPOs8/yY6cG/d/zESwKSLgR
+ ME85SNEs0fdw4H2uYdUnYeeeEu1NfZntFCNbvh/bFue1mo9GRpaR4m/4CP/tZmJhQ6G5
+ nUh0xCNSLQHt2N3pR6tGe/lJWWxrDn7Z26wP1zDUB8FZMlCdPSyVln1Tdt5g72O2/mON
+ 2IwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714755187; x=1715359987;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=J4K2NK95hJk3SMYf+83MeWc3awsgLGmBJJ3K5eqJ6nU=;
+ b=FP/dQKE4Pe6pUgjhvMz7MIwFJ5TqR0C20pNgW0cOtwZAfQp4bEWpQubL2fnH34j0OT
+ LFX7TBBiipdVB6HwEQ+A5Uq3LXdKb7hnHd11OR+Q1Iygi2TJuLjQDCqQuk78QEg2iag+
+ seAyLq/qJDky/YOP4Jr4/Wd9PAvCtHCGq1rlPdyG9DQPdL1yiroD1ZoxMTswfS/Ejmzn
+ nHXS/lX8CcjEmLaWfZqa+mus5yn7IXUkzCh5QZXYvXczpS+s94AY5abnS7MsghI5tB8O
+ Yg5/5yI+I51mJnjaYleqa7jLYrjhV99+gpuRvoGspGUiuWecd2/Njgafe6IDg6+UY9Yi
+ 0d1Q==
+X-Gm-Message-State: AOJu0YwJHemYP02n37I7pV3BEgO2Vw5hFPY27TL0knxUQ7tpR3rIwGqv
+ 0YroFiap5MTES/m2Xub2gVFv4ei9/i6Pgb8k8PEsVANbTRGtqmbg0GK2c5dM54vrv1uywhVinEI
+ Pkkio8P0DyBnkUWyIb7BfrHQ7gqo=
+X-Google-Smtp-Source: AGHT+IFuLi+WF2HT71uQHt/WxY/PXcYgZ9wFJwJcouJEyTxBJrvszB2i56oLjsLo3pHLKhUUkoFPn9mqYPG/Y3An2aA=
+X-Received: by 2002:a2e:a23a:0:b0:2e1:d34d:9b2c with SMTP id
+ i26-20020a2ea23a000000b002e1d34d9b2cmr1928152ljm.9.1714755186860; Fri, 03 May
+ 2024 09:53:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240426142042.14573-4-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.483,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240419183135.12276-1-dorjoychy111@gmail.com>
+ <CAFEAcA9w1PeT4X=eX6Xh64vNWC1FPQdgGCXJkf0+=3kDLuYVsQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA9w1PeT4X=eX6Xh64vNWC1FPQdgGCXJkf0+=3kDLuYVsQ@mail.gmail.com>
+From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Date: Fri, 3 May 2024 22:52:55 +0600
+Message-ID: <CAFfO_h57h7MX0Drw_jjym-kq8q9jFwTx7J7nYX7cxW_XY+pOsA@mail.gmail.com>
+Subject: Re: [PATCH] target/arm: fix MPIDR value for ARM CPUs with SMT
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-lj1-x22e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,163 +91,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 26, 2024 at 11:20:36AM -0300, Fabiano Rosas wrote:
-> When doing file migration, QEMU accepts an offset that should be
-> skipped when writing the migration stream to the file. The purpose of
-> the offset is to allow the management layer to put its own metadata at
-> the start of the file.
-> 
-> We have tests for this in migration-test, but only testing that the
-> migration stream starts at the correct offset and not that it actually
-> leaves the data intact. Unsurprisingly, there's been a bug in that
-> area that the tests didn't catch.
-> 
-> Fix the tests to write some data to the offset region and check that
-> it's actually there after the migration.
-> 
-> Fixes: 3dc35470c8 ("tests/qtest: migration-test: Add tests for file-based migration")
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  tests/qtest/migration-test.c | 70 +++++++++++++++++++++++++++++++++---
->  1 file changed, 65 insertions(+), 5 deletions(-)
-> 
-> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-> index 5d6d8cd634..7b177686b4 100644
-> --- a/tests/qtest/migration-test.c
-> +++ b/tests/qtest/migration-test.c
-> @@ -2081,6 +2081,63 @@ static void test_precopy_file(void)
->      test_file_common(&args, true);
->  }
->  
-> +#ifndef _WIN32
-> +static void file_dirty_offset_region(void)
-> +{
-> +#if defined(__linux__)
+On Fri, May 3, 2024 at 10:28=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+>
+> On Fri, 19 Apr 2024 at 19:31, Dorjoy Chowdhury <dorjoychy111@gmail.com> w=
+rote:
+> >
+> > Some ARM CPUs advertise themselves as SMT by having the MT[24] bit set
+> > to 1 in the MPIDR register. These CPUs have the thread id in Aff0[7:0]
+> > bits, CPU id in Aff1[15:8] bits and cluster id in Aff2[23:16] bits in
+> > MPIDR.
+> >
+> > On the other hand, ARM CPUs without SMT have the MT[24] bit set to 0,
+> > CPU id in Aff0[7:0] bits and cluster id in Aff1[15:8] bits in MPIDR.
+> >
+> > The mpidr_read_val() function always reported non-SMT i.e., MT=3D0 styl=
+e
+> > MPIDR value which means it was wrong for the following CPUs with SMT
+> > supported by QEMU:
+> >     - cortex-a55
+> >     - cortex-a76
+> >     - cortex-a710
+> >     - neoverse-v1
+> >     - neoverse-n1
+> >     - neoverse-n2
+>
+> This has definitely turned out to be rather more complicated
+> than I thought it would be when I wrote up the original issue
+> in gitlab, so sorry about that.
+>
+> I still need to think through how we should deal with the
+> interaction between what the CPU type implies about the MPIDR
+> format and the topology information provided by the user.
+> I probably won't get to that next week, because I'm on holiday
+> for most of it, but I will see if I can at least make a start.
+>
 
-Hmm, what's the case to cover when !_WIN32 && __linux__?  Can we remove one
-layer of ifdef?
+No problem at all. Just let me know when you get to it. I will see if
+I can fix it or ask if I need help then. Please enjoy your holidays.
+Thanks!
 
-I'm also wondering why it can't work on win32?  I thought win32 has all
-these stuff we used here, but I may miss something.
+> In the meantime, there is one tiny bit of this that we can
+> do now:
+>
+> > diff --git a/hw/arm/npcm7xx.c b/hw/arm/npcm7xx.c
+> > index cc68b5d8f1..9d5dcf1a3f 100644
+> > --- a/hw/arm/npcm7xx.c
+> > +++ b/hw/arm/npcm7xx.c
+> > @@ -487,7 +487,7 @@ static void npcm7xx_realize(DeviceState *dev, Error=
+ **errp)
+> >      /* CPUs */
+> >      for (i =3D 0; i < nc->num_cpus; i++) {
+> >          object_property_set_int(OBJECT(&s->cpu[i]), "mp-affinity",
+> > -                                arm_build_mp_affinity(i, NPCM7XX_MAX_N=
+UM_CPUS),
+> > +                                arm_build_mp_affinity(ARM_CPU(&s->cpu[=
+i]), i, NPCM7XX_MAX_NUM_CPUS),
+> >                                  &error_abort);
+> >          object_property_set_int(OBJECT(&s->cpu[i]), "reset-cbar",
+> >                                  NPCM7XX_GIC_CPU_IF_ADDR, &error_abort)=
+;
+>
+> In this file, the value of the mp-affinity property that the
+> board is setting is always the same as the default value it
+> would have anyway. So we can delete the call to
+> object_property_set_int() entirely, which gives us one fewer
+> place we need to deal with when we do eventually figure out
+> how the MPIDR values should work.
+>
+> If you like you can submit a separate patch which deletes
+> this one call.
+>
 
-> +    g_autofree char *path = g_strdup_printf("%s/%s", tmpfs, FILE_TEST_FILENAME);
-> +    size_t size = FILE_TEST_OFFSET;
-> +    uintptr_t *addr, *p;
-> +    int fd;
-> +
-> +    fd = open(path, O_CREAT | O_RDWR, 0660);
-> +    g_assert(fd != -1);
-> +
-> +    g_assert(!ftruncate(fd, size));
-> +
-> +    addr = mmap(NULL, size, PROT_WRITE, MAP_SHARED, fd, 0);
-> +    g_assert(addr != MAP_FAILED);
-> +
-> +    /* ensure the skipped offset contains some data */
-> +    p = addr;
-> +    while (p < addr + FILE_TEST_OFFSET / sizeof(uintptr_t)) {
-> +        *p = (unsigned long) FILE_TEST_FILENAME;
+Makes sense. I will try and send a patch.
 
-This is fine, but not as clear what is assigned..  I think here we assigned
-is the pointer pointing to the binary's RO section (rather than the chars).
-Maybe using some random numbers would be more straightforward, but no
-strong opinions.
-
-> +        p++;
-> +    }
-> +
-> +    munmap(addr, size);
-> +    fsync(fd);
-> +    close(fd);
-> +#endif
-> +}
-> +
-> +static void *file_offset_start_hook(QTestState *from, QTestState *to)
-> +{
-> +    g_autofree char *file = g_strdup_printf("%s/%s", tmpfs, FILE_TEST_FILENAME);
-> +    int src_flags = O_WRONLY;
-> +    int dst_flags = O_RDONLY;
-> +    int fds[2];
-> +
-> +    file_dirty_offset_region();
-> +
-> +    fds[0] = open(file, src_flags, 0660);
-> +    assert(fds[0] != -1);
-> +
-> +    fds[1] = open(file, dst_flags, 0660);
-> +    assert(fds[1] != -1);
-> +
-> +    qtest_qmp_fds_assert_success(from, &fds[0], 1, "{'execute': 'add-fd', "
-> +                                 "'arguments': {'fdset-id': 1}}");
-> +
-> +    qtest_qmp_fds_assert_success(to, &fds[1], 1, "{'execute': 'add-fd', "
-> +                                 "'arguments': {'fdset-id': 1}}");
-> +
-> +    close(fds[0]);
-> +    close(fds[1]);
-> +
-> +    return NULL;
-> +}
-> +
->  static void file_offset_finish_hook(QTestState *from, QTestState *to,
->                                      void *opaque)
->  {
-> @@ -2096,12 +2153,12 @@ static void file_offset_finish_hook(QTestState *from, QTestState *to,
->      g_assert(addr != MAP_FAILED);
->  
->      /*
-> -     * Ensure the skipped offset contains zeros and the migration
-> -     * stream starts at the right place.
-> +     * Ensure the skipped offset region's data has not been touched
-> +     * and the migration stream starts at the right place.
->       */
->      p = addr;
->      while (p < addr + FILE_TEST_OFFSET / sizeof(uintptr_t)) {
-> -        g_assert(*p == 0);
-> +        g_assert_cmpstr((char *) *p, ==, FILE_TEST_FILENAME);
->          p++;
->      }
->      g_assert_cmpint(cpu_to_be64(*p) >> 32, ==, QEMU_VM_FILE_MAGIC);
-> @@ -2113,17 +2170,18 @@ static void file_offset_finish_hook(QTestState *from, QTestState *to,
->  
->  static void test_precopy_file_offset(void)
->  {
-> -    g_autofree char *uri = g_strdup_printf("file:%s/%s,offset=%d", tmpfs,
-> -                                           FILE_TEST_FILENAME,
-> +    g_autofree char *uri = g_strdup_printf("file:/dev/fdset/1,offset=%d",
->                                             FILE_TEST_OFFSET);
-
-Do we want to keep both tests to cover both normal file and fdsets?
-
->      MigrateCommon args = {
->          .connect_uri = uri,
->          .listen_uri = "defer",
-> +        .start_hook = file_offset_start_hook,
->          .finish_hook = file_offset_finish_hook,
->      };
->  
->      test_file_common(&args, false);
->  }
-> +#endif
->  
->  static void test_precopy_file_offset_bad(void)
->  {
-> @@ -3636,8 +3694,10 @@ int main(int argc, char **argv)
->  
->      migration_test_add("/migration/precopy/file",
->                         test_precopy_file);
-> +#ifndef _WIN32
->      migration_test_add("/migration/precopy/file/offset",
->                         test_precopy_file_offset);
-> +#endif
->      migration_test_add("/migration/precopy/file/offset/bad",
->                         test_precopy_file_offset_bad);
->  
-> -- 
-> 2.35.3
-> 
-
--- 
-Peter Xu
-
+Regards,
+Dorjoy
 
