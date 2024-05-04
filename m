@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64E30C4345F
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 May 2024 15:41:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3074C4345F
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 May 2024 15:41:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3HUB-00024X-Cn; Sat, 04 May 2024 11:39:39 -0400
+	id 1s3HU7-00022R-N2; Sat, 04 May 2024 11:39:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s3HU8-00022k-Oe
- for qemu-devel@nongnu.org; Sat, 04 May 2024 11:39:36 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1s3HU5-00021J-KQ
+ for qemu-devel@nongnu.org; Sat, 04 May 2024 11:39:33 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s3HU7-0006Ey-2g
- for qemu-devel@nongnu.org; Sat, 04 May 2024 11:39:36 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-6f44881ad9eso503299b3a.3
- for <qemu-devel@nongnu.org>; Sat, 04 May 2024 08:39:34 -0700 (PDT)
+ id 1s3HU4-0006EC-4l
+ for qemu-devel@nongnu.org; Sat, 04 May 2024 11:39:33 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-1ecd9a81966so18850285ad.0
+ for <qemu-devel@nongnu.org>; Sat, 04 May 2024 08:39:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714837173; x=1715441973; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714837170; x=1715441970; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sbgTvqZXx0oV/4QT5gXHywIupzMDjszkzNiZiQWIETo=;
- b=erh5dysrkgPPdSQhwPB6/rL9zUmMaxNFvNmF66mS8e4AM+EOCXfpERBnhRwE1NdepG
- qiPNWZTfwej+JQUOHL/io3dFhzylJkwwPV5xgtwrUVMVkUxkzgyI9q6JzgAjEj69Btng
- hMOaVB7x+LeLD8dtSbfQcPOh4z4oRihxH+r2TQpZu/TSh+ytfvoRcOp9iXNqLMDb/3pN
- N2ePRAoBXELbaXPGUOxKO9evFmmuvcDBv95z5QbpKFfu4RyrSlV2JsPnRawAwedqBmRg
- KVR6prNCYJowCd9AjOyMwG9Wao8RKdozvV3ByQWaMu0Tr06xLnOmz40FIfg+fefPFQBU
- raCw==
+ bh=p/6g7IPHM26fk2SatJJUV9sUQh1e0SSWEbxZZLoVbHA=;
+ b=F1sIB0CNuDpGOPLpd19Zc97N4nLD594fe8PbPGvT44rk6PVG2BerYQ2q/+p1R0QLHh
+ iZ1jkoFNIGeqqBP91+KU2VxJG1ddcXGKPXFGCUA/zGJdTH3m2N2W5xP81dnNkZ05lzra
+ J2zuBNOW+HhXfpd6rucpXWO6y6s46rJ+IU9cbWypBxfvEMb69CSKjEcl0qNy6m9LA05n
+ QS/ONzJ/rs3aTVDHfI0C6jnJZ+8FMgrO9ChOh3XzA/F5DE8L/b5G10Oa4rI95rdmkT9n
+ l3S+xC6V2I3Vrwk8G8+szA5y8P0SX9Q7tzJXYyLmBRGMGkDJoZvajUJTzbdB3DngKtax
+ yRjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714837173; x=1715441973;
+ d=1e100.net; s=20230601; t=1714837170; x=1715441970;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sbgTvqZXx0oV/4QT5gXHywIupzMDjszkzNiZiQWIETo=;
- b=mw16f3JNapHTeoWLNxgr07ADQGq9/pio2a2/mZEVKdaFdGBDLn+DcxzrBbz7Z9/oDk
- FaxiteEAKJWeQMFxWb+tvATQz8f+n5pIk09aapfiwLU3tQwHL+CjsGKO5m3HFG7IkTr9
- B3rMzqzlM7S3uoEPi1mMVBPNIiVeC88U/VFWVIgcpBe9ecHBGEhoK2rRrqQpeMLIGvB8
- +z9/vzaETjxY+CmrBCjD0up0Z6mBrcrK+LLptkgSbyOr20B1KJyhz8VKqm6EHturKBW1
- 9tAQx8xLSmP5hh9EXk6PFXviB5Ffgij9lxSgltP4fI/K7vV0iwPTtInTUNqtReEs1Qmn
- Wk4A==
-X-Gm-Message-State: AOJu0YxlzVDZdz5ueCJNfW/9bYNOM91GcX7aTVbecYvH8r57fMbVmC1F
- 7RCwQYmZP73OcqD5HqhBFalRM63vUjpvGME4vg7T4I5hWBjRbDbCPAQdyQ9zaKyHvtNQnr0KbeV
- k
-X-Google-Smtp-Source: AGHT+IEcrE7LZvmWqm/4nV6TT0eMMT9SUnkl/thjmXYfBhhC5YcFa8gi3FuELyGTaSMAjpxhIx3j0Q==
-X-Received: by 2002:a05:6a21:164a:b0:1af:997d:1788 with SMTP id
- no10-20020a056a21164a00b001af997d1788mr1216910pzb.44.1714837173623; 
- Sat, 04 May 2024 08:39:33 -0700 (PDT)
+ bh=p/6g7IPHM26fk2SatJJUV9sUQh1e0SSWEbxZZLoVbHA=;
+ b=Tr0YOu7uNoVUU2P55k6bCE6oSZNXX8n+Vt0zBxv5atzLMkGeEfgzTjw8/y3nZEt9vf
+ hXPPKxF2V7wma4MKKVMigxE9GgXSCbTaScAqJ7vM4hwAvtPv097baJWutDNVIb+xhfxQ
+ ULtazMwsZGBma4Ja8NEuvnwPImILqmWZnzXVSYZA7+AXoQMFh9xzd9MA68+AmiUbjZai
+ 74qWklds2flXUVZ1SBYVNoRlG6DijvrrlOi7UeULXcL9ygMsVFVodVJ0QKTKKtFY/zeC
+ U1jgNIye96fIl6ygzwLcsLL0royJmcC8RcQUB4e5dctraJDTPgXD35HQfNzwWgOgmHtf
+ 56HA==
+X-Gm-Message-State: AOJu0Yx0LRyosWkxJgp8YrlZ13hZbQiuUuoarEOf+MQfuCjV2/nNeoCY
+ EVeJ4SgwFm4EF7B2BnRHzul2NdEaWQGQRfAVY7FauReWoZp04efqmih7tcbOQQhCYk/qNQ3MoUh
+ 4
+X-Google-Smtp-Source: AGHT+IHlSBk2718oh16x7sxkqipeOzJ0wd5gKWFo5XPRWOmKYFDIKbXAYb07p/scMSXWGvGVP0JgRQ==
+X-Received: by 2002:a17:902:e752:b0:1e3:ce12:ef77 with SMTP id
+ p18-20020a170902e75200b001e3ce12ef77mr8437938plf.11.1714837170177; 
+ Sat, 04 May 2024 08:39:30 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- n15-20020a170902e54f00b001e4d22f828fsm5197859plf.33.2024.05.04.08.39.32
+ n15-20020a170902e54f00b001e4d22f828fsm5197859plf.33.2024.05.04.08.39.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 04 May 2024 08:39:33 -0700 (PDT)
+ Sat, 04 May 2024 08:39:29 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 6/9] target/alpha: Simplify gen_bcond_internal()
-Date: Sat,  4 May 2024 08:39:23 -0700
-Message-Id: <20240504153926.357845-7-richard.henderson@linaro.org>
+Subject: [PULL 2/9] target/alpha: Hoist branch shift to initial decode
+Date: Sat,  4 May 2024 08:39:19 -0700
+Message-Id: <20240504153926.357845-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240504153926.357845-1-richard.henderson@linaro.org>
 References: <20240504153926.357845-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,62 +95,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-Richard Henderson explained on IRC:
-
-  bcond_internal() used to insist that both branch
-  destination and branch fallthrough are use_goto_tb;
-  if not, we'd use movcond to compute an indirect jump.
-  But it's perfectly fine for e.g. the branch fallthrough
-  to use_goto_tb, and the branch destination to use
-  an indirect branch.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240424234436.995410-4-richard.henderson@linaro.org>
-[PMD: Split bigger patch, part 4/5]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20240503072014.24751-7-philmd@linaro.org>
+Message-Id: <20240503072014.24751-3-philmd@linaro.org>
 ---
- target/alpha/translate.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ target/alpha/translate.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/target/alpha/translate.c b/target/alpha/translate.c
-index 41151f002e..b7b94cc378 100644
+index a97cd54f0c..52c2e6248b 100644
 --- a/target/alpha/translate.c
 +++ b/target/alpha/translate.c
-@@ -461,23 +461,22 @@ static DisasJumpType gen_bcond_internal(DisasContext *ctx, TCGCond cond,
-     uint64_t dest = ctx->base.pc_next + disp;
+@@ -432,7 +432,7 @@ static bool use_goto_tb(DisasContext *ctx, uint64_t dest)
+ 
+ static DisasJumpType gen_bdirect(DisasContext *ctx, int ra, int32_t disp)
+ {
+-    uint64_t dest = ctx->base.pc_next + (disp << 2);
++    uint64_t dest = ctx->base.pc_next + disp;
+ 
+     if (ra != 31) {
+         tcg_gen_movi_i64(ctx->ir[ra], ctx->base.pc_next);
+@@ -455,7 +455,7 @@ static DisasJumpType gen_bdirect(DisasContext *ctx, int ra, int32_t disp)
+ static DisasJumpType gen_bcond_internal(DisasContext *ctx, TCGCond cond,
+                                         TCGv cmp, uint64_t imm, int32_t disp)
+ {
+-    uint64_t dest = ctx->base.pc_next + (disp << 2);
++    uint64_t dest = ctx->base.pc_next + disp;
      TCGLabel *lab_true = gen_new_label();
  
--    if (use_goto_tb(ctx, dest)) {
--        tcg_gen_brcondi_i64(cond, cmp, imm, lab_true);
--
-+    tcg_gen_brcondi_i64(cond, cmp, imm, lab_true);
-+    if (use_goto_tb(ctx, ctx->base.pc_next)) {
-         tcg_gen_goto_tb(0);
-         tcg_gen_movi_i64(cpu_pc, ctx->base.pc_next);
-         tcg_gen_exit_tb(ctx->base.tb, 0);
--
--        gen_set_label(lab_true);
-+    } else {
-+        tcg_gen_movi_i64(cpu_pc, ctx->base.pc_next);
-+        tcg_gen_lookup_and_goto_ptr();
-+    }
-+    gen_set_label(lab_true);
-+    if (use_goto_tb(ctx, dest)) {
-         tcg_gen_goto_tb(1);
-         tcg_gen_movi_i64(cpu_pc, dest);
-         tcg_gen_exit_tb(ctx->base.tb, 1);
-     } else {
--        TCGv_i64 i = tcg_constant_i64(imm);
--        TCGv_i64 d = tcg_constant_i64(dest);
--        TCGv_i64 p = tcg_constant_i64(ctx->base.pc_next);
--
--        tcg_gen_movcond_i64(cond, cpu_pc, cmp, i, d, p);
-+        tcg_gen_movi_i64(cpu_pc, dest);
-         tcg_gen_lookup_and_goto_ptr();
-     }
+     if (use_goto_tb(ctx, dest)) {
+@@ -1382,7 +1382,7 @@ static DisasJumpType translate_one(DisasContext *ctx, uint32_t insn)
+     real_islit = islit = extract32(insn, 12, 1);
+     lit = extract32(insn, 13, 8);
+ 
+-    disp21 = sextract32(insn, 0, 21);
++    disp21 = sextract32(insn, 0, 21) * 4;
+     disp16 = sextract32(insn, 0, 16);
+     disp12 = sextract32(insn, 0, 12);
  
 -- 
 2.34.1
