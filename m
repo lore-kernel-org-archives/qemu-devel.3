@@ -4,108 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C19C6C4345F
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 May 2024 01:42:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95AFFC4345F
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 May 2024 02:02:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s34Or-0007g9-OU; Fri, 03 May 2024 21:41:18 -0400
+	id 1s34iy-0005Ld-4d; Fri, 03 May 2024 22:02:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
- id 1s34On-0007f5-Ja
- for qemu-devel@nongnu.org; Fri, 03 May 2024 21:41:13 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s34iw-0005KT-7Y
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 22:02:02 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
- id 1s34Ol-0001sy-Du
- for qemu-devel@nongnu.org; Fri, 03 May 2024 21:41:13 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a59a5f81af4so40090166b.3
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 18:41:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s34iu-0005kq-Iy
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 22:02:01 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1ed904c2280so404955ad.2
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 19:02:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=opnsrc.net; s=google; t=1714786869; x=1715391669; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=cMaSACtjO3SUkgFNE0eUoOTbz0mIrS43V9gIJCsSjMw=;
- b=Tm+x6g3uquRdLWEaDCV1sDPeWQ9/odIp75WT4cU4MIAv5LxqR4CXo42KgtqKbq3juD
- 1APx9TxKrB65jav5ndnlOLSsj+Eux7YtcIvtWnsEpKcsEk/lnli20NWG2ZJhRuIq5loT
- 7NxBmbg3U6D+miMloyfs2wf0s2m8YfNfecyiYJ28EN20Ke5B2+tW42UFJ59hbuSFH7cz
- r7BTA1pwJqglNMQnnHVJvaApvIFhNioiQecUiClbZrlOFx5w+k3ImDhozIf8AOhpGYiQ
- X99Af2T/uO5fIdtctiqsGcYm66eoYJSNOuEfJwyCuvPuxD0bs/MM4StKkb0pU1V9UuCw
- +LXg==
+ d=linaro.org; s=google; t=1714788119; x=1715392919; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=srm7mw21kgd5V/T/ERxEo3Fo+k2Mpf/CtFfHueoXpU4=;
+ b=Twz/9kEK1VSUy3XguVOxwR0xWQC7D63DO65mNp0Nd/w6A4pbH5GTIFjbt5TuB6Ha+C
+ K8RuAnV5R3CsssLF9yuQzbZeh4dqyD2bd1YduSpiprISO6/tPgUawP0sNCXcxDxckTFS
+ TQjz2G9uHzIaMjER080lSgDTehJy1RLBkSpq1JjUqSx+fcLDgmnbMgkSz8D5HDK238aa
+ P/PWcEtnJV9+TrvnRdmHYoDtgM3XCPBOMiju/pRupsTecSABvgqpqI/JhIdBxKrZ4LwY
+ GCCezcyFLberD13qGEReJR7aheEvyTWBKSuflU/am0f9T5PtCLxq7hX0a2pt06Yq1iy+
+ KfYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714786869; x=1715391669;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=cMaSACtjO3SUkgFNE0eUoOTbz0mIrS43V9gIJCsSjMw=;
- b=T4WEoT9zZhtiv4pH168TkhbeOWW/JonE6cp49w02lxTU9K0Tu6FtA6pAtxfj8aRYvj
- DnQ0irR1b+x4XD6HrTrSpAPE3GBAQ6gz4X13guAACc4wkQoVuuiCpcOebxI97Xas8xWd
- 4NUON2QC2787CBYEgxvHH3YL75xI4Qlo61r1ok9gaaiUYTui2wCq3+KfaTwxKW3TQ9EM
- F5+zxSCKOTXTGq8epHVfVJw27WgOxptQnZkxrSRdAnoWadlUn8GSAhZbKfMxB9sXOf3N
- uQ9LH3H2hXal5SfzYX62uGzxPeEO2bH4nw5Q2Rj6lyb+jt5hvV1NklwXAXbjOj6YjNnd
- OONQ==
+ d=1e100.net; s=20230601; t=1714788119; x=1715392919;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=srm7mw21kgd5V/T/ERxEo3Fo+k2Mpf/CtFfHueoXpU4=;
+ b=X8TJvYXXzLOvQ+DLl93gqoA6Khk9A5Skho2AsBvLX+PF8ojT5RLuIooWAtm5s54nEt
+ 2+itrmoc1nLGKhmb2wA83+VnIfxE27/8LtdHWYufCHBZwLN2ZiZcbF9dJ/jOiwxkpYq9
+ 1UdFMT8/AUwgYLoy8yiNSRo3FBuSub0JCOcLW94QddEGj0i6wTB95LgMo1flrq/mv2J1
+ 5Mw+BlELphJ8igp0+Dbntwek01g7Xhg1GcYJAR1g3wN+t/uV2mSM0lmzicj8hWp+9BlO
+ XE/ZC5McdlCqqnx1L+6YdG4taH0BKPDp/Tt0403R7nMlfZsBgpln/YXgsgpCK8VV/RXg
+ M8Zg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVenjNQJqPBapA4IediSFYArMCRi2LQq6QkVVSn9d0T39BuCAKv8TH8UQWMKzXYTGIgsWP5HLpVgYKoWiXJnbbfNDRJkd4=
-X-Gm-Message-State: AOJu0YzqupAwqAp90pWtZ3+/pdDBNNXgvrjWG7esmBJtpf6DfD+kKO54
- GcNBoU+XuA8z0tarFoDKcWFlBfBwrQDIBIbpaST1Bl8cE6bxrSXz4D1zO9a7mn7NbMQPyViKE+p
- SHkkPm7ZdsCI9F6Qh59UFg2QRt5+JXeNq7E7k1Q==
-X-Google-Smtp-Source: AGHT+IHjmytAzojMfNdYwcFmfP1vW50Hh3Q+jDWe+k2a+JTyeZh4d7TBP15mECEOVzFwePmUI2mZfJryFWNQJZ5yAHI=
-X-Received: by 2002:a17:906:52cc:b0:a59:9f11:2b66 with SMTP id
- w12-20020a17090652cc00b00a599f112b66mr974332ejn.36.1714786869051; Fri, 03 May
- 2024 18:41:09 -0700 (PDT)
+ AJvYcCW8/XRMY1LW4zjIFZFScqCBoRepewaPgVfYkkmyZSMyWkFLK88aoMeI6b7TeecKcmqh1tVs/6YY2q3+WNrNhPTCZHkL4zw=
+X-Gm-Message-State: AOJu0YyWAJywSxXD2g2Lqs11kvWmZHZTc4TGgRARvVAzu5mFhQDC3O8z
+ pL0cAytBEQo/u7MG399EwfHu4sDEtyrfCzl/UhBJ4sIZ2VOmy8vXweiwBy2lDvc=
+X-Google-Smtp-Source: AGHT+IEAl6v+acAYZ+EG2Nih5pr8q/HG6lb6q0lN4H2xMwbhXFmyaP2T8ABXsejUyexfCWJxNZY5Tw==
+X-Received: by 2002:a17:902:c94e:b0:1ea:fb65:a0c9 with SMTP id
+ i14-20020a170902c94e00b001eafb65a0c9mr5174821pla.20.1714788118533; 
+ Fri, 03 May 2024 19:01:58 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ by smtp.gmail.com with ESMTPSA id
+ l12-20020a170903244c00b001e511acfd0esm3939084pls.140.2024.05.03.19.01.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 03 May 2024 19:01:57 -0700 (PDT)
+Message-ID: <1262a9a2-40c9-4429-a4ec-404f3dec9386@linaro.org>
+Date: Fri, 3 May 2024 19:01:56 -0700
 MIME-Version: 1.0
-References: <20240312020000.12992-1-salil.mehta@huawei.com>
- <20240312020000.12992-7-salil.mehta@huawei.com>
- <7bccde5479f044dc87679236b736b861@huawei.com>
-In-Reply-To: <7bccde5479f044dc87679236b736b861@huawei.com>
-From: Salil Mehta <salil.mehta@opnsrc.net>
-Date: Sat, 4 May 2024 02:40:57 +0100
-Message-ID: <CAJ7pxebK_rPFYN_NVLUyAVExb+e0ep7Bx5BuPgRJcmg9s5BQBQ@mail.gmail.com>
-Subject: Re: [PATCH V8 6/8] physmem: Add helper function to destroy CPU
- AddressSpace
-To: zhukeqian <zhukeqian1@huawei.com>
-Cc: Salil Mehta <salil.mehta@huawei.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "maz@kernel.org" <maz@kernel.org>,
- "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
- Jonathan Cameron <jonathan.cameron@huawei.com>, 
- "lpieralisi@kernel.org" <lpieralisi@kernel.org>, 
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, 
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "imammedo@redhat.com" <imammedo@redhat.com>, 
- "andrew.jones@linux.dev" <andrew.jones@linux.dev>,
- "david@redhat.com" <david@redhat.com>, 
- "philmd@linaro.org" <philmd@linaro.org>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, 
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>, 
- "mst@redhat.com" <mst@redhat.com>, "will@kernel.org" <will@kernel.org>,
- "gshan@redhat.com" <gshan@redhat.com>, 
- "rafael@kernel.org" <rafael@kernel.org>,
- "alex.bennee@linaro.org" <alex.bennee@linaro.org>, 
- "linux@armlinux.org.uk" <linux@armlinux.org.uk>, 
- "darren@os.amperecomputing.com" <darren@os.amperecomputing.com>, 
- "ilkka@os.amperecomputing.com" <ilkka@os.amperecomputing.com>, 
- "vishnu@os.amperecomputing.com" <vishnu@os.amperecomputing.com>, 
- "karl.heubaum@oracle.com" <karl.heubaum@oracle.com>,
- "miguel.luis@oracle.com" <miguel.luis@oracle.com>, 
- "wangxiongfeng (C)" <wangxiongfeng2@huawei.com>,
- "wangyanan (Y)" <wangyanan55@huawei.com>, 
- "jiakernel2@gmail.com" <jiakernel2@gmail.com>,
- "Wanghaibin (D)" <wanghaibin.wang@huawei.com>, 
- "maobibo@loongson.cn" <maobibo@loongson.cn>,
- "lixianglai@loongson.cn" <lixianglai@loongson.cn>, 
- Linuxarm <linuxarm@huawei.com>, yuzenghui <yuzenghui@huawei.com>
-Content-Type: multipart/alternative; boundary="000000000000321bd9061796eeec"
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=salil.mehta@opnsrc.net; helo=mail-ej1-x635.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/14] Accel / SH4 / UI patches for 2024-05-03
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20240503153613.38709-1-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240503153613.38709-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -123,167 +97,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000321bd9061796eeec
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 5/3/24 08:35, Philippe Mathieu-Daudé wrote:
+> The following changes since commit fd87be1dada5672f877e03c2ca8504458292c479:
+> 
+>    Merge tag 'accel-20240426' ofhttps://github.com/philmd/qemu  into staging (2024-04-26 15:28:13 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://github.com/philmd/qemu.git  tags/accel-sh4-ui-20240503
+> 
+> for you to fetch changes up to 2d27c91e2b72ac7a65504ac207c89262d92464eb:
+> 
+>    ui/cocoa.m: Drop old macOS-10.12-and-earlier compat ifdefs (2024-05-03 17:33:26 +0200)
+> 
+> ----------------------------------------------------------------
+> - Fix NULL dereference in NVMM & WHPX init_vcpu()
+> - Move user emulation headers "exec/user" to "user"
+> - Fix SH-4 ADDV / SUBV opcodes
+> - Drop Cocoa compatility on macOS <= 10.12
+> - Update Anthony PERARD email
 
-Hi Zhukeqian,
-
-On Fri, Mar 15, 2024 at 1:17=E2=80=AFAM zhukeqian <zhukeqian1@huawei.com> w=
-rote:
-
-> Hi Salil,
->
-> [...]
->
-> +void cpu_address_space_destroy(CPUState *cpu, int asidx) {
-> +    CPUAddressSpace *cpuas;
-> +
-> +    assert(cpu->cpu_ases);
-> +    assert(asidx >=3D 0 && asidx < cpu->num_ases);
-> +    /* KVM cannot currently support multiple address spaces. */
-> +    assert(asidx =3D=3D 0 || !kvm_enabled());
-> +
-> +    cpuas =3D &cpu->cpu_ases[asidx];
-> +    if (tcg_enabled()) {
-> +        memory_listener_unregister(&cpuas->tcg_as_listener);
-> +    }
-> +
-> +    address_space_destroy(cpuas->as);
-> +    g_free_rcu(cpuas->as, rcu);
->
-> In address_space_destroy(), it calls call_rcu1() on cpuas->as which will
-> set do_address_space_destroy() as the rcu func.
-> And g_free_rcu() also calls call_rcu1() on cpuas->as which will overwrite
-> the rcu func as g_free().
->
-> Then I think the g_free() may be called twice in rcu thread, please verif=
-y
-> that.
->
-> The source code of call_rcu1:
->
-> void call_rcu1(struct rcu_head *node, void (*func)(struct rcu_head *node)=
-)
-> {
->     node->func =3D func;
->     enqueue(node);
->     qatomic_inc(&rcu_call_count);
->     qemu_event_set(&rcu_call_ready_event);
-> }
->
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
 
-Thanks for testing and identifying this. Let me have a look and will get
-back to you.
+r~
 
-Thanks
-Salil
-
-
-
->
-> Thanks,
-> Keqian
->
-> +
-> +    if (asidx =3D=3D 0) {
-> +        /* reset the convenience alias for address space 0 */
-> +        cpu->as =3D NULL;
-> +    }
-> +
-> +    if (--cpu->cpu_ases_count =3D=3D 0) {
-> +        g_free(cpu->cpu_ases);
-> +        cpu->cpu_ases =3D NULL;
-> +    }
-> +}
-> +
->  AddressSpace *cpu_get_address_space(CPUState *cpu, int asidx)  {
->      /* Return the AddressSpace corresponding to the specified index */
-> --
-> 2.34.1
->
->
-
---000000000000321bd9061796eeec
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">Hi Zhukeqian,</div><br><div class=3D"gmai=
-l_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Mar 15, 2024 at 1:17=
-=E2=80=AFAM zhukeqian &lt;<a href=3D"mailto:zhukeqian1@huawei.com">zhukeqia=
-n1@huawei.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" sty=
-le=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddi=
-ng-left:1ex">Hi Salil,<br>
-<br>
-[...]<br>
-<br>
-+void cpu_address_space_destroy(CPUState *cpu, int asidx) {<br>
-+=C2=A0 =C2=A0 CPUAddressSpace *cpuas;<br>
-+<br>
-+=C2=A0 =C2=A0 assert(cpu-&gt;cpu_ases);<br>
-+=C2=A0 =C2=A0 assert(asidx &gt;=3D 0 &amp;&amp; asidx &lt; cpu-&gt;num_ase=
-s);<br>
-+=C2=A0 =C2=A0 /* KVM cannot currently support multiple address spaces. */<=
-br>
-+=C2=A0 =C2=A0 assert(asidx =3D=3D 0 || !kvm_enabled());<br>
-+<br>
-+=C2=A0 =C2=A0 cpuas =3D &amp;cpu-&gt;cpu_ases[asidx];<br>
-+=C2=A0 =C2=A0 if (tcg_enabled()) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 memory_listener_unregister(&amp;cpuas-&gt;tcg_=
-as_listener);<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 address_space_destroy(cpuas-&gt;as);<br>
-+=C2=A0 =C2=A0 g_free_rcu(cpuas-&gt;as, rcu);<br>
-<br>
-In address_space_destroy(), it calls call_rcu1() on cpuas-&gt;as which will=
- set do_address_space_destroy() as the rcu func.<br>
-And g_free_rcu() also calls call_rcu1() on cpuas-&gt;as which will overwrit=
-e the rcu func as g_free().<br>
-<br>
-Then I think the g_free() may be called twice in rcu thread, please verify =
-that.<br>
-<br>
-The source code of call_rcu1:<br>
-<br>
-void call_rcu1(struct rcu_head *node, void (*func)(struct rcu_head *node))<=
-br>
-{<br>
-=C2=A0 =C2=A0 node-&gt;func =3D func;<br>
-=C2=A0 =C2=A0 enqueue(node);<br>
-=C2=A0 =C2=A0 qatomic_inc(&amp;rcu_call_count);<br>
-=C2=A0 =C2=A0 qemu_event_set(&amp;rcu_call_ready_event);<br>
-}<br></blockquote><div><br></div><div><br></div><div>Thanks for testing and=
- identifying this. Let me have a look and will get back to you.</div><div><=
-br></div><div>Thanks</div><div>Salil</div><div><br></div><div>=C2=A0</div><=
-blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
-eft:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-Thanks,<br>
-Keqian<br>
-<br>
-+<br>
-+=C2=A0 =C2=A0 if (asidx =3D=3D 0) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* reset the convenience alias for address spa=
-ce 0 */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 cpu-&gt;as =3D NULL;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 if (--cpu-&gt;cpu_ases_count =3D=3D 0) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free(cpu-&gt;cpu_ases);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 cpu-&gt;cpu_ases =3D NULL;<br>
-+=C2=A0 =C2=A0 }<br>
-+}<br>
-+<br>
-=C2=A0AddressSpace *cpu_get_address_space(CPUState *cpu, int asidx)=C2=A0 {=
-<br>
-=C2=A0 =C2=A0 =C2=A0/* Return the AddressSpace corresponding to the specifi=
-ed index */<br>
---<br>
-2.34.1<br>
-<br>
-</blockquote></div></div>
-
---000000000000321bd9061796eeec--
 
