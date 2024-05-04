@@ -4,83 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71351C4345F
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 May 2024 01:18:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C19C6C4345F
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 May 2024 01:42:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s342H-0001pC-41; Fri, 03 May 2024 21:17:57 -0400
+	id 1s34Or-0007g9-OU; Fri, 03 May 2024 21:41:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s342F-0001oo-Qh
- for qemu-devel@nongnu.org; Fri, 03 May 2024 21:17:55 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
+ id 1s34On-0007f5-Ja
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 21:41:13 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s342E-0006IE-6m
- for qemu-devel@nongnu.org; Fri, 03 May 2024 21:17:55 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-6f44dd41a5cso292464b3a.0
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 18:17:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
+ id 1s34Ol-0001sy-Du
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 21:41:13 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-a59a5f81af4so40090166b.3
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 18:41:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714785472; x=1715390272; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Znv/A1peFrZeg+01cCtMglkTKs7jCgeyrCtMnIuzLxg=;
- b=poB/N8reRTYTZDffvS32YRCiNKHxV1/NjNcsEP6G5nomK6RCF7wLWKtoEB2MmfJpP2
- nABnRzvMafwN68+z7AhN7cl+ONMLhGCfTaMCjejqjjMgi0ItU3XWp8Ug0RX7y1uP9x7d
- VKMPTqDPXuUaUCFAknuuB/ie6yLZdDoXV9awCshbyHxANi/hUViKUbAt7e+nJSETipAO
- +5jLKiLNlGuulJzg5aWRwUz35z5V4QEKW/lCnYob5yGAorN+nzBbxDn8P2RC9i1wnaDo
- oOO4ADhi/TW5Bnz5NzoslSWxwp1Akbkqs8y9gopQ4ShlT4V9gtxwpBPRUJ3+bHoa+3ca
- 1ERg==
+ d=opnsrc.net; s=google; t=1714786869; x=1715391669; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=cMaSACtjO3SUkgFNE0eUoOTbz0mIrS43V9gIJCsSjMw=;
+ b=Tm+x6g3uquRdLWEaDCV1sDPeWQ9/odIp75WT4cU4MIAv5LxqR4CXo42KgtqKbq3juD
+ 1APx9TxKrB65jav5ndnlOLSsj+Eux7YtcIvtWnsEpKcsEk/lnli20NWG2ZJhRuIq5loT
+ 7NxBmbg3U6D+miMloyfs2wf0s2m8YfNfecyiYJ28EN20Ke5B2+tW42UFJ59hbuSFH7cz
+ r7BTA1pwJqglNMQnnHVJvaApvIFhNioiQecUiClbZrlOFx5w+k3ImDhozIf8AOhpGYiQ
+ X99Af2T/uO5fIdtctiqsGcYm66eoYJSNOuEfJwyCuvPuxD0bs/MM4StKkb0pU1V9UuCw
+ +LXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714785472; x=1715390272;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Znv/A1peFrZeg+01cCtMglkTKs7jCgeyrCtMnIuzLxg=;
- b=TuT+FYSeYLWVPg0TZe2l+NDHUsJQUJDFtA3eaOC/lnvCEL5sWswqLeU678eh8/EOaL
- rLCuWlb22PrdBhVnVKoOWTlBRNmhjcXZjqOPih1geeGfZVNAMmb5wSNdf6IlLeRUPYY+
- q7YmQdylDUnJFD7zPCDMw8OQIOGTva1h9J9r93IF0/i79omG/Y64d8hDYqEoNJ3o/x8u
- H0d1X10BDaFIQpoj70eSC6YItH59zs74EfVYjKzzgHfAcZfRIS0/d5iHQftSfPbCn+xx
- SIX9bW5zP1gEIOoUQWlSDjjXnLIHaCaCUg4oVdzmTlOwS/3nhK62+DKPnX74HBZhTKT2
- lUww==
+ d=1e100.net; s=20230601; t=1714786869; x=1715391669;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=cMaSACtjO3SUkgFNE0eUoOTbz0mIrS43V9gIJCsSjMw=;
+ b=T4WEoT9zZhtiv4pH168TkhbeOWW/JonE6cp49w02lxTU9K0Tu6FtA6pAtxfj8aRYvj
+ DnQ0irR1b+x4XD6HrTrSpAPE3GBAQ6gz4X13guAACc4wkQoVuuiCpcOebxI97Xas8xWd
+ 4NUON2QC2787CBYEgxvHH3YL75xI4Qlo61r1ok9gaaiUYTui2wCq3+KfaTwxKW3TQ9EM
+ F5+zxSCKOTXTGq8epHVfVJw27WgOxptQnZkxrSRdAnoWadlUn8GSAhZbKfMxB9sXOf3N
+ uQ9LH3H2hXal5SfzYX62uGzxPeEO2bH4nw5Q2Rj6lyb+jt5hvV1NklwXAXbjOj6YjNnd
+ OONQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXCfPWhzb6cxBvCzc5HO9Y+0hovPbXdD9RFtFYqLV/WoJ9DG8KhZaj/xnW1RbMSwHfLe4TsStfZaam/qtxhw2kYoVfZmx4=
-X-Gm-Message-State: AOJu0YxTovHk0gEjHm8QQKOJQdDvS3aFO7xUVRWzNoK02gCJw69BWyHp
- JWh4iYIFgqTyoqKaVJTdD2JOBpfTTP9Q8fCdNF6WOA2F+L0xFlWLoUc4xzbB5vs=
-X-Google-Smtp-Source: AGHT+IG07XmUhsjR2lRiHS/Kk+S9SbRu5dJoYHFb5+WW3ZlBTXh/k8fAX6mAqveBngdSuvLzp8pmcQ==
-X-Received: by 2002:a05:6a20:7782:b0:1ad:7bfd:549f with SMTP id
- c2-20020a056a20778200b001ad7bfd549fmr4118720pzg.48.1714785472243; 
- Fri, 03 May 2024 18:17:52 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
- by smtp.gmail.com with ESMTPSA id
- fi7-20020a056a00398700b006ed007b3596sm3690222pfb.69.2024.05.03.18.17.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 May 2024 18:17:51 -0700 (PDT)
-Message-ID: <50c27a9f-fd75-4f8e-9a2d-488d8df4f9b9@linaro.org>
-Date: Fri, 3 May 2024 18:17:49 -0700
+ AJvYcCVenjNQJqPBapA4IediSFYArMCRi2LQq6QkVVSn9d0T39BuCAKv8TH8UQWMKzXYTGIgsWP5HLpVgYKoWiXJnbbfNDRJkd4=
+X-Gm-Message-State: AOJu0YzqupAwqAp90pWtZ3+/pdDBNNXgvrjWG7esmBJtpf6DfD+kKO54
+ GcNBoU+XuA8z0tarFoDKcWFlBfBwrQDIBIbpaST1Bl8cE6bxrSXz4D1zO9a7mn7NbMQPyViKE+p
+ SHkkPm7ZdsCI9F6Qh59UFg2QRt5+JXeNq7E7k1Q==
+X-Google-Smtp-Source: AGHT+IHjmytAzojMfNdYwcFmfP1vW50Hh3Q+jDWe+k2a+JTyeZh4d7TBP15mECEOVzFwePmUI2mZfJryFWNQJZ5yAHI=
+X-Received: by 2002:a17:906:52cc:b0:a59:9f11:2b66 with SMTP id
+ w12-20020a17090652cc00b00a599f112b66mr974332ejn.36.1714786869051; Fri, 03 May
+ 2024 18:41:09 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] testing/next: s390x gitlab updates
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org
-References: <20240426153938.1707723-1-alex.bennee@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240426153938.1707723-1-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+References: <20240312020000.12992-1-salil.mehta@huawei.com>
+ <20240312020000.12992-7-salil.mehta@huawei.com>
+ <7bccde5479f044dc87679236b736b861@huawei.com>
+In-Reply-To: <7bccde5479f044dc87679236b736b861@huawei.com>
+From: Salil Mehta <salil.mehta@opnsrc.net>
+Date: Sat, 4 May 2024 02:40:57 +0100
+Message-ID: <CAJ7pxebK_rPFYN_NVLUyAVExb+e0ep7Bx5BuPgRJcmg9s5BQBQ@mail.gmail.com>
+Subject: Re: [PATCH V8 6/8] physmem: Add helper function to destroy CPU
+ AddressSpace
+To: zhukeqian <zhukeqian1@huawei.com>
+Cc: Salil Mehta <salil.mehta@huawei.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "maz@kernel.org" <maz@kernel.org>,
+ "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>, 
+ "lpieralisi@kernel.org" <lpieralisi@kernel.org>, 
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, 
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "imammedo@redhat.com" <imammedo@redhat.com>, 
+ "andrew.jones@linux.dev" <andrew.jones@linux.dev>,
+ "david@redhat.com" <david@redhat.com>, 
+ "philmd@linaro.org" <philmd@linaro.org>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, 
+ "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>, 
+ "mst@redhat.com" <mst@redhat.com>, "will@kernel.org" <will@kernel.org>,
+ "gshan@redhat.com" <gshan@redhat.com>, 
+ "rafael@kernel.org" <rafael@kernel.org>,
+ "alex.bennee@linaro.org" <alex.bennee@linaro.org>, 
+ "linux@armlinux.org.uk" <linux@armlinux.org.uk>, 
+ "darren@os.amperecomputing.com" <darren@os.amperecomputing.com>, 
+ "ilkka@os.amperecomputing.com" <ilkka@os.amperecomputing.com>, 
+ "vishnu@os.amperecomputing.com" <vishnu@os.amperecomputing.com>, 
+ "karl.heubaum@oracle.com" <karl.heubaum@oracle.com>,
+ "miguel.luis@oracle.com" <miguel.luis@oracle.com>, 
+ "wangxiongfeng (C)" <wangxiongfeng2@huawei.com>,
+ "wangyanan (Y)" <wangyanan55@huawei.com>, 
+ "jiakernel2@gmail.com" <jiakernel2@gmail.com>,
+ "Wanghaibin (D)" <wanghaibin.wang@huawei.com>, 
+ "maobibo@loongson.cn" <maobibo@loongson.cn>,
+ "lixianglai@loongson.cn" <lixianglai@loongson.cn>, 
+ Linuxarm <linuxarm@huawei.com>, yuzenghui <yuzenghui@huawei.com>
+Content-Type: multipart/alternative; boundary="000000000000321bd9061796eeec"
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=salil.mehta@opnsrc.net; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -98,39 +123,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/26/24 08:39, Alex Bennée wrote:
-> I was asked to update the custom gitlab runner from the aging 20.04 to
-> 22.04 which has been done. However I needed to update the provisioning
-> scripts and clean-up some of the cruft. Sadly this doesn't seem to be
-> passing cleanly as we have:
-> 
->    - qtest-s390x/migration-test ERROR           98.94s   killed by signal 6 SIGABRT
->    - failing TCG tests (on s390x HW)
->       - float_convd fails against a generated reference
->       - clc returns 1
+--000000000000321bd9061796eeec
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I've had a look at the clc failure.
+Hi Zhukeqian,
 
-It fails because of bad address space layout, where the NULL page isn't unmapped, so the 
-expected SIGSEGV does *not* happen.
+On Fri, Mar 15, 2024 at 1:17=E2=80=AFAM zhukeqian <zhukeqian1@huawei.com> w=
+rote:
 
-This is unfortunate and we could do better.
+> Hi Salil,
+>
+> [...]
+>
+> +void cpu_address_space_destroy(CPUState *cpu, int asidx) {
+> +    CPUAddressSpace *cpuas;
+> +
+> +    assert(cpu->cpu_ases);
+> +    assert(asidx >=3D 0 && asidx < cpu->num_ases);
+> +    /* KVM cannot currently support multiple address spaces. */
+> +    assert(asidx =3D=3D 0 || !kvm_enabled());
+> +
+> +    cpuas =3D &cpu->cpu_ases[asidx];
+> +    if (tcg_enabled()) {
+> +        memory_listener_unregister(&cpuas->tcg_as_listener);
+> +    }
+> +
+> +    address_space_destroy(cpuas->as);
+> +    g_free_rcu(cpuas->as, rcu);
+>
+> In address_space_destroy(), it calls call_rcu1() on cpuas->as which will
+> set do_address_space_destroy() as the rcu func.
+> And g_free_rcu() also calls call_rcu1() on cpuas->as which will overwrite
+> the rcu func as g_free().
+>
+> Then I think the g_free() may be called twice in rcu thread, please verif=
+y
+> that.
+>
+> The source code of call_rcu1:
+>
+> void call_rcu1(struct rcu_head *node, void (*func)(struct rcu_head *node)=
+)
+> {
+>     node->func =3D func;
+>     enqueue(node);
+>     qatomic_inc(&rcu_call_count);
+>     qemu_event_set(&rcu_call_ready_event);
+> }
+>
 
-However, with the upgrade, --static --enable-pie no longer works.
- From config.log,
 
-cc -m64 -Werror -fPIE -DPIE -o config-temp/qemu-conf.exe config-temp/qemu-conf.c -static-pie
-/usr/bin/ld: cannot find rcrt1.o: No such file or directory
+Thanks for testing and identifying this. Let me have a look and will get
+back to you.
 
-which suggests a missing package.
-
-Alternately, we could drop --static, as it's not really relevant to this testing.  With 
-that, we get PIE dynamically linked executables, which do not trigger the bad layout.
-
-But at some point we should make sure that the NULL page(s) are reserved PROT_NONE for the 
-guest, which ensure this stays fixed.
+Thanks
+Salil
 
 
-r~
 
+>
+> Thanks,
+> Keqian
+>
+> +
+> +    if (asidx =3D=3D 0) {
+> +        /* reset the convenience alias for address space 0 */
+> +        cpu->as =3D NULL;
+> +    }
+> +
+> +    if (--cpu->cpu_ases_count =3D=3D 0) {
+> +        g_free(cpu->cpu_ases);
+> +        cpu->cpu_ases =3D NULL;
+> +    }
+> +}
+> +
+>  AddressSpace *cpu_get_address_space(CPUState *cpu, int asidx)  {
+>      /* Return the AddressSpace corresponding to the specified index */
+> --
+> 2.34.1
+>
+>
+
+--000000000000321bd9061796eeec
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hi Zhukeqian,</div><br><div class=3D"gmai=
+l_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Mar 15, 2024 at 1:17=
+=E2=80=AFAM zhukeqian &lt;<a href=3D"mailto:zhukeqian1@huawei.com">zhukeqia=
+n1@huawei.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" sty=
+le=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddi=
+ng-left:1ex">Hi Salil,<br>
+<br>
+[...]<br>
+<br>
++void cpu_address_space_destroy(CPUState *cpu, int asidx) {<br>
++=C2=A0 =C2=A0 CPUAddressSpace *cpuas;<br>
++<br>
++=C2=A0 =C2=A0 assert(cpu-&gt;cpu_ases);<br>
++=C2=A0 =C2=A0 assert(asidx &gt;=3D 0 &amp;&amp; asidx &lt; cpu-&gt;num_ase=
+s);<br>
++=C2=A0 =C2=A0 /* KVM cannot currently support multiple address spaces. */<=
+br>
++=C2=A0 =C2=A0 assert(asidx =3D=3D 0 || !kvm_enabled());<br>
++<br>
++=C2=A0 =C2=A0 cpuas =3D &amp;cpu-&gt;cpu_ases[asidx];<br>
++=C2=A0 =C2=A0 if (tcg_enabled()) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 memory_listener_unregister(&amp;cpuas-&gt;tcg_=
+as_listener);<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 address_space_destroy(cpuas-&gt;as);<br>
++=C2=A0 =C2=A0 g_free_rcu(cpuas-&gt;as, rcu);<br>
+<br>
+In address_space_destroy(), it calls call_rcu1() on cpuas-&gt;as which will=
+ set do_address_space_destroy() as the rcu func.<br>
+And g_free_rcu() also calls call_rcu1() on cpuas-&gt;as which will overwrit=
+e the rcu func as g_free().<br>
+<br>
+Then I think the g_free() may be called twice in rcu thread, please verify =
+that.<br>
+<br>
+The source code of call_rcu1:<br>
+<br>
+void call_rcu1(struct rcu_head *node, void (*func)(struct rcu_head *node))<=
+br>
+{<br>
+=C2=A0 =C2=A0 node-&gt;func =3D func;<br>
+=C2=A0 =C2=A0 enqueue(node);<br>
+=C2=A0 =C2=A0 qatomic_inc(&amp;rcu_call_count);<br>
+=C2=A0 =C2=A0 qemu_event_set(&amp;rcu_call_ready_event);<br>
+}<br></blockquote><div><br></div><div><br></div><div>Thanks for testing and=
+ identifying this. Let me have a look and will get back to you.</div><div><=
+br></div><div>Thanks</div><div>Salil</div><div><br></div><div>=C2=A0</div><=
+blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
+eft:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+Thanks,<br>
+Keqian<br>
+<br>
++<br>
++=C2=A0 =C2=A0 if (asidx =3D=3D 0) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* reset the convenience alias for address spa=
+ce 0 */<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 cpu-&gt;as =3D NULL;<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 if (--cpu-&gt;cpu_ases_count =3D=3D 0) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free(cpu-&gt;cpu_ases);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 cpu-&gt;cpu_ases =3D NULL;<br>
++=C2=A0 =C2=A0 }<br>
++}<br>
++<br>
+=C2=A0AddressSpace *cpu_get_address_space(CPUState *cpu, int asidx)=C2=A0 {=
+<br>
+=C2=A0 =C2=A0 =C2=A0/* Return the AddressSpace corresponding to the specifi=
+ed index */<br>
+--<br>
+2.34.1<br>
+<br>
+</blockquote></div></div>
+
+--000000000000321bd9061796eeec--
 
