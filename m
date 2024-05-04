@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E41A8C4345F
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 May 2024 15:40:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 728E7C4345F
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 May 2024 15:41:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3HUC-00025T-VQ; Sat, 04 May 2024 11:39:40 -0400
+	id 1s3HU8-00022f-EL; Sat, 04 May 2024 11:39:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s3HUB-00024d-IT
- for qemu-devel@nongnu.org; Sat, 04 May 2024 11:39:39 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1s3HU6-00022E-S4
+ for qemu-devel@nongnu.org; Sat, 04 May 2024 11:39:34 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s3HU9-0006FT-MV
- for qemu-devel@nongnu.org; Sat, 04 May 2024 11:39:39 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-1ec69e3dbcfso4591375ad.0
- for <qemu-devel@nongnu.org>; Sat, 04 May 2024 08:39:37 -0700 (PDT)
+ id 1s3HU5-0006EU-8d
+ for qemu-devel@nongnu.org; Sat, 04 May 2024 11:39:34 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-2b12b52fbe0so433244a91.0
+ for <qemu-devel@nongnu.org>; Sat, 04 May 2024 08:39:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714837176; x=1715441976; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714837172; x=1715441972; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MWL0Ke+Jw6QzfCzbT3Y2xG1VsHYECu3YiFT2GS703uA=;
- b=PZhR3wv5PKdhPjG1nlhi7rmgPT8fVobamOaXatYSr7N2papdTW90+3jMBBpFldf/Y1
- Qa1Al77P7b8hae9wtIFaLLlFrT3g3e8CElHRUSAReH5qAM9uMy6ebR8amQjgO8Q9i8wu
- zzOmlXSqR/teF9T/+2m7GiKTPaasmoA8rfJerQq2HlKSzdSjbdAMoPSTzzpxSXUdPnOK
- SwxP5jPn0VlTwNbC7jDz+5dMO+VBfWlaW1c9+s+MpH336ClJEq6TfIpages9M2V47R1n
- 1hd2nqdzwOPJ1BqHy/7Xxs24BWnRN1yXaCBIAIHU1cvtyOUbOnZgkt4B3vdiTQCn7Bqm
- nH/Q==
+ bh=fi/ZQeRrecbB7BBaXRi3+3SwPGSOgsgXACvVx9J1knk=;
+ b=uGpEVFSSEr8060cP509cO+f4sPuHs+61OeLKLcmndJaneWGPUcAcYvrjRXF+n7M2XK
+ pO3EprLaXPujlCOdCUoD2qAiluaOjhhNebN28oEJ3C7qBagfIXb25nKc5DTqhg3fTiS9
+ kh5EEDQdGkce/sD1hLtUoKrN2RdsuRJHANcg0g9Ur6hb8Wz/K5r8lbrcrnycZ2O2xNvg
+ veTlY/eKbKSQCMINRzN8Pf9hyUcSNiXEDWyjZFTiA/KkYcMWo0e0730tL0ffXL9gCgtU
+ VuNBhCJAj7M49IYzpxXlTlqyRXhAEHkp9kNDCoytSCwO1+ImiBIOpwO8q2J1vFdQTaxN
+ JdGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714837176; x=1715441976;
+ d=1e100.net; s=20230601; t=1714837172; x=1715441972;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MWL0Ke+Jw6QzfCzbT3Y2xG1VsHYECu3YiFT2GS703uA=;
- b=BPZaNx3QM8bEYx6oDLw1l1ty/BebhQrpsH1KFhGBBVcyZxXB9mcqLin8f0Y1dVhx6J
- pIKaftkWTuBttTxgcEdEr96mKoTosFL2X1pbPR0Z9x9qDGLxRw/v0+zGmp4zYRvzBzhx
- 431FcpnJZRmPB96c1HV6eKvOCaONuOwB9DQ6ExkxQYo1yz5LCwQeFoyGHXasJS54G5lm
- pGGY1OCpibtHj3CVfie4qkU7Z8uwS1agzPK3SSLQP/TD8W0dlSdE/hrDDQf+UxpImwjc
- 8XEIj4u2srnMoRAlx6Yr1n55uUed2Td+Fudie+Dn/Jq6wuMdukovAsql3ZfhzAKpzH5U
- n2ug==
-X-Gm-Message-State: AOJu0YxGJqNTQkKEUmTFKqwGfvLxiweGR5QqbjKVtJ7kerN9VLRf0mG2
- Z3Oq/+yVMwECMRSfY8QL9pTjk4QsBYiUBe0EwpLhWYPK8UPliEX7vILSJyBHfbEg6p0Yh6X+uQA
- V
-X-Google-Smtp-Source: AGHT+IGkBsFt3l6KcPPa1IN/eZwLHpSi+psnnFFYDPbIf5X7+x3aSG0jLFiIIAeS8U4/MIOrc7kS9A==
-X-Received: by 2002:a17:903:234b:b0:1ec:a65a:e4ad with SMTP id
- c11-20020a170903234b00b001eca65ae4admr6419420plh.66.1714837176291; 
- Sat, 04 May 2024 08:39:36 -0700 (PDT)
+ bh=fi/ZQeRrecbB7BBaXRi3+3SwPGSOgsgXACvVx9J1knk=;
+ b=hSI3C05QS4+fiCOgTxrvDk2eHTSlra8UotxkUyl+jcTkJi9aqUDY2tV4mkGiiOqiaE
+ nqY3HkeUW4kgTOlyGgYg4b7fy8189/poGf7D8YP1P6nPCyZKR/H6SxxiLM4LU7G+12sJ
+ 90aNU3YQdjFuyw0OFYTgkeqa5rvCMkayF38ZB42toAJG0oGQokjRRDXkWa/VEWQkND43
+ P3W2qoHg3tBGOFgxcV+zHpi/kKVlzyYZ/d0W3zOGm3w9nJcrMVU8EyBkSs9OFVXm4Xt3
+ FBJDUus1Gr7IJOfiu8lTOzMQpWuwdUt+MiZJ6ItvuIVBWkiJ6InDA/NCO+OuGoIgigul
+ fiWQ==
+X-Gm-Message-State: AOJu0YxhNVmHRBm1NUGgXdQThyYv+hr0BVkeDNoueXbdBMpF2m1Omb7l
+ zglpx99UDd1Wh4SbIgHBDtmc6LN3pA9FvTWRW0dhRBvgIaG7iZNEXHksv+IFe6T6zFPw0D5Ge7m
+ 0
+X-Google-Smtp-Source: AGHT+IG/hzdw5QCUao4sdoXVF0FENHoiHnoJROWBIlnUDLQRv7rt+zJGfwwarl4+o9JEA9QkQg3AEQ==
+X-Received: by 2002:a17:90b:684:b0:2b4:329e:e373 with SMTP id
+ m4-20020a17090b068400b002b4329ee373mr5941195pjz.6.1714837171872; 
+ Sat, 04 May 2024 08:39:31 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- n15-20020a170902e54f00b001e4d22f828fsm5197859plf.33.2024.05.04.08.39.35
+ n15-20020a170902e54f00b001e4d22f828fsm5197859plf.33.2024.05.04.08.39.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 04 May 2024 08:39:35 -0700 (PDT)
+ Sat, 04 May 2024 08:39:31 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 9/9] target/alpha: Implement CF_PCREL
-Date: Sat,  4 May 2024 08:39:26 -0700
-Message-Id: <20240504153926.357845-10-richard.henderson@linaro.org>
+Subject: [PULL 4/9] target/alpha: Inline DISAS_PC_UPDATED and return
+ DISAS_NORETURN
+Date: Sat,  4 May 2024 08:39:21 -0700
+Message-Id: <20240504153926.357845-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240504153926.357845-1-richard.henderson@linaro.org>
 References: <20240504153926.357845-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,136 +96,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20240503072014.24751-10-philmd@linaro.org>
----
- target/alpha/cpu.c       | 23 ++++++++++++++++++++++-
- target/alpha/translate.c | 29 +++++++++++++++++++++++++----
- 2 files changed, 47 insertions(+), 5 deletions(-)
+Inline DISAS_PC_UPDATED switch case from alpha_tr_tb_stop():
 
-diff --git a/target/alpha/cpu.c b/target/alpha/cpu.c
-index f98d022671..0e2fbcb397 100644
---- a/target/alpha/cpu.c
-+++ b/target/alpha/cpu.c
-@@ -38,12 +38,27 @@ static vaddr alpha_cpu_get_pc(CPUState *cs)
-     return env->pc;
- }
- 
-+static void alpha_cpu_synchronize_from_tb(CPUState *cs,
-+                                          const TranslationBlock *tb)
-+{
-+    /* The program counter is always up to date with CF_PCREL. */
-+    if (!(tb_cflags(tb) & CF_PCREL)) {
-+        CPUAlphaState *env = cpu_env(cs);
-+        env->pc = tb->pc;
-+    }
-+}
-+
- static void alpha_restore_state_to_opc(CPUState *cs,
-                                        const TranslationBlock *tb,
-                                        const uint64_t *data)
- {
-     CPUAlphaState *env = cpu_env(cs);
--    env->pc = data[0];
-+
-+    if (tb_cflags(tb) & CF_PCREL) {
-+        env->pc = (env->pc & TARGET_PAGE_MASK) | data[0];
-+    } else {
-+        env->pc = data[0];
-+    }
- }
- 
- static bool alpha_cpu_has_work(CPUState *cs)
-@@ -78,6 +93,11 @@ static void alpha_cpu_realizefn(DeviceState *dev, Error **errp)
-     AlphaCPUClass *acc = ALPHA_CPU_GET_CLASS(dev);
-     Error *local_err = NULL;
- 
-+#ifndef CONFIG_USER_ONLY
-+    /* Use pc-relative instructions in system-mode */
-+    cs->tcg_cflags |= CF_PCREL;
-+#endif
-+
-     cpu_exec_realizefn(cs, &local_err);
-     if (local_err != NULL) {
-         error_propagate(errp, local_err);
-@@ -190,6 +210,7 @@ static const struct SysemuCPUOps alpha_sysemu_ops = {
- 
- static const TCGCPUOps alpha_tcg_ops = {
-     .initialize = alpha_translate_init,
-+    .synchronize_from_tb = alpha_cpu_synchronize_from_tb,
-     .restore_state_to_opc = alpha_restore_state_to_opc,
- 
- #ifdef CONFIG_USER_ONLY
+    switch (ctx->base.is_jmp) {
+    ...
+    case DISAS_PC_UPDATED:
+        tcg_gen_lookup_and_goto_ptr();
+        break;
+
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240424234436.995410-4-richard.henderson@linaro.org>
+[PMD: Split bigger patch, part 2/5]
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20240503072014.24751-5-philmd@linaro.org>
+---
+ target/alpha/translate.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
 diff --git a/target/alpha/translate.c b/target/alpha/translate.c
-index 86402d96d5..db847e7a23 100644
+index 9ad7bf6e5f..01914e7b56 100644
 --- a/target/alpha/translate.c
 +++ b/target/alpha/translate.c
-@@ -54,6 +54,9 @@ struct DisasContext {
-     uint32_t tbflags;
-     int mem_idx;
- 
-+    /* True if generating pc-relative code.  */
-+    bool pcrel;
-+
-     /* implver and amask values for this CPU.  */
-     int implver;
-     int amask;
-@@ -254,7 +257,12 @@ static void st_flag_byte(TCGv val, unsigned shift)
- 
- static void gen_pc_disp(DisasContext *ctx, TCGv dest, int32_t disp)
- {
--    tcg_gen_movi_i64(dest, ctx->base.pc_next + disp);
-+    uint64_t addr = ctx->base.pc_next + disp;
-+    if (ctx->pcrel) {
-+        tcg_gen_addi_i64(dest, cpu_pc, addr - ctx->base.pc_first);
-+    } else {
-+        tcg_gen_movi_i64(dest, addr);
-+    }
- }
- 
- static void gen_excp_1(int exception, int error_code)
-@@ -433,8 +441,14 @@ static DisasJumpType gen_store_conditional(DisasContext *ctx, int ra, int rb,
- static void gen_goto_tb(DisasContext *ctx, int idx, int32_t disp)
- {
-     if (translator_use_goto_tb(&ctx->base, ctx->base.pc_next + disp)) {
--        tcg_gen_goto_tb(idx);
--        gen_pc_disp(ctx, cpu_pc, disp);
-+        /* With PCREL, PC must always be up-to-date. */
-+        if (ctx->pcrel) {
-+            gen_pc_disp(ctx, cpu_pc, disp);
-+            tcg_gen_goto_tb(idx);
-+        } else {
-+            tcg_gen_goto_tb(idx);
-+            gen_pc_disp(ctx, cpu_pc, disp);
-+        }
-         tcg_gen_exit_tb(ctx->base.tb, idx);
+@@ -450,7 +450,8 @@ static DisasJumpType gen_bdirect(DisasContext *ctx, int ra, int32_t disp)
+         return DISAS_NORETURN;
      } else {
-         gen_pc_disp(ctx, cpu_pc, disp);
-@@ -2852,6 +2866,7 @@ static void alpha_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cpu)
- 
-     ctx->tbflags = ctx->base.tb->flags;
-     ctx->mem_idx = alpha_env_mmu_index(env);
-+    ctx->pcrel = ctx->base.tb->cflags & CF_PCREL;
-     ctx->implver = env->implver;
-     ctx->amask = env->amask;
- 
-@@ -2887,7 +2902,13 @@ static void alpha_tr_tb_start(DisasContextBase *db, CPUState *cpu)
- 
- static void alpha_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
- {
--    tcg_gen_insn_start(dcbase->pc_next);
-+    DisasContext *ctx = container_of(dcbase, DisasContext, base);
-+
-+    if (ctx->pcrel) {
-+        tcg_gen_insn_start(dcbase->pc_next & ~TARGET_PAGE_MASK);
-+    } else {
-+        tcg_gen_insn_start(dcbase->pc_next);
-+    }
+         tcg_gen_movi_i64(cpu_pc, dest);
+-        return DISAS_PC_UPDATED;
++        tcg_gen_lookup_and_goto_ptr();
++        return DISAS_NORETURN;
+     }
  }
  
- static void alpha_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
+@@ -479,7 +480,8 @@ static DisasJumpType gen_bcond_internal(DisasContext *ctx, TCGCond cond,
+         TCGv_i64 p = tcg_constant_i64(ctx->base.pc_next);
+ 
+         tcg_gen_movcond_i64(cond, cpu_pc, cmp, i, d, p);
+-        return DISAS_PC_UPDATED;
++        tcg_gen_lookup_and_goto_ptr();
++        return DISAS_NORETURN;
+     }
+ }
+ 
 -- 
 2.34.1
 
