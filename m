@@ -4,78 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0825C4345F
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 May 2024 14:21:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E44ADC4345F
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 May 2024 14:34:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3GG5-0001wM-Lm; Sat, 04 May 2024 10:21:01 -0400
+	id 1s3GRf-0004gC-1R; Sat, 04 May 2024 10:32:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1s3GFu-0001ob-UK
- for qemu-devel@nongnu.org; Sat, 04 May 2024 10:20:51 -0400
-Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s3GRd-0004fz-GD
+ for qemu-devel@nongnu.org; Sat, 04 May 2024 10:32:57 -0400
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1s3GFs-0001oZ-QR
- for qemu-devel@nongnu.org; Sat, 04 May 2024 10:20:50 -0400
-Received: by mail-lj1-x22d.google.com with SMTP id
- 38308e7fff4ca-2e1d6166521so23361591fa.1
- for <qemu-devel@nongnu.org>; Sat, 04 May 2024 07:20:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s3GRa-0003Ug-5G
+ for qemu-devel@nongnu.org; Sat, 04 May 2024 10:32:56 -0400
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-5bdbe2de25fso428009a12.3
+ for <qemu-devel@nongnu.org>; Sat, 04 May 2024 07:32:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1714832447; x=1715437247; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9+faylab5uzDb2HMirTowOpsqyES8jFPS0qxmhWlqs0=;
- b=UIgwh65SczWI2FFTONbK5SVlXruAvxj52/GCxR/VcPcoyQeOllIC0V5u+Yjw5/bBIV
- 79+oCoZMrr7nQjaumFN0u3cJK5kQxD2oQq/pSsSvap+1XglDOmD/cPMALGjIxV3E1tZH
- mnzca4DO6XTGNbtxmUf2ShJOckxvjgQXCrgu/0e/JgFvgglkUBlzgfO2yZTQPZPEI2k3
- Tcx1YVA2NdnVAGvysei/tdwmVf8IRnVg4Ay7y0CIX2CeA/HiW06axPeeKtxQ+oDbE9yc
- ulwvoaLGaJuC/3k3Mbrc6f6CBYvuumxih+YhJl+Kxwx4tuZGfj4uVvrTHNU3OW4kjiPU
- +kxg==
+ d=linaro.org; s=google; t=1714833171; x=1715437971; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=qYOn5XI4TmMG4xq9q1rS47FLba5V3BJLGhlysxtkrAg=;
+ b=o6THBbV9+opra5RmNz1llryySf8oK6pMo7hpF3aufDHfo+BK9Nm6vDn2rc7VP/TxzH
+ 6TQDqgB/SQ0n7bRAXaIMZyR+rVtV9btdDXO1NdZUaIGafxBsGdoA1zsNgV+YfA6JU0R3
+ rP4nTCPDc/nJeNZTphVqtfoZj+T6/ZQvsJgUsoWoOIdCECG/e3rQMhvH8GAjpIo7hhot
+ Ov+FwO8HfAaNVQijSM5cDc1wRbfClwEGYpCL4vo7W2GOVMOgnA8xkbmXUesKFFcZ0ofe
+ x5elvsj9RQj0kM5h5ztCMSjg1xMaU8ArtP0ki9AFHzVPp+OM+jK3czob5Sv9OSbgaViB
+ JHrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714832447; x=1715437247;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=9+faylab5uzDb2HMirTowOpsqyES8jFPS0qxmhWlqs0=;
- b=H4WLHN4OItcsgyj9fNfdO/wYvOlobgpWLr6lot7AFoh9a7nKiwSFg6VjoSOmPD3l1G
- 7JdRCA/47/0bdbfGiB1eArfUOXbObaVFAtqXXwDojtvVIbOGScJnVhSo6XN9NrQH7wSC
- 4PJbp73M3mHbUUQPmWaZWR6WNBdOXth7kd7Mixg8YQCt8Gtk7HhouP6vbsx/MsRnp2yo
- UcWmTBEDgUOVBnzrTOukCCSiH+rhsW135HlmC7lZPP+5wPZ+4iH3RYAwWKxa3nGKH2VV
- HpG85/9ZYfggYxx7HGdWH3tqvwxJ65dskvDfJnj1/Q6j/g4AjwlYxGVPS8Ajl+bwJJ6I
- Fm9Q==
-X-Gm-Message-State: AOJu0YxtYlP0X1hBbUmEL3/gh0cbJSq6iBrgWJZ3BkkhczRX60F6vXOJ
- KAGpVhmjEbPtJfz+Ty4B+mNeiLo2YG6KSBQnWGg8OekkRnppegnGHZUbseozKRoHctz3R1A6QD2
- tzi2kifxAJtB/D8ZnSWGk6VEwn9c=
-X-Google-Smtp-Source: AGHT+IHO6n73/ZMo20W75xa+1MIPEt7AQrNsaq3qrRtY2mskfZEXchYC5yfgh2nZgHICGcKadLZz7o3ddksfntLakOE=
-X-Received: by 2002:a05:651c:211c:b0:2e2:f3f:9636 with SMTP id
- a28-20020a05651c211c00b002e20f3f9636mr1843173ljq.26.1714832446764; Sat, 04
- May 2024 07:20:46 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1714833171; x=1715437971;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qYOn5XI4TmMG4xq9q1rS47FLba5V3BJLGhlysxtkrAg=;
+ b=N/Z0tuUAcKMTPxxvWeGa5sQMRb2X9atGocccTnGRGQJ5XmXa+7xZ1sWEw2rIrCpTg2
+ CMOsDEMwR9PBUA08NwnucFppl5dydZ9jctjCVQPIAlSClUdZkDA9kvU/VJT+CgP+c3aJ
+ /G/pHPgDQW5ilZoh+YB22soQNBqtPB2pv8zgoNn6xDyZLvAkZmGQXX18mLAqAF6W5UR8
+ 7cGbpgsDLz3L9ctKcinbNMjBFp5dyuCTgiHuYretZDo0yflS6MfWGBJu7zneaEI+XAWP
+ Xq3X9YLcxbwy4nrbH9t2+iTg6B9yJjHURQSej4XUDSp3b+CnBXSmWGEBZWMD9T5CXWWe
+ Lo0g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW4vKb3dK+ZRTJ0dn0X9SmJC0GJ841lckMr6ZPR1rZE3h7jwX3k86b8IcoM2aORRhv9fnw+AXne+u2U8EPlxWeCRSsTJ+8=
+X-Gm-Message-State: AOJu0Yx89Mv9K/Wi+PeZXeUHpvu47Wdq85r9rzexQGAn6SacAZrv8+zH
+ QeWyeTaPYGMrmOkNW0VAJqKNdpB2tQioU9NbmYqTguJBbE4Es2FRNJcY6Fqz80CuwIOOfc0okUy
+ k
+X-Google-Smtp-Source: AGHT+IG/yluUTX9LivSNXz38RL8SxNIBeA/p28plF7TZ3fKJAvArXVozT83fDntQ1zQJ4r7RH2J+bA==
+X-Received: by 2002:a17:90b:1e0c:b0:2b3:28df:92bb with SMTP id
+ pg12-20020a17090b1e0c00b002b328df92bbmr5415595pjb.13.1714833170926; 
+ Sat, 04 May 2024 07:32:50 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ by smtp.gmail.com with ESMTPSA id
+ lt10-20020a17090b354a00b002a2f6da006csm4981295pjb.52.2024.05.04.07.32.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 04 May 2024 07:32:50 -0700 (PDT)
+Message-ID: <de22b9fc-6d8c-47aa-a192-878904efd3db@linaro.org>
+Date: Sat, 4 May 2024 07:32:48 -0700
 MIME-Version: 1.0
-References: <20240419183135.12276-1-dorjoychy111@gmail.com>
- <CAFEAcA9w1PeT4X=eX6Xh64vNWC1FPQdgGCXJkf0+=3kDLuYVsQ@mail.gmail.com>
- <CAFfO_h4zNuk0xuxaiGAMPcaQR5+CGuSnE7sr6OY8r-yiGow_ow@mail.gmail.com>
- <CAFEAcA-CGkdi2jzHLM6oKQTKwqVXVUe_F+0nrTDuoV3XFeZuzw@mail.gmail.com>
-In-Reply-To: <CAFEAcA-CGkdi2jzHLM6oKQTKwqVXVUe_F+0nrTDuoV3XFeZuzw@mail.gmail.com>
-From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Date: Sat, 4 May 2024 20:20:34 +0600
-Message-ID: <CAFfO_h6o3+CxwgMqkG6UQ0OVr1ZQjf9fQAf6LE6y+PCKGQ478w@mail.gmail.com>
-Subject: Re: [PATCH] target/arm: fix MPIDR value for ARM CPUs with SMT
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
- envelope-from=dorjoychy111@gmail.com; helo=mail-lj1-x22d.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/arm/npcm7xx: remove setting of mp-affinity
+To: Dorjoy Chowdhury <dorjoychy111@gmail.com>, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, kfting@nuvoton.com, wuhaotsh@google.com
+References: <20240504141733.14813-1-dorjoychy111@gmail.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240504141733.14813-1-dorjoychy111@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -93,64 +98,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, May 4, 2024 at 7:31=E2=80=AFPM Peter Maydell <peter.maydell@linaro.=
-org> wrote:
->
-> On Fri, 3 May 2024 at 19:14, Dorjoy Chowdhury <dorjoychy111@gmail.com> wr=
-ote:
-> >
-> > On Fri, May 3, 2024 at 10:28=E2=80=AFPM Peter Maydell <peter.maydell@li=
-naro.org> wrote:
-> > > In the meantime, there is one tiny bit of this that we can
-> > > do now:
-> > >
-> > > > diff --git a/hw/arm/npcm7xx.c b/hw/arm/npcm7xx.c
-> > > > index cc68b5d8f1..9d5dcf1a3f 100644
-> > > > --- a/hw/arm/npcm7xx.c
-> > > > +++ b/hw/arm/npcm7xx.c
-> > > > @@ -487,7 +487,7 @@ static void npcm7xx_realize(DeviceState *dev, E=
-rror **errp)
-> > > >      /* CPUs */
-> > > >      for (i =3D 0; i < nc->num_cpus; i++) {
-> > > >          object_property_set_int(OBJECT(&s->cpu[i]), "mp-affinity",
-> > > > -                                arm_build_mp_affinity(i, NPCM7XX_M=
-AX_NUM_CPUS),
-> > > > +                                arm_build_mp_affinity(ARM_CPU(&s->=
-cpu[i]), i, NPCM7XX_MAX_NUM_CPUS),
-> > > >                                  &error_abort);
-> > > >          object_property_set_int(OBJECT(&s->cpu[i]), "reset-cbar",
-> > > >                                  NPCM7XX_GIC_CPU_IF_ADDR, &error_ab=
-ort);
-> > >
-> > > In this file, the value of the mp-affinity property that the
-> > > board is setting is always the same as the default value it
-> > > would have anyway. So we can delete the call to
-> > > object_property_set_int() entirely, which gives us one fewer
-> > > place we need to deal with when we do eventually figure out
-> > > how the MPIDR values should work.
-> > >
-> >
-> > Before I send the patch removing the "object_property_set_int" line
-> > for "mp-affinity", just so that I understand, where else is it that
-> > for npcm7xx the mp_affinity is being set? I can't follow the code
-> > easily and I am not seeing where else it is being set to the same
-> > value. It's a bit hard to follow the initialization codes in QEMU.
->
-> The value that npcm7xx sets here is identical to the default value
-> that the Arm CPU will use if we don't set the property at all.
-> If the board doesn't set the property then the cpu mp_affinity field
-> is left at its default of ARM64_AFFINITY_INVALID, which then causes
-> arm_cpu_realizefn() to set it to the result of
->    arm_build_mp_affinity(cs->cpu_index, ARM_DEFAULT_CPUS_PER_CLUSTER)
-> Although ARM_DEFAULT_CPUS_PER_CLUSTER and NPCM7XX_MAX_NUM_CPUS are
-> different, the number of CPUs on an npcm7xx is always exactly 2,
-> so we never get to a CPU number high enough for that difference
-> to cause the mp_affinity value to be different from the default.
-> (The two CPUs get an mp_affinity of 0 and 1.)
->
+On 5/4/24 07:17, Dorjoy Chowdhury wrote:
+> The value of the mp-affinity property being set in npcm7xx_realize is
+> always the same as the default value it would have when arm_cpu_realizefn
+> is called if the property is not set here. So there is no need to set
+> the property value in npcm7xx_realize function.
+> 
+> Signed-off-by: Dorjoy Chowdhury<dorjoychy111@gmail.com>
+> ---
+>   hw/arm/npcm7xx.c | 3 ---
+>   1 file changed, 3 deletions(-)
 
-Understood. Thanks! I sent a patch.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Regards,
-Dorjoy
+r~
 
