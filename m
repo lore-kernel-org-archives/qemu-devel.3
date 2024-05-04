@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F14DC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 May 2024 22:18:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71351C4345F
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 May 2024 01:18:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s31DF-0000Ii-DK; Fri, 03 May 2024 18:17:05 -0400
+	id 1s342H-0001pC-41; Fri, 03 May 2024 21:17:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s31DC-0000I8-Uk
- for qemu-devel@nongnu.org; Fri, 03 May 2024 18:17:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s31DA-0007TY-W9
- for qemu-devel@nongnu.org; Fri, 03 May 2024 18:17:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714774619;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=di9VvHdEplo4sNxBWVyhq/7CPmtSjfq3bdcNcj0/xZE=;
- b=NVCUeOQm2+RBfFK0neFfLxQSbd4z70R3sxXXRuBJZ41jcZ5OunL+DQEcUpCpvxr+gfog4H
- 6Zuwm7dCG3k0caXABZFBYNKuxpLcloGvP+k18EVWS+fuxUkTvj0OTAajxVE3NmQ23nE7mH
- v9vNncKVmcWM7ozgbVl/nO1swehmQ6Y=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-626-BQV4pTTdPGKD6eDEP8gBWw-1; Fri, 03 May 2024 18:16:56 -0400
-X-MC-Unique: BQV4pTTdPGKD6eDEP8gBWw-1
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-2b2c8a007f2so37913a91.0
- for <qemu-devel@nongnu.org>; Fri, 03 May 2024 15:16:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s342F-0001oo-Qh
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 21:17:55 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s342E-0006IE-6m
+ for qemu-devel@nongnu.org; Fri, 03 May 2024 21:17:55 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-6f44dd41a5cso292464b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 03 May 2024 18:17:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714785472; x=1715390272; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Znv/A1peFrZeg+01cCtMglkTKs7jCgeyrCtMnIuzLxg=;
+ b=poB/N8reRTYTZDffvS32YRCiNKHxV1/NjNcsEP6G5nomK6RCF7wLWKtoEB2MmfJpP2
+ nABnRzvMafwN68+z7AhN7cl+ONMLhGCfTaMCjejqjjMgi0ItU3XWp8Ug0RX7y1uP9x7d
+ VKMPTqDPXuUaUCFAknuuB/ie6yLZdDoXV9awCshbyHxANi/hUViKUbAt7e+nJSETipAO
+ +5jLKiLNlGuulJzg5aWRwUz35z5V4QEKW/lCnYob5yGAorN+nzBbxDn8P2RC9i1wnaDo
+ oOO4ADhi/TW5Bnz5NzoslSWxwp1Akbkqs8y9gopQ4ShlT4V9gtxwpBPRUJ3+bHoa+3ca
+ 1ERg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714774615; x=1715379415;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=di9VvHdEplo4sNxBWVyhq/7CPmtSjfq3bdcNcj0/xZE=;
- b=lYH6+9ZYzlSrizkOCruevoIVSpBm1G3yO5PPARMluriiJXJaFYAnjNQf8OWNVhertq
- prG2kr3ROKrQiuXJ0X51SxE65vbs1vG0RIBwO6EMkEi+FcBuws/DuWn02AayT8dvSL1T
- 1OGi/EzwGw5Qv53fZac2wI6w+DXWfEf/Dpjnh5yu6bZ+rURQLx3bRteU3BFwXBTP97Cd
- FhOaiuQN6vz3q7bnNeCiK8XNi3nkYv45K5RXu/PgYTVW1hWPUXrfC8kGSm18Wq/pVtsz
- geMqDteEsxOU+FtnrxotU1nyBNh0xg2fGnNwSYYbEhW0n7zGL47ahCHdLWrUobN21X1Z
- FQ1A==
-X-Gm-Message-State: AOJu0Yz2P8mGxT6u4P50c9YJg+WvIWYKRlT9rcf2xH+pK0zr6Bh5fFj+
- mfcF0PAOWiODixpdDHE5onvDLZUpY30QqOAotw0V5MEhN8Tn4IT4msamf9R56cbL9k7ieFXWIbU
- yoHjbzVNKsv4f3IwtSuObjygxejv21C7hf+ARQRVCxQhuKFPKjlEm
-X-Received: by 2002:a05:6a20:5654:b0:1ae:3504:c5e with SMTP id
- is20-20020a056a20565400b001ae35040c5emr3615486pzc.4.1714774614703; 
- Fri, 03 May 2024 15:16:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHAsUv5nC96DpliB1Q++1T8hnOp5fPeHTsq4tWxlwrRT15qCd381fTrnC/at9TL42sHJ/5lUg==
-X-Received: by 2002:a05:6a20:5654:b0:1ae:3504:c5e with SMTP id
- is20-20020a056a20565400b001ae35040c5emr3615443pzc.4.1714774613876; 
- Fri, 03 May 2024 15:16:53 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- w11-20020aa7858b000000b006efd89cea71sm3554423pfn.84.2024.05.03.15.16.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 03 May 2024 15:16:53 -0700 (PDT)
-Date: Fri, 3 May 2024 18:16:50 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
- Claudio Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>
-Subject: Re: [PATCH 7/9] monitor: fdset: Match against O_DIRECT
-Message-ID: <ZjViUjq2mV-XmH4C@x1n>
-References: <20240426142042.14573-1-farosas@suse.de>
- <20240426142042.14573-8-farosas@suse.de> <ZjUyta-q8GuTDDjJ@x1n>
- <87seyymw4d.fsf@suse.de>
+ d=1e100.net; s=20230601; t=1714785472; x=1715390272;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Znv/A1peFrZeg+01cCtMglkTKs7jCgeyrCtMnIuzLxg=;
+ b=TuT+FYSeYLWVPg0TZe2l+NDHUsJQUJDFtA3eaOC/lnvCEL5sWswqLeU678eh8/EOaL
+ rLCuWlb22PrdBhVnVKoOWTlBRNmhjcXZjqOPih1geeGfZVNAMmb5wSNdf6IlLeRUPYY+
+ q7YmQdylDUnJFD7zPCDMw8OQIOGTva1h9J9r93IF0/i79omG/Y64d8hDYqEoNJ3o/x8u
+ H0d1X10BDaFIQpoj70eSC6YItH59zs74EfVYjKzzgHfAcZfRIS0/d5iHQftSfPbCn+xx
+ SIX9bW5zP1gEIOoUQWlSDjjXnLIHaCaCUg4oVdzmTlOwS/3nhK62+DKPnX74HBZhTKT2
+ lUww==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXCfPWhzb6cxBvCzc5HO9Y+0hovPbXdD9RFtFYqLV/WoJ9DG8KhZaj/xnW1RbMSwHfLe4TsStfZaam/qtxhw2kYoVfZmx4=
+X-Gm-Message-State: AOJu0YxTovHk0gEjHm8QQKOJQdDvS3aFO7xUVRWzNoK02gCJw69BWyHp
+ JWh4iYIFgqTyoqKaVJTdD2JOBpfTTP9Q8fCdNF6WOA2F+L0xFlWLoUc4xzbB5vs=
+X-Google-Smtp-Source: AGHT+IG07XmUhsjR2lRiHS/Kk+S9SbRu5dJoYHFb5+WW3ZlBTXh/k8fAX6mAqveBngdSuvLzp8pmcQ==
+X-Received: by 2002:a05:6a20:7782:b0:1ad:7bfd:549f with SMTP id
+ c2-20020a056a20778200b001ad7bfd549fmr4118720pzg.48.1714785472243; 
+ Fri, 03 May 2024 18:17:52 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ by smtp.gmail.com with ESMTPSA id
+ fi7-20020a056a00398700b006ed007b3596sm3690222pfb.69.2024.05.03.18.17.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 03 May 2024 18:17:51 -0700 (PDT)
+Message-ID: <50c27a9f-fd75-4f8e-9a2d-488d8df4f9b9@linaro.org>
+Date: Fri, 3 May 2024 18:17:49 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87seyymw4d.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.483,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] testing/next: s390x gitlab updates
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org
+References: <20240426153938.1707723-1-alex.bennee@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240426153938.1707723-1-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,126 +98,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 03, 2024 at 06:19:30PM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
+On 4/26/24 08:39, Alex Bennée wrote:
+> I was asked to update the custom gitlab runner from the aging 20.04 to
+> 22.04 which has been done. However I needed to update the provisioning
+> scripts and clean-up some of the cruft. Sadly this doesn't seem to be
+> passing cleanly as we have:
 > 
-> > On Fri, Apr 26, 2024 at 11:20:40AM -0300, Fabiano Rosas wrote:
-> >> We're about to enable the use of O_DIRECT in the migration code and
-> >> due to the alignment restrictions imposed by filesystems we need to
-> >> make sure the flag is only used when doing aligned IO.
-> >> 
-> >> The migration will do parallel IO to different regions of a file, so
-> >> we need to use more than one file descriptor. Those cannot be obtained
-> >> by duplicating (dup()) since duplicated file descriptors share the
-> >> file status flags, including O_DIRECT. If one migration channel does
-> >> unaligned IO while another sets O_DIRECT to do aligned IO, the
-> >> filesystem would fail the unaligned operation.
-> >> 
-> >> The add-fd QMP command along with the fdset code are specifically
-> >> designed to allow the user to pass a set of file descriptors with
-> >> different access flags into QEMU to be later fetched by code that
-> >> needs to alternate between those flags when doing IO.
-> >> 
-> >> Extend the fdset matching to behave the same with the O_DIRECT flag.
-> >> 
-> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> >> ---
-> >>  monitor/fds.c | 7 ++++++-
-> >>  1 file changed, 6 insertions(+), 1 deletion(-)
-> >> 
-> >> diff --git a/monitor/fds.c b/monitor/fds.c
-> >> index 4ec3b7eea9..62e324fcec 100644
-> >> --- a/monitor/fds.c
-> >> +++ b/monitor/fds.c
-> >> @@ -420,6 +420,11 @@ int monitor_fdset_dup_fd_add(int64_t fdset_id, int flags)
-> >>          int fd = -1;
-> >>          int dup_fd;
-> >>          int mon_fd_flags;
-> >> +        int mask = O_ACCMODE;
-> >> +
-> >> +#ifdef O_DIRECT
-> >> +        mask |= O_DIRECT;
-> >> +#endif
-> >>  
-> >>          if (mon_fdset->id != fdset_id) {
-> >>              continue;
-> >> @@ -431,7 +436,7 @@ int monitor_fdset_dup_fd_add(int64_t fdset_id, int flags)
-> >>                  return -1;
-> >>              }
-> >>  
-> >> -            if ((flags & O_ACCMODE) == (mon_fd_flags & O_ACCMODE)) {
-> >> +            if ((flags & mask) == (mon_fd_flags & mask)) {
-> >>                  fd = mon_fdset_fd->fd;
-> >>                  break;
-> >>              }
-> >
-> > I think I see what you wanted to do, picking out the right fd out of two
-> > when qemu_open_old(), which makes sense.
-> >
-> > However what happens if the mgmt app only passes in 1 fd to the fdset?  The
-> > issue is we have a "fallback dup()" plan right after this chunk of code:
-> >
-> 
-> I'm validating the fdset at file_parse_fdset() beforehand. If there's
-> anything else than 2 fds then we'll error out:
-> 
->     if (nfds != 2) {
->         error_setg(errp, "Outgoing migration needs two fds in the fdset, "
->                    "got %d", nfds);
->         qmp_remove_fd(*id, false, -1, NULL);
->         *id = -1;
->         return false;
->     }
-> 
-> >         dup_fd = qemu_dup_flags(fd, flags);
-> >         if (dup_fd == -1) {
-> >             return -1;
-> >         }
-> >
-> >         mon_fdset_fd_dup = g_malloc0(sizeof(*mon_fdset_fd_dup));
-> >         mon_fdset_fd_dup->fd = dup_fd;
-> >         QLIST_INSERT_HEAD(&mon_fdset->dup_fds, mon_fdset_fd_dup, next);
-> >
-> > I think it means even if the mgmt app only passes in 1 fd (rather than 2,
-> > one with O_DIRECT, one without), QEMU can always successfully call
-> > qemu_open_old() twice for each case, even though silently the two FDs will
-> > actually impact on each other.  This doesn't look ideal if it's true.
-> >
-> > But I also must confess I don't really understand this code at all: we
-> > dup(), then we try F_SETFL on all the possible flags got passed in.
-> > However AFAICT due to the fact that dup()ed FDs will share "struct file" it
-> > means mostly all flags will be shared, except close-on-exec.  I don't ever
-> > see anything protecting that F_SETFL to only touch close-on-exec, I think
-> > it means it'll silently change file status flags for the other fd which we
-> > dup()ed from.  Does it mean that we have issue already with such dup() usage?
-> 
-> I think you're right, but I also think there's a requirement even from
-> this code that the fds in the fdset cannot be dup()ed. I don't see it
-> enforced anywhere, but maybe that's a consequence of the larger use-case
-> for which this feature was introduced.
+>    - qtest-s390x/migration-test ERROR           98.94s   killed by signal 6 SIGABRT
+>    - failing TCG tests (on s390x HW)
+>       - float_convd fails against a generated reference
+>       - clc returns 1
 
-I think that's the thing we need to figure out for add-fd usages.  The bad
-thing is there're too many qemu_open_internal() users... so we can't easily
-tell what we're looking for. May need some time reading the code or the
-history.. pretty sad.  I hope someone can chim in.
+I've had a look at the clc failure.
 
-> 
-> For our scenario, the open() man page says one can use kcmp() to compare
-> the fds and determine if they are a result of dup(). Maybe we should do
-> that extra check? We're defining a pretty rigid interface between QEMU
-> and the management layer, so not likely to break once it's written. I'm
-> also not sure how bad would it be to call syscall() directly from QEMU
-> (kcmp has no libc wrapper).
+It fails because of bad address space layout, where the NULL page isn't unmapped, so the 
+expected SIGSEGV does *not* happen.
 
-That should be all fine, see:
+This is unfortunate and we could do better.
 
-$ git grep " syscall(" | wc -l
-28
+However, with the upgrade, --static --enable-pie no longer works.
+ From config.log,
 
-And if we want we can also do fcntl(F_GETFL) on both fds later, making sure
-they have proper flags (one must have O_DIRECT, one must not).
+cc -m64 -Werror -fPIE -DPIE -o config-temp/qemu-conf.exe config-temp/qemu-conf.c -static-pie
+/usr/bin/ld: cannot find rcrt1.o: No such file or directory
 
--- 
-Peter Xu
+which suggests a missing package.
+
+Alternately, we could drop --static, as it's not really relevant to this testing.  With 
+that, we get PIE dynamically linked executables, which do not trigger the bad layout.
+
+But at some point we should make sure that the NULL page(s) are reserved PROT_NONE for the 
+guest, which ensure this stays fixed.
+
+
+r~
 
 
