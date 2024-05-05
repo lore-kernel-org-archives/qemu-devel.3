@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 117C6C4345F
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 May 2024 17:16:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 851A8C4345F
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 May 2024 17:16:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3fS3-0001l3-55; Sun, 05 May 2024 13:15:03 -0400
+	id 1s3fS5-0001mf-8F; Sun, 05 May 2024 13:15:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1s3fS0-0001it-Bv
- for qemu-devel@nongnu.org; Sun, 05 May 2024 13:15:00 -0400
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1s3fS3-0001lm-Mu
+ for qemu-devel@nongnu.org; Sun, 05 May 2024 13:15:03 -0400
 Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1s3fRx-0005i9-LH
- for qemu-devel@nongnu.org; Sun, 05 May 2024 13:15:00 -0400
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1s3fS2-0005ir-7f
+ for qemu-devel@nongnu.org; Sun, 05 May 2024 13:15:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
  ; s=bytemarkmx;
  h=MIME-Version:Message-ID:Date:Subject:From:Content-Type:From
- :Subject; bh=NP0N3GXAxQ0oT/3vkVD47WATl6JL6lrtKMJPsb0DHs8=; b=ofZ3umL4gd4IAENk
- GkB3Mh+ZihtJ5GdEqDpNUs44XX9GC3tTW94WwnaH99eQ9+X4v6E9qLRRZdmq0G/fq7URJ8QqcYAmJ
- mmZH07M9x8qZ48IlKy+g8cK782tV8Y1T9twZV+8EsldADKjPgmzqYNrFVWjqqkSAR0B9cvIXZ0I5M
- GEKmWdf4ewLpSXY5eIHe+devaga/ex4vZgz6J3FpiDfbQWXS7C5NumsEXJExdO9Q4y8CuUosq6/1w
- SOREVJEJj0+s1/UFngrG52G4Jo8ztPSlQXP/kfFOksgRpp3gfvcHf5JVjpfJZhN7XvG3Dg79nHHxd
- 98sKqnzX/kgYdV6XIA==;
+ :Subject; bh=6VcNWgHQlHoShRzZIx36jlPM5YOe1vzWmwbKSfnn+dc=; b=L4t5UBx5HLLbWed4
+ VAa+J3vSIQqJSDLxPcmXdpH0IyFkyABEwLb/30+AypW1rfrogTcLO6+oB0zdclSCJJGJcN2EKSCVp
+ ZQy4XO45F1KX6sPXCG7t3A4GwqW1fD81LTWuCHysWdqiMB06IZv33BpBzGS9qqhfepbBfAO3pChC4
+ E/7cvLQZOWgk+j8RX1oRrkgtr8a8Av5u50LnYmPxuSSZh4m3hQDlNa36uOyBcjYITsC0Az2Lzk4UF
+ KTd0HFybYUlIaBMSu6i3qUqR7HYl77fQNy5bl8XfCxeXfMrTMZQC8kF/uibCpLesWQggOuKXfRrZU
+ Z4aUYRl72Pku4Jc2bw==;
 Received: from localhost ([127.0.0.1] helo=dalek.home.treblig.org)
  by mx.treblig.org with esmtp (Exim 4.96)
- (envelope-from <dave@treblig.org>) id 1s3fRv-004nca-3D;
- Sun, 05 May 2024 17:14:56 +0000
+ (envelope-from <dave@treblig.org>) id 1s3fRz-004nca-0E;
+ Sun, 05 May 2024 17:14:59 +0000
 From: "Dr. David Alan Gilbert" <dave@treblig.org>
 To: peter.maydell@linaro.org,
 	laurent@vivier.eu
 Cc: qemu-devel@nongnu.org,
 	"Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: [PATCH 2/7] linux-user: i386/signal: Remove unused fp structs
-Date: Sun,  5 May 2024 18:14:39 +0100
-Message-ID: <20240505171444.333302-3-dave@treblig.org>
+Subject: [PATCH 6/7] target/ppc: Remove unused struct 'mmu_ctx_hash32'
+Date: Sun,  5 May 2024 18:14:43 +0100
+Message-ID: <20240505171444.333302-7-dave@treblig.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240505171444.333302-1-dave@treblig.org>
 References: <20240505171444.333302-1-dave@treblig.org>
@@ -67,38 +67,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The structs 'target_fpxreg' and 'target_xmmreg' are unused since
-Paolo's:
-
-Commit 2796f290b546 ("linux-user: i386/signal: support FXSAVE fpstate on
-32-bit emulation")
+I think it's use was removed by
+Commit 5883d8b296 ("mmu-hash*: Don't use full ppc_hash{32,
+64}_translate() path for get_phys_page_debug()")
 
 Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
 ---
- linux-user/i386/signal.c | 10 ----------
- 1 file changed, 10 deletions(-)
+ target/ppc/mmu-hash32.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/linux-user/i386/signal.c b/linux-user/i386/signal.c
-index 990048f42a..9bf602b388 100644
---- a/linux-user/i386/signal.c
-+++ b/linux-user/i386/signal.c
-@@ -34,16 +34,6 @@ struct target_fpreg {
-     uint16_t exponent;
- };
+diff --git a/target/ppc/mmu-hash32.c b/target/ppc/mmu-hash32.c
+index 3976416840..746321329c 100644
+--- a/target/ppc/mmu-hash32.c
++++ b/target/ppc/mmu-hash32.c
+@@ -36,12 +36,6 @@
+ #  define LOG_BATS(...) do { } while (0)
+ #endif
  
--struct target_fpxreg {
--    uint16_t significand[4];
--    uint16_t exponent;
--    uint16_t padding[3];
+-struct mmu_ctx_hash32 {
+-    hwaddr raddr;      /* Real address              */
+-    int prot;                      /* Protection bits           */
+-    int key;                       /* Access key                */
 -};
 -
--struct target_xmmreg {
--    uint32_t element[4];
--};
--
- struct target_fpx_sw_bytes {
-     uint32_t magic1;
-     uint32_t extended_size;
+ static int ppc_hash32_pp_prot(int key, int pp, int nx)
+ {
+     int prot;
 -- 
 2.45.0
 
