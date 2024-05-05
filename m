@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A2DCC4345F
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 May 2024 06:38:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67AABC4345F
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 May 2024 06:48:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3VV8-0007Cz-Ao; Sun, 05 May 2024 02:37:34 -0400
+	id 1s3Ver-0004XJ-2C; Sun, 05 May 2024 02:47:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s3VV6-0007CC-4t
- for qemu-devel@nongnu.org; Sun, 05 May 2024 02:37:32 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1s3VeV-0004K4-FM
+ for qemu-devel@nongnu.org; Sun, 05 May 2024 02:47:20 -0400
+Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s3VV3-0000WU-Pf
- for qemu-devel@nongnu.org; Sun, 05 May 2024 02:37:31 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-2a2d82537efso628172a91.2
- for <qemu-devel@nongnu.org>; Sat, 04 May 2024 23:37:29 -0700 (PDT)
+ id 1s3VeT-0004YV-EG
+ for qemu-devel@nongnu.org; Sun, 05 May 2024 02:47:15 -0400
+Received: by mail-oi1-x235.google.com with SMTP id
+ 5614622812f47-3c730f599abso587194b6e.0
+ for <qemu-devel@nongnu.org>; Sat, 04 May 2024 23:47:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1714891048; x=1715495848;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1714891632; x=1715496432;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=QKMQzxrMRPgomZrUaIVHd65z4FA1pEpQNxl/vkgncNc=;
- b=Pvo2rxdReiwP+6BldXpp9hvWqokfX0jfknJ/9qnBa6URemiIidxnllQlxGSF3qO4JE
- 8hmBgdKnEIre9HlputknD3HrXz31+rn3P2SoKALdn4hNkTHjztam6xG3K7S2OJfKuoBs
- EV5MhyUM0krQXnXSewx1eyMNpFQop0NoGFg/T6ONjeGF0H3ozjA37lze1U2wJI1WOT8s
- NGagmN6BWo/AfrHHPR5VYzT7FeyS1TmUQ7hg0ky0rCBUE8DiP+IyZ/TFtAmEss0fgR2r
- eA67YyVM5ggKiODRUS85z44XL280UKNPsJHch1dKku1D8N8jT4D4awcPTS8wU8gjypnq
- 6OMg==
+ bh=hEa0NI/QLS8EAks0UyGKcbthlP3DtJ6BCVS3wqFCMA4=;
+ b=hfnx0ooZ9qQquY+i1BzfeH437RsjVlQd8o6hSYQ48ltXyqo64KVAkR87R81XbL4104
+ HNCaFR7465CQR3I7MrmhIRXx/TmrXwtSv1tADi5D0HPjRscuC++kNkjWXYT584yjnI9Z
+ PiSyEEGWnOgpcJWHpUZa4UV8+U9RtRU7RR1Sq5JP9lyH8w5bEJ7CNZY3Px6hlky7WaHQ
+ fNRXuHVktBws2QsOgjC2rJDS1SdyM8KM39hyL8x+va0XMxLrli+SWm8u5zLiNoLVyLab
+ MwooPbV9qYDQI6UTVKfPO8H6PGiHwgsq/QpzPeIvKfenbCe2AnAyxSK87O2/pf1Mh2gU
+ MtZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714891048; x=1715495848;
+ d=1e100.net; s=20230601; t=1714891632; x=1715496432;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QKMQzxrMRPgomZrUaIVHd65z4FA1pEpQNxl/vkgncNc=;
- b=ZGKykhBEM0AFa3gU9OQpmTJKZTHAiI+RdbEDtCLE0RPuYYpchLJA9DAQ4FSVLkR/PZ
- jOqQPU3n3WrkaUeZ8MqQUrifshJL3Fz2HYSx+rdK3axkIK7ByH8FMZTeCU6fdxJaViuX
- FEU9J6WWmAZe/Sru3dQQDwJ0jjenRTKFcqCRvukeoYXmpOjZBXlEyOmAe268XfXkXpK7
- jLKY3w6wRhEkM5melsqw0LXa8ZP5I4zZBBj872BOcr1s1s7hEMOLzGlQBibWacNbyAEN
- AJ3sd5ASXSFrNFIS1SAGDiubM9qUDCCSsFoS0fVLAgcjzUztTmMzUlpaGYBx1teXRxp4
- hWtQ==
-X-Gm-Message-State: AOJu0YwEfN0snEEdmxMeT30cvMJzseGDT2qu0mvHQ4e+oozMLllFfoDK
- bOK4UuU4S/f+q5pzc/O5R3aD/Q5xPBjvQSosB6CeqjsTr4xkg9lzE05G4RFCH+8=
-X-Google-Smtp-Source: AGHT+IE91jjWdz5j9i92uMDIgrpa0MVfBB3/2fundYtzi+vuoL/l+mKVrQP9N4JOSgOUZJ6hkhEixw==
-X-Received: by 2002:a17:90b:92:b0:2a5:16c2:8551 with SMTP id
- bb18-20020a17090b009200b002a516c28551mr6181123pjb.19.1714891048112; 
- Sat, 04 May 2024 23:37:28 -0700 (PDT)
+ bh=hEa0NI/QLS8EAks0UyGKcbthlP3DtJ6BCVS3wqFCMA4=;
+ b=ceO5oAksh42mU4nKslHXFNJJRA7dSmSidUOQiK1xG0p2WTvttwCNyUufqD6i+/L38M
+ cgAt1sPcyiXhJzkWx+hjOUUbm9vNIcUVwaGGGUHbULW2ymfcnWGwY3LS4FPhqt3tOcLw
+ k9WYPfKBfDJJZ/pIfMs/lsdv6UXMkzoD0IXGuaX8Giy+BIR0C8FYWzqy3n0nFO5vPpN+
+ /3ql/yvramqy8ZPAJb0vP1k/TuGixi5wkvUz5Dc+Sx0izBeeRePyHnmY1ezI12VI/vq2
+ ueNG+qBunQCg67ou3sBLhO4ysAaYsAChQ7UDSk4j3MSp4EAGqQHw0bm4XDUhjUqC30vW
+ 8N4w==
+X-Gm-Message-State: AOJu0YwPV99FMZrFx61khnmF/ZC5ZiUwhGThoxsHx835ZeUtrxgmW9S7
+ VAsbj5r2hpSyHBSfkLp4KHlacwMtl1Gh/G0P7uJq2xN8JwYBk/7EIQ8D+2n6eZ8=
+X-Google-Smtp-Source: AGHT+IFbi+7tYt7BIdh8O7iF2niehk13bmwouCeqbTUAdlq61HsVkmA4fsGqR3YPsQyMTBGD6cMwrg==
+X-Received: by 2002:a05:6808:116:b0:3c8:41ed:8738 with SMTP id
+ b22-20020a056808011600b003c841ed8738mr7990109oie.22.1714891632243; 
+ Sat, 04 May 2024 23:47:12 -0700 (PDT)
 Received: from [157.82.202.162] ([157.82.202.162])
  by smtp.gmail.com with ESMTPSA id
- sz15-20020a17090b2d4f00b002aff85b97dfsm7792790pjb.27.2024.05.04.23.37.22
+ l23-20020a637017000000b0061c60a12026sm4323072pgc.72.2024.05.04.23.47.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 04 May 2024 23:37:27 -0700 (PDT)
-Message-ID: <0360512c-eb25-4c93-adb3-7f43395ae699@daynix.com>
-Date: Sun, 5 May 2024 15:37:21 +0900
+ Sat, 04 May 2024 23:47:11 -0700 (PDT)
+Message-ID: <48d03070-6002-4953-aa09-47ae72b8f291@daynix.com>
+Date: Sun, 5 May 2024 15:47:05 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 07/11] virtio-gpu: Support suspension of commands
- processing
+Subject: Re: [PATCH v8 08/11] virtio-gpu: Handle resource blob commands
 To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Huang Rui <ray.huang@amd.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
  <marcandre.lureau@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
@@ -88,18 +87,18 @@ Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
 References: <20240418190040.1110210-1-dmitry.osipenko@collabora.com>
- <20240418190040.1110210-8-dmitry.osipenko@collabora.com>
- <8a153bf1-f86c-46c8-a29a-08e9a0197dc3@daynix.com>
- <4c6b3ca0-4813-48f4-87f8-a94e911c02d3@collabora.com>
- <10337ba0-70ce-436c-9cac-398851ebdfc9@daynix.com>
- <5b240c8a-f1c5-487f-a528-cbb4f440094f@collabora.com>
+ <20240418190040.1110210-9-dmitry.osipenko@collabora.com>
+ <2c5a0b2e-58ef-4766-baea-5df98fa6fc2f@daynix.com>
+ <51b45c53-b7d3-4f3c-984c-44a94e6cf5af@collabora.com>
+ <a0808d93-fb2c-4663-bd5b-8ae06e813492@daynix.com>
+ <b4d78255-cc83-482b-a9f6-781c1b795ee9@collabora.com>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <5b240c8a-f1c5-487f-a528-cbb4f440094f@collabora.com>
+In-Reply-To: <b4d78255-cc83-482b-a9f6-781c1b795ee9@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::1032;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1032.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::235;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oi1-x235.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -121,36 +120,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/05/02 4:02, Dmitry Osipenko wrote:
-> On 4/27/24 08:48, Akihiko Odaki wrote:
+On 2024/05/02 4:20, Dmitry Osipenko wrote:
+> On 4/27/24 08:52, Akihiko Odaki wrote:
+>> On 2024/04/24 19:30, Dmitry Osipenko wrote:
+>>> On 4/19/24 12:18, Akihiko Odaki wrote:
+>>>>> @@ -61,6 +61,10 @@ struct virtio_gpu_simple_resource {
+>>>>>         int dmabuf_fd;
+>>>>>         uint8_t *remapped;
+>>>>>     +    MemoryRegion *mr;
+>>>>> +    bool async_unmap_completed;
+>>>>> +    bool async_unmap_in_progress;
+>>>>> +
+>>>>
+>>>> Don't add fields to virtio_gpu_simple_resource but instead create a
+>>>> struct that embeds virtio_gpu_simple_resource in virtio-gpu-virgl.c.
 >>>
->>> The VIRTIO_GPU_FILL_CMD() macro returns void and this macro is used by
->>> every function processing commands. Changing process_cmd() to return
->>> bool will require to change all those functions. Not worthwhile to
->>> change it, IMO. >
->>> The flag reflects the exact command status. The !finished + !suspended
->>> means that command is fenced, i.e. these flags don't have exactly same
->>> meaning.
+>>> Please give a justification. I'd rather rename
+>>> virtio_gpu_simple_resource s/_simple//. Simple resource already supports
+>>> blob and the added fields are directly related to the blob. Don't see
+>>> why another struct is needed.
+>>>
 >>
->> It is not necessary to change the signature of process_cmd(). You can
->> just refer to !finished. No need to have the suspended flag.
+>> Because mapping is only implemented in virtio-gpu-gl while blob itself
+>> is implemented also in virtio-gpu.
 > 
-> Not sure what you're meaning. The !finished says that cmd is fenced,
-> this fenced command is added to the polling list and the fence is
-> checked periodically by the fence_poll timer, meanwhile next virgl
-> commands are executed in the same time.
-> 
-> This is completely different from the suspension where whole cmd
-> processing is blocked until command is resumed.
+> Rutubaga maps blobs and it should do unmapping blobs asynchronously as
+> well, AFAICT.
 > 
 
-!finished means you have not sent a response with 
-virtio_gpu_ctrl_response(). Currently such a situation only happens when 
-a fence is requested and virtio_gpu_process_cmdq() exploits the fact, 
-but we are adding a new case without a fence.
+Right. It makes sense to put mr in struct virtio_gpu_simple_resource in 
+preparation for such a situation.
 
-So we need to add code to check if we are fencing or not in 
-virtio_gpu_process_cmdq(). This can be achieved by evaluating the 
-following expression as done in virtio_gpu_virgl_process_cmd():
-cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_FENCE
+Based on this discussion, I think it is fine to put mr either in struct 
+virtio_gpu_simple_resource or a distinct struct. However if you put mr 
+in struct virtio_gpu_simple_resource, the logic that manages 
+MemoryRegion should also be moved to virtio-gpu.c for consistency.
 
