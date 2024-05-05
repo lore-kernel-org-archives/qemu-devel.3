@@ -4,42 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3040AC04FFE
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 May 2024 17:16:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DD8CC4345F
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 May 2024 17:16:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3fS1-0001ji-DP; Sun, 05 May 2024 13:15:01 -0400
+	id 1s3fS3-0001kr-5P; Sun, 05 May 2024 13:15:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1s3fRz-0001gr-8k
- for qemu-devel@nongnu.org; Sun, 05 May 2024 13:14:59 -0400
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1s3fS1-0001jW-5J
+ for qemu-devel@nongnu.org; Sun, 05 May 2024 13:15:01 -0400
 Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1s3fRx-0005hY-25
- for qemu-devel@nongnu.org; Sun, 05 May 2024 13:14:59 -0400
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1s3fRz-0005iL-ND
+ for qemu-devel@nongnu.org; Sun, 05 May 2024 13:15:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
  ; s=bytemarkmx;
  h=MIME-Version:Message-ID:Date:Subject:From:Content-Type:From
- :Subject; bh=PnpACvcW7IcKgJBPfeh+nx3cyRj1I2VUIdxtNjnmg5I=; b=j1DbTNT6evTj62eb
- OehpbvXdvAg17Qxz9ums+TIVkeVgcq4DDrVQOW9vDC0G+OxmByd/7NlLl3+CaVskp6G/N/Res3sm8
- TnqXqkba7ovi6nOWIWYU1MUCPn84780zPcdmCqd56P6cfRAaPZr37Xnur+Lc0U2cBIQlZCP9WsRb2
- xoruR/eYG5ERD6YFiw/3ioe/rYCAgnrcwFPPwxw3ps2UfthpvPuAk1rVDYNMAi8/iRtFJEVK1NUHo
- bKCV5mabjQIRZXNJylf0hF8q/eOClx7ZvgLHL3VDu69ZtcP4+B/ze6rL9by0eLeFrlIerUrWwTBuc
- tZrVr6EIXoSptFJFsA==;
+ :Subject; bh=6Hyxc6NsbvquaujV8/AXCDaGepCJvLT6ei8fyjF4/nE=; b=OD48jMksWpwm1NDk
+ Oop1yNMQF2iIL+ovEdBVaVDFlu+v5h9OjSHj85fBXGBy99iCKFuI/czUlfMpS4UIiykhy7gqtZOhQ
+ iWUtb/g67AHf87laQEsALvSkKWINd2tzqXGmZWVmFG1m4CbQLdZYKmqaimOb7Bt9dVfTOf2vBlW0u
+ fUB9kgMQf+nPLzp0rwj/H+Y5mzP9UTS47c3L/tBy8mfjE2S9LdJ3c4MXNfIvYyjxlXxFMfFus2+sV
+ 9wPdtC+7516Za9QpQf6aaTTWmLaa+zOHUqOCDj03755olCOObyCIdgw9gzHNqR1XOKg5OTeFOv6Jr
+ gCb/E1Mq9NRoZPkpXA==;
 Received: from localhost ([127.0.0.1] helo=dalek.home.treblig.org)
  by mx.treblig.org with esmtp (Exim 4.96)
- (envelope-from <dave@treblig.org>) id 1s3fRr-004nca-0E;
- Sun, 05 May 2024 17:14:51 +0000
+ (envelope-from <dave@treblig.org>) id 1s3fRw-004nca-2q;
+ Sun, 05 May 2024 17:14:56 +0000
 From: "Dr. David Alan Gilbert" <dave@treblig.org>
 To: peter.maydell@linaro.org,
 	laurent@vivier.eu
 Cc: qemu-devel@nongnu.org,
 	"Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: [PATCH 0/7] Remove some unused structures
-Date: Sun,  5 May 2024 18:14:37 +0100
-Message-ID: <20240505171444.333302-1-dave@treblig.org>
+Subject: [PATCH 3/7] linux-user: sparc: Remove unused struct 'target_mc_fq'
+Date: Sun,  5 May 2024 18:14:40 +0100
+Message-ID: <20240505171444.333302-4-dave@treblig.org>
 X-Mailer: git-send-email 2.45.0
+In-Reply-To: <20240505171444.333302-1-dave@treblig.org>
+References: <20240505171444.333302-1-dave@treblig.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dave@treblig.org;
@@ -65,37 +67,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A bunch of structs that are currently unused,
-found with a simple script and a bit of eyeballing.
+This struct is unused since Peter's
+Commit b8ae597f0e6d ("linux-user/sparc: Fix errors in target_ucontext
+structures")
 
-The only one I'm that suspicious of is the SPARC
-one, where the patch which removed the use is a bit
-confusing to me.
+However, hmm, I'm a bit confused since that commit modifies the
+structure and then removes it, was that intentional?
 
-Tested with a 
-  --target-list=ppc-softmmu,m68k-softmmu,x86_64-softmmu,arm-softmmu,aarch64-softmmu,cris-linux-user,i386-linux-user,sparc-linux-user
-and 'make check' on x86 linux.
+Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
+---
+ linux-user/sparc/signal.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-Dave
-
-Dr. David Alan Gilbert (7):
-  linux-user: cris: Remove unused struct 'rt_signal_frame'
-  linux-user: i386/signal: Remove unused fp structs
-  linux-user: sparc: Remove unused struct 'target_mc_fq'
-  hw/usb/dev-network: Remove unused struct 'rndis_config_parameter'
-  hw/arm/bcm2836: Remove unusued struct 'BCM283XClass'
-  target/ppc: Remove unused struct 'mmu_ctx_hash32'
-  net/can: Remove unused struct 'CanBusState'
-
- hw/arm/bcm2836.c          | 12 ------------
- hw/usb/dev-network.c      |  8 --------
- linux-user/cris/signal.c  |  8 --------
- linux-user/i386/signal.c  | 10 ----------
- linux-user/sparc/signal.c |  5 -----
- net/can/can_host.c        |  6 ------
- target/ppc/mmu-hash32.c   |  6 ------
- 7 files changed, 55 deletions(-)
-
+diff --git a/linux-user/sparc/signal.c b/linux-user/sparc/signal.c
+index f164b74032..8181b8b92c 100644
+--- a/linux-user/sparc/signal.c
++++ b/linux-user/sparc/signal.c
+@@ -546,11 +546,6 @@ void setup_sigtramp(abi_ulong sigtramp_page)
+ typedef abi_ulong target_mc_greg_t;
+ typedef target_mc_greg_t target_mc_gregset_t[SPARC_MC_NGREG];
+ 
+-struct target_mc_fq {
+-    abi_ulong mcfq_addr;
+-    uint32_t mcfq_insn;
+-};
+-
+ /*
+  * Note the manual 16-alignment; the kernel gets this because it
+  * includes a "long double qregs[16]" in the mcpu_fregs union,
 -- 
 2.45.0
 
