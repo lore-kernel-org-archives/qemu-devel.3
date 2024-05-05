@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A74FC4345F
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 May 2024 17:16:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 117C6C4345F
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 May 2024 17:16:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3fST-0001v0-Ah; Sun, 05 May 2024 13:15:29 -0400
+	id 1s3fS3-0001l3-55; Sun, 05 May 2024 13:15:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1s3fSG-0001qT-0J
- for qemu-devel@nongnu.org; Sun, 05 May 2024 13:15:23 -0400
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1s3fS0-0001it-Bv
+ for qemu-devel@nongnu.org; Sun, 05 May 2024 13:15:00 -0400
 Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1s3fS1-0005ic-4H
- for qemu-devel@nongnu.org; Sun, 05 May 2024 13:15:15 -0400
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1s3fRx-0005i9-LH
+ for qemu-devel@nongnu.org; Sun, 05 May 2024 13:15:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
  ; s=bytemarkmx;
  h=MIME-Version:Message-ID:Date:Subject:From:Content-Type:From
- :Subject; bh=dFPS7Oal1lrCOrfCkqIetV7yrx9zbnK4KyW+11VM5yo=; b=DNjckBOtkSMt/zKD
- ZxPSd/o84tiJQo5KRC1JXJAinWzHsHCOAjStttbGwfCcIk41C+XOhE2oEogKk77CRbXCBjM2pSbsH
- EmFq45dy++D73W5z1SATSja0p6poOPrQjT0l6UweJ7DrU7SWTFj66IZIRG0CnzVnVMyrJF59PXHNq
- s9YNqEaDBSI25Eb4EN8cvOisl3BPrgzEJyWkgKDuJo2b9sLwv4JBUqJR8EWv9mHr8jNAcZ+IcBXdy
- J/UuXkvRWdESjKJEmPbm5tF00QJ++0+DzUrBfYisZ2kJRghp6JHuG337d8NS/b3ARruNns7HUD0zc
- yRqptzLH8KcT+IsBVA==;
+ :Subject; bh=NP0N3GXAxQ0oT/3vkVD47WATl6JL6lrtKMJPsb0DHs8=; b=ofZ3umL4gd4IAENk
+ GkB3Mh+ZihtJ5GdEqDpNUs44XX9GC3tTW94WwnaH99eQ9+X4v6E9qLRRZdmq0G/fq7URJ8QqcYAmJ
+ mmZH07M9x8qZ48IlKy+g8cK782tV8Y1T9twZV+8EsldADKjPgmzqYNrFVWjqqkSAR0B9cvIXZ0I5M
+ GEKmWdf4ewLpSXY5eIHe+devaga/ex4vZgz6J3FpiDfbQWXS7C5NumsEXJExdO9Q4y8CuUosq6/1w
+ SOREVJEJj0+s1/UFngrG52G4Jo8ztPSlQXP/kfFOksgRpp3gfvcHf5JVjpfJZhN7XvG3Dg79nHHxd
+ 98sKqnzX/kgYdV6XIA==;
 Received: from localhost ([127.0.0.1] helo=dalek.home.treblig.org)
  by mx.treblig.org with esmtp (Exim 4.96)
- (envelope-from <dave@treblig.org>) id 1s3fRy-004nca-0t;
- Sun, 05 May 2024 17:14:58 +0000
+ (envelope-from <dave@treblig.org>) id 1s3fRv-004nca-3D;
+ Sun, 05 May 2024 17:14:56 +0000
 From: "Dr. David Alan Gilbert" <dave@treblig.org>
 To: peter.maydell@linaro.org,
 	laurent@vivier.eu
 Cc: qemu-devel@nongnu.org,
 	"Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: [PATCH 5/7] hw/arm/bcm2836: Remove unusued struct 'BCM283XClass'
-Date: Sun,  5 May 2024 18:14:42 +0100
-Message-ID: <20240505171444.333302-6-dave@treblig.org>
+Subject: [PATCH 2/7] linux-user: i386/signal: Remove unused fp structs
+Date: Sun,  5 May 2024 18:14:39 +0100
+Message-ID: <20240505171444.333302-3-dave@treblig.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240505171444.333302-1-dave@treblig.org>
 References: <20240505171444.333302-1-dave@treblig.org>
@@ -67,38 +67,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This struct has been unused since
-Commit f932093ae165 ("hw/arm/bcm2836: Split out common part of BCM283X
-classes")
+The structs 'target_fpxreg' and 'target_xmmreg' are unused since
+Paolo's:
+
+Commit 2796f290b546 ("linux-user: i386/signal: support FXSAVE fpstate on
+32-bit emulation")
 
 Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
 ---
- hw/arm/bcm2836.c | 12 ------------
- 1 file changed, 12 deletions(-)
+ linux-user/i386/signal.c | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-diff --git a/hw/arm/bcm2836.c b/hw/arm/bcm2836.c
-index db191661f2..40a379bc36 100644
---- a/hw/arm/bcm2836.c
-+++ b/hw/arm/bcm2836.c
-@@ -18,18 +18,6 @@
- #include "target/arm/cpu-qom.h"
- #include "target/arm/gtimer.h"
+diff --git a/linux-user/i386/signal.c b/linux-user/i386/signal.c
+index 990048f42a..9bf602b388 100644
+--- a/linux-user/i386/signal.c
++++ b/linux-user/i386/signal.c
+@@ -34,16 +34,6 @@ struct target_fpreg {
+     uint16_t exponent;
+ };
  
--struct BCM283XClass {
--    /*< private >*/
--    DeviceClass parent_class;
--    /*< public >*/
--    const char *name;
--    const char *cpu_type;
--    unsigned core_count;
--    hwaddr peri_base; /* Peripheral base address seen by the CPU */
--    hwaddr ctrl_base; /* Interrupt controller and mailboxes etc. */
--    int clusterid;
+-struct target_fpxreg {
+-    uint16_t significand[4];
+-    uint16_t exponent;
+-    uint16_t padding[3];
 -};
 -
- static Property bcm2836_enabled_cores_property =
-     DEFINE_PROP_UINT32("enabled-cpus", BCM283XBaseState, enabled_cpus, 0);
- 
+-struct target_xmmreg {
+-    uint32_t element[4];
+-};
+-
+ struct target_fpx_sw_bytes {
+     uint32_t magic1;
+     uint32_t extended_size;
 -- 
 2.45.0
 
