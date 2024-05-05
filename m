@@ -4,84 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFB9EC4345F
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 May 2024 10:30:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F74FC4345F
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 May 2024 12:11:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3Z7s-0001HN-2y; Sun, 05 May 2024 06:29:48 -0400
+	id 1s3ahL-00018z-Tv; Sun, 05 May 2024 08:10:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s3Z7p-0001Gx-Hl
- for qemu-devel@nongnu.org; Sun, 05 May 2024 06:29:45 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1s3Z7n-0008CC-CD
- for qemu-devel@nongnu.org; Sun, 05 May 2024 06:29:44 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-2b37731c118so752775a91.1
- for <qemu-devel@nongnu.org>; Sun, 05 May 2024 03:29:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1714904982; x=1715509782;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=fMb+NL2JV5o5bue7UPFwYy8bgklZrqQMWJt58wpkW8s=;
- b=Gte38bYYnKuG8VV/p6iCmIERv+784HYG/BfO8VVCXBDVpvAXfdp5jnATzqDk/pxI4V
- 6/3uvSoe0ANKPY9KxcEaRw6dix/fvu13sbxUOAQkxY1FvAKhYZJShrzb9ekncC3TZ9+1
- OclZBK9Qavcvh/HVNTuM5gj1uPSFj6QUdMtL2tmLj1d1IAg4aYS2KhIDcCqSq82hxrsH
- MwZk2beTvn5GY84da7zQLbYweh6hGDpDS1mlKynUmQz5abY8QdbA/1JgF5Qvj8ks5Qr5
- /uPAjWw66h/rCMdgOcvKuDUs9jnQE+7hxCI20B5kdA4Om/lxZTaIMuGlDHKJHy5bCF/K
- l51Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714904982; x=1715509782;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fMb+NL2JV5o5bue7UPFwYy8bgklZrqQMWJt58wpkW8s=;
- b=oOKO/JRaQthHLY+HFy6Vdc1Pj+4cu+WlLtFEh90wnxNLMHwMxaJp164yWDwke8vBlb
- E9AwAe219sADIEbuGVW7wLsoF9YljWhAu6lFI2PUq1L0SqhH2P5G1IdpegAFQ90mfyxX
- KbczZfv5zSMtHqhbjuWYnjUCzYSx4Iy3Jd1xMorqgtUpQ/e8xuCR4H81N+0wbsKsmCXY
- fVYMZ+oG+/ttkpp39dtIRZwXPttE8B/EWvpLNshq1cknBab2jvfVOvCpI4yL7gIutf5t
- 6aKOf6pP09bi2A8rI9iaMwHBOa9INP39b1uOSq7PeGHC6Oqdveh2NXIQAfPBU5lFiFvw
- ZUuA==
-X-Gm-Message-State: AOJu0Yxo81pAG+dZaJQ8MLXTvv9R1o/pXdAb4BmXK7qDNOaqVN7OmgRW
- OEoLtqhQgPpzB4IJPASrmWE4u2JwOjeaS63RhkdoQuNI2pVBUpPhEj7sBLP8kRF1j3Jscv799Gt
- jRaA=
-X-Google-Smtp-Source: AGHT+IHC21i7WUZekdavOCRZJ5JpOZgZS72w7tgns6ft0+pP6TyxfOvlnT//lofhjNgfQ2tytZKK1g==
-X-Received: by 2002:a05:6a21:18e:b0:1af:8004:4be1 with SMTP id
- le14-20020a056a21018e00b001af80044be1mr8224225pzb.33.1714904981748; 
- Sun, 05 May 2024 03:29:41 -0700 (PDT)
-Received: from [157.82.202.162] ([157.82.202.162])
- by smtp.gmail.com with ESMTPSA id
- gx7-20020a17090b124700b002ab664e5e17sm6125060pjb.1.2024.05.05.03.29.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 05 May 2024 03:29:41 -0700 (PDT)
-Message-ID: <edad61c6-2b7c-4982-9038-afcd765f6df6@daynix.com>
-Date: Sun, 5 May 2024 19:29:38 +0900
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1s3ahE-00018Q-7G; Sun, 05 May 2024 08:10:24 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1s3ah9-0002Wt-FD; Sun, 05 May 2024 08:10:23 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 38ED54E600F;
+ Sun, 05 May 2024 14:10:10 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id HebXpnnfEH_c; Sun,  5 May 2024 14:10:08 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 44A0D4E602D; Sun, 05 May 2024 14:10:08 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PATCH] include/exec/cpu-common.h: Rename PAGE_BITS macro to PAGE_RWX
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] qemu-keymap: Free xkb allocations
-To: Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
-References: <20240501-xkb-v1-1-f046d8e11a2b@daynix.com>
- <b3b6ba1d-3f58-45f8-96fc-800e6ec95284@tls.msk.ru>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <b3b6ba1d-3f58-45f8-96fc-800e6ec95284@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::102d;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x102d.google.com
+To: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Message-Id: <20240505121008.44A0D4E602D@zero.eik.bme.hu>
+Date: Sun, 05 May 2024 14:10:08 +0200 (CEST)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,38 +59,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/05/05 19:24, Michael Tokarev wrote:
-> 01.05.2024 10:55, Akihiko Odaki wrote:
->> This fixes LeakSanitizer complaints with xkbcommon 1.6.0.
->>
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->>   qemu-keymap.c | 3 +++
->>   1 file changed, 3 insertions(+)
->>
->> diff --git a/qemu-keymap.c b/qemu-keymap.c
->> index 8c80f7a4ed65..7a9f38cf9863 100644
->> --- a/qemu-keymap.c
->> +++ b/qemu-keymap.c
->> @@ -237,6 +237,9 @@ int main(int argc, char *argv[])
->>       xkb_state_unref(state);
->>       state = NULL;
->> +    xkb_keymap_unref(map);
->> +    xkb_context_unref(ctx);
->> +
-> 
-> I'd avoid freeing any resources in main() entirely,
-> since it's much cheaper to free whole process by the
-> kernel at exit time than to mess with each chunk of
-> allocated memory.  Dunno how useful it is to "fix"
-> these.
-> 
-> /mjt
+This macro can be used to abbreviate PAGE_READ | PAGE_WRITE | PAGE_EXEC
+for which PAGE_RWX is a better name and renaming it also shows it is
+not related to TARGET_PAGE_BITS.
 
-This is purely to satisfy LeakSanitizier; the LeakSanitizer complaints 
-result in a build failure with many noisy logs. I don't add Fixes: tags 
-for this kind of leaks.
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+---
+ accel/tcg/user-exec.c      | 2 +-
+ bsd-user/mmap.c            | 6 +++---
+ include/exec/cpu-common.h  | 2 +-
+ linux-user/elfload.c       | 2 +-
+ linux-user/mmap.c          | 2 +-
+ target/cris/mmu.c          | 4 ++--
+ target/microblaze/helper.c | 2 +-
+ 7 files changed, 10 insertions(+), 10 deletions(-)
 
-Regards,
-Akihiko Odaki
+diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
+index 1c621477ad..a81e3cc920 100644
+--- a/accel/tcg/user-exec.c
++++ b/accel/tcg/user-exec.c
+@@ -765,7 +765,7 @@ int page_unprotect(target_ulong address, uintptr_t pc)
+         if (prot & PAGE_EXEC) {
+             prot = (prot & ~PAGE_EXEC) | PAGE_READ;
+         }
+-        mprotect((void *)g2h_untagged(start), len, prot & PAGE_BITS);
++        mprotect((void *)g2h_untagged(start), len, prot & PAGE_RWX);
+     }
+     mmap_unlock();
+ 
+diff --git a/bsd-user/mmap.c b/bsd-user/mmap.c
+index 3ef11b2807..c785615392 100644
+--- a/bsd-user/mmap.c
++++ b/bsd-user/mmap.c
+@@ -96,7 +96,7 @@ int target_mprotect(abi_ulong start, abi_ulong len, int prot)
+             end = host_end;
+         }
+         ret = mprotect(g2h_untagged(host_start),
+-                       qemu_host_page_size, prot1 & PAGE_BITS);
++                       qemu_host_page_size, prot1 & PAGE_RWX);
+         if (ret != 0)
+             goto error;
+         host_start += qemu_host_page_size;
+@@ -107,7 +107,7 @@ int target_mprotect(abi_ulong start, abi_ulong len, int prot)
+             prot1 |= page_get_flags(addr);
+         }
+         ret = mprotect(g2h_untagged(host_end - qemu_host_page_size),
+-                       qemu_host_page_size, prot1 & PAGE_BITS);
++                       qemu_host_page_size, prot1 & PAGE_RWX);
+         if (ret != 0)
+             goto error;
+         host_end -= qemu_host_page_size;
+@@ -174,7 +174,7 @@ static int mmap_frag(abi_ulong real_start,
+             return -1;
+         prot1 = prot;
+     }
+-    prot1 &= PAGE_BITS;
++    prot1 &= PAGE_RWX;
+ 
+     prot_new = prot | prot1;
+     if (fd != -1) {
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index 8812ba744d..a4bb4e6680 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -212,7 +212,7 @@ G_NORETURN void cpu_loop_exit_restore(CPUState *cpu, uintptr_t pc);
+ #define PAGE_READ      0x0001
+ #define PAGE_WRITE     0x0002
+ #define PAGE_EXEC      0x0004
+-#define PAGE_BITS      (PAGE_READ | PAGE_WRITE | PAGE_EXEC)
++#define PAGE_RWX       (PAGE_READ | PAGE_WRITE | PAGE_EXEC)
+ #define PAGE_VALID     0x0008
+ /*
+  * Original state of the write flag (used when tracking self-modifying code)
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index f9461d2844..41fae2b520 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -2361,7 +2361,7 @@ static bool zero_bss(abi_ulong start_bss, abi_ulong end_bss,
+     if (start_bss < align_bss) {
+         int flags = page_get_flags(start_bss);
+ 
+-        if (!(flags & PAGE_BITS)) {
++        if (!(flags & PAGE_RWX)) {
+             /*
+              * The whole address space of the executable was reserved
+              * at the start, therefore all pages will be VALID.
+diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+index be3b9a68eb..66a1631094 100644
+--- a/linux-user/mmap.c
++++ b/linux-user/mmap.c
+@@ -117,7 +117,7 @@ static void shm_region_rm_complete(abi_ptr start, abi_ptr last)
+ static int validate_prot_to_pageflags(int prot)
+ {
+     int valid = PROT_READ | PROT_WRITE | PROT_EXEC | TARGET_PROT_SEM;
+-    int page_flags = (prot & PAGE_BITS) | PAGE_VALID;
++    int page_flags = (prot & PAGE_RWX) | PAGE_VALID;
+ 
+ #ifdef TARGET_AARCH64
+     {
+diff --git a/target/cris/mmu.c b/target/cris/mmu.c
+index b574ec6e5b..c25c31c9f8 100644
+--- a/target/cris/mmu.c
++++ b/target/cris/mmu.c
+@@ -333,7 +333,7 @@ int cris_mmu_translate(struct cris_mmu_result *res,
+ 
+     if (!cris_mmu_enabled(env->sregs[SFR_RW_GC_CFG])) {
+         res->phy = vaddr;
+-        res->prot = PAGE_BITS;
++        res->prot = PAGE_RWX;
+         goto done;
+     }
+ 
+@@ -344,7 +344,7 @@ int cris_mmu_translate(struct cris_mmu_result *res,
+         miss = 0;
+         base = cris_mmu_translate_seg(env, seg);
+         res->phy = base | (0x0fffffff & vaddr);
+-        res->prot = PAGE_BITS;
++        res->prot = PAGE_RWX;
+     } else {
+         miss = cris_mmu_translate_page(res, env, vaddr, access_type,
+                                        is_user, debug);
+diff --git a/target/microblaze/helper.c b/target/microblaze/helper.c
+index d25c9eb4d3..ff5f86ddc2 100644
+--- a/target/microblaze/helper.c
++++ b/target/microblaze/helper.c
+@@ -51,7 +51,7 @@ bool mb_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+     if (mmu_idx == MMU_NOMMU_IDX) {
+         /* MMU disabled or not available.  */
+         address &= TARGET_PAGE_MASK;
+-        prot = PAGE_BITS;
++        prot = PAGE_RWX;
+         tlb_set_page_with_attrs(cs, address, address, attrs, prot, mmu_idx,
+                                 TARGET_PAGE_SIZE);
+         return true;
+-- 
+2.30.9
+
 
