@@ -4,68 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16AA0C4345F
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 May 2024 14:17:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EB79C4345F
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 May 2024 14:33:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3cfM-0005hY-B0; Sun, 05 May 2024 10:16:36 -0400
+	id 1s3cuv-0003Ux-8m; Sun, 05 May 2024 10:32:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1s3cfB-0005cK-Qk; Sun, 05 May 2024 10:16:28 -0400
-Received: from zproxy1.enst.fr ([2001:660:330f:2::dc])
+ (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
+ id 1s3cus-0003Om-RX
+ for qemu-devel@nongnu.org; Sun, 05 May 2024 10:32:38 -0400
+Received: from out-178.mta1.migadu.com ([2001:41d0:203:375::b2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1s3cf9-00052o-Mx; Sun, 05 May 2024 10:16:25 -0400
-Received: from localhost (localhost [IPv6:::1])
- by zproxy1.enst.fr (Postfix) with ESMTP id C3C3BC062D;
- Sun,  5 May 2024 16:16:19 +0200 (CEST)
-Received: from zproxy1.enst.fr ([IPv6:::1])
- by localhost (zproxy1.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
- id RB6ty0b616Pb; Sun,  5 May 2024 16:16:19 +0200 (CEST)
-Received: from localhost (localhost [IPv6:::1])
- by zproxy1.enst.fr (Postfix) with ESMTP id 5F32CC05F5;
- Sun,  5 May 2024 16:16:19 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy1.enst.fr 5F32CC05F5
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
- s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1714918579;
- bh=vcFgVjRGgW/7vYVh6RD7B1Vto6HuZOvfgObdLod54wg=;
- h=From:To:Date:Message-ID:MIME-Version;
- b=txQN/c9HWZRJvSHD4VC7/WNopOltIncwDqJn0y/k68CCZC4EhLa5u/wQ3wf5PMWK2
- jezThd6kVdhy/IHSTTPMzaPamzX9Ow2g3/cXzT/V/kKvG51UNTafg/C4GYRnX64miP
- Bvdge12WvXs6L3vXZLkf5d5LT+Eze1kvT5by1uog=
-X-Virus-Scanned: amavis at enst.fr
-Received: from zproxy1.enst.fr ([IPv6:::1])
- by localhost (zproxy1.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
- id B-vYFCQw5Vi3; Sun,  5 May 2024 16:16:19 +0200 (CEST)
-Received: from inesv-Inspiron-3501.enst.fr (unknown
- [IPv6:2a04:8ec0:0:124::190c])
- by zproxy1.enst.fr (Postfix) with ESMTPSA id 92831C056B;
- Sun,  5 May 2024 16:16:18 +0200 (CEST)
-From: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Arnaud Minier <arnaud.minier@telecom-paris.fr>,
- =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH] hw/char: Correct STM32L4x5 usart register CR2 field ADD_0 size
-Date: Sun,  5 May 2024 16:16:08 +0200
-Message-ID: <20240505141613.387508-1-ines.varhol@telecom-paris.fr>
-X-Mailer: git-send-email 2.43.2
+ (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
+ id 1s3cuo-0002UM-N8
+ for qemu-devel@nongnu.org; Sun, 05 May 2024 10:32:38 -0400
+Message-ID: <960d6344-4aa5-4644-ba97-a06d21f4ead8@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1714919543;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VY+njysv1MdU4u1nHnnqJGdW72Ge39UFiDFeON+QGqE=;
+ b=taJ5kOdk2wl3oHJ8XlNRBIB/QtmTn9jYIKgmTYIaKOTNIEyB1/RBoYpuzOCNXYP7P0r7oi
+ U7AnvcfyROoRjp0lA3/UKJhUggXT1et8mYL/ijzskc+wbJhGeYB/u/Lpn7ghgzTYS7pV7R
+ A50jGzcXrBGpmyoBepbyUxQW/MQZNN8=
+Date: Sun, 5 May 2024 22:31:54 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2001:660:330f:2::dc;
- envelope-from=ines.varhol@telecom-paris.fr; helo=zproxy1.enst.fr
+Subject: Re: [PATCH] hvf: arm: Fix encodings for ID_AA64PFR1_EL1 and debug
+ System registers
+To: Alexander Graf <agraf@csgraf.de>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ wanghaibin.wang@huawei.com
+References: <20240503153453.54389-1-zenghui.yu@linux.dev>
+ <f0c19830-d4e0-4585-b960-7dd3fa1a3c76@csgraf.de>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+From: Zenghui Yu <zenghui.yu@linux.dev>
+In-Reply-To: <f0c19830-d4e0-4585-b960-7dd3fa1a3c76@csgraf.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=2001:41d0:203:375::b2;
+ envelope-from=zenghui.yu@linux.dev; helo=out-178.mta1.migadu.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,26 +71,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
----
- hw/char/stm32l4x5_usart.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 2024/5/5 21:18, Alexander Graf wrote:
+> 
+> On 03.05.24 19:34, Zenghui Yu wrote:
+>> We wrongly encoded ID_AA64PFR1_EL1 using {3,0,0,4,2} in 
+>> hvf_sreg_match[] so
+>> we fail to get the expected ARMCPRegInfo from cp_regs hash table with the
+>> wrong key.
+>>
+>> Fix it with the correct encoding {3,0,0,4,1}. With that fixed, the Linux
+>> guest can properly detect FEAT_SSBS2 on my M1 HW.
+>>
+>> All DBG{B,W}{V,C}R_EL1 registers are also wrongly encoded with op0 == 14.
+>> It happens to work because HVF_SYSREG(CRn, CRm, 14, op1, op2) equals to
+>> HVF_SYSREG(CRn, CRm, 2, op1, op2), by definition. But we shouldn't 
+>> rely on
+>> it.
+>>
+>> Fixes: a1477da3ddeb ("hvf: Add Apple Silicon support")
+>> Signed-off-by: Zenghui Yu <zenghui.yu@linux.dev>
+> 
+> 
+> Nice catch! Did you find them only because of functional issues or have 
+> you taken an automated pass somehow to validate the sysreg definitions 
+> are correct?
 
-diff --git a/hw/char/stm32l4x5_usart.c b/hw/char/stm32l4x5_usart.c
-index 02f666308c..fc5dcac0c4 100644
---- a/hw/char/stm32l4x5_usart.c
-+++ b/hw/char/stm32l4x5_usart.c
-@@ -56,7 +56,7 @@ REG32(CR1, 0x00)
-     FIELD(CR1, UE, 0, 1)     /* USART enable */
- REG32(CR2, 0x04)
-     FIELD(CR2, ADD_1, 28, 4)    /* ADD[7:4] */
--    FIELD(CR2, ADD_0, 24, 1)    /* ADD[3:0] */
-+    FIELD(CR2, ADD_0, 24, 4)    /* ADD[3:0] */
-     FIELD(CR2, RTOEN, 23, 1)    /* Receiver timeout enable */
-     FIELD(CR2, ABRMOD, 21, 2)   /* Auto baud rate mode */
-     FIELD(CR2, ABREN, 20, 1)    /* Auto baud rate enable */
---=20
-2.43.2
+Neither, this was found by code inspection. I was just curious about how
+VMM would interact with hypervisor to expose features to the guest. Docs
+at https://developer.apple.com/documentation/hypervisor are not that
+detailed (I may need to read further ;-) ).
 
+P.S., I verified on M1 that ID_AA64PFR1_EL1 is 0x20 at
+hvf_arm_get_host_cpu_features() stage and is overwritten as 0x0 later
+w/o this patch, which indicates the (guest visible) feature ID registers
+are "writable" to some extent.
+
+> Reviewed-by: Alexander Graf <agraf@csgraf.de>
+
+Thanks!
+
+Zenghui
 
