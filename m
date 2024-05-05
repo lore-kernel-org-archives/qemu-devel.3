@@ -4,70 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CD90C4345F
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 May 2024 20:35:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42A76C4345F
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 May 2024 00:40:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3M6J-0006Qn-IK; Sat, 04 May 2024 16:35:22 -0400
+	id 1s3PuV-0001Jb-PF; Sat, 04 May 2024 20:39:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1s3M6A-0006P8-5k; Sat, 04 May 2024 16:35:10 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1s3M64-0006Vs-KN; Sat, 04 May 2024 16:35:09 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 14B086412B;
- Sat,  4 May 2024 23:35:14 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 09D7AC669A;
- Sat,  4 May 2024 23:35:00 +0300 (MSK)
-Message-ID: <df14595f-3a26-4b7f-948d-df522f487b92@tls.msk.ru>
-Date: Sat, 4 May 2024 23:34:59 +0300
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s3PuU-0001JM-9Q
+ for qemu-devel@nongnu.org; Sat, 04 May 2024 20:39:22 -0400
+Received: from mail-oo1-xc34.google.com ([2607:f8b0:4864:20::c34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s3PuS-0004Bg-Jl
+ for qemu-devel@nongnu.org; Sat, 04 May 2024 20:39:22 -0400
+Received: by mail-oo1-xc34.google.com with SMTP id
+ 006d021491bc7-5aa362cc2ccso696761eaf.3
+ for <qemu-devel@nongnu.org>; Sat, 04 May 2024 17:39:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714869558; x=1715474358; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=RNMXCqRtwS6Ls77ayO6uQk8IbXmRFiEtaw7b9iYKI0g=;
+ b=SlypAQORlCmo5yGPiOEeet2lFpllun9rWnAWcJ9MU9P4OREXNUWlJbWKBZFFUD267C
+ lQ93A8ZsyBBnP9CxxPykcxFG2YJy8e+fU7RlUcIDD7RUWfJu/JE2stEGReewyWHCUcQa
+ eBBHd8YixIvj/kEggjagOWvSM6eIAkrxWCvdSuNgMoc1exPAsuJpnMD4hp0URAsf1xjq
+ 2EwPdWDcgrc68mh4Por8NRIgoxUhx3n4t8bFV3B+opK/OMUmaYkR0fN7uYNRQt4CwPOs
+ JXRBGBNGAo/VH5SJ+mzhcDuCtLDLxAVNmUCfF71mFqZU4vxgCDDj5UVaydWrm+O/VKTj
+ 9D/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714869558; x=1715474358;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RNMXCqRtwS6Ls77ayO6uQk8IbXmRFiEtaw7b9iYKI0g=;
+ b=KR0lWK/gbstQmg+HNa486fttBJlpydY9OXdiDuCSHPlNwHCm7OghjgqXUMAu9HoEM7
+ 7L9ArT63TQwfzAmfZGRWlYGSlDRgXSGMpGpqRPpMzSIgQWXVax7CnqP3lnDJBCmcYWac
+ 9jwEgKleAGoFB9F8nXrYoTRlrxIkaD/OHTbRK/K8ESDa5j4VUoRvfmk02J2MxSGht++A
+ mmaA+9tPV/0r7/LccfBlBxD5ViD2siX89IUo6y9+B7WmzQwlKAa8vVyGkfcVdsx3gA5p
+ 4NwvEBDk4FwwYdP5aJgoLxcH1iKW7cHT9TylYyujF49YkZjRYfeZAIx6rEcJYXstbHTS
+ ExlQ==
+X-Gm-Message-State: AOJu0YxiAd707xUJjx2/oLI4BFkZZTxmkbpdznqEfcmZJIPgOsX+GlVz
+ XMUTGMr8LwkfBGpdwDfYOqLO4NF8+kU1poJv95nOqrnqCtaIkbIiM+PZ3aIdh76TPl2ZNWwty3c
+ X
+X-Google-Smtp-Source: AGHT+IE5OonZpDykYE79uwV3q2u+oSRtegpc8WjOyhuef8SYJZ8JQsmvfABQTo61gr4cT7IebAormg==
+X-Received: by 2002:a05:6359:4582:b0:18d:715e:1e17 with SMTP id
+ no2-20020a056359458200b0018d715e1e17mr7551899rwb.2.1714869558138; 
+ Sat, 04 May 2024 17:39:18 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ by smtp.gmail.com with ESMTPSA id
+ l9-20020a17090add8900b002b269962606sm5495608pjv.30.2024.05.04.17.39.17
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 04 May 2024 17:39:17 -0700 (PDT)
+Message-ID: <ab8c4ba2-60d4-4d5e-a473-bf34c9972ade@linaro.org>
+Date: Sat, 4 May 2024 17:39:15 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Fixes: Indentation using TABs and improve formatting
-To: Tanmay <tanmaynpatil105@gmail.com>, qemu-stable@nongnu.org,
- QEMU Developers <qemu-devel@nongnu.org>
-References: <CAHnsOnM6gzcjpmEqCN0cFjZKXZCK_ZGAphuf46xWmUyBcNrAxQ@mail.gmail.com>
+Subject: Re: [PULL 0/9] target/alpha: Implement CF_PCREL
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+References: <20240504153926.357845-1-richard.henderson@linaro.org>
 Content-Language: en-US
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <CAHnsOnM6gzcjpmEqCN0cFjZKXZCK_ZGAphuf46xWmUyBcNrAxQ@mail.gmail.com>
+In-Reply-To: <20240504153926.357845-1-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c34;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc34.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,25 +96,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-04.05.2024 21:58, Tanmay wrote:
-> Hi,
+On 5/4/24 08:39, Richard Henderson wrote:
+> The following changes since commit 97c872276d147c882296f5da245bd8432f1582f6:
 > 
-> I have attached a patch file that fixes indentation and formatting for some files as listed in https://gitlab.com/qemu-project/qemu/-/issues/373 
-> <https://gitlab.com/qemu-project/qemu/-/issues/373>.
+>    Merge tag 'accel-sh4-ui-20240503' ofhttps://github.com/philmd/qemu  into staging (2024-05-03 14:42:50 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/rth7680/qemu.git  tags/pull-axp-20240504
+> 
+> for you to fetch changes up to 23bb086350c0de390f77dd034d775742314cabd7:
+> 
+>    target/alpha: Implement CF_PCREL (2024-05-04 08:05:51 -0700)
+> 
+> ----------------------------------------------------------------
+> target/alpha: Implement CF_PCREL
 
-it is sort of good you posted this patch to stable@.  It has absolutely nothing to do
-with stable, but it serves as a an example of things which should - in my opinion -
-not be done at all.  We had another similar change, 55339361276a "sh4: Coding style:
-Remove tabs", which makes all further changes (fixes) in this area basically
-non-back-portable to previous stable series.
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
-FWIW,
 
-/mjt
--- 
-GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
-New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
-Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
-Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
+r~
 
 
