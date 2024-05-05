@@ -4,81 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42A76C4345F
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 May 2024 00:40:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BDDFC4345F
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 May 2024 06:06:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3PuV-0001Jb-PF; Sat, 04 May 2024 20:39:23 -0400
+	id 1s3V0e-00049w-BB; Sun, 05 May 2024 02:06:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s3PuU-0001JM-9Q
- for qemu-devel@nongnu.org; Sat, 04 May 2024 20:39:22 -0400
-Received: from mail-oo1-xc34.google.com ([2607:f8b0:4864:20::c34])
+ (Exim 4.90_1) (envelope-from <tanmaynpatil105@gmail.com>)
+ id 1s3V0S-00044i-8Y; Sun, 05 May 2024 02:05:52 -0400
+Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s3PuS-0004Bg-Jl
- for qemu-devel@nongnu.org; Sat, 04 May 2024 20:39:22 -0400
-Received: by mail-oo1-xc34.google.com with SMTP id
- 006d021491bc7-5aa362cc2ccso696761eaf.3
- for <qemu-devel@nongnu.org>; Sat, 04 May 2024 17:39:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <tanmaynpatil105@gmail.com>)
+ id 1s3V0Q-0005gE-4r; Sun, 05 May 2024 02:05:51 -0400
+Received: by mail-oa1-x33.google.com with SMTP id
+ 586e51a60fabf-23f62699219so47992fac.0; 
+ Sat, 04 May 2024 23:05:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714869558; x=1715474358; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to;
- bh=RNMXCqRtwS6Ls77ayO6uQk8IbXmRFiEtaw7b9iYKI0g=;
- b=SlypAQORlCmo5yGPiOEeet2lFpllun9rWnAWcJ9MU9P4OREXNUWlJbWKBZFFUD267C
- lQ93A8ZsyBBnP9CxxPykcxFG2YJy8e+fU7RlUcIDD7RUWfJu/JE2stEGReewyWHCUcQa
- eBBHd8YixIvj/kEggjagOWvSM6eIAkrxWCvdSuNgMoc1exPAsuJpnMD4hp0URAsf1xjq
- 2EwPdWDcgrc68mh4Por8NRIgoxUhx3n4t8bFV3B+opK/OMUmaYkR0fN7uYNRQt4CwPOs
- JXRBGBNGAo/VH5SJ+mzhcDuCtLDLxAVNmUCfF71mFqZU4vxgCDDj5UVaydWrm+O/VKTj
- 9D/Q==
+ d=gmail.com; s=20230601; t=1714889148; x=1715493948; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=joSaW5Q73FN0Zzf2sziQVGs0aG3j4d1B9rZFS+CMsX8=;
+ b=OQa7nPmXZekq1d2zzl6O+JJM0cjYsJlvDZ1/vmMA9zlnXYgh7MRUjMRX3y+IZ1g3FH
+ Tb6PBtyZiJuCKAfRPPRB7OfStvJzxPCm7tXbYx9Y6L4PE7N2p/62+627zycpEumN0xno
+ UrgMIj2D9hLaczS0rxoxoMfW6wMA51PuqzaLtjwU6+owxGk4CdQHvzZyAKJEyNFvvjyh
+ 25Bp/5k9v6GJlO8h1BucB2r0iUZjw7iJDZCTIT7E+eftfX/lqqBkMpRETqh51rpGXiVD
+ V4LbETDTyPzXRyLpiY0pNHFez4CkpSKgomkOzhq5roEJ6TOnVg9OyakgMhWLD+8zx1Q4
+ 5q7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714869558; x=1715474358;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RNMXCqRtwS6Ls77ayO6uQk8IbXmRFiEtaw7b9iYKI0g=;
- b=KR0lWK/gbstQmg+HNa486fttBJlpydY9OXdiDuCSHPlNwHCm7OghjgqXUMAu9HoEM7
- 7L9ArT63TQwfzAmfZGRWlYGSlDRgXSGMpGpqRPpMzSIgQWXVax7CnqP3lnDJBCmcYWac
- 9jwEgKleAGoFB9F8nXrYoTRlrxIkaD/OHTbRK/K8ESDa5j4VUoRvfmk02J2MxSGht++A
- mmaA+9tPV/0r7/LccfBlBxD5ViD2siX89IUo6y9+B7WmzQwlKAa8vVyGkfcVdsx3gA5p
- 4NwvEBDk4FwwYdP5aJgoLxcH1iKW7cHT9TylYyujF49YkZjRYfeZAIx6rEcJYXstbHTS
- ExlQ==
-X-Gm-Message-State: AOJu0YxiAd707xUJjx2/oLI4BFkZZTxmkbpdznqEfcmZJIPgOsX+GlVz
- XMUTGMr8LwkfBGpdwDfYOqLO4NF8+kU1poJv95nOqrnqCtaIkbIiM+PZ3aIdh76TPl2ZNWwty3c
- X
-X-Google-Smtp-Source: AGHT+IE5OonZpDykYE79uwV3q2u+oSRtegpc8WjOyhuef8SYJZ8JQsmvfABQTo61gr4cT7IebAormg==
-X-Received: by 2002:a05:6359:4582:b0:18d:715e:1e17 with SMTP id
- no2-20020a056359458200b0018d715e1e17mr7551899rwb.2.1714869558138; 
- Sat, 04 May 2024 17:39:18 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
- by smtp.gmail.com with ESMTPSA id
- l9-20020a17090add8900b002b269962606sm5495608pjv.30.2024.05.04.17.39.17
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 04 May 2024 17:39:17 -0700 (PDT)
-Message-ID: <ab8c4ba2-60d4-4d5e-a473-bf34c9972ade@linaro.org>
-Date: Sat, 4 May 2024 17:39:15 -0700
+ d=1e100.net; s=20230601; t=1714889148; x=1715493948;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=joSaW5Q73FN0Zzf2sziQVGs0aG3j4d1B9rZFS+CMsX8=;
+ b=SlihpyVlhPtHGyiEHr+umYDRZwLgRswa7ZhKiCaODC7QzMv6IAqnC+LQGfLopgms3l
+ PEOsLbhaQriUhPXMY4Di2TyQF/hn6zxuJyQMQsUbo6kKKSEgBqhUNoX5y6LZFYA6McFU
+ idYZ8827cApuoOvxusKUpgMRsVYBnx3m7/nlLmvpNowvuAtPwZOUi7o0ixHZE7HeUECB
+ HEQkahHxgO4/Wp3dAqwQkGfLKeyMsO5m25HmztFWjfSwkXeTMcvG7/52Q6lBAhWI/VmD
+ 754iG1lGkuKMZLnvafLw6NN9GJjzshhF2hJCho1DhWfutH5008lDJRCFevrAORMdPjWo
+ 4wvw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV3HzknkFipsHBx8FQr/APpKOBqHi/5nVrdihK5hxBtC/OfnHQVeIz84lvyLQ0dQF+Ds8li7VWa0VlGCN6z97GrGBBkxQU=
+X-Gm-Message-State: AOJu0YwpycRKZFFF/rYy2PNHAkf6aamc+EO9U3qF6Y7nfCX57tB7nJdu
+ VzVHYowU8815S3qSfIQIKYoTY8rDblkS8GepC2QNtBz/j0aip4Mfbtzudh7DL8ihOK37SNzZwWO
+ HVQ/I3BD1fX5sdt48W70GR+uzoNmkuSPgKBw=
+X-Google-Smtp-Source: AGHT+IG+QwKXasAwGdMo0OTPAleIX9Rlf/RdbuOgldV81FYuuW3JpAyZQ62QTNL4MSibQLNDwSj5MEaNs2v6+g+xrOk=
+X-Received: by 2002:a05:6871:5213:b0:23c:6619:5970 with SMTP id
+ ht19-20020a056871521300b0023c66195970mr8938671oac.7.1714889148221; Sat, 04
+ May 2024 23:05:48 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/9] target/alpha: Implement CF_PCREL
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-References: <20240504153926.357845-1-richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20240504153926.357845-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c34;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc34.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <CAHnsOnM6gzcjpmEqCN0cFjZKXZCK_ZGAphuf46xWmUyBcNrAxQ@mail.gmail.com>
+ <df14595f-3a26-4b7f-948d-df522f487b92@tls.msk.ru>
+In-Reply-To: <df14595f-3a26-4b7f-948d-df522f487b92@tls.msk.ru>
+From: Tanmay <tanmaynpatil105@gmail.com>
+Date: Sun, 5 May 2024 11:35:37 +0530
+Message-ID: <CAHnsOnNX=sWCM8pjKHnA6G_PVVjWhVi3RUbVVrPHtRX0hqA0Nw@mail.gmail.com>
+Subject: Re: [PATCH] Fixes: Indentation using TABs and improve formatting
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, QEMU Developers <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="0000000000008251f60617aebe99"
+Received-SPF: pass client-ip=2001:4860:4864:20::33;
+ envelope-from=tanmaynpatil105@gmail.com; helo=mail-oa1-x33.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,25 +89,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/4/24 08:39, Richard Henderson wrote:
-> The following changes since commit 97c872276d147c882296f5da245bd8432f1582f6:
-> 
->    Merge tag 'accel-sh4-ui-20240503' ofhttps://github.com/philmd/qemu  into staging (2024-05-03 14:42:50 -0700)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/rth7680/qemu.git  tags/pull-axp-20240504
-> 
-> for you to fetch changes up to 23bb086350c0de390f77dd034d775742314cabd7:
-> 
->    target/alpha: Implement CF_PCREL (2024-05-04 08:05:51 -0700)
-> 
-> ----------------------------------------------------------------
-> target/alpha: Implement CF_PCREL
+--0000000000008251f60617aebe99
+Content-Type: text/plain; charset="UTF-8"
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+Hi,
 
+I completely agree!
+This was more of a "NEWCOMERS" issue to help us understand how the patch
+flow works.
+I'll take up a trivial issue and work on it instead.
 
-r~
+Thanks,
+Tanmay
 
+On Sun, 5 May 2024 at 02:05, Michael Tokarev <mjt@tls.msk.ru> wrote:
+
+> 04.05.2024 21:58, Tanmay wrote:
+> > Hi,
+> >
+> > I have attached a patch file that fixes indentation and formatting for
+> some files as listed in https://gitlab.com/qemu-project/qemu/-/issues/373
+> > <https://gitlab.com/qemu-project/qemu/-/issues/373>.
+>
+> it is sort of good you posted this patch to stable@.  It has absolutely
+> nothing to do
+> with stable, but it serves as a an example of things which should - in my
+> opinion -
+> not be done at all.  We had another similar change, 55339361276a "sh4:
+> Coding style:
+> Remove tabs", which makes all further changes (fixes) in this area
+> basically
+> non-back-portable to previous stable series.
+>
+> FWIW,
+>
+> /mjt
+> --
+> GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
+> New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD
+> 3D98 ECDF 2C8E
+> Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C
+> E0A0 8044 65C5
+> Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
+>
+>
+
+--0000000000008251f60617aebe99
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div><div><div>Hi,<br><br></div>I completely agree!<br></d=
+iv>This was more of a &quot;NEWCOMERS&quot; issue to help us understand how=
+ the patch flow works.<br>I&#39;ll take up a trivial issue and work on it i=
+nstead.<br><br></div><div>Thanks,<br></div><div>Tanmay<br></div></div><br><=
+div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Sun, 5 M=
+ay 2024 at 02:05, Michael Tokarev &lt;<a href=3D"mailto:mjt@tls.msk.ru">mjt=
+@tls.msk.ru</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">04.05.2024 21:58, Tanmay wrote:<br>
+&gt; Hi,<br>
+&gt; <br>
+&gt; I have attached a patch file that fixes indentation and formatting for=
+ some files as listed in <a href=3D"https://gitlab.com/qemu-project/qemu/-/=
+issues/373" rel=3D"noreferrer" target=3D"_blank">https://gitlab.com/qemu-pr=
+oject/qemu/-/issues/373</a> <br>
+&gt; &lt;<a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/373" rel=
+=3D"noreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qemu/-/is=
+sues/373</a>&gt;.<br>
+<br>
+it is sort of good you posted this patch to stable@.=C2=A0 It has absolutel=
+y nothing to do<br>
+with stable, but it serves as a an example of things which should - in my o=
+pinion -<br>
+not be done at all.=C2=A0 We had another similar change, 55339361276a &quot=
+;sh4: Coding style:<br>
+Remove tabs&quot;, which makes all further changes (fixes) in this area bas=
+ically<br>
+non-back-portable to previous stable series.<br>
+<br>
+FWIW,<br>
+<br>
+/mjt<br>
+-- <br>
+GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.<br>
+New key: rsa4096/61AD3D98ECDF2C8E=C2=A0 9D8B E14E 3F2A 9DD7 9199=C2=A0 28F1=
+ 61AD 3D98 ECDF 2C8E<br>
+Old key: rsa2048/457CE0A0804465C5=C2=A0 6EE1 95D1 886E 8FFB 810D=C2=A0 4324=
+ 457C E0A0 8044 65C5<br>
+Transition statement: <a href=3D"http://www.corpit.ru/mjt/gpg-transition-20=
+24.txt" rel=3D"noreferrer" target=3D"_blank">http://www.corpit.ru/mjt/gpg-t=
+ransition-2024.txt</a><br>
+<br>
+</blockquote></div>
+
+--0000000000008251f60617aebe99--
 
