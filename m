@@ -4,83 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75FFEC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 08:43:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 723F0C25B5C
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 08:46:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3tvk-0000eg-7C; Mon, 06 May 2024 04:42:40 -0400
+	id 1s3tz3-0003Kt-1L; Mon, 06 May 2024 04:46:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3tvV-0000bL-Q9
- for qemu-devel@nongnu.org; Mon, 06 May 2024 04:42:25 -0400
-Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3tvU-0001OW-3U
- for qemu-devel@nongnu.org; Mon, 06 May 2024 04:42:25 -0400
-Received: by mail-lf1-x12d.google.com with SMTP id
- 2adb3069b0e04-52006fbae67so2167148e87.0
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 01:42:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714984941; x=1715589741; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Y/y3A+Whe4/vlM9oBR9QL5Dz3x3dqJLja5EldNh1/co=;
- b=OF5y6Pr710kk7V8U1o1W2fPoQeYlwbSOJdBfYykCA+qtts0fhmXW7qnVV9pABNLhjW
- gnUrELtvGxM6jUpBxitoacTeeKsQEkqKVmfnyUq4eBf7jasSWiUGLJorr8Meak3tS1rK
- 2sAImsYbqomWmvX6bnSSzHL30wuVW/i54E50VGYRfW7tfU6Bw67H+o9KYuCP/PY5br0u
- 9gcyIQbu+zXofy8lD8xzbcj+47N+aIKZZ4kC8z3BrZpEmvdrGKJQbIlIAfS57HqGxHyK
- kuCVAjkSeRLI2O+yrM4ZdTmjBfewVLFpDFiBWOpVEgtlEa/Ugvai61WQ642Ews+lgI2G
- Ow2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714984941; x=1715589741;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Y/y3A+Whe4/vlM9oBR9QL5Dz3x3dqJLja5EldNh1/co=;
- b=k4fMWLgMdl1ZGr9cESwhKNWYUuaFkOaSI4yvEli16dgHdmZYFHvh0WhgSuYO3L0Yul
- parb53xzJ3xCbcOlC31tEq83TckfbS9pjsPtuYjvw0FRlH6CJ4vqQzC+x95vtI2Lenl1
- qzUoEmpY9RbMGjkLOEWFnvbNXviuXepUAXDabBMS25FQUjt54fypLQ02+Nwll2X12cWR
- xtlGVvDtJ72ONGU+Eyq1RG8z5QMSh7XlBwfNRZuYQoDfIEBL+MqRFHp1FtjAZxqcxzVv
- Yap5HBHPtjkjI/KiEdPEomcA+HsbYzioAxf0wWE7GCcdpy6YyKsaAR71/PMAJKCWASPf
- l4uA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXU8oP9QfnO2ghQQ0zpD+Lpc2e/65C1TXE6YY1HX9DwS4vHz11ITDcQT6c+XYg88AuK2Qwk8GtvVjAR4FWaCD6gRdhfi1o=
-X-Gm-Message-State: AOJu0YxKEtTizuuHrHj3YGIWL6vKgyL+Ol9DRjaWyr+EsC6mg+VhEXwT
- 2llOhBxImWoYA3lEVGoh3P58RLjwBEZkvRMZdTzVYFhdJ5P3O/RxAg0nUQYLraPb6hw7ak5UhlZ
- 9
-X-Google-Smtp-Source: AGHT+IFUhzBtoH9DUKIVz0WPt12kHeFCcCeyIg7mVxPGq1OpGcnMuVt5NqYLgHV69PNO0717Or456g==
-X-Received: by 2002:ac2:43bc:0:b0:51b:e46c:19fd with SMTP id
- t28-20020ac243bc000000b0051be46c19fdmr5644963lfl.18.1714984941498; 
- Mon, 06 May 2024 01:42:21 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.211.4])
- by smtp.gmail.com with ESMTPSA id
- c16-20020adffb10000000b0034f0633e322sm3037266wrr.38.2024.05.06.01.42.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 May 2024 01:42:20 -0700 (PDT)
-Message-ID: <9ddae62b-68e4-47dd-8fec-a5ec6a01c6f3@linaro.org>
-Date: Mon, 6 May 2024 10:42:19 +0200
+ (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
+ id 1s3tys-000374-4K
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 04:45:54 -0400
+Received: from mgamail.intel.com ([192.198.163.17])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
+ id 1s3tym-0003Qx-DL
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 04:45:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1714985148; x=1746521148;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=iTHJMnTGgm+QDvGy7rVOjNVqA8EzlMFAakXdCWncmyI=;
+ b=MoU3Iimk9vectDsyMVOpgVLO7HT+t6E7HwkedIMbzhlFdE7BHU39foA7
+ Z7f+nkaanLjimf+i30jP07DhXy7BarfHyAACtHTBmcgiBnCUjBLWttgYJ
+ 6T/3MTp3Wst/Xij6UDCuEQVmLjAL6YgwEzcuoQ07Gehf3hr88BGcdW7rp
+ oz7hsUxYDH1g72ro9ftts9M7flUoAJxYg5EvQJbSdgUiIAVp/jM/szPmg
+ 3tKiUT/j6CoScAbkAe6CWyvk2e5SrXXxmReAarHtOOFSnB7Iv3LQI8M5c
+ mTsMp/2ClDjJEcPfJuuEQsRtAlBjgCFtLPjafe5+YJqmy0JygDaYkErTE A==;
+X-CSE-ConnectionGUID: TJ3CeRNxTKO1nC/yOg8hfQ==
+X-CSE-MsgGUID: rLsCkgvxRtKWBha5B5E5AA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11064"; a="10602329"
+X-IronPort-AV: E=Sophos;i="6.07,257,1708416000"; d="scan'208";a="10602329"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 May 2024 01:45:45 -0700
+X-CSE-ConnectionGUID: S1yTUQ1sQxmAUFmqd/Wkkg==
+X-CSE-MsgGUID: gG5/+spERzad8TG1SwVNwg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,257,1708416000"; d="scan'208";a="28179667"
+Received: from sae-gw02.sh.intel.com (HELO localhost) ([10.239.45.110])
+ by orviesa009.jf.intel.com with ESMTP; 06 May 2024 01:45:43 -0700
+From: Yuan Liu <yuan1.liu@intel.com>
+To: peterx@redhat.com,
+	farosas@suse.de
+Cc: qemu-devel@nongnu.org,
+	yuan1.liu@intel.com,
+	nanhai.zou@intel.com
+Subject: [PATCH v6 0/7] Live Migration With IAA
+Date: Mon,  6 May 2024 00:57:44 +0800
+Message-Id: <20240505165751.2392198-1-yuan1.liu@intel.com>
+X-Mailer: git-send-email 2.39.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] MAINTAINERS: Update my email address
-To: Bin Meng <bmeng.cn@gmail.com>, qemu-devel@nongnu.org,
- Alistair Francis <alistair.francis@wdc.com>
-Cc: Bin Meng <bin.meng.cn@windriver.com>
-References: <20240505072312.2776074-1-bmeng.cn@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240505072312.2776074-1-bmeng.cn@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=192.198.163.17; envelope-from=yuan1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
+ DKIMWL_WL_HIGH=-0.431, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,31 +81,254 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/5/24 09:23, Bin Meng wrote:
-> From: Bin Meng <bin.meng.cn@windriver.com>
-> 
-> The old Wind River email address (bin.meng@windriver.com) is no longer
-> available due to an internal infrastructure change within the company.
-> While a new email address (bin.meng.cn@windriver.com) has been assigned
-> to me, I am unable to find a way to send this patch directly from the
-> new address. Presumably, the basic authentication with client submission
-> (SMTP AUTH) [1] has been disabled by the company's IT.
-> 
-> Switch to use my personal email address instead.
-> 
-> Signed-off-by: Bin Meng <bin.meng.cn@windriver.com>
-> Signed-off-by: Bin Meng <bmeng.cn@gmail.com>
-> 
-> [1] https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/how-to-set-up-a-multifunction-device-or-application-to-send-email-using-microsoft-365-or-office-365
-> 
-> ---
-> 
-> Changes in v2:
-> - Provide more background info for the email address change
-> 
->   MAINTAINERS | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+I am writing to submit a code change aimed at enhancing live migration
+acceleration by leveraging the compression capability of the Intel
+In-Memory Analytics Accelerator (IAA).
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+The implementation of the IAA (de)compression code is based on Intel Query
+Processing Library (QPL), an open-source software project designed for
+high-performance query processing operations on Intel CPUs.
+https://github.com/intel/qpl
+
+I would like to summarize the progress so far
+1. QPL will be used as an independent compression method like ZLIB and ZSTD,
+   For the summary of issues compatible with ZLIB, please refer to
+   docs/devel/migration/qpl-compression.rst
+
+2. The QPL method supports both software path and hardware path (use IAA device)
+   for multifd migration compression and decompression.
+   The hardware path is always used first, if the hardware path is unavailable,
+   it automatically falls back to the software path.
+
+3. Compression accelerator related patches are removed from this patch set and
+   will be added to the QAT patch set, we will submit separate patches to use
+   QAT to accelerate ZLIB and ZSTD.
+
+4. Advantages of using IAA accelerator include:
+   a. Compared with the non-compression method, it can improve downtime
+      performance without adding additional host resources (both CPU and
+      network).
+   b. Compared with using software compression methods (ZSTD/ZLIB), it can
+      provide high data compression ratio and save a lot of CPU resources
+      used for compression.
+
+Test condition:
+  1. Host CPUs are based on Sapphire Rapids
+  2. VM type, 16 vCPU and 64G memory
+  3. The source and destination respectively use 4 IAA devices.
+  4. The workload in the VM
+    a. all vCPUs are idle state
+    b. 90% of the virtual machine's memory is used, use silesia to fill
+       the memory.
+       The introduction of silesia:
+       https://sun.aei.polsl.pl//~sdeor/index.php?page=silesia
+  5. Set "--mem-prealloc" boot parameter on the destination, this parameter
+     can make IAA performance better and related introduction is added here.
+     docs/devel/migration/qpl-compression.rst
+  6. Source migration configuration commands
+     a. migrate_set_capability multifd on
+     b. migrate_set_parameter multifd-channels 2/4/8
+     c. migrate_set_parameter downtime-limit 300
+     f. migrate_set_parameter max-bandwidth 100G/1G
+     d. migrate_set_parameter multifd-compression none/qpl/zstd
+  7. Destination migration configuration commands
+     a. migrate_set_capability multifd on
+     b. migrate_set_parameter multifd-channels 2/4/8
+     c. migrate_set_parameter multifd-compression none/qpl/zstd
+
+Early migration result, each result is the average of three tests
+
+ +--------+-------------+--------+--------+---------+----------+------|
+ |        | The number  |total   |downtime|network  |pages per | CPU  |
+ | None   | of channels |time(ms)|(ms)    |bandwidth|second    | Util |
+ | Comp   |             |        |        |(mbps)   |          |      |
+ |        +-------------+-----------------+---------+----------+------+
+ |Network |            2|    8571|      69|    58391|   1896525|  256%|
+ |BW:100G +-------------+--------+--------+---------+----------+------+
+ |        |            4|    7180|      92|    69736|   1865640|  300%|
+ |        +-------------+--------+--------+---------+----------+------+
+ |        |            8|    7090|     121|    70562|   2174060|  307%|
+ +--------+-------------+--------+--------+---------+----------+------+
+
+ +--------+-------------+--------+--------+---------+----------+------|
+ |        | The number  |total   |downtime|network  |pages per | CPU  |
+ |QPL(IAA)| of channels |time(ms)|(ms)    |bandwidth|second    | Util |
+ | Comp   |             |        |        |(mbps)   |          |      |
+ |        +-------------+-----------------+---------+----------+------+
+ |Network |            2|    8413|      34|    30067|   1732411|  230%|
+ |BW:100G +-------------+--------+--------+---------+----------+------+
+ |        |            4|    6559|      32|    38804|   1689954|  450%|
+ |        +-------------+--------+--------+---------+----------+------+
+ |        |            8|    6623|      37|    38745|   1566507|  790%|
+ +--------+-------------+--------+--------+---------+----------+------+
+
+ +--------+-------------+--------+--------+---------+----------+------|
+ |        | The number  |total   |downtime|network  |pages per | CPU  |
+ | QPL(SW)| of channels |time(ms)|(ms)    |bandwidth|second    | Util |
+ | Comp   |             |        |        |(mbps)   |          |      |
+ |        +-------------+-----------------+---------+----------+------+
+ |Network |            2|   93776|      30|     3050|    500815|  210%|
+ |BW:100G +-------------+--------+--------+---------+----------+------+
+ |        |            4|   47263|      57|     6068|   1376627|  403%|
+ |        +-------------+--------+--------+---------+----------+------+
+ |        |            8|   24474|      37|    11828|   1951372|  800%|
+ +--------+-------------+--------+--------+---------+----------+------+
+
+ +--------+-------------+--------+--------+---------+----------+------|
+ |        | The number  |total   |downtime|network  |pages per | CPU  |
+ | ZSTD   | of channels |time(ms)|(ms)    |bandwidth|second    | Util |
+ | Comp   |             |        |        |(mbps)   |          |      |
+ |        +-------------+-----------------+---------+----------+------+
+ |Network |            2|   95846|      24|     1800|    521829|  203%|
+ |BW:100G +-------------+--------+--------+---------+----------+------+
+ |        |            4|   49004|      24|     3529|    890532|  403%|
+ |        +-------------+--------+--------+---------+----------+------+
+ |        |            8|   25574|      32|     6782|   1762222|  800%|
+ +--------+-------------+--------+--------+---------+----------+------+
+
+When network bandwidth resource is sufficient, QPL can improve downtime
+by 2x compared to no compression. In this scenario, with 4/8 channels,
+IAA hardware resources are fully used, so adding more channels will not
+gain more benefits.
+
+
+ +--------+-------------+--------+--------+---------+----------+------|
+ |        | The number  |total   |downtime|network  |pages per | CPU  |
+ | None   | of channels |time(ms)|(ms)    |bandwidth|second    | Util |
+ | Comp   |             |        |        |(mbps)   |          |      |
+ |        +-------------+-----------------+---------+----------+------+
+ |Network |            2|   57758|      66|     8643|    264617|   34%|
+ |BW:  1G +-------------+--------+--------+---------+----------+------+
+ |        |            4|   57216|      58|     8726|    266773|   34%|
+ |        +-------------+--------+--------+---------+----------+------+
+ |        |            8|   56708|      53|     8804|    270223|   33%|
+ +--------+-------------+--------+--------+---------+----------+------+
+
+ +--------+-------------+--------+--------+---------+----------+------|
+ |        | The number  |total   |downtime|network  |pages per | CPU  |
+ |QPL(IAA)| of channels |time(ms)|(ms)    |bandwidth|second    | Util |
+ | Comp   |             |        |        |(mbps)   |          |      |
+ |        +-------------+-----------------+---------+----------+------+
+ |Network |            2|   30129|      34|     8345|   2224761|   54%|
+ |BW:  1G +-------------+--------+--------+---------+----------+------+
+ |        |            4|   30317|      39|     8300|   2025220|   73%|
+ |        +-------------+--------+--------+---------+----------+------+
+ |        |            8|   29615|      35|     8514|   2250122|  131%|
+ +--------+-------------+--------+--------+---------+----------+------+
+
+ +--------+-------------+--------+--------+---------+----------+------|
+ |        | The number  |total   |downtime|network  |pages per | CPU  |
+ | QPL(SW)| of channels |time(ms)|(ms)    |bandwidth|second    | Util |
+ | Comp   |             |        |        |(mbps)   |          |      |
+ |        +-------------+-----------------+---------+----------+------+
+ |Network |            2|   93358|      41|     3064|    534588|  202%|
+ |BW:  1G +-------------+--------+--------+---------+----------+------+
+ |        |            4|   47266|      52|     6067|   1392941|  402%|
+ |        +-------------+--------+--------+---------+----------+------+
+ |        |            8|   33134|      45|     8706|   2433242|  580%|
+ +--------+-------------+--------+--------+---------+----------+------+
+
+ +--------+-------------+--------+--------+---------+----------+------|
+ |        | The number  |total   |downtime|network  |pages per | CPU  |
+ | ZSTD   | of channels |time(ms)|(ms)    |bandwidth|second    | Util |
+ | Comp   |             |        |        |(mbps)   |          |      |
+ |        +-------------+-----------------+---------+----------+------+
+ |Network |            2|   95750|      24|     1802|    477236|  202%|
+ |BW:  1G +-------------+--------+--------+---------+----------+------+
+ |        |            4|   48907|      24|     3536|   1002142|  404%|
+ |        +-------------+--------+--------+---------+----------+------+
+ |        |            8|   25568|      32|     6783|   1696437|  800%|
+ +--------+-------------+--------+--------+---------+----------+------+
+
+When network bandwidth resource is limited, the "page perf second" metric
+decreases for none compression, the success rate of migration will reduce.
+Comparison of QPL and ZSTD compression methods, QPL can save a lot of CPU
+resources used for compression.
+
+v2:
+  - add support for multifd compression accelerator
+  - add support for the QPL accelerator in the multifd
+    compression accelerator
+  - fixed the issue that QPL was compiled into the migration
+    module by default
+
+v3:
+  - use Meson instead of pkg-config to resolve QPL build
+    dependency issue
+  - fix coding style
+  - fix a CI issue for get_multifd_ops function in multifd.c file
+
+v4:
+  - patch based on commit: da96ad4a6a Merge tag 'hw-misc-20240215' of
+    https://github.com/philmd/qemu into staging
+  - remove the compression accelerator implementation patches, the patches
+    will be placed in the QAT accelerator implementation.
+  - introduce QPL as a new compression method
+  - add QPL compression documentation
+  - add QPL compression migration test
+  - fix zlib/zstd compression level issue
+
+v5:
+  - patch based on v9.0.0-rc0 (c62d54d0a8)
+  - use pkgconfig to check libaccel-config, libaccel-config is already
+    in many distributions.
+  - initialize the IOV of the sender by the specific compression method
+  - refine the coding style
+  - remove the zlib/zstd compression level not working patch, the issue
+    has been solved
+
+v6:
+  - rebase to commit id 248f6f62df, Merge tag 'pull-axp-20240504' of
+    https://gitlab.com/rth7680/qemu into staging.
+  - add qpl software path, if the hardware path(IAA) is unavailable, the
+    qpl will fall back to software path automatically.
+  - add pkgconfig to check qpl, qpl version 1.5 already supports pkgconfig,
+    users can install the qpl library and qpl.pc file through source code.
+  - remove libaccel-config library detection, if there is no the library,
+    the qpl will automatically switch to the software path.
+  - use g_malloc0 instead of mmap to apply for memory.
+  - add the more introduction of IAA device management, including usage
+    permission, resource configuration, etc in qpl-compression.rst.
+  - modified unit test to use software path to complete testing when
+    hardware path is unavailable.
+
+Yuan Liu (7):
+  docs/migration: add qpl compression feature
+  migration/multifd: put IOV initialization into compression method
+  configure: add --enable-qpl build option
+  migration/multifd: add qpl compression method
+  migration/multifd: implement initialization of qpl compression
+  migration/multifd: implement qpl compression and decompression
+  tests/migration-test: add qpl compression test
+
+Yuan Liu (7):
+  docs/migration: add qpl compression feature
+  migration/multifd: put IOV initialization into compression method
+  configure: add --enable-qpl build option
+  migration/multifd: add qpl compression method
+  migration/multifd: implement initialization of qpl compression
+  migration/multifd: implement qpl compression and decompression
+  tests/migration-test: add qpl compression test
+
+ docs/devel/migration/features.rst        |   1 +
+ docs/devel/migration/qpl-compression.rst | 262 +++++++++++
+ hw/core/qdev-properties-system.c         |   2 +-
+ meson.build                              |   8 +
+ meson_options.txt                        |   2 +
+ migration/meson.build                    |   1 +
+ migration/multifd-qpl.c                  | 566 +++++++++++++++++++++++
+ migration/multifd-zlib.c                 |   7 +
+ migration/multifd-zstd.c                 |   8 +-
+ migration/multifd.c                      |  22 +-
+ migration/multifd.h                      |   1 +
+ qapi/migration.json                      |   7 +-
+ scripts/meson-buildoptions.sh            |   3 +
+ tests/qtest/migration-test.c             |  24 +
+ 14 files changed, 901 insertions(+), 13 deletions(-)
+ create mode 100644 docs/devel/migration/qpl-compression.rst
+ create mode 100644 migration/multifd-qpl.c
+
+-- 
+2.39.3
 
 
