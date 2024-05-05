@@ -4,48 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A651C4345F
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 May 2024 20:06:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77247C4345F
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 May 2024 20:14:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3i7E-000767-Cw; Sun, 05 May 2024 16:05:45 -0400
+	id 1s3iEo-0000j7-RS; Sun, 05 May 2024 16:13:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1s3i7A-00075l-Ke
- for qemu-devel@nongnu.org; Sun, 05 May 2024 16:05:40 -0400
+ id 1s3iEn-0000iw-3l
+ for qemu-devel@nongnu.org; Sun, 05 May 2024 16:13:33 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1s3i79-0005K3-4A
- for qemu-devel@nongnu.org; Sun, 05 May 2024 16:05:40 -0400
+ id 1s3iEl-0000ys-0W
+ for qemu-devel@nongnu.org; Sun, 05 May 2024 16:13:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
  Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
  Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
  List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=wieSBdb1jzRTt2qj0MAkZdIgb59EI3x2gU/RBiAkyWc=; b=WR1XxC8Ku0ZV8lcyymbOkPxaeG
- cIowAf2lrSuFbtKemI/rBg7aRjLGYPHCqolvd6WlAex3ykCPz3P7PrdZK0AAb4UIF85oQjFQ0hzFM
- Kkaf1/DUOHlROYwj/RJ0BwOy7daSikRXKiXwZSNOwBHm3nb4vZXg+sQvLFDZWamy+YmXSm4ZEa4ry
- ZrZTzWUtVlYAjxUM6rc012cj43UMzAn2eaX+U1fACfy73r81cJ0mFueI1rEbl7K4j2K5YszRlVvq7
- FgHpPjYSmHWeWytKtTLBe+K8m0EApDphWsZ2ZDSnFsy04b6dLZkAys/BPj891PcA8Ll0/4seKjiz8
- 7ApevzbbYmufRpRakJUZfuBi9orhfk/QcUn3jBdNi8A1Urs02bdSWZkYmQZIPIj43ruos8O4LJjJ+
- ofxpo62EmYjQdWqdqoG/7TQOh47nDUkgjTE6DRL4/M6h+u0+j3SVQe51Q7PhjsVxgm1MHxagItLWW
- eu7b9JSL4mZba4JJxctaWqbghz7M6NvMhApS6wqO0uSLofwM183nRKF6BFna0dXJKmUC92+JmzRNm
- dqUg+yDeGvFXL37noDdVUrpCaR8krmB7anI4LDQU0h00ThrTF9EiUodqCJSUG+rj+EjK1Cbs6pUr1
- Cd5IzJRB9tCQfrhf3tb4EjUjWdQyF5fbuBVPnXtHw=;
+ bh=+3xJGj2Eyzim+BK7xH2vKsN1UPaG/HI48LvDkqEskfM=; b=1T8LorKm1Z5tZ7ICbVJwhjk3Vj
+ +2ImBmrU6UovABGPSohxrdgwzKnyING8/IiVAFq5dmufDFf4E/WhjRoDj/IlnmuZoGsURqwcmjdWT
+ e3WQIVi7KA/cjgD0qQYjfMKnPEdMf9FULWEuwZtwSvFyJkfCwnv6DQLIRPWW+99Ke6vw8GAcF1jPP
+ dUvcWtcM7OzGz/eTeLJUV0EYu8BYN371zaDiwpbiV2dVBp+iev/KGXSVJppj0k6OMkBWX5+2ZgOiP
+ qQs0PPIi8Ujoh/rTFHdT0TFSvtoJ57UXhWx0Xi9mZYdVMxeV5TnbXp5lAB0fqIzunFExWCGXVtkli
+ ChkAOo13LuBAdJaE07sHoRhZmK9m8bma3vbOGCfsQGJkVSDHoq+C+slMPuBwTw3u6VoJKrHZyH7Jf
+ FMSVw++Rlk+qeHQ9IuHBd6gyIJNa7H1twxuS/JXi9aYJSLFV5SOMrPBTjzT/aw2UDf6QiT6+YiK4P
+ sERYvwdzJyByfSAH8WBWzajmk3gwt0TsTpJYcaKmiXfco0F7MwT2JVQAWJDekJKHrtpEgwrnvtZjW
+ igG7PQ/cA/X4OZpTAkeYxNEwz7AHsrKCdTtf6vEj5qs75bDekAoTr3LhH8hZutjhXlfB+OdB5gYyC
+ UkSgsPdutmEP6D3VB3ux/xQ4MsR2Fk3kUyEfZQpGE=;
 Received: from [2a00:23c4:8bb4:4000:b60d:a162:d698:c802]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1s3i62-000B4P-1L; Sun, 05 May 2024 21:04:30 +0100
-Message-ID: <0c59e547-3e0b-4e01-afe1-2d4fb15dce93@ilande.co.uk>
-Date: Sun, 5 May 2024 21:05:30 +0100
+ id 1s3iDf-000B7J-CA; Sun, 05 May 2024 21:12:23 +0100
+Message-ID: <be5ad8b7-46ac-47f8-91ae-6302f2fbb4dc@ilande.co.uk>
+Date: Sun, 5 May 2024 21:13:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20240502165528.244004-1-richard.henderson@linaro.org>
+ <d97b250e-0140-429f-81cc-357537c2a212@linaro.org>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -72,9 +74,9 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20240502165528.244004-1-richard.henderson@linaro.org>
+In-Reply-To: <d97b250e-0140-429f-81cc-357537c2a212@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:b60d:a162:d698:c802
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
 Subject: Re: [PATCH v2 0/7] target/sparc: vis fixes
@@ -103,34 +105,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02/05/2024 17:55, Richard Henderson wrote:
+On 03/05/2024 19:18, Philippe Mathieu-Daudé wrote:
 
-> Split out from my vis4 patch set, with just the bug fixes.
-> I've fixed the issue in patch 6, as noticed by Mark, but
-> include the follow-up that cleans up all of the macros by
-> removing them.
->  
-> r~
+> On 2/5/24 18:55, Richard Henderson wrote:
+>> Split out from my vis4 patch set, with just the bug fixes.
+>> I've fixed the issue in patch 6, as noticed by Mark, but
+>> include the follow-up that cleans up all of the macros by
+>> removing them.
+>>
+>>
+>> r~
+>>
+>>
+>> Richard Henderson (7):
+>>    linux-user/sparc: Add more hwcap bits for sparc64
+>>    target/sparc: Fix FEXPAND
+>>    target/sparc: Fix FMUL8x16
+>>    target/sparc: Fix FMUL8x16A{U,L}
+>>    target/sparc: Fix FMULD8*X16
+>>    target/sparc: Fix FPMERGE
+>>    target/sparc: Split out do_ms16b
 > 
-> 
-> Richard Henderson (7):
->    linux-user/sparc: Add more hwcap bits for sparc64
->    target/sparc: Fix FEXPAND
->    target/sparc: Fix FMUL8x16
->    target/sparc: Fix FMUL8x16A{U,L}
->    target/sparc: Fix FMULD8*X16
->    target/sparc: Fix FPMERGE
->    target/sparc: Split out do_ms16b
-> 
->   target/sparc/helper.h     |  11 +--
->   target/sparc/insns.decode |   2 +-
->   linux-user/elfload.c      |  48 +++++++---
->   target/sparc/translate.c  | 129 ++++++++++++++++++++++---
->   target/sparc/vis_helper.c | 195 ++++++++++----------------------------
->   5 files changed, 207 insertions(+), 178 deletions(-)
+> I'm wondering about the coverage here, since various patches
+> fix bugs since VIS intro in commit e9ebed4d41 from 2007, so
+> being broken for 17 years.
 
-Thanks Richard. I've applied v2 to my qmeu-sparc branch, and will send a PR assuming 
-everything passes in GitLab.
+I've definitely seen the VIS instructions in use in my test images, however I can't 
+recall exactly whether it was the particular ones fixed in this series. I'm certainly 
+keen for some more VIS instruction coverage though, especially for VIS2 and later 
+which I'm unlikely to come across in my day-to-day testing.
 
 
 ATB,
