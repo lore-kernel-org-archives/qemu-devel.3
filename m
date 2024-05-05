@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDEFCC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 08:46:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDAB5C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 08:46:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3tz3-0003Kw-2p; Mon, 06 May 2024 04:46:05 -0400
+	id 1s3tz9-0003Qj-OL; Mon, 06 May 2024 04:46:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
- id 1s3tyt-0003B6-PW
- for qemu-devel@nongnu.org; Mon, 06 May 2024 04:45:55 -0400
+ id 1s3tyv-0003Ee-VI
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 04:45:58 -0400
 Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
- id 1s3tyr-0003RG-2k
- for qemu-devel@nongnu.org; Mon, 06 May 2024 04:45:55 -0400
+ id 1s3tyu-0003R3-34
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 04:45:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1714985153; x=1746521153;
+ t=1714985156; x=1746521156;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=GS1pkcl74WF/h4OJ8r86fgDEFmLH4pI9ksnjms0coSw=;
- b=OoAUfl/ddmUxajSuQo3fPGjJiNLH7P8mykGWnbvW/9hDmjValxYTaGBM
- +N1OyDaL/Csn2Xyc84/SOthi31g1XmOeSeVVHVyiCX1Or942ZGnOdXUZq
- BqEDqbXjtZaEQ9PP1fkENJx5fePogDR2+/gEEbgfF53BN7KUqEgI+9Sv8
- 5O8od8HxCtjp8W+phKeg0RH7T8CLz2WX0NO6jn0h+rQR+qIkEf5th7MD7
- +l8PdOI3Qv8eQmTWdr07O+nL4/QUBytn2a6RfsbRlCkJqyrW4LejxSKiD
- UzmbOlaVBscvLEqihiwTYM2hUux/20e7Br8+bx9s3m40N8P204q39MwRT w==;
-X-CSE-ConnectionGUID: b6fes4bqQ1mE8q8jdJ0IFg==
-X-CSE-MsgGUID: XNHtFR29ROSDVfVqle119g==
-X-IronPort-AV: E=McAfee;i="6600,9927,11064"; a="11254989"
-X-IronPort-AV: E=Sophos;i="6.07,257,1708416000"; d="scan'208";a="11254989"
+ bh=z2l/kZxF6ucmve0nR6QM982kPczxoQOncFJ70CSOlCI=;
+ b=dZpAYYsQxfmM6ijVJU1K18lK7Qc+QpvXcg3ufz3zmgxyEWYg6R5sbh62
+ 0l7ZwOVGbVBKx5ee8iMvTvuYOTHQax4Tg7QWWrm5AXXAGvs99I0Oo4ztC
+ 7qxylQAUby477ZpCM6Y87XgeaDIvBEtx8bpS2tVOoBI7JwbNRxZJJSym9
+ v+qC3RRH5UaKjezLUnWHBUz5mmNSzQvAauiYmeSrteoHzfctJ3a0ZC0pP
+ /8JIAK0QupkhuwwjkQSMslwkAXjH4Anmbxg+ewufdMdy6Ns7lhAqT5NPz
+ vdY7XGuXJDnpYCFp3wKXXUMTtWA8lrLi6w8B73swguYyh60Ash1fjFR0H Q==;
+X-CSE-ConnectionGUID: 7K+G+mxoSVaPwbxmvsbY+g==
+X-CSE-MsgGUID: oftrFUSOSei7LGHGyVrEyg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11064"; a="11254997"
+X-IronPort-AV: E=Sophos;i="6.07,257,1708416000"; d="scan'208";a="11254997"
 Received: from fmviesa002.fm.intel.com ([10.60.135.142])
  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 May 2024 01:45:50 -0700
-X-CSE-ConnectionGUID: XX+s3QZoT7ezO/0h2E37Hg==
-X-CSE-MsgGUID: KeE2RTxAQWOfn1Rk78hpqA==
+ 06 May 2024 01:45:55 -0700
+X-CSE-ConnectionGUID: Xr3dABfyTWmdf4Reg9LjpQ==
+X-CSE-MsgGUID: kRAOcOy3SBWFAVETf+bmxw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,257,1708416000"; d="scan'208";a="51287494"
+X-IronPort-AV: E=Sophos;i="6.07,257,1708416000"; d="scan'208";a="51287533"
 Received: from sae-gw02.sh.intel.com (HELO localhost) ([10.239.45.110])
- by fmviesa002.fm.intel.com with ESMTP; 06 May 2024 01:45:48 -0700
+ by fmviesa002.fm.intel.com with ESMTP; 06 May 2024 01:45:54 -0700
 From: Yuan Liu <yuan1.liu@intel.com>
 To: peterx@redhat.com,
 	farosas@suse.de
 Cc: qemu-devel@nongnu.org,
 	yuan1.liu@intel.com,
 	nanhai.zou@intel.com
-Subject: [PATCH v6 2/7] migration/multifd: put IOV initialization into
- compression method
-Date: Mon,  6 May 2024 00:57:46 +0800
-Message-Id: <20240505165751.2392198-3-yuan1.liu@intel.com>
+Subject: [PATCH v6 4/7] migration/multifd: add qpl compression method
+Date: Mon,  6 May 2024 00:57:48 +0800
+Message-Id: <20240505165751.2392198-5-yuan1.liu@intel.com>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20240505165751.2392198-1-yuan1.liu@intel.com>
 References: <20240505165751.2392198-1-yuan1.liu@intel.com>
@@ -84,159 +83,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Different compression methods may require different numbers of IOVs.
-Based on streaming compression of zlib and zstd, all pages will be
-compressed to a data block, so two IOVs are needed for packet header
-and compressed data block.
+add the Query Processing Library (QPL) compression method
+
+Introduce the qpl as a new multifd migration compression method, it can
+use In-Memory Analytics Accelerator(IAA) to accelerate compression and
+decompression, which can not only reduce network bandwidth requirement
+but also reduce host compression and decompression CPU overhead.
+
+How to enable qpl compression during migration:
+migrate_set_parameter multifd-compression qpl
+
+The qpl method only supports one compression level, there is no qpl
+compression level parameter added, users do not need to specify the
+qpl compression level.
 
 Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
 Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
 ---
- migration/multifd-zlib.c |  7 +++++++
- migration/multifd-zstd.c |  8 +++++++-
- migration/multifd.c      | 22 ++++++++++++----------
- 3 files changed, 26 insertions(+), 11 deletions(-)
+ hw/core/qdev-properties-system.c |  2 +-
+ migration/meson.build            |  1 +
+ migration/multifd-qpl.c          | 20 ++++++++++++++++++++
+ migration/multifd.h              |  1 +
+ qapi/migration.json              |  7 ++++++-
+ 5 files changed, 29 insertions(+), 2 deletions(-)
+ create mode 100644 migration/multifd-qpl.c
 
-diff --git a/migration/multifd-zlib.c b/migration/multifd-zlib.c
-index 737a9645d2..2ced69487e 100644
---- a/migration/multifd-zlib.c
-+++ b/migration/multifd-zlib.c
-@@ -70,6 +70,10 @@ static int zlib_send_setup(MultiFDSendParams *p, Error **errp)
-         goto err_free_zbuff;
-     }
-     p->compress_data = z;
+diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+index d79d6f4b53..6ccd7224f6 100644
+--- a/hw/core/qdev-properties-system.c
++++ b/hw/core/qdev-properties-system.c
+@@ -659,7 +659,7 @@ const PropertyInfo qdev_prop_fdc_drive_type = {
+ const PropertyInfo qdev_prop_multifd_compression = {
+     .name = "MultiFDCompression",
+     .description = "multifd_compression values, "
+-                   "none/zlib/zstd",
++                   "none/zlib/zstd/qpl",
+     .enum_table = &MultiFDCompression_lookup,
+     .get = qdev_propinfo_get_enum,
+     .set = qdev_propinfo_set_enum,
+diff --git a/migration/meson.build b/migration/meson.build
+index f76b1ba328..1d432d5328 100644
+--- a/migration/meson.build
++++ b/migration/meson.build
+@@ -43,6 +43,7 @@ if get_option('live_block_migration').allowed()
+   system_ss.add(files('block.c'))
+ endif
+ system_ss.add(when: zstd, if_true: files('multifd-zstd.c'))
++system_ss.add(when: qpl, if_true: files('multifd-qpl.c'))
+ 
+ specific_ss.add(when: 'CONFIG_SYSTEM_ONLY',
+                 if_true: files('ram.c',
+diff --git a/migration/multifd-qpl.c b/migration/multifd-qpl.c
+new file mode 100644
+index 0000000000..056a68a060
+--- /dev/null
++++ b/migration/multifd-qpl.c
+@@ -0,0 +1,20 @@
++/*
++ * Multifd qpl compression accelerator implementation
++ *
++ * Copyright (c) 2023 Intel Corporation
++ *
++ * Authors:
++ *  Yuan Liu<yuan1.liu@intel.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
++#include "qemu/osdep.h"
++#include "qemu/module.h"
 +
-+    /* Needs 2 IOVs, one for packet header and one for compressed data */
-+    p->iov = g_new0(struct iovec, 2);
++static void multifd_qpl_register(void)
++{
++    /* noop */
++}
 +
-     return 0;
++migration_init(multifd_qpl_register);
+diff --git a/migration/multifd.h b/migration/multifd.h
+index c9d9b09239..5b7d9b15f8 100644
+--- a/migration/multifd.h
++++ b/migration/multifd.h
+@@ -40,6 +40,7 @@ MultiFDRecvData *multifd_get_recv_data(void);
+ #define MULTIFD_FLAG_NOCOMP (0 << 1)
+ #define MULTIFD_FLAG_ZLIB (1 << 1)
+ #define MULTIFD_FLAG_ZSTD (2 << 1)
++#define MULTIFD_FLAG_QPL (4 << 1)
  
- err_free_zbuff:
-@@ -101,6 +105,9 @@ static void zlib_send_cleanup(MultiFDSendParams *p, Error **errp)
-     z->buf = NULL;
-     g_free(p->compress_data);
-     p->compress_data = NULL;
-+
-+    g_free(p->iov);
-+    p->iov = NULL;
- }
+ /* This value needs to be a multiple of qemu_target_page_size() */
+ #define MULTIFD_PACKET_SIZE (512 * 1024)
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 8c65b90328..854e8609bd 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -628,11 +628,16 @@
+ #
+ # @zstd: use zstd compression method.
+ #
++# @qpl: use qpl compression method. Query Processing Library(qpl) is based on
++#       the deflate compression algorithm and use the Intel In-Memory Analytics
++#       Accelerator(IAA) accelerated compression and decompression. (Since 9.1)
++#
+ # Since: 5.0
+ ##
+ { 'enum': 'MultiFDCompression',
+   'data': [ 'none', 'zlib',
+-            { 'name': 'zstd', 'if': 'CONFIG_ZSTD' } ] }
++            { 'name': 'zstd', 'if': 'CONFIG_ZSTD' },
++            { 'name': 'qpl', 'if': 'CONFIG_QPL' } ] }
  
- /**
-diff --git a/migration/multifd-zstd.c b/migration/multifd-zstd.c
-index 256858df0a..ca17b7e310 100644
---- a/migration/multifd-zstd.c
-+++ b/migration/multifd-zstd.c
-@@ -52,7 +52,6 @@ static int zstd_send_setup(MultiFDSendParams *p, Error **errp)
-     struct zstd_data *z = g_new0(struct zstd_data, 1);
-     int res;
- 
--    p->compress_data = z;
-     z->zcs = ZSTD_createCStream();
-     if (!z->zcs) {
-         g_free(z);
-@@ -77,6 +76,10 @@ static int zstd_send_setup(MultiFDSendParams *p, Error **errp)
-         error_setg(errp, "multifd %u: out of memory for zbuff", p->id);
-         return -1;
-     }
-+    p->compress_data = z;
-+
-+    /* Needs 2 IOVs, one for packet header and one for compressed data */
-+    p->iov = g_new0(struct iovec, 2);
-     return 0;
- }
- 
-@@ -98,6 +101,9 @@ static void zstd_send_cleanup(MultiFDSendParams *p, Error **errp)
-     z->zbuff = NULL;
-     g_free(p->compress_data);
-     p->compress_data = NULL;
-+
-+    g_free(p->iov);
-+    p->iov = NULL;
- }
- 
- /**
-diff --git a/migration/multifd.c b/migration/multifd.c
-index f317bff077..d82885fdbb 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -137,6 +137,13 @@ static int nocomp_send_setup(MultiFDSendParams *p, Error **errp)
-         p->write_flags |= QIO_CHANNEL_WRITE_FLAG_ZERO_COPY;
-     }
- 
-+    if (multifd_use_packets()) {
-+        /* We need one extra place for the packet header */
-+        p->iov = g_new0(struct iovec, p->page_count + 1);
-+    } else {
-+        p->iov = g_new0(struct iovec, p->page_count);
-+    }
-+
-     return 0;
- }
- 
-@@ -150,6 +157,8 @@ static int nocomp_send_setup(MultiFDSendParams *p, Error **errp)
-  */
- static void nocomp_send_cleanup(MultiFDSendParams *p, Error **errp)
- {
-+    g_free(p->iov);
-+    p->iov = NULL;
-     return;
- }
- 
-@@ -228,6 +237,7 @@ static int nocomp_send_prepare(MultiFDSendParams *p, Error **errp)
-  */
- static int nocomp_recv_setup(MultiFDRecvParams *p, Error **errp)
- {
-+    p->iov = g_new0(struct iovec, p->page_count);
-     return 0;
- }
- 
-@@ -240,6 +250,8 @@ static int nocomp_recv_setup(MultiFDRecvParams *p, Error **errp)
-  */
- static void nocomp_recv_cleanup(MultiFDRecvParams *p)
- {
-+    g_free(p->iov);
-+    p->iov = NULL;
- }
- 
- /**
-@@ -783,8 +795,6 @@ static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
-     p->packet_len = 0;
-     g_free(p->packet);
-     p->packet = NULL;
--    g_free(p->iov);
--    p->iov = NULL;
-     multifd_send_state->ops->send_cleanup(p, errp);
- 
-     return *errp == NULL;
-@@ -1179,11 +1189,6 @@ bool multifd_send_setup(void)
-             p->packet = g_malloc0(p->packet_len);
-             p->packet->magic = cpu_to_be32(MULTIFD_MAGIC);
-             p->packet->version = cpu_to_be32(MULTIFD_VERSION);
--
--            /* We need one extra place for the packet header */
--            p->iov = g_new0(struct iovec, page_count + 1);
--        } else {
--            p->iov = g_new0(struct iovec, page_count);
-         }
-         p->name = g_strdup_printf("multifdsend_%d", i);
-         p->page_size = qemu_target_page_size();
-@@ -1353,8 +1358,6 @@ static void multifd_recv_cleanup_channel(MultiFDRecvParams *p)
-     p->packet_len = 0;
-     g_free(p->packet);
-     p->packet = NULL;
--    g_free(p->iov);
--    p->iov = NULL;
-     g_free(p->normal);
-     p->normal = NULL;
-     g_free(p->zero);
-@@ -1602,7 +1605,6 @@ int multifd_recv_setup(Error **errp)
-             p->packet = g_malloc0(p->packet_len);
-         }
-         p->name = g_strdup_printf("multifdrecv_%d", i);
--        p->iov = g_new0(struct iovec, page_count);
-         p->normal = g_new0(ram_addr_t, page_count);
-         p->zero = g_new0(ram_addr_t, page_count);
-         p->page_count = page_count;
+ ##
+ # @MigMode:
 -- 
 2.39.3
 
