@@ -4,76 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BDDFC4345F
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 May 2024 06:06:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A2DCC4345F
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 May 2024 06:38:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3V0e-00049w-BB; Sun, 05 May 2024 02:06:05 -0400
+	id 1s3VV8-0007Cz-Ao; Sun, 05 May 2024 02:37:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tanmaynpatil105@gmail.com>)
- id 1s3V0S-00044i-8Y; Sun, 05 May 2024 02:05:52 -0400
-Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1s3VV6-0007CC-4t
+ for qemu-devel@nongnu.org; Sun, 05 May 2024 02:37:32 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tanmaynpatil105@gmail.com>)
- id 1s3V0Q-0005gE-4r; Sun, 05 May 2024 02:05:51 -0400
-Received: by mail-oa1-x33.google.com with SMTP id
- 586e51a60fabf-23f62699219so47992fac.0; 
- Sat, 04 May 2024 23:05:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1s3VV3-0000WU-Pf
+ for qemu-devel@nongnu.org; Sun, 05 May 2024 02:37:31 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-2a2d82537efso628172a91.2
+ for <qemu-devel@nongnu.org>; Sat, 04 May 2024 23:37:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1714889148; x=1715493948; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=joSaW5Q73FN0Zzf2sziQVGs0aG3j4d1B9rZFS+CMsX8=;
- b=OQa7nPmXZekq1d2zzl6O+JJM0cjYsJlvDZ1/vmMA9zlnXYgh7MRUjMRX3y+IZ1g3FH
- Tb6PBtyZiJuCKAfRPPRB7OfStvJzxPCm7tXbYx9Y6L4PE7N2p/62+627zycpEumN0xno
- UrgMIj2D9hLaczS0rxoxoMfW6wMA51PuqzaLtjwU6+owxGk4CdQHvzZyAKJEyNFvvjyh
- 25Bp/5k9v6GJlO8h1BucB2r0iUZjw7iJDZCTIT7E+eftfX/lqqBkMpRETqh51rpGXiVD
- V4LbETDTyPzXRyLpiY0pNHFez4CkpSKgomkOzhq5roEJ6TOnVg9OyakgMhWLD+8zx1Q4
- 5q7A==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1714891048; x=1715495848;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=QKMQzxrMRPgomZrUaIVHd65z4FA1pEpQNxl/vkgncNc=;
+ b=Pvo2rxdReiwP+6BldXpp9hvWqokfX0jfknJ/9qnBa6URemiIidxnllQlxGSF3qO4JE
+ 8hmBgdKnEIre9HlputknD3HrXz31+rn3P2SoKALdn4hNkTHjztam6xG3K7S2OJfKuoBs
+ EV5MhyUM0krQXnXSewx1eyMNpFQop0NoGFg/T6ONjeGF0H3ozjA37lze1U2wJI1WOT8s
+ NGagmN6BWo/AfrHHPR5VYzT7FeyS1TmUQ7hg0ky0rCBUE8DiP+IyZ/TFtAmEss0fgR2r
+ eA67YyVM5ggKiODRUS85z44XL280UKNPsJHch1dKku1D8N8jT4D4awcPTS8wU8gjypnq
+ 6OMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714889148; x=1715493948;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=joSaW5Q73FN0Zzf2sziQVGs0aG3j4d1B9rZFS+CMsX8=;
- b=SlihpyVlhPtHGyiEHr+umYDRZwLgRswa7ZhKiCaODC7QzMv6IAqnC+LQGfLopgms3l
- PEOsLbhaQriUhPXMY4Di2TyQF/hn6zxuJyQMQsUbo6kKKSEgBqhUNoX5y6LZFYA6McFU
- idYZ8827cApuoOvxusKUpgMRsVYBnx3m7/nlLmvpNowvuAtPwZOUi7o0ixHZE7HeUECB
- HEQkahHxgO4/Wp3dAqwQkGfLKeyMsO5m25HmztFWjfSwkXeTMcvG7/52Q6lBAhWI/VmD
- 754iG1lGkuKMZLnvafLw6NN9GJjzshhF2hJCho1DhWfutH5008lDJRCFevrAORMdPjWo
- 4wvw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV3HzknkFipsHBx8FQr/APpKOBqHi/5nVrdihK5hxBtC/OfnHQVeIz84lvyLQ0dQF+Ds8li7VWa0VlGCN6z97GrGBBkxQU=
-X-Gm-Message-State: AOJu0YwpycRKZFFF/rYy2PNHAkf6aamc+EO9U3qF6Y7nfCX57tB7nJdu
- VzVHYowU8815S3qSfIQIKYoTY8rDblkS8GepC2QNtBz/j0aip4Mfbtzudh7DL8ihOK37SNzZwWO
- HVQ/I3BD1fX5sdt48W70GR+uzoNmkuSPgKBw=
-X-Google-Smtp-Source: AGHT+IG+QwKXasAwGdMo0OTPAleIX9Rlf/RdbuOgldV81FYuuW3JpAyZQ62QTNL4MSibQLNDwSj5MEaNs2v6+g+xrOk=
-X-Received: by 2002:a05:6871:5213:b0:23c:6619:5970 with SMTP id
- ht19-20020a056871521300b0023c66195970mr8938671oac.7.1714889148221; Sat, 04
- May 2024 23:05:48 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1714891048; x=1715495848;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=QKMQzxrMRPgomZrUaIVHd65z4FA1pEpQNxl/vkgncNc=;
+ b=ZGKykhBEM0AFa3gU9OQpmTJKZTHAiI+RdbEDtCLE0RPuYYpchLJA9DAQ4FSVLkR/PZ
+ jOqQPU3n3WrkaUeZ8MqQUrifshJL3Fz2HYSx+rdK3axkIK7ByH8FMZTeCU6fdxJaViuX
+ FEU9J6WWmAZe/Sru3dQQDwJ0jjenRTKFcqCRvukeoYXmpOjZBXlEyOmAe268XfXkXpK7
+ jLKY3w6wRhEkM5melsqw0LXa8ZP5I4zZBBj872BOcr1s1s7hEMOLzGlQBibWacNbyAEN
+ AJ3sd5ASXSFrNFIS1SAGDiubM9qUDCCSsFoS0fVLAgcjzUztTmMzUlpaGYBx1teXRxp4
+ hWtQ==
+X-Gm-Message-State: AOJu0YwEfN0snEEdmxMeT30cvMJzseGDT2qu0mvHQ4e+oozMLllFfoDK
+ bOK4UuU4S/f+q5pzc/O5R3aD/Q5xPBjvQSosB6CeqjsTr4xkg9lzE05G4RFCH+8=
+X-Google-Smtp-Source: AGHT+IE91jjWdz5j9i92uMDIgrpa0MVfBB3/2fundYtzi+vuoL/l+mKVrQP9N4JOSgOUZJ6hkhEixw==
+X-Received: by 2002:a17:90b:92:b0:2a5:16c2:8551 with SMTP id
+ bb18-20020a17090b009200b002a516c28551mr6181123pjb.19.1714891048112; 
+ Sat, 04 May 2024 23:37:28 -0700 (PDT)
+Received: from [157.82.202.162] ([157.82.202.162])
+ by smtp.gmail.com with ESMTPSA id
+ sz15-20020a17090b2d4f00b002aff85b97dfsm7792790pjb.27.2024.05.04.23.37.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 04 May 2024 23:37:27 -0700 (PDT)
+Message-ID: <0360512c-eb25-4c93-adb3-7f43395ae699@daynix.com>
+Date: Sun, 5 May 2024 15:37:21 +0900
 MIME-Version: 1.0
-References: <CAHnsOnM6gzcjpmEqCN0cFjZKXZCK_ZGAphuf46xWmUyBcNrAxQ@mail.gmail.com>
- <df14595f-3a26-4b7f-948d-df522f487b92@tls.msk.ru>
-In-Reply-To: <df14595f-3a26-4b7f-948d-df522f487b92@tls.msk.ru>
-From: Tanmay <tanmaynpatil105@gmail.com>
-Date: Sun, 5 May 2024 11:35:37 +0530
-Message-ID: <CAHnsOnNX=sWCM8pjKHnA6G_PVVjWhVi3RUbVVrPHtRX0hqA0Nw@mail.gmail.com>
-Subject: Re: [PATCH] Fixes: Indentation using TABs and improve formatting
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-stable@nongnu.org, QEMU Developers <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="0000000000008251f60617aebe99"
-Received-SPF: pass client-ip=2001:4860:4864:20::33;
- envelope-from=tanmaynpatil105@gmail.com; helo=mail-oa1-x33.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 07/11] virtio-gpu: Support suspension of commands
+ processing
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Huang Rui <ray.huang@amd.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony.perard@citrix.com>,
+ Antonio Caggiano <quic_acaggian@quicinc.com>,
+ "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Robert Beckett <bob.beckett@collabora.com>,
+ Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
+ ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
+References: <20240418190040.1110210-1-dmitry.osipenko@collabora.com>
+ <20240418190040.1110210-8-dmitry.osipenko@collabora.com>
+ <8a153bf1-f86c-46c8-a29a-08e9a0197dc3@daynix.com>
+ <4c6b3ca0-4813-48f4-87f8-a94e911c02d3@collabora.com>
+ <10337ba0-70ce-436c-9cac-398851ebdfc9@daynix.com>
+ <5b240c8a-f1c5-487f-a528-cbb4f440094f@collabora.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <5b240c8a-f1c5-487f-a528-cbb4f440094f@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1032.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,98 +121,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000008251f60617aebe99
-Content-Type: text/plain; charset="UTF-8"
+On 2024/05/02 4:02, Dmitry Osipenko wrote:
+> On 4/27/24 08:48, Akihiko Odaki wrote:
+>>>
+>>> The VIRTIO_GPU_FILL_CMD() macro returns void and this macro is used by
+>>> every function processing commands. Changing process_cmd() to return
+>>> bool will require to change all those functions. Not worthwhile to
+>>> change it, IMO. >
+>>> The flag reflects the exact command status. The !finished + !suspended
+>>> means that command is fenced, i.e. these flags don't have exactly same
+>>> meaning.
+>>
+>> It is not necessary to change the signature of process_cmd(). You can
+>> just refer to !finished. No need to have the suspended flag.
+> 
+> Not sure what you're meaning. The !finished says that cmd is fenced,
+> this fenced command is added to the polling list and the fence is
+> checked periodically by the fence_poll timer, meanwhile next virgl
+> commands are executed in the same time.
+> 
+> This is completely different from the suspension where whole cmd
+> processing is blocked until command is resumed.
+> 
 
-Hi,
+!finished means you have not sent a response with 
+virtio_gpu_ctrl_response(). Currently such a situation only happens when 
+a fence is requested and virtio_gpu_process_cmdq() exploits the fact, 
+but we are adding a new case without a fence.
 
-I completely agree!
-This was more of a "NEWCOMERS" issue to help us understand how the patch
-flow works.
-I'll take up a trivial issue and work on it instead.
-
-Thanks,
-Tanmay
-
-On Sun, 5 May 2024 at 02:05, Michael Tokarev <mjt@tls.msk.ru> wrote:
-
-> 04.05.2024 21:58, Tanmay wrote:
-> > Hi,
-> >
-> > I have attached a patch file that fixes indentation and formatting for
-> some files as listed in https://gitlab.com/qemu-project/qemu/-/issues/373
-> > <https://gitlab.com/qemu-project/qemu/-/issues/373>.
->
-> it is sort of good you posted this patch to stable@.  It has absolutely
-> nothing to do
-> with stable, but it serves as a an example of things which should - in my
-> opinion -
-> not be done at all.  We had another similar change, 55339361276a "sh4:
-> Coding style:
-> Remove tabs", which makes all further changes (fixes) in this area
-> basically
-> non-back-portable to previous stable series.
->
-> FWIW,
->
-> /mjt
-> --
-> GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
-> New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD
-> 3D98 ECDF 2C8E
-> Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C
-> E0A0 8044 65C5
-> Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
->
->
-
---0000000000008251f60617aebe99
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div><div><div>Hi,<br><br></div>I completely agree!<br></d=
-iv>This was more of a &quot;NEWCOMERS&quot; issue to help us understand how=
- the patch flow works.<br>I&#39;ll take up a trivial issue and work on it i=
-nstead.<br><br></div><div>Thanks,<br></div><div>Tanmay<br></div></div><br><=
-div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Sun, 5 M=
-ay 2024 at 02:05, Michael Tokarev &lt;<a href=3D"mailto:mjt@tls.msk.ru">mjt=
-@tls.msk.ru</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">04.05.2024 21:58, Tanmay wrote:<br>
-&gt; Hi,<br>
-&gt; <br>
-&gt; I have attached a patch file that fixes indentation and formatting for=
- some files as listed in <a href=3D"https://gitlab.com/qemu-project/qemu/-/=
-issues/373" rel=3D"noreferrer" target=3D"_blank">https://gitlab.com/qemu-pr=
-oject/qemu/-/issues/373</a> <br>
-&gt; &lt;<a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/373" rel=
-=3D"noreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qemu/-/is=
-sues/373</a>&gt;.<br>
-<br>
-it is sort of good you posted this patch to stable@.=C2=A0 It has absolutel=
-y nothing to do<br>
-with stable, but it serves as a an example of things which should - in my o=
-pinion -<br>
-not be done at all.=C2=A0 We had another similar change, 55339361276a &quot=
-;sh4: Coding style:<br>
-Remove tabs&quot;, which makes all further changes (fixes) in this area bas=
-ically<br>
-non-back-portable to previous stable series.<br>
-<br>
-FWIW,<br>
-<br>
-/mjt<br>
--- <br>
-GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.<br>
-New key: rsa4096/61AD3D98ECDF2C8E=C2=A0 9D8B E14E 3F2A 9DD7 9199=C2=A0 28F1=
- 61AD 3D98 ECDF 2C8E<br>
-Old key: rsa2048/457CE0A0804465C5=C2=A0 6EE1 95D1 886E 8FFB 810D=C2=A0 4324=
- 457C E0A0 8044 65C5<br>
-Transition statement: <a href=3D"http://www.corpit.ru/mjt/gpg-transition-20=
-24.txt" rel=3D"noreferrer" target=3D"_blank">http://www.corpit.ru/mjt/gpg-t=
-ransition-2024.txt</a><br>
-<br>
-</blockquote></div>
-
---0000000000008251f60617aebe99--
+So we need to add code to check if we are fencing or not in 
+virtio_gpu_process_cmdq(). This can be achieved by evaluating the 
+following expression as done in virtio_gpu_virgl_process_cmd():
+cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_FENCE
 
