@@ -4,69 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC921C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 23:18:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2ECFC25B10
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 23:28:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s47aM-0002cO-AY; Mon, 06 May 2024 19:17:30 -0400
+	id 1s47jw-0007IW-9M; Mon, 06 May 2024 19:27:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s47aE-0002bK-9P
- for qemu-devel@nongnu.org; Mon, 06 May 2024 19:17:23 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s47ju-0007ID-7P
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 19:27:22 -0400
 Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s47aB-0002fz-Rh
- for qemu-devel@nongnu.org; Mon, 06 May 2024 19:17:21 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s47js-00021i-Fl
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 19:27:21 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 891BD22A0A;
- Mon,  6 May 2024 23:17:17 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id B6B6022338;
+ Mon,  6 May 2024 23:27:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1715037437; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1715038038; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2OLV1/is1LVGnIw5bRFMN+BoKXmc2dX4gO+1BX9xTZI=;
- b=dN6C8mJb3JpBsv/IKCsoOGFgse61+/sdtFdhqeJwn/XXSO6PEOtrecd5CaVox9TKhYT4IR
- pLik1x696P5p27mL0GWJDQqIXReO2hE4zDx2gX5+UptNf+3nmoSio/fIYVRzWgVZmAhMET
- Xc1ls2CItvTVoLXOU3EkHLILYm+dBmk=
+ bh=tnUNCGTHIF37hmvD+XUlYNWofK0xMsAzRtgUegxy61o=;
+ b=ZT+GqnwqNX8xFn5WGhQFoHlV96HsMPzdtfAFF7cSUVQSyBKF6EHwfQCYLBNvc9C50j/Gp+
+ hja807fPxrysygDli7wZPAlvEfnb0hcgEOkhC0nsU6ChzpoSfOXCExuusc4CXYGAJdQNg2
+ cedElkhIXxwYS8EZWOJipZiOPt0YbnQ=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1715037437;
+ s=susede2_ed25519; t=1715038038;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2OLV1/is1LVGnIw5bRFMN+BoKXmc2dX4gO+1BX9xTZI=;
- b=Eu1M4JNJkF6ckoHKzFbxRRrvx8HaYMNTsRZ9Ez8jcSUJYK05Vrw3pqhoueiKMBLyUcKGyE
- /N0HzDzz5RT3+FAQ==
+ bh=tnUNCGTHIF37hmvD+XUlYNWofK0xMsAzRtgUegxy61o=;
+ b=UMdFWPHHoMSZSdzU+xFPcWrx1/gAvOMJSQ9sc1BeZLv8NHAfGvPvUKvLl2GwZTKzI8WTJZ
+ YqbAPVRMVNxbseAw==
 Authentication-Results: smtp-out1.suse.de;
-	none
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ZT+Gqnwq;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=UMdFWPHH
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1715037437; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1715038038; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2OLV1/is1LVGnIw5bRFMN+BoKXmc2dX4gO+1BX9xTZI=;
- b=dN6C8mJb3JpBsv/IKCsoOGFgse61+/sdtFdhqeJwn/XXSO6PEOtrecd5CaVox9TKhYT4IR
- pLik1x696P5p27mL0GWJDQqIXReO2hE4zDx2gX5+UptNf+3nmoSio/fIYVRzWgVZmAhMET
- Xc1ls2CItvTVoLXOU3EkHLILYm+dBmk=
+ bh=tnUNCGTHIF37hmvD+XUlYNWofK0xMsAzRtgUegxy61o=;
+ b=ZT+GqnwqNX8xFn5WGhQFoHlV96HsMPzdtfAFF7cSUVQSyBKF6EHwfQCYLBNvc9C50j/Gp+
+ hja807fPxrysygDli7wZPAlvEfnb0hcgEOkhC0nsU6ChzpoSfOXCExuusc4CXYGAJdQNg2
+ cedElkhIXxwYS8EZWOJipZiOPt0YbnQ=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1715037437;
+ s=susede2_ed25519; t=1715038038;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2OLV1/is1LVGnIw5bRFMN+BoKXmc2dX4gO+1BX9xTZI=;
- b=Eu1M4JNJkF6ckoHKzFbxRRrvx8HaYMNTsRZ9Ez8jcSUJYK05Vrw3pqhoueiKMBLyUcKGyE
- /N0HzDzz5RT3+FAQ==
+ bh=tnUNCGTHIF37hmvD+XUlYNWofK0xMsAzRtgUegxy61o=;
+ b=UMdFWPHHoMSZSdzU+xFPcWrx1/gAvOMJSQ9sc1BeZLv8NHAfGvPvUKvLl2GwZTKzI8WTJZ
+ YqbAPVRMVNxbseAw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0874E1386E;
- Mon,  6 May 2024 23:17:16 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3823B13A25;
+ Mon,  6 May 2024 23:27:18 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 2ZdeMPxkOWYZFQAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 06 May 2024 23:17:16 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id POByAFZnOWbeFwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 06 May 2024 23:27:18 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, Igor
@@ -74,30 +80,41 @@ Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, Igor
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Philippe Mathieu-Daude
  <philmd@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, "Daniel P.
  Berrange" <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: Re: [PATCH V1 03/26] migration: SAVEVM_FOREACH
-In-Reply-To: <1714406135-451286-4-git-send-email-steven.sistare@oracle.com>
+ Steve Sistare <steven.sistare@oracle.com>, Dr. David Alan Gilbert
+ <dgilbert@redhat.com>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH V1 01/26] oslib: qemu_clear_cloexec
+In-Reply-To: <1714406135-451286-2-git-send-email-steven.sistare@oracle.com>
 References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
- <1714406135-451286-4-git-send-email-steven.sistare@oracle.com>
-Date: Mon, 06 May 2024 20:17:14 -0300
-Message-ID: <878r0mmsxx.fsf@suse.de>
+ <1714406135-451286-2-git-send-email-steven.sistare@oracle.com>
+Date: Mon, 06 May 2024 20:27:15 -0300
+Message-ID: <875xvqmsh8.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; RCVD_VIA_SMTP_AUTH(0.00)[];
- ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- TAGGED_RCPT(0.00)[]; RCPT_COUNT_TWELVE(0.00)[12];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ NEURAL_HAM_SHORT(-0.20)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ ARC_NA(0.00)[]; RCPT_COUNT_TWELVE(0.00)[14];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com];
  FREEMAIL_CC(0.00)[redhat.com,habkost.net,gmail.com,linaro.org,oracle.com];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com];
+ RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; TAGGED_RCPT(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; MISSING_XM_UA(0.00)[];
  DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns]
+ imap1.dmz-prg2.suse.org:rdns, suse.de:dkim, suse.de:email]
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: B6B6022338
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
 Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
  helo=smtp-out1.suse.de
 X-Spam_score_int: -43
@@ -124,254 +141,85 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Steve Sistare <steven.sistare@oracle.com> writes:
 
-> Define an abstraction SAVEVM_FOREACH to loop over all savevm state
-> handlers, and replace QTAILQ_FOREACH.  Define variants for ALL so
-> we can loop over all handlers vs a subset of handlers in a subsequent
-> patch, but at this time there is no distinction between the two.
-> No functional change.
++cc dgilbert, marcandre
+
+> Define qemu_clear_cloexec, analogous to qemu_set_cloexec.
 >
 > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> Reviewed-by: Dr. David Alan Gilbert <dgilbert@redhat.com>
+> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
+A v1 patch with two reviews already, from people from another company
+and they're not in CC. Looks suspicious. =3D)
+
+Here's a fresh one, hopefully it won't spend another 4 years in the
+drawer:
+
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+
 > ---
->  migration/savevm.c | 55 +++++++++++++++++++++++++++++++-----------------------
->  1 file changed, 32 insertions(+), 23 deletions(-)
+>  include/qemu/osdep.h | 9 +++++++++
+>  util/oslib-posix.c   | 9 +++++++++
+>  util/oslib-win32.c   | 4 ++++
+>  3 files changed, 22 insertions(+)
 >
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index 4509482..6829ba3 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -237,6 +237,15 @@ static SaveState savevm_state = {
->      .global_section_id = 0,
->  };
->  
-> +#define SAVEVM_FOREACH(se, entry)                                    \
-> +    QTAILQ_FOREACH(se, &savevm_state.handlers, entry)                \
+> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+> index c7053cd..b58f312 100644
+> --- a/include/qemu/osdep.h
+> +++ b/include/qemu/osdep.h
+> @@ -660,6 +660,15 @@ ssize_t qemu_write_full(int fd, const void *buf, siz=
+e_t count)
+>=20=20
+>  void qemu_set_cloexec(int fd);
+>=20=20
+> +/*
+> + * Clear FD_CLOEXEC for a descriptor.
+> + *
+> + * The caller must guarantee that no other fork+exec's occur before the
+> + * exec that is intended to inherit this descriptor, eg by suspending CP=
+Us
+> + * and blocking monitor commands.
+> + */
+> +void qemu_clear_cloexec(int fd);
 > +
-> +#define SAVEVM_FOREACH_ALL(se, entry)                                \
-> +    QTAILQ_FOREACH(se, &savevm_state.handlers, entry)
-
-This feels worse than SAVEVM_FOREACH_NOT_PRECREATED. We'll have to keep
-coming back to the definition to figure out which FOREACH is the real
-deal.
-
+>  /* Return a dynamically allocated directory path that is appropriate for=
+ storing
+>   * local state.
+>   *
+> diff --git a/util/oslib-posix.c b/util/oslib-posix.c
+> index e764416..614c3e5 100644
+> --- a/util/oslib-posix.c
+> +++ b/util/oslib-posix.c
+> @@ -272,6 +272,15 @@ int qemu_socketpair(int domain, int type, int protoc=
+ol, int sv[2])
+>      return ret;
+>  }
+>=20=20
+> +void qemu_clear_cloexec(int fd)
+> +{
+> +    int f;
+> +    f =3D fcntl(fd, F_GETFD);
+> +    assert(f !=3D -1);
+> +    f =3D fcntl(fd, F_SETFD, f & ~FD_CLOEXEC);
+> +    assert(f !=3D -1);
+> +}
 > +
-> +#define SAVEVM_FOREACH_SAFE_ALL(se, entry, new_se)                   \
-> +    QTAILQ_FOREACH_SAFE(se, &savevm_state.handlers, entry, new_se)
+>  char *
+>  qemu_get_local_state_dir(void)
+>  {
+> diff --git a/util/oslib-win32.c b/util/oslib-win32.c
+> index b623830..c3e969a 100644
+> --- a/util/oslib-win32.c
+> +++ b/util/oslib-win32.c
+> @@ -222,6 +222,10 @@ void qemu_set_cloexec(int fd)
+>  {
+>  }
+>=20=20
+> +void qemu_clear_cloexec(int fd)
+> +{
+> +}
 > +
->  static SaveStateEntry *find_se(const char *idstr, uint32_t instance_id);
->  
->  static bool should_validate_capability(int capability)
-> @@ -674,7 +683,7 @@ static uint32_t calculate_new_instance_id(const char *idstr)
->      SaveStateEntry *se;
->      uint32_t instance_id = 0;
->  
-> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-> +    SAVEVM_FOREACH_ALL(se, entry) {
-
-In this patch we can't have both instances...
-
->          if (strcmp(idstr, se->idstr) == 0
->              && instance_id <= se->instance_id) {
->              instance_id = se->instance_id + 1;
-> @@ -690,7 +699,7 @@ static int calculate_compat_instance_id(const char *idstr)
->      SaveStateEntry *se;
->      int instance_id = 0;
->  
-> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-> +    SAVEVM_FOREACH(se, entry) {
-
-...otherwise one of the two changes will go undocumented because the
-actual reason for it will only be described in the next patch.
-
->          if (!se->compat) {
->              continue;
->          }
-> @@ -816,7 +825,7 @@ void unregister_savevm(VMStateIf *obj, const char *idstr, void *opaque)
->      }
->      pstrcat(id, sizeof(id), idstr);
->  
-> -    QTAILQ_FOREACH_SAFE(se, &savevm_state.handlers, entry, new_se) {
-> +    SAVEVM_FOREACH_SAFE_ALL(se, entry, new_se) {
->          if (strcmp(se->idstr, id) == 0 && se->opaque == opaque) {
->              savevm_state_handler_remove(se);
->              g_free(se->compat);
-> @@ -939,7 +948,7 @@ void vmstate_unregister(VMStateIf *obj, const VMStateDescription *vmsd,
+>  int qemu_get_thread_id(void)
 >  {
->      SaveStateEntry *se, *new_se;
->  
-> -    QTAILQ_FOREACH_SAFE(se, &savevm_state.handlers, entry, new_se) {
-> +    SAVEVM_FOREACH_SAFE_ALL(se, entry, new_se) {
->          if (se->vmsd == vmsd && se->opaque == opaque) {
->              savevm_state_handler_remove(se);
->              g_free(se->compat);
-> @@ -1223,7 +1232,7 @@ bool qemu_savevm_state_blocked(Error **errp)
->  {
->      SaveStateEntry *se;
->  
-> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-> +    SAVEVM_FOREACH(se, entry) {
->          if (se->vmsd && se->vmsd->unmigratable) {
->              error_setg(errp, "State blocked by non-migratable device '%s'",
->                         se->idstr);
-> @@ -1237,7 +1246,7 @@ void qemu_savevm_non_migratable_list(strList **reasons)
->  {
->      SaveStateEntry *se;
->  
-> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-> +    SAVEVM_FOREACH(se, entry) {
->          if (se->vmsd && se->vmsd->unmigratable) {
->              QAPI_LIST_PREPEND(*reasons,
->                                g_strdup_printf("non-migratable device: %s",
-> @@ -1276,7 +1285,7 @@ bool qemu_savevm_state_guest_unplug_pending(void)
->  {
->      SaveStateEntry *se;
->  
-> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-> +    SAVEVM_FOREACH(se, entry) {
->          if (se->vmsd && se->vmsd->dev_unplug_pending &&
->              se->vmsd->dev_unplug_pending(se->opaque)) {
->              return true;
-> @@ -1291,7 +1300,7 @@ int qemu_savevm_state_prepare(Error **errp)
->      SaveStateEntry *se;
->      int ret;
->  
-> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-> +    SAVEVM_FOREACH(se, entry) {
->          if (!se->ops || !se->ops->save_prepare) {
->              continue;
->          }
-> @@ -1321,7 +1330,7 @@ int qemu_savevm_state_setup(QEMUFile *f, Error **errp)
->      json_writer_start_array(ms->vmdesc, "devices");
->  
->      trace_savevm_state_setup();
-> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-> +    SAVEVM_FOREACH(se, entry) {
->          if (se->vmsd && se->vmsd->early_setup) {
->              ret = vmstate_save(f, se, ms->vmdesc, errp);
->              if (ret) {
-> @@ -1365,7 +1374,7 @@ int qemu_savevm_state_resume_prepare(MigrationState *s)
->  
->      trace_savevm_state_resume_prepare();
->  
-> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-> +    SAVEVM_FOREACH(se, entry) {
->          if (!se->ops || !se->ops->resume_prepare) {
->              continue;
->          }
-> @@ -1396,7 +1405,7 @@ int qemu_savevm_state_iterate(QEMUFile *f, bool postcopy)
->      int ret;
->  
->      trace_savevm_state_iterate();
-> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-> +    SAVEVM_FOREACH(se, entry) {
->          if (!se->ops || !se->ops->save_live_iterate) {
->              continue;
->          }
-> @@ -1461,7 +1470,7 @@ void qemu_savevm_state_complete_postcopy(QEMUFile *f)
->      SaveStateEntry *se;
->      int ret;
->  
-> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-> +    SAVEVM_FOREACH(se, entry) {
->          if (!se->ops || !se->ops->save_live_complete_postcopy) {
->              continue;
->          }
-> @@ -1495,7 +1504,7 @@ int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy)
->      SaveStateEntry *se;
->      int ret;
->  
-> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-> +    SAVEVM_FOREACH(se, entry) {
->          if (!se->ops ||
->              (in_postcopy && se->ops->has_postcopy &&
->               se->ops->has_postcopy(se->opaque)) ||
-> @@ -1543,7 +1552,7 @@ int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
->      Error *local_err = NULL;
->      int ret;
->  
-> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-> +    SAVEVM_FOREACH(se, entry) {
->          if (se->vmsd && se->vmsd->early_setup) {
->              /* Already saved during qemu_savevm_state_setup(). */
->              continue;
-> @@ -1649,7 +1658,7 @@ void qemu_savevm_state_pending_estimate(uint64_t *must_precopy,
->      *must_precopy = 0;
->      *can_postcopy = 0;
->  
-> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-> +    SAVEVM_FOREACH(se, entry) {
->          if (!se->ops || !se->ops->state_pending_estimate) {
->              continue;
->          }
-> @@ -1670,7 +1679,7 @@ void qemu_savevm_state_pending_exact(uint64_t *must_precopy,
->      *must_precopy = 0;
->      *can_postcopy = 0;
->  
-> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-> +    SAVEVM_FOREACH(se, entry) {
->          if (!se->ops || !se->ops->state_pending_exact) {
->              continue;
->          }
-> @@ -1693,7 +1702,7 @@ void qemu_savevm_state_cleanup(void)
->      }
->  
->      trace_savevm_state_cleanup();
-> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-> +    SAVEVM_FOREACH(se, entry) {
->          if (se->ops && se->ops->save_cleanup) {
->              se->ops->save_cleanup(se->opaque);
->          }
-> @@ -1778,7 +1787,7 @@ int qemu_save_device_state(QEMUFile *f)
->      }
->      cpu_synchronize_all_states();
->  
-> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-> +    SAVEVM_FOREACH(se, entry) {
->          int ret;
->  
->          if (se->is_ram) {
-> @@ -1801,7 +1810,7 @@ static SaveStateEntry *find_se(const char *idstr, uint32_t instance_id)
->  {
->      SaveStateEntry *se;
->  
-> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-> +    SAVEVM_FOREACH_ALL(se, entry) {
->          if (!strcmp(se->idstr, idstr) &&
->              (instance_id == se->instance_id ||
->               instance_id == se->alias_id))
-> @@ -2680,7 +2689,7 @@ qemu_loadvm_section_part_end(QEMUFile *f, MigrationIncomingState *mis,
->      }
->  
->      trace_qemu_loadvm_state_section_partend(section_id);
-> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-> +    SAVEVM_FOREACH(se, entry) {
->          if (se->load_section_id == section_id) {
->              break;
->          }
-> @@ -2755,7 +2764,7 @@ static void qemu_loadvm_state_switchover_ack_needed(MigrationIncomingState *mis)
->  {
->      SaveStateEntry *se;
->  
-> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-> +    SAVEVM_FOREACH(se, entry) {
->          if (!se->ops || !se->ops->switchover_ack_needed) {
->              continue;
->          }
-> @@ -2775,7 +2784,7 @@ static int qemu_loadvm_state_setup(QEMUFile *f, Error **errp)
->      int ret;
->  
->      trace_loadvm_state_setup();
-> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-> +    SAVEVM_FOREACH(se, entry) {
->          if (!se->ops || !se->ops->load_setup) {
->              continue;
->          }
-> @@ -2801,7 +2810,7 @@ void qemu_loadvm_state_cleanup(void)
->      SaveStateEntry *se;
->  
->      trace_loadvm_state_cleanup();
-> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-> +    SAVEVM_FOREACH(se, entry) {
->          if (se->ops && se->ops->load_cleanup) {
->              se->ops->load_cleanup(se->opaque);
->          }
+>      return GetCurrentThreadId();
 
