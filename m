@@ -4,81 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CB81C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 01:18:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90267C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 01:20:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3mnO-0000ss-4L; Sun, 05 May 2024 21:05:34 -0400
+	id 1s3n1D-0007JY-GR; Sun, 05 May 2024 21:19:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s3mmt-0008OQ-I5
- for qemu-devel@nongnu.org; Sun, 05 May 2024 21:05:07 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s3mmQ-0002Xd-1p
- for qemu-devel@nongnu.org; Sun, 05 May 2024 21:05:03 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-6f44bcbaae7so1089212b3a.2
- for <qemu-devel@nongnu.org>; Sun, 05 May 2024 18:04:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714957471; x=1715562271; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=S5LFuok2jxUbiWgmM2Sy0JqIQDVEXKHKAdB9OyP0pIk=;
- b=Kz0KYu9cEhON2xPi72DWbuSVZAUz3Rt9CzAaOu6mJp1mRajKpefBkC1xvXDliBJdVv
- Nf9+da5Yep6bVvllikJ07iLt6NYUUrHXBGV8XGBp9xZf/2w5d1uEjA4KckUgA/KxizWx
- X01xGIm4bXgUFlg1j1mhBoLuJu874WmENA8a1yNloBENIM7HrlMjhv1aMP9/j76EroMm
- zWUJ7mpxUYLOEH15oSJfeHdfnfyt4pYe5I3gIhF2t0mKcBwkQTAneLoYMctPMbShZPtK
- 5IMAS+XDpDR4W/IaA4EG7UvrwesMXB/CWQHGbKIv6ZfYpKegeOy4In3aURIz8EmOuBac
- deSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714957471; x=1715562271;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=S5LFuok2jxUbiWgmM2Sy0JqIQDVEXKHKAdB9OyP0pIk=;
- b=IljlD42nDlw3eZaT5bIO8QMJBKhkqP/N6XAzmQZJYuUcVuLonVLQCm7B2HO6Y91jIf
- 29gtbkrsFAMjM3ah+hOprOCTSuPBdQ6vzyRg5BQhAFi4mR8Ul1q+d4hHg74FV+119O+I
- Ekg0D4uTrdUY80WLujiujuayoSYnxyX3gdK210RARSocxk+8o2Z4i+5UIvCAIb+3glaX
- XPylQKwpYOPE36Ni35Cqm1uoTB2MeyiyFksrXzGimchhzjtjqRAew/dswQfTa1n4U8SI
- +Ra9loWsERaIJ+U16zbgGd+8gK37NAgbiU3BNExkEEGKPmNhwwm4m/byxtLoCqhVzCxH
- y+Nw==
-X-Gm-Message-State: AOJu0Yx3UeEp7iWevT9p1hCFfYsh4Fji3Y9TSbOEVCndtTrDZJYjUMfu
- oReBw6/ZCuKBudiVL/tgGd6xR+JzsHZDRsmZYNLH6aaU9tK3fKnlm/szRb83he8ZyKW2Uffcnoq
- 5
-X-Google-Smtp-Source: AGHT+IGCn1vrLZkiiZa5adeWQcjGcmTUDLIjqnbAuU1qWNxr+Xyu1QgKKPhpWZoPJAhGCxi1fJaXEQ==
-X-Received: by 2002:a05:6a20:dd88:b0:1aa:590a:9668 with SMTP id
- kw8-20020a056a20dd8800b001aa590a9668mr6964148pzb.51.1714957471496; 
- Sun, 05 May 2024 18:04:31 -0700 (PDT)
-Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
- by smtp.gmail.com with ESMTPSA id
- pv7-20020a17090b3c8700b002a5f44353d2sm8958232pjb.7.2024.05.05.18.04.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 May 2024 18:04:31 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-Subject: [PATCH 32/57] target/arm: Inline scalar SUQADD and USQADD
-Date: Sun,  5 May 2024 18:03:38 -0700
-Message-Id: <20240506010403.6204-33-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240506010403.6204-1-richard.henderson@linaro.org>
-References: <20240506010403.6204-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1s3n17-0007Hs-Li
+ for qemu-devel@nongnu.org; Sun, 05 May 2024 21:19:45 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1s3n13-0007xw-Vf
+ for qemu-devel@nongnu.org; Sun, 05 May 2024 21:19:45 -0400
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8Dxd_AiMDhmdtIHAA--.22470S3;
+ Mon, 06 May 2024 09:19:30 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8Ax690gMDhmKOARAA--.36677S2; 
+ Mon, 06 May 2024 09:19:29 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <gaosong@loongson.cn>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: [PATCH v4] target/loongarch: Add TCG macro in structure CPUArchState
+Date: Mon,  6 May 2024 09:19:12 +0800
+Message-Id: <20240506011912.2108842-1-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-CM-TRANSID: AQAAf8Ax690gMDhmKOARAA--.36677S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,435 +63,224 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This eliminates the last uses of these neon helpers.
-Incorporate the MO_64 expanders as an option to the vector expander.
+In structure CPUArchState some struct elements are only used in TCG
+mode, and it is not used in KVM mode. Macro CONFIG_TCG is added to
+make it simpiler in KVM mode, also there is the same modification
+in c code when these structure elements are used.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+When VM runs in KVM mode, TLB entries are not used and do not need
+migrate. It is only useful when it runs in TCG mode.
+
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/helper.h            |   8 --
- target/arm/tcg/translate-a64.h |   8 ++
- target/arm/tcg/gengvec64.c     |  71 ++++++++++++++
- target/arm/tcg/neon_helper.c   | 165 ---------------------------------
- target/arm/tcg/translate-a64.c |  73 +++++----------
- 5 files changed, 103 insertions(+), 222 deletions(-)
+v3 --> v4:
+- Refresh the patch based on the latest mainline version.
 
-diff --git a/target/arm/helper.h b/target/arm/helper.h
-index de2c5c9aef..c76158d6d3 100644
---- a/target/arm/helper.h
-+++ b/target/arm/helper.h
-@@ -274,14 +274,6 @@ DEF_HELPER_FLAGS_3(neon_qadd_u16, TCG_CALL_NO_RWG, i32, env, i32, i32)
- DEF_HELPER_FLAGS_3(neon_qadd_s16, TCG_CALL_NO_RWG, i32, env, i32, i32)
- DEF_HELPER_FLAGS_3(neon_qadd_u32, TCG_CALL_NO_RWG, i32, env, i32, i32)
- DEF_HELPER_FLAGS_3(neon_qadd_s32, TCG_CALL_NO_RWG, i32, env, i32, i32)
--DEF_HELPER_FLAGS_3(neon_uqadd_s8, TCG_CALL_NO_RWG, i32, env, i32, i32)
--DEF_HELPER_FLAGS_3(neon_uqadd_s16, TCG_CALL_NO_RWG, i32, env, i32, i32)
--DEF_HELPER_FLAGS_3(neon_uqadd_s32, TCG_CALL_NO_RWG, i32, env, i32, i32)
--DEF_HELPER_FLAGS_3(neon_uqadd_s64, TCG_CALL_NO_RWG, i64, env, i64, i64)
--DEF_HELPER_FLAGS_3(neon_sqadd_u8, TCG_CALL_NO_RWG, i32, env, i32, i32)
--DEF_HELPER_FLAGS_3(neon_sqadd_u16, TCG_CALL_NO_RWG, i32, env, i32, i32)
--DEF_HELPER_FLAGS_3(neon_sqadd_u32, TCG_CALL_NO_RWG, i32, env, i32, i32)
--DEF_HELPER_FLAGS_3(neon_sqadd_u64, TCG_CALL_NO_RWG, i64, env, i64, i64)
- DEF_HELPER_3(neon_qsub_u8, i32, env, i32, i32)
- DEF_HELPER_3(neon_qsub_s8, i32, env, i32, i32)
- DEF_HELPER_3(neon_qsub_u16, i32, env, i32, i32)
-diff --git a/target/arm/tcg/translate-a64.h b/target/arm/tcg/translate-a64.h
-index b5cb26f8a2..0fcf7cb63a 100644
---- a/target/arm/tcg/translate-a64.h
-+++ b/target/arm/tcg/translate-a64.h
-@@ -197,9 +197,17 @@ void gen_gvec_eor3(unsigned vece, uint32_t d, uint32_t n, uint32_t m,
-                    uint32_t a, uint32_t oprsz, uint32_t maxsz);
- void gen_gvec_bcax(unsigned vece, uint32_t d, uint32_t n, uint32_t m,
-                    uint32_t a, uint32_t oprsz, uint32_t maxsz);
-+
-+void gen_suqadd_bhs(TCGv_i64 res, TCGv_i64 qc,
-+                    TCGv_i64 a, TCGv_i64 b, MemOp esz);
-+void gen_suqadd_d(TCGv_i64 res, TCGv_i64 qc, TCGv_i64 a, TCGv_i64 b);
- void gen_gvec_suqadd_qc(unsigned vece, uint32_t rd_ofs,
-                         uint32_t rn_ofs, uint32_t rm_ofs,
-                         uint32_t opr_sz, uint32_t max_sz);
-+
-+void gen_usqadd_bhs(TCGv_i64 res, TCGv_i64 qc,
-+                    TCGv_i64 a, TCGv_i64 b, MemOp esz);
-+void gen_usqadd_d(TCGv_i64 res, TCGv_i64 qc, TCGv_i64 a, TCGv_i64 b);
- void gen_gvec_usqadd_qc(unsigned vece, uint32_t rd_ofs,
-                         uint32_t rn_ofs, uint32_t rm_ofs,
-                         uint32_t opr_sz, uint32_t max_sz);
-diff --git a/target/arm/tcg/gengvec64.c b/target/arm/tcg/gengvec64.c
-index 201a719bc1..876abadd76 100644
---- a/target/arm/tcg/gengvec64.c
-+++ b/target/arm/tcg/gengvec64.c
-@@ -188,6 +188,38 @@ void gen_gvec_bcax(unsigned vece, uint32_t d, uint32_t n, uint32_t m,
-     tcg_gen_gvec_4(d, n, m, a, oprsz, maxsz, &op);
- }
- 
-+/*
-+ * Set @res to the correctly saturated result.
-+ * Set @qc non-zero if saturation occured.
-+ */
-+void gen_suqadd_bhs(TCGv_i64 res, TCGv_i64 qc,
-+                    TCGv_i64 a, TCGv_i64 b, MemOp esz)
-+{
-+    TCGv_i64 max = tcg_constant_i64((1ull << ((8 << esz) - 1)) - 1);
-+    TCGv_i64 t = tcg_temp_new_i64();
-+
-+    tcg_gen_add_i64(t, a, b);
-+    tcg_gen_smin_i64(res, t, max);
-+    tcg_gen_xor_i64(t, t, res);
-+    tcg_gen_or_i64(qc, qc, t);
-+}
-+
-+void gen_suqadd_d(TCGv_i64 res, TCGv_i64 qc, TCGv_i64 a, TCGv_i64 b)
-+{
-+    TCGv_i64 max = tcg_constant_i64(INT64_MAX);
-+    TCGv_i64 t = tcg_temp_new_i64();
-+
-+    /* Maximum value that can be added to @a without overflow. */
-+    tcg_gen_sub_i64(t, max, a);
-+
-+    /* Constrain addend so that the next addition never overflows. */
-+    tcg_gen_umin_i64(t, t, b);
-+    tcg_gen_add_i64(res, a, t);
-+
-+    tcg_gen_xor_i64(t, t, b);
-+    tcg_gen_or_i64(qc, qc, t);
-+}
-+
- static void gen_suqadd_vec(unsigned vece, TCGv_vec t, TCGv_vec qc,
-                            TCGv_vec a, TCGv_vec b)
- {
-@@ -231,6 +263,7 @@ void gen_gvec_suqadd_qc(unsigned vece, uint32_t rd_ofs,
-           .write_aofs = true,
-           .vece = MO_32 },
-         { .fniv = gen_suqadd_vec,
-+          .fni8 = gen_suqadd_d,
-           .fno = gen_helper_gvec_suqadd_d,
-           .opt_opc = vecop_list,
-           .write_aofs = true,
-@@ -240,6 +273,43 @@ void gen_gvec_suqadd_qc(unsigned vece, uint32_t rd_ofs,
-                    rn_ofs, rm_ofs, opr_sz, max_sz, &ops[vece]);
- }
- 
-+void gen_usqadd_bhs(TCGv_i64 res, TCGv_i64 qc,
-+                    TCGv_i64 a, TCGv_i64 b, MemOp esz)
-+{
-+    TCGv_i64 max = tcg_constant_i64(MAKE_64BIT_MASK(0, 8 << esz));
-+    TCGv_i64 zero = tcg_constant_i64(0);
-+    TCGv_i64 tmp = tcg_temp_new_i64();
-+
-+    tcg_gen_add_i64(tmp, a, b);
-+    tcg_gen_smin_i64(res, tmp, max);
-+    tcg_gen_smax_i64(res, res, zero);
-+    tcg_gen_xor_i64(tmp, tmp, res);
-+    tcg_gen_or_i64(qc, qc, tmp);
-+}
-+
-+void gen_usqadd_d(TCGv_i64 res, TCGv_i64 qc, TCGv_i64 a, TCGv_i64 b)
-+{
-+    TCGv_i64 tmp = tcg_temp_new_i64();
-+    TCGv_i64 tneg = tcg_temp_new_i64();
-+    TCGv_i64 tpos = tcg_temp_new_i64();
-+    TCGv_i64 max = tcg_constant_i64(UINT64_MAX);
-+    TCGv_i64 zero = tcg_constant_i64(0);
-+
-+    tcg_gen_add_i64(tmp, a, b);
-+
-+    /* If @b is positive, saturate if (a + b) < a, aka unsigned overflow. */
-+    tcg_gen_movcond_i64(TCG_COND_LTU, tpos, tmp, a, max, tmp);
-+
-+    /* If @b is negative, saturate if a < -b, ie subtraction is negative. */
-+    tcg_gen_neg_i64(tneg, b);
-+    tcg_gen_movcond_i64(TCG_COND_LTU, tneg, a, tneg, zero, tmp);
-+
-+    /* Select correct result from sign of @b. */
-+    tcg_gen_movcond_i64(TCG_COND_LT, res, b, zero, tneg, tpos);
-+    tcg_gen_xor_i64(tmp, tmp, res);
-+    tcg_gen_or_i64(qc, qc, tmp);
-+}
-+
- static void gen_usqadd_vec(unsigned vece, TCGv_vec t, TCGv_vec qc,
-                            TCGv_vec a, TCGv_vec b)
- {
-@@ -286,6 +356,7 @@ void gen_gvec_usqadd_qc(unsigned vece, uint32_t rd_ofs,
-           .write_aofs = true,
-           .vece = MO_32 },
-         { .fniv = gen_usqadd_vec,
-+          .fni8 = gen_usqadd_d,
-           .fno = gen_helper_gvec_usqadd_d,
-           .opt_opc = vecop_list,
-           .write_aofs = true,
-diff --git a/target/arm/tcg/neon_helper.c b/target/arm/tcg/neon_helper.c
-index a0b51c8809..9505a5fd18 100644
---- a/target/arm/tcg/neon_helper.c
-+++ b/target/arm/tcg/neon_helper.c
-@@ -236,171 +236,6 @@ uint64_t HELPER(neon_qadd_s64)(CPUARMState *env, uint64_t src1, uint64_t src2)
-     return res;
- }
- 
--/* Unsigned saturating accumulate of signed value
-- *
-- * Op1/Rn is treated as signed
-- * Op2/Rd is treated as unsigned
-- *
-- * Explicit casting is used to ensure the correct sign extension of
-- * inputs. The result is treated as a unsigned value and saturated as such.
-- *
-- * We use a macro for the 8/16 bit cases which expects signed integers of va,
-- * vb, and vr for interim calculation and an unsigned 32 bit result value r.
-- */
--
--#define USATACC(bits, shift) \
--    do { \
--        va = sextract32(a, shift, bits);                                \
--        vb = extract32(b, shift, bits);                                 \
--        vr = va + vb;                                                   \
--        if (vr > UINT##bits##_MAX) {                                    \
--            SET_QC();                                                   \
--            vr = UINT##bits##_MAX;                                      \
--        } else if (vr < 0) {                                            \
--            SET_QC();                                                   \
--            vr = 0;                                                     \
--        }                                                               \
--        r = deposit32(r, shift, bits, vr);                              \
--   } while (0)
--
--uint32_t HELPER(neon_uqadd_s8)(CPUARMState *env, uint32_t a, uint32_t b)
--{
--    int16_t va, vb, vr;
--    uint32_t r = 0;
--
--    USATACC(8, 0);
--    USATACC(8, 8);
--    USATACC(8, 16);
--    USATACC(8, 24);
--    return r;
--}
--
--uint32_t HELPER(neon_uqadd_s16)(CPUARMState *env, uint32_t a, uint32_t b)
--{
--    int32_t va, vb, vr;
--    uint64_t r = 0;
--
--    USATACC(16, 0);
--    USATACC(16, 16);
--    return r;
--}
--
--#undef USATACC
--
--uint32_t HELPER(neon_uqadd_s32)(CPUARMState *env, uint32_t a, uint32_t b)
--{
--    int64_t va = (int32_t)a;
--    int64_t vb = (uint32_t)b;
--    int64_t vr = va + vb;
--    if (vr > UINT32_MAX) {
--        SET_QC();
--        vr = UINT32_MAX;
--    } else if (vr < 0) {
--        SET_QC();
--        vr = 0;
--    }
--    return vr;
--}
--
--uint64_t HELPER(neon_uqadd_s64)(CPUARMState *env, uint64_t a, uint64_t b)
--{
--    uint64_t res;
--    res = a + b;
--    /* We only need to look at the pattern of SIGN bits to detect
--     * +ve/-ve saturation
--     */
--    if (~a & b & ~res & SIGNBIT64) {
--        SET_QC();
--        res = UINT64_MAX;
--    } else if (a & ~b & res & SIGNBIT64) {
--        SET_QC();
--        res = 0;
--    }
--    return res;
--}
--
--/* Signed saturating accumulate of unsigned value
-- *
-- * Op1/Rn is treated as unsigned
-- * Op2/Rd is treated as signed
-- *
-- * The result is treated as a signed value and saturated as such
-- *
-- * We use a macro for the 8/16 bit cases which expects signed integers of va,
-- * vb, and vr for interim calculation and an unsigned 32 bit result value r.
-- */
--
--#define SSATACC(bits, shift) \
--    do { \
--        va = extract32(a, shift, bits);                                 \
--        vb = sextract32(b, shift, bits);                                \
--        vr = va + vb;                                                   \
--        if (vr > INT##bits##_MAX) {                                     \
--            SET_QC();                                                   \
--            vr = INT##bits##_MAX;                                       \
--        } else if (vr < INT##bits##_MIN) {                              \
--            SET_QC();                                                   \
--            vr = INT##bits##_MIN;                                       \
--        }                                                               \
--        r = deposit32(r, shift, bits, vr);                              \
--    } while (0)
--
--uint32_t HELPER(neon_sqadd_u8)(CPUARMState *env, uint32_t a, uint32_t b)
--{
--    int16_t va, vb, vr;
--    uint32_t r = 0;
--
--    SSATACC(8, 0);
--    SSATACC(8, 8);
--    SSATACC(8, 16);
--    SSATACC(8, 24);
--    return r;
--}
--
--uint32_t HELPER(neon_sqadd_u16)(CPUARMState *env, uint32_t a, uint32_t b)
--{
--    int32_t va, vb, vr;
--    uint32_t r = 0;
--
--    SSATACC(16, 0);
--    SSATACC(16, 16);
--
--    return r;
--}
--
--#undef SSATACC
--
--uint32_t HELPER(neon_sqadd_u32)(CPUARMState *env, uint32_t a, uint32_t b)
--{
--    int64_t res;
--    int64_t op1 = (uint32_t)a;
--    int64_t op2 = (int32_t)b;
--    res = op1 + op2;
--    if (res > INT32_MAX) {
--        SET_QC();
--        res = INT32_MAX;
--    } else if (res < INT32_MIN) {
--        SET_QC();
--        res = INT32_MIN;
--    }
--    return res;
--}
--
--uint64_t HELPER(neon_sqadd_u64)(CPUARMState *env, uint64_t a, uint64_t b)
--{
--    uint64_t res;
--    res = a + b;
--    /* We only need to look at the pattern of SIGN bits to detect an overflow */
--    if (((a & res)
--         | (~b & res)
--         | (a & ~b)) & SIGNBIT64) {
--        SET_QC();
--        res = INT64_MAX;
--    }
--    return res;
--}
--
--
- #define NEON_USAT(dest, src1, src2, type) do { \
-     uint32_t tmp = (uint32_t)src1 - (uint32_t)src2; \
-     if (tmp != (type)tmp) { \
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index f221c71c8e..a8fd22f3e9 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -9979,67 +9979,42 @@ static void handle_2misc_narrow(DisasContext *s, bool scalar,
- static void handle_2misc_satacc(DisasContext *s, bool is_scalar, bool is_u,
-                                 bool is_q, unsigned size, int rn, int rd)
- {
-+    TCGv_i64 res, qc, a, b;
-+
-     if (!is_scalar) {
-         gen_gvec_fn3(s, is_q, rd, rd, rn,
-                      is_u ? gen_gvec_usqadd_qc : gen_gvec_suqadd_qc, size);
-         return;
+v2 --> v3:
+- Remove print info about fp_status in loongarch_cpu_dump_state() since
+it is always zero.
+- Return tcg_enabled() directly in tlb_needed()
+
+v1 --> v2:
+- Add field needed in structure vmstate_tlb, dynamically judge whether
+tlb should be migrated, since mostly qemu-system-loongarch64 is compiled
+with both kvm and tcg accl enabled.
+---
+ target/loongarch/cpu.c        |  7 +++++--
+ target/loongarch/cpu.h        | 16 ++++++++++------
+ target/loongarch/cpu_helper.c |  9 +++++++++
+ target/loongarch/machine.c    | 30 +++++++++++++++++++++++++-----
+ 4 files changed, 49 insertions(+), 13 deletions(-)
+
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 1ebba043f4..ab813a8f67 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -505,7 +505,9 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+         lacc->parent_phases.hold(obj, type);
      }
  
--    if (size == 3) {
--        TCGv_i64 tcg_rn = tcg_temp_new_i64();
--        TCGv_i64 tcg_rd = tcg_temp_new_i64();
-+    res = tcg_temp_new_i64();
-+    qc = tcg_temp_new_i64();
-+    a = tcg_temp_new_i64();
-+    b = tcg_temp_new_i64();
++#ifdef CONFIG_TCG
+     env->fcsr0_mask = FCSR0_M1 | FCSR0_M2 | FCSR0_M3;
++#endif
+     env->fcsr0 = 0x0;
  
--        read_vec_element(s, tcg_rn, rn, 0, MO_64);
--        read_vec_element(s, tcg_rd, rd, 0, MO_64);
-+    /* Read and extend scalar inputs to 64-bits. */
-+    read_vec_element(s, a, rd, 0, size | (is_u ? 0 : MO_SIGN));
-+    read_vec_element(s, b, rn, 0, size | (is_u ? MO_SIGN : 0));
-+    tcg_gen_ld_i64(qc, tcg_env, offsetof(CPUARMState, vfp.qc));
+     int n;
+@@ -550,7 +552,9 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
  
--        if (is_u) { /* USQADD */
--            gen_helper_neon_uqadd_s64(tcg_rd, tcg_env, tcg_rn, tcg_rd);
--        } else { /* SUQADD */
--            gen_helper_neon_sqadd_u64(tcg_rd, tcg_env, tcg_rn, tcg_rd);
-+    if (size == MO_64) {
-+        if (is_u) {
-+            gen_usqadd_d(res, qc, a, b);
-+        } else {
-+            gen_suqadd_d(res, qc, a, b);
-         }
--        write_vec_element(s, tcg_rd, rd, 0, MO_64);
--        clear_vec_high(s, false, rd);
-     } else {
--        TCGv_i32 tcg_rn = tcg_temp_new_i32();
--        TCGv_i32 tcg_rd = tcg_temp_new_i32();
--
--        read_vec_element_i32(s, tcg_rn, rn, 0, size);
--        read_vec_element_i32(s, tcg_rd, rd, 0, size);
--
--        if (is_u) { /* USQADD */
--            switch (size) {
--            case 0:
--                gen_helper_neon_uqadd_s8(tcg_rd, tcg_env, tcg_rn, tcg_rd);
--                break;
--            case 1:
--                gen_helper_neon_uqadd_s16(tcg_rd, tcg_env, tcg_rn, tcg_rd);
--                break;
--            case 2:
--                gen_helper_neon_uqadd_s32(tcg_rd, tcg_env, tcg_rn, tcg_rd);
--                break;
--            default:
--                g_assert_not_reached();
--            }
--        } else { /* SUQADD */
--            switch (size) {
--            case 0:
--                gen_helper_neon_sqadd_u8(tcg_rd, tcg_env, tcg_rn, tcg_rd);
--                break;
--            case 1:
--                gen_helper_neon_sqadd_u16(tcg_rd, tcg_env, tcg_rn, tcg_rd);
--                break;
--            case 2:
--                gen_helper_neon_sqadd_u32(tcg_rd, tcg_env, tcg_rn, tcg_rd);
--                break;
--            default:
--                g_assert_not_reached();
--            }
-+        if (is_u) {
-+            gen_usqadd_bhs(res, qc, a, b, size);
-+        } else {
-+            gen_suqadd_bhs(res, qc, a, b, size);
-+            /* Truncate signed 64-bit result for writeback. */
-+            tcg_gen_ext_i64(res, res, size);
-         }
--
--        write_vec_element(s, tcg_constant_i64(0), rd, 0, MO_64);
--        write_vec_element_i32(s, tcg_rd, rd, 0, MO_32);
--        clear_vec_high(s, false, rd);
+ #ifndef CONFIG_USER_ONLY
+     env->pc = 0x1c000000;
++#ifdef CONFIG_TCG
+     memset(env->tlb, 0, sizeof(env->tlb));
++#endif
+     if (kvm_enabled()) {
+         kvm_arch_reset_vcpu(env);
      }
-+
-+    write_fp_dreg(s, rd, res);
-+    tcg_gen_st_i64(qc, tcg_env, offsetof(CPUARMState, vfp.qc));
- }
+@@ -686,8 +690,7 @@ void loongarch_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+     int i;
  
- /* AdvSIMD scalar two reg misc
+     qemu_fprintf(f, " PC=%016" PRIx64 " ", env->pc);
+-    qemu_fprintf(f, " FCSR0 0x%08x  fp_status 0x%02x\n", env->fcsr0,
+-                 get_float_exception_flags(&env->fp_status));
++    qemu_fprintf(f, " FCSR0 0x%08x\n", env->fcsr0);
+ 
+     /* gpr */
+     for (i = 0; i < 32; i++) {
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index c5722670f5..41b8e6d96d 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -270,6 +270,7 @@ union fpr_t {
+     VReg  vreg;
+ };
+ 
++#ifdef CONFIG_TCG
+ struct LoongArchTLB {
+     uint64_t tlb_misc;
+     /* Fields corresponding to CSR_TLBELO0/1 */
+@@ -277,23 +278,18 @@ struct LoongArchTLB {
+     uint64_t tlb_entry1;
+ };
+ typedef struct LoongArchTLB LoongArchTLB;
++#endif
+ 
+ typedef struct CPUArchState {
+     uint64_t gpr[32];
+     uint64_t pc;
+ 
+     fpr_t fpr[32];
+-    float_status fp_status;
+     bool cf[8];
+-
+     uint32_t fcsr0;
+-    uint32_t fcsr0_mask;
+ 
+     uint32_t cpucfg[21];
+ 
+-    uint64_t lladdr; /* LL virtual address compared against SC */
+-    uint64_t llval;
+-
+     /* LoongArch CSRs */
+     uint64_t CSR_CRMD;
+     uint64_t CSR_PRMD;
+@@ -350,8 +346,16 @@ typedef struct CPUArchState {
+     uint64_t CSR_DERA;
+     uint64_t CSR_DSAVE;
+ 
++#ifdef CONFIG_TCG
++    float_status fp_status;
++    uint32_t fcsr0_mask;
++    uint64_t lladdr; /* LL virtual address compared against SC */
++    uint64_t llval;
++#endif
+ #ifndef CONFIG_USER_ONLY
++#ifdef CONFIG_TCG
+     LoongArchTLB  tlb[LOONGARCH_TLB_MAX];
++#endif
+ 
+     AddressSpace *address_space_iocsr;
+     bool load_elf;
+diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
+index 960eec9567..580362ac3e 100644
+--- a/target/loongarch/cpu_helper.c
++++ b/target/loongarch/cpu_helper.c
+@@ -11,6 +11,7 @@
+ #include "internals.h"
+ #include "cpu-csr.h"
+ 
++#ifdef CONFIG_TCG
+ static int loongarch_map_tlb_entry(CPULoongArchState *env, hwaddr *physical,
+                                    int *prot, target_ulong address,
+                                    int access_type, int index, int mmu_idx)
+@@ -154,6 +155,14 @@ static int loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
+ 
+     return TLBRET_NOMATCH;
+ }
++#else
++static int loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
++                                 int *prot, target_ulong address,
++                                 MMUAccessType access_type, int mmu_idx)
++{
++    return TLBRET_NOMATCH;
++}
++#endif
+ 
+ static hwaddr dmw_va2pa(CPULoongArchState *env, target_ulong va,
+                         target_ulong dmw)
+diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
+index c7029fb9b4..9cd9e848d6 100644
+--- a/target/loongarch/machine.c
++++ b/target/loongarch/machine.c
+@@ -8,6 +8,7 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "migration/cpu.h"
++#include "sysemu/tcg.h"
+ #include "vec.h"
+ 
+ static const VMStateDescription vmstate_fpu_reg = {
+@@ -109,9 +110,15 @@ static const VMStateDescription vmstate_lasx = {
+     },
+ };
+ 
++#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
++static bool tlb_needed(void *opaque)
++{
++    return tcg_enabled();
++}
++
+ /* TLB state */
+-const VMStateDescription vmstate_tlb = {
+-    .name = "cpu/tlb",
++static const VMStateDescription vmstate_tlb_entry = {
++    .name = "cpu/tlb_entry",
+     .version_id = 0,
+     .minimum_version_id = 0,
+     .fields = (const VMStateField[]) {
+@@ -122,6 +129,19 @@ const VMStateDescription vmstate_tlb = {
+     }
+ };
+ 
++static const VMStateDescription vmstate_tlb = {
++    .name = "cpu/tlb",
++    .version_id = 0,
++    .minimum_version_id = 0,
++    .needed = tlb_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_STRUCT_ARRAY(env.tlb, LoongArchCPU, LOONGARCH_TLB_MAX,
++                             0, vmstate_tlb_entry, LoongArchTLB),
++        VMSTATE_END_OF_LIST()
++    }
++};
++#endif
++
+ /* LoongArch CPU state */
+ const VMStateDescription vmstate_loongarch_cpu = {
+     .name = "cpu",
+@@ -187,9 +207,6 @@ const VMStateDescription vmstate_loongarch_cpu = {
+         VMSTATE_UINT64(env.CSR_DBG, LoongArchCPU),
+         VMSTATE_UINT64(env.CSR_DERA, LoongArchCPU),
+         VMSTATE_UINT64(env.CSR_DSAVE, LoongArchCPU),
+-        /* TLB */
+-        VMSTATE_STRUCT_ARRAY(env.tlb, LoongArchCPU, LOONGARCH_TLB_MAX,
+-                             0, vmstate_tlb, LoongArchTLB),
+ 
+         VMSTATE_END_OF_LIST()
+     },
+@@ -197,6 +214,9 @@ const VMStateDescription vmstate_loongarch_cpu = {
+         &vmstate_fpu,
+         &vmstate_lsx,
+         &vmstate_lasx,
++#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
++        &vmstate_tlb,
++#endif
+         NULL
+     }
+ };
+
+base-commit: 248f6f62df073a3b4158fd0093863ab885feabb5
 -- 
-2.34.1
+2.39.3
 
 
