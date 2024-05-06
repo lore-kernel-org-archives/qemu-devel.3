@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DAF5C10F16
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 11:47:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACE87C25B5C
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 11:47:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3wmr-0002EW-N7; Mon, 06 May 2024 07:45:44 -0400
+	id 1s3woY-0003tb-7C; Mon, 06 May 2024 07:47:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1s3wmU-0001q0-NJ
- for qemu-devel@nongnu.org; Mon, 06 May 2024 07:45:29 -0400
+ id 1s3wmd-0001zc-FV
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 07:45:30 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1s3wmL-0001t5-Rt
- for qemu-devel@nongnu.org; Mon, 06 May 2024 07:45:18 -0400
+ id 1s3wmb-00020C-RZ
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 07:45:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
  References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
  Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
  Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
  List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=Iv0qu/DvouHMUWkJhrQofFhP1SlFQ9rAt+Y/ankr54U=; b=wzAmXBls+P8XEEE3Kc3Wdh5H5Q
- voHUvFR578+ssAmiTE6/yGKmwzGUoZ1iUfE9iiRAyF48aZWUHJFkLGhxKp3C3l+8FxlVMvORxkoxa
- y9cESB8oKjKerigqUdmGYcxD1ApZnagV8r1ZBl/MNH2oJzXf3rH6OGR7yNOsK8XfFf0tTc008/6Bh
- 8yiw6RvQgl74rvB/nIny8/MKnCVMITpbdQKhVOiSqFbNK6vTKj9LAofNtVSgKwmkowoV8a5P0Agcc
- RnmHlZnVLev3eWoIkPaetwDalTihvq/3QZJq8kPIMwp7+j3b79lI4GF4nqdYoA6nkHXxNlgaDNzbU
- az7mqV0JY29USIYCJHLWFyyXhHRCiCYzBuxMLNMm0Nt7fVMGaQhEsiHoNy4/G5BVTbBztweidr7tE
- qRsfmlyQsk2zpFnfFo5eyS6d1HLqqj+whJoRM4ULi+flNnm0S+mumVSFNqyW/wNh+JkkcZ1/K1wCz
- kSYZO7RsLO3LSsOCa2vYYYXFQ1fXH15zZ9B6+/yoCuQkO/PmhT/ageKxodZnMSntYS3vYWwfHrQqw
- 4wQvmWPSmJIESQrgJZD46HCiE1v/mNwM1uCSEYD0vqVZc/IT1mwkz+8BGYiu/4ojqXTLppazy4wSx
- P0TiVyWnfDi95Y+J9AI4VQaDWlu4hGoLOCUuE+K38=;
+ bh=RdZxbvcd9Ww/IUgTe96WN9PtS1C0KS34Ir6CDMqHT3w=; b=eSLEXoiEeyU6/sSFs/Rl2fZDRM
+ HPDH85q9hKY9+gzyehL8F0rfjMiHVYVHMQqwOO69fmc/oTZ4eKywwtjWE1FBYkjtBTOnJvHhvRZZZ
+ 08g/IqedpWspxer5c7I6U8qNf11KtAD2UMqNAza/dY0s1Dwp2DP9RK193JDXRujDaj0Y4afmLiRhn
+ ZauWIrkiJ8KH34cmB2IkGrqBTGoRMXFJuxGwXofAX1q81KCex6PxlV2b4e+RZsf+hDNSPSY5kPZJp
+ d1hAowwQE+cTMylGzoy+TXhsAwH+K8WtYRMdRDrYjyDPlWPxQVvuKuMc8qeMr4g9ZM6CaD8t2ph87
+ iFvLGqxq+ywGbMzFh8QUN5tqh8ANl+wcnDVVlvvMtwcH4PybN341ZQn5Mv8lamuZm0OsMkIj3DdQr
+ /7+F9dKRLF382YlB2pCpzfaxoWlSU7YouwKDfP/npTeR6b0Y/9vrSUikK9ZMh7YM6i9eamlqttnKF
+ DKkeugapNv00Kb7k+5gQn1KuiLIiWaE1ywMnnv9ZZNmnQDcoFBf1Li2/FKJtt/M6NsqgX9NArBjEJ
+ jAJLa5wt9lo5efnvI6bUFfFLthC42a5VC00nK+hdoX5gg3l2AhXLUh1Ye0roTBhTxiWxQdHUn+sfi
+ 0jQakl7E2eiobiJOpHHoOiSnd0sZMyLtH7BQ0YvTo=;
 Received: from [2a00:23c4:8bb4:4000:b60d:a162:d698:c802]
  (helo=localhost.localdomain)
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1s3wlC-0005pA-8v; Mon, 06 May 2024 12:44:02 +0100
+ id 1s3wlS-0005pA-Eq; Mon, 06 May 2024 12:44:18 +0100
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: qemu-devel@nongnu.org,
 	richard.henderson@linaro.org
-Date: Mon,  6 May 2024 12:44:40 +0100
-Message-Id: <20240506114451.331311-2-mark.cave-ayland@ilande.co.uk>
+Date: Mon,  6 May 2024 12:44:44 +0100
+Message-Id: <20240506114451.331311-6-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240506114451.331311-1-mark.cave-ayland@ilande.co.uk>
 References: <20240506114451.331311-1-mark.cave-ayland@ilande.co.uk>
@@ -53,8 +53,8 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:b60d:a162:d698:c802
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PULL 01/12] target/sparc/cpu: Rename the CPU models with a "+" in
- their names
+Subject: [PULL 05/12] hw/sparc64: set iommu_platform=on for virtio devices
+ attached to the sun4u machine
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -80,87 +80,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+The sun4u machine has an IOMMU and therefore it is possible to program it such
+that the virtio-device IOVA does not map directly to the CPU physical address.
 
-Commit b447378e12 ("qom/object: Limit type names to alphanumerical ...")
-cut down the amount of allowed characters for QOM types to a saner set.
-The "+" character was meant to be included in this set, so we had to
-add a hack there to still allow the legacy names of POWER and Sparc64
-CPUs. However, instead of putting such a hack in the common QOM code,
-there is a much better place to do this: The sparc_cpu_class_by_name()
-function which is used to look up the names of all Sparc CPUs.
-Thus let's finally get rid of the "+" in the Sparc CPU names, and provide
-backward compatibility for the old names via some simple checks in the
-sparc_cpu_class_by_name() function.
+This is not a problem with Linux which always maps the IOVA directly to the CPU
+physical address, however it is required for the NetBSD virtio driver where this
+is not the case.
 
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240419084812.504779-2-thuth@redhat.com>
+Set the sun4u machine defaults for all virtio devices so that disable-legacy=on
+and iommu_platform=on to ensure a default configuration will allow virtio
+devices to function correctly on both Linux and NetBSD.
+
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Message-Id: <20240418205730.31396-1-mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
- qom/object.c       |  8 --------
- target/sparc/cpu.c | 14 ++++++++++++--
- 2 files changed, 12 insertions(+), 10 deletions(-)
+ hw/sparc64/sun4u.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/qom/object.c b/qom/object.c
-index 44ec8f6460..157a45c5f8 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -157,14 +157,6 @@ static bool type_name_is_valid(const char *name)
-                         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                         "0123456789-_.");
- 
--    /* Allow some legacy names with '+' in it for compatibility reasons */
--    if (name[plen] == '+') {
--        if (plen >= 17 && g_str_has_prefix(name, "Sun-UltraSparc-I")) {
--            /* Allow "Sun-UltraSparc-IV+" and "Sun-UltraSparc-IIIi+" */
--            return true;
--        }
--    }
--
-     return plen == slen;
+diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
+index cff6d5abaf..4ece1ac1ff 100644
+--- a/hw/sparc64/sun4u.c
++++ b/hw/sparc64/sun4u.c
+@@ -793,6 +793,12 @@ static void sun4v_init(MachineState *machine)
+     sun4uv_init(get_system_memory(), machine, &hwdefs[1]);
  }
  
-diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
-index 485d416925..7487ae034d 100644
---- a/target/sparc/cpu.c
-+++ b/target/sparc/cpu.c
-@@ -314,7 +314,7 @@ static const sparc_def_t sparc_defs[] = {
-         .features = CPU_DEFAULT_FEATURES,
-     },
-     {
--        .name = "Sun UltraSparc IV+",
-+        .name = "Sun UltraSparc IV plus",
-         .iu_version = ((0x3eULL << 48) | (0x19ULL << 32) | (0x22ULL << 24)),
-         .fpu_version = 0x00000000,
-         .mmu_version = mmu_us_12,
-@@ -323,7 +323,7 @@ static const sparc_def_t sparc_defs[] = {
-         .features = CPU_DEFAULT_FEATURES | CPU_FEATURE_CMT,
-     },
-     {
--        .name = "Sun UltraSparc IIIi+",
-+        .name = "Sun UltraSparc IIIi plus",
-         .iu_version = ((0x3eULL << 48) | (0x22ULL << 32) | (0ULL << 24)),
-         .fpu_version = 0x00000000,
-         .mmu_version = mmu_us_3,
-@@ -762,6 +762,16 @@ static ObjectClass *sparc_cpu_class_by_name(const char *cpu_model)
-     char *typename;
++static GlobalProperty hw_compat_sparc64[] = {
++    { "virtio-pci", "disable-legacy", "on", .optional = true },
++    { "virtio-device", "iommu_platform", "on" },
++};
++static const size_t hw_compat_sparc64_len = G_N_ELEMENTS(hw_compat_sparc64);
++
+ static void sun4u_class_init(ObjectClass *oc, void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+@@ -810,6 +816,7 @@ static void sun4u_class_init(ObjectClass *oc, void *data)
+     mc->default_nic = "sunhme";
+     mc->no_parallel = !module_object_class_by_name(TYPE_ISA_PARALLEL);
+     fwc->get_dev_path = sun4u_fw_dev_path;
++    compat_props_add(mc->compat_props, hw_compat_sparc64, hw_compat_sparc64_len);
+ }
  
-     typename = sparc_cpu_type_name(cpu_model);
-+
-+    /* Fix up legacy names with '+' in it */
-+    if (g_str_equal(typename, SPARC_CPU_TYPE_NAME("Sun-UltraSparc-IV+"))) {
-+        g_free(typename);
-+        typename = g_strdup(SPARC_CPU_TYPE_NAME("Sun-UltraSparc-IV-plus"));
-+    } else if (g_str_equal(typename, SPARC_CPU_TYPE_NAME("Sun-UltraSparc-IIIi+"))) {
-+        g_free(typename);
-+        typename = g_strdup(SPARC_CPU_TYPE_NAME("Sun-UltraSparc-IIIi-plus"));
-+    }
-+
-     oc = object_class_by_name(typename);
-     g_free(typename);
-     return oc;
+ static const TypeInfo sun4u_type = {
 -- 
 2.39.2
 
