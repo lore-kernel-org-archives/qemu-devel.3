@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ABEBC25B10
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 12:39:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA9D8C10F16
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 12:39:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3xca-0002u2-Mt; Mon, 06 May 2024 08:39:08 -0400
+	id 1s3xco-0003hO-LH; Mon, 06 May 2024 08:39:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3xcJ-00022Z-Lw
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3xcI-00020D-4z
  for qemu-devel@nongnu.org; Mon, 06 May 2024 08:38:54 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3xc9-00022v-P2
- for qemu-devel@nongnu.org; Mon, 06 May 2024 08:38:51 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-41b21ed19f5so12254555e9.2
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 05:38:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3xcF-00023T-Ku
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 08:38:49 -0400
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-2e1fa824504so27400131fa.0
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 05:38:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714999119; x=1715603919; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714999125; x=1715603925; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NLt7aSiKdJSjR9IsbCYiGtAu0ptRlqr/9IF1r+scoR0=;
- b=Nx723U75kLSvie/QkmlkkjVVoOPQUFmsPm41nEbyn1lqj2SjlZdIUNMK5SDVLjmENg
- GWag2BUr7ZYcrbFaAS/Uhdx13VHR3JULs7NDc5MmYLiHkaOP/lb+aBDVi72dTdMo2Yql
- fpZQHFWhFxWkr3qJZFHn4FqJqqlpNcmlQ1upcV9K2V4BAmS2hnrb3YM+Jy/ZN7wYZwo9
- bT1cx7ZvbSxAkPcpvE5L7pnUkVFKjPrnFZMGS89diRpBs65U2M8t4ULc3rkItNRzxC7x
- uAukOs0ew6sr8Va7lTPJYWFLt327+LZ1kHMVx5Z2ZmQ9pwITuOCuTITlw2CqeVenJ28Y
- GT6w==
+ bh=vxHJc/1SpfLp2sqgCrwCIMC13iOcC35tqJ/KVJcg7HA=;
+ b=yyg5AJny7xRj7kPEDDqstg1Ud7nzkoVP5YNIdJ8ktWJaNZqMvJTZPqM+cN3OIrQIZv
+ TFAGPUBFc+lLfmu51DEh0rL9JuWZEMNVrE+J6ebmZeEjxBeoo+lk2R8krLMVgCHuEWf6
+ ap2EI5xEp+GIrOxn/hdL0T7EpmacVBD2BPulX82lsqTTcf4YzkRNIvb9koXCC4QZBaNW
+ K5QIOKk9oRIgRgrxlsXDE911hNF2p5jrdd6rZN+b5rSYvALJqJ9sdEfcPxPWElgZYocY
+ GBuLh2Q+GcSYMUIFTBffD/kiWFJk1THOUb+mG35tjxv3alptPH8tQnXiG5/PVKo3ZIfp
+ V9LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714999119; x=1715603919;
+ d=1e100.net; s=20230601; t=1714999125; x=1715603925;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NLt7aSiKdJSjR9IsbCYiGtAu0ptRlqr/9IF1r+scoR0=;
- b=rIqMBQEDibugAJR1SiNrdDBpbXWsIO54NEPuhlPovpWc3WBtvpwlthF11v+N4oklDc
- LJ0DtY8JxkajTt3w2EAFC1cEhRjRnVEBz4MQpciHdjXYvH0McK3TkMc0zNueRsW2wbYA
- +rlDQLEfgLGez+0nc+Uv7JkS2O79D1B0hSzLuA4B+KPv3fajP58tCDK21ssLzWdY0cZA
- 5XkdVzynhZFtctWkX9JTm9qTBSQD0xuniQlf3HE/ZemMkRSxUATGzjibHQCpQCpZLTjb
- KvGV/l5rKSD6d5BkxcLTyO7G3cuCsMfNganWGagwmRbyvMCUb/fz0thmtToFHqBgcGUt
- etmg==
-X-Gm-Message-State: AOJu0YwISwC2rMNFCbT9LW3o6F49IIpYEsPZrB6CerojgGg65KLPo6qi
- PablkJNQZZkuP3qMUMvuRrR/q11Or6VI7eu3PVSyNUR9XIxB+bQ4xpI2FfTHDNuDrIBx08Hv5s9
- 4
-X-Google-Smtp-Source: AGHT+IGSQFEGe2NT87A1x6OPr1eG1WF08b3rU9ZPlntATHxFd1HdmNJht3PbTHL/QE+nS1lM9wYNYA==
-X-Received: by 2002:a05:600c:4ed2:b0:41b:f30a:41f1 with SMTP id
- g18-20020a05600c4ed200b0041bf30a41f1mr8222863wmq.7.1714999119594; 
- Mon, 06 May 2024 05:38:39 -0700 (PDT)
+ bh=vxHJc/1SpfLp2sqgCrwCIMC13iOcC35tqJ/KVJcg7HA=;
+ b=dOMA30NK5t6z4XVauOc883WzCcOuDzvMwpXt2m7k/9FwhgtmI+0fXGcDZwzPMPl0J+
+ /ChQUuIJXVfHWQWM8LAHR9SWbx0+yeMmYCN19/jDvlDNJXdAKr30ZJqRYRpSjRYS2w8j
+ cJLgtozQGJxQI39xx0DHW1htartcQhT1yPL41DQv+/kWYkl5zJuosVhqGM8j0AerwST9
+ nstdMk70tfygnHmm5Cjlz+hImkt0jK5+kyJVAK8WBnxipR0sua5vYhYShMmVxY47E+PZ
+ Pxe1QY1Ch1MHFwCxmtnb/BsioLzwkyO2fuWXTkvt8lHvBEfEgKHVJ0khCQeQUPyMRtYJ
+ 5Rnw==
+X-Gm-Message-State: AOJu0Yxuez9+Zux9AqwJPKZuBzKMg9KwhwJ1xiCJKoJrijw+aOJNneer
+ FCv5GgcZoVTIQCUSGtFCvsowQPv/CTG1u9XiYBw534pDWUQPu2h2i/EoAGAZbPHYEuWR/TPhNzK
+ 1
+X-Google-Smtp-Source: AGHT+IFC0LPB4olsiT3y1Bh5ew7RgDQQfYf4Nemr/FJ1CeDUyos4obzEm2Rn5CajZ7hqSlUBvZD3xQ==
+X-Received: by 2002:a2e:9006:0:b0:2dc:b964:b15 with SMTP id
+ h6-20020a2e9006000000b002dcb9640b15mr6152525ljg.25.1714999125390; 
+ Mon, 06 May 2024 05:38:45 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.211.4]) by smtp.gmail.com with ESMTPSA id
- fl25-20020a05600c0b9900b0041e9c1d6f4esm6712931wmb.48.2024.05.06.05.38.38
+ m7-20020a05600c4f4700b0041b434e5869sm19638255wmq.43.2024.05.06.05.38.44
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 06 May 2024 05:38:39 -0700 (PDT)
+ Mon, 06 May 2024 05:38:44 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 09/28] accel/tcg: Update CPUNegativeOffsetState::can_do_io
- field documentation
-Date: Mon,  6 May 2024 14:37:09 +0200
-Message-ID: <20240506123728.65278-10-philmd@linaro.org>
+Subject: [PULL 10/28] accel/tcg: Restrict qemu_plugin_vcpu_exit_hook() to TCG
+ plugins
+Date: Mon,  6 May 2024 14:37:10 +0200
+Message-ID: <20240506123728.65278-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240506123728.65278-1-philmd@linaro.org>
 References: <20240506123728.65278-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x233.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,43 +94,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The @can_do_io field got moved from CPUState to
-CPUNegativeOffsetState in commit 464dacf609 ("accel/tcg:
-Move can_do_io to CPUNegativeOffsetState").
+qemu_plugin_vcpu_exit_hook() is specific to TCG plugins,
+so must be restricted to it in cpu_common_unrealizefn(),
+similarly to how qemu_plugin_create_vcpu_state() is
+restricted in the cpu_common_realizefn() counterpart.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240428221450.26460-14-philmd@linaro.org>
+Message-Id: <20240429213050.55177-2-philmd@linaro.org>
 ---
- include/hw/core/cpu.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ hw/core/cpu-common.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 46b99a7ea5..173349b0bd 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -338,9 +338,10 @@ typedef union IcountDecr {
-     } u16;
- } IcountDecr;
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index a72d48d9e1..0f0a247f56 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -30,7 +30,9 @@
+ #include "hw/boards.h"
+ #include "hw/qdev-properties.h"
+ #include "trace.h"
++#ifdef CONFIG_PLUGIN
+ #include "qemu/plugin.h"
++#endif
  
--/*
-- * Elements of CPUState most efficiently accessed from CPUArchState,
-- * via small negative offsets.
-+/**
-+ * CPUNegativeOffsetState: Elements of CPUState most efficiently accessed
-+ *                         from CPUArchState, via small negative offsets.
-+ * @can_do_io: True if memory-mapped IO is allowed.
-  */
- typedef struct CPUNegativeOffsetState {
-     CPUTLB tlb;
-@@ -400,7 +401,6 @@ struct qemu_work_item;
-  * @crash_occurred: Indicates the OS reported a crash (panic) for this CPU
-  * @singlestep_enabled: Flags for single-stepping.
-  * @icount_extra: Instructions until next timer event.
-- * @neg.can_do_io: True if memory-mapped IO is allowed.
-  * @cpu_ases: Pointer to array of CPUAddressSpaces (which define the
-  *            AddressSpaces this CPU has)
-  * @num_ases: number of CPUAddressSpaces in @cpu_ases
+ CPUState *cpu_by_arch_id(int64_t id)
+ {
+@@ -236,9 +238,11 @@ static void cpu_common_unrealizefn(DeviceState *dev)
+     CPUState *cpu = CPU(dev);
+ 
+     /* Call the plugin hook before clearing the cpu is fully unrealized */
++#ifdef CONFIG_PLUGIN
+     if (tcg_enabled()) {
+         qemu_plugin_vcpu_exit_hook(cpu);
+     }
++#endif
+ 
+     /* NOTE: latest generic point before the cpu is fully unrealized */
+     cpu_exec_unrealizefn(cpu);
 -- 
 2.41.0
 
