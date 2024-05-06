@@ -4,105 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A8AAC25B5C
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 10:09:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5C61C10F16
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 10:14:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3vHU-00030A-OL; Mon, 06 May 2024 06:09:12 -0400
+	id 1s3vM0-0004jU-P2; Mon, 06 May 2024 06:13:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jinpu.wang@ionos.com>)
- id 1s3vHP-0002xw-LJ
- for qemu-devel@nongnu.org; Mon, 06 May 2024 06:09:09 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jinpu.wang@ionos.com>)
- id 1s3vHJ-00086H-DM
- for qemu-devel@nongnu.org; Mon, 06 May 2024 06:09:06 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-a59b097b202so228429366b.0
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 03:08:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ionos.com; s=google; t=1714990135; x=1715594935; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=K1DL2p9VPXsM5PHDrzeL/vKvwcqg+MyeXTVFoF/578Y=;
- b=Jzp7uNDBJpBwKUaSYkzD5II2i1a0xVGe4ZTsSO0Zmn58TPstBQVTdi/2S2xfQZ9tFr
- V3E4Vn1N7vTkR4og7UEmSaO74HFiv5h1BOYh1s7nztp+8vFT68GWu2Ty57rzp3lFaosP
- 4bQwvTrIbXoxIkmo7SgWYeYGTlOI4wVn8bT1K+7qyJERrewAgm60H3ItagcVstoeQtbs
- Nhvhfe142Skd42bFEgQ333nmlMN2mZ5fRYOfCw9YEWErpQlQ6EJgIOXY3dbEQV22Jagq
- OlH/6GMi3IjSKiIuXmbDaEIRunwMXTQOVCWshXRWGD0R9gK/gj/jiM2PsRslKtt7sUld
- kFoA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1s3vLz-0004jH-Ld
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 06:13:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1s3vLx-0000cv-SU
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 06:13:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714990428;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:autocrypt:autocrypt;
+ bh=1i/nouFZzZKxXWfOben7joELYCeg9MZYcxbD/HWOVZ4=;
+ b=SAme+sPLQCFrmAOsq6Z4Z4jq0VdUhKcRRMelMydeiC0rPgopTNpmuo2Xd3gSG8hDVsguGm
+ uT8iXcWgyrazd54UcLxounkNRfJJK3TzyEK36ETD60Sg5N+/u/xEHv08+D65Cb4onnNaYL
+ UawoPePIg6FMq5Al2ccPk4GoEaL/8js=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-461-sbqQ5lGkMg6Np-HLItGLjQ-1; Mon, 06 May 2024 06:13:47 -0400
+X-MC-Unique: sbqQ5lGkMg6Np-HLItGLjQ-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-572afd6e96fso436191a12.2
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 03:13:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714990135; x=1715594935;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=K1DL2p9VPXsM5PHDrzeL/vKvwcqg+MyeXTVFoF/578Y=;
- b=lfHhHoy4JlDACxRiCOVFpW1D4+86h+GSHwgvLFwAiAGUiy+mu+cscJVfLnZtRraIrt
- 8NtquWYDBfOYFDO8oMT7kXGUZvCu4w3GCsDe4RGYOjFd3TfbcIQtVPASSTPb/jlG3avD
- Vt3qauFl+2JYDRybY0WZx/+JS3rzJtVecfNQ3bXpC0UASWZxS2or2/IMbNfc25RD/voa
- ZhRKtbGVTx1chRfZlGFaH0dsAcLt/EnYc8ln3rr8UyC4fQxtFw0VsQCY2gWkq99rMhW6
- AMDPz1giP/oO7zxsDclvvjw8d4pNdN0SDERpRwYyfT2S7qw1t1a3OWVwNFOT+DwqyRCP
- +hZg==
+ d=1e100.net; s=20230601; t=1714990425; x=1715595225;
+ h=content-transfer-encoding:autocrypt:subject:to:from
+ :content-language:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1i/nouFZzZKxXWfOben7joELYCeg9MZYcxbD/HWOVZ4=;
+ b=R4wlWRWdjv+8t7AwLHVxSTs5WbVe+ygGDPLbUFhtH7jCbNFUJrzJqn5Tm8Vxlj7TnF
+ vQXKv6+Tw8+uVC/UMB9cYB1Wn2TeM6wzQsFc0ZXTBg9XAlhFwXLI7vPXuQzxkFvRG54X
+ UR6lrxl8brusF+XdsYW1IuS2anS+AsWesx5v1xHrGdTuE7RFVLgbppew18Bz4U+FE4w3
+ hkNvpK736ryxkfX7sK/9UimBLFYEFO7fN42WXF47MTSbKbUquQJ61O3r43YSAsyxZdD6
+ gE6sW0fYiH0ADK82rY1B/olRkqtiMT7cp7UTBwBZ2QSOax4sbdCtN2Dc0yyQyeSgpoLk
+ JhWg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXplq+Vy4Ym8ypCoWwLbCPJjuPS6CLu5HSYlL3Su/IGrRZkRJ80ZXlYRLEXMJ7yevxb5mCIkUiIEjRFn1vQomx2z1JnIJc=
-X-Gm-Message-State: AOJu0YxpfCzNyYN5jtZuZKTIXusQPkiyTdcQnIYMSm2QHjmMB1OcU4fW
- 6f+QRGIlsAqxsd7Ep05Pmfsi2CaohnnFq+Vb4X+/Pb2r23zk+h25ZifVoZs/VAsnht9wuVrXRut
- WeQXSb7AYm9wJAfkXCbq7xA+vG2D/40JaJJmxdA==
-X-Google-Smtp-Source: AGHT+IFHrGUjy9PJ4hNv6l9eTJT3nwCwrZSn/F+0JLy5tDvVyHNFyd27XuxecgUGjHhG/MJPSrzhQq1dV/EczHAlFvY=
-X-Received: by 2002:a50:9b56:0:b0:572:a7ec:1a5f with SMTP id
- a22-20020a509b56000000b00572a7ec1a5fmr6574455edj.24.1714990134992; Mon, 06
- May 2024 03:08:54 -0700 (PDT)
+ AJvYcCVIvvagESmdLNIYeZDka8pXyNQDzAKlLtanq0VRvxgVpveBlvobiFjcaULVPu0QJrvEDuPYsprj8OeCvpTvB+Db/oBocn4=
+X-Gm-Message-State: AOJu0YwScw1wTpGQv+NMY5uG3F6NCOe1+c7vhWWiWDXDu31gMzPDdIPb
+ fQ4M360HDP6RwPOEupKvdmFVeLu8aZZfUpLxikogwlzFPtzHlbHKKJuLThGACgU2Ppo9h+lcZji
+ +UVRJAR81otMQYQs1fLGqq300p/xMJOhb//y+v8pdNC+HYCZ7tPpYMDrAVlmK
+X-Received: by 2002:a50:9982:0:b0:572:3a93:ee69 with SMTP id
+ m2-20020a509982000000b005723a93ee69mr8204327edb.3.1714990425171; 
+ Mon, 06 May 2024 03:13:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFz1BxSkyOLKm6fYDo4Jdflsb1KBb5EK4wob14xz47t14mtTa3w5z1LoaxaCPCXY1sB27dbGg==
+X-Received: by 2002:a50:9982:0:b0:572:3a93:ee69 with SMTP id
+ m2-20020a509982000000b005723a93ee69mr8204316edb.3.1714990424643; 
+ Mon, 06 May 2024 03:13:44 -0700 (PDT)
+Received: from [192.168.10.81] ([151.95.155.52])
+ by smtp.googlemail.com with ESMTPSA id
+ a9-20020aa7d749000000b005704419f56csm4976235eds.86.2024.05.06.03.13.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 06 May 2024 03:13:44 -0700 (PDT)
+Message-ID: <115ff3b4-6ba5-4027-965b-1fd79409e6d8@redhat.com>
+Date: Mon, 6 May 2024 12:13:43 +0200
 MIME-Version: 1.0
-References: <ZhaY2_cO6CrQFCt3@x1n> <Zhfxoaz9yNTx8Btd@x1n>
- <CAHEcVy7POArt+CmY8dyNTzLJp3XxXgjh3k8=C=9K+_cw1CSJFA@mail.gmail.com>
- <46f5e323-632d-7bda-f2c5-3cfa7b1c6b68@akamai.com> <Zi-1OvxA5MIHjklU@x1n>
- <877cgfe2yw.fsf@pond.sub.org> <ZjClMb-6MddpvHqQ@redhat.com>
- <ZjJgQcPQ29HJsTpY@x1n> <ZjJm6rcqS5EhoKgK@redhat.com>
- <CAMGffEnj54q1GAtB84dWGVR0hLPzfR1W8Fa2TeP22y2zTBRNeQ@mail.gmail.com>
- <ZjT1sPh5OaByQmAB@x1n>
-In-Reply-To: <ZjT1sPh5OaByQmAB@x1n>
-From: Jinpu Wang <jinpu.wang@ionos.com>
-Date: Mon, 6 May 2024 12:08:43 +0200
-Message-ID: <CAMGffEk8wiKNQmoUYxcaTHGtiEm2dwoCF_W7T0vMcD-i30tUkA@mail.gmail.com>
-Subject: Re: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol handling
-To: Peter Xu <peterx@redhat.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Michael Galaxy <mgalaxy@akamai.com>,
- Yu Zhang <yu.zhang@ionos.com>, 
- "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>,
- Elmar Gerdes <elmar.gerdes@ionos.com>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Yuval Shaia <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
- Prasanna Kumar Kalever <prasanna.kalever@redhat.com>, 
- Cornelia Huck <cohuck@redhat.com>, Michael Roth <michael.roth@amd.com>, 
- Prasanna Kumar Kalever <prasanna4324@gmail.com>, 
- "integration@gluster.org" <integration@gluster.org>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
- "devel@lists.libvirt.org" <devel@lists.libvirt.org>, 
- Hanna Reitz <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Thomas Huth <thuth@redhat.com>, 
- Eric Blake <eblake@redhat.com>, Song Gao <gaosong@loongson.cn>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, arei.gonglei@huawei.com, 
- pannengyuan@huawei.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: permerror client-ip=2a00:1450:4864:20::634;
- envelope-from=jinpu.wang@ionos.com; helo=mail-ej1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: KVM list <kvm@vger.kernel.org>, qemu-devel <qemu-devel@nongnu.org>
+Subject: Call for Presentations: KVM Forum 2024
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.431,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,375 +135,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter, hi Daniel,
+###########################
+KVM Forum 2024
+September 22-23, 2024
+Brno, Czech Republic
+https://kvm-forum.qemu.org/
+###########################
 
-On Fri, May 3, 2024 at 4:33=E2=80=AFPM Peter Xu <peterx@redhat.com> wrote:
->
-> On Fri, May 03, 2024 at 08:40:03AM +0200, Jinpu Wang wrote:
-> > I had a brief check in the rsocket changelog, there seems some
-> > improvement over time,
-> >  might be worth revisiting this. due to socket abstraction, we can't
-> > use some feature like
-> >  ODP, it won't be a small and easy task.
->
-> It'll be good to know whether Dan's suggestion would work first, without
-> rewritting everything yet so far.  Not sure whether some perf test could
-> help with the rsocket APIs even without QEMU's involvements (or looking f=
-or
-> test data supporting / invalidate such conversions).
->
-I did a quick test with iperf on 100 G environment and 40 G
-environment, in summary rsocket works pretty well.
+KVM Forum is an annual event that presents a rare opportunity for
+developers and users to discuss the state of Linux virtualization
+technology and plan for the challenges ahead. Sessions include updates
+on the state of the KVM virtualization stack, planning for the future,
+and opportunities for attendees to collaborate in "birds of a feather"
+(BoF) sessions.
 
-iperf tests between 2 hosts with 40 G (IB),
-first  a few test with different num. of threads on top of ipoib
-interface, later with preload rsocket on top of same ipoib interface.
-
-jwang@ps401a-914.nst:~$ iperf -p 52000 -c 10.43.3.145
-------------------------------------------------------------
-Client connecting to 10.43.3.145, TCP port 52000
-TCP window size:  165 KByte (default)
-------------------------------------------------------------
-[  3] local 10.43.3.146 port 55602 connected with 10.43.3.145 port 52000
-[ ID] Interval       Transfer     Bandwidth
-[  3] 0.0000-10.0001 sec  2.85 GBytes  2.44 Gbits/sec
-jwang@ps401a-914.nst:~$ iperf -p 52000 -c 10.43.3.145 -P 2
-------------------------------------------------------------
-Client connecting to 10.43.3.145, TCP port 52000
-TCP window size:  165 KByte (default)
-------------------------------------------------------------
-[  4] local 10.43.3.146 port 39640 connected with 10.43.3.145 port 52000
-[  3] local 10.43.3.146 port 39626 connected with 10.43.3.145 port 52000
-[ ID] Interval       Transfer     Bandwidth
-[  3] 0.0000-10.0012 sec  2.85 GBytes  2.45 Gbits/sec
-[  4] 0.0000-10.0026 sec  2.86 GBytes  2.45 Gbits/sec
-[SUM] 0.0000-10.0026 sec  5.71 GBytes  4.90 Gbits/sec
-[ CT] final connect times (min/avg/max/stdev) =3D
-0.281/0.300/0.318/0.318 ms (tot/err) =3D 2/0
-jwang@ps401a-914.nst:~$ iperf -p 52000 -c 10.43.3.145 -P 4
-------------------------------------------------------------
-Client connecting to 10.43.3.145, TCP port 52000
-TCP window size:  165 KByte (default)
-------------------------------------------------------------
-[  4] local 10.43.3.146 port 46956 connected with 10.43.3.145 port 52000
-[  6] local 10.43.3.146 port 46978 connected with 10.43.3.145 port 52000
-[  3] local 10.43.3.146 port 46944 connected with 10.43.3.145 port 52000
-[  5] local 10.43.3.146 port 46962 connected with 10.43.3.145 port 52000
-[ ID] Interval       Transfer     Bandwidth
-[  3] 0.0000-10.0017 sec  2.85 GBytes  2.45 Gbits/sec
-[  4] 0.0000-10.0015 sec  2.85 GBytes  2.45 Gbits/sec
-[  5] 0.0000-10.0026 sec  2.85 GBytes  2.45 Gbits/sec
-[  6] 0.0000-10.0005 sec  2.85 GBytes  2.45 Gbits/sec
-[SUM] 0.0000-10.0005 sec  11.4 GBytes  9.80 Gbits/sec
-[ CT] final connect times (min/avg/max/stdev) =3D
-0.274/0.312/0.360/0.212 ms (tot/err) =3D 4/0
-jwang@ps401a-914.nst:~$ iperf -p 52000 -c 10.43.3.145 -P 8
-------------------------------------------------------------
-Client connecting to 10.43.3.145, TCP port 52000
-TCP window size:  165 KByte (default)
-------------------------------------------------------------
-[  7] local 10.43.3.146 port 35062 connected with 10.43.3.145 port 52000
-[  6] local 10.43.3.146 port 35058 connected with 10.43.3.145 port 52000
-[  8] local 10.43.3.146 port 35066 connected with 10.43.3.145 port 52000
-[  9] local 10.43.3.146 port 35074 connected with 10.43.3.145 port 52000
-[  3] local 10.43.3.146 port 35038 connected with 10.43.3.145 port 52000
-[ 12] local 10.43.3.146 port 35088 connected with 10.43.3.145 port 52000
-[  5] local 10.43.3.146 port 35048 connected with 10.43.3.145 port 52000
-[  4] local 10.43.3.146 port 35050 connected with 10.43.3.145 port 52000
-[ ID] Interval       Transfer     Bandwidth
-[  4] 0.0000-10.0005 sec  2.85 GBytes  2.44 Gbits/sec
-[  8] 0.0000-10.0011 sec  2.85 GBytes  2.45 Gbits/sec
-[  5] 0.0000-10.0000 sec  2.85 GBytes  2.45 Gbits/sec
-[ 12] 0.0000-10.0021 sec  2.85 GBytes  2.44 Gbits/sec
-[  3] 0.0000-10.0003 sec  2.85 GBytes  2.44 Gbits/sec
-[  7] 0.0000-10.0065 sec  2.50 GBytes  2.14 Gbits/sec
-[  9] 0.0000-10.0077 sec  2.52 GBytes  2.16 Gbits/sec
-[  6] 0.0000-10.0003 sec  2.85 GBytes  2.44 Gbits/sec
-[SUM] 0.0000-10.0003 sec  22.1 GBytes  19.0 Gbits/sec
-[ CT] final connect times (min/avg/max/stdev) =3D
-0.096/0.226/0.339/0.109 ms (tot/err) =3D 8/0
-jwang@ps401a-914.nst:~$ iperf -p 52000 -c 10.43.3.145 -P 16
-[  3] local 10.43.3.146 port 49540 connected with 10.43.3.145 port 52000
-------------------------------------------------------------
-Client connecting to 10.43.3.145, TCP port 52000
-TCP window size:  165 KByte (default)
-------------------------------------------------------------
-[  6] local 10.43.3.146 port 49554 connected with 10.43.3.145 port 52000
-[  8] local 10.43.3.146 port 49584 connected with 10.43.3.145 port 52000
-[  5] local 10.43.3.146 port 49552 connected with 10.43.3.145 port 52000
-[ 20] local 10.43.3.146 port 49626 connected with 10.43.3.145 port 52000
-[  4] local 10.43.3.146 port 49606 connected with 10.43.3.145 port 52000
-[  9] local 10.43.3.146 port 49596 connected with 10.43.3.145 port 52000
-[ 10] local 10.43.3.146 port 49604 connected with 10.43.3.145 port 52000
-[ 26] local 10.43.3.146 port 49678 connected with 10.43.3.145 port 52000
-[  7] local 10.43.3.146 port 49556 connected with 10.43.3.145 port 52000
-[ 25] local 10.43.3.146 port 49662 connected with 10.43.3.145 port 52000
-[ 22] local 10.43.3.146 port 49636 connected with 10.43.3.145 port 52000
-[ 11] local 10.43.3.146 port 49612 connected with 10.43.3.145 port 52000
-[ 13] local 10.43.3.146 port 49618 connected with 10.43.3.145 port 52000
-[ 23] local 10.43.3.146 port 49646 connected with 10.43.3.145 port 52000
-[ 15] local 10.43.3.146 port 49688 connected with 10.43.3.145 port 52000
-[ ID] Interval       Transfer     Bandwidth
-[ 11] 0.0000-10.0024 sec  2.28 GBytes  1.95 Gbits/sec
-[ 23] 0.0000-10.0022 sec  2.28 GBytes  1.95 Gbits/sec
-[ 20] 0.0000-10.0010 sec  2.28 GBytes  1.95 Gbits/sec
-[  8] 0.0000-10.0032 sec  2.28 GBytes  1.95 Gbits/sec
-[ 26] 0.0000-10.0038 sec  2.28 GBytes  1.95 Gbits/sec
-[ 10] 0.0000-10.0002 sec  2.28 GBytes  1.95 Gbits/sec
-[  7] 0.0000-10.0033 sec  2.28 GBytes  1.95 Gbits/sec
-[ 15] 0.0000-10.0015 sec  2.27 GBytes  1.95 Gbits/sec
-[  4] 0.0000-10.0028 sec  2.28 GBytes  1.95 Gbits/sec
-[  6] 0.0000-10.0012 sec  2.28 GBytes  1.96 Gbits/sec
-[ 13] 0.0000-10.0030 sec  2.28 GBytes  1.95 Gbits/sec
-[ 25] 0.0000-10.0051 sec  2.28 GBytes  1.95 Gbits/sec
-[  5] 0.0000-10.0001 sec  2.28 GBytes  1.96 Gbits/sec
-[  9] 0.0000-10.0017 sec  2.28 GBytes  1.95 Gbits/sec
-[ 22] 0.0000-10.0008 sec  2.27 GBytes  1.95 Gbits/sec
-[  3] 0.0000-10.0033 sec  2.28 GBytes  1.95 Gbits/sec
-[SUM] 0.0000-10.0034 sec  36.4 GBytes  31.3 Gbits/sec
-[ CT] final connect times (min/avg/max/stdev) =3D
-0.105/0.217/0.401/0.093 ms (tot/err) =3D 16/0
-jwang@ps401a-914.nst:~$
-LD_PRELOAD=3D/usr/lib/x86_64-linux-gnu/rsocket/librspreload.so iperf -p
-52000 -c 10.43.3.145 -P 16
-------------------------------------------------------------
-Client connecting to 10.43.3.145, TCP port 52000
-TCP window size:  128 KByte (default)
-------------------------------------------------------------
-[  3] local 10.43.3.146 port 48902 connected with 10.43.3.145 port 52000
-[  5] local 10.43.3.146 port 52777 connected with 10.43.3.145 port 52000
-[  9] local 10.43.3.146 port 42911 connected with 10.43.3.145 port 52000
-[ 11] local 10.43.3.146 port 56354 connected with 10.43.3.145 port 52000
-[ 15] local 10.43.3.146 port 43325 connected with 10.43.3.145 port 52000
-[  6] local 10.43.3.146 port 37041 connected with 10.43.3.145 port 52000
-[  7] local 10.43.3.146 port 58828 connected with 10.43.3.145 port 52000
-[ 17] local 10.43.3.146 port 48858 connected with 10.43.3.145 port 52000
-[ 13] local 10.43.3.146 port 49256 connected with 10.43.3.145 port 52000
-[ 16] local 10.43.3.146 port 35652 connected with 10.43.3.145 port 52000
-[  8] local 10.43.3.146 port 48567 connected with 10.43.3.145 port 52000
-[ 18] local 10.43.3.146 port 47394 connected with 10.43.3.145 port 52000
-[ 19] local 10.43.3.146 port 48065 connected with 10.43.3.145 port 52000
-[ 10] local 10.43.3.146 port 39788 connected with 10.43.3.145 port 52000
-[  4] local 10.43.3.146 port 46818 connected with 10.43.3.145 port 52000
-[ 14] local 10.43.3.146 port 57174 connected with 10.43.3.145 port 52000
-[ ID] Interval       Transfer     Bandwidth
-[ 14] 0.0000-10.0002 sec  2.30 GBytes  1.98 Gbits/sec
-[  6] 0.0000-10.0004 sec  2.31 GBytes  1.98 Gbits/sec
-[  5] 0.0000-10.0002 sec  2.31 GBytes  1.98 Gbits/sec
-[  8] 0.0000-10.0001 sec  2.31 GBytes  1.98 Gbits/sec
-[ 11] 0.0000-10.0003 sec  2.31 GBytes  1.98 Gbits/sec
-[ 18] 0.0000-10.0003 sec  2.31 GBytes  1.98 Gbits/sec
-[  3] 0.0000-10.0004 sec  2.31 GBytes  1.98 Gbits/sec
-[  4] 0.0000-10.0005 sec  2.30 GBytes  1.98 Gbits/sec
-[ 17] 0.0000-10.0004 sec  2.31 GBytes  1.98 Gbits/sec
-[ 15] 0.0000-10.0005 sec  2.31 GBytes  1.98 Gbits/sec
-[ 19] 0.0000-10.0001 sec  2.30 GBytes  1.98 Gbits/sec
-[  7] 0.0000-10.0004 sec  2.31 GBytes  1.98 Gbits/sec
-[ 13] 0.0000-10.0005 sec  2.31 GBytes  1.98 Gbits/sec
-[ 10] 0.0000-10.0003 sec  2.30 GBytes  1.98 Gbits/sec
-[  9] 0.0000-10.0000 sec  2.31 GBytes  1.98 Gbits/sec
-[ 16] 0.0000-10.0002 sec  2.31 GBytes  1.98 Gbits/sec
-[SUM] 0.0000-10.0003 sec  36.9 GBytes  31.7 Gbits/sec
-[ CT] final connect times (min/avg/max/stdev) =3D
-88.398/101.706/114.726/24.755 ms (tot/err) =3D 16/0
-jwang@ps401a-914.nst:~$
-LD_PRELOAD=3D/usr/lib/x86_64-linux-gnu/rsocket/librspreload.so iperf -p
-52000 -c 10.43.3.145 -P 1
-------------------------------------------------------------
-Client connecting to 10.43.3.145, TCP port 52000
-TCP window size:  128 KByte (default)
-------------------------------------------------------------
-[  3] local 10.43.3.146 port 49168 connected with 10.43.3.145 port 52000
-[ ID] Interval       Transfer     Bandwidth
-[  3] 0.0000-10.0000 sec  34.3 GBytes  29.5 Gbits/sec
-jwang@ps401a-914.nst:~$
-LD_PRELOAD=3D/usr/lib/x86_64-linux-gnu/rsocket/librspreload.so iperf -p
-52000 -c 10.43.3.145 -P 2
-------------------------------------------------------------
-Client connecting to 10.43.3.145, TCP port 52000
-TCP window size:  128 KByte (default)
-------------------------------------------------------------
-[  3] local 10.43.3.146 port 42096 connected with 10.43.3.145 port 52000
-[  4] local 10.43.3.146 port 58667 connected with 10.43.3.145 port 52000
-[ ID] Interval       Transfer     Bandwidth
-[  4] 0.0000-10.0001 sec  18.4 GBytes  15.8 Gbits/sec
-[  3] 0.0000-10.0000 sec  18.5 GBytes  15.9 Gbits/sec
-[SUM] 0.0000-10.0001 sec  36.9 GBytes  31.7 Gbits/sec
-[ CT] final connect times (min/avg/max/stdev) =3D
-38.155/38.997/39.839/39.839 ms (tot/err) =3D 2/0
-jwang@ps401a-914.nst:~$
-LD_PRELOAD=3D/usr/lib/x86_64-linux-gnu/rsocket/librspreload.so iperf -p
-52000 -c 10.43.3.145 -P 4
-------------------------------------------------------------
-Client connecting to 10.43.3.145, TCP port 52000
-TCP window size:  128 KByte (default)
-------------------------------------------------------------
-[  3] local 10.43.3.146 port 36100 connected with 10.43.3.145 port 52000
-[  5] local 10.43.3.146 port 55108 connected with 10.43.3.145 port 52000
-[  6] local 10.43.3.146 port 41039 connected with 10.43.3.145 port 52000
-[  7] local 10.43.3.146 port 34868 connected with 10.43.3.145 port 52000
-[ ID] Interval       Transfer     Bandwidth
-[  7] 0.0000-10.0000 sec  9.22 GBytes  7.92 Gbits/sec
-[  5] 0.0000-10.0000 sec  9.22 GBytes  7.92 Gbits/sec
-[  3] 0.0000-10.0000 sec  9.22 GBytes  7.92 Gbits/sec
-[  6] 0.0000-10.0001 sec  9.22 GBytes  7.92 Gbits/sec
-[SUM] 0.0000-10.0001 sec  36.9 GBytes  31.7 Gbits/sec
-[ CT] final connect times (min/avg/max/stdev) =3D
-51.401/53.644/56.015/30.487 ms (tot/err) =3D 4/0
-
-You can see with rsocket it reaches ~ 30 Gb/s with single stream,
-while ipoib only 2.5 Gb/s (12 X), ipoib scales with more threads until
- ~ 32 Gb/s, which is the link limit.
-
-With 100 G env, rsocket also out perform ipoib, see below:
+This year's event will be held in Brno, Czechia on September 22-23, 2024.
+The location should also be easy to reach for attendees of Linux Plumbers
+Conference 2024!
 
 
-jwang@ps404a-59.stg:~$
-LD_PRELOAD=3D/usr/lib/x86_64-linux-gnu/rsocket/librspreload.so iperf -p
-52000 -c 10.43.48.58
-------------------------------------------------------------
-Client connecting to 10.43.48.58, TCP port 52000
-TCP window size:  128 KByte (default)
-------------------------------------------------------------
-[  3] local 10.43.48.59 port 40588 connected with 10.43.48.58 port 52000
-[ ID] Interval       Transfer     Bandwidth
-[  3] 0.0000-10.0000 sec  80.7 GBytes  69.4 Gbits/sec
-jwang@ps404a-59.stg:~$
-LD_PRELOAD=3D/usr/lib/x86_64-linux-gnu/rsocket/librspreload.so iperf -p
-52000 -c 10.43.48.58 -P 2
-------------------------------------------------------------
-Client connecting to 10.43.48.58, TCP port 52000
-TCP window size:  128 KByte (default)
-------------------------------------------------------------
-[  3] local 10.43.48.59 port 41813 connected with 10.43.48.58 port 52000
-[  5] local 10.43.48.59 port 60638 connected with 10.43.48.58 port 52000
-[ ID] Interval       Transfer     Bandwidth
-[  5] 0.0000-10.0000 sec  48.9 GBytes  42.0 Gbits/sec
-[  3] 0.0000-10.0000 sec  49.8 GBytes  42.8 Gbits/sec
-[SUM] 0.0000-10.0000 sec  98.7 GBytes  84.8 Gbits/sec
-[ CT] final connect times (min/avg/max/stdev) =3D
-6.962/7.764/8.567/8.567 ms (tot/err) =3D 2/0
-jwang@ps404a-59.stg:~$
-LD_PRELOAD=3D/usr/lib/x86_64-linux-gnu/rsocket/librspreload.so iperf -p
-52000 -c 10.43.48.58 -P 4
-[  6] local 10.43.48.59 port 58086 connected with 10.43.48.58 port 52000
-[  3] local 10.43.48.59 port 49335 connected with 10.43.48.58 port 52000
-------------------------------------------------------------
-Client connecting to 10.43.48.58, TCP port 52000
-TCP window size:  128 KByte (default)
-------------------------------------------------------------
-[  4] local 10.43.48.59 port 44593 connected with 10.43.48.58 port 52000
-[  5] local 10.43.48.59 port 60464 connected with 10.43.48.58 port 52000
-[ ID] Interval       Transfer     Bandwidth
-[  5] 0.0000-10.0000 sec  28.0 GBytes  24.0 Gbits/sec
-[  4] 0.0000-10.0000 sec  28.0 GBytes  24.0 Gbits/sec
-[  3] 0.0000-10.0000 sec  28.0 GBytes  24.1 Gbits/sec
-[  6] 0.0000-10.0000 sec  28.0 GBytes  24.1 Gbits/sec
-[SUM] 0.0000-10.0001 sec   112 GBytes  96.3 Gbits/sec
-[ CT] final connect times (min/avg/max/stdev) =3D
-7.344/9.619/12.199/5.271 ms (tot/err) =3D 4/0
-jwang@ps404a-59.stg:~$
-LD_PRELOAD=3D/usr/lib/x86_64-linux-gnu/rsocket/librspreload.so iperf -p
-52000 -c 10.43.48.58 -P 8
-[  3] local 10.43.48.59 port 43020 connected with 10.43.48.58 port 52000
-[  7] local 10.43.48.59 port 59720 connected with 10.43.48.58 port 52000
-[  4] local 10.43.48.59 port 52547 connected with 10.43.48.58 port 52000
-[  8] local 10.43.48.59 port 41712 connected with 10.43.48.58 port 52000
-[ 10] local 10.43.48.59 port 53126 connected with 10.43.48.58 port 52000
-------------------------------------------------------------
-Client connecting to 10.43.48.58, TCP port 52000
-TCP window size:  128 KByte (default)
-------------------------------------------------------------
-[  6] local 10.43.48.59 port 60311 connected with 10.43.48.58 port 52000
-[  5] local 10.43.48.59 port 44103 connected with 10.43.48.58 port 52000
-[  9] local 10.43.48.59 port 49007 connected with 10.43.48.58 port 52000
-[ ID] Interval       Transfer     Bandwidth
-[  9] 0.0000-10.0001 sec  14.0 GBytes  12.0 Gbits/sec
-[  8] 0.0000-10.0000 sec  14.0 GBytes  12.0 Gbits/sec
-[  4] 0.0000-10.0001 sec  14.0 GBytes  12.0 Gbits/sec
-[  6] 0.0000-10.0000 sec  14.0 GBytes  12.0 Gbits/sec
-[ 10] 0.0000-10.0000 sec  14.0 GBytes  12.0 Gbits/sec
-[  7] 0.0000-10.0000 sec  14.0 GBytes  12.0 Gbits/sec
-[  5] 0.0000-10.0001 sec  14.0 GBytes  12.0 Gbits/sec
-[  3] 0.0000-10.0001 sec  14.0 GBytes  12.0 Gbits/sec
-[SUM] 0.0000-10.0001 sec   112 GBytes  96.3 Gbits/sec
-[ CT] final connect times (min/avg/max/stdev) =3D
-6.942/12.361/18.109/4.872 ms (tot/err) =3D 8/0
-jwang@ps404a-59.stg:~$ iperf -p 52000 -c 10.43.48.58 -P 8
-------------------------------------------------------------
-Client connecting to 10.43.48.58, TCP port 52000
-TCP window size:  165 KByte (default)
-------------------------------------------------------------
-[  4] local 10.43.48.59 port 58176 connected with 10.43.48.58 port 52000
-[  5] local 10.43.48.59 port 58180 connected with 10.43.48.58 port 52000
-[  3] local 10.43.48.59 port 58178 connected with 10.43.48.58 port 52000
-[ 10] local 10.43.48.59 port 58226 connected with 10.43.48.58 port 52000
-[ 11] local 10.43.48.59 port 58228 connected with 10.43.48.58 port 52000
-[  9] local 10.43.48.59 port 58212 connected with 10.43.48.58 port 52000
-[  7] local 10.43.48.59 port 58194 connected with 10.43.48.58 port 52000
-[  8] local 10.43.48.59 port 58198 connected with 10.43.48.58 port 52000
-[ ID] Interval       Transfer     Bandwidth
-[  9] 0.0000-10.0005 sec  15.8 GBytes  13.5 Gbits/sec
-[  4] 0.0000-10.0002 sec  15.8 GBytes  13.6 Gbits/sec
-[  3] 0.0000-10.0000 sec  15.8 GBytes  13.6 Gbits/sec
-[  5] 0.0000-10.0002 sec  15.8 GBytes  13.6 Gbits/sec
-[  8] 0.0000-10.0005 sec  7.89 GBytes  6.78 Gbits/sec
-[ 10] 0.0000-10.0000 sec  15.8 GBytes  13.6 Gbits/sec
-[ 11] 0.0000-10.0014 sec  7.94 GBytes  6.82 Gbits/sec
-[  7] 0.0000-10.0009 sec  15.8 GBytes  13.6 Gbits/sec
-[SUM] 0.0000-10.0009 sec   111 GBytes  95.1 Gbits/sec
-[ CT] final connect times (min/avg/max/stdev) =3D
-0.234/0.325/0.406/0.155 ms (tot/err) =3D 8/0
-jwang@ps404a-59.stg:~$ iperf -p 52000 -c 10.43.48.58 -P 4
-[  3] local 10.43.48.59 port 42548 connected with 10.43.48.58 port 52000
-------------------------------------------------------------
-Client connecting to 10.43.48.58, TCP port 52000
-TCP window size:  165 KByte (default)
-------------------------------------------------------------
-[  4] local 10.43.48.59 port 42558 connected with 10.43.48.58 port 52000
-[  5] local 10.43.48.59 port 42560 connected with 10.43.48.58 port 52000
-[  6] local 10.43.48.59 port 42562 connected with 10.43.48.58 port 52000
-[ ID] Interval       Transfer     Bandwidth
-[  6] 0.0000-10.0000 sec  27.8 GBytes  23.9 Gbits/sec
-[  5] 0.0000-10.0001 sec  27.3 GBytes  23.5 Gbits/sec
-[  3] 0.0000-10.0001 sec  27.8 GBytes  23.9 Gbits/sec
-[  4] 0.0000-10.0001 sec  27.8 GBytes  23.9 Gbits/sec
-[SUM] 0.0000-10.0001 sec   111 GBytes  95.1 Gbits/sec
-[ CT] final connect times (min/avg/max/stdev) =3D
-0.295/0.340/0.390/0.201 ms (tot/err) =3D 4/0
-jwang@ps404a-59.stg:~$ iperf -p 52000 -c 10.43.48.58 -P 2
-------------------------------------------------------------
-Client connecting to 10.43.48.58, TCP port 52000
-TCP window size:  165 KByte (default)
-------------------------------------------------------------
-[  4] local 10.43.48.59 port 44194 connected with 10.43.48.58 port 52000
-[  3] local 10.43.48.59 port 44186 connected with 10.43.48.58 port 52000
-[ ID] Interval       Transfer     Bandwidth
-[  3] 0.0000-10.0000 sec  48.3 GBytes  41.5 Gbits/sec
-[  4] 0.0000-10.0000 sec  41.3 GBytes  35.5 Gbits/sec
-[SUM] 0.0000-10.0000 sec  89.7 GBytes  77.0 Gbits/sec
-[ CT] final connect times (min/avg/max/stdev) =3D
-0.227/0.233/0.240/0.240 ms (tot/err) =3D 2/0
-jwang@ps404a-59.stg:~$ pbkvm list
- VM  State  PID  Cores  Mem  VNC  Migration
---------------------------------------------
+CALL FOR PRESENTATIONS
+======================
 
-Total: 0 VMs, Running: 0
-jwang@ps404a-59.stg:~$ iperf -p 52000 -c 10.43.48.58 -P 1
-------------------------------------------------------------
-Client connecting to 10.43.48.58, TCP port 52000
-TCP window size:  165 KByte (default)
-------------------------------------------------------------
-[  3] local 10.43.48.59 port 40364 connected with 10.43.48.58 port 52000
-[ ID] Interval       Transfer     Bandwidth
-[  3] 0.0000-10.0000 sec  51.2 GBytes  44.0 Gbits/sec
+We encourage you to submit presentations via Pretalx at
+https://kvm-forum.qemu.org/2024/cfp. Suggested topics include:
 
-Thanks!
+* Scalability and Optimization
+
+* Hardening and security
+
+* Confidential computing
+
+* Testing
+
+* KVM and the Linux Kernel:
+    * New Features and Ports
+    * Device Passthrough: VFIO, mdev, vDPA
+    * Network Virtualization
+    * Virtio and vhost
+
+* Virtual Machine Monitors and Management:
+    * VMM Implementation: APIs, Live Migration, Performance Tuning, etc.
+    * Multi-process VMMs: vhost-user, vfio-user, QEMU Storage Daemon
+    * QEMU without KVM: Hypervisor.framework and other hypervisors
+    * Managing KVM: Libvirt, KubeVirt, Kata Containers
+
+* Emulation:
+    * New Devices, Boards and Architectures
+    * CPU Emulation and Binary Translation
+
+All presentation slots will be 25 minutes + 5 minutes for questions.
 
 
-> Thanks,
->
-> --
-> Peter Xu
->
+IMPORTANT DATES
+===============
+
+The deadline for submitting presentations is June 8, 2024 - 11:59 PM CEST.
+
+Accepted speakers will be notified on July 5, 2024.
+
+
+ATTENDING KVM FORUM
+===================
+
+Admission to KVM Forum costs $75. You can get your ticket at
+
+     https://kvm-forum.qemu.org/2024/register/
+
+Admission is free for accepted speakers.
+
+The conference will be held at Hotel International, which is
+within walking distance from the train station:
+
+     HOTEL INTERNATIONAL
+     Husova 16
+     60200 Brno-střed
+     Czechia
+
+Special room prices are available at the venue for attendees
+of KVM Forum. More information will be available soon at
+https://kvm-forum.qemu.org/location/.
+
+We are committed to fostering an open and welcoming environment at our
+conference. Participants are expected to abide by our code of conduct
+and media policy:
+
+     https://kvm-forum.qemu.org/coc/
+     https://kvm-forum.qemu.org/media-policy/
+
+
+GETTING TO BRNO
+===============
+
+Brno has a small international airport with flights from London
+(Stansted) and other European cities.
+
+Other nearby airports include Vienna, Bratislava and Prague. Travelling
+to Brno is easiest from Vienna Schwechat Airport, from where there are
+direct buses operated by RegioJet:
+
+Attendees of the Linux Plumbers Conference can travel from Vienna to
+Brno by train on Saturday, September 21.
+
+If you need a visa invitation letter, please reach out to the organizers
+at kvm-forum-2024-pc@redhat.com.
+
+
+CONTACTS
+========
+
+Reach out to us should you have any questions. The program committee may
+be contacted as a group via email: kvm-forum-2024-pc@redhat.com.
+
 
