@@ -4,83 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 820CDC25B4F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 19:01:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80210C25B4F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 19:07:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s43a7-0006t1-Rv; Mon, 06 May 2024 15:01:03 -0400
+	id 1s43fl-0002sP-Av; Mon, 06 May 2024 15:06:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1s43Zd-0006bx-Sm
- for qemu-devel@nongnu.org; Mon, 06 May 2024 15:00:40 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1s43ZY-0005Pe-5p
- for qemu-devel@nongnu.org; Mon, 06 May 2024 15:00:27 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-2ac9b225a91so1621673a91.2
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 12:00:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715022017; x=1715626817; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nx55YKW7SO1z394BS1S+XUqrjENESfE/9CViqjcHFPg=;
- b=YCXMewtiX1jS/ZJHkzlW2/JFNgXwOi6j3HjTvzLGSMJs4B9aD3mes+rSFSlkNeBnwY
- dSbATTvNSGtwxpAqSlH8E2kBSqiy4aVYA3JxoSuOIEQacjdBrDcyT+H3YWzmshciw9vw
- 98b05zuCZ6kiekPgRc5W6poUdCrduqzXS0sbBPar+xvG7o6JdGga+hr21XEFv9lxp2s2
- 4Ytc5eSNJuDZdsYwqyolsy6MH+1fFaozxlkEWZeINf8nJwHT2P8r6Z2FzAT+H5V8Cn3l
- MWQEG3bX8dQxDMTDPzYwVpvzIhxJo4/hoMdYhuzFBmsOVLa0bD5t0zHW8nW9Yby/3Mj+
- Gq9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715022017; x=1715626817;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=nx55YKW7SO1z394BS1S+XUqrjENESfE/9CViqjcHFPg=;
- b=HOxHxADS4NXavouzMnxH0qye5l2HNkDMqxt7pNKw8HCsW/A3W+naOdr+k1Xh14lkNh
- Trch5VDLsQpubHkn12gYmVFhRr9ACJygGoe9FFAGkT2A2l/iuH9X6+HPsJoLdOJcFxSP
- i47aAi+S9fmO6gGKIhWsnKA+xk2eDI+4wcZMvrcc6UY7/GjV/WAhWHj2+DBSnYs2ar87
- aZOvHB6jgF7P7AavrQyKWv53YA3Tdl/ctSb3UKT72fffAiwWjdVzgdtxVTaFIUO4uGba
- lLZHbopPDr04Xh1P5MxHpPwX2VYgMre59HW7FtNpA1cedxsMtFq8zmZROaIg7qer4yOU
- t9kg==
-X-Gm-Message-State: AOJu0YyWeArnBuyXExycAxg+CBOMK+vwS6uuAYVvrzPMbOk3iKFhh6id
- N0As9OnigTrmS7sTx0kBDfiit0dWZGtyS/zOFeGq7O67XId9cZgM
-X-Google-Smtp-Source: AGHT+IH+jUTBZW6DlwgKWxxcMpFxSZLuAmEo3wSE7tnZk5YIEYGJL/y1hGujRESa/lUBLtPP/SFGQA==
-X-Received: by 2002:a17:90b:230e:b0:2b1:a632:60f6 with SMTP id
- mt14-20020a17090b230e00b002b1a63260f6mr8736911pjb.44.1715022016346; 
- Mon, 06 May 2024 12:00:16 -0700 (PDT)
-Received: from valdaarhun.localnet ([223.233.87.247])
- by smtp.gmail.com with ESMTPSA id
- sv12-20020a17090b538c00b002b1979d3af9sm7425460pjb.0.2024.05.06.12.00.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 May 2024 12:00:15 -0700 (PDT)
-From: Sahil <icegambit91@gmail.com>
-To: Eugenio Perez Martin <eperezma@redhat.com>
-Cc: qemu-level <qemu-devel@nongnu.org>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: Re: Intention to work on GSoC project
-Date: Tue, 07 May 2024 00:30:12 +0530
-Message-ID: <13514535.uLZWGnKmhe@valdaarhun>
-In-Reply-To: <4912056.31r3eYUQgx@valdaarhun>
-References: <13625712.uLZWGnKmhe@valdaarhun>
- <CAJaqyWdD7futYvUFt7=zV1xsoBdyAET6mvneOOjR2oob2U1-qg@mail.gmail.com>
- <4912056.31r3eYUQgx@valdaarhun>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1s43fW-0002jz-EZ
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 15:06:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1s43fS-0000Ag-09
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 15:06:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715022389;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=2FC85QHFSou3g+VF+WZcEDgtuGCnshu1TV5DtCgjLS4=;
+ b=M8Sauef9wGRc8fJCGBudznRXKClH6RmYU7yjpW6o4/unlHgXsVJGHJLYSrdj1oHaqGbn7Z
+ WKoHlmNknIWZW6kDcbmReCQUO1D6to5+gMiwdP8kA3lmp5QCjC2y3JymYY1Ax0/GK2638q
+ tPmVMSjQVHIAVDABFIP7V99Farz2kfA=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-10-4jFI02ctPa2UEbaLehaw0Q-1; Mon,
+ 06 May 2024 15:06:25 -0400
+X-MC-Unique: 4jFI02ctPa2UEbaLehaw0Q-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 24D231C3F0E5;
+ Mon,  6 May 2024 19:06:25 +0000 (UTC)
+Received: from localhost (unknown [10.39.192.54])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 1A5AC492BC7;
+ Mon,  6 May 2024 19:06:23 +0000 (UTC)
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Czenczek <hreitz@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
+ Fam Zheng <fam@euphon.net>
+Subject: [PATCH 0/2] Revert "monitor: use aio_co_reschedule_self()"
+Date: Mon,  6 May 2024 15:06:20 -0400
+Message-ID: <20240506190622.56095-1-stefanha@redhat.com>
 Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=icegambit91@gmail.com; helo=mail-pj1-x1029.google.com
-X-Spam_score_int: 15
-X-Spam_score: 1.5
-X-Spam_bar: +
-X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,32 +81,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+This series fixes RHEL-34618 "qemu crash on Assertion `luringcb->co->ctx ==
+s->aio_context' failed when do block_resize on hotplug disk with aio=io_uring":
+https://issues.redhat.com/browse/RHEL-34618
 
-It's been a while since I last gave an update. Sorry about that. I am ready
-to get my hands dirty and start with the implementation.
+Kevin identified commit 1f25c172f837 ("monitor: use aio_co_reschedule_self()")
+as the root cause. There is a subtlety regarding how
+qemu_get_current_aio_context() returns qemu_aio_context even though we may be
+running in iohandler_ctx.
 
-I have gone through the source of linux's drivers/virtio/virtio_ring.c [1], and
-QEMU's hw/virtio/virtio.c [2] and hw/virtio/vhost-shadow-virtqueue.c [3].
+Revert commit 1f25c172f837, it was just intended as a code cleanup.
 
-Before actually starting I would like to make sure I am on the right track. In
-vhost-shadow-virtqueue.c, there's a function "vhost_svq_add" which in turn
-calls "vhost_svq_add_split".
+Stefan Hajnoczi (2):
+  Revert "monitor: use aio_co_reschedule_self()"
+  aio: warn about iohandler_ctx special casing
 
-Shall I start by implementing a mechanism to check if the feature bit
-"VIRTIO_F_RING_PACKED" is set (using "virtio_vdev_has_feature")? And
-if it's supported, "vhost_svq_add" should call "vhost_svq_add_packed".
-Following this, I can then start implementing "vhost_svq_add_packed"
-and progress from there.
+ include/block/aio.h | 6 ++++++
+ qapi/qmp-dispatch.c | 7 +++++--
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
-What are your thoughts on this?
-
-Thanks,
-Sahil
-
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/virtio/virtio.c
-[2] https://gitlab.com/qemu-project/qemu/-/blob/master/hw/virtio/virtio.c
-[3] https://gitlab.com/qemu-project/qemu/-/blob/master/hw/virtio/vhost-shadow-virtqueue.c
-
+-- 
+2.45.0
 
 
