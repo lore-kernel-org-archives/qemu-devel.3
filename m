@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08C61C25B10
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 19:59:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 844B8C25B4F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 19:59:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s44UP-0008NE-LS; Mon, 06 May 2024 15:59:09 -0400
+	id 1s44UX-0008Oz-9H; Mon, 06 May 2024 15:59:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s44UH-0008MT-Ic
- for qemu-devel@nongnu.org; Mon, 06 May 2024 15:59:04 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1s44UU-0008OM-IE
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 15:59:14 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s44UE-0004Qd-Uz
- for qemu-devel@nongnu.org; Mon, 06 May 2024 15:59:00 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-6f4178aec15so2020124b3a.0
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 12:58:56 -0700 (PDT)
+ id 1s44US-0004yI-Dy
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 15:59:13 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1ee12baa01cso9845415ad.0
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 12:59:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715025535; x=1715630335; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715025550; x=1715630350; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=R9F4NDprLnA4MX1RYcjtn8a59V8nr2rMP5GKIrekoOs=;
- b=GOrUhIwdTgsHmcUTQXs/Bw5jRtUD2azYbUYrnnls11Y7JVGWLqGBZvXYxUHLMkB+0U
- EvT/BzBjWw/h4FGH3yRG/3KkTPRaBLHW3c60d8T1tnCGey0NweoDnkOMcD+DSPQpueSL
- L0DHYfrSvPfvd+g5cF/JyiQHM7ct6vikFgq1fWNZbA8E/2CbHmsqchInNF2EbZZJCy7L
- HJDSantenszA1XlKYSBrT6Gj8F6gUqQM6YPjVbM8mEplmgpVpwoli17PBZJQvSUD50fB
- f9lwqPbDLMcmFaPRafNioK0bB7o61z76qpWsTbu8/RbyqWiuFb0Jq87ipqRIIcCFne2A
- VaaA==
+ bh=pDkgZz3ovFeA/gXnUdICgMTZrbw520CQlWxBpLRt8Hs=;
+ b=eCx7bMQ6o+GzuwdGs21XbTNeFxoB+YxabJMdDPe5GRg3dWwji+QgLKqveclpDlMpgv
+ I6CMZ6io/ArkBwDNDIbk/Qw2KU96DWQAmMf6Y/OHGb3JHhxTn3hpVa7EAGupmpgLJvvH
+ VZyAG2EX1YvY4L9xDU0iyBusqZNmtD5Zqwf+fdw8ciRznTg8iZ4QiI8UiQCiJVyXhk8C
+ tXHhiOk9x39g4z5CbguRdZnRpdM/Rb8fAphrPgua08lpCAbI0prsy91EnzV7yGKi347B
+ OOtpQdytgdxXQISjSgbdUF6cKwKD/RdPuBoKwKYBmeQbMgwAI3x2r4WJ047VlV+Miowu
+ pDdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715025535; x=1715630335;
+ d=1e100.net; s=20230601; t=1715025550; x=1715630350;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=R9F4NDprLnA4MX1RYcjtn8a59V8nr2rMP5GKIrekoOs=;
- b=RsR/Zwb1e2DsTIR2VD+gKPWJC8gZUQcJgVGXBz3YCpAMCWNiB4h0Gyd9rS/sSy0Lzg
- kUpeMpR0NTfFMypRFX36n9VkTYskGez9RvWfdO2AhjXoJk+P1TSEGS7RG5E6s50XslXI
- CZEcHj5MevCz/sAqOIwEUpaZ/k6qqTKkIlabh+clmf0mEEl3QvD9mlvE5MCJ/1Cm9yBv
- d1pFd8+haKIgQlINQJemMgoPBoA1uBI/VC8JHOkZAIPVOwEZ8GRLXZxFMvdb5xHGgSvK
- EMk0i3F8+5DeA3dpo7UJFz1iMjV5vRo0SyT3waAdNTxbwiLAOPVhhGDOXT9rTN30EfHv
- kVhA==
+ bh=pDkgZz3ovFeA/gXnUdICgMTZrbw520CQlWxBpLRt8Hs=;
+ b=XA+OqUhh9wXAUaAzrFH+6H4TAFmPfIEJdpeFUneLxk/KpLdHNiM/EVztqBCxAmGMuU
+ abfu/lae3tjM4SWNwqZUDm3bdsrJ1y6H70lGuEAJEGm0pIY4Nu8hEOR3z4Z+/j+ZUiGX
+ xh3dkmIwiUeD7iywXAT+GEZtyZ2ewvu33FrJXwLu73XT0FO+XHmsnu1efg4PkmON0SsR
+ wASNVfSoX7PRO9whuyqT/Kpd9IRYCy/AIvKPpo7WiHopKbtP5WAtlrnhQsUABb2PlSxS
+ +/U3nk9qgr7RP9aAgiSSYHdeHe8FYxoKjbJI4w8ptVW5A5adQRlSzhBnD9rimZ4wYgqe
+ asiA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXrKATl8JvBRtRQJnHfiy7SXvl+DI4ikQRJ72mPtyspg+VU41jaHmT5szJ6dD9p3wJZVSyVqwVgeHakin49xUVIyy5F7Uw=
-X-Gm-Message-State: AOJu0YzrDqOhObBL7z2gtKkBBgCBP0Rt5+iX6NxHK2ZEfl/xK9S9yWGV
- 6vHHKMPPgInMwqVlbINzk3aeP1gHOpAO37jqUJca7KGcRS0sKNJri0WjGRPTkD8NOwDJOBfACXM
- 2
-X-Google-Smtp-Source: AGHT+IFGoEZt1rS80xBQQZ3tdgcAuv9Z0/TdsgFG9K0IXv3c/AD0F8T9b3pyiAvIwKpkNiCR+/wyFw==
-X-Received: by 2002:a05:6a00:4606:b0:6ea:950f:7d29 with SMTP id
- ko6-20020a056a00460600b006ea950f7d29mr11936683pfb.20.1715025535256; 
- Mon, 06 May 2024 12:58:55 -0700 (PDT)
+ AJvYcCUGiZC9yZGCi1I4VNnjtLjEp1apGw1OeJnlMeB12tLfI7xw/06laMHa3Y1sFjQHi+RfnmOgQNSs/dTuXrzTDPgAhv+4Ou8=
+X-Gm-Message-State: AOJu0YxQfqFhmUlr4V6Pgo6HRn5gvWMXfoTcXggSaL/XkZFLaHjdqJua
+ goAhU/Eg964Xq0QQvpSupcr4j1PIApgLBLjbQyt/Fqn7zipuYWYbXrXQYvlUvu8GKhJ2FKQTIx8
+ y
+X-Google-Smtp-Source: AGHT+IHMA/Xq3FaSyyMnR5vXXXldaGq0QwJN6QF9+RdMvXqI0E6XAdzy8OVcid5qSkCDI1IRwER7/A==
+X-Received: by 2002:a17:902:7409:b0:1ea:f9b1:8b13 with SMTP id
+ g9-20020a170902740900b001eaf9b18b13mr9584301pll.31.1715025550519; 
+ Mon, 06 May 2024 12:59:10 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- j13-20020aa783cd000000b006eb058b2703sm8096151pfn.187.2024.05.06.12.58.54
+ jj20-20020a170903049400b001eb7483a002sm8627789plb.209.2024.05.06.12.59.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 May 2024 12:58:54 -0700 (PDT)
-Message-ID: <279b336d-4fda-4868-8ccf-855326fabef8@linaro.org>
-Date: Mon, 6 May 2024 12:58:53 -0700
+ Mon, 06 May 2024 12:59:09 -0700 (PDT)
+Message-ID: <418f3a85-cda5-47e8-ae79-d6860635fc66@linaro.org>
+Date: Mon, 6 May 2024 12:59:08 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/7] QAPI patches patches for 2024-05-06
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-References: <20240506110254.3965097-1-armbru@redhat.com>
+Subject: Re: [PULL 00/28] Accelerator patches for 2024-05-06
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20240506123728.65278-1-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240506110254.3965097-1-armbru@redhat.com>
+In-Reply-To: <20240506123728.65278-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,21 +98,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/6/24 04:02, Markus Armbruster wrote:
+On 5/6/24 05:37, Philippe Mathieu-Daudé wrote:
 > The following changes since commit 248f6f62df073a3b4158fd0093863ab885feabb5:
 > 
 >    Merge tag 'pull-axp-20240504' ofhttps://gitlab.com/rth7680/qemu  into staging (2024-05-04 08:39:46 -0700)
 > 
 > are available in the Git repository at:
 > 
->    https://repo.or.cz/qemu/armbru.git  tags/pull-qapi-2024-05-06
+>    https://github.com/philmd/qemu.git  tags/accel-next-20240506
 > 
-> for you to fetch changes up to 285a8f209af7b4992aa91e8bea03a303fb6406ab:
+> for you to fetch changes up to c984d1d8916df8abac71325a5a135cd851b2106a:
 > 
->    qapi: Simplify QAPISchemaVariants @tag_member (2024-05-06 12:38:27 +0200)
+>    MAINTAINERS: Update my email address (2024-05-06 14:33:49 +0200)
 > 
 > ----------------------------------------------------------------
-> QAPI patches patches for 2024-05-06
+> Accelerator patches
+> 
+> - Extract page-protection definitions to page-protection.h
+> - Rework in accel/tcg in preparation of extracting TCG fields from CPUState
+> - More uses of get_task_state() in user emulation
+> - Xen refactors in preparation for adding multiple map caches (Juergen & Edgar)
+> - MAINTAINERS updates (Aleksandar and Bin)
 
 Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
