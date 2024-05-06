@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDC38C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 08:00:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAC2CC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 08:01:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3tAT-0000dm-7F; Mon, 06 May 2024 03:53:49 -0400
+	id 1s3t9m-0007mt-LB; Mon, 06 May 2024 03:53:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s3tA0-0008PL-Qj
- for qemu-devel@nongnu.org; Mon, 06 May 2024 03:53:23 -0400
+ id 1s3t9j-0007ZW-21
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 03:53:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s3t9y-0001of-UP
- for qemu-devel@nongnu.org; Mon, 06 May 2024 03:53:20 -0400
+ id 1s3t9h-0001m4-JB
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 03:53:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714981998;
+ s=mimecast20190719; t=1714981980;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PBc91Al63eay/PNo3RVE1I5QeuiworYFdD0LlT+cZG4=;
- b=cNq2BTobDjocPm1/yTfp1O7DNVuRCluSiC1/AQnu9ckH0Ik9HsPgIHDRauM4lT5XFNTYH3
- /LYyxM8R0Yy4Z+jnvLBiB3DzE0xm5PTlElATHwo0HjdujUmY2z7zQu0wchkLJX7UlBsSKk
- OxCUdjxojbtG0ktu3DACB/202TEgcRE=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=uYqiJiD3cHkBOXJK8l/nxNS2jHk461xYcqaYdRiiYtg=;
+ b=AlV5FUHY5sJj+jKQ5Jw8aFuud+raY/DjNVDTqr2IQmZfSvzEQopwM3D23QyDMDCZmb6S7x
+ w24vseQ5kFc0ljKWQ1Nj7vRmKM1LkM6MXIO0vxu3Jju5vzUWVjYllkihr2bF4MHpw9BDIO
+ fxBgdDp05WYiprXB/m4izrWUp6v5q4k=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-324-bmG9KkvQPpOeiBemyqq2-g-1; Mon, 06 May 2024 03:53:16 -0400
-X-MC-Unique: bmG9KkvQPpOeiBemyqq2-g-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-572eea3758dso936519a12.0
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 00:53:16 -0700 (PDT)
+ us-mta-304-4_QaOxtTN_-xiZ7Dfp3zVw-1; Mon, 06 May 2024 03:52:58 -0400
+X-MC-Unique: 4_QaOxtTN_-xiZ7Dfp3zVw-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-572a0c5ece9so818425a12.2
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 00:52:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714981995; x=1715586795;
+ d=1e100.net; s=20230601; t=1714981977; x=1715586777;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PBc91Al63eay/PNo3RVE1I5QeuiworYFdD0LlT+cZG4=;
- b=UesV82iQorBGvkZPfRBJhRpqLXT9vhHy7ecRWkAc8PdSe9DOM4ViBOUZEO2XAU7GYA
- yp1OJvo9y0ItxzQl9ausd5VP3w942ufHbKJxSBVOZ8qtrFAAVdK27TkP4HVPBv71m1UI
- Ggod/lOWBgtpmzSKaIVPbqFpV6QfxCK3flwOt8GzkbnVX0zXjw0HPu/2P+6AnAa5poS5
- mf7Uw8N+FD+TuUNyJM5yZlMgA68p+YmEA7ZOymFP9Kw95oksnD3GJPLq0byByr+1mmAi
- VbVCTjxH6hy9gtDhCW0aG8uieiqDs4WC/fHU+JO8RXYYUcz2DkuxZx6+NVFusHP/wzni
- Ajtg==
-X-Gm-Message-State: AOJu0Yy+1Q7OboZZzhGLljxzjGGMPM5w0uZEPFHZDR7GjNwQzk3WTYNs
- uezfavEawFx8evC3JJY1mR7i9WPZRPJ3cYeqaP0ZP/GAZvqEQW7EzmsGcFqswGbjgq63E3BdSmg
- Gnhaww3EFY+fyHWaMUVyO8GQ3IuFm21cEf1W9ecAwv3U+Q4I450S/mucbuiBN25WCgoh7vv/84C
- Wwj05IlfHwLFAW1cG8kKXAMwF6kOxw0B2FAxNF
-X-Received: by 2002:a50:9517:0:b0:572:3b3c:754f with SMTP id
- u23-20020a509517000000b005723b3c754fmr7817519eda.4.1714981994733; 
- Mon, 06 May 2024 00:53:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGppqGdAs2zybrcxN9jzvl1TwJaaSQzyrl25XUDjUHrwZtGd5YDk4Dq/WziKo44smKaXQHFMg==
-X-Received: by 2002:a50:9517:0:b0:572:3b3c:754f with SMTP id
- u23-20020a509517000000b005723b3c754fmr7817492eda.4.1714981994282; 
- Mon, 06 May 2024 00:53:14 -0700 (PDT)
+ bh=uYqiJiD3cHkBOXJK8l/nxNS2jHk461xYcqaYdRiiYtg=;
+ b=fwrFwOZ1ytqsuseNWBnwLw/DSy0ciW8U3rb2rSyf9JAmCzO2T7HsC1VWMleiF0WSJO
+ wRVUDYAzI/vRTty1z0bd6yaeDlJxMUukkwiVNSlncxN6jEMFyOfZBqIv/ZQG0t/D28pU
+ GWwmxd2MONQB9VNJQIjYtOEjJyaK2ev7Z62pne2iK9l5uul7FBue6PpSrX4jXTQaSdO9
+ rcrgkjk4gt1EyIrS7WF9qCqt+DNS3KS+6ARZewt782qtxO3NlWNWJ0Yg7nZBkxFznmNL
+ OIRbVRSnkxT30DQrNcv0Q4fXcDsEpIsM0OCTc6/UrhjwoJ2w6zWasetrNvJGFPszFtri
+ Lkpg==
+X-Gm-Message-State: AOJu0YywvnzXbjxj+zJY9p+3m3elTXBY9ja0M71OOFOBy4qEES5ClphR
+ WfFptRS40xotHnLSxUikQbu8e0ZY6yH9qWs7MZxVSstyYhso8Z+rFPwCwLie4plBZY/GL5g42nu
+ JVpuo/varViAZOmd7iljqmiq2x213UAcWVtQF/JGgfqLjmFtljAuukdLNbtP1cxLJpzAcIut35o
+ IlJ9s4/hgZuIjXUXWn64xmoHaCU2QoU1a7/e+S
+X-Received: by 2002:a50:cdde:0:b0:572:9d87:9aa3 with SMTP id
+ h30-20020a50cdde000000b005729d879aa3mr6088127edj.36.1714981976871; 
+ Mon, 06 May 2024 00:52:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGwn4ba2TUupKhjfFRVRr75PJoma4/O5fEZ5D2rhMBv8qgvaZMgJEm5/NcCzQc5jbRcU8wv+w==
+X-Received: by 2002:a50:cdde:0:b0:572:9d87:9aa3 with SMTP id
+ h30-20020a50cdde000000b005729d879aa3mr6088118edj.36.1714981976528; 
+ Mon, 06 May 2024 00:52:56 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- c21-20020aa7df15000000b005727bdb1eafsm4805919edy.40.2024.05.06.00.53.13
- for <qemu-devel@nongnu.org>
+ h9-20020a0564020e0900b00572d58cffe1sm3720062edh.2.2024.05.06.00.52.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 May 2024 00:53:13 -0700 (PDT)
+ Mon, 06 May 2024 00:52:56 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 43/46] pci: remove some types from typedefs.h
-Date: Mon,  6 May 2024 09:51:22 +0200
-Message-ID: <20240506075125.8238-44-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 36/46] intc: remove PICCommonState from typedefs.h
+Date: Mon,  6 May 2024 09:51:15 +0200
+Message-ID: <20240506075125.8238-37-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240506075125.8238-1-pbonzini@redhat.com>
 References: <20240506075125.8238-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -102,149 +103,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For types that are embedded in structs defined by pci.h, the definition
-is pretty much required to be available.  Remove them from typedefs.h.
+Move it to the existing "PIC related things" header, hw/intc/i8259.h.
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/hw/pci/pcie.h       |  3 +++
- include/hw/pci/pcie_aer.h   | 38 ++++++++++++++++++-------------------
- include/hw/pci/pcie_sriov.h |  8 ++++----
- include/qemu/typedefs.h     |  5 -----
- 4 files changed, 26 insertions(+), 28 deletions(-)
+ include/hw/intc/i8259.h | 2 ++
+ include/qemu/typedefs.h | 1 -
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/pci/pcie.h b/include/hw/pci/pcie.h
-index 11f5a91bbb7..5eddb909769 100644
---- a/include/hw/pci/pcie.h
-+++ b/include/hw/pci/pcie.h
-@@ -27,6 +27,9 @@
- #include "hw/pci/pcie_sriov.h"
- #include "hw/hotplug.h"
+diff --git a/include/hw/intc/i8259.h b/include/hw/intc/i8259.h
+index c4125757753..1f2420231f1 100644
+--- a/include/hw/intc/i8259.h
++++ b/include/hw/intc/i8259.h
+@@ -3,6 +3,8 @@
  
-+typedef struct PCIEPort PCIEPort;
-+typedef struct PCIESlot PCIESlot;
+ /* i8259.c */
+ 
++typedef struct PICCommonState PICCommonState;
 +
- typedef enum {
-     /* these bits must match the bits in Slot Control/Status registers.
-      * PCI_EXP_HP_EV_xxx = PCI_EXP_SLTCTL_xxxE = PCI_EXP_SLTSTA_xxx
-diff --git a/include/hw/pci/pcie_aer.h b/include/hw/pci/pcie_aer.h
-index 4a9f0ea69dc..4d8c0e05077 100644
---- a/include/hw/pci/pcie_aer.h
-+++ b/include/hw/pci/pcie_aer.h
-@@ -25,8 +25,23 @@
+ extern PICCommonState *isa_pic;
  
- /* definitions which PCIExpressDevice uses */
- 
-+/* error */
-+typedef struct PCIEAERErr {
-+    uint32_t status;    /* error status bits */
-+    uint16_t source_id; /* bdf */
-+
-+#define PCIE_AER_ERR_IS_CORRECTABLE     0x1     /* correctable/uncorrectable */
-+#define PCIE_AER_ERR_MAYBE_ADVISORY     0x2     /* maybe advisory non-fatal */
-+#define PCIE_AER_ERR_HEADER_VALID       0x4     /* TLP header is logged */
-+#define PCIE_AER_ERR_TLP_PREFIX_PRESENT 0x8     /* TLP Prefix is logged */
-+    uint16_t flags;
-+
-+    uint32_t header[4]; /* TLP header */
-+    uint32_t prefix[4]; /* TLP header prefix */
-+} PCIEAERErr;
-+
- /* AER log */
--struct PCIEAERLog {
-+typedef struct PCIEAERLog {
-     /* This structure is saved/loaded.
-        So explicitly size them instead of unsigned int */
- 
-@@ -48,11 +63,11 @@ struct PCIEAERLog {
- 
-     /* Error log. log_max-sized array */
-     PCIEAERErr *log;
--};
-+} PCIEAERLog;
- 
- /* aer error message: error signaling message has only error severity and
-    source id. See 2.2.8.3 error signaling messages */
--struct PCIEAERMsg {
-+typedef struct PCIEAERMsg {
-     /*
-      * PCI_ERR_ROOT_CMD_{COR, NONFATAL, FATAL}_EN
-      * = PCI_EXP_DEVCTL_{CERE, NFERE, FERE}
-@@ -60,7 +75,7 @@ struct PCIEAERMsg {
-     uint32_t severity;
- 
-     uint16_t source_id; /* bdf */
--};
-+} PCIEAERMsg;
- 
- static inline bool
- pcie_aer_msg_is_uncor(const PCIEAERMsg *msg)
-@@ -69,21 +84,6 @@ pcie_aer_msg_is_uncor(const PCIEAERMsg *msg)
-         msg->severity == PCI_ERR_ROOT_CMD_FATAL_EN;
- }
- 
--/* error */
--struct PCIEAERErr {
--    uint32_t status;    /* error status bits */
--    uint16_t source_id; /* bdf */
--
--#define PCIE_AER_ERR_IS_CORRECTABLE     0x1     /* correctable/uncorrectable */
--#define PCIE_AER_ERR_MAYBE_ADVISORY     0x2     /* maybe advisory non-fatal */
--#define PCIE_AER_ERR_HEADER_VALID       0x4     /* TLP header is logged */
--#define PCIE_AER_ERR_TLP_PREFIX_PRESENT 0x8     /* TLP Prefix is logged */
--    uint16_t flags;
--
--    uint32_t header[4]; /* TLP header */
--    uint32_t prefix[4]; /* TLP header prefix */
--};
--
- extern const VMStateDescription vmstate_pcie_aer_log;
- 
- int pcie_aer_init(PCIDevice *dev, uint8_t cap_ver, uint16_t offset,
-diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
-index b77eb7bf58a..450cbef6c20 100644
---- a/include/hw/pci/pcie_sriov.h
-+++ b/include/hw/pci/pcie_sriov.h
-@@ -15,17 +15,17 @@
- 
- #include "hw/pci/pci.h"
- 
--struct PCIESriovPF {
-+typedef struct PCIESriovPF {
-     uint16_t num_vfs;   /* Number of virtual functions created */
-     uint8_t vf_bar_type[PCI_NUM_REGIONS];   /* Store type for each VF bar */
-     const char *vfname; /* Reference to the device type used for the VFs */
-     PCIDevice **vf;     /* Pointer to an array of num_vfs VF devices */
--};
-+} PCIESriovPF;
- 
--struct PCIESriovVF {
-+typedef struct PCIESriovVF {
-     PCIDevice *pf;      /* Pointer back to owner physical function */
-     uint16_t vf_number; /* Logical VF number of this function */
--};
-+} PCIESriovVF;
- 
- void pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
-                         const char *vfname, uint16_t vf_dev_id,
+ /*
 diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
-index d23020ed232..5d999e20d7c 100644
+index 4519f0cd613..090e219248a 100644
 --- a/include/qemu/typedefs.h
 +++ b/include/qemu/typedefs.h
-@@ -78,13 +78,8 @@ typedef struct ObjectClass ObjectClass;
- typedef struct PCIBridge PCIBridge;
- typedef struct PCIBus PCIBus;
- typedef struct PCIDevice PCIDevice;
--typedef struct PCIEAERErr PCIEAERErr;
--typedef struct PCIEAERLog PCIEAERLog;
--typedef struct PCIEAERMsg PCIEAERMsg;
- typedef struct PCIEPort PCIEPort;
- typedef struct PCIESlot PCIESlot;
--typedef struct PCIESriovPF PCIESriovPF;
--typedef struct PCIESriovVF PCIESriovVF;
- typedef struct PCIExpressDevice PCIExpressDevice;
+@@ -96,7 +96,6 @@ typedef struct PCIExpressDevice PCIExpressDevice;
  typedef struct PCIExpressHost PCIExpressHost;
  typedef struct PCIHostDeviceAddress PCIHostDeviceAddress;
+ typedef struct PCIHostState PCIHostState;
+-typedef struct PICCommonState PICCommonState;
+ typedef struct PostcopyDiscardState PostcopyDiscardState;
+ typedef struct Property Property;
+ typedef struct PropertyInfo PropertyInfo;
 -- 
 2.44.0
 
