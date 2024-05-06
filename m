@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00B53C10F16
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 15:41:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82BDBC25B4F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 15:54:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s40SY-0004Vc-V4; Mon, 06 May 2024 11:41:00 -0400
+	id 1s40f8-0000MA-9Y; Mon, 06 May 2024 11:53:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s40SX-0004VP-0m
- for qemu-devel@nongnu.org; Mon, 06 May 2024 11:40:57 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s40f2-0000L9-Gu
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 11:53:53 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s40SV-0005cN-8T
- for qemu-devel@nongnu.org; Mon, 06 May 2024 11:40:56 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-41dc9f98e8dso24714535e9.1
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 08:40:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s40f0-00079M-VJ
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 11:53:52 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-6f44a2d1e3dso1762736b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 08:53:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715010053; x=1715614853; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715010829; x=1715615629; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=0Cla4TPz2MHR0CsffK4PpfqmkXc2HE0MHscUbXAdx4c=;
- b=C+YTV9PVZYXhZX5h0Y5UbN9T2PY0VRpaCCQf8I74CfzVn4Lnr+XsEPi4ulsMx0lHhZ
- 0pJ/Hs6C/mz5tfubYVscGPOwn1+1h3/wvCrPOA079ANAA6u9wq16SKOBvmcsMsQ8QAGW
- LTMrN+UT5G+PJptTrF1zdUKF6RpS6bmW4XPTUlHOG+SUawixCJw+PFlDOGKfaAXpRyQ2
- Qv+m3m90lcuDeP0Wo2BDRDtMXA2zE9fsAGehIVKFvY5bCfX/fL7raBH7x2i3kJwifty9
- S06D6+jssBsu6lMt9W8FQTXqpS8Gcjr3o0SseujgBs7+ggTqVFoBUiGnNtLPX6SY+QbH
- yBSA==
+ bh=t9Qrq0MOhVt97a3qQbBknbLuV2XL5pxI8ICnF29ffik=;
+ b=ErUY/lpaqUEeZizmHrvo/RSvQA0QeroKndd1dja8A06MaNQaumKXiWba0nzrrA/V7Z
+ OT/yspY3ZojXhp4VmXqls88hsBmNB3pVQZJviw2M9mhHgPv4BykjcVtxXsDHFc53DH9e
+ zWgUOaklK0nPMdBq2qImOn4vnNgleOifQiyANnuDVK34WjjiDFPxM5KtpL2binxzG7ax
+ mYfhoq8LdXkvoefBC15/PpVoynXeDxDVjMwrhd4V14HWGYQHr+OyxHd00aH+6srrBt0n
+ /I//bGc52wIXKA3Kas4wheTnj7vz0TAYd4TinY8+VDFZwjou0DMEz63V2+8T9AItv7tZ
+ gkEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715010053; x=1715614853;
+ d=1e100.net; s=20230601; t=1715010829; x=1715615629;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0Cla4TPz2MHR0CsffK4PpfqmkXc2HE0MHscUbXAdx4c=;
- b=wuLDu/MU6UPoqFcVDQ1y/9ppHtG13z3FLmOfYHST4Ns2YCj9GUOx+gJaynsBfVX5v+
- auUZbsldBt29gok9QQU16t7XtQb3UTTdSBJMQ4kk0sURODkp/xT882WHYPs1hyrWpDLG
- dJjgbkVs1WaltMj+Kazgj8Z/bCX/nl+rtmimF87VyQzygy6BkWztiqnuQPSHfNgZN6XM
- qg1Ao/vHRtvUzrnf3jwmMFV6+mE07oeivTx0VHJYHxekvQn0TFx/twpYBbKokLPkD9kq
- HgC9es89Vxm7oGgMLgBWUFkTvP2/CAOyT5Y+7gRSVvvNtFZM5nVJ71wrNqVcnwNrU9dh
- llzw==
-X-Gm-Message-State: AOJu0Yx3NZHnvFRH3hSvJD8zvTxN5Iet3djklRpiUIWKUlT+kdtKgqne
- zXbkuo2XaXqOaD+QrfjX1QMSAkoh5pTl8k2tRqyUgW/pZYmxWjsVWCgm5f8ltaf4ggIOaB4qdYA
- Q
-X-Google-Smtp-Source: AGHT+IGWHpx6HAvlRU4A+XG+ZbiyV+D3oMRBf84BFV1nsuuqAnEf1vcL23yAKSMLnFr2pzdlvEQUSQ==
-X-Received: by 2002:a05:600c:458f:b0:418:2ab6:7123 with SMTP id
- r15-20020a05600c458f00b004182ab67123mr44384wmo.10.1715010053200; 
- Mon, 06 May 2024 08:40:53 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.211.4])
+ bh=t9Qrq0MOhVt97a3qQbBknbLuV2XL5pxI8ICnF29ffik=;
+ b=aibDdVmNKrmGe/5KxmpxDmp+MhN/em3CRugcIkMKBdqWB0ZQAGcGkTiSH2fMNGGF7s
+ F87GFy3+MYLx+ojmCUT6LgigYjypO/kqBcEfY7EvsQVisFV7KqbiZcmy5GrI1rQyiIFO
+ yrTT9LGrqvaNZ2Vjg1O/1VeSXXBrjeLlYCSvI8rK3CJwbBh40A07w4nMuK6cm7ycTExE
+ Ajg51Gd4xTKu9Px9WjSTe2C8QVLid3XuanUrLNZve4aK1strafKCYfzSO/GJ9k/mtLno
+ ET4hEIzVR1WOJwxsc/nrBhUmQqJKEE4f5bc3iYzyo0yck3RELJbn9p0RHRfUX6LL9+yX
+ wNBQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWEbp6A79JB7TvQKWKwjXxaeYe0vYYzhd82Y+MgDHFHkBpyLkesGAFZs/6xPXn6tfmVpsKPlnZGm1tYW0FtFEk76gpBSGE=
+X-Gm-Message-State: AOJu0Ywat53cRyB8j0r0mqbRcsL16beG6JVodXXwFXutsIOMu8lCewGP
+ fLeMz5iNg6wqTcSNgp4ywRqfxfxQGPbgFO0l0GHzXsNeEIp5fT6L+3FfQcBcjHg=
+X-Google-Smtp-Source: AGHT+IFjyi/C9C0oxsn2g2neba5Xeztk8uTBe+5JOoQH3Js/ipEJzEibvLNDKBcTmxB+jhF7DtOcDA==
+X-Received: by 2002:a05:6a21:1789:b0:1a9:5e63:501b with SMTP id
+ nx9-20020a056a21178900b001a95e63501bmr11324706pzb.44.1715010829133; 
+ Mon, 06 May 2024 08:53:49 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- c14-20020adfe70e000000b0034de40673easm11027151wrm.74.2024.05.06.08.40.51
+ e7-20020a63e007000000b005dc8702f0a9sm8220574pgh.1.2024.05.06.08.53.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 May 2024 08:40:52 -0700 (PDT)
-Message-ID: <de27bf37-2487-4c3e-b2fb-6623a744d9f7@linaro.org>
-Date: Mon, 6 May 2024 17:40:49 +0200
+ Mon, 06 May 2024 08:53:48 -0700 (PDT)
+Message-ID: <002c9d04-e695-49e7-87ba-0d5bfb9f9f13@linaro.org>
+Date: Mon, 6 May 2024 08:53:46 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/5] accel/tcg: Move SoftMMU specific units to
- softmmu_specific_ss[]
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Warner Losh <imp@bsdimp.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Kyle Evans <kevans@freebsd.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>
-References: <20240503123456.28866-1-philmd@linaro.org>
- <20240503123456.28866-2-philmd@linaro.org>
+Subject: Re: [PATCH v2 04/25] target/i386: cc_op is not dynamic in gen_jcc1
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: zhao1.liu@intel.com
+References: <20240506080957.10005-1-pbonzini@redhat.com>
+ <20240506080957.10005-5-pbonzini@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240503123456.28866-2-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240506080957.10005-5-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,44 +98,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/5/24 14:34, Philippe Mathieu-Daudé wrote:
-> Currently these files are only used in system emulation,
-> but could eventually be used by user emulation. Use the
-> "softmmu_specific_ss" to express they are related to
-> SoftMMU.
+On 5/6/24 01:09, Paolo Bonzini wrote:
+> Resetting cc_op to CC_OP_DYNAMIC should be done at control flow junctions,
+> which is not the case here.  This translation block is ending and the
+> only effect of calling set_cc_op() would be a discard of s->cc_srcT.
+> This discard is useless (it's a temporary, not a global) and in fact
+> prevents gen_prepare_cc from returning s->cc_srcT.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   accel/tcg/meson.build | 7 +++++--
->   1 file changed, 5 insertions(+), 2 deletions(-)
-> 
-> diff --git a/accel/tcg/meson.build b/accel/tcg/meson.build
-> index aef80de967..84826f043a 100644
-> --- a/accel/tcg/meson.build
-> +++ b/accel/tcg/meson.build
-> @@ -16,12 +16,13 @@ tcg_specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_false: files('user-exec-stub.
->   if get_option('plugins')
->     tcg_specific_ss.add(files('plugin-gen.c'))
->   endif
-> -specific_ss.add_all(when: 'CONFIG_TCG', if_true: tcg_specific_ss)
->   
-> -specific_ss.add(when: ['CONFIG_SYSTEM_ONLY', 'CONFIG_TCG'], if_true: files(
-> +softmmu_specific_ss = ss.source_set()
-> +softmmu_specific_ss.add(files(
->     'cputlb.c',
->     'watchpoint.c',
->   ))
-> +tcg_specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: softmmu_specific_ss)
+>   target/i386/tcg/translate.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-Should be .add_all() here.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
->   system_ss.add(when: ['CONFIG_TCG'], if_true: files(
->     'icount-common.c',
-> @@ -34,3 +35,5 @@ tcg_module_ss.add(when: ['CONFIG_SYSTEM_ONLY', 'CONFIG_TCG'], if_true: files(
->     'tcg-accel-ops-icount.c',
->     'tcg-accel-ops-rr.c',
->   ))
-> +
-> +specific_ss.add_all(when: 'CONFIG_TCG', if_true: tcg_specific_ss)
 
+r~
 
