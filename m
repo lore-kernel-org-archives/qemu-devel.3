@@ -4,86 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B55AC10F16
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 14:30:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A67B5C25B5F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 14:39:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3zLd-0004VO-6P; Mon, 06 May 2024 10:29:45 -0400
+	id 1s3zTo-000868-7a; Mon, 06 May 2024 10:38:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3zLW-0004Rh-25
- for qemu-devel@nongnu.org; Mon, 06 May 2024 10:29:39 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s3zTm-00085w-3J
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 10:38:10 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3zLU-0008R3-8S
- for qemu-devel@nongnu.org; Mon, 06 May 2024 10:29:37 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-34db9a38755so1917614f8f.1
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 07:29:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715005774; x=1715610574; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ba7nd+UfOBYkqEvqsJujD4dIxGkHfk5SM1/9sfXvRGg=;
- b=GqM+geYeKZ/5LHNzyGHRfrMm2RODv3mHSkSDa3JT8Zdcb3NqHj6bCPfYRNNco+t3YH
- jt6KDwTXuto+cL7PKzEdah6ccYgp220MtyO+WZa17p9HA74BB2mZ+nFDMWJykhknhZgv
- RnunW2+4rAn/kZcryjJCDt7uCoWKgI4xZ53zEy9C1Ft/E/3UlDZT4xrs3bC/Ws0h0bjx
- arJro99RQYL25Id/wXPHjmw4idcOeHJkkhH7s+vjiE0uLPt5xjQlA2CCSYU8jdKDNjOd
- 6Bc019hV6VpvJ4rQplfigzdXkOTP3mSfiWZk1NWNCwfzz461tSVxN6Iy7/NTANNrH77K
- 0jew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715005774; x=1715610574;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ba7nd+UfOBYkqEvqsJujD4dIxGkHfk5SM1/9sfXvRGg=;
- b=eNV3LYa3n95Eu3fITQstZVb/9AQLJ2gpv/mzPSIQ2yhfDPgxM3kq+63zGHpXGedPY9
- 6BxcFGaNQXbXP85zG6HGZPzNmJlLrutpl8JCqGIfMQaXzr1HeevDX9bUBPVTPhF0BGCg
- tAzGV0f1Bd/y7Esg3iCm/0e83P8ZYhzJEkQj3ULSjDfdbG34fGu+myY085Qs/Uov3ekG
- 2rxU6yZ0imcT6jEC/eDEuhs70QfI4Law7qmMzUuZOPP5opghFb+NmV2eAwb0qfyFCbSG
- Dioe76ow1z9m9+jbyIsXb53ssViDWDm3B/m9Ep4XF+uS5YE+VeicUPmu9zuITfkAgMe3
- 9SyQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXK9hJqjdb85t+hmXwa1tAYI2Imx1rHo2in8WhIvXWNnURsEI1KjHjRjEoXz+T/Bc2VcYRm3SV5ntB4u+SeZx3R6UY8BX4=
-X-Gm-Message-State: AOJu0Yx5qezzQClTDbv1RiJEr5HV8H1iQ+f6Fz/qTO4wCztf8KqLoVpj
- Z9YI0mGDwT6QEcrFE0wKUPTYiL34A4E278pytHOB/ctCaJarc4ClfiljGY71iZM=
-X-Google-Smtp-Source: AGHT+IFu9jTJzOMdEtdPRC073tVIICl0ogjMziKULhaxYUUNf5yt9pqu26+0Xf79jIkH0MWsE5nTVg==
-X-Received: by 2002:a5d:5483:0:b0:34a:35c7:22a3 with SMTP id
- h3-20020a5d5483000000b0034a35c722a3mr9032998wrv.20.1715005773952; 
- Mon, 06 May 2024 07:29:33 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.211.4])
- by smtp.gmail.com with ESMTPSA id
- cm11-20020a5d5f4b000000b0034dd27adb2fsm10821339wrb.107.2024.05.06.07.29.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 May 2024 07:29:33 -0700 (PDT)
-Message-ID: <6de106f2-1061-483e-97db-96b09e5b40ad@linaro.org>
-Date: Mon, 6 May 2024 16:29:31 +0200
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s3zTj-0005aI-4u
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 10:38:09 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 55318384B0;
+ Mon,  6 May 2024 14:38:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1715006283; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CQioLuGgn1JZYmWvJxUNyCvjboJjLxh1W+bOV1LfEHg=;
+ b=uknvM/IQn7UnPmhJ0eptiLX7fPerT2Cg6tN0TJ/fgHGGvSGeoOFDV9bBhcbqsiLDCdNQ9c
+ acQkMCsTiA9mpIIMgBPmqMsmhrqAIO4kR3G+kT0iDdksbzl71tjXGRIUXC21X58SOXiq/6
+ E4WNjnjaC9VUvXrfrMwuDy77BCHnOxU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1715006283;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CQioLuGgn1JZYmWvJxUNyCvjboJjLxh1W+bOV1LfEHg=;
+ b=foTQoC4MvR9ktxKSF+4KtsB+th3TImlAxg6LN/8WRKJEIV3KPrnrasrGlcR8OWIVoNyWcq
+ hAf82AgqsQS6ItCw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1715006283; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CQioLuGgn1JZYmWvJxUNyCvjboJjLxh1W+bOV1LfEHg=;
+ b=uknvM/IQn7UnPmhJ0eptiLX7fPerT2Cg6tN0TJ/fgHGGvSGeoOFDV9bBhcbqsiLDCdNQ9c
+ acQkMCsTiA9mpIIMgBPmqMsmhrqAIO4kR3G+kT0iDdksbzl71tjXGRIUXC21X58SOXiq/6
+ E4WNjnjaC9VUvXrfrMwuDy77BCHnOxU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1715006283;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CQioLuGgn1JZYmWvJxUNyCvjboJjLxh1W+bOV1LfEHg=;
+ b=foTQoC4MvR9ktxKSF+4KtsB+th3TImlAxg6LN/8WRKJEIV3KPrnrasrGlcR8OWIVoNyWcq
+ hAf82AgqsQS6ItCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D2E451386E;
+ Mon,  6 May 2024 14:38:02 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id N6AdJkrrOGb2cgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 06 May 2024 14:38:02 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Markus Armbruster <armbru@redhat.com>, Avihai Horon <avihaih@nvidia.com>
+Cc: Joao Martins <joao.m.martins@oracle.com>, Alex Williamson
+ <alex.williamson@redhat.com>, =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@redhat.com>, Michael
+ Roth <michael.roth@amd.com>, Eric Blake <eblake@redhat.com>, Peter Xu
+ <peterx@redhat.com>, Maor Gottlieb <maorg@nvidia.com>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH 2/3] vfio/migration: Emit VFIO device migration state
+ change QAPI event
+In-Reply-To: <87pltzsfl3.fsf@pond.sub.org>
+References: <20240430051621.19597-1-avihaih@nvidia.com>
+ <20240430051621.19597-3-avihaih@nvidia.com>
+ <08936db7-46bf-42ba-ac14-49cb14f34646@oracle.com>
+ <0d368ac4-fbba-4829-b25d-d49957b7c9da@nvidia.com>
+ <5e9c1edd-4e99-4fb7-8b9a-159b1a6503c5@oracle.com>
+ <600825d2-a314-4120-ad2a-0b1f3c5bb8d9@nvidia.com>
+ <87pltzsfl3.fsf@pond.sub.org>
+Date: Mon, 06 May 2024 11:38:00 -0300
+Message-ID: <87ikzrm2ev.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 00/22] hw/i386: Remove deprecated pc-i440fx-2.0 -> 2.3
- machines
-To: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
- Thomas Huth <thuth@redhat.com>, David Hildenbrand <david@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, kvm@vger.kernel.org,
- qemu-ppc@nongnu.org, qemu-arm@nongnu.org
-References: <20240416185939.37984-1-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240416185939.37984-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ ARC_NA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCVD_TLS_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
+ MISSING_XM_UA(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; TO_DN_SOME(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCPT_COUNT_SEVEN(0.00)[10];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
+ imap1.dmz-prg2.suse.org:rdns]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,34 +131,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/4/24 20:59, Philippe Mathieu-Daudé wrote:
-> Series fully reviewed.
+Markus Armbruster <armbru@redhat.com> writes:
 
-Ping, is there some issue holding this series?
+> Peter, Fabiano, I'd like to hear your opinion on the issue discussed
+> below.
+>
+> Avihai Horon <avihaih@nvidia.com> writes:
+>
+>> On 02/05/2024 13:22, Joao Martins wrote:
+>>> External email: Use caution opening links or attachments
+>>>
+>>>
+>>> On 01/05/2024 13:28, Avihai Horon wrote:
+>>>> On 01/05/2024 14:50, Joao Martins wrote:
+>>>>> External email: Use caution opening links or attachments
+>>>>>
+>>>>>
+>>>>> On 30/04/2024 06:16, Avihai Horon wrote:
+>>>>>> Emit VFIO device migration state change QAPI event when a VFIO device
+>>>>>> changes its migration state. This can be used by management applicat=
+ions
+>>>>>> to get updates on the current state of the VFIO device for their own
+>>>>>> purposes.
+>>>>>>
+>>>>>> A new per VFIO device capability, "migration-events", is added so ev=
+ents
+>>>>>> can be enabled only for the required devices. It is disabled by defa=
+ult.
+>>>>>>
+>>>>>> Signed-off-by: Avihai Horon<avihaih@nvidia.com>
+>>>>>> ---
+>>>>>>    include/hw/vfio/vfio-common.h |=C2=A0 1 +
+>>>>>>    hw/vfio/migration.c           | 44 ++++++++++++++++++++++++++++++=
++++++
+>>>>>>    hw/vfio/pci.c                 |=C2=A0 2 ++
+>>>>>>    3 files changed, 47 insertions(+)
+>>>>>>
+>>>>>> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-co=
+mmon.h
+>>>>>> index b9da6c08ef..3ec5f2425e 100644
+>>>>>> --- a/include/hw/vfio/vfio-common.h
+>>>>>> +++ b/include/hw/vfio/vfio-common.h
+>>>>>> @@ -115,6 +115,7 @@ typedef struct VFIODevice {
+>>>>>>        bool no_mmap;
+>>>>>>        bool ram_block_discard_allowed;
+>>>>>>        OnOffAuto enable_migration;
+>>>>>> +    bool migration_events;
+>>>>>>        VFIODeviceOps *ops;
+>>>>>>        unsigned int num_irqs;
+>>>>>>        unsigned int num_regions;
+>>>>>> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+>>>>>> index 06ae40969b..6bbccf6545 100644
+>>>>>> --- a/hw/vfio/migration.c
+>>>>>> +++ b/hw/vfio/migration.c
+>>>>>> @@ -24,6 +24,7 @@
+>>>>>>    #include "migration/register.h"
+>>>>>>    #include "migration/blocker.h"
+>>>>>>    #include "qapi/error.h"
+>>>>>> +#include "qapi/qapi-events-vfio.h"
+>>>>>>    #include "exec/ramlist.h"
+>>>>>>    #include "exec/ram_addr.h"
+>>>>>>    #include "pci.h"
+>>>>>> @@ -80,6 +81,46 @@ static const char *mig_state_to_str(enum
+>>>>>> vfio_device_mig_state state)
+>>>>>>        }
+>>>>>>    }
+>>>>>>
+>>>>>> +static VFIODeviceMigState
+>>>>>> +mig_state_to_qapi_state(enum vfio_device_mig_state state)
+>>>>>> +{
+>>>>>> +    switch (state) {
+>>>>>> +    case VFIO_DEVICE_STATE_STOP:
+>>>>>> +        return QAPI_VFIO_DEVICE_MIG_STATE_STOP;
+>>>>>> +    case VFIO_DEVICE_STATE_RUNNING:
+>>>>>> +        return QAPI_VFIO_DEVICE_MIG_STATE_RUNNING;
+>>>>>> +    case VFIO_DEVICE_STATE_STOP_COPY:
+>>>>>> +        return QAPI_VFIO_DEVICE_MIG_STATE_STOP_COPY;
+>>>>>> +    case VFIO_DEVICE_STATE_RESUMING:
+>>>>>> +        return QAPI_VFIO_DEVICE_MIG_STATE_RESUMING;
+>>>>>> +    case VFIO_DEVICE_STATE_RUNNING_P2P:
+>>>>>> +        return QAPI_VFIO_DEVICE_MIG_STATE_RUNNING_P2P;
+>>>>>> +    case VFIO_DEVICE_STATE_PRE_COPY:
+>>>>>> +        return QAPI_VFIO_DEVICE_MIG_STATE_PRE_COPY;
+>>>>>> +    case VFIO_DEVICE_STATE_PRE_COPY_P2P:
+>>>>>> +        return QAPI_VFIO_DEVICE_MIG_STATE_PRE_COPY_P2P;
+>>>>>> +    default:
+>>>>>> +        g_assert_not_reached();
+>>>>>> +    }
+>>>>>> +}
+>>>>>> +
+>>>>>> +static void vfio_migration_send_state_change_event(VFIODevice *vbas=
+edev)
+>>>>>> +{
+>>>>>> +    VFIOMigration *migration =3D vbasedev->migration;
+>>>>>> +    const char *id;
+>>>>>> +    Object *obj;
+>>>>>> +
+>>>>>> +    if (!vbasedev->migration_events) {
+>>>>>> +        return;
+>>>>>> +    }
+>>>>>> +
+>>>>> Shouldn't this leap frog migrate_events() capability instead of intro=
+ducing its
+>>>>> vfio equivalent i.e.
+>>>>>
+>>>>>           if (!migrate_events()) {
+>>>>>               return;
+>>>>>           }
+>>>>>
+>>>>> ?
+>>>>
+>>>> I used a per VFIO device cap so the events can be fine tuned for each =
+device
+>>>> (maybe one device should send events while the other not).
+>>>> This gives the most flexibility and I don't think it complicates the
+>>>> configuration (one downside, though, is that it can't be enabled/disab=
+led
+>>>> dynamically during runtime).
+>>>>
+>>> Right.
+>>>
+>>>> I don't think events add much overhead, so if you prefer a global cap,=
+ I can
+>>>> change it.
+>>>> However, I'm not sure overloading the existing migrate_events() is val=
+id?
+>>>>
+>>> migration 'events' capability just means we will have some migration ev=
+ents
+>>> emited via QAPI monitor for: 1) general global status and 2) for each m=
+igration
+>>> pass (both with different event names=3D.
+>>
+>> Yes, it's already overloaded.
+>>
+>> In migration QAPI it says: "@events: generate events for each migration =
+state change (since 2.4)".
+>> This only refers to the MIGRATION event AFAIU.
+>>
+>> Later on (in QEMU 2.6), MIGRATION_PASS event was added and the events ca=
+p was overloaded for the first time (without changing=C2=A0@events descript=
+ion).
+>>
+>> Now we want to add yet another use for events capability, the VFIO migra=
+tion state change events.
+>>
+>> I think what bothers me is the @events description, which is not accurat=
+e.
+>> Maybe it should be changed to "@events: generate migration related event=
+s (since 2.4)"? However, I'm not sure if it's OK to do this.
+>>
+>>>   So the suggestion was just what feels a
+>>> natural extension of that (...)
+>>>
+>>>>> Applications that don't understand the event string (migration relate=
+d or not)
+>>>>> will just discard it (AIUI)
+>>>
+>>> (...) specially because of this as all these events have a different na=
+me.
+>>>
+>>> But overloading might not make sense for others IDK ... it was just a s=
+uggestion
+>>> :) not a strong preference
+>>
+>> Yes, I get your rationale.
+>> I don't have a strong opinion either, so maybe let's see what other peop=
+le think.
 
-> Philippe Mathieu-Daudé (22):
->    hw/i386/pc: Deprecate 2.4 to 2.12 pc-i440fx machines
->    hw/i386/pc: Remove deprecated pc-i440fx-2.0 machine
->    hw/usb/hcd-xhci: Remove XHCI_FLAG_FORCE_PCIE_ENDCAP flag
->    hw/usb/hcd-xhci: Remove XHCI_FLAG_SS_FIRST flag
->    hw/i386/acpi: Remove PCMachineClass::legacy_acpi_table_size
->    hw/acpi/ich9: Remove 'memory-hotplug-support' property
->    hw/acpi/ich9: Remove dead code related to 'acpi_memory_hotplug'
->    hw/i386/pc: Remove deprecated pc-i440fx-2.1 machine
->    target/i386/kvm: Remove x86_cpu_change_kvm_default() and 'kvm-cpu.h'
->    hw/i386/pc: Remove PCMachineClass::smbios_uuid_encoded
->    hw/smbios: Remove 'uuid_encoded' argument from smbios_set_defaults()
->    hw/smbios: Remove 'smbios_uuid_encoded', simplify smbios_encode_uuid()
->    hw/i386/pc: Remove PCMachineClass::enforce_aligned_dimm
->    hw/mem/pc-dimm: Remove legacy_align argument from pc_dimm_pre_plug()
->    hw/mem/memory-device: Remove legacy_align from
->      memory_device_pre_plug()
->    hw/i386/pc: Remove deprecated pc-i440fx-2.2 machine
->    hw/i386/pc: Remove PCMachineClass::resizable_acpi_blob
->    hw/i386/pc: Remove PCMachineClass::rsdp_in_ram
->    hw/i386/acpi: Remove AcpiBuildState::rsdp field
->    hw/i386/pc: Remove deprecated pc-i440fx-2.3 machine
->    target/i386: Remove X86CPU::kvm_no_smi_migration field
->    hw/i386/pc: Replace PCMachineClass::acpi_data_size by
->      PC_ACPI_DATA_SIZE
+I don't see the need to tie this to the migration events
+capability. Although there's overlap in the terms used, this seems more
+like exposing a device feature via QEMU, then a migration event
+per-se. The state changes also happen during moments unrelated to
+migration (cover letter mentions start/stopping guest), so I assume we'd
+like to keep those even if the management layer doesn't want to see
+migration events.
 
