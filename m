@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E179C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 08:13:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B26E8C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 08:13:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3tR8-0004Cw-OK; Mon, 06 May 2024 04:11:06 -0400
+	id 1s3tQz-0003Zf-Q1; Mon, 06 May 2024 04:10:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s3tQo-0003UF-B0
- for qemu-devel@nongnu.org; Mon, 06 May 2024 04:10:44 -0400
+ id 1s3tQb-00037f-2T
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 04:10:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s3tQl-0002NG-FZ
- for qemu-devel@nongnu.org; Mon, 06 May 2024 04:10:42 -0400
+ id 1s3tQY-0002K0-CI
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 04:10:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714983033;
+ s=mimecast20190719; t=1714983025;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Wcaz5O9kM6xFtdQe7JZoLdV+i05Af/0Zhu3fO6AJ/cg=;
- b=G5rXUaHNtHCxq1wLZ+xs9lckvouiwRWymZYjYTUIhOdSo/yJNTlQJ6m/OzlT9614+i2s/0
- cKdd3YZZCMtG28YCzIYjm445FvinjwIIQKa/NFYxWKbPwHNkAPaK8PJqqaHoOpq8BJ5v32
- eSUbbUNeORZZCucm9aGwkbF/N7D1xHk=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=sMIpGq47NzUApNOh+nUXBtgT2brN5VudQhysyxraGNk=;
+ b=QH46Q0oiUF4IsFDzIxftipsnEHb5MMVT7nUYQLiC+bXpRrsarvW2tiZh9hJE6mqRHjFevl
+ eiKU6QWnuM8PI/LvMY3gTRGoTVhEcTbSm3Q8fM9BP8TNguw+KYGpjUpd0hz+K9yrsbQ0ZM
+ +ZGH47nqkAb/EH/pIRu16hU+w6eVe0I=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-346-7WovVe1iOemRKBXPu9ibqA-1; Mon, 06 May 2024 04:10:26 -0400
-X-MC-Unique: 7WovVe1iOemRKBXPu9ibqA-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a59c02f798bso99245166b.1
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 01:10:26 -0700 (PDT)
+ us-mta-594-J8moF4V0NMmRjH5UEdD_1w-1; Mon, 06 May 2024 04:10:23 -0400
+X-MC-Unique: J8moF4V0NMmRjH5UEdD_1w-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a59a0014904so102169566b.2
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 01:10:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714983025; x=1715587825;
+ d=1e100.net; s=20230601; t=1714983021; x=1715587821;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Wcaz5O9kM6xFtdQe7JZoLdV+i05Af/0Zhu3fO6AJ/cg=;
- b=Fpm+hGopvEBuhZkOCeDs0F7u7cHyN5JwDsVdLwU06EdS8CSYXqp27x8X/Kk/SIh3TG
- Zc5KOdxbQS9HQ1NhoCKoJ+hlsHeGfEM2V1RY2POUwp305vKIhIa3eRiM7sKjVB8qAmSA
- Uqc208j5rJxIOMqQa2Wmk8qjeJANQBbL0ATvCodh44BLxUsGm/SHj6rQUuWdFvB68GoQ
- fsHK33j2AwoF91LH0eLdekXxP1CBoZhqQB0kG1aQLiL6tlVSckS6/6q8RjfjKUhN3zgc
- YpMQshpqMxReWNey1ssrhX2r08/K5kGeyQ4PWlh3d8VJkRpMqaB4jq/VdWGpIliySrnW
- AAPA==
-X-Gm-Message-State: AOJu0Yyapjjh4/Z1UDaMIWDKr8orWmse2Y0+GchKr3WorsCFlesKQM3M
- A55OjgBcJbQm0o/c+FrKTsxa/zhXKJYaRpzdinT2TztcLNpj7Pn2hfrInQxCljWgLoqM6qkSeR2
- yuCVn0ccSNsY2yoS12+Jl311rWxbn9EjcTWiHFQ7MPwQB7KYP4UF/Vsg+Kg5FrMOHkppII21lIc
- s9xHJztP7Rx5MZfXQDyoN0dTGk5emuHa884hMN
-X-Received: by 2002:a17:906:b249:b0:a59:a0da:1ee1 with SMTP id
- ce9-20020a170906b24900b00a59a0da1ee1mr5581461ejb.69.1714983024786; 
- Mon, 06 May 2024 01:10:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF03+aiY3a8Ys4WXV7ND/g7gyIxzN7v23U3h/PfmYxewoQRodSQMyKJyznQAXqOZbiaXXcg7A==
-X-Received: by 2002:a17:906:b249:b0:a59:a0da:1ee1 with SMTP id
- ce9-20020a170906b24900b00a59a0da1ee1mr5581445ejb.69.1714983024397; 
- Mon, 06 May 2024 01:10:24 -0700 (PDT)
+ bh=sMIpGq47NzUApNOh+nUXBtgT2brN5VudQhysyxraGNk=;
+ b=oFJHtiqJpGTpXq7Dt+SUV1Md8hvoSozUSlrTLpnVVTfGO4tY/TBr2YRwCohW9/WDyn
+ APoIePQCg39r1lECgUwbFcr/WaBIY8sBUM45t1Wq2lUQaYt8dNUQsQk/FatuvNwBDHR+
+ pn5UuBL7fjTWGtuyeheezQY578mrcjtgq0mQNtAIG4636so5W2/jJodBo7n6YQsfs05g
+ F2/wTkslWyoKyd7lzfcqVzUjyffkukQZNp9HS+hSLkStxCKKVt1t9MxOh+cM2mwqWB1f
+ NvQerbwFh/e3ihmui2OJ/I8gmT4Bld/qAP9UR7CGDxL1KO/+qNqbGaBYEWkqUuDB/Ep3
+ Sp5Q==
+X-Gm-Message-State: AOJu0YwYIUHQ/YxgRUz3PWqtFfhB85GKTynBdEc04Z5ti41i62nF2Gq5
+ PdxsFchBH7L8eIs90ZhUTeC6m3hW3QBzR+GB0saEknlm/spfTblNGwiXTDLu/WTh3GUP+fQPl6r
+ di3oI8gd/3pkOLHD6FSdkRG/sNYyK6KP+oiOQUr+nESKqkp8UzSZsuXxp2wPocv+oi8v+4SqX6/
+ wmRlG/gJp2avHoiGvTBgqZJF6luBIFKUfTrYBZ
+X-Received: by 2002:a17:906:b212:b0:a59:a83b:d440 with SMTP id
+ p18-20020a170906b21200b00a59a83bd440mr3791044ejz.31.1714983021370; 
+ Mon, 06 May 2024 01:10:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE/Sdldg2x5NJ300Qa6lJA60NBXBKNcKINxIqg+OjqbZ5lC7FqVTRvkiFKa1SiIKm1jRXQOZQ==
+X-Received: by 2002:a17:906:b212:b0:a59:a83b:d440 with SMTP id
+ p18-20020a170906b21200b00a59a83bd440mr3791031ejz.31.1714983021055; 
+ Mon, 06 May 2024 01:10:21 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- n26-20020a170906119a00b00a59cd12c9c6sm1055053eja.116.2024.05.06.01.10.22
+ c3-20020a170906528300b00a4e5866448bsm4897440ejm.155.2024.05.06.01.10.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 May 2024 01:10:23 -0700 (PDT)
+ Mon, 06 May 2024 01:10:19 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
 	zhao1.liu@intel.com
-Subject: [PATCH v2 08/25] target/i386: do not use s->T0 and s->T1 as scratch
- registers for CCPrepare
-Date: Mon,  6 May 2024 10:09:40 +0200
-Message-ID: <20240506080957.10005-9-pbonzini@redhat.com>
+Subject: [PATCH v2 07/25] target/i386: extend cc_* when using them to compute
+ flags
+Date: Mon,  6 May 2024 10:09:39 +0200
+Message-ID: <20240506080957.10005-8-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240506080957.10005-1-pbonzini@redhat.com>
 References: <20240506080957.10005-1-pbonzini@redhat.com>
@@ -104,77 +104,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instead of using s->T0 or s->T1, create a scratch register
-when computing the C, NC, L or LE conditions.
+Instead of using s->tmp0 or s->tmp4 as the result, just extend the cc_*
+registers in place.  It is harmless and, if multiple setcc instructions
+are used, the optimizer will be able to remove the redundant ones.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/translate.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ target/i386/tcg/translate.c | 44 +++++++++++++++----------------------
+ 1 file changed, 18 insertions(+), 26 deletions(-)
 
 diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index d76f72c1b96..2cd7868d596 100644
+index 17bf85da0ce..d76f72c1b96 100644
 --- a/target/i386/tcg/translate.c
 +++ b/target/i386/tcg/translate.c
-@@ -998,6 +998,9 @@ static CCPrepare gen_prepare_eflags_c(DisasContext *s, TCGv reg)
-        /* The need to compute only C from CC_OP_DYNAMIC is important
-           in efficiently implementing e.g. INC at the start of a TB.  */
-        gen_update_cc_op(s);
-+       if (!reg) {
-+           reg = tcg_temp_new();
-+       }
-        gen_helper_cc_compute_c(reg, cpu_cc_dst, cpu_cc_src,
-                                cpu_cc_src2, cpu_cc_op);
-        return (CCPrepare) { .cond = TCG_COND_NE, .reg = reg,
-@@ -1152,8 +1155,8 @@ static CCPrepare gen_prepare_cc(DisasContext *s, int b, TCGv reg)
+@@ -940,28 +940,24 @@ static CCPrepare gen_prepare_sign_nz(TCGv src, MemOp size)
+ /* compute eflags.C to reg */
+ static CCPrepare gen_prepare_eflags_c(DisasContext *s, TCGv reg)
+ {
+-    TCGv t0, t1;
+     MemOp size;
+ 
+     switch (s->cc_op) {
+     case CC_OP_SUBB ... CC_OP_SUBQ:
+         /* (DATA_TYPE)CC_SRCT < (DATA_TYPE)CC_SRC */
+         size = s->cc_op - CC_OP_SUBB;
+-        t1 = gen_ext_tl(s->tmp0, cpu_cc_src, size, false);
+-        /* If no temporary was used, be careful not to alias t1 and t0.  */
+-        t0 = t1 == cpu_cc_src ? s->tmp0 : reg;
+-        tcg_gen_mov_tl(t0, s->cc_srcT);
+-        gen_extu(size, t0);
+-        goto add_sub;
++        gen_ext_tl(s->cc_srcT, s->cc_srcT, size, false);
++        gen_ext_tl(cpu_cc_src, cpu_cc_src, size, false);
++        return (CCPrepare) { .cond = TCG_COND_LTU, .reg = s->cc_srcT,
++                             .reg2 = cpu_cc_src, .use_reg2 = true };
+ 
+     case CC_OP_ADDB ... CC_OP_ADDQ:
+         /* (DATA_TYPE)CC_DST < (DATA_TYPE)CC_SRC */
+         size = s->cc_op - CC_OP_ADDB;
+-        t1 = gen_ext_tl(s->tmp0, cpu_cc_src, size, false);
+-        t0 = gen_ext_tl(reg, cpu_cc_dst, size, false);
+-    add_sub:
+-        return (CCPrepare) { .cond = TCG_COND_LTU, .reg = t0,
+-                             .reg2 = t1, .use_reg2 = true };
++        gen_ext_tl(cpu_cc_dst, cpu_cc_dst, size, false);
++        gen_ext_tl(cpu_cc_src, cpu_cc_src, size, false);
++        return (CCPrepare) { .cond = TCG_COND_LTU, .reg = cpu_cc_dst,
++                             .reg2 = cpu_cc_src, .use_reg2 = true };
+ 
+     case CC_OP_LOGICB ... CC_OP_LOGICQ:
+     case CC_OP_CLR:
+@@ -984,8 +980,8 @@ static CCPrepare gen_prepare_eflags_c(DisasContext *s, TCGv reg)
+ 
+     case CC_OP_BMILGB ... CC_OP_BMILGQ:
+         size = s->cc_op - CC_OP_BMILGB;
+-        t0 = gen_ext_tl(reg, cpu_cc_src, size, false);
+-        return (CCPrepare) { .cond = TCG_COND_EQ, .reg = t0 };
++        gen_ext_tl(cpu_cc_src, cpu_cc_src, size, false);
++        return (CCPrepare) { .cond = TCG_COND_EQ, .reg = cpu_cc_src };
+ 
+     case CC_OP_ADCX:
+     case CC_OP_ADCOX:
+@@ -1098,7 +1094,6 @@ static CCPrepare gen_prepare_cc(DisasContext *s, int b, TCGv reg)
+     int inv, jcc_op, cond;
+     MemOp size;
+     CCPrepare cc;
+-    TCGv t0;
+ 
+     inv = b & 1;
+     jcc_op = (b >> 1) & 7;
+@@ -1109,24 +1104,21 @@ static CCPrepare gen_prepare_cc(DisasContext *s, int b, TCGv reg)
+         size = s->cc_op - CC_OP_SUBB;
+         switch (jcc_op) {
+         case JCC_BE:
+-            tcg_gen_mov_tl(s->tmp4, s->cc_srcT);
+-            gen_extu(size, s->tmp4);
+-            t0 = gen_ext_tl(s->tmp0, cpu_cc_src, size, false);
+-            cc = (CCPrepare) { .cond = TCG_COND_LEU, .reg = s->tmp4,
+-                               .reg2 = t0, .use_reg2 = true };
++            gen_ext_tl(s->cc_srcT, s->cc_srcT, size, false);
++            gen_ext_tl(cpu_cc_src, cpu_cc_src, size, false);
++            cc = (CCPrepare) { .cond = TCG_COND_LEU, .reg = s->cc_srcT,
++                               .reg2 = cpu_cc_src, .use_reg2 = true };
              break;
+-
          case JCC_L:
-             gen_compute_eflags(s);
--            if (reg == cpu_cc_src) {
--                reg = s->tmp0;
-+            if (!reg || reg == cpu_cc_src) {
-+                reg = tcg_temp_new();
-             }
-             tcg_gen_addi_tl(reg, cpu_cc_src, CC_O - CC_S);
-             cc = (CCPrepare) { .cond = TCG_COND_TSTNE, .reg = reg,
-@@ -1162,8 +1165,8 @@ static CCPrepare gen_prepare_cc(DisasContext *s, int b, TCGv reg)
-         default:
+             cond = TCG_COND_LT;
+             goto fast_jcc_l;
          case JCC_LE:
-             gen_compute_eflags(s);
--            if (reg == cpu_cc_src) {
--                reg = s->tmp0;
-+            if (!reg || reg == cpu_cc_src) {
-+                reg = tcg_temp_new();
-             }
-             tcg_gen_addi_tl(reg, cpu_cc_src, CC_O - CC_S);
-             cc = (CCPrepare) { .cond = TCG_COND_TSTNE, .reg = reg,
-@@ -1208,7 +1211,7 @@ static inline void gen_compute_eflags_c(DisasContext *s, TCGv reg)
-    value 'b'. In the fast case, T0 is guaranteed not to be used. */
- static inline void gen_jcc1_noeob(DisasContext *s, int b, TCGLabel *l1)
- {
--    CCPrepare cc = gen_prepare_cc(s, b, s->T0);
-+    CCPrepare cc = gen_prepare_cc(s, b, NULL);
+             cond = TCG_COND_LE;
+         fast_jcc_l:
+-            tcg_gen_mov_tl(s->tmp4, s->cc_srcT);
+-            gen_exts(size, s->tmp4);
+-            t0 = gen_ext_tl(s->tmp0, cpu_cc_src, size, true);
+-            cc = (CCPrepare) { .cond = cond, .reg = s->tmp4,
+-                               .reg2 = t0, .use_reg2 = true };
++            gen_ext_tl(s->cc_srcT, s->cc_srcT, size, true);
++            gen_ext_tl(cpu_cc_src, cpu_cc_src, size, true);
++            cc = (CCPrepare) { .cond = cond, .reg = s->cc_srcT,
++                               .reg2 = cpu_cc_src, .use_reg2 = true };
+             break;
  
-     if (cc.use_reg2) {
-         tcg_gen_brcond_tl(cc.cond, cc.reg, cc.reg2, l1);
-@@ -1223,7 +1226,7 @@ static inline void gen_jcc1_noeob(DisasContext *s, int b, TCGLabel *l1)
-    cc_op is clean.  */
- static inline void gen_jcc1(DisasContext *s, int b, TCGLabel *l1)
- {
--    CCPrepare cc = gen_prepare_cc(s, b, s->T0);
-+    CCPrepare cc = gen_prepare_cc(s, b, NULL);
- 
-     gen_update_cc_op(s);
-     if (cc.use_reg2) {
-@@ -2492,7 +2495,7 @@ static void gen_jcc(DisasContext *s, int b, int diff)
- 
- static void gen_cmovcc1(DisasContext *s, int b, TCGv dest, TCGv src)
- {
--    CCPrepare cc = gen_prepare_cc(s, b, s->T1);
-+    CCPrepare cc = gen_prepare_cc(s, b, NULL);
- 
-     if (!cc.use_reg2) {
-         cc.reg2 = tcg_constant_tl(cc.imm);
+         default:
 -- 
 2.45.0
 
