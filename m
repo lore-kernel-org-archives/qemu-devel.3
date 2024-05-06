@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C83B6C10F16
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 08:15:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BBA0C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 08:15:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3tQz-0003Zi-Sy; Mon, 06 May 2024 04:10:54 -0400
+	id 1s3tSU-0005ds-TR; Mon, 06 May 2024 04:12:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s3tQm-0003UD-VT
- for qemu-devel@nongnu.org; Mon, 06 May 2024 04:10:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1s3tRs-0004zW-1O
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 04:11:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s3tQg-0002NB-Nq
- for qemu-devel@nongnu.org; Mon, 06 May 2024 04:10:39 -0400
+ id 1s3tRL-0002bJ-Us
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 04:11:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714983032;
+ s=mimecast20190719; t=1714983074;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lTEjkpuKyY2Y+K0Igbw0Rw9OKqigSJ52nD4y0sLqCyU=;
- b=hvOrH4B4e6D/KyeJXkyzYiZryFJIvnCxtnlZp0hS0hMnYzXvBJC/sp2dso6SsmPtundj0r
- wRnthhE3qQGUZR0D3X1CXJO1fT7hfudIKrGBBkoYE6rDnMc2IgH0PeC8sFWoZ7B6zRNixS
- ODnwrBqDnB6WWKjA9UqgwrCb9Cl/8TA=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=fYkUXKVgikgRxjMEnZM7x1wi9MeC1reAhoLZnGHXz94=;
+ b=KzK2CVsKvFY0i7SiGYCmgIjy8WBGC3RTcfLl3ymnANRmAECwqVvmUPl29UMQCOLAXI9mvI
+ 2qZ2pk4A2m91YCktXHeT+N5utOde/c+EHN1b+NtOU/5St3bnh1os6uoACbzFSlwnWST6cO
+ ZVDDD/WMBf9VLkeMc2P5bxFfGb3XFGE=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-656-t2nTA3O4PGWBGcYkpDJkdA-1; Mon, 06 May 2024 04:10:30 -0400
-X-MC-Unique: t2nTA3O4PGWBGcYkpDJkdA-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a59cdf2141eso37363066b.2
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 01:10:29 -0700 (PDT)
+ us-mta-643-61L3IBJGN-GVKsCFx7b7mg-1; Mon, 06 May 2024 04:11:13 -0400
+X-MC-Unique: 61L3IBJGN-GVKsCFx7b7mg-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a59aedbd9a9so110977066b.0
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 01:11:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714983027; x=1715587827;
+ d=1e100.net; s=20230601; t=1714983071; x=1715587871;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lTEjkpuKyY2Y+K0Igbw0Rw9OKqigSJ52nD4y0sLqCyU=;
- b=aPQGEuW5XnN0aH4I6mPA4stcXkNFtSuL2UbIcb//orcW6JpoWKRT5f2KsXgM4iQxzb
- SKeJdZXi0mNmLfUahD1noPB5+pbYunImwO8I9bJkg0zrs97sMEnbSfXuRZV3zJbt6/U6
- /zFZ1rFKDyrFG3XHRgnxQaNcdljQASbtc9s0p0R3dWJqEb/VI2IAQmAlMcD/s0c0r2Fp
- u2Rw0rc4Z7ZAOA1rX/A4Usc+c2vc2vd6/c/UFmxaK+/ZWomOAar53Ww2fXgoOphASLDj
- iMSL9fniJ4WNtHCIzyZcKgMLqyGt13f2SOLCBlZ5hib1/V5/BwXjnkMO14vfhX2phq4n
- hlTg==
-X-Gm-Message-State: AOJu0YxUxzsm5ejsiO9N2oS/0GF9RON3iVEwJDrSgek8Aq/Uv9Zx0MOr
- +bMlw3zguJTEVcPbuLWezM6RIbpshJXvxp7S8+N3zFh8N/Z8WyveE6F6kPm5RrzrSxpsoes4Jxw
- dQr9pg3yknviHALuU6WTthlL1iKWcmyBItajmkgoWoAs8h+BBGlh9d8/IO7JpCT6JtTGcus5au/
- gUaJ6aYSyT1husQsApV1tqfMxOtf1p6gaSoYEs
-X-Received: by 2002:a17:906:f59f:b0:a59:aa68:9992 with SMTP id
- cm31-20020a170906f59f00b00a59aa689992mr4250255ejd.18.1714983027628; 
- Mon, 06 May 2024 01:10:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEawiz1EwDd+R8fBJm7KEmllnR6/h5hC5rj8opA2121ZKVB5Riiyn2POpP0cbahUMZroWuFLA==
-X-Received: by 2002:a17:906:f59f:b0:a59:aa68:9992 with SMTP id
- cm31-20020a170906f59f00b00a59aa689992mr4250231ejd.18.1714983027200; 
- Mon, 06 May 2024 01:10:27 -0700 (PDT)
+ bh=fYkUXKVgikgRxjMEnZM7x1wi9MeC1reAhoLZnGHXz94=;
+ b=hjn0uwEwV8Dqynpfe742DgBylgAgGd8IGb5YaVIfAmReIIBoyyi0lN1uCz/2g1yYfz
+ qNOojuQZ1YLUwosppkE9IZHyCAsN2+PFjktK2778JZnC5ckh8DIwW0yI+cSv7rfIBmiA
+ 7XkSS6Tkq32MDBFDSGX3F+mA50ltLI9TQYT/qeJO//6wcN5S7XtlL6AchBh+dSRVrDvj
+ RABMFrSPNsFXjiOAINNQsNXtwU9AFP/esqSLswjaRjTT6DFjAzKc+dJRHDhe75qIulOv
+ ruAOmhuBbefsSc0ldwJsqjT9/B0Wcl883N/8OyVzHZ5FkQ/NA0A8Q2qYbjDWkmXRwT4Y
+ 3oIw==
+X-Gm-Message-State: AOJu0YzvkGzYzc4ehvPEeAV6QaDHNeKjtraZUfHyshduk5JZVZQwIqsb
+ UIlo3A0Dt4x2GjMB939yTVtwIjJ4N2i2ZIP/YbcBR9oy9h7ijhOvHDnO/rERR3+uWRd6AmMwtyx
+ SxCptuKU+edW6TD589QJK9HA1lynnE08r5PGHU2UBO8U6YXwwkNyD72pb45S3l6nwXlX7UDpReE
+ uvbI+qycFJPSTmN/el4VJzj3bov2lflyYhC0RJ
+X-Received: by 2002:a17:906:730d:b0:a59:c52b:9937 with SMTP id
+ di13-20020a170906730d00b00a59c52b9937mr2266189ejc.4.1714983071646; 
+ Mon, 06 May 2024 01:11:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGuQ1XcljoG1T0HEnTD08yF+oBvdS3f3N5SNQA8yRZjGAJ+JWjdJQYUqv577fRME1LqojUiOg==
+X-Received: by 2002:a17:906:730d:b0:a59:c52b:9937 with SMTP id
+ di13-20020a170906730d00b00a59c52b9937mr2266164ejc.4.1714983071116; 
+ Mon, 06 May 2024 01:11:11 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- hg12-20020a1709072ccc00b00a59b6eed3c4sm2047529ejc.45.2024.05.06.01.10.26
+ lc5-20020a170906f90500b00a599c783c04sm3453689ejb.20.2024.05.06.01.11.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 May 2024 01:10:26 -0700 (PDT)
+ Mon, 06 May 2024 01:11:09 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
 	zhao1.liu@intel.com
-Subject: [PATCH v2 09/25] target/i386: clarify the "reg" argument of functions
- returning CCPrepare
-Date: Mon,  6 May 2024 10:09:41 +0200
-Message-ID: <20240506080957.10005-10-pbonzini@redhat.com>
+Subject: [PATCH v2 24/25] target/i386: split legacy decoder into a separate
+ function
+Date: Mon,  6 May 2024 10:09:56 +0200
+Message-ID: <20240506080957.10005-25-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240506080957.10005-1-pbonzini@redhat.com>
 References: <20240506080957.10005-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -104,72 +104,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Split the bits that have some duplication with disas_insn_new, from
+those that should be the main topic of the conversion.  This is the
+first step towards removing duplicate decoding of prefixes between
+disas_insn and disas_insn_new.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/translate.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ target/i386/tcg/translate.c | 58 +++++++++++++++++++++++--------------
+ 1 file changed, 37 insertions(+), 21 deletions(-)
 
 diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 2cd7868d596..7efd12cbe7e 100644
+index e077fdd8c71..8c1062c8e13 100644
 --- a/target/i386/tcg/translate.c
 +++ b/target/i386/tcg/translate.c
-@@ -937,7 +937,7 @@ static CCPrepare gen_prepare_sign_nz(TCGv src, MemOp size)
+@@ -3116,15 +3116,15 @@ static bool disas_insn_x87(DisasContext *s, CPUState *cpu, int b)
+     return true;
+ }
+ 
++static void disas_insn_old(DisasContext *s, CPUState *cpu, int b);
++
+ /* convert one instruction. s->base.is_jmp is set if the translation must
+    be stopped. Return the next pc value */
+ static bool disas_insn(DisasContext *s, CPUState *cpu)
+ {
+     CPUX86State *env = cpu_env(cpu);
+     int b, prefixes;
+-    int shift;
+-    MemOp ot, aflag, dflag;
+-    int modrm, reg, rm, mod, op, opreg, val;
++    MemOp aflag, dflag;
+     bool orig_cc_op_dirty = s->cc_op_dirty;
+     CCOp orig_cc_op = s->cc_op;
+     target_ulong orig_pc_save = s->pc_save;
+@@ -3270,6 +3270,38 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
+     s->aflag = aflag;
+     s->dflag = dflag;
+ 
++    switch (b) {
++    case 0     ... 0xd7:
++    case 0xe0  ... 0xff:
++    case 0x10e ... 0x117:
++    case 0x128 ... 0x12f:
++    case 0x138 ... 0x19f:
++    case 0x1a0 ... 0x1a1:
++    case 0x1a8 ... 0x1a9:
++    case 0x1af:
++    case 0x1b2:
++    case 0x1b4 ... 0x1b7:
++    case 0x1be ... 0x1bf:
++    case 0x1c2 ... 0x1c6:
++    case 0x1c8 ... 0x1ff:
++        disas_insn_new(s, cpu, b);
++        break;
++    default:
++        disas_insn_old(s, cpu, b);
++        break;
++    }
++    return true;
++}
++
++static void disas_insn_old(DisasContext *s, CPUState *cpu, int b)
++{
++    CPUX86State *env = cpu_env(cpu);
++    int prefixes = s->prefix;
++    MemOp dflag = s->dflag;
++    int shift;
++    MemOp ot;
++    int modrm, reg, rm, mod, op, opreg, val;
++
+     /* now check op code */
+     switch (b) {
+         /**************************/
+@@ -4725,31 +4757,15 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
+ 
+         set_cc_op(s, CC_OP_POPCNT);
+         break;
+-    case 0     ... 0xd7:
+-    case 0xe0  ... 0xff:
+-    case 0x10e ... 0x117:
+-    case 0x128 ... 0x12f:
+-    case 0x138 ... 0x19f:
+-    case 0x1a0 ... 0x1a1:
+-    case 0x1a8 ... 0x1a9:
+-    case 0x1af:
+-    case 0x1b2:
+-    case 0x1b4 ... 0x1b7:
+-    case 0x1be ... 0x1bf:
+-    case 0x1c2 ... 0x1c6:
+-    case 0x1c8 ... 0x1ff:
+-        disas_insn_new(s, cpu, b);
+-        break;
+     default:
+         goto unknown_op;
      }
+-    return true;
++    return;
+  illegal_op:
+     gen_illegal_opcode(s);
+-    return true;
++    return;
+  unknown_op:
+     gen_unknown_opcode(env, s);
+-    return true;
  }
  
--/* compute eflags.C to reg */
-+/* compute eflags.C, trying to store it in reg if not NULL */
- static CCPrepare gen_prepare_eflags_c(DisasContext *s, TCGv reg)
- {
-     MemOp size;
-@@ -1008,7 +1008,7 @@ static CCPrepare gen_prepare_eflags_c(DisasContext *s, TCGv reg)
-     }
- }
- 
--/* compute eflags.P to reg */
-+/* compute eflags.P, trying to store it in reg if not NULL */
- static CCPrepare gen_prepare_eflags_p(DisasContext *s, TCGv reg)
- {
-     gen_compute_eflags(s);
-@@ -1016,7 +1016,7 @@ static CCPrepare gen_prepare_eflags_p(DisasContext *s, TCGv reg)
-                          .imm = CC_P };
- }
- 
--/* compute eflags.S to reg */
-+/* compute eflags.S, trying to store it in reg if not NULL */
- static CCPrepare gen_prepare_eflags_s(DisasContext *s, TCGv reg)
- {
-     switch (s->cc_op) {
-@@ -1040,7 +1040,7 @@ static CCPrepare gen_prepare_eflags_s(DisasContext *s, TCGv reg)
-     }
- }
- 
--/* compute eflags.O to reg */
-+/* compute eflags.O, trying to store it in reg if not NULL */
- static CCPrepare gen_prepare_eflags_o(DisasContext *s, TCGv reg)
- {
-     switch (s->cc_op) {
-@@ -1060,7 +1060,7 @@ static CCPrepare gen_prepare_eflags_o(DisasContext *s, TCGv reg)
-     }
- }
- 
--/* compute eflags.Z to reg */
-+/* compute eflags.Z, trying to store it in reg if not NULL */
- static CCPrepare gen_prepare_eflags_z(DisasContext *s, TCGv reg)
- {
-     switch (s->cc_op) {
-@@ -1090,8 +1090,9 @@ static CCPrepare gen_prepare_eflags_z(DisasContext *s, TCGv reg)
-     }
- }
- 
--/* perform a conditional store into register 'reg' according to jump opcode
--   value 'b'. In the fast case, T0 is guaranteed not to be used. */
-+/* return how to compute jump opcode 'b'.  'reg' can be clobbered
-+ * if needed; it may be used for CCPrepare.reg if that will
-+ * provide more freedom in the translation of a subsequent setcond. */
- static CCPrepare gen_prepare_cc(DisasContext *s, int b, TCGv reg)
- {
-     int inv, jcc_op, cond;
+ void tcg_x86_init(void)
 -- 
 2.45.0
 
