@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD6E2C25B4F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFC75C10F16
 	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 15:33:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s40Jv-0007kt-Ds; Mon, 06 May 2024 11:32:03 -0400
+	id 1s40Jt-0007jB-0d; Mon, 06 May 2024 11:32:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1s40Js-0007iw-K8
- for qemu-devel@nongnu.org; Mon, 06 May 2024 11:32:00 -0400
-Received: from wfout7-smtp.messagingengine.com ([64.147.123.150])
+ id 1s40Jp-0007hE-1D
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 11:31:59 -0400
+Received: from wfhigh1-smtp.messagingengine.com ([64.147.123.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1s40Jq-0003U6-OH
- for qemu-devel@nongnu.org; Mon, 06 May 2024 11:32:00 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailfout.west.internal (Postfix) with ESMTP id D55991C000B5;
- Mon,  6 May 2024 11:31:56 -0400 (EDT)
+ id 1s40Jk-0003JY-Vm
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 11:31:55 -0400
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+ by mailfhigh.west.internal (Postfix) with ESMTP id 4205B1800123;
+ Mon,  6 May 2024 11:31:48 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
- by compute3.internal (MEProxy); Mon, 06 May 2024 11:31:57 -0400
+ by compute7.internal (MEProxy); Mon, 06 May 2024 11:31:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
  cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm1; t=1715009516;
- x=1715095916; bh=XeJ4KkGylBz/yVz6BnceGDPMbIFcGGvB/K45B0IEGpU=; b=
- ZCe8ny8SPvGTOR3p1DZIB7NvnA5hBcs2UKhg/wbBPQiNa5xGqBZdHNVLk4vxV2ke
- vLoYOKTZU9WnjXrRrtYOAPbOrXIe7ASf500QAkoKYYQ7VW9t6e6JE4RnQdrG4PSp
- routCbp9XdZk2G8CCQOw8VLyHbPawKiNK+vQAnyTur52nkpqMTODwQlLAGhz88yP
- 3XACa+R4yD+C9cKsiyHaA/1/WoR0DcvbAsIcbeXp5EMU5cz/bSE4eSQu/cj7p4jX
- IhFDkvqdo07KZr4+Gz+t6flGwGxrfCujdeRhsI+vd1veJVgxRPH1V+ZtIAVnDvxB
- McdUP6RYd8IH/h9j99alYQ==
+ :date:from:from:in-reply-to:message-id:mime-version:reply-to
+ :subject:subject:to:to; s=fm1; t=1715009507; x=1715095907; bh=9q
+ kPuxLpOL5az0FyzD29sfaThSDlmwI4Ujxs7bT7BR8=; b=KVLeYhVMvtfUYec51w
+ 6yyYM0/TbdVzyQ8I3lbnwG0pAsWPx1aZqaa06VTX4DKWrXQTFeC37XmXmW1xb3Yd
+ CKtVgh76g00/S56Ra88lKbbduGBEMz1jnc7L3p7as3Oira2aFl5/m2MEs+Tfpkhn
+ +ouNhkojOJtCbA9pa1rOUpr6yK+6CvGtkLgHdatMGt8oiaQ+v1VNpbR70Nuf4Yo3
+ IMdCM33tJC9rDAxfSQxMVXgfbGm+uPssIfjqeOf8urgbDTvedg+NJbiKp2InIt0S
+ Xje9jEf8MHUlH4DkIz/0MZokI6OIkQehoojLwhxeg3pKMMVWNZRQviubgI7CMi3U
+ cBEg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1715009516; x=
- 1715095916; bh=XeJ4KkGylBz/yVz6BnceGDPMbIFcGGvB/K45B0IEGpU=; b=P
- 6hk3NXr9gAvabRzdFwwb15PFstbmTS3wwGL3dfOqyRYZLBgWDLet6uCCPyPAmPWa
- cD5YnlFmUyLYJ6U+HBtoeQeaFOlUsoaPKJIuH3UahVh9f4MKFi2jmt3LDogx051S
- PuWIr6ZXmj4NiCUUv8wNdWctGvYmmuOGiNUhRR4hHfQ2bmH61gUz+AuVTx0dC0oQ
- 6yYYsWtLBV/xZFBrZVopRAQKaG2SS3mkiqfiAgsmcZ6scyukVxGSvASkp7hNB7or
- tSc7Tp4OFPIUBn+7ng/NkOffHXNcyQuwg6RnwJRHonop5mS6KxPC1Hfme0WhvttV
- 1QOvbtutrGpCJC8kvZ72g==
-X-ME-Sender: <xms:7Pc4ZkwhEqXE9ws3YcKZAevAxZ2ua-t23vIMD33qJVnLQcIp5BNDkQ>
- <xme:7Pc4ZoSRqHTar5v-rZpHOzhTX1kNDr88_vQoIQDLmiyMRRBzGNDWDiJJT7bJXdOWd
- 4-sFXLXXzeCP5jNLyg>
-X-ME-Received: <xmr:7Pc4ZmXlkrPEGwB_I5DXhUv8Y4aMLnWIZDy5LFScxE60XA-aLnGNFxY>
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm3; t=1715009507; x=1715095907; bh=9qkPuxLpOL5az
+ 0FyzD29sfaThSDlmwI4Ujxs7bT7BR8=; b=i9O0CvE6y1rU7LI1Cp9X128T/16rZ
+ Nw03rMQCxy1ktStAKXQSSnJt350eNCg8et/ID/Z7RO4aruUvs1XGNO5wMh/xmCZ3
+ U8YvA05hKCZApd0qaChd6CAN/zMQe6EdUjWXHfXRg5VzeckJ7Q2wVcVtGCNh42hZ
+ 1gQKWdaSd9hJ+SJiLMAs8pIvT5wv6J1vzdSncG8ovUYe6NBwPcdslh3umknXjMy6
+ T+jOlPik5Lse0BGIljCJiKwoV71sCXmgdA2cRHZCn+ph7CJFymS4eJIsI26wyj72
+ hbakmg2CnZl4eZ6NI4Dag+1KYtmMzCny1yc5sm1CMpHSQvevKwwOWyyhQ==
+X-ME-Sender: <xms:4_c4ZlewNoX7xU7kSfsdodGL4sJDbhBDTYBMRBsG7Nx5eX8zBrtvWA>
+ <xme:4_c4ZjNb4SSInvNciEe7ZutSVavFzcMg4WLT2XZfLVh4FGkiC3wxcQfPLuWNd9yj4
+ 5igVzryVrZ0ScGszq4>
+X-ME-Received: <xmr:4_c4Zuj-R3C7qx5gNz-c74CSXIA1Y0s6MNrjNfA1-MTv7bmKj3Vgv1Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddviedgledtucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpeflihgr
- gihunhcujggrnhhguceojhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomheqne
- cuggftrfgrthhtvghrnhepvdekiefhfeevkeeuveetfeelffekgedugefhtdduudeghfeu
- veegffegudekjeelnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilh
- hfrhhomhepjhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomh
-X-ME-Proxy: <xmx:7Pc4ZijWo8M08AyOV-FzmGGmxP5bqpzsZxJ_8_TuPv6bZUYywJC7og>
- <xmx:7Pc4ZmDjTdh3QWXeB1IhGgmutvRXZZo_t_l5pac0V1-RBOeyb0odnQ>
- <xmx:7Pc4ZjKs2HA8vFHVqJHV_Iz1H1d3pyFKjowlh5hIrf7iA1UbCd3ebQ>
- <xmx:7Pc4ZtDOq0NNIHbcb4jcPyMpqOFxtmw4Mi5oup47RvZbLUmCUZwBAA>
- <xmx:7Pc4ZhOmw_USobVFnT9kVU9ZPCXEr8vCKgmXysBS1vjh_fOVnkIPuGzl>
+ cujfgurhephffufffkgggtgffvvefosehtkeertdertdejnecuhfhrohhmpeflihgrgihu
+ nhcujggrnhhguceojhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomheqnecugg
+ ftrfgrthhtvghrnhepkeejgfdtteeljeeuvdeiteegheefleehgeevuefgfeevhfevheeh
+ hfefieegvdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
+ homhepjhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomh
+X-ME-Proxy: <xmx:4_c4Zu9kb_AT68gca3Nob57dmI_YpG5YHpHjWmyQ5T6lDsbIs7tiig>
+ <xmx:4_c4Zht4tP6mF-qJmMffNdBtzon6CN8T5ImNsEhnjah4PzHdEAEBwQ>
+ <xmx:4_c4ZtEBijrl4NhLs-CsOFu2l8fyLktcobq909AN5t2l-I6LROLUkw>
+ <xmx:4_c4ZoMdrkeOc_gxtKApzFlCboyFlxKTczzr4cjsO9E-iFUe_cTzOw>
+ <xmx:4_c4ZpJwyDrvGq4jzKgxgWhMaCbYTeDVtAJ3qurfyIDc2HzmaqSCfP96>
 Feedback-ID: ifd894703:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 May 2024 11:31:55 -0400 (EDT)
+ 6 May 2024 11:31:47 -0400 (EDT)
 From: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Date: Mon, 06 May 2024 16:31:39 +0100
-Subject: [PATCH 5/5] hw/mips/boston: Implement multi core support
+Subject: [PATCH 0/5] hw/mips: Proper multi core support
+Date: Mon, 06 May 2024 16:31:34 +0100
+Message-Id: <20240506-mips-smp-v1-0-3cc234786910@flygoat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240506-mips-smp-v1-5-3cc234786910@flygoat.com>
-References: <20240506-mips-smp-v1-0-3cc234786910@flygoat.com>
-In-Reply-To: <20240506-mips-smp-v1-0-3cc234786910@flygoat.com>
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIANb3OGYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDUwMz3dzMgmLd4twCXcvENMtUc8PEFItkIyWg8oKi1LTMCrBR0bG1tQC
+ V8DEGWgAAAA==
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Jiaxun Yang <jiaxun.yang@flygoat.com>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3546;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2782;
  i=jiaxun.yang@flygoat.com; h=from:subject:message-id;
- bh=agVUDK5z50Yx3y9FJ7dmchE1btUX/7dn7FnPDCPKZdk=;
- b=owGbwMvMwCHmXMhTe71c8zDjabUkhjSL74932Ov0zJsbZhlZfK82qc7fOjJkcyPHkS86fcG8u
- 14uOHuso5SFQYyDQVZMkSVEQKlvQ+PFBdcfZP2BmcPKBDKEgYtTACYSUs7IsM1m1rL8Kdnrwm0j
- urhjkv2cezff5zFSUyv/NmnF3A3rTjH80zUpFq3wsvK/79e70STjbpiDBkMs/51iEfa8oH3BCq3
- 8AA==
+ bh=oNlozXeAJRJUSVaV0fKqi4kZN1E3eUjY+6x2UcXdfzA=;
+ b=owGbwMvMwCHmXMhTe71c8zDjabUkhjSL7487riTP+lh30eRIuPBRnh87hU5wHr1jM/Wl9T0JI
+ U6O4jnsHaUsDGIcDLJiiiwhAkp9GxovLrj+IOsPzBxWJpAhDFycAjCRZF2G//53D+xfsuI5S+zW
+ Z5/8tDV+6AkeDnl+XFB/Q9enA092d/UyMhx0EjOTSztyeX1LR2Dxvv4dd7fUdqk/kJE6Hlh66P2
+ dRbwA
 X-Developer-Key: i=jiaxun.yang@flygoat.com; a=openpgp;
  fpr=980379BEFEBFBF477EA04EF9C111949073FC0F67
-Received-SPF: pass client-ip=64.147.123.150;
- envelope-from=jiaxun.yang@flygoat.com; helo=wfout7-smtp.messagingengine.com
+Received-SPF: pass client-ip=64.147.123.152;
+ envelope-from=jiaxun.yang@flygoat.com; helo=wfhigh1-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -115,87 +115,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement multiple physical core support by passing topology
-to CPS subsystem and generate cpu-map fdt node to decribe
-new topology.
+Hi all,
+
+This series implemented propper multiple core support for MIPS
+CPS systsm.
+
+Previously all CPUs are being implemented as a smt thread in a
+single core. Now it respects topology supplied in QEMU args.
+
+To test:
+Build a latest kernel with 64r6el_defconfig (tested on 6.6,
+next-20240506).
+
+Then run:
+```
+qemu-system-mips64el -M boston -cpu I6500 -kernel ~/linux-next/vmlinux -smp 4,cores=2,threads=2 -append "console=ttyS0,115200" -nographic
+```
+In dmesg of guest kernel:
+```
+[    0.000000] VP topology {2,2} total 4
+...
+[    0.085190] smp: Bringing up secondary CPUs ...
+[    0.090219] Primary instruction cache 64kB, VIPT, 4-way, linesize 64 bytes.
+[    0.095461] Primary data cache 64kB, 4-way, PIPT, no aliases, linesize 64 bytes
+[    0.096658] CPU1 revision is: 0001b000 (MIPS I6500)
+[    0.096718] FPU revision is: 20f30300
+[    0.124711] Synchronize counters for CPU 1: done.
+[    0.940979] Primary instruction cache 64kB, VIPT, 4-way, linesize 64 bytes.
+[    0.941041] Primary data cache 64kB, 4-way, PIPT, no aliases, linesize 64 bytes
+[    0.941256] CPU2 revision is: 0001b000 (MIPS I6500)
+[    0.941289] FPU revision is: 20f30300
+[    0.965322] Synchronize counters for CPU 2: done.
+[    1.260937] Primary instruction cache 64kB, VIPT, 4-way, linesize 64 bytes.
+[    1.261001] Primary data cache 64kB, 4-way, PIPT, no aliases, linesize 64 bytes
+[    1.261172] CPU3 revision is: 0001b000 (MIPS I6500)
+[    1.261209] FPU revision is: 20f30300
+[    1.285390] Synchronize counters for CPU 3: done.
+[    1.346985] smp: Brought up 1 node, 4 CPUs
+```
+
+Please review.
+
+Thanks
+
+To: qemu-devel@nongnu.org
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 ---
- hw/mips/boston.c | 37 ++++++++++++++++++++++++++++++++++++-
- 1 file changed, 36 insertions(+), 1 deletion(-)
+Jiaxun Yang (5):
+      target/mips: Make globalnumber a CPU property
+      hw/msic/mips_cmgcr: Implement multicore functions
+      hw/msic/mips_cpc: Implement multi core support
+      hw/mips/cps: Implement multi core support
+      hw/mips/boston: Implement multi core support
 
-diff --git a/hw/mips/boston.c b/hw/mips/boston.c
-index 1b44fb354c..4ed7d366fe 100644
---- a/hw/mips/boston.c
-+++ b/hw/mips/boston.c
-@@ -542,7 +542,10 @@ static const void *create_fdt(BostonState *s,
-     qemu_fdt_setprop_cell(fdt, "/cpus", "#size-cells", 0x0);
-     qemu_fdt_setprop_cell(fdt, "/cpus", "#address-cells", 0x1);
- 
-+    qemu_fdt_add_subnode(fdt, "/cpus/cpu-map");
-     for (cpu = 0; cpu < ms->smp.cpus; cpu++) {
-+        char *map_path;
-+
-         name = g_strdup_printf("/cpus/cpu@%d", cpu);
-         qemu_fdt_add_subnode(fdt, name);
-         qemu_fdt_setprop_string(fdt, name, "compatible", "img,mips");
-@@ -550,6 +553,27 @@ static const void *create_fdt(BostonState *s,
-         qemu_fdt_setprop_cell(fdt, name, "reg", cpu);
-         qemu_fdt_setprop_string(fdt, name, "device_type", "cpu");
-         qemu_fdt_setprop_cells(fdt, name, "clocks", clk_ph, FDT_BOSTON_CLK_CPU);
-+        qemu_fdt_setprop_cell(fdt, name, "phandle", qemu_fdt_alloc_phandle(fdt));
-+
-+        if (ms->smp.threads > 1) {
-+            map_path = g_strdup_printf(
-+                "/cpus/cpu-map/socket%d/cluster%d/core%d/thread%d",
-+                cpu / (ms->smp.clusters * ms->smp.cores * ms->smp.threads),
-+                (cpu / (ms->smp.cores * ms->smp.threads)) % ms->smp.clusters,
-+                (cpu / ms->smp.threads) % ms->smp.cores,
-+                cpu % ms->smp.threads);
-+        } else {
-+            map_path = g_strdup_printf(
-+                "/cpus/cpu-map/socket%d/cluster%d/core%d",
-+                cpu / (ms->smp.clusters * ms->smp.cores),
-+                (cpu / ms->smp.cores) % ms->smp.clusters,
-+                cpu % ms->smp.cores);
-+        }
-+
-+        qemu_fdt_add_path(fdt, map_path);
-+        qemu_fdt_setprop_phandle(fdt, map_path, "cpu", name);
-+
-+        g_free(map_path);
-         g_free(name);
-     }
- 
-@@ -591,6 +615,15 @@ static const void *create_fdt(BostonState *s,
-     g_free(name);
-     g_free(gic_name);
- 
-+    /* CM node */
-+    name = g_strdup_printf("/soc/cm@%" HWADDR_PRIx, memmap[BOSTON_CM].base);
-+    qemu_fdt_add_subnode(fdt, name);
-+    qemu_fdt_setprop_string(fdt, name, "compatible", "mti,mips-cm");
-+    qemu_fdt_setprop_cells(fdt, name, "reg", memmap[BOSTON_CM].base,
-+                            memmap[BOSTON_CM].size);
-+    g_free(name);
-+
-+
-     /* CDMM node */
-     name = g_strdup_printf("/soc/cdmm@%" HWADDR_PRIx, memmap[BOSTON_CDMM].base);
-     qemu_fdt_add_subnode(fdt, name);
-@@ -703,7 +736,9 @@ static void boston_mach_init(MachineState *machine)
-     object_initialize_child(OBJECT(machine), "cps", &s->cps, TYPE_MIPS_CPS);
-     object_property_set_str(OBJECT(&s->cps), "cpu-type", machine->cpu_type,
-                             &error_fatal);
--    object_property_set_uint(OBJECT(&s->cps), "num-vp", machine->smp.cpus,
-+    object_property_set_uint(OBJECT(&s->cps), "num-pcore", machine->smp.cores,
-+                            &error_fatal);
-+    object_property_set_uint(OBJECT(&s->cps), "num-vp", machine->smp.threads,
-                             &error_fatal);
-     qdev_connect_clock_in(DEVICE(&s->cps), "clk-in",
-                           qdev_get_clock_out(dev, "cpu-refclk"));
+ hw/mips/boston.c             |  37 +++++++++-
+ hw/mips/cps.c                |  66 ++++++++++-------
+ hw/misc/mips_cmgcr.c         | 168 +++++++++++++++++++++++++++++++++++--------
+ hw/misc/mips_cpc.c           |  97 ++++++++++++++++++-------
+ include/hw/mips/cps.h        |   1 +
+ include/hw/misc/mips_cmgcr.h |  87 +++++++++++++++++++---
+ include/hw/misc/mips_cpc.h   |  15 +++-
+ target/mips/cpu.c            |  16 ++++-
+ target/mips/cpu.h            |  10 ++-
+ target/mips/sysemu/machine.c |   5 +-
+ 10 files changed, 403 insertions(+), 99 deletions(-)
+---
+base-commit: 248f6f62df073a3b4158fd0093863ab885feabb5
+change-id: 20240506-mips-smp-9af9e71ad8c2
 
+Best regards,
 -- 
-2.34.1
+Jiaxun Yang <jiaxun.yang@flygoat.com>
 
 
