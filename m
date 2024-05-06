@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06AF6C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 07:53:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C204C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 07:53:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3t9t-0008Bx-UN; Mon, 06 May 2024 03:53:13 -0400
+	id 1s3t9N-0006Qz-Ku; Mon, 06 May 2024 03:52:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s3t9q-00084K-19
- for qemu-devel@nongnu.org; Mon, 06 May 2024 03:53:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1s3t8u-0005pj-37
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 03:52:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s3t9o-0001nE-CP
- for qemu-devel@nongnu.org; Mon, 06 May 2024 03:53:09 -0400
+ id 1s3t8r-0001e3-FX
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 03:52:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714981987;
+ s=mimecast20190719; t=1714981928;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BZowvef2Ajk61rQN0cGeoX5jJiq28YAn+xqA2isy+TU=;
- b=XC7LjFbXrva0/CtKVdU663I4uZYLXzAHhyU1qdPxbiroZSystC5A5usT8Dk9sC/7mRnUYb
- m+3pwYIAkTSJrw5SImcraUbH1Z2607403xuVE+v/2s/NWiG7etynPCwlBiaqS74KJ5ttVS
- IoBqFSi35RkwaIlO3SEAIh8pisqgBHY=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=cP3nWL94R08Eo67ZV+TaTc1CdPSmPODit+By5QzQoEE=;
+ b=gUZ1DGigP0OlyS0Awr0xNNZvvrt9ZbqcEyHlTKfM5/9JiBt9r+M2Af2+s74xwq2JiE5C+Z
+ fwAYuf7B5oG4yAZwR1WQkPXnGarQLbo8/NoKMaYv5EgHQgZqII1MQ8Gzo8lWVi9wiSDsX5
+ Eh4p40Nz6DSLgoLVGemketaFfnVAx6k=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-145-wpsv7GntNHK8PUBvyWqI9A-1; Mon, 06 May 2024 03:53:06 -0400
-X-MC-Unique: wpsv7GntNHK8PUBvyWqI9A-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a59a212d874so128376166b.1
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 00:53:05 -0700 (PDT)
+ us-mta-398-MMSJi--VOT-puKbRGEWYxQ-1; Mon, 06 May 2024 03:52:06 -0400
+X-MC-Unique: MMSJi--VOT-puKbRGEWYxQ-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-572ba1df326so501289a12.2
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 00:52:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714981984; x=1715586784;
+ d=1e100.net; s=20230601; t=1714981925; x=1715586725;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BZowvef2Ajk61rQN0cGeoX5jJiq28YAn+xqA2isy+TU=;
- b=j5i+zSZzXyNv8UedAYPaGEvgV5Jwhlj182eQeoRQfhiTcsUkHyyCAEuPeRpHYfjmIB
- HA9ZIGfkiD2D0914BoSCVQnXK8LKpfQJGLMy/BCw9Yr2JcZy8ipaib1JkZ3VvuTBxK8M
- UNLH8wPl6NMoZ1rOB87Qk2j/dEZASg91Xu5MIEdq2/HDdj5mMpHLoi6N8xby4Q8e1Rey
- TLOx3fFo6NI9yfR4/1HD8aQt616FTrshZrz4+a/LmtYRRfhUPewk6l+7IVFpfQDjfcau
- rncxebR8ETKCiDB5DzRAgWXiAnhj36CcMj7MijD928HF9cgn/IY6ok+OCxEk/KPTjEPb
- roLQ==
-X-Gm-Message-State: AOJu0YxAVDUIbw9rMhnJn2USho2EaMpgia3dWgroK9DJQOBE+UrXS5MJ
- 1x1skY0sw46bMRBBuMH6xzkk++bVw0qgxBG2IPr/nelTMhkMFi7ZXF6U9CXmacYo2Ki1JqT3LyV
- 2YNRrDbKcTwR5nT+X1e6DKXR0+Hq0neVzVmcGRWVPNNBjHcLUStlytQhQONosSt5y5nZymIyuIA
- h5cyGreMQVQ3zbQ7bjlJbWzvNEpge0hOPU94Cl
-X-Received: by 2002:a17:906:f8e:b0:a55:358f:783c with SMTP id
- q14-20020a1709060f8e00b00a55358f783cmr5028644ejj.24.1714981984383; 
- Mon, 06 May 2024 00:53:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFz8jijY3KIwFE9AHjVKGyPY1wMHJ0IBWd5o4GEl6R4JfEFXzujyUM8Ij2/jnmIi14sjGo6GQ==
-X-Received: by 2002:a17:906:f8e:b0:a55:358f:783c with SMTP id
- q14-20020a1709060f8e00b00a55358f783cmr5028631ejj.24.1714981983983; 
- Mon, 06 May 2024 00:53:03 -0700 (PDT)
+ bh=cP3nWL94R08Eo67ZV+TaTc1CdPSmPODit+By5QzQoEE=;
+ b=p4DoxWE2zqHK0tbXLDlR5OLWxOPqMvZYCHeguYqDnVlFEk+3KI4MRL5F/vZUNaRAUV
+ KtbC4w9yssUA3eeaKJ2NQkf4dHSg0e6Glx475f3u3Exj50pXtvAyhypm3S0f28/DChSP
+ 3zvtURKGDjvaTS4k5vWGGCBwdtti23jWsG2h7PqKMzhJgSxEKwl0YrNmnMEDYoOvuwYO
+ 7eqWqI6ab7j1NQP+HUAbG49861Nu8GGW/O6ITiTsCGxjm2HqEmJOQzLTwsL/zrLYix6j
+ fcV6U7UdjoOaGnZvi2DgiGNUaIKTsFcf5tPK8snXsQ+7sttMFhxiqPad6piTn7XQ6BOS
+ a7/w==
+X-Gm-Message-State: AOJu0YwAqkR4cfIkq6Brb+cMLKAiPlfd7Dr2kkzSXAEfNaPM8O60HZah
+ i04TqIq1Fqp0z+Cdna7eVlqnrWrxjK8RwepynPlqBqKXerjMHFLwKdv9rcqJHtJIQxarAT/RoGG
+ JXg4PA9nNhc6mNRDmPrWuU0DaOG7+etdGOZkOmqZdCrirTZw35h3D06DOmuCfPJH6yTShTHbJfg
+ c7gc9FyaKhp20yQsWi+A6brh3XEQNA0O9zjRSm
+X-Received: by 2002:a50:8a96:0:b0:572:65d3:803c with SMTP id
+ j22-20020a508a96000000b0057265d3803cmr7680805edj.0.1714981925306; 
+ Mon, 06 May 2024 00:52:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHy9p1zDeCaFNCPq87ATV8ryWATOXqbWc8CoJP6jDYnU7Gokxn6w26XZyA7AtCA+hqDVtPWHg==
+X-Received: by 2002:a50:8a96:0:b0:572:65d3:803c with SMTP id
+ j22-20020a508a96000000b0057265d3803cmr7680790edj.0.1714981924903; 
+ Mon, 06 May 2024 00:52:04 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- md1-20020a170906ae8100b00a534000d525sm4916791ejb.158.2024.05.06.00.53.03
+ ze15-20020a170906ef8f00b00a59ae3efb03sm2425669ejb.3.2024.05.06.00.52.04
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 May 2024 00:53:03 -0700 (PDT)
+ Mon, 06 May 2024 00:52:04 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 39/46] monitor: remove MonitorDef from typedefs.h
-Date: Mon,  6 May 2024 09:51:18 +0200
-Message-ID: <20240506075125.8238-40-pbonzini@redhat.com>
+Subject: [PULL 15/46] microblaze: switch boards to "default y"
+Date: Mon,  6 May 2024 09:50:54 +0200
+Message-ID: <20240506075125.8238-16-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240506075125.8238-1-pbonzini@redhat.com>
 References: <20240506075125.8238-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -103,75 +102,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-MonitorDef is defined by hmp-target.h, and all users except one already
-include it; the reason why the stubs do not include it, is because
-hmp-target.h currently can only be used in files that are compiled
-per target.  However, that is easily fixed.  Because the benefit of
-having MonitorDef in typedefs.h is very small, do it and remove the
-type from typedefs.h.
+Some targets use "default y" for boards to filter out those that require
+TCG.  For consistency we are switching all other targets to do the same.
+Continue with Microblaze.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+No changes to generated config-devices.mak file.
+
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/monitor/hmp-target.h | 11 +++++++----
- include/qemu/typedefs.h      |  1 -
- stubs/target-monitor-defs.c  |  3 +--
- 3 files changed, 8 insertions(+), 7 deletions(-)
+ configs/devices/microblaze-softmmu/default.mak | 9 ++++-----
+ .gitlab-ci.d/buildtest.yml                     | 3 ++-
+ hw/microblaze/Kconfig                          | 6 ++++++
+ 3 files changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/include/monitor/hmp-target.h b/include/monitor/hmp-target.h
-index d78e979f053..b679aaebbff 100644
---- a/include/monitor/hmp-target.h
-+++ b/include/monitor/hmp-target.h
-@@ -25,11 +25,10 @@
- #ifndef MONITOR_HMP_TARGET_H
- #define MONITOR_HMP_TARGET_H
+diff --git a/configs/devices/microblaze-softmmu/default.mak b/configs/devices/microblaze-softmmu/default.mak
+index db8c6e4bba3..583e3959bb7 100644
+--- a/configs/devices/microblaze-softmmu/default.mak
++++ b/configs/devices/microblaze-softmmu/default.mak
+@@ -1,7 +1,6 @@
+ # Default configuration for microblaze-softmmu
  
-+typedef struct MonitorDef MonitorDef;
-+
-+#ifdef COMPILING_PER_TARGET
- #include "cpu.h"
--
--#define MD_TLONG 0
--#define MD_I32   1
--
- struct MonitorDef {
-     const char *name;
-     int offset;
-@@ -37,6 +36,10 @@ struct MonitorDef {
-                              int val);
-     int type;
- };
-+#endif
-+
-+#define MD_TLONG 0
-+#define MD_I32   1
+-# Boards:
+-#
+-CONFIG_PETALOGIX_S3ADSP1800=y
+-CONFIG_PETALOGIX_ML605=y
+-CONFIG_XLNX_ZYNQMP_PMU=y
++# Boards are selected by default, uncomment to keep out of the build.
++# CONFIG_PETALOGIX_S3ADSP1800=n
++# CONFIG_PETALOGIX_ML605=n
++# CONFIG_XLNX_ZYNQMP_PMU=n
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index a91e8d359d5..e2e92f25c58 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -648,7 +648,8 @@ build-tci:
+     - make check-tcg
  
- const MonitorDef *target_monitor_defs(void);
- int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval);
-diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
-index 2b1948a19ac..b71a36d02b2 100644
---- a/include/qemu/typedefs.h
-+++ b/include/qemu/typedefs.h
-@@ -75,7 +75,6 @@ typedef struct MemoryRegionSection MemoryRegionSection;
- typedef struct MigrationIncomingState MigrationIncomingState;
- typedef struct MigrationState MigrationState;
- typedef struct Monitor Monitor;
--typedef struct MonitorDef MonitorDef;
- typedef struct MSIMessage MSIMessage;
- typedef struct NetClientState NetClientState;
- typedef struct NetFilterState NetFilterState;
-diff --git a/stubs/target-monitor-defs.c b/stubs/target-monitor-defs.c
-index ac07b19064c..35a0a342772 100644
---- a/stubs/target-monitor-defs.c
-+++ b/stubs/target-monitor-defs.c
-@@ -1,6 +1,5 @@
- #include "qemu/osdep.h"
--
--const MonitorDef *target_monitor_defs(void);
-+#include "monitor/hmp-target.h"
+ # Check our reduced build configurations
+-# requires libfdt: aarch64, arm, i386, loongarch64, x86_64
++# requires libfdt: aarch64, arm, i386, loongarch64, microblaze, microblazeel,
++#   x86_64
+ # does not build without boards: i386, loongarch64, x86_64
+ build-without-defaults:
+   extends: .native_build_job_template
+diff --git a/hw/microblaze/Kconfig b/hw/microblaze/Kconfig
+index e2697ced9cc..d78ba843fac 100644
+--- a/hw/microblaze/Kconfig
++++ b/hw/microblaze/Kconfig
+@@ -1,5 +1,7 @@
+ config PETALOGIX_S3ADSP1800
+     bool
++    default y
++    depends on MICROBLAZE
+     select PFLASH_CFI01
+     select XILINX
+     select XILINX_AXI
+@@ -8,6 +10,8 @@ config PETALOGIX_S3ADSP1800
  
- const MonitorDef *target_monitor_defs(void)
- {
+ config PETALOGIX_ML605
+     bool
++    default y
++    depends on MICROBLAZE
+     select PFLASH_CFI01
+     select SERIAL
+     select SSI_M25P80
+@@ -18,4 +22,6 @@ config PETALOGIX_ML605
+ 
+ config XLNX_ZYNQMP_PMU
+     bool
++    default y
++    depends on MICROBLAZE
+     select XLNX_ZYNQMP
 -- 
 2.44.0
 
