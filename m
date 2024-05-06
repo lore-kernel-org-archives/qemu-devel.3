@@ -4,92 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A475FC10F16
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 15:08:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A2AFC10F16
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 15:20:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3zx5-0001zL-Ie; Mon, 06 May 2024 11:08:27 -0400
+	id 1s407m-00017p-Lo; Mon, 06 May 2024 11:19:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s3zwX-0001iN-SK
- for qemu-devel@nongnu.org; Mon, 06 May 2024 11:07:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s407K-00012d-OG
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 11:19:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s3zwR-0004q4-F8
- for qemu-devel@nongnu.org; Mon, 06 May 2024 11:07:53 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s407J-0003wb-78
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 11:19:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715008066;
+ s=mimecast20190719; t=1715008740;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=y61HfgjVewkJQU10ucRJoENKWfyE1rPjSIkvm+7zPIg=;
- b=aS0MgBazVbHTEUh6PKvIkHStleIKmPAYkr06uyQEIOKcrzin3G8JCIP2KqFy9G+D5eoIoV
- d/Bs1tG1frUpog7sLuR/pLiCSeAhSPnDjP1lsJTqQ55JKEQdWbavgOcY+sLwIZq7RhYOW2
- 0i9jmsJ21YsTu9XC7WxctaTdNp3dnAA=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5DH2eLQh9nsU8lQj7GQu/H8O+eAi10yYDcbwZEz4dxA=;
+ b=BK5CkFFvT350b0Y6KrAQryXv66pLmvIlwk6HF0N5pSRQY+E4EnmVgAgIaYKpNNcKEIbqpL
+ Dv5kHlvmw3dyyi69n+P2GgvmAs7McoX0jFHa28jG6MTp+Aj8wLtfOGRsYmz5n5xPnpbI4D
+ AcMSVJMbQK4nwbMbqjHjfazHts69WKE=
+Received: from mail-yb1-f199.google.com (mail-yb1-f199.google.com
+ [209.85.219.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-664-K5R1uLlHNmi_iYRXtQj3UQ-1; Mon, 06 May 2024 11:07:44 -0400
-X-MC-Unique: K5R1uLlHNmi_iYRXtQj3UQ-1
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6a0e9eddad0so8672206d6.0
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 08:07:44 -0700 (PDT)
+ us-mta-637-TAg5wabKOT-zmuYkwXXtZA-1; Mon, 06 May 2024 11:18:57 -0400
+X-MC-Unique: TAg5wabKOT-zmuYkwXXtZA-1
+Received: by mail-yb1-f199.google.com with SMTP id
+ 3f1490d57ef6-de5555a937fso200674276.0
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 08:18:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715008064; x=1715612864;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=y61HfgjVewkJQU10ucRJoENKWfyE1rPjSIkvm+7zPIg=;
- b=bEYxcPYKpgF1LcAcGzn7x2A2JnOXVxG2iJi+XnanD6DIQUpVP4mJa0dvtSyWUrja5V
- mmQwFf+umAMmO3J/GILFChQ0cSLV0NprG/1obNkuMZxyzmcArd+sqrTN26b4/brUjSod
- uzd0HUMEyTSRxMkV3LqTvdqiHGBxmLPkweNOBHzAKITgZyXvoL517kBbs7IiRxrMu4xQ
- AucbHM9uIG2ajEcy5QASlZ96UQOcKYvvOQS/XOy02GHW3lJ4gPP9v5oijr2oRhL3baM/
- 6AwHX8p2JfyvINRMnsgZD5/VhIfRol8gG0Eh4oO+qBg/ybg2vL9USTKxNbe3iZu4ECye
- 2sjw==
+ d=1e100.net; s=20230601; t=1715008736; x=1715613536;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5DH2eLQh9nsU8lQj7GQu/H8O+eAi10yYDcbwZEz4dxA=;
+ b=a4TrOzL8EZMSP9Mtm0qyDk8TQsWhlj9sKwllcJpguiRwrVHhcQ9srt8QuG9iFSMeKc
+ Jr0GHnsq/7OM1MxZolH58J/xJhKUKyrnsO9g+kzLK5aPf9WKVrSbow5W2c8hpguaTlZh
+ l3ZrQxZ+2SHUPWD+bJW50D7yG+SJ6FE1dO/g0+2o7NqMnuOy/6o9B+oQo0CCCFgkV1E5
+ fh14njoHG6aEWGLqhYbc5hWB0mPAAKI63hJujwGhuDgICUPBc64j7ajpScnPHk+jAHFy
+ tpp0uzEQSIWAi3F1hgQngMaMdVsLPY1O7XIaVPSgE6K/+m+DIvBMccDDsjiJame/Ok+Y
+ b5cA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW8TcvagqExxL3skGBD5u1248zvyXVExmT8fNUKX6eYiBpSEchztuNCNT4a7/P+45gYvwN9gSxL4xfT1xnPUIUcQGMIBeM=
-X-Gm-Message-State: AOJu0YxUKU5AUxzJDWaZEMlBP4uCBF3DRPK4Fes+AOqALYgbcFw0VmwB
- TeozNunBC4eX/9Zf+Pf8fwzV3RVhg86V9g3CSx0uyqNFSl5E2NuXGoLKpI1KbNd+pArZ832sjio
- b/xZx90y/A7ELh7JpBWZABgyYq1ZjynetcCGpwcZMAGQ4FNmxHxFB
-X-Received: by 2002:a05:6214:e8b:b0:6a0:a44e:c59c with SMTP id
- hf11-20020a0562140e8b00b006a0a44ec59cmr12907849qvb.1.1715008063961; 
- Mon, 06 May 2024 08:07:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG83p3PQVdI++DfZEUxtljhspI7xaZ+GUQVSuE5phXO+0tUjolDZJcx9r4vqbSiIyli5EtV4Q==
-X-Received: by 2002:a05:6214:e8b:b0:6a0:a44e:c59c with SMTP id
- hf11-20020a0562140e8b00b006a0a44ec59cmr12907772qvb.1.1715008063064; 
- Mon, 06 May 2024 08:07:43 -0700 (PDT)
+ AJvYcCWXaDeg5JaiS+hI96rOGk077jHge2v7Vms90LzzsuRqwrv+nL4ZKr0fIL33STyx1FbNt8B7CKy2B0eXFEI2KJcc4jHoMQ4=
+X-Gm-Message-State: AOJu0YyhYjvNu+itQ6XSWmjmuXHKdC2tENgz+JqoaqOKqMWbHOmYtwG4
+ E09oxj8xYIIIvHVz/5y7oz+mnNq0cXFEfJE7losC9f9/WGBKXZIf+isD8rRK2gQ0pCpiFSnIDUd
+ IPR+seGt+T8k6+RJyvBX5eadOdRr0waDAA6DXVpmFJI5mk3BTCJ/GPYVmlrgw
+X-Received: by 2002:a25:b11:0:b0:de5:4f72:46bf with SMTP id
+ 17-20020a250b11000000b00de54f7246bfmr6757470ybl.5.1715008736012; 
+ Mon, 06 May 2024 08:18:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE2P8vnSj7o0hOEUWJd0LHTmXMoHwYdn5ZthRZO2Q5HDFjEwyp86vvjFne4G2kBPrnrVCC/bA==
+X-Received: by 2002:a05:620a:4448:b0:790:ec9c:e717 with SMTP id
+ w8-20020a05620a444800b00790ec9ce717mr13404904qkp.5.1715008713281; 
+ Mon, 06 May 2024 08:18:33 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- m17-20020ad44a11000000b006a0d7154d13sm3789795qvz.78.2024.05.06.08.07.42
+ m4-20020ae9e004000000b00792a33c1c29sm318455qkk.59.2024.05.06.08.18.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 May 2024 08:07:42 -0700 (PDT)
-Date: Mon, 6 May 2024 11:07:40 -0400
+ Mon, 06 May 2024 08:18:32 -0700 (PDT)
+Date: Mon, 6 May 2024 11:18:29 -0400
 From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Markus Armbruster <armbru@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Michael Roth <michael.roth@amd.com>, Eric Blake <eblake@redhat.com>,
- Maor Gottlieb <maorg@nvidia.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/3] vfio/migration: Emit VFIO device migration state
- change QAPI event
-Message-ID: <ZjjyPESK-YC-XtFO@x1n>
-References: <20240430051621.19597-1-avihaih@nvidia.com>
- <20240430051621.19597-3-avihaih@nvidia.com>
- <08936db7-46bf-42ba-ac14-49cb14f34646@oracle.com>
- <0d368ac4-fbba-4829-b25d-d49957b7c9da@nvidia.com>
- <5e9c1edd-4e99-4fb7-8b9a-159b1a6503c5@oracle.com>
- <600825d2-a314-4120-ad2a-0b1f3c5bb8d9@nvidia.com>
- <87pltzsfl3.fsf@pond.sub.org> <87ikzrm2ev.fsf@suse.de>
+To: "Gonglei (Arei)" <arei.gonglei@huawei.com>
+Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Michael Galaxy <mgalaxy@akamai.com>, Yu Zhang <yu.zhang@ionos.com>,
+ "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>,
+ Jinpu Wang <jinpu.wang@ionos.com>, Elmar Gerdes <elmar.gerdes@ionos.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Yuval Shaia <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
+ Prasanna Kumar Kalever <prasanna.kalever@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Prasanna Kumar Kalever <prasanna4324@gmail.com>,
+ "integration@gluster.org" <integration@gluster.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
+ "devel@lists.libvirt.org" <devel@lists.libvirt.org>,
+ Hanna Reitz <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Song Gao <gaosong@loongson.cn>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Pannengyuan <pannengyuan@huawei.com>,
+ Xiexiangyou <xiexiangyou@huawei.com>
+Subject: Re: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol handling
+Message-ID: <Zjj0xa-3KrFHTK0S@x1n>
+References: <082a21b0-d4d1-9f6c-24b5-bee56263008e@fujitsu.com>
+ <ZhaY2_cO6CrQFCt3@x1n> <Zhfxoaz9yNTx8Btd@x1n>
+ <CAHEcVy7POArt+CmY8dyNTzLJp3XxXgjh3k8=C=9K+_cw1CSJFA@mail.gmail.com>
+ <46f5e323-632d-7bda-f2c5-3cfa7b1c6b68@akamai.com>
+ <Zi-1OvxA5MIHjklU@x1n> <877cgfe2yw.fsf@pond.sub.org>
+ <ZjClMb-6MddpvHqQ@redhat.com> <ZjJgQcPQ29HJsTpY@x1n>
+ <7e902e4e576a4e199e36d28f99bd55e5@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87ikzrm2ev.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <7e902e4e576a4e199e36d28f99bd55e5@huawei.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -97,7 +110,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,172 +126,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 06, 2024 at 11:38:00AM -0300, Fabiano Rosas wrote:
-> Markus Armbruster <armbru@redhat.com> writes:
-> 
-> > Peter, Fabiano, I'd like to hear your opinion on the issue discussed
-> > below.
-> >
-> > Avihai Horon <avihaih@nvidia.com> writes:
-> >
-> >> On 02/05/2024 13:22, Joao Martins wrote:
-> >>> External email: Use caution opening links or attachments
-> >>>
-> >>>
-> >>> On 01/05/2024 13:28, Avihai Horon wrote:
-> >>>> On 01/05/2024 14:50, Joao Martins wrote:
-> >>>>> External email: Use caution opening links or attachments
-> >>>>>
-> >>>>>
-> >>>>> On 30/04/2024 06:16, Avihai Horon wrote:
-> >>>>>> Emit VFIO device migration state change QAPI event when a VFIO device
-> >>>>>> changes its migration state. This can be used by management applications
-> >>>>>> to get updates on the current state of the VFIO device for their own
-> >>>>>> purposes.
-> >>>>>>
-> >>>>>> A new per VFIO device capability, "migration-events", is added so events
-> >>>>>> can be enabled only for the required devices. It is disabled by default.
-> >>>>>>
-> >>>>>> Signed-off-by: Avihai Horon<avihaih@nvidia.com>
-> >>>>>> ---
-> >>>>>>    include/hw/vfio/vfio-common.h |  1 +
-> >>>>>>    hw/vfio/migration.c           | 44 +++++++++++++++++++++++++++++++++++
-> >>>>>>    hw/vfio/pci.c                 |  2 ++
-> >>>>>>    3 files changed, 47 insertions(+)
-> >>>>>>
-> >>>>>> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-> >>>>>> index b9da6c08ef..3ec5f2425e 100644
-> >>>>>> --- a/include/hw/vfio/vfio-common.h
-> >>>>>> +++ b/include/hw/vfio/vfio-common.h
-> >>>>>> @@ -115,6 +115,7 @@ typedef struct VFIODevice {
-> >>>>>>        bool no_mmap;
-> >>>>>>        bool ram_block_discard_allowed;
-> >>>>>>        OnOffAuto enable_migration;
-> >>>>>> +    bool migration_events;
-> >>>>>>        VFIODeviceOps *ops;
-> >>>>>>        unsigned int num_irqs;
-> >>>>>>        unsigned int num_regions;
-> >>>>>> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> >>>>>> index 06ae40969b..6bbccf6545 100644
-> >>>>>> --- a/hw/vfio/migration.c
-> >>>>>> +++ b/hw/vfio/migration.c
-> >>>>>> @@ -24,6 +24,7 @@
-> >>>>>>    #include "migration/register.h"
-> >>>>>>    #include "migration/blocker.h"
-> >>>>>>    #include "qapi/error.h"
-> >>>>>> +#include "qapi/qapi-events-vfio.h"
-> >>>>>>    #include "exec/ramlist.h"
-> >>>>>>    #include "exec/ram_addr.h"
-> >>>>>>    #include "pci.h"
-> >>>>>> @@ -80,6 +81,46 @@ static const char *mig_state_to_str(enum
-> >>>>>> vfio_device_mig_state state)
-> >>>>>>        }
-> >>>>>>    }
-> >>>>>>
-> >>>>>> +static VFIODeviceMigState
-> >>>>>> +mig_state_to_qapi_state(enum vfio_device_mig_state state)
-> >>>>>> +{
-> >>>>>> +    switch (state) {
-> >>>>>> +    case VFIO_DEVICE_STATE_STOP:
-> >>>>>> +        return QAPI_VFIO_DEVICE_MIG_STATE_STOP;
-> >>>>>> +    case VFIO_DEVICE_STATE_RUNNING:
-> >>>>>> +        return QAPI_VFIO_DEVICE_MIG_STATE_RUNNING;
-> >>>>>> +    case VFIO_DEVICE_STATE_STOP_COPY:
-> >>>>>> +        return QAPI_VFIO_DEVICE_MIG_STATE_STOP_COPY;
-> >>>>>> +    case VFIO_DEVICE_STATE_RESUMING:
-> >>>>>> +        return QAPI_VFIO_DEVICE_MIG_STATE_RESUMING;
-> >>>>>> +    case VFIO_DEVICE_STATE_RUNNING_P2P:
-> >>>>>> +        return QAPI_VFIO_DEVICE_MIG_STATE_RUNNING_P2P;
-> >>>>>> +    case VFIO_DEVICE_STATE_PRE_COPY:
-> >>>>>> +        return QAPI_VFIO_DEVICE_MIG_STATE_PRE_COPY;
-> >>>>>> +    case VFIO_DEVICE_STATE_PRE_COPY_P2P:
-> >>>>>> +        return QAPI_VFIO_DEVICE_MIG_STATE_PRE_COPY_P2P;
-> >>>>>> +    default:
-> >>>>>> +        g_assert_not_reached();
-> >>>>>> +    }
-> >>>>>> +}
-> >>>>>> +
-> >>>>>> +static void vfio_migration_send_state_change_event(VFIODevice *vbasedev)
-> >>>>>> +{
-> >>>>>> +    VFIOMigration *migration = vbasedev->migration;
-> >>>>>> +    const char *id;
-> >>>>>> +    Object *obj;
-> >>>>>> +
-> >>>>>> +    if (!vbasedev->migration_events) {
-> >>>>>> +        return;
-> >>>>>> +    }
-> >>>>>> +
-> >>>>> Shouldn't this leap frog migrate_events() capability instead of introducing its
-> >>>>> vfio equivalent i.e.
-> >>>>>
-> >>>>>           if (!migrate_events()) {
-> >>>>>               return;
-> >>>>>           }
-> >>>>>
-> >>>>> ?
-> >>>>
-> >>>> I used a per VFIO device cap so the events can be fine tuned for each device
-> >>>> (maybe one device should send events while the other not).
-> >>>> This gives the most flexibility and I don't think it complicates the
-> >>>> configuration (one downside, though, is that it can't be enabled/disabled
-> >>>> dynamically during runtime).
-> >>>>
-> >>> Right.
-> >>>
-> >>>> I don't think events add much overhead, so if you prefer a global cap, I can
-> >>>> change it.
-> >>>> However, I'm not sure overloading the existing migrate_events() is valid?
-> >>>>
-> >>> migration 'events' capability just means we will have some migration events
-> >>> emited via QAPI monitor for: 1) general global status and 2) for each migration
-> >>> pass (both with different event names=.
-> >>
-> >> Yes, it's already overloaded.
-> >>
-> >> In migration QAPI it says: "@events: generate events for each migration state change (since 2.4)".
-> >> This only refers to the MIGRATION event AFAIU.
-> >>
-> >> Later on (in QEMU 2.6), MIGRATION_PASS event was added and the events cap was overloaded for the first time (without changing @events description).
-> >>
-> >> Now we want to add yet another use for events capability, the VFIO migration state change events.
-> >>
-> >> I think what bothers me is the @events description, which is not accurate.
-> >> Maybe it should be changed to "@events: generate migration related events (since 2.4)"? However, I'm not sure if it's OK to do this.
-> >>
-> >>>   So the suggestion was just what feels a
-> >>> natural extension of that (...)
-> >>>
-> >>>>> Applications that don't understand the event string (migration related or not)
-> >>>>> will just discard it (AIUI)
-> >>>
-> >>> (...) specially because of this as all these events have a different name.
-> >>>
-> >>> But overloading might not make sense for others IDK ... it was just a suggestion
-> >>> :) not a strong preference
-> >>
-> >> Yes, I get your rationale.
-> >> I don't have a strong opinion either, so maybe let's see what other people think.
-> 
-> I don't see the need to tie this to the migration events
-> capability. Although there's overlap in the terms used, this seems more
-> like exposing a device feature via QEMU, then a migration event
-> per-se. The state changes also happen during moments unrelated to
-> migration (cover letter mentions start/stopping guest), so I assume we'd
-> like to keep those even if the management layer doesn't want to see
-> migration events.
+On Mon, May 06, 2024 at 02:06:28AM +0000, Gonglei (Arei) wrote:
+> Hi, Peter
 
-Yeh makes sense to me to keep that per-device flag, as it's not a generic
-migration state change.
+Hey, Lei,
 
-  @events: generate events for each migration state change (since 2.4)
+Happy to see you around again after years.
 
-The other option is to emit event only if "migrate_events() &&
-vfio_dev_send_event", but that sounds like an overkill to overload "events"
-cap, and doesn't look like bring anything better than just keeping them
-separate.
+> RDMA features high bandwidth, low latency (in non-blocking lossless
+> network), and direct remote memory access by bypassing the CPU (As you
+> know, CPU resources are expensive for cloud vendors, which is one of the
+> reasons why we introduced offload cards.), which TCP does not have.
 
-While at it, another trivial comment is maybe it's nice to have a helper to
-both update the vfio migration state, plus emitting events when necessary.
+It's another cost to use offload cards, v.s. preparing more cpu resources?
+
+> In some scenarios where fast live migration is needed (extremely short
+> interruption duration and migration duration) is very useful. To this
+> end, we have also developed RDMA support for multifd.
+
+Will any of you upstream that work?  I'm curious how intrusive would it be
+when adding it to multifd, if it can keep only 5 exported functions like
+what rdma.h does right now it'll be pretty nice.  We also want to make sure
+it works with arbitrary sized loads and buffers, e.g. vfio is considering
+to add IO loads to multifd channels too.
+
+One thing to note that the question here is not about a pure performance
+comparison between rdma and nics only.  It's about help us make a decision
+on whether to drop rdma, iow, even if rdma performs well, the community
+still has the right to drop it if nobody can actively work and maintain it.
+It's just that if nics can perform as good it's more a reason to drop,
+unless companies can help to provide good support and work together.
 
 Thanks,
 
