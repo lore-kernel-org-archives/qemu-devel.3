@@ -4,75 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE1BBC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 06:11:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B962BC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 06:13:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3rYA-0004oE-3l; Mon, 06 May 2024 02:10:10 -0400
+	id 1s3raX-0005nu-1p; Mon, 06 May 2024 02:12:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1s3rY7-0004o6-DZ
- for qemu-devel@nongnu.org; Mon, 06 May 2024 02:10:07 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1s3rY0-0002so-8I
- for qemu-devel@nongnu.org; Mon, 06 May 2024 02:10:06 -0400
-Received: from loongson.cn (unknown [10.20.42.173])
- by gateway (Coremail) with SMTP id _____8CxCuoxdDhm6vgHAA--.10042S3;
- Mon, 06 May 2024 14:09:54 +0800 (CST)
-Received: from [10.20.42.173] (unknown [10.20.42.173])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8BxFlcudDhmTC4SAA--.20446S3; 
- Mon, 06 May 2024 14:09:52 +0800 (CST)
-Subject: Re: [PATCH v3 1/5] hw/loongarch: Rename LOONGARCH_MACHINE with
- VIRT_MACHINE
-To: Thomas Huth <thuth@redhat.com>, Song Gao <gaosong@loongson.cn>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org
-References: <20240506030206.2119832-1-maobibo@loongson.cn>
- <20240506030206.2119832-2-maobibo@loongson.cn>
- <b1a4b08c-e288-4319-ac4a-7d6ca1256755@redhat.com>
-From: maobibo <maobibo@loongson.cn>
-Message-ID: <1a05cc73-3fda-2b17-e9be-541113a751fb@loongson.cn>
-Date: Mon, 6 May 2024 14:09:48 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1s3raM-0005jv-Bv
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 02:12:26 -0400
+Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1s3raK-00046h-HR
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 02:12:26 -0400
+Received: by mail-lj1-x229.google.com with SMTP id
+ 38308e7fff4ca-2e367c2457bso5861191fa.1
+ for <qemu-devel@nongnu.org>; Sun, 05 May 2024 23:12:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1714975942; x=1715580742; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VXx0i4fSaFCK9+9RiI/Aa6wwUQxFeaFWg/hGSQ0VnYY=;
+ b=cLZTzJO/h/iabTFgjoI8SnIhvAQ4YR6AOUnufEFuCN+xeNlqniSvaJ8YdhA/Y4Icad
+ XECbeYFlxkp8x/8D3/Y9IiDge5xX0I50sPtOxTRUf4q9UIAXW/+JVwyxKkmcYmU+qCpR
+ TOTZ92hOSZSmsAhRd2/D0H8OyJFO6HiR8XEQAEzXOYpfUwy40NCGNAZJv/gaA8s0ETIx
+ gN2QOBVZW0vKcNRWQf35nlKNBEiADVYAxa/F7RQltBPPLryeJ/darWZY/wMjNGnBC9Nf
+ lBntUCowWxr+S0xand9OsdOxOHgYBw8pY+MmWT4Ugzfp77QVIAE5H8ZroEWzasOzHeY0
+ tRFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714975942; x=1715580742;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=VXx0i4fSaFCK9+9RiI/Aa6wwUQxFeaFWg/hGSQ0VnYY=;
+ b=XzPuU7kt7i5pr4lWJqKZ9YrycB5cSk+HTw4aKelsyX9Sf/8rzTvVYa8eOSTM2qBWrA
+ 11Ao4XfbmzHu6Lj0sO0b3RTXTIceZar6ZkJriUGPUPM/Zp+Em4h9xKH+5Ibx48Cf7Ylb
+ B7uT0SpULhkbxTnEdvsQVZynzDvNDwXE3MUUlglYiXAfbfrjuTJcwc4sva7FtIWbKlwb
+ Ny4hn21ef79Bi3tA1FDK0ledil3Qpk58TPrAE1doWSkU201rn6zm1WHJJpzyV9D4O8Bw
+ X7x9skDXLsXkJwRw0+dkTnp/YdzfCNcoJuRr2PJ/OB/uR6753+jKY1ZufFtxeIAeVhUb
+ HEwg==
+X-Gm-Message-State: AOJu0YxqyQIvrqqPLQ9UPQV6E5sSkg48c2ZQ6NqAyYRoijxvRJZSgpcx
+ vvn0YFmhcQJ8PkiSlBpRsB0EBinyeJ1Z+DhgAgKER48YmWO8R3Z6NJn2Pxvdx6Xe/YiQWjBcuO4
+ xByF8/mgi9w+2mBX0M+xHVTDtPWbaJX3CebztqyIORGLfhzxZHmmnuvWLrKQ/RYO8MIMeQJVJyn
+ RGZfhLJFh9nPCWaO6/clxvVKGK+FqAuihdqvEkjA46OQ==
+X-Google-Smtp-Source: AGHT+IHENwKg/Pj3kUARg0vayx8vOpDvaXxgCnio9CMlQoEAgkrETTtnF4OokQ+gvu/XlFkZhFSwRA==
+X-Received: by 2002:a19:f606:0:b0:519:1a91:30cc with SMTP id
+ x6-20020a19f606000000b005191a9130ccmr5869974lfe.4.1714975942131; 
+ Sun, 05 May 2024 23:12:22 -0700 (PDT)
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com.
+ [209.85.208.178]) by smtp.gmail.com with ESMTPSA id
+ dw11-20020a0565122c8b00b0051ff89d5ec6sm841245lfb.58.2024.05.05.23.12.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 05 May 2024 23:12:21 -0700 (PDT)
+Received: by mail-lj1-f178.google.com with SMTP id
+ 38308e7fff4ca-2e0b2ddc5d1so19253491fa.3; 
+ Sun, 05 May 2024 23:12:21 -0700 (PDT)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUEMDnld/iJ2JV3vI3+qvr3nPHq5m62b71QF37Xn/34maHLtpAKGyAgUIcP+CJCSI9PYzwnqYtPx1tre4wEAqAnTpmJ0XQ=
+X-Received: by 2002:a2e:b009:0:b0:2d4:3d86:54e2 with SMTP id
+ y9-20020a2eb009000000b002d43d8654e2mr5012098ljk.27.1714975941554; Sun, 05 May
+ 2024 23:12:21 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <b1a4b08c-e288-4319-ac4a-7d6ca1256755@redhat.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8BxFlcudDhmTC4SAA--.20446S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7Zr18CFW7ur1rGrWfWw13Jrc_yoW8tr1UpF
- WxAF1kArW8Wr48Crn7W3s8WFyUArn7C347WFnxtFW0yrWqkryjgr48Z34q9F1UAw48tr40
- qw1ku34xZFn8JrcCm3ZEXasCq-sJn29KB7ZKAUJUUUUr529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUPIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1ln4kS14v26r1Y6r17M2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12
- xvs2x26I8E6xACxx1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y
- 6r17McIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr4
- 1lc7I2V7IY0VAS07AlzVAYIcxG8wCY1x0262kKe7AKxVWUAVWUtwCF04k20xvY0x0EwIxG
- rwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C267AKxVWUXVWUAwC20s026c02F40E14
- v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkG
- c2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4U
- MIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jYg4hUUU
- UU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.47,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+References: <20240307160319.675044-1-dbarboza@ventanamicro.com>
+ <20240307160319.675044-13-dbarboza@ventanamicro.com>
+In-Reply-To: <20240307160319.675044-13-dbarboza@ventanamicro.com>
+From: Frank Chang <frank.chang@sifive.com>
+Date: Mon, 6 May 2024 14:12:10 +0800
+X-Gmail-Original-Message-ID: <CANzO1D13s85OE3u30EkP43CFVdFNgJNVWoM-BW9oPJi-A7cbNA@mail.gmail.com>
+Message-ID: <CANzO1D13s85OE3u30EkP43CFVdFNgJNVWoM-BW9oPJi-A7cbNA@mail.gmail.com>
+Subject: Re: [PATCH v2 12/15] hw/riscv/riscv-iommu: Add another irq for mrif
+ notifications
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com, ajones@ventanamicro.com, tjeznach@rivosinc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::229;
+ envelope-from=frank.chang@sifive.com; helo=mail-lj1-x229.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,55 +108,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Reviewed-by: Frank Chang <frank.chang@sifive.com>
 
-
-On 2024/5/6 下午12:24, Thomas Huth wrote:
-> On 06/05/2024 05.02, Bibo Mao wrote:
->> On LoongArch system, there is only virt machine type now, name
->> LOONGARCH_MACHINE is confused, rename it with VIRT_MACHINE. Machine name
->> about Other real hw boards can be added in future.
->>
->> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->> ---
-> ...
->> @@ -1245,7 +1244,7 @@ static void loongarch_class_init(ObjectClass 
->> *oc, void *data)
->>   static const TypeInfo loongarch_machine_types[] = {
->>       {
->> -        .name           = TYPE_LOONGARCH_MACHINE,
->> +        .name           = TYPE_VIRT_MACHINE,
->>           .parent         = TYPE_MACHINE,
->>           .instance_size  = sizeof(LoongArchMachineState),
->>           .class_init     = loongarch_class_init,
->> diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
->> index 4e14bf6060..5ea2f0370d 100644
->> --- a/include/hw/loongarch/virt.h
->> +++ b/include/hw/loongarch/virt.h
->> @@ -73,8 +73,8 @@ struct LoongArchMachineState {
->>       struct loongarch_boot_info bootinfo;
->>   };
->> -#define TYPE_LOONGARCH_MACHINE  MACHINE_TYPE_NAME("virt")
->> -OBJECT_DECLARE_SIMPLE_TYPE(LoongArchMachineState, LOONGARCH_MACHINE)
->> +#define TYPE_VIRT_MACHINE  MACHINE_TYPE_NAME("virt")
->> +OBJECT_DECLARE_SIMPLE_TYPE(LoongArchMachineState, VIRT_MACHINE)
->>   bool loongarch_is_acpi_enabled(LoongArchMachineState *lams);
->>   void loongarch_acpi_setup(LoongArchMachineState *lams);
->>   #endif
-> 
->   Hi,
-> 
-> there are currently some efforts going on to create the possibility to 
-> link a QEMU binary that contains all targets in one binary. Since we 
-> already have a TYPE_VIRT_MACHINE for other targets, I wonder whether it 
-> might be better to use LOONGARCH_VIRT_MACHINE than just VIRT_MACHINE 
-> here? Philippe, could you comment on this?
-
-It is great if there is one QEMU binary which supports different 
-targets. And LOONGARCH_VIRT_MACHINE is ok for me.
-
-Regards
-Bibo Mao
-> 
->   Thomas
-
+Daniel Henrique Barboza <dbarboza@ventanamicro.com> =E6=96=BC 2024=E5=B9=B4=
+3=E6=9C=888=E6=97=A5 =E9=80=B1=E4=BA=94 =E4=B8=8A=E5=8D=8812:06=E5=AF=AB=E9=
+=81=93=EF=BC=9A
+>
+> From: Andrew Jones <ajones@ventanamicro.com>
+>
+> And add mrif notification trace.
+>
+> Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> ---
+>  hw/riscv/riscv-iommu-pci.c | 2 +-
+>  hw/riscv/riscv-iommu.c     | 1 +
+>  hw/riscv/trace-events      | 1 +
+>  3 files changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/riscv/riscv-iommu-pci.c b/hw/riscv/riscv-iommu-pci.c
+> index 4eb1057210..8a7b71166c 100644
+> --- a/hw/riscv/riscv-iommu-pci.c
+> +++ b/hw/riscv/riscv-iommu-pci.c
+> @@ -78,7 +78,7 @@ static void riscv_iommu_pci_realize(PCIDevice *dev, Err=
+or **errp)
+>      pci_register_bar(dev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY |
+>                       PCI_BASE_ADDRESS_MEM_TYPE_64, &s->bar0);
+>
+> -    int ret =3D msix_init(dev, RISCV_IOMMU_INTR_COUNT,
+> +    int ret =3D msix_init(dev, RISCV_IOMMU_INTR_COUNT + 1,
+>                          &s->bar0, 0, RISCV_IOMMU_REG_MSI_CONFIG,
+>                          &s->bar0, 0, RISCV_IOMMU_REG_MSI_CONFIG + 256, 0=
+, &err);
+>
+> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+> index 1fa1286d07..954a6892c2 100644
+> --- a/hw/riscv/riscv-iommu.c
+> +++ b/hw/riscv/riscv-iommu.c
+> @@ -543,6 +543,7 @@ static MemTxResult riscv_iommu_msi_write(RISCVIOMMUSt=
+ate *s,
+>      if (res !=3D MEMTX_OK) {
+>          return res;
+>      }
+> +    trace_riscv_iommu_mrif_notification(s->parent_obj.id, n190, addr);
+>
+>      return MEMTX_OK;
+>  }
+> diff --git a/hw/riscv/trace-events b/hw/riscv/trace-events
+> index 4b486b6420..d69719a27a 100644
+> --- a/hw/riscv/trace-events
+> +++ b/hw/riscv/trace-events
+> @@ -6,6 +6,7 @@ riscv_iommu_flt(const char *id, unsigned b, unsigned d, u=
+nsigned f, uint64_t rea
+>  riscv_iommu_pri(const char *id, unsigned b, unsigned d, unsigned f, uint=
+64_t iova) "%s: page request %04x:%02x.%u iova: 0x%"PRIx64
+>  riscv_iommu_dma(const char *id, unsigned b, unsigned d, unsigned f, unsi=
+gned pasid, const char *dir, uint64_t iova, uint64_t phys) "%s: translate %=
+04x:%02x.%u #%u %s 0x%"PRIx64" -> 0x%"PRIx64
+>  riscv_iommu_msi(const char *id, unsigned b, unsigned d, unsigned f, uint=
+64_t iova, uint64_t phys) "%s: translate %04x:%02x.%u MSI 0x%"PRIx64" -> 0x=
+%"PRIx64
+> +riscv_iommu_mrif_notification(const char *id, uint32_t nid, uint64_t phy=
+s) "%s: sent MRIF notification 0x%x to 0x%"PRIx64
+>  riscv_iommu_cmd(const char *id, uint64_t l, uint64_t u) "%s: command 0x%=
+"PRIx64" 0x%"PRIx64
+>  riscv_iommu_notifier_add(const char *id) "%s: dev-iotlb notifier added"
+>  riscv_iommu_notifier_del(const char *id) "%s: dev-iotlb notifier removed=
+"
+> --
+> 2.43.2
+>
+>
 
