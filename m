@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8655FC25B10
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 01:06:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97C4AC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 01:06:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3mmE-0007cE-53; Sun, 05 May 2024 21:04:23 -0400
+	id 1s3mny-0002bM-49; Sun, 05 May 2024 21:06:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s3mm6-0007a4-FY
- for qemu-devel@nongnu.org; Sun, 05 May 2024 21:04:15 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1s3mmx-0008Oy-4f
+ for qemu-devel@nongnu.org; Sun, 05 May 2024 21:05:15 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s3mm2-0002QG-0q
- for qemu-devel@nongnu.org; Sun, 05 May 2024 21:04:12 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-6f43ee95078so1218043b3a.1
- for <qemu-devel@nongnu.org>; Sun, 05 May 2024 18:04:09 -0700 (PDT)
+ id 1s3mmR-0002YN-36
+ for qemu-devel@nongnu.org; Sun, 05 May 2024 21:05:06 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-2a2d82537efso913910a91.2
+ for <qemu-devel@nongnu.org>; Sun, 05 May 2024 18:04:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714957448; x=1715562248; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714957474; x=1715562274; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aquqtgyprD8GqAQ4MMnB5w7emoyugrccNtEaKLtPj1U=;
- b=wszlZ9N5f9nAkeiDIQrkXkguej+p3AXZ5n6mjsujNRBzzmC7I7HVqIdAX05VwKgsX6
- yEd94VX9gJ8weyYPzLCjeChPhiGb6mbsynLSZF6ZNPooH5UYbtgItcpS8aVKf1Y0Gzjs
- I16ltYztmPOMid576faSn7a1Gr87+W0eCT9QiM9RqzbJF1sUhWjpulA6YIG37JyRkfB1
- f4RNVmyc2Xk5smcc3km1KqIcGUx3MJodAx/cUA8ps0zTByd4hHskciRVao0inP/1EDDm
- OPT3LTLBj/cAaHNn/zhsSuNuwfrII3FPVy5R0CguGXcqoLj51woDU/xcEr4iCGaqEaYM
- azOw==
+ bh=Cvy/xAJhwcIPOwkcc5Fig2qaysU0XFh1mpPnIeZDXIg=;
+ b=n8f2wrxcCqWCa05eiV4A421xF+k2OD+YXZ2lPJ6cLh6p0rRA/pQxkXK39DeEo4Va+/
+ hQpXLlfOyU2q1rf9l9KNF+8BY9opeLayeuHxQljMuEop3vmq1d9UZEdS+79YjPXEsxwo
+ Rsd+YR633tK0kcz2LaXiSgGCoMj05npcvVL1HsBkA9fZFDbdrYVvRND9InHk3SRaFQZY
+ h5t9m8FraGWiksv8+91o3jJvzx86qp/O5VcZrREcGNkCGu+gOQ+PUWizVZSX4flwmr3v
+ akTJ2ODemNQePYIMqkJEevOaMJvQOBXbOCBm3AyILjx7yVGK1iJdVpSxSEgfu53n3q54
+ YsLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714957448; x=1715562248;
+ d=1e100.net; s=20230601; t=1714957474; x=1715562274;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aquqtgyprD8GqAQ4MMnB5w7emoyugrccNtEaKLtPj1U=;
- b=Je9uZWV/yhlGCY87owgUN8ZF5ERxxC3PpXUs21WaxUcWmg6tHMAdodkR4+Fq0VSzTN
- 0Km9M6oizqEXn8sfQLSxGLnYbe6pmnzpGdn1yrtt2v4zrTikCtCIj7/iFF5IoUVXsr+Q
- JMkTGiBHUHNgjOiHkGXGKpKN/UBdEXy5Wg7cn5WdOdEODiapxpqSunKLANKxpCOKUC0e
- 08FUKMFMmIsr9AnzUEk8OrLgyf2iZZ6VDiRERKM28znXKhVMojxfVYwLoIfi/n46MKWj
- TdThExn7wuVGf6zHafpxEAxsFrzNJOaGLomerYQqCKWjrx2YvU7+h6nQKEajeXSk4ho3
- Dibg==
-X-Gm-Message-State: AOJu0YytPx/jL0WZPXtPo2zpGa+TbimUrY7y13AFf0kKn8f3Sp1y+rik
- WjhA5mqEonlb0hnxR1kRqzYmqzgq78a1jNCPE9EHLSVkHzzOmqJBl03XZxJfSy8icmmFB6X/tU4
- x
-X-Google-Smtp-Source: AGHT+IFtGGapn4wZYMdydHAMLX5Q64Xp3G4AodmD4iKaAFFNlTldSN1MsmmUHS9X4Y1wfMBA0WowBw==
-X-Received: by 2002:a05:6a21:6d81:b0:1a3:ae18:f1e4 with SMTP id
- wl1-20020a056a216d8100b001a3ae18f1e4mr9442880pzb.34.1714957448481; 
- Sun, 05 May 2024 18:04:08 -0700 (PDT)
+ bh=Cvy/xAJhwcIPOwkcc5Fig2qaysU0XFh1mpPnIeZDXIg=;
+ b=Xs3SLpXhBZ4s/24Q+Gkle3v0FFWcuNbeVONA+RulbgMRt2TR4smL9nA0w/St1qJ1US
+ S/Zzxw5CzWdg2k1dNThPNtB5kR5ysE2pNuhPs48LtwZViGJORoi1o2QMO3W0nBZilmDR
+ oRF7xCiT+vm2Uu7ZxdRJ3XFQF1icjIuML4H0UyJu3Bq/3gZYw2EY2eHSpHKKKqnRytpI
+ rWxeECJSKMj25OFECxKEJaxdQ+Fc+F0K6K2p01UcIIoQCdwIECwqBa7NNclNMyzvMJ0I
+ 4tkUbadbM+N8XEGn07ansrSEYr0b3O+kyQiUeJTNQ/y0WIsdsj3IilRrLgD6C9LTuiee
+ djGA==
+X-Gm-Message-State: AOJu0YzZZdTxgF1crvY64KSb5iiCp7E27THA9WaeqgU+grcPQil6fXoy
+ fznfgmf7mSYl5fAWmwdUCSHkkcyMhWAjEz4g4DmuyKL4ZoQXhkjZhNfHnEv1UjzITxU5byE5tol
+ t
+X-Google-Smtp-Source: AGHT+IFP4ZKr+EvUN1C5CPVu7POR6R8WcdDbXfLEGBWWLF39KmPKITXykNE8nzFvfcmK4n9H2v9V8A==
+X-Received: by 2002:a17:90b:39cc:b0:2b4:fcfd:7505 with SMTP id
+ of12-20020a17090b39cc00b002b4fcfd7505mr2487437pjb.36.1714957473778; 
+ Sun, 05 May 2024 18:04:33 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- pv7-20020a17090b3c8700b002a5f44353d2sm8958232pjb.7.2024.05.05.18.04.07
+ pv7-20020a17090b3c8700b002a5f44353d2sm8958232pjb.7.2024.05.05.18.04.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 May 2024 18:04:08 -0700 (PDT)
+ Sun, 05 May 2024 18:04:33 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 03/57] target/arm: Convert Cryptographic AES to decodetree
-Date: Sun,  5 May 2024 18:03:09 -0700
-Message-Id: <20240506010403.6204-4-richard.henderson@linaro.org>
+Subject: [PATCH 35/57] target/arm: Convert SUQADD, USQADD to decodetree
+Date: Sun,  5 May 2024 18:03:41 -0700
+Message-Id: <20240506010403.6204-36-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240506010403.6204-1-richard.henderson@linaro.org>
 References: <20240506010403.6204-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,167 +94,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+These are faux 2-operand instructions, reading from rd.
+Sort them next to the other three-operand same insns for clarity.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/a64.decode      | 21 +++++++--
- target/arm/tcg/translate-a64.c | 86 +++++++++++++++-------------------
- 2 files changed, 54 insertions(+), 53 deletions(-)
+ target/arm/tcg/a64.decode      |  8 +++++
+ target/arm/tcg/translate-a64.c | 64 ++++------------------------------
+ 2 files changed, 14 insertions(+), 58 deletions(-)
 
 diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 0e7656fd15..1de09903dc 100644
+index 5eced906a9..7cea0d2721 100644
 --- a/target/arm/tcg/a64.decode
 +++ b/target/arm/tcg/a64.decode
-@@ -19,11 +19,17 @@
- # This file is processed by scripts/decodetree.py
- #
+@@ -45,6 +45,7 @@
+ @rrr_sd         ........ ... rm:5 ...... rn:5 rd:5      &rrr_e esz=%esz_sd
+ @rrr_hsd        ........ ... rm:5 ...... rn:5 rd:5      &rrr_e esz=%esz_hsd
+ @rrr_e          ........ esz:2 . rm:5 ...... rn:5 rd:5  &rrr_e
++@r2r_e          ........ esz:2 . ..... ...... rm:5 rd:5 &rrr_e rn=%rd
  
--&r               rn
--&ri              rd imm
--&rri_sf          rd rn imm sf
--&i               imm
-+%rd             0:5
+ @rrx_h          ........ .. .. rm:4 .... . . rn:5 rd:5  &rrx_e esz=1 idx=%hlm
+ @rrx_s          ........ .. . rm:5  .... . . rn:5 rd:5  &rrx_e esz=2 idx=%hl
+@@ -60,6 +61,7 @@
+ @qrrr_h         . q:1 ...... ... rm:5 ...... rn:5 rd:5  &qrrr_e esz=1
+ @qrrr_sd        . q:1 ...... ... rm:5 ...... rn:5 rd:5  &qrrr_e esz=%esz_sd
+ @qrrr_e         . q:1 ...... esz:2 . rm:5 ...... rn:5 rd:5  &qrrr_e
++@qr2r_e         . q:1 ...... esz:2 . ..... ...... rm:5 rd:5 &qrrr_e rn=%rd
  
-+&r              rn
-+&ri             rd imm
-+&rri_sf         rd rn imm sf
-+&i              imm
-+&qrr_e          q rd rn esz
-+&qrrr_e         q rd rn rm esz
+ @qrrx_h         . q:1 .. .... .. .. rm:4 .... . . rn:5 rd:5 \
+                 &qrrx_e esz=1 idx=%hlm
+@@ -750,6 +752,9 @@ UQADD_s         0111 1110 ..1 ..... 00001 1 ..... ..... @rrr_e
+ SQSUB_s         0101 1110 ..1 ..... 00101 1 ..... ..... @rrr_e
+ UQSUB_s         0111 1110 ..1 ..... 00101 1 ..... ..... @rrr_e
+ 
++SUQADD_s        0101 1110 ..1 00000 00111 0 ..... ..... @r2r_e
++USQADD_s        0111 1110 ..1 00000 00111 0 ..... ..... @r2r_e
 +
-+@rr_q1e0        ........ ........ ...... rn:5 rd:5      &qrr_e q=1 esz=0
-+@r2r_q1e0       ........ ........ ...... rm:5 rd:5      &qrrr_e rn=%rd q=1 esz=0
+ ### Advanced SIMD scalar pairwise
  
- ### Data Processing - Immediate
+ FADDP_s         0101 1110 0011 0000 1101 10 ..... ..... @rr_h
+@@ -868,6 +873,9 @@ UQADD_v         0.10 1110 ..1 ..... 00001 1 ..... ..... @qrrr_e
+ SQSUB_v         0.00 1110 ..1 ..... 00101 1 ..... ..... @qrrr_e
+ UQSUB_v         0.10 1110 ..1 ..... 00101 1 ..... ..... @qrrr_e
  
-@@ -590,3 +596,10 @@ CPYFE           00 011 0 01100 ..... .... 01 ..... ..... @cpy
- CPYP            00 011 1 01000 ..... .... 01 ..... ..... @cpy
- CPYM            00 011 1 01010 ..... .... 01 ..... ..... @cpy
- CPYE            00 011 1 01100 ..... .... 01 ..... ..... @cpy
++SUQADD_v        0.00 1110 ..1 00000 00111 0 ..... ..... @qr2r_e
++USQADD_v        0.10 1110 ..1 00000 00111 0 ..... ..... @qr2r_e
 +
-+### Cryptographic AES
-+
-+AESE            01001110 00 10100 00100 10 ..... .....  @r2r_q1e0
-+AESD            01001110 00 10100 00101 10 ..... .....  @r2r_q1e0
-+AESMC           01001110 00 10100 00110 10 ..... .....  @rr_q1e0
-+AESIMC          01001110 00 10100 00111 10 ..... .....  @rr_q1e0
+ ### Advanced SIMD scalar x indexed element
+ 
+ FMUL_si         0101 1111 00 .. .... 1001 . 0 ..... .....   @rrx_h
 diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 283078d385..1ba6a30176 100644
+index 5d91263ebb..ccc30d61f3 100644
 --- a/target/arm/tcg/translate-a64.c
 +++ b/target/arm/tcg/translate-a64.c
-@@ -1314,6 +1314,34 @@ bool sme_enabled_check_with_svcr(DisasContext *s, unsigned req)
-     return true;
- }
+@@ -5097,6 +5097,8 @@ TRANS(SQADD_s, do_satacc_s, a, MO_SIGN, MO_SIGN, gen_sqadd_bhs, gen_sqadd_d)
+ TRANS(SQSUB_s, do_satacc_s, a, MO_SIGN, MO_SIGN, gen_sqsub_bhs, gen_sqsub_d)
+ TRANS(UQADD_s, do_satacc_s, a, 0, 0, gen_uqadd_bhs, gen_uqadd_d)
+ TRANS(UQSUB_s, do_satacc_s, a, 0, 0, gen_uqsub_bhs, gen_uqsub_d)
++TRANS(SUQADD_s, do_satacc_s, a, MO_SIGN, 0, gen_suqadd_bhs, gen_suqadd_d)
++TRANS(USQADD_s, do_satacc_s, a, 0, MO_SIGN, gen_usqadd_bhs, gen_usqadd_d)
  
-+/*
-+ * Expanders for AdvSIMD translation functions.
-+ */
-+
-+static bool do_gvec_op2_ool(DisasContext *s, arg_qrr_e *a, int data,
-+                            gen_helper_gvec_2 *fn)
-+{
-+    if (!a->q && a->esz == MO_64) {
-+        return false;
-+    }
-+    if (fp_access_check(s)) {
-+        gen_gvec_op2_ool(s, a->q, a->rd, a->rn, data, fn);
-+    }
-+    return true;
-+}
-+
-+static bool do_gvec_op3_ool(DisasContext *s, arg_qrrr_e *a, int data,
-+                            gen_helper_gvec_3 *fn)
-+{
-+    if (!a->q && a->esz == MO_64) {
-+        return false;
-+    }
-+    if (fp_access_check(s)) {
-+        gen_gvec_op3_ool(s, a->q, a->rd, a->rn, a->rm, data, fn);
-+    }
-+    return true;
-+}
-+
+ static bool do_fp3_vector(DisasContext *s, arg_qrrr_e *a,
+                           gen_helper_gvec_3_ptr * const fns[3])
+@@ -5340,6 +5342,8 @@ TRANS(SQADD_v, do_gvec_fn3, a, gen_gvec_sqadd_qc)
+ TRANS(UQADD_v, do_gvec_fn3, a, gen_gvec_uqadd_qc)
+ TRANS(SQSUB_v, do_gvec_fn3, a, gen_gvec_sqsub_qc)
+ TRANS(UQSUB_v, do_gvec_fn3, a, gen_gvec_uqsub_qc)
++TRANS(SUQADD_v, do_gvec_fn3, a, gen_gvec_suqadd_qc)
++TRANS(USQADD_v, do_gvec_fn3, a, gen_gvec_usqadd_qc)
+ 
  /*
-  * This utility function is for doing register extension with an
-  * optional shift. You will likely want to pass a temporary for the
-@@ -4561,6 +4589,15 @@ static bool trans_EXTR(DisasContext *s, arg_extract *a)
-     return true;
+  * Advanced SIMD scalar/vector x indexed element
+@@ -10003,48 +10007,6 @@ static void handle_2misc_narrow(DisasContext *s, bool scalar,
+     clear_vec_high(s, is_q, rd);
  }
  
-+/*
-+ * Cryptographic AES
-+ */
-+
-+TRANS_FEAT(AESE, aa64_aes, do_gvec_op3_ool, a, 0, gen_helper_crypto_aese)
-+TRANS_FEAT(AESD, aa64_aes, do_gvec_op3_ool, a, 0, gen_helper_crypto_aesd)
-+TRANS_FEAT(AESMC, aa64_aes, do_gvec_op2_ool, a, 0, gen_helper_crypto_aesmc)
-+TRANS_FEAT(AESIMC, aa64_aes, do_gvec_op2_ool, a, 0, gen_helper_crypto_aesimc)
-+
- /* Shift a TCGv src by TCGv shift_amount, put result in dst.
-  * Note that it is the caller's responsibility to ensure that the
-  * shift amount is in range (ie 0..31 or 0..63) and provide the ARM
-@@ -13454,54 +13491,6 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
-     }
- }
- 
--/* Crypto AES
-- *  31             24 23  22 21       17 16    12 11 10 9    5 4    0
-- * +-----------------+------+-----------+--------+-----+------+------+
-- * | 0 1 0 0 1 1 1 0 | size | 1 0 1 0 0 | opcode | 1 0 |  Rn  |  Rd  |
-- * +-----------------+------+-----------+--------+-----+------+------+
-- */
--static void disas_crypto_aes(DisasContext *s, uint32_t insn)
+-/* Remaining saturating accumulating ops */
+-static void handle_2misc_satacc(DisasContext *s, bool is_scalar, bool is_u,
+-                                bool is_q, unsigned size, int rn, int rd)
 -{
--    int size = extract32(insn, 22, 2);
--    int opcode = extract32(insn, 12, 5);
--    int rn = extract32(insn, 5, 5);
--    int rd = extract32(insn, 0, 5);
--    gen_helper_gvec_2 *genfn2 = NULL;
--    gen_helper_gvec_3 *genfn3 = NULL;
+-    TCGv_i64 res, qc, a, b;
 -
--    if (!dc_isar_feature(aa64_aes, s) || size != 0) {
--        unallocated_encoding(s);
+-    if (!is_scalar) {
+-        gen_gvec_fn3(s, is_q, rd, rd, rn,
+-                     is_u ? gen_gvec_usqadd_qc : gen_gvec_suqadd_qc, size);
 -        return;
 -    }
 -
--    switch (opcode) {
--    case 0x4: /* AESE */
--        genfn3 = gen_helper_crypto_aese;
--        break;
--    case 0x6: /* AESMC */
--        genfn2 = gen_helper_crypto_aesmc;
--        break;
--    case 0x5: /* AESD */
--        genfn3 = gen_helper_crypto_aesd;
--        break;
--    case 0x7: /* AESIMC */
--        genfn2 = gen_helper_crypto_aesimc;
--        break;
--    default:
--        unallocated_encoding(s);
--        return;
--    }
+-    res = tcg_temp_new_i64();
+-    qc = tcg_temp_new_i64();
+-    a = tcg_temp_new_i64();
+-    b = tcg_temp_new_i64();
 -
--    if (!fp_access_check(s)) {
--        return;
--    }
--    if (genfn2) {
--        gen_gvec_op2_ool(s, true, rd, rn, 0, genfn2);
+-    /* Read and extend scalar inputs to 64-bits. */
+-    read_vec_element(s, a, rd, 0, size | (is_u ? 0 : MO_SIGN));
+-    read_vec_element(s, b, rn, 0, size | (is_u ? MO_SIGN : 0));
+-    tcg_gen_ld_i64(qc, tcg_env, offsetof(CPUARMState, vfp.qc));
+-
+-    if (size == MO_64) {
+-        if (is_u) {
+-            gen_usqadd_d(res, qc, a, b);
+-        } else {
+-            gen_suqadd_d(res, qc, a, b);
+-        }
 -    } else {
--        gen_gvec_op3_ool(s, true, rd, rd, rn, 0, genfn3);
+-        if (is_u) {
+-            gen_usqadd_bhs(res, qc, a, b, size);
+-        } else {
+-            gen_suqadd_bhs(res, qc, a, b, size);
+-            /* Truncate signed 64-bit result for writeback. */
+-            tcg_gen_ext_i64(res, res, size);
+-        }
 -    }
+-
+-    write_fp_dreg(s, rd, res);
+-    tcg_gen_st_i64(qc, tcg_env, offsetof(CPUARMState, vfp.qc));
 -}
 -
- /* Crypto three-reg SHA
-  *  31             24 23  22  21 20  16  15 14    12 11 10 9    5 4    0
-  * +-----------------+------+---+------+---+--------+-----+------+------+
-@@ -13911,7 +13900,6 @@ static const AArch64DecodeTable data_proc_simd[] = {
-     { 0x5e000400, 0xdfe08400, disas_simd_scalar_copy },
-     { 0x5f000000, 0xdf000400, disas_simd_indexed }, /* scalar indexed */
-     { 0x5f000400, 0xdf800400, disas_simd_scalar_shift_imm },
--    { 0x4e280800, 0xff3e0c00, disas_crypto_aes },
-     { 0x5e000000, 0xff208c00, disas_crypto_three_reg_sha },
-     { 0x5e280800, 0xff3e0c00, disas_crypto_two_reg_sha },
-     { 0xce608000, 0xffe0b000, disas_crypto_three_reg_sha512 },
+ /* AdvSIMD scalar two reg misc
+  *  31 30  29 28       24 23  22 21       17 16    12 11 10 9    5 4    0
+  * +-----+---+-----------+------+-----------+--------+-----+------+------+
+@@ -10064,12 +10026,6 @@ static void disas_simd_scalar_two_reg_misc(DisasContext *s, uint32_t insn)
+     TCGv_ptr tcg_fpstatus;
+ 
+     switch (opcode) {
+-    case 0x3: /* USQADD / SUQADD*/
+-        if (!fp_access_check(s)) {
+-            return;
+-        }
+-        handle_2misc_satacc(s, true, u, false, size, rn, rd);
+-        return;
+     case 0x7: /* SQABS / SQNEG */
+         break;
+     case 0xa: /* CMLT */
+@@ -10169,6 +10125,7 @@ static void disas_simd_scalar_two_reg_misc(DisasContext *s, uint32_t insn)
+         }
+         break;
+     default:
++    case 0x3: /* USQADD / SUQADD */
+         unallocated_encoding(s);
+         return;
+     }
+@@ -11660,16 +11617,6 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
+             return;
+         }
+         break;
+-    case 0x3: /* SUQADD, USQADD */
+-        if (size == 3 && !is_q) {
+-            unallocated_encoding(s);
+-            return;
+-        }
+-        if (!fp_access_check(s)) {
+-            return;
+-        }
+-        handle_2misc_satacc(s, false, u, is_q, size, rn, rd);
+-        return;
+     case 0x7: /* SQABS, SQNEG */
+         if (size == 3 && !is_q) {
+             unallocated_encoding(s);
+@@ -11844,6 +11791,7 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
+         break;
+     }
+     default:
++    case 0x3: /* SUQADD, USQADD */
+         unallocated_encoding(s);
+         return;
+     }
 -- 
 2.34.1
 
