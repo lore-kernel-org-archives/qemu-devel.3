@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFB6AC25B4F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 14:07:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 474CBC10F16
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 14:07:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3yzs-0000hE-RM; Mon, 06 May 2024 10:07:16 -0400
+	id 1s3yzS-0000V6-Q6; Mon, 06 May 2024 10:06:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3yzq-0000fq-KB
- for qemu-devel@nongnu.org; Mon, 06 May 2024 10:07:14 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3yzQ-0000US-Kg
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 10:06:48 -0400
+Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3yzj-0003Ne-45
- for qemu-devel@nongnu.org; Mon, 06 May 2024 10:07:14 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2e0933d3b5fso25299291fa.2
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 07:07:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3yzO-0003ME-T4
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 10:06:48 -0400
+Received: by mail-lf1-x130.google.com with SMTP id
+ 2adb3069b0e04-51f29e80800so2119210e87.2
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 07:06:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715004425; x=1715609225; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715004404; x=1715609204; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ys3nXqHYRv3BJVb6DxHAxB8fKiZMOgfbiFOG3Qz/k7M=;
- b=GuJ+hBtc3vzhMGtsaOZoV8tl5wI5srMjCf8EGBPvAlUH/pg1is3B520gav2rm2wmDA
- fxSXU9+Own2DWfIA3Ns8jhOnlWLgJoF/PFadgtZbLlsOiTeoX7PFRTqZsmprPUKYuaK6
- EnSKk6sM9eb5BTt2CcTLnjkMIMcy/a7U94FPsomb5Xrc2Hbba30cNQu4ClmOS3eaRhHf
- hH6lYv5hY3bgn0OR4TQAuPcncjxmkxB7qrnL70rSKe+XAiwNc/Ta1/JIIgtzCn9kSxrX
- jUme3w0Toj5Fmx3NSwgmcPBTZSjL1iW+ayob4xjgY4Mhau+jAQVZ3LG25VCLWrl3csOD
- aYTQ==
+ bh=nRUoICy/spSW1zCEmwRT84NBpmmvaibCrHd5mY4msvw=;
+ b=eXsilrjCvuZmvceyA38pTdgd3au7KHIM1qrhBYrm+wBmaAuxHmiBg74sZiVi7KBbqH
+ mEL8dysyNCKhCtW3JgT8oyTwNNNPhL8FUZFoagc7hH3gvCFCfIDZdR9K1b9fEc36/NeJ
+ enhgUEE2Ljgk78hGJfX+ISTnjPTNBLjFjRbo8QBYOl5Q2lmQCpWBuzDTbk3DvZiFOn+r
+ FMA06pY6SdX3Fc51VpO+T2WL974PNegAD3TCRfE9uTyLETOMSzeT15Y/Xq5EeQBIaHF7
+ EY139TUD/gBkC0mIMu5kVIoSQg3eAyhVslM/pxz23fM7TUjnvMKS0bWcVuDZMMoUE/jZ
+ MdZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715004425; x=1715609225;
+ d=1e100.net; s=20230601; t=1715004404; x=1715609204;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ys3nXqHYRv3BJVb6DxHAxB8fKiZMOgfbiFOG3Qz/k7M=;
- b=FukY5BBTUyFeC4OWLnsXLe8A47IMfhxapdvY31CejwtZK7mDrw6/CqJ5itLGTUjQ5l
- 6nDtNP64vb/WqmG75x6J8LyAyTWaTl7BZLVyFQvFYHY+U3GhgqRIn8Ld0H89b6pZa2zk
- Wnjol6399k/kASV8sBgu8aIngPjUr8WfI5HCK1bC2R+ues9oJCPJxM7UfOy7buLwd+tA
- 9t5gCu3Odx0Y+cZBrpwtAM94164GuVjGggWly2VWwa6nurV4TSBt5L8C8DTU4YwthA4a
- ozUZxeOBSAjlWlCMJ5YJ7zNC8HBhXi2R0mmNz2+3Zw5LCpiL7pwdih3hZxnORj/I/J9n
- nNaA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX2+IJGLar6miBE6i/92AmkHg9PeCqDxgZvFMm/2OQviU1Cu0xYJyJEIykGPLfYde0bEY/Gi+c2467Jvi6stEBBGgF3Ez0=
-X-Gm-Message-State: AOJu0YxF+Ovg70z6dIe/WVhGbvPg7+PVfKBLa75ppYU7VziXpU/LkOqK
- qHSQfnHTLmmhLoKr+fXMGoRBkEfzbiTRNfs7KdsTOw9ciesaCluh9I8/h1ygbC+kfgcwaoI+8M2
- G
-X-Google-Smtp-Source: AGHT+IGceLeYci/usnQ0gyQEOeEUqkuVTq8+pUeR85picBG1vRykWUSiAJaw9RdVCXJ407I5lHr+Kg==
-X-Received: by 2002:a2e:9a90:0:b0:2de:bae:b306 with SMTP id
- p16-20020a2e9a90000000b002de0baeb306mr7551409lji.8.1715004425291; 
- Mon, 06 May 2024 07:07:05 -0700 (PDT)
+ bh=nRUoICy/spSW1zCEmwRT84NBpmmvaibCrHd5mY4msvw=;
+ b=jNqLVMuZVOIqbFsh8QvpWuvB4KzI8NcIzZYk1+kxPiKgLO87LMA6932VvCCW1tUFhI
+ +zFsvNSBgtGLJNgau3tRmA1evypfHR8WjdIDTiF4XNL4e3o5yysoE/ncEXNz1dZY+0bM
+ /uW62i6dYrf+euHCvVN9TlO9s28IsUcULXunO0SZXcnbYIbGVVGQSfwyMsH7TwiHlaSJ
+ skh1kWRiqL8FdHpAOkVP5Yee5dMkhfMl8JRKKvt62nxR8YalGzH1Qjl+xJDiwMDSeP8w
+ MOasQQP4hqMHc3hue8La2V1ZhArsaPNEJ0zVWetp8EK1VdYCFTy/hyIm5M7p2F63kOSQ
+ GIkQ==
+X-Gm-Message-State: AOJu0YwSXvCaWb+rpyUeU+7ndmBlm0DCxcA3aRCVOsPgSdMcJR2EzBKv
+ Hdp1HkW0ruZG5xliUO1GJN/HkpSebRGOQRG0u2ytdrjxJr3HkdkSSUeytfh6NX0=
+X-Google-Smtp-Source: AGHT+IFHKOAzZS/OvP1L2IsorPTSIYNmEiuyJPQww7PFn345i3QsZAHG+rFN8s09NPKdGPY6Y+Pomw==
+X-Received: by 2002:a2e:be9a:0:b0:2df:55a3:43af with SMTP id
+ a26-20020a2ebe9a000000b002df55a343afmr6980563ljr.41.1715004404242; 
+ Mon, 06 May 2024 07:06:44 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.211.4])
  by smtp.gmail.com with ESMTPSA id
- p20-20020a05600c469400b0041bc41287cesm16252017wmo.16.2024.05.06.07.07.03
+ bi15-20020a05600c3d8f00b0041c24321934sm20038264wmb.41.2024.05.06.07.06.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 May 2024 07:07:03 -0700 (PDT)
-Message-ID: <0b2b8ac1-475e-4bbb-b4d2-7a65da563ba2@linaro.org>
-Date: Mon, 6 May 2024 16:07:02 +0200
+ Mon, 06 May 2024 07:06:42 -0700 (PDT)
+Message-ID: <3e4d3589-692e-4628-a883-3319e8a593a4@linaro.org>
+Date: Mon, 6 May 2024 16:06:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] MAINTAINERS: Update my email address
-To: Bin Meng <bmeng.cn@gmail.com>, qemu-devel@nongnu.org,
- Alistair Francis <alistair.francis@wdc.com>
-Cc: Bin Meng <bin.meng.cn@windriver.com>
-References: <20240505072312.2776074-1-bmeng.cn@gmail.com>
+Subject: Re: [PATCH] MAINTAINERS: Update Aleksandar Rikalo email
+To: Markus Armbruster <armbru@redhat.com>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
+Cc: qemu-devel@nongnu.org, Aleksandar Rikalo <arikalo@gmail.com>,
+ qemu-trivial@nongnu.org
+References: <20240209062147.62453-1-aleksandar.rikalo@syrmia.com>
+ <87h6fbsc27.fsf@pond.sub.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240505072312.2776074-1-bmeng.cn@gmail.com>
+In-Reply-To: <87h6fbsc27.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::130;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,27 +96,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/5/24 09:23, Bin Meng wrote:
-> From: Bin Meng <bin.meng.cn@windriver.com>
+On 6/5/24 08:13, Markus Armbruster wrote:
+> Looks like this fell through the cracks.
 > 
-> The old Wind River email address (bin.meng@windriver.com) is no longer
-> available due to an internal infrastructure change within the company.
-> While a new email address (bin.meng.cn@windriver.com) has been assigned
-> to me, I am unable to find a way to send this patch directly from the
-> new address. Presumably, the basic authentication with client submission
-> (SMTP AUTH) [1] has been disabled by the company's IT.
+> As far as I can tell, the patch did come from @syrmia.com.
 > 
-> Switch to use my personal email address instead.
+> Cc'ing qemu-trivial.
 > 
-> Signed-off-by: Bin Meng <bin.meng.cn@windriver.com>
-> Signed-off-by: Bin Meng <bmeng.cn@gmail.com>
+> Aleksandar Rikalo <aleksandar.rikalo@syrmia.com> writes:
 > 
-> [1] https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/how-to-set-up-a-multifunction-device-or-application-to-send-email-using-microsoft-365-or-office-365
-> 
-> ---
-> 
-> Changes in v2:
-> - Provide more background info for the email address change
+>> Syrmia LLC has been acquired recently and the syrmia.com domain will
+>> disappear soon, so updating my email in the MAINTAINERS file.
+>>
+>> Signed-off-by: Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
+>> ---
+>>   MAINTAINERS | 10 +++++-----
+>>   1 file changed, 5 insertions(+), 5 deletions(-)
 
 Queued, thanks.
 
