@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97F0CC10F16
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 08:02:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8571C25B5F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 08:02:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3t9V-0006w3-Cl; Mon, 06 May 2024 03:52:49 -0400
+	id 1s3t9A-0005x3-1S; Mon, 06 May 2024 03:52:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s3t9P-0006Zy-CM
- for qemu-devel@nongnu.org; Mon, 06 May 2024 03:52:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1s3t8j-0005nO-H6
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 03:52:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s3t9N-0001jR-2d
- for qemu-devel@nongnu.org; Mon, 06 May 2024 03:52:42 -0400
+ id 1s3t8i-0001cg-1w
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 03:52:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714981960;
+ s=mimecast20190719; t=1714981919;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DStBOVuOMmNiEoCX8orG6MRwWNCRdkFLsbdf73i2SnU=;
- b=ivAqDiJrHtJpvbbmfSzpjCqYvBm3i6c9wZALzysB2oFli12hkLcU1LVCNGdsnvUhgVE++A
- qBrQCPJ+ulm27nwPMC/ZRQvUfQdQA5Qrm+nXRFJLZjEAMNMLuaH5fmVUWGEEZ20dSg3Zgu
- PA+Gmuyd3toFWbz9z5hp5G0VT0hAkw8=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=iN4tbNSzLnnxZylnaIpsJ38zvZ6eIX3lpJVpzpt9iIU=;
+ b=L81vWV+oFNp4AxhIbrqUjXGk84AxusQXHkhIHfgj3n56rFgJ15tuI+yQc6q2f9FOH90HII
+ VmZw6sp58zZIvuHa0+49Rb/lpMtQF3F86Dfy5GnGwJwrFqLZpRZHlegBHvU7NdqbrGxpsw
+ uSA/CXeFZjG++lsCZSsoPKjbKvn6FRw=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-401-Zec38qQJN8KGz8oNffmcEg-1; Mon, 06 May 2024 03:52:38 -0400
-X-MC-Unique: Zec38qQJN8KGz8oNffmcEg-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a59ab39c8b6so108764666b.2
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 00:52:38 -0700 (PDT)
+ us-mta-150-Cnz3ngx6OXCYPRKSGg76mQ-1; Mon, 06 May 2024 03:51:57 -0400
+X-MC-Unique: Cnz3ngx6OXCYPRKSGg76mQ-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a59c02f798bso98239266b.1
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 00:51:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714981957; x=1715586757;
+ d=1e100.net; s=20230601; t=1714981916; x=1715586716;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DStBOVuOMmNiEoCX8orG6MRwWNCRdkFLsbdf73i2SnU=;
- b=X+OzXG1Uq0+ntna2IXWvsoWW18UL1yQiZe0+8oJ54I45yQW3RVH8Bl/+nevw5q1HG9
- Aav/aKtpYl6cLxPdwOnpQIt2KOgNJzr1+h+1/1vokc5pnWZ7Xx5M4WGjYpxwiuH+Uewe
- EU5XnF4mu6J52Sfh3CdCS/s4UrxOvRk7g9lw5RBhDYD37riJwBgBUwjr1z6h5K628ApQ
- JhBDBtkfGlklVJTDYo+9RbIoP6HRqtl0yJr8tK3eAtvl7dB2//H7SH3jjKR2yhualT0v
- IewtxC9cTyaAP9WWyk+IgFjEiCMLSYKxm3AczyLXE1lgnLVRP01ZJioqvsHuNumNmU9R
- XgqA==
-X-Gm-Message-State: AOJu0Yxtqq6UZ5Xt9uFZv/Rf+l6vsqQbqw58U6WkDZ92658MDEeQu1zq
- TQzzxe7iZtJuMm0V/DPHgtuldFNOzye24kx/JuQ7eCHp9GVlzc3XIe7789ZutCo3aTUol+FOksn
- Zz6LPwd2jWha579sGjD8YQDfJkPhwZ0CThZhDTaui/Ctp0CQqiX/4bqRfvqhEhkotOqjbl+OFsS
- N8+ptcXIycfolzPHLRIB2pNUVNj6evE1A2NK+k
-X-Received: by 2002:a17:907:94c1:b0:a59:cdf4:f939 with SMTP id
- dn1-20020a17090794c100b00a59cdf4f939mr1434285ejc.3.1714981956771; 
- Mon, 06 May 2024 00:52:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEgPVtQ9nPlYPZc2v9qdz8sHrzfGCINPXEIEAnLVZyGaqajrIo1wEBKtnkmVodDkM2X16mdJQ==
-X-Received: by 2002:a17:907:94c1:b0:a59:cdf4:f939 with SMTP id
- dn1-20020a17090794c100b00a59cdf4f939mr1434269ejc.3.1714981956342; 
- Mon, 06 May 2024 00:52:36 -0700 (PDT)
+ bh=iN4tbNSzLnnxZylnaIpsJ38zvZ6eIX3lpJVpzpt9iIU=;
+ b=RkyCBUS4xkT88zpQXYccNp6SLr5oWHED64ncQXYESpRycn3P3QjAZUwLKvCf+vYtRX
+ Vv0SzSwzj1kOidcmZ5qLpYv+SW0LF33VihvNQuwnVeM9nzn91v9DTxAqn+mlnEGTbhtE
+ 0w8TZTNUoS10EwMbjwX3YthHDZIcWBF/SWNy11kYlufUwttX2aDwOHJ5NG2UyQlqv9NV
+ MaEzDthI7aR1Wc9H2m5JeksgSuVf0mOOdUJmT4tvoh1BAKEvnbj8VhaP1sT71xF2xwVq
+ 0AE6/Rnl6qCmDgrF9svGj2p2X5+jyU8jkpQHBo8XH1vivn9cynaVZiH9Xxcgw8J9kQC0
+ Al8g==
+X-Gm-Message-State: AOJu0YzMnjnq/uuY15dXyqZHuhOzZoNzV8lzs6TKxgxf4sFT7pNVQ5SB
+ PIuoWWl/whNjCUSNKARp64qHMFwzTHwjp1wMkqhzAwdjei+YqnJlSa1AuYxF+/Uov3+JPF5JTM+
+ p1aXMudVTwoWWviM/Pasf/zJMT4uHtaJQcKvsQ3WSZvfEConbUjC2pwkIDrY6pIc1RhaFE6ngPX
+ pAyIkVhHOLAAdaSWv2+GeoeGoyHm385r67bydI
+X-Received: by 2002:a17:906:b858:b0:a59:a282:5dbd with SMTP id
+ ga24-20020a170906b85800b00a59a2825dbdmr5691781ejb.66.1714981916103; 
+ Mon, 06 May 2024 00:51:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEszT7UWcHMI2CfPXwjJuy1hwAjF2JBB5MnKqWapjNPKVFMuKN8Kn1xbAH/prdcQKVjUbG8PA==
+X-Received: by 2002:a17:906:b858:b0:a59:a282:5dbd with SMTP id
+ ga24-20020a170906b85800b00a59a2825dbdmr5691767ejb.66.1714981915705; 
+ Mon, 06 May 2024 00:51:55 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- fw14-20020a170906c94e00b00a59bf41edbesm1842051ejb.146.2024.05.06.00.52.35
+ a6-20020a1709064a4600b00a59c3a49fc6sm1612424ejv.72.2024.05.06.00.51.55
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 May 2024 00:52:35 -0700 (PDT)
+ Mon, 06 May 2024 00:51:55 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Lei Wang <lei4.wang@intel.com>
-Subject: [PULL 28/46] target/i386: Introduce SapphireRapids-v3 to add missing
- features
-Date: Mon,  6 May 2024 09:51:07 +0200
-Message-ID: <20240506075125.8238-29-pbonzini@redhat.com>
+Subject: [PULL 11/46] hppa: switch boards to "default y"
+Date: Mon,  6 May 2024 09:50:50 +0200
+Message-ID: <20240506075125.8238-12-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240506075125.8238-1-pbonzini@redhat.com>
 References: <20240506075125.8238-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -103,40 +102,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Lei Wang <lei4.wang@intel.com>
+Some targets use "default y" for boards to filter out those that require
+TCG.  For consistency we are switching all other targets to do the same.
+Continue with PARISC.
 
-Add the missing features(ss, tsc-adjust, cldemote, movdiri, movdir64b) in
-the SapphireRapids-v3 CPU model.
+No changes to generated config-devices.mak file.
 
-Signed-off-by: Lei Wang <lei4.wang@intel.com>
-Message-ID: <20240424072912.43188-1-lei4.wang@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ configs/devices/hppa-softmmu/default.mak | 5 ++---
+ .gitlab-ci.d/buildtest.yml               | 2 +-
+ hw/hppa/Kconfig                          | 2 ++
+ 3 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index aa3b2d83912..e5723f232c0 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -3970,6 +3970,17 @@ static const X86CPUDefinition builtin_x86_defs[] = {
-                     { /* end of list */ }
-                 }
-             },
-+            {
-+                .version = 3,
-+                .props = (PropValue[]) {
-+                    { "ss", "on" },
-+                    { "tsc-adjust", "on" },
-+                    { "cldemote", "on" },
-+                    { "movdiri", "on" },
-+                    { "movdir64b", "on" },
-+                    { /* end of list */ }
-+                }
-+            },
-             { /* end of list */ }
-         }
-     },
+diff --git a/configs/devices/hppa-softmmu/default.mak b/configs/devices/hppa-softmmu/default.mak
+index b0364bb88f2..059510cdbb7 100644
+--- a/configs/devices/hppa-softmmu/default.mak
++++ b/configs/devices/hppa-softmmu/default.mak
+@@ -4,6 +4,5 @@
+ #
+ #CONFIG_PCI_DEVICES=n
+ 
+-# Boards:
+-#
+-CONFIG_HPPA_B160L=y
++# Boards are selected by default, uncomment to keep out of the build.
++# CONFIG_HPPA_B160L=n
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index f4dc5666467..6531758d968 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -662,7 +662,7 @@ build-without-defaults:
+       --disable-pie
+       --disable-qom-cast-debug
+       --disable-strip
+-    TARGETS: alpha-softmmu avr-softmmu cris-softmmu
++    TARGETS: alpha-softmmu avr-softmmu cris-softmmu hppa-softmmu
+       s390x-softmmu sh4-softmmu
+       sparc64-softmmu hexagon-linux-user i386-linux-user s390x-linux-user
+     MAKE_CHECK_ARGS: check
+diff --git a/hw/hppa/Kconfig b/hw/hppa/Kconfig
+index ee7ffd2bfb5..d4d457f4ab4 100644
+--- a/hw/hppa/Kconfig
++++ b/hw/hppa/Kconfig
+@@ -1,5 +1,7 @@
+ config HPPA_B160L
+     bool
++    default y
++    depends on HPPA
+     imply PCI_DEVICES
+     imply E1000_PCI
+     imply USB_OHCI_PCI
 -- 
 2.44.0
 
