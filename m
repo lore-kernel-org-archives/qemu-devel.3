@@ -4,59 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDB44C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 08:36:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61DF3C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 08:36:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3tos-0008Jy-B1; Mon, 06 May 2024 04:35:34 -0400
+	id 1s3tpo-0000Vc-07; Mon, 06 May 2024 04:36:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1s3toX-0008Hi-8q
- for qemu-devel@nongnu.org; Mon, 06 May 2024 04:35:14 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1s3tpk-0000SZ-Vh
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 04:36:29 -0400
+Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1s3toR-00006Y-6r
- for qemu-devel@nongnu.org; Mon, 06 May 2024 04:35:11 -0400
-Received: from mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net
- [IPv6:2a02:6b8:c12:379a:0:640:b005:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 0CEC860CF5;
- Mon,  6 May 2024 11:34:59 +0300 (MSK)
-Received: from d-tatianin-lin.yandex-team.ru (unknown
- [2a02:6b8:b081:1319::1:21])
- by mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id qYSunJ3IYOs0-J8RU2Ngv; Mon, 06 May 2024 11:34:58 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1714984498;
- bh=xPDWZJqmvmhCPj6oX0+mNKUHgkYuT3vZDw+8XdUON5g=;
- h=Message-Id:Date:Cc:Subject:To:From;
- b=D3gYaegNuJHduo5nNMFljEyKHDc5vpCKLy41bXecHNdyh0UsuCb5yrC1Vv4vDapJ4
- JvqdVC4f/tYDNYL6bkAZSfY7E4yaNh8YwqVmzU5HR3+fHnBfwGxBVTt9K+FVKlJodT
- 9Fex/AgtY2hpqqoOzMDuJoCH3H4qR2Ck9Y95NL9c=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Daniil Tatianin <d-tatianin@yandex-team.ru>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Subject: [PATCH v3] mc146818rtc: add a way to generate RTC interrupts via QMP
-Date: Mon,  6 May 2024 11:34:20 +0300
-Message-Id: <20240506083420.557726-1-d-tatianin@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1s3tpb-0000Ph-FM
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 04:36:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1714984579; x=1746520579;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=8gppBe4HPRasMsk5TjYJ/K6juHzs9jT5l6J3TjgHbrE=;
+ b=SUOvRyQ1tG0furWpByYQkoCNwgKyZ68BUmXdv5hup/l/K3TtwFU7AgwY
+ SHQjeod3W3RD06EfRZBvhlMDfKQ6hxeOHCQOA/ePo3nwPCtEA0c2j+szT
+ RJ8hSfNsh3EBG5FmzJA4GZsza957qdxZoLk9HCloxn6hFdXZR/boUAFWl
+ Es0Rr1Zfkph4JcOxl57QN9gVxVTdfp3dHXf7APKgNONNoz3X7fzN1oJr/
+ I1bBuvrD4e6cmeDc2XXOJzNbIn3C+bmQD6s36ZCIvsgnxHi+UxZsVeJ38
+ 8exNZp2Ymjalh0WA9Q26f8VaU/2wiEEUvvAgWuC3JkdDFTdctnpI4E1tI Q==;
+X-CSE-ConnectionGUID: JMXuwq2/T/+dSrrIHUvnwg==
+X-CSE-MsgGUID: hb5inSWFRDW6R1PNYNfZHw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11064"; a="10647843"
+X-IronPort-AV: E=Sophos;i="6.07,257,1708416000"; d="scan'208";a="10647843"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 May 2024 01:36:16 -0700
+X-CSE-ConnectionGUID: KAA7Y+RcReaSZGrhBl7otw==
+X-CSE-MsgGUID: 7PrvbfalReah5LM3S5sDlw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,257,1708416000"; d="scan'208";a="28606564"
+Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.124])
+ by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 May 2024 01:36:14 -0700
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
+ chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PATCH 0/3] Cleanup VFIOIOMMUClass callback return with bool
+Date: Mon,  6 May 2024 16:33:49 +0800
+Message-Id: <20240506083352.4037226-1-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=198.175.65.21;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.431,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -73,113 +80,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This can be used to force-synchronize the time in guest after a long
-stop-cont pause, which can be useful for serverless-type workload.
+Hi
 
-Also add a comment to highlight the fact that this (and one other QMP
-command) only works for the MC146818 RTC controller.
+This is a cleanup series to change VFIOIOMMUClass callbacks to return
+bool when the error is passed through errp parameter.
 
-Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
----
+See discussion at https://lists.gnu.org/archive/html/qemu-devel/2024-04/msg04782.html
 
-Changes since v0:
-- Rename to rtc-inject-irq to match other similar API
-- Add a comment to highlight that this only works for the I386 RTC
+It looks many functions in VFIO sub-system need same change,
+so this can be a very first series.
 
-Changes since v1:
-- Added a description below the QMP command to explain how it can be
-  used and what it does.
+Test done on x86 platform:
+vfio device hotplug/unplug with different backend
+reboot
 
-Changes since v2:
-- Add a 'broadcast' suffix.
-- Change the comments to explain the flags we're setting.
-- Change the command description to fix styling & explain that it's a broadcast command.
+Thanks
+Zhenzhong
 
----
- hw/rtc/mc146818rtc.c         | 20 ++++++++++++++++++++
- include/hw/rtc/mc146818rtc.h |  1 +
- qapi/misc-target.json        | 19 +++++++++++++++++++
- 3 files changed, 40 insertions(+)
+Zhenzhong Duan (3):
+  vfio: Make VFIOIOMMUClass::attach_device() and its wrapper return bool
+  vfio: Make VFIOIOMMUClass::setup() return bool
+  vfio: Make VFIOIOMMUClass::add_window() and its wrapper return bool
 
-diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
-index 3379f92748..2b3754f5c6 100644
---- a/hw/rtc/mc146818rtc.c
-+++ b/hw/rtc/mc146818rtc.c
-@@ -107,6 +107,11 @@ static void rtc_coalesced_timer_update(MC146818RtcState *s)
- static QLIST_HEAD(, MC146818RtcState) rtc_devices =
-     QLIST_HEAD_INITIALIZER(rtc_devices);
- 
-+/*
-+ * NOTE:
-+ * The two QMP functions below are _only_ implemented for the MC146818.
-+ * All other RTC devices ignore this.
-+ */
- void qmp_rtc_reset_reinjection(Error **errp)
- {
-     MC146818RtcState *s;
-@@ -116,6 +121,21 @@ void qmp_rtc_reset_reinjection(Error **errp)
-     }
- }
- 
-+void qmp_rtc_inject_irq_broadcast(Error **errp)
-+{
-+    MC146818RtcState *s;
-+
-+    QLIST_FOREACH(s, &rtc_devices, link) {
-+        // Update-ended interrupt enable
-+        s->cmos_data[RTC_REG_B] |= REG_B_UIE;
-+
-+        // Interrupt request flag | update interrupt flag
-+        s->cmos_data[RTC_REG_C] |= REG_C_IRQF | REG_C_UF;
-+
-+        qemu_irq_raise(s->irq);
-+    }
-+}
-+
- static bool rtc_policy_slew_deliver_irq(MC146818RtcState *s)
- {
-     kvm_reset_irq_delivered();
-diff --git a/include/hw/rtc/mc146818rtc.h b/include/hw/rtc/mc146818rtc.h
-index 97cec0b3e8..e9dd0f9c72 100644
---- a/include/hw/rtc/mc146818rtc.h
-+++ b/include/hw/rtc/mc146818rtc.h
-@@ -56,5 +56,6 @@ MC146818RtcState *mc146818_rtc_init(ISABus *bus, int base_year,
- void mc146818rtc_set_cmos_data(MC146818RtcState *s, int addr, int val);
- int mc146818rtc_get_cmos_data(MC146818RtcState *s, int addr);
- void qmp_rtc_reset_reinjection(Error **errp);
-+void qmp_rtc_inject_irq_broadcast(Error **errp);
- 
- #endif /* HW_RTC_MC146818RTC_H */
-diff --git a/qapi/misc-target.json b/qapi/misc-target.json
-index 4e0a6492a9..7d388a3753 100644
---- a/qapi/misc-target.json
-+++ b/qapi/misc-target.json
-@@ -19,6 +19,25 @@
- { 'command': 'rtc-reset-reinjection',
-   'if': 'TARGET_I386' }
- 
-+##
-+# @rtc-inject-irq-broadcast:
-+#
-+# Inject an RTC interrupt for all existing RTCs on the system.
-+# The interrupt forces the guest to synchronize the time with RTC.
-+# This is useful after a long stop-cont pause, which is common for
-+# serverless-type workload.
-+#
-+# Since: 9.1
-+#
-+# Example:
-+#
-+#     -> { "execute": "rtc-inject-irq-broadcast" }
-+#     <- { "return": {} }
-+#
-+##
-+{ 'command': 'rtc-inject-irq-broadcast',
-+  'if': 'TARGET_I386' }
-+
- ##
- # @SevState:
- #
+ include/hw/vfio/vfio-common.h         |  4 ++--
+ include/hw/vfio/vfio-container-base.h | 18 ++++++++---------
+ hw/vfio/ap.c                          |  6 ++----
+ hw/vfio/ccw.c                         |  6 ++----
+ hw/vfio/common.c                      |  6 +++---
+ hw/vfio/container-base.c              |  8 ++++----
+ hw/vfio/container.c                   | 24 +++++++++++------------
+ hw/vfio/iommufd.c                     | 11 +++++------
+ hw/vfio/pci.c                         |  8 +++-----
+ hw/vfio/platform.c                    |  7 +++----
+ hw/vfio/spapr.c                       | 28 +++++++++++++--------------
+ 11 files changed, 58 insertions(+), 68 deletions(-)
+
 -- 
 2.34.1
 
