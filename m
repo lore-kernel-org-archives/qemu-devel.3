@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F34E6C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 07:58:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AE10C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 08:00:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3tAp-0001xB-Qd; Mon, 06 May 2024 03:54:13 -0400
+	id 1s3t9H-0006De-MB; Mon, 06 May 2024 03:52:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s3tA9-000091-5Y
- for qemu-devel@nongnu.org; Mon, 06 May 2024 03:53:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1s3t97-0005uM-4W
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 03:52:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s3tA2-0001qV-SI
- for qemu-devel@nongnu.org; Mon, 06 May 2024 03:53:28 -0400
+ id 1s3t95-0001h6-GL
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 03:52:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714982002;
+ s=mimecast20190719; t=1714981941;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HoGDH+Rv7yjyMA09L6ivkS5qMJY1NeD7GH9r1OMOy2A=;
- b=aDhsmsP3E8GAgmn8YDzj9R3uyfZUSNdG+pdv/OskIFd2dpKrMZIgsrEw/Fpm/8Gz52/34i
- FFQYhtus/pyJcmdVtUJhz4X/ju1TgLtfzVMtwhniGz6YDZ2+ofg/KR8oeZLj3Po2SaDaO1
- /G9T3dCsrBkZG7cnY7qht+SWjqlVyiE=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=iCgAKilFMtFyGnLR98ktMLMEg7TiqKvecQepTbmci8Q=;
+ b=JOk1NQhXoaVBh7sVZYyVBqoSAijGo1kYHThjmkpCS+S4gpZRSp9Nl6GlqAyao/l4doP9ij
+ GkvW5IWCJtWlEGNP3l8MVB+vkx8kWIIfIBq42a1Koc4b2d5cAdnZiZ40KDjp2bncdAw6Ev
+ d57Q1mykU6eGSNry+lsMXqeoRnEdsM4=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-478-RRL5lvGRNo-iRUmMz4SKqw-1; Mon, 06 May 2024 03:53:20 -0400
-X-MC-Unique: RRL5lvGRNo-iRUmMz4SKqw-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a59cdf2141eso36414766b.2
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 00:53:20 -0700 (PDT)
+ us-mta-251-BLgFiuNtMuqOZKaNYMxxkQ-1; Mon, 06 May 2024 03:52:18 -0400
+X-MC-Unique: BLgFiuNtMuqOZKaNYMxxkQ-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-572a98b4020so822929a12.1
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 00:52:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714981999; x=1715586799;
+ d=1e100.net; s=20230601; t=1714981937; x=1715586737;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HoGDH+Rv7yjyMA09L6ivkS5qMJY1NeD7GH9r1OMOy2A=;
- b=i/nvzzthgpgDDsNcx+OCalnHQA5Z1VAinyO4hef+2QTkxkvYAyNPL1zjr/iFuXccls
- DTwY9La4K0lwtg0SNxoVMYSZBnu6vOVl1okjee+R5C8gcIH0La8iklxLPFIzqtNoBvOd
- sFt2bk0/zKf2prVDvKuQ+IGJKrCO+sUGK3WJaLSHrdnNLhDibtJabj72d/SmN4Y5BYaz
- 5MnPdJ26zumfY5PsWe2ZFM2QtbMhmDVDKn17LDlmImaoikLiavYizgj8jg7ukFLkJYRe
- qHjHjhx3V5C6s2Xh73cEn2R/5MUYphh0rcNg+dUdJf1PZTblHBwrwGpKSU2h/18tiJIo
- AoIw==
-X-Gm-Message-State: AOJu0YwOXMOUdRbhDpA0MDPdSusaBy+KFq+UwWs0D9AhGKCaCfKlDplX
- Xbn7IqExaS1oUuJJXSpdIIa9sD5X+OYmMTMyR+uTqYSFyndGdYpTycFFfi3om1DW/3mOgwqgRzZ
- IBy6YeJAz5ID4HYpooG21ro1UY+k3KkaiTSfrp+g/gVnUkdBjNMPUrhl5KTM+ARYNr710+qQxA4
- +7Zi/RHKdyuwp3ga9PQf4eqZiDA77TlANkbpvC
-X-Received: by 2002:a17:906:b012:b0:a59:d6d8:b24e with SMTP id
- v18-20020a170906b01200b00a59d6d8b24emr480232ejy.22.1714981999226; 
- Mon, 06 May 2024 00:53:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHqpZpb2xfiTNorA4wyKgRAykP6qSIhP4NTxuFfg/io7y1wA/7mTNSlVcXNPtNbJmfmTKr0fw==
-X-Received: by 2002:a17:906:b012:b0:a59:d6d8:b24e with SMTP id
- v18-20020a170906b01200b00a59d6d8b24emr480222ejy.22.1714981998937; 
- Mon, 06 May 2024 00:53:18 -0700 (PDT)
+ bh=iCgAKilFMtFyGnLR98ktMLMEg7TiqKvecQepTbmci8Q=;
+ b=Wh0tcb9sz6AB52cqx26zC4dSwyPW9upchSlQkvzHkh6S85evjSi0lSli/PX2z+dhpI
+ 1xlmR2DBNT8IkbNWmcDNcO+CJLaU1J3m4CIc/Fr+S/5Dq/Iewj8fqYJHHEERpt4jdOYu
+ +yvo5Jam1ZIWPTaCf9n1svbdN8J2vPNDug0iCtjrjM7yZEnerxDr+Th2E19Ps0nilTAu
+ jflfvaUKIESrCNSPFcahFH3UL8b1+1TqADbKwtRVNOVHm8k1RDxMXgJn7dUCD0FAKl3w
+ Vy+4JMI1bcO3wlLPTk++9TlZJ5P6Eh9eoDiBB9xHfdhxjS1SifYhn3rYuvFP3+uoqSBn
+ 8J2A==
+X-Gm-Message-State: AOJu0YxA7O1wMeloHj+3/jomzGz/kaDv1VwfZdgIWBLUFXbENtjHGFAK
+ nbHrZ1qMYEUWM0nnwrLLyxwoP7FM7Pup7RNIoYt/SeqnaqIbDaJ2QqxQo1mLs+PZwTZqStaVwOX
+ tCUk3J+GXJZpGOyOPTYIq22hBBfzLYSQgSmOZFbdMmhtqaw2PjWpqkPlVG+mCP7f99waBQv9nvZ
+ xbrffHxxorV/ezjUnhp3zcwQNwu6N42wMENHbH
+X-Received: by 2002:a50:99d8:0:b0:56c:d47:e403 with SMTP id
+ n24-20020a5099d8000000b0056c0d47e403mr5838528edb.28.1714981937437; 
+ Mon, 06 May 2024 00:52:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGMVJ1toRyPZ/8sV9SH+Ji+ajKkaP/dhcVhLvj9diMv9vn/FcANNl2HJ0F1yD89gwHIuWbwfw==
+X-Received: by 2002:a50:99d8:0:b0:56c:d47:e403 with SMTP id
+ n24-20020a5099d8000000b0056c0d47e403mr5838511edb.28.1714981937055; 
+ Mon, 06 May 2024 00:52:17 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- bm26-20020a170906c05a00b00a5588a9fe66sm4868540ejb.86.2024.05.06.00.53.18
+ i15-20020a0564020f0f00b005726dceb2easm4907453eda.20.2024.05.06.00.52.16
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 May 2024 00:53:18 -0700 (PDT)
+ Mon, 06 May 2024 00:52:16 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 45/46] migration: do not include coroutine_int.h
-Date: Mon,  6 May 2024 09:51:24 +0200
-Message-ID: <20240506075125.8238-46-pbonzini@redhat.com>
+Subject: [PULL 20/46] riscv: switch boards to "default y"
+Date: Mon,  6 May 2024 09:50:59 +0200
+Message-ID: <20240506075125.8238-21-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240506075125.8238-1-pbonzini@redhat.com>
 References: <20240506075125.8238-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -102,28 +102,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Migration code needs no private fields of the coroutine backend.
-Include the "regular" coroutine.h header.
+Some targets use "default y" for boards to filter out those that require
+TCG.  For consistency we are switching all other targets to do the same.
+Continue with RISC-V.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+No changes to generated config-devices.mak file.
+
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- migration/migration.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ configs/devices/riscv32-softmmu/default.mak | 13 ++++++-------
+ configs/devices/riscv64-softmmu/default.mak | 15 +++++++--------
+ .gitlab-ci.d/buildtest.yml                  |  2 +-
+ hw/riscv/Kconfig                            | 14 ++++++++++++++
+ 4 files changed, 28 insertions(+), 16 deletions(-)
 
-diff --git a/migration/migration.h b/migration/migration.h
-index 8045e39c26f..6c612c03819 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -19,7 +19,7 @@
- #include "qapi/qapi-types-migration.h"
- #include "qapi/qmp/json-writer.h"
- #include "qemu/thread.h"
--#include "qemu/coroutine_int.h"
-+#include "qemu/coroutine.h"
- #include "io/channel.h"
- #include "io/channel-buffer.h"
- #include "net/announce.h"
+diff --git a/configs/devices/riscv32-softmmu/default.mak b/configs/devices/riscv32-softmmu/default.mak
+index 07e4fd26df3..c2cd86ce05f 100644
+--- a/configs/devices/riscv32-softmmu/default.mak
++++ b/configs/devices/riscv32-softmmu/default.mak
+@@ -4,10 +4,9 @@
+ # CONFIG_PCI_DEVICES=n
+ # CONFIG_TEST_DEVICES=n
+ 
+-# Boards:
+-#
+-CONFIG_SPIKE=y
+-CONFIG_SIFIVE_E=y
+-CONFIG_SIFIVE_U=y
+-CONFIG_RISCV_VIRT=y
+-CONFIG_OPENTITAN=y
++# Boards are selected by default, uncomment to keep out of the build.
++# CONFIG_SPIKE=n
++# CONFIG_SIFIVE_E=n
++# CONFIG_SIFIVE_U=n
++# CONFIG_RISCV_VIRT=n
++# CONFIG_OPENTITAN=n
+diff --git a/configs/devices/riscv64-softmmu/default.mak b/configs/devices/riscv64-softmmu/default.mak
+index 221963d4c5c..39ed3a0061a 100644
+--- a/configs/devices/riscv64-softmmu/default.mak
++++ b/configs/devices/riscv64-softmmu/default.mak
+@@ -4,11 +4,10 @@
+ # CONFIG_PCI_DEVICES=n
+ # CONFIG_TEST_DEVICES=n
+ 
+-# Boards:
+-#
+-CONFIG_SPIKE=y
+-CONFIG_SIFIVE_E=y
+-CONFIG_SIFIVE_U=y
+-CONFIG_RISCV_VIRT=y
+-CONFIG_MICROCHIP_PFSOC=y
+-CONFIG_SHAKTI_C=y
++# Boards are selected by default, uncomment to keep out of the build.
++# CONFIG_SPIKE=n
++# CONFIG_SIFIVE_E=n
++# CONFIG_SIFIVE_U=n
++# CONFIG_RISCV_VIRT=n
++# CONFIG_MICROCHIP_PFSOC=n
++# CONFIG_SHAKTI_C=n
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index a5f4b4d3793..a65b5fc9560 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -649,7 +649,7 @@ build-tci:
+ 
+ # Check our reduced build configurations
+ # requires libfdt: aarch64, arm, i386, loongarch64, microblaze, microblazeel,
+-#   mips64el, or1k, ppc, ppc64, x86_64
++#   mips64el, or1k, ppc, ppc64, riscv32, riscv64, x86_64
+ # does not build without boards: i386, loongarch64, x86_64
+ build-without-defaults:
+   extends: .native_build_job_template
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index fc72ef03799..5f5f9e31bb0 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -8,6 +8,8 @@ config IBEX
+ 
+ config MICROCHIP_PFSOC
+     bool
++    default y
++    depends on RISCV64
+     select CADENCE_SDHCI
+     select CPU_CLUSTER
+     select MCHP_PFSOC_DMC
+@@ -21,12 +23,16 @@ config MICROCHIP_PFSOC
+ 
+ config OPENTITAN
+     bool
++    default y
++    depends on RISCV32
+     select IBEX
+     select SIFIVE_PLIC
+     select UNIMP
+ 
+ config RISCV_VIRT
+     bool
++    default y
++    depends on RISCV32 || RISCV64
+     imply PCI_DEVICES
+     imply VIRTIO_VGA
+     imply TEST_DEVICES
+@@ -51,6 +57,8 @@ config RISCV_VIRT
+ 
+ config SHAKTI_C
+     bool
++    default y
++    depends on RISCV64
+     select RISCV_ACLINT
+     select SHAKTI_UART
+     select SIFIVE_PLIC
+@@ -58,6 +66,8 @@ config SHAKTI_C
+ 
+ config SIFIVE_E
+     bool
++    default y
++    depends on RISCV32 || RISCV64
+     select RISCV_ACLINT
+     select SIFIVE_GPIO
+     select SIFIVE_PLIC
+@@ -68,6 +78,8 @@ config SIFIVE_E
+ 
+ config SIFIVE_U
+     bool
++    default y
++    depends on RISCV32 || RISCV64
+     select CADENCE
+     select CPU_CLUSTER
+     select RISCV_ACLINT
+@@ -85,6 +97,8 @@ config SIFIVE_U
+ 
+ config SPIKE
+     bool
++    default y
++    depends on RISCV32 || RISCV64
+     select RISCV_NUMA
+     select HTIF
+     select RISCV_ACLINT
 -- 
 2.44.0
 
