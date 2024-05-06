@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ACABC10F16
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 13:07:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82063C10F16
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 13:11:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3y26-0001tR-NR; Mon, 06 May 2024 09:05:30 -0400
+	id 1s3y79-0004P6-3j; Mon, 06 May 2024 09:10:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1s3y23-0001qB-UD
- for qemu-devel@nongnu.org; Mon, 06 May 2024 09:05:28 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1s3y20-0008BH-Gf
- for qemu-devel@nongnu.org; Mon, 06 May 2024 09:05:27 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-1ec4dc64c6cso12302715ad.0
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 06:05:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1715000715; x=1715605515; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=m2e6miWxvP8l2p8XuQ6anDUvvnsup8z0r2EdQToelss=;
- b=Ye5J+3CD9y8ZKkm7aRhMpV3gkrYkyPFDrk4jJ8Plc4Rp6NzuHU/yt8KgkY5oayOCFV
- HHCl473K2pkwVNSvFu3e7AjdOxgGiA9uVoXBJCD7RBaBjYphxWle95RNvUQd+WViJWIK
- BIHD02wLp7VESmhVIrDikGz4jc6ZSi7HCCkKaXDFkkePFSfk9e4udLJwZ2rwR3YEPn9f
- 5a5QGTRbTXDLIkz3nJu6a44SYzhwD60/M2LURIIvMQDYC/ntrOM2rmfLk2xe9cFl6/YC
- iqnn6wfWKtuM4fJscgKZJnARBwXECETd5S7197KmtPhbLysDdVti51/s9mFB9JXJ5A63
- Smtg==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1s3y77-0004Oo-A9
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 09:10:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1s3y75-0005IV-Pf
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 09:10:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715001038;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7sm632hvadCPIW1vd8okXxXRUR8xDRpvG9Kf+IaJIM8=;
+ b=ZzaT/4nixEHKpwxvh1lfMbC+V1x6GCOiQDPIVcp91LQ/ezdalVVVQjC191MeqgemPAnK78
+ EeKh8e9aIFf/U7wHcj8vTgVw/rj9/4IURdfBDDPH4Jkbb74tfohkmCbnN1wB5s0LOEGWpB
+ LIquXtLGRgmk7tVSTCD4ywga9/dpA4o=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-96-FviI1mvyNkCfLKCYA0grgg-1; Mon, 06 May 2024 09:10:37 -0400
+X-MC-Unique: FviI1mvyNkCfLKCYA0grgg-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-34dcec2cbbbso1386507f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 06:10:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715000715; x=1715605515;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=m2e6miWxvP8l2p8XuQ6anDUvvnsup8z0r2EdQToelss=;
- b=tCwon1Y5B5wKpj8qFkiQLSy7EwZWgZkw9gc8joHaNrR6GwUSx3JaOoOvm16kYv134l
- PxA1Un47WrQlGz0GCVZoS1+oEPruvrPHP9mNmv2/7snstwk4WihXefOBO5TPKyBMLv+V
- ub3RVNpgYSSewpr+xZIursheywBndtItYLdH7FWZ/lBT6htWUUfZ7FiULrdWCtjdtdlr
- eGI6xJ1sVXBI4yq0jcIFhtsEBs3FRpNRuhMaXOX2FzApxFRI0JoJUmueFuDO6DEIOhsR
- qaG6NYIwQrgxkXYNbWj92K1ypo96nqqLztL0I2GZNfqx2cUBXkq76DlUMM1A5sUUCijU
- Dt/g==
-X-Gm-Message-State: AOJu0YxUGljcYwFvhWtgdJSLmVv5QR952mrNOeo9/RC/oKbcvMQEQPSA
- IgqdnoLvhP66scoZvY6FSJhdeN0D7+JamJXirpyMVvrxofTeWyGqi6cjmFmOaiLIL+wD9G/6VtN
- 6
-X-Google-Smtp-Source: AGHT+IGOwJzhMhEp11Mu1Y8Ro+3/F1mirpNirXxEZDIA4e+nFoRnzf3b+yeiLih8bTyK97CRA8Rcrg==
-X-Received: by 2002:a17:902:bb95:b0:1e2:688e:597d with SMTP id
- m21-20020a170902bb9500b001e2688e597dmr10241247pls.21.1715000714089; 
- Mon, 06 May 2024 06:05:14 -0700 (PDT)
-Received: from [192.168.68.110] ([177.94.42.168])
- by smtp.gmail.com with ESMTPSA id
- kn14-20020a170903078e00b001e27557050dsm8209549plb.178.2024.05.06.06.05.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 May 2024 06:05:13 -0700 (PDT)
-Message-ID: <e3eba1d7-35d7-4ecd-8443-320cbebc2bc3@ventanamicro.com>
-Date: Mon, 6 May 2024 10:05:09 -0300
+ d=1e100.net; s=20230601; t=1715001034; x=1715605834;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7sm632hvadCPIW1vd8okXxXRUR8xDRpvG9Kf+IaJIM8=;
+ b=I0oYCwej6nDzHcG2PoLoRWAK2C6f8xlVTu14M4i0EnPPPbSJ48qdCXpjwoU/A6a71G
+ 55jEBh/x1PWOpO+lolRseG0+Xs48110TSIkgG5kZuByRCAsBnOW/EoC3ymb5SRe0AZWV
+ BUjIYsnywr/97SUhBVKcVIiU7nJ0q6DQawOvzFooTMbClJQqmjPTtR1p3c8Pw/kdLmO1
+ jqvZcAkG0Rp6UJHNNcSMgCXpebguwVLitwVGtOGIC1L8IcaAfoZybvwUM/5HZCLkxTHW
+ OOJVJ12UjHLkBF/LPPPi75p4gk6GBkygxYtt/QIiZvWHYY3zP8Ht6VI2gdHjbbmo6mpf
+ Wc8w==
+X-Gm-Message-State: AOJu0YzqQZAXmqWs7Kxn/q+Q+FMG0zLWHRE6jsE9hX0yvHL0AXk4RIJf
+ wdNPOAmt+I3K5vzV+0S68WXg2AHk02sm9E5HyZ/5AUIahBhS3d7O+/sq1m54NmcL68e1x+UMEN6
+ /GoEgHlsE3z11pn3MgEviPZ5FtKT9njYTXBYkRc5orqHt4CVaDTpKrHVLTI/IXundLlnvuMTt9G
+ WI8TJigNqAaGsk+hyMCDFoB95RFH0=
+X-Received: by 2002:a5d:540c:0:b0:34d:9055:c5e7 with SMTP id
+ g12-20020a5d540c000000b0034d9055c5e7mr6492081wrv.3.1715001034111; 
+ Mon, 06 May 2024 06:10:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHmFFj1H45Jo2jVugh1xqEmrGPNtQw+BT1tTRgCxgWUnComm5IXE4iRDyfYs66KmLMm5p9BU+NN55fNslTGI7M=
+X-Received: by 2002:a5d:540c:0:b0:34d:9055:c5e7 with SMTP id
+ g12-20020a5d540c000000b0034d9055c5e7mr6492066wrv.3.1715001033737; Mon, 06 May
+ 2024 06:10:33 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 11/15] hw/riscv/riscv-iommu: add DBG support
-To: Frank Chang <frank.chang@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- palmer@rivosinc.com, ajones@ventanamicro.com, tjeznach@rivosinc.com
-References: <20240307160319.675044-1-dbarboza@ventanamicro.com>
- <20240307160319.675044-12-dbarboza@ventanamicro.com>
- <CANzO1D0ywHs+Juv9_qavykxCDiUsuk6tebObfSAyRbgW-WhGJA@mail.gmail.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <CANzO1D0ywHs+Juv9_qavykxCDiUsuk6tebObfSAyRbgW-WhGJA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240506112058.51446-1-thuth@redhat.com>
+In-Reply-To: <20240506112058.51446-1-thuth@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 6 May 2024 15:10:21 +0200
+Message-ID: <CABgObfaPUQvnP-+Ff9gb6TZw5G1SLS5C-=QbmJ0HRy5cFoM2nw@mail.gmail.com>
+Subject: Re: [PATCH v2] qemu-options: Deprecate "-runas" and introduce
+ "-run-with user=..." instead
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Claudio Imbrenda <imbrenda@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,196 +100,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Frank,
+On Mon, May 6, 2024 at 1:21=E2=80=AFPM Thomas Huth <thuth@redhat.com> wrote=
+:
+>
+> The old "-runas" option has the disadvantage that it is not visible
+> in the QAPI schema, so it is not available via the normal introspection
+> mechanisms. We've recently introduced the "-run-with" option for exactly
+> this purpose, which is meant to handle the options that affect the
+> runtime behavior. Thus let's introduce a "user=3D..." parameter here now
+> and deprecate the old "-runas" option.
 
-On 5/6/24 01:09, Frank Chang wrote:
-> Hi Daniel,
-> 
-> Daniel Henrique Barboza <dbarboza@ventanamicro.com> 於 2024年3月8日 週五 上午12:05寫道：
->>
->> From: Tomasz Jeznach <tjeznach@rivosinc.com>
->>
->> DBG support adds three additional registers: tr_req_iova, tr_req_ctl and
->> tr_response.
->>
->> The DBG cap is always enabled. No on/off toggle is provided for it.
->>
->> Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
->> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->> ---
->>   hw/riscv/riscv-iommu-bits.h | 20 +++++++++++++
->>   hw/riscv/riscv-iommu.c      | 57 ++++++++++++++++++++++++++++++++++++-
->>   2 files changed, 76 insertions(+), 1 deletion(-)
->>
->> diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
->> index 0994f5ce48..b3f92411bb 100644
->> --- a/hw/riscv/riscv-iommu-bits.h
->> +++ b/hw/riscv/riscv-iommu-bits.h
->> @@ -83,6 +83,7 @@ struct riscv_iommu_pq_record {
->>   #define RISCV_IOMMU_CAP_MSI_MRIF        BIT_ULL(23)
->>   #define RISCV_IOMMU_CAP_ATS             BIT_ULL(25)
->>   #define RISCV_IOMMU_CAP_IGS             GENMASK_ULL(29, 28)
->> +#define RISCV_IOMMU_CAP_DBG             BIT_ULL(31)
->>   #define RISCV_IOMMU_CAP_PAS             GENMASK_ULL(37, 32)
->>   #define RISCV_IOMMU_CAP_PD8             BIT_ULL(38)
->>
->> @@ -177,6 +178,25 @@ enum {
->>       RISCV_IOMMU_INTR_COUNT
->>   };
->>
->> +#define RISCV_IOMMU_IPSR_CIP            BIT(RISCV_IOMMU_INTR_CQ)
->> +#define RISCV_IOMMU_IPSR_FIP            BIT(RISCV_IOMMU_INTR_FQ)
->> +#define RISCV_IOMMU_IPSR_PMIP           BIT(RISCV_IOMMU_INTR_PM)
->> +#define RISCV_IOMMU_IPSR_PIP            BIT(RISCV_IOMMU_INTR_PQ)
-> 
-> These are not related to the DBG.
-> 
->> +
->> +/* 5.24 Translation request IOVA (64bits) */
->> +#define RISCV_IOMMU_REG_TR_REQ_IOVA     0x0258
->> +
->> +/* 5.25 Translation request control (64bits) */
->> +#define RISCV_IOMMU_REG_TR_REQ_CTL      0x0260
->> +#define RISCV_IOMMU_TR_REQ_CTL_GO_BUSY  BIT_ULL(0)
->> +#define RISCV_IOMMU_TR_REQ_CTL_PID      GENMASK_ULL(31, 12)
->> +#define RISCV_IOMMU_TR_REQ_CTL_DID      GENMASK_ULL(63, 40)
->> +
->> +/* 5.26 Translation request response (64bits) */
->> +#define RISCV_IOMMU_REG_TR_RESPONSE     0x0268
->> +#define RISCV_IOMMU_TR_RESPONSE_FAULT   BIT_ULL(0)
->> +#define RISCV_IOMMU_TR_RESPONSE_PPN     RISCV_IOMMU_PPN_FIELD
->> +
->>   /* 5.27 Interrupt cause to vector (64bits) */
->>   #define RISCV_IOMMU_REG_IVEC            0x02F8
->>
->> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
->> index 7af5929b10..1fa1286d07 100644
->> --- a/hw/riscv/riscv-iommu.c
->> +++ b/hw/riscv/riscv-iommu.c
->> @@ -1457,6 +1457,46 @@ static void riscv_iommu_process_pq_control(RISCVIOMMUState *s)
->>       riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_PQCSR, ctrl_set, ctrl_clr);
->>   }
->>
->> +static void riscv_iommu_process_dbg(RISCVIOMMUState *s)
->> +{
->> +    uint64_t iova = riscv_iommu_reg_get64(s, RISCV_IOMMU_REG_TR_REQ_IOVA);
->> +    uint64_t ctrl = riscv_iommu_reg_get64(s, RISCV_IOMMU_REG_TR_REQ_CTL);
->> +    unsigned devid = get_field(ctrl, RISCV_IOMMU_TR_REQ_CTL_DID);
->> +    unsigned pid = get_field(ctrl, RISCV_IOMMU_TR_REQ_CTL_PID);
->> +    RISCVIOMMUContext *ctx;
->> +    void *ref;
->> +
->> +    if (!(ctrl & RISCV_IOMMU_TR_REQ_CTL_GO_BUSY)) {
->> +        return;
->> +    }
->> +
->> +    ctx = riscv_iommu_ctx(s, devid, pid, &ref);
->> +    if (ctx == NULL) {
->> +        riscv_iommu_reg_set64(s, RISCV_IOMMU_REG_TR_RESPONSE,
->> +                                 RISCV_IOMMU_TR_RESPONSE_FAULT |
->> +                                 (RISCV_IOMMU_FQ_CAUSE_DMA_DISABLED << 10));
->> +    } else {
->> +        IOMMUTLBEntry iotlb = {
->> +            .iova = iova,
->> +            .perm = IOMMU_NONE,
-> 
-> .perm should honor tr_req_ctl.[Exe|Nw]
-> 
->> +            .addr_mask = ~0,
->> +            .target_as = NULL,
->> +        };
->> +        int fault = riscv_iommu_translate(s, ctx, &iotlb, false);
->> +        if (fault) {
->> +            iova = RISCV_IOMMU_TR_RESPONSE_FAULT | (((uint64_t) fault) << 10);
->> +        } else {
->> +            iova = ((iotlb.translated_addr & ~iotlb.addr_mask) >> 2) &
-> 
-> For 4-KB page, we should right-shift 12 bits.
-> 
->> +                RISCV_IOMMU_TR_RESPONSE_PPN;
-> 
-> It's possible that the translation is not 4-KB page (i.e. superpage),
-> which we should set tr_response.S
-> and encode translation range size in tr_response.PPN.
+No need to deprecate it, there are other shortcut options that are
+just a couple lines of code to implement:
 
-At this moment this emulation doesn't support superpages, at least from my
-understanding. Tomasz is welcome to correct me if I'm wrong. I'll explictly
-set tr_response.S to 0 here to make it clearer.
+            case QEMU_OPTION_watchdog_action: {
+                opts =3D qemu_opts_create(qemu_find_opts("action"),
+NULL, 0, &error_abort);
+                qemu_opt_set(opts, "watchdog", optarg, &error_abort);
+                break;
 
-The idea here IIUC is to, in the future, merge the IOMMU translation lookup code
-with the existing lookup code we have (cpu_helper.c, get_physical_address()), and
-with that the IOMMU will end up supporting both super-pages and svnapot.
+However that would be a larger patch, basically moving all of the
+--run-with handling to qemu_process_early_options() (and, as an aside,
+setting .merge_lists =3D true in qemu_run_with_opts).
 
+No objections to your patch, but also no objections to cleaning all of
+--run-with; I should have caught it and proposed the shortcut options
+when it was introduced or when --chroot was removed.
 
+Paolo
 
-Thanks,
+>                  if (!os_set_runas(optarg)) {
+>                      error_report("User \"%s\" doesn't exist"
+>                                   " (and is not <uid>:<gid>)",
+> @@ -3612,6 +3617,16 @@ void qemu_init(int argc, char **argv)
+>                  if (str) {
+>                      os_set_chroot(str);
+>                  }
+> +                str =3D qemu_opt_get(opts, "user");
+> +                if (str) {
+> +                    if (!os_set_runas(str)) {
+> +                        error_report("User \"%s\" doesn't exist"
+> +                                     " (and is not <uid>:<gid>)",
+> +                                     optarg);
+> +                        exit(1);
+> +                    }
+> +                }
+> +
+>                  break;
+>              }
+>  #endif /* CONFIG_POSIX */
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index cf61f6b863..3031479a15 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
+> @@ -4824,7 +4824,8 @@ DEF("runas", HAS_ARG, QEMU_OPTION_runas, \
+>  SRST
+>  ``-runas user``
+>      Immediately before starting guest execution, drop root privileges,
+> -    switching to the specified user.
+> +    switching to the specified user. This option is deprecated, use
+> +    ``-run-with user=3D...`` instead.
+>  ERST
+>
+>  DEF("prom-env", HAS_ARG, QEMU_OPTION_prom_env,
+> @@ -4990,13 +4991,15 @@ DEF("qtest-log", HAS_ARG, QEMU_OPTION_qtest_log, =
+"", QEMU_ARCH_ALL)
+>
+>  #ifdef CONFIG_POSIX
+>  DEF("run-with", HAS_ARG, QEMU_OPTION_run_with,
+> -    "-run-with [async-teardown=3Don|off][,chroot=3Ddir]\n"
+> +    "-run-with [async-teardown=3Don|off][,chroot=3Ddir][user=3Dusername|=
+uid:gid]\n"
+>      "                Set miscellaneous QEMU process lifecycle options:\n=
+"
+>      "                async-teardown=3Don enables asynchronous teardown (=
+Linux only)\n"
+> -    "                chroot=3Ddir chroot to dir just before starting the=
+ VM\n",
+> +    "                chroot=3Ddir chroot to dir just before starting the=
+ VM\n"
+> +    "                user=3Dusername switch to the specified user before=
+ starting the VM\n"
+> +    "                user=3Duid:gid dito, but use specified user-ID and =
+group-ID instead\n",
+>      QEMU_ARCH_ALL)
+>  SRST
+> -``-run-with [async-teardown=3Don|off][,chroot=3Ddir]``
+> +``-run-with [async-teardown=3Don|off][,chroot=3Ddir][user=3Dusername|uid=
+:gid]``
+>      Set QEMU process lifecycle options.
+>
+>      ``async-teardown=3Don`` enables asynchronous teardown. A new process=
+ called
+> @@ -5013,6 +5016,10 @@ SRST
+>      ``chroot=3Ddir`` can be used for doing a chroot to the specified dir=
+ectory
+>      immediately before starting the guest execution. This is especially =
+useful
+>      in combination with -runas.
+> +
+> +    ``user=3Dusername`` or ``user=3Duid:gid`` can be used to drop root p=
+rivileges
+> +    by switching to the specified user (via username) or user and group
+> +    (via uid:gid) immediately before starting guest execution.
+>  ERST
+>  #endif
+>
+> --
+> 2.45.0
+>M
 
-Daniel
-
-
-> 
-> Regards,
-> Frank Chang
-> 
->> +        }
->> +        riscv_iommu_reg_set64(s, RISCV_IOMMU_REG_TR_RESPONSE, iova);
->> +    }
->> +
->> +    riscv_iommu_reg_mod64(s, RISCV_IOMMU_REG_TR_REQ_CTL, 0,
->> +        RISCV_IOMMU_TR_REQ_CTL_GO_BUSY);
->> +    riscv_iommu_ctx_put(s, ref);
->> +}
->> +
->>   /* Core IOMMU execution activation */
->>   enum {
->>       RISCV_IOMMU_EXEC_DDTP,
->> @@ -1502,7 +1542,7 @@ static void *riscv_iommu_core_proc(void* arg)
->>               /* NOP */
->>               break;
->>           case BIT(RISCV_IOMMU_EXEC_TR_REQUEST):
->> -            /* DBG support not implemented yet */
->> +            riscv_iommu_process_dbg(s);
->>               break;
->>           }
->>           exec &= ~mask;
->> @@ -1574,6 +1614,12 @@ static MemTxResult riscv_iommu_mmio_write(void *opaque, hwaddr addr,
->>           exec = BIT(RISCV_IOMMU_EXEC_PQCSR);
->>           busy = RISCV_IOMMU_PQCSR_BUSY;
->>           break;
->> +
->> +    case RISCV_IOMMU_REG_TR_REQ_CTL:
->> +        exec = BIT(RISCV_IOMMU_EXEC_TR_REQUEST);
->> +        regb = RISCV_IOMMU_REG_TR_REQ_CTL;
->> +        busy = RISCV_IOMMU_TR_REQ_CTL_GO_BUSY;
->> +        break;
->>       }
->>
->>       /*
->> @@ -1746,6 +1792,9 @@ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
->>           s->cap |= RISCV_IOMMU_CAP_SV32X4 | RISCV_IOMMU_CAP_SV39X4 |
->>                     RISCV_IOMMU_CAP_SV48X4 | RISCV_IOMMU_CAP_SV57X4;
->>       }
->> +    /* Enable translation debug interface */
->> +    s->cap |= RISCV_IOMMU_CAP_DBG;
->> +
->>       /* Report QEMU target physical address space limits */
->>       s->cap = set_field(s->cap, RISCV_IOMMU_CAP_PAS,
->>                          TARGET_PHYS_ADDR_SPACE_BITS);
->> @@ -1800,6 +1849,12 @@ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
->>       stl_le_p(&s->regs_wc[RISCV_IOMMU_REG_IPSR], ~0);
->>       stl_le_p(&s->regs_ro[RISCV_IOMMU_REG_IVEC], 0);
->>       stq_le_p(&s->regs_rw[RISCV_IOMMU_REG_DDTP], s->ddtp);
->> +    /* If debug registers enabled. */
->> +    if (s->cap & RISCV_IOMMU_CAP_DBG) {
->> +        stq_le_p(&s->regs_ro[RISCV_IOMMU_REG_TR_REQ_IOVA], 0);
->> +        stq_le_p(&s->regs_ro[RISCV_IOMMU_REG_TR_REQ_CTL],
->> +            RISCV_IOMMU_TR_REQ_CTL_GO_BUSY);
->> +    }
->>
->>       /* Memory region for downstream access, if specified. */
->>       if (s->target_mr) {
->> --
->> 2.43.2
->>
->>
 
