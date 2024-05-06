@@ -4,95 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B962BC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 06:13:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BA9EC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 06:14:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3raX-0005nu-1p; Mon, 06 May 2024 02:12:37 -0400
+	id 1s3rbV-0006Qn-RQ; Mon, 06 May 2024 02:13:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1s3raM-0005jv-Bv
- for qemu-devel@nongnu.org; Mon, 06 May 2024 02:12:26 -0400
-Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1s3raK-00046h-HR
- for qemu-devel@nongnu.org; Mon, 06 May 2024 02:12:26 -0400
-Received: by mail-lj1-x229.google.com with SMTP id
- 38308e7fff4ca-2e367c2457bso5861191fa.1
- for <qemu-devel@nongnu.org>; Sun, 05 May 2024 23:12:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1714975942; x=1715580742; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VXx0i4fSaFCK9+9RiI/Aa6wwUQxFeaFWg/hGSQ0VnYY=;
- b=cLZTzJO/h/iabTFgjoI8SnIhvAQ4YR6AOUnufEFuCN+xeNlqniSvaJ8YdhA/Y4Icad
- XECbeYFlxkp8x/8D3/Y9IiDge5xX0I50sPtOxTRUf4q9UIAXW/+JVwyxKkmcYmU+qCpR
- TOTZ92hOSZSmsAhRd2/D0H8OyJFO6HiR8XEQAEzXOYpfUwy40NCGNAZJv/gaA8s0ETIx
- gN2QOBVZW0vKcNRWQf35nlKNBEiADVYAxa/F7RQltBPPLryeJ/darWZY/wMjNGnBC9Nf
- lBntUCowWxr+S0xand9OsdOxOHgYBw8pY+MmWT4Ugzfp77QVIAE5H8ZroEWzasOzHeY0
- tRFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714975942; x=1715580742;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VXx0i4fSaFCK9+9RiI/Aa6wwUQxFeaFWg/hGSQ0VnYY=;
- b=XzPuU7kt7i5pr4lWJqKZ9YrycB5cSk+HTw4aKelsyX9Sf/8rzTvVYa8eOSTM2qBWrA
- 11Ao4XfbmzHu6Lj0sO0b3RTXTIceZar6ZkJriUGPUPM/Zp+Em4h9xKH+5Ibx48Cf7Ylb
- B7uT0SpULhkbxTnEdvsQVZynzDvNDwXE3MUUlglYiXAfbfrjuTJcwc4sva7FtIWbKlwb
- Ny4hn21ef79Bi3tA1FDK0ledil3Qpk58TPrAE1doWSkU201rn6zm1WHJJpzyV9D4O8Bw
- X7x9skDXLsXkJwRw0+dkTnp/YdzfCNcoJuRr2PJ/OB/uR6753+jKY1ZufFtxeIAeVhUb
- HEwg==
-X-Gm-Message-State: AOJu0YxqyQIvrqqPLQ9UPQV6E5sSkg48c2ZQ6NqAyYRoijxvRJZSgpcx
- vvn0YFmhcQJ8PkiSlBpRsB0EBinyeJ1Z+DhgAgKER48YmWO8R3Z6NJn2Pxvdx6Xe/YiQWjBcuO4
- xByF8/mgi9w+2mBX0M+xHVTDtPWbaJX3CebztqyIORGLfhzxZHmmnuvWLrKQ/RYO8MIMeQJVJyn
- RGZfhLJFh9nPCWaO6/clxvVKGK+FqAuihdqvEkjA46OQ==
-X-Google-Smtp-Source: AGHT+IHENwKg/Pj3kUARg0vayx8vOpDvaXxgCnio9CMlQoEAgkrETTtnF4OokQ+gvu/XlFkZhFSwRA==
-X-Received: by 2002:a19:f606:0:b0:519:1a91:30cc with SMTP id
- x6-20020a19f606000000b005191a9130ccmr5869974lfe.4.1714975942131; 
- Sun, 05 May 2024 23:12:22 -0700 (PDT)
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com.
- [209.85.208.178]) by smtp.gmail.com with ESMTPSA id
- dw11-20020a0565122c8b00b0051ff89d5ec6sm841245lfb.58.2024.05.05.23.12.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 05 May 2024 23:12:21 -0700 (PDT)
-Received: by mail-lj1-f178.google.com with SMTP id
- 38308e7fff4ca-2e0b2ddc5d1so19253491fa.3; 
- Sun, 05 May 2024 23:12:21 -0700 (PDT)
-X-Forwarded-Encrypted: i=1;
- AJvYcCUEMDnld/iJ2JV3vI3+qvr3nPHq5m62b71QF37Xn/34maHLtpAKGyAgUIcP+CJCSI9PYzwnqYtPx1tre4wEAqAnTpmJ0XQ=
-X-Received: by 2002:a2e:b009:0:b0:2d4:3d86:54e2 with SMTP id
- y9-20020a2eb009000000b002d43d8654e2mr5012098ljk.27.1714975941554; Sun, 05 May
- 2024 23:12:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s3rbG-0006KJ-OK
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 02:13:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s3rb6-0004dd-Uj
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 02:13:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714975990;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=LQapm1J1mC6roB+BwuihFStYb/xnfa8N3vQmFEeEWm4=;
+ b=QrVBjCIgXifNwiygENwd9hVjeiP8W8A4fyGFhlDJk6uGKH4VrQj4eSdJ5VKe9T9inYDjMP
+ w+lAB1FapboTJh52BY88pGEhAJtAd9kowUzzAM5m9sD5CreD4MtynMhwmZ0dDBqTWlu8/c
+ tjr7LbGD5F/OD68wruWyFQ4xd3CW/0w=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-139-9NrTt8yaOn6O2N4EOqzfTg-1; Mon, 06 May 2024 02:13:05 -0400
+X-MC-Unique: 9NrTt8yaOn6O2N4EOqzfTg-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 88BE58943A0;
+ Mon,  6 May 2024 06:13:05 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 62BC7EC680;
+ Mon,  6 May 2024 06:13:05 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 7E2D921E6806; Mon,  6 May 2024 08:13:04 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org,
+ Aleksandar Rikalo <arikalo@gmail.com>, qemu-trivial@nongnu.org
+Subject: Re: [PATCH] MAINTAINERS: Update Aleksandar Rikalo email
+In-Reply-To: <20240209062147.62453-1-aleksandar.rikalo@syrmia.com> (Aleksandar
+ Rikalo's message of "Fri, 9 Feb 2024 07:21:47 +0100")
+References: <20240209062147.62453-1-aleksandar.rikalo@syrmia.com>
+Date: Mon, 06 May 2024 08:13:04 +0200
+Message-ID: <87h6fbsc27.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20240307160319.675044-1-dbarboza@ventanamicro.com>
- <20240307160319.675044-13-dbarboza@ventanamicro.com>
-In-Reply-To: <20240307160319.675044-13-dbarboza@ventanamicro.com>
-From: Frank Chang <frank.chang@sifive.com>
-Date: Mon, 6 May 2024 14:12:10 +0800
-X-Gmail-Original-Message-ID: <CANzO1D13s85OE3u30EkP43CFVdFNgJNVWoM-BW9oPJi-A7cbNA@mail.gmail.com>
-Message-ID: <CANzO1D13s85OE3u30EkP43CFVdFNgJNVWoM-BW9oPJi-A7cbNA@mail.gmail.com>
-Subject: Re: [PATCH v2 12/15] hw/riscv/riscv-iommu: Add another irq for mrif
- notifications
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, ajones@ventanamicro.com, tjeznach@rivosinc.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::229;
- envelope-from=frank.chang@sifive.com; helo=mail-lj1-x229.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.431,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,75 +85,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
+Looks like this fell through the cracks.
 
-Daniel Henrique Barboza <dbarboza@ventanamicro.com> =E6=96=BC 2024=E5=B9=B4=
-3=E6=9C=888=E6=97=A5 =E9=80=B1=E4=BA=94 =E4=B8=8A=E5=8D=8812:06=E5=AF=AB=E9=
-=81=93=EF=BC=9A
+As far as I can tell, the patch did come from @syrmia.com.
+
+Cc'ing qemu-trivial.
+
+Aleksandar Rikalo <aleksandar.rikalo@syrmia.com> writes:
+
+> Syrmia LLC has been acquired recently and the syrmia.com domain will
+> disappear soon, so updating my email in the MAINTAINERS file.
 >
-> From: Andrew Jones <ajones@ventanamicro.com>
->
-> And add mrif notification trace.
->
-> Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Signed-off-by: Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
 > ---
->  hw/riscv/riscv-iommu-pci.c | 2 +-
->  hw/riscv/riscv-iommu.c     | 1 +
->  hw/riscv/trace-events      | 1 +
->  3 files changed, 3 insertions(+), 1 deletion(-)
+>  MAINTAINERS | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
 >
-> diff --git a/hw/riscv/riscv-iommu-pci.c b/hw/riscv/riscv-iommu-pci.c
-> index 4eb1057210..8a7b71166c 100644
-> --- a/hw/riscv/riscv-iommu-pci.c
-> +++ b/hw/riscv/riscv-iommu-pci.c
-> @@ -78,7 +78,7 @@ static void riscv_iommu_pci_realize(PCIDevice *dev, Err=
-or **errp)
->      pci_register_bar(dev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY |
->                       PCI_BASE_ADDRESS_MEM_TYPE_64, &s->bar0);
->
-> -    int ret =3D msix_init(dev, RISCV_IOMMU_INTR_COUNT,
-> +    int ret =3D msix_init(dev, RISCV_IOMMU_INTR_COUNT + 1,
->                          &s->bar0, 0, RISCV_IOMMU_REG_MSI_CONFIG,
->                          &s->bar0, 0, RISCV_IOMMU_REG_MSI_CONFIG + 256, 0=
-, &err);
->
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index 1fa1286d07..954a6892c2 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -543,6 +543,7 @@ static MemTxResult riscv_iommu_msi_write(RISCVIOMMUSt=
-ate *s,
->      if (res !=3D MEMTX_OK) {
->          return res;
->      }
-> +    trace_riscv_iommu_mrif_notification(s->parent_obj.id, n190, addr);
->
->      return MEMTX_OK;
->  }
-> diff --git a/hw/riscv/trace-events b/hw/riscv/trace-events
-> index 4b486b6420..d69719a27a 100644
-> --- a/hw/riscv/trace-events
-> +++ b/hw/riscv/trace-events
-> @@ -6,6 +6,7 @@ riscv_iommu_flt(const char *id, unsigned b, unsigned d, u=
-nsigned f, uint64_t rea
->  riscv_iommu_pri(const char *id, unsigned b, unsigned d, unsigned f, uint=
-64_t iova) "%s: page request %04x:%02x.%u iova: 0x%"PRIx64
->  riscv_iommu_dma(const char *id, unsigned b, unsigned d, unsigned f, unsi=
-gned pasid, const char *dir, uint64_t iova, uint64_t phys) "%s: translate %=
-04x:%02x.%u #%u %s 0x%"PRIx64" -> 0x%"PRIx64
->  riscv_iommu_msi(const char *id, unsigned b, unsigned d, unsigned f, uint=
-64_t iova, uint64_t phys) "%s: translate %04x:%02x.%u MSI 0x%"PRIx64" -> 0x=
-%"PRIx64
-> +riscv_iommu_mrif_notification(const char *id, uint32_t nid, uint64_t phy=
-s) "%s: sent MRIF notification 0x%x to 0x%"PRIx64
->  riscv_iommu_cmd(const char *id, uint64_t l, uint64_t u) "%s: command 0x%=
-"PRIx64" 0x%"PRIx64
->  riscv_iommu_notifier_add(const char *id) "%s: dev-iotlb notifier added"
->  riscv_iommu_notifier_del(const char *id) "%s: dev-iotlb notifier removed=
-"
-> --
-> 2.43.2
->
->
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 2f9741b898..1c2dbbc30a 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -284,7 +284,7 @@ MIPS TCG CPUs
+>  M: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>  R: Aurelien Jarno <aurelien@aurel32.net>
+>  R: Jiaxun Yang <jiaxun.yang@flygoat.com>
+> -R: Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
+> +R: Aleksandar Rikalo <arikalo@gmail.com>
+>  S: Odd Fixes
+>  F: target/mips/
+>  F: disas/*mips.c
+> @@ -1344,7 +1344,7 @@ F: include/hw/mips/
+>=20=20
+>  Jazz
+>  M: Herv=C3=A9 Poussineau <hpoussin@reactos.org>
+> -R: Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
+> +R: Aleksandar Rikalo <arikalo@gmail.com>
+>  S: Maintained
+>  F: hw/mips/jazz.c
+>  F: hw/display/g364fb.c
+> @@ -1365,7 +1365,7 @@ F: tests/avocado/linux_ssh_mips_malta.py
+>  F: tests/avocado/machine_mips_malta.py
+>=20=20
+>  Mipssim
+> -R: Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
+> +R: Aleksandar Rikalo <arikalo@gmail.com>
+>  S: Orphan
+>  F: hw/mips/mipssim.c
+>  F: hw/net/mipsnet.c
+> @@ -1393,7 +1393,7 @@ F: tests/avocado/machine_mips_loongson3v.py
+>=20=20
+>  Boston
+>  M: Paul Burton <paulburton@kernel.org>
+> -R: Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
+> +R: Aleksandar Rikalo <arikalo@gmail.com>
+>  S: Odd Fixes
+>  F: hw/core/loader-fit.c
+>  F: hw/mips/boston.c
+> @@ -3719,7 +3719,7 @@ M: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>  R: Aurelien Jarno <aurelien@aurel32.net>
+>  R: Huacai Chen <chenhuacai@kernel.org>
+>  R: Jiaxun Yang <jiaxun.yang@flygoat.com>
+> -R: Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
+> +R: Aleksandar Rikalo <arikalo@gmail.com>
+>  S: Odd Fixes
+>  F: tcg/mips/
+
 
