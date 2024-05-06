@@ -4,95 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F30E2C25B4F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 17:58:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A73DC25B5C
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 18:10:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s42a2-0007hm-2D; Mon, 06 May 2024 13:56:50 -0400
+	id 1s42m7-00052a-VR; Mon, 06 May 2024 14:09:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s42Zl-0007eM-NK
- for qemu-devel@nongnu.org; Mon, 06 May 2024 13:56:35 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1s42m6-00051u-2y
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 14:09:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s42Zj-0007nf-CM
- for qemu-devel@nongnu.org; Mon, 06 May 2024 13:56:33 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1s42m4-0007q9-5s
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 14:09:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715018190;
+ s=mimecast20190719; t=1715018954;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fedYap05wAOgminPR8mdhKJYI+JwjCgJErPhAlq8vbQ=;
- b=RhRtWIKhAb5mOZLqRjS3Qh0SfSvKYO9Iyd2+IMR/yfwibA9RHJLvPQuZRwZMZnBGz8/Yv0
- hOwqTrfFcjdioJ0yykx5pZQPebr+Lz/MOuWFTDDYuFiVPsW7ev9hjDoQZb2vdDaMVycQRB
- ZTpjxWbva4ln+Hs9NlVPi6opJNtZw0s=
-Received: from mail-oi1-f198.google.com (mail-oi1-f198.google.com
- [209.85.167.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-670-g8kd1asQM2Cmty0q1GaG_A-1; Mon, 06 May 2024 13:56:28 -0400
-X-MC-Unique: g8kd1asQM2Cmty0q1GaG_A-1
-Received: by mail-oi1-f198.google.com with SMTP id
- 5614622812f47-3c864bcd2b0so159238b6e.3
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 10:56:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715018188; x=1715622988;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fedYap05wAOgminPR8mdhKJYI+JwjCgJErPhAlq8vbQ=;
- b=AN4zAcNm7MINdqRLzvCxkw7i2j9s6DzZlEuqaAVyvuuVSnpycjrRvDKumIT8GqY/dC
- g9BB/zg52nxB7EVMXSyIfO7E3cyu1HkiUS2OpkhiciUERLYox8BY68hVGEnxe6B4/DCG
- dwF6GSqaKUaQPrkFp1Ctap7loOr1QQLTXWG6LMIGXzpvbKAYKkPHTODNYvKRtUBxgOWb
- e2B9LA+JZSSS3aNt/Z7ndLVTGC/hlIUe8eK8n3E3ZGR67kPTdITexzmolOkHzIOj7khh
- pBWrCYpRzwE6LtDHNflMRauzvGW25V064e1MVJG4Ff0KP0TG6fnjW6xcVaeveqeNxK9I
- Ms3Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX/YQqqdQYU//0AXNUqsFmcImFTuyRcfz5qDnwH+uHPy/NU/Ejp4PcSUhAcVGe1Ng7KDQuzvcrE8ScyN2ac+PBGo9CKbp8=
-X-Gm-Message-State: AOJu0YyiWLEpJV4PgPUIAuiNQQarYaF0b6IQDJ88pXyt3GuFri4/FbIm
- mU05tZ9j/FpFAmHVMPMmSmf7u0PpkEmGliCPAteY0voTuILRAcwAA8dvqDzRwUVfp7v20VtGdSO
- 9IuRza5owJxG8VUf5USre3gEcrqIrZD6tf/3CNuFj/EaJiJCc2KJq
-X-Received: by 2002:a05:6808:1513:b0:3c8:3076:f54f with SMTP id
- u19-20020a056808151300b003c83076f54fmr14274842oiw.1.1715018187780; 
- Mon, 06 May 2024 10:56:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEXzW+yQsD+sGNBvbPDwanVGb+hUyhJSQJx4pXw+2x4uHw1lcLsPOx4nV5wNv6tIbhHxzBvGQ==
-X-Received: by 2002:a05:6808:1513:b0:3c8:3076:f54f with SMTP id
- u19-20020a056808151300b003c83076f54fmr14274804oiw.1.1715018186966; 
- Mon, 06 May 2024 10:56:26 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- l10-20020ad4444a000000b006a0f0a7f7c2sm3920486qvt.89.2024.05.06.10.56.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 May 2024 10:56:26 -0700 (PDT)
-Date: Mon, 6 May 2024 13:56:24 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH RFC 00/26] =?utf-8?Q?Multifd_?= =?utf-8?B?8J+UgA==?=
- device state transfer support with VFIO consumer
-Message-ID: <ZjkZyP9Ty0TpTCTx@x1n>
-References: <ZiF8aWVfW7kPuOtn@x1n> <ZiJCSZvsekaO8dzO@redhat.com>
- <ZiKOTkgEIKo-wj5N@x1n>
- <d7d59001-0800-4073-9def-08327e904b7b@maciej.szmigiero.name>
- <Zig0IPofMCpJdGsn@x1n>
- <e88ecd55-14a2-4043-946b-9c2447fe9def@maciej.szmigiero.name>
- <Zig3vebacR4SfJLh@x1n>
- <1a0b3c24-fffd-4db3-a35e-e40ae2e0a074@maciej.szmigiero.name>
- <Zi-4FmjXv-gx7JH_@x1n>
- <fc0721e3-4932-40b8-a6eb-2584a475d8eb@maciej.szmigiero.name>
+ bh=L7O6dUPFkwmDle7Dj1o3ADQtOM4cQu1Ei0/mYQVeDaQ=;
+ b=ie5GN0TsdO8GtRnMVkx0LNthx6kt//VQ65e/pSpkMEFasCpGkuxKbDuOh79DdtWlCiz2/W
+ grrpnXz+vbPfAukZvWWVbfR03PwYsgSESkyVGtxIwlvQpkmHyMpyJqcEWTpW3bHu6pmZcU
+ 03g29nMZxYESgCW2uLGPH/mOoInqxBA=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-590-3avuUD9MMSW9EKpNO5NYeQ-1; Mon,
+ 06 May 2024 14:09:10 -0400
+X-MC-Unique: 3avuUD9MMSW9EKpNO5NYeQ-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6B7D73C025D2;
+ Mon,  6 May 2024 18:09:10 +0000 (UTC)
+Received: from localhost (unknown [10.39.192.54])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 93DE21C060D1;
+ Mon,  6 May 2024 18:09:09 +0000 (UTC)
+Date: Mon, 6 May 2024 14:09:08 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: Re: [PATCH v2 5/5] monitor: use aio_co_reschedule_self()
+Message-ID: <20240506180908.GB7375@fedora.redhat.com>
+References: <20240206190610.107963-1-stefanha@redhat.com>
+ <20240206190610.107963-6-stefanha@redhat.com>
+ <ZjUf3TkiBO1N264C@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="ykADY2Nf4leySL0I"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <fc0721e3-4932-40b8-a6eb-2584a475d8eb@maciej.szmigiero.name>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <ZjUf3TkiBO1N264C@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -100,7 +71,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,188 +87,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 06, 2024 at 06:26:46PM +0200, Maciej S. Szmigiero wrote:
-> On 29.04.2024 17:09, Peter Xu wrote:
-> > On Fri, Apr 26, 2024 at 07:34:09PM +0200, Maciej S. Szmigiero wrote:
-> > > On 24.04.2024 00:35, Peter Xu wrote:
-> > > > On Wed, Apr 24, 2024 at 12:25:08AM +0200, Maciej S. Szmigiero wrote:
-> > > > > On 24.04.2024 00:20, Peter Xu wrote:
-> > > > > > On Tue, Apr 23, 2024 at 06:15:35PM +0200, Maciej S. Szmigiero wrote:
-> > > > > > > On 19.04.2024 17:31, Peter Xu wrote:
-> > > > > > > > On Fri, Apr 19, 2024 at 11:07:21AM +0100, Daniel P. Berrangé wrote:
-> > > > > > > > > On Thu, Apr 18, 2024 at 04:02:49PM -0400, Peter Xu wrote:
-> > > > > > > > > > On Thu, Apr 18, 2024 at 08:14:15PM +0200, Maciej S. Szmigiero wrote:
-> > > > > > > > > > > I think one of the reasons for these results is that mixed (RAM + device
-> > > > > > > > > > > state) multifd channels participate in the RAM sync process
-> > > > > > > > > > > (MULTIFD_FLAG_SYNC) whereas device state dedicated channels don't.
-> > > > > > > > > > 
-> > > > > > > > > > Firstly, I'm wondering whether we can have better names for these new
-> > > > > > > > > > hooks.  Currently (only comment on the async* stuff):
-> > > > > > > > > > 
-> > > > > > > > > >       - complete_precopy_async
-> > > > > > > > > >       - complete_precopy
-> > > > > > > > > >       - complete_precopy_async_wait
-> > > > > > > > > > 
-> > > > > > > > > > But perhaps better:
-> > > > > > > > > > 
-> > > > > > > > > >       - complete_precopy_begin
-> > > > > > > > > >       - complete_precopy
-> > > > > > > > > >       - complete_precopy_end
-> > > > > > > > > > 
-> > > > > > > > > > ?
-> > > > > > > > > > 
-> > > > > > > > > > As I don't see why the device must do something with async in such hook.
-> > > > > > > > > > To me it's more like you're splitting one process into multiple, then
-> > > > > > > > > > begin/end sounds more generic.
-> > > > > > > > > > 
-> > > > > > > > > > Then, if with that in mind, IIUC we can already split ram_save_complete()
-> > > > > > > > > > into >1 phases too. For example, I would be curious whether the performance
-> > > > > > > > > > will go back to normal if we offloading multifd_send_sync_main() into the
-> > > > > > > > > > complete_precopy_end(), because we really only need one shot of that, and I
-> > > > > > > > > > am quite surprised it already greatly affects VFIO dumping its own things.
-> > > > > > > > > > 
-> > > > > > > > > > I would even ask one step further as what Dan was asking: have you thought
-> > > > > > > > > > about dumping VFIO states via multifd even during iterations?  Would that
-> > > > > > > > > > help even more than this series (which IIUC only helps during the blackout
-> > > > > > > > > > phase)?
-> > > > > > > > > 
-> > > > > > > > > To dump during RAM iteration, the VFIO device will need to have
-> > > > > > > > > dirty tracking and iterate on its state, because the guest CPUs
-> > > > > > > > > will still be running potentially changing VFIO state. That seems
-> > > > > > > > > impractical in the general case.
-> > > > > > > > 
-> > > > > > > > We already do such interations in vfio_save_iterate()?
-> > > > > > > > 
-> > > > > > > > My understanding is the recent VFIO work is based on the fact that the VFIO
-> > > > > > > > device can track device state changes more or less (besides being able to
-> > > > > > > > save/load full states).  E.g. I still remember in our QE tests some old
-> > > > > > > > devices report much more dirty pages than expected during the iterations
-> > > > > > > > when we were looking into such issue that a huge amount of dirty pages
-> > > > > > > > reported.  But newer models seem to have fixed that and report much less.
-> > > > > > > > 
-> > > > > > > > That issue was about GPU not NICs, though, and IIUC a major portion of such
-> > > > > > > > tracking used to be for GPU vRAMs.  So maybe I was mixing up these, and
-> > > > > > > > maybe they work differently.
-> > > > > > > 
-> > > > > > > The device which this series was developed against (Mellanox ConnectX-7)
-> > > > > > > is already transferring its live state before the VM gets stopped (via
-> > > > > > > save_live_iterate SaveVMHandler).
-> > > > > > > 
-> > > > > > > It's just that in addition to the live state it has more than 400 MiB
-> > > > > > > of state that cannot be transferred while the VM is still running.
-> > > > > > > And that fact hurts a lot with respect to the migration downtime.
-> > > > > > > 
-> > > > > > > AFAIK it's a very similar story for (some) GPUs.
-> > > > > > 
-> > > > > > So during iteration phase VFIO cannot yet leverage the multifd channels
-> > > > > > when with this series, am I right?
-> > > > > 
-> > > > > That's right.
-> > > > > 
-> > > > > > Is it possible to extend that use case too?
-> > > > > 
-> > > > > I guess so, but since this phase (iteration while the VM is still
-> > > > > running) doesn't impact downtime it is much less critical.
-> > > > 
-> > > > But it affects the bandwidth, e.g. even with multifd enabled, the device
-> > > > iteration data will still bottleneck at ~15Gbps on a common system setup
-> > > > the best case, even if the hosts are 100Gbps direct connected.  Would that
-> > > > be a concern in the future too, or it's known problem and it won't be fixed
-> > > > anyway?
-> > > 
-> > > I think any improvements to the migration performance are good, even if
-> > > they don't impact downtime.
-> > > 
-> > > It's just that this patch set focuses on the downtime phase as the more
-> > > critical thing.
-> > > 
-> > > After this gets improved there's no reason why not to look at improving
-> > > performance of the VM live phase too if it brings sensible improvements.
-> > > 
-> > > > I remember Avihai used to have plan to look into similar issues, I hope
-> > > > this is exactly what he is looking for.  Otherwise changing migration
-> > > > protocol from time to time is cumbersome; we always need to provide a flag
-> > > > to make sure old systems migrates in the old ways, new systems run the new
-> > > > ways, and for such a relatively major change I'd want to double check on
-> > > > how far away we can support offload VFIO iterations data to multifd.
-> > > 
-> > > The device state transfer is indicated by a new flag in the multifd
-> > > header (MULTIFD_FLAG_DEVICE_STATE).
-> > > 
-> > > If we are to use multifd channels for VM live phase transfers these
-> > > could simply re-use the same flag type.
-> > 
-> > Right, and that's also my major purpose of such request to consider both
-> > issues.
-> > 
-> > If supporting iterators can be easy on top of this, I am thinking whether
-> > we should do this in one shot.  The problem is even if the flag type can be
-> > reused, old/new qemu binaries may not be compatible and may not migrate
-> > well when:
-> > 
-> >    - The old qemu only supports the downtime optimizations
-> >    - The new qemu supports both downtime + iteration optimizations
-> 
-> I think the situation here will be the same as with any new flag
-> affecting the migration wire protocol - if the old version of QEMU
-> doesn't support that flag then it has to be kept at its backward-compatible
-> setting for migration to succeed.
-> 
-> > IIUC, at least the device threads are currently created only at the end of
-> > migration when switching over for the downtime-only optimization (aka, this
-> > series).  Then it means it won't be compatible with a new QEMU as the
-> > threads there will need to be created before iteration starts to take
-> > iteration data.  So I believe we'll need yet another flag to tune the
-> > behavior of such, one for each optimizations (downtime v.s. data during
-> > iterations).  If they work mostly similarly, I want to avoid two flags.
-> > It'll be chaos for user to see such similar flags and they'll be pretty
-> > confusing.
-> 
-> The VFIO loading threads are created from vfio_load_setup(), which is
-> called at the very beginning of the migration, so they should be already
-> there.
-> 
-> However, they aren't currently prepared to receive VM live phase data.
-> 
-> > If possible, I wish we can spend some time looking into that if they're so
-> > close, and if it's low hanging fruit when on top of this series, maybe we
-> > can consider doing that in one shot.
-> 
-> I'm still trying to figure out the complete explanation why dedicated
-> device state channels improve downtime as there was a bunch of holidays
-> last week here.
 
-No rush.  I am not sure whether it'll reduce downtime, but it may improve
-total migration time when multiple devices are used.
+--ykADY2Nf4leySL0I
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> 
-> I will have a look later what would it take to add VM live phase multifd
-> device state transfer support and also how invasive it would be as I
-> think it's better to keep the number of code conflicts in a patch set
-> to a manageable size as it reduces the chance of accidentally
-> introducing regressions when forward-porting the patch set to the git master.
+On Fri, May 03, 2024 at 07:33:17PM +0200, Kevin Wolf wrote:
+> Am 06.02.2024 um 20:06 hat Stefan Hajnoczi geschrieben:
+> > The aio_co_reschedule_self() API is designed to avoid the race
+> > condition between scheduling the coroutine in another AioContext and
+> > yielding.
+> >=20
+> > The QMP dispatch code uses the open-coded version that appears
+> > susceptible to the race condition at first glance:
+> >=20
+> >   aio_co_schedule(qemu_get_aio_context(), qemu_coroutine_self());
+> >   qemu_coroutine_yield();
+> >=20
+> > The code is actually safe because the iohandler and qemu_aio_context
+> > AioContext run under the Big QEMU Lock. Nevertheless, set a good example
+> > and use aio_co_reschedule_self() so it's obvious that there is no race.
+> >=20
+> > Suggested-by: Hanna Reitz <hreitz@redhat.com>
+> > Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> > Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
+> > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> > ---
+> >  qapi/qmp-dispatch.c | 7 ++-----
+> >  1 file changed, 2 insertions(+), 5 deletions(-)
+> >=20
+> > diff --git a/qapi/qmp-dispatch.c b/qapi/qmp-dispatch.c
+> > index 176b549473..f3488afeef 100644
+> > --- a/qapi/qmp-dispatch.c
+> > +++ b/qapi/qmp-dispatch.c
+> > @@ -212,8 +212,7 @@ QDict *coroutine_mixed_fn qmp_dispatch(const QmpCom=
+mandList *cmds, QObject *requ
+> >               * executing the command handler so that it can make progr=
+ess if it
+> >               * involves an AIO_WAIT_WHILE().
+> >               */
+> > -            aio_co_schedule(qemu_get_aio_context(), qemu_coroutine_sel=
+f());
+> > -            qemu_coroutine_yield();
+> > +            aio_co_reschedule_self(qemu_get_aio_context());
+>=20
+> Turns out that this one actually causes a regression. [1] This code is
+> =C5=95un in iohandler_ctx, aio_co_reschedule_self() looks at the new cont=
+ext
+> and compares it with qemu_get_current_aio_context() - and because both
+> are qemu_aio_context, it decides that it has nothing to do. So the
+> command handler coroutine actually still runs in iohandler_ctx now,
+> which is not what we want.
+>=20
+> We could just revert this patch because it was only meant as a cleanup
+> without a semantic difference.
+>=20
+> Or aio_co_reschedule_self() could look at qemu_coroutine_self()->ctx
+> instead of using qemu_get_current_aio_context(). That would be a little
+> more indirect, though, and I'm not sure if co->ctx is always up to date.
+>=20
+> Any opinions on what is the best way to fix this?
 
-Yes it makes sense.  It'll be good to look one step further in this case,
-then:
+If the commit is reverted then similar bugs may be introduced again in
+the future. The qemu_get_current_aio_context() API is unaware of
+iohandler_ctx and this can lead to unexpected results.
 
-  - If it's easy to add support then we do in one batch, or
+I will send patches to revert the commit and add doc comments explaining
+iohandler_ctx's special behavior. This will reduce, but not eliminate,
+the risk of future bugs.
 
-  - If it's not easy to add support, but if we can find a compatible way so
-    that ABI can be transparent when adding that later, it'll be also nice, or
-    
-  - If we have solid clue it should be a major separate work, and we must
-    need a new flag, then we at least know we should simply split the
-    effort due to that complexity
+Modifying aio_co_reschedule_self() might be better long-term fix, but
+I'm afraid it will create more bugs because it will expose the subtle
+distinction between the current coroutine AioContext and non-coroutine
+AioContext in new places. I think the root cause is that iohandler_ctx
+isn't a full-fledged AioContext with its own event loop. iohandler_ctx
+is a special superset of qemu_aio_context that the main loop monitors.
 
-The hope is option (1)/(2) would work out.
+Stefan
 
-I hope Avihai can also chim in here (or please reach him out) because I
-remember he used to consider proposing such a whole solution, but maybe I
-just misunderstood.  I suppose no harm to check with him.
+>=20
+> Kevin
+>=20
+> [1] https://issues.redhat.com/browse/RHEL-34618
+>=20
 
-Thanks,
+--ykADY2Nf4leySL0I
+Content-Type: application/pgp-signature; name="signature.asc"
 
--- 
-Peter Xu
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmY5HMMACgkQnKSrs4Gr
+c8hH/wgAmn/13IKYo0t3wak8vgOxDpo8DW4rCulzL3SjY6dphWHKXS2gqfEX3lDD
+7nkRmFEbBSP4LNS9S5b4KuK14mvVMhG8z5yY4FyIM3rRYG59xTbQoP2TbhFLcIp8
++vRICJwtMzBwjGTkgthperC5pXD7dzBQGHMbCbdI8mfea6CjcGlPNSaxPK4H5coE
+vVtpkJqkJTLXH3AOJL1aF1S1aTyfohpCVlVuHRVGVgsZ1XE6crMTzNbjFf3b8Sm8
+j/nO13fyHJkIsddqOsrQLY3Efhg5iaNY6bl42ZU8R6eJ4iwuHEpbYnRWya4OG1kC
+wWXo9yS0GuYXzXHniqPTKthcJNJCpA==
+=Vr0K
+-----END PGP SIGNATURE-----
+
+--ykADY2Nf4leySL0I--
 
 
