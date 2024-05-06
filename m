@@ -4,98 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91853C10F16
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 14:45:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69AD6C25B4F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 14:51:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3za3-0003bF-Ls; Mon, 06 May 2024 10:44:39 -0400
+	id 1s3zgO-0007vX-Bp; Mon, 06 May 2024 10:51:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s3zZy-0003al-MT
- for qemu-devel@nongnu.org; Mon, 06 May 2024 10:44:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1s3zgM-0007vB-7b
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 10:51:10 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s3zZv-0000Xa-NS
- for qemu-devel@nongnu.org; Mon, 06 May 2024 10:44:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715006669;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=r4IMUI1cggfAU+LsiLUGxeeA7y8FTnw1s8bqs3x7z/w=;
- b=NEeABj+T+XiF5RggzDGBgyuFfhoTpK4Oep5ZuQLavntqumFVyDsq24WGB5XAttgHZ2vt2y
- i7ICnJ30DEZ8xds0GhAkcmuswi/4AFffPepUdS46IbiKIef1Gm19khOqwv4YKzXc87Jm6a
- oWvM+L5coofRA3GfTy+ypLhp+M+JJ8w=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-130-MvkptNb4OxiS_aPdg6JzMg-1; Mon, 06 May 2024 10:44:28 -0400
-X-MC-Unique: MvkptNb4OxiS_aPdg6JzMg-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6a0f87048e6so6194066d6.3
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 07:44:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715006668; x=1715611468;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=r4IMUI1cggfAU+LsiLUGxeeA7y8FTnw1s8bqs3x7z/w=;
- b=uqnvcTiNlTM0Tcg8ETeK0bfaU540HlpZiOVpwxWqKjfyM0d+USUJMwPtb6aX3zrg6Q
- ViAU7Mr6M5UHqpRWHFdXp7MxjsBnYxcmifngy0DAizgskEmfIdR74mYcv7j0Rjeh3oTs
- 6MM2ak2/bLNaOEFnstxnTjBkbFLuB1RMB5npEkWmvrbN6/e/61TohQ38eEt4NIJ+ir24
- LI7wbGTG2BkkhzE8qdiKKJjXsZg5usUTQ/tSQFVJeQqc7zmYUkv1fc8XQ0pTuYE93N6k
- OfjkVyBskjGyI1PnCuHL2LSePyrQTfJy2JCPB9lKAxm2d/quNWB51+vyGL6/owHs25aD
- VWtA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXb1Ce5y/KBtLcNGsNjXhpZ6I7f4soA7N4NySe7B4wqvYDvaI5/S5c0DZ6GNnDejl9+c8rg0KvinaRHRCbpcuX6CftoGRo=
-X-Gm-Message-State: AOJu0YwCUDI5hxa/sMU0MfLakIcpdWa05LKGlve9KiOo8puVW+YLl/uz
- J9/lqbecV2iHQAKgblTGU4jzoF4pe4Zf6qpU/D16e/z7Yao3Yyy9ycfnvL+2lIeOknEGOLQL2NZ
- XCLwRPptfZl89WaqCOUzuyN5kybp8Kko7i1HcoDNVFXG45dEvGqmG
-X-Received: by 2002:a05:620a:2549:b0:790:e856:7cc9 with SMTP id
- s9-20020a05620a254900b00790e8567cc9mr11600450qko.1.1715006667566; 
- Mon, 06 May 2024 07:44:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEfL3HiTUS+hqjqsQjfldVC248fqr2KuSEJBs7rUzAeZ6De8qv3PvQ/w3zz/cGoXSLoKx2zww==
-X-Received: by 2002:a05:620a:2549:b0:790:e856:7cc9 with SMTP id
- s9-20020a05620a254900b00790e8567cc9mr11600413qko.1.1715006666791; 
- Mon, 06 May 2024 07:44:26 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- s6-20020a05620a0bc600b0078ede411c92sm3940284qki.27.2024.05.06.07.44.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 May 2024 07:44:26 -0700 (PDT)
-Date: Mon, 6 May 2024 10:44:24 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Mattias Nissler <mnissler@rivosinc.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Jagannathan Raman <jag.raman@oracle.com>,
- QEMU Developers <qemu-devel@nongnu.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- john.levon@nutanix.com, David Hildenbrand <david@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>
-Subject: Re: [PATCH v8 0/5] Support message-based DMA in vfio-user server
-Message-ID: <ZjjsyF_ZMIPGqcci@x1n>
-References: <20240304100554.1143763-1-mnissler@rivosinc.com>
- <ZeWho6ZW41tg0rob@x1n>
- <CAGNS4TYd7qVjLb6VCUSQa9DrYivwJV5UDhdSnSde0t2UCMpXrg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1s3zgH-0002o6-IN
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 10:51:09 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 3CB89648DC;
+ Mon,  6 May 2024 17:51:17 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9ABEEC7F2C;
+ Mon,  6 May 2024 17:50:59 +0300 (MSK)
+Message-ID: <811528af-cddd-492b-8b7a-4e153932a1f2@tls.msk.ru>
+Date: Mon, 6 May 2024 17:50:59 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGNS4TYd7qVjLb6VCUSQa9DrYivwJV5UDhdSnSde0t2UCMpXrg@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -11
-X-Spam_score: -1.2
-X-Spam_bar: -
-X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/12] qemu-sparc queue 20240506
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org,
+ richard.henderson@linaro.org
+References: <20240506114451.331311-1-mark.cave-ayland@ilande.co.uk>
+Content-Language: en-US
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240506114451.331311-1-mark.cave-ayland@ilande.co.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,21 +83,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 28, 2024 at 08:53:36AM +0100, Mattias Nissler wrote:
-> Stefan, to the best of my knowledge this is fully reviewed and ready
-> to go in - can you kindly pick it up or advise in case there's
-> something I missed? Thanks!
+06.05.2024 14:44, Mark Cave-Ayland wrote:
 
-Fails cross-compile on mipsel:
+> Mark Cave-Ayland (1):
+>        hw/sparc64: set iommu_platform=on for virtio devices attached to the sun4u machine
+> 
+> Richard Henderson (7):
+>        linux-user/sparc: Add more hwcap bits for sparc64
+>        target/sparc: Fix FEXPAND
+>        target/sparc: Fix FMUL8x16
+>        target/sparc: Fix FMUL8x16A{U,L}
+>        target/sparc: Fix FMULD8*X16
+>        target/sparc: Fix FPMERGE
+>        target/sparc: Split out do_ms16b
 
-https://gitlab.com/peterx/qemu/-/jobs/6787790601
+Should these "Fix" changes go to stable?
 
-IIUC it should be the same for all 32bits systems that do not support 64bit
-atomics.  Perhaps the easiest fix is switching all *bounce_buffer_size to 32bit.
-
+> Thomas Huth (4):
+>        target/sparc/cpu: Rename the CPU models with a "+" in their names
+>        target/sparc/cpu: Avoid spaces by default in the CPU names
+>        docs/system/target-sparc: Improve the Sparc documentation
+>        docs/about: Deprecate the old "UltraSparc" CPU names that contain a "+"
 Thanks,
 
+/mjt
 -- 
-Peter Xu
+GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
+New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
+Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
+Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
 
 
