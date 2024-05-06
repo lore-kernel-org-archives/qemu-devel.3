@@ -4,58 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81DDCC10F16
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 11:46:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 923B2C25B5C
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 11:46:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3wmq-0002BG-0Y; Mon, 06 May 2024 07:45:41 -0400
+	id 1s3wmq-0002BI-0z; Mon, 06 May 2024 07:45:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1s3wmZ-0001rI-18
+ id 1s3wmU-0001q2-Rb
  for qemu-devel@nongnu.org; Mon, 06 May 2024 07:45:29 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1s3wmW-0001vv-MY
- for qemu-devel@nongnu.org; Mon, 06 May 2024 07:45:22 -0400
+ id 1s3wmT-0001vE-0a
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 07:45:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- MIME-Version:References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=WY+P13fomWYQhB4vSdw0hSoUKVFP4d5TPh/QOK/Wn/k=; b=K9ZPkyZsqvYWsK2zaLTiGRAzig
- 2kHrJhq6lbY0E0+hiJz58crO/lMtfjCOpfg/p6f/vnYGh6LkHwDKZTAqK/xLAZytkA9inA8NCxTvc
- TRtxJ1698Mp5Y4vM3ojy1fEXLn0epgwdQwG0JONECIe6pCLiZ1vab/Feqc47tBmUpyERYSi/FUo/N
- PdyHzfHu7xqUITND5F8N4UerS9ulXb+MtOCG6seMiXF/0HBujrf/ETbAXxIEKJuj+jB6cPl+TSSKw
- zFP0h6gx+c0ar9evMF9mJ31oebfKFoKBiHz7jbBGtPkdf4sY0/AfmSrgdapXE5pnhfKabBFShGvzE
- JmMT9KpG6kSZMPzPn22vTpL7MHaj04lN/SrB0VZbu7Fzl5Ltl7cndqACJ5MDX7FIYkrAPI4euY1K9
- firCKmaE/CUiizsyXYkkq5Pz+tf3IdZyWNiibkqYKROSgtaazrVEsmP1UBgQms1KD5b0LA49FjfXf
- KoS1awX5F53FAJvxF4S5vYDm7yJd9XUvLJq7ZmPsSnRWICL0w2u8qMI1umE42KLHrZAsbhvAPaOwO
- 3n1viGiofnVRfDOXH52/rizDMJBN5wNWhvy2LMzHrv5NqdE2rK9jMZg0SyZWmgkUuXxKXdKqCpQVR
- pTmvJa3qwkMvpXZxkEtfU3a6MF0Z9BGMmNXq+UHvQ=;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
+ References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
+ Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
+ Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+ List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=f5kowjNmM1V5Tw1z4x5IIe927kwIc/2zGVQMsZgVWG0=; b=vnISCjbuclUVCrzuPgfCO+xolc
+ T0vgyR1B7O1aeZy3mCaXE+evDfMBgIYGiLV6bhgrx0sX9PcMKT1Dh8IBy9yefSfqzJPByGkMuqC44
+ lw3vK2SF4SaPm1FvlIg3As0tPuTi6BvQyUyVqnJxeMv04ppqIVWlxgS1sRCqJcjU0eEoAawwc9ny6
+ OLgNL0NG99/2YaTKU6td22VDJwqeLxOKN5R+hK8F+kCLKpkEvJ3Uvbz8iJvOO0AfQ6ItsOcA7Eoye
+ WopxzVliKHU5eXqezSYhsstpJ972BGyZLnl1/O+h1Zr5S/FXjuOSLmeIDRiyvL6nirGKuTYLSH9w7
+ TOhWa0c8n+bIvuPunvG1h0o6EsUUzP2/A+0+rJ/nVIH8ZhfbCty/5Qhg+7sF2+jkvycGkFb+6+295
+ kKMasWs/mFTUj3fuEXmyXpeb3bplt4eUKaDgv9X9KOxItiLXk7BUkfzX//2NFhx9KxLJo6/pmNu5h
+ 3z2H6jOVgZM7vNMAyil94v36l6duLQ1bULGzdVoVez5CU5uMX1IhfLIuDe04/ZxbvrNcqisPa5voA
+ 6Yec2z0DBQVvhryiXQNpnOCX9S1boNSOToaNI+4bHZdX1+HBrYEbMBhSLOAsb8xdMxBL8vxQu2HRm
+ ILqKBlKCZSWqI0pdUXG7mAlmQkj3dl2hv06ReWTbs=;
 Received: from [2a00:23c4:8bb4:4000:b60d:a162:d698:c802]
  (helo=localhost.localdomain)
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1s3wlO-0005pA-Ow; Mon, 06 May 2024 12:44:14 +0100
+ id 1s3wlK-0005pA-IZ; Mon, 06 May 2024 12:44:10 +0100
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: qemu-devel@nongnu.org,
 	richard.henderson@linaro.org
-Date: Mon,  6 May 2024 12:44:43 +0100
-Message-Id: <20240506114451.331311-5-mark.cave-ayland@ilande.co.uk>
+Date: Mon,  6 May 2024 12:44:42 +0100
+Message-Id: <20240506114451.331311-4-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240506114451.331311-1-mark.cave-ayland@ilande.co.uk>
 References: <20240506114451.331311-1-mark.cave-ayland@ilande.co.uk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:b60d:a162:d698:c802
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PULL 04/12] docs/about: Deprecate the old "UltraSparc" CPU names
- that contain a "+"
+Subject: [PULL 03/12] docs/system/target-sparc: Improve the Sparc documentation
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -83,39 +81,49 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-For consistency we should drop the names with a "+" in it in the
-long run.
+Add some words about how to enable or disable boolean features,
+and remove the note about a Linux kernel being available on the
+QEMU website (they have been removed long ago already), and the
+note about NetBSD and OpenBSD still having issues (they should
+work fine nowadays).
 
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2141
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240419084812.504779-5-thuth@redhat.com>
+Message-Id: <20240419084812.504779-4-thuth@redhat.com>
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
- docs/about/deprecated.rst | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ docs/system/target-sparc.rst | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 7b8aafa15b..03f8b1b655 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -194,6 +194,15 @@ in the QEMU object model anymore. ``power5+``, ``power5+_v2.1``,
- an alias, but for consistency these will get removed in a future
- release, too. Use ``power5p_v2.1`` and ``power7p_v2.1`` instead.
+diff --git a/docs/system/target-sparc.rst b/docs/system/target-sparc.rst
+index 9ec8c90c14..4116cac493 100644
+--- a/docs/system/target-sparc.rst
++++ b/docs/system/target-sparc.rst
+@@ -27,6 +27,11 @@ architecture machines:
+ The emulation is somewhat complete. SMP up to 16 CPUs is supported, but
+ Linux limits the number of usable CPUs to 4.
  
-+``Sun-UltraSparc-IIIi+`` and ``Sun-UltraSparc-IV+`` CPU names (since 9.1)
-+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
++The list of available CPUs can be viewed by starting QEMU with ``-cpu help``.
++Optional boolean features can be added with a "+" in front of the feature name,
++or disabled with a "-" in front of the name, for example
++``-cpu TI-SuperSparc-II,+float128``.
 +
-+The character "+" in device (and thus also CPU) names is not allowed
-+in the QEMU object model anymore. ``Sun-UltraSparc-IIIi+`` and
-+``Sun-UltraSparc-IV+`` are currently still supported via a workaround,
-+but for consistency these will get removed in a future release, too.
-+Use ``Sun-UltraSparc-IIIi-plus`` and ``Sun-UltraSparc-IV-plus`` instead.
-+
- CRIS CPU architecture (since 9.0)
- '''''''''''''''''''''''''''''''''
+ QEMU emulates the following sun4m peripherals:
  
+ -  IOMMU
+@@ -55,8 +60,5 @@ OpenBIOS is a free (GPL v2) portable firmware implementation. The goal
+ is to implement a 100% IEEE 1275-1994 (referred to as Open Firmware)
+ compliant firmware.
+ 
+-A sample Linux 2.6 series kernel and ram disk image are available on the
+-QEMU web site. There are still issues with NetBSD and OpenBSD, but most
+-kernel versions work. Please note that currently older Solaris kernels
+-don't work probably due to interface issues between OpenBIOS and
+-Solaris.
++Please note that currently older Solaris kernels don't work; this is probably
++due to interface issues between OpenBIOS and Solaris.
 -- 
 2.39.2
 
