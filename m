@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B06D1C25B5C
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 09:23:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5089AC25B5C
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 09:23:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3uXa-0006Dw-9n; Mon, 06 May 2024 05:21:46 -0400
+	id 1s3uXY-0005tf-Ay; Mon, 06 May 2024 05:21:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s3uXG-0005Sy-Lv
- for qemu-devel@nongnu.org; Mon, 06 May 2024 05:21:28 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s3uXB-0005MI-U5
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 05:21:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s3uXF-0007GP-1Z
- for qemu-devel@nongnu.org; Mon, 06 May 2024 05:21:26 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s3uX7-0007DY-UB
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 05:21:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714987284;
+ s=mimecast20190719; t=1714987277;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GB1agZ6Tu0XrtOL5tl3cQgrpTBeYUVe/gEYMw3zR2yw=;
- b=TYOMjdqMyTSP27jLDoLeaIN07tfQW1EWJ1noTp5A6RFmIGcY6sq03VGfDLzkGpqXlzaWkH
- 7MCQmsJa1J6g1P29a8Iz5cklS8qI2NzTUjGpAFItLGfNCFND1Bk0Hbeu0SgkKTqiZQxpjc
- VF4hn0/FrdpadBRrl6QuiFHb0VanpZk=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-205-oso880ZNMa-DcFSpW-gvqw-1; Mon, 06 May 2024 05:21:20 -0400
-X-MC-Unique: oso880ZNMa-DcFSpW-gvqw-1
+ bh=hvtU/q23M/raa1AFj0XJmWHXivlWjUUXMvJL0+mGj80=;
+ b=aCQDS3MFYlBx33XRVBzoXek5DNkD88TKaa6nuv1g3/4OToKbcHwPnkQLWZlwN0BDuAls0Y
+ +Ph4Y03Snur7Xl4YCtmyXJ0+50VhZTxUu7K9ICyXUxHq7Poh6XNtpBmQzUWB2H4+FdgXJ9
+ FfjtO7PKBLOo/FKSBoP46ofTvF8MR+U=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-647-SsnWRMSrPTCZ5nS0HpR-aw-1; Mon,
+ 06 May 2024 05:21:13 -0400
+X-MC-Unique: SsnWRMSrPTCZ5nS0HpR-aw-1
 Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
  [10.11.54.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A2974811003;
- Mon,  6 May 2024 09:21:19 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7980229AA3AD;
+ Mon,  6 May 2024 09:21:13 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.11])
- by smtp.corp.redhat.com (Postfix) with ESMTP id CA941AC6A;
- Mon,  6 May 2024 09:21:17 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id C6B55AC69;
+ Mon,  6 May 2024 09:21:10 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -50,11 +50,13 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Avihai Horon <avihaih@nvidia.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v5 10/10] vfio: Extend vfio_set_migration_error() with Error*
- argument
-Date: Mon,  6 May 2024 11:20:53 +0200
-Message-ID: <20240506092053.388578-11-clg@redhat.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>
+Subject: [PATCH v5 07/10] memory: Add Error** argument to
+ memory_get_xlat_addr()
+Date: Mon,  6 May 2024 11:20:50 +0200
+Message-ID: <20240506092053.388578-8-clg@redhat.com>
 In-Reply-To: <20240506092053.388578-1-clg@redhat.com>
 References: <20240506092053.388578-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -85,125 +87,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-vfio_set_migration_error() sets the 'return' error on the migration
-stream if a migration is in progress. To improve error reporting, add
-a new Error* argument to also set the Error object on the migration
-stream, if a migration is progress.
+Let the callers do the reporting. This will be useful in
+vfio_iommu_map_dirty_notify().
 
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: David Hildenbrand <david@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
+ include/exec/memory.h  | 15 ++++++++++++++-
+ hw/vfio/common.c       | 13 +++++++++----
+ hw/virtio/vhost-vdpa.c |  5 ++++-
+ system/memory.c        | 10 +++++-----
+ 4 files changed, 32 insertions(+), 11 deletions(-)
 
- Changes in v5:
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index dadb5cd65ab58b4868fcae06b4e301f0ecb0c1d2..2c45051b7b419c48b4e14c25f4d16a99ccd23996 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -774,9 +774,22 @@ void ram_discard_manager_register_listener(RamDiscardManager *rdm,
+ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
+                                              RamDiscardListener *rdl);
  
- - Rebased on 20c64c8a51a4 ("migration: migration_file_set_error")
-
- hw/vfio/common.c | 37 ++++++++++++++++++-------------------
- 1 file changed, 18 insertions(+), 19 deletions(-)
-
++/**
++ * memory_get_xlat_addr: Extract addresses from a TLB entry
++ *
++ * @iotlb: pointer to an #IOMMUTLBEntry
++ * @vaddr: virtual addressf
++ * @ram_addr: RAM address
++ * @read_only: indicates if writes are allowed
++ * @mr_has_discard_manager: indicates memory is controlled by a
++ *                          RamDiscardManager
++ * @errp: pointer to Error*, to store an error if it happens.
++ *
++ * Return: true on success, else false setting @errp with error.
++ */
+ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+                           ram_addr_t *ram_addr, bool *read_only,
+-                          bool *mr_has_discard_manager);
++                          bool *mr_has_discard_manager, Error **errp);
+ 
+ typedef struct CoalescedMemoryRange CoalescedMemoryRange;
+ typedef struct MemoryRegionIoeventfd MemoryRegionIoeventfd;
 diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index c3d82a9d6e434e33f361e4b96157bf912d5c3a2f..4cf3e13a8439bd1b9a032e9d4e75df676eba457b 100644
+index b929bb0b7ac60dcef34c0d5a098d5d91f75501dd..da748563eb33843e93631a5240759964f33162f2 100644
 --- a/hw/vfio/common.c
 +++ b/hw/vfio/common.c
-@@ -147,10 +147,10 @@ bool vfio_viommu_preset(VFIODevice *vbasedev)
-     return vbasedev->bcontainer->space->as != &address_space_memory;
- }
+@@ -253,12 +253,13 @@ static bool vfio_listener_skipped_section(MemoryRegionSection *section)
  
--static void vfio_set_migration_error(int err)
-+static void vfio_set_migration_error(int ret, Error *err)
+ /* Called with rcu_read_lock held.  */
+ static bool vfio_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+-                               ram_addr_t *ram_addr, bool *read_only)
++                               ram_addr_t *ram_addr, bool *read_only,
++                               Error **errp)
  {
-     if (migration_is_setup_or_active()) {
--        migration_file_set_error(err, NULL);
-+        migration_file_set_error(ret, err);
-     }
- }
+     bool ret, mr_has_discard_manager;
  
-@@ -295,9 +295,10 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     ret = memory_get_xlat_addr(iotlb, vaddr, ram_addr, read_only,
+-                               &mr_has_discard_manager);
++                               &mr_has_discard_manager, errp);
+     if (ret && mr_has_discard_manager) {
+         /*
+          * Malicious VMs might trigger discarding of IOMMU-mapped memory. The
+@@ -288,6 +289,7 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     hwaddr iova = iotlb->iova + giommu->iommu_offset;
+     void *vaddr;
+     int ret;
++    Error *local_err = NULL;
+ 
+     trace_vfio_iommu_map_notify(iotlb->perm == IOMMU_NONE ? "UNMAP" : "MAP",
                                  iova, iova + iotlb->addr_mask);
+@@ -304,7 +306,8 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
+         bool read_only;
  
-     if (iotlb->target_as != &address_space_memory) {
--        error_report("Wrong target AS \"%s\", only system memory is allowed",
--                     iotlb->target_as->name ? iotlb->target_as->name : "none");
--        vfio_set_migration_error(-EINVAL);
-+        error_setg(&local_err,
-+                   "Wrong target AS \"%s\", only system memory is allowed",
-+                   iotlb->target_as->name ? iotlb->target_as->name : "none");
-+        vfio_set_migration_error(-EINVAL, local_err);
-         return;
-     }
- 
-@@ -330,11 +331,12 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
-         ret = vfio_container_dma_unmap(bcontainer, iova,
-                                        iotlb->addr_mask + 1, iotlb);
-         if (ret) {
--            error_report("vfio_container_dma_unmap(%p, 0x%"HWADDR_PRIx", "
--                         "0x%"HWADDR_PRIx") = %d (%s)",
--                         bcontainer, iova,
--                         iotlb->addr_mask + 1, ret, strerror(-ret));
--            vfio_set_migration_error(ret);
-+            error_setg(&local_err,
-+                       "vfio_container_dma_unmap(%p, 0x%"HWADDR_PRIx", "
-+                       "0x%"HWADDR_PRIx") = %d (%s)",
-+                       bcontainer, iova,
-+                       iotlb->addr_mask + 1, ret, strerror(-ret));
-+            vfio_set_migration_error(ret, local_err);
+-        if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only)) {
++        if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, &local_err)) {
++            error_report_err(local_err);
+             goto out;
          }
-     }
- out:
-@@ -1108,8 +1110,7 @@ static void vfio_listener_log_global_stop(MemoryListener *listener)
-     if (ret) {
-         error_prepend(&local_err,
-                       "vfio: Could not stop dirty page tracking - ");
--        error_report_err(local_err);
--        vfio_set_migration_error(ret);
-+        vfio_set_migration_error(ret, local_err);
-     }
- }
+         /*
+@@ -1213,6 +1216,7 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     VFIOContainerBase *bcontainer = giommu->bcontainer;
+     hwaddr iova = iotlb->iova + giommu->iommu_offset;
+     ram_addr_t translated_addr;
++    Error *local_err = NULL;
+     int ret = -EINVAL;
  
-@@ -1226,14 +1227,14 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
      trace_vfio_iommu_map_dirty_notify(iova, iova + iotlb->addr_mask);
- 
-     if (iotlb->target_as != &address_space_memory) {
--        error_report("Wrong target AS \"%s\", only system memory is allowed",
--                     iotlb->target_as->name ? iotlb->target_as->name : "none");
-+        error_setg(&local_err,
-+                   "Wrong target AS \"%s\", only system memory is allowed",
-+                   iotlb->target_as->name ? iotlb->target_as->name : "none");
-         goto out;
+@@ -1224,7 +1228,8 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
      }
  
      rcu_read_lock();
-     if (!vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL, &local_err)) {
--        error_report_err(local_err);
+-    if (!vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL)) {
++    if (!vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL, &local_err)) {
++        error_report_err(local_err);
          goto out_lock;
      }
  
-@@ -1244,7 +1245,6 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
-                       "vfio_iommu_map_dirty_notify(%p, 0x%"HWADDR_PRIx", "
-                       "0x%"HWADDR_PRIx") failed - ", bcontainer, iova,
-                       iotlb->addr_mask + 1);
--        error_report_err(local_err);
-     }
+diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+index e827b9175fc61f1ef419e48d90a440b00449312a..ed99ab87457d8f31b98ace960713f48d47b27102 100644
+--- a/hw/virtio/vhost-vdpa.c
++++ b/hw/virtio/vhost-vdpa.c
+@@ -208,6 +208,7 @@ static void vhost_vdpa_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     void *vaddr;
+     int ret;
+     Int128 llend;
++    Error *local_err = NULL;
  
- out_lock:
-@@ -1252,7 +1252,7 @@ out_lock:
+     if (iotlb->target_as != &address_space_memory) {
+         error_report("Wrong target AS \"%s\", only system memory is allowed",
+@@ -227,7 +228,9 @@ static void vhost_vdpa_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
+         bool read_only;
  
- out:
-     if (ret) {
--        vfio_set_migration_error(ret);
-+        vfio_set_migration_error(ret, local_err);
-     }
- }
- 
-@@ -1372,8 +1372,7 @@ static void vfio_listener_log_sync(MemoryListener *listener,
-     if (vfio_devices_all_dirty_tracking(bcontainer)) {
-         ret = vfio_sync_dirty_bitmap(bcontainer, section, &local_err);
-         if (ret) {
--            error_report_err(local_err);
--            vfio_set_migration_error(ret);
-+            vfio_set_migration_error(ret, local_err);
+-        if (!memory_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, NULL)) {
++        if (!memory_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, NULL,
++                                  &local_err)) {
++            error_report_err(local_err);
+             return;
          }
+         ret = vhost_vdpa_dma_map(s, VHOST_VDPA_GUEST_PA_ASID, iova,
+diff --git a/system/memory.c b/system/memory.c
+index 49f1cb2c3835f78f5f948531cbbf13adc706f1ad..e2b9f0aa9ea7326a5bedde28b8c777cf86bc253e 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -2179,7 +2179,7 @@ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
+ /* Called with rcu_read_lock held.  */
+ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+                           ram_addr_t *ram_addr, bool *read_only,
+-                          bool *mr_has_discard_manager)
++                          bool *mr_has_discard_manager, Error **errp)
+ {
+     MemoryRegion *mr;
+     hwaddr xlat;
+@@ -2197,7 +2197,7 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+     mr = address_space_translate(&address_space_memory, iotlb->translated_addr,
+                                  &xlat, &len, writable, MEMTXATTRS_UNSPECIFIED);
+     if (!memory_region_is_ram(mr)) {
+-        error_report("iommu map to non memory area %" HWADDR_PRIx "", xlat);
++        error_setg(errp, "iommu map to non memory area %" HWADDR_PRIx "", xlat);
+         return false;
+     } else if (memory_region_has_ram_discard_manager(mr)) {
+         RamDiscardManager *rdm = memory_region_get_ram_discard_manager(mr);
+@@ -2216,8 +2216,8 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+          * were already restored before IOMMUs are restored.
+          */
+         if (!ram_discard_manager_is_populated(rdm, &tmp)) {
+-            error_report("iommu map to discarded memory (e.g., unplugged via"
+-                         " virtio-mem): %" HWADDR_PRIx "",
++            error_setg(errp, "iommu map to discarded memory (e.g., unplugged"
++                         " via virtio-mem): %" HWADDR_PRIx "",
+                          iotlb->translated_addr);
+             return false;
+         }
+@@ -2228,7 +2228,7 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+      * check that it did not truncate too much.
+      */
+     if (len & iotlb->addr_mask) {
+-        error_report("iommu has granularity incompatible with target AS");
++        error_setg(errp, "iommu has granularity incompatible with target AS");
+         return false;
      }
- }
+ 
 -- 
 2.45.0
 
