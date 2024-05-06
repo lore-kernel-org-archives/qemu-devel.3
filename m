@@ -4,59 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80210C25B4F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 19:07:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56174C25B4F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 19:07:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s43fl-0002sP-Av; Mon, 06 May 2024 15:06:49 -0400
+	id 1s43fr-00030w-Oc; Mon, 06 May 2024 15:06:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1s43fW-0002jz-EZ
- for qemu-devel@nongnu.org; Mon, 06 May 2024 15:06:36 -0400
+ id 1s43fY-0002kK-RE
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 15:06:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1s43fS-0000Ag-09
- for qemu-devel@nongnu.org; Mon, 06 May 2024 15:06:34 -0400
+ id 1s43fX-0000B0-0T
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 15:06:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715022389;
+ s=mimecast20190719; t=1715022394;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=2FC85QHFSou3g+VF+WZcEDgtuGCnshu1TV5DtCgjLS4=;
- b=M8Sauef9wGRc8fJCGBudznRXKClH6RmYU7yjpW6o4/unlHgXsVJGHJLYSrdj1oHaqGbn7Z
- WKoHlmNknIWZW6kDcbmReCQUO1D6to5+gMiwdP8kA3lmp5QCjC2y3JymYY1Ax0/GK2638q
- tPmVMSjQVHIAVDABFIP7V99Farz2kfA=
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=kKRKhnvbK/7eXO0y9aksHFlEplESZ1pbg0cA8AApavM=;
+ b=gm+UIX0iE4S9NgyODEDBDDSVinPy9FzG2ckj4hpqPQmF57V0xcXRG3rQz8NZp053cEbzZp
+ tm7xDygQW4uOpWwKc9ssZyIuthT4YlhIJSuGdVh+4y4BgXx7uHUjrU0ONBzIh+eTeaY7Ph
+ 0EQR2UP6zz1QTMd6xrY9+vzKyATiFU8=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-10-4jFI02ctPa2UEbaLehaw0Q-1; Mon,
- 06 May 2024 15:06:25 -0400
-X-MC-Unique: 4jFI02ctPa2UEbaLehaw0Q-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-352-u43OzzATN0art_CcYz9XTg-1; Mon,
+ 06 May 2024 15:06:28 -0400
+X-MC-Unique: u43OzzATN0art_CcYz9XTg-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 24D231C3F0E5;
- Mon,  6 May 2024 19:06:25 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 36BBE380008B;
+ Mon,  6 May 2024 19:06:28 +0000 (UTC)
 Received: from localhost (unknown [10.39.192.54])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 1A5AC492BC7;
- Mon,  6 May 2024 19:06:23 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id BCBA91C060D1;
+ Mon,  6 May 2024 19:06:26 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
  Kevin Wolf <kwolf@redhat.com>, Hanna Czenczek <hreitz@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
  Fam Zheng <fam@euphon.net>
-Subject: [PATCH 0/2] Revert "monitor: use aio_co_reschedule_self()"
-Date: Mon,  6 May 2024 15:06:20 -0400
-Message-ID: <20240506190622.56095-1-stefanha@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+Subject: [PATCH 1/2] Revert "monitor: use aio_co_reschedule_self()"
+Date: Mon,  6 May 2024 15:06:21 -0400
+Message-ID: <20240506190622.56095-2-stefanha@redhat.com>
+In-Reply-To: <20240506190622.56095-1-stefanha@redhat.com>
+References: <20240506190622.56095-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
@@ -81,25 +83,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series fixes RHEL-34618 "qemu crash on Assertion `luringcb->co->ctx ==
-s->aio_context' failed when do block_resize on hotplug disk with aio=io_uring":
-https://issues.redhat.com/browse/RHEL-34618
+Commit 1f25c172f837 ("monitor: use aio_co_reschedule_self()") was a code
+cleanup that uses aio_co_reschedule_self() instead of open coding
+coroutine rescheduling.
 
-Kevin identified commit 1f25c172f837 ("monitor: use aio_co_reschedule_self()")
-as the root cause. There is a subtlety regarding how
-qemu_get_current_aio_context() returns qemu_aio_context even though we may be
-running in iohandler_ctx.
+Bug RHEL-34618 was reported and Kevin Wolf <kwolf@redhat.com> identified
+the root cause. I missed that aio_co_reschedule_self() ->
+qemu_get_current_aio_context() only knows about
+qemu_aio_context/IOThread AioContexts and not about iohandler_ctx. It
+does not function correctly when going back from the iohandler_ctx to
+qemu_aio_context.
 
-Revert commit 1f25c172f837, it was just intended as a code cleanup.
+Go back to open coding the AioContext transitions to avoid this bug.
 
-Stefan Hajnoczi (2):
-  Revert "monitor: use aio_co_reschedule_self()"
-  aio: warn about iohandler_ctx special casing
+This reverts commit 1f25c172f83704e350c0829438d832384084a74d.
 
- include/block/aio.h | 6 ++++++
+Buglink: https://issues.redhat.com/browse/RHEL-34618
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+---
  qapi/qmp-dispatch.c | 7 +++++--
- 2 files changed, 11 insertions(+), 2 deletions(-)
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
+diff --git a/qapi/qmp-dispatch.c b/qapi/qmp-dispatch.c
+index f3488afeef..176b549473 100644
+--- a/qapi/qmp-dispatch.c
++++ b/qapi/qmp-dispatch.c
+@@ -212,7 +212,8 @@ QDict *coroutine_mixed_fn qmp_dispatch(const QmpCommandList *cmds, QObject *requ
+              * executing the command handler so that it can make progress if it
+              * involves an AIO_WAIT_WHILE().
+              */
+-            aio_co_reschedule_self(qemu_get_aio_context());
++            aio_co_schedule(qemu_get_aio_context(), qemu_coroutine_self());
++            qemu_coroutine_yield();
+         }
+ 
+         monitor_set_cur(qemu_coroutine_self(), cur_mon);
+@@ -226,7 +227,9 @@ QDict *coroutine_mixed_fn qmp_dispatch(const QmpCommandList *cmds, QObject *requ
+              * Move back to iohandler_ctx so that nested event loops for
+              * qemu_aio_context don't start new monitor commands.
+              */
+-            aio_co_reschedule_self(iohandler_get_aio_context());
++            aio_co_schedule(iohandler_get_aio_context(),
++                            qemu_coroutine_self());
++            qemu_coroutine_yield();
+         }
+     } else {
+        /*
 -- 
 2.45.0
 
