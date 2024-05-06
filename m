@@ -4,83 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92FA3C10F16
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 11:45:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4D6DC10F16
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 11:45:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3wm0-0001OM-OU; Mon, 06 May 2024 07:44:48 -0400
+	id 1s3wmR-0001lA-8s; Mon, 06 May 2024 07:45:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3wlw-0001NO-Qb
- for qemu-devel@nongnu.org; Mon, 06 May 2024 07:44:46 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3wls-0001q6-Jl
- for qemu-devel@nongnu.org; Mon, 06 May 2024 07:44:44 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-41b9dff6be8so11628725e9.3
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 04:44:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714995876; x=1715600676; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=bUk6sZWSg9CNXZsq5ah5PkHoX97J9I57NZqTtlqNVBA=;
- b=P72JWf3E76cJ8IZY/hcBVfu53iwOKsuUb7TXlugxmAgI93xSZYhp26Lbo1euCEeUX/
- vauG24BsY3voZ5+RghpHgyLmW+oG7N3uAJ0nNa+sJ4kZ4VE+DuT6WDUIH7p4JOMssRTr
- mxEE1gBLHFFBp8RHuyukPXFXv6rwIVpAV9274Ydx/ItatIm4rP0052vOi+aeMiqxWQNJ
- 7JoAssCHcTOUvMbdqkyjq6O0QY8s7Uj6BumYYdEddKK8QS0LklJY5/nRcGrCilv6mw5S
- fS28d95yy2e0CbKTMr2Bxz8STdd1B3yPS5SvT6CDw1d0mOTLJ26U6h3PkVlFf8jWleyQ
- Kv+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714995876; x=1715600676;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bUk6sZWSg9CNXZsq5ah5PkHoX97J9I57NZqTtlqNVBA=;
- b=HNsvc+fH31I/ZbQumKRsILyHBBb2DfSBz5zUybstk2fimK/7Wz8ACL/vYKbGD6dQoP
- EJpcKBleH2DEii0PCLiL+oKeb5o2uHfbW68qXMFDvXn9v25TTxEBnB0kt+kLw+ppcrNI
- 1Ibh7MZ31ikK9nG5JlozaT7H0nSBXNw77lKrB1Lkjltamc4KTiC+mFIfUgrL72z9EOa9
- zpUutXlQOd47ZGQPIY/BaiqaCJQ5J6sC3OGOWzSNL33Zph7Cd3O7S4SWpHQpz3SStp7E
- PWzXPpigl76tXl8HlTKAzgCyxV0i6iJSfEn4FkCJmyO1Z7o3BrWmhQidexq/eFNrHtiq
- P1Dw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWxBvZDgue/nzmxByfciXCJiJTHbnwaoOyulEcOzqDtoaK45fxQ3VPn0+93K+HnDUA4DTs5Mxys3fG4YP62r2LmnRss90c=
-X-Gm-Message-State: AOJu0YwWox0jxN3qUEfPdjIe8EIi7x3r+599tS7qdTWj9gIL2R/FbvE/
- OxiZ5PhC7uhaOvCIiokk1gHfQ5kwNWxVSXo86fzqjrl/sp4e5HHQ6XXUDdUCjaWrW6v2iDAW54V
- R
-X-Google-Smtp-Source: AGHT+IG+ZbvlQaoWGP+GPBflM1p6dUTpXNUkhfaFJ+Wo2P6urrzvO8+S0tgDk6hoCjMTuUuL0ymirw==
-X-Received: by 2002:a05:600c:154c:b0:41a:5958:d6ac with SMTP id
- f12-20020a05600c154c00b0041a5958d6acmr7130861wmg.21.1714995876630; 
- Mon, 06 May 2024 04:44:36 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.211.4])
- by smtp.gmail.com with ESMTPSA id
- m1-20020a5d64a1000000b0034edd6d5bbdsm4711630wrp.7.2024.05.06.04.44.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 May 2024 04:44:36 -0700 (PDT)
-Message-ID: <73ae70ff-0e20-437a-b5d9-72de6a948264@linaro.org>
-Date: Mon, 6 May 2024 13:44:34 +0200
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1s3wmP-0001kk-VD
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 07:45:14 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1s3wmJ-0001sh-LQ
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 07:45:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ MIME-Version:Message-Id:Date:To:From:Sender:Reply-To:Cc:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=LfeUNHCUlXdUgrM1iqoBXdGRDuj1orIgD/TwK4KQqss=; b=DOSoeXazQ4Q2YvpuJWrpQ646MB
+ y0Su0CLwitQLrxi2Z9QE0puwazeDtRKnZekJqbLz3MXRyhchUPF+eJqaLtQuTmgLdlWZ5SDJoF6aO
+ gGvZlgWFQmPmge1aTDe9ZAQhC840+IvQKFwPZiFFa6um6n8erJ17aoDywjDEOhFvQ7zdnvZd3abLl
+ olZ5xecB8HMOSdytE06YNw/1rPCnQz7ovBTcWfdfJYpIvSs3NIzHe8Pj5osWdHrLGzcAnMeE8GVFP
+ 81ZFAPlDxVwwY0XQyNnAWpWOqLzoghnnU5TViEYlBgf3gx9wathfH3Lbt6NOoVeVwfuSdOoSbRWmG
+ Y7NML8tcwIhDucVgIK3A/3vbFcXGFTaF7Dz5e3o+2tOIYGQmRA2km8QWzaUQpylVAyIwsDPDM6kRT
+ arkML2pPws+Zljv/nML5qWyeAuhysYp0XPPCqFEt/8lnKAGJdHU7/g01kCMFsJfdZE5aKKRxP4+TV
+ K+sKDVdsfgR/Tyh/GhQdTRemY8mujfDvRZqgzq2N+GexlkBb6H/8aJSSdw8ct41jVrZopUzPETSGm
+ 8RU1r0UAt6qiILJ+TBA1rPZsRi6lSKhrvSEyKp7uLfCMCOqJpAg8QLao9sPBqju76+YX0oOdNy0uy
+ QUKRsxxm2mxWRkRJoF+AYuN+SPahiiOfOiK3Lfzx8=;
+Received: from [2a00:23c4:8bb4:4000:b60d:a162:d698:c802]
+ (helo=localhost.localdomain)
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1s3wl8-0005pA-7G; Mon, 06 May 2024 12:43:58 +0100
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+To: qemu-devel@nongnu.org,
+	richard.henderson@linaro.org
+Date: Mon,  6 May 2024 12:44:39 +0100
+Message-Id: <20240506114451.331311-1-mark.cave-ayland@ilande.co.uk>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/7] qapi: make since sections special WIP
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org
-References: <20240506110254.3965097-1-armbru@redhat.com>
- <20240506110254.3965097-3-armbru@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240506110254.3965097-3-armbru@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:b60d:a162:d698:c802
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: [PULL 00/12] qemu-sparc queue 20240506
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,17 +78,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/5/24 13:02, Markus Armbruster wrote:
-> since moves to end in generated output
-> ---
->   docs/sphinx/qapidoc.py         | 22 +++++++++++++++++-----
->   scripts/qapi/parser.py         |  5 +++--
->   tests/qapi-schema/test-qapi.py |  2 ++
->   3 files changed, 22 insertions(+), 7 deletions(-)
+The following changes since commit 248f6f62df073a3b4158fd0093863ab885feabb5:
 
-Alternatively use git-publish to send pull requests :)
+  Merge tag 'pull-axp-20240504' of https://gitlab.com/rth7680/qemu into staging (2024-05-04 08:39:46 -0700)
 
-$ git publish --pull-request --sign-pull
+are available in the Git repository at:
 
-https://github.com/stefanha/git-publish/blob/master/git-publish.pod
+  https://github.com/mcayland/qemu.git tags/qemu-sparc-20240506
+
+for you to fetch changes up to d6f898cf85c92389182d22f0bcc3a11d7194fc94:
+
+  target/sparc: Split out do_ms16b (2024-05-05 21:02:48 +0100)
+
+----------------------------------------------------------------
+qemu-sparc queue
+- Default to modern virtio with iommu_platform enabled for sun4u
+- Fixes for various VIS instructions from Richard
+- CPU name updates from Thomas
+
+----------------------------------------------------------------
+Mark Cave-Ayland (1):
+      hw/sparc64: set iommu_platform=on for virtio devices attached to the sun4u machine
+
+Richard Henderson (7):
+      linux-user/sparc: Add more hwcap bits for sparc64
+      target/sparc: Fix FEXPAND
+      target/sparc: Fix FMUL8x16
+      target/sparc: Fix FMUL8x16A{U,L}
+      target/sparc: Fix FMULD8*X16
+      target/sparc: Fix FPMERGE
+      target/sparc: Split out do_ms16b
+
+Thomas Huth (4):
+      target/sparc/cpu: Rename the CPU models with a "+" in their names
+      target/sparc/cpu: Avoid spaces by default in the CPU names
+      docs/system/target-sparc: Improve the Sparc documentation
+      docs/about: Deprecate the old "UltraSparc" CPU names that contain a "+"
+
+ docs/about/deprecated.rst    |   9 +++
+ docs/system/target-sparc.rst |  12 +--
+ hw/sparc64/sun4u.c           |   7 ++
+ linux-user/elfload.c         |  48 +++++++----
+ qom/object.c                 |   8 --
+ target/sparc/cpu.c           |  66 ++++++++-------
+ target/sparc/helper.h        |  11 +--
+ target/sparc/insns.decode    |   2 +-
+ target/sparc/translate.c     | 129 ++++++++++++++++++++++++++---
+ target/sparc/vis_helper.c    | 189 +++++++++++--------------------------------
+ 10 files changed, 265 insertions(+), 216 deletions(-)
 
