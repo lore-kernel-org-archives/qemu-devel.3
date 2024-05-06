@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F077FC25B5C
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 11:43:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92FA3C10F16
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 11:45:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3wk9-0000Wy-6i; Mon, 06 May 2024 07:42:53 -0400
+	id 1s3wm0-0001OM-OU; Mon, 06 May 2024 07:44:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3wk7-0000WY-1P
- for qemu-devel@nongnu.org; Mon, 06 May 2024 07:42:51 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3wlw-0001NO-Qb
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 07:44:46 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3wk5-0000x5-EI
- for qemu-devel@nongnu.org; Mon, 06 May 2024 07:42:50 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-34dc9065606so962365f8f.1
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 04:42:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3wls-0001q6-Jl
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 07:44:44 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-41b9dff6be8so11628725e9.3
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 04:44:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714995767; x=1715600567; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714995876; x=1715600676; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=PXdB8+QIO6SMSbA2Z9lG3FeNC1/imepdGXxFob/hIKs=;
- b=uoJThCddjYg+alqTL/lB7g7OKSPp3PnIdrbdfLGgVy0MGAasAT3f8boHGXB9jdp9H3
- siHUYF7ZMDZzZC9GX9Ff/B0wUie8WPe0K8mHZDtjmWLZWByz97g1SF9OmWAXAi/hQpE4
- k0zFbfaA1FnzXPuUDj48aLfNtb3cV3SYxDj2rbNUtXAV7HNhKW0MclY5dFHX7RIKGIs1
- HLq1YlPFSp+z/agjQn7s4TMhPg+c/8wc9DX7HNv3nLJulfAxSYoNbwx5Ka3TAJk88fF7
- JbfZMlsADbZgXajRHkTI2wikVK8UR2S7Eg3iX2DwJ/rY2bYMgWdChAXkQeLEkXKdJYG0
- TaQQ==
+ bh=bUk6sZWSg9CNXZsq5ah5PkHoX97J9I57NZqTtlqNVBA=;
+ b=P72JWf3E76cJ8IZY/hcBVfu53iwOKsuUb7TXlugxmAgI93xSZYhp26Lbo1euCEeUX/
+ vauG24BsY3voZ5+RghpHgyLmW+oG7N3uAJ0nNa+sJ4kZ4VE+DuT6WDUIH7p4JOMssRTr
+ mxEE1gBLHFFBp8RHuyukPXFXv6rwIVpAV9274Ydx/ItatIm4rP0052vOi+aeMiqxWQNJ
+ 7JoAssCHcTOUvMbdqkyjq6O0QY8s7Uj6BumYYdEddKK8QS0LklJY5/nRcGrCilv6mw5S
+ fS28d95yy2e0CbKTMr2Bxz8STdd1B3yPS5SvT6CDw1d0mOTLJ26U6h3PkVlFf8jWleyQ
+ Kv+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714995767; x=1715600567;
+ d=1e100.net; s=20230601; t=1714995876; x=1715600676;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PXdB8+QIO6SMSbA2Z9lG3FeNC1/imepdGXxFob/hIKs=;
- b=FkzhTZkm+ux7dzZoIdp+DfT0VmAFJOU2Spa8cu063igWJDe6e1v8BvFQ8kTXvsQaCE
- da1X15OZgOwGHYBLdtJ/VEXwx4bTJGVFDQz9e4MZgI61TlkSyredGH8SRzcw5ezaiCEZ
- qIuf4Cxdm3bAYjMWxp9aqRgvlI7maARc5sCMAvbV16DFRUIwj3o1ir5FhhNmgoYgVwUM
- o4Wb0DGlco+x35oScTDc9kxsdNDPdI9eX90h2vxIwJclGZJl34ih9McI2SWpJKFiVjOB
- 7IOZZaMsll5L+9LiQf6c3QwvwfYeHdJ29fXpfEhTbhSMiEWM3zKTnMupyg7WZK9ZSgei
- 3Mpg==
+ bh=bUk6sZWSg9CNXZsq5ah5PkHoX97J9I57NZqTtlqNVBA=;
+ b=HNsvc+fH31I/ZbQumKRsILyHBBb2DfSBz5zUybstk2fimK/7Wz8ACL/vYKbGD6dQoP
+ EJpcKBleH2DEii0PCLiL+oKeb5o2uHfbW68qXMFDvXn9v25TTxEBnB0kt+kLw+ppcrNI
+ 1Ibh7MZ31ikK9nG5JlozaT7H0nSBXNw77lKrB1Lkjltamc4KTiC+mFIfUgrL72z9EOa9
+ zpUutXlQOd47ZGQPIY/BaiqaCJQ5J6sC3OGOWzSNL33Zph7Cd3O7S4SWpHQpz3SStp7E
+ PWzXPpigl76tXl8HlTKAzgCyxV0i6iJSfEn4FkCJmyO1Z7o3BrWmhQidexq/eFNrHtiq
+ P1Dw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVCcT7QZjZbTnDr/sFX4I5xP4888xI8CSKtt64bGznQriB1g8aEcyoVoogQhnXibFQ7U5mkIWyW1WNRFdJTQdnhwth7HxQ=
-X-Gm-Message-State: AOJu0YxrQ9FC/ngWhQo0A1LbCo2Ut37Pnbb9l+a7a9Jt8C3DMeKx02eK
- bP1gDMlFBvZA0W2HbQETpcUXTcst86Od7CslmzFRbsQLj1kmgKiGxBRKlsLmTdQ=
-X-Google-Smtp-Source: AGHT+IHCzkV9WQPZeN0lqJt9qDUM2a/ht5daURp07Z3M7cU3JZpOp5O6Z/T9h79pxhfVnrwtx17AiQ==
-X-Received: by 2002:a5d:66c8:0:b0:34d:13c9:eb52 with SMTP id
- k8-20020a5d66c8000000b0034d13c9eb52mr10857175wrw.3.1714995767598; 
- Mon, 06 May 2024 04:42:47 -0700 (PDT)
+ AJvYcCWxBvZDgue/nzmxByfciXCJiJTHbnwaoOyulEcOzqDtoaK45fxQ3VPn0+93K+HnDUA4DTs5Mxys3fG4YP62r2LmnRss90c=
+X-Gm-Message-State: AOJu0YwWox0jxN3qUEfPdjIe8EIi7x3r+599tS7qdTWj9gIL2R/FbvE/
+ OxiZ5PhC7uhaOvCIiokk1gHfQ5kwNWxVSXo86fzqjrl/sp4e5HHQ6XXUDdUCjaWrW6v2iDAW54V
+ R
+X-Google-Smtp-Source: AGHT+IG+ZbvlQaoWGP+GPBflM1p6dUTpXNUkhfaFJ+Wo2P6urrzvO8+S0tgDk6hoCjMTuUuL0ymirw==
+X-Received: by 2002:a05:600c:154c:b0:41a:5958:d6ac with SMTP id
+ f12-20020a05600c154c00b0041a5958d6acmr7130861wmg.21.1714995876630; 
+ Mon, 06 May 2024 04:44:36 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.211.4])
  by smtp.gmail.com with ESMTPSA id
- c16-20020adffb10000000b0034f0633e322sm3405545wrr.38.2024.05.06.04.42.46
+ m1-20020a5d64a1000000b0034edd6d5bbdsm4711630wrp.7.2024.05.06.04.44.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 May 2024 04:42:47 -0700 (PDT)
-Message-ID: <0a93eda4-6935-42ad-9601-2d6430f4ed8f@linaro.org>
-Date: Mon, 6 May 2024 13:42:44 +0200
+ Mon, 06 May 2024 04:44:36 -0700 (PDT)
+Message-ID: <73ae70ff-0e20-437a-b5d9-72de6a948264@linaro.org>
+Date: Mon, 6 May 2024 13:44:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] qemu-options: Deprecate "-runas" and introduce
- "-run-with user=..." instead
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: devel@lists.libvirt.org, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Claudio Imbrenda <imbrenda@linux.ibm.com>
-References: <20240506112058.51446-1-thuth@redhat.com>
+Subject: Re: [PATCH 1/7] qapi: make since sections special WIP
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org
+References: <20240506110254.3965097-1-armbru@redhat.com>
+ <20240506110254.3965097-3-armbru@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240506112058.51446-1-thuth@redhat.com>
+In-Reply-To: <20240506110254.3965097-3-armbru@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,23 +97,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/5/24 13:20, Thomas Huth wrote:
-> The old "-runas" option has the disadvantage that it is not visible
-> in the QAPI schema, so it is not available via the normal introspection
-> mechanisms. We've recently introduced the "-run-with" option for exactly
-> this purpose, which is meant to handle the options that affect the
-> runtime behavior. Thus let's introduce a "user=..." parameter here now
-> and deprecate the old "-runas" option.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+On 6/5/24 13:02, Markus Armbruster wrote:
+> since moves to end in generated output
 > ---
->   v2: Add missing part in qemu-options.hx as suggested by Philippe
-> 
->   docs/about/deprecated.rst |  6 ++++++
->   system/vl.c               | 15 +++++++++++++++
->   qemu-options.hx           | 15 +++++++++++----
->   3 files changed, 32 insertions(+), 4 deletions(-)
+>   docs/sphinx/qapidoc.py         | 22 +++++++++++++++++-----
+>   scripts/qapi/parser.py         |  5 +++--
+>   tests/qapi-schema/test-qapi.py |  2 ++
+>   3 files changed, 22 insertions(+), 7 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Alternatively use git-publish to send pull requests :)
 
+$ git publish --pull-request --sign-pull
+
+https://github.com/stefanha/git-publish/blob/master/git-publish.pod
 
