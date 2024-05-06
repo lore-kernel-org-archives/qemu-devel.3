@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD231C10F16
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 11:07:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BF40C25B5C
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 11:07:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3w7r-00036s-Lw; Mon, 06 May 2024 07:03:19 -0400
+	id 1s3w7l-0002xQ-4N; Mon, 06 May 2024 07:03:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s3w7f-0002on-Ew
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s3w7f-0002oq-PA
  for qemu-devel@nongnu.org; Mon, 06 May 2024 07:03:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s3w7X-0003eh-4Q
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s3w7Y-0003fP-QE
  for qemu-devel@nongnu.org; Mon, 06 May 2024 07:03:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714993378;
+ s=mimecast20190719; t=1714993380;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HXdJA2BHeqHIiC0EhCGjai0a7ae19Qf0y5BbHTMjxDU=;
- b=c9ZdTfLC/s/pIp3qGBcZW26GAb4pFzaNi9OWASkEmya+CsjxTYB+kSzO6Vwxc91bYJFap7
- baM8/IsODAC01szduQkakYQ8poiJeY412mSkta7uEgtz2M6sxaAfiUTsA0bE9bprwVQqAd
- PB1GJ0xTh69uSBEdH4VVU5kM0t1CiJU=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-665-IQb2DXQAOEWhUQLVOe_OXQ-1; Mon, 06 May 2024 07:02:56 -0400
-X-MC-Unique: IQb2DXQAOEWhUQLVOe_OXQ-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
+ bh=y8Xv4sKeuJXrReP+xdm8YZZkzbF0yY+MYu1X3PH04IU=;
+ b=XsNX68Mcg+S5qwG/gj+mxnpCjf5j+487N+Pr1uU2mkGtS6YufmO81svzdG+rEmDa5+oJl9
+ An+lrZbLetMhpDL+vnMJ07uVOiw+voBxxmTOIx+cMiWC+PTEWqMEiIsVdKLyo+tbdyiUsM
+ TO41gkv4N9IbUZipKqOUg0zEvWox3Ts=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-556-mDo0nzLiPQWyJKsAFFKH_g-1; Mon,
+ 06 May 2024 07:02:57 -0400
+X-MC-Unique: mDo0nzLiPQWyJKsAFFKH_g-1
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 774AB1049C93;
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 79BE929AA394;
  Mon,  6 May 2024 11:02:56 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 58075200B09C;
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 584E6AC6B;
  Mon,  6 May 2024 11:02:56 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 47A6421E5D28; Mon,  6 May 2024 13:02:54 +0200 (CEST)
+ id 52FC021EE971; Mon,  6 May 2024 13:02:54 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org
-Subject: [PATCH 3/7] qapi: make returns sections special WIP
-Date: Mon,  6 May 2024 13:02:46 +0200
-Message-ID: <20240506110254.3965097-7-armbru@redhat.com>
+Subject: [PULL 5/7] qapi: Rename QAPISchemaAlternateType.variants to
+ .alternatives
+Date: Mon,  6 May 2024 13:02:50 +0200
+Message-ID: <20240506110254.3965097-11-armbru@redhat.com>
 In-Reply-To: <20240506110254.3965097-1-armbru@redhat.com>
 References: <20240506110254.3965097-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -81,127 +82,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-returns moves in generated output
----
- docs/sphinx/qapidoc.py         |  8 ++++++++
- scripts/qapi/parser.py         |  4 ++--
- tests/qapi-schema/doc-good.out |  4 ++--
- tests/qapi-schema/doc-good.txt | 12 ++++++------
- tests/qapi-schema/test-qapi.py |  2 ++
- 5 files changed, 20 insertions(+), 10 deletions(-)
+A previous commit narrowed the type of
+QAPISchemaAlternateType.variants from QAPISchemaVariants to
+QAPISchemaAlternatives.  Rename it to .alternatives.
 
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index f19f5ded78..24bf1d9a90 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -250,6 +250,13 @@ def _nodes_for_features(self, doc):
-         section += dlnode
-         return [section]
+Same for .__init__() parameter @variants.
+
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ scripts/qapi/schema.py | 25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
+
+diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
+index c9ff794d0c..9bdbfd52b2 100644
+--- a/scripts/qapi/schema.py
++++ b/scripts/qapi/schema.py
+@@ -651,25 +651,25 @@ def __init__(
+         doc: Optional[QAPIDoc],
+         ifcond: Optional[QAPISchemaIfCond],
+         features: List[QAPISchemaFeature],
+-        variants: QAPISchemaAlternatives,
++        alternatives: QAPISchemaAlternatives,
+     ):
+         super().__init__(name, info, doc, ifcond, features)
+-        assert variants.tag_member
+-        variants.set_defined_in(name)
+-        variants.tag_member.set_defined_in(self.name)
+-        self.variants = variants
++        assert alternatives.tag_member
++        alternatives.set_defined_in(name)
++        alternatives.tag_member.set_defined_in(self.name)
++        self.alternatives = alternatives
  
-+    def _nodes_for_returns(self, doc, ret_type):
-+        if doc.returns:
-+            section = self._make_section('Returns')
-+            self._parse_text_into_node(doc.returns.text, section)
-+            return [section]
-+        return []
-+
-     def _nodes_for_since(self, doc):
-         if doc.since:
-             # TODO emphasis
-@@ -343,6 +350,7 @@ def visit_command(self, name, info, ifcond, features, arg_type,
-         self._add_doc('Command',
-                       self._nodes_for_arguments(doc,
-                                                 arg_type if boxed else None)
-+                      + self._nodes_for_returns(doc, ret_type)
-                       + self._nodes_for_features(doc)
-                       + self._nodes_for_sections(doc)
-                       + self._nodes_for_if_section(ifcond)
-diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-index 0237d13da9..e8a482c37d 100644
---- a/scripts/qapi/parser.py
-+++ b/scripts/qapi/parser.py
-@@ -646,7 +646,7 @@ def __init__(self, info: QAPISourceInfo, symbol: Optional[str] = None):
-         self.errors: Optional[QAPIDoc.Section] = None
-         # "Since" section
-         self.since: Optional[QAPIDoc.Section] = None
--        # sections other than .body, .args, .features, .since
-+        # sections other than .body, .args, .features, .returns, .since
-         self.sections: List[QAPIDoc.Section] = []
+     def check(self, schema: QAPISchema) -> None:
+         super().check(schema)
+-        self.variants.tag_member.check(schema)
+-        # Not calling self.variants.check_clash(), because there's nothing
+-        # to clash with
+-        self.variants.check(schema, {})
++        self.alternatives.tag_member.check(schema)
++        # Not calling self.alternatives.check_clash(), because there's
++        # nothing to clash with
++        self.alternatives.check(schema, {})
+         # Alternate branch names have no relation to the tag enum values;
+         # so we have to check for potential name collisions ourselves.
+         seen: Dict[str, QAPISchemaMember] = {}
+         types_seen: Dict[str, str] = {}
+-        for v in self.variants.variants:
++        for v in self.alternatives.variants:
+             v.check_clash(self.info, seen)
+             qtype = v.type.alternate_qtype()
+             if not qtype:
+@@ -700,7 +700,7 @@ def check(self, schema: QAPISchema) -> None:
+     def connect_doc(self, doc: Optional[QAPIDoc] = None) -> None:
+         super().connect_doc(doc)
+         doc = doc or self.doc
+-        for v in self.variants.variants:
++        for v in self.alternatives.variants:
+             v.connect_doc(doc)
  
-     def end(self) -> None:
-@@ -683,7 +683,7 @@ def new_tagged_section(self, info: QAPISourceInfo, tag: str) -> None:
-                 raise QAPISemError(
-                     info, "duplicated '%s' section" % tag)
-             self.since = section
--        if tag != 'Since':
-+        if tag not in ('Returns', 'Since'):
-             self.sections.append(section)
-         self.all_sections.append(section)
- 
-diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-good.out
-index 716a9a4102..f2be711a2c 100644
---- a/tests/qapi-schema/doc-good.out
-+++ b/tests/qapi-schema/doc-good.out
-@@ -165,14 +165,14 @@ description starts on the same line
- remainder indented differently
-     arg=arg3
- 
-+    section=Returns
-+@Object
-     feature=cmd-feat1
- a feature
-     feature=cmd-feat2
- another feature
-     section=Note
- @arg3 is undocumented
--    section=Returns
--@Object
-     section=Errors
- some
-     section=TODO
-diff --git a/tests/qapi-schema/doc-good.txt b/tests/qapi-schema/doc-good.txt
-index 56d50d4992..fd88301431 100644
---- a/tests/qapi-schema/doc-good.txt
-+++ b/tests/qapi-schema/doc-good.txt
-@@ -184,6 +184,12 @@ Arguments
-    Not documented
+     def c_type(self) -> str:
+@@ -712,7 +712,8 @@ def json_type(self) -> str:
+     def visit(self, visitor: QAPISchemaVisitor) -> None:
+         super().visit(visitor)
+         visitor.visit_alternate_type(
+-            self.name, self.info, self.ifcond, self.features, self.variants)
++            self.name, self.info, self.ifcond, self.features,
++            self.alternatives)
  
  
-+Returns
-+~~~~~~~
-+
-+"Object"
-+
-+
- Features
- ~~~~~~~~
- 
-@@ -200,12 +206,6 @@ Note
- "arg3" is undocumented
- 
- 
--Returns
--~~~~~~~
--
--"Object"
--
--
- Errors
- ~~~~~~
- 
-diff --git a/tests/qapi-schema/test-qapi.py b/tests/qapi-schema/test-qapi.py
-index 642daa29a4..1628efe0f3 100755
---- a/tests/qapi-schema/test-qapi.py
-+++ b/tests/qapi-schema/test-qapi.py
-@@ -127,6 +127,8 @@ def test_frontend(fname):
-         print('    body=\n%s' % doc.body.text)
-         for arg, section in doc.args.items():
-             print('    arg=%s\n%s' % (arg, section.text))
-+        if doc.returns:
-+            print('    section=%s\n%s' % (doc.returns.tag, doc.returns.text))
-         for feat, section in doc.features.items():
-             print('    feature=%s\n%s' % (feat, section.text))
-         for section in doc.sections:
+ class QAPISchemaVariants:
 -- 
 2.44.0
 
