@@ -4,89 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05050C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 08:06:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 223F6C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 08:07:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3t97-0005uK-53; Mon, 06 May 2024 03:52:25 -0400
+	id 1s3tNg-0008LV-7Q; Mon, 06 May 2024 04:07:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s3t8n-0005o4-Vr
- for qemu-devel@nongnu.org; Mon, 06 May 2024 03:52:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1s3tNL-0007yZ-88; Mon, 06 May 2024 04:07:10 -0400
+Received: from fhigh4-smtp.messagingengine.com ([103.168.172.155])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s3t8m-0001dV-If
- for qemu-devel@nongnu.org; Mon, 06 May 2024 03:52:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714981923;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Tpj0GLKdyQenhxApFtKcWrPJj8IHK+zOooWEIXzunbA=;
- b=Z4OJxBz1zDzbQEtph0v6gR6+orTCHZIYs3q5/Rb8ZPBWc/ENZk/LBPvy76QwY5fAzvDT1R
- XCFUul6U1lJOZ1K+AZRkTU8e0od+6/GvM+Z7qk94N9XucNiedw/G44juh29XlaqIi8JAYI
- KPKGBSM+6CkQ+le0wndfxq6yLqIe2I8=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-609-HpUuD6daOaSMRGMGtyowxQ-1; Mon, 06 May 2024 03:52:02 -0400
-X-MC-Unique: HpUuD6daOaSMRGMGtyowxQ-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a59cbb6f266so53706266b.3
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 00:52:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714981920; x=1715586720;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Tpj0GLKdyQenhxApFtKcWrPJj8IHK+zOooWEIXzunbA=;
- b=j0fFHCkMXpKK3Gvsf4xLaGS5k560BiaDGvlOedGGMIga9sfopSwB7Mv8KC3wpn2Sju
- DxcrHEanjKBSSb/koDAi9CQaKo/7b2oLQCj4fzYvyTMfoMebsH7tMETpqXzEqkn5S8ey
- gsqwlwRZtaanoskJCNYNHj/1GRSLn4uOPowiVU00U/Na+Cx3Wfgl8h6NUVnvQjgODRFH
- FnlsN1/0fCvfFtmvJr+ZGdGlpyHTVKLDvrmRghs+7G6dcpxKU+MpSRywwbhzEAMuRlZ9
- 4N6RxUzjoOqJkr/RTOc1WfBttaBY1yXaL3WbLY12pjlYWE9pLcfWmI9bq0nVwSewHScO
- JUJA==
-X-Gm-Message-State: AOJu0YzFjHCieei++Y42EhKytJ2dOpjuiXzsLWh+RWEWkmbVh+OLKqq1
- X1nRufQxmvG9utqhseX3LfPMlNMmU5jcokKaogwl5L1hiFcwn3DrosfoV3eU/V5e44LSV32QUBT
- WWObAib4bNq8BOkJ3tPJxsr+Ikdf604gZUvMpe8COIFQdj9VxMwhT0q7LW/21LS9trTe2Rws0ih
- lai2mpqYXndx9Xkq6QCBNR/LE7nMlbAtiypuDb
-X-Received: by 2002:a17:906:ddb:b0:a59:bfd6:bf2c with SMTP id
- p27-20020a1709060ddb00b00a59bfd6bf2cmr3833946eji.7.1714981920571; 
- Mon, 06 May 2024 00:52:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHJxDIuqJSJw5yF5zNogglTpt690fUknOLHcXwCcv6f48mWw6z+EOdKZVnWAr3Vyha4KVVaHQ==
-X-Received: by 2002:a17:906:ddb:b0:a59:bfd6:bf2c with SMTP id
- p27-20020a1709060ddb00b00a59bfd6bf2cmr3833926eji.7.1714981920211; 
- Mon, 06 May 2024 00:52:00 -0700 (PDT)
-Received: from avogadro.local ([151.95.155.52])
- by smtp.gmail.com with ESMTPSA id
- fy20-20020a170906b7d400b00a59ac65a13csm2546977ejb.179.2024.05.06.00.51.59
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 May 2024 00:51:59 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PULL 13/46] loongarch: switch boards to "default y"
-Date: Mon,  6 May 2024 09:50:52 +0200
-Message-ID: <20240506075125.8238-14-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.0
-In-Reply-To: <20240506075125.8238-1-pbonzini@redhat.com>
-References: <20240506075125.8238-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1s3tNJ-000887-5u; Mon, 06 May 2024 04:07:06 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailfhigh.nyi.internal (Postfix) with ESMTP id A301411400F4;
+ Mon,  6 May 2024 04:07:02 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute3.internal (MEProxy); Mon, 06 May 2024 04:07:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:message-id:mime-version
+ :reply-to:subject:subject:to:to; s=fm2; t=1714982822; x=
+ 1715069222; bh=ToGsE3re4vDluF3Y7EKO0tvz3XQaP8vS1/m4Y84KrUA=; b=S
+ UZIa9eXD8uYqB6J3qu6jJvyPN2h2YPs0XFGdCjRy4bQYv/lNJMSHHWKgMzs/CWPc
+ k+OWX4mMposRpphgrTQBsSDAF4gNKBFMIJLuZ9ItJGjgwbUVV+kKJIsBSyk77MAF
+ b8CMohFZr6UIl/7mOBIBW8wCsSb4wKylQunsQOr16eq8o/5FnvVooFkAlfpLtqMv
+ uV70lPFgQgPwZMGVhSZNogAO+OZczABzHprg6t8dYGsRO7Zjld/nkAEs0pTe4Rx2
+ HrweNpZ2E0TqQWGAhABgTYYtz9ymRqfN2U6scZWwmCQSpnqqpNOBCB4OYz0vR3xr
+ 8JD0xraH70IYGBoFSwn6A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm3; t=1714982822; x=1715069222; bh=ToGsE3re4vDlu
+ F3Y7EKO0tvz3XQaP8vS1/m4Y84KrUA=; b=B9NKxEdZ02uT2GX0UHOmDYyI3bFcf
+ u3C5FPO4Olhf3idmKkTvG/2fvztDFNtT+dHZf/rvpQESpmO7ajnijhe2/YjpUXhG
+ 1r5mQpxdnRDMpSA7JCY0CYyvRP6To2t2xpecEMDNWPwGRgjz3cft5Jd3mgSofgjK
+ wPb2h2YuxS4rqYqWQlFlTG8P0QsLFs6KsugQ/O/izMi9D6HQ8cznh1enSt4uTvxC
+ 1O+Ds7rxd4PQ1689bDtVDMDVP1Jot4y1Bn3lHIEvD5rYngQWwqCWWLAys/kdXxp9
+ 1LxdldLG0dMbbPE+DZKv2gXULe0nQn9bg9g5jkvuOjoZ8/hn0lcl04RUA==
+X-ME-Sender: <xms:pY84Zs_q-UemvIjQrgSx4zOSp92ZaI9oci_56CE0t6fsK1m-GBdKuw>
+ <xme:pY84ZksQKW9bEWfvVP4F6gjNVjG8sD1NO8dv1k8Sab6_zd9rgeZfRQEH-krAplem9
+ 1sgSm-Cswi4qelLw8k>
+X-ME-Received: <xmr:pY84ZiCqoz9Ok40rOkstI2P2g-rCXish0uwZNRsTkagvyvP2eIraahpGW0DunETkZxf7MHcokHeTT6tfnPxbmDXdBD1UB1VT-a8ZthCrKfGGcAFPkvxR99wkvKvbkKeXpVPG2d0tbdAAuHc0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddvhedguddvjecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+ enucfjughrpefhfffugggtgffkvfevofesthejredtredtjeenucfhrhhomhepmfhlrghu
+ shculfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrth
+ htvghrnheptdehveejiefhgfegiefhfeehueeigfeugfelhfdtffevheffkefhkeegteet
+ ffetnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepih
+ htshesihhrrhgvlhgvvhgrnhhtrdgukh
+X-ME-Proxy: <xmx:po84Zseb6_3vL3fCXslx3y9iLCMRnamPOqIOZ_9kG_gMLIpVJJZbQg>
+ <xmx:po84ZhPi_TQvugaAsRDT-cw6n9MPJJo7WZri9A73wp3cvnXJJv1t8w>
+ <xmx:po84ZmnwoA10kuNSF08-xXI6oLNkceIurRVJk_u3FoTsrzLSHS9Xag>
+ <xmx:po84ZjtE7oYUrk-y9CEXEKpKDTwwWWflBeZjo-jhL0z4G9RB1iUkSw>
+ <xmx:po84ZtChg-tjHvVLeT_Y1ZiozR0ZJFRPGrkv_Ia9ErMFPbK7X1mg20EE>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 6 May 2024 04:07:00 -0400 (EDT)
+From: Klaus Jensen <its@irrelevant.dk>
+Date: Mon, 06 May 2024 10:06:54 +0200
+Subject: [PATCH] hw/nvme: fix mo field in io mgnt send
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240506-fix-ioms-mo-v1-1-65c315531850@samsung.com>
+X-B4-Tracking: v=1; b=H4sIAJ2POGYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDUwMz3bTMCt3M/Nxi3dx8XUtzA0uLZLNkU2NLMyWgjoKiVKA02LTo2Np
+ aACkUJ9FdAAAA
+To: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, 
+ Jesper Devantier <foss@defmacro.it>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, 
+ Klaus Jensen <k.jensen@samsung.com>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=870; i=k.jensen@samsung.com;
+ h=from:subject:message-id; bh=AGGihcdJhqjHmbqYeZO/goo4qm0ktgvENouud7aj2fc=;
+ b=owJ4nAFtAZL+kA0DAAoBTeGvMW1PDekByyZiAGY4j6RO1/WyVxrcwTngx2lnYSZXwddQahkUy
+ Lzxlo0qFl+AUYkBMwQAAQoAHRYhBFIoM6p14tzmokdmwE3hrzFtTw3pBQJmOI+kAAoJEE3hrzFt
+ Tw3pTKkH/iY1sN4nSFE0MTo51c7jXXlq7nfYy07+g8E92k5GgLrqXMX+r2FLaTqzouwtG+N4DEl
+ Cvpu1/t/EosIPJG01ee67gRhBa2TEpoSBog2LpAW294yMtDG40FIOyG40zj12/rc6qaQ51DHA/1
+ LWkFvl+QhMCTtHAcTXEtXBpRQdcLekbMheg6V0xg3QmXu5fHKbqIINCgfaVuDMr0FbD1o11SdKc
+ HRBE9JsI5ulHtzZ7Y0s7QUSQ8FKnU7wHbY01Y9f+epq8pjPqnVO+wpHBQIusYd8Sceloe0SX33u
+ 2lIcjTVDjkZGEIeyMilyKL8vayiOvIQOvgZ0X1K3TVVhagX9mKKj7KfD
+X-Developer-Key: i=k.jensen@samsung.com; a=openpgp;
+ fpr=DDCA4D9C9EF931CC3468427263D56FC5E55DA838
+Received-SPF: pass client-ip=103.168.172.155; envelope-from=its@irrelevant.dk;
+ helo=fhigh4-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.431,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,58 +116,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some targets use "default y" for boards to filter out those that require
-TCG.  For consistency we are switching all other targets to do the same.
-Continue with Loongarch.
+From: Klaus Jensen <k.jensen@samsung.com>
 
-No changes to generated config-devices.mak file.
+The Management Operation field of I/O Management Send is only 8 bits,
+not 16.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Fixes: 73064edfb864 ("hw/nvme: flexible data placement emulation")
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
 ---
- configs/devices/loongarch64-softmmu/default.mak | 3 ++-
- .gitlab-ci.d/buildtest.yml                      | 4 ++--
- hw/loongarch/Kconfig                            | 2 ++
- 3 files changed, 6 insertions(+), 3 deletions(-)
+ hw/nvme/ctrl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/configs/devices/loongarch64-softmmu/default.mak b/configs/devices/loongarch64-softmmu/default.mak
-index 0893112b81d..ffe705836fd 100644
---- a/configs/devices/loongarch64-softmmu/default.mak
-+++ b/configs/devices/loongarch64-softmmu/default.mak
-@@ -3,4 +3,5 @@
- # Uncomment the following lines to disable these optional devices:
- # CONFIG_PCI_DEVICES=n
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 9e7bbebc8bb0..ede5f281dd7c 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -4387,7 +4387,7 @@ static uint16_t nvme_io_mgmt_send(NvmeCtrl *n, NvmeRequest *req)
+ {
+     NvmeCmd *cmd = &req->cmd;
+     uint32_t cdw10 = le32_to_cpu(cmd->cdw10);
+-    uint8_t mo = (cdw10 & 0xff);
++    uint8_t mo = cdw10 & 0xf;
  
--CONFIG_LOONGARCH_VIRT=y
-+# Boards are selected by default, uncomment to keep out of the build.
-+# CONFIG_LOONGARCH_VIRT=n
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index 75222c4450b..a82848ba55b 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -648,8 +648,8 @@ build-tci:
-     - make check-tcg
- 
- # Check our reduced build configurations
--# requires libfdt: aarch64, arm, i386, x86_64
--# does not build without boards: i386, x86_64
-+# requires libfdt: aarch64, arm, i386, loongarch64, x86_64
-+# does not build without boards: i386, loongarch64, x86_64
- build-without-defaults:
-   extends: .native_build_job_template
-   needs:
-diff --git a/hw/loongarch/Kconfig b/hw/loongarch/Kconfig
-index 5727efed6d8..78640505630 100644
---- a/hw/loongarch/Kconfig
-+++ b/hw/loongarch/Kconfig
-@@ -1,5 +1,7 @@
- config LOONGARCH_VIRT
-     bool
-+    default y
-+    depends on LOONGARCH64
-     select PCI
-     select PCI_EXPRESS_GENERIC_BRIDGE
-     imply VIRTIO_VGA
+     switch (mo) {
+     case NVME_IOMS_MO_NOP:
+
+---
+base-commit: 84b0eb1826f690aa8d51984644318ee6c810f5bf
+change-id: 20240506-fix-ioms-mo-97098c6c5396
+
+Best regards,
 -- 
-2.44.0
+Klaus Jensen <k.jensen@samsung.com>
 
 
