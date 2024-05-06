@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42527C25B10
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 21:06:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC8F7C25B10
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 21:08:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s45XA-0002Gh-Dw; Mon, 06 May 2024 17:06:04 -0400
+	id 1s45ZI-00035m-EB; Mon, 06 May 2024 17:08:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1s45X8-0002Eq-Hk
- for qemu-devel@nongnu.org; Mon, 06 May 2024 17:06:02 -0400
-Received: from mail-oa1-x2f.google.com ([2001:4860:4864:20::2f])
+ id 1s45ZF-00035H-NF
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 17:08:13 -0400
+Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1s45X6-0000Cg-In
- for qemu-devel@nongnu.org; Mon, 06 May 2024 17:06:02 -0400
-Received: by mail-oa1-x2f.google.com with SMTP id
- 586e51a60fabf-23f5a31d948so1155217fac.0
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 14:05:59 -0700 (PDT)
+ id 1s45ZE-0000nJ-0J
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 17:08:13 -0400
+Received: by mail-ot1-x32d.google.com with SMTP id
+ 46e09a7af769-6f05b8fc6c1so862724a34.0
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 14:08:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1715029558; x=1715634358;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1715029690; x=1715634490;
  darn=nongnu.org; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=mw/pTAb/99xK1qavMOVettMtS07i2utPLsUqaqwEJj0=;
- b=et/vQyA1xjQFMDfmZzLffFcSz6HsLBslGP2DhpfEghMo42pQARAJExvprgEWeQWbip
- HEN8ohAPwYd9+qoFozWx5+GP0ytA5jU/S4fsSdf8Tw5dRmvRPZIhCTkHGDBZBhp8vHpT
- 4WG8ezo8Dyjn3UVnBjNNkhlPEe8SNouiFvpKp9zEwLBZLRoe57rx3FnCH2JY5Pvx7H7h
- vHVj3eYOZpZPMn7IHRtV689RnmRKO0L797pwPTflmoorWSsuF4i5CwL5oGUEULkr2U37
- A1U4nZDjNXTms2Uk9lpJEnKWVEWcZmqvClkjwQW3TlpPRQf+sKUMPdYYTQCVW3O03bBf
- mcmA==
+ bh=z/loUhp5PrsBYSFWbwTS+0yfJJR9vjwcisKcGSpp6iI=;
+ b=RfEo3SX05QHQbplaOM+1Z2wResriPQfg963QlskG0CFf/pHSyv3ke0/hLicuq97mHa
+ VKaktSbfzYcjNW5HV9OafBdnsUlV0X1rLq30yHV3LzwMr/eIk5DIktlgvekGliyd8YH7
+ mELDhMi9fBLlUrJTeFPhhF1HLO9VVrigQ56R61bXjBS2cBgTlxnRgEnxQgTss9QjHSbW
+ YEOs79VC6mdYg3q0u/2F4BWDDGQ93jBd7CqZlfF3KUkXYCasaERd+X89JOyO0yX6d7C9
+ evVuiqjPSZtXnX0XSbbylFi80uX+YNS6ioYCvY9JtTHl53QLhFuZzMioVFrCm7RpVC5R
+ N9dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715029558; x=1715634358;
+ d=1e100.net; s=20230601; t=1715029690; x=1715634490;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=mw/pTAb/99xK1qavMOVettMtS07i2utPLsUqaqwEJj0=;
- b=J/J9IUV44yYJz4Ku8geTuDwYWenzw32JQWX1XK74B/6wMdXk7W3CC/hdtUPjJZpPbf
- pz8Y6hBdqygJvWk8E44TNtac6IeX+7YYo7PPaNysAK79ttIP2611Yvwj7HNHi5RCBDO/
- 6/pm1AYeqDxgzC8tHIfFJwjzKcbOZGwj0AUkSclvl0px8g0ZikhojH+b+yMOuuDpM7Vm
- X3RQ49GierbY4i5v7Isqy/BE5F727wM1pZRfCTyO1095JCQGy86oroAmREPv2Ce/NqC3
- TvhBSbEtxIwN10CGVb3hR/6Z9gh0ckErSXZhXovLtkbw7bxlnv/C1+smzkMK6JlO+P2Y
- nOEg==
+ bh=z/loUhp5PrsBYSFWbwTS+0yfJJR9vjwcisKcGSpp6iI=;
+ b=QRYLp8/4xCzHgIuxmpmVU2foXrWMmihvqFS9vKqj6KTuG4ROH13ZbcLHpYvXK6NTbQ
+ 6gWXhtv3pBFsp0JxZrCXnbwOS0/t1gfBft+Jm7T0SPTy8F8U788JMY9smAH8ZraF7A/2
+ Yl2Ra3SElbEIPFzCygdkCV1XANcQnrdSOCjRsgqyn/HR+MhGc0IXsY9gFbc4Lbwj4fKC
+ ZXlcR7E2fSeeDDx4qHUw8MybrsnTFFx9/JlJwwYiXtKV4j1SVXVHAVIgrnEFkX42+7I0
+ IDQihBmuL87cNvgsWzozllkHKnNInlWvVPtHAKPTWUoZkqWpOWRuPnQqRkrh0Ibhbjrx
+ SYuQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVbMMF3uT7UBRpEAhxkcakeXSeenZz7b4bukHAUczM1J3tQfvb5mC4IfOvF79+fRIQOUcBfUFKkJ9KwsDJHg1h6BWt4DqU=
-X-Gm-Message-State: AOJu0YyzlM+kh+nZyBnk5VwAOUfCyRoOK+CZuRYMCFGGG4QyR/6InqWl
- nNwi+xSKpwu/LnFNq5871Eg95mTLRThxwKY4D4GMpnWh0JqPBYdcTnBKfgdk02DRs/QRUfbfCau
- 1UMeTjp6Mw6BMkwFas8CkM0fZF2EPFCYKV+Kpgg==
-X-Google-Smtp-Source: AGHT+IHCQSJg6qGFe2vZx+X0EIoIItw2i6xHnPtHlSw8DtG0mE4BoqwoLfnxf+E3b8IYbVa6T7bQnPNXpHyc9p2M6YI=
-X-Received: by 2002:a05:6870:ac06:b0:22a:6c9a:ece8 with SMTP id
- kw6-20020a056870ac0600b0022a6c9aece8mr13787627oab.21.1715029558440; Mon, 06
- May 2024 14:05:58 -0700 (PDT)
+ AJvYcCWZuXx13INXQN0mLBXnRDKqc76u6PjPk9iTsdskbQJQrtAvc8u+RlCB80ALm7HrCmXR8E/bMozOFpOcDtz+JYsphMW1D0U=
+X-Gm-Message-State: AOJu0Yz4Kj5cg9IUWtiVWR326EJaOdt3wSjKwfEoQOjh+5QldL8oB5bI
+ wUhBRk7A+M1YhVSlewuDcLs2ESAskhPiPtZQLd8dcqqDOQZ9zlCHCBTKfSSntbKoPM8t9fdhfV4
+ pbzERE8HVfOsFdhyTvyEjJA944Jfh0OyX12pvPQ==
+X-Google-Smtp-Source: AGHT+IHk83H1LbLbgeXy1rhJDqBJSijyh2jEZtuBHC8q6qDqnKHNYotBOITFXBqa6J752ulyK18YWae85ZB1JBeG0iE=
+X-Received: by 2002:a05:6871:799e:b0:23c:ffe8:a80c with SMTP id
+ pb30-20020a056871799e00b0023cffe8a80cmr12517231oac.52.1715029690482; Mon, 06
+ May 2024 14:08:10 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240304100554.1143763-1-mnissler@rivosinc.com>
  <ZeWho6ZW41tg0rob@x1n>
  <CAGNS4TYd7qVjLb6VCUSQa9DrYivwJV5UDhdSnSde0t2UCMpXrg@mail.gmail.com>
- <CAJSP0QVxJ__44uTHfZ+Ry0u9iL0QxyL-ca7ypO6YUmyEE5WL0A@mail.gmail.com>
-In-Reply-To: <CAJSP0QVxJ__44uTHfZ+Ry0u9iL0QxyL-ca7ypO6YUmyEE5WL0A@mail.gmail.com>
+ <ZjjsyF_ZMIPGqcci@x1n>
+In-Reply-To: <ZjjsyF_ZMIPGqcci@x1n>
 From: Mattias Nissler <mnissler@rivosinc.com>
-Date: Mon, 6 May 2024 23:05:47 +0200
-Message-ID: <CAGNS4TbFdTR5uDupW63o+OvWUq2xHsBq9Ly8Sp-zGUvPbsUiEA@mail.gmail.com>
+Date: Mon, 6 May 2024 23:07:59 +0200
+Message-ID: <CAGNS4TaSxprHvoVCMRLw2YCGA2FXirO=Wp-TgzzxquwaL6y51Q@mail.gmail.com>
 Subject: Re: [PATCH v8 0/5] Support message-based DMA in vfio-user server
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: Jagannathan Raman <jag.raman@oracle.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>,
+To: Peter Xu <peterx@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Jagannathan Raman <jag.raman@oracle.com>,
  QEMU Developers <qemu-devel@nongnu.org>, 
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
  john.levon@nutanix.com, David Hildenbrand <david@redhat.com>, 
  "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
  Richard Henderson <richard.henderson@linaro.org>, 
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>, Peter Xu <peterx@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000009c50090617cf6feb"
-Received-SPF: pass client-ip=2001:4860:4864:20::2f;
- envelope-from=mnissler@rivosinc.com; helo=mail-oa1-x2f.google.com
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>
+Content-Type: multipart/alternative; boundary="0000000000007b1aad0617cf77d6"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32d;
+ envelope-from=mnissler@rivosinc.com; helo=mail-ot1-x32d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -101,49 +101,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000009c50090617cf6feb
+--0000000000007b1aad0617cf77d6
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, May 6, 2024 at 5:01=E2=80=AFPM Stefan Hajnoczi <stefanha@gmail.com>=
- wrote:
+On Mon, May 6, 2024 at 4:44=E2=80=AFPM Peter Xu <peterx@redhat.com> wrote:
 
-> On Thu, 28 Mar 2024 at 03:54, Mattias Nissler <mnissler@rivosinc.com>
-> wrote:
-> >
+> On Thu, Mar 28, 2024 at 08:53:36AM +0100, Mattias Nissler wrote:
 > > Stefan, to the best of my knowledge this is fully reviewed and ready
 > > to go in - can you kindly pick it up or advise in case there's
 > > something I missed? Thanks!
 >
-> This code is outside the areas that I maintain. I think it would make
-> sense for Jag to merge it and send a pull request as vfio-user
-> maintainer.
+> Fails cross-compile on mipsel:
+>
+> https://gitlab.com/peterx/qemu/-/jobs/6787790601
 
 
-OK, thanks for following up, I'll check with Jag.
+Ah, bummer, thanks for reporting. 4GB of bounce buffer should be plenty, so
+switching to 32 bit atomics seems a good idea at first glance. I'll take a
+closer look tomorrow and send a respin with a fix.
 
---0000000000009c50090617cf6feb
+--0000000000007b1aad0617cf77d6
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Mon, May 6, 2024 at 5:01=E2=80=AFP=
-M Stefan Hajnoczi &lt;<a href=3D"mailto:stefanha@gmail.com">stefanha@gmail.=
-com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"marg=
-in:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1e=
-x">On Thu, 28 Mar 2024 at 03:54, Mattias Nissler &lt;<a href=3D"mailto:mnis=
-sler@rivosinc.com" target=3D"_blank">mnissler@rivosinc.com</a>&gt; wrote:<b=
-r>
-&gt;<br>
+<div dir=3D"ltr" class=3D"gmail_attr">On Mon, May 6, 2024 at 4:44=E2=80=AFP=
+M Peter Xu &lt;<a href=3D"mailto:peterx@redhat.com">peterx@redhat.com</a>&g=
+t; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0p=
+x 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Thu=
+, Mar 28, 2024 at 08:53:36AM +0100, Mattias Nissler wrote:<br>
 &gt; Stefan, to the best of my knowledge this is fully reviewed and ready<b=
 r>
 &gt; to go in - can you kindly pick it up or advise in case there&#39;s<br>
 &gt; something I missed? Thanks!<br>
 <br>
-This code is outside the areas that I maintain. I think it would make<br>
-sense for Jag to merge it and send a pull request as vfio-user<br>
-maintainer.</blockquote><div><br></div><div>OK, thanks for following up, I&=
-#39;ll check with Jag. <br></div></div></div>
+Fails cross-compile on mipsel:<br>
+<br>
+<a href=3D"https://gitlab.com/peterx/qemu/-/jobs/6787790601" rel=3D"norefer=
+rer" target=3D"_blank">https://gitlab.com/peterx/qemu/-/jobs/6787790601</a>=
+</blockquote><div><br></div><div>Ah, bummer, thanks for reporting. 4GB of b=
+ounce buffer should be plenty, so switching to 32 bit atomics seems a good =
+idea at first glance. I&#39;ll take a closer look tomorrow and send a respi=
+n with a fix. <br></div></div></div>
 
---0000000000009c50090617cf6feb--
+--0000000000007b1aad0617cf77d6--
 
