@@ -4,54 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25C6EC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 03:03:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4392AC25B10
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 03:49:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3ocO-00075A-GS; Sun, 05 May 2024 23:02:20 -0400
+	id 1s3pL5-0007cz-Up; Sun, 05 May 2024 23:48:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1s3ocM-00074U-2D
- for qemu-devel@nongnu.org; Sun, 05 May 2024 23:02:18 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1s3ocI-0008GQ-07
- for qemu-devel@nongnu.org; Sun, 05 May 2024 23:02:17 -0400
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8BxnuswSDhmOuIHAA--.21261S3;
- Mon, 06 May 2024 11:02:08 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8DxvlcuSDhmFvwRAA--.31503S3; 
- Mon, 06 May 2024 11:02:07 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: [PATCH v3 1/5] hw/loongarch: Rename LOONGARCH_MACHINE with
- VIRT_MACHINE
-Date: Mon,  6 May 2024 11:02:02 +0800
-Message-Id: <20240506030206.2119832-2-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20240506030206.2119832-1-maobibo@loongson.cn>
-References: <20240506030206.2119832-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1s3pL4-0007cA-BP
+ for qemu-devel@nongnu.org; Sun, 05 May 2024 23:48:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1s3pL2-00045y-2v
+ for qemu-devel@nongnu.org; Sun, 05 May 2024 23:48:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714967306;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VSK62MJbU3FHTHsma8iEmMQD+HKDSbuD0OhWsE/hw6g=;
+ b=H9C+uOqTwQiJor5QYrQLF3DIkmVSUKfQJwuN3+qMugcFtvY8aKrkkmDubvlQfxcyYK+6g7
+ IGxOYpFHU+sME+7/9tdH8V1Mmyivit3ym5DSHEZVzLRRRUHHDYvPiBZ3P6OqdA/kUO4rDS
+ anl597EhP+nZ5umV8i0BW4kFvJ1iVQc=
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-695-uUCOm00ROWKHqfE_0oJCmA-1; Sun, 05 May 2024 23:48:24 -0400
+X-MC-Unique: uUCOm00ROWKHqfE_0oJCmA-1
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-5d8bff2b792so1816457a12.1
+ for <qemu-devel@nongnu.org>; Sun, 05 May 2024 20:48:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714967303; x=1715572103;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=VSK62MJbU3FHTHsma8iEmMQD+HKDSbuD0OhWsE/hw6g=;
+ b=vdCADP2HbuJgKiE+zY4jG09CghJeAW355GXR15MozRbgv/URX4G1bvu2aN2xZGxecG
+ AEUma+6RmEeAYqoTUbQ0A/ZVMqoZK5+DuB3ntMi9bLvk9IFYIX4IEQ1dwVDKnTXqXHGf
+ bqOsxq60xAbXHNeVxMJBtl2G4YD5B2DNg1aFQRiknRhdhCLJ2R7DCqKY4x72xUPB0eF+
+ sqTXoa5BlLHCa3t7m7J+zerT1lkwBnuhMRXVG2+i984gHNpXvtc2jw8Qq7k94m/+3fBD
+ KXhexc87GfhkR60Z3YRDgOGDVM6SQCkaGFO4QynCYem5q6Rq9McnJ4zDLfSkEpn5u+EX
+ ExQA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX6ZCUO7djZrFYCwmwgrtFxcN0xxs40fuGfuSJmv2z77I7IP3FeplqHC7utn76pZIGk3GeSqb8L4MK0uGc8rDNZ8cME9ug=
+X-Gm-Message-State: AOJu0YwbzIYT/Qvkqiy0LG0rXhc1/bCrMa2Zaot/36JikqzASoe6UkkM
+ h2tjsngiZ2/2YIhCY3hINEaWejoHDpQAu7jIqZxEokXySYdgbHUM+2Aehwk/DrwijszDaqUxe7U
+ qbE/vQdLYWeNLOrFttOBdCMU6rBs5rerFJxDS20vW5BWW755Ei8olREHqwI8rFW0tk704bEC3I9
+ cmKtJ6jDW1F74u75H5lG9j0ep/d50=
+X-Received: by 2002:a05:6300:8a0d:b0:1ac:34cc:b323 with SMTP id
+ jp13-20020a0563008a0d00b001ac34ccb323mr8804180pzc.33.1714967303132; 
+ Sun, 05 May 2024 20:48:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGXnClhD4pShFaQfAMeUeU+40pPyF/eC7uPp6x5JOFYW+IceIGj4C1hd5rGkTLsQvS0eF98Z1hgBkARsT5/pNU=
+X-Received: by 2002:a05:6300:8a0d:b0:1ac:34cc:b323 with SMTP id
+ jp13-20020a0563008a0d00b001ac34ccb323mr8804168pzc.33.1714967302773; Sun, 05
+ May 2024 20:48:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8DxvlcuSDhmFvwRAA--.31503S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240428-auto-v1-0-7b012216a120@daynix.com>
+ <20240429030329-mutt-send-email-mst@kernel.org>
+ <e7b29a10-addf-4fed-9092-73652cb16cce@daynix.com>
+In-Reply-To: <e7b29a10-addf-4fed-9092-73652cb16cce@daynix.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Mon, 6 May 2024 11:48:11 +0800
+Message-ID: <CACGkMEs9-afb2btypPqeLNTJA_vAhdTa5kqZxuCUPUBtQiELog@mail.gmail.com>
+Subject: Re: [PATCH 0/3] virtio-net: Convert feature properties to OnOffAuto
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Luigi Rizzo <rizzo@iet.unipi.it>, 
+ Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
+ Vincenzo Maffione <v.maffione@gmail.com>, 
+ Andrew Melnychenko <andrew@daynix.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org, 
+ 20240428-rss-v10-0-73cbaa91aeb6@daynix.com, 
+ Jonathon Jongsma <jjongsma@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.431,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,179 +112,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On LoongArch system, there is only virt machine type now, name
-LOONGARCH_MACHINE is confused, rename it with VIRT_MACHINE. Machine name
-about Other real hw boards can be added in future.
+On Wed, May 1, 2024 at 3:20=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix.=
+com> wrote:
+>
+> On 2024/04/29 16:05, Michael S. Tsirkin wrote:
+> > On Sun, Apr 28, 2024 at 04:21:06PM +0900, Akihiko Odaki wrote:
+> >> Based-on: <20240428-rss-v10-0-73cbaa91aeb6@daynix.com>
+> >> ("[PATCH v10 00/18] virtio-net RSS/hash report fixes and improvements"=
+)
+> >>
+> >> Some features are not always available, and virtio-net used to disable
+> >> them when not available even if the corresponding properties were
+> >> explicitly set to "on".
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- hw/loongarch/acpi-build.c   |  8 ++++----
- hw/loongarch/boot.c         |  2 +-
- hw/loongarch/virt.c         | 19 +++++++++----------
- include/hw/loongarch/virt.h |  4 ++--
- 4 files changed, 16 insertions(+), 17 deletions(-)
+I think we'd better fail the initialization in this case, otherwise it
+might confuse libvirt.
 
-diff --git a/hw/loongarch/acpi-build.c b/hw/loongarch/acpi-build.c
-index e5ab1080af..72322cdb1e 100644
---- a/hw/loongarch/acpi-build.c
-+++ b/hw/loongarch/acpi-build.c
-@@ -167,7 +167,7 @@ build_srat(GArray *table_data, BIOSLinker *linker, MachineState *machine)
-     int i, arch_id, node_id;
-     uint64_t mem_len, mem_base;
-     int nb_numa_nodes = machine->numa_state->num_nodes;
--    LoongArchMachineState *lams = LOONGARCH_MACHINE(machine);
-+    LoongArchMachineState *lams = VIRT_MACHINE(machine);
-     MachineClass *mc = MACHINE_GET_CLASS(lams);
-     const CPUArchIdList *arch_ids = mc->possible_cpu_arch_ids(machine);
-     AcpiTable table = { .sig = "SRAT", .rev = 1, .oem_id = lams->oem_id,
-@@ -279,7 +279,7 @@ static void
- build_la_ged_aml(Aml *dsdt, MachineState *machine)
- {
-     uint32_t event;
--    LoongArchMachineState *lams = LOONGARCH_MACHINE(machine);
-+    LoongArchMachineState *lams = VIRT_MACHINE(machine);
- 
-     build_ged_aml(dsdt, "\\_SB."GED_DEVICE,
-                   HOTPLUG_HANDLER(lams->acpi_ged),
-@@ -391,7 +391,7 @@ static void
- build_dsdt(GArray *table_data, BIOSLinker *linker, MachineState *machine)
- {
-     Aml *dsdt, *scope, *pkg;
--    LoongArchMachineState *lams = LOONGARCH_MACHINE(machine);
-+    LoongArchMachineState *lams = VIRT_MACHINE(machine);
-     AcpiTable table = { .sig = "DSDT", .rev = 1, .oem_id = lams->oem_id,
-                         .oem_table_id = lams->oem_table_id };
- 
-@@ -421,7 +421,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, MachineState *machine)
- 
- static void acpi_build(AcpiBuildTables *tables, MachineState *machine)
- {
--    LoongArchMachineState *lams = LOONGARCH_MACHINE(machine);
-+    LoongArchMachineState *lams = VIRT_MACHINE(machine);
-     GArray *table_offsets;
-     AcpiFadtData fadt_data;
-     unsigned facs, rsdt, dsdt;
-diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-index 7d1630b2e7..e46c70b1b3 100644
---- a/hw/loongarch/boot.c
-+++ b/hw/loongarch/boot.c
-@@ -316,7 +316,7 @@ static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
- 
- void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
- {
--    LoongArchMachineState *lams = LOONGARCH_MACHINE(ms);
-+    LoongArchMachineState *lams = VIRT_MACHINE(ms);
-     int i;
- 
-     /* register reset function */
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index c0999878df..e343974b48 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -880,7 +880,7 @@ static void loongarch_init(MachineState *machine)
-     ram_addr_t ram_size = machine->ram_size;
-     uint64_t highram_size = 0, phyAddr = 0;
-     MemoryRegion *address_space_mem = get_system_memory();
--    LoongArchMachineState *lams = LOONGARCH_MACHINE(machine);
-+    LoongArchMachineState *lams = VIRT_MACHINE(machine);
-     int nb_numa_nodes = machine->numa_state->num_nodes;
-     NodeInfo *numa_info = machine->numa_state->nodes;
-     int i;
-@@ -1032,7 +1032,7 @@ bool loongarch_is_acpi_enabled(LoongArchMachineState *lams)
- static void loongarch_get_acpi(Object *obj, Visitor *v, const char *name,
-                                void *opaque, Error **errp)
- {
--    LoongArchMachineState *lams = LOONGARCH_MACHINE(obj);
-+    LoongArchMachineState *lams = VIRT_MACHINE(obj);
-     OnOffAuto acpi = lams->acpi;
- 
-     visit_type_OnOffAuto(v, name, &acpi, errp);
-@@ -1041,14 +1041,14 @@ static void loongarch_get_acpi(Object *obj, Visitor *v, const char *name,
- static void loongarch_set_acpi(Object *obj, Visitor *v, const char *name,
-                                void *opaque, Error **errp)
- {
--    LoongArchMachineState *lams = LOONGARCH_MACHINE(obj);
-+    LoongArchMachineState *lams = VIRT_MACHINE(obj);
- 
-     visit_type_OnOffAuto(v, name, &lams->acpi, errp);
- }
- 
- static void loongarch_machine_initfn(Object *obj)
- {
--    LoongArchMachineState *lams = LOONGARCH_MACHINE(obj);
-+    LoongArchMachineState *lams = VIRT_MACHINE(obj);
- 
-     lams->acpi = ON_OFF_AUTO_AUTO;
-     lams->oem_id = g_strndup(ACPI_BUILD_APPNAME6, 6);
-@@ -1080,7 +1080,7 @@ static void virt_machine_device_pre_plug(HotplugHandler *hotplug_dev,
- static void virt_mem_unplug_request(HotplugHandler *hotplug_dev,
-                                      DeviceState *dev, Error **errp)
- {
--    LoongArchMachineState *lams = LOONGARCH_MACHINE(hotplug_dev);
-+    LoongArchMachineState *lams = VIRT_MACHINE(hotplug_dev);
- 
-     /* the acpi ged is always exist */
-     hotplug_handler_unplug_request(HOTPLUG_HANDLER(lams->acpi_ged), dev,
-@@ -1098,7 +1098,7 @@ static void virt_machine_device_unplug_request(HotplugHandler *hotplug_dev,
- static void virt_mem_unplug(HotplugHandler *hotplug_dev,
-                              DeviceState *dev, Error **errp)
- {
--    LoongArchMachineState *lams = LOONGARCH_MACHINE(hotplug_dev);
-+    LoongArchMachineState *lams = VIRT_MACHINE(hotplug_dev);
- 
-     hotplug_handler_unplug(HOTPLUG_HANDLER(lams->acpi_ged), dev, errp);
-     pc_dimm_unplug(PC_DIMM(dev), MACHINE(lams));
-@@ -1116,7 +1116,7 @@ static void virt_machine_device_unplug(HotplugHandler *hotplug_dev,
- static void virt_mem_plug(HotplugHandler *hotplug_dev,
-                              DeviceState *dev, Error **errp)
- {
--    LoongArchMachineState *lams = LOONGARCH_MACHINE(hotplug_dev);
-+    LoongArchMachineState *lams = VIRT_MACHINE(hotplug_dev);
- 
-     pc_dimm_plug(PC_DIMM(dev), MACHINE(lams));
-     hotplug_handler_plug(HOTPLUG_HANDLER(lams->acpi_ged),
-@@ -1126,7 +1126,7 @@ static void virt_mem_plug(HotplugHandler *hotplug_dev,
- static void loongarch_machine_device_plug_cb(HotplugHandler *hotplug_dev,
-                                         DeviceState *dev, Error **errp)
- {
--    LoongArchMachineState *lams = LOONGARCH_MACHINE(hotplug_dev);
-+    LoongArchMachineState *lams = VIRT_MACHINE(hotplug_dev);
-     MachineClass *mc = MACHINE_GET_CLASS(lams);
- 
-     if (device_is_dynamic_sysbus(mc, dev)) {
-@@ -1208,7 +1208,6 @@ static void loongarch_class_init(ObjectClass *oc, void *data)
-     MachineClass *mc = MACHINE_CLASS(oc);
-     HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(oc);
- 
--    mc->desc = "Loongson-3A5000 LS7A1000 machine";
-     mc->init = loongarch_init;
-     mc->default_ram_size = 1 * GiB;
-     mc->default_cpu_type = LOONGARCH_CPU_TYPE_NAME("la464");
-@@ -1245,7 +1244,7 @@ static void loongarch_class_init(ObjectClass *oc, void *data)
- 
- static const TypeInfo loongarch_machine_types[] = {
-     {
--        .name           = TYPE_LOONGARCH_MACHINE,
-+        .name           = TYPE_VIRT_MACHINE,
-         .parent         = TYPE_MACHINE,
-         .instance_size  = sizeof(LoongArchMachineState),
-         .class_init     = loongarch_class_init,
-diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-index 4e14bf6060..5ea2f0370d 100644
---- a/include/hw/loongarch/virt.h
-+++ b/include/hw/loongarch/virt.h
-@@ -73,8 +73,8 @@ struct LoongArchMachineState {
-     struct loongarch_boot_info bootinfo;
- };
- 
--#define TYPE_LOONGARCH_MACHINE  MACHINE_TYPE_NAME("virt")
--OBJECT_DECLARE_SIMPLE_TYPE(LoongArchMachineState, LOONGARCH_MACHINE)
-+#define TYPE_VIRT_MACHINE  MACHINE_TYPE_NAME("virt")
-+OBJECT_DECLARE_SIMPLE_TYPE(LoongArchMachineState, VIRT_MACHINE)
- bool loongarch_is_acpi_enabled(LoongArchMachineState *lams);
- void loongarch_acpi_setup(LoongArchMachineState *lams);
- #endif
--- 
-2.39.3
+Adding Jonathon for more comments.
+
+> >>
+> >> Convert feature properties to OnOffAuto so that the user can explicitl=
+y
+> >> tell QEMU to automatically select the value by setting them "auto".
+> >> QEMU will give an error if they are set "on".
+> >>
+> >> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> >
+> > Should we maybe bite the bullet allow "auto" for all binary/boolean
+> > properties? Just ignore "auto" if no one cares ATM.
+>
+> It is not always obvious whether "auto" should be considered as "on" or
+> "off" for existing boolean properties. The properties this patch deals
+> with are to enable features so "auto" should be considered as "on" if
+> possible. However, other properties may mean to disable features, and in
+> such a case, "auto" should be considered as "off".
+>
+> It may still make sense to accept "auto" for all virtio-net feature bits
+> for consistency. In particular, I left guest_rsc_ext property boolean
+> since nobody cares "auto" for that feature, but this can be converted to
+> OnOffAuto.
+>
+
+Thanks
 
 
