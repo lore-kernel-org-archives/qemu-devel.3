@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA9D8C10F16
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAA0DC25B10
 	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 12:39:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3xco-0003hO-LH; Mon, 06 May 2024 08:39:23 -0400
+	id 1s3xcp-0003nN-QR; Mon, 06 May 2024 08:39:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3xcI-00020D-4z
- for qemu-devel@nongnu.org; Mon, 06 May 2024 08:38:54 -0400
-Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3xcd-000393-70
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 08:39:12 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3xcF-00023T-Ku
- for qemu-devel@nongnu.org; Mon, 06 May 2024 08:38:49 -0400
-Received: by mail-lj1-x233.google.com with SMTP id
- 38308e7fff4ca-2e1fa824504so27400131fa.0
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 05:38:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3xcZ-00026i-HL
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 08:39:09 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-34b64b7728cso1575803f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 05:39:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714999125; x=1715603925; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714999145; x=1715603945; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vxHJc/1SpfLp2sqgCrwCIMC13iOcC35tqJ/KVJcg7HA=;
- b=yyg5AJny7xRj7kPEDDqstg1Ud7nzkoVP5YNIdJ8ktWJaNZqMvJTZPqM+cN3OIrQIZv
- TFAGPUBFc+lLfmu51DEh0rL9JuWZEMNVrE+J6ebmZeEjxBeoo+lk2R8krLMVgCHuEWf6
- ap2EI5xEp+GIrOxn/hdL0T7EpmacVBD2BPulX82lsqTTcf4YzkRNIvb9koXCC4QZBaNW
- K5QIOKk9oRIgRgrxlsXDE911hNF2p5jrdd6rZN+b5rSYvALJqJ9sdEfcPxPWElgZYocY
- GBuLh2Q+GcSYMUIFTBffD/kiWFJk1THOUb+mG35tjxv3alptPH8tQnXiG5/PVKo3ZIfp
- V9LQ==
+ bh=QDCtZ5R6jWRdBusTW5eWLGmV5MNQ1/vJ4icErDbd6hU=;
+ b=uwlnMA9Ecrm258wYw/yWuYGmP61sfj4BDkRMtW5uK5BnrqkxIcInzOlgNhxXZyAMyl
+ cAvEplUrYA9hq778fqQADQkfj1bfmZ9hu5OStYKoGgUI05m5w69Ww6knZ9glJf6qvwAx
+ GeD5Yl0mvlORRIEiUl23/GfjikBUtdNxHn7MYPG9//Lof/c2NoMQNkGxNMzDB7KI6KGi
+ lrVbKGEz+fXejh07idWWrGZD9zskDCKm9wsQ3ZLLSYqnursLfv9zznsleXo7hzJBdBkj
+ 5sPQXFkZ4A+ty70XFqH594ak9q3pqBHkVLozjXFpAGIRreHu4PKxVMb6THCA5VbfMldA
+ 6QUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714999125; x=1715603925;
+ d=1e100.net; s=20230601; t=1714999145; x=1715603945;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vxHJc/1SpfLp2sqgCrwCIMC13iOcC35tqJ/KVJcg7HA=;
- b=dOMA30NK5t6z4XVauOc883WzCcOuDzvMwpXt2m7k/9FwhgtmI+0fXGcDZwzPMPl0J+
- /ChQUuIJXVfHWQWM8LAHR9SWbx0+yeMmYCN19/jDvlDNJXdAKr30ZJqRYRpSjRYS2w8j
- cJLgtozQGJxQI39xx0DHW1htartcQhT1yPL41DQv+/kWYkl5zJuosVhqGM8j0AerwST9
- nstdMk70tfygnHmm5Cjlz+hImkt0jK5+kyJVAK8WBnxipR0sua5vYhYShMmVxY47E+PZ
- Pxe1QY1Ch1MHFwCxmtnb/BsioLzwkyO2fuWXTkvt8lHvBEfEgKHVJ0khCQeQUPyMRtYJ
- 5Rnw==
-X-Gm-Message-State: AOJu0Yxuez9+Zux9AqwJPKZuBzKMg9KwhwJ1xiCJKoJrijw+aOJNneer
- FCv5GgcZoVTIQCUSGtFCvsowQPv/CTG1u9XiYBw534pDWUQPu2h2i/EoAGAZbPHYEuWR/TPhNzK
- 1
-X-Google-Smtp-Source: AGHT+IFC0LPB4olsiT3y1Bh5ew7RgDQQfYf4Nemr/FJ1CeDUyos4obzEm2Rn5CajZ7hqSlUBvZD3xQ==
-X-Received: by 2002:a2e:9006:0:b0:2dc:b964:b15 with SMTP id
- h6-20020a2e9006000000b002dcb9640b15mr6152525ljg.25.1714999125390; 
- Mon, 06 May 2024 05:38:45 -0700 (PDT)
+ bh=QDCtZ5R6jWRdBusTW5eWLGmV5MNQ1/vJ4icErDbd6hU=;
+ b=royKOlTKmyYtDPZpsLtzsrSJSIsK66aHbotMHwSZ3bXThsTmH1aKhliSUMjIj1dr9p
+ XDK34wqVPyuWaDczrCyOtE7h6gbAXl0jLqLtoPgLITcfphddGHGy2F2P6KMJOTR7bTSU
+ Fdh44/NXnYAgWOrmWpPqoH+z7GejUmICY5mg2G9WyVsbr1n0axWVmr/TP3rlP5z1x1iq
+ dMCDq7LOC9HPVT4gd1AuhtBvleSVJ0SjQGrSQSzAGlIaZwY/GrOU53PlpdTfCy5uMjhu
+ nqksC/pqq49tGJfLnd3/Q9oS22js79VFmMU4o/E1bue9adVVxEQOiDzC57K+NpLY4zRd
+ YcOg==
+X-Gm-Message-State: AOJu0YxxJko0rtWy5CHRtMMerTJMR8hiIvCY+xKOn27cxqtz2JsPJzqD
+ SlNRh2BrMmIV1WTmz4z5vno853u0A0Ek6BgcVEG4/2Tv5+ylDxZHc6j1eQGnTz1WmUYUsj8hnyF
+ 3
+X-Google-Smtp-Source: AGHT+IFf1HCZemRyst4urnJsbcV/fmfR3PwPqXOIv1B/AzeLX60LPneOwv5OGkqAuQmMhKAX4IUHfg==
+X-Received: by 2002:a05:6000:11c9:b0:34d:a0b5:3c57 with SMTP id
+ i9-20020a05600011c900b0034da0b53c57mr6060906wrx.23.1714999145528; 
+ Mon, 06 May 2024 05:39:05 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.211.4]) by smtp.gmail.com with ESMTPSA id
- m7-20020a05600c4f4700b0041b434e5869sm19638255wmq.43.2024.05.06.05.38.44
+ h11-20020adfe98b000000b00343d1d09550sm10622257wrm.60.2024.05.06.05.39.04
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 06 May 2024 05:38:44 -0700 (PDT)
+ Mon, 06 May 2024 05:39:05 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 10/28] accel/tcg: Restrict qemu_plugin_vcpu_exit_hook() to TCG
- plugins
-Date: Mon,  6 May 2024 14:37:10 +0200
-Message-ID: <20240506123728.65278-11-philmd@linaro.org>
+Subject: [PULL 13/28] user: Forward declare TaskState type definition
+Date: Mon,  6 May 2024 14:37:13 +0200
+Message-ID: <20240506123728.65278-14-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240506123728.65278-1-philmd@linaro.org>
 References: <20240506123728.65278-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::233;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x233.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,44 +93,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qemu_plugin_vcpu_exit_hook() is specific to TCG plugins,
-so must be restricted to it in cpu_common_unrealizefn(),
-similarly to how qemu_plugin_create_vcpu_state() is
-restricted in the cpu_common_realizefn() counterpart.
+Forward declare TaskState in "qemu/typedefs.h" so we can
+use it in generic headers like "hw/cpu/core.h".
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240429213050.55177-2-philmd@linaro.org>
+Message-Id: <20240428221450.26460-9-philmd@linaro.org>
 ---
- hw/core/cpu-common.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ bsd-user/qemu.h         | 4 ++--
+ include/qemu/typedefs.h | 1 +
+ linux-user/qemu.h       | 4 ++--
+ 3 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index a72d48d9e1..0f0a247f56 100644
---- a/hw/core/cpu-common.c
-+++ b/hw/core/cpu-common.c
-@@ -30,7 +30,9 @@
- #include "hw/boards.h"
- #include "hw/qdev-properties.h"
- #include "trace.h"
-+#ifdef CONFIG_PLUGIN
- #include "qemu/plugin.h"
-+#endif
+diff --git a/bsd-user/qemu.h b/bsd-user/qemu.h
+index 322177de16..1780f485d6 100644
+--- a/bsd-user/qemu.h
++++ b/bsd-user/qemu.h
+@@ -76,7 +76,7 @@ struct emulated_sigtable {
+ /*
+  * NOTE: we force a big alignment so that the stack stored after is aligned too
+  */
+-typedef struct TaskState {
++struct TaskState {
+     pid_t ts_tid;     /* tid (or pid) of this task */
  
- CPUState *cpu_by_arch_id(int64_t id)
+     struct TaskState *next;
+@@ -114,7 +114,7 @@ typedef struct TaskState {
+ 
+     /* This thread's sigaltstack, if it has one */
+     struct target_sigaltstack sigaltstack_used;
+-} __attribute__((aligned(16))) TaskState;
++} __attribute__((aligned(16)));
+ 
+ static inline TaskState *get_task_state(CPUState *cs)
  {
-@@ -236,9 +238,11 @@ static void cpu_common_unrealizefn(DeviceState *dev)
-     CPUState *cpu = CPU(dev);
+diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
+index 50c277cf0b..36f2825725 100644
+--- a/include/qemu/typedefs.h
++++ b/include/qemu/typedefs.h
+@@ -134,6 +134,7 @@ typedef struct SHPCDevice SHPCDevice;
+ typedef struct SSIBus SSIBus;
+ typedef struct TCGCPUOps TCGCPUOps;
+ typedef struct TCGHelperInfo TCGHelperInfo;
++typedef struct TaskState TaskState;
+ typedef struct TranslationBlock TranslationBlock;
+ typedef struct VirtIODevice VirtIODevice;
+ typedef struct Visitor Visitor;
+diff --git a/linux-user/qemu.h b/linux-user/qemu.h
+index 263f445ff1..7df4645c2b 100644
+--- a/linux-user/qemu.h
++++ b/linux-user/qemu.h
+@@ -95,7 +95,7 @@ struct emulated_sigtable {
+     target_siginfo_t info;
+ };
  
-     /* Call the plugin hook before clearing the cpu is fully unrealized */
-+#ifdef CONFIG_PLUGIN
-     if (tcg_enabled()) {
-         qemu_plugin_vcpu_exit_hook(cpu);
-     }
-+#endif
+-typedef struct TaskState {
++struct TaskState {
+     pid_t ts_tid;     /* tid (or pid) of this task */
+ #ifdef TARGET_ARM
+ # ifdef TARGET_ABI32
+@@ -158,7 +158,7 @@ typedef struct TaskState {
  
-     /* NOTE: latest generic point before the cpu is fully unrealized */
-     cpu_exec_unrealizefn(cpu);
+     /* Start time of task after system boot in clock ticks */
+     uint64_t start_boottime;
+-} TaskState;
++};
+ 
+ static inline TaskState *get_task_state(CPUState *cs)
+ {
 -- 
 2.41.0
 
