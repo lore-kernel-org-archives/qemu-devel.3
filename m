@@ -4,86 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 563B0C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 07:50:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 237DBC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 07:52:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3t6A-0004OL-EO; Mon, 06 May 2024 03:49:22 -0400
+	id 1s3t99-0005wJ-9e; Mon, 06 May 2024 03:52:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3t5y-0004GH-5P
- for qemu-devel@nongnu.org; Mon, 06 May 2024 03:49:11 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3t5w-0000xk-6k
- for qemu-devel@nongnu.org; Mon, 06 May 2024 03:49:09 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-41bab13ca81so17301485e9.1
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 00:49:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714981746; x=1715586546; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=AG9JPJ2NO0frLDtYOlHEhWYFOcm6MOuVJVo5/lWL+g4=;
- b=gG/ozM4auoUUcbP/6tSdeFpX9q5ZFT9sua1RpB+WFP66y/8Z2UKBw/CuzWr29bwdPb
- vJy3gNSw0dGqWUGg6XCn/+FshQ0oAhFlAOKvVE2yeaJZdTaddjIlgH1jgtY/BLrWzORG
- gia7sekFKIWPXiPVTjktAjuDNMZ4Lx1KgxBGsZuuUMzwES8PCkTyowYBtJIw2zJ+rBrq
- j9xunW3xQjaE3kObL8kslakGdPsbjaUPiWT+kY8Rg11niza2h6rkGSlIkiFsYOgB6kDj
- psbr93F9mWHgEaJiYGN4ant7SjJvBNWW0SbOwA7VT/Jk0Y1JDMaRrgStWv8vKHMwbZxD
- hE9g==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1s3t8c-0005jL-KH
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 03:51:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1s3t8Y-0001XT-Nl
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 03:51:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1714981905;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=irmtTqct8A65MzBRfGfL65/eckdbEHDoF5RjwLqL9+Y=;
+ b=XAk+aLvx5C4WSDeQK7j9W9AJngGSDTrCp1+NXWZcwVelOGFRcZJChhKUvKMWPmXzAUDMWr
+ tibwevePaq9qMkX1TwnvJ1XbgqQdmx+64syANHpG2aaUn1YADVKvSVa9XbzkgLFiwyTXoz
+ B3wdCEet3Z0sooDvIaBugsDVg03wobE=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-194-49zWmaTQNh2OrRntU9dcZQ-1; Mon, 06 May 2024 03:51:42 -0400
+X-MC-Unique: 49zWmaTQNh2OrRntU9dcZQ-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-56e645a8762so1133198a12.3
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 00:51:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714981746; x=1715586546;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AG9JPJ2NO0frLDtYOlHEhWYFOcm6MOuVJVo5/lWL+g4=;
- b=KGn6xhA1b1ZijEFFuGvGqMiMuXvBb94VT087eeoELDLn9yKKhwkKtJud4hmW9dxGnO
- 1CON8LyjTA4q7vdq+QXBrQBal15KmTJymu1M4TfmlV4ULIcqlz+RL76RS1M11rSKvD2B
- cVi6cSZ9KH61Mn5H5XIeDObbqxLJyP1Zidxuf7pmA1QYlmQrv0C0RAwwU7631jPVPyjs
- 35hlWvsrlFtmy4AKJHGjvi5AdTRqpIfdT6X1ZWcLLioyuAOk4yiau23yRFPidKH0BtJJ
- dFNXVH+SOhjE4sx5cR9HeVU6XMyC/2qD7SGWtlnWo6hssojtW4wgGzkLVCghCHyG0OkN
- 7yKQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWD1nywxKDafTckhN6fGYo4ci9Bc7CvATVncFN6VHyD4SQjy1AiXm9c0PMXxWvBmujULZL40cAdNLAKT67IbzYe/d1mGBQ=
-X-Gm-Message-State: AOJu0Yw25ja7dAD9wiEfjW3tnOcMJ8SZ21FVyMLm/a4Vehulv2R9gNT5
- KBEYRFCJABF4Lv5trllhb5wbp50MYnR8/vOf4vksDX6jBOs9/VsKDhTm1tyxoA69ycOG6ZCNn+q
- P
-X-Google-Smtp-Source: AGHT+IF9x0q4MGsWgaIRvAWwMR9RbMRYKTPrvfmC24q2OhSJf4YhJ3KzWui3CTZyPZ0MlEM138mtcA==
-X-Received: by 2002:a05:600c:1e09:b0:418:a706:3209 with SMTP id
- ay9-20020a05600c1e0900b00418a7063209mr10053658wmb.31.1714981746453; 
- Mon, 06 May 2024 00:49:06 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.211.4])
+ d=1e100.net; s=20230601; t=1714981901; x=1715586701;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=irmtTqct8A65MzBRfGfL65/eckdbEHDoF5RjwLqL9+Y=;
+ b=Sz/IC8Il3ZHhX+38MLQzuc/ZixS43Yp28J7Qtqv2l1AysG8SK6oQ/VEQ9cHT/bSK4C
+ eIvIOehxA69PtYsaAGS8BLxkv76lsGbYN1S2cU1GeHLY+2dT+Be6kDLJLx0Od72J0g0l
+ nc7xrIHP4wNAK77vve2Tyg5BMFYJ8hu1smQvQq5Rs2np5NVi3PSXgoxamb9VLsCloFnz
+ MK6Xr/KR08RFuY2PhOJBkYJ/9XXosEhVCHAk339yCZk8AH5yTiEXTNPVYv3nyQhdu5Cq
+ DYgMawatASuJHB73sRSr0g4c8xwkrbakyxmUt0whMx+NZgan6Tw0Xx8VPfPEwQl5htQT
+ 3b6A==
+X-Gm-Message-State: AOJu0Yy5BB2B88626yjf/b7LbvMlFabKdCnsoEw/fFdtI/oWGB5D+vCv
+ dD7t7lz4a8p1QAa3azz3VSgPH0YK3QGpB9xiqRaIaIyBAw5tTEMCMgnqyVx3M+UdDfoAFyDHPSi
+ BYbHGOIk37W2ennw1NZodZIivRuZcg/A6m827KGUnl513Vds4FojpfEYFa91bRgCn+KTWTZsgKy
+ jllWiMz0bFHE6W16xAi02qJTgcc0IFD8NYBorG
+X-Received: by 2002:a50:c30e:0:b0:56e:34e0:4699 with SMTP id
+ a14-20020a50c30e000000b0056e34e04699mr6082475edb.30.1714981900843; 
+ Mon, 06 May 2024 00:51:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHLTRoTBQLzuLNGHU08YJmbHYP1FJ1way6/iCEXZeCL8ZvYDH/kcyUTirM+pnjNcre8OVAWwQ==
+X-Received: by 2002:a50:c30e:0:b0:56e:34e0:4699 with SMTP id
+ a14-20020a50c30e000000b0056e34e04699mr6082458edb.30.1714981900502; 
+ Mon, 06 May 2024 00:51:40 -0700 (PDT)
+Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- w15-20020a05600c474f00b0041ea90d11edsm5178504wmo.31.2024.05.06.00.49.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 May 2024 00:49:06 -0700 (PDT)
-Message-ID: <5c1507b8-7f6e-419e-972e-af4fc98e9112@linaro.org>
-Date: Mon, 6 May 2024 09:49:04 +0200
+ x2-20020a056402414200b00572cf08369asm4090322eda.23.2024.05.06.00.51.39
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 06 May 2024 00:51:40 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: [PULL 05/46] kvm: ppc: disable sPAPR code if CONFIG_PSERIES is
+ disabled
+Date: Mon,  6 May 2024 09:50:44 +0200
+Message-ID: <20240506075125.8238-6-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.45.0
+In-Reply-To: <20240506075125.8238-1-pbonzini@redhat.com>
+References: <20240506075125.8238-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [sdl-qemu] [PATCH v1] /hw/intc/arm_gic WRONG ARGUMENTS
-To: Andrey Shumilin <shum.sdl@nppct.ru>, Michael Tokarev <mjt@tls.msk.ru>,
- qemu-devel@nongnu.org
-Cc: sdl.qemu@linuxtesting.org, qemu-arm <qemu-arm@nongnu.org>
-References: <a4cbfe6c-27d6-4df0-ae31-db0d60d88f9e@nppct.ru>
- <95ab6dcf-cc96-4472-93ab-f08682b37d5e@tls.msk.ru>
- <4c4dfebb-698d-466f-90b0-9475ad4c123a@nppct.ru>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <4c4dfebb-698d-466f-90b0-9475ad4c123a@nppct.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.431,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,59 +103,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/5/24 21:57, Andrey Shumilin wrote:
->  1. Possibly mismatched call arguments in function 'gic_apr_ns_view':
->     'cpu' and 'regno' passed in place of 'int regno' and 'int cpu'.
->  2. Possibly mismatched call arguments in function
->     'gic_apr_write_ns_view': 'cpu' and 'regno' passed in place of 'int
->     regno' and 'int cpu'.
-> 
-> Found by Linux Verification Center (linuxtesting.org) with SVACE.
-> 
+target/ppc/kvm.c calls out to code in hw/ppc/spapr*.c; that code is
+not present and fails to link if CONFIG_PSERIES is not enabled.
+Adjust kvm.c to depend on CONFIG_PSERIES instead of TARGET_PPC64,
+and compile out anything that requires cap_papr, because only
+the pseries machine will call kvmppc_set_papr().
 
-Fixes: 51fd06e0ee ("hw/intc/arm_gic: Fix handling of GICC_APR<n>, 
-GICC_NSAPR<n> registers")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/ppc/kvm.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-> 
->  From 23b142f5046ba9d3aec57217f6d8f3127f9bff69 Mon Sep 17 00:00:00 2001
-> From: Andrey Shumilin <shum.sdl@nppct.ru>
-> Date: Sun, 5 May 2024 20:13:40 +0300
-> Subject: [PATCH] Patch hw/intc/arm_gic.c
-
-Your patch is malformed, see:
-https://www.qemu.org/docs/master/devel/submitting-a-patch.html#submitting-your-patches
-
-> 
-> Signed-off-by: Andrey Shumilin <shum.sdl@nppct.ru>
-> ---
->   hw/intc/arm_gic.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/intc/arm_gic.c b/hw/intc/arm_gic.c
-> index 7a34bc0998..47f01e45e3 100644
-> --- a/hw/intc/arm_gic.c
-> +++ b/hw/intc/arm_gic.c
-> @@ -1658,7 +1658,7 @@ static MemTxResult gic_cpu_read(GICState *s, int 
-> cpu, int offset,
->               *data = s->h_apr[gic_get_vcpu_real_id(cpu)];
->           } else if (gic_cpu_ns_access(s, cpu, attrs)) {
->               /* NS view of GICC_APR<n> is the top half of GIC_NSAPR<n> */
-> -            *data = gic_apr_ns_view(s, regno, cpu);
-> +            *data = gic_apr_ns_view(s, cpu, regno);
->           } else {
->               *data = s->apr[regno][cpu];
->           }
-> @@ -1746,7 +1746,7 @@ static MemTxResult gic_cpu_write(GICState *s, int 
-> cpu, int offset,
->               s->h_apr[gic_get_vcpu_real_id(cpu)] = value;
->           } else if (gic_cpu_ns_access(s, cpu, attrs)) {
->               /* NS view of GICC_APR<n> is the top half of GIC_NSAPR<n> */
-> -            gic_apr_write_ns_view(s, regno, cpu, value);
-> +            gic_apr_write_ns_view(s, cpu, regno, value);
->           } else {
->               s->apr[regno][cpu] = value;
->           }
-> 
+diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+index 63930d4a77d..46fccff7865 100644
+--- a/target/ppc/kvm.c
++++ b/target/ppc/kvm.c
+@@ -49,6 +49,8 @@
+ #include "elf.h"
+ #include "sysemu/kvm_int.h"
+ 
++#include CONFIG_DEVICES
++
+ #define PROC_DEVTREE_CPU      "/proc/device-tree/cpus/"
+ 
+ #define DEBUG_RETURN_GUEST 0
+@@ -71,7 +73,6 @@ static int cap_hior;
+ static int cap_one_reg;
+ static int cap_epr;
+ static int cap_ppc_watchdog;
+-static int cap_papr;
+ static int cap_htab_fd;
+ static int cap_fixup_hcalls;
+ static int cap_htm;             /* Hardware transactional memory support */
+@@ -90,6 +91,12 @@ static int cap_fwnmi;
+ static int cap_rpt_invalidate;
+ static int cap_ail_mode_3;
+ 
++#ifdef CONFIG_PSERIES
++static int cap_papr;
++#else
++#define cap_papr (0)
++#endif
++
+ static uint32_t debug_inst_opcode;
+ 
+ /*
+@@ -1668,7 +1675,7 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
+         trace_kvm_handle_halt();
+         ret = kvmppc_handle_halt(cpu);
+         break;
+-#if defined(TARGET_PPC64)
++#if defined(CONFIG_PSERIES)
+     case KVM_EXIT_PAPR_HCALL:
+         trace_kvm_handle_papr_hcall(run->papr_hcall.nr);
+         run->papr_hcall.ret = spapr_hypercall(cpu,
+@@ -1698,7 +1705,7 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
+         ret = 0;
+         break;
+ 
+-#if defined(TARGET_PPC64)
++#if defined(CONFIG_PSERIES)
+     case KVM_EXIT_NMI:
+         trace_kvm_handle_nmi_exception();
+         ret = kvm_handle_nmi(cpu, run);
+@@ -2054,6 +2061,7 @@ void kvmppc_enable_h_rpt_invalidate(void)
+     kvmppc_enable_hcall(kvm_state, H_RPT_INVALIDATE);
+ }
+ 
++#ifdef CONFIG_PSERIES
+ void kvmppc_set_papr(PowerPCCPU *cpu)
+ {
+     CPUState *cs = CPU(cpu);
+@@ -2075,6 +2083,7 @@ void kvmppc_set_papr(PowerPCCPU *cpu)
+      */
+     cap_papr = 1;
+ }
++#endif
+ 
+ int kvmppc_set_compat(PowerPCCPU *cpu, uint32_t compat_pvr)
+ {
+@@ -2837,7 +2846,7 @@ int kvm_arch_msi_data_to_gsi(uint32_t data)
+     return data & 0xffff;
+ }
+ 
+-#if defined(TARGET_PPC64)
++#if defined(CONFIG_PSERIES)
+ int kvm_handle_nmi(PowerPCCPU *cpu, struct kvm_run *run)
+ {
+     uint16_t flags = run->flags & KVM_RUN_PPC_NMI_DISP_MASK;
+-- 
+2.44.0
 
 
