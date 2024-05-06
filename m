@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E2C0C25B4F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 18:58:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D908C25B4F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 18:59:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s43XQ-0003Nv-Te; Mon, 06 May 2024 14:58:12 -0400
+	id 1s43XQ-0003Ji-1p; Mon, 06 May 2024 14:58:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1s43XO-0003HQ-IE
- for qemu-devel@nongnu.org; Mon, 06 May 2024 14:58:10 -0400
-Received: from mail-oo1-xc2b.google.com ([2607:f8b0:4864:20::c2b])
+ id 1s43XN-0003D9-Dm
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 14:58:09 -0400
+Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1s43XN-0004yJ-3H
- for qemu-devel@nongnu.org; Mon, 06 May 2024 14:58:10 -0400
-Received: by mail-oo1-xc2b.google.com with SMTP id
- 006d021491bc7-5aa362cc2ccso1547489eaf.3
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 11:58:08 -0700 (PDT)
+ id 1s43XK-0004xj-J0
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 14:58:07 -0400
+Received: by mail-ot1-x32b.google.com with SMTP id
+ 46e09a7af769-6f048a08628so626392a34.1
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 11:58:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715021887; x=1715626687; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1715021885; x=1715626685; darn=nongnu.org;
  h=content-language:thread-index:content-transfer-encoding
  :mime-version:message-id:date:subject:in-reply-to:references:cc:to
  :from:from:to:cc:subject:date:message-id:reply-to;
- bh=Waa/3QqtGDLTGCVQMC1IzaXr3Qpxi263kxmAGkc6qHc=;
- b=a/fVV3kZZ09elhI3qQRRXSNJxyqxAzOouSHKl6/Ge0zZoIW0LTdHwgp3Ev3gCttN5N
- gUn1BF8W3TymfJCd3K8/TWofyR6B8Ulx9QS/hRFge86oZU44UVWYqDacmpHkmdUJQZ4C
- kWap3ONLOmSuHnGZXrrWCNAKUj2YE85mJw8pEiZv3JhFMY+26j2L+4LRJ+St2EWVc9ap
- fDSCaquxU0K0JntWMsex85XrOUNnr/BEmgiJCKl8sbvlaJix/XGIoesxwIrheaRTl92/
- Hi1Ml99VkQ7wCTpl4SG0uDN/B7YsB8S7vOmN+TLrCqL0QcDzfWjssNH2mrYBzCo8Wpqm
- /OTw==
+ bh=t2EkUA9/lTSjw4F/MmwRSMe8EPOOZErqs5N9e+sXW1A=;
+ b=WrtyGz/L5V7ZRij9zfJmqYjVfSCcNTd9v3yMBVeSplOyzTB0P1S4W+EaDGySOjVM2H
+ ghTvZ5dDachrG1jlSoXkaUUaWimlOlpC2uQmBEF4kQvr1taQc30iOYfQYy5lJJTQ2nwl
+ j1/U/teWXfiVVABjEYrsAXPrrruAKuRkCvi/rsVqw3WvfdjArodV3RONSk6cAn4wnLB4
+ m8TF/ciQxmpO5ISDIBIJHa7AcpQUZfb2oFfUqU7gsjyiQ89/+5l2ydTpZamhYSOWC1Bt
+ ngGGj1t390qitCuYX1NOW/UcmxiNl0NFKuceDFzjx2QxfeA/dXQYjE3bn+21hi4JtgvC
+ Vtrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715021887; x=1715626687;
+ d=1e100.net; s=20230601; t=1715021885; x=1715626685;
  h=content-language:thread-index:content-transfer-encoding
  :mime-version:message-id:date:subject:in-reply-to:references:cc:to
  :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Waa/3QqtGDLTGCVQMC1IzaXr3Qpxi263kxmAGkc6qHc=;
- b=CBJLTasR3pLYnMLCj1tfMc/2GhTrTiAA+NX6srfNygu+4qgK3Enbq6RXA23fOselLq
- kA9YmH5r57QptTL5C1xK0JtYb8mOsIRaaOWiEIAmijiXeXYrNWki/Qpm4IANEEepxm4n
- 9icE8/vAnnYnhEJlR74ZSFMKhuXDHkzs3MewT2r/I2N97jForJMUMdDFA2qnQFS3nvuI
- YqKD5MsmjFDRI25MrPMTsilDJZQUIZSaAwLQGOPYLS1neqcl8rZcSUbPOk/sRXRnAoYV
- OiIIqKl8gmGw7Y7rtIAUVU/Lgv93iyzEs27vP01Ud4m2Vs1yroSmRIEpelCK8cI3E7jq
- VtCQ==
+ bh=t2EkUA9/lTSjw4F/MmwRSMe8EPOOZErqs5N9e+sXW1A=;
+ b=AMuCe1FdNDlMNW/Pcq8EV2WoZLNR2PDoTG2YtVl0wpk+PW/ud+GpFSNtlDHElj2vwX
+ oOlV0V/JJrGe2SYxLMA9xud9mTqlpbhnvXOYywiMRBUzt8BChySgde+Vw2X2vHdRI+kw
+ +x70rQI8QBQaEBdDx9i6svfAbC8ZfoFI1Uih4x+G4DjdG118LfTbprQgrrmWsNENnnn/
+ ZREJD1WGpYDPOv4Tx8D85/EP8P7oDT1/Tg/7L3c4Su2NbQvvo8DXvNR97sNQKHP/uHTS
+ KRvqvQjDgr0FNbrP3s6B1cPWaZasRyfkuit+uwpXCwqdlnVtHMmQcygbGY2mXJW0mS0m
+ VR3A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUbXQDu5J21Fxgy2PSpb3QS2gjuFbT0qO+8D/D9I7iyaPvcfRByT6q70TBA5Hs7uikqTwIN6hrBtgLwl5XK0IzI2Gsgw4o=
-X-Gm-Message-State: AOJu0YyUHhdEswWVRrB2YX+n3pFn2Pit8PiFeY39d3m6H+j7TwV0Loi2
- SKdeLovHYjQK2X3EiN1eoDDTAJTeoxfVtiPGE364i+3HfsR+xpoh
-X-Google-Smtp-Source: AGHT+IEKg1nc8o8wb8i/XP3fEE6opJKvO7iMOKv/rbsgVrNwIQz6ZlyjvlmsSypgEEdsiOcXV9Svqg==
-X-Received: by 2002:a4a:ad41:0:b0:5af:c4b3:969a with SMTP id
- s1-20020a4aad41000000b005afc4b3969amr10674911oon.6.1715021887299; 
- Mon, 06 May 2024 11:58:07 -0700 (PDT)
+ AJvYcCW6uNxxz2sqJC4pf3FRHCO4zbfN5Qj3trrwiTR/AF5FRgBFJsfYJh0KlDKGZ3HDwpaNsVDqG+uf1uBTawsy3kFaBy3HmO8=
+X-Gm-Message-State: AOJu0YyAxVlW0NBtwg57nr2CTceCp0yaoY6J+sGDZSecS8ylcnszv4XH
+ ihd5ZCx9ZGIf90OhsJwKi/qzOeiN/3rHdFUWNjO5yWGw5lKHuRfg
+X-Google-Smtp-Source: AGHT+IHFB4KS84OB6zn3yY+Q6/8zW/bdA/K3CbGd9pRz1HwNFbQ0Mf817FcTerUVr+egtJTdhpb0Hw==
+X-Received: by 2002:a05:6830:246a:b0:6f0:4492:4850 with SMTP id
+ 46e09a7af769-6f08d09b570mr240900a34.11.1715021884685; 
+ Mon, 06 May 2024 11:58:04 -0700 (PDT)
 Received: from DESKTOPUU50BPD ([2603:8080:1f00:9c00:b108:eb17:4557:755d])
  by smtp.gmail.com with ESMTPSA id
- m9-20020a4ae849000000b005a4c3d44cadsm2067993oom.38.2024.05.06.11.58.06
+ m9-20020a4ae849000000b005a4c3d44cadsm2067993oom.38.2024.05.06.11.58.03
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 06 May 2024 11:58:06 -0700 (PDT)
+ Mon, 06 May 2024 11:58:04 -0700 (PDT)
 From: <ltaylorsimpson@gmail.com>
 To: "'Anton Johansson'" <anjo@rev.ng>,
 	<qemu-devel@nongnu.org>
 Cc: <ale@rev.ng>,
 	<bcain@quicinc.com>
 References: <20240506183117.32268-1-anjo@rev.ng>
- <20240506183117.32268-3-anjo@rev.ng>
-In-Reply-To: <20240506183117.32268-3-anjo@rev.ng>
-Subject: RE: [PATCH 2/4] target/hexagon: idef-parser remove undefined functions
-Date: Mon, 6 May 2024 13:58:06 -0500
-Message-ID: <068101da9fe7$5493b900$fdbb2b00$@gmail.com>
+ <20240506183117.32268-2-anjo@rev.ng>
+In-Reply-To: <20240506183117.32268-2-anjo@rev.ng>
+Subject: RE: [PATCH 1/4] target/hexagon: idef-parser remove unused defines
+Date: Mon, 6 May 2024 13:58:03 -0500
+Message-ID: <068001da9fe7$52f8f4c0$f8eade40$@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
 	charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQJLdJdU/DG86JVEEIa8gVqwbMNhjgHtYVb/sJl2PtA=
+Thread-Index: AQJLdJdU/DG86JVEEIa8gVqwbMNhjgK5rscQsJMUGxA=
 Content-Language: en-us
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2b;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-oo1-xc2b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32b;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-ot1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,14 +109,19 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 > Sent: Monday, May 6, 2024 1:31 PM
 > To: qemu-devel@nongnu.org
 > Cc: ale@rev.ng; ltaylorsimpson@gmail.com; bcain@quicinc.com
-> Subject: [PATCH 2/4] target/hexagon: idef-parser remove undefined
-> functions
+> Subject: [PATCH 1/4] target/hexagon: idef-parser remove unused defines
+> 
+> Before switching to GArray/g_string_printf we used fixed size arrays for
+> output buffers and instructions arguments among other things.
+> 
+> Macros defining the sizes of these buffers were left behind, remove them.
 > 
 > Signed-off-by: Anton Johansson <anjo@rev.ng>
 > ---
->  target/hexagon/idef-parser/parser-helpers.h | 13 -------------
->  1 file changed, 13 deletions(-)
+>  target/hexagon/idef-parser/idef-parser.h | 10 ----------
+>  1 file changed, 10 deletions(-)
 
 Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+
 
 
