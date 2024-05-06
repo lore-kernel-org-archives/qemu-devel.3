@@ -4,58 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15B8BC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 02:37:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FF5CC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 02:41:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3oDZ-00069c-7s; Sun, 05 May 2024 22:36:41 -0400
+	id 1s3oHZ-0007so-R7; Sun, 05 May 2024 22:40:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
- id 1s3oDT-00068T-73; Sun, 05 May 2024 22:36:36 -0400
-Received: from out30-99.freemail.mail.aliyun.com ([115.124.30.99])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1s3oHW-0007rp-EH
+ for qemu-devel@nongnu.org; Sun, 05 May 2024 22:40:47 -0400
+Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
- id 1s3oDO-0005JH-GM; Sun, 05 May 2024 22:36:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1714962980; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=VYAVeRMKZI8P52HWvIaKancLspgPQjp2KQ+AmcqrVI8=;
- b=E8v2U4TXEOn3lVtxgaP3JLuKk8CxaIK03MYaHf5ZyfgOuWhJKDZgtjBSU/P7Ifb7DjODa8qphyOcsHXTD09xs6j8sfix7aC5k+z1jiwNLbAZwJqSws5RBgEnPEDCwG1Y5uT19PkXqUDVPnXpU4fMrQTTs4awBBAq0c2xGyXkEEU=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R941e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032014031;
- MF=eric.huang@linux.alibaba.com; NM=1; PH=DS; RN=11; SR=0;
- TI=SMTPD_---0W5q-kTJ_1714962977; 
-Received: from localhost.localdomain(mailfrom:eric.huang@linux.alibaba.com
- fp:SMTPD_---0W5q-kTJ_1714962977) by smtp.aliyun-inc.com;
- Mon, 06 May 2024 10:36:18 +0800
-From: Huang Tao <eric.huang@linux.alibaba.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com,
- dbarboza@ventanamicro.com, liwei1518@gmail.com, bin.meng@windriver.com,
- alistair.francis@wdc.com, palmer@dabbelt.com,
- Huang Tao <eric.huang@linux.alibaba.com>,
- Christoph Muellner <christoph.muellner@vrull.eu>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v5] target/riscv: Implement dynamic establishment of custom
- decoder
-Date: Mon,  6 May 2024 10:36:07 +0800
-Message-ID: <20240506023607.29544-1-eric.huang@linux.alibaba.com>
-X-Mailer: git-send-email 2.44.0
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1s3oHT-0007Dk-EY
+ for qemu-devel@nongnu.org; Sun, 05 May 2024 22:40:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1714963244; x=1746499244;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=8NCHiPb7AIUJPCLV8GfvbkSeFl/6CephUsTfkltLJuU=;
+ b=F8kOaYMl931/hFTQ7/pp+3ZA0oTmI7FehjEas4dLBZn9wvM6fSmZLvN/
+ A1W7vmIJQihjk+/WxkDhCiIEzOamlvGccSN6KWS+V3v+4bjUSJjyGdZAD
+ bPYpXxTsMmMjAI1FQqW3Prte9gvc6xvM/6OMQyxXDB6QHB1jQ/u+e4Ag0
+ 8TxNQbTpHWbCPpeLzgOnQbAmlxsfwLGn5NYJmVVY2U93TFHq8qRv7obDA
+ og6nIWiD9XIayCRbsGI1kK4pstJVYZyymFvt9iaNlhSNMoQKAdOjVeocv
+ M1wXhIQ2kMLptYoT9Tx4x1UkTgN3HwOJu/7gdesOHW2rI95Xh66Vubeu4 g==;
+X-CSE-ConnectionGUID: RyKqi4QFQrKSO457NGQzsw==
+X-CSE-MsgGUID: QMNTDxMRToSKOzy5uPyf2A==
+X-IronPort-AV: E=McAfee;i="6600,9927,11064"; a="36080381"
+X-IronPort-AV: E=Sophos;i="6.07,257,1708416000"; d="scan'208";a="36080381"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 May 2024 19:40:33 -0700
+X-CSE-ConnectionGUID: ool1PNuwS6WykBKUBLBn2g==
+X-CSE-MsgGUID: Os5rVDVeQ9yhjdj2IAtbiA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,257,1708416000"; d="scan'208";a="32494811"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa005.fm.intel.com with ESMTP; 05 May 2024 19:40:30 -0700
+Date: Mon, 6 May 2024 10:54:42 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: "Chen, Zide" <zide.chen@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+Subject: Re: [PATCH 1/6] target/i386/kvm: Add feature bit definitions for KVM
+ CPUID
+Message-ID: <ZjhGchDOqGB1taVz@intel.com>
+References: <20240426100716.2111688-1-zhao1.liu@intel.com>
+ <20240426100716.2111688-2-zhao1.liu@intel.com>
+ <04d827f7-fb18-4c93-b223-91dd5e190421@intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.99;
- envelope-from=eric.huang@linux.alibaba.com;
- helo=out30-99.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <04d827f7-fb18-4c93-b223-91dd5e190421@intel.com>
+Received-SPF: pass client-ip=192.198.163.7; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.431,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,196 +91,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In this patch, we modify the decoder to be a freely composable data
-structure instead of a hardcoded one. It can be dynamically builded up
-according to the extensions.
-This approach has several benefits:
-1. Provides support for heterogeneous cpu architectures. As we add decoder in
-   RISCVCPU, each cpu can have their own decoder, and the decoders can be
-   different due to cpu's features.
-2. Improve the decoding efficiency. We run the guard_func to see if the decoder
-   can be added to the dynamic_decoder when building up the decoder. Therefore,
-   there is no need to run the guard_func when decoding each instruction. It can
-   improve the decoding efficiency
-3. For vendor or dynamic cpus, it allows them to customize their own decoder
-   functions to improve decoding efficiency, especially when vendor-defined
-   instruction sets increase. Because of dynamic building up, it can skip the other
-   decoder guard functions when decoding.
-4. Pre patch for allowing adding a vendor decoder before decode_insn32() with minimal
-   overhead for users that don't need this particular vendor decoder.
+Hi Zide,
 
-Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
-Suggested-by: Christoph Muellner <christoph.muellner@vrull.eu>
-Co-authored-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
----
-Changes in v5:
-- rebase on https://github.com/alistair23/qemu/tree/riscv-to-apply.next
+On Fri, Apr 26, 2024 at 10:23:27AM -0700, Chen, Zide wrote:
+> Date: Fri, 26 Apr 2024 10:23:27 -0700
+> From: "Chen, Zide" <zide.chen@intel.com>
+> Subject: Re: [PATCH 1/6] target/i386/kvm: Add feature bit definitions for
+>  KVM CPUID
+> 
+> On 4/26/2024 3:07 AM, Zhao Liu wrote:
+> > Add feature definiations for KVM_CPUID_FEATURES in CPUID (
+> > CPUID[4000_0001].EAX and CPUID[4000_0001].EDX), to get rid of lots of
+> > offset calculations.
+> > 
+> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> > ---
+> > v2: Changed the prefix from CPUID_FEAT_KVM_* to CPUID_KVM_*. (Xiaoyao)
+> > ---
+> >  hw/i386/kvm/clock.c   |  5 ++---
+> >  target/i386/cpu.h     | 23 +++++++++++++++++++++++
+> >  target/i386/kvm/kvm.c | 28 ++++++++++++++--------------
+> >  3 files changed, 39 insertions(+), 17 deletions(-)
+> > 
+> > diff --git a/hw/i386/kvm/clock.c b/hw/i386/kvm/clock.c
+> > index 40aa9a32c32c..ce416c05a3d0 100644
+> > --- a/hw/i386/kvm/clock.c
+> > +++ b/hw/i386/kvm/clock.c
+> > @@ -27,7 +27,6 @@
+> >  #include "qapi/error.h"
+> >  
+> >  #include <linux/kvm.h>
+> > -#include "standard-headers/asm-x86/kvm_para.h"
+> >  #include "qom/object.h"
+> >  
+> >  #define TYPE_KVM_CLOCK "kvmclock"
+> > @@ -334,8 +333,8 @@ void kvmclock_create(bool create_always)
+> >  
+> >      assert(kvm_enabled());
+> >      if (create_always ||
+> > -        cpu->env.features[FEAT_KVM] & ((1ULL << KVM_FEATURE_CLOCKSOURCE) |
+> > -                                       (1ULL << KVM_FEATURE_CLOCKSOURCE2))) {
+> > +        cpu->env.features[FEAT_KVM] & (CPUID_KVM_CLOCK |
+> > +                                       CPUID_KVM_CLOCK2)) {
+> 
+> To achieve this purpose, how about doing the alternative to define an
+> API similar to KVM's guest_pv_has()?
+>
+> xxxx_has() is simpler and clearer than "features[] & CPUID_xxxxx",
+> additionally, this helps to keep the definitions identical to KVM, more
+> readable and easier for future maintenance.
 
-Changes in v4:
-- fix typo
-- rename function
-- add 'if tcg_enable()'
-- move function to tcg-cpu.c and declarations to tcg-cpu.h
+Yes, it's a clearer way! I can explore the xxxx_has() pattern in another
+series and try to expand it to more CPUID leaves.
 
-Changes in v3:
-- use GPtrArray to save decode function poionter list.
----
- target/riscv/cpu.c         |  1 +
- target/riscv/cpu.h         |  1 +
- target/riscv/tcg/tcg-cpu.c | 15 +++++++++++++++
- target/riscv/tcg/tcg-cpu.h | 15 +++++++++++++++
- target/riscv/translate.c   | 31 +++++++++++++++----------------
- 5 files changed, 47 insertions(+), 16 deletions(-)
+Thanks,
+Zhao
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index a74f0eb29c..2cb145121d 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1134,6 +1134,7 @@ void riscv_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
-             error_propagate(errp, local_err);
-             return;
-         }
-+        riscv_tcg_cpu_finalize_dynamic_decoder(cpu);
-     } else if (kvm_enabled()) {
-         riscv_kvm_cpu_finalize_features(cpu, &local_err);
-         if (local_err != NULL) {
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index e0dd1828b5..2838d9640b 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -455,6 +455,7 @@ struct ArchCPU {
-     uint32_t pmu_avail_ctrs;
-     /* Mapping of events to counters */
-     GHashTable *pmu_event_ctr_map;
-+    const GPtrArray *decoders;
- };
- 
- /**
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 4ebebebe09..3a4ec3662a 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -863,6 +863,21 @@ void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
-     }
- }
- 
-+void riscv_tcg_cpu_finalize_dynamic_decoder(RISCVCPU *cpu)
-+{
-+    GPtrArray *dynamic_decoders;
-+    dynamic_decoders = g_ptr_array_sized_new(decoder_table_size);
-+    for (size_t i = 0; i < decoder_table_size; ++i) {
-+        if (decoder_table[i].guard_func &&
-+            decoder_table[i].guard_func(&cpu->cfg)) {
-+            g_ptr_array_add(dynamic_decoders,
-+                            (gpointer)decoder_table[i].riscv_cpu_decode_fn);
-+        }
-+    }
-+
-+    cpu->decoders = dynamic_decoders;
-+}
-+
- bool riscv_cpu_tcg_compatible(RISCVCPU *cpu)
- {
-     return object_dynamic_cast(OBJECT(cpu), TYPE_RISCV_CPU_HOST) == NULL;
-diff --git a/target/riscv/tcg/tcg-cpu.h b/target/riscv/tcg/tcg-cpu.h
-index f7b32417f8..ce94253fe4 100644
---- a/target/riscv/tcg/tcg-cpu.h
-+++ b/target/riscv/tcg/tcg-cpu.h
-@@ -26,4 +26,19 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp);
- void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
- bool riscv_cpu_tcg_compatible(RISCVCPU *cpu);
- 
-+struct DisasContext;
-+struct RISCVCPUConfig;
-+typedef struct RISCVDecoder {
-+    bool (*guard_func)(const struct RISCVCPUConfig *);
-+    bool (*riscv_cpu_decode_fn)(struct DisasContext *, uint32_t);
-+} RISCVDecoder;
-+
-+typedef bool (*riscv_cpu_decode_fn)(struct DisasContext *, uint32_t);
-+
-+extern const size_t decoder_table_size;
-+
-+extern const RISCVDecoder decoder_table[];
-+
-+void riscv_tcg_cpu_finalize_dynamic_decoder(RISCVCPU *cpu);
-+
- #endif
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index 9ff09ebdb6..15e7123a68 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -37,6 +37,8 @@
- #include "exec/helper-info.c.inc"
- #undef  HELPER_H
- 
-+#include "tcg/tcg-cpu.h"
-+
- /* global register indices */
- static TCGv cpu_gpr[32], cpu_gprh[32], cpu_pc, cpu_vl, cpu_vstart;
- static TCGv_i64 cpu_fpr[32]; /* assume F and D extensions */
-@@ -116,6 +118,7 @@ typedef struct DisasContext {
-     /* FRM is known to contain a valid value. */
-     bool frm_valid;
-     bool insn_start_updated;
-+    const GPtrArray *decoders;
- } DisasContext;
- 
- static inline bool has_ext(DisasContext *ctx, uint32_t ext)
-@@ -1125,21 +1128,16 @@ static inline int insn_len(uint16_t first_word)
-     return (first_word & 3) == 3 ? 4 : 2;
- }
- 
-+const RISCVDecoder decoder_table[] = {
-+    { always_true_p, decode_insn32 },
-+    { has_xthead_p, decode_xthead},
-+    { has_XVentanaCondOps_p, decode_XVentanaCodeOps},
-+};
-+
-+const size_t decoder_table_size = ARRAY_SIZE(decoder_table);
-+
- static void decode_opc(CPURISCVState *env, DisasContext *ctx, uint16_t opcode)
- {
--    /*
--     * A table with predicate (i.e., guard) functions and decoder functions
--     * that are tested in-order until a decoder matches onto the opcode.
--     */
--    static const struct {
--        bool (*guard_func)(const RISCVCPUConfig *);
--        bool (*decode_func)(DisasContext *, uint32_t);
--    } decoders[] = {
--        { always_true_p,  decode_insn32 },
--        { has_xthead_p, decode_xthead },
--        { has_XVentanaCondOps_p,  decode_XVentanaCodeOps },
--    };
--
-     ctx->virt_inst_excp = false;
-     ctx->cur_insn_len = insn_len(opcode);
-     /* Check for compressed insn */
-@@ -1160,9 +1158,9 @@ static void decode_opc(CPURISCVState *env, DisasContext *ctx, uint16_t opcode)
-                                              ctx->base.pc_next + 2));
-         ctx->opcode = opcode32;
- 
--        for (size_t i = 0; i < ARRAY_SIZE(decoders); ++i) {
--            if (decoders[i].guard_func(ctx->cfg_ptr) &&
--                decoders[i].decode_func(ctx, opcode32)) {
-+        for (guint i = 0; i < ctx->decoders->len; ++i) {
-+            riscv_cpu_decode_fn func = g_ptr_array_index(ctx->decoders, i);
-+            if (func(ctx, opcode32)) {
-                 return;
-             }
-         }
-@@ -1207,6 +1205,7 @@ static void riscv_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
-     ctx->itrigger = FIELD_EX32(tb_flags, TB_FLAGS, ITRIGGER);
-     ctx->zero = tcg_constant_tl(0);
-     ctx->virt_inst_excp = false;
-+    ctx->decoders = cpu->decoders;
- }
- 
- static void riscv_tr_tb_start(DisasContextBase *db, CPUState *cpu)
--- 
-2.44.0
 
 
