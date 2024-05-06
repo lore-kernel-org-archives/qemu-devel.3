@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04969C10F16
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 11:06:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 211E8C10F16
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 11:06:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3w7o-00032N-9J; Mon, 06 May 2024 07:03:16 -0400
+	id 1s3w7q-00035s-Qj; Mon, 06 May 2024 07:03:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s3w7a-0002lM-TI
- for qemu-devel@nongnu.org; Mon, 06 May 2024 07:03:04 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s3w7g-0002oz-Vp
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 07:03:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s3w7X-0003ek-3n
- for qemu-devel@nongnu.org; Mon, 06 May 2024 07:03:02 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s3w7Y-0003fM-KJ
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 07:03:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714993378;
+ s=mimecast20190719; t=1714993380;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=t0bAfLx0fSN9+pKtZd6qempTW+VtaN8OzkHnNuAO3EY=;
- b=F6hOfpSODIoshj02oXdrpGkM6wo5lvyO9zPuL25kM6fkkxQR6QUXdZuf3j8zqomfWaS/mY
- NiQb3bT9e2RgCyzCr/FmhQkCgXXc1LAv2KFx/HUxmhoiDNV3K0/EXkFsb4HTyFCdUDMhbN
- sbai6hU0zequY8qgBiP0/uaUVV3mZKA=
+ bh=NuQ9Fil2xTNfxL9eTvXPA3hWo76CgVTuL8CK0QDZm6w=;
+ b=YbmZLVGeQNHteegvgVQSkQtRDcaJRMnmCeT7ZE/ZMWmIj1qxnFhEGxJLRmTdnFrb03mVFd
+ FwDCVWR2rB+9BfoQR+bkLOBf72IOykHjSlvWM88jipvIQWXFesUU3L77zz74E/i/ylpQeO
+ OomgOGzDKJxkmZAsUC0KkEz+upHrRfw=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-556-YlVr0dCRNsiZ9_hajyr2WA-1; Mon,
- 06 May 2024 07:02:57 -0400
-X-MC-Unique: YlVr0dCRNsiZ9_hajyr2WA-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-584-GdW2s1XgPOaMvcCfBv-ixw-1; Mon,
+ 06 May 2024 07:02:56 -0400
+X-MC-Unique: GdW2s1XgPOaMvcCfBv-ixw-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 9767E38000AF;
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 9B0A43810B06;
  Mon,  6 May 2024 11:02:56 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 5D53D200B2C4;
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 61615400D279;
  Mon,  6 May 2024 11:02:56 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5B32921D49C4; Mon,  6 May 2024 13:02:54 +0200 (CEST)
+ id 5E1C221D49C6; Mon,  6 May 2024 13:02:54 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org
-Subject: [PATCH 7/7] find untagged sections WIP
-Date: Mon,  6 May 2024 13:02:53 +0200
-Message-ID: <20240506110254.3965097-14-armbru@redhat.com>
+Subject: [PULL 7/7] qapi: Simplify QAPISchemaVariants @tag_member
+Date: Mon,  6 May 2024 13:02:54 +0200
+Message-ID: <20240506110254.3965097-15-armbru@redhat.com>
 In-Reply-To: <20240506110254.3965097-1-armbru@redhat.com>
 References: <20240506110254.3965097-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
@@ -81,203 +81,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
----
- qapi/block-core.json           | 1 +
- qapi/introspect.json           | 4 ++++
- qapi/machine-target.json       | 2 ++
- qapi/migration.json            | 3 +++
- qapi/net.json                  | 2 ++
- qapi/qom.json                  | 1 +
- qapi/ui.json                   | 1 +
- qga/qapi-schema.json           | 2 ++
- scripts/qapi/parser.py         | 1 +
- tests/qapi-schema/doc-good.out | 1 +
- 10 files changed, 18 insertions(+)
+For union types, the tag member is known only after .check().
 
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index fab1a45365..1c43d3d2bb 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -3289,6 +3289,7 @@
- #
- # @namespace: namespace number of the device, starting from 1.
- #
-+# @@@ untagged
- # Note that the PCI @device must have been unbound from any host
- # kernel driver before instructing QEMU to add the blockdev.
- #
-diff --git a/qapi/introspect.json b/qapi/introspect.json
-index b041b02ba8..1747562a41 100644
---- a/qapi/introspect.json
-+++ b/qapi/introspect.json
-@@ -149,6 +149,7 @@
- #
- # @deprecated: Member @values is deprecated.  Use @members instead.
- #
-+# @@@ untagged
- # Values of this type are JSON string on the wire.
- #
- # Since: 2.5
-@@ -180,6 +181,7 @@
- #
- # @element-type: the array type's element type.
- #
-+# @@@ untagged
- # Values of this type are JSON array on the wire.
- #
- # Since: 2.5
-@@ -203,6 +205,7 @@
- #     The variants are in no particular order, and may even differ
- #     from the order of the values of the enum type of the @tag.
- #
-+# @@@ untagged
- # Values of this type are JSON object on the wire.
- #
- # Since: 2.5
-@@ -261,6 +264,7 @@
- #     members' wire encoding is distinct, see
- #     :doc:`/devel/qapi-code-gen` section Alternate types.
- #
-+# @@@ untagged
- # On the wire, this can be any of the members.
- #
- # Since: 2.5
-diff --git a/qapi/machine-target.json b/qapi/machine-target.json
-index 4ef7ef7b43..37ffd6409b 100644
---- a/qapi/machine-target.json
-+++ b/qapi/machine-target.json
-@@ -107,6 +107,7 @@
- # @responsible-properties: List of properties that led to the
- #     comparison result not being identical.
- #
-+# @@@ untagged
- # @responsible-properties is a list of QOM property names that led to
- # both CPUs not being detected as identical.  For identical models,
- # this list is empty.  If a QOM property is read-only, that means
-@@ -342,6 +343,7 @@
- #     removed in in some future version of QEMU according to the QEMU
- #     deprecation policy.  (since 5.2)
- #
-+# @@@ untagged
- # @unavailable-features is a list of QOM property names that represent
- # CPU model attributes that prevent the CPU from running.  If the QOM
- # property is read-only, that means there's no known way to make the
-diff --git a/qapi/migration.json b/qapi/migration.json
-index e22645253c..97a727c41a 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -2427,6 +2427,7 @@
- #
- # @devices: list of block device node names to save a snapshot to
- #
-+# @@@ untagged
- # Applications should not assume that the snapshot save is complete
- # when this command returns.  The job commands / events must be used
- # to determine completion and to fetch details of any errors that
-@@ -2499,6 +2500,7 @@
- #
- # @devices: list of block device node names to load a snapshot from
- #
-+# @@@ untagged
- # Applications should not assume that the snapshot load is complete
- # when this command returns.  The job commands / events must be used
- # to determine completion and to fetch details of any errors that
-@@ -2567,6 +2569,7 @@
- #
- # @devices: list of block device node names to delete a snapshot from
- #
-+# @@@ untagged
- # Applications should not assume that the snapshot delete is complete
- # when this command returns.  The job commands / events must be used
- # to determine completion and to fetch details of any errors that
-diff --git a/qapi/net.json b/qapi/net.json
-index 0f5a259475..da21c02fa2 100644
---- a/qapi/net.json
-+++ b/qapi/net.json
-@@ -650,6 +650,7 @@
- #     attempt a reconnect after the given number of seconds.  Setting
- #     this to zero disables this function.  (default: 0) (since 8.0)
- #
-+# @@@ untagged
- # Only SocketAddress types 'unix', 'inet' and 'fd' are supported.
- #
- # Since: 7.2
-@@ -669,6 +670,7 @@
- #
- # @local: local address
- #
-+# @@@ untagged
- # Only SocketAddress types 'unix', 'inet' and 'fd' are supported.
- #
- # If remote address is present and it's a multicast address, local
-diff --git a/qapi/qom.json b/qapi/qom.json
-index d1dc216474..237711cd59 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -547,6 +547,7 @@
- #     algorithm detects it is spending too long polling without
- #     encountering events.  0 selects a default behaviour (default: 0)
- #
-+# @@@ untagged
- # The @aio-max-batch option is available since 6.1.
- #
- # Since: 2.0
-diff --git a/qapi/ui.json b/qapi/ui.json
-index 2b7f0b8401..b2c3f143dc 100644
---- a/qapi/ui.json
-+++ b/qapi/ui.json
-@@ -934,6 +934,7 @@
- #
- # @f24: since 8.0
- #
-+# @@@ untagged
- # 'sysrq' was mistakenly added to hack around the fact that the ps2
- # driver was not generating correct scancodes sequences when
- # 'alt+print' was pressed.  This flaw is now fixed and the 'sysrq' key
-diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-index fe41670ed2..17cdb52f83 100644
---- a/qga/qapi-schema.json
-+++ b/qga/qapi-schema.json
-@@ -207,6 +207,7 @@
- #
- # @mode: "halt", "powerdown" (default), or "reboot"
- #
-+# @@@ untagged
- # This command does NOT return a response on success.  Success
- # condition is indicated by the VM exiting with a zero exit status or,
- # when running with --no-shutdown, by issuing the query-status QMP
-@@ -1050,6 +1051,7 @@
- #
- # @crypted: true if password is already crypt()d, false if raw
- #
-+# @@@ untagged
- # If the @crypted flag is true, it is the caller's responsibility to
- # ensure the correct crypt() encryption scheme is used.  This command
- # does not attempt to interpret or report on the encryption scheme.
-diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-index e8a482c37d..126acab38d 100644
---- a/scripts/qapi/parser.py
-+++ b/scripts/qapi/parser.py
-@@ -665,6 +665,7 @@ def ensure_untagged_section(self, info: QAPISourceInfo) -> None:
-         section = self.Section(info)
-         self.sections.append(section)
-         self.all_sections.append(section)
-+        section.append_line(f'### untagged {info.loc()}')
+We used to code this in a simple way: QAPISchemaVariants attribute
+.tag_member was None for union types until .check().
+
+Since this complicated typing, recent commit "qapi/schema: fix typing
+for QAPISchemaVariants.tag_member" hid it behind a property.
+
+The previous commit lets us treat .tag_member just like the other
+attributes that become known only in .check(): declare, but don't
+initialize it in .__init__().
+
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ scripts/qapi/schema.py | 44 +++++++++++++++++-------------------------
+ 1 file changed, 18 insertions(+), 26 deletions(-)
+
+diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
+index c5b824f1fd..721c470d2b 100644
+--- a/scripts/qapi/schema.py
++++ b/scripts/qapi/schema.py
+@@ -723,18 +723,9 @@ def __init__(
+         variants: List[QAPISchemaVariant],
+     ):
+         self.info = info
+-        self._tag_member: Optional[QAPISchemaObjectTypeMember] = None
++        self.tag_member: QAPISchemaObjectTypeMember
+         self.variants = variants
  
-     def new_tagged_section(self, info: QAPISourceInfo, tag: str) -> None:
-         section = self.Section(info, tag)
-diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-good.out
-index f2be711a2c..067e3d1135 100644
---- a/tests/qapi-schema/doc-good.out
-+++ b/tests/qapi-schema/doc-good.out
-@@ -112,6 +112,7 @@ Also _one_ {and only}
-     feature=enum-member-feat
- a member feature
-     section=None
-+### untagged /work/armbru/qemu/bld/../tests/qapi-schema/doc-good.json:67
- @two is undocumented
- doc symbol=Base
-     body=
+-    @property
+-    def tag_member(self) -> QAPISchemaObjectTypeMember:
+-        if self._tag_member is None:
+-            raise RuntimeError(
+-                "QAPISchemaVariants has no tag_member property until "
+-                "after check() has been run."
+-            )
+-        return self._tag_member
+-
+     def set_defined_in(self, name: str) -> None:
+         for v in self.variants:
+             v.set_defined_in(name)
+@@ -758,47 +749,48 @@ def check(
+             self, schema: QAPISchema, seen: Dict[str, QAPISchemaMember]
+     ) -> None:
+         # We need to narrow the member type:
+-        tmp = seen.get(c_name(self._tag_name))
+-        assert tmp is None or isinstance(tmp, QAPISchemaObjectTypeMember)
+-        self._tag_member = tmp
++        tag_member = seen.get(c_name(self._tag_name))
++        assert (tag_member is None
++                or isinstance(tag_member, QAPISchemaObjectTypeMember))
+ 
+         base = "'base'"
+         # Pointing to the base type when not implicit would be
+         # nice, but we don't know it here
+-        if not self._tag_member or self._tag_name != self._tag_member.name:
++        if not tag_member or self._tag_name != tag_member.name:
+             raise QAPISemError(
+                 self.info,
+                 "discriminator '%s' is not a member of %s"
+                 % (self._tag_name, base))
++        self.tag_member = tag_member
+         # Here we do:
+-        assert self.tag_member.defined_in
+-        base_type = schema.lookup_type(self.tag_member.defined_in)
++        assert tag_member.defined_in
++        base_type = schema.lookup_type(tag_member.defined_in)
+         assert base_type
+         if not base_type.is_implicit():
+-            base = "base type '%s'" % self.tag_member.defined_in
+-        if not isinstance(self.tag_member.type, QAPISchemaEnumType):
++            base = "base type '%s'" % tag_member.defined_in
++        if not isinstance(tag_member.type, QAPISchemaEnumType):
+             raise QAPISemError(
+                 self.info,
+                 "discriminator member '%s' of %s must be of enum type"
+                 % (self._tag_name, base))
+-        if self.tag_member.optional:
++        if tag_member.optional:
+             raise QAPISemError(
+                 self.info,
+                 "discriminator member '%s' of %s must not be optional"
+                 % (self._tag_name, base))
+-        if self.tag_member.ifcond.is_present():
++        if tag_member.ifcond.is_present():
+             raise QAPISemError(
+                 self.info,
+                 "discriminator member '%s' of %s must not be conditional"
+                 % (self._tag_name, base))
+         # branches that are not explicitly covered get an empty type
+-        assert self.tag_member.defined_in
++        assert tag_member.defined_in
+         cases = {v.name for v in self.variants}
+-        for m in self.tag_member.type.members:
++        for m in tag_member.type.members:
+             if m.name not in cases:
+                 v = QAPISchemaVariant(m.name, self.info,
+                                       'q_empty', m.ifcond)
+-                v.set_defined_in(self.tag_member.defined_in)
++                v.set_defined_in(tag_member.defined_in)
+                 self.variants.append(v)
+         if not self.variants:
+             raise QAPISemError(self.info, "union has no branches")
+@@ -807,11 +799,11 @@ def check(
+             # Union names must match enum values; alternate names are
+             # checked separately. Use 'seen' to tell the two apart.
+             if seen:
+-                if v.name not in self.tag_member.type.member_names():
++                if v.name not in tag_member.type.member_names():
+                     raise QAPISemError(
+                         self.info,
+                         "branch '%s' is not a value of %s"
+-                        % (v.name, self.tag_member.type.describe()))
++                        % (v.name, tag_member.type.describe()))
+                 if not isinstance(v.type, QAPISchemaObjectType):
+                     raise QAPISemError(
+                         self.info,
+@@ -839,7 +831,7 @@ def __init__(self,
+                  variants: List[QAPISchemaVariant],
+                  tag_member: QAPISchemaObjectTypeMember):
+         super().__init__(info, variants)
+-        self._tag_member = tag_member
++        self.tag_member = tag_member
+ 
+     def check(
+             self, schema: QAPISchema, seen: Dict[str, QAPISchemaMember]
 -- 
 2.44.0
 
