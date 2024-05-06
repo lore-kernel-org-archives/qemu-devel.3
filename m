@@ -4,42 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B77F6C25B4F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 16:26:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BF1DC25B4F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 16:27:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s41AP-0003Q8-7k; Mon, 06 May 2024 12:26:18 -0400
+	id 1s41BL-00044u-78; Mon, 06 May 2024 12:27:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1s41AH-0003Nt-QN
- for qemu-devel@nongnu.org; Mon, 06 May 2024 12:26:10 -0400
+ id 1s41BI-00044g-6o
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 12:27:12 -0400
 Received: from vps-vb.mhejs.net ([37.28.154.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1s41AE-0003rI-E2
- for qemu-devel@nongnu.org; Mon, 06 May 2024 12:26:09 -0400
+ id 1s41B6-00045u-S0
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 12:27:11 -0400
 Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
  TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
  (envelope-from <mail@maciej.szmigiero.name>)
- id 1s419q-0002Xn-LD; Mon, 06 May 2024 18:25:42 +0200
-Message-ID: <91e6485a-a9fe-45b1-8b32-f1d7ab5c69cc@maciej.szmigiero.name>
-Date: Mon, 6 May 2024 18:25:36 +0200
+ id 1s41Ax-0002YD-VJ; Mon, 06 May 2024 18:26:52 +0200
+Message-ID: <fc0721e3-4932-40b8-a6eb-2584a475d8eb@maciej.szmigiero.name>
+Date: Mon, 6 May 2024 18:26:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 23/26] migration/multifd: Device state transfer
- support - send side
+Subject: =?UTF-8?Q?Re=3A_=5BPATCH_RFC_00/26=5D_Multifd_=F0=9F=94=80_device_s?=
+ =?UTF-8?Q?tate_transfer_support_with_VFIO_consumer?=
 To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
-References: <cover.1713269378.git.maciej.szmigiero@oracle.com>
- <ec2f88766178ab461f19ff4fa1414ce828e9862f.1713269378.git.maciej.szmigiero@oracle.com>
- <Zi_9SyJy__8wJTou@x1n>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Alex Williamson
+ <alex.williamson@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+References: <ZiD4aLSre6qubuHr@redhat.com>
+ <aebcd78e-b8b6-44db-b2be-0bbd5acccf3f@maciej.szmigiero.name>
+ <ZiF8aWVfW7kPuOtn@x1n> <ZiJCSZvsekaO8dzO@redhat.com> <ZiKOTkgEIKo-wj5N@x1n>
+ <d7d59001-0800-4073-9def-08327e904b7b@maciej.szmigiero.name>
+ <Zig0IPofMCpJdGsn@x1n>
+ <e88ecd55-14a2-4043-946b-9c2447fe9def@maciej.szmigiero.name>
+ <Zig3vebacR4SfJLh@x1n>
+ <1a0b3c24-fffd-4db3-a35e-e40ae2e0a074@maciej.szmigiero.name>
+ <Zi-4FmjXv-gx7JH_@x1n>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -83,9 +89,9 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
  ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
  WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
-In-Reply-To: <Zi_9SyJy__8wJTou@x1n>
+In-Reply-To: <Zi-4FmjXv-gx7JH_@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=37.28.154.113;
  envelope-from=mail@maciej.szmigiero.name; helo=vps-vb.mhejs.net
 X-Spam_score_int: -18
@@ -108,28 +114,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29.04.2024 22:04, Peter Xu wrote:
-> On Tue, Apr 16, 2024 at 04:43:02PM +0200, Maciej S. Szmigiero wrote:
->> +bool multifd_queue_page(RAMBlock *block, ram_addr_t offset)
->> +{
->> +    g_autoptr(GMutexLocker) locker = NULL;
->> +
->> +    /*
->> +     * Device state submissions for shared channels can come
->> +     * from multiple threads and conflict with page submissions
->> +     * with respect to multifd_send_state access.
->> +     */
->> +    if (!multifd_send_state->device_state_dedicated_channels) {
->> +        locker = g_mutex_locker_new(&multifd_send_state->queue_job_mutex);
+On 29.04.2024 17:09, Peter Xu wrote:
+> On Fri, Apr 26, 2024 at 07:34:09PM +0200, Maciej S. Szmigiero wrote:
+>> On 24.04.2024 00:35, Peter Xu wrote:
+>>> On Wed, Apr 24, 2024 at 12:25:08AM +0200, Maciej S. Szmigiero wrote:
+>>>> On 24.04.2024 00:20, Peter Xu wrote:
+>>>>> On Tue, Apr 23, 2024 at 06:15:35PM +0200, Maciej S. Szmigiero wrote:
+>>>>>> On 19.04.2024 17:31, Peter Xu wrote:
+>>>>>>> On Fri, Apr 19, 2024 at 11:07:21AM +0100, Daniel P. Berrangé wrote:
+>>>>>>>> On Thu, Apr 18, 2024 at 04:02:49PM -0400, Peter Xu wrote:
+>>>>>>>>> On Thu, Apr 18, 2024 at 08:14:15PM +0200, Maciej S. Szmigiero wrote:
+>>>>>>>>>> I think one of the reasons for these results is that mixed (RAM + device
+>>>>>>>>>> state) multifd channels participate in the RAM sync process
+>>>>>>>>>> (MULTIFD_FLAG_SYNC) whereas device state dedicated channels don't.
+>>>>>>>>>
+>>>>>>>>> Firstly, I'm wondering whether we can have better names for these new
+>>>>>>>>> hooks.  Currently (only comment on the async* stuff):
+>>>>>>>>>
+>>>>>>>>>       - complete_precopy_async
+>>>>>>>>>       - complete_precopy
+>>>>>>>>>       - complete_precopy_async_wait
+>>>>>>>>>
+>>>>>>>>> But perhaps better:
+>>>>>>>>>
+>>>>>>>>>       - complete_precopy_begin
+>>>>>>>>>       - complete_precopy
+>>>>>>>>>       - complete_precopy_end
+>>>>>>>>>
+>>>>>>>>> ?
+>>>>>>>>>
+>>>>>>>>> As I don't see why the device must do something with async in such hook.
+>>>>>>>>> To me it's more like you're splitting one process into multiple, then
+>>>>>>>>> begin/end sounds more generic.
+>>>>>>>>>
+>>>>>>>>> Then, if with that in mind, IIUC we can already split ram_save_complete()
+>>>>>>>>> into >1 phases too. For example, I would be curious whether the performance
+>>>>>>>>> will go back to normal if we offloading multifd_send_sync_main() into the
+>>>>>>>>> complete_precopy_end(), because we really only need one shot of that, and I
+>>>>>>>>> am quite surprised it already greatly affects VFIO dumping its own things.
+>>>>>>>>>
+>>>>>>>>> I would even ask one step further as what Dan was asking: have you thought
+>>>>>>>>> about dumping VFIO states via multifd even during iterations?  Would that
+>>>>>>>>> help even more than this series (which IIUC only helps during the blackout
+>>>>>>>>> phase)?
+>>>>>>>>
+>>>>>>>> To dump during RAM iteration, the VFIO device will need to have
+>>>>>>>> dirty tracking and iterate on its state, because the guest CPUs
+>>>>>>>> will still be running potentially changing VFIO state. That seems
+>>>>>>>> impractical in the general case.
+>>>>>>>
+>>>>>>> We already do such interations in vfio_save_iterate()?
+>>>>>>>
+>>>>>>> My understanding is the recent VFIO work is based on the fact that the VFIO
+>>>>>>> device can track device state changes more or less (besides being able to
+>>>>>>> save/load full states).  E.g. I still remember in our QE tests some old
+>>>>>>> devices report much more dirty pages than expected during the iterations
+>>>>>>> when we were looking into such issue that a huge amount of dirty pages
+>>>>>>> reported.  But newer models seem to have fixed that and report much less.
+>>>>>>>
+>>>>>>> That issue was about GPU not NICs, though, and IIUC a major portion of such
+>>>>>>> tracking used to be for GPU vRAMs.  So maybe I was mixing up these, and
+>>>>>>> maybe they work differently.
+>>>>>>
+>>>>>> The device which this series was developed against (Mellanox ConnectX-7)
+>>>>>> is already transferring its live state before the VM gets stopped (via
+>>>>>> save_live_iterate SaveVMHandler).
+>>>>>>
+>>>>>> It's just that in addition to the live state it has more than 400 MiB
+>>>>>> of state that cannot be transferred while the VM is still running.
+>>>>>> And that fact hurts a lot with respect to the migration downtime.
+>>>>>>
+>>>>>> AFAIK it's a very similar story for (some) GPUs.
+>>>>>
+>>>>> So during iteration phase VFIO cannot yet leverage the multifd channels
+>>>>> when with this series, am I right?
+>>>>
+>>>> That's right.
+>>>>
+>>>>> Is it possible to extend that use case too?
+>>>>
+>>>> I guess so, but since this phase (iteration while the VM is still
+>>>> running) doesn't impact downtime it is much less critical.
+>>>
+>>> But it affects the bandwidth, e.g. even with multifd enabled, the device
+>>> iteration data will still bottleneck at ~15Gbps on a common system setup
+>>> the best case, even if the hosts are 100Gbps direct connected.  Would that
+>>> be a concern in the future too, or it's known problem and it won't be fixed
+>>> anyway?
+>>
+>> I think any improvements to the migration performance are good, even if
+>> they don't impact downtime.
+>>
+>> It's just that this patch set focuses on the downtime phase as the more
+>> critical thing.
+>>
+>> After this gets improved there's no reason why not to look at improving
+>> performance of the VM live phase too if it brings sensible improvements.
+>>
+>>> I remember Avihai used to have plan to look into similar issues, I hope
+>>> this is exactly what he is looking for.  Otherwise changing migration
+>>> protocol from time to time is cumbersome; we always need to provide a flag
+>>> to make sure old systems migrates in the old ways, new systems run the new
+>>> ways, and for such a relatively major change I'd want to double check on
+>>> how far away we can support offload VFIO iterations data to multifd.
+>>
+>> The device state transfer is indicated by a new flag in the multifd
+>> header (MULTIFD_FLAG_DEVICE_STATE).
+>>
+>> If we are to use multifd channels for VM live phase transfers these
+>> could simply re-use the same flag type.
 > 
-> Haven't read the rest, but suggest to stick with QemuMutex for the whole
-> patchset, as that's what we use in the rest migration code, along with
-> QEMU_LOCK_GUARD().
+> Right, and that's also my major purpose of such request to consider both
+> issues.
 > 
+> If supporting iterators can be easy on top of this, I am thinking whether
+> we should do this in one shot.  The problem is even if the flag type can be
+> reused, old/new qemu binaries may not be compatible and may not migrate
+> well when:
+> 
+>    - The old qemu only supports the downtime optimizations
+>    - The new qemu supports both downtime + iteration optimizations
 
-Ack, from a quick scan of QEMU thread sync primitives it seems that
-QemuMutex with QemuLockable and QemuCond should fulfill the
-requirements to replace GMutex, GMutexLocker and GCond.
+I think the situation here will be the same as with any new flag
+affecting the migration wire protocol - if the old version of QEMU
+doesn't support that flag then it has to be kept at its backward-compatible
+setting for migration to succeed.
+
+> IIUC, at least the device threads are currently created only at the end of
+> migration when switching over for the downtime-only optimization (aka, this
+> series).  Then it means it won't be compatible with a new QEMU as the
+> threads there will need to be created before iteration starts to take
+> iteration data.  So I believe we'll need yet another flag to tune the
+> behavior of such, one for each optimizations (downtime v.s. data during
+> iterations).  If they work mostly similarly, I want to avoid two flags.
+> It'll be chaos for user to see such similar flags and they'll be pretty
+> confusing.
+
+The VFIO loading threads are created from vfio_load_setup(), which is
+called at the very beginning of the migration, so they should be already
+there.
+
+However, they aren't currently prepared to receive VM live phase data.
+
+> If possible, I wish we can spend some time looking into that if they're so
+> close, and if it's low hanging fruit when on top of this series, maybe we
+> can consider doing that in one shot.
+
+I'm still trying to figure out the complete explanation why dedicated
+device state channels improve downtime as there was a bunch of holidays
+last week here.
+
+I will have a look later what would it take to add VM live phase multifd
+device state transfer support and also how invasive it would be as I
+think it's better to keep the number of code conflicts in a patch set
+to a manageable size as it reduces the chance of accidentally
+introducing regressions when forward-porting the patch set to the git master.
+
+> Thanks,
+> 
 
 Thanks,
 Maciej
