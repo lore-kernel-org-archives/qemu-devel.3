@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01052C10F16
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 09:54:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FE6FC10F16
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 09:54:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3v1v-0001iE-GE; Mon, 06 May 2024 05:53:07 -0400
+	id 1s3v2s-00027Q-4Q; Mon, 06 May 2024 05:54:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3v1t-0001hy-CX
- for qemu-devel@nongnu.org; Mon, 06 May 2024 05:53:05 -0400
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3v2g-0001zb-Fc
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 05:53:54 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3v1r-0006AM-Kq
- for qemu-devel@nongnu.org; Mon, 06 May 2024 05:53:05 -0400
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-51f0f6b613dso2163372e87.1
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 02:53:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3v2a-0006cT-Au
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 05:53:51 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-41b869326daso11619775e9.0
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 02:53:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714989181; x=1715593981; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714989225; x=1715594025; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=TPCl+61dRvUZ43xraXeNfSbdX7BxsyMvGiFdXcYoCwY=;
- b=yjzAH30bkSK3ALOM0vZ1KHtf7eA1NjSupkoyY5kXaRN1lgqD438orkMiBwqsUpxvTs
- SQ5J83M7mXH1P1GoLLAtjv8Zs+Me20yMbWFoG69heaFb1pO/4bL8vi4nn1vK+KtYi4IA
- QKzcaAyuGvAepL5+mrffMJqDTOB8iKC18a1GwERzBt5V+yVVx3F+fcww/69Xb4WqutKu
- RRlMvJxshdcznNqtixRLacCpS0JrZ8rP2lWPoSDHvtoRjLeoDazWm8hCPivOR0mQqU48
- lAV0KrWG/BSd2rNPB3XtCawj1lU537P43mzHGhc5Zx1gBCcec3itf2jEqOxNYFVRNVwb
- xU4g==
+ bh=R3MXBECi884L5d0aW1y4r22YZZuFnhM5zOy+PcayxA4=;
+ b=UwTKIZJp7PSp1QgzvSoPNhlZOneW4OWkrIu/sF3B3cHQsbOLXKtSZe01POkIJ/oa2S
+ HPUyK3oxtHH2EtKOO8AfJUHc7kC1pFkm8OkNPtjAHGwLHM9R89+pIYzEgDUDvA4RX8cL
+ BfIGt89BwzPf9VAa1y8Bg250aN42dZhP1bnovLVjPdZcMI1HtLIy5SO/8YB3ykpiGBkU
+ yM2r96Q+WePhTJQ+rHI7aHhtAFqxmOkdj1zpig1nsA4ut0EoIzls8+cpAx/nAVU+dVM1
+ kUGHziK2li0JHful60rMt1Bt/oUc50bFV74k2XehYX4pEKYbemNfmKcQIu+iJerm/C/v
+ bAUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714989181; x=1715593981;
+ d=1e100.net; s=20230601; t=1714989225; x=1715594025;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TPCl+61dRvUZ43xraXeNfSbdX7BxsyMvGiFdXcYoCwY=;
- b=XS6Nm9zOvEjjz3PS5kPz3pPCsBVgKEBwH4dhr2Uysr7CC2unkWsVn4EuawEK+azuN0
- vMPrziC3rvmMRbroE7nE1H/4a6aAlpDvgaujCWQEF3HG1KvEcUXE4m7scESRSiHXUJz0
- 3/37I0+93aWBccUJVnkUa2jZ1fHWadlCCAle8E4xwFJstmeKS45fx/trFhWgLayDYvJz
- BaKve1QZmtlqkN+MbeAnJqTY6TqQzdlUru1l58z3x6qvQHfoFUxCRwhTDPGZAOneTtQt
- 19favFN8oiMVQXH5NZonc/h6usu0aFnxPf/PfP7IHbFlSILsOUoIIkGZvaA2i+5ibgbe
- jVUQ==
+ bh=R3MXBECi884L5d0aW1y4r22YZZuFnhM5zOy+PcayxA4=;
+ b=XXMHlrbzYl3LOWTsyjOxD5MshNwSEAWp58jcVmdDySKOY9ZnQZN0S0tA2AdMerQF08
+ JsO6VMUbd7l8admnrsdbY37iMcAdv1n4IYLAgL+npAk19q7EnwkKyPAFx56wG6F5rAmE
+ l5CJR52KbhU+TU8Q1bhXMewg+OuAnqKVstyVWo3mamPhnmBmrKE6JkRFDl/JRFxTnHmR
+ nAtIQXBN8FMk3fnv3cgzBlLD6047e9j75NdPzEHFgYbEMCV+Kl+UOcPI3QX4PtG8f/sf
+ MSyTEYf+jflcE0LQYsCGvkdmixYQ4IYDEc4KWxftb4b/UgHfl0NwixIGuFwazSCc+OEN
+ ruWw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVq6yGWse2pPt2TcdMS8JH0Dk6+WP8/zfHwdAaKIuRxr5lmSth31VDzmLMwABdqbQG54sUjTJ7CualImF7mY0nqHU+6FcM=
-X-Gm-Message-State: AOJu0YzT5SFQszCGiVG3rl2tAHBQfUovvh5wRMJAVRzxkjb+kSv8cBw6
- 3NUwIj/zhnxVzJcOOl13XN2ZGlpV5J4nfASUwwz9OZVzFi9Yzp+4EB8HQBDUC0M=
-X-Google-Smtp-Source: AGHT+IE6VEab3Nb48zWWttMEjaLYBNaijuvXZUWASOQIGE7LaA6yDT6c1ODOLkonnCdy4GCZ52lmBg==
-X-Received: by 2002:ac2:43bc:0:b0:51c:15fa:b08 with SMTP id
- t28-20020ac243bc000000b0051c15fa0b08mr5054250lfl.69.1714989181528; 
- Mon, 06 May 2024 02:53:01 -0700 (PDT)
+ AJvYcCXBK556UFcSJ1HAIi7NO+M50t3JEf6O8C0ZjDPOVuzmXwToEFr5pPYOSNVw7NHEZ4YaXsBpYBmAk4C6J/aR2zrewxelaBA=
+X-Gm-Message-State: AOJu0YxHBIju3ZTfhuwbN5x4MHaY1EbJw6tgrhoXujl7Gk0z+bESLSWX
+ IsxLIFkvkAprAReux6gP5qzVkMF6XutZ6DlXfnZhz0OvD1nsLQ0mPFFQCEVWcXEOmXZf8+uF3JT
+ l
+X-Google-Smtp-Source: AGHT+IF16S4BEzauRTbWJC0iDOTjOLBHJaJTfN9M9AvFa6XZRi9Sy9mQaph2LBneCeJ++5YUspTtfQ==
+X-Received: by 2002:a05:600c:3150:b0:419:f241:633b with SMTP id
+ h16-20020a05600c315000b00419f241633bmr9657877wmo.8.1714989225374; 
+ Mon, 06 May 2024 02:53:45 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.211.4])
  by smtp.gmail.com with ESMTPSA id
- s20-20020adfa294000000b0034e285d818dsm10325541wra.32.2024.05.06.02.52.59
+ f19-20020a05600c4e9300b0041bab13cd60sm19278191wmq.3.2024.05.06.02.53.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 May 2024 02:53:01 -0700 (PDT)
-Message-ID: <e43695d7-e13c-4bb3-a9ff-0a5739cbeb79@linaro.org>
-Date: Mon, 6 May 2024 11:52:58 +0200
+ Mon, 06 May 2024 02:53:44 -0700 (PDT)
+Message-ID: <c42978d2-cc54-413c-bdba-3d0adf1cc6ab@linaro.org>
+Date: Mon, 6 May 2024 11:53:43 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 03/17] xen: mapcache: Refactor lock functions for
+Subject: Re: [PATCH v4 04/17] xen: mapcache: Refactor xen_map_cache for
  multi-instance
 To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org
 Cc: sstabellini@kernel.org, jgross@suse.com,
@@ -70,14 +71,14 @@ Cc: sstabellini@kernel.org, jgross@suse.com,
  Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
  xen-devel@lists.xenproject.org
 References: <20240430164939.925307-1-edgar.iglesias@gmail.com>
- <20240430164939.925307-4-edgar.iglesias@gmail.com>
+ <20240430164939.925307-5-edgar.iglesias@gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240430164939.925307-4-edgar.iglesias@gmail.com>
+In-Reply-To: <20240430164939.925307-5-edgar.iglesias@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x131.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,15 +104,15 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 30/4/24 18:49, Edgar E. Iglesias wrote:
 > From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 > 
-> Make the lock functions take MapCache * as argument. This is
-> in preparation for supporting multiple caches.
+> Make xen_map_cache take a MapCache as argument. This is in
+> prepaparation to support multiple map caches.
 > 
 > No functional changes.
 > 
 > Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 > ---
->   hw/xen/xen-mapcache.c | 34 +++++++++++++++++-----------------
->   1 file changed, 17 insertions(+), 17 deletions(-)
+>   hw/xen/xen-mapcache.c | 35 ++++++++++++++++++-----------------
+>   1 file changed, 18 insertions(+), 17 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
