@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E937C4345F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 954EBC10F16
 	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 07:56:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3t9d-0007J2-9r; Mon, 06 May 2024 03:52:58 -0400
+	id 1s3tAp-0001yJ-Ot; Mon, 06 May 2024 03:54:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s3t99-0005wH-3d
- for qemu-devel@nongnu.org; Mon, 06 May 2024 03:52:27 -0400
+ id 1s3tA7-00005O-P3
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 03:53:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s3t97-0001hb-K0
- for qemu-devel@nongnu.org; Mon, 06 May 2024 03:52:26 -0400
+ id 1s3tA6-0001qz-FF
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 03:53:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714981945;
+ s=mimecast20190719; t=1714982005;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=66X98Fkv+2DNq3mOuHqUSiSO+Feayago3MqQ7S1J/PY=;
- b=WmTlu49LBAPHvnbtJdWs3Rfv5XdRwMEilVQpTa/VP30D3HhIr1fNRt5Bk3kyyyur0MDLVw
- GWO7oj5Ck5BYRYkqJCLQDY/ZhirL/hGTGHtHeNv65QuAiX6Abq6FAESFVwstnsaKLFc1JX
- VLnUWEQINdAbMWjYL6CBPN2c+QblzlY=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ONGYpDHvGaq+Ar3j95zhW7jx60qaSUiuPIrd8f0yOgM=;
+ b=FogXxM3bCac9B7Z30niJsJZv69n2ScmWsx31UA+Gjhuf/8GtEL2U2wEyFzsiy4dDGq4QmZ
+ JLzT984P7EF2Q3uj+zgQpHYn8CS0VFeHj9Qc1Q1QNwzvgeoHkAclsrODuyuylv3gGT/n0v
+ Y8SYuN7GQIuiHIaptgyA0f2sBAdlN2s=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-692-V6CvMinlOs2ZxTL4wjFE_A-1; Mon, 06 May 2024 03:52:23 -0400
-X-MC-Unique: V6CvMinlOs2ZxTL4wjFE_A-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-572eea3758dso935880a12.0
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 00:52:23 -0700 (PDT)
+ us-mta-196-c5mxMUpIMu-YVfSl5zIeAA-1; Mon, 06 May 2024 03:53:23 -0400
+X-MC-Unique: c5mxMUpIMu-YVfSl5zIeAA-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a59a5b06802so97543366b.1
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 00:53:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714981942; x=1715586742;
+ d=1e100.net; s=20230601; t=1714982001; x=1715586801;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=66X98Fkv+2DNq3mOuHqUSiSO+Feayago3MqQ7S1J/PY=;
- b=d88EwfzMkdkHd84WUxS0z4AHOcnkn2AMTzQ0N+1Y0ZhddILseQwTtEbGqvcCGTEJgW
- kIioqpKLr1uwpGiWjKT4UVnQVRYaTIEG/0CqjxXUnGUSnxQmCjCW1qHtJq8PLWmOU1RC
- I7zShgWNp7/1L2+uRlU+7KAZhQnHSoF8RyduOKAyAsnM580IrhwSXQL7d/srk54OOtGt
- uRqYqMA/cO/OKTu6P2+d9htc3cKWDYTf6pj/NnDDPS3z69Jmkdm2Qyjw/3rMkbc3W7cq
- pbp/agPL97ypSfMcPHKtArfmjQrePcwFpcTQHMoh24RP4/wZurwhnX5wgjfwYHsyDPRC
- 67nA==
-X-Gm-Message-State: AOJu0YwvIDFKdiGyJKFBeo8foEiNjk8dnkk+Mx09tqQCEgVQd8+UxY07
- fSTNR0EAN8/1wE4POgoFPNs5xfaLxWAA+yzicN5QlvNmJYBgBclO7FVwf06DLiv8+tziLGaV0y6
- GCddrycTWhQxdxQxwn7BFdeHg5Oy+R2cLn4dIxdJrazetu5v5t/k32Z4maA7X2ZGQsCYPLcgaaL
- rG2Zi8r/tQJGPMrSkSgSlD3L6c81qlRyUkZ/sl
-X-Received: by 2002:a50:9fc8:0:b0:572:99fa:1095 with SMTP id
- c66-20020a509fc8000000b0057299fa1095mr10999403edf.18.1714981942091; 
- Mon, 06 May 2024 00:52:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHOFGA3FNCajSih961nc6YZepATIQrc5dWE0+w+MZYGZkDCxulIl5yHMgttl7zU+E2OElihig==
-X-Received: by 2002:a50:9fc8:0:b0:572:99fa:1095 with SMTP id
- c66-20020a509fc8000000b0057299fa1095mr10999386edf.18.1714981941663; 
- Mon, 06 May 2024 00:52:21 -0700 (PDT)
+ bh=ONGYpDHvGaq+Ar3j95zhW7jx60qaSUiuPIrd8f0yOgM=;
+ b=ER+MwVOcdZHWFK+Hr1yP+VFl7mLmGUTNfMs9IguGTviaN59NSJ8lvGJGFp8Phk4N7A
+ I9Gopaq52AwWBv03EhquGdlUME/r8opFI2bD3ceZVWvUbVQBMgN8vIJAU6p1UUMdglw+
+ r0DkdOgoCrlcP9ThuF67zLX3fcsjXt8aKEKBRZpF5uiZ7gpg06759XtD0XfkGmtBCfiw
+ bmgBprWkAHcow1jTyl4Kh7oINER+ZcE2c6uwM2jbKKUjynZ6SeS3mUA8BxxcPI1N8Slq
+ zgnKYe5CBui03QpfiuW4kExQ6pqIOnK7WGZmCmDhwh5FltspuYVhFFawma+z0ttkC80P
+ xXYA==
+X-Gm-Message-State: AOJu0Yyxdnh/oDgAbmV+OON+0U+EBbXxFDgEWVekEu7kW0D4Ii6u5D88
+ QFUwvPYRPiKZdkvv0Nel9XQzaML9pCKsY0trF4cTSBa+KDBpGerJsFJO+SekvDAB0Xcisatvnjp
+ LY8xceqyIh2AVXz3DvTwIaLGoMZlCrUs5ZduZMpyuM469ytn9tLerWjzCaTpuLjkQAhzUKsGcRJ
+ qlnheosdw+3DVWwyrUlmfcB589YKQSt8wyxR9U
+X-Received: by 2002:a17:907:9403:b0:a59:c9b1:cb64 with SMTP id
+ dk3-20020a170907940300b00a59c9b1cb64mr2229874ejc.62.1714982001526; 
+ Mon, 06 May 2024 00:53:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFdu3x4hNriukUV28WW3HXDqb0oYNkOrr4Codvco4YouL1Xcond+9yu4MfMuiyqKXSIVAXung==
+X-Received: by 2002:a17:907:9403:b0:a59:c9b1:cb64 with SMTP id
+ dk3-20020a170907940300b00a59c9b1cb64mr2229867ejc.62.1714982001204; 
+ Mon, 06 May 2024 00:53:21 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- u1-20020aa7d541000000b00572eebbfc61sm1926215edr.35.2024.05.06.00.52.21
- for <qemu-devel@nongnu.org>
+ ze16-20020a170906ef9000b00a59b9b1abdfsm1984932ejb.185.2024.05.06.00.53.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 May 2024 00:52:21 -0700 (PDT)
+ Mon, 06 May 2024 00:53:20 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 22/46] s390x: switch boards to "default y"
-Date: Mon,  6 May 2024 09:51:01 +0200
-Message-ID: <20240506075125.8238-23-pbonzini@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>
+Subject: [PULL 46/46] qga/commands-posix: fix typo in
+ qmp_guest_set_user_password
+Date: Mon,  6 May 2024 09:51:25 +0200
+Message-ID: <20240506075125.8238-47-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240506075125.8238-1-pbonzini@redhat.com>
 References: <20240506075125.8238-1-pbonzini@redhat.com>
@@ -102,66 +103,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some targets use "default y" for boards to filter out those that require
-TCG.  For consistency we are switching all other targets to do the same.
-Continue with s390.
+qga/commands-posix.c does not compile on FreeBSD due to a confusion
+between "chpasswdata" (wrong) and "chpasswddata" (used in the #else
+branch).
 
-No changes to generated config-devices.mak file.
-
+Fixes: 0e5b75a390 ("qga/commands-posix: qmp_guest_set_user_password: use ga_run_command helper")
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- configs/devices/s390x-softmmu/default.mak | 5 ++---
- .gitlab-ci.d/buildtest.yml                | 4 ++--
- hw/s390x/Kconfig                          | 2 ++
- 3 files changed, 6 insertions(+), 5 deletions(-)
+ qga/commands-posix.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/configs/devices/s390x-softmmu/default.mak b/configs/devices/s390x-softmmu/default.mak
-index 6d87bc8b4b0..340c1092922 100644
---- a/configs/devices/s390x-softmmu/default.mak
-+++ b/configs/devices/s390x-softmmu/default.mak
-@@ -9,6 +9,5 @@
- #CONFIG_WDT_DIAG288=n
- #CONFIG_PCIE_DEVICES=n
+diff --git a/qga/commands-posix.c b/qga/commands-posix.c
+index 7a065c4085c..7f05996495a 100644
+--- a/qga/commands-posix.c
++++ b/qga/commands-posix.c
+@@ -2173,7 +2173,7 @@ void qmp_guest_set_user_password(const char *username,
+     }
  
--# Boards:
--#
--CONFIG_S390_CCW_VIRTIO=y
-+# Boards are selected by default, uncomment to keep out of the build.
-+# CONFIG_S390_CCW_VIRTIO=n
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index 13f505f20d7..2475262c5c8 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -650,7 +650,7 @@ build-tci:
- # Check our reduced build configurations
- # requires libfdt: aarch64, arm, i386, loongarch64, microblaze, microblazeel,
- #   mips64el, or1k, ppc, ppc64, riscv32, riscv64, rx, x86_64
--# does not build without boards: i386, loongarch64, x86_64
-+# does not build without boards: i386, loongarch64, s390x, x86_64
- build-without-defaults:
-   extends: .native_build_job_template
-   needs:
-@@ -666,7 +666,7 @@ build-without-defaults:
-       --disable-strip
-     TARGETS: alpha-softmmu avr-softmmu cris-softmmu hppa-softmmu m68k-softmmu
-       mips-softmmu mips64-softmmu mipsel-softmmu
--      s390x-softmmu sh4-softmmu
-+      sh4-softmmu
-       sparc64-softmmu hexagon-linux-user i386-linux-user s390x-linux-user
-     MAKE_CHECK_ARGS: check
- 
-diff --git a/hw/s390x/Kconfig b/hw/s390x/Kconfig
-index 26ad1044858..3bbf4ae56e4 100644
---- a/hw/s390x/Kconfig
-+++ b/hw/s390x/Kconfig
-@@ -1,5 +1,7 @@
- config S390_CCW_VIRTIO
-     bool
-+    default y
-+    depends on S390X
-     imply VIRTIO_PCI
-     imply TERMINAL3270
-     imply VFIO_AP
+ #ifdef __FreeBSD__
+-    g_autofree char *chpasswdata = g_strdup(rawpasswddata);
++    g_autofree char *chpasswddata = g_strdup(rawpasswddata);
+     const char *crypt_flag = crypted ? "-H" : "-h";
+     const char *argv[] = {"pw", "usermod", "-n", username,
+                           crypt_flag, "0", NULL};
 -- 
 2.44.0
 
