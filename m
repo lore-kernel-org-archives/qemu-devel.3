@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85572C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 08:11:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FD33C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 08:11:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3tRA-0004AT-KP; Mon, 06 May 2024 04:11:08 -0400
+	id 1s3tRS-0004aO-An; Mon, 06 May 2024 04:11:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s3tQv-0003Yk-N9
- for qemu-devel@nongnu.org; Mon, 06 May 2024 04:10:49 -0400
+ id 1s3tQo-0003UM-EW
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 04:10:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s3tQs-0002OZ-Gf
- for qemu-devel@nongnu.org; Mon, 06 May 2024 04:10:49 -0400
+ id 1s3tQm-0002NZ-EN
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 04:10:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714983045;
+ s=mimecast20190719; t=1714983037;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CEpDyUKulqMJAILlx9bT2KyS4H1JorB2/FN7/WZ3adA=;
- b=J9EoXg9AL5jq+4F2AKoxTD8GXTVPqNUvmTZTdD5henau/WHIlkJIXSDpOjhn7+KGGVD7Ws
- SL6ED6rZwBFpxFaWDcF+1l3DYt+b+natNzU7oRCrf6b8G4MDQQx6/IWdEDMqgfKp/fkgAp
- Dhf37pGjzY7vDCNtsxgz5gAzMgygyfg=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=B8BvS4sj+GUGVtorZpR85dTDQubyMYT7AlKL1wB3gfU=;
+ b=LnDwbLSwBZJi3kk73/z0XP53+t1vbzmynnV3b8lx3QPUsIiNsyKe2QvcY+oX/27xxYlQpR
+ CL1weIqXN1gs7d/JZE+tp2Eo/vMBucWaGX1SleOD3z5c3a4jSlFDNWLyQhXgQzYJkD+wco
+ HkR+sAjTLnzPUfMlHFXwLb8BmPD/mFM=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-330-28QFCKigPnShpYrX9FU6dQ-1; Mon, 06 May 2024 04:10:44 -0400
-X-MC-Unique: 28QFCKigPnShpYrX9FU6dQ-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a59cb20ea3bso58668566b.3
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 01:10:44 -0700 (PDT)
+ us-mta-674-wKhTbwWGNi-O5MTvS04dXQ-1; Mon, 06 May 2024 04:10:35 -0400
+X-MC-Unique: wKhTbwWGNi-O5MTvS04dXQ-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a59ad2436f8so125333466b.2
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 01:10:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714983042; x=1715587842;
+ d=1e100.net; s=20230601; t=1714983034; x=1715587834;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CEpDyUKulqMJAILlx9bT2KyS4H1JorB2/FN7/WZ3adA=;
- b=tVMSUeg3kuQ8xf/M/COUAq+CQLoWRPeGB/3aTHdqd5Kk0PO98rJJ0MsDBqyTatdenq
- VWMz7icgdwGK1i7S7cQsxNJZwQIlyJo7K2eiHBWQLlrA6H3UMeECRHFxx3rRQLlFKd8q
- 3FcFEAleG9gSUoyfM4mf+fHyahznoN4oGWrc+wWYKmTyJ2dQHEK4/C43eWrNUzxXyz6S
- LhayWK0H9woPFmY9CSemdEcyEdCHDdxeOE45JKMvi3j1Q+CrxAKpihKd3XajBss5UfWG
- HeDA90yROuKO+mY93wRppj7fH6r3seqpQxJ8THB1MH2W0Wmt8q+wF1Z7NGtIOxTjqBa/
- yQNw==
-X-Gm-Message-State: AOJu0YzggE/jYHDkAcpWHT4RBw3t0YvKaXOn6PIGsgeKfakejwnyhxYn
- HjgSxMUlVCjmTh+afmlMpVFSSXrDhzpXah21iDrHeBtnrg5vKvZ2ZSczp7Em36/W3fpC86Tlc5Z
- QjLDure3s3HGMYpMOa0wiuUHfgFq1tnFlOMm6iJF76b/qslM1YZnWS9XALFE3YBGyhQwF6W0dYw
- /FGx1+LhR62R3Lk1845hKT2LktsCrhNpuZfPrm
-X-Received: by 2002:a17:906:370a:b0:a59:a431:a8ce with SMTP id
- d10-20020a170906370a00b00a59a431a8cemr4280965ejc.2.1714983042208; 
- Mon, 06 May 2024 01:10:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFuakf42Ew0t2TCfkDPdOhcuxlcR9R7p/Ow9gbCstWNmXvZ847gqlS4ZhCxzNC3xN2kr4Z82Q==
-X-Received: by 2002:a17:906:370a:b0:a59:a431:a8ce with SMTP id
- d10-20020a170906370a00b00a59a431a8cemr4280946ejc.2.1714983041862; 
- Mon, 06 May 2024 01:10:41 -0700 (PDT)
+ bh=B8BvS4sj+GUGVtorZpR85dTDQubyMYT7AlKL1wB3gfU=;
+ b=mpbZ2fk7Sh/FUpw8rbQGqvhnQy6y2l1x+/9eZ9seMoPQJ7tRWxJ+tjUsz7geJxBCUP
+ K9SiQ8qC5sW1fy03iGYINnj809uKaoPNvJzgcqyEBpjFeSAkQMZOd7wdQy+YxoMZYsNO
+ PukOIlB7Jz3vdezvR95dnd/WA9f6LzGIOAR+QzhLjr/f2lGV0Kz7flBgsCe5yHy8bJ6/
+ nXRpJrbX2BQkb1q0w8Mrm4XYgCEARvmWZWoyqRX16oQpQlRz54wesCxsrNyO7T39bYFo
+ FeR4JDJ+/aQrcblujPx50EG0REl15P7cx+0qgPHPob8i+RxtLL2BHQ0mtBJlm3jtXZ6O
+ a/yg==
+X-Gm-Message-State: AOJu0YwsoRmIDz3+ugloZn9FiPdChbN2l0ZgpOuncapE/oLX1A7iA7m+
+ 2gD8kWvRAVLtkOa5AkaIyMy9rRV0MG4TgZuB6y9TDBM8VGkVtQ0khVTmMP3al0XLnPSb8COCLbi
+ WbEhQIAFz1SAUdySQcDP3BZHj4jvJ7GUjzlk+l/7TegAXWyIRyw6PHdZ6xE9i9NUFUvIxIDM+JM
+ XuojwiYz+QCCQvgiEiGUnkPGJGqziMXpYWdmGZ
+X-Received: by 2002:a17:906:f146:b0:a55:6f6c:3bae with SMTP id
+ gw6-20020a170906f14600b00a556f6c3baemr5305081ejb.0.1714983033781; 
+ Mon, 06 May 2024 01:10:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGS0JgoywUhOma20aEpZQjp9oCmXacATZ5cgI7O9mYwXgtpCvXHdu0gW+ZWEYRCF9RM0fzQaQ==
+X-Received: by 2002:a17:906:f146:b0:a55:6f6c:3bae with SMTP id
+ gw6-20020a170906f14600b00a556f6c3baemr5305066ejb.0.1714983033363; 
+ Mon, 06 May 2024 01:10:33 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- lb21-20020a170906add500b00a59c0a65a5bsm1778121ejb.219.2024.05.06.01.10.41
+ ju23-20020a170906e91700b00a59ddf023ddsm237746ejb.127.2024.05.06.01.10.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 May 2024 01:10:41 -0700 (PDT)
+ Mon, 06 May 2024 01:10:32 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
 	zhao1.liu@intel.com
-Subject: [PATCH v2 14/25] target/i386: allow instructions with more than one
- immediate
-Date: Mon,  6 May 2024 10:09:46 +0200
-Message-ID: <20240506080957.10005-15-pbonzini@redhat.com>
+Subject: [PATCH v2 11/25] target/i386: reintroduce debugging mechanism
+Date: Mon,  6 May 2024 10:09:43 +0200
+Message-ID: <20240506080957.10005-12-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240506080957.10005-1-pbonzini@redhat.com>
 References: <20240506080957.10005-1-pbonzini@redhat.com>
@@ -104,87 +103,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While keeping decode->immediate for convenience and for 4-operand instructions,
-store the immediate in X86DecodedOp as well.  This enables instructions
-with more than one immediate such as ENTER.  It can also be used for far
-calls and jumps.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/decode-new.h     | 17 ++++++++++++-----
- target/i386/tcg/decode-new.c.inc |  2 +-
- target/i386/tcg/emit.c.inc       |  4 +++-
- 3 files changed, 16 insertions(+), 7 deletions(-)
+ target/i386/tcg/translate.c      | 27 +++++++++++++++++++++++++++
+ target/i386/tcg/decode-new.c.inc |  3 +++
+ 2 files changed, 30 insertions(+)
 
-diff --git a/target/i386/tcg/decode-new.h b/target/i386/tcg/decode-new.h
-index 15e6bfef4b1..8ffde8d1cd6 100644
---- a/target/i386/tcg/decode-new.h
-+++ b/target/i386/tcg/decode-new.h
-@@ -271,16 +271,23 @@ typedef struct X86DecodedOp {
-     bool has_ea;
-     int offset;   /* For MMX and SSE */
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index e36ed4dcc10..705e8f3ef49 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -2968,6 +2968,9 @@ static void gen_sty_env_A0(DisasContext *s, int offset, bool align)
+     tcg_gen_qemu_st_i128(t, s->tmp0, mem_index, mop);
+ }
  
--    /*
--     * This field is used internally by macros OP0_PTR/OP1_PTR/OP2_PTR,
--     * do not access directly!
--     */
--    TCGv_ptr v_ptr;
-+    union {
-+	target_ulong imm;
-+        /*
-+         * This field is used internally by macros OP0_PTR/OP1_PTR/OP2_PTR,
-+         * do not access directly!
-+         */
-+        TCGv_ptr v_ptr;
-+    };
- } X86DecodedOp;
++static bool first = true;
++static unsigned long limit;
++
+ #include "decode-new.h"
+ #include "emit.c.inc"
+ #include "decode-new.c.inc"
+@@ -3123,15 +3126,39 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
  
- struct X86DecodedInsn {
-     X86OpEntry e;
-     X86DecodedOp op[3];
-+    /*
-+     * Rightmost immediate, for convenience since most instructions have
-+     * one (and also for 4-operand instructions).
-+     */
-     target_ulong immediate;
-     AddressParts mem;
+     prefixes = 0;
  
++    if (first) {
++        const char *limit_str = getenv("QEMU_I386_LIMIT");
++        limit = limit_str ? atol(limit_str) : -1;
++        first = false;
++    }
++    bool use_new = true;
++#ifdef CONFIG_USER_ONLY
++    use_new &= limit > 0;
++#endif
++
+  next_byte:
+     s->prefix = prefixes;
+     b = x86_ldub_code(env, s);
+     /* Collect prefixes.  */
+     switch (b) {
+     default:
++#ifndef CONFIG_USER_ONLY
++        use_new &= b <= limit;
++#endif
++        if (use_new && 0) {
++            disas_insn_new(s, cpu, b);
++            return true;
++        }
+         break;
+     case 0x0f:
+         b = x86_ldub_code(env, s) + 0x100;
++#ifndef CONFIG_USER_ONLY
++        use_new &= b <= limit;
++#endif
++        if (use_new && 0) {
++            disas_insn_new(s, cpu, b);
++            return true;
++        }
+         break;
+     case 0xf3:
+         prefixes |= PREFIX_REPZ;
 diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 1e792426ff5..c6fd7a053bd 100644
+index 426c4594120..3fc6485d74c 100644
 --- a/target/i386/tcg/decode-new.c.inc
 +++ b/target/i386/tcg/decode-new.c.inc
-@@ -1473,7 +1473,7 @@ static bool decode_op(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode,
-     case X86_TYPE_I:  /* Immediate */
-     case X86_TYPE_J:  /* Relative offset for a jump */
-         op->unit = X86_OP_IMM;
--        decode->immediate = insn_get_signed(env, s, op->ot);
-+        decode->immediate = op->imm = insn_get_signed(env, s, op->ot);
-         break;
+@@ -1689,6 +1689,9 @@ static void disas_insn_new(DisasContext *s, CPUState *cpu, int b)
+     X86DecodeFunc decode_func = decode_root;
+     uint8_t cc_live;
  
-     case X86_TYPE_L:  /* The upper 4 bits of the immediate select a 128-bit register */
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index a64186b8957..fc065caae79 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -259,7 +259,7 @@ static void gen_load(DisasContext *s, X86DecodedInsn *decode, int opn, TCGv v)
-         }
-         break;
-     case X86_OP_IMM:
--        tcg_gen_movi_tl(v, decode->immediate);
-+        tcg_gen_movi_tl(v, op->imm);
-         break;
++#ifdef CONFIG_USER_ONLY
++    if (limit) { --limit; }
++#endif
+     s->has_modrm = false;
  
-     case X86_OP_MMX:
-@@ -283,6 +283,8 @@ static void gen_load(DisasContext *s, X86DecodedInsn *decode, int opn, TCGv v)
- static TCGv_ptr op_ptr(X86DecodedInsn *decode, int opn)
- {
-     X86DecodedOp *op = &decode->op[opn];
-+
-+    assert(op->unit == X86_OP_MMX || op->unit == X86_OP_SSE);
-     if (op->v_ptr) {
-         return op->v_ptr;
-     }
+  next_byte:
 -- 
 2.45.0
 
