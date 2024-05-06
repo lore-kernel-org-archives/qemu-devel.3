@@ -4,94 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60AF6C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 00:44:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8234CC04FFE
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 01:05:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3mSP-0008BD-5s; Sun, 05 May 2024 20:43:53 -0400
+	id 1s3mmQ-0007kX-9Y; Sun, 05 May 2024 21:04:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marmarek@invisiblethingslab.com>)
- id 1s3mSN-0008An-58
- for qemu-devel@nongnu.org; Sun, 05 May 2024 20:43:51 -0400
-Received: from wfout5-smtp.messagingengine.com ([64.147.123.148])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marmarek@invisiblethingslab.com>)
- id 1s3mSL-0002GF-DJ
- for qemu-devel@nongnu.org; Sun, 05 May 2024 20:43:50 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
- by mailfout.west.internal (Postfix) with ESMTP id 0032B1C00123;
- Sun,  5 May 2024 20:43:47 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute1.internal (MEProxy); Sun, 05 May 2024 20:43:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- invisiblethingslab.com; h=cc:cc:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1714956227;
- x=1715042627; bh=GSTBJNSEtl8MwjGUTXO9Irkbt9SMO1bvpJFfCxULEdk=; b=
- jD1TZwyPzPt4dO3thb15WX/xsDD+AanvfIg/yz/6c6iIx5SJ6EUzke6NXMrqqqIL
- +sUJJRxRMESyBmeGNdeOmEXkCnRt1C1OcQf3Tsff+TPGIeTK9+ZYRcO/TlOXP/ty
- 86Is6vmf0EKfU0rq0oJCvr95TsteFhs+Smc1ldYLZymAToatwaz3RXHfenzAIUmb
- pEEZ0tTClPrFzE+n3uj8q3fBCk3U1ZPGax28cghZEXvq+ekQnvD01uqBufEh3Jsc
- tYywbWhmAknM/kdmjeR6gYJ6f9Z4AvSAm11KpSfUB+KrzHfBDphjH0TGHOi+ALPG
- QqEE1i9sh3GTx3KO8HioQg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm3; t=1714956227; x=1715042627; bh=GSTBJNSEtl8MwjGUTXO9Irkbt9SM
- O1bvpJFfCxULEdk=; b=b9klGxDDCj442mToWgJY15IcU5X4Sf4Mt/ZodLeBMpfx
- pMISYm1bvqYLXd/4tVbxb4p0igcwJc3ILmIAZ3YxHKjMBKF9K0YV4kNS7oNZbFek
- 57QBdWOZho+mIaQDD2tHxVrWLdn/YwkFIaf4uDOlvxsWHu1JSIjU8v1IJLgeBa4f
- tV25IXt8lGDdK+rZeoHKlZD1FjH0apuD08ljovQaTUgCvUFEqKU9P0ekxkGqfoVu
- GDh+SYeGImCnDLk/hBZYcrJeTNwR1b+ugZM6ZOxuwCLyo20RkbRB38bN8ZTBh+zg
- BL0rX2NDXz2ttLawbQHK4u7SAikuc6ICI5NoeDVpNQ==
-X-ME-Sender: <xms:wyc4ZuNuPOwstAw5XkcjCoRIlun8tg4T3OBr11-GC7xZxYmX9ORR3w>
- <xme:wyc4Zs9ElTyNvUBgCwcGJ8WMBWPOWrhiwNhvpNbWuqE5qwTUxcU80ZoBD71qhnAOH
- 7-lqeGmJ7jW_Q>
-X-ME-Received: <xmr:wyc4ZlSelM8ZZcGC5V2ItfyywTuK11vzbovNAEJUraIFHQLdemM4sZ6iMjRPxpMaUwOYakB2FvdN7Nshjqj5E8c_hsCaJ0BmjA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddvhedgfeekucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
- erredttdejnecuhfhrohhmpeforghrvghkucforghrtgiihihkohifshhkihdqifpkrhgv
- tghkihcuoehmrghrmhgrrhgvkhesihhnvhhishhisghlvghthhhinhhgshhlrggsrdgtoh
- hmqeenucggtffrrghtthgvrhhnpefgudelteefvefhfeehieetleeihfejhfeludevteet
- keevtedtvdegueetfeejudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
- grihhlfhhrohhmpehmrghrmhgrrhgvkhesihhnvhhishhisghlvghthhhinhhgshhlrggs
- rdgtohhm
-X-ME-Proxy: <xmx:wyc4ZutN2vpf2tzmYpUD_JWnUmUE_vOIOc0TCNw80YSmo2iOZlg5lA>
- <xmx:wyc4ZmcT3MvnimRHyoHYlIKBRMAkBc7vBAaLv2W5Ez_iwFZo76t_4Q>
- <xmx:wyc4Zi1p_TvKPIZpZAUaKZWFYnprQth70xV6khNGmNX6YIQX9KZlqQ>
- <xmx:wyc4Zq_HfaWwQZDBLmBv4bVFs8X7YXrfBwCPbVAuA9uK8NaTcnwy-w>
- <xmx:wyc4ZqEL1z8ujawolbPm8EwH3j7-iCnTRbPhs2viPpF1VUnae-ZjTyJc>
-Feedback-ID: i1568416f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 5 May 2024 20:43:46 -0400 (EDT)
-Date: Mon, 6 May 2024 02:43:44 +0200
-From: Marek =?utf-8?Q?Marczykowski-G=C3=B3recki?=
- <marmarek@invisiblethingslab.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s3mmM-0007jL-6t
+ for qemu-devel@nongnu.org; Sun, 05 May 2024 21:04:30 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s3mm7-0002Qt-8q
+ for qemu-devel@nongnu.org; Sun, 05 May 2024 21:04:29 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-2b346712919so1062517a91.2
+ for <qemu-devel@nongnu.org>; Sun, 05 May 2024 18:04:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714957451; x=1715562251; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=J3ynYZGWfg5G8S+QH4bQzWjTjr2Vm4oABcf1AlBRbeg=;
+ b=zvdmP0bczEoAAM+B2pMlGB3oCMSctyfweaHyr79x4G+6F9Lruy6rh7F2GYRuODogoB
+ WFDyET5Tzsu1Cma+iXczO2JAGNiKjjvBMvDAxn7P+DH5BZpAP17D8RW52/tK+qeMUjUe
+ ZxitqAY8Os78+jyCpaRcWQ/myYaDBcbRy5pTyYaOnO8gQOk6tOXl65NUgQweP6lQrPO7
+ 0bu7s4IvdXdQxYfEZDZat3CmdV2Ogy5By9z1/yNLMjGBJwnY8oY1mLwsk4x1vcn3kMNU
+ pq8t0NsPAdJxvl6WJU4rqzWLdoaGj8PqjadhYKTaf7/HTzXDluoHaYPnpj+FV+W8Kkmj
+ DKrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714957451; x=1715562251;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=J3ynYZGWfg5G8S+QH4bQzWjTjr2Vm4oABcf1AlBRbeg=;
+ b=B1q36UiwHgbct+ifTd2LrxekYdltXUlR/al4F690DCjkxHWG2/H9GlMfNqmDYhKgkC
+ YrnDXCZCvD+ApyLOQEJnK3I329XaPkx33vtK7jmaEySUlnMwc0yPimrsEmS/q0a8hoL2
+ CXkV933f6kzTw5ZPnFnnZarvomD8FzEZVI6yGnf0xzKdqJU8DqnDq1Vf7uTlj80Hmoaa
+ xDndAxigZ/h20hN4Nf3uCGH0FprV1jHR7gi7OWD3xvWQLghgq7xXxS3v98Ay09mQcc1W
+ JAciEm9vREkbb9trnJ5olT/XCHyj9Xgd6JfCQ+5+zNpFJZJX+jj1TRBJdpwBeXRbFOBN
+ Jv3A==
+X-Gm-Message-State: AOJu0YwY26n5myrmtr57KwsvaXpN7ZDIQa1PJNQZgKQeVBi48aADoDQ9
+ SoRgqzyQUEKcQAGCybslVQGVCcMbADDBzMir9e6GYhPALinlXm26lJGKJ1R+Gbs7Uf5T5Zr55vH
+ N
+X-Google-Smtp-Source: AGHT+IF/+FbkIxYuCfpzen5uia1q+OIC1CxUXr4rX3jZeLWMmgKNg9N54jwBGbqKkNjOSpQx6GdaFg==
+X-Received: by 2002:a17:90a:c593:b0:2b1:74be:1704 with SMTP id
+ l19-20020a17090ac59300b002b174be1704mr7212380pjt.15.1714957451042; 
+ Sun, 05 May 2024 18:04:11 -0700 (PDT)
+Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ by smtp.gmail.com with ESMTPSA id
+ pv7-20020a17090b3c8700b002a5f44353d2sm8958232pjb.7.2024.05.05.18.04.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 05 May 2024 18:04:10 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: anthony@xenproject.org
-Subject: Re: [PATCH v3 0/3] Fix MSI-X handling for Xen HVM
-Message-ID: <ZjgnwLZ__HbNauHW@mail-itl>
-References: <cover.f5d45e3c2fb87552abfaf80982b0b724fca2134c.1714955598.git-series.marmarek@invisiblethingslab.com>
+Cc: qemu-arm@nongnu.org
+Subject: [PATCH 06/57] target/arm: Convert Cryptographic 3-register SHA512 to
+ decodetree
+Date: Sun,  5 May 2024 18:03:12 -0700
+Message-Id: <20240506010403.6204-7-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240506010403.6204-1-richard.henderson@linaro.org>
+References: <20240506010403.6204-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="fSX2++y3p9WVUB3a"
-Content-Disposition: inline
-In-Reply-To: <cover.f5d45e3c2fb87552abfaf80982b0b724fca2134c.1714955598.git-series.marmarek@invisiblethingslab.com>
-Received-SPF: none client-ip=64.147.123.148;
- envelope-from=marmarek@invisiblethingslab.com;
- helo=wfout5-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,81 +94,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/tcg/a64.decode      | 11 ++++
+ target/arm/tcg/translate-a64.c | 97 ++++++++--------------------------
+ 2 files changed, 32 insertions(+), 76 deletions(-)
 
---fSX2++y3p9WVUB3a
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 6 May 2024 02:43:44 +0200
-From: Marek =?utf-8?Q?Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>
-To: qemu-devel@nongnu.org
-Cc: anthony@xenproject.org
-Subject: Re: [PATCH v3 0/3] Fix MSI-X handling for Xen HVM
+diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+index 350afabc77..c342c27608 100644
+--- a/target/arm/tcg/a64.decode
++++ b/target/arm/tcg/a64.decode
+@@ -31,6 +31,7 @@
+ @rr_q1e0        ........ ........ ...... rn:5 rd:5      &qrr_e q=1 esz=0
+ @r2r_q1e0       ........ ........ ...... rm:5 rd:5      &qrrr_e rn=%rd q=1 esz=0
+ @rrr_q1e0       ........ ... rm:5 ...... rn:5 rd:5      &qrrr_e q=1 esz=0
++@rrr_q1e3       ........ ... rm:5 ...... rn:5 rd:5      &qrrr_e q=1 esz=3
+ 
+ ### Data Processing - Immediate
+ 
+@@ -620,3 +621,13 @@ SHA256SU1       0101 1110 000 ..... 011000 ..... .....  @rrr_q1e0
+ SHA1H           0101 1110 0010 1000 0000 10 ..... ..... @rr_q1e0
+ SHA1SU1         0101 1110 0010 1000 0001 10 ..... ..... @rr_q1e0
+ SHA256SU0       0101 1110 0010 1000 0010 10 ..... ..... @rr_q1e0
++
++### Cryptographic three-register SHA512
++
++SHA512H         1100 1110 011 ..... 100000 ..... .....  @rrr_q1e0
++SHA512H2        1100 1110 011 ..... 100001 ..... .....  @rrr_q1e0
++SHA512SU1       1100 1110 011 ..... 100010 ..... .....  @rrr_q1e0
++RAX1            1100 1110 011 ..... 100011 ..... .....  @rrr_q1e3
++SM3PARTW1       1100 1110 011 ..... 110000 ..... .....  @rrr_q1e0
++SM3PARTW2       1100 1110 011 ..... 110001 ..... .....  @rrr_q1e0
++SM4EKEY         1100 1110 011 ..... 110010 ..... .....  @rrr_q1e0
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 89f733ef12..d2d9198f22 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -1342,6 +1342,17 @@ static bool do_gvec_op3_ool(DisasContext *s, arg_qrrr_e *a, int data,
+     return true;
+ }
+ 
++static bool do_gvec_fn3(DisasContext *s, arg_qrrr_e *a, GVecGen3Fn *fn)
++{
++    if (!a->q && a->esz == MO_64) {
++        return false;
++    }
++    if (fp_access_check(s)) {
++        gen_gvec_fn3(s, a->q, a->rd, a->rn, a->rm, fn, a->esz);
++    }
++    return true;
++}
++
+ /*
+  * This utility function is for doing register extension with an
+  * optional shift. You will likely want to pass a temporary for the
+@@ -4590,7 +4601,7 @@ static bool trans_EXTR(DisasContext *s, arg_extract *a)
+ }
+ 
+ /*
+- * Cryptographic AES, SHA
++ * Cryptographic AES, SHA, SHA512
+  */
+ 
+ TRANS_FEAT(AESE, aa64_aes, do_gvec_op3_ool, a, 0, gen_helper_crypto_aese)
+@@ -4611,6 +4622,15 @@ TRANS_FEAT(SHA1H, aa64_sha1, do_gvec_op2_ool, a, 0, gen_helper_crypto_sha1h)
+ TRANS_FEAT(SHA1SU1, aa64_sha1, do_gvec_op2_ool, a, 0, gen_helper_crypto_sha1su1)
+ TRANS_FEAT(SHA256SU0, aa64_sha256, do_gvec_op2_ool, a, 0, gen_helper_crypto_sha256su0)
+ 
++TRANS_FEAT(SHA512H, aa64_sha512, do_gvec_op3_ool, a, 0, gen_helper_crypto_sha512h)
++TRANS_FEAT(SHA512H2, aa64_sha512, do_gvec_op3_ool, a, 0, gen_helper_crypto_sha512h2)
++TRANS_FEAT(SHA512SU1, aa64_sha512, do_gvec_op3_ool, a, 0, gen_helper_crypto_sha512su1)
++TRANS_FEAT(RAX1, aa64_sha3, do_gvec_fn3, a, gen_gvec_rax1)
++TRANS_FEAT(SM3PARTW1, aa64_sm3, do_gvec_op3_ool, a, 0, gen_helper_crypto_sm3partw1)
++TRANS_FEAT(SM3PARTW2, aa64_sm3, do_gvec_op3_ool, a, 0, gen_helper_crypto_sm3partw2)
++TRANS_FEAT(SM4EKEY, aa64_sm4, do_gvec_op3_ool, a, 0, gen_helper_crypto_sm4ekey)
++
++
+ /* Shift a TCGv src by TCGv shift_amount, put result in dst.
+  * Note that it is the caller's responsibility to ensure that the
+  * shift amount is in range (ie 0..31 or 0..63) and provide the ARM
+@@ -13504,80 +13524,6 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
+     }
+ }
+ 
+-/* Crypto three-reg SHA512
+- *  31                   21 20  16 15  14  13 12  11  10  9    5 4    0
+- * +-----------------------+------+---+---+-----+--------+------+------+
+- * | 1 1 0 0 1 1 1 0 0 1 1 |  Rm  | 1 | O | 0 0 | opcode |  Rn  |  Rd  |
+- * +-----------------------+------+---+---+-----+--------+------+------+
+- */
+-static void disas_crypto_three_reg_sha512(DisasContext *s, uint32_t insn)
+-{
+-    int opcode = extract32(insn, 10, 2);
+-    int o =  extract32(insn, 14, 1);
+-    int rm = extract32(insn, 16, 5);
+-    int rn = extract32(insn, 5, 5);
+-    int rd = extract32(insn, 0, 5);
+-    bool feature;
+-    gen_helper_gvec_3 *oolfn = NULL;
+-    GVecGen3Fn *gvecfn = NULL;
+-
+-    if (o == 0) {
+-        switch (opcode) {
+-        case 0: /* SHA512H */
+-            feature = dc_isar_feature(aa64_sha512, s);
+-            oolfn = gen_helper_crypto_sha512h;
+-            break;
+-        case 1: /* SHA512H2 */
+-            feature = dc_isar_feature(aa64_sha512, s);
+-            oolfn = gen_helper_crypto_sha512h2;
+-            break;
+-        case 2: /* SHA512SU1 */
+-            feature = dc_isar_feature(aa64_sha512, s);
+-            oolfn = gen_helper_crypto_sha512su1;
+-            break;
+-        case 3: /* RAX1 */
+-            feature = dc_isar_feature(aa64_sha3, s);
+-            gvecfn = gen_gvec_rax1;
+-            break;
+-        default:
+-            g_assert_not_reached();
+-        }
+-    } else {
+-        switch (opcode) {
+-        case 0: /* SM3PARTW1 */
+-            feature = dc_isar_feature(aa64_sm3, s);
+-            oolfn = gen_helper_crypto_sm3partw1;
+-            break;
+-        case 1: /* SM3PARTW2 */
+-            feature = dc_isar_feature(aa64_sm3, s);
+-            oolfn = gen_helper_crypto_sm3partw2;
+-            break;
+-        case 2: /* SM4EKEY */
+-            feature = dc_isar_feature(aa64_sm4, s);
+-            oolfn = gen_helper_crypto_sm4ekey;
+-            break;
+-        default:
+-            unallocated_encoding(s);
+-            return;
+-        }
+-    }
+-
+-    if (!feature) {
+-        unallocated_encoding(s);
+-        return;
+-    }
+-
+-    if (!fp_access_check(s)) {
+-        return;
+-    }
+-
+-    if (oolfn) {
+-        gen_gvec_op3_ool(s, true, rd, rn, rm, 0, oolfn);
+-    } else {
+-        gen_gvec_fn3(s, true, rd, rn, rm, gvecfn, MO_64);
+-    }
+-}
+-
+ /* Crypto two-reg SHA512
+  *  31                                     12  11  10  9    5 4    0
+  * +-----------------------------------------+--------+------+------+
+@@ -13798,7 +13744,6 @@ static const AArch64DecodeTable data_proc_simd[] = {
+     { 0x5e000400, 0xdfe08400, disas_simd_scalar_copy },
+     { 0x5f000000, 0xdf000400, disas_simd_indexed }, /* scalar indexed */
+     { 0x5f000400, 0xdf800400, disas_simd_scalar_shift_imm },
+-    { 0xce608000, 0xffe0b000, disas_crypto_three_reg_sha512 },
+     { 0xcec08000, 0xfffff000, disas_crypto_two_reg_sha512 },
+     { 0xce000000, 0xff808000, disas_crypto_four_reg },
+     { 0xce800000, 0xffe00000, disas_crypto_xar },
+-- 
+2.34.1
 
-On Mon, May 06, 2024 at 02:33:19AM +0200, Marek Marczykowski-G=C3=B3recki w=
-rote:
-> This series fixes handling MSI-X when device model is running in a stubdo=
-main.
-> The main part is to avoid accessing /dev/mem, which also fixes running do=
-m0
-> with lockdown enabled.
->=20
-> It depends on a behavior change of Xen that was just comitted, and signal=
-ed
-> with a feature flag. If Xen is too old (and XENFEAT_dm_msix_all_writes fl=
-ag is
-> not set), fallback to the old behavior.
->=20
-> The other part is a fix to enforce read-only registers in the config spac=
-e.
-> This fixes MSI-X setup for iwlwifi Linux driver, as it happen to write to=
- MSI-X
-> capability id reg (as a workaround for some older device which has another
-> register there). It should be no-op, but due to a bug in xen_pt code,
-> it broke MSI-X detection.
->=20
-> All those patches have been shipped in Qubes OS 4.2 already, and prove to=
- fix
-> the issue.
->=20
-> See individual commit messages for details.
-
-Initially I sent the series with the old Anthony's address, but just in
-case I forwarded it to his new address too.
-
-> Marek Marczykowski-G=C3=B3recki (3):
->   hw/xen/xen_pt: Save back data only for declared registers
->   Update Xen's features.h header
->   Do not access /dev/mem in MSI-X PCI passthrough on Xen
->=20
->  hw/xen/xen_pt.c                     |  7 +-
->  hw/xen/xen_pt_msi.c                 | 94 ++++++++++++++++++------------
->  include/hw/xen/interface/features.h | 17 +++++-
->  3 files changed, 82 insertions(+), 36 deletions(-)
->=20
-> base-commit: 2358f1b60f73287fe606c7ff48043b4f9e1c2d0f
-> --=20
-> git-series 0.9.1
-
---=20
-Best Regards,
-Marek Marczykowski-G=C3=B3recki
-Invisible Things Lab
-
---fSX2++y3p9WVUB3a
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhrpukzGPukRmQqkK24/THMrX1ywFAmY4J8AACgkQ24/THMrX
-1yyslwf/fZ3h+ODQqbgt5MSSsOYekZRwcU3wZawlDx5gb/nhX5clI5qTmd0clobn
-wgTsuqV/0G5Cc3T5m9B7exB4A2Sp/ukb7XAUeUJPBgwFJarzk9ajgU/mWNUQm/yZ
-E2PqzMy18Ad0NisdfEtPMcATQDsti/uUVZ5bHXvWgDU03EeVzbD33Rl7mTO/+S2t
-ucZZJGNWzDDLaxu4l1ZABPsglHeArbT8KewD8wi2qFdgXHiRCtirn8TKsk8v9uo6
-IGQRY3Lk/g2YFyGwZQLBPBU3cOibs5RRVWgLtCqoF7J3QzZT33X9/9QtD/piQMl4
-EGO7Xf9B0pyPIpokQmLV7keE3dBHuA==
-=LTG+
------END PGP SIGNATURE-----
-
---fSX2++y3p9WVUB3a--
 
