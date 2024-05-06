@@ -4,81 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C797C10F16
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 12:39:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9F9CC10F16
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 12:39:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3xcW-0002SA-KR; Mon, 06 May 2024 08:39:04 -0400
+	id 1s3xca-0002oB-OW; Mon, 06 May 2024 08:39:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3xbz-0001KQ-AZ
- for qemu-devel@nongnu.org; Mon, 06 May 2024 08:38:31 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3xbr-00020O-Mo
- for qemu-devel@nongnu.org; Mon, 06 May 2024 08:38:31 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-41ba1ba5592so12608155e9.1
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 05:38:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714999101; x=1715603901; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1xKUlJq4altC6gXgMzk8h7ZuMjWZxGoEWR8S+Y8f728=;
- b=uR1rA6Ba6NGMxIpkAdx2yWzANPGRl/9JGOYUIoccvpKV4eaEuoCszad4gxByHItzyh
- LWfXBoMmAlwD6ukzkzxGDnhN2paOp2o2AIndC/mSnNJaa4cZ11jrelZo2vjD0zKgoEie
- PQEjNSuGB42XChxly+3lTz6ocOZqM100FhLznMESKjoayF2JyTyBjciwAhpjMKz+ITVu
- UYIGpai87y7C7/u6tF5QztokE6KPn+VJ8b0Ft6jmVGpvMsyVVRbvKyihNTktZ/oyEYVe
- GRGQNNir8JGvRtAS2dY/x/oyWbhxkYiGiXHp3D5yRKiSyIA569shvtz/vID0bu/ESept
- h4/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714999101; x=1715603901;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1xKUlJq4altC6gXgMzk8h7ZuMjWZxGoEWR8S+Y8f728=;
- b=I3VGreDmyDe4D96GL67DbW320nKr6su+MBddhohmRJDc7txbhZNAd1dANt3Vk9S3Nf
- s6zdYHC5UOobkOMRfb+rst5cCS7FXT61D8C7mDLrQRR0GOeXRFUSVlZdXVSs5eJyFQjd
- aGyNgjpqdRlPJKrYIG3PyPuC1mBEIUeTo9bhC3gekJEOT92ALtH3EPMUOEM5MDmicjsT
- ahNTB6wFuiq5E1p5FeMTKjhTqBEP7ouWe2F7vp+bXJrA/lsa3jqWmU4X+x+1q1+Gu0qa
- q/FeO+3U/GU+4Lbg2dhUfdFSLB1TgwCLDVblWofWynucsVw89n2ENtfJE2Ytdj8g6l3q
- EDWQ==
-X-Gm-Message-State: AOJu0YzWOH58T2m93wRDd6xXNOwUp1LAEvtgfGPYAAr6BgpXYSvILcBa
- gBTKeDmSKgpNYwNExD+aDTNQrlXi++iwygZLGAhMJzhqG8vbkzRg7soNdTBKJ2arNaXWsZO2flS
- G
-X-Google-Smtp-Source: AGHT+IELGqsBkmf75yiyELsUowxoTaPMzb/Vwq+fEs8tiwUvnuNKo/riL+WXxb44mOibW/urZnxXJQ==
-X-Received: by 2002:adf:f6c6:0:b0:34d:963a:12cf with SMTP id
- y6-20020adff6c6000000b0034d963a12cfmr9146299wrp.50.1714999101595; 
- Mon, 06 May 2024 05:38:21 -0700 (PDT)
-Received: from m1x-phil.lan ([176.187.211.4]) by smtp.gmail.com with ESMTPSA id
- c4-20020a5d5284000000b0034b1a91be72sm10608400wrv.14.2024.05.06.05.38.20
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 06 May 2024 05:38:21 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 06/28] accel/tcg: Use cpu_loop_exit_requested() in
- cpu_loop_exec_tb()
-Date: Mon,  6 May 2024 14:37:06 +0200
-Message-ID: <20240506123728.65278-7-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240506123728.65278-1-philmd@linaro.org>
-References: <20240506123728.65278-1-philmd@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <ysato@users.sourceforge.jp>)
+ id 1s3xcF-0001u5-C7
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 08:38:48 -0400
+Received: from ik1-413-38519.vs.sakura.ne.jp ([153.127.30.23]
+ helo=sakura.ysato.name) by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <ysato@users.sourceforge.jp>) id 1s3xcD-00022i-3U
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 08:38:47 -0400
+Received: from SIOS1075.ysato.ml (ZM005235.ppp.dion.ne.jp [222.8.5.235])
+ by sakura.ysato.name (Postfix) with ESMTPSA id 3643A1C00D7;
+ Mon,  6 May 2024 21:38:37 +0900 (JST)
+Date: Mon, 06 May 2024 21:38:34 +0900
+Message-ID: <87o79j15f9.wl-ysato@users.sourceforge.jp>
+From: Yoshinori Sato <ysato@users.sourceforge.jp>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: Richard Henderson <richard.henderson@linaro.org>,	qemu-devel@nongnu.org,
+ zack@buhman.org,	peter.maydell@linaro.org,	Cole Robinson
+ <crobinso@redhat.com>,	Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
+ <philmd@linaro.org>
+Subject: Re: [PATCH for-9.0 v3 0/4] target/sh4: Fix mac.[lw]
+In-Reply-To: <26711de4-180b-4448-8d79-30efec984900@tls.msk.ru>
+References: <20240406053732.191398-1-richard.henderson@linaro.org>
+ <26711de4-180b-4448-8d79-30efec984900@tls.msk.ru>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
+ Emacs/28.2 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+Received-SPF: softfail client-ip=153.127.30.23;
+ envelope-from=ysato@users.sourceforge.jp; helo=sakura.ysato.name
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, KHOP_HELO_FCRDNS=0.259,
+ SPF_HELO_NONE=0.001, SPF_SOFTFAIL=0.665 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,48 +61,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Do not open-code cpu_loop_exit_requested().
+On Sat, 04 May 2024 17:25:52 +0900,
+Michael Tokarev wrote:
+> 
+> 06.04.2024 08:37, Richard Henderson wrote:
+> > Zack's recent patches, tidied a little bit, and with
+> > test cases added.
+> 
+> These fixes ended up in stable-8.2, but not in stable-7.2.
+> This is because in 7.2, the context is a bit different.
+> 
+> Later, a couple other fixes in this area come from Philippe
+> (Fix ADDV & SUBV opcodes) which are easy to pick up but it
+> wants changes in tests/tcg/sh4/Makefile.target introduced
+> in this patchset.
+> 
+> b0f2f2976b "target/sh4: mac.w: memory accesses are 16-bit words"
+> also needs 03a0d87e8d "target/sh4: Use MO_ALIGN where required",
+> but this one, while simple, is a big one and doesn't apply to
+> 7.2 directly in many places in target/sh4/translate.c, in parts
+> due to bebd5cb300 "target/sh4: Drop tcg_temp_free" (but can be
+> easily tweaked manually).
+> 
+> Or I can hand-apply b0f2f2976b (s/MO_TESL/MO_TESW) without
+> 03a0d87e8d (add MO_ALIGN).
+> 
+> Does picking up this stuff for 7.2 make sense?
+> 
+> (Cc'ing Cole for general stable-7.2 feedback on redhat side).
+> 
+> Thanks,
+> 
+> /mjt
+> 
+> > Richard Henderson (1):
+> >    target/sh4: Merge mach and macl into a union
+> > 
+> > Zack Buhman (3):
+> >    target/sh4: mac.w: memory accesses are 16-bit words
+> >    target/sh4: Fix mac.l with saturation enabled
+> >    target/sh4: Fix mac.w with saturation enabled
+> > 
+> >   target/sh4/cpu.h              | 14 ++++++--
+> >   target/sh4/helper.h           |  4 +--
+> >   target/sh4/op_helper.c        | 51 +++++++++++++++-----------
+> >   target/sh4/translate.c        |  4 +--
+> >   tests/tcg/sh4/test-macl.c     | 67 +++++++++++++++++++++++++++++++++++
+> >   tests/tcg/sh4/test-macw.c     | 61 +++++++++++++++++++++++++++++++
+> >   tests/tcg/sh4/Makefile.target |  8 +++++
+> >   7 files changed, 182 insertions(+), 27 deletions(-)
+> >   create mode 100644 tests/tcg/sh4/test-macl.c
+> >   create mode 100644 tests/tcg/sh4/test-macw.c
+> > 
+> 
+> -- 
+> GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
+> New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
+> Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
+> Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
+> 
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240428214915.10339-9-philmd@linaro.org>
----
- accel/tcg/cpu-exec.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+Does this mean you changed it like this?
+I think this is fine.
 
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 225e5fbd3e..c18a7e2b85 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -900,8 +900,6 @@ static inline void cpu_loop_exec_tb(CPUState *cpu, TranslationBlock *tb,
-                                     vaddr pc, TranslationBlock **last_tb,
-                                     int *tb_exit)
- {
--    int32_t insns_left;
--
-     trace_exec_tb(tb, pc);
-     tb = cpu_tb_exec(cpu, tb, tb_exit);
-     if (*tb_exit != TB_EXIT_REQUESTED) {
-@@ -910,8 +908,7 @@ static inline void cpu_loop_exec_tb(CPUState *cpu, TranslationBlock *tb,
-     }
- 
-     *last_tb = NULL;
--    insns_left = qatomic_read(&cpu->neg.icount_decr.u32);
--    if (insns_left < 0) {
-+    if (cpu_loop_exit_requested(cpu)) {
-         /* Something asked us to stop executing chained TBs; just
-          * continue round the main loop. Whatever requested the exit
-          * will also have set something else (eg exit_request or
-@@ -928,7 +925,7 @@ static inline void cpu_loop_exec_tb(CPUState *cpu, TranslationBlock *tb,
-     /* Ensure global icount has gone forward */
-     icount_update(cpu);
-     /* Refill decrementer and continue execution.  */
--    insns_left = MIN(0xffff, cpu->icount_budget);
-+    int32_t insns_left = MIN(0xffff, cpu->icount_budget);
-     cpu->neg.icount_decr.u16.low = insns_left;
-     cpu->icount_extra = cpu->icount_budget - insns_left;
- 
+index 7db3468b01..f3bf0fc50a 100644
+--- a/target/sh4/translate.c
++++ b/target/sh4/translate.c
+@@ -844,9 +844,9 @@ static void _decode_opc(DisasContext * ctx)
+ 	{
+ 	    TCGv arg0, arg1;
+ 	    arg0 = tcg_temp_new();
+-            tcg_gen_qemu_ld_i32(arg0, REG(B7_4), ctx->memidx, MO_TESL);
++            tcg_gen_qemu_ld_i32(arg0, REG(B7_4), ctx->memidx, MO_TESW);
+ 	    arg1 = tcg_temp_new();
+-            tcg_gen_qemu_ld_i32(arg1, REG(B11_8), ctx->memidx, MO_TESL);
++            tcg_gen_qemu_ld_i32(arg1, REG(B11_8), ctx->memidx, MO_TESW);
+             gen_helper_macw(cpu_env, arg0, arg1);
+ 	    tcg_temp_free(arg1);
+ 	    tcg_temp_free(arg0);
+
 -- 
-2.41.0
-
+Yosinori Sato
 
