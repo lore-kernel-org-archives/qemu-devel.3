@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98186C10F16
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 11:49:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B8B0C10F16
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 11:49:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3wok-0004fG-F7; Mon, 06 May 2024 07:47:38 -0400
+	id 1s3wov-00057w-AW; Mon, 06 May 2024 07:47:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1s3wnD-0002bI-IU
- for qemu-devel@nongnu.org; Mon, 06 May 2024 07:46:05 -0400
+ id 1s3wnD-0002bJ-J8
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 07:46:04 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1s3wmr-00025W-SR
- for qemu-devel@nongnu.org; Mon, 06 May 2024 07:45:43 -0400
+ id 1s3wmw-00026A-57
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 07:45:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
- References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
- Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
- List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=NVY+DInK6e9c7Rfod3udmjYDPm6WHRlbkoobfpkday0=; b=AJJfiv620T+8S/6UmLQL8dX5L3
- LWIi3XFQaE4CVpHBRpTH4KWo8uE0cTa9Qt8S8za5yfdxdEYC9eWFpAzxHd2Hi79p6t72oug3fjr9w
- b4vLuNe5VX+vwd9fghk48jYaBWIcCPGkOnF+/pLD2u5ld55k6Q/Ow5U8GkEKpMLLcpPviST+4vGrR
- pu0I2grH/QJlpEUgiwqyqTliIKMjunORuDWGOZjaQIxhLjU1/3zfyxpaeZ/wGWs0PmvOrg8hp51x6
- I+IHBVz8sutSHdGGjxBWqn0aZ9HA77DgiZsdQHnuoLZFA5ah7uZzM9YhiuU8v2KG/tiPgbEDJrNw7
- Lpint4/dCE6miLddt/1IRzgW6Lo4ev/vGAK6Tc01/JjJ340n6cVCQj692mT0DnxSI2hDVXXvl0CSh
- V6j9xacGJBH09a5vOBEKuryIfB1KPMyn0pWQlDh5ziah5rPgCPF3SxV8Y8AxXMgHYL5HD/v+SlO7f
- U/3lyqSjZhbMREwikicg9Y418H5+TbKMzlQpYM8EwKIIxDuHlChEas3wmUEvR/M3W1MR8ygwHL4wr
- puS7K6P2iMt4DKEb9XTq8RsLirnkZ2wThaz1bMh2MTnAJ4M4Xs8C4Ism78SnWHwdvFYQ7KjJNVA/6
- eb4enEojEkL6f7GgZ7yQ0eabYP1olFuF6jFWohEn8=;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ MIME-Version:References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:
+ Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=+nWXIBRD4JwFRlPQUPhOrXxE5sdDw1a50waOf4VxWsU=; b=g/WoWmHSHwrT15PtlpLQHgXNfk
+ N7oWyHjeAvTGjV+vLX2JMPs22ZbiI9Cvra0d4nHYGsbFd6uGIA0WS0WfA4oDlYKMADgaoG8FAev2f
+ 9L0peKwqDHh259QItx543UWjdSUBOwjdMHMFs0S7a+ipst8SHuV44oKkwPN0cZdEhMJH700MmdrUj
+ fm6I1hr/YeMg9juejLRlHa3wQm3W9TLlLla8mmTjEtOkfI5uPmTSBLlL6irhSm2Yk2OHlI9HJRorH
+ OPbCkZRAoPsneCKpTC+arQmhXoMwX9PwqD5/QWP8z8oYZyXc6JH6RtN5Z2HhJss+qeubx3b6uCo3+
+ h46esu6Q5OjSIrtBAvlJPsdyWlcOrpisVIX6yD0H6VN9L3ZF9I/zO0uByFGytq/808l1QlJWZaOgw
+ Xm9J08eh9PQlO/Bjgl8yz7StsSTRwFnyYKUjzrL6k/BVZpE0xmCSBVZE3BPItNk6ahHRjiPxJPN3Y
+ 2moUbqVDk7AzLMbykNX+H+32mwPZBBTalnYK1DnBjdzzQOiFOKTrLHzR7Vo/sdBKiAkeKpu+Dov7a
+ MAEl3WEq0NDCw5ms6oxsI6epLEU4nvHCzBNWEerIRPBsgDnFfYb/vJwpOBSOmVlu5O3S7ilxqhcZM
+ lwxOkXfFd2Px981cojTYJOe04+51hMUScgA7b+CpM=;
 Received: from [2a00:23c4:8bb4:4000:b60d:a162:d698:c802]
  (helo=localhost.localdomain)
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1s3wln-0005pA-4f; Mon, 06 May 2024 12:44:35 +0100
+ id 1s3wln-0005pA-LB; Mon, 06 May 2024 12:44:39 +0100
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: qemu-devel@nongnu.org,
 	richard.henderson@linaro.org
-Date: Mon,  6 May 2024 12:44:49 +0100
-Message-Id: <20240506114451.331311-11-mark.cave-ayland@ilande.co.uk>
+Date: Mon,  6 May 2024 12:44:50 +0100
+Message-Id: <20240506114451.331311-12-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240506114451.331311-1-mark.cave-ayland@ilande.co.uk>
 References: <20240506114451.331311-1-mark.cave-ayland@ilande.co.uk>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:b60d:a162:d698:c802
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PULL 10/12] target/sparc: Fix FMULD8*X16
+Subject: [PULL 11/12] target/sparc: Fix FPMERGE
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -81,169 +82,93 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-Not only do these instructions have f32 inputs, they also do not
-perform rounding.  Since these are relatively simple, implement
-them properly inline.
+This instruction has f32 inputs, which changes the decode
+of the register numbers.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240502165528.244004-6-richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20240502165528.244004-7-richard.henderson@linaro.org>
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
- target/sparc/helper.h     |  2 --
- target/sparc/translate.c  | 48 +++++++++++++++++++++++++++++++++++----
- target/sparc/vis_helper.c | 46 -------------------------------------
- 3 files changed, 44 insertions(+), 52 deletions(-)
+ target/sparc/helper.h     |  2 +-
+ target/sparc/translate.c  |  2 +-
+ target/sparc/vis_helper.c | 27 ++++++++++++++-------------
+ 3 files changed, 16 insertions(+), 15 deletions(-)
 
 diff --git a/target/sparc/helper.h b/target/sparc/helper.h
-index 9cde2b69a5..fcb9c617b7 100644
+index fcb9c617b7..97fbf6f66c 100644
 --- a/target/sparc/helper.h
 +++ b/target/sparc/helper.h
-@@ -99,8 +99,6 @@ DEF_HELPER_FLAGS_2(fmul8x16, TCG_CALL_NO_RWG_SE, i64, i32, i64)
+@@ -94,7 +94,7 @@ DEF_HELPER_FLAGS_2(fstox, TCG_CALL_NO_WG, s64, env, f32)
+ DEF_HELPER_FLAGS_2(fdtox, TCG_CALL_NO_WG, s64, env, f64)
+ DEF_HELPER_FLAGS_2(fqtox, TCG_CALL_NO_WG, s64, env, i128)
+ 
+-DEF_HELPER_FLAGS_2(fpmerge, TCG_CALL_NO_RWG_SE, i64, i64, i64)
++DEF_HELPER_FLAGS_2(fpmerge, TCG_CALL_NO_RWG_SE, i64, i32, i32)
+ DEF_HELPER_FLAGS_2(fmul8x16, TCG_CALL_NO_RWG_SE, i64, i32, i64)
  DEF_HELPER_FLAGS_2(fmul8x16a, TCG_CALL_NO_RWG_SE, i64, i32, s32)
  DEF_HELPER_FLAGS_2(fmul8sux16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
- DEF_HELPER_FLAGS_2(fmul8ulx16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
--DEF_HELPER_FLAGS_2(fmuld8sux16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
--DEF_HELPER_FLAGS_2(fmuld8ulx16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
- DEF_HELPER_FLAGS_1(fexpand, TCG_CALL_NO_RWG_SE, i64, i32)
- DEF_HELPER_FLAGS_3(pdist, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
- DEF_HELPER_FLAGS_2(fpack16, TCG_CALL_NO_RWG_SE, i32, i64, i64)
 diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index a8ada6934a..8a2894bb9f 100644
+index 8a2894bb9f..99c6f3cc72 100644
 --- a/target/sparc/translate.c
 +++ b/target/sparc/translate.c
-@@ -74,8 +74,6 @@
- # define gen_helper_fmul8sux16           ({ qemu_build_not_reached(); NULL; })
- # define gen_helper_fmul8ulx16           ({ qemu_build_not_reached(); NULL; })
- # define gen_helper_fmul8x16             ({ qemu_build_not_reached(); NULL; })
--# define gen_helper_fmuld8sux16          ({ qemu_build_not_reached(); NULL; })
--# define gen_helper_fmuld8ulx16          ({ qemu_build_not_reached(); NULL; })
- # define gen_helper_fpmerge              ({ qemu_build_not_reached(); NULL; })
- # define gen_helper_fqtox                ({ qemu_build_not_reached(); NULL; })
- # define gen_helper_fstox                ({ qemu_build_not_reached(); NULL; })
-@@ -730,6 +728,48 @@ static void gen_op_fmul8x16au(TCGv_i64 dst, TCGv_i32 src1, TCGv_i32 src2)
-     gen_helper_fmul8x16a(dst, src1, src2);
- }
- 
-+static void gen_op_fmuld8ulx16(TCGv_i64 dst, TCGv_i32 src1, TCGv_i32 src2)
-+{
-+    TCGv_i32 t0 = tcg_temp_new_i32();
-+    TCGv_i32 t1 = tcg_temp_new_i32();
-+    TCGv_i32 t2 = tcg_temp_new_i32();
-+
-+    tcg_gen_ext8u_i32(t0, src1);
-+    tcg_gen_ext16s_i32(t1, src2);
-+    tcg_gen_mul_i32(t0, t0, t1);
-+
-+    tcg_gen_extract_i32(t1, src1, 16, 8);
-+    tcg_gen_sextract_i32(t2, src2, 16, 16);
-+    tcg_gen_mul_i32(t1, t1, t2);
-+
-+    tcg_gen_concat_i32_i64(dst, t0, t1);
-+}
-+
-+static void gen_op_fmuld8sux16(TCGv_i64 dst, TCGv_i32 src1, TCGv_i32 src2)
-+{
-+    TCGv_i32 t0 = tcg_temp_new_i32();
-+    TCGv_i32 t1 = tcg_temp_new_i32();
-+    TCGv_i32 t2 = tcg_temp_new_i32();
-+
-+    /*
-+     * The insn description talks about extracting the upper 8 bits
-+     * of the signed 16-bit input rs1, performing the multiply, then
-+     * shifting left by 8 bits.  Instead, zap the lower 8 bits of
-+     * the rs1 input, which avoids the need for two shifts.
-+     */
-+    tcg_gen_ext16s_i32(t0, src1);
-+    tcg_gen_andi_i32(t0, t0, ~0xff);
-+    tcg_gen_ext16s_i32(t1, src2);
-+    tcg_gen_mul_i32(t0, t0, t1);
-+
-+    tcg_gen_sextract_i32(t1, src1, 16, 16);
-+    tcg_gen_andi_i32(t1, t1, ~0xff);
-+    tcg_gen_sextract_i32(t2, src2, 16, 16);
-+    tcg_gen_mul_i32(t1, t1, t2);
-+
-+    tcg_gen_concat_i32_i64(dst, t0, t1);
-+}
-+
- static void finishing_insn(DisasContext *dc)
- {
-     /*
-@@ -4614,6 +4654,8 @@ static bool do_dff(DisasContext *dc, arg_r_r_r *a,
- 
- TRANS(FMUL8x16AU, VIS1, do_dff, a, gen_op_fmul8x16au)
+@@ -4656,6 +4656,7 @@ TRANS(FMUL8x16AU, VIS1, do_dff, a, gen_op_fmul8x16au)
  TRANS(FMUL8x16AL, VIS1, do_dff, a, gen_op_fmul8x16al)
-+TRANS(FMULD8SUx16, VIS1, do_dff, a, gen_op_fmuld8sux16)
-+TRANS(FMULD8ULx16, VIS1, do_dff, a, gen_op_fmuld8ulx16)
+ TRANS(FMULD8SUx16, VIS1, do_dff, a, gen_op_fmuld8sux16)
+ TRANS(FMULD8ULx16, VIS1, do_dff, a, gen_op_fmuld8ulx16)
++TRANS(FPMERGE, VIS1, do_dff, a, gen_helper_fpmerge)
  
  static bool do_dfd(DisasContext *dc, arg_r_r_r *a,
                     void (*func)(TCGv_i64, TCGv_i32, TCGv_i64))
-@@ -4654,8 +4696,6 @@ static bool do_ddd(DisasContext *dc, arg_r_r_r *a,
+@@ -4696,7 +4697,6 @@ static bool do_ddd(DisasContext *dc, arg_r_r_r *a,
  
  TRANS(FMUL8SUx16, VIS1, do_ddd, a, gen_helper_fmul8sux16)
  TRANS(FMUL8ULx16, VIS1, do_ddd, a, gen_helper_fmul8ulx16)
--TRANS(FMULD8SUx16, VIS1, do_ddd, a, gen_helper_fmuld8sux16)
--TRANS(FMULD8ULx16, VIS1, do_ddd, a, gen_helper_fmuld8ulx16)
- TRANS(FPMERGE, VIS1, do_ddd, a, gen_helper_fpmerge)
+-TRANS(FPMERGE, VIS1, do_ddd, a, gen_helper_fpmerge)
  
  TRANS(FPADD16, VIS1, do_ddd, a, tcg_gen_vec_add16_i64)
+ TRANS(FPADD32, VIS1, do_ddd, a, tcg_gen_vec_add32_i64)
 diff --git a/target/sparc/vis_helper.c b/target/sparc/vis_helper.c
-index ff2f43c23f..61c61c7fea 100644
+index 61c61c7fea..14c665cad6 100644
 --- a/target/sparc/vis_helper.c
 +++ b/target/sparc/vis_helper.c
-@@ -194,52 +194,6 @@ uint64_t helper_fmul8ulx16(uint64_t src1, uint64_t src2)
+@@ -74,22 +74,23 @@ typedef union {
+     float32 f;
+ } VIS32;
+ 
+-uint64_t helper_fpmerge(uint64_t src1, uint64_t src2)
++uint64_t helper_fpmerge(uint32_t src1, uint32_t src2)
+ {
+-    VIS64 s, d;
++    VIS32 s1, s2;
++    VIS64 d;
+ 
+-    s.ll = src1;
+-    d.ll = src2;
++    s1.l = src1;
++    s2.l = src2;
++    d.ll = 0;
+ 
+-    /* Reverse calculation order to handle overlap */
+-    d.VIS_B64(7) = s.VIS_B64(3);
+-    d.VIS_B64(6) = d.VIS_B64(3);
+-    d.VIS_B64(5) = s.VIS_B64(2);
+-    d.VIS_B64(4) = d.VIS_B64(2);
+-    d.VIS_B64(3) = s.VIS_B64(1);
+-    d.VIS_B64(2) = d.VIS_B64(1);
+-    d.VIS_B64(1) = s.VIS_B64(0);
+-    /* d.VIS_B64(0) = d.VIS_B64(0); */
++    d.VIS_B64(7) = s1.VIS_B32(3);
++    d.VIS_B64(6) = s2.VIS_B32(3);
++    d.VIS_B64(5) = s1.VIS_B32(2);
++    d.VIS_B64(4) = s2.VIS_B32(2);
++    d.VIS_B64(3) = s1.VIS_B32(1);
++    d.VIS_B64(2) = s2.VIS_B32(1);
++    d.VIS_B64(1) = s1.VIS_B32(0);
++    d.VIS_B64(0) = s2.VIS_B32(0);
+ 
      return d.ll;
  }
- 
--uint64_t helper_fmuld8sux16(uint64_t src1, uint64_t src2)
--{
--    VIS64 s, d;
--    uint32_t tmp;
--
--    s.ll = src1;
--    d.ll = src2;
--
--#define PMUL(r)                                                         \
--    tmp = (int32_t)d.VIS_SW64(r) * ((int32_t)s.VIS_SW64(r) >> 8);       \
--    if ((tmp & 0xff) > 0x7f) {                                          \
--        tmp += 0x100;                                                   \
--    }                                                                   \
--    d.VIS_L64(r) = tmp;
--
--    /* Reverse calculation order to handle overlap */
--    PMUL(1);
--    PMUL(0);
--#undef PMUL
--
--    return d.ll;
--}
--
--uint64_t helper_fmuld8ulx16(uint64_t src1, uint64_t src2)
--{
--    VIS64 s, d;
--    uint32_t tmp;
--
--    s.ll = src1;
--    d.ll = src2;
--
--#define PMUL(r)                                                         \
--    tmp = (int32_t)d.VIS_SW64(r) * ((uint32_t)s.VIS_B64(r * 2));        \
--    if ((tmp & 0xff) > 0x7f) {                                          \
--        tmp += 0x100;                                                   \
--    }                                                                   \
--    d.VIS_L64(r) = tmp;
--
--    /* Reverse calculation order to handle overlap */
--    PMUL(1);
--    PMUL(0);
--#undef PMUL
--
--    return d.ll;
--}
--
- uint64_t helper_fexpand(uint32_t src2)
- {
-     VIS32 s;
 -- 
 2.39.2
 
