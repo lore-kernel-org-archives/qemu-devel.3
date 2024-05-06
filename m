@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEFADC10F16
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 13:27:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFB6AC25B4F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 14:07:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3yMY-0004L9-MQ; Mon, 06 May 2024 09:26:40 -0400
+	id 1s3yzs-0000hE-RM; Mon, 06 May 2024 10:07:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1s3yMS-0004Im-LG
- for qemu-devel@nongnu.org; Mon, 06 May 2024 09:26:32 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3yzq-0000fq-KB
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 10:07:14 -0400
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1s3yMM-00024z-Mq
- for qemu-devel@nongnu.org; Mon, 06 May 2024 09:26:32 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a59a934ad50so404563266b.1
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 06:26:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3yzj-0003Ne-45
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 10:07:14 -0400
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2e0933d3b5fso25299291fa.2
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 07:07:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715001985; x=1715606785; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iXjEFMRzTzj3KldPoNPBs9HkkDMftiy61B6AF2CyXKk=;
- b=c/IQ4wI12j64yW8ZkgpwTVizwnqsA5OajQVEBN1olJs+IA6bKAFt8M8RS/wUeVFUHz
- CY4+zfo5zprH4hXDozO13D7sHBanCzTYbXxce4mi//6E0VYAtXNuog722tLEltKtnsXr
- P56CJfXPAZJYH1WF+maJi4H3V8OOby2//OsdaPpkVd7xXJMmkMbN4ltWDvZKm8XPAdoR
- hG1j5MqrrGA8oA0sGQa8hlzJIaVtYdkIZ3WMWBJPEsvtJRK6YH2Cug7M0TiQyrNsYJAX
- 5ZkcYbw1spQkFXEovE8l3j2sOiCx+7bVDgP6bonJke+BhM6RF9ywuQvklMM+EDGDQa8g
- VGYQ==
+ d=linaro.org; s=google; t=1715004425; x=1715609225; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ys3nXqHYRv3BJVb6DxHAxB8fKiZMOgfbiFOG3Qz/k7M=;
+ b=GuJ+hBtc3vzhMGtsaOZoV8tl5wI5srMjCf8EGBPvAlUH/pg1is3B520gav2rm2wmDA
+ fxSXU9+Own2DWfIA3Ns8jhOnlWLgJoF/PFadgtZbLlsOiTeoX7PFRTqZsmprPUKYuaK6
+ EnSKk6sM9eb5BTt2CcTLnjkMIMcy/a7U94FPsomb5Xrc2Hbba30cNQu4ClmOS3eaRhHf
+ hH6lYv5hY3bgn0OR4TQAuPcncjxmkxB7qrnL70rSKe+XAiwNc/Ta1/JIIgtzCn9kSxrX
+ jUme3w0Toj5Fmx3NSwgmcPBTZSjL1iW+ayob4xjgY4Mhau+jAQVZ3LG25VCLWrl3csOD
+ aYTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715001985; x=1715606785;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=iXjEFMRzTzj3KldPoNPBs9HkkDMftiy61B6AF2CyXKk=;
- b=QLJMPAmayhkYsyzQ7v1qbvhGUVyEpncJoKty5G/q3XPRxKeM8v12ar53D6hrZQlyp7
- pWPbP3EL5syRhfeqgfEfVXE4t8nSX2kaZJQseSO0V6hsdfuYvnZFgBOZFZcZ/z3kowLC
- FMn1XeQsH8LqLd2y62Ty2Bj/+PRC2bnxr1f99yLGLsEu8mNdk2WcsD9vVHH9EL+dsM43
- Bxn3oF9mPwPV9bMdrGYJRb07QSGQAep9CFjTGYMqHuSCSAWJgEx2vlRDvJwcM9az5sMQ
- fHAGtg99X+akk7ZQpATBGEptBctb9Qg6IX2UIx1mdOdPUAyxxVGd5KNVy1VIxPlZ5d2L
- uDhQ==
+ d=1e100.net; s=20230601; t=1715004425; x=1715609225;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ys3nXqHYRv3BJVb6DxHAxB8fKiZMOgfbiFOG3Qz/k7M=;
+ b=FukY5BBTUyFeC4OWLnsXLe8A47IMfhxapdvY31CejwtZK7mDrw6/CqJ5itLGTUjQ5l
+ 6nDtNP64vb/WqmG75x6J8LyAyTWaTl7BZLVyFQvFYHY+U3GhgqRIn8Ld0H89b6pZa2zk
+ Wnjol6399k/kASV8sBgu8aIngPjUr8WfI5HCK1bC2R+ues9oJCPJxM7UfOy7buLwd+tA
+ 9t5gCu3Odx0Y+cZBrpwtAM94164GuVjGggWly2VWwa6nurV4TSBt5L8C8DTU4YwthA4a
+ ozUZxeOBSAjlWlCMJ5YJ7zNC8HBhXi2R0mmNz2+3Zw5LCpiL7pwdih3hZxnORj/I/J9n
+ nNaA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUNGl4N+5ZqRgHBj5X+Ijr8m4ugFSOaljMPuljpfpotDZ9xFlvzfW45NvHUlfQ1662g5Uq1tkCbTw6ufDs7hL1AZDx8bS4=
-X-Gm-Message-State: AOJu0YzGBDdkD3TrdiD+j1gNL133maX29vXHoH0HwhOvdpE/bP49YXjA
- VKo6ycc2miO3808DEIML5hF6hhd3UN4WmYoaZBjJmtKk4rxyGvIVX6gUW3qFRS0T0loGGcSWpfg
- zdTuYSdrk5GpZcdi9ePqbDvnoRNI=
-X-Google-Smtp-Source: AGHT+IFjRGcd4vevXd4YmEJIpnLbj+EtQPldgB+Qq/+tP0OUO7ic/p9jXzqaReEl+6jNOvGvJR1QQdDnYUkvaMPNk/A=
-X-Received: by 2002:a50:d495:0:b0:56d:c928:ad76 with SMTP id
- s21-20020a50d495000000b0056dc928ad76mr6259743edi.26.1715001984479; Mon, 06
- May 2024 06:26:24 -0700 (PDT)
+ AJvYcCX2+IJGLar6miBE6i/92AmkHg9PeCqDxgZvFMm/2OQviU1Cu0xYJyJEIykGPLfYde0bEY/Gi+c2467Jvi6stEBBGgF3Ez0=
+X-Gm-Message-State: AOJu0YxF+Ovg70z6dIe/WVhGbvPg7+PVfKBLa75ppYU7VziXpU/LkOqK
+ qHSQfnHTLmmhLoKr+fXMGoRBkEfzbiTRNfs7KdsTOw9ciesaCluh9I8/h1ygbC+kfgcwaoI+8M2
+ G
+X-Google-Smtp-Source: AGHT+IGceLeYci/usnQ0gyQEOeEUqkuVTq8+pUeR85picBG1vRykWUSiAJaw9RdVCXJ407I5lHr+Kg==
+X-Received: by 2002:a2e:9a90:0:b0:2de:bae:b306 with SMTP id
+ p16-20020a2e9a90000000b002de0baeb306mr7551409lji.8.1715004425291; 
+ Mon, 06 May 2024 07:07:05 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.211.4])
+ by smtp.gmail.com with ESMTPSA id
+ p20-20020a05600c469400b0041bc41287cesm16252017wmo.16.2024.05.06.07.07.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 06 May 2024 07:07:03 -0700 (PDT)
+Message-ID: <0b2b8ac1-475e-4bbb-b4d2-7a65da563ba2@linaro.org>
+Date: Mon, 6 May 2024 16:07:02 +0200
 MIME-Version: 1.0
-References: <20240430164939.925307-1-edgar.iglesias@gmail.com>
- <20240430164939.925307-15-edgar.iglesias@gmail.com>
- <0263b7e8-5800-4f5a-9dc5-bc2b4fbbbbfe@redhat.com>
- <d4008042-6f68-42f6-8ade-fbb0ba115a33@linaro.org>
-In-Reply-To: <d4008042-6f68-42f6-8ade-fbb0ba115a33@linaro.org>
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Date: Mon, 6 May 2024 15:26:12 +0200
-Message-ID: <CAJy5ezoVOR-OB7HVEAAkmwdC7jerCVatNS=VdP1jTMZpgUm_fg@mail.gmail.com>
-Subject: Re: [PATCH v4 14/17] xen: Add xen_mr_is_memory()
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: David Hildenbrand <david@redhat.com>, qemu-devel@nongnu.org,
- sstabellini@kernel.org, 
- jgross@suse.com, "Edgar E. Iglesias" <edgar.iglesias@amd.com>, 
- Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- xen-devel@lists.xenproject.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-ej1-x631.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] MAINTAINERS: Update my email address
+To: Bin Meng <bmeng.cn@gmail.com>, qemu-devel@nongnu.org,
+ Alistair Francis <alistair.francis@wdc.com>
+Cc: Bin Meng <bin.meng.cn@windriver.com>
+References: <20240505072312.2776074-1-bmeng.cn@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240505072312.2776074-1-bmeng.cn@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,75 +97,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 6, 2024 at 11:59=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> On 2/5/24 09:26, David Hildenbrand wrote:
-> > On 30.04.24 18:49, Edgar E. Iglesias wrote:
-> >> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-> >>
-> >> Add xen_mr_is_memory() to abstract away tests for the
-> >> xen_memory MR.
-> >>
-> >> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-> >> ---
-> >
-> > [...]
-> >
-> >>   #endif
-> >> diff --git a/system/physmem.c b/system/physmem.c
-> >> index ad7a8c7d95..1a5ffcba2a 100644
-> >> --- a/system/physmem.c
-> >> +++ b/system/physmem.c
-> >> @@ -2227,7 +2227,7 @@ static void *qemu_ram_ptr_length(RAMBlock
-> >> *block, ram_addr_t addr,
-> >>            * because we don't want to map the entire memory in QEMU.
-> >>            * In that case just map the requested area.
-> >>            */
-> >> -        if (block->offset =3D=3D 0) {
-> >> +        if (xen_mr_is_memory(block->mr)) {
-> >>               return xen_map_cache(block->mr, addr, len, lock, lock,
-> >>                                    is_write);
-> >>           }
-> >
-> > I'd have moved that into a separate patch, because this is not a simple
-> > abstraction here.
->
-> Yes please, maybe using Stefano review comment in the description.
->
+On 5/5/24 09:23, Bin Meng wrote:
+> From: Bin Meng <bin.meng.cn@windriver.com>
+> 
+> The old Wind River email address (bin.meng@windriver.com) is no longer
+> available due to an internal infrastructure change within the company.
+> While a new email address (bin.meng.cn@windriver.com) has been assigned
+> to me, I am unable to find a way to send this patch directly from the
+> new address. Presumably, the basic authentication with client submission
+> (SMTP AUTH) [1] has been disabled by the company's IT.
+> 
+> Switch to use my personal email address instead.
+> 
+> Signed-off-by: Bin Meng <bin.meng.cn@windriver.com>
+> Signed-off-by: Bin Meng <bmeng.cn@gmail.com>
+> 
+> [1] https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/how-to-set-up-a-multifunction-device-or-application-to-send-email-using-microsoft-365-or-office-365
+> 
+> ---
+> 
+> Changes in v2:
+> - Provide more background info for the email address change
 
-Thanks, for v5 I've split out this particular change into a separate patch:
+Queued, thanks.
 
-    softmmu: Replace check for RAMBlock offset 0 with xen_mr_is_memory
-
-    For xen, when checking for the first RAM (xen_memory), use
-    xen_mr_is_memory() rather than checking for a RAMBlock with
-    offset 0.
-
-    All Xen machines create xen_memory first so this has no
-    functional change for existing machines.
-
-    Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-
-diff --git a/system/physmem.c b/system/physmem.c
-index ad7a8c7d95..1a5ffcba2a 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -2227,7 +2227,7 @@ static void *qemu_ram_ptr_length(RAMBlock
-*block, ram_addr_t addr,
-          * because we don't want to map the entire memory in QEMU.
-          * In that case just map the requested area.
-          */
--        if (block->offset =3D=3D 0) {
-+        if (xen_mr_is_memory(block->mr)) {
-             return xen_map_cache(block->mr, addr, len, lock, lock,
-                                  is_write);
-         }
-
-
-
-> >
-> > Acked-by: David Hildenbrand <david@redhat.com>
-> >
->
 
