@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 564B4C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 08:01:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7A74C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 08:02:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3t9R-0006ia-R7; Mon, 06 May 2024 03:52:45 -0400
+	id 1s3t9f-0007Sn-Tj; Mon, 06 May 2024 03:52:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s3t9L-0006Kx-KN
- for qemu-devel@nongnu.org; Mon, 06 May 2024 03:52:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1s3t9Y-00074Q-7p
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 03:52:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s3t9K-0001jA-4Z
- for qemu-devel@nongnu.org; Mon, 06 May 2024 03:52:39 -0400
+ id 1s3t9W-0001km-Oy
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 03:52:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714981957;
+ s=mimecast20190719; t=1714981970;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=n3vpEUsRGRbH/fpvacNXxdrZu8llumdrJ7M6KLKOzzM=;
- b=fbWO3+MAZVbXzAQXPtrYtk3sJYHDCCh8XKf9etDjGV2wBls8GCM0e+mnv+071JcWGv1jBh
- Scotgb+CnhurbKhh/7eK5zHIxFVurQAqW8nKJP85Uv1braBNRH7hFwnpdWMzKX8o7uz6MT
- zSWvRToWgPZqqA3/Y7HgCb/EGVVthos=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=XG+/YIdax3MeleXDpFVwjxPQHTXWj33Onf7v92r1kBM=;
+ b=LiBe2eUWFMVAq+OR8BqG/KA/lUhJwJGNrT2ssogo+LKXvJmBS1JGi7bKoV65AWn/9N/PPb
+ vIxfPoELLVgo5kT+FBbGR0kNcuS5pHBG9lO0FM7rKVZjS3qbsKZ7uYC1SvjmOAD706nlBM
+ jlMIX5DF3Q3jUOCSCUWZUhjtOmArdSU=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-497-K42BlKPpPnq_ZKYuuNz5OQ-1; Mon, 06 May 2024 03:52:35 -0400
-X-MC-Unique: K42BlKPpPnq_ZKYuuNz5OQ-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a59caea8836so47211966b.1
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 00:52:35 -0700 (PDT)
+ us-mta-46-UV1pcIvVNsm_GS1DSjTVrQ-1; Mon, 06 May 2024 03:52:48 -0400
+X-MC-Unique: UV1pcIvVNsm_GS1DSjTVrQ-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-572cbbdb450so577733a12.1
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 00:52:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714981954; x=1715586754;
+ d=1e100.net; s=20230601; t=1714981967; x=1715586767;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=n3vpEUsRGRbH/fpvacNXxdrZu8llumdrJ7M6KLKOzzM=;
- b=mVVLi0IpeB0cGVlN56imijQO2SmGNmfQZo8/Wf2uRfk6/OlpxcuaWnhVutVJmpflbP
- ud9cOA38024ZZHQbiHb4ZFLiPqpaH/vs3B7/fYRn3QeW4bh54uwu/ziYvqLrDbI6u7lI
- SWCGA6aTE1kHaTcBlpxWrtq3FYH+PFg6s0N6Z+tgcjhEhWmF+x4g4Dsd3S2GJJYGqiJo
- cUI3kwmA8hScpsSCJ0FIzmL2tzomsPdXfrMJ55k2p6I0ScAZdWmyXCcerTY76wz/wShU
- NIWeXjUN7dLEYz2zYzZhaQOhoOQ0sHaJIwlGO/fGRIAhSRX7cb7uapyCEmcP5cKFAkNO
- d1lw==
-X-Gm-Message-State: AOJu0YwnCpBuHPBlcVlIhgIz5CvQPuTE5C2VwT5dmeg/L5EcxI6EqFGF
- 2syvKIO6J6wQO/IqO1f5WMHHRSknvd1RYIr7DTPP7Li5uNZPyZQdyirT+jZJu9HrdDKQ2ceNXaV
- 7pBrtfkBSEeCdaPjYmiva737137lLabC8BFQpPc13/n+77PCIErcKnd+W87ALRoCWTKw2G1+8e8
- OEEMSJuQ9ISY0UU/NeqXCjoqQgUfV1DYUqkC9A
-X-Received: by 2002:a17:907:29c4:b0:a59:9cc1:7330 with SMTP id
- ev4-20020a17090729c400b00a599cc17330mr3959550ejc.64.1714981954404; 
- Mon, 06 May 2024 00:52:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGd/xr1Oud7WQgc9pO/J3MgJJQyuziJrF2NZGTe34CAsqwe3zuJUGGVUIZnxEXo2bzntFzAqw==
-X-Received: by 2002:a17:907:29c4:b0:a59:9cc1:7330 with SMTP id
- ev4-20020a17090729c400b00a599cc17330mr3959538ejc.64.1714981953977; 
- Mon, 06 May 2024 00:52:33 -0700 (PDT)
+ bh=XG+/YIdax3MeleXDpFVwjxPQHTXWj33Onf7v92r1kBM=;
+ b=blxLuBkHx8fZ3ebuY/ohyBL2jhzWMS5z1hM5rErFSVAqCZWHMoj8tPMxtRxlhzRB7M
+ 1LgexXNssNd58gDob8H85tnFLP4mhO90AC5bUl1ZHgCd+D/JXQVonVGGCpIJ21hRMSYe
+ XnzETu/rTuYQxUZtOL/wem/97ZMQdDsixebiJ4R5PgjcuCxk0IfOUgWjMrOTTlahbauW
+ mJ5IjCAhVPBYnm4ceuFX6+OAyeSms3Zb/Tk3it7+QDvtmdelbtZpf6Dykv1vff06fAAU
+ ZIMBt5iZyr/wFKO5dceRgZDjJ0Bs8HlngAF1gRBqtLt9OM74mPjkKbRsZuzoJDo5Jidr
+ 9KDQ==
+X-Gm-Message-State: AOJu0Ywn7ewx9BlJqXk6h0ZpkGSgSxYNQYI2BTggREbI+VIeytXocWua
+ x+hDcoA7wIN8v6zi5PNNvqcZS7jDRbN0E2dXrYAR62k2s6MX8CQ6J10mWgX/r1Z5wSdAd6mNiNA
+ lRko6zqym+yjP3wER8bqKJoL12tQrjnD5iQyIfE/T8MCNcMs6QAhnlJMhqTiZ08oYD+n5JNjxcp
+ pJf2gecdd6WTSPqF7dvyJwUvsbbVWB1AkvBT18
+X-Received: by 2002:a50:a6de:0:b0:572:a158:8a7c with SMTP id
+ f30-20020a50a6de000000b00572a1588a7cmr4748349edc.42.1714981966940; 
+ Mon, 06 May 2024 00:52:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGKf69+QdXUeyjIZW5AhSICU/Bv/WaTYiPx0PKIqGt41tDHB4450UEumV9CTwItOWnv2mgzfQ==
+X-Received: by 2002:a50:a6de:0:b0:572:a158:8a7c with SMTP id
+ f30-20020a50a6de000000b00572a1588a7cmr4748338edc.42.1714981966473; 
+ Mon, 06 May 2024 00:52:46 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- l12-20020a1709066b8c00b00a59c0ecd559sm1744622ejr.112.2024.05.06.00.52.33
- for <qemu-devel@nongnu.org>
+ n15-20020a05640206cf00b00572b029ca57sm4788976edy.25.2024.05.06.00.52.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 May 2024 00:52:33 -0700 (PDT)
+ Mon, 06 May 2024 00:52:46 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 27/46] docs: document new convention for Kconfig board symbols
-Date: Mon,  6 May 2024 09:51:06 +0200
-Message-ID: <20240506075125.8238-28-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 32/46] qdev-core: remove DeviceListener from typedefs.h
+Date: Mon,  6 May 2024 09:51:11 +0200
+Message-ID: <20240506075125.8238-33-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240506075125.8238-1-pbonzini@redhat.com>
 References: <20240506075125.8238-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -102,48 +103,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Boards have been switched to use "default y" and are now listed
-in default-configs/*.mak only for convenience.
+It is needed in very few places, which already depend on other parts of
+qdev-core.h files.  The benefit of having it in typedefs.h is small.
 
-Document this change and the new possibilities that it allows.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- docs/devel/kconfig.rst | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ include/hw/qdev-core.h  | 1 +
+ include/qemu/typedefs.h | 1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/docs/devel/kconfig.rst b/docs/devel/kconfig.rst
-index ccb9a46bd77..52d4b905f67 100644
---- a/docs/devel/kconfig.rst
-+++ b/docs/devel/kconfig.rst
-@@ -211,6 +211,8 @@ declares its dependencies in different ways:
+diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+index 9228e96c87e..5336728a23f 100644
+--- a/include/hw/qdev-core.h
++++ b/include/hw/qdev-core.h
+@@ -294,6 +294,7 @@ struct DeviceState {
+     MemReentrancyGuard mem_reentrancy_guard;
+ };
  
-     config SUN4M
-       bool
-+      default y
-+      depends on SPARC && !SPARC64
-       imply TCX
-       imply CG3
-       select CS4231
-@@ -228,8 +230,16 @@ declares its dependencies in different ways:
-   directives.  A device should be listed under ``select`` if the board
-   cannot be started at all without it.  It should be listed under
-   ``imply`` if (depending on the QEMU command line) the board may or
--  may not be started without it.  Boards also default to false; they are
--  enabled by the ``default-configs/*.mak`` for the target they apply to.
-+  may not be started without it.  Boards default to true, but also
-+  have a ``depends on`` clause to limit them to the appropriate targets.
-+  For some targets, not all boards may be supported by hardware
-+  virtualization, in which case they also depend on the ``TCG`` symbol,
-+  Other symbols that are commonly used as dependencies for boards
-+  include libraries (such as ``FDT``) or ``TARGET_BIG_ENDIAN``
-+  (possibly negated).
-+
-+  Boards are listed for convenience in the ``default-configs/*.mak``
-+  for the target they apply to.
- 
- **internal elements**
- 
++typedef struct DeviceListener DeviceListener;
+ struct DeviceListener {
+     void (*realize)(DeviceListener *listener, DeviceState *dev);
+     void (*unrealize)(DeviceListener *listener, DeviceState *dev);
+diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
+index 949d3e1daf9..66f0b146c8c 100644
+--- a/include/qemu/typedefs.h
++++ b/include/qemu/typedefs.h
+@@ -47,7 +47,6 @@ typedef struct CpuInfoFast CpuInfoFast;
+ typedef struct CPUJumpCache CPUJumpCache;
+ typedef struct CPUState CPUState;
+ typedef struct CPUTLBEntryFull CPUTLBEntryFull;
+-typedef struct DeviceListener DeviceListener;
+ typedef struct DeviceState DeviceState;
+ typedef struct DirtyBitmapSnapshot DirtyBitmapSnapshot;
+ typedef struct DisplayChangeListener DisplayChangeListener;
 -- 
 2.44.0
 
