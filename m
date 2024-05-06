@@ -4,67 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8042AC25B5C
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 11:22:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F077FC25B5C
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 11:43:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3wQ7-0001it-M4; Mon, 06 May 2024 07:22:11 -0400
+	id 1s3wk9-0000Wy-6i; Mon, 06 May 2024 07:42:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s3wPL-0001ZV-2P
- for qemu-devel@nongnu.org; Mon, 06 May 2024 07:21:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s3wPH-00007C-Rg
- for qemu-devel@nongnu.org; Mon, 06 May 2024 07:21:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714994466;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=vAyX+18i7W5hxpcwWY3wQVWZeUt+CcwHVxmQ6+nOCI4=;
- b=ZamIMqHd/WMYjfJXksKd8YLSMsp1QzqPjse6oaO9/ZTyAX2Z5t8V4vGgwoNcjhqcEzSdvm
- N/xvz1TXbZzNxQ+69nRuSLZEHISLtCwkhIhUwe/PWVeVplu7HyeZ3jnuuhyvYcVM1mQUa0
- uPoc2cCW8WHlNKxu0gGcTJ5yhr3+4Mo=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-257-nC-01PcsPWCClcaTbe54pA-1; Mon,
- 06 May 2024 07:21:01 -0400
-X-MC-Unique: nC-01PcsPWCClcaTbe54pA-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D9D8729AA3AF;
- Mon,  6 May 2024 11:21:00 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.58])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 420501C060D1;
- Mon,  6 May 2024 11:20:59 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org,
-	Paolo Bonzini <pbonzini@redhat.com>
-Cc: devel@lists.libvirt.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Claudio Imbrenda <imbrenda@linux.ibm.com>
-Subject: [PATCH v2] qemu-options: Deprecate "-runas" and introduce "-run-with
- user=..." instead
-Date: Mon,  6 May 2024 13:20:58 +0200
-Message-ID: <20240506112058.51446-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3wk7-0000WY-1P
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 07:42:51 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3wk5-0000x5-EI
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 07:42:50 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-34dc9065606so962365f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 04:42:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1714995767; x=1715600567; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=PXdB8+QIO6SMSbA2Z9lG3FeNC1/imepdGXxFob/hIKs=;
+ b=uoJThCddjYg+alqTL/lB7g7OKSPp3PnIdrbdfLGgVy0MGAasAT3f8boHGXB9jdp9H3
+ siHUYF7ZMDZzZC9GX9Ff/B0wUie8WPe0K8mHZDtjmWLZWByz97g1SF9OmWAXAi/hQpE4
+ k0zFbfaA1FnzXPuUDj48aLfNtb3cV3SYxDj2rbNUtXAV7HNhKW0MclY5dFHX7RIKGIs1
+ HLq1YlPFSp+z/agjQn7s4TMhPg+c/8wc9DX7HNv3nLJulfAxSYoNbwx5Ka3TAJk88fF7
+ JbfZMlsADbZgXajRHkTI2wikVK8UR2S7Eg3iX2DwJ/rY2bYMgWdChAXkQeLEkXKdJYG0
+ TaQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1714995767; x=1715600567;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=PXdB8+QIO6SMSbA2Z9lG3FeNC1/imepdGXxFob/hIKs=;
+ b=FkzhTZkm+ux7dzZoIdp+DfT0VmAFJOU2Spa8cu063igWJDe6e1v8BvFQ8kTXvsQaCE
+ da1X15OZgOwGHYBLdtJ/VEXwx4bTJGVFDQz9e4MZgI61TlkSyredGH8SRzcw5ezaiCEZ
+ qIuf4Cxdm3bAYjMWxp9aqRgvlI7maARc5sCMAvbV16DFRUIwj3o1ir5FhhNmgoYgVwUM
+ o4Wb0DGlco+x35oScTDc9kxsdNDPdI9eX90h2vxIwJclGZJl34ih9McI2SWpJKFiVjOB
+ 7IOZZaMsll5L+9LiQf6c3QwvwfYeHdJ29fXpfEhTbhSMiEWM3zKTnMupyg7WZK9ZSgei
+ 3Mpg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVCcT7QZjZbTnDr/sFX4I5xP4888xI8CSKtt64bGznQriB1g8aEcyoVoogQhnXibFQ7U5mkIWyW1WNRFdJTQdnhwth7HxQ=
+X-Gm-Message-State: AOJu0YxrQ9FC/ngWhQo0A1LbCo2Ut37Pnbb9l+a7a9Jt8C3DMeKx02eK
+ bP1gDMlFBvZA0W2HbQETpcUXTcst86Od7CslmzFRbsQLj1kmgKiGxBRKlsLmTdQ=
+X-Google-Smtp-Source: AGHT+IHCzkV9WQPZeN0lqJt9qDUM2a/ht5daURp07Z3M7cU3JZpOp5O6Z/T9h79pxhfVnrwtx17AiQ==
+X-Received: by 2002:a5d:66c8:0:b0:34d:13c9:eb52 with SMTP id
+ k8-20020a5d66c8000000b0034d13c9eb52mr10857175wrw.3.1714995767598; 
+ Mon, 06 May 2024 04:42:47 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.211.4])
+ by smtp.gmail.com with ESMTPSA id
+ c16-20020adffb10000000b0034f0633e322sm3405545wrr.38.2024.05.06.04.42.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 06 May 2024 04:42:47 -0700 (PDT)
+Message-ID: <0a93eda4-6935-42ad-9601-2d6430f4ed8f@linaro.org>
+Date: Mon, 6 May 2024 13:42:44 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] qemu-options: Deprecate "-runas" and introduce
+ "-run-with user=..." instead
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: devel@lists.libvirt.org, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Claudio Imbrenda <imbrenda@linux.ibm.com>
+References: <20240506112058.51446-1-thuth@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240506112058.51446-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,124 +98,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The old "-runas" option has the disadvantage that it is not visible
-in the QAPI schema, so it is not available via the normal introspection
-mechanisms. We've recently introduced the "-run-with" option for exactly
-this purpose, which is meant to handle the options that affect the
-runtime behavior. Thus let's introduce a "user=..." parameter here now
-and deprecate the old "-runas" option.
+On 6/5/24 13:20, Thomas Huth wrote:
+> The old "-runas" option has the disadvantage that it is not visible
+> in the QAPI schema, so it is not available via the normal introspection
+> mechanisms. We've recently introduced the "-run-with" option for exactly
+> this purpose, which is meant to handle the options that affect the
+> runtime behavior. Thus let's introduce a "user=..." parameter here now
+> and deprecate the old "-runas" option.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   v2: Add missing part in qemu-options.hx as suggested by Philippe
+> 
+>   docs/about/deprecated.rst |  6 ++++++
+>   system/vl.c               | 15 +++++++++++++++
+>   qemu-options.hx           | 15 +++++++++++----
+>   3 files changed, 32 insertions(+), 4 deletions(-)
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- v2: Add missing part in qemu-options.hx as suggested by Philippe
-
- docs/about/deprecated.rst |  6 ++++++
- system/vl.c               | 15 +++++++++++++++
- qemu-options.hx           | 15 +++++++++++----
- 3 files changed, 32 insertions(+), 4 deletions(-)
-
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 3310df3274..fe69e2d44c 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -61,6 +61,12 @@ configurations (e.g. -smp drawers=1,books=1,clusters=1 for x86 PC machine) is
- marked deprecated since 9.0, users have to ensure that all the topology members
- described with -smp are supported by the target machine.
- 
-+``-runas`` (since 9.1)
-+----------------------
-+
-+Use ``-run-with user=..`` instead.
-+
-+
- User-mode emulator command line arguments
- -----------------------------------------
- 
-diff --git a/system/vl.c b/system/vl.c
-index 7756eac81e..b031427440 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -773,6 +773,10 @@ static QemuOptsList qemu_run_with_opts = {
-             .name = "chroot",
-             .type = QEMU_OPT_STRING,
-         },
-+        {
-+            .name = "user",
-+            .type = QEMU_OPT_STRING,
-+        },
-         { /* end of list */ }
-     },
- };
-@@ -3586,6 +3590,7 @@ void qemu_init(int argc, char **argv)
-                 break;
- #if defined(CONFIG_POSIX)
-             case QEMU_OPTION_runas:
-+                warn_report("-runas is deprecated, use '-run-with user=...' instead");
-                 if (!os_set_runas(optarg)) {
-                     error_report("User \"%s\" doesn't exist"
-                                  " (and is not <uid>:<gid>)",
-@@ -3612,6 +3617,16 @@ void qemu_init(int argc, char **argv)
-                 if (str) {
-                     os_set_chroot(str);
-                 }
-+                str = qemu_opt_get(opts, "user");
-+                if (str) {
-+                    if (!os_set_runas(str)) {
-+                        error_report("User \"%s\" doesn't exist"
-+                                     " (and is not <uid>:<gid>)",
-+                                     optarg);
-+                        exit(1);
-+                    }
-+                }
-+
-                 break;
-             }
- #endif /* CONFIG_POSIX */
-diff --git a/qemu-options.hx b/qemu-options.hx
-index cf61f6b863..3031479a15 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -4824,7 +4824,8 @@ DEF("runas", HAS_ARG, QEMU_OPTION_runas, \
- SRST
- ``-runas user``
-     Immediately before starting guest execution, drop root privileges,
--    switching to the specified user.
-+    switching to the specified user. This option is deprecated, use
-+    ``-run-with user=...`` instead.
- ERST
- 
- DEF("prom-env", HAS_ARG, QEMU_OPTION_prom_env,
-@@ -4990,13 +4991,15 @@ DEF("qtest-log", HAS_ARG, QEMU_OPTION_qtest_log, "", QEMU_ARCH_ALL)
- 
- #ifdef CONFIG_POSIX
- DEF("run-with", HAS_ARG, QEMU_OPTION_run_with,
--    "-run-with [async-teardown=on|off][,chroot=dir]\n"
-+    "-run-with [async-teardown=on|off][,chroot=dir][user=username|uid:gid]\n"
-     "                Set miscellaneous QEMU process lifecycle options:\n"
-     "                async-teardown=on enables asynchronous teardown (Linux only)\n"
--    "                chroot=dir chroot to dir just before starting the VM\n",
-+    "                chroot=dir chroot to dir just before starting the VM\n"
-+    "                user=username switch to the specified user before starting the VM\n"
-+    "                user=uid:gid dito, but use specified user-ID and group-ID instead\n",
-     QEMU_ARCH_ALL)
- SRST
--``-run-with [async-teardown=on|off][,chroot=dir]``
-+``-run-with [async-teardown=on|off][,chroot=dir][user=username|uid:gid]``
-     Set QEMU process lifecycle options.
- 
-     ``async-teardown=on`` enables asynchronous teardown. A new process called
-@@ -5013,6 +5016,10 @@ SRST
-     ``chroot=dir`` can be used for doing a chroot to the specified directory
-     immediately before starting the guest execution. This is especially useful
-     in combination with -runas.
-+
-+    ``user=username`` or ``user=uid:gid`` can be used to drop root privileges
-+    by switching to the specified user (via username) or user and group
-+    (via uid:gid) immediately before starting guest execution.
- ERST
- #endif
- 
--- 
-2.45.0
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
