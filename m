@@ -4,104 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50EC8C10F16
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 09:29:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43F33C25B5C
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 09:35:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3uem-0006qi-QB; Mon, 06 May 2024 05:29:12 -0400
+	id 1s3ukD-0000TL-BN; Mon, 06 May 2024 05:34:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s3uek-0006qO-LP
- for qemu-devel@nongnu.org; Mon, 06 May 2024 05:29:10 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3uk9-0000Qk-V6
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 05:34:46 -0400
 Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s3ueh-0001mi-7q
- for qemu-devel@nongnu.org; Mon, 06 May 2024 05:29:10 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3uk7-0007CH-Qj
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 05:34:45 -0400
 Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-a59a387fbc9so379768166b.1
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 02:29:06 -0700 (PDT)
+ a640c23a62f3a-a59a387fbc9so381341466b.1
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 02:34:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714987744; x=1715592544; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NDFtcL5t4gXzrN/uQPJUI7ZcnUDtAe2YPjtW9fAQBEw=;
- b=E8gySF7GdCttEuvBlIRvtOak2x9ep+X6tGVv52vcDlebDetWJPFRTMAbLaFjf3IMMJ
- +PzrEfxZSC+1XVqaT5n5bUwd91obMu/g9ziHxUa2zjWGX5ZFBanoQCcYp/Rn9moZ8c7A
- MT/riiAgUFMMCQypijxavRe/2JQ2ftDLazgffsu6ny9+rncOf/m0nSFmAy+GIGc/b+S/
- lRHxy2FRj6mS/urvmVyuwokAMiVVcbGywtUgwNUTijFSvi1Tal6wJAQO4NKI3ymD5tfO
- N2WMpMPrRYFxz3rRzAdvSDsqLkAuGspDMhqTHrx1yYjtF2xkP/gf1rbxfO/1/mYUNBh9
- gY/A==
+ d=linaro.org; s=google; t=1714988081; x=1715592881; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=kfoPd5lIV4bqhuA9i3A1ge+qoho79nPaXq5HjCBEwuQ=;
+ b=qscxZZpuWpNLAzHeBgJPr8rV7EvgtXKbqOmBywz0iSIPtnv7COi0NfphGgZz6rksdy
+ Gqz5vA5DGzBXNTihOw+gCVIkhcf/DNeUle8K61AYV5DTjn2rFaHKlJoOA64fXwf9MPD7
+ siqcQRxoVejz6rVx/RQ0VkmmbtmSrBpnATDlqfysI/2og/zCwxcxEhuMe5PPuFdBMrph
+ 8nlGhvJ+YFI4tFITDmMaZw+wA6zPUgk70Krr5dzqul1fNv67Mazzkjhp3L+eg8zazWD6
+ vVZfuPE7io0TkPrMnCx0x/ghsV8hK84GgJP3O3sabU1GTIfeRfOkPdRRW9KpY/QJtbgc
+ tCKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714987744; x=1715592544;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=NDFtcL5t4gXzrN/uQPJUI7ZcnUDtAe2YPjtW9fAQBEw=;
- b=r4svlqwmAsn3TG00awRUlHEZYg/hogeLNiyAD/de7WWtmhSPlhrwocfiyUfIsScQRq
- ob+herOUTO/anB+gj8hy2aT2t+j7RmnivynWpEl1Tt5bldKrRctbM86oMWrP8XfQJL+j
- Z9gslogTYc0yV7v6dYhXGz/KOwKXt+M6+X2/2IKUyR89hw3zmwg0DRpPiXr1BQWGp90m
- YqNsISPilPGXmeEH2lKuLC0bSE8h4rjyRCnmc6zE+jVh8D8VZqj+15p3e/YzBksF63cF
- bx/Zc60wnl7xTA5W6rMJ7pEquYsz8vR6sN/wUgh88fk3s/pdgHxCSyx8IYYF5EY6KG/r
- 7J/A==
-X-Gm-Message-State: AOJu0Yy7CAUq8mCiCvsYVaXFsAGeGUZlZ0GgzZq8t7UZvQl7Te+7E/5V
- N6BjyqbS0gVkeftGwKCv217dmPgaEc9Z/rNvLpog18qk5liUYh2ddTo3nwBEX1wBWjcPLWiz/up
- C/tFyD3wSJXl1CR+s3YJq+mZSVjDCj5NN8m2zJA==
-X-Google-Smtp-Source: AGHT+IEqIDgMe2oDZ5RHq9MbU78RQXnYjCtvPqFtl7gl7Mutky36zjfwIX03Jme46gdh/TtmGKOA/vo0RCOy1YbvXv0=
-X-Received: by 2002:a50:a696:0:b0:568:d5e7:37a1 with SMTP id
- e22-20020a50a696000000b00568d5e737a1mr6219741edc.36.1714987744248; Mon, 06
- May 2024 02:29:04 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1714988081; x=1715592881;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kfoPd5lIV4bqhuA9i3A1ge+qoho79nPaXq5HjCBEwuQ=;
+ b=Wu3BtxHdeEXyNlsNJ5uSJvXCDc1OG+kkpta1/vJtlrqmED7c0Xnbq9xd+d59LfIngy
+ mhEE6jsjwte/bSR4hWNImo5qDSwf+stOdlrpFVUJh96nCWSyfsOBAxL9QEz+5bshWDjF
+ m48/xYlCfqcs34okRslmEh2EhmWD/BeYaboLXawiltgEoECHBJVNxWhLZ64mVozD78yz
+ TKpIu4m+8DEvGTwrTH+oT2NYwz8zs6/fzrnmqHWcuKQ1mTTjoNOIQ2eV1xC7iL7Ettn4
+ xk4xC6CAPJQAOh49ea+AkGyRj+76tp7vdpkNH7MKxLN2C96BfW7miVeRq32LEHmPiFD1
+ vr6Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWZRlq2G69/coNuIl4AgDkN0fja3j4OKfyf+DheXagOrxtSDLFP5xkUiqGusDOrlbO5o6yBUef2KWBYQxJIynxxXZtYols=
+X-Gm-Message-State: AOJu0YzTWXmuiW05+icjWuaJL4T5zdfz+SGGditvrRm3bnfhdWAdFY3k
+ D7baodSvQGUlTw887QQX7Zf4Yiqa8CkyGtripxAn0FXnZHLpYaB28SXtH+Tgf5A=
+X-Google-Smtp-Source: AGHT+IEH0xvvW9WbqM1rgaFNxQzM57dtnx1fZ23stmlO86FlL43JQO0X6z1U0Dkcm+5c//aeeTuoZQ==
+X-Received: by 2002:a50:bac6:0:b0:570:c8f:1a35 with SMTP id
+ x64-20020a50bac6000000b005700c8f1a35mr5812355ede.8.1714988081223; 
+ Mon, 06 May 2024 02:34:41 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.211.4])
+ by smtp.gmail.com with ESMTPSA id
+ t25-20020a056402241900b005725de35790sm4977627eda.61.2024.05.06.02.34.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 06 May 2024 02:34:40 -0700 (PDT)
+Message-ID: <06e98554-3430-49d5-94f3-c5d683327f55@linaro.org>
+Date: Mon, 6 May 2024 11:34:37 +0200
 MIME-Version: 1.0
-References: <20240312020000.12992-1-salil.mehta@huawei.com>
- <20240312020000.12992-7-salil.mehta@huawei.com>
- <CAFEAcA93EotG4-LXRJF034_9dWAWgZJA1VF6dB-xCsXn0T059g@mail.gmail.com>
- <10f35804a55e460a8ce6ecdb3f0c79b6@huawei.com>
-In-Reply-To: <10f35804a55e460a8ce6ecdb3f0c79b6@huawei.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 6 May 2024 10:28:52 +0100
-Message-ID: <CAFEAcA-w7wf9F4VVAnZR3b34ydEWq=QNw=CxhTMobsr+AP_LCg@mail.gmail.com>
-Subject: Re: [PATCH V8 6/8] physmem: Add helper function to destroy CPU
- AddressSpace
-To: Salil Mehta <salil.mehta@huawei.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, 
- "maz@kernel.org" <maz@kernel.org>,
- "jean-philippe@linaro.org" <jean-philippe@linaro.org>, 
- Jonathan Cameron <jonathan.cameron@huawei.com>, 
- "lpieralisi@kernel.org" <lpieralisi@kernel.org>, 
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "imammedo@redhat.com" <imammedo@redhat.com>, 
- "andrew.jones@linux.dev" <andrew.jones@linux.dev>,
- "david@redhat.com" <david@redhat.com>, 
- "philmd@linaro.org" <philmd@linaro.org>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, 
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>, 
- "mst@redhat.com" <mst@redhat.com>, "will@kernel.org" <will@kernel.org>,
- "gshan@redhat.com" <gshan@redhat.com>, 
- "rafael@kernel.org" <rafael@kernel.org>,
- "alex.bennee@linaro.org" <alex.bennee@linaro.org>, 
- "linux@armlinux.org.uk" <linux@armlinux.org.uk>, 
- "darren@os.amperecomputing.com" <darren@os.amperecomputing.com>, 
- "ilkka@os.amperecomputing.com" <ilkka@os.amperecomputing.com>, 
- "vishnu@os.amperecomputing.com" <vishnu@os.amperecomputing.com>, 
- "karl.heubaum@oracle.com" <karl.heubaum@oracle.com>,
- "miguel.luis@oracle.com" <miguel.luis@oracle.com>, 
- "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>,
- zhukeqian <zhukeqian1@huawei.com>, 
- "wangxiongfeng (C)" <wangxiongfeng2@huawei.com>,
- "wangyanan (Y)" <wangyanan55@huawei.com>, 
- "jiakernel2@gmail.com" <jiakernel2@gmail.com>,
- "maobibo@loongson.cn" <maobibo@loongson.cn>, 
- "lixianglai@loongson.cn" <lixianglai@loongson.cn>,
- Linuxarm <linuxarm@huawei.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] hw/char: Add QOM property for STM32L4x5 USART clock
+ frequency
+To: =?UTF-8?Q?In=C3=A8s_Varhol?= <ines.varhol@telecom-paris.fr>,
+ qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ Laurent Vivier <lvivier@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair@alistair23.me>,
+ Samuel Tardieu <samuel.tardieu@telecom-paris.fr>,
+ Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>
+References: <20240505140556.373711-1-ines.varhol@telecom-paris.fr>
+ <20240505140556.373711-4-ines.varhol@telecom-paris.fr>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240505140556.373711-4-ines.varhol@telecom-paris.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x632.google.com
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -124,46 +105,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 6 May 2024 at 10:06, Salil Mehta <salil.mehta@huawei.com> wrote:
->
-> Hi Peter,
->
-> Thanks for the review.
->
-> >  From: Peter Maydell <peter.maydell@linaro.org>
-> >  When do we need to destroy a single address space in this way that mea=
-ns
-> >  we need to keep a count of how many ASes the CPU currently has? The
-> >  commit message talks about the case when we unrealize the whole CPU
-> >  object, but in that situation you can just throw away all the ASes at =
-once (eg
-> >  by calling some
-> >  cpu_destroy_address_spaces() function from cpu_common_unrealizefn()).
->
->
-> Yes, maybe, we can destroy all at once from common leg as well. I'd prefe=
-r this
-> to be done from the arch specific function for ARM to maintain the clarit=
-y &
-> symmetry of initialization and un-initialization legs.  For now, all of t=
-hese address
-> space destruction is happening in context to the arm_cpu_unrealizefn().
->
-> It=E2=80=99s a kind of trade-off between little more code and clarity but=
- I'm open to
-> further suggestions.
->
->
-> >
-> >  Also, if we're leaking stuff here by failing to destroy it, is that a =
-problem for
-> >  existing CPU types like x86 that we can already hotplug?
->
-> No we are not. We are taking care of these in the ARM arch specific legs
-> within functions arm_cpu_(un)realizefn().
+Hi,
 
-How can you be taking care of *x86* CPU types in the Arm unrealize?
+On 5/5/24 16:05, Inès Varhol wrote:
+> Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
+> ---
+>   hw/char/stm32l4x5_usart.c | 12 ++++++++++++
+>   1 file changed, 12 insertions(+)
+> 
+> diff --git a/hw/char/stm32l4x5_usart.c b/hw/char/stm32l4x5_usart.c
+> index fc5dcac0c4..ee7727481c 100644
+> --- a/hw/char/stm32l4x5_usart.c
+> +++ b/hw/char/stm32l4x5_usart.c
+> @@ -26,6 +26,7 @@
+>   #include "hw/clock.h"
+>   #include "hw/irq.h"
+>   #include "hw/qdev-clock.h"
+> +#include "qapi/visitor.h"
+>   #include "hw/qdev-properties.h"
+>   #include "hw/qdev-properties-system.h"
+>   #include "hw/registerfields.h"
+> @@ -523,6 +524,14 @@ static Property stm32l4x5_usart_base_properties[] = {
+>       DEFINE_PROP_END_OF_LIST(),
+>   };
+>   
+> +static void clock_freq_get(Object *obj, Visitor *v,
+> +    const char *name, void *opaque, Error **errp)
+> +{
+> +    Stm32l4x5UsartBaseState *s = STM32L4X5_USART_BASE(obj);
+> +    uint32_t clock_freq_hz = clock_get_hz(s->clk);
+> +    visit_type_uint32(v, name, &clock_freq_hz, errp);
+> +}
+> +
+>   static void stm32l4x5_usart_base_init(Object *obj)
+>   {
+>       Stm32l4x5UsartBaseState *s = STM32L4X5_USART_BASE(obj);
+> @@ -534,6 +543,9 @@ static void stm32l4x5_usart_base_init(Object *obj)
+>       sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
+>   
+>       s->clk = qdev_init_clock_in(DEVICE(s), "clk", NULL, s, 0);
+> +
+> +    object_property_add(obj, "clock-freq-hz", "uint32",
+> +                        clock_freq_get, NULL, NULL, NULL);
 
-thanks
--- PMM
+Patch LGTM, but I wonder if registering QOM getter without setter
+is recommended. Perhaps we should encourage parity? In normal HW
+emulation we shouldn't update this clock externally, but thinking
+about testing, this could be interesting to introduce jitter.
+
+Any opinion on this?
+
+>   }
+>   
+>   static int stm32l4x5_usart_base_post_load(void *opaque, int version_id)
+
 
