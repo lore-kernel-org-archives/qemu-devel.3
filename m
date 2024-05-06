@@ -4,70 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1035C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 19:07:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2F2BC25B5C
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 19:12:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s43fp-00030P-Po; Mon, 06 May 2024 15:06:53 -0400
+	id 1s43kp-0006pB-KO; Mon, 06 May 2024 15:12:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1s43fa-0002rV-6b
- for qemu-devel@nongnu.org; Mon, 06 May 2024 15:06:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <shum.sdl@nppct.ru>) id 1s43km-0006oQ-3P
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 15:12:00 -0400
+Received: from mail.nppct.ru ([195.133.245.4])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1s43fY-0000B9-FS
- for qemu-devel@nongnu.org; Mon, 06 May 2024 15:06:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715022395;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=EaNV6j44T8hFyYd9mWj4JUcAH/rY+FTEpab1tHrtqVI=;
- b=HSeIZAkZ4thSb/KP7ySP5JIoVIj71yHHyqiGoMCJYFq5vs7GA0BpQJf34i3FE9L1ghuYbg
- xvwX/IwY+PUt034e+GdlpVutynVPzpL9DWHSAOvFcfITAOf2ueTykX4HxaOaVl5UDMQ1f/
- DOVQtHMXl+6P1erA0NPm1+69OMkMj/Y=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-586-rbqpOyRaMq6o3k0wNx0F8A-1; Mon, 06 May 2024 15:06:31 -0400
-X-MC-Unique: rbqpOyRaMq6o3k0wNx0F8A-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2F65818065AB;
- Mon,  6 May 2024 19:06:31 +0000 (UTC)
-Received: from localhost (unknown [10.39.192.54])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 568DB40C6DAE;
- Mon,  6 May 2024 19:06:30 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Czenczek <hreitz@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
- Fam Zheng <fam@euphon.net>
-Subject: [PATCH 2/2] aio: warn about iohandler_ctx special casing
-Date: Mon,  6 May 2024 15:06:22 -0400
-Message-ID: <20240506190622.56095-3-stefanha@redhat.com>
-In-Reply-To: <20240506190622.56095-1-stefanha@redhat.com>
-References: <20240506190622.56095-1-stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <shum.sdl@nppct.ru>) id 1s43kh-0002zk-9G
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 15:11:59 -0400
+Received: from mail.nppct.ru (localhost [127.0.0.1])
+ by mail.nppct.ru (Postfix) with ESMTP id DBE701C158F
+ for <qemu-devel@nongnu.org>; Mon,  6 May 2024 22:11:41 +0300 (MSK)
+Authentication-Results: mail.nppct.ru (amavisd-new); dkim=pass (1024-bit key)
+ reason="pass (just generated,
+ assumed good)" header.d=nppct.ru
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nppct.ru; h=
+ in-reply-to:from:from:content-language:references:to:subject
+ :subject:user-agent:mime-version:date:date:message-id
+ :content-type:content-type; s=dkim; t=1715022700; x=1715886701;
+ bh=U2rYzKds8VDbjUyJE6Iwx7B8bz/UQJnabEQd+7p6b5w=; b=ilLIQ8SY+K81
+ 7PMC295B7XYM77+TOoFA1j4KTUjqaXkvzxnzYsP2kf82GaFXjgLZ8nIsULZMgrNM
+ zY45AGw2aNTY9zj6KcvEBcyfWP56Ojs7KUFCN2fk4r64rmrpbv+DupBgwT87aPiM
+ 5LTEttTIbKPvBK2fUEgRr6Mzj3BnJgg=
+X-Virus-Scanned: Debian amavisd-new at mail.nppct.ru
+Received: from mail.nppct.ru ([127.0.0.1])
+ by mail.nppct.ru (mail.nppct.ru [127.0.0.1]) (amavisd-new, port 10026)
+ with ESMTP id j9ckdUmxr-TG for <qemu-devel@nongnu.org>;
+ Mon,  6 May 2024 22:11:40 +0300 (MSK)
+Received: from [10.66.66.2] (unknown [176.222.55.70])
+ by mail.nppct.ru (Postfix) with ESMTPSA id 6E5BA1C1571;
+ Mon,  6 May 2024 22:11:39 +0300 (MSK)
+Content-Type: multipart/alternative;
+ boundary="------------dQ0IFg4gXZJKeG2jp6HFXw3t"
+Message-ID: <3e3d3c9c-e8df-4447-91d9-a156712d57ba@nppct.ru>
+Date: Mon, 6 May 2024 22:11:39 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [sdl-qemu] [PATCH v1] /hw/intc/arm_gic WRONG ARGUMENTS
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+References: <a4cbfe6c-27d6-4df0-ae31-db0d60d88f9e@nppct.ru>
+ <95ab6dcf-cc96-4472-93ab-f08682b37d5e@tls.msk.ru>
+ <4c4dfebb-698d-466f-90b0-9475ad4c123a@nppct.ru>
+ <8734qvuukl.fsf@draig.linaro.org>
+Content-Language: ru
+From: Andrey Shumilin <shum.sdl@nppct.ru>
+In-Reply-To: <8734qvuukl.fsf@draig.linaro.org>
+Received-SPF: pass client-ip=195.133.245.4; envelope-from=shum.sdl@nppct.ru;
+ helo=mail.nppct.ru
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,51 +79,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The main loop has two AioContexts: qemu_aio_context and iohandler_ctx.
-The main loop runs them both, but nested aio_poll() calls on
-qemu_aio_context exclude iohandler_ctx.
+This is a multi-part message in MIME format.
+--------------dQ0IFg4gXZJKeG2jp6HFXw3t
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Which one should qemu_get_current_aio_context() return when called from
-the main loop? Document that it's always qemu_aio_context.
+ 1. s - This argument passes a pointer to the GICState structure that
+    contains the state of the interrupt controller. This argument is
+    passed first and used correctly.
+ 2. regno - This is the register number, which in the context of
+    gic_cpu_read is calculated as (offset - 0xd0) / 4. In gic_cpu_read
+    code, this number is used to identify the specific APR register to
+    be read or modified. In gic_apr_ns_view, this number is also used to
+    determine which NSAPR register to read or how to compute bits,
+    implying that it is used as a register index.
+ 3. cpu - This is the CPU number used to address a particular CPU in the
+    nsapr, apr, and other arrays.
 
-This has subtle effects on functions that use
-qemu_get_current_aio_context(). For example, aio_co_reschedule_self()
-does not work when moving from iohandler_ctx to qemu_aio_context because
-qemu_get_current_aio_context() does not differentiate these two
-AioContexts.
+Based on the context, it is important that regno and cpu are passed to 
+gic_apr_ns_view in the correct order for correct handling of arrays and 
+indexes within this function. An error in the order of the arguments can 
+result in incorrect data handling, as arrays are indexed first by CPU 
+number and then by register number. In the considered call 
+gic_apr_ns_view the arguments are passed in the wrong order
 
-Document this in order to reduce the chance of future bugs.
+06.05.2024 13:02, Alex Bennée пишет:
+> Andrey Shumilin<shum.sdl@nppct.ru>  writes:
+>
+>> 1 Possibly mismatched call arguments in function 'gic_apr_ns_view': 'cpu' and 'regno' passed in place of 'int regno' and 'int
+>>   cpu'.
+>> 2 Possibly mismatched call arguments in function 'gic_apr_write_ns_view': 'cpu' and 'regno' passed in place of 'int regno' and
+>>   'int cpu'.
+>>
+>> Found by Linux Verification Center (linuxtesting.org) with SVACE.
+> So this purely a heuristic test based on the parameter names?
+>
+>>  From 23b142f5046ba9d3aec57217f6d8f3127f9bff69 Mon Sep 17 00:00:00 2001
+>> From: Andrey Shumilin<shum.sdl@nppct.ru>
+>> Date: Sun, 5 May 2024 20:13:40 +0300
+>> Subject: [PATCH] Patch hw/intc/arm_gic.c
+>>
+>> Signed-off-by: Andrey Shumilin<shum.sdl@nppct.ru>
+>> ---
+>>   hw/intc/arm_gic.c | 4 ++--
+>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hw/intc/arm_gic.c b/hw/intc/arm_gic.c
+>> index 7a34bc0998..47f01e45e3 100644
+>> --- a/hw/intc/arm_gic.c
+>> +++ b/hw/intc/arm_gic.c
+>> @@ -1658,7 +1658,7 @@ static MemTxResult gic_cpu_read(GICState *s, int cpu, int offset,
+>>               *data = s->h_apr[gic_get_vcpu_real_id(cpu)];
+>>           } else if (gic_cpu_ns_access(s, cpu, attrs)) {
+>>               /* NS view of GICC_APR<n> is the top half of GIC_NSAPR<n> */
+>> -            *data = gic_apr_ns_view(s, regno, cpu);
+>> +            *data = gic_apr_ns_view(s, cpu, regno);
+>>           } else {
+>>               *data = s->apr[regno][cpu];
+>>           }
+>> @@ -1746,7 +1746,7 @@ static MemTxResult gic_cpu_write(GICState *s, int cpu, int offset,
+>>               s->h_apr[gic_get_vcpu_real_id(cpu)] = value;
+>>           } else if (gic_cpu_ns_access(s, cpu, attrs)) {
+>>               /* NS view of GICC_APR<n> is the top half of GIC_NSAPR<n> */
+>> -            gic_apr_write_ns_view(s, regno, cpu, value);
+>> +            gic_apr_write_ns_view(s, cpu, regno, value);
+>>           } else {
+>>               s->apr[regno][cpu] = value;
+>>           }
+> Ahh C's lack of strong typing wins again :-/
+>
+> Reviewed-by: Alex Bennée<alex.bennee@linaro.org>
+>
+--------------dQ0IFg4gXZJKeG2jp6HFXw3t
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <ol>
+      <li>s - This argument passes a pointer to the GICState structure
+        that contains the state of the interrupt controller. This
+        argument is passed first and used correctly.</li>
+      <li>regno - This is the register number, which in the context of
+        gic_cpu_read is calculated as (offset - 0xd0) / 4. In
+        gic_cpu_read code, this number is used to identify the specific
+        APR register to be read or modified. In gic_apr_ns_view, this
+        number is also used to determine which NSAPR register to read or
+        how to compute bits, implying that it is used as a register
+        index.</li>
+      <li>cpu - This is the CPU number used to address a particular CPU
+        in the nsapr, apr, and other arrays.</li>
+    </ol>
+    Based on the context, it is important that regno and cpu are passed
+    to gic_apr_ns_view in the correct order for correct handling of
+    arrays and indexes within this function. An error in the order of
+    the arguments can result in incorrect data handling, as arrays are
+    indexed first by CPU number and then by register number. In the
+    considered call gic_apr_ns_view the arguments are passed in the
+    wrong order<br>
+    <p></p>
+    <div class="moz-cite-prefix">06.05.2024 13:02, Alex Bennée пишет:<br>
+    </div>
+    <blockquote type="cite" cite="mid:8734qvuukl.fsf@draig.linaro.org">
+      <pre class="moz-quote-pre" wrap="">Andrey Shumilin <a class="moz-txt-link-rfc2396E" href="mailto:shum.sdl@nppct.ru">&lt;shum.sdl@nppct.ru&gt;</a> writes:
+
+</pre>
+      <blockquote type="cite">
+        <pre class="moz-quote-pre" wrap="">1 Possibly mismatched call arguments in function 'gic_apr_ns_view': 'cpu' and 'regno' passed in place of 'int regno' and 'int
+ cpu'.
+2 Possibly mismatched call arguments in function 'gic_apr_write_ns_view': 'cpu' and 'regno' passed in place of 'int regno' and
+ 'int cpu'.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+</pre>
+      </blockquote>
+      <pre class="moz-quote-pre" wrap="">
+So this purely a heuristic test based on the parameter names?
+
+</pre>
+      <blockquote type="cite">
+        <pre class="moz-quote-pre" wrap="">
+From 23b142f5046ba9d3aec57217f6d8f3127f9bff69 Mon Sep 17 00:00:00 2001
+From: Andrey Shumilin <a class="moz-txt-link-rfc2396E" href="mailto:shum.sdl@nppct.ru">&lt;shum.sdl@nppct.ru&gt;</a>
+Date: Sun, 5 May 2024 20:13:40 +0300
+Subject: [PATCH] Patch hw/intc/arm_gic.c
+
+Signed-off-by: Andrey Shumilin <a class="moz-txt-link-rfc2396E" href="mailto:shum.sdl@nppct.ru">&lt;shum.sdl@nppct.ru&gt;</a>
 ---
- include/block/aio.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+ hw/intc/arm_gic.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/block/aio.h b/include/block/aio.h
-index 8378553eb9..4ee81936ed 100644
---- a/include/block/aio.h
-+++ b/include/block/aio.h
-@@ -629,6 +629,9 @@ void aio_co_schedule(AioContext *ctx, Coroutine *co);
-  *
-  * Move the currently running coroutine to new_ctx. If the coroutine is already
-  * running in new_ctx, do nothing.
-+ *
-+ * Note that this function cannot reschedule from iohandler_ctx to
-+ * qemu_aio_context.
-  */
- void coroutine_fn aio_co_reschedule_self(AioContext *new_ctx);
- 
-@@ -661,6 +664,9 @@ void aio_co_enter(AioContext *ctx, Coroutine *co);
-  * If called from an IOThread this will be the IOThread's AioContext.  If
-  * called from the main thread or with the "big QEMU lock" taken it
-  * will be the main loop AioContext.
-+ *
-+ * Note that the return value is never the main loop's iohandler_ctx and the
-+ * return value is the main loop AioContext instead.
-  */
- AioContext *qemu_get_current_aio_context(void);
- 
--- 
-2.45.0
+diff --git a/hw/intc/arm_gic.c b/hw/intc/arm_gic.c
+index 7a34bc0998..47f01e45e3 100644
+--- a/hw/intc/arm_gic.c
++++ b/hw/intc/arm_gic.c
+@@ -1658,7 +1658,7 @@ static MemTxResult gic_cpu_read(GICState *s, int cpu, int offset,
+             *data = s-&gt;h_apr[gic_get_vcpu_real_id(cpu)];
+         } else if (gic_cpu_ns_access(s, cpu, attrs)) {
+             /* NS view of GICC_APR&lt;n&gt; is the top half of GIC_NSAPR&lt;n&gt; */
+-            *data = gic_apr_ns_view(s, regno, cpu);
++            *data = gic_apr_ns_view(s, cpu, regno);
+         } else {
+             *data = s-&gt;apr[regno][cpu];
+         }
+@@ -1746,7 +1746,7 @@ static MemTxResult gic_cpu_write(GICState *s, int cpu, int offset,
+             s-&gt;h_apr[gic_get_vcpu_real_id(cpu)] = value;
+         } else if (gic_cpu_ns_access(s, cpu, attrs)) {
+             /* NS view of GICC_APR&lt;n&gt; is the top half of GIC_NSAPR&lt;n&gt; */
+-            gic_apr_write_ns_view(s, regno, cpu, value);
++            gic_apr_write_ns_view(s, cpu, regno, value);
+         } else {
+             s-&gt;apr[regno][cpu] = value;
+         }
+</pre>
+      </blockquote>
+      <pre class="moz-quote-pre" wrap="">
+Ahh C's lack of strong typing wins again :-/
 
+Reviewed-by: Alex Bennée <a class="moz-txt-link-rfc2396E" href="mailto:alex.bennee@linaro.org">&lt;alex.bennee@linaro.org&gt;</a>
+
+</pre>
+    </blockquote>
+  </body>
+</html>
+
+--------------dQ0IFg4gXZJKeG2jp6HFXw3t--
 
