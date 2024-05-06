@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CBF8C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 07:53:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06AF6C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 07:53:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3t9Q-0006dE-VR; Mon, 06 May 2024 03:52:45 -0400
+	id 1s3t9t-0008Bx-UN; Mon, 06 May 2024 03:53:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s3t9E-00067Y-2P
- for qemu-devel@nongnu.org; Mon, 06 May 2024 03:52:32 -0400
+ id 1s3t9q-00084K-19
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 03:53:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s3t9A-0001i9-Tn
- for qemu-devel@nongnu.org; Mon, 06 May 2024 03:52:31 -0400
+ id 1s3t9o-0001nE-CP
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 03:53:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714981948;
+ s=mimecast20190719; t=1714981987;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2j7P3TXePI6sdhQMICKDlQARo6sQhFnL+fIFYEDqzOI=;
- b=Jc6JYpjWSzbDm8d02tjWDUvRDaZP95VLfqcyWVAM2z3FpghYN8lNfVPkbEipPuyjQDdZb0
- fxLu8uug26U/jVmlBO17R5hYjj1ZojKObgXzo9cTmhVKARAtn5huSGTvMFKlyTyj8BBuLe
- 7nDPeg2r+ZAcA0N8Lg0hpzla76vr/X8=
+ bh=BZowvef2Ajk61rQN0cGeoX5jJiq28YAn+xqA2isy+TU=;
+ b=XC7LjFbXrva0/CtKVdU663I4uZYLXzAHhyU1qdPxbiroZSystC5A5usT8Dk9sC/7mRnUYb
+ m+3pwYIAkTSJrw5SImcraUbH1Z2607403xuVE+v/2s/NWiG7etynPCwlBiaqS74KJ5ttVS
+ IoBqFSi35RkwaIlO3SEAIh8pisqgBHY=
 Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
  [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-209-DF35RQfGPau7W343LxDczg-1; Mon, 06 May 2024 03:52:26 -0400
-X-MC-Unique: DF35RQfGPau7W343LxDczg-1
+ us-mta-145-wpsv7GntNHK8PUBvyWqI9A-1; Mon, 06 May 2024 03:53:06 -0400
+X-MC-Unique: wpsv7GntNHK8PUBvyWqI9A-1
 Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a59cb20ea3bso57586166b.3
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 00:52:25 -0700 (PDT)
+ a640c23a62f3a-a59a212d874so128376166b.1
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 00:53:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714981944; x=1715586744;
+ d=1e100.net; s=20230601; t=1714981984; x=1715586784;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2j7P3TXePI6sdhQMICKDlQARo6sQhFnL+fIFYEDqzOI=;
- b=C9Vmh/ZAgaNRTBiUr+pwvZKtUhQZa8dmUbNcq1hMx3GGa4QpMm0m/gu6dySWk5YfWN
- asiQl4Xe9wOhDPICRbe0oDa5R+NsENSrPQzgbfR1p2Ml1ofr/Xkd5mbaM/ScX4XiGiey
- JbsYlN8IUWJ8yz50s+LR8MeFVEOLklK2I/47HJNMl3L4+uSl1KPPE8DBNnDG1E8aQ5dt
- 6yc/Fn5FMh7cZj7HoprFBWDtMg+rPtAWe9c+zIbe7eM07qIdPJrBsKls06S7qVjEPRhG
- TDQWXkpEC/5z5On/6hUtNhBBnUr+bkAWTXw3ZRpUqQiqaAqJOoDPTTJHZ47c5pHjlKrJ
- ZaMw==
-X-Gm-Message-State: AOJu0Yx0/GOeo1qkNYuP6xGe3HwsS3AbKusMLZax9R1A/H1jKSY/ouCZ
- Cp5i7qLvQoDekXty6lthuqfYonDNX5uIGL2ETdqEOWUrfETLaKRr15iANPFj6PaYmBs+rn1PKyB
- dJJBTaYnuCPPyEpSM9wTq4itnywc5Gm503C63a6vWKxz7naoZzUqZPGzy+qavVVrD+Dktvj1R6Z
- PE6l8KMZdY+I1IqT1aE5wvfqnywBWL/k4cBrj4
-X-Received: by 2002:a17:906:2bd6:b0:a59:d4f0:cfc3 with SMTP id
- n22-20020a1709062bd600b00a59d4f0cfc3mr752505ejg.59.1714981944323; 
- Mon, 06 May 2024 00:52:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHzO2xg7a/lLihw3DtoyRaN1Fee881hP1Vi2lJBANXR/MrddwW5LRDanE7DmUTHRVcMv0NkJA==
-X-Received: by 2002:a17:906:2bd6:b0:a59:d4f0:cfc3 with SMTP id
- n22-20020a1709062bd600b00a59d4f0cfc3mr752486ejg.59.1714981943907; 
- Mon, 06 May 2024 00:52:23 -0700 (PDT)
+ bh=BZowvef2Ajk61rQN0cGeoX5jJiq28YAn+xqA2isy+TU=;
+ b=j5i+zSZzXyNv8UedAYPaGEvgV5Jwhlj182eQeoRQfhiTcsUkHyyCAEuPeRpHYfjmIB
+ HA9ZIGfkiD2D0914BoSCVQnXK8LKpfQJGLMy/BCw9Yr2JcZy8ipaib1JkZ3VvuTBxK8M
+ UNLH8wPl6NMoZ1rOB87Qk2j/dEZASg91Xu5MIEdq2/HDdj5mMpHLoi6N8xby4Q8e1Rey
+ TLOx3fFo6NI9yfR4/1HD8aQt616FTrshZrz4+a/LmtYRRfhUPewk6l+7IVFpfQDjfcau
+ rncxebR8ETKCiDB5DzRAgWXiAnhj36CcMj7MijD928HF9cgn/IY6ok+OCxEk/KPTjEPb
+ roLQ==
+X-Gm-Message-State: AOJu0YxAVDUIbw9rMhnJn2USho2EaMpgia3dWgroK9DJQOBE+UrXS5MJ
+ 1x1skY0sw46bMRBBuMH6xzkk++bVw0qgxBG2IPr/nelTMhkMFi7ZXF6U9CXmacYo2Ki1JqT3LyV
+ 2YNRrDbKcTwR5nT+X1e6DKXR0+Hq0neVzVmcGRWVPNNBjHcLUStlytQhQONosSt5y5nZymIyuIA
+ h5cyGreMQVQ3zbQ7bjlJbWzvNEpge0hOPU94Cl
+X-Received: by 2002:a17:906:f8e:b0:a55:358f:783c with SMTP id
+ q14-20020a1709060f8e00b00a55358f783cmr5028644ejj.24.1714981984383; 
+ Mon, 06 May 2024 00:53:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFz8jijY3KIwFE9AHjVKGyPY1wMHJ0IBWd5o4GEl6R4JfEFXzujyUM8Ij2/jnmIi14sjGo6GQ==
+X-Received: by 2002:a17:906:f8e:b0:a55:358f:783c with SMTP id
+ q14-20020a1709060f8e00b00a55358f783cmr5028631ejj.24.1714981983983; 
+ Mon, 06 May 2024 00:53:03 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- b19-20020a1709062b5300b00a59a05a8030sm3157895ejg.25.2024.05.06.00.52.23
- for <qemu-devel@nongnu.org>
+ md1-20020a170906ae8100b00a534000d525sm4916791ejb.158.2024.05.06.00.53.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 May 2024 00:52:23 -0700 (PDT)
+ Mon, 06 May 2024 00:53:03 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 23/46] sh4: switch boards to "default y"
-Date: Mon,  6 May 2024 09:51:02 +0200
-Message-ID: <20240506075125.8238-24-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 39/46] monitor: remove MonitorDef from typedefs.h
+Date: Mon,  6 May 2024 09:51:18 +0200
+Message-ID: <20240506075125.8238-40-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240506075125.8238-1-pbonzini@redhat.com>
 References: <20240506075125.8238-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -102,76 +103,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some targets use "default y" for boards to filter out those that require
-TCG.  For consistency we are switching all other targets to do the same.
-Continue with SH.
+MonitorDef is defined by hmp-target.h, and all users except one already
+include it; the reason why the stubs do not include it, is because
+hmp-target.h currently can only be used in files that are compiled
+per target.  However, that is easily fixed.  Because the benefit of
+having MonitorDef in typedefs.h is very small, do it and remove the
+type from typedefs.h.
 
-No changes to generated config-devices.mak file.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- configs/devices/sh4-softmmu/default.mak | 7 +++----
- .gitlab-ci.d/buildtest.yml              | 3 +--
- hw/sh4/Kconfig                          | 4 ++++
- 3 files changed, 8 insertions(+), 6 deletions(-)
+ include/monitor/hmp-target.h | 11 +++++++----
+ include/qemu/typedefs.h      |  1 -
+ stubs/target-monitor-defs.c  |  3 +--
+ 3 files changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/configs/devices/sh4-softmmu/default.mak b/configs/devices/sh4-softmmu/default.mak
-index 565e8b0b5df..c06a427053a 100644
---- a/configs/devices/sh4-softmmu/default.mak
-+++ b/configs/devices/sh4-softmmu/default.mak
-@@ -5,7 +5,6 @@
- #CONFIG_PCI_DEVICES=n
- #CONFIG_TEST_DEVICES=n
+diff --git a/include/monitor/hmp-target.h b/include/monitor/hmp-target.h
+index d78e979f053..b679aaebbff 100644
+--- a/include/monitor/hmp-target.h
++++ b/include/monitor/hmp-target.h
+@@ -25,11 +25,10 @@
+ #ifndef MONITOR_HMP_TARGET_H
+ #define MONITOR_HMP_TARGET_H
  
--# Boards:
--#
--CONFIG_R2D=y
--CONFIG_SHIX=y
-+# Boards are selected by default, uncomment to keep out of the build.
-+# CONFIG_R2D=n
-+# CONFIG_SHIX=n
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index 2475262c5c8..fd665931847 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -650,7 +650,7 @@ build-tci:
- # Check our reduced build configurations
- # requires libfdt: aarch64, arm, i386, loongarch64, microblaze, microblazeel,
- #   mips64el, or1k, ppc, ppc64, riscv32, riscv64, rx, x86_64
--# does not build without boards: i386, loongarch64, s390x, x86_64
-+# does not build without boards: i386, loongarch64, s390x, sh4, sh4eb, x86_64
- build-without-defaults:
-   extends: .native_build_job_template
-   needs:
-@@ -666,7 +666,6 @@ build-without-defaults:
-       --disable-strip
-     TARGETS: alpha-softmmu avr-softmmu cris-softmmu hppa-softmmu m68k-softmmu
-       mips-softmmu mips64-softmmu mipsel-softmmu
--      sh4-softmmu
-       sparc64-softmmu hexagon-linux-user i386-linux-user s390x-linux-user
-     MAKE_CHECK_ARGS: check
++typedef struct MonitorDef MonitorDef;
++
++#ifdef COMPILING_PER_TARGET
+ #include "cpu.h"
+-
+-#define MD_TLONG 0
+-#define MD_I32   1
+-
+ struct MonitorDef {
+     const char *name;
+     int offset;
+@@ -37,6 +36,10 @@ struct MonitorDef {
+                              int val);
+     int type;
+ };
++#endif
++
++#define MD_TLONG 0
++#define MD_I32   1
  
-diff --git a/hw/sh4/Kconfig b/hw/sh4/Kconfig
-index e0c4ecd1a53..99a76a94c3f 100644
---- a/hw/sh4/Kconfig
-+++ b/hw/sh4/Kconfig
-@@ -1,5 +1,7 @@
- config R2D
-     bool
-+    default y
-+    depends on SH4
-     imply PCI_DEVICES
-     imply TEST_DEVICES
-     imply RTL8139_PCI
-@@ -13,6 +15,8 @@ config R2D
+ const MonitorDef *target_monitor_defs(void);
+ int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval);
+diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
+index 2b1948a19ac..b71a36d02b2 100644
+--- a/include/qemu/typedefs.h
++++ b/include/qemu/typedefs.h
+@@ -75,7 +75,6 @@ typedef struct MemoryRegionSection MemoryRegionSection;
+ typedef struct MigrationIncomingState MigrationIncomingState;
+ typedef struct MigrationState MigrationState;
+ typedef struct Monitor Monitor;
+-typedef struct MonitorDef MonitorDef;
+ typedef struct MSIMessage MSIMessage;
+ typedef struct NetClientState NetClientState;
+ typedef struct NetFilterState NetFilterState;
+diff --git a/stubs/target-monitor-defs.c b/stubs/target-monitor-defs.c
+index ac07b19064c..35a0a342772 100644
+--- a/stubs/target-monitor-defs.c
++++ b/stubs/target-monitor-defs.c
+@@ -1,6 +1,5 @@
+ #include "qemu/osdep.h"
+-
+-const MonitorDef *target_monitor_defs(void);
++#include "monitor/hmp-target.h"
  
- config SHIX
-     bool
-+    default y
-+    depends on SH4
-     select SH7750
-     select TC58128
- 
+ const MonitorDef *target_monitor_defs(void)
+ {
 -- 
 2.44.0
 
