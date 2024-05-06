@@ -4,126 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2779C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 04:50:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C4D9C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 04:53:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3qId-0003gq-7o; Mon, 06 May 2024 00:50:04 -0400
+	id 1s3qLs-0004zS-3Z; Mon, 06 May 2024 00:53:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s3qAo-0001Os-Gh
- for qemu-devel@nongnu.org; Mon, 06 May 2024 00:42:02 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s3qLX-0004xs-Te
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 00:53:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s3qAm-00026b-9F
- for qemu-devel@nongnu.org; Mon, 06 May 2024 00:41:57 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s3qLV-0007Z3-TB
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 00:53:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714970512;
+ s=mimecast20190719; t=1714971180;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=JR8n/Tllmjm0G1lB8+ML5Tpv6SVFI1c7XPk5XjIsyD4=;
- b=iBK42qDy/DQkzgySYvKPg1aJVSQpZHSe+CYvuKnfQrhpQnbtIMJCqAGO8Fmpym5yBHbbV8
- Ws2NmmWl9Lr+RMauWTkuvGpfIknqLDw0J8/47gqqwF6fhBCW3xhso4mJgET1wNk+puyu5o
- u+QKqpFoZ1sAZj9oX2zFFzBdOKRpJCQ=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-686-OcGXeRWaOb6_GU4fo7CEHg-1; Mon, 06 May 2024 00:41:50 -0400
-X-MC-Unique: OcGXeRWaOb6_GU4fo7CEHg-1
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7928d36432bso271120685a.0
- for <qemu-devel@nongnu.org>; Sun, 05 May 2024 21:41:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714970510; x=1715575310;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JR8n/Tllmjm0G1lB8+ML5Tpv6SVFI1c7XPk5XjIsyD4=;
- b=NeCiK640VP37XXB7Vox9ZGcNM6/fWNNTPbNQlyVqZ2AFkbT6p7zKOuVb/vs52wezz0
- jy0ADk6ia0qoHFVL4H5RncYRDTLAMRzajIvzvE+6dxUWZpu731sffW9KLxEzFQHCiICH
- DHGNDvP+Ukcshq1JTdSmdtmU5DUl0lvDAoEwXjWEMxOUz+4sbaqrrqQHM+IGimpJN02k
- ogqcWNVUx+9oIyZj/JQMi3xZvt45EcD+FxVAQF32/QALQnuQ4eJwXH7MJxXINWIGJe3o
- /sprz3OCX2ddrYtbbgwW4SshRal2SB2ivDhIHBm3bPzvK1DZF0YTjx7Tpfr0zZjQ1GqQ
- IJ+w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWtHaspX6whkYLQO1o9JdWuhSrAbNb9yES4sXZ1ZNMTt1G9lD1LWkFnrpk/9qASiVAXdaV3rk11Ia6AXZHMod0JWp9N3tA=
-X-Gm-Message-State: AOJu0YzIgzkVLSYl2xIZVCy3/q4QErH7ELBLiUbEGsmtNlUDt2k/6qHB
- IpPPHhr9LjD3VqJcOgQy5K+fX3zpoVPSrP1dx8dt4+5CTzzW43NWhl0+xWkMw/3vPG8i8R1Vc6+
- 1PU3es8V9t5muFGVfwmIhdwtSWFIDwgF6Lys+9bRej6BXdc/Hymzq
-X-Received: by 2002:a05:620a:27cd:b0:790:f930:e1ca with SMTP id
- i13-20020a05620a27cd00b00790f930e1camr12220821qkp.26.1714970510348; 
- Sun, 05 May 2024 21:41:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH8h5hUygpID12a/NyNyZ1mOTH2BlPIWhlr1oxQWezag4HVTWqZIZ3/sVk5pkk6zEXisZDMxw==
-X-Received: by 2002:a05:620a:27cd:b0:790:f930:e1ca with SMTP id
- i13-20020a05620a27cd00b00790f930e1camr12220804qkp.26.1714970509751; 
- Sun, 05 May 2024 21:41:49 -0700 (PDT)
-Received: from [192.168.0.9] (ip-109-43-179-34.web.vodafone.de.
- [109.43.179.34]) by smtp.gmail.com with ESMTPSA id
- g4-20020a05620a108400b00790676d0fe2sm3523983qkk.121.2024.05.05.21.41.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 05 May 2024 21:41:49 -0700 (PDT)
-Message-ID: <b655fa90-d9a8-475b-ac65-27bf12a48916@redhat.com>
-Date: Mon, 6 May 2024 06:41:45 +0200
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=GMryBqVqB9094jjLWUBKK85eIDTEWLpeVqEoZCNRaSs=;
+ b=H/V/pY4lIvFcmGVZqSzp7mITnmf9ZDSsBLTUSL2eUTjofGOaDFTwWZ8NXmze+cOU7XR/wk
+ ptqsQdCtBhAJu07Ndol9GifJX6Y6zfaraHANG2fIKEocE17A1pwh4kuhGOyipEouzFBUZu
+ zABrRgB42y2edUiSQhu65o+Zo/g8TUc=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-604-8MybA0OiPZu9HXGkzP5eXg-1; Mon,
+ 06 May 2024 00:52:57 -0400
+X-MC-Unique: 8MybA0OiPZu9HXGkzP5eXg-1
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id CD7E029AA395;
+ Mon,  6 May 2024 04:52:56 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 8FE11A20;
+ Mon,  6 May 2024 04:52:56 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 803E221E6806; Mon,  6 May 2024 06:52:55 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Avihai Horon <avihaih@nvidia.com>
+Cc: Joao Martins <joao.m.martins@oracle.com>,  qemu-devel@nongnu.org,  Alex
+ Williamson <alex.williamson@redhat.com>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@redhat.com>,  Markus Armbruster <armbru@redhat.com>,  Michael Roth
+ <michael.roth@amd.com>,  Eric Blake <eblake@redhat.com>,  Peter Xu
+ <peterx@redhat.com>,  Fabiano Rosas <farosas@suse.de>,  Maor Gottlieb
+ <maorg@nvidia.com>
+Subject: Re: [PATCH 1/3] qapi/vfio: Add VFIO device migration state change
+ QAPI event
+In-Reply-To: <703aab34-1704-4ede-8398-17c0137f6e17@nvidia.com> (Avihai Horon's
+ message of "Wed, 1 May 2024 15:08:16 +0300")
+References: <20240430051621.19597-1-avihaih@nvidia.com>
+ <20240430051621.19597-2-avihaih@nvidia.com>
+ <fd972eee-068e-489e-ab45-e1985115a128@oracle.com>
+ <703aab34-1704-4ede-8398-17c0137f6e17@nvidia.com>
+Date: Mon, 06 May 2024 06:52:55 +0200
+Message-ID: <87ttjbsfrs.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Fixes: Indentation using TABs and improve formatting
-To: Michael Tokarev <mjt@tls.msk.ru>, Tanmay <tanmaynpatil105@gmail.com>,
- qemu-stable@nongnu.org, QEMU Developers <qemu-devel@nongnu.org>,
- qemu-arm <qemu-arm@nongnu.org>, Peter Maydell <peter.maydell@linaro.org>
-References: <CAHnsOnM6gzcjpmEqCN0cFjZKXZCK_ZGAphuf46xWmUyBcNrAxQ@mail.gmail.com>
- <df14595f-3a26-4b7f-948d-df522f487b92@tls.msk.ru>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <df14595f-3a26-4b7f-948d-df522f487b92@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -147,37 +90,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/05/2024 22.34, Michael Tokarev wrote:
-> 04.05.2024 21:58, Tanmay wrote:
->> Hi,
+Avihai Horon <avihaih@nvidia.com> writes:
+
+> On 01/05/2024 14:50, Joao Martins wrote:
+>> External email: Use caution opening links or attachments
 >>
->> I have attached a patch file that fixes indentation and formatting for 
->> some files as listed in https://gitlab.com/qemu-project/qemu/-/issues/373 
->> <https://gitlab.com/qemu-project/qemu/-/issues/373>.
-> 
-> it is sort of good you posted this patch to stable@.  It has absolutely 
-> nothing to do
-> with stable, but it serves as a an example of things which should - in my 
-> opinion -
-> not be done at all.
+>>
+>> On 30/04/2024 06:16, Avihai Horon wrote:
+>>> Add a new QAPI event for VFIO device migration state change. This event
+>>> will be emitted when a VFIO device changes its migration state, for
+>>> example, during migration or when stopping/starting the guest.
+>>>
+>>> This event can be used by management applications to get updates on the
+>>> current state of the VFIO device for their own purposes.
+>>>
+>>> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+>>> ---
+>>>   MAINTAINERS           |  1 +
+>>>   qapi/qapi-schema.json |  1 +
+>>>   qapi/vfio.json        | 61 +++++++++++++++++++++++++++++++++++++++++++
+>>>   qapi/meson.build      |  1 +
+>>>   4 files changed, 64 insertions(+)
+>>>   create mode 100644 qapi/vfio.json
+>>>
+>>> diff --git a/MAINTAINERS b/MAINTAINERS
+>>> index 302b6fd00c..ef58a39d36 100644
+>>> --- a/MAINTAINERS
+>>> +++ b/MAINTAINERS
+>>> @@ -2159,6 +2159,7 @@ F: hw/vfio/*
+>>>  F: include/hw/vfio/
+>>>  F: docs/igd-assign.txt
+>>>  F: docs/devel/migration/vfio.rst
+>>> +F: qapi/vfio.json
+>>>
+>>>   vfio-ccw
+>>>   M: Eric Farman <farman@linux.ibm.com>
+>>> diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
+>>> index 5e33da7228..b1581988e4 100644
+>>> --- a/qapi/qapi-schema.json
+>>> +++ b/qapi/qapi-schema.json
+>>> @@ -78,5 +78,6 @@
+>>>  { 'include': 'pci.json' }
+>>>  { 'include': 'stats.json' }
+>>>  { 'include': 'virtio.json' }
+>>> +{ 'include': 'vfio.json' }
+>>>  { 'include': 'cryptodev.json' }
+>>>  { 'include': 'cxl.json' }
+>>> diff --git a/qapi/vfio.json b/qapi/vfio.json
+>>> new file mode 100644
+>>> index 0000000000..a38f26bccd
+>>> --- /dev/null
+>>> +++ b/qapi/vfio.json
+>>> @@ -0,0 +1,61 @@
+>>> +# -*- Mode: Python -*-
+>>> +# vim: filetype=python
+>>> +#
+>>> +
+>>> +##
+>>> +# = VFIO devices
+>>> +##
+>>> +
+>>> +##
+>>> +# @VFIODeviceMigState:
+>>> +#
+>>> +# An enumeration of the VFIO device migration states.
+>>> +#
+>>> +# @stop: The device is stopped.
+>>> +#
+>>> +# @running: The device is running.
+>>> +#
+>>> +# @stop-copy: The device is stopped and its internal state is available
+>>> +#     for reading.
+>>> +#
+>>> +# @resuming: The device is stopped and its internal state is available
+>>> +#     for writing.
+>>> +#
+>>> +# @running-p2p: The device is running in the P2P quiescent state.
+>>> +#
+>>> +# @pre-copy: The device is running, tracking its internal state and its
+>>> +#     internal state is available for reading.
+>>> +#
+>>> +# @pre-copy-p2p: The device is running in the P2P quiescent state,
+>>> +#     tracking its internal state and its internal state is available
+>>> +#     for reading.
+>>> +#
+>>> +# Since: 9.1
+>>> +##
+>>> +{ 'enum': 'VFIODeviceMigState',
+>>> +  'data': [ 'stop', 'running', 'stop-copy', 'resuming', 'running-p2p',
+>>> +            'pre-copy', 'pre-copy-p2p' ],
+>>> +  'prefix': 'QAPI_VFIO_DEVICE_MIG_STATE' }
 
-I disagree. Yes, clean-up patches like this make it somewhat difficult to 
-backport other patches to stable, but that should not be the reason to not 
-do cleanups at all. If we keep badly formatted code in the repository, 
-people will copy-n-paste it to other places, or if you have to do fixes in 
-sources that have mixed TABs and spaces, you often get complaints from 
-checkpatch.pl though it is not your fault. So we should get this straight at 
-one point in time.
+Without 'prefix', you get VFIO_DEVICE_MIG_STATE_STOP and so forth.  Why
+do you need a QAPI_ prefix?
 
-So, Tanmay, could you please resend your patch, this time to 
-qemu-devel@nongnu.org instead of qemu-stable, and CC: qemu-arm@nongnu.org 
-and the corresponding ARM maintainers (you can use 
-scripts/get_maintainers.pl to find out the correct maintainers that should 
-be CC:-ed). And if possible, please send your patch inline and not as an 
-attachment (so it's possible to comment on the patch via hitting the reply 
-button), preferably with "git send-email" instead of using your e-mail program.
+>>> +
+>>
+>> Considering MIG can also be interpreted as Multi Instance GPU elsewhere
+>> unrelated to this shouldn't we be explicit here? i.e.
+>>
+>>          VFIO_DEVICE_MIGRATION_STATE
+>>
+>> ... to avoid ambiguiosity.
+>
+> I used mig to avoid long names, but I don't mind changing it to migration if that's clearer.
+>
+> Thanks.
 
-  Thanks!
-   Thomas
+We generally avoid abbreviations in QAPI/QMP.
+
+The event that reports general migration state change is called
+MIGRATION, and its data type MigrationStatus.
+
+We could call this one VFIO_MIGRATION, and its data type
+VfioMigrationStatus.
+
+>>> +##
+>>> +# @VFIO_DEVICE_MIG_STATE_CHANGED:
+>>> +#
+>>> +# This event is emitted when a VFIO device migration state is changed.
+>>> +#
+>>> +# @device-id: The id of the VFIO device (final component of QOM path).
+>>> +#
+>>> +# @device-state: The new changed device migration state.
+>>> +#
+>>> +# Since: 9.1
+>>> +#
+>>> +# Example:
+>>> +#
+>>> +#     <- {"timestamp": {"seconds": 1713771323, "microseconds": 212268},
+>>> +#         "event": "VFIO_DEVICE_MIG_STATE_CHANGED",
+>>> +#         "data": {"device-id": "vfio_dev1", "device-state": "stop"} }
+>>> +##
+>>> +{ 'event': 'VFIO_DEVICE_MIG_STATE_CHANGED',
+>>> +  'data': {
+>>> +      'device-id': 'str',
+>>> +      'device-state': 'VFIODeviceMigState'
+>>> +  } }
+>>> diff --git a/qapi/meson.build b/qapi/meson.build
+>>> index c92af6e063..e7bc54e5d0 100644
+>>> --- a/qapi/meson.build
+>>> +++ b/qapi/meson.build
+>>> @@ -52,6 +52,7 @@ qapi_all_modules = [
+>>>    'stats',
+>>>    'trace',
+>>>    'transaction',
+>>> +  'vfio',
+>>>    'virtio',
+>>>    'yank',
+>>>  ]
+
+The new code is in the intersection of VFIO and migration.  Putting it
+into new vfio.json instead of existing migration.json lets you add it to
+MAINTAINERS section VFIO instead of Migration.  Up to the maintainers
+involved.
 
 
