@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 211E8C10F16
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 11:06:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD231C10F16
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 11:07:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3w7q-00035s-Qj; Mon, 06 May 2024 07:03:18 -0400
+	id 1s3w7r-00036s-Lw; Mon, 06 May 2024 07:03:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s3w7g-0002oz-Vp
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s3w7f-0002on-Ew
  for qemu-devel@nongnu.org; Mon, 06 May 2024 07:03:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s3w7Y-0003fM-KJ
- for qemu-devel@nongnu.org; Mon, 06 May 2024 07:03:08 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s3w7X-0003eh-4Q
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 07:03:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714993380;
+ s=mimecast20190719; t=1714993378;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NuQ9Fil2xTNfxL9eTvXPA3hWo76CgVTuL8CK0QDZm6w=;
- b=YbmZLVGeQNHteegvgVQSkQtRDcaJRMnmCeT7ZE/ZMWmIj1qxnFhEGxJLRmTdnFrb03mVFd
- FwDCVWR2rB+9BfoQR+bkLOBf72IOykHjSlvWM88jipvIQWXFesUU3L77zz74E/i/ylpQeO
- OomgOGzDKJxkmZAsUC0KkEz+upHrRfw=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-584-GdW2s1XgPOaMvcCfBv-ixw-1; Mon,
- 06 May 2024 07:02:56 -0400
-X-MC-Unique: GdW2s1XgPOaMvcCfBv-ixw-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
+ bh=HXdJA2BHeqHIiC0EhCGjai0a7ae19Qf0y5BbHTMjxDU=;
+ b=c9ZdTfLC/s/pIp3qGBcZW26GAb4pFzaNi9OWASkEmya+CsjxTYB+kSzO6Vwxc91bYJFap7
+ baM8/IsODAC01szduQkakYQ8poiJeY412mSkta7uEgtz2M6sxaAfiUTsA0bE9bprwVQqAd
+ PB1GJ0xTh69uSBEdH4VVU5kM0t1CiJU=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-665-IQb2DXQAOEWhUQLVOe_OXQ-1; Mon, 06 May 2024 07:02:56 -0400
+X-MC-Unique: IQb2DXQAOEWhUQLVOe_OXQ-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 9B0A43810B06;
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 774AB1049C93;
  Mon,  6 May 2024 11:02:56 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 61615400D279;
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 58075200B09C;
  Mon,  6 May 2024 11:02:56 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5E1C221D49C6; Mon,  6 May 2024 13:02:54 +0200 (CEST)
+ id 47A6421E5D28; Mon,  6 May 2024 13:02:54 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org
-Subject: [PULL 7/7] qapi: Simplify QAPISchemaVariants @tag_member
-Date: Mon,  6 May 2024 13:02:54 +0200
-Message-ID: <20240506110254.3965097-15-armbru@redhat.com>
+Subject: [PATCH 3/7] qapi: make returns sections special WIP
+Date: Mon,  6 May 2024 13:02:46 +0200
+Message-ID: <20240506110254.3965097-7-armbru@redhat.com>
 In-Reply-To: <20240506110254.3965097-1-armbru@redhat.com>
 References: <20240506110254.3965097-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -81,132 +81,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For union types, the tag member is known only after .check().
-
-We used to code this in a simple way: QAPISchemaVariants attribute
-.tag_member was None for union types until .check().
-
-Since this complicated typing, recent commit "qapi/schema: fix typing
-for QAPISchemaVariants.tag_member" hid it behind a property.
-
-The previous commit lets us treat .tag_member just like the other
-attributes that become known only in .check(): declare, but don't
-initialize it in .__init__().
-
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
+returns moves in generated output
 ---
- scripts/qapi/schema.py | 44 +++++++++++++++++-------------------------
- 1 file changed, 18 insertions(+), 26 deletions(-)
+ docs/sphinx/qapidoc.py         |  8 ++++++++
+ scripts/qapi/parser.py         |  4 ++--
+ tests/qapi-schema/doc-good.out |  4 ++--
+ tests/qapi-schema/doc-good.txt | 12 ++++++------
+ tests/qapi-schema/test-qapi.py |  2 ++
+ 5 files changed, 20 insertions(+), 10 deletions(-)
 
-diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
-index c5b824f1fd..721c470d2b 100644
---- a/scripts/qapi/schema.py
-+++ b/scripts/qapi/schema.py
-@@ -723,18 +723,9 @@ def __init__(
-         variants: List[QAPISchemaVariant],
-     ):
-         self.info = info
--        self._tag_member: Optional[QAPISchemaObjectTypeMember] = None
-+        self.tag_member: QAPISchemaObjectTypeMember
-         self.variants = variants
+diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+index f19f5ded78..24bf1d9a90 100644
+--- a/docs/sphinx/qapidoc.py
++++ b/docs/sphinx/qapidoc.py
+@@ -250,6 +250,13 @@ def _nodes_for_features(self, doc):
+         section += dlnode
+         return [section]
  
--    @property
--    def tag_member(self) -> QAPISchemaObjectTypeMember:
--        if self._tag_member is None:
--            raise RuntimeError(
--                "QAPISchemaVariants has no tag_member property until "
--                "after check() has been run."
--            )
--        return self._tag_member
++    def _nodes_for_returns(self, doc, ret_type):
++        if doc.returns:
++            section = self._make_section('Returns')
++            self._parse_text_into_node(doc.returns.text, section)
++            return [section]
++        return []
++
+     def _nodes_for_since(self, doc):
+         if doc.since:
+             # TODO emphasis
+@@ -343,6 +350,7 @@ def visit_command(self, name, info, ifcond, features, arg_type,
+         self._add_doc('Command',
+                       self._nodes_for_arguments(doc,
+                                                 arg_type if boxed else None)
++                      + self._nodes_for_returns(doc, ret_type)
+                       + self._nodes_for_features(doc)
+                       + self._nodes_for_sections(doc)
+                       + self._nodes_for_if_section(ifcond)
+diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+index 0237d13da9..e8a482c37d 100644
+--- a/scripts/qapi/parser.py
++++ b/scripts/qapi/parser.py
+@@ -646,7 +646,7 @@ def __init__(self, info: QAPISourceInfo, symbol: Optional[str] = None):
+         self.errors: Optional[QAPIDoc.Section] = None
+         # "Since" section
+         self.since: Optional[QAPIDoc.Section] = None
+-        # sections other than .body, .args, .features, .since
++        # sections other than .body, .args, .features, .returns, .since
+         self.sections: List[QAPIDoc.Section] = []
+ 
+     def end(self) -> None:
+@@ -683,7 +683,7 @@ def new_tagged_section(self, info: QAPISourceInfo, tag: str) -> None:
+                 raise QAPISemError(
+                     info, "duplicated '%s' section" % tag)
+             self.since = section
+-        if tag != 'Since':
++        if tag not in ('Returns', 'Since'):
+             self.sections.append(section)
+         self.all_sections.append(section)
+ 
+diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-good.out
+index 716a9a4102..f2be711a2c 100644
+--- a/tests/qapi-schema/doc-good.out
++++ b/tests/qapi-schema/doc-good.out
+@@ -165,14 +165,14 @@ description starts on the same line
+ remainder indented differently
+     arg=arg3
+ 
++    section=Returns
++@Object
+     feature=cmd-feat1
+ a feature
+     feature=cmd-feat2
+ another feature
+     section=Note
+ @arg3 is undocumented
+-    section=Returns
+-@Object
+     section=Errors
+ some
+     section=TODO
+diff --git a/tests/qapi-schema/doc-good.txt b/tests/qapi-schema/doc-good.txt
+index 56d50d4992..fd88301431 100644
+--- a/tests/qapi-schema/doc-good.txt
++++ b/tests/qapi-schema/doc-good.txt
+@@ -184,6 +184,12 @@ Arguments
+    Not documented
+ 
+ 
++Returns
++~~~~~~~
++
++"Object"
++
++
+ Features
+ ~~~~~~~~
+ 
+@@ -200,12 +206,6 @@ Note
+ "arg3" is undocumented
+ 
+ 
+-Returns
+-~~~~~~~
 -
-     def set_defined_in(self, name: str) -> None:
-         for v in self.variants:
-             v.set_defined_in(name)
-@@ -758,47 +749,48 @@ def check(
-             self, schema: QAPISchema, seen: Dict[str, QAPISchemaMember]
-     ) -> None:
-         # We need to narrow the member type:
--        tmp = seen.get(c_name(self._tag_name))
--        assert tmp is None or isinstance(tmp, QAPISchemaObjectTypeMember)
--        self._tag_member = tmp
-+        tag_member = seen.get(c_name(self._tag_name))
-+        assert (tag_member is None
-+                or isinstance(tag_member, QAPISchemaObjectTypeMember))
+-"Object"
+-
+-
+ Errors
+ ~~~~~~
  
-         base = "'base'"
-         # Pointing to the base type when not implicit would be
-         # nice, but we don't know it here
--        if not self._tag_member or self._tag_name != self._tag_member.name:
-+        if not tag_member or self._tag_name != tag_member.name:
-             raise QAPISemError(
-                 self.info,
-                 "discriminator '%s' is not a member of %s"
-                 % (self._tag_name, base))
-+        self.tag_member = tag_member
-         # Here we do:
--        assert self.tag_member.defined_in
--        base_type = schema.lookup_type(self.tag_member.defined_in)
-+        assert tag_member.defined_in
-+        base_type = schema.lookup_type(tag_member.defined_in)
-         assert base_type
-         if not base_type.is_implicit():
--            base = "base type '%s'" % self.tag_member.defined_in
--        if not isinstance(self.tag_member.type, QAPISchemaEnumType):
-+            base = "base type '%s'" % tag_member.defined_in
-+        if not isinstance(tag_member.type, QAPISchemaEnumType):
-             raise QAPISemError(
-                 self.info,
-                 "discriminator member '%s' of %s must be of enum type"
-                 % (self._tag_name, base))
--        if self.tag_member.optional:
-+        if tag_member.optional:
-             raise QAPISemError(
-                 self.info,
-                 "discriminator member '%s' of %s must not be optional"
-                 % (self._tag_name, base))
--        if self.tag_member.ifcond.is_present():
-+        if tag_member.ifcond.is_present():
-             raise QAPISemError(
-                 self.info,
-                 "discriminator member '%s' of %s must not be conditional"
-                 % (self._tag_name, base))
-         # branches that are not explicitly covered get an empty type
--        assert self.tag_member.defined_in
-+        assert tag_member.defined_in
-         cases = {v.name for v in self.variants}
--        for m in self.tag_member.type.members:
-+        for m in tag_member.type.members:
-             if m.name not in cases:
-                 v = QAPISchemaVariant(m.name, self.info,
-                                       'q_empty', m.ifcond)
--                v.set_defined_in(self.tag_member.defined_in)
-+                v.set_defined_in(tag_member.defined_in)
-                 self.variants.append(v)
-         if not self.variants:
-             raise QAPISemError(self.info, "union has no branches")
-@@ -807,11 +799,11 @@ def check(
-             # Union names must match enum values; alternate names are
-             # checked separately. Use 'seen' to tell the two apart.
-             if seen:
--                if v.name not in self.tag_member.type.member_names():
-+                if v.name not in tag_member.type.member_names():
-                     raise QAPISemError(
-                         self.info,
-                         "branch '%s' is not a value of %s"
--                        % (v.name, self.tag_member.type.describe()))
-+                        % (v.name, tag_member.type.describe()))
-                 if not isinstance(v.type, QAPISchemaObjectType):
-                     raise QAPISemError(
-                         self.info,
-@@ -839,7 +831,7 @@ def __init__(self,
-                  variants: List[QAPISchemaVariant],
-                  tag_member: QAPISchemaObjectTypeMember):
-         super().__init__(info, variants)
--        self._tag_member = tag_member
-+        self.tag_member = tag_member
- 
-     def check(
-             self, schema: QAPISchema, seen: Dict[str, QAPISchemaMember]
+diff --git a/tests/qapi-schema/test-qapi.py b/tests/qapi-schema/test-qapi.py
+index 642daa29a4..1628efe0f3 100755
+--- a/tests/qapi-schema/test-qapi.py
++++ b/tests/qapi-schema/test-qapi.py
+@@ -127,6 +127,8 @@ def test_frontend(fname):
+         print('    body=\n%s' % doc.body.text)
+         for arg, section in doc.args.items():
+             print('    arg=%s\n%s' % (arg, section.text))
++        if doc.returns:
++            print('    section=%s\n%s' % (doc.returns.tag, doc.returns.text))
+         for feat, section in doc.features.items():
+             print('    feature=%s\n%s' % (feat, section.text))
+         for section in doc.sections:
 -- 
 2.44.0
 
