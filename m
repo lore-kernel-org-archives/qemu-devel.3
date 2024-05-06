@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACE87C25B5C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B285BC41513
 	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 11:47:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3woY-0003tb-7C; Mon, 06 May 2024 07:47:27 -0400
+	id 1s3wnd-0002yg-Bt; Mon, 06 May 2024 07:46:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1s3wmd-0001zc-FV
- for qemu-devel@nongnu.org; Mon, 06 May 2024 07:45:30 -0400
+ id 1s3wml-00028t-3x
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 07:45:38 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1s3wmb-00020C-RZ
- for qemu-devel@nongnu.org; Mon, 06 May 2024 07:45:27 -0400
+ id 1s3wmj-00023M-9k
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 07:45:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
- References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
- Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
- List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=RdZxbvcd9Ww/IUgTe96WN9PtS1C0KS34Ir6CDMqHT3w=; b=eSLEXoiEeyU6/sSFs/Rl2fZDRM
- HPDH85q9hKY9+gzyehL8F0rfjMiHVYVHMQqwOO69fmc/oTZ4eKywwtjWE1FBYkjtBTOnJvHhvRZZZ
- 08g/IqedpWspxer5c7I6U8qNf11KtAD2UMqNAza/dY0s1Dwp2DP9RK193JDXRujDaj0Y4afmLiRhn
- ZauWIrkiJ8KH34cmB2IkGrqBTGoRMXFJuxGwXofAX1q81KCex6PxlV2b4e+RZsf+hDNSPSY5kPZJp
- d1hAowwQE+cTMylGzoy+TXhsAwH+K8WtYRMdRDrYjyDPlWPxQVvuKuMc8qeMr4g9ZM6CaD8t2ph87
- iFvLGqxq+ywGbMzFh8QUN5tqh8ANl+wcnDVVlvvMtwcH4PybN341ZQn5Mv8lamuZm0OsMkIj3DdQr
- /7+F9dKRLF382YlB2pCpzfaxoWlSU7YouwKDfP/npTeR6b0Y/9vrSUikK9ZMh7YM6i9eamlqttnKF
- DKkeugapNv00Kb7k+5gQn1KuiLIiWaE1ywMnnv9ZZNmnQDcoFBf1Li2/FKJtt/M6NsqgX9NArBjEJ
- jAJLa5wt9lo5efnvI6bUFfFLthC42a5VC00nK+hdoX5gg3l2AhXLUh1Ye0roTBhTxiWxQdHUn+sfi
- 0jQakl7E2eiobiJOpHHoOiSnd0sZMyLtH7BQ0YvTo=;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ MIME-Version:References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:
+ Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=sMhmJO5kyFUJkf58pFSFv2atNJSSrYfDJkwhEX27jSY=; b=nW9k4wvkivfJUu5+V32rAczZ2P
+ +/7EPKtAjkjUEqwTb8jGnYySbJixBhVcgfC0/CNZ2g5IOnqlvi+9JzKi0R+W1lepkZ+GfAJFX0iHR
+ nJU8Pbohj1egCRD/dipFSCZAr2a7a3t45HL7zEPCr1Mj+gPFh6XLRPoVNGLBIDPbUJsGmbMdMrM4w
+ 4xzC1oolOERiknKqs/QiLwszDl0IOpJ4MQaLXMZaaNtwFYXNWi4Lnd8zFT2mbpY7BYsjS8zHLdQFd
+ XkS5eSROOIpgcSoxP6yFCXdxDL4Ycx2UHWBDg89Rt73c8orLUMbOa5Jh3NQFdQB1UYvNqbKWKAtqC
+ rWzaymlHYQpnfLjPKBWrT2SoV23PtU0eo2C2hPOYRtI4MSgQhVR2pdFPTAsbcP6XVNibQHuo/0/ug
+ XyzySncr2LC/9A1HTrCLJLn9J5Nu9sjPpzl0N70EEathfs9iW4tuKWWQJkhLNwTe6i/mjruLrgEZR
+ pUmMWviqZSfQODqwMdosgbtm7Pv883MRFQoUqNAI0NeUVpWNYj/aMGU67TM6agjlBCSM+p+r5gUXJ
+ qnrkEM6G3LHVzwkNpGN1zlgMCO+VSVmU45sSiVnMpHJ5Z6sLZ4Yp520G7BY4LpwyqKk1UcBOcMi8+
+ 90Iqz5sUcibgUBk89jDB2lB1QZHqMzGvsF7XuitRw=;
 Received: from [2a00:23c4:8bb4:4000:b60d:a162:d698:c802]
  (helo=localhost.localdomain)
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1s3wlS-0005pA-Eq; Mon, 06 May 2024 12:44:18 +0100
+ id 1s3wla-0005pA-OL; Mon, 06 May 2024 12:44:26 +0100
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: qemu-devel@nongnu.org,
 	richard.henderson@linaro.org
-Date: Mon,  6 May 2024 12:44:44 +0100
-Message-Id: <20240506114451.331311-6-mark.cave-ayland@ilande.co.uk>
+Date: Mon,  6 May 2024 12:44:46 +0100
+Message-Id: <20240506114451.331311-8-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240506114451.331311-1-mark.cave-ayland@ilande.co.uk>
 References: <20240506114451.331311-1-mark.cave-ayland@ilande.co.uk>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:b60d:a162:d698:c802
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PULL 05/12] hw/sparc64: set iommu_platform=on for virtio devices
- attached to the sun4u machine
+Subject: [PULL 07/12] target/sparc: Fix FEXPAND
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -80,49 +80,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The sun4u machine has an IOMMU and therefore it is possible to program it such
-that the virtio-device IOVA does not map directly to the CPU physical address.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-This is not a problem with Linux which always maps the IOVA directly to the CPU
-physical address, however it is required for the NetBSD virtio driver where this
-is not the case.
+This is a 2-operand instruction, not 3-operand.
+Worse, we took the source from the wrong operand.
 
-Set the sun4u machine defaults for all virtio devices so that disable-legacy=on
-and iommu_platform=on to ensure a default configuration will allow virtio
-devices to function correctly on both Linux and NetBSD.
-
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Message-Id: <20240418205730.31396-1-mark.cave-ayland@ilande.co.uk>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20240502165528.244004-3-richard.henderson@linaro.org>
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
- hw/sparc64/sun4u.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ target/sparc/helper.h     |  2 +-
+ target/sparc/insns.decode |  2 +-
+ target/sparc/translate.c  | 20 +++++++++++++++++++-
+ target/sparc/vis_helper.c |  6 +++---
+ 4 files changed, 24 insertions(+), 6 deletions(-)
 
-diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
-index cff6d5abaf..4ece1ac1ff 100644
---- a/hw/sparc64/sun4u.c
-+++ b/hw/sparc64/sun4u.c
-@@ -793,6 +793,12 @@ static void sun4v_init(MachineState *machine)
-     sun4uv_init(get_system_memory(), machine, &hwdefs[1]);
- }
+diff --git a/target/sparc/helper.h b/target/sparc/helper.h
+index b8087d0d2b..57ab755ffd 100644
+--- a/target/sparc/helper.h
++++ b/target/sparc/helper.h
+@@ -102,7 +102,7 @@ DEF_HELPER_FLAGS_2(fmul8sux16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+ DEF_HELPER_FLAGS_2(fmul8ulx16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+ DEF_HELPER_FLAGS_2(fmuld8sux16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+ DEF_HELPER_FLAGS_2(fmuld8ulx16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+-DEF_HELPER_FLAGS_2(fexpand, TCG_CALL_NO_RWG_SE, i64, i64, i64)
++DEF_HELPER_FLAGS_1(fexpand, TCG_CALL_NO_RWG_SE, i64, i32)
+ DEF_HELPER_FLAGS_3(pdist, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
+ DEF_HELPER_FLAGS_2(fpack16, TCG_CALL_NO_RWG_SE, i32, i64, i64)
+ DEF_HELPER_FLAGS_3(fpack32, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
+diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
+index 2d26404cb2..e2d8a07dc4 100644
+--- a/target/sparc/insns.decode
++++ b/target/sparc/insns.decode
+@@ -352,7 +352,7 @@ FCMPEq      10 000 cc:2 110101 rs1:5  0 0101 0111 rs2:5
+     FALIGNDATAg 10 ..... 110110 ..... 0 0100 1000 .....    @r_r_r
+     FPMERGE     10 ..... 110110 ..... 0 0100 1011 .....    @r_r_r
+     BSHUFFLE    10 ..... 110110 ..... 0 0100 1100 .....    @r_r_r
+-    FEXPAND     10 ..... 110110 ..... 0 0100 1101 .....    @r_r_r
++    FEXPAND     10 ..... 110110 00000 0 0100 1101 .....    @r_r2
  
-+static GlobalProperty hw_compat_sparc64[] = {
-+    { "virtio-pci", "disable-legacy", "on", .optional = true },
-+    { "virtio-device", "iommu_platform", "on" },
-+};
-+static const size_t hw_compat_sparc64_len = G_N_ELEMENTS(hw_compat_sparc64);
+     FSRCd       10 ..... 110110 ..... 0 0111 0100 00000    @r_r1  # FSRC1d
+     FSRCs       10 ..... 110110 ..... 0 0111 0101 00000    @r_r1  # FSRC1s
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index 571b3e3f03..dfcfe855a1 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -4358,6 +4358,25 @@ TRANS(FSQRTd, ALL, do_env_dd, a, gen_helper_fsqrtd)
+ TRANS(FxTOd, 64, do_env_dd, a, gen_helper_fxtod)
+ TRANS(FdTOx, 64, do_env_dd, a, gen_helper_fdtox)
+ 
++static bool do_df(DisasContext *dc, arg_r_r *a,
++                  void (*func)(TCGv_i64, TCGv_i32))
++{
++    TCGv_i64 dst;
++    TCGv_i32 src;
 +
- static void sun4u_class_init(ObjectClass *oc, void *data)
++    if (gen_trap_ifnofpu(dc)) {
++        return true;
++    }
++
++    dst = tcg_temp_new_i64();
++    src = gen_load_fpr_F(dc, a->rs);
++    func(dst, src);
++    gen_store_fpr_D(dc, a->rd, dst);
++    return advance_pc(dc);
++}
++
++TRANS(FEXPAND, VIS1, do_df, a, gen_helper_fexpand)
++
+ static bool do_env_df(DisasContext *dc, arg_r_r *a,
+                       void (*func)(TCGv_i64, TCGv_env, TCGv_i32))
  {
-     MachineClass *mc = MACHINE_CLASS(oc);
-@@ -810,6 +816,7 @@ static void sun4u_class_init(ObjectClass *oc, void *data)
-     mc->default_nic = "sunhme";
-     mc->no_parallel = !module_object_class_by_name(TYPE_ISA_PARALLEL);
-     fwc->get_dev_path = sun4u_fw_dev_path;
-+    compat_props_add(mc->compat_props, hw_compat_sparc64, hw_compat_sparc64_len);
+@@ -4589,7 +4608,6 @@ TRANS(FMUL8ULx16, VIS1, do_ddd, a, gen_helper_fmul8ulx16)
+ TRANS(FMULD8SUx16, VIS1, do_ddd, a, gen_helper_fmuld8sux16)
+ TRANS(FMULD8ULx16, VIS1, do_ddd, a, gen_helper_fmuld8ulx16)
+ TRANS(FPMERGE, VIS1, do_ddd, a, gen_helper_fpmerge)
+-TRANS(FEXPAND, VIS1, do_ddd, a, gen_helper_fexpand)
+ 
+ TRANS(FPADD16, VIS1, do_ddd, a, tcg_gen_vec_add16_i64)
+ TRANS(FPADD32, VIS1, do_ddd, a, tcg_gen_vec_add32_i64)
+diff --git a/target/sparc/vis_helper.c b/target/sparc/vis_helper.c
+index 7763b16c24..db2e6dd6c1 100644
+--- a/target/sparc/vis_helper.c
++++ b/target/sparc/vis_helper.c
+@@ -260,13 +260,13 @@ uint64_t helper_fmuld8ulx16(uint64_t src1, uint64_t src2)
+     return d.ll;
  }
  
- static const TypeInfo sun4u_type = {
+-uint64_t helper_fexpand(uint64_t src1, uint64_t src2)
++uint64_t helper_fexpand(uint32_t src2)
+ {
+     VIS32 s;
+     VIS64 d;
+ 
+-    s.l = (uint32_t)src1;
+-    d.ll = src2;
++    s.l = src2;
++    d.ll = 0;
+     d.VIS_W64(0) = s.VIS_B32(0) << 4;
+     d.VIS_W64(1) = s.VIS_B32(1) << 4;
+     d.VIS_W64(2) = s.VIS_B32(2) << 4;
 -- 
 2.39.2
 
