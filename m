@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E31DFC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 08:38:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D564C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 08:38:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3trX-0002zB-6f; Mon, 06 May 2024 04:38:20 -0400
+	id 1s3trZ-00031m-HM; Mon, 06 May 2024 04:38:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1s3trD-0002m8-Mb
- for qemu-devel@nongnu.org; Mon, 06 May 2024 04:38:01 -0400
+ id 1s3trH-0002rs-RF
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 04:38:05 -0400
 Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1s3trB-0000kO-AC
- for qemu-devel@nongnu.org; Mon, 06 May 2024 04:37:59 -0400
+ id 1s3trF-0000h1-UX
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 04:38:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1714984678; x=1746520678;
+ t=1714984682; x=1746520682;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=qijGxXFvV8iZRXcREWHGG85ad89+AhgWWgpYseJlNhg=;
- b=Ihpj/PucnqucsV/7udwzqyYVIjO9QnZgvoMVj0dnSwJX8BDCby2pnkri
- Z+1bZzIaAfjJwFzGtpMDKM7yQYNbrHALZKueSVCoz9xkIfxzeM1pt2zXe
- LmFWmX6q23fVpfcFcZgIyl3FbkmUvkXjq4Xe8qo899ZpmpOETWyZYAxEM
- S1cKorgBuzgTm4ynGCnnodYVTf3XCdkq0DUB+SwlaoTITk39y5IRlnld+
- xSO88EAsm862nd4f6352en3daWV/z//vOsjD9KCmzIKnUygazN0w6pPxl
- 7HKLTwyhUvhy773XELUc7JPS2QXJebkEAMMJ7gaT25y0JcBjUHt7ofkCH w==;
-X-CSE-ConnectionGUID: IyLyxymESJ2M7wX9DRAGaA==
-X-CSE-MsgGUID: JPJWg1utR2uUEvqAj2yqiA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11064"; a="14533342"
-X-IronPort-AV: E=Sophos;i="6.07,257,1708416000"; d="scan'208";a="14533342"
+ bh=dbHgXYEF7kX6u5b8GXlmzpie+e+fbcRgQqzu6sj3a4E=;
+ b=i5yHAi7JhXue+KRgBzn4GfhImWixYxiMGwNyZ6WV6E2MgaRamLeCGMC8
+ idLo0fyLguIgC1p1zGaI2LW4vUZbxv+JioL7Chn0QrvMd1rlHQLprYGd1
+ eMIGZr17WrtLvyrdKruXQVdKIV39L42yf7q6xinQEkyfDd3xxctFMCJCC
+ eKafar9D7fq8Q8ytMozajfxj3eqiVgPZk2NH0lwUIxSEgw1pozUU8yOX8
+ B1gTf5hKuP/pKt6I6+gQVmVmVmoPMTZ9z2BihNrZ288YnmWL+RI36ULv5
+ lZyfWQiF+mYWWlQIQ0BdCe23JjQG+ZPA5DVgsNmlxq2nNXzxIoNP460Pz w==;
+X-CSE-ConnectionGUID: g70PNE++SWmDvemz+TR8WA==
+X-CSE-MsgGUID: Y/75dDw+TUiLKrHD0/MttQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11064"; a="14533367"
+X-IronPort-AV: E=Sophos;i="6.07,257,1708416000"; d="scan'208";a="14533367"
 Received: from fmviesa010.fm.intel.com ([10.60.135.150])
  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 May 2024 01:37:55 -0700
-X-CSE-ConnectionGUID: md3ea1NeT1KDBbZJPmP8vw==
-X-CSE-MsgGUID: iR4hwVDPS8aBT7i5tcaJ7Q==
+ 06 May 2024 01:38:01 -0700
+X-CSE-ConnectionGUID: YepjWWxrTXSyU6H3+bb+6Q==
+X-CSE-MsgGUID: G+D7BZJbQXGU71FcdhrWyg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,257,1708416000"; d="scan'208";a="28186729"
+X-IronPort-AV: E=Sophos;i="6.07,257,1708416000"; d="scan'208";a="28186747"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa010.fm.intel.com with ESMTP; 06 May 2024 01:37:51 -0700
+ by fmviesa010.fm.intel.com with ESMTP; 06 May 2024 01:37:58 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -55,10 +55,10 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
 Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
  Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org,
  kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 3/6] target/i386/kvm: Only save/load kvmclock MSRs when
- kvmclock enabled
-Date: Mon,  6 May 2024 16:51:50 +0800
-Message-Id: <20240506085153.2834841-4-zhao1.liu@intel.com>
+Subject: [PATCH v2 5/6] target/i386/kvm: Drop workaround for
+ KVM_X86_DISABLE_EXITS_HTL typo
+Date: Mon,  6 May 2024 16:51:52 +0800
+Message-Id: <20240506085153.2834841-6-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240506085153.2834841-1-zhao1.liu@intel.com>
 References: <20240506085153.2834841-1-zhao1.liu@intel.com>
@@ -88,47 +88,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-MSR_KVM_SYSTEM_TIME and MSR_KVM_WALL_CLOCK are attached with the (old)
-kvmclock feature (KVM_FEATURE_CLOCKSOURCE).
+The KVM_X86_DISABLE_EXITS_HTL typo has been fixed in commit
+77d361b13c19 ("linux-headers: Update to kernel mainline commit
+b357bf602").
 
-So, just save/load them only when kvmclock (KVM_FEATURE_CLOCKSOURCE) is
-enabled.
+Drop the related workaround.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/i386/kvm/kvm.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ target/i386/kvm/kvm.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
 diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index b2c52ec9561f..75d2091c4f8c 100644
+index ee0767e8f501..b3ce7da37947 100644
 --- a/target/i386/kvm/kvm.c
 +++ b/target/i386/kvm/kvm.c
-@@ -3372,8 +3372,10 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
-      */
-     if (level >= KVM_PUT_RESET_STATE) {
-         kvm_msr_entry_add(cpu, MSR_IA32_TSC, env->tsc);
--        kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME, env->system_time_msr);
--        kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK, env->wall_clock_msr);
-+        if (env->features[FEAT_KVM] & CPUID_KVM_CLOCK) {
-+            kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME, env->system_time_msr);
-+            kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK, env->wall_clock_msr);
-+        }
-         if (env->features[FEAT_KVM] & CPUID_KVM_ASYNCPF_INT) {
-             kvm_msr_entry_add(cpu, MSR_KVM_ASYNC_PF_INT, env->async_pf_int_msr);
-         }
-@@ -3837,8 +3839,10 @@ static int kvm_get_msrs(X86CPU *cpu)
-         kvm_msr_entry_add(cpu, MSR_LSTAR, 0);
-     }
- #endif
--    kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME, 0);
--    kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK, 0);
-+    if (env->features[FEAT_KVM] & CPUID_KVM_CLOCK) {
-+        kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME, 0);
-+        kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK, 0);
-+    }
-     if (env->features[FEAT_KVM] & CPUID_KVM_ASYNCPF_INT) {
-         kvm_msr_entry_add(cpu, MSR_KVM_ASYNC_PF_INT, 0);
-     }
+@@ -2692,10 +2692,6 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+ 
+     if (enable_cpu_pm) {
+         int disable_exits = kvm_check_extension(s, KVM_CAP_X86_DISABLE_EXITS);
+-/* Work around for kernel header with a typo. TODO: fix header and drop. */
+-#if defined(KVM_X86_DISABLE_EXITS_HTL) && !defined(KVM_X86_DISABLE_EXITS_HLT)
+-#define KVM_X86_DISABLE_EXITS_HLT KVM_X86_DISABLE_EXITS_HTL
+-#endif
+         if (disable_exits) {
+             disable_exits &= (KVM_X86_DISABLE_EXITS_MWAIT |
+                               KVM_X86_DISABLE_EXITS_HLT |
 -- 
 2.34.1
 
