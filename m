@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66371C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 08:38:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 964ABC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 08:39:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3trf-0003Ak-EE; Mon, 06 May 2024 04:38:28 -0400
+	id 1s3trp-0003YQ-VX; Mon, 06 May 2024 04:38:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1s3trK-0002tc-Dy
- for qemu-devel@nongnu.org; Mon, 06 May 2024 04:38:09 -0400
+ id 1s3tr3-0002h7-UQ
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 04:37:51 -0400
 Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1s3trI-0000h1-R1
- for qemu-devel@nongnu.org; Mon, 06 May 2024 04:38:06 -0400
+ id 1s3tr2-0000gt-4l
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 04:37:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1714984685; x=1746520685;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=R4trk+H0mPF/t62AN97t8+Kv8Yiy7IDTzo4yU4vF/s4=;
- b=T3BoHEQos5Nw6TRAUFNTUmsdLPpU9ze4+RGIjO6+AiQt0EA+StjFmkwA
- 6EZLB+VQmHp3Emluk46rKFfJvudIJ0hdEre1J7rrAU+Ywb0meJjjCpCsF
- UGU4qk+Z08sjD3uC5eSTO0PUurP5kk9dW9H1UZvZR3hC6HU2upFoFkUme
- UnhSLVj0JiXSScOH6QTHc75BVbCutpSoZe4o4Z81prpBkQxy4idWFZN3H
- kQLppDyBEf/g/8fK0/F5zZAMtiWY7YOsjTc+sgrLXpkJxXSMNSw+G/TOU
- HaXrz/PSBBFC/h5BLqoC8l41U1lw2IPwbzS/PxdP+mm7/Y90Ty9pa3nBz A==;
-X-CSE-ConnectionGUID: XR/IcldeQEK0SSaxrRuOiQ==
-X-CSE-MsgGUID: aUrQxcajToS2ne0ucrBkHQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11064"; a="14533377"
-X-IronPort-AV: E=Sophos;i="6.07,257,1708416000"; d="scan'208";a="14533377"
+ t=1714984668; x=1746520668;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=t16zbWmXufIghAtbC59BZnfuKimAEZlNbjdKAMlDDag=;
+ b=bpu1l8MhXRYc53Wc6BkfX6WG5YY82EcGTSSFwq5iHCeLqGZpQISbH7DI
+ jN/aB2vJ+rZLC8w9kMBcyij4AsHIwN1mfwp+nGZxpvVX3uZ0aU2JykWzw
+ LSYQk/zjVnPuDuDm2V9YAQtp8A0NqVQX9Pl6Q1oNyPUXWFLjEAugBYACM
+ dcvejX7DYhfQEq/QsMDrfbF5SuTFZ1LsoY/OEIT27Et2B9MTtPGGm638o
+ kGRtGAnMYpNvvZAApGrCiKJDDv/yt/IP/nlqhExSJcgNy8yqrSzolErLB
+ VoOIyts8RdooMphlrZlKOLB8ct8GpivSwjQBCNPZyqqRk5xp3FK5xvk+N A==;
+X-CSE-ConnectionGUID: JPceVyfkSF6YESzK8s8aPg==
+X-CSE-MsgGUID: 1jRO9RkNSM6xMjRT4zaH3w==
+X-IronPort-AV: E=McAfee;i="6600,9927,11064"; a="14533314"
+X-IronPort-AV: E=Sophos;i="6.07,257,1708416000"; d="scan'208";a="14533314"
 Received: from fmviesa010.fm.intel.com ([10.60.135.150])
  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 May 2024 01:38:04 -0700
-X-CSE-ConnectionGUID: psUkXkENSL2KfBdKRk4RKg==
-X-CSE-MsgGUID: 3HDy4qf6SWOs6ysskfFemw==
+ 06 May 2024 01:37:46 -0700
+X-CSE-ConnectionGUID: yv9lfA5xRjetFiZhiWpslw==
+X-CSE-MsgGUID: mcQArTPlQFCiDrXfvOBQiQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,257,1708416000"; d="scan'208";a="28186755"
+X-IronPort-AV: E=Sophos;i="6.07,257,1708416000"; d="scan'208";a="28186713"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa010.fm.intel.com with ESMTP; 06 May 2024 01:38:01 -0700
+ by fmviesa010.fm.intel.com with ESMTP; 06 May 2024 01:37:43 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -55,13 +55,11 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
 Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
  Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org,
  kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 6/6] target/i386/confidential-guest: Fix comment of
- x86_confidential_guest_kvm_type()
-Date: Mon,  6 May 2024 16:51:53 +0800
-Message-Id: <20240506085153.2834841-7-zhao1.liu@intel.com>
+Subject: [PATCH v2 0/6] target/i386: Misc cleanup on KVM PV defs and outdated
+ comments
+Date: Mon,  6 May 2024 16:51:47 +0800
+Message-Id: <20240506085153.2834841-1-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240506085153.2834841-1-zhao1.liu@intel.com>
-References: <20240506085153.2834841-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.14; envelope-from=zhao1.liu@intel.com;
@@ -88,29 +86,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update the comment to match the X86ConfidentialGuestClass
-implementation.
+Hi,
 
-Reported-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
+This is my v2 cleanup series. Compared with v1 [1], only tags (R/b, S/b)
+updates, and a typo fix, no code change.
+
+This series picks cleanup from my previous kvmclock [2] (as other
+renaming attempts were temporarily put on hold).
+
+In addition, this series also include the cleanup on a historically
+workaround and recent comment of coco interface [3].
+
+Avoiding the fragmentation of these misc cleanups, I consolidated them
+all in one series and was able to tackle them in one go!
+
+[1]: https://lore.kernel.org/qemu-devel/20240426100716.2111688-1-zhao1.liu@intel.com/
+[2]: https://lore.kernel.org/qemu-devel/20240329101954.3954987-1-zhao1.liu@linux.intel.com/
+[3]: https://lore.kernel.org/qemu-devel/2815f0f1-9e20-4985-849c-d74c6cdc94ae@intel.com/
+
+Thanks and Best Regards,
+Zhao
 ---
- target/i386/confidential-guest.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Zhao Liu (6):
+  target/i386/kvm: Add feature bit definitions for KVM CPUID
+  target/i386/kvm: Remove local MSR_KVM_WALL_CLOCK and
+    MSR_KVM_SYSTEM_TIME definitions
+  target/i386/kvm: Only save/load kvmclock MSRs when kvmclock enabled
+  target/i386/kvm: Save/load MSRs of kvmclock2
+    (KVM_FEATURE_CLOCKSOURCE2)
+  target/i386/kvm: Drop workaround for KVM_X86_DISABLE_EXITS_HTL typo
+  target/i386/confidential-guest: Fix comment of
+    x86_confidential_guest_kvm_type()
 
-diff --git a/target/i386/confidential-guest.h b/target/i386/confidential-guest.h
-index 532e172a60b6..06d54a120227 100644
---- a/target/i386/confidential-guest.h
-+++ b/target/i386/confidential-guest.h
-@@ -44,7 +44,7 @@ struct X86ConfidentialGuestClass {
- /**
-  * x86_confidential_guest_kvm_type:
-  *
-- * Calls #X86ConfidentialGuestClass.unplug callback of @plug_handler.
-+ * Calls #X86ConfidentialGuestClass.kvm_type() callback.
-  */
- static inline int x86_confidential_guest_kvm_type(X86ConfidentialGuest *cg)
- {
+ hw/i386/kvm/clock.c              |  5 +--
+ target/i386/confidential-guest.h |  2 +-
+ target/i386/cpu.h                | 25 +++++++++++++
+ target/i386/kvm/kvm.c            | 63 +++++++++++++++++++-------------
+ 4 files changed, 66 insertions(+), 29 deletions(-)
+
 -- 
 2.34.1
 
