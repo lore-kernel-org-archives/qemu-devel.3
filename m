@@ -4,74 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47488C10F16
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB3C3C41513
 	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 12:39:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3xcw-0004Fm-3m; Mon, 06 May 2024 08:39:30 -0400
+	id 1s3xd3-0005La-IN; Mon, 06 May 2024 08:39:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3xcW-0002QI-5s
- for qemu-devel@nongnu.org; Mon, 06 May 2024 08:39:04 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3xd0-000535-OG
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 08:39:35 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3xcT-00025Y-AW
- for qemu-devel@nongnu.org; Mon, 06 May 2024 08:39:03 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-34d8d11a523so860204f8f.2
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 05:38:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3xcy-0002BF-Lj
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 08:39:34 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-41ba1ba5592so12617735e9.1
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 05:39:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714999138; x=1715603938; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714999171; x=1715603971; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2P2Lp6Z6ney+zSdOdvmSI8h/fve28/uqRuYWe+tRCYc=;
- b=tXlWHPcHhzVz4qJYEFJhFI0bYhRwNL1uCBON+XwQKj5VUy1EfGM2nDOoJdnqPeHfe6
- 2YZQH5wLHkI+wW5dIzmsIe0vhaSqp+YMkMBEafcHTw6S3r2OtvB6C1/f3Q79kJixk0BU
- w5xx+g92psGhJbMprGQkkJ5FL8r4VrKnI5UH7itQyLQrB0xQycXY6n3dWbPD7yallA2g
- SBjqkbjhf36LD6kYrxyuNHVL4CQLgi/6bgV3zwdF4BaBxhIglAO8/9b0loRc6CDW9wLc
- Y2pOoj3lVdPf+a6mR/m6bc0d4y9Seh2gVvcsSZTq8TIQ5Pk2sVWDpPBmzarVzBp3yjgm
- SR/w==
+ bh=vPkYetppSsjPcJRijyPbZW3TmA+wkAdtU1ccC5YsPog=;
+ b=hf0bccvLPsJ3T279ELV5hRP8x7mJNaqgetWH4sWKJ3kiFIjq8zl5+LEZN6xiSL4OIm
+ yqqg0CQ9dUDdzLOflj9mtJ2v+v8y/Nq0MEOJmH/I3gAWx0O1hG2LAQW2BGo03dp0Aq85
+ 8KsGN2tN0XzaDCPkQQ984aoYx9bXIkeR973M41V7+WlzIUD6pmgfSTx4Rp2ziF7A+g8R
+ BbY6B6r3D/vIjGvDV5W0a1ugO7Vdv9rdkhhpbtBRYssj3EQ3tvTeT8X0M7KtQvfYM+eV
+ np+7equ/PqWRmdi4TCORQEV3J1QXYln/mR6XzS4OENmo5FOKEZg1Z0XQ6LgVj4HPetVu
+ xntw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714999138; x=1715603938;
+ d=1e100.net; s=20230601; t=1714999171; x=1715603971;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2P2Lp6Z6ney+zSdOdvmSI8h/fve28/uqRuYWe+tRCYc=;
- b=jzMIkQkjUE9ugUZ2915aVlzX04jy1mQf5VnTYEj61QuSFmXkWhHNwlficx6BOmGl4o
- +SmEsUnVYKZLizOWuj1TYnTaO67jqJrdXCUvVXHqLdSH93yPapykCT/6k1/N+RVMUAsJ
- r2IX1DrOflBWupMkLdUIlF/KZ4aJFOhHH9d7kOfsuv72RilAo10/boREbCpGSK6mfniu
- naqiS70gp0kHZ0DYgAsV8UwQ6vxElJ8n9oBcBhcd4+XLE+wch01NcBfDXbcvb+GBa0Le
- IapM/G9HO+HaFrTsDLG28ZGcUx3LxZ3XNlmzk4JHj58RP8LDzaQxEdNLPtjA1XRW7Dmh
- bKzQ==
-X-Gm-Message-State: AOJu0YzlvjktS3yA4NDzZUeASNPi+YSq9sateuSF2POJBd4+FmDT0Aqj
- Bq4QP+JiyErAd5N0Rerg2FekKezBVMXZNTxoreAB40x+FlC6fr5gGt+zCGfMqwuTjkOov/Yeb3A
- 9
-X-Google-Smtp-Source: AGHT+IGhEPmAtROJixUHN/3NgaDB4Ez+iwE/km2Vs3xU3kNnIhilr8fe9S4BRqVyF9oHidW67WmMvg==
-X-Received: by 2002:a5d:6a83:0:b0:34c:c4fe:63d with SMTP id
- s3-20020a5d6a83000000b0034cc4fe063dmr7072541wru.29.1714999138632; 
- Mon, 06 May 2024 05:38:58 -0700 (PDT)
+ bh=vPkYetppSsjPcJRijyPbZW3TmA+wkAdtU1ccC5YsPog=;
+ b=BPoHyhZRJB5IStndVvoia/+qVZOhQfXVexyqT33xSzLh08eEFa2EM1OOdVCyzQF0BY
+ KthQKxJMkyNVJBX9i6sigDU907PhGy7Sm1QiZ/QJJwpCpAUGfbL439UvCOZCyto7yuK0
+ aO8Cqf5x+I0d/2KVRzKZcC88tKqSaHS6xF1KbE9Ma5i089xZ/79yzg1qRegSPNYJ1sTw
+ zgWeBI8dThxX+raBxXiqmlf1NqFYkfg5jwQxJ/W3nr0AVbeWf8KwyB1KigUM4Lwz1FvL
+ yvarajInVj6dgiNr3aCg9zXP+QavyhUXmA9f3wFE3RyYYYLC4zWapsXLswCsYOSUhJpJ
+ /V4w==
+X-Gm-Message-State: AOJu0YzYgODdqrzYXptT2gxtPnAVPdakFky2drdwFPrrcoxp1plqb9hC
+ bvOryzIqChZdM22Lf80LeXNQaNNxFuD7P2ErJZkHs4CcFkBfNcf90qEV8/I20E/WKieTRl4anyb
+ k
+X-Google-Smtp-Source: AGHT+IFMwT2CU499T0HLrxuDWtAES8yxvtF878ta820SmEae4RndjeuacLoAIPnzOFdGp5hduuZ1Dg==
+X-Received: by 2002:a05:600c:4f02:b0:41b:d973:24c1 with SMTP id
+ l2-20020a05600c4f0200b0041bd97324c1mr9426655wmq.12.1714999170931; 
+ Mon, 06 May 2024 05:39:30 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.211.4]) by smtp.gmail.com with ESMTPSA id
- n15-20020adff08f000000b00343eac2acc4sm10630140wro.111.2024.05.06.05.38.57
+ bg5-20020a05600c3c8500b0041bbec72670sm16031875wmb.39.2024.05.06.05.39.29
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 06 May 2024 05:38:58 -0700 (PDT)
+ Mon, 06 May 2024 05:39:30 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 12/28] accel/tcg: Move @plugin_mem_cbs from CPUState to
- CPUNegativeOffsetState
-Date: Mon,  6 May 2024 14:37:12 +0200
-Message-ID: <20240506123728.65278-13-philmd@linaro.org>
+Cc: Juergen Gross <jgross@suse.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 17/28] xen: let xen_ram_addr_from_mapcache() return -1 in case
+ of not found entry
+Date: Mon,  6 May 2024 14:37:17 +0200
+Message-ID: <20240506123728.65278-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240506123728.65278-1-philmd@linaro.org>
 References: <20240506123728.65278-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,130 +97,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-@plugin_mem_cbs is accessed by tcg generated code, move it
-to CPUNegativeOffsetState.
+From: Juergen Gross <jgross@suse.com>
 
+Today xen_ram_addr_from_mapcache() will either abort() or return 0 in
+case it can't find a matching entry for a pointer value. Both cases
+are bad, so change that to return an invalid address instead.
+
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+Message-Id: <20231005181629.4046-5-vikram.garhwal@amd.com>
+Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Message-ID: <20240430164939.925307-3-edgar.iglesias@gmail.com>
+[PMD: Keep xen_ram_addr_from_mapcache_not_found trace event]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240429213050.55177-4-philmd@linaro.org>
 ---
- accel/tcg/internal-common.h |  2 +-
- include/hw/core/cpu.h       | 13 +++++++------
- include/qemu/plugin.h       |  2 +-
- accel/tcg/plugin-gen.c      |  6 +++---
- plugins/core.c              |  2 +-
- 5 files changed, 13 insertions(+), 12 deletions(-)
+ hw/xen/xen-mapcache.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/accel/tcg/internal-common.h b/accel/tcg/internal-common.h
-index cbeff39e3e..cff43d221b 100644
---- a/accel/tcg/internal-common.h
-+++ b/accel/tcg/internal-common.h
-@@ -35,7 +35,7 @@ static inline bool cpu_in_serial_context(CPUState *cs)
- static inline bool cpu_plugin_mem_cbs_enabled(const CPUState *cpu)
- {
- #ifdef CONFIG_PLUGIN
--    return !!cpu->plugin_mem_cbs;
-+    return !!cpu->neg.plugin_mem_cbs;
- #else
-     return false;
- #endif
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index a001bafcf8..6efd7353be 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -342,9 +342,16 @@ typedef union IcountDecr {
-  * CPUNegativeOffsetState: Elements of CPUState most efficiently accessed
-  *                         from CPUArchState, via small negative offsets.
-  * @can_do_io: True if memory-mapped IO is allowed.
-+ * @plugin_mem_cbs: active plugin memory callbacks
-  */
- typedef struct CPUNegativeOffsetState {
-     CPUTLB tlb;
-+#ifdef CONFIG_PLUGIN
-+    /*
-+     * The callback pointer are accessed via TCG (see gen_empty_mem_helper).
-+     */
-+    GArray *plugin_mem_cbs;
-+#endif
-     IcountDecr icount_decr;
-     bool can_do_io;
- } CPUNegativeOffsetState;
-@@ -416,7 +423,6 @@ struct qemu_work_item;
-  * @kvm_fd: vCPU file descriptor for KVM.
-  * @work_mutex: Lock to prevent multiple access to @work_list.
-  * @work_list: List of pending asynchronous work.
-- * @plugin_mem_cbs: active plugin memory callbacks
-  * @plugin_state: per-CPU plugin state
-  * @ignore_memory_transaction_failures: Cached copy of the MachineState
-  *    flag of the same name: allows the board to suppress calling of the
-@@ -511,11 +517,6 @@ struct CPUState {
-     QemuLockCnt in_ioctl_lock;
+diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
+index 7f59080ba7..7771c6cb91 100644
+--- a/hw/xen/xen-mapcache.c
++++ b/hw/xen/xen-mapcache.c
+@@ -395,12 +395,8 @@ ram_addr_t xen_ram_addr_from_mapcache(void *ptr)
+     }
+     if (!found) {
+         trace_xen_ram_addr_from_mapcache_not_found(ptr);
+-        QTAILQ_FOREACH(reventry, &mapcache->locked_entries, next) {
+-            trace_xen_ram_addr_from_mapcache_found(reventry->paddr_index,
+-                                                   reventry->vaddr_req);
+-        }
+-        abort();
+-        return 0;
++        mapcache_unlock();
++        return RAM_ADDR_INVALID;
+     }
  
- #ifdef CONFIG_PLUGIN
--    /*
--     * The callback pointer stays in the main CPUState as it is
--     * accessed via TCG (see gen_empty_mem_helper).
--     */
--    GArray *plugin_mem_cbs;
-     CPUPluginState *plugin_state;
- #endif
- 
-diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
-index 18062528c1..b535bfd5de 100644
---- a/include/qemu/plugin.h
-+++ b/include/qemu/plugin.h
-@@ -180,7 +180,7 @@ void qemu_plugin_add_dyn_cb_arr(GArray *arr);
- 
- static inline void qemu_plugin_disable_mem_helpers(CPUState *cpu)
- {
--    cpu->plugin_mem_cbs = NULL;
-+    cpu->neg.plugin_mem_cbs = NULL;
- }
- 
- /**
-diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
-index 3db74ae9bf..49f5d1c2e4 100644
---- a/accel/tcg/plugin-gen.c
-+++ b/accel/tcg/plugin-gen.c
-@@ -55,7 +55,7 @@ static void gen_enable_mem_helper(struct qemu_plugin_tb *ptb,
-      * Tracking memory accesses performed from helpers requires extra work.
-      * If an instruction is emulated with helpers, we do two things:
-      * (1) copy the CB descriptors, and keep track of it so that they can be
--     * freed later on, and (2) point CPUState.plugin_mem_cbs to the
-+     * freed later on, and (2) point CPUState.neg.plugin_mem_cbs to the
-      * descriptors, so that we can read them at run-time
-      * (i.e. when the helper executes).
-      * This run-time access is performed from qemu_plugin_vcpu_mem_cb.
-@@ -90,14 +90,14 @@ static void gen_enable_mem_helper(struct qemu_plugin_tb *ptb,
-     qemu_plugin_add_dyn_cb_arr(arr);
- 
-     tcg_gen_st_ptr(tcg_constant_ptr((intptr_t)arr), tcg_env,
--                   offsetof(CPUState, plugin_mem_cbs) -
-+                   offsetof(CPUState, neg.plugin_mem_cbs) -
-                    offsetof(ArchCPU, env));
- }
- 
- static void gen_disable_mem_helper(void)
- {
-     tcg_gen_st_ptr(tcg_constant_ptr(0), tcg_env,
--                   offsetof(CPUState, plugin_mem_cbs) -
-+                   offsetof(CPUState, neg.plugin_mem_cbs) -
-                    offsetof(ArchCPU, env));
- }
- 
-diff --git a/plugins/core.c b/plugins/core.c
-index 081323dafc..1e58a57bf1 100644
---- a/plugins/core.c
-+++ b/plugins/core.c
-@@ -533,7 +533,7 @@ void exec_inline_op(struct qemu_plugin_dyn_cb *cb, int cpu_index)
- void qemu_plugin_vcpu_mem_cb(CPUState *cpu, uint64_t vaddr,
-                              MemOpIdx oi, enum qemu_plugin_mem_rw rw)
- {
--    GArray *arr = cpu->plugin_mem_cbs;
-+    GArray *arr = cpu->neg.plugin_mem_cbs;
-     size_t i;
- 
-     if (arr == NULL) {
+     entry = &mapcache->entry[paddr_index % mapcache->nr_buckets];
+@@ -409,7 +405,7 @@ ram_addr_t xen_ram_addr_from_mapcache(void *ptr)
+     }
+     if (!entry) {
+         trace_xen_ram_addr_from_mapcache_not_in_cache(ptr);
+-        raddr = 0;
++        raddr = RAM_ADDR_INVALID;
+     } else {
+         raddr = (reventry->paddr_index << MCACHE_BUCKET_SHIFT) +
+              ((unsigned long) ptr - (unsigned long) entry->vaddr_base);
 -- 
 2.41.0
 
