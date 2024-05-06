@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A416BC10F16
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 12:40:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7E0EC25B10
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 12:40:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3xcx-0004X5-Ml; Mon, 06 May 2024 08:39:31 -0400
+	id 1s3xdK-0007ql-Qv; Mon, 06 May 2024 08:39:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3xco-0003rS-Py
- for qemu-devel@nongnu.org; Mon, 06 May 2024 08:39:23 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3xdJ-0007bq-0l
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 08:39:53 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3xcl-00027y-NJ
- for qemu-devel@nongnu.org; Mon, 06 May 2024 08:39:21 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-41b794510cdso15114335e9.2
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 05:39:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s3xdH-0002FA-2u
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 08:39:52 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-41ba0bb5837so12252795e9.3
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 05:39:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1714999157; x=1715603957; darn=nongnu.org;
+ d=linaro.org; s=google; t=1714999189; x=1715603989; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=s/Fp8DKElE44Fn+ap9z01bjvDp7koqMm6QbA7s6TWS0=;
- b=fb4GpYfMg6cUPm0Bmlf46mTeWVPFZI9VgXhV9CMID8Rn6b8pl+ShGu8bnbGScH2gWT
- fDMmCwCGyeTnBVXbGxcu7mWIRjHMneLOJC3v+grY8vG1eVOzOR9lSBEVvdWEG0j9EizQ
- zwcXOkGn5iwxb+COBwSiJS3lnflJKxUKXjTiSplzWN2BldlzQj3qLUmsRS4Lda17TKU3
- uWG0g5lhkkawt0Pl/oFT7v7z3alDcYI4y0cDa5Sz0hHd6lOZ6QhxX2scyrPL4FbXvwPS
- Tz7vLKYi4nAKUjf8Mjt7vbXnKHbv9IlPwArywk6v0c3PZvkS97BCUO7uG/64IqdtiG7Z
- x52w==
+ bh=1p0/bn0v9GB+8nuG2nruzO91sj0ZUfXKvZH/Fy9rq7U=;
+ b=d4gLKbveEe4X1q8Vid5upgyFd/8ozH1QK6AY1NkfSc6MCie8EOyF/sF+zbf7qTKnlS
+ ffEC74IdSUf0h9aGuX1cc77QieOjyWI/izrZDn11GNDLgv8z1UN/t2aqt8Zg1FbBxJQl
+ RxJ9FpT0j3CHaFnoiBMVVeGFckn8ZXw1FD4HU0E06zYHDsfN5gTMU98zIrKEv5qmispC
+ qD0UzKgTNRszeX1kdTparvQrwdWX9hDji4FuVt5JIv67Rxmr27GGLmPDgR9QT0M7rPwf
+ /4oxKU8UrfHLmneICg6SALj9dhWDIJ74Y0l6z+0/pog3srgMi6/GnBGblnVn0MsrLML8
+ xApw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714999157; x=1715603957;
+ d=1e100.net; s=20230601; t=1714999189; x=1715603989;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=s/Fp8DKElE44Fn+ap9z01bjvDp7koqMm6QbA7s6TWS0=;
- b=i5PcfzY63byK2oLMAjkcDGgNJr/5KJRdQCUu4h0rKVDdbHRKZpD7VqSUJvBOMHPEmZ
- 1VqJDGGeMWxxfm/P/+yvhUgK8EdIS/RQPyat+F+qMBXFVT12Peq6Z3GoNgf9jv0WU2RY
- OUzNmfDKcLNCZUF1scPQODLG73hfrK4JHKiXvHPDLkOxjJSzggCJNifXL7E5kjZ6ZkQJ
- vGJXv6d4ozFggq45bsSPnF7sE6qdSrYKAxlxQZXcBlGz90la5IqRalQSUahVR+vBiWnk
- N012480KoklR4W6xpJEYRAvx29KWXCoGh1w7eyWqKduuIAgPZp+4e6m85E2unCw1h9qn
- p5mg==
-X-Gm-Message-State: AOJu0Yw7aYkzRKWyEZ6NyeJXBmWpJqKoRhyYfP1dtwQ7g2wR6z1nBtng
- NeII4pN1mWE/QWg5/+zwsDDEQTVHh9L6zk30TUZ0bmz5OL6uWftfeyU/33GrZxyo90jqMlUEyHQ
- Q
-X-Google-Smtp-Source: AGHT+IG6+HGdXHbsGqMQFJxAOHi9y8kE6+10UOueQ0oU/hK5fsCgavf11g/uzy3dW3WYUFbPf61crQ==
-X-Received: by 2002:a05:6000:d87:b0:34d:a1fb:8f73 with SMTP id
- dv7-20020a0560000d8700b0034da1fb8f73mr7057376wrb.4.1714999157442; 
- Mon, 06 May 2024 05:39:17 -0700 (PDT)
+ bh=1p0/bn0v9GB+8nuG2nruzO91sj0ZUfXKvZH/Fy9rq7U=;
+ b=fPT2wEkh+C70oJujn94Pv1anv0aQxGPdi9MdjxcGccA3OYGfjZO5VV6nzvUvLjn8r3
+ SOrSEdleY3ExbR34Y9LCOeflq/xar7b2nyYnd5dhEYN20d3rXBHfFPwJJLHVwmadXm84
+ 5dnrgysIedVZv++iP38x5md4RbS/vF8nYkeQMtKwT+qvpugtwxqBroptMl1dFasWxCNZ
+ x27cedD0mvR8WHjLfKHNKiHUfyJftZORtiI6dHpFhs8dZpuKRBWMXC/411ZtBAASZOcW
+ r/WCmzgj9h33ynZ2NrCGfGpwGvja4notGGHjCrCTtCCLDkWe9SaU1LmJUKlSzhCUjCdY
+ QnVw==
+X-Gm-Message-State: AOJu0Yy+XuBmOebDyHr4KXdYs7eRGNwI9xnvflPzFbTK5eUlhi4TyMzu
+ 8eYOiOEaYROWMllPrf8TBPHkDG+5/1wcRcqTlWF8GBRku/zY3Dc5YSxWUavru+ORj4aJRy75lLV
+ k
+X-Google-Smtp-Source: AGHT+IE333ToYqtTxLOqMVXEoZqDwY5eSkpBSHiWA8AgOwiCUvATpQJZie1VWWDZVFv+5dFTBV0Ceg==
+X-Received: by 2002:a05:600c:5251:b0:418:e04b:ee63 with SMTP id
+ fc17-20020a05600c525100b00418e04bee63mr6910750wmb.36.1714999189222; 
+ Mon, 06 May 2024 05:39:49 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.211.4]) by smtp.gmail.com with ESMTPSA id
- n8-20020adffe08000000b0034df2d0bd71sm10588152wrr.12.2024.05.06.05.39.16
+ je8-20020a05600c1f8800b0041bf28aa11dsm15935813wmb.42.2024.05.06.05.39.47
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 06 May 2024 05:39:17 -0700 (PDT)
+ Mon, 06 May 2024 05:39:48 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 15/28] user: Use get_task_state() helper
-Date: Mon,  6 May 2024 14:37:15 +0200
-Message-ID: <20240506123728.65278-16-philmd@linaro.org>
+Cc: "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 20/28] xen: mapcache: Refactor xen_remap_bucket for
+ multi-instance
+Date: Mon,  6 May 2024 14:37:20 +0200
+Message-ID: <20240506123728.65278-21-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240506123728.65278-1-philmd@linaro.org>
 References: <20240506123728.65278-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,82 +95,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Get the TaskState pointer calling get_task_state().
+From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 
+Add MapCache argument to xen_remap_bucket in preparation
+to support multiple map caches.
+
+No functional changes.
+
+Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240430164939.925307-6-edgar.iglesias@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240428221450.26460-11-philmd@linaro.org>
 ---
- gdbstub/gdbstub.c     | 3 ++-
- gdbstub/user-target.c | 4 ++--
- linux-user/syscall.c  | 4 ++--
- 3 files changed, 6 insertions(+), 5 deletions(-)
+ hw/xen/xen-mapcache.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index 9c2b8b5d0a..b3574997ea 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -32,6 +32,7 @@
- #include "exec/gdbstub.h"
- #include "gdbstub/syscalls.h"
- #ifdef CONFIG_USER_ONLY
-+#include "accel/tcg/vcpu-state.h"
- #include "gdbstub/user.h"
- #else
- #include "hw/cpu/cluster.h"
-@@ -1661,7 +1662,7 @@ static void handle_query_supported(GArray *params, void *user_ctx)
+diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
+index 9e0a56b41b..6bb3e0b362 100644
+--- a/hw/xen/xen-mapcache.c
++++ b/hw/xen/xen-mapcache.c
+@@ -139,7 +139,8 @@ void xen_map_cache_init(phys_offset_to_gaddr_t f, void *opaque)
+     mapcache->entry = g_malloc0(size);
+ }
  
- #if defined(CONFIG_USER_ONLY)
- #if defined(CONFIG_LINUX)
--    if (gdbserver_state.c_cpu->opaque) {
-+    if (get_task_state(gdbserver_state.c_cpu)) {
-         g_string_append(gdbserver_state.str_buf, ";qXfer:auxv:read+");
-     }
-     g_string_append(gdbserver_state.str_buf, ";QCatchSyscalls+");
-diff --git a/gdbstub/user-target.c b/gdbstub/user-target.c
-index 6646684a4c..a9c6c64512 100644
---- a/gdbstub/user-target.c
-+++ b/gdbstub/user-target.c
-@@ -216,7 +216,7 @@ void gdb_handle_query_offsets(GArray *params, void *user_ctx)
- {
-     TaskState *ts;
- 
--    ts = gdbserver_state.c_cpu->opaque;
-+    ts = get_task_state(gdbserver_state.c_cpu);
-     g_string_printf(gdbserver_state.str_buf,
-                     "Text=" TARGET_ABI_FMT_lx
-                     ";Data=" TARGET_ABI_FMT_lx
-@@ -252,7 +252,7 @@ void gdb_handle_query_xfer_auxv(GArray *params, void *user_ctx)
- 
-     offset = get_param(params, 0)->val_ul;
-     len = get_param(params, 1)->val_ul;
--    ts = gdbserver_state.c_cpu->opaque;
-+    ts = get_task_state(gdbserver_state.c_cpu);
-     saved_auxv = ts->info->saved_auxv;
-     auxv_len = ts->info->auxv_len;
- 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 1b42e80f9a..b9b5a387b3 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -6463,7 +6463,7 @@ static abi_long do_prctl(CPUArchState *env, abi_long option, abi_long arg2,
- 
-     case PR_GET_TID_ADDRESS:
-         {
--            TaskState *ts = env_cpu(env)->opaque;
-+            TaskState *ts = get_task_state(env_cpu(env));
-             return put_user_ual(ts->child_tidptr, arg2);
+-static void xen_remap_bucket(MapCacheEntry *entry,
++static void xen_remap_bucket(MapCache *mc,
++                             MapCacheEntry *entry,
+                              void *vaddr,
+                              hwaddr size,
+                              hwaddr address_index,
+@@ -313,14 +314,14 @@ tryagain:
+     if (!entry) {
+         entry = g_new0(MapCacheEntry, 1);
+         pentry->next = entry;
+-        xen_remap_bucket(entry, NULL, cache_size, address_index, dummy);
++        xen_remap_bucket(mc, entry, NULL, cache_size, address_index, dummy);
+     } else if (!entry->lock) {
+         if (!entry->vaddr_base || entry->paddr_index != address_index ||
+                 entry->size != cache_size ||
+                 !test_bits(address_offset >> XC_PAGE_SHIFT,
+                     test_bit_size >> XC_PAGE_SHIFT,
+                     entry->valid_mapping)) {
+-            xen_remap_bucket(entry, NULL, cache_size, address_index, dummy);
++            xen_remap_bucket(mc, entry, NULL, cache_size, address_index, dummy);
          }
+     }
  
-@@ -8124,7 +8124,7 @@ static int open_self_maps_2(void *opaque, target_ulong guest_start,
- static int open_self_maps_1(CPUArchState *env, int fd, bool smaps)
- {
-     struct open_self_maps_data d = {
--        .ts = env_cpu(env)->opaque,
-+        .ts = get_task_state(env_cpu(env)),
-         .host_maps = read_self_maps(),
-         .fd = fd,
-         .smaps = smaps
+@@ -588,7 +589,7 @@ static uint8_t *xen_replace_cache_entry_unlocked(hwaddr old_phys_addr,
+ 
+     trace_xen_replace_cache_entry_dummy(old_phys_addr, new_phys_addr);
+ 
+-    xen_remap_bucket(entry, entry->vaddr_base,
++    xen_remap_bucket(mapcache, entry, entry->vaddr_base,
+                      cache_size, address_index, false);
+     if (!test_bits(address_offset >> XC_PAGE_SHIFT,
+                 test_bit_size >> XC_PAGE_SHIFT,
 -- 
 2.41.0
 
