@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFC75C10F16
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 15:33:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECA5BC10F16
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 15:33:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s40Jt-0007jB-0d; Mon, 06 May 2024 11:32:01 -0400
+	id 1s40Ju-0007kD-O3; Mon, 06 May 2024 11:32:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1s40Jp-0007hE-1D
+ id 1s40Jr-0007hw-DE
  for qemu-devel@nongnu.org; Mon, 06 May 2024 11:31:59 -0400
 Received: from wfhigh1-smtp.messagingengine.com ([64.147.123.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1s40Jk-0003JY-Vm
- for qemu-devel@nongnu.org; Mon, 06 May 2024 11:31:55 -0400
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
- by mailfhigh.west.internal (Postfix) with ESMTP id 4205B1800123;
- Mon,  6 May 2024 11:31:48 -0400 (EDT)
+ id 1s40Jo-0003RL-OQ
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 11:31:59 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+ by mailfhigh.west.internal (Postfix) with ESMTP id 30A421800153;
+ Mon,  6 May 2024 11:31:55 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
- by compute7.internal (MEProxy); Mon, 06 May 2024 11:31:48 -0400
+ by compute2.internal (MEProxy); Mon, 06 May 2024 11:31:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
  cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:message-id:mime-version:reply-to
- :subject:subject:to:to; s=fm1; t=1715009507; x=1715095907; bh=9q
- kPuxLpOL5az0FyzD29sfaThSDlmwI4Ujxs7bT7BR8=; b=KVLeYhVMvtfUYec51w
- 6yyYM0/TbdVzyQ8I3lbnwG0pAsWPx1aZqaa06VTX4DKWrXQTFeC37XmXmW1xb3Yd
- CKtVgh76g00/S56Ra88lKbbduGBEMz1jnc7L3p7as3Oira2aFl5/m2MEs+Tfpkhn
- +ouNhkojOJtCbA9pa1rOUpr6yK+6CvGtkLgHdatMGt8oiaQ+v1VNpbR70Nuf4Yo3
- IMdCM33tJC9rDAxfSQxMVXgfbGm+uPssIfjqeOf8urgbDTvedg+NJbiKp2InIt0S
- Xje9jEf8MHUlH4DkIz/0MZokI6OIkQehoojLwhxeg3pKMMVWNZRQviubgI7CMi3U
- cBEg==
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm1; t=1715009514;
+ x=1715095914; bh=nPIbGPamlN+9KKqIN+ZYNQjFTgy446GDwC+t8kWt5Mo=; b=
+ SU1pVRz5c/o04E/X/JByliBslJhzlKM+tTD3yrwnGCp49ncYw7tfR1Q0peVVBHkI
+ y9YuEHh3L2jES6Wd+qxLoDOa0g5xQcChKlVCWzCS9qYQ7is3V74qWY8QCaATTYot
+ XXLEyKqcqcFpfO2dKCy4RWNMRdxVLORqgKDX5K1v5y1ElMOGFZD14bDcOhrAcUt6
+ i4Hos4ZyUGJPvzWc4Gz6S+DDzUZefxQQg1V+s7PJSQIBOw83X3tPGnbYeE/zG/B4
+ /FwiivgakzSCQVdF3KHb3+gH8vPqEkTxiGxNgRcoSoHCA8HUl/qlgJ6vLGn5IgwC
+ RtRsjrrEObihHdStNWwn2A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm3; t=1715009507; x=1715095907; bh=9qkPuxLpOL5az
- 0FyzD29sfaThSDlmwI4Ujxs7bT7BR8=; b=i9O0CvE6y1rU7LI1Cp9X128T/16rZ
- Nw03rMQCxy1ktStAKXQSSnJt350eNCg8et/ID/Z7RO4aruUvs1XGNO5wMh/xmCZ3
- U8YvA05hKCZApd0qaChd6CAN/zMQe6EdUjWXHfXRg5VzeckJ7Q2wVcVtGCNh42hZ
- 1gQKWdaSd9hJ+SJiLMAs8pIvT5wv6J1vzdSncG8ovUYe6NBwPcdslh3umknXjMy6
- T+jOlPik5Lse0BGIljCJiKwoV71sCXmgdA2cRHZCn+ph7CJFymS4eJIsI26wyj72
- hbakmg2CnZl4eZ6NI4Dag+1KYtmMzCny1yc5sm1CMpHSQvevKwwOWyyhQ==
-X-ME-Sender: <xms:4_c4ZlewNoX7xU7kSfsdodGL4sJDbhBDTYBMRBsG7Nx5eX8zBrtvWA>
- <xme:4_c4ZjNb4SSInvNciEe7ZutSVavFzcMg4WLT2XZfLVh4FGkiC3wxcQfPLuWNd9yj4
- 5igVzryVrZ0ScGszq4>
-X-ME-Received: <xmr:4_c4Zuj-R3C7qx5gNz-c74CSXIA1Y0s6MNrjNfA1-MTv7bmKj3Vgv1Q>
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1715009514; x=
+ 1715095914; bh=nPIbGPamlN+9KKqIN+ZYNQjFTgy446GDwC+t8kWt5Mo=; b=N
+ AKwTAZEBRSGe6n4t7CHZvE0q+VnsqImdiVgdUGw8VFhuuE0ARt3QAJb7Taq5Kppv
+ mjGmpRvGHh2/oLjJr/M12X4MrLOpqc5qyJtYV4Ko88R8Vq1Swji7GLW/yk8ayBxl
+ yjcKo0llzQRaCSfK7yacUHY6lK7+IKDfFnX84lA7envgGIs7ryczTCBdf2+Aeyro
+ 0ggHfWq7gg6ZJ7jXJn6vOteku55ImzWXNBkIjZ0Nt0jjn8bOSANQjZ0a7yeN74zL
+ In5B6zo2QRB+EwNVV6XbWg8xvWwRcDO3QfgdBGCmGg90NOQaUkswTFITMv0iRSSy
+ 0qgRgy8vsLbMFOWHK0RcQ==
+X-ME-Sender: <xms:6vc4ZqD6A1bbNJZgmgNRs_8Q06yITop_6-SOgs5sUMmld1yGuTTsWg>
+ <xme:6vc4ZkiSU0Ywr-OzyssdekxQGSdO8Ke4xQiJvqWLnVEK743UCdRrUmsk5FF0nahzQ
+ NFxKX3wCGHyvUpXw3I>
+X-ME-Received: <xmr:6vc4ZtlQwkjkX3RYPPhTKkPI0T7a61clPa8crWrXJ46oFQ3VKWGFMIc>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddviedgledtucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhephffufffkgggtgffvvefosehtkeertdertdejnecuhfhrohhmpeflihgrgihu
- nhcujggrnhhguceojhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomheqnecugg
- ftrfgrthhtvghrnhepkeejgfdtteeljeeuvdeiteegheefleehgeevuefgfeevhfevheeh
- hfefieegvdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
- homhepjhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomh
-X-ME-Proxy: <xmx:4_c4Zu9kb_AT68gca3Nob57dmI_YpG5YHpHjWmyQ5T6lDsbIs7tiig>
- <xmx:4_c4Zht4tP6mF-qJmMffNdBtzon6CN8T5ImNsEhnjah4PzHdEAEBwQ>
- <xmx:4_c4ZtEBijrl4NhLs-CsOFu2l8fyLktcobq909AN5t2l-I6LROLUkw>
- <xmx:4_c4ZoMdrkeOc_gxtKApzFlCboyFlxKTczzr4cjsO9E-iFUe_cTzOw>
- <xmx:4_c4ZpJwyDrvGq4jzKgxgWhMaCbYTeDVtAJ3qurfyIDc2HzmaqSCfP96>
+ cujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpeflihgr
+ gihunhcujggrnhhguceojhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomheqne
+ cuggftrfgrthhtvghrnhepvdekiefhfeevkeeuveetfeelffekgedugefhtdduudeghfeu
+ veegffegudekjeelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilh
+ hfrhhomhepjhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomh
+X-ME-Proxy: <xmx:6vc4ZozOTor1Zfcs9jlK_YwFKO6NtFM7zhg47GSVywnnM5R5WsuWNw>
+ <xmx:6vc4ZvR9c77_9Raz3m7tyZajI344mZbi0r2wYVyLtX75QQSWwzAieA>
+ <xmx:6vc4ZjZ1LBD4fcPIGWauzR5a1VM5VX9lBogKG2C0Hh6xZWuw0wxTeA>
+ <xmx:6vc4ZoT9oSjh2Cp0q7pXAwoGd1TchczTKYWMaxCOh76hbI2d7Lho6Q>
+ <xmx:6vc4ZpcL_hK-DotKrOI3J9qvyXTvVwukAQT7Z45qi_f10fFXbnn2-uaB>
 Feedback-ID: ifd894703:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 May 2024 11:31:47 -0400 (EDT)
+ 6 May 2024 11:31:53 -0400 (EDT)
 From: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PATCH 0/5] hw/mips: Proper multi core support
-Date: Mon, 06 May 2024 16:31:34 +0100
-Message-Id: <20240506-mips-smp-v1-0-3cc234786910@flygoat.com>
+Date: Mon, 06 May 2024 16:31:38 +0100
+Subject: [PATCH 4/5] hw/mips/cps: Implement multi core support
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIANb3OGYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDUwMz3dzMgmLd4twCXcvENMtUc8PEFItkIyWg8oKi1LTMCrBR0bG1tQC
- V8DEGWgAAAA==
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240506-mips-smp-v1-4-3cc234786910@flygoat.com>
+References: <20240506-mips-smp-v1-0-3cc234786910@flygoat.com>
+In-Reply-To: <20240506-mips-smp-v1-0-3cc234786910@flygoat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Jiaxun Yang <jiaxun.yang@flygoat.com>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2782;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6178;
  i=jiaxun.yang@flygoat.com; h=from:subject:message-id;
- bh=oNlozXeAJRJUSVaV0fKqi4kZN1E3eUjY+6x2UcXdfzA=;
- b=owGbwMvMwCHmXMhTe71c8zDjabUkhjSL7487riTP+lh30eRIuPBRnh87hU5wHr1jM/Wl9T0JI
- U6O4jnsHaUsDGIcDLJiiiwhAkp9GxovLrj+IOsPzBxWJpAhDFycAjCRZF2G//53D+xfsuI5S+zW
- Z5/8tDV+6AkeDnl+XFB/Q9enA092d/UyMhx0EjOTSztyeX1LR2Dxvv4dd7fUdqk/kJE6Hlh66P2
- dRbwA
+ bh=/FjpNTd8i6ZiVBgPVy4jFS2xatx8RS7XQ1Hw3unLW38=;
+ b=owGbwMvMwCHmXMhTe71c8zDjabUkhjSL748PM0v6eK1lFHq3YKrZUlXOrc9mlD511q9NrOae6
+ nL7cjJTRykLgxgHg6yYIkuIgFLfhsaLC64/yPoDM4eVCWQIAxenAExkFR/DHx7LnpULs/+HzLp2
+ /tflc1Y3ziSfdd9qGBgpE2SlzZa8tpGR4RbfoktF179eVZmbNEt6UoTIywOfVpaWemaefLxLwqn
+ flRkA
 X-Developer-Key: i=jiaxun.yang@flygoat.com; a=openpgp;
  fpr=980379BEFEBFBF477EA04EF9C111949073FC0F67
 Received-SPF: pass client-ip=64.147.123.152;
@@ -115,78 +115,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all,
-
-This series implemented propper multiple core support for MIPS
-CPS systsm.
-
-Previously all CPUs are being implemented as a smt thread in a
-single core. Now it respects topology supplied in QEMU args.
-
-To test:
-Build a latest kernel with 64r6el_defconfig (tested on 6.6,
-next-20240506).
-
-Then run:
-```
-qemu-system-mips64el -M boston -cpu I6500 -kernel ~/linux-next/vmlinux -smp 4,cores=2,threads=2 -append "console=ttyS0,115200" -nographic
-```
-In dmesg of guest kernel:
-```
-[    0.000000] VP topology {2,2} total 4
-...
-[    0.085190] smp: Bringing up secondary CPUs ...
-[    0.090219] Primary instruction cache 64kB, VIPT, 4-way, linesize 64 bytes.
-[    0.095461] Primary data cache 64kB, 4-way, PIPT, no aliases, linesize 64 bytes
-[    0.096658] CPU1 revision is: 0001b000 (MIPS I6500)
-[    0.096718] FPU revision is: 20f30300
-[    0.124711] Synchronize counters for CPU 1: done.
-[    0.940979] Primary instruction cache 64kB, VIPT, 4-way, linesize 64 bytes.
-[    0.941041] Primary data cache 64kB, 4-way, PIPT, no aliases, linesize 64 bytes
-[    0.941256] CPU2 revision is: 0001b000 (MIPS I6500)
-[    0.941289] FPU revision is: 20f30300
-[    0.965322] Synchronize counters for CPU 2: done.
-[    1.260937] Primary instruction cache 64kB, VIPT, 4-way, linesize 64 bytes.
-[    1.261001] Primary data cache 64kB, 4-way, PIPT, no aliases, linesize 64 bytes
-[    1.261172] CPU3 revision is: 0001b000 (MIPS I6500)
-[    1.261209] FPU revision is: 20f30300
-[    1.285390] Synchronize counters for CPU 3: done.
-[    1.346985] smp: Brought up 1 node, 4 CPUs
-```
-
-Please review.
-
-Thanks
-
-To: qemu-devel@nongnu.org
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Implement multiple physical core support by creating
+CPU devices accorading to the new topology and passing
+pcore/vp information to CPC and CMGCR sub-devices.
 
 Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 ---
-Jiaxun Yang (5):
-      target/mips: Make globalnumber a CPU property
-      hw/msic/mips_cmgcr: Implement multicore functions
-      hw/msic/mips_cpc: Implement multi core support
-      hw/mips/cps: Implement multi core support
-      hw/mips/boston: Implement multi core support
+ hw/mips/cps.c         | 66 +++++++++++++++++++++++++++++++--------------------
+ include/hw/mips/cps.h |  1 +
+ 2 files changed, 41 insertions(+), 26 deletions(-)
 
- hw/mips/boston.c             |  37 +++++++++-
- hw/mips/cps.c                |  66 ++++++++++-------
- hw/misc/mips_cmgcr.c         | 168 +++++++++++++++++++++++++++++++++++--------
- hw/misc/mips_cpc.c           |  97 ++++++++++++++++++-------
- include/hw/mips/cps.h        |   1 +
- include/hw/misc/mips_cmgcr.h |  87 +++++++++++++++++++---
- include/hw/misc/mips_cpc.h   |  15 +++-
- target/mips/cpu.c            |  16 ++++-
- target/mips/cpu.h            |  10 ++-
- target/mips/sysemu/machine.c |   5 +-
- 10 files changed, 403 insertions(+), 99 deletions(-)
----
-base-commit: 248f6f62df073a3b4158fd0093863ab885feabb5
-change-id: 20240506-mips-smp-9af9e71ad8c2
+diff --git a/hw/mips/cps.c b/hw/mips/cps.c
+index 07b73b0a1f..6cf02379a9 100644
+--- a/hw/mips/cps.c
++++ b/hw/mips/cps.c
+@@ -73,31 +73,43 @@ static void mips_cps_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
+-    for (int i = 0; i < s->num_vp; i++) {
+-        MIPSCPU *cpu = MIPS_CPU(object_new(s->cpu_type));
+-        CPUMIPSState *env = &cpu->env;
++    object_initialize_child(OBJECT(dev), "gcr", &s->gcr, TYPE_MIPS_GCR);
+ 
+-        /* All VPs are halted on reset. Leave powering up to CPC. */
+-        object_property_set_bool(OBJECT(cpu), "start-powered-off", true,
+-                                 &error_abort);
++    for (int corenum = 0; corenum < s->num_pcore; corenum++) {
++        for (int vpid = 0; vpid < s->num_vp; vpid++) {
++            int vpnum = corenum * s->num_vp + vpid;
++            int32_t globalnumber = (corenum << CP0GN_CoreNum) | vpid;
+ 
+-        /* All cores use the same clock tree */
+-        qdev_connect_clock_in(DEVICE(cpu), "clk-in", s->clock);
++            MIPSCPU *cpu = MIPS_CPU(object_new(s->cpu_type));
++            CPUMIPSState *env = &cpu->env;
+ 
+-        if (!qdev_realize_and_unref(DEVICE(cpu), NULL, errp)) {
+-            return;
+-        }
++            /* All VPs are halted on reset. Leave powering up to CPC. */
++            object_property_set_bool(OBJECT(cpu), "start-powered-off", true,
++                                    &error_abort);
++
++            object_property_set_int(OBJECT(cpu), "globalnumber", globalnumber,
++                                    &error_abort);
++
++            /* All cores use the same clock tree */
++            qdev_connect_clock_in(DEVICE(cpu), "clk-in", s->clock);
++
++            if (!qdev_realize_and_unref(DEVICE(cpu), NULL, errp)) {
++                return;
++            }
++
++            g_assert(vpnum == CPU(cpu)->cpu_index);
+ 
+-        /* Init internal devices */
+-        cpu_mips_irq_init_cpu(cpu);
+-        cpu_mips_clock_init(cpu);
++            /* Init internal devices */
++            cpu_mips_irq_init_cpu(cpu);
++            cpu_mips_clock_init(cpu);
+ 
+-        if (cpu_mips_itu_supported(env)) {
+-            itu_present = true;
+-            /* Attach ITC Tag to the VP */
+-            env->itc_tag = mips_itu_get_tag_region(&s->itu);
++            if (cpu_mips_itu_supported(env)) {
++                itu_present = true;
++                /* Attach ITC Tag to the VP */
++                env->itc_tag = mips_itu_get_tag_region(&s->itu);
++            }
++            qemu_register_reset(main_cpu_reset, cpu);
+         }
+-        qemu_register_reset(main_cpu_reset, cpu);
+     }
+ 
+     /* Inter-Thread Communication Unit */
+@@ -119,8 +131,12 @@ static void mips_cps_realize(DeviceState *dev, Error **errp)
+     object_initialize_child(OBJECT(dev), "cpc", &s->cpc, TYPE_MIPS_CPC);
+     object_property_set_uint(OBJECT(&s->cpc), "num-vp", s->num_vp,
+                             &error_abort);
++    object_property_set_uint(OBJECT(&s->cpc), "num-pcore", s->num_pcore,
++                            &error_abort);
+     object_property_set_int(OBJECT(&s->cpc), "vp-start-running", 1,
+                             &error_abort);
++    object_property_set_link(OBJECT(&s->cpc), "gcr", OBJECT(&s->gcr),
++                            &error_abort);
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->cpc), errp)) {
+         return;
+     }
+@@ -130,7 +146,7 @@ static void mips_cps_realize(DeviceState *dev, Error **errp)
+ 
+     /* Global Interrupt Controller */
+     object_initialize_child(OBJECT(dev), "gic", &s->gic, TYPE_MIPS_GIC);
+-    object_property_set_uint(OBJECT(&s->gic), "num-vp", s->num_vp,
++    object_property_set_uint(OBJECT(&s->gic), "num-vp", s->num_vp * s->num_pcore,
+                             &error_abort);
+     object_property_set_uint(OBJECT(&s->gic), "num-irq", 128,
+                             &error_abort);
+@@ -141,16 +157,13 @@ static void mips_cps_realize(DeviceState *dev, Error **errp)
+     memory_region_add_subregion(&s->container, 0,
+                             sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->gic), 0));
+ 
+-    /* Global Configuration Registers */
+-    gcr_base = MIPS_CPU(first_cpu)->env.CP0_CMGCRBase << 4;
+-
+-    object_initialize_child(OBJECT(dev), "gcr", &s->gcr, TYPE_MIPS_GCR);
++    gcr_base = GCR_BASE_ADDR;
++    object_property_set_uint(OBJECT(&s->gcr), "num-pcores", s->num_pcore,
++                            &error_abort);
+     object_property_set_uint(OBJECT(&s->gcr), "num-vp", s->num_vp,
+                             &error_abort);
+     object_property_set_int(OBJECT(&s->gcr), "gcr-rev", 0x800,
+                             &error_abort);
+-    object_property_set_int(OBJECT(&s->gcr), "gcr-base", gcr_base,
+-                            &error_abort);
+     object_property_set_link(OBJECT(&s->gcr), "gic", OBJECT(&s->gic.mr),
+                              &error_abort);
+     object_property_set_link(OBJECT(&s->gcr), "cpc", OBJECT(&s->cpc.mr),
+@@ -164,6 +177,7 @@ static void mips_cps_realize(DeviceState *dev, Error **errp)
+ }
+ 
+ static Property mips_cps_properties[] = {
++    DEFINE_PROP_UINT32("num-pcore", MIPSCPSState, num_pcore, 1),
+     DEFINE_PROP_UINT32("num-vp", MIPSCPSState, num_vp, 1),
+     DEFINE_PROP_UINT32("num-irq", MIPSCPSState, num_irq, 256),
+     DEFINE_PROP_STRING("cpu-type", MIPSCPSState, cpu_type),
+diff --git a/include/hw/mips/cps.h b/include/hw/mips/cps.h
+index 04d636246a..ea184b46a9 100644
+--- a/include/hw/mips/cps.h
++++ b/include/hw/mips/cps.h
+@@ -35,6 +35,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(MIPSCPSState, MIPS_CPS)
+ struct MIPSCPSState {
+     SysBusDevice parent_obj;
+ 
++    uint32_t num_pcore;
+     uint32_t num_vp;
+     uint32_t num_irq;
+     char *cpu_type;
 
-Best regards,
 -- 
-Jiaxun Yang <jiaxun.yang@flygoat.com>
+2.34.1
 
 
