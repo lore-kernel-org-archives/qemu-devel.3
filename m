@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E02A0C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 07:53:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC6EAC25B5C
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 May 2024 07:53:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s3t8j-0005md-5O; Mon, 06 May 2024 03:52:01 -0400
+	id 1s3t9k-0007f1-I9; Mon, 06 May 2024 03:53:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s3t8c-0005jK-KB
- for qemu-devel@nongnu.org; Mon, 06 May 2024 03:51:55 -0400
+ id 1s3t9f-0007Sl-Mi
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 03:52:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s3t8Z-0001Ui-86
- for qemu-devel@nongnu.org; Mon, 06 May 2024 03:51:52 -0400
+ id 1s3t9e-0001ll-6n
+ for qemu-devel@nongnu.org; Mon, 06 May 2024 03:52:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1714981896;
+ s=mimecast20190719; t=1714981977;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JS40WGMZssL8xSLN75H7ZLPUAK/PS4Fo0sIeTbJc6nU=;
- b=POeba1OCwKTJTt9MSziSWyus1PNe0JgRU+ppKYVZ07IcxHGQtrNqPFNWocxS2WoP1Ef2UM
- nGQi7h7USrFTT291rIxvMdieEunMP76aoK66a7uEb7QEpfnsLkP78NajcSjzy7EVD3ekMg
- jA//a4Nq8KY7pzzqdItpWYYbNrej/Nc=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vl6UmUSnCe1v+kvRt3ccMUbyvwhB5ANCb14lhy2pm2o=;
+ b=HOhtj4iUd/FEO6jOTUZUVAyeFe81JfAg7S49PCBCgh1agbrXOhX5NHM/Ldd67uk00GIab7
+ lzFa0p7WUS/mX8WF4aD+oS6A/Pe9N7KUx56G8XGBRXnBA4Y01XatGyPt9adDYxKpd/u4ZQ
+ yxrhm0eDE8c5ovInfRhENtZMDwhETKY=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-446-Gx-aH9xePu-e8lRWt8T8TQ-1; Mon, 06 May 2024 03:51:35 -0400
-X-MC-Unique: Gx-aH9xePu-e8lRWt8T8TQ-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a59a212d874so128293666b.1
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 00:51:34 -0700 (PDT)
+ us-mta-652-PpellDxoNs-HyR1rF8sl4Q-1; Mon, 06 May 2024 03:52:56 -0400
+X-MC-Unique: PpellDxoNs-HyR1rF8sl4Q-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a59aedbd9a9so109767166b.0
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 00:52:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714981893; x=1715586693;
+ d=1e100.net; s=20230601; t=1714981974; x=1715586774;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JS40WGMZssL8xSLN75H7ZLPUAK/PS4Fo0sIeTbJc6nU=;
- b=DyUNxx8D0NuYVGmgLHbDnjc0x+jhPC6Ev/9lpIUTUAjZmRwTOL6Z9oxVV1BXOFsY0t
- DMFsQWv7tHmQc7YSCgRiw9TwuW01zuEgR+SxnhlcaED3LQ5dkH6iANvl1ehKBhrIup5x
- oHr2CUS34gvnzXitoeV+jvQZ5rbSupDKy/KxczJSCJG9fPWLiUS/VTMdQrf03S7JwShi
- dcsTCEzxBBYufkKGIHkXDd+OPD9+PZpkDF3vgUh6I68Wg1y4IjbrQ4wB3skWPVCmay9m
- O/rKkoTUIyrCe84aNufkE0CXaYMs2NsraDbYU2eOFPEBTqNu1tE3WjUJ1W1DLs4x+rbb
- XXiw==
-X-Gm-Message-State: AOJu0YyW0PCWS4gy0GqwM7OQWhA/gcfyBncsoXJ//7IZq+RZ+ihhwY0u
- R9mcRxcagI4+BSMJ8vhUuBIrzysd8WV6jzlCflO7mK3eHJJhkbnRY/HMLxtAEI1NeR8u0auw8v5
- kPfD2I8GZWGFoBy104OPNxXCdVeUwtBymrcTX2hLUuOfXNSx/nIr9J4LNqCRQ72oNjeuAtIWkjn
- NP7fJKOUITil+LLb5z7cGrT46zNZTSASTOrNid
-X-Received: by 2002:a17:906:1555:b0:a51:8d60:215a with SMTP id
- c21-20020a170906155500b00a518d60215amr5859708ejd.27.1714981893025; 
- Mon, 06 May 2024 00:51:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IERJiTImqjrq5t8Z9eAfaY6QWt/zgf6Bnq44WAYLRkxN9uRnMeQG5EG5eBwz1VmT4aSBlz6xg==
-X-Received: by 2002:a17:906:1555:b0:a51:8d60:215a with SMTP id
- c21-20020a170906155500b00a518d60215amr5859690ejd.27.1714981892621; 
- Mon, 06 May 2024 00:51:32 -0700 (PDT)
+ bh=vl6UmUSnCe1v+kvRt3ccMUbyvwhB5ANCb14lhy2pm2o=;
+ b=RsloF3heaXIXX7tRFeL8Vt+aYw3sGKkWBt31bK2+bhwYePFLTsBc3W+PoHLHd8zh3N
+ KMGrwbgsK9K3Nb7pH8tyMGgBI3x0j3inZI13gHD6f2xw72AAHhd0i1hNrBmzvnrvGSrq
+ sSe5TaL0xQ3shIkQ2lDFXUBab9aPFXoik128SAnayW5KNAJGkVrUH4ASD+wzCcfvTkVQ
+ 6nhNiXmujhdbc2wZoqUpuQne0dzHLMfac8hbvmNGrGLLYUzwRQduMJ2OPs5wkmgXmo0b
+ u8KYiU/TrNonqPp9E/cVGsXxso2k9my2XyLj5szVH3mT0+00Slw2A38L/b95rdVY1NyW
+ Hn1w==
+X-Gm-Message-State: AOJu0YwcnoqaurncC3ZhnmhC/4nuy+dXYO7uhRKj47H8/fJ6Q7VYJrX5
+ ZZybNxv7DX6DUZy1/fPw9owjhrmkgJ3xE6rfBknzjbdnrOxfw/81FslFnKbxq2E6pOxjCDBTK4/
+ I5eBiiKGw/38VEHAqZxi5sW3yV+GFHpZ32cUWakgeC7A0ynPuheQ68hYyx6uq5oB20WVUHyx0SQ
+ KyST1UxfbacgTKegmCytMmUNMP4adU8IYt6FjX
+X-Received: by 2002:a17:907:7f87:b0:a59:d458:835c with SMTP id
+ qk7-20020a1709077f8700b00a59d458835cmr767692ejc.52.1714981974074; 
+ Mon, 06 May 2024 00:52:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHBdpbwVfUX3Z9jeiqpa0PRRNd795oWpQxK386urA0kWdMc82eMvZv7G5N45N+vTOlpnC4L5g==
+X-Received: by 2002:a17:907:7f87:b0:a59:d458:835c with SMTP id
+ qk7-20020a1709077f8700b00a59d458835cmr767681ejc.52.1714981973736; 
+ Mon, 06 May 2024 00:52:53 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- s20-20020a170906455400b00a59c4a16e4asm1557962ejq.120.2024.05.06.00.51.30
+ qy29-20020a170907689d00b00a59adb12790sm2458320ejc.27.2024.05.06.00.52.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 May 2024 00:51:30 -0700 (PDT)
+ Mon, 06 May 2024 00:52:53 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>
-Subject: [PULL 02/46] Kconfig: kvm: allow building without any board
-Date: Mon,  6 May 2024 09:50:41 +0200
-Message-ID: <20240506075125.8238-3-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 35/46] qemu-option: remove QemuOpt from typedefs.h
+Date: Mon,  6 May 2024 09:51:14 +0200
+Message-ID: <20240506075125.8238-36-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240506075125.8238-1-pbonzini@redhat.com>
 References: <20240506075125.8238-1-pbonzini@redhat.com>
@@ -104,45 +103,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-KVM code might have to call functions on the PCIDevice that is
-passed to kvm_arch_fixup_msi_route().  This fails in the case
-where --without-default-devices is used and no board is
-configured.  While this is not really a useful configuration,
-and therefore setting up stubs for CONFIG_PCI is overkill,
-failing the build is impolite.  Just include the PCI
-subsystem if kvm_arch_fixup_msi_route() requires it, as
-is the case for ARM and x86.
+QemuOpt is basically an internal data structure.  It has no business
+being defined except if you need functions from include/qemu/option.h.
 
-Reported-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/arm/Kconfig  | 2 ++
- target/i386/Kconfig | 2 ++
- 2 files changed, 4 insertions(+)
+ include/qemu/option.h   | 2 ++
+ include/qemu/typedefs.h | 1 -
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/Kconfig b/target/arm/Kconfig
-index bf57d739cd1..5847c5a74a7 100644
---- a/target/arm/Kconfig
-+++ b/target/arm/Kconfig
-@@ -9,3 +9,5 @@ config ARM
- config AARCH64
-     bool
-     select ARM
-+    # kvm_arch_fixup_msi_route() needs to access PCIDevice
-+    select PCI if KVM
-diff --git a/target/i386/Kconfig b/target/i386/Kconfig
-index ce6968906ee..46898946394 100644
---- a/target/i386/Kconfig
-+++ b/target/i386/Kconfig
-@@ -1,5 +1,7 @@
- config I386
-     bool
-+    # kvm_arch_fixup_msi_route() needs to access PCIDevice
-+    select PCI if KVM
+diff --git a/include/qemu/option.h b/include/qemu/option.h
+index b3498287823..01e673ae03f 100644
+--- a/include/qemu/option.h
++++ b/include/qemu/option.h
+@@ -54,6 +54,8 @@ enum QemuOptType {
+     QEMU_OPT_SIZE,        /* size, accepts (K)ilo, (M)ega, (G)iga, (T)era postfix */
+ };
  
- config X86_64
-     bool
++typedef struct QemuOpt QemuOpt;
++
+ typedef struct QemuOptDesc {
+     const char *name;
+     enum QemuOptType type;
+diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
+index 520f421397b..4519f0cd613 100644
+--- a/include/qemu/typedefs.h
++++ b/include/qemu/typedefs.h
+@@ -108,7 +108,6 @@ typedef struct QEMUCursor QEMUCursor;
+ typedef struct QEMUFile QEMUFile;
+ typedef struct QemuLockable QemuLockable;
+ typedef struct QemuMutex QemuMutex;
+-typedef struct QemuOpt QemuOpt;
+ typedef struct QemuOpts QemuOpts;
+ typedef struct QemuOptsList QemuOptsList;
+ typedef struct QEMUSGList QEMUSGList;
 -- 
 2.44.0
 
