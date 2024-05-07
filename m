@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AFD8C10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 12:41:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D259C10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 12:47:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4K7o-0006Kb-M5; Tue, 07 May 2024 08:40:54 -0400
+	id 1s4KDc-0001Oz-Eh; Tue, 07 May 2024 08:46:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4K7Z-0006Fm-3v; Tue, 07 May 2024 08:40:38 -0400
-Received: from mail-oo1-xc36.google.com ([2607:f8b0:4864:20::c36])
+ id 1s4KD4-0001BW-P7; Tue, 07 May 2024 08:46:22 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4K7W-00056f-Eq; Tue, 07 May 2024 08:40:36 -0400
-Received: by mail-oo1-xc36.google.com with SMTP id
- 006d021491bc7-5ad2da2196bso1519082eaf.3; 
- Tue, 07 May 2024 05:40:33 -0700 (PDT)
+ id 1s4KCm-0007AO-6t; Tue, 07 May 2024 08:46:02 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-6f44b5e7f07so2182756b3a.2; 
+ Tue, 07 May 2024 05:45:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715085632; x=1715690432; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=gmail.com; s=20230601; t=1715085957; x=1715690757; darn=nongnu.org;
+ h=in-reply-to:references:cc:to:from:subject:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LiwPL2CtC+PD+ASVZMatvoEJvdaZbT3OQz+0RdeBp4I=;
- b=UqyLLD8/fAaFmHWFP4HjqtDrv5aEe013xBeFGuWaAg6osJ1JbVtLJpgtvfvq68KVy3
- J7rNvue9NHtFBBKXbgr4Em1hYpyHAkjOjUxh+gXugiDWYEERAPVIPadj+B6cudmDqVQB
- DsBl1e+R9BIEO+uC5iMSeQ4uPMdWvpVDT+N33FaG/vOnleRcjY1mF7Akjx4PoOq6AXyE
- 1SxRAS7ZGxs272IFwGnWojWsUkLPX7L0bmV3/0fmSqQgUqaTy5MZNQUE+4Z/iKFAt9nw
- uWTgNhj6IKN4LJWOeYvfyanbGMqd/wG4ouI762Yrrc5/6YPhj9ZE3xJuvNqmYP6vljb4
- LeGw==
+ bh=iz0r9uwhYBTyTENWYg3IdUNatsrXw1RhGAmBIg8pzIw=;
+ b=DPbaLwhrf/AgpH2DPGSeVsNh12PUb2Y56v9GMuKlqOOyq2mIuNoAgm6w9oBFG+avjD
+ 5j/YcpP+sXLfQPWZ13ijVWk4Nf4mMmMO9lrMdm0rKEqjJuFZttFRYpRmzEy6TaP9ze4L
+ o1K9t18bmzRkg7mkWqIFODoG61BjKF5Z+zrKWgzBN34X9hJn2Mm3JD/auJ8Zpnk5+l3I
+ 2QMJQH21GkUZcfk/jFpB33FBnp2tMerojrJ7fShZq7+W/QvTWhLz7wIVJUud58VTQ5ek
+ GYObAmcLobvpAuWHkp+QgejlA0xZtHGW4+gNcRA/9Z1VDh4CsV0xCA5LIXF6Ohwsl2MO
+ ynlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715085632; x=1715690432;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=1e100.net; s=20230601; t=1715085957; x=1715690757;
+ h=in-reply-to:references:cc:to:from:subject:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=LiwPL2CtC+PD+ASVZMatvoEJvdaZbT3OQz+0RdeBp4I=;
- b=dWCF5Yw8pPyJwtSVYis8qCMcj/bD9YKJ3qPty+8fkw2mSSLuPLfk9XwfId/RofQylH
- OrAUF56MlJknVmR9OTdQYYmSPRUckjzyjDLlBtSvGrpk7h2pomjEtRnVAY1Kmkm9Hj0L
- 7kuYZW4aon4l43eVor3N7eqoo/4D2SL05/49uhknW3c2NcML1ej+LZgxLM0rmfHvyMdV
- dDVZ45v7A/cQg6SlVu0iAAx5GuO2tkU4dk9IhfKTQ+xLd5kbT9U93/JNGF/MPoi46ltW
- 6/ENMAr0jJE0AgNMcygoGGTqC3gCMIDzu609fmVjM7VVP8eJOAl+ig9xUHY8rjHMDB7Z
- wm2w==
+ bh=iz0r9uwhYBTyTENWYg3IdUNatsrXw1RhGAmBIg8pzIw=;
+ b=PL5p8LovfW7ZR4BCMtlMhmJzXcHb7dD0w12oNifXZ5Egz4HPJn+ruUnLUl1WrphufE
+ f9EK8juO6drKAWC1pFVmIhs8uiHDrYxDlNhGe495OU6Qv32ewKyo5kfkJHqzogaZBmNO
+ ERkrWq+dEFbL98wU+rXfR+BQ+mKfGDzAS24EUPJ4hahq1deOzh1/v3KuxTLfhs7+xF5p
+ QI3YE340Aadk4Xh1d18ylKCvbidsHLBE/YaNVpVsZybZ4P4lO5ThfFFjCfrstUAb6pjz
+ bCyhPIJFzoDaiXyabtkdv5IfOfxVkvim1lwowy0DgL9plwfXCsxw3wlD08lcwV+Kl58a
+ 2mzg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWGlPqed8iEDhzay8+P/PksI2l4zx9XftbKAy7dAn6Qqz1s75P5S15rk2EAnEekZnIRmb4oyHPZ0t2f/Hhj73oiVJf16h/gTmXCziLUxaDeV+pF+tWQLTZG5ME=
-X-Gm-Message-State: AOJu0Yw/74jqoU/u2oR5YcQYMNWUfja2npnLCQatwxufD/29/LTzJY4R
- K82Xs3DYw4OKB0/J+S6oODEu30iGnOORVuUrKvU7lbzpLytpt5Yv
-X-Google-Smtp-Source: AGHT+IHE7TEK2YejsQx9Zth+0z/mHvpr0CnjJm4BSLbN3Ak5TxNM7lpGykwl3YwTr3s351RWeOQbfw==
-X-Received: by 2002:a05:6358:70c3:b0:183:b7a0:8aa with SMTP id
- h3-20020a05635870c300b00183b7a008aamr10106175rwh.13.1715085632304; 
- Tue, 07 May 2024 05:40:32 -0700 (PDT)
+ AJvYcCXmqxIPAn8o/wcGwD0+NL4efQliMBKxW45I/GA8BGzyag3SNDiI6HE4/WrYModzn4rW6bvZ/93AXfmCwBAnrx0b67GOWrOGWi8fuRTVySlnaltA9lDrli8in2c=
+X-Gm-Message-State: AOJu0YyDt0QTIdPriKlLHNGbgJiz7sWOS07haDED5K0Y34nPIME6wHat
+ UTBM8mOOw5g7VKBuZ7RSzm/JRsSwgapN5dpxd2qhFDpT1dW+ys9JMpSuog==
+X-Google-Smtp-Source: AGHT+IG413nMo11lPUbXgqULWkT4434NzLVGlfuwKKq/6LZ49qN+OyUitM4F5U4NQ9Q+LGOgqVI3yQ==
+X-Received: by 2002:a05:6a21:3a85:b0:1a7:9cf6:6044 with SMTP id
+ zv5-20020a056a213a8500b001a79cf66044mr12939515pzb.27.1715085957431; 
+ Tue, 07 May 2024 05:45:57 -0700 (PDT)
 Received: from localhost (220-245-239-57.tpgi.com.au. [220.245.239.57])
  by smtp.gmail.com with ESMTPSA id
- b185-20020a6334c2000000b0061f42afa8d0sm6888135pga.6.2024.05.07.05.40.29
+ fj36-20020a056a003a2400b006e72c8ece23sm9332041pfb.191.2024.05.07.05.45.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 May 2024 05:40:32 -0700 (PDT)
+ Tue, 07 May 2024 05:45:57 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 07 May 2024 22:40:27 +1000
-Message-Id: <D13F4451TLXZ.2Q4MCLTIOCK4H@gmail.com>
-Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
-Subject: Re: [PATCH v2 28/28] target/ppc: Split off common 4xx TLB init
+Date: Tue, 07 May 2024 22:45:52 +1000
+Message-Id: <D13F89JFC1G4.2FJHXLMJWYYCC@gmail.com>
+Subject: Re: [PATCH v2 00/28] Misc PPC exception and BookE MMU clean ups
 From: "Nicholas Piggin" <npiggin@gmail.com>
 To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
  <qemu-ppc@nongnu.org>
+Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
 X-Mailer: aerc 0.17.0
 References: <cover.1714606359.git.balaton@eik.bme.hu>
- <a99aeec44ad192f842d66f7514702bd5d5f912ad.1714606359.git.balaton@eik.bme.hu>
-In-Reply-To: <a99aeec44ad192f842d66f7514702bd5d5f912ad.1714606359.git.balaton@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c36;
- envelope-from=npiggin@gmail.com; helo=mail-oo1-xc36.google.com
+In-Reply-To: <cover.1714606359.git.balaton@eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,114 +96,84 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Thu May 2, 2024 at 9:43 AM AEST, BALATON Zoltan wrote:
-> Several 4xx related CPUs have the same TLB settings. Split it off in a
-> common function in cpu_init.
->
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
->  target/ppc/cpu_init.c | 46 ++++++++++++++++---------------------------
->  1 file changed, 17 insertions(+), 29 deletions(-)
->
-> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> index 07ad788e54..d7e85c1b07 100644
-> --- a/target/ppc/cpu_init.c
-> +++ b/target/ppc/cpu_init.c
-> @@ -2107,18 +2107,22 @@ static int check_pow_hid0_74xx(CPUPPCState *env)
->      return 0;
->  }
-> =20
-> +static void init_tlbs_4xx(CPUPPCState *env)
-> +{
-> +#ifndef CONFIG_USER_ONLY
-> +    env->nb_tlb =3D 64;
-> +    env->nb_ways =3D 1;
-> +    env->tlb_type =3D TLB_EMB;
-> +#endif
-> +}
+> This series does some further clean up mostly around BookE MMU to
+> untangle it from other MMU models. It also contains some other changes
+> that I've come up with while working on this. The first 3 patches are
+> from the last exception handling clean up series that were dropped due
+> to some error on CI but I'm not sure if that was because of some CI
+> infrastructure problem or some problem with the patches as the error
+> did not make much sense. So these patches are only rebased now, I made
+> no other change to them until the issue is understood better. The rest
+> are new patches I've added since tha last series. Please review.
 
-e200 isn't 4xx though is it? Call it init_TLB_EMB()?
+Not CI infrastructure as far as I could tell it's upstream gitlab.
+But I could not figure out how to reproduce at the time... I ended
+up running out of time to look too closely though.
 
-Otherwise,
-
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+I think I won't take the first 2, yes arguably the CPU does execute
+the sc instruction, but it's actually a good rule for the exception
+handler to be invoked with the nip that caused the exception, and
+SRR0/1 to be set by the handler according to semantics.
 
 Thanks,
 Nick
 
-> +
->  static void init_proc_405(CPUPPCState *env)
->  {
->      register_40x_sprs(env);
->      register_405_sprs(env);
->      register_usprgh_sprs(env);
-> =20
-> -    /* Memory management */
-> -#if !defined(CONFIG_USER_ONLY)
-> -    env->nb_tlb =3D 64;
-> -    env->nb_ways =3D 1;
-> -    env->tlb_type =3D TLB_EMB;
-> -#endif
-> +    init_tlbs_4xx(env);
->      init_excp_4xx(env);
->      env->dcache_line_size =3D 32;
->      env->icache_line_size =3D 32;
-> @@ -2185,12 +2189,8 @@ static void init_proc_440EP(CPUPPCState *env)
->                   SPR_NOACCESS, SPR_NOACCESS,
->                   &spr_read_generic, &spr_write_generic,
->                   0x00000000);
-> -    /* Memory management */
-> -#if !defined(CONFIG_USER_ONLY)
-> -    env->nb_tlb =3D 64;
-> -    env->nb_ways =3D 1;
-> -    env->tlb_type =3D TLB_EMB;
-> -#endif
-> +
-> +    init_tlbs_4xx(env);
->      init_excp_BookE(env);
->      env->dcache_line_size =3D 32;
->      env->icache_line_size =3D 32;
-> @@ -2282,12 +2282,7 @@ static void init_proc_440GP(CPUPPCState *env)
->      register_440_sprs(env);
->      register_usprgh_sprs(env);
-> =20
-> -    /* Memory management */
-> -#if !defined(CONFIG_USER_ONLY)
-> -    env->nb_tlb =3D 64;
-> -    env->nb_ways =3D 1;
-> -    env->tlb_type =3D TLB_EMB;
-> -#endif
-> +    init_tlbs_4xx(env);
->      init_excp_BookE(env);
->      env->dcache_line_size =3D 32;
->      env->icache_line_size =3D 32;
-> @@ -2355,12 +2350,8 @@ static void init_proc_440x5(CPUPPCState *env)
->                   SPR_NOACCESS, SPR_NOACCESS,
->                   &spr_read_generic, &spr_write_generic,
->                   0x00000000);
-> -    /* Memory management */
-> -#if !defined(CONFIG_USER_ONLY)
-> -    env->nb_tlb =3D 64;
-> -    env->nb_ways =3D 1;
-> -    env->tlb_type =3D TLB_EMB;
-> -#endif
-> +
-> +    init_tlbs_4xx(env);
->      init_excp_BookE(env);
->      env->dcache_line_size =3D 32;
->      env->icache_line_size =3D 32;
-> @@ -2717,11 +2708,8 @@ static void init_proc_e200(CPUPPCState *env)
->                   SPR_NOACCESS, SPR_NOACCESS,
->                   &spr_read_generic, &spr_write_generic,
->                   0x00000000);
-> -#if !defined(CONFIG_USER_ONLY)
-> -    env->nb_tlb =3D 64;
-> -    env->nb_ways =3D 1;
-> -    env->tlb_type =3D TLB_EMB;
-> -#endif
-> +
-> +    init_tlbs_4xx(env);
->      init_excp_e200(env, 0xFFFF0000UL);
->      env->dcache_line_size =3D 32;
->      env->icache_line_size =3D 32;
+>
+> v2:
+> - Fix user mode issue in patch 1 by keeping old behaviour for user mode
+> - Add some more MMU clean up patches
+>
+> Regards,
+> BALATON Zoltan
+>
+> BALATON Zoltan (28):
+>   target/ppc: Fix gen_sc to use correct nip
+>   target/ppc: Move patching nip from exception handler to helper_scv
+>   target/ppc: Simplify syscall exception handlers
+>   target/ppc: Remove unused helper
+>   target/ppc/mmu_common.c: Move calculation of a value closer to its
+>     usage
+>   target/ppc/mmu_common.c: Move calculation of a value closer to its
+>     usage
+>   target/ppc/mmu_common.c: Remove unneeded local variable
+>   target/ppc/mmu_common.c: Simplify checking for real mode
+>   target/ppc/mmu_common.c: Drop cases for unimplemented MPC8xx MMU
+>   target/ppc/mmu_common.c: Introduce mmu6xx_get_physical_address()
+>   target/ppc/mmu_common.c: Rename get_bat_6xx_tlb()
+>   target/ppc/mmu_common.c: Split out BookE cases before checking real
+>     mode
+>   target/ppc/mmu_common.c: Split off real mode cases in
+>     get_physical_address_wtlb()
+>   target/ppc/mmu_common.c: Inline and remove check_physical()
+>   target/ppc/mmu_common.c: Simplify mmubooke_get_physical_address()
+>   target/ppc/mmu_common.c: Simplify mmubooke206_get_physical_address()
+>   target/ppc/mmu_common.c: Fix misindented qemu_log_mask() calls
+>   target/ppc/mmu_common.c: Deindent ppc_jumbo_xlate()
+>   target/ppc/mmu_common.c: Replace hard coded constants in
+>     ppc_jumbo_xlate()
+>   target/ppc/mmu_common.c: Make get_physical_address_wtlb() static
+>   target/ppc: Move mmu_ctx_t definition to mmu_common.c
+>   target/ppc: Remove ppc_hash32_pp_prot() and reuse common function
+>   target/ppc/mmu_common.c: Split off BookE handling from
+>     ppc_jumbo_xlate()
+>   target/ppc/mmu_common.c: Remove BookE handling from
+>     get_physical_address_wtlb()
+>   target/ppc/mmu_common.c: Simplify ppc_booke_xlate()
+>   target/ppc/mmu_common.c: Move BookE MMU functions together
+>   target/ppc: Remove id_tlbs flag from CPU env
+>   target/ppc: Split off common 4xx TLB init
+>
+>  hw/ppc/pegasos2.c        |   2 +-
+>  target/ppc/cpu.h         |   1 -
+>  target/ppc/cpu_init.c    |  65 ++--
+>  target/ppc/excp_helper.c |  67 +---
+>  target/ppc/helper.h      |   2 -
+>  target/ppc/helper_regs.c |   1 -
+>  target/ppc/internal.h    |  19 +-
+>  target/ppc/mmu-hash32.c  |  47 +--
+>  target/ppc/mmu_common.c  | 792 +++++++++++++++++++--------------------
+>  target/ppc/mmu_helper.c  |  36 +-
+>  target/ppc/translate.c   |  21 +-
+>  11 files changed, 438 insertions(+), 615 deletions(-)
 
 
