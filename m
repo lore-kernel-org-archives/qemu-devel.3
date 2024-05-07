@@ -4,87 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22259C10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 15:47:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F731C10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 15:52:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4N2D-0002ND-9u; Tue, 07 May 2024 11:47:17 -0400
+	id 1s4N6V-0004Tp-1y; Tue, 07 May 2024 11:51:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s4N2B-0002Mj-K8
- for qemu-devel@nongnu.org; Tue, 07 May 2024 11:47:15 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s4N6R-0004TE-5C
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 11:51:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s4N2A-0003x6-9v
- for qemu-devel@nongnu.org; Tue, 07 May 2024 11:47:15 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s4N6P-0004sm-Lq
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 11:51:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715096833;
+ s=mimecast20190719; t=1715097096;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Tg+KBvtfWxWpOJ2vclfrnrqtD66OsA9AfCkIXg0daH0=;
- b=GWi2+6+GotI+oJhroXw0wPR1cxIpgBLTHbpwPNcqcUZgtX4OUjdlRSj+ExpFNAKjIcMd0D
- KetfnOLYBxz0/KSsaKCg7vI8NKFifgBfkl44Z7/HPrMpvW9zFmneh6Bf73EePhE1H+q/c3
- KeQZITal8YrRpQY0a9PJ8ca457wnBPQ=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5xC4mmxAv7PbmZhQWGyCId8fJujH6vW2g0QyDQ6YYCM=;
+ b=FAi4QiqA2pQqmQHsjrSzt3tHMEufsij/R2J6LFRjcKY52UlnNrM7on7vaXK9M1CsQvKEub
+ W+WxlRGS9w0dRO9Fv3P51qUIcmsOB2XUwkU8YCBUdlq203DwEDo2PSHKHj9ItsxFZVKL9D
+ HJLL9kdJUyqou0swYqnlISmxWU/nmUw=
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
+ [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-611-9v_VlEayO9yuBuNEIFSXEA-1; Tue, 07 May 2024 11:47:11 -0400
-X-MC-Unique: 9v_VlEayO9yuBuNEIFSXEA-1
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-43d4e45913cso1855411cf.2
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 08:47:11 -0700 (PDT)
+ us-mta-61-ynKQi857PGmmE6yEOaAOUQ-1; Tue, 07 May 2024 11:51:35 -0400
+X-MC-Unique: ynKQi857PGmmE6yEOaAOUQ-1
+Received: by mail-oi1-f199.google.com with SMTP id
+ 5614622812f47-3c96e10b290so140998b6e.2
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 08:51:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715096831; x=1715701631;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Tg+KBvtfWxWpOJ2vclfrnrqtD66OsA9AfCkIXg0daH0=;
- b=OaQ5LRnpJpdAZ0hxpicuCUQjGC9tT9kM9kany+o/VFcNYv6aOouticOfkVaVLIY0G5
- CSirR5/NH9iU82STDBkhQcsTW2ILrNXJzQNoPvGbMG5YlYbOpv7xPR3Tq7nELsvWtN+O
- Gp6qUbXolt1SbLmBJbiA4exLdcld4YkY9Ov0MdXXokTlAPEwXT8mkuueJYYxO2tn+sj7
- LtT3HS3m0DzGXldaCdwC8mH6aaxHvsJypHqgMdvzQR2h0k8wvF2k8y2LW3XFuWfUojVG
- txc8/BBuAL9goaG4nNHDOzSctb2athRtT6HB9B6hMXBwcbfeYsuys7mnGZCm2K76eCNL
- n78w==
+ d=1e100.net; s=20230601; t=1715097094; x=1715701894;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5xC4mmxAv7PbmZhQWGyCId8fJujH6vW2g0QyDQ6YYCM=;
+ b=G9HWO32mGG2a/M5YodvBuatI0ht8bJrFt2XWY8iQGC1lTAYQsbOfZSp7umdJ0WoXuO
+ dApoNkUoDtz0a4168Gr5jMN4M0kNy25i5O8cQ0KQenwNT6WNzXblwEXkmJQWQamRk1jZ
+ 1j/BlSdDeAyI2zJvCfIw+rZ/ZEMOyu1HdcGPTVH/ULyL95DeFLchva7jL+7h9Nsgwwha
+ EFPioG/sNiCmdApvo4/dNZjdD3lpBWyZ4XW8Bz9ANITAjrxYed+gsNI85DBFqzGvZ2kf
+ McdWigauHN2MlwnrniCEh0eW8aNtL7QdmHDlK5UKpteiAAqJDOWIv8WRLBlx7AhjIg7o
+ InTg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVpdqOX+/bbpMMJ+A1mTmcN4aTx7hInmdiavQkW6IlbjGV4qYbr4YxtNdEZj9GC3swKVg+bHHm/B6nU1VXzr5+gKCuJXJM=
-X-Gm-Message-State: AOJu0YxYKDWbtY8wOxPNWFZN8lgr7pen062n49GnDQSLX8NZnH1zcWDr
- c0B2Ie7Gcw97bejzp8OfzPI5qN2sRQIc4BFvuQR+SlWHaGD+rPW2+IXFr1P4rOOc9H5/14CG7zX
- N8WNvTPkGVomVG9lbxeSe6WEQGYv4yEqAcYttrj2YaMVtXSNm2FFs
-X-Received: by 2002:ac8:7d04:0:b0:43d:89f6:9104 with SMTP id
- d75a77b69052e-43dbf3c1862mr835611cf.1.1715096831028; 
- Tue, 07 May 2024 08:47:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHLjsWyeXd0izdBz+Q8cteDG9KoheOFBogT3saitGf623PDUI3gzH878hMxbWSSajsBkGDALA==
-X-Received: by 2002:ac8:7d04:0:b0:43d:89f6:9104 with SMTP id
- d75a77b69052e-43dbf3c1862mr835311cf.1.1715096830423; 
- Tue, 07 May 2024 08:47:10 -0700 (PDT)
+ AJvYcCVVole/+9UnkviYK+hDf4+lfaZBISlNBykzP/xDNuRPc2Dgx6pHkq64cd+rjgLRYDVKiwI7UyPm1xFV0+exZfHa7gGYHMs=
+X-Gm-Message-State: AOJu0YybQWCVWOAfqNULR/X4mFONcPSqsf2corwMXJtgU0URsY9dV9ND
+ hjW00xOjHadE87LiJxsbCv/0wj3aOOMdtHIxje5+flsfWCCZLOtCQ1YezBalhCtsbQtGY2FzLUs
+ RfXXB513EF8zYWLwIEkFiqEeVjSl6+CdSZKOdnY0+1HwKQ8jlYnV3
+X-Received: by 2002:a05:6808:1a19:b0:3c8:4e7f:47bd with SMTP id
+ bk25-20020a0568081a1900b003c84e7f47bdmr17294995oib.5.1715097093871; 
+ Tue, 07 May 2024 08:51:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFhfkGQCGap/tDEW9ARn8JfXLxQ+Keaqtbt+HxADBqqfaQT0JLDd1l2FPc+dIjBmsi0nlo5qQ==
+X-Received: by 2002:a05:6808:1a19:b0:3c8:4e7f:47bd with SMTP id
+ bk25-20020a0568081a1900b003c84e7f47bdmr17294963oib.5.1715097093248; 
+ Tue, 07 May 2024 08:51:33 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- f8-20020ac840c8000000b00434c31fa60csm6490015qtm.92.2024.05.07.08.47.08
+ n10-20020a05620a222a00b007929914d7cbsm2126943qkh.81.2024.05.07.08.51.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 May 2024 08:47:09 -0700 (PDT)
-Date: Tue, 7 May 2024 11:47:07 -0400
+ Tue, 07 May 2024 08:51:32 -0700 (PDT)
+Date: Tue, 7 May 2024 11:51:30 -0400
 From: Peter Xu <peterx@redhat.com>
-To: gaosong <gaosong@loongson.cn>
-Cc: Fabiano Rosas <farosas@suse.de>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Tianrui Zhao <zhaotianrui@loongson.cn>,
- pbonzini@redhat.com, peter.maydell@linaro.org,
- richard.henderson@linaro.org, maobibo@loongson.cn, lixianglai@loongso.cn
-Subject: Re: [PATCH] target/loongarch/kvm: Fix VM recovery from disk failures
-Message-ID: <ZjpM-1MImDyQKyHI@x1n>
-References: <20240430012356.2620763-1-gaosong@loongson.cn>
- <f9956c18-3530-4fc2-8150-beba7b673f89@linaro.org>
- <87edanlzlz.fsf@suse.de> <ZjJjl2fIU1s24uFD@x1n>
- <87o79oo00b.fsf@suse.de>
- <c9bfd6a4-befb-c17d-a87d-15eeecdfb75a@loongson.cn>
+To: Avihai Horon <avihaih@nvidia.com>
+Cc: Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
+ Joao Martins <joao.m.martins@oracle.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Michael Roth <michael.roth@amd.com>, Eric Blake <eblake@redhat.com>,
+ Maor Gottlieb <maorg@nvidia.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 2/3] vfio/migration: Emit VFIO device migration state
+ change QAPI event
+Message-ID: <ZjpOAm3kXE-7Rg6G@x1n>
+References: <20240430051621.19597-1-avihaih@nvidia.com>
+ <20240430051621.19597-3-avihaih@nvidia.com>
+ <08936db7-46bf-42ba-ac14-49cb14f34646@oracle.com>
+ <0d368ac4-fbba-4829-b25d-d49957b7c9da@nvidia.com>
+ <5e9c1edd-4e99-4fb7-8b9a-159b1a6503c5@oracle.com>
+ <600825d2-a314-4120-ad2a-0b1f3c5bb8d9@nvidia.com>
+ <87pltzsfl3.fsf@pond.sub.org> <87ikzrm2ev.fsf@suse.de>
+ <ZjjyPESK-YC-XtFO@x1n>
+ <23edb44a-7147-443e-b0e3-2a832aff5aa4@nvidia.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c9bfd6a4-befb-c17d-a87d-15eeecdfb75a@loongson.cn>
+In-Reply-To: <23edb44a-7147-443e-b0e3-2a832aff5aa4@nvidia.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
@@ -109,13 +113,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 07, 2024 at 04:12:34PM +0800, gaosong wrote:
-> Just remove CONIFG_KVM  would be OK?
+On Tue, May 07, 2024 at 10:47:13AM +0300, Avihai Horon wrote:
+> > While at it, another trivial comment is maybe it's nice to have a helper to
+> > both update the vfio migration state, plus emitting events when necessary.
+> 
+> I think vfio_migration_set_state() does exactly that, no?
 
-You're the loongarch maintainer so I'd say your call. :)
+Ah yes, looks so.  It's just that I saw some common patterns, like:
 
-If you're not yet sure, IMHO we should go with the simplest, which is the
-original oneliner patch.
+===8<===
+@@ -126,11 +167,13 @@ static int vfio_migration_set_state(VFIODevice *vbasedev,
+         }
+ 
+         migration->device_state = recover_state;
++        vfio_migration_send_state_change_event(vbasedev);
+ 
+         return ret;
+     }
+ 
+     migration->device_state = new_state;
++    vfio_migration_send_state_change_event(vbasedev);
+     if (mig_state->data_fd != -1) {
+         if (migration->data_fd != -1) {
+             /*
+@@ -157,6 +200,7 @@ reset_device:
+     }
+ 
+     migration->device_state = VFIO_DEVICE_STATE_RUNNING;
++    vfio_migration_send_state_change_event(vbasedev);
+ 
+     return ret;
+ }
+===8<===
+
+So maybe some more internal helpers?  It doesn't look like to cover all
+updates to device_state, but I really didn't read into it.  Not a huge deal
+really, feel free to keep it as-is if maintainers are happy.
 
 Thanks,
 
