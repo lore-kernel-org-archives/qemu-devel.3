@@ -4,79 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4078C10F1A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDA00C25B5F
 	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 14:38:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4LtA-0003P7-1x; Tue, 07 May 2024 10:33:52 -0400
+	id 1s4LuO-0006eP-3L; Tue, 07 May 2024 10:35:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s4Lsk-0003BS-0K
- for qemu-devel@nongnu.org; Tue, 07 May 2024 10:33:30 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
+ id 1s4LuJ-0006OF-CR
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 10:35:03 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s4Lsd-0001MV-MR
- for qemu-devel@nongnu.org; Tue, 07 May 2024 10:33:25 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1ee12baa01cso16719745ad.0
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 07:33:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
+ id 1s4LuG-0002IO-Uh
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 10:35:03 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-2b36232fa48so2263152a91.1
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 07:35:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715092396; x=1715697196; darn=nongnu.org;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1715092499; x=1715697299;
+ darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=gCKDBZgmkxkw60aZ1JTPBVFXSTJpz/Y7AMgu8NmXySI=;
- b=rU21QaQqyzZDyWF+otofLRzwyXy8DlkglFIyd6LY/hux+bSBj5Kyseh7dbrxWwY79K
- Yq1Ctj+cBoCyq9V05WR6etxlH5QjeR60wX3AnUOSHxl7tyELUozlc/UcRAwuQBFS2Tam
- XqikWDOxQpB15s8+Byc84C6ttKOOOdXgb6dAO/OM2/uvw0o/vfaD5V2p2YfzhUSnv8OH
- tCyFuNylElULJ1Lpj+ZU75P1EjMeJF1MVht6TOTAt3wjFe2fIfcKlHztANpU48OjLJXV
- Zb1KudVmlSsEGSDL/+qN2a9Wu9tft0k81jb0BvoLHPBhNCpwangUb0g82FHgeF521Vle
- 3aTw==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VQRoBwM3VtnsocziBWRdu7rYUqFpcQLBHetkRLLTiYU=;
+ b=II3XaxZLLd0GeVQef6lrRQX0/vh02HdWdeVB9JeUkExebtaRXIZXLXrNsVVQC4vgHv
+ eoi19Q9pr8DVEdGmjEv9dCYyT9t98iOc5aKSPrtWSijxbseB0p2cXxB32NjZjmLefjS5
+ PfYcyf285LGpiFbmaWsXWOz94GO67VNeBxLcC3/1dm9vTlsVvedT/tRvDCJu5yszokHP
+ Y6s3F0Z1SqdoVhXHWpKzZZR1RK5yFo0bKBDZdLU03Y8dGCxort2Q/itSJqk2T8o2iUK6
+ F/fbbykVY1frofeDVJUspvZqDRoDA/nN06jX8iIgXUP6mPWsAB+HU9glXrAWJZ7sfVeb
+ Q+wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715092396; x=1715697196;
+ d=1e100.net; s=20230601; t=1715092499; x=1715697299;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gCKDBZgmkxkw60aZ1JTPBVFXSTJpz/Y7AMgu8NmXySI=;
- b=bmvm2A5qR/rAfU6Uvb7bKI9cPdD/567utmYr07UbGTkGtkKsn5brR33U+grBBZ8GyV
- OvDVXjYHZjMPlga4EoSEnXxfvGT1RufDcE/gREm7/GjykYxzcFGBMvBKC8nsF+6QT+Rl
- olgMLkGQ70k3AKjqnjRRJmOVdcdHqW/ZY3jI5BOBJlB5QfDmOpL+VKpRclfMvOGPpOv6
- 8TrDThgb/CzF9+/99TWeX9wXc90oJWIIVcvORrK7CO3WKoRhO8wgJFHoCDW6MUQBHP5+
- KxNh+e5dJDL4VilF19ig68xrMColLmoNaYXABr7Z4ZePJCHAfnEvGBv6xOlW1n9izP6r
- x5nA==
-X-Gm-Message-State: AOJu0YwvbHp9rWKHGRqxjQRuSER3o+PVrstnwppLuVEyhzvSYkxFMwhz
- k84TrCZJlwUfuycJ0GW66FN7M+hzt5r/8tvuRhv+UVqGSB/OC57O0G8j6FCYNijfl2A1bwNeDp1
- s
-X-Google-Smtp-Source: AGHT+IHWo/vw1iNCOfcDjUQe03i3bd2Av3k6ZYTsrZlgi045cAAmeQ6o+oZGM5MgZ6pzeezIyRS3OA==
-X-Received: by 2002:a17:902:d50c:b0:1e5:d0e3:b960 with SMTP id
- b12-20020a170902d50c00b001e5d0e3b960mr16194495plg.11.1715092396486; 
- Tue, 07 May 2024 07:33:16 -0700 (PDT)
-Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ bh=VQRoBwM3VtnsocziBWRdu7rYUqFpcQLBHetkRLLTiYU=;
+ b=lRUOaunbnUWR+lodPvTBZXTGkI0eUnpkFF3g+8JN/YD7fgW/YUWduEHiHANZ3I4A1j
+ ykLyfQ8ICA2C1D6MyOclE9SCWiMuvQ5HhuYvtefOQpU5dM7KNeZHBlmV5aXLudWUdzMz
+ lH7oSzP1Oid5imiJesVBfn0SG3Aswmb0fpThbfHMhxX84Exy1R5TdSyBMMJ0L1Nc20br
+ QppDByGoV2V44i6JTIJj2BuNxbFnx+yTJU5KM5oyKhbe5oTpo8iVSfNqHHvtuHMDKhrO
+ 5/H9zo5h25rUPd/TZgT6q144mShmuIC/qnz0upTyMkgR/cr1vqupaTz+sp+bLztdrf2x
+ YWoA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWum7BCd1CumjqsGCmmPSxRpqrDwYTqRCESmt5sZIctoSLRV67ybb/dOMDKmNwlI5MDfz4deWBmmz2MlaRl5KbJhjM1k/k=
+X-Gm-Message-State: AOJu0YzlleJ6gMsbRtSZKB20ZCNjEncanXTPSROwUE8OsgA1jbOP/j9k
+ SVWeXuHPyaBGhW1PBVuH2iiSjzlkPY1tyizxXEkaA+JxlIPFyHtg9GBZAU7Q5Xg=
+X-Google-Smtp-Source: AGHT+IGH8Ldm8JgABb49ziH49B9kVw+z8BaUE98L2DFVZPQ/BWYi4bM2AfUQr17SuC7M+YZBmoRnIQ==
+X-Received: by 2002:a17:90a:d44f:b0:2b4:32ae:9d7a with SMTP id
+ cz15-20020a17090ad44f00b002b432ae9d7amr9569144pjb.19.1715092495364; 
+ Tue, 07 May 2024 07:34:55 -0700 (PDT)
+Received: from mnissler.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- p3-20020a170902780300b001ed2d84c1cbsm8690097pll.193.2024.05.07.07.33.15
- for <qemu-devel@nongnu.org>
+ pq10-20020a17090b3d8a00b002af8056917csm11827206pjb.29.2024.05.07.07.34.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 May 2024 07:33:15 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 6/9] target/sh4: Update DisasContextBase.insn_start
-Date: Tue,  7 May 2024 07:33:06 -0700
-Message-Id: <20240507143309.5528-7-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240507143309.5528-1-richard.henderson@linaro.org>
-References: <20240507143309.5528-1-richard.henderson@linaro.org>
+ Tue, 07 May 2024 07:34:54 -0700 (PDT)
+From: Mattias Nissler <mnissler@rivosinc.com>
+To: jag.raman@oracle.com, peterx@redhat.com, stefanha@redhat.com,
+ qemu-devel@nongnu.org
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ john.levon@nutanix.com, David Hildenbrand <david@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Mattias Nissler <mnissler@rivosinc.com>
+Subject: [PATCH v10 7/7] vfio-user: Fix config space access byte order
+Date: Tue,  7 May 2024 07:34:31 -0700
+Message-ID: <20240507143431.464382-8-mnissler@rivosinc.com>
+X-Mailer: git-send-email 2.43.2
+In-Reply-To: <20240507143431.464382-1-mnissler@rivosinc.com>
+References: <20240507143431.464382-1-mnissler@rivosinc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=mnissler@rivosinc.com; helo=mail-pj1-x102f.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,28 +103,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Match the extra inserts of INDEX_op_insn_start, fixing
-the db->num_insns != 1 assert in translator_loop.
+PCI config space is little-endian, so on a big-endian host we need to
+perform byte swaps for values as they are passed to and received from
+the generic PCI config space access machinery.
 
-Fixes: dcd092a0636 ("accel/tcg: Improve can_do_io management")
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Jagannathan Raman <jag.raman@oracle.com>
+Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
 ---
- target/sh4/translate.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/remote/vfio-user-obj.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/sh4/translate.c b/target/sh4/translate.c
-index e599ab9d1a..b3282f3ac7 100644
---- a/target/sh4/translate.c
-+++ b/target/sh4/translate.c
-@@ -2189,6 +2189,7 @@ static void decode_gusa(DisasContext *ctx, CPUSH4State *env)
-      */
-     for (i = 1; i < max_insns; ++i) {
-         tcg_gen_insn_start(pc + i * 2, ctx->envflags);
-+        ctx->base.insn_start = tcg_last_op();
-     }
- }
- #endif
+diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
+index a15e291c9a..0e93d7a7b4 100644
+--- a/hw/remote/vfio-user-obj.c
++++ b/hw/remote/vfio-user-obj.c
+@@ -281,7 +281,7 @@ static ssize_t vfu_object_cfg_access(vfu_ctx_t *vfu_ctx, char * const buf,
+     while (bytes > 0) {
+         len = (bytes > pci_access_width) ? pci_access_width : bytes;
+         if (is_write) {
+-            memcpy(&val, ptr, len);
++            val = ldn_le_p(ptr, len);
+             pci_host_config_write_common(o->pci_dev, offset,
+                                          pci_config_size(o->pci_dev),
+                                          val, len);
+@@ -289,7 +289,7 @@ static ssize_t vfu_object_cfg_access(vfu_ctx_t *vfu_ctx, char * const buf,
+         } else {
+             val = pci_host_config_read_common(o->pci_dev, offset,
+                                               pci_config_size(o->pci_dev), len);
+-            memcpy(ptr, &val, len);
++            stn_le_p(ptr, len, val);
+             trace_vfu_cfg_read(offset, val);
+         }
+         offset += len;
 -- 
-2.34.1
+2.43.2
 
 
