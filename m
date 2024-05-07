@@ -4,49 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65BB4C25B75
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 12:16:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0AC6C10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 12:17:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4JjU-000247-U4; Tue, 07 May 2024 08:15:45 -0400
+	id 1s4JkE-0002rV-SU; Tue, 07 May 2024 08:16:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1s4JjG-0001z3-T3; Tue, 07 May 2024 08:15:31 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s4Jjx-0002hA-5P
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 08:16:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1s4JjE-0000wJ-Gy; Tue, 07 May 2024 08:15:30 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 57C9C4520B;
- Tue,  7 May 2024 14:15:15 +0200 (CEST)
-Message-ID: <14e568d4-ae82-4eaa-921f-1927a9b81ceb@proxmox.com>
-Date: Tue, 7 May 2024 14:15:10 +0200
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s4Jju-0001BM-IZ
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 08:16:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715084169;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=bgZwf+OJofzKjlUr04LDgMXG05JK4FwCCbz2PQ0UvOY=;
+ b=BHXxb/qsm8hgB2Ts0NtydHkI64YQI0hvKNDyoTTqqdG2Qpr33C8QioUNm35AgcjMvBZDOR
+ lZtVatovguXJ4b8XHM7a/P2W+7XjFzBj5MNDQiPBRFtLS2OZ5YugdyuVWP67ljlzTkKzvt
+ Xa7aR0HX88zcQby/KOt3dI0cxRzupsg=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-198-qjNxqft7PFaDpQ6izA_rBA-1; Tue, 07 May 2024 08:16:08 -0400
+X-MC-Unique: qjNxqft7PFaDpQ6izA_rBA-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-41bf6751b28so11242805e9.2
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 05:16:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715084167; x=1715688967;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=bgZwf+OJofzKjlUr04LDgMXG05JK4FwCCbz2PQ0UvOY=;
+ b=LuJxAE3nb49coT0mUYar+4s58cEMg1csevxcU4vpMR852lrWjjDGXvKvNL9fxFOMsz
+ xva61nDUURXS4ofCtu+J3igzYUWVdKLOrb+/wPiMy4dVReovjJWQPv6fwGDy4MT+IWKm
+ MUQgBuPA8cnH8qMUI27ENkmRJ3u0tVWuTjJFaogjH+vRYHJkobrqpe31+WFKzLL/bPxf
+ JcyTNEJWAdOJBFwkdR1b0vzSATvVznjhPt8Tt1wfsGYv9I6cQBQLGcaIchMTaLl7um7F
+ KhdC9h6m3X//v9s0nvCqAcb+dFkWT7n4ph2Txg7+27hn0s0dE/YHkJoKQDk7YZ1qtl5w
+ dWuA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW7xG423cAX5XfrRFGam92hWcSXZ9ViJvZSxWPQhpxZ/iC38SoPLTqrjM1f2AhTRzKXpLsCsGTk71dT010K4czl5EM3fBU=
+X-Gm-Message-State: AOJu0YznHRD5yTsjyTYxQzww9sYhFJaveMywij6UgUCJ301KLMM3BgJT
+ XP+MG7DW1/AqmYBAPqXWQCqpKvr+XAmmQO7fgz+oxREaCwUbx77qpeWat9xHMznPToHST759N2D
+ btzZG8Mqyc86NR9ZL3BCR657UH23/zijcuZ487dkWHfRIKFh4snUE
+X-Received: by 2002:a05:600c:154d:b0:41d:7c48:5558 with SMTP id
+ f13-20020a05600c154d00b0041d7c485558mr9942349wmg.4.1715084167368; 
+ Tue, 07 May 2024 05:16:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH7w3ShEFozqTWFC4/DOgKfFqUgSgkwC2sz2Uo8Rsuq1sTpp6rHjIgh5njg2knGBps2I9wvMg==
+X-Received: by 2002:a05:600c:154d:b0:41d:7c48:5558 with SMTP id
+ f13-20020a05600c154d00b0041d7c485558mr9942336wmg.4.1715084166998; 
+ Tue, 07 May 2024 05:16:06 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ p17-20020a05600c469100b0041b083e16e2sm23385788wmo.2.2024.05.07.05.16.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 May 2024 05:16:06 -0700 (PDT)
+Message-ID: <63fd5fb0-7176-4e86-bf11-4e5e35b4b2fd@redhat.com>
+Date: Tue, 7 May 2024 14:16:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] mirror: allow specifying working bitmap
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, armbru@redhat.com, eblake@redhat.com,
- hreitz@redhat.com, kwolf@redhat.com, jsnow@redhat.com,
- f.gruenbichler@proxmox.com, t.lamprecht@proxmox.com,
- mahaocong@didichuxing.com, xiechanglong.d@gmail.com, wencongyang2@huawei.com
-References: <20240307134711.709816-1-f.ebner@proxmox.com>
- <20240307134711.709816-3-f.ebner@proxmox.com>
- <3e338160-a172-42b8-946c-ae7f7d97a17c@yandex-team.ru>
-Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <3e338160-a172-42b8-946c-ae7f7d97a17c@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v4 02/19] vfio/container: Introduce
+ TYPE_HOST_IOMMU_DEVICE_LEGACY_VFIO device
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
+ peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
+ joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
+ kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com
+References: <20240507092043.1172717-1-zhenzhong.duan@intel.com>
+ <20240507092043.1172717-3-zhenzhong.duan@intel.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240507092043.1172717-3-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,103 +108,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 02.04.24 um 22:14 schrieb Vladimir Sementsov-Ogievskiy:
-> On 07.03.24 16:47, Fiona Ebner wrote:
->> diff --git a/block/mirror.c b/block/mirror.c
->> index 1609354db3..5c9a00b574 100644
->> --- a/block/mirror.c
->> +++ b/block/mirror.c
->> @@ -51,7 +51,7 @@ typedef struct MirrorBlockJob {
->>       BlockDriverState *to_replace;
->>       /* Used to block operations on the drive-mirror-replace target */
->>       Error *replace_blocker;
->> -    bool is_none_mode;
->> +    MirrorSyncMode sync_mode;
+On 5/7/24 11:20, Zhenzhong Duan wrote:
+> TYPE_HOST_IOMMU_DEVICE_LEGACY_VFIO represents a host IOMMU device under
+> VFIO legacy container backend.
 > 
-> Could you please split this change to separate preparation patch?
+> It will have its own realize implementation.
 > 
+> Suggested-by: Eric Auger <eric.auger@redhat.com>
+> Suggested-by: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>   include/hw/vfio/vfio-common.h | 3 +++
+>   hw/vfio/container.c           | 5 ++++-
+>   2 files changed, 7 insertions(+), 1 deletion(-)
+> 
+> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+> index e4c60374fa..05a199ce65 100644
+> --- a/include/hw/vfio/vfio-common.h
+> +++ b/include/hw/vfio/vfio-common.h
+> @@ -31,6 +31,7 @@
+>   #endif
+>   #include "sysemu/sysemu.h"
+>   #include "hw/vfio/vfio-container-base.h"
+> +#include "sysemu/host_iommu_device.h"
 
-Will do.
+This breaks build on windows because <linux/iommufd.h> is included
+by <sysemu/host_iommu_device.h>. See patch 5.
 
->> +        if (bdrv_dirty_bitmap_check(bitmap, BDRV_BITMAP_ALLOW_RO,
->> errp)) {
-> 
-> Why allow read-only bitmaps?
-> 
 
-Good catch! This is a left-over from an earlier version. Now that the
-bitmap shall be used as the working bitmap, it cannot be read-only. I'll
-change it to BDRV_BITMAP_DEFAULT in v3 of the series.
+Thanks,
 
->> +# @bitmap: The name of a bitmap to use as a working bitmap for
->> +#     sync=full mode.  This argument must be not be present for other
->> +#     sync modes and not at the same time as @granularity.  The
->> +#     bitmap's granularity is used as the job's granularity.  When
->> +#     the target is a diff image, i.e. one that should only contain
->> +#     the delta and was not synced to previously, the target's
->> +#     cluster size must not be larger than the bitmap's granularity.
-> 
-> Could we check this? Like in block_copy_calculate_cluster_size(), we can
-> check if target does COW, and if not, we can check that we are safe with
-> granularity.
-> 
+C.
 
-The issue here is (in particular) present when the target does COW, i.e.
-in qcow2 diff images, allocated clusters which end up with partial data,
-when we don't have the right cluster size. Patch 4/4 adds the check for
-the target's cluster size.
 
->> +#     For a diff image target, using copy-mode=write-blocking should
->> +#     not be used, because unaligned writes will lead to allocated
->> +#     clusters with partial data in the target image!
-> 
-> Could this be checked?
-> 
-
-I don't think so. How should we know if the target already contains data
-from a previous full sync or not?
-
-Those caveats when using diff images are unfortunate, and users should
-be warned about them of course, but the main/expected use case for the
-feature is to sync to the same target multiple times, so I'd hope the
-cluster size check in patch 4/4 and mentioning the edge cases in the
-documentation is enough here.
-
->>  The bitmap
->> +#     will be enabled after the job finishes.  (Since 9.0)
-> 
-> Hmm. That looks correct. At least for the case, when bitmap is enabled
-> at that start of job. Suggest to require this.
-> 
-
-It's true for any provided bitmap: it will be disabled when the mirror
-job starts, because we manually set it in bdrv_mirror_top_do_write() and
-then in mirror_exit_common(), the bitmap will be enabled.
-
-Okay, I'll require that it is enabled at the beginning.
-
->> +#
->>   # @granularity: granularity of the dirty bitmap, default is 64K if the
->>   #     image format doesn't have clusters, 4K if the clusters are
->>   #     smaller than that, else the cluster size.  Must be a power of 2
->> @@ -2548,6 +2578,10 @@
->>   #     disappear from the query list without user intervention.
->>   #     Defaults to true.  (Since 3.1)
->>   #
->> +# Features:
->> +#
->> +# @unstable: Member @bitmap is experimental.
->> +#
->>   # Since: 2.6
-> 
-> Y_MODE_BACKGROUND,
->>                    &error_abort);
-> 
-> [..]
-> 
-> Generally looks good to me.
-> 
-
-Thank you for the review!
+>   
+>   #define VFIO_MSG_PREFIX "vfio %s: "
+>   
+> @@ -147,6 +148,8 @@ typedef struct VFIOGroup {
+>       bool ram_block_discard_allowed;
+>   } VFIOGroup;
+>   
+> +#define TYPE_HOST_IOMMU_DEVICE_LEGACY_VFIO TYPE_HOST_IOMMU_DEVICE "-legacy-vfio"
+> +
+>   typedef struct VFIODMABuf {
+>       QemuDmaBuf buf;
+>       uint32_t pos_x, pos_y, pos_updates;
+> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+> index 86266f3b83..1b4fc2f3e8 100644
+> --- a/hw/vfio/container.c
+> +++ b/hw/vfio/container.c
+> @@ -1139,7 +1139,10 @@ static const TypeInfo types[] = {
+>           .name = TYPE_VFIO_IOMMU_LEGACY,
+>           .parent = TYPE_VFIO_IOMMU,
+>           .class_init = vfio_iommu_legacy_class_init,
+> -    },
+> +    }, {
+> +        .name = TYPE_HOST_IOMMU_DEVICE_LEGACY_VFIO,
+> +        .parent = TYPE_HOST_IOMMU_DEVICE,
+> +    }
+>   };
+>   
+>   DEFINE_TYPES(types)
 
 
