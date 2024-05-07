@@ -4,96 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3714C10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 07:06:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86955C25B74
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 07:09:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4Esv-0008Ld-Bt; Tue, 07 May 2024 03:05:09 -0400
+	id 1s4Eww-00018r-1j; Tue, 07 May 2024 03:09:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s4Esq-0008L9-F0
- for qemu-devel@nongnu.org; Tue, 07 May 2024 03:05:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
+ id 1s4Ewt-000186-7N; Tue, 07 May 2024 03:09:16 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s4Eso-0005tm-9H
- for qemu-devel@nongnu.org; Tue, 07 May 2024 03:05:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715065500;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rVAqjg7Hgn3nprLRs5LQRaoVcIylBktO9XNtobYUmUs=;
- b=b8mPIhNeZ8GZaKyrQaf+twxfGegGW40YeGKAyh5BORj8m76lmwEkzpEjeEAc0tq/6rXjIb
- gLzSTmrNEjNXb3xYtAOi8Y07UKam5xjMp9pfygF2pVOSZZddwsiOO0i73gZTk/XAPibRr2
- Hrqtp0KUQUKHauUUAZtMRJfgHZso40I=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-245-TYTFInrgNDeNUtavE8yDYQ-1; Tue, 07 May 2024 03:04:59 -0400
-X-MC-Unique: TYTFInrgNDeNUtavE8yDYQ-1
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7928abc8eddso444861785a.1
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 00:04:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715065498; x=1715670298;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rVAqjg7Hgn3nprLRs5LQRaoVcIylBktO9XNtobYUmUs=;
- b=YwLYbYZfRuZomtDr5Bqtvu2mdFZxK4DKF6VRP+0x1E0CUqIkLfkYK+IBtV99KSbRTV
- H/U0ES6nSgODXqO2yI8U9y8TOVJKanSybO9hQI/tT0YpGoqq9biKMbF8EuJCGsB55E0I
- kcp90x7+Q+ynEGff3iHQKbSglexcTiXAEiTRlW+tscbA6Hvb+Cz1YPNJkMAiGN41dYtM
- GfEHfMg5PiPB+yUWtP7Vrd52Lf8c9b85DuMxJ/QgCItrhvhQjpQZYP+np3LRDFOUpLLc
- tMlVaaSl9LcMdqC5J+BQhfnnUfNmS+YXqJvIpyOupqa1X5KSutKjYpTqMJbN5S54O55I
- 41qw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWWc0p/ObUlXNRoAV82fSJY47uJjqifSwWzOq2VSprus/zaNkJQS80AiAdHemWlMhzEFHGqRhel2bT9fpxWBgNmkpbo/kk=
-X-Gm-Message-State: AOJu0Yzy0nDCCpvRgGVEeq3GH0D268RlOn0dMN9RdXuBlHCKZtPRcgin
- Sz1zmpCEd6YJBaFkwSKv9Fs+mwj5l+GmlMOKC7P2UwsQZOPfqNI0UMeG1f7vfyXPYic+QOuGbCq
- /5SvrRJFAcEhe7GBTcqUCMZaGLli6p5IC71GUPdBx/pZy+YPFmxE6
-X-Received: by 2002:a05:620a:118b:b0:792:91e1:2c5a with SMTP id
- b11-20020a05620a118b00b0079291e12c5amr7703427qkk.68.1715065498404; 
- Tue, 07 May 2024 00:04:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHP5A+1p6YUhwKfIKwMq5nlIli/Rfb5348HzIadx72tSgmciB1YBbpC9m95opHf+5yralEdHw==
-X-Received: by 2002:a05:620a:118b:b0:792:91e1:2c5a with SMTP id
- b11-20020a05620a118b00b0079291e12c5amr7703407qkk.68.1715065498071; 
- Tue, 07 May 2024 00:04:58 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- po3-20020a05620a384300b007929547c02bsm2055176qkn.129.2024.05.07.00.04.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 May 2024 00:04:57 -0700 (PDT)
-Message-ID: <adb10cf9-faff-41f1-a6e4-e7c169f16c72@redhat.com>
-Date: Tue, 7 May 2024 09:04:53 +0200
+ (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
+ id 1s4Ewq-0008Mv-PJ; Tue, 07 May 2024 03:09:14 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 4476CAnF013123; Tue, 7 May 2024 07:09:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=Lyxw7bbZMWp/YqtteOw7RNEDOMzF2yqOTuzjWmD/t30=;
+ b=aDKOXHHOocQnCOh+SH+uOco1LIsDEfuSYz5H5RswdE2yMCWgUXop2/6IyapRfYpNFo5q
+ CF9e/7PtMYdWgjVWG7gspCHiONr6oJFOBNe2UIKFRxvuxEBwXrmWUKrxYFf5ouuWFlGE
+ /PbaFfiklnxOdHvP2lDNC3B0kfkUEnz4+JELtbyxQFP0eeZYp9hkQvsIZ+BwaeKFC/a3
+ 4jytXhO6HAc9uxk96QguuvqTQCn8nenyTwknD+lnKOqI2gI4KPEZVT08R2sBqUJ213vz
+ 9DAF7z1nxzeddeQcZWpOJEGRgnFeBvOjOlx3gVQdbfJq+UvO+qY40tnxgx55cYwiv5M2 vQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xyetp04kr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 07 May 2024 07:09:09 +0000
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 447744BS031718;
+ Tue, 7 May 2024 07:09:09 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xyetp04kp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 07 May 2024 07:09:09 +0000
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44742dIn013942; Tue, 7 May 2024 07:09:08 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xx222v8ej-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 07 May 2024 07:09:08 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 447794Ak54854124
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 7 May 2024 07:09:07 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DAFC320049;
+ Tue,  7 May 2024 07:09:04 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E125120040;
+ Tue,  7 May 2024 07:09:03 +0000 (GMT)
+Received: from [9.199.192.140] (unknown [9.199.192.140])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  7 May 2024 07:09:03 +0000 (GMT)
+Message-ID: <2bd50388-2bb0-42c5-a2ce-8c243c2051dd@linux.vnet.ibm.com>
+Date: Tue, 7 May 2024 12:39:03 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 15/19] hw/pci: Introduce
- pci_device_[set|unset]_iommu_device()
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
- peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
- joao.m.martins@oracle.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com, Yi Sun <yi.y.sun@linux.intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-References: <20240429065046.3688701-1-zhenzhong.duan@intel.com>
- <20240429065046.3688701-16-zhenzhong.duan@intel.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240429065046.3688701-16-zhenzhong.duan@intel.com>
+Subject: Re: [PATCH 3/3] target/ppc: Add ISA v3.1 variants of sync instruction
+Content-Language: en-US
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Chinmay Rath <rathc@linux.ibm.com>
+References: <20240501130435.941189-1-npiggin@gmail.com>
+ <20240501130435.941189-4-npiggin@gmail.com>
+From: Chinmay Rath <rathc@linux.vnet.ibm.com>
+In-Reply-To: <20240501130435.941189-4-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 4xCsf_1LuHEPIoC6UMIXiaAC5esIjp6t
+X-Proofpoint-ORIG-GUID: Smhv1pXMGR8wUzI0TIJKy3iH-9hEdfUf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-07_02,2024-05-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 phishscore=0
+ bulkscore=0 clxscore=1015 lowpriorityscore=0 mlxscore=0 suspectscore=0
+ mlxlogscore=967 adultscore=0 malwarescore=0 priorityscore=1501
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2404010000 definitions=main-2405070048
+Received-SPF: none client-ip=148.163.156.1;
+ envelope-from=rathc@linux.vnet.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,135 +116,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Zhenzhong,
 
-On 4/29/24 08:50, Zhenzhong Duan wrote:
-> From: Yi Liu <yi.l.liu@intel.com>
-> 
-> pci_device_[set|unset]_iommu_device() call pci_device_get_iommu_bus_devfn()
-> to get iommu_bus->iommu_ops and call [set|unset]_iommu_device callback to
-> set/unset HostIOMMUDevice for a given PCI device.
-> 
-> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-> Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+
+On 5/1/24 18:34, Nicholas Piggin wrote:
+> POWER10 adds a new field to sync for store-store syncs, and some
+> new variants of the existing syncs that include persistent memory.
+>
+> Implement the store-store syncs and plwsync/phwsync.
+>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Chinmay Rath <rathc@linux.ibm.com>
 > ---
->   include/hw/pci/pci.h | 38 +++++++++++++++++++++++++++++++++++++-
->   hw/pci/pci.c         | 27 +++++++++++++++++++++++++++
->   2 files changed, 64 insertions(+), 1 deletion(-)
-> 
-> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-> index eaa3fc99d8..849e391813 100644
-> --- a/include/hw/pci/pci.h
-> +++ b/include/hw/pci/pci.h
-> @@ -3,6 +3,7 @@
+>   target/ppc/insn32.decode             |  6 ++--
+>   target/ppc/translate/misc-impl.c.inc | 41 ++++++++++++++++++++--------
+>   2 files changed, 32 insertions(+), 15 deletions(-)
+>
+> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
+> index 6b89804b15..a180380750 100644
+> --- a/target/ppc/insn32.decode
+> +++ b/target/ppc/insn32.decode
+> @@ -1001,7 +1001,7 @@ MSGSYNC         011111 ----- ----- ----- 1101110110 -
 >   
->   #include "exec/memory.h"
->   #include "sysemu/dma.h"
-> +#include "sysemu/host_iommu_device.h"
-
-This include directive pulls a Linux header file <linux/iommufd.h>
-which doesn't exist on all platforms, such as windows and it breaks
-compile. So,
-
+>   # Memory Barrier Instructions
 >   
->   /* PCI includes legacy ISA access.  */
->   #include "hw/isa/isa.h"
-> @@ -383,10 +384,45 @@ typedef struct PCIIOMMUOps {
->        *
->        * @devfn: device and function number
->        */
-> -   AddressSpace * (*get_address_space)(PCIBus *bus, void *opaque, int devfn);
-> +    AddressSpace * (*get_address_space)(PCIBus *bus, void *opaque, int devfn);
-> +    /**
-> +     * @set_iommu_device: attach a HostIOMMUDevice to a vIOMMU
-> +     *
-> +     * Optional callback, if not implemented in vIOMMU, then vIOMMU can't
-> +     * retrieve host information from the associated HostIOMMUDevice.
-> +     *
-> +     * @bus: the #PCIBus of the PCI device.
-> +     *
-> +     * @opaque: the data passed to pci_setup_iommu().
-> +     *
-> +     * @devfn: device and function number of the PCI device.
-> +     *
-> +     * @dev: the data structure representing host IOMMU device.
-> +     *
-> +     * @errp: pass an Error out only when return false
-> +     *
-> +     * Returns: 0 if HostIOMMUDevice is attached, or else <0 with errp set.
-> +     */
-> +    int (*set_iommu_device)(PCIBus *bus, void *opaque, int devfn,
-> +                            HostIOMMUDevice *dev, Error **errp);
-> +    /**
-> +     * @unset_iommu_device: detach a HostIOMMUDevice from a vIOMMU
-> +     *
-> +     * Optional callback.
-> +     *
-> +     * @bus: the #PCIBus of the PCI device.
-> +     *
-> +     * @opaque: the data passed to pci_setup_iommu().
-> +     *
-> +     * @devfn: device and function number of the PCI device.
-> +     */
-> +    void (*unset_iommu_device)(PCIBus *bus, void *opaque, int devfn);
->   } PCIIOMMUOps;
->   
->   AddressSpace *pci_device_iommu_address_space(PCIDevice *dev);
-> +int pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice *hiod,
-> +                                Error **errp);
-
-please include a forward declaration for HostIOMMUDevice instead.
-
-Thanks,
-
-C.
-
-
-
-
-> +void pci_device_unset_iommu_device(PCIDevice *dev);
->   
->   /**
->    * pci_setup_iommu: Initialize specific IOMMU handlers for a PCIBus
-> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> index 02a4bb2af6..c3293e9357 100644
-> --- a/hw/pci/pci.c
-> +++ b/hw/pci/pci.c
-> @@ -2742,6 +2742,33 @@ AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
->       return &address_space_memory;
->   }
->   
-> +int pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice *hiod,
-> +                                Error **errp)
-> +{
-> +    PCIBus *iommu_bus;
-> +
-> +    /* set_iommu_device requires device's direct BDF instead of aliased BDF */
-> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, NULL, NULL);
-> +    if (iommu_bus && iommu_bus->iommu_ops->set_iommu_device) {
-> +        return iommu_bus->iommu_ops->set_iommu_device(pci_get_bus(dev),
-> +                                                      iommu_bus->iommu_opaque,
-> +                                                      dev->devfn, hiod, errp);
-> +    }
-> +    return 0;
-> +}
-> +
-> +void pci_device_unset_iommu_device(PCIDevice *dev)
-> +{
-> +    PCIBus *iommu_bus;
-> +
-> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, NULL, NULL);
-> +    if (iommu_bus && iommu_bus->iommu_ops->unset_iommu_device) {
-> +        return iommu_bus->iommu_ops->unset_iommu_device(pci_get_bus(dev),
-> +                                                        iommu_bus->iommu_opaque,
-> +                                                        dev->devfn);
-> +    }
-> +}
-> +
->   void pci_setup_iommu(PCIBus *bus, const PCIIOMMUOps *ops, void *opaque)
+> -&X_sync         l
+> -@X_sync         ...... ... l:2 ..... ..... .......... .           &X_sync
+> -SYNC            011111 --- ..  ----- ----- 1001010110 -           @X_sync
+> +&X_sync         l sc
+> +@X_sync         ...... .. l:3 ... sc:2 ..... .......... .           &X_sync
+> +SYNC            011111 -- ... --- ..   ----- 1001010110 -           @X_sync
+>   EIEIO           011111 ----- ----- ----- 1101010110 -
+> diff --git a/target/ppc/translate/misc-impl.c.inc b/target/ppc/translate/misc-impl.c.inc
+> index 9226467f81..3467b49d0d 100644
+> --- a/target/ppc/translate/misc-impl.c.inc
+> +++ b/target/ppc/translate/misc-impl.c.inc
+> @@ -25,6 +25,7 @@ static bool trans_SYNC(DisasContext *ctx, arg_X_sync *a)
 >   {
+>       TCGBar bar = TCG_MO_ALL;
+>       uint32_t l = a->l;
+> +    uint32_t sc = a->sc;
+>   
 >       /*
-
+>        * BookE uses the msync mnemonic. This means hwsync, except in the
+> @@ -46,20 +47,36 @@ static bool trans_SYNC(DisasContext *ctx, arg_X_sync *a)
+>           gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
+>       }
+>   
+> -    if ((l == 1) && (ctx->insns_flags2 & PPC2_MEM_LWSYNC)) {
+> -        bar = TCG_MO_LD_LD | TCG_MO_LD_ST | TCG_MO_ST_ST;
+> -    }
+> -
+>       /*
+> -     * We may need to check for a pending TLB flush.
+> -     *
+> -     * We do this on ptesync (l == 2) on ppc64 and any sync on ppc32.
+> -     *
+> -     * Additionally, this can only happen in kernel mode however so
+> -     * check MSR_PR as well.
+> +     * In ISA v3.1, the L field grew one bit. Mask that out to ignore it in
+> +     * older processors. It also added the SC field, zero this to ignore
+> +     * it too.
+>        */
+> -    if (((l == 2) || !(ctx->insns_flags & PPC_64B)) && !ctx->pr) {
+> -        gen_check_tlb_flush(ctx, true);
+> +    if (!(ctx->insns_flags2 & PPC2_ISA310)) {
+> +        l &= 0x3;
+> +        sc = 0;
+> +    }
+> +
+> +    if (sc) {
+> +        /* Store syncs [stsync, stcisync, stncisync]. These ignore L. */
+> +        bar = TCG_MO_ST_ST;
+> +    } else {
+> +        if (((l == 1) && (ctx->insns_flags2 & PPC2_MEM_LWSYNC)) || (l == 5)) {
+> +            /* lwsync, or plwsync on POWER10 and later */
+> +            bar = TCG_MO_LD_LD | TCG_MO_LD_ST | TCG_MO_ST_ST;
+> +        }
+> +
+> +        /*
+> +         * We may need to check for a pending TLB flush.
+> +         *
+> +         * We do this on ptesync (l == 2) on ppc64 and any sync on ppc32.
+> +         *
+> +         * Additionally, this can only happen in kernel mode however so
+> +         * check MSR_PR as well.
+> +         */
+> +        if (((l == 2) || !(ctx->insns_flags & PPC_64B)) && !ctx->pr) {
+> +            gen_check_tlb_flush(ctx, true);
+> +        }
+>       }
+>   
+>       tcg_gen_mb(bar | TCG_BAR_SC);
 
