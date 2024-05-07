@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4C2FC10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 09:30:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C920CC10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 09:31:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4H9W-0005Tm-5O; Tue, 07 May 2024 05:30:26 -0400
+	id 1s4H9k-0005wv-0Y; Tue, 07 May 2024 05:30:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4H9R-0005KX-0q; Tue, 07 May 2024 05:30:22 -0400
-Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4H9O-0001Im-Gd; Tue, 07 May 2024 05:30:20 -0400
-Received: by mail-oa1-x2a.google.com with SMTP id
- 586e51a60fabf-23bd61fbd64so2016639fac.0; 
- Tue, 07 May 2024 02:30:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715074215; x=1715679015; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EWfeKHutv1hGflkS2VGbGxzwr5SuEdP4sDX10fX2SfM=;
- b=Hjpq8SCmXjUKydCZceZDCEw49HxnQHCgj+UVCgO/9CdMnjrJSYPPGLe4tiDyIGU6V/
- VQN8V2tmzQCSeSg5HB3qHLZK+JMWnxdmfc5jaH9XXG6XNL3Qj8JDW+k5T296r/MaoPTQ
- z7T5ovaumIU0A02jJj2e/QItxGz1AEHNcUCJ6ubcY0DF02ku/MhamyxKa7NUyHpk+cQA
- nUaaMZMpHTFBvZyYjgvGgPw6gg/syItdVLjseoBb3P9wR1CRm4DRZzpaB7gTtg7MR7cW
- WIk2/TFa12w0cYIkaB+n42VhD/PDNee7z/nPyQambulTosM5DIKxcBdNrtq32kIip6Aq
- 7JZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715074215; x=1715679015;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=EWfeKHutv1hGflkS2VGbGxzwr5SuEdP4sDX10fX2SfM=;
- b=qMfRpKjpCWi7spFfghXKsNdID7IrMIZCX2UlFzggfLz+jAdM2EgZAA4SK4+4Q1N1R+
- xtRuVlGWmKF2pPqvpW0ozgKR4DtCpjE2j+SWDXFcjYeMyod7YeUg2k2NANhB+dZebX2e
- 0S6ImV3fyPCN5wn6kz+Q7/1BmY1rsDxIa4H/c4lxJZ9iB6YCua2LDetlH+tbwGBDr1Yy
- 2WokEdEu/y4OTcinXMtHRB7z04aY14rbCCDhf5uqh1Rkdf2n+3BJcLXEoodK4AdaIrSu
- YH0FToi7dkHYquLFH+v50LTj/DUM9eQrfNGTR6viG/85c10Kmqxw3PTevgOF1YorSsp/
- 971A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX5oc06y+9iQC2d3fQPIVXP2xm3JncMG1EzcHxiWwkIcYqoKbcgPiUL2W8AMUfS0MoPYaHBdu40P+kcDcrO8aBgQFA6CBwPxxHQPHutB3y8mfU+qrG+zf5kLCY=
-X-Gm-Message-State: AOJu0YySQvCNNsuEeDRdTZck2lIgSrx3TSpYKHzPqZVUOP6sWXYt7A8r
- O/+E/HmSJ8cmAt5W143nlNWMJsYW/kkHlmdDPsxICKM6WhRBTJSi
-X-Google-Smtp-Source: AGHT+IGszwckOo03BCbmwxcedgt6/V6VZqoxlnATo/pc1oiIS/lPKH6goA52nMlQG+5BYrntDq5Sjg==
-X-Received: by 2002:a05:6871:5223:b0:23d:a4ce:b82f with SMTP id
- ht35-20020a056871522300b0023da4ceb82fmr14961793oac.5.1715074215010; 
- Tue, 07 May 2024 02:30:15 -0700 (PDT)
-Received: from localhost (220-245-239-57.tpgi.com.au. [220.245.239.57])
- by smtp.gmail.com with ESMTPSA id
- fx13-20020a056a00820d00b006ead1509847sm8942436pfb.216.2024.05.07.02.30.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 May 2024 02:30:14 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 07 May 2024 19:30:09 +1000
-Message-Id: <D13B2EWZN5GU.3L686RNTRX35A@gmail.com>
-Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
-Subject: Re: [PATCH v2 07/28] target/ppc/mmu_common.c: Remove unneeded local
- variable
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
- <qemu-ppc@nongnu.org>
-X-Mailer: aerc 0.17.0
-References: <cover.1714606359.git.balaton@eik.bme.hu>
- <99eb8fb0b992a30e9588226c6c1010185cf1341b.1714606359.git.balaton@eik.bme.hu>
-In-Reply-To: <99eb8fb0b992a30e9588226c6c1010185cf1341b.1714606359.git.balaton@eik.bme.hu>
-Received-SPF: pass client-ip=2001:4860:4864:20::2a;
- envelope-from=npiggin@gmail.com; helo=mail-oa1-x2a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <mic@digikod.net>) id 1s4H9h-0005tq-Gt
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 05:30:37 -0400
+Received: from smtp-190c.mail.infomaniak.ch ([185.125.25.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mic@digikod.net>) id 1s4H9d-0001Ma-T3
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 05:30:37 -0400
+Received: from smtp-4-0000.mail.infomaniak.ch (smtp-4-0000.mail.infomaniak.ch
+ [10.7.10.107])
+ by smtp-3-3000.mail.infomaniak.ch (Postfix) with ESMTPS id 4VYY0h64rLzhcB;
+ Tue,  7 May 2024 11:30:28 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=digikod.net;
+ s=20191114; t=1715074228;
+ bh=N7C083XW9HErJ1+R52TKnyEZNzil5v9FCazYyr/JQx0=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=g4cR8t/iRRSN5giqF0Iwy3XXWNCfhqE/qqqfoxy0lSmFuyqhdQ4FyOhVfsBJ5BFWv
+ xFaM80SdAPMBtmnCReKLZkFRcwvBisebzGQz+PahxsjXN1dm1r13uXB5fKC058GUn5
+ E40tFjEfU9DKYpAc1PGGy+RZ3L2pJN9bZLXwuqBg=
+Received: from unknown by smtp-4-0000.mail.infomaniak.ch (Postfix) with ESMTPA
+ id 4VYY0d4NWlzhxd; Tue,  7 May 2024 11:30:25 +0200 (CEST)
+Date: Tue, 7 May 2024 11:30:24 +0200
+From: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>
+To: Sean Christopherson <seanjc@google.com>
+Cc: Borislav Petkov <bp@alien8.de>, 
+ Dave Hansen <dave.hansen@linux.intel.com>, "H . Peter Anvin" <hpa@zytor.com>, 
+ Ingo Molnar <mingo@redhat.com>, Kees Cook <keescook@chromium.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Gleixner <tglx@linutronix.de>, 
+ Vitaly Kuznetsov <vkuznets@redhat.com>, Wanpeng Li <wanpengli@tencent.com>, 
+ Rick P Edgecombe <rick.p.edgecombe@intel.com>, Alexander Graf <graf@amazon.com>,
+ Angelina Vu <angelinavu@linux.microsoft.com>,
+ Anna Trikalinou <atrikalinou@microsoft.com>, 
+ Chao Peng <chao.p.peng@linux.intel.com>, Forrest Yuan Yu <yuanyu@google.com>, 
+ James Gowans <jgowans@amazon.com>, James Morris <jamorris@linux.microsoft.com>,
+ John Andersen <john.s.andersen@intel.com>,
+ "Madhavan T . Venkataraman" <madvenka@linux.microsoft.com>, 
+ Marian Rotariu <marian.c.rotariu@gmail.com>,
+ Mihai =?utf-8?B?RG9uyJt1?= <mdontu@bitdefender.com>, 
+ =?utf-8?B?TmljdciZb3IgQ8OuyJt1?= <nicu.citu@icloud.com>,
+ Thara Gopinath <tgopinath@microsoft.com>, 
+ Trilok Soni <quic_tsoni@quicinc.com>, Wei Liu <wei.liu@kernel.org>,
+ Will Deacon <will@kernel.org>, Yu Zhang <yu.c.zhang@linux.intel.com>,
+ =?utf-8?Q?=C8=98tefan_=C8=98icleru?= <ssicleru@bitdefender.com>, 
+ dev@lists.cloudhypervisor.org, kvm@vger.kernel.org,
+ linux-hardening@vger.kernel.org, 
+ linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-security-module@vger.kernel.org, qemu-devel@nongnu.org,
+ virtualization@lists.linux-foundation.org, 
+ x86@kernel.org, xen-devel@lists.xenproject.org
+Subject: Re: [RFC PATCH v3 3/5] KVM: x86: Add notifications for Heki policy
+ configuration and violation
+Message-ID: <20240507.ieghomae0UoC@digikod.net>
+References: <20240503131910.307630-1-mic@digikod.net>
+ <20240503131910.307630-4-mic@digikod.net>
+ <ZjTuqV-AxQQRWwUW@google.com> <20240506.ohwe7eewu0oB@digikod.net>
+ <ZjmFPZd5q_hEBdBz@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZjmFPZd5q_hEBdBz@google.com>
+X-Infomaniak-Routing: alpha
+Received-SPF: pass client-ip=185.125.25.12; envelope-from=mic@digikod.net;
+ helo=smtp-190c.mail.infomaniak.ch
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,121 +96,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu May 2, 2024 at 9:43 AM AEST, BALATON Zoltan wrote:
-> In mmubooke_check_tlb() and mmubooke206_check_tlb() we can assign the
-> value directly the the destination, no need to have a separate local
-> variable for it.
->
+On Mon, May 06, 2024 at 06:34:53PM GMT, Sean Christopherson wrote:
+> On Mon, May 06, 2024, Mickaël Salaün wrote:
+> > On Fri, May 03, 2024 at 07:03:21AM GMT, Sean Christopherson wrote:
+> > > > ---
+> > > > 
+> > > > Changes since v1:
+> > > > * New patch. Making user space aware of Heki properties was requested by
+> > > >   Sean Christopherson.
+> > > 
+> > > No, I suggested having userspace _control_ the pinning[*], not merely be notified
+> > > of pinning.
+> > > 
+> > >  : IMO, manipulation of protections, both for memory (this patch) and CPU state
+> > >  : (control registers in the next patch) should come from userspace.  I have no
+> > >  : objection to KVM providing plumbing if necessary, but I think userspace needs to
+> > >  : to have full control over the actual state.
+> > >  : 
+> > >  : One of the things that caused Intel's control register pinning series to stall
+> > >  : out was how to handle edge cases like kexec() and reboot.  Deferring to userspace
+> > >  : means the kernel doesn't need to define policy, e.g. when to unprotect memory,
+> > >  : and avoids questions like "should userspace be able to overwrite pinned control
+> > >  : registers".
+> > >  : 
+> > >  : And like the confidential VM use case, keeping userspace in the loop is a big
+> > >  : beneifit, e.g. the guest can't circumvent protections by coercing userspace into
+> > >  : writing to protected memory.
+> > > 
+> > > I stand by that suggestion, because I don't see a sane way to handle things like
+> > > kexec() and reboot without having a _much_ more sophisticated policy than would
+> > > ever be acceptable in KVM.
+> > > 
+> > > I think that can be done without KVM having any awareness of CR pinning whatsoever.
+> > > E.g. userspace just needs to ability to intercept CR writes and inject #GPs.  Off
+> > > the cuff, I suspect the uAPI could look very similar to MSR filtering.  E.g. I bet
+> > > userspace could enforce MSR pinning without any new KVM uAPI at all.
+> > > 
+> > > [*] https://lore.kernel.org/all/ZFUyhPuhtMbYdJ76@google.com
+> > 
+> > OK, I had concern about the control not directly coming from the guest,
+> > especially in the case of pKVM and confidential computing, but I get you
+> 
+> Hardware-based CoCo is completely out of scope, because KVM has zero visibility
+> into the guest (well, SNP technically allows trapping CR0/CR4, but KVM really
+> shouldn't intercept CR0/CR4 for SNP guests).
+> 
+> And more importantly, _KVM_ doesn't define any policies for CoCo VMs.  KVM might
+> help enforce policies that are defined by hardware/firmware, but KVM doesn't
+> define any of its own.
+> 
+> If pKVM on x86 comes along, then KVM will likely get in the business of defining
+> policy, but until that happens, KVM needs to stay firmly out of the picture.
+> 
+> > point.  It should indeed be quite similar to the MSR filtering on the
+> > userspace side, except that we need another interface for the guest to
+> > request such change (i.e. self-protection).
+> > 
+> > Would it be OK to keep this new KVM_HC_LOCK_CR_UPDATE hypercall but
+> > forward the request to userspace with a VM exit instead?  That would
+> > also enable userspace to get the request and directly configure the CR
+> > pinning with the same VM exit.
+> 
+> No?  Maybe?  I strongly suspect that full support will need a richer set of APIs
+> than a single hypercall.  E.g. to handle kexec(), suspend+resume, emulated SMM,
+> and so on and so forth.  And that's just for CR pinning.
+> 
+> And hypercalls are hampered by the fact that VMCALL/VMMCALL don't allow for
+> delegation or restriction, i.e. there's no way for the guest to communicate to
+> the hypervisor that a less privileged component is allowed to perform some action,
+> nor is there a way for the guest to say some chunk of CPL0 code *isn't* allowed
+> to request transition.  Delegation and restriction all has to be done out-of-band.
+> 
+> It'd probably be more annoying to setup initially, but I think a synthetic device
+> with an MMIO-based interface would be more powerful and flexible in the long run.
+> Then userspace can evolve without needing to wait for KVM to catch up.
+> 
+> Actually, potential bad/crazy idea.  Why does the _host_ need to define policy?
+> Linux already knows what assets it wants to (un)protect and when.  What's missing
+> is a way for the guest kernel to effectively deprivilege and re-authenticate
+> itself as needed.  We've been tossing around the idea of paired VMs+vCPUs to
+> support VTLs and SEV's VMPLs, what if we usurped/piggybacked those ideas, with a
+> bit of pKVM mixed in?
+> 
+> Borrowing VTL terminology, where VTL0 is the least privileged, userspace launches
+> the VM at VTL0.  At some point, the guest triggers the deprivileging sequence and
+> userspace creates VTL1.  Userpace also provides a way for VTL0 restrict access to
+> its memory, e.g. to effectively make the page tables for the kernel's direct map
+> writable only from VTL1, to make kernel text RO (or XO), etc.  And VTL0 could then
+> also completely remove its access to code that changes CR0/CR4.
+> 
+> It would obviously require a _lot_ more upfront work, e.g. to isolate the kernel
+> text that modifies CR0/CR4 so that it can be removed from VTL0, but that should
+> be doable with annotations, e.g. tag relevant functions with __magic or whatever,
+> throw them in a dedicated section, and then free/protect the section(s) at the
+> appropriate time.
+> 
+> KVM would likely need to provide the ability to switch VTLs (or whatever they get
+> called), and host userspace would need to provide a decent amount of the backend
+> mechanisms and "core" policies, e.g. to manage VTL0 memory, teardown (turn off?)
+> VTL1 on kexec(), etc.  But everything else could live in the guest kernel itself.
+> E.g. to have CR pinning play nice with kexec(), toss the relevant kexec() code into
+> VTL1.  That way VTL1 can verify the kexec() target and tear itself down before
+> jumping into the new kernel. 
+> 
+> This is very off the cuff and have-wavy, e.g. I don't have much of an idea what
+> it would take to harden kernel text patching, but keeping the policy in the guest
+> seems like it'd make everything more tractable than trying to define an ABI
+> between Linux and a VMM that is rich and flexible enough to support all the
+> fancy things Linux does (and will do in the future).
 
-For a minute I thought this changed the interface to now update
-ctx->prot even if the lookup failed, but it already does that in
-some cases so... no issue.
+Yes, we agree that the guest needs to manage its own policy.  That's why
+we implemented Heki for KVM this way, but without VTLs because KVM
+doesn't support them.
 
-If this was more widely used API we'd rather change it to never
-update *prot on failure, but okay we can do this.
+To sum up, is the VTL approach the only one that would be acceptable for
+KVM?  If yes, that would indeed require a *lot* of work for something
+we're not sure will be accepted later on.
 
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
->  target/ppc/mmu_common.c | 30 +++++++++++++-----------------
->  1 file changed, 13 insertions(+), 17 deletions(-)
->
-> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-> index b0aca8ec02..74c3b814c9 100644
-> --- a/target/ppc/mmu_common.c
-> +++ b/target/ppc/mmu_common.c
-> @@ -627,8 +627,6 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppcem=
-b_tlb_t *tlb,
->                                hwaddr *raddr, int *prot, target_ulong add=
-ress,
->                                MMUAccessType access_type, int i)
->  {
-> -    int prot2;
-> -
->      if (!mmubooke_check_pid(env, tlb, raddr, address, i)) {
->          qemu_log_mask(CPU_LOG_MMU, "%s: TLB entry not found\n", __func__=
-);
->          return -1;
-> @@ -643,17 +641,16 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppc=
-emb_tlb_t *tlb,
->      }
-> =20
->      if (FIELD_EX64(env->msr, MSR, PR)) {
-> -        prot2 =3D tlb->prot & 0xF;
-> +        *prot =3D tlb->prot & 0xF;
->      } else {
-> -        prot2 =3D (tlb->prot >> 4) & 0xF;
-> +        *prot =3D (tlb->prot >> 4) & 0xF;
->      }
-> -    *prot =3D prot2;
-> -    if (prot2 & prot_for_access_type(access_type)) {
-> +    if (*prot & prot_for_access_type(access_type)) {
->          qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
->          return 0;
->      }
-> =20
-> -    qemu_log_mask(CPU_LOG_MMU, "%s: no prot match: %x\n", __func__, prot=
-2);
-> +    qemu_log_mask(CPU_LOG_MMU, "%s: no prot match: %x\n", __func__, *pro=
-t);
->      return access_type =3D=3D MMU_INST_FETCH ? -3 : -2;
->  }
-> =20
-> @@ -794,7 +791,6 @@ static int mmubooke206_check_tlb(CPUPPCState *env, pp=
-cmas_tlb_t *tlb,
->                                   target_ulong address,
->                                   MMUAccessType access_type, int mmu_idx)
->  {
-> -    int prot2 =3D 0;
->      uint32_t epid;
->      bool as, pr;
->      bool use_epid =3D mmubooke206_get_as(env, mmu_idx, &epid, &as, &pr);
-> @@ -840,34 +836,34 @@ found_tlb:
->          return -1;
->      }
-> =20
-> +    *prot =3D 0;
->      if (pr) {
->          if (tlb->mas7_3 & MAS3_UR) {
-> -            prot2 |=3D PAGE_READ;
-> +            *prot |=3D PAGE_READ;
->          }
->          if (tlb->mas7_3 & MAS3_UW) {
-> -            prot2 |=3D PAGE_WRITE;
-> +            *prot |=3D PAGE_WRITE;
->          }
->          if (tlb->mas7_3 & MAS3_UX) {
-> -            prot2 |=3D PAGE_EXEC;
-> +            *prot |=3D PAGE_EXEC;
->          }
->      } else {
->          if (tlb->mas7_3 & MAS3_SR) {
-> -            prot2 |=3D PAGE_READ;
-> +            *prot |=3D PAGE_READ;
->          }
->          if (tlb->mas7_3 & MAS3_SW) {
-> -            prot2 |=3D PAGE_WRITE;
-> +            *prot |=3D PAGE_WRITE;
->          }
->          if (tlb->mas7_3 & MAS3_SX) {
-> -            prot2 |=3D PAGE_EXEC;
-> +            *prot |=3D PAGE_EXEC;
->          }
->      }
-> -    *prot =3D prot2;
-> -    if (prot2 & prot_for_access_type(access_type)) {
-> +    if (*prot & prot_for_access_type(access_type)) {
->          qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
->          return 0;
->      }
-> =20
-> -    qemu_log_mask(CPU_LOG_MMU, "%s: no prot match: %x\n", __func__, prot=
-2);
-> +    qemu_log_mask(CPU_LOG_MMU, "%s: no prot match: %x\n", __func__, *pro=
-t);
->      return access_type =3D=3D MMU_INST_FETCH ? -3 : -2;
->  }
-> =20
-
+> 
+> Am I crazy?  Or maybe reinventing whatever that McAfee thing was that led to
+> Intel implementing EPTP switching?
+> 
 
