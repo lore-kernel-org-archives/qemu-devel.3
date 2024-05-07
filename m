@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E94EC10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 07:16:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A30DC10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 07:20:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4F2q-0003eQ-28; Tue, 07 May 2024 03:15:24 -0400
+	id 1s4F7H-0007e2-7a; Tue, 07 May 2024 03:19:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1s4F2j-0003Xl-U7
- for qemu-devel@nongnu.org; Tue, 07 May 2024 03:15:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1s4F7F-0007dk-SO
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 03:19:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1s4F2h-0003BF-B3
- for qemu-devel@nongnu.org; Tue, 07 May 2024 03:15:17 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1s4F7E-0003vq-Bi
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 03:19:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715066113;
+ s=mimecast20190719; t=1715066394;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6avkvtHt/qOgI2pQAbXBg8UxCMSZ2xrpYYaNnSE9h0Q=;
- b=LIPzze65bU7SqDz8/cICeuSwhTzjJb5Cqd8h+3EI335QU01UATkkYeeOGi2WThgCxTi86v
- ftsRiQE1ITU6ua58V1wXXE8TbDy4uYkC0PkHGRuOoU12DP5zeLCkyVU++iuahxBPPwciLk
- /t3CacMznebMFWuPFTTs6AOd8qz6ruY=
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=rQ6NUGv6/rMNdPHUeGTtxCGheZ7NPFu62C7ytlGqWxI=;
+ b=HHpWYAqRo1PKTV3+mwjNBoUssB98YMOcZ0NjEJd3BO+8uWm/KaKvMcMRA39W1UadVvsvhr
+ gc0CoQav7UVNeglsAIrAVqI+VHJZXtZ1HcXOitKwnAVUufekzVqmMb8CpOoPVJ627kuyh+
+ XQm6Yxf53mSNY+dnI/S2UOZE7anXuls=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-107-rGeEOjncOZWH63W6b8CdNQ-1; Tue, 07 May 2024 03:15:11 -0400
-X-MC-Unique: rGeEOjncOZWH63W6b8CdNQ-1
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-61bb09d8fecso52144937b3.0
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 00:15:11 -0700 (PDT)
+ us-mta-662-h-vqt0ttNeCyaOhjY37xgg-1; Tue, 07 May 2024 03:19:52 -0400
+X-MC-Unique: h-vqt0ttNeCyaOhjY37xgg-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-572ef3eb368so154705a12.1
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 00:19:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715066110; x=1715670910;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6avkvtHt/qOgI2pQAbXBg8UxCMSZ2xrpYYaNnSE9h0Q=;
- b=Dt/b4DC8oNu9fi8GbONtIMb7DiM7OxPWsFsK3FW6qfyvcAteiR/1LEiVPWKUmOnOKA
- 0ciSLWD7dnHKun78pMKUpTt9i9Z/3RgIoFqjnhgpOKbvAwaIODstE+gDsDo50FcEzXJH
- 7nsgKsEyubTz/IlqyDu+6hiRjTK4OdsAFP2Q9ez5pMrdHe5RRW+Xf4zUoph/WtBqaZdw
- 5WF5szR8aZzngqpwT2qVLktGc58+LQOtHhSaiMGWd6iiKQx84jjDvy5Arpkz8GAS/rAA
- mxKUhoY3l35hdfDn63cj6zr4F52oZ0gUebyufMZ27uLszIllf60kWrLRloPyVsTssJVo
- CT4g==
-X-Gm-Message-State: AOJu0YyH0ilc6pyWGpRwNEtmm50dPPEMHZwaOA8+CfObPbO5MolyGp8p
- hp/fNNUSMkour2XmeCkW9zn1J+0S88Bw52I1n8010A0T9g4FpBmlgI4Se1ZWINPufF5kABvH2hp
- ytMokSRZYgOm/mfdRFBaWvBGcEOen8oQrrPXW2yRmm0gO6DMDeLss1ZaKxopyh00Lxsx2nAoO6X
- tE3eMaqmBto1djnu0p8ZSD2+NGWsE=
-X-Received: by 2002:a5b:c0a:0:b0:de4:7bae:d57f with SMTP id
- f10-20020a5b0c0a000000b00de47baed57fmr11677937ybq.38.1715066110573; 
- Tue, 07 May 2024 00:15:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGNAqL2nEQQyAStr+SJPOWhoozDkwgWwIwE6GiF2mAxyzeb1TP8a5DgTVAYYzi9aCLC7oy0lrMsF4yFkxNgaWM=
-X-Received: by 2002:a5b:c0a:0:b0:de4:7bae:d57f with SMTP id
- f10-20020a5b0c0a000000b00de47baed57fmr11677917ybq.38.1715066110227; Tue, 07
- May 2024 00:15:10 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1715066391; x=1715671191;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rQ6NUGv6/rMNdPHUeGTtxCGheZ7NPFu62C7ytlGqWxI=;
+ b=QCQ8344pbofO217u8WWYwPbzFxwys3Xzf32etf+ppNiHJ6aqePBHrKGiYOjOTqnH5M
+ GVwMiYDrfXP1BwwGQxOEHQ+3mPEg6R4c81wArafb61EK+q74HwLxaPA1g712uxdAKCIs
+ FG9An0tFp7d4oYyODe13RTyq/zR28Wl4C3zuv6gRuRF+bla/kw43pjeuhgyuaNS26zIG
+ YWTHbGUGSnJvOGuZaMnjmYnzrCRhtkQnglY1PhQhe442X3yNWfigYgYwGXNXpKtTWSpN
+ QNsIL5EhWWhXTpOQJSzrPyTDfMGWF+iir9hbQBX/l8deaUta6h24F4r8NSd5mrssRn3l
+ 6Wsg==
+X-Gm-Message-State: AOJu0YyUnV7mGVvx1XXARycJP3KyrUDkalTRMv+qfnVMlIuiDIms4v21
+ WWkzOa0KLcFGMurKCvQgqY1N26WLXzeTv8drmbK/VlTX+wkUolPbBYNUoUbGnokWpfMZOobKytd
+ JxQojlvsWBkuLsYBHliNOXemmE5Uz6D/C75KDeZOEQFde/SfSStDYTzPyg1xWm+DM9On4QwQtDP
+ E+fAHfSUhTcBqL4M+WV5FGQfVmb2PbK7qDvYCN
+X-Received: by 2002:a50:9b18:0:b0:572:4761:1947 with SMTP id
+ o24-20020a509b18000000b0057247611947mr7621325edi.36.1715066390962; 
+ Tue, 07 May 2024 00:19:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFGwL+KdxAgz26yYbOKxuSfD6hI2Asjdw/TYldMUgbonWbdpryfR5F0Po081txgYI05enAw3Q==
+X-Received: by 2002:a50:9b18:0:b0:572:4761:1947 with SMTP id
+ o24-20020a509b18000000b0057247611947mr7621308edi.36.1715066390588; 
+ Tue, 07 May 2024 00:19:50 -0700 (PDT)
+Received: from avogadro.local ([151.95.155.52])
+ by smtp.gmail.com with ESMTPSA id
+ ds9-20020a0564021cc900b005705bfeeb27sm6031389edb.66.2024.05.07.00.19.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 07 May 2024 00:19:49 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: philmd@linaro.org
+Subject: [PATCH 0/4] express dependency of individual boards on libfdt
+Date: Tue,  7 May 2024 09:19:44 +0200
+Message-ID: <20240507071948.105022-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.45.0
 MIME-Version: 1.0
-References: <13625712.uLZWGnKmhe@valdaarhun>
- <CAJaqyWdD7futYvUFt7=zV1xsoBdyAET6mvneOOjR2oob2U1-qg@mail.gmail.com>
- <4912056.31r3eYUQgx@valdaarhun> <13514535.uLZWGnKmhe@valdaarhun>
-In-Reply-To: <13514535.uLZWGnKmhe@valdaarhun>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Tue, 7 May 2024 09:14:33 +0200
-Message-ID: <CAJaqyWeYtyfGav9Ppx=FgRg_Gzucaoz4T3kVi9EbzrDwwEBsyQ@mail.gmail.com>
-Subject: Re: Intention to work on GSoC project
-To: Sahil <icegambit91@gmail.com>
-Cc: qemu-level <qemu-devel@nongnu.org>,
- Stefano Garzarella <sgarzare@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -99,59 +99,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 6, 2024 at 9:00=E2=80=AFPM Sahil <icegambit91@gmail.com> wrote:
->
-> Hi,
->
-> It's been a while since I last gave an update. Sorry about that. I am rea=
-dy
-> to get my hands dirty and start with the implementation.
->
+Just like we have boards that depend on TCG, not all boards in a
+target may require libfdt.  Express one by one which boards do,
+using Kconfig "depends on" and "select" directives, and use the
+result to include system/device_tree.c in the build.
 
-No worries!
+Some binaries do require libfdt altogether.  In a normal build without
+--target-list or --enable-libfdt, these binaries will be disabled with a
+message printed by meson.
 
-> I have gone through the source of linux's drivers/virtio/virtio_ring.c [1=
-], and
-> QEMU's hw/virtio/virtio.c [2] and hw/virtio/vhost-shadow-virtqueue.c [3].
->
-> Before actually starting I would like to make sure I am on the right trac=
-k. In
-> vhost-shadow-virtqueue.c, there's a function "vhost_svq_add" which in tur=
-n
-> calls "vhost_svq_add_split".
->
-> Shall I start by implementing a mechanism to check if the feature bit
-> "VIRTIO_F_RING_PACKED" is set (using "virtio_vdev_has_feature")? And
-> if it's supported, "vhost_svq_add" should call "vhost_svq_add_packed".
-> Following this, I can then start implementing "vhost_svq_add_packed"
-> and progress from there.
->
-> What are your thoughts on this?
->
+Paolo
 
-Yes, that's totally right.
+Paolo Bonzini (4):
+  meson: remove system/internal distinction for libfdt
+  kconfig: express dependency of individual boards on libfdt
+  hw/xtensa: require libfdt
+  configs: disable emulators that require it if libfdt is not found
 
-I recommend you to also disable _F_EVENT_IDX to start, so the first
-version is easier.
+ configs/targets/aarch64-softmmu.mak      |  1 +
+ configs/targets/arm-softmmu.mak          |  1 +
+ configs/targets/i386-softmmu.mak         |  1 -
+ configs/targets/loongarch64-softmmu.mak  |  1 +
+ configs/targets/microblaze-softmmu.mak   |  1 +
+ configs/targets/microblazeel-softmmu.mak |  1 +
+ configs/targets/mips64el-softmmu.mak     |  1 -
+ configs/targets/or1k-softmmu.mak         |  1 +
+ configs/targets/ppc-softmmu.mak          |  1 -
+ configs/targets/ppc64-softmmu.mak        |  1 +
+ configs/targets/riscv32-softmmu.mak      |  1 +
+ configs/targets/riscv64-softmmu.mak      |  1 +
+ configs/targets/rx-softmmu.mak           |  1 +
+ configs/targets/x86_64-softmmu.mak       |  1 -
+ meson.build                              | 82 ++++++++++++------------
+ hw/xtensa/xtfpga.c                       |  9 ---
+ .gitlab-ci.d/buildtest.yml               |  7 +-
+ Kconfig.host                             |  3 +
+ hw/arm/Kconfig                           |  5 ++
+ hw/arm/meson.build                       |  2 +-
+ hw/core/Kconfig                          |  9 ++-
+ hw/core/meson.build                      |  2 +-
+ hw/i386/Kconfig                          |  3 +-
+ hw/loongarch/Kconfig                     |  3 +-
+ hw/loongarch/meson.build                 |  2 +-
+ hw/mips/Kconfig                          |  1 +
+ hw/mips/meson.build                      |  2 +-
+ hw/openrisc/Kconfig                      |  2 +
+ hw/openrisc/meson.build                  |  4 +-
+ hw/ppc/Kconfig                           | 15 +++--
+ hw/ppc/meson.build                       |  4 +-
+ hw/riscv/Kconfig                         |  4 ++
+ hw/riscv/meson.build                     |  2 +-
+ hw/rx/Kconfig                            |  3 +-
+ hw/xtensa/Kconfig                        |  3 +-
+ meson_options.txt                        |  6 +-
+ scripts/meson-buildoptions.sh            |  4 +-
+ system/meson.build                       |  2 +-
+ target/arm/Kconfig                       |  2 +
+ target/microblaze/Kconfig                |  1 +
+ target/openrisc/Kconfig                  |  1 +
+ target/riscv/Kconfig                     |  2 +
+ 42 files changed, 112 insertions(+), 87 deletions(-)
 
-Also, you can send as many incomplete RFCs as you want. For example,
-you can send a first version that only implements reading of the guest
-avail ring, so we know we're aligned on that. Then, we can send
-subsequents RFCs adding features on top.
-
-Does that make sense to you?
-
-Thanks!
-
-> Thanks,
-> Sahil
->
-> [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tr=
-ee/drivers/virtio/virtio.c
-> [2] https://gitlab.com/qemu-project/qemu/-/blob/master/hw/virtio/virtio.c
-> [3] https://gitlab.com/qemu-project/qemu/-/blob/master/hw/virtio/vhost-sh=
-adow-virtqueue.c
->
->
+-- 
+2.45.0
 
 
