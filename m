@@ -4,76 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2611DC10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 09:43:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04873C25B4F
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 09:44:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4HM6-0005SG-0F; Tue, 07 May 2024 05:43:26 -0400
+	id 1s4HM3-0005HT-RD; Tue, 07 May 2024 05:43:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s4HM2-0005E3-KZ
- for qemu-devel@nongnu.org; Tue, 07 May 2024 05:43:22 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1s4HM1-0005BE-NO; Tue, 07 May 2024 05:43:21 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s4HM0-0007Ul-VP
- for qemu-devel@nongnu.org; Tue, 07 May 2024 05:43:22 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a59a0168c75so742200566b.1
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 02:43:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1s4HM0-0007Uj-0J; Tue, 07 May 2024 05:43:21 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1ee0132a6f3so16773525ad.0; 
+ Tue, 07 May 2024 02:43:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715074998; x=1715679798; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=xVsF+p+sXkKcJb/3iL2WMFEAO55fzk/3b9eoESNXz4M=;
- b=eqscTgERfbmwwSAHko+OK1Tn113CgytuwN4dH7HwPNh0ZZzLbYB4P1gJbjvv8gB9jE
- pYixPKNd16prNAan3ibSQxeso9yv9/CVEnY7yPxnYbDN/nf2Vu6V2+qArcUqb9VTuXkl
- EOn7vOoGGQqg3GE7BMt+cF9cwE0O5YewrIEcvly3DHexUUNlrDX0HCEkyiTYyJN3Q3mi
- g4DwGF1lat/bz6GGgXlgvmu4xW0eAhLFi4Q2hiox55GVVxnnGH2ZFyfJkQaySdsK/2sf
- ojFIxZA+T6BCSINRDBdx+3lX4Yxs4HQYztklksxn/0UJj8RlCmWeP+ghf+IlHjYrGJ/C
- 1kdQ==
+ d=gmail.com; s=20230601; t=1715074998; x=1715679798; darn=nongnu.org;
+ h=in-reply-to:references:from:subject:cc:to:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=04Oz8jcaSe+p7prA09HLsICSGpfQsX9m+g8AK44s6So=;
+ b=N0/R8WRKjJkP5no6ZJSzqxwERGBPkuE+Wm8+ub7qX0JnJ/hmEr3PLQqYwlPWrKx3fO
+ FOKcZRnC7M/DMQ7KbwmxOViacYDcJehgss/ZiFRu1L/gjBIVMDRi3s4SEvbg1NOYSS/M
+ bgIlZliae2QW+buhQnCYcBiexXsw+X6s5dw3ARdrmIS3uSOPJ/Cp09tuwenRNsINLeY4
+ qEHPJ9kO1M2Aq0pbYn/5eem9skDQQYHG4QzmBft/dofSBhrmYIkTaz+pY2KRphdhhs8s
+ zhq26HY4LS0c8BqotkX7pkf8E4Rjnq+1H1FT9MooXxK4Na4rGgZOgnN8RtPiKcm+y84+
+ Fwfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1715074998; x=1715679798;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xVsF+p+sXkKcJb/3iL2WMFEAO55fzk/3b9eoESNXz4M=;
- b=fZloPNxugYpc7c7l9Zk0U8aTnbgWrukxVCXqRabZ44mGF/hJjfubUNSn9wBHw253vW
- g3DoNUGoNu3dBlM8uiCpoxZIIoon6lmej42tvgOsjQYgIPA4u4i7zPaCz7vhHN50mgeI
- cJWfr3YCmNIwbAxSG0inY4O3AWTwyYTIk4AOWlhPZujaoKhk52Dk2j8nGQ3RpQmeBTD3
- qG47QebC7CD1ATc2XgfBMMBhXLArp51aLZGHCZWhdL8MSEN5ohv51dV58SIpNDp3bmYi
- w1egpQyGaDRYlrVI++JVQCrRmJMDfISydg+KO8lTPPW2/bbqF4Favz6983erUcinlgiy
- Bscg==
+ h=in-reply-to:references:from:subject:cc:to:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=04Oz8jcaSe+p7prA09HLsICSGpfQsX9m+g8AK44s6So=;
+ b=k58wlUxiW103j/pb/YeeRfOFrwP0rJGqquaHB2L8Vcjse57dfR7Sn6janNuCWTnwWZ
+ Spsmnov71jADWaRSaWvKOmRih16CfRpYgd96HsuJ7bKLkleeiwypPxO6MuCBZ5aizeZt
+ 57yGwUw2GnkLLth82oZ4wnRoUE1VNkPeTZOeeQqDbgSTI9Jwf0Oy+TXUqqonKeH3bO6z
+ ZzZDKGSbOzbPj+4hH64lM13MAEwmuCHlRn7UVudFj0KrW1uMZ4Xn4pDO7hQ7X+HfO1kG
+ 3UmOFTKQdKFP/AntYyQWjQASAOm+eBDqLW+Sm7sJBSIL6YvV4xmh0q4L6SbXH0EjCOs9
+ AzRQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW+Dfj8z5N40i5A+Wmm2eAlO98Zm5o80YjIFSEuyUuhe0Jq1nhqw2cXSGYl3cxZHoBIZNSm9DHgpG1irrFVuhhwGS7kHBQ=
-X-Gm-Message-State: AOJu0YxHyrkXNo8VzIODBPARW8uMy6VXP7QeVEaXl2/QQUFNM8Io0iuS
- cmBFPgpTNyXG/CwTS1KsfDYUE0S0VuGCCVibNN3jmrLmz3zyJ8s7NgHF60oBQEjfYZNxENn0ySa
- TMPOlqb1AnhI6WVbnAdPJqq1mMpBL8x4YJfxy5Q==
-X-Google-Smtp-Source: AGHT+IGS+TXCPL5Lxz3EQDD/ZKmpGnFKrsPyYj0bHEqbTMr3V3grF+ATO7wpir6T7TBNV/RrWqXh8V12uwZjffVZLzg=
-X-Received: by 2002:a50:ccde:0:b0:570:5b3d:91f with SMTP id
- b30-20020a50ccde000000b005705b3d091fmr7926980edj.23.1715074998248; Tue, 07
- May 2024 02:43:18 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240503153453.54389-1-zenghui.yu@linux.dev>
-In-Reply-To: <20240503153453.54389-1-zenghui.yu@linux.dev>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 7 May 2024 10:43:07 +0100
-Message-ID: <CAFEAcA9Jh9udZEa0ebzO--V+K9inA49TWf9jCv=Kn7RtMqhpZQ@mail.gmail.com>
-Subject: Re: [PATCH] hvf: arm: Fix encodings for ID_AA64PFR1_EL1 and debug
- System registers
-To: Zenghui Yu <zenghui.yu@linux.dev>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, agraf@csgraf.de, 
- wanghaibin.wang@huawei.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x630.google.com
+ AJvYcCWXG/5uCqwjEvVm6rAYQkdHOEiDWZZBZrlUrXDz3O82T3pEnHIeK3yM6pleGCGi2wGf7WeNErl6AfDgB61rQhD1Fvd13vJ7ks3pGyZ2b91N4Ahv8M/aRnmi9FE=
+X-Gm-Message-State: AOJu0YxKgwkdXvI3JwsnB7eG9E9BY07+aPYzm70wczZtflADhu/5x5oM
+ 6+LanfoXVvrmHPv7auG9nGc6ogMVR7nVkm2f6DOIKQWbTumVtzJgGBdvAA==
+X-Google-Smtp-Source: AGHT+IF0F9JXfPcHzVTx+gD30CTC0Yr+lPLjGXU5rQHpjm61bqRqBeSyuEqLi/udomBsD0pgAqVFxw==
+X-Received: by 2002:a17:902:c94e:b0:1ea:fb65:a0c9 with SMTP id
+ i14-20020a170902c94e00b001eafb65a0c9mr15463679pla.20.1715074998053; 
+ Tue, 07 May 2024 02:43:18 -0700 (PDT)
+Received: from localhost (220-245-239-57.tpgi.com.au. [220.245.239.57])
+ by smtp.gmail.com with ESMTPSA id
+ o16-20020a17090323d000b001ea26bdfca6sm9640879plh.282.2024.05.07.02.43.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 May 2024 02:43:17 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 07 May 2024 19:43:11 +1000
+Message-Id: <D13BCE6A3VHI.64MA1779MLMW@gmail.com>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
+ <qemu-ppc@nongnu.org>
+Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
+Subject: Re: [PATCH v2 11/28] target/ppc/mmu_common.c: Rename get_bat_6xx_tlb()
+From: "Nicholas Piggin" <npiggin@gmail.com>
+X-Mailer: aerc 0.17.0
+References: <cover.1714606359.git.balaton@eik.bme.hu>
+ <400affc638d56c4669abe2e20bf9a22c18ea29fe.1714606359.git.balaton@eik.bme.hu>
+In-Reply-To: <400affc638d56c4669abe2e20bf9a22c18ea29fe.1714606359.git.balaton@eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -91,27 +96,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 3 May 2024 at 16:35, Zenghui Yu <zenghui.yu@linux.dev> wrote:
+On Thu May 2, 2024 at 9:43 AM AEST, BALATON Zoltan wrote:
+> Rename to ppc6xx_tlb_get_bat() to match other similar names in the
+> same file.
 >
-> We wrongly encoded ID_AA64PFR1_EL1 using {3,0,0,4,2} in hvf_sreg_match[] so
-> we fail to get the expected ARMCPRegInfo from cp_regs hash table with the
-> wrong key.
->
-> Fix it with the correct encoding {3,0,0,4,1}. With that fixed, the Linux
-> guest can properly detect FEAT_SSBS2 on my M1 HW.
->
-> All DBG{B,W}{V,C}R_EL1 registers are also wrongly encoded with op0 == 14.
-> It happens to work because HVF_SYSREG(CRn, CRm, 14, op1, op2) equals to
-> HVF_SYSREG(CRn, CRm, 2, op1, op2), by definition. But we shouldn't rely on
-> it.
->
-> Fixes: a1477da3ddeb ("hvf: Add Apple Silicon support")
-> Signed-off-by: Zenghui Yu <zenghui.yu@linux.dev>
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+
+Acked-by: Nicholas Piggin <npiggin@gmail.com>
+
 > ---
+>  target/ppc/mmu_common.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+> index ef1669b01d..a069e4083f 100644
+> --- a/target/ppc/mmu_common.c
+> +++ b/target/ppc/mmu_common.c
+> @@ -288,8 +288,8 @@ static inline void bat_size_prot(CPUPPCState *env, ta=
+rget_ulong *blp,
+>      *protp =3D prot;
+>  }
+> =20
+> -static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
+> -                           target_ulong virtual, MMUAccessType access_ty=
+pe)
+> +static int ppc6xx_tlb_get_bat(CPUPPCState *env, mmu_ctx_t *ctx,
+> +                              target_ulong virtual, MMUAccessType access=
+_type)
+>  {
+>      target_ulong *BATlt, *BATut, *BATu, *BATl;
+>      target_ulong BEPIl, BEPIu, bl;
+> @@ -371,7 +371,7 @@ static int mmu6xx_get_physical_address(CPUPPCState *e=
+nv, mmu_ctx_t *ctx,
+> =20
+>      /* First try to find a BAT entry if there are any */
+>      if (env->nb_BATs !=3D 0) {
+> -        ret =3D get_bat_6xx_tlb(env, ctx, eaddr, access_type);
+> +        ret =3D ppc6xx_tlb_get_bat(env, ctx, eaddr, access_type);
+>      }
+>      if (ret >=3D 0) {
+>          return ret;
 
-Applied to target-arm.next, thanks. I threw in a cc:stable tag,
-though it doesn't sound like the consequences of the bug are very
-significant.
-
--- PMM
 
