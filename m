@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AECB0C10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 10:58:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CBD5C25B4F
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 10:58:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4IUG-0004Po-Sd; Tue, 07 May 2024 06:55:57 -0400
+	id 1s4IVB-0005mP-57; Tue, 07 May 2024 06:56:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s4IUF-0004PE-Jq
- for qemu-devel@nongnu.org; Tue, 07 May 2024 06:55:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1s4IUw-00052y-Ka
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 06:56:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s4IUE-00021A-2U
- for qemu-devel@nongnu.org; Tue, 07 May 2024 06:55:55 -0400
+ id 1s4IUv-0002tp-3x
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 06:56:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715079353;
+ s=mimecast20190719; t=1715079396;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AhoNqVKllU+cxk9CZCPzWu2TKd8lptUXlZZn/hLjrxs=;
- b=BSMU1aqZGsW9PutRNrwC0VEhIy1AR7qWhD6sVR0w3MdAPJer9V9UV2SEO88nVerij6rrig
- SMSJ8QcGEHJDv9uFdiU5M73dtsHODjb+VehcOvEc3IFoX0QeHFW8btjr8F1dsX6k7WnGcz
- lA6t3+i+BZ4m/8q5KJQ9AT7OW7HtxZA=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/Gh4ObM+jx4Fq+FBU9GVILaKVEgzJpFA3P4BFJazzNo=;
+ b=ZEzK/uGfhh6Wio2yawPuPlGow3iz+46AfUzema1Lm7520rxQlXKPtTtrSCL/tGmDDKtVXj
+ ec3jLiGzMcFYoo6mdavwE8X3AXelKNcWKliSldNcKK1VM/kCIwiXRghMTPu+6NIE1COMRH
+ BqasjwS6jua5fMZLqN5vqn2VQM1ChOI=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-416-3yQJtW51PkukjPc7q5eHng-1; Tue, 07 May 2024 06:55:51 -0400
-X-MC-Unique: 3yQJtW51PkukjPc7q5eHng-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a59a5b06802so193156866b.1
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 03:55:51 -0700 (PDT)
+ us-mta-319-mMwYVV-GO82UhGgeVeOzmg-1; Tue, 07 May 2024 06:56:34 -0400
+X-MC-Unique: mMwYVV-GO82UhGgeVeOzmg-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a59a63a1f78so175293666b.0
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 03:56:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715079349; x=1715684149;
+ d=1e100.net; s=20230601; t=1715079393; x=1715684193;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AhoNqVKllU+cxk9CZCPzWu2TKd8lptUXlZZn/hLjrxs=;
- b=bBAskO9plJKq8NnkeNCb3YvzDp0T9J5pnsu43FaU+qVkUcDgYHMu1xX23qNN4UOhzG
- 1l5uou/olDxyH9U+s/GVu+fgh9XC3Ke2tfAlR9lVwSvIrA5gFuBbbibWIuZ8S8NPA8Nj
- Z9dnGUbL+IRSsZQQJ+sCR1rgzdWqhyPw1CXxof7qTk+cdwdOWzT1NpmmWOzzfWzZH+uB
- OdQr292My0DTYG+jkknvllXw7YHE+B8l627YXNSKII7uibfD6wUwJgyxyN2ABtkVfqXG
- X0gB4+7WABYAso/PBeeoxf8NLFiOUS8cOR06UH56yfIg7i2lxOdF8/B0Le/Kvnzsg1Oq
- vowA==
-X-Gm-Message-State: AOJu0YyQPdqgAXOOfT+SUWp3G4r3CRPIkLVmtDJykSNo9fVNl9/8p8DF
- VKowYDSESBD+Pk0kSQAZAKW2AUJnx9mMsL5PEL7G5p2Rpku4OpzSZx809ZOEGQxW7TeaUvjO2zh
- 83ap7DDXJ7dX/ClBgY87dtlEpaArjGbxWt7Z7duZUOZXSk4cIZQmvtu5RVRAjimqCy2VlOEQ+H4
- xpok6BuDu1rB6cFMOvFKU4xSaApvbgc221BHs9
-X-Received: by 2002:a17:906:5614:b0:a59:beb2:62cc with SMTP id
- f20-20020a170906561400b00a59beb262ccmr4461583ejq.61.1715079349601; 
- Tue, 07 May 2024 03:55:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEsSJJjbDYIPqo90Nz/PZTX600XtajMkvCIJUAD/USNjm/VpPh7i2SzwfxTzgH378q1cI9B3g==
-X-Received: by 2002:a17:906:5614:b0:a59:beb2:62cc with SMTP id
- f20-20020a170906561400b00a59beb262ccmr4461575ejq.61.1715079349287; 
- Tue, 07 May 2024 03:55:49 -0700 (PDT)
+ bh=/Gh4ObM+jx4Fq+FBU9GVILaKVEgzJpFA3P4BFJazzNo=;
+ b=AHRHTItWZ7g2KSkcaspEasqcw8JMlNzIfSfs1NCJESl65Se1G1TfepfcK1K2Zin5pl
+ WNiesq3ysdeMEMAKq085wxwGyHNSsMuc9sVkaFVnYzZih7Qep5ctBAGXNzW/a4hkRyYQ
+ JlLCY6vOD4DOKRosWHKMiTUP/p2T2jtseP6o8kyp+ZtM0JstJ9ctGRY4SWceOneEPSHS
+ nkKAH3WIA5vbE8mFckk6etJCze+2ClOFdIgKJnCRW/7viN7rRg2t9gB/Ae0U2z7euL3k
+ A02ECpY+S51ddSsdc7Lh/Sgqxy6ns1/zk0W28a8hamvwrrQ3gD7nOhdBTTZN/fur7wQP
+ wCQg==
+X-Gm-Message-State: AOJu0YwwbX0/a9HQ297zv0ALfqnwWwyyoLVD8vPHIHClSfh58ueaTHcl
+ bOlhncdcnJ7xuLKIYT5W57H8BrECk/333GCrKTrCAFiGUi3vq11vMCJx4XdYuBMdT2xmVZpohoC
+ Zio0zyOlPl0turERo2GbCG3CDo+N8nNw6zIx0o8U51bmOlhPSH+zkkh6zIO5VL9UNeSjKFrwq7E
+ 1+fcNqXRJcQznbTpoD78F8X1s7NXylJQkKQ0bb
+X-Received: by 2002:a17:907:1c28:b0:a59:bb1f:6ffc with SMTP id
+ nc40-20020a1709071c2800b00a59bb1f6ffcmr5448073ejc.8.1715079392992; 
+ Tue, 07 May 2024 03:56:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE0O7BMUJKPYng9NLYdms7DDmyzzNgJka+V7pUJT3xpX8OqptwOx8JTiQjqu617wl47WE2c2Q==
+X-Received: by 2002:a17:907:1c28:b0:a59:bb1f:6ffc with SMTP id
+ nc40-20020a1709071c2800b00a59bb1f6ffcmr5448065ejc.8.1715079392733; 
+ Tue, 07 May 2024 03:56:32 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- ww1-20020a170907084100b00a59cb8c93f3sm2553537ejb.58.2024.05.07.03.55.47
+ s10-20020a170906c30a00b00a59a08c722fsm4519422ejz.184.2024.05.07.03.56.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 May 2024 03:55:47 -0700 (PDT)
+ Tue, 07 May 2024 03:56:30 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 03/26] target/i386: use TSTEQ/TSTNE to check flags
-Date: Tue,  7 May 2024 12:55:15 +0200
-Message-ID: <20240507105538.180704-4-pbonzini@redhat.com>
+Subject: [PULL 19/26] target/i386: merge and enlarge a few ranges for call to
+ disas_insn_new
+Date: Tue,  7 May 2024 12:55:31 +0200
+Message-ID: <20240507105538.180704-20-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240507105538.180704-1-pbonzini@redhat.com>
 References: <20240507105538.180704-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -102,110 +103,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The new conditions obviously come in handy when testing individual bits
-of EFLAGS, and they make it possible to remove the .mask field of
-CCPrepare.
-
-Lowering to shift+and is done by the optimizer if necessary.
+Since new opcodes are not going to be added in translate.c, round the
+case labels that call to disas_insn_new(), including whole sets of
+eight opcodes when possible.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/translate.c | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ target/i386/tcg/translate.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 4735f084d40..62ba21c1d74 100644
+index f83204bd1ed..3060fdbee94 100644
 --- a/target/i386/tcg/translate.c
 +++ b/target/i386/tcg/translate.c
-@@ -996,8 +996,8 @@ static CCPrepare gen_prepare_eflags_c(DisasContext *s, TCGv reg)
-     case CC_OP_EFLAGS:
-     case CC_OP_SARB ... CC_OP_SARQ:
-         /* CC_SRC & 1 */
--        return (CCPrepare) { .cond = TCG_COND_NE,
--                             .reg = cpu_cc_src, .mask = CC_C };
-+        return (CCPrepare) { .cond = TCG_COND_TSTNE,
-+                             .reg = cpu_cc_src, .mask = -1, .imm = CC_C };
- 
-     default:
-        /* The need to compute only C from CC_OP_DYNAMIC is important
-@@ -1014,8 +1014,8 @@ static CCPrepare gen_prepare_eflags_c(DisasContext *s, TCGv reg)
- static CCPrepare gen_prepare_eflags_p(DisasContext *s, TCGv reg)
- {
-     gen_compute_eflags(s);
--    return (CCPrepare) { .cond = TCG_COND_NE, .reg = cpu_cc_src,
--                         .mask = CC_P };
-+    return (CCPrepare) { .cond = TCG_COND_TSTNE, .reg = cpu_cc_src,
-+                         .mask = -1, .imm = CC_P };
- }
- 
- /* compute eflags.S to reg */
-@@ -1029,8 +1029,8 @@ static CCPrepare gen_prepare_eflags_s(DisasContext *s, TCGv reg)
-     case CC_OP_ADCX:
-     case CC_OP_ADOX:
-     case CC_OP_ADCOX:
--        return (CCPrepare) { .cond = TCG_COND_NE, .reg = cpu_cc_src,
--                             .mask = CC_S };
-+        return (CCPrepare) { .cond = TCG_COND_TSTNE, .reg = cpu_cc_src,
-+                             .mask = -1, .imm = CC_S };
-     case CC_OP_CLR:
-     case CC_OP_POPCNT:
-         return (CCPrepare) { .cond = TCG_COND_NEVER, .mask = -1 };
-@@ -1058,8 +1058,8 @@ static CCPrepare gen_prepare_eflags_o(DisasContext *s, TCGv reg)
-                              .reg = cpu_cc_src, .mask = -1 };
-     default:
-         gen_compute_eflags(s);
--        return (CCPrepare) { .cond = TCG_COND_NE, .reg = cpu_cc_src,
--                             .mask = CC_O };
-+        return (CCPrepare) { .cond = TCG_COND_TSTNE, .reg = cpu_cc_src,
-+                             .mask = -1, .imm = CC_O };
-     }
- }
- 
-@@ -1074,8 +1074,8 @@ static CCPrepare gen_prepare_eflags_z(DisasContext *s, TCGv reg)
-     case CC_OP_ADCX:
-     case CC_OP_ADOX:
-     case CC_OP_ADCOX:
--        return (CCPrepare) { .cond = TCG_COND_NE, .reg = cpu_cc_src,
--                             .mask = CC_Z };
-+        return (CCPrepare) { .cond = TCG_COND_TSTNE, .reg = cpu_cc_src,
-+                             .mask = -1, .imm = CC_Z };
-     case CC_OP_CLR:
-         return (CCPrepare) { .cond = TCG_COND_ALWAYS, .mask = -1 };
-     case CC_OP_POPCNT:
-@@ -1153,8 +1153,8 @@ static CCPrepare gen_prepare_cc(DisasContext *s, int b, TCGv reg)
-             break;
-         case JCC_BE:
-             gen_compute_eflags(s);
--            cc = (CCPrepare) { .cond = TCG_COND_NE, .reg = cpu_cc_src,
--                               .mask = CC_Z | CC_C };
-+            cc = (CCPrepare) { .cond = TCG_COND_TSTNE, .reg = cpu_cc_src,
-+                               .mask = -1, .imm = CC_Z | CC_C };
-             break;
-         case JCC_S:
-             cc = gen_prepare_eflags_s(s, reg);
-@@ -1168,8 +1168,8 @@ static CCPrepare gen_prepare_cc(DisasContext *s, int b, TCGv reg)
-                 reg = s->tmp0;
-             }
-             tcg_gen_addi_tl(reg, cpu_cc_src, CC_O - CC_S);
--            cc = (CCPrepare) { .cond = TCG_COND_NE, .reg = reg,
--                               .mask = CC_O };
-+            cc = (CCPrepare) { .cond = TCG_COND_TSTNE, .reg = reg,
-+                               .mask = -1, .imm = CC_O };
-             break;
-         default:
-         case JCC_LE:
-@@ -1178,8 +1178,8 @@ static CCPrepare gen_prepare_cc(DisasContext *s, int b, TCGv reg)
-                 reg = s->tmp0;
-             }
-             tcg_gen_addi_tl(reg, cpu_cc_src, CC_O - CC_S);
--            cc = (CCPrepare) { .cond = TCG_COND_NE, .reg = reg,
--                               .mask = CC_O | CC_Z };
-+            cc = (CCPrepare) { .cond = TCG_COND_TSTNE, .reg = reg,
-+                               .mask = -1, .imm = CC_O | CC_Z };
-             break;
-         }
+@@ -6869,9 +6869,8 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
          break;
+     case 0x10e ... 0x117:
+     case 0x128 ... 0x12f:
+-    case 0x138 ... 0x13a:
+-    case 0x150 ... 0x179:
+-    case 0x17c ... 0x17f:
++    case 0x138 ... 0x13f:
++    case 0x150 ... 0x17f:
+     case 0x1c2:
+     case 0x1c4 ... 0x1c6:
+     case 0x1d0 ... 0x1fe:
 -- 
 2.45.0
 
