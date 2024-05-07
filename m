@@ -4,69 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CF80C10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 18:45:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC0DFC10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 19:00:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4PmT-0005IV-Nv; Tue, 07 May 2024 14:43:13 -0400
+	id 1s4Q21-0008H7-Fn; Tue, 07 May 2024 14:59:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1s4PmN-0005HW-Jw
- for qemu-devel@nongnu.org; Tue, 07 May 2024 14:43:07 -0400
-Received: from mgamail.intel.com ([192.198.163.10])
+ (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
+ id 1s4Q1w-0008Bz-KA; Tue, 07 May 2024 14:59:12 -0400
+Received: from zproxy1.enst.fr ([2001:660:330f:2::dc])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1s4PmK-0005KM-7m
- for qemu-devel@nongnu.org; Tue, 07 May 2024 14:43:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1715107384; x=1746643384;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=11pN+4SeL3X5Jx2qJlXWtWn1YTK9gf8IMCiG9pd+k2A=;
- b=BZfhdzpbfG0ZBMUyaY+oEYxxp9gJDKXfphn7XM0EMTHhmNra+XpWkOCb
- XaZ4wckAm1N4VQms1IRGsG9GPUTq3P2+vdAVNO/vEVkEuGM8Ucl9HrW4/
- Ulex1f8sJGGtNKDFQKie6lYaDzZAcUc1ca+KX2ihBSHuXXUfrelzCchWe
- 0KTzT73MF9f3I1j0AG2RrEo5RTkBqKfBDwzlWuEPeRrkyPKXB/LIH2o9L
- 0jYzuZsnjJW1jyryWFfVyQDZF6ktQam8/fWn2pT4oHfDVS6aS429de1pI
- zC5YG9yCwUt+OdPUgERRPR1NSyNLGDTZ5LMorC4lqSizlS/JmG0DvxGBu Q==;
-X-CSE-ConnectionGUID: aScLi7+ISOuIehhfbtTrWA==
-X-CSE-MsgGUID: iBMGtAkGSu2fzbmuBTQveA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11066"; a="22321495"
-X-IronPort-AV: E=Sophos;i="6.08,143,1712646000"; d="scan'208";a="22321495"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 May 2024 11:42:55 -0700
-X-CSE-ConnectionGUID: JWtg76m0Qh2Wu58Sb+PIxg==
-X-CSE-MsgGUID: 2V0K+mdoTvGdTZtw9LavDA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,143,1712646000"; d="scan'208";a="29031360"
-Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.129.124])
- by orviesa006.jf.intel.com with ESMTP; 07 May 2024 11:42:55 -0700
-From: dongwon.kim@intel.com
+ (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
+ id 1s4Q1t-0006Aq-QR; Tue, 07 May 2024 14:59:12 -0400
+Received: from localhost (localhost [IPv6:::1])
+ by zproxy1.enst.fr (Postfix) with ESMTP id 950FFC0D30;
+ Tue,  7 May 2024 20:59:07 +0200 (CEST)
+Received: from zproxy1.enst.fr ([IPv6:::1])
+ by localhost (zproxy1.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
+ id rRhCOOj9oPHE; Tue,  7 May 2024 20:59:07 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+ by zproxy1.enst.fr (Postfix) with ESMTP id 20766C0D05;
+ Tue,  7 May 2024 20:59:07 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy1.enst.fr 20766C0D05
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
+ s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1715108347;
+ bh=IrR2Qad9VCbTE2UXFB7znMO4uXFwPBsww9btUNUzoLQ=;
+ h=From:To:Date:Message-ID:MIME-Version;
+ b=iBJWW5Iushq9As6knhZAr2A6kTMU6O0DT2RCom6Xa1EMibDuVCxMFtUkiJcCwwg36
+ d3hjqp4lYE2l09iEiw4znVXs+GyQu1yAHPMNTZ5ZeGO1rnNaedcrpkvx1yOfZ6NW8X
+ S6XFU6OaI2Pyh93/8blmrgaZmgktdEWuPi9m6G7U=
+X-Virus-Scanned: amavis at enst.fr
+Received: from zproxy1.enst.fr ([IPv6:::1])
+ by localhost (zproxy1.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
+ id giaDoVpdQgOG; Tue,  7 May 2024 20:59:07 +0200 (CEST)
+Received: from inesv-Inspiron-3501.enst.fr (unknown
+ [IPv6:2a04:8ec0:0:124::190c])
+ by zproxy1.enst.fr (Postfix) with ESMTPSA id 25264C0D30;
+ Tue,  7 May 2024 20:59:06 +0200 (CEST)
+From: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
 To: qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com,
-	philmd@linaro.org,
-	berrange@redhat.com
-Subject: [PATCH v13 3/6] ui/console: Use qemu_dmabuf_get_..() helpers instead
-Date: Tue,  7 May 2024 11:37:54 -0700
-Message-Id: <20240507183757.3383641-4-dongwon.kim@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240507183757.3383641-1-dongwon.kim@intel.com>
-References: <20240507183757.3383641-1-dongwon.kim@intel.com>
+Cc: Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-arm@nongnu.org, Alistair Francis <alistair@alistair23.me>,
+ =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 4/4] tests/qtest: Check STM32L4x5 clock connections
+Date: Tue,  7 May 2024 20:55:41 +0200
+Message-ID: <20240507185854.34572-5-ines.varhol@telecom-paris.fr>
+X-Mailer: git-send-email 2.43.2
+In-Reply-To: <20240507185854.34572-1-ines.varhol@telecom-paris.fr>
+References: <20240507185854.34572-1-ines.varhol@telecom-paris.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.10;
- envelope-from=dongwon.kim@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2001:660:330f:2::dc;
+ envelope-from=ines.varhol@telecom-paris.fr; helo=zproxy1.enst.fr
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,733 +85,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dongwon Kim <dongwon.kim@intel.com>
+For USART, GPIO and SYSCFG devices, check that clock frequency before
+and after enabling the peripheral clock in RCC is correct.
 
-This commit updates all instances where fields within the QemuDmaBuf
-struct are directly accessed, replacing them with calls to these new
-helper functions.
-
-v6: fix typos in helper names in ui/spice-display.c
-
-v7: removed prefix, "dpy_gl_" from all helpers
-
-v8: Introduction of helpers was removed as those were already added
-    by the previous commit
-
-v11: -- Use new qemu_dmabuf_close() instead of close(qemu_dmabuf_get_fd()).
-        (Daniel P. Berrangé <berrange@redhat.com>)
-     -- Use new qemu_dmabuf_dup_fd() instead of dup(qemu_dmabuf_get_fd()).
-        (Daniel P. Berrangé <berrange@redhat.com>)
-
-Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
 ---
- hw/display/vhost-user-gpu.c     |  5 +---
- hw/display/virtio-gpu-udmabuf.c |  7 +++--
- hw/vfio/display.c               | 12 +++++---
- ui/console.c                    |  4 +--
- ui/dbus-console.c               |  9 ++++--
- ui/dbus-listener.c              | 43 +++++++++++++++++-----------
- ui/egl-headless.c               | 23 ++++++++++-----
- ui/egl-helpers.c                | 47 ++++++++++++++++++-------------
- ui/gtk-egl.c                    | 48 ++++++++++++++++++++-----------
- ui/gtk-gl-area.c                | 37 ++++++++++++++++--------
- ui/gtk.c                        |  6 ++--
- ui/spice-display.c              | 50 +++++++++++++++++++--------------
- 12 files changed, 181 insertions(+), 110 deletions(-)
+ tests/qtest/stm32l4x5.h             | 40 +++++++++++++++++++++++++++++
+ tests/qtest/stm32l4x5_gpio-test.c   | 23 +++++++++++++++++
+ tests/qtest/stm32l4x5_syscfg-test.c | 19 ++++++++++++--
+ tests/qtest/stm32l4x5_usart-test.c  | 26 +++++++++++++++++++
+ 4 files changed, 106 insertions(+), 2 deletions(-)
+ create mode 100644 tests/qtest/stm32l4x5.h
 
-diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
-index 709c8a02a1..454e5afcff 100644
---- a/hw/display/vhost-user-gpu.c
-+++ b/hw/display/vhost-user-gpu.c
-@@ -262,10 +262,7 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
-         g->parent_obj.enable = 1;
-         con = g->parent_obj.scanout[m->scanout_id].con;
-         dmabuf = &g->dmabuf[m->scanout_id];
--        if (dmabuf->fd >= 0) {
--            close(dmabuf->fd);
--            dmabuf->fd = -1;
--        }
-+        qemu_dmabuf_close(dmabuf);
-         dpy_gl_release_dmabuf(con, dmabuf);
-         if (fd == -1) {
-             dpy_gl_scanout_disable(con);
-diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
-index d51184d658..c90eba281e 100644
---- a/hw/display/virtio-gpu-udmabuf.c
-+++ b/hw/display/virtio-gpu-udmabuf.c
-@@ -206,6 +206,7 @@ int virtio_gpu_update_dmabuf(VirtIOGPU *g,
- {
-     struct virtio_gpu_scanout *scanout = &g->parent_obj.scanout[scanout_id];
-     VGPUDMABuf *new_primary, *old_primary = NULL;
-+    uint32_t width, height;
- 
-     new_primary = virtio_gpu_create_dmabuf(g, scanout_id, res, fb, r);
-     if (!new_primary) {
-@@ -216,10 +217,10 @@ int virtio_gpu_update_dmabuf(VirtIOGPU *g,
-         old_primary = g->dmabuf.primary[scanout_id];
-     }
- 
-+    width = qemu_dmabuf_get_width(&new_primary->buf);
-+    height = qemu_dmabuf_get_height(&new_primary->buf);
-     g->dmabuf.primary[scanout_id] = new_primary;
--    qemu_console_resize(scanout->con,
--                        new_primary->buf.width,
--                        new_primary->buf.height);
-+    qemu_console_resize(scanout->con, width, height);
-     dpy_gl_scanout_dmabuf(scanout->con, &new_primary->buf);
- 
-     if (old_primary) {
-diff --git a/hw/vfio/display.c b/hw/vfio/display.c
-index 1aa440c663..7784502b53 100644
---- a/hw/vfio/display.c
-+++ b/hw/vfio/display.c
-@@ -260,8 +260,9 @@ static VFIODMABuf *vfio_display_get_dmabuf(VFIOPCIDevice *vdev,
- static void vfio_display_free_one_dmabuf(VFIODisplay *dpy, VFIODMABuf *dmabuf)
- {
-     QTAILQ_REMOVE(&dpy->dmabuf.bufs, dmabuf, next);
+diff --git a/tests/qtest/stm32l4x5.h b/tests/qtest/stm32l4x5.h
+new file mode 100644
+index 0000000000..b8ef6698b2
+--- /dev/null
++++ b/tests/qtest/stm32l4x5.h
+@@ -0,0 +1,40 @@
++/*
++ * QTest testcase header for STM32L4X5 :
++ * used for consolidating common objects in stm32l4x5_*-test.c
++ *
++ * Copyright (c) 2024 Arnaud Minier <arnaud.minier@telecom-paris.fr>
++ * Copyright (c) 2024 In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or la=
+ter.
++ * See the COPYING file in the top-level directory.
++ */
 +
-+    qemu_dmabuf_close(&dmabuf->buf);
-     dpy_gl_release_dmabuf(dpy->con, &dmabuf->buf);
--    close(dmabuf->buf.fd);
-     g_free(dmabuf);
++#include "qemu/osdep.h"
++#include "libqtest.h"
++
++/*
++ * MSI (4 MHz) is used as system clock source after startup
++ * from Reset.
++ * AHB, APB1 and APB2 prescalers are set to 1 at reset.
++ */
++#define SYSCLK_FREQ_HZ 4000000
++#define RCC_AHB2ENR 0x4002104C
++#define RCC_APB1ENR1 0x40021058
++#define RCC_APB1ENR2 0x4002105C
++#define RCC_APB2ENR 0x40021060
++
++
++static inline uint32_t get_clock_freq_hz(QTestState *qts, const char *pa=
+th)
++{
++    uint32_t clock_freq_hz =3D 0;
++    QDict *r;
++
++    r =3D qtest_qmp(qts, "{ 'execute': 'qom-get', 'arguments':"
++        " { 'path': %s, 'property': 'clock-freq-hz'} }", path);
++    g_assert_false(qdict_haskey(r, "error"));
++    clock_freq_hz =3D qdict_get_int(r, "return");
++    qobject_unref(r);
++    return clock_freq_hz;
++}
++
++
+diff --git a/tests/qtest/stm32l4x5_gpio-test.c b/tests/qtest/stm32l4x5_gp=
+io-test.c
+index 72a7823406..5c62125736 100644
+--- a/tests/qtest/stm32l4x5_gpio-test.c
++++ b/tests/qtest/stm32l4x5_gpio-test.c
+@@ -10,6 +10,7 @@
+=20
+ #include "qemu/osdep.h"
+ #include "libqtest-single.h"
++#include "stm32l4x5.h"
+=20
+ #define GPIO_BASE_ADDR 0x48000000
+ #define GPIO_SIZE      0x400
+@@ -505,6 +506,26 @@ static void test_bsrr_brr(const void *data)
+     gpio_writel(gpio, ODR, reset(gpio, ODR));
  }
- 
-@@ -286,6 +287,7 @@ static void vfio_display_dmabuf_update(void *opaque)
-     VFIOPCIDevice *vdev = opaque;
-     VFIODisplay *dpy = vdev->dpy;
-     VFIODMABuf *primary, *cursor;
-+    uint32_t width, height;
-     bool free_bufs = false, new_cursor = false;
- 
-     primary = vfio_display_get_dmabuf(vdev, DRM_PLANE_TYPE_PRIMARY);
-@@ -296,10 +298,12 @@ static void vfio_display_dmabuf_update(void *opaque)
-         return;
-     }
- 
-+    width = qemu_dmabuf_get_width(&primary->buf);
-+    height = qemu_dmabuf_get_height(&primary->buf);
+=20
++static void test_clock_enable(void)
++{
++    /*
++     * For each GPIO, enable its clock in RCC
++     * and check that its clock frequency changes to SYSCLK_FREQ_HZ
++     */
++    unsigned int gpio_id;
 +
-     if (dpy->dmabuf.primary != primary) {
-         dpy->dmabuf.primary = primary;
--        qemu_console_resize(dpy->con,
--                            primary->buf.width, primary->buf.height);
-+        qemu_console_resize(dpy->con, width, height);
-         dpy_gl_scanout_dmabuf(dpy->con, &primary->buf);
-         free_bufs = true;
-     }
-@@ -328,7 +332,7 @@ static void vfio_display_dmabuf_update(void *opaque)
-         cursor->pos_updates = 0;
-     }
- 
--    dpy_gl_update(dpy->con, 0, 0, primary->buf.width, primary->buf.height);
-+    dpy_gl_update(dpy->con, 0, 0, width, height);
- 
-     if (free_bufs) {
-         vfio_display_free_dmabufs(vdev);
-diff --git a/ui/console.c b/ui/console.c
-index 43226c5c14..1b2cd0c736 100644
---- a/ui/console.c
-+++ b/ui/console.c
-@@ -1459,7 +1459,7 @@ int qemu_console_get_width(QemuConsole *con, int fallback)
-     }
-     switch (con->scanout.kind) {
-     case SCANOUT_DMABUF:
--        return con->scanout.dmabuf->width;
-+        return qemu_dmabuf_get_width(con->scanout.dmabuf);
-     case SCANOUT_TEXTURE:
-         return con->scanout.texture.width;
-     case SCANOUT_SURFACE:
-@@ -1476,7 +1476,7 @@ int qemu_console_get_height(QemuConsole *con, int fallback)
-     }
-     switch (con->scanout.kind) {
-     case SCANOUT_DMABUF:
--        return con->scanout.dmabuf->height;
-+        return qemu_dmabuf_get_height(con->scanout.dmabuf);
-     case SCANOUT_TEXTURE:
-         return con->scanout.texture.height;
-     case SCANOUT_SURFACE:
-diff --git a/ui/dbus-console.c b/ui/dbus-console.c
-index 49da9ccc83..578b67f62b 100644
---- a/ui/dbus-console.c
-+++ b/ui/dbus-console.c
-@@ -110,11 +110,14 @@ static void
- dbus_gl_scanout_dmabuf(DisplayChangeListener *dcl,
-                        QemuDmaBuf *dmabuf)
++    for (uint32_t gpio =3D GPIO_A; gpio <=3D GPIO_H; gpio +=3D GPIO_B - =
+GPIO_A) {
++        gpio_id =3D get_gpio_id(gpio);
++        g_autofree char *path =3D g_strdup_printf("/machine/soc/gpio%c",
++                                                gpio_id + 'a');
++        g_assert_cmpuint(get_clock_freq_hz(global_qtest, path), =3D=3D, =
+0);
++        /* Enable the gpio clock */
++        writel(RCC_AHB2ENR, readl(RCC_AHB2ENR) | (0x1 << gpio_id));
++        g_assert_cmpuint(get_clock_freq_hz(global_qtest, path), =3D=3D,
++                         SYSCLK_FREQ_HZ);
++    }
++}
++
+ int main(int argc, char **argv)
  {
-+    uint32_t width, height;
-+
-     DBusDisplayConsole *ddc = container_of(dcl, DBusDisplayConsole, dcl);
- 
--    dbus_display_console_set_size(ddc,
--                                  dmabuf->width,
--                                  dmabuf->height);
-+    width = qemu_dmabuf_get_width(dmabuf);
-+    height = qemu_dmabuf_get_height(dmabuf);
-+
-+    dbus_display_console_set_size(ddc, width, height);
+     int ret;
+@@ -556,6 +577,8 @@ int main(int argc, char **argv)
+     qtest_add_data_func("stm32l4x5/gpio/test_bsrr_brr2",
+                         test_data(GPIO_D, 0),
+                         test_bsrr_brr);
++    qtest_add_func("stm32l4x5/gpio/test_clock_enable",
++                   test_clock_enable);
+=20
+     qtest_start("-machine b-l475e-iot01a");
+     ret =3D g_test_run();
+diff --git a/tests/qtest/stm32l4x5_syscfg-test.c b/tests/qtest/stm32l4x5_=
+syscfg-test.c
+index 506ca08bc2..2ff0d5e9e0 100644
+--- a/tests/qtest/stm32l4x5_syscfg-test.c
++++ b/tests/qtest/stm32l4x5_syscfg-test.c
+@@ -10,6 +10,7 @@
+=20
+ #include "qemu/osdep.h"
+ #include "libqtest-single.h"
++#include "stm32l4x5.h"
+=20
+ #define SYSCFG_BASE_ADDR 0x40010000
+ #define SYSCFG_MEMRMP 0x00
+@@ -26,7 +27,8 @@
+ #define INVALID_ADDR 0x2C
+=20
+ /* SoC forwards GPIOs to SysCfg */
+-#define SYSCFG "/machine/soc"
++#define SOC "/machine/soc"
++#define SYSCFG "/machine/soc/syscfg"
+ #define EXTI "/machine/soc/exti"
+=20
+ static void syscfg_writel(unsigned int offset, uint32_t value)
+@@ -41,7 +43,7 @@ static uint32_t syscfg_readl(unsigned int offset)
+=20
+ static void syscfg_set_irq(int num, int level)
+ {
+-   qtest_set_irq_in(global_qtest, SYSCFG, NULL, num, level);
++   qtest_set_irq_in(global_qtest, SOC, NULL, num, level);
  }
- 
- static void
-diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
-index 4a0a5d78f9..62d1e2d3f9 100644
---- a/ui/dbus-listener.c
-+++ b/ui/dbus-listener.c
-@@ -278,29 +278,33 @@ static void dbus_scanout_dmabuf(DisplayChangeListener *dcl,
-     DBusDisplayListener *ddl = container_of(dcl, DBusDisplayListener, dcl);
-     g_autoptr(GError) err = NULL;
-     g_autoptr(GUnixFDList) fd_list = NULL;
-+    int fd;
-+    uint32_t width, height, stride, fourcc;
-+    uint64_t modifier;
-+    bool y0_top;
- 
-+    fd = qemu_dmabuf_get_fd(dmabuf);
-     fd_list = g_unix_fd_list_new();
--    if (g_unix_fd_list_append(fd_list, dmabuf->fd, &err) != 0) {
-+    if (g_unix_fd_list_append(fd_list, fd, &err) != 0) {
-         error_report("Failed to setup dmabuf fdlist: %s", err->message);
-         return;
-     }
- 
-     ddl_discard_pending_messages(ddl);
- 
-+    width = qemu_dmabuf_get_width(dmabuf);
-+    height = qemu_dmabuf_get_height(dmabuf);
-+    stride = qemu_dmabuf_get_stride(dmabuf);
-+    fourcc = qemu_dmabuf_get_fourcc(dmabuf);
-+    modifier = qemu_dmabuf_get_modifier(dmabuf);
-+    y0_top = qemu_dmabuf_get_y0_top(dmabuf);
-+
-     /* FIXME: add missing x/y/w/h support */
-     qemu_dbus_display1_listener_call_scanout_dmabuf(
--        ddl->proxy,
--        g_variant_new_handle(0),
--        dmabuf->width,
--        dmabuf->height,
--        dmabuf->stride,
--        dmabuf->fourcc,
--        dmabuf->modifier,
--        dmabuf->y0_top,
--        G_DBUS_CALL_FLAGS_NONE,
--        -1,
--        fd_list,
--        NULL, NULL, NULL);
-+        ddl->proxy, g_variant_new_handle(0),
-+        width, height, stride, fourcc, modifier,
-+        y0_top, G_DBUS_CALL_FLAGS_NONE,
-+        -1, fd_list, NULL, NULL, NULL);
+=20
+ static void system_reset(void)
+@@ -301,6 +303,17 @@ static void test_irq_gpio_multiplexer(void)
+     syscfg_writel(SYSCFG_EXTICR1, 0x00000000);
  }
- #endif /* GBM */
- #endif /* OPENGL */
-@@ -488,6 +492,7 @@ static void dbus_cursor_dmabuf(DisplayChangeListener *dcl,
-     DisplaySurface *ds;
-     GVariant *v_data = NULL;
-     egl_fb cursor_fb = EGL_FB_INIT;
-+    uint32_t width, height, texture;
- 
-     if (!dmabuf) {
-         qemu_dbus_display1_listener_call_mouse_set(
-@@ -497,12 +502,16 @@ static void dbus_cursor_dmabuf(DisplayChangeListener *dcl,
-     }
- 
-     egl_dmabuf_import_texture(dmabuf);
--    if (!dmabuf->texture) {
-+    texture = qemu_dmabuf_get_texture(dmabuf);
-+    if (!texture) {
-         return;
-     }
--    egl_fb_setup_for_tex(&cursor_fb, dmabuf->width, dmabuf->height,
--                         dmabuf->texture, false);
--    ds = qemu_create_displaysurface(dmabuf->width, dmabuf->height);
+=20
++static void test_clock_enable(void)
++{
++    g_assert_cmpuint(get_clock_freq_hz(global_qtest, SYSCFG), =3D=3D, 0)=
+;
 +
-+    width = qemu_dmabuf_get_width(dmabuf);
-+    height = qemu_dmabuf_get_height(dmabuf);
++    /* Enable SYSCFG clock */
++    writel(RCC_APB2ENR, readl(RCC_APB2ENR) | (0x1 << 0));
 +
-+    egl_fb_setup_for_tex(&cursor_fb, width, height, texture, false);
-+    ds = qemu_create_displaysurface(width, height);
-     egl_fb_read(ds, &cursor_fb);
- 
-     v_data = g_variant_new_from_data(
-diff --git a/ui/egl-headless.c b/ui/egl-headless.c
-index d5637dadb2..6187249c73 100644
---- a/ui/egl-headless.c
-+++ b/ui/egl-headless.c
-@@ -85,29 +85,38 @@ static void egl_scanout_texture(DisplayChangeListener *dcl,
- static void egl_scanout_dmabuf(DisplayChangeListener *dcl,
-                                QemuDmaBuf *dmabuf)
++    g_assert_cmpuint(get_clock_freq_hz(global_qtest, SYSCFG), =3D=3D,
++                                       SYSCLK_FREQ_HZ);
++}
++
+ int main(int argc, char **argv)
  {
-+    uint32_t width, height, texture;
-+
-     egl_dmabuf_import_texture(dmabuf);
--    if (!dmabuf->texture) {
-+    texture = qemu_dmabuf_get_texture(dmabuf);
-+    if (!texture) {
-         return;
-     }
- 
--    egl_scanout_texture(dcl, dmabuf->texture,
--                        false, dmabuf->width, dmabuf->height,
--                        0, 0, dmabuf->width, dmabuf->height, NULL);
-+    width = qemu_dmabuf_get_width(dmabuf);
-+    height = qemu_dmabuf_get_height(dmabuf);
-+
-+    egl_scanout_texture(dcl, texture, false, width, height, 0, 0,
-+                        width, height, NULL);
+     int ret;
+@@ -325,6 +338,8 @@ int main(int argc, char **argv)
+                    test_irq_pin_multiplexer);
+     qtest_add_func("stm32l4x5/syscfg/test_irq_gpio_multiplexer",
+                    test_irq_gpio_multiplexer);
++    qtest_add_func("stm32l4x5/syscfg/test_clock_enable",
++                   test_clock_enable);
+=20
+     qtest_start("-machine b-l475e-iot01a");
+     ret =3D g_test_run();
+diff --git a/tests/qtest/stm32l4x5_usart-test.c b/tests/qtest/stm32l4x5_u=
+sart-test.c
+index 8902518233..7a5671be99 100644
+--- a/tests/qtest/stm32l4x5_usart-test.c
++++ b/tests/qtest/stm32l4x5_usart-test.c
+@@ -12,6 +12,7 @@
+ #include "libqtest.h"
+ #include "hw/misc/stm32l4x5_rcc_internals.h"
+ #include "hw/registerfields.h"
++#include "stm32l4x5.h"
+=20
+ #define RCC_BASE_ADDR 0x40021000
+ /* Use USART 1 ADDR, assume the others work the same */
+@@ -296,6 +297,30 @@ static void test_send_str(void)
+     qtest_quit(qts);
  }
- 
- static void egl_cursor_dmabuf(DisplayChangeListener *dcl,
-                               QemuDmaBuf *dmabuf, bool have_hot,
-                               uint32_t hot_x, uint32_t hot_y)
- {
-+    uint32_t width, height, texture;
-     egl_dpy *edpy = container_of(dcl, egl_dpy, dcl);
- 
-     if (dmabuf) {
-         egl_dmabuf_import_texture(dmabuf);
--        if (!dmabuf->texture) {
-+        texture = qemu_dmabuf_get_texture(dmabuf);
-+        if (!texture) {
-             return;
-         }
--        egl_fb_setup_for_tex(&edpy->cursor_fb, dmabuf->width, dmabuf->height,
--                             dmabuf->texture, false);
+=20
++static void check_clock(QTestState *qts, const char *path, uint32_t rcc_=
+reg,
++                        uint32_t reg_offset)
++{
++    g_assert_cmpuint(get_clock_freq_hz(qts, path), =3D=3D, 0);
++    qtest_writel(qts, rcc_reg, qtest_readl(qts, rcc_reg) | (0x1 << reg_o=
+ffset));
++    g_assert_cmpuint(get_clock_freq_hz(qts, path), =3D=3D, SYSCLK_FREQ_H=
+Z);
++}
 +
-+        width = qemu_dmabuf_get_width(dmabuf);
-+        height = qemu_dmabuf_get_height(dmabuf);
-+        egl_fb_setup_for_tex(&edpy->cursor_fb, width, height, texture, false);
-     } else {
-         egl_fb_destroy(&edpy->cursor_fb);
-     }
-diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
-index 3d19dbe382..3f96e63d25 100644
---- a/ui/egl-helpers.c
-+++ b/ui/egl-helpers.c
-@@ -146,10 +146,10 @@ void egl_fb_blit(egl_fb *dst, egl_fb *src, bool flip)
-     glViewport(0, 0, dst->width, dst->height);
- 
-     if (src->dmabuf) {
--        x1 = src->dmabuf->x;
--        y1 = src->dmabuf->y;
--        w = src->dmabuf->width;
--        h = src->dmabuf->height;
-+        x1 = qemu_dmabuf_get_x(src->dmabuf);
-+        y1 = qemu_dmabuf_get_y(src->dmabuf);
-+        w = qemu_dmabuf_get_width(src->dmabuf);
-+        h = qemu_dmabuf_get_height(src->dmabuf);
-     }
- 
-     w = (x1 + w) > src->width ? src->width - x1 : w;
-@@ -308,30 +308,33 @@ void egl_dmabuf_import_texture(QemuDmaBuf *dmabuf)
-     EGLImageKHR image = EGL_NO_IMAGE_KHR;
-     EGLint attrs[64];
-     int i = 0;
-+    uint64_t modifier;
-+    uint32_t texture = qemu_dmabuf_get_texture(dmabuf);
- 
--    if (dmabuf->texture != 0) {
-+    if (texture != 0) {
-         return;
-     }
- 
-     attrs[i++] = EGL_WIDTH;
--    attrs[i++] = dmabuf->backing_width;
-+    attrs[i++] = qemu_dmabuf_get_backing_width(dmabuf);
-     attrs[i++] = EGL_HEIGHT;
--    attrs[i++] = dmabuf->backing_height;
-+    attrs[i++] = qemu_dmabuf_get_backing_height(dmabuf);
-     attrs[i++] = EGL_LINUX_DRM_FOURCC_EXT;
--    attrs[i++] = dmabuf->fourcc;
-+    attrs[i++] = qemu_dmabuf_get_fourcc(dmabuf);
- 
-     attrs[i++] = EGL_DMA_BUF_PLANE0_FD_EXT;
--    attrs[i++] = dmabuf->fd;
-+    attrs[i++] = qemu_dmabuf_get_fd(dmabuf);
-     attrs[i++] = EGL_DMA_BUF_PLANE0_PITCH_EXT;
--    attrs[i++] = dmabuf->stride;
-+    attrs[i++] = qemu_dmabuf_get_stride(dmabuf);
-     attrs[i++] = EGL_DMA_BUF_PLANE0_OFFSET_EXT;
-     attrs[i++] = 0;
- #ifdef EGL_DMA_BUF_PLANE0_MODIFIER_LO_EXT
--    if (dmabuf->modifier) {
-+    modifier = qemu_dmabuf_get_modifier(dmabuf);
-+    if (modifier) {
-         attrs[i++] = EGL_DMA_BUF_PLANE0_MODIFIER_LO_EXT;
--        attrs[i++] = (dmabuf->modifier >>  0) & 0xffffffff;
-+        attrs[i++] = (modifier >>  0) & 0xffffffff;
-         attrs[i++] = EGL_DMA_BUF_PLANE0_MODIFIER_HI_EXT;
--        attrs[i++] = (dmabuf->modifier >> 32) & 0xffffffff;
-+        attrs[i++] = (modifier >> 32) & 0xffffffff;
-     }
- #endif
-     attrs[i++] = EGL_NONE;
-@@ -346,7 +349,8 @@ void egl_dmabuf_import_texture(QemuDmaBuf *dmabuf)
-     }
- 
-     glGenTextures(1, &dmabuf->texture);
--    glBindTexture(GL_TEXTURE_2D, dmabuf->texture);
-+    texture = qemu_dmabuf_get_texture(dmabuf);
-+    glBindTexture(GL_TEXTURE_2D, texture);
-     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
- 
-@@ -356,11 +360,14 @@ void egl_dmabuf_import_texture(QemuDmaBuf *dmabuf)
- 
- void egl_dmabuf_release_texture(QemuDmaBuf *dmabuf)
- {
--    if (dmabuf->texture == 0) {
-+    uint32_t texture;
++static void test_clock_enable(void)
++{
++    /*
++     * For each USART device, enable its clock in RCC
++     * and check that its clock frequency is SYSCLK_FREQ_HZ
++     */
++    QTestState *qts =3D qtest_init("-M b-l475e-iot01a");
 +
-+    texture = qemu_dmabuf_get_texture(dmabuf);
-+    if (texture == 0) {
-         return;
-     }
- 
--    glDeleteTextures(1, &dmabuf->texture);
-+    glDeleteTextures(1, &texture);
-     dmabuf->texture = 0;
- }
- 
-@@ -382,10 +389,12 @@ void egl_dmabuf_create_sync(QemuDmaBuf *dmabuf)
- 
- void egl_dmabuf_create_fence(QemuDmaBuf *dmabuf)
- {
--    if (dmabuf->sync) {
-+    void *sync = qemu_dmabuf_get_sync(dmabuf);
++    check_clock(qts, "machine/soc/usart[0]", RCC_APB2ENR, 14);
++    check_clock(qts, "machine/soc/usart[1]", RCC_APB1ENR1, 17);
++    check_clock(qts, "machine/soc/usart[2]", RCC_APB1ENR1, 18);
++    check_clock(qts, "machine/soc/uart[0]", RCC_APB1ENR1, 19);
++    check_clock(qts, "machine/soc/uart[1]", RCC_APB1ENR1, 20);
++    check_clock(qts, "machine/soc/lpuart1", RCC_APB1ENR2, 0);
++}
 +
-+    if (sync) {
-         dmabuf->fence_fd = eglDupNativeFenceFDANDROID(qemu_egl_display,
--                                                      dmabuf->sync);
--        eglDestroySyncKHR(qemu_egl_display, dmabuf->sync);
-+                                                      sync);
-+        eglDestroySyncKHR(qemu_egl_display, sync);
-         dmabuf->sync = NULL;
-     }
- }
-diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-index 955234429d..7a45daefa1 100644
---- a/ui/gtk-egl.c
-+++ b/ui/gtk-egl.c
-@@ -70,6 +70,7 @@ void gd_egl_draw(VirtualConsole *vc)
-     QemuDmaBuf *dmabuf = vc->gfx.guest_fb.dmabuf;
- #endif
-     int ww, wh, ws;
-+    int fence_fd;
- 
-     if (!vc->gfx.gls) {
-         return;
-@@ -83,7 +84,7 @@ void gd_egl_draw(VirtualConsole *vc)
-     if (vc->gfx.scanout_mode) {
- #ifdef CONFIG_GBM
-         if (dmabuf) {
--            if (!dmabuf->draw_submitted) {
-+            if (!qemu_dmabuf_get_draw_submitted(dmabuf)) {
-                 return;
-             } else {
-                 dmabuf->draw_submitted = false;
-@@ -99,8 +100,9 @@ void gd_egl_draw(VirtualConsole *vc)
- #ifdef CONFIG_GBM
-         if (dmabuf) {
-             egl_dmabuf_create_fence(dmabuf);
--            if (dmabuf->fence_fd >= 0) {
--                qemu_set_fd_handler(dmabuf->fence_fd, gd_hw_gl_flushed, NULL, vc);
-+            fence_fd = qemu_dmabuf_get_fence_fd(dmabuf);
-+            if (fence_fd >= 0) {
-+                qemu_set_fd_handler(fence_fd, gd_hw_gl_flushed, NULL, vc);
-                 return;
-             }
-             graphic_hw_gl_block(vc->gfx.dcl.con, false);
-@@ -149,7 +151,8 @@ void gd_egl_refresh(DisplayChangeListener *dcl)
-     gd_update_monitor_refresh_rate(
-             vc, vc->window ? vc->window : vc->gfx.drawing_area);
- 
--    if (vc->gfx.guest_fb.dmabuf && vc->gfx.guest_fb.dmabuf->draw_submitted) {
-+    if (vc->gfx.guest_fb.dmabuf &&
-+        qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
-         return;
-     }
- 
-@@ -264,22 +267,30 @@ void gd_egl_scanout_dmabuf(DisplayChangeListener *dcl,
+ int main(int argc, char **argv)
  {
- #ifdef CONFIG_GBM
-     VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
-+    uint32_t x, y, width, height, backing_width, backing_height, texture;
-+    bool y0_top;
- 
-     eglMakeCurrent(qemu_egl_display, vc->gfx.esurface,
-                    vc->gfx.esurface, vc->gfx.ectx);
- 
-     egl_dmabuf_import_texture(dmabuf);
--    if (!dmabuf->texture) {
-+    texture = qemu_dmabuf_get_texture(dmabuf);
-+    if (!texture) {
-         return;
-     }
- 
--    gd_egl_scanout_texture(dcl, dmabuf->texture,
--                           dmabuf->y0_top,
--                           dmabuf->backing_width, dmabuf->backing_height,
--                           dmabuf->x, dmabuf->y, dmabuf->width,
--                           dmabuf->height, NULL);
-+    x = qemu_dmabuf_get_x(dmabuf);
-+    y = qemu_dmabuf_get_y(dmabuf);
-+    width = qemu_dmabuf_get_width(dmabuf);
-+    height = qemu_dmabuf_get_height(dmabuf);
-+    backing_width = qemu_dmabuf_get_backing_width(dmabuf);
-+    backing_height = qemu_dmabuf_get_backing_height(dmabuf);
-+    y0_top = qemu_dmabuf_get_y0_top(dmabuf);
- 
--    if (dmabuf->allow_fences) {
-+    gd_egl_scanout_texture(dcl, texture, y0_top, backing_width, backing_height,
-+                           x, y, width, height, NULL);
-+
-+    if (qemu_dmabuf_get_allow_fences(dmabuf)) {
-         vc->gfx.guest_fb.dmabuf = dmabuf;
-     }
- #endif
-@@ -291,15 +302,19 @@ void gd_egl_cursor_dmabuf(DisplayChangeListener *dcl,
- {
- #ifdef CONFIG_GBM
-     VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
-+    uint32_t backing_width, backing_height, texture;
- 
-     if (dmabuf) {
-         egl_dmabuf_import_texture(dmabuf);
--        if (!dmabuf->texture) {
-+        texture = qemu_dmabuf_get_texture(dmabuf);
-+        if (!texture) {
-             return;
-         }
--        egl_fb_setup_for_tex(&vc->gfx.cursor_fb,
--                             dmabuf->backing_width, dmabuf->backing_height,
--                             dmabuf->texture, false);
-+
-+        backing_width = qemu_dmabuf_get_backing_width(dmabuf);
-+        backing_height = qemu_dmabuf_get_backing_height(dmabuf);
-+        egl_fb_setup_for_tex(&vc->gfx.cursor_fb, backing_width, backing_height,
-+                             texture, false);
-     } else {
-         egl_fb_destroy(&vc->gfx.cursor_fb);
-     }
-@@ -363,7 +378,8 @@ void gd_egl_flush(DisplayChangeListener *dcl,
-     VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
-     GtkWidget *area = vc->gfx.drawing_area;
- 
--    if (vc->gfx.guest_fb.dmabuf && !vc->gfx.guest_fb.dmabuf->draw_submitted) {
-+    if (vc->gfx.guest_fb.dmabuf &&
-+        !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
-         graphic_hw_gl_block(vc->gfx.dcl.con, true);
-         vc->gfx.guest_fb.dmabuf->draw_submitted = true;
-         gtk_egl_set_scanout_mode(vc, true);
-diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-index 7fffd0544e..2d70280803 100644
---- a/ui/gtk-gl-area.c
-+++ b/ui/gtk-gl-area.c
-@@ -60,7 +60,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
- 
- #ifdef CONFIG_GBM
-         if (dmabuf) {
--            if (!dmabuf->draw_submitted) {
-+            if (!qemu_dmabuf_get_draw_submitted(dmabuf)) {
-                 return;
-             } else {
-                 dmabuf->draw_submitted = false;
-@@ -85,9 +85,11 @@ void gd_gl_area_draw(VirtualConsole *vc)
-         glFlush();
- #ifdef CONFIG_GBM
-         if (dmabuf) {
-+            int fence_fd;
-             egl_dmabuf_create_fence(dmabuf);
--            if (dmabuf->fence_fd >= 0) {
--                qemu_set_fd_handler(dmabuf->fence_fd, gd_hw_gl_flushed, NULL, vc);
-+            fence_fd = qemu_dmabuf_get_fence_fd(dmabuf);
-+            if (fence_fd >= 0) {
-+                qemu_set_fd_handler(fence_fd, gd_hw_gl_flushed, NULL, vc);
-                 return;
-             }
-             graphic_hw_gl_block(vc->gfx.dcl.con, false);
-@@ -125,7 +127,8 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
- 
-     gd_update_monitor_refresh_rate(vc, vc->window ? vc->window : vc->gfx.drawing_area);
- 
--    if (vc->gfx.guest_fb.dmabuf && vc->gfx.guest_fb.dmabuf->draw_submitted) {
-+    if (vc->gfx.guest_fb.dmabuf &&
-+        qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
-         return;
-     }
- 
-@@ -285,7 +288,8 @@ void gd_gl_area_scanout_flush(DisplayChangeListener *dcl,
- {
-     VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
- 
--    if (vc->gfx.guest_fb.dmabuf && !vc->gfx.guest_fb.dmabuf->draw_submitted) {
-+    if (vc->gfx.guest_fb.dmabuf &&
-+        !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
-         graphic_hw_gl_block(vc->gfx.dcl.con, true);
-         vc->gfx.guest_fb.dmabuf->draw_submitted = true;
-         gtk_gl_area_set_scanout_mode(vc, true);
-@@ -298,20 +302,29 @@ void gd_gl_area_scanout_dmabuf(DisplayChangeListener *dcl,
- {
- #ifdef CONFIG_GBM
-     VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
-+    uint32_t x, y, width, height, backing_width, backing_height, texture;
-+    bool y0_top;
- 
-     gtk_gl_area_make_current(GTK_GL_AREA(vc->gfx.drawing_area));
-     egl_dmabuf_import_texture(dmabuf);
--    if (!dmabuf->texture) {
-+    texture = qemu_dmabuf_get_texture(dmabuf);
-+    if (!texture) {
-         return;
-     }
- 
--    gd_gl_area_scanout_texture(dcl, dmabuf->texture,
--                               dmabuf->y0_top,
--                               dmabuf->backing_width, dmabuf->backing_height,
--                               dmabuf->x, dmabuf->y, dmabuf->width,
--                               dmabuf->height, NULL);
-+    x = qemu_dmabuf_get_x(dmabuf);
-+    y = qemu_dmabuf_get_y(dmabuf);
-+    width = qemu_dmabuf_get_width(dmabuf);
-+    height = qemu_dmabuf_get_height(dmabuf);
-+    backing_width = qemu_dmabuf_get_backing_width(dmabuf);
-+    backing_height = qemu_dmabuf_get_backing_height(dmabuf);
-+    y0_top = qemu_dmabuf_get_y0_top(dmabuf);
- 
--    if (dmabuf->allow_fences) {
-+    gd_gl_area_scanout_texture(dcl, texture, y0_top,
-+                               backing_width, backing_height,
-+                               x, y, width, height, NULL);
-+
-+    if (qemu_dmabuf_get_allow_fences(dmabuf)) {
-         vc->gfx.guest_fb.dmabuf = dmabuf;
-     }
- #endif
-diff --git a/ui/gtk.c b/ui/gtk.c
-index 7819a86321..237c913b26 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -596,10 +596,12 @@ void gd_hw_gl_flushed(void *vcon)
- {
-     VirtualConsole *vc = vcon;
-     QemuDmaBuf *dmabuf = vc->gfx.guest_fb.dmabuf;
-+    int fence_fd;
- 
-     if (dmabuf->fence_fd >= 0) {
--        qemu_set_fd_handler(dmabuf->fence_fd, NULL, NULL, NULL);
--        close(dmabuf->fence_fd);
-+        fence_fd = qemu_dmabuf_get_fence_fd(dmabuf);
-+        qemu_set_fd_handler(fence_fd, NULL, NULL, NULL);
-+        close(fence_fd);
-         dmabuf->fence_fd = -1;
-         graphic_hw_gl_block(vc->gfx.dcl.con, false);
-     }
-diff --git a/ui/spice-display.c b/ui/spice-display.c
-index 6eb98a5a5c..8a8472d029 100644
---- a/ui/spice-display.c
-+++ b/ui/spice-display.c
-@@ -976,6 +976,7 @@ static void qemu_spice_gl_cursor_dmabuf(DisplayChangeListener *dcl,
-                                         uint32_t hot_x, uint32_t hot_y)
- {
-     SimpleSpiceDisplay *ssd = container_of(dcl, SimpleSpiceDisplay, dcl);
-+    uint32_t width, height, texture;
- 
-     ssd->have_hot = have_hot;
-     ssd->hot_x = hot_x;
-@@ -984,11 +985,13 @@ static void qemu_spice_gl_cursor_dmabuf(DisplayChangeListener *dcl,
-     trace_qemu_spice_gl_cursor(ssd->qxl.id, dmabuf != NULL, have_hot);
-     if (dmabuf) {
-         egl_dmabuf_import_texture(dmabuf);
--        if (!dmabuf->texture) {
-+        texture = qemu_dmabuf_get_texture(dmabuf);
-+        if (!texture) {
-             return;
-         }
--        egl_fb_setup_for_tex(&ssd->cursor_fb, dmabuf->width, dmabuf->height,
--                             dmabuf->texture, false);
-+        width = qemu_dmabuf_get_width(dmabuf);
-+        height = qemu_dmabuf_get_height(dmabuf);
-+        egl_fb_setup_for_tex(&ssd->cursor_fb, width, height, texture, false);
-     } else {
-         egl_fb_destroy(&ssd->cursor_fb);
-     }
-@@ -1026,6 +1029,7 @@ static void qemu_spice_gl_update(DisplayChangeListener *dcl,
-     bool y_0_top = false; /* FIXME */
-     uint64_t cookie;
-     int fd;
-+    uint32_t width, height, texture;
- 
-     if (!ssd->have_scanout) {
-         return;
-@@ -1042,41 +1046,45 @@ static void qemu_spice_gl_update(DisplayChangeListener *dcl,
- 
-     if (ssd->guest_dmabuf_refresh) {
-         QemuDmaBuf *dmabuf = ssd->guest_dmabuf;
-+        width = qemu_dmabuf_get_width(dmabuf);
-+        height = qemu_dmabuf_get_height(dmabuf);
-+
-         if (render_cursor) {
-             egl_dmabuf_import_texture(dmabuf);
--            if (!dmabuf->texture) {
-+            texture = qemu_dmabuf_get_texture(dmabuf);
-+            if (!texture) {
-                 return;
-             }
- 
-             /* source framebuffer */
--            egl_fb_setup_for_tex(&ssd->guest_fb,
--                                 dmabuf->width, dmabuf->height,
--                                 dmabuf->texture, false);
-+            egl_fb_setup_for_tex(&ssd->guest_fb, width, height,
-+                                 texture, false);
- 
-             /* dest framebuffer */
--            if (ssd->blit_fb.width  != dmabuf->width ||
--                ssd->blit_fb.height != dmabuf->height) {
--                trace_qemu_spice_gl_render_dmabuf(ssd->qxl.id, dmabuf->width,
--                                                  dmabuf->height);
-+            if (ssd->blit_fb.width  != width ||
-+                ssd->blit_fb.height != height) {
-+                trace_qemu_spice_gl_render_dmabuf(ssd->qxl.id, width,
-+                                                  height);
-                 egl_fb_destroy(&ssd->blit_fb);
-                 egl_fb_setup_new_tex(&ssd->blit_fb,
--                                     dmabuf->width, dmabuf->height);
-+                                     width, height);
-                 fd = egl_get_fd_for_texture(ssd->blit_fb.texture,
-                                             &stride, &fourcc, NULL);
--                spice_qxl_gl_scanout(&ssd->qxl, fd,
--                                     dmabuf->width, dmabuf->height,
-+                spice_qxl_gl_scanout(&ssd->qxl, fd, width, height,
-                                      stride, fourcc, false);
-             }
-         } else {
--            trace_qemu_spice_gl_forward_dmabuf(ssd->qxl.id,
--                                               dmabuf->width, dmabuf->height);
-+            stride = qemu_dmabuf_get_stride(dmabuf);
-+            fourcc = qemu_dmabuf_get_fourcc(dmabuf);
-+            y_0_top = qemu_dmabuf_get_y0_top(dmabuf);
-+            fd = qemu_dmabuf_dup_fd(dmabuf);
-+
-+            trace_qemu_spice_gl_forward_dmabuf(ssd->qxl.id, width, height);
-             /* note: spice server will close the fd, so hand over a dup */
--            spice_qxl_gl_scanout(&ssd->qxl, dup(dmabuf->fd),
--                                 dmabuf->width, dmabuf->height,
--                                 dmabuf->stride, dmabuf->fourcc,
--                                 dmabuf->y0_top);
-+            spice_qxl_gl_scanout(&ssd->qxl, fd, width, height,
-+                                 stride, fourcc, y_0_top);
-         }
--        qemu_spice_gl_monitor_config(ssd, 0, 0, dmabuf->width, dmabuf->height);
-+        qemu_spice_gl_monitor_config(ssd, 0, 0, width, height);
-         ssd->guest_dmabuf_refresh = false;
-     }
- 
--- 
-2.34.1
+     int ret;
+@@ -308,6 +333,7 @@ int main(int argc, char **argv)
+     qtest_add_func("stm32l4x5/usart/send_char", test_send_char);
+     qtest_add_func("stm32l4x5/usart/receive_str", test_receive_str);
+     qtest_add_func("stm32l4x5/usart/send_str", test_send_str);
++    qtest_add_func("stm32l4x5/usart/clock_enable", test_clock_enable);
+     ret =3D g_test_run();
+=20
+     return ret;
+--=20
+2.43.2
 
 
