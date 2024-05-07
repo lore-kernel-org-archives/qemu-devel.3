@@ -4,89 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 004A1C10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 09:43:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2611DC10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 09:43:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4HLT-0004Om-Bz; Tue, 07 May 2024 05:42:49 -0400
+	id 1s4HM6-0005SG-0F; Tue, 07 May 2024 05:43:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1s4HLF-0004Ip-8m
- for qemu-devel@nongnu.org; Tue, 07 May 2024 05:42:33 -0400
-Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s4HM2-0005E3-KZ
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 05:43:22 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1s4HLB-0007Pz-Eb
- for qemu-devel@nongnu.org; Tue, 07 May 2024 05:42:32 -0400
-Received: by mail-oi1-x230.google.com with SMTP id
- 5614622812f47-3c97dab75bbso168325b6e.0
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 02:42:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s4HM0-0007Ul-VP
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 05:43:22 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-a59a0168c75so742200566b.1
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 02:43:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1715074948; x=1715679748;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zC41XEWmCGmbRdAQaJylVzWnmJhjIatmLeHfnViYTYo=;
- b=qhk6NXYs5PZ+fx+bj+rb5cVx23oTDtEgRT/0dy/iqmQbtec3kIycg5LUP9tu9ZWzv0
- qshLDRP8ZzHCWnrspCRymPLGQwBuOgmf7Kti94cRbVJUL+AVFyMvtlid65hA1i538p0f
- zRQ1F+A1zoC/CFrTaMoc5Qa3iWShn+csm++ivrUG4sDL25Y2gVdgvo0oC7NIhsbiyveZ
- 69IOjnIWnQ2pmJLqv3TXm3L36T4Gr3Ap8jTNBl1hJf98MA7GX3Vwu+yHhjWa2yG/HyDU
- Mrk8zvKpDpA0SjqnoDVRx0YGAMszMGznPWOSD2ea5yQtvwwFpxSU8DWX1RN+AZl/ZmBg
- 3eTA==
+ d=linaro.org; s=google; t=1715074998; x=1715679798; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=xVsF+p+sXkKcJb/3iL2WMFEAO55fzk/3b9eoESNXz4M=;
+ b=eqscTgERfbmwwSAHko+OK1Tn113CgytuwN4dH7HwPNh0ZZzLbYB4P1gJbjvv8gB9jE
+ pYixPKNd16prNAan3ibSQxeso9yv9/CVEnY7yPxnYbDN/nf2Vu6V2+qArcUqb9VTuXkl
+ EOn7vOoGGQqg3GE7BMt+cF9cwE0O5YewrIEcvly3DHexUUNlrDX0HCEkyiTYyJN3Q3mi
+ g4DwGF1lat/bz6GGgXlgvmu4xW0eAhLFi4Q2hiox55GVVxnnGH2ZFyfJkQaySdsK/2sf
+ ojFIxZA+T6BCSINRDBdx+3lX4Yxs4HQYztklksxn/0UJj8RlCmWeP+ghf+IlHjYrGJ/C
+ 1kdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715074948; x=1715679748;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zC41XEWmCGmbRdAQaJylVzWnmJhjIatmLeHfnViYTYo=;
- b=qs6v2FFn/KfkJGeI/25UOLdCg5LDJy1ZPogpAQZUgOjgdBh73fa7x5StKb4a1xEbJW
- ltqj3FG7+UxXv1Zoua3S/P58DqdeW1vDHe5vP+o85X0JNeBGMDF7HHX7/R+57CibMNCp
- pfIbTBfOB4f96m6Qp3NLiTWYkWGobEfQCvc3DOlVho0Cy9oXPawHu632qFTnYLmnZYV2
- G4uni2T5qlPW03DOxujur6jDP6XYgc33Lvo93BTI1Z/Hz77WDAMtOSMSM1z76ysiRCuh
- 3pqe6iCuCvyEPpeqHA+OxoCUWnJTfnmnJR+cI8QOkBWrRUEbEK53QAnWuqdG+GTLylHj
- gn+Q==
+ d=1e100.net; s=20230601; t=1715074998; x=1715679798;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xVsF+p+sXkKcJb/3iL2WMFEAO55fzk/3b9eoESNXz4M=;
+ b=fZloPNxugYpc7c7l9Zk0U8aTnbgWrukxVCXqRabZ44mGF/hJjfubUNSn9wBHw253vW
+ g3DoNUGoNu3dBlM8uiCpoxZIIoon6lmej42tvgOsjQYgIPA4u4i7zPaCz7vhHN50mgeI
+ cJWfr3YCmNIwbAxSG0inY4O3AWTwyYTIk4AOWlhPZujaoKhk52Dk2j8nGQ3RpQmeBTD3
+ qG47QebC7CD1ATc2XgfBMMBhXLArp51aLZGHCZWhdL8MSEN5ohv51dV58SIpNDp3bmYi
+ w1egpQyGaDRYlrVI++JVQCrRmJMDfISydg+KO8lTPPW2/bbqF4Favz6983erUcinlgiy
+ Bscg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUv+EzPzdjKxkwJl6AIRxsAOdJQ3QcxVvtR2zVNcX6oF9UzFZcrybo1leWAj9N+Tt5NLwiJQyExM8O2tqsdkY/xpEoq+8c=
-X-Gm-Message-State: AOJu0Yx2HT/rdMdrI4nSYJVMVgBPPVLyM5Za9noSQIsTIc8IHHtsHM26
- ebtY1SPu76ILvayqPVBrJudUqnvjVS7aRvwoztjMiE2R6o1/DLD7ng5DYaaks4w=
-X-Google-Smtp-Source: AGHT+IEAKBQEV3XrO69A8jbvtGr5S+Fymq3ojzoCfd/KT7/zkMjITsqUSSxprQvok2i4NFH15O7K9g==
-X-Received: by 2002:a05:6871:4006:b0:22e:7ba2:ced4 with SMTP id
- kx6-20020a056871400600b0022e7ba2ced4mr15980776oab.18.1715074948158; 
- Tue, 07 May 2024 02:42:28 -0700 (PDT)
-Received: from mnissler.ba.rivosinc.com ([64.71.180.162])
- by smtp.gmail.com with ESMTPSA id
- p4-20020a62ab04000000b006f45257d3f7sm6434114pff.45.2024.05.07.02.42.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 May 2024 02:42:27 -0700 (PDT)
-From: Mattias Nissler <mnissler@rivosinc.com>
-To: stefanha@redhat.com, qemu-devel@nongnu.org, peterx@redhat.com,
- jag.raman@oracle.com
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- David Hildenbrand <david@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>, john.levon@nutanix.com,
- Mattias Nissler <mnissler@rivosinc.com>
-Subject: [PATCH v9 2/5] softmmu: Support concurrent bounce buffers
-Date: Tue,  7 May 2024 02:42:06 -0700
-Message-ID: <20240507094210.300566-3-mnissler@rivosinc.com>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240507094210.300566-1-mnissler@rivosinc.com>
-References: <20240507094210.300566-1-mnissler@rivosinc.com>
+ AJvYcCW+Dfj8z5N40i5A+Wmm2eAlO98Zm5o80YjIFSEuyUuhe0Jq1nhqw2cXSGYl3cxZHoBIZNSm9DHgpG1irrFVuhhwGS7kHBQ=
+X-Gm-Message-State: AOJu0YxHyrkXNo8VzIODBPARW8uMy6VXP7QeVEaXl2/QQUFNM8Io0iuS
+ cmBFPgpTNyXG/CwTS1KsfDYUE0S0VuGCCVibNN3jmrLmz3zyJ8s7NgHF60oBQEjfYZNxENn0ySa
+ TMPOlqb1AnhI6WVbnAdPJqq1mMpBL8x4YJfxy5Q==
+X-Google-Smtp-Source: AGHT+IGS+TXCPL5Lxz3EQDD/ZKmpGnFKrsPyYj0bHEqbTMr3V3grF+ATO7wpir6T7TBNV/RrWqXh8V12uwZjffVZLzg=
+X-Received: by 2002:a50:ccde:0:b0:570:5b3d:91f with SMTP id
+ b30-20020a50ccde000000b005705b3d091fmr7926980edj.23.1715074998248; Tue, 07
+ May 2024 02:43:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::230;
- envelope-from=mnissler@rivosinc.com; helo=mail-oi1-x230.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+References: <20240503153453.54389-1-zenghui.yu@linux.dev>
+In-Reply-To: <20240503153453.54389-1-zenghui.yu@linux.dev>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 7 May 2024 10:43:07 +0100
+Message-ID: <CAFEAcA9Jh9udZEa0ebzO--V+K9inA49TWf9jCv=Kn7RtMqhpZQ@mail.gmail.com>
+Subject: Re: [PATCH] hvf: arm: Fix encodings for ID_AA64PFR1_EL1 and debug
+ System registers
+To: Zenghui Yu <zenghui.yu@linux.dev>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, agraf@csgraf.de, 
+ wanghaibin.wang@huawei.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,279 +91,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When DMA memory can't be directly accessed, as is the case when
-running the device model in a separate process without shareable DMA
-file descriptors, bounce buffering is used.
+On Fri, 3 May 2024 at 16:35, Zenghui Yu <zenghui.yu@linux.dev> wrote:
+>
+> We wrongly encoded ID_AA64PFR1_EL1 using {3,0,0,4,2} in hvf_sreg_match[] so
+> we fail to get the expected ARMCPRegInfo from cp_regs hash table with the
+> wrong key.
+>
+> Fix it with the correct encoding {3,0,0,4,1}. With that fixed, the Linux
+> guest can properly detect FEAT_SSBS2 on my M1 HW.
+>
+> All DBG{B,W}{V,C}R_EL1 registers are also wrongly encoded with op0 == 14.
+> It happens to work because HVF_SYSREG(CRn, CRm, 14, op1, op2) equals to
+> HVF_SYSREG(CRn, CRm, 2, op1, op2), by definition. But we shouldn't rely on
+> it.
+>
+> Fixes: a1477da3ddeb ("hvf: Add Apple Silicon support")
+> Signed-off-by: Zenghui Yu <zenghui.yu@linux.dev>
+> ---
 
-It is not uncommon for device models to request mapping of several DMA
-regions at the same time. Examples include:
- * net devices, e.g. when transmitting a packet that is split across
-   several TX descriptors (observed with igb)
- * USB host controllers, when handling a packet with multiple data TRBs
-   (observed with xhci)
+Applied to target-arm.next, thanks. I threw in a cc:stable tag,
+though it doesn't sound like the consequences of the bug are very
+significant.
 
-Previously, qemu only provided a single bounce buffer per AddressSpace
-and would fail DMA map requests while the buffer was already in use. In
-turn, this would cause DMA failures that ultimately manifest as hardware
-errors from the guest perspective.
-
-This change allocates DMA bounce buffers dynamically instead of
-supporting only a single buffer. Thus, multiple DMA mappings work
-correctly also when RAM can't be mmap()-ed.
-
-The total bounce buffer allocation size is limited individually for each
-AddressSpace. The default limit is 4096 bytes, matching the previous
-maximum buffer size. A new x-max-bounce-buffer-size parameter is
-provided to configure the limit for PCI devices.
-
-Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
----
- hw/pci/pci.c                |  8 ++++
- include/exec/memory.h       | 14 +++----
- include/hw/pci/pci_device.h |  3 ++
- system/memory.c             |  5 ++-
- system/physmem.c            | 82 ++++++++++++++++++++++++++-----------
- 5 files changed, 76 insertions(+), 36 deletions(-)
-
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 324c1302d2..69934bfbbf 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -85,6 +85,8 @@ static Property pci_props[] = {
-                     QEMU_PCIE_ERR_UNC_MASK_BITNR, true),
-     DEFINE_PROP_BIT("x-pcie-ari-nextfn-1", PCIDevice, cap_present,
-                     QEMU_PCIE_ARI_NEXTFN_1_BITNR, false),
-+    DEFINE_PROP_UINT32("x-max-bounce-buffer-size", PCIDevice,
-+                       max_bounce_buffer_size, DEFAULT_MAX_BOUNCE_BUFFER_SIZE),
-     DEFINE_PROP_END_OF_LIST()
- };
- 
-@@ -1204,6 +1206,8 @@ static PCIDevice *do_pci_register_device(PCIDevice *pci_dev,
-                        "bus master container", UINT64_MAX);
-     address_space_init(&pci_dev->bus_master_as,
-                        &pci_dev->bus_master_container_region, pci_dev->name);
-+    pci_dev->bus_master_as.max_bounce_buffer_size =
-+        pci_dev->max_bounce_buffer_size;
- 
-     if (phase_check(PHASE_MACHINE_READY)) {
-         pci_init_bus_master(pci_dev);
-@@ -2633,6 +2637,10 @@ static void pci_device_class_init(ObjectClass *klass, void *data)
-     k->unrealize = pci_qdev_unrealize;
-     k->bus_type = TYPE_PCI_BUS;
-     device_class_set_props(k, pci_props);
-+    object_class_property_set_description(
-+        klass, "x-max-bounce-buffer-size",
-+        "Maximum buffer size allocated for bounce buffers used for mapped "
-+        "access to indirect DMA memory");
- }
- 
- static void pci_device_class_base_init(ObjectClass *klass, void *data)
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index d417d7f363..2ea1e99da2 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -1117,13 +1117,7 @@ typedef struct AddressSpaceMapClient {
-     QLIST_ENTRY(AddressSpaceMapClient) link;
- } AddressSpaceMapClient;
- 
--typedef struct {
--    MemoryRegion *mr;
--    void *buffer;
--    hwaddr addr;
--    hwaddr len;
--    bool in_use;
--} BounceBuffer;
-+#define DEFAULT_MAX_BOUNCE_BUFFER_SIZE (4096)
- 
- /**
-  * struct AddressSpace: describes a mapping of addresses to #MemoryRegion objects
-@@ -1143,8 +1137,10 @@ struct AddressSpace {
-     QTAILQ_HEAD(, MemoryListener) listeners;
-     QTAILQ_ENTRY(AddressSpace) address_spaces_link;
- 
--    /* Bounce buffer to use for this address space. */
--    BounceBuffer bounce;
-+    /* Maximum DMA bounce buffer size used for indirect memory map requests */
-+    uint32_t max_bounce_buffer_size;
-+    /* Total size of bounce buffers currently allocated, atomically accessed */
-+    uint32_t bounce_buffer_size;
-     /* List of callbacks to invoke when buffers free up */
-     QemuMutex map_client_list_lock;
-     QLIST_HEAD(, AddressSpaceMapClient) map_client_list;
-diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
-index d3dd0f64b2..253b48a688 100644
---- a/include/hw/pci/pci_device.h
-+++ b/include/hw/pci/pci_device.h
-@@ -160,6 +160,9 @@ struct PCIDevice {
-     /* ID of standby device in net_failover pair */
-     char *failover_pair_id;
-     uint32_t acpi_index;
-+
-+    /* Maximum DMA bounce buffer size used for indirect memory map requests */
-+    uint32_t max_bounce_buffer_size;
- };
- 
- static inline int pci_intx(PCIDevice *pci_dev)
-diff --git a/system/memory.c b/system/memory.c
-index 642a449f8c..c288ed354a 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -3174,7 +3174,8 @@ void address_space_init(AddressSpace *as, MemoryRegion *root, const char *name)
-     as->ioeventfds = NULL;
-     QTAILQ_INIT(&as->listeners);
-     QTAILQ_INSERT_TAIL(&address_spaces, as, address_spaces_link);
--    as->bounce.in_use = false;
-+    as->max_bounce_buffer_size = DEFAULT_MAX_BOUNCE_BUFFER_SIZE;
-+    as->bounce_buffer_size = 0;
-     qemu_mutex_init(&as->map_client_list_lock);
-     QLIST_INIT(&as->map_client_list);
-     as->name = g_strdup(name ? name : "anonymous");
-@@ -3184,7 +3185,7 @@ void address_space_init(AddressSpace *as, MemoryRegion *root, const char *name)
- 
- static void do_address_space_destroy(AddressSpace *as)
- {
--    assert(!qatomic_read(&as->bounce.in_use));
-+    assert(qatomic_read(&as->bounce_buffer_size) == 0);
-     assert(QLIST_EMPTY(&as->map_client_list));
-     qemu_mutex_destroy(&as->map_client_list_lock);
- 
-diff --git a/system/physmem.c b/system/physmem.c
-index 632da6508a..cd61758da0 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -3046,6 +3046,20 @@ void cpu_flush_icache_range(hwaddr start, hwaddr len)
-                                      NULL, len, FLUSH_CACHE);
- }
- 
-+/*
-+ * A magic value stored in the first 8 bytes of the bounce buffer struct. Used
-+ * to detect illegal pointers passed to address_space_unmap.
-+ */
-+#define BOUNCE_BUFFER_MAGIC 0xb4017ceb4ffe12ed
-+
-+typedef struct {
-+    uint64_t magic;
-+    MemoryRegion *mr;
-+    hwaddr addr;
-+    uint32_t len;
-+    uint8_t buffer[];
-+} BounceBuffer;
-+
- static void
- address_space_unregister_map_client_do(AddressSpaceMapClient *client)
- {
-@@ -3071,9 +3085,9 @@ void address_space_register_map_client(AddressSpace *as, QEMUBH *bh)
-     qemu_mutex_lock(&as->map_client_list_lock);
-     client->bh = bh;
-     QLIST_INSERT_HEAD(&as->map_client_list, client, link);
--    /* Write map_client_list before reading in_use.  */
-+    /* Write map_client_list before reading bounce_buffer_size. */
-     smp_mb();
--    if (!qatomic_read(&as->bounce.in_use)) {
-+    if (qatomic_read(&as->bounce_buffer_size) < as->max_bounce_buffer_size) {
-         address_space_notify_map_clients_locked(as);
-     }
-     qemu_mutex_unlock(&as->map_client_list_lock);
-@@ -3203,28 +3217,40 @@ void *address_space_map(AddressSpace *as,
-     mr = flatview_translate(fv, addr, &xlat, &l, is_write, attrs);
- 
-     if (!memory_access_is_direct(mr, is_write)) {
--        if (qatomic_xchg(&as->bounce.in_use, true)) {
-+        uint32_t used = qatomic_read(&as->bounce_buffer_size);
-+        for (;;) {
-+            hwaddr alloc = MIN(as->max_bounce_buffer_size - used, l);
-+            uint32_t new_size = used + alloc;
-+            uint32_t actual =
-+                qatomic_cmpxchg(&as->bounce_buffer_size, used, new_size);
-+            if (actual == used) {
-+                l = alloc;
-+                break;
-+            }
-+            used = actual;
-+        }
-+
-+        if (l == 0) {
-             *plen = 0;
-             return NULL;
-         }
--        /* Avoid unbounded allocations */
--        l = MIN(l, TARGET_PAGE_SIZE);
--        as->bounce.buffer = qemu_memalign(TARGET_PAGE_SIZE, l);
--        as->bounce.addr = addr;
--        as->bounce.len = l;
- 
-+        BounceBuffer *bounce = g_malloc0(l + sizeof(BounceBuffer));
-+        bounce->magic = BOUNCE_BUFFER_MAGIC;
-         memory_region_ref(mr);
--        as->bounce.mr = mr;
-+        bounce->mr = mr;
-+        bounce->addr = addr;
-+        bounce->len = l;
-+
-         if (!is_write) {
-             flatview_read(fv, addr, MEMTXATTRS_UNSPECIFIED,
--                          as->bounce.buffer, l);
-+                          bounce->buffer, l);
-         }
- 
-         *plen = l;
--        return as->bounce.buffer;
-+        return bounce->buffer;
-     }
- 
--
-     memory_region_ref(mr);
-     *plen = flatview_extend_translation(fv, addr, len, mr, xlat,
-                                         l, is_write, attrs);
-@@ -3239,12 +3265,11 @@ void *address_space_map(AddressSpace *as,
- void address_space_unmap(AddressSpace *as, void *buffer, hwaddr len,
-                          bool is_write, hwaddr access_len)
- {
--    if (buffer != as->bounce.buffer) {
--        MemoryRegion *mr;
--        ram_addr_t addr1;
-+    MemoryRegion *mr;
-+    ram_addr_t addr1;
- 
--        mr = memory_region_from_host(buffer, &addr1);
--        assert(mr != NULL);
-+    mr = memory_region_from_host(buffer, &addr1);
-+    if (mr != NULL) {
-         if (is_write) {
-             invalidate_and_set_dirty(mr, addr1, access_len);
-         }
-@@ -3254,15 +3279,22 @@ void address_space_unmap(AddressSpace *as, void *buffer, hwaddr len,
-         memory_region_unref(mr);
-         return;
-     }
-+
-+
-+    BounceBuffer *bounce = container_of(buffer, BounceBuffer, buffer);
-+    assert(bounce->magic == BOUNCE_BUFFER_MAGIC);
-+
-     if (is_write) {
--        address_space_write(as, as->bounce.addr, MEMTXATTRS_UNSPECIFIED,
--                            as->bounce.buffer, access_len);
--    }
--    qemu_vfree(as->bounce.buffer);
--    as->bounce.buffer = NULL;
--    memory_region_unref(as->bounce.mr);
--    /* Clear in_use before reading map_client_list.  */
--    qatomic_set_mb(&as->bounce.in_use, false);
-+        address_space_write(as, bounce->addr, MEMTXATTRS_UNSPECIFIED,
-+                            bounce->buffer, access_len);
-+    }
-+
-+    qatomic_sub(&as->bounce_buffer_size, bounce->len);
-+    bounce->magic = ~BOUNCE_BUFFER_MAGIC;
-+    memory_region_unref(bounce->mr);
-+    g_free(bounce);
-+    /* Write bounce_buffer_size before reading map_client_list. */
-+    smp_mb();
-     address_space_notify_map_clients(as);
- }
- 
--- 
-2.43.2
-
+-- PMM
 
