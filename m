@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC44FC10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 06:04:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 061B5C10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 06:06:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4Dw3-0002U4-Fg; Tue, 07 May 2024 02:04:23 -0400
+	id 1s4DxW-0002uY-00; Tue, 07 May 2024 02:05:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s4Dvq-0002QU-0y
- for qemu-devel@nongnu.org; Tue, 07 May 2024 02:04:10 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s4DxC-0002qu-0j
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 02:05:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s4Dvn-0001ja-Ak
- for qemu-devel@nongnu.org; Tue, 07 May 2024 02:04:05 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s4Dx9-0001p1-Hh
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 02:05:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715061842;
+ s=mimecast20190719; t=1715061923;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=8OmJ/ELJ9lWegoGcumLoZ2FlbDoklvWgLkFvaZpqbAE=;
- b=bVjhVDWjUo6z7MU06zBuaZ3S3RT2mjK4tArIqIwSsKZz4Kuetsw6zfzbkAffrJ+ko+rtXv
- +z1Ia1k6KEsZWtrPRTWUY8MEr+OozqUAnY3FJSoAQx/adol0qNmOY7Qt4l2YFW3HR0xDVE
- 73h0dRWqQmabJv7LY+uFXpfUIdWpDlo=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VyUx9Py8/2xCDVuVH58T9zyOja4GYvKz4uJcu0jHfkE=;
+ b=g7VWVCkULe7xxY4IYyfNUDrh+oyomw4FT4N7QtwYkMBrwoFPjQ/VCfpLHEHZct2pe6UKhu
+ py/LWT2X4rD4/vtVoQvnINrwBQH+xxxdheBCCt7f0+MFppYDd9jUoH/Mbm/POxY4vEWpWG
+ ngAFtKdeVzVLLYgtTGSfscHm5vnabKI=
+Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
+ [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-441-NPQpHUZHOl6WHmu_mYcoaw-1; Tue, 07 May 2024 02:04:00 -0400
-X-MC-Unique: NPQpHUZHOl6WHmu_mYcoaw-1
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-572ef242caaso626359a12.1
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 23:04:00 -0700 (PDT)
+ us-mta-169-uAWlTpfYPIqWxYbez1JGyg-1; Tue, 07 May 2024 02:05:21 -0400
+X-MC-Unique: uAWlTpfYPIqWxYbez1JGyg-1
+Received: by mail-lj1-f199.google.com with SMTP id
+ 38308e7fff4ca-2e41bd70238so26461fa.1
+ for <qemu-devel@nongnu.org>; Mon, 06 May 2024 23:05:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715061839; x=1715666639;
+ d=1e100.net; s=20230601; t=1715061920; x=1715666720;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8OmJ/ELJ9lWegoGcumLoZ2FlbDoklvWgLkFvaZpqbAE=;
- b=FqJtHZDPRMZxQirXMhOcO8puPUK2sdOhTkOI1RgvPqWNJ6CREOSKFQmSnXuHAV3iQ8
- dXYvn1RGS3gn2U96JIHqLbaJ0ss40eKN0+bFy4gbcLP6xaUVmPbe7HCi31ncHH3tmTfd
- 1E7E0pYY6TTfGJn+hWnLiZ/lVP7jqNsIEUBuMc8Ed5B6XDxKKvASAYA6HHIDnZWiJgPS
- /Viu3CCU/5nLM52Avf1hL5XwJXaPPdpEFeV+BQb+gJ8mOP+eEinPMd3COMIwU6L/AIce
- o/9NjVSmmf1tvhZfiLbgjuRe8YPGckCdzTT44Es8FTBwbpDrRsztlsNaU9wGGXvh6dLo
- QWsQ==
+ bh=VyUx9Py8/2xCDVuVH58T9zyOja4GYvKz4uJcu0jHfkE=;
+ b=e9jlfIkgPQY2Ts3tTk45E2KcntMTk4YWc1kLcIQolqiSgvF7c6LR6zS7/Yh5+rAtsF
+ CDk0EkR4w9bBfq7n6TdqcBHRQOBP7jQWXGL8iB0xmT1bIWf2wEiTVvHrkVsw7a0/UWW5
+ aSHCKF99aa5fymnyzsYyeJ6xy9BAw93Ts5Bxybh/buMNdujEyC1FWcm4JWweOXjxPGDB
+ ICfk5A8SltRKjF+suvD44tkFq3UH3lAV52DbupgqstZFKTZ2Op6NZZhDC9HkaN3Wf9/Q
+ /GjsIivaqGibnbyIXMOHjIgAUorozmgjbeTCrZDi3snJ98wDrtn2SAqcGZoJ8r1y1z14
+ SVrA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUNksWfwacjD0dSfq3g/+YzCyFrN89ikxkZ3V8RNEVBCyumyii9I7UHoBYApSzOl56FWeICeEKHG6Hli+dEBFopFjH6WMg=
-X-Gm-Message-State: AOJu0YzRxp0HXQuP+dJHCkI/IEn9nc6cP6sLPITOT9etyQ/SWpbzjVCj
- nJtJo3ZixZnRuSBeZx4lJ6QvBg9gO7qgVqiUbcJoGWgYFpDpUXrdNojI+oSMt/O0XGw0T+izSh5
- 0FmnfsMLWUG4egjXAlUeGaLFKcN1GVTWA4A73cjl4kioQg03HeWbS
-X-Received: by 2002:a50:9faa:0:b0:572:326b:c055 with SMTP id
- c39-20020a509faa000000b00572326bc055mr8897354edf.13.1715061839231; 
- Mon, 06 May 2024 23:03:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGAsyYPQoEPcT4+nFYc+kRgld6RFvjZJ8hlkF041D6sGscs+VWkmJzOyR0IfrINO8luVEMb1A==
-X-Received: by 2002:a50:9faa:0:b0:572:326b:c055 with SMTP id
- c39-20020a509faa000000b00572326bc055mr8897341edf.13.1715061838883; 
- Mon, 06 May 2024 23:03:58 -0700 (PDT)
+ AJvYcCUjuf8p3zbDO5z0F8ZL7XulIGOWBwaJeADiRFzrnMJJGGLxh8QuHDfdvuz5lvn8/hOBjUOdcaG6/woQl8U+6cIi4vwT6Vc=
+X-Gm-Message-State: AOJu0YwbwXO5ltkeJE+LuXmpEtHNKsRCbp75Z0umAeE3R4HvnOIg/Lqy
+ CdNdBA5CFBjMgZyc4+ND0vdgUF5YPbjhdD5UdtZEzTWFljlzHlYoy6Z+QG7fElVrftZAMSy1n4y
+ qqFAQoANF/6cSx4Ri5xhooBsbFmScVj6fealsdpQBjoVfFI9hZU/v
+X-Received: by 2002:a05:6512:3c92:b0:51c:f00c:2243 with SMTP id
+ h18-20020a0565123c9200b0051cf00c2243mr10246410lfv.35.1715061920276; 
+ Mon, 06 May 2024 23:05:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF7exp+YBu4PhHje0ntc8p22EqHLRDfLCxtiBAS5t75gJ3n6jo6SnebnnMGqqPFInJlddzXvA==
+X-Received: by 2002:a05:6512:3c92:b0:51c:f00c:2243 with SMTP id
+ h18-20020a0565123c9200b0051cf00c2243mr10246388lfv.35.1715061919749; 
+ Mon, 06 May 2024 23:05:19 -0700 (PDT)
 Received: from [192.168.0.9] (ip-109-40-241-109.web.vodafone.de.
  [109.40.241.109]) by smtp.gmail.com with ESMTPSA id
- p8-20020aa7c888000000b00572aba0d8a0sm5948718eds.88.2024.05.06.23.03.58
+ f10-20020a170906084a00b00a59a2ec20e4sm4193049ejd.175.2024.05.06.23.05.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 May 2024 23:03:58 -0700 (PDT)
-Message-ID: <2e99999c-d63d-4f9c-a407-8eee496a9d41@redhat.com>
-Date: Tue, 7 May 2024 08:03:56 +0200
+ Mon, 06 May 2024 23:05:19 -0700 (PDT)
+Message-ID: <ddfdd6c4-9d64-4430-9a2a-099503b51980@redhat.com>
+Date: Tue, 7 May 2024 08:05:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] gitlab: Drop --static from s390x linux-user build
+Subject: Re: [PATCH] gitlab: Rename ubuntu-22.04-s390x-all to *-system
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org
-References: <20240506202020.422514-1-richard.henderson@linaro.org>
+References: <20240506202341.422814-1-richard.henderson@linaro.org>
 Content-Language: en-US
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -118,7 +118,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240506202020.422514-1-richard.henderson@linaro.org>
+In-Reply-To: <20240506202341.422814-1-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -145,47 +145,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06/05/2024 22.20, Richard Henderson wrote:
-> The host does not have the correct libraries installed for static pie,
-> which causes host/guest address space interference for some tests.
-> There's no real gain from linking statically, so drop it.
+On 06/05/2024 22.23, Richard Henderson wrote:
+> We already build the linux-user binaries with
+> ubuntu-22.04-s390x-all-linux, so there's no need to do it again.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
-> Per my suggestion in
-> 
-> https://lore.kernel.org/qemu-devel/50c27a9f-fd75-4f8e-9a2d-488d8df4f9b9@linaro.org
-> 
-> 
-> r~
 > ---
 >   .gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml | 4 ++--
 >   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
 > diff --git a/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml b/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
-> index 105981879f..3a2b1e1d24 100644
+> index 3a2b1e1d24..c3f16d77bb 100644
 > --- a/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
 > +++ b/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
-> @@ -2,7 +2,7 @@
->   # setup by the scripts/ci/setup/build-environment.yml task
->   # "Install basic packages to build QEMU on Ubuntu 22.04"
+> @@ -21,7 +21,7 @@ ubuntu-22.04-s390x-all-linux:
+>    - make --output-sync check-tcg
+>    - make --output-sync -j`nproc` check
 >   
-> -ubuntu-22.04-s390x-all-linux-static:
-> +ubuntu-22.04-s390x-all-linux:
+> -ubuntu-22.04-s390x-all:
+> +ubuntu-22.04-s390x-all-system:
 >    extends: .custom_runner_template
 >    needs: []
 >    stage: build
-> @@ -15,7 +15,7 @@ ubuntu-22.04-s390x-all-linux-static:
+> @@ -35,7 +35,7 @@ ubuntu-22.04-s390x-all:
 >    script:
 >    - mkdir build
 >    - cd build
-> - - ../configure --enable-debug --static --disable-system
-> + - ../configure --enable-debug-tcg --disable-system --disable-tools --disable-docs
+> - - ../configure --disable-libssh
+> + - ../configure --disable-libssh --disable-user
 
-Maybe mention the --disable-tools and --disable-docs in the commit message, too?
+While you're at it, you could also drop the --disable-libssh now (it was a 
+work-around for a bug in Ubuntu 18.04 IIRC).
 
-Anyway:
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-
 
 
