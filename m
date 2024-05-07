@@ -4,49 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E855C10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 11:18:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C291C10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 11:20:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4Iox-0003oa-5S; Tue, 07 May 2024 07:17:19 -0400
+	id 1s4IrF-0005ct-Kt; Tue, 07 May 2024 07:19:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1s4Ioq-0003k8-6V
- for qemu-devel@nongnu.org; Tue, 07 May 2024 07:17:12 -0400
-Received: from rev.ng ([5.9.113.41])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1s4IrA-0005Zo-F2
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 07:19:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1s4Ioo-00048q-Dv
- for qemu-devel@nongnu.org; Tue, 07 May 2024 07:17:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
- :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=+3lAuG6dD9BYd00oq6jQN6agoXMrIMvZsXqVbs5g+rY=; b=Qk7F7pBGE0OHEeW
- e3ItHYPjZztHDRt9WQoYcN0TEPl29xwZQ28fPzeycOr/2Gmay/vOFX4D8B/tnnerwloiHtmhKuugO
- WImLlRBM1BoWLA3VF0dNeOD2rwaLA6jcwBYY4wmOOqq2YscDbJZnYsMQXfBGySuS4Is9uDruhNVP7
- e4=;
-Date: Tue, 7 May 2024 13:18:28 +0200
-To: ltaylorsimpson@gmail.com
-Cc: qemu-devel@nongnu.org, ale@rev.ng, bcain@quicinc.com
-Subject: Re: [PATCH 4/4] target/hexagon: idef-parser simplify predicate init
-Message-ID: <jx7e3hvlsxld3h7736twjjaoaguamzeqtonjnrpr4yzmz44qlj@4paocplivllt>
-References: <20240506183117.32268-1-anjo@rev.ng>
- <20240506183117.32268-5-anjo@rev.ng>
- <067e01da9fe7$4ffddd30$eff99790$@gmail.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1s4Ir8-0004b1-F2
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 07:19:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715080772;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=f6OuYjBZrv88ojVjhaTMeYTflAUOFWIhb7MzDrZLKuw=;
+ b=Wg4Wrc09WEWowXwUtOObcCkL0TJOOPYrmaXglfdiuvb0q6S8k9CHDHbTBVRcNZ36Llufb6
+ vwZ1K79ygY9++OMXkeqJ4TDCNzshsEdvbMjUB5jMOTvEFnmYsMynV++mNOw+sU4OeNXUE8
+ O0d/DhuwPsVYvV9b+2JUSlTxTMfVmgA=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-18-lIce3OWHOI2c4Cn3cdf7GQ-1; Tue,
+ 07 May 2024 07:19:26 -0400
+X-MC-Unique: lIce3OWHOI2c4Cn3cdf7GQ-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id AB27538012C6;
+ Tue,  7 May 2024 11:19:25 +0000 (UTC)
+Received: from localhost (unknown [10.39.208.8])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 4837710000AD;
+ Tue,  7 May 2024 11:19:22 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Sebastian Ott <sebott@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Eduardo Habkost <eduardo@habkost.net>, Fiona Ebner <f.ebner@proxmox.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, peter.maydell@linaro.org,
+ "Michael S. Tsirkin" <mst@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ =?unknown-8bit?q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Subject: [PATCH 0/4] Fix "virtio-gpu: fix scanout migration post-load"
+Date: Tue,  7 May 2024 15:19:16 +0400
+Message-ID: <20240507111920.1594897-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <067e01da9fe7$4ffddd30$eff99790$@gmail.com>
-Received-SPF: pass client-ip=5.9.113.41; envelope-from=anjo@rev.ng; helo=rev.ng
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -59,72 +83,40 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  'Anton Johansson' <anjo@rev.ng>
-From:  'Anton Johansson' via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06/05/24, ltaylorsimpson@gmail.com wrote:
-> 
-> 
-> > -----Original Message-----
-> > From: Anton Johansson <anjo@rev.ng>
-> > Sent: Monday, May 6, 2024 1:31 PM
-> > To: qemu-devel@nongnu.org
-> > Cc: ale@rev.ng; ltaylorsimpson@gmail.com; bcain@quicinc.com
-> > Subject: [PATCH 4/4] target/hexagon: idef-parser simplify predicate init
-> > 
-> > Only predicate instruction arguments need to be initialized by
-> idef-parser.
-> > This commit removes registers from the init_list and simplifies
-> > gen_inst_init_args() slightly.
-> > 
-> > Signed-off-by: Anton Johansson <anjo@rev.ng>
-> > ---
-> >  target/hexagon/idef-parser/idef-parser.y    |  2 --
-> >  target/hexagon/idef-parser/parser-helpers.c | 20 +++++++++-----------
-> >  2 files changed, 9 insertions(+), 13 deletions(-)
-> 
-> > diff --git a/target/hexagon/idef-parser/parser-helpers.c
-> > b/target/hexagon/idef-parser/parser-helpers.c
-> > index bae01c2bb8..33e8f82007 100644
-> > --- a/target/hexagon/idef-parser/parser-helpers.c
-> > +++ b/target/hexagon/idef-parser/parser-helpers.c
-> > @@ -1652,26 +1652,24 @@ void gen_inst(Context *c, GString *iname)
-> > 
-> >  void gen_inst_init_args(Context *c, YYLTYPE *locp)  {
-> > +    /* If init_list is NULL arguments have already been initialized */
-> >      if (!c->inst.init_list) {
-> >          return;
-> >      }
-> > 
-> >      for (unsigned i = 0; i < c->inst.init_list->len; i++) {
-> >          HexValue *val = &g_array_index(c->inst.init_list, HexValue, i);
-> > -        if (val->type == REGISTER_ARG) {
-> > -            /* Nothing to do here */
-> > -        } else if (val->type == PREDICATE) {
-> > -            char suffix = val->is_dotnew ? 'N' : 'V';
-> > -            EMIT_HEAD(c, "tcg_gen_movi_i%u(P%c%c, 0);\n", val->bit_width,
-> > -                      val->pred.id, suffix);
-> > -        } else {
-> > -            yyassert(c, locp, false, "Invalid arg type!");
-> > -        }
-> > +        yyassert(c, locp, val->type == PREDICATE,
-> > +                 "Only predicates need to be initialized!");
-> > +        char suffix = val->is_dotnew ? 'N' : 'V';
-> 
-> Declarations should be at the beginning of the function per QEMU coding
-> standards.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Agh right!
+Hi,
 
->
-> > +        EMIT_HEAD(c, "tcg_gen_movi_i%u(P%c%c, 0);\n", val->bit_width,
-> 
-> Since you know this is a predicate, the bit_width will always be 32.  You
-> can hard-code that instead of using %u.
+The aforementioned patch breaks virtio-gpu device migrations for versions
+pre-9.0/9.0, both forwards and backwards. Versioning of `VMS_STRUCT` is more
+complex than it may initially appear, as evidenced in the problematic commit
+dfcf74fa68c ("virtio-gpu: fix scanout migration post-load").
 
-Good point, I'll add a paranoia assertion as well.
+To resolve this, we need to propagate the `vmstate` `version_id` through the
+nested structures. Additionally, we should tie specific machine version to a
+corresponding `version_id` to maintain migration compatibility.
 
-//Anton
+`VMS_VSTRUCT` allows specifying the appropriate version of the nested structure
+to use.
+
+Marc-André Lureau (4):
+  migration: add "exists" info to load-state-field trace
+  include/migration: add VMSTATE_VSTRUCT_TEST_VARRAY_UINT32
+  virtio-gpu: use a VMState variant for the scanout field
+  virtio-gpu: add x-vmstate-version
+
+ include/hw/virtio/virtio-gpu.h |  1 +
+ include/migration/vmstate.h    | 12 ++++++++++++
+ hw/core/machine.c              |  1 +
+ hw/display/virtio-gpu.c        | 28 +++++++++++++++++++++-------
+ migration/vmstate.c            |  5 +++--
+ migration/trace-events         |  2 +-
+ 6 files changed, 39 insertions(+), 10 deletions(-)
+
+-- 
+2.41.0.28.gd7d8841f67
+
 
