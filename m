@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A37C1C25B4F
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 09:23:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2374C25B4F
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 09:23:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4H2X-0008Lr-UQ; Tue, 07 May 2024 05:23:13 -0400
+	id 1s4H2U-0008JX-6P; Tue, 07 May 2024 05:23:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s4H2W-0008Kr-Fy
- for qemu-devel@nongnu.org; Tue, 07 May 2024 05:23:12 -0400
+ id 1s4H2S-0008JM-PI
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 05:23:08 -0400
 Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s4H2U-00008K-Sx
- for qemu-devel@nongnu.org; Tue, 07 May 2024 05:23:12 -0400
+ id 1s4H2Q-00007g-0v
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 05:23:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1715073790; x=1746609790;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=p7P8aFLeoc4zseIGlhl+TlPbNc3qYP0grqWyfXSUiLo=;
- b=UyjSdZQxAUl6YuxjED1m8+qGX41Y2d/sA40zbA3fbnGn++Bez9msdQgY
- qsYRQzmHEQIpskPNQ4gD1qUA8e0QAkMckQEwNsrpS8vx77P4wn2hQ8IYo
- MznDOsOPeAvsR/z0bxGDvFDYaTyIsA0gjrS4YLqGBr5HyreaxQqH6z3S5
- ZO4GEvd5Lqkm9qqqZsE+PhyvFiNPpaFy59CHwHYetB99zeO0RwwUV0yDW
- R8Cnh/99KCw1HiG5wC30ieOkpvX7KniDoj7nFw2/7yW8wNK8ka5d4cLtn
- t8HL1FC6EESnNV9NXzZnpPF2EjWJ6a+O+0NrZWA7uO774oaf5wF+Jtx74 A==;
-X-CSE-ConnectionGUID: si6I/AfBRRKeGh2UppY0Kg==
-X-CSE-MsgGUID: dTrOn2PlTd2GMQuXgcFSoQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11065"; a="10785185"
-X-IronPort-AV: E=Sophos;i="6.07,260,1708416000"; d="scan'208";a="10785185"
+ t=1715073786; x=1746609786;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=ECtMSJ4Hf7GDWod1eZLnSy0ZFBCaVKwnTWBkNVKQzzE=;
+ b=LMPTwr61H3cnsz+R17ao1naz7fiGEtvqEzYdNq88MmEZ+aJKNLki/CdF
+ TWW9NXPYyKh69mHBQsij8kEgLxRaKunBZMy1oqoDGizFQ5QzkGEOdEH2o
+ wh99cil+/5wtIugoCzoKjx4pAHI2+gsipouQp6T2JUEaPAstHz8McQa7M
+ TjqVZKhhZu8o1dvfkC/40pe5tqQbphoOL5s3y8ZXfYgOSgpRy0VWTAkaA
+ iddItofkQt7ayp+IobRYu0IrK0FMh+2KyigMZh6qaJA/XztvPnx5zHqh/
+ OWI5aNrpDZlgcKd5FvX0W9lwz3gQbDATXTE7MRSdwp6ka5N+UvVi0JVmH g==;
+X-CSE-ConnectionGUID: mV8QFqDKQViin+snYekEfA==
+X-CSE-MsgGUID: kqYfAPxqRUiCFwvyWD06wg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11065"; a="10785173"
+X-IronPort-AV: E=Sophos;i="6.07,260,1708416000"; d="scan'208";a="10785173"
 Received: from fmviesa010.fm.intel.com ([10.60.135.150])
  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 May 2024 02:23:09 -0700
-X-CSE-ConnectionGUID: +eggQQB2RIeAkkyFRoHxDA==
-X-CSE-MsgGUID: YDQtqEWPSSi1YX+a0gGm/Q==
+ 07 May 2024 02:23:01 -0700
+X-CSE-ConnectionGUID: 2qzGpL4OT6aRwqvX1Ogz0A==
+X-CSE-MsgGUID: i0maunaIRBei4cgE6QrAjQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,260,1708416000"; d="scan'208";a="28553249"
+X-IronPort-AV: E=Sophos;i="6.07,260,1708416000"; d="scan'208";a="28553237"
 Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.124])
  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 May 2024 02:23:06 -0700
+ 07 May 2024 02:22:58 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -53,13 +53,11 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  nicolinc@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v4 02/19] vfio/container: Introduce
- TYPE_HOST_IOMMU_DEVICE_LEGACY_VFIO device
-Date: Tue,  7 May 2024 17:20:26 +0800
-Message-Id: <20240507092043.1172717-3-zhenzhong.duan@intel.com>
+Subject: [PATCH v4 00/19] Add a host IOMMU device abstraction to check with
+ vIOMMU
+Date: Tue,  7 May 2024 17:20:24 +0800
+Message-Id: <20240507092043.1172717-1-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240507092043.1172717-1-zhenzhong.duan@intel.com>
-References: <20240507092043.1172717-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -87,56 +85,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-TYPE_HOST_IOMMU_DEVICE_LEGACY_VFIO represents a host IOMMU device under
-VFIO legacy container backend.
+Hi,
 
-It will have its own realize implementation.
+This series introduce a HostIOMMUDevice abstraction and sub-classes.
+Also HostIOMMUDeviceCaps structure in HostIOMMUDevice and a new interface
+between vIOMMU and HostIOMMUDevice.
 
-Suggested-by: Eric Auger <eric.auger@redhat.com>
-Suggested-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
----
- include/hw/vfio/vfio-common.h | 3 +++
- hw/vfio/container.c           | 5 ++++-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+HostIOMMUDeviceClass::realize() is introduced to initialize
+HostIOMMUDeviceCaps and other fields of HostIOMMUDevice variants.
 
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index e4c60374fa..05a199ce65 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -31,6 +31,7 @@
- #endif
- #include "sysemu/sysemu.h"
- #include "hw/vfio/vfio-container-base.h"
-+#include "sysemu/host_iommu_device.h"
- 
- #define VFIO_MSG_PREFIX "vfio %s: "
- 
-@@ -147,6 +148,8 @@ typedef struct VFIOGroup {
-     bool ram_block_discard_allowed;
- } VFIOGroup;
- 
-+#define TYPE_HOST_IOMMU_DEVICE_LEGACY_VFIO TYPE_HOST_IOMMU_DEVICE "-legacy-vfio"
-+
- typedef struct VFIODMABuf {
-     QemuDmaBuf buf;
-     uint32_t pos_x, pos_y, pos_updates;
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 86266f3b83..1b4fc2f3e8 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -1139,7 +1139,10 @@ static const TypeInfo types[] = {
-         .name = TYPE_VFIO_IOMMU_LEGACY,
-         .parent = TYPE_VFIO_IOMMU,
-         .class_init = vfio_iommu_legacy_class_init,
--    },
-+    }, {
-+        .name = TYPE_HOST_IOMMU_DEVICE_LEGACY_VFIO,
-+        .parent = TYPE_HOST_IOMMU_DEVICE,
-+    }
- };
- 
- DEFINE_TYPES(types)
+HostIOMMUDeviceClass::check_cap() is introduced to query host IOMMU
+device capabilities.
+
+The class tree is as below:
+
+                              HostIOMMUDevice
+                                     | .caps
+                                     | .realize()
+                                     | .check_cap()
+                                     |
+            .-----------------------------------------------.
+            |                        |                      |
+HostIOMMUDeviceLegacyVFIO  {HostIOMMUDeviceLegacyVDPA}  HostIOMMUDeviceIOMMUFD
+            |                        |                      | [.iommufd]
+                                                            | [.devid]
+                                                            | [.ioas_id]
+                                                            | [.attach_hwpt()]
+                                                            | [.detach_hwpt()]
+                                                            |
+                                            .----------------------.
+                                            |                      |
+                         HostIOMMUDeviceIOMMUFDVFIO  {HostIOMMUDeviceIOMMUFDVDPA}
+                                          | [.vdev]                | {.vdev}
+
+* The attributes in [] will be implemented in nesting series.
+* The classes in {} will be implemented in future.
+* .vdev in different class points to different agent device,
+* i.e., for VFIO it points to VFIODevice.
+
+PATCH1-4: Introduce HostIOMMUDevice and its sub classes
+PATCH5-11: Introduce HostIOMMUDeviceCaps, implement .realize() and .check_cap() handler
+PATCH12-16: Create HostIOMMUDevice instance and pass to vIOMMU
+PATCH17-19: Implement compatibility check between host IOMMU and vIOMMU(intel_iommu)
+
+Qemu code can be found at:
+https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_nesting_preq_v4
+
+Besides the compatibility check in this series, in nesting series, this
+host IOMMU device is extended for much wider usage. For anyone interested
+on the nesting series, here is the link:
+https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_nesting_rfcv2
+
+Thanks
+Zhenzhong
+
+Changelog:
+v3:
+- move properties vdev, iommufd and devid to nesting series where need it (Cédric)
+- fix 32bit build with clz64 (Cédric)
+- change check_cap naming to get_cap (Cédric)
+- return bool if error is passed through errp (Cédric)
+- drop HostIOMMUDevice[LegacyVFIO|IOMMUFD|IOMMUFDVFIO] declaration (Cédric)
+- drop HOST_IOMMU_DEVICE_CAP_IOMMUFD (Cédric)
+- replace include directive with forward declaration (Cédric)
+
+v2:
+- use QOM to abstract host IOMMU device and its sub-classes (Cédric)
+- move host IOMMU device creation in attach_device() (Cédric)
+- refine pci_device_set/unset_iommu_device doc further (Eric)
+- define host IOMMU info format of different backend
+- implement get_host_iommu_info() for different backend (Cédric)
+- drop cap/ecap update logic (MST)
+- check aw-bits from get_host_iommu_info() in legacy mode
+
+v1:
+- use HostIOMMUDevice handle instead of union in VFIODevice (Eric)
+- change host_iommu_device_init to host_iommu_device_create
+- allocate HostIOMMUDevice in host_iommu_device_create callback
+  and set the VFIODevice base_hdev handle (Eric)
+- refine pci_device_set/unset_iommu_device doc (Eric)
+- use HostIOMMUDevice handle instead of union in VTDHostIOMMUDevice (Eric)
+- convert HostIOMMUDevice to sub object pointer in vtd_check_hdev
+
+rfcv2:
+- introduce common abstract HostIOMMUDevice and sub struct for different BEs (Eric, Cédric)
+- remove iommufd_device.[ch] (Cédric)
+- remove duplicate iommufd/devid define from VFIODevice (Eric)
+- drop the p in aliased_pbus and aliased_pdevfn (Eric)
+- assert devfn and iommu_bus in pci_device_get_iommu_bus_devfn (Cédric, Eric)
+- use errp in iommufd_device_get_info (Eric)
+- split and simplify cap/ecap check/sync code in intel_iommu.c (Cédric)
+- move VTDHostIOMMUDevice declaration to intel_iommu_internal.h (Cédric)
+- make '(vtd->cap_reg >> 16) & 0x3fULL' a MACRO and add missed '+1' (Cédric)
+- block migration if vIOMMU cap/ecap updated based on host IOMMU cap/ecap
+- add R-B
+
+
+Yi Liu (2):
+  hw/pci: Introduce pci_device_[set|unset]_iommu_device()
+  intel_iommu: Implement [set|unset]_iommu_device() callbacks
+
+Zhenzhong Duan (17):
+  backends: Introduce HostIOMMUDevice abstract
+  vfio/container: Introduce TYPE_HOST_IOMMU_DEVICE_LEGACY_VFIO device
+  backends/iommufd: Introduce abstract TYPE_HOST_IOMMU_DEVICE_IOMMUFD
+    device
+  vfio/iommufd: Introduce TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO device
+  backends/host_iommu_device: Introduce HostIOMMUDeviceCaps
+  range: Introduce range_get_last_bit()
+  vfio/container: Implement HostIOMMUDeviceClass::realize() handler
+  backends/iommufd: Introduce helper function
+    iommufd_backend_get_device_info()
+  vfio/iommufd: Implement HostIOMMUDeviceClass::realize() handler
+  vfio/container: Implement HostIOMMUDeviceClass::get_cap() handler
+  backends/iommufd: Implement HostIOMMUDeviceClass::get_cap() handler
+  vfio: Introduce VFIOIOMMUClass::hiod_typename attribute
+  vfio: Create host IOMMU device instance
+  hw/pci: Introduce helper function pci_device_get_iommu_bus_devfn()
+  vfio/pci: Pass HostIOMMUDevice to vIOMMU
+  intel_iommu: Extract out vtd_cap_init() to initialize cap/ecap
+  intel_iommu: Check compatibility with host IOMMU capabilities
+
+ MAINTAINERS                           |   2 +
+ hw/i386/intel_iommu_internal.h        |   8 ++
+ include/hw/i386/intel_iommu.h         |   3 +
+ include/hw/pci/pci.h                  |  38 ++++-
+ include/hw/vfio/vfio-common.h         |   7 +
+ include/hw/vfio/vfio-container-base.h |   3 +
+ include/qemu/range.h                  |  11 ++
+ include/sysemu/host_iommu_device.h    |  92 ++++++++++++
+ include/sysemu/iommufd.h              |  20 +++
+ backends/host_iommu_device.c          |  42 ++++++
+ backends/iommufd.c                    |  77 +++++++---
+ hw/i386/intel_iommu.c                 | 195 ++++++++++++++++++++------
+ hw/pci/pci.c                          |  75 +++++++++-
+ hw/vfio/common.c                      |  16 ++-
+ hw/vfio/container.c                   |  50 ++++++-
+ hw/vfio/iommufd.c                     |  44 +++++-
+ hw/vfio/pci.c                         |  19 ++-
+ backends/Kconfig                      |   5 +
+ backends/meson.build                  |   1 +
+ 19 files changed, 638 insertions(+), 70 deletions(-)
+ create mode 100644 include/sysemu/host_iommu_device.h
+ create mode 100644 backends/host_iommu_device.c
+
 -- 
 2.34.1
 
