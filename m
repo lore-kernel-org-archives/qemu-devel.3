@@ -4,212 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDCE4C10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 06:25:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ECF2C10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 06:42:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4EFq-0005nx-Hd; Tue, 07 May 2024 02:24:46 -0400
+	id 1s4EWS-0001T2-Ck; Tue, 07 May 2024 02:41:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s4EFp-0005nk-12
- for qemu-devel@nongnu.org; Tue, 07 May 2024 02:24:45 -0400
-Received: from mgamail.intel.com ([198.175.65.20])
+ (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
+ id 1s4EWP-0001Ro-AN; Tue, 07 May 2024 02:41:54 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s4EFm-0004Om-W7
- for qemu-devel@nongnu.org; Tue, 07 May 2024 02:24:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1715063083; x=1746599083;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=UOPIrGm9cz5fBvPLjjdIUb5sEywRpamaI2jt1tU+cxw=;
- b=LSwA0w4L4XXI1A787WtUOPb8KRkK6vAScnNx3fL5U02P7hGGxKv0B20m
- 3jhk3Kcr0y216CL3R0OHTeiDp0kBiTM4ygxeelWZEIya3t5vfKUYNpGVi
- U7ZaStiP8cBXBMKfMtYtKu9hn6LMmu/hMEtJ2pSKHV68NecmicDH+RqC9
- MHmV6j4MgSTIm7TiKvOqNI5HwVIHYGMQqftXWUnbDGZvbMhyWp4iS3/Sx
- aQBaeDwws/MHmH57ujGwh52iJnBBN553WSM/E0pNx6GdxlvsmipmL5DEg
- 0SdeHsZV7oeOlqI8PUb3JvNR7Oy00Re8uN3X7OFS0EosI/k8HGiCqAwV7 A==;
-X-CSE-ConnectionGUID: KioR040mRE6+jr/T9h01Kw==
-X-CSE-MsgGUID: IAaXJ2c9Qcq/m2LwGawZ/w==
-X-IronPort-AV: E=McAfee;i="6600,9927,11065"; a="10673454"
-X-IronPort-AV: E=Sophos;i="6.07,260,1708416000"; d="scan'208";a="10673454"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 May 2024 23:24:36 -0700
-X-CSE-ConnectionGUID: 8fieha6rRnCBhWHR7PMVYg==
-X-CSE-MsgGUID: NwZemxIlSEunTl9VqtWZdQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,260,1708416000"; d="scan'208";a="33082919"
-Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
- by orviesa003.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 06 May 2024 23:24:37 -0700
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Mon, 6 May 2024 23:24:35 -0700
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Mon, 6 May 2024 23:24:35 -0700
-Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
- fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35 via Frontend Transport; Mon, 6 May 2024 23:24:35 -0700
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (104.47.55.169)
- by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Mon, 6 May 2024 23:24:35 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=SmxBFrMX5N+x8OlccNrSmXc1pNEUTAZyIMAQILKVW3aNvzjp/1A0kRC8PB0es2x/GLp1MwcVrQyAYqqTjd7ergvBhR1JL7AXRP1I7nwYHLSO7vRmUVFFw76y2yUIl2xgp6W5G2hdRSXj47L2orBvmJxXVQQV8uYGJ5ntxualuZ+w8a6+6bUZM9jSr3pw89M+30qoxkHxVxny7D7D4yNCpM2Lee5xPWZ8sdaI8C74sRU5+6PkjFidIWkhKlS/JyirLPEdvVco1UjPIF+QioDQ9ckPj5XoOp+yHE3J2ztKHX7HeQktC4Ws90Xez0lCzPvZra3WQEo9NoHZYJPl7q9dIw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=UOPIrGm9cz5fBvPLjjdIUb5sEywRpamaI2jt1tU+cxw=;
- b=GR/LvJowZ5oxiAmXkDeMXAbw6zwCmT6INQdhC68AlmiE5ugaxe5+xjjaVTlra1aV6Zoh0IHmrZ2DFAKFIOTOZ5CLw0UoWTQUfAAdqHj1pY1kYMXPQ7ufCye7pud9z+IVoELzSqCkNzaHEa6xzqGkhhnSE9Ebl84DYzFChmTfSMmscUYrW9zhhCjPCTchiTDenh/KKHMAX32rRf1A1nNIrCPnzG2y5zjFjcOQnyJtjBtjJSKzUynz4xRiUqD8ezADJQ9mujxRdut7Ft8bYa+4erJdIPrsbsujKqIrUzs8A2lFakhQLSL7gk4VfxJm+T4JgBOoIJmyksj4O6q0vbFj8Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
- by LV3PR11MB8694.namprd11.prod.outlook.com (2603:10b6:408:21b::11)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.41; Tue, 7 May
- 2024 06:24:32 +0000
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::e4a3:76ce:879:9129]) by SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::e4a3:76ce:879:9129%7]) with mapi id 15.20.7544.041; Tue, 7 May 2024
- 06:24:32 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "mst@redhat.com"
- <mst@redhat.com>, "peterx@redhat.com" <peterx@redhat.com>,
- "jasowang@redhat.com" <jasowang@redhat.com>, "jgg@nvidia.com"
- <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>, "Tian, Kevin"
- <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>, "Peng, Chao P"
- <chao.p.peng@intel.com>
-Subject: RE: [PATCH v3 05/19] backends/host_iommu_device: Introduce
- HostIOMMUDeviceCaps
-Thread-Topic: [PATCH v3 05/19] backends/host_iommu_device: Introduce
- HostIOMMUDeviceCaps
-Thread-Index: AQHamgIP5dlYY8RorUiCu4lRxYlSdLGLVrgAgAADkzA=
-Date: Tue, 7 May 2024 06:24:32 +0000
-Message-ID: <SJ0PR11MB6744F3C5D0BA44017DBD675A92E42@SJ0PR11MB6744.namprd11.prod.outlook.com>
-References: <20240429065046.3688701-1-zhenzhong.duan@intel.com>
- <20240429065046.3688701-6-zhenzhong.duan@intel.com>
- <462b4000-888b-4f89-bb0d-0cdbc0496a02@redhat.com>
-In-Reply-To: <462b4000-888b-4f89-bb0d-0cdbc0496a02@redhat.com>
-Accept-Language: en-US
+ (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
+ id 1s4EWI-000328-LY; Tue, 07 May 2024 02:41:50 -0400
+Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 4476Mobb010008; Tue, 7 May 2024 06:41:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ subject : to : cc : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=xw9cjdoifpy59lbZL1mPZTGfemtplTtKZDCQboN9OuQ=;
+ b=exElJodW4BsbARfS4bVlzT/a4SFvvNGt0QMSEcYu29JZAGwBPCI0eJXc8TE6tHJxA3F2
+ Wg0wuXSuBC4eX929ti8PeaVX1pnnUQZw5c9+ypzeIVYIa/2JLdX6tidlUw2zBeWa/juL
+ yKaXItRSptsEeEbLrOfQbASsaxmha2ZK3n7hMl/rRcOYEvQ5SJITPN/foXwPHn/1yM/u
+ /nCWPvk1PigEhFcA8N/x/K/PR/EFGOtOkpFPAoNFEOat67OhdUbpmkXDsQYO19VQM1+u
+ ygUb9cb7p4UyEd2qau6piqRfLYGZ1aaMAmhNXg/loWmgygG7QotLClsjXjGQbh0Q7bS6 kg== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xyeyn8224-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 07 May 2024 06:41:42 +0000
+Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4476fgc8009405;
+ Tue, 7 May 2024 06:41:42 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xyeyn8222-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 07 May 2024 06:41:42 +0000
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44741VSb013877; Tue, 7 May 2024 06:41:41 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xx222v4j9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 07 May 2024 06:41:41 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4476fcbd52953516
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 7 May 2024 06:41:40 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F07B22004B;
+ Tue,  7 May 2024 06:41:37 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D5B2520040;
+ Tue,  7 May 2024 06:41:36 +0000 (GMT)
+Received: from [9.199.192.140] (unknown [9.199.192.140])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  7 May 2024 06:41:36 +0000 (GMT)
+Message-ID: <fba61833-faeb-4c3e-bab2-87d1a99e7644@linux.vnet.ibm.com>
+Date: Tue, 7 May 2024 12:11:35 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] target/ppc: Move sync instructions to decodetree
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Chinmay Rath <rathc@linux.ibm.com>
+References: <20240501130435.941189-1-npiggin@gmail.com>
+ <20240501130435.941189-2-npiggin@gmail.com>
 Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|LV3PR11MB8694:EE_
-x-ms-office365-filtering-correlation-id: 4c056761-6540-474a-914f-08dc6e5e5bd6
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230031|376005|7416005|1800799015|366007|38070700009; 
-x-microsoft-antispam-message-info: =?utf-8?B?ZUdOemxDbkZabDJZeEFaTlZ0S0RXWHhFeDRoVXh0Y1ZjeS9kSWIyek1kM09j?=
- =?utf-8?B?R1Y2ZkYrY0o3aENqWHhYVHJJUHdSRGxZbERPVVYyc0pMdW5GYzZkV01GMmk4?=
- =?utf-8?B?Yi9oOVc3KzNadkdPSG9kYWdvNWYwL3dMMnovamJzNkp5UlNnSndpa29EaWpR?=
- =?utf-8?B?c0FGU2s1ZHRCVkJEcjVydWpmNkxVTlZHalZNL2xkWDZ0Y0U4RXkwam1wV29U?=
- =?utf-8?B?YWk4OERwYkVIcnpqbDl3WElGbDEvWS9VcW0wUm1EZHAxQ0JPTHo5a0J0YmVG?=
- =?utf-8?B?UjdnTURRRkNPTlhiNTNqRlNhMC90eE9CdUEzQXprMXRZdjhCWHhNK1c5dDhm?=
- =?utf-8?B?eUttOG5PSVpGUzlRQUdORkpLT1EzTU1SNXhRTE1CdGVoR1F0SkdNY0YraDBi?=
- =?utf-8?B?RmRZOXV3WGJSckZmSFZ6czNIM2h4SEQ2TnU5YXlpdnQ2OGtobm4zR0V5YWd0?=
- =?utf-8?B?aWJFL3V2K3VvQlVBSlFWRy8rZmQ1bUR3bW1TbmN4YlRSTnYvbE5yaE5yRVF4?=
- =?utf-8?B?V2lCOHUxVlFtdzA1dVRwdTl0aHY5OFRxdnNTUlRneWhsVGpSZStPKzFMOGVX?=
- =?utf-8?B?dUdSYzd0NVdTYUo5UEYzMll1V0J4eCswdXlFUWh1K24xclhtQkY0aklkWlNr?=
- =?utf-8?B?T2swU0dvWnN6YkN5M1YrZkc0NlgyNHdjUWVzampXS1pTZVlOWEVxemMwNGQv?=
- =?utf-8?B?Ky9GNVpHMWdsd2loRVBIWnlsM1dyN1ZMeWpWa2JGWUs4WWxWNEFaK2pucW10?=
- =?utf-8?B?L0pHelFZTVNRdjJEYVk0UzM1MDhPZENMYTV3eng4cTd0WXNxSVQrcWZZZVhF?=
- =?utf-8?B?Zit2KzhwaWVaU1Z4VFo4NzVLSFpJeXFJUjFPMmFYSjVhVEF3clZDZ1YrdXRM?=
- =?utf-8?B?dFd6Y1NxK0RqaE9iZmRNbU1lMk9PM3hiVzBNSEhNZXhaZjlkbllSSTlOazNK?=
- =?utf-8?B?RXdvTVdoY2hMUjhSWVFIQzhMemJlMUp3Ni9aTHZjZHNlbWZSR0dFTXAxOVEr?=
- =?utf-8?B?Q0R5UFNVSmhXVGQ0RHREbU5aUUg5bFdweUNwamVKWnUyTlhQaXBJNlNmbWdT?=
- =?utf-8?B?bkNFckdHUmVDMnovMms3U2xSdjUzNjFDUkNiejQwTVNpWkJHQzNXcXlDeWZO?=
- =?utf-8?B?cWJIN3lhOHRsajFZTGhjYjBqUmYvd1lxY25UOXNmd3FhVW1OV21uYUhHZ0Ft?=
- =?utf-8?B?WjY4STlSWitmSlJldUlPbzVLV3FHN2NFMEt2N2xkbENOakxFeXFlZDh6NzBv?=
- =?utf-8?B?eXh5M0dkTXltOVFlTUNLRFBpaW8xMG5FeDhGN2VhVWNqMHY5WXJpV295SkFp?=
- =?utf-8?B?ZUIvVEoweXVtMSsrS3pFcFl3TFFOWmhBdFp5ckExNlVXeWZQT2Q3TnlKNmtm?=
- =?utf-8?B?YUNrSnJnSEsyVVRHL25Tc3ZENU9JdVI2R24zUlpqeGNobi8wRHFjbFNCWGhQ?=
- =?utf-8?B?eGZUQis1dktweDEzK2E2SkRQL2VKZW1yQzZJUm9KdXlHMHFzbEYrY0d0eWVR?=
- =?utf-8?B?QlhOdnAyOVQyaEdkNnFpWjVsVmtJdk53NFJGbnd3MWtuTVg2YmwxQnd4T3Ex?=
- =?utf-8?B?VzdhRE1IdXNWNVYrTzIxN3VoRzZ2cEdJYlBSZmZ3WFJCUzNYUG14VGFhT0Rh?=
- =?utf-8?B?bWNFSVF6SHNXY01rbk0xT0c1QVJvN1owMUk0MlN2YklhMmNIWjBnazNxRXZ2?=
- =?utf-8?B?M3RGaXZqUkRCSkkwclVnbEdoL2g4VGZ0c0dWTTZOcXQwWEFQNnF2eDVsU3Za?=
- =?utf-8?B?MXd6TFVWaEJFaHhmRU9xZHlSWm13bjZuQ2haQTVHZU82RFdwWkhjR1h1STkz?=
- =?utf-8?B?V1lEZUNGWFp1ekloaVlndz09?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(376005)(7416005)(1800799015)(366007)(38070700009); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?OW5oUllDWStITFhiZW5vSlVsYzUzRmNWOC9DUEgzRjl6NThCUGRvUDhEY1VC?=
- =?utf-8?B?L3F1c2dNWmFZQ1RuZUZmNHdvY0h3ZHcxaDNJWnJwRk1Ka3o3Tko4bTJ0QkM2?=
- =?utf-8?B?RnN3RWJoeEliS2NDdS93WUhGTlFvd21zM05YMnBwZDBYR0E1ZG5FcTRIVURN?=
- =?utf-8?B?SE5lU0lGRlljc3ZYUGJPMytTZm1qL3FEeTd3a09ZQ3lvR3g0cVpDalA3ak92?=
- =?utf-8?B?bFVJSXNsTDZmSXgwelJiTC91QUhibzBxMDJPTWttVWxXcGYvM0MwQmY2STNQ?=
- =?utf-8?B?RXRnYWJQTVZlVXJTY3JqODU5NDIrYVlaOEVPYnBEVmJoQjFyQU5NdHJtNzJD?=
- =?utf-8?B?TTJpL3pIMUhCSFgzcFBEdi9MR1BkS29wa3owSnBqNEN2Vm9WdGdlNElvdmxT?=
- =?utf-8?B?M3dGZlR1ZlpWeEIvakNNNVMyRlA1RXpVdlZjV2RDQzJib1Z6b2JkSmpWcklV?=
- =?utf-8?B?bndWRVplSkROeW1IU0J3UnRLK1pMUHowR1lsdjNQRTJqUDhuaGg3emJRWG0z?=
- =?utf-8?B?MHZmQ05PSnIycjRlQ1JPYU42U3lMQ3ovK250RjFlNDU4TUl1ZldzUXBuRUkx?=
- =?utf-8?B?K2tTMkQ2MkdnOGg5UCtuS1hmbzMzN2pvSFFrTnEzRkVQZ1pzeFJCc0pRR0xB?=
- =?utf-8?B?K0FQcVB5U2xrU09MK1I1Zm10SDN3MXkxLzV5Nk8xZzBBU01OdEpuVGFhMzI2?=
- =?utf-8?B?WU5ycEVFNVVSYWlobmlYRWJVS256ZUl1cThpM1BXajNhR2p1MVpnRnd3bE53?=
- =?utf-8?B?aURReGpoaHBVWWtPdkdZVnNoakZxOWQ5UzZEbHYvVy85cmxSZ3RkK2xvaEdK?=
- =?utf-8?B?THZDMlMyYVQxRHE4aEpRajNiTnFKdzVqemdiZUFzeVdqT2xGMUR3eVpUOUhu?=
- =?utf-8?B?eUJHalQzUUVHck9Sd2VXTDRMQTllYVdBT2xic1NrZk02U0h3VkJGK093M1pz?=
- =?utf-8?B?dlpLM3hiV2lKVyt0OVE2Nzd5K3VyazlHMEJrbU04YUNMRDJzem1lL0RWelgx?=
- =?utf-8?B?Y0Q0U0VTQXFZUEQ2TUV2YzN2QjhpTDJFb3NqcHFnRllMVmVTMUVMK0RURXNU?=
- =?utf-8?B?MVFhSUE4eTJDaDhaVUtYbTM3aWdpbmlpYlI2VE1GWVZFcWJTK3hNTk1TUEVK?=
- =?utf-8?B?Y043d1pLQTNqaGRjUHpxQWdOZ3FhdTJDTW11NUU3aVBVRUI1Vnl1OXlmSW5R?=
- =?utf-8?B?VUgvaDFORFpBUkNQWWk0V09va0pnNGpoQ09RL1plOHBpUnpKSVNJNzJPQXBu?=
- =?utf-8?B?UkI1SlgyaU9idllRWWd1QVVTUnRST1JhYnFKUDF6MzhFb0FaQUJNdkJqQVRT?=
- =?utf-8?B?RXU3UWM2dkZkZElNZjRWU0Q4ZWZDZ2g4YkV6VittQ0M3WEl0QTB5Z1hqTWVi?=
- =?utf-8?B?Ukh3WkFSaFZmZm1sdGNwUE9OWTBwKzBxWXFIRDdHSmNpMU1YOWFnZSszbVBu?=
- =?utf-8?B?bWM4cFVoM2NTYTZxMkNFSEdnblhpUTVBU2hycjJFRkNyaUN1R3JJRFQvd2pw?=
- =?utf-8?B?b0NJK1M1OEZOVzJ1RnhQOFdBUEprMm1wbFZrbktLRFJ5ckRYWnJpdWJYNldy?=
- =?utf-8?B?S1N3bHZ2ODBuREhOc3RqSmNXanVWaHRJSUxEMzNzTFhIWUtlWll1bVNXNHYz?=
- =?utf-8?B?cVZkN0wxWkJmYlVPaW4wVHBEbzFEeFZNMXdTMEpScjJSc01lQ2h6dWM5Q1c0?=
- =?utf-8?B?bnNjcHdBNTBFaFpsdVRVbFA2YzNtaW1iWlNFVkxHRWdTbGYzNVNhSGMwT0hZ?=
- =?utf-8?B?NnhOdk95Y2ppdmVyNTVySkpSdGEyc0xBSGwzT2ZRTDJPcTlBWHJsR1BRMi9r?=
- =?utf-8?B?M0VwUE5CSTQrRjFLa29iVnIzZ3FobTV4Y0h0TmMvNVU2Mk15VGdxWEw5ek96?=
- =?utf-8?B?TTd4Zk1tNitiTWNoU3h1dFFkb2Z4V2pCWXVyMHUwK1Y0enJtNFhscnB0UmZE?=
- =?utf-8?B?WkNyaDduNkZSc3lyMU5MNGJka1ZOZXlSRXJNNTIyYjRqcURpYlVhL0RMYVNE?=
- =?utf-8?B?SWg0NWh2WHFySVdpYXRZMDMrS1hhMHM1eGJvRVhScDRLT0taSHJGaHNML0J5?=
- =?utf-8?B?dnlLUzN4SCtnUWc3dTE1Q1VJTG5uREpFZ0ZBQzhSWTBIR0xDMEtMeEdPdFRI?=
- =?utf-8?Q?ZsaB+DPbB93GiDrIZRIZYzCzY?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+From: Chinmay Rath <rathc@linux.vnet.ibm.com>
+In-Reply-To: <20240501130435.941189-2-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 0bDVRuTcfKxhENIo4MLhyVUineDVt4b5
+X-Proofpoint-GUID: KesI6-6i2GPyd-ND_mMbsqw8UBGQyizA
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4c056761-6540-474a-914f-08dc6e5e5bd6
-X-MS-Exchange-CrossTenant-originalarrivaltime: 07 May 2024 06:24:32.6418 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: hE9c9ozC/A2MuAitX/zyhAsTyHh0x0eesgd7IHYYq1M6Y3QpQV4+R2ck06craIbMxrqHthS2y8Oe0H71WnawVWM+6KcggdTACIqY1siml4A=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR11MB8694
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.20;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-07_02,2024-05-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 suspectscore=0
+ malwarescore=0 bulkscore=0 phishscore=0 clxscore=1015 spamscore=0
+ lowpriorityscore=0 priorityscore=1501 impostorscore=0 adultscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2404010000 definitions=main-2405070045
+Received-SPF: none client-ip=148.163.158.5;
+ envelope-from=rathc@linux.vnet.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -225,34 +117,338 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IEPDqWRyaWMgTGUgR29hdGVy
-IDxjbGdAcmVkaGF0LmNvbT4NCj5TdWJqZWN0OiBSZTogW1BBVENIIHYzIDA1LzE5XSBiYWNrZW5k
-cy9ob3N0X2lvbW11X2RldmljZTogSW50cm9kdWNlDQo+SG9zdElPTU1VRGV2aWNlQ2Fwcw0KPg0K
-PkhlbGxvIFpoZW56aG9uZywNCj4NCj5PbiA0LzI5LzI0IDA4OjUwLCBaaGVuemhvbmcgRHVhbiB3
-cm90ZToNCj4+IEhvc3RJT01NVURldmljZUNhcHMncyBlbGVtZW50cyBtYXAgdG8gdGhlIGhvc3Qg
-SU9NTVUncyBjYXBhYmlsaXRpZXMuDQo+PiBEaWZmZXJlbnQgcGxhdGZvcm0gSU9NTVUgY2FuIHN1
-cHBvcnQgZGlmZmVyZW50IGVsZW1lbnRzLg0KPj4NCj4+IEN1cnJlbnRseSBvbmx5IHR3byBlbGVt
-ZW50cywgdHlwZSBhbmQgYXdfYml0cywgdHlwZSBoaW50cyB0aGUgaG9zdA0KPj4gcGxhdGZvcm0g
-SU9NTVUgdHlwZSwgaS5lLiwgSU5URUwgdnRkLCBBUk0gc21tdSwgZXRjOyBhd19iaXRzIGhpbnRz
-DQo+PiBob3N0IElPTU1VIGFkZHJlc3Mgd2lkdGguDQo+Pg0KPj4gSW50cm9kdWNlIC5jaGVja19j
-YXAoKSBoYW5kbGVyIHRvIGNoZWNrIGlmDQo+SE9TVF9JT01NVV9ERVZJQ0VfQ0FQX1hYWA0KPj4g
-aXMgc3VwcG9ydGVkLg0KPj4NCj4+IEludHJvZHVjZSBhIEhvc3RJT01NVURldmljZSBBUEkgaG9z
-dF9pb21tdV9kZXZpY2VfY2hlY2tfY2FwKCkNCj53aGljaA0KPj4gaXMgYSB3cmFwcGVyIG9mIC5j
-aGVja19jYXAoKS4NCj4+DQo+PiBJbnRyb2R1Y2UgYSBIb3N0SU9NTVVEZXZpY2UgQVBJDQo+aG9z
-dF9pb21tdV9kZXZpY2VfY2hlY2tfY2FwX2NvbW1vbigpDQo+PiB0byBjaGVjayBjb21tb24gY2Fw
-YWJhbGl0aWVzIG9mIGRpZmZlcmVudCBob3N0IHBsYXRmb3JtIElPTU1Vcy4NCj4+DQo+PiBTdWdn
-ZXN0ZWQtYnk6IEPDqWRyaWMgTGUgR29hdGVyIDxjbGdAcmVkaGF0LmNvbT4NCj4+IFNpZ25lZC1v
-ZmYtYnk6IFpoZW56aG9uZyBEdWFuIDx6aGVuemhvbmcuZHVhbkBpbnRlbC5jb20+DQo+PiAtLS0N
-Cj4+ICAgaW5jbHVkZS9zeXNlbXUvaG9zdF9pb21tdV9kZXZpY2UuaCB8IDQ0DQo+KysrKysrKysr
-KysrKysrKysrKysrKysrKysrKysrDQo+PiAgIGJhY2tlbmRzL2hvc3RfaW9tbXVfZGV2aWNlLmMg
-ICAgICAgfCAyOSArKysrKysrKysrKysrKysrKysrKw0KPj4gICAyIGZpbGVzIGNoYW5nZWQsIDcz
-IGluc2VydGlvbnMoKykNCj4+DQo+PiBkaWZmIC0tZ2l0IGEvaW5jbHVkZS9zeXNlbXUvaG9zdF9p
-b21tdV9kZXZpY2UuaA0KPmIvaW5jbHVkZS9zeXNlbXUvaG9zdF9pb21tdV9kZXZpY2UuaA0KPj4g
-aW5kZXggMmI1OGE5NGQ2Mi4uMTJiNmFmYjQ2MyAxMDA2NDQNCj4+IC0tLSBhL2luY2x1ZGUvc3lz
-ZW11L2hvc3RfaW9tbXVfZGV2aWNlLmgNCj4+ICsrKyBiL2luY2x1ZGUvc3lzZW11L2hvc3RfaW9t
-bXVfZGV2aWNlLmgNCj4+IEBAIC0xNCwxMiArMTQsMjcgQEANCj4+DQo+PiAgICNpbmNsdWRlICJx
-b20vb2JqZWN0LmgiDQo+PiAgICNpbmNsdWRlICJxYXBpL2Vycm9yLmgiDQo+PiArI2luY2x1ZGUg
-ImxpbnV4L2lvbW11ZmQuaCINCj4NCj4NCj5QbGVhc2UgdXNlIGluc3RlYWQgOg0KPg0KPiAgICAj
-aW5jbHVkZSA8bGludXgvaW9tbXVmZC5oPg0KDQpHb3QgaXQuDQoNClRoYW5rcw0KWmhlbnpob25n
-DQo=
+
+
+On 5/1/24 18:34, Nicholas Piggin wrote:
+> This tries to faithfully reproduce the odd BookE logic.
+>
+> It does change the handling of non-zero reserved bits outside the
+> defined fields from being illegal to being ignored, which the
+> architecture specifies ot help with backward compatibility of new
+> fields. The existing behaviour causes illegal instruction exceptions
+> when using new POWER10 sync variants that add new fields, after this
+> the instructions are accepted and are implemented as supersets of
+> the new behaviour, as intended.
+>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Chinmay Rath <rathc@linux.ibm.com>
+> ---
+>   target/ppc/insn32.decode             |   7 ++
+>   target/ppc/translate.c               | 102 +-------------------
+>   target/ppc/translate/misc-impl.c.inc | 135 +++++++++++++++++++++++++++
+>   3 files changed, 144 insertions(+), 100 deletions(-)
+>   create mode 100644 target/ppc/translate/misc-impl.c.inc
+>
+> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
+> index eada59f59f..6b89804b15 100644
+> --- a/target/ppc/insn32.decode
+> +++ b/target/ppc/insn32.decode
+> @@ -998,3 +998,10 @@ MSGSND          011111 ----- ----- ..... 0011001110 -   @X_rb
+>   MSGCLRP         011111 ----- ----- ..... 0010101110 -   @X_rb
+>   MSGSNDP         011111 ----- ----- ..... 0010001110 -   @X_rb
+>   MSGSYNC         011111 ----- ----- ----- 1101110110 -
+> +
+> +# Memory Barrier Instructions
+> +
+> +&X_sync         l
+> +@X_sync         ...... ... l:2 ..... ..... .......... .           &X_sync
+> +SYNC            011111 --- ..  ----- ----- 1001010110 -           @X_sync
+> +EIEIO           011111 ----- ----- ----- 1101010110 -
+> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+> index 93ffec787c..bb2cabae10 100644
+> --- a/target/ppc/translate.c
+> +++ b/target/ppc/translate.c
+> @@ -3423,59 +3423,6 @@ static void gen_stswx(DisasContext *ctx)
+>       gen_helper_stsw(tcg_env, t0, t1, t2);
+>   }
+>   
+> -/***                        Memory synchronisation                         ***/
+> -/* eieio */
+> -static void gen_eieio(DisasContext *ctx)
+> -{
+> -    TCGBar bar = TCG_MO_ALL;
+> -
+> -    /*
+> -     * eieio has complex semanitcs. It provides memory ordering between
+> -     * operations in the set:
+> -     * - loads from CI memory.
+> -     * - stores to CI memory.
+> -     * - stores to WT memory.
+> -     *
+> -     * It separately also orders memory for operations in the set:
+> -     * - stores to cacheble memory.
+> -     *
+> -     * It also serializes instructions:
+> -     * - dcbt and dcbst.
+> -     *
+> -     * It separately serializes:
+> -     * - tlbie and tlbsync.
+> -     *
+> -     * And separately serializes:
+> -     * - slbieg, slbiag, and slbsync.
+> -     *
+> -     * The end result is that CI memory ordering requires TCG_MO_ALL
+> -     * and it is not possible to special-case more relaxed ordering for
+> -     * cacheable accesses. TCG_BAR_SC is required to provide this
+> -     * serialization.
+> -     */
+> -
+> -    /*
+> -     * POWER9 has a eieio instruction variant using bit 6 as a hint to
+> -     * tell the CPU it is a store-forwarding barrier.
+> -     */
+> -    if (ctx->opcode & 0x2000000) {
+> -        /*
+> -         * ISA says that "Reserved fields in instructions are ignored
+> -         * by the processor". So ignore the bit 6 on non-POWER9 CPU but
+> -         * as this is not an instruction software should be using,
+> -         * complain to the user.
+> -         */
+> -        if (!(ctx->insns_flags2 & PPC2_ISA300)) {
+> -            qemu_log_mask(LOG_GUEST_ERROR, "invalid eieio using bit 6 at @"
+> -                          TARGET_FMT_lx "\n", ctx->cia);
+> -        } else {
+> -            bar = TCG_MO_ST_LD;
+> -        }
+> -    }
+> -
+> -    tcg_gen_mb(bar | TCG_BAR_SC);
+> -}
+> -
+>   #if !defined(CONFIG_USER_ONLY)
+>   static inline void gen_check_tlb_flush(DisasContext *ctx, bool global)
+>   {
+> @@ -3877,31 +3824,6 @@ static void gen_stqcx_(DisasContext *ctx)
+>   }
+>   #endif /* defined(TARGET_PPC64) */
+>   
+> -/* sync */
+> -static void gen_sync(DisasContext *ctx)
+> -{
+> -    TCGBar bar = TCG_MO_ALL;
+> -    uint32_t l = (ctx->opcode >> 21) & 3;
+> -
+> -    if ((l == 1) && (ctx->insns_flags2 & PPC2_MEM_LWSYNC)) {
+> -        bar = TCG_MO_LD_LD | TCG_MO_LD_ST | TCG_MO_ST_ST;
+> -    }
+> -
+> -    /*
+> -     * We may need to check for a pending TLB flush.
+> -     *
+> -     * We do this on ptesync (l == 2) on ppc64 and any sync pn ppc32.
+> -     *
+> -     * Additionally, this can only happen in kernel mode however so
+> -     * check MSR_PR as well.
+> -     */
+> -    if (((l == 2) || !(ctx->insns_flags & PPC_64B)) && !ctx->pr) {
+> -        gen_check_tlb_flush(ctx, true);
+> -    }
+> -
+> -    tcg_gen_mb(bar | TCG_BAR_SC);
+> -}
+> -
+>   /* wait */
+>   static void gen_wait(DisasContext *ctx)
+>   {
+> @@ -6010,23 +5932,6 @@ static void gen_dlmzb(DisasContext *ctx)
+>                        cpu_gpr[rS(ctx->opcode)], cpu_gpr[rB(ctx->opcode)], t0);
+>   }
+>   
+> -/* mbar replaces eieio on 440 */
+> -static void gen_mbar(DisasContext *ctx)
+> -{
+> -    /* interpreted as no-op */
+> -}
+> -
+> -/* msync replaces sync on 440 */
+> -static void gen_msync_4xx(DisasContext *ctx)
+> -{
+> -    /* Only e500 seems to treat reserved bits as invalid */
+> -    if ((ctx->insns_flags2 & PPC2_BOOKE206) &&
+> -        (ctx->opcode & 0x03FFF801)) {
+> -        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
+> -    }
+> -    /* otherwise interpreted as no-op */
+> -}
+> -
+>   /* icbt */
+>   static void gen_icbt_440(DisasContext *ctx)
+>   {
+> @@ -6364,6 +6269,8 @@ static bool resolve_PLS_D(DisasContext *ctx, arg_D *d, arg_PLS_D *a)
+>   
+>   #include "translate/storage-ctrl-impl.c.inc"
+>   
+> +#include "translate/misc-impl.c.inc"
+> +
+>   /* Handles lfdp */
+>   static void gen_dform39(DisasContext *ctx)
+>   {
+> @@ -6492,7 +6399,6 @@ GEN_HANDLER(lswi, 0x1F, 0x15, 0x12, 0x00000001, PPC_STRING),
+>   GEN_HANDLER(lswx, 0x1F, 0x15, 0x10, 0x00000001, PPC_STRING),
+>   GEN_HANDLER(stswi, 0x1F, 0x15, 0x16, 0x00000001, PPC_STRING),
+>   GEN_HANDLER(stswx, 0x1F, 0x15, 0x14, 0x00000001, PPC_STRING),
+> -GEN_HANDLER(eieio, 0x1F, 0x16, 0x1A, 0x01FFF801, PPC_MEM_EIEIO),
+>   GEN_HANDLER(isync, 0x13, 0x16, 0x04, 0x03FFF801, PPC_MEM),
+>   GEN_HANDLER_E(lbarx, 0x1F, 0x14, 0x01, 0, PPC_NONE, PPC2_ATOMIC_ISA206),
+>   GEN_HANDLER_E(lharx, 0x1F, 0x14, 0x03, 0, PPC_NONE, PPC2_ATOMIC_ISA206),
+> @@ -6510,7 +6416,6 @@ GEN_HANDLER_E(lqarx, 0x1F, 0x14, 0x08, 0, PPC_NONE, PPC2_LSQ_ISA207),
+>   GEN_HANDLER2(stdcx_, "stdcx.", 0x1F, 0x16, 0x06, 0x00000000, PPC_64B),
+>   GEN_HANDLER_E(stqcx_, 0x1F, 0x16, 0x05, 0, PPC_NONE, PPC2_LSQ_ISA207),
+>   #endif
+> -GEN_HANDLER(sync, 0x1F, 0x16, 0x12, 0x039FF801, PPC_MEM_SYNC),
+>   /* ISA v3.0 changed the extended opcode from 62 to 30 */
+>   GEN_HANDLER(wait, 0x1F, 0x1E, 0x01, 0x039FF801, PPC_WAIT),
+>   GEN_HANDLER_E(wait, 0x1F, 0x1E, 0x00, 0x039CF801, PPC_NONE, PPC2_ISA300),
+> @@ -6633,9 +6538,6 @@ GEN_HANDLER2_E(tlbilx_booke206, "tlbilx", 0x1F, 0x12, 0x00, 0x03800001,
+>   GEN_HANDLER(wrtee, 0x1F, 0x03, 0x04, 0x000FFC01, PPC_WRTEE),
+>   GEN_HANDLER(wrteei, 0x1F, 0x03, 0x05, 0x000E7C01, PPC_WRTEE),
+>   GEN_HANDLER(dlmzb, 0x1F, 0x0E, 0x02, 0x00000000, PPC_440_SPEC),
+> -GEN_HANDLER_E(mbar, 0x1F, 0x16, 0x1a, 0x001FF801,
+> -              PPC_BOOKE, PPC2_BOOKE206),
+> -GEN_HANDLER(msync_4xx, 0x1F, 0x16, 0x12, 0x039FF801, PPC_BOOKE),
+>   GEN_HANDLER2_E(icbt_440, "icbt", 0x1F, 0x16, 0x00, 0x03E00001,
+>                  PPC_BOOKE, PPC2_BOOKE206),
+>   GEN_HANDLER2(icbt_440, "icbt", 0x1F, 0x06, 0x08, 0x03E00001,
+> diff --git a/target/ppc/translate/misc-impl.c.inc b/target/ppc/translate/misc-impl.c.inc
+> new file mode 100644
+> index 0000000000..f58bf8b848
+> --- /dev/null
+> +++ b/target/ppc/translate/misc-impl.c.inc
+> @@ -0,0 +1,135 @@
+> +/*
+> + * Power ISA decode for misc instructions
+> + *
+> + * Copyright (c) 2024, IBM Corporation.
+> + *
+> + * This library is free software; you can redistribute it and/or
+> + * modify it under the terms of the GNU Lesser General Public
+> + * License as published by the Free Software Foundation; either
+> + * version 2.1 of the License, or (at your option) any later version.
+> + *
+> + * This library is distributed in the hope that it will be useful,
+> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
+> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+> + * Lesser General Public License for more details.
+> + *
+> + * You should have received a copy of the GNU Lesser General Public
+> + * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+> + */
+> +
+> +/*
+> + * Memory Barrier Instructions
+> + */
+> +
+> +static bool trans_SYNC(DisasContext *ctx, arg_X_sync *a)
+> +{
+> +    TCGBar bar = TCG_MO_ALL;
+> +    uint32_t l = a->l;
+> +
+> +    /*
+> +     * BookE uses the msync mnemonic. This means hwsync, except in the
+> +     * 440, where it an execution serialisation point that requires all
+> +     * previous storage accesses to have been performed to memory (which
+> +     * doesn't matter for TCG).
+> +     */
+> +    if (!(ctx->insns_flags & PPC_MEM_SYNC)) {
+> +        if (ctx->insns_flags & PPC_BOOKE) {
+> +            /* msync replaces sync on 440, interpreted as nop */
+> +            /* XXX: this also catches e200 */
+> +            return true;
+> +        }
+> +
+> +        return false;
+> +    }
+> +
+> +    /* e500 family seems to treat reserved bits as invalid, this enforces l=0 */
+> +    if ((ctx->insns_flags2 & PPC2_BOOKE206) && (ctx->opcode & 0x03FFF801)) {
+> +        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
+> +    }
+> +
+> +    if ((l == 1) && (ctx->insns_flags2 & PPC2_MEM_LWSYNC)) {
+> +        bar = TCG_MO_LD_LD | TCG_MO_LD_ST | TCG_MO_ST_ST;
+> +    }
+> +
+> +    /*
+> +     * We may need to check for a pending TLB flush.
+> +     *
+> +     * We do this on ptesync (l == 2) on ppc64 and any sync on ppc32.
+> +     *
+> +     * Additionally, this can only happen in kernel mode however so
+> +     * check MSR_PR as well.
+> +     */
+> +    if (((l == 2) || !(ctx->insns_flags & PPC_64B)) && !ctx->pr) {
+> +        gen_check_tlb_flush(ctx, true);
+> +    }
+> +
+> +    tcg_gen_mb(bar | TCG_BAR_SC);
+> +
+> +    return true;
+> +}
+> +
+> +static bool trans_EIEIO(DisasContext *ctx, arg_EIEIO *a)
+> +{
+> +    TCGBar bar = TCG_MO_ALL;
+> +
+> +    /*
+> +     * BookE uses the mbar instruction instead of eieio, which is basically
+> +     * full hwsync memory barrier, but is not execution synchronising. For
+> +     * the purpose of TCG the distinction is not relevant.
+> +     */
+> +    if (!(ctx->insns_flags & PPC_MEM_EIEIO)) {
+> +        if ((ctx->insns_flags & PPC_BOOKE) ||
+> +            (ctx->insns_flags2 & PPC2_BOOKE206)) {
+> +            return true;
+> +        }
+> +        return false;
+> +    }
+> +
+> +    /*
+> +     * eieio has complex semanitcs. It provides memory ordering between
+> +     * operations in the set:
+> +     * - loads from CI memory.
+> +     * - stores to CI memory.
+> +     * - stores to WT memory.
+> +     *
+> +     * It separately also orders memory for operations in the set:
+> +     * - stores to cacheble memory.
+> +     *
+> +     * It also serializes instructions:
+> +     * - dcbt and dcbst.
+> +     *
+> +     * It separately serializes:
+> +     * - tlbie and tlbsync.
+> +     *
+> +     * And separately serializes:
+> +     * - slbieg, slbiag, and slbsync.
+> +     *
+> +     * The end result is that CI memory ordering requires TCG_MO_ALL
+> +     * and it is not possible to special-case more relaxed ordering for
+> +     * cacheable accesses. TCG_BAR_SC is required to provide this
+> +     * serialization.
+> +     */
+> +
+> +    /*
+> +     * POWER9 has a eieio instruction variant using bit 6 as a hint to
+> +     * tell the CPU it is a store-forwarding barrier.
+> +     */
+> +    if (ctx->opcode & 0x2000000) {
+> +        /*
+> +         * ISA says that "Reserved fields in instructions are ignored
+> +         * by the processor". So ignore the bit 6 on non-POWER9 CPU but
+> +         * as this is not an instruction software should be using,
+> +         * complain to the user.
+> +         */
+> +        if (!(ctx->insns_flags2 & PPC2_ISA300)) {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "invalid eieio using bit 6 at @"
+> +                          TARGET_FMT_lx "\n", ctx->cia);
+> +        } else {
+> +            bar = TCG_MO_ST_LD;
+> +        }
+> +    }
+> +
+> +    tcg_gen_mb(bar | TCG_BAR_SC);
+> +
+> +    return true;
+> +}
+
 
