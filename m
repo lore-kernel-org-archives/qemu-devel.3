@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06A86C10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 10:58:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D837FC10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 10:58:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4IVG-0006Du-Pa; Tue, 07 May 2024 06:56:58 -0400
+	id 1s4IVD-0005xn-NS; Tue, 07 May 2024 06:56:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s4IVB-0005ui-U4
- for qemu-devel@nongnu.org; Tue, 07 May 2024 06:56:53 -0400
+ id 1s4IV0-0005Bo-Mw
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 06:56:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s4IV9-0002wd-Gt
- for qemu-devel@nongnu.org; Tue, 07 May 2024 06:56:53 -0400
+ id 1s4IUy-0002uK-Ms
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 06:56:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715079410;
+ s=mimecast20190719; t=1715079398;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hv1mTHtMOvMDbCaGwvhYNHLHmob4hA1awvsWSuwA+Aw=;
- b=iXgU3M1LUSBAJm3mDTv8g39iF/ejvz57snKVOLsejZb4aH9bM7FeEUhGbuFIz0O5sMpeKZ
- UYmxkr/UOfynHjCPJ+3sXE065Hbnwz9g8sFetrPKKM/T/1J6zhurnt6ApkUTaZFa0co8u0
- CWQnkR0pURoxzM/MdHMg9v2jfCjv1Ck=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=36zjtL34Xdsi5Kw7ff/j9esAdUS5f+PAQXgkpMxW4Zk=;
+ b=BZ05cT+EXpQJLgbBwAZKhfuynAG45QgIb6F1XZIWcb+yzy28TyGwAEDCgs/yBvE8f8liKn
+ sBWhpvmuqWrGfv1wGOOuTXqphvP9ZraVSob10RiiV9TLn3OvO3HAWroVPaMJEgTU7xb1y7
+ 2VOupSeIFWOXH8Cel8hY7Y7LoJJ7EB0=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-483-YftTFXGROV2TfX-mowK5mQ-1; Tue, 07 May 2024 06:56:49 -0400
-X-MC-Unique: YftTFXGROV2TfX-mowK5mQ-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a59c0ecd59cso164812666b.2
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 03:56:49 -0700 (PDT)
+ us-mta-411-Hm02DHwqOCOWyIlcIKmYrA-1; Tue, 07 May 2024 06:56:37 -0400
+X-MC-Unique: Hm02DHwqOCOWyIlcIKmYrA-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a59ad486084so153453866b.1
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 03:56:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715079407; x=1715684207;
+ d=1e100.net; s=20230601; t=1715079395; x=1715684195;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hv1mTHtMOvMDbCaGwvhYNHLHmob4hA1awvsWSuwA+Aw=;
- b=TtFClvm5lm9snT6LsWll5HBNw8JflLvkj4pjXI1JTqOogYh3pDtqDac/hLeWHk/OHv
- t+zfODXZuOxG5+HJ+VbCvmLG8TbycpYZ6ccI9Zi77PvZQVJvLHwW9erUtTA3nbQLL1jS
- vahcLzWaPVgWzM/QGOjS2P+ERwNSp2pAW5fq5eoII3jk14rhdMP0QIU10/qejo0Ow6Fv
- lwybo336yCSdxLjdrhHXsvr+iD7WI8ORFM/zL4hsh1V+meEl/OYGkQhVfWaUTGUv0gXt
- VtaTOuNpPvFevkrMlokwdRY89nVT+DCl5uPHOgALyO5rP/Gvsfx5UpTGZtOg6bEkNV+6
- tTKQ==
-X-Gm-Message-State: AOJu0YyT35+Ki159l4lr+b4U0c6BqB7Fpo4PM1kDV1JKkfFIdFgnsjxv
- +An/3eDHss+5wdY26+5gVWddt39BEprYc/Rju/8bNm8WMv/pwsN0IklT1hHyh2xfvaitb4pBE1/
- m7SNo8WYRW6/OvMZFGcAuJ9y9DvVtgDFSm+cdpOV3cp6EKHvHzYgSLaV3iwk7L2tUEeITTF0i+7
- w3AL7p2sc/rCuNryRd9Dye6C0wjJHiyISn1Pjh
-X-Received: by 2002:a50:934f:0:b0:572:9c4c:250b with SMTP id
- n15-20020a50934f000000b005729c4c250bmr12021011eda.18.1715079407442; 
- Tue, 07 May 2024 03:56:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFZeF5IeMRdfd8q2wZFgh1br7eSDQtga1AAtIGbq7i3f4uoxxg1zItAiqOPSG0Hw5pRXb8KVg==
-X-Received: by 2002:a50:934f:0:b0:572:9c4c:250b with SMTP id
- n15-20020a50934f000000b005729c4c250bmr12020995eda.18.1715079407100; 
- Tue, 07 May 2024 03:56:47 -0700 (PDT)
+ bh=36zjtL34Xdsi5Kw7ff/j9esAdUS5f+PAQXgkpMxW4Zk=;
+ b=AiEfQWo4pp6wALQG5j3qqlJCN1dUMJn6VimEFkzOwpcVBaqbieUe6pyeWH4bFVjW3r
+ FK5zsIRFh/uki7QcWk9FcXvDIpFeOZKLn7FadEmjO92Cps7XD1cd3YCPnCtsxpodsMpg
+ d8XTzD6yAP0IJrC+lhEow3lwGseKNfzvRhgyIXmTSQvVOSsqsWQnMgc4U/rz2pzCxciV
+ JGdhBiluKnNn4bTMYdCi2mQKq4kLqk2yGH4AaooRErhbTDq2V7lpPSlLmzXmzSSdKy56
+ Vw4FCnjgf8zZwR8s1mqMoDoZBLIpPqNSssqPjaCDjBE6UGXmwbRWaOqG6uehuNtx8q8E
+ j6pw==
+X-Gm-Message-State: AOJu0YyP1TJ7FEuoEfR7+v/Lvu/NxX0CyMM5Gm1At2fC8vU+kcdlL4LV
+ GlG2UjvL2JU/NtVWVi67Tkl49hox94V9EoJLBAujjQN9vcaY8W0PRWcHjacS8O9iAHRp+eCVGv1
+ wfrKdauBQRvnk3GJvgyDgVXF2OvniJ4ddb3fajBzNXVuCJ2tCOE7kl/JHOyoTXZGcTMpl5dGk4c
+ fnO57oFCJ7Qkz9zQP/e+mgGn5xC2f2MMdUhT86
+X-Received: by 2002:a17:907:9722:b0:a59:bae0:b12f with SMTP id
+ jg34-20020a170907972200b00a59bae0b12fmr6412195ejc.57.1715079395595; 
+ Tue, 07 May 2024 03:56:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEt9bxOaDBYQ1nNDFqRUS1YIQbKQpLNrYB8vlpSUI+Kwv5sssuCKz3lyTxm4pc7gu8ltgEABw==
+X-Received: by 2002:a17:907:9722:b0:a59:bae0:b12f with SMTP id
+ jg34-20020a170907972200b00a59bae0b12fmr6412185ejc.57.1715079395300; 
+ Tue, 07 May 2024 03:56:35 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- er21-20020a056402449500b005726e5e8765sm6215784edb.3.2024.05.07.03.56.46
+ g3-20020a170906394300b00a599c1d46d5sm4786967eje.101.2024.05.07.03.56.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 May 2024 03:56:46 -0700 (PDT)
+ Tue, 07 May 2024 03:56:34 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 25/26] target/i386: split legacy decoder into a separate
- function
-Date: Tue,  7 May 2024 12:55:37 +0200
-Message-ID: <20240507105538.180704-26-pbonzini@redhat.com>
+Subject: [PULL 20/26] target/i386: move remaining conditional operations to
+ new decoder
+Date: Tue,  7 May 2024 12:55:32 +0200
+Message-ID: <20240507105538.180704-21-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240507105538.180704-1-pbonzini@redhat.com>
 References: <20240507105538.180704-1-pbonzini@redhat.com>
@@ -103,113 +103,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Split the bits that have some duplication with disas_insn_new, from
-those that should be the main topic of the conversion.  This is the
-first step towards removing duplicate decoding of prefixes between
-disas_insn and disas_insn_new.
+Move long-displacement Jcc, SETcc and CMOVcc to the new decoder.
+While filling in the tables makes the code seem longer, the new
+emitters are all just one line of code.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/translate.c | 58 +++++++++++++++++++++++--------------
- 1 file changed, 37 insertions(+), 21 deletions(-)
+ target/i386/tcg/decode-new.h     |  1 +
+ target/i386/tcg/translate.c      |  2 +-
+ target/i386/tcg/decode-new.c.inc | 56 ++++++++++++++++++++++++++++++++
+ target/i386/tcg/emit.c.inc       | 10 ++++++
+ 4 files changed, 68 insertions(+), 1 deletion(-)
 
+diff --git a/target/i386/tcg/decode-new.h b/target/i386/tcg/decode-new.h
+index e86a5c2cb56..2ea06b44787 100644
+--- a/target/i386/tcg/decode-new.h
++++ b/target/i386/tcg/decode-new.h
+@@ -107,6 +107,7 @@ typedef enum X86CPUIDFeature {
+     X86_FEAT_AVX2,
+     X86_FEAT_BMI1,
+     X86_FEAT_BMI2,
++    X86_FEAT_CMOV,
+     X86_FEAT_CMPCCXADD,
+     X86_FEAT_F16C,
+     X86_FEAT_FMA,
 diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 973bf07ef27..eb0e37e1480 100644
+index 3060fdbee94..b1c1aecf71e 100644
 --- a/target/i386/tcg/translate.c
 +++ b/target/i386/tcg/translate.c
-@@ -3117,15 +3117,15 @@ static bool disas_insn_x87(DisasContext *s, CPUState *cpu, int b)
-     return true;
+@@ -3207,7 +3207,7 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
+ #ifndef CONFIG_USER_ONLY
+         use_new &= b <= limit;
+ #endif
+-        if (use_new && 0) {
++        if (use_new && (b >= 0x138 && b <= 0x19f)) {
+             disas_insn_new(s, cpu, b);
+             return true;
+         }
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index b145af7a565..c70a7836914 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -999,6 +999,15 @@ static const X86OpEntry opcodes_0F[256] = {
+     /* Incorrectly listed as Mq,Vq in the manual */
+     [0x17] = X86_OP_ENTRY3(VMOVHPx_st,  M,q, None,None, V,dq, vex5 p_00_66),
+ 
++    [0x40] = X86_OP_ENTRY2(CMOVcc,     G,v, E,v, cpuid(CMOV)),
++    [0x41] = X86_OP_ENTRY2(CMOVcc,     G,v, E,v, cpuid(CMOV)),
++    [0x42] = X86_OP_ENTRY2(CMOVcc,     G,v, E,v, cpuid(CMOV)),
++    [0x43] = X86_OP_ENTRY2(CMOVcc,     G,v, E,v, cpuid(CMOV)),
++    [0x44] = X86_OP_ENTRY2(CMOVcc,     G,v, E,v, cpuid(CMOV)),
++    [0x45] = X86_OP_ENTRY2(CMOVcc,     G,v, E,v, cpuid(CMOV)),
++    [0x46] = X86_OP_ENTRY2(CMOVcc,     G,v, E,v, cpuid(CMOV)),
++    [0x47] = X86_OP_ENTRY2(CMOVcc,     G,v, E,v, cpuid(CMOV)),
++
+     [0x50] = X86_OP_ENTRY3(MOVMSK,     G,y, None,None, U,x, vex7 p_00_66),
+     [0x51] = X86_OP_GROUP3(sse_unary,  V,x, H,x, W,x, vex2_rep3 p_00_66_f3_f2), /* sqrtps */
+     [0x52] = X86_OP_GROUP3(sse_unary,  V,x, H,x, W,x, vex4_rep5 p_00_f3), /* rsqrtps */
+@@ -1026,6 +1035,24 @@ static const X86OpEntry opcodes_0F[256] = {
+     [0x76] = X86_OP_ENTRY3(PCMPEQD,    V,x, H,x, W,x,  vex4 mmx avx2_256 p_00_66),
+     [0x77] = X86_OP_GROUP0(0F77),
+ 
++    [0x80] = X86_OP_ENTRYr(Jcc, J,z_f64),
++    [0x81] = X86_OP_ENTRYr(Jcc, J,z_f64),
++    [0x82] = X86_OP_ENTRYr(Jcc, J,z_f64),
++    [0x83] = X86_OP_ENTRYr(Jcc, J,z_f64),
++    [0x84] = X86_OP_ENTRYr(Jcc, J,z_f64),
++    [0x85] = X86_OP_ENTRYr(Jcc, J,z_f64),
++    [0x86] = X86_OP_ENTRYr(Jcc, J,z_f64),
++    [0x87] = X86_OP_ENTRYr(Jcc, J,z_f64),
++
++    [0x90] = X86_OP_ENTRYw(SETcc, E,b),
++    [0x91] = X86_OP_ENTRYw(SETcc, E,b),
++    [0x92] = X86_OP_ENTRYw(SETcc, E,b),
++    [0x93] = X86_OP_ENTRYw(SETcc, E,b),
++    [0x94] = X86_OP_ENTRYw(SETcc, E,b),
++    [0x95] = X86_OP_ENTRYw(SETcc, E,b),
++    [0x96] = X86_OP_ENTRYw(SETcc, E,b),
++    [0x97] = X86_OP_ENTRYw(SETcc, E,b),
++
+     [0x28] = X86_OP_ENTRY3(MOVDQ,      V,x,  None,None, W,x, vex1 p_00_66), /* MOVAPS */
+     [0x29] = X86_OP_ENTRY3(MOVDQ,      W,x,  None,None, V,x, vex1 p_00_66), /* MOVAPS */
+     [0x2A] = X86_OP_GROUP0(0F2A),
+@@ -1038,6 +1065,15 @@ static const X86OpEntry opcodes_0F[256] = {
+     [0x38] = X86_OP_GROUP0(0F38),
+     [0x3a] = X86_OP_GROUP0(0F3A),
+ 
++    [0x48] = X86_OP_ENTRY2(CMOVcc,     G,v, E,v, cpuid(CMOV)),
++    [0x49] = X86_OP_ENTRY2(CMOVcc,     G,v, E,v, cpuid(CMOV)),
++    [0x4a] = X86_OP_ENTRY2(CMOVcc,     G,v, E,v, cpuid(CMOV)),
++    [0x4b] = X86_OP_ENTRY2(CMOVcc,     G,v, E,v, cpuid(CMOV)),
++    [0x4c] = X86_OP_ENTRY2(CMOVcc,     G,v, E,v, cpuid(CMOV)),
++    [0x4d] = X86_OP_ENTRY2(CMOVcc,     G,v, E,v, cpuid(CMOV)),
++    [0x4e] = X86_OP_ENTRY2(CMOVcc,     G,v, E,v, cpuid(CMOV)),
++    [0x4f] = X86_OP_ENTRY2(CMOVcc,     G,v, E,v, cpuid(CMOV)),
++
+     [0x58] = X86_OP_ENTRY3(VADD,       V,x, H,x, W,x, vex2_rep3 p_00_66_f3_f2),
+     [0x59] = X86_OP_ENTRY3(VMUL,       V,x, H,x, W,x, vex2_rep3 p_00_66_f3_f2),
+     [0x5a] = X86_OP_GROUP0(0F5A),
+@@ -1063,6 +1099,24 @@ static const X86OpEntry opcodes_0F[256] = {
+     [0x7e] = X86_OP_GROUP0(0F7E),
+     [0x7f] = X86_OP_GROUP0(0F7F),
+ 
++    [0x88] = X86_OP_ENTRYr(Jcc, J,z_f64),
++    [0x89] = X86_OP_ENTRYr(Jcc, J,z_f64),
++    [0x8a] = X86_OP_ENTRYr(Jcc, J,z_f64),
++    [0x8b] = X86_OP_ENTRYr(Jcc, J,z_f64),
++    [0x8c] = X86_OP_ENTRYr(Jcc, J,z_f64),
++    [0x8d] = X86_OP_ENTRYr(Jcc, J,z_f64),
++    [0x8e] = X86_OP_ENTRYr(Jcc, J,z_f64),
++    [0x8f] = X86_OP_ENTRYr(Jcc, J,z_f64),
++
++    [0x98] = X86_OP_ENTRYw(SETcc, E,b),
++    [0x99] = X86_OP_ENTRYw(SETcc, E,b),
++    [0x9a] = X86_OP_ENTRYw(SETcc, E,b),
++    [0x9b] = X86_OP_ENTRYw(SETcc, E,b),
++    [0x9c] = X86_OP_ENTRYw(SETcc, E,b),
++    [0x9d] = X86_OP_ENTRYw(SETcc, E,b),
++    [0x9e] = X86_OP_ENTRYw(SETcc, E,b),
++    [0x9f] = X86_OP_ENTRYw(SETcc, E,b),
++
+     [0xae] = X86_OP_GROUP0(group15),
+ 
+     [0xc2] = X86_OP_ENTRY4(VCMP,       V,x, H,x, W,x,       vex2_rep3 p_00_66_f3_f2),
+@@ -1929,6 +1983,8 @@ static bool has_cpuid_feature(DisasContext *s, X86CPUIDFeature cpuid)
+     switch (cpuid) {
+     case X86_FEAT_None:
+         return true;
++    case X86_FEAT_CMOV:
++        return (s->cpuid_features & CPUID_CMOV);
+     case X86_FEAT_F16C:
+         return (s->cpuid_ext_features & CPUID_EXT_F16C);
+     case X86_FEAT_FMA:
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index 2c848fab62f..a9e32516afd 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -1386,6 +1386,11 @@ static void gen_CMC(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
+     tcg_gen_xori_tl(cpu_cc_src, cpu_cc_src, CC_C);
  }
  
-+static void disas_insn_old(DisasContext *s, CPUState *cpu, int b);
-+
- /* convert one instruction. s->base.is_jmp is set if the translation must
-    be stopped. Return the next pc value */
- static bool disas_insn(DisasContext *s, CPUState *cpu)
- {
-     CPUX86State *env = cpu_env(cpu);
-     int b, prefixes;
--    int shift;
--    MemOp ot, aflag, dflag;
--    int modrm, reg, rm, mod, op, opreg, val;
-+    MemOp aflag, dflag;
-     bool orig_cc_op_dirty = s->cc_op_dirty;
-     CCOp orig_cc_op = s->cc_op;
-     target_ulong orig_pc_save = s->pc_save;
-@@ -3271,6 +3271,38 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
-     s->aflag = aflag;
-     s->dflag = dflag;
- 
-+    switch (b) {
-+    case 0     ... 0xd7:
-+    case 0xe0  ... 0xff:
-+    case 0x10e ... 0x117:
-+    case 0x128 ... 0x12f:
-+    case 0x138 ... 0x19f:
-+    case 0x1a0 ... 0x1a1:
-+    case 0x1a8 ... 0x1a9:
-+    case 0x1af:
-+    case 0x1b2:
-+    case 0x1b4 ... 0x1b7:
-+    case 0x1be ... 0x1bf:
-+    case 0x1c2 ... 0x1c6:
-+    case 0x1c8 ... 0x1ff:
-+        disas_insn_new(s, cpu, b);
-+        break;
-+    default:
-+        disas_insn_old(s, cpu, b);
-+        break;
-+    }
-+    return true;
++static void gen_CMOVcc(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
++{
++    gen_cmovcc1(s, decode->b & 0xf, s->T0, s->T1);
 +}
 +
-+static void disas_insn_old(DisasContext *s, CPUState *cpu, int b)
-+{
-+    CPUX86State *env = cpu_env(cpu);
-+    int prefixes = s->prefix;
-+    MemOp dflag = s->dflag;
-+    int shift;
-+    MemOp ot;
-+    int modrm, reg, rm, mod, op, opreg, val;
-+
-     /* now check op code */
-     switch (b) {
-         /**************************/
-@@ -4726,31 +4758,15 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
- 
-         set_cc_op(s, CC_OP_POPCNT);
-         break;
--    case 0     ... 0xd7:
--    case 0xe0  ... 0xff:
--    case 0x10e ... 0x117:
--    case 0x128 ... 0x12f:
--    case 0x138 ... 0x19f:
--    case 0x1a0 ... 0x1a1:
--    case 0x1a8 ... 0x1a9:
--    case 0x1af:
--    case 0x1b2:
--    case 0x1b4 ... 0x1b7:
--    case 0x1be ... 0x1bf:
--    case 0x1c2 ... 0x1c6:
--    case 0x1c8 ... 0x1ff:
--        disas_insn_new(s, cpu, b);
--        break;
-     default:
-         goto unknown_op;
+ static void gen_CMPccXADD(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
+ {
+     TCGLabel *label_top = gen_new_label();
+@@ -3305,6 +3310,11 @@ static void gen_SCAS(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
      }
--    return true;
-+    return;
-  illegal_op:
-     gen_illegal_opcode(s);
--    return true;
-+    return;
-  unknown_op:
-     gen_unknown_opcode(env, s);
--    return true;
  }
  
- void tcg_x86_init(void)
++static void gen_SETcc(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
++{
++    gen_setcc1(s, decode->b & 0xf, s->T0);
++}
++
+ static void gen_SHA1NEXTE(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
+ {
+     gen_helper_sha1nexte(OP_PTR0, OP_PTR1, OP_PTR2);
 -- 
 2.45.0
 
