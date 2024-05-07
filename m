@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E69EC25B4F
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 07:33:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9797EC10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 07:35:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4FK7-00089E-0i; Tue, 07 May 2024 03:33:15 -0400
+	id 1s4FLr-0000XC-Ne; Tue, 07 May 2024 03:35:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4FK5-000891-Lg
- for qemu-devel@nongnu.org; Tue, 07 May 2024 03:33:13 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4FLj-0000Wl-Gi
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 03:34:57 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4FJz-0003aj-Bm
- for qemu-devel@nongnu.org; Tue, 07 May 2024 03:33:08 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-41ba0bb5837so19397405e9.3
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 00:33:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4FLh-0005uX-Fi
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 03:34:54 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-41ba1ba5591so20898145e9.1
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 00:34:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715067185; x=1715671985; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715067291; x=1715672091; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zzGnp97rSg7gvT8i0eSN9694T1KbqRaIo97BDou6Y0E=;
- b=mvSWCxXq+dHA1S832bHNvSmoQ1j4Ww+qCPdy1SCtTdXKVARlej6+2E0IXHm2zRvkg/
- y1ANwImVmCcts1zoSANXjYV3mwdT9QqlrAjFR2Vb/2mee51hTl4gPj+0kqOx2ow310rE
- xFQmegvbaCD7OXyzF2z8Rvt+D6/Mm3UKsaUFomsi5jLTQqH2phcy94y69VDXWaOOdTPx
- rT+MybxYF/Ju2HB+9IUp57BeSZ5mMWyND7NuJGbpN+PrdtemuOyhjsIMpOb4kOwjsfbP
- PFgWk4YCs7/OZK3ycpLQHPTSed7kd+hQB0YdYXGkaozKSoQRRqYtSra/bMXL7axYVY9f
- 5QcQ==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=oOAotrvpO0LMM8zVjtpr+DfXCL6BT1nfHqvQAWpPdZA=;
+ b=fpklyt1YxwZRByuLK/pJHxnbF0fE41V6KHW3xguKa9DN+CGxOKybu8jsl7YP46HF/r
+ Dl/c1mUal1H1cx1VhKlfYLiC6ap59RrG/7OBxn/d5Sni36ghtG/OT1Bc7UdplkS5MrAj
+ T7a/5aHvN3bTdSlCDwr7VIJjg1uAs7aWXblhvhLF5BpSWj64mLAQN6/iP4I6MjwpXyFn
+ ohpMabrGSI+4o49T3t1F3aZ/Og2agJBph7Pq6IVR1OUSlIvGc3KoCxsUuypV4+EwqPy4
+ eZCqd94vqMmodYK2304KCep8A7zapQdjzw06bBTSWTdfwk3PbbhLMp2x99mUgw9FTP0W
+ nnVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715067185; x=1715671985;
+ d=1e100.net; s=20230601; t=1715067291; x=1715672091;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zzGnp97rSg7gvT8i0eSN9694T1KbqRaIo97BDou6Y0E=;
- b=sVwU987l55vWNAwjzwSrGvbTXqNPay6ag+ime40hIN5IsYbyr6xDEmQVwIeQUfTDSl
- LARHir3E+tEwsrJNGrsI66nnY3Yx5vTTy+im2sdU6TiBt78hZ0NUH30hl9tlO9oj461j
- /SxQgD0I2aMGnxkuyRo1wlGrIXiBUGny1h6R2njwi35GQco4qz7D1T5WNMLH/a36UUqF
- gLuGZiRmSytgIyQmud++vMQW12ZR7salw34QUuaQEmTEpiYyRUN+2Z5rFZWZnyj2bU+H
- Tyxnrpj3lj4df/Bi2AzL9F3dLuOUV9KCC6IvZE0GCijA1DbSv/51e5hpPKs/5eId7IzQ
- 427Q==
+ bh=oOAotrvpO0LMM8zVjtpr+DfXCL6BT1nfHqvQAWpPdZA=;
+ b=plvqu62DIB2P3uOeMJEhSqI6S0ePTiL0FygFYZzlaJv6JQeFM5PWO3uNO9OT8WEQ4u
+ AePr3h9opjnVf4G/3pw0LL6jyBM6wlMmzudQFC+M/WjSK7meaCkBDCkUtDdYb6NMNpzO
+ sDSFTi8yXY8h7MHLsYbb80eOqTpl/z6t6gTIeJNcPNVPT2shQ1VTuMV7thyWVZmtEBh/
+ l9zTVCXHyyRxBpgWey1a4D2Wb/j9fFaJG1ZQ7wjOxi0cuBil+yYnq6AqckYNbbaAsKE6
+ 9UMcc2uws9yKDLvEixG/RvBXvX7d58lEyBZR2ae03sVloXgi57A4o9aVLnoYthm1rZia
+ Ur8A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXLM8/wFHiHzArD+K31Q0ypAND4q27d4GRvP7WMvvrJFp73M+zryP47OImfVnQWPl9C2ITxdJc2wL3JWsI2h+Q9B0GoT3Y=
-X-Gm-Message-State: AOJu0YxwdR2qyMrdCPuO3ld5vnUWJ9ms1Tl3CFRjH0uKwRyTqIka3819
- ncAEJXNwGIWupJUP+yC7XQ8HY2w81N9/swuZGvD9ewFTrARKBft6w7FVvmT1Ygg=
-X-Google-Smtp-Source: AGHT+IGn0qF4uRtQiRnhtEPfMf4s6NVaFQdttfYrdycNvc8M66l8tTiN5yfnXzbpSL3Bwnmz4sQOEg==
-X-Received: by 2002:a05:600c:45cd:b0:419:d841:d318 with SMTP id
- s13-20020a05600c45cd00b00419d841d318mr9377437wmo.29.1715067185193; 
- Tue, 07 May 2024 00:33:05 -0700 (PDT)
+ AJvYcCX8xIpGAbP/+P7GuvkIA+3p830wXt9CUfRKgdRWFVFc+oHbCSbWD2PUgjd76BJVmvsUAlkyHHaVGLtLOGIMcTY7fvOJWS4=
+X-Gm-Message-State: AOJu0Yzl8U6HDE9hSZe3wAXQ4M3blUo19y7U2k2viK7iKIrMQUNJZ0vA
+ E9SLSi6m9ycZElf76NyOp6E3RgawulzwRO9iTBgBBm3xpNHEY0myx6MhO7T6bA8pINaWviek3Oe
+ 0
+X-Google-Smtp-Source: AGHT+IFDHujBb+NvvAFd2mulC4CCyHhVCH+J7UHB86nov8ISQj25YPBjqQWgjTR0bmu4wTg6ionM5Q==
+X-Received: by 2002:adf:a18f:0:b0:34c:b31e:18de with SMTP id
+ u15-20020adfa18f000000b0034cb31e18demr8377402wru.35.1715067290933; 
+ Tue, 07 May 2024 00:34:50 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.177.243])
  by smtp.gmail.com with ESMTPSA id
- t12-20020a05600c198c00b0041becb7ff05sm18310233wmq.26.2024.05.07.00.33.04
+ j30-20020a5d6e5e000000b0034db5f648a8sm12347091wrz.77.2024.05.07.00.34.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 May 2024 00:33:04 -0700 (PDT)
-Message-ID: <ef6df20a-04c9-46bd-95b4-b5bc553364ab@linaro.org>
-Date: Tue, 7 May 2024 09:33:02 +0200
+ Tue, 07 May 2024 00:34:50 -0700 (PDT)
+Message-ID: <4b070489-9676-4dff-8ccd-47b224f9ee62@linaro.org>
+Date: Tue, 7 May 2024 09:34:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/1] accel/kvm: Fix segmentation fault
-To: Masato Imai <mii@sfc.wide.ad.jp>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- "open list:Overall KVM CPUs" <kvm@vger.kernel.org>
-References: <20240507025010.1968881-1-mii@sfc.wide.ad.jp>
- <20240507025010.1968881-2-mii@sfc.wide.ad.jp>
+Subject: Re: [PATCH 3/4] hw/xtensa: require libfdt
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20240507071948.105022-1-pbonzini@redhat.com>
+ <20240507071948.105022-4-pbonzini@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240507025010.1968881-2-mii@sfc.wide.ad.jp>
+In-Reply-To: <20240507071948.105022-4-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,38 +96,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Masato,
-
-On 7/5/24 04:50, Masato Imai wrote:
-> When the KVM acceleration parameter is not set, executing calc_dirty_rate
-> with the -r or -b option results in a segmentation fault due to accessing
-> a null kvm_state pointer in the kvm_dirty_ring_enabled function. This
-> commit adds a null check for kvm_status to prevent segmentation faults.
+On 7/5/24 09:19, Paolo Bonzini wrote:
+> All other boards require libfdt if it can be used (including for example
+> i386/x86_64), so change the "imply" to "select" and always allow -dtb
+> in qemu-system-xtensa.
 > 
-> Signed-off-by: Masato Imai <mii@sfc.wide.ad.jp>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   accel/kvm/kvm-all.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index c0be9f5eed..544293be8a 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -2329,7 +2329,7 @@ bool kvm_vcpu_id_is_valid(int vcpu_id)
->   
->   bool kvm_dirty_ring_enabled(void)
->   {
-> -    return kvm_state->kvm_dirty_ring_size ? true : false;
-> +    return kvm_state && kvm_state->kvm_dirty_ring_size;
+>   hw/xtensa/xtfpga.c | 9 ---------
+>   hw/xtensa/Kconfig  | 4 ++--
+>   2 files changed, 2 insertions(+), 11 deletions(-)
 
-I missed the previous iterations of this patch. I disagree
-with this approach, we shouldn't call kvm_dirty_ring_enabled()
-if kvm_state is NULL, this is a bad API usage. So I'd rather
-assert(kvm_state) here and force the callers to check for
-kvm_enabled() before calling.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
->   }
->   
->   static void query_stats_cb(StatsResultList **result, StatsTarget target,
+
 
 
