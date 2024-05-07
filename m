@@ -4,67 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF5A1C10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 09:44:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC03FC25B4F
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 09:44:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4HN1-00083q-4x; Tue, 07 May 2024 05:44:26 -0400
+	id 1s4HNU-0002D7-RA; Tue, 07 May 2024 05:44:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s4HMn-0007gm-R0
- for qemu-devel@nongnu.org; Tue, 07 May 2024 05:44:10 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4HNS-00022C-KU
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 05:44:50 -0400
+Received: from mail-il1-x12f.google.com ([2607:f8b0:4864:20::12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s4HMl-00083o-VK
- for qemu-devel@nongnu.org; Tue, 07 May 2024 05:44:09 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a59b58fe083so432732166b.0
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 02:44:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4HNQ-0000ca-F8
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 05:44:50 -0400
+Received: by mail-il1-x12f.google.com with SMTP id
+ e9e14a558f8ab-36c9c603b1dso6037085ab.1
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 02:44:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715075046; x=1715679846; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=rxwyMmfF3KqdghGwiS3fdlhYvlXBRfgLw4N8EEu+e1Y=;
- b=iujU1kHCsc2XzI67AblK2gfqCQbulVevsGpw/jzokx8Q8dn/mAXA2NthcQ/JDkJmSL
- xy19Jk22j5PKnnDZeU1AuoGArb53rl3eAGaZDP6sGoF31bO154QPS11htjyXyzjlOi90
- qzx4LFPu/bPPa0m2vgm7kl0IpjG0HaNo/onUSJU+ZpTqbjy2layaZWfaj/hk01nOj1rh
- Mz9V16x5WGyAIK/IC9YevkLyFUhtJOwy6fPuHzqjc+ZL4/zg1TdvSNTNXo60cTY41sXo
- pB5FyB9AXp77cPMgK+Imiou11777q+3GVesCf8pQ6jOl0NjJgTDBtMwkDUirW/ORKZic
- DjRA==
+ d=linaro.org; s=google; t=1715075087; x=1715679887; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=gDABy5HAOxnzlJ8M2TYozHuK6oLtg1StJK56pYStw4s=;
+ b=W7/ghvxE9xvfiRTufGbEE5tjvNKkv5CGTgUh8qcUIg5opR/QFthQvn4MlM5xPCq3uw
+ hsIc9SnZgTjDv/5raQudQVPgkO6WL1wMXAFfqJuC7v9o12kInaAlA+Yq0sDA32qhiALs
+ xkmMczEtz2MNKnrjbZ00TQgv/L8n8aEk9u9nh6QH/5mkFMoQdV260qVvGfYTBs9GZRb2
+ vhIFowAUsHJ5i6OF25ech1qIaQIlFN6uonxevzZqOvW1dV86M5v4UJp/nPpSRBGmdUwb
+ T8qumafDiC0tY2mcCrKwM4ynae3bNin8VA7mE77MgdL2cX7ErT72RfyhF32ahjmQRa72
+ KUyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715075046; x=1715679846;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=rxwyMmfF3KqdghGwiS3fdlhYvlXBRfgLw4N8EEu+e1Y=;
- b=lRnKolT/7GWGsw2ry4czzU1p/XRXffnpuV4jTHwwIW8MAbl8crlD/okLW8hF6RyZ9e
- ZyJYlcr2m3WbEotUpG8zosc52I/uQTY45B9UavezuIiddbH1Pph2YC+3Hm9JRCyWGxi2
- aOKIZVb48nL15IYJfls/ekkm7fEcMtt9xLWYRF9LP+TOv7xgsMiz5o4FMMStDKf+mAIY
- jbMNfZriEMIbNodE+uUP85UnoTqVG6ffM4siXCUT7V8Mxp+Ai9cpkZc+/iGLvc0YZUI6
- kyku9RHnhMfoztwFqhUYQSaqxAstlmQMPbK923t/bwWi77d4pKDiZoAScqeahWlvvrVQ
- i5Cw==
-X-Gm-Message-State: AOJu0YxSWesg8/85cE8JdlDqWpnwSazC5PWCZ7/C+QizxlB6JxwdA9hs
- +H4TW4v4SjeADGaQRMEab3qiOOOaHU6LPKAeJai8LMB7kEUSRImSQ4qFamVZvOId2kFE8R+4d8o
- CYdHTL71G0Ub4ZYE37ozoex97f0EnXtNKZYDto6a8Z7BlyrCZ
-X-Google-Smtp-Source: AGHT+IEbDSbeW0gukHdeXT65fucysl1sPG9EwOdpZ+RaKe6c8srHk/RbyDyp9cyBB98ROmErfpj3HxlCk48luzmOvNA=
-X-Received: by 2002:a50:ab5c:0:b0:572:6846:b899 with SMTP id
- t28-20020a50ab5c000000b005726846b899mr6898027edc.41.1715075046321; Tue, 07
- May 2024 02:44:06 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1715075087; x=1715679887;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=gDABy5HAOxnzlJ8M2TYozHuK6oLtg1StJK56pYStw4s=;
+ b=C3wg6oi0L9oOSd45P1B/NE6sOdQpjsFi96SZAU4eRziEzUAkKW2q9T1MmXg5ODEHvE
+ voVReYKRql/B2pywwYYwAyMDzKry5mZ1G0DdrnWTdBWojMIj6FfRMdQgfqpoMh8555nY
+ R6QK+pWyJ78JUM2JjoOO15qWjvZeFPbUxmIOM9gwwRLDi3iG1Fy1g2o5LkdRJ32B67rg
+ qLarl7GYKPO/9khgY6Taj5/by4sXty5K/r2cSOzhIKwWJB2Mqob2dCtarUS/yGbHhHlb
+ VSNk6ZAKzKdMUGITlG2apDTOFJxrdW4I66ZaDJYr/omRA7YsFhCkDb0lj3yljbg6Z1tv
+ juqQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXZhi9Ad0e64fx7CAwuCCt7FRSFE2emFKSTp2s3ev1ekQx0y82oTpzvbnysueFXr8F8JouiUNmoGugzZHzKZDT38QOeMUo=
+X-Gm-Message-State: AOJu0Yze6P025RCOEVK6ShYqMy7oVMHzWp8R19G1CE6WJExJXHsdU/Ib
+ OBmovwg/V+Uskoif0sbkzhan4TdWXwB4wkvWZEVRH9nxJq0VRiJoJWf3ZEAIfRY=
+X-Google-Smtp-Source: AGHT+IGBuqn/T2a9M+Vi8LGaCroRNJVsZ5Qi3/XxRVErCD+x/fxoll4GZ9UemH3YIEB3HuF/1Tzikw==
+X-Received: by 2002:a05:6e02:13ad:b0:368:efa4:bdf8 with SMTP id
+ h13-20020a056e0213ad00b00368efa4bdf8mr16411027ilo.21.1715075086920; 
+ Tue, 07 May 2024 02:44:46 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.177.243])
+ by smtp.gmail.com with ESMTPSA id
+ r5-20020a92cd85000000b0036a3e54b6b1sm2625988ilb.13.2024.05.07.02.44.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 May 2024 02:44:46 -0700 (PDT)
+Message-ID: <264a1de0-1c1e-44bc-bf9b-f1082b9e0e9a@linaro.org>
+Date: Tue, 7 May 2024 11:44:39 +0200
 MIME-Version: 1.0
-References: <20240504141733.14813-1-dorjoychy111@gmail.com>
-In-Reply-To: <20240504141733.14813-1-dorjoychy111@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 7 May 2024 10:43:55 +0100
-Message-ID: <CAFEAcA9GFu2SvtdrEcH_S2kfc_OCQCyhRbKuRnKgYw9Tw6fvRw@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm/npcm7xx: remove setting of mp-affinity
-To: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Cc: qemu-devel@nongnu.org, kfting@nuvoton.com, wuhaotsh@google.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x631.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 01/19] backends: Introduce HostIOMMUDevice abstract
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org,
+ Markus Armbruster <armbru@redhat.com>
+Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
+ mst@redhat.com, peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com,
+ nicolinc@nvidia.com, joao.m.martins@oracle.com,
+ clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
+ chao.p.peng@intel.com, Paolo Bonzini <pbonzini@redhat.com>
+References: <20240507092043.1172717-1-zhenzhong.duan@intel.com>
+ <20240507092043.1172717-2-zhenzhong.duan@intel.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240507092043.1172717-2-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12f;
+ envelope-from=philmd@linaro.org; helo=mail-il1-x12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,19 +101,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 4 May 2024 at 15:17, Dorjoy Chowdhury <dorjoychy111@gmail.com> wrote:
->
-> The value of the mp-affinity property being set in npcm7xx_realize is
-> always the same as the default value it would have when arm_cpu_realizefn
-> is called if the property is not set here. So there is no need to set
-> the property value in npcm7xx_realize function.
->
-> Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Hi Zhenzhong,
+
+On 7/5/24 11:20, Zhenzhong Duan wrote:
+> Introduce HostIOMMUDevice as an abstraction of host IOMMU device.
+> 
+> Introduce .realize() to initialize HostIOMMUDevice further after
+> instance init.
+> 
+> Introduce a macro CONFIG_HOST_IOMMU_DEVICE to define the usage
+> for VFIO, and VDPA in the future.
+> 
+> Suggested-by: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 > ---
+>   MAINTAINERS                        |  2 ++
+>   include/sysemu/host_iommu_device.h | 51 ++++++++++++++++++++++++++++++
+>   backends/host_iommu_device.c       | 30 ++++++++++++++++++
+>   backends/Kconfig                   |  5 +++
+>   backends/meson.build               |  1 +
+>   5 files changed, 89 insertions(+)
+>   create mode 100644 include/sysemu/host_iommu_device.h
+>   create mode 100644 backends/host_iommu_device.c
 
 
+> diff --git a/include/sysemu/host_iommu_device.h b/include/sysemu/host_iommu_device.h
+> new file mode 100644
+> index 0000000000..2b58a94d62
+> --- /dev/null
+> +++ b/include/sysemu/host_iommu_device.h
+> @@ -0,0 +1,51 @@
+> +/*
+> + * Host IOMMU device abstract declaration
+> + *
+> + * Copyright (C) 2024 Intel Corporation.
+> + *
+> + * Authors: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2.  See
+> + * the COPYING file in the top-level directory.
+> + */
+> +
+> +#ifndef HOST_IOMMU_DEVICE_H
+> +#define HOST_IOMMU_DEVICE_H
+> +
+> +#include "qom/object.h"
+> +#include "qapi/error.h"
+> +
+> +#define TYPE_HOST_IOMMU_DEVICE "host-iommu-device"
+> +OBJECT_DECLARE_TYPE(HostIOMMUDevice, HostIOMMUDeviceClass, HOST_IOMMU_DEVICE)
+> +
+> +struct HostIOMMUDevice {
+> +    Object parent_obj;
+> +};
+> +
+> +/**
+> + * struct HostIOMMUDeviceClass - The base class for all host IOMMU devices.
+> + *
+> + * Different type of host devices (e.g., VFIO or VDPA device) or devices
+> + * with different backend (e.g., VFIO legacy container or IOMMUFD backend)
+> + * can have different sub-classes.
+> + */
+> +struct HostIOMMUDeviceClass {
+> +    ObjectClass parent_class;
+> +
+> +    /**
+> +     * @realize: initialize host IOMMU device instance further.
+> +     *
+> +     * Mandatory callback.
+> +     *
+> +     * @hiod: pointer to a host IOMMU device instance.
+> +     *
+> +     * @opaque: pointer to agent device of this host IOMMU device,
+> +     *          i.e., for VFIO, pointer to VFIODevice
+> +     *
+> +     * @errp: pass an Error out when realize fails.
+> +     *
+> +     * Returns: true on success, false on failure.
+> +     */
+> +    bool (*realize)(HostIOMMUDevice *hiod, void *opaque, Error **errp);
+> +};
+> +#endif
+> diff --git a/backends/host_iommu_device.c b/backends/host_iommu_device.c
+> new file mode 100644
+> index 0000000000..41f2fdce20
+> --- /dev/null
+> +++ b/backends/host_iommu_device.c
+> @@ -0,0 +1,30 @@
+> +/*
+> + * Host IOMMU device abstract
+> + *
+> + * Copyright (C) 2024 Intel Corporation.
+> + *
+> + * Authors: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2.  See
+> + * the COPYING file in the top-level directory.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "sysemu/host_iommu_device.h"
+> +
+> +OBJECT_DEFINE_ABSTRACT_TYPE(HostIOMMUDevice,
+> +                            host_iommu_device,
+> +                            HOST_IOMMU_DEVICE,
+> +                            OBJECT)
+> +
+> +static void host_iommu_device_class_init(ObjectClass *oc, void *data)
+> +{
+> +}
+> +
+> +static void host_iommu_device_init(Object *obj)
+> +{
+> +}
+> +
+> +static void host_iommu_device_finalize(Object *obj)
+> +{
+> +}
 
-Applied to target-arm.next, thanks.
-
--- PMM
+All these stubs call for a QOM interface design instead
+of inheritance IMHO. See INTERFACE_CHECK in "qom/object.h".
+But maybe I misunderstood this series :)
 
