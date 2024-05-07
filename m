@@ -4,59 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F23C2C25B5F
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 06:45:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29330C41513
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 06:46:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4EZo-00038m-JK; Tue, 07 May 2024 02:45:25 -0400
+	id 1s4EZt-0003MR-FA; Tue, 07 May 2024 02:45:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s4EZg-000365-RS
- for qemu-devel@nongnu.org; Tue, 07 May 2024 02:45:17 -0400
+ id 1s4EZp-0003Ai-Nm; Tue, 07 May 2024 02:45:25 -0400
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s4EZf-000550-3m
- for qemu-devel@nongnu.org; Tue, 07 May 2024 02:45:16 -0400
+ id 1s4EZn-0005Ee-Q9; Tue, 07 May 2024 02:45:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1715064315; x=1746600315;
+ t=1715064323; x=1746600323;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=bFd4oSxT+3OuxTU6241PGfq4mw6h6aaCpEOi35TjN4M=;
- b=eT3xpiBQJe4DpwgQ25U8sF5RU3NCRwGlIJ+LKF6fVQH9z6goEfFAVOVl
- i3u7aQ3ItXk5j8+33h45pFZkv/619KtaOCQ2v9xBGlCJpDGcA1zNNHsgE
- oYFuPTTYIJcL6EQYm4I0DSfbkxbxkzkl/RR98m68qzYSh7MNHd9jq7E0a
- oBY+A7WXikFzOQZ562y14llf5/GBW0YZ7Tj/HWbR2Z3219+ZsfeBuZFe/
- F/kolaDJoUpundul1FqVbK9s7FyCiXu1e1LRmHCZvgCfP1dzDqJ65wnQa
- +WuLuAi67Hu1wvSFVYIiAud1lcYEKsSVeQDVqX80yAP0b12bbezy7toX6 Q==;
-X-CSE-ConnectionGUID: QnpaZsFLSZiKsLgN9sbEhg==
-X-CSE-MsgGUID: N+Vi9G9jT2SVMcJWiCJuTQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11065"; a="22240215"
-X-IronPort-AV: E=Sophos;i="6.07,260,1708416000"; d="scan'208";a="22240215"
+ bh=rWCmMnV1q1IK9J8/rklP7DJaZKe+3/GfmS6fjHmvrBA=;
+ b=JId9YO+/RPhknLbN823AyIwejXWl6x+E5C+laLOEMA2eeAuDrpihZpA2
+ r5WRdZcUnYy7RU/dC4vRV0dxKnAdnIMlO6OpBR3Z8tVP2dIsq0d1WXu0q
+ zPml6da38RD0z4kaFvf7j45GUB1+FTFmk5Izz45P8Mw37eivdRXJypxwC
+ J5Jk5xM25zgCVPtcUOYJ96XNVCYGeEOtCuN20SOW+2IIiVkbth7Pmv42q
+ ldAvcaBrEioUxhF8y9zIayZxYJOp0aNikOfAsvjyk56+0E0Gpyt4p19uw
+ j/j4LV99Zs76oeDbSJj7uIHtNa948qDyT+r5uj8740SfEkIpoIStIpVFQ w==;
+X-CSE-ConnectionGUID: J5tzOFWfRTyoSFEoVIrsMQ==
+X-CSE-MsgGUID: 5RLh7t2aQR2WqIPK9+CZfg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11065"; a="22240241"
+X-IronPort-AV: E=Sophos;i="6.07,260,1708416000"; d="scan'208";a="22240241"
 Received: from fmviesa008.fm.intel.com ([10.60.135.148])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 May 2024 23:45:13 -0700
-X-CSE-ConnectionGUID: DpczNi9WRzyxRpESV0KdSQ==
-X-CSE-MsgGUID: klhrWXTZQ5qjIi74yUkZZA==
+ 06 May 2024 23:45:22 -0700
+X-CSE-ConnectionGUID: vqfwdyJnR8iKgsyowHcRHw==
+X-CSE-MsgGUID: yKzcCdkRQ6yK5DQh3X1Nyw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,260,1708416000"; d="scan'208";a="28407506"
+X-IronPort-AV: E=Sophos;i="6.07,260,1708416000"; d="scan'208";a="28407522"
 Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.124])
  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 May 2024 23:45:11 -0700
+ 06 May 2024 23:45:20 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
- chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v2 01/11] vfio/pci: Use g_autofree in vfio_realize
-Date: Tue,  7 May 2024 14:42:42 +0800
-Message-Id: <20240507064252.457884-2-zhenzhong.duan@intel.com>
+ chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ qemu-ppc@nongnu.org (open list:sPAPR (pseries))
+Subject: [PATCH v2 04/11] vfio: Make VFIOIOMMUClass::setup() return bool
+Date: Tue,  7 May 2024 14:42:45 +0800
+Message-Id: <20240507064252.457884-5-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240507064252.457884-1-zhenzhong.duan@intel.com>
 References: <20240507064252.457884-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.10;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
@@ -82,54 +86,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Local pointer name is allocated before vfio_attach_device() call
-and freed after the call.
+This is to follow the coding standand to return bool if 'Error **'
+is used to pass error.
 
-Same for tmp when calling realpath().
-
-Use 'g_autofree' to avoid the g_free() calls.
-
+Suggested-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/pci.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ include/hw/vfio/vfio-container-base.h |  2 +-
+ hw/vfio/container.c                   | 10 +++++-----
+ hw/vfio/spapr.c                       | 12 +++++-------
+ 3 files changed, 11 insertions(+), 13 deletions(-)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 64780d1b79..576b21e2bb 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2946,12 +2946,13 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
-     ERRP_GUARD();
-     VFIOPCIDevice *vdev = VFIO_PCI(pdev);
-     VFIODevice *vbasedev = &vdev->vbasedev;
--    char *tmp, *subsys;
-+    char *subsys;
-     Error *err = NULL;
-     int i, ret;
-     bool is_mdev;
-     char uuid[UUID_STR_LEN];
--    char *name;
-+    g_autofree char *name = NULL;
-+    g_autofree char *tmp = NULL;
+diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+index c839cfd9cb..68539e3bed 100644
+--- a/include/hw/vfio/vfio-container-base.h
++++ b/include/hw/vfio/vfio-container-base.h
+@@ -111,7 +111,7 @@ struct VFIOIOMMUClass {
+     InterfaceClass parent_class;
  
-     if (vbasedev->fd < 0 && !vbasedev->sysfsdev) {
-         if (!(~vdev->host.domain || ~vdev->host.bus ||
-@@ -2982,7 +2983,6 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
-      */
-     tmp = g_strdup_printf("%s/subsystem", vbasedev->sysfsdev);
-     subsys = realpath(tmp, NULL);
--    g_free(tmp);
-     is_mdev = subsys && (strcmp(subsys, "/sys/bus/mdev") == 0);
-     free(subsys);
- 
-@@ -3003,7 +3003,6 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
- 
-     ret = vfio_attach_device(name, vbasedev,
-                              pci_device_iommu_address_space(pdev), errp);
--    g_free(name);
-     if (ret) {
-         goto error;
+     /* basic feature */
+-    int (*setup)(VFIOContainerBase *bcontainer, Error **errp);
++    bool (*setup)(VFIOContainerBase *bcontainer, Error **errp);
+     int (*dma_map)(const VFIOContainerBase *bcontainer,
+                    hwaddr iova, ram_addr_t size,
+                    void *vaddr, bool readonly);
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index ea3b145913..85a8a369dc 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -505,7 +505,7 @@ static void vfio_get_iommu_info_migration(VFIOContainer *container,
      }
+ }
+ 
+-static int vfio_legacy_setup(VFIOContainerBase *bcontainer, Error **errp)
++static bool vfio_legacy_setup(VFIOContainerBase *bcontainer, Error **errp)
+ {
+     VFIOContainer *container = container_of(bcontainer, VFIOContainer,
+                                             bcontainer);
+@@ -515,7 +515,7 @@ static int vfio_legacy_setup(VFIOContainerBase *bcontainer, Error **errp)
+     ret = vfio_get_iommu_info(container, &info);
+     if (ret) {
+         error_setg_errno(errp, -ret, "Failed to get VFIO IOMMU info");
+-        return ret;
++        return false;
+     }
+ 
+     if (info->flags & VFIO_IOMMU_INFO_PGSIZES) {
+@@ -531,7 +531,7 @@ static int vfio_legacy_setup(VFIOContainerBase *bcontainer, Error **errp)
+     vfio_get_info_iova_range(info, bcontainer);
+ 
+     vfio_get_iommu_info_migration(container, info);
+-    return 0;
++    return true;
+ }
+ 
+ static int vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+@@ -633,8 +633,8 @@ static int vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+ 
+     assert(bcontainer->ops->setup);
+ 
+-    ret = bcontainer->ops->setup(bcontainer, errp);
+-    if (ret) {
++    if (!bcontainer->ops->setup(bcontainer, errp)) {
++        ret = -EINVAL;
+         goto enable_discards_exit;
+     }
+ 
+diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
+index 0d949bb728..148b257c9c 100644
+--- a/hw/vfio/spapr.c
++++ b/hw/vfio/spapr.c
+@@ -458,8 +458,8 @@ static void vfio_spapr_container_release(VFIOContainerBase *bcontainer)
+     }
+ }
+ 
+-static int vfio_spapr_container_setup(VFIOContainerBase *bcontainer,
+-                                      Error **errp)
++static bool vfio_spapr_container_setup(VFIOContainerBase *bcontainer,
++                                       Error **errp)
+ {
+     VFIOContainer *container = container_of(bcontainer, VFIOContainer,
+                                             bcontainer);
+@@ -480,7 +480,7 @@ static int vfio_spapr_container_setup(VFIOContainerBase *bcontainer,
+         ret = ioctl(fd, VFIO_IOMMU_ENABLE);
+         if (ret) {
+             error_setg_errno(errp, errno, "failed to enable container");
+-            return -errno;
++            return false;
+         }
+     } else {
+         scontainer->prereg_listener = vfio_prereg_listener;
+@@ -488,7 +488,6 @@ static int vfio_spapr_container_setup(VFIOContainerBase *bcontainer,
+         memory_listener_register(&scontainer->prereg_listener,
+                                  &address_space_memory);
+         if (bcontainer->error) {
+-            ret = -1;
+             error_propagate_prepend(errp, bcontainer->error,
+                     "RAM memory listener initialization failed: ");
+             goto listener_unregister_exit;
+@@ -500,7 +499,6 @@ static int vfio_spapr_container_setup(VFIOContainerBase *bcontainer,
+     if (ret) {
+         error_setg_errno(errp, errno,
+                          "VFIO_IOMMU_SPAPR_TCE_GET_INFO failed");
+-        ret = -errno;
+         goto listener_unregister_exit;
+     }
+ 
+@@ -527,13 +525,13 @@ static int vfio_spapr_container_setup(VFIOContainerBase *bcontainer,
+                           0x1000);
+     }
+ 
+-    return 0;
++    return true;
+ 
+ listener_unregister_exit:
+     if (v2) {
+         memory_listener_unregister(&scontainer->prereg_listener);
+     }
+-    return ret;
++    return false;
+ }
+ 
+ static void vfio_iommu_spapr_class_init(ObjectClass *klass, void *data)
 -- 
 2.34.1
 
