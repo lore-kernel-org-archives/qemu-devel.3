@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 416FBC25B74
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 07:21:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF4FBC10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 07:21:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4F7U-0007hg-2m; Tue, 07 May 2024 03:20:12 -0400
+	id 1s4F7K-0007fD-FT; Tue, 07 May 2024 03:20:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s4F7R-0007gi-Ph
- for qemu-devel@nongnu.org; Tue, 07 May 2024 03:20:09 -0400
+ id 1s4F7I-0007eL-Qh
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 03:20:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s4F7N-0004a8-9v
- for qemu-devel@nongnu.org; Tue, 07 May 2024 03:20:09 -0400
+ id 1s4F7H-0004BD-1l
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 03:20:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715066404;
+ s=mimecast20190719; t=1715066398;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GZeSHTEIZaZ87Q0+qmszQgyShcSW78CNFvo2DL7feAs=;
- b=O4bLUTitn4UzvVs9su3+yYdrS+9GROLAaA2WXisgKuHu9iwAkFV+0y/RVgOPRfDuyq1F8s
- RXHhg/KI/zaGvGoefIJDLbk74h/gYSUpzvnsP16zc6CFH1lF4ouE0xD9/kSVH6ay+VD6Y6
- 12+lRYmKK0GrndcLSL4GRaWSG2bg60k=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=84v/4qsjERWpXvEfekpOOvFOg4h6lGBG7/Q0iXd2pZ0=;
+ b=OAZbY42KFVHuTWFAj5jgdkG2aDCVFt/sRiYVH2sshVe5HLAKz2BjyAWJtrFot3rZVd+LXA
+ 1nXEEs+xDF6IPvCVWbLXgqA6iwtZB7cAD9Bik9e8Nije3OmEIMiNn3b2dFNcX+9wU08wrF
+ 5GYkNuezutoq0GtgKD0K4FEKgdYQP6o=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-503-QGGvBxpFNUeqRQCG5MYnSw-1; Tue, 07 May 2024 03:20:01 -0400
-X-MC-Unique: QGGvBxpFNUeqRQCG5MYnSw-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a51fdbd06c8so197536566b.3
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 00:20:01 -0700 (PDT)
+ us-mta-657-7utFJ_5wPKu1xwyrMPCK2w-1; Tue, 07 May 2024 03:19:56 -0400
+X-MC-Unique: 7utFJ_5wPKu1xwyrMPCK2w-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a59eea00cafso21231866b.1
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 00:19:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715066400; x=1715671200;
+ d=1e100.net; s=20230601; t=1715066394; x=1715671194;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GZeSHTEIZaZ87Q0+qmszQgyShcSW78CNFvo2DL7feAs=;
- b=BiS/qdCH+cC8DHPR4QwPI8+kImfP7c/6Br0pAXFxkqU7fYCXLLvk7AC+uURW55k2Xr
- 6EEAjvWq55vFy99y8ksXbH3D0+ACYAMJzweL4mhLCiYuRIdz2di3UW2evFqtH5Gl6BDP
- UDDZylUXHwKu9PHPJjNPg5B1wv7Oo/AAW1jNQ1v1zpSY2T2I2ymjjyXVEwcYHPlKiS8B
- E7HGSJ0iCLh5S+4Ujk0C6n5TYN0VZ27fmw7SjNuTFtP4ICzmDPlwbqZEyTnWJ8eWIuVA
- oLpvxP9t4qYq85ES1VxcZwDTGkJKDxQmf/p3XLBX2lYU1fnVc2m70DyuL9x7N7eyTFnt
- XD9g==
-X-Gm-Message-State: AOJu0YwZOIUdkUHgSr8h0NXdqbDxYdcVdsNiA3PZKDsB17uR3HhEk2Vj
- AXngzOzwtRGNoPUcALLHBdcqcl/tIbN0MfNvhrMKQpa7HD4GzQZGY8GhqZWu8BN835xND9eq082
- qUsuG09C9RAcreI9j7AHoAh3orfiA66OmOjFZtJ5z8xgdLq21AduXhJzTD9mw5xquOI1GN03Hv1
- Tx+qR80t6osihBYqQkfOIvgLaIqjoC1RqKhD4F
-X-Received: by 2002:a17:907:995a:b0:a55:a895:46ae with SMTP id
- kl26-20020a170907995a00b00a55a89546aemr7619845ejc.63.1715066400253; 
- Tue, 07 May 2024 00:20:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFfgcQ2QzRZyabGjXNYriQB4I1ZKzQuKLU8xfAOA7j+Ydtm5U2PfrWrCTTgzmffW90AFQAKmw==
-X-Received: by 2002:a17:907:995a:b0:a55:a895:46ae with SMTP id
- kl26-20020a170907995a00b00a55a89546aemr7619831ejc.63.1715066399893; 
- Tue, 07 May 2024 00:19:59 -0700 (PDT)
+ bh=84v/4qsjERWpXvEfekpOOvFOg4h6lGBG7/Q0iXd2pZ0=;
+ b=lNywd/nlDr6t0t8rhnftTVFP5KxRbrs6TfvpCUoieXW95WKYkzNkCKutFUr25D0c/t
+ XsR6M01J2ZuVW5KTbGmesfmWKZxgzoLpBJBkozLVzLVDRUuXxd7EdxuCiLrCzABu7hAQ
+ sx5EuDQPEaLVssWs+SnENWKRbyJXVSsX/AUHlfIA47a6utd0u89Q1F92CuYLEw0m+g0u
+ DDwwv1jeACX3hH1ZVRl6ohQcoRp7v+390Vljf7Qg3UwpuOSnbBruVo/x0OB9SizbgQ2C
+ KJ1GrirC1Ta1EpH3DUY2gqYhciIMswlDpBvqj2Tn7V2AzUV1Msl9c4AwR4iCK5Hlw1HM
+ ZGSQ==
+X-Gm-Message-State: AOJu0Yy5E4ddAWX4xp+f+sWfSbJG+O92CaIWvrk7q0sawUCNm9OjSVIA
+ HBUHqW8oamDVugfH8yGaBUB8hqnkx+C7BCe80rAS7+RaKTSasSXncctRJ9PThIT3jtlKfKZE0Ny
+ GkG1JgVFrH/l9mAwn3jt8FL7l+6QREbd1LGmGr+sHvBKM+3OWs6jZOmGwUobDiGtHocSy0z+ADF
+ TnFwxvUbUI4aTA8meznNvCeeBhlyGEqzV0wPF3
+X-Received: by 2002:a17:906:c00a:b0:a55:6602:e3a9 with SMTP id
+ e10-20020a170906c00a00b00a556602e3a9mr10431821ejz.1.1715066394264; 
+ Tue, 07 May 2024 00:19:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEKRJWsSUBlg48vt91ws4tRQj8/goatk1U6Q1s+dCr8mB+FryijYhxcD4K9jTGI8iag5G4+/Q==
+X-Received: by 2002:a17:906:c00a:b0:a55:6602:e3a9 with SMTP id
+ e10-20020a170906c00a00b00a556602e3a9mr10431801ejz.1.1715066393819; 
+ Tue, 07 May 2024 00:19:53 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- la6-20020a170906ad8600b00a59aa18c685sm3806434ejb.173.2024.05.07.00.19.58
+ h12-20020a170906718c00b00a59a6026ee1sm4068876ejk.14.2024.05.07.00.19.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 May 2024 00:19:58 -0700 (PDT)
+ Tue, 07 May 2024 00:19:52 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org
-Subject: [PATCH 3/4] hw/xtensa: require libfdt
-Date: Tue,  7 May 2024 09:19:47 +0200
-Message-ID: <20240507071948.105022-4-pbonzini@redhat.com>
+Subject: [PATCH 1/4] meson: remove system/internal distinction for libfdt
+Date: Tue,  7 May 2024 09:19:45 +0200
+Message-ID: <20240507071948.105022-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240507071948.105022-1-pbonzini@redhat.com>
 References: <20240507071948.105022-1-pbonzini@redhat.com>
@@ -102,58 +102,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All other boards require libfdt if it can be used (including for example
-i386/x86_64), so change the "imply" to "select" and always allow -dtb
-in qemu-system-xtensa.
+Treat libfdt like slirp and the other dependencies that use --enable-download;
+remove the ability to force usage of the subproject.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/xtensa/xtfpga.c | 9 ---------
- hw/xtensa/Kconfig  | 4 ++--
- 2 files changed, 2 insertions(+), 11 deletions(-)
+ meson.build                   | 69 +++++++++++++++--------------------
+ meson_options.txt             |  6 +--
+ scripts/meson-buildoptions.sh |  4 +-
+ 3 files changed, 34 insertions(+), 45 deletions(-)
 
-diff --git a/hw/xtensa/xtfpga.c b/hw/xtensa/xtfpga.c
-index f49e6591dc2..955e8867a36 100644
---- a/hw/xtensa/xtfpga.c
-+++ b/hw/xtensa/xtfpga.c
-@@ -356,7 +356,6 @@ static void xtfpga_init(const XtfpgaBoardDesc *board, MachineState *machine)
-             cur_tagptr = put_tag(cur_tagptr, BP_TAG_COMMAND_LINE,
-                                  strlen(kernel_cmdline) + 1, kernel_cmdline);
-         }
--#ifdef CONFIG_FDT
-         if (dtb_filename) {
-             int fdt_size;
-             void *fdt = load_device_tree(dtb_filename, &fdt_size);
-@@ -373,14 +372,6 @@ static void xtfpga_init(const XtfpgaBoardDesc *board, MachineState *machine)
-             cur_lowmem = QEMU_ALIGN_UP(cur_lowmem + fdt_size, 4 * KiB);
-             g_free(fdt);
-         }
--#else
--        if (dtb_filename) {
--            error_report("could not load DTB '%s': "
--                         "FDT support is not configured in QEMU",
--                         dtb_filename);
--            exit(EXIT_FAILURE);
--        }
--#endif
-         if (initrd_filename) {
-             BpMemInfo initrd_location = { 0 };
-             int initrd_size = load_ramdisk(initrd_filename, cur_lowmem,
-diff --git a/hw/xtensa/Kconfig b/hw/xtensa/Kconfig
-index 8ea283a7a3b..fc5c785cfac 100644
---- a/hw/xtensa/Kconfig
-+++ b/hw/xtensa/Kconfig
-@@ -14,8 +14,8 @@ config XTENSA_VIRT
- config XTENSA_XTFPGA
-     bool
-     default y
--    depends on XTENSA
--    imply DEVICE_TREE
-+    depends on XTENSA && FDT
-+    select DEVICE_TREE
-     select OPENCORES_ETH
-     select PFLASH_CFI01
-     select SERIAL
+diff --git a/meson.build b/meson.build
+index 43da4923721..530f92c0a9c 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1858,6 +1858,30 @@ if numa.found() and not cc.links('''
+   endif
+ endif
+ 
++fdt = not_found
++if get_option('fdt').disable_auto_if(not have_system).allowed()
++  fdt = cc.find_library('fdt', required: false)
++  if fdt.found()
++    if not cc.links('''
++      #include <libfdt.h>
++      #include <libfdt_env.h>
++      int main(void) { fdt_find_max_phandle(NULL, NULL); return 0; }''',
++        dependencies: fdt)
++      libfdt_proj = subproject('dtc', required: get_option('fdt'),
++                               default_options: ['tools=false',  'yaml=disabled',
++                                                 'python=disabled', 'default_library=static'])
++      fdt = libfdt_proj.get_variable('libfdt_dep')
++    endif
++    if not fdt.found()
++      if get_option('fdt').enabled()
++        error('libfdt found but too old (1.5.1 or newer required)')
++      else
++        warning('libfdt found but too old (1.5.1 or newer required)')
++      endif
++    endif
++  endif
++endif
++
+ rdma = not_found
+ if not get_option('rdma').auto() or have_system
+   libumad = cc.find_library('ibumad', required: get_option('rdma'))
+@@ -2199,6 +2223,7 @@ config_host_data.set('CONFIG_BSD', host_os in bsd_oses)
+ config_host_data.set('CONFIG_CAPSTONE', capstone.found())
+ config_host_data.set('CONFIG_COCOA', cocoa.found())
+ config_host_data.set('CONFIG_DARWIN', host_os == 'darwin')
++config_host_data.set('CONFIG_FDT', fdt.found())
+ config_host_data.set('CONFIG_FUZZ', get_option('fuzzing'))
+ config_host_data.set('CONFIG_GCOV', get_option('b_coverage'))
+ config_host_data.set('CONFIG_LIBUDEV', libudev.found())
+@@ -3120,6 +3145,10 @@ genh += custom_target('config-poison.h',
+                       command: [find_program('scripts/make-config-poison.sh'),
+                                 target_configs_h])
+ 
++if fdt_required.length() > 0 and not fdt.found()
++  error('fdt disabled but required by targets ' + ', '.join(fdt_required))
++endif
++
+ ###############
+ # Subprojects #
+ ###############
+@@ -3130,44 +3159,6 @@ if have_system and vfio_user_server_allowed
+   libvfio_user_dep = libvfio_user_proj.get_variable('libvfio_user_dep')
+ endif
+ 
+-fdt = not_found
+-fdt_opt = get_option('fdt')
+-if fdt_required.length() > 0 or fdt_opt == 'enabled'
+-  if fdt_opt == 'disabled'
+-    error('fdt disabled but required by targets ' + ', '.join(fdt_required))
+-  endif
+-
+-  if fdt_opt in ['enabled', 'auto', 'system']
+-    if get_option('wrap_mode') == 'nodownload'
+-      fdt_opt = 'system'
+-    endif
+-    fdt = cc.find_library('fdt', required: fdt_opt == 'system')
+-    if fdt.found() and cc.links('''
+-       #include <libfdt.h>
+-       #include <libfdt_env.h>
+-       int main(void) { fdt_find_max_phandle(NULL, NULL); return 0; }''',
+-         dependencies: fdt)
+-      fdt_opt = 'system'
+-    elif fdt_opt == 'system'
+-       error('system libfdt requested, but it is too old (1.5.1 or newer required)')
+-    else
+-      fdt_opt = 'internal'
+-      fdt = not_found
+-    endif
+-  endif
+-  if not fdt.found()
+-    assert(fdt_opt == 'internal')
+-    libfdt_proj = subproject('dtc', required: true,
+-                             default_options: ['tools=false',  'yaml=disabled',
+-                                               'python=disabled', 'default_library=static'])
+-    fdt = libfdt_proj.get_variable('libfdt_dep')
+-  endif
+-else
+-  fdt_opt = 'disabled'
+-endif
+-
+-config_host_data.set('CONFIG_FDT', fdt.found())
+-
+ vhost_user = not_found
+ if host_os == 'linux' and have_vhost_user
+   libvhost_user = subproject('libvhost-user')
+@@ -4411,7 +4402,7 @@ summary_info += {'Linux AIO support': libaio}
+ summary_info += {'Linux io_uring support': linux_io_uring}
+ summary_info += {'ATTR/XATTR support': libattr}
+ summary_info += {'RDMA support':      rdma}
+-summary_info += {'fdt support':       fdt_opt == 'disabled' ? false : fdt_opt}
++summary_info += {'fdt support':       fdt}
+ summary_info += {'libcap-ng support': libcap_ng}
+ summary_info += {'bpf support':       libbpf}
+ summary_info += {'rbd support':       rbd}
+diff --git a/meson_options.txt b/meson_options.txt
+index adc77bae0cd..90902c19d1c 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -308,9 +308,9 @@ option('vduse_blk_export', type: 'feature', value: 'auto',
+ 
+ option('capstone', type: 'feature', value: 'auto',
+        description: 'Whether and how to find the capstone library')
+-option('fdt', type: 'combo', value: 'auto',
+-       choices: ['disabled', 'enabled', 'auto', 'system', 'internal'],
+-       description: 'Whether and how to find the libfdt library')
++option('fdt', type: 'feature', value: 'auto',
++       deprecated: { 'system': 'enabled' },
++       description: 'device tree support')
+ 
+ option('selinux', type: 'feature', value: 'auto',
+        description: 'SELinux support in qemu-nbd')
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index 0a29d35fdb6..d816b35a2f4 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -33,8 +33,6 @@ meson_options_help() {
+   printf "%s\n" '  --enable-debug-stack-usage'
+   printf "%s\n" '                           measure coroutine stack usage'
+   printf "%s\n" '  --enable-debug-tcg       TCG debugging'
+-  printf "%s\n" '  --enable-fdt[=CHOICE]    Whether and how to find the libfdt library'
+-  printf "%s\n" '                           (choices: auto/disabled/enabled/internal/system)'
+   printf "%s\n" '  --enable-fuzzing         build fuzzing targets'
+   printf "%s\n" '  --enable-gcov            Enable coverage tracking.'
+   printf "%s\n" '  --enable-lto             Use link time optimization'
+@@ -113,6 +111,7 @@ meson_options_help() {
+   printf "%s\n" '  dmg             dmg image format support'
+   printf "%s\n" '  docs            Documentations build support'
+   printf "%s\n" '  dsound          DirectSound sound support'
++  printf "%s\n" '  fdt             device tree support'
+   printf "%s\n" '  fuse            FUSE block device export'
+   printf "%s\n" '  fuse-lseek      SEEK_HOLE/SEEK_DATA support for FUSE exports'
+   printf "%s\n" '  gcrypt          libgcrypt cryptography support'
+@@ -310,7 +309,6 @@ _meson_option_parse() {
+     --disable-dsound) printf "%s" -Ddsound=disabled ;;
+     --enable-fdt) printf "%s" -Dfdt=enabled ;;
+     --disable-fdt) printf "%s" -Dfdt=disabled ;;
+-    --enable-fdt=*) quote_sh "-Dfdt=$2" ;;
+     --enable-fuse) printf "%s" -Dfuse=enabled ;;
+     --disable-fuse) printf "%s" -Dfuse=disabled ;;
+     --enable-fuse-lseek) printf "%s" -Dfuse_lseek=enabled ;;
 -- 
 2.45.0
 
