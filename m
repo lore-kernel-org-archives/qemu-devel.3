@@ -4,89 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ACA3C10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 04:33:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8460C25B5F
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 04:43:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4CVf-00071H-8z; Tue, 07 May 2024 00:32:59 -0400
+	id 1s4Cet-0000i2-H6; Tue, 07 May 2024 00:42:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4CVb-00070A-SK; Tue, 07 May 2024 00:32:57 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4CVa-0006U0-0P; Tue, 07 May 2024 00:32:55 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1ee5235f5c9so8629975ad.2; 
- Mon, 06 May 2024 21:32:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715056372; x=1715661172; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+uAoPhyorj6EitS242+fxxENQEPtgu5DnsXCRH6c768=;
- b=dM9ZF23U3n+lDAY3iOfG6rZ7zj4jFcZnB43jAMpaVSwC7mUbSGnRETbIO/1pd8NzZm
- UkejUMdEHCWojVzDFqxkMJ1taoSxn+xDm1N/uLxxRAz6NSVlWUgVjvwiQl31cnR/Sch6
- rP3NmrZvVk4cx1Js33SmeCIr/Ud09cG6333R9N9vn1O8lb/j6cHdur391mtJn+vbd5UY
- rNZz4sAtZ8klizdfb+T714ejwJwJXlTkI1JMsxlYiw3EKj0H86IWydo5iRJPp1/IAMe9
- Pqf9/XCSZoOdpbsD6chOpgfKG4yz2WTPy4yrXd7iFKXOte4iZKlWjpHg2u0UtyV+bZNs
- G2Ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715056372; x=1715661172;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=+uAoPhyorj6EitS242+fxxENQEPtgu5DnsXCRH6c768=;
- b=roHkajKLXaIGlSy56OxsR1+uu7vQB+VQ4lEa+UCQR2L1Ns3XXI82a8O00p0x1yeHtU
- gWsmgkBaUESjaEjYYFK60Lft+w33vU2PEBgT1naxDAfbNa3fk0V6R6W80AYK+gYg26pN
- lq/qSFOX+8B0JPnIid8jld37MkiE+SbmGJtXtmxI8yzqbfJSYJem7/vJwoWGu58oySeO
- 652kEUKwC9a040TW44REcBMd+/LgcK74UBGj73ppd2LIqtIHYKHml2QP00LaK7Q/Doxn
- 66hBB21VZUAuvYBTZOy5HBlH//5OTuH5QbFN3QU0O9qNI54BqfNC+ui/2LhSkhDkctNX
- 68Mg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXrslLCneug/GAxCU+EBDzO4RvCCe0MCNRlaCNwcptq8rl+T3quZV6otFmcT3lg8KTN2ZSO3DgHksreBsr75lodh99t
-X-Gm-Message-State: AOJu0YyZakqSpjetZG2uGQgkYUUML5//waSmBnNemteoSYUauuzCy+Al
- mebWzaIlUXmNV59J8qHr+RD03m2Av/7FnW+ZHXaxHgSVdeYL3aZPzy/wcw==
-X-Google-Smtp-Source: AGHT+IFmrTh5DGGkVZjA6hLD0Y23O3v7P46LzysiTXwSCnQqS6Z8hS1reVhQP9HtApo2XJ9UzcwPsw==
-X-Received: by 2002:a17:902:b607:b0:1e1:214:1b7d with SMTP id
- b7-20020a170902b60700b001e102141b7dmr12876947pls.61.1715056371713; 
- Mon, 06 May 2024 21:32:51 -0700 (PDT)
-Received: from localhost (220-245-239-57.tpgi.com.au. [220.245.239.57])
- by smtp.gmail.com with ESMTPSA id
- c8-20020a170903234800b001e2b4f513e1sm9079529plh.106.2024.05.06.21.32.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 May 2024 21:32:51 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 07 May 2024 14:32:46 +1000
-Message-Id: <D134QQ0G9D1C.1W05PMY7F4LKJ@gmail.com>
-Cc: <qemu-devel@nongnu.org>, =?utf-8?q?Fr=C3=A9d=C3=A9ric_Barrat?=
- <fbarrat@linux.ibm.com>, "Saif Abrar" <saif.abrar@linux.vnet.ibm.com>
-Subject: Re: [PATCH 1/2] ppc/pnv: Begin a more complete ADU LPC model for
- POWER9/10
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, <qemu-ppc@nongnu.org>
-X-Mailer: aerc 0.17.0
-References: <20240417110215.808926-1-npiggin@gmail.com>
- <20240417110215.808926-2-npiggin@gmail.com>
- <577fd77f-a6b9-41f5-8193-f2cc80503a7d@kaod.org>
- <D0YBCHP9K12V.3JU88W5WITYRM@gmail.com>
- <272a9f32-8d32-4681-b25b-9d45c6c787b5@kaod.org>
- <D0ZQN2YAQ28S.3FGETJPE6XVC8@gmail.com>
- <e1875754-1b85-4f85-a9e0-d5cbe41b1711@kaod.org>
-In-Reply-To: <e1875754-1b85-4f85-a9e0-d5cbe41b1711@kaod.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
+ (Exim 4.90_1) (envelope-from <shum.sdl@nppct.ru>) id 1s4Cep-0000hp-B7
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 00:42:27 -0400
+Received: from mail.nppct.ru ([195.133.245.4])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shum.sdl@nppct.ru>) id 1s4Cek-0002R1-1I
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 00:42:27 -0400
+Received: from mail.nppct.ru (localhost [127.0.0.1])
+ by mail.nppct.ru (Postfix) with ESMTP id A097F1C17E4
+ for <qemu-devel@nongnu.org>; Tue,  7 May 2024 07:42:15 +0300 (MSK)
+Authentication-Results: mail.nppct.ru (amavisd-new); dkim=pass (1024-bit key)
+ reason="pass (just generated,
+ assumed good)" header.d=nppct.ru
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nppct.ru; h=
+ in-reply-to:from:from:content-language:references:to:subject
+ :subject:user-agent:mime-version:date:date:message-id
+ :content-type:content-type; s=dkim; t=1715056934; x=1715920935;
+ bh=+nKdRyqYHAAql/nVsacHVb7WUBdsHSrmFiytkcpDbBY=; b=Bx2Td1Pf17JD
+ fAnTicC/tl2yl5az/Gk4EGxtTJ2so873WjKz2nrNtD6iJAVv9q8eQvHdv/c6SGCa
+ ez43PTkVQfrKyps8GMqOJgr4csofkpDXZ1I7eiPTXUySO7tP+2YwDr1bOpjA9CQL
+ k4yzpTcc7tKubgxlCPCUrRXwa25FlQA=
+X-Virus-Scanned: Debian amavisd-new at mail.nppct.ru
+Received: from mail.nppct.ru ([127.0.0.1])
+ by mail.nppct.ru (mail.nppct.ru [127.0.0.1]) (amavisd-new, port 10026)
+ with ESMTP id f590Tvra77kp for <qemu-devel@nongnu.org>;
+ Tue,  7 May 2024 07:42:14 +0300 (MSK)
+Received: from [10.66.66.2] (unknown [176.222.55.70])
+ by mail.nppct.ru (Postfix) with ESMTPSA id 744721C1751
+ for <qemu-devel@nongnu.org>; Tue,  7 May 2024 07:42:14 +0300 (MSK)
+Content-Type: multipart/alternative;
+ boundary="------------jgjHyKx1bMRUrUk2dfyDeSYb"
+Message-ID: <d6489f2b-6e18-4499-8d4c-6585549155ef@nppct.ru>
+Date: Tue, 7 May 2024 07:42:14 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [sdl-qemu] [PATCH v1] /hw/intc/arm_gic WRONG ARGUMENTS
+To: qemu-devel@nongnu.org
+References: <a4cbfe6c-27d6-4df0-ae31-db0d60d88f9e@nppct.ru>
+ <95ab6dcf-cc96-4472-93ab-f08682b37d5e@tls.msk.ru>
+ <4c4dfebb-698d-466f-90b0-9475ad4c123a@nppct.ru>
+ <8734qvuukl.fsf@draig.linaro.org>
+Content-Language: ru
+From: Andrey Shumilin <shum.sdl@nppct.ru>
+In-Reply-To: <8734qvuukl.fsf@draig.linaro.org>
+Received-SPF: pass client-ip=195.133.245.4; envelope-from=shum.sdl@nppct.ru;
+ helo=mail.nppct.ru
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,89 +78,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri May 3, 2024 at 3:44 PM AEST, C=C3=A9dric Le Goater wrote:
-> On 5/3/24 06:51, Nicholas Piggin wrote:
-> > On Thu May 2, 2024 at 6:47 PM AEST, C=C3=A9dric Le Goater wrote:
-> >> On 5/1/24 14:39, Nicholas Piggin wrote:
-> >>> On Wed Apr 17, 2024 at 9:25 PM AEST, C=C3=A9dric Le Goater wrote:
-> >>>> Hello Nick,
-> >>>>
-> >>>> On 4/17/24 13:02, Nicholas Piggin wrote:
-> >>>>> This implements a framework for an ADU unit model.
-> >>>>>
-> >>>>> The ADU unit actually implements XSCOM, which is the bridge between=
- MMIO
-> >>>>> and PIB. However it also includes control and status registers and =
-other
-> >>>>> functions that are exposed as PIB (xscom) registers.
-> >>>>>
-> >>>>> To keep things simple, pnv_xscom.c remains the XSCOM bridge
-> >>>>> implementation, and pnv_adu.c implements the ADU registers and othe=
-r
-> >>>>> functions.
-> >>>>>
-> >>>>> So far, just the ADU no-op registers in the pnv_xscom.c default han=
-dler
-> >>>>> are moved over to the adu model.
-> >>>>>
-> >>>>> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> >>>>> ---
-> >>>>>     include/hw/ppc/pnv_adu.h   |  34 ++++++++++++
-> >>>>>     include/hw/ppc/pnv_chip.h  |   3 +
-> >>>>>     include/hw/ppc/pnv_xscom.h |   6 ++
-> >>>>>     hw/ppc/pnv.c               |  16 ++++++
-> >>>>>     hw/ppc/pnv_adu.c           | 111 ++++++++++++++++++++++++++++++=
-+++++++
-> >>>>>     hw/ppc/pnv_xscom.c         |   9 ---
-> >>>>>     hw/ppc/meson.build         |   1 +
-> >>>>>     hw/ppc/trace-events        |   4 ++
-> >>>>>     8 files changed, 175 insertions(+), 9 deletions(-)
-> >>>>>     create mode 100644 include/hw/ppc/pnv_adu.h
-> >>>>>     create mode 100644 hw/ppc/pnv_adu.c
-> >>>>>
-> >>>>> diff --git a/include/hw/ppc/pnv_adu.h b/include/hw/ppc/pnv_adu.h
-> >>>>> new file mode 100644
-> >>>>> index 0000000000..9dc91857a9
-> >>>>> --- /dev/null
-> >>>>> +++ b/include/hw/ppc/pnv_adu.h
-> >>>>> @@ -0,0 +1,34 @@
-> >>>>> +/*
-> >>>>> + * QEMU PowerPC PowerNV Emulation of some ADU behaviour
-> >>>>> + *
-> >>>>> + * Copyright (c) 2024, IBM Corporation.
-> >>>>> + *
-> >>>>> + * SPDX-License-Identifier: LGPL-2.1-or-later
-> >>>>
-> >>>>
-> >>>> Did you mean GPL-2.0-or-later ?
-> >>>
-> >>> Hey Cedric,
-> >>>
-> >>> Thanks for reviewing, I've been away so sorry for the late reply.
-> >>>
-> >>> It just came from one of the headers I copied which was LGPL. But
-> >>> there's really nothing much in it and could find a GPL header to
-> >>> copy. Is GPL-2.0-or-later preferred?
-> >>
-> >> I would since all pnv models are GPL.
-> >=20
-> > Some of pnv is actually LGPL.=20
->
-> I was grepping for 'LGPL' and not 'Lesser' ... Indeed you are right.
-> Most files miss an SPDX-License-Identifier tag also.
->
-> > That's okay I'll change to GPL.
->
-> LGPL is more relaxed if the code needs to be used in libraries, but
-> I am not sure it applies to the PNV models. What would you prefer ?
+This is a multi-part message in MIME format.
+--------------jgjHyKx1bMRUrUk2dfyDeSYb
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-GPL seems to be more common and I don't see a need for LGPL here,
-so maybe GPL?
+ 1. s - This argument passes a pointer to the GICState structure that
+    contains the state of the interrupt controller. This argument is
+    passed first and used correctly.
+ 2. regno - This is the register number, which in the context of
+    gic_cpu_read is calculated as (offset - 0xd0) / 4. In gic_cpu_read
+    code, this number is used to identify the specific APR register to
+    be read or modified. In gic_apr_ns_view, this number is also used to
+    determine which NSAPR register to read or how to compute bits,
+    implying that it is used as a register index.
+ 3. cpu - This is the CPU number used to address a particular CPU in the
+    nsapr, apr, and other arrays.
 
-We could probably switch all LGPL pnv over to GPL if we wanted to.
-I think LGPL permits such relicensing. Will leave this discussion
-for another time though.
+Based on the context, it is important that regno and cpu are passed to 
+gic_apr_ns_view in the correct order for correct handling of arrays and 
+indexes within this function. An error in the order of the arguments can 
+result in incorrect data handling, as arrays are indexed first by CPU 
+number and then by register number. In the considered call 
+gic_apr_ns_view the arguments are passed in the wrong order
 
-Thanks,
-Nick
+
+Fixes: 51fd06e0ee ("hw/intc/arm_gic: Fix handling of GICC_APR<n>, 
+GICC_NSAPR<n> registers")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+06.05.2024 13:02, Alex Bennée пишет:
+> Andrey Shumilin<shum.sdl@nppct.ru>  writes:
+>
+>> 1 Possibly mismatched call arguments in function 'gic_apr_ns_view': 'cpu' and 'regno' passed in place of 'int regno' and 'int
+>>   cpu'.
+>> 2 Possibly mismatched call arguments in function 'gic_apr_write_ns_view': 'cpu' and 'regno' passed in place of 'int regno' and
+>>   'int cpu'.
+>>
+>> Found by Linux Verification Center (linuxtesting.org) with SVACE.
+> So this purely a heuristic test based on the parameter names?
+>
+>>  From 23b142f5046ba9d3aec57217f6d8f3127f9bff69 Mon Sep 17 00:00:00 2001
+>> From: Andrey Shumilin<shum.sdl@nppct.ru>
+>> Date: Sun, 5 May 2024 20:13:40 +0300
+>> Subject: [PATCH] Patch hw/intc/arm_gic.c
+>>
+>> Signed-off-by: Andrey Shumilin<shum.sdl@nppct.ru>
+>> ---
+>>   hw/intc/arm_gic.c | 4 ++--
+>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hw/intc/arm_gic.c b/hw/intc/arm_gic.c
+>> index 7a34bc0998..47f01e45e3 100644
+>> --- a/hw/intc/arm_gic.c
+>> +++ b/hw/intc/arm_gic.c
+>> @@ -1658,7 +1658,7 @@ static MemTxResult gic_cpu_read(GICState *s, int cpu, int offset,
+>>               *data = s->h_apr[gic_get_vcpu_real_id(cpu)];
+>>           } else if (gic_cpu_ns_access(s, cpu, attrs)) {
+>>               /* NS view of GICC_APR<n> is the top half of GIC_NSAPR<n> */
+>> -            *data = gic_apr_ns_view(s, regno, cpu);
+>> +            *data = gic_apr_ns_view(s, cpu, regno);
+>>           } else {
+>>               *data = s->apr[regno][cpu];
+>>           }
+>> @@ -1746,7 +1746,7 @@ static MemTxResult gic_cpu_write(GICState *s, int cpu, int offset,
+>>               s->h_apr[gic_get_vcpu_real_id(cpu)] = value;
+>>           } else if (gic_cpu_ns_access(s, cpu, attrs)) {
+>>               /* NS view of GICC_APR<n> is the top half of GIC_NSAPR<n> */
+>> -            gic_apr_write_ns_view(s, regno, cpu, value);
+>> +            gic_apr_write_ns_view(s, cpu, regno, value);
+>>           } else {
+>>               s->apr[regno][cpu] = value;
+>>           }
+> Ahh C's lack of strong typing wins again :-/
+>
+> Reviewed-by: Alex Bennée<alex.bennee@linaro.org>
+>
+--------------jgjHyKx1bMRUrUk2dfyDeSYb
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <ol>
+      <li>s - This argument passes a pointer to the GICState structure
+        that contains the state of the interrupt controller. This
+        argument is passed first and used correctly.</li>
+      <li>regno - This is the register number, which in the context of
+        gic_cpu_read is calculated as (offset - 0xd0) / 4. In
+        gic_cpu_read code, this number is used to identify the specific
+        APR register to be read or modified. In gic_apr_ns_view, this
+        number is also used to determine which NSAPR register to read or
+        how to compute bits, implying that it is used as a register
+        index.</li>
+      <li>cpu - This is the CPU number used to address a particular CPU
+        in the nsapr, apr, and other arrays.</li>
+    </ol>
+    <p> Based on the context, it is important that regno and cpu are
+      passed to gic_apr_ns_view in the correct order for correct
+      handling of arrays and indexes within this function. An error in
+      the order of the arguments can result in incorrect data handling,
+      as arrays are indexed first by CPU number and then by register
+      number. In the considered call gic_apr_ns_view the arguments are
+      passed in the wrong order</p>
+    <p><br>
+    </p>
+    <p>Fixes: 51fd06e0ee ("hw/intc/arm_gic: Fix handling of
+      GICC_APR&lt;n&gt;, GICC_NSAPR&lt;n&gt; registers")
+      <br>
+      Reviewed-by: Philippe Mathieu-Daudé <a
+        class="moz-txt-link-rfc2396E" href="mailto:philmd@linaro.org">&lt;philmd@linaro.org&gt;</a></p>
+    <p></p>
+    <div class="moz-cite-prefix">06.05.2024 13:02, Alex Bennée пишет:<br>
+    </div>
+    <blockquote type="cite" cite="mid:8734qvuukl.fsf@draig.linaro.org">
+      <pre class="moz-quote-pre" wrap="">Andrey Shumilin <a class="moz-txt-link-rfc2396E" href="mailto:shum.sdl@nppct.ru">&lt;shum.sdl@nppct.ru&gt;</a> writes:
+
+</pre>
+      <blockquote type="cite">
+        <pre class="moz-quote-pre" wrap="">1 Possibly mismatched call arguments in function 'gic_apr_ns_view': 'cpu' and 'regno' passed in place of 'int regno' and 'int
+ cpu'.
+2 Possibly mismatched call arguments in function 'gic_apr_write_ns_view': 'cpu' and 'regno' passed in place of 'int regno' and
+ 'int cpu'.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+</pre>
+      </blockquote>
+      <pre class="moz-quote-pre" wrap="">
+So this purely a heuristic test based on the parameter names?
+
+</pre>
+      <blockquote type="cite">
+        <pre class="moz-quote-pre" wrap="">
+From 23b142f5046ba9d3aec57217f6d8f3127f9bff69 Mon Sep 17 00:00:00 2001
+From: Andrey Shumilin <a class="moz-txt-link-rfc2396E" href="mailto:shum.sdl@nppct.ru">&lt;shum.sdl@nppct.ru&gt;</a>
+Date: Sun, 5 May 2024 20:13:40 +0300
+Subject: [PATCH] Patch hw/intc/arm_gic.c
+
+Signed-off-by: Andrey Shumilin <a class="moz-txt-link-rfc2396E" href="mailto:shum.sdl@nppct.ru">&lt;shum.sdl@nppct.ru&gt;</a>
+---
+ hw/intc/arm_gic.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/hw/intc/arm_gic.c b/hw/intc/arm_gic.c
+index 7a34bc0998..47f01e45e3 100644
+--- a/hw/intc/arm_gic.c
++++ b/hw/intc/arm_gic.c
+@@ -1658,7 +1658,7 @@ static MemTxResult gic_cpu_read(GICState *s, int cpu, int offset,
+             *data = s-&gt;h_apr[gic_get_vcpu_real_id(cpu)];
+         } else if (gic_cpu_ns_access(s, cpu, attrs)) {
+             /* NS view of GICC_APR&lt;n&gt; is the top half of GIC_NSAPR&lt;n&gt; */
+-            *data = gic_apr_ns_view(s, regno, cpu);
++            *data = gic_apr_ns_view(s, cpu, regno);
+         } else {
+             *data = s-&gt;apr[regno][cpu];
+         }
+@@ -1746,7 +1746,7 @@ static MemTxResult gic_cpu_write(GICState *s, int cpu, int offset,
+             s-&gt;h_apr[gic_get_vcpu_real_id(cpu)] = value;
+         } else if (gic_cpu_ns_access(s, cpu, attrs)) {
+             /* NS view of GICC_APR&lt;n&gt; is the top half of GIC_NSAPR&lt;n&gt; */
+-            gic_apr_write_ns_view(s, regno, cpu, value);
++            gic_apr_write_ns_view(s, cpu, regno, value);
+         } else {
+             s-&gt;apr[regno][cpu] = value;
+         }
+</pre>
+      </blockquote>
+      <pre class="moz-quote-pre" wrap="">
+Ahh C's lack of strong typing wins again :-/
+
+Reviewed-by: Alex Bennée <a class="moz-txt-link-rfc2396E" href="mailto:alex.bennee@linaro.org">&lt;alex.bennee@linaro.org&gt;</a>
+
+</pre>
+    </blockquote>
+  </body>
+</html>
+
+--------------jgjHyKx1bMRUrUk2dfyDeSYb--
 
