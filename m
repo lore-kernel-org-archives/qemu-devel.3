@@ -4,83 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19C4FC41513
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 12:31:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4185C41513
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 12:31:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4Jxy-0005fQ-Nk; Tue, 07 May 2024 08:30:44 -0400
+	id 1s4JyT-0005tn-QL; Tue, 07 May 2024 08:31:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4Jxg-0005e7-N5; Tue, 07 May 2024 08:30:26 -0400
-Received: from mail-il1-x12e.google.com ([2607:f8b0:4864:20::12e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4Jxw-0005lR-15
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 08:30:43 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4Jxe-0006kV-6a; Tue, 07 May 2024 08:30:24 -0400
-Received: by mail-il1-x12e.google.com with SMTP id
- e9e14a558f8ab-36c826d6edeso13150655ab.0; 
- Tue, 07 May 2024 05:30:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4Jxp-0006sL-2N
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 08:30:39 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-41ecd60bb16so22951655e9.0
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 05:30:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715085019; x=1715689819; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YD+CWUWFIUhodPnXnwGaEzhbwY02GTI8eVZz7/m19+U=;
- b=aCLzHz384mCsUUjQ+eFLsXknPQEL1M0zcOe8EOx46SSkUVlKHZoeO+Ph4vknzlXatT
- W0wrKAnOXOzEUeMGPteAJTLqKU2Bwar2rhuAXxsV0OcgaSdnznk3brrAaHiVjjJHSJNC
- OYvN7IYJZNCaaEer6secGISLEpd6yK4Fzcq03WCey0PnO++Z1XOGUCNVIso5te7bh5nh
- BgErlJ6WEtEiidIytXUGUmt/hrsS7TMbeMhlGedlNVvF+2sc0YiHikoITfr9FEogvj2O
- nQMvMOOWfw8SYa+VtGMUUr/CzuL9rhDTHd1WuvYLuqbXQsPSPPSmmbvtQQooDTAcOAfY
- 2znQ==
+ d=linaro.org; s=google; t=1715085030; x=1715689830; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=wx/6CI8YsxdL7zULZQpaCZPw1Wrj7TgMWK29VE0fJdI=;
+ b=su/pFa1uID4NRvWrLncb6xz/2MHBeKy5ryzTeK9LH6EAmTPdd3NyXJANVMXvXXX9U8
+ jgIjLeHgGsLKMVHGrbAWVUM8jmFUmzVsflHe5+ecSxncbX+NCkVCkx9v3xlVc+eiLl35
+ b9IyY8m7iVMKRUjnCmXsNADFvBOTtxtrGKGX6DeYC0bOcONMZ1omSl2d/PwFXIPueb6i
+ lhFjBtkq2b+ViliqpIAiWhjZR04OIVq2hSJlHrIxa4QIzIZemtx2XKQIc2rCPZ0MqQs5
+ toO4kYEVWfyjBnPFObMTMckyu2AM8PJU1y7XzOU/c7bpIAzDVYXfqUED2ovjjRDtJQ/g
+ xkEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715085019; x=1715689819;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=YD+CWUWFIUhodPnXnwGaEzhbwY02GTI8eVZz7/m19+U=;
- b=nArCw9ItCeo/Z2/MY38F+E18FwXeSpd2I/VbF75N7wim613sPCK3qjnZVkP6eKiN2L
- 4heKn8kE0jXqwTu/0/+1oSRUqSGnACFGV0EOitshFDzKq43zpIgVK3VqnPiWvKk4bE/a
- ZNdLjO3oeIhs0eij73nXQMc4H52Ptz5muryAm/Ff5ASaMbFUy12c8WN+ecwkMgfTqeET
- W3+Wz+XWPAr/Qpr2OXz/xKYJcdbxlMvVN0mvBpJ9THIcCH2yU9k03JWhdwbanLolIfBX
- EFcsYK5yi6jOr33UiFOVArIkp1WLqlor9qIda/NhUUjNPpoyd+xeB2AU7+Yb6URoB5de
- nRRw==
+ d=1e100.net; s=20230601; t=1715085030; x=1715689830;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wx/6CI8YsxdL7zULZQpaCZPw1Wrj7TgMWK29VE0fJdI=;
+ b=A7DC4QcHIWXOHpJGWd3JM3ySDXsKMON9C94fQ9AUFScvDaaAPov/tl2QoNgdRqcBwX
+ heZNq50IkQPwAmMVlIK4GpDU5obVcKYF1uUOqMjwHr5zJcvrwV08bDnW9QTSDwgTQR3Q
+ j/fpOWP/9pN4aWBKvtsz49kd0J21pbQi9Pw5LFfUutndEL6is/aK9ZgCJk+gVCif9Rxm
+ T/9DT3MR+6/AHAA38Zin/I5bNvFlMlq0QXKe+uFospxiScsWhXK/YOvrBseQ/1xO/qPK
+ P1AfN0IcFPdBsv5gsGi5nzY2ofn1pXTgi+D9PgvYtdJQd4wHqusnrrwb3voAKx2BcjbC
+ Qgag==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVmQ3l11US/ZilrRz5m0sdBm5sk69HYFjFDwdNUYTCCqwTwFWgdL2afHzle4JGhiUMmuVpkHfowta17le6Cgs9VGrh8hhMbEYcX+KM7Kn21a2M8b2rKijp7rBY=
-X-Gm-Message-State: AOJu0Yxvw7SIotq8xngl2+1VhUmjRscrQZw5u+Xa5Gi8hTaVZVD8mhR9
- SaCCTXFNLpaze/NVgyEgofCZHK+nflQ9QP1pZRtfSRoek7EIADjk
-X-Google-Smtp-Source: AGHT+IEWDiySI5wCWjTXYh3xXCok6dg2RmDuysgscfm2j78/WHW8jy6UuUwVUGl2rTO+TaOLcRfDgQ==
-X-Received: by 2002:a05:6e02:164d:b0:36c:dd5:63a1 with SMTP id
- v13-20020a056e02164d00b0036c0dd563a1mr16494975ilu.24.1715085019215; 
- Tue, 07 May 2024 05:30:19 -0700 (PDT)
-Received: from localhost (220-245-239-57.tpgi.com.au. [220.245.239.57])
+ AJvYcCWWRcS82a4KMXi1BLye4OWCpTJLUmhjMS7uAZa6lC08IBy8Ki8gfmG7iDwcaVt1xJeZxY5g2a4GiBfctqQ3MwCgwJdJYhg=
+X-Gm-Message-State: AOJu0YwiReAs1cYhn8EfUF3ctg5Gqe2FaKpEztDxFFyqYTB+B/18nc/b
+ hMdkNQbgUtu8Gayx8C99wyhlYLUY1KVRbjXMF/2V1uCt+J+hSfajCo1JYP8XpIk=
+X-Google-Smtp-Source: AGHT+IEg/BW7aejSqNLApUIz0xaNANYGz4sl6pI++e0ZNwBHNd+pJ3eA4aJ6bYuSfRWMHQnlfN4qqg==
+X-Received: by 2002:a5d:628f:0:b0:34f:3293:83d9 with SMTP id
+ k15-20020a5d628f000000b0034f329383d9mr4983336wru.57.1715085029714; 
+ Tue, 07 May 2024 05:30:29 -0700 (PDT)
+Received: from m1x-phil.lan ([176.176.177.243])
  by smtp.gmail.com with ESMTPSA id
- k1-20020a635601000000b005fd88b393b4sm9156395pgb.59.2024.05.07.05.30.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 May 2024 05:30:18 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 07 May 2024 22:30:14 +1000
-Message-Id: <D13EWAGCZ9F6.1LCJ4K7W21C3L@gmail.com>
-Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
-Subject: Re: [PATCH v2 27/28] target/ppc: Remove id_tlbs flag from CPU env
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
- <qemu-ppc@nongnu.org>
-X-Mailer: aerc 0.17.0
-References: <cover.1714606359.git.balaton@eik.bme.hu>
- <5a24db3d48babe4e855707a01954b1827712772f.1714606359.git.balaton@eik.bme.hu>
-In-Reply-To: <5a24db3d48babe4e855707a01954b1827712772f.1714606359.git.balaton@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12e;
- envelope-from=npiggin@gmail.com; helo=mail-il1-x12e.google.com
+ h3-20020a5d4303000000b0034f145b60ebsm5532523wrq.3.2024.05.07.05.30.27
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 07 May 2024 05:30:28 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Mattias Nissler <mnissler@rivosinc.com>,
+	qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@redhat.com>,
+ "Marcel Apfelbaum" <marcel.apfelbaum@gmail.com>,
+ Peter Xu <peterx@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, john.levon@nutanix.com,
+ "Jonathan Cameron" <Jonathan.Cameron@huawei.com>,
+ "Elena Ufimtseva" <elena.ufimtseva@oracle.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 0/3] system/physmem: Propagate AddressSpace to MapClient
+ helpers
+Date: Tue,  7 May 2024 14:30:22 +0200
+Message-ID: <20240507123025.93391-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,214 +100,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu May 2, 2024 at 9:43 AM AEST, BALATON Zoltan wrote:
-> This flag for split instruction/data TLBs is only set for 6xx soft TLB
-> MMU model and not used otherwise so no need to have a separate flag
-> for that.
->
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
->  hw/ppc/pegasos2.c        |  2 +-
->  target/ppc/cpu.h         |  1 -
->  target/ppc/cpu_init.c    | 19 +++++--------------
->  target/ppc/helper_regs.c |  1 -
->  target/ppc/mmu_common.c  | 10 ++--------
->  target/ppc/mmu_helper.c  | 12 ++----------
->  6 files changed, 10 insertions(+), 35 deletions(-)
->
-> diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
-> index 04d6decb2b..dfc6fab180 100644
-> --- a/hw/ppc/pegasos2.c
-> +++ b/hw/ppc/pegasos2.c
-> @@ -984,7 +984,7 @@ static void *build_fdt(MachineState *machine, int *fd=
-t_size)
->                            cpu->env.icache_line_size);
->      qemu_fdt_setprop_cell(fdt, cp, "i-cache-line-size",
->                            cpu->env.icache_line_size);
-> -    if (cpu->env.id_tlbs) {
-> +    if (cpu->env.tlb_type =3D=3D TLB_6XX) {
+Respin of Mattias patch [1 split to ease review.
+Preliminary use QEMU_LOCK_GUARD to simplify.
 
-Want to just add the standard comment here?
+I'm OK to include this and the endianness fix [2]
+if Mattias agrees, once first patch is reviewed.
 
-    /* 6xx has separate TLBs for instructions and data */
+Regards,
 
-Otherwise looks good
+Phil.
 
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+[1 https://lore.kernel.org/qemu-devel/20240507094210.300566-2-mnissler@rivosinc.com/
+[2] https://lore.kernel.org/qemu-devel/20240507094210.300566-6-mnissler@rivosinc.com/
 
->          qemu_fdt_setprop_cell(fdt, cp, "i-tlb-sets", cpu->env.nb_ways);
->          qemu_fdt_setprop_cell(fdt, cp, "i-tlb-size", cpu->env.tlb_per_wa=
-y);
->          qemu_fdt_setprop_cell(fdt, cp, "d-tlb-sets", cpu->env.nb_ways);
-> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-> index 0ac55d6b25..21e12a4f0d 100644
-> --- a/target/ppc/cpu.h
-> +++ b/target/ppc/cpu.h
-> @@ -1260,7 +1260,6 @@ struct CPUArchState {
->      int tlb_per_way; /* Speed-up helper: used to avoid divisions at run =
-time */
->      int nb_ways;     /* Number of ways in the TLB set */
->      int last_way;    /* Last used way used to allocate TLB in a LRU way =
-*/
-> -    int id_tlbs;     /* If 1, MMU has separated TLBs for instructions & =
-data */
->      int nb_pids;     /* Number of available PID registers */
->      int tlb_type;    /* Type of TLB we're dealing with */
->      ppc_tlb_t tlb;   /* TLB is optional. Allocate them only if needed */
-> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> index c11a69fd90..07ad788e54 100644
-> --- a/target/ppc/cpu_init.c
-> +++ b/target/ppc/cpu_init.c
-> @@ -2117,7 +2117,6 @@ static void init_proc_405(CPUPPCState *env)
->  #if !defined(CONFIG_USER_ONLY)
->      env->nb_tlb =3D 64;
->      env->nb_ways =3D 1;
-> -    env->id_tlbs =3D 0;
->      env->tlb_type =3D TLB_EMB;
->  #endif
->      init_excp_4xx(env);
-> @@ -2190,7 +2189,6 @@ static void init_proc_440EP(CPUPPCState *env)
->  #if !defined(CONFIG_USER_ONLY)
->      env->nb_tlb =3D 64;
->      env->nb_ways =3D 1;
-> -    env->id_tlbs =3D 0;
->      env->tlb_type =3D TLB_EMB;
->  #endif
->      init_excp_BookE(env);
-> @@ -2288,7 +2286,6 @@ static void init_proc_440GP(CPUPPCState *env)
->  #if !defined(CONFIG_USER_ONLY)
->      env->nb_tlb =3D 64;
->      env->nb_ways =3D 1;
-> -    env->id_tlbs =3D 0;
->      env->tlb_type =3D TLB_EMB;
->  #endif
->      init_excp_BookE(env);
-> @@ -2362,7 +2359,6 @@ static void init_proc_440x5(CPUPPCState *env)
->  #if !defined(CONFIG_USER_ONLY)
->      env->nb_tlb =3D 64;
->      env->nb_ways =3D 1;
-> -    env->id_tlbs =3D 0;
->      env->tlb_type =3D TLB_EMB;
->  #endif
->      init_excp_BookE(env);
-> @@ -2724,7 +2720,6 @@ static void init_proc_e200(CPUPPCState *env)
->  #if !defined(CONFIG_USER_ONLY)
->      env->nb_tlb =3D 64;
->      env->nb_ways =3D 1;
-> -    env->id_tlbs =3D 0;
->      env->tlb_type =3D TLB_EMB;
->  #endif
->      init_excp_e200(env, 0xFFFF0000UL);
-> @@ -2843,7 +2838,6 @@ static void init_proc_e500(CPUPPCState *env, int ve=
-rsion)
->      /* Memory management */
->      env->nb_pids =3D 3;
->      env->nb_ways =3D 2;
-> -    env->id_tlbs =3D 0;
->      switch (version) {
->      case fsl_e500v1:
->          tlbncfg[0] =3D register_tlbncfg(2, 1, 1, 0, 256);
-> @@ -6800,20 +6794,17 @@ static void init_ppc_proc(PowerPCCPU *cpu)
->      }
->      /* Allocate TLBs buffer when needed */
->  #if !defined(CONFIG_USER_ONLY)
-> -    if (env->nb_tlb !=3D 0) {
-> -        int nb_tlb =3D env->nb_tlb;
-> -        if (env->id_tlbs !=3D 0) {
-> -            nb_tlb *=3D 2;
-> -        }
-> +    if (env->nb_tlb) {
->          switch (env->tlb_type) {
->          case TLB_6XX:
-> -            env->tlb.tlb6 =3D g_new0(ppc6xx_tlb_t, nb_tlb);
-> +            /* 6xx has separate TLBs for instructions and data hence tim=
-es 2 */
-> +            env->tlb.tlb6 =3D g_new0(ppc6xx_tlb_t, 2 * env->nb_tlb);
->              break;
->          case TLB_EMB:
-> -            env->tlb.tlbe =3D g_new0(ppcemb_tlb_t, nb_tlb);
-> +            env->tlb.tlbe =3D g_new0(ppcemb_tlb_t, env->nb_tlb);
->              break;
->          case TLB_MAS:
-> -            env->tlb.tlbm =3D g_new0(ppcmas_tlb_t, nb_tlb);
-> +            env->tlb.tlbm =3D g_new0(ppcmas_tlb_t, env->nb_tlb);
->              break;
->          }
->          /* Pre-compute some useful values */
-> diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
-> index 25258986e3..ed583fe9b3 100644
-> --- a/target/ppc/helper_regs.c
-> +++ b/target/ppc/helper_regs.c
-> @@ -693,7 +693,6 @@ void register_6xx_7xx_soft_tlb(CPUPPCState *env, int =
-nb_tlbs, int nb_ways)
->  #if !defined(CONFIG_USER_ONLY)
->      env->nb_tlb =3D nb_tlbs;
->      env->nb_ways =3D nb_ways;
-> -    env->id_tlbs =3D 1;
->      env->tlb_type =3D TLB_6XX;
->      spr_register(env, SPR_DMISS, "DMISS",
->                   SPR_NOACCESS, SPR_NOACCESS,
-> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-> index 204b8af455..a0b34f9637 100644
-> --- a/target/ppc/mmu_common.c
-> +++ b/target/ppc/mmu_common.c
-> @@ -130,8 +130,8 @@ int ppc6xx_tlb_getnum(CPUPPCState *env, target_ulong =
-eaddr,
->      nr =3D (eaddr >> TARGET_PAGE_BITS) & (env->tlb_per_way - 1);
->      /* Select TLB way */
->      nr +=3D env->tlb_per_way * way;
-> -    /* 6xx have separate TLBs for instructions and data */
-> -    if (is_code && env->id_tlbs =3D=3D 1) {
-> +    /* 6xx has separate TLBs for instructions and data */
-> +    if (is_code) {
->          nr +=3D env->nb_tlb;
->      }
-> =20
-> @@ -1246,13 +1246,7 @@ static void mmu6xx_dump_mmu(CPUPPCState *env)
->      mmu6xx_dump_BATs(env, ACCESS_INT);
->      mmu6xx_dump_BATs(env, ACCESS_CODE);
-> =20
-> -    if (env->id_tlbs !=3D 1) {
-> -        qemu_printf("ERROR: 6xx MMU should have separated TLB"
-> -                    " for code and data\n");
-> -    }
-> -
->      qemu_printf("\nTLBs                       [EPN    EPN + SIZE]\n");
-> -
->      for (type =3D 0; type < 2; type++) {
->          for (way =3D 0; way < env->nb_ways; way++) {
->              for (entry =3D env->nb_tlb * type + env->tlb_per_way * way;
-> diff --git a/target/ppc/mmu_helper.c b/target/ppc/mmu_helper.c
-> index 817836b731..87c611888b 100644
-> --- a/target/ppc/mmu_helper.c
-> +++ b/target/ppc/mmu_helper.c
-> @@ -44,14 +44,8 @@
->  static inline void ppc6xx_tlb_invalidate_all(CPUPPCState *env)
->  {
->      ppc6xx_tlb_t *tlb;
-> -    int nr, max;
-> +    int nr, max =3D 2 * env->nb_tlb;
-> =20
-> -    /* LOG_SWTLB("Invalidate all TLBs\n"); */
-> -    /* Invalidate all defined software TLB */
-> -    max =3D env->nb_tlb;
-> -    if (env->id_tlbs =3D=3D 1) {
-> -        max *=3D 2;
-> -    }
->      for (nr =3D 0; nr < max; nr++) {
->          tlb =3D &env->tlb.tlb6[nr];
->          pte_invalidate(&tlb->pte0);
-> @@ -307,9 +301,7 @@ void ppc_tlb_invalidate_one(CPUPPCState *env, target_=
-ulong addr)
->      switch (env->mmu_model) {
->      case POWERPC_MMU_SOFT_6xx:
->          ppc6xx_tlb_invalidate_virt(env, addr, 0);
-> -        if (env->id_tlbs =3D=3D 1) {
-> -            ppc6xx_tlb_invalidate_virt(env, addr, 1);
-> -        }
-> +        ppc6xx_tlb_invalidate_virt(env, addr, 1);
->          break;
->      case POWERPC_MMU_32B:
->          /*
+Mattias Nissler (2):
+  system/physmem: Propagate AddressSpace to MapClient helpers
+  system/physmem: Per-AddressSpace bounce buffering
+
+Philippe Mathieu-Daudé (1):
+  system/physmem: Replace qemu_mutex_lock() calls with QEMU_LOCK_GUARD
+
+ include/exec/cpu-common.h |  2 -
+ include/exec/memory.h     | 45 +++++++++++++++++-
+ system/dma-helpers.c      |  4 +-
+ system/memory.c           |  7 +++
+ system/physmem.c          | 98 +++++++++++++++------------------------
+ 5 files changed, 90 insertions(+), 66 deletions(-)
+
+-- 
+2.41.0
 
 
