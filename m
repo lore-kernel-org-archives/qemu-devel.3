@@ -4,114 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 448ABC10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 21:04:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E179AC19F4F
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 21:06:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4Ryz-0001hE-Kv; Tue, 07 May 2024 17:04:17 -0400
+	id 1s4S0l-00030d-FO; Tue, 07 May 2024 17:06:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s4Ryw-0001aa-EK
- for qemu-devel@nongnu.org; Tue, 07 May 2024 17:04:14 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1s4S0e-0002zR-7L
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 17:06:01 -0400
+Received: from mail-oa1-x31.google.com ([2001:4860:4864:20::31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s4Ryi-0003jh-U9
- for qemu-devel@nongnu.org; Tue, 07 May 2024 17:04:14 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 376055BD38;
- Tue,  7 May 2024 21:03:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1715115839; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rRqkJbti4o/uw7dESQcGbPAnBlfMo4z2G6mt5iHvOPI=;
- b=A3tHKV2468S7CUNQ7U5BSLdj8aH0nZ1inLs1wvm/67xG2B69E5tRxOwIv/plfsOwBZTO1K
- 3095Ue1TTwsO1Let0CiJdq7N+A9WaOefFQtESYRPeLoRNVUDsxdlTHfjAsb653oMfaZ0AK
- qzS34Tj04jZ88fXzIbeUdUgjPqD5SRg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1715115839;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rRqkJbti4o/uw7dESQcGbPAnBlfMo4z2G6mt5iHvOPI=;
- b=v4vElHvAYyIz+iBWsjb7fgG3i/kSsAnQm3C/5vBbgbOWMNAHV7NeBukiiIV3vxKbMdrJLR
- 3RdcjDbAGs4ZfnDg==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=A3tHKV24;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=v4vElHvA
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1715115839; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rRqkJbti4o/uw7dESQcGbPAnBlfMo4z2G6mt5iHvOPI=;
- b=A3tHKV2468S7CUNQ7U5BSLdj8aH0nZ1inLs1wvm/67xG2B69E5tRxOwIv/plfsOwBZTO1K
- 3095Ue1TTwsO1Let0CiJdq7N+A9WaOefFQtESYRPeLoRNVUDsxdlTHfjAsb653oMfaZ0AK
- qzS34Tj04jZ88fXzIbeUdUgjPqD5SRg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1715115839;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rRqkJbti4o/uw7dESQcGbPAnBlfMo4z2G6mt5iHvOPI=;
- b=v4vElHvAYyIz+iBWsjb7fgG3i/kSsAnQm3C/5vBbgbOWMNAHV7NeBukiiIV3vxKbMdrJLR
- 3RdcjDbAGs4ZfnDg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B5F64139CB;
- Tue,  7 May 2024 21:03:58 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id IyMDHz6XOmZePQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 07 May 2024 21:03:58 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, Igor
- Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Philippe Mathieu-Daude
- <philmd@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, "Daniel P.
- Berrange" <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: Re: [PATCH V1 07/26] migration: VMStateId
-In-Reply-To: <1714406135-451286-8-git-send-email-steven.sistare@oracle.com>
-References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
- <1714406135-451286-8-git-send-email-steven.sistare@oracle.com>
-Date: Tue, 07 May 2024 18:03:56 -0300
-Message-ID: <87o79hl4g3.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1s4S0b-0004df-2B
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 17:05:59 -0400
+Received: by mail-oa1-x31.google.com with SMTP id
+ 586e51a60fabf-23bd61fbd64so2457365fac.0
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 14:05:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1715115955; x=1715720755; darn=nongnu.org;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=vGef84+m4oQ4iOIrxb0PfmIZtWMtXpB40ysiWFdCci0=;
+ b=JmaYaS687SLRxY/OD4guMxFvu7sMgRnAHrpUjQGrNjjzEzSTWGway25Xn7lYtb41g+
+ LprX5GiOJRVVCWaFGhIcmqWIBATaQfCyRotHyttA+hrkvOeBDzKb1lHp6Mk01XDnmjzP
+ k4EB0hC/BaU5cvAXVs0ve26JhYhRWBeKs5zigXk1pmbetZeOZbjjJfoMJIuW/QVkomnE
+ zg+chruvBcEjOW5K1d6txx9j84J1iJeCmrJ90gSu6NnS4F6mshpAOE/P0OwOGnUhi5iI
+ BplLv8EEllB96e2dhow8xyRTfsONWVpHWTyqHEkyPl/hS/3qmXTYQsWFQnbjReY3yvIh
+ 5Hmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715115955; x=1715720755;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=vGef84+m4oQ4iOIrxb0PfmIZtWMtXpB40ysiWFdCci0=;
+ b=Czf57/znWlO5kyP12KxGYLB842OvPpkxuFUG0rGrPrLSvb2NhKvXZYKHVlkxuCD5bi
+ w0e3JWdfHcK6UajUHU1g3S5ziVoIRvCNHj/Ps2lCDeW+Lm+86kwe20mbyndmbSKJtW3K
+ lqg6l94/K99kqezPHHtROB6qXoq+ExGVTEabTUBp/TQ7Rqus0aM42RIcOGRdz47jnNWH
+ aRt3BLE4vnhuFic0iFYPB+Yfj3/FNV7lV6QgZgh0shtojdDYk8OSnwR/kZqD9Gq/DBvQ
+ wGdEFlXf3PV9n4X8vMWr1/dkUPy1cu7BKViUMnX+G+bUpljxR+glNjza8gTy8GaP5Vqd
+ 3zlA==
+X-Gm-Message-State: AOJu0YxCyIo4cdnaQ1CBfb7/h7SmKl6TLi5eCRjJTGvATET9KiHpNf6v
+ 0mLXx0fGR4avoZwVZLOk7zuJS/4kq6X95uSa97pQbLJkdRshjtGXXEu9uQ==
+X-Google-Smtp-Source: AGHT+IGmggmH+4zsP2G4CrPpcYBhQ9pzdYt65rdFMWqvGpJUXL0CpVnmw6Xm8IW97yAdZAXohCgUHg==
+X-Received: by 2002:a05:6870:5e0e:b0:23e:6d44:f984 with SMTP id
+ 586e51a60fabf-24097e768b7mr818963fac.26.1715115955338; 
+ Tue, 07 May 2024 14:05:55 -0700 (PDT)
+Received: from DESKTOPUU50BPD ([2603:8080:1f00:9c00:9853:4f9b:dc74:424c])
+ by smtp.gmail.com with ESMTPSA id
+ qg17-20020a056870de1100b0023b5203fc58sm2723517oab.37.2024.05.07.14.05.54
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 07 May 2024 14:05:54 -0700 (PDT)
+From: <ltaylorsimpson@gmail.com>
+To: "'Anton Johansson'" <anjo@rev.ng>
+Cc: <qemu-devel@nongnu.org>,
+	<ale@rev.ng>,
+	<bcain@quicinc.com>
+References: <20240506183117.32268-1-anjo@rev.ng>
+ <20240506183117.32268-4-anjo@rev.ng>
+ <067f01da9fe7$51597590$f40c60b0$@gmail.com>
+ <f7fmzerjibovuo7uevxmold5g6jvvjazfckhtv6tqkatpgbtzy@ging72uqq27r>
+In-Reply-To: <f7fmzerjibovuo7uevxmold5g6jvvjazfckhtv6tqkatpgbtzy@ging72uqq27r>
+Subject: RE: [PATCH 3/4] target/hexagon: idef-parser fix leak of init_list
+Date: Tue, 7 May 2024 16:05:53 -0500
+Message-ID: <071701daa0c2$5988d450$0c9a7cf0$@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-2.99 / 50.00]; BAYES_HAM(-2.98)[99.92%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmail.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- ARC_NA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- MIME_TRACE(0.00)[0:+];
- FREEMAIL_CC(0.00)[redhat.com,habkost.net,gmail.com,linaro.org,oracle.com];
- DKIM_TRACE(0.00)[suse.de:+]; RCPT_COUNT_TWELVE(0.00)[12];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; TAGGED_RCPT(0.00)[];
- DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim]; MISSING_XM_UA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; TO_DN_SOME(0.00)[]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 376055BD38
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQJLdJdU/DG86JVEEIa8gVqwbMNhjgHc4CmKAZKcipcB0QeirbCAlt3Q
+Content-Language: en-us
+Received-SPF: pass client-ip=2001:4860:4864:20::31;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-oa1-x31.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,12 +102,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Steve Sistare <steven.sistare@oracle.com> writes:
 
-> Define a type for the 256 byte id string to guarantee the same length is
-> used and enforced everywhere.
->
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> -----Original Message-----
+> From: 'Anton Johansson' <anjo@rev.ng>
+> Sent: Tuesday, May 7, 2024 4:47 AM
+> To: ltaylorsimpson@gmail.com
+> Cc: qemu-devel@nongnu.org; ale@rev.ng; bcain@quicinc.com
+> Subject: Re: [PATCH 3/4] target/hexagon: idef-parser fix leak of =
+init_list
+>=20
+> On 06/05/24, ltaylorsimpson@gmail.com wrote:
+> >
+> >
+> > > -----Original Message-----
+> > > From: Anton Johansson <anjo@rev.ng>
+> > > Sent: Monday, May 6, 2024 1:31 PM
+> > > To: qemu-devel@nongnu.org
+> > > Cc: ale@rev.ng; ltaylorsimpson@gmail.com; bcain@quicinc.com
+> > > Subject: [PATCH 3/4] target/hexagon: idef-parser fix leak of
+> > > init_list
+> > >
+> > > gen_inst_init_args() is called for instructions using a predicate =
+as
+> > > an
+> > rvalue.
+> > > Upon first call, the list of arguments which might need
+> > > initialization
+> > init_list is
+> > > freed to indicate that they have been processed. For instructions
+> > > without
+> > an
+> > > rvalue predicate,
+> > > gen_inst_init_args() isn't called and init_list will never be =
+freed.
+> > >
+> > > Free init_list from free_instruction() if it hasn't already been =
+freed.
+> > >
+> > > Signed-off-by: Anton Johansson <anjo@rev.ng>
+> > > ---
+> > >  target/hexagon/idef-parser/parser-helpers.c | 7 +++++++
+> > >  1 file changed, 7 insertions(+)
+> > >
+> > > diff --git a/target/hexagon/idef-parser/parser-helpers.c
+> > > b/target/hexagon/idef-parser/parser-helpers.c
+> > > index 95f2b43076..bae01c2bb8 100644
+> > > --- a/target/hexagon/idef-parser/parser-helpers.c
+> > > +++ b/target/hexagon/idef-parser/parser-helpers.c
+> > > @@ -2121,6 +2121,13 @@ void free_instruction(Context *c)
+> > >          g_string_free(g_array_index(c->inst.strings, GString*, =
+i), TRUE);
+> > >      }
+> > >      g_array_free(c->inst.strings, TRUE);
+> > > +    /*
+> > > +     * Free list of arguments that might need initialization, if
+> > > + they
+> > haven't
+> > > +     * already been free'd.
+> > > +     */
+> > > +    if (c->inst.init_list) {
+> > > +        g_array_free(c->inst.init_list, TRUE);
+> > > +    }
+> > >      /* Free INAME token value */
+> > >      g_string_free(c->inst.name, TRUE);
+> > >      /* Free variables and registers */
+> >
+> > Why not do this in gen_inst_init_args just before this?
+> >    /* Free argument init list once we have initialized everything */
+> >     g_array_free(c->inst.init_list, TRUE);
+> >     c->inst.init_list =3D NULL;
+>=20
+> Thanks for the reviews Taylor! I'm not sure I understand what you mean
+> here, we already free init_list in gen_inst_init_args, since =
+gen_inst_init_args
+> won't be called for all instructions we need to also free from a =
+common
+> place.
+>=20
+> //Anton
+
+It just seems more natural to free the elements of the array at the same =
+place you free the array itself.  If there are valid reasons for doing =
+it elsewhere, I'm OK with that.
+
+Taylor
+
+
 
