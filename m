@@ -4,102 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 923E0C10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 04:14:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ACA3C10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 04:33:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4CCO-0007gA-OM; Tue, 07 May 2024 00:13:04 -0400
+	id 1s4CVf-00071H-8z; Tue, 07 May 2024 00:32:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1s4CCM-0007fJ-G0; Tue, 07 May 2024 00:13:02 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1s4CCK-00079K-Dt; Tue, 07 May 2024 00:13:02 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44743JwC024608; Tue, 7 May 2024 04:12:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=vvY04gXkOB4D+WEsP1Bo5LAC7Hd2KZz6ylAewgoVbok=;
- b=pOZVaJw+oXf4kz1Qla5pa+xDv8SU4po2aJG5O6Vu04XWrpZGBaTJL5pfc9FQLBJBg/L8
- kXt8fozLaFnvIrIx1fKQRW0pgKZ3usSJgIul0FxmMQM+/uUB+bxcFXp9Z3ki9+KcZqkX
- p1NA4oVp5wDH2mmGv1hgyh4+SIv6leDAXswZgET06K51G6l90wYFYi5cLTZMKgFvlMzN
- ICT/owCY8XP85sQDa51mt9wfN95iO8DCfHzqHxSI3U0x6waClx7JDpG7QY2vIsjjaQb/
- paOtpajwS3pZ8DXE9GzgmAvIK8c5aDChAyftCad/cKJGMBQXLD6g5tYEYYicZ0LnzfgC eQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xycxa80m1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 07 May 2024 04:12:52 +0000
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4474Cq7J004196;
- Tue, 7 May 2024 04:12:52 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xycxa80m0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 07 May 2024 04:12:51 +0000
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 4472KYn6010584; Tue, 7 May 2024 04:12:50 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3xx0bp3wyr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 07 May 2024 04:12:50 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4474Cl2u23069196
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 7 May 2024 04:12:50 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B8EF058065;
- Tue,  7 May 2024 04:12:47 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ABF7458063;
- Tue,  7 May 2024 04:12:45 +0000 (GMT)
-Received: from [9.109.243.194] (unknown [9.109.243.194])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  7 May 2024 04:12:45 +0000 (GMT)
-Message-ID: <9efc3c34-2330-4337-bf69-3a7a13d691c5@linux.ibm.com>
-Date: Tue, 7 May 2024 09:42:43 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] spapr: Migrate ail-mode-3 spapr cap
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>, qemu-devel@nongnu.org,
- qemu-stable@nongnu.org
-References: <20240506115607.13405-1-npiggin@gmail.com>
-Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20240506115607.13405-1-npiggin@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 8qjel7rWCsZL2moTsD4zWg0KjTguwxao
-X-Proofpoint-ORIG-GUID: HpXFXOU2ysAp8zb-Kt-ZBr0Tv_l2ZXl_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-07_01,2024-05-06_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 phishscore=0
- priorityscore=1501 suspectscore=0 spamscore=0 mlxlogscore=999
- impostorscore=0 bulkscore=0 malwarescore=0 mlxscore=0 adultscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2404010000 definitions=main-2405070029
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1s4CVb-00070A-SK; Tue, 07 May 2024 00:32:57 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1s4CVa-0006U0-0P; Tue, 07 May 2024 00:32:55 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1ee5235f5c9so8629975ad.2; 
+ Mon, 06 May 2024 21:32:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1715056372; x=1715661172; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+uAoPhyorj6EitS242+fxxENQEPtgu5DnsXCRH6c768=;
+ b=dM9ZF23U3n+lDAY3iOfG6rZ7zj4jFcZnB43jAMpaVSwC7mUbSGnRETbIO/1pd8NzZm
+ UkejUMdEHCWojVzDFqxkMJ1taoSxn+xDm1N/uLxxRAz6NSVlWUgVjvwiQl31cnR/Sch6
+ rP3NmrZvVk4cx1Js33SmeCIr/Ud09cG6333R9N9vn1O8lb/j6cHdur391mtJn+vbd5UY
+ rNZz4sAtZ8klizdfb+T714ejwJwJXlTkI1JMsxlYiw3EKj0H86IWydo5iRJPp1/IAMe9
+ Pqf9/XCSZoOdpbsD6chOpgfKG4yz2WTPy4yrXd7iFKXOte4iZKlWjpHg2u0UtyV+bZNs
+ G2Ww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715056372; x=1715661172;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=+uAoPhyorj6EitS242+fxxENQEPtgu5DnsXCRH6c768=;
+ b=roHkajKLXaIGlSy56OxsR1+uu7vQB+VQ4lEa+UCQR2L1Ns3XXI82a8O00p0x1yeHtU
+ gWsmgkBaUESjaEjYYFK60Lft+w33vU2PEBgT1naxDAfbNa3fk0V6R6W80AYK+gYg26pN
+ lq/qSFOX+8B0JPnIid8jld37MkiE+SbmGJtXtmxI8yzqbfJSYJem7/vJwoWGu58oySeO
+ 652kEUKwC9a040TW44REcBMd+/LgcK74UBGj73ppd2LIqtIHYKHml2QP00LaK7Q/Doxn
+ 66hBB21VZUAuvYBTZOy5HBlH//5OTuH5QbFN3QU0O9qNI54BqfNC+ui/2LhSkhDkctNX
+ 68Mg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXrslLCneug/GAxCU+EBDzO4RvCCe0MCNRlaCNwcptq8rl+T3quZV6otFmcT3lg8KTN2ZSO3DgHksreBsr75lodh99t
+X-Gm-Message-State: AOJu0YyZakqSpjetZG2uGQgkYUUML5//waSmBnNemteoSYUauuzCy+Al
+ mebWzaIlUXmNV59J8qHr+RD03m2Av/7FnW+ZHXaxHgSVdeYL3aZPzy/wcw==
+X-Google-Smtp-Source: AGHT+IFmrTh5DGGkVZjA6hLD0Y23O3v7P46LzysiTXwSCnQqS6Z8hS1reVhQP9HtApo2XJ9UzcwPsw==
+X-Received: by 2002:a17:902:b607:b0:1e1:214:1b7d with SMTP id
+ b7-20020a170902b60700b001e102141b7dmr12876947pls.61.1715056371713; 
+ Mon, 06 May 2024 21:32:51 -0700 (PDT)
+Received: from localhost (220-245-239-57.tpgi.com.au. [220.245.239.57])
+ by smtp.gmail.com with ESMTPSA id
+ c8-20020a170903234800b001e2b4f513e1sm9079529plh.106.2024.05.06.21.32.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 06 May 2024 21:32:51 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 07 May 2024 14:32:46 +1000
+Message-Id: <D134QQ0G9D1C.1W05PMY7F4LKJ@gmail.com>
+Cc: <qemu-devel@nongnu.org>, =?utf-8?q?Fr=C3=A9d=C3=A9ric_Barrat?=
+ <fbarrat@linux.ibm.com>, "Saif Abrar" <saif.abrar@linux.vnet.ibm.com>
+Subject: Re: [PATCH 1/2] ppc/pnv: Begin a more complete ADU LPC model for
+ POWER9/10
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, <qemu-ppc@nongnu.org>
+X-Mailer: aerc 0.17.0
+References: <20240417110215.808926-1-npiggin@gmail.com>
+ <20240417110215.808926-2-npiggin@gmail.com>
+ <577fd77f-a6b9-41f5-8193-f2cc80503a7d@kaod.org>
+ <D0YBCHP9K12V.3JU88W5WITYRM@gmail.com>
+ <272a9f32-8d32-4681-b25b-9d45c6c787b5@kaod.org>
+ <D0ZQN2YAQ28S.3FGETJPE6XVC8@gmail.com>
+ <e1875754-1b85-4f85-a9e0-d5cbe41b1711@kaod.org>
+In-Reply-To: <e1875754-1b85-4f85-a9e0-d5cbe41b1711@kaod.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,59 +102,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri May 3, 2024 at 3:44 PM AEST, C=C3=A9dric Le Goater wrote:
+> On 5/3/24 06:51, Nicholas Piggin wrote:
+> > On Thu May 2, 2024 at 6:47 PM AEST, C=C3=A9dric Le Goater wrote:
+> >> On 5/1/24 14:39, Nicholas Piggin wrote:
+> >>> On Wed Apr 17, 2024 at 9:25 PM AEST, C=C3=A9dric Le Goater wrote:
+> >>>> Hello Nick,
+> >>>>
+> >>>> On 4/17/24 13:02, Nicholas Piggin wrote:
+> >>>>> This implements a framework for an ADU unit model.
+> >>>>>
+> >>>>> The ADU unit actually implements XSCOM, which is the bridge between=
+ MMIO
+> >>>>> and PIB. However it also includes control and status registers and =
+other
+> >>>>> functions that are exposed as PIB (xscom) registers.
+> >>>>>
+> >>>>> To keep things simple, pnv_xscom.c remains the XSCOM bridge
+> >>>>> implementation, and pnv_adu.c implements the ADU registers and othe=
+r
+> >>>>> functions.
+> >>>>>
+> >>>>> So far, just the ADU no-op registers in the pnv_xscom.c default han=
+dler
+> >>>>> are moved over to the adu model.
+> >>>>>
+> >>>>> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> >>>>> ---
+> >>>>>     include/hw/ppc/pnv_adu.h   |  34 ++++++++++++
+> >>>>>     include/hw/ppc/pnv_chip.h  |   3 +
+> >>>>>     include/hw/ppc/pnv_xscom.h |   6 ++
+> >>>>>     hw/ppc/pnv.c               |  16 ++++++
+> >>>>>     hw/ppc/pnv_adu.c           | 111 ++++++++++++++++++++++++++++++=
++++++++
+> >>>>>     hw/ppc/pnv_xscom.c         |   9 ---
+> >>>>>     hw/ppc/meson.build         |   1 +
+> >>>>>     hw/ppc/trace-events        |   4 ++
+> >>>>>     8 files changed, 175 insertions(+), 9 deletions(-)
+> >>>>>     create mode 100644 include/hw/ppc/pnv_adu.h
+> >>>>>     create mode 100644 hw/ppc/pnv_adu.c
+> >>>>>
+> >>>>> diff --git a/include/hw/ppc/pnv_adu.h b/include/hw/ppc/pnv_adu.h
+> >>>>> new file mode 100644
+> >>>>> index 0000000000..9dc91857a9
+> >>>>> --- /dev/null
+> >>>>> +++ b/include/hw/ppc/pnv_adu.h
+> >>>>> @@ -0,0 +1,34 @@
+> >>>>> +/*
+> >>>>> + * QEMU PowerPC PowerNV Emulation of some ADU behaviour
+> >>>>> + *
+> >>>>> + * Copyright (c) 2024, IBM Corporation.
+> >>>>> + *
+> >>>>> + * SPDX-License-Identifier: LGPL-2.1-or-later
+> >>>>
+> >>>>
+> >>>> Did you mean GPL-2.0-or-later ?
+> >>>
+> >>> Hey Cedric,
+> >>>
+> >>> Thanks for reviewing, I've been away so sorry for the late reply.
+> >>>
+> >>> It just came from one of the headers I copied which was LGPL. But
+> >>> there's really nothing much in it and could find a GPL header to
+> >>> copy. Is GPL-2.0-or-later preferred?
+> >>
+> >> I would since all pnv models are GPL.
+> >=20
+> > Some of pnv is actually LGPL.=20
+>
+> I was grepping for 'LGPL' and not 'Lesser' ... Indeed you are right.
+> Most files miss an SPDX-License-Identifier tag also.
+>
+> > That's okay I'll change to GPL.
+>
+> LGPL is more relaxed if the code needs to be used in libraries, but
+> I am not sure it applies to the PNV models. What would you prefer ?
 
+GPL seems to be more common and I don't see a need for LGPL here,
+so maybe GPL?
 
-On 5/6/24 17:26, Nicholas Piggin wrote:
-> This cap did not add the migration code when it was introduced. This
-> results in migration failure when changing the default using the
-> command line.
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: ccc5a4c5e10 ("spapr: Add SPAPR_CAP_AIL_MODE_3 for AIL mode 3 support for H_SET_MODE hcall")
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+We could probably switch all LGPL pnv over to GPL if we wanted to.
+I think LGPL permits such relicensing. Will leave this discussion
+for another time though.
 
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-
-> ---
->   include/hw/ppc/spapr.h | 1 +
->   hw/ppc/spapr.c         | 1 +
->   hw/ppc/spapr_caps.c    | 1 +
->   3 files changed, 3 insertions(+)
-> 
-> diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
-> index 4aaf23d28f..f6de3e9972 100644
-> --- a/include/hw/ppc/spapr.h
-> +++ b/include/hw/ppc/spapr.h
-> @@ -1004,6 +1004,7 @@ extern const VMStateDescription vmstate_spapr_cap_large_decr;
->   extern const VMStateDescription vmstate_spapr_cap_ccf_assist;
->   extern const VMStateDescription vmstate_spapr_cap_fwnmi;
->   extern const VMStateDescription vmstate_spapr_cap_rpt_invalidate;
-> +extern const VMStateDescription vmstate_spapr_cap_ail_mode_3;
->   extern const VMStateDescription vmstate_spapr_wdt;
->   
->   static inline uint8_t spapr_get_cap(SpaprMachineState *spapr, int cap)
-> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-> index d2d1e310a3..065f58ec93 100644
-> --- a/hw/ppc/spapr.c
-> +++ b/hw/ppc/spapr.c
-> @@ -2169,6 +2169,7 @@ static const VMStateDescription vmstate_spapr = {
->           &vmstate_spapr_cap_fwnmi,
->           &vmstate_spapr_fwnmi,
->           &vmstate_spapr_cap_rpt_invalidate,
-> +        &vmstate_spapr_cap_ail_mode_3,
->           &vmstate_spapr_cap_nested_papr,
->           NULL
->       }
-> diff --git a/hw/ppc/spapr_caps.c b/hw/ppc/spapr_caps.c
-> index 0a15415a1d..2f74923560 100644
-> --- a/hw/ppc/spapr_caps.c
-> +++ b/hw/ppc/spapr_caps.c
-> @@ -974,6 +974,7 @@ SPAPR_CAP_MIG_STATE(large_decr, SPAPR_CAP_LARGE_DECREMENTER);
->   SPAPR_CAP_MIG_STATE(ccf_assist, SPAPR_CAP_CCF_ASSIST);
->   SPAPR_CAP_MIG_STATE(fwnmi, SPAPR_CAP_FWNMI);
->   SPAPR_CAP_MIG_STATE(rpt_invalidate, SPAPR_CAP_RPT_INVALIDATE);
-> +SPAPR_CAP_MIG_STATE(ail_mode_3, SPAPR_CAP_AIL_MODE_3);
->   
->   void spapr_caps_init(SpaprMachineState *spapr)
->   {
+Thanks,
+Nick
 
