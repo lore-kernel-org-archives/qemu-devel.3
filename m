@@ -4,78 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 237C1C10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 10:13:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB69AC10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 10:13:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4HoW-0006X0-1q; Tue, 07 May 2024 06:12:48 -0400
+	id 1s4HpI-0007FL-No; Tue, 07 May 2024 06:13:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
- id 1s4HoL-0006Rn-Dl
- for qemu-devel@nongnu.org; Tue, 07 May 2024 06:12:40 -0400
-Received: from mail-ot1-x32e.google.com ([2607:f8b0:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s4HpF-0007Ck-MY
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 06:13:33 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
- id 1s4HoG-0007cn-Rg
- for qemu-devel@nongnu.org; Tue, 07 May 2024 06:12:36 -0400
-Received: by mail-ot1-x32e.google.com with SMTP id
- 46e09a7af769-6f04ec17bacso1225449a34.1
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 03:12:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s4HpD-0007j7-TZ
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 06:13:33 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a59b097b202so520057566b.0
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 03:13:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1715076747; x=1715681547; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=n4/GAPdJUfHnp48kN0aWhS7WR6PdArXN2IIWbN7coW0=;
- b=RnZLHtXY7nnYhaijyLXnbJUHzjGsHDlNFFXakI3/rCCoGEFgfpZt5YQIATxAmAQjtX
- 98maJGCvk6FUZEIaLbSUysGWLCYRfm3cVFN9hMqsYcOthdckgF/lVL88jkrgtcy6EKS5
- QCQA5f5UTRYFXH38aEF4OKgaPiSwfJDAcRx88iufujhN/UNMuTNEmdi9mkvT8BOHC+f/
- kbhxp9AxntoHlZIexkYYXWSwRt3TZU1A3tB/ntMG2le20jS1aeLfdv+nwqpG1jvoqPWN
- U2Icuad37zw9yCfAumzG6Dv4igrzxiVqhi+PQDNsexoJ1RkR25qTtUX2iaQGy8er1Qwy
- wY3Q==
+ d=linaro.org; s=google; t=1715076809; x=1715681609; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=6Aup3QI/STFkqcNVUFACURmwtXFEnMt4IqIBYADkig4=;
+ b=QCrv6zp98jETic95ENHuj7o3BuqJXl8qaMtIV6ZkC6clDKydxA3nbL2JTd4lAgnPjM
+ I/O0dpOTouw9n+5b7mOqjVPh/tzmqsdcPskZsiSpakY6SEjr154IUAloKQSqxG+6myhR
+ K3T8I0nh3YMzlHNKusC1x9PwJWqwU0EajuTkqEij5cqRFU77o5MlUugGY6h3aB0mR+qs
+ Y9kDfGiCODJPcf8gOASufQA2raTST/w9KLd3+IbFrdhdmKaMC+v6smasKRBW5l3GipGU
+ kV+ppq6ZhFnz6hHo8NDTC7e/CKE4ZckQ2ZrO7bldoSLVvxEQbngkP2QESdP2dkCdvoQE
+ Jvrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715076747; x=1715681547;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=n4/GAPdJUfHnp48kN0aWhS7WR6PdArXN2IIWbN7coW0=;
- b=SFlj7+9utwof935v59HIciAhuoUxnxz/uLmCQDC25UOMQB0GwWMMsxFkFwdNheqd5g
- Z/V99s6RRYT0M3nkdmU6cMkjK9++rmNqbOetY8MyRX5UxWjvC5kO+0NQsdhE2tMTpwAT
- +hHN0i6kwBmpX6oJ9SVSfvVaDlLMmVQWbt2ZnNrVVvWESQMjyz/d9xJDzPj7opgE/Hu5
- /evDf1Qd+9YD2T+vE8vzoLxGVkrIpjxiXMVD2pHfQfEMoxFeC3M26LCLaxS+8WvMBcku
- 4L510A5uCwGFMCUCtIZmL8E7Jhq5q/K8AAkVPibYauptn3REnIqVk2Up/4trzqYTnaoZ
- F68Q==
-X-Gm-Message-State: AOJu0Yyl3+KMh6Ctw/z8lx5b0U3b7AKivVwJVxkMU+85/fK+ahJKJrl+
- oElHTu47lyIjLQeVULdQsyZhHKwH/vyuCasHHAYooAuNF1k8TGZbAwaFiRfcNtm1txAvDSgpmJS
- NAEUQACf1xols8bRKTj7VDS0AGnO7pJgIX3ZNjQ==
-X-Google-Smtp-Source: AGHT+IGzBoELkMyDthtPioUrbGr0WU7/8LaTFS3isC/sBOp7EiPzsaDUZt98yiaSPIZGmVYlaLWNvCumtx9/AWkQQ9U=
-X-Received: by 2002:a05:6870:32d3:b0:23f:6c3d:c789 with SMTP id
- r19-20020a05687032d300b0023f6c3dc789mr8380041oac.30.1715076746856; Tue, 07
- May 2024 03:12:26 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1715076809; x=1715681609;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=6Aup3QI/STFkqcNVUFACURmwtXFEnMt4IqIBYADkig4=;
+ b=UbRYlsosP2FVXNWlxMOliuHLP65meBO6ZXudO6C/7CTwsRSEb/Tx7hbc6oxI20BXmP
+ 3hpMaojT+il7fM3kfpqVoam7rCHHx5XTZoD0HdXY2gdzagf+fPDUUybvrGoLExGFzgNs
+ r4jBB6zJftF9AndUarVJfY4OmB5hOkFNb9VtPwICAByHjW02fS28B6nBDGN6ZzOmrh2U
+ glJ3/DeJMwG5uGnUsKR+dyvS3aZSk7ZjqWrnVB63CLqXQMkswO491O6/GjTWSpEvn/Er
+ PHaC4DPLK/GyDg7r6iRKbCDcYIy4Nt3HLWuLoNTKPk6e1BF4FMjhs0iIPGROVTFhq1We
+ D+0g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUcR/Wnd0X4C/sZeDVXRFfEwIIlELzxMIlR8fn8xiCPg1aEFdhh04AnSdHF4D4AtNb8+U7Iit529gCZhCO3mYjGfopME1U=
+X-Gm-Message-State: AOJu0YzqvVYp6C53zoqE99iyN/gFOo6KAtaNkn79YFXy5pR5bolDBN6R
+ rBcHGxwMRcxNnBBx42H2cj4SqojrLtqMd9lIxuXAQg0o9ef9y5iM0BmvXbqAL6IChXudTt08/St
+ DqxxWRDzdKgz4LNkbZlavJsiJzkbysUDAFTgu1324HuY4VZey
+X-Google-Smtp-Source: AGHT+IFodJHyF2AeUEQEO9RuqnQr8yUAMcPQujUsDy6zbiv4NkDv5fti4XyGV3WQPdJHAfGOg9niLCjiKu1aqJQjQKA=
+X-Received: by 2002:a50:cccf:0:b0:56e:2cfc:1d3d with SMTP id
+ b15-20020a50cccf000000b0056e2cfc1d3dmr7470682edj.16.1715076809580; Tue, 07
+ May 2024 03:13:29 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240415065245.25455-1-yongxuan.wang@sifive.com>
- <CAKmqyKO3qj9k74RBp+KCGxgPR_=ZGCSzdUDdGrQj9TPJCUD1Nw@mail.gmail.com>
-In-Reply-To: <CAKmqyKO3qj9k74RBp+KCGxgPR_=ZGCSzdUDdGrQj9TPJCUD1Nw@mail.gmail.com>
-From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-Date: Tue, 7 May 2024 18:12:16 +0800
-Message-ID: <CAMWQL2h3+1rkYMusg0Mzgu6NZy4gYLa75+nGWRVzjF83jCukzA@mail.gmail.com>
-Subject: Re: [PATCH 1/1] target/riscv/kvm.c: Fix the hart bit setting of AIA
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, greentime.hu@sifive.com, 
- vincent.chen@sifive.com, frank.chang@sifive.com, jim.shu@sifive.com, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Andrew Jones <ajones@ventanamicro.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+References: <a4cbfe6c-27d6-4df0-ae31-db0d60d88f9e@nppct.ru>
+ <95ab6dcf-cc96-4472-93ab-f08682b37d5e@tls.msk.ru>
+ <4c4dfebb-698d-466f-90b0-9475ad4c123a@nppct.ru>
+In-Reply-To: <4c4dfebb-698d-466f-90b0-9475ad4c123a@nppct.ru>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 7 May 2024 11:13:18 +0100
+Message-ID: <CAFEAcA9fGmNx4yLv+4jTx+j1zTfkXXoaiZewqWHUZuxKSEiV-g@mail.gmail.com>
+Subject: Re: [sdl-qemu] [PATCH v1] /hw/intc/arm_gic WRONG ARGUMENTS
+To: Andrey Shumilin <shum.sdl@nppct.ru>
+Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
+ sdl.qemu@linuxtesting.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32e;
- envelope-from=yongxuan.wang@sifive.com; helo=mail-ot1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,82 +92,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alistair,
-
-On Mon, Apr 29, 2024 at 11:25=E2=80=AFAM Alistair Francis <alistair23@gmail=
-.com> wrote:
+On Sun, 5 May 2024 at 20:58, Andrey Shumilin <shum.sdl@nppct.ru> wrote:
 >
-> On Mon, Apr 15, 2024 at 4:53=E2=80=AFPM Yong-Xuan Wang <yongxuan.wang@sif=
-ive.com> wrote:
-> >
-> > The hart bit setting is different with Linux AIA driver[1] when the num=
-ber
-> > of hart is power of 2. For example, when the guest has 4 harts, the
-> > estimated result of AIA driver is 2, whereas we pass 3 to RISC-V/KVM. S=
-ince
-> > only 2 bits are needed to represent 4 harts, update the formula to get =
-the
-> > accurate result.
+> Possibly mismatched call arguments in function 'gic_apr_ns_view': 'cpu' and 'regno' passed in place of 'int regno' and 'int cpu'.
+> Possibly mismatched call arguments in function 'gic_apr_write_ns_view': 'cpu' and 'regno' passed in place of 'int regno' and 'int cpu'.
 >
-> I don't really follow this.
+> Found by Linux Verification Center (linuxtesting.org) with SVACE.
 >
-> Do you mind re-wording it to talk about what the specification says?
-> Not what Linux does.
+>
+> From 23b142f5046ba9d3aec57217f6d8f3127f9bff69 Mon Sep 17 00:00:00 2001
+> From: Andrey Shumilin <shum.sdl@nppct.ru>
+> Date: Sun, 5 May 2024 20:13:40 +0300
+> Subject: [PATCH] Patch hw/intc/arm_gic.c
+>
+> Signed-off-by: Andrey Shumilin <shum.sdl@nppct.ru>
+> ---
+>  hw/intc/arm_gic.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
 
-Sure!
+Thanks, I have applied your patch to target-arm.next (with a
+rewritten commit message).
 
-> >
-> > [1] https://lore.kernel.org/all/20240307140307.646078-1-apatel@ventanam=
-icro.com/
-> >
-> > Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-> > ---
-> >  target/riscv/kvm/kvm-cpu.c | 9 ++++++++-
-> >  1 file changed, 8 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> > index 6a6c6cae80f1..388c4ddaa145 100644
-> > --- a/target/riscv/kvm/kvm-cpu.c
-> > +++ b/target/riscv/kvm/kvm-cpu.c
-> > @@ -1642,7 +1642,14 @@ void kvm_riscv_aia_create(MachineState *machine,=
- uint64_t group_shift,
-> >          }
-> >      }
-> >
-> > -    hart_bits =3D find_last_bit(&max_hart_per_socket, BITS_PER_LONG) +=
- 1;
-> > +
-> > +    if (max_hart_per_socket > 1) {
-> > +        max_hart_per_socket--;
->
-> Assuming there are an even number of cores (which there usually are)
-> won't this always result in a
->
-> > +        hart_bits =3D find_last_bit(&max_hart_per_socket, BITS_PER_LON=
-G) + 1;
->
-> 1 being returned by find_last_bit()?
->
+For future patches, it would be good if you can sort out the
+mail format issues. It looks like you're using Thunderbird,
+which ought to be configurable to do a reasonable job.
+In particular, if you can set it to send plain text only
+(not plain-text + HTML multipart) for all mailing list
+messages that will help a lot. That will help the automated
+tooling to have a better time trying to interpret it.
+You might alternatively consider git-send-email.
 
-find_last_bit() returns the position of the leftmost set bit. The
-output will not be 1 when the given input is an odd number.
-
-Regards,
-Yong-Xuan
-
-
-> Alistair
->
-> > +    } else {
-> > +        hart_bits =3D 0;
-> > +    }
-> > +
-> >      ret =3D kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_CONFIG,
-> >                              KVM_DEV_RISCV_AIA_CONFIG_HART_BITS,
-> >                              &hart_bits, true, NULL);
-> > --
-> > 2.17.1
-> >
-> >
+thanks
+-- PMM
 
