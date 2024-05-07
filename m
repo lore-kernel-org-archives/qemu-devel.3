@@ -4,77 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B6F0C10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 20:21:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58E17C10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 20:48:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4RIi-0000ql-FF; Tue, 07 May 2024 16:20:39 -0400
+	id 1s4RiR-0002HZ-28; Tue, 07 May 2024 16:47:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmamfmgm@gmail.com>)
- id 1s4RIe-0000qO-Sd
- for qemu-devel@nongnu.org; Tue, 07 May 2024 16:20:33 -0400
-Received: from mail-vs1-xe2a.google.com ([2607:f8b0:4864:20::e2a])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s4Ri2-00027L-3f
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 16:46:59 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dmamfmgm@gmail.com>)
- id 1s4RIY-0007If-Lq
- for qemu-devel@nongnu.org; Tue, 07 May 2024 16:20:28 -0400
-Received: by mail-vs1-xe2a.google.com with SMTP id
- ada2fe7eead31-47f1100e05bso445677137.2
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 13:20:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715113225; x=1715718025; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=2flm7HEJirpC5j9XGWqujVZQXGgfIwtVcJ7Eoi0Uxc8=;
- b=HuqGSnG7ZltZnsobINZGmZUcqlv76IOEdoTtYOsD9w2yCCh6e79jUk+9H5aTIGUhhs
- 69gSOaOrUt0B5Uy4aWAW/zZ5bEFwVKvxPfHXd01iCcdZZeKgr5uslLwlQ2o9xVYtHyqw
- Wa1CLVAwbNpU3zvVQq8PcJj6o6czlR5SS/jUdO5gdZL35VegmPGCT3wZW5ZeDg/GoPNt
- zZn/+Y+BMU7FMUvzviL9WGXbgfKHiQ0tmxOXWxLqsXHbS4XUZMoPgfO95usV/9qdmFOt
- QxOfutyN+46I+DaSXS2V0D35UZAevJVASoFo3r3ZjPqB8kywPYrdl8ctHwKdUgd0e6Se
- AE8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715113225; x=1715718025;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2flm7HEJirpC5j9XGWqujVZQXGgfIwtVcJ7Eoi0Uxc8=;
- b=B6FFr14jcz169aWB+Twmldu7Eb3y6d8bhNEIMBo+uRk6MQws1IOWaodYfnp1Mmu/QY
- uV/4d9ftwPTcvNGa/ZvTdM784P65hkiZIWYmDHlToECu9pd9+8+pzLjWCjgpwQCO5xo3
- zrTRJ0XcFYhaSfogNbDiuLJDTX8xwI/WXcSjdTr+I0Ra7PPtUKry83+oNJ0pYEBD59po
- 0oJSd4YJuVSpz9QeNQ64m6TADGZRHKH4L73oxBOCi8BkRiZHi9isnyB6SEiGeWCuMtZp
- ZxJyxS5rFbv8Hyh/PSNI0VIm+sFhR/+8C+8PVzVdauFXwKZOIwKU2vEgM0PlREMhnjEg
- X9hQ==
-X-Gm-Message-State: AOJu0Yx9S9ShiZbEdgud+rpnTzKzvpbdmN32vORCXLB5LkjMT39TAgql
- cnflHoSmVwAbkgDqwr+xxFIAy3v8PfiMJz9IQ1IzLW1UNHrxjP+w+c4nVblIfDLqpJliKh3+gxQ
- VYe9gtOhPRHrv0BHECdsoSdqFiolFcg==
-X-Google-Smtp-Source: AGHT+IH+kgEmvVhyV9/pD5jyDV15rOjZ+qqMsUo7vKD5kD+DigLUYRt7ptqF2tmooGrZBMiiByRA3rNKyD6QeaYx81E=
-X-Received: by 2002:a67:f295:0:b0:47e:b21d:f4a0 with SMTP id
- ada2fe7eead31-47f3c376d91mr426242137.35.1715113223505; Tue, 07 May 2024
- 13:20:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s4Rhy-0002Ns-PV
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 16:46:44 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id B953134556;
+ Tue,  7 May 2024 20:46:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1715114799; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7u6Z88u+LEtTCHvAw3XwbSINJZpfMjAsfiNeZtWI/NQ=;
+ b=qZNV+kT5GUGC2RJk++vf+i7JDLO2zxS244I/hBz8k4nr0jPkplNRWn0ZYp3imkGY/1Whu6
+ q53XNXKV7jyFEB+ZCjOc6cyDBfy6qjsxXubOJ/xBbO37DeMQl/+P4Fo95qPJL5B6RJQ0u6
+ whWBEs+v2zv85YPYPqK0byj4YM7k1Ho=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1715114799;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7u6Z88u+LEtTCHvAw3XwbSINJZpfMjAsfiNeZtWI/NQ=;
+ b=3ZPBn2nPIhiIrujlGLkWoGmMAu/Xo5PRNAMdbbUX3m9ePhlGZFDZ2SVYpB3FE1CF1Smgr/
+ l3qeZUyu8QPf5DAQ==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=qZNV+kT5;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=3ZPBn2nP
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1715114799; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7u6Z88u+LEtTCHvAw3XwbSINJZpfMjAsfiNeZtWI/NQ=;
+ b=qZNV+kT5GUGC2RJk++vf+i7JDLO2zxS244I/hBz8k4nr0jPkplNRWn0ZYp3imkGY/1Whu6
+ q53XNXKV7jyFEB+ZCjOc6cyDBfy6qjsxXubOJ/xBbO37DeMQl/+P4Fo95qPJL5B6RJQ0u6
+ whWBEs+v2zv85YPYPqK0byj4YM7k1Ho=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1715114799;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7u6Z88u+LEtTCHvAw3XwbSINJZpfMjAsfiNeZtWI/NQ=;
+ b=3ZPBn2nPIhiIrujlGLkWoGmMAu/Xo5PRNAMdbbUX3m9ePhlGZFDZ2SVYpB3FE1CF1Smgr/
+ l3qeZUyu8QPf5DAQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 32C6613A2D;
+ Tue,  7 May 2024 20:46:38 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id hO2mOi6TOmYoOAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 07 May 2024 20:46:38 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>, Sebastian Ott
+ <sebott@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, Fiona Ebner
+ <f.ebner@proxmox.com>, Gerd Hoffmann <kraxel@redhat.com>, Peter Xu
+ <peterx@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>, peter.maydell@linaro.org, "Michael
+ S. Tsirkin" <mst@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH 0/4] Fix "virtio-gpu: fix scanout migration post-load"
+In-Reply-To: <20240507111920.1594897-1-marcandre.lureau@redhat.com>
+References: <20240507111920.1594897-1-marcandre.lureau@redhat.com>
+Date: Tue, 07 May 2024 17:46:36 -0300
+Message-ID: <87wmo5l58z.fsf@suse.de>
 MIME-Version: 1.0
-References: <CACBuX0To1QWpOTE-HfbXv=tUVWVL0=pvn-+E28EL_mWuqfZ-sw@mail.gmail.com>
- <dcaed5da-5e94-4cb6-b5b8-0a571eac371b@tls.msk.ru>
- <CACBuX0Q_JOp1xGKZjnrBguiXVcM-ApfVrOs9UQE2B7sq=f5vLQ@mail.gmail.com>
-In-Reply-To: <CACBuX0Q_JOp1xGKZjnrBguiXVcM-ApfVrOs9UQE2B7sq=f5vLQ@mail.gmail.com>
-From: Cord Amfmgm <dmamfmgm@gmail.com>
-Date: Tue, 7 May 2024 15:20:12 -0500
-Message-ID: <CACBuX0SUvsip=hj5NbE3g5gCxSmdRKbK-k=ZQz819TDEfvtXgw@mail.gmail.com>
-Subject: Re: hw/usb/hcd-ohci: Fix #1510, #303: pid not IN or OUT
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000006fcf7a0617e2ea7f"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2a;
- envelope-from=dmamfmgm@gmail.com; helo=mail-vs1-xe2a.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: B953134556
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ ARC_NA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ RCPT_COUNT_TWELVE(0.00)[14]; MIME_TRACE(0.00)[0:+];
+ FREEMAIL_CC(0.00)[linaro.org,redhat.com,habkost.net,proxmox.com,gmail.com,huawei.com];
+ RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; TAGGED_RCPT(0.00)[];
+ DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim]; MISSING_XM_UA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,269 +135,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000006fcf7a0617e2ea7f
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+marcandre.lureau@redhat.com writes:
 
-On Wed, Apr 24, 2024 at 3:43=E2=80=AFPM Cord Amfmgm <dmamfmgm@gmail.com> wr=
-ote:
-
-> On Thu, Apr 18, 2024 at 10:43=E2=80=AFAM Michael Tokarev <mjt@tls.msk.ru>=
- wrote:
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 >
->> 06.02.2024 10:13, Cord Amfmgm wrote:
->> > This changes the ohci validation to not assert if invalid
->> > data is fed to the ohci controller. The poc suggested in
->> > https://bugs.launchpad.net/qemu/+bug/1907042
->> > and then migrated to bug #303 does the following to
->> > feed it a SETUP pid and EndPt of 1:
->> >
->> >          uint32_t MaxPacket =3D 64;
->> >          uint32_t TDFormat =3D 0;
->> >          uint32_t Skip =3D 0;
->> >          uint32_t Speed =3D 0;
->> >          uint32_t Direction =3D 0;  /* #define OHCI_TD_DIR_SETUP 0 */
->> >          uint32_t EndPt =3D 1;
->> >          uint32_t FuncAddress =3D 0;
->> >          ed->attr =3D (MaxPacket << 16) | (TDFormat << 15) | (Skip << =
-14)
->> >                     | (Speed << 13) | (Direction << 11) | (EndPt << 7)
->> >                     | FuncAddress;
->> >          ed->tailp =3D /*TDQTailPntr=3D */ 0;
->> >          ed->headp =3D ((/*TDQHeadPntr=3D */ &td[0]) & 0xfffffff0)
->> >                     | (/* ToggleCarry=3D */ 0 << 1);
->> >          ed->next_ed =3D (/* NextED=3D */ 0 & 0xfffffff0)
->> >
->> > qemu-fuzz also caught the same issue in #1510. They are
->> > both fixed by this patch.
->> >
->> > The if (td.cbp > td.be) logic in ohci_service_td() causes an
->> > ohci_die(). My understanding of the OHCI spec 4.3.1.2
->> > Table 4-2 allows td.cbp to be one byte more than td.be to
->> > signal the buffer has zero length. The new check in qemu
->> > appears to have been added since qemu-4.2. This patch
->> > includes both fixes since they are located very close
->> > together.
->> >
->> > Signed-off-by: David Hubbard <dmamfmgm@gmail.com>
->>
->> Wonder if this got lost somehow.  Or is it not needed?
->>
->> Thanks,
->>
->> /mjt
->>
+> Hi,
 >
-> Friendly ping! Gerd, can you chime in with how you would like to approach
-> this? I still need this patch to unblock my qemu workflow - custom OS
-> development.
+> The aforementioned patch breaks virtio-gpu device migrations for versions
+> pre-9.0/9.0, both forwards and backwards. Versioning of `VMS_STRUCT` is m=
+ore
+> complex than it may initially appear, as evidenced in the problematic com=
+mit
+> dfcf74fa68c ("virtio-gpu: fix scanout migration post-load").
 >
+> To resolve this, we need to propagate the `vmstate` `version_id` through =
+the
+> nested structures. Additionally, we should tie specific machine version t=
+o a
+> corresponding `version_id` to maintain migration compatibility.
 >
+> `VMS_VSTRUCT` allows specifying the appropriate version of the nested str=
+ucture
+> to use.
 
-Can I please ask for an update on this? I'm attempting to figure out if
-this patch has been rejected and I need to resubmit / rework it at HEAD?
+This would have been caught by the migration-compat-x86_64 CI job had we
+added the virtio-gpu device to it.
 
+$ cd build-8.2
+$ QTEST_TRACE=3D'vmstate_*' QTEST_DEVICE_OPTS=3D'-device virtio-gpu' \
+QTEST_QEMU_BINARY=3D./qemu-system-x86_64 \
+QTEST_QEMU_BINARY_DST=3D../build-9.0/qemu-system-x86_64 ./tests/qtest/migra=
+tion-test
+...
+vmstate_n_elems fb.offset: 1
+vmstate_subsection_load virtio-gpu-one-scanout
+vmstate_subsection_load_good virtio-gpu-one-scanout
+vmstate_load_state_end virtio-gpu-one-scanout end/0
+vmstate_subsection_load virtio-gpu-scanouts
+vmstate_subsection_load_good virtio-gpu-scanouts
+vmstate_load_state_end virtio-gpu-scanouts end/0
+vmstate_subsection_load virtio-gpu
+vmstate_subsection_load_good virtio-gpu
+vmstate_load_state_end virtio-gpu end/0
+vmstate_downtime_load type=3Dnon-iterable idstr=3D0000:00:03.0/virtio-gpu i=
+nstance_id=3D0 downtime=3D32118
+qemu-system-x86_64: Missing section footer for 0000:00:03.0/virtio-gpu
+vmstate_downtime_checkpoint dst-precopy-loadvm-completed
+qemu-system-x86_64: load of migration failed: Invalid argument
 
->
->> > diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
->> > index d73b53f33c..a53808126f 100644
->> > --- a/hw/usb/hcd-ohci.c
->> > +++ b/hw/usb/hcd-ohci.c
->> > @@ -927,6 +927,11 @@ static int ohci_service_td(OHCIState *ohci,
->> > struct ohci_ed *ed)
->> >       case OHCI_TD_DIR_SETUP:
->> >           str =3D "setup";
->> >           pid =3D USB_TOKEN_SETUP;
->> > +        if (OHCI_BM(ed->flags, ED_EN) > 0) {  /* setup only allowed t=
-o
->> ep 0 */
->> > +            trace_usb_ohci_td_bad_pid(str, ed->flags, td.flags);
->> > +            ohci_die(ohci);
->> > +            return 1;
->> > +        }
->> >           break;
->> >       default:
->> >           trace_usb_ohci_td_bad_direction(dir);
->> > @@ -936,8 +941,8 @@ static int ohci_service_td(OHCIState *ohci, struct
->> > ohci_ed *ed)
->> >           if ((td.cbp & 0xfffff000) !=3D (td.be & 0xfffff000)) {
->> >               len =3D (td.be & 0xfff) + 0x1001 - (td.cbp & 0xfff);
->> >           } else {
->> > -            if (td.cbp > td.be) {
->> > -                trace_usb_ohci_iso_td_bad_cc_overrun(td.cbp, td.be);
->> > +            if (td.cbp > td.be + 1) {
->> > +                trace_usb_ohci_td_bad_buf(td.cbp, td.be);
->> >                   ohci_die(ohci);
->> >                   return 1;
->> >               }
->> > diff --git a/hw/usb/trace-events b/hw/usb/trace-events
->> > index ed7dc210d3..b47d082fa3 100644
->> > --- a/hw/usb/trace-events
->> > +++ b/hw/usb/trace-events
->> > @@ -28,6 +28,8 @@ usb_ohci_iso_td_data_overrun(int ret, ssize_t len)
->> > "DataOverrun %d > %zu"
->> >   usb_ohci_iso_td_data_underrun(int ret) "DataUnderrun %d"
->> >   usb_ohci_iso_td_nak(int ret) "got NAK/STALL %d"
->> >   usb_ohci_iso_td_bad_response(int ret) "Bad device response %d"
->> > +usb_ohci_td_bad_buf(uint32_t cbp, uint32_t be) "Bad cbp =3D 0x%x > be=
- =3D
->> 0x%x"
->> > +usb_ohci_td_bad_pid(const char *s, uint32_t edf, uint32_t tdf) "Bad
->> > pid %s: ed.flags 0x%x td.flags 0x%x"
->> >   usb_ohci_port_attach(int index) "port #%d"
->> >   usb_ohci_port_detach(int index) "port #%d"
->> >   usb_ohci_port_wakeup(int index) "port #%d"
->> >
->>
->
+Some considerations:
 
---0000000000006fcf7a0617e2ea7f
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+1) Here QTEST_DEVICE_OPTS is a hack I added on top, it doesn't currently
+   exist.
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Wed, Apr 24, 2024 at 3:43=E2=80=AF=
-PM Cord Amfmgm &lt;<a href=3D"mailto:dmamfmgm@gmail.com">dmamfmgm@gmail.com=
-</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:=
-0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">=
-<div dir=3D"ltr"><div dir=3D"ltr">On Thu, Apr 18, 2024 at 10:43=E2=80=AFAM =
-Michael Tokarev &lt;<a href=3D"mailto:mjt@tls.msk.ru" target=3D"_blank">mjt=
-@tls.msk.ru</a>&gt; wrote:<br></div><div class=3D"gmail_quote"><blockquote =
-class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px sol=
-id rgb(204,204,204);padding-left:1ex">06.02.2024 10:13, Cord Amfmgm wrote:<=
-br>
-&gt; This changes the ohci validation to not assert if invalid<br>
-&gt; data is fed to the ohci controller. The poc suggested in<br>
-&gt; <a href=3D"https://bugs.launchpad.net/qemu/+bug/1907042" rel=3D"norefe=
-rrer" target=3D"_blank">https://bugs.launchpad.net/qemu/+bug/1907042</a><br=
->
-&gt; and then migrated to bug #303 does the following to<br>
-&gt; feed it a SETUP pid and EndPt of 1:<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint32_t MaxPacket =3D 64;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint32_t TDFormat =3D 0;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint32_t Skip =3D 0;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint32_t Speed =3D 0;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint32_t Direction =3D 0;=C2=A0 /* #=
-define OHCI_TD_DIR_SETUP 0 */<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint32_t EndPt =3D 1;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint32_t FuncAddress =3D 0;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ed-&gt;attr =3D (MaxPacket &lt;&lt; =
-16) | (TDFormat &lt;&lt; 15) | (Skip &lt;&lt; 14)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0| (Speed &lt;&lt; 13) | (Direction &lt;&lt; 11) | (EndPt &lt;&lt; 7)<=
-br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0| FuncAddress;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ed-&gt;tailp =3D /*TDQTailPntr=3D */=
- 0;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ed-&gt;headp =3D ((/*TDQHeadPntr=3D =
-*/ &amp;td[0]) &amp; 0xfffffff0)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0| (/* ToggleCarry=3D */ 0 &lt;&lt; 1);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ed-&gt;next_ed =3D (/* NextED=3D */ =
-0 &amp; 0xfffffff0)<br>
-&gt; <br>
-&gt; qemu-fuzz also caught the same issue in #1510. They are<br>
-&gt; both fixed by this patch.<br>
-&gt; <br>
-&gt; The if (td.cbp &gt; <a href=3D"http://td.be" rel=3D"noreferrer" target=
-=3D"_blank">td.be</a>) logic in ohci_service_td() causes an<br>
-&gt; ohci_die(). My understanding of the OHCI spec 4.3.1.2<br>
-&gt; Table 4-2 allows td.cbp to be one byte more than <a href=3D"http://td.=
-be" rel=3D"noreferrer" target=3D"_blank">td.be</a> to<br>
-&gt; signal the buffer has zero length. The new check in qemu<br>
-&gt; appears to have been added since qemu-4.2. This patch<br>
-&gt; includes both fixes since they are located very close<br>
-&gt; together.<br>
-&gt; <br>
-&gt; Signed-off-by: David Hubbard &lt;<a href=3D"mailto:dmamfmgm@gmail.com"=
- target=3D"_blank">dmamfmgm@gmail.com</a>&gt;<br>
-<br>
-Wonder if this got lost somehow.=C2=A0 Or is it not needed?<br>
-<br>
-Thanks,<br>
-<br>
-/mjt<br></blockquote><div><br></div><div>Friendly ping! Gerd, can you chime=
- in with how you would like to approach this? I still need this patch to un=
-block my qemu workflow - custom OS development.</div><div>=C2=A0</div></div=
-></div></blockquote><div><br></div><div>Can I please ask for an update on t=
-his? I&#39;m attempting to figure out if this patch has been rejected and I=
- need to resubmit / rework it at HEAD?</div><div>=C2=A0</div><blockquote cl=
-ass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid=
- rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div class=3D"gmail_qu=
-ote"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bo=
-rder-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-&gt; diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c<br>
-&gt; index d73b53f33c..a53808126f 100644<br>
-&gt; --- a/hw/usb/hcd-ohci.c<br>
-&gt; +++ b/hw/usb/hcd-ohci.c<br>
-&gt; @@ -927,6 +927,11 @@ static int ohci_service_td(OHCIState *ohci,<br>
-&gt; struct ohci_ed *ed)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0case OHCI_TD_DIR_SETUP:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0str =3D &quot;setup&quot;;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0pid =3D USB_TOKEN_SETUP;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (OHCI_BM(ed-&gt;flags, ED_EN) &gt; 0) =
-{=C2=A0 /* setup only allowed to ep 0 */<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 trace_usb_ohci_td_bad_pid(s=
-tr, ed-&gt;flags, td.flags);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ohci_die(ohci);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 1;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0default:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0trace_usb_ohci_td_bad_directio=
-n(dir);<br>
-&gt; @@ -936,8 +941,8 @@ static int ohci_service_td(OHCIState *ohci, struct=
-<br>
-&gt; ohci_ed *ed)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if ((td.cbp &amp; 0xfffff000) =
-!=3D (<a href=3D"http://td.be" rel=3D"noreferrer" target=3D"_blank">td.be</=
-a> &amp; 0xfffff000)) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0len =3D (<a href=
-=3D"http://td.be" rel=3D"noreferrer" target=3D"_blank">td.be</a> &amp; 0xff=
-f) + 0x1001 - (td.cbp &amp; 0xfff);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0} else {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (td.cbp &gt; <a href=3D"=
-http://td.be" rel=3D"noreferrer" target=3D"_blank">td.be</a>) {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 trace_usb_ohc=
-i_iso_td_bad_cc_overrun(td.cbp, <a href=3D"http://td.be" rel=3D"noreferrer"=
- target=3D"_blank">td.be</a>);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (td.cbp &gt; <a href=3D"=
-http://td.be" rel=3D"noreferrer" target=3D"_blank">td.be</a> + 1) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 trace_usb_ohc=
-i_td_bad_buf(td.cbp, <a href=3D"http://td.be" rel=3D"noreferrer" target=3D"=
-_blank">td.be</a>);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0oh=
-ci_die(ohci);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0re=
-turn 1;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt; diff --git a/hw/usb/trace-events b/hw/usb/trace-events<br>
-&gt; index ed7dc210d3..b47d082fa3 100644<br>
-&gt; --- a/hw/usb/trace-events<br>
-&gt; +++ b/hw/usb/trace-events<br>
-&gt; @@ -28,6 +28,8 @@ usb_ohci_iso_td_data_overrun(int ret, ssize_t len)<b=
-r>
-&gt; &quot;DataOverrun %d &gt; %zu&quot;<br>
-&gt;=C2=A0 =C2=A0usb_ohci_iso_td_data_underrun(int ret) &quot;DataUnderrun =
-%d&quot;<br>
-&gt;=C2=A0 =C2=A0usb_ohci_iso_td_nak(int ret) &quot;got NAK/STALL %d&quot;<=
-br>
-&gt;=C2=A0 =C2=A0usb_ohci_iso_td_bad_response(int ret) &quot;Bad device res=
-ponse %d&quot;<br>
-&gt; +usb_ohci_td_bad_buf(uint32_t cbp, uint32_t be) &quot;Bad cbp =3D 0x%x=
- &gt; be =3D 0x%x&quot;<br>
-&gt; +usb_ohci_td_bad_pid(const char *s, uint32_t edf, uint32_t tdf) &quot;=
-Bad<br>
-&gt; pid %s: ed.flags 0x%x td.flags 0x%x&quot;<br>
-&gt;=C2=A0 =C2=A0usb_ohci_port_attach(int index) &quot;port #%d&quot;<br>
-&gt;=C2=A0 =C2=A0usb_ohci_port_detach(int index) &quot;port #%d&quot;<br>
-&gt;=C2=A0 =C2=A0usb_ohci_port_wakeup(int index) &quot;port #%d&quot;<br>
-&gt;<br>
-</blockquote></div></div>
-</blockquote></div></div>
+2) This only uncovers relatively simple bugs where we don't need the
+   guest to access the device, it just needs to be there.
 
---0000000000006fcf7a0617e2ea7f--
+We could take the steps to enable this kind of testing if we think it's
+worthwhile. Some downsides are:
+
+a) the item (2) above - situations that depend on guest behavior are out
+   of the picture because migration-test runs only a custom program that
+   dirties memory;
+
+b) this test only works in CI or in a pre setup environment because it
+   needs the previous QEMU version to be built beforehand;
+
+c) the full set of migration tests already runs a few times in CI via
+   make check, plus the compat job. We'll probably need to do some
+   simplification to avoid taking too much additional time;
+
+d) there's also the obvious maintenance burden of choosing devices and
+   doing the eventual upkeep of the QEMU command line for the
+   migration-test.
 
