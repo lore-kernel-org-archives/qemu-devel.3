@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97D3EC10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 10:04:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9314EC10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 10:05:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4Hfg-0001k7-Dz; Tue, 07 May 2024 06:03:40 -0400
+	id 1s4Hh7-0002ZX-Fw; Tue, 07 May 2024 06:05:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4Hfe-0001jJ-UP; Tue, 07 May 2024 06:03:38 -0400
-Received: from mail-il1-x136.google.com ([2607:f8b0:4864:20::136])
+ id 1s4Hh5-0002Yr-Ce; Tue, 07 May 2024 06:05:07 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4Hfd-00026V-91; Tue, 07 May 2024 06:03:38 -0400
-Received: by mail-il1-x136.google.com with SMTP id
- e9e14a558f8ab-36c703d13e6so12636195ab.3; 
- Tue, 07 May 2024 03:03:36 -0700 (PDT)
+ id 1s4Hh2-0002FL-Cx; Tue, 07 May 2024 06:05:07 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-6f4496af4cdso2412981b3a.0; 
+ Tue, 07 May 2024 03:05:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715076215; x=1715681015; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=gmail.com; s=20230601; t=1715076302; x=1715681102; darn=nongnu.org;
+ h=in-reply-to:references:from:subject:cc:to:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=q7aJ8DLnvlKe2mm6bmvpsdaGAMKDtrV44/uy3OXpS4g=;
- b=H81asOj0o8fOdjjx5amHQcPZ0Rq/+6zqd+ye4juIsKKfuTqSWBi22XEtHLzRNgGi5H
- oPirrbdKrWUUKFwhXXpxuAlNU4nP7ebL9upB0mPrpDzOqwDbQeOJaoXzdFBkFl1q2m1V
- YQw+EnJQJUtcO+nXARQyCimUmOhAix1eGKFM9orMdZD2Mi6WGCc2u3A5mwGu1RHI8Rmr
- GXoapbsT5WF0zRtaCJTnRayFOXWIkcz+69E/TS/SR3kb3m1xG78Nis1YbKpAZP+KUIzb
- A851JWw3iX0DY1CLRSB7ocj5Qfw0CQ3DoAnaEZMN8VCVEUbTKhVPRNam1QhAz6zG6KWz
- Oc3A==
+ bh=Jo52RS86kcfQd48Wvl43HJ4CfxMFbj82aBWZOce79vA=;
+ b=kemjUdGoykpoTBC77Ug/VFzsZHn4aT4N8o3VpXoXMEN3Wat0jJO4Z2NwP+HqtXhlci
+ 6V97oiOuTz6mckpENNsQsb+fgT+r0t5vHp/HhiJR7dRR4ymD5z5PmgJnbvjwO1Vn/ggM
+ D9fot62cuytA86B9yxlr58gNbKQ7yYNki/MJ2KXmq3XB1lUBjzwwlidvwoNhpf+6MrKO
+ 0mMpZjzREThxhcs8JMZoCbn959NzctU+ekuigF1dtCsgJL3puKr4PB3i3amXfWumTAq5
+ KHSQn51cdJkT6gUKA+R4s+P+BCYC7zpyyL3E/XVytaIye3lvDvrUaJapRsTE4qJGKA9F
+ MXLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715076215; x=1715681015;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=1e100.net; s=20230601; t=1715076302; x=1715681102;
+ h=in-reply-to:references:from:subject:cc:to:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=q7aJ8DLnvlKe2mm6bmvpsdaGAMKDtrV44/uy3OXpS4g=;
- b=jhfrII3ESkUbQYGzBX3NYS6CPe2BDgugo6TmcxcLLNEnFmIQlWm+HA/huR2d6gMByU
- 3Okkt8l6nt5K0CJH3sfL26t1CxdobV/so8XG3v3aIIgGsumltAG1iga+s4F/xEisq/Tp
- RnbvWHWE0QzdZrCK7tgTlmOnz4BBdLBvpLEZBzdoxDP54sFIIl/rlR1+b51nmsJRZAmo
- 6i1aKunUFicQOMn6Z4IMsf3XJv+xDR7x6yFj8xpylKrt6GC0s+SCIzkOZBs8rqA+CeXV
- Fsu+bE+ZKcx8HZ1bqTPxKx3A1MuR/jynsCdnnD+gHPyBurXCFvqSoi+4jjsh+b9g8T/e
- OepQ==
+ bh=Jo52RS86kcfQd48Wvl43HJ4CfxMFbj82aBWZOce79vA=;
+ b=usNClBzmQvTs+/l0bu6bmxYixX3zATg6oQeHApRwxCtJJpxHsC+g8kmNWimVfTtsm2
+ IRxNO//ekD1nFbjg4LC24UgskNRKmP8bvjSjGr155yBM4udzd5GLYPvy/msPCQ4kGHhB
+ nIJwVFcQDoCzmUKIzEu6EnDE5WFgmu1mwUgE2+FmB5zmDQkmj9Urtp6vT3S+ExouXMOg
+ FYfqmpYnhG2Z+CjjoIgZbhK9Judvij/t2agsxWHOsWaCRt0wStT0wvx9zv/DEElm5Zd0
+ UP5gSp7AO+35sbieSn8ixM9/pPxeV+FYNj1+jITIIApKTNyaQ5HjKJzq+x2kNPAZVJmk
+ OszQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWSBI51DEWM243/7BJP3RQtS/gkJGlA3s5W8KcRF4ul6BZcr2gVEvWzoGhw3YEtxDaXPp05RAMKUAtRunr9Uvqs63auhk9fmd8Fzv2RS+7RU+uf/t247tvuvZY=
-X-Gm-Message-State: AOJu0YxH+lHvL0w99eqUAO19AXnOGrLVqPrkFbw/O5ysEDUSRZwyxSCe
- yjFKgwognsRhQC/bzL9PvTRR0mMBUKrZDXRPS+qBrIJ0nBLeW8+r
-X-Google-Smtp-Source: AGHT+IGW2LXTtw7zvP51VFlI6xwfTbjC/hS6GnmcYyRiCg48Gsci/hiKqDwpCWEvyb6EKMdZSNV3GA==
-X-Received: by 2002:a92:cd8b:0:b0:36a:fe5f:732d with SMTP id
- r11-20020a92cd8b000000b0036afe5f732dmr16400557ilb.12.1715076215626; 
- Tue, 07 May 2024 03:03:35 -0700 (PDT)
+ AJvYcCX+i6ajDLGyldFKxwP+a9JBP8Q5F6dlAmALvGdoZLROOsGUyldChXjb4Bkcu16XulULdcjrbwceZFVpO3UXr266RV83cDOy+2B2vJ23XpDxHzVUqxvx5DDHILo=
+X-Gm-Message-State: AOJu0YwgLdZPAEmaAexcqDNBUIfKhiip6eJoQbxGZYuic9UEs4UlXD7J
+ sHAWjEh5wVJp/pHORAHk/Lnk2BiEkdSW8ista62iy8RcrPWtlIq27bGwvQ==
+X-Google-Smtp-Source: AGHT+IGuT5hmZJ0qEHvP2AIJwKkb7XYNJPYbvUzQOtt9gLfkJPNKn9CJVuz1YjFVrD6xFY7irCmiuA==
+X-Received: by 2002:a05:6a20:9794:b0:1a3:65af:9baa with SMTP id
+ hx20-20020a056a20979400b001a365af9baamr10361677pzc.62.1715076301729; 
+ Tue, 07 May 2024 03:05:01 -0700 (PDT)
 Received: from localhost (220-245-239-57.tpgi.com.au. [220.245.239.57])
  by smtp.gmail.com with ESMTPSA id
- l184-20020a6388c1000000b0061c9b4f2f17sm7912272pgd.45.2024.05.07.03.03.33
+ p16-20020a170902ebd000b001ebd7bdaaffsm9673368plg.288.2024.05.07.03.04.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 May 2024 03:03:35 -0700 (PDT)
+ Tue, 07 May 2024 03:05:01 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 07 May 2024 20:03:30 +1000
-Message-Id: <D13BRY8Z2TYJ.2OKOJAUMQW9PG@gmail.com>
-Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
-Subject: Re: [PATCH v2 15/28] target/ppc/mmu_common.c: Simplify
- mmubooke_get_physical_address()
-From: "Nicholas Piggin" <npiggin@gmail.com>
+Date: Tue, 07 May 2024 20:04:56 +1000
+Message-Id: <D13BT1NPFI22.2CUU4PPJDPY5Q@gmail.com>
 To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
  <qemu-ppc@nongnu.org>
+Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
+Subject: Re: [PATCH v2 16/28] target/ppc/mmu_common.c: Simplify
+ mmubooke206_get_physical_address()
+From: "Nicholas Piggin" <npiggin@gmail.com>
 X-Mailer: aerc 0.17.0
 References: <cover.1714606359.git.balaton@eik.bme.hu>
- <64b67465625047cca82742a59a520d51359b853b.1714606359.git.balaton@eik.bme.hu>
-In-Reply-To: <64b67465625047cca82742a59a520d51359b853b.1714606359.git.balaton@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::136;
- envelope-from=npiggin@gmail.com; helo=mail-il1-x136.google.com
+ <14bc4664f49e6634e49f454971d8281c69ff0ff2.1714606359.git.balaton@eik.bme.hu>
+In-Reply-To: <14bc4664f49e6634e49f454971d8281c69ff0ff2.1714606359.git.balaton@eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,58 +98,78 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Thu May 2, 2024 at 9:43 AM AEST, BALATON Zoltan wrote:
+> This function is similar to mmubooke_get_physical_address() and can be
+> simplified the same way.
+>
 > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> ---
+>  target/ppc/mmu_common.c | 28 ++++++++++------------------
+>  1 file changed, 10 insertions(+), 18 deletions(-)
+>
+> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+> index 760e4072b2..ebf18a751c 100644
+> --- a/target/ppc/mmu_common.c
+> +++ b/target/ppc/mmu_common.c
+> @@ -872,15 +872,11 @@ static int mmubooke206_get_physical_address(CPUPPCS=
+tate *env, mmu_ctx_t *ctx,
+>                                              int mmu_idx)
+>  {
+>      ppcmas_tlb_t *tlb;
+> -    hwaddr raddr;
+> -    int i, j, ret;
+> -
+> -    ret =3D -1;
+> -    raddr =3D (hwaddr)-1ULL;
+> +    hwaddr raddr =3D (hwaddr)-1ULL;
+> +    int i, j, ways, ret =3D -1;
+> =20
+>      for (i =3D 0; i < BOOKE206_MAX_TLBN; i++) {
+> -        int ways =3D booke206_tlb_ways(env, i);
+
+Don't need to bring the ways variable into a larger scope I think?
+Otherwise,
 
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
-> ---
->  target/ppc/mmu_common.c | 25 +++++++++----------------
->  1 file changed, 9 insertions(+), 16 deletions(-)
->
-> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-> index fab86a8f3e..760e4072b2 100644
-> --- a/target/ppc/mmu_common.c
-> +++ b/target/ppc/mmu_common.c
-> @@ -665,31 +665,24 @@ static int mmubooke_get_physical_address(CPUPPCStat=
-e *env, mmu_ctx_t *ctx,
->                                           MMUAccessType access_type)
->  {
->      ppcemb_tlb_t *tlb;
-> -    hwaddr raddr;
-> -    int i, ret;
-> +    hwaddr raddr =3D (hwaddr)-1ULL;
-> +    int i, ret =3D -1;
-> =20
-> -    ret =3D -1;
-> -    raddr =3D (hwaddr)-1ULL;
->      for (i =3D 0; i < env->nb_tlb; i++) {
->          tlb =3D &env->tlb.tlbe[i];
->          ret =3D mmubooke_check_tlb(env, tlb, &raddr, &ctx->prot, address=
-,
->                                   access_type, i);
->          if (ret !=3D -1) {
-> +            if (ret >=3D 0) {
-> +                ctx->raddr =3D raddr;
-> +            }
->              break;
->          }
->      }
 > -
+> +        ways =3D booke206_tlb_ways(env, i);
+>          for (j =3D 0; j < ways; j++) {
+>              tlb =3D booke206_get_tlbm(env, i, address, j);
+>              if (!tlb) {
+> @@ -889,6 +885,9 @@ static int mmubooke206_get_physical_address(CPUPPCSta=
+te *env, mmu_ctx_t *ctx,
+>              ret =3D mmubooke206_check_tlb(env, tlb, &raddr, &ctx->prot, =
+address,
+>                                          access_type, mmu_idx);
+>              if (ret !=3D -1) {
+> +                if (ret >=3D 0) {
+> +                    ctx->raddr =3D raddr;
+> +                }
+>                  goto found_tlb;
+>              }
+>          }
+> @@ -896,17 +895,10 @@ static int mmubooke206_get_physical_address(CPUPPCS=
+tate *env, mmu_ctx_t *ctx,
+> =20
+>  found_tlb:
+> =20
 > -    if (ret >=3D 0) {
 > -        ctx->raddr =3D raddr;
-> -        qemu_log_mask(CPU_LOG_MMU, "%s: access granted " TARGET_FMT_lx
-> -                      " =3D> " HWADDR_FMT_plx " %d %d\n", __func__,
-> -                      address, ctx->raddr, ctx->prot, ret);
+> -         qemu_log_mask(CPU_LOG_MMU, "%s: access granted " TARGET_FMT_lx
+> -                       " =3D> " HWADDR_FMT_plx " %d %d\n", __func__, add=
+ress,
+> -                       ctx->raddr, ctx->prot, ret);
 > -    } else {
 > -         qemu_log_mask(CPU_LOG_MMU, "%s: access refused " TARGET_FMT_lx
-> -                       " =3D> " HWADDR_FMT_plx " %d %d\n", __func__,
-> -                       address, raddr, ctx->prot, ret);
+> -                       " =3D> " HWADDR_FMT_plx " %d %d\n", __func__, add=
+ress,
+> -                       raddr, ctx->prot, ret);
 > -    }
 > -
-> +    qemu_log_mask(CPU_LOG_MMU,
-> +                  "%s: access %s " TARGET_FMT_lx " =3D> " HWADDR_FMT_plx
-> +                  " %d %d\n", __func__, ret < 0 ? "refused" : "granted",
-> +                  address, raddr, ctx->prot, ret);
+> +    qemu_log_mask(CPU_LOG_MMU, "%s: access %s " TARGET_FMT_lx " =3D> "
+> +                  HWADDR_FMT_plx " %d %d\n", __func__,
+> +                  ret < 0 ? "refused" : "granted", address, raddr,
+> +                  ctx->prot, ret);
 >      return ret;
 >  }
 > =20
