@@ -4,94 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D92CEC25B4F
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 14:33:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B8B9C25B4F
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 14:34:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4LsN-00037z-7P; Tue, 07 May 2024 10:33:03 -0400
+	id 1s4Lt6-0003Nj-9U; Tue, 07 May 2024 10:33:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1s4LsK-00036d-Vc
- for qemu-devel@nongnu.org; Tue, 07 May 2024 10:33:00 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s4Lsj-0003BH-NR
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 10:33:30 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1s4LsI-0001Jd-J0
- for qemu-devel@nongnu.org; Tue, 07 May 2024 10:33:00 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-34d99ec52e1so2093036f8f.3
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 07:32:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s4Lsd-0001Mc-BO
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 10:33:24 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-1e3c3aa8938so20057135ad.1
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 07:33:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=suse.com; s=google; t=1715092376; x=1715697176; darn=nongnu.org;
- h=mime-version:user-agent:content-transfer-encoding:autocrypt
- :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=VGkdIXNxX6cZuzNQR631K9h3CCPgg151J6P18kArUwg=;
- b=PHzLKqyczjIciGIE9TWofi54jGnPgkDwHuw7VB0zFPcVVUIpu9QyBCpE+4E7o6/sNu
- EGNMdTMLaHZVqtYpIdOB9mEcEW4KMIVVKdtx9cHtRaqqbBUInJ6TN7i1ulPHEXOt+p9D
- FREDJjRSFejOgJr5mhzYHlyQe8tEltMeynPQFWZYcx4diEDVrDbTV5OrV8v9wxSGtDtS
- 61JJ4cEcMCza2MnCNkVJ+Ljx4PxrLrdffo7C3bU3fwDB114SBH+jZn++7lyr9jCe8v7H
- AgqZav8KRrkdpvaD5L3MoP2j5az4BMWIOmnA2Rnq6jxeoe4PqYim9vO/q+mqzEb8pLxN
- tsbg==
+ d=linaro.org; s=google; t=1715092398; x=1715697198; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wfE/asCDMv/fqU/grGA1GfwBU0TPNElhgaA02CsVIwg=;
+ b=ZTCFUDrSFtNalm9xtenYTRX41eARmADXagudJfyTycJ/cTT6b+Zz588uFGrGhUC+zZ
+ j3Jtrj15qnhZqxjOKVKQK3hjAPTThuKI30zmA7wvemSvlMD9n/G53qeyM5ZpslhsKVHj
+ IgKy8DIBt+zvLzjPUwKaHWT/gJSdyTd+MYhl+657DShjPLLcqHRhmRU7l1i1C/hAyaJD
+ 7lmM1ijctm2jG8JVen3mWsvJOnDdmprLUX1ag4gvzUuE4M+fGJaxi/634L4wUm0KJ9fy
+ rIYG8haljFCQzZFuAVXt64PGbLdNFT85h9APJCvewN0VwQmWwDYl1gX3gY+8q+acXUhi
+ fwlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715092376; x=1715697176;
- h=mime-version:user-agent:content-transfer-encoding:autocrypt
- :references:in-reply-to:date:cc:to:from:subject:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VGkdIXNxX6cZuzNQR631K9h3CCPgg151J6P18kArUwg=;
- b=e7sQZaoO3WkomhTCWpOlB4LX8O7+YYGZKFNDYU5iabk3MHSSI5gYQb0Zm+Givig/rr
- 53itbVxQVRxcIVZI7so30rdv6x1YQhQSnDmCwFitHEEbBLvSzf1RJY/7rit7mKR4JOlR
- 2pRjqX13tc8Un3fTXyI4dfMcVngyimwZxZWrZ2X1aKttBO7tfcYawdTApEN4USQO5E6x
- ai2+DkRqRGumVCeRNn0wGsqKBRlFNBFCS7SZ7yKTlz8ooHpEZAFoc7Vhxee5ehidFQGS
- FUnEnzrr6SMOLENm5RzWxMjmOlpyOCporLTUUp7o7DuuCaPeIL28QUifuOmx6U9/OpIw
- iz/w==
-X-Gm-Message-State: AOJu0Yxr4OsGioMDoAHHo17dOLYFelXUlnhAZ5yMOkgXuN7wESfcaH0/
- soJg2hivx/xWDptJrP6vc0OafWpZUuIL60kyKdNF0ONS2LJyNstttwu+R0vxHKM=
-X-Google-Smtp-Source: AGHT+IHqJDsxXxxUGLRb5254lqfKE3qHCOm/rLVL5TXHJoZxqPGrIoK9Af70hVPqd9/M5Ei2jTMtWA==
-X-Received: by 2002:a5d:45cb:0:b0:34c:9383:844f with SMTP id
- b11-20020a5d45cb000000b0034c9383844fmr8911032wrs.57.1715092375706; 
- Tue, 07 May 2024 07:32:55 -0700 (PDT)
-Received: from [192.168.7.249] ([145.40.191.116])
+ d=1e100.net; s=20230601; t=1715092398; x=1715697198;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wfE/asCDMv/fqU/grGA1GfwBU0TPNElhgaA02CsVIwg=;
+ b=S2XX9TYD77PWAytYtjv33CVEx8vmjVbYb+RBLv60c2o/+1aBWhgAIfaEAYV539F+kB
+ HkpD3W7Ksr2M+ETTdz9k9lNLoQLRisBpc5ldaF+cv9rA7R2FgbimI+WToCKZv5hJ2+br
+ GKJD8fsBRvoc4+Uwdh/67nbURb8162fFbZQ8BdhLc7iulNpZAlz+3MyRg3qapGBbzUbj
+ KYOFgiVW40IzNjCQBW/YXD6Dhg/c7Pq3jtq7SwP6ExNZZcw8r+aVNekJI3d28XSHqMEo
+ Pfr3/g8WaTIRXuBttTmtFGDYOGcaE7118jtigYmoq7yBVoUz2uTp9Khg0tq+4NiC6L5z
+ kpOA==
+X-Gm-Message-State: AOJu0YwlSZGhf82BqUFLNfGyPt0iP64769SPMlAcRTuz6aG3O/LR6nPi
+ Mef/Sa7ghPOqGielsuG60IiUjbS/xf9Q4n3nPbPuGS9tAy+bAWtABLGK711iO8ZDzZb/hh6IK/d
+ t
+X-Google-Smtp-Source: AGHT+IG/YFZ6PHDYiQxWCfSJGMSQs7oy8LxscRwCSF1EsthMIulCmq86r25cCQWUI3HuCG2dxvv1Cw==
+X-Received: by 2002:a17:902:ea8c:b0:1e0:bae4:48f9 with SMTP id
+ x12-20020a170902ea8c00b001e0bae448f9mr12107686plb.32.1715092397966; 
+ Tue, 07 May 2024 07:33:17 -0700 (PDT)
+Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- c4-20020a5d5284000000b0034b1a91be72sm13089870wrv.14.2024.05.07.07.32.54
+ p3-20020a170902780300b001ed2d84c1cbsm8690097pll.193.2024.05.07.07.33.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 May 2024 07:32:55 -0700 (PDT)
-Message-ID: <2bd15d1f23169ca7effb9803b53c9273132ac4ca.camel@suse.com>
-Subject: Re: [PATCH v2 06/10] i386/pc_sysfw: Ensure sysfw flash
- configuration does not conflict with IGVM
-From: Roy Hopkins <roy.hopkins@suse.com>
-To: Ani Sinha <anisinha@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Daniel Berrange <berrange@redhat.com>, Stefano Garzarella
- <sgarzare@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>, Michael
- Tsirkin <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>, Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>, Sergio Lopez Pascual
- <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, Alistair Francis
- <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>, David Hildenbrand
- <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>, Tom Lendacky
- <thomas.lendacky@amd.com>, Michael Roth <michael.roth@amd.com>, 
- =?ISO-8859-1?Q?J=F6rg?= Roedel <jroedel@suse.com>
-Date: Tue, 07 May 2024 15:32:49 +0100
-In-Reply-To: <54875E49-0710-4DD9-A6A6-79BEA4F09EFF@redhat.com>
-References: <cover.1712141833.git.roy.hopkins@suse.com>
- <613c3dc97a29fa9b8baa8acf45cefe4fac24ea87.1712141833.git.roy.hopkins@suse.com>
- <54875E49-0710-4DD9-A6A6-79BEA4F09EFF@redhat.com>
-Autocrypt: addr=roy.hopkins@suse.com; prefer-encrypt=mutual;
- keydata=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
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.50.2 
+ Tue, 07 May 2024 07:33:17 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>
+Subject: [PULL 8/9] gitlab: Drop --static from s390x linux-user build
+Date: Tue,  7 May 2024 07:33:08 -0700
+Message-Id: <20240507143309.5528-9-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240507143309.5528-1-richard.henderson@linaro.org>
+References: <20240507143309.5528-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Received-SPF: permerror client-ip=2a00:1450:4864:20::42b;
- envelope-from=roy.hopkins@suse.com; helo=mail-wr1-x42b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,119 +94,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2024-04-04 at 18:06 +0530, Ani Sinha wrote:
->=20
->=20
-> > On 3 Apr 2024, at 16:41, Roy Hopkins <roy.hopkins@suse.com> wrote:
-> >=20
-> > When using an IGVM file the configuration of the system firmware is
-> > defined by IGVM directives contained in the file. In this case the user
-> > should not configure any pflash devices.
-> >=20
-> > This commit skips initialization of the ROM mode when pflash0 is not se=
-t
-> > then checks to ensure no pflash devices have been configured when using
-> > IGVM, exiting with an error message if this is not the case.
-> >=20
-> > Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
-> > ---
-> > hw/i386/pc_sysfw.c | 23 +++++++++++++++++++++--
-> > 1 file changed, 21 insertions(+), 2 deletions(-)
-> >=20
-> > diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
-> > index 3efabbbab2..2412f26225 100644
-> > --- a/hw/i386/pc_sysfw.c
-> > +++ b/hw/i386/pc_sysfw.c
-> > @@ -226,8 +226,13 @@ void pc_system_firmware_init(PCMachineState *pcms,
-> > =C2=A0=C2=A0=C2=A0 }
-> >=20
-> > =C2=A0=C2=A0=C2=A0 if (!pflash_blk[0]) {
-> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Machine property pflash0=
- not set, use ROM mode */
-> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 x86_bios_rom_init(MACHINE(p=
-cms), "bios.bin", rom_memory, false);
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /*
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * Machine property pf=
-lash0 not set, use ROM mode unless using
-> > IGVM,
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * in which case the f=
-irmware must be provided by the IGVM file.
->=20
-> What if the igvm file does not contain a firmware? Can we have a check fo=
-r
-> that case somewhere and assert if firmware is absent?
->=20
-I don't think we can easily check for presence of firmware. In fact, using =
-IGVM
-means that you can effectively launch a guest without traditional firmware.=
- A
-good example of this is if you use IGVM to deploy an SVSM module that is us=
-ed to
-help with guest migration. In this case, the SVSM code would be placed in m=
-emory
-(by the IGVM directives) and the initial CPU state configured to launch the=
- SVSM
-kernel directly.
+The host does not have the correct libraries installed for static pie,
+which causes host/guest address space interference for some tests.
+There's no real gain from linking statically, so drop it.
 
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 */
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (!cgs_is_igvm(MACHINE(pc=
-ms)->cgs)) {
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 x86=
-_bios_rom_init(MACHINE(pcms), "bios.bin", rom_memory,
-> > false);
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> > =C2=A0=C2=A0=C2=A0 } else {
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (kvm_enabled() && !kvm_re=
-adonly_mem_enabled()) {
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /*
-> > @@ -243,6 +248,20 @@ void pc_system_firmware_init(PCMachineState *pcms,
-> > =C2=A0=C2=A0=C2=A0 }
-> >=20
-> > =C2=A0=C2=A0=C2=A0 pc_system_flash_cleanup_unused(pcms);
-> > +
-> > +=C2=A0=C2=A0=C2=A0 /*
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 * The user should not have specified any pfla=
-sh devices when using
-> > IGVM
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 * to configure the guest.
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 */
-> > +=C2=A0=C2=A0=C2=A0 if (cgs_is_igvm(MACHINE(pcms)->cgs)) {
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 for (i =3D 0; i < ARRAY_SIZ=
-E(pcms->flash); i++) {
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if =
-(pcms->flash[i]) {
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 error_report("pflash devices cannot be configured whe=
-n "
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 "using IGVM");
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 exit(1);
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> > +=C2=A0=C2=A0=C2=A0 }
->=20
-> I have not tested this change but looking at pc_system_flash_create() cre=
-ates
-> flash[0] and flash[1] for all cases (well except for isapc machines). So =
-for
-> igvm case, would this not cause an exit all the time?
->=20
-Although the flash devices are created, if they are not configured then the=
-y are
-removed by the call to pc_system_flash_cleanup_unused() above, meaning that=
- this
-check succeeds in the IGVM case.
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ .gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-> > }
-> >=20
-> > void x86_firmware_configure(void *ptr, int size)
-> > --=20
-> > 2.43.0
-> >=20
->=20
+diff --git a/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml b/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
+index 2b9e1ff749..0a2d2bd332 100644
+--- a/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
++++ b/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
+@@ -2,7 +2,7 @@
+ # setup by the scripts/ci/setup/build-environment.yml task
+ # "Install basic packages to build QEMU on Ubuntu 22.04"
+ 
+-ubuntu-22.04-s390x-all-linux-static:
++ubuntu-22.04-s390x-all-linux:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+@@ -15,7 +15,7 @@ ubuntu-22.04-s390x-all-linux-static:
+  script:
+  - mkdir build
+  - cd build
+- - ../configure --enable-debug --static --disable-system
++ - ../configure --enable-debug --disable-system
+    || { cat config.log meson-logs/meson-log.txt; exit 1; }
+  - make --output-sync -j`nproc`
+  - make --output-sync check-tcg
+-- 
+2.34.1
 
-Regards,
-Roy
 
