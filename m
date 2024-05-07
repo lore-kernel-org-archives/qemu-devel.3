@@ -4,90 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 317F4C10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 14:37:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EE36C10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 14:37:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4Lu9-0005jd-LM; Tue, 07 May 2024 10:34:53 -0400
+	id 1s4LtA-0003P6-1w; Tue, 07 May 2024 10:33:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1s4Lu7-0005ca-Hy
- for qemu-devel@nongnu.org; Tue, 07 May 2024 10:34:51 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s4Lsk-0003BV-41
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 10:33:30 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1s4Lu5-00025N-N0
- for qemu-devel@nongnu.org; Tue, 07 May 2024 10:34:51 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-53fbf2c42bfso2448278a12.3
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 07:34:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s4Lsd-0001MR-MJ
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 10:33:25 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-1ee0132a6f3so19265455ad.0
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 07:33:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1715092488; x=1715697288;
- darn=nongnu.org; 
+ d=linaro.org; s=google; t=1715092395; x=1715697195; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=s8UQwJWo0cr2ZRaC4+6kRjAHtdNM0XskKMAiaHBTEPQ=;
- b=QoEjEsmjN7rpWd/sbNtl7UgF+fLVGYN/nN8XE2byNqc5u4OpwDuZSwFI0iZcN2fyUe
- Mr/qqZdmyCqE1F4EqSqaLw7W9mV+6U5CE79Vkgzg5GTitlmWfUJ5pbp5U1SDR6eqUpzY
- qJOQKMV3khOpu4Wbw1l9VJr/6QoPY5K4VZsQF2HDAe+PG+wWc7TP9lxV14XtwJiMsbFD
- K3HISguEtmNK0ocJPYNavcZPPBVu4Wj6PsgjgaF8zbGIB24uL+zqVqpw4sXsb2V9xraH
- zkXrUwJ0wBro0o+BFGqVAop6OYBCqtsJOgM0fW+2rZPIzeaGEXx/G6NFzp4VdeyqmPHC
- UcrA==
+ bh=v6IIOegRVX0IRNGiRvdKLFUu17MQmdNwKORAfdJtFaw=;
+ b=w1wvSFHG4ykTETQyRuC0EGd/Tz5I8DFt0v3UlPgGhliV/0ECmLa44H0BBLsZ+feegb
+ DYnr7l8MR7J1+m5r+WJ0mWlCLe5LE/ZlUMB51Ul7Bw83KqMXrPf6p4DQ7R/+XdwIR0f3
+ s5KfusXdMUoHhAo3lwrigHgLmwCk3Apo+/9aV2a5fUG8BGDuvIBnSUSAHl6sJpIiw6tT
+ dthfx5PbJNRk7vjxpnns+EIc2w31KmJtbEpTApOMwFuVLrMoETAgnLyIN72MspSeTZpO
+ 5hXejSFDpddUUZxUWK+f47Qkc5NkOmNEm/FCDqKXaNQOu1yCcTeqyXo+xU+WrZyvIAK/
+ gPKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715092488; x=1715697288;
+ d=1e100.net; s=20230601; t=1715092395; x=1715697195;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=s8UQwJWo0cr2ZRaC4+6kRjAHtdNM0XskKMAiaHBTEPQ=;
- b=IEGPbQcChUc7g98n7efzu9Voo6oLqkDMW0Q/ysbB0astLKzsGrpAwoO2fjrIHXAF7S
- JqPllvsnuwO2hH4k5BhkvUJ8ij2MmQT1GtRKzlOy/4CMtB2/OHZ3YfQ004wAAkGCxoza
- xbT9FERzMwHBDByjEcWgfWgCcLsfAX8jri9cc8AnzMrmE4TDq46aqtKhP+eC3aNyj8t6
- DgW7q65edmzVMfi9Szf/o5o4Q/ZXYPOMhw2neMginCsSmib13P+Gma6qPsHlhUEgJWDV
- /4Zd0PAd59zRAJP9mVsrrTSjFyhuP4FqfSnO6kwIhjN2KFa2a+hGAMtEcki8625WYaik
- TDIw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXXDK7qNj03ehKFPN/nCe+0UzQtV93DJcWrlY6JgWMxjGKnuYqrbQo0BcuT/1t46qPjxTK2/aO6i27BQmKkGeIeCufLu+I=
-X-Gm-Message-State: AOJu0YyszQmhhc1nr+hj5iXGExFNiQ32kqirYCL0fuNA0FUI78vCr+aC
- J1AEaxJU8tN9AboB4aVU0SkRbFWD4Dfd8GIC6KdEL/hF5YH+lZqndbDH2+44zfE=
-X-Google-Smtp-Source: AGHT+IFBTyD6yAwtLJxwTETKda7qnBJZeLRZUN8zPZ2/2WnkHx+uAAfr3lvbB02xC4trri8CqeudzQ==
-X-Received: by 2002:a05:6a20:e188:b0:1a7:7505:ac97 with SMTP id
- ks8-20020a056a20e18800b001a77505ac97mr15903702pzb.11.1715092488112; 
- Tue, 07 May 2024 07:34:48 -0700 (PDT)
-Received: from mnissler.ba.rivosinc.com ([64.71.180.162])
+ bh=v6IIOegRVX0IRNGiRvdKLFUu17MQmdNwKORAfdJtFaw=;
+ b=U0RgePzhUx+RTRWBw8UWo4BrS2vhhrIzEky8yBz3N9glE2GFC5Z0OGU+kXcK2Eez1E
+ n4DCEbqy0jIr/PdYh279hkD8G9y+3l2rQqbig/tMomzBggP/9GtsZFUoSxc7dEKriWAk
+ TDITJg74Hl3Jf2kNzlRERSmzhrlR9vuuMOZZFslCnn3b/No1bjlOG+soQ8K/1wLsvQcH
+ VH0PGD2DkiVEHtbLjbA0U0Hv4YLi7hrXAsVYfKVZrDziYqTQViaI6H2er4/N9jlcsTdg
+ OgZPahND+qCS3bNzVTxcJPDgRi366j4bqf6SV0z7Npce7KMob2/1tFzPZFt7jAqwPNWc
+ Nluw==
+X-Gm-Message-State: AOJu0YwMt+oebVkEPohVusZ2k4v2hxlhIDmMFvv+CtEMDyd4KvKsruXQ
+ aI6oR14vc8heQ2+/O6WrrjZckVOD33dytpog/dF6eePRKykhbdQbT8WxdVgN9uPCfT6GgV10LPv
+ a
+X-Google-Smtp-Source: AGHT+IEDQHppY2z0ZOAy0qMx4WOpq/zFMdMd/mlRoZh0GQXYK+CtARNHtfzoKpBc0W3d0bPLWPkqaw==
+X-Received: by 2002:a17:903:240a:b0:1e6:40f1:93be with SMTP id
+ e10-20020a170903240a00b001e640f193bemr15652254plo.27.1715092395403; 
+ Tue, 07 May 2024 07:33:15 -0700 (PDT)
+Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- pq10-20020a17090b3d8a00b002af8056917csm11827206pjb.29.2024.05.07.07.34.47
+ p3-20020a170902780300b001ed2d84c1cbsm8690097pll.193.2024.05.07.07.33.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 May 2024 07:34:47 -0700 (PDT)
-From: Mattias Nissler <mnissler@rivosinc.com>
-To: jag.raman@oracle.com, peterx@redhat.com, stefanha@redhat.com,
- qemu-devel@nongnu.org
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- john.levon@nutanix.com, David Hildenbrand <david@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Mattias Nissler <mnissler@rivosinc.com>
-Subject: [PATCH v10 1/7] system/physmem: Replace qemu_mutex_lock() calls with
- QEMU_LOCK_GUARD
-Date: Tue,  7 May 2024 07:34:25 -0700
-Message-ID: <20240507143431.464382-2-mnissler@rivosinc.com>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240507143431.464382-1-mnissler@rivosinc.com>
-References: <20240507143431.464382-1-mnissler@rivosinc.com>
+ Tue, 07 May 2024 07:33:15 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 5/9] accel/tcg: Introduce CF_BP_PAGE
+Date: Tue,  7 May 2024 07:33:05 -0700
+Message-Id: <20240507143309.5528-6-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240507143309.5528-1-richard.henderson@linaro.org>
+References: <20240507143309.5528-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=mnissler@rivosinc.com; helo=mail-pg1-x531.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,67 +95,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+Record the fact that we've found a breakpoint on the page
+in which a TranslationBlock is running.
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-Simplify cpu_[un]register_map_client() and cpu_notify_map_clients()
-by replacing the pair of qemu_mutex_lock/qemu_mutex_unlock calls by
-the WITH_QEMU_LOCK_GUARD() macro.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
-Reviewed-by: Mattias Nissler <mnissler@rivosinc.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- system/physmem.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ include/exec/translation-block.h | 1 +
+ accel/tcg/cpu-exec.c             | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/system/physmem.c b/system/physmem.c
-index d3a3d8a45c..5486014cf2 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -3086,7 +3086,7 @@ void cpu_register_map_client(QEMUBH *bh)
- {
-     MapClient *client = g_malloc(sizeof(*client));
+diff --git a/include/exec/translation-block.h b/include/exec/translation-block.h
+index 48211c890a..a6d1af6e9b 100644
+--- a/include/exec/translation-block.h
++++ b/include/exec/translation-block.h
+@@ -77,6 +77,7 @@ struct TranslationBlock {
+ #define CF_PARALLEL      0x00008000 /* Generate code for a parallel context */
+ #define CF_NOIRQ         0x00010000 /* Generate an uninterruptible TB */
+ #define CF_PCREL         0x00020000 /* Opcodes in TB are PC-relative */
++#define CF_BP_PAGE       0x00040000 /* Breakpoint present in code page */
+ #define CF_CLUSTER_MASK  0xff000000 /* Top 8 bits are cluster ID */
+ #define CF_CLUSTER_SHIFT 24
  
--    qemu_mutex_lock(&map_client_list_lock);
-+    QEMU_LOCK_GUARD(&map_client_list_lock);
-     client->bh = bh;
-     QLIST_INSERT_HEAD(&map_client_list, client, link);
-     /* Write map_client_list before reading in_use.  */
-@@ -3094,7 +3094,6 @@ void cpu_register_map_client(QEMUBH *bh)
-     if (!qatomic_read(&bounce.in_use)) {
-         cpu_notify_map_clients_locked();
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 225e5fbd3e..6a764f527b 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -371,7 +371,7 @@ static bool check_for_breakpoints_slow(CPUState *cpu, vaddr pc,
+      * breakpoints are removed.
+      */
+     if (match_page) {
+-        *cflags = (*cflags & ~CF_COUNT_MASK) | CF_NO_GOTO_TB | 1;
++        *cflags = (*cflags & ~CF_COUNT_MASK) | CF_NO_GOTO_TB | CF_BP_PAGE | 1;
      }
--    qemu_mutex_unlock(&map_client_list_lock);
+     return false;
  }
- 
- void cpu_exec_init_all(void)
-@@ -3117,21 +3116,19 @@ void cpu_unregister_map_client(QEMUBH *bh)
- {
-     MapClient *client;
- 
--    qemu_mutex_lock(&map_client_list_lock);
-+    QEMU_LOCK_GUARD(&map_client_list_lock);
-     QLIST_FOREACH(client, &map_client_list, link) {
-         if (client->bh == bh) {
-             cpu_unregister_map_client_do(client);
-             break;
-         }
-     }
--    qemu_mutex_unlock(&map_client_list_lock);
- }
- 
- static void cpu_notify_map_clients(void)
- {
--    qemu_mutex_lock(&map_client_list_lock);
-+    QEMU_LOCK_GUARD(&map_client_list_lock);
-     cpu_notify_map_clients_locked();
--    qemu_mutex_unlock(&map_client_list_lock);
- }
- 
- static bool flatview_access_valid(FlatView *fv, hwaddr addr, hwaddr len,
 -- 
-2.43.2
+2.34.1
 
 
