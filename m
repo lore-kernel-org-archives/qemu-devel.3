@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1A35C25B4F
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 10:57:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06A86C10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 10:58:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4IVG-00067t-2R; Tue, 07 May 2024 06:56:58 -0400
+	id 1s4IVG-0006Du-Pa; Tue, 07 May 2024 06:56:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s4IV4-0005Oo-PS
- for qemu-devel@nongnu.org; Tue, 07 May 2024 06:56:46 -0400
+ id 1s4IVB-0005ui-U4
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 06:56:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s4IV1-0002v6-Q3
- for qemu-devel@nongnu.org; Tue, 07 May 2024 06:56:45 -0400
+ id 1s4IV9-0002wd-Gt
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 06:56:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715079403;
+ s=mimecast20190719; t=1715079410;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iMND7pu/M928xDVINEPT8A5TcOwQFK6xSjrV4C36iH4=;
- b=Uz3RQkcU6s6oyhmI95RoXUsxGzNWuGUi12OJhbt6YaS9fYRSHbbGOEmFe0CkcG4vWqIapj
- b6oZadju3XBmwPwkdTCT6dLY2tyHdAcUEBaw1pF2McgDwqD64nHKsYzrpyx8ETqc2TEkFv
- 8tcWn8it02mEOsN0m5qmvDUkRCZkLv4=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hv1mTHtMOvMDbCaGwvhYNHLHmob4hA1awvsWSuwA+Aw=;
+ b=iXgU3M1LUSBAJm3mDTv8g39iF/ejvz57snKVOLsejZb4aH9bM7FeEUhGbuFIz0O5sMpeKZ
+ UYmxkr/UOfynHjCPJ+3sXE065Hbnwz9g8sFetrPKKM/T/1J6zhurnt6ApkUTaZFa0co8u0
+ CWQnkR0pURoxzM/MdHMg9v2jfCjv1Ck=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-207-I4P7pnH7NaCWjynCgEod5g-1; Tue, 07 May 2024 06:56:41 -0400
-X-MC-Unique: I4P7pnH7NaCWjynCgEod5g-1
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-572babec6c6so5690736a12.0
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 03:56:41 -0700 (PDT)
+ us-mta-483-YftTFXGROV2TfX-mowK5mQ-1; Tue, 07 May 2024 06:56:49 -0400
+X-MC-Unique: YftTFXGROV2TfX-mowK5mQ-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a59c0ecd59cso164812666b.2
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 03:56:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715079400; x=1715684200;
+ d=1e100.net; s=20230601; t=1715079407; x=1715684207;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iMND7pu/M928xDVINEPT8A5TcOwQFK6xSjrV4C36iH4=;
- b=tlxD1YN2a6WBbf8mF1T+jOQ+et9/FujWz9QTY2/46SmksNzdwx83586qbeuB/cypZ2
- 6TdB8nwENulOK42nbb7vATsPgxHFFEF20AQH6gvP+SV0qeIVHZEWgs0f+rg+c/JGje0L
- wDnxPoPNow2e8WMCNIczCIHzFP5Cl8EfnCh1JTg23I9HCpAEnVzSMd+08SF6PPB+DaqN
- IiG+H/PyFAidHI/gpmeXdWZS1senbduHQC3eIKXioQgJD72tDKrvJ9LmHZL6OLwvnziI
- 5U7pOydqwTFImgWH7bbqejt2KJ9Q6PoPz/S1znj00ZcUFyOcc9oZcyp2ZTmgCMfxpw3N
- eoyg==
-X-Gm-Message-State: AOJu0Yy8zhrFFaHfYRvzmWhO4hiwx6+l2miiY2gfHA7AlswXNsDsltO7
- 0u0BgZq5kJCFDm0dBNOk2htq2hCbZ35BEaiNNQvs5WcKns59Bmjcd2SNZu9JffrQqCpSifE2ACi
- iChhwxLL22Nr9DiMtsiP3rpxZV1zzc12sB41de8BM7fz1GlSJhPE/Mls2mHUs4B9308hNNG5Hga
- bZRiyYnAouFde2w7JX55nZcuhTzemedZxRqFRR
-X-Received: by 2002:a05:6402:134f:b0:572:a087:304c with SMTP id
- 4fb4d7f45d1cf-5731101d4b9mr1923186a12.2.1715079400106; 
- Tue, 07 May 2024 03:56:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE5ADz1O9fm9mnGDumusO5ofxMMo0xt1xZq9gGwc/no3ELvs8+bFJeovAijPbU4+HOgWnkPNg==
-X-Received: by 2002:a05:6402:134f:b0:572:a087:304c with SMTP id
- 4fb4d7f45d1cf-5731101d4b9mr1923171a12.2.1715079399806; 
- Tue, 07 May 2024 03:56:39 -0700 (PDT)
+ bh=hv1mTHtMOvMDbCaGwvhYNHLHmob4hA1awvsWSuwA+Aw=;
+ b=TtFClvm5lm9snT6LsWll5HBNw8JflLvkj4pjXI1JTqOogYh3pDtqDac/hLeWHk/OHv
+ t+zfODXZuOxG5+HJ+VbCvmLG8TbycpYZ6ccI9Zi77PvZQVJvLHwW9erUtTA3nbQLL1jS
+ vahcLzWaPVgWzM/QGOjS2P+ERwNSp2pAW5fq5eoII3jk14rhdMP0QIU10/qejo0Ow6Fv
+ lwybo336yCSdxLjdrhHXsvr+iD7WI8ORFM/zL4hsh1V+meEl/OYGkQhVfWaUTGUv0gXt
+ VtaTOuNpPvFevkrMlokwdRY89nVT+DCl5uPHOgALyO5rP/Gvsfx5UpTGZtOg6bEkNV+6
+ tTKQ==
+X-Gm-Message-State: AOJu0YyT35+Ki159l4lr+b4U0c6BqB7Fpo4PM1kDV1JKkfFIdFgnsjxv
+ +An/3eDHss+5wdY26+5gVWddt39BEprYc/Rju/8bNm8WMv/pwsN0IklT1hHyh2xfvaitb4pBE1/
+ m7SNo8WYRW6/OvMZFGcAuJ9y9DvVtgDFSm+cdpOV3cp6EKHvHzYgSLaV3iwk7L2tUEeITTF0i+7
+ w3AL7p2sc/rCuNryRd9Dye6C0wjJHiyISn1Pjh
+X-Received: by 2002:a50:934f:0:b0:572:9c4c:250b with SMTP id
+ n15-20020a50934f000000b005729c4c250bmr12021011eda.18.1715079407442; 
+ Tue, 07 May 2024 03:56:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFZeF5IeMRdfd8q2wZFgh1br7eSDQtga1AAtIGbq7i3f4uoxxg1zItAiqOPSG0Hw5pRXb8KVg==
+X-Received: by 2002:a50:934f:0:b0:572:9c4c:250b with SMTP id
+ n15-20020a50934f000000b005729c4c250bmr12020995eda.18.1715079407100; 
+ Tue, 07 May 2024 03:56:47 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- n18-20020a05640205d200b00572f0438b02sm3102130edx.6.2024.05.07.03.56.39
+ er21-20020a056402449500b005726e5e8765sm6215784edb.3.2024.05.07.03.56.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 May 2024 03:56:39 -0700 (PDT)
+ Tue, 07 May 2024 03:56:46 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 22/26] target/i386: port extensions of one-byte opcodes to new
- decoder
-Date: Tue,  7 May 2024 12:55:34 +0200
-Message-ID: <20240507105538.180704-23-pbonzini@redhat.com>
+Subject: [PULL 25/26] target/i386: split legacy decoder into a separate
+ function
+Date: Tue,  7 May 2024 12:55:37 +0200
+Message-ID: <20240507105538.180704-26-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240507105538.180704-1-pbonzini@redhat.com>
 References: <20240507105538.180704-1-pbonzini@redhat.com>
@@ -103,107 +103,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A few two-byte opcodes are simple extensions of existing one-byte opcodes;
-they are easy to decode and need no change to emit.c.inc.  Port them to
-the new decoder.
+Split the bits that have some duplication with disas_insn_new, from
+those that should be the main topic of the conversion.  This is the
+first step towards removing duplicate decoding of prefixes between
+disas_insn and disas_insn_new.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/translate.c      |  4 ++++
- target/i386/tcg/decode-new.c.inc | 20 ++++++++++++++++++++
- target/i386/tcg/emit.c.inc       | 15 +++++++++++++++
- 3 files changed, 39 insertions(+)
+ target/i386/tcg/translate.c | 58 +++++++++++++++++++++++--------------
+ 1 file changed, 37 insertions(+), 21 deletions(-)
 
 diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 751ec5d0f1a..4fbd91e70d1 100644
+index 973bf07ef27..eb0e37e1480 100644
 --- a/target/i386/tcg/translate.c
 +++ b/target/i386/tcg/translate.c
-@@ -3209,6 +3209,10 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
- #endif
-         if (use_new &&
-             ((b >= 0x138 && b <= 0x19f) ||
-+             (b & ~9) == 0x1a0 ||
-+             b == 0x1af || b == 0x1b2 ||
-+             (b >= 0x1b4 && b <= 0x1b7) ||
-+             b == 0x1be || b == 0x1bf || b == 0x1c3 ||
-              (b >= 0x1c8 && b <= 0x1cf))) {
-             disas_insn_new(s, cpu, b);
-             return true;
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 16e23ec3d88..f9a966943fb 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1053,6 +1053,9 @@ static const X86OpEntry opcodes_0F[256] = {
-     [0x96] = X86_OP_ENTRYw(SETcc, E,b),
-     [0x97] = X86_OP_ENTRYw(SETcc, E,b),
- 
-+    [0xa0] = X86_OP_ENTRYr(PUSH, FS, w),
-+    [0xa1] = X86_OP_ENTRYw(POP, FS, w),
-+
-     [0x28] = X86_OP_ENTRY3(MOVDQ,      V,x,  None,None, W,x, vex1 p_00_66), /* MOVAPS */
-     [0x29] = X86_OP_ENTRY3(MOVDQ,      W,x,  None,None, V,x, vex1 p_00_66), /* MOVAPS */
-     [0x2A] = X86_OP_GROUP0(0F2A),
-@@ -1117,9 +1120,26 @@ static const X86OpEntry opcodes_0F[256] = {
-     [0x9e] = X86_OP_ENTRYw(SETcc, E,b),
-     [0x9f] = X86_OP_ENTRYw(SETcc, E,b),
- 
-+    [0xa8] = X86_OP_ENTRYr(PUSH,   GS, w),
-+    [0xa9] = X86_OP_ENTRYw(POP,    GS, w),
-     [0xae] = X86_OP_GROUP0(group15),
-+    /*
-+     * It's slightly more efficient to put Ev operand in T0 and allow gen_IMUL3
-+     * to assume sextT0.  Multiplication is commutative anyway.
-+     */
-+    [0xaf] = X86_OP_ENTRY3(IMUL3,  G,v, E,v, 2op,v, sextT0),
-+
-+    [0xb2] = X86_OP_ENTRY3(LSS,    G,v, EM,p, None, None),
-+    [0xb4] = X86_OP_ENTRY3(LFS,    G,v, EM,p, None, None),
-+    [0xb5] = X86_OP_ENTRY3(LGS,    G,v, EM,p, None, None),
-+    [0xb6] = X86_OP_ENTRY3(MOV,    G,v, E,b, None, None, zextT0), /* MOVZX */
-+    [0xb7] = X86_OP_ENTRY3(MOV,    G,v, E,w, None, None, zextT0), /* MOVZX */
-+
-+    [0xbe] = X86_OP_ENTRY3(MOV,    G,v, E,b, None, None, sextT0), /* MOVSX */
-+    [0xbf] = X86_OP_ENTRY3(MOV,    G,v, E,w, None, None, sextT0), /* MOVSX */
- 
-     [0xc2] = X86_OP_ENTRY4(VCMP,       V,x, H,x, W,x,       vex2_rep3 p_00_66_f3_f2),
-+    [0xc3] = X86_OP_ENTRY3(MOV,        EM,y,G,y, None,None, cpuid(SSE2)), /* MOVNTI */
-     [0xc4] = X86_OP_ENTRY4(PINSRW,     V,dq,H,dq,E,w,       vex5 mmx p_00_66),
-     [0xc5] = X86_OP_ENTRY3(PEXTRW,     G,d, U,dq,I,b,       vex5 mmx p_00_66),
-     [0xc6] = X86_OP_ENTRY4(VSHUF,      V,x, H,x, W,x,       vex4 p_00_66),
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index befde6677be..58f255873ff 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -1979,6 +1979,16 @@ static void gen_LES(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
-     gen_lxx_seg(s, env, decode, R_ES);
+@@ -3117,15 +3117,15 @@ static bool disas_insn_x87(DisasContext *s, CPUState *cpu, int b)
+     return true;
  }
  
-+static void gen_LFS(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
-+{
-+    gen_lxx_seg(s, env, decode, R_FS);
-+}
++static void disas_insn_old(DisasContext *s, CPUState *cpu, int b);
 +
-+static void gen_LGS(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
-+{
-+    gen_lxx_seg(s, env, decode, R_GS);
-+}
-+
- static void gen_LODS(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
+ /* convert one instruction. s->base.is_jmp is set if the translation must
+    be stopped. Return the next pc value */
+ static bool disas_insn(DisasContext *s, CPUState *cpu)
  {
-     MemOp ot = decode->op[2].ot;
-@@ -2023,6 +2033,11 @@ static void gen_LOOPNE(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode
-     gen_conditional_jump_labels(s, decode->immediate, not_taken, taken);
+     CPUX86State *env = cpu_env(cpu);
+     int b, prefixes;
+-    int shift;
+-    MemOp ot, aflag, dflag;
+-    int modrm, reg, rm, mod, op, opreg, val;
++    MemOp aflag, dflag;
+     bool orig_cc_op_dirty = s->cc_op_dirty;
+     CCOp orig_cc_op = s->cc_op;
+     target_ulong orig_pc_save = s->pc_save;
+@@ -3271,6 +3271,38 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
+     s->aflag = aflag;
+     s->dflag = dflag;
+ 
++    switch (b) {
++    case 0     ... 0xd7:
++    case 0xe0  ... 0xff:
++    case 0x10e ... 0x117:
++    case 0x128 ... 0x12f:
++    case 0x138 ... 0x19f:
++    case 0x1a0 ... 0x1a1:
++    case 0x1a8 ... 0x1a9:
++    case 0x1af:
++    case 0x1b2:
++    case 0x1b4 ... 0x1b7:
++    case 0x1be ... 0x1bf:
++    case 0x1c2 ... 0x1c6:
++    case 0x1c8 ... 0x1ff:
++        disas_insn_new(s, cpu, b);
++        break;
++    default:
++        disas_insn_old(s, cpu, b);
++        break;
++    }
++    return true;
++}
++
++static void disas_insn_old(DisasContext *s, CPUState *cpu, int b)
++{
++    CPUX86State *env = cpu_env(cpu);
++    int prefixes = s->prefix;
++    MemOp dflag = s->dflag;
++    int shift;
++    MemOp ot;
++    int modrm, reg, rm, mod, op, opreg, val;
++
+     /* now check op code */
+     switch (b) {
+         /**************************/
+@@ -4726,31 +4758,15 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
+ 
+         set_cc_op(s, CC_OP_POPCNT);
+         break;
+-    case 0     ... 0xd7:
+-    case 0xe0  ... 0xff:
+-    case 0x10e ... 0x117:
+-    case 0x128 ... 0x12f:
+-    case 0x138 ... 0x19f:
+-    case 0x1a0 ... 0x1a1:
+-    case 0x1a8 ... 0x1a9:
+-    case 0x1af:
+-    case 0x1b2:
+-    case 0x1b4 ... 0x1b7:
+-    case 0x1be ... 0x1bf:
+-    case 0x1c2 ... 0x1c6:
+-    case 0x1c8 ... 0x1ff:
+-        disas_insn_new(s, cpu, b);
+-        break;
+     default:
+         goto unknown_op;
+     }
+-    return true;
++    return;
+  illegal_op:
+     gen_illegal_opcode(s);
+-    return true;
++    return;
+  unknown_op:
+     gen_unknown_opcode(env, s);
+-    return true;
  }
  
-+static void gen_LSS(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
-+{
-+    gen_lxx_seg(s, env, decode, R_SS);
-+}
-+
- static void gen_MOV(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
- {
-     /* nothing to do! */
+ void tcg_x86_init(void)
 -- 
 2.45.0
 
