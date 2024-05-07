@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D94AEC10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 09:50:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A139C10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 09:52:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4HT6-0000Wq-Jq; Tue, 07 May 2024 05:50:40 -0400
+	id 1s4HTv-0001BF-8M; Tue, 07 May 2024 05:51:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s4HT4-0000TK-SP
- for qemu-devel@nongnu.org; Tue, 07 May 2024 05:50:39 -0400
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1s4HTa-00012o-3c; Tue, 07 May 2024 05:51:10 -0400
+Received: from mail-oa1-x2e.google.com ([2001:4860:4864:20::2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s4HT2-0004Cm-CZ
- for qemu-devel@nongnu.org; Tue, 07 May 2024 05:50:38 -0400
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-51ff65b1e14so3491675e87.2
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 02:50:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1s4HTX-0004K0-CL; Tue, 07 May 2024 05:51:09 -0400
+Received: by mail-oa1-x2e.google.com with SMTP id
+ 586e51a60fabf-23f0d7d2ce6so1659707fac.2; 
+ Tue, 07 May 2024 02:51:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715075434; x=1715680234; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1715075465; x=1715680265; darn=nongnu.org;
+ h=in-reply-to:references:from:subject:cc:to:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3xB9y6e7IAHiEp8If4b36zppCTyWuRdj3rszw6jl/hw=;
- b=IJc+WXK6HtSlblDOV5+gdz3HBoTCII7iiH3y9gDqFUSpTnv0Yqtgw1K281jsZPKy0C
- Oo53mgakvN4UO2cr5+QyxhuPz+thxhgx1R/ze0OvVpZo9VNmpJN9nbgr0+Q7uRZ/M6/Q
- Xp81VG1JVXHDhcKAyMfOZjFA0P6JRHZa9bU44shjG9LxUQ0NsaXL6I8ToADYNqGzv2t8
- fkcZbiWRnoaHSwUssBbd74DMQJwMaom7H+8gqA0tZrPg7XzMRlOzmTn9kwi61pZZpas4
- kkfhCdQH0fNkN75FDCq08NtNAGVFkAUAQH+Xsc6VjTVbb871MyFwWf3QTQWLfJrNecDj
- cb+A==
+ bh=TiMMWoKIHumqK/XUPSQgWDFSfAVDNvuNNXSCJAkdlUA=;
+ b=meMP+hvjZPtz2oMoEp0D4oTju0XqHDh+18+ishC7sKF4Z4ehp7h/jG0VPyr1JjD0DA
+ rE85pLaUzXgYYRnG21q/NXM2EpSuDqxKHlq0LsHldiXc+WHL2u+xYM+e1RzzHOwAtzCO
+ kLwqRNQ18ZVNdXhgTskz+SL+r5thTgdA4J06uqJu2j3J8V5Qk6ik1US3vNlpc7utgfBY
+ Rbm3ip0izG9d6Xt6VlTgLsp6vNed7kqhO2l8AjXWtRszluA4TFA6w7PPIl1oPHjBp7Xw
+ iDTkn3M5JBlX+qZ0ATmMhxy6Tw/Aqwbwb43bTxv/NY3rkvTFXyqTGZYYduioTEO1kVvr
+ Y7Vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715075434; x=1715680234;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3xB9y6e7IAHiEp8If4b36zppCTyWuRdj3rszw6jl/hw=;
- b=CtgldbsaDhU7d5RUCgesDRA6fw2kKm6GibOyEOEKkI1mbEruZ1O2eDOrOGlpOUNvPa
- 6qtQ1Dj3/JaIFroq47Aj/JCxJkivZCsOV6Lt0E4g9IAETL8mmG+sDPfglmLH6z3RGmRT
- hqNpZi9+irPTcptF5YmVy3lUU5V50RLUJWWO/DoztQbFj5AVC62PTl4GT+cWhPD09gyl
- 6VSPjzBWrYXv7oN8boAYmegWOaVcVnjIWNpiA5ic0HGoHG2udxWGSINvDs3SgjWf3LED
- MjvRpkdnWpAhbwQYVBGYZUp9ZTGzT3ldRWzXQ3KfoXDugHe7R3vWTXHVokafczT/oL+0
- 0Ucw==
-X-Gm-Message-State: AOJu0YyxQPyLlV7jZe67VKubGV5IMj6tmaGjuelyYqM82PHHk2boSBTh
- qYJ4H//SjyJcoLBpMRJu5+P7wdpfLs0kULrfJdPEYmeYaH+mmpFhe3uirfYZ2cqxfbRpunTD06l
- 8XruTwcHmlbnZYAYPbztK3/YSlNUihPUuGO/ozw==
-X-Google-Smtp-Source: AGHT+IEj87l3Os/7f28LGWBqFgOJgrYCa4SeLJlf2BqRyivpBEGkMQ34Y/oBriNav023s80bNSpTol67tGKh+RzfJp8=
-X-Received: by 2002:a19:c201:0:b0:51b:79b7:8322 with SMTP id
- l1-20020a19c201000000b0051b79b78322mr6740846lfc.52.1715075433728; Tue, 07 May
- 2024 02:50:33 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240505140556.373711-1-ines.varhol@telecom-paris.fr>
- <20240505140556.373711-2-ines.varhol@telecom-paris.fr>
-In-Reply-To: <20240505140556.373711-2-ines.varhol@telecom-paris.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 7 May 2024 10:50:23 +0100
-Message-ID: <CAFEAcA9kOhzn+9pXOTBwRdLmMcFfPQzwwX6Nv_90RLPiUH6JAA@mail.gmail.com>
-Subject: Re: [PATCH 1/4] hw/misc: Create STM32L4x5 SYSCFG clock
-To: =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Arnaud Minier <arnaud.minier@telecom-paris.fr>,
- Laurent Vivier <lvivier@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Alistair Francis <alistair@alistair23.me>,
- Samuel Tardieu <samuel.tardieu@telecom-paris.fr>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+ d=1e100.net; s=20230601; t=1715075465; x=1715680265;
+ h=in-reply-to:references:from:subject:cc:to:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=TiMMWoKIHumqK/XUPSQgWDFSfAVDNvuNNXSCJAkdlUA=;
+ b=BoBZOdMV6SAeVCtRQ2VWr4sog8t9bQjcpWXbrOcg9Fps42sLiLybcoTgsBJsjHKfUw
+ YPOhyY4WJfkwX/qwyMkgr8xNdiu1yDgSprwHb00RkMDeZEJpBvNvVYE+q005Grnn7Co5
+ ttW+th5uIbCRUjzU5vv+mLO5uNaf8B9w5Azdy53ChfA0NBQg1jg+ia/HkeV4QS/naVO1
+ u6Y5MqyA/ULL9AIIBSqOHQgxgmNOC1OZ516qT4tWlYev/9G1QJ3uU8fAbUpA1QM0xNXF
+ vQaymiqWNZbzB4pd7MAjFknanDa7qO/DuSe9K4zkggHdx53PId5m9A2a49KC/uHvCOe3
+ dqIQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVRWsQ6W/zZziAvOWbd6cVMrrG/BmTO9kNkoozFHTbjSgnpqFBfX3J6ch4/DXUHG0yDK53hMApCjUGX8TGUGBUqF5JknjB90I0ylHg4NODJnpFCJhtDkEjYPTo=
+X-Gm-Message-State: AOJu0YwQiWVfR6nDnqOdA4VDniZmTtn9Ehs7A6lc06J1uYV36SrPBnTd
+ oDeAC8GLfoZlPV0R+zJpbzfRwXDKQ//3I2UZZR719MPRWox4iREk
+X-Google-Smtp-Source: AGHT+IFTCmLre8MtIgT54i0ojke7z/TMJ8Mq1I+eTp3ruv5bowULlWVQmbjQ2EEeTRjPHihoBkimbw==
+X-Received: by 2002:a05:6871:409a:b0:23c:e635:8db with SMTP id
+ kz26-20020a056871409a00b0023ce63508dbmr15506070oab.15.1715075465585; 
+ Tue, 07 May 2024 02:51:05 -0700 (PDT)
+Received: from localhost (220-245-239-57.tpgi.com.au. [220.245.239.57])
+ by smtp.gmail.com with ESMTPSA id
+ a5-20020a63d405000000b0060c5179a0a5sm9428921pgh.50.2024.05.07.02.51.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 May 2024 02:51:05 -0700 (PDT)
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x134.google.com
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 07 May 2024 19:50:59 +1000
+Message-Id: <D13BID6N11W0.34G4IGO8KCEPO@gmail.com>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
+ <qemu-ppc@nongnu.org>
+Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
+Subject: Re: [PATCH v2 12/28] target/ppc/mmu_common.c: Split out BookE cases
+ before checking real mode
+From: "Nicholas Piggin" <npiggin@gmail.com>
+X-Mailer: aerc 0.17.0
+References: <cover.1714606359.git.balaton@eik.bme.hu>
+ <6e9441212a1146fde2bd3a120d6c426cd2a1792e.1714606359.git.balaton@eik.bme.hu>
+In-Reply-To: <6e9441212a1146fde2bd3a120d6c426cd2a1792e.1714606359.git.balaton@eik.bme.hu>
+Received-SPF: pass client-ip=2001:4860:4864:20::2e;
+ envelope-from=npiggin@gmail.com; helo=mail-oa1-x2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,118 +97,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 5 May 2024 at 15:06, In=C3=A8s Varhol <ines.varhol@telecom-paris.fr=
-> wrote:
+On Thu May 2, 2024 at 9:43 AM AEST, BALATON Zoltan wrote:
+> BookE does not have real mode so split off and handle it first in
+> get_physical_address_wtlb() before checking for real mode for other
+> MMU models.
+
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+
 >
-> Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-
-In general you should try to avoid commits with no commit message.
-Sometimes there really isn't anything to say beyond what the
-subject line is, but that should be the exception rather than
-the usual thing.
-
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->  include/hw/misc/stm32l4x5_syscfg.h |  1 +
->  hw/arm/stm32l4x5_soc.c             |  2 ++
->  hw/misc/stm32l4x5_syscfg.c         | 26 ++++++++++++++++++++++++++
->  3 files changed, 29 insertions(+)
+>  target/ppc/mmu_common.c | 14 +++++++-------
+>  1 file changed, 7 insertions(+), 7 deletions(-)
 >
-> diff --git a/include/hw/misc/stm32l4x5_syscfg.h b/include/hw/misc/stm32l4=
-x5_syscfg.h
-> index 23bb564150..c450df2b9e 100644
-> --- a/include/hw/misc/stm32l4x5_syscfg.h
-> +++ b/include/hw/misc/stm32l4x5_syscfg.h
-> @@ -48,6 +48,7 @@ struct Stm32l4x5SyscfgState {
->      uint32_t swpr2;
->
->      qemu_irq gpio_out[GPIO_NUM_PINS];
-> +    Clock *clk;
->  };
->
->  #endif
-> diff --git a/hw/arm/stm32l4x5_soc.c b/hw/arm/stm32l4x5_soc.c
-> index 38f7a2d5d9..fb2afa6cfe 100644
-> --- a/hw/arm/stm32l4x5_soc.c
-> +++ b/hw/arm/stm32l4x5_soc.c
-> @@ -236,6 +236,8 @@ static void stm32l4x5_soc_realize(DeviceState *dev_so=
-c, Error **errp)
->
->      /* System configuration controller */
->      busdev =3D SYS_BUS_DEVICE(&s->syscfg);
-> +    qdev_connect_clock_in(DEVICE(&s->syscfg), "clk",
-> +        qdev_get_clock_out(DEVICE(&(s->rcc)), "syscfg-out"));
->      if (!sysbus_realize(busdev, errp)) {
->          return;
->      }
-> diff --git a/hw/misc/stm32l4x5_syscfg.c b/hw/misc/stm32l4x5_syscfg.c
-> index a5a1ce2680..a82864c33d 100644
-> --- a/hw/misc/stm32l4x5_syscfg.c
-> +++ b/hw/misc/stm32l4x5_syscfg.c
-> @@ -26,6 +26,10 @@
->  #include "trace.h"
->  #include "hw/irq.h"
->  #include "migration/vmstate.h"
-> +#include "hw/clock.h"
-> +#include "hw/qdev-clock.h"
-> +#include "qapi/visitor.h"
-> +#include "qapi/error.h"
->  #include "hw/misc/stm32l4x5_syscfg.h"
->  #include "hw/gpio/stm32l4x5_gpio.h"
->
-> @@ -202,6 +206,14 @@ static void stm32l4x5_syscfg_write(void *opaque, hwa=
-ddr addr,
->      }
->  }
->
-> +static void clock_freq_get(Object *obj, Visitor *v,
-> +    const char *name, void *opaque, Error **errp)
-> +{
-> +    Stm32l4x5SyscfgState *s =3D STM32L4X5_SYSCFG(obj);
-> +    uint32_t clock_freq_hz =3D clock_get_hz(s->clk);
-> +    visit_type_uint32(v, name, &clock_freq_hz, errp);
-> +}
-> +
->  static const MemoryRegionOps stm32l4x5_syscfg_ops =3D {
->      .read =3D stm32l4x5_syscfg_read,
->      .write =3D stm32l4x5_syscfg_write,
-> @@ -225,6 +237,18 @@ static void stm32l4x5_syscfg_init(Object *obj)
->      qdev_init_gpio_in(DEVICE(obj), stm32l4x5_syscfg_set_irq,
->                        GPIO_NUM_PINS * NUM_GPIOS);
->      qdev_init_gpio_out(DEVICE(obj), s->gpio_out, GPIO_NUM_PINS);
-> +    s->clk =3D qdev_init_clock_in(DEVICE(s), "clk", NULL, s, 0);
-> +    object_property_add(obj, "clock-freq-hz", "uint32", clock_freq_get, =
-NULL,
-> +                        NULL, NULL);
-
-Why do we need this property? The clock on this device is an input,
-so the device doesn't control its frequency.
-
-> +}
-> +
-> +static void stm32l4x5_syscfg_realize(DeviceState *dev, Error **errp)
-> +{
-> +    Stm32l4x5SyscfgState *s =3D STM32L4X5_SYSCFG(dev);
-> +    if (!clock_has_source(s->clk)) {
-> +        error_setg(errp, "SYSCFG: clk input must be connected");
-> +        return;
+> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+> index a069e4083f..24a9b9ef19 100644
+> --- a/target/ppc/mmu_common.c
+> +++ b/target/ppc/mmu_common.c
+> @@ -1191,6 +1191,13 @@ int get_physical_address_wtlb(CPUPPCState *env, mm=
+u_ctx_t *ctx,
+>      int ret =3D -1;
+>      bool real_mode;
+> =20
+> +    if (env->mmu_model =3D=3D POWERPC_MMU_BOOKE) {
+> +        return mmubooke_get_physical_address(env, ctx, eaddr, access_typ=
+e);
+> +    } else if (env->mmu_model =3D=3D POWERPC_MMU_BOOKE206) {
+> +        return mmubooke206_get_physical_address(env, ctx, eaddr, access_=
+type,
+> +                                                mmu_idx);
 > +    }
->  }
->
->  static const VMStateDescription vmstate_stm32l4x5_syscfg =3D {
-> @@ -241,6 +265,7 @@ static const VMStateDescription vmstate_stm32l4x5_sys=
-cfg =3D {
->          VMSTATE_UINT32(swpr, Stm32l4x5SyscfgState),
->          VMSTATE_UINT32(skr, Stm32l4x5SyscfgState),
->          VMSTATE_UINT32(swpr2, Stm32l4x5SyscfgState),
-> +        VMSTATE_CLOCK(clk, Stm32l4x5SyscfgState),
+> +
+>      real_mode =3D (type =3D=3D ACCESS_CODE) ? !FIELD_EX64(env->msr, MSR,=
+ IR)
+>                                        : !FIELD_EX64(env->msr, MSR, DR);
+> =20
+> @@ -1211,13 +1218,6 @@ int get_physical_address_wtlb(CPUPPCState *env, mm=
+u_ctx_t *ctx,
+>              ret =3D mmu40x_get_physical_address(env, ctx, eaddr, access_=
+type);
+>          }
+>          break;
+> -    case POWERPC_MMU_BOOKE:
+> -        ret =3D mmubooke_get_physical_address(env, ctx, eaddr, access_ty=
+pe);
+> -        break;
+> -    case POWERPC_MMU_BOOKE206:
+> -        ret =3D mmubooke206_get_physical_address(env, ctx, eaddr, access=
+_type,
+> -                                               mmu_idx);
+> -        break;
+>      case POWERPC_MMU_REAL:
+>          if (real_mode) {
+>              ret =3D check_physical(env, ctx, eaddr, access_type);
 
-Adding a field to the vmstate means we must bump the version number,
-since it's a migration compatibility break.
-
->          VMSTATE_END_OF_LIST()
->      }
->  };
-
-thanks
--- PMM
 
