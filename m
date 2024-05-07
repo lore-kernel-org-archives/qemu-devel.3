@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09108C19F4F
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 20:02:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11262C10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 20:05:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4R1J-0000AM-9p; Tue, 07 May 2024 16:02:37 -0400
+	id 1s4R3W-0002GO-Fq; Tue, 07 May 2024 16:04:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s4R1C-00008G-23
- for qemu-devel@nongnu.org; Tue, 07 May 2024 16:02:30 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s4R3U-0002G3-Lw
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 16:04:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s4R19-0006u9-FA
- for qemu-devel@nongnu.org; Tue, 07 May 2024 16:02:29 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s4R3T-0007tk-7i
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 16:04:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715112146;
+ s=mimecast20190719; t=1715112290;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=u8LmkKztR/usfpOFoEBc359ghd6Du5/5DLJmmMdkS1A=;
- b=Hca68YjpYc64nWSKEWkh6q2uTaCFHmY0yAHsO/yASv/2js4oLRF4d1vU9dI8LaCL9arxng
- Qnyzj/ztc6eE2J/NU5RlNtSDK1XjRGgxoKrOPoPhgd0DkkAMTdncsnTTXMDEXWsF8nLEfG
- xd/jE3ldwo2Xwm7tUWZr/4ts4TPIDGU=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=QU/MBP3z7rtp4vu0fCAYV9b9R17J0dSisvJEGz/yQfA=;
+ b=SQybHqsM3yRigSAdCYZ92ZAK4zPojPXmcb5XqXlHAPEZSAyTWqudN2b8QtM5ei5HjakIXJ
+ 36Za44KEPd2WSTWUHsyJkhdVL9drsWSGCUKP4vKa/wfw/4IKbnFQqtGvyIXZ38ftxu3ZuE
+ lYSsyQGOQaLuSgMc/WMsidwpowGoHfY=
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
+ [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-665-sS_V_M1eOcOlHYKfVv2ILw-1; Tue, 07 May 2024 16:02:25 -0400
-X-MC-Unique: sS_V_M1eOcOlHYKfVv2ILw-1
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-43a3632d56aso5366001cf.1
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 13:02:25 -0700 (PDT)
+ us-mta-15-TjECQ561NCWM3-nLiuPj-w-1; Tue, 07 May 2024 16:04:47 -0400
+X-MC-Unique: TjECQ561NCWM3-nLiuPj-w-1
+Received: by mail-oi1-f199.google.com with SMTP id
+ 5614622812f47-3c864bcd2b0so299523b6e.3
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 13:04:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715112144; x=1715716944;
+ d=1e100.net; s=20230601; t=1715112287; x=1715717087;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=u8LmkKztR/usfpOFoEBc359ghd6Du5/5DLJmmMdkS1A=;
- b=QY3D+qvIhLxYrfbpRuvxz9SsgAk2MbM2X7i+iN5Hh9PnyjKmBbechKA4cGhEKymPQu
- pjqtOBtzFYfB/GUIeODCSGHJF5u/9DfViiEIvxSD5q2gYDMt8XxelbGDywdq8n6QDLse
- w6pkO9Z4rcDpQelHGKif/E5ImsVPFytr1r63MwB8/hVDGL6UF2+wIpK8PmVStNcjmXhg
- 0KU93xJdyzm0RIGf9e5doMgduuhtwfaGdbFdqcLoSaxn0vlhFThEbuzOm1QD8IoBsu4w
- TaxUTWYCQ2qe0vFtvYIEI6nMWxIqo8foaR45GL096GLfcKZ2LFOvT6E0jNVLgLd4buTZ
- +6dg==
+ bh=QU/MBP3z7rtp4vu0fCAYV9b9R17J0dSisvJEGz/yQfA=;
+ b=TMpsjHm+vsu3vgFIbN9Ifd1U6A2UHFL8+q8vWvrLSxWueA8ZDC2aOGH9IIYWOEahKX
+ Z/GB+uV7jJVKF/L65rqyeVai1UdLpysM1kp7GmFw9SnRc3zubxI564UVwXjx6b2bLaY7
+ HRdaPUdztw2avqyPeL9QHhF4G4ImxuUub8llqhPglx543MngX4sKnP2ruSCWFgFOyLes
+ uCkLdN6QOSUXNJPEMp5CFB72Izg2g9OcmfgEGgm8DNYQ1jP56D4/wolMf0Qf2zvIXMgn
+ 932Lg7tJm+UIjNeTQDfOlCrdpyACBmT+5xJvhoqH6ai8/cA0BKF1fionF66pTezNKiq0
+ KQBg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWTQvtc3gZDIQyRNRt+97hpocxxZW/QZa2cfTfb7DHoQUzkDlF2qym5aPPD/w5WwT5rYEfCUy9jtx9Tnff6gSHsx7RPiqY=
-X-Gm-Message-State: AOJu0Yy4ciV185U73z2o4kWN+S/wUIPNs3Lo4VC7oi2GJgtuRS3+o+PD
- sTJ/C2VxyVA/B6eMeUhcSKu8frWRgqxJm+1NU/igxcr/nqKNuxtRDrCMoz5ZMFQ7bilvfBTlZE6
- JoPYjnnLZE4TwtRPNeCMlkao9BfQh3CPK/SX1Uus4F74sQuuK1EWt
-X-Received: by 2002:a05:620a:4010:b0:790:c7f9:e919 with SMTP id
- af79cd13be357-792b279af23mr87393685a.1.1715112143997; 
- Tue, 07 May 2024 13:02:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHb1vr+NEzajjyfNANQPtCD/uzInDl+OBR/TxANTIXQdKM5+CAL9QXysAXTkAMqH4jydg/4NQ==
-X-Received: by 2002:a05:620a:4010:b0:790:c7f9:e919 with SMTP id
- af79cd13be357-792b279af23mr87387685a.1.1715112143311; 
- Tue, 07 May 2024 13:02:23 -0700 (PDT)
+ AJvYcCVUM6IuoC2g4UtmEMdTgMHWoGz+G8Wgfv6ZMqftvEVUcwWiLq25+OVp4h+ZfI5Fm3e7g6YGjuqiV+q7Uj6beJOM3JrgJJw=
+X-Gm-Message-State: AOJu0Yy/SnHGf/+TccahzYE5Y+xFDRaWqOfzrHmLmz+S9LlPy2qYqG4I
+ O9MlJqkYoFk6AggG3biKbUYjeC65cWQmhTe1rBKMmjzO2aZDqXtPK8qxVNp4h6IYUzUuGsplu0A
+ 2CogCUzU4Dkw8TqXTLmNQB4Y/x5i/iVHTFcNfON1Xy2RmqLio6v4T
+X-Received: by 2002:a05:6808:200d:b0:3c8:49ef:cdf0 with SMTP id
+ 5614622812f47-3c9852b99a0mr677439b6e.2.1715112286670; 
+ Tue, 07 May 2024 13:04:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE11fWZbJtW421Y6lSIKgAt52fuhRMhBoCwP/ni+JNKqFf8sw8uiPiv1edo4aRIrCcKTaEbvA==
+X-Received: by 2002:a05:6808:200d:b0:3c8:49ef:cdf0 with SMTP id
+ 5614622812f47-3c9852b99a0mr677403b6e.2.1715112286075; 
+ Tue, 07 May 2024 13:04:46 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- pi30-20020a05620a379e00b0079264acccd7sm5208497qkn.9.2024.05.07.13.02.22
+ f14-20020ad442ce000000b006a0fd6b745bsm4954090qvr.43.2024.05.07.13.04.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 May 2024 13:02:22 -0700 (PDT)
-Date: Tue, 7 May 2024 16:02:21 -0400
+ Tue, 07 May 2024 13:04:45 -0700 (PDT)
+Date: Tue, 7 May 2024 16:04:43 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Mattias Nissler <mnissler@rivosinc.com>
 Cc: jag.raman@oracle.com, stefanha@redhat.com, qemu-devel@nongnu.org,
@@ -74,14 +74,13 @@ Cc: jag.raman@oracle.com, stefanha@redhat.com, qemu-devel@nongnu.org,
  "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Elena Ufimtseva <elena.ufimtseva@oracle.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH v10 4/7] softmmu: Support concurrent bounce buffers
-Message-ID: <ZjqIzRLF_oy2Jmvk@x1n>
+Subject: Re: [PATCH v10 0/7] Support message-based DMA in vfio-user server
+Message-ID: <ZjqJW88alkjCmS5I@x1n>
 References: <20240507143431.464382-1-mnissler@rivosinc.com>
- <20240507143431.464382-5-mnissler@rivosinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240507143431.464382-5-mnissler@rivosinc.com>
+In-Reply-To: <20240507143431.464382-1-mnissler@rivosinc.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
@@ -106,35 +105,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 07, 2024 at 07:34:28AM -0700, Mattias Nissler wrote:
-> When DMA memory can't be directly accessed, as is the case when
-> running the device model in a separate process without shareable DMA
-> file descriptors, bounce buffering is used.
+On Tue, May 07, 2024 at 07:34:24AM -0700, Mattias Nissler wrote:
+> This series adds basic support for message-based DMA in qemu's vfio-user
+> server. This is useful for cases where the client does not provide file
+> descriptors for accessing system memory via memory mappings. My motivating use
+> case is to hook up device models as PCIe endpoints to a hardware design. This
+> works by bridging the PCIe transaction layer to vfio-user, and the endpoint
+> does not access memory directly, but sends memory requests TLPs to the hardware
+> design in order to perform DMA.
 > 
-> It is not uncommon for device models to request mapping of several DMA
-> regions at the same time. Examples include:
->  * net devices, e.g. when transmitting a packet that is split across
->    several TX descriptors (observed with igb)
->  * USB host controllers, when handling a packet with multiple data TRBs
->    (observed with xhci)
-> 
-> Previously, qemu only provided a single bounce buffer per AddressSpace
-> and would fail DMA map requests while the buffer was already in use. In
-> turn, this would cause DMA failures that ultimately manifest as hardware
-> errors from the guest perspective.
-> 
-> This change allocates DMA bounce buffers dynamically instead of
-> supporting only a single buffer. Thus, multiple DMA mappings work
-> correctly also when RAM can't be mmap()-ed.
-> 
-> The total bounce buffer allocation size is limited individually for each
-> AddressSpace. The default limit is 4096 bytes, matching the previous
-> maximum buffer size. A new x-max-bounce-buffer-size parameter is
-> provided to configure the limit for PCI devices.
-> 
-> Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
+> Note that more work is needed to make message-based DMA work well: qemu
+> currently breaks down DMA accesses into chunks of size 8 bytes at maximum, each
+> of which will be handled in a separate vfio-user DMA request message. This is
+> quite terrible for large DMA accesses, such as when nvme reads and writes
+> page-sized blocks for example. Thus, I would like to improve qemu to be able to
+> perform larger accesses, at least for indirect memory regions. I have something
+> working locally, but since this will likely result in more involved surgery and
+> discussion, I am leaving this to be addressed in a separate patch.
 
-Acked-by: Peter Xu <peterx@redhat.com>
+I assume Jag will pick this up then.
+
+Thanks,
 
 -- 
 Peter Xu
