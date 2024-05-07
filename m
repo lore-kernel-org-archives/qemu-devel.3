@@ -4,102 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E04C2C10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 16:14:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0742C10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 16:16:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4NS7-0005X9-J6; Tue, 07 May 2024 12:14:03 -0400
+	id 1s4NUI-0007Tf-5x; Tue, 07 May 2024 12:16:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s4NS6-0005Wz-ME
- for qemu-devel@nongnu.org; Tue, 07 May 2024 12:14:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s4NS5-0007UX-2N
- for qemu-devel@nongnu.org; Tue, 07 May 2024 12:14:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715098440;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=u7QZHYm+Ei8/1iATuVALb+2BptqwX0TTbTEZ6LF7Zfg=;
- b=fDqgAYpmMb2WHmA9JtcPJjiG/FFFZJnRp2356iQ4Jketw1O04doEvMhlDYJid7ETkBNFyk
- EzsdLEG29Zd4wrlYVHSltSZe9X+MR5FgQbAHeTd+zmM367B4x/CN54QtYlQ07Hk5lrtkGQ
- QTSe8HpyYE0jXc7S7GJuePojwnp/WQw=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-532-ITJZolJBPkmJNcQIdpVEOA-1; Tue, 07 May 2024 12:13:58 -0400
-X-MC-Unique: ITJZolJBPkmJNcQIdpVEOA-1
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6a1326b6c56so9785036d6.1
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 09:13:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from
+ <3x1M6ZgYKCpACyu73w08805y.w86Ay6E-xyFy578707E.8B0@flex--seanjc.bounces.google.com>)
+ id 1s4NUE-0007OP-6H
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 12:16:14 -0400
+Received: from mail-yb1-xb4a.google.com ([2607:f8b0:4864:20::b4a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <3x1M6ZgYKCpACyu73w08805y.w86Ay6E-xyFy578707E.8B0@flex--seanjc.bounces.google.com>)
+ id 1s4NUC-00088T-5K
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 12:16:13 -0400
+Received: by mail-yb1-xb4a.google.com with SMTP id
+ 3f1490d57ef6-dc6b26783b4so4331423276.0
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 09:16:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1715098568; x=1715703368; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:from:subject:message-id:references
+ :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+ :reply-to; bh=IWxS0mCdKrqU6bVOz4n3NTmQy0CRO7Urzkw5a/fWZlQ=;
+ b=RO2JYa+Qdqmza82S9vsDCjEZccXPJsCxMqQvCWn7CwVOBOcm1ri8EXijrnVHdM3ok6
+ HuSJeHTln+q0FdeevrzGfZ4N7b9EHx7f4hI36i8YB/AkL36p+dWxqOf9iNwjODVNWTaj
+ g8ZTG5txob8lqTyWYYW9RDh/JVRCLgdz4oWnNF5rZ7OH/3bDcEZE3pXOy1iuFN67WSfo
+ xbalkZ82o06wBqoB2o0h5aWWhHDB8v/Yv8yC+qMQuf2bDw8bdfFQ8fjPGfZ9P70p5ZEI
+ qKZp45tSGIHpC+q0xnABCoBz3ph/GAJ0s5237ZJoyTrp/ywRjyVhB4L0cSJj+/Ypbr3N
+ BLUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715098438; x=1715703238;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=u7QZHYm+Ei8/1iATuVALb+2BptqwX0TTbTEZ6LF7Zfg=;
- b=ZZSWqAwPi0tWyShCbWl4hzLJuV4NHe59VOiXiuMpREE0TQeoim15gD4onB4jgFE82d
- JrnUiJzFcG1IImY1YsRSim2eRxBm9k4akCPJ01WSgumoW5SJlp5d/j8jOWCr64IzhEgN
- DukKfYC4uVUKIyiQuSn5tu57GFkTiU5WFRZMbV+VWF0uC/9gVUdd/YxbdAZ5VRdnjIsd
- B8Yu0wYrKrix9g1BNQ0BpWpPO0tHJJW2kH8Q1qT5j+3BMQDJC0n1N/Tp3q2hPKfjVd5z
- LxrLda0SEj49OhRChGbfmvk3z2Kv78MWNoUfz7QsiZHg6sxiIrQmTLisY9fANpS1xTDY
- hcHw==
+ d=1e100.net; s=20230601; t=1715098568; x=1715703368;
+ h=content-transfer-encoding:cc:to:from:subject:message-id:references
+ :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=IWxS0mCdKrqU6bVOz4n3NTmQy0CRO7Urzkw5a/fWZlQ=;
+ b=mwD39ojovbBTlCvPcsrQyCB1ZzzfindM6WCMFSs35Mq0kTXNME9RPPGv2arNqHjTVE
+ SNW26Xa5/cmhy1J94KUjLThMYCp/dS/rTDpo4psY+Nt1xQO4wuKImZ4T1jPicLYSVsLa
+ Bql9RoQitqKCA/PfLIucD9GjCntIzSAQDTeY71mApZT93J7FCFGDI1m+utpK2aa50yF+
+ zra7RYVgVNA9aMI+w4YEdn73ZbCsDPEzZwnSGYsb5JG2LCvtU+1695VTq5ltAj3W/eQg
+ yhxyrngLQ5yrtnS2Bl0TwVN6DzHuRi34FNn1KTA01xU/nMmZ4oxxDwQLmLnLJdyLzRhM
+ 7xSQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVsFnFp/cFYU3XOOngATxOsd+Agan+W8fJBwLwFHU4/zhu3Wac5Dff9O4OHk3sLSTo3Lqqjv9z1yqE2RTzxafJOGQftC70=
-X-Gm-Message-State: AOJu0YxazjlVSUtHO5re4bU5Pk6dTWK2bO8vgiPLHPFYywH5zwnFzxod
- kM5bubJ1bqcNu8vCrWQJ9tAOKJAGCaW3gBfV6m2eRgLYIy/8gRjAoxUXhH9SFmTdxmLlHFmtdBc
- 8JOj/GyKtOiwh0nt9GQA7VOf+HV/D9dM3MoaSh/glS9bdeXsfUYxZ
-X-Received: by 2002:a05:6214:19ee:b0:6a1:f0f:73a6 with SMTP id
- 6a1803df08f44-6a1514c2f4dmr2996126d6.1.1715098437919; 
- Tue, 07 May 2024 09:13:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHHaks3M/rgfZoI2aMmTavYCkIzUIrnxg2Xb9KKoshUAXrtYY7yDTnqTkYRi/epWlUYPElo1w==
-X-Received: by 2002:a05:6214:19ee:b0:6a1:f0f:73a6 with SMTP id
- 6a1803df08f44-6a1514c2f4dmr2995756d6.1.1715098437387; 
- Tue, 07 May 2024 09:13:57 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- t3-20020a0cea23000000b006a100fa5fb2sm4809681qvp.77.2024.05.07.09.13.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 May 2024 09:13:57 -0700 (PDT)
-Date: Tue, 7 May 2024 12:13:54 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Avihai Horon <avihaih@nvidia.com>
-Cc: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH RFC 00/26] =?utf-8?Q?Multifd_?= =?utf-8?B?8J+UgA==?=
- device state transfer support with VFIO consumer
-Message-ID: <ZjpTQoKT9AIGwNGk@x1n>
-References: <ZiKOTkgEIKo-wj5N@x1n>
- <d7d59001-0800-4073-9def-08327e904b7b@maciej.szmigiero.name>
- <Zig0IPofMCpJdGsn@x1n>
- <e88ecd55-14a2-4043-946b-9c2447fe9def@maciej.szmigiero.name>
- <Zig3vebacR4SfJLh@x1n>
- <1a0b3c24-fffd-4db3-a35e-e40ae2e0a074@maciej.szmigiero.name>
- <Zi-4FmjXv-gx7JH_@x1n>
- <fc0721e3-4932-40b8-a6eb-2584a475d8eb@maciej.szmigiero.name>
- <ZjkZyP9Ty0TpTCTx@x1n>
- <7e855ccb-d5af-490f-94ab-61141fa30ba8@nvidia.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <7e855ccb-d5af-490f-94ab-61141fa30ba8@nvidia.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
+ AJvYcCUOF+i5li5onP7yHAIfpUiyrOr1OJLRBse6pThsFocYncqwDyj3YR/kXjTTFrhfThg2gvAiptoIcathti72A9G1nRu4LB0=
+X-Gm-Message-State: AOJu0YzNl2qdsoY1EOWd3p3NbsfRdyjGp8VXTR4C7fK/sFoR2Vo+6suh
+ DOKA/ucCFycJMEIEkE3WkAGS+LB15+zNXMr4IRCoQSqq+X/e/LWly4/MS3vfuwM0Kw1rrLD2PES
+ svw==
+X-Google-Smtp-Source: AGHT+IEEPkTwPJaOTGouRKDc7DVHMnqTRjb0yesgQ4YUUdFhPv8WpJzXBwRvcXmUBR39ssSE6I5KsNiqYrA=
+X-Received: from zagreus.c.googlers.com
+ ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
+ (user=seanjc job=sendgmr) by 2002:a05:6902:707:b0:dbe:30cd:8fcb with SMTP id
+ 3f1490d57ef6-debb9c0032emr11950276.0.1715098567940; Tue, 07 May 2024 09:16:07
+ -0700 (PDT)
+Date: Tue, 7 May 2024 09:16:06 -0700
+In-Reply-To: <20240507.ieghomae0UoC@digikod.net>
+Mime-Version: 1.0
+References: <20240503131910.307630-1-mic@digikod.net>
+ <20240503131910.307630-4-mic@digikod.net>
+ <ZjTuqV-AxQQRWwUW@google.com> <20240506.ohwe7eewu0oB@digikod.net>
+ <ZjmFPZd5q_hEBdBz@google.com> <20240507.ieghomae0UoC@digikod.net>
+Message-ID: <ZjpTxt-Bxia3bRwB@google.com>
+Subject: Re: [RFC PATCH v3 3/5] KVM: x86: Add notifications for Heki policy
+ configuration and violation
+From: Sean Christopherson <seanjc@google.com>
+To: "=?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?=" <mic@digikod.net>
+Cc: Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>, 
+ "H . Peter Anvin" <hpa@zytor.com>, Ingo Molnar <mingo@redhat.com>,
+ Kees Cook <keescook@chromium.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Gleixner <tglx@linutronix.de>, 
+ Vitaly Kuznetsov <vkuznets@redhat.com>, Wanpeng Li <wanpengli@tencent.com>, 
+ Rick P Edgecombe <rick.p.edgecombe@intel.com>, Alexander Graf <graf@amazon.com>,
+ Angelina Vu <angelinavu@linux.microsoft.com>, 
+ Anna Trikalinou <atrikalinou@microsoft.com>,
+ Chao Peng <chao.p.peng@linux.intel.com>, 
+ Forrest Yuan Yu <yuanyu@google.com>, James Gowans <jgowans@amazon.com>, 
+ James Morris <jamorris@linux.microsoft.com>,
+ John Andersen <john.s.andersen@intel.com>, 
+ "Madhavan T . Venkataraman" <madvenka@linux.microsoft.com>,
+ Marian Rotariu <marian.c.rotariu@gmail.com>, 
+ "Mihai =?utf-8?B?RG9uyJt1?=" <mdontu@bitdefender.com>, 
+ "=?utf-8?B?TmljdciZb3IgQ8OuyJt1?=" <nicu.citu@icloud.com>,
+ Thara Gopinath <tgopinath@microsoft.com>, 
+ Trilok Soni <quic_tsoni@quicinc.com>, Wei Liu <wei.liu@kernel.org>, 
+ Will Deacon <will@kernel.org>, Yu Zhang <yu.c.zhang@linux.intel.com>, 
+ "=?utf-8?Q?=C8=98tefan_=C8=98icleru?=" <ssicleru@bitdefender.com>,
+ dev@lists.cloudhypervisor.org, 
+ kvm@vger.kernel.org, linux-hardening@vger.kernel.org, 
+ linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-security-module@vger.kernel.org, qemu-devel@nongnu.org, 
+ virtualization@lists.linux-foundation.org, x86@kernel.org, 
+ xen-devel@lists.xenproject.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b4a;
+ envelope-from=3x1M6ZgYKCpACyu73w08805y.w86Ay6E-xyFy578707E.8B0@flex--seanjc.bounces.google.com;
+ helo=mail-yb1-xb4a.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,25 +124,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 07, 2024 at 11:41:05AM +0300, Avihai Horon wrote:
-> Yes, I was working on parallel VFIO migration, but in a different approach
-> (not over multifd) which I'm not sure is relevant to this series.
-> I've been skimming over your discussions but haven't had the time to go over
-> Maciej's series thoroughly.
-> I will try to find time to do this next week and see if I can help.
+On Tue, May 07, 2024, Micka=C3=ABl Sala=C3=BCn wrote:
+> > Actually, potential bad/crazy idea.  Why does the _host_ need to define=
+ policy?
+> > Linux already knows what assets it wants to (un)protect and when.  What=
+'s missing
+> > is a way for the guest kernel to effectively deprivilege and re-authent=
+icate
+> > itself as needed.  We've been tossing around the idea of paired VMs+vCP=
+Us to
+> > support VTLs and SEV's VMPLs, what if we usurped/piggybacked those idea=
+s, with a
+> > bit of pKVM mixed in?
+> >=20
+> > Borrowing VTL terminology, where VTL0 is the least privileged, userspac=
+e launches
+> > the VM at VTL0.  At some point, the guest triggers the deprivileging se=
+quence and
+> > userspace creates VTL1.  Userpace also provides a way for VTL0 restrict=
+ access to
+> > its memory, e.g. to effectively make the page tables for the kernel's d=
+irect map
+> > writable only from VTL1, to make kernel text RO (or XO), etc.  And VTL0=
+ could then
+> > also completely remove its access to code that changes CR0/CR4.
+> >=20
+> > It would obviously require a _lot_ more upfront work, e.g. to isolate t=
+he kernel
+> > text that modifies CR0/CR4 so that it can be removed from VTL0, but tha=
+t should
+> > be doable with annotations, e.g. tag relevant functions with __magic or=
+ whatever,
+> > throw them in a dedicated section, and then free/protect the section(s)=
+ at the
+> > appropriate time.
+> >=20
+> > KVM would likely need to provide the ability to switch VTLs (or whateve=
+r they get
+> > called), and host userspace would need to provide a decent amount of th=
+e backend
+> > mechanisms and "core" policies, e.g. to manage VTL0 memory, teardown (t=
+urn off?)
+> > VTL1 on kexec(), etc.  But everything else could live in the guest kern=
+el itself.
+> > E.g. to have CR pinning play nice with kexec(), toss the relevant kexec=
+() code into
+> > VTL1.  That way VTL1 can verify the kexec() target and tear itself down=
+ before
+> > jumping into the new kernel.=20
+> >=20
+> > This is very off the cuff and have-wavy, e.g. I don't have much of an i=
+dea what
+> > it would take to harden kernel text patching, but keeping the policy in=
+ the guest
+> > seems like it'd make everything more tractable than trying to define an=
+ ABI
+> > between Linux and a VMM that is rich and flexible enough to support all=
+ the
+> > fancy things Linux does (and will do in the future).
+>=20
+> Yes, we agree that the guest needs to manage its own policy.  That's why
+> we implemented Heki for KVM this way, but without VTLs because KVM
+> doesn't support them.
+>=20
+> To sum up, is the VTL approach the only one that would be acceptable for
+> KVM? =20
 
-IIUC your solution could also improve downtime, it's just that it bypasses
-migration in general so from that POV a multifd-based solution is
-preferred.
+Heh, that's not a question you want to be asking.  You're effectively askin=
+g me
+to make an authorative, "final" decision on a topic which I am only passing=
+ly
+familiar with.
 
-Fundamentally I think you share the goal more or less on allowing
-concurrent vfio migrations, so it will be greatly helpful to have your
-input / reviews, also making sure the ultimate solution will work for all
-the use cases.
+But since you asked it... :-)  Probably?
 
-Thanks,
+I see a lot of advantages to a VTL/VSM-like approach:
 
--- 
-Peter Xu
+ 1. Provides Linux-as-a guest the flexibility it needs to meaningfully adva=
+nce
+    its security, with the least amount of policy built into the guest/host=
+ ABI.
 
+ 2. Largely decouples guest policy from the host, i.e. should allow the gue=
+st to
+    evolve/update it's policy without needing to coordinate changes with th=
+e host.
+
+ 3. The KVM implementation can be generic enough to be reusable for other f=
+eatures.
+
+ 4. Other groups are already working on VTL-like support in KVM, e.g. for V=
+SM
+    itself, and potentially for VMPL/SVSM support.
+
+IMO, #2 is a *huge* selling point.  Not having to coordinate changes across
+multiple code bases and/or organizations and/or maintainers is a big win fo=
+r
+velocity, long term maintenance, and probably the very viability of HEKI.
+
+Providing the guest with the tools to define and implement its own policy m=
+eans
+end users don't have to way for some third party, e.g. CSPs, to deploy the
+accompanying host-side changes, because there are no host-side changes.
+
+And encapsulating everything in the guest drastically reduces the friction =
+with
+changes in the kernel that interact with hardening, both from a technical a=
+nd a
+social perspective.  I.e. giving the kernel (near) complete control over it=
+s
+destiny minimizes the number of moving parts, and will be far, far easier t=
+o sell
+to maintainers.  I would expect maintainers to react much more favorably to=
+ being
+handed tools to harden the kernel, as opposed to being presented a set of A=
+PIs
+that can be used to make the kernel compliant with _someone else's_ vision =
+of
+what kernel hardening should look like.
+
+E.g. imagine a new feature comes along that requires overriding CR0/CR4 pin=
+ning
+in a way that doesn't fit into existing policy.  If the VMM is involved in
+defining/enforcing the CR pinning policy, then supporting said new feature =
+would
+require new guest/host ABI and an updated host VMM in order to make the new
+feature compatible with HEKI.  Inevitably, even if everything goes smoothly=
+ from
+an upstreaming perspective, that will result in guests that have to choose =
+between
+HEKI and new feature X, because there is zero chance that all hosts that ru=
+n Linux
+as a guest will be updated in advance of new feature X being deployed.
+
+And if/when things don't go smoothly, odds are very good that kernel mainta=
+iners
+will eventually tire of having to coordinate and negotiate with QEMU and ot=
+her
+VMMs, and will become resistant to continuing to support/extend HEKI.
+
+> If yes, that would indeed require a *lot* of work for something we're not
+> sure will be accepted later on.
+
+Yes and no.  The AWS folks are pursuing VSM support in KVM+QEMU, and SVSM s=
+upport
+is trending toward the paired VM+vCPU model.  IMO, it's entirely feasible t=
+o
+design KVM support such that much of the development load can be shared bet=
+ween
+the projects.  And having 2+ use cases for a feature (set) makes it _much_ =
+more
+likely that the feature(s) will be accepted.
+
+And similar to what Paolo said regarding HEKI not having a complete story, =
+I
+don't see a clear line of sight for landing host-defined policy enforcement=
+, as
+there are many open, non-trivial questions that need answers. I.e. upstream=
+ing
+HEKI in its current form is also far from a done deal, and isn't guaranteed=
+ to
+be substantially less work when all is said and done.
 
