@@ -4,56 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41339C25B75
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 06:46:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA87EC10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 06:46:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4EZl-00037s-Gb; Tue, 07 May 2024 02:45:21 -0400
+	id 1s4EaS-0003ol-G2; Tue, 07 May 2024 02:46:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s4EZh-000366-08
- for qemu-devel@nongnu.org; Tue, 07 May 2024 02:45:17 -0400
+ id 1s4Ea3-0003Pd-60
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 02:45:42 -0400
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s4EZd-0004xu-UE
- for qemu-devel@nongnu.org; Tue, 07 May 2024 02:45:16 -0400
+ id 1s4Ea1-00064G-GA
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 02:45:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1715064314; x=1746600314;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=ZAnWuegHbLPuSZnA6eackL2uGPiM3H6HFgwU9RDIcpk=;
- b=XM2pOeQHxidBnUjYGxeKXgpHR4bwVwmoxnDPJN7BeLqc3UVJVRBWHD6K
- H0cbfojG3RIM2O5WxkWny08hup27EBYIIFffeTGnSWJIYWhG+rRkdEhza
- gIa0/XOA/+JBzdPj0rp/PZfzK+ykBLgW+iklCs1VfmECAcmo1htUe9n/Q
- ftMZr7UzGkDQUliMQQAAxMLddLPyAK+Krxcxb0ruxx8SJ2+TzZKjI/1f8
- MhufBc6czH6pMec0aJb7EkZiJtcGTw7ENlKaI3qWbgibSpzTqpYbDoq2r
- xdBRHHtZ+pDiJBP4drXPnmSThSXamoYaHUGngg2QQ8bOxrJ1eERYu8plv w==;
-X-CSE-ConnectionGUID: cZxZLW6kSMqYoZ3jof8l0g==
-X-CSE-MsgGUID: EKsqaEEvQzae+cAHOSKHng==
-X-IronPort-AV: E=McAfee;i="6600,9927,11065"; a="22240211"
-X-IronPort-AV: E=Sophos;i="6.07,260,1708416000"; d="scan'208";a="22240211"
+ t=1715064337; x=1746600337;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=3kz+HnMU3OELL9Qs0ND9eLNaakr4SnZrzRGavmQaJdM=;
+ b=hciNUrFNNt/XrSuk0o3V46h+MmHK+IXtoFnzRib9BbK9TVHLf7tB0Kei
+ 7mXfSfKOpVfrxDyUuUwl4xyr7XTsMw28dEQ5usBlYmEZCG6YWdEMSOrce
+ 2e5nokDJw8kL+QAcYjRKNPcoVfi1N6GRXvG2Q4RgFakt/j1WrDU7L8Q5o
+ i2m34o+e/0Oc614Pt0QcyPAewUmUdhX6qwHzzPWqEiXGCvTZlVf20jJes
+ 3mNFV8YHx9LuapdxPiQwVoMKilHlNLjwsywPnTGsseyzVYuFkYKNOY5aZ
+ 6zAJYFLlLu3kPZegt4qdQ3Njad5SA0lHKPc2ezoN2BkZVl6bYDbt+hu/g w==;
+X-CSE-ConnectionGUID: RnEC3rbWQHKECvWgZGng+Q==
+X-CSE-MsgGUID: 7UL7lI7GQqWXo+8AqAp9Jw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11065"; a="22240272"
+X-IronPort-AV: E=Sophos;i="6.07,260,1708416000"; d="scan'208";a="22240272"
 Received: from fmviesa008.fm.intel.com ([10.60.135.148])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 May 2024 23:45:11 -0700
-X-CSE-ConnectionGUID: vveMYWi5TU+d1fL4ZwvRqQ==
-X-CSE-MsgGUID: nU5hhprUTG2U29BcVXIUbg==
+ 06 May 2024 23:45:36 -0700
+X-CSE-ConnectionGUID: DlwC+QZFTuy/X3WwkaPPxA==
+X-CSE-MsgGUID: 6l7kCiThRtWj2aIdmPEEKQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,260,1708416000"; d="scan'208";a="28407501"
+X-IronPort-AV: E=Sophos;i="6.07,260,1708416000"; d="scan'208";a="28407545"
 Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.124])
  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 May 2024 23:45:09 -0700
+ 06 May 2024 23:45:34 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v2 00/11] VFIO: misc cleanups
-Date: Tue,  7 May 2024 14:42:41 +0800
-Message-Id: <20240507064252.457884-1-zhenzhong.duan@intel.com>
+Subject: [PATCH v2 10/11] vfio/cpr: Make vfio_cpr_register_container() return
+ bool
+Date: Tue,  7 May 2024 14:42:51 +0800
+Message-Id: <20240507064252.457884-11-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240507064252.457884-1-zhenzhong.duan@intel.com>
+References: <20240507064252.457884-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,65 +84,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+This is to follow the coding standand to return bool if 'Error **'
+is used to pass error.
 
-This is a cleanup series to change functions in hw/vfio/ to return bool 
-when the error is passed through errp parameter, also some cleanup
-with g_autofree.
+Suggested-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+---
+ include/hw/vfio/vfio-common.h | 2 +-
+ hw/vfio/container.c           | 3 +--
+ hw/vfio/cpr.c                 | 4 ++--
+ hw/vfio/iommufd.c             | 3 +--
+ 4 files changed, 5 insertions(+), 7 deletions(-)
 
-See discussion at https://lists.gnu.org/archive/html/qemu-devel/2024-04/msg04782.html
-
-This series processed below files:
-hw/vfio/container.c
-hw/vfio/iommufd.c
-hw/vfio/cpr.c
-backends/iommufd.c
-
-So above files are clean now, there are still other files need processing
-in hw/vfio.
-
-Test done on x86 platform:
-vfio device hotplug/unplug with different backend
-reboot
-
-Thanks
-Zhenzhong
-
-Changelog:
-v2:
-- split out g_autofree code as a patch (Cédric)
-- add processing for more files
-
-Zhenzhong Duan (11):
-  vfio/pci: Use g_autofree in vfio_realize
-  vfio/pci: Use g_autofree in iommufd_cdev_get_info_iova_range()
-  vfio: Make VFIOIOMMUClass::attach_device() and its wrapper return bool
-  vfio: Make VFIOIOMMUClass::setup() return bool
-  vfio: Make VFIOIOMMUClass::add_window() and its wrapper return bool
-  vfio/container: Make vfio_connect_container() return bool
-  vfio/container: Make vfio_set_iommu() return bool
-  vfio/container: Make vfio_get_device() return bool
-  vfio/iommufd: Make iommufd_cdev_*() return bool
-  vfio/cpr: Make vfio_cpr_register_container() return bool
-  backends/iommufd: Make iommufd_backend_*() return bool
-
- include/hw/vfio/vfio-common.h         |   6 +-
- include/hw/vfio/vfio-container-base.h |  18 ++---
- include/sysemu/iommufd.h              |   6 +-
- backends/iommufd.c                    |  29 +++----
- hw/vfio/ap.c                          |   6 +-
- hw/vfio/ccw.c                         |   6 +-
- hw/vfio/common.c                      |   6 +-
- hw/vfio/container-base.c              |   8 +-
- hw/vfio/container.c                   |  81 +++++++++----------
- hw/vfio/cpr.c                         |   4 +-
- hw/vfio/iommufd.c                     | 109 +++++++++++---------------
- hw/vfio/pci.c                         |  12 ++-
- hw/vfio/platform.c                    |   7 +-
- hw/vfio/spapr.c                       |  28 +++----
- backends/trace-events                 |   4 +-
- 15 files changed, 147 insertions(+), 183 deletions(-)
-
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index a7b6fc8f46..e4c60374fa 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -205,7 +205,7 @@ void vfio_detach_device(VFIODevice *vbasedev);
+ int vfio_kvm_device_add_fd(int fd, Error **errp);
+ int vfio_kvm_device_del_fd(int fd, Error **errp);
+ 
+-int vfio_cpr_register_container(VFIOContainerBase *bcontainer, Error **errp);
++bool vfio_cpr_register_container(VFIOContainerBase *bcontainer, Error **errp);
+ void vfio_cpr_unregister_container(VFIOContainerBase *bcontainer);
+ 
+ extern const MemoryRegionOps vfio_region_ops;
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index b02583ea16..86266f3b83 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -616,8 +616,7 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+         goto free_container_exit;
+     }
+ 
+-    ret = vfio_cpr_register_container(bcontainer, errp);
+-    if (ret) {
++    if (!vfio_cpr_register_container(bcontainer, errp)) {
+         goto free_container_exit;
+     }
+ 
+diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
+index 392c2dd95d..87e51fcee1 100644
+--- a/hw/vfio/cpr.c
++++ b/hw/vfio/cpr.c
+@@ -25,12 +25,12 @@ static int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier,
+     return 0;
+ }
+ 
+-int vfio_cpr_register_container(VFIOContainerBase *bcontainer, Error **errp)
++bool vfio_cpr_register_container(VFIOContainerBase *bcontainer, Error **errp)
+ {
+     migration_add_notifier_mode(&bcontainer->cpr_reboot_notifier,
+                                 vfio_cpr_reboot_notifier,
+                                 MIG_MODE_CPR_REBOOT);
+-    return 0;
++    return true;
+ }
+ 
+ void vfio_cpr_unregister_container(VFIOContainerBase *bcontainer)
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 84c86b970e..6a446b16dc 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -396,8 +396,7 @@ found_container:
+         goto err_listener_register;
+     }
+ 
+-    ret = vfio_cpr_register_container(bcontainer, errp);
+-    if (ret) {
++    if (!vfio_cpr_register_container(bcontainer, errp)) {
+         goto err_listener_register;
+     }
+ 
 -- 
 2.34.1
 
