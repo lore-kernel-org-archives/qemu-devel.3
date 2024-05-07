@@ -4,84 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A139C10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 09:52:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F259AC10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 09:53:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4HTv-0001BF-8M; Tue, 07 May 2024 05:51:31 -0400
+	id 1s4HUy-0002nl-CJ; Tue, 07 May 2024 05:52:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4HTa-00012o-3c; Tue, 07 May 2024 05:51:10 -0400
-Received: from mail-oa1-x2e.google.com ([2001:4860:4864:20::2e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4HTX-0004K0-CL; Tue, 07 May 2024 05:51:09 -0400
-Received: by mail-oa1-x2e.google.com with SMTP id
- 586e51a60fabf-23f0d7d2ce6so1659707fac.2; 
- Tue, 07 May 2024 02:51:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715075465; x=1715680265; darn=nongnu.org;
- h=in-reply-to:references:from:subject:cc:to:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TiMMWoKIHumqK/XUPSQgWDFSfAVDNvuNNXSCJAkdlUA=;
- b=meMP+hvjZPtz2oMoEp0D4oTju0XqHDh+18+ishC7sKF4Z4ehp7h/jG0VPyr1JjD0DA
- rE85pLaUzXgYYRnG21q/NXM2EpSuDqxKHlq0LsHldiXc+WHL2u+xYM+e1RzzHOwAtzCO
- kLwqRNQ18ZVNdXhgTskz+SL+r5thTgdA4J06uqJu2j3J8V5Qk6ik1US3vNlpc7utgfBY
- Rbm3ip0izG9d6Xt6VlTgLsp6vNed7kqhO2l8AjXWtRszluA4TFA6w7PPIl1oPHjBp7Xw
- iDTkn3M5JBlX+qZ0ATmMhxy6Tw/Aqwbwb43bTxv/NY3rkvTFXyqTGZYYduioTEO1kVvr
- Y7Vg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715075465; x=1715680265;
- h=in-reply-to:references:from:subject:cc:to:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=TiMMWoKIHumqK/XUPSQgWDFSfAVDNvuNNXSCJAkdlUA=;
- b=BoBZOdMV6SAeVCtRQ2VWr4sog8t9bQjcpWXbrOcg9Fps42sLiLybcoTgsBJsjHKfUw
- YPOhyY4WJfkwX/qwyMkgr8xNdiu1yDgSprwHb00RkMDeZEJpBvNvVYE+q005Grnn7Co5
- ttW+th5uIbCRUjzU5vv+mLO5uNaf8B9w5Azdy53ChfA0NBQg1jg+ia/HkeV4QS/naVO1
- u6Y5MqyA/ULL9AIIBSqOHQgxgmNOC1OZ516qT4tWlYev/9G1QJ3uU8fAbUpA1QM0xNXF
- vQaymiqWNZbzB4pd7MAjFknanDa7qO/DuSe9K4zkggHdx53PId5m9A2a49KC/uHvCOe3
- dqIQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVRWsQ6W/zZziAvOWbd6cVMrrG/BmTO9kNkoozFHTbjSgnpqFBfX3J6ch4/DXUHG0yDK53hMApCjUGX8TGUGBUqF5JknjB90I0ylHg4NODJnpFCJhtDkEjYPTo=
-X-Gm-Message-State: AOJu0YwQiWVfR6nDnqOdA4VDniZmTtn9Ehs7A6lc06J1uYV36SrPBnTd
- oDeAC8GLfoZlPV0R+zJpbzfRwXDKQ//3I2UZZR719MPRWox4iREk
-X-Google-Smtp-Source: AGHT+IFTCmLre8MtIgT54i0ojke7z/TMJ8Mq1I+eTp3ruv5bowULlWVQmbjQ2EEeTRjPHihoBkimbw==
-X-Received: by 2002:a05:6871:409a:b0:23c:e635:8db with SMTP id
- kz26-20020a056871409a00b0023ce63508dbmr15506070oab.15.1715075465585; 
- Tue, 07 May 2024 02:51:05 -0700 (PDT)
-Received: from localhost (220-245-239-57.tpgi.com.au. [220.245.239.57])
- by smtp.gmail.com with ESMTPSA id
- a5-20020a63d405000000b0060c5179a0a5sm9428921pgh.50.2024.05.07.02.51.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 May 2024 02:51:05 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 07 May 2024 19:50:59 +1000
-Message-Id: <D13BID6N11W0.34G4IGO8KCEPO@gmail.com>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
- <qemu-ppc@nongnu.org>
-Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
-Subject: Re: [PATCH v2 12/28] target/ppc/mmu_common.c: Split out BookE cases
- before checking real mode
-From: "Nicholas Piggin" <npiggin@gmail.com>
-X-Mailer: aerc 0.17.0
-References: <cover.1714606359.git.balaton@eik.bme.hu>
- <6e9441212a1146fde2bd3a120d6c426cd2a1792e.1714606359.git.balaton@eik.bme.hu>
-In-Reply-To: <6e9441212a1146fde2bd3a120d6c426cd2a1792e.1714606359.git.balaton@eik.bme.hu>
-Received-SPF: pass client-ip=2001:4860:4864:20::2e;
- envelope-from=npiggin@gmail.com; helo=mail-oa1-x2e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1s4HUw-0002nX-9j; Tue, 07 May 2024 05:52:34 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1s4HUu-0004Uh-37; Tue, 07 May 2024 05:52:33 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 80DF264C89;
+ Tue,  7 May 2024 12:52:47 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4D27EC8685;
+ Tue,  7 May 2024 12:52:28 +0300 (MSK)
+Message-ID: <d086f072-5e0f-4cd4-a375-8d809fff8085@tls.msk.ru>
+Date: Tue, 7 May 2024 12:52:28 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/loongarch/virt: Fix memory leak
+To: Song Gao <gaosong@loongson.cn>, peter.maydell@linaro.org
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org,
+ richard.henderson@linaro.org, zhaotianrui@loongson.cn
+References: <20240507022239.3113987-1-gaosong@loongson.cn>
+Content-Language: en-US
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240507022239.3113987-1-gaosong@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,58 +84,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu May 2, 2024 at 9:43 AM AEST, BALATON Zoltan wrote:
-> BookE does not have real mode so split off and handle it first in
-> get_physical_address_wtlb() before checking for real mode for other
-> MMU models.
+07.05.2024 05:22, Song Gao wrote:
 
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+>       for (i = 1; i < nb_numa_nodes; i++) {
+>           MemoryRegion *nodemem = g_new(MemoryRegion, 1);
+> -        ramName = g_strdup_printf("loongarch.node%d.ram", i);
+> +        g_autofree char *ramName = g_strdup_printf("loongarch.node%d.ram", i);
 
->
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
->  target/ppc/mmu_common.c | 14 +++++++-------
->  1 file changed, 7 insertions(+), 7 deletions(-)
->
-> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-> index a069e4083f..24a9b9ef19 100644
-> --- a/target/ppc/mmu_common.c
-> +++ b/target/ppc/mmu_common.c
-> @@ -1191,6 +1191,13 @@ int get_physical_address_wtlb(CPUPPCState *env, mm=
-u_ctx_t *ctx,
->      int ret =3D -1;
->      bool real_mode;
-> =20
-> +    if (env->mmu_model =3D=3D POWERPC_MMU_BOOKE) {
-> +        return mmubooke_get_physical_address(env, ctx, eaddr, access_typ=
-e);
-> +    } else if (env->mmu_model =3D=3D POWERPC_MMU_BOOKE206) {
-> +        return mmubooke206_get_physical_address(env, ctx, eaddr, access_=
-type,
-> +                                                mmu_idx);
-> +    }
-> +
->      real_mode =3D (type =3D=3D ACCESS_CODE) ? !FIELD_EX64(env->msr, MSR,=
- IR)
->                                        : !FIELD_EX64(env->msr, MSR, DR);
-> =20
-> @@ -1211,13 +1218,6 @@ int get_physical_address_wtlb(CPUPPCState *env, mm=
-u_ctx_t *ctx,
->              ret =3D mmu40x_get_physical_address(env, ctx, eaddr, access_=
-type);
->          }
->          break;
-> -    case POWERPC_MMU_BOOKE:
-> -        ret =3D mmubooke_get_physical_address(env, ctx, eaddr, access_ty=
-pe);
-> -        break;
-> -    case POWERPC_MMU_BOOKE206:
-> -        ret =3D mmubooke206_get_physical_address(env, ctx, eaddr, access=
-_type,
-> -                                               mmu_idx);
-> -        break;
->      case POWERPC_MMU_REAL:
->          if (real_mode) {
->              ret =3D check_physical(env, ctx, eaddr, access_type);
+Can't this be a fixed-size buffer on stack?
+
+Maybe I'm old-minded, but such obviously fixed and
+very small allocations on the heap hurt my eyes ;)
+
+/mjt
+-- 
+GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
+New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
+Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
+Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
 
 
