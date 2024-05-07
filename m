@@ -4,66 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEF36C10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 18:07:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3563DC25B4F
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 18:16:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4PCd-0006iX-7D; Tue, 07 May 2024 14:06:11 -0400
+	id 1s4PLP-0000VG-5d; Tue, 07 May 2024 14:15:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1s4PCa-0006hQ-Es
- for qemu-devel@nongnu.org; Tue, 07 May 2024 14:06:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1s4PCX-0005pi-Tt
- for qemu-devel@nongnu.org; Tue, 07 May 2024 14:06:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715105164;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=+UjO/ht9tVlihuhzYU+Y1fKToV8y7egqHaB0TByGeBY=;
- b=i9jb78ih8x3BYh8IYfActOrsz3aylgDHf97cudBJfmvo5o+1iNei7R9PRiZNU1ze2WEKBW
- CTPr8FS11wbj1+cIGiOZ8wPXS7Qw4aV74VZOpYoWlFk2+s1QqgT5bigTs33Y5G7e2viLqY
- yTnDRBRxkCqWDyd9HtEK6C64e6viNgU=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-94-xlR28XOMO9a6guFqQnSyFQ-1; Tue,
- 07 May 2024 14:06:01 -0400
-X-MC-Unique: xlR28XOMO9a6guFqQnSyFQ-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E937029AC009;
- Tue,  7 May 2024 18:06:00 +0000 (UTC)
-Received: from localhost (unknown [10.39.192.114])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 1D917200AF76;
- Tue,  7 May 2024 18:05:59 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: <qemu-block@nongnu.org>, Peter Maydell <peter.maydell@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Sam Li <faithilikerun@gmail.com>
-Subject: [PATCH] qemu-io: add cvtnum() error handling for zone commands
-Date: Tue,  7 May 2024 14:05:58 -0400
-Message-ID: <20240507180558.377233-1-stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <faithilikerun@gmail.com>)
+ id 1s4PL6-0000NN-Dl; Tue, 07 May 2024 14:14:58 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <faithilikerun@gmail.com>)
+ id 1s4PL4-0002l3-Nr; Tue, 07 May 2024 14:14:56 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-2b2bc7b37bcso3001509a91.2; 
+ Tue, 07 May 2024 11:14:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1715105692; x=1715710492; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=darRKVJjCTh+cD23wYc6yj8pxz31pAEK6v1QtVB0M70=;
+ b=Jwkw/EAPRiz7nN9DsqEvjHnQZgzJHJ4zz08iKDiRKLLherHzimiijxYqE8kXuN7FWw
+ jiwpZzFRSfhZ47m9CBLFifi/tl6t1QqDdSj4HaFBk3GOFJXvkxNE5cJ7D/l/wj4C5LIW
+ 0D5Z0kIZixiU8zIl/aJNgtwy2IKbR3Vx6F4J6sthUX7hVkRMOex0dIZMQz420zCqosk5
+ tVMymprWq1Pf88rAA/BOdMGVBhGQs3gKIaGYT1l/sTY2jSMqmiEqhYhk/anRafoLftDm
+ FvU35AbRxHUV9/NXSagm+IBvNdiDqc3f3G626Qpj/9SL5BHwzV4cDFodOlteUZuQuzkp
+ mfKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715105692; x=1715710492;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=darRKVJjCTh+cD23wYc6yj8pxz31pAEK6v1QtVB0M70=;
+ b=HqI88dQsRj1f3BXOphtAZnW6p9z0FYQlmd1HN3n5xoPkHL5zZYnKP+usBgx6obrcqk
+ XOyWeMBpgzm7WOTfUS4uswa8ahKAZCTn/AmiI5yNrRdDAkYFuU2+0sF1D+UiCp36k+cd
+ mcdkxViK33cyj2kJ8K98QEaCyz1C2QvDk1sW6OTL2YS1uvHOEFJN/o6Z1on0hib88+//
+ e9iVQe4ginzPmX/m5JQkej3hk5+hfF9SZ4AKcAn8IEU04pXePmbIED0Zw+43c+imb/6w
+ Ec/lDrkep6orj5Nhfgc5o3k+LrIfQ4CL7Hs7KZVfqDaIxLo6xmm7vey+LLPP7Vlbsn8W
+ iibQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWWL8gntgVs41nxBHZmXXfBMKw4JjkvkN6gf164IYsXq2kE4ZGOsxm9QVyV+QNQHgjM1S0uNZabcjYc97KCPEuvSqPOqaE=
+X-Gm-Message-State: AOJu0YxWq48zsX+dB54E51RTfeaH7u1acOT5w4tIAWZDL+2ewbj2CGjP
+ O6/kZksXj1Qw7ZSJqpjkU5MTG/qD6tstXwnplxTqLjwC3elMmf03ixKJ9l/BxTQVArqr2PX0U6b
+ v2iTKY13woYdR0RFne4h1MJGE94g=
+X-Google-Smtp-Source: AGHT+IGi5+TltaTG8F2lnd0BtV8c0TpqOS/2TOFE/OQUPELYuQXO7mXygvypLPW9c7NS6/N5OcuNmGpO3v5K8hGCSzs=
+X-Received: by 2002:a17:90a:598e:b0:2b2:81c0:4d85 with SMTP id
+ 98e67ed59e1d1-2b616be550dmr298586a91.45.1715105692203; Tue, 07 May 2024
+ 11:14:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20240507180558.377233-1-stefanha@redhat.com>
+In-Reply-To: <20240507180558.377233-1-stefanha@redhat.com>
+From: Sam Li <faithilikerun@gmail.com>
+Date: Tue, 7 May 2024 20:14:25 +0200
+Message-ID: <CAAAx-8JOSj6qqmbqk-gSBi0Ksxa_bJ=rvyM69nb_y1rr4hPpxg@mail.gmail.com>
+Subject: Re: [PATCH] qemu-io: add cvtnum() error handling for zone commands
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ Peter Maydell <peter.maydell@linaro.org>, Kevin Wolf <kwolf@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=faithilikerun@gmail.com; helo=mail-pj1-x102b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,120 +91,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-cvtnum() parses positive int64_t values and returns a negative errno on
-failure. Print errors and return early when cvtnum() fails.
+Stefan Hajnoczi <stefanha@redhat.com> =E4=BA=8E2024=E5=B9=B45=E6=9C=887=E6=
+=97=A5=E5=91=A8=E4=BA=8C 20:06=E5=86=99=E9=81=93=EF=BC=9A
+>
+> cvtnum() parses positive int64_t values and returns a negative errno on
+> failure. Print errors and return early when cvtnum() fails.
+>
+> While we're at it, also reject nr_zones values greater or equal to 2^32
+> since they cannot be represented.
+>
+> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> Cc: Sam Li <faithilikerun@gmail.com>
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> ---
+>  qemu-io-cmds.c | 48 +++++++++++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 47 insertions(+), 1 deletion(-)
 
-While we're at it, also reject nr_zones values greater or equal to 2^32
-since they cannot be represented.
+Reviewed-by: Sam Li <faithilikerun@gmail.com>
 
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Cc: Sam Li <faithilikerun@gmail.com>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
----
- qemu-io-cmds.c | 48 +++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 47 insertions(+), 1 deletion(-)
+Hi Stefan,
 
-diff --git a/qemu-io-cmds.c b/qemu-io-cmds.c
-index f5d7202a13..e2fab57183 100644
---- a/qemu-io-cmds.c
-+++ b/qemu-io-cmds.c
-@@ -1739,12 +1739,26 @@ static int zone_report_f(BlockBackend *blk, int argc, char **argv)
- {
-     int ret;
-     int64_t offset;
-+    int64_t val;
-     unsigned int nr_zones;
- 
-     ++optind;
-     offset = cvtnum(argv[optind]);
-+    if (offset < 0) {
-+        print_cvtnum_err(offset, argv[optind]);
-+        return offset;
-+    }
-     ++optind;
--    nr_zones = cvtnum(argv[optind]);
-+    val = cvtnum(argv[optind]);
-+    if (val < 0) {
-+        print_cvtnum_err(val, argv[optind]);
-+        return val;
-+    }
-+    if (val > UINT_MAX) {
-+        printf("Number of zones must be less than 2^32\n");
-+        return -ERANGE;
-+    }
-+    nr_zones = val;
- 
-     g_autofree BlockZoneDescriptor *zones = NULL;
-     zones = g_new(BlockZoneDescriptor, nr_zones);
-@@ -1780,8 +1794,16 @@ static int zone_open_f(BlockBackend *blk, int argc, char **argv)
-     int64_t offset, len;
-     ++optind;
-     offset = cvtnum(argv[optind]);
-+    if (offset < 0) {
-+        print_cvtnum_err(offset, argv[optind]);
-+        return offset;
-+    }
-     ++optind;
-     len = cvtnum(argv[optind]);
-+    if (len < 0) {
-+        print_cvtnum_err(len, argv[optind]);
-+        return len;
-+    }
-     ret = blk_zone_mgmt(blk, BLK_ZO_OPEN, offset, len);
-     if (ret < 0) {
-         printf("zone open failed: %s\n", strerror(-ret));
-@@ -1805,8 +1827,16 @@ static int zone_close_f(BlockBackend *blk, int argc, char **argv)
-     int64_t offset, len;
-     ++optind;
-     offset = cvtnum(argv[optind]);
-+    if (offset < 0) {
-+        print_cvtnum_err(offset, argv[optind]);
-+        return offset;
-+    }
-     ++optind;
-     len = cvtnum(argv[optind]);
-+    if (len < 0) {
-+        print_cvtnum_err(len, argv[optind]);
-+        return len;
-+    }
-     ret = blk_zone_mgmt(blk, BLK_ZO_CLOSE, offset, len);
-     if (ret < 0) {
-         printf("zone close failed: %s\n", strerror(-ret));
-@@ -1830,8 +1860,16 @@ static int zone_finish_f(BlockBackend *blk, int argc, char **argv)
-     int64_t offset, len;
-     ++optind;
-     offset = cvtnum(argv[optind]);
-+    if (offset < 0) {
-+        print_cvtnum_err(offset, argv[optind]);
-+        return offset;
-+    }
-     ++optind;
-     len = cvtnum(argv[optind]);
-+    if (len < 0) {
-+        print_cvtnum_err(len, argv[optind]);
-+        return len;
-+    }
-     ret = blk_zone_mgmt(blk, BLK_ZO_FINISH, offset, len);
-     if (ret < 0) {
-         printf("zone finish failed: %s\n", strerror(-ret));
-@@ -1855,8 +1893,16 @@ static int zone_reset_f(BlockBackend *blk, int argc, char **argv)
-     int64_t offset, len;
-     ++optind;
-     offset = cvtnum(argv[optind]);
-+    if (offset < 0) {
-+        print_cvtnum_err(offset, argv[optind]);
-+        return offset;
-+    }
-     ++optind;
-     len = cvtnum(argv[optind]);
-+    if (len < 0) {
-+        print_cvtnum_err(len, argv[optind]);
-+        return len;
-+    }
-     ret = blk_zone_mgmt(blk, BLK_ZO_RESET, offset, len);
-     if (ret < 0) {
-         printf("zone reset failed: %s\n", strerror(-ret));
--- 
-2.45.0
+Thank you for fixing that. I've been a little busy with moving house lately=
+ :)
 
+Sam
 
