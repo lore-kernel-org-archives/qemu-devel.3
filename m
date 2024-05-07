@@ -4,89 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E179AC19F4F
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 21:06:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D729FC10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 21:25:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4S0l-00030d-FO; Tue, 07 May 2024 17:06:09 -0400
+	id 1s4SIu-0002RR-9J; Tue, 07 May 2024 17:24:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1s4S0e-0002zR-7L
- for qemu-devel@nongnu.org; Tue, 07 May 2024 17:06:01 -0400
-Received: from mail-oa1-x31.google.com ([2001:4860:4864:20::31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1s4S0b-0004df-2B
- for qemu-devel@nongnu.org; Tue, 07 May 2024 17:05:59 -0400
-Received: by mail-oa1-x31.google.com with SMTP id
- 586e51a60fabf-23bd61fbd64so2457365fac.0
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 14:05:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715115955; x=1715720755; darn=nongnu.org;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=vGef84+m4oQ4iOIrxb0PfmIZtWMtXpB40ysiWFdCci0=;
- b=JmaYaS687SLRxY/OD4guMxFvu7sMgRnAHrpUjQGrNjjzEzSTWGway25Xn7lYtb41g+
- LprX5GiOJRVVCWaFGhIcmqWIBATaQfCyRotHyttA+hrkvOeBDzKb1lHp6Mk01XDnmjzP
- k4EB0hC/BaU5cvAXVs0ve26JhYhRWBeKs5zigXk1pmbetZeOZbjjJfoMJIuW/QVkomnE
- zg+chruvBcEjOW5K1d6txx9j84J1iJeCmrJ90gSu6NnS4F6mshpAOE/P0OwOGnUhi5iI
- BplLv8EEllB96e2dhow8xyRTfsONWVpHWTyqHEkyPl/hS/3qmXTYQsWFQnbjReY3yvIh
- 5Hmw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s4SIl-0002QL-Ue
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 17:24:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s4SIi-0002sF-W4
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 17:24:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715117078;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uh+qwMbLNvjpkxSfcevpmQuws+tbOebBqrnhG75VPJM=;
+ b=BjxzVqWdC+l2T1TRAkjqyqLk95mjLAbx64u1Yr0hjMQme0+yFlAL/BHReC1cWOr2qDa9oV
+ nB/0pq1KCm3XrCOStbALwH2nfQ8quwjjnLYDhkMrerYNd7iFGkmI0ADDWHMpFr4mn3Puqk
+ B8+3XjT3ueT9JNHH3hkEtjuNFxwNxII=
+Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
+ [209.85.222.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-447-wR05hIAeO3KVSsx7tjk-aw-1; Tue, 07 May 2024 17:24:35 -0400
+X-MC-Unique: wR05hIAeO3KVSsx7tjk-aw-1
+Received: by mail-ua1-f72.google.com with SMTP id
+ a1e0cc1a2514c-7f3873f8104so423051241.0
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 14:24:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715115955; x=1715720755;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vGef84+m4oQ4iOIrxb0PfmIZtWMtXpB40ysiWFdCci0=;
- b=Czf57/znWlO5kyP12KxGYLB842OvPpkxuFUG0rGrPrLSvb2NhKvXZYKHVlkxuCD5bi
- w0e3JWdfHcK6UajUHU1g3S5ziVoIRvCNHj/Ps2lCDeW+Lm+86kwe20mbyndmbSKJtW3K
- lqg6l94/K99kqezPHHtROB6qXoq+ExGVTEabTUBp/TQ7Rqus0aM42RIcOGRdz47jnNWH
- aRt3BLE4vnhuFic0iFYPB+Yfj3/FNV7lV6QgZgh0shtojdDYk8OSnwR/kZqD9Gq/DBvQ
- wGdEFlXf3PV9n4X8vMWr1/dkUPy1cu7BKViUMnX+G+bUpljxR+glNjza8gTy8GaP5Vqd
- 3zlA==
-X-Gm-Message-State: AOJu0YxCyIo4cdnaQ1CBfb7/h7SmKl6TLi5eCRjJTGvATET9KiHpNf6v
- 0mLXx0fGR4avoZwVZLOk7zuJS/4kq6X95uSa97pQbLJkdRshjtGXXEu9uQ==
-X-Google-Smtp-Source: AGHT+IGmggmH+4zsP2G4CrPpcYBhQ9pzdYt65rdFMWqvGpJUXL0CpVnmw6Xm8IW97yAdZAXohCgUHg==
-X-Received: by 2002:a05:6870:5e0e:b0:23e:6d44:f984 with SMTP id
- 586e51a60fabf-24097e768b7mr818963fac.26.1715115955338; 
- Tue, 07 May 2024 14:05:55 -0700 (PDT)
-Received: from DESKTOPUU50BPD ([2603:8080:1f00:9c00:9853:4f9b:dc74:424c])
- by smtp.gmail.com with ESMTPSA id
- qg17-20020a056870de1100b0023b5203fc58sm2723517oab.37.2024.05.07.14.05.54
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 07 May 2024 14:05:54 -0700 (PDT)
-From: <ltaylorsimpson@gmail.com>
-To: "'Anton Johansson'" <anjo@rev.ng>
-Cc: <qemu-devel@nongnu.org>,
-	<ale@rev.ng>,
-	<bcain@quicinc.com>
-References: <20240506183117.32268-1-anjo@rev.ng>
- <20240506183117.32268-4-anjo@rev.ng>
- <067f01da9fe7$51597590$f40c60b0$@gmail.com>
- <f7fmzerjibovuo7uevxmold5g6jvvjazfckhtv6tqkatpgbtzy@ging72uqq27r>
-In-Reply-To: <f7fmzerjibovuo7uevxmold5g6jvvjazfckhtv6tqkatpgbtzy@ging72uqq27r>
-Subject: RE: [PATCH 3/4] target/hexagon: idef-parser fix leak of init_list
-Date: Tue, 7 May 2024 16:05:53 -0500
-Message-ID: <071701daa0c2$5988d450$0c9a7cf0$@gmail.com>
+ d=1e100.net; s=20230601; t=1715117074; x=1715721874;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=uh+qwMbLNvjpkxSfcevpmQuws+tbOebBqrnhG75VPJM=;
+ b=VFiHcFjEigWlt+1fYHB5pxHW1EzQm/5pfhlGqX9/a304R9WMWmuh8lvegaCts/4dBZ
+ dRwI1eCl36lPW/iwVfL5+ScSfmo63A1CX3lyWjDMn5GWsD3ydrVhKMFmlFT9rz+Z6bcD
+ BvoA65dP63CmdwrpHy1U4cIAYXBDPepxf1C1hJ6Aevxj5mL61I80SoFgNfp4V9DLEsxF
+ eJyNR7zCOhYzCAUZbzICigkL2Djd3oN5Mx7FdKnjZ7Sq3lvMb86iuObxR57nqsAzdgYu
+ mdyPTcyHi6E3+w45+d8XWToiinEm0v+LhfARIy7z7mS+vnZdX5vLJrSappFvjYuahEPV
+ BwHw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWyUSw+dyYOobqh8kyjifpnKuExPF5597ky2KJOUshJXUQVx2VfyNyVymSLcGKcZOwJS1IUP4FuwChP1SmkBtCUisGhty4=
+X-Gm-Message-State: AOJu0YxKa8VmWHoJUyjVlxZYRJ9fS6KCeTxx1M9dHwc07qdmV+IhYpwz
+ ATMVWn9XCcXaaAveF72j8KLVIlw9061X1NlxGZdjVx3exfhojKMZ+Uu5DQ/q04mxxlZHStEcLU1
+ kjRizgK7ne57OBPt9J3tQOYnPio5k8OQmtuhS/y9/pq0wbzHLtCCV
+X-Received: by 2002:a67:f54b:0:b0:47c:2372:1130 with SMTP id
+ ada2fe7eead31-47f3c3789fbmr664695137.3.1715117074252; 
+ Tue, 07 May 2024 14:24:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFPZ4ns4OQMHPXkmblzVRHD1L2832czuUznVjH30hCnKJvsmL+jB77Wx5jkzzQlMb0so1oJSQ==
+X-Received: by 2002:a67:f54b:0:b0:47c:2372:1130 with SMTP id
+ ada2fe7eead31-47f3c3789fbmr664666137.3.1715117073532; 
+ Tue, 07 May 2024 14:24:33 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ ne18-20020a056214425200b006a0e151d54csm4918260qvb.108.2024.05.07.14.24.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 07 May 2024 14:24:33 -0700 (PDT)
+Date: Tue, 7 May 2024 17:24:30 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: marcandre.lureau@redhat.com, qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Sebastian Ott <sebott@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Fiona Ebner <f.ebner@proxmox.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ peter.maydell@linaro.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Yanan Wang <wangyanan55@huawei.com>
+Subject: Re: [PATCH 0/4] Fix "virtio-gpu: fix scanout migration post-load"
+Message-ID: <ZjqcDqxxJDxsN5n7@x1n>
+References: <20240507111920.1594897-1-marcandre.lureau@redhat.com>
+ <87wmo5l58z.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQJLdJdU/DG86JVEEIa8gVqwbMNhjgHc4CmKAZKcipcB0QeirbCAlt3Q
-Content-Language: en-us
-Received-SPF: pass client-ip=2001:4860:4864:20::31;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-oa1-x31.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87wmo5l58z.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,91 +109,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-> -----Original Message-----
-> From: 'Anton Johansson' <anjo@rev.ng>
-> Sent: Tuesday, May 7, 2024 4:47 AM
-> To: ltaylorsimpson@gmail.com
-> Cc: qemu-devel@nongnu.org; ale@rev.ng; bcain@quicinc.com
-> Subject: Re: [PATCH 3/4] target/hexagon: idef-parser fix leak of =
-init_list
->=20
-> On 06/05/24, ltaylorsimpson@gmail.com wrote:
+On Tue, May 07, 2024 at 05:46:36PM -0300, Fabiano Rosas wrote:
+> marcandre.lureau@redhat.com writes:
+> 
+> > From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > >
+> > Hi,
 > >
-> > > -----Original Message-----
-> > > From: Anton Johansson <anjo@rev.ng>
-> > > Sent: Monday, May 6, 2024 1:31 PM
-> > > To: qemu-devel@nongnu.org
-> > > Cc: ale@rev.ng; ltaylorsimpson@gmail.com; bcain@quicinc.com
-> > > Subject: [PATCH 3/4] target/hexagon: idef-parser fix leak of
-> > > init_list
-> > >
-> > > gen_inst_init_args() is called for instructions using a predicate =
-as
-> > > an
-> > rvalue.
-> > > Upon first call, the list of arguments which might need
-> > > initialization
-> > init_list is
-> > > freed to indicate that they have been processed. For instructions
-> > > without
-> > an
-> > > rvalue predicate,
-> > > gen_inst_init_args() isn't called and init_list will never be =
-freed.
-> > >
-> > > Free init_list from free_instruction() if it hasn't already been =
-freed.
-> > >
-> > > Signed-off-by: Anton Johansson <anjo@rev.ng>
-> > > ---
-> > >  target/hexagon/idef-parser/parser-helpers.c | 7 +++++++
-> > >  1 file changed, 7 insertions(+)
-> > >
-> > > diff --git a/target/hexagon/idef-parser/parser-helpers.c
-> > > b/target/hexagon/idef-parser/parser-helpers.c
-> > > index 95f2b43076..bae01c2bb8 100644
-> > > --- a/target/hexagon/idef-parser/parser-helpers.c
-> > > +++ b/target/hexagon/idef-parser/parser-helpers.c
-> > > @@ -2121,6 +2121,13 @@ void free_instruction(Context *c)
-> > >          g_string_free(g_array_index(c->inst.strings, GString*, =
-i), TRUE);
-> > >      }
-> > >      g_array_free(c->inst.strings, TRUE);
-> > > +    /*
-> > > +     * Free list of arguments that might need initialization, if
-> > > + they
-> > haven't
-> > > +     * already been free'd.
-> > > +     */
-> > > +    if (c->inst.init_list) {
-> > > +        g_array_free(c->inst.init_list, TRUE);
-> > > +    }
-> > >      /* Free INAME token value */
-> > >      g_string_free(c->inst.name, TRUE);
-> > >      /* Free variables and registers */
+> > The aforementioned patch breaks virtio-gpu device migrations for versions
+> > pre-9.0/9.0, both forwards and backwards. Versioning of `VMS_STRUCT` is more
+> > complex than it may initially appear, as evidenced in the problematic commit
+> > dfcf74fa68c ("virtio-gpu: fix scanout migration post-load").
 > >
-> > Why not do this in gen_inst_init_args just before this?
-> >    /* Free argument init list once we have initialized everything */
-> >     g_array_free(c->inst.init_list, TRUE);
-> >     c->inst.init_list =3D NULL;
->=20
-> Thanks for the reviews Taylor! I'm not sure I understand what you mean
-> here, we already free init_list in gen_inst_init_args, since =
-gen_inst_init_args
-> won't be called for all instructions we need to also free from a =
-common
-> place.
->=20
-> //Anton
+> > To resolve this, we need to propagate the `vmstate` `version_id` through the
+> > nested structures. Additionally, we should tie specific machine version to a
+> > corresponding `version_id` to maintain migration compatibility.
+> >
+> > `VMS_VSTRUCT` allows specifying the appropriate version of the nested structure
+> > to use.
+> 
+> This would have been caught by the migration-compat-x86_64 CI job had we
+> added the virtio-gpu device to it.
 
-It just seems more natural to free the elements of the array at the same =
-place you free the array itself.  If there are valid reasons for doing =
-it elsewhere, I'm OK with that.
+I had exactly the same thoughts, and actually I added a todo after I
+noticed this issue but I forgot to discuss with you today.. actually I have
+one more on whether we can allow vmsd versioning to work for bi-direction
+(then we can get rid of machine type dependencies), we may need the
+handshake work as pre-requisite, so that two qemus need to talk first on
+verify the vmsds.  But let's leave that for later.
 
-Taylor
+> 
+> $ cd build-8.2
+> $ QTEST_TRACE='vmstate_*' QTEST_DEVICE_OPTS='-device virtio-gpu' \
+> QTEST_QEMU_BINARY=./qemu-system-x86_64 \
+> QTEST_QEMU_BINARY_DST=../build-9.0/qemu-system-x86_64 ./tests/qtest/migration-test
+> ...
+> vmstate_n_elems fb.offset: 1
+> vmstate_subsection_load virtio-gpu-one-scanout
+> vmstate_subsection_load_good virtio-gpu-one-scanout
+> vmstate_load_state_end virtio-gpu-one-scanout end/0
+> vmstate_subsection_load virtio-gpu-scanouts
+> vmstate_subsection_load_good virtio-gpu-scanouts
+> vmstate_load_state_end virtio-gpu-scanouts end/0
+> vmstate_subsection_load virtio-gpu
+> vmstate_subsection_load_good virtio-gpu
+> vmstate_load_state_end virtio-gpu end/0
+> vmstate_downtime_load type=non-iterable idstr=0000:00:03.0/virtio-gpu instance_id=0 downtime=32118
+> qemu-system-x86_64: Missing section footer for 0000:00:03.0/virtio-gpu
+> vmstate_downtime_checkpoint dst-precopy-loadvm-completed
+> qemu-system-x86_64: load of migration failed: Invalid argument
+> 
+> Some considerations:
+> 
+> 1) Here QTEST_DEVICE_OPTS is a hack I added on top, it doesn't currently
+>    exist.
+> 
+> 2) This only uncovers relatively simple bugs where we don't need the
+>    guest to access the device, it just needs to be there.
 
+Right, but having something to cover the basics would still be nice,
+because the rarer the bug the less impact to users too (I hope!), so they
+can be with lower priority too when tested.
+
+> 
+> We could take the steps to enable this kind of testing if we think it's
+> worthwhile. Some downsides are:
+> 
+> a) the item (2) above - situations that depend on guest behavior are out
+>    of the picture because migration-test runs only a custom program that
+>    dirties memory;
+> 
+> b) this test only works in CI or in a pre setup environment because it
+>    needs the previous QEMU version to be built beforehand;
+> 
+> c) the full set of migration tests already runs a few times in CI via
+>    make check, plus the compat job. We'll probably need to do some
+>    simplification to avoid taking too much additional time;
+> 
+> d) there's also the obvious maintenance burden of choosing devices and
+>    doing the eventual upkeep of the QEMU command line for the
+>    migration-test.
+
+The last one should be mostly fine, iiuc - we shouldn't add any device that
+can easily break ABI, and the list of devices can start with a minumum; an
+extreme case is we add one device only if something broke first with a
+stable ABI.
+
+Then if the ABI is stable, we need to go through the deprecation procedure,
+and that takes two releases.  We can drop the device in migration-test in
+the release of when deprecation starts.
+
+Thanks,
+
+-- 
+Peter Xu
 
 
