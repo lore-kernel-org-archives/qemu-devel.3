@@ -4,67 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29579C10F1A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51FC2C25B75
 	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 09:27:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4H4j-0003XO-P3; Tue, 07 May 2024 05:25:29 -0400
+	id 1s4H4b-0003Fa-42; Tue, 07 May 2024 05:25:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s4H3r-0001DV-Aj
- for qemu-devel@nongnu.org; Tue, 07 May 2024 05:24:35 -0400
+ id 1s4H3F-0000kH-QX
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 05:24:06 -0400
 Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s4H3k-0000Bi-93
- for qemu-devel@nongnu.org; Tue, 07 May 2024 05:24:35 -0400
+ id 1s4H3E-0000Bi-4r
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 05:23:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1715073868; x=1746609868;
+ t=1715073836; x=1746609836;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=3/+z84KmMKFWfq3QNUgQrXw0OJL3z4Glfwf5rFi/pZE=;
- b=QqDSArtfCSA2UiRQtJNE4xX+xSmcThM6FGVs9oT9pGqDDf76EEbIRLbZ
- RjHo/8e7Zc4UryF3fOoGlc3SB8ayi6Lu6YqNvsdyL9xxscVwh0wmQKkAr
- A+yOk71s+K1UFRgiEEsnXcKSZTPjMFW22rS6vRFD6/+n2w0JoWu9QIhlQ
- /7FQIbZKFLIJBlh5sg0i/yI2BuQgtp5X8IOSLlsH+RaOCsRmmZtGnFOa9
- k2s0TDZLB639qkVWK16KEYkNuX/48rnd2A7lcPJ8Csvh/YFVFQNF68UcQ
- qzpZqKZqQsc8e0UOO1WgL3lXy96taCjXR9B2SZnK1B6Fvm5/xiUlNZPVu A==;
-X-CSE-ConnectionGUID: gxDPmfikTTm0E0L5Srd5Bw==
-X-CSE-MsgGUID: Cu/JfiaLS0Oc5nUMrRCyfA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11065"; a="10785367"
-X-IronPort-AV: E=Sophos;i="6.07,260,1708416000"; d="scan'208";a="10785367"
+ bh=3evy5Fn1NeUvF8A+wdco68VIVay91RZK5fR/tL35KqQ=;
+ b=As1bPFT+ETdcUKhtwyHyi5QG3YxcWy8wC0SyhGSKYWD4FSqJdNm7kSYR
+ DHkmxuHAFNkNOsh+jrmIOBVTMlNCZYGb/zJ6JjatcaHmA6mxLUXNmlIsw
+ zG+qWrPuccxK52LE5WuczwuW3boUjOXsoCGaqnAilQLy2QXSeHN+reL1Y
+ AYfyWmuIlncP7soHWrc2Fq+J1+llIucE1Rp82sCFeQB3GACvpJ4laXMHU
+ W+msB1ZIZjC4cIW5GkdYLxEQzQrxO+hycp6ABad8UrjA4LFCHMoEtHeXi
+ gENyP45p07WU7NVvr6eqXXj7ewNU6RqssOByK2PPVfIyj3rTBBvWlRMEt Q==;
+X-CSE-ConnectionGUID: o4NOHKLCQ/+yqJnBeBGz4w==
+X-CSE-MsgGUID: vqG+ng9TTI+3BcGpcjwocg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11065"; a="10785293"
+X-IronPort-AV: E=Sophos;i="6.07,260,1708416000"; d="scan'208";a="10785293"
 Received: from fmviesa010.fm.intel.com ([10.60.135.150])
  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 May 2024 02:24:22 -0700
-X-CSE-ConnectionGUID: 8WBviFWnSQWDIpz86d+rQw==
-X-CSE-MsgGUID: B0srRDbxT1mR+ToAgplihw==
+ 07 May 2024 02:23:55 -0700
+X-CSE-ConnectionGUID: 3gOCzRMxQJySvv78qY+3yw==
+X-CSE-MsgGUID: /AFydm/dRJ63KfPBpPeGcA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,260,1708416000"; d="scan'208";a="28553563"
+X-IronPort-AV: E=Sophos;i="6.07,260,1708416000"; d="scan'208";a="28553467"
 Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.124])
  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 May 2024 02:24:17 -0700
+ 07 May 2024 02:23:50 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  mst@redhat.com, peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com,
  nicolinc@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH v4 19/19] intel_iommu: Check compatibility with host IOMMU
- capabilities
-Date: Tue,  7 May 2024 17:20:43 +0800
-Message-Id: <20240507092043.1172717-20-zhenzhong.duan@intel.com>
+ chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PATCH v4 13/19] vfio: Create host IOMMU device instance
+Date: Tue,  7 May 2024 17:20:37 +0800
+Message-Id: <20240507092043.1172717-14-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240507092043.1172717-1-zhenzhong.duan@intel.com>
 References: <20240507092043.1172717-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.21;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
@@ -90,70 +86,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If check fails, host device (either VFIO or VDPA device) is not
-compatible with current vIOMMU config and should not be passed to
-guest.
+Create host IOMMU device instance in vfio_attach_device() and call
+.realize() to initialize it further.
 
-Only aw_bits is checked for now, we don't care other capabilities
-before scalable modern mode is introduced.
-
-Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+Suggested-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- hw/i386/intel_iommu.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ include/hw/vfio/vfio-common.h |  1 +
+ hw/vfio/common.c              | 16 +++++++++++++++-
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 747c988bc4..146fde23fc 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -35,6 +35,7 @@
- #include "sysemu/kvm.h"
- #include "sysemu/dma.h"
- #include "sysemu/sysemu.h"
-+#include "sysemu/host_iommu_device.h"
- #include "hw/i386/apic_internal.h"
- #include "kvm/kvm_i386.h"
- #include "migration/vmstate.h"
-@@ -3819,6 +3820,25 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
-     return vtd_dev_as;
- }
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index affb73f209..94428abcf4 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -126,6 +126,7 @@ typedef struct VFIODevice {
+     OnOffAuto pre_copy_dirty_page_tracking;
+     bool dirty_pages_supported;
+     bool dirty_tracking;
++    HostIOMMUDevice *hiod;
+     int devid;
+     IOMMUFDBackend *iommufd;
+ } VFIODevice;
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index 9f1f2e19f7..970c9e3a5f 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -1497,6 +1497,7 @@ bool vfio_attach_device(char *name, VFIODevice *vbasedev,
+ {
+     const VFIOIOMMUClass *ops =
+         VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_LEGACY));
++    HostIOMMUDevice *hiod;
  
-+static bool vtd_check_hdev(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hdev,
-+                           Error **errp)
-+{
-+    HostIOMMUDevice *hiod = vtd_hdev->dev;
-+    int ret;
+     if (vbasedev->iommufd) {
+         ops = VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_IOMMUFD));
+@@ -1504,7 +1505,19 @@ bool vfio_attach_device(char *name, VFIODevice *vbasedev,
+ 
+     assert(ops);
+ 
+-    return ops->attach_device(name, vbasedev, as, errp);
++    if (!ops->attach_device(name, vbasedev, as, errp)) {
++        return false;
++    }
 +
-+    /* Common checks */
-+    ret = host_iommu_device_get_cap(hiod, HOST_IOMMU_DEVICE_CAP_AW_BITS, errp);
-+    if (ret < 0) {
++    hiod = HOST_IOMMU_DEVICE(object_new(ops->hiod_typename));
++    if (!HOST_IOMMU_DEVICE_GET_CLASS(hiod)->realize(hiod, vbasedev, errp)) {
++        object_unref(hiod);
++        ops->detach_device(vbasedev);
 +        return false;
 +    }
-+    if (s->aw_bits > ret) {
-+        error_setg(errp, "aw-bits %d > host aw-bits %d", s->aw_bits, ret);
-+        return false;
-+    }
++    vbasedev->hiod = hiod;
 +
 +    return true;
-+}
-+
- static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
-                                      HostIOMMUDevice *hiod, Error **errp)
- {
-@@ -3848,6 +3868,12 @@ static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
-     vtd_hdev->iommu_state = s;
-     vtd_hdev->dev = hiod;
+ }
  
-+    if (!vtd_check_hdev(s, vtd_hdev, errp)) {
-+        g_free(vtd_hdev);
-+        vtd_iommu_unlock(s);
-+        return false;
-+    }
-+
-     new_key = g_malloc(sizeof(*new_key));
-     new_key->bus = bus;
-     new_key->devfn = devfn;
+ void vfio_detach_device(VFIODevice *vbasedev)
+@@ -1512,5 +1525,6 @@ void vfio_detach_device(VFIODevice *vbasedev)
+     if (!vbasedev->bcontainer) {
+         return;
+     }
++    object_unref(vbasedev->hiod);
+     vbasedev->bcontainer->ops->detach_device(vbasedev);
+ }
 -- 
 2.34.1
 
