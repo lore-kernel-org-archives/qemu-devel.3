@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4221C25B4F
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 09:43:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D82A3C10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 09:43:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4HLL-0004Jm-6D; Tue, 07 May 2024 05:42:41 -0400
+	id 1s4HLR-0004Of-BQ; Tue, 07 May 2024 05:42:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1s4HLE-0004IR-PQ
- for qemu-devel@nongnu.org; Tue, 07 May 2024 05:42:32 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1s4HLG-0004Jq-B1
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 05:42:35 -0400
+Received: from mail-oo1-xc2d.google.com ([2607:f8b0:4864:20::c2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1s4HLC-0007Q7-Od
- for qemu-devel@nongnu.org; Tue, 07 May 2024 05:42:32 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-6f45f1179c3so2031383b3a.3
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 02:42:30 -0700 (PDT)
+ id 1s4HLE-0007QX-Pr
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 05:42:34 -0400
+Received: by mail-oo1-xc2d.google.com with SMTP id
+ 006d021491bc7-5aa1bf6cb40so2028558eaf.1
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 02:42:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1715074949; x=1715679749;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1715074951; x=1715679751;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=apzsRecOwxYlD+3KkUMAHR59Iv8gB2EACXeGK4OKruY=;
- b=DMhhi9zFijIIhD6rIxLME6A2Be98f6EXuopT98bxpvnVdQobmeMP5qem5vFaPN1wMC
- KXQ5d0nn3qBJQl8U23oVWct2TW411fjVl1lGx41gNuAT8dGjaiyi8n9PtiRhLN5VdPUB
- qZZTB9K/Wkq4khbogO+N+mXlqM9AWNma3uZcr9rsCFU3lp15vs+CRWOzVaakIL361RQA
- /VrWLcXCFkqyJc6fdXdIb5UVWovY+/I3FNlvUbZsY+pbN8JoJItnNzd0a3YdjFc2MZFr
- DYGV6fR4S/oxgxcmaTdg1l7Dhw/7ABx5udpbvA85zRc2gtEhZeEW4w/hSYNcCsobkMdH
- z/4w==
+ bh=VQRoBwM3VtnsocziBWRdu7rYUqFpcQLBHetkRLLTiYU=;
+ b=LMbbNQ7kd/cCVdVhY9bCb9lkOCosyI6Wb0OMNKvzQd0ldmsicpIb6n37ojB5f2R8l0
+ WLJDJ+58RdFNWD87d8dpkLQfAVsUC6kw0dXdagObPSm2WIpvT00ZvYAu/YNRTs6tcGjr
+ Q+cyuSo8RTcTVM5tQhvPvO/+7w80VXhPxin6Pw+jAZjMCq8+L6oCiWK0DcbOaTJOLPkV
+ 9g39h5rEHaO2fmTwRctVa+5jbF+zohlPhBD058UtsQKgoSDdW1hhVu07nwMK1GbYF93l
+ NSZ+ZYniZHWHy1mgC7Niqz1bYNEusfDl8sLSeCRkaYhUSpRSHGYAsMhUuNBWBx0mX2Nb
+ S//w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715074949; x=1715679749;
+ d=1e100.net; s=20230601; t=1715074951; x=1715679751;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=apzsRecOwxYlD+3KkUMAHR59Iv8gB2EACXeGK4OKruY=;
- b=Z2pRdeM6plI/V0v7tOvYAQ3XjrWb5hcyFafWCzij/h9Ko4jLfzlC4z9ojp35MZ3Gnf
- aYuuF5e4TArtG83MVCAq1huQuASBzIOiZAFxNUF4ufyWAzIZpHnI1lqstoyoXCnowmSM
- Y6xo8wxgz4Z5TMljJPQWu5Yk1jd43L8KU8dNcBm90b+jq91sHcVTgeUQPd2SHPmBV7CJ
- ttrtn+vZIslOzXtISo9rshx9vRjXJrj7FYEf+foZaAIAQVmtEXLEjMPJGbSqPQQIK/r1
- jLh3hijBYarFMJfV1B3dC3ealMRWVR2Ir3HSXNmfNlqqOd66AC6UF5avzboBWs5Gbp+B
- ZmMw==
+ bh=VQRoBwM3VtnsocziBWRdu7rYUqFpcQLBHetkRLLTiYU=;
+ b=lYhhcQOpZWe94oAuEeaK0TR/KFnKR+U7YTDz6Rn0jux4FLW+XH4249ljrbq+9HFKjE
+ m6o5mg2sd7hzx4FRFsq2lFkafviZLo3PSTo0A6zMYNAhudTUGnyjlbwuAboi5ET2QrCs
+ uH9Pr8KrRXJbjbFnI0PPbYEq6g3cLvRgPeR/OIayw3w9r7aKCV+AD4SF+WNN5NYvWZcM
+ mFqffW43xTft6sULOZT+8BJD82YSCb/0U0XllzuWdyl27QWWAFIaYExjE2fjbrAovuCa
+ CDE5IDmx4GOo4VEZDFvbVBM7vniyCOwKtOWAJaNVY5vqCeJgl7+1cnlqcTOWfH5sH8Nu
+ KMyA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWRgBN042kLkCLWPTJiuuX+GS5HEU+O/vd+vElcCZIeMHJvLIUZ/7T4Rp1EJtdAeoc3SrRMYSqZzKBhOYI7nqflhU+4Y1I=
-X-Gm-Message-State: AOJu0Ywq0iXpVsp/YsbzNd29KUI8bnxqumzfIF+uSchG10tdh5rp4I02
- WSnRMTvXjQstUgN9Lo6W8taHgZvarbY2er1ylR3W9cXlRYSvhKwbCcI0BEfxwIk=
-X-Google-Smtp-Source: AGHT+IH5BS0VWuf9WZLAUQhqzpfnFusPfq1xQJuPJ2gzRK2A9UzYqOvx70l/c3sgHecJE1jyPEf26w==
-X-Received: by 2002:a05:6a00:2287:b0:6e6:970f:a809 with SMTP id
- f7-20020a056a00228700b006e6970fa809mr13726473pfe.20.1715074949336; 
- Tue, 07 May 2024 02:42:29 -0700 (PDT)
+ AJvYcCV5ITn6MMFP9OV2JmOPKDpiAb2OkTFoh7m2ASmYOk7KlE3zrasPo/46HTqqHzqT2AM/xhQJlanP9cj5aHmsEafzYCn4QNE=
+X-Gm-Message-State: AOJu0Yz0IeKC2NuD57Ln8wDtXYq6RdT98CE/zz6Z6a2bToXO9Y6C7p3y
+ Oocqpn/5Vw+e9yS9JMePY3pRfL0mcdFb2Q1gpNaZzkIeNLvIgTiEFFZiD8yQUg4=
+X-Google-Smtp-Source: AGHT+IEG/0TuRLwzQxW/D1sjrN+5fUhu4/gTpvaJuEd30uRZlJBkD1RtlW187x6s3KB6l2+vTrI4Eg==
+X-Received: by 2002:a05:6870:c0cb:b0:239:876b:b23d with SMTP id
+ e11-20020a056870c0cb00b00239876bb23dmr15527133oad.24.1715074951638; 
+ Tue, 07 May 2024 02:42:31 -0700 (PDT)
 Received: from mnissler.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- p4-20020a62ab04000000b006f45257d3f7sm6434114pff.45.2024.05.07.02.42.28
+ p4-20020a62ab04000000b006f45257d3f7sm6434114pff.45.2024.05.07.02.42.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 May 2024 02:42:29 -0700 (PDT)
+ Tue, 07 May 2024 02:42:31 -0700 (PDT)
 From: Mattias Nissler <mnissler@rivosinc.com>
 To: stefanha@redhat.com, qemu-devel@nongnu.org, peterx@redhat.com,
  jag.raman@oracle.com
@@ -72,16 +72,17 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Elena Ufimtseva <elena.ufimtseva@oracle.com>, john.levon@nutanix.com,
  Mattias Nissler <mnissler@rivosinc.com>
-Subject: [PATCH v9 3/5] Update subprojects/libvfio-user
-Date: Tue,  7 May 2024 02:42:07 -0700
-Message-ID: <20240507094210.300566-4-mnissler@rivosinc.com>
+Subject: [PATCH v9 5/5] vfio-user: Fix config space access byte order
+Date: Tue,  7 May 2024 02:42:09 -0700
+Message-ID: <20240507094210.300566-6-mnissler@rivosinc.com>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240507094210.300566-1-mnissler@rivosinc.com>
 References: <20240507094210.300566-1-mnissler@rivosinc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=mnissler@rivosinc.com; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2d;
+ envelope-from=mnissler@rivosinc.com; helo=mail-oo1-xc2d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -103,33 +104,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Brings in assorted bug fixes. The following are of particular interest
-with respect to message-based DMA support:
+PCI config space is little-endian, so on a big-endian host we need to
+perform byte swaps for values as they are passed to and received from
+the generic PCI config space access machinery.
 
-* bb308a2 "Fix address calculation for message-based DMA"
-  Corrects a bug in DMA address calculation.
-
-* 1569a37 "Pass server->client command over a separate socket pair"
-  Adds support for separate sockets for either command direction,
-  addressing a bug where libvfio-user gets confused if both client and
-  server send commands concurrently.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Reviewed-by: Jagannathan Raman <jag.raman@oracle.com>
 Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
 ---
- subprojects/libvfio-user.wrap | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/remote/vfio-user-obj.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/subprojects/libvfio-user.wrap b/subprojects/libvfio-user.wrap
-index 416955ca45..cdf0a7a375 100644
---- a/subprojects/libvfio-user.wrap
-+++ b/subprojects/libvfio-user.wrap
-@@ -1,4 +1,4 @@
- [wrap-git]
- url = https://gitlab.com/qemu-project/libvfio-user.git
--revision = 0b28d205572c80b568a1003db2c8f37ca333e4d7
-+revision = 1569a37a54ecb63bd4008708c76339ccf7d06115
- depth = 1
+diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
+index a15e291c9a..0e93d7a7b4 100644
+--- a/hw/remote/vfio-user-obj.c
++++ b/hw/remote/vfio-user-obj.c
+@@ -281,7 +281,7 @@ static ssize_t vfu_object_cfg_access(vfu_ctx_t *vfu_ctx, char * const buf,
+     while (bytes > 0) {
+         len = (bytes > pci_access_width) ? pci_access_width : bytes;
+         if (is_write) {
+-            memcpy(&val, ptr, len);
++            val = ldn_le_p(ptr, len);
+             pci_host_config_write_common(o->pci_dev, offset,
+                                          pci_config_size(o->pci_dev),
+                                          val, len);
+@@ -289,7 +289,7 @@ static ssize_t vfu_object_cfg_access(vfu_ctx_t *vfu_ctx, char * const buf,
+         } else {
+             val = pci_host_config_read_common(o->pci_dev, offset,
+                                               pci_config_size(o->pci_dev), len);
+-            memcpy(ptr, &val, len);
++            stn_le_p(ptr, len, val);
+             trace_vfu_cfg_read(offset, val);
+         }
+         offset += len;
 -- 
 2.43.2
 
