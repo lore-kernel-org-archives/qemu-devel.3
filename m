@@ -4,79 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0A28C25B4F
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 14:35:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABCE1C25B4F
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 14:35:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4LtB-0003Pc-DA; Tue, 07 May 2024 10:33:53 -0400
+	id 1s4LuB-0005ui-Af; Tue, 07 May 2024 10:34:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s4Lsj-0003BP-Pc
- for qemu-devel@nongnu.org; Tue, 07 May 2024 10:33:30 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
+ id 1s4Lu9-0005mX-EJ
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 10:34:53 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s4LsY-0001M6-PY
- for qemu-devel@nongnu.org; Tue, 07 May 2024 10:33:24 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1ee38966529so12455005ad.1
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 07:33:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
+ id 1s4Lu6-00029d-Vf
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 10:34:52 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-61be599ab77so1284485a12.1
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 07:34:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715092392; x=1715697192; darn=nongnu.org;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1715092489; x=1715697289;
+ darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=T0/wwsmOrIFP2k0lfcZhLa1SDoLg5xmY78unAbAeB00=;
- b=kiBd4fz7dJnr7APi4uGHFIVCWk7EDt+/Wll62WpAWG1XwpCwVNKoCXfWWmUMA/+wva
- DQYEUs71DE337OmF5Y2+OUTbd2YmbVC4JCvNjVw2NkXWS5ZEk8mvrl7nzZTdQ19CV9D3
- MES7J3Igu9+DQXeycqGp89BkocsPLZvseuPNMmcghBPUPk6O/F9bJGpqRs80/btvgEbv
- tGX/eHB7u2icFheCd28Gru+mb9j8UbLei52uRVec/XklkZMvP/ka89zvdkcFmxHeL7sp
- 571s9/29IAe31FkwiZ4vFT9EOttLkt/LPcQ85y89XIAfXnI7KhEU5wpYih9dsXscemJY
- AwTA==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sbl6Cn/2SrMdVp5f3zSpmcxRHU/zOlM5ad+nfpeWxEI=;
+ b=p1TucNDFm1yz5YTJE0XXJFcD0/nLRZ7uoH0ezXEEZXHsB7oAGXCvvKnAT9hs7rpYqs
+ pxnoPwjUpyX+kFTC9H0abGkfBaoIfHvqXxEQ66wEtF2NxhS9pWYtFKEcpv4wgROTbDY7
+ tt8FouP6UEbQ6sCuJRZgH2JBDiaEHBP0Mxax4ARffdre03O0gO+H20mUr8RV5qsW3x95
+ /MPiUBf7gYTf9UOHs2w6DSKBR8n7IngxUfvd/g+cbYQh7OlsCNHNaWuC/c++J6jAwocr
+ AAVj2soLSdS2PAvCp4Fj+lCEBoi4lgMK4fv/4cdFlIOzs24LLJT5LwzYmPI0Xupvdvve
+ ufyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715092392; x=1715697192;
+ d=1e100.net; s=20230601; t=1715092489; x=1715697289;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=T0/wwsmOrIFP2k0lfcZhLa1SDoLg5xmY78unAbAeB00=;
- b=boORFZYgIktUgDBZXBb0EriIt4Oo060fzWAKfojMnPYWzUvlcAg8E2daIEEBvQqpR5
- DMNw8ELDy+U/5K2qxAjrWecODxyR+QhU4OixUhUdBnzM+y+fOqErFpufJoXd9yzE50U+
- 5qifalERZcVJsWnNs2TzFLi7kkX6TWOEK2uVnBcsgm0pgkNNku7ytOqLGCE/4p9oWOtC
- OvoEet8jQcyBT+6lCniQRAn7NbBNo4vvUefU8lFUK7uWl/YhS3a++bJzE2qICrruxhGE
- 3WWBNUwUYByXsGbY6bfeCfmO0zh6+FwiLx6rEx/fc85oRu/P8RLbYh3txAaP4ONR3XNv
- W++A==
-X-Gm-Message-State: AOJu0Yxxj2YwwF6PyQ5gZH7jZZi1kqAGTZtf3Dhj5U3MLYAq0CGJ0URS
- Y2QplZDDpExlbIyLDytpFXamL//T4IpmMEAYwmVx28lAfSFq2r0fH7AljZGiN4TaUs7DpQhKLfY
- L
-X-Google-Smtp-Source: AGHT+IGZm1S2pNCyxFo/vgXiN2lLokX8duBkNY04YlhT35X7LlypaWahG9QsRSV1KnxRPtwUqrWTgA==
-X-Received: by 2002:a17:902:654d:b0:1e8:7906:5be3 with SMTP id
- d9443c01a7336-1ee63167542mr34107525ad.18.1715092392442; 
- Tue, 07 May 2024 07:33:12 -0700 (PDT)
-Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ bh=sbl6Cn/2SrMdVp5f3zSpmcxRHU/zOlM5ad+nfpeWxEI=;
+ b=AhSHFob0/rDmyJ9/d1EkqAO3TJ7zm/S+oR6Xrvmmk57SMq3YI9VLhXWroqMKmWHhmE
+ 7Dt5qRfNzuw/mnR+JAXzxFt2KiqIWUEtXWRbrrhHG19Uc+JW+YL8xn0u5JW+pRg2G/JL
+ 8Kgkx0siVL7zqX6E/s8xpulpENuEI59E8LKBRlOT4yPnfLBT6SSfYbDzh3/pnqLSe+C8
+ 9D+F14VUGa36r0QN7WYBmOKROwVGhfPFaIb3vM7AIgqqwHvG9YFg+iNGmmsRvByGI0t/
+ ZhiG+oYKFJrQnmdxHMLDwf2n5ku0HONPKBynEw2PFH4u68Pawa1ybCUuWNJopz9QSP0A
+ Y4gg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWbLF3eeCIvg49P4nUVyjkinIwk7RFcBndxCkW7MnryTUWAqk4h/Y8HV4llXNhWeEKrV/4F/w3aD18MwM4XRSvv2FWZRpA=
+X-Gm-Message-State: AOJu0YyidnmWTrcAO0xA6gmF4YKRGgVQmuG/ojQJqkpq2NMJKVSwqLOX
+ arka/1tbEwwoVdbqddfB282xtNYpCeQq7sk9ZUhtttjcHUI6Y72ivOZQjRJcOfE=
+X-Google-Smtp-Source: AGHT+IHdlMQCs6zcK93GNzEvvKDxWklWZXVFDJ6lpxj36R68laHWvEnFnnTAounX3BP/kW8UScNp4Q==
+X-Received: by 2002:a17:90b:400b:b0:2b2:9b67:198a with SMTP id
+ ie11-20020a17090b400b00b002b29b67198amr13356767pjb.34.1715092489324; 
+ Tue, 07 May 2024 07:34:49 -0700 (PDT)
+Received: from mnissler.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- p3-20020a170902780300b001ed2d84c1cbsm8690097pll.193.2024.05.07.07.33.11
- for <qemu-devel@nongnu.org>
+ pq10-20020a17090b3d8a00b002af8056917csm11827206pjb.29.2024.05.07.07.34.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 May 2024 07:33:12 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 2/9] tcg/i386: Simplify immediate 8-bit logical vector shifts
-Date: Tue,  7 May 2024 07:33:02 -0700
-Message-Id: <20240507143309.5528-3-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240507143309.5528-1-richard.henderson@linaro.org>
-References: <20240507143309.5528-1-richard.henderson@linaro.org>
+ Tue, 07 May 2024 07:34:49 -0700 (PDT)
+From: Mattias Nissler <mnissler@rivosinc.com>
+To: jag.raman@oracle.com, peterx@redhat.com, stefanha@redhat.com,
+ qemu-devel@nongnu.org
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ john.levon@nutanix.com, David Hildenbrand <david@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Mattias Nissler <mnissler@rivosinc.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH v10 2/7] system/physmem: Propagate AddressSpace to MapClient
+ helpers
+Date: Tue,  7 May 2024 07:34:26 -0700
+Message-ID: <20240507143431.464382-3-mnissler@rivosinc.com>
+X-Mailer: git-send-email 2.43.2
+In-Reply-To: <20240507143431.464382-1-mnissler@rivosinc.com>
+References: <20240507143431.464382-1-mnissler@rivosinc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=mnissler@rivosinc.com; helo=mail-pg1-x530.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,119 +105,199 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The x86 isa does not have this operation, so we need an expansion.
-Use the same algorithm that we use for expanding this vector
-operation with integers: perform the shift with a wider type
-and then mask the bits that must be zero.
+Propagate AddressSpace handler to following helpers:
+- register_map_client()
+- unregister_map_client()
+- notify_map_clients[_locked]()
 
-This reduces the instruction count from 5 to 2.
+Rename them using 'address_space_' prefix instead of 'cpu_'.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+The AddressSpace argument will be used in the next commit.
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Tested-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
+Message-ID: <20240507094210.300566-2-mnissler@rivosinc.com>
+[PMD: Split patch, part 1/2]
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Mattias Nissler <mnissler@rivosinc.com>
 ---
- tcg/i386/tcg-target.c.inc | 61 +++++++++------------------------------
- 1 file changed, 14 insertions(+), 47 deletions(-)
+ include/exec/cpu-common.h |  2 --
+ include/exec/memory.h     | 26 ++++++++++++++++++++++++--
+ system/dma-helpers.c      |  4 ++--
+ system/physmem.c          | 24 ++++++++++++------------
+ 4 files changed, 38 insertions(+), 18 deletions(-)
 
-diff --git a/tcg/i386/tcg-target.c.inc b/tcg/i386/tcg-target.c.inc
-index c6ba498623..6837c519b0 100644
---- a/tcg/i386/tcg-target.c.inc
-+++ b/tcg/i386/tcg-target.c.inc
-@@ -3769,49 +3769,20 @@ int tcg_can_emit_vec_op(TCGOpcode opc, TCGType type, unsigned vece)
-     }
- }
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index 8bc397e251..815342d043 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -147,8 +147,6 @@ void *cpu_physical_memory_map(hwaddr addr,
+                               bool is_write);
+ void cpu_physical_memory_unmap(void *buffer, hwaddr len,
+                                bool is_write, hwaddr access_len);
+-void cpu_register_map_client(QEMUBH *bh);
+-void cpu_unregister_map_client(QEMUBH *bh);
  
--static void expand_vec_shi(TCGType type, unsigned vece, TCGOpcode opc,
-+static void expand_vec_shi(TCGType type, unsigned vece, bool right,
-                            TCGv_vec v0, TCGv_vec v1, TCGArg imm)
- {
--    TCGv_vec t1, t2;
-+    uint8_t mask;
+ bool cpu_physical_memory_is_io(hwaddr phys_addr);
  
-     tcg_debug_assert(vece == MO_8);
--
--    t1 = tcg_temp_new_vec(type);
--    t2 = tcg_temp_new_vec(type);
--
--    /*
--     * Unpack to W, shift, and repack.  Tricky bits:
--     * (1) Use punpck*bw x,x to produce DDCCBBAA,
--     *     i.e. duplicate in other half of the 16-bit lane.
--     * (2) For right-shift, add 8 so that the high half of the lane
--     *     becomes zero.  For left-shift, and left-rotate, we must
--     *     shift up and down again.
--     * (3) Step 2 leaves high half zero such that PACKUSWB
--     *     (pack with unsigned saturation) does not modify
--     *     the quantity.
--     */
--    vec_gen_3(INDEX_op_x86_punpckl_vec, type, MO_8,
--              tcgv_vec_arg(t1), tcgv_vec_arg(v1), tcgv_vec_arg(v1));
--    vec_gen_3(INDEX_op_x86_punpckh_vec, type, MO_8,
--              tcgv_vec_arg(t2), tcgv_vec_arg(v1), tcgv_vec_arg(v1));
--
--    if (opc != INDEX_op_rotli_vec) {
--        imm += 8;
--    }
--    if (opc == INDEX_op_shri_vec) {
--        tcg_gen_shri_vec(MO_16, t1, t1, imm);
--        tcg_gen_shri_vec(MO_16, t2, t2, imm);
-+    if (right) {
-+        mask = 0xff >> imm;
-+        tcg_gen_shri_vec(MO_16, v0, v1, imm);
-     } else {
--        tcg_gen_shli_vec(MO_16, t1, t1, imm);
--        tcg_gen_shli_vec(MO_16, t2, t2, imm);
--        tcg_gen_shri_vec(MO_16, t1, t1, 8);
--        tcg_gen_shri_vec(MO_16, t2, t2, 8);
-+        mask = 0xff << imm;
-+        tcg_gen_shli_vec(MO_16, v0, v1, imm);
-     }
--
--    vec_gen_3(INDEX_op_x86_packus_vec, type, MO_8,
--              tcgv_vec_arg(v0), tcgv_vec_arg(t1), tcgv_vec_arg(t2));
--    tcg_temp_free_vec(t1);
--    tcg_temp_free_vec(t2);
-+    tcg_gen_and_vec(MO_8, v0, v0, tcg_constant_vec(type, MO_8, mask));
- }
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index dadb5cd65a..e1e0c5a3de 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -2946,8 +2946,8 @@ bool address_space_access_valid(AddressSpace *as, hwaddr addr, hwaddr len,
+  * May return %NULL and set *@plen to zero(0), if resources needed to perform
+  * the mapping are exhausted.
+  * Use only for reads OR writes - not for read-modify-write operations.
+- * Use cpu_register_map_client() to know when retrying the map operation is
+- * likely to succeed.
++ * Use address_space_register_map_client() to know when retrying the map
++ * operation is likely to succeed.
+  *
+  * @as: #AddressSpace to be accessed
+  * @addr: address within that address space
+@@ -2972,6 +2972,28 @@ void *address_space_map(AddressSpace *as, hwaddr addr,
+ void address_space_unmap(AddressSpace *as, void *buffer, hwaddr len,
+                          bool is_write, hwaddr access_len);
  
- static void expand_vec_sari(TCGType type, unsigned vece,
-@@ -3821,7 +3792,7 @@ static void expand_vec_sari(TCGType type, unsigned vece,
++/*
++ * address_space_register_map_client: Register a callback to invoke when
++ * resources for address_space_map() are available again.
++ *
++ * address_space_map may fail when there are not enough resources available,
++ * such as when bounce buffer memory would exceed the limit. The callback can
++ * be used to retry the address_space_map operation. Note that the callback
++ * gets automatically removed after firing.
++ *
++ * @as: #AddressSpace to be accessed
++ * @bh: callback to invoke when address_space_map() retry is appropriate
++ */
++void address_space_register_map_client(AddressSpace *as, QEMUBH *bh);
++
++/*
++ * address_space_unregister_map_client: Unregister a callback that has
++ * previously been registered and not fired yet.
++ *
++ * @as: #AddressSpace to be accessed
++ * @bh: callback to unregister
++ */
++void address_space_unregister_map_client(AddressSpace *as, QEMUBH *bh);
  
-     switch (vece) {
-     case MO_8:
--        /* Unpack to W, shift, and repack, as in expand_vec_shi.  */
-+        /* Unpack to 16-bit, shift, and repack.  */
-         t1 = tcg_temp_new_vec(type);
-         t2 = tcg_temp_new_vec(type);
-         vec_gen_3(INDEX_op_x86_punpckl_vec, type, MO_8,
-@@ -3874,12 +3845,7 @@ static void expand_vec_rotli(TCGType type, unsigned vece,
- {
-     TCGv_vec t;
- 
--    if (vece == MO_8) {
--        expand_vec_shi(type, vece, INDEX_op_rotli_vec, v0, v1, imm);
--        return;
--    }
--
--    if (have_avx512vbmi2) {
-+    if (vece != MO_8 && have_avx512vbmi2) {
-         vec_gen_4(INDEX_op_x86_vpshldi_vec, type, vece,
-                   tcgv_vec_arg(v0), tcgv_vec_arg(v1), tcgv_vec_arg(v1), imm);
+ /* Internal functions, part of the implementation of address_space_read.  */
+ MemTxResult address_space_read_full(AddressSpace *as, hwaddr addr,
+diff --git a/system/dma-helpers.c b/system/dma-helpers.c
+index 9b221cf94e..74013308f5 100644
+--- a/system/dma-helpers.c
++++ b/system/dma-helpers.c
+@@ -169,7 +169,7 @@ static void dma_blk_cb(void *opaque, int ret)
+     if (dbs->iov.size == 0) {
+         trace_dma_map_wait(dbs);
+         dbs->bh = aio_bh_new(ctx, reschedule_dma, dbs);
+-        cpu_register_map_client(dbs->bh);
++        address_space_register_map_client(dbs->sg->as, dbs->bh);
          return;
-@@ -4155,10 +4121,11 @@ void tcg_expand_vec_op(TCGOpcode opc, TCGType type, unsigned vece,
+     }
  
-     switch (opc) {
-     case INDEX_op_shli_vec:
--    case INDEX_op_shri_vec:
--        expand_vec_shi(type, vece, opc, v0, v1, a2);
-+        expand_vec_shi(type, vece, false, v0, v1, a2);
-+        break;
-+    case INDEX_op_shri_vec:
-+        expand_vec_shi(type, vece, true, v0, v1, a2);
-         break;
--
-     case INDEX_op_sari_vec:
-         expand_vec_sari(type, vece, v0, v1, a2);
-         break;
+@@ -197,7 +197,7 @@ static void dma_aio_cancel(BlockAIOCB *acb)
+     }
+ 
+     if (dbs->bh) {
+-        cpu_unregister_map_client(dbs->bh);
++        address_space_unregister_map_client(dbs->sg->as, dbs->bh);
+         qemu_bh_delete(dbs->bh);
+         dbs->bh = NULL;
+     }
+diff --git a/system/physmem.c b/system/physmem.c
+index 5486014cf2..27e754ff57 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3065,24 +3065,24 @@ QemuMutex map_client_list_lock;
+ static QLIST_HEAD(, MapClient) map_client_list
+     = QLIST_HEAD_INITIALIZER(map_client_list);
+ 
+-static void cpu_unregister_map_client_do(MapClient *client)
++static void address_space_unregister_map_client_do(MapClient *client)
+ {
+     QLIST_REMOVE(client, link);
+     g_free(client);
+ }
+ 
+-static void cpu_notify_map_clients_locked(void)
++static void address_space_notify_map_clients_locked(AddressSpace *as)
+ {
+     MapClient *client;
+ 
+     while (!QLIST_EMPTY(&map_client_list)) {
+         client = QLIST_FIRST(&map_client_list);
+         qemu_bh_schedule(client->bh);
+-        cpu_unregister_map_client_do(client);
++        address_space_unregister_map_client_do(client);
+     }
+ }
+ 
+-void cpu_register_map_client(QEMUBH *bh)
++void address_space_register_map_client(AddressSpace *as, QEMUBH *bh)
+ {
+     MapClient *client = g_malloc(sizeof(*client));
+ 
+@@ -3092,7 +3092,7 @@ void cpu_register_map_client(QEMUBH *bh)
+     /* Write map_client_list before reading in_use.  */
+     smp_mb();
+     if (!qatomic_read(&bounce.in_use)) {
+-        cpu_notify_map_clients_locked();
++        address_space_notify_map_clients_locked(as);
+     }
+ }
+ 
+@@ -3112,23 +3112,23 @@ void cpu_exec_init_all(void)
+     qemu_mutex_init(&map_client_list_lock);
+ }
+ 
+-void cpu_unregister_map_client(QEMUBH *bh)
++void address_space_unregister_map_client(AddressSpace *as, QEMUBH *bh)
+ {
+     MapClient *client;
+ 
+     QEMU_LOCK_GUARD(&map_client_list_lock);
+     QLIST_FOREACH(client, &map_client_list, link) {
+         if (client->bh == bh) {
+-            cpu_unregister_map_client_do(client);
++            address_space_unregister_map_client_do(client);
+             break;
+         }
+     }
+ }
+ 
+-static void cpu_notify_map_clients(void)
++static void address_space_notify_map_clients(AddressSpace *as)
+ {
+     QEMU_LOCK_GUARD(&map_client_list_lock);
+-    cpu_notify_map_clients_locked();
++    address_space_notify_map_clients_locked(as);
+ }
+ 
+ static bool flatview_access_valid(FlatView *fv, hwaddr addr, hwaddr len,
+@@ -3195,8 +3195,8 @@ flatview_extend_translation(FlatView *fv, hwaddr addr,
+  * May map a subset of the requested range, given by and returned in *plen.
+  * May return NULL if resources needed to perform the mapping are exhausted.
+  * Use only for reads OR writes - not for read-modify-write operations.
+- * Use cpu_register_map_client() to know when retrying the map operation is
+- * likely to succeed.
++ * Use address_space_register_map_client() to know when retrying the map
++ * operation is likely to succeed.
+  */
+ void *address_space_map(AddressSpace *as,
+                         hwaddr addr,
+@@ -3279,7 +3279,7 @@ void address_space_unmap(AddressSpace *as, void *buffer, hwaddr len,
+     memory_region_unref(bounce.mr);
+     /* Clear in_use before reading map_client_list.  */
+     qatomic_set_mb(&bounce.in_use, false);
+-    cpu_notify_map_clients();
++    address_space_notify_map_clients(as);
+ }
+ 
+ void *cpu_physical_memory_map(hwaddr addr,
 -- 
-2.34.1
+2.43.2
 
 
