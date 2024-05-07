@@ -4,36 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96C6CC25B4F
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 08:44:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B610C25B4F
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 08:44:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4GPn-00041g-VP; Tue, 07 May 2024 04:43:12 -0400
+	id 1s4GQS-00052h-GM; Tue, 07 May 2024 04:43:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1s4GPZ-0003iG-5q; Tue, 07 May 2024 04:42:57 -0400
+ id 1s4GQE-0004VG-Jp; Tue, 07 May 2024 04:43:40 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1s4GPW-0003FE-N8; Tue, 07 May 2024 04:42:56 -0400
+ id 1s4GQB-0003Lb-8f; Tue, 07 May 2024 04:43:37 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0B5D464BCC;
+ by isrv.corpit.ru (Postfix) with ESMTP id 8CF2B64BD4;
  Tue,  7 May 2024 11:42:49 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id EE233C85B5;
- Tue,  7 May 2024 11:42:29 +0300 (MSK)
-Received: (nullmailer pid 1026536 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 7A946C85BD;
+ Tue,  7 May 2024 11:42:30 +0300 (MSK)
+Received: (nullmailer pid 1026561 invoked by uid 1000);
  Tue, 07 May 2024 08:42:29 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Li Zhijian <lizhijian@fujitsu.com>,
+Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- zhenwei pi <pizhenwei@bytedance.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.4 08/16] backends/cryptodev-builtin: Fix local_error leaks
-Date: Tue,  7 May 2024 11:42:07 +0300
-Message-Id: <20240507084226.1026455-8-mjt@tls.msk.ru>
+ Paul Cercueil <paul@crapouillou.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.4 16/16] target/sh4: Fix SUBV opcode
+Date: Tue,  7 May 2024 11:42:15 +0300
+Message-Id: <20240507084226.1026455-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.4-20240506205855@cover.tls.msk.ru>
 References: <qemu-stable-8.2.4-20240506205855@cover.tls.msk.ru>
@@ -62,55 +64,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Li Zhijian <lizhijian@fujitsu.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-It seems that this error does not need to be propagated to the upper,
-directly output the error to avoid the leaks
+The documentation says:
 
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/2283
-Fixes: 2fda101de07 ("virtio-crypto: Support asynchronous mode")
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: zhenwei pi <pizhenwei@bytedance.com>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+  SUBV Rm, Rn        Rn - Rm -> Rn, underflow -> T
+
+The overflow / underflow can be calculated as:
+
+  T = ((Rn ^ Rm) & (Result ^ Rn)) >> 31
+
+However we were using the incorrect:
+
+  T = ((Rn ^ Rm) & (Result ^ Rm)) >> 31
+
+Fix by using the Rn register instead of Rm.
+
+Add tests provided by Paul Cercueil.
+
+Cc: qemu-stable@nongnu.org
+Fixes: ad8d25a11f ("target-sh4: implement addv and subv using TCG")
+Reported-by: Paul Cercueil <paul@crapouillou.net>
+Suggested-by: Paul Cercueil <paul@crapouillou.net>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2318
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Yoshinori Sato <ysato@users.sourceforge.jp>
+Message-Id: <20240430163125.77430-3-philmd@linaro.org>
+(cherry picked from commit e88a856efd1d3c3ffa8e53da4831eff8da290808)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(cherry picked from commit 06479dbf3d7d245572c4b3016e5a1d923ff04d66)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/backends/cryptodev-builtin.c b/backends/cryptodev-builtin.c
-index a514bbb310..940104ee55 100644
---- a/backends/cryptodev-builtin.c
-+++ b/backends/cryptodev-builtin.c
-@@ -23,6 +23,7 @@
+diff --git a/target/sh4/translate.c b/target/sh4/translate.c
+index d8dcfc3a20..5c0a4cce7a 100644
+--- a/target/sh4/translate.c
++++ b/target/sh4/translate.c
+@@ -934,7 +934,7 @@ static void _decode_opc(DisasContext * ctx)
+             t0 = tcg_temp_new();
+             tcg_gen_sub_i32(t0, REG(B11_8), REG(B7_4));
+             t1 = tcg_temp_new();
+-            tcg_gen_xor_i32(t1, t0, REG(B7_4));
++            tcg_gen_xor_i32(t1, t0, REG(B11_8));
+             t2 = tcg_temp_new();
+             tcg_gen_xor_i32(t2, REG(B11_8), REG(B7_4));
+             tcg_gen_and_i32(t1, t1, t2);
+diff --git a/tests/tcg/sh4/Makefile.target b/tests/tcg/sh4/Makefile.target
+index 39751c41b2..a523a0d2c8 100644
+--- a/tests/tcg/sh4/Makefile.target
++++ b/tests/tcg/sh4/Makefile.target
+@@ -23,3 +23,6 @@ TESTS += test-macw
  
- #include "qemu/osdep.h"
- #include "sysemu/cryptodev.h"
-+#include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "standard-headers/linux/virtio_crypto.h"
- #include "crypto/cipher.h"
-@@ -396,8 +397,8 @@ static int cryptodev_builtin_create_session(
-     case VIRTIO_CRYPTO_HASH_CREATE_SESSION:
-     case VIRTIO_CRYPTO_MAC_CREATE_SESSION:
-     default:
--        error_setg(&local_error, "Unsupported opcode :%" PRIu32 "",
--                   sess_info->op_code);
-+        error_report("Unsupported opcode :%" PRIu32 "",
-+                     sess_info->op_code);
-         return -VIRTIO_CRYPTO_NOTSUPP;
-     }
- 
-@@ -554,8 +555,8 @@ static int cryptodev_builtin_operation(
- 
-     if (op_info->session_id >= MAX_NUM_SESSIONS ||
-               builtin->sessions[op_info->session_id] == NULL) {
--        error_setg(&local_error, "Cannot find a valid session id: %" PRIu64 "",
--                   op_info->session_id);
-+        error_report("Cannot find a valid session id: %" PRIu64 "",
-+                     op_info->session_id);
-         return -VIRTIO_CRYPTO_INVSESS;
-     }
- 
+ test-addv: CFLAGS += -O -g
+ TESTS += test-addv
++
++test-subv: CFLAGS += -O -g
++TESTS += test-subv
+diff --git a/tests/tcg/sh4/test-subv.c b/tests/tcg/sh4/test-subv.c
+new file mode 100644
+index 0000000000..a3c2db96e4
+--- /dev/null
++++ b/tests/tcg/sh4/test-subv.c
+@@ -0,0 +1,30 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#include <limits.h>
++#include <stdio.h>
++#include <stdlib.h>
++
++static void subv(const int a, const int b, const int res, const int carry)
++{
++    int o = a, c;
++
++    asm volatile("subv %2,%0\n"
++                 "movt %1\n"
++                 : "+r"(o), "=r"(c) : "r"(b) : );
++
++    if (c != carry || o != res) {
++        printf("SUBV %d, %d = %d/%d [T = %d/%d]\n", a, b, o, res, c, carry);
++        abort();
++    }
++}
++
++int main(void)
++{
++    subv(INT_MIN, 1, INT_MAX, 1);
++    subv(INT_MAX, -1, INT_MIN, 1);
++    subv(INT_MAX, 1, INT_MAX - 1, 0);
++    subv(0, 1, -1, 0);
++    subv(-1, -1, 0, 0);
++
++    return 0;
++}
 -- 
 2.39.2
 
