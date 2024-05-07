@@ -4,103 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86955C25B74
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 07:09:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E94EC10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 07:16:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4Eww-00018r-1j; Tue, 07 May 2024 03:09:18 -0400
+	id 1s4F2q-0003eQ-28; Tue, 07 May 2024 03:15:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
- id 1s4Ewt-000186-7N; Tue, 07 May 2024 03:09:16 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1s4F2j-0003Xl-U7
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 03:15:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
- id 1s4Ewq-0008Mv-PJ; Tue, 07 May 2024 03:09:14 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 4476CAnF013123; Tue, 7 May 2024 07:09:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=Lyxw7bbZMWp/YqtteOw7RNEDOMzF2yqOTuzjWmD/t30=;
- b=aDKOXHHOocQnCOh+SH+uOco1LIsDEfuSYz5H5RswdE2yMCWgUXop2/6IyapRfYpNFo5q
- CF9e/7PtMYdWgjVWG7gspCHiONr6oJFOBNe2UIKFRxvuxEBwXrmWUKrxYFf5ouuWFlGE
- /PbaFfiklnxOdHvP2lDNC3B0kfkUEnz4+JELtbyxQFP0eeZYp9hkQvsIZ+BwaeKFC/a3
- 4jytXhO6HAc9uxk96QguuvqTQCn8nenyTwknD+lnKOqI2gI4KPEZVT08R2sBqUJ213vz
- 9DAF7z1nxzeddeQcZWpOJEGRgnFeBvOjOlx3gVQdbfJq+UvO+qY40tnxgx55cYwiv5M2 vQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xyetp04kr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 07 May 2024 07:09:09 +0000
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 447744BS031718;
- Tue, 7 May 2024 07:09:09 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xyetp04kp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 07 May 2024 07:09:09 +0000
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44742dIn013942; Tue, 7 May 2024 07:09:08 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xx222v8ej-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 07 May 2024 07:09:08 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 447794Ak54854124
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 7 May 2024 07:09:07 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DAFC320049;
- Tue,  7 May 2024 07:09:04 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E125120040;
- Tue,  7 May 2024 07:09:03 +0000 (GMT)
-Received: from [9.199.192.140] (unknown [9.199.192.140])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  7 May 2024 07:09:03 +0000 (GMT)
-Message-ID: <2bd50388-2bb0-42c5-a2ce-8c243c2051dd@linux.vnet.ibm.com>
-Date: Tue, 7 May 2024 12:39:03 +0530
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1s4F2h-0003BF-B3
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 03:15:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715066113;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6avkvtHt/qOgI2pQAbXBg8UxCMSZ2xrpYYaNnSE9h0Q=;
+ b=LIPzze65bU7SqDz8/cICeuSwhTzjJb5Cqd8h+3EI335QU01UATkkYeeOGi2WThgCxTi86v
+ ftsRiQE1ITU6ua58V1wXXE8TbDy4uYkC0PkHGRuOoU12DP5zeLCkyVU++iuahxBPPwciLk
+ /t3CacMznebMFWuPFTTs6AOd8qz6ruY=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-107-rGeEOjncOZWH63W6b8CdNQ-1; Tue, 07 May 2024 03:15:11 -0400
+X-MC-Unique: rGeEOjncOZWH63W6b8CdNQ-1
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-61bb09d8fecso52144937b3.0
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 00:15:11 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715066110; x=1715670910;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6avkvtHt/qOgI2pQAbXBg8UxCMSZ2xrpYYaNnSE9h0Q=;
+ b=Dt/b4DC8oNu9fi8GbONtIMb7DiM7OxPWsFsK3FW6qfyvcAteiR/1LEiVPWKUmOnOKA
+ 0ciSLWD7dnHKun78pMKUpTt9i9Z/3RgIoFqjnhgpOKbvAwaIODstE+gDsDo50FcEzXJH
+ 7nsgKsEyubTz/IlqyDu+6hiRjTK4OdsAFP2Q9ez5pMrdHe5RRW+Xf4zUoph/WtBqaZdw
+ 5WF5szR8aZzngqpwT2qVLktGc58+LQOtHhSaiMGWd6iiKQx84jjDvy5Arpkz8GAS/rAA
+ mxKUhoY3l35hdfDn63cj6zr4F52oZ0gUebyufMZ27uLszIllf60kWrLRloPyVsTssJVo
+ CT4g==
+X-Gm-Message-State: AOJu0YyH0ilc6pyWGpRwNEtmm50dPPEMHZwaOA8+CfObPbO5MolyGp8p
+ hp/fNNUSMkour2XmeCkW9zn1J+0S88Bw52I1n8010A0T9g4FpBmlgI4Se1ZWINPufF5kABvH2hp
+ ytMokSRZYgOm/mfdRFBaWvBGcEOen8oQrrPXW2yRmm0gO6DMDeLss1ZaKxopyh00Lxsx2nAoO6X
+ tE3eMaqmBto1djnu0p8ZSD2+NGWsE=
+X-Received: by 2002:a5b:c0a:0:b0:de4:7bae:d57f with SMTP id
+ f10-20020a5b0c0a000000b00de47baed57fmr11677937ybq.38.1715066110573; 
+ Tue, 07 May 2024 00:15:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGNAqL2nEQQyAStr+SJPOWhoozDkwgWwIwE6GiF2mAxyzeb1TP8a5DgTVAYYzi9aCLC7oy0lrMsF4yFkxNgaWM=
+X-Received: by 2002:a5b:c0a:0:b0:de4:7bae:d57f with SMTP id
+ f10-20020a5b0c0a000000b00de47baed57fmr11677917ybq.38.1715066110227; Tue, 07
+ May 2024 00:15:10 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] target/ppc: Add ISA v3.1 variants of sync instruction
-Content-Language: en-US
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
- Chinmay Rath <rathc@linux.ibm.com>
-References: <20240501130435.941189-1-npiggin@gmail.com>
- <20240501130435.941189-4-npiggin@gmail.com>
-From: Chinmay Rath <rathc@linux.vnet.ibm.com>
-In-Reply-To: <20240501130435.941189-4-npiggin@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 4xCsf_1LuHEPIoC6UMIXiaAC5esIjp6t
-X-Proofpoint-ORIG-GUID: Smhv1pXMGR8wUzI0TIJKy3iH-9hEdfUf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-07_02,2024-05-06_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0
- bulkscore=0 clxscore=1015 lowpriorityscore=0 mlxscore=0 suspectscore=0
- mlxlogscore=967 adultscore=0 malwarescore=0 priorityscore=1501
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2404010000 definitions=main-2405070048
-Received-SPF: none client-ip=148.163.156.1;
- envelope-from=rathc@linux.vnet.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <13625712.uLZWGnKmhe@valdaarhun>
+ <CAJaqyWdD7futYvUFt7=zV1xsoBdyAET6mvneOOjR2oob2U1-qg@mail.gmail.com>
+ <4912056.31r3eYUQgx@valdaarhun> <13514535.uLZWGnKmhe@valdaarhun>
+In-Reply-To: <13514535.uLZWGnKmhe@valdaarhun>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Tue, 7 May 2024 09:14:33 +0200
+Message-ID: <CAJaqyWeYtyfGav9Ppx=FgRg_Gzucaoz4T3kVi9EbzrDwwEBsyQ@mail.gmail.com>
+Subject: Re: Intention to work on GSoC project
+To: Sahil <icegambit91@gmail.com>
+Cc: qemu-level <qemu-devel@nongnu.org>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,95 +99,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, May 6, 2024 at 9:00=E2=80=AFPM Sahil <icegambit91@gmail.com> wrote:
+>
+> Hi,
+>
+> It's been a while since I last gave an update. Sorry about that. I am rea=
+dy
+> to get my hands dirty and start with the implementation.
+>
 
+No worries!
 
-On 5/1/24 18:34, Nicholas Piggin wrote:
-> POWER10 adds a new field to sync for store-store syncs, and some
-> new variants of the existing syncs that include persistent memory.
+> I have gone through the source of linux's drivers/virtio/virtio_ring.c [1=
+], and
+> QEMU's hw/virtio/virtio.c [2] and hw/virtio/vhost-shadow-virtqueue.c [3].
 >
-> Implement the store-store syncs and plwsync/phwsync.
+> Before actually starting I would like to make sure I am on the right trac=
+k. In
+> vhost-shadow-virtqueue.c, there's a function "vhost_svq_add" which in tur=
+n
+> calls "vhost_svq_add_split".
 >
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Reviewed-by: Chinmay Rath <rathc@linux.ibm.com>
-> ---
->   target/ppc/insn32.decode             |  6 ++--
->   target/ppc/translate/misc-impl.c.inc | 41 ++++++++++++++++++++--------
->   2 files changed, 32 insertions(+), 15 deletions(-)
+> Shall I start by implementing a mechanism to check if the feature bit
+> "VIRTIO_F_RING_PACKED" is set (using "virtio_vdev_has_feature")? And
+> if it's supported, "vhost_svq_add" should call "vhost_svq_add_packed".
+> Following this, I can then start implementing "vhost_svq_add_packed"
+> and progress from there.
 >
-> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-> index 6b89804b15..a180380750 100644
-> --- a/target/ppc/insn32.decode
-> +++ b/target/ppc/insn32.decode
-> @@ -1001,7 +1001,7 @@ MSGSYNC         011111 ----- ----- ----- 1101110110 -
->   
->   # Memory Barrier Instructions
->   
-> -&X_sync         l
-> -@X_sync         ...... ... l:2 ..... ..... .......... .           &X_sync
-> -SYNC            011111 --- ..  ----- ----- 1001010110 -           @X_sync
-> +&X_sync         l sc
-> +@X_sync         ...... .. l:3 ... sc:2 ..... .......... .           &X_sync
-> +SYNC            011111 -- ... --- ..   ----- 1001010110 -           @X_sync
->   EIEIO           011111 ----- ----- ----- 1101010110 -
-> diff --git a/target/ppc/translate/misc-impl.c.inc b/target/ppc/translate/misc-impl.c.inc
-> index 9226467f81..3467b49d0d 100644
-> --- a/target/ppc/translate/misc-impl.c.inc
-> +++ b/target/ppc/translate/misc-impl.c.inc
-> @@ -25,6 +25,7 @@ static bool trans_SYNC(DisasContext *ctx, arg_X_sync *a)
->   {
->       TCGBar bar = TCG_MO_ALL;
->       uint32_t l = a->l;
-> +    uint32_t sc = a->sc;
->   
->       /*
->        * BookE uses the msync mnemonic. This means hwsync, except in the
-> @@ -46,20 +47,36 @@ static bool trans_SYNC(DisasContext *ctx, arg_X_sync *a)
->           gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
->       }
->   
-> -    if ((l == 1) && (ctx->insns_flags2 & PPC2_MEM_LWSYNC)) {
-> -        bar = TCG_MO_LD_LD | TCG_MO_LD_ST | TCG_MO_ST_ST;
-> -    }
-> -
->       /*
-> -     * We may need to check for a pending TLB flush.
-> -     *
-> -     * We do this on ptesync (l == 2) on ppc64 and any sync on ppc32.
-> -     *
-> -     * Additionally, this can only happen in kernel mode however so
-> -     * check MSR_PR as well.
-> +     * In ISA v3.1, the L field grew one bit. Mask that out to ignore it in
-> +     * older processors. It also added the SC field, zero this to ignore
-> +     * it too.
->        */
-> -    if (((l == 2) || !(ctx->insns_flags & PPC_64B)) && !ctx->pr) {
-> -        gen_check_tlb_flush(ctx, true);
-> +    if (!(ctx->insns_flags2 & PPC2_ISA310)) {
-> +        l &= 0x3;
-> +        sc = 0;
-> +    }
-> +
-> +    if (sc) {
-> +        /* Store syncs [stsync, stcisync, stncisync]. These ignore L. */
-> +        bar = TCG_MO_ST_ST;
-> +    } else {
-> +        if (((l == 1) && (ctx->insns_flags2 & PPC2_MEM_LWSYNC)) || (l == 5)) {
-> +            /* lwsync, or plwsync on POWER10 and later */
-> +            bar = TCG_MO_LD_LD | TCG_MO_LD_ST | TCG_MO_ST_ST;
-> +        }
-> +
-> +        /*
-> +         * We may need to check for a pending TLB flush.
-> +         *
-> +         * We do this on ptesync (l == 2) on ppc64 and any sync on ppc32.
-> +         *
-> +         * Additionally, this can only happen in kernel mode however so
-> +         * check MSR_PR as well.
-> +         */
-> +        if (((l == 2) || !(ctx->insns_flags & PPC_64B)) && !ctx->pr) {
-> +            gen_check_tlb_flush(ctx, true);
-> +        }
->       }
->   
->       tcg_gen_mb(bar | TCG_BAR_SC);
+> What are your thoughts on this?
+>
+
+Yes, that's totally right.
+
+I recommend you to also disable _F_EVENT_IDX to start, so the first
+version is easier.
+
+Also, you can send as many incomplete RFCs as you want. For example,
+you can send a first version that only implements reading of the guest
+avail ring, so we know we're aligned on that. Then, we can send
+subsequents RFCs adding features on top.
+
+Does that make sense to you?
+
+Thanks!
+
+> Thanks,
+> Sahil
+>
+> [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tr=
+ee/drivers/virtio/virtio.c
+> [2] https://gitlab.com/qemu-project/qemu/-/blob/master/hw/virtio/virtio.c
+> [3] https://gitlab.com/qemu-project/qemu/-/blob/master/hw/virtio/vhost-sh=
+adow-virtqueue.c
+>
+>
+
 
