@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDF40C25B4F
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 15:19:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C48EDC10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 15:21:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4Mat-0004TA-51; Tue, 07 May 2024 11:19:03 -0400
+	id 1s4McO-0006cT-RP; Tue, 07 May 2024 11:20:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1s4Mar-0004RR-Oc
- for qemu-devel@nongnu.org; Tue, 07 May 2024 11:19:01 -0400
-Received: from mail-qk1-x729.google.com ([2607:f8b0:4864:20::729])
+ id 1s4McL-0006c6-1g
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 11:20:33 -0400
+Received: from mail-qt1-x82f.google.com ([2607:f8b0:4864:20::82f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1s4Maq-0004fz-1i
- for qemu-devel@nongnu.org; Tue, 07 May 2024 11:19:01 -0400
-Received: by mail-qk1-x729.google.com with SMTP id
- af79cd13be357-79291262dc0so226931585a.2
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 08:18:59 -0700 (PDT)
+ id 1s4McJ-0005kI-E7
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 11:20:32 -0400
+Received: by mail-qt1-x82f.google.com with SMTP id
+ d75a77b69052e-4365c1451d4so22311911cf.2
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 08:20:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715095139; x=1715699939; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1715095229; x=1715700029; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=q+h4zAQqUI4H2deth/ON0PNsxHuLEyaZc4P2MWDUBLg=;
- b=PWq31TV7graZ5Qmh9mn9IyNQgjjIvTaRRBOuQrovHmmHMaVsA9YvWNgr/U39whKfLo
- s7ZmsiXaWqphQHAJvnoZ+uXKaDMGts09hNDp3IwDBRQI9AEWyOGqyaNn07DQtcWjgTtQ
- RRoIdSoyH69gXl5PEaBHZ/A3d3RxcM3BqGt4Fk2kmBluatpKLxtyLf8ct36QzZ5+zopC
- u6OlZghYepcdaG+WrcHBGU6uldw487LIQ3NaMPotrCBlwYfo62m6Ajw4DriPNvinD2vi
- uV2Ga0iBD0YQOSZcSvke9E12yOeHxUYSyCmdXcBrmMSQINm8dzvrwvSyVqjhP8in51b/
- QS7A==
+ bh=5rPtVYQzTkGXKf1B6h2YgGd/M0eKj05NpjB46351Tcs=;
+ b=a1Z3VNYk1U+vSmDHthaHJKoTAWay6Pgo8oxdk91stf24MT3yu7SIC0z5lmEkeViA3w
+ 9b5rihMC9lugjP7/vefSO+YZqRWdPRus2xkUgffEoZZr6vctn1TmeskCQSdAGH6CL8+t
+ Y2APK15ouS6zfnMQkOb+CCZZaXcPtSiYvxPp0Inn15eFySwIz3j7KJc/aocNLqey0Oeh
+ lKVaqMlcF/h/G3RPFEqdf6kBfGVP3wcaFOs9ON8mC+HzfakBD6jE6rJC+nSx1aSMh1L8
+ x9LzN8D+f0gIr31CnlJGtS9Fq9qd5ftt7qQOukgvjDlsdXr6OXRux+jyeFUe5n+fxbPU
+ moZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715095139; x=1715699939;
+ d=1e100.net; s=20230601; t=1715095229; x=1715700029;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=q+h4zAQqUI4H2deth/ON0PNsxHuLEyaZc4P2MWDUBLg=;
- b=ADYLrkUr+Oztj3EaPKhG+NAwqcT3nT1gnDbJLpGOHNMUh2TsqpMGGfliXyEr0v2rJW
- aMx84g1909NA3V4/bi9WaEOO4fzhS4fzkzrch3d5gslRckdfBxI7UbNKE3NxSQc+ThlY
- bwRiBG9lGsTqwPY9SeCT1rJFv9wogplB06QUC1w6Kxx5nofzxBOdwCAfLAc0dbD2beCK
- /g9Vr18wmbbBEe3UmFGLT2bpfycrS8cW1qVi3W5/8v6/TAVZFne5QdWLvt0Oi6ls4mLo
- r5ggxSuwAKslrvIN/UxJB8RbL9y+enl4P61OveSu0SvYgSP9Y/hWvLSyqdPt6CbTcUBp
- a49Q==
+ bh=5rPtVYQzTkGXKf1B6h2YgGd/M0eKj05NpjB46351Tcs=;
+ b=K/HFECh6OhaeqgOHuCDLwfn1LBsziXafqA6+lCvE3njHii8PmwSlYKe8nKlyOvcvlP
+ PLd4OJY6nWWxmp2ctaBKXJEbdCHekQvgV98RaBSSlIP0XsApGn9XLONS+wuJBeqgOTQ0
+ zs661yUVkrJ4RS3DRuaKlQH9jMJLKYdCW1Vnn84KE2K5bOotvW1P6cRENNUPCKUF1CoY
+ K21penTElcWbnZQMBjXSXjUTH4I4fZ3Z1hUyNuDN4Lhp8TL/nGuToWx2qsnH3W7+3gSl
+ v4mO6omOMt7J7iN4T7moRr/YexDpWKFuUMKVrwb8Tu0izn9rlRMXBw0vFJzqIDHS19Ri
+ a3jQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXPA1kejJtis60T+ImXGjx/j/fR8Uy4xXfj665f2WGxUay6avtkFsdAVCK6Yft4tlznDrVdu36SKyQJDVNIH1+McEMuJ2c=
-X-Gm-Message-State: AOJu0YymVWKaXGmaP/uYjNrvdx+0cUFmhZuAOzmOIoLX6eAH6WTUKgTl
- XW2p1okYuWz1LjRIm24fwcj5a2UGm0ea7yB6+uhc1KWbAZ4xIlkndVFummxF9m3FLl2gNKFcPTl
- Y7HbTKjqLfPGKlAOeF4+G00VP6gI=
-X-Google-Smtp-Source: AGHT+IGCxsIXrLQP57mG9WbGV/2k3TGJ/8TrymFMOXyAWqsNUUs2OM6AcYMJQ78yrygEHfeQdWgPxq7q749k+bSkaeQ=
-X-Received: by 2002:a05:622a:10e:b0:43a:9cd3:7fed with SMTP id
- u14-20020a05622a010e00b0043a9cd37fedmr15759739qtw.17.1715095138676; Tue, 07
- May 2024 08:18:58 -0700 (PDT)
+ AJvYcCWk8Wo7B4Sq7YQ/PoamhRifN6BPhypAdL7jjwg0POY4H3u2jzrVcQgnIDBxlkaDRK5++PYw09+zsomVn+lc7gEHeVZUKXo=
+X-Gm-Message-State: AOJu0YxnsHJ0GSAKJ0w867zQyecCfxCPC/kDVH9ZT8gXnja62BSKPsaA
+ KBQV1AVzxlSMBLAE6ISP/ovR8joebvuqnq37HhOzZ6iDPoHNO+B9wXQ0o7R5Aigp8VKwsgoW4xY
+ B2TLrqqFznO2icP1/gDphqkyvACc=
+X-Google-Smtp-Source: AGHT+IHZCTZ7pbXYYOb1Y8h1rhZqtW2WjKUoao2DBV1G0S+VdfQxsmhF5aPijvEaUOVt64xkl85bzyaNlVv8AxqQiGM=
+X-Received: by 2002:a05:622a:4d87:b0:43c:76a4:dea5 with SMTP id
+ d75a77b69052e-43dbee440ddmr200061cf.0.1715095228750; Tue, 07 May 2024
+ 08:20:28 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240504202834.399780-1-dmitry.osipenko@collabora.com>
  <20240504202834.399780-3-dmitry.osipenko@collabora.com>
-In-Reply-To: <20240504202834.399780-3-dmitry.osipenko@collabora.com>
+ <CAJ+F1CLkZjZ5b_wbVYFtr65UFjnxMR236=_=+mUZBYMO73jr6g@mail.gmail.com>
+In-Reply-To: <CAJ+F1CLkZjZ5b_wbVYFtr65UFjnxMR236=_=+mUZBYMO73jr6g@mail.gmail.com>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 7 May 2024 19:18:47 +0400
-Message-ID: <CAJ+F1CLkZjZ5b_wbVYFtr65UFjnxMR236=_=+mUZBYMO73jr6g@mail.gmail.com>
+Date: Tue, 7 May 2024 19:20:17 +0400
+Message-ID: <CAJ+F1C+UfKqoydwgCnfm=J+0sBQwqQFzvR=D7D2q+SSnRdPA6g@mail.gmail.com>
 Subject: Re: [PATCH v10 02/10] virtio-gpu: Use pkgconfig version to decide
  which virgl features are available
 To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
@@ -89,8 +90,8 @@ Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  Yiwei Zhang <zzyiwei@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::729;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qk1-x729.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82f;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,48 +116,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi
 
-On Sun, May 5, 2024 at 12:29=E2=80=AFAM Dmitry Osipenko
-<dmitry.osipenko@collabora.com> wrote:
+On Tue, May 7, 2024 at 7:18=E2=80=AFPM Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@gmail.com> wrote:
 >
-> New virglrerenderer features were stabilized with release of v1.0.0.
-> Presence of symbols in virglrenderer.h doesn't guarantee ABI compatibilit=
-y
-> with pre-release development versions of libvirglerender. Use virglrender=
-er
-> version to decide reliably which virgl features are available.
+> Hi
 >
-> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> ---
->  meson.build | 7 ++-----
->  1 file changed, 2 insertions(+), 5 deletions(-)
+> On Sun, May 5, 2024 at 12:29=E2=80=AFAM Dmitry Osipenko
+> <dmitry.osipenko@collabora.com> wrote:
+> >
+> > New virglrerenderer features were stabilized with release of v1.0.0.
+> > Presence of symbols in virglrenderer.h doesn't guarantee ABI compatibil=
+ity
+> > with pre-release development versions of libvirglerender. Use virglrend=
+erer
+> > version to decide reliably which virgl features are available.
+> >
+> > Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> > ---
+> >  meson.build | 7 ++-----
+> >  1 file changed, 2 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/meson.build b/meson.build
+> > index 5db2dbc12ec7..f4a4d71c1978 100644
+> > --- a/meson.build
+> > +++ b/meson.build
+> > @@ -2286,11 +2286,8 @@ config_host_data.set('CONFIG_PNG', png.found())
+> >  config_host_data.set('CONFIG_VNC', vnc.found())
+> >  config_host_data.set('CONFIG_VNC_JPEG', jpeg.found())
+> >  config_host_data.set('CONFIG_VNC_SASL', sasl.found())
+> > -if virgl.found()
+> > -  config_host_data.set('HAVE_VIRGL_D3D_INFO_EXT',
+> > -                       cc.has_member('struct virgl_renderer_resource_i=
+nfo_ext', 'd3d_tex2d',
+> > -                                     prefix: '#include <virglrenderer.=
+h>',
+> > -                                     dependencies: virgl))
+> > +if virgl.version().version_compare('>=3D1.0.0')
+> > +  config_host_data.set('HAVE_VIRGL_D3D_INFO_EXT', 1)
 >
-> diff --git a/meson.build b/meson.build
-> index 5db2dbc12ec7..f4a4d71c1978 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -2286,11 +2286,8 @@ config_host_data.set('CONFIG_PNG', png.found())
->  config_host_data.set('CONFIG_VNC', vnc.found())
->  config_host_data.set('CONFIG_VNC_JPEG', jpeg.found())
->  config_host_data.set('CONFIG_VNC_SASL', sasl.found())
-> -if virgl.found()
-> -  config_host_data.set('HAVE_VIRGL_D3D_INFO_EXT',
-> -                       cc.has_member('struct virgl_renderer_resource_inf=
-o_ext', 'd3d_tex2d',
-> -                                     prefix: '#include <virglrenderer.h>=
-',
-> -                                     dependencies: virgl))
-> +if virgl.version().version_compare('>=3D1.0.0')
-> +  config_host_data.set('HAVE_VIRGL_D3D_INFO_EXT', 1)
+> If it checks for version >=3D1.0, we may as well depend on >=3D1.0.1 imho=
+,
+> and then simply use VIRGL_CHECK_VERSION in the code.
+>
 
-If it checks for version >=3D1.0, we may as well depend on >=3D1.0.1 imho,
-and then simply use VIRGL_CHECK_VERSION in the code.
+..but we would need a fallback if VIRGL_CHECK_VERSION isn't defined in
+that case (which could simply fail).
 
->  endif
->  config_host_data.set('CONFIG_VIRTFS', have_virtfs)
->  config_host_data.set('CONFIG_VTE', vte.found())
-> --
-> 2.44.0
->
+
 
 
 --=20
