@@ -4,59 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7913AC10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 13:33:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7146C25B5F
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 13:37:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4Kwp-0000oS-Vl; Tue, 07 May 2024 09:33:36 -0400
+	id 1s4L01-0002Nd-59; Tue, 07 May 2024 09:36:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=IG/P=MK=kaod.org=clg@ozlabs.org>)
- id 1s4Kwk-0000nV-MJ; Tue, 07 May 2024 09:33:30 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1s4Kzz-0002NN-H0
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 09:36:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=IG/P=MK=kaod.org=clg@ozlabs.org>)
- id 1s4Kwh-0006yW-Hm; Tue, 07 May 2024 09:33:30 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4VYfNx4Mxdz4x2v;
- Tue,  7 May 2024 23:33:21 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4VYfNr35F2z4x2g;
- Tue,  7 May 2024 23:33:16 +1000 (AEST)
-Message-ID: <484c975e-3b68-4730-93a1-febfb7668fc5@kaod.org>
-Date: Tue, 7 May 2024 15:33:12 +0200
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1s4Kzx-0000NA-8x
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 09:36:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715089008;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8VWYGz5Bp35TsHMnaj/8XBmNCaDwogizfLfD2SjzILM=;
+ b=IwyxWA7TXMVqT5vrI3QmSg5/GMl81cnEypHP1g2za1Uv7zA+GdqWbTaf8uIyMb5ehSb9st
+ PX8Xsxtbwj4d8cKwXvyfIuz+YKzg2nxTE1ZrKBnFFxE3jeXHY/PVkC34qZ/6q//CMmTuli
+ kvn2TUgrJtgWlYToz9+SCgNJRxvlaqA=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-595-Kwqai0tNNPOGPkg6h5YELw-1; Tue, 07 May 2024 09:36:46 -0400
+X-MC-Unique: Kwqai0tNNPOGPkg6h5YELw-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-57287ec26a8so1525780a12.3
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 06:36:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715089005; x=1715693805;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8VWYGz5Bp35TsHMnaj/8XBmNCaDwogizfLfD2SjzILM=;
+ b=nFkZ71RKUcKECtFVBvHg6Cn+D4kHvRvQGgGMd4XBaG3OpXWo6GJ1NTmbf6F8/XaNPL
+ mon9m20TbPeI+WhS/FHqQdD+zUZ1zAsA6BjAU7qAaPgFvYWnh423wPug79OWrEHXgCef
+ u13uP2xWtI2kUjUIxvpLtNfY+h8egse4mlVmlvJ5XTuc9uLPXl9hPSphkuberconjRIh
+ D9g1OY/foEDGtoVL/HDg8qIeyJ+uX996ehkMh4uD8SQTYqMcAeW0Rc/3wX3vzHWtXwE2
+ 0LpCtIu5GEJY/3Irju9IH0jLR7cKTcTI5+dbetL3aXV19ByRMIfnX6zuCBD3gBX08J8B
+ 1RNQ==
+X-Gm-Message-State: AOJu0YwJg0JYDi17W31EFNe0Pd8PPlW1nIHlHkR5GR6vq0pMZozqF2MT
+ 8Bt+Rd4J/e2Ihe9Zd7mU57a/d6fmEq5SFTuN/O3QmZaxXL/ZJ4Y4FYOwpUkUXZgMoLps0iIinZL
+ SSfq6oJnCWSbutY8XDoERD0NwyznnPtrGVaZ1dtuxPevZnXiB45vlna2bJTSABa1SPy7tGMo2DE
+ kcUbob/IRBhK1kjr3rt7H4MG3Ut9Q=
+X-Received: by 2002:a50:cd56:0:b0:571:bd88:e84b with SMTP id
+ d22-20020a50cd56000000b00571bd88e84bmr8171012edj.18.1715089005468; 
+ Tue, 07 May 2024 06:36:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEGjAAesExrmgpmRijuZ8OjiU8RfNFZFT8LPcGWzmTooy2kn0a3bm3LsxgLg5a1/jEKFgKlX9ijFYXvqU7R8EE=
+X-Received: by 2002:a50:cd56:0:b0:571:bd88:e84b with SMTP id
+ d22-20020a50cd56000000b00571bd88e84bmr8171003edj.18.1715089005148; Tue, 07
+ May 2024 06:36:45 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 11/16] aspeed/intc: Add AST2700 support
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Alistair Francis <alistair@alistair23.me>, Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, "open list:ASPEED BMCs"
- <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
-References: <20240416091904.935283-1-jamin_lin@aspeedtech.com>
- <20240416091904.935283-12-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240416091904.935283-12-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=IG/P=MK=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.248, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240425015342.1033815-1-dongwon.kim@intel.com>
+ <20240425015342.1033815-6-dongwon.kim@intel.com>
+In-Reply-To: <20240425015342.1033815-6-dongwon.kim@intel.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 7 May 2024 17:36:33 +0400
+Message-ID: <CAMxuvawxtS0LoP3xfhEF3mY_5DQpEfFHk71x3DSdOrVxZdeatg@mail.gmail.com>
+Subject: Re: [PATCH v12 5/6] ui/console: Use qemu_dmabuf_new() and free()
+ helpers instead
+To: dongwon.kim@intel.com
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, philmd@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,405 +98,328 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Jamin
+Hi
 
-On 4/16/24 11:18, Jamin Lin wrote:
-> AST2700 interrupt controller(INTC) provides hardware interrupt interfaces
-> to interrupt of processors PSP, SSP and TSP. In INTC, each interrupt of
-> INT 128 to INT136 combines 32 interrupts.
-> 
-> Introduce a new aspeed_intc class with instance_init and realize handlers.
-> 
-> So far, this model only supports GICINT128 to GICINT136.
-> It creates 9 GICINT or-gates to connect 32 interrupts sources
-> from GICINT128 to GICINT136 as IRQ GPIO-OUTPUT pins.
-> Then, this model registers IRQ handler with its IRQ GPIO-INPUT pins which
-> connect to GICINT or-gates. And creates 9 GICINT IRQ GPIO-OUTPUT pins which
-> connect to GIC device with GIC IRQ 128 to 136.
-> 
-> If one interrupt source from GICINT128 to GICINT136
-> set irq, the OR-GATE irq callback function is called and set irq to INTC by
-> OR-GATE GPIO-OUTPUT pins. Then, the INTC irq callback function is called and
-> set irq to GIC by its GICINT IRQ GPIO-OUTPUT pins. Finally, the GIC irq
-> callback function is called and set irq to CPUs and
-> CPUs execute Interrupt Service Routine (ISR).
-
-It is difficult to understand what the model does :/
-
-> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+On Thu, Apr 25, 2024 at 5:58=E2=80=AFAM <dongwon.kim@intel.com> wrote:
+>
+> From: Dongwon Kim <dongwon.kim@intel.com>
+>
+> This commit introduces utility functions for the creation and deallocatio=
+n
+> of QemuDmaBuf instances. Additionally, it updates all relevant sections
+> of the codebase to utilize these new utility functions.
+>
+> v7: remove prefix, "dpy_gl_" from all helpers
+>     qemu_dmabuf_free() returns without doing anything if input is null
+>     (Daniel P. Berrang=C3=A9 <berrange@redhat.com>)
+>     call G_DEFINE_AUTOPTR_CLEANUP_FUNC for qemu_dmabuf_free()
+>     (Daniel P. Berrang=C3=A9 <berrange@redhat.com>)
+>
+> v8: Introduction of helpers was removed as those were already added
+>     by the previous commit
+>
+> v9: set dmabuf->allow_fences to 'true' when dmabuf is created in
+>     virtio_gpu_create_dmabuf()/virtio-gpu-udmabuf.c
+>
+>     removed unnecessary spaces were accidently added in the patch,
+>     'ui/console: Use qemu_dmabuf_new() a...'
+>
+> v11: Calling qemu_dmabuf_close was removed as closing dmabuf->fd will be
+>      done in qemu_dmabuf_free anyway.
+>      (Daniel P. Berrang=C3=A9 <berrange@redhat.com>)
+>
+> v12: --- Calling qemu_dmabuf_close separately as qemu_dmabuf_free doesn't
+>          do it.
+>
+>      --- 'dmabuf' is now allocated space so it should be freed at the end=
+ of
+>          dbus_scanout_texture
+>
+> Suggested-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Cc: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Cc: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
 > ---
->   hw/intc/aspeed_intc.c         | 269 ++++++++++++++++++++++++++++++++++
->   hw/intc/meson.build           |   1 +
->   hw/intc/trace-events          |   6 +
->   include/hw/intc/aspeed_intc.h |  35 +++++
->   4 files changed, 311 insertions(+)
->   create mode 100644 hw/intc/aspeed_intc.c
->   create mode 100644 include/hw/intc/aspeed_intc.h
-> 
-> diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
-> new file mode 100644
-> index 0000000000..df31900d56
-> --- /dev/null
-> +++ b/hw/intc/aspeed_intc.c
-> @@ -0,0 +1,269 @@
-> +/*
-> + * ASPEED INTC Controller
-> + *
-> + * Copyright (C) 2024 ASPEED Technology Inc.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "hw/intc/aspeed_intc.h"
-> +#include "hw/irq.h"
-> +#include "migration/vmstate.h"
-> +#include "qemu/bitops.h"
-> +#include "qemu/log.h"
-> +#include "qemu/module.h"
-> +#include "hw/intc/arm_gicv3.h"
-> +#include "trace.h"
-> +#include "hw/registerfields.h"
-> +#include "qapi/error.h"
-> +
-> +/* INTC Registers */
-> +REG32(GICINT128_EN,         0x1000)
-> +REG32(GICINT128_STATUS,     0x1004)
-> +REG32(GICINT129_EN,         0x1100)
-> +REG32(GICINT129_STATUS,     0x1104)
-> +REG32(GICINT130_EN,         0x1200)
-> +REG32(GICINT130_STATUS,     0x1204)
-> +REG32(GICINT131_EN,         0x1300)
-> +REG32(GICINT131_STATUS,     0x1304)
-> +REG32(GICINT132_EN,         0x1400)
-> +REG32(GICINT132_STATUS,     0x1404)
-> +REG32(GICINT133_EN,         0x1500)
-> +REG32(GICINT133_STATUS,     0x1504)
-> +REG32(GICINT134_EN,         0x1600)
-> +REG32(GICINT134_STATUS,     0x1604)
-> +REG32(GICINT135_EN,         0x1700)
-> +REG32(GICINT135_STATUS,     0x1704)
-> +REG32(GICINT136_EN,         0x1800)
-> +REG32(GICINT136_STATUS,     0x1804)
-> +
-> +#define GICINT_EN_BASE     R_GICINT128_EN
-> +
-> +/*
-> + * The address of GICINT128 to GICINT136 are from 0x1000 to 0x1804.
-> + * Utilize "address & 0x0f00" to get the gicint_out index and
-> + * its gic irq.
-> + */
-> +static void aspeed_intc_update(AspeedINTCState *s, int irq, int level)
-> +{
-> +    uint32_t gicint_enable_addr = GICINT_EN_BASE + ((0x100 * irq) >> 2);
-> +    uint32_t gicint_status_addr = gicint_enable_addr + (0x4 >> 2);
-> +
-> +    if (s->trigger[irq]) {
-> +        if (!level && !s->regs[gicint_status_addr]) {
-> +            /* clear irq */
-> +            trace_aspeed_intc_update_irq(irq, 0);
-> +            qemu_set_irq(s->gicint_out[irq], 0);
-> +            s->trigger[irq] = false;
-> +        }
-> +    } else {
-> +        if (s->new_gicint_status[irq]) {
-> +            /* set irq */
-> +            trace_aspeed_intc_update_irq(irq, 1);
-> +            s->regs[gicint_status_addr] = s->new_gicint_status[irq];
-> +            s->new_gicint_status[irq] = 0;
-> +            qemu_set_irq(s->gicint_out[irq], 1);
-> +            s->trigger[irq] = true;
-> +        }
-> +    }
+>  include/hw/vfio/vfio-common.h   |  2 +-
+>  include/hw/virtio/virtio-gpu.h  |  4 ++--
+>  hw/display/vhost-user-gpu.c     | 21 +++++++++++----------
+>  hw/display/virtio-gpu-udmabuf.c | 24 +++++++++---------------
+>  hw/vfio/display.c               | 26 ++++++++++++--------------
+>  ui/dbus-listener.c              | 29 +++++++++++++----------------
+>  6 files changed, 48 insertions(+), 58 deletions(-)
+>
+> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.=
+h
+> index b9da6c08ef..d66e27db02 100644
+> --- a/include/hw/vfio/vfio-common.h
+> +++ b/include/hw/vfio/vfio-common.h
+> @@ -148,7 +148,7 @@ typedef struct VFIOGroup {
+>  } VFIOGroup;
+>
+>  typedef struct VFIODMABuf {
+> -    QemuDmaBuf buf;
+> +    QemuDmaBuf *buf;
+>      uint32_t pos_x, pos_y, pos_updates;
+>      uint32_t hot_x, hot_y, hot_updates;
+>      int dmabuf_id;
+> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gp=
+u.h
+> index ed44cdad6b..56d6e821bf 100644
+> --- a/include/hw/virtio/virtio-gpu.h
+> +++ b/include/hw/virtio/virtio-gpu.h
+> @@ -169,7 +169,7 @@ struct VirtIOGPUBaseClass {
+>      DEFINE_PROP_UINT32("yres", _state, _conf.yres, 800)
+>
+>  typedef struct VGPUDMABuf {
+> -    QemuDmaBuf buf;
+> +    QemuDmaBuf *buf;
+>      uint32_t scanout_id;
+>      QTAILQ_ENTRY(VGPUDMABuf) next;
+>  } VGPUDMABuf;
+> @@ -238,7 +238,7 @@ struct VhostUserGPU {
+>      VhostUserBackend *vhost;
+>      int vhost_gpu_fd; /* closed by the chardev */
+>      CharBackend vhost_chr;
+> -    QemuDmaBuf dmabuf[VIRTIO_GPU_MAX_SCANOUTS];
+> +    QemuDmaBuf *dmabuf[VIRTIO_GPU_MAX_SCANOUTS];
+>      bool backend_blocked;
+>  };
+>
+> diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
+> index 454e5afcff..62e7b4376b 100644
+> --- a/hw/display/vhost-user-gpu.c
+> +++ b/hw/display/vhost-user-gpu.c
+> @@ -249,6 +249,7 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostU=
+serGpuMsg *msg)
+>      case VHOST_USER_GPU_DMABUF_SCANOUT: {
+>          VhostUserGpuDMABUFScanout *m =3D &msg->payload.dmabuf_scanout;
+>          int fd =3D qemu_chr_fe_get_msgfd(&g->vhost_chr);
+> +        uint64_t modifier =3D 0;
+>          QemuDmaBuf *dmabuf;
+>
+>          if (m->scanout_id >=3D g->parent_obj.conf.max_outputs) {
+> @@ -261,27 +262,27 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, Vhos=
+tUserGpuMsg *msg)
+>
+>          g->parent_obj.enable =3D 1;
+>          con =3D g->parent_obj.scanout[m->scanout_id].con;
+> -        dmabuf =3D &g->dmabuf[m->scanout_id];
+> +        dmabuf =3D g->dmabuf[m->scanout_id];
+>          qemu_dmabuf_close(dmabuf);
+>          dpy_gl_release_dmabuf(con, dmabuf);
+> +        g_clear_pointer(&dmabuf, qemu_dmabuf_free);
 
-I will trust you on this as I don't understand.
+This will create a dangling pointer in g->dmabuf[m->scanout_id]...
 
+>          if (fd =3D=3D -1) {
+>              dpy_gl_scanout_disable(con);
+>              break;
 
-> +}
-> +
-> +/*
-> + * The value of irq should be 0 to ASPEED_INTC_NR_GICS.
-> + * The irq 0 indicates GICINT128, irq 1 indicates GICINT129 and so on.
-> + */
-> +static void aspeed_intc_set_irq(void *opaque, int irq, int level)
-> +{
-> +    AspeedINTCState *s = (AspeedINTCState *)opaque;
-> +    uint32_t gicint_enable_addr = GICINT_EN_BASE + ((0x100 * irq) >> 2);
-> +    uint32_t enable = s->regs[gicint_enable_addr];
-> +    int i;
-> +
-> +    if (irq > ASPEED_INTC_NR_GICS) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid interrupt number: %d\n",
-> +                      __func__, irq);
-> +        return;
-> +    }
-> +
-> +    trace_aspeed_intc_set_irq(irq, level);
-> +
-> +    for (i = 0; i < 32; i++) {
-> +        if (s->gicint_orgate[irq].levels[i]) {
-> +            if (enable & BIT(i)) {
-> +                s->new_gicint_status[irq] |= BIT(i);
-> +            }
-> +        }
-> +    }
-> +
-> +    aspeed_intc_update(s, irq, level);
-> +}
-> +
-> +static uint64_t aspeed_intc_read(void *opaque, hwaddr offset, unsigned int size)
-> +{
-> +    AspeedINTCState *s = ASPEED_INTC(opaque);
-> +    uint32_t addr = offset >> 2;
-> +    uint32_t value = 0;
-> +
-> +    if (addr >= ASPEED_INTC_NR_REGS) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: Out-of-bounds read at offset 0x%" HWADDR_PRIx "\n",
-> +                      __func__, offset);
-> +        return 0;
-> +    }
-> +
-> +    switch (addr) {
-> +    case R_GICINT128_EN:
-> +    case R_GICINT129_EN:
-> +    case R_GICINT130_EN:
-> +    case R_GICINT131_EN:
-> +    case R_GICINT132_EN:
-> +    case R_GICINT133_EN:
-> +    case R_GICINT134_EN:
-> +    case R_GICINT135_EN:
-> +    case R_GICINT136_EN:
-> +    case R_GICINT128_STATUS:
-> +    case R_GICINT129_STATUS:
-> +    case R_GICINT130_STATUS:
-> +    case R_GICINT131_STATUS:
-> +    case R_GICINT132_STATUS:
-> +    case R_GICINT133_STATUS:
-> +    case R_GICINT134_STATUS:
-> +    case R_GICINT135_STATUS:
-> +    case R_GICINT136_STATUS:
-> +        value = s->regs[addr];
-> +        break;
-> +    default:
-> +        value = s->regs[addr];
-> +        break;
-> +    }
-> +
-> +    trace_aspeed_intc_read(offset, size, value);
-> +
-> +    return value;
-> +}
-> +
-> +static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
-> +                                        unsigned size)
-> +{
-> +    AspeedINTCState *s = ASPEED_INTC(opaque);
-> +    uint32_t irq = (offset & 0x0f00) >> 8;
-> +    uint32_t addr = offset >> 2;
-> +
-> +
-> +    if (addr >= ASPEED_INTC_NR_REGS) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx "\n",
-> +                      __func__, offset);
-> +        return;
-> +    }
-> +
-> +    trace_aspeed_intc_write(offset, size, data);
-> +
-> +    switch (addr) {
-> +    case R_GICINT128_EN:
-> +    case R_GICINT129_EN:
-> +    case R_GICINT130_EN:
-> +    case R_GICINT131_EN:
-> +    case R_GICINT132_EN:
-> +    case R_GICINT133_EN:
-> +    case R_GICINT134_EN:
-> +    case R_GICINT135_EN:
-> +    case R_GICINT136_EN:
-> +        s->regs[addr] = data;
-> +        break;
-> +    case R_GICINT128_STATUS:
-> +    case R_GICINT129_STATUS:
-> +    case R_GICINT130_STATUS:
-> +    case R_GICINT131_STATUS:
-> +    case R_GICINT132_STATUS:
-> +    case R_GICINT133_STATUS:
-> +    case R_GICINT134_STATUS:
-> +    case R_GICINT135_STATUS:
-> +    case R_GICINT136_STATUS:
-> +        /* clear status */
-> +        s->regs[addr] &= ~data;
-> +        if (!s->regs[addr]) {
-> +            aspeed_intc_update(s, irq, 0);
-> +        }
-> +        break;
-> +    default:
-> +        s->regs[addr] = data;
-> +        break;
-> +    }
-> +
-> +    return;
-> +}
-> +
-> +static const MemoryRegionOps aspeed_intc_ops = {
-> +    .read = aspeed_intc_read,
-> +    .write = aspeed_intc_write,
-> +    .endianness = DEVICE_LITTLE_ENDIAN,
-> +    .valid = {
-> +        .min_access_size = 4,
-> +        .max_access_size = 4,
-> +    }
-> +};
-> +
-> +static void aspeed_intc_instance_init(Object *obj)
-> +{
-> +    AspeedINTCState *s = ASPEED_INTC(obj);
-> +    int i;
-> +
-> +    for (i = 0; i < ASPEED_INTC_NR_GICS; i++) {
-> +        object_initialize_child(obj, "gic-orgate[*]", &s->gicint_orgate[i],
-> +                                TYPE_OR_IRQ);
-> +        object_property_set_int(OBJECT(&s->gicint_orgate[i]), "num-lines",
-> +                                32, &error_abort);
-> +    }
-> +}
-> +
-> +static void aspeed_intc_reset(DeviceState *dev)
-> +{
-> +    AspeedINTCState *s = ASPEED_INTC(dev);
-> +    memset(s->regs, 0, sizeof(s->regs));
-> +    memset(s->trigger, 0, sizeof(s->trigger));
-> +    memset(s->new_gicint_status, 0, sizeof(s->new_gicint_status));
-> +}
-> +
-> +static void aspeed_intc_realize(DeviceState *dev, Error **errp)
-> +{
-> +    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-> +    AspeedINTCState *s = ASPEED_INTC(dev);
-> +    int i;
-> +
-> +    memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_intc_ops, s,
-> +                          TYPE_ASPEED_INTC ".regs", ASPEED_INTC_NR_REGS << 2);
-> +
-> +    sysbus_init_mmio(sbd, &s->iomem);
-> +    qdev_init_gpio_in(dev, aspeed_intc_set_irq, ASPEED_INTC_NR_GICS);
-> +
-> +    for (i = 0; i < ASPEED_INTC_NR_GICS; i++) {
-> +        sysbus_init_irq(sbd, &s->gicint_out[i]);
-> +    }
+.. which may persist here
 
-Why aren't the orgates realized here ?
+>          }
+> -        *dmabuf =3D (QemuDmaBuf) {
+> -            .fd =3D fd,
+> -            .width =3D m->fd_width,
+> -            .height =3D m->fd_height,
+> -            .stride =3D m->fd_stride,
+> -            .fourcc =3D m->fd_drm_fourcc,
+> -            .y0_top =3D m->fd_flags & VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP,
+> -        };
+>          if (msg->request =3D=3D VHOST_USER_GPU_DMABUF_SCANOUT2) {
+>              VhostUserGpuDMABUFScanout2 *m2 =3D &msg->payload.dmabuf_scan=
+out2;
+> -            dmabuf->modifier =3D m2->modifier;
+> +            modifier =3D m2->modifier;
+>          }
+>
+> +        dmabuf =3D qemu_dmabuf_new(m->fd_width, m->fd_height,
+> +                                 m->fd_stride, 0, 0, 0, 0,
+> +                                 m->fd_drm_fourcc, modifier,
+> +                                 fd, false, m->fd_flags &
+> +                                 VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP);
+> +
+>          dpy_gl_scanout_dmabuf(con, dmabuf);
+> +        g->dmabuf[m->scanout_id] =3D dmabuf;
+>          break;
+>      }
+>      case VHOST_USER_GPU_DMABUF_UPDATE: {
+> diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udma=
+buf.c
+> index c90eba281e..c02ec6d37d 100644
+> --- a/hw/display/virtio-gpu-udmabuf.c
+> +++ b/hw/display/virtio-gpu-udmabuf.c
+> @@ -162,7 +162,8 @@ static void virtio_gpu_free_dmabuf(VirtIOGPU *g, VGPU=
+DMABuf *dmabuf)
+>      struct virtio_gpu_scanout *scanout;
+>
+>      scanout =3D &g->parent_obj.scanout[dmabuf->scanout_id];
+> -    dpy_gl_release_dmabuf(scanout->con, &dmabuf->buf);
+> +    dpy_gl_release_dmabuf(scanout->con, dmabuf->buf);
+> +    g_clear_pointer(&dmabuf->buf, qemu_dmabuf_free);
+>      QTAILQ_REMOVE(&g->dmabuf.bufs, dmabuf, next);
+>      g_free(dmabuf);
+>  }
+> @@ -181,17 +182,10 @@ static VGPUDMABuf
+>      }
+>
+>      dmabuf =3D g_new0(VGPUDMABuf, 1);
+> -    dmabuf->buf.width =3D r->width;
+> -    dmabuf->buf.height =3D r->height;
+> -    dmabuf->buf.stride =3D fb->stride;
+> -    dmabuf->buf.x =3D r->x;
+> -    dmabuf->buf.y =3D r->y;
+> -    dmabuf->buf.backing_width =3D fb->width;
+> -    dmabuf->buf.backing_height =3D fb->height;
+> -    dmabuf->buf.fourcc =3D qemu_pixman_to_drm_format(fb->format);
+> -    dmabuf->buf.fd =3D res->dmabuf_fd;
+> -    dmabuf->buf.allow_fences =3D true;
+> -    dmabuf->buf.draw_submitted =3D false;
+> +    dmabuf->buf =3D qemu_dmabuf_new(r->width, r->height, fb->stride,
+> +                                  r->x, r->y, fb->width, fb->height,
+> +                                  qemu_pixman_to_drm_format(fb->format),
+> +                                  0, res->dmabuf_fd, true, false);
+>      dmabuf->scanout_id =3D scanout_id;
+>      QTAILQ_INSERT_HEAD(&g->dmabuf.bufs, dmabuf, next);
+>
+> @@ -217,11 +211,11 @@ int virtio_gpu_update_dmabuf(VirtIOGPU *g,
+>          old_primary =3D g->dmabuf.primary[scanout_id];
+>      }
+>
+> -    width =3D qemu_dmabuf_get_width(&new_primary->buf);
+> -    height =3D qemu_dmabuf_get_height(&new_primary->buf);
+> +    width =3D qemu_dmabuf_get_width(new_primary->buf);
+> +    height =3D qemu_dmabuf_get_height(new_primary->buf);
+>      g->dmabuf.primary[scanout_id] =3D new_primary;
+>      qemu_console_resize(scanout->con, width, height);
+> -    dpy_gl_scanout_dmabuf(scanout->con, &new_primary->buf);
+> +    dpy_gl_scanout_dmabuf(scanout->con, new_primary->buf);
+>
+>      if (old_primary) {
+>          virtio_gpu_free_dmabuf(g, old_primary);
+> diff --git a/hw/vfio/display.c b/hw/vfio/display.c
+> index 7784502b53..fe624a6c9b 100644
+> --- a/hw/vfio/display.c
+> +++ b/hw/vfio/display.c
+> @@ -241,14 +241,11 @@ static VFIODMABuf *vfio_display_get_dmabuf(VFIOPCID=
+evice *vdev,
+>
+>      dmabuf =3D g_new0(VFIODMABuf, 1);
+>      dmabuf->dmabuf_id  =3D plane.dmabuf_id;
+> -    dmabuf->buf.width  =3D plane.width;
+> -    dmabuf->buf.height =3D plane.height;
+> -    dmabuf->buf.backing_width =3D plane.width;
+> -    dmabuf->buf.backing_height =3D plane.height;
+> -    dmabuf->buf.stride =3D plane.stride;
+> -    dmabuf->buf.fourcc =3D plane.drm_format;
+> -    dmabuf->buf.modifier =3D plane.drm_format_mod;
+> -    dmabuf->buf.fd     =3D fd;
+> +    dmabuf->buf =3D qemu_dmabuf_new(plane.width, plane.height,
+> +                                  plane.stride, 0, 0, plane.width,
+> +                                  plane.height, plane.drm_format,
+> +                                  plane.drm_format_mod, fd, false, false=
+);
+> +
+>      if (plane_type =3D=3D DRM_PLANE_TYPE_CURSOR) {
+>          vfio_display_update_cursor(dmabuf, &plane);
+>      }
+> @@ -261,8 +258,9 @@ static void vfio_display_free_one_dmabuf(VFIODisplay =
+*dpy, VFIODMABuf *dmabuf)
+>  {
+>      QTAILQ_REMOVE(&dpy->dmabuf.bufs, dmabuf, next);
+>
+> -    qemu_dmabuf_close(&dmabuf->buf);
+> -    dpy_gl_release_dmabuf(dpy->con, &dmabuf->buf);
+> +    qemu_dmabuf_close(dmabuf->buf);
+> +    dpy_gl_release_dmabuf(dpy->con, dmabuf->buf);
+> +    g_clear_pointer(&dmabuf->buf, qemu_dmabuf_free);
+>      g_free(dmabuf);
+>  }
+>
+> @@ -298,13 +296,13 @@ static void vfio_display_dmabuf_update(void *opaque=
+)
+>          return;
+>      }
+>
+> -    width =3D qemu_dmabuf_get_width(&primary->buf);
+> -    height =3D qemu_dmabuf_get_height(&primary->buf);
+> +    width =3D qemu_dmabuf_get_width(primary->buf);
+> +    height =3D qemu_dmabuf_get_height(primary->buf);
+>
+>      if (dpy->dmabuf.primary !=3D primary) {
+>          dpy->dmabuf.primary =3D primary;
+>          qemu_console_resize(dpy->con, width, height);
+> -        dpy_gl_scanout_dmabuf(dpy->con, &primary->buf);
+> +        dpy_gl_scanout_dmabuf(dpy->con, primary->buf);
+>          free_bufs =3D true;
+>      }
+>
+> @@ -318,7 +316,7 @@ static void vfio_display_dmabuf_update(void *opaque)
+>      if (cursor && (new_cursor || cursor->hot_updates)) {
+>          bool have_hot =3D (cursor->hot_x !=3D 0xffffffff &&
+>                           cursor->hot_y !=3D 0xffffffff);
+> -        dpy_gl_cursor_dmabuf(dpy->con, &cursor->buf, have_hot,
+> +        dpy_gl_cursor_dmabuf(dpy->con, cursor->buf, have_hot,
+>                               cursor->hot_x, cursor->hot_y);
+>          cursor->hot_updates =3D 0;
+>      } else if (!cursor && new_cursor) {
+> diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
+> index 62d1e2d3f9..d72dbe832c 100644
+> --- a/ui/dbus-listener.c
+> +++ b/ui/dbus-listener.c
+> @@ -442,28 +442,25 @@ static void dbus_scanout_texture(DisplayChangeListe=
+ner *dcl,
+>      trace_dbus_scanout_texture(tex_id, backing_y_0_top,
+>                                 backing_width, backing_height, x, y, w, h=
+);
+>  #ifdef CONFIG_GBM
+> -    QemuDmaBuf dmabuf =3D {
+> -        .width =3D w,
+> -        .height =3D h,
+> -        .y0_top =3D backing_y_0_top,
+> -        .x =3D x,
+> -        .y =3D y,
+> -        .backing_width =3D backing_width,
+> -        .backing_height =3D backing_height,
+> -    };
+> +    int fd;
+> +    uint32_t stride, fourcc;
+> +    uint64_t modifier;
+> +    QemuDmaBuf *dmabuf;
+>
+>      assert(tex_id);
+> -    dmabuf.fd =3D egl_get_fd_for_texture(
+> -        tex_id, (EGLint *)&dmabuf.stride,
+> -        (EGLint *)&dmabuf.fourcc,
+> -        &dmabuf.modifier);
+> -    if (dmabuf.fd < 0) {
+> +    fd =3D egl_get_fd_for_texture(tex_id, (EGLint *)&stride, (EGLint *)&=
+fourcc,
+> +                                &modifier);
+> +    if (fd < 0) {
+>          error_report("%s: failed to get fd for texture", __func__);
+>          return;
+>      }
+> +    dmabuf =3D qemu_dmabuf_new(w, h, stride, x, y, backing_width,
+> +                             backing_height, fourcc, modifier, fd,
+> +                             false, backing_y_0_top);
+>
+> -    dbus_scanout_dmabuf(dcl, &dmabuf);
+> -    close(dmabuf.fd);
+> +    dbus_scanout_dmabuf(dcl, dmabuf);
+> +    qemu_dmabuf_close(dmabuf);
+> +    qemu_dmabuf_free(dmabuf);
 
-> +}
-> +
-> +static void aspeed_intc_class_init(ObjectClass *klass, void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +
-> +    dc->realize = aspeed_intc_realize;
-> +    dc->reset = aspeed_intc_reset;
-> +    dc->desc = "ASPEED INTC Controller";
-> +    dc->vmsd = NULL;
-> +}
-> +
-> +static const TypeInfo aspeed_intc_info = {
-> +    .name = TYPE_ASPEED_INTC,
-> +    .parent = TYPE_SYS_BUS_DEVICE,
-> +    .instance_init = aspeed_intc_instance_init,
-> +    .instance_size = sizeof(AspeedINTCState),
-> +    .class_init = aspeed_intc_class_init,
-> +};
-> +
-> +static void aspeed_intc_register_types(void)
-> +{
-> +    type_register_static(&aspeed_intc_info);
-> +}
-> +
-> +type_init(aspeed_intc_register_types);
-> diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-> index ed355941d1..f5c574f584 100644
-> --- a/hw/intc/meson.build
-> +++ b/hw/intc/meson.build
-> @@ -14,6 +14,7 @@ system_ss.add(when: 'CONFIG_ARM_GICV3_TCG', if_true: files(
->   ))
->   system_ss.add(when: 'CONFIG_ALLWINNER_A10_PIC', if_true: files('allwinner-a10-pic.c'))
->   system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_vic.c'))
-> +system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_intc.c'))
->   system_ss.add(when: 'CONFIG_ETRAXFS', if_true: files('etraxfs_pic.c'))
->   system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4210_gic.c', 'exynos4210_combiner.c'))
->   system_ss.add(when: 'CONFIG_GOLDFISH_PIC', if_true: files('goldfish_pic.c'))
-> diff --git a/hw/intc/trace-events b/hw/intc/trace-events
-> index 1ef29d0256..30b9dd2a96 100644
-> --- a/hw/intc/trace-events
-> +++ b/hw/intc/trace-events
-> @@ -79,6 +79,12 @@ aspeed_vic_update_fiq(int flags) "Raising FIQ: %d"
->   aspeed_vic_update_irq(int flags) "Raising IRQ: %d"
->   aspeed_vic_read(uint64_t offset, unsigned size, uint32_t value) "From 0x%" PRIx64 " of size %u: 0x%" PRIx32
->   aspeed_vic_write(uint64_t offset, unsigned size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
-> +# aspeed_intc.c
-> +aspeed_intc_read(uint64_t offset, unsigned size, uint32_t value) "From 0x%" PRIx64 " of size %u: 0x%" PRIx32
-> +aspeed_intc_write(uint64_t offset, unsigned size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
-> +aspeed_intc_set_irq(int irq, int level) "Set IRQ %d: %d"
-> +aspeed_intc_update_irq(int irq, int level) "Update IRQ: %d: %d"
-> +aspeed_intc_debug(uint32_t offset, uint32_t value) "Debug 0x%x: 0x%x"
->   
->   # arm_gic.c
->   gic_enable_irq(int irq) "irq %d enabled"
-> diff --git a/include/hw/intc/aspeed_intc.h b/include/hw/intc/aspeed_intc.h
-> new file mode 100644
-> index 0000000000..0d2fbbda8f
-> --- /dev/null
-> +++ b/include/hw/intc/aspeed_intc.h
-> @@ -0,0 +1,35 @@
-> +/*
-> + * ASPEED INTC Controller
-> + *
-> + * Copyright (C) 2024 ASPEED Technology Inc.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +#ifndef ASPEED_INTC_H
-> +#define ASPEED_INTC_H
-> +
-> +#include "hw/sysbus.h"
-> +#include "qom/object.h"
-> +#include "hw/or-irq.h"
-> +
-> +#define TYPE_ASPEED_INTC "aspeed.intc"
-> +OBJECT_DECLARE_SIMPLE_TYPE(AspeedINTCState, ASPEED_INTC)
-> +
-> +#define ASPEED_INTC_NR_REGS (0x2000 >> 2)
-> +#define ASPEED_INTC_NR_GICS 9
-> +
-> +struct AspeedINTCState {
-> +    /*< private >*/
-> +    SysBusDevice parent_obj;
-> +    DeviceState *gic;
-> +
-> +    /*< public >*/
-> +    MemoryRegion iomem;
-> +    uint32_t regs[ASPEED_INTC_NR_REGS];
-> +    OrIRQState gicint_orgate[ASPEED_INTC_NR_GICS];
-> +    qemu_irq gicint_out[ASPEED_INTC_NR_GICS];
-> +    bool trigger[ASPEED_INTC_NR_GICS];
-> +    uint32_t new_gicint_status[ASPEED_INTC_NR_GICS];
+it could use g_autoptr() instead, but that's ok too.
 
-I don't think the gicint prefix is useful in the names. I am struggling to
-catch what new_gicint_status and trigger really do.
+>  #endif
+>
+>  #ifdef WIN32
+> --
+> 2.34.1
+>
 
-
-Thanks,
-
-C.
-
-
-
-
-> +};
-> +
-> +#endif /* ASPEED_INTC_H */
+looks ok otherwise
 
 
