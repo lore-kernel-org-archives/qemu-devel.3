@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B7CEC25B4F
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 10:50:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3955CC25B4F
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 10:50:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4IO5-0008Je-Nh; Tue, 07 May 2024 06:49:35 -0400
+	id 1s4IOD-0008QL-9g; Tue, 07 May 2024 06:49:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4INu-0008D8-NH; Tue, 07 May 2024 06:49:23 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4INs-0007Vk-VD; Tue, 07 May 2024 06:49:22 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1eab16c8d83so21941055ad.3; 
- Tue, 07 May 2024 03:49:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715078959; x=1715683759; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=REnlp3h0pLf5O6waaBHoThFYvF9f/f0guPiaD6nis6U=;
- b=ZL+s+pdMl18kP270x7JQfzaidfxGswl+MALEShi7mFLNULZDJQQAeBiHM+cT/Tbzy/
- ZO/QiiABXXUgC1Od8biWIrl/fAuiF7AQJUivvDc+230Fbxles05xCeQrUV94ucGz/+NH
- VqSntWJX3wDM/CTKNRSdn90kgjmWDOpxZQuEN5wpsNjqC9+lin1SA8eCpl13HvnEDBGK
- pIT/rSF1/CfmeW28PWfDfF7LIvur6UmvM1PrMbNcocedgp7xVkSikJ0K4nkf4OAKnhEq
- pcia3vdU44T7pqeX+8hJ+oVqreFzDOTjAup/VHvev3NBNLKfL/XcGyqUM/U7zQeM8lhF
- uXRA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1s4IO6-0008Lj-QS
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 06:49:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1s4IO5-0007d7-4Y
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 06:49:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715078972;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ti0wXm0yvKxFk/IcUXQzmvTAJt0gDIEZSIYDJ2MTpOU=;
+ b=doIxDW8hRundziltevGJlWxVEHMk1ADPE1jLRaktXFkTkXe4pPnVvwGyvDTFdMClfs3xyL
+ 2RxyWPKU2HIt/PwWK+Grtl+yzbLzb8Xdvqy/lO0y7Z4D9Du7P5hLuzrIexgObtcGgMie99
+ nMoIHNCrvNiR4/s/7cw2dNUQb+Bt9fM=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-544-iljAQtYyNOaIJ6JL0u9HOA-1; Tue, 07 May 2024 06:49:30 -0400
+X-MC-Unique: iljAQtYyNOaIJ6JL0u9HOA-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a59a212d874so215908166b.1
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 03:49:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715078959; x=1715683759;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=REnlp3h0pLf5O6waaBHoThFYvF9f/f0guPiaD6nis6U=;
- b=a1itRUq9aQg8/OXzhybdrWiqmdKwE9xPfYJZunmG4PwLpuzg1TmOsOD63F4mlU/rC/
- UPieZcSGfkKv06gQOqCmWaUhENwwMCykLOqnfGy2psVt135llivCWm7nrDcSiSB3Cd2V
- s2IuIqVQlEzVuBPErYWc7h/XnBMyw8mylfBGaL7EqTH8J62QmiktNg+obO3S2rt4N4Dv
- W5DfwPTwGZcHGzrRoRfqi6HZxvK316gQFexyu323MQgaOd9XRTjQmJ4Uvltw05WERD09
- bQOJNL6doongbGOgbAH6ZNcfL76JM7LL+9c7EsCRJWUmEldvEcm6SS4fdbLfiDHAITCs
- mIIQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCULv5TmY5c8s+pW1HGB3MEkRxP5bZuX9FqS9SOcTDtG0CNZOxVhstjPF/Hig2XOhls53A+73M4EA0rpMWwK90GaJeubZqaba/YoOChN4YEa09jRQQL3c0b8Kho=
-X-Gm-Message-State: AOJu0Yxmy1A7nrR5qcvTHG2g0O2LhoaKfUQJ7PStkuLMtFh5uw6LE4T8
- 2fmyicba8Znzgjg1pGaLJt5xJ19vcD51bVJBDuVZaamW6piEcYgR
-X-Google-Smtp-Source: AGHT+IEGMxwvcTG8PmLxBRBF3lrBxVgnKVvFWIaALXqapL/aXsvROhgznXrY4WUIPpjpvzimlnxcSg==
-X-Received: by 2002:a17:902:d344:b0:1ea:f921:61db with SMTP id
- l4-20020a170902d34400b001eaf92161dbmr10504151plk.58.1715078958936; 
- Tue, 07 May 2024 03:49:18 -0700 (PDT)
-Received: from localhost (220-245-239-57.tpgi.com.au. [220.245.239.57])
+ d=1e100.net; s=20230601; t=1715078969; x=1715683769;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ti0wXm0yvKxFk/IcUXQzmvTAJt0gDIEZSIYDJ2MTpOU=;
+ b=S8BVTWAjdsvTq9fxmd7kW55WbUu/a+4ZDB4m4hlbh+J2puj3b9euzFgjUsYuOzAm0X
+ cR6RSFQpD3VwoTHDJNO8kYKKc6tqL+ZRA4Gq9JGMIIy6qKqs0sZ0g9xThp0xQY7O7otl
+ KMrPZ3gjVVIuCyOYktdz7KnK9OXc0MS4R2K1+Y6aexqLjtdIQm2kdIPB9WTiRVP1wdmH
+ 2cTx+VYwYArvbKw+3IKPh8uIYhM1aXf+lIAXBOPtehrt21YLlPb6BsK82HHHlh6Uevj4
+ 4Y7HBgdyCKS+xHV/U+bjl9ZDcelzqgy1z6oAlo3Nej1oS4d639AC+6xy3W1b+xnVch3p
+ poow==
+X-Gm-Message-State: AOJu0Yx5yZoX2wYT/xOP4vysn4FZl+0DALMHCJeEgkS4tj4ts+xtKUbT
+ bNBZ3E2tOvL248ubYiaD66n10noIr1NIIiaJdcqJBrdzFlx9UHKeuz2D/zfYP6lS0ZtiXDK60PG
+ 0EysM0xZLpmuR+NzV2duWLsIkUku8gsjAAlD91MJdStVcY/kfVQ/pJPiFF9rWtJRgGdq9QKIShN
+ wvnG+vF3Ac6lPLTLEsjHU88VlQZ7UuYxB46jgr
+X-Received: by 2002:a17:907:7da6:b0:a59:aa9d:3142 with SMTP id
+ oz38-20020a1709077da600b00a59aa9d3142mr7048875ejc.37.1715078969059; 
+ Tue, 07 May 2024 03:49:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEeOBJvQVTC4es33OR5lWgN65OmXay+tEqDVjMH3RNBrmpWxr4OaGG/CRmfOlz6ARups1tmrw==
+X-Received: by 2002:a17:907:7da6:b0:a59:aa9d:3142 with SMTP id
+ oz38-20020a1709077da600b00a59aa9d3142mr7048855ejc.37.1715078968619; 
+ Tue, 07 May 2024 03:49:28 -0700 (PDT)
+Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- q9-20020a17090311c900b001e944fc9248sm9716321plh.194.2024.05.07.03.49.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 May 2024 03:49:18 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+ rh12-20020a17090720ec00b00a59a0cbf048sm4576562ejb.13.2024.05.07.03.49.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 07 May 2024 03:49:28 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+Subject: [PATCH] configure: quote -D options that are passed to meson
+Date: Tue,  7 May 2024 12:49:26 +0200
+Message-ID: <20240507104926.179301-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.45.0
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 07 May 2024 20:49:14 +1000
-Message-Id: <D13CQYJAUWTM.1A6N55S7X77O7@gmail.com>
-Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
-Subject: Re: [PATCH v2 21/28] target/ppc: Move mmu_ctx_t definition to
- mmu_common.c
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
- <qemu-ppc@nongnu.org>
-X-Mailer: aerc 0.17.0
-References: <cover.1714606359.git.balaton@eik.bme.hu>
- <441004d25ece7b536825906e0325235bc2614b5d.1714606359.git.balaton@eik.bme.hu>
-In-Reply-To: <441004d25ece7b536825906e0325235bc2614b5d.1714606359.git.balaton@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,75 +99,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu May 2, 2024 at 9:43 AM AEST, BALATON Zoltan wrote:
-> This type is only used within mmu_common.c. Move its definition from
-> internal.h to there.
+Ensure that they go through unmodified, instead of removing one layer
+of quoting.
 
-This can be squashed with the previous patch unexport the
-remaining user.
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-
->
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
->  target/ppc/internal.h   | 12 ------------
->  target/ppc/mmu_common.c | 11 +++++++++++
->  2 files changed, 11 insertions(+), 12 deletions(-)
->
-> diff --git a/target/ppc/internal.h b/target/ppc/internal.h
-> index 7a99f08dc8..61c2aadd0d 100644
-> --- a/target/ppc/internal.h
-> +++ b/target/ppc/internal.h
-> @@ -256,8 +256,6 @@ static inline int prot_for_access_type(MMUAccessType =
-access_type)
-> =20
->  /* PowerPC MMU emulation */
-> =20
-> -typedef struct mmu_ctx_t mmu_ctx_t;
-> -
->  bool ppc_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
->                        hwaddr *raddrp, int *psizep, int *protp,
->                        int mmu_idx, bool guest_visible);
-> @@ -265,16 +263,6 @@ bool ppc_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAcce=
-ssType access_type,
->  /* Software driven TLB helpers */
->  int ppc6xx_tlb_getnum(CPUPPCState *env, target_ulong eaddr,
->                                      int way, int is_code);
-> -/* Context used internally during MMU translations */
-> -struct mmu_ctx_t {
-> -    hwaddr raddr;      /* Real address              */
-> -    hwaddr eaddr;      /* Effective address         */
-> -    int prot;                      /* Protection bits           */
-> -    hwaddr hash[2];    /* Pagetable hash values     */
-> -    target_ulong ptem;             /* Virtual segment ID | API  */
-> -    int key;                       /* Access key                */
-> -    int nx;                        /* Non-execute area          */
-> -};
-> =20
->  #endif /* !CONFIG_USER_ONLY */
-> =20
-> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-> index 4852cb5571..41ef174ab4 100644
-> --- a/target/ppc/mmu_common.c
-> +++ b/target/ppc/mmu_common.c
-> @@ -35,6 +35,17 @@
-> =20
->  /* #define DUMP_PAGE_TABLES */
-> =20
-> +/* Context used internally during MMU translations */
-> +typedef struct {
-> +    hwaddr raddr;      /* Real address             */
-> +    hwaddr eaddr;      /* Effective address        */
-> +    int prot;          /* Protection bits          */
-> +    hwaddr hash[2];    /* Pagetable hash values    */
-> +    target_ulong ptem; /* Virtual segment ID | API */
-> +    int key;           /* Access key               */
-> +    int nx;            /* Non-execute area         */
-> +} mmu_ctx_t;
-> +
->  void ppc_store_sdr1(CPUPPCState *env, target_ulong value)
->  {
->      PowerPCCPU *cpu =3D env_archcpu(env);
+diff --git a/configure b/configure
+index bd85377a6ae..10fbe10ad9c 100755
+--- a/configure
++++ b/configure
+@@ -764,7 +764,7 @@ for opt do
+   --*) meson_option_parse "$opt" "$optarg"
+   ;;
+   # Pass through -Dxxxx options to meson
+-  -D*) meson_options="$meson_options $opt"
++  -D*) meson_option_add "$opt"
+   ;;
+   esac
+ done
+-- 
+2.45.0
 
 
