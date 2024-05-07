@@ -4,76 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3563DC25B4F
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 18:16:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF7F8C10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 18:28:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4PLP-0000VG-5d; Tue, 07 May 2024 14:15:15 -0400
+	id 1s4PXT-0000HE-8w; Tue, 07 May 2024 14:27:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <faithilikerun@gmail.com>)
- id 1s4PL6-0000NN-Dl; Tue, 07 May 2024 14:14:58 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s4PXP-0000Gp-CR
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 14:27:39 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <faithilikerun@gmail.com>)
- id 1s4PL4-0002l3-Nr; Tue, 07 May 2024 14:14:56 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-2b2bc7b37bcso3001509a91.2; 
- Tue, 07 May 2024 11:14:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s4PXM-00012S-R2
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 14:27:39 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1ec4b2400b6so29460675ad.3
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 11:27:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715105692; x=1715710492; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=darRKVJjCTh+cD23wYc6yj8pxz31pAEK6v1QtVB0M70=;
- b=Jwkw/EAPRiz7nN9DsqEvjHnQZgzJHJ4zz08iKDiRKLLherHzimiijxYqE8kXuN7FWw
- jiwpZzFRSfhZ47m9CBLFifi/tl6t1QqDdSj4HaFBk3GOFJXvkxNE5cJ7D/l/wj4C5LIW
- 0D5Z0kIZixiU8zIl/aJNgtwy2IKbR3Vx6F4J6sthUX7hVkRMOex0dIZMQz420zCqosk5
- tVMymprWq1Pf88rAA/BOdMGVBhGQs3gKIaGYT1l/sTY2jSMqmiEqhYhk/anRafoLftDm
- FvU35AbRxHUV9/NXSagm+IBvNdiDqc3f3G626Qpj/9SL5BHwzV4cDFodOlteUZuQuzkp
- mfKg==
+ d=linaro.org; s=google; t=1715106454; x=1715711254; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=CwMi06/1PqRiZMpvJ1zhf7crsIcDUR2zcnNMjbREkHw=;
+ b=lRv7CXoE+tIVL5viNqf4IKMsZRNkF6VDwiXwyzDkKj3S5giLieJrwYLjpAq+NuvbMI
+ sPruPV1Kbh8UkIQY5vq7eCnuVit5gtaeNev365rqQWs0mSLibWMQHrRr51OGxanvwQBA
+ gXUGI9+1oohCiygmGyGTjSdq0/BJqRPY12ZXM4MjFq5bCjuYQKU+56ZRuiK2qNf1/e4a
+ 4qU1tsXd6fVxks1escncm3HBRwpD1gdgVP3yJwc32m4V0psom+pHvcJxjWyyM6ZQR8rf
+ Q6K2FKnYPGbn2vAdTLNLivcacQJgAY7y54juuIyEFnnluqm5pwOA5VbxZ0GPxEt76mHS
+ 6uqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715105692; x=1715710492;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=darRKVJjCTh+cD23wYc6yj8pxz31pAEK6v1QtVB0M70=;
- b=HqI88dQsRj1f3BXOphtAZnW6p9z0FYQlmd1HN3n5xoPkHL5zZYnKP+usBgx6obrcqk
- XOyWeMBpgzm7WOTfUS4uswa8ahKAZCTn/AmiI5yNrRdDAkYFuU2+0sF1D+UiCp36k+cd
- mcdkxViK33cyj2kJ8K98QEaCyz1C2QvDk1sW6OTL2YS1uvHOEFJN/o6Z1on0hib88+//
- e9iVQe4ginzPmX/m5JQkej3hk5+hfF9SZ4AKcAn8IEU04pXePmbIED0Zw+43c+imb/6w
- Ec/lDrkep6orj5Nhfgc5o3k+LrIfQ4CL7Hs7KZVfqDaIxLo6xmm7vey+LLPP7Vlbsn8W
- iibQ==
+ d=1e100.net; s=20230601; t=1715106454; x=1715711254;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=CwMi06/1PqRiZMpvJ1zhf7crsIcDUR2zcnNMjbREkHw=;
+ b=eqwC3TylOYB4oaWho3xI71Q2KljihFH9oBpdTSjghXIk4Q0jUBZC+cQaXbtCBdIGz4
+ 4fphvQydehM2k1EnG/BOR1PEWyLtkbNgKhrTEbuqd08fc2vF9ToCQnOz2ZPICYUTDmF7
+ Epd01rpGa3NuLQRlDBX77lQZ8bBCQWjLdwe644ZR/ey/3B+SEEoKs+2CF7SXEa2V98Mp
+ w4Q/RPKYExdq36LqDISPN4jPlPxy7mZYrOSf0GwbRF7k9tBV1rlHUhDqwDiusL2QeK8v
+ vLSBE3CgKOS+EzYsItiAf0N5Wxv6D+VcmydW7mvnKefEc6pdEZP+/V/qtzdf3PNmXdu0
+ yT5Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWWL8gntgVs41nxBHZmXXfBMKw4JjkvkN6gf164IYsXq2kE4ZGOsxm9QVyV+QNQHgjM1S0uNZabcjYc97KCPEuvSqPOqaE=
-X-Gm-Message-State: AOJu0YxWq48zsX+dB54E51RTfeaH7u1acOT5w4tIAWZDL+2ewbj2CGjP
- O6/kZksXj1Qw7ZSJqpjkU5MTG/qD6tstXwnplxTqLjwC3elMmf03ixKJ9l/BxTQVArqr2PX0U6b
- v2iTKY13woYdR0RFne4h1MJGE94g=
-X-Google-Smtp-Source: AGHT+IGi5+TltaTG8F2lnd0BtV8c0TpqOS/2TOFE/OQUPELYuQXO7mXygvypLPW9c7NS6/N5OcuNmGpO3v5K8hGCSzs=
-X-Received: by 2002:a17:90a:598e:b0:2b2:81c0:4d85 with SMTP id
- 98e67ed59e1d1-2b616be550dmr298586a91.45.1715105692203; Tue, 07 May 2024
- 11:14:52 -0700 (PDT)
+ AJvYcCXRhCe0t9qPG6alMqS9vPlYQdRWlJyk4rTvh/Q3vv5/K5f66J2UjhgktXN+foE1nRP1m5OkJ5BLB0p+Hs6t1xAkGDIBVRY=
+X-Gm-Message-State: AOJu0Yx6mu0/WEr81bkeCaZ3DH5PYcay2nggVgfQNIooQbryoYR43jVf
+ hqwTfBM2UXP9nwc1kH5U2HqOCSRMyLDkp++atqhMwAV56gCqhTgmC/vt37NlPUU=
+X-Google-Smtp-Source: AGHT+IGtofq+e0TdrSumQ0Cs8n9c4ifhHZhC5eLbKMEBYQH3WorOissJPdHAOuav1W+7gq0lVYyXzg==
+X-Received: by 2002:a17:902:aa8e:b0:1eb:54b7:2724 with SMTP id
+ d9443c01a7336-1eeb0bad67emr3900325ad.64.1715106454205; 
+ Tue, 07 May 2024 11:27:34 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ by smtp.gmail.com with ESMTPSA id
+ jz13-20020a170903430d00b001e2a3014541sm10351011plb.190.2024.05.07.11.27.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 May 2024 11:27:33 -0700 (PDT)
+Message-ID: <ae6547a5-a16c-44de-98e5-5158bf9b5069@linaro.org>
+Date: Tue, 7 May 2024 11:27:32 -0700
 MIME-Version: 1.0
-References: <20240507180558.377233-1-stefanha@redhat.com>
-In-Reply-To: <20240507180558.377233-1-stefanha@redhat.com>
-From: Sam Li <faithilikerun@gmail.com>
-Date: Tue, 7 May 2024 20:14:25 +0200
-Message-ID: <CAAAx-8JOSj6qqmbqk-gSBi0Ksxa_bJ=rvyM69nb_y1rr4hPpxg@mail.gmail.com>
-Subject: Re: [PATCH] qemu-io: add cvtnum() error handling for zone commands
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- Peter Maydell <peter.maydell@linaro.org>, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=faithilikerun@gmail.com; helo=mail-pj1-x102b.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/26] target/i386 changes for 2024-05-07
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20240507105538.180704-1-pbonzini@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240507105538.180704-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -91,28 +96,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Stefan Hajnoczi <stefanha@redhat.com> =E4=BA=8E2024=E5=B9=B45=E6=9C=887=E6=
-=97=A5=E5=91=A8=E4=BA=8C 20:06=E5=86=99=E9=81=93=EF=BC=9A
->
-> cvtnum() parses positive int64_t values and returns a negative errno on
-> failure. Print errors and return early when cvtnum() fails.
->
-> While we're at it, also reject nr_zones values greater or equal to 2^32
-> since they cannot be represented.
->
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> Cc: Sam Li <faithilikerun@gmail.com>
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> ---
->  qemu-io-cmds.c | 48 +++++++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 47 insertions(+), 1 deletion(-)
+On 5/7/24 03:55, Paolo Bonzini wrote:
+> The following changes since commit e116b92d01c2cd75957a9f8ad1d4932292867b81:
+> 
+>    Merge tag 'qemu-sparc-20240506' ofhttps://github.com/mcayland/qemu  into staging (2024-05-06 10:19:56 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/bonzini/qemu.git  tags/for-upstream
+> 
+> for you to fetch changes up to d4e6d40c36071c287199c072cd5d296091ee5968:
+> 
+>    target/i386: remove duplicate prefix decoding (2024-05-07 08:53:26 +0200)
+> 
+> ----------------------------------------------------------------
+> * target/i386/tcg: conversion of one byte opcodes to table-based decoder
 
-Reviewed-by: Sam Li <faithilikerun@gmail.com>
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
-Hi Stefan,
 
-Thank you for fixing that. I've been a little busy with moving house lately=
- :)
+r~
 
-Sam
 
