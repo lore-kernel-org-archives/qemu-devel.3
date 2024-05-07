@@ -4,40 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15964C25B75
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64C13C25B4F
 	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 08:43:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4GPN-0003SF-GN; Tue, 07 May 2024 04:42:47 -0400
+	id 1s4GQQ-0004ix-Gk; Tue, 07 May 2024 04:43:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1s4GPI-0003N5-JP; Tue, 07 May 2024 04:42:40 -0400
+ id 1s4GQA-0004SO-02; Tue, 07 May 2024 04:43:38 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1s4GPG-0003DR-4z; Tue, 07 May 2024 04:42:40 -0400
+ id 1s4GQ8-0003HC-36; Tue, 07 May 2024 04:43:33 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AA80764BC7;
- Tue,  7 May 2024 11:42:48 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6940F64BD2;
+ Tue,  7 May 2024 11:42:49 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 8C2B9C85B0;
- Tue,  7 May 2024 11:42:29 +0300 (MSK)
-Received: (nullmailer pid 1026521 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 58039C85BB;
+ Tue,  7 May 2024 11:42:30 +0300 (MSK)
+Received: (nullmailer pid 1026555 invoked by uid 1000);
  Tue, 07 May 2024 08:42:29 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Andrew Jones <ajones@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.4 03/16] target/riscv/kvm: change timer regs size to u64
-Date: Tue,  7 May 2024 11:42:02 +0300
-Message-Id: <20240507084226.1026455-3-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Avi Fishman <Avi.Fishman@nuvoton.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.4 14/16] hw/arm/npcm7xx: Store derivative OTP fuse key in
+ little endian
+Date: Tue,  7 May 2024 11:42:13 +0300
+Message-Id: <20240507084226.1026455-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.4-20240506205855@cover.tls.msk.ru>
 References: <qemu-stable-8.2.4-20240506205855@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,100 +64,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-KVM_REG_RISCV_TIMER regs are always u64 according to the KVM API, but at
-this moment we'll return u32 regs if we're running a RISCV32 target.
+Use little endian for derivative OTP fuse key.
 
-Use the kvm_riscv_reg_id_u64() helper in RISCV_TIMER_REG() to fix it.
-
-Reported-by: Andrew Jones <ajones@ventanamicro.com>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Message-ID: <20231208183835.2411523-4-dbarboza@ventanamicro.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 10f86d1b845087d14b58d65dd2a6e3411d1b6529)
+Cc: qemu-stable@nongnu.org
+Fixes: c752bb079b ("hw/nvram: NPCM7xx OTP device model")
+Suggested-by: Avi Fishman <Avi.Fishman@nuvoton.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20240422125813.1403-1-philmd@linaro.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit eb656a60fd93262b1e519b3162888bf261df7f68)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 82ed4455a5..ddbe820e10 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -88,7 +88,7 @@ static uint64_t kvm_riscv_reg_id_u64(uint64_t type, uint64_t idx)
- #define RISCV_CSR_REG(env, name)  kvm_riscv_reg_id(env, KVM_REG_RISCV_CSR, \
-                  KVM_REG_RISCV_CSR_REG(name))
+diff --git a/hw/arm/npcm7xx.c b/hw/arm/npcm7xx.c
+index 15ff21d047..8753812c37 100644
+--- a/hw/arm/npcm7xx.c
++++ b/hw/arm/npcm7xx.c
+@@ -24,6 +24,7 @@
+ #include "hw/qdev-clock.h"
+ #include "hw/qdev-properties.h"
+ #include "qapi/error.h"
++#include "qemu/bswap.h"
+ #include "qemu/units.h"
+ #include "sysemu/sysemu.h"
  
--#define RISCV_TIMER_REG(env, name)  kvm_riscv_reg_id(env, KVM_REG_RISCV_TIMER, \
-+#define RISCV_TIMER_REG(name)  kvm_riscv_reg_id_u64(KVM_REG_RISCV_TIMER, \
-                  KVM_REG_RISCV_TIMER_REG(name))
- 
- #define RISCV_FP_F_REG(idx)  kvm_riscv_reg_id_u32(KVM_REG_RISCV_FP_F, idx)
-@@ -111,17 +111,17 @@ static uint64_t kvm_riscv_reg_id_u64(uint64_t type, uint64_t idx)
-         } \
-     } while (0)
- 
--#define KVM_RISCV_GET_TIMER(cs, env, name, reg) \
-+#define KVM_RISCV_GET_TIMER(cs, name, reg) \
-     do { \
--        int ret = kvm_get_one_reg(cs, RISCV_TIMER_REG(env, name), &reg); \
-+        int ret = kvm_get_one_reg(cs, RISCV_TIMER_REG(name), &reg); \
-         if (ret) { \
-             abort(); \
-         } \
-     } while (0)
- 
--#define KVM_RISCV_SET_TIMER(cs, env, name, reg) \
-+#define KVM_RISCV_SET_TIMER(cs, name, reg) \
-     do { \
--        int ret = kvm_set_one_reg(cs, RISCV_TIMER_REG(env, name), &reg); \
-+        int ret = kvm_set_one_reg(cs, RISCV_TIMER_REG(name), &reg); \
-         if (ret) { \
-             abort(); \
-         } \
-@@ -649,10 +649,10 @@ static void kvm_riscv_get_regs_timer(CPUState *cs)
-         return;
-     }
- 
--    KVM_RISCV_GET_TIMER(cs, env, time, env->kvm_timer_time);
--    KVM_RISCV_GET_TIMER(cs, env, compare, env->kvm_timer_compare);
--    KVM_RISCV_GET_TIMER(cs, env, state, env->kvm_timer_state);
--    KVM_RISCV_GET_TIMER(cs, env, frequency, env->kvm_timer_frequency);
-+    KVM_RISCV_GET_TIMER(cs, time, env->kvm_timer_time);
-+    KVM_RISCV_GET_TIMER(cs, compare, env->kvm_timer_compare);
-+    KVM_RISCV_GET_TIMER(cs, state, env->kvm_timer_state);
-+    KVM_RISCV_GET_TIMER(cs, frequency, env->kvm_timer_frequency);
- 
-     env->kvm_timer_dirty = true;
+@@ -377,7 +378,7 @@ static void npcm7xx_init_fuses(NPCM7xxState *s)
+      * The initial mask of disabled modules indicates the chip derivative (e.g.
+      * NPCM750 or NPCM730).
+      */
+-    value = tswap32(nc->disabled_modules);
++    value = cpu_to_le32(nc->disabled_modules);
+     npcm7xx_otp_array_write(&s->fuse_array, &value, NPCM7XX_FUSE_DERIVATIVE,
+                             sizeof(value));
  }
-@@ -666,8 +666,8 @@ static void kvm_riscv_put_regs_timer(CPUState *cs)
-         return;
-     }
- 
--    KVM_RISCV_SET_TIMER(cs, env, time, env->kvm_timer_time);
--    KVM_RISCV_SET_TIMER(cs, env, compare, env->kvm_timer_compare);
-+    KVM_RISCV_SET_TIMER(cs, time, env->kvm_timer_time);
-+    KVM_RISCV_SET_TIMER(cs, compare, env->kvm_timer_compare);
- 
-     /*
-      * To set register of RISCV_TIMER_REG(state) will occur a error from KVM
-@@ -676,7 +676,7 @@ static void kvm_riscv_put_regs_timer(CPUState *cs)
-      * TODO If KVM changes, adapt here.
-      */
-     if (env->kvm_timer_state) {
--        KVM_RISCV_SET_TIMER(cs, env, state, env->kvm_timer_state);
-+        KVM_RISCV_SET_TIMER(cs, state, env->kvm_timer_state);
-     }
- 
-     /*
-@@ -685,7 +685,7 @@ static void kvm_riscv_put_regs_timer(CPUState *cs)
-      * during the migration.
-      */
-     if (migration_is_running(migrate_get_current()->state)) {
--        KVM_RISCV_GET_TIMER(cs, env, frequency, reg);
-+        KVM_RISCV_GET_TIMER(cs, frequency, reg);
-         if (reg != env->kvm_timer_frequency) {
-             error_report("Dst Hosts timer frequency != Src Hosts");
-         }
 -- 
 2.39.2
 
