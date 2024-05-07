@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80386C10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 10:48:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B7CEC25B4F
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 10:50:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4IMi-0007Q1-A4; Tue, 07 May 2024 06:48:08 -0400
+	id 1s4IO5-0008Je-Nh; Tue, 07 May 2024 06:49:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4IMY-0007Mj-2X; Tue, 07 May 2024 06:48:01 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1s4INu-0008D8-NH; Tue, 07 May 2024 06:49:23 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4IMW-0007Hf-Cl; Tue, 07 May 2024 06:47:57 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-6f472d550cbso1571505b3a.1; 
- Tue, 07 May 2024 03:47:55 -0700 (PDT)
+ id 1s4INs-0007Vk-VD; Tue, 07 May 2024 06:49:22 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1eab16c8d83so21941055ad.3; 
+ Tue, 07 May 2024 03:49:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715078874; x=1715683674; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1715078959; x=1715683759; darn=nongnu.org;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NXPuDO8eerefpnKg6j5mA/qsoRo+G3ccj32oYA7s1SM=;
- b=nV0n+X1pKUoUJoHHCSmR9owbW1Q42b853hNAHCdwM8OmvNQ8wnhN0fCfwiZtzJGC45
- SaULhWp1FpfbqRwLggBmIFa2YkACBSNtRTkbNA0D19FpZTWTGokddyKDF9n2g1Pdctvs
- TdH83it3sLXErJ7RGTUqyaS6qZJ1AOkIo1pEB9VOvC9/albp4XLvvOtmMvxg9SQ1ZQBX
- jVeCYsVFher6wRpOCvfU9TKWtlygR8HD6JUSqwWVyqazMBQKkQdy0LY0WL4Rx5fSH803
- Tru116eKe7axJAvZgUk8YGKqFS5mPYKGrVCUTKHDs7NQ3Qr2oLrsIBm25gnIraAiwI+j
- O8UA==
+ bh=REnlp3h0pLf5O6waaBHoThFYvF9f/f0guPiaD6nis6U=;
+ b=ZL+s+pdMl18kP270x7JQfzaidfxGswl+MALEShi7mFLNULZDJQQAeBiHM+cT/Tbzy/
+ ZO/QiiABXXUgC1Od8biWIrl/fAuiF7AQJUivvDc+230Fbxles05xCeQrUV94ucGz/+NH
+ VqSntWJX3wDM/CTKNRSdn90kgjmWDOpxZQuEN5wpsNjqC9+lin1SA8eCpl13HvnEDBGK
+ pIT/rSF1/CfmeW28PWfDfF7LIvur6UmvM1PrMbNcocedgp7xVkSikJ0K4nkf4OAKnhEq
+ pcia3vdU44T7pqeX+8hJ+oVqreFzDOTjAup/VHvev3NBNLKfL/XcGyqUM/U7zQeM8lhF
+ uXRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715078874; x=1715683674;
+ d=1e100.net; s=20230601; t=1715078959; x=1715683759;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=NXPuDO8eerefpnKg6j5mA/qsoRo+G3ccj32oYA7s1SM=;
- b=PCuRZAIWJ76cZuZOYzIVqI1YyVeQJ6Eql6s6qhZz4WudHRXhB4uw9wXqTSNUCZIhYm
- AXF6aO8ByL7A0/FeIgamzEBMQ9ny7ug9JDQQEPwF4hWWl7m6Z2oNMlilXfDXOiWaTFt9
- 0wxA0NNG55arIMMdQ9AYxmr9EcAuwyRrFpzPYKEKPZgNiuskp6dkJ7wwBRiQHUvQvyUu
- w5RUnVFUbNGQbDCTCRi3wBjjLVIg/ZnVxSY+MyLL7jEfkgMPOfd8qvcpkih8YDcJLLPZ
- vLx9dX5oJJdkTkiwWyRl7UzUKFfTvui8l8H2ZOiunMST2e0nDdCOYl7e1D3Z9jRGepNG
- Yuzw==
+ bh=REnlp3h0pLf5O6waaBHoThFYvF9f/f0guPiaD6nis6U=;
+ b=a1itRUq9aQg8/OXzhybdrWiqmdKwE9xPfYJZunmG4PwLpuzg1TmOsOD63F4mlU/rC/
+ UPieZcSGfkKv06gQOqCmWaUhENwwMCykLOqnfGy2psVt135llivCWm7nrDcSiSB3Cd2V
+ s2IuIqVQlEzVuBPErYWc7h/XnBMyw8mylfBGaL7EqTH8J62QmiktNg+obO3S2rt4N4Dv
+ W5DfwPTwGZcHGzrRoRfqi6HZxvK316gQFexyu323MQgaOd9XRTjQmJ4Uvltw05WERD09
+ bQOJNL6doongbGOgbAH6ZNcfL76JM7LL+9c7EsCRJWUmEldvEcm6SS4fdbLfiDHAITCs
+ mIIQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWeeB+Lb8CoB7oDIrE1O8TEI7dIdmPJXMvuDqscw6yYtaOHonFtwHgyAzMmHmE/gQBnM4dUBurwUesKMgxleUhi+5TEB5KTcfjd7USxnQS7bv2Yn/TC+AoYCmM=
-X-Gm-Message-State: AOJu0YzVAGh/xPMjT5/mrt0Axfeys0LcjbZHLglYzx7dfxYYh/dKihVE
- AUkQtI4llF/JmwRnGg4ZjOBhPnKGINOHaQgZ6OYbvtamciiS2pU+ZY3ttw==
-X-Google-Smtp-Source: AGHT+IHOX87GtvBUz25vO+ZyL2M2eADxsKFg/1NCet5aAtcO/HXu5A7VLGWOEb088uGzxowBBXONaQ==
-X-Received: by 2002:a05:6a00:9393:b0:6f3:e6d6:7fde with SMTP id
- ka19-20020a056a00939300b006f3e6d67fdemr17292149pfb.26.1715078874297; 
- Tue, 07 May 2024 03:47:54 -0700 (PDT)
+ AJvYcCULv5TmY5c8s+pW1HGB3MEkRxP5bZuX9FqS9SOcTDtG0CNZOxVhstjPF/Hig2XOhls53A+73M4EA0rpMWwK90GaJeubZqaba/YoOChN4YEa09jRQQL3c0b8Kho=
+X-Gm-Message-State: AOJu0Yxmy1A7nrR5qcvTHG2g0O2LhoaKfUQJ7PStkuLMtFh5uw6LE4T8
+ 2fmyicba8Znzgjg1pGaLJt5xJ19vcD51bVJBDuVZaamW6piEcYgR
+X-Google-Smtp-Source: AGHT+IEGMxwvcTG8PmLxBRBF3lrBxVgnKVvFWIaALXqapL/aXsvROhgznXrY4WUIPpjpvzimlnxcSg==
+X-Received: by 2002:a17:902:d344:b0:1ea:f921:61db with SMTP id
+ l4-20020a170902d34400b001eaf92161dbmr10504151plk.58.1715078958936; 
+ Tue, 07 May 2024 03:49:18 -0700 (PDT)
 Received: from localhost (220-245-239-57.tpgi.com.au. [220.245.239.57])
  by smtp.gmail.com with ESMTPSA id
- a5-20020a63d405000000b0060c5179a0a5sm9525446pgh.50.2024.05.07.03.47.52
+ q9-20020a17090311c900b001e944fc9248sm9716321plh.194.2024.05.07.03.49.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 May 2024 03:47:54 -0700 (PDT)
+ Tue, 07 May 2024 03:49:18 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 07 May 2024 20:47:49 +1000
-Message-Id: <D13CPVTK824I.8DR4MRXLJRPB@gmail.com>
+Date: Tue, 07 May 2024 20:49:14 +1000
+Message-Id: <D13CQYJAUWTM.1A6N55S7X77O7@gmail.com>
 Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
-Subject: Re: [PATCH v2 20/28] target/ppc/mmu_common.c: Make
- get_physical_address_wtlb() static
+Subject: Re: [PATCH v2 21/28] target/ppc: Move mmu_ctx_t definition to
+ mmu_common.c
 From: "Nicholas Piggin" <npiggin@gmail.com>
 To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
  <qemu-ppc@nongnu.org>
 X-Mailer: aerc 0.17.0
 References: <cover.1714606359.git.balaton@eik.bme.hu>
- <55ea002eb081fd1fdc6ff6f0e3f25ba892044e9d.1714606359.git.balaton@eik.bme.hu>
-In-Reply-To: <55ea002eb081fd1fdc6ff6f0e3f25ba892044e9d.1714606359.git.balaton@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42b.google.com
+ <441004d25ece7b536825906e0325235bc2614b5d.1714606359.git.balaton@eik.bme.hu>
+In-Reply-To: <441004d25ece7b536825906e0325235bc2614b5d.1714606359.git.balaton@eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,99 +98,74 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Thu May 2, 2024 at 9:43 AM AEST, BALATON Zoltan wrote:
-> This function is not used from any other files so make it static and
-> fix the maybe used uninitialised warnings this has uncovered.
+> This type is only used within mmu_common.c. Move its definition from
+> internal.h to there.
+
+This can be squashed with the previous patch unexport the
+remaining user.
+
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+
 >
 > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->  target/ppc/internal.h   | 5 +----
->  target/ppc/mmu_common.c | 5 ++++-
->  2 files changed, 5 insertions(+), 5 deletions(-)
+>  target/ppc/internal.h   | 12 ------------
+>  target/ppc/mmu_common.c | 11 +++++++++++
+>  2 files changed, 11 insertions(+), 12 deletions(-)
 >
 > diff --git a/target/ppc/internal.h b/target/ppc/internal.h
-> index 601c0b533f..7a99f08dc8 100644
+> index 7a99f08dc8..61c2aadd0d 100644
 > --- a/target/ppc/internal.h
 > +++ b/target/ppc/internal.h
-> @@ -261,10 +261,7 @@ typedef struct mmu_ctx_t mmu_ctx_t;
+> @@ -256,8 +256,6 @@ static inline int prot_for_access_type(MMUAccessType =
+access_type)
+> =20
+>  /* PowerPC MMU emulation */
+> =20
+> -typedef struct mmu_ctx_t mmu_ctx_t;
+> -
 >  bool ppc_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
 >                        hwaddr *raddrp, int *psizep, int *protp,
 >                        int mmu_idx, bool guest_visible);
-> -int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
-> -                                     target_ulong eaddr,
-> -                                     MMUAccessType access_type, int type=
-,
-> -                                     int mmu_idx);
-> +
+> @@ -265,16 +263,6 @@ bool ppc_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAcce=
+ssType access_type,
 >  /* Software driven TLB helpers */
 >  int ppc6xx_tlb_getnum(CPUPPCState *env, target_ulong eaddr,
 >                                      int way, int is_code);
+> -/* Context used internally during MMU translations */
+> -struct mmu_ctx_t {
+> -    hwaddr raddr;      /* Real address              */
+> -    hwaddr eaddr;      /* Effective address         */
+> -    int prot;                      /* Protection bits           */
+> -    hwaddr hash[2];    /* Pagetable hash values     */
+> -    target_ulong ptem;             /* Virtual segment ID | API  */
+> -    int key;                       /* Access key                */
+> -    int nx;                        /* Non-execute area          */
+> -};
+> =20
+>  #endif /* !CONFIG_USER_ONLY */
+> =20
 > diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-> index 762b13805b..4852cb5571 100644
+> index 4852cb5571..41ef174ab4 100644
 > --- a/target/ppc/mmu_common.c
 > +++ b/target/ppc/mmu_common.c
-> @@ -666,6 +666,7 @@ static int mmubooke_get_physical_address(CPUPPCState =
-*env, mmu_ctx_t *ctx,
->      hwaddr raddr =3D (hwaddr)-1ULL;
->      int i, ret =3D -1;
+> @@ -35,6 +35,17 @@
 > =20
-> +    ctx->prot =3D 0;
->      for (i =3D 0; i < env->nb_tlb; i++) {
->          tlb =3D &env->tlb.tlbe[i];
->          ret =3D mmubooke_check_tlb(env, tlb, &raddr, &ctx->prot, address=
-,
-> @@ -873,6 +874,7 @@ static int mmubooke206_get_physical_address(CPUPPCSta=
-te *env, mmu_ctx_t *ctx,
->      hwaddr raddr =3D (hwaddr)-1ULL;
->      int i, j, ways, ret =3D -1;
+>  /* #define DUMP_PAGE_TABLES */
 > =20
-> +    ctx->prot =3D 0;
->      for (i =3D 0; i < BOOKE206_MAX_TLBN; i++) {
->          ways =3D booke206_tlb_ways(env, i);
->          for (j =3D 0; j < ways; j++) {
+> +/* Context used internally during MMU translations */
+> +typedef struct {
+> +    hwaddr raddr;      /* Real address             */
+> +    hwaddr eaddr;      /* Effective address        */
+> +    int prot;          /* Protection bits          */
+> +    hwaddr hash[2];    /* Pagetable hash values    */
+> +    target_ulong ptem; /* Virtual segment ID | API */
+> +    int key;           /* Access key               */
+> +    int nx;            /* Non-execute area         */
+> +} mmu_ctx_t;
+> +
+>  void ppc_store_sdr1(CPUPPCState *env, target_ulong value)
+>  {
+>      PowerPCCPU *cpu =3D env_archcpu(env);
 
-The prot warnings are valid AFAIKS, used uninit by qemu_log_mask call.
-
-So, I see what the booke _check_tlb() functions are doing with
-*prot now and that is to assign it iff return value is 0 or -2 or
--3, matching TLB address (and possibly mismatch prot).
-
-Would it be better to fix it as:
-
-    qemu_log_mask(CPU_LOG_MMU,
-                  "%s: access %s " TARGET_FMT_lx " =3D> " HWADDR_FMT_plx
-                  " %d %d\n", __func__, ret < 0 ? "refused" : "granted",
-                  address, raddr, ret =3D=3D -1 ? 0 : ctx->prot, ret);
-
-This way it's clearer that we're only printing it when a TLB was
-found, and it won't silence other possible use-uninitialised?
-
-> @@ -1144,7 +1146,7 @@ void dump_mmu(CPUPPCState *env)
->      }
->  }
-> =20
-> -int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
-> +static int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
->                                       target_ulong eaddr,
->                                       MMUAccessType access_type, int type=
-,
->                                       int mmu_idx)
-> @@ -1163,6 +1165,7 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu=
-_ctx_t *ctx,
->      if (real_mode && (env->mmu_model =3D=3D POWERPC_MMU_SOFT_6xx ||
->                        env->mmu_model =3D=3D POWERPC_MMU_SOFT_4xx ||
->                        env->mmu_model =3D=3D POWERPC_MMU_REAL)) {
-> +        memset(ctx, 0, sizeof(*ctx));
->          ctx->raddr =3D eaddr;
->          ctx->prot =3D PAGE_READ | PAGE_WRITE | PAGE_EXEC;
->          return 0;
-
-I wonder why the compiler doesn't see these, they are all in the return
-not-zero cases that should be quite visible?
-
-What if you leave the static change to the end of your series, do the
-simplifications allow the compiler to work it out? I prefer not to
-squash such compiler warnings if it can be avoided.
-
-Thanks,
-Nick
 
