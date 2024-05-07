@@ -4,96 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55612C10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 08:12:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF223C10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 08:13:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4Fur-0007fg-17; Tue, 07 May 2024 04:11:13 -0400
+	id 1s4FwQ-0000A6-QC; Tue, 07 May 2024 04:12:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1s4Fuf-0007f7-1U
- for qemu-devel@nongnu.org; Tue, 07 May 2024 04:11:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1s4Fud-0007Ci-A5
- for qemu-devel@nongnu.org; Tue, 07 May 2024 04:11:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715069456;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YjnIcSH+FqrxPgOAE7MG8E1vh4FRj51/wDvPzDiTdK4=;
- b=VGQ7vF6JjjnXN2k4kx2c6dR5lg1KPqdWXFYcu4sncsFes38oyQOfi/Cx6mMkwAKRogwjVB
- rAdvGeu8qSXUCGUEHA3Mz9fdJB14zzUehZE7TY2wywRg5u1NwrQ5km8V/GuzszVmNqGXlH
- FnR6nKTwF6znelIZvMcJN7nqYI188PQ=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-591-yM8Jy_PyNBSYQGU31J8eOw-1; Tue, 07 May 2024 04:10:55 -0400
-X-MC-Unique: yM8Jy_PyNBSYQGU31J8eOw-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-572f3859ff2so728513a12.3
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 01:10:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715069454; x=1715674254;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YjnIcSH+FqrxPgOAE7MG8E1vh4FRj51/wDvPzDiTdK4=;
- b=dRFthSQ+5BR4t8UYslCAeGHWPOQikPAPePpJ0yNeiUpC8DIWYLeoIVnCJLg5jLeU17
- fQAdvuqU5oklWpbJx82GkhMicyHUH5kLIzGsgL41i8ltgED6nggfsnpVsAMDsC9d8dkB
- dYaMAOGWk1y3FRAG7VN4PtgFNMX35ofA2OBuOo8sAfmvIxDbRymvCLd4cGjYAdOGRs8y
- dpMe0FZ13qoGlNiSb+BoDmmH3bVy1HxhwrhVO4r9k1rOzZqggk5kmesVH77jhXCaMaKd
- SX0qrv0LdurNdf23qjBF61XI9bFt7b22SHUfU1S55mBsbY34FbUXij4HtU29jyZtfWgi
- PpNw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCURAG0PpKX/IROvdsdjUFGpIAlF3x3xXTIhfD5R82wP1SJShMQ1qnc5dDkVMWdYGodDxR/IxSa6iBgeF9vLhklIlheNpEo=
-X-Gm-Message-State: AOJu0YxcqT5pg1TRreStXIpCN4m0PwH+s+STrADg0heiHVeIRY05O+Nb
- apG+iDfklXOF0paSIs/eYeXkOnFsm/RjafhjFt4G/+O8fX/6g4ZYIgHXPJlB9H0pEdbAlCNUWZ5
- Ya3dFuKq/Eha0KqvpxOsz8hOFgW9UP0a5yikc7hPrD/Y4dnTTETFu
-X-Received: by 2002:a50:d503:0:b0:572:9a99:cae6 with SMTP id
- u3-20020a50d503000000b005729a99cae6mr7533000edi.15.1715069454298; 
- Tue, 07 May 2024 01:10:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH57vlvbblu5vV+KoeH+A3xZfmCPatx5vhDvMY1CCrw2nZ17LHMq7gJpGlr7o1yN6zdyJF9bQ==
-X-Received: by 2002:a50:d503:0:b0:572:9a99:cae6 with SMTP id
- u3-20020a50d503000000b005729a99cae6mr7532983edi.15.1715069453961; 
- Tue, 07 May 2024 01:10:53 -0700 (PDT)
-Received: from sgarzare-redhat (host-87-12-25-56.business.telecomitalia.it.
- [87.12.25.56]) by smtp.gmail.com with ESMTPSA id
- p7-20020aa7d307000000b005722d871e4csm6060358edq.90.2024.05.07.01.10.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 May 2024 01:10:53 -0700 (PDT)
-Date: Tue, 7 May 2024 10:10:49 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: Roman Kiryanov <rkir@google.com>, 
- Peter Maydell <peter.maydell@linaro.org>, alex.bennee@linaro.org,
- QEMU Developers <qemu-devel@nongnu.org>, 
- JP Cottin <jpcottin@google.com>, Erwin Jansen <jansene@google.com>, 
- Mehdi Alizadeh <mett@google.com>
-Subject: Re: Hermetic virtio-vsock in QEMU
-Message-ID: <nga2k5uuvpqm2sovguofglw6u3reiqqurbn7vbdexanzrhmw42@vuje72e57egu>
-References: <CAOGAQeqOVAHJ4VxQNKqO43hmLJdxpA6E_JEQrfL380SwT4Y73w@mail.gmail.com>
- <Zh0NiI9ZfS5uzs5Z@redhat.com>
- <CAOGAQerx0DmHvJNf05wuJFOtXVwDFTt7fy0-GmBZ7xKoLAHTKQ@mail.gmail.com>
- <ZiDpM7ZusU0SvH7K@redhat.com>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1s4FwN-00009v-Pw
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 04:12:47 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1s4FwL-0007Us-7u
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 04:12:47 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8DxNvB24jlmBroIAA--.23866S3;
+ Tue, 07 May 2024 16:12:38 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8AxhFZy4jlmS8QTAA--.22703S3; 
+ Tue, 07 May 2024 16:12:36 +0800 (CST)
+Subject: Re: [PATCH] target/loongarch/kvm: Fix VM recovery from disk failures
+To: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Tianrui Zhao <zhaotianrui@loongson.cn>,
+ pbonzini@redhat.com, peter.maydell@linaro.org, richard.henderson@linaro.org,
+ maobibo@loongson.cn, lixianglai@loongso.cn
+References: <20240430012356.2620763-1-gaosong@loongson.cn>
+ <f9956c18-3530-4fc2-8150-beba7b673f89@linaro.org> <87edanlzlz.fsf@suse.de>
+ <ZjJjl2fIU1s24uFD@x1n> <87o79oo00b.fsf@suse.de>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <c9bfd6a4-befb-c17d-a87d-15eeecdfb75a@loongson.cn>
+Date: Tue, 7 May 2024 16:12:34 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Disposition: inline
+In-Reply-To: <87o79oo00b.fsf@suse.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZiDpM7ZusU0SvH7K@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Language: en-US
+X-CM-TRANSID: AQAAf8AxhFZy4jlmS8QTAA--.22703S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxGF1fJry7Cr48Zw1Dur1xJFc_yoWrXr1xp3
+ 4DA3WqkFWrJr97Jwn2yw1rWF9Iyr1UKF42gFs7Kr18uF90qrnaqr4kt347uF1fAa4rGr1I
+ vr1xJF9xXF45A3cCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GF
+ ylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8j-
+ e5UUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.593,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,45 +86,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-sorry for the delay, but I have been away most of last month.
 
-On Thu, Apr 18, 2024 at 10:34:43AM GMT, Daniel P. Berrang� wrote:
->On Wed, Apr 17, 2024 at 12:31:41PM -0700, Roman Kiryanov wrote:
->> Hi Daniel,
+Thanks for the comments !
+
+在 2024/5/2 下午8:45, Fabiano Rosas 写道:
+> Peter Xu <peterx@redhat.com> writes:
+>
+>> On Tue, Apr 30, 2024 at 11:00:24AM -0300, Fabiano Rosas wrote:
+>>> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
+>>>
+>>>> (Cc'ing migration maintainers)
+>>>>
+>>>> On 30/4/24 03:23, Song Gao wrote:
+>>>>> vmstate does not save kvm_state_conter,
+>>>>> which can cause VM recovery from disk to fail.
+>>>> Cc: qemu-stable@nongnu.org
+>>>> Fixes: d11681c94f ("target/loongarch: Implement kvm_arch_init_vcpu")
+>>>>
+>>>>> Signed-off-by: Song Gao <gaosong@loongson.cn>
+>>>>> ---
+>>>>>    target/loongarch/machine.c | 2 ++
+>>>>>    1 file changed, 2 insertions(+)
+>>>>>
+>>>>> diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
+>>>>> index c7029fb9b4..4cd1bf06ff 100644
+>>>>> --- a/target/loongarch/machine.c
+>>>>> +++ b/target/loongarch/machine.c
+>>>>> @@ -191,6 +191,8 @@ const VMStateDescription vmstate_loongarch_cpu = {
+>>>>>            VMSTATE_STRUCT_ARRAY(env.tlb, LoongArchCPU, LOONGARCH_TLB_MAX,
+>>>>>                                 0, vmstate_tlb, LoongArchTLB),
+>>>>>    
+>>>>> +        VMSTATE_UINT64(kvm_state_counter, LoongArchCPU),
+>>>>> +
+>>>>>            VMSTATE_END_OF_LIST()
+>>>>>        },
+>>>>>        .subsections = (const VMStateDescription * const []) {
+>>>> The migration stream is versioned, so you should increase it,
+>>>> but this field is only relevant for KVM (it shouldn't be there
+>>>> in non-KVM builds). IMHO the correct migration way to fix that
+>>>> is (untested):
+>>>>
+>>>> -- >8 --
+>>>> diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
+>>>> index c7029fb9b4..08032c6d71 100644
+>>>> --- a/target/loongarch/machine.c
+>>>> +++ b/target/loongarch/machine.c
+>>>> @@ -8,8 +8,27 @@
+>>>>    #include "qemu/osdep.h"
+>>>>    #include "cpu.h"
+>>>>    #include "migration/cpu.h"
+>>>> +#include "sysemu/kvm.h"
+>>>>    #include "vec.h"
+>>>>
+>>>> +#ifdef CONFIG_KVM
+>>>> +static bool kvmcpu_needed(void *opaque)
+>>>> +{
+>>>> +    return kvm_enabled();
+>>>> +}
+>>>> +
+>>>> +static const VMStateDescription vmstate_kvmtimer = {
+>>>> +    .name = "cpu/kvmtimer",
+>>>> +    .version_id = 1,
+>>>> +    .minimum_version_id = 1,
+>>>> +    .needed = kvmcpu_needed,
+>>>> +    .fields = (const VMStateField[]) {
+>>>> +        VMSTATE_UINT64(kvm_state_counter, LoongArchCPU),
+>>>> +        VMSTATE_END_OF_LIST()
+>>>> +    }
+>>>> +};
+>>>> +#endif /* CONFIG_KVM */
+>>>> +
+>>>>    static const VMStateDescription vmstate_fpu_reg = {
+>>>>        .name = "fpu_reg",
+>>>>        .version_id = 1,
+>>>> @@ -194,6 +213,9 @@ const VMStateDescription vmstate_loongarch_cpu = {
+>>>>            VMSTATE_END_OF_LIST()
+>>>>        },
+>>>>        .subsections = (const VMStateDescription * const []) {
+>>>> +#ifdef CONFIG_KVM
+>>>> +        &vmstate_kvmcpu,
+>>>> +#endif
+>>>>            &vmstate_fpu,
+>>>>            &vmstate_lsx,
+>>>>            &vmstate_lasx,
+>>>> ---
+>>> LGTM, I'd just leave only the .needed function under CONFIG_KVM instead
+>>> of the whole subsection.
+>> But when !KVM it means there's no ".needed" and it'll still be migrated?
+> I expressed myself poorly, I meant put the return from .needed under
+> CONFIG_KVM. But that is not even necessary, kvm_enabled() is enough.
+>
+>> IMHO it depends on whether loongarch is in the state already of trying to
+>> keep its ABI at all.  I think we should still try to enjoy the time when
+>> that ABI is not required, then we can simply add whatever fields, and let
+>> things break with no big deal.
 >>
->> thank you for looking into this. I checked how VHOST_USER_VSOCK and it
->> refers to the vhost-user protocol. It is implemented in the
->> subprojects/libvhost-user library, but this library depends on poll.h
->> and linux/vhost.h files. Do you know if it builds/works on Windows?
+>> Note that if with CONFIG_KVM it means it can break migration between kvm
+>> v.s. tcg when only one qemu enabled kvm when compile.
+Just remove CONIFG_KVM  would be OK?
+
+Thanks.
+Song Gao
+>>    Considering the
+>> patch is from the maintainer (which seems to say "breaking that is all
+>> fine!") I'd say the original patch looks good actually, as it allows kvm /
+>> tcg migrations too as a baseline.
+> I'm fine with this approach as well.
 >
->Stefano recently ported it to work on any POSIX platform,
->but obviously that still excludes Windows:
->
->  https://lists.nongnu.org/archive/html/qemu-devel/2024-04/msg00388.html
->
->I'm unclear what blockers there are wrt Windows, but perhaps
->Stefano (CC'd) can advise.
-
-I have no experience with Windows, but what we need for vhost-user is:
-
-- AF_UNIX and be able to send file descriptors using ancillary data
-   (i.e. SCM_RIGHTS)
-- share memory via an fd associated with it (i.e. shm_open(),
-   memfd_create(), etc.)
-- eventfd or pipe/pipe2 to exchange events (irq and kick)
-
->
->Personally, while I think vhost-user is a good option for the
->vast majority of cases, I believe QEMU ought to natively
->implement a simple self contained AF_UNIX backend for vsock,
->avoiding need to depend on 3rd party software for its use.
-
-I was already planning to extrapolate the code that handles this from
-vhost-user-vsock to implement a library, this might be a good reason.
-Next GSoC?
-
-Thanks,
-Stefano
+>> Thanks,
 
 
