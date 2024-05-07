@@ -4,85 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD666C10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 14:52:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03388C25B4F
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 15:05:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4MAV-0006fb-Ma; Tue, 07 May 2024 10:51:47 -0400
+	id 1s4MN1-00060F-QK; Tue, 07 May 2024 11:04:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s4MAT-0006ex-WE
- for qemu-devel@nongnu.org; Tue, 07 May 2024 10:51:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s4MAS-0002qK-Je
- for qemu-devel@nongnu.org; Tue, 07 May 2024 10:51:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715093503;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=N25+1UPAT5thwCNy/6Q0XVQjeOkhX+mAvGM/gJJ6kXk=;
- b=L45RWBZ28BLYO1x8fOySCrh94XXoZei2L7hlY32r9WRZTDVvNfEEQbO0fj6VpxA9Hv0dqh
- 8Y4DOAPAVipq1/8zdVlxvUuWENK5C23pqHgPz4H5wYpiKZzvZ77wK7saWekXKVibRMEQGk
- UrlWhMbwsCa68Z3rYR+Q1EsvNnCv8d4=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-549-MciBo1_3NUS6d2xNAVgnxQ-1; Tue, 07 May 2024 10:51:42 -0400
-X-MC-Unique: MciBo1_3NUS6d2xNAVgnxQ-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a59bfd32b8fso173113566b.3
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 07:51:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1s4MN0-0005zW-Ia
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 11:04:42 -0400
+Received: from mail-qt1-x82e.google.com ([2607:f8b0:4864:20::82e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1s4MMy-0007Om-Vg
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 11:04:42 -0400
+Received: by mail-qt1-x82e.google.com with SMTP id
+ d75a77b69052e-43ad398f164so13913651cf.2
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 08:04:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1715094280; x=1715699080; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wUH43TrzI6NN+G4ahGgZmgbCZ5yK8D3pkjeS7AU2Skk=;
+ b=DnLYoEoCyfNaCocirUGWVeZtwG7A/z3lTx3YmZjt0NL4NKunxUAB7aRNHRvOU9+sH2
+ VP+9xyg9eMYPS89U3GsgLrEcsFXeYWjMrTLp3UgkcUPKT1ZyZUIlsY7IYt5m6A6h47Jq
+ aba94gGR5seLfADxQa5oB28gIxqQbT0ZQnJJ8jo2FyBA90BCj2aAp04ZgwzVPz691kON
+ RIvwy31YiHQKq9G/hnwVA7QqfpiKjK/wXJQfD7x8JQdDu7TcCc6TPIkJ1tJJT6UbL9is
+ h5QxYH7+a2Op1RIXivY+GBoKwNvIsF/tkcRaoenuXN6NEggpRH9rDB7VhkqkZnPN8l+9
+ R1ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715093500; x=1715698300;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=N25+1UPAT5thwCNy/6Q0XVQjeOkhX+mAvGM/gJJ6kXk=;
- b=wLXxEYmhy/qWqT9qpWI3yY/1IJW4ZTP9G7kOPQXHeFoknCNfhL/QV7gV2sLhYa162t
- T0ry3/ya/Rk4mAR+hPVka4XRHkFlcxT2IW2ImKvUTpKaLOHK6E5uE/D8GWcw+/0/M2uC
- iLIt+83NkIN1EZwLCfRuydh7nlwKCxUqDngNtr6a1mjDuH4uSEPYW+qnfd+uN6MPF4vz
- FXCsy9crkQeK0+eTu/rZ5MqgrCm/8ABZ06Eejz43hBiBZn7a4KHTTC0nhtuqYsWJue4A
- 9Nz5N9Pzix/3Xeqgs17u8yOxWEWF0YsUX02AeR0J9vHYS7JMfX3vfEfGhbP30q4MwkJF
- HEvw==
-X-Gm-Message-State: AOJu0YwD+lkqaBOYohi/WPfuFQGjBP5v8eo9uVMnpAeWgfq/RKTSKVzx
- 9F/gxBBjQqERALoZZhPDGS3TPH86OdzJSwy5X5hpwyWpBexocHxcQyeBNtveBrrS2/vOo5aadyn
- DQY0AgSSW6gHeCNxnifEy/9hw1vz7AUzimg7esIsOGAJlKa5PBfqEBzh00i9cnRBfMYajbvVdIU
- qwMnIcI3nr5WuKpYMUsHcddohQdelTyu6AkipM
-X-Received: by 2002:a17:907:7248:b0:a59:b784:ced4 with SMTP id
- ds8-20020a170907724800b00a59b784ced4mr7083154ejc.75.1715093500732; 
- Tue, 07 May 2024 07:51:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGqHMB8rfog2hUWA8ncrm7IDJylFh1eXLpI6T9LTWfqfIV5JNuSyAea/dJkMtV4/jFDUJkLNw==
-X-Received: by 2002:a17:907:7248:b0:a59:b784:ced4 with SMTP id
- ds8-20020a170907724800b00a59b784ced4mr7083141ejc.75.1715093500381; 
- Tue, 07 May 2024 07:51:40 -0700 (PDT)
-Received: from avogadro.local ([151.95.155.52])
- by smtp.gmail.com with ESMTPSA id
- o10-20020a1709061d4a00b00a59ed1eb60fsm774129ejh.105.2024.05.07.07.51.39
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 May 2024 07:51:39 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PATCH] sh4: select correct components for no-board build
-Date: Tue,  7 May 2024 16:51:38 +0200
-Message-ID: <20240507145138.270825-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.0
+ d=1e100.net; s=20230601; t=1715094280; x=1715699080;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wUH43TrzI6NN+G4ahGgZmgbCZ5yK8D3pkjeS7AU2Skk=;
+ b=oPlPyBMyCC0H7YjfWAvj0RCuhbFiKmMNwH/ohLFvbvz8oY0k6OUF5gkUR1z6NWvhZd
+ qYVIodP9mkF/U/VD+ZrKKc7Pe/+dEcN5v+tOIH7MHoqwyWdb6RpxytGZLdiAADJz5/t+
+ V39AGqOPRbfQYGYFYrXmFf4l8uJMhEfTX35nxduLh3CRrahg5v28MSUyj5/Zh7tk22cp
+ A0JqiIeIc59LFrmZ5VtYPj5j5oPLTMDorkOw8kFjc3HCe5wd4/68uh5xW2wd9SsAsFh9
+ g81R6Mycjr/hk48xVA1gvif6LY3DGfdsNaux2a3PQBjWGQ1thWMfzk5oRAWF0KkubaI5
+ rw8Q==
+X-Gm-Message-State: AOJu0YwnOh6LtL5WJ07h7U1JfzdN48c3CgeWO0p5mDwN+p4CYlVw0VCO
+ 9fX2bls4sQfVfypyCTKviNSCzJAYwfCQhCsXmskDR7NPG5w92r4a2k904fMoBUIWz4FSjP4/iQv
+ mOMaPZkptU0S0lVdRImUVE6fycJ0=
+X-Google-Smtp-Source: AGHT+IGKy2O0kcwqO/6O5kPOcB5v7Zqv+H/i/gKUqa3UBfoB0d6ny7eEwVeHieljV4tQEto1s+AhDw1E24iF9RWXBj4=
+X-Received: by 2002:ac8:7f05:0:b0:43a:db0c:e7f0 with SMTP id
+ f5-20020ac87f05000000b0043adb0ce7f0mr17116937qtk.29.1715094278944; Tue, 07
+ May 2024 08:04:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20240426225059.3871283-1-dongwon.kim@intel.com>
+In-Reply-To: <20240426225059.3871283-1-dongwon.kim@intel.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 7 May 2024 19:04:27 +0400
+Message-ID: <CAJ+F1C+JZ+vLWuY8QxvzPqFqY5neTYrjK6xnYN2b1weR_GPwZQ@mail.gmail.com>
+Subject: Re: [PATCH v2] ui/gtk: Draw guest frame at refresh cycle
+To: dongwon.kim@intel.com
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82e;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,57 +89,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- .gitlab-ci.d/buildtest.yml | 5 +++--
- hw/sh4/meson.build         | 2 +-
- target/sh4/Kconfig         | 2 ++
- 3 files changed, 6 insertions(+), 3 deletions(-)
+On Sat, Apr 27, 2024 at 2:56=E2=80=AFAM <dongwon.kim@intel.com> wrote:
+>
+> From: Dongwon Kim <dongwon.kim@intel.com>
+>
+> Draw routine needs to be manually invoked in the next refresh
+> if there is a scanout blob from the guest. This is to prevent
+> a situation where there is a scheduled draw event but it won't
+> happen bacause the window is currently in inactive state
+> (minimized or tabified). If draw is not done for a long time,
+> gl_block timeout and/or fence timeout (on the guest) will happen
+> eventually.
+>
+> v2: Use gd_gl_area_draw(vc) in gtk-gl-area.c
+>
+> Suggested-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+> Cc: Gerd Hoffmann <kraxel@redhat.com>
+> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Cc: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
 
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index bab61945643..13afd0df1f0 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -650,7 +650,7 @@ build-tci:
- # Check our reduced build configurations
- # requires libfdt: aarch64, arm, i386, loongarch64, microblaze, microblazeel,
- #   mips64el, or1k, ppc, ppc64, riscv32, riscv64, rx, x86_64
--# does not build without boards: i386, s390x, sh4, sh4eb, x86_64
-+# does not build without boards: i386, s390x, x86_64
- build-without-defaults:
-   extends: .native_build_job_template
-   needs:
-@@ -665,7 +665,8 @@ build-without-defaults:
-       --disable-qom-cast-debug
-       --disable-strip
-     TARGETS: alpha-softmmu avr-softmmu cris-softmmu hppa-softmmu m68k-softmmu
--      mips-softmmu mips64-softmmu mipsel-softmmu sparc-softmmu
-+      mips-softmmu mips64-softmmu mipsel-softmmu
-+      sh4-softmmu sh4eb-softmmu sparc-softmmu
-       sparc64-softmmu tricore-softmmu xtensa-softmmu xtensaeb-softmmu
-       hexagon-linux-user i386-linux-user s390x-linux-user
-     MAKE_CHECK_ARGS: check
-diff --git a/hw/sh4/meson.build b/hw/sh4/meson.build
-index 424d5674dea..70e814c3a28 100644
---- a/hw/sh4/meson.build
-+++ b/hw/sh4/meson.build
-@@ -1,5 +1,5 @@
- sh4_ss = ss.source_set()
--sh4_ss.add(files(
-+sh4_ss.add(when: 'CONFIG_SH7750', if_true: files(
-   'sh7750.c',
-   'sh7750_regnames.c',
- ))
-diff --git a/target/sh4/Kconfig b/target/sh4/Kconfig
-index 2397c860280..93b92f1e480 100644
---- a/target/sh4/Kconfig
-+++ b/target/sh4/Kconfig
-@@ -1,2 +1,4 @@
- config SH4
-     bool
-+    # needed for sh_intc_get_pending_vector
-+    select SH_INTC
--- 
-2.45.0
+Acked-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
+> ---
+>  ui/gtk-egl.c     | 1 +
+>  ui/gtk-gl-area.c | 1 +
+>  2 files changed, 2 insertions(+)
+>
+> diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+> index 3af5ac5bcf..75f6b9011a 100644
+> --- a/ui/gtk-egl.c
+> +++ b/ui/gtk-egl.c
+> @@ -150,6 +150,7 @@ void gd_egl_refresh(DisplayChangeListener *dcl)
+>              vc, vc->window ? vc->window : vc->gfx.drawing_area);
+>
+>      if (vc->gfx.guest_fb.dmabuf && vc->gfx.guest_fb.dmabuf->draw_submitt=
+ed) {
+> +        gd_egl_draw(vc);
+>          return;
+>      }
+>
+> diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+> index 52dcac161e..4fff957c3f 100644
+> --- a/ui/gtk-gl-area.c
+> +++ b/ui/gtk-gl-area.c
+> @@ -126,6 +126,7 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
+>      gd_update_monitor_refresh_rate(vc, vc->window ? vc->window : vc->gfx=
+.drawing_area);
+>
+>      if (vc->gfx.guest_fb.dmabuf && vc->gfx.guest_fb.dmabuf->draw_submitt=
+ed) {
+> +        gd_gl_area_draw(vc);
+>          return;
+>      }
+>
+> --
+> 2.34.1
+>
+>
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
