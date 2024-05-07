@@ -4,43 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B47BBC25B75
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 08:44:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54F00C10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 08:44:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4GQO-0004fI-Cw; Tue, 07 May 2024 04:43:50 -0400
+	id 1s4GPc-0003k4-V5; Tue, 07 May 2024 04:43:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1s4GQ9-0004SM-At; Tue, 07 May 2024 04:43:38 -0400
+ id 1s4GPO-0003TI-J8; Tue, 07 May 2024 04:42:46 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1s4GQ7-0003LI-Cv; Tue, 07 May 2024 04:43:33 -0400
+ id 1s4GPK-0003Dr-K6; Tue, 07 May 2024 04:42:44 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7B71264BD3;
- Tue,  7 May 2024 11:42:49 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CBB7864BC9;
+ Tue,  7 May 2024 11:42:48 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 68D82C85BC;
- Tue,  7 May 2024 11:42:30 +0300 (MSK)
-Received: (nullmailer pid 1026558 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id BD398C85B2;
+ Tue,  7 May 2024 11:42:29 +0300 (MSK)
+Received: (nullmailer pid 1026527 invoked by uid 1000);
  Tue, 07 May 2024 08:42:29 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paul Cercueil <paul@crapouillou.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- Yoshinori Sato <ysato@users.sourceforge.jp>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.4 15/16] target/sh4: Fix ADDV opcode
-Date: Tue,  7 May 2024 11:42:14 +0300
-Message-Id: <20240507084226.1026455-15-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [Stable-8.2.4 05/16] linux-user: do_setsockopt: fix
+ SOL_ALG.ALG_SET_KEY
+Date: Tue,  7 May 2024 11:42:04 +0300
+Message-Id: <20240507084226.1026455-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.4-20240506205855@cover.tls.msk.ru>
 References: <qemu-stable-8.2.4-20240506205855@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,88 +61,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+This setsockopt accepts zero-lengh optlen (current qemu implementation
+does not allow this).  Also, there's no need to make a copy of the key,
+it is enough to use lock_user() (which accepts zero length already).
 
-The documentation says:
-
-  ADDV Rm, Rn        Rn + Rm -> Rn, overflow -> T
-
-But QEMU implementation was:
-
-  ADDV Rm, Rn        Rn + Rm -> Rm, overflow -> T
-
-Fix by filling the correct Rm register.
-
-Add tests provided by Paul Cercueil.
-
-Cc: qemu-stable@nongnu.org
-Fixes: ad8d25a11f ("target-sh4: implement addv and subv using TCG")
-Reported-by: Paul Cercueil <paul@crapouillou.net>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2317
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Yoshinori Sato <ysato@users.sourceforge.jp>
-Message-Id: <20240430163125.77430-2-philmd@linaro.org>
-(cherry picked from commit c365e6b0705788866a65e7b8206bd4c5332595cd)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2197
+Fixes: f31dddd2fc "linux-user: Add support for setsockopt() option SOL_ALG"
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Message-Id: <20240331100737.2724186-2-mjt@tls.msk.ru>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit 04f6fb897a5aeb3e356a7b889869c9962f9c16c7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/sh4/translate.c b/target/sh4/translate.c
-index 5aa10d3946..d8dcfc3a20 100644
---- a/target/sh4/translate.c
-+++ b/target/sh4/translate.c
-@@ -715,7 +715,7 @@ static void _decode_opc(DisasContext * ctx)
-             tcg_gen_xor_i32(t2, REG(B7_4), REG(B11_8));
-             tcg_gen_andc_i32(cpu_sr_t, t1, t2);
-             tcg_gen_shri_i32(cpu_sr_t, cpu_sr_t, 31);
--            tcg_gen_mov_i32(REG(B7_4), t0);
-+            tcg_gen_mov_i32(REG(B11_8), t0);
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 11c75e3b4e..2b1a3ee094 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -2277,18 +2277,13 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
+         switch (optname) {
+         case ALG_SET_KEY:
+         {
+-            char *alg_key = g_malloc(optlen);
+-
++            char *alg_key = lock_user(VERIFY_READ, optval_addr, optlen, 1);
+             if (!alg_key) {
+-                return -TARGET_ENOMEM;
+-            }
+-            if (copy_from_user(alg_key, optval_addr, optlen)) {
+-                g_free(alg_key);
+                 return -TARGET_EFAULT;
+             }
+             ret = get_errno(setsockopt(sockfd, level, optname,
+                                        alg_key, optlen));
+-            g_free(alg_key);
++            unlock_user(alg_key, optval_addr, optlen);
+             break;
          }
-         return;
-     case 0x2009: /* and Rm,Rn */
-diff --git a/tests/tcg/sh4/Makefile.target b/tests/tcg/sh4/Makefile.target
-index c3d7fa86e3..39751c41b2 100644
---- a/tests/tcg/sh4/Makefile.target
-+++ b/tests/tcg/sh4/Makefile.target
-@@ -20,3 +20,6 @@ TESTS += test-macl
- 
- test-macw: CFLAGS += -O -g
- TESTS += test-macw
-+
-+test-addv: CFLAGS += -O -g
-+TESTS += test-addv
-diff --git a/tests/tcg/sh4/test-addv.c b/tests/tcg/sh4/test-addv.c
-new file mode 100644
-index 0000000000..ca87fe746a
---- /dev/null
-+++ b/tests/tcg/sh4/test-addv.c
-@@ -0,0 +1,27 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include <limits.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+
-+static void addv(const int a, const int b, const int res, const int carry)
-+{
-+    int o = a, c;
-+
-+    asm volatile("addv %2,%0\n"
-+                 "movt %1\n"
-+                 : "+r"(o), "=r"(c) : "r"(b) : );
-+
-+    if (c != carry || o != res) {
-+        printf("ADDV %d, %d = %d/%d [T = %d/%d]\n", a, b, o, res, c, carry);
-+        abort();
-+    }
-+}
-+
-+int main(void)
-+{
-+    addv(INT_MAX, 1, INT_MIN, 1);
-+    addv(INT_MAX - 1, 1, INT_MAX, 0);
-+
-+    return 0;
-+}
+         case ALG_SET_AEAD_AUTHSIZE:
 -- 
 2.39.2
 
