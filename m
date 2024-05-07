@@ -4,110 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC1D4C25B10
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 01:35:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7057FC25B10
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 01:51:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s49jV-00005V-4z; Mon, 06 May 2024 21:35:05 -0400
+	id 1s49yt-0007SW-LK; Mon, 06 May 2024 21:51:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3P4U5ZgYKCmgYKGTPIMUUMRK.IUSWKSa-JKbKRTUTMTa.UXM@flex--seanjc.bounces.google.com>)
- id 1s49jP-000057-Ri
- for qemu-devel@nongnu.org; Mon, 06 May 2024 21:34:59 -0400
-Received: from mail-yw1-x114a.google.com ([2607:f8b0:4864:20::114a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3P4U5ZgYKCmgYKGTPIMUUMRK.IUSWKSa-JKbKRTUTMTa.UXM@flex--seanjc.bounces.google.com>)
- id 1s49jN-00081E-Lc
- for qemu-devel@nongnu.org; Mon, 06 May 2024 21:34:59 -0400
-Received: by mail-yw1-x114a.google.com with SMTP id
- 00721157ae682-61e0949fc17so51016007b3.0
- for <qemu-devel@nongnu.org>; Mon, 06 May 2024 18:34:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1715045695; x=1715650495; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:from:subject:message-id:references
- :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
- :reply-to; bh=VvGkjH9SPvsjHvBH/WrCy4dSbt+wcqHhkwU5LfzuS0Q=;
- b=AMidPh/rn9Kbacz1rd3GPgxelPHP7jLVXqjZkMgvYVEVHWcdhAGqGaYE5Z2B4lsYIu
- YFnKd/b30Ho+grmfIthTcubpHXQWT2dLoCiKfbMNK9M7DeZOS/32VBq7dhtf5o/r7DpG
- DFAlu/W4eHKkWBPUIEe3GYLWfb4YuqRA53th4hl1x/Crz5Jf43NQ6HWYPkOnNZ1ORcf1
- eCEsqdD5g5akmURIwFE/i9LTKi6bUW+qtjAbV4xcZTxSfuYaPYRXZSk/WcSO+7fG/YHW
- 6LilPogBfqu6WVO3O42RATp2ufBlQNAYWatb/zSIhPb+jvLoAnnNuhGRsBg6Hv6rEIRv
- tuKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715045695; x=1715650495;
- h=content-transfer-encoding:cc:to:from:subject:message-id:references
- :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=VvGkjH9SPvsjHvBH/WrCy4dSbt+wcqHhkwU5LfzuS0Q=;
- b=Y4zq4HBW/OOz4kWCT2w9KCKWnek28q83/EAPeMdLFz3ACPzyY12Ac0Tq/Aau+mAh2Q
- RCBrAIEgfT2M88olz29otje/xVtgPgZnDENFZL4noJPzcoUEfdduXyA/5NyjokInRpoS
- 1Vgfj7AQt20PVJ7UI6aHWDRfAWysYuKXWkYCcSKJsQ6Rpx+jYJVKfh5E7F3S8JiKWISO
- se5l4utshUogGfYyCxDnKxjA4YHMNE7l0xRcx5g86ll8uVb+yjoR/vijm8BXhlWvUpUK
- We6HwA0YHHXQ9lLzMDtU5YFOOoOI6smtvlfRJONN4mtK+1AYZ/dO7yCraOTxyDZNRPn2
- 37XA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXdgH7q1A6900JMOR9aESTniLcPL0d/UWQ+I1rxIhl7SLCo7erRvIybG/jA/XgaieoK52xmbysX12ooCR4JjZx9MwkpcXM=
-X-Gm-Message-State: AOJu0YxSE6G2bNnVj84O9Q47V3lGEDrSv396hkvodclGmCqWUXLsjgp1
- zinaCqKZ4sxg62GJnyoGFwSEKYEVF8cdxQyh0Mc0/A8QzXULt31fl0yVqFtHU9+yzXEtf/6VsNJ
- FFQ==
-X-Google-Smtp-Source: AGHT+IEuRRNgC6bmH2Ym7Hdh0kKkoS5NCGgVEW4kTiZkpma4/j2gQOn7KVKqRXFpAim0ldEq7Pn05YmuCaI=
-X-Received: from zagreus.c.googlers.com
- ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
- (user=seanjc job=sendgmr) by 2002:a05:6902:1893:b0:de4:67d9:a2c6 with SMTP id
- cj19-20020a056902189300b00de467d9a2c6mr1291648ybb.2.1715045695256; Mon, 06
- May 2024 18:34:55 -0700 (PDT)
-Date: Mon, 6 May 2024 18:34:53 -0700
-In-Reply-To: <20240506.ohwe7eewu0oB@digikod.net>
-Mime-Version: 1.0
-References: <20240503131910.307630-1-mic@digikod.net>
- <20240503131910.307630-4-mic@digikod.net>
- <ZjTuqV-AxQQRWwUW@google.com> <20240506.ohwe7eewu0oB@digikod.net>
-Message-ID: <ZjmFPZd5q_hEBdBz@google.com>
-Subject: Re: [RFC PATCH v3 3/5] KVM: x86: Add notifications for Heki policy
- configuration and violation
-From: Sean Christopherson <seanjc@google.com>
-To: "=?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?=" <mic@digikod.net>
-Cc: Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>, 
- "H . Peter Anvin" <hpa@zytor.com>, Ingo Molnar <mingo@redhat.com>,
- Kees Cook <keescook@chromium.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Gleixner <tglx@linutronix.de>, 
- Vitaly Kuznetsov <vkuznets@redhat.com>, Wanpeng Li <wanpengli@tencent.com>, 
- Rick P Edgecombe <rick.p.edgecombe@intel.com>, Alexander Graf <graf@amazon.com>,
- Angelina Vu <angelinavu@linux.microsoft.com>, 
- Anna Trikalinou <atrikalinou@microsoft.com>,
- Chao Peng <chao.p.peng@linux.intel.com>, 
- Forrest Yuan Yu <yuanyu@google.com>, James Gowans <jgowans@amazon.com>, 
- James Morris <jamorris@linux.microsoft.com>,
- John Andersen <john.s.andersen@intel.com>, 
- "Madhavan T . Venkataraman" <madvenka@linux.microsoft.com>,
- Marian Rotariu <marian.c.rotariu@gmail.com>, 
- "Mihai =?utf-8?B?RG9uyJt1?=" <mdontu@bitdefender.com>, 
- "=?utf-8?B?TmljdciZb3IgQ8OuyJt1?=" <nicu.citu@icloud.com>,
- Thara Gopinath <tgopinath@microsoft.com>, 
- Trilok Soni <quic_tsoni@quicinc.com>, Wei Liu <wei.liu@kernel.org>, 
- Will Deacon <will@kernel.org>, Yu Zhang <yu.c.zhang@linux.intel.com>, 
- "=?utf-8?Q?=C8=98tefan_=C8=98icleru?=" <ssicleru@bitdefender.com>,
- dev@lists.cloudhypervisor.org, 
- kvm@vger.kernel.org, linux-hardening@vger.kernel.org, 
- linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-security-module@vger.kernel.org, qemu-devel@nongnu.org, 
- virtualization@lists.linux-foundation.org, x86@kernel.org, 
- xen-devel@lists.xenproject.org
+ (Exim 4.90_1) (envelope-from <arei.gonglei@huawei.com>)
+ id 1s49yq-0007QM-8u; Mon, 06 May 2024 21:50:56 -0400
+Received: from szxga01-in.huawei.com ([45.249.212.187])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <arei.gonglei@huawei.com>)
+ id 1s49yn-0000yn-5O; Mon, 06 May 2024 21:50:56 -0400
+Received: from mail.maildlp.com (unknown [172.19.162.254])
+ by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4VYLkQ1NKJzvQWW;
+ Tue,  7 May 2024 09:47:26 +0800 (CST)
+Received: from dggpemm500006.china.huawei.com (unknown [7.185.36.236])
+ by mail.maildlp.com (Postfix) with ESMTPS id 5880918009D;
+ Tue,  7 May 2024 09:50:44 +0800 (CST)
+Received: from dggpemm500006.china.huawei.com (7.185.36.236) by
+ dggpemm500006.china.huawei.com (7.185.36.236) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Tue, 7 May 2024 09:50:43 +0800
+Received: from dggpemm500006.china.huawei.com ([7.185.36.236]) by
+ dggpemm500006.china.huawei.com ([7.185.36.236]) with mapi id 15.01.2507.035;
+ Tue, 7 May 2024 09:50:43 +0800
+To: Peter Xu <peterx@redhat.com>
+CC: =?utf-8?B?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?= <berrange@redhat.com>, "Markus
+ Armbruster" <armbru@redhat.com>, Michael Galaxy <mgalaxy@akamai.com>, Yu
+ Zhang <yu.zhang@ionos.com>, "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>,
+ "Jinpu Wang" <jinpu.wang@ionos.com>, Elmar Gerdes <elmar.gerdes@ionos.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Yuval Shaia
+ <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>, "Prasanna Kumar
+ Kalever" <prasanna.kalever@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Michael Roth <michael.roth@amd.com>, Prasanna Kumar Kalever
+ <prasanna4324@gmail.com>, "integration@gluster.org"
+ <integration@gluster.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ "qemu-block@nongnu.org" <qemu-block@nongnu.org>, "devel@lists.libvirt.org"
+ <devel@lists.libvirt.org>, Hanna Reitz <hreitz@redhat.com>, "Michael S.
+ Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>, Eric Blake
+ <eblake@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ =?utf-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>,
+ =?utf-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, "Wainer dos Santos
+ Moschetta" <wainersm@redhat.com>, Beraldo Leal <bleal@redhat.com>,
+ Pannengyuan <pannengyuan@huawei.com>, Xiexiangyou <xiexiangyou@huawei.com>,
+ zhengchuan <zhengchuan@huawei.com>
+Subject: RE: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol handling
+Thread-Topic: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol handling
+Thread-Index: AQHaib4eb+nVph6utEe7HatbjXSGr7FeBxGAgAD/kQCAAM0PAIAAcGaAgAC+EICAAZsBgIAAJisAgBwPpQCAAB5mAIABl4t9//+GhYCAAhAsgIAHeqWwgABddICAATP+EA==
+Date: Tue, 7 May 2024 01:50:43 +0000
+Message-ID: <addaa8d094904315a466533763689ead@huawei.com>
+References: <082a21b0-d4d1-9f6c-24b5-bee56263008e@fujitsu.com>
+ <ZhaY2_cO6CrQFCt3@x1n> <Zhfxoaz9yNTx8Btd@x1n>
+ <CAHEcVy7POArt+CmY8dyNTzLJp3XxXgjh3k8=C=9K+_cw1CSJFA@mail.gmail.com>
+ <46f5e323-632d-7bda-f2c5-3cfa7b1c6b68@akamai.com> <Zi-1OvxA5MIHjklU@x1n>
+ <877cgfe2yw.fsf@pond.sub.org> <ZjClMb-6MddpvHqQ@redhat.com>
+ <ZjJgQcPQ29HJsTpY@x1n> <7e902e4e576a4e199e36d28f99bd55e5@huawei.com>
+ <Zjj0xa-3KrFHTK0S@x1n>
+In-Reply-To: <Zjj0xa-3KrFHTK0S@x1n>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.173.124.235]
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::114a;
- envelope-from=3P4U5ZgYKCmgYKGTPIMUUMRK.IUSWKSa-JKbKRTUTMTa.UXM@flex--seanjc.bounces.google.com;
- helo=mail-yw1-x114a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+Received-SPF: pass client-ip=45.249.212.187;
+ envelope-from=arei.gonglei@huawei.com; helo=szxga01-in.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,170 +92,71 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  "Gonglei (Arei)" <arei.gonglei@huawei.com>
+From:  "Gonglei (Arei)" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 06, 2024, Micka=C3=ABl Sala=C3=BCn wrote:
-> On Fri, May 03, 2024 at 07:03:21AM GMT, Sean Christopherson wrote:
-> > > ---
-> > >=20
-> > > Changes since v1:
-> > > * New patch. Making user space aware of Heki properties was requested=
- by
-> > >   Sean Christopherson.
-> >=20
-> > No, I suggested having userspace _control_ the pinning[*], not merely b=
-e notified
-> > of pinning.
-> >=20
-> >  : IMO, manipulation of protections, both for memory (this patch) and C=
-PU state
-> >  : (control registers in the next patch) should come from userspace.  I=
- have no
-> >  : objection to KVM providing plumbing if necessary, but I think usersp=
-ace needs to
-> >  : to have full control over the actual state.
-> >  :=20
-> >  : One of the things that caused Intel's control register pinning serie=
-s to stall
-> >  : out was how to handle edge cases like kexec() and reboot.  Deferring=
- to userspace
-> >  : means the kernel doesn't need to define policy, e.g. when to unprote=
-ct memory,
-> >  : and avoids questions like "should userspace be able to overwrite pin=
-ned control
-> >  : registers".
-> >  :=20
-> >  : And like the confidential VM use case, keeping userspace in the loop=
- is a big
-> >  : beneifit, e.g. the guest can't circumvent protections by coercing us=
-erspace into
-> >  : writing to protected memory.
-> >=20
-> > I stand by that suggestion, because I don't see a sane way to handle th=
-ings like
-> > kexec() and reboot without having a _much_ more sophisticated policy th=
-an would
-> > ever be acceptable in KVM.
-> >=20
-> > I think that can be done without KVM having any awareness of CR pinning=
- whatsoever.
-> > E.g. userspace just needs to ability to intercept CR writes and inject =
-#GPs.  Off
-> > the cuff, I suspect the uAPI could look very similar to MSR filtering. =
- E.g. I bet
-> > userspace could enforce MSR pinning without any new KVM uAPI at all.
-> >=20
-> > [*] https://lore.kernel.org/all/ZFUyhPuhtMbYdJ76@google.com
->=20
-> OK, I had concern about the control not directly coming from the guest,
-> especially in the case of pKVM and confidential computing, but I get you
-
-Hardware-based CoCo is completely out of scope, because KVM has zero visibi=
-lity
-into the guest (well, SNP technically allows trapping CR0/CR4, but KVM real=
-ly
-shouldn't intercept CR0/CR4 for SNP guests).
-
-And more importantly, _KVM_ doesn't define any policies for CoCo VMs.  KVM =
-might
-help enforce policies that are defined by hardware/firmware, but KVM doesn'=
-t
-define any of its own.
-
-If pKVM on x86 comes along, then KVM will likely get in the business of def=
-ining
-policy, but until that happens, KVM needs to stay firmly out of the picture=
-.
-
-> point.  It should indeed be quite similar to the MSR filtering on the
-> userspace side, except that we need another interface for the guest to
-> request such change (i.e. self-protection).
->=20
-> Would it be OK to keep this new KVM_HC_LOCK_CR_UPDATE hypercall but
-> forward the request to userspace with a VM exit instead?  That would
-> also enable userspace to get the request and directly configure the CR
-> pinning with the same VM exit.
-
-No?  Maybe?  I strongly suspect that full support will need a richer set of=
- APIs
-than a single hypercall.  E.g. to handle kexec(), suspend+resume, emulated =
-SMM,
-and so on and so forth.  And that's just for CR pinning.
-
-And hypercalls are hampered by the fact that VMCALL/VMMCALL don't allow for
-delegation or restriction, i.e. there's no way for the guest to communicate=
- to
-the hypervisor that a less privileged component is allowed to perform some =
-action,
-nor is there a way for the guest to say some chunk of CPL0 code *isn't* all=
-owed
-to request transition.  Delegation and restriction all has to be done out-o=
-f-band.
-
-It'd probably be more annoying to setup initially, but I think a synthetic =
-device
-with an MMIO-based interface would be more powerful and flexible in the lon=
-g run.
-Then userspace can evolve without needing to wait for KVM to catch up.
-
-Actually, potential bad/crazy idea.  Why does the _host_ need to define pol=
-icy?
-Linux already knows what assets it wants to (un)protect and when.  What's m=
-issing
-is a way for the guest kernel to effectively deprivilege and re-authenticat=
-e
-itself as needed.  We've been tossing around the idea of paired VMs+vCPUs t=
-o
-support VTLs and SEV's VMPLs, what if we usurped/piggybacked those ideas, w=
-ith a
-bit of pKVM mixed in?
-
-Borrowing VTL terminology, where VTL0 is the least privileged, userspace la=
-unches
-the VM at VTL0.  At some point, the guest triggers the deprivileging sequen=
-ce and
-userspace creates VTL1.  Userpace also provides a way for VTL0 restrict acc=
-ess to
-its memory, e.g. to effectively make the page tables for the kernel's direc=
-t map
-writable only from VTL1, to make kernel text RO (or XO), etc.  And VTL0 cou=
-ld then
-also completely remove its access to code that changes CR0/CR4.
-
-It would obviously require a _lot_ more upfront work, e.g. to isolate the k=
-ernel
-text that modifies CR0/CR4 so that it can be removed from VTL0, but that sh=
-ould
-be doable with annotations, e.g. tag relevant functions with __magic or wha=
-tever,
-throw them in a dedicated section, and then free/protect the section(s) at =
-the
-appropriate time.
-
-KVM would likely need to provide the ability to switch VTLs (or whatever th=
-ey get
-called), and host userspace would need to provide a decent amount of the ba=
-ckend
-mechanisms and "core" policies, e.g. to manage VTL0 memory, teardown (turn =
-off?)
-VTL1 on kexec(), etc.  But everything else could live in the guest kernel i=
-tself.
-E.g. to have CR pinning play nice with kexec(), toss the relevant kexec() c=
-ode into
-VTL1.  That way VTL1 can verify the kexec() target and tear itself down bef=
-ore
-jumping into the new kernel.=20
-
-This is very off the cuff and have-wavy, e.g. I don't have much of an idea =
-what
-it would take to harden kernel text patching, but keeping the policy in the=
- guest
-seems like it'd make everything more tractable than trying to define an ABI
-between Linux and a VMM that is rich and flexible enough to support all the
-fancy things Linux does (and will do in the future).
-
-Am I crazy?  Or maybe reinventing whatever that McAfee thing was that led t=
-o
-Intel implementing EPTP switching?
+SGVsbG8sDQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogUGV0ZXIgWHUg
+W21haWx0bzpwZXRlcnhAcmVkaGF0LmNvbV0NCj4gU2VudDogTW9uZGF5LCBNYXkgNiwgMjAyNCAx
+MToxOCBQTQ0KPiBUbzogR29uZ2xlaSAoQXJlaSkgPGFyZWkuZ29uZ2xlaUBodWF3ZWkuY29tPg0K
+PiBDYzogRGFuaWVsIFAuIEJlcnJhbmfDqSA8YmVycmFuZ2VAcmVkaGF0LmNvbT47IE1hcmt1cyBB
+cm1icnVzdGVyDQo+IDxhcm1icnVAcmVkaGF0LmNvbT47IE1pY2hhZWwgR2FsYXh5IDxtZ2FsYXh5
+QGFrYW1haS5jb20+OyBZdSBaaGFuZw0KPiA8eXUuemhhbmdAaW9ub3MuY29tPjsgWmhpamlhbiBM
+aSAoRnVqaXRzdSkgPGxpemhpamlhbkBmdWppdHN1LmNvbT47IEppbnB1IFdhbmcNCj4gPGppbnB1
+LndhbmdAaW9ub3MuY29tPjsgRWxtYXIgR2VyZGVzIDxlbG1hci5nZXJkZXNAaW9ub3MuY29tPjsN
+Cj4gcWVtdS1kZXZlbEBub25nbnUub3JnOyBZdXZhbCBTaGFpYSA8eXV2YWwuc2hhaWEubWxAZ21h
+aWwuY29tPjsgS2V2aW4gV29sZg0KPiA8a3dvbGZAcmVkaGF0LmNvbT47IFByYXNhbm5hIEt1bWFy
+IEthbGV2ZXINCj4gPHByYXNhbm5hLmthbGV2ZXJAcmVkaGF0LmNvbT47IENvcm5lbGlhIEh1Y2sg
+PGNvaHVja0ByZWRoYXQuY29tPjsNCj4gTWljaGFlbCBSb3RoIDxtaWNoYWVsLnJvdGhAYW1kLmNv
+bT47IFByYXNhbm5hIEt1bWFyIEthbGV2ZXINCj4gPHByYXNhbm5hNDMyNEBnbWFpbC5jb20+OyBp
+bnRlZ3JhdGlvbkBnbHVzdGVyLm9yZzsgUGFvbG8gQm9uemluaQ0KPiA8cGJvbnppbmlAcmVkaGF0
+LmNvbT47IHFlbXUtYmxvY2tAbm9uZ251Lm9yZzsgZGV2ZWxAbGlzdHMubGlidmlydC5vcmc7DQo+
+IEhhbm5hIFJlaXR6IDxocmVpdHpAcmVkaGF0LmNvbT47IE1pY2hhZWwgUy4gVHNpcmtpbiA8bXN0
+QHJlZGhhdC5jb20+Ow0KPiBUaG9tYXMgSHV0aCA8dGh1dGhAcmVkaGF0LmNvbT47IEVyaWMgQmxh
+a2UgPGVibGFrZUByZWRoYXQuY29tPjsgU29uZw0KPiBHYW8gPGdhb3NvbmdAbG9vbmdzb24uY24+
+OyBNYXJjLUFuZHLDqSBMdXJlYXUNCj4gPG1hcmNhbmRyZS5sdXJlYXVAcmVkaGF0LmNvbT47IEFs
+ZXggQmVubsOpZSA8YWxleC5iZW5uZWVAbGluYXJvLm9yZz47DQo+IFdhaW5lciBkb3MgU2FudG9z
+IE1vc2NoZXR0YSA8d2FpbmVyc21AcmVkaGF0LmNvbT47IEJlcmFsZG8gTGVhbA0KPiA8YmxlYWxA
+cmVkaGF0LmNvbT47IFBhbm5lbmd5dWFuIDxwYW5uZW5neXVhbkBodWF3ZWkuY29tPjsNCj4gWGll
+eGlhbmd5b3UgPHhpZXhpYW5neW91QGh1YXdlaS5jb20+DQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0gt
+Zm9yLTkuMSB2MiAyLzNdIG1pZ3JhdGlvbjogUmVtb3ZlIFJETUEgcHJvdG9jb2wgaGFuZGxpbmcN
+Cj4gDQo+IE9uIE1vbiwgTWF5IDA2LCAyMDI0IGF0IDAyOjA2OjI4QU0gKzAwMDAsIEdvbmdsZWkg
+KEFyZWkpIHdyb3RlOg0KPiA+IEhpLCBQZXRlcg0KPiANCj4gSGV5LCBMZWksDQo+IA0KPiBIYXBw
+eSB0byBzZWUgeW91IGFyb3VuZCBhZ2FpbiBhZnRlciB5ZWFycy4NCj4gDQpIYWhhLCBtZSB0b28u
+DQoNCj4gPiBSRE1BIGZlYXR1cmVzIGhpZ2ggYmFuZHdpZHRoLCBsb3cgbGF0ZW5jeSAoaW4gbm9u
+LWJsb2NraW5nIGxvc3NsZXNzDQo+ID4gbmV0d29yayksIGFuZCBkaXJlY3QgcmVtb3RlIG1lbW9y
+eSBhY2Nlc3MgYnkgYnlwYXNzaW5nIHRoZSBDUFUgKEFzIHlvdQ0KPiA+IGtub3csIENQVSByZXNv
+dXJjZXMgYXJlIGV4cGVuc2l2ZSBmb3IgY2xvdWQgdmVuZG9ycywgd2hpY2ggaXMgb25lIG9mDQo+
+ID4gdGhlIHJlYXNvbnMgd2h5IHdlIGludHJvZHVjZWQgb2ZmbG9hZCBjYXJkcy4pLCB3aGljaCBU
+Q1AgZG9lcyBub3QgaGF2ZS4NCj4gDQo+IEl0J3MgYW5vdGhlciBjb3N0IHRvIHVzZSBvZmZsb2Fk
+IGNhcmRzLCB2LnMuIHByZXBhcmluZyBtb3JlIGNwdSByZXNvdXJjZXM/DQo+IA0KU29mdHdhcmUg
+YW5kIGhhcmR3YXJlIG9mZmxvYWQgY29udmVyZ2VkIGFyY2hpdGVjdHVyZSBpcyB0aGUgd2F5IHRv
+IGdvIGZvciBhbGwgY2xvdWQgdmVuZG9ycyANCihJbmNsdWRpbmcgY29tcHJlaGVuc2l2ZSBiZW5l
+Zml0cyBpbiB0ZXJtcyBvZiBwZXJmb3JtYW5jZSwgY29zdCwgc2VjdXJpdHksIGFuZCBpbm5vdmF0
+aW9uIHNwZWVkKSwgDQppdCdzIG5vdCBqdXN0IGEgbWF0dGVyIG9mIGFkZGluZyB0aGUgcmVzb3Vy
+Y2Ugb2YgYSBEUFUgY2FyZC4NCg0KPiA+IEluIHNvbWUgc2NlbmFyaW9zIHdoZXJlIGZhc3QgbGl2
+ZSBtaWdyYXRpb24gaXMgbmVlZGVkIChleHRyZW1lbHkgc2hvcnQNCj4gPiBpbnRlcnJ1cHRpb24g
+ZHVyYXRpb24gYW5kIG1pZ3JhdGlvbiBkdXJhdGlvbikgaXMgdmVyeSB1c2VmdWwuIFRvIHRoaXMN
+Cj4gPiBlbmQsIHdlIGhhdmUgYWxzbyBkZXZlbG9wZWQgUkRNQSBzdXBwb3J0IGZvciBtdWx0aWZk
+Lg0KPiANCj4gV2lsbCBhbnkgb2YgeW91IHVwc3RyZWFtIHRoYXQgd29yaz8gIEknbSBjdXJpb3Vz
+IGhvdyBpbnRydXNpdmUgd291bGQgaXQgYmUNCj4gd2hlbiBhZGRpbmcgaXQgdG8gbXVsdGlmZCwg
+aWYgaXQgY2FuIGtlZXAgb25seSA1IGV4cG9ydGVkIGZ1bmN0aW9ucyBsaWtlIHdoYXQNCj4gcmRt
+YS5oIGRvZXMgcmlnaHQgbm93IGl0J2xsIGJlIHByZXR0eSBuaWNlLiAgV2UgYWxzbyB3YW50IHRv
+IG1ha2Ugc3VyZSBpdCB3b3Jrcw0KPiB3aXRoIGFyYml0cmFyeSBzaXplZCBsb2FkcyBhbmQgYnVm
+ZmVycywgZS5nLiB2ZmlvIGlzIGNvbnNpZGVyaW5nIHRvIGFkZCBJTyBsb2FkcyB0bw0KPiBtdWx0
+aWZkIGNoYW5uZWxzIHRvby4NCj4gDQoNCkluIGZhY3QsIHdlIHNlbnQgdGhlIHBhdGNoc2V0IHRv
+IHRoZSBjb21tdW5pdHkgaW4gMjAyMS4gUGxzIHNlZToNCmh0dHBzOi8vbG9yZS5rZXJuZWwub3Jn
+L2FsbC8yMDIxMDIwMzE4NTkwNi5HVDI5NTBAd29yay12bS9ULw0KDQoNCj4gT25lIHRoaW5nIHRv
+IG5vdGUgdGhhdCB0aGUgcXVlc3Rpb24gaGVyZSBpcyBub3QgYWJvdXQgYSBwdXJlIHBlcmZvcm1h
+bmNlDQo+IGNvbXBhcmlzb24gYmV0d2VlbiByZG1hIGFuZCBuaWNzIG9ubHkuICBJdCdzIGFib3V0
+IGhlbHAgdXMgbWFrZSBhIGRlY2lzaW9uDQo+IG9uIHdoZXRoZXIgdG8gZHJvcCByZG1hLCBpb3cs
+IGV2ZW4gaWYgcmRtYSBwZXJmb3JtcyB3ZWxsLCB0aGUgY29tbXVuaXR5IHN0aWxsDQo+IGhhcyB0
+aGUgcmlnaHQgdG8gZHJvcCBpdCBpZiBub2JvZHkgY2FuIGFjdGl2ZWx5IHdvcmsgYW5kIG1haW50
+YWluIGl0Lg0KPiBJdCdzIGp1c3QgdGhhdCBpZiBuaWNzIGNhbiBwZXJmb3JtIGFzIGdvb2QgaXQn
+cyBtb3JlIGEgcmVhc29uIHRvIGRyb3AsIHVubGVzcw0KPiBjb21wYW5pZXMgY2FuIGhlbHAgdG8g
+cHJvdmlkZSBnb29kIHN1cHBvcnQgYW5kIHdvcmsgdG9nZXRoZXIuDQo+IA0KDQpXZSBhcmUgaGFw
+cHkgdG8gcHJvdmlkZSB0aGUgbmVjZXNzYXJ5IHJldmlldyBhbmQgbWFpbnRlbmFuY2Ugd29yayBm
+b3IgUkRNQQ0KaWYgdGhlIGNvbW11bml0eSBuZWVkcyBpdC4NCg0KQ0MnaW5nIENodWFuIFpoZW5n
+Lg0KDQoNClJlZ2FyZHMsDQotR29uZ2xlaQ0KDQo=
 
