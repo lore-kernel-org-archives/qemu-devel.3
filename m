@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1292DC10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 09:19:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96227C10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 09:20:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4GyP-0004Dm-Nb; Tue, 07 May 2024 05:18:57 -0400
+	id 1s4Gyf-0004Mr-39; Tue, 07 May 2024 05:19:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4GyO-0004DE-DU; Tue, 07 May 2024 05:18:56 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1s4Gyd-0004MT-Ex; Tue, 07 May 2024 05:19:11 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4GyM-0003ut-DO; Tue, 07 May 2024 05:18:55 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-6e46dcd8feaso1066633b3a.2; 
- Tue, 07 May 2024 02:18:53 -0700 (PDT)
+ id 1s4Gyc-0003wN-0K; Tue, 07 May 2024 05:19:11 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-2b3c711dfd3so2253187a91.2; 
+ Tue, 07 May 2024 02:19:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715073533; x=1715678333; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=gmail.com; s=20230601; t=1715073548; x=1715678348; darn=nongnu.org;
+ h=in-reply-to:references:from:subject:cc:to:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BrDmWQ5RkziQ6JRvc8PlQszqB9p0enhjKo03QqLJ5WI=;
- b=jGqn8XtxumOQTVmK6qe6miiW1/OKgOTkxuXCzgTU+rvKo8GBme8jO/il1NMKYOdQQw
- k9fYnl3kbuE7agOr+o1hof2LvQGsi7X9L3OprVdbggzndgVH9q3dhNjdXs92TEBukHXS
- PpJ85H3JJfD5IAKW0V/Ku2fW9xZz9X+JAslS7hAEMgK5gxTF97KFPzoFiCAzBP0q3XKH
- lPZDnpraZHBTrMMM1vPUGHCcJF4QVqufPLLUVicxHn2TvSO5dHu1xBPpP+7gNSJU19eb
- +SNiDQv+9VycrUuipjnz/rLE+M3g/9v5EjZLy6FKOwTFaW7vKx8qFupaCByxdAngorXJ
- nhNg==
+ bh=ChL5QlV/NNuHxB5hQirEygLiXEwndmqvymPljTskbBg=;
+ b=ZzHx5hwju4MWOFk6jlkRjGch0Feids1IZXFK+7PsJT4Mzfo5tzqIWsS1O8WXS7bZAM
+ gP6DFUbV9kirrQhRkXslI23yN0n3ADOqF4Wd0nx3DbekNsYHOHe1oTS8eUQ2SU+s5agb
+ d/4tfsr5Bp/5VXVCdoz02pa5iGyOYFMfJ8lCk5eYEAdcyn7cyTitpWA6t4paIR1a5TQl
+ 92fA0YS/u6/Hka/LRfTTt2SiJ8T61fIiPJeCcRKny+x1o5lCWD/4/nzyAfR3x/qi6sS6
+ 28RoA2woCHnf5UNdmS3dnhDAXd7uAir3eEREkSHrVY+o/M2IYeXRIVUAy7pTB7ylc0UV
+ 4GPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715073533; x=1715678333;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=1e100.net; s=20230601; t=1715073548; x=1715678348;
+ h=in-reply-to:references:from:subject:cc:to:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=BrDmWQ5RkziQ6JRvc8PlQszqB9p0enhjKo03QqLJ5WI=;
- b=hCUnBiE7PwOYMQlkwP34umk0TU1fD/Ph5Myjo/Yi3+LMDI4Pf5muZgjbRUCB3nyMMH
- 1QQh9ddpW8qv6SxQymQx0sz/KmizJr6pgxxypl4GwYW97kqCSw9tmoZZ//fLOxeHy+zs
- JcW1T33xHEEcDDWCsSohdLaNZOE6995PihXb6livNYry3SjOG2+j3JfmwQ758dCF42GC
- 06KpVc3bYkADBYqZCznro1AtRRs+VmpWh6MrgX9GQrZNRTyOnuf/cCApE4FamQF8+gGA
- thiZ99J3cR+vH/i7Bj3uyRdxEoq4VxGVBxcIPfTmlIO4GJgZr9rper0f2nWJGCmY7wCP
- ATIA==
+ bh=ChL5QlV/NNuHxB5hQirEygLiXEwndmqvymPljTskbBg=;
+ b=Qh0VPi/sZ8lbHiDjTihNat2z8JINDRwUsiUckbGYYdV36W/3YKwzovkxwsUihmVchI
+ wTY0xPlPXMfaEL+7IfgQ7MPqca6O3I/TJU9xnh9ApjVr7pPrhJ4Po9sJSLMFLSfBbQuN
+ 8Z/oUso6drvRNXQqZeq5xCtrzTcRYNnRMQMxfMk0r7KQFKVRXyz8xdv7wbAHbaC7BWXN
+ Y55D2WYW8qb8vNCAKBQkDW1wI/IOF6zEq0eu7sWIH3QioMLcbzLT9gzUZmK+wsGF+usk
+ lPFx+D+drYFOXtgionQLA5YyCfaziUvT9frmMRbCMc4087xJLBBplWInVS706rVH/lfp
+ LrsQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVKblmSc4TMIXiDz9YQzoN1uk+NPjpkyETOM+yEqstpK/Mg82Jd8BLJ9/muMs6A14TOQQuiRhwhHXHAHyg2vdzVj9p+xMGaFBF07tU4/L2g4ID4FuSikxDZSs8=
-X-Gm-Message-State: AOJu0Yz4xxSFeM2ss0AAyOe7VDg0Oq9WZX5eEsWeA8EwFdxrwUG1K/Cm
- 75tpXpKbZv6G++4u6uQ9VQBGiBvksEjYzzkSRiBeIb/YjLq4/uck
-X-Google-Smtp-Source: AGHT+IHmxHDWwcoxFhbyyOjlb5qbgUlRzmoaEsIo8IvrzND2MH2DBqFDFUxpXJIENTDzF2qMrF2jrw==
-X-Received: by 2002:a05:6a21:3941:b0:1af:a45a:ab78 with SMTP id
- ac1-20020a056a21394100b001afa45aab78mr7813589pzc.9.1715073532598; 
- Tue, 07 May 2024 02:18:52 -0700 (PDT)
+ AJvYcCWUBurqKtAjOjNu2J5Aj2rHTbEsFT0ZX5zV6M3a4FC8N8aGQjqb94UsehU9PlUSG3Oq705vSalpcGICkCuCxo7LLi2B+dvFWcnV+u09pI8/Boe7NRgsaArdXfg=
+X-Gm-Message-State: AOJu0YyF2stk4xptTmshbKwA50ZiAYHIxW/7i9Vce0AnP4B5prxl5zS4
+ eYDPAAj2q1M1FiLC/bjWpq88H6jRloyN1Jxlda4QBRgea4UZ2zkI
+X-Google-Smtp-Source: AGHT+IEqTwp3eNYxt9wFRLX0BMBgl4LH+T38k0f5k4yjigFTuU68blmKJBCtUkfZw0rOayqpYqEB5w==
+X-Received: by 2002:a17:90b:1487:b0:2b2:9660:7d44 with SMTP id
+ js7-20020a17090b148700b002b296607d44mr9730581pjb.25.1715073548141; 
+ Tue, 07 May 2024 02:19:08 -0700 (PDT)
 Received: from localhost (220-245-239-57.tpgi.com.au. [220.245.239.57])
  by smtp.gmail.com with ESMTPSA id
- x21-20020a170902ea9500b001e510b3e807sm9454370plb.263.2024.05.07.02.18.50
+ d20-20020a17090ae29400b0029bf32b524esm11336481pjz.13.2024.05.07.02.19.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 May 2024 02:18:52 -0700 (PDT)
+ Tue, 07 May 2024 02:19:07 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 07 May 2024 19:18:46 +1000
-Message-Id: <D13ATP0YSIZ8.2SHHJEA9VROT5@gmail.com>
-Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
-Subject: Re: [PATCH v2 04/28] target/ppc: Remove unused helper
-From: "Nicholas Piggin" <npiggin@gmail.com>
+Date: Tue, 07 May 2024 19:19:02 +1000
+Message-Id: <D13ATWC6RQVA.9ZLADDX17XUU@gmail.com>
 To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
  <qemu-ppc@nongnu.org>
+Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
+Subject: Re: [PATCH v2 05/28] target/ppc/mmu_common.c: Move calculation of a
+ value closer to its usage
+From: "Nicholas Piggin" <npiggin@gmail.com>
 X-Mailer: aerc 0.17.0
 References: <cover.1714606359.git.balaton@eik.bme.hu>
- <747ae7cc484e0d9387fd7647381009005cd81833.1714606359.git.balaton@eik.bme.hu>
-In-Reply-To: <747ae7cc484e0d9387fd7647381009005cd81833.1714606359.git.balaton@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42a.google.com
+ <c60019daaf0218b64205ba2ec4d5f8edca20776a.1714606359.git.balaton@eik.bme.hu>
+In-Reply-To: <c60019daaf0218b64205ba2ec4d5f8edca20776a.1714606359.git.balaton@eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,68 +98,49 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Thu May 2, 2024 at 9:43 AM AEST, BALATON Zoltan wrote:
-> The helper_rac function is defined but not used, remove it.
+> In mmubooke_check_tlb() prot2 is calculated first but only used after
+> an unrelated check that can return before tha value is used. Move the
+> calculation after the check, closer to where it is used, to keep them
+> together and avoid computing it when not needed.
 >
-> Fixes: 005b69fdcc (target/ppc: Remove PowerPC 601 CPUs)
 > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 
 Reviwed-by: Nicholas Piggin <npiggin@gmail.com>
 
 > ---
->  target/ppc/helper.h     |  2 --
->  target/ppc/mmu_helper.c | 24 ------------------------
->  2 files changed, 26 deletions(-)
+>  target/ppc/mmu_common.c | 11 +++++------
+>  1 file changed, 5 insertions(+), 6 deletions(-)
 >
-> diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-> index 86f97ee1e7..f769e01c3d 100644
-> --- a/target/ppc/helper.h
-> +++ b/target/ppc/helper.h
-> @@ -700,8 +700,6 @@ DEF_HELPER_2(book3s_msgclr, void, env, tl)
+> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+> index 751403f1c8..168ff842a5 100644
+> --- a/target/ppc/mmu_common.c
+> +++ b/target/ppc/mmu_common.c
+> @@ -634,12 +634,6 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppce=
+mb_tlb_t *tlb,
+>          return -1;
+>      }
 > =20
->  DEF_HELPER_4(dlmzb, tl, env, tl, tl, i32)
->  #if !defined(CONFIG_USER_ONLY)
-> -DEF_HELPER_2(rac, tl, env, tl)
-> -
->  DEF_HELPER_2(load_dcr, tl, env, tl)
->  DEF_HELPER_3(store_dcr, void, env, tl, tl)
->  #endif
-> diff --git a/target/ppc/mmu_helper.c b/target/ppc/mmu_helper.c
-> index c071b4d5e2..817836b731 100644
-> --- a/target/ppc/mmu_helper.c
-> +++ b/target/ppc/mmu_helper.c
-> @@ -595,30 +595,6 @@ void helper_6xx_tlbi(CPUPPCState *env, target_ulong =
-EPN)
->      do_6xx_tlb(env, EPN, 1);
->  }
-> =20
-> -/***********************************************************************=
-******/
-> -/* PowerPC 601 specific instructions (POWER bridge) */
-> -
-> -target_ulong helper_rac(CPUPPCState *env, target_ulong addr)
-> -{
-> -    mmu_ctx_t ctx;
-> -    int nb_BATs;
-> -    target_ulong ret =3D 0;
-> -
-> -    /*
-> -     * We don't have to generate many instances of this instruction,
-> -     * as rac is supervisor only.
-> -     *
-> -     * XXX: FIX THIS: Pretend we have no BAT
-> -     */
-> -    nb_BATs =3D env->nb_BATs;
-> -    env->nb_BATs =3D 0;
-> -    if (get_physical_address_wtlb(env, &ctx, addr, 0, ACCESS_INT, 0) =3D=
-=3D 0) {
-> -        ret =3D ctx.raddr;
+> -    if (FIELD_EX64(env->msr, MSR, PR)) {
+> -        prot2 =3D tlb->prot & 0xF;
+> -    } else {
+> -        prot2 =3D (tlb->prot >> 4) & 0xF;
 > -    }
-> -    env->nb_BATs =3D nb_BATs;
-> -    return ret;
-> -}
 > -
->  static inline target_ulong booke_tlb_to_page_size(int size)
->  {
->      return 1024 << (2 * size);
+>      /* Check the address space */
+>      if ((access_type =3D=3D MMU_INST_FETCH ?
+>          FIELD_EX64(env->msr, MSR, IR) :
+> @@ -648,6 +642,11 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppce=
+mb_tlb_t *tlb,
+>          return -1;
+>      }
+> =20
+> +    if (FIELD_EX64(env->msr, MSR, PR)) {
+> +        prot2 =3D tlb->prot & 0xF;
+> +    } else {
+> +        prot2 =3D (tlb->prot >> 4) & 0xF;
+> +    }
+>      *prot =3D prot2;
+>      if (prot2 & prot_for_access_type(access_type)) {
+>          qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
 
 
