@@ -4,87 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BB72C25B74
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 07:30:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9DE9C25B76
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 07:31:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4FGr-0006JV-Kg; Tue, 07 May 2024 03:29:53 -0400
+	id 1s4FIW-0007HZ-UG; Tue, 07 May 2024 03:31:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1s4FGq-0006J9-NK
- for qemu-devel@nongnu.org; Tue, 07 May 2024 03:29:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1s4FGp-0001E1-4b
- for qemu-devel@nongnu.org; Tue, 07 May 2024 03:29:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715066990;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=A93ahfNar1uOKETloUlGrDT9DLnPE9GYJb5I2ezCmlE=;
- b=DYLYsQVFM1rk6FDtlDN1pRLFjmUdIR1oOMnC2xWBzC25nFZxRkpjdADmdn+EU4pCAQgrg4
- m5PKj0MxBSqcAmPWpRubH1zjhrzzSY4CsAcAPGtFFTiWi0IhNBTfH/iDxTM1PzZBiQV9lG
- 3oo2n/ir2h+tkxyhIe8h2R+KkoeEy0A=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-478-P92GaeQvM0qRcccvqR2d9g-1; Tue, 07 May 2024 03:29:48 -0400
-X-MC-Unique: P92GaeQvM0qRcccvqR2d9g-1
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-2b294c5ebc1so2367033a91.2
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 00:29:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715066987; x=1715671787;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=A93ahfNar1uOKETloUlGrDT9DLnPE9GYJb5I2ezCmlE=;
- b=ujJTyTBMWLtN91ucdvIml7dJjHYfmN78cI2xEbR6OloEz60VRuVZhMtueIbDUrZdV2
- u5OAD7nkmXjGmjLxMxEevi8Xu0RTd2VNgiDXhwUC/740UTCM4BB/g2emLUa0c/TIP6qS
- E/JY0OpaSKTrd3DfnujeYsqq4HxCfa8Z0C4uNt1JQV1bGQwlXQLR/OxbLsUUVGv/gI9z
- 3P/soldbjO9LYAFaexgploV8LHpmZEA278wzH+wk5QnIaMN8NFnxoDnoAQl6Gb402hRb
- 5WIuSk1VDCS1CKEwrA7HM6DencHN85ypb5LL1e2XOpc36lQt5flADojtLkfRalXozIBm
- R/zw==
-X-Gm-Message-State: AOJu0Yw9qSVHxtpAhnlW8cbXK/v3y2RRrYTShX3F4n6in+ItCvTK9bHg
- UomeCxYnILLTHS7FSn3Gly/ppTn+eFOXy5G2tTDbz6sVRtZSPWT4FqX1mZh4W5nUz4pGakR6MSs
- 8LNX6d1bFQpw8MqneoUIfLsWEYS/ubqSJjjhpX66+n3E7FMu3qxFe5oGwiES5CUeC95bx0pkDy4
- Tb8LMuewVqWnBfAcBZOjmW8/PO5OA=
-X-Received: by 2002:a17:90a:6fc4:b0:2b2:c278:279a with SMTP id
- e62-20020a17090a6fc400b002b2c278279amr10990846pjk.23.1715066987454; 
- Tue, 07 May 2024 00:29:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEOcGwII0K4zW5efu4+PDvtjtFEKf0QxuyEgS4W9Q/uOgt/6GAYCMo7CiPHfyTT0vUE54D0NVEkBUKrXRXf29s=
-X-Received: by 2002:a17:90a:6fc4:b0:2b2:c278:279a with SMTP id
- e62-20020a17090a6fc400b002b2c278279amr10990829pjk.23.1715066987064; Tue, 07
- May 2024 00:29:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1s4FIU-0007HO-RL
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 03:31:34 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1s4FIR-0001gb-Uc
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 03:31:34 -0400
+Received: from loongson.cn (unknown [10.20.42.173])
+ by gateway (Coremail) with SMTP id _____8AxTevM2DlmErUIAA--.16969S3;
+ Tue, 07 May 2024 15:31:24 +0800 (CST)
+Received: from [10.20.42.173] (unknown [10.20.42.173])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8CxX1XJ2DlmDLYTAA--.22246S3; 
+ Tue, 07 May 2024 15:31:23 +0800 (CST)
+Subject: Re: [PATCH v3 1/5] hw/loongarch: Rename LOONGARCH_MACHINE with
+ VIRT_MACHINE
+To: Thomas Huth <thuth@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <20240506030206.2119832-1-maobibo@loongson.cn>
+ <20240506030206.2119832-2-maobibo@loongson.cn>
+ <b1a4b08c-e288-4319-ac4a-7d6ca1256755@redhat.com>
+ <1a05cc73-3fda-2b17-e9be-541113a751fb@loongson.cn>
+ <d5845d4e-c50d-87e6-c8d6-b21bd354c148@loongson.cn>
+ <ea6ca025-8c2a-49ab-a5b5-9e77d1d4114a@redhat.com>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <fd244788-9452-8c25-eb2f-cbfe8484ad27@loongson.cn>
+Date: Tue, 7 May 2024 15:31:19 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20240410100345.389462-1-eperezma@redhat.com>
- <CACGkMEuJc1ba67Hge+MfpV6npy9KJf84q=uMSP3VYDEA4FiZ=A@mail.gmail.com>
- <CAJaqyWemfoCTLr21ukNszqnqaaEbuB_h+s3R4j-eC_YvHJpEGg@mail.gmail.com>
-In-Reply-To: <CAJaqyWemfoCTLr21ukNszqnqaaEbuB_h+s3R4j-eC_YvHJpEGg@mail.gmail.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Tue, 7 May 2024 15:29:35 +0800
-Message-ID: <CACGkMEtZEe=ONRcrmm5TNdcxkJx=p4m24VD0yx5w0u+Rn854hQ@mail.gmail.com>
-Subject: Re: [RFC 0/2] Identify aliased maps in vdpa SVQ iova_tree
-To: Eugenio Perez Martin <eperezma@redhat.com>
-Cc: qemu-devel@nongnu.org, Si-Wei Liu <si-wei.liu@oracle.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Lei Yang <leiyang@redhat.com>,
- Peter Xu <peterx@redhat.com>, 
- Jonah Palmer <jonah.palmer@oracle.com>, Dragos Tatulea <dtatulea@nvidia.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+In-Reply-To: <ea6ca025-8c2a-49ab-a5b5-9e77d1d4114a@redhat.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8CxX1XJ2DlmDLYTAA--.22246S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxZFy8tFyrKr43CF48XrWDGFX_yoW5uFWUpF
+ Z7AF1kArWrXr48Cr4Iqwn8WFyjyr9rG34UWFn3JFW8t3909ryjgr40vrWq9F1DAw48tF18
+ Zwn5C34fZFn8JrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
+ 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jO
+ F4_UUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.593,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,100 +90,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 12, 2024 at 3:56=E2=80=AFPM Eugenio Perez Martin
-<eperezma@redhat.com> wrote:
->
-> On Fri, Apr 12, 2024 at 8:47=E2=80=AFAM Jason Wang <jasowang@redhat.com> =
-wrote:
-> >
-> > On Wed, Apr 10, 2024 at 6:03=E2=80=AFPM Eugenio P=C3=A9rez <eperezma@re=
-dhat.com> wrote:
-> > >
-> > > The guest may have overlapped memory regions, where different GPA lea=
-ds
-> > > to the same HVA.  This causes a problem when overlapped regions
-> > > (different GPA but same translated HVA) exists in the tree, as lookin=
-g
-> > > them by HVA will return them twice.
-> >
-> > I think I don't understand if there's any side effect for shadow virtqu=
-eue?
-> >
->
-> My bad, I totally forgot to put a reference to where this comes from.
->
-> Si-Wei found that during initialization this sequences of maps /
-> unmaps happens [1]:
->
-> HVA                    GPA                IOVA
-> -------------------------------------------------------------------------=
-------------------------------------------------
-> Map
-> [0x7f7903e00000, 0x7f7983e00000)    [0x0, 0x80000000) [0x1000, 0x80000000=
-)
-> [0x7f7983e00000, 0x7f9903e00000)    [0x100000000, 0x2080000000)
-> [0x80001000, 0x2000001000)
-> [0x7f7903ea0000, 0x7f7903ec0000)    [0xfeda0000, 0xfedc0000)
-> [0x2000001000, 0x2000021000)
->
-> Unmap
-> [0x7f7903ea0000, 0x7f7903ec0000)    [0xfeda0000, 0xfedc0000) [0x1000,
-> 0x20000) ???
->
-> The third HVA range is contained in the first one, but exposed under a
-> different GVA (aliased). This is not "flattened" by QEMU, as GPA does
-> not overlap, only HVA.
->
-> At the third chunk unmap, the current algorithm finds the first chunk,
-> not the second one. This series is the way to tell the difference at
-> unmap time.
->
-> [1] https://lists.nongnu.org/archive/html/qemu-devel/2024-04/msg00079.htm=
-l
->
-> Thanks!
 
-Ok, I was wondering if we need to store GPA(GIOVA) to HVA mappings in
-the iova tree to solve this issue completely. Then there won't be
-aliasing issues.
 
-Thanks
+On 2024/5/7 下午2:10, Thomas Huth wrote:
+> On 07/05/2024 03.18, maobibo wrote:
+>>
+>>
+>> On 2024/5/6 下午2:09, maobibo wrote:
+>>>
+>>>
+>>> On 2024/5/6 下午12:24, Thomas Huth wrote:
+>>>> On 06/05/2024 05.02, Bibo Mao wrote:
+>>>>> On LoongArch system, there is only virt machine type now, name
+>>>>> LOONGARCH_MACHINE is confused, rename it with VIRT_MACHINE. Machine 
+>>>>> name
+>>>>> about Other real hw boards can be added in future.
+>>>>>
+>>>>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>>>>> ---
+>>>> ...
+>>>>> @@ -1245,7 +1244,7 @@ static void loongarch_class_init(ObjectClass 
+>>>>> *oc, void *data)
+>>>>>   static const TypeInfo loongarch_machine_types[] = {
+>>>>>       {
+>>>>> -        .name           = TYPE_LOONGARCH_MACHINE,
+>>>>> +        .name           = TYPE_VIRT_MACHINE,
+>>>>>           .parent         = TYPE_MACHINE,
+>>>>>           .instance_size  = sizeof(LoongArchMachineState),
+>>>>>           .class_init     = loongarch_class_init,
+>>>>> diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+>>>>> index 4e14bf6060..5ea2f0370d 100644
+>>>>> --- a/include/hw/loongarch/virt.h
+>>>>> +++ b/include/hw/loongarch/virt.h
+>>>>> @@ -73,8 +73,8 @@ struct LoongArchMachineState {
+>>>>>       struct loongarch_boot_info bootinfo;
+>>>>>   };
+>>>>> -#define TYPE_LOONGARCH_MACHINE  MACHINE_TYPE_NAME("virt")
+>>>>> -OBJECT_DECLARE_SIMPLE_TYPE(LoongArchMachineState, LOONGARCH_MACHINE)
+>>>>> +#define TYPE_VIRT_MACHINE  MACHINE_TYPE_NAME("virt")
+>>>>> +OBJECT_DECLARE_SIMPLE_TYPE(LoongArchMachineState, VIRT_MACHINE)
+>>>>>   bool loongarch_is_acpi_enabled(LoongArchMachineState *lams);
+>>>>>   void loongarch_acpi_setup(LoongArchMachineState *lams);
+>>>>>   #endif
+>>>>
+>>>>   Hi,
+>>>>
+>>>> there are currently some efforts going on to create the possibility 
+>>>> to link a QEMU binary that contains all targets in one binary. Since 
+>>>> we already have a TYPE_VIRT_MACHINE for other targets, I wonder 
+>>>> whether it might be better to use LOONGARCH_VIRT_MACHINE than just 
+>>>> VIRT_MACHINE here? Philippe, could you comment on this?
+>>>
+>>> It is great if there is one QEMU binary which supports different 
+>>> targets. And LOONGARCH_VIRT_MACHINE is ok for me.
+>> Hi Thomas, Philippe,
+>>
+>> Does machine name "virt" need be changed if LOONGARCH_VIRT_MACHINE is 
+>> used? There will be compatible issues if "virt" machine type is not 
+>> suggested to use.
+>>
+>> However CPU type "max" is not widely used now, can we get different 
+>> architectures from CPU type rather than machine type for one QEMU 
+>> binary which supports different targets?
+> 
+> I assume it should be fine to keep the "virt" machine name and "max" CPU 
+> type for each target, we've got a bunch of those already. I assume we'll 
+> keep the binary names as symlinks to the generic binary around and then 
+> decide via argv[0] about the main target...? Philippe, do you have 
+> already concrete plans for this?
+The method using symlinks to generic binary is great. It is transparent 
+to detailed architectures. I will refresh the patch and use 
+LOONGARCH_VIRT_MACHINE macro.
 
->
-> > Thanks
-> >
-> > >
-> > > To solve this, track GPA in the DMA entry that acs as unique identifi=
-ers
-> > > to the maps.  When the map needs to be removed, iova tree is able to
-> > > find the right one.
-> > >
-> > > Users that does not go to this extra layer of indirection can use the
-> > > iova tree as usual, with id =3D 0.
-> > >
-> > > This was found by Si-Wei Liu <si-wei.liu@oracle.com>, but I'm having =
-a hard
-> > > time to reproduce the issue.  This has been tested only without overl=
-apping
-> > > maps.  If it works with overlapping maps, it will be intergrated in t=
-he main
-> > > series.
-> > >
-> > > Comments are welcome.  Thanks!
-> > >
-> > > Eugenio P=C3=A9rez (2):
-> > >   iova_tree: add an id member to DMAMap
-> > >   vdpa: identify aliased maps in iova_tree
-> > >
-> > >  hw/virtio/vhost-vdpa.c   | 2 ++
-> > >  include/qemu/iova-tree.h | 5 +++--
-> > >  util/iova-tree.c         | 3 ++-
-> > >  3 files changed, 7 insertions(+), 3 deletions(-)
-> > >
-> > > --
-> > > 2.44.0
-> > >
-> >
->
+Regards
+Bibo Mao
+> 
+>   Thomas
+> 
+> 
 
 
