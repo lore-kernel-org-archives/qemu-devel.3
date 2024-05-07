@@ -4,90 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72AB5C25B4F
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 16:17:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 827D2C10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 16:22:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4NVG-0008Lb-92; Tue, 07 May 2024 12:17:20 -0400
+	id 1s4NaH-0002PF-I8; Tue, 07 May 2024 12:22:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s4NUt-0007yx-8L
- for qemu-devel@nongnu.org; Tue, 07 May 2024 12:16:59 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1s4NaF-0002Ol-Ge
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 12:22:27 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s4NUo-0008Dc-6J
- for qemu-devel@nongnu.org; Tue, 07 May 2024 12:16:55 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-1eca195a7c8so26661965ad.2
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 09:16:49 -0700 (PDT)
+ id 1s4NaD-0001HI-79
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 12:22:27 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-6ed3cafd766so2521462b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 09:22:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715098608; x=1715703408; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715098942; x=1715703742; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=OPrlm9diuhPkoGOG7Wer92IB6sXYn1GaYL0f6X5MsUU=;
- b=QBlY17ZQ/I7PtaxogR4+rTfjOk2Xv9LNR3dcfb3t2YoXdA8UctmhG1nNukYljGtTZK
- T65U9jPjJTRYTCqH87GaUrdgQi9xQXPi3BrH8FoPCUDJecdY7IaoxXJZHR6kuxOEV8zE
- fQ82/4LEzUeHbj+lLxnlDtTI5d3oVNiPdyYoJfj8It3jomvTJWsEt6LdeZY5ZosAoBdN
- Z5uQOy5WmBuKy5GKjufecziyKeTU+aRREvpWeLI4E0mkk77uUYbnpJP7rXQBXf9oUrGm
- zfu35IzI1qNiF25AgxrzK2phjGFdYRa+VT3X5Po2xvJsjdsYD3rfoHM0d0bdA++qiQ8z
- bQBg==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=HeTb6/e6/0ZsAmScNtS89lM9ZO9xUsxkKcrZRXGJ0lU=;
+ b=PCqIzszs2/WgauGLaxRnkIXQJLGkRli74onEde0z1hUh4+RSBxKjNdZ828jKpQ1kuc
+ xzd28DBH1Rv4Ico9ypxGFDHdLCdzAFCrwMW0sj4+y+ChdFmwaE5qdFgCN1HdEEQsYp9R
+ pBlPEn3hycbClDlPSvdeal66cI6mBnDqq+hpCedfv72ibriLW8RPYdrhNWgkgwGsl5NA
+ GdVqIssv49TnIGU+xr4BfJCYiRjypa2ZqtCPV0k0xeYU4GFylFhGMXNWiIqztEyyYzVQ
+ 8OA5ne3Vdwdn+V1j3vHal6lqxYwXiz4lcI8vLAEBu0C1LPfrJooStX6ifufVYTss1vsU
+ 1Q2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715098608; x=1715703408;
+ d=1e100.net; s=20230601; t=1715098942; x=1715703742;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OPrlm9diuhPkoGOG7Wer92IB6sXYn1GaYL0f6X5MsUU=;
- b=fm/BiryJHmgpjmpQAwD12XUySJ6b3iLI2gaiPcgeJJw6avUTB+rFoDSfoUnfrNnVBS
- r8UHZy+Sodw2FavSV/WOhhA1ifat2RblpKSJfYtHyNd6rK+Dw8J63maCBZwKJFl0Sgo2
- hStHAyHrb4OE4WeXxDq4jkYDh20p54IIMFRCT5NtvX3YSV8XYIUz9Co+WNvyOr3rjIcr
- BihBmjA7vjpi6yEFJ+qGdFstaCcIqf4WhgmafBhmDBAJ1LQm+tsad7DzHE+Ybted0h6l
- Rzk8oS23tsmXPL/Y40U8zy0CNy6rxM0v/3XzPFoird9gBLTVLEfXCrJBPFa80vJ2Fn5/
- IXXw==
+ bh=HeTb6/e6/0ZsAmScNtS89lM9ZO9xUsxkKcrZRXGJ0lU=;
+ b=FwEU3Ej2KFKHzQTST1f5NXqiXmhibFREr+Dkv7D2kkWut9Qvd+M7tAnukSdaF/fJhD
+ Vr4jVIe8V4GCiVQBIs4Mvmj9DJKHXLNBw7c9D127fsCuwjQ0C+a8l+Hp2+N2vvxVkGxa
+ wTLMh5Ir1+TMxCZHsvhUXikRF8xEkRx1sHOhNXRrq5WfzrWYH712I3MI47YK1Y0mYyI5
+ l4ZCo+viiHUBM0NOR9Wt+q8CAmeR1nAus2xEuyw95iB0j+X1YAsJcm9q9Wvh/FkmjEjZ
+ EEHlv/xXFAPzOVJdK+71q84gXZy2hHIJFa16S3aV9TaCPDyzxnKt1LuRsxaK7vTWH+O4
+ IxQw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVnUofdY70Gb3cQYf2QE8i3If7Fhpcj3tw8ZQwPOXQNMAK5pj9LbEFg7+Sg1mxzHt1cVYbNqjGgE7Ga33UIVXnexXDV6E4=
-X-Gm-Message-State: AOJu0Yxf5eNR6l2JZBFEe0WNKBI6GBkTruM2BOgY6hdMOJ6tnRHANgzE
- XK9Z4wddE3m2XCMvRNvw+9FbZk8QFCYgkrgb8FCdko+x4SDZR7lqmSPiOCP/WN4=
-X-Google-Smtp-Source: AGHT+IFUyq9sBoy1WwhC7RZxFJHStQHCSY9Lz3/gURKNYCpUcADfUooJg4moy5ZYlBbpQZEiBMa8QA==
-X-Received: by 2002:a17:902:d2cf:b0:1eb:7334:1228 with SMTP id
- d9443c01a7336-1eeaff8bd51mr1368875ad.3.1715098608334; 
- Tue, 07 May 2024 09:16:48 -0700 (PDT)
+ AJvYcCVwP7yVls4K6gejx0hcu5ErQUKXRh22R/UG9BfR0vOedsHcQOAlgOii0apWFnIortqo940AeBMTVo0DRoPrZXKVX7fgYYs=
+X-Gm-Message-State: AOJu0Ywn2YJwBqAjeTl/5wB14RJd+RXvppthbiFOfXPnFisgrn6E//HF
+ J+14dw2nixfd5wmU9ZGro5biob23glsa9+7J2Q7ZuCjQXk65HLn6zRYflPrp4WiCH1x01qaS1Qq
+ w
+X-Google-Smtp-Source: AGHT+IE3rfkY6c1G0gFfAGZ8Pr9jHLG6eMbthA2z2AIT+U5Na33WmJG4qZcpKRNx8WHAuusRJoOJ4Q==
+X-Received: by 2002:a05:6a20:ce4b:b0:1a3:64a9:11e5 with SMTP id
+ adf61e73a8af0-1afc8dea28dmr179852637.50.1715098941906; 
+ Tue, 07 May 2024 09:22:21 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- c12-20020a170902d48c00b001e434923462sm10266346plg.50.2024.05.07.09.16.47
+ p17-20020a634f51000000b00602a85927d8sm9997231pgl.73.2024.05.07.09.22.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 May 2024 09:16:47 -0700 (PDT)
-Message-ID: <74c2db17-3f47-478f-8379-6006ff94dcb5@linaro.org>
-Date: Tue, 7 May 2024 09:16:45 -0700
+ Tue, 07 May 2024 09:22:21 -0700 (PDT)
+Message-ID: <e503852c-4a5d-439c-b4d6-7b67e44ef0f6@linaro.org>
+Date: Tue, 7 May 2024 09:22:19 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] misc: Use QEMU header path relative to include/ directory
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Song Gao <gaosong@loongson.cn>, qemu-block@nongnu.org,
- Keith Busch <kbusch@kernel.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Jeuk Kim <jeuk20.kim@samsung.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Klaus Jensen <its@irrelevant.dk>,
- Jesper Devantier <foss@defmacro.it>, "Michael S. Tsirkin" <mst@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20240507142737.95735-1-philmd@linaro.org>
+Subject: Re: [PATCH] loongarch64: move memory map to boot.c
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20240507145135.270803-1-pbonzini@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240507142737.95735-1-philmd@linaro.org>
+In-Reply-To: <20240507145135.270803-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,22 +97,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/7/24 07:27, Philippe Mathieu-Daudé wrote:
-> QEMU headers are relative to the include/ directory,
-> not to the project root directory. Remove "include/".
+On 5/7/24 07:51, Paolo Bonzini wrote:
+> Ensure that it can be used even if virt.c is not included in the build, as
+> is the case for --without-default-devices.
 > 
-> See also:
-> https://www.qemu.org/docs/master/devel/style.html#include-directives
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
 > ---
->   hw/audio/virtio-snd.c   | 2 +-
->   hw/rtc/ls7a_rtc.c       | 2 +-
->   target/i386/gdbstub.c   | 2 +-
->   tests/qtest/nvme-test.c | 2 +-
->   tests/qtest/ufs-test.c  | 2 +-
->   5 files changed, 5 insertions(+), 5 deletions(-)
+>   include/hw/loongarch/boot.h | 10 ++++++++++
+>   include/hw/loongarch/virt.h | 10 ----------
+>   hw/loongarch/boot.c         |  3 +++
+>   hw/loongarch/virt.c         |  3 ---
+>   .gitlab-ci.d/buildtest.yml  |  2 +-
+>   5 files changed, 14 insertions(+), 14 deletions(-)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
 
+r~
 
