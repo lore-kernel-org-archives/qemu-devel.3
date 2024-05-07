@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D08D3C25B4F
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 08:43:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15964C25B75
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 08:43:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4GPW-0003YS-A7; Tue, 07 May 2024 04:42:54 -0400
+	id 1s4GPN-0003SF-GN; Tue, 07 May 2024 04:42:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1s4GPH-0003MP-Vh; Tue, 07 May 2024 04:42:40 -0400
+ id 1s4GPI-0003N5-JP; Tue, 07 May 2024 04:42:40 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1s4GPF-0003DH-6W; Tue, 07 May 2024 04:42:38 -0400
+ id 1s4GPG-0003DR-4z; Tue, 07 May 2024 04:42:40 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8CC3364BC6;
+ by isrv.corpit.ru (Postfix) with ESMTP id AA80764BC7;
  Tue,  7 May 2024 11:42:48 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 7ACC8C85AF;
+ by tsrv.corpit.ru (Postfix) with SMTP id 8C2B9C85B0;
  Tue,  7 May 2024 11:42:29 +0300 (MSK)
-Received: (nullmailer pid 1026517 invoked by uid 1000);
+Received: (nullmailer pid 1026521 invoked by uid 1000);
  Tue, 07 May 2024 08:42:29 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Andrew Jones <ajones@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.4 02/16] target/riscv/kvm: change KVM_REG_RISCV_FP_D to
- u64
-Date: Tue,  7 May 2024 11:42:01 +0300
-Message-Id: <20240507084226.1026455-2-mjt@tls.msk.ru>
+Subject: [Stable-8.2.4 03/16] target/riscv/kvm: change timer regs size to u64
+Date: Tue,  7 May 2024 11:42:02 +0300
+Message-Id: <20240507084226.1026455-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.4-20240506205855@cover.tls.msk.ru>
 References: <qemu-stable-8.2.4-20240506205855@cover.tls.msk.ru>
@@ -64,64 +63,98 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-KVM_REG_RISCV_FP_D regs are always u64 size. Using kvm_riscv_reg_id() in
-RISCV_FP_D_REG() ends up encoding the wrong size if we're running with
-TARGET_RISCV32.
+KVM_REG_RISCV_TIMER regs are always u64 according to the KVM API, but at
+this moment we'll return u32 regs if we're running a RISCV32 target.
 
-Create a new helper that returns a KVM ID with u64 size and use it with
-RISCV_FP_D_REG().
+Use the kvm_riscv_reg_id_u64() helper in RISCV_TIMER_REG() to fix it.
 
 Reported-by: Andrew Jones <ajones@ventanamicro.com>
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Message-ID: <20231208183835.2411523-3-dbarboza@ventanamicro.com>
+Message-ID: <20231208183835.2411523-4-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 450bd6618fda3d2e2ab02b2fce1c79efd5b66084)
+(cherry picked from commit 10f86d1b845087d14b58d65dd2a6e3411d1b6529)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 2eef2be86a..82ed4455a5 100644
+index 82ed4455a5..ddbe820e10 100644
 --- a/target/riscv/kvm/kvm-cpu.c
 +++ b/target/riscv/kvm/kvm-cpu.c
-@@ -77,6 +77,11 @@ static uint64_t kvm_riscv_reg_id_u32(uint64_t type, uint64_t idx)
-     return KVM_REG_RISCV | KVM_REG_SIZE_U32 | type | idx;
- }
+@@ -88,7 +88,7 @@ static uint64_t kvm_riscv_reg_id_u64(uint64_t type, uint64_t idx)
+ #define RISCV_CSR_REG(env, name)  kvm_riscv_reg_id(env, KVM_REG_RISCV_CSR, \
+                  KVM_REG_RISCV_CSR_REG(name))
  
-+static uint64_t kvm_riscv_reg_id_u64(uint64_t type, uint64_t idx)
-+{
-+    return KVM_REG_RISCV | KVM_REG_SIZE_U64 | type | idx;
-+}
-+
- #define RISCV_CORE_REG(env, name)  kvm_riscv_reg_id(env, KVM_REG_RISCV_CORE, \
-                  KVM_REG_RISCV_CORE_REG(name))
- 
-@@ -88,7 +93,7 @@ static uint64_t kvm_riscv_reg_id_u32(uint64_t type, uint64_t idx)
+-#define RISCV_TIMER_REG(env, name)  kvm_riscv_reg_id(env, KVM_REG_RISCV_TIMER, \
++#define RISCV_TIMER_REG(name)  kvm_riscv_reg_id_u64(KVM_REG_RISCV_TIMER, \
+                  KVM_REG_RISCV_TIMER_REG(name))
  
  #define RISCV_FP_F_REG(idx)  kvm_riscv_reg_id_u32(KVM_REG_RISCV_FP_F, idx)
+@@ -111,17 +111,17 @@ static uint64_t kvm_riscv_reg_id_u64(uint64_t type, uint64_t idx)
+         } \
+     } while (0)
  
--#define RISCV_FP_D_REG(env, idx)  kvm_riscv_reg_id(env, KVM_REG_RISCV_FP_D, idx)
-+#define RISCV_FP_D_REG(idx)  kvm_riscv_reg_id_u64(KVM_REG_RISCV_FP_D, idx)
- 
- #define KVM_RISCV_GET_CSR(cs, env, csr, reg) \
+-#define KVM_RISCV_GET_TIMER(cs, env, name, reg) \
++#define KVM_RISCV_GET_TIMER(cs, name, reg) \
      do { \
-@@ -579,7 +584,7 @@ static int kvm_riscv_get_regs_fp(CPUState *cs)
-     if (riscv_has_ext(env, RVD)) {
-         uint64_t reg;
-         for (i = 0; i < 32; i++) {
--            ret = kvm_get_one_reg(cs, RISCV_FP_D_REG(env, i), &reg);
-+            ret = kvm_get_one_reg(cs, RISCV_FP_D_REG(i), &reg);
-             if (ret) {
-                 return ret;
-             }
-@@ -613,7 +618,7 @@ static int kvm_riscv_put_regs_fp(CPUState *cs)
-         uint64_t reg;
-         for (i = 0; i < 32; i++) {
-             reg = env->fpr[i];
--            ret = kvm_set_one_reg(cs, RISCV_FP_D_REG(env, i), &reg);
-+            ret = kvm_set_one_reg(cs, RISCV_FP_D_REG(i), &reg);
-             if (ret) {
-                 return ret;
-             }
+-        int ret = kvm_get_one_reg(cs, RISCV_TIMER_REG(env, name), &reg); \
++        int ret = kvm_get_one_reg(cs, RISCV_TIMER_REG(name), &reg); \
+         if (ret) { \
+             abort(); \
+         } \
+     } while (0)
+ 
+-#define KVM_RISCV_SET_TIMER(cs, env, name, reg) \
++#define KVM_RISCV_SET_TIMER(cs, name, reg) \
+     do { \
+-        int ret = kvm_set_one_reg(cs, RISCV_TIMER_REG(env, name), &reg); \
++        int ret = kvm_set_one_reg(cs, RISCV_TIMER_REG(name), &reg); \
+         if (ret) { \
+             abort(); \
+         } \
+@@ -649,10 +649,10 @@ static void kvm_riscv_get_regs_timer(CPUState *cs)
+         return;
+     }
+ 
+-    KVM_RISCV_GET_TIMER(cs, env, time, env->kvm_timer_time);
+-    KVM_RISCV_GET_TIMER(cs, env, compare, env->kvm_timer_compare);
+-    KVM_RISCV_GET_TIMER(cs, env, state, env->kvm_timer_state);
+-    KVM_RISCV_GET_TIMER(cs, env, frequency, env->kvm_timer_frequency);
++    KVM_RISCV_GET_TIMER(cs, time, env->kvm_timer_time);
++    KVM_RISCV_GET_TIMER(cs, compare, env->kvm_timer_compare);
++    KVM_RISCV_GET_TIMER(cs, state, env->kvm_timer_state);
++    KVM_RISCV_GET_TIMER(cs, frequency, env->kvm_timer_frequency);
+ 
+     env->kvm_timer_dirty = true;
+ }
+@@ -666,8 +666,8 @@ static void kvm_riscv_put_regs_timer(CPUState *cs)
+         return;
+     }
+ 
+-    KVM_RISCV_SET_TIMER(cs, env, time, env->kvm_timer_time);
+-    KVM_RISCV_SET_TIMER(cs, env, compare, env->kvm_timer_compare);
++    KVM_RISCV_SET_TIMER(cs, time, env->kvm_timer_time);
++    KVM_RISCV_SET_TIMER(cs, compare, env->kvm_timer_compare);
+ 
+     /*
+      * To set register of RISCV_TIMER_REG(state) will occur a error from KVM
+@@ -676,7 +676,7 @@ static void kvm_riscv_put_regs_timer(CPUState *cs)
+      * TODO If KVM changes, adapt here.
+      */
+     if (env->kvm_timer_state) {
+-        KVM_RISCV_SET_TIMER(cs, env, state, env->kvm_timer_state);
++        KVM_RISCV_SET_TIMER(cs, state, env->kvm_timer_state);
+     }
+ 
+     /*
+@@ -685,7 +685,7 @@ static void kvm_riscv_put_regs_timer(CPUState *cs)
+      * during the migration.
+      */
+     if (migration_is_running(migrate_get_current()->state)) {
+-        KVM_RISCV_GET_TIMER(cs, env, frequency, reg);
++        KVM_RISCV_GET_TIMER(cs, frequency, reg);
+         if (reg != env->kvm_timer_frequency) {
+             error_report("Dst Hosts timer frequency != Src Hosts");
+         }
 -- 
 2.39.2
 
