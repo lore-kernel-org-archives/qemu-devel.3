@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2F4DC10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 19:00:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B2E8C25B5F
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 19:00:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4Q1y-0008Cd-3d; Tue, 07 May 2024 14:59:14 -0400
+	id 1s4Q20-0008Ga-5X; Tue, 07 May 2024 14:59:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1s4Q1v-0008BM-VG; Tue, 07 May 2024 14:59:11 -0400
+ id 1s4Q1w-0008BT-6c; Tue, 07 May 2024 14:59:12 -0400
 Received: from zproxy1.enst.fr ([137.194.2.220])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1s4Q1t-0006AL-KZ; Tue, 07 May 2024 14:59:11 -0400
+ id 1s4Q1t-0006A2-LS; Tue, 07 May 2024 14:59:11 -0400
 Received: from localhost (localhost [IPv6:::1])
- by zproxy1.enst.fr (Postfix) with ESMTP id 5A52FC0D41;
- Tue,  7 May 2024 20:59:05 +0200 (CEST)
+ by zproxy1.enst.fr (Postfix) with ESMTP id 9DF11C0588;
+ Tue,  7 May 2024 20:59:03 +0200 (CEST)
 Received: from zproxy1.enst.fr ([IPv6:::1])
  by localhost (zproxy1.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
- id Ya_-fyY7R5nH; Tue,  7 May 2024 20:59:05 +0200 (CEST)
+ id HLNQxTVh1GQ0; Tue,  7 May 2024 20:59:03 +0200 (CEST)
 Received: from localhost (localhost [IPv6:::1])
- by zproxy1.enst.fr (Postfix) with ESMTP id 17814C0D05;
- Tue,  7 May 2024 20:59:05 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy1.enst.fr 17814C0D05
+ by zproxy1.enst.fr (Postfix) with ESMTP id 2791FC0D05;
+ Tue,  7 May 2024 20:59:03 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy1.enst.fr 2791FC0D05
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
- s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1715108345;
- bh=QnpJKaskVydt3M9JeeJ+YmrTlVQ6dW0qxexbTyP/ZYg=;
+ s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1715108343;
+ bh=J8aP9fhelT/d154OZawuXtJOGh0PzL+Rwts8IZYUaWs=;
  h=From:To:Date:Message-ID:MIME-Version;
- b=XgKLuwJbF0eNnKSiouecPoGnjcnrnpsPvWzNBZCCJgENbNcuyeBS2BJTVIT6mFu7/
- mPHMS75c5WaEvTRkKfUJgV+ybRA5zak5GZtFMd6ZeeMWX4O20Lsg2VmV9ljcQGZoh8
- eELRGOUVEkpeYKJNuDmv3UBA3qjRWBx7H9HMT7SI=
+ b=Du7CRNCD+JsBuyVjSp0l/83p2Mx4vg1fqR+eBSkYn/TPGmLtrLB1CLE6seojq7wBx
+ 0b1KZqxbmXONnTRYqarIi0gKAaGbm6ykY4Ge8Th4kZs8HHfaN/HA1v1pIs9UKfoAPm
+ dHCEKGkzskYBkrNsDZsl554YlXGHVyR6F6wGr50w=
 X-Virus-Scanned: amavis at enst.fr
 Received: from zproxy1.enst.fr ([IPv6:::1])
  by localhost (zproxy1.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
- id f9IRu4IZ5MYc; Tue,  7 May 2024 20:59:05 +0200 (CEST)
+ id hibf2R4nwdOi; Tue,  7 May 2024 20:59:03 +0200 (CEST)
 Received: from inesv-Inspiron-3501.enst.fr (unknown
  [IPv6:2a04:8ec0:0:124::190c])
- by zproxy1.enst.fr (Postfix) with ESMTPSA id 1D8AFC0D30;
- Tue,  7 May 2024 20:59:04 +0200 (CEST)
+ by zproxy1.enst.fr (Postfix) with ESMTPSA id DC0DEC0588;
+ Tue,  7 May 2024 20:59:00 +0200 (CEST)
 From: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
@@ -53,12 +53,11 @@ Cc: Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Arnaud Minier <arnaud.minier@telecom-paris.fr>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 2/4] hw/gpio: Handle clock migration in STM32L4x5 gpios
-Date: Tue,  7 May 2024 20:55:39 +0200
-Message-ID: <20240507185854.34572-3-ines.varhol@telecom-paris.fr>
+Subject: [PATCH 0/4] Check clock connection between STM32L4x5 RCC and
+ peripherals
+Date: Tue,  7 May 2024 20:55:37 +0200
+Message-ID: <20240507185854.34572-1-ines.varhol@telecom-paris.fr>
 X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240507185854.34572-1-ines.varhol@telecom-paris.fr>
-References: <20240507185854.34572-1-ines.varhol@telecom-paris.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
@@ -85,46 +84,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-STM32L4x5 GPIO wasn't migrating its clock.
+Among implemented STM32L4x5 devices, USART, GPIO and SYSCFG
+have a clock source, but none has a corresponding test in QEMU.
+
+This patch makes sure that all 3 devices create a clock,
+have a QOM property to access the clock frequency,
+and adds QTests checking that clock enable in RCC has the
+expected results.
+
+Philippe Mathieu-Daud=C3=A9 suggested the following :
+".. We could add the clock properties
+directly in qdev_init_clock_in(). Seems useful for the QTest
+framework."
+
+However Peter Maydell pointed out the following :
+"...Mostly "frequency" properties on devices are for the case
+where they *don't* have a Clock input and instead have
+ad-hoc legacy handling where the board/SoC that creates the
+device sets an integer property to define the input frequency
+because it doesn't model the clock tree with Clock objects."
+
+You both agree on the fact that replicating the code in the
+different devices is a bad idea, what should be the
+alternative?
+
+Thank you for the reviews.
+
+Changes from v1:
+- upgrading `VMStateDescription` to version 2 to account for
+`VMSTATE_CLOCK()`
+- QTests : consolidating `get_clock_freq_hz()` in a header
+and making appropriate changes in stm32l4x5q_*-test.c
 
 Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
----
- hw/gpio/stm32l4x5_gpio.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/hw/gpio/stm32l4x5_gpio.c b/hw/gpio/stm32l4x5_gpio.c
-index 71bf5fddb2..30d8d6cba4 100644
---- a/hw/gpio/stm32l4x5_gpio.c
-+++ b/hw/gpio/stm32l4x5_gpio.c
-@@ -20,6 +20,7 @@
- #include "qemu/log.h"
- #include "hw/gpio/stm32l4x5_gpio.h"
- #include "hw/irq.h"
-+#include "hw/clock.h"
- #include "hw/qdev-clock.h"
- #include "hw/qdev-properties.h"
- #include "qapi/visitor.h"
-@@ -426,8 +427,8 @@ static void stm32l4x5_gpio_realize(DeviceState *dev, =
-Error **errp)
-=20
- static const VMStateDescription vmstate_stm32l4x5_gpio =3D {
-     .name =3D TYPE_STM32L4X5_GPIO,
--    .version_id =3D 1,
--    .minimum_version_id =3D 1,
-+    .version_id =3D 2,
-+    .minimum_version_id =3D 2,
-     .fields =3D (VMStateField[]){
-         VMSTATE_UINT32(moder, Stm32l4x5GpioState),
-         VMSTATE_UINT32(otyper, Stm32l4x5GpioState),
-@@ -441,6 +442,7 @@ static const VMStateDescription vmstate_stm32l4x5_gpi=
-o =3D {
-         VMSTATE_UINT32(ascr, Stm32l4x5GpioState),
-         VMSTATE_UINT16(disconnected_pins, Stm32l4x5GpioState),
-         VMSTATE_UINT16(pins_connected_high, Stm32l4x5GpioState),
-+        VMSTATE_CLOCK(clk, Stm32l4x5GpioState),
-         VMSTATE_END_OF_LIST()
-     }
- };
+In=C3=A8s Varhol (4):
+  hw/misc: Create STM32L4x5 SYSCFG clock
+  hw/gpio: Handle clock migration in STM32L4x5 gpios
+  hw/char: Add QOM property for STM32L4x5 USART clock frequency
+  tests/qtest: Check STM32L4x5 clock connections
+
+ include/hw/misc/stm32l4x5_syscfg.h  |  1 +
+ tests/qtest/stm32l4x5.h             | 40 +++++++++++++++++++++++++++++
+ hw/arm/stm32l4x5_soc.c              |  2 ++
+ hw/char/stm32l4x5_usart.c           | 16 ++++++++++--
+ hw/gpio/stm32l4x5_gpio.c            |  6 +++--
+ hw/misc/stm32l4x5_syscfg.c          | 30 ++++++++++++++++++++--
+ tests/qtest/stm32l4x5_gpio-test.c   | 23 +++++++++++++++++
+ tests/qtest/stm32l4x5_syscfg-test.c | 19 ++++++++++++--
+ tests/qtest/stm32l4x5_usart-test.c  | 26 +++++++++++++++++++
+ 9 files changed, 155 insertions(+), 8 deletions(-)
+ create mode 100644 tests/qtest/stm32l4x5.h
+
 --=20
 2.43.2
 
