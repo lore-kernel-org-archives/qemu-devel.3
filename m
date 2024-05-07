@@ -4,80 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2F2DC25B4F
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 08:57:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD576C10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 09:04:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4GdH-0004GM-3h; Tue, 07 May 2024 04:57:07 -0400
+	id 1s4Gj4-0006Dw-E3; Tue, 07 May 2024 05:03:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s4GdF-0004G7-QB
- for qemu-devel@nongnu.org; Tue, 07 May 2024 04:57:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s4GdE-00041J-1I
- for qemu-devel@nongnu.org; Tue, 07 May 2024 04:57:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715072222;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JEf/ykASi6GsgFSKNRIigV0ACFvxIVVQwg5gSD395+g=;
- b=BzDuPgNqW/Gg2zKm0s+8wdokV3hwAScNsImWecCIQBEnr0zQYL/WagF3HKRPQNgBD8S0Kn
- PhIbEYRkel204OpNoZ1vDm7zNrl7DfZ/uiUp5EhM6LvqN8SaCuqUQvNx9GrP30LeESmOZy
- bbCVruzA28JF+oSuATtOvH9vBXsr1e4=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-681-xY8d-1XINgWciHf5GoW9eA-1; Tue,
- 07 May 2024 04:56:59 -0400
-X-MC-Unique: xY8d-1XINgWciHf5GoW9eA-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 74B8E3800BA2;
- Tue,  7 May 2024 08:56:59 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.138])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id BF13B40C6CB6;
- Tue,  7 May 2024 08:56:56 +0000 (UTC)
-Date: Tue, 7 May 2024 09:56:54 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- "Dr. David Alan Gilbert" <dgilbert@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH V1 01/26] oslib: qemu_clear_cloexec
-Message-ID: <Zjns1qd57E86lAGy@redhat.com>
-References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
- <1714406135-451286-2-git-send-email-steven.sistare@oracle.com>
- <875xvqmsh8.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s4Gix-0006Cd-68
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 05:02:59 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1s4Gir-0005vi-QY
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 05:02:57 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-a59c0a6415fso599027366b.1
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 02:02:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1715072569; x=1715677369; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Z2jE5qDfx8bS3LJas2UapfjwL3dy12JCUJWy1N4nJtY=;
+ b=l7eLrdWzEUobSXYFbhc2sq/EoTfkCZc1uDgoNrSZSN0vNtVl+6eEodC0NBof0twGQ2
+ xWDPKqgMeDl3UCPOvnMi220MOiac5rAyVoXlGX6TGg9WXS9+9OCaqorHGT9rEoPqnmOM
+ JaiFr6Asx2dF7dOmMjMiKVzzZKcnVWU1OxxijB4wFUgJyqS5uyeTWTG3kw6Sul0J6JYK
+ /8fIgivbm9HUbmxBLIRXD8OcsYwCjtOKGugrdgPQF49MNhphZbGM4lZhkvjCupL1+NUF
+ tjPLumzoQ5G5kecI+7ZtzSpyEdWvXz7ikiAyicYH5fvgvbeYgj8N2iK9BqOx9HWCR9KD
+ Xt3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715072569; x=1715677369;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Z2jE5qDfx8bS3LJas2UapfjwL3dy12JCUJWy1N4nJtY=;
+ b=bmD78cLwPS824qg8Vmr7+DcWzKz+FBblaBeE70E8DpEbmDCLEZ6oDiCa8WJ7RcN038
+ 6tXAs+gohasBzPevR27iqyPTFT7i53OrXBWAu3luGHEKM/uEntGNlCh7SeCUGXdJlxK8
+ OiKxCU2hNSDf+GPp9ghXCPyfKFjISao7465gOHXAHneUP1Sg4fxJqKl7k2fGN/nGRBQU
+ a7c5CYS1x+KKsT2tYTVckhElw4UYsXaHAJRgXssV8uZ70+w/Xdg8gFZG5KXVA8emNguO
+ uHjVbHmdUNiwcKOxYxnesWhNBfzrJ6IQPeHiDj+TKeE9Ph9meX6BkTSrt/XezKV08+RQ
+ IENg==
+X-Gm-Message-State: AOJu0YzhCnwHzGB2YakXtYUnosMpY1WCu61ECNy4rdc3CwErr27Yfwtb
+ UxG9mj0dXq1YL2ERW1190KWvoVkmo9xGo566xvvF+0f41aNcEy/q5ESSDYOe2D/lrmrv84F095z
+ DfExG5GHeUNozcOhda2vriiomvmfD5Puel/lEgQ==
+X-Google-Smtp-Source: AGHT+IGRKbUd3xCeyVnFWisL15Tu+azAc7g+Ys9aQHJHCKi0yT/uNqNOD6ylCW1UdjC1qCIAoBcMsGi2by5IjZeQDnk=
+X-Received: by 2002:a50:cc96:0:b0:572:32e4:daca with SMTP id
+ q22-20020a50cc96000000b0057232e4dacamr7264208edi.25.1715072569373; Tue, 07
+ May 2024 02:02:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <875xvqmsh8.fsf@suse.de>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20240312020000.12992-1-salil.mehta@huawei.com>
+ <20240312020000.12992-7-salil.mehta@huawei.com>
+ <CAFEAcA93EotG4-LXRJF034_9dWAWgZJA1VF6dB-xCsXn0T059g@mail.gmail.com>
+ <10f35804a55e460a8ce6ecdb3f0c79b6@huawei.com>
+ <CAFEAcA-w7wf9F4VVAnZR3b34ydEWq=QNw=CxhTMobsr+AP_LCg@mail.gmail.com>
+ <55f942d2a3644bdaaff759014e3a4c20@huawei.com>
+In-Reply-To: <55f942d2a3644bdaaff759014e3a4c20@huawei.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 7 May 2024 10:02:37 +0100
+Message-ID: <CAFEAcA92nCPPk0Qa6XjRqRGTq_XDyRSVVaz67WgJBEZcxoEtOQ@mail.gmail.com>
+Subject: Re: [PATCH V8 6/8] physmem: Add helper function to destroy CPU
+ AddressSpace
+To: Salil Mehta <salil.mehta@huawei.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, 
+ "maz@kernel.org" <maz@kernel.org>,
+ "jean-philippe@linaro.org" <jean-philippe@linaro.org>, 
+ Jonathan Cameron <jonathan.cameron@huawei.com>, 
+ "lpieralisi@kernel.org" <lpieralisi@kernel.org>, 
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "imammedo@redhat.com" <imammedo@redhat.com>, 
+ "andrew.jones@linux.dev" <andrew.jones@linux.dev>,
+ "david@redhat.com" <david@redhat.com>, 
+ "philmd@linaro.org" <philmd@linaro.org>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, 
+ "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>, 
+ "mst@redhat.com" <mst@redhat.com>, "will@kernel.org" <will@kernel.org>,
+ "gshan@redhat.com" <gshan@redhat.com>, 
+ "rafael@kernel.org" <rafael@kernel.org>,
+ "alex.bennee@linaro.org" <alex.bennee@linaro.org>, 
+ "linux@armlinux.org.uk" <linux@armlinux.org.uk>, 
+ "darren@os.amperecomputing.com" <darren@os.amperecomputing.com>, 
+ "ilkka@os.amperecomputing.com" <ilkka@os.amperecomputing.com>, 
+ "vishnu@os.amperecomputing.com" <vishnu@os.amperecomputing.com>, 
+ "karl.heubaum@oracle.com" <karl.heubaum@oracle.com>,
+ "miguel.luis@oracle.com" <miguel.luis@oracle.com>, 
+ "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>,
+ zhukeqian <zhukeqian1@huawei.com>, 
+ "wangxiongfeng (C)" <wangxiongfeng2@huawei.com>,
+ "wangyanan (Y)" <wangyanan55@huawei.com>, 
+ "jiakernel2@gmail.com" <jiakernel2@gmail.com>,
+ "maobibo@loongson.cn" <maobibo@loongson.cn>, 
+ "lixianglai@loongson.cn" <lixianglai@loongson.cn>,
+ Linuxarm <linuxarm@huawei.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,103 +123,84 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 06, 2024 at 08:27:15PM -0300, Fabiano Rosas wrote:
-> Steve Sistare <steven.sistare@oracle.com> writes:
-> 
-> +cc dgilbert, marcandre
-> 
-> > Define qemu_clear_cloexec, analogous to qemu_set_cloexec.
+On Tue, 7 May 2024 at 01:11, Salil Mehta <salil.mehta@huawei.com> wrote:
+>
+> >  From: Peter Maydell <peter.maydell@linaro.org>
+> >  Sent: Monday, May 6, 2024 10:29 AM
+> >  To: Salil Mehta <salil.mehta@huawei.com>
 > >
-> > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> > Reviewed-by: Dr. David Alan Gilbert <dgilbert@redhat.com>
-> > Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> A v1 patch with two reviews already, from people from another company
-> and they're not in CC. Looks suspicious. =)
-
-It is ok in this case - the cpr work has been going on a long
-time and the original series that got partial reviews has been
-split up somewhat. So its "v1" of this series of patches, but
-not "v1" of what we've seen posted on qemu-devel in the past
-
-> 
-> Here's a fresh one, hopefully it won't spend another 4 years in the
-> drawer:
-> 
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
-> 
-> > ---
-> >  include/qemu/osdep.h | 9 +++++++++
-> >  util/oslib-posix.c   | 9 +++++++++
-> >  util/oslib-win32.c   | 4 ++++
-> >  3 files changed, 22 insertions(+)
+> >  On Mon, 6 May 2024 at 10:06, Salil Mehta <salil.mehta@huawei.com>
+> >  wrote:
+> >  >
+> >  > Hi Peter,
+> >  >
+> >  > Thanks for the review.
+> >  >
+> >  > >  From: Peter Maydell <peter.maydell@linaro.org>  When do we need t=
+o
+> >  > > destroy a single address space in this way that means  we need to
+> >  > > keep a count of how many ASes the CPU currently has? The  commit
+> >  > > message talks about the case when we unrealize the whole CPU
+> >  > > object, but in that situation you can just throw away all the ASes
+> >  > > at once (eg  by calling some
+> >  > >  cpu_destroy_address_spaces() function from
+> >  cpu_common_unrealizefn()).
+> >  >
+> >  >
+> >  > Yes, maybe, we can destroy all at once from common leg as well. I'd
+> >  > prefer this to be done from the arch specific function for ARM to
+> >  > maintain the clarity & symmetry of initialization and
+> >  > un-initialization legs.  For now, all of these address space destruc=
+tion is
+> >  happening in context to the arm_cpu_unrealizefn().
+> >  >
+> >  > It=E2=80=99s a kind of trade-off between little more code and clarit=
+y but I'm
+> >  > open to further suggestions.
+> >  >
+> >  >
+> >  > >
+> >  > >  Also, if we're leaking stuff here by failing to destroy it, is th=
+at
+> >  > > a problem for  existing CPU types like x86 that we can already hot=
+plug?
+> >  >
+> >  > No we are not. We are taking care of these in the ARM arch specific
+> >  > legs within functions arm_cpu_(un)realizefn().
 > >
-> > diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-> > index c7053cd..b58f312 100644
-> > --- a/include/qemu/osdep.h
-> > +++ b/include/qemu/osdep.h
-> > @@ -660,6 +660,15 @@ ssize_t qemu_write_full(int fd, const void *buf, size_t count)
-> >  
-> >  void qemu_set_cloexec(int fd);
-> >  
-> > +/*
-> > + * Clear FD_CLOEXEC for a descriptor.
-> > + *
-> > + * The caller must guarantee that no other fork+exec's occur before the
-> > + * exec that is intended to inherit this descriptor, eg by suspending CPUs
-> > + * and blocking monitor commands.
-> > + */
-> > +void qemu_clear_cloexec(int fd);
-> > +
-> >  /* Return a dynamically allocated directory path that is appropriate for storing
-> >   * local state.
-> >   *
-> > diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-> > index e764416..614c3e5 100644
-> > --- a/util/oslib-posix.c
-> > +++ b/util/oslib-posix.c
-> > @@ -272,6 +272,15 @@ int qemu_socketpair(int domain, int type, int protocol, int sv[2])
-> >      return ret;
-> >  }
-> >  
-> > +void qemu_clear_cloexec(int fd)
-> > +{
-> > +    int f;
-> > +    f = fcntl(fd, F_GETFD);
-> > +    assert(f != -1);
-> > +    f = fcntl(fd, F_SETFD, f & ~FD_CLOEXEC);
-> > +    assert(f != -1);
-> > +}
-> > +
-> >  char *
-> >  qemu_get_local_state_dir(void)
-> >  {
-> > diff --git a/util/oslib-win32.c b/util/oslib-win32.c
-> > index b623830..c3e969a 100644
-> > --- a/util/oslib-win32.c
-> > +++ b/util/oslib-win32.c
-> > @@ -222,6 +222,10 @@ void qemu_set_cloexec(int fd)
-> >  {
-> >  }
-> >  
-> > +void qemu_clear_cloexec(int fd)
-> > +{
-> > +}
-> > +
-> >  int qemu_get_thread_id(void)
-> >  {
-> >      return GetCurrentThreadId();
-> 
+> >  How can you be taking care of *x86* CPU types in the Arm unrealize?
+>
+>
+> Sorry, yes, I missed to reply that clearly. There was indeed a leak with =
+x86 reported
+> by Phillipe/David last year. In fact, Phillipe floated a patch last year =
+for this.
+> I thought it was fixed already as part of cpu_common_unrealize() but I ju=
+st
+> checked and realized that the below proposed changed still isn=E2=80=99t =
+part of the
+> mainline
+>
+> https://lore.kernel.org/qemu-devel/20230918160257.30127-9-philmd@linaro.o=
+rg/
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+That seems like the right way to clean these up -- Philippe, do you want
+to fish that bugfix out of your big patchset and submit it separately ?
 
+> I can definitely add a common CPU AddressSpace destruction leg as part of=
+ this
+> patch if in case arch specific CPU unrealize does not cleans up its CPU
+> AddressSpace?
+
+Arch-specific CPU unrealize shouldn't need to do anything -- if we
+fix this similarly to Philippe's patch above then that will do
+the cleanup required. Handling this kind of cleanup in common code
+is more reliable because it doesn't require every target-arch
+maintainer to remember it needs to be done, plus it's less code.
+
+thanks
+-- PMM
 
