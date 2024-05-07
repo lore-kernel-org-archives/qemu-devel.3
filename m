@@ -4,94 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E0BEC10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 12:53:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 260BBC25B75
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 12:57:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4KJm-00064H-1G; Tue, 07 May 2024 08:53:14 -0400
+	id 1s4KN5-0001Vo-S6; Tue, 07 May 2024 08:56:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4KJJ-0005dH-4p
- for qemu-devel@nongnu.org; Tue, 07 May 2024 08:52:45 -0400
-Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4KJG-0002I8-Uo
- for qemu-devel@nongnu.org; Tue, 07 May 2024 08:52:44 -0400
-Received: by mail-lf1-x12a.google.com with SMTP id
- 2adb3069b0e04-51f4d2676d1so3444088e87.3
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 05:52:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715086361; x=1715691161; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=yKM634OjyYIi8yArIR9t/13TNpeWE1UO4NyOtqU9kcw=;
- b=EToy1UD6YH1xyse7V3R6YWsLEGhAy2DokRAtJ+ikLbaChhHrtpXbUltKPWabeV5s+T
- 2DIaootgAToQgTk6lCLwSHqowysEPc0JF54emCqtKDUGUg8o0DjKelwSUsTdMrCi77pp
- +DXXH1f7bLMlcnyNPv93LBm9/CDSbdJ3naTRWzmnLf0QveHo3LAy3yX9cphNe3GT9DVJ
- xO1quGY2m8FCAPppjC3QcyUTKKs6tcZecLt9Qsm+Sb+H92OX6noS7e48O8XWYcONa24n
- nhFjSJfI9up0wU7+7X+JPsuWN6C9anOIVW9T0rqyfsuxtHkkJr4aiWP+aR1UX51xeCiW
- CGJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715086361; x=1715691161;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yKM634OjyYIi8yArIR9t/13TNpeWE1UO4NyOtqU9kcw=;
- b=bqoIGgSvtMvvlO1LpCvJXLoEJ58MNTRsnAgVvtiQAat1Ci8+U6CG5ztZQe9/OW4or+
- Ys8pg+TPYNymzaLbFtnVmKjWprQ9iVsWi5fpBsmS7Az3xNcHUi9l97gznbDOOTej04RN
- PyS7HzHte8phORXKXBYSr1Xh0fK5azEdXvINfqLTM/gN3RGLQ8dVEojs8jJ8IBjuU7V6
- K7/t291vpz9D//QmKvnq2H30j6c21Zyssvm5JGfpZB4NPwMpp3LmbliWFort/G84kBG1
- Kr0Kr5Y9ukOCkRoE+0DxfNSrWzjUcoaZBFreUgWMqFbIikwxHMJAmK74COCBWyqLHeKq
- DBlQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUfkIuyVI+M6ixrf8aWVYRFTk99A6qnY/FzMGqG+uDYHBCB+6eqOmaf25uqqCcgc61uYkMIldXILbVkf+nx3AmxLGPp0uE=
-X-Gm-Message-State: AOJu0YyciU3XWzhpJM4O291WrPPzdqVbfC2ocx1HkuhI9rhpq8srerML
- brSk6fuwzvQDe/RQY3t/4zbXuV4VhPzBPkBpePEG8c17uVpmNChLectUeBBebLM=
-X-Google-Smtp-Source: AGHT+IEuDAAilDr/mHbQLshrXntLj9Wo4A8uHNySu0I5zYnfHq5bgfOLHQ6KyAhMnUQmhHcBrogvVg==
-X-Received: by 2002:a05:6512:2090:b0:51f:d72:cd2d with SMTP id
- t16-20020a056512209000b0051f0d72cd2dmr7617330lfr.22.1715086360879; 
- Tue, 07 May 2024 05:52:40 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.177.243])
- by smtp.gmail.com with ESMTPSA id
- m37-20020a05600c3b2500b0041816c3049csm19555853wms.11.2024.05.07.05.52.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 May 2024 05:52:40 -0700 (PDT)
-Message-ID: <cf640e4c-610e-4357-a9bb-57d2d4ab1254@linaro.org>
-Date: Tue, 7 May 2024 14:52:37 +0200
+ (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1s4KN3-0001UF-R3
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 08:56:37 -0400
+Received: from dedi548.your-server.de ([85.10.215.148])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1s4KN1-0004UN-TY
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 08:56:37 -0400
+Received: from sslproxy03.your-server.de ([88.198.220.132])
+ by dedi548.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.94.2) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1s4KMw-000MDT-T4; Tue, 07 May 2024 14:56:30 +0200
+Received: from [82.100.198.138] (helo=mail.embedded-brains.de)
+ by sslproxy03.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.96) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1s4KMw-000Jiz-1F; Tue, 07 May 2024 14:56:30 +0200
+Received: from localhost (localhost [127.0.0.1])
+ by mail.embedded-brains.de (Postfix) with ESMTP id 4FD81480182;
+ Tue,  7 May 2024 14:56:30 +0200 (CEST)
+Received: from mail.embedded-brains.de ([127.0.0.1])
+ by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10032)
+ with ESMTP id ek6Fqv7eoNyi; Tue,  7 May 2024 14:56:30 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by mail.embedded-brains.de (Postfix) with ESMTP id EBD5F4801C3;
+ Tue,  7 May 2024 14:56:29 +0200 (CEST)
+X-Virus-Scanned: amavis at zimbra.eb.localhost
+Received: from mail.embedded-brains.de ([127.0.0.1])
+ by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10026)
+ with ESMTP id ajyio7jF6cSZ; Tue,  7 May 2024 14:56:29 +0200 (CEST)
+Received: from zimbra.eb.localhost (unknown [192.168.96.242])
+ by mail.embedded-brains.de (Postfix) with ESMTPSA id CC032480157;
+ Tue,  7 May 2024 14:56:29 +0200 (CEST)
+From: Sebastian Huber <sebastian.huber@embedded-brains.de>
+To: devel@rtems.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH 1/2] hw/intc/arm_gic: Fix set pending of PPIs
+Date: Tue,  7 May 2024 14:56:23 +0200
+Message-Id: <20240507125624.86731-1-sebastian.huber@embedded-brains.de>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <CAFEAcA8DAt+o-XZepg8xtj4i3xLW_yChwPnDZVM0O=rW8+9qJQ@mail.gmail.com>
+References: <CAFEAcA8DAt+o-XZepg8xtj4i3xLW_yChwPnDZVM0O=rW8+9qJQ@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 0/5] Support message-based DMA in vfio-user server
-To: Mattias Nissler <mnissler@rivosinc.com>, Peter Xu <peterx@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Jagannathan Raman <jag.raman@oracle.com>,
- QEMU Developers <qemu-devel@nongnu.org>, john.levon@nutanix.com,
- David Hildenbrand <david@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>
-References: <20240304100554.1143763-1-mnissler@rivosinc.com>
- <ZeWho6ZW41tg0rob@x1n>
- <CAGNS4TYd7qVjLb6VCUSQa9DrYivwJV5UDhdSnSde0t2UCMpXrg@mail.gmail.com>
- <ZjjsyF_ZMIPGqcci@x1n>
- <CAGNS4TaSxprHvoVCMRLw2YCGA2FXirO=Wp-TgzzxquwaL6y51Q@mail.gmail.com>
- <CAGNS4TYUPwQFWZ5Pc3eqTkLX2u0_mP5EFMJgGLUva3CGL=ZxLg@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAGNS4TYUPwQFWZ5Pc3eqTkLX2u0_mP5EFMJgGLUva3CGL=ZxLg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: quoted-printable
+X-Authenticated-Sender: smtp-embedded@poldi-networks.de
+X-Virus-Scanned: Clear (ClamAV 0.103.10/27268/Tue May  7 10:25:13 2024)
+Received-SPF: pass client-ip=85.10.215.148;
+ envelope-from=sebastian.huber@embedded-brains.de; helo=dedi548.your-server.de
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,37 +79,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/5/24 11:43, Mattias Nissler wrote:
-> 
-> 
-> On Mon, May 6, 2024 at 11:07 PM Mattias Nissler <mnissler@rivosinc.com 
-> <mailto:mnissler@rivosinc.com>> wrote:
-> 
-> 
-> 
->     On Mon, May 6, 2024 at 4:44 PM Peter Xu <peterx@redhat.com
->     <mailto:peterx@redhat.com>> wrote:
-> 
->         On Thu, Mar 28, 2024 at 08:53:36AM +0100, Mattias Nissler wrote:
->          > Stefan, to the best of my knowledge this is fully reviewed
->         and ready
->          > to go in - can you kindly pick it up or advise in case there's
->          > something I missed? Thanks!
-> 
->         Fails cross-compile on mipsel:
-> 
->         https://gitlab.com/peterx/qemu/-/jobs/6787790601
->         <https://gitlab.com/peterx/qemu/-/jobs/6787790601>
-> 
-> 
->     Ah, bummer, thanks for reporting. 4GB of bounce buffer should be
->     plenty, so switching to 32 bit atomics seems a good idea at first
->     glance. I'll take a closer look tomorrow and send a respin with a fix.
-> 
-> 
-> To close the loop on this: I have posted v9 with patch #2 adjusted to 
-> use uint32_t for size accounting to fix this.
+According to the GICv2 specification section 4.3.7, "Interrupt Set-Pendin=
+g
+Registers, GICD_ISPENDRn":
 
-"size accounting" calls for portable size_t type. But if uint32_t
-satisfies our needs, OK.
+"In a multiprocessor implementation, GICD_ISPENDR0 is banked for each con=
+nected
+processor. This register holds the Set-pending bits for interrupts 0-31."
+
+Signed-off-by: Sebastian Huber <sebastian.huber@embedded-brains.de>
+---
+ hw/intc/arm_gic.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/hw/intc/arm_gic.c b/hw/intc/arm_gic.c
+index 4da5326ed6..20b3f701e0 100644
+--- a/hw/intc/arm_gic.c
++++ b/hw/intc/arm_gic.c
+@@ -1296,12 +1296,14 @@ static void gic_dist_writeb(void *opaque, hwaddr =
+offset,
+=20
+         for (i =3D 0; i < 8; i++) {
+             if (value & (1 << i)) {
++                int cm =3D (irq < GIC_INTERNAL) ? (1 << cpu) : ALL_CPU_M=
+ASK;
++
+                 if (s->security_extn && !attrs.secure &&
+                     !GIC_DIST_TEST_GROUP(irq + i, 1 << cpu)) {
+                     continue; /* Ignore Non-secure access of Group0 IRQ =
+*/
+                 }
+=20
+-                GIC_DIST_SET_PENDING(irq + i, GIC_DIST_TARGET(irq + i));
++                GIC_DIST_SET_PENDING(irq + i, cm);
+             }
+         }
+     } else if (offset < 0x300) {
+--=20
+2.35.3
+
 
