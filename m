@@ -4,89 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBA1AC10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 14:35:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B10AC10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 14:37:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4LuK-0006OY-38; Tue, 07 May 2024 10:35:04 -0400
+	id 1s4LtA-0003P9-8H; Tue, 07 May 2024 10:33:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1s4LuI-0006Jq-0M
- for qemu-devel@nongnu.org; Tue, 07 May 2024 10:35:02 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s4Lsk-0003BW-89
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 10:33:30 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1s4LuA-0002HY-T5
- for qemu-devel@nongnu.org; Tue, 07 May 2024 10:35:01 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-6f4521ad6c0so2354326b3a.0
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 07:34:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s4Lsg-0001Mj-6U
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 10:33:25 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-1ecd9a81966so34885695ad.0
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 07:33:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1715092493; x=1715697293;
- darn=nongnu.org; 
+ d=linaro.org; s=google; t=1715092399; x=1715697199; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=apzsRecOwxYlD+3KkUMAHR59Iv8gB2EACXeGK4OKruY=;
- b=Y/ZdWqIrxLKNKqGsD+aEAbrU4ABYuhAIVrF6HimtSIaBvidWPLvCsLi/SK3mKNOuqo
- wj0kYN+VEliu0eoQVYVZHJUEDAzrVX5hFFOUVrCNoQdBTd6T8t4xwTsBiJNMfREBoyNU
- 3uEj5lhWAoH80rygRvgq/7/4wWMu+bkJAvJPSXT23IuKsCJ4sr9zBpb00L6JgWJz1KuT
- GBsMZ4+UI+N7L6/YCCKEOd979FnwQXnWtNWFT4dW2WFXGuhadUpQWF7OjIgmemCHUufP
- +BFFxGXSwFxGOAcy99x8ekUgKZFCDa4Z52pgPYKP9onuXlucWIhPrLDfFTmgokpTnO2v
- Ybww==
+ bh=tacbeao5rfkPxJFPTQiS5odWwv69qO+6Pb46/LGm6jU=;
+ b=DLPPs2kL9bHa5plRpZEu7OPEUY22LePlsUnjBDNY5vshifm6QPN8iOis3GnVLuktcK
+ Ex+B5aTZPyosZdTh2f04fhKqBC/aMufke6oXVy2fB4uhAkZEUh/bSTxj4KBq4WDqltMW
+ +/TWzVrnmBHe4j0BvLya9lDrj1rhe7bVsooR0jlopN3v0D/Wf7RQ6vwqJy+rM+CtL9gk
+ avBfIWAZJBmoP1ONnACAa+GbHJS/VM9WoRVX/2ECtP+6luLoOjE0aIuinhmhQdqj6xvC
+ pILqeY2iBA34FxoSAn+8s/az2VGAdnJ+AnLOAXIQdwoiusz6wqrFyUEXE1jr1ha/c9x7
+ qZtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715092493; x=1715697293;
+ d=1e100.net; s=20230601; t=1715092399; x=1715697199;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=apzsRecOwxYlD+3KkUMAHR59Iv8gB2EACXeGK4OKruY=;
- b=cPtJDo7I1L7KiDr/7NxCDeZOIPMfB4KLiyvvGi5saVa8WUk+rwoyPqWEhYIaQKNfbq
- hU1OW+jxPkO9N/angPAnP4j/83xM6sVcXlxP0HrT+TY3jmtqtyHrGnUlUIx42nUUGcBj
- CNRLY6z2NQ6ksVrXldcafRu/B91jNwbJGbXHokkxqCfm6rks5dqTQWWqleU9nI6WxT+B
- iDxDnhUGY0uSOmDt0Wd5AwDpqaxZPWi9huSznR+J+qk6x1PP3VWBLYiY6Xf4f6g+NoqQ
- nA10UFhFRVyPJcu+IXobUOU7KMzorXrXoezP3vFD89lxs7jXDA23f9KyINbtvqTnX5xV
- qdkg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV/andLeLFH0TYdFK1Tj8wiIc6xdMssMc5BTnI+3lO9dkSUQzXd1qhOgJhVhquSi90z2bhoEpDubw+JZY39e3A2rD2pC3k=
-X-Gm-Message-State: AOJu0YzjUjchSYPCejZPwxe0E8rFlIrrvp/ii5ym2VjbnJcyYNdzshKU
- ZW3kM69DhFmrOEnFlUjmzi7cVE+26JrCtduFW8aBVtJQN6gZpZLsbncEI4er3lw=
-X-Google-Smtp-Source: AGHT+IHBYFND3WPc+fm1E02Um6ZDNPZ9QUtDuYQUMJnnAOh1GgdJQCdRtC2cmqBaJXMJwG09chBcfQ==
-X-Received: by 2002:a05:6a21:1786:b0:1af:ac67:1307 with SMTP id
- nx6-20020a056a21178600b001afac671307mr7351479pzb.21.1715092492908; 
- Tue, 07 May 2024 07:34:52 -0700 (PDT)
-Received: from mnissler.ba.rivosinc.com ([64.71.180.162])
+ bh=tacbeao5rfkPxJFPTQiS5odWwv69qO+6Pb46/LGm6jU=;
+ b=mY5MH8B6MIAOnT9T9dOBaZHiOo13CbRMxLZ4o42VzCsFy48r6AMSxZKMOCOJiNE4p8
+ OLhIk4WfxdgqT0IHA6qUidl7ZK/Q+RD+459PKuw1SY4lTt4wSGQT+T0SoIzLrC1DWqhd
+ CuOWC8cynFc5nCTjWpZbmleByMOorz3f/ozCx53SIf21g92fhxf4wUhNUfZKuPnqYRm6
+ V35FoA37yN+2/OkluqFnjeEtXbvS01pUh61NUjNYf0oTxfSerj9lLZ+KJVvAEE+Z7f9H
+ s/JD4yvkWSTM4ocmRaP8FzYUPF9jCoQ4XjM6nqKfVlhleCaU1ZFaUTUEVXxJs+5R+8th
+ ETmg==
+X-Gm-Message-State: AOJu0Yyf2Q53iA8TG5Aw/9CsR0nUr9+bb4nHnVwIsnC/3NukCnodkNZW
+ WaF8u+CqjjaO9/dajdO6XdaL3mS2kzkDt6iEko021EvyfnKPLhgPnCsipYjQ3RD5oQJQDBMv7Pg
+ Q
+X-Google-Smtp-Source: AGHT+IFNUGW7y4URfvUftnCmdOepzCpwlxN2NmW0v+0aGlRU9b1J+j+dg070Jw0MXLemYh+bnOBKEg==
+X-Received: by 2002:a17:902:ec84:b0:1eb:527e:a89e with SMTP id
+ d9443c01a7336-1ee63463d05mr43662915ad.26.1715092398871; 
+ Tue, 07 May 2024 07:33:18 -0700 (PDT)
+Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- pq10-20020a17090b3d8a00b002af8056917csm11827206pjb.29.2024.05.07.07.34.52
+ p3-20020a170902780300b001ed2d84c1cbsm8690097pll.193.2024.05.07.07.33.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 May 2024 07:34:52 -0700 (PDT)
-From: Mattias Nissler <mnissler@rivosinc.com>
-To: jag.raman@oracle.com, peterx@redhat.com, stefanha@redhat.com,
- qemu-devel@nongnu.org
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- john.levon@nutanix.com, David Hildenbrand <david@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Mattias Nissler <mnissler@rivosinc.com>
-Subject: [PATCH v10 5/7] Update subprojects/libvfio-user
-Date: Tue,  7 May 2024 07:34:29 -0700
-Message-ID: <20240507143431.464382-6-mnissler@rivosinc.com>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240507143431.464382-1-mnissler@rivosinc.com>
-References: <20240507143431.464382-1-mnissler@rivosinc.com>
+ Tue, 07 May 2024 07:33:18 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 9/9] gitlab: Streamline ubuntu-22.04-s390x
+Date: Tue,  7 May 2024 07:33:09 -0700
+Message-Id: <20240507143309.5528-10-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240507143309.5528-1-richard.henderson@linaro.org>
+References: <20240507143309.5528-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=mnissler@rivosinc.com; helo=mail-pf1-x433.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,34 +96,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Brings in assorted bug fixes. The following are of particular interest
-with respect to message-based DMA support:
+We have one job to build user binaries and one job for system.
+Disable tools and docs in the user job, and disable building
+the user binaries in the system job.
 
-* bb308a2 "Fix address calculation for message-based DMA"
-  Corrects a bug in DMA address calculation.
-
-* 1569a37 "Pass server->client command over a separate socket pair"
-  Adds support for separate sockets for either command direction,
-  addressing a bug where libvfio-user gets confused if both client and
-  server send commands concurrently.
-
-Reviewed-by: Jagannathan Raman <jag.raman@oracle.com>
-Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- subprojects/libvfio-user.wrap | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/subprojects/libvfio-user.wrap b/subprojects/libvfio-user.wrap
-index 416955ca45..cdf0a7a375 100644
---- a/subprojects/libvfio-user.wrap
-+++ b/subprojects/libvfio-user.wrap
-@@ -1,4 +1,4 @@
- [wrap-git]
- url = https://gitlab.com/qemu-project/libvfio-user.git
--revision = 0b28d205572c80b568a1003db2c8f37ca333e4d7
-+revision = 1569a37a54ecb63bd4008708c76339ccf7d06115
- depth = 1
+diff --git a/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml b/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
+index 0a2d2bd332..25935048e2 100644
+--- a/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
++++ b/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
+@@ -15,13 +15,13 @@ ubuntu-22.04-s390x-all-linux:
+  script:
+  - mkdir build
+  - cd build
+- - ../configure --enable-debug --disable-system
++ - ../configure --enable-debug --disable-system --disable-tools --disable-docs
+    || { cat config.log meson-logs/meson-log.txt; exit 1; }
+  - make --output-sync -j`nproc`
+  - make --output-sync check-tcg
+  - make --output-sync -j`nproc` check
+ 
+-ubuntu-22.04-s390x-all:
++ubuntu-22.04-s390x-all-system:
+  extends: .custom_runner_template
+  needs: []
+  stage: build
+@@ -35,7 +35,7 @@ ubuntu-22.04-s390x-all:
+  script:
+  - mkdir build
+  - cd build
+- - ../configure
++ - ../configure --disable-user
+    || { cat config.log meson-logs/meson-log.txt; exit 1; }
+  - make --output-sync -j`nproc`
+  - make --output-sync -j`nproc` check
 -- 
-2.43.2
+2.34.1
 
 
