@@ -4,89 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDA00C25B5F
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 14:38:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 065A0C10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 14:43:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4LuO-0006eP-3L; Tue, 07 May 2024 10:35:08 -0400
+	id 1s4M2A-0000tp-8f; Tue, 07 May 2024 10:43:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1s4LuJ-0006OF-CR
- for qemu-devel@nongnu.org; Tue, 07 May 2024 10:35:03 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4M1w-0000p8-4g
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 10:43:01 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1s4LuG-0002IO-Uh
- for qemu-devel@nongnu.org; Tue, 07 May 2024 10:35:03 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-2b36232fa48so2263152a91.1
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 07:35:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4M1u-0006Nh-1q
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 10:42:55 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-41b782405bbso22524825e9.1
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 07:42:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1715092499; x=1715697299;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VQRoBwM3VtnsocziBWRdu7rYUqFpcQLBHetkRLLTiYU=;
- b=II3XaxZLLd0GeVQef6lrRQX0/vh02HdWdeVB9JeUkExebtaRXIZXLXrNsVVQC4vgHv
- eoi19Q9pr8DVEdGmjEv9dCYyT9t98iOc5aKSPrtWSijxbseB0p2cXxB32NjZjmLefjS5
- PfYcyf285LGpiFbmaWsXWOz94GO67VNeBxLcC3/1dm9vTlsVvedT/tRvDCJu5yszokHP
- Y6s3F0Z1SqdoVhXHWpKzZZR1RK5yFo0bKBDZdLU03Y8dGCxort2Q/itSJqk2T8o2iUK6
- F/fbbykVY1frofeDVJUspvZqDRoDA/nN06jX8iIgXUP6mPWsAB+HU9glXrAWJZ7sfVeb
- Q+wg==
+ d=linaro.org; s=google; t=1715092972; x=1715697772; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=jjhSQNkjeQtumZCCXmYh7ZT/mmpA23TX58VPvX/vMnE=;
+ b=Zqzqjni/FoZTwxEJUUloxq/VInZxR4j0GABBMy1SoqtF+BcU10XuV8U69FaB4qJm0i
+ dn8jiGzhATPslYgv4sKtAGf8dIQWvVPaDAVt30DVqBP0J7H7B6t4nbshAVzWfyaijkyk
+ IW5SNMnHWPFpY2VmphMD3h7FFTtmegu6B04LTTlW14yFo1TLZFpFQ1ZOusJP56M0Zwsx
+ at4GF9wE6ijNF3o5cxpwN+kEEmlugzbSJleSk7Mg2QEI/ZOF01k0IMthK0w+dUEbOtMr
+ 9AkKYeD5qbJ7sFo2p/vvceqT4/Z6LLSgegYsZ6OMSnZgT3qRz/rhnAXC3QzB1FgNsY2j
+ iRAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715092499; x=1715697299;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VQRoBwM3VtnsocziBWRdu7rYUqFpcQLBHetkRLLTiYU=;
- b=lRUOaunbnUWR+lodPvTBZXTGkI0eUnpkFF3g+8JN/YD7fgW/YUWduEHiHANZ3I4A1j
- ykLyfQ8ICA2C1D6MyOclE9SCWiMuvQ5HhuYvtefOQpU5dM7KNeZHBlmV5aXLudWUdzMz
- lH7oSzP1Oid5imiJesVBfn0SG3Aswmb0fpThbfHMhxX84Exy1R5TdSyBMMJ0L1Nc20br
- QppDByGoV2V44i6JTIJj2BuNxbFnx+yTJU5KM5oyKhbe5oTpo8iVSfNqHHvtuHMDKhrO
- 5/H9zo5h25rUPd/TZgT6q144mShmuIC/qnz0upTyMkgR/cr1vqupaTz+sp+bLztdrf2x
- YWoA==
+ d=1e100.net; s=20230601; t=1715092972; x=1715697772;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=jjhSQNkjeQtumZCCXmYh7ZT/mmpA23TX58VPvX/vMnE=;
+ b=jpWPO4hBQnfR72FMYAk9UKZmtuFHy5MiIGHNI3O1/cZ+n2iHdW3+fJ2ZDLfXCTrHud
+ 5e4qYwIIdfx027DMlZz4WG/csYn38ZlLxWK+J8BrNGdpWvJ2ioqrJ47DLHb8smpZPnbh
+ M7r+448JxPomgcNvmDtGtTg7OuEVAH0WiENTd8bV2RjQhi50iGHWA/3Y6ghFJaR2p6/k
+ 44pkecHwVv8DRYCnFzS67cGXV90DN4vcE9k4XrNeV5Sv5704HupgLrZrdDgWQfyZTvNw
+ XFKu7XPaNJynBDTNStEPF9lPQCQ8S2miubmNHLlmAtV3acSdyvLryW31+MiBb/Qylli9
+ +fog==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWum7BCd1CumjqsGCmmPSxRpqrDwYTqRCESmt5sZIctoSLRV67ybb/dOMDKmNwlI5MDfz4deWBmmz2MlaRl5KbJhjM1k/k=
-X-Gm-Message-State: AOJu0YzlleJ6gMsbRtSZKB20ZCNjEncanXTPSROwUE8OsgA1jbOP/j9k
- SVWeXuHPyaBGhW1PBVuH2iiSjzlkPY1tyizxXEkaA+JxlIPFyHtg9GBZAU7Q5Xg=
-X-Google-Smtp-Source: AGHT+IGH8Ldm8JgABb49ziH49B9kVw+z8BaUE98L2DFVZPQ/BWYi4bM2AfUQr17SuC7M+YZBmoRnIQ==
-X-Received: by 2002:a17:90a:d44f:b0:2b4:32ae:9d7a with SMTP id
- cz15-20020a17090ad44f00b002b432ae9d7amr9569144pjb.19.1715092495364; 
- Tue, 07 May 2024 07:34:55 -0700 (PDT)
-Received: from mnissler.ba.rivosinc.com ([64.71.180.162])
+ AJvYcCW8b1l4sVuwK1zQe/SF+EV3jJPXiJXXtBuZ/H6EZWSP1A5N7De7zkWszLgsq8YcOXHgRgcFXl6e6T4seZRe3aP4imJWLcE=
+X-Gm-Message-State: AOJu0Yx14lTgNRWEeRWSSJZm1wIuHGZVQrDsI3NyJz0qWS+XsrQKL/jz
+ SFKa3bR19t4a+qosNobqnUnlNjWMWcPCLi81WncJ3Uw7HEg7f0CcpsTamfeCbc4=
+X-Google-Smtp-Source: AGHT+IH6nxDLXJZP/F19hjLjrOsZYdYpsCucZ/rc//Wlf2POgrKev61WE8pHBzZRDFfVTNfP9F2h9g==
+X-Received: by 2002:a05:600c:46c6:b0:41a:2044:1b3e with SMTP id
+ 5b1f17b1804b1-41f719d627fmr254715e9.32.1715092972196; 
+ Tue, 07 May 2024 07:42:52 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.177.243])
  by smtp.gmail.com with ESMTPSA id
- pq10-20020a17090b3d8a00b002af8056917csm11827206pjb.29.2024.05.07.07.34.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 May 2024 07:34:54 -0700 (PDT)
-From: Mattias Nissler <mnissler@rivosinc.com>
-To: jag.raman@oracle.com, peterx@redhat.com, stefanha@redhat.com,
- qemu-devel@nongnu.org
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- john.levon@nutanix.com, David Hildenbrand <david@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Mattias Nissler <mnissler@rivosinc.com>
-Subject: [PATCH v10 7/7] vfio-user: Fix config space access byte order
-Date: Tue,  7 May 2024 07:34:31 -0700
-Message-ID: <20240507143431.464382-8-mnissler@rivosinc.com>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240507143431.464382-1-mnissler@rivosinc.com>
-References: <20240507143431.464382-1-mnissler@rivosinc.com>
+ r9-20020a05600c35c900b0041bf5b9fb93sm20011217wmq.5.2024.05.07.07.42.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 May 2024 07:42:51 -0700 (PDT)
+Message-ID: <04b91274-add5-4855-8989-a4a988750ec9@linaro.org>
+Date: Tue, 7 May 2024 16:42:49 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/sh4: Update DisasContextBase.insn_start
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: ysato@users.sourceforge.jp
+References: <20240506195506.385921-1-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240506195506.385921-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=mnissler@rivosinc.com; helo=mail-pj1-x102f.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,41 +95,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PCI config space is little-endian, so on a big-endian host we need to
-perform byte swaps for values as they are passed to and received from
-the generic PCI config space access machinery.
+On 6/5/24 21:55, Richard Henderson wrote:
+> Match the extra inserts of INDEX_op_insn_start,
+
+Maybe insert here:
+
+(see commit e03291cd9a "Emit insn_start for each insn in gUSA region")
+
+  fixing
+> the db->num_insns != 1 assert in translator_loop.
+> 
+> Fixes: dcd092a0636 ("accel/tcg: Improve can_do_io management")
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/sh4/translate.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/target/sh4/translate.c b/target/sh4/translate.c
+> index e599ab9d1a..b3282f3ac7 100644
+> --- a/target/sh4/translate.c
+> +++ b/target/sh4/translate.c
+> @@ -2189,6 +2189,7 @@ static void decode_gusa(DisasContext *ctx, CPUSH4State *env)
+>        */
+>       for (i = 1; i < max_insns; ++i) {
+>           tcg_gen_insn_start(pc + i * 2, ctx->envflags);
+> +        ctx->base.insn_start = tcg_last_op();
+>       }
+>   }
+>   #endif
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Jagannathan Raman <jag.raman@oracle.com>
-Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
----
- hw/remote/vfio-user-obj.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
-index a15e291c9a..0e93d7a7b4 100644
---- a/hw/remote/vfio-user-obj.c
-+++ b/hw/remote/vfio-user-obj.c
-@@ -281,7 +281,7 @@ static ssize_t vfu_object_cfg_access(vfu_ctx_t *vfu_ctx, char * const buf,
-     while (bytes > 0) {
-         len = (bytes > pci_access_width) ? pci_access_width : bytes;
-         if (is_write) {
--            memcpy(&val, ptr, len);
-+            val = ldn_le_p(ptr, len);
-             pci_host_config_write_common(o->pci_dev, offset,
-                                          pci_config_size(o->pci_dev),
-                                          val, len);
-@@ -289,7 +289,7 @@ static ssize_t vfu_object_cfg_access(vfu_ctx_t *vfu_ctx, char * const buf,
-         } else {
-             val = pci_host_config_read_common(o->pci_dev, offset,
-                                               pci_config_size(o->pci_dev), len);
--            memcpy(ptr, &val, len);
-+            stn_le_p(ptr, len, val);
-             trace_vfu_cfg_read(offset, val);
-         }
-         offset += len;
--- 
-2.43.2
 
 
