@@ -4,83 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B31FFC10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 15:53:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25F32C10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 15:53:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4N7c-0006Gs-0H; Tue, 07 May 2024 11:52:52 -0400
+	id 1s4N8F-00071r-L7; Tue, 07 May 2024 11:53:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s4N7a-0006GU-AR
- for qemu-devel@nongnu.org; Tue, 07 May 2024 11:52:50 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1s4N7Y-00053I-Cd
- for qemu-devel@nongnu.org; Tue, 07 May 2024 11:52:50 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-a59cf0bda27so261673966b.0
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 08:52:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715097166; x=1715701966; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=eOCPxri9o5Qn3OAXWI10hYMRo0TIT5UXHdlgSRC1roc=;
- b=BcmRC135WVI4pEn0ypf6G6puxroXXFWrPOq8O4tg5R88kYsCrdxQS4YVTXWKKRlBpQ
- DDrANhlFor6QWty/UciztLSyVjkaTcgaI9f3R/2mheflOBgdgPZkmJHnMrc1PaT5Lxfi
- HFQcDhOC8XYBRduTaNyPGjSOq0B7Y9OpmEAUi9aug4AFQl1a6QNPuov2ELQ/Y7/rg58V
- hu8rVUm2fxP4m0rNpu6sKmWSMeGh7iNtla6SE5EBFRZjMrW4lgOEATMM1rLzZGGA6SN0
- dfUsj/JtYKImmjghk09WPEYOUDmwOjb+Pa07vOls3gaFT/LpCvP5vDikE2S7JYCzoHUv
- L0Hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715097166; x=1715701966;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=eOCPxri9o5Qn3OAXWI10hYMRo0TIT5UXHdlgSRC1roc=;
- b=Cf8U2J9dtA2cxA/3HtW/JlJHwGgBBnfFhY2P2AKrMEli7SYHWz/vZJZLn5uXoeG+9+
- lHUUd33AGQ4Xjl6YyrhhwMo2yDhVp/Vp6TDBPcjRYULUsS/4iU1MqD1ItjRsaWHThHKx
- U6ielu+HfVhytMlZL5WOHDDih50RzUuzQ9rHrQgmoEM7A0AC+NTYS+F2xLvGrKnsCjM0
- lfBcIJ4w9Tk2JKgvwKbPuVBahqN6okWgdsOC3LCDPV1zI4Zu6j8Pc93eYTHUW1uZMxDz
- k7/nOnlYyeW/qViDmLAZQ0NtVszmrP8FNx+MHAN/qrmg9IMlgOE/UEAc0mZTt+WHwSU9
- ZQTQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUdvcv+65JnSFgGfZ3zN6x6QwL975OBa5W1mvJYI1ScEUJQR5TOnObfj6tzg7NVT5ycOBvdzUesmuQ0s1K+7ZQ7MPR+KKI=
-X-Gm-Message-State: AOJu0YxHUsny1jf6fdLKDao67tnUbszPZJXvViKUBE4c7W9kYe8DE1WQ
- Ivcjx/9+KHGWLb9CEqgeZWR4corsfJoNkhDvA9yz+ueP+Xzd61qxSVS6mdWOuYqrirI2tx/XefK
- WLtfhOQPNn6qrEIcsYLGkQ4fdVtnlk40+jzsjEg==
-X-Google-Smtp-Source: AGHT+IFBJX39cIlnYPsQukFwTK3P7V6gs+9v/lsogtrd8PcoiSJn1mNKpAXDp8VcG6RW/qbMYZS4uA+EmXpxC6sCHuc=
-X-Received: by 2002:a50:8ac2:0:b0:572:5630:d8d6 with SMTP id
- 4fb4d7f45d1cf-5731d9d1b7amr118318a12.22.1715097166068; Tue, 07 May 2024
- 08:52:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1s4N85-0006Yl-ND
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 11:53:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1s4N82-00059l-IB
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 11:53:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715097194;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=F/p62PpUlXpQLcDK4AU7DZJBrUFG0lvrcdHAWwWeto0=;
+ b=HxnSB9EyHw/zHpYlZDYLYAax1tJsORtOSzd58fZvQsYRegnJyljWg1qufBVDb+GuV8Nhn/
+ CuFjk+SyS6HHtGv7WCpId/+eJprwFQUl5Awfk3PPTruw9TjKV+dJ3znR1X2Bb9V5a0ZAg2
+ bMKiiSHA4Ax6K9/FvmAs8uosiXOe16Q=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-681-DlMw73eoPDGQeT1AdlXGrw-1; Tue,
+ 07 May 2024 11:53:13 -0400
+X-MC-Unique: DlMw73eoPDGQeT1AdlXGrw-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6DB763803526;
+ Tue,  7 May 2024 15:53:12 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.39.192.234])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 970CF2141800;
+ Tue,  7 May 2024 15:53:11 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 888581800D4F; Tue,  7 May 2024 17:53:10 +0200 (CEST)
+Date: Tue, 7 May 2024 17:53:10 +0200
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Frank Chang <frank.chang@sifive.com>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com, ajones@ventanamicro.com
+Subject: Re: [RFC PATCH 0/1] pci: allocate a PCI ID for RISC-V IOMMU
+Message-ID: <d4wsa62chc4dgxeakmsimk6tsvxhflgbofgbugpfjyyo5xx2oh@urgime5r4wqs>
+References: <20240503124244.8804-1-dbarboza@ventanamicro.com>
+ <CANzO1D0g=AoPkyFS_5d5mJwmwDX8hpaj0fjeFy9xt4xi70fh1A@mail.gmail.com>
 MIME-Version: 1.0
-References: <20240430012356.2620763-1-gaosong@loongson.cn>
- <f9956c18-3530-4fc2-8150-beba7b673f89@linaro.org>
- <87edanlzlz.fsf@suse.de> <ZjJjl2fIU1s24uFD@x1n> <87o79oo00b.fsf@suse.de>
- <c9bfd6a4-befb-c17d-a87d-15eeecdfb75a@loongson.cn> <ZjpM-1MImDyQKyHI@x1n>
-In-Reply-To: <ZjpM-1MImDyQKyHI@x1n>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 7 May 2024 16:52:35 +0100
-Message-ID: <CAFEAcA9vTfhakvVRTfRvtgxTxfADVARX5yHAKT6a1_QXAC4MgQ@mail.gmail.com>
-Subject: Re: [PATCH] target/loongarch/kvm: Fix VM recovery from disk failures
-To: Peter Xu <peterx@redhat.com>
-Cc: gaosong <gaosong@loongson.cn>, Fabiano Rosas <farosas@suse.de>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, Tianrui Zhao <zhaotianrui@loongson.cn>,
- pbonzini@redhat.com, 
- richard.henderson@linaro.org, maobibo@loongson.cn, lixianglai@loongso.cn
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CANzO1D0g=AoPkyFS_5d5mJwmwDX8hpaj0fjeFy9xt4xi70fh1A@mail.gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,24 +86,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 7 May 2024 at 16:47, Peter Xu <peterx@redhat.com> wrote:
->
-> On Tue, May 07, 2024 at 04:12:34PM +0800, gaosong wrote:
-> > Just remove CONIFG_KVM  would be OK?
->
-> You're the loongarch maintainer so I'd say your call. :)
->
-> If you're not yet sure, IMHO we should go with the simplest, which is the
-> original oneliner patch.
+On Tue, May 07, 2024 at 11:37:05PM GMT, Frank Chang wrote:
+> Hi Daniel,
+> 
+> Daniel Henrique Barboza <dbarboza@ventanamicro.com> 於 2024年5月3日 週五 下午8:43寫道：
+> >
+> > Hi,
+> >
+> > In this RFC I want to check with Gerd and others if it's ok to add a PCI
+> > id for the RISC-V IOMMU device. It's currently under review in [1]. The
+> 
+> Is the link [1] missing?
 
-The original patch needs to also bump the version numbers when
-it adds the new field.
+Yes ;)
 
-Even when we do not wish to maintain migration compatibility,
-bumping the version number means that users get a (more or less)
-helpful error message if they try an unsupported cross-version
-migration, rather than weird behaviour.
+Also:  A bit more background on the iommu would be great, for example a
+pointer to the specification.
 
-thanks
--- PMM
+take care,
+  Gerd
+
 
