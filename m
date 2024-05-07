@@ -4,103 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E3C4C25B4F
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 12:27:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19C4FC41513
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 12:31:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4Jtv-0004Id-Q0; Tue, 07 May 2024 08:26:33 -0400
+	id 1s4Jxy-0005fQ-Nk; Tue, 07 May 2024 08:30:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s4Jtk-0004IL-O9
- for qemu-devel@nongnu.org; Tue, 07 May 2024 08:26:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s4Jth-0003rY-DR
- for qemu-devel@nongnu.org; Tue, 07 May 2024 08:26:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715084776;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GcyMXeYO6Y752j6WMqbWC4MiiIKx5csJMTuQjSAteg4=;
- b=SOG7+/efXHPXuc1nkYhnAE3zKmIMArx7o3HuIyObKiYYkDuS8/qpjhDMCiBe5PUEX5bLZi
- QMjU8lSATkUAdpPK9WliZ6gIdtceO44nHkJr6DDoXJGKTYp0sS3rnyYvYQsm2BJ9CSjDus
- +TD73sNAktb13VHkTb6T3l5Zqeh30Ao=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-635-ih0N1ccAMFiHBK8NxWTS1Q-1; Tue, 07 May 2024 08:26:15 -0400
-X-MC-Unique: ih0N1ccAMFiHBK8NxWTS1Q-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-34eb54c888cso3274351f8f.3
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 05:26:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1s4Jxg-0005e7-N5; Tue, 07 May 2024 08:30:26 -0400
+Received: from mail-il1-x12e.google.com ([2607:f8b0:4864:20::12e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1s4Jxe-0006kV-6a; Tue, 07 May 2024 08:30:24 -0400
+Received: by mail-il1-x12e.google.com with SMTP id
+ e9e14a558f8ab-36c826d6edeso13150655ab.0; 
+ Tue, 07 May 2024 05:30:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1715085019; x=1715689819; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YD+CWUWFIUhodPnXnwGaEzhbwY02GTI8eVZz7/m19+U=;
+ b=aCLzHz384mCsUUjQ+eFLsXknPQEL1M0zcOe8EOx46SSkUVlKHZoeO+Ph4vknzlXatT
+ W0wrKAnOXOzEUeMGPteAJTLqKU2Bwar2rhuAXxsV0OcgaSdnznk3brrAaHiVjjJHSJNC
+ OYvN7IYJZNCaaEer6secGISLEpd6yK4Fzcq03WCey0PnO++Z1XOGUCNVIso5te7bh5nh
+ BgErlJ6WEtEiidIytXUGUmt/hrsS7TMbeMhlGedlNVvF+2sc0YiHikoITfr9FEogvj2O
+ nQMvMOOWfw8SYa+VtGMUUr/CzuL9rhDTHd1WuvYLuqbXQsPSPPSmmbvtQQooDTAcOAfY
+ 2znQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715084774; x=1715689574;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GcyMXeYO6Y752j6WMqbWC4MiiIKx5csJMTuQjSAteg4=;
- b=EWpDotPz1yEXvtKpPwK8dEvMD0HddccdkqmzaS/1ryIDNXXkLwH55WwTZm60K8fMEh
- z2Iu4x1/Iv83+yg6lB6Mqanr06t4Jo5NX5Wl0y9LYrqn22rbh7AKYTjarJ7WC8ihUQdF
- Is/Y0Gd4F2OF4j7X20b+tuXNTq/XKvozxtzs5Xrw5K2lhRmiAWUqmF5kbNn+EsWtxGbb
- nYLbTOnEUkzxzEjWczBt4gDLtc7vR5bqFtjl3yEqRJZOILRl1r5vCjoRUYcgrjxITWkp
- xHQu4XnQzl/S69cGEQ1xFf26WZxql7fZ97U9oQ/YmZSDElRWxs8s3FDNp6Qr5QkfIkoa
- ASyA==
+ d=1e100.net; s=20230601; t=1715085019; x=1715689819;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=YD+CWUWFIUhodPnXnwGaEzhbwY02GTI8eVZz7/m19+U=;
+ b=nArCw9ItCeo/Z2/MY38F+E18FwXeSpd2I/VbF75N7wim613sPCK3qjnZVkP6eKiN2L
+ 4heKn8kE0jXqwTu/0/+1oSRUqSGnACFGV0EOitshFDzKq43zpIgVK3VqnPiWvKk4bE/a
+ ZNdLjO3oeIhs0eij73nXQMc4H52Ptz5muryAm/Ff5ASaMbFUy12c8WN+ecwkMgfTqeET
+ W3+Wz+XWPAr/Qpr2OXz/xKYJcdbxlMvVN0mvBpJ9THIcCH2yU9k03JWhdwbanLolIfBX
+ EFcsYK5yi6jOr33UiFOVArIkp1WLqlor9qIda/NhUUjNPpoyd+xeB2AU7+Yb6URoB5de
+ nRRw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX4G6JD9NCbwzvidI4Z3Y6tTFObSKf7yqZlOkeP9KGXaZocYdjJXkzMk3e4N2efGGz/dYsXyhlTtn668S9zwsO+3vWu9ro=
-X-Gm-Message-State: AOJu0Yz2GHFt8JLBUPBYZucmCtpJlmI3c66zZaSqTL6YG2gvH4lu+59U
- kSkXjlVbH1p7C78joRxsCvN26Oq2wGaPX+ZbEkScTBuTlzxxydl+20pLlhy00Gt198dj9iqCQCP
- ChO8K32nW0Zl1iu53RVJK+CAXhSPfupWSJT2JNbZmojnpy58o2yJc
-X-Received: by 2002:adf:e4c3:0:b0:34d:8fac:9540 with SMTP id
- v3-20020adfe4c3000000b0034d8fac9540mr11234782wrm.59.1715084773502; 
- Tue, 07 May 2024 05:26:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHjgqOjJibPm/9rNV9htR2+HkaOQa9F+6GBAzYbOv68KjAPiGylM4SnfgkimvUbCrlKx1ET0Q==
-X-Received: by 2002:adf:e4c3:0:b0:34d:8fac:9540 with SMTP id
- v3-20020adfe4c3000000b0034d8fac9540mr11234762wrm.59.1715084773113; 
- Tue, 07 May 2024 05:26:13 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ AJvYcCVmQ3l11US/ZilrRz5m0sdBm5sk69HYFjFDwdNUYTCCqwTwFWgdL2afHzle4JGhiUMmuVpkHfowta17le6Cgs9VGrh8hhMbEYcX+KM7Kn21a2M8b2rKijp7rBY=
+X-Gm-Message-State: AOJu0Yxvw7SIotq8xngl2+1VhUmjRscrQZw5u+Xa5Gi8hTaVZVD8mhR9
+ SaCCTXFNLpaze/NVgyEgofCZHK+nflQ9QP1pZRtfSRoek7EIADjk
+X-Google-Smtp-Source: AGHT+IEWDiySI5wCWjTXYh3xXCok6dg2RmDuysgscfm2j78/WHW8jy6UuUwVUGl2rTO+TaOLcRfDgQ==
+X-Received: by 2002:a05:6e02:164d:b0:36c:dd5:63a1 with SMTP id
+ v13-20020a056e02164d00b0036c0dd563a1mr16494975ilu.24.1715085019215; 
+ Tue, 07 May 2024 05:30:19 -0700 (PDT)
+Received: from localhost (220-245-239-57.tpgi.com.au. [220.245.239.57])
  by smtp.gmail.com with ESMTPSA id
- f14-20020a0560001b0e00b003462fec9f5asm12839310wrz.62.2024.05.07.05.26.11
+ k1-20020a635601000000b005fd88b393b4sm9156395pgb.59.2024.05.07.05.30.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 May 2024 05:26:12 -0700 (PDT)
-Message-ID: <f90dff15-bc08-46bb-a583-48622062249f@redhat.com>
-Date: Tue, 7 May 2024 14:26:10 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 15/19] hw/pci: Introduce
- pci_device_[set|unset]_iommu_device()
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "mst@redhat.com" <mst@redhat.com>, "peterx@redhat.com" <peterx@redhat.com>,
- "jasowang@redhat.com" <jasowang@redhat.com>, "jgg@nvidia.com"
- <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
- "Peng, Chao P" <chao.p.peng@intel.com>, Yi Sun <yi.y.sun@linux.intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-References: <20240429065046.3688701-1-zhenzhong.duan@intel.com>
- <20240429065046.3688701-16-zhenzhong.duan@intel.com>
- <adb10cf9-faff-41f1-a6e4-e7c169f16c72@redhat.com>
- <SJ0PR11MB6744EEA78AD1ADA4CC71DD8092E42@SJ0PR11MB6744.namprd11.prod.outlook.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <SJ0PR11MB6744EEA78AD1ADA4CC71DD8092E42@SJ0PR11MB6744.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ Tue, 07 May 2024 05:30:18 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 07 May 2024 22:30:14 +1000
+Message-Id: <D13EWAGCZ9F6.1LCJ4K7W21C3L@gmail.com>
+Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
+Subject: Re: [PATCH v2 27/28] target/ppc: Remove id_tlbs flag from CPU env
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
+ <qemu-ppc@nongnu.org>
+X-Mailer: aerc 0.17.0
+References: <cover.1714606359.git.balaton@eik.bme.hu>
+ <5a24db3d48babe4e855707a01954b1827712772f.1714606359.git.balaton@eik.bme.hu>
+In-Reply-To: <5a24db3d48babe4e855707a01954b1827712772f.1714606359.git.balaton@eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12e;
+ envelope-from=npiggin@gmail.com; helo=mail-il1-x12e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,118 +96,214 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/7/24 09:48, Duan, Zhenzhong wrote:
-> Hi Cédric,
-> 
->> -----Original Message-----
->> From: Cédric Le Goater <clg@redhat.com>
->> Subject: Re: [PATCH v3 15/19] hw/pci: Introduce
->> pci_device_[set|unset]_iommu_device()
->>
->> Hello Zhenzhong,
->>
->> On 4/29/24 08:50, Zhenzhong Duan wrote:
->>> From: Yi Liu <yi.l.liu@intel.com>
->>>
->>> pci_device_[set|unset]_iommu_device() call
->> pci_device_get_iommu_bus_devfn()
->>> to get iommu_bus->iommu_ops and call [set|unset]_iommu_device
->> callback to
->>> set/unset HostIOMMUDevice for a given PCI device.
->>>
->>> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
->>> Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
->>> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
->>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
->>> ---
->>>    include/hw/pci/pci.h | 38
->> +++++++++++++++++++++++++++++++++++++-
->>>    hw/pci/pci.c         | 27 +++++++++++++++++++++++++++
->>>    2 files changed, 64 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
->>> index eaa3fc99d8..849e391813 100644
->>> --- a/include/hw/pci/pci.h
->>> +++ b/include/hw/pci/pci.h
->>> @@ -3,6 +3,7 @@
->>>
->>>    #include "exec/memory.h"
->>>    #include "sysemu/dma.h"
->>> +#include "sysemu/host_iommu_device.h"
->>
->> This include directive pulls a Linux header file <linux/iommufd.h>
->> which doesn't exist on all platforms, such as windows and it breaks
->> compile. So,
->>
->>>
->>>    /* PCI includes legacy ISA access.  */
->>>    #include "hw/isa/isa.h"
->>> @@ -383,10 +384,45 @@ typedef struct PCIIOMMUOps {
->>>         *
->>>         * @devfn: device and function number
->>>         */
->>> -   AddressSpace * (*get_address_space)(PCIBus *bus, void *opaque, int
->> devfn);
->>> +    AddressSpace * (*get_address_space)(PCIBus *bus, void *opaque, int
->> devfn);
->>> +    /**
->>> +     * @set_iommu_device: attach a HostIOMMUDevice to a vIOMMU
->>> +     *
->>> +     * Optional callback, if not implemented in vIOMMU, then vIOMMU
->> can't
->>> +     * retrieve host information from the associated HostIOMMUDevice.
->>> +     *
->>> +     * @bus: the #PCIBus of the PCI device.
->>> +     *
->>> +     * @opaque: the data passed to pci_setup_iommu().
->>> +     *
->>> +     * @devfn: device and function number of the PCI device.
->>> +     *
->>> +     * @dev: the data structure representing host IOMMU device.
->>> +     *
->>> +     * @errp: pass an Error out only when return false
->>> +     *
->>> +     * Returns: 0 if HostIOMMUDevice is attached, or else <0 with errp set.
->>> +     */
->>> +    int (*set_iommu_device)(PCIBus *bus, void *opaque, int devfn,
->>> +                            HostIOMMUDevice *dev, Error **errp);
->>> +    /**
->>> +     * @unset_iommu_device: detach a HostIOMMUDevice from a
->> vIOMMU
->>> +     *
->>> +     * Optional callback.
->>> +     *
->>> +     * @bus: the #PCIBus of the PCI device.
->>> +     *
->>> +     * @opaque: the data passed to pci_setup_iommu().
->>> +     *
->>> +     * @devfn: device and function number of the PCI device.
->>> +     */
->>> +    void (*unset_iommu_device)(PCIBus *bus, void *opaque, int devfn);
->>>    } PCIIOMMUOps;
->>>
->>>    AddressSpace *pci_device_iommu_address_space(PCIDevice *dev);
->>> +int pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice
->> *hiod,
->>> +                                Error **errp);
->>
->> please include a forward declaration for HostIOMMUDevice instead.
-> 
-> Got it, will do.
-> Maybe using iommu_hw_info_type in include/sysemu/host_iommu_device.h
-> isn't a good idea from start.
+On Thu May 2, 2024 at 9:43 AM AEST, BALATON Zoltan wrote:
+> This flag for split instruction/data TLBs is only set for 6xx soft TLB
+> MMU model and not used otherwise so no need to have a separate flag
+> for that.
+>
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> ---
+>  hw/ppc/pegasos2.c        |  2 +-
+>  target/ppc/cpu.h         |  1 -
+>  target/ppc/cpu_init.c    | 19 +++++--------------
+>  target/ppc/helper_regs.c |  1 -
+>  target/ppc/mmu_common.c  | 10 ++--------
+>  target/ppc/mmu_helper.c  | 12 ++----------
+>  6 files changed, 10 insertions(+), 35 deletions(-)
+>
+> diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
+> index 04d6decb2b..dfc6fab180 100644
+> --- a/hw/ppc/pegasos2.c
+> +++ b/hw/ppc/pegasos2.c
+> @@ -984,7 +984,7 @@ static void *build_fdt(MachineState *machine, int *fd=
+t_size)
+>                            cpu->env.icache_line_size);
+>      qemu_fdt_setprop_cell(fdt, cp, "i-cache-line-size",
+>                            cpu->env.icache_line_size);
+> -    if (cpu->env.id_tlbs) {
+> +    if (cpu->env.tlb_type =3D=3D TLB_6XX) {
 
-It is not indeed since some included files are used on the Windows build.
+Want to just add the standard comment here?
 
-Thanks,
+    /* 6xx has separate TLBs for instructions and data */
 
-C.
+Otherwise looks good
 
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
-
-> 
-> Thanks
-> Zhenzhong
-> 
+>          qemu_fdt_setprop_cell(fdt, cp, "i-tlb-sets", cpu->env.nb_ways);
+>          qemu_fdt_setprop_cell(fdt, cp, "i-tlb-size", cpu->env.tlb_per_wa=
+y);
+>          qemu_fdt_setprop_cell(fdt, cp, "d-tlb-sets", cpu->env.nb_ways);
+> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+> index 0ac55d6b25..21e12a4f0d 100644
+> --- a/target/ppc/cpu.h
+> +++ b/target/ppc/cpu.h
+> @@ -1260,7 +1260,6 @@ struct CPUArchState {
+>      int tlb_per_way; /* Speed-up helper: used to avoid divisions at run =
+time */
+>      int nb_ways;     /* Number of ways in the TLB set */
+>      int last_way;    /* Last used way used to allocate TLB in a LRU way =
+*/
+> -    int id_tlbs;     /* If 1, MMU has separated TLBs for instructions & =
+data */
+>      int nb_pids;     /* Number of available PID registers */
+>      int tlb_type;    /* Type of TLB we're dealing with */
+>      ppc_tlb_t tlb;   /* TLB is optional. Allocate them only if needed */
+> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+> index c11a69fd90..07ad788e54 100644
+> --- a/target/ppc/cpu_init.c
+> +++ b/target/ppc/cpu_init.c
+> @@ -2117,7 +2117,6 @@ static void init_proc_405(CPUPPCState *env)
+>  #if !defined(CONFIG_USER_ONLY)
+>      env->nb_tlb =3D 64;
+>      env->nb_ways =3D 1;
+> -    env->id_tlbs =3D 0;
+>      env->tlb_type =3D TLB_EMB;
+>  #endif
+>      init_excp_4xx(env);
+> @@ -2190,7 +2189,6 @@ static void init_proc_440EP(CPUPPCState *env)
+>  #if !defined(CONFIG_USER_ONLY)
+>      env->nb_tlb =3D 64;
+>      env->nb_ways =3D 1;
+> -    env->id_tlbs =3D 0;
+>      env->tlb_type =3D TLB_EMB;
+>  #endif
+>      init_excp_BookE(env);
+> @@ -2288,7 +2286,6 @@ static void init_proc_440GP(CPUPPCState *env)
+>  #if !defined(CONFIG_USER_ONLY)
+>      env->nb_tlb =3D 64;
+>      env->nb_ways =3D 1;
+> -    env->id_tlbs =3D 0;
+>      env->tlb_type =3D TLB_EMB;
+>  #endif
+>      init_excp_BookE(env);
+> @@ -2362,7 +2359,6 @@ static void init_proc_440x5(CPUPPCState *env)
+>  #if !defined(CONFIG_USER_ONLY)
+>      env->nb_tlb =3D 64;
+>      env->nb_ways =3D 1;
+> -    env->id_tlbs =3D 0;
+>      env->tlb_type =3D TLB_EMB;
+>  #endif
+>      init_excp_BookE(env);
+> @@ -2724,7 +2720,6 @@ static void init_proc_e200(CPUPPCState *env)
+>  #if !defined(CONFIG_USER_ONLY)
+>      env->nb_tlb =3D 64;
+>      env->nb_ways =3D 1;
+> -    env->id_tlbs =3D 0;
+>      env->tlb_type =3D TLB_EMB;
+>  #endif
+>      init_excp_e200(env, 0xFFFF0000UL);
+> @@ -2843,7 +2838,6 @@ static void init_proc_e500(CPUPPCState *env, int ve=
+rsion)
+>      /* Memory management */
+>      env->nb_pids =3D 3;
+>      env->nb_ways =3D 2;
+> -    env->id_tlbs =3D 0;
+>      switch (version) {
+>      case fsl_e500v1:
+>          tlbncfg[0] =3D register_tlbncfg(2, 1, 1, 0, 256);
+> @@ -6800,20 +6794,17 @@ static void init_ppc_proc(PowerPCCPU *cpu)
+>      }
+>      /* Allocate TLBs buffer when needed */
+>  #if !defined(CONFIG_USER_ONLY)
+> -    if (env->nb_tlb !=3D 0) {
+> -        int nb_tlb =3D env->nb_tlb;
+> -        if (env->id_tlbs !=3D 0) {
+> -            nb_tlb *=3D 2;
+> -        }
+> +    if (env->nb_tlb) {
+>          switch (env->tlb_type) {
+>          case TLB_6XX:
+> -            env->tlb.tlb6 =3D g_new0(ppc6xx_tlb_t, nb_tlb);
+> +            /* 6xx has separate TLBs for instructions and data hence tim=
+es 2 */
+> +            env->tlb.tlb6 =3D g_new0(ppc6xx_tlb_t, 2 * env->nb_tlb);
+>              break;
+>          case TLB_EMB:
+> -            env->tlb.tlbe =3D g_new0(ppcemb_tlb_t, nb_tlb);
+> +            env->tlb.tlbe =3D g_new0(ppcemb_tlb_t, env->nb_tlb);
+>              break;
+>          case TLB_MAS:
+> -            env->tlb.tlbm =3D g_new0(ppcmas_tlb_t, nb_tlb);
+> +            env->tlb.tlbm =3D g_new0(ppcmas_tlb_t, env->nb_tlb);
+>              break;
+>          }
+>          /* Pre-compute some useful values */
+> diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
+> index 25258986e3..ed583fe9b3 100644
+> --- a/target/ppc/helper_regs.c
+> +++ b/target/ppc/helper_regs.c
+> @@ -693,7 +693,6 @@ void register_6xx_7xx_soft_tlb(CPUPPCState *env, int =
+nb_tlbs, int nb_ways)
+>  #if !defined(CONFIG_USER_ONLY)
+>      env->nb_tlb =3D nb_tlbs;
+>      env->nb_ways =3D nb_ways;
+> -    env->id_tlbs =3D 1;
+>      env->tlb_type =3D TLB_6XX;
+>      spr_register(env, SPR_DMISS, "DMISS",
+>                   SPR_NOACCESS, SPR_NOACCESS,
+> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+> index 204b8af455..a0b34f9637 100644
+> --- a/target/ppc/mmu_common.c
+> +++ b/target/ppc/mmu_common.c
+> @@ -130,8 +130,8 @@ int ppc6xx_tlb_getnum(CPUPPCState *env, target_ulong =
+eaddr,
+>      nr =3D (eaddr >> TARGET_PAGE_BITS) & (env->tlb_per_way - 1);
+>      /* Select TLB way */
+>      nr +=3D env->tlb_per_way * way;
+> -    /* 6xx have separate TLBs for instructions and data */
+> -    if (is_code && env->id_tlbs =3D=3D 1) {
+> +    /* 6xx has separate TLBs for instructions and data */
+> +    if (is_code) {
+>          nr +=3D env->nb_tlb;
+>      }
+> =20
+> @@ -1246,13 +1246,7 @@ static void mmu6xx_dump_mmu(CPUPPCState *env)
+>      mmu6xx_dump_BATs(env, ACCESS_INT);
+>      mmu6xx_dump_BATs(env, ACCESS_CODE);
+> =20
+> -    if (env->id_tlbs !=3D 1) {
+> -        qemu_printf("ERROR: 6xx MMU should have separated TLB"
+> -                    " for code and data\n");
+> -    }
+> -
+>      qemu_printf("\nTLBs                       [EPN    EPN + SIZE]\n");
+> -
+>      for (type =3D 0; type < 2; type++) {
+>          for (way =3D 0; way < env->nb_ways; way++) {
+>              for (entry =3D env->nb_tlb * type + env->tlb_per_way * way;
+> diff --git a/target/ppc/mmu_helper.c b/target/ppc/mmu_helper.c
+> index 817836b731..87c611888b 100644
+> --- a/target/ppc/mmu_helper.c
+> +++ b/target/ppc/mmu_helper.c
+> @@ -44,14 +44,8 @@
+>  static inline void ppc6xx_tlb_invalidate_all(CPUPPCState *env)
+>  {
+>      ppc6xx_tlb_t *tlb;
+> -    int nr, max;
+> +    int nr, max =3D 2 * env->nb_tlb;
+> =20
+> -    /* LOG_SWTLB("Invalidate all TLBs\n"); */
+> -    /* Invalidate all defined software TLB */
+> -    max =3D env->nb_tlb;
+> -    if (env->id_tlbs =3D=3D 1) {
+> -        max *=3D 2;
+> -    }
+>      for (nr =3D 0; nr < max; nr++) {
+>          tlb =3D &env->tlb.tlb6[nr];
+>          pte_invalidate(&tlb->pte0);
+> @@ -307,9 +301,7 @@ void ppc_tlb_invalidate_one(CPUPPCState *env, target_=
+ulong addr)
+>      switch (env->mmu_model) {
+>      case POWERPC_MMU_SOFT_6xx:
+>          ppc6xx_tlb_invalidate_virt(env, addr, 0);
+> -        if (env->id_tlbs =3D=3D 1) {
+> -            ppc6xx_tlb_invalidate_virt(env, addr, 1);
+> -        }
+> +        ppc6xx_tlb_invalidate_virt(env, addr, 1);
+>          break;
+>      case POWERPC_MMU_32B:
+>          /*
 
 
