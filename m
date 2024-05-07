@@ -4,129 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6453AC25B4F
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 13:30:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5766C25B75
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 13:30:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4Kt6-00065n-Fi; Tue, 07 May 2024 09:29:44 -0400
+	id 1s4Ksv-00062Q-Km; Tue, 07 May 2024 09:29:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1s4Kt2-00064k-PA
- for qemu-devel@nongnu.org; Tue, 07 May 2024 09:29:42 -0400
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1s4Kst-000625-Sa
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 09:29:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1s4Kt1-0004El-7E
- for qemu-devel@nongnu.org; Tue, 07 May 2024 09:29:40 -0400
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1s4Ksr-0004CK-LA
+ for qemu-devel@nongnu.org; Tue, 07 May 2024 09:29:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715088576;
+ s=mimecast20190719; t=1715088566;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=jeBh9he9L3RYYnPUwQGI0wQVWgoBLGbRAPnfXnK0nQo=;
- b=Fa6FgKD0bsnqZzFsMoKsmpG5CgihlHnJkmebNPZ1HpjxH5K5D7ekTlFqp6AKR96CAZu1rQ
- rB0RtAOjiZUyT4oWQThidsustJ7d3DFrFuP85rByVNtB0GQwIff1BJ0cd4Xjoeb0ZUBZ6B
- cpHtzL4lgzBs2rRVWMimFp/SPjvOsE4=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=b5yd4GjL4qX6YlwdPSSjSQ+W9J166p+cC+Yaup/VRpM=;
+ b=RL0akS3DONHFvEZpCvBmxbUplniVqDwAHjiqsEuhnsUJvv7oVit5tVnalWuVOuVxuOSui2
+ WObhJAqKSxCIjydPq11//2/PrN069094tNkpyaDaPSIugT3XseeJyPAg7VsLSJ90Sv2sLP
+ zm2vtC//PN6hmIe76SR8ODYXRkZf6bo=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-356-YbnPWwsrP--bRs6u35VVmA-1; Tue, 07 May 2024 09:29:34 -0400
-X-MC-Unique: YbnPWwsrP--bRs6u35VVmA-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-41a38f6e371so13431715e9.2
- for <qemu-devel@nongnu.org>; Tue, 07 May 2024 06:29:34 -0700 (PDT)
+ us-mta-166-0E_8-2hQPdSCWxAlQiSq0A-1; Tue, 07 May 2024 09:29:25 -0400
+X-MC-Unique: 0E_8-2hQPdSCWxAlQiSq0A-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-558aafe9bf2so2279109a12.1
+ for <qemu-devel@nongnu.org>; Tue, 07 May 2024 06:29:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715088573; x=1715693373;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jeBh9he9L3RYYnPUwQGI0wQVWgoBLGbRAPnfXnK0nQo=;
- b=NC83HVgOGnBlTVOktIrtySUWybKvnFDofQbDSLqn0Vqgr7FAy66IYOWxCFVn6nops5
- itidTUQDbHR+kI6Nf7G9gHsh9GAPcBuPOfoQjfCrgPAYLbwGLuTMNgEcntOHSZiduG1i
- CAGY1eN7CWMBfr5zazosakGiXPnbsTID/zYdVf7KstfiXVCMZNAHBrxgROXxzhdCbetK
- 84tGOfPdhaCFgwY3Tr7QTyFWV5gljrwbKSpKWNIImeDk2edGcdW1PfloQATSMR5QEvET
- 9auGllotSkvBspGzvXCgDoVX3DCrnA8d8FugQKpqEoCJqfPBzSPZitFeWZlYEsxGRp/1
- dy0w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXDuf3YSV+5V6uf/yDeYZY5/LPJAbeWR53oz1bx3GtmhFB9Q/iMl9IRLbUaIlvWcCKHyGzFsIiEKDQV4qc//+NMhm5tNWU=
-X-Gm-Message-State: AOJu0YzBZwoyr+vNub2wd1AYBE4KWTViP82Q8ordPvFspI3BAD3N0Qiz
- OXFE3d2aZ1SvaHPeZFLXeEw64C9OXRvdtnj3xdHQ5Cnn26UnMuBbXGjgQqzwvO5W8k6+VEzEacu
- QkiVsz/GKuGtjgjQqnyew9StUZdm/EVP8mCS4ALW7j+1p4tIOs2vP
-X-Received: by 2002:a05:600c:1c03:b0:416:605b:5868 with SMTP id
- j3-20020a05600c1c0300b00416605b5868mr10002823wms.35.1715088573515; 
- Tue, 07 May 2024 06:29:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEdrWj3XAdgD/wSuNMV7bu7LqRGs6B6XpdeUbckJJY0ZmBnv1xxQUTnzyaGCojs3IvWP0msig==
-X-Received: by 2002:a05:600c:1c03:b0:416:605b:5868 with SMTP id
- j3-20020a05600c1c0300b00416605b5868mr10002804wms.35.1715088573100; 
- Tue, 07 May 2024 06:29:33 -0700 (PDT)
-Received: from ?IPV6:2a09:80c0:192:0:5dac:bf3d:c41:c3e7?
- ([2a09:80c0:192:0:5dac:bf3d:c41:c3e7])
- by smtp.gmail.com with ESMTPSA id
- q20-20020a05600c46d400b0041bc412899fsm23445763wmo.42.2024.05.07.06.29.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 May 2024 06:29:32 -0700 (PDT)
-Message-ID: <4e6c9c96-3adf-41d4-9869-90da27a38ae3@redhat.com>
-Date: Tue, 7 May 2024 15:29:31 +0200
+ d=1e100.net; s=20230601; t=1715088564; x=1715693364;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=b5yd4GjL4qX6YlwdPSSjSQ+W9J166p+cC+Yaup/VRpM=;
+ b=V3WhlOrLCY9I2JS6zvFrhokMjfbVHXG4WPfYYZtnI9xIQFL4EbERHv/Rv3SVxzLeET
+ 95wb71hPYKg9nqnUrYJaIY9Tt6IuTJxQROqm74y4HXvHcztU5IdBfCMQMmZ9GhAOePNm
+ Y6VsdvK6efG/KdCL2vXV04Oj2KqnGSoIRiFrvoA5lq+zqwmTHWFTZjvyMuHWFSqMFRfR
+ 09spNFpyt+sqohzKE9yw6SFSmOp14njw3Oz1xGyhLKBq3lsL3CKb2xitsFqWFjJyICbo
+ MIpCaIQrDAj5dp3AeNEG/MfLtqtelArk554VSVi++KY7mwYlY5aqWoM9mzmyM7tZ2/a2
+ mKUw==
+X-Gm-Message-State: AOJu0YybfnkPO0YI2UU61j1NQWaNa/o0xYBv4Eu/dTvuepFoHjswIVqc
+ lgO2Wd0BMdAfFKiBA6/G70jYns9bcvHCQHNqFCJ+lYh1iADW91vKXzBAuqE5A/kd+NQRuM52MBK
+ tz54Zh8w2IOStkMbXefOAqbgKoidP+k5iyUQ9VT88m3Q4c1M9Lj00hLzffu+3zEre08bLJ5bYk5
+ 258EE1L+U8f+SUaOkU9t2I52QaSTE=
+X-Received: by 2002:a50:d55e:0:b0:572:8aab:4415 with SMTP id
+ f30-20020a50d55e000000b005728aab4415mr7181302edj.40.1715088564310; 
+ Tue, 07 May 2024 06:29:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IExQGDSfkyn/y1bcwM66yrKPB2puPyWRn0fQJfAwX6wg/H+WrD7dAzvfx+SksdEF9GMDsAX+kC/bnkZhca1YzU=
+X-Received: by 2002:a50:d55e:0:b0:572:8aab:4415 with SMTP id
+ f30-20020a50d55e000000b005728aab4415mr7181290edj.40.1715088563968; Tue, 07
+ May 2024 06:29:23 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/14] target/s390x: Fix helper_per_ifetch flags
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, iii@linux.ibm.com, thuth@redhat.com
-References: <20240502054417.234340-1-richard.henderson@linaro.org>
- <20240502054417.234340-12-richard.henderson@linaro.org>
-Content-Language: en-US
-From: David Hildenbrand <david@redhat.com>
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20240502054417.234340-12-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+References: <20240425015342.1033815-1-dongwon.kim@intel.com>
+ <20240425015342.1033815-3-dongwon.kim@intel.com>
+In-Reply-To: <20240425015342.1033815-3-dongwon.kim@intel.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 7 May 2024 17:29:11 +0400
+Message-ID: <CAMxuvayD5v9Dqo-59j_jG3Ys+rfFj-EaerRiTSXjWNAsbfK4pg@mail.gmail.com>
+Subject: Re: [PATCH v12 2/6] ui/console: new dmabuf.h and dmabuf.c for
+ QemuDmaBuf struct and helpers
+To: dongwon.kim@intel.com
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, philmd@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -134,7 +82,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,34 +98,390 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02.05.24 07:44, Richard Henderson wrote:
-> CPU state is read on the exception path.
-> 
-> Fixes: 83bb161299c ("target-s390x: PER instruction-fetch nullification event support")
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On Thu, Apr 25, 2024 at 5:58=E2=80=AFAM <dongwon.kim@intel.com> wrote:
+>
+> From: Dongwon Kim <dongwon.kim@intel.com>
+>
+> New header and source files are added for containing QemuDmaBuf struct
+> definition and newly introduced helpers for creating/freeing the struct
+> and accessing its data.
+>
+> v10: Change the license type for both dmabuf.h and dmabuf.c from MIT to
+>      GPL to be in line with QEMU's default license
+>
+> v11: -- Added new helpers, qemu_dmabuf_close for closing dmabuf->fd,
+>         qemu_dmabuf_dup_fd for duplicating dmabuf->fd
+>         (Daniel P. Berrang=C3=A9 <berrange@redhat.com>)
+>
+>      -- Let qemu_dmabuf_fee to call qemu_dmabuf_close before freeing
+>         the struct to make sure fd is closed.
+>         (Daniel P. Berrang=C3=A9 <berrange@redhat.com>)
+>
+> v12: Not closing fd in qemu_dmabuf_free because there are cases fd
+>      should still be available even after the struct is destroyed
+>      (e.g. virtio-gpu: res->dmabuf_fd).
+>
+> Suggested-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Cc: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Cc: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
 > ---
->   target/s390x/helper.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/s390x/helper.h b/target/s390x/helper.h
-> index 5611155ba1..31bd193322 100644
-> --- a/target/s390x/helper.h
-> +++ b/target/s390x/helper.h
-> @@ -361,7 +361,7 @@ DEF_HELPER_FLAGS_1(purge, TCG_CALL_NO_RWG, void, env)
->   DEF_HELPER_3(lra, i64, env, i64, i64)
->   DEF_HELPER_FLAGS_3(per_check_exception, TCG_CALL_NO_WG, void, env, i64, i32)
->   DEF_HELPER_FLAGS_3(per_branch, TCG_CALL_NO_WG, void, env, i64, i32)
-> -DEF_HELPER_FLAGS_2(per_ifetch, TCG_CALL_NO_RWG, void, env, i64)
-> +DEF_HELPER_FLAGS_2(per_ifetch, TCG_CALL_NO_WG, void, env, i64)
->   DEF_HELPER_FLAGS_2(per_store_real, TCG_CALL_NO_WG, noreturn, env, i32)
->   DEF_HELPER_FLAGS_1(stfl, TCG_CALL_NO_RWG, void, env)
->   
-
-Reviewed-by: David Hildenbrand <david@redhat.com>
-
--- 
-Cheers,
-
-David / dhildenb
+>  include/ui/console.h |  20 +----
+>  include/ui/dmabuf.h  |  66 ++++++++++++++
+>  ui/dmabuf.c          | 210 +++++++++++++++++++++++++++++++++++++++++++
+>  ui/meson.build       |   1 +
+>  4 files changed, 278 insertions(+), 19 deletions(-)
+>  create mode 100644 include/ui/dmabuf.h
+>  create mode 100644 ui/dmabuf.c
+>
+> diff --git a/include/ui/console.h b/include/ui/console.h
+> index 0bc7a00ac0..a208a68b88 100644
+> --- a/include/ui/console.h
+> +++ b/include/ui/console.h
+> @@ -7,6 +7,7 @@
+>  #include "qapi/qapi-types-ui.h"
+>  #include "ui/input.h"
+>  #include "ui/surface.h"
+> +#include "ui/dmabuf.h"
+>
+>  #define TYPE_QEMU_CONSOLE "qemu-console"
+>  OBJECT_DECLARE_TYPE(QemuConsole, QemuConsoleClass, QEMU_CONSOLE)
+> @@ -185,25 +186,6 @@ struct QEMUGLParams {
+>      int minor_ver;
+>  };
+>
+> -typedef struct QemuDmaBuf {
+> -    int       fd;
+> -    uint32_t  width;
+> -    uint32_t  height;
+> -    uint32_t  stride;
+> -    uint32_t  fourcc;
+> -    uint64_t  modifier;
+> -    uint32_t  texture;
+> -    uint32_t  x;
+> -    uint32_t  y;
+> -    uint32_t  backing_width;
+> -    uint32_t  backing_height;
+> -    bool      y0_top;
+> -    void      *sync;
+> -    int       fence_fd;
+> -    bool      allow_fences;
+> -    bool      draw_submitted;
+> -} QemuDmaBuf;
+> -
+>  enum display_scanout {
+>      SCANOUT_NONE,
+>      SCANOUT_SURFACE,
+> diff --git a/include/ui/dmabuf.h b/include/ui/dmabuf.h
+> new file mode 100644
+> index 0000000000..4198cdf85a
+> --- /dev/null
+> +++ b/include/ui/dmabuf.h
+> @@ -0,0 +1,66 @@
+> +/*
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * QemuDmaBuf struct and helpers used for accessing its data
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2 or la=
+ter.
+> + * See the COPYING file in the top-level directory.
+> + */
+> +
+> +#ifndef DMABUF_H
+> +#define DMABUF_H
+> +
+> +typedef struct QemuDmaBuf {
+> +    int       fd;
+> +    uint32_t  width;
+> +    uint32_t  height;
+> +    uint32_t  stride;
+> +    uint32_t  fourcc;
+> +    uint64_t  modifier;
+> +    uint32_t  texture;
+> +    uint32_t  x;
+> +    uint32_t  y;
+> +    uint32_t  backing_width;
+> +    uint32_t  backing_height;
+> +    bool      y0_top;
+> +    void      *sync;
+> +    int       fence_fd;
+> +    bool      allow_fences;
+> +    bool      draw_submitted;
+> +} QemuDmaBuf;
+> +
+> +QemuDmaBuf *qemu_dmabuf_new(uint32_t width, uint32_t height,
+> +                            uint32_t stride, uint32_t x,
+> +                            uint32_t y, uint32_t backing_width,
+> +                            uint32_t backing_height, uint32_t fourcc,
+> +                            uint64_t modifier, int dmabuf_fd,
+> +                            bool allow_fences, bool y0_top);
+> +void qemu_dmabuf_free(QemuDmaBuf *dmabuf);
+> +
+> +G_DEFINE_AUTOPTR_CLEANUP_FUNC(QemuDmaBuf, qemu_dmabuf_free);
+> +
+> +int qemu_dmabuf_get_fd(QemuDmaBuf *dmabuf);
+> +int qemu_dmabuf_dup_fd(QemuDmaBuf *dmabuf);
+> +void qemu_dmabuf_close(QemuDmaBuf *dmabuf);
+> +uint32_t qemu_dmabuf_get_width(QemuDmaBuf *dmabuf);
+> +uint32_t qemu_dmabuf_get_height(QemuDmaBuf *dmabuf);
+> +uint32_t qemu_dmabuf_get_stride(QemuDmaBuf *dmabuf);
+> +uint32_t qemu_dmabuf_get_fourcc(QemuDmaBuf *dmabuf);
+> +uint64_t qemu_dmabuf_get_modifier(QemuDmaBuf *dmabuf);
+> +uint32_t qemu_dmabuf_get_texture(QemuDmaBuf *dmabuf);
+> +uint32_t qemu_dmabuf_get_x(QemuDmaBuf *dmabuf);
+> +uint32_t qemu_dmabuf_get_y(QemuDmaBuf *dmabuf);
+> +uint32_t qemu_dmabuf_get_backing_width(QemuDmaBuf *dmabuf);
+> +uint32_t qemu_dmabuf_get_backing_height(QemuDmaBuf *dmabuf);
+> +bool qemu_dmabuf_get_y0_top(QemuDmaBuf *dmabuf);
+> +void *qemu_dmabuf_get_sync(QemuDmaBuf *dmabuf);
+> +int32_t qemu_dmabuf_get_fence_fd(QemuDmaBuf *dmabuf);
+> +bool qemu_dmabuf_get_allow_fences(QemuDmaBuf *dmabuf);
+> +bool qemu_dmabuf_get_draw_submitted(QemuDmaBuf *dmabuf);
+> +void qemu_dmabuf_set_texture(QemuDmaBuf *dmabuf, uint32_t texture);
+> +void qemu_dmabuf_set_fence_fd(QemuDmaBuf *dmabuf, int32_t fence_fd);
+> +void qemu_dmabuf_set_sync(QemuDmaBuf *dmabuf, void *sync);
+> +void qemu_dmabuf_set_draw_submitted(QemuDmaBuf *dmabuf, bool draw_submit=
+ted);
+> +void qemu_dmabuf_set_fd(QemuDmaBuf *dmabuf, int32_t fd);
+> +
+> +#endif
+> diff --git a/ui/dmabuf.c b/ui/dmabuf.c
+> new file mode 100644
+> index 0000000000..e047d5ca26
+> --- /dev/null
+> +++ b/ui/dmabuf.c
+> @@ -0,0 +1,210 @@
+> +/*
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * QemuDmaBuf struct and helpers used for accessing its data
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2 or la=
+ter.
+> + * See the COPYING file in the top-level directory.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "ui/dmabuf.h"
+> +
+> +QemuDmaBuf *qemu_dmabuf_new(uint32_t width, uint32_t height,
+> +                            uint32_t stride, uint32_t x,
+> +                            uint32_t y, uint32_t backing_width,
+> +                            uint32_t backing_height, uint32_t fourcc,
+> +                            uint64_t modifier, int32_t dmabuf_fd,
+> +                            bool allow_fences, bool y0_top) {
+> +    QemuDmaBuf *dmabuf;
+> +
+> +    dmabuf =3D g_new0(QemuDmaBuf, 1);
+> +
+> +    dmabuf->width =3D width;
+> +    dmabuf->height =3D height;
+> +    dmabuf->stride =3D stride;
+> +    dmabuf->x =3D x;
+> +    dmabuf->y =3D y;
+> +    dmabuf->backing_width =3D backing_width;
+> +    dmabuf->backing_height =3D backing_height;
+> +    dmabuf->fourcc =3D fourcc;
+> +    dmabuf->modifier =3D modifier;
+> +    dmabuf->fd =3D dmabuf_fd;
+> +    dmabuf->allow_fences =3D allow_fences;
+> +    dmabuf->y0_top =3D y0_top;
+> +    dmabuf->fence_fd =3D -1;
+> +
+> +    return dmabuf;
+> +}
+> +
+> +void qemu_dmabuf_free(QemuDmaBuf *dmabuf)
+> +{
+> +    if (dmabuf =3D=3D NULL) {
+> +        return;
+> +    }
+> +
+> +    g_free(dmabuf);
+> +}
+> +
+> +int qemu_dmabuf_get_fd(QemuDmaBuf *dmabuf)
+> +{
+> +    assert(dmabuf !=3D NULL);
+> +
+> +    return dmabuf->fd;
+> +}
+> +
+> +int qemu_dmabuf_dup_fd(QemuDmaBuf *dmabuf)
+> +{
+> +    assert(dmabuf !=3D NULL);
+> +
+> +    if (dmabuf->fd >=3D 0) {
+> +        return dup(dmabuf->fd);
+> +    } else {
+> +        return -1;
+> +    }
+> +}
+> +
+> +void qemu_dmabuf_close(QemuDmaBuf *dmabuf)
+> +{
+> +    assert(dmabuf !=3D NULL);
+> +
+> +    if (dmabuf->fd >=3D 0) {
+> +        close(dmabuf->fd);
+> +        dmabuf->fd =3D -1;
+> +    }
+> +}
+> +
+> +uint32_t qemu_dmabuf_get_width(QemuDmaBuf *dmabuf)
+> +{
+> +    assert(dmabuf !=3D NULL);
+> +
+> +    return dmabuf->width;
+> +}
+> +
+> +uint32_t qemu_dmabuf_get_height(QemuDmaBuf *dmabuf)
+> +{
+> +    assert(dmabuf !=3D NULL);
+> +
+> +    return dmabuf->height;
+> +}
+> +
+> +uint32_t qemu_dmabuf_get_stride(QemuDmaBuf *dmabuf)
+> +{
+> +    assert(dmabuf !=3D NULL);
+> +
+> +    return dmabuf->stride;
+> +}
+> +
+> +uint32_t qemu_dmabuf_get_fourcc(QemuDmaBuf *dmabuf)
+> +{
+> +    assert(dmabuf !=3D NULL);
+> +
+> +    return dmabuf->fourcc;
+> +}
+> +
+> +uint64_t qemu_dmabuf_get_modifier(QemuDmaBuf *dmabuf)
+> +{
+> +    assert(dmabuf !=3D NULL);
+> +
+> +    return dmabuf->modifier;
+> +}
+> +
+> +uint32_t qemu_dmabuf_get_texture(QemuDmaBuf *dmabuf)
+> +{
+> +    assert(dmabuf !=3D NULL);
+> +
+> +    return dmabuf->texture;
+> +}
+> +
+> +uint32_t qemu_dmabuf_get_x(QemuDmaBuf *dmabuf)
+> +{
+> +    assert(dmabuf !=3D NULL);
+> +
+> +    return dmabuf->x;
+> +}
+> +
+> +uint32_t qemu_dmabuf_get_y(QemuDmaBuf *dmabuf)
+> +{
+> +    assert(dmabuf !=3D NULL);
+> +
+> +    return dmabuf->y;
+> +}
+> +
+> +uint32_t qemu_dmabuf_get_backing_width(QemuDmaBuf *dmabuf)
+> +{
+> +    assert(dmabuf !=3D NULL);
+> +
+> +    return dmabuf->backing_width;
+> +}
+> +
+> +uint32_t qemu_dmabuf_get_backing_height(QemuDmaBuf *dmabuf)
+> +{
+> +    assert(dmabuf !=3D NULL);
+> +
+> +    return dmabuf->backing_height;
+> +}
+> +
+> +bool qemu_dmabuf_get_y0_top(QemuDmaBuf *dmabuf)
+> +{
+> +    assert(dmabuf !=3D NULL);
+> +
+> +    return dmabuf->y0_top;
+> +}
+> +
+> +void *qemu_dmabuf_get_sync(QemuDmaBuf *dmabuf)
+> +{
+> +    assert(dmabuf !=3D NULL);
+> +
+> +    return dmabuf->sync;
+> +}
+> +
+> +int32_t qemu_dmabuf_get_fence_fd(QemuDmaBuf *dmabuf)
+> +{
+> +    assert(dmabuf !=3D NULL);
+> +
+> +    return dmabuf->fence_fd;
+> +}
+> +
+> +bool qemu_dmabuf_get_allow_fences(QemuDmaBuf *dmabuf)
+> +{
+> +    assert(dmabuf !=3D NULL);
+> +
+> +    return dmabuf->allow_fences;
+> +}
+> +
+> +bool qemu_dmabuf_get_draw_submitted(QemuDmaBuf *dmabuf)
+> +{
+> +    assert(dmabuf !=3D NULL);
+> +
+> +    return dmabuf->draw_submitted;
+> +}
+> +
+> +void qemu_dmabuf_set_texture(QemuDmaBuf *dmabuf, uint32_t texture)
+> +{
+> +    assert(dmabuf !=3D NULL);
+> +    dmabuf->texture =3D texture;
+> +}
+> +
+> +void qemu_dmabuf_set_fence_fd(QemuDmaBuf *dmabuf, int32_t fence_fd)
+> +{
+> +    assert(dmabuf !=3D NULL);
+> +    dmabuf->fence_fd =3D fence_fd;
+> +}
+> +
+> +void qemu_dmabuf_set_sync(QemuDmaBuf *dmabuf, void *sync)
+> +{
+> +    assert(dmabuf !=3D NULL);
+> +    dmabuf->sync =3D sync;
+> +}
+> +
+> +void qemu_dmabuf_set_draw_submitted(QemuDmaBuf *dmabuf, bool draw_submit=
+ted)
+> +{
+> +    assert(dmabuf !=3D NULL);
+> +    dmabuf->draw_submitted =3D draw_submitted;
+> +}
+> +
+> +void qemu_dmabuf_set_fd(QemuDmaBuf *dmabuf, int32_t fd)
+> +{
+> +    assert(dmabuf !=3D NULL);
+> +    dmabuf->fd =3D fd;
+> +}
+> diff --git a/ui/meson.build b/ui/meson.build
+> index a5ce22a678..5d89986b0e 100644
+> --- a/ui/meson.build
+> +++ b/ui/meson.build
+> @@ -7,6 +7,7 @@ system_ss.add(files(
+>    'clipboard.c',
+>    'console.c',
+>    'cursor.c',
+> +  'dmabuf.c',
+>    'input-keymap.c',
+>    'input-legacy.c',
+>    'input-barrier.c',
+> --
+> 2.34.1
+>
 
 
