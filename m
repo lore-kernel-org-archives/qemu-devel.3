@@ -4,116 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FD2FC10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 21:34:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E3A2C10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 May 2024 22:36:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4SRd-00059U-2T; Tue, 07 May 2024 17:33:53 -0400
+	id 1s4TPg-0002cg-PK; Tue, 07 May 2024 18:35:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s4SRb-000590-Fm
- for qemu-devel@nongnu.org; Tue, 07 May 2024 17:33:51 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s4SRZ-0007jh-Vs
- for qemu-devel@nongnu.org; Tue, 07 May 2024 17:33:51 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 30748345DE;
- Tue,  7 May 2024 21:33:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1715117628; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=B7kkhSZ3cvi9TiBQo7ca6OAX4phYJ5pn+wkNKv6vj4Y=;
- b=1fyl78267tJVjsQxFjTa3hcZOJCjD4SiDpjD5pAsjZhZmJ1BKV0BrMzt83te+CA39sTNCa
- TBQ42ovY6mVoxFTPbQbAHZHeHABsAxHQfZNk51pVxsrxMaqKYTCZ+R3KyXGIQYzw7IyDKK
- ZCrStYIkmM4cUv6kbNv5yBY8UQua8oA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1715117628;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=B7kkhSZ3cvi9TiBQo7ca6OAX4phYJ5pn+wkNKv6vj4Y=;
- b=rrOcjRjiiJLE3joWx3qe1khx0MybgsrcrO8PTQrhEibxAq0V1+9zGyu9c3iel/KM2Doo/D
- MHeU1rMLZuUvpCDA==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=1fyl7826;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=rrOcjRji
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1715117628; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=B7kkhSZ3cvi9TiBQo7ca6OAX4phYJ5pn+wkNKv6vj4Y=;
- b=1fyl78267tJVjsQxFjTa3hcZOJCjD4SiDpjD5pAsjZhZmJ1BKV0BrMzt83te+CA39sTNCa
- TBQ42ovY6mVoxFTPbQbAHZHeHABsAxHQfZNk51pVxsrxMaqKYTCZ+R3KyXGIQYzw7IyDKK
- ZCrStYIkmM4cUv6kbNv5yBY8UQua8oA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1715117628;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=B7kkhSZ3cvi9TiBQo7ca6OAX4phYJ5pn+wkNKv6vj4Y=;
- b=rrOcjRjiiJLE3joWx3qe1khx0MybgsrcrO8PTQrhEibxAq0V1+9zGyu9c3iel/KM2Doo/D
- MHeU1rMLZuUvpCDA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id ADFAB139CB;
- Tue,  7 May 2024 21:33:47 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id cK+XHDueOmboRQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 07 May 2024 21:33:47 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, Igor
- Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Philippe Mathieu-Daude
- <philmd@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, "Daniel P.
- Berrange" <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: Re: [PATCH V1 08/26] migration: vmstate_info_void_ptr
-In-Reply-To: <1714406135-451286-9-git-send-email-steven.sistare@oracle.com>
-References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
- <1714406135-451286-9-git-send-email-steven.sistare@oracle.com>
-Date: Tue, 07 May 2024 18:33:45 -0300
-Message-ID: <87le4ll32e.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1s4TPc-0002bn-Og; Tue, 07 May 2024 18:35:52 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1s4TPa-0003Na-Fo; Tue, 07 May 2024 18:35:52 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 447MQdJD001980; Tue, 7 May 2024 22:35:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=utLfr/1cPgb4TwHoktnfaU7ePqL5FsvwV7c9kjodRaU=;
+ b=imCSvdTtzDobCmL0052ieDI9iS7uzSBHa88EsU5Wgr1oSjNJrI76YBxsqM+lB0BZ/xa5
+ DlDIZCgZur4aa2hqJNFdjEE7ekXPNdYxag05ofuxMMZEGa0X5VOL/g3NAhZefWNMG8Wz
+ E9c+0HUmvHmHY9Vw9l6z395OmZBTJ1hhC7SvNPGGLmI4nhhgv55shcc5hKx0ut/RLFWb
+ QfiU2C00O+tBaokq4Ib4K5QNWf8jpcW5beqmL1cN4NkbnkIByQjpe6xrJsoxdbrVQkNd
+ YY3F6WLABcD5lubkIe+qSJ1TVF5yBQ+ELjro0FM+gDPbM1Wv2daVDJSFAAfIY08r6teO Ug== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xyusx873p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 07 May 2024 22:35:42 +0000
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 447MZfV6015446;
+ Tue, 7 May 2024 22:35:41 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xyusx873k-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 07 May 2024 22:35:41 +0000
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 447LPkCU017582; Tue, 7 May 2024 22:35:41 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xyshss6r7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 07 May 2024 22:35:40 +0000
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 447MZceN21365310
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 7 May 2024 22:35:40 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EFB8958075;
+ Tue,  7 May 2024 22:35:37 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 81BA858067;
+ Tue,  7 May 2024 22:35:37 +0000 (GMT)
+Received: from [9.12.68.85] (unknown [9.12.68.85])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue,  7 May 2024 22:35:37 +0000 (GMT)
+Message-ID: <fcee5fcf-db96-45da-bedc-599ebb71a573@linux.ibm.com>
+Date: Tue, 7 May 2024 18:35:37 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-5.00 / 50.00]; BAYES_HAM(-2.99)[99.96%];
- DWL_DNSWL_MED(-2.00)[suse.de:dkim]; SUSPICIOUS_RECIPS(1.50)[];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com]; ARC_NA(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_TWELVE(0.00)[12]; MIME_TRACE(0.00)[0:+];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; RCVD_TLS_ALL(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[redhat.com,habkost.net,gmail.com,linaro.org,oracle.com];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- TAGGED_RCPT(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 30748345DE
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/2] query-cpu-model-expansion: report deprecated
+ features
+Content-Language: en-US
+To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: david@redhat.com, wangyanan55@huawei.com, philmd@linaro.org,
+ marcel.apfelbaum@gmail.com, eduardo@habkost.net, armbru@redhat.com
+References: <20240429191059.11806-1-walling@linux.ibm.com>
+ <744e57f9-5885-4fb2-844f-3f008632d257@redhat.com>
+From: Collin Walling <walling@linux.ibm.com>
+In-Reply-To: <744e57f9-5885-4fb2-844f-3f008632d257@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: p5iqLzHBZf6L4rhTNYihLoY_UwsKeok_
+X-Proofpoint-ORIG-GUID: fVLlvcbiT6pswffzVntb7-m9l8QH8Rgg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-07_14,2024-05-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0
+ priorityscore=1501 impostorscore=0 mlxlogscore=981 adultscore=0
+ clxscore=1015 phishscore=0 mlxscore=0 spamscore=0 suspectscore=0
+ bulkscore=0 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2405010000 definitions=main-2405070158
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=walling@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,12 +118,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Steve Sistare <steven.sistare@oracle.com> writes:
+[...]
 
-> Define VMSTATE_VOID_PTR so the value of a pointer (but not its target)
-> can be saved in the migration stream.  This will be needed for CPR.
->
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Thanks everyone!  The RFC for the analogous libvirt patches have been
+posted under the subject:
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+[RFC PATCH 0/1] support deprecated-props from query-cpu-model-expansion
+
+Any and all feedback is welcome.
+
+-- 
+Regards,
+  Collin
+
 
