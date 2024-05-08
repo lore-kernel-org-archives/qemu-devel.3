@@ -4,84 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB611C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7B38C04FFE
 	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 12:38:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4gYT-00031A-Af; Wed, 08 May 2024 08:37:54 -0400
+	id 1s4gYh-0003Cm-58; Wed, 08 May 2024 08:38:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4gXn-0002lT-DF; Wed, 08 May 2024 08:37:20 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4gXl-0005JZ-P0; Wed, 08 May 2024 08:37:11 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-6f43ee95078so3829885b3a.1; 
- Wed, 08 May 2024 05:37:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715171826; x=1715776626; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7VXByjdim0aNjUK7fR6kAyAUSfQPZjwFoKkgzvwvfQI=;
- b=IN9zJLGma0ACo9HbFBG6NJKDrsJTA3SLs9ARI7/OlGWW/qydkdBdcAMx0fWX5HvJTp
- fxQlmxsUnkk76HjrIW1K+uhmcUDy1wE1qyzM9sMtLpJvlIlhceAtGZRyN0fHGSyFtiZN
- BrIQMPXb/+3APL10hV2JcAgYeIGfFGRiyp1aEzNvR4D7g8XPPElzdWCcFE41yeY853T1
- F/p+mIA2XQ1d4BRWgolBualCjG2Hb8FKgjy2JoKWJUHklNZMK+oJ8EndVyRJ5pB41Ztu
- 533Ed1/wS6FAmqSZkmOvq91OtAKF/Yx6Y0OwMBPOlWabrFCFAXudr/SECadQGJZaS3Gv
- Y9dA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1s4gYb-00035a-7F
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 08:38:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1s4gYZ-0005UJ-Bs
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 08:38:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715171877;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=5Qd1ROufodYLlLHDFoGox2MqDnx0x5IcbpSXqPReRzU=;
+ b=IsxSoML9TtKv2ClTzO7pZELQT/AivoWBuf4uVYD5uun4XbM7oUKOsCxaEFMMDAYw3S8WVL
+ R74d+WYNssq5cQN9uJOw5TGiOD6xtY3MdNi9En0MrPq/ohatCReij5PogmELpxDUE55OYh
+ j64uhYF4212gH9aODddnEZUtYURfxFs=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-487-08lsBC4mOfG9G1Os0wDR9g-1; Wed, 08 May 2024 08:37:56 -0400
+X-MC-Unique: 08lsBC4mOfG9G1Os0wDR9g-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-572146eeed3so2121372a12.2
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 05:37:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715171826; x=1715776626;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=7VXByjdim0aNjUK7fR6kAyAUSfQPZjwFoKkgzvwvfQI=;
- b=PbvgZ8hKTsuZyms3pvYdUqR8slrt/cfkGIZTC9rECGXcKg04QwKNdoSvlPKq4j//iw
- rtnrUKtyCE3ztJEZKb2F/5tPff2ErvX3KkY9wT6dbULoevWsIKvh5ThgqTyjSgG22Piz
- /AmX7Jm1h0YVdaOzMBy+DJ+Rklotb8skwXR+Yckt5YAN/T+H5kzyaCsmVTJaMz7PcVPZ
- k1vBgRW/rT3p936YZxqMApFoU0VZmuEo6a+Y5+KkLqYtPY8MHbhaYSnoBJYFs5fErkUW
- tyCFW8P4RczqwWtXPMNv3FF6B7qBHMeK3cWWT6lQyCXBYgavfWQCl/vKBvqM2O3qaGqx
- StfQ==
+ d=1e100.net; s=20230601; t=1715171875; x=1715776675;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=5Qd1ROufodYLlLHDFoGox2MqDnx0x5IcbpSXqPReRzU=;
+ b=OJKRuzNERajkQAn77hz+cyEyFwjDsDqvg20ptgGTlhzCWE928c6wE1fJLpWqw+5x89
+ ZGwcWvxRMrRtbcoIK0rWA1pgqxB7KqcnZOPADB7qVaO89+Uh8E90QdrJLAK5RlKNqWbc
+ MZNFquRGfuCr0F/y9+rfXPdwA6facGwPOhhyU8PastV/1uyOJ7Z/B6OcAes/pz1hfhjJ
+ XgLKzOiyCP+3EFAJNQwt0Bg+HuNQofPcIBWtinCu8Eck6YX2tVuydpOghN5U0KlvUwj3
+ s5Xj7qUSBH2cSMHJj0H4Nfm1sH3zZRM6tYzdSZCdfbIum63sc4wYL9LNG2hDl9ov1/8t
+ aOAw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUxKcCZZg64ByUbj1RAnAK6SrlV46R+i9uVNWrYjI8txbpAuEHVWP9nNg8Kx0CKuVBe6uChfDYp3OYSoc4uW5jTc6cW
-X-Gm-Message-State: AOJu0YxudsohAUhiUHk7IwGO33V9N/UsofXRNY7RV4vrphEoiYyhmqWP
- bd074N1fqMi+aYwviInKRf4cMy/tMg+9CjJJr5+erNJiwGRpU9m+
-X-Google-Smtp-Source: AGHT+IFy1bPi5jejFOOr8LIKN0uOy6IFs74x2Ut8nT0S4mLXC0y1pc9ZkTQfiU9tap+ylKeC/nd+Xg==
-X-Received: by 2002:a05:6a21:3948:b0:1af:cefe:dbab with SMTP id
- adf61e73a8af0-1afcefedc59mr537335637.5.1715171825863; 
- Wed, 08 May 2024 05:37:05 -0700 (PDT)
-Received: from localhost ([1.146.8.34]) by smtp.gmail.com with ESMTPSA id
- t4-20020a170902a5c400b001e7b82f33eesm11689985plq.291.2024.05.08.05.37.03
+ AJvYcCWEFDqQoXvBsiNx49Jlpjvk9XwaFH1j0lYyJH4BRcJEiYV5TMDKg6UH76HCfpXiTACgXZ3nEdXRdnGBHQxC8jDELqim+N4=
+X-Gm-Message-State: AOJu0Ywu7zX19f0OTKXtieFnPS/CYYH/cuhXa3oJfir8lTiUFtwnbIfG
+ FlnR9WZc10f+L+MJFnjuhlxKNqcUa3cxGAz44x/BtFHFWRrqMbWx+8CrU2b3CWrBWYFf/yUGME5
+ 3y4L0dEi9et/a8etLwdcJqy+SzJWvyp6dUatVLf+/dokYCVGT/ZMP
+X-Received: by 2002:a50:cd93:0:b0:570:5e7f:62cb with SMTP id
+ 4fb4d7f45d1cf-5731da697ebmr1829739a12.29.1715171875425; 
+ Wed, 08 May 2024 05:37:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEu1msvbnoERHLRYUfLdwUq2Gk3IoExHvQPhucBGzpkRi5qaRe4azpLxkDk8pRd93kqwmTp0w==
+X-Received: by 2002:a50:cd93:0:b0:570:5e7f:62cb with SMTP id
+ 4fb4d7f45d1cf-5731da697ebmr1829724a12.29.1715171875061; 
+ Wed, 08 May 2024 05:37:55 -0700 (PDT)
+Received: from [192.168.10.3] ([151.95.155.52])
+ by smtp.googlemail.com with ESMTPSA id
+ g40-20020a056402322800b00572e0ab367dsm5647445eda.11.2024.05.08.05.37.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 May 2024 05:37:05 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 08 May 2024 22:37:00 +1000
-Message-Id: <D149O0V77ABT.1ODT0ZNPBL9WK@gmail.com>
-Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>, "Daniel Henrique
- Barboza" <danielhb413@gmail.com>
-Subject: Re: [PATCH v2 27/28] target/ppc: Remove id_tlbs flag from CPU env
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>
-X-Mailer: aerc 0.17.0
-References: <cover.1714606359.git.balaton@eik.bme.hu>
- <5a24db3d48babe4e855707a01954b1827712772f.1714606359.git.balaton@eik.bme.hu>
- <D13EWAGCZ9F6.1LCJ4K7W21C3L@gmail.com>
- <11d79524-f9d1-6200-0889-515c9d0dbf9c@eik.bme.hu>
-In-Reply-To: <11d79524-f9d1-6200-0889-515c9d0dbf9c@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ Wed, 08 May 2024 05:37:54 -0700 (PDT)
+Message-ID: <30baeb56-64d2-4ea3-8e53-6a5c50999979@redhat.com>
+Date: Wed, 8 May 2024 14:37:52 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: Hermetic virtio-vsock in QEMU
+To: Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
+Cc: Roman Kiryanov <rkir@google.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ alex.bennee@linaro.org, QEMU Developers <qemu-devel@nongnu.org>,
+ JP Cottin <jpcottin@google.com>, Erwin Jansen <jansene@google.com>,
+ Mehdi Alizadeh <mett@google.com>
+References: <CAOGAQeqOVAHJ4VxQNKqO43hmLJdxpA6E_JEQrfL380SwT4Y73w@mail.gmail.com>
+ <Zh0NiI9ZfS5uzs5Z@redhat.com>
+ <CAOGAQerx0DmHvJNf05wuJFOtXVwDFTt7fy0-GmBZ7xKoLAHTKQ@mail.gmail.com>
+ <ZiDpM7ZusU0SvH7K@redhat.com>
+ <nga2k5uuvpqm2sovguofglw6u3reiqqurbn7vbdexanzrhmw42@vuje72e57egu>
+ <CAOGAQeqU692hHf3dU7udz8hwzP6KuFTNWir0mLcV-URF-JkFnA@mail.gmail.com>
+ <zyj7huwfzji6c5bkq44o56nizo7fju5kn2nqg2n5niuwdzsnkl@ykhg5yqruvwr>
+ <CAJ+F1CKvBW_khQ+zwKiunWGUQYtC_RKnVvUWbZpZALHv07efBw@mail.gmail.com>
+ <5o3xyylget6hqhdaya5cj5tnbmmpzxk6u53cp6jhpviev6ez4m@ri6ady5zc6n3>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
+ CxXPkIBTvYY+ZPkoTh5xF9oS1jqI8iRLzouzF8yXs3QjQIZ2SfuCxSVwlV65jotcjD2FTN04
+ hVopm9llFijNZpVIOGUTqzM4U55sdsCcZUluWM6x4HSOdw5F5Utxfp1wOjD/v92Lrax0hjiX
+ DResHSt48q+8FrZzY+AUbkUS+Jm34qjswdrgsC5uxeVcLkBgWLmov2kMaMROT0YmFY6A3m1S
+ P/kXmHDXxhe23gKb3dgwxUTpENDBGcfEzrzilWueOeUWiOcWuFOed/C3SyijBx3Av/lbCsHU
+ Vx6pMycNTdzU1BuAroB+Y3mNEuW56Yd44jlInzG2UOwt9XjjdKkJZ1g0P9dwptwLEgTEd3Fo
+ UdhAQyRXGYO8oROiuh+RZ1lXp6AQ4ZjoyH8WLfTLf5g1EKCTc4C1sy1vQSdzIRu3rBIjAvnC
+ tGZADei1IExLqB3uzXKzZ1BZ+Z8hnt2og9hb7H0y8diYfEk2w3R7wEr+Ehk5NQsT2MPI2QBd
+ wEv1/Aj1DgUHZAHzG1QN9S8wNWQ6K9DqHZTBnI1hUlkp22zCSHK/6FwUCuYp1zcAEQEAAc0j
+ UGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT7CwU0EEwECACMFAlRCcBICGwMH
+ CwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRB+FRAMzTZpsbceDp9IIN6BIA0Ol7MoB15E
+ 11kRz/ewzryFY54tQlMnd4xxfH8MTQ/mm9I482YoSwPMdcWFAKnUX6Yo30tbLiNB8hzaHeRj
+ jx12K+ptqYbg+cevgOtbLAlL9kNgLLcsGqC2829jBCUTVeMSZDrzS97ole/YEez2qFpPnTV0
+ VrRWClWVfYh+JfzpXmgyhbkuwUxNFk421s4Ajp3d8nPPFUGgBG5HOxzkAm7xb1cjAuJ+oi/K
+ CHfkuN+fLZl/u3E/fw7vvOESApLU5o0icVXeakfSz0LsygEnekDbxPnE5af/9FEkXJD5EoYG
+ SEahaEtgNrR4qsyxyAGYgZlS70vkSSYJ+iT2rrwEiDlo31MzRo6Ba2FfHBSJ7lcYdPT7bbk9
+ AO3hlNMhNdUhoQv7M5HsnqZ6unvSHOKmReNaS9egAGdRN0/GPDWr9wroyJ65ZNQsHl9nXBqE
+ AukZNr5oJO5vxrYiAuuTSd6UI/xFkjtkzltG3mw5ao2bBpk/V/YuePrJsnPFHG7NhizrxttB
+ nTuOSCMo45pfHQ+XYd5K1+Cv/NzZFNWscm5htJ0HznY+oOsZvHTyGz3v91pn51dkRYN0otqr
+ bQ4tlFFuVjArBZcapSIe6NV8C4cEiSTOwE0EVEJx7gEIAMeHcVzuv2bp9HlWDp6+RkZe+vtl
+ KwAHplb/WH59j2wyG8V6i33+6MlSSJMOFnYUCCL77bucx9uImI5nX24PIlqT+zasVEEVGSRF
+ m8dgkcJDB7Tps0IkNrUi4yof3B3shR+vMY3i3Ip0e41zKx0CvlAhMOo6otaHmcxr35sWq1Jk
+ tLkbn3wG+fPQCVudJJECvVQ//UAthSSEklA50QtD2sBkmQ14ZryEyTHQ+E42K3j2IUmOLriF
+ dNr9NvE1QGmGyIcbw2NIVEBOK/GWxkS5+dmxM2iD4Jdaf2nSn3jlHjEXoPwpMs0KZsgdU0pP
+ JQzMUMwmB1wM8JxovFlPYrhNT9MAEQEAAcLBMwQYAQIACQUCVEJx7gIbDAAKCRB+FRAMzTZp
+ sadRDqCctLmYICZu4GSnie4lKXl+HqlLanpVMOoFNnWs9oRP47MbE2wv8OaYh5pNR9VVgyhD
+ OG0AU7oidG36OeUlrFDTfnPYYSF/mPCxHttosyt8O5kabxnIPv2URuAxDByz+iVbL+RjKaGM
+ GDph56ZTswlx75nZVtIukqzLAQ5fa8OALSGum0cFi4ptZUOhDNz1onz61klD6z3MODi0sBZN
+ Aj6guB2L/+2ZwElZEeRBERRd/uommlYuToAXfNRdUwrwl9gRMiA0WSyTb190zneRRDfpSK5d
+ usXnM/O+kr3Dm+Ui+UioPf6wgbn3T0o6I5BhVhs4h4hWmIW7iNhPjX1iybXfmb1gAFfjtHfL
+ xRUr64svXpyfJMScIQtBAm0ihWPltXkyITA92ngCmPdHa6M1hMh4RDX+Jf1fiWubzp1voAg0
+ JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
+ dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
+ b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
+In-Reply-To: <5o3xyylget6hqhdaya5cj5tnbmmpzxk6u53cp6jhpviev6ez4m@ri6ady5zc6n3>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.582,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,53 +153,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed May 8, 2024 at 2:02 AM AEST, BALATON Zoltan wrote:
-> On Tue, 7 May 2024, Nicholas Piggin wrote:
-> > On Thu May 2, 2024 at 9:43 AM AEST, BALATON Zoltan wrote:
-> >> This flag for split instruction/data TLBs is only set for 6xx soft TLB
-> >> MMU model and not used otherwise so no need to have a separate flag
-> >> for that.
-> >>
-> >> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> >> ---
-> >>  hw/ppc/pegasos2.c        |  2 +-
-> >>  target/ppc/cpu.h         |  1 -
-> >>  target/ppc/cpu_init.c    | 19 +++++--------------
-> >>  target/ppc/helper_regs.c |  1 -
-> >>  target/ppc/mmu_common.c  | 10 ++--------
-> >>  target/ppc/mmu_helper.c  | 12 ++----------
-> >>  6 files changed, 10 insertions(+), 35 deletions(-)
-> >>
-> >> diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
-> >> index 04d6decb2b..dfc6fab180 100644
-> >> --- a/hw/ppc/pegasos2.c
-> >> +++ b/hw/ppc/pegasos2.c
-> >> @@ -984,7 +984,7 @@ static void *build_fdt(MachineState *machine, int =
-*fdt_size)
-> >>                            cpu->env.icache_line_size);
-> >>      qemu_fdt_setprop_cell(fdt, cp, "i-cache-line-size",
-> >>                            cpu->env.icache_line_size);
-> >> -    if (cpu->env.id_tlbs) {
-> >> +    if (cpu->env.tlb_type =3D=3D TLB_6XX) {
-> >
-> > Want to just add the standard comment here?
-> >
-> >    /* 6xx has separate TLBs for instructions and data */
->
-> I think that comment would be redundant here because it's clear from the=
-=20
-> i-tlb, d-tlb this adds so I can do without a comment in this machine if=
-=20
-> you don't mind. (If this was not in my machine I would not mind adding a=
-=20
-> comment but I'd keep this one simple.) I think comments should only be=20
-> added for things that are not clear from code.
+On 5/8/24 11:38, Stefano Garzarella wrote:
+> On Wed, May 08, 2024 at 01:13:09PM GMT, Marc-André Lureau wrote:
+>> Hi
+>>
+>> On Wed, May 8, 2024 at 11:50 AM Stefano Garzarella 
+>> <sgarzare@redhat.com> wrote:
+>>>
+>>> Hi Roman,
+>>>
+>>> On Tue, May 07, 2024 at 11:20:50PM GMT, Roman Kiryanov wrote:
+>>> >Hi Stefano,
+>>> >
+>>> >On Tue, May 7, 2024 at 1:10 AM Stefano Garzarella 
+>>> <sgarzare@redhat.com> wrote:
+>>> >> I have no experience with Windows, but what we need for vhost-user 
+>>> is:
+>>> >>
+>>> >> - AF_UNIX and be able to send file descriptors using ancillary data
+>>> >>    (i.e. SCM_RIGHTS)
+>>> >
+>>> >As far as I understand, Windows does NOT support SCM_RIGHTS over 
+>>> AF_UNIX.
+>>>
+>>> Thank you for the information. This is unfortunate and does not allow
+>>> us to use vhost-user as it is on Windows.
+>>>
+>>
+>> fwiw, Windows has other mechanisms to share resources between processes.
+>>
+>> To share/pass sockets, you can use WSADuplicateSocket. For shared
+>> memory and other resources, DuplicateHandle API.
+> 
+> Cool, thanks for sharing that. So it could be done, but I think we need
+> to extend the vhost-user protocol to work with Windows.
 
-Yes. "Obvious" stuff just builds up until it's not.
+It would be possible to implement the memfd backend for Windows, using 
+the CreateFileMapping() API.
 
-If you make a simple inline function to test if tlb is split and it can
-est TLB_6XX then you don't need the comment.
+However, the vhost-user protocol's VHOST_USER_SET_MEM_TABLE requests do 
+not have any padding that can be used to pass the handle to the target. 
+An extended version would be necessary.
 
-Thanks,
-Nick
+One difference between Unix and Windows is that, if the vhost-server 
+messes up the handling of messages from the socket, and therefore it 
+does not close the handle, it is leaked forever.  This is not a huge 
+deal per se, but I think it means that QEMU is not allowed to "open" a 
+privileged vhost-user server process with PROCESS_DUP_HANDLE rights 
+(translation: QEMU cannot provide duplicate handles to a privileged 
+vhost-user server process).
+
+Also I'm not sure what the cost of DuplicateHandle() is, and whether 
+it's a good idea to do it for every region on every 
+VHOST_USER_SET_MEM_TABLE request.  But VHOST_USER_SET_MEM_TABLE is not a 
+fast path, so perhaps it's okay.
+
+I think a virtio-vsock implementation in QEMU would be easier, lacking 
+another usecase for vhost-user on Windows.
+
+The main design question is whether multiple virtio-vsock devices for 
+the same guest should share the CID space or not (I think it should, but 
+I'm not 100% sure).  To connect host<->guest you could have a QOM 
+object, here I am naming it vsock-forward as an example:
+
+   -object vsock-forward,socket=SocketAddress,port=uint32,mode=connect
+
+      takes the address of a listening socket on the host, and all
+      connections to the given vsock port would be forwarded to the
+      socket.
+
+   -object vsock-forward,socket=SocketAddress,port=uint32,mode=listen
+
+      creates a listening socket on the host, and all connections to that
+      socket would be forwarded to the vsock port, where the guest should
+      set up a server.
+
+i.e. "mode" is what QEMU does, whether connect to the address or listen 
+on it.
+
+Another possibility for the names is to copy "hostfwd" and "guestfwd" 
+names that are in netdev -netdev, i.e. respectively:
+
+   -object vsock-guestfwd,socket=SocketAddress,port=uint32
+   -object vsock-hostfwd,socket=SocketAddress,port=uint32
+
+but I think it's worse.
+
+Paolo
+
 
