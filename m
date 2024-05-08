@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ED06C25B4F
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 17:49:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 221BDC25B5F
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 17:49:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4lNc-0002mW-2G; Wed, 08 May 2024 13:47:00 -0400
+	id 1s4lOR-000587-0s; Wed, 08 May 2024 13:47:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lNV-0002AX-98
- for qemu-devel@nongnu.org; Wed, 08 May 2024 13:46:54 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lOE-0004zn-OS
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 13:47:39 -0400
+Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lNQ-0008IA-0V
- for qemu-devel@nongnu.org; Wed, 08 May 2024 13:46:52 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-a59b097b202so2562766b.0
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 10:46:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lOC-0000sh-Mh
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 13:47:38 -0400
+Received: by mail-lf1-x12e.google.com with SMTP id
+ 2adb3069b0e04-51ef64d051bso4051676e87.1
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 10:47:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715190405; x=1715795205; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715190453; x=1715795253; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MvmYkwM/vtus+gTFbMymcQXt7CwFyRNe8VlkJ3oWH6M=;
- b=HVNHj3K2OIXkdH+wsxNcXWxn5VzagTNa11PiIQvKN3GiRDLAcYQ5hMVF+nO3lj9Qs0
- OFAju4QI9JoQ/x966YiwwbTx/IDlkPDXQdjqhPRAsFnW1987HJmpvdBEQK9KSWYpYUWc
- Qk0kpqEc+zq74YGYJRG8zrilUNs5t6crcFNrQIlQsXDqH8IBc3dASz4vKoZJsZdp3y4r
- km36CHEinh1UnjElnEBSy/DSabpgHAqFkoav2YHXJBemctb0qFXqMhalptdk+jX2+MUH
- kZ3os9b3X3U5rHqYfFqlI9dxHKep+TGtEtgziV/dv+dGliLD+K+dU0eryRwxbng0e1j1
- FXFg==
+ bh=lB9PBXZLhPirLB2HUXLQgsvt1kdrJAYX5azy5DWGsCI=;
+ b=MeLbS01kJxZO3QcL5W0jG2Fioop4bHZEVXAeY77PDByAmpx7btIaqAu95Zhr7gFGZi
+ 42LjFFrvHJEXHt0Fq9MyUR+R5o8fszxlv7sWkc5icUGFfnzZYf76+qd1X1hXK9/5tb+o
+ iypk976AV/jjziCvXQL93//M/YEt5Tj6PNgCLvLTlASjUF40Br6bZMBcql4PqU0Aw3Am
+ n3YZkQELkwZrzEx/5tn5OWe8oIgvegr4ddKqO/k40r9pqJCU3wU6cjN99BhigZgNGOU0
+ t1Lb9mFUA6KR3iUEMfmgsbMLY7l+K90XcvVDTEi/xY4ZhaFY6SRmd9ENaK3N7knEBrtX
+ UPkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715190405; x=1715795205;
+ d=1e100.net; s=20230601; t=1715190453; x=1715795253;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MvmYkwM/vtus+gTFbMymcQXt7CwFyRNe8VlkJ3oWH6M=;
- b=OX6W0wmwvNPGxs/rnYz3cz1XrvchmNi1rZoe0Udir7ML9fbcE0jJuo8P1vBs8+jmp7
- EtVLoSomlXB9vI0refQ+r9UzHorIjsgzM5y57M750w7CWPjDvQQPDSXGKIeXnHrRpuPz
- s00mFnS5Xpd1ZSuWTBIK4l+Zg3UWj9DFfx9570nTLcpfk1ALnMyBqiGc6QBv/LKkx386
- Anse8gveAmw3+SQAyUL8ttgOqzJPjKl28X54wAyrFzxai/zsYypom2GjcB3S5ob1S0a2
- qjmRHKCUY04tBF1q8DZkv7Rjf/h9Kjf4zoIGFjE4VjrmymDNWrKrzXI7uACKF/93tf7j
- AA9w==
-X-Gm-Message-State: AOJu0Yzf5bsUzwEPej+k0AJIY7hzRNtRND4AG+YbExhknPjTjOZcFWw6
- mAs52sfQufMvY2FjvpJddWRup1caS7UnH4rh/RJNEZ7KQsF5LSXNFAMJKHmp35qfhCWHYZQkQAH
- k
-X-Google-Smtp-Source: AGHT+IF26hRzWZQQz/L7HTj2f+65lx+LGGImSfo+vjzv/tEhlb5+9KyVzLr9GXO+pyHHYTPj/UZuOw==
-X-Received: by 2002:a17:906:6051:b0:a59:bbd6:bb39 with SMTP id
- a640c23a62f3a-a59fb9c6be6mr220795066b.55.1715190405295; 
- Wed, 08 May 2024 10:46:45 -0700 (PDT)
+ bh=lB9PBXZLhPirLB2HUXLQgsvt1kdrJAYX5azy5DWGsCI=;
+ b=eZsZ7S+uMCCnJ6u3DATlL8bz+NXHrgDZOojELYbS1TyP0xKCoaMkIyAiSKcXZWyOVM
+ NSRqa1vKsQxm/PcDVMH4pRBWTsmXwsoXBwg6qDwSmAdrSOdXXBRBz5mgcTGnS9lZf9Zq
+ NFap048ymTa+/9Ii2MWEADJg88E5+HPCU7vGvzXxQUxc5+wspQUmCYdx+orVaIslH1zB
+ xw6NJ6+4jEViIXMs3yA0ZeXDAI94/WbzDiEq+lcJwTDuiwBPEIX57hEALow889pxYJ8P
+ txTITXSriez79DhX0ySd/XURdOGPZT67Pdkm3TsYm4oaUr7fnpKMrQws6YKHx9XPwMkx
+ kNyw==
+X-Gm-Message-State: AOJu0YwW/GwHfewKhFPVaPhsO1a2Y1/hCrerWhWPva81DY6fg2T5xByC
+ uJx6Li9QrnMn5aFoo6lH6h2Lk1X7xPSJta6AMBjgwtCf3FizTHYJ17xtJ2Z/d6nPA2ebF+f1Ix/
+ Q
+X-Google-Smtp-Source: AGHT+IErf8jaj9iHB0AJKsDouPlhfOlLoBUYZAHmGlSzmEqaKasw5QbS+Tl/P3jHJ+L4c4PX6ieHxQ==
+X-Received: by 2002:ac2:5494:0:b0:51d:bbb:7a4e with SMTP id
+ 2adb3069b0e04-5217c3740bemr2007778e87.24.1715190453314; 
+ Wed, 08 May 2024 10:47:33 -0700 (PDT)
 Received: from m1x-phil.lan (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
  [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
- d12-20020a17090648cc00b00a59a874136fsm5744899ejt.214.2024.05.08.10.46.44
+ el24-20020a170907285800b00a59b9263f59sm5007080ejc.102.2024.05.08.10.47.32
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 08 May 2024 10:46:44 -0700 (PDT)
+ Wed, 08 May 2024 10:47:32 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 17/26] hw/ppc: Deprecate 'ref405ep' machine and 405 CPUs
-Date: Wed,  8 May 2024 19:45:01 +0200
-Message-ID: <20240508174510.60470-18-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 26/26] misc: Use QEMU header path relative to include/ directory
+Date: Wed,  8 May 2024 19:45:10 +0200
+Message-ID: <20240508174510.60470-27-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240508174510.60470-1-philmd@linaro.org>
 References: <20240508174510.60470-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,53 +95,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+QEMU headers are relative to the include/ directory,
+not to the project root directory. Remove "include/".
 
-The 'ref405ep' machine and PPC 405 CPU have no known users, firmware
-images are not available, OpenWRT dropped support in 2019, U-Boot in
-2017, Linux also is dropping support in 2024. It is time to let go of
-this ancient hardware and focus on newer CPUs and platforms.
+See also:
+https://www.qemu.org/docs/master/devel/style.html#include-directives
 
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-Acked-by: Nicholas Piggin <npiggin@gmail.com>
-Message-ID: <20240507123332.641708-1-clg@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240507142737.95735-1-philmd@linaro.org>
 ---
- docs/about/deprecated.rst | 8 ++++++++
- hw/ppc/ppc405_boards.c    | 1 +
- 2 files changed, 9 insertions(+)
+ hw/audio/virtio-snd.c   | 2 +-
+ hw/rtc/ls7a_rtc.c       | 2 +-
+ target/i386/gdbstub.c   | 2 +-
+ tests/qtest/nvme-test.c | 2 +-
+ tests/qtest/ufs-test.c  | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 03f8b1b655..e22acb17f2 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -258,6 +258,14 @@ dropping the ``cheetah`` OMAP1 board, because we don't have any
- test images for it and don't know of anybody who does; the ``sx1``
- and ``sx1-v1`` OMAP1 machines remain supported for now.
+diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+index 6a2ee085c0..7d09800d1f 100644
+--- a/hw/audio/virtio-snd.c
++++ b/hw/audio/virtio-snd.c
+@@ -19,7 +19,7 @@
+ #include "qemu/iov.h"
+ #include "qemu/log.h"
+ #include "qemu/error-report.h"
+-#include "include/qemu/lockable.h"
++#include "qemu/lockable.h"
+ #include "exec/tswap.h"
+ #include "sysemu/runstate.h"
+ #include "trace.h"
+diff --git a/hw/rtc/ls7a_rtc.c b/hw/rtc/ls7a_rtc.c
+index ac28c1165b..052201c2cd 100644
+--- a/hw/rtc/ls7a_rtc.c
++++ b/hw/rtc/ls7a_rtc.c
+@@ -8,7 +8,7 @@
+ #include "qemu/osdep.h"
+ #include "hw/sysbus.h"
+ #include "hw/irq.h"
+-#include "include/hw/register.h"
++#include "hw/register.h"
+ #include "qemu/timer.h"
+ #include "sysemu/sysemu.h"
+ #include "qemu/cutils.h"
+diff --git a/target/i386/gdbstub.c b/target/i386/gdbstub.c
+index ebb000df6a..4acf485879 100644
+--- a/target/i386/gdbstub.c
++++ b/target/i386/gdbstub.c
+@@ -19,7 +19,7 @@
+  */
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+-#include "include/gdbstub/helpers.h"
++#include "gdbstub/helpers.h"
  
-+PPC 405 ``ref405ep`` machine (since 9.1)
-+''''''''''''''''''''''''''''''''''''''''
-+
-+The ``ref405ep`` machine and PPC 405 CPU have no known users, firmware
-+images are not available, OpenWRT dropped support in 2019, U-Boot in
-+2017, Linux also is dropping support in 2024. It is time to let go of
-+this ancient hardware and focus on newer CPUs and platforms.
-+
- Backend options
- ---------------
+ #ifdef TARGET_X86_64
+ static const int gpr_map[16] = {
+diff --git a/tests/qtest/nvme-test.c b/tests/qtest/nvme-test.c
+index 008d189b0f..5ad6821f7a 100644
+--- a/tests/qtest/nvme-test.c
++++ b/tests/qtest/nvme-test.c
+@@ -13,7 +13,7 @@
+ #include "libqtest.h"
+ #include "libqos/qgraph.h"
+ #include "libqos/pci.h"
+-#include "include/block/nvme.h"
++#include "block/nvme.h"
  
-diff --git a/hw/ppc/ppc405_boards.c b/hw/ppc/ppc405_boards.c
-index 4092ebc1ab..c44e7ed162 100644
---- a/hw/ppc/ppc405_boards.c
-+++ b/hw/ppc/ppc405_boards.c
-@@ -350,6 +350,7 @@ static void ppc405_machine_class_init(ObjectClass *oc, void *data)
-     mc->init = ppc405_init;
-     mc->default_ram_size = 128 * MiB;
-     mc->default_ram_id = "ppc405.ram";
-+    mc->deprecation_reason = "machine is old and unmaintained";
- }
+ typedef struct QNvme QNvme;
  
- static const TypeInfo ppc405_machine_type = {
+diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
+index 95e82f9472..82ec3f0671 100644
+--- a/tests/qtest/ufs-test.c
++++ b/tests/qtest/ufs-test.c
+@@ -13,7 +13,7 @@
+ #include "libqos/qgraph.h"
+ #include "libqos/pci.h"
+ #include "scsi/constants.h"
+-#include "include/block/ufs.h"
++#include "block/ufs.h"
+ 
+ /* Test images sizes in Bytes */
+ #define TEST_IMAGE_SIZE (64 * 1024 * 1024)
 -- 
 2.41.0
 
