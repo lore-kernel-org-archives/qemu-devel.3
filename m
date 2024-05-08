@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 402FEC25B5F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 173C6C25B4F
 	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 17:47:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4lNM-0001G5-As; Wed, 08 May 2024 13:46:45 -0400
+	id 1s4lO4-00040J-AQ; Wed, 08 May 2024 13:47:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lNC-0000ZO-5h
- for qemu-devel@nongnu.org; Wed, 08 May 2024 13:46:34 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lNt-0003aV-FV
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 13:47:19 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lMp-0007Zy-JW
- for qemu-devel@nongnu.org; Wed, 08 May 2024 13:46:13 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-51ff65b1e14so5445585e87.2
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 10:46:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lNq-0000ho-L5
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 13:47:16 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a59cdd185b9so207222466b.1
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 10:47:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715190368; x=1715795168; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715190432; x=1715795232; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WpkAm6Hg1nlOzBAO4vDNkPRXv+LXQE3F1WzdPdPpy9g=;
- b=Bb/1mYXGasgbIp0beH0g2XAyusrzkR5gmYATFXJ/PDHMVGMNkew/QxDpEzRCxoRql0
- +gKjLyQylrGDT3vofOxZkKM38A3CNeJjoIkB/iU62qk7Xq10eZQRHR46mm22LXbi9Fxa
- 8FBkn9GQdjO0NL6r320rjreBbjBym+ZQKfTzPkvsqcHVcZZTkYYd8B3TtvuJhWJNzGIn
- UIOeUB7FCFeHVwfXrE0FnYIgWLr+1YqKYUCUzzdoPokiQhcJApS4pfn+6ea3Ea9iF/C2
- TC7JBKwUin4NmQns6fSnuw2JP7uyrPYwbq9SVDo6OOu2UspuBfscDlicI73tv6h7gOLu
- xOXw==
+ bh=RtqJ/HpVTKlat1filTS1A2oaNsIBTtDSWzDDsWKSNIM=;
+ b=cqA4pbQuySvqH9/N0uaqeHCLIPf1X9tjNJrsxqIkAMmltNG2JXC32oh0f3HSxYUUv7
+ GCAfTmQ0Dmv6lOW0sYtMl1an2ozJqI7Pxe8AUWXSl5yvtJxYL3keQX5WYoFteZYALZY5
+ 0+Ldhu+IHXxQ8X6o/4NcWumgUbJghcor3sUg+o2hJU4OPEFDdc1elZZkAsYwlZIdsWnu
+ FrW9qjz3irkiNCaHx2EXM7hsseJu1VS1sn1L5r+TyAcYblsJ7QMOt1A1uGdzUOC3UoFK
+ oATCIolrArlJ1FqAz4LAycrxquAFZgahTkbM/4xSbwf4j06gog5H4I8Rs5MBl5JPowhN
+ r7gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715190368; x=1715795168;
+ d=1e100.net; s=20230601; t=1715190432; x=1715795232;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WpkAm6Hg1nlOzBAO4vDNkPRXv+LXQE3F1WzdPdPpy9g=;
- b=IsYkEZfcRyhRWLnol+3DzR/ToTx3l55st0JPnWZUe3Jf8oXpQeBp8cYbqFN1uzPhk/
- RYGmuWlLYCr57c+AO4mkonFQkKmksMTfK8QdLS/tjvJCxZzJugieBv9B1FN/yFR+w7l2
- fe7WWm477NDeNQ66Ulnjamv1aqu56gcW2TmOiPghB6Y2rFoHL/fNc9VYMnIiUeqB8xoK
- X/cNFlRexq7nbIxZzZBmhZrhh42E4thwwUpmh682UQBX9Tz+CZUJyE+f+S3iLAkK5p3k
- Gn2boFk6T10E1N2dwcb7RsnkEfnOTZI7pkBMRI8G9caAMtTZUVL2HFRph6KOVHAW7iG3
- QvcA==
-X-Gm-Message-State: AOJu0YyJSLx+GuUkwCJ8Gi/ogXuGHTG6CORnS+uMexG3tzQUXDVz2kqv
- 1ndkC3mINnfwQZ8013dCMYxvJClNByvRjITwHRSADnO0JGlvEU9kGiQ7lB2p2evULMszVeSdOCC
- F
-X-Google-Smtp-Source: AGHT+IHzilZL0UsJQg7qOE+WrXTMEeL8wAgXmaA85cXDJp/ux2bKdSihtYvsMB89Nyh69Sc9m87yfw==
-X-Received: by 2002:a05:6512:b0f:b0:51b:79b7:8322 with SMTP id
- 2adb3069b0e04-5217cc4ae15mr2511328e87.52.1715190368031; 
- Wed, 08 May 2024 10:46:08 -0700 (PDT)
+ bh=RtqJ/HpVTKlat1filTS1A2oaNsIBTtDSWzDDsWKSNIM=;
+ b=L9qMUq8Yv6jmawywzIvKCCoqTvFC/+SdxUweq2Ps5KkjoVXXEsBJ3Mj7rEqsat86m2
+ sGlCkHwtHnh6m06UkQHWlCYOSgtHjAg/nMJpRx44ZwaUC7HVPIbB3MC/AfLkbfNqt3xX
+ gayb/NpnSrjhETNFAFPrMU7PDevdKTLZGKWTrqmgH3/SRKHoypKxSSDPWWybcOAZXM7N
+ j/AyC54V2O+3Dky7/N+zV5q6a5iXBgEI4FTcg2KZQEl1/BtaHiq46SUTB64uu1GbMAYE
+ miVodEA1IbjHW9vsqXdg0yUA+XjsTQ0NDejEJg+HXJ2uRlP2809WLW5KY+jAvHOZRRyp
+ dUTQ==
+X-Gm-Message-State: AOJu0YwvTlb/l+6/p5dHzMwA4pC4o42Q4sMZDiMUHJaNfXomkwjEzH9U
+ wDZ2tk7zhWSq7BJcN8KvZbKIJA8u5OX/vt76ngtKiuLs94Ot8Xg3Cl3sL28Hej0620+b/jFLcRE
+ q
+X-Google-Smtp-Source: AGHT+IH4P0DMaCD7q38szteqC+S2ARW6D8EJMvnwI+EKI7jPSa49h+o/OOvITzYE5daOe+zTPiN/0w==
+X-Received: by 2002:a17:906:2bd3:b0:a59:a1b1:2978 with SMTP id
+ a640c23a62f3a-a5a116ece99mr27068166b.20.1715190432235; 
+ Wed, 08 May 2024 10:47:12 -0700 (PDT)
 Received: from m1x-phil.lan (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
  [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
- t22-20020a1709060c5600b00a59c7a001b6sm4499003ejf.177.2024.05.08.10.46.07
+ g23-20020a1709067c5700b00a5a0b34110dsm560178ejp.1.2024.05.08.10.47.11
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 08 May 2024 10:46:07 -0700 (PDT)
+ Wed, 08 May 2024 10:47:11 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>,
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 10/26] hw/i386/Kconfig: Allow to compile Q35 without FDC_ISA
-Date: Wed,  8 May 2024 19:44:54 +0200
-Message-ID: <20240508174510.60470-11-philmd@linaro.org>
+Subject: [PULL 22/26] hw/mips/loongson3_virt: Emulate suspend function
+Date: Wed,  8 May 2024 19:45:06 +0200
+Message-ID: <20240508174510.60470-23-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240508174510.60470-1-philmd@linaro.org>
 References: <20240508174510.60470-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x133.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,53 +94,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-The q35 machine can be used without floppy disk controller (FDC),
-but due to our current Kconfig setup, the FDC code is still always
-included in the binary. To fix this, the "PC" config option should
-only imply the "FDC_ISA" instead of always selecting it.
+Suspend function is emulated as what hardware actually do.
+Doorbell register fields are updates to include suspend value,
+suspend vector is encoded in firmware blob and fw_cfg is updated
+to include S3 bits as what x86 did.
 
-The i440fx and the isa-pc machine currently always instantiate
-the FDC, so we have to add the select statements now there instead.
-
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240425184315.553329-3-thuth@redhat.com>
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Message-ID: <20240508-loongson3v-suspend-v1-1-186725524a39@flygoat.com>
+[PMD: Use g_memdup2(), constify suspend array]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/i386/Kconfig | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ hw/mips/loongson3_bootp.c |  1 +
+ hw/mips/loongson3_virt.c  | 20 ++++++++++++++++++++
+ 2 files changed, 21 insertions(+)
 
-diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
-index 4362164962..58ca8f246d 100644
---- a/hw/i386/Kconfig
-+++ b/hw/i386/Kconfig
-@@ -32,7 +32,7 @@ config PC
-     imply VGA_PCI
-     imply VIRTIO_VGA
-     imply NVDIMM
--    select FDC_ISA
-+    imply FDC_ISA
-     select I8259
-     select I8254
-     select PCKBD
-@@ -72,6 +72,7 @@ config I440FX
-     imply VMPORT
-     imply VMMOUSE
-     select ACPI_PIIX4
-+    select FDC_ISA
-     select PC_PCI
-     select PC_ACPI
-     select PCI_I440FX
-@@ -87,6 +88,7 @@ config ISAPC
-     depends on I386
-     imply VGA_ISA
-     select ISA_BUS
-+    select FDC_ISA
-     select PC
-     select IDE_ISA
-     # FIXME: it is in the same file as i440fx, and does not compile
+diff --git a/hw/mips/loongson3_bootp.c b/hw/mips/loongson3_bootp.c
+index f99af22932..03a10b63c1 100644
+--- a/hw/mips/loongson3_bootp.c
++++ b/hw/mips/loongson3_bootp.c
+@@ -148,4 +148,5 @@ void init_reset_system(struct efi_reset_system_t *reset)
+     reset->Shutdown = cpu_to_le64(0xffffffffbfc000a8);
+     reset->ResetCold = cpu_to_le64(0xffffffffbfc00080);
+     reset->ResetWarm = cpu_to_le64(0xffffffffbfc00080);
++    reset->DoSuspend = cpu_to_le64(0xffffffffbfc000d0);
+ }
+diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
+index b10a611a98..440268a074 100644
+--- a/hw/mips/loongson3_virt.c
++++ b/hw/mips/loongson3_virt.c
+@@ -127,6 +127,9 @@ static void loongson3_pm_write(void *opaque, hwaddr addr,
+     case 0x00:
+         qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
+         return;
++    case 0x01:
++        qemu_system_suspend_request();
++        return;
+     case 0xff:
+         qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
+         return;
+@@ -250,6 +253,17 @@ static void init_boot_rom(void)
+         0x240D00FF,   /* li      t1, 0xff                                     */
+         0xA18D0000,   /* sb      t1, (t0)                                     */
+         0x1000FFFF,   /* 1:  b   1b                                           */
++        0x00000000,   /* nop                                                  */
++                      /* Suspend                                              */
++        0x3C0C9000,   /* dli     t0, 0x9000000010080010                       */
++        0x358C0000,
++        0x000C6438,
++        0x358C1008,
++        0x000C6438,
++        0x358C0010,
++        0x240D0001,   /* li      t1, 0x01                                     */
++        0xA18D0000,   /* sb      t1, (t0)                                     */
++        0x03e00008,   /* jr      ra                                           */
+         0x00000000    /* nop                                                  */
+     };
+ 
+@@ -265,6 +279,7 @@ static void fw_cfg_boot_set(void *opaque, const char *boot_device,
+ 
+ static void fw_conf_init(unsigned long ram_size)
+ {
++    static const uint8_t suspend[6] = {128, 0, 0, 129, 128, 128};
+     FWCfgState *fw_cfg;
+     hwaddr cfg_addr = virt_memmap[VIRT_FW_CFG].base;
+ 
+@@ -274,6 +289,10 @@ static void fw_conf_init(unsigned long ram_size)
+     fw_cfg_add_i64(fw_cfg, FW_CFG_RAM_SIZE, (uint64_t)ram_size);
+     fw_cfg_add_i32(fw_cfg, FW_CFG_MACHINE_VERSION, 1);
+     fw_cfg_add_i64(fw_cfg, FW_CFG_CPU_FREQ, get_cpu_freq_hz());
++
++    fw_cfg_add_file(fw_cfg, "etc/system-states",
++                    g_memdup2(suspend, sizeof(suspend)), sizeof(suspend));
++
+     qemu_register_boot_set(fw_cfg_boot_set, fw_cfg);
+ }
+ 
+@@ -553,6 +572,7 @@ static void mips_loongson3_virt_init(MachineState *machine)
+                            machine->ram, 0, virt_memmap[VIRT_LOWMEM].size);
+     memory_region_init_io(iomem, NULL, &loongson3_pm_ops,
+                            NULL, "loongson3_pm", virt_memmap[VIRT_PM].size);
++    qemu_register_wakeup_support();
+ 
+     memory_region_add_subregion(address_space_mem,
+                       virt_memmap[VIRT_LOWMEM].base, ram);
 -- 
 2.41.0
 
