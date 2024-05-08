@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 517C4C04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 07:52:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7A9BC25B74
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 07:52:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4c5y-0007d4-3S; Wed, 08 May 2024 03:52:10 -0400
+	id 1s4c5j-00072k-4P; Wed, 08 May 2024 03:51:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s4c5M-0006tg-IL
- for qemu-devel@nongnu.org; Wed, 08 May 2024 03:51:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1s4c5H-0006r3-Il
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 03:51:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s4c5G-0003eX-JU
- for qemu-devel@nongnu.org; Wed, 08 May 2024 03:51:30 -0400
+ id 1s4c5E-0003eK-LX
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 03:51:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715154686;
+ s=mimecast20190719; t=1715154682;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EHfp4hyic82q83vzDg4ggug031W0Z3Ar7QGHLKU1pSg=;
- b=NbxMFf75UqEuSCi4bBSf+Fdthl7UnNYZfSPfr8dwczYlL5lWtqNzzQKquWlMwuCF+ICL3n
- ZTxNoC7na4Wzp76jqvHN1GXm8QMV0bHtldUXNP2o4CvynzgmFHX8DGar16RzLxauhdFLb7
- kDX3xYrV3ZasXlmwjY2JJJHGW+w2I94=
+ bh=MIrdhYYSEjHQf62aM9cNEMsXn+yUWKJciAkldDNdnXg=;
+ b=Z852JXGeUIqxR7H3zXuCxbBBmqXClONRhpkOeZyy7AFB2I+JeMNx//cNsOIzo3XXE2P5en
+ G7SHgkEY5v315PfPRBilxh8XuNbKJaHyo4dtEooDYCkhC2Yo2ooqR+tVakWHOIFFdckW4e
+ +Df6cvfgNXHez22BjsByWgOteA3SH1U=
 Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
  [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-138-ATWlCSg4OGqKgV_SG-9b8w-1; Wed, 08 May 2024 03:51:24 -0400
-X-MC-Unique: ATWlCSg4OGqKgV_SG-9b8w-1
+ us-mta-263-SLZYD8WWO7iI0q4No-MNNA-1; Wed, 08 May 2024 03:51:21 -0400
+X-MC-Unique: SLZYD8WWO7iI0q4No-MNNA-1
 Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a59aedbd9a9so266999266b.0
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 00:51:24 -0700 (PDT)
+ a640c23a62f3a-a599b55056bso229311066b.0
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 00:51:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715154682; x=1715759482;
+ d=1e100.net; s=20230601; t=1715154679; x=1715759479;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EHfp4hyic82q83vzDg4ggug031W0Z3Ar7QGHLKU1pSg=;
- b=Lh5UhrKTYwrkAVYEp9Ok6ECqtLF/TCkyFI8jT9juSQ1FusGXjev1U6lxj3df4L8Fnb
- 2btWJGa6nxwKyYB6sdooRBQm2Tcsp4upsseEGFpH9jpF2N1omRoXgWYiMILgKjPtsKnj
- rSX3CJDvfS9IwvdyGUnwk5NGF2gk1e0ezTq0gfZZntHcrhEXkFg+vK3Lnt3XMtZIMCN5
- exjvtEq+3IRtKoA9F3FH2AhXpeEG++bqu0JM/rQxnfjFZH4/9pDmP4P/9NemxB+MmaMI
- aPeWQ6ZByB0Q0MEFnuD3pPSf9PDgTzuqF599QrK5/7HDqU5XF8GNZXwdx/AlwL27blNs
- S1VQ==
-X-Gm-Message-State: AOJu0YwdkiZnw/Ttb+IMDkFqRwthU0oP0se+57jphEGuozUDyZUsTokD
- iT5W1DX2o91C1recNny8MmiYDEGrmHytbOBDNVHdz67S7LtRRBqyl9V3z/m/2VRXuxkDydGFJ8Y
- 3M1y22psa38mBcr7uxCm/Jo4x65iTd/myvQRUAKkN0RbZcY+lL5oK2qfoTP0bqVQPGvYZ6a1yH/
- A1Q7Hwz7++0E79BgpIDkMRKjDXZGAzhyCth70/
-X-Received: by 2002:a17:906:c795:b0:a59:8cd2:5b2c with SMTP id
- a640c23a62f3a-a59fb95d98dmr100844366b.39.1715154682176; 
- Wed, 08 May 2024 00:51:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHZcTnzPQRmpanHE3pOoAg/8fe+TT0COPQJMYqgPSPqm5bkgFP5U/Mz+tB7xe3Yrud9EChOsA==
-X-Received: by 2002:a17:906:c795:b0:a59:8cd2:5b2c with SMTP id
- a640c23a62f3a-a59fb95d98dmr100842866b.39.1715154681764; 
- Wed, 08 May 2024 00:51:21 -0700 (PDT)
+ bh=MIrdhYYSEjHQf62aM9cNEMsXn+yUWKJciAkldDNdnXg=;
+ b=Ncevx2p6wzZOqhPMSrXSwWT+hbq5/J1s2PsSX8/G9XCPIGmdRv6+j3lQvyh2I+Uoq7
+ YTO5Jhxo7AXSX0svT/v5yyLLvewSZb7Dosh4RbG7/Nv4amCQrAJl3XqbJAvbgibHWq/D
+ 2S7ktUXdDv88+39qHpXH+dZMgbMiY/AMVTcMb2gr9VWyDvED0Xr1sjqZ2HMmQ3bgxlAe
+ tj3toF/ZbdISEV6emzVY5+KHKSoUrJbFgcrzxW+E+d1KISwqZljxFjjnlukaCyi3F2oS
+ JBAb2fL+wzQaioXHluZguMw13cNxlCCrcutWeaxjI4ILuPg+jv+RCV3HZdYSxT/905xN
+ EmIA==
+X-Gm-Message-State: AOJu0Yy7AGb18mACxA/Gkn1OQCzMpS+CqTZw3k4qsdBfvPEdUNrZ9b4u
+ 34KdwYhi3F89wGUVYuzDBvBvIZ86+7nSDXC8oiJlVZaN62ADcg6SlGqe09EhlPTMJ58Yo1mKn44
+ zl6QWj2K064j5l22z41PUWE8zSDcSjdBAMwRtSRiG7texL9Gc5XXv6TctYuFILcZ91Yr5T68gKZ
+ i6UGFUD0Pd7U3ICrj7HZxCvpIwe9qAOs01ZHvs
+X-Received: by 2002:a17:906:3544:b0:a59:c319:f1de with SMTP id
+ a640c23a62f3a-a59fb92142cmr99529466b.15.1715154679285; 
+ Wed, 08 May 2024 00:51:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF9qtpm71ABB/KR77HCLxnkvEHENcI++3tppPDHb8nbif/m/fxSSMUMWvL2P/K/ZrzspD1Dog==
+X-Received: by 2002:a17:906:3544:b0:a59:c319:f1de with SMTP id
+ a640c23a62f3a-a59fb92142cmr99528566b.15.1715154678891; 
+ Wed, 08 May 2024 00:51:18 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- kh24-20020a170906f81800b00a59bf40ba6dsm4256676ejb.7.2024.05.08.00.51.19
+ gc21-20020a170906c8d500b00a59a7bac0easm5175452ejb.164.2024.05.08.00.51.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 May 2024 00:51:19 -0700 (PDT)
+ Wed, 08 May 2024 00:51:17 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org
-Subject: [PATCH 6/6] configs: disable emulators that require it if libfdt is
- not found
-Date: Wed,  8 May 2024 09:51:05 +0200
-Message-ID: <20240508075105.15510-7-pbonzini@redhat.com>
+Subject: [PATCH 5/6] hw/xtensa: require libfdt
+Date: Wed,  8 May 2024 09:51:04 +0200
+Message-ID: <20240508075105.15510-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240508075105.15510-1-pbonzini@redhat.com>
 References: <20240508075105.15510-1-pbonzini@redhat.com>
@@ -80,7 +79,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -104,216 +103,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since boards can express their dependency on libfdt and
-system/device_tree.c, only leave TARGET_NEED_FDT if the target has a
-hard dependency.
-
-Those emulators will be skipped if libfdt is disabled, or if it
-is "auto" and not found and --disable-download is passed; unless
-the target is mentioned explicitly in --target-list, in which case
-the build will fail.
+All other boards require libfdt if it can be used (including for example
+i386/x86_64), so change the "imply" to "select" and always allow -dtb
+in qemu-system-xtensa.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- configs/targets/aarch64-softmmu.mak      | 1 +
- configs/targets/arm-softmmu.mak          | 1 +
- configs/targets/i386-softmmu.mak         | 1 -
- configs/targets/loongarch64-softmmu.mak  | 1 +
- configs/targets/microblaze-softmmu.mak   | 1 +
- configs/targets/microblazeel-softmmu.mak | 1 +
- configs/targets/mips64el-softmmu.mak     | 1 -
- configs/targets/or1k-softmmu.mak         | 1 +
- configs/targets/ppc-softmmu.mak          | 1 -
- configs/targets/ppc64-softmmu.mak        | 1 +
- configs/targets/riscv32-softmmu.mak      | 1 +
- configs/targets/riscv64-softmmu.mak      | 1 +
- configs/targets/rx-softmmu.mak           | 1 +
- configs/targets/x86_64-softmmu.mak       | 1 -
- meson.build                              | 6 +++++-
- .gitlab-ci.d/buildtest.yml               | 8 ++++----
- 16 files changed, 19 insertions(+), 9 deletions(-)
+ hw/xtensa/xtfpga.c | 9 ---------
+ hw/xtensa/Kconfig  | 4 ++--
+ 2 files changed, 2 insertions(+), 11 deletions(-)
 
-diff --git a/configs/targets/aarch64-softmmu.mak b/configs/targets/aarch64-softmmu.mak
-index 83c22391a69..84cb32dc2f4 100644
---- a/configs/targets/aarch64-softmmu.mak
-+++ b/configs/targets/aarch64-softmmu.mak
-@@ -3,4 +3,5 @@ TARGET_BASE_ARCH=arm
- TARGET_SUPPORTS_MTTCG=y
- TARGET_KVM_HAVE_GUEST_DEBUG=y
- TARGET_XML_FILES= gdb-xml/aarch64-core.xml gdb-xml/aarch64-fpu.xml gdb-xml/arm-core.xml gdb-xml/arm-vfp.xml gdb-xml/arm-vfp3.xml gdb-xml/arm-vfp-sysregs.xml gdb-xml/arm-neon.xml gdb-xml/arm-m-profile.xml gdb-xml/arm-m-profile-mve.xml gdb-xml/aarch64-pauth.xml
-+# needed by boot.c
- TARGET_NEED_FDT=y
-diff --git a/configs/targets/arm-softmmu.mak b/configs/targets/arm-softmmu.mak
-index 92c8349b964..bf390b7a8de 100644
---- a/configs/targets/arm-softmmu.mak
-+++ b/configs/targets/arm-softmmu.mak
-@@ -1,4 +1,5 @@
- TARGET_ARCH=arm
- TARGET_SUPPORTS_MTTCG=y
- TARGET_XML_FILES= gdb-xml/arm-core.xml gdb-xml/arm-vfp.xml gdb-xml/arm-vfp3.xml gdb-xml/arm-vfp-sysregs.xml gdb-xml/arm-neon.xml gdb-xml/arm-m-profile.xml gdb-xml/arm-m-profile-mve.xml
-+# needed by boot.c
- TARGET_NEED_FDT=y
-diff --git a/configs/targets/i386-softmmu.mak b/configs/targets/i386-softmmu.mak
-index d61b5076134..2ac69d5ba37 100644
---- a/configs/targets/i386-softmmu.mak
-+++ b/configs/targets/i386-softmmu.mak
-@@ -1,5 +1,4 @@
- TARGET_ARCH=i386
- TARGET_SUPPORTS_MTTCG=y
--TARGET_NEED_FDT=y
- TARGET_KVM_HAVE_GUEST_DEBUG=y
- TARGET_XML_FILES= gdb-xml/i386-32bit.xml
-diff --git a/configs/targets/loongarch64-softmmu.mak b/configs/targets/loongarch64-softmmu.mak
-index f23780fdd89..84beb19b90a 100644
---- a/configs/targets/loongarch64-softmmu.mak
-+++ b/configs/targets/loongarch64-softmmu.mak
-@@ -2,4 +2,5 @@ TARGET_ARCH=loongarch64
- TARGET_BASE_ARCH=loongarch
- TARGET_SUPPORTS_MTTCG=y
- TARGET_XML_FILES= gdb-xml/loongarch-base32.xml gdb-xml/loongarch-base64.xml gdb-xml/loongarch-fpu.xml
-+# all boards require libfdt
- TARGET_NEED_FDT=y
-diff --git a/configs/targets/microblaze-softmmu.mak b/configs/targets/microblaze-softmmu.mak
-index e84c0cc7283..eea266d4f3d 100644
---- a/configs/targets/microblaze-softmmu.mak
-+++ b/configs/targets/microblaze-softmmu.mak
-@@ -1,5 +1,6 @@
- TARGET_ARCH=microblaze
- TARGET_BIG_ENDIAN=y
- TARGET_SUPPORTS_MTTCG=y
-+# needed by boot.c
- TARGET_NEED_FDT=y
- TARGET_XML_FILES=gdb-xml/microblaze-core.xml gdb-xml/microblaze-stack-protect.xml
-diff --git a/configs/targets/microblazeel-softmmu.mak b/configs/targets/microblazeel-softmmu.mak
-index 9b688036bd3..77b968acad3 100644
---- a/configs/targets/microblazeel-softmmu.mak
-+++ b/configs/targets/microblazeel-softmmu.mak
-@@ -1,4 +1,5 @@
- TARGET_ARCH=microblaze
- TARGET_SUPPORTS_MTTCG=y
-+# needed by boot.c
- TARGET_NEED_FDT=y
- TARGET_XML_FILES=gdb-xml/microblaze-core.xml gdb-xml/microblaze-stack-protect.xml
-diff --git a/configs/targets/mips64el-softmmu.mak b/configs/targets/mips64el-softmmu.mak
-index 8d9ab3ddc4b..3864daa7364 100644
---- a/configs/targets/mips64el-softmmu.mak
-+++ b/configs/targets/mips64el-softmmu.mak
-@@ -1,3 +1,2 @@
- TARGET_ARCH=mips64
- TARGET_BASE_ARCH=mips
--TARGET_NEED_FDT=y
-diff --git a/configs/targets/or1k-softmmu.mak b/configs/targets/or1k-softmmu.mak
-index 432f855a30a..0341cb2a6b3 100644
---- a/configs/targets/or1k-softmmu.mak
-+++ b/configs/targets/or1k-softmmu.mak
-@@ -1,4 +1,5 @@
- TARGET_ARCH=openrisc
- TARGET_SUPPORTS_MTTCG=y
- TARGET_BIG_ENDIAN=y
-+# needed by boot.c and all boards
- TARGET_NEED_FDT=y
-diff --git a/configs/targets/ppc-softmmu.mak b/configs/targets/ppc-softmmu.mak
-index f3ea9c98f75..53120dab41d 100644
---- a/configs/targets/ppc-softmmu.mak
-+++ b/configs/targets/ppc-softmmu.mak
-@@ -2,4 +2,3 @@ TARGET_ARCH=ppc
- TARGET_BIG_ENDIAN=y
- TARGET_KVM_HAVE_GUEST_DEBUG=y
- TARGET_XML_FILES= gdb-xml/power-core.xml gdb-xml/power-fpu.xml gdb-xml/power-altivec.xml gdb-xml/power-spe.xml
--TARGET_NEED_FDT=y
-diff --git a/configs/targets/ppc64-softmmu.mak b/configs/targets/ppc64-softmmu.mak
-index 1db8d8381d0..40881d93968 100644
---- a/configs/targets/ppc64-softmmu.mak
-+++ b/configs/targets/ppc64-softmmu.mak
-@@ -4,4 +4,5 @@ TARGET_BIG_ENDIAN=y
- TARGET_SUPPORTS_MTTCG=y
- TARGET_KVM_HAVE_GUEST_DEBUG=y
- TARGET_XML_FILES= gdb-xml/power64-core.xml gdb-xml/power-fpu.xml gdb-xml/power-altivec.xml gdb-xml/power-spe.xml gdb-xml/power-vsx.xml
-+# all boards require libfdt
- TARGET_NEED_FDT=y
-diff --git a/configs/targets/riscv32-softmmu.mak b/configs/targets/riscv32-softmmu.mak
-index d8b71cddcd4..338182d5b89 100644
---- a/configs/targets/riscv32-softmmu.mak
-+++ b/configs/targets/riscv32-softmmu.mak
-@@ -2,4 +2,5 @@ TARGET_ARCH=riscv32
- TARGET_BASE_ARCH=riscv
- TARGET_SUPPORTS_MTTCG=y
- TARGET_XML_FILES= gdb-xml/riscv-32bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-32bit-virtual.xml
-+# needed by boot.c
- TARGET_NEED_FDT=y
-diff --git a/configs/targets/riscv64-softmmu.mak b/configs/targets/riscv64-softmmu.mak
-index 7c0e7eeb429..f688ffa7bce 100644
---- a/configs/targets/riscv64-softmmu.mak
-+++ b/configs/targets/riscv64-softmmu.mak
-@@ -2,4 +2,5 @@ TARGET_ARCH=riscv64
- TARGET_BASE_ARCH=riscv
- TARGET_SUPPORTS_MTTCG=y
- TARGET_XML_FILES= gdb-xml/riscv-64bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-64bit-virtual.xml
-+# needed by boot.c
- TARGET_NEED_FDT=y
-diff --git a/configs/targets/rx-softmmu.mak b/configs/targets/rx-softmmu.mak
-index 0c458b2d07c..706bbe6062c 100644
---- a/configs/targets/rx-softmmu.mak
-+++ b/configs/targets/rx-softmmu.mak
-@@ -1,3 +1,4 @@
- TARGET_ARCH=rx
- TARGET_XML_FILES= gdb-xml/rx-core.xml
-+# all boards require libfdt
- TARGET_NEED_FDT=y
-diff --git a/configs/targets/x86_64-softmmu.mak b/configs/targets/x86_64-softmmu.mak
-index c5f882e5ba1..e12ac3dc59b 100644
---- a/configs/targets/x86_64-softmmu.mak
-+++ b/configs/targets/x86_64-softmmu.mak
-@@ -1,6 +1,5 @@
- TARGET_ARCH=x86_64
- TARGET_BASE_ARCH=i386
- TARGET_SUPPORTS_MTTCG=y
--TARGET_NEED_FDT=y
- TARGET_KVM_HAVE_GUEST_DEBUG=y
- TARGET_XML_FILES= gdb-xml/i386-64bit.xml
-diff --git a/meson.build b/meson.build
-index d8f259d2610..b8b3e7d73f5 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3059,7 +3059,11 @@ foreach target : target_dirs
-   config_target += { 'TARGET_' + config_target['TARGET_ARCH'].to_upper(): 'y' }
- 
-   if 'TARGET_NEED_FDT' in config_target and not fdt.found()
--    fdt_required += target
-+    if default_targets
-+      warning('Disabling ' + target + ' due to missing libfdt')
-+    else
-+      fdt_required += target
-+    endif
-     continue
-   endif
- 
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index e9402a68a79..92ca396c195 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -648,8 +648,8 @@ build-tci:
-     - make check-tcg
- 
- # Check our reduced build configurations
--# requires libfdt: aarch64, arm, i386, loongarch64, microblaze, microblazeel,
--#   mips64el, or1k, ppc, ppc64, riscv32, riscv64, rx, x86_64
-+# requires libfdt: aarch64, arm, loongarch64, microblaze, microblazeel,
-+#   or1k, ppc64, riscv32, riscv64, rx
- # does not build without boards: i386, loongarch64, s390x, sh4, sh4eb, x86_64
- build-without-defaults:
-   extends: .native_build_job_template
-@@ -665,7 +665,8 @@ build-without-defaults:
-       --disable-qom-cast-debug
-       --disable-strip
-     TARGETS: alpha-softmmu avr-softmmu cris-softmmu hppa-softmmu m68k-softmmu
--      mips-softmmu mips64-softmmu mipsel-softmmu sparc-softmmu
-+      mips-softmmu mips64-softmmu mipsel-softmmu mips64el-softmmu
-+      ppc-softmmu sparc-softmmu
-       sparc64-softmmu tricore-softmmu xtensa-softmmu xtensaeb-softmmu
-       hexagon-linux-user i386-linux-user s390x-linux-user
-     MAKE_CHECK_ARGS: check
+diff --git a/hw/xtensa/xtfpga.c b/hw/xtensa/xtfpga.c
+index f49e6591dc2..955e8867a36 100644
+--- a/hw/xtensa/xtfpga.c
++++ b/hw/xtensa/xtfpga.c
+@@ -356,7 +356,6 @@ static void xtfpga_init(const XtfpgaBoardDesc *board, MachineState *machine)
+             cur_tagptr = put_tag(cur_tagptr, BP_TAG_COMMAND_LINE,
+                                  strlen(kernel_cmdline) + 1, kernel_cmdline);
+         }
+-#ifdef CONFIG_FDT
+         if (dtb_filename) {
+             int fdt_size;
+             void *fdt = load_device_tree(dtb_filename, &fdt_size);
+@@ -373,14 +372,6 @@ static void xtfpga_init(const XtfpgaBoardDesc *board, MachineState *machine)
+             cur_lowmem = QEMU_ALIGN_UP(cur_lowmem + fdt_size, 4 * KiB);
+             g_free(fdt);
+         }
+-#else
+-        if (dtb_filename) {
+-            error_report("could not load DTB '%s': "
+-                         "FDT support is not configured in QEMU",
+-                         dtb_filename);
+-            exit(EXIT_FAILURE);
+-        }
+-#endif
+         if (initrd_filename) {
+             BpMemInfo initrd_location = { 0 };
+             int initrd_size = load_ramdisk(initrd_filename, cur_lowmem,
+diff --git a/hw/xtensa/Kconfig b/hw/xtensa/Kconfig
+index 8ea283a7a3b..fc5c785cfac 100644
+--- a/hw/xtensa/Kconfig
++++ b/hw/xtensa/Kconfig
+@@ -14,8 +14,8 @@ config XTENSA_VIRT
+ config XTENSA_XTFPGA
+     bool
+     default y
+-    depends on XTENSA
+-    imply DEVICE_TREE
++    depends on XTENSA && FDT
++    select DEVICE_TREE
+     select OPENCORES_ETH
+     select PFLASH_CFI01
+     select SERIAL
 -- 
 2.45.0
 
