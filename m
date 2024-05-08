@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF307C10F1A
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 00:24:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E005AC10F1A
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 00:24:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4V0K-0004IC-5B; Tue, 07 May 2024 20:17:52 -0400
+	id 1s4V0K-00049C-1r; Tue, 07 May 2024 20:17:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s4UyO-0007in-B9; Tue, 07 May 2024 20:15:52 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ id 1s4Uxk-00076a-RJ; Tue, 07 May 2024 20:15:21 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s4UyK-0003nr-HE; Tue, 07 May 2024 20:15:52 -0400
+ id 1s4Uxj-0003k1-9z; Tue, 07 May 2024 20:15:12 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 0306A4E65D0;
- Wed, 08 May 2024 02:15:27 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id F3B4B4E65CB;
+ Wed, 08 May 2024 02:15:07 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id WGY2VkvdP7Nm; Wed,  8 May 2024 02:15:25 +0200 (CEST)
+ with ESMTP id 09a8us5z_zD3; Wed,  8 May 2024 02:15:06 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 1253A4E65D1; Wed, 08 May 2024 02:15:25 +0200 (CEST)
-Message-Id: <2cb59eadd107d11b47635da829e578a55f263013.1715125376.git.balaton@eik.bme.hu>
+ id 122644E65CE; Wed, 08 May 2024 02:15:06 +0200 (CEST)
+Message-Id: <744f860c39b6a0090367a4ff874119aa530415e4.1715125376.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1715125376.git.balaton@eik.bme.hu>
 References: <cover.1715125376.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v3 31/33] target/ppc/mmu-hash32.c: Drop a local variable
+Subject: [PATCH v3 13/33] target/ppc/mmu_common.c: Split out BookE cases
+ before checking real mode
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -39,9 +40,9 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Wed, 08 May 2024 02:15:25 +0200 (CEST)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
+Date: Wed, 08 May 2024 02:15:06 +0200 (CEST)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -62,54 +63,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In ppc_hash32_xlate() the value of need_prop is checked in two places
-but precalculating it does not help because when we reach the first
-check we always return and not reach the second place so the value
-will only be used once. We can drop the local variable and calculate
-it when needed, which makes these checks using it similar to other
-places with such checks.
+BookE does not have real mode so split off and handle it first in
+get_physical_address_wtlb() before checking for real mode for other
+MMU models.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu-hash32.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ target/ppc/mmu_common.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/target/ppc/mmu-hash32.c b/target/ppc/mmu-hash32.c
-index 960751a50e..b5d7aeed4e 100644
---- a/target/ppc/mmu-hash32.c
-+++ b/target/ppc/mmu-hash32.c
-@@ -347,7 +347,6 @@ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
-     hwaddr pte_offset;
-     ppc_hash_pte32_t pte;
-     int prot;
--    int need_prot;
-     hwaddr raddr;
+diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+index 2b6252f3f9..5a0df60ebc 100644
+--- a/target/ppc/mmu_common.c
++++ b/target/ppc/mmu_common.c
+@@ -1178,6 +1178,13 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
+     int ret = -1;
+     bool real_mode;
  
-     /* There are no hash32 large pages. */
-@@ -361,13 +360,11 @@ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
-         return true;
-     }
++    if (env->mmu_model == POWERPC_MMU_BOOKE) {
++        return mmubooke_get_physical_address(env, ctx, eaddr, access_type);
++    } else if (env->mmu_model == POWERPC_MMU_BOOKE206) {
++        return mmubooke206_get_physical_address(env, ctx, eaddr, access_type,
++                                                mmu_idx);
++    }
++
+     real_mode = (type == ACCESS_CODE) ? !FIELD_EX64(env->msr, MSR, IR)
+                                       : !FIELD_EX64(env->msr, MSR, DR);
  
--    need_prot = prot_for_access_type(access_type);
--
-     /* 2. Check Block Address Translation entries (BATs) */
-     if (env->nb_BATs != 0) {
-         raddr = ppc_hash32_bat_lookup(cpu, eaddr, access_type, protp, mmu_idx);
-         if (raddr != -1) {
--            if (need_prot & ~*protp) {
-+            if (prot_for_access_type(access_type) & ~*protp) {
-                 if (guest_visible) {
-                     if (access_type == MMU_INST_FETCH) {
-                         cs->exception_index = POWERPC_EXCP_ISI;
-@@ -435,7 +432,7 @@ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
- 
-     prot = ppc_hash32_pte_prot(mmu_idx, sr, pte);
- 
--    if (need_prot & ~prot) {
-+    if (prot_for_access_type(access_type) & ~prot) {
-         /* Access right violation */
-         qemu_log_mask(CPU_LOG_MMU, "PTE access rejected\n");
-         if (guest_visible) {
+@@ -1198,13 +1205,6 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
+             ret = mmu40x_get_physical_address(env, ctx, eaddr, access_type);
+         }
+         break;
+-    case POWERPC_MMU_BOOKE:
+-        ret = mmubooke_get_physical_address(env, ctx, eaddr, access_type);
+-        break;
+-    case POWERPC_MMU_BOOKE206:
+-        ret = mmubooke206_get_physical_address(env, ctx, eaddr, access_type,
+-                                               mmu_idx);
+-        break;
+     case POWERPC_MMU_REAL:
+         if (real_mode) {
+             ret = check_physical(env, ctx, eaddr, access_type);
 -- 
 2.30.9
 
