@@ -4,85 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56222C04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 14:31:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91DA3C04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 14:36:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4iJv-0001cR-U4; Wed, 08 May 2024 10:30:59 -0400
+	id 1s4iOA-0002hs-BL; Wed, 08 May 2024 10:35:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4iJt-0001c5-7r
- for qemu-devel@nongnu.org; Wed, 08 May 2024 10:30:57 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4iO8-0002ek-3z
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 10:35:20 -0400
+Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4iJq-00026T-DB
- for qemu-devel@nongnu.org; Wed, 08 May 2024 10:30:55 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a59a0168c75so1173511566b.1
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 07:30:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4iO6-0004g8-4z
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 10:35:19 -0400
+Received: by mail-lf1-x12b.google.com with SMTP id
+ 2adb3069b0e04-51f74fa2a82so5086865e87.0
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 07:35:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715178652; x=1715783452; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=qJeX4PTvGBUc/QZ27oUBczxM8HKxjR/gxBCc/BA1cII=;
- b=oRuU8YMA02uZeS6ieB4/8e1HSfB5yv3jZvof02kZgCz+o6ctuzTI8WzL8xwGGDkLCU
- Xe594qUihhtx+2qvSvwwP3vrTJ7TvQa6gDpjtWL1+OF8RlT8nveTV8GMaEpV6Y16qWVg
- lzU/v3QvbsQc6o3z2CBqLseBQlu9uJLH3hNlhEuVA/nj5F1JBiXO296jrW2DzRYdooc7
- cjS9PDhdsNu8WxEV8Eo+93XVYf14Bb4rOMNuN1nx9aI64Kw6NjXN2sj7J3pXj6KhfcJf
- ZQNamzKqnPMN3rrAefXfwhyTiAppeaVnJ6Kp8NZowCCKgK8EQA2NJXCk68jYYsigChFN
- sjqw==
+ d=linaro.org; s=google; t=1715178916; x=1715783716; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Znvm/tKg0F+01QfyX6rQqjcFA81lmYWx+WoExy2PfEY=;
+ b=l2SQ8HD6YP7oG0IlxktHvI9s/0Ks3yGwFhvjBqgkr+Ka+S1cf4JzlJJmSsG5Y0lTWp
+ 3q8JNaTVB42vE7mBh5K/Fqy3UY7uW3ZJFVwxTHvr2t79poVZHM2i1B3uBkOPYYeBNRoV
+ /gqLRd7j97uNRw4XDdpzhm48MDZm4lsFHffspI+ijipPfiMhC5fdxySCofdpCbXcJakZ
+ zr0GTZ6EsPlaz3GHvMXmGnA/t5v5UZ+LYn5weEhAYSyw10Wne1Yv+sK4YXUkXGqzhpw9
+ ThX1minno+KfdL2m3DeRKC6jwoAxEpV0laVZ4sl8ZHhLToWGP0sl5b417zepM2c60AqZ
+ wk5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715178652; x=1715783452;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qJeX4PTvGBUc/QZ27oUBczxM8HKxjR/gxBCc/BA1cII=;
- b=KmhYxkRUIMQssKpd3mmEcG7f39EpHu6j8M79nQWUHq9ZO5r8I7l9PnIrq0oFgI5gEk
- MXRrir0nEWsNCwAzVO8tmjCuv6KX4OWZwGytw6jiQ0rRcqxuwfH+q1uwDetudI8Wl6fL
- TVBd1S8GaWwmSbC9JxvDxIw3FZv8o72A5Tj841AayUeETFx3ZesfrWZsguvXhHNIe0kZ
- xSW9UhVov9PFGNJH+8vFP9XEefWmEX0hkBWebBIrV3+fnWa9k+cWe4UnbdGjaqK+Z7mf
- LyhrNcb8SqN3bsIR2y9tZ/LCGHohc8mGJtSmyaUOOm0Fed+lRuMnCILyssjTm3zsrVxm
- 1HKQ==
-X-Gm-Message-State: AOJu0Yx+JEdOYpu6qwPgSrCF4l/XDGiom9w4dlfOGUtqUkyVFUPaUiuh
- Q2mzrK92cbMYADVoNcPDgn0W4j9L4hIEweYwIT62qil7pYnCo8c2PRjtOYhjBOnoagwBDIPDt/Y
- Q
-X-Google-Smtp-Source: AGHT+IEq6JyPjgUiVC8YD3Kgnqtq2FaVGoBA5DJInxTDw0/A0BB5rSmWc49S6Lqo9+EIufr9QH/7Rw==
-X-Received: by 2002:a17:906:2c09:b0:a59:bfab:b257 with SMTP id
- a640c23a62f3a-a59fb9f2e08mr160099766b.65.1715178651983; 
- Wed, 08 May 2024 07:30:51 -0700 (PDT)
-Received: from [192.168.69.100] (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
+ d=1e100.net; s=20230601; t=1715178916; x=1715783716;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Znvm/tKg0F+01QfyX6rQqjcFA81lmYWx+WoExy2PfEY=;
+ b=KHgSeySiBWfkFXqxMUYZaeBvfEPFzF1CG77yNvKYKT9shfC/hki6QX0haMjNm0WSwX
+ PxW+3OLo+ybwKoOA9bKpGkunEoBoPqJfKph9/zkjSLJUouJNGEeOiutZkt5CsXeOBVS7
+ GVlPF/SVctNhnrNIuQoxnz08yQN3mcxfKpVeg3lMdm/99KZm6uvjnLoOYuVkP4uTjs/l
+ 9taxNePGNwxmfFkpQ4ShNvORRSee0zoeJbSWuHZC7kuWqY0f9EEvtz9f9Nl8Qd2hKSUc
+ giKNhQP7GobK0iEiTDiYdKJp/pSC0xpgz4xjEDmnr9Tld+FS0GcPR+dgIUfgcZER8n5m
+ cstw==
+X-Gm-Message-State: AOJu0YwajoCcHzoncTe0xS5+o5jmzRzmHzMSxcuz5/JvZ/Kj2gJ1pxnk
+ JzFYcsNkHdp9aUX6O0A/Nie+sAIToJCu8ElygoxToly6btQ6Fv78+L82qEJQ3E9zUv2kvHTtFP+
+ m
+X-Google-Smtp-Source: AGHT+IGinbXw0xib84O+A/UBZWknfYZ+Y9HX/lj27vUlH8IPc6Dap1t0EYEYyIIeuBzumM3eGW5c0A==
+X-Received: by 2002:a05:6512:3157:b0:518:eef0:45c0 with SMTP id
+ 2adb3069b0e04-5217cc520d0mr2390867e87.48.1715178915749; 
+ Wed, 08 May 2024 07:35:15 -0700 (PDT)
+Received: from m1x-phil.lan (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
  [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
- b8-20020a170906834800b00a59b126af69sm5026190ejy.159.2024.05.08.07.30.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 May 2024 07:30:51 -0700 (PDT)
-Message-ID: <f860769b-22a0-44b7-8c27-f1cc099b24bb@linaro.org>
-Date: Wed, 8 May 2024 16:30:49 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] crypto: Allow building with GnuTLS but without
- Libtasn1
+ n4-20020aa7d044000000b005720e083878sm7610286edo.49.2024.05.08.07.35.14
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 08 May 2024 07:35:15 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>
-References: <20240502095642.93368-1-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240502095642.93368-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2] hw/input/tsc2005: Fix -Wchar-subscripts warning in
+ tsc2005_txrx()
+Date: Wed,  8 May 2024 16:35:13 +0200
+Message-ID: <20240508143513.44996-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,29 +92,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ping?
+Check the function index is in range and use an unsigned
+variable to avoid the following warning with GCC 13.2.0:
 
-On 2/5/24 11:56, Philippe Mathieu-Daudé wrote:
-> Since v1:
-> - split in 3
-> - remove "crypto-tls-x509-helpers.h" (danpb)
-> - include pkix_asn1_tab.c.inc
-> 
-> Philippe Mathieu-Daudé (3):
->    crypto: Remove 'crypto-tls-x509-helpers.h' from
->      crypto-tls-psk-helpers.c
->    crypto: Restrict pkix_asn1_tab[] to crypto-tls-x509-helpers.c
->    crypto: Allow building with GnuTLS but without Libtasn1
-> 
->   meson.build                                         | 1 +
->   tests/unit/crypto-tls-x509-helpers.h                | 3 ---
->   tests/unit/crypto-tls-psk-helpers.c                 | 1 -
->   tests/unit/crypto-tls-x509-helpers.c                | 6 +++++-
->   tests/unit/{pkix_asn1_tab.c => pkix_asn1_tab.c.inc} | 5 +----
->   tests/qtest/meson.build                             | 3 +--
->   tests/unit/meson.build                              | 6 +++---
->   7 files changed, 11 insertions(+), 14 deletions(-)
->   rename tests/unit/{pkix_asn1_tab.c => pkix_asn1_tab.c.inc} (99%)
-> 
+  [666/5358] Compiling C object libcommon.fa.p/hw_input_tsc2005.c.o
+  hw/input/tsc2005.c: In function 'tsc2005_timer_tick':
+  hw/input/tsc2005.c:416:26: warning: array subscript has type 'char' [-Wchar-subscripts]
+    416 |     s->dav |= mode_regs[s->function];
+        |                         ~^~~~~~~~~~
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+v2: Use Peter suggestion
+---
+ hw/input/tsc2005.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/hw/input/tsc2005.c b/hw/input/tsc2005.c
+index 941f163d36..8d35892c09 100644
+--- a/hw/input/tsc2005.c
++++ b/hw/input/tsc2005.c
+@@ -406,6 +406,9 @@ uint32_t tsc2005_txrx(void *opaque, uint32_t value, int len)
+ static void tsc2005_timer_tick(void *opaque)
+ {
+     TSC2005State *s = opaque;
++    unsigned int function = s->function;
++
++    assert(function < ARRAY_SIZE(mode_regs);
+ 
+     /* Timer ticked -- a set of conversions has been finished.  */
+ 
+@@ -413,7 +416,7 @@ static void tsc2005_timer_tick(void *opaque)
+         return;
+ 
+     s->busy = false;
+-    s->dav |= mode_regs[s->function];
++    s->dav |= mode_regs[function];
+     s->function = -1;
+     tsc2005_pin_update(s);
+ }
+-- 
+2.41.0
 
 
