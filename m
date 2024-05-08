@@ -4,83 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1300AC04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 12:49:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31B34C04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 12:50:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4gjG-0002gs-MI; Wed, 08 May 2024 08:49:06 -0400
+	id 1s4gjf-0002qP-T1; Wed, 08 May 2024 08:49:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4gj9-0002gD-U6; Wed, 08 May 2024 08:48:55 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4gj8-00014z-39; Wed, 08 May 2024 08:48:55 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-6f460e05101so652264b3a.1; 
- Wed, 08 May 2024 05:48:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715172532; x=1715777332; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hvg2nEvkpKN5NbI05oLpPxNJjeUnpE8azuKEJlncLbw=;
- b=S++PPaWH6CVn1x0dimEK7lvOBq8/cmDxZ/aMqtY+jIS8peUquLJNrS1siriYm+ghoe
- v1P3SNovm8xclpUj8R3pKf/hrPgpCqDZZvM1DpzuGtJVeFmVic801bQp2hzJ62ia+prS
- R/QGpYqOAHce5cxIR6ezWSoboUIrN6HWw0c3fkXfZmdnHUADbgmeZQ/Rmm7VwCIedRp3
- UUBCetlC9F7kQMu7lF8igiBQd75BFFlPqdNLBO5nSpzOOzKDfFKIv3vhpo4PlnVwjvmB
- zDZHLOcRKR5K+AnDhsukf5ibwjBGWK/yIRb5wIrBegbVheJwqI6Lv5Yx24T5xU0qTVd+
- z/Kg==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s4gjY-0002lu-0j
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 08:49:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s4gjV-00017c-9h
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 08:49:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715172555;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+UH2SLE6JiWPuwo29iAkiHoegHXd814nyvIRH8CH55c=;
+ b=DvhAVuqFSZUcVcuzCDWR4lyCcpGpTq2/JC+abVFimVD120YjV1LL/6KOdLMRgW0I0v6k2R
+ Ie1sDZYQGE+hPWz37LeY2lvJaGZuiRkNYW7oAskBPv72zu+3AO551OJZovU24i/SYpA6nq
+ GUgy4synfwGEbObkmn+eu+BXyI0zjlk=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-68-3mHTp4Q3Oq-6mZ0tiJHbWQ-1; Wed, 08 May 2024 08:49:14 -0400
+X-MC-Unique: 3mHTp4Q3Oq-6mZ0tiJHbWQ-1
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-2b433dd1f24so1516859a91.3
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 05:49:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715172532; x=1715777332;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=hvg2nEvkpKN5NbI05oLpPxNJjeUnpE8azuKEJlncLbw=;
- b=K+3oSmz4JztKl68GIhKvcBMPn7uaAp4BAsgECV2dMKSLJdKNIVKQloIBI5HRNm5SGX
- 69q3GY1XeKw3G25tDjbxImEttPZJHeFExV9PFdLV68p9eD/TgXPVuoG+GkETp05jPU0J
- imL8H2tljlFPecAR0UwHV1ty1LID5rf4cU0hHjHRWul3lWZ2cK/hovlY8+/zPHEXbwrF
- An3o8Y3jk7bhEudZ6UwlLJB5i4K9HroO/c2u64cinjxxvS5F+rwOCqRgt7SDVpv6MD7u
- 6UIkH06L8niMamec1l1buZDGjglW1CbXmMtmL0rTxcaitjtOe4exadOpusN5e5DnpkTQ
- ywBw==
+ d=1e100.net; s=20230601; t=1715172553; x=1715777353;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+UH2SLE6JiWPuwo29iAkiHoegHXd814nyvIRH8CH55c=;
+ b=T6LqCWO1f967VXsGovUHPeNkbc+gK7fmUyomWuCBaabFDagVROynVb1NYhpfBf22Wy
+ LMskd77Ig4Kw90o4wtZpeYwd0wRO3s33AxLxKz1yr7uo2ekQoMu7Ah78tSw+gQr0CScn
+ M7KL82axNtO1gvWcVnYe29Q7zI39RN3tQL6GGoQ3EOySzM3Knj+294FOeUcWxN+vvXmF
+ vDE02Qo2DF89rypduqMUBoTdgfvi93kW4BD1PFtL0GEii/xU9rYhUbdS+BhCkGCPy51Y
+ U54boL3Ipa0BQUhQ7SSbLV/LDw7gDlLIcSrN2zsOFFF8fx7w/nA3i/ez18+qwX0zqV/9
+ YaxQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUYz38kF+4zzD6ufTIf4oxF+nvfWiXmZiXfaQQNX1pGIVAvmlB/7rT9UaAvxnJ6QOx+aP//4oVXVyaESg69FHJhVuPB0Hnf2QoIv6l2ml2F5bOd4TH2PLgvVC0=
-X-Gm-Message-State: AOJu0Yy4d93ZmUpShqkRBtw7zHbyhV1ntZXYsrBxFfq4xtMEMCZGoukD
- X9xMRkObVcfbS2oJaR1OJu8jOQiyH0eW81to8tnU2nxLsWg++8eh
-X-Google-Smtp-Source: AGHT+IGQ/ECp2vLwupigCra0mAw1c75d/IwpgfN24Y3MRqWyeyFNA8QkCqEWGhrJj1HD40bQLEww0w==
-X-Received: by 2002:a05:6a00:2d1e:b0:6f3:ef08:747a with SMTP id
- d2e1a72fcca58-6f48e8f2b54mr8491207b3a.12.1715172531956; 
- Wed, 08 May 2024 05:48:51 -0700 (PDT)
-Received: from localhost ([1.146.8.34]) by smtp.gmail.com with ESMTPSA id
- h11-20020aa79f4b000000b006f449ed909csm9548080pfr.23.2024.05.08.05.48.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 May 2024 05:48:51 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 08 May 2024 22:48:46 +1000
-Message-Id: <D149X1513YHR.32ZDIUJBISU0B@gmail.com>
-Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
-Subject: Re: [PATCH v3 12/33] target/ppc/mmu_common.c: Eliminate ret from
- mmu6xx_get_physical_address()
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
- <qemu-ppc@nongnu.org>
-X-Mailer: aerc 0.17.0
-References: <cover.1715125376.git.balaton@eik.bme.hu>
- <f6d3814523929d4277d6f5a02e3798f9651140a5.1715125376.git.balaton@eik.bme.hu>
-In-Reply-To: <f6d3814523929d4277d6f5a02e3798f9651140a5.1715125376.git.balaton@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ AJvYcCW6L39h9mhQW8HXHJk9IjW3rm10+YxQGTpS74otcypIAbXicAcFGkt96bWtDZGV0DluK0C0fibzvxlMV0G2lwdR5ctbVVY=
+X-Gm-Message-State: AOJu0YyJd4SVG757GeY0F65RHY7/LY0H91G9P3ZXhfcPOAD/pr6tCq3k
+ Ic/5BMowUSASsGJzhoov1LOI111PD+kr6H/KcJ8iFHTZTz+emzMFZa1RE2iLOPlSsO4nQ7jW8wW
+ /f4hEYBH6/cqblKnfYGzuQryvBLpuI2ceSXMA5U0HeJVxSz1xhkWc
+X-Received: by 2002:a05:6a20:9693:b0:1ad:7bdd:361f with SMTP id
+ adf61e73a8af0-1afc8de8c8emr2465762637.5.1715172552928; 
+ Wed, 08 May 2024 05:49:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEjlA+i5KE/XBcCj7Y2V5zffPU0H5WXBpmmoIfjqwc9e4a5Av/SYkftc/lzZneCihWPtJVkHg==
+X-Received: by 2002:a05:6a20:9693:b0:1ad:7bdd:361f with SMTP id
+ adf61e73a8af0-1afc8de8c8emr2465735637.5.1715172552252; 
+ Wed, 08 May 2024 05:49:12 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2b628ea6ae7sm1336189a91.51.2024.05.08.05.49.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 08 May 2024 05:49:11 -0700 (PDT)
+Date: Wed, 8 May 2024 08:49:08 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ armbru@redhat.com, Claudio Fontana <cfontana@suse.de>,
+ Jim Fehlig <jfehlig@suse.com>
+Subject: Re: [PATCH 2/9] migration: Fix file migration with fdset
+Message-ID: <Zjt0xELzTq2qWwc_@x1n>
+References: <20240426142042.14573-1-farosas@suse.de>
+ <20240426142042.14573-3-farosas@suse.de> <ZjUPl6XwB3Zt3cKR@x1n>
+ <ZjsxiDEZgXycn_tl@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZjsxiDEZgXycn_tl@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.582,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,135 +105,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed May 8, 2024 at 10:15 AM AEST, BALATON Zoltan wrote:
-> Return directly, which is simpler than dragging a return value through
-> multpile if and else blocks.
+On Wed, May 08, 2024 at 09:02:16AM +0100, Daniel P. Berrangé wrote:
+> On Fri, May 03, 2024 at 12:23:51PM -0400, Peter Xu wrote:
+> > On Fri, Apr 26, 2024 at 11:20:35AM -0300, Fabiano Rosas wrote:
+> > > When the migration using the "file:" URI was implemented, I don't
+> > > think any of us noticed that if you pass in a file name with the
+> > > format "/dev/fdset/N", this allows a file descriptor to be passed in
+> > > to QEMU and that behaves just like the "fd:" URI. So the "file:"
+> > > support has been added without regard for the fdset part and we got
+> > > some things wrong.
+> > > 
+> > > The first issue is that we should not truncate the migration file if
+> > > we're allowing an fd + offset. We need to leave the file contents
+> > > untouched.
+> > 
+> > I'm wondering whether we can use fallocate() instead on the ranges so that
+> > we always don't open() with O_TRUNC.  Before that..  could you remind me
+> > why do we need to truncate in the first place?  I definitely missed
+> > something else here too.
+> 
+> You're mixing distinct concepts here. fallocate makes a file region
+> non-sparse, while O_TRUNC removes all existing allocation, making it
+> sparse if we write at non-contiguous offsets. I don't think we would
+> want to call fallocate, since we /want/ a sparse file so that we
+> don't needlessly store large regions of all-zeros as RAM maps.
 
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+I meant fallocate() with FALLOC_FL_PUNCH_HOLE.  But now I think it'll be
+good we avoid both.
 
->
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
->  target/ppc/mmu_common.c | 84 +++++++++++++++++++----------------------
->  1 file changed, 39 insertions(+), 45 deletions(-)
->
-> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-> index b2f2cee1a8..2b6252f3f9 100644
-> --- a/target/ppc/mmu_common.c
-> +++ b/target/ppc/mmu_common.c
-> @@ -389,7 +389,6 @@ static int mmu6xx_get_physical_address(CPUPPCState *e=
-nv, mmu_ctx_t *ctx,
->      target_ulong vsid, sr, pgidx;
->      int ds, target_page_bits;
->      bool pr;
-> -    int ret;
-> =20
->      /* First try to find a BAT entry if there are any */
->      if (env->nb_BATs && get_bat_6xx_tlb(env, ctx, eaddr, access_type) =
-=3D=3D 0) {
-> @@ -422,7 +421,6 @@ static int mmu6xx_get_physical_address(CPUPPCState *e=
-nv, mmu_ctx_t *ctx,
->      qemu_log_mask(CPU_LOG_MMU,
->              "pte segment: key=3D%d ds %d nx %d vsid " TARGET_FMT_lx "\n"=
-,
->              ctx->key, ds, ctx->nx, vsid);
-> -    ret =3D -1;
->      if (!ds) {
->          /* Check if instruction fetch is allowed, if needed */
->          if (type =3D=3D ACCESS_CODE && ctx->nx) {
-> @@ -439,51 +437,47 @@ static int mmu6xx_get_physical_address(CPUPPCState =
-*env, mmu_ctx_t *ctx,
->          /* Initialize real address with an invalid value */
->          ctx->raddr =3D (hwaddr)-1ULL;
->          /* Software TLB search */
-> -        ret =3D ppc6xx_tlb_check(env, ctx, eaddr, access_type);
-> -    } else {
-> -        qemu_log_mask(CPU_LOG_MMU, "direct store...\n");
-> -        /* Direct-store segment : absolutely *BUGGY* for now */
-> -
-> -        switch (type) {
-> -        case ACCESS_INT:
-> -            /* Integer load/store : only access allowed */
-> -            break;
-> -        case ACCESS_CODE:
-> -            /* No code fetch is allowed in direct-store areas */
-> -            return -4;
-> -        case ACCESS_FLOAT:
-> -            /* Floating point load/store */
-> -            return -4;
-> -        case ACCESS_RES:
-> -            /* lwarx, ldarx or srwcx. */
-> -            return -4;
-> -        case ACCESS_CACHE:
-> -            /*
-> -             * dcba, dcbt, dcbtst, dcbf, dcbi, dcbst, dcbz, or icbi
-> -             *
-> -             * Should make the instruction do no-op.  As it already do
-> -             * no-op, it's quite easy :-)
-> -             */
-> -            ctx->raddr =3D eaddr;
-> -            return 0;
-> -        case ACCESS_EXT:
-> -            /* eciwx or ecowx */
-> -            return -4;
-> -        default:
-> -            qemu_log_mask(CPU_LOG_MMU, "ERROR: instruction should not ne=
-ed "
-> -                          "address translation\n");
-> -            return -4;
-> -        }
-> -        if ((access_type =3D=3D MMU_DATA_STORE || ctx->key !=3D 1) &&
-> -            (access_type =3D=3D MMU_DATA_LOAD || ctx->key !=3D 0)) {
-> -            ctx->raddr =3D eaddr;
-> -            ret =3D 2;
-> -        } else {
-> -            ret =3D -2;
-> -        }
-> +        return ppc6xx_tlb_check(env, ctx, eaddr, access_type);
->      }
-> =20
-> -    return ret;
-> +    /* Direct-store segment : absolutely *BUGGY* for now */
-> +    qemu_log_mask(CPU_LOG_MMU, "direct store...\n");
-> +    switch (type) {
-> +    case ACCESS_INT:
-> +        /* Integer load/store : only access allowed */
-> +        break;
-> +    case ACCESS_CODE:
-> +        /* No code fetch is allowed in direct-store areas */
-> +        return -4;
-> +    case ACCESS_FLOAT:
-> +        /* Floating point load/store */
-> +        return -4;
-> +    case ACCESS_RES:
-> +        /* lwarx, ldarx or srwcx. */
-> +        return -4;
-> +    case ACCESS_CACHE:
-> +        /*
-> +         * dcba, dcbt, dcbtst, dcbf, dcbi, dcbst, dcbz, or icbi
-> +         *
-> +         * Should make the instruction do no-op.  As it already do
-> +         * no-op, it's quite easy :-)
-> +         */
-> +        ctx->raddr =3D eaddr;
-> +        return 0;
-> +    case ACCESS_EXT:
-> +        /* eciwx or ecowx */
-> +        return -4;
-> +    default:
-> +        qemu_log_mask(CPU_LOG_MMU, "ERROR: instruction should not need a=
-ddress"
-> +                                   " translation\n");
-> +        return -4;
-> +    }
-> +    if ((access_type =3D=3D MMU_DATA_STORE || ctx->key !=3D 1) &&
-> +        (access_type =3D=3D MMU_DATA_LOAD || ctx->key !=3D 0)) {
-> +        ctx->raddr =3D eaddr;
-> +        return 2;
-> +    }
-> +    return -2;
->  }
-> =20
->  /* Generic TLB check function for embedded PowerPC implementations */
+Thanks,
+
+-- 
+Peter Xu
 
 
