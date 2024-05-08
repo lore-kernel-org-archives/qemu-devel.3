@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DB5EC25B4F
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 17:46:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11E46C04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 17:46:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4lN8-0000T5-1F; Wed, 08 May 2024 13:46:34 -0400
+	id 1s4lNE-0000vX-OB; Wed, 08 May 2024 13:46:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lMV-0000NQ-Nn
- for qemu-devel@nongnu.org; Wed, 08 May 2024 13:45:59 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lN6-0000eF-58
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 13:46:34 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lMS-0007N8-Nz
- for qemu-devel@nongnu.org; Wed, 08 May 2024 13:45:51 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-a59ad344f7dso2378466b.0
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 10:45:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lN4-0007rC-DT
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 13:46:27 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a59a352bbd9so7985666b.1
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 10:46:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715190346; x=1715795146; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715190384; x=1715795184; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9pAi+aT7uG1PQ0D1DDKsbWx9K3/GOCCjH1yeKFgaO1M=;
- b=RD8Q0OKiOwNtpmnG3lwoMpAtV3yOO4EEfXZPiaVN9+mzKumdrgPzP+ukWkf1qSnpfP
- LRzMTpO8oQbBjP4+6Tf/Q9nZmB7iY0j+vFcsz2vX1qIiJF9F+kjSEvm1Yp2m3UjsiKFq
- eOJg4VK0TWrjEqeVByq+8mr9F2mnSY5fFPXcYLKOm/AVhHVl/1NBQ+8dEvwlgJ0sg02H
- jfap8aMTPcFFX7uzcS0WQxphclb1LzVECsaSIKjsGDyuoEUTZGS3KQdqLz4eiPPac8DA
- c77Dz65MGDlY1C6dem8ll2TZxrrTU3grt/sv87otXrKjcflKshtMVdoKpx+Dppr+lJtz
- VYhg==
+ bh=JQ4w2/+EqpgnI71e92633PGSLkfTtg3h6pqel4U0YZE=;
+ b=KsBl4vSgfvD7k5Z5erU5fDEwiMSzrVgksGpeJdzI8Nwgi+HvdPVrbfSnnTXmb2zaZw
+ jQvAXW9F/7X0QHTPywN9ECDLpf2O9qIJHu7OP2Uf5Firs90mkr9RFjXdq7pfAYWBgZXb
+ 12oHqLiQIU/5yNSdhLMs/OQQlgjrfqDPWHV8f3iURR4DNM6ofSKf8FyP/icTtzURtFYj
+ BhOgd092Q/nwIfS95Z/EJzq5AkoEUrUo8i2lAfAFWEqH0eSW+uXy13Frbe/tYLNhh26j
+ HJ8ZrOXPxHOzwJH5PvwYWi9QnO2hoMXqncl1Y4VYMsFbpWPgiaktxRFQxl84YvzTS+kz
+ pXFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715190346; x=1715795146;
+ d=1e100.net; s=20230601; t=1715190384; x=1715795184;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9pAi+aT7uG1PQ0D1DDKsbWx9K3/GOCCjH1yeKFgaO1M=;
- b=HItP761zPKvgRoGBiDViaRJCsrKUd8bSJtktq18XuM5GZK9/1sbkhNr0MwP1P1o5R1
- nigiyxnCY/9qarvavPo/y7gevb9CWV3cVP+tY7j8nTySax6jxMYa4RUiP3dalQqJyXZx
- xS++ZVmgtnk4VNeBfo31E1jX0yKci3OKJddJqle1EDMbOno/Py3BV5uBZ86zlt1mOh0e
- A9bTLU6Aa1y1zfak6keeHTTyzcq+iKxqmGWm5l7iKUC9CvWzla5uvEe/Q43iKEdNCq5C
- BQeaDboAw2QK+2DIWaRMucsWiCL3/pvxemm7BskXAUnSv1sIjhDVoNxTA1IfJKQBxHV/
- DF6g==
-X-Gm-Message-State: AOJu0YwyYakXuPACHRI21pPMlYGyjw0t6U7nJgAuN1LPYfOiRDgl2XZu
- ZYjNVAH03aQaJImjWk6ug7VX2H60P5r05CyLwB9y9x7g5DlIgeKFKSSdVoFDbjg2H+YbUOEgJtL
- H
-X-Google-Smtp-Source: AGHT+IHoHdefWcSQX/hK3X99KMRKvnXfMoMkUdvvKxRTA+hTyLcmi5ZDsWMFsuL1MTai6auwQd8nrg==
-X-Received: by 2002:a50:cdc9:0:b0:572:7280:89d6 with SMTP id
- 4fb4d7f45d1cf-5731d9a7cdamr2228272a12.7.1715190346399; 
- Wed, 08 May 2024 10:45:46 -0700 (PDT)
+ bh=JQ4w2/+EqpgnI71e92633PGSLkfTtg3h6pqel4U0YZE=;
+ b=lqh1/c24kcl86QXzH4T8utUDAliMF5U1Ty2gN2v1cunG/fR2vcPYJIN1SbMsgYhTeG
+ rxvFLLD5DQ/1ih4swz+KIMfZNRI5gaCur1yXguL9gphPJSHsRIwHd2yHoD8PyElWi+A0
+ naQWWiF0GkXuYtoYU8UOaPQMI5UWiPQehgfzJLz0UCpWLbIlF3II/CPQsJhMk4vIWNxy
+ G+bgGWkf0XkRiR1JqvcNY+Bm5yJP1G8X+qTSc1iY/frbyQGFIWonnJBD77R4KZ+sjhh8
+ 51TGFd74FROpbnGRorIad17uMl7/+/158YzFBcaL5UZSWAP3dQBmLCF+OKht+PpCQd0Z
+ uW9g==
+X-Gm-Message-State: AOJu0YxEqhdUvhsJlfZts7ikpPmeHHCSxQO7ibD77G6oufxmjVvznXRH
+ nvfpnYeWA965kj1rAwy7DfJqV9Iai8D9wKBuPv4e75/WAIA1/bAZKb5SDgz1c5oDXSMU5zIFXuP
+ Z
+X-Google-Smtp-Source: AGHT+IEiKagKtza5aT6L4ZLuI7SQGF0EJkTsZHvIeE8YpRcTC+ECbCTzCurXnviFiIySRsajpy3OnQ==
+X-Received: by 2002:a17:907:7ea1:b0:a59:c698:41ae with SMTP id
+ a640c23a62f3a-a5a1180eb0cmr29319766b.34.1715190384076; 
+ Wed, 08 May 2024 10:46:24 -0700 (PDT)
 Received: from m1x-phil.lan (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
  [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
- n10-20020a056402434a00b00572df643637sm5956680edc.62.2024.05.08.10.45.45
+ mb15-20020a170906eb0f00b00a59cc6d06f2sm4123186ejb.218.2024.05.08.10.46.23
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 08 May 2024 10:45:45 -0700 (PDT)
+ Wed, 08 May 2024 10:46:23 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Mattias Nissler <mnissler@rivosinc.com>, Peter Xu <peterx@redhat.com>
-Subject: [PULL 06/26] system/physmem: Replace qemu_mutex_lock() calls with
- QEMU_LOCK_GUARD
-Date: Wed,  8 May 2024 19:44:50 +0200
-Message-ID: <20240508174510.60470-7-philmd@linaro.org>
+Cc: Bernhard Beschow <shentey@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 13/26] hw/i386: Have x86_bios_rom_init() take X86MachineState
+ rather than MachineState
+Date: Wed,  8 May 2024 19:44:57 +0200
+Message-ID: <20240508174510.60470-14-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240508174510.60470-1-philmd@linaro.org>
 References: <20240508174510.60470-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,72 +95,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Simplify cpu_[un]register_map_client() and cpu_notify_map_clients()
-by replacing the pair of qemu_mutex_lock/qemu_mutex_unlock calls by
-the WITH_QEMU_LOCK_GUARD() macro.
+From: Bernhard Beschow <shentey@gmail.com>
 
+The function creates and leaks two MemoryRegion objects regarding the BIOS which
+will be moved into X86MachineState in the next steps to avoid the leakage.
+
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240430150643.111976-3-shentey@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Mattias Nissler <mnissler@rivosinc.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Message-Id: <20240507123025.93391-2-philmd@linaro.org>
 ---
- system/physmem.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ include/hw/i386/x86.h | 2 +-
+ hw/i386/microvm.c     | 2 +-
+ hw/i386/pc_sysfw.c    | 4 ++--
+ hw/i386/x86.c         | 4 ++--
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/system/physmem.c b/system/physmem.c
-index d3a3d8a45c..26f42f4a6f 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -25,6 +25,7 @@
- #include "qemu/cacheflush.h"
- #include "qemu/hbitmap.h"
- #include "qemu/madvise.h"
-+#include "qemu/lockable.h"
+diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
+index 4dc30dcb4d..cb07618d19 100644
+--- a/include/hw/i386/x86.h
++++ b/include/hw/i386/x86.h
+@@ -116,7 +116,7 @@ void x86_cpu_unplug_request_cb(HotplugHandler *hotplug_dev,
+ void x86_cpu_unplug_cb(HotplugHandler *hotplug_dev,
+                        DeviceState *dev, Error **errp);
  
- #ifdef CONFIG_TCG
- #include "hw/core/tcg-cpu-ops.h"
-@@ -3086,7 +3087,7 @@ void cpu_register_map_client(QEMUBH *bh)
- {
-     MapClient *client = g_malloc(sizeof(*client));
+-void x86_bios_rom_init(MachineState *ms, const char *default_firmware,
++void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
+                        MemoryRegion *rom_memory, bool isapc_ram_fw);
  
--    qemu_mutex_lock(&map_client_list_lock);
-+    QEMU_LOCK_GUARD(&map_client_list_lock);
-     client->bh = bh;
-     QLIST_INSERT_HEAD(&map_client_list, client, link);
-     /* Write map_client_list before reading in_use.  */
-@@ -3094,7 +3095,6 @@ void cpu_register_map_client(QEMUBH *bh)
-     if (!qatomic_read(&bounce.in_use)) {
-         cpu_notify_map_clients_locked();
+ void x86_load_linux(X86MachineState *x86ms,
+diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
+index 61a772dfe6..fec63cacfa 100644
+--- a/hw/i386/microvm.c
++++ b/hw/i386/microvm.c
+@@ -278,7 +278,7 @@ static void microvm_devices_init(MicrovmMachineState *mms)
+     default_firmware = x86_machine_is_acpi_enabled(x86ms)
+             ? MICROVM_BIOS_FILENAME
+             : MICROVM_QBOOT_FILENAME;
+-    x86_bios_rom_init(MACHINE(mms), default_firmware, get_system_memory(), true);
++    x86_bios_rom_init(x86ms, default_firmware, get_system_memory(), true);
+ }
+ 
+ static void microvm_memory_init(MicrovmMachineState *mms)
+diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+index 87b5bf59d6..59c7a81692 100644
+--- a/hw/i386/pc_sysfw.c
++++ b/hw/i386/pc_sysfw.c
+@@ -205,7 +205,7 @@ void pc_system_firmware_init(PCMachineState *pcms,
+     BlockBackend *pflash_blk[ARRAY_SIZE(pcms->flash)];
+ 
+     if (!pcmc->pci_enabled) {
+-        x86_bios_rom_init(MACHINE(pcms), "bios.bin", rom_memory, true);
++        x86_bios_rom_init(X86_MACHINE(pcms), "bios.bin", rom_memory, true);
+         return;
      }
--    qemu_mutex_unlock(&map_client_list_lock);
+ 
+@@ -226,7 +226,7 @@ void pc_system_firmware_init(PCMachineState *pcms,
+ 
+     if (!pflash_blk[0]) {
+         /* Machine property pflash0 not set, use ROM mode */
+-        x86_bios_rom_init(MACHINE(pcms), "bios.bin", rom_memory, false);
++        x86_bios_rom_init(X86_MACHINE(pcms), "bios.bin", rom_memory, false);
+     } else {
+         if (kvm_enabled() && !kvm_readonly_mem_enabled()) {
+             /*
+diff --git a/hw/i386/x86.c b/hw/i386/x86.c
+index 2a4f3ee285..6d3c72f124 100644
+--- a/hw/i386/x86.c
++++ b/hw/i386/x86.c
+@@ -1128,7 +1128,7 @@ void x86_load_linux(X86MachineState *x86ms,
+     nb_option_roms++;
  }
  
- void cpu_exec_init_all(void)
-@@ -3117,21 +3117,19 @@ void cpu_unregister_map_client(QEMUBH *bh)
+-void x86_bios_rom_init(MachineState *ms, const char *default_firmware,
++void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
+                        MemoryRegion *rom_memory, bool isapc_ram_fw)
  {
-     MapClient *client;
+     const char *bios_name;
+@@ -1138,7 +1138,7 @@ void x86_bios_rom_init(MachineState *ms, const char *default_firmware,
+     ssize_t ret;
  
--    qemu_mutex_lock(&map_client_list_lock);
-+    QEMU_LOCK_GUARD(&map_client_list_lock);
-     QLIST_FOREACH(client, &map_client_list, link) {
-         if (client->bh == bh) {
-             cpu_unregister_map_client_do(client);
-             break;
-         }
-     }
--    qemu_mutex_unlock(&map_client_list_lock);
- }
- 
- static void cpu_notify_map_clients(void)
- {
--    qemu_mutex_lock(&map_client_list_lock);
-+    QEMU_LOCK_GUARD(&map_client_list_lock);
-     cpu_notify_map_clients_locked();
--    qemu_mutex_unlock(&map_client_list_lock);
- }
- 
- static bool flatview_access_valid(FlatView *fv, hwaddr addr, hwaddr len,
+     /* BIOS load */
+-    bios_name = ms->firmware ?: default_firmware;
++    bios_name = MACHINE(x86ms)->firmware ?: default_firmware;
+     filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
+     if (filename) {
+         bios_size = get_image_size(filename);
 -- 
 2.41.0
 
