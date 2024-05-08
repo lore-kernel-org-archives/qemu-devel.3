@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE21AC10F1A
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 00:23:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0F6AC10F1A
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 00:24:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4V0a-0005Za-AW; Tue, 07 May 2024 20:18:08 -0400
+	id 1s4Uz6-0000t2-QX; Tue, 07 May 2024 20:16:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s4UyN-0007fP-0w; Tue, 07 May 2024 20:15:51 -0400
+ id 1s4Uxy-0007As-Ty; Tue, 07 May 2024 20:15:30 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s4UyJ-0003nX-Fd; Tue, 07 May 2024 20:15:50 -0400
+ id 1s4Uxt-0003mU-5s; Tue, 07 May 2024 20:15:22 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E74FE4E65D2;
- Wed, 08 May 2024 02:15:25 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 9F2024E602E;
+ Wed, 08 May 2024 02:15:19 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id nTcpgBUtViGI; Wed,  8 May 2024 02:15:24 +0200 (CEST)
+ with ESMTP id v7GI_ClQxY1k; Wed,  8 May 2024 02:15:17 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 073644E65D0; Wed, 08 May 2024 02:15:24 +0200 (CEST)
-Message-Id: <525072e0bffafa96043dcb7c9d2a7c9d803b8e57.1715125376.git.balaton@eik.bme.hu>
+ id B1BCB4E65BB; Wed, 08 May 2024 02:15:17 +0200 (CEST)
+Message-Id: <a4e98930eee506ca36e10b10d432879f1d9bfe58.1715125376.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1715125376.git.balaton@eik.bme.hu>
 References: <cover.1715125376.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v3 30/33] target/ppc: Split off common embedded TLB init
+Subject: [PATCH v3 24/33] target/ppc/mmu_common.c: Split off BookE handling
+ from ppc_jumbo_xlate()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -39,7 +40,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Wed, 08 May 2024 02:15:24 +0200 (CEST)
+Date: Wed, 08 May 2024 02:15:17 +0200 (CEST)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -62,107 +63,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Several 4xx CPUs and e200 share the same TLB settings enclosed in an
-ifdef. Split it off in a common function to reduce code duplication
-and the number of ifdefs.
+Introduce ppc_booke_xlate() to handle BookE and BookE 2.06 cases to
+reduce ppc_jumbo_xlate() further.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/cpu_init.c | 46 ++++++++++++++++---------------------------
- 1 file changed, 17 insertions(+), 29 deletions(-)
+ target/ppc/mmu_common.c | 128 +++++++++++++++++++++++++++++-----------
+ 1 file changed, 92 insertions(+), 36 deletions(-)
 
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 07ad788e54..92c71b2a09 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -2107,18 +2107,22 @@ static int check_pow_hid0_74xx(CPUPPCState *env)
-     return 0;
+diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+index 03b834eb77..83dc041a77 100644
+--- a/target/ppc/mmu_common.c
++++ b/target/ppc/mmu_common.c
+@@ -1194,6 +1194,92 @@ static void booke206_update_mas_tlb_miss(CPUPPCState *env, target_ulong address,
+     env->spr[SPR_BOOKE_MAS0] |= env->last_way << MAS0_NV_SHIFT;
  }
  
-+static void init_tlbs_emb(CPUPPCState *env)
++static bool ppc_booke_xlate(PowerPCCPU *cpu, vaddr eaddr,
++                            MMUAccessType access_type,
++                            hwaddr *raddrp, int *psizep, int *protp,
++                            int mmu_idx, bool guest_visible)
 +{
-+#ifndef CONFIG_USER_ONLY
-+    env->nb_tlb = 64;
-+    env->nb_ways = 1;
-+    env->tlb_type = TLB_EMB;
-+#endif
++    CPUState *cs = CPU(cpu);
++    CPUPPCState *env = &cpu->env;
++    mmu_ctx_t ctx;
++    int ret;
++
++    if (env->mmu_model == POWERPC_MMU_BOOKE206) {
++        ret = mmubooke206_get_physical_address(env, &ctx, eaddr, access_type,
++                                               mmu_idx);
++    } else {
++        ret = mmubooke_get_physical_address(env, &ctx, eaddr, access_type);
++    }
++    if (ret == 0) {
++        *raddrp = ctx.raddr;
++        *protp = ctx.prot;
++        *psizep = TARGET_PAGE_BITS;
++        return true;
++    } else if (!guest_visible) {
++        return false;
++    }
++
++    log_cpu_state_mask(CPU_LOG_MMU, cs, 0);
++    if (access_type == MMU_INST_FETCH) {
++        switch (ret) {
++        case -1:
++            /* No matches in page tables or TLB */
++            switch (env->mmu_model) {
++            case POWERPC_MMU_BOOKE206:
++                booke206_update_mas_tlb_miss(env, eaddr, access_type, mmu_idx);
++                /* fall through */
++            case POWERPC_MMU_BOOKE:
++                cs->exception_index = POWERPC_EXCP_ITLB;
++                env->error_code = 0;
++                env->spr[SPR_BOOKE_DEAR] = eaddr;
++                env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
++                break;
++            default:
++                g_assert_not_reached();
++            }
++            break;
++        case -2:
++            /* Access rights violation */
++            cs->exception_index = POWERPC_EXCP_ISI;
++            env->error_code = 0;
++            break;
++        case -3:
++            /* No execute protection violation */
++            cs->exception_index = POWERPC_EXCP_ISI;
++            env->spr[SPR_BOOKE_ESR] = 0;
++            env->error_code = 0;
++            break;
++        }
++    } else {
++        switch (ret) {
++        case -1:
++            /* No matches in page tables or TLB */
++            switch (env->mmu_model) {
++            case POWERPC_MMU_BOOKE206:
++                booke206_update_mas_tlb_miss(env, eaddr, access_type, mmu_idx);
++                /* fall through */
++            case POWERPC_MMU_BOOKE:
++                cs->exception_index = POWERPC_EXCP_DTLB;
++                env->error_code = 0;
++                env->spr[SPR_BOOKE_DEAR] = eaddr;
++                env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
++                break;
++            default:
++                g_assert_not_reached();
++            }
++            break;
++        case -2:
++            /* Access rights violation */
++            cs->exception_index = POWERPC_EXCP_DSI;
++            env->error_code = 0;
++            env->spr[SPR_BOOKE_DEAR] = eaddr;
++            env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
++            break;
++        }
++    }
++    return false;
 +}
 +
- static void init_proc_405(CPUPPCState *env)
- {
-     register_40x_sprs(env);
-     register_405_sprs(env);
-     register_usprgh_sprs(env);
- 
--    /* Memory management */
--#if !defined(CONFIG_USER_ONLY)
--    env->nb_tlb = 64;
--    env->nb_ways = 1;
--    env->tlb_type = TLB_EMB;
--#endif
-+    init_tlbs_emb(env);
-     init_excp_4xx(env);
-     env->dcache_line_size = 32;
-     env->icache_line_size = 32;
-@@ -2185,12 +2189,8 @@ static void init_proc_440EP(CPUPPCState *env)
-                  SPR_NOACCESS, SPR_NOACCESS,
-                  &spr_read_generic, &spr_write_generic,
-                  0x00000000);
--    /* Memory management */
--#if !defined(CONFIG_USER_ONLY)
--    env->nb_tlb = 64;
--    env->nb_ways = 1;
--    env->tlb_type = TLB_EMB;
--#endif
-+
-+    init_tlbs_emb(env);
-     init_excp_BookE(env);
-     env->dcache_line_size = 32;
-     env->icache_line_size = 32;
-@@ -2282,12 +2282,7 @@ static void init_proc_440GP(CPUPPCState *env)
-     register_440_sprs(env);
-     register_usprgh_sprs(env);
- 
--    /* Memory management */
--#if !defined(CONFIG_USER_ONLY)
--    env->nb_tlb = 64;
--    env->nb_ways = 1;
--    env->tlb_type = TLB_EMB;
--#endif
-+    init_tlbs_emb(env);
-     init_excp_BookE(env);
-     env->dcache_line_size = 32;
-     env->icache_line_size = 32;
-@@ -2355,12 +2350,8 @@ static void init_proc_440x5(CPUPPCState *env)
-                  SPR_NOACCESS, SPR_NOACCESS,
-                  &spr_read_generic, &spr_write_generic,
-                  0x00000000);
--    /* Memory management */
--#if !defined(CONFIG_USER_ONLY)
--    env->nb_tlb = 64;
--    env->nb_ways = 1;
--    env->tlb_type = TLB_EMB;
--#endif
-+
-+    init_tlbs_emb(env);
-     init_excp_BookE(env);
-     env->dcache_line_size = 32;
-     env->icache_line_size = 32;
-@@ -2717,11 +2708,8 @@ static void init_proc_e200(CPUPPCState *env)
-                  SPR_NOACCESS, SPR_NOACCESS,
-                  &spr_read_generic, &spr_write_generic,
-                  0x00000000);
--#if !defined(CONFIG_USER_ONLY)
--    env->nb_tlb = 64;
--    env->nb_ways = 1;
--    env->tlb_type = TLB_EMB;
--#endif
-+
-+    init_tlbs_emb(env);
-     init_excp_e200(env, 0xFFFF0000UL);
-     env->dcache_line_size = 32;
-     env->icache_line_size = 32;
+ /* Perform address translation */
+ /* TODO: Split this by mmu_model. */
+ static bool ppc_jumbo_xlate(PowerPCCPU *cpu, vaddr eaddr,
+@@ -1246,15 +1332,6 @@ static bool ppc_jumbo_xlate(PowerPCCPU *cpu, vaddr eaddr,
+                 env->spr[SPR_40x_DEAR] = eaddr;
+                 env->spr[SPR_40x_ESR] = 0x00000000;
+                 break;
+-            case POWERPC_MMU_BOOKE206:
+-                booke206_update_mas_tlb_miss(env, eaddr, access_type, mmu_idx);
+-                /* fall through */
+-            case POWERPC_MMU_BOOKE:
+-                cs->exception_index = POWERPC_EXCP_ITLB;
+-                env->error_code = 0;
+-                env->spr[SPR_BOOKE_DEAR] = eaddr;
+-                env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
+-                break;
+             case POWERPC_MMU_REAL:
+                 cpu_abort(cs, "PowerPC in real mode should never raise "
+                               "any MMU exceptions\n");
+@@ -1265,23 +1342,12 @@ static bool ppc_jumbo_xlate(PowerPCCPU *cpu, vaddr eaddr,
+         case -2:
+             /* Access rights violation */
+             cs->exception_index = POWERPC_EXCP_ISI;
+-            if ((env->mmu_model == POWERPC_MMU_BOOKE) ||
+-                (env->mmu_model == POWERPC_MMU_BOOKE206)) {
+-                env->error_code = 0;
+-            } else {
+-                env->error_code = 0x08000000;
+-            }
++            env->error_code = 0x08000000;
+             break;
+         case -3:
+             /* No execute protection violation */
+-            if ((env->mmu_model == POWERPC_MMU_BOOKE) ||
+-                (env->mmu_model == POWERPC_MMU_BOOKE206)) {
+-                env->spr[SPR_BOOKE_ESR] = 0x00000000;
+-                env->error_code = 0;
+-            } else {
+-                env->error_code = 0x10000000;
+-            }
+             cs->exception_index = POWERPC_EXCP_ISI;
++            env->error_code = 0x10000000;
+             break;
+         case -4:
+             /* Direct store exception */
+@@ -1322,15 +1388,6 @@ static bool ppc_jumbo_xlate(PowerPCCPU *cpu, vaddr eaddr,
+                     env->spr[SPR_40x_ESR] = 0x00000000;
+                 }
+                 break;
+-            case POWERPC_MMU_BOOKE206:
+-                booke206_update_mas_tlb_miss(env, eaddr, access_type, mmu_idx);
+-                /* fall through */
+-            case POWERPC_MMU_BOOKE:
+-                cs->exception_index = POWERPC_EXCP_DTLB;
+-                env->error_code = 0;
+-                env->spr[SPR_BOOKE_DEAR] = eaddr;
+-                env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
+-                break;
+             case POWERPC_MMU_REAL:
+                 cpu_abort(cs, "PowerPC in real mode should never raise "
+                               "any MMU exceptions\n");
+@@ -1347,10 +1404,6 @@ static bool ppc_jumbo_xlate(PowerPCCPU *cpu, vaddr eaddr,
+                 if (access_type == MMU_DATA_STORE) {
+                     env->spr[SPR_40x_ESR] |= 0x00800000;
+                 }
+-            } else if ((env->mmu_model == POWERPC_MMU_BOOKE) ||
+-                       (env->mmu_model == POWERPC_MMU_BOOKE206)) {
+-                env->spr[SPR_BOOKE_DEAR] = eaddr;
+-                env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
+             } else {
+                 env->spr[SPR_DAR] = eaddr;
+                 if (access_type == MMU_DATA_STORE) {
+@@ -1429,7 +1482,10 @@ bool ppc_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
+     case POWERPC_MMU_32B:
+         return ppc_hash32_xlate(cpu, eaddr, access_type, raddrp,
+                                psizep, protp, mmu_idx, guest_visible);
+-
++    case POWERPC_MMU_BOOKE:
++    case POWERPC_MMU_BOOKE206:
++        return ppc_booke_xlate(cpu, eaddr, access_type, raddrp,
++                               psizep, protp, mmu_idx, guest_visible);
+     default:
+         return ppc_jumbo_xlate(cpu, eaddr, access_type, raddrp,
+                                psizep, protp, mmu_idx, guest_visible);
 -- 
 2.30.9
 
