@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B825EC04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 16:21:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0ADBC04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 16:23:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4k2a-000626-2k; Wed, 08 May 2024 12:21:13 -0400
+	id 1s4k4E-0007Fv-Pk; Wed, 08 May 2024 12:22:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4k2Y-00061p-Mr
- for qemu-devel@nongnu.org; Wed, 08 May 2024 12:21:10 -0400
-Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4k4D-0007FO-2n
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 12:22:53 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4k2T-0006Mj-7n
- for qemu-devel@nongnu.org; Wed, 08 May 2024 12:21:09 -0400
-Received: by mail-lj1-x235.google.com with SMTP id
- 38308e7fff4ca-2e34e85ebf4so31114801fa.2
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 09:21:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4k4B-0007Wf-J5
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 12:22:52 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-34db6a299b2so3989659f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 09:22:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715185263; x=1715790063; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715185370; x=1715790170; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=WUHnHpwMf8BvaPrjbKUlAMw8ZVLJYlT7QG0WqWUCLRc=;
- b=g2q8x5wfiJehkRBed8gFJrvWN/SUUPBlgojWkGgIrno1dog+9jtyfu/ndKfbc+GAmb
- 2Ir0ai6N+VaewcANtcNU65Yb+fdBngQK8e1B58VVKWqWNNKbEclwnenhhz1ApMW/faTs
- ZZhggss/h0qBIiabBZkoQn7H8Mkf85nJGtM+EQwDtnQXBLl5oJaatS1Ys5WcRHr7mxRg
- G8hGSaVeF0NOHnjpWLxYVEw+FQANMiA56VabbsX7lrd9Sw4qVjJjHKkQig11U9sAasZk
- sFj8uitHOWmJNkxDH7Ui/XXw8Vx1roS9jG797oztqs/nM2mxpnCCwToyhz0EkL4ecrTM
- QxoA==
+ bh=JFQx/gtl4mrgR25yql7R7/oHLt+CjTIPJA7gnCNnNPQ=;
+ b=I2HyeGVOcfbj5T7JXW4duKJ3ykRHuXbkmHyN4dOVpFGt0veEzsu0d9y7syGm8pKhny
+ JYDNYfWBM3MNDeRHy+xotWOm0HEYRhXrYK3IoY6LVz1gAQmZEvXWB2cdUnxvUN4cR+xV
+ /TjTYn2F4MGK058UgJMYw7H0jkXhRsAbL6+Soh3bQio8OnvOUvsy9Ido7wyBgY4KaKjl
+ erB50EwLMEp2+BSn804WztxnhVKPZUUsX2hsFkcClk/vRpmOyQmDo1Jun+o4OSpamzWJ
+ 7UNSEVqKBD+ABaLfRsZPFcV469uK4vyTFht7VTmlyaaoHHGpepdyBGQm2XGj87pUDIme
+ 9NSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715185263; x=1715790063;
+ d=1e100.net; s=20230601; t=1715185370; x=1715790170;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WUHnHpwMf8BvaPrjbKUlAMw8ZVLJYlT7QG0WqWUCLRc=;
- b=LvQUqdaQlgfeiqHr2Iq6iVou3ebQdDfy1M4m2znCzv4oabfxR1XzWuZxm9pwT7WnFf
- f3ENa+Wcvqg2od0dLwQew3a+IGKE62+mtBJX7v8A2Cj8szNt9DDHWbe5ZvaKQBOUwSr8
- 4Kb9D9u9AZjwlVmYTEQLetr1PC0Rp2oc3o1ZQseQR0Jt21Oxy/zPeUdM3Vv8SEsP+D3Q
- dCrjMmHHnfevVPfCF2sshrnR7wqMepHWBb/wuG2EIr0ENxnWxODjWy6hCEviYf2t599o
- qKiHq6BrIpxaoGXWkuoMKNEm0X6MUq36k1y304t45ahI0IrNpbP4xvzPT7AjVUG6//yv
- YBPg==
+ bh=JFQx/gtl4mrgR25yql7R7/oHLt+CjTIPJA7gnCNnNPQ=;
+ b=GgO+DVZdjNlsLlQv6DyVVTBuGebSKrVshtrVC5x4plNpXwPWzNFXPsxfMofQwxSsKl
+ ue/6nuh/ow7mm8HfP8Mf9hO+3b1sBLyn0OuWWeq58R0wsoeDBezp4kMLEF5+r7H6sLvJ
+ +VM2UgB3NPMZNB9s55QXxF1dP0f6lt2UvkFm5941ZYjwtXVsDqtUDVFJg8p68Am9zM6i
+ w4GlaoWgaun3GoLzI2jSTLvjzx6Sm+e4t8urEC9jA1h1eUaJO/eg/aDkWwFTyNecLSra
+ 55rbXYT5tY8GpzhmoALUuACgZJ9DZS9NRGZe8rNTiKdhvblTvwQkA2CLKhlu5cwSjaiR
+ Ytdg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWbtlWdEjW54gdEIxnVsFeosv4rf92ssu2POhWwRoobi1nVQn+HCTh42qA27rEZtx0oaDAw3cHsz6MzLtMZYKN8KqWLU9s=
-X-Gm-Message-State: AOJu0YyIA9rygFzGMd5sTtmx2yxMJsMc2BqDae+sADvxJ7ntU2i+qUOx
- kEvnNlRWT2a5EWJUwm/Sm+1oNCoe8i9YI2YQ8FS8YESNDpTjJeDOmVOWqqYDSZU=
-X-Google-Smtp-Source: AGHT+IFOOYYvBNZC7d5Qr7oVY1bCwP5wSHGVHSnnnBmFwHXLIg3qDzPuKteL/m4IacpC9QJIYfXklA==
-X-Received: by 2002:a2e:80d4:0:b0:2e3:cba4:22f with SMTP id
- 38308e7fff4ca-2e446d83e06mr19968671fa.11.1715185263249; 
- Wed, 08 May 2024 09:21:03 -0700 (PDT)
+ AJvYcCXMYWV7kRSnsTtfp3oYrNuquL3QWNokVLf3a40lB+2Yh4PKJBMHRbH4Lb1ft9XXyFTwJMltjtemp/lUhlBFGSw2hM9CRiw=
+X-Gm-Message-State: AOJu0YwX6tnQSQALGpOXxo4+hkCFQ8D9iIAFmCt4yWQX1bsGcBgqLhii
+ yp9vfBSLHRYaPru0aFNyFvdciRkSZ/MXNd93DdW9h2bkxKnOiORiDVPz+R+By2k=
+X-Google-Smtp-Source: AGHT+IF0+HNEoO28b+OMqbR3jY+11Jbck867timb9DzHlF4xAn1VAL8v2N/gRc5NHdxOySoWI/HaZg==
+X-Received: by 2002:a5d:58f2:0:b0:34d:9fc2:4a81 with SMTP id
+ ffacd0b85a97d-34fcaddf8c2mr2051534f8f.5.1715185370074; 
+ Wed, 08 May 2024 09:22:50 -0700 (PDT)
 Received: from [192.168.69.100] (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
  [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
- k6-20020a05600c1c8600b0041facbd2619sm999591wms.13.2024.05.08.09.21.02
+ v7-20020a056000144700b0034c66bddea3sm15802841wrx.37.2024.05.08.09.22.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 May 2024 09:21:02 -0700 (PDT)
-Message-ID: <05ee02c0-c189-4c67-8988-c1b646a2c107@linaro.org>
-Date: Wed, 8 May 2024 18:21:01 +0200
+ Wed, 08 May 2024 09:22:49 -0700 (PDT)
+Message-ID: <02d0f3ae-f4c4-437f-91da-10ae17b539ed@linaro.org>
+Date: Wed, 8 May 2024 18:22:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] hw/intc/loongson_ipi: Implement IOCSR address space
- for MIPS
+Subject: Re: [PATCH 1/5] hw/intc/loongarch_ipi: Remove pointless MAX_CPU check
 To: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
 Cc: Huacai Chen <chenhuacai@kernel.org>, Song Gao <gaosong@loongson.cn>
 References: <20240508-loongson3-ipi-v1-0-1a7b67704664@flygoat.com>
- <20240508-loongson3-ipi-v1-3-1a7b67704664@flygoat.com>
+ <20240508-loongson3-ipi-v1-1-1a7b67704664@flygoat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240508-loongson3-ipi-v1-3-1a7b67704664@flygoat.com>
+In-Reply-To: <20240508-loongson3-ipi-v1-1-1a7b67704664@flygoat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::235;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x235.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,21 +97,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/5/24 15:06, Jiaxun Yang wrote:
-> Implement IOCSR address space get functions for MIPS/Loongson CPUs.
+> Since cpuid will be checked by ipi_getcpu anyway, there is
+> no point to enforce MAX_CPU here.
 > 
-> For MIPS/Loongson without IOCSR (i.e. Loongson-3A1000), get_cpu_iocsr_as
-> will return as null, and send_ipi_data will fail with MEMTX_DECODE_ERROR,
-> which matches expected behavior on hardware.
+> This also saved us from including loongarch board header.
 > 
 > Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 > ---
-> I understand that there was a review comment stating that I shouldn't
-> use TARGET_* macros in device drivers. But I still think this is the
-> best way to handle architectural difference. There are many TARGET_*
-> usages in hw/virtio for similiar purpose.
-> ---
->   hw/intc/loongson_ipi.c | 39 ++++++++++++++++++++++++++++++---------
->   1 file changed, 30 insertions(+), 9 deletions(-)
+>   hw/intc/loongarch_ipi.c | 19 ++-----------------
+>   hw/intc/trace-events    |  2 --
+>   2 files changed, 2 insertions(+), 19 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
