@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2798AC04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 12:51:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C2B1C04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 12:55:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4glw-0005PO-Io; Wed, 08 May 2024 08:51:48 -0400
+	id 1s4gp5-00081e-AJ; Wed, 08 May 2024 08:55:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s4glt-0005Oj-M5
- for qemu-devel@nongnu.org; Wed, 08 May 2024 08:51:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s4glq-00021T-TH
- for qemu-devel@nongnu.org; Wed, 08 May 2024 08:51:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715172701;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3W/ScREmjvqUXIhjdT57Hp+BVufKIZBlTgrfJcfKQhM=;
- b=FKwsdUFoATQhTC9knudbf8x5MVAQQ20UN9IB3lq2Dlue9LidMfxyDxrTGHN7Qg1hAt1Zfb
- j0lYE0reZ2PFda63Legu5CmDNUnGVNQm4x/kPStSeXsQKhPJBYsVOom0rAzvR4Xab4w3cC
- KzPjj9oe8kgixBXoFD+Z3Jb0sEmGFIA=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-528-Wjl6glZ-NdS_KtiO_r3oMQ-1; Wed,
- 08 May 2024 08:51:38 -0400
-X-MC-Unique: Wjl6glZ-NdS_KtiO_r3oMQ-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id F2B3F1C4C39B;
- Wed,  8 May 2024 12:51:36 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.29])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id B5B18C0157C;
- Wed,  8 May 2024 12:51:35 +0000 (UTC)
-Date: Wed, 8 May 2024 13:51:33 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Stefano Garzarella <sgarzare@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>,
- Roman Kiryanov <rkir@google.com>,
- Peter Maydell <peter.maydell@linaro.org>, alex.bennee@linaro.org,
- QEMU Developers <qemu-devel@nongnu.org>,
- JP Cottin <jpcottin@google.com>, Erwin Jansen <jansene@google.com>,
- Mehdi Alizadeh <mett@google.com>
-Subject: Re: Hermetic virtio-vsock in QEMU
-Message-ID: <Zjt1VdKQ3KIZChg9@redhat.com>
-References: <CAOGAQeqOVAHJ4VxQNKqO43hmLJdxpA6E_JEQrfL380SwT4Y73w@mail.gmail.com>
- <Zh0NiI9ZfS5uzs5Z@redhat.com>
- <CAOGAQerx0DmHvJNf05wuJFOtXVwDFTt7fy0-GmBZ7xKoLAHTKQ@mail.gmail.com>
- <ZiDpM7ZusU0SvH7K@redhat.com>
- <nga2k5uuvpqm2sovguofglw6u3reiqqurbn7vbdexanzrhmw42@vuje72e57egu>
- <CAOGAQeqU692hHf3dU7udz8hwzP6KuFTNWir0mLcV-URF-JkFnA@mail.gmail.com>
- <zyj7huwfzji6c5bkq44o56nizo7fju5kn2nqg2n5niuwdzsnkl@ykhg5yqruvwr>
- <CAJ+F1CKvBW_khQ+zwKiunWGUQYtC_RKnVvUWbZpZALHv07efBw@mail.gmail.com>
- <5o3xyylget6hqhdaya5cj5tnbmmpzxk6u53cp6jhpviev6ez4m@ri6ady5zc6n3>
- <30baeb56-64d2-4ea3-8e53-6a5c50999979@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <30baeb56-64d2-4ea3-8e53-6a5c50999979@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1s4gp4-0007zL-5b; Wed, 08 May 2024 08:55:02 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1s4gox-0002eA-6M; Wed, 08 May 2024 08:55:01 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-2b4a7671abaso2955419a91.0; 
+ Wed, 08 May 2024 05:54:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1715172893; x=1715777693; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=x22OY0CdU4vXaLJgtfBbfBxu69h616NKYbyMEyzgPBE=;
+ b=fJrBIfeprZne8JMhZ1xPgpn+RvxuRir8O++F3EmjXsYR40zddmxo7Wb8uFJbvZrycC
+ qX45W+BCGkcm1jGqPIKHzTFBT/5SuDIPX/51FKYbTlKd8bizU15b3c1Wx6Zzbj7B3epT
+ 6EhwXLJ2J/A+KH98dSgzDedG7CxXDsEo090vMa8GSwinQhLSW6N/trr2Lj3mIhrPF0yP
+ ec3hYqMS+0S6Y01FfQECf1vvUcZpu/ZnbcR9p/ijXgN1vDk9/QPxCGgIP3Pyw4RattEk
+ gTOBeubOwrRXTLUlG1TFciWl5QoV1N0ICERmOlZnb6VB460uvchcq+tSUmMulD9jx+in
+ ukpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715172893; x=1715777693;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=x22OY0CdU4vXaLJgtfBbfBxu69h616NKYbyMEyzgPBE=;
+ b=nx+SoXFwok5cxgis75B/c763e93Zh0SYaR/pzNKVyA9g59culZWoa7r9l/thVetnlI
+ XRmBzJ7JQ5WFmuul0cxnfIdlp8m8hndklmd6Ml6H0GwCSHQT1xMhU3gIdpFSELgI+B8D
+ 9+2tNLEWPygE96tyaHVzecbMCzai6YaCxchl4VLXw3XFEbBT5lZyxXqUYpHhNELhnUdZ
+ u1AXwjSqYZlNMcUltDlW1ofAIu7VcnWV+HEHKkX45wmfVozK9YkJRRHIMWDRVuZIgxoY
+ vowGYdCoH/KsDfBk5fxcn5+sceB7Y3EtvcTPa2qRqeTo1t2rNV3qlhARYk8XEFWo7EDa
+ GbpA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWyNbXCQb0+oeiXZ6g9YSe4/SsmktX84E11ZFHQUCBq45gDuSiqM5722enNBkzCEQuV+aZ/ACZEyDPg5BwtrjwLtLBQ
+X-Gm-Message-State: AOJu0YzKffnRmdHOBqMG9Whsakq1kJkLGPEkKdcb0NIRxjQMLaUhP6tM
+ YgcSlFRQ00MbXryorrdUs+pfmahNeT/DfPC4GHMNvFgE/+8KdLA9
+X-Google-Smtp-Source: AGHT+IEtCw7C+Wfu6apjMsWyPHE7zRSQvr7oKYdfy6r8qThhE1ZoyhvWhTfQEzUrCOQx8PrN7RfO/w==
+X-Received: by 2002:a17:90a:f289:b0:2b1:a632:60f6 with SMTP id
+ 98e67ed59e1d1-2b616beb346mr2330615a91.44.1715172893104; 
+ Wed, 08 May 2024 05:54:53 -0700 (PDT)
+Received: from localhost ([1.146.8.34]) by smtp.gmail.com with ESMTPSA id
+ dt15-20020a17090afa4f00b002b57ccdf929sm1359872pjb.1.2024.05.08.05.54.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 08 May 2024 05:54:52 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 08 May 2024 22:54:47 +1000
+Message-Id: <D14A1N415IER.161PBQJVFBY8L@gmail.com>
+Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>, "Daniel Henrique
+ Barboza" <danielhb413@gmail.com>
+Subject: Re: [PATCH v2 24/28] target/ppc/mmu_common.c: Remove BookE handling
+ from get_physical_address_wtlb()
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>
+X-Mailer: aerc 0.17.0
+References: <cover.1714606359.git.balaton@eik.bme.hu>
+ <cd05e33ea86d301cf64aa3925a6302b92249ee3c.1714606359.git.balaton@eik.bme.hu>
+ <D13EDO9E2R7L.E6416WEFSMYL@gmail.com>
+ <alpine.LMD.2.03.2405080129400.14319@eik.bme.hu>
+In-Reply-To: <alpine.LMD.2.03.2405080129400.14319@eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x102e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.582,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,102 +95,139 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 08, 2024 at 02:37:52PM +0200, Paolo Bonzini wrote:
-> On 5/8/24 11:38, Stefano Garzarella wrote:
-> > On Wed, May 08, 2024 at 01:13:09PM GMT, Marc-André Lureau wrote:
-> > > Hi
-> > > 
-> > > On Wed, May 8, 2024 at 11:50 AM Stefano Garzarella
-> > > <sgarzare@redhat.com> wrote:
-> > > > 
-> > > > Hi Roman,
-> > > > 
-> > > > On Tue, May 07, 2024 at 11:20:50PM GMT, Roman Kiryanov wrote:
-> > > > >Hi Stefano,
-> > > > >
-> > > > >On Tue, May 7, 2024 at 1:10 AM Stefano Garzarella
-> > > > <sgarzare@redhat.com> wrote:
-> > > > >> I have no experience with Windows, but what we need for
-> > > > vhost-user is:
-> > > > >>
-> > > > >> - AF_UNIX and be able to send file descriptors using ancillary data
-> > > > >>    (i.e. SCM_RIGHTS)
-> > > > >
-> > > > >As far as I understand, Windows does NOT support SCM_RIGHTS
-> > > > over AF_UNIX.
-> > > > 
-> > > > Thank you for the information. This is unfortunate and does not allow
-> > > > us to use vhost-user as it is on Windows.
-> > > > 
-> > > 
-> > > fwiw, Windows has other mechanisms to share resources between processes.
-> > > 
-> > > To share/pass sockets, you can use WSADuplicateSocket. For shared
-> > > memory and other resources, DuplicateHandle API.
-> > 
-> > Cool, thanks for sharing that. So it could be done, but I think we need
-> > to extend the vhost-user protocol to work with Windows.
-> 
-> It would be possible to implement the memfd backend for Windows, using the
-> CreateFileMapping() API.
-> 
-> However, the vhost-user protocol's VHOST_USER_SET_MEM_TABLE requests do not
-> have any padding that can be used to pass the handle to the target. An
-> extended version would be necessary.
-> 
-> One difference between Unix and Windows is that, if the vhost-server messes
-> up the handling of messages from the socket, and therefore it does not close
-> the handle, it is leaked forever.  This is not a huge deal per se, but I
-> think it means that QEMU is not allowed to "open" a privileged vhost-user
-> server process with PROCESS_DUP_HANDLE rights (translation: QEMU cannot
-> provide duplicate handles to a privileged vhost-user server process).
-> 
-> Also I'm not sure what the cost of DuplicateHandle() is, and whether it's a
-> good idea to do it for every region on every VHOST_USER_SET_MEM_TABLE
-> request.  But VHOST_USER_SET_MEM_TABLE is not a fast path, so perhaps it's
-> okay.
-> 
-> I think a virtio-vsock implementation in QEMU would be easier, lacking
-> another usecase for vhost-user on Windows.
-> 
-> The main design question is whether multiple virtio-vsock devices for the
-> same guest should share the CID space or not (I think it should, but I'm not
-> 100% sure).  To connect host<->guest you could have a QOM object, here I am
-> naming it vsock-forward as an example:
+On Wed May 8, 2024 at 9:40 AM AEST, BALATON Zoltan wrote:
+> On Tue, 7 May 2024, Nicholas Piggin wrote:
+> > On Thu May 2, 2024 at 9:43 AM AEST, BALATON Zoltan wrote:
+> >> This function is no longer called for BookE MMU model so remove parts
+> >> related to it. This has uncovered a few may be used uninitialised
+> >> warnings that are also fixed.
+> >>
+> >> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> >> ---
+> >>  target/ppc/mmu_common.c | 25 +++++--------------------
+> >>  1 file changed, 5 insertions(+), 20 deletions(-)
+> >>
+> >> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+> >> index a1f98f8de4..d61c41d8c9 100644
+> >> --- a/target/ppc/mmu_common.c
+> >> +++ b/target/ppc/mmu_common.c
+> >> @@ -684,12 +684,10 @@ static int mmubooke_get_physical_address(CPUPPCS=
+tate *env, mmu_ctx_t *ctx,
+> >>          ret =3D mmubooke_check_tlb(env, tlb, &raddr, &ctx->prot, addr=
+ess,
+> >>                                   access_type, i);
+> >>          if (ret !=3D -1) {
+> >> -            if (ret >=3D 0) {
+> >> -                ctx->raddr =3D raddr;
+> >> -            }
+> >>              break;
+> >>          }
+> >>      }
+> >> +    ctx->raddr =3D raddr;
+> >>      qemu_log_mask(CPU_LOG_MMU,
+> >>                    "%s: access %s " TARGET_FMT_lx " =3D> " HWADDR_FMT_=
+plx
+> >>                    " %d %d\n", __func__, ret < 0 ? "refused" : "grante=
+d",
+> >> @@ -897,9 +895,6 @@ static int mmubooke206_get_physical_address(CPUPPC=
+State *env, mmu_ctx_t *ctx,
+> >>              ret =3D mmubooke206_check_tlb(env, tlb, &raddr, &ctx->pro=
+t, address,
+> >>                                          access_type, mmu_idx);
+> >>              if (ret !=3D -1) {
+> >> -                if (ret >=3D 0) {
+> >> -                    ctx->raddr =3D raddr;
+> >> -                }
+> >>                  goto found_tlb;
+> >>              }
+> >>          }
+> >> @@ -907,6 +902,7 @@ static int mmubooke206_get_physical_address(CPUPPC=
+State *env, mmu_ctx_t *ctx,
+> >>
+> >>  found_tlb:
+> >>
+> >> +    ctx->raddr =3D raddr;
+> >
+> > Not sure about the uninitialized warnings here either, caller probably
+> > should not be using ctx->raddr unless we returned 0...
+> >
+> >>      qemu_log_mask(CPU_LOG_MMU, "%s: access %s " TARGET_FMT_lx " =3D> =
+"
+> >>                    HWADDR_FMT_plx " %d %d\n", __func__,
+> >>                    ret < 0 ? "refused" : "granted", address, raddr,
+> >> @@ -1163,20 +1159,9 @@ static int get_physical_address_wtlb(CPUPPCStat=
+e *env, mmu_ctx_t *ctx,
+> >>                                       MMUAccessType access_type, int t=
+ype,
+> >>                                       int mmu_idx)
+> >>  {
+> >> -    bool real_mode;
+> >> -
+> >> -    if (env->mmu_model =3D=3D POWERPC_MMU_BOOKE) {
+> >> -        return mmubooke_get_physical_address(env, ctx, eaddr, access_=
+type);
+> >> -    } else if (env->mmu_model =3D=3D POWERPC_MMU_BOOKE206) {
+> >> -        return mmubooke206_get_physical_address(env, ctx, eaddr, acce=
+ss_type,
+> >> -                                                mmu_idx);
+> >> -    }
+> >
+> > This could just go in the previous patch when you split booke xlate?
+>
+> Removing this uncovers the warnings so I keep it here to separate it from=
+=20
+> the previous change. I gave up on trying to resolve these warnings and=20
+> untangle the embedded functions from mmu_ctx_t which would be needed to=
+=20
+> move these booke functions out from this file. The other problem is that=
+=20
+> these booke get_physical_address functions and mmu40x_get_physical_addres=
+s=20
+> all use ppcemb_tlb_check which then needs to be in the same file and=20
+> static to be inlined and not run too slow but 40x is still in jumbo_xlate=
+=20
+> so I just leave it for now and may return to it later or let somebody els=
+e=20
+> continue from here. I think this series moves forward enough for now and =
+I=20
+> don't have more time now.
 
-Designwise, a native VSOCK backend in QEMU really should implement the
-same approach defined by firecracker, so that we have interoperability
-with systemd, firecracker and cloud-hypervisor. See
+If you can't easily drop the path or solve the problem okay, just put
+a comment or something on the zeroing and I'll take a closer look
+when I merge.
 
-  https://gitlab.com/qemu-project/qemu/-/issues/2095
-  https://github.com/firecracker-microvm/firecracker/blob/main/docs/vsock.md#firecracker-virtio-vsock-design
+>
+> >> -
+> >> -    real_mode =3D (type =3D=3D ACCESS_CODE) ? !FIELD_EX64(env->msr, M=
+SR, IR)
+> >> -                                      : !FIELD_EX64(env->msr, MSR, DR=
+);
+> >> -    if (real_mode && (env->mmu_model =3D=3D POWERPC_MMU_SOFT_6xx ||
+> >> -                      env->mmu_model =3D=3D POWERPC_MMU_SOFT_4xx ||
+> >> -                      env->mmu_model =3D=3D POWERPC_MMU_REAL)) {
+> >> +    bool real_mode =3D (type =3D=3D ACCESS_CODE) ? !FIELD_EX64(env->m=
+sr, MSR, IR)
+> >> +                                           : !FIELD_EX64(env->msr, MS=
+R, DR);
+> >> +    if (real_mode) {
+> >>          memset(ctx, 0, sizeof(*ctx));
+> >>          ctx->raddr =3D eaddr;
+> >>          ctx->prot =3D PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+> >
+> > This still changes beahviour of MPC8xx MMU doesn't it? It's supposed
+> > to abort always.
+>
+> I don't think it can get here because there's still an abort case in=20
+> ppc_tlb_invalidate_all() which is called from ppc_cpu_reset_hold() so it=
+=20
+> will likely crash before it could call anything here. But if you think=20
+> it's necessary I could add a case for it in ppc_xlate() maybe.
 
-This involves multiple UNIX sockets on the host
+I would rather not change it here. You can remove it with another patch.
 
-  1 * /some/path   - QEMU listens on this, and accepts connections
-                     from other host processes. The client sends
-                     "PORT <num>" to indicate that guest port it
-                     is connecting to
-
-  n * /some/path_$PORT - QEMU connect to this for outgoing connections
-                         from the guest. Other host processes need
-                         to listen on whatever path_$PORT need to be
-                         serviced
-
-IOW, from a CLI pov, QEMU should need nothing more than
-
-    -object vsock-forward,prefix=/some/path
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Thanks,
+Nick
 
