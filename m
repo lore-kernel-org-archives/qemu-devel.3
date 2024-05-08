@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE07AC41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B760DC25B74
 	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 23:43:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4qpe-0003Ff-Hd; Wed, 08 May 2024 19:36:18 -0400
+	id 1s4qpp-0003SU-DX; Wed, 08 May 2024 19:36:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s4qpc-0003DY-T6; Wed, 08 May 2024 19:36:16 -0400
+ id 1s4qpn-0003RI-Sh; Wed, 08 May 2024 19:36:27 -0400
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s4qpb-0002Vj-5C; Wed, 08 May 2024 19:36:16 -0400
+ id 1s4qpm-0002ak-7F; Wed, 08 May 2024 19:36:27 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 0035A4E6426;
- Thu, 09 May 2024 01:36:13 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id AEE564E65BB;
+ Thu, 09 May 2024 01:36:24 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id x081mn3izBGZ; Thu,  9 May 2024 01:36:11 +0200 (CEST)
+ with ESMTP id ELY82SMat7FM; Thu,  9 May 2024 01:36:22 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 12A2D4E6030; Thu, 09 May 2024 01:36:11 +0200 (CEST)
-Message-Id: <71aafa52bdf95e4c82e0ed2f6ca045eaccb56abe.1715209155.git.balaton@eik.bme.hu>
+ id BE2A84E65CE; Thu, 09 May 2024 01:36:22 +0200 (CEST)
+Message-Id: <c70c4716eb59944e8eb810c2b1d57dc715ac551e.1715209155.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1715209155.git.balaton@eik.bme.hu>
 References: <cover.1715209155.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v4 08/33] target/ppc/mmu_common.c: Drop cases for
- unimplemented MPC8xx MMU
+Subject: [PATCH v4 19/33] target/ppc/mmu_common.c: Don't use mmu_ctx_t for
+ mmu40x_get_physical_address()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,7 +40,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Thu, 09 May 2024 01:36:11 +0200 (CEST)
+Date: Thu, 09 May 2024 01:36:22 +0200 (CEST)
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
  envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -63,61 +63,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Drop MPC8xx cases from get_physical_address_wtlb() and ppc_jumbo_xlate().
-The default case would still catch this and abort the same way and
-there is still a warning about it in ppc_tlb_invalidate_all() which is
-called in ppc_cpu_reset_hold() so likely we never get here but to make
-sure add a case to ppc_xlate() to the same effect.
+mmu40x_get_physical_address() only uses the raddr and prot fields from
+mmu_ctx_t. Pass these directly instead of using a ctx struct.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- target/ppc/mmu_common.c | 12 ++----------
- 1 file changed, 2 insertions(+), 10 deletions(-)
+ target/ppc/mmu_common.c | 38 ++++++++++++++++----------------------
+ 1 file changed, 16 insertions(+), 22 deletions(-)
 
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 886fb6a657..3391df61cb 100644
+index 6570b280ca..c5ef02f05e 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -1219,10 +1219,6 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
-         ret = mmubooke206_get_physical_address(env, ctx, eaddr, access_type,
-                                                mmu_idx);
-         break;
--    case POWERPC_MMU_MPC8xx:
--        /* XXX: TODO */
--        cpu_abort(env_cpu(env), "MPC8xx MMU model is not implemented\n");
--        break;
+@@ -519,20 +519,19 @@ int ppcemb_tlb_search(CPUPPCState *env, target_ulong address, uint32_t pid)
+     return -1;
+ }
+ 
+-static int mmu40x_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
+-                                       target_ulong address,
++static int mmu40x_get_physical_address(CPUPPCState *env, hwaddr *raddr,
++                                       int *prot, target_ulong address,
+                                        MMUAccessType access_type)
+ {
+     ppcemb_tlb_t *tlb;
+-    hwaddr raddr;
+     int i, ret, zsel, zpr, pr;
+ 
+     ret = -1;
+-    raddr = (hwaddr)-1ULL;
++    *prot = 0;
+     pr = FIELD_EX64(env->msr, MSR, PR);
+     for (i = 0; i < env->nb_tlb; i++) {
+         tlb = &env->tlb.tlbe[i];
+-        if (!ppcemb_tlb_check(env, tlb, &raddr, address,
++        if (!ppcemb_tlb_check(env, tlb, raddr, address,
+                               env->spr[SPR_40x_PID], i)) {
+             continue;
+         }
+@@ -550,40 +549,34 @@ static int mmu40x_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
+             /* fall through */
+         case 0x3:
+             /* All accesses granted */
+-            ctx->prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
++            *prot = PAGE_RWX;
+             ret = 0;
+             break;
++
+         case 0x0:
+             if (pr != 0) {
+                 /* Raise Zone protection fault.  */
+                 env->spr[SPR_40x_ESR] = 1 << 22;
+-                ctx->prot = 0;
++                *prot = 0;
+                 ret = -2;
+                 break;
+             }
+             /* fall through */
+         case 0x1:
+-        check_perms:
++check_perms:
+             /* Check from TLB entry */
+-            ctx->prot = tlb->prot;
+-            ret = check_prot(ctx->prot, access_type);
++            *prot = tlb->prot;
++            ret = check_prot(*prot, access_type);
+             if (ret == -2) {
+                 env->spr[SPR_40x_ESR] = 0;
+             }
+             break;
+         }
+-        if (ret >= 0) {
+-            ctx->raddr = raddr;
+-            qemu_log_mask(CPU_LOG_MMU, "%s: access granted " TARGET_FMT_lx
+-                          " => " HWADDR_FMT_plx
+-                          " %d %d\n", __func__, address, ctx->raddr, ctx->prot,
+-                          ret);
+-            return 0;
+-        }
+     }
+-    qemu_log_mask(CPU_LOG_MMU, "%s: access refused " TARGET_FMT_lx
+-                  " => " HWADDR_FMT_plx " %d %d\n",
+-                  __func__, address, raddr, ctx->prot, ret);
++    qemu_log_mask(CPU_LOG_MMU, "%s: access %s " TARGET_FMT_lx " => "
++                  HWADDR_FMT_plx " %d %d\n",  __func__,
++                  ret < 0 ? "refused" : "granted", address,
++                  ret < 0 ? 0 : *raddr, *prot, ret);
+ 
+     return ret;
+ }
+@@ -1171,7 +1164,8 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
+     case POWERPC_MMU_SOFT_6xx:
+         return mmu6xx_get_physical_address(env, ctx, eaddr, access_type, type);
+     case POWERPC_MMU_SOFT_4xx:
+-        return mmu40x_get_physical_address(env, ctx, eaddr, access_type);
++        return mmu40x_get_physical_address(env, &ctx->raddr, &ctx->prot, eaddr,
++                                           access_type);
      case POWERPC_MMU_REAL:
-         if (real_mode) {
-             ret = check_physical(env, ctx, eaddr, access_type);
-@@ -1353,8 +1349,6 @@ static bool ppc_jumbo_xlate(PowerPCCPU *cpu, vaddr eaddr,
-                     env->spr[SPR_BOOKE_DEAR] = eaddr;
-                     env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, MMU_DATA_LOAD);
-                     break;
--                case POWERPC_MMU_MPC8xx:
--                    cpu_abort(cs, "MPC8xx MMU model is not implemented\n");
-                 case POWERPC_MMU_REAL:
-                     cpu_abort(cs, "PowerPC in real mode should never raise "
-                               "any MMU exceptions\n");
-@@ -1427,9 +1421,6 @@ static bool ppc_jumbo_xlate(PowerPCCPU *cpu, vaddr eaddr,
-                         env->spr[SPR_40x_ESR] = 0x00000000;
-                     }
-                     break;
--                case POWERPC_MMU_MPC8xx:
--                    /* XXX: TODO */
--                    cpu_abort(cs, "MPC8xx MMU model is not implemented\n");
-                 case POWERPC_MMU_BOOKE206:
-                     booke206_update_mas_tlb_miss(env, eaddr, access_type, mmu_idx);
-                     /* fall through */
-@@ -1539,7 +1530,8 @@ bool ppc_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
-     case POWERPC_MMU_32B:
-         return ppc_hash32_xlate(cpu, eaddr, access_type, raddrp,
-                                psizep, protp, mmu_idx, guest_visible);
--
-+    case POWERPC_MMU_MPC8xx:
-+        cpu_abort(env_cpu(&cpu->env), "MPC8xx MMU model is not implemented\n");
-     default:
-         return ppc_jumbo_xlate(cpu, eaddr, access_type, raddrp,
-                                psizep, protp, mmu_idx, guest_visible);
+         cpu_abort(env_cpu(env),
+                   "PowerPC in real mode do not do any translation\n");
 -- 
 2.30.9
 
