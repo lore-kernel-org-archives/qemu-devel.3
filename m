@@ -4,103 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 303B4C04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 09:32:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D7EEC04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 09:34:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4de1-0004SK-UY; Wed, 08 May 2024 05:31:26 -0400
+	id 1s4dgh-0005pq-O4; Wed, 08 May 2024 05:34:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1s4ddz-0004RL-Jb
- for qemu-devel@nongnu.org; Wed, 08 May 2024 05:31:23 -0400
-Received: from wfhigh3-smtp.messagingengine.com ([64.147.123.154])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1s4dgf-0005pR-J2
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 05:34:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1s4ddx-0003QV-J8
- for qemu-devel@nongnu.org; Wed, 08 May 2024 05:31:23 -0400
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
- by mailfhigh.west.internal (Postfix) with ESMTP id 92AEE1800438;
- Wed,  8 May 2024 05:31:15 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute5.internal (MEProxy); Wed, 08 May 2024 05:31:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:message-id:mime-version:reply-to
- :subject:subject:to:to; s=fm1; t=1715160675; x=1715247075; bh=jX
- 3jRPM5iIHqQ+6f+7oyx5qolQ10AFd01/QIe41Fe8k=; b=oQvVfIXKdCawS9Dchj
- 5gK3W336rmKUWf9/wf1gM8xLSm3EU9l6vqHoBQiGP0kWvP1u4YgwFpyRhIpnu4Hu
- NkZC/M8nsGzOMBfjjGJ2P4g6vNz0VTS6lVs7X7jVL2kM5BNrmj6mjQQg+/vcqQLd
- 3g+xrMdaLPsO8gj6NdpGIjtIA1QfTjLc2E/008Rj+EkCrdH7O/I4MNJDKIjpLYZE
- P8ssnJTcW89e+7gQbbP2o+9Ozd+3i8AGo5ofc0VL1614yDhHR+YLvgfgrxXBotMe
- vmjZ4sZcK3oG75BAR/xl6maMhmQ5zVvQUAlOVmrmy7fzmuIhUq1UkEPSoTvCamkS
- sNuA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm3; t=1715160675; x=1715247075; bh=jX3jRPM5iIHqQ
- +6f+7oyx5qolQ10AFd01/QIe41Fe8k=; b=awV8PDCGTC1J8+/GNBek9Y+S/v4Ng
- yD2/ip0jRbi1A/TJPLUZCriPQAqPUVqAzRxvr4ZSi419uKs6j1u+oL51bIgQVtdB
- sRH/AKD3PxRKg3BL4gWVwfxL9kLVVamYxCYWRu/2OfonIcSpqCJNoPpL/6JwK1lU
- DOhbf4MOjlk6D4lUYLejWP9N8eF9peIh0hKLHypvlgmMzYFDyGJ5oxKTa4u1iCW/
- JEpvy8FAl1MlYjtnlo4DR9jOgZwK7GC9ebDAXE+X/T4wOJZ0LsnSdcg+vTV0u4A9
- ey2Y5HMHGS7onfTKnibndrHgXsXWvgRlXXdjMQ0+IXiX0lacC7SF1F+bg==
-X-ME-Sender: <xms:YkY7Zkf4w-9IRqjqigLFb1NFZR44TenryDmLpve9K3r_2mZJ08yz6Q>
- <xme:YkY7ZmOc6uKQD6TLwKyUDn4h9PKd714GBklp8sZdmjxmfbZiSAvPPL0FxrNqSLb23
- YvThIN_-PJBUkqMvcg>
-X-ME-Received: <xmr:YkY7ZljgCWP01G8wLBiKbJuEUXCSSeTfBYs6jUUG6GFJQ31V3cbUxbQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeftddgudeiucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhephfffufggtgfgkffvvefosehtjeertdertdejnecuhfhrohhmpeflihgrgihu
- nhcujggrnhhguceojhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomheqnecugg
- ftrfgrthhtvghrnhepffetueegkedtgfejveeuvdfghfegtddvgfehudeghfegheetuedu
- heduveejtefhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
- homhepjhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomh
-X-ME-Proxy: <xmx:Y0Y7Zp8Bx3BWYwjNn2ojtb3n7CZxgpP11aBuyMWH9k-uGuJzxwX4ig>
- <xmx:Y0Y7ZgtPCG0Em9PZybVKvpBsUeywj2P7dNMkqkoduPr8WkLBDJty-Q>
- <xmx:Y0Y7ZgEmmMxo5H8He_NhXhOEnB5yC1RmxxdvHIiqPhVHZpJZpxuyZg>
- <xmx:Y0Y7ZvOldijfSqpRU2In0Ssurq9y4yQxo24AR2AxoCq20vvfTpR3vA>
- <xmx:Y0Y7ZiLgbSae07ONv5LPOQiq4iW9AgbLe52Q1oozaKXc8UpsF2tj0wck>
-Feedback-ID: ifd894703:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 May 2024 05:31:14 -0400 (EDT)
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Date: Wed, 08 May 2024 10:31:09 +0100
-Subject: [PATCH] hw/mips/loongson3_virt: Emulate suspend function
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1s4dgb-0006bw-87
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 05:34:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715160843;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rSaf9p0kesoLNztcvYNJiJ92JbSB/luH/B+1o6wgYyo=;
+ b=iE3uTLY5gcVwXCoVNCfhyAKBWZJHAP3zkwTi0ZLPAUpajhy+2dXrDSNskvc0UTMZin/kvm
+ yTHIdeqvRn3WNSscm0/h9gr2n3wDV4YBDlstOPruFPEJzw59WBhVgFyiav7PrWY3DZ9wnA
+ G33UaV/hnlbe3G/85CYblYljrZzK9Hc=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-25-axA2Z6cwOgK-xw7Y5NtqWA-1; Wed, 08 May 2024 05:34:01 -0400
+X-MC-Unique: axA2Z6cwOgK-xw7Y5NtqWA-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-34c85b29a7fso2993832f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 02:34:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715160840; x=1715765640;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rSaf9p0kesoLNztcvYNJiJ92JbSB/luH/B+1o6wgYyo=;
+ b=NTrI7maqXyEgRrYzvSLQncC6tBISRXyG9rEr7XL2OPd5a8gBTOfyBZPyF+sj48QMze
+ 7M04tmiuL2jWN6OPUWmKQE8OWsVllA10vWXBJXXPeLTheHvvysBdG1K+70TN1QX04Afh
+ qzn0ZyBqGVhlx1SDbRZuVIFLAbqn4sM4K+wzWlQO9/RPFPFzoaqqHn6MDnXOiYn4iOBF
+ 42hx9YBJfOuQKpoqaLp4ehIEXaI2LRMZYVLtGGG2MIyjnylF6t4L07I/5B/rTzRNw9lP
+ /OhCa7oTYUoxe1/YTNuSuUw2DQyp9/zRGKnYhKknHiwmrqqWocfPCQ8w9BinKqxBHf2A
+ FfYQ==
+X-Gm-Message-State: AOJu0YzGra75YPTDTpuIfrgzIsv0mkWCR/+wQ0iOE2rPq4p5nNod9LjE
+ 1YL4jjNIP05izBbxm8uabNpW+7/Iu2x4lJG3CpnsTThlFqvAP5g3iUY1s7J2ztCxghGoC7pIYWM
+ jM+ZfBk2KHcjsBeFEqnRSGOZ2ivHhH+sF5xiLUBBZ705qQVdia4pb
+X-Received: by 2002:a5d:6da6:0:b0:34c:9e4a:e72c with SMTP id
+ ffacd0b85a97d-34fca14b308mr1840141f8f.11.1715160840712; 
+ Wed, 08 May 2024 02:34:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF/slMMFehOnAZ06D1x4IoDrCBZT1IxWHouQRVo2/3R8dWdl1uZPihFpy4VTFvn9SrLWBGjig==
+X-Received: by 2002:a5d:6da6:0:b0:34c:9e4a:e72c with SMTP id
+ ffacd0b85a97d-34fca14b308mr1840107f8f.11.1715160840318; 
+ Wed, 08 May 2024 02:34:00 -0700 (PDT)
+Received: from sgarzare-redhat (host-87-12-25-56.business.telecomitalia.it.
+ [87.12.25.56]) by smtp.gmail.com with ESMTPSA id
+ q5-20020adff945000000b0034f5925edacsm5459322wrr.30.2024.05.08.02.33.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 08 May 2024 02:33:59 -0700 (PDT)
+Date: Wed, 8 May 2024 11:33:55 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>, 
+ Coiby Xu <Coiby.Xu@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-block@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, slp@redhat.com, 
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Brad Smith <brad@comstyle.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Thomas Huth <thuth@redhat.com>,
+ Eric Blake <eblake@redhat.com>, 
+ Kevin Wolf <kwolf@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
+ Raphael Norwitz <raphael@enfabrica.net>, gmaglione@redhat.com,
+ Laurent Vivier <lvivier@redhat.com>, 
+ stefanha@redhat.com, David Hildenbrand <david@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH v4 01/12] libvhost-user: set msg.msg_control to NULL when
+ it is empty
+Message-ID: <qz46kdzqc266aluq3ib6q3bcmvnunmqv7tybkq2yvvatxgzx4i@3qo6ro3x6prv>
+References: <20240508074457.12367-1-sgarzare@redhat.com>
+ <20240508074457.12367-2-sgarzare@redhat.com>
+ <Zjs-aTeUfOy2PDQr@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240508-loongson3v-suspend-v1-1-186725524a39@flygoat.com>
-X-B4-Tracking: v=1; b=H4sIAFxGO2YC/x3MQQqAIBBA0avErBM0K6qrRAvLqQZiFIciiO6et
- HyL/x8QTIQCQ/FAwouEAmeYsoBld7yhIp8Nla5q3ehOHSHwJoHtpeSUiOzV4r21zrQ9uhlyGBO
- udP/TcXrfDy3j74VkAAAA
-To: qemu-devel@nongnu.org
-Cc: Huacai Chen <chenhuacai@kernel.org>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3530;
- i=jiaxun.yang@flygoat.com; h=from:subject:message-id;
- bh=FjgEq9nv9Wu3tjTBtpf2KLynllfJpuMeOVdE3qC7pik=;
- b=owGbwMvMwCHmXMhTe71c8zDjabUkhjRrt+SME+z2uxyU9SNWxkRv1Z34ZcuuqhMSN+0vcop0X
- f55tuJpRykLgxgHg6yYIkuIgFLfhsaLC64/yPoDM4eVCWQIAxenAEzEcCUjQ0viQelH8+w/1TVo
- SjFfe/r3Qkz0LDfvCg6pnbZn1e98qGdkmH239HCnAne21b4wsXMsBl0fHLjEK7caGnD92dM1+RY
- XDwA=
-X-Developer-Key: i=jiaxun.yang@flygoat.com; a=openpgp;
- fpr=980379BEFEBFBF477EA04EF9C111949073FC0F67
-Received-SPF: pass client-ip=64.147.123.154;
- envelope-from=jiaxun.yang@flygoat.com; helo=wfhigh3-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Zjs-aTeUfOy2PDQr@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,85 +117,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Suspend function is emulated as what hardware actually do.
-Doorbell register fields are updates to include suspend value,
-suspend vector is encoded in firmware blob and fw_cfg is updated
-to include S3 bits as what x86 did.
+On Wed, May 08, 2024 at 09:57:13AM GMT, Daniel P. Berrangé wrote:
+>On Wed, May 08, 2024 at 09:44:45AM +0200, Stefano Garzarella wrote:
+>> On some OS (e.g. macOS) sendmsg() returns -1 (errno EINVAL) if
+>> the `struct msghdr` has the field `msg_controllen` set to 0, but
+>> `msg_control` is not NULL.
+>>
+>> Reviewed-by: Eric Blake <eblake@redhat.com>
+>> Reviewed-by: David Hildenbrand <david@redhat.com>
+>> Reviewed-by: Philippe Mathieu-Daud?? <philmd@linaro.org>
+>
+>Philippe's name has got mangled here
 
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
----
- hw/mips/loongson3_bootp.c |  1 +
- hw/mips/loongson3_virt.c  | 19 +++++++++++++++++++
- 2 files changed, 20 insertions(+)
+Thank you for bringing this to my attention and helping me solve it
+off-list.
 
-diff --git a/hw/mips/loongson3_bootp.c b/hw/mips/loongson3_bootp.c
-index f99af229327a..03a10b63c1b4 100644
---- a/hw/mips/loongson3_bootp.c
-+++ b/hw/mips/loongson3_bootp.c
-@@ -148,4 +148,5 @@ void init_reset_system(struct efi_reset_system_t *reset)
-     reset->Shutdown = cpu_to_le64(0xffffffffbfc000a8);
-     reset->ResetCold = cpu_to_le64(0xffffffffbfc00080);
-     reset->ResetWarm = cpu_to_le64(0xffffffffbfc00080);
-+    reset->DoSuspend = cpu_to_le64(0xffffffffbfc000d0);
- }
-diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
-index 33eae01eca2b..f06518ad8f54 100644
---- a/hw/mips/loongson3_virt.c
-+++ b/hw/mips/loongson3_virt.c
-@@ -127,6 +127,9 @@ static void loongson3_pm_write(void *opaque, hwaddr addr,
-     case 0x00:
-         qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
-         return;
-+    case 0x01:
-+        qemu_system_suspend_request();
-+        return;
-     case 0xff:
-         qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
-         return;
-@@ -250,6 +253,17 @@ static void init_boot_rom(void)
-         0x240D00FF,   /* li      t1, 0xff                                     */
-         0xA18D0000,   /* sb      t1, (t0)                                     */
-         0x1000FFFF,   /* 1:  b   1b                                           */
-+        0x00000000,   /* nop                                                  */
-+                      /* Suspend                                              */
-+        0x3C0C9000,   /* dli     t0, 0x9000000010080010                       */
-+        0x358C0000,
-+        0x000C6438,
-+        0x358C1008,
-+        0x000C6438,
-+        0x358C0010,
-+        0x240D0001,   /* li      t1, 0x01                                     */
-+        0xA18D0000,   /* sb      t1, (t0)                                     */
-+        0x03e00008,   /* jr      ra                                           */
-         0x00000000    /* nop                                                  */
-     };
- 
-@@ -274,6 +288,10 @@ static void fw_conf_init(unsigned long ram_size)
-     fw_cfg_add_i64(fw_cfg, FW_CFG_RAM_SIZE, (uint64_t)ram_size);
-     fw_cfg_add_i32(fw_cfg, FW_CFG_MACHINE_VERSION, 1);
-     fw_cfg_add_i64(fw_cfg, FW_CFG_CPU_FREQ, get_cpu_freq_hz());
-+
-+    uint8_t suspend[6] = {128, 0, 0, 129, 128, 128};
-+    fw_cfg_add_file(fw_cfg, "etc/system-states", g_memdup(suspend, 6), 6);
-+
-     qemu_register_boot_set(fw_cfg_boot_set, fw_cfg);
- }
- 
-@@ -551,6 +569,7 @@ static void mips_loongson3_virt_init(MachineState *machine)
-                            machine->ram, 0, virt_memmap[VIRT_LOWMEM].size);
-     memory_region_init_io(iomem, NULL, &loongson3_pm_ops,
-                            NULL, "loongson3_pm", virt_memmap[VIRT_PM].size);
-+    qemu_register_wakeup_support();
- 
-     memory_region_add_subregion(address_space_mem,
-                       virt_memmap[VIRT_LOWMEM].base, ram);
+It should be fixed with the next posting!
 
----
-base-commit: d762bf97931b58839316b68a570eecc6143c9e3e
-change-id: 20240508-loongson3v-suspend-cdd33a169eab
+Stefano
 
-Best regards,
--- 
-Jiaxun Yang <jiaxun.yang@flygoat.com>
+>
+>> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+>> ---
+>>  subprojects/libvhost-user/libvhost-user.c | 1 +
+>>  1 file changed, 1 insertion(+)
+>>
+>> diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
+>> index a879149fef..22bea0c775 100644
+>> --- a/subprojects/libvhost-user/libvhost-user.c
+>> +++ b/subprojects/libvhost-user/libvhost-user.c
+>> @@ -632,6 +632,7 @@ vu_message_write(VuDev *dev, int conn_fd, VhostUserMsg *vmsg)
+>>          memcpy(CMSG_DATA(cmsg), vmsg->fds, fdsize);
+>>      } else {
+>>          msg.msg_controllen = 0;
+>> +        msg.msg_control = NULL;
+>>      }
+>>
+>>      do {
+>> --
+>> 2.45.0
+>>
+>
+>With regards,
+>Daniel
+>-- 
+>|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+>|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+>|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+>
 
 
