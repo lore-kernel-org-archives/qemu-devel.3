@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05EE0C25B74
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 17:48:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78F2FC25B5F
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 17:48:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4lO6-0004Eq-BQ; Wed, 08 May 2024 13:47:32 -0400
+	id 1s4lNb-0002jz-My; Wed, 08 May 2024 13:46:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lNz-0003f8-9M
- for qemu-devel@nongnu.org; Wed, 08 May 2024 13:47:25 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lNX-0002Nm-Qc
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 13:46:56 -0400
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lNw-0000rb-Ll
- for qemu-devel@nongnu.org; Wed, 08 May 2024 13:47:22 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-a59b49162aeso1043236966b.3
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 10:47:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lNV-0008NS-A3
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 13:46:55 -0400
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-51f60817e34so5567041e87.2
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 10:46:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715190437; x=1715795237; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715190411; x=1715795211; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tfa4b/yP5j4YbPKarQui7QysCN8PurfTYNdnjK8DmcY=;
- b=bgc52l6se0MGAHFB/WaKt/fb0L+jYOQn5c7ZD4vJb130N5xAV/Xbhnlsbl/nVMu/wb
- HfBWlI2G3Mp55kAFFY80l1bDMslgNx9h41vWL8IqAghfJpQfeHuSS8BJ8PnwOlYU+mDR
- C+Zs8Sa/DFCZNKZGPO1mC346dmV4OvAUbT3KL03k6U/x6AebW3xMWROJT+SHeI6smB4U
- zIN3Xh0XJyezP1XxwhegbcChSvEgHEs/aXgRJKqcaNWocd2/3LyVAFS1Eyw5hjlf4yph
- i1eQb6FlPwLdY2xf2OavomCRfg43xLfAml64Hhstd0c60Jz+JnllYzUHR7d+n4hoWFvf
- QLRQ==
+ bh=4ksHT3bB/Mu2+/CUZFpNJqWT39TDBSsmRF88s5MP6rA=;
+ b=O4Z48j9AVvCjFHDzDesqLZHTJsINN2l31GJkU9xbkek91JkL3+P7Tqc5oZnSurOgv0
+ I7ti91Ge+zxbr31k65ZGuIYEQoNGd6CwWd9l3S/PWo57i8f1VASDQkLUbEfSe9Ngnk6d
+ XMPMb7s9K9NgPgebnGd+u4w6yANQaj3bOzvNHEfp5CbnAmnc7IhqyI5LYIvNGfu9Y+ZK
+ N2RvNObdTcQy2ayr8M/wYwN3yFVql/XxNzXjH+PUdB7NAvi18dIbtJYCnZo1ffEgRONH
+ 19wDz7cAqa1joKYHwxOBTOQmRiocGWS3NqH5oI9teetHgZrJ7SUKzji7PUaOBkcNAEbO
+ 058g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715190437; x=1715795237;
+ d=1e100.net; s=20230601; t=1715190411; x=1715795211;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tfa4b/yP5j4YbPKarQui7QysCN8PurfTYNdnjK8DmcY=;
- b=WsxwnxPiLFDVGqp31MAupwtIGpyiOzbqYO9Q430J6ZtZ/x6/DMOlw1JSLj3PARMqlS
- y65oFfGtpe8p6Xxbmqr/FQ+loUW3G39dl941L5yzJpYVn++FfIM826U2cvglHB7jh7Ug
- Ts84o0cN4OXe/uuEbXG4N07WQaDvYtgpTormD3m+lTEI3E2aII8qPLZSY+BBW94jCSrb
- Duw0/9qfwvHaLoIjMl586Cf8Lz9c3cujEDg57pjjqjN5lU0LkCrNr06SuFePfK67Y7W0
- 3cpoSgepoS7YhlJPNSGWzUTjZpXuHAs82wS3gsvmcnR2coFVqYhfYIhAY1EfIfdMlE6y
- CsGA==
-X-Gm-Message-State: AOJu0YwPbVxMEmVzMWZnud1GKjFuOKiZafPVEAcUBbFxaa2Bg1rCqJCo
- 6lY5EPespNnhZJq+JCF7K3QYmwFxidOD55a7p7HxPpglo8WWEUwJ7JeTruRHtajDwXByRh28k8w
- 7
-X-Google-Smtp-Source: AGHT+IG/wbch7inn3YgxYi376mBfCwdGm+cxn0FK5VL+GS+Toy3wWLtJKjb8TrQWhmb6vUgB2IDEyg==
-X-Received: by 2002:a50:bb05:0:b0:572:7c99:a280 with SMTP id
- 4fb4d7f45d1cf-5731d9d4572mr2221467a12.15.1715190437587; 
- Wed, 08 May 2024 10:47:17 -0700 (PDT)
+ bh=4ksHT3bB/Mu2+/CUZFpNJqWT39TDBSsmRF88s5MP6rA=;
+ b=i3Hu1tBO1+O3UoCAWziqvia+gG3bUoFI7GXQD2+tzai+eLBIGDUXp5zlPr+rKmWHBU
+ 3GD8R37pzVC6BcKDoDDgiay+Bijw6Z80AEr0fv3wg1i6vFkiAO5tEVsCTeFlvEKGChgu
+ rPepF70xy9dLKthaHOdlvJJwsmvLp40tUPl20jhyBjGlVQRfRzyd/ri0Cue4wUNea9Iu
+ 2YTEQqYVzwSbt/0cvAxjeHiWcBOOUNdNyyxRcG4VQZ7igMy9ewpU517GCeRy8wwCGNpg
+ nay6Y+Acni5RzkgrUwi4cEwyCB2sRVy+GSbND9UBFteYpxZ3Fl2wepaW2qPE5vHVp5SH
+ IXVQ==
+X-Gm-Message-State: AOJu0YwFPY7kEpYtBCefKbrKPJlFKMj80pigBEyPLR6BgUG2hUky8nQs
+ WT6n0C9MJ7pnIWmrLJ5rhP3TFK9WV2Z9AKxoE5cNx04Na6aWHlOvLpuEurLt1NFnVCn2MVlO5Pu
+ +
+X-Google-Smtp-Source: AGHT+IF3DwLW/VGQCis1GT3b/8D7+Buh8NcG6JCXcSNfw3SrPAl9nHmQuI3jejdB5UUXRn9DxRVV3Q==
+X-Received: by 2002:a05:6512:3b92:b0:51e:f68b:d266 with SMTP id
+ 2adb3069b0e04-5217cc42a62mr2596591e87.50.1715190410789; 
+ Wed, 08 May 2024 10:46:50 -0700 (PDT)
 Received: from m1x-phil.lan (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
  [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
- o5-20020aa7c7c5000000b00572c25023b1sm7792892eds.0.2024.05.08.10.47.16
+ q8-20020a170906a08800b00a59ce3ec763sm3925589ejy.154.2024.05.08.10.46.49
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 08 May 2024 10:47:17 -0700 (PDT)
+ Wed, 08 May 2024 10:46:50 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 23/26] hw/intc/loongarch_ipi: Remove pointless MAX_CPU check
-Date: Wed,  8 May 2024 19:45:07 +0200
-Message-ID: <20240508174510.60470-24-philmd@linaro.org>
+Subject: [PULL 18/26] hw/loongarch: move memory map to boot.c
+Date: Wed,  8 May 2024 19:45:02 +0200
+Message-ID: <20240508174510.60470-19-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240508174510.60470-1-philmd@linaro.org>
 References: <20240508174510.60470-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,94 +95,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Since cpuid will be checked by ipi_getcpu anyway, there is
-no point to enforce MAX_CPU here.
+Ensure that it can be used even if virt.c is not included in the build, as
+is the case for --without-default-devices.
 
-This also saved us from including loongarch board header.
-
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240508-loongson3-ipi-v1-1-1a7b67704664@flygoat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20240507145135.270803-1-pbonzini@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/intc/loongarch_ipi.c | 19 ++-----------------
- hw/intc/trace-events    |  2 --
- 2 files changed, 2 insertions(+), 19 deletions(-)
+ include/hw/loongarch/boot.h | 10 ++++++++++
+ include/hw/loongarch/virt.h | 10 ----------
+ hw/loongarch/boot.c         |  3 +++
+ hw/loongarch/virt.c         |  3 ---
+ .gitlab-ci.d/buildtest.yml  |  2 +-
+ 5 files changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/hw/intc/loongarch_ipi.c b/hw/intc/loongarch_ipi.c
-index a184112b09..44b3b9c138 100644
---- a/hw/intc/loongarch_ipi.c
-+++ b/hw/intc/loongarch_ipi.c
-@@ -6,6 +6,7 @@
-  */
+diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
+index 4ebcc89dcf..b3b870df1f 100644
+--- a/include/hw/loongarch/boot.h
++++ b/include/hw/loongarch/boot.h
+@@ -104,6 +104,16 @@ struct loongarch_boot_info {
+     uint64_t a0, a1, a2;
+ };
  
- #include "qemu/osdep.h"
-+#include "hw/boards.h"
- #include "hw/sysbus.h"
- #include "hw/intc/loongarch_ipi.h"
- #include "hw/irq.h"
-@@ -13,9 +14,8 @@
- #include "qapi/error.h"
- #include "qemu/log.h"
- #include "exec/address-spaces.h"
--#include "hw/loongarch/virt.h"
- #include "migration/vmstate.h"
--#include "target/loongarch/internals.h"
-+#include "target/loongarch/cpu.h"
- #include "trace.h"
++extern struct memmap_entry *memmap_table;
++extern unsigned memmap_entries;
++
++struct memmap_entry {
++    uint64_t address;
++    uint64_t length;
++    uint32_t type;
++    uint32_t reserved;
++};
++
+ void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info);
  
- static MemTxResult loongarch_ipi_readl(void *opaque, hwaddr addr,
-@@ -122,11 +122,6 @@ static MemTxResult mail_send(uint64_t val, MemTxAttrs attrs)
-     CPUState *cs;
+ #endif /* HW_LOONGARCH_BOOT_H */
+diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+index 4e14bf6060..fdbd2b146f 100644
+--- a/include/hw/loongarch/virt.h
++++ b/include/hw/loongarch/virt.h
+@@ -37,16 +37,6 @@
  
-     cpuid = extract32(val, 16, 10);
--    if (cpuid >= LOONGARCH_MAX_CPUS) {
--        trace_loongarch_ipi_unsupported_cpuid("IOCSR_MAIL_SEND", cpuid);
--        return MEMTX_DECODE_ERROR;
--    }
--
-     cs = ipi_getcpu(cpuid);
-     if (cs == NULL) {
-         return MEMTX_DECODE_ERROR;
-@@ -146,11 +141,6 @@ static MemTxResult any_send(uint64_t val, MemTxAttrs attrs)
-     CPUState *cs;
+ #define FDT_BASE                0x100000
  
-     cpuid = extract32(val, 16, 10);
--    if (cpuid >= LOONGARCH_MAX_CPUS) {
--        trace_loongarch_ipi_unsupported_cpuid("IOCSR_ANY_SEND", cpuid);
--        return MEMTX_DECODE_ERROR;
--    }
+-extern struct memmap_entry *memmap_table;
+-extern unsigned memmap_entries;
 -
-     cs = ipi_getcpu(cpuid);
-     if (cs == NULL) {
-         return MEMTX_DECODE_ERROR;
-@@ -201,11 +191,6 @@ static MemTxResult loongarch_ipi_writel(void *opaque, hwaddr addr, uint64_t val,
-         break;
-     case IOCSR_IPI_SEND:
-         cpuid = extract32(val, 16, 10);
--        if (cpuid >= LOONGARCH_MAX_CPUS) {
--            trace_loongarch_ipi_unsupported_cpuid("IOCSR_IPI_SEND", cpuid);
--            return MEMTX_DECODE_ERROR;
--        }
+-struct memmap_entry {
+-    uint64_t address;
+-    uint64_t length;
+-    uint32_t type;
+-    uint32_t reserved;
+-};
 -
-         /* IPI status vector */
-         vector = extract8(val, 0, 5);
-         cs = ipi_getcpu(cpuid);
-diff --git a/hw/intc/trace-events b/hw/intc/trace-events
-index 47340b5bc1..a979784f9b 100644
---- a/hw/intc/trace-events
-+++ b/hw/intc/trace-events
-@@ -294,8 +294,6 @@ sh_intc_set(int id, int enable) "setting interrupt group %d to %d"
- # loongarch_ipi.c
- loongarch_ipi_read(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x%"PRIx64 "val: 0x%"PRIx64
- loongarch_ipi_write(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x%"PRIx64 "val: 0x%"PRIx64
--loongarch_ipi_unsupported_cpuid(const char *s, uint32_t cpuid) "%s unsupported cpuid 0x%" PRIx32
+ struct LoongArchMachineState {
+     /*< private >*/
+     MachineState parent_obj;
+diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+index 7d1630b2e7..03f6301a77 100644
+--- a/hw/loongarch/boot.c
++++ b/hw/loongarch/boot.c
+@@ -15,6 +15,9 @@
+ #include "sysemu/reset.h"
+ #include "sysemu/qtest.h"
+ 
++struct memmap_entry *memmap_table;
++unsigned memmap_entries;
++
+ ram_addr_t initrd_offset;
+ uint64_t initrd_size;
+ 
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index c0999878df..504e1fb349 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -516,9 +516,6 @@ static void virt_powerdown_req(Notifier *notifier, void *opaque)
+     acpi_send_event(s->acpi_ged, ACPI_POWER_DOWN_STATUS);
+ }
+ 
+-struct memmap_entry *memmap_table;
+-unsigned memmap_entries;
 -
- # loongarch_pch_pic.c
- loongarch_pch_pic_irq_handler(int irq, int level) "irq %d level %d"
- loongarch_pch_pic_low_readw(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x%"PRIx64 "val: 0x%" PRIx64
+ static void memmap_add_entry(uint64_t address, uint64_t length, uint32_t type)
+ {
+     /* Ensure there are no duplicate entries. */
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index e9402a68a7..bab6194564 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -650,7 +650,7 @@ build-tci:
+ # Check our reduced build configurations
+ # requires libfdt: aarch64, arm, i386, loongarch64, microblaze, microblazeel,
+ #   mips64el, or1k, ppc, ppc64, riscv32, riscv64, rx, x86_64
+-# does not build without boards: i386, loongarch64, s390x, sh4, sh4eb, x86_64
++# does not build without boards: i386, s390x, sh4, sh4eb, x86_64
+ build-without-defaults:
+   extends: .native_build_job_template
+   needs:
 -- 
 2.41.0
 
