@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA311C04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 10:37:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD9B6C04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 10:39:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4ef8-0000uB-FF; Wed, 08 May 2024 06:36:38 -0400
+	id 1s4ei9-0002X5-1D; Wed, 08 May 2024 06:39:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4ef7-0000tf-4z
- for qemu-devel@nongnu.org; Wed, 08 May 2024 06:36:37 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4ei5-0002WB-R3
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 06:39:41 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4ef5-00068q-IW
- for qemu-devel@nongnu.org; Wed, 08 May 2024 06:36:36 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-a59c04839caso943421566b.2
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 03:36:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4ei2-0006xW-Nr
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 06:39:41 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a59c0a6415fso965187966b.1
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 03:39:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715164594; x=1715769394; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715164777; x=1715769577; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=XW9LpS1IbXUstiaFxl42nMLceOCHN/O69a7yEHMHlgw=;
- b=FYZCrNXYy4MOJOQJGaTiJhc0x+i6LeB40yzzaCBolo0MBUz4rMkqAZW8sKUzR9tL23
- B0/8cLz9H6pZNH2ADHugphHcuc/hhlE4KS+xDfZGrxnMmUBa9el+u3fx4PZVtiNyeCjz
- gABAb8IM7q29BoWX1oJ/Ey35MH65EYpGXVeyYyWCx71l2khj1AsIiD9IOl5nfBVlVmhk
- ekZ6uVK08IbTOaI4YKckx1MKUr6ugZO52TJDxqmokX47KGSpR+XQTUHIOAYybzPFmzBY
- DiB7XSYjY0Rc3iPA+uw0znFsfAOL/HUGpUKfLbDX+/PA6djZ1pxCSv1JldFtsZOId3gc
- 4f+A==
+ bh=tZSb4kex2VFiwM4IXr6Tp6GwJBex9wUMrGNtxG3oTbE=;
+ b=XT8HZGwxqPCYVv0q+0vnfGx8oPikcB6Bm0o2grBRlHNLhU/sQtT5+iBp6+bIbYf5Pw
+ cWy/G3hbLfx530zT6/mioAJT9Lt4kYTx5t2JLVc8/ZT5Ir2PWWn847rSj16+y3d9Zo3u
+ vM5bdwZ/kGLyDwLeaQKWKAGeRqd7hknDngjnERLGIdhlURfJTpqo5Zfw2JgIC8ifQoF4
+ vm7+TW/SRGuoFKyK1enFXLzD5sNnSnQPXK+Nc700VpRvsLpxCZcQPt/bN03xyqXA9cY/
+ y3KIay1YNS5hslPMWokW/++fwxRTGtcq4vjTO8CDtgtCaYQ4GCuTa01EbLkfm2ho/Np7
+ StxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715164594; x=1715769394;
+ d=1e100.net; s=20230601; t=1715164777; x=1715769577;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XW9LpS1IbXUstiaFxl42nMLceOCHN/O69a7yEHMHlgw=;
- b=D5lZzZYqwSakBya6NodvAuYLMxvlKZHzGoZZiwn1Zgm11rkIrVs1B13xWUY0CtMYBd
- RIoTNMiP1TlqaWK9ZEAFXNQoTouGalbOZxGqz6w8svcTQsXTVNB5fH4avEPNYVBXBNml
- BXz2F/ZR089wSOiNsdoKSb6TCImwjmxcuX8a1yPBCq24QkAXjZTFiSwpMhMdSskxq8Xv
- Yj49V5MH2Wu3W3Y2/U0+1R+izA8qo9/TimuxUIt5JyA2QDEFpnrTwVUxuQjGpc1Ertzl
- vX1Atp5bBgebncqSdepci/2WL2vJi2gTjn3g+HuNK7v2YbYpw7NOh3Y0DbsO21eMtKPR
- r6TA==
+ bh=tZSb4kex2VFiwM4IXr6Tp6GwJBex9wUMrGNtxG3oTbE=;
+ b=r7SgMmRRKcKzjg79lyAS6rR9kljkAxwUQTAQE4sQaRjXy/gCXA1xX6HN/qZRha/2e0
+ FpBUgLL9995+sEjoKYpic3v+HJKqpyDMdr9TQXAtgxVnWjqgaGhZuPigcW9H6IIUysJJ
+ ExDSTthLyj6eyLrrr9PsQCrutDhhFNNX2KGlXEh/ENBcGH7bPQgQUjIcJOe6igRRtnrn
+ dEAORjg/Njl9eYxEJF7SktEc6Ths/X+gtE8C7/f9eDo0KePKoN1IRQatq8qaaLPEj/PP
+ C3eo7vCVopUrzu6pen1cye+SXOYnFx7Yqx4e2b6dJRnLUS5CziQKy8Hck56ILSjswdTg
+ H3Jg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXiZODwN+tDWz+sGdv2BvjauoibwOytmfS/mHR+8rTwFd+Ehc7vanorwocnj3EBnSHbgfn0L49l+8EkI5e9IHUOmGs0UUY=
-X-Gm-Message-State: AOJu0YyVsHNOqHyu/7sAqAJk0vtn5cxEjHNh4P8hAPbz8ilQNnCoMrqe
- 6WzufKIGC45ojvZ6lcC6mjWiPwrwWUXxb+aNk+kJlj0mpS9vav7N625cYHZmyWk=
-X-Google-Smtp-Source: AGHT+IEVVVLSyUiD/R/7P4eziGIJLJJwgEoMoxOcafGp+j9P3nSruJP0zHwvVU9NkRwEMMB0iG2T5Q==
-X-Received: by 2002:a50:9b42:0:b0:572:a711:3daf with SMTP id
- 4fb4d7f45d1cf-5731da6975amr1313090a12.40.1715164593875; 
- Wed, 08 May 2024 03:36:33 -0700 (PDT)
+ AJvYcCXJ+3Xiu/g/RtpiSyBbE3/X5c5QfRC3U6ahFkJFjG5ZMJ5vjiePuNxkZfht9t8csvAEy3PyCiXycbN9e1RaIrpVKaUukPc=
+X-Gm-Message-State: AOJu0YyxnvT4kfSf4jwJF7bl6dVgHc4oujcSTc5YYAePZgbEZpyEXqHY
+ 8ceYXpsKDPeUKnj6zVP4QRk2ejwR7s+vE7vM1N7p54t7YpD+MlxH/Uy6nQaiwAQ=
+X-Google-Smtp-Source: AGHT+IHp9WIi5eGHu9irLbTg1W7qM8C/6iPuPRu3j88iGmQkkQR/JVB/MInmFI1mfJrjHmrqtjr3PA==
+X-Received: by 2002:a17:906:6d7:b0:a58:832d:c3e8 with SMTP id
+ a640c23a62f3a-a59fb9c88b2mr144609766b.58.1715164777064; 
+ Wed, 08 May 2024 03:39:37 -0700 (PDT)
 Received: from [192.168.69.100] (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
  [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
- dj28-20020a05640231bc00b00572c2a849acsm7396504edb.21.2024.05.08.03.36.31
+ bo15-20020a170906d04f00b00a59b87dd0bbsm4650814ejb.161.2024.05.08.03.39.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 May 2024 03:36:33 -0700 (PDT)
-Message-ID: <74f4593a-eada-40cc-8371-0f53a62f39ad@linaro.org>
-Date: Wed, 8 May 2024 12:36:30 +0200
+ Wed, 08 May 2024 03:39:36 -0700 (PDT)
+Message-ID: <bde68851-04a0-424f-9412-69d11b9a9caf@linaro.org>
+Date: Wed, 8 May 2024 12:39:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 08/12] libvhost-user: enable it on any POSIX system
+Subject: Re: [PATCH v4 03/12] libvhost-user: mask F_INFLIGHT_SHMFD if memfd is
+ not supported
 To: Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>, Coiby Xu <Coiby.Xu@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
@@ -77,21 +78,21 @@ Cc: Jason Wang <jasowang@redhat.com>, Coiby Xu <Coiby.Xu@gmail.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
 References: <20240508074457.12367-1-sgarzare@redhat.com>
- <20240508074457.12367-9-sgarzare@redhat.com>
+ <20240508074457.12367-4-sgarzare@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240508074457.12367-9-sgarzare@redhat.com>
+In-Reply-To: <20240508074457.12367-4-sgarzare@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x634.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,39 +109,46 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/5/24 09:44, Stefano Garzarella wrote:
-> The vhost-user protocol is not really Linux-specific so let's enable
-> libvhost-user for any POSIX system.
+> libvhost-user will panic when receiving VHOST_USER_GET_INFLIGHT_FD
+> message if MFD_ALLOW_SEALING is not defined, since it's not able
+> to create a memfd.
 > 
-> Compiling it on macOS and FreeBSD some problems came up:
-> - avoid to include linux/vhost.h which is avaibale only on Linux
-
-"available"
-
->    (vhost_types.h contains many of the things we need)
-> - macOS doesn't provide sys/endian.h, so let's define them
->    (note: libvhost-user doesn't include qemu's headers, so we can't use
-
-"QEMU"
-
->     use "qemu/bswap.h")
-> - define eventfd_[write|read] as write/read wrapper when system doesn't
->    provide those (e.g. macOS)
-> - copy SEAL defines from include/qemu/memfd.h to make the code works
->    on FreeBSD where MFD_ALLOW_SEALING is defined
-
-Alternatively add in subprojects/libvhost-user/include/osdep.h.
-
-> - define MAP_NORESERVE if it's not defined (e.g. on FreeBSD)
+> VHOST_USER_GET_INFLIGHT_FD is used only if
+> VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD is negotiated. So, let's mask
+> that feature if the backend is not able to properly handle these
+> messages.
 > 
 > Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
 > ---
->   meson.build                               |  2 +-
->   subprojects/libvhost-user/libvhost-user.h |  2 +-
->   subprojects/libvhost-user/libvhost-user.c | 60 +++++++++++++++++++++--
->   3 files changed, 59 insertions(+), 5 deletions(-)
+>   subprojects/libvhost-user/libvhost-user.c | 10 ++++++++++
+>   1 file changed, 10 insertions(+)
+> 
+> diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
+> index a11afd1960..1c361ffd51 100644
+> --- a/subprojects/libvhost-user/libvhost-user.c
+> +++ b/subprojects/libvhost-user/libvhost-user.c
+> @@ -1674,6 +1674,16 @@ vu_get_protocol_features_exec(VuDev *dev, VhostUserMsg *vmsg)
+>           features |= dev->iface->get_protocol_features(dev);
+>       }
+>   
+
+Maybe move the #ifndef here?
+
+> +    /*
+> +     * If MFD_ALLOW_SEALING is not defined, we are not able to handle
+> +     * VHOST_USER_GET_INFLIGHT_FD messages, since we can't create a memfd.
+> +     * Those messages are used only if VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD
+> +     * is negotiated. A device implementation can enable it, so let's mask
+> +     * it to avoid a runtime panic.
+> +     */
+> +#ifndef MFD_ALLOW_SEALING
+> +    features &= ~(1ULL << VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD);
+> +#endif
+>       vmsg_set_reply_u64(vmsg, features);
+>       return true;
+>   }
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
 
 
