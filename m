@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C978C25B74
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 23:40:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78E9DC04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 23:40:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4qpY-0002zG-Ma; Wed, 08 May 2024 19:36:12 -0400
+	id 1s4qpc-0003DR-W0; Wed, 08 May 2024 19:36:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s4qpV-0002or-Nd; Wed, 08 May 2024 19:36:09 -0400
+ id 1s4qpa-00034p-CV; Wed, 08 May 2024 19:36:14 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s4qpT-0002Sg-JO; Wed, 08 May 2024 19:36:09 -0400
+ id 1s4qpY-0002Uh-H7; Wed, 08 May 2024 19:36:14 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id AB5114E64CB;
- Thu, 09 May 2024 01:36:05 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id D8ED34E6013;
+ Thu, 09 May 2024 01:36:10 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id mWp1tNPNgyoc; Thu,  9 May 2024 01:36:03 +0200 (CEST)
+ with ESMTP id VgiCKJ3EABED; Thu,  9 May 2024 01:36:08 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id B6F9B4E6426; Thu, 09 May 2024 01:36:03 +0200 (CEST)
-Message-Id: <2ff176c8ab216ff63e7b7708f3390594532052ec.1715209155.git.balaton@eik.bme.hu>
+ id EBE4B4E65D7; Thu, 09 May 2024 01:36:08 +0200 (CEST)
+Message-Id: <c61120b1b6f46aaf8e4c6d54be02136c65247691.1715209155.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1715209155.git.balaton@eik.bme.hu>
 References: <cover.1715209155.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v4 01/33] target/ppc: Fix gen_sc to use correct nip
+Subject: [PATCH v4 06/33] target/ppc/mmu_common.c: Remove unneeded local
+ variable
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -39,7 +40,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Thu, 09 May 2024 01:36:03 +0200 (CEST)
+Date: Thu, 09 May 2024 01:36:08 +0200 (CEST)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -62,161 +63,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Most exceptions are raised with nip pointing to the faulting
-instruction but the sc instruction generating a syscall exception
-leaves nip pointing to next instruction. Fix gen_sc to not use
-gen_exception_err() which sets nip back but correctly set nip to
-pc_next so we don't have to patch this in the exception handlers.
+In mmubooke_check_tlb() and mmubooke206_check_tlb() we can assign the
+value directly the the destination, no need to have a separate local
+variable for it.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- linux-user/ppc/cpu_loop.c |  2 --
- target/ppc/excp_helper.c  | 43 ++-------------------------------------
- target/ppc/translate.c    |  6 ++----
- 3 files changed, 4 insertions(+), 47 deletions(-)
+ target/ppc/mmu_common.c | 30 +++++++++++++-----------------
+ 1 file changed, 13 insertions(+), 17 deletions(-)
 
-diff --git a/linux-user/ppc/cpu_loop.c b/linux-user/ppc/cpu_loop.c
-index 02204ad8be..0ebf7e9808 100644
---- a/linux-user/ppc/cpu_loop.c
-+++ b/linux-user/ppc/cpu_loop.c
-@@ -332,12 +332,10 @@ void cpu_loop(CPUPPCState *env)
-              * in syscalls.
-              */
-             env->crf[0] &= ~0x1;
--            env->nip += 4;
-             ret = do_syscall(env, env->gpr[0], env->gpr[3], env->gpr[4],
-                              env->gpr[5], env->gpr[6], env->gpr[7],
-                              env->gpr[8], 0, 0);
-             if (ret == -QEMU_ERESTARTSYS) {
--                env->nip -= 4;
-                 break;
-             }
-             if (ret == (target_ulong)(-QEMU_ESIGRETURN)) {
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 0712098cf7..92fe535815 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -116,7 +116,7 @@ static void dump_syscall(CPUPPCState *env)
-                   ppc_dump_gpr(env, 0), ppc_dump_gpr(env, 3),
-                   ppc_dump_gpr(env, 4), ppc_dump_gpr(env, 5),
-                   ppc_dump_gpr(env, 6), ppc_dump_gpr(env, 7),
--                  ppc_dump_gpr(env, 8), env->nip);
-+                  ppc_dump_gpr(env, 8), env->nip - 4);
- }
- 
- static void dump_hcall(CPUPPCState *env)
-@@ -131,7 +131,7 @@ static void dump_hcall(CPUPPCState *env)
-                   ppc_dump_gpr(env, 7), ppc_dump_gpr(env, 8),
-                   ppc_dump_gpr(env, 9), ppc_dump_gpr(env, 10),
-                   ppc_dump_gpr(env, 11), ppc_dump_gpr(env, 12),
--                  env->nip);
-+                  env->nip - 4);
- }
- 
- #ifdef CONFIG_TCG
-@@ -516,12 +516,6 @@ static void powerpc_excp_40x(PowerPCCPU *cpu, int excp)
-         break;
-     case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
-         dump_syscall(env);
--
--        /*
--         * We need to correct the NIP which in this case is supposed
--         * to point to the next instruction
--         */
--        env->nip += 4;
-         break;
-     case POWERPC_EXCP_FIT:       /* Fixed-interval timer interrupt           */
-         trace_ppc_excp_print("FIT");
-@@ -632,12 +626,6 @@ static void powerpc_excp_6xx(PowerPCCPU *cpu, int excp)
-         break;
-     case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
-         dump_syscall(env);
--
--        /*
--         * We need to correct the NIP which in this case is supposed
--         * to point to the next instruction
--         */
--        env->nip += 4;
-         break;
-     case POWERPC_EXCP_FPU:       /* Floating-point unavailable exception     */
-     case POWERPC_EXCP_DECR:      /* Decrementer exception                    */
-@@ -780,13 +768,6 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
-         } else {
-             dump_syscall(env);
-         }
--
--        /*
--         * We need to correct the NIP which in this case is supposed
--         * to point to the next instruction
--         */
--        env->nip += 4;
--
-         /*
-          * The Virtual Open Firmware (VOF) relies on the 'sc 1'
-          * instruction to communicate with QEMU. The pegasos2 machine
-@@ -932,13 +913,6 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
-         } else {
-             dump_syscall(env);
-         }
--
--        /*
--         * We need to correct the NIP which in this case is supposed
--         * to point to the next instruction
--         */
--        env->nip += 4;
--
-         /*
-          * The Virtual Open Firmware (VOF) relies on the 'sc 1'
-          * instruction to communicate with QEMU. The pegasos2 machine
-@@ -1098,12 +1072,6 @@ static void powerpc_excp_booke(PowerPCCPU *cpu, int excp)
-         break;
-     case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
-         dump_syscall(env);
--
--        /*
--         * We need to correct the NIP which in this case is supposed
--         * to point to the next instruction
--         */
--        env->nip += 4;
-         break;
-     case POWERPC_EXCP_FPU:       /* Floating-point unavailable exception     */
-     case POWERPC_EXCP_APU:       /* Auxiliary processor unavailable          */
-@@ -1428,13 +1396,6 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
-         } else {
-             dump_syscall(env);
-         }
--
--        /*
--         * We need to correct the NIP which in this case is supposed
--         * to point to the next instruction
--         */
--        env->nip += 4;
--
-         /* "PAPR mode" built-in hypercall emulation */
-         if (lev == 1 && books_vhyp_handles_hcall(cpu)) {
-             PPCVirtualHypervisorClass *vhc =
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 93ffec787c..fa72f17c3e 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -4479,15 +4479,13 @@ static void gen_hrfid(DisasContext *ctx)
- #endif
- static void gen_sc(DisasContext *ctx)
+diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+index f79e390306..09cbeb0052 100644
+--- a/target/ppc/mmu_common.c
++++ b/target/ppc/mmu_common.c
+@@ -628,8 +628,6 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppcemb_tlb_t *tlb,
+                               hwaddr *raddr, int *prot, target_ulong address,
+                               MMUAccessType access_type, int i)
  {
--    uint32_t lev;
+-    int prot2;
 -
-     /*
-      * LEV is a 7-bit field, but the top 6 bits are treated as a reserved
-      * field (i.e., ignored). ISA v3.1 changes that to 5 bits, but that is
-      * for Ultravisor which TCG does not support, so just ignore the top 6.
-      */
--    lev = (ctx->opcode >> 5) & 0x1;
--    gen_exception_err(ctx, POWERPC_SYSCALL, lev);
-+    uint32_t lev = (ctx->opcode >> 5) & 0x1;
-+    gen_exception_err_nip(ctx, POWERPC_SYSCALL, lev, ctx->base.pc_next);
+     if (!mmubooke_check_pid(env, tlb, raddr, address, i)) {
+         qemu_log_mask(CPU_LOG_MMU, "%s: TLB entry not found\n", __func__);
+         return -1;
+@@ -644,17 +642,16 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppcemb_tlb_t *tlb,
+     }
+ 
+     if (FIELD_EX64(env->msr, MSR, PR)) {
+-        prot2 = tlb->prot & 0xF;
++        *prot = tlb->prot & 0xF;
+     } else {
+-        prot2 = (tlb->prot >> 4) & 0xF;
++        *prot = (tlb->prot >> 4) & 0xF;
+     }
+-    *prot = prot2;
+-    if (prot2 & prot_for_access_type(access_type)) {
++    if (*prot & prot_for_access_type(access_type)) {
+         qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
+         return 0;
+     }
+ 
+-    qemu_log_mask(CPU_LOG_MMU, "%s: no prot match: %x\n", __func__, prot2);
++    qemu_log_mask(CPU_LOG_MMU, "%s: no prot match: %x\n", __func__, *prot);
+     return access_type == MMU_INST_FETCH ? -3 : -2;
  }
  
- #if defined(TARGET_PPC64)
+@@ -795,7 +792,6 @@ static int mmubooke206_check_tlb(CPUPPCState *env, ppcmas_tlb_t *tlb,
+                                  target_ulong address,
+                                  MMUAccessType access_type, int mmu_idx)
+ {
+-    int prot2 = 0;
+     uint32_t epid;
+     bool as, pr;
+     bool use_epid = mmubooke206_get_as(env, mmu_idx, &epid, &as, &pr);
+@@ -841,34 +837,34 @@ found_tlb:
+         return -1;
+     }
+ 
++    *prot = 0;
+     if (pr) {
+         if (tlb->mas7_3 & MAS3_UR) {
+-            prot2 |= PAGE_READ;
++            *prot |= PAGE_READ;
+         }
+         if (tlb->mas7_3 & MAS3_UW) {
+-            prot2 |= PAGE_WRITE;
++            *prot |= PAGE_WRITE;
+         }
+         if (tlb->mas7_3 & MAS3_UX) {
+-            prot2 |= PAGE_EXEC;
++            *prot |= PAGE_EXEC;
+         }
+     } else {
+         if (tlb->mas7_3 & MAS3_SR) {
+-            prot2 |= PAGE_READ;
++            *prot |= PAGE_READ;
+         }
+         if (tlb->mas7_3 & MAS3_SW) {
+-            prot2 |= PAGE_WRITE;
++            *prot |= PAGE_WRITE;
+         }
+         if (tlb->mas7_3 & MAS3_SX) {
+-            prot2 |= PAGE_EXEC;
++            *prot |= PAGE_EXEC;
+         }
+     }
+-    *prot = prot2;
+-    if (prot2 & prot_for_access_type(access_type)) {
++    if (*prot & prot_for_access_type(access_type)) {
+         qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
+         return 0;
+     }
+ 
+-    qemu_log_mask(CPU_LOG_MMU, "%s: no prot match: %x\n", __func__, prot2);
++    qemu_log_mask(CPU_LOG_MMU, "%s: no prot match: %x\n", __func__, *prot);
+     return access_type == MMU_INST_FETCH ? -3 : -2;
+ }
+ 
 -- 
 2.30.9
 
