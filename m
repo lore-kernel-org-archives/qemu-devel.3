@@ -4,76 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B9D0C04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 09:54:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89BC9C04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 09:58:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4dzm-0007JQ-Vl; Wed, 08 May 2024 05:53:55 -0400
+	id 1s4e45-0001I9-Id; Wed, 08 May 2024 05:58:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4dzk-0007J4-Vx
- for qemu-devel@nongnu.org; Wed, 08 May 2024 05:53:53 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4e43-0001Hl-9x
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 05:58:19 -0400
+Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4dzi-0005xx-PM
- for qemu-devel@nongnu.org; Wed, 08 May 2024 05:53:52 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-a4702457ccbso1090544166b.3
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 02:53:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4e40-0007zm-A6
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 05:58:19 -0400
+Received: by mail-lf1-x131.google.com with SMTP id
+ 2adb3069b0e04-51fdc9af005so6306163e87.3
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 02:58:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715162028; x=1715766828; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715162294; x=1715767094; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Kz6J1+pLsobBLcj0x7rTc+o+bMuujCnGRo9EUUcj9JI=;
- b=zXoppQatERbbiBLHVhULl6RhfO9oP6VEZYN/MBrHMS1LDewRDOFraZpgsMsT+NHZEk
- c5NQgXkvOMT5XN3dDqexhlErQW3fRUUiCRWXf41jR3VfKMyuVU7RJytl9lZW5ciBGip3
- Z2xVSmQzQNRP2vrmtRFRutlynf3oOkcRj3GK5JjaUPj19HA21wqbgVTPXhZBBFXOrWFF
- Zvn85kLJscSdVqcrJ8TMNbUOVFDohXx4h74g6n8tR0E4Zy4wJ+x7NSo00Y4q7yZJ9xxk
- jEJLPvVagh3hp1Cr7VpcPb0sJt6uS8aPa8wX9iYIK4vzmRG+BgUtHvX9oagACygx9jZe
- vjug==
+ bh=SiAt7yhXVrya0kacI9iqGWaYfivCpMx9tK+/08mVhWI=;
+ b=tMVz665BWhxpzRKgL/YLwyabOB5ltWYnFtK3MxCm3WnsJ+GHUfresX8RYHNgZCusN1
+ mEn9fysDYJ7FS1nbp0HSX6G6E1+FwdSu4MtIzA8otIwGoyBWJcjv4J+4rSHfAcvCQoNl
+ 2wcbajZIKQma2S/zzVYgiwFODH47r4POU4p1wcV+UUzsnvR6mkxVwxfyKkDVHdPXD/Ds
+ KxXOCC6iLb0vBwIyRCQ3hhu5iaNR4VWaicoHg7zSdFE7i93QIN0JU7hz0UnL5qUFm27/
+ xRC2nBLW02OQ6UStrTu43pCge2kdo6psNO/s8B0MF2/YpO/IbZPfwLQdD37Y6T8PV7Uu
+ Kf6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715162028; x=1715766828;
+ d=1e100.net; s=20230601; t=1715162294; x=1715767094;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Kz6J1+pLsobBLcj0x7rTc+o+bMuujCnGRo9EUUcj9JI=;
- b=EtxZFkEXpFcrbY4/fezwGP8sehl3p+OLG9st4T3qMF1MsHUPnUktYtTgqgnpNAk2yZ
- 2N9PoORfjcnqTCM3nuqoU5Vr7r4AJOsW7ZcgDpbMjEZn3JXBQJt/2BeVQJcfj2qEnzSu
- S0+MhNNi5ZMtigbeHEf8/8+w3W5lZQYkl+GJCqH1Yv5NkazfAANvdaZ3ub1RgwWWuysJ
- im5aVgzrHl6oUjjeHfXBKj2F9gM26Pxf3MSH11PeEkHedOEYJZ3RF/+MfhdUsHwvwwZo
- l8DB4vSh6DY6kmoKkbswO6QSd0P+ALtlr88P0DtKIMc3oAcKA3rxQeSvHXwfM37LsuY3
- H/4g==
-X-Gm-Message-State: AOJu0YzyXb9RzGvtwjJL2qFB1nN36NX+YYAZ5fBVu+QLElSyUM+bfDPc
- Aj45DIq+R3S7jy3ddBfBEihiRI/Ie8ioXErgq+IotwmXxZCarj0Zf3dqM3HEr0k=
-X-Google-Smtp-Source: AGHT+IEhcINjAIYOipbCTuZObiZkVM/2yRTpcq+GlIhoGZApJwRtymVGgt2rtBkWCFVam0pfO5A94Q==
-X-Received: by 2002:a50:930c:0:b0:56e:64a:2a47 with SMTP id
- 4fb4d7f45d1cf-5731da83cbfmr1203716a12.42.1715162027875; 
- Wed, 08 May 2024 02:53:47 -0700 (PDT)
+ bh=SiAt7yhXVrya0kacI9iqGWaYfivCpMx9tK+/08mVhWI=;
+ b=LOfb/Rd7QMennwCHGEe07FMLnQ+Mc9eXx3w6ZqGVEjm2p9WLDlTQA+/O4rJclcRhTW
+ dtJB4MDsVP4WGZT4Iqep76/fqx+SAYKjGbIXG+JT5Jr2ORIekTk1zgSejw9Un9KQDsV6
+ 9KGB3L/oBmf3PWUFEq+uBgPN8rac6Dt8BoQaZhc66OY+EHoOjMTFIA/v9zd5/XMNg68S
+ yI0Pn+NkM2yhnISJ+FupPEkflIVSsvsPmEPyEr/VuhN/HxQDNbPVp7yuES8yWwnwMqmB
+ tPHpQXM1EbR0k3uLS4ot94s3H/6Ncg1ruhovq1uALRrjXrLVl7waSVBKvdTHV8Gzcb2m
+ wf0A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWosKSQRtbOVRIEi+VLmuTuSQIo0rr3xnY0jagHcGiluk5AUBefyrofLaHlnqqfDlAf58f5DKwrl2S1pOL+NVN8t2QNKMo=
+X-Gm-Message-State: AOJu0Yx9j+phv+pSupQNjZIH3wTQX7c880IQlFc/E2nTTlwanXoQaBbq
+ 0QmthJjr3prvNPg/c859Zo83YMwA+YDJMEVPl8EXjSX4cAYCEgZ2sotrVXf/dG8=
+X-Google-Smtp-Source: AGHT+IHRL0Tgh4YjFFam7tY0iVc6Scgox2OODQklOm7yvrqOhNYmip9XBkylyrc1KZ93StUUlZN2AA==
+X-Received: by 2002:ac2:4472:0:b0:51a:f362:ab40 with SMTP id
+ 2adb3069b0e04-5217c373e28mr1749700e87.2.1715162293908; 
+ Wed, 08 May 2024 02:58:13 -0700 (PDT)
 Received: from [192.168.69.100] (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
  [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
- n10-20020a056402434a00b00572df643637sm5562245edc.62.2024.05.08.02.53.46
+ hb4-20020a170906b88400b00a5599f3a057sm7529067ejb.107.2024.05.08.02.58.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 May 2024 02:53:47 -0700 (PDT)
-Message-ID: <8dadea4d-ab16-4102-93e6-61559fb5b00c@linaro.org>
-Date: Wed, 8 May 2024 11:53:45 +0200
+ Wed, 08 May 2024 02:58:13 -0700 (PDT)
+Message-ID: <39752709-381d-47c7-bba3-8cf5e9ff920a@linaro.org>
+Date: Wed, 8 May 2024 11:58:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: hw/usb/hcd-ohci: Fix #1510, #303: pid not IN or OUT
-To: Cord Amfmgm <dmamfmgm@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>
-References: <CACBuX0To1QWpOTE-HfbXv=tUVWVL0=pvn-+E28EL_mWuqfZ-sw@mail.gmail.com>
- <dcaed5da-5e94-4cb6-b5b8-0a571eac371b@tls.msk.ru>
- <CACBuX0Q_JOp1xGKZjnrBguiXVcM-ApfVrOs9UQE2B7sq=f5vLQ@mail.gmail.com>
- <CACBuX0SUvsip=hj5NbE3g5gCxSmdRKbK-k=ZQz819TDEfvtXgw@mail.gmail.com>
+Subject: Re: [PATCH v2 6/6] hw/i386/pc_sysfw: Alias rather than copy isa-bios
+ region
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Sergio Lopez <slp@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Michael Roth <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20240430150643.111976-1-shentey@gmail.com>
+ <20240430150643.111976-7-shentey@gmail.com>
+ <65316058-d2e1-4250-91e6-4da22c1279ed@linaro.org>
+ <CDABAD92-BAD8-41A4-97A2-1C13C72552F8@gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CACBuX0SUvsip=hj5NbE3g5gCxSmdRKbK-k=ZQz819TDEfvtXgw@mail.gmail.com>
+In-Reply-To: <CDABAD92-BAD8-41A4-97A2-1C13C72552F8@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::131;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,139 +103,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/5/24 22:20, Cord Amfmgm wrote:
+On 8/5/24 10:17, Bernhard Beschow wrote:
 > 
 > 
-> On Wed, Apr 24, 2024 at 3:43 PM Cord Amfmgm <dmamfmgm@gmail.com 
-> <mailto:dmamfmgm@gmail.com>> wrote:
+> Am 30. April 2024 15:39:21 UTC schrieb "Philippe Mathieu-Daudé" <philmd@linaro.org>:
+>> On 30/4/24 17:06, Bernhard Beschow wrote:
+>>> In the -bios case the "isa-bios" memory region is an alias to the BIOS mapped
+>>> to the top of the 4G memory boundary. Do the same in the -pflash case, but only
+>>> for new machine versions for migration compatibility. This establishes common
+>>> behavior and makes pflash commands work in the "isa-bios" region which some
+>>> real-world legacy bioses rely on.
+>>
+>> Can you amend a diff of 'info mtree' here to see how the layout changes?
 > 
->     On Thu, Apr 18, 2024 at 10:43 AM Michael Tokarev <mjt@tls.msk.ru
->     <mailto:mjt@tls.msk.ru>> wrote:
+> Will do.
 > 
->         06.02.2024 10:13, Cord Amfmgm wrote:
->          > This changes the ohci validation to not assert if invalid
->          > data is fed to the ohci controller. The poc suggested in
->          > https://bugs.launchpad.net/qemu/+bug/1907042
->         <https://bugs.launchpad.net/qemu/+bug/1907042>
->          > and then migrated to bug #303 does the following to
->          > feed it a SETUP pid and EndPt of 1:
->          >
->          >          uint32_t MaxPacket = 64;
->          >          uint32_t TDFormat = 0;
->          >          uint32_t Skip = 0;
->          >          uint32_t Speed = 0;
->          >          uint32_t Direction = 0;  /* #define
->         OHCI_TD_DIR_SETUP 0 */
->          >          uint32_t EndPt = 1;
->          >          uint32_t FuncAddress = 0;
->          >          ed->attr = (MaxPacket << 16) | (TDFormat << 15) |
->         (Skip << 14)
->          >                     | (Speed << 13) | (Direction << 11) |
->         (EndPt << 7)
->          >                     | FuncAddress;
->          >          ed->tailp = /*TDQTailPntr= */ 0;
->          >          ed->headp = ((/*TDQHeadPntr= */ &td[0]) & 0xfffffff0)
->          >                     | (/* ToggleCarry= */ 0 << 1);
->          >          ed->next_ed = (/* NextED= */ 0 & 0xfffffff0)
->          >
->          > qemu-fuzz also caught the same issue in #1510. They are
->          > both fixed by this patch.
->          >
->          > The if (td.cbp > td.be <http://td.be>) logic in
->         ohci_service_td() causes an
->          > ohci_die(). My understanding of the OHCI spec 4.3.1.2
->          > Table 4-2 allows td.cbp to be one byte more than td.be
->         <http://td.be> to
->          > signal the buffer has zero length. The new check in qemu
->          > appears to have been added since qemu-4.2. This patch
->          > includes both fixes since they are located very close
->          > together.
->          >
->          > Signed-off-by: David Hubbard <dmamfmgm@gmail.com
->         <mailto:dmamfmgm@gmail.com>>
-> 
->         Wonder if this got lost somehow.  Or is it not needed?
-> 
->         Thanks,
-> 
->         /mjt
-> 
-> 
->     Friendly ping! Gerd, can you chime in with how you would like to
->     approach this? I still need this patch to unblock my qemu workflow -
->     custom OS development.
-> 
-> 
-> Can I please ask for an update on this? I'm attempting to figure out if 
-> this patch has been rejected and I need to resubmit / rework it at HEAD?
-> 
-> 
->          > diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
->          > index d73b53f33c..a53808126f 100644
->          > --- a/hw/usb/hcd-ohci.c
->          > +++ b/hw/usb/hcd-ohci.c
->          > @@ -927,6 +927,11 @@ static int ohci_service_td(OHCIState *ohci,
->          > struct ohci_ed *ed)
->          >       case OHCI_TD_DIR_SETUP:
->          >           str = "setup";
->          >           pid = USB_TOKEN_SETUP;
->          > +        if (OHCI_BM(ed->flags, ED_EN) > 0) {  /* setup only
->         allowed to ep 0 */
->          > +            trace_usb_ohci_td_bad_pid(str, ed->flags, td.flags);
->          > +            ohci_die(ohci);
->          > +            return 1;
->          > +        }
->          >           break;
+> Right now I have to manually sort the output to get a minimal diff. Is there a way to get a stable ordering of the memory regions? How would one fix that if this is currently impossible? With stable orderings we could have automated memory map tests which had been handy in the past.
 
-I made a comment on April 18 but it is not showing on the list...
-https://lore.kernel.org/qemu-devel/593072d7-614b-4197-9c9a-12bb70c31d31@linaro.org/
+It is stable until the guest plays with it, so it depends at which
+point in guest execution time you stop your VM to dump the mem tree.
 
-It was:
-
- > Please split in 2 different patches.
-
-Even if closely related, it simplifies the workflow to have
-single fix in single commit; for example if one is invalid,
-we can revert it and not the other.
-
->          >       default:
->          >           trace_usb_ohci_td_bad_direction(dir);
->          > @@ -936,8 +941,8 @@ static int ohci_service_td(OHCIState
->         *ohci, struct
->          > ohci_ed *ed)
->          >           if ((td.cbp & 0xfffff000) != (td.be <http://td.be>
->         & 0xfffff000)) {
->          >               len = (td.be <http://td.be> & 0xfff) + 0x1001 -
->         (td.cbp & 0xfff);
->          >           } else {
->          > -            if (td.cbp > td.be <http://td.be>) {
->          > -                trace_usb_ohci_iso_td_bad_cc_overrun(td.cbp,
->         td.be <http://td.be>);
->          > +            if (td.cbp > td.be <http://td.be> + 1) {
->          > +                trace_usb_ohci_td_bad_buf(td.cbp, td.be
->         <http://td.be>);
->          >                   ohci_die(ohci);
->          >                   return 1;
->          >               }
->          > diff --git a/hw/usb/trace-events b/hw/usb/trace-events
->          > index ed7dc210d3..b47d082fa3 100644
->          > --- a/hw/usb/trace-events
->          > +++ b/hw/usb/trace-events
->          > @@ -28,6 +28,8 @@ usb_ohci_iso_td_data_overrun(int ret,
->         ssize_t len)
->          > "DataOverrun %d > %zu"
->          >   usb_ohci_iso_td_data_underrun(int ret) "DataUnderrun %d"
->          >   usb_ohci_iso_td_nak(int ret) "got NAK/STALL %d"
->          >   usb_ohci_iso_td_bad_response(int ret) "Bad device response %d"
->          > +usb_ohci_td_bad_buf(uint32_t cbp, uint32_t be) "Bad cbp =
->         0x%x > be = 0x%x"
->          > +usb_ohci_td_bad_pid(const char *s, uint32_t edf, uint32_t
->         tdf) "Bad
->          > pid %s: ed.flags 0x%x td.flags 0x%x"
->          >   usb_ohci_port_attach(int index) "port #%d"
->          >   usb_ohci_port_detach(int index) "port #%d"
->          >   usb_ohci_port_wakeup(int index) "port #%d"
->          >
 > 
+>>
+>>> Note that in the sev_enabled() case, the "isa-bios" memory region in the -pflash
+>>> case will now also point to encrypted memory, just like it already does in the
+>>> -bios case.
+>>>
+>>> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+>>> ---
+>>>    include/hw/i386/pc.h | 1 +
+>>>    hw/i386/pc.c         | 1 +
+>>>    hw/i386/pc_piix.c    | 3 +++
+>>>    hw/i386/pc_q35.c     | 2 ++
+>>>    hw/i386/pc_sysfw.c   | 8 +++++++-
+>>>    5 files changed, 14 insertions(+), 1 deletion(-)
+>>
+>> I'm still not convinced we need a migration back compat for this...
+> 
+> A copy behaves different than an alias, thus there is a behavioral change. Whether it really matters in practice for the kind of guests we care about I can't tell. Therefore I'd keep the compat machinery.
+
+Yeah I know MST asked that, I'm not against, I'm just not convinced
+(in particular because we'll need to maintain these few lines for
+6 years).
+
+> 
+> Best regards,
+> Bernhard
+> 
+>>
+>>> diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+>>> index 82d37cb376..ac88ad4eb9 100644
+>>> --- a/hw/i386/pc_sysfw.c
+>>> +++ b/hw/i386/pc_sysfw.c
+>>> @@ -135,6 +135,7 @@ static void pc_system_flash_map(PCMachineState *pcms,
+>>>                                    MemoryRegion *rom_memory)
+>>>    {
+>>>        X86MachineState *x86ms = X86_MACHINE(pcms);
+>>> +    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
+>>>        hwaddr total_size = 0;
+>>>        int i;
+>>>        BlockBackend *blk;
+>>> @@ -184,7 +185,12 @@ static void pc_system_flash_map(PCMachineState *pcms,
+>>>              if (i == 0) {
+>>>                flash_mem = pflash_cfi01_get_memory(system_flash);
+>>> -            pc_isa_bios_init(&x86ms->isa_bios, rom_memory, flash_mem);
+>>> +            if (pcmc->isa_bios_alias) {
+>>> +                x86_isa_bios_init(&x86ms->isa_bios, rom_memory, flash_mem,
+>>> +                                  true);
+>>> +            } else {
+>>> +                pc_isa_bios_init(&x86ms->isa_bios, rom_memory, flash_mem);
+>>> +            }
+>>>                  /* Encrypt the pflash boot ROM */
+>>>                if (sev_enabled()) {
+>>
 
 
