@@ -4,76 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B0DBC25B4F
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 07:22:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37F50C04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 07:27:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4bcr-0006Rp-RE; Wed, 08 May 2024 03:22:05 -0400
+	id 1s4bhZ-0007y1-JY; Wed, 08 May 2024 03:26:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1s4bcp-0006Px-Ah
- for qemu-devel@nongnu.org; Wed, 08 May 2024 03:22:03 -0400
-Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1s4bhH-0007wj-3A
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 03:26:42 -0400
+Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1s4bcn-0000of-1F
- for qemu-devel@nongnu.org; Wed, 08 May 2024 03:22:02 -0400
-Received: by mail-qt1-x82b.google.com with SMTP id
- d75a77b69052e-43b0b09d012so21510961cf.3
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 00:22:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1s4bh0-000206-SD
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 03:26:38 -0400
+Received: by mail-lf1-x133.google.com with SMTP id
+ 2adb3069b0e04-51f1bf83f06so4839618e87.1
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 00:26:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715152920; x=1715757720; darn=nongnu.org;
+ d=sifive.com; s=google; t=1715153179; x=1715757979; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eSwYY2tk1eQzVv9jPwUE2u+MZYCvSMAtC6ADbEq8kQc=;
- b=FA5TVZI0QL9ZMCQ4toZM5AQ2CzYopjCthzlorp1dafXP+GyOuzrKT/VGtjUzPrtfMv
- gVLkAgMkMJ4FZV/Ck2060y4xiWJKRK411ZVPIa9qIbaVnN4ED4ZeQ3lqQSRclLgGgVfE
- 3chuIxMxRLddSn1cuj4cPvMjl4pU3WqSY2tuTTioxbkGvgTfDlA44Kzx+6nX3B8vkXC1
- 8GLrzXdYirRLYILYlkpxx6QRNFgMaiIqiayI+jym8VvvKB2IBpBMDMJzaMXUaUypWnWL
- BOOu+6m8dNuBA4dDsU84TX3qhMMgztwoRj7A2487hUpjSiKT2ZG/XHbBzZc3fb+BIgeu
- qL5Q==
+ bh=QhpqB4afhdNcfZ8uKF6g7sebrO28AFEJ22i0nh9oysY=;
+ b=g17AmGZIheTxVheAKdpjamyDDzn4IpV90yIP9b5UeEOlkcBhZAwTaEAEVO6/jyVRxV
+ gUtkKmgiUG5x8WHEKAIumaRr1S5MISMW8j2fX6qgymhPcQzkS/qH9jbf2zooVSaDD88P
+ /SSS5J6CRtTYsviL0UlWd/h7FF4mHwexaZeskjhaHsUYDfPZUGpKlCpyhGTZ8iH4HZKs
+ OelbIuxkqKBeEASvf3xoAQkkYSuc/mNOQPrYL2fFN8YCoM8ur4yYCd/j5OV3U8WrkTBG
+ n0Pp+UNXt1iGBqFNqvPqbOjjLy3mUzeX2lCcO4qn96UVQENpCIM4W7VM5GAsCCpjy6TK
+ Wu0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715152920; x=1715757720;
+ d=1e100.net; s=20230601; t=1715153179; x=1715757979;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=eSwYY2tk1eQzVv9jPwUE2u+MZYCvSMAtC6ADbEq8kQc=;
- b=hcovvbPfmAkCFqtHeE+esW5YtYAaEu4YUnf867CBcRED0MT9w4sMEaQyWPLj/dwgWI
- UNu7Fjfaig0XPSO6JJcISq9A1BQvD82hAuNbWS6iPODAq9YRuH8XPicdXb9aDCXlypoE
- B+VC2ebPM2b9OJoV6gYO4eOL8gRgFj8XNblmXM7S32tgNoI/6inw6eTPJiXJ+sLlRRTt
- VdVIGbgoay3yCLtcCQn3nbX3WZgsxTjraLgD3AnwNA3WlIgPhw+z/1+gaz5U6bMya9uf
- tq5Zy64kokmzaU7WzEISKn4kA842ha2Bvyf/QtLl1B5HWnUCMb5nP1G8HxuK2gNTaDqG
- fPig==
-X-Gm-Message-State: AOJu0YyyKt6+9U14PxnwWQ2oiD1YtrJMBMfpMWMdq5tuxXIfq6Y12IEe
- ZaA0fTOF6p1nd7o6relpRxFmSTGTM5X6M8Q4HAR0MnSDcyG2K6prnwLPpK0TuABB8LBS6lr6dYi
- iRNkgG4KALb7y40HnvRXclXQ3Ugs=
-X-Google-Smtp-Source: AGHT+IEIBCcPfooKUCqw9FmCjOia2ctFjijcrsIDsl9laf8NNy7zHW1dWTT+prWNymVcMO0w6rG3soQDGTtSY0W/S9M=
-X-Received: by 2002:ac8:7f08:0:b0:43a:dede:73b8 with SMTP id
- d75a77b69052e-43dbf860a3emr23022701cf.57.1715152919860; Wed, 08 May 2024
- 00:21:59 -0700 (PDT)
+ bh=QhpqB4afhdNcfZ8uKF6g7sebrO28AFEJ22i0nh9oysY=;
+ b=ZCUjuf5yq53GgAKy7VLCv37NZ5BNtAonXPLQQe+nmEH3Lvky3JhBNSYXJRp8bOO8R5
+ IXcsOxq788YXlLcQMARiXECAE6Cn7aRwvzgArB7ZLjuPh/5+tPjarvfQbhY5++lVr0PK
+ gU/RJ9b34rTUTzRPP4PCK10Gij55VTXkXBab7NFapCH/Hzk+tD9ELBd2GU687PBf/WSJ
+ IM6wvbfqEszoCIpfZ0XrpVbQs8jsyPJfeOe34VauWd3qxU46VYf2izfF9aPNHEYZ0j+5
+ NYrhnoJm6rXv1BnjSZe5UFqXC+VEiWTMl5/UGb+dulQ4WOX5axgPIGRKKXAny8HU2tk4
+ zaLg==
+X-Gm-Message-State: AOJu0YxUK4ebixPt0xJZgKz8Bg/aXqK8Q0kyYJM5GV2/OQbOLPKijrAY
+ TQozB68NBgcktdkMR82GyXDyE1bsYgM66QHUlv0aDF89tU0lWJBbj1VyLnHqRlY3++857d5lXtR
+ a2ampE14LWtUQJRpK+nxDFIoClb41olagcsFd9VVxaW3gnTL/qf707z72UJzkCcTUJ0LpgTjXf4
+ Cf/WU/veGEc4Fe8CmTPCiqiAjXBQA4fPSNV9JdAdQVLA==
+X-Google-Smtp-Source: AGHT+IG/pduzd4ghCVqbCeLsld2w1B3yaqtaMfFvf45FjHQy/ekNqkpuj1SywX0QhHVJxpWV/oZ7Aw==
+X-Received: by 2002:ac2:54b7:0:b0:51f:d989:18f6 with SMTP id
+ 2adb3069b0e04-5217c2794acmr1004621e87.13.1715153178333; 
+ Wed, 08 May 2024 00:26:18 -0700 (PDT)
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com.
+ [209.85.208.177]) by smtp.gmail.com with ESMTPSA id
+ f14-20020a19ae0e000000b0051dc70a0a32sm2381068lfc.291.2024.05.08.00.26.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 08 May 2024 00:26:17 -0700 (PDT)
+Received: by mail-lj1-f177.google.com with SMTP id
+ 38308e7fff4ca-2db17e8767cso50508251fa.3; 
+ Wed, 08 May 2024 00:26:17 -0700 (PDT)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWxfwoyLwfQ39I8f4aK9TlsFWfUV9+WiAKPvVOLxudzYKHvgP6qwKYAiooJ3gukQRQw8acQ3cls6cTc/X/PD/TYMs5jwEo=
+X-Received: by 2002:a2e:9d99:0:b0:2df:b800:5bff with SMTP id
+ 38308e7fff4ca-2e446d86204mr10824151fa.7.1715153177358; Wed, 08 May 2024
+ 00:26:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240507183757.3383641-1-dongwon.kim@intel.com>
- <20240507183757.3383641-6-dongwon.kim@intel.com>
-In-Reply-To: <20240507183757.3383641-6-dongwon.kim@intel.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Wed, 8 May 2024 11:21:47 +0400
-Message-ID: <CAJ+F1CKcH==Vx1TfwEmn8a+J8NtDvfBpxjQMDMjSf_NHAbKS-g@mail.gmail.com>
-Subject: Re: [PATCH v13 5/6] ui/console: Use qemu_dmabuf_new() and free()
- helpers instead
-To: dongwon.kim@intel.com
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, berrange@redhat.com
+References: <20240307160319.675044-1-dbarboza@ventanamicro.com>
+ <20240307160319.675044-9-dbarboza@ventanamicro.com>
+In-Reply-To: <20240307160319.675044-9-dbarboza@ventanamicro.com>
+From: Frank Chang <frank.chang@sifive.com>
+Date: Wed, 8 May 2024 15:26:04 +0800
+X-Gmail-Original-Message-ID: <CANzO1D1hKidUTKeLrWoNsr4oCy_D6m0UEWAPYemFo5MzmJGuLQ@mail.gmail.com>
+Message-ID: <CANzO1D1hKidUTKeLrWoNsr4oCy_D6m0UEWAPYemFo5MzmJGuLQ@mail.gmail.com>
+Subject: Re: [PATCH v2 08/15] hw/riscv/riscv-iommu: add Address Translation
+ Cache (IOATC)
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com, ajones@ventanamicro.com, tjeznach@rivosinc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82b;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::133;
+ envelope-from=frank.chang@sifive.com; helo=mail-lf1-x133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -91,335 +108,333 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+Hi Daniel,
 
-On Tue, May 7, 2024 at 10:44=E2=80=AFPM <dongwon.kim@intel.com> wrote:
+Daniel Henrique Barboza <dbarboza@ventanamicro.com> =E6=96=BC 2024=E5=B9=B4=
+3=E6=9C=888=E6=97=A5 =E9=80=B1=E4=BA=94 =E4=B8=8A=E5=8D=8812:05=E5=AF=AB=E9=
+=81=93=EF=BC=9A
 >
-> From: Dongwon Kim <dongwon.kim@intel.com>
+> From: Tomasz Jeznach <tjeznach@rivosinc.com>
 >
-> This commit introduces utility functions for the creation and deallocatio=
-n
-> of QemuDmaBuf instances. Additionally, it updates all relevant sections
-> of the codebase to utilize these new utility functions.
+> The RISC-V IOMMU spec predicts that the IOMMU can use translation caches
+> to hold entries from the DDT. This includes implementation for all cache
+> commands that are marked as 'not implemented'.
 >
-> v7: remove prefix, "dpy_gl_" from all helpers
->     qemu_dmabuf_free() returns without doing anything if input is null
->     (Daniel P. Berrang=C3=A9 <berrange@redhat.com>)
->     call G_DEFINE_AUTOPTR_CLEANUP_FUNC for qemu_dmabuf_free()
->     (Daniel P. Berrang=C3=A9 <berrange@redhat.com>)
+> There are some artifacts included in the cache that predicts s-stage and
+> g-stage elements, although we don't support it yet. We'll introduce them
+> next.
 >
-> v8: Introduction of helpers was removed as those were already added
->     by the previous commit
->
-> v9: set dmabuf->allow_fences to 'true' when dmabuf is created in
->     virtio_gpu_create_dmabuf()/virtio-gpu-udmabuf.c
->
->     removed unnecessary spaces were accidently added in the patch,
->     'ui/console: Use qemu_dmabuf_new() a...'
->
-> v11: Calling qemu_dmabuf_close was removed as closing dmabuf->fd will be
->      done in qemu_dmabuf_free anyway.
->      (Daniel P. Berrang=C3=A9 <berrange@redhat.com>)
->
-> v12: --- Calling qemu_dmabuf_close separately as qemu_dmabuf_free doesn't
->          do it.
->
->      --- 'dmabuf' is now allocated space so it should be freed at the end=
- of
->          dbus_scanout_texture
->
-> v13: --- Immediately free dmabuf after it is released to prevent possible
->          leaking of the ptr
->          (Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>)
->
->      --- Use g_autoptr macro to define *dmabuf for auto clean up instead =
-of
->          calling qemu_dmabuf_free
->          (Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>)
->
-> Suggested-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Cc: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Cc: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
-> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+> Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 > ---
->  include/hw/vfio/vfio-common.h   |  2 +-
->  include/hw/virtio/virtio-gpu.h  |  4 ++--
->  hw/display/vhost-user-gpu.c     | 21 +++++++++++----------
->  hw/display/virtio-gpu-udmabuf.c | 24 +++++++++---------------
->  hw/vfio/display.c               | 26 ++++++++++++--------------
->  ui/dbus-listener.c              | 28 ++++++++++++----------------
->  6 files changed, 47 insertions(+), 58 deletions(-)
+>  hw/riscv/riscv-iommu.c | 190 ++++++++++++++++++++++++++++++++++++++++-
+>  hw/riscv/riscv-iommu.h |   2 +
+>  2 files changed, 188 insertions(+), 4 deletions(-)
 >
-> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.=
-h
-> index b9da6c08ef..d66e27db02 100644
-> --- a/include/hw/vfio/vfio-common.h
-> +++ b/include/hw/vfio/vfio-common.h
-> @@ -148,7 +148,7 @@ typedef struct VFIOGroup {
->  } VFIOGroup;
->
->  typedef struct VFIODMABuf {
-> -    QemuDmaBuf buf;
-> +    QemuDmaBuf *buf;
->      uint32_t pos_x, pos_y, pos_updates;
->      uint32_t hot_x, hot_y, hot_updates;
->      int dmabuf_id;
-> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gp=
-u.h
-> index ed44cdad6b..56d6e821bf 100644
-> --- a/include/hw/virtio/virtio-gpu.h
-> +++ b/include/hw/virtio/virtio-gpu.h
-> @@ -169,7 +169,7 @@ struct VirtIOGPUBaseClass {
->      DEFINE_PROP_UINT32("yres", _state, _conf.yres, 800)
->
->  typedef struct VGPUDMABuf {
-> -    QemuDmaBuf buf;
-> +    QemuDmaBuf *buf;
->      uint32_t scanout_id;
->      QTAILQ_ENTRY(VGPUDMABuf) next;
->  } VGPUDMABuf;
-> @@ -238,7 +238,7 @@ struct VhostUserGPU {
->      VhostUserBackend *vhost;
->      int vhost_gpu_fd; /* closed by the chardev */
->      CharBackend vhost_chr;
-> -    QemuDmaBuf dmabuf[VIRTIO_GPU_MAX_SCANOUTS];
-> +    QemuDmaBuf *dmabuf[VIRTIO_GPU_MAX_SCANOUTS];
->      bool backend_blocked;
+> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+> index df534b99b0..0b93146327 100644
+> --- a/hw/riscv/riscv-iommu.c
+> +++ b/hw/riscv/riscv-iommu.c
+> @@ -63,6 +63,16 @@ struct RISCVIOMMUContext {
+>      uint64_t msiptp;            /* MSI redirection page table pointer */
 >  };
 >
-> diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
-> index 454e5afcff..744792cf78 100644
-> --- a/hw/display/vhost-user-gpu.c
-> +++ b/hw/display/vhost-user-gpu.c
-> @@ -249,6 +249,7 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostU=
-serGpuMsg *msg)
->      case VHOST_USER_GPU_DMABUF_SCANOUT: {
->          VhostUserGpuDMABUFScanout *m =3D &msg->payload.dmabuf_scanout;
->          int fd =3D qemu_chr_fe_get_msgfd(&g->vhost_chr);
-> +        uint64_t modifier =3D 0;
->          QemuDmaBuf *dmabuf;
->
->          if (m->scanout_id >=3D g->parent_obj.conf.max_outputs) {
-> @@ -261,27 +262,27 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, Vhos=
-tUserGpuMsg *msg)
->
->          g->parent_obj.enable =3D 1;
->          con =3D g->parent_obj.scanout[m->scanout_id].con;
-> -        dmabuf =3D &g->dmabuf[m->scanout_id];
-> +        dmabuf =3D g->dmabuf[m->scanout_id];
->          qemu_dmabuf_close(dmabuf);
->          dpy_gl_release_dmabuf(con, dmabuf);
-> +        qemu_dmabuf_free(dmabuf);
->          if (fd =3D=3D -1) {
->              dpy_gl_scanout_disable(con);
->              break;
-
-This is still incorrect. You replaced g_clear_pointer(&dmabuf,
-qemu_dmabuf_free), but that's not the point.
-
-g->dmabuf[m->scanout_id] must be set to NULL, before breaking, at least.
-
->          }
-> -        *dmabuf =3D (QemuDmaBuf) {
-> -            .fd =3D fd,
-> -            .width =3D m->fd_width,
-> -            .height =3D m->fd_height,
-> -            .stride =3D m->fd_stride,
-> -            .fourcc =3D m->fd_drm_fourcc,
-> -            .y0_top =3D m->fd_flags & VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP,
-> -        };
->          if (msg->request =3D=3D VHOST_USER_GPU_DMABUF_SCANOUT2) {
->              VhostUserGpuDMABUFScanout2 *m2 =3D &msg->payload.dmabuf_scan=
-out2;
-> -            dmabuf->modifier =3D m2->modifier;
-> +            modifier =3D m2->modifier;
->          }
->
-> +        dmabuf =3D qemu_dmabuf_new(m->fd_width, m->fd_height,
-> +                                 m->fd_stride, 0, 0, 0, 0,
-> +                                 m->fd_drm_fourcc, modifier,
-> +                                 fd, false, m->fd_flags &
-> +                                 VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP);
+> +/* Address translation cache entry */
+> +struct RISCVIOMMUEntry {
+> +    uint64_t iova:44;           /* IOVA Page Number */
+> +    uint64_t pscid:20;          /* Process Soft-Context identifier */
+> +    uint64_t phys:44;           /* Physical Page Number */
+> +    uint64_t gscid:16;          /* Guest Soft-Context identifier */
+> +    uint64_t perm:2;            /* IOMMU_RW flags */
+> +    uint64_t __rfu:2;
+> +};
 > +
->          dpy_gl_scanout_dmabuf(con, dmabuf);
-> +        g->dmabuf[m->scanout_id] =3D dmabuf;
->          break;
->      }
->      case VHOST_USER_GPU_DMABUF_UPDATE: {
-> diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udma=
-buf.c
-> index c90eba281e..c02ec6d37d 100644
-> --- a/hw/display/virtio-gpu-udmabuf.c
-> +++ b/hw/display/virtio-gpu-udmabuf.c
-> @@ -162,7 +162,8 @@ static void virtio_gpu_free_dmabuf(VirtIOGPU *g, VGPU=
-DMABuf *dmabuf)
->      struct virtio_gpu_scanout *scanout;
+>  /* IOMMU index for transactions without PASID specified. */
+>  #define RISCV_IOMMU_NOPASID 0
 >
->      scanout =3D &g->parent_obj.scanout[dmabuf->scanout_id];
-> -    dpy_gl_release_dmabuf(scanout->con, &dmabuf->buf);
-> +    dpy_gl_release_dmabuf(scanout->con, dmabuf->buf);
-> +    g_clear_pointer(&dmabuf->buf, qemu_dmabuf_free);
->      QTAILQ_REMOVE(&g->dmabuf.bufs, dmabuf, next);
->      g_free(dmabuf);
+> @@ -629,14 +639,127 @@ static AddressSpace *riscv_iommu_space(RISCVIOMMUS=
+tate *s, uint32_t devid)
+>      return &as->iova_as;
 >  }
-> @@ -181,17 +182,10 @@ static VGPUDMABuf
->      }
 >
->      dmabuf =3D g_new0(VGPUDMABuf, 1);
-> -    dmabuf->buf.width =3D r->width;
-> -    dmabuf->buf.height =3D r->height;
-> -    dmabuf->buf.stride =3D fb->stride;
-> -    dmabuf->buf.x =3D r->x;
-> -    dmabuf->buf.y =3D r->y;
-> -    dmabuf->buf.backing_width =3D fb->width;
-> -    dmabuf->buf.backing_height =3D fb->height;
-> -    dmabuf->buf.fourcc =3D qemu_pixman_to_drm_format(fb->format);
-> -    dmabuf->buf.fd =3D res->dmabuf_fd;
-> -    dmabuf->buf.allow_fences =3D true;
-> -    dmabuf->buf.draw_submitted =3D false;
-> +    dmabuf->buf =3D qemu_dmabuf_new(r->width, r->height, fb->stride,
-> +                                  r->x, r->y, fb->width, fb->height,
-> +                                  qemu_pixman_to_drm_format(fb->format),
-> +                                  0, res->dmabuf_fd, true, false);
->      dmabuf->scanout_id =3D scanout_id;
->      QTAILQ_INSERT_HEAD(&g->dmabuf.bufs, dmabuf, next);
->
-> @@ -217,11 +211,11 @@ int virtio_gpu_update_dmabuf(VirtIOGPU *g,
->          old_primary =3D g->dmabuf.primary[scanout_id];
->      }
->
-> -    width =3D qemu_dmabuf_get_width(&new_primary->buf);
-> -    height =3D qemu_dmabuf_get_height(&new_primary->buf);
-> +    width =3D qemu_dmabuf_get_width(new_primary->buf);
-> +    height =3D qemu_dmabuf_get_height(new_primary->buf);
->      g->dmabuf.primary[scanout_id] =3D new_primary;
->      qemu_console_resize(scanout->con, width, height);
-> -    dpy_gl_scanout_dmabuf(scanout->con, &new_primary->buf);
-> +    dpy_gl_scanout_dmabuf(scanout->con, new_primary->buf);
->
->      if (old_primary) {
->          virtio_gpu_free_dmabuf(g, old_primary);
-> diff --git a/hw/vfio/display.c b/hw/vfio/display.c
-> index 7784502b53..fe624a6c9b 100644
-> --- a/hw/vfio/display.c
-> +++ b/hw/vfio/display.c
-> @@ -241,14 +241,11 @@ static VFIODMABuf *vfio_display_get_dmabuf(VFIOPCID=
-evice *vdev,
->
->      dmabuf =3D g_new0(VFIODMABuf, 1);
->      dmabuf->dmabuf_id  =3D plane.dmabuf_id;
-> -    dmabuf->buf.width  =3D plane.width;
-> -    dmabuf->buf.height =3D plane.height;
-> -    dmabuf->buf.backing_width =3D plane.width;
-> -    dmabuf->buf.backing_height =3D plane.height;
-> -    dmabuf->buf.stride =3D plane.stride;
-> -    dmabuf->buf.fourcc =3D plane.drm_format;
-> -    dmabuf->buf.modifier =3D plane.drm_format_mod;
-> -    dmabuf->buf.fd     =3D fd;
-> +    dmabuf->buf =3D qemu_dmabuf_new(plane.width, plane.height,
-> +                                  plane.stride, 0, 0, plane.width,
-> +                                  plane.height, plane.drm_format,
-> +                                  plane.drm_format_mod, fd, false, false=
-);
+> +/* Translation Object cache support */
+> +static gboolean __iot_equal(gconstpointer v1, gconstpointer v2)
+> +{
+> +    RISCVIOMMUEntry *t1 =3D (RISCVIOMMUEntry *) v1;
+> +    RISCVIOMMUEntry *t2 =3D (RISCVIOMMUEntry *) v2;
+> +    return t1->gscid =3D=3D t2->gscid && t1->pscid =3D=3D t2->pscid &&
+> +           t1->iova =3D=3D t2->iova;
+> +}
 > +
->      if (plane_type =3D=3D DRM_PLANE_TYPE_CURSOR) {
->          vfio_display_update_cursor(dmabuf, &plane);
->      }
-> @@ -261,8 +258,9 @@ static void vfio_display_free_one_dmabuf(VFIODisplay =
-*dpy, VFIODMABuf *dmabuf)
+> +static guint __iot_hash(gconstpointer v)
+> +{
+> +    RISCVIOMMUEntry *t =3D (RISCVIOMMUEntry *) v;
+> +    return (guint)t->iova;
+> +}
+> +
+> +/* GV: 1 PSCV: 1 AV: 1 */
+> +static void __iot_inval_pscid_iova(gpointer key, gpointer value, gpointe=
+r data)
+> +{
+> +    RISCVIOMMUEntry *iot =3D (RISCVIOMMUEntry *) value;
+> +    RISCVIOMMUEntry *arg =3D (RISCVIOMMUEntry *) data;
+> +    if (iot->gscid =3D=3D arg->gscid &&
+> +        iot->pscid =3D=3D arg->pscid &&
+> +        iot->iova =3D=3D arg->iova) {
+> +        iot->perm =3D 0;
+
+Maybe using IOMMU_NONE would be clearer?
+
+Otherwise,
+Reviewed-by: Frank Chang <frank.chang@sifive.com>
+
+> +    }
+> +}
+> +
+> +/* GV: 1 PSCV: 1 AV: 0 */
+> +static void __iot_inval_pscid(gpointer key, gpointer value, gpointer dat=
+a)
+> +{
+> +    RISCVIOMMUEntry *iot =3D (RISCVIOMMUEntry *) value;
+> +    RISCVIOMMUEntry *arg =3D (RISCVIOMMUEntry *) data;
+> +    if (iot->gscid =3D=3D arg->gscid &&
+> +        iot->pscid =3D=3D arg->pscid) {
+> +        iot->perm =3D 0;
+> +    }
+> +}
+> +
+> +/* GV: 1 GVMA: 1 */
+> +static void __iot_inval_gscid_gpa(gpointer key, gpointer value, gpointer=
+ data)
+> +{
+> +    RISCVIOMMUEntry *iot =3D (RISCVIOMMUEntry *) value;
+> +    RISCVIOMMUEntry *arg =3D (RISCVIOMMUEntry *) data;
+> +    if (iot->gscid =3D=3D arg->gscid) {
+> +        /* simplified cache, no GPA matching */
+> +        iot->perm =3D 0;
+> +    }
+> +}
+> +
+> +/* GV: 1 GVMA: 0 */
+> +static void __iot_inval_gscid(gpointer key, gpointer value, gpointer dat=
+a)
+> +{
+> +    RISCVIOMMUEntry *iot =3D (RISCVIOMMUEntry *) value;
+> +    RISCVIOMMUEntry *arg =3D (RISCVIOMMUEntry *) data;
+> +    if (iot->gscid =3D=3D arg->gscid) {
+> +        iot->perm =3D 0;
+> +    }
+> +}
+> +
+> +/* GV: 0 */
+> +static void __iot_inval_all(gpointer key, gpointer value, gpointer data)
+> +{
+> +    RISCVIOMMUEntry *iot =3D (RISCVIOMMUEntry *) value;
+> +    iot->perm =3D 0;
+> +}
+> +
+> +/* caller should keep ref-count for iot_cache object */
+> +static RISCVIOMMUEntry *riscv_iommu_iot_lookup(RISCVIOMMUContext *ctx,
+> +    GHashTable *iot_cache, hwaddr iova)
+> +{
+> +    RISCVIOMMUEntry key =3D {
+> +        .pscid =3D get_field(ctx->ta, RISCV_IOMMU_DC_TA_PSCID),
+> +        .iova  =3D PPN_DOWN(iova),
+> +    };
+> +    return g_hash_table_lookup(iot_cache, &key);
+> +}
+> +
+> +/* caller should keep ref-count for iot_cache object */
+> +static void riscv_iommu_iot_update(RISCVIOMMUState *s,
+> +    GHashTable *iot_cache, RISCVIOMMUEntry *iot)
+> +{
+> +    if (!s->iot_limit) {
+> +        return;
+> +    }
+> +
+> +    if (g_hash_table_size(s->iot_cache) >=3D s->iot_limit) {
+> +        iot_cache =3D g_hash_table_new_full(__iot_hash, __iot_equal,
+> +                                          g_free, NULL);
+> +        g_hash_table_unref(qatomic_xchg(&s->iot_cache, iot_cache));
+> +    }
+> +    g_hash_table_add(iot_cache, iot);
+> +}
+> +
+> +static void riscv_iommu_iot_inval(RISCVIOMMUState *s, GHFunc func,
+> +    uint32_t gscid, uint32_t pscid, hwaddr iova)
+> +{
+> +    GHashTable *iot_cache;
+> +    RISCVIOMMUEntry key =3D {
+> +        .gscid =3D gscid,
+> +        .pscid =3D pscid,
+> +        .iova  =3D PPN_DOWN(iova),
+> +    };
+> +
+> +    iot_cache =3D g_hash_table_ref(s->iot_cache);
+> +    g_hash_table_foreach(iot_cache, func, &key);
+> +    g_hash_table_unref(iot_cache);
+> +}
+> +
+>  static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *=
+ctx,
+> -    IOMMUTLBEntry *iotlb)
+> +    IOMMUTLBEntry *iotlb, bool enable_cache)
 >  {
->      QTAILQ_REMOVE(&dpy->dmabuf.bufs, dmabuf, next);
+> +    RISCVIOMMUEntry *iot;
+> +    IOMMUAccessFlags perm;
+>      bool enable_faults;
+>      bool enable_pasid;
+>      bool enable_pri;
+> +    GHashTable *iot_cache;
+>      int fault;
 >
-> -    qemu_dmabuf_close(&dmabuf->buf);
-> -    dpy_gl_release_dmabuf(dpy->con, &dmabuf->buf);
-> +    qemu_dmabuf_close(dmabuf->buf);
-> +    dpy_gl_release_dmabuf(dpy->con, dmabuf->buf);
-> +    g_clear_pointer(&dmabuf->buf, qemu_dmabuf_free);
->      g_free(dmabuf);
+> +    iot_cache =3D g_hash_table_ref(s->iot_cache);
+> +
+>      enable_faults =3D !(ctx->tc & RISCV_IOMMU_DC_TC_DTF);
+>      /*
+>       * TC[32] is reserved for custom extensions, used here to temporaril=
+y
+> @@ -645,9 +768,36 @@ static int riscv_iommu_translate(RISCVIOMMUState *s,=
+ RISCVIOMMUContext *ctx,
+>      enable_pri =3D (iotlb->perm =3D=3D IOMMU_NONE) && (ctx->tc & BIT_ULL=
+(32));
+>      enable_pasid =3D (ctx->tc & RISCV_IOMMU_DC_TC_PDTV);
+>
+> +    iot =3D riscv_iommu_iot_lookup(ctx, iot_cache, iotlb->iova);
+> +    perm =3D iot ? iot->perm : IOMMU_NONE;
+> +    if (perm !=3D IOMMU_NONE) {
+> +        iotlb->translated_addr =3D PPN_PHYS(iot->phys);
+> +        iotlb->addr_mask =3D ~TARGET_PAGE_MASK;
+> +        iotlb->perm =3D perm;
+> +        fault =3D 0;
+> +        goto done;
+> +    }
+> +
+>      /* Translate using device directory / page table information. */
+>      fault =3D riscv_iommu_spa_fetch(s, ctx, iotlb);
+>
+> +    if (!fault && iotlb->target_as =3D=3D &s->trap_as) {
+> +        /* Do not cache trapped MSI translations */
+> +        goto done;
+> +    }
+> +
+> +    if (!fault && iotlb->translated_addr !=3D iotlb->iova && enable_cach=
+e) {
+> +        iot =3D g_new0(RISCVIOMMUEntry, 1);
+> +        iot->iova =3D PPN_DOWN(iotlb->iova);
+> +        iot->phys =3D PPN_DOWN(iotlb->translated_addr);
+> +        iot->pscid =3D get_field(ctx->ta, RISCV_IOMMU_DC_TA_PSCID);
+> +        iot->perm =3D iotlb->perm;
+> +        riscv_iommu_iot_update(s, iot_cache, iot);
+> +    }
+> +
+> +done:
+> +    g_hash_table_unref(iot_cache);
+> +
+>      if (enable_pri && fault) {
+>          struct riscv_iommu_pq_record pr =3D {0};
+>          if (enable_pasid) {
+> @@ -794,13 +944,40 @@ static void riscv_iommu_process_cq_tail(RISCVIOMMUS=
+tate *s)
+>              if (cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_PSCV) {
+>                  /* illegal command arguments IOTINVAL.GVMA & PSCV =3D=3D=
+ 1 */
+>                  goto cmd_ill;
+> +            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_GV)) {
+> +                /* invalidate all cache mappings */
+> +                func =3D __iot_inval_all;
+> +            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_AV)) {
+> +                /* invalidate cache matching GSCID */
+> +                func =3D __iot_inval_gscid;
+> +            } else {
+> +                /* invalidate cache matching GSCID and ADDR (GPA) */
+> +                func =3D __iot_inval_gscid_gpa;
+>              }
+> -            /* translation cache not implemented yet */
+> +            riscv_iommu_iot_inval(s, func,
+> +                get_field(cmd.dword0, RISCV_IOMMU_CMD_IOTINVAL_GSCID), 0=
+,
+> +                cmd.dword1 & TARGET_PAGE_MASK);
+>              break;
+>
+>          case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IOTINVAL_FUNC_VMA,
+>                               RISCV_IOMMU_CMD_IOTINVAL_OPCODE):
+> -            /* translation cache not implemented yet */
+> +            if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_GV)) {
+> +                /* invalidate all cache mappings, simplified model */
+> +                func =3D __iot_inval_all;
+> +            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_PSCV)) {
+> +                /* invalidate cache matching GSCID, simplified model */
+> +                func =3D __iot_inval_gscid;
+> +            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_AV)) {
+> +                /* invalidate cache matching GSCID and PSCID */
+> +                func =3D __iot_inval_pscid;
+> +            } else {
+> +                /* invalidate cache matching GSCID and PSCID and ADDR (I=
+OVA) */
+> +                func =3D __iot_inval_pscid_iova;
+> +            }
+> +            riscv_iommu_iot_inval(s, func,
+> +                get_field(cmd.dword0, RISCV_IOMMU_CMD_IOTINVAL_GSCID),
+> +                get_field(cmd.dword0, RISCV_IOMMU_CMD_IOTINVAL_PSCID),
+> +                cmd.dword1 & TARGET_PAGE_MASK);
+>              break;
+>
+>          case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IODIR_FUNC_INVAL_DDT,
+> @@ -1290,6 +1467,8 @@ static void riscv_iommu_realize(DeviceState *dev, E=
+rror **errp)
+>      /* Device translation context cache */
+>      s->ctx_cache =3D g_hash_table_new_full(__ctx_hash, __ctx_equal,
+>                                           g_free, NULL);
+> +    s->iot_cache =3D g_hash_table_new_full(__iot_hash, __iot_equal,
+> +                                         g_free, NULL);
+>
+>      s->iommus.le_next =3D NULL;
+>      s->iommus.le_prev =3D NULL;
+> @@ -1313,6 +1492,7 @@ static void riscv_iommu_unrealize(DeviceState *dev)
+>      qemu_thread_join(&s->core_proc);
+>      qemu_cond_destroy(&s->core_cond);
+>      qemu_mutex_destroy(&s->core_lock);
+> +    g_hash_table_unref(s->iot_cache);
+>      g_hash_table_unref(s->ctx_cache);
 >  }
 >
-> @@ -298,13 +296,13 @@ static void vfio_display_dmabuf_update(void *opaque=
-)
->          return;
->      }
+> @@ -1320,6 +1500,8 @@ static Property riscv_iommu_properties[] =3D {
+>      DEFINE_PROP_UINT32("version", RISCVIOMMUState, version,
+>          RISCV_IOMMU_SPEC_DOT_VER),
+>      DEFINE_PROP_UINT32("bus", RISCVIOMMUState, bus, 0x0),
+> +    DEFINE_PROP_UINT32("ioatc-limit", RISCVIOMMUState, iot_limit,
+> +        LIMIT_CACHE_IOT),
+>      DEFINE_PROP_BOOL("intremap", RISCVIOMMUState, enable_msi, TRUE),
+>      DEFINE_PROP_BOOL("off", RISCVIOMMUState, enable_off, TRUE),
+>      DEFINE_PROP_LINK("downstream-mr", RISCVIOMMUState, target_mr,
+> @@ -1372,7 +1554,7 @@ static IOMMUTLBEntry riscv_iommu_memory_region_tran=
+slate(
+>          /* Translation disabled or invalid. */
+>          iotlb.addr_mask =3D 0;
+>          iotlb.perm =3D IOMMU_NONE;
+> -    } else if (riscv_iommu_translate(as->iommu, ctx, &iotlb)) {
+> +    } else if (riscv_iommu_translate(as->iommu, ctx, &iotlb, true)) {
+>          /* Translation disabled or fault reported. */
+>          iotlb.addr_mask =3D 0;
+>          iotlb.perm =3D IOMMU_NONE;
+> diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
+> index 6f740de690..eea2123686 100644
+> --- a/hw/riscv/riscv-iommu.h
+> +++ b/hw/riscv/riscv-iommu.h
+> @@ -68,6 +68,8 @@ struct RISCVIOMMUState {
+>      MemoryRegion trap_mr;
 >
-> -    width =3D qemu_dmabuf_get_width(&primary->buf);
-> -    height =3D qemu_dmabuf_get_height(&primary->buf);
-> +    width =3D qemu_dmabuf_get_width(primary->buf);
-> +    height =3D qemu_dmabuf_get_height(primary->buf);
+>      GHashTable *ctx_cache;          /* Device translation Context Cache =
+*/
+> +    GHashTable *iot_cache;          /* IO Translated Address Cache */
+> +    unsigned iot_limit;             /* IO Translation Cache size limit *=
+/
 >
->      if (dpy->dmabuf.primary !=3D primary) {
->          dpy->dmabuf.primary =3D primary;
->          qemu_console_resize(dpy->con, width, height);
-> -        dpy_gl_scanout_dmabuf(dpy->con, &primary->buf);
-> +        dpy_gl_scanout_dmabuf(dpy->con, primary->buf);
->          free_bufs =3D true;
->      }
->
-> @@ -318,7 +316,7 @@ static void vfio_display_dmabuf_update(void *opaque)
->      if (cursor && (new_cursor || cursor->hot_updates)) {
->          bool have_hot =3D (cursor->hot_x !=3D 0xffffffff &&
->                           cursor->hot_y !=3D 0xffffffff);
-> -        dpy_gl_cursor_dmabuf(dpy->con, &cursor->buf, have_hot,
-> +        dpy_gl_cursor_dmabuf(dpy->con, cursor->buf, have_hot,
->                               cursor->hot_x, cursor->hot_y);
->          cursor->hot_updates =3D 0;
->      } else if (!cursor && new_cursor) {
-> diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
-> index 62d1e2d3f9..5490088043 100644
-> --- a/ui/dbus-listener.c
-> +++ b/ui/dbus-listener.c
-> @@ -442,28 +442,24 @@ static void dbus_scanout_texture(DisplayChangeListe=
-ner *dcl,
->      trace_dbus_scanout_texture(tex_id, backing_y_0_top,
->                                 backing_width, backing_height, x, y, w, h=
-);
->  #ifdef CONFIG_GBM
-> -    QemuDmaBuf dmabuf =3D {
-> -        .width =3D w,
-> -        .height =3D h,
-> -        .y0_top =3D backing_y_0_top,
-> -        .x =3D x,
-> -        .y =3D y,
-> -        .backing_width =3D backing_width,
-> -        .backing_height =3D backing_height,
-> -    };
-> +    g_autoptr(QemuDmaBuf) dmabuf =3D NULL;
-> +    int fd;
-> +    uint32_t stride, fourcc;
-> +    uint64_t modifier;
->
->      assert(tex_id);
-> -    dmabuf.fd =3D egl_get_fd_for_texture(
-> -        tex_id, (EGLint *)&dmabuf.stride,
-> -        (EGLint *)&dmabuf.fourcc,
-> -        &dmabuf.modifier);
-> -    if (dmabuf.fd < 0) {
-> +    fd =3D egl_get_fd_for_texture(tex_id, (EGLint *)&stride, (EGLint *)&=
-fourcc,
-> +                                &modifier);
-> +    if (fd < 0) {
->          error_report("%s: failed to get fd for texture", __func__);
->          return;
->      }
-> +    dmabuf =3D qemu_dmabuf_new(w, h, stride, x, y, backing_width,
-> +                             backing_height, fourcc, modifier, fd,
-> +                             false, backing_y_0_top);
->
-> -    dbus_scanout_dmabuf(dcl, &dmabuf);
-> -    close(dmabuf.fd);
-> +    dbus_scanout_dmabuf(dcl, dmabuf);
-> +    qemu_dmabuf_close(dmabuf);
->  #endif
->
->  #ifdef WIN32
+>      /* MMIO Hardware Interface */
+>      MemoryRegion regs_mr;
 > --
-> 2.34.1
+> 2.43.2
 >
 >
-
-
---=20
-Marc-Andr=C3=A9 Lureau
 
