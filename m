@@ -4,93 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69CCCC04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 14:09:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 220E3C04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 14:14:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4hyY-0007tI-V6; Wed, 08 May 2024 10:08:54 -0400
+	id 1s4i3H-0001Dl-BY; Wed, 08 May 2024 10:13:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4hyX-0007sy-Gy
- for qemu-devel@nongnu.org; Wed, 08 May 2024 10:08:53 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4i3D-0001DL-Vt
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 10:13:44 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4hyU-0002gQ-RL
- for qemu-devel@nongnu.org; Wed, 08 May 2024 10:08:53 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-573137ba8d7so1644830a12.0
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 07:08:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4i38-0004NL-Bd
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 10:13:43 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-34da35cd01cso4078367f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 07:13:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715177328; x=1715782128; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=5RHqHsuiLiPA/oyCgbngDHmPlwOj1ZNaC9uXrn1XVW8=;
- b=F/bBcKI8/qGW+48XCB/jsKwBcfJfFVWISIix9o3CyecMf3phcR4IirdC74Hq6Bv2Uq
- SPrCrPz0RJ0xVFr7yvq/VDHepstkHMDmh5vDCSpbn3e0YzHv3nicsII0P15VX6/EcErw
- TVnfIUekt52SgID592ZqsJ8v1LGkdZz80QLKNz19UVYoSDqFHYDYCXExKuQy1YEN2KnO
- jwOyhNJ+M/0D2IXUEetAl4kruhOLGQYz02ZnE5Xi5JHyA7MkI5OXO2iadaQjBFTV0UZh
- ewx3NFCZUpcDivtm9IeJ8KMHJflnHnxTUp9+2a1eqUikF01tFR5ovNsitEWBcrlM5x+5
- U55Q==
+ d=linaro.org; s=google; t=1715177616; x=1715782416; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=bPs0zsG9VK2wQ8xgMVPcc5ZG9na1Q66b8plpnDmTE4Q=;
+ b=kNstpwFXfFa0JcEjWS3AuJQMfdll8UMKEVXLc6z8T6KehKhDCd5kqf/MDPsVisArYK
+ HkK734C8+67MmF7TbFP9nXlzF53WBy42x7iYiwpLWepHxy7C56G3SMyFyBjMMLYaij5q
+ AwTTQ12Sub4cUdxxt3SLUif8EQDekrJgJw0wxXykpcNcTh2O4WsK0BFsOFm0nK0RwXTx
+ 5TPVrJwJtnuXAbmTmJft06VqDkCfqn7DHc4FWQwlxOQZLLca8PznU4CNzyBRDfMx+bl1
+ jb4AKkZMd5mHPl0kW+ncEwJDJu3LkeGB4UBqUDSlCJGHBa/L9Xe8K5FSK3q47pLitIyO
+ Na/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715177328; x=1715782128;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5RHqHsuiLiPA/oyCgbngDHmPlwOj1ZNaC9uXrn1XVW8=;
- b=fIaVmIqeON3to6F/utL8oGPZ2fsnMieEJBUZbLShJNuo1wj5gEKk59rvN+CL0dPC0o
- DsyXNv45SWBJijWcvrAyCFkhpJRvfqwGjXyQ2AJGkdGhZ2vITUawhGtCWirXqjhAZetc
- E/1rZ0FesUzje59Omhk73Ns2F4yiU8bjraUnl+6rlyoaCAh369Q43hQGbf9IIRYMiku1
- MrycZwtPQ1UF4a8xCebOr8lLfD4H5LaLUwBPjmmx6VlMKcCGNFTae/3Favot/s8RsgN/
- MX87/ck5oyK8VkNLBnKkZWN+oT55DfY/wourPnv14jqKPyDSF8E507IuCOCZsS/MeBAB
- Zo+A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXO0z8DmL3k/ovbqLK4SMAyTa6os6nAu8mPcG2QzLW5arvgxqp5W2PJ17/Hh5sDyiMiXYIsrMT4bvtIjQpPf8zVxD68t8Y=
-X-Gm-Message-State: AOJu0YzOctIM/+06rGzZyrFMLdBmnubFCrlw3B+eIXs0QH81kdqhWN1w
- 1/qIrx4po2Ixsb6bwBkSQvPyT0vWCD8eJfoRh+Oj6BHslMni6Qw8hb38StWhWMI=
-X-Google-Smtp-Source: AGHT+IEz6WoH9ZFnMhGm0j3XtBpTHyKelK1c97hkp18IeSug2XbkTiADxPRiw2rUjY1NdR1RviumLw==
-X-Received: by 2002:a17:907:9490:b0:a59:fb06:5d35 with SMTP id
- a640c23a62f3a-a59fb065e31mr295445866b.8.1715177328136; 
- Wed, 08 May 2024 07:08:48 -0700 (PDT)
-Received: from [192.168.69.100] (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
+ d=1e100.net; s=20230601; t=1715177616; x=1715782416;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bPs0zsG9VK2wQ8xgMVPcc5ZG9na1Q66b8plpnDmTE4Q=;
+ b=eXMkoqrHn+1l+2GjNekESazq4RSyIY7NmWz5TgN+gaGx6uioIc2PTKe7Z/r3wWKr8+
+ q9GyZBZfxYFzWHcchIAfAIGY+91MpHDEXkHwRtdB6zlCMOf0FlO+ce0eI9RunjY3JsRo
+ 4uP96IzmDVDrBxDJ3NGzMBnXmYiy8iTBQsZ8SNieIZ2iMf1dq7+dcH+E8v2HZsmTauV6
+ pgPEDEXoPVTUnASsoOUQ29pcPH0FD32q34WsOkF72Cgz+AzgcfAh7UVUhP9FrM3qUybd
+ mbcQPtVA684wwU/8JaHn8Wms+wed0veWcwU6SQZgJS5JP2kDymeEsXvE1n2eZpePSEOt
+ w6iA==
+X-Gm-Message-State: AOJu0YwDX2EbGlz7tW5lhPmDEyW0TjQYj7YhSyUx74qVYIwPsTDLEiuN
+ IYb9XVfK8I+jwm5wfX+69sGNiwcBs9IqBvf+W2mZd9IcGEX/UP9WRoRds5mH26uGRbomIoCM+tw
+ 4
+X-Google-Smtp-Source: AGHT+IFeFJ2JGx/ZmqmnLWoV4naAhKN//95DH/a/FJRlmyvlekEZnDKLAFljJJrZeKdNfWFT4+eRbQ==
+X-Received: by 2002:a05:6000:1104:b0:34f:96ba:ca3f with SMTP id
+ ffacd0b85a97d-34fca621dbcmr3321638f8f.53.1715177616129; 
+ Wed, 08 May 2024 07:13:36 -0700 (PDT)
+Received: from m1x-phil.lan (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
  [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
- jt26-20020a170906ca1a00b00a558206b2c5sm7748013ejb.99.2024.05.08.07.08.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 May 2024 07:08:47 -0700 (PDT)
-Message-ID: <d03ca96e-53e9-43ed-886e-0cffd15994fb@linaro.org>
-Date: Wed, 8 May 2024 16:08:45 +0200
+ d9-20020adff2c9000000b0034dd56189e8sm15448242wrp.22.2024.05.08.07.13.35
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 08 May 2024 07:13:35 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Luc Michel <luc@lmichel.fr>, Peter Maydell <peter.maydell@linaro.org>,
+ Damien Hedde <damien.hedde@dahe.fr>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
+Subject: [PATCH] hw/clock: Expose 'freq-hz' QOM property
+Date: Wed,  8 May 2024 16:13:33 +0200
+Message-ID: <20240508141333.44610-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] hw/char: Add QOM property for STM32L4x5 USART clock
- frequency
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: =?UTF-8?Q?In=C3=A8s_Varhol?= <ines.varhol@telecom-paris.fr>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Arnaud Minier <arnaud.minier@telecom-paris.fr>,
- Laurent Vivier <lvivier@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Alistair Francis <alistair@alistair23.me>,
- Samuel Tardieu <samuel.tardieu@telecom-paris.fr>,
- Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <20240505140556.373711-1-ines.varhol@telecom-paris.fr>
- <20240505140556.373711-4-ines.varhol@telecom-paris.fr>
- <06e98554-3430-49d5-94f3-c5d683327f55@linaro.org>
- <CAFEAcA83cgqq3yh3=d=gHd-LK3qh2g-pE2v734apKmcNTJTvww@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA83cgqq3yh3=d=gHd-LK3qh2g-pE2v734apKmcNTJTvww@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,80 +93,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Expose the clock frequency via the QOM 'freq-hz' property,
+as it might be useful for QTests.
 
-On 7/5/24 11:54, Peter Maydell wrote:
-> On Mon, 6 May 2024 at 10:34, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> Hi,
->>
->> On 5/5/24 16:05, Inès Varhol wrote:
->>> Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
->>> ---
->>>    hw/char/stm32l4x5_usart.c | 12 ++++++++++++
->>>    1 file changed, 12 insertions(+)
->>>
->>> diff --git a/hw/char/stm32l4x5_usart.c b/hw/char/stm32l4x5_usart.c
->>> index fc5dcac0c4..ee7727481c 100644
->>> --- a/hw/char/stm32l4x5_usart.c
->>> +++ b/hw/char/stm32l4x5_usart.c
->>> @@ -26,6 +26,7 @@
->>>    #include "hw/clock.h"
->>>    #include "hw/irq.h"
->>>    #include "hw/qdev-clock.h"
->>> +#include "qapi/visitor.h"
->>>    #include "hw/qdev-properties.h"
->>>    #include "hw/qdev-properties-system.h"
->>>    #include "hw/registerfields.h"
->>> @@ -523,6 +524,14 @@ static Property stm32l4x5_usart_base_properties[] = {
->>>        DEFINE_PROP_END_OF_LIST(),
->>>    };
->>>
->>> +static void clock_freq_get(Object *obj, Visitor *v,
->>> +    const char *name, void *opaque, Error **errp)
->>> +{
->>> +    Stm32l4x5UsartBaseState *s = STM32L4X5_USART_BASE(obj);
->>> +    uint32_t clock_freq_hz = clock_get_hz(s->clk);
->>> +    visit_type_uint32(v, name, &clock_freq_hz, errp);
->>> +}
->>> +
->>>    static void stm32l4x5_usart_base_init(Object *obj)
->>>    {
->>>        Stm32l4x5UsartBaseState *s = STM32L4X5_USART_BASE(obj);
->>> @@ -534,6 +543,9 @@ static void stm32l4x5_usart_base_init(Object *obj)
->>>        sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
->>>
->>>        s->clk = qdev_init_clock_in(DEVICE(s), "clk", NULL, s, 0);
->>> +
->>> +    object_property_add(obj, "clock-freq-hz", "uint32",
->>> +                        clock_freq_get, NULL, NULL, NULL);
->>
->> Patch LGTM, but I wonder if registering QOM getter without setter
->> is recommended. Perhaps we should encourage parity? In normal HW
->> emulation we shouldn't update this clock externally, but thinking
->> about testing, this could be interesting to introduce jitter.
-> 
-> object_property_add() with the set function NULL is fine,
-> and is documented to mean "property cannot be set". Attempts
-> to set it will be failed (in object_property_set()) with a
-> reasonable error.
-> 
-> But it's not clear to me why we want the property in the first
-> place -- we don't generally have devices which take a Clock
-> input have properties exposing its frequency. If we did want
-> that it would probably be better if we could do it generically
-> rather than by adding more boilerplate code to each device.
+HMP example:
 
-Inès qtest checking (via HMP) the configured clock has a
-correct scaled frequency seems a good use case.
+  $ qemu-system-mips -S -monitor stdio -M mipssim
+  (qemu) qom-get /machine/cpu-refclk freq-hz
+  12000000
 
-> Mostly "frequency" properties on devices are for the case
-> where  they *don't* have a Clock input and instead have
-> ad-hoc legacy handling where the board/SoC that creates the
-> device sets an integer property to define the input frequency
-> because it doesn't model the clock tree with Clock objects.
-> 
-> thanks
-> -- PMM
+Inspired-by: Inès Varhol <ines.varhol@telecom-paris.fr>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/core/clock.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/hw/core/clock.c b/hw/core/clock.c
+index e212865307..55f86ef483 100644
+--- a/hw/core/clock.c
++++ b/hw/core/clock.c
+@@ -13,6 +13,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/cutils.h"
++#include "qapi/visitor.h"
+ #include "hw/clock.h"
+ #include "trace.h"
+ 
+@@ -158,6 +159,14 @@ bool clock_set_mul_div(Clock *clk, uint32_t multiplier, uint32_t divider)
+     return true;
+ }
+ 
++static void clock_prop_freq_get(Object *obj, Visitor *v, const char *name,
++                                void *opaque, Error **errp)
++{
++    Clock *clk = CLOCK(obj);
++    uint64_t freq_hz = clock_get_hz(clk);
++    visit_type_uint64(v, name, &freq_hz, errp);
++}
++
+ static void clock_initfn(Object *obj)
+ {
+     Clock *clk = CLOCK(obj);
+@@ -166,6 +175,9 @@ static void clock_initfn(Object *obj)
+     clk->divider = 1;
+ 
+     QLIST_INIT(&clk->children);
++
++    object_property_add(obj, "freq-hz", "uint64",
++                        clock_prop_freq_get, NULL, NULL, NULL);
+ }
+ 
+ static void clock_finalizefn(Object *obj)
+-- 
+2.41.0
 
 
