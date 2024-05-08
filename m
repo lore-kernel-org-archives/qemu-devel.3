@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B693C25B4F
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 17:59:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B854C25B4F
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 18:00:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4lZV-0005s7-Ck; Wed, 08 May 2024 13:59:17 -0400
+	id 1s4lZY-0005tr-Mi; Wed, 08 May 2024 13:59:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1s4lZS-0005rM-82
- for qemu-devel@nongnu.org; Wed, 08 May 2024 13:59:14 -0400
+ id 1s4lZV-0005s9-OP
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 13:59:17 -0400
 Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1s4lZP-0002sE-Uh
- for qemu-devel@nongnu.org; Wed, 08 May 2024 13:59:13 -0400
+ id 1s4lZU-0002tb-2n
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 13:59:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1715191153; x=1746727153;
+ t=1715191157; x=1746727157;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=RwHG8xoa6rtWjbBxqnoFDSH2osgNkoEZfuDubg3Fjgo=;
- b=H+ttsa0caycWqA9ZIqp6OqfQn9Cggn6LzOen+JLkl2zzBpPzDMMN7xxp
- shQPmAWmQGD90Fg541GIAifvyOJm0PugVaaVwV2kdrp2JaU5pWdzmeWpC
- Ow6BME23ybRYZnh1L3iTnvZl/DPF49w8/jMnZHGSx0outYLig0zcIg8Zm
- BhFjIBlh/7JBxUjc/SDAay2v78V1R+8PKVzQYTMcqKJH1zR27Y4xqPoZ8
- zRx0iqWoL4y80U4cloQpgxs+JSXiKAssIEcBYcgaKtrnZPsSko7LNHDnv
- GegbAtdnQtwrc3TaSLfwXHLNqs3Zfz7OT42bq8lgKKJgld3PQuIfbO5PU Q==;
-X-CSE-ConnectionGUID: Q9TZHlyORdW07p0yzr3nEg==
-X-CSE-MsgGUID: ItO6bd34Tlyw5xyriZD+DQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11067"; a="14887679"
-X-IronPort-AV: E=Sophos;i="6.08,145,1712646000"; d="scan'208";a="14887679"
+ bh=RrsXBA3BArGZQhG128vhl9bHRq9JMxssTs3Xu4/f4EQ=;
+ b=lF/iMhRx2TT58iPTHfA5zzWio3FhPI2R4f2r0VzPkeYRh+Awmzefnh7t
+ vKNVN4WeEEgfv4Iz8vpEv5gnHtG0DtqTmIXkJo6uZU+TVTjxafSYx4PZV
+ /WgvfWAwPMdDo+vEnXP+XOVF7sY4BUO7jYqy4sZA454Y1fYV2vHhECmEq
+ iuXkZKzMfiZipnr2d6cGZ9RRxgn55yMIG/46pQT7kiNp+dSAAUnuJRyW0
+ vW8OYn7Cyjv7NBkTlrzN5dRZfRW42cv7yGZafTdyl9QFjdQyRVUfnYGEF
+ WmqSpZgqBmg9lcwMBkGTDJ8CZExZnD5Ers6AEHtpLFcFeHP8bS3rEJEXM w==;
+X-CSE-ConnectionGUID: 9WatMf4gT5CUnES7tDaCrQ==
+X-CSE-MsgGUID: TExWEjs/TWK1inD68d6qhQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11067"; a="14887692"
+X-IronPort-AV: E=Sophos;i="6.08,145,1712646000"; d="scan'208";a="14887692"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 May 2024 10:59:02 -0700
-X-CSE-ConnectionGUID: xa37VUBgR7yxmv6DdQMCCQ==
-X-CSE-MsgGUID: A0Ya7gQzTwKir/A7sWRamQ==
+ 08 May 2024 10:59:03 -0700
+X-CSE-ConnectionGUID: EOSCg8vhR9GE/GWYD5EmxA==
+X-CSE-MsgGUID: Qj7fvrZIS/uy+EBvef3jTA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,145,1712646000"; d="scan'208";a="29541303"
+X-IronPort-AV: E=Sophos;i="6.08,145,1712646000"; d="scan'208";a="29541316"
 Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.129.124])
  by orviesa008.jf.intel.com with ESMTP; 08 May 2024 10:59:02 -0700
 From: dongwon.kim@intel.com
@@ -50,10 +50,9 @@ To: qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com,
 	philmd@linaro.org,
 	berrange@redhat.com
-Subject: [PATCH v14 2/6] ui/console: new dmabuf.h and dmabuf.c for QemuDmaBuf
- struct and helpers
-Date: Wed,  8 May 2024 10:53:59 -0700
-Message-Id: <20240508175403.3399895-3-dongwon.kim@intel.com>
+Subject: [PATCH v14 6/6] ui/console: move QemuDmaBuf struct def to dmabuf.c
+Date: Wed,  8 May 2024 10:54:03 -0700
+Message-Id: <20240508175403.3399895-7-dongwon.kim@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240508175403.3399895-1-dongwon.kim@intel.com>
 References: <20240508175403.3399895-1-dongwon.kim@intel.com>
@@ -86,24 +85,8 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Dongwon Kim <dongwon.kim@intel.com>
 
-New header and source files are added for containing QemuDmaBuf struct
-definition and newly introduced helpers for creating/freeing the struct
-and accessing its data.
-
-v10: Change the license type for both dmabuf.h and dmabuf.c from MIT to
-     GPL to be in line with QEMU's default license
-
-v11: -- Added new helpers, qemu_dmabuf_close for closing dmabuf->fd,
-        qemu_dmabuf_dup_fd for duplicating dmabuf->fd
-        (Daniel P. Berrangé <berrange@redhat.com>)
-
-     -- Let qemu_dmabuf_fee to call qemu_dmabuf_close before freeing
-        the struct to make sure fd is closed.
-        (Daniel P. Berrangé <berrange@redhat.com>)
-
-v12: Not closing fd in qemu_dmabuf_free because there are cases fd
-     should still be available even after the struct is destroyed
-     (e.g. virtio-gpu: res->dmabuf_fd).
+To complete privatizing process of QemuDmaBuf, QemuDmaBuf struct def
+is moved to dmabuf.c
 
 Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
@@ -112,29 +95,17 @@ Cc: Daniel P. Berrangé <berrange@redhat.com>
 Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
 Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
 ---
- include/ui/console.h |  20 +----
- include/ui/dmabuf.h  |  66 ++++++++++++++
- ui/dmabuf.c          | 210 +++++++++++++++++++++++++++++++++++++++++++
- ui/meson.build       |   1 +
- 4 files changed, 278 insertions(+), 19 deletions(-)
- create mode 100644 include/ui/dmabuf.h
- create mode 100644 ui/dmabuf.c
+ include/ui/dmabuf.h | 19 +------------------
+ ui/dmabuf.c         | 19 +++++++++++++++++++
+ 2 files changed, 20 insertions(+), 18 deletions(-)
 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index 0bc7a00ac0..a208a68b88 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -7,6 +7,7 @@
- #include "qapi/qapi-types-ui.h"
- #include "ui/input.h"
- #include "ui/surface.h"
-+#include "ui/dmabuf.h"
- 
- #define TYPE_QEMU_CONSOLE "qemu-console"
- OBJECT_DECLARE_TYPE(QemuConsole, QemuConsoleClass, QEMU_CONSOLE)
-@@ -185,25 +186,6 @@ struct QEMUGLParams {
-     int minor_ver;
- };
+diff --git a/include/ui/dmabuf.h b/include/ui/dmabuf.h
+index 4198cdf85a..dc74ba895a 100644
+--- a/include/ui/dmabuf.h
++++ b/include/ui/dmabuf.h
+@@ -10,24 +10,7 @@
+ #ifndef DMABUF_H
+ #define DMABUF_H
  
 -typedef struct QemuDmaBuf {
 -    int       fd;
@@ -154,29 +125,19 @@ index 0bc7a00ac0..a208a68b88 100644
 -    bool      allow_fences;
 -    bool      draw_submitted;
 -} QemuDmaBuf;
--
- enum display_scanout {
-     SCANOUT_NONE,
-     SCANOUT_SURFACE,
-diff --git a/include/ui/dmabuf.h b/include/ui/dmabuf.h
-new file mode 100644
-index 0000000000..4198cdf85a
---- /dev/null
-+++ b/include/ui/dmabuf.h
-@@ -0,0 +1,66 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * QemuDmaBuf struct and helpers used for accessing its data
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#ifndef DMABUF_H
-+#define DMABUF_H
-+
-+typedef struct QemuDmaBuf {
++typedef struct QemuDmaBuf QemuDmaBuf;
+ 
+ QemuDmaBuf *qemu_dmabuf_new(uint32_t width, uint32_t height,
+                             uint32_t stride, uint32_t x,
+diff --git a/ui/dmabuf.c b/ui/dmabuf.c
+index e047d5ca26..df7a09703f 100644
+--- a/ui/dmabuf.c
++++ b/ui/dmabuf.c
+@@ -10,6 +10,25 @@
+ #include "qemu/osdep.h"
+ #include "ui/dmabuf.h"
+ 
++struct QemuDmaBuf {
 +    int       fd;
 +    uint32_t  width;
 +    uint32_t  height;
@@ -193,271 +154,11 @@ index 0000000000..4198cdf85a
 +    int       fence_fd;
 +    bool      allow_fences;
 +    bool      draw_submitted;
-+} QemuDmaBuf;
++};
 +
-+QemuDmaBuf *qemu_dmabuf_new(uint32_t width, uint32_t height,
-+                            uint32_t stride, uint32_t x,
-+                            uint32_t y, uint32_t backing_width,
-+                            uint32_t backing_height, uint32_t fourcc,
-+                            uint64_t modifier, int dmabuf_fd,
-+                            bool allow_fences, bool y0_top);
-+void qemu_dmabuf_free(QemuDmaBuf *dmabuf);
-+
-+G_DEFINE_AUTOPTR_CLEANUP_FUNC(QemuDmaBuf, qemu_dmabuf_free);
-+
-+int qemu_dmabuf_get_fd(QemuDmaBuf *dmabuf);
-+int qemu_dmabuf_dup_fd(QemuDmaBuf *dmabuf);
-+void qemu_dmabuf_close(QemuDmaBuf *dmabuf);
-+uint32_t qemu_dmabuf_get_width(QemuDmaBuf *dmabuf);
-+uint32_t qemu_dmabuf_get_height(QemuDmaBuf *dmabuf);
-+uint32_t qemu_dmabuf_get_stride(QemuDmaBuf *dmabuf);
-+uint32_t qemu_dmabuf_get_fourcc(QemuDmaBuf *dmabuf);
-+uint64_t qemu_dmabuf_get_modifier(QemuDmaBuf *dmabuf);
-+uint32_t qemu_dmabuf_get_texture(QemuDmaBuf *dmabuf);
-+uint32_t qemu_dmabuf_get_x(QemuDmaBuf *dmabuf);
-+uint32_t qemu_dmabuf_get_y(QemuDmaBuf *dmabuf);
-+uint32_t qemu_dmabuf_get_backing_width(QemuDmaBuf *dmabuf);
-+uint32_t qemu_dmabuf_get_backing_height(QemuDmaBuf *dmabuf);
-+bool qemu_dmabuf_get_y0_top(QemuDmaBuf *dmabuf);
-+void *qemu_dmabuf_get_sync(QemuDmaBuf *dmabuf);
-+int32_t qemu_dmabuf_get_fence_fd(QemuDmaBuf *dmabuf);
-+bool qemu_dmabuf_get_allow_fences(QemuDmaBuf *dmabuf);
-+bool qemu_dmabuf_get_draw_submitted(QemuDmaBuf *dmabuf);
-+void qemu_dmabuf_set_texture(QemuDmaBuf *dmabuf, uint32_t texture);
-+void qemu_dmabuf_set_fence_fd(QemuDmaBuf *dmabuf, int32_t fence_fd);
-+void qemu_dmabuf_set_sync(QemuDmaBuf *dmabuf, void *sync);
-+void qemu_dmabuf_set_draw_submitted(QemuDmaBuf *dmabuf, bool draw_submitted);
-+void qemu_dmabuf_set_fd(QemuDmaBuf *dmabuf, int32_t fd);
-+
-+#endif
-diff --git a/ui/dmabuf.c b/ui/dmabuf.c
-new file mode 100644
-index 0000000000..e047d5ca26
---- /dev/null
-+++ b/ui/dmabuf.c
-@@ -0,0 +1,210 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * QemuDmaBuf struct and helpers used for accessing its data
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "ui/dmabuf.h"
-+
-+QemuDmaBuf *qemu_dmabuf_new(uint32_t width, uint32_t height,
-+                            uint32_t stride, uint32_t x,
-+                            uint32_t y, uint32_t backing_width,
-+                            uint32_t backing_height, uint32_t fourcc,
-+                            uint64_t modifier, int32_t dmabuf_fd,
-+                            bool allow_fences, bool y0_top) {
-+    QemuDmaBuf *dmabuf;
-+
-+    dmabuf = g_new0(QemuDmaBuf, 1);
-+
-+    dmabuf->width = width;
-+    dmabuf->height = height;
-+    dmabuf->stride = stride;
-+    dmabuf->x = x;
-+    dmabuf->y = y;
-+    dmabuf->backing_width = backing_width;
-+    dmabuf->backing_height = backing_height;
-+    dmabuf->fourcc = fourcc;
-+    dmabuf->modifier = modifier;
-+    dmabuf->fd = dmabuf_fd;
-+    dmabuf->allow_fences = allow_fences;
-+    dmabuf->y0_top = y0_top;
-+    dmabuf->fence_fd = -1;
-+
-+    return dmabuf;
-+}
-+
-+void qemu_dmabuf_free(QemuDmaBuf *dmabuf)
-+{
-+    if (dmabuf == NULL) {
-+        return;
-+    }
-+
-+    g_free(dmabuf);
-+}
-+
-+int qemu_dmabuf_get_fd(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->fd;
-+}
-+
-+int qemu_dmabuf_dup_fd(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    if (dmabuf->fd >= 0) {
-+        return dup(dmabuf->fd);
-+    } else {
-+        return -1;
-+    }
-+}
-+
-+void qemu_dmabuf_close(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    if (dmabuf->fd >= 0) {
-+        close(dmabuf->fd);
-+        dmabuf->fd = -1;
-+    }
-+}
-+
-+uint32_t qemu_dmabuf_get_width(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->width;
-+}
-+
-+uint32_t qemu_dmabuf_get_height(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->height;
-+}
-+
-+uint32_t qemu_dmabuf_get_stride(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->stride;
-+}
-+
-+uint32_t qemu_dmabuf_get_fourcc(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->fourcc;
-+}
-+
-+uint64_t qemu_dmabuf_get_modifier(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->modifier;
-+}
-+
-+uint32_t qemu_dmabuf_get_texture(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->texture;
-+}
-+
-+uint32_t qemu_dmabuf_get_x(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->x;
-+}
-+
-+uint32_t qemu_dmabuf_get_y(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->y;
-+}
-+
-+uint32_t qemu_dmabuf_get_backing_width(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->backing_width;
-+}
-+
-+uint32_t qemu_dmabuf_get_backing_height(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->backing_height;
-+}
-+
-+bool qemu_dmabuf_get_y0_top(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->y0_top;
-+}
-+
-+void *qemu_dmabuf_get_sync(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->sync;
-+}
-+
-+int32_t qemu_dmabuf_get_fence_fd(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->fence_fd;
-+}
-+
-+bool qemu_dmabuf_get_allow_fences(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->allow_fences;
-+}
-+
-+bool qemu_dmabuf_get_draw_submitted(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->draw_submitted;
-+}
-+
-+void qemu_dmabuf_set_texture(QemuDmaBuf *dmabuf, uint32_t texture)
-+{
-+    assert(dmabuf != NULL);
-+    dmabuf->texture = texture;
-+}
-+
-+void qemu_dmabuf_set_fence_fd(QemuDmaBuf *dmabuf, int32_t fence_fd)
-+{
-+    assert(dmabuf != NULL);
-+    dmabuf->fence_fd = fence_fd;
-+}
-+
-+void qemu_dmabuf_set_sync(QemuDmaBuf *dmabuf, void *sync)
-+{
-+    assert(dmabuf != NULL);
-+    dmabuf->sync = sync;
-+}
-+
-+void qemu_dmabuf_set_draw_submitted(QemuDmaBuf *dmabuf, bool draw_submitted)
-+{
-+    assert(dmabuf != NULL);
-+    dmabuf->draw_submitted = draw_submitted;
-+}
-+
-+void qemu_dmabuf_set_fd(QemuDmaBuf *dmabuf, int32_t fd)
-+{
-+    assert(dmabuf != NULL);
-+    dmabuf->fd = fd;
-+}
-diff --git a/ui/meson.build b/ui/meson.build
-index a5ce22a678..5d89986b0e 100644
---- a/ui/meson.build
-+++ b/ui/meson.build
-@@ -7,6 +7,7 @@ system_ss.add(files(
-   'clipboard.c',
-   'console.c',
-   'cursor.c',
-+  'dmabuf.c',
-   'input-keymap.c',
-   'input-legacy.c',
-   'input-barrier.c',
+ QemuDmaBuf *qemu_dmabuf_new(uint32_t width, uint32_t height,
+                             uint32_t stride, uint32_t x,
+                             uint32_t y, uint32_t backing_width,
 -- 
 2.34.1
 
