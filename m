@@ -4,52 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EE4EC04FFE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37E5CC25B74
 	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 23:37:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4qpJ-0002dw-7t; Wed, 08 May 2024 19:35:57 -0400
+	id 1s4qpO-0002g5-Lu; Wed, 08 May 2024 19:36:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s4qpH-0002dR-Da; Wed, 08 May 2024 19:35:55 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s4qpF-0002JJ-Ic; Wed, 08 May 2024 19:35:55 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 88EBA4E6030;
- Thu, 09 May 2024 01:35:51 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id XOGayBQsySuI; Thu,  9 May 2024 01:35:49 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 95C4E4E6013; Thu, 09 May 2024 01:35:49 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 93E05746E3B;
- Thu, 09 May 2024 01:35:49 +0200 (CEST)
-Date: Thu, 9 May 2024 01:35:49 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Nicholas Piggin <npiggin@gmail.com>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Daniel Henrique Barboza <danielhb413@gmail.com>
-Subject: Re: [PATCH v3 33/33] target/ppc: Add a macro to check for page
- protection bit
-In-Reply-To: <D14ASGGTNSQB.3TX66EXAL001R@gmail.com>
-Message-ID: <7c4e51de-fdff-37b6-ffe5-2e7e26cffc17@eik.bme.hu>
-References: <cover.1715125376.git.balaton@eik.bme.hu>
- <a91a1b9455f88cbbeff2652fc4f44acd89e98215.1715125376.git.balaton@eik.bme.hu>
- <D14ASGGTNSQB.3TX66EXAL001R@gmail.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s4qpL-0002fW-HT
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 19:36:00 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s4qpJ-0002Lj-HC
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 19:35:59 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 4F8385D38D;
+ Wed,  8 May 2024 23:35:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1715211356; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=T7TwvoAVe5RioVfpxD++Axd+EsFoR7/haRQrRhvgaKM=;
+ b=oyFYwT6PxlJJ6ks+YUGxgvZ6OR5MIldFzyzRRF4dJGMWWL6I6a+cO5HIVe8DSDXryasNcT
+ uOtZjajZUPplsvKJ8v85dRdNZCVwGV30t4SaGrEnud1GH8SVf6DkntCoRO5TnAZ8JGCcxd
+ kZ+vHwHr+6N/x9lNO8J/efWEVO9X5kk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1715211356;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=T7TwvoAVe5RioVfpxD++Axd+EsFoR7/haRQrRhvgaKM=;
+ b=+UHqGcS9NYu/81yoz0TchQOMe9L1IIoW0cYy6GVnJlgZSzDp/DiPcM4IALpn8yjGAglyrQ
+ XohTvO4E0n6MVjCA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1715211356; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=T7TwvoAVe5RioVfpxD++Axd+EsFoR7/haRQrRhvgaKM=;
+ b=oyFYwT6PxlJJ6ks+YUGxgvZ6OR5MIldFzyzRRF4dJGMWWL6I6a+cO5HIVe8DSDXryasNcT
+ uOtZjajZUPplsvKJ8v85dRdNZCVwGV30t4SaGrEnud1GH8SVf6DkntCoRO5TnAZ8JGCcxd
+ kZ+vHwHr+6N/x9lNO8J/efWEVO9X5kk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1715211356;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=T7TwvoAVe5RioVfpxD++Axd+EsFoR7/haRQrRhvgaKM=;
+ b=+UHqGcS9NYu/81yoz0TchQOMe9L1IIoW0cYy6GVnJlgZSzDp/DiPcM4IALpn8yjGAglyrQ
+ XohTvO4E0n6MVjCA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B174F13A27;
+ Wed,  8 May 2024 23:35:54 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([10.150.64.162])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id QIj2HVoMPGZ7FQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 08 May 2024 23:35:54 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: [PULL v2 06/13] qapi: introduce exit-on-error parameter for
+ migrate-incoming
+Date: Wed,  8 May 2024 20:35:34 -0300
+Message-Id: <20240508233541.2403-7-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20240508233541.2403-1-farosas@suse.de>
+References: <20240508233541.2403-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
+ RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -66,86 +121,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 8 May 2024, Nicholas Piggin wrote:
-> On Wed May 8, 2024 at 10:15 AM AEST, BALATON Zoltan wrote:
->> Checking if a page protection bit is set for a given access type is a
->> common operation. Add a macro to avoid repeating the same check at
->> multiple places and also avoid a function call. As this relies on
->> access type and page protection bit values having certain relation
->> also add an assert to ensure that this assumption holds.
->>
->> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->> ---
->>  target/ppc/cpu_init.c    |  4 ++++
->>  target/ppc/internal.h    | 20 ++------------------
->>  target/ppc/mmu-hash32.c  |  6 +++---
->>  target/ppc/mmu-hash64.c  |  2 +-
->>  target/ppc/mmu-radix64.c |  2 +-
->>  target/ppc/mmu_common.c  | 26 +++++++++++++-------------
->>  6 files changed, 24 insertions(+), 36 deletions(-)
->>
->> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
->> index 92c71b2a09..6639235544 100644
->> --- a/target/ppc/cpu_init.c
->> +++ b/target/ppc/cpu_init.c
->> @@ -7377,6 +7377,10 @@ static void ppc_cpu_class_init(ObjectClass *oc, void *data)
->>      resettable_class_set_parent_phases(rc, NULL, ppc_cpu_reset_hold, NULL,
->>                                         &pcc->parent_phases);
->>
->> +    /* CHECK_PROT_ACCESS relies on this MMU access and PAGE bits relation */
->> +    assert(MMU_DATA_LOAD == 0 && MMU_DATA_STORE == 1 && MMU_INST_FETCH == 2 &&
->> +           PAGE_READ == 1 && PAGE_WRITE == 2 && PAGE_EXEC == 4);
->> +
->
-> Can you use qemu_build_assert() for this?
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-I've changed it to qemu_build_assert and seems to work.
+Now we do set MIGRATION_FAILED state, but don't give a chance to
+orchestrator to query migration state and get the error.
 
->>      cc->class_by_name = ppc_cpu_class_by_name;
->>      cc->has_work = ppc_cpu_has_work;
->>      cc->mmu_index = ppc_cpu_mmu_index;
->> diff --git a/target/ppc/internal.h b/target/ppc/internal.h
->> index 46176c4711..9880422ce3 100644
->> --- a/target/ppc/internal.h
->> +++ b/target/ppc/internal.h
->> @@ -234,24 +234,8 @@ void destroy_ppc_opcodes(PowerPCCPU *cpu);
->>  void ppc_gdb_init(CPUState *cs, PowerPCCPUClass *ppc);
->>  const gchar *ppc_gdb_arch_name(CPUState *cs);
->>
->> -/**
->> - * prot_for_access_type:
->> - * @access_type: Access type
->> - *
->> - * Return the protection bit required for the given access type.
->> - */
->> -static inline int prot_for_access_type(MMUAccessType access_type)
->> -{
->> -    switch (access_type) {
->> -    case MMU_INST_FETCH:
->> -        return PAGE_EXEC;
->> -    case MMU_DATA_LOAD:
->> -        return PAGE_READ;
->> -    case MMU_DATA_STORE:
->> -        return PAGE_WRITE;
->> -    }
->> -    g_assert_not_reached();
->> -}
->> +/* Check if permission bit required for the access_type is set in prot */
->> +#define CHECK_PROT_ACCESS(prot, access_type) ((prot) & (1 << (access_type)))
->
-> We don't want to use a macro when an inline function will work.
->
-> Does the compiler not see the pattern and transform the existing
-> code into a shift? If it does then I would leave it. If not, then
-> just keep prot_for_access_type but make it a shift and maybe
-> comment the logic.
->
-> I would call the new function check_prot_for_access_type().
+Let's provide a possibility for QMP-based orchestrators to get an error
+like with outgoing migration.
 
-That would be too long and does not fit on one line. Long names with 
-underscore and 80 char line limit does not go well together. I've left 
-this unchanged for now and wait for your reply on this.
+For hmp_migrate_incoming(), let's enable the new behavior: HMP is not
+and ABI, it's mostly intended to use by developer and it makes sense
+not to stop the process.
 
-Regards,
-BALATON Zoltan
+For x-exit-preconfig, let's keep the old behavior:
+ - it's called from init(), so here we want to keep current behavior by
+   default
+ - it does exit on error by itself as well
+So, if we want to change the behavior of x-exit-preconfig, it should be
+another patch.
+
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Acked-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ migration/migration-hmp-cmds.c |  2 +-
+ migration/migration.c          | 33 +++++++++++++++++++++++++++------
+ migration/migration.h          |  3 +++
+ qapi/migration.json            |  7 ++++++-
+ system/vl.c                    |  3 ++-
+ 5 files changed, 39 insertions(+), 9 deletions(-)
+
+diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+index 7e96ae6ffd..23181bbee1 100644
+--- a/migration/migration-hmp-cmds.c
++++ b/migration/migration-hmp-cmds.c
+@@ -466,7 +466,7 @@ void hmp_migrate_incoming(Monitor *mon, const QDict *qdict)
+     }
+     QAPI_LIST_PREPEND(caps, g_steal_pointer(&channel));
+ 
+-    qmp_migrate_incoming(NULL, true, caps, &err);
++    qmp_migrate_incoming(NULL, true, caps, true, false, &err);
+     qapi_free_MigrationChannelList(caps);
+ 
+ end:
+diff --git a/migration/migration.c b/migration/migration.c
+index a9599838e6..289afa8d85 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -72,6 +72,8 @@
+ #define NOTIFIER_ELEM_INIT(array, elem)    \
+     [elem] = NOTIFIER_WITH_RETURN_LIST_INITIALIZER((array)[elem])
+ 
++#define INMIGRATE_DEFAULT_EXIT_ON_ERROR true
++
+ static NotifierWithReturnList migration_state_notifiers[] = {
+     NOTIFIER_ELEM_INIT(migration_state_notifiers, MIG_MODE_NORMAL),
+     NOTIFIER_ELEM_INIT(migration_state_notifiers, MIG_MODE_CPR_REBOOT),
+@@ -234,6 +236,8 @@ void migration_object_init(void)
+     qemu_cond_init(&current_incoming->page_request_cond);
+     current_incoming->page_requested = g_tree_new(page_request_addr_cmp);
+ 
++    current_incoming->exit_on_error = INMIGRATE_DEFAULT_EXIT_ON_ERROR;
++
+     migration_object_check(current_migration, &error_fatal);
+ 
+     blk_mig_init();
+@@ -800,12 +804,14 @@ fail:
+ 
+     migration_incoming_state_destroy();
+ 
+-    WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
+-        error_report_err(s->error);
+-        s->error = NULL;
+-    }
++    if (mis->exit_on_error) {
++        WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
++            error_report_err(s->error);
++            s->error = NULL;
++        }
+ 
+-    exit(EXIT_FAILURE);
++        exit(EXIT_FAILURE);
++    }
+ }
+ 
+ /**
+@@ -1314,6 +1320,15 @@ static void fill_destination_migration_info(MigrationInfo *info)
+         break;
+     }
+     info->status = mis->state;
++
++    if (!info->error_desc) {
++        MigrationState *s = migrate_get_current();
++        QEMU_LOCK_GUARD(&s->error_mutex);
++
++        if (s->error) {
++            info->error_desc = g_strdup(error_get_pretty(s->error));
++        }
++    }
+ }
+ 
+ MigrationInfo *qmp_query_migrate(Error **errp)
+@@ -1797,10 +1812,13 @@ void migrate_del_blocker(Error **reasonp)
+ }
+ 
+ void qmp_migrate_incoming(const char *uri, bool has_channels,
+-                          MigrationChannelList *channels, Error **errp)
++                          MigrationChannelList *channels,
++                          bool has_exit_on_error, bool exit_on_error,
++                          Error **errp)
+ {
+     Error *local_err = NULL;
+     static bool once = true;
++    MigrationIncomingState *mis = migration_incoming_get_current();
+ 
+     if (!once) {
+         error_setg(errp, "The incoming migration has already been started");
+@@ -1815,6 +1833,9 @@ void qmp_migrate_incoming(const char *uri, bool has_channels,
+         return;
+     }
+ 
++    mis->exit_on_error =
++        has_exit_on_error ? exit_on_error : INMIGRATE_DEFAULT_EXIT_ON_ERROR;
++
+     qemu_start_incoming_migration(uri, has_channels, channels, &local_err);
+ 
+     if (local_err) {
+diff --git a/migration/migration.h b/migration/migration.h
+index 6c612c0381..f3406c43c8 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -227,6 +227,9 @@ struct MigrationIncomingState {
+      * is needed as this field is updated serially.
+      */
+     unsigned int switchover_ack_pending_num;
++
++    /* Do exit on incoming migration failure */
++    bool exit_on_error;
+ };
+ 
+ MigrationIncomingState *migration_incoming_get_current(void);
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 8c65b90328..9feed413b5 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -1837,6 +1837,10 @@
+ # @channels: list of migration stream channels with each stream in the
+ #     list connected to a destination interface endpoint.
+ #
++# @exit-on-error: Exit on incoming migration failure.  Default true.
++#     When set to false, the failure triggers a MIGRATION event, and
++#     error details could be retrieved with query-migrate.  (since 9.1)
++#
+ # Since: 2.3
+ #
+ # Notes:
+@@ -1889,7 +1893,8 @@
+ ##
+ { 'command': 'migrate-incoming',
+              'data': {'*uri': 'str',
+-                      '*channels': [ 'MigrationChannel' ] } }
++                      '*channels': [ 'MigrationChannel' ],
++                      '*exit-on-error': 'bool' } }
+ 
+ ##
+ # @xen-save-devices-state:
+diff --git a/system/vl.c b/system/vl.c
+index 7756eac81e..79cd498395 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -2723,7 +2723,8 @@ void qmp_x_exit_preconfig(Error **errp)
+     if (incoming) {
+         Error *local_err = NULL;
+         if (strcmp(incoming, "defer") != 0) {
+-            qmp_migrate_incoming(incoming, false, NULL, &local_err);
++            qmp_migrate_incoming(incoming, false, NULL, true, true,
++                                 &local_err);
+             if (local_err) {
+                 error_reportf_err(local_err, "-incoming %s: ", incoming);
+                 exit(1);
+-- 
+2.35.3
+
 
