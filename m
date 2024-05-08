@@ -4,82 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5916CC04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 22:26:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F4CEC04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 23:34:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4pjf-0002VU-5r; Wed, 08 May 2024 18:26:03 -0400
+	id 1s4qnL-0001RG-Bm; Wed, 08 May 2024 19:33:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4pjd-0002VJ-2W
- for qemu-devel@nongnu.org; Wed, 08 May 2024 18:26:01 -0400
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4pjb-0000M8-A4
- for qemu-devel@nongnu.org; Wed, 08 May 2024 18:26:00 -0400
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-51ffff16400so270210e87.2
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 15:25:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715207157; x=1715811957; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=dbBc98+zFeaVhgd8PdBcKMiD7Ph2Eef9azq2MGlTC0s=;
- b=ed9brEQya8p3LI8li6gFzeqae46PNCUuD3AGdtycjfPmZdBL0/UjZAUNd9XlHlR5zv
- VPZ1lTiRNvUojHLoko9ScwaMzxka1K3iigBCFXCnAzvoSyjapcBouuWqJm/ZzEHFzaDf
- SDcxoIMK66NEQCEsu4Xno+oVd7GnHldW2nRtzb0zV/ucj2i92u03mi1I5QDC+izkWDvF
- iDc74gFQX39Rn3pEAtVPRJEnPQMwQxzuMDgnFpKLTQuoTkDz/sEWDeizYKcNdN3PpSoo
- yOZszRKXUE6w7T+N/XEqh9wkbEVti++9E7TwlZu5LMhMQPFOgmTRROlj67PSiXV/njWb
- eL9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715207157; x=1715811957;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dbBc98+zFeaVhgd8PdBcKMiD7Ph2Eef9azq2MGlTC0s=;
- b=S2AcJcXE6iuqJWMH6PewskU1y9wEJIVgXeOWa9ojkyg+b45vEwip+WYvTyNUNZB15f
- kIeNZAEJDhQ/v9XIHK210uKTr4LynJJWvG+cEXpMeyNkFdiUcgw+GcsBKhD1NNJ9oLGs
- RLxV5nYO7baVl26XsdhCi4wAEUh5VY8p3H58ISag2SD1cgjc1UAf/Y8ulHz50Bh+v55Q
- 1Ir6xz7oG2BhttvRLwHGpdXwBmleFp/aGQ3A09KyqJO1XPcajJ8yyu7IetRSEXw1PifB
- k0mQjOxsyMLm+f4SVns9Cg7zkTGgBwhGx3/LidWUpa+9ESS1bXIrZ1xaYnoKXZWCAroS
- Tc+Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUT+5sIE0Tdm92dlcqqWgZ7bIW3y0HVbHakQE5qQWiTINvD7ZPJFKcM6im2cWWDFtwOFjBeIlq5KQ/QdB73vCOZvEf0u9I=
-X-Gm-Message-State: AOJu0YyYa1iejlcniQdr907MDTDLDdVVLWRuLx6Wi1gjyTdc0JatK4RN
- PGas3RbYPLcleQlX74Fo8/vdNH4Dqo1q60DUDgsu7YqRktsR21QwPtD31UtYpFY=
-X-Google-Smtp-Source: AGHT+IHry1z4SuJTN+G0xAgi9aZk0iDqX/FyP7dv0+Hu6AASpJWwfhnIqgC4Rd4dUY7a5oYEnSvC8g==
-X-Received: by 2002:ac2:48b4:0:b0:51c:fd0a:7e37 with SMTP id
- 2adb3069b0e04-5217c567393mr3288258e87.20.1715207156578; 
- Wed, 08 May 2024 15:25:56 -0700 (PDT)
-Received: from [192.168.69.100] (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
- [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a5a1781cdb5sm7750866b.29.2024.05.08.15.25.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 May 2024 15:25:56 -0700 (PDT)
-Message-ID: <ef295b83-ae04-4b5c-abae-b1975933a2c4@linaro.org>
-Date: Thu, 9 May 2024 00:25:53 +0200
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1s4qnI-0001Qf-SN; Wed, 08 May 2024 19:33:52 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1s4qnG-0000yV-QJ; Wed, 08 May 2024 19:33:52 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 096814E6030;
+ Thu, 09 May 2024 01:33:46 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id aMq-XOdjxQrD; Thu,  9 May 2024 01:33:44 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 1AADE4E6013; Thu, 09 May 2024 01:33:44 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 18A8E746E3B;
+ Thu, 09 May 2024 01:33:44 +0200 (CEST)
+Date: Thu, 9 May 2024 01:33:44 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Nicholas Piggin <npiggin@gmail.com>
+cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>
+Subject: Re: [PATCH v2 26/28] target/ppc/mmu_common.c: Move BookE MMU functions
+ together
+In-Reply-To: <D149IYMCXH4Z.ZPIXWOVQVOZO@gmail.com>
+Message-ID: <841877bd-04d6-7608-b762-322962afad59@eik.bme.hu>
+References: <cover.1714606359.git.balaton@eik.bme.hu>
+ <d5d70791bdf598cd28ee70fd058f51c257a2b969.1714606359.git.balaton@eik.bme.hu>
+ <D13EMTIRPDQJ.2LCAHIOTN0W5N@gmail.com>
+ <090308e7-e3c0-8129-bdae-c2e3a41a2aa5@eik.bme.hu>
+ <D149IYMCXH4Z.ZPIXWOVQVOZO@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] gitlab: Update msys2-64bit runner tags
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, thuth@redhat.com
-References: <20240507175356.281618-1-richard.henderson@linaro.org>
- <f754d4a9-f481-4da7-ae7c-edbb013f55d9@linaro.org>
-Content-Language: en-US
-In-Reply-To: <f754d4a9-f481-4da7-ae7c-edbb013f55d9@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,20 +68,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/5/24 10:28, Philippe Mathieu-Daudé wrote:
-> On 7/5/24 19:53, Richard Henderson wrote:
->> Gitlab has deprecated and removed support for windows-1809
->> and shared-windows.  Update to saas-windows-medium-amd64 per
+On Wed, 8 May 2024, Nicholas Piggin wrote:
+> On Tue May 7, 2024 at 10:31 PM AEST, BALATON Zoltan wrote:
+>> On Tue, 7 May 2024, Nicholas Piggin wrote:
+>>> What do you think about adding mmu-book3e.c instead?
 >>
->> https://about.gitlab.com/blog/2024/01/22/windows-2022-support-for-gitlab-saas-runners/
->>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   .gitlab-ci.d/windows.yml | 4 +---
->>   1 file changed, 1 insertion(+), 3 deletions(-)
-> 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> I have considered that but found that some functions have to be in the
+>> same file and declared static for the compiler to inline them otherwise I
+>> get worse performance. Maybe after these rearrangments it's now possible
+>> to move these out but as this series got a bit long already I dod not go
+>> through with that and left it for a follow up but I can give it a try.
+>
+> It would be nice.
 
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+OK I've done that now as this also helps with some of the unint warnings 
+but I could not get rid of all work arounds completely.
 
+> What host machines are you using? I'm surprised inlining is causing
+> so much performance unless it is something older or in-order.
+
+Maybe it depends more on the compiler than host. I still use gcc 10 with 
+default -O2 level. Some people found that -O3 and LTO may help a bit but I 
+test with default QEMU settings as that may be what most use.
+
+Regards,
+BALATON Zoltan
 
