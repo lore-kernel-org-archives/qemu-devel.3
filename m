@@ -4,50 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93580C04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 14:24:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79C6CC25B5F
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 14:24:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4iCV-00083A-3j; Wed, 08 May 2024 10:23:19 -0400
+	id 1s4iCK-00082H-D0; Wed, 08 May 2024 10:23:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1s4iCT-000832-O5
- for qemu-devel@nongnu.org; Wed, 08 May 2024 10:23:17 -0400
-Received: from rev.ng ([5.9.113.41])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1s4iCR-0000FR-L0
- for qemu-devel@nongnu.org; Wed, 08 May 2024 10:23:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
- :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=f1Lk5qRs/YvBXQV9R4mnp+GPaBVqrdmTaPNt3LhIbLE=; b=i+HNkV9nFrcFi4k
- Ms8NNcbOOcknZaq7EYMrqekeWO1Gk0nk9w04wEJuf8rK0Px7r41SAfr6JJeMNd2B5rsOy48Mpc1L1
- aUbqX1ovwPkeLQ7XdFzb+wgVSvQK/vixm2t1D4MsNXNxoy5uQxxDndoy270UAtKyP/T9gdsA9YDoV
- ec=;
-Date: Wed, 8 May 2024 16:24:01 +0200
-To: ltaylorsimpson@gmail.com
-Cc: qemu-devel@nongnu.org, ale@rev.ng, bcain@quicinc.com
-Subject: Re: [PATCH 3/4] target/hexagon: idef-parser fix leak of init_list
-Message-ID: <jsusre6vphnnyoengz74djo2dvaoiz3auruhkmcc2pygv73w3u@hk7zhipgpbz6>
-References: <20240506183117.32268-1-anjo@rev.ng>
- <20240506183117.32268-4-anjo@rev.ng>
- <067f01da9fe7$51597590$f40c60b0$@gmail.com>
- <f7fmzerjibovuo7uevxmold5g6jvvjazfckhtv6tqkatpgbtzy@ging72uqq27r>
- <071701daa0c2$5988d450$0c9a7cf0$@gmail.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4iCJ-000828-8t
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 10:23:07 -0400
+Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4iCH-0000FB-Hq
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 10:23:07 -0400
+Received: by mail-lf1-x133.google.com with SMTP id
+ 2adb3069b0e04-52192578b95so924634e87.2
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 07:23:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1715178183; x=1715782983; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=r9b/KYGCpFg4e7Z6EStgo1qjH14mzmGzKeX8zTSKYSU=;
+ b=uM4/XLaRlNQwvnPg1C81KL9hDg+1IjTPyOTvX79NjUP1PTx7xV7q5GjaP03cQOYSYZ
+ DzgTNC7t7tNNMZ6Wv51os/gqhof34lOHTO5FEwdWsPWqrFK1rwsfsLTd1EyvzQkpSVUP
+ xFPeCYQR4mdNxOvmP65Yfd2xCzSSLf3bIBFxvm8vg7o6axudihlrQpUqWFqDV2KFoRh0
+ D1311vvg/wcKnP5Rqu6rEDhWPuuJZzXhL5pL2RlopILAiP6/Pwtqt4iKpw0g3wrPX8Vj
+ FoKqn3YuovBtgPK4shMx9jdorc9MVg01fWnJQy9Vk0D1fQBuS7iwI8QNDby3xsLBNa/g
+ vSOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715178183; x=1715782983;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=r9b/KYGCpFg4e7Z6EStgo1qjH14mzmGzKeX8zTSKYSU=;
+ b=nNRjakseGv02trOdeFmuKzFoILKDxdHZZAOrGVXEdbjnKe+Jb2yVh8eIDNzqOBkn8n
+ 9F598Qbw1+eS6WbPSsmnhIBPwA6ulEIaWESpjgDJptIKq/+jGJx2c+lW+4TzDtmsSj51
+ oMuJIRSnEaCZR2FceU2bvJGjLEk13GW/uQb/ye2SR12wlWs/f2lBvI/pem9M8AvPpqDi
+ iGxx0D1vuYCcGnjv/8jJRwENP4vT4r3WxMpYHAaX8r2HpxOvGtfoRUR/TFgJXS6czoDg
+ SHnFvP5dgn/UzbBCKTHG6tkoUpeVWGhzptansHERDYNjuwdhW6iJpR6ujB4eNqi71nV+
+ KdGQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWyBF9YHPH5ZrLcOTblEE9PrPaayCF2NDzlFpgOkhYqNHqDhZXx+vcPXojCvZLehGVJecOF+UCNuZKDIejFpNOFVZZkVPc=
+X-Gm-Message-State: AOJu0YyGhQ3K4mz6M64RMcBxK+Cp0LC3FwKMv26APKXDqWrzLz+UeI8q
+ s4N99gHi4NktMBooqJc2s4T1sVJsOtUmOuc8SHBntcpGX8U5BsMlGMhLs4QFhE8=
+X-Google-Smtp-Source: AGHT+IGFImL3S0UnjIM+sSsWpyKtK9DMiXvYdGuYboviealbnYJUDVBB3WHD6WEC9uP5j055KlKwKQ==
+X-Received: by 2002:ac2:5230:0:b0:51a:df97:cc8e with SMTP id
+ 2adb3069b0e04-5217c276f4dmr1681356e87.4.1715178182818; 
+ Wed, 08 May 2024 07:23:02 -0700 (PDT)
+Received: from [192.168.69.100] (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
+ [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-41f87d1fa40sm24569915e9.20.2024.05.08.07.23.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 08 May 2024 07:23:02 -0700 (PDT)
+Message-ID: <3cf22fc2-222d-40a1-b27f-fda72d4b2be5@linaro.org>
+Date: Wed, 8 May 2024 16:23:00 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <071701daa0c2$5988d450$0c9a7cf0$@gmail.com>
-Received-SPF: pass client-ip=5.9.113.41; envelope-from=anjo@rev.ng; helo=rev.ng
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] scripts/simpletrace: Mark output with unstable timestamp
+ as WARN
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Mads Ynddal <mads@ynddal.dk>, John Snow <jsnow@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20240508043229.3433128-1-zhao1.liu@intel.com>
+ <210757c3-c949-4dd1-bd7d-c33db3aa390e@linaro.org>
+ <ZjuEOPPbGaZgY6gG@intel.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <ZjuEOPPbGaZgY6gG@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::133;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -61,97 +97,57 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  'Anton Johansson' <anjo@rev.ng>
-From:  'Anton Johansson' via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07/05/24, ltaylorsimpson@gmail.com wrote:
+On 8/5/24 15:55, Zhao Liu wrote:
+> Hi Philippe,
 > 
+> On Wed, May 08, 2024 at 03:09:39PM +0200, Philippe Mathieu-Daudé wrote:
+>> Date: Wed, 8 May 2024 15:09:39 +0200
+>> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Subject: Re: [PATCH] scripts/simpletrace: Mark output with unstable
+>>   timestamp as WARN
+>>
+>> On 8/5/24 06:32, Zhao Liu wrote:
+>>> In some trace log, there're unstable timestamp breaking temporal
+>>> ordering of trace records. For example:
+>>>
+>>> kvm_run_exit -0.015 pid=3289596 cpu_index=0x0 reason=0x6
+>>> kvm_vm_ioctl -0.020 pid=3289596 type=0xffffffffc008ae67 arg=0x7ffeefb5aa60
+>>> kvm_vm_ioctl -0.021 pid=3289596 type=0xffffffffc008ae67 arg=0x7ffeefb5aa60
+>>>
+>>> Negative delta intervals tend to get drowned in the massive trace logs,
+>>> and an unstable timestamp can corrupt the calculation of intervals
+>>> between two events adjacent to it.
+>>>
+>>> Therefore, mark the outputs with unstable timestamps as WARN like:
+>>>
+>>> WARN: skip unstable timestamp: kvm_run_exit cur(8497404907761146)-pre(8497404907761161) pid=3289596 cpu_index=0x0 reason=0x6
+>>> WARN: skip unstable timestamp: kvm_vm_ioctl cur(8497404908603653)-pre(8497404908603673) pid=3289596 type=0xffffffffc008ae67 arg=0x7ffeefb5aa60
+>>> WARN: skip unstable timestamp: kvm_vm_ioctl cur(8497404908625787)-pre(8497404908625808) pid=3289596 type=0xffffffffc008ae67 arg=0x7ffeefb5aa60
+>>>
+>>> This would help to identify unusual events.
+>>>
+>>> And skip them without updating Formatter2.last_timestamp_ns to avoid
+>>> time back.
+>>
+>> Can't we reorder them instead?
 > 
-> > -----Original Message-----
-> > From: 'Anton Johansson' <anjo@rev.ng>
-> > Sent: Tuesday, May 7, 2024 4:47 AM
-> > To: ltaylorsimpson@gmail.com
-> > Cc: qemu-devel@nongnu.org; ale@rev.ng; bcain@quicinc.com
-> > Subject: Re: [PATCH 3/4] target/hexagon: idef-parser fix leak of init_list
-> > 
-> > On 06/05/24, ltaylorsimpson@gmail.com wrote:
-> > >
-> > >
-> > > > -----Original Message-----
-> > > > From: Anton Johansson <anjo@rev.ng>
-> > > > Sent: Monday, May 6, 2024 1:31 PM
-> > > > To: qemu-devel@nongnu.org
-> > > > Cc: ale@rev.ng; ltaylorsimpson@gmail.com; bcain@quicinc.com
-> > > > Subject: [PATCH 3/4] target/hexagon: idef-parser fix leak of
-> > > > init_list
-> > > >
-> > > > gen_inst_init_args() is called for instructions using a predicate as
-> > > > an
-> > > rvalue.
-> > > > Upon first call, the list of arguments which might need
-> > > > initialization
-> > > init_list is
-> > > > freed to indicate that they have been processed. For instructions
-> > > > without
-> > > an
-> > > > rvalue predicate,
-> > > > gen_inst_init_args() isn't called and init_list will never be freed.
-> > > >
-> > > > Free init_list from free_instruction() if it hasn't already been freed.
-> > > >
-> > > > Signed-off-by: Anton Johansson <anjo@rev.ng>
-> > > > ---
-> > > >  target/hexagon/idef-parser/parser-helpers.c | 7 +++++++
-> > > >  1 file changed, 7 insertions(+)
-> > > >
-> > > > diff --git a/target/hexagon/idef-parser/parser-helpers.c
-> > > > b/target/hexagon/idef-parser/parser-helpers.c
-> > > > index 95f2b43076..bae01c2bb8 100644
-> > > > --- a/target/hexagon/idef-parser/parser-helpers.c
-> > > > +++ b/target/hexagon/idef-parser/parser-helpers.c
-> > > > @@ -2121,6 +2121,13 @@ void free_instruction(Context *c)
-> > > >          g_string_free(g_array_index(c->inst.strings, GString*, i), TRUE);
-> > > >      }
-> > > >      g_array_free(c->inst.strings, TRUE);
-> > > > +    /*
-> > > > +     * Free list of arguments that might need initialization, if
-> > > > + they
-> > > haven't
-> > > > +     * already been free'd.
-> > > > +     */
-> > > > +    if (c->inst.init_list) {
-> > > > +        g_array_free(c->inst.init_list, TRUE);
-> > > > +    }
-> > > >      /* Free INAME token value */
-> > > >      g_string_free(c->inst.name, TRUE);
-> > > >      /* Free variables and registers */
-> > >
-> > > Why not do this in gen_inst_init_args just before this?
-> > >    /* Free argument init list once we have initialized everything */
-> > >     g_array_free(c->inst.init_list, TRUE);
-> > >     c->inst.init_list = NULL;
-> > 
-> > Thanks for the reviews Taylor! I'm not sure I understand what you mean
-> > here, we already free init_list in gen_inst_init_args, since gen_inst_init_args
-> > won't be called for all instructions we need to also free from a common
-> > place.
-> > 
-> > //Anton
-> 
-> It just seems more natural to free the elements of the array at the same place you free the array itself.  If there are valid reasons for doing it elsewhere, I'm OK with that.
-> 
-> Taylor
-> 
-> 
+> I think so...IIUC, when the current event with "wrong" timestamp is
+> detected, its previous events records have already been output and
+> cannot be reordered.
 
-Ah I see what you mean. The array and its elements are either freed in
-gen_inst_init_args or free_instruction so they do occur together. The
-"freeing of variables and registers" comment only refers to declared
-TCGvs and has nothing to do with the arguments.
+Well, this certainly need rework to cleverly handle out of sync
+events, reordering them to display them correctly.
 
-Comment is a bit outdated so I've updated it.
+Skipping events really sounds a bad idea to me. Even more out
+of sync ones.
 
-//Anton
+Some simple approach could be to queue up to N events, then sort them
+and unqueue N/2, while processing all events.
+
+Regards,
+
+Phil.
 
