@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C105C04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 17:47:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 402FEC25B5F
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 17:47:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4lNG-00014V-BM; Wed, 08 May 2024 13:46:38 -0400
+	id 1s4lNM-0001G5-As; Wed, 08 May 2024 13:46:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lMk-0000TL-Ec
- for qemu-devel@nongnu.org; Wed, 08 May 2024 13:46:14 -0400
-Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lNC-0000ZO-5h
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 13:46:34 -0400
+Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lMi-0007Oz-SV
- for qemu-devel@nongnu.org; Wed, 08 May 2024 13:46:06 -0400
-Received: by mail-lf1-x12f.google.com with SMTP id
- 2adb3069b0e04-52006fbae67so6405735e87.0
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 10:46:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lMp-0007Zy-JW
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 13:46:13 -0400
+Received: by mail-lf1-x133.google.com with SMTP id
+ 2adb3069b0e04-51ff65b1e14so5445585e87.2
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 10:46:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715190363; x=1715795163; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715190368; x=1715795168; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/3iYL7NrK3YLqicig51htgd0NBJzLG9cU40QkiClpvo=;
- b=vBg/ihLUYONPmDIgZzQMVzAQWatOVPUNTqpDCGqFBwZ2RZ+F61dfyGFZV9KGrzoBja
- OdoHUc1+wXuW3nEEfMSzW3smCme2pvx3cM3H8AlhDQ2Az1w5gVDSyW8LPym9dBgD/iLT
- mUr+/627HjxB9g59xgx7evuN/iuI6ngoNOc8r1XbIwA2040kOXwWPRaPOCjteR9r+sgE
- ArGkNqZod35zY7QoJmaGjdqGw9SYKfGUGgE6e3vDQW6wPpyGquPN5dQzUIreLikDJA2f
- zEPMnujSzb9ADtWMcaN/1ZiTVC3oTCVxGKZnISTpKZ9sPHBapqDUEbpRwcACjmxwnz1n
- Z9EA==
+ bh=WpkAm6Hg1nlOzBAO4vDNkPRXv+LXQE3F1WzdPdPpy9g=;
+ b=Bb/1mYXGasgbIp0beH0g2XAyusrzkR5gmYATFXJ/PDHMVGMNkew/QxDpEzRCxoRql0
+ +gKjLyQylrGDT3vofOxZkKM38A3CNeJjoIkB/iU62qk7Xq10eZQRHR46mm22LXbi9Fxa
+ 8FBkn9GQdjO0NL6r320rjreBbjBym+ZQKfTzPkvsqcHVcZZTkYYd8B3TtvuJhWJNzGIn
+ UIOeUB7FCFeHVwfXrE0FnYIgWLr+1YqKYUCUzzdoPokiQhcJApS4pfn+6ea3Ea9iF/C2
+ TC7JBKwUin4NmQns6fSnuw2JP7uyrPYwbq9SVDo6OOu2UspuBfscDlicI73tv6h7gOLu
+ xOXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715190363; x=1715795163;
+ d=1e100.net; s=20230601; t=1715190368; x=1715795168;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/3iYL7NrK3YLqicig51htgd0NBJzLG9cU40QkiClpvo=;
- b=cwcFgi9bl/HU++Btnhs43vKsTbwD1FdfYVLzaRJS6WW3gRYijeVT3vgX5e7oyrJNtC
- MEFXWMibsNxQ9X50qZX/gV4b/tr5lyDzWCpv1g2TjfYnA0VgQEM82pHgNtahdUP+cwxR
- Swi+R6GXgJb10UGTPS+cVHjL63hIIdvbBDD/NAIM44QJGRHYSAxcTMUFvCo5dE8SuOMp
- o54xSHAZ4DhuQdbAxNDxU8WXzNKDYId7Wmkg6krejqZ5gYM8AoDmzRya7lNC8ZgcXy9B
- sH2fsQyC60uwL9p6uf977eBt+OsyiN8fB/qgdx5qQVKexAf/nS7v+jN/E9ji5EmD9ShI
- 9CAg==
-X-Gm-Message-State: AOJu0YxKhpcIlciPuhBIwLg/71AA1nw/YfLbqbhmfGY27pnkk72PgC54
- d1Vs7MmxP+/fnEhTUQya5onKU7gJR9z093LO/ynA3gWLTTkZXv472tbTYY4svlLEiU7H6hpMwDh
- C
-X-Google-Smtp-Source: AGHT+IGgoFPgSuLdJzWWmK9z4ETnXQ6RpLzaJ6VUGGmiPZJTYJtmUOqfqGpI+sM4ujIoLfARASYHjA==
-X-Received: by 2002:a05:6512:3f1a:b0:518:ae8f:b573 with SMTP id
- 2adb3069b0e04-5217cf3cb59mr2189882e87.61.1715190362829; 
- Wed, 08 May 2024 10:46:02 -0700 (PDT)
+ bh=WpkAm6Hg1nlOzBAO4vDNkPRXv+LXQE3F1WzdPdPpy9g=;
+ b=IsYkEZfcRyhRWLnol+3DzR/ToTx3l55st0JPnWZUe3Jf8oXpQeBp8cYbqFN1uzPhk/
+ RYGmuWlLYCr57c+AO4mkonFQkKmksMTfK8QdLS/tjvJCxZzJugieBv9B1FN/yFR+w7l2
+ fe7WWm477NDeNQ66Ulnjamv1aqu56gcW2TmOiPghB6Y2rFoHL/fNc9VYMnIiUeqB8xoK
+ X/cNFlRexq7nbIxZzZBmhZrhh42E4thwwUpmh682UQBX9Tz+CZUJyE+f+S3iLAkK5p3k
+ Gn2boFk6T10E1N2dwcb7RsnkEfnOTZI7pkBMRI8G9caAMtTZUVL2HFRph6KOVHAW7iG3
+ QvcA==
+X-Gm-Message-State: AOJu0YyJSLx+GuUkwCJ8Gi/ogXuGHTG6CORnS+uMexG3tzQUXDVz2kqv
+ 1ndkC3mINnfwQZ8013dCMYxvJClNByvRjITwHRSADnO0JGlvEU9kGiQ7lB2p2evULMszVeSdOCC
+ F
+X-Google-Smtp-Source: AGHT+IHzilZL0UsJQg7qOE+WrXTMEeL8wAgXmaA85cXDJp/ux2bKdSihtYvsMB89Nyh69Sc9m87yfw==
+X-Received: by 2002:a05:6512:b0f:b0:51b:79b7:8322 with SMTP id
+ 2adb3069b0e04-5217cc4ae15mr2511328e87.52.1715190368031; 
+ Wed, 08 May 2024 10:46:08 -0700 (PDT)
 Received: from m1x-phil.lan (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
  [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
- oy6-20020a170907104600b00a59a86b85ecsm5747185ejb.78.2024.05.08.10.46.01
+ t22-20020a1709060c5600b00a59c7a001b6sm4499003ejf.177.2024.05.08.10.46.07
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 08 May 2024 10:46:02 -0700 (PDT)
+ Wed, 08 May 2024 10:46:07 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 09/26] hw/i386/pc: Allow to compile without CONFIG_FDC_ISA
-Date: Wed,  8 May 2024 19:44:53 +0200
-Message-ID: <20240508174510.60470-10-philmd@linaro.org>
+Subject: [PULL 10/26] hw/i386/Kconfig: Allow to compile Q35 without FDC_ISA
+Date: Wed,  8 May 2024 19:44:54 +0200
+Message-ID: <20240508174510.60470-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240508174510.60470-1-philmd@linaro.org>
 References: <20240508174510.60470-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::133;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,68 +96,51 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-The q35 machine can work without FDC. But to be able to also link
-a QEMU binary that does not include the FDC code, we have to make
-it possible to disable the spots that call into the FDC code.
+The q35 machine can be used without floppy disk controller (FDC),
+but due to our current Kconfig setup, the FDC code is still always
+included in the binary. To fix this, the "PC" config option should
+only imply the "FDC_ISA" instead of always selecting it.
+
+The i440fx and the isa-pc machine currently always instantiate
+the FDC, so we have to add the select statements now there instead.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240425184315.553329-2-thuth@redhat.com>
+Message-ID: <20240425184315.553329-3-thuth@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/i386/pc.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ hw/i386/Kconfig | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 46235466d7..505ea750f4 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -440,16 +440,19 @@ static void pc_boot_set(void *opaque, const char *boot_device, Error **errp)
- 
- static void pc_cmos_init_floppy(MC146818RtcState *rtc_state, ISADevice *floppy)
- {
--    int val, nb, i;
-+    int val, nb;
-     FloppyDriveType fd_type[2] = { FLOPPY_DRIVE_TYPE_NONE,
-                                    FLOPPY_DRIVE_TYPE_NONE };
- 
-+#ifdef CONFIG_FDC_ISA
-     /* floppy type */
-     if (floppy) {
--        for (i = 0; i < 2; i++) {
-+        for (int i = 0; i < 2; i++) {
-             fd_type[i] = isa_fdc_get_drive_type(floppy, i);
-         }
-     }
-+#endif
-+
-     val = (cmos_get_fd_drive_type(fd_type[0]) << 4) |
-         cmos_get_fd_drive_type(fd_type[1]);
-     mc146818rtc_set_cmos_data(rtc_state, 0x10, val);
-@@ -1133,7 +1136,7 @@ static void pc_superio_init(ISABus *isa_bus, bool create_fdctrl,
-     int i;
-     DriveInfo *fd[MAX_FD];
-     qemu_irq *a20_line;
--    ISADevice *fdc, *i8042, *port92, *vmmouse;
-+    ISADevice *i8042, *port92, *vmmouse;
- 
-     serial_hds_isa_init(isa_bus, 0, MAX_ISA_SERIAL_PORTS);
-     parallel_hds_isa_init(isa_bus, MAX_PARALLEL_PORTS);
-@@ -1143,11 +1146,13 @@ static void pc_superio_init(ISABus *isa_bus, bool create_fdctrl,
-         create_fdctrl |= !!fd[i];
-     }
-     if (create_fdctrl) {
--        fdc = isa_new(TYPE_ISA_FDC);
-+#ifdef CONFIG_FDC_ISA
-+        ISADevice *fdc = isa_new(TYPE_ISA_FDC);
-         if (fdc) {
-             isa_realize_and_unref(fdc, isa_bus, &error_fatal);
-             isa_fdc_init_drives(fdc, fd);
-         }
-+#endif
-     }
- 
-     if (!create_i8042) {
+diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
+index 4362164962..58ca8f246d 100644
+--- a/hw/i386/Kconfig
++++ b/hw/i386/Kconfig
+@@ -32,7 +32,7 @@ config PC
+     imply VGA_PCI
+     imply VIRTIO_VGA
+     imply NVDIMM
+-    select FDC_ISA
++    imply FDC_ISA
+     select I8259
+     select I8254
+     select PCKBD
+@@ -72,6 +72,7 @@ config I440FX
+     imply VMPORT
+     imply VMMOUSE
+     select ACPI_PIIX4
++    select FDC_ISA
+     select PC_PCI
+     select PC_ACPI
+     select PCI_I440FX
+@@ -87,6 +88,7 @@ config ISAPC
+     depends on I386
+     imply VGA_ISA
+     select ISA_BUS
++    select FDC_ISA
+     select PC
+     select IDE_ISA
+     # FIXME: it is in the same file as i440fx, and does not compile
 -- 
 2.41.0
 
