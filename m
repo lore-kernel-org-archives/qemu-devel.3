@@ -4,51 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE6CFC04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 15:18:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20D61C19F4F
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 15:20:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4j3S-0004Ej-GW; Wed, 08 May 2024 11:18:02 -0400
+	id 1s4j5V-00058z-OC; Wed, 08 May 2024 11:20:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s4j3Q-0004EA-ER; Wed, 08 May 2024 11:18:00 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s4j3O-00021a-2B; Wed, 08 May 2024 11:18:00 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 781504E6001;
- Wed, 08 May 2024 17:17:50 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 1xeCEvozPg88; Wed,  8 May 2024 17:17:48 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 753704E601B; Wed, 08 May 2024 17:17:48 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 731E3746E3B;
- Wed, 08 May 2024 17:17:48 +0200 (CEST)
-Date: Wed, 8 May 2024 17:17:48 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Nicholas Piggin <npiggin@gmail.com>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Daniel Henrique Barboza <danielhb413@gmail.com>
-Subject: Re: [PATCH v3 01/33] target/ppc: Fix gen_sc to use correct nip
-In-Reply-To: <D14AXR65WIXZ.2H0R05J3AL0W4@gmail.com>
-Message-ID: <e6a92c1b-8ecf-80e5-6095-8aa5d828d82c@eik.bme.hu>
-References: <cover.1715125376.git.balaton@eik.bme.hu>
- <addcf637335b56956663aaa4234213da49e85a8b.1715125376.git.balaton@eik.bme.hu>
- <D14AXR65WIXZ.2H0R05J3AL0W4@gmail.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4j5U-00058l-5O
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 11:20:08 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4j5S-0002c3-GG
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 11:20:07 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a59a934ad50so1066493566b.1
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 08:20:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1715181605; x=1715786405; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=SVcPlbO2s26PlyrrMjby+JkTbGWLfVju1wec6fSphlI=;
+ b=Gf9+87rMLBZaUP59ir05bDSG2twqOs2Ei0jFC23lkOUUXoQrJ9Sx5ha3jY4BL3awic
+ BJaNsnNbo+/mzKiYwdJpRz/FbrG1GCnThRQGCJMuQsIky8pFfIlQRe+IGJIHBm6qFr8L
+ ywQOeFb84zatZftxQSw4oynT+PKgcDgy3D8Bby4wVvwmwc6AbQRwoTb9QNeUji9x1KJj
+ GQVcVtJ26hbSrq1IAx0Yvv82sDSCHoHNswpevdTEGvdmkA8R8olZpc4al05wnxw+3S6v
+ hl23jIf19jh0n7bz/Uzr1EFgaFEDsqA5KZoAa5Qwpi7NdHdfK0X9V2NNYUVlRAHyXFsv
+ WVLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715181605; x=1715786405;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=SVcPlbO2s26PlyrrMjby+JkTbGWLfVju1wec6fSphlI=;
+ b=V18TQYkDhgw8AX8Pp60N9gcKXVM8lbQeGIROwZffN/Nk9CXNzE1V4DUMyhZWijj+ML
+ mj+DFASa1aKZ4QloLzV/5VBMLTPiVhfKQYaMbAuLE93Ob1BdzQLwnMbbScwTdGeHZb8t
+ Q9y0Tv1CohOc+SfhqygLW2bJd32zxmFPD1HC36KRroPjmGo9/yxtItsjW73cus6epEfk
+ 8g3ulvuHHmAzJfTUeTDzkydtkTyZffzfWipzhIGkXeybwWAo77N8lDrrgZnwmdoJl1xY
+ t5t/VQJYVjTmOBeFRVoKdsYJ4sN6elIm9dk8ahZnj9h5fpQlCpSYytm7+HCteoBAlHz2
+ UIeA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXuyCgpM7GA7/9BiVtWjmQBFHvYDDYeo3eK1DxdjUlWzbUqTMgYoG7551CSWD+1VkDm3VhZ+FUC2Yr8FXCyzLQvRA8y/RA=
+X-Gm-Message-State: AOJu0YxfofFGkjE50xA2OQbmbRRcI3fSAAytIaDYvYjDW79eQ1x2otAK
+ S1c3P5MQ+bHL3AP/kAMEFCDBEWn1DVAZNkPFm6AAZrBpVrCbIimQ/qogULwp9G+QC9IC1CHVNrS
+ D
+X-Google-Smtp-Source: AGHT+IGqcEhMbV9mTMGFyoaS4N541PxZ5MuDvPKsRcVWY28chvXwyvFmfGa676FnjwyGmRbgAbY7Wg==
+X-Received: by 2002:a50:a45d:0:b0:572:d1e1:b4b3 with SMTP id
+ 4fb4d7f45d1cf-5731d9ce4f1mr2033203a12.7.1715181604657; 
+ Wed, 08 May 2024 08:20:04 -0700 (PDT)
+Received: from [192.168.69.100] (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
+ [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
+ p5-20020a50cd85000000b0057259943ba2sm7945602edi.12.2024.05.08.08.20.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 08 May 2024 08:20:03 -0700 (PDT)
+Message-ID: <a19d84f5-d59e-4a59-a3ca-baa3a630eca1@linaro.org>
+Date: Wed, 8 May 2024 17:20:02 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 10/33] accel/tcg: Implement translator_st
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20240424233131.988727-1-richard.henderson@linaro.org>
+ <20240424233131.988727-11-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240424233131.988727-11-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -65,162 +96,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 8 May 2024, Nicholas Piggin wrote:
-> On Wed May 8, 2024 at 10:14 AM AEST, BALATON Zoltan wrote:
->> Most exceptions are raised with nip pointing to the faulting
->> instruction but the sc instruction generating a syscall exception
->> leaves nip pointing to next instruction. Fix gen_sc to not use
->> gen_exception_err() which sets nip back but correctly set nip to
->> pc_next so we don't have to patch this in the exception handlers.
->>
->> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->> ---
->>  target/ppc/excp_helper.c | 43 ++--------------------------------------
->>  target/ppc/translate.c   | 15 ++++++--------
->>  2 files changed, 8 insertions(+), 50 deletions(-)
->>
->> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
->> index 0712098cf7..92fe535815 100644
->> --- a/target/ppc/excp_helper.c
->> +++ b/target/ppc/excp_helper.c
->> @@ -116,7 +116,7 @@ static void dump_syscall(CPUPPCState *env)
->>                    ppc_dump_gpr(env, 0), ppc_dump_gpr(env, 3),
->>                    ppc_dump_gpr(env, 4), ppc_dump_gpr(env, 5),
->>                    ppc_dump_gpr(env, 6), ppc_dump_gpr(env, 7),
->> -                  ppc_dump_gpr(env, 8), env->nip);
->> +                  ppc_dump_gpr(env, 8), env->nip - 4);
->>  }
->>
->>  static void dump_hcall(CPUPPCState *env)
->> @@ -131,7 +131,7 @@ static void dump_hcall(CPUPPCState *env)
->>                    ppc_dump_gpr(env, 7), ppc_dump_gpr(env, 8),
->>                    ppc_dump_gpr(env, 9), ppc_dump_gpr(env, 10),
->>                    ppc_dump_gpr(env, 11), ppc_dump_gpr(env, 12),
->> -                  env->nip);
->> +                  env->nip - 4);
->>  }
->>
->>  #ifdef CONFIG_TCG
->> @@ -516,12 +516,6 @@ static void powerpc_excp_40x(PowerPCCPU *cpu, int excp)
->>          break;
->>      case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
->>          dump_syscall(env);
->> -
->> -        /*
->> -         * We need to correct the NIP which in this case is supposed
->> -         * to point to the next instruction
->> -         */
->> -        env->nip += 4;
->>          break;
->>      case POWERPC_EXCP_FIT:       /* Fixed-interval timer interrupt           */
->>          trace_ppc_excp_print("FIT");
->> @@ -632,12 +626,6 @@ static void powerpc_excp_6xx(PowerPCCPU *cpu, int excp)
->>          break;
->>      case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
->>          dump_syscall(env);
->> -
->> -        /*
->> -         * We need to correct the NIP which in this case is supposed
->> -         * to point to the next instruction
->> -         */
->> -        env->nip += 4;
->>          break;
->>      case POWERPC_EXCP_FPU:       /* Floating-point unavailable exception     */
->>      case POWERPC_EXCP_DECR:      /* Decrementer exception                    */
->> @@ -780,13 +768,6 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
->>          } else {
->>              dump_syscall(env);
->>          }
->> -
->> -        /*
->> -         * We need to correct the NIP which in this case is supposed
->> -         * to point to the next instruction
->> -         */
->> -        env->nip += 4;
->> -
->>          /*
->>           * The Virtual Open Firmware (VOF) relies on the 'sc 1'
->>           * instruction to communicate with QEMU. The pegasos2 machine
->> @@ -932,13 +913,6 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
->>          } else {
->>              dump_syscall(env);
->>          }
->> -
->> -        /*
->> -         * We need to correct the NIP which in this case is supposed
->> -         * to point to the next instruction
->> -         */
->> -        env->nip += 4;
->> -
->>          /*
->>           * The Virtual Open Firmware (VOF) relies on the 'sc 1'
->>           * instruction to communicate with QEMU. The pegasos2 machine
->> @@ -1098,12 +1072,6 @@ static void powerpc_excp_booke(PowerPCCPU *cpu, int excp)
->>          break;
->>      case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
->>          dump_syscall(env);
->> -
->> -        /*
->> -         * We need to correct the NIP which in this case is supposed
->> -         * to point to the next instruction
->> -         */
->> -        env->nip += 4;
->>          break;
->>      case POWERPC_EXCP_FPU:       /* Floating-point unavailable exception     */
->>      case POWERPC_EXCP_APU:       /* Auxiliary processor unavailable          */
->> @@ -1428,13 +1396,6 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
->>          } else {
->>              dump_syscall(env);
->>          }
->> -
->> -        /*
->> -         * We need to correct the NIP which in this case is supposed
->> -         * to point to the next instruction
->> -         */
->> -        env->nip += 4;
->> -
->>          /* "PAPR mode" built-in hypercall emulation */
->>          if (lev == 1 && books_vhyp_handles_hcall(cpu)) {
->>              PPCVirtualHypervisorClass *vhc =
->> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
->> index 93ffec787c..e112c44a02 100644
->> --- a/target/ppc/translate.c
->> +++ b/target/ppc/translate.c
->> @@ -4472,22 +4472,19 @@ static void gen_hrfid(DisasContext *ctx)
->>  #endif
->>
->>  /* sc */
->> -#if defined(CONFIG_USER_ONLY)
->> -#define POWERPC_SYSCALL POWERPC_EXCP_SYSCALL_USER
->> -#else
->> -#define POWERPC_SYSCALL POWERPC_EXCP_SYSCALL
->> -#endif
->>  static void gen_sc(DisasContext *ctx)
->>  {
->> -    uint32_t lev;
->> -
->>      /*
->>       * LEV is a 7-bit field, but the top 6 bits are treated as a reserved
->>       * field (i.e., ignored). ISA v3.1 changes that to 5 bits, but that is
->>       * for Ultravisor which TCG does not support, so just ignore the top 6.
->>       */
->> -    lev = (ctx->opcode >> 5) & 0x1;
->> -    gen_exception_err(ctx, POWERPC_SYSCALL, lev);
->> +    uint32_t lev = (ctx->opcode >> 5) & 0x1;
->> +#ifdef CONFIG_USER_ONLY
->> +    gen_exception_err(ctx, POWERPC_EXCP_SYSCALL_USER, lev);
->> +#else
->> +    gen_exception_err_nip(ctx, POWERPC_EXCP_SYSCALL, lev, ctx->base.pc_next);
->> +#endif
->
-> I think this is the nail in the coffin for this one. Let's shelve it.
+On 25/4/24 01:31, Richard Henderson wrote:
+> Copy data out of a completed translation.  This will be used
+> for both plugins and disassembly.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   include/exec/translator.h | 23 ++++++++++++++++
+>   accel/tcg/translator.c    | 55 +++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 78 insertions(+)
+> 
+> diff --git a/include/exec/translator.h b/include/exec/translator.h
+> index e92dfba035..3c354a4310 100644
+> --- a/include/exec/translator.h
+> +++ b/include/exec/translator.h
+> @@ -246,6 +246,29 @@ translator_ldq_swap(CPUArchState *env, DisasContextBase *db,
+>    */
+>   void translator_fake_ldb(DisasContextBase *db, vaddr pc, uint8_t insn8);
+>   
+> +/**
+> + * translator_st
+> + * @db: disassembly context
+> + * @dest: address to copy into
 
-I really would like to get rid of all the +4s and long comments in 
-excp_helper.c though so I won't let this go until we find a solution. I've 
-now found that linux-user/ppc/cpu_loop.c handles this case and that also 
-has a +4 that I've missed before so with that removed this should work. 
-I'll try again.
+Or s/address/buffer/
 
-Regards,
-BALATON Zoltan
+> + * @addr: virtual address within TB
+> + * @len: length
+> + *
+> + * Copy @len bytes from @addr into @dest.
+> + * All bytes must have been read during translation.
+> + * Return true on success or false on failure.
+> + */
+> +bool translator_st(const DisasContextBase *db, void *dest,
+> +                   vaddr addr, size_t len);
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+
 
