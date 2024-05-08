@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2C49C25B74
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 23:38:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53DB4C25B4F
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 23:38:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4qpk-0003P6-RK; Wed, 08 May 2024 19:36:24 -0400
+	id 1s4qqW-0004oo-Av; Wed, 08 May 2024 19:37:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s4qpi-0003MN-QX; Wed, 08 May 2024 19:36:22 -0400
+ id 1s4qqL-0004ZG-3m; Wed, 08 May 2024 19:37:03 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s4qpg-0002Yd-Vg; Wed, 08 May 2024 19:36:22 -0400
+ id 1s4qqH-0002dw-2T; Wed, 08 May 2024 19:37:00 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 65AE24E65CE;
- Thu, 09 May 2024 01:36:19 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 5C9B54E65DA;
+ Thu, 09 May 2024 01:36:35 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id XHyu4-mxa-av; Thu,  9 May 2024 01:36:17 +0200 (CEST)
+ with ESMTP id UnV3xDFFv-gZ; Thu,  9 May 2024 01:36:33 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 74BED4E65D6; Thu, 09 May 2024 01:36:17 +0200 (CEST)
-Message-Id: <a68ca45111847c977d5052e20b4fc7bd13aca94a.1715209155.git.balaton@eik.bme.hu>
+ id 6C67F4E65DB; Thu, 09 May 2024 01:36:33 +0200 (CEST)
+Message-Id: <e7734ba33c181d6f07c86d57553a2615e0e3b966.1715209155.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1715209155.git.balaton@eik.bme.hu>
 References: <cover.1715209155.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v4 14/33] target/ppc/mmu_common.c: Split off real mode cases
- in get_physical_address_wtlb()
+Subject: [PATCH v4 29/33] target/ppc: Split off common embedded TLB init
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,7 +39,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Thu, 09 May 2024 01:36:17 +0200 (CEST)
+Date: Thu, 09 May 2024 01:36:33 +0200 (CEST)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -63,76 +62,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The real mode handling is identical in the remaining switch cases.
-Split off these common real mode cases into a separate conditional to
-leave only the else branches in the switch that are different.
+Several 4xx CPUs and e200 share the same TLB settings enclosed in an
+ifdef. Split it off in a common function to reduce code duplication
+and the number of ifdefs.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu_common.c | 34 +++++++++-------------------------
- 1 file changed, 9 insertions(+), 25 deletions(-)
+ target/ppc/cpu_init.c | 46 ++++++++++++++++---------------------------
+ 1 file changed, 17 insertions(+), 29 deletions(-)
 
-diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 9f177b6976..b13150ce23 100644
---- a/target/ppc/mmu_common.c
-+++ b/target/ppc/mmu_common.c
-@@ -1172,7 +1172,6 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
-                                      MMUAccessType access_type, int type,
-                                      int mmu_idx)
- {
--    int ret = -1;
-     bool real_mode;
- 
-     if (env->mmu_model == POWERPC_MMU_BOOKE) {
-@@ -1184,38 +1183,23 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
- 
-     real_mode = (type == ACCESS_CODE) ? !FIELD_EX64(env->msr, MSR, IR)
-                                       : !FIELD_EX64(env->msr, MSR, DR);
-+    if (real_mode && (env->mmu_model == POWERPC_MMU_SOFT_6xx ||
-+                      env->mmu_model == POWERPC_MMU_SOFT_4xx ||
-+                      env->mmu_model == POWERPC_MMU_REAL)) {
-+        return check_physical(env, ctx, eaddr, access_type);
-+    }
- 
-     switch (env->mmu_model) {
-     case POWERPC_MMU_SOFT_6xx:
--        if (real_mode) {
--            ret = check_physical(env, ctx, eaddr, access_type);
--        } else {
--            ret = mmu6xx_get_physical_address(env, ctx, eaddr, access_type,
--                                              type);
--        }
--        break;
--
-+        return mmu6xx_get_physical_address(env, ctx, eaddr, access_type, type);
-     case POWERPC_MMU_SOFT_4xx:
--        if (real_mode) {
--            ret = check_physical(env, ctx, eaddr, access_type);
--        } else {
--            ret = mmu40x_get_physical_address(env, ctx, eaddr, access_type);
--        }
--        break;
-+        return mmu40x_get_physical_address(env, ctx, eaddr, access_type);
-     case POWERPC_MMU_REAL:
--        if (real_mode) {
--            ret = check_physical(env, ctx, eaddr, access_type);
--        } else {
--            cpu_abort(env_cpu(env),
--                      "PowerPC in real mode do not do any translation\n");
--        }
--        return -1;
-+        cpu_abort(env_cpu(env),
-+                  "PowerPC in real mode do not do any translation\n");
-     default:
-         cpu_abort(env_cpu(env), "Unknown or invalid MMU model\n");
--        return -1;
-     }
--
--    return ret;
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 07ad788e54..92c71b2a09 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -2107,18 +2107,22 @@ static int check_pow_hid0_74xx(CPUPPCState *env)
+     return 0;
  }
  
- static void booke206_update_mas_tlb_miss(CPUPPCState *env, target_ulong address,
++static void init_tlbs_emb(CPUPPCState *env)
++{
++#ifndef CONFIG_USER_ONLY
++    env->nb_tlb = 64;
++    env->nb_ways = 1;
++    env->tlb_type = TLB_EMB;
++#endif
++}
++
+ static void init_proc_405(CPUPPCState *env)
+ {
+     register_40x_sprs(env);
+     register_405_sprs(env);
+     register_usprgh_sprs(env);
+ 
+-    /* Memory management */
+-#if !defined(CONFIG_USER_ONLY)
+-    env->nb_tlb = 64;
+-    env->nb_ways = 1;
+-    env->tlb_type = TLB_EMB;
+-#endif
++    init_tlbs_emb(env);
+     init_excp_4xx(env);
+     env->dcache_line_size = 32;
+     env->icache_line_size = 32;
+@@ -2185,12 +2189,8 @@ static void init_proc_440EP(CPUPPCState *env)
+                  SPR_NOACCESS, SPR_NOACCESS,
+                  &spr_read_generic, &spr_write_generic,
+                  0x00000000);
+-    /* Memory management */
+-#if !defined(CONFIG_USER_ONLY)
+-    env->nb_tlb = 64;
+-    env->nb_ways = 1;
+-    env->tlb_type = TLB_EMB;
+-#endif
++
++    init_tlbs_emb(env);
+     init_excp_BookE(env);
+     env->dcache_line_size = 32;
+     env->icache_line_size = 32;
+@@ -2282,12 +2282,7 @@ static void init_proc_440GP(CPUPPCState *env)
+     register_440_sprs(env);
+     register_usprgh_sprs(env);
+ 
+-    /* Memory management */
+-#if !defined(CONFIG_USER_ONLY)
+-    env->nb_tlb = 64;
+-    env->nb_ways = 1;
+-    env->tlb_type = TLB_EMB;
+-#endif
++    init_tlbs_emb(env);
+     init_excp_BookE(env);
+     env->dcache_line_size = 32;
+     env->icache_line_size = 32;
+@@ -2355,12 +2350,8 @@ static void init_proc_440x5(CPUPPCState *env)
+                  SPR_NOACCESS, SPR_NOACCESS,
+                  &spr_read_generic, &spr_write_generic,
+                  0x00000000);
+-    /* Memory management */
+-#if !defined(CONFIG_USER_ONLY)
+-    env->nb_tlb = 64;
+-    env->nb_ways = 1;
+-    env->tlb_type = TLB_EMB;
+-#endif
++
++    init_tlbs_emb(env);
+     init_excp_BookE(env);
+     env->dcache_line_size = 32;
+     env->icache_line_size = 32;
+@@ -2717,11 +2708,8 @@ static void init_proc_e200(CPUPPCState *env)
+                  SPR_NOACCESS, SPR_NOACCESS,
+                  &spr_read_generic, &spr_write_generic,
+                  0x00000000);
+-#if !defined(CONFIG_USER_ONLY)
+-    env->nb_tlb = 64;
+-    env->nb_ways = 1;
+-    env->tlb_type = TLB_EMB;
+-#endif
++
++    init_tlbs_emb(env);
+     init_excp_e200(env, 0xFFFF0000UL);
+     env->dcache_line_size = 32;
+     env->icache_line_size = 32;
 -- 
 2.30.9
 
