@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D8EBC04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 12:32:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C051C04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 12:33:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4gS5-0005ar-Cx; Wed, 08 May 2024 08:31:17 -0400
+	id 1s4gS7-0005bf-AN; Wed, 08 May 2024 08:31:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4gRz-0005Yu-A0; Wed, 08 May 2024 08:31:13 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ (Exim 4.90_1) (envelope-from <minwoo.im.dev@gmail.com>)
+ id 1s4gS5-0005bA-Lb; Wed, 08 May 2024 08:31:17 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4gRv-00037b-DW; Wed, 08 May 2024 08:31:10 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-5ca29c131ebso3205738a12.0; 
- Wed, 08 May 2024 05:31:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <minwoo.im.dev@gmail.com>)
+ id 1s4gS3-00039t-Vh; Wed, 08 May 2024 08:31:17 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-1e651a9f3ffso22166615ad.1; 
+ Wed, 08 May 2024 05:31:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715171464; x=1715776264; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1715171474; x=1715776274; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6GpM2Wau9g7vnLLFGS1shdiSHE3sPS8g3dHSCTmh/6c=;
- b=fe5is1pz1W1OCy0exaVWf5NWeJOKnPP3laLpuYNUd106ZoihoODGH1gV/kTmEXU1id
- gCauFOXxzcv4BBbP5PlNGQI7hnNZf4UxJAH/1oo+f+rGExBC42qcZnscZbbkKmz6I8b5
- CGvWxHDZwgdBKVt0pww81i2GWoR1+oolzemC3NUwhmC7Z0SnLbsCDA5ZF4NcF5cWKLHS
- Q7r5kyhDpGZgEKEzVWHpL+Hhx1Yey/pZUI3GyOiW5f1xWliFyAa/NsKw8WeRABSprmlO
- JyYyfoVQ+0KDaoOF4Fy7hNLFYQGkObchoE/jJqWDLQ6RuctrH26v+cFwk+ioQRg7TOyQ
- bECQ==
+ bh=41zciqobW1lSQYD67CMpHII/+O0mLdb6RkZbAdkYnvw=;
+ b=aWQpjIWgUwGFPb5a8dylvy6UO1mWnn3SXcPHXFlddfQ7UzaCz419gYza2QW2Xa48ej
+ ZzQRpuPMFtruZhuXrqVIk7l8UIPkwsmka7v2qFA8i1YX0XND5TJ2k2MZZ0IJTQS5bWtJ
+ 6ptex7yjwGyaHDiv5YORCCANIwcCGaueFcncb93IRFm4h6gP55C/haAoRZUxdOD46oeP
+ zhbLk3ovogYQPWxigXwny2jWHgATeOpiKapYf/3whRC4fZe9EAzUBzUEaZ2IKzJqhU13
+ 9vygKat985uMB/k3Wx+KtsWlAgilX5hrFqM7RzCleMjvCm++paoxHvkq8dyByGHqQXR7
+ IOLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715171464; x=1715776264;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=6GpM2Wau9g7vnLLFGS1shdiSHE3sPS8g3dHSCTmh/6c=;
- b=QV3LHzJp5ZyPa/h8sixMcwfMnx79rQIX5nn1PxceV/cuF6mJ4hVNlFKgHDkcZ2xpzK
- VGDNsKah1hJ/JrBNv4Pduf2ghf9LOKXbFkRdnnvxnupk9QRvp5StIVLVKQ9ykagUOKvM
- jsa/uWV7qW1Vq2NANOyKoboxlQNcSIlB9klf8CxveO/B6aTcnAjbU0wIx6MT5VeMrWWA
- a8NqMmXTRMFr0n42BGPtiIByqcOyA5gy8IYoF7YDIgu3CLFPxRwSHbt/AQ3zRNRsyv9y
- 4sngTaEVdyUAr0y/Kc2jSSX3Rw1isRaS13wHPrTNmc9LZd+in+zfvruSERLMwxAj4se1
- GMqA==
+ d=1e100.net; s=20230601; t=1715171474; x=1715776274;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=41zciqobW1lSQYD67CMpHII/+O0mLdb6RkZbAdkYnvw=;
+ b=bIfOcGvKh0OExYVq9k9rfiPU+HpI5Y6u7rK2i0oboYUINUgDaPIu437amjSmopq6X1
+ jFmiZDZMFJHGJXYv5f6262L28tG7y0wbraNicZ9PKQ+VXpXt0MHbUTF8u5vgrx6q39YG
+ D3b2+cox2D1aPN2dd3R0VwwmoMS5Nx8OzCFZEjpJZ9AMadFvbCSIYPxihLslEeVTOJYf
+ rowsdaKIacrqQFvFWWK65Z7/qq5yMyrtLGIsBALvZIX8trIb9SfpWr5XsISA8R8huViu
+ zPNgekZBSfO3Oiw1Fwdanncipq2Z8kFY4IrjjVWwN70rg9XTHkuPhCdAspyCc8HAFdaB
+ wV4Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVA6U8D4IYf/21U8WnbQqO00MZ1MEook/iwJQi1C9YBA32CFChTMa5K4uIIlVy3FA6gffJ+LPec/0rtxMCKtL5dnAdNHHo=
-X-Gm-Message-State: AOJu0YwEVrug3FauYf3FPgctAp7U9GsmO/ZbVvZkVmLPmBwDtb0bo6xn
- TLXFfkzRspTXnHVN/dW09X9OeFCvJdR5r2jwWQyGgpBqzNLsgnsrm24J/Q==
-X-Google-Smtp-Source: AGHT+IHsdEzOsg+0VUkyyAwLXWC3VdaTCWunh1jnlnKO+hWzfscOypM84mIX+IeF0DlvE2GOVvG6yg==
-X-Received: by 2002:a05:6a20:1592:b0:1a7:ae5d:5fb4 with SMTP id
- adf61e73a8af0-1afc8d4df22mr2805232637.28.1715171464236; 
- Wed, 08 May 2024 05:31:04 -0700 (PDT)
-Received: from localhost ([1.146.8.34]) by smtp.gmail.com with ESMTPSA id
- bf5-20020a656d05000000b0062070308b0esm6921812pgb.46.2024.05.08.05.31.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 May 2024 05:31:03 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 08 May 2024 22:30:57 +1000
-Message-Id: <D149JDYPG4NB.GTUPG8F1OZL2@gmail.com>
-Cc: <qemu-ppc@nongnu.org>, "Thomas Huth" <thuth@redhat.com>
-Subject: Re: [PATCH v2] ppc: Deprecate 'ref405ep' machine and 405 CPUs
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, <qemu-devel@nongnu.org>
-X-Mailer: aerc 0.17.0
-References: <20240507123332.641708-1-clg@redhat.com>
-In-Reply-To: <20240507123332.641708-1-clg@redhat.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x530.google.com
+ AJvYcCVpFkdJ8nZutuZ5l6HqF4JttoIqfuPa8o9xy192Z5vVT0Y8junc1+5VbjrjT7boKspIryuwgtXCvsbzuKUCXvEwOHzMZoo=
+X-Gm-Message-State: AOJu0YyR/BwF2pOeJzJ67L0Zx5lx8J2fb6WlQQsu8xPqd+oS/xfZA89X
+ T6SFya2r39ME0nas16Z0+o67TKtxZghT+69gzNnXSQiPOJ7ivq42R+aAWQ==
+X-Google-Smtp-Source: AGHT+IGNcVh4SAxQDXmWeZr40KH95b2x0M7A7hh1Zzq+UlNU4mzN1qV6EhOobm6wZCrX14M6J1c/1w==
+X-Received: by 2002:a17:902:ce8a:b0:1e1:1791:3681 with SMTP id
+ d9443c01a7336-1eeb0796948mr29718035ad.61.1715171473939; 
+ Wed, 08 May 2024 05:31:13 -0700 (PDT)
+Received: from localhost ([116.121.76.56]) by smtp.gmail.com with ESMTPSA id
+ b3-20020a170902d30300b001e2a479954dsm11741336plc.181.2024.05.08.05.31.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 08 May 2024 05:31:13 -0700 (PDT)
+From: Minwoo Im <minwoo.im.dev@gmail.com>
+To: Klaus Jensen <its@irrelevant.dk>,
+	Keith Busch <kbusch@kernel.org>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Minwoo Im <minwoo.im@samsung.com>, Klaus Jensen <k.jensen@samsung.com>
+Subject: [PATCH v3 1/4] hw/nvme: add Identify Endurance Group List
+Date: Wed,  8 May 2024 21:31:04 +0900
+Message-Id: <20240508123107.87919-2-minwoo.im.dev@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240508123107.87919-1-minwoo.im.dev@gmail.com>
+References: <20240508123107.87919-1-minwoo.im.dev@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=minwoo.im.dev@gmail.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,57 +94,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue May 7, 2024 at 10:33 PM AEST, C=C3=A9dric Le Goater wrote:
-> The 'ref405ep' machine and PPC 405 CPU have no known users, firmware
-> images are not available, OpenWRT dropped support in 2019, U-Boot in
-> 2017, Linux also is dropping support in 2024. It is time to let go of
-> this ancient hardware and focus on newer CPUs and platforms.
->
-> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
+From: Minwoo Im <minwoo.im@samsung.com>
 
-Acked-by: Nicholas Piggin <npiggin@gmail.com>
+Commit 73064edfb864 ("hw/nvme: flexible data placement emulation")
+intorudced NVMe FDP feature to nvme-subsys and nvme-ctrl with a
+single endurance group #1 supported.  This means that controller should
+return proper identify data to host with Identify Endurance Group List
+(CNS 19h).  But, yes, only just for the endurance group #1.  This patch
+allows host applications to ask for which endurance group is available
+and utilize FDP through that endurance group.
 
-> ---
->  v2: fixed header line
->
->  docs/about/deprecated.rst | 8 ++++++++
->  hw/ppc/ppc405_boards.c    | 1 +
->  2 files changed, 9 insertions(+)
->
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index 03f8b1b655e071432ecd9decf61e194821d06928..e22acb17f296362509a3e143b=
-a61bafd210a6c91 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -258,6 +258,14 @@ dropping the ``cheetah`` OMAP1 board, because we don=
-'t have any
->  test images for it and don't know of anybody who does; the ``sx1``
->  and ``sx1-v1`` OMAP1 machines remain supported for now.
-> =20
-> +PPC 405 ``ref405ep`` machine (since 9.1)
-> +''''''''''''''''''''''''''''''''''''''''
-> +
-> +The ``ref405ep`` machine and PPC 405 CPU have no known users, firmware
-> +images are not available, OpenWRT dropped support in 2019, U-Boot in
-> +2017, Linux also is dropping support in 2024. It is time to let go of
-> +this ancient hardware and focus on newer CPUs and platforms.
-> +
->  Backend options
->  ---------------
-> =20
-> diff --git a/hw/ppc/ppc405_boards.c b/hw/ppc/ppc405_boards.c
-> index 4092ebc1ab59de14b66ebad2be7eb019faf45db1..c44e7ed162fae5ec884ba4e45=
-8138f84430a8460 100644
-> --- a/hw/ppc/ppc405_boards.c
-> +++ b/hw/ppc/ppc405_boards.c
-> @@ -350,6 +350,7 @@ static void ppc405_machine_class_init(ObjectClass *oc=
-, void *data)
->      mc->init =3D ppc405_init;
->      mc->default_ram_size =3D 128 * MiB;
->      mc->default_ram_id =3D "ppc405.ram";
-> +    mc->deprecation_reason =3D "machine is old and unmaintained";
->  }
-> =20
->  static const TypeInfo ppc405_machine_type =3D {
+Signed-off-by: Minwoo Im <minwoo.im@samsung.com>
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+---
+ hw/nvme/ctrl.c       | 22 ++++++++++++++++++++++
+ include/block/nvme.h |  1 +
+ 2 files changed, 23 insertions(+)
+
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 127c3d238346..18672f66193f 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -5629,6 +5629,26 @@ static uint16_t nvme_identify_nslist_csi(NvmeCtrl *n, NvmeRequest *req,
+     return nvme_c2h(n, list, data_len, req);
+ }
+ 
++static uint16_t nvme_endurance_group_list(NvmeCtrl *n, NvmeRequest *req)
++{
++    uint16_t list[NVME_CONTROLLER_LIST_SIZE] = {};
++    uint16_t *nr_ids = &list[0];
++    uint16_t *ids = &list[1];
++    uint16_t endgid = le32_to_cpu(req->cmd.cdw11) & 0xffff;
++
++    /*
++     * The current nvme-subsys only supports Endurance Group #1.
++     */
++    if (!endgid) {
++        *nr_ids = 1;
++        ids[0] = 1;
++    } else {
++        *nr_ids = 0;
++    }
++
++    return nvme_c2h(n, list, sizeof(list), req);
++}
++
+ static uint16_t nvme_identify_ns_descr_list(NvmeCtrl *n, NvmeRequest *req)
+ {
+     NvmeNamespace *ns;
+@@ -5744,6 +5764,8 @@ static uint16_t nvme_identify(NvmeCtrl *n, NvmeRequest *req)
+         return nvme_identify_nslist(n, req, false);
+     case NVME_ID_CNS_CS_NS_ACTIVE_LIST:
+         return nvme_identify_nslist_csi(n, req, true);
++    case NVME_ID_CNS_ENDURANCE_GROUP_LIST:
++        return nvme_endurance_group_list(n, req);
+     case NVME_ID_CNS_CS_NS_PRESENT_LIST:
+         return nvme_identify_nslist_csi(n, req, false);
+     case NVME_ID_CNS_NS_DESCR_LIST:
+diff --git a/include/block/nvme.h b/include/block/nvme.h
+index bb231d0b9ad0..7c77d38174a7 100644
+--- a/include/block/nvme.h
++++ b/include/block/nvme.h
+@@ -1074,6 +1074,7 @@ enum NvmeIdCns {
+     NVME_ID_CNS_CTRL_LIST             = 0x13,
+     NVME_ID_CNS_PRIMARY_CTRL_CAP      = 0x14,
+     NVME_ID_CNS_SECONDARY_CTRL_LIST   = 0x15,
++    NVME_ID_CNS_ENDURANCE_GROUP_LIST  = 0x19,
+     NVME_ID_CNS_CS_NS_PRESENT_LIST    = 0x1a,
+     NVME_ID_CNS_CS_NS_PRESENT         = 0x1b,
+     NVME_ID_CNS_IO_COMMAND_SET        = 0x1c,
+-- 
+2.34.1
 
 
