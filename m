@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56DABC04FFE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD010C25B5F
 	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 17:46:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4lMe-0000O1-OY; Wed, 08 May 2024 13:46:00 -0400
+	id 1s4lMk-0000PK-0n; Wed, 08 May 2024 13:46:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lM9-0000KT-0A
- for qemu-devel@nongnu.org; Wed, 08 May 2024 13:45:30 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lMD-0000Kz-6q
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 13:45:34 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lM6-0007Ic-EJ
- for qemu-devel@nongnu.org; Wed, 08 May 2024 13:45:27 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a59a5f81af4so1227611766b.3
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 10:45:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lMB-0007Kc-Bj
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 13:45:32 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a59ad344f7dso2301066b.0
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 10:45:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715190324; x=1715795124; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715190329; x=1715795129; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UIF3u0N5I7QP9EtogOTWS3nnNPFic90FVU2Lm7bwK+4=;
- b=hMQCv4M5UWNYSO53L0UIrp4qg+W4zPVRPVXzumcndqPGS65zkcFOv/djRZ0i973XD2
- x9d/lf3J51BNNKgL0rCuWSk0RZkwKIn4ilPBqefxKNCxD6VGH6GUPvgwuQch9fM56dSw
- xqXvaXogCBhA0XzPdBYhodaLcA/fNOgIqNXQHOwtQzj3p3Q9G99t9BfJKKr9+k0P21HI
- 4jA2voYm59IhBCLs5Z1U3iBf3tUKPJdpyWBsJWPU3aiYOTN1Dxiqjxc8zrMFBfBE3Q8E
- s8DeMivA63wI8QRIjQ78lng7StlHrsE746Vpgh3qiqgTgWBdFYVNAhKATLHE3xyB8KtR
- og2w==
+ bh=4OH+OdSI3NRi6kwuyf3vIVlVnfRZUW2MUDqdsivDFuU=;
+ b=pE8Tg3XzkDRBNFc/Gbh6fHTM/R5yf5Bz3y02Sz75FzBChxpvmgD3koGUjqvRqAFVU4
+ AwcLKl6sFriFUkuWHL/+zsMOLU1g5+KSAJzn6+S8wAbsidilNTE4KYVDfVLLxIXhD6FW
+ G9FnLjlbgu2qej2vbONp0aqFTpOMAHfiCjvxy62EiTfocjGNQ5XnoNZLYtEREeGpNjAG
+ 7Fmhs40Lw6O/st8GBP8h76fbWntzuxCIbFUJel2RGJNL2UQFNxzRe1jN2AjgR1kIoe+q
+ gxjuwJ9PwKXXxC8zhPBrYG3NFZUeMRzuror701smBBmUyqGg41g2WezHECXkXj+t0n70
+ 61kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715190324; x=1715795124;
+ d=1e100.net; s=20230601; t=1715190329; x=1715795129;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UIF3u0N5I7QP9EtogOTWS3nnNPFic90FVU2Lm7bwK+4=;
- b=YV/vvI4ZLcyQa6W2PDwmAm3C6xN5DylKkyD4kHQagzosjCzPAjRBUNB9oIt9WMbbqP
- 7CYwNx/E+vEeE3sizjk5kKZp8UaeXQsaDkMuJ88a3oe/h8QLF/poUAgRS8pRdRLR0z0Q
- FJoqIXcrJpfe89hbd5ippqYVO6Fhwfv9/oz/XCnA310hML7MXzCc7PuqVnSYil98qYpW
- RMNi9WEV9FcGQuOuRxlNebRpdNmSJKgVFXAp5bfQoZ4lT3vuY89lye6hokoNhohsqIkT
- swci4WCdfF/HGJzIZdp3niYkwDlN50q2PpnG0OP6+YI8jWJ2tvuzWGIDdP8yLfeMSLPi
- udRw==
-X-Gm-Message-State: AOJu0YzocqTRb/a2irAn/vW/kCHhg0K8dUFLZsELCOC+D51xZriHzpyB
- /8lEzmItQMkkOHz7Fpt0mS+q8Ui7LeBz0rdye/q3N5x8gjQUcIL5OiEg5wpDWao71fFcvEuwlsg
- J
-X-Google-Smtp-Source: AGHT+IHFtNnKIpPHWs5X5ndEAEwcPC8b1aIJGPBTCnfSHnF8xy4tRg7n+BZkq+WGVvTU7Xx38vM5FQ==
-X-Received: by 2002:a17:906:f8c4:b0:a59:bf43:4e40 with SMTP id
- a640c23a62f3a-a59fb94a651mr225408466b.14.1715190324214; 
- Wed, 08 May 2024 10:45:24 -0700 (PDT)
+ bh=4OH+OdSI3NRi6kwuyf3vIVlVnfRZUW2MUDqdsivDFuU=;
+ b=qk7Z14NBS9/TAbdWIp4z+kx8/8lI8IfsikIneVXTxIlXBE/J6OI04ZPEF9xA6Xt5jD
+ rCcQGOAZMR6s3zioNGcTHddbC4nLQ55RgKsEcrf7twIPyE5RZJjpEnGYNdTuZhEve9/Q
+ ZOmu9WyUMWzFd5yhmbPdFM0x1OmQoSoPCFXZi2h407bUajVOeCdvI0Z6EJSGCqD9cu7h
+ SuGu+UP47FZhOWEjsWxqTkds8q82KQyxRRWxuoVR1iETfO1MmLNJ6gHnmQtI3TX1orZB
+ v+jKuN7k9Gfo9/nh+I+dPe8IcxoxewarLXa6j7ce0XR/NFYosy5tEh9lMEbZwjjOEkGM
+ 1RBw==
+X-Gm-Message-State: AOJu0YzuVNizcE6KrQwUjlh2vnbWsvTNuZk7Gox91e8Em6Ygkbwr0WWY
+ DtM/vvvsD4gCWJVGIYsLQKnuV9Qvsqp0qZ4SE8ABrI7blDtcgslebF+Ydfb+Jp+gJtAGsSdROmX
+ h
+X-Google-Smtp-Source: AGHT+IFiXTQ3xsWokvC+U2OW2s2TLDWVueDDmiEoj8wM4ynYT11xOqgmWHh7sZ+QSRNXfazggVIilg==
+X-Received: by 2002:a17:906:c802:b0:a59:9a68:7327 with SMTP id
+ a640c23a62f3a-a59fb9ce261mr175867066b.54.1715190329529; 
+ Wed, 08 May 2024 10:45:29 -0700 (PDT)
 Received: from m1x-phil.lan (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
  [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
- jl24-20020a17090775d800b00a599acaff03sm6667049ejc.19.2024.05.08.10.45.23
+ g17-20020a170906395100b00a59c3db0c50sm4608038eje.199.2024.05.08.10.45.28
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 08 May 2024 10:45:23 -0700 (PDT)
+ Wed, 08 May 2024 10:45:29 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@redhat.com>,
- David Gibson <david@gibson.dropbear.id.au>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 02/26] target/ppc: Replace g_memdup() by g_memdup2()
-Date: Wed,  8 May 2024 19:44:46 +0200
-Message-ID: <20240508174510.60470-3-philmd@linaro.org>
+Subject: [PULL 03/26] hw/hppa/machine: Replace g_memdup() by g_memdup2()
+Date: Wed,  8 May 2024 19:44:47 +0200
+Message-ID: <20240508174510.60470-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240508174510.60470-1-philmd@linaro.org>
 References: <20240508174510.60470-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,26 +111,62 @@ Replace g_memdup() by the safer g_memdup2() wrapper.
 Trivially safe because the argument was directly from sizeof.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@redhat.com>
-Acked-by: David Gibson <david@gibson.dropbear.id.au>
-Message-Id: <20210903174510.751630-27-philmd@redhat.com>
+Message-Id: <20210903174510.751630-12-philmd@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/ppc/mmu-hash64.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/hppa/machine.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/target/ppc/mmu-hash64.c b/target/ppc/mmu-hash64.c
-index 5a0d80feda..0966422a55 100644
---- a/target/ppc/mmu-hash64.c
-+++ b/target/ppc/mmu-hash64.c
-@@ -1188,7 +1188,7 @@ void ppc_hash64_init(PowerPCCPU *cpu)
-         return;
-     }
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index 37ee6387e0..5d0a8739de 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -207,37 +207,37 @@ static FWCfgState *create_fw_cfg(MachineState *ms, PCIBus *pci_bus,
  
--    cpu->hash64_opts = g_memdup(pcc->hash64_opts, sizeof(*cpu->hash64_opts));
-+    cpu->hash64_opts = g_memdup2(pcc->hash64_opts, sizeof(*cpu->hash64_opts));
- }
+     val = cpu_to_le64(MIN_SEABIOS_HPPA_VERSION);
+     fw_cfg_add_file(fw_cfg, "/etc/firmware-min-version",
+-                    g_memdup(&val, sizeof(val)), sizeof(val));
++                    g_memdup2(&val, sizeof(val)), sizeof(val));
  
- void ppc_hash64_finalize(PowerPCCPU *cpu)
+     val = cpu_to_le64(HPPA_TLB_ENTRIES - btlb_entries);
+     fw_cfg_add_file(fw_cfg, "/etc/cpu/tlb_entries",
+-                    g_memdup(&val, sizeof(val)), sizeof(val));
++                    g_memdup2(&val, sizeof(val)), sizeof(val));
+ 
+     val = cpu_to_le64(btlb_entries);
+     fw_cfg_add_file(fw_cfg, "/etc/cpu/btlb_entries",
+-                    g_memdup(&val, sizeof(val)), sizeof(val));
++                    g_memdup2(&val, sizeof(val)), sizeof(val));
+ 
+     len = strlen(mc->name) + 1;
+     fw_cfg_add_file(fw_cfg, "/etc/hppa/machine",
+-                    g_memdup(mc->name, len), len);
++                    g_memdup2(mc->name, len), len);
+ 
+     val = cpu_to_le64(soft_power_reg);
+     fw_cfg_add_file(fw_cfg, "/etc/hppa/power-button-addr",
+-                    g_memdup(&val, sizeof(val)), sizeof(val));
++                    g_memdup2(&val, sizeof(val)), sizeof(val));
+ 
+     val = cpu_to_le64(CPU_HPA + 16);
+     fw_cfg_add_file(fw_cfg, "/etc/hppa/rtc-addr",
+-                    g_memdup(&val, sizeof(val)), sizeof(val));
++                    g_memdup2(&val, sizeof(val)), sizeof(val));
+ 
+     val = cpu_to_le64(CPU_HPA + 24);
+     fw_cfg_add_file(fw_cfg, "/etc/hppa/DebugOutputPort",
+-                    g_memdup(&val, sizeof(val)), sizeof(val));
++                    g_memdup2(&val, sizeof(val)), sizeof(val));
+ 
+     fw_cfg_add_i16(fw_cfg, FW_CFG_BOOT_DEVICE, ms->boot_config.order[0]);
+     qemu_register_boot_set(fw_cfg_boot_set, fw_cfg);
+ 
+     fw_cfg_add_file(fw_cfg, "/etc/qemu-version",
+-                    g_memdup(qemu_version, sizeof(qemu_version)),
++                    g_memdup2(qemu_version, sizeof(qemu_version)),
+                     sizeof(qemu_version));
+ 
+     fw_cfg_add_extra_pci_roots(pci_bus, fw_cfg);
 -- 
 2.41.0
 
