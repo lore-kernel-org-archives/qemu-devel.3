@@ -4,98 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7D26C04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 10:07:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D93CBC04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 10:15:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4eCO-0003GO-JD; Wed, 08 May 2024 06:06:56 -0400
+	id 1s4eJA-0005FO-Vj; Wed, 08 May 2024 06:13:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s4eCL-0003FT-J1
- for qemu-devel@nongnu.org; Wed, 08 May 2024 06:06:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s4eCJ-0001v6-72
- for qemu-devel@nongnu.org; Wed, 08 May 2024 06:06:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715162810;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gdV7aO/vBaZrtRyxgzjWMxfg2weXLmcHwx6yfA2YnlA=;
- b=VTQl0RYc0uwA1SBqnetZmzJNAi//SJhOKCQLfdy4CAgvKyfK2tD2D31sLJDVyFX7yrdVZ/
- Ue7KBmozr+YJgCR/ZOrTz2QS6tTO9lLzAkZilDC+aokcEut4F19uGMT/gNaZ4RsSQhhl2/
- v/68oy7XzSQm2xayW7fURILoL61DMM4=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-635-cpw-36GsNp-7uauo7qRaXw-1; Wed, 08 May 2024 06:06:45 -0400
-X-MC-Unique: cpw-36GsNp-7uauo7qRaXw-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8B4718021A4;
- Wed,  8 May 2024 10:06:44 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.29])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 6A82C40C6EB7;
- Wed,  8 May 2024 10:06:39 +0000 (UTC)
-Date: Wed, 8 May 2024 11:06:37 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Jinpu Wang <jinpu.wang@ionos.com>
-Cc: Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Michael Galaxy <mgalaxy@akamai.com>, Yu Zhang <yu.zhang@ionos.com>,
- "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>,
- Elmar Gerdes <elmar.gerdes@ionos.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Yuval Shaia <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
- Prasanna Kumar Kalever <prasanna.kalever@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Prasanna Kumar Kalever <prasanna4324@gmail.com>,
- "integration@gluster.org" <integration@gluster.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
- "devel@lists.libvirt.org" <devel@lists.libvirt.org>,
- Hanna Reitz <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Eric Blake <eblake@redhat.com>,
- Song Gao <gaosong@loongson.cn>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, arei.gonglei@huawei.com,
- pannengyuan@huawei.com
-Subject: Re: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol handling
-Message-ID: <ZjtOreamN8xF9FDE@redhat.com>
-References: <Zi-1OvxA5MIHjklU@x1n> <877cgfe2yw.fsf@pond.sub.org>
- <ZjClMb-6MddpvHqQ@redhat.com> <ZjJgQcPQ29HJsTpY@x1n>
- <ZjJm6rcqS5EhoKgK@redhat.com>
- <CAMGffEnj54q1GAtB84dWGVR0hLPzfR1W8Fa2TeP22y2zTBRNeQ@mail.gmail.com>
- <ZjT1sPh5OaByQmAB@x1n>
- <CAMGffEk8wiKNQmoUYxcaTHGtiEm2dwoCF_W7T0vMcD-i30tUkA@mail.gmail.com>
- <Zjj3GXsaUyCjjUnC@x1n>
- <CAMGffE=Hcep90DaoJDmKY6ESMtr1fZHehv-UrcHJHA8b2KvjBw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4eJ0-0005Dw-RS
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 06:13:51 -0400
+Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4eIx-0005ZV-3R
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 06:13:45 -0400
+Received: by mail-lj1-x236.google.com with SMTP id
+ 38308e7fff4ca-2e27277d2c1so54403081fa.2
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 03:13:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1715163221; x=1715768021; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=RapXxqNPK4nzEyPe0A1pG4r6EOpJJ6RcJSFPJ5dlVGE=;
+ b=w4liyd53xjX4OhRXo+Mf3G0FZkQg365TrEBGV4RlcX8vQ25pdtn8YYLXUndd5D2dst
+ tPed0ybnm/Nmhf+4s+NuAv5UxLqpxwqKGA2k9FRSeispbmct4k4aXk/PdFDbEMTcU8Os
+ R7dfa9JMNBqTem2Br2Q8RNcTDcWElK9EnSflQHQE1E6+26I/F9PY9E1ngC8IJjRXRW1E
+ kvswfIJzimkNMO1qjZW/IwPMtB7jW/YjzN3TTJ5GIt5kmL4SCgTJJJjFI6TDEqdtCRMu
+ uFlfna9nT2RHIiEDmGyFLbzUc3YQXN+YWaS1NHQnoaDjHerSncVTmXdgomM1fWcljK4K
+ bOtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715163221; x=1715768021;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RapXxqNPK4nzEyPe0A1pG4r6EOpJJ6RcJSFPJ5dlVGE=;
+ b=MCZl/RMg0kJNjen0UrRVlLC5k2lx6tr5/u5XSDlUo6dXp5gJkjFjoqbcIvwz5EHD3j
+ qXQdS+K8nH8VKyWv3URKYk1s33/Ck+YrpMjPnH6krv616nuy6X0oWv6TaGnJjODbMaKz
+ zT8o3dsoF1cYwyuwHdW/w9cxRPNbw5th6I06l2sWOi4rEUQ1FqlGO+pO8rCf9GscDWMz
+ hAuvgawNq0Iro+m+0u8JyBeRtYkZv57mIhbF3A04ElEq+YgZ8Kodo3hTjOtmPiLWMDC8
+ WhFYx52KT+zHGM3FhqGJ1xiJG+5JYlGUo9l2SsTGmKOzPvBRNdMnO+Esyf0f9Q/u4xep
+ XKEw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWlEPUSrJDN3ZCBKi9UoI7DAfEJ2tGxnG7cr+q1osaC1VgHrjughHaGVvuoZDXZgBd9tYy25SqRBCo8yIB8je/GzXHPO3I=
+X-Gm-Message-State: AOJu0YxuJf6WRPQsadZfRcVrFQVleWiOyhouLqBFkU3wILN3oYRQtvIG
+ Yzdqm4InVRwTr+KrKly+HOXphX5azy4BrYMYPsfiXHnDuMjVhnUxMvu3Gjmnogw=
+X-Google-Smtp-Source: AGHT+IGHNllDqS5hi5TGA4McjU1rp0e67egaUE9JYmj1cI7LEcaYt4IvuieQcmobF7Imoxns/Hnxxg==
+X-Received: by 2002:ac2:4288:0:b0:51f:40f4:c6aa with SMTP id
+ 2adb3069b0e04-5217cf3b177mr1268596e87.68.1715163220587; 
+ Wed, 08 May 2024 03:13:40 -0700 (PDT)
+Received: from [192.168.69.100] (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
+ [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
+ g13-20020a056402114d00b00572aadbf4absm7382974edw.28.2024.05.08.03.13.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 08 May 2024 03:13:40 -0700 (PDT)
+Message-ID: <d69b52ef-d801-47b2-9095-4c830cc58386@linaro.org>
+Date: Wed, 8 May 2024 12:13:37 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 06/12] contrib/vhost-user-*: use QEMU bswap helper
+ functions
+To: Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org
+Cc: Jason Wang <jasowang@redhat.com>, Coiby Xu <Coiby.Xu@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, slp@redhat.com,
+ Brad Smith <brad@comstyle.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Thomas Huth <thuth@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Raphael Norwitz <raphael@enfabrica.net>, gmaglione@redhat.com,
+ Laurent Vivier <lvivier@redhat.com>, stefanha@redhat.com,
+ David Hildenbrand <david@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20240508074457.12367-1-sgarzare@redhat.com>
+ <20240508074457.12367-7-sgarzare@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240508074457.12367-7-sgarzare@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMGffE=Hcep90DaoJDmKY6ESMtr1fZHehv-UrcHJHA8b2KvjBw@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::236;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x236.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,63 +105,22 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 07, 2024 at 06:52:50AM +0200, Jinpu Wang wrote:
-> Hi Peter, hi Daniel,
-> On Mon, May 6, 2024 at 5:29 PM Peter Xu <peterx@redhat.com> wrote:
-> >
-> > On Mon, May 06, 2024 at 12:08:43PM +0200, Jinpu Wang wrote:
-> > > Hi Peter, hi Daniel,
-> >
-> > Hi, Jinpu,
-> >
-> > Thanks for sharing this test results.  Sounds like a great news.
-> >
-> > What's your plan next?  Would it then be worthwhile / possible moving QEMU
-> > into that direction?  Would that greatly simplify rdma code as Dan
-> > mentioned?
-> I'm rather not familiar with QEMU migration yet,  from the test
-> result, I think it's a possible direction,
-> just we need to at least based on a rather recent release like
-> rdma-core v33 with proper 'fork' support.
+On 8/5/24 09:44, Stefano Garzarella wrote:
+> Let's replace the calls to le*toh() and htole*() with qemu/bswap.h
+> helpers to make the code more portable.
 > 
-> Maybe Dan or you could give more detail about what you have in mind
-> for using rsocket as a replacement for the future.
-> We will also look into the implementation details in the meantime.
+> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+> ---
+>   contrib/vhost-user-blk/vhost-user-blk.c |  9 +++++----
+>   contrib/vhost-user-input/main.c         | 16 ++++++++--------
+>   2 files changed, 13 insertions(+), 12 deletions(-)
 
-The migration/socket.c file is the entrypoint for traditional TCP
-based migration code. It uses the QIOChannelSocket class which is
-written against the traditional sockets APIs, and uses the QAPI
-SocketAddress data type to configure it..
+Thanks,
 
-My thought was that potentially SocketAddress could be extended to
-offer RDMA addressing eg
-
-
-{ 'union': 'SocketAddress',
-  'base': { 'type': 'SocketAddressType' },
-  'discriminator': 'type',
-  'data': { 'inet': 'InetSocketAddress',
-            'unix': 'UnixSocketAddress',
-            'vsock': 'VsockSocketAddress',
-            'fd': 'FdSocketAddress',
-	    'rdma': 'InetSocketAddress' } }
-
-And then QIOChannelSocket could be also extended to call the
-alternative 'rsockets' APIs where needed. That would mean that
-existing sockets migration code would almost "just work" with
-RDMA. Theoreticaly any other part of QEMU using QIOChannelSocket
-would also then magically support RDMA too, with very little (if
-any) extra work.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
