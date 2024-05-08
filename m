@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6433C25B4F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFF33C41513
 	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 03:12:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4XiE-0000yO-UN; Tue, 07 May 2024 23:11:23 -0400
+	id 1s4XiE-0000yL-UV; Tue, 07 May 2024 23:11:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1s4XiB-0000xZ-CL
+ id 1s4XiB-0000xa-CL
  for qemu-devel@nongnu.org; Tue, 07 May 2024 23:11:19 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1s4Xi8-0006ya-M7
+ (envelope-from <maobibo@loongson.cn>) id 1s4Xi8-0006yU-Mx
  for qemu-devel@nongnu.org; Tue, 07 May 2024 23:11:19 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8BxnutR7Tpm1TAJAA--.23744S3;
+ by gateway (Coremail) with SMTP id _____8Dx_+tR7Tpm0DAJAA--.24965S3;
  Wed, 08 May 2024 11:11:13 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8AxKORO7Tpm9hkVAA--.41182S6; 
+ AQAAf8AxKORO7Tpm9hkVAA--.41182S5; 
  Wed, 08 May 2024 11:11:13 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>, Peter Xu <peterx@redhat.com>,
@@ -32,15 +32,15 @@ To: Song Gao <gaosong@loongson.cn>, Peter Xu <peterx@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v4 4/5] hw/loongarch: Set minimium memory size as 256M
-Date: Wed,  8 May 2024 11:11:09 +0800
-Message-Id: <20240508031110.2507477-5-maobibo@loongson.cn>
+Subject: [PATCH v4 3/5] hw/loongarch: Add compat machine for 9.0
+Date: Wed,  8 May 2024 11:11:08 +0800
+Message-Id: <20240508031110.2507477-4-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20240508031110.2507477-1-maobibo@loongson.cn>
 References: <20240508031110.2507477-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8AxKORO7Tpm9hkVAA--.41182S6
+X-CM-TRANSID: AQAAf8AxKORO7Tpm9hkVAA--.41182S5
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -67,32 +67,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The minimum memory size for LoongArch UEFI bios is 256M, also some
-test cases such as migration and qos use 256M memory by default.
-
-Here set minimum memory size for Loongarch VirtMachine with 256M rather
-than 1G, so that test cases with 256M memory can pass to run.
+Since migration test case requires compat machine type support,
+compat machine is added for qemu 9.0 here.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- hw/loongarch/virt.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/loongarch/virt.c | 61 +++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 48 insertions(+), 13 deletions(-)
 
 diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index c3bb343574..5d590cf92f 100644
+index 93cdadfb8a..c3bb343574 100644
 --- a/hw/loongarch/virt.c
 +++ b/hw/loongarch/virt.c
-@@ -894,8 +894,8 @@ static void virt_init(MachineState *machine)
-         cpu_model = LOONGARCH_CPU_TYPE_NAME("la464");
-     }
+@@ -1236,18 +1236,53 @@ static void virt_class_init(ObjectClass *oc, void *data)
+ #endif
+ }
  
--    if (ram_size < 1 * GiB) {
--        error_report("ram_size must be greater than 1G.");
-+    if (ram_size < 256 * MiB) {
-+        error_report("ram_size must be greater than 256M.");
-         exit(1);
-     }
-     create_fdt(lvms);
+-static const TypeInfo virt_machine_types[] = {
+-    {
+-        .name           = TYPE_LOONGARCH_VIRT_MACHINE,
+-        .parent         = TYPE_MACHINE,
+-        .instance_size  = sizeof(LoongArchVirtMachineState),
+-        .class_init     = virt_class_init,
+-        .instance_init  = virt_initfn,
+-        .interfaces = (InterfaceInfo[]) {
+-         { TYPE_HOTPLUG_HANDLER },
+-         { }
+-        },
+-    }
++#define DEFINE_VIRT_MACHINE_LATEST(major, minor, latest) \
++    static void virt_##major##_##minor##_class_init(ObjectClass *oc, \
++                                                    void *data) \
++    { \
++        MachineClass *mc = MACHINE_CLASS(oc); \
++        virt_machine_##major##_##minor##_options(mc); \
++        mc->desc = "QEMU " # major "." # minor " LoongArch Virtual Machine"; \
++        if (latest) { \
++            mc->alias = "virt"; \
++        } \
++    } \
++    static const TypeInfo machvirt_##major##_##minor##_info = { \
++        .name = MACHINE_TYPE_NAME("virt-" # major "." # minor), \
++        .parent = TYPE_LOONGARCH_VIRT_MACHINE, \
++        .class_init = virt_##major##_##minor##_class_init, \
++    }; \
++    static void machvirt_machine_##major##_##minor##_init(void) \
++    { \
++        type_register_static(&machvirt_##major##_##minor##_info); \
++    } \
++    type_init(machvirt_machine_##major##_##minor##_init);
++
++#define DEFINE_VIRT_MACHINE_AS_LATEST(major, minor) \
++    DEFINE_VIRT_MACHINE_LATEST(major, minor, true)
++#define DEFINE_VIRT_MACHINE(major, minor) \
++    DEFINE_VIRT_MACHINE_LATEST(major, minor, false)
++
++static const TypeInfo virt_machine_info = {
++    .name           = TYPE_LOONGARCH_VIRT_MACHINE,
++    .parent         = TYPE_MACHINE,
++    .abstract       = true,
++    .instance_size  = sizeof(LoongArchVirtMachineState),
++    .class_init     = virt_class_init,
++    .instance_init  = virt_initfn,
++    .interfaces = (InterfaceInfo[]) {
++    { TYPE_HOTPLUG_HANDLER },
++    { }
++    },
+ };
+ 
+-DEFINE_TYPES(virt_machine_types)
++static void machvirt_machine_init(void)
++{
++    type_register_static(&virt_machine_info);
++}
++type_init(machvirt_machine_init);
++
++static void virt_machine_9_0_options(MachineClass *mc)
++{
++}
++DEFINE_VIRT_MACHINE_AS_LATEST(9, 0)
 -- 
 2.39.3
 
