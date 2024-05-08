@@ -4,62 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39ECCC25B5F
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 08:03:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BC3FC04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 08:10:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4cGQ-0008EV-A1; Wed, 08 May 2024 04:02:58 -0400
+	id 1s4cNZ-0001g5-Og; Wed, 08 May 2024 04:10:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s4cG2-00086N-LS
- for qemu-devel@nongnu.org; Wed, 08 May 2024 04:02:41 -0400
+ id 1s4cNV-0001f9-KW
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 04:10:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s4cFy-0008PA-M0
- for qemu-devel@nongnu.org; Wed, 08 May 2024 04:02:34 -0400
+ id 1s4cNS-0001Qc-QO
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 04:10:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715155348;
+ s=mimecast20190719; t=1715155813;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=9gxNroo/yIgDKQMkEv39lBtbUS5mR6uvbvpXdf7xFjQ=;
- b=VeKkwqC4UQ1ngqCIIvxhsvHZDgbkqfzc8KlZrf65ooGC4nxRilRbZhyio3GP4quuV5dkUV
- aFFEUZOrn1U1w3IX736dPd2dRQ8+jIFWRvE6PcQO3mlZdVreVPkDlLx0scK2nK9xRhqlel
- eiD08iSChADWjBk+TE70CtPY9NC5JII=
+ bh=SCqAYfsobavvaZmjXP87PdP/8lZ0MEZ+fgvf0byLdKs=;
+ b=grAfBKxCafW22X/dLpjQAP5A2yBQFeWoFUlTidAMnKck+3O+pba83kQR+piKYfLBg+HpzE
+ rY1O3isqUqNtZcuTu2KZ5QlC2zpOjmRLEu37blaXvg16DAdxvl+6viy3nV3PsShZtgbmbo
+ oI1jLDFwUteldqu21CqKDsB73tzFEmk=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-384-OH5ABRdrN9C-L0QAVFKUMg-1; Wed, 08 May 2024 04:02:21 -0400
-X-MC-Unique: OH5ABRdrN9C-L0QAVFKUMg-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
+ us-mta-340-j9ewiadFPwCVovvnsePF5Q-1; Wed, 08 May 2024 04:10:10 -0400
+X-MC-Unique: j9ewiadFPwCVovvnsePF5Q-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id BE7C0101A525;
- Wed,  8 May 2024 08:02:19 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D38608016F6;
+ Wed,  8 May 2024 08:10:09 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.29])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id ECEC310000AD;
- Wed,  8 May 2024 08:02:18 +0000 (UTC)
-Date: Wed, 8 May 2024 09:02:16 +0100
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 65588492CAB;
+ Wed,  8 May 2024 08:10:08 +0000 (UTC)
+Date: Wed, 8 May 2024 09:10:06 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- armbru@redhat.com, Claudio Fontana <cfontana@suse.de>,
- Jim Fehlig <jfehlig@suse.com>
-Subject: Re: [PATCH 2/9] migration: Fix file migration with fdset
-Message-ID: <ZjsxiDEZgXycn_tl@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, armbru@redhat.com,
+ Claudio Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>,
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 3/9] tests/qtest/migration: Fix file migration offset check
+Message-ID: <ZjszXofTjB-dOOMo@redhat.com>
 References: <20240426142042.14573-1-farosas@suse.de>
- <20240426142042.14573-3-farosas@suse.de> <ZjUPl6XwB3Zt3cKR@x1n>
+ <20240426142042.14573-4-farosas@suse.de> <ZjUVKEJq7LBU57Rf@x1n>
+ <874jbeocno.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZjUPl6XwB3Zt3cKR@x1n>
+In-Reply-To: <874jbeocno.fsf@suse.de>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
@@ -85,29 +87,97 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 03, 2024 at 12:23:51PM -0400, Peter Xu wrote:
-> On Fri, Apr 26, 2024 at 11:20:35AM -0300, Fabiano Rosas wrote:
-> > When the migration using the "file:" URI was implemented, I don't
-> > think any of us noticed that if you pass in a file name with the
-> > format "/dev/fdset/N", this allows a file descriptor to be passed in
-> > to QEMU and that behaves just like the "fd:" URI. So the "file:"
-> > support has been added without regard for the fdset part and we got
-> > some things wrong.
-> > 
-> > The first issue is that we should not truncate the migration file if
-> > we're allowing an fd + offset. We need to leave the file contents
-> > untouched.
+On Fri, May 03, 2024 at 05:36:59PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
 > 
-> I'm wondering whether we can use fallocate() instead on the ranges so that
-> we always don't open() with O_TRUNC.  Before that..  could you remind me
-> why do we need to truncate in the first place?  I definitely missed
-> something else here too.
+> > On Fri, Apr 26, 2024 at 11:20:36AM -0300, Fabiano Rosas wrote:
+> >> When doing file migration, QEMU accepts an offset that should be
+> >> skipped when writing the migration stream to the file. The purpose of
+> >> the offset is to allow the management layer to put its own metadata at
+> >> the start of the file.
+> >> 
+> >> We have tests for this in migration-test, but only testing that the
+> >> migration stream starts at the correct offset and not that it actually
+> >> leaves the data intact. Unsurprisingly, there's been a bug in that
+> >> area that the tests didn't catch.
+> >> 
+> >> Fix the tests to write some data to the offset region and check that
+> >> it's actually there after the migration.
+> >> 
+> >> Fixes: 3dc35470c8 ("tests/qtest: migration-test: Add tests for file-based migration")
+> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> >> ---
+> >>  tests/qtest/migration-test.c | 70 +++++++++++++++++++++++++++++++++---
+> >>  1 file changed, 65 insertions(+), 5 deletions(-)
+> >> 
+> >> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+> >> index 5d6d8cd634..7b177686b4 100644
+> >> --- a/tests/qtest/migration-test.c
+> >> +++ b/tests/qtest/migration-test.c
+> >> @@ -2081,6 +2081,63 @@ static void test_precopy_file(void)
+> >>      test_file_common(&args, true);
+> >>  }
+> >>  
+> >> +#ifndef _WIN32
+> >> +static void file_dirty_offset_region(void)
+> >> +{
+> >> +#if defined(__linux__)
+> >
+> > Hmm, what's the case to cover when !_WIN32 && __linux__?  Can we remove one
+> > layer of ifdef?
+> >
+> > I'm also wondering why it can't work on win32?  I thought win32 has all
+> > these stuff we used here, but I may miss something.
+> >
+> 
+> __linux__ is because of mmap, !_WIN32 is because of the passing of
+> fds. We might be able to keep !_WIN32 only, I'll check.
+> 
+> >> +    g_autofree char *path = g_strdup_printf("%s/%s", tmpfs, FILE_TEST_FILENAME);
+> >> +    size_t size = FILE_TEST_OFFSET;
+> >> +    uintptr_t *addr, *p;
+> >> +    int fd;
+> >> +
+> >> +    fd = open(path, O_CREAT | O_RDWR, 0660);
+> >> +    g_assert(fd != -1);
+> >> +
+> >> +    g_assert(!ftruncate(fd, size));
+> >> +
+> >> +    addr = mmap(NULL, size, PROT_WRITE, MAP_SHARED, fd, 0);
+> >> +    g_assert(addr != MAP_FAILED);
+> >> +
+> >> +    /* ensure the skipped offset contains some data */
+> >> +    p = addr;
+> >> +    while (p < addr + FILE_TEST_OFFSET / sizeof(uintptr_t)) {
+> >> +        *p = (unsigned long) FILE_TEST_FILENAME;
+> >
+> > This is fine, but not as clear what is assigned..  I think here we assigned
+> > is the pointer pointing to the binary's RO section (rather than the chars).
+> 
+> Haha you're right, I was assigning the FILE_TEST_OFFSET previously and
+> just switched to the FILENAME without thinking. I'll fix it up.
+> 
+> > Maybe using some random numbers would be more straightforward, but no
+> > strong opinions.
+> >
+> >> +        p++;
+> >> +    }
+> >> +
+> >> +    munmap(addr, size);
+> >> +    fsync(fd);
+> >> +    close(fd);
+> >> +#endif
+> >> +}
 
-You're mixing distinct concepts here. fallocate makes a file region
-non-sparse, while O_TRUNC removes all existing allocation, making it
-sparse if we write at non-contiguous offsets. I don't think we would
-want to call fallocate, since we /want/ a sparse file so that we
-don't needlessly store large regions of all-zeros as RAM maps.
+
+Use of mmap and this loop looks like overkill to me, when we can do
+it in a fully portable manner with:
+
+   g_autofree char *data = g_new0(char *, offset);
+   memset(data, 0x44, offset);
+   g_file_set_contents(path, data, offset, NULL);
+
+and I checked that g_file_set_contents' impl also takes care of fsync.
 
 
 With regards,
