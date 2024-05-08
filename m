@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A303C04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 17:48:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05EE0C25B74
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 17:48:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4lOJ-00051b-8A; Wed, 08 May 2024 13:47:45 -0400
+	id 1s4lO6-0004Eq-BQ; Wed, 08 May 2024 13:47:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lO8-0004YE-HH
- for qemu-devel@nongnu.org; Wed, 08 May 2024 13:47:34 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lNz-0003f8-9M
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 13:47:25 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lO6-0000sL-71
- for qemu-devel@nongnu.org; Wed, 08 May 2024 13:47:32 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-a59b178b75bso2868666b.0
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 10:47:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lNw-0000rb-Ll
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 13:47:22 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a59b49162aeso1043236966b.3
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 10:47:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715190448; x=1715795248; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715190437; x=1715795237; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=npbkiNQNqy3L7L6w2vAeVZgTjq5H6cLzlHY7iLgQ/Nk=;
- b=Vf4MDnqiuD/OX7m1MgNqEBWtopf3rTQrC8DLgzqREzt7lytBWJ8SvwLGXBQwZHUzzC
- LB5gHaqCMuKIF/ZoEniSC0L5ULTJCzZ+njzS96uPsE2AttFdnCxNq/V/5LpBIX+bKUxX
- gEr4rXrLVRCE4TjO9CmlhOwIcCF6belCcD0dfUlJC73AmyCIUCsepVVrvtxwx3qSHxOG
- PyzM9f/7UrA27pMG7eBW9mndU/RhH2Uy1WbNlDu/YuRE+iEYOW7bY04KAOlOmdlONM5g
- 0dPfGjnqRwP5wvxVKMhLNxNcHt4aKsQy52WsPLV7MO2Fp/noFTxCOrPCVdtnTMOZFvOt
- d4fA==
+ bh=tfa4b/yP5j4YbPKarQui7QysCN8PurfTYNdnjK8DmcY=;
+ b=bgc52l6se0MGAHFB/WaKt/fb0L+jYOQn5c7ZD4vJb130N5xAV/Xbhnlsbl/nVMu/wb
+ HfBWlI2G3Mp55kAFFY80l1bDMslgNx9h41vWL8IqAghfJpQfeHuSS8BJ8PnwOlYU+mDR
+ C+Zs8Sa/DFCZNKZGPO1mC346dmV4OvAUbT3KL03k6U/x6AebW3xMWROJT+SHeI6smB4U
+ zIN3Xh0XJyezP1XxwhegbcChSvEgHEs/aXgRJKqcaNWocd2/3LyVAFS1Eyw5hjlf4yph
+ i1eQb6FlPwLdY2xf2OavomCRfg43xLfAml64Hhstd0c60Jz+JnllYzUHR7d+n4hoWFvf
+ QLRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715190448; x=1715795248;
+ d=1e100.net; s=20230601; t=1715190437; x=1715795237;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=npbkiNQNqy3L7L6w2vAeVZgTjq5H6cLzlHY7iLgQ/Nk=;
- b=gBfd/IpDA+e7JURf/TqL32yPe9XimjApeEYoGxxUbyWwsYmsCPfxN4/YHQTS7qcv+I
- BBikx8RLUz7HWD4t0FTjLtMyO/ZgAeFgsPm8c92vxmeaTtGo/SVqXbli5YP/AdoB9OGK
- cP+WkUv+9YdOHYbx1Z0qCiJVINVtP18O+v6el6E3Lb1TFvXbr3rCIrPiXzoi1uZHrMAQ
- O41Q6hkn7tFVgZdlYZCMt29Q+nbX4ua8gb7AXLr11sb1Daur/Ekxal4wavGC24oBvUVJ
- hTHis4hvcYrjvhlgUVcEwAyElBBMhx6LDsR9EtIt4QJ/VY/hVI9OQC+Xl45Pw//gx83H
- bqPw==
-X-Gm-Message-State: AOJu0Yz6DbSZK1PXhFXkkAnRvYCiCGivmDFCHPx7UkrYaM3zQRlp0JCA
- /8VXbdwjGDWfbevGgnJEx3ZnMUNk9gkwF7NEHfwLcCqd8FUOANCUcsS/Dio31VI2Y2DJeb4TV/O
- s
-X-Google-Smtp-Source: AGHT+IF3DpTVscXY7U8ySR2YjONVZTu7ImXYo2+cylfDeCKTjh9lUq67qz+Q5a0+xlH2iKgnT26GuQ==
-X-Received: by 2002:a17:907:60e:b0:a59:a431:a8ce with SMTP id
- a640c23a62f3a-a59fb94a3fdmr233568166b.2.1715190448072; 
- Wed, 08 May 2024 10:47:28 -0700 (PDT)
+ bh=tfa4b/yP5j4YbPKarQui7QysCN8PurfTYNdnjK8DmcY=;
+ b=WsxwnxPiLFDVGqp31MAupwtIGpyiOzbqYO9Q430J6ZtZ/x6/DMOlw1JSLj3PARMqlS
+ y65oFfGtpe8p6Xxbmqr/FQ+loUW3G39dl941L5yzJpYVn++FfIM826U2cvglHB7jh7Ug
+ Ts84o0cN4OXe/uuEbXG4N07WQaDvYtgpTormD3m+lTEI3E2aII8qPLZSY+BBW94jCSrb
+ Duw0/9qfwvHaLoIjMl586Cf8Lz9c3cujEDg57pjjqjN5lU0LkCrNr06SuFePfK67Y7W0
+ 3cpoSgepoS7YhlJPNSGWzUTjZpXuHAs82wS3gsvmcnR2coFVqYhfYIhAY1EfIfdMlE6y
+ CsGA==
+X-Gm-Message-State: AOJu0YwPbVxMEmVzMWZnud1GKjFuOKiZafPVEAcUBbFxaa2Bg1rCqJCo
+ 6lY5EPespNnhZJq+JCF7K3QYmwFxidOD55a7p7HxPpglo8WWEUwJ7JeTruRHtajDwXByRh28k8w
+ 7
+X-Google-Smtp-Source: AGHT+IG/wbch7inn3YgxYi376mBfCwdGm+cxn0FK5VL+GS+Toy3wWLtJKjb8TrQWhmb6vUgB2IDEyg==
+X-Received: by 2002:a50:bb05:0:b0:572:7c99:a280 with SMTP id
+ 4fb4d7f45d1cf-5731d9d4572mr2221467a12.15.1715190437587; 
+ Wed, 08 May 2024 10:47:17 -0700 (PDT)
 Received: from m1x-phil.lan (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
  [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
- c3-20020a170906528300b00a4e5866448bsm7833784ejm.155.2024.05.08.10.47.27
+ o5-20020aa7c7c5000000b00572c25023b1sm7792892eds.0.2024.05.08.10.47.16
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 08 May 2024 10:47:27 -0700 (PDT)
+ Wed, 08 May 2024 10:47:17 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 25/26] hw/intc/loongson_ipi: Implement IOCSR address space for
- MIPS
-Date: Wed,  8 May 2024 19:45:09 +0200
-Message-ID: <20240508174510.60470-26-philmd@linaro.org>
+Subject: [PULL 23/26] hw/intc/loongarch_ipi: Remove pointless MAX_CPU check
+Date: Wed,  8 May 2024 19:45:07 +0200
+Message-ID: <20240508174510.60470-24-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240508174510.60470-1-philmd@linaro.org>
 References: <20240508174510.60470-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,108 +96,92 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-Implement IOCSR address space get functions for MIPS/Loongson CPUs.
+Since cpuid will be checked by ipi_getcpu anyway, there is
+no point to enforce MAX_CPU here.
 
-For MIPS/Loongson without IOCSR (i.e. Loongson-3A1000), get_cpu_iocsr_as
-will return as null, and send_ipi_data will fail with MEMTX_DECODE_ERROR,
-which matches expected behavior on hardware.
+This also saved us from including loongarch board header.
 
 Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240508-loongson3-ipi-v1-3-1a7b67704664@flygoat.com>
+Message-ID: <20240508-loongson3-ipi-v1-1-1a7b67704664@flygoat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/intc/loongson_ipi.c | 39 ++++++++++++++++++++++++++++++---------
- 1 file changed, 30 insertions(+), 9 deletions(-)
+ hw/intc/loongarch_ipi.c | 19 ++-----------------
+ hw/intc/trace-events    |  2 --
+ 2 files changed, 2 insertions(+), 19 deletions(-)
 
-diff --git a/hw/intc/loongson_ipi.c b/hw/intc/loongson_ipi.c
-index 8c888da3b2..93cc50a37a 100644
---- a/hw/intc/loongson_ipi.c
-+++ b/hw/intc/loongson_ipi.c
-@@ -15,7 +15,12 @@
+diff --git a/hw/intc/loongarch_ipi.c b/hw/intc/loongarch_ipi.c
+index a184112b09..44b3b9c138 100644
+--- a/hw/intc/loongarch_ipi.c
++++ b/hw/intc/loongarch_ipi.c
+@@ -6,6 +6,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "hw/boards.h"
+ #include "hw/sysbus.h"
+ #include "hw/intc/loongarch_ipi.h"
+ #include "hw/irq.h"
+@@ -13,9 +14,8 @@
+ #include "qapi/error.h"
  #include "qemu/log.h"
  #include "exec/address-spaces.h"
+-#include "hw/loongarch/virt.h"
  #include "migration/vmstate.h"
-+#ifdef TARGET_LOONGARCH64
- #include "target/loongarch/cpu.h"
-+#endif
-+#ifdef TARGET_MIPS
-+#include "target/mips/cpu.h"
-+#endif
+-#include "target/loongarch/internals.h"
++#include "target/loongarch/cpu.h"
  #include "trace.h"
  
- static MemTxResult loongson_ipi_readl(void *opaque, hwaddr addr,
-@@ -56,18 +61,35 @@ static MemTxResult loongson_ipi_readl(void *opaque, hwaddr addr,
-     return MEMTX_OK;
- }
+ static MemTxResult loongarch_ipi_readl(void *opaque, hwaddr addr,
+@@ -122,11 +122,6 @@ static MemTxResult mail_send(uint64_t val, MemTxAttrs attrs)
+     CPUState *cs;
  
--static void send_ipi_data(CPULoongArchState *env, uint64_t val, hwaddr addr,
-+static AddressSpace *get_cpu_iocsr_as(CPUState *cpu)
-+{
-+#ifdef TARGET_LOONGARCH64
-+    return LOONGARCH_CPU(cpu)->env.address_space_iocsr;
-+#endif
-+#ifdef TARGET_MIPS
-+    if (ase_lcsr_available(&MIPS_CPU(cpu)->env)) {
-+        return &MIPS_CPU(cpu)->env.iocsr.as;
-+    }
-+#endif
-+    return NULL;
-+}
-+
-+static MemTxResult send_ipi_data(CPUState *cpu, uint64_t val, hwaddr addr,
-                           MemTxAttrs attrs)
- {
-     int i, mask = 0, data = 0;
-+    AddressSpace *iocsr_as = get_cpu_iocsr_as(cpu);
-+
-+    if (!iocsr_as) {
-+        return MEMTX_DECODE_ERROR;
-+    }
+     cpuid = extract32(val, 16, 10);
+-    if (cpuid >= LOONGARCH_MAX_CPUS) {
+-        trace_loongarch_ipi_unsupported_cpuid("IOCSR_MAIL_SEND", cpuid);
+-        return MEMTX_DECODE_ERROR;
+-    }
+-
+     cs = ipi_getcpu(cpuid);
+     if (cs == NULL) {
+         return MEMTX_DECODE_ERROR;
+@@ -146,11 +141,6 @@ static MemTxResult any_send(uint64_t val, MemTxAttrs attrs)
+     CPUState *cs;
  
-     /*
-      * bit 27-30 is mask for byte writing,
-      * if the mask is 0, we need not to do anything.
-      */
-     if ((val >> 27) & 0xf) {
--        data = address_space_ldl(env->address_space_iocsr, addr,
--                                 attrs, NULL);
-+        data = address_space_ldl(iocsr_as, addr, attrs, NULL);
-         for (i = 0; i < 4; i++) {
-             /* get mask for byte writing */
-             if (val & (0x1 << (27 + i))) {
-@@ -78,8 +100,9 @@ static void send_ipi_data(CPULoongArchState *env, uint64_t val, hwaddr addr,
- 
-     data &= mask;
-     data |= (val >> 32) & ~mask;
--    address_space_stl(env->address_space_iocsr, addr,
--                      data, attrs, NULL);
-+    address_space_stl(iocsr_as, addr, data, attrs, NULL);
-+
-+    return MEMTX_OK;
- }
- 
- static int archid_cmp(const void *a, const void *b)
-@@ -130,8 +153,7 @@ static MemTxResult mail_send(uint64_t val, MemTxAttrs attrs)
-     /* override requester_id */
-     addr = SMP_IPI_MAILBOX + CORE_BUF_20 + (val & 0x1c);
-     attrs.requester_id = cs->cpu_index;
--    send_ipi_data(&LOONGARCH_CPU(cs)->env, val, addr, attrs);
--    return MEMTX_OK;
-+    return send_ipi_data(cs, val, addr, attrs);
- }
- 
- static MemTxResult any_send(uint64_t val, MemTxAttrs attrs)
-@@ -149,8 +171,7 @@ static MemTxResult any_send(uint64_t val, MemTxAttrs attrs)
-     /* override requester_id */
-     addr = val & 0xffff;
-     attrs.requester_id = cs->cpu_index;
--    send_ipi_data(&LOONGARCH_CPU(cs)->env, val, addr, attrs);
--    return MEMTX_OK;
-+    return send_ipi_data(cs, val, addr, attrs);
- }
- 
- static MemTxResult loongson_ipi_writel(void *opaque, hwaddr addr, uint64_t val,
+     cpuid = extract32(val, 16, 10);
+-    if (cpuid >= LOONGARCH_MAX_CPUS) {
+-        trace_loongarch_ipi_unsupported_cpuid("IOCSR_ANY_SEND", cpuid);
+-        return MEMTX_DECODE_ERROR;
+-    }
+-
+     cs = ipi_getcpu(cpuid);
+     if (cs == NULL) {
+         return MEMTX_DECODE_ERROR;
+@@ -201,11 +191,6 @@ static MemTxResult loongarch_ipi_writel(void *opaque, hwaddr addr, uint64_t val,
+         break;
+     case IOCSR_IPI_SEND:
+         cpuid = extract32(val, 16, 10);
+-        if (cpuid >= LOONGARCH_MAX_CPUS) {
+-            trace_loongarch_ipi_unsupported_cpuid("IOCSR_IPI_SEND", cpuid);
+-            return MEMTX_DECODE_ERROR;
+-        }
+-
+         /* IPI status vector */
+         vector = extract8(val, 0, 5);
+         cs = ipi_getcpu(cpuid);
+diff --git a/hw/intc/trace-events b/hw/intc/trace-events
+index 47340b5bc1..a979784f9b 100644
+--- a/hw/intc/trace-events
++++ b/hw/intc/trace-events
+@@ -294,8 +294,6 @@ sh_intc_set(int id, int enable) "setting interrupt group %d to %d"
+ # loongarch_ipi.c
+ loongarch_ipi_read(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x%"PRIx64 "val: 0x%"PRIx64
+ loongarch_ipi_write(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x%"PRIx64 "val: 0x%"PRIx64
+-loongarch_ipi_unsupported_cpuid(const char *s, uint32_t cpuid) "%s unsupported cpuid 0x%" PRIx32
+-
+ # loongarch_pch_pic.c
+ loongarch_pch_pic_irq_handler(int irq, int level) "irq %d level %d"
+ loongarch_pch_pic_low_readw(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x%"PRIx64 "val: 0x%" PRIx64
 -- 
 2.41.0
 
