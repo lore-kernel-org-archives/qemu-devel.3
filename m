@@ -4,80 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A7D1C04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 18:06:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61257C04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 18:23:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4lfa-0004Va-TR; Wed, 08 May 2024 14:05:34 -0400
+	id 1s4lv7-0002gC-UR; Wed, 08 May 2024 14:21:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1s4lfP-0004UM-8w
- for qemu-devel@nongnu.org; Wed, 08 May 2024 14:05:27 -0400
-Received: from mail-oo1-xc2b.google.com ([2607:f8b0:4864:20::c2b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1s4lfM-0005LR-Hk
- for qemu-devel@nongnu.org; Wed, 08 May 2024 14:05:23 -0400
-Received: by mail-oo1-xc2b.google.com with SMTP id
- 006d021491bc7-5b203ce4ef0so6525eaf.1
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 11:05:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715191517; x=1715796317; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=eENa/BZ/fp6up6GGz0T8HJY5xaqtroVQNCQ7oEBn7fs=;
- b=UVMkkOz4EUv1uLLEN2RLwcMPpCcftnlhTMD590wt6EC2frRz4kkeyLvZVEZrCK+oNb
- 9UXFA/FWgVl7abOnj5o8UarR4fAknEsdoMToxK/4dP0wEU8RiRJEQlWLnvgCryifGeRZ
- ts25794/QULdY1gFvBy5I51oA3zlMfwNOHESO8usQ4668s0bTBlIEakUXPybIWlO7yyJ
- DE0L79Jq3Sjn6pNklvURm1VSbnIEMm3whkZRZc5TtKQ8h+Yp/+ClAUKwbsQHZ160QCQl
- LFyK6MWlzyhcau1/q+qt+ouJUWF5k75KZ9sJ7ENsknNi+69zxbMIKl4ayvT0IYpLuYu7
- d6KQ==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1s4lv1-0002eq-6i
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 14:21:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1s4luz-0001jw-34
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 14:21:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715192486;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zoz3JnYamTO21tpB5TUcC8r0hcWk7Xh9DqZtVdHC+Uk=;
+ b=hUzXk7ld6Xdoscs43sO5xC2L25Ndx0VWjL8EDoi/LDgmtgz1UEiIb78VYFiI0dlxJ88VS0
+ rzs1KqgjOigAIY6A3hM6pJfSNdP+KUq8wbzPfr0aZGv6QjGKPybiIsxCs+0FmvSTZ2xT/8
+ UrMIge2kuMlyJe79q5fuVUuMP08R9Lk=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-128-6u0AYP24N9mJXNHFgH2-pg-1; Wed, 08 May 2024 14:21:25 -0400
+X-MC-Unique: 6u0AYP24N9mJXNHFgH2-pg-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-34dd570f48cso2790296f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 11:21:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715191517; x=1715796317;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=eENa/BZ/fp6up6GGz0T8HJY5xaqtroVQNCQ7oEBn7fs=;
- b=sMCUKb56JJLwgw9eZgJeKHwe6Y9qjYpTQZI+5ac6yy4Dgf+y9Q8knJdayghNUnfqUV
- YuYoE0M4QQ4JunZ/s4s2eD68QgXkCBkeCPvRV7qopgCcD6D9ncBTMuGq0sIVyW63g0NC
- Ej7dktMDzLl1FQmoNJwjWGecNOrCnBG7AJUj4cI606lULb04e2Z0r12+WikFxZvErf1B
- VJa7M4KSfu3i4xXS/zXooUEq+DQ0zV08pnlA0a4cU9RXYNgJkHDW9Ix+BscgsexVSrRe
- U7T4nyU9xUejBrQowMUQMmOEGgVCkIQka8P2YGzf+femQvdO91JczWHyXCcArtLJ+Wjx
- vMQA==
+ d=1e100.net; s=20230601; t=1715192484; x=1715797284;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=zoz3JnYamTO21tpB5TUcC8r0hcWk7Xh9DqZtVdHC+Uk=;
+ b=ZYr4BuWyqlqTAXcVpPsaUrCKXX0st0CbtgNp/ymuMGjckyzzkXXRLdWVRoM5xUf+/i
+ aoHubAxUF4mIKfBjbfeH5WNb98v9EqaDS0yhK3LlPd+q+FmUwXK4fGj+QkMt8iomxQSH
+ AcBB9HPuvnaF6BqiJeXns5kXTOt2V2zuAJE1OaUAxu99YEAuQB5F98MePGL7pRlSjxs6
+ 283Q1oUdevej1gnnFYIDc/Ln/ZS0mFgPXRK4sDp7FKSY4hczEjvM7f+5j8YTccjn1fpF
+ VfAd/F9a/NDbsn3cUaS7rP+6PnW/jdmSVb+TFb7M5VFPCcuDlb3SDwT+SobeKNTmBqmi
+ bBjw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWQtP4gVYcxlqz29N+LyRuzb/NfUjBoD38a1l3nFputvYoq3fW0rjfcGDpWrGwr9tqEU/8fisAmH6XNgpHzITY/dRbDWX8=
-X-Gm-Message-State: AOJu0YyjC3NZuPYePYBKG3jZy3OaMUiWmDIv/Si0xJqnChf3dgMY3rn8
- YfhkApu7UuSUntHzDafNkUnoIA54IfG1nFVMAcZedSZqAGLX6OyujRBqVnXGybhz7OmzpyvQ+2k
- 6uTU1pA8vGxxNMdMyykZKQ85/L78=
-X-Google-Smtp-Source: AGHT+IGhWG4dz+kFxrU5hYik2+BHPtja35yNpr2LuXwibCiun1MJcz9X4Mq2x18zpp7KJpSowwe2RXnbttH488r7ryA=
-X-Received: by 2002:a4a:8c32:0:b0:5af:292b:6982 with SMTP id
- 006d021491bc7-5b24d5e6a16mr3202601eaf.5.1715191516878; Wed, 08 May 2024
- 11:05:16 -0700 (PDT)
+ AJvYcCVSWDlEKKH0CkRXFHwfiRM4dvWFO7jIE3m3qca3ErcF38rMNzi3biJtYE/NMRRbvmLZm9nIL76TvlYLvYIEqnNDKrsOiJk=
+X-Gm-Message-State: AOJu0Yyblvo70dZGRDGxDfsKax0EGmri6FunICgZNxgncTrK0R293iNr
+ vKqc/lj8UQH5UR5p/5sWDAEjIs7+X8dLE5wn612tNOToTewgC90/+RpxjnpL5vvXDaQRpt7DzfV
+ 7F/vYYmdXmPNX4VHP4rPH1kqj5r05A0jKI0f8bFdVkL5D4SFC1RHJ
+X-Received: by 2002:adf:a30c:0:b0:346:c7ed:22de with SMTP id
+ ffacd0b85a97d-34fcaddfa90mr2174064f8f.14.1715192483799; 
+ Wed, 08 May 2024 11:21:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFeZe83pgrhfgE6Xw1Klz81MPjdRHJ0xwQ+SOrPdzCbQqb3l4ToglGrVjVtaLl1LfoRulg1SA==
+X-Received: by 2002:adf:a30c:0:b0:346:c7ed:22de with SMTP id
+ ffacd0b85a97d-34fcaddfa90mr2174037f8f.14.1715192483049; 
+ Wed, 08 May 2024 11:21:23 -0700 (PDT)
+Received: from redhat.com ([2.52.1.121]) by smtp.gmail.com with ESMTPSA id
+ r2-20020adfce82000000b0034dd7984d7fsm15844669wrn.94.2024.05.08.11.21.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 08 May 2024 11:21:22 -0700 (PDT)
+Date: Wed, 8 May 2024 14:21:19 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Eugenio Perez Martin <eperezma@redhat.com>
+Cc: Wafer <wafer@jaguarmicro.com>, jasowang@redhat.com,
+ qemu-devel@nongnu.org, angus.chen@jaguarmicro.com,
+ Lei Yang <leiyang@redhat.com>
+Subject: Re: [PATCH] hw/virtio: Fix obtain the buffer id from the last
+ descriptor
+Message-ID: <20240508141920-mutt-send-email-mst@kernel.org>
+References: <20240422014041.5706-2-wafer@jaguarmicro.com>
+ <CAJaqyWcgMFJL8y7wXwFZa6dny34WKDRH+tuEaCdP8oFN4Qf5fQ@mail.gmail.com>
 MIME-Version: 1.0
-References: <20240508043229.3433128-1-zhao1.liu@intel.com>
-In-Reply-To: <20240508043229.3433128-1-zhao1.liu@intel.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Wed, 8 May 2024 14:05:04 -0400
-Message-ID: <CAJSP0QX0y_J1pu+hgUNhXn7bFJfoAMm9Ux9vq3u+k_UDjwK8Ww@mail.gmail.com>
-Subject: Re: [PATCH] scripts/simpletrace: Mark output with unstable timestamp
- as WARN
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Mads Ynddal <mads@ynddal.dk>, John Snow <jsnow@redhat.com>,
- Cleber Rosa <crosa@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2b;
- envelope-from=stefanha@gmail.com; helo=mail-oo1-xc2b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJaqyWcgMFJL8y7wXwFZa6dny34WKDRH+tuEaCdP8oFN4Qf5fQ@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.582,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,69 +104,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 8 May 2024 at 00:19, Zhao Liu <zhao1.liu@intel.com> wrote:
->
-> In some trace log, there're unstable timestamp breaking temporal
-> ordering of trace records. For example:
->
-> kvm_run_exit -0.015 pid=3289596 cpu_index=0x0 reason=0x6
-> kvm_vm_ioctl -0.020 pid=3289596 type=0xffffffffc008ae67 arg=0x7ffeefb5aa60
-> kvm_vm_ioctl -0.021 pid=3289596 type=0xffffffffc008ae67 arg=0x7ffeefb5aa60
->
-> Negative delta intervals tend to get drowned in the massive trace logs,
-> and an unstable timestamp can corrupt the calculation of intervals
-> between two events adjacent to it.
->
-> Therefore, mark the outputs with unstable timestamps as WARN like:
+On Wed, May 08, 2024 at 02:56:11PM +0200, Eugenio Perez Martin wrote:
+> On Mon, Apr 22, 2024 at 3:41 AM Wafer <wafer@jaguarmicro.com> wrote:
+> >
+> > The virtio-1.3 specification
+> > <https://docs.oasis-open.org/virtio/virtio/v1.3/virtio-v1.3.html> writes:
+> > 2.8.6 Next Flag: Descriptor Chaining
+> >       Buffer ID is included in the last descriptor in the list.
+> >
+> > If the feature (_F_INDIRECT_DESC) has been negotiated, install only
+> > one descriptor in the virtqueue.
+> > Therefor the buffer id should be obtained from the first descriptor.
+> >
+> > In descriptor chaining scenarios, the buffer id should be obtained
+> > from the last descriptor.
+> >
+> 
+> This is actually trickier. While it is true the standard mandates it,
+> both linux virtio_ring driver and QEMU trusts the ID will be the first
+> descriptor of the chain. Does merging this change in QEMU without
+> merging the corresponding one in the linux kernel break things? Or am
+> I missing something?
+> 
+> If it breaks I guess this requires more thinking. I didn't check DPDK,
+> neither as driver nor as vhost-user device.
+> 
+> Thanks!
 
-Why are the timestamps non-monotonic?
+I think that if the driver is out of spec we should for starters fix it ASAP.
 
-In a situation like that maybe not only the negative timestamps are
-useless but even some positive timestamps are incorrect. I think it's
-worth understanding the nature of the instability before merging a
-fix.
+> > Fixes: 86044b24e8 ("virtio: basic packed virtqueue support")
+> >
+> > Signed-off-by: Wafer <wafer@jaguarmicro.com>
+> > ---
+> >  hw/virtio/virtio.c | 5 +++++
+> >  1 file changed, 5 insertions(+)
+> >
+> > diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> > index 871674f9be..f65d4b4161 100644
+> > --- a/hw/virtio/virtio.c
+> > +++ b/hw/virtio/virtio.c
+> > @@ -1739,6 +1739,11 @@ static void *virtqueue_packed_pop(VirtQueue *vq, size_t sz)
+> >              goto err_undo_map;
+> >          }
+> >
+> > +        if (desc_cache != &indirect_desc_cache) {
+> > +            /* Buffer ID is included in the last descriptor in the list. */
+> > +            id = desc.id;
+> > +        }
+> > +
+> >          rc = virtqueue_packed_read_next_desc(vq, &desc, desc_cache, max, &i,
+> >                                               desc_cache ==
+> >                                               &indirect_desc_cache);
+> > --
+> > 2.27.0
+> >
 
-Stefan
-
->
-> WARN: skip unstable timestamp: kvm_run_exit cur(8497404907761146)-pre(8497404907761161) pid=3289596 cpu_index=0x0 reason=0x6
-> WARN: skip unstable timestamp: kvm_vm_ioctl cur(8497404908603653)-pre(8497404908603673) pid=3289596 type=0xffffffffc008ae67 arg=0x7ffeefb5aa60
-> WARN: skip unstable timestamp: kvm_vm_ioctl cur(8497404908625787)-pre(8497404908625808) pid=3289596 type=0xffffffffc008ae67 arg=0x7ffeefb5aa60
->
-> This would help to identify unusual events.
->
-> And skip them without updating Formatter2.last_timestamp_ns to avoid
-> time back.
->
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
->  scripts/simpletrace.py | 11 +++++++++++
->  1 file changed, 11 insertions(+)
->
-> diff --git a/scripts/simpletrace.py b/scripts/simpletrace.py
-> index cef81b0707f0..23911dddb8a6 100755
-> --- a/scripts/simpletrace.py
-> +++ b/scripts/simpletrace.py
-> @@ -343,6 +343,17 @@ def __init__(self):
->          def catchall(self, *rec_args, event, timestamp_ns, pid, event_id):
->              if self.last_timestamp_ns is None:
->                  self.last_timestamp_ns = timestamp_ns
-> +
-> +            if timestamp_ns < self.last_timestamp_ns:
-> +                fields = [
-> +                    f'{name}={r}' if is_string(type) else f'{name}=0x{r:x}'
-> +                    for r, (type, name) in zip(rec_args, event.args)
-> +                ]
-> +                print(f'WARN: skip unstable timestamp: {event.name} '
-> +                      f'cur({timestamp_ns})-pre({self.last_timestamp_ns}) {pid=} ' +
-> +                      f' '.join(fields))
-> +                return
-> +
->              delta_ns = timestamp_ns - self.last_timestamp_ns
->              self.last_timestamp_ns = timestamp_ns
->
-> --
-> 2.34.1
->
->
 
