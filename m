@@ -4,80 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A6FAC25B4F
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 21:17:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83E94C04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 21:17:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4oex-0004Vs-Hn; Wed, 08 May 2024 17:17:08 -0400
+	id 1s4ofT-0005Zj-5B; Wed, 08 May 2024 17:17:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4oep-0004F0-Nk
- for qemu-devel@nongnu.org; Wed, 08 May 2024 17:17:01 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4ofA-0005G1-Mk
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 17:17:23 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4oen-0007c4-AJ
- for qemu-devel@nongnu.org; Wed, 08 May 2024 17:16:59 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-349545c3eb8so94304f8f.2
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 14:16:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4of9-0007gC-7L
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 17:17:20 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-349545c3eb8so94462f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 14:17:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715203016; x=1715807816; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715203037; x=1715807837; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=2emLFOcz8NBT5lpJD5lhxOGmvEJslyehYxldhnKZt64=;
- b=GJUhoXXNk8u8F/pEAGtIJyTKLrXBKIeQpoO5vD0DBsHw72GVr9WWJeAnrt91I/Fvx7
- i2Oz1RFfG6L3YyqWiOzNARROb4ob5nsCJaAL8cJ633OpsYsxBCWnRMvo7WAVpxSZujKg
- HnTTkWjOw678ak7l5jTdy8SvwC3hRlaUlB9F9Jr44zfMIbm75OnboU/yLNM8xWWlta9H
- IU1vvqNh0LjfohFOYmcaFQWPc5gauY2KmWlBbERLqFN4v+0TNcs+B2P3xzZWA6BIgS5V
- BwBZ5Ku+fhNYMMnDLEssSPCdvpNMiUc116x35DuH9EFEYM6t2Bh9EgGH6UaHy+mOjEnq
- l3wQ==
+ bh=ELB5hR0l6aboTYnfPTbapdrQNwpmH5dSlohL3kD+byQ=;
+ b=Ayk3SNxjqPy2UMjCiuFnUudNxmyYMEo6FxWNN70KKu68ZdHmsP7Zkj6z6HuLAEj/6G
+ BJOtrW1MopqZRPSST/twURJO5Hy2bNh2JE3xXESulHLU8r3nTJN8J2NVbm9oR2ft96vw
+ hE+bcRmd6JSbt7uXI5KCsY1XmAC0G+risKBTFUGRsh4C+y0WOrnyRoHh6XODMo1kh/rg
+ Uwe0OQ6nBpmqs4bD6bDX9MXkuj1OYdvQ5Z0aXj5B4tUAQsYvoHmRJCJ2OGR6NE7SMAs3
+ bGRRtOYNAimNLYOUOwmDA1dOj80LxJ1UOeSGQZgxxN4KWXnJNZ1WWd1VEtzK4j9gmbc/
+ ZvGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715203016; x=1715807816;
+ d=1e100.net; s=20230601; t=1715203037; x=1715807837;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2emLFOcz8NBT5lpJD5lhxOGmvEJslyehYxldhnKZt64=;
- b=pMve0zCbpaS/EIiZBiHzc7xoENT9X85Yi35XDfBEzeAbW/6xmJZGQ5HqdAGJYoQAha
- MuCOstJxFd0mY6inSce3zf69QXe+CZakzj4auSdjIIhIUObGoqoqFWYpBvC5YUarUvf+
- in1CK9NQPlyJWwOOTEvkw9kqLrya9IpL/ksD/M2jNYjILhxhbDeQafwJdNfXimBukfs7
- cejMHBwEYQ8Z0paYd8Pbdt6IQJxbrHlwPhWLvZXp5CtUhvJma0w+nEI9ptwyCL4HlgQ3
- X2DXP8xEbcqckGHbthtFwEVeqyVq6vsPqV07y7D32pfAHrUK8DvyjdyvmbWcAV2/Id22
- Bbzg==
+ bh=ELB5hR0l6aboTYnfPTbapdrQNwpmH5dSlohL3kD+byQ=;
+ b=TFTVUIdcBY1jupjMY9InWdCUtCLjEVsgtF+QLCcFKhcVlQcN/MXNYKGl7RxcteEZeH
+ 9PfU8plQ+uyTjhRsGzxp3i/9FdqqRxU/pjuL2JS6uVgc17YNDw2jl2UsK02O3P3K0eia
+ UsC7gdoJBzWRuz6j90vDyiR3TKkaPpaG4u5zELd6oO4e1wUvFRrTma9oDBjSC4FM1Foh
+ /X+4UCuO22nf0kdCjdRCr4qCmpTMFxbXfsUDO5IE1fd/z3AHoqa3h+QmTfhnMVVSnNyP
+ njK7PnHrDEwJVZ2AxI8prmElb0y9coFM3eyu+X6fAY4lD6bpFZCBen2atikM5nsmKoMA
+ IAmA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXh+xfdnshbWOCE1K+57DW2AIKmMBl6BAtdtNGt+uEO8gS0K4MZGSa5XxUTFdn1AMAlhLXw0GzwMq1dKxTP0VXXe/ut8qE=
-X-Gm-Message-State: AOJu0YxDw1eLMC9HiyFcc14keqQz54DxiQefWgaja1g23QVrcAFWgzVm
- gsFEXb6UGu2PWxlH7WgNxptigf8futOEI8j0rs112HxH8ew+9gWZ0dDkTIFdxa0=
-X-Google-Smtp-Source: AGHT+IFqEqAsjJyypAjOKh8VsFryP1ATQFUab+GrinUxGp0iud8B4uFgcboOiQWp40Nku8U+FCSTug==
-X-Received: by 2002:a5d:510a:0:b0:34c:bf58:abde with SMTP id
- ffacd0b85a97d-34fcade2e38mr2553597f8f.27.1715203015827; 
- Wed, 08 May 2024 14:16:55 -0700 (PDT)
+ AJvYcCU5oMhdkJ6jArg2tdO52i2xkV3bSSZFf70R/1Zy/0Zfikv6PrUq0HCrTihM15inWxt09dxv9kolXHylot5HTzFigpxI4CE=
+X-Gm-Message-State: AOJu0YzKJh/1VvV953BUNu3NKIXy4Au3dIj9HVaTL9pHV1xlhCZrw/qt
+ AzJlLZL/2sr5z92QnNrCqSc6mUHHKVmUoD095J8c3xX079PyXCCAj7NWafMT0o8=
+X-Google-Smtp-Source: AGHT+IGl5eX+fx9wZ0BNh7aSz5boecsPMS/37d1P6P2yUCA33rIF7DQ7Q9UMJR/To3nzP6i1uHKssQ==
+X-Received: by 2002:a5d:4884:0:b0:34d:ad05:7d7e with SMTP id
+ ffacd0b85a97d-34fcb3a9277mr2676895f8f.43.1715203036753; 
+ Wed, 08 May 2024 14:17:16 -0700 (PDT)
 Received: from [192.168.69.100] (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
  [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
- p12-20020adfe60c000000b0034ccd06a6a3sm16192223wrm.18.2024.05.08.14.16.52
+ y10-20020a5d620a000000b0034ddb760da2sm16410867wru.79.2024.05.08.14.17.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 May 2024 14:16:55 -0700 (PDT)
-Message-ID: <94bb9721-831a-4572-9e00-94540203e5b7@linaro.org>
-Date: Wed, 8 May 2024 23:16:50 +0200
+ Wed, 08 May 2024 14:17:16 -0700 (PDT)
+Message-ID: <7a56d91a-364f-4e2f-a239-1e8931770149@linaro.org>
+Date: Wed, 8 May 2024 23:17:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 0/7] Support message-based DMA in vfio-user server
-To: Mattias Nissler <mnissler@rivosinc.com>, jag.raman@oracle.com,
- peterx@redhat.com, stefanha@redhat.com, qemu-devel@nongnu.org
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, john.levon@nutanix.com,
- David Hildenbrand <david@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20240507143431.464382-1-mnissler@rivosinc.com>
+Subject: Re: [PATCH v2] ppc: Deprecate 'ref405ep' machine and 405 CPUs
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>
+References: <20240507123332.641708-1-clg@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240507143431.464382-1-mnissler@rivosinc.com>
+In-Reply-To: <20240507123332.641708-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,14 +96,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/5/24 16:34, Mattias Nissler wrote:
-> This series adds basic support for message-based DMA in qemu's vfio-user
-> server. This is useful for cases where the client does not provide file
-> descriptors for accessing system memory via memory mappings. My motivating use
-> case is to hook up device models as PCIe endpoints to a hardware design. This
-> works by bridging the PCIe transaction layer to vfio-user, and the endpoint
-> does not access memory directly, but sends memory requests TLPs to the hardware
-> design in order to perform DMA.
+On 7/5/24 14:33, Cédric Le Goater wrote:
+> The 'ref405ep' machine and PPC 405 CPU have no known users, firmware
+> images are not available, OpenWRT dropped support in 2019, U-Boot in
+> 2017, Linux also is dropping support in 2024. It is time to let go of
+> this ancient hardware and focus on newer CPUs and platforms.
+> 
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>   v2: fixed header line
+> 
+>   docs/about/deprecated.rst | 8 ++++++++
+>   hw/ppc/ppc405_boards.c    | 1 +
+>   2 files changed, 9 insertions(+)
 
-Patches 1-3 & 7 queued to hw-misc tree, thanks.
+Thanks, patch queued to hw-misc tree.
 
