@@ -4,54 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9669C04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 12:03:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C11ABC04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 12:31:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4g0u-0004T3-5U; Wed, 08 May 2024 08:03:12 -0400
+	id 1s4gRr-0005XG-Nj; Wed, 08 May 2024 08:31:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1s4g0m-0004R6-Ja
- for qemu-devel@nongnu.org; Wed, 08 May 2024 08:03:05 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1s4g0j-00017V-1r
- for qemu-devel@nongnu.org; Wed, 08 May 2024 08:03:04 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VZDGX73SZz6K6Pr;
- Wed,  8 May 2024 19:59:48 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 6A1E7140B38;
- Wed,  8 May 2024 20:02:54 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 8 May
- 2024 13:02:54 +0100
-Date: Wed, 8 May 2024 13:02:52 +0100
-To: Yuquan Wang <wangyuquan1236@phytium.com.cn>
-CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>
-Subject: Re: CXL numa error on arm64 qemu virt machine
-Message-ID: <20240508130252.00006367@Huawei.com>
-In-Reply-To: <20240508080051.3756934-1-wangyuquan1236@phytium.com.cn>
-References: <20240508080051.3756934-1-wangyuquan1236@phytium.com.cn>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
-MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml100004.china.huawei.com (7.191.162.219) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1s4gRS-0005Pf-Qu; Wed, 08 May 2024 08:30:42 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1s4gRP-00035q-6x; Wed, 08 May 2024 08:30:38 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1edf506b216so23313455ad.2; 
+ Wed, 08 May 2024 05:30:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1715171432; x=1715776232; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=o4qmmFmgHRQlppj/tK/ouq/AbDhqnlddI8qawmh2p8U=;
+ b=Q+pNCMGfFIbdtVn7tgTevawOdW27D9axXQOiBVOyEB3b+vuDShzW5Q2zCv/S+cT3Q4
+ BaSGtzihw48tqBVIbh2oa2EWgi6OYMoZzfGaTQozhpi0SxwWq70NvJvo7RkmWx70QEty
+ 5ol9CZjgJgVsoawSLgWIXMMtU+SgcTPcQGH+l4FvSgiEabXqOF+CrT+e7iiLbLewUWNQ
+ 6CMJZMPitey9AD3b91LGXgPGId4iMhiMIm41EaW8C+4gNEcxz4udFAn3xFBuC9jKrums
+ PyJakdBRse1eXRpM3o83TUZzHLanjTbi6nh3QvJcdw+J9zDcYCS/YwM3Dievt7zUthcV
+ A2bA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715171432; x=1715776232;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=o4qmmFmgHRQlppj/tK/ouq/AbDhqnlddI8qawmh2p8U=;
+ b=IgBZpxVlOb+mySyAAba/H8UYPJyYEYDrSuWcJjRcU79Wg2xvPIRWrIG3efvQOEbDSj
+ /DHmhXOFeMXkelxJHGx2EkZhI+5LJfEbCefjUyAyGcMgZ9mYIltCZx8yq+W3AHuZlNYz
+ oJ/MBSWC7n7afOhpxZgQvmeV6GL92/DdtSDa3lw70qCfDgbkQpXatKdjKkfc3DSeaWzT
+ mSuWIC4uI4QWsdipeBS6zZLyp2IKe7uvpwgrtifGorvorXmZHlF1FlhHsG3A3rlUdz4D
+ oVGRfKlTZQOV35Y5itXxKvBb82TiAZJ/jaoLmV3P0PXJFIJKYv7Y+B886u0meRoPiZIU
+ dH2A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXfM3pr5nYsZbM7vrbp7fDi+RxaTYDKs4k11ZRI7e5Qxk/bKe+zm/oLzwRN11FpKV7DmiupPTyC3ve66vOa/dtVhmXI
+X-Gm-Message-State: AOJu0YyY0Vr+ziDuoMlx+qkFzyPBPVrlZgA+I6RMHK217W1krCKsxlAe
+ gwjzIcJbwPbobHzMYpX6eHoU/t63Uk6wxW3KgGRJhF9wWylOcbRt
+X-Google-Smtp-Source: AGHT+IFPj6GskyIz0bMqfsOyjCBWxTby3wRBbdgnLXzp2g9lS9LTvg/haTgjTw3klnGfqoLMtuZ4rA==
+X-Received: by 2002:a17:903:2301:b0:1eb:63d9:8d85 with SMTP id
+ d9443c01a7336-1eeb03a5643mr29658135ad.14.1715171429774; 
+ Wed, 08 May 2024 05:30:29 -0700 (PDT)
+Received: from localhost ([1.146.8.34]) by smtp.gmail.com with ESMTPSA id
+ cp1-20020a170902e78100b001e403970ec0sm2418979plb.277.2024.05.08.05.30.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 08 May 2024 05:30:29 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 08 May 2024 22:30:24 +1000
+Message-Id: <D149IYMCXH4Z.ZPIXWOVQVOZO@gmail.com>
+Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>, "Daniel Henrique
+ Barboza" <danielhb413@gmail.com>
+Subject: Re: [PATCH v2 26/28] target/ppc/mmu_common.c: Move BookE MMU
+ functions together
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>
+X-Mailer: aerc 0.17.0
+References: <cover.1714606359.git.balaton@eik.bme.hu>
+ <d5d70791bdf598cd28ee70fd058f51c257a2b969.1714606359.git.balaton@eik.bme.hu>
+ <D13EMTIRPDQJ.2LCAHIOTN0W5N@gmail.com>
+ <090308e7-e3c0-8129-bdae-c2e3a41a2aa5@eik.bme.hu>
+In-Reply-To: <090308e7-e3c0-8129-bdae-c2e3a41a2aa5@eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -65,116 +95,41 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 8 May 2024 16:00:51 +0800
-Yuquan Wang <wangyuquan1236@phytium.com.cn> wrote:
+On Tue May 7, 2024 at 10:31 PM AEST, BALATON Zoltan wrote:
+> On Tue, 7 May 2024, Nicholas Piggin wrote:
+> > What do you think about adding mmu-book3e.c instead?
+>
+> I have considered that but found that some functions have to be in the=20
+> same file and declared static for the compiler to inline them otherwise I=
+=20
+> get worse performance. Maybe after these rearrangments it's now possible=
+=20
+> to move these out but as this series got a bit long already I dod not go=
+=20
+> through with that and left it for a follow up but I can give it a try.
 
-> Hello, Jonathan
-> 
-> Recently I run some cxl tests on qemu virt(branch:cxl-2024-04-22-draft) but met some
-> problems.
-> 
-> Problems: 
-> 1) the virt machine could not set the right numa topology from user input;
-> 
-> My Qemu numa set:
-> -object memory-backend-ram,size=2G,id=mem0 \
-> -numa node,nodeid=0,cpus=0-1,memdev=mem0 \
-> -object memory-backend-ram,size=2G,id=mem1 \
-> -numa node,nodeid=1,cpus=2-3,memdev=mem1 \
+It would be nice.
 
-That is setting up the main DRAM nodes, unrelated to
-CXL memory. For CXL memory you need to use generic
-port entries (in my gitlab qemu tree - with examples but not upstream yet)
-However, if you get some breakage
+What host machines are you using? I'm surprised inlining is causing
+so much performance unless it is something older or in-order.
 
-> 
-> However, the system shows:
-> root@ubuntu-jammy-arm64:~# numactl -H
-> 	available: 1 nodes (0)
-> 	node 0 cpus: 0 1 2 3
-> 	node 0 size: 4166 MB
-> 	node 0 free: 3920 MB
-> 	node distances:
-> 	node   0 
-> 	0:  10 
-> 
-> Boot Kernel print:
-> [    0.000000] ACPI: SRAT: Node 0 PXM 0 [mem 0x40000000-0xbfffffff]
-> [    0.000000] ACPI: SRAT: Node 1 PXM 1 [mem 0xc0000000-0x13fffffff]
-> [    0.000000] ACPI: Unknown target node for memory at 0x10000000000, assuming node 0
-> [    0.000000] NUMA: Warning: invalid memblk node 16 [mem 0x0000000004000000-0x0000000007ffffff]
-> [    0.000000] NUMA: Faking a node at [mem 0x0000000004000000-0x000000013fffffff]
-> [    0.000000] NUMA: NODE_DATA [mem 0x13f7f89c0-0x13f7fafff]
-> 
-> 2) it seems like the problem of allocating numa node in arm for cxl memory still exists;
-> Previous discussion: https://lore.kernel.org/linux-cxl/20231011150620.0000212a@Huawei.com/
-> 
-> root@debian-bullseye-arm64:~# cxl create-region -d decoder0.0 -t ram
-> [   68.653873] cxl region0: Bypassing cpu_cache_invalidate_memregion() for testing!
-> [   68.660568] Unknown target node for memory at 0x10000000000, assuming node 0
+Should be able to move small common things inline to headers if it's
+important though, we should try to split since you've done most of
+the work now.
 
-You need a load of kernel changes for NUMA nodes to work correctly with
-CXL memory on arm64 platforms.  I have some working code but need to tidy
-up a few corners that came up in an internal review earlier this week.
+Thanks,
+Nick
 
-I have some travel coming up so may take a week or so to get those out.
-
-Curiously that invalid memblk has nothing to do with the CXL fixed memory window
-Could you check if that is happening for you without the CXL patches?
-
-> 
-> If not, maybe I could try to do something to help fix this problem.
-> 
-> 
-> My full qemu command line:
-> qemu-system-aarch64 \
-> -M virt,gic-version=3,cxl=on \
-> -m 4G \
-> -smp 4 \
-> -object memory-backend-ram,size=2G,id=mem0 \
-> -numa node,nodeid=0,cpus=0-1,memdev=mem0 \
-> -object memory-backend-ram,size=2G,id=mem1 \
-> -numa node,nodeid=1,cpus=2-3,memdev=mem1 \
-> -cpu cortex-a57 \
-> -bios QEMU_EFI.fd.bak \
-> -device virtio-blk-pci,drive=hd,bus=pcie.0 \
-> -drive if=none,id=hd,file=../disk/debos_arm64.ext \
-> -nographic \
-> -object memory-backend-file,id=mem2,mem-path=/tmp/mem2,size=256M,share=true \
-> -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
-> -device cxl-rp,port=0,bus=cxl.1,id=root_port13,chassis=0,slot=2 \
-> -device cxl-type3,bus=root_port13,volatile-memdev=mem2,id=cxl-mem1 \
-> -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G \
-> -qmp tcp:127.0.0.1:4444,server,nowait \
-> 
-> Qemu version: the lastest commit of branch cxl-2024-04-22-draft in "https://gitlab.com/jic23/qemu" 
-> Kernel version: 6.6.0
-
-Whilst it doesn't work yet (because of missing kernel support)
-you'll need something that looks more like the generic ports test added in 
-https://gitlab.com/jic23/qemu/-/commit/6589c527920ba22fe0923b60b58d33a8e9fd371e
-
-Most importantly
--numa node,nodeid=2 -object acpi-generic-port,id=gp0,pci-bus-cxl.1,node=2
-+ the bits setting distances etc.  Note CXL memory does not provide SLIT like
-data at the moment, so the test above won't help you identify if it is correctly
-set up.  That's a gap in general in the kernel support. Whilst we'd love
-it if everyone moved to hmat derived information we may need to provide
-some fallback.
-
-Jonathan
-
-
-
-
-> 
-> Many thanks
-> Yuquan
-> 
+>
+> Thanks for the review so far, I'll try to make the changes that I=20
+> understood and submit and updated version. I'm not sure I got some of you=
+r=20
+> requests so that may need another round.
+>
+> Regards,
+> BALATON Zoltan
 
 
