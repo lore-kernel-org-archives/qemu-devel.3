@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDAA6C10F1A
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 00:23:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BCC3C25B4F
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 00:23:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4V0E-0003bx-Ii; Tue, 07 May 2024 20:17:46 -0400
+	id 1s4V07-0002k1-Cw; Tue, 07 May 2024 20:17:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s4UyQ-0007ox-TK; Tue, 07 May 2024 20:15:58 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ id 1s4UyA-0007HI-Rh; Tue, 07 May 2024 20:15:43 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s4UyL-0003o1-H8; Tue, 07 May 2024 20:15:53 -0400
+ id 1s4Uy5-0003lB-Q4; Tue, 07 May 2024 20:15:37 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 088D04E65CE;
- Wed, 08 May 2024 02:15:28 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 335014E65C0;
+ Wed, 08 May 2024 02:15:12 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id H5J14vWln8jN; Wed,  8 May 2024 02:15:26 +0200 (CEST)
+ with ESMTP id fAD3JFsxLV-T; Wed,  8 May 2024 02:15:10 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 1BC414E65D3; Wed, 08 May 2024 02:15:26 +0200 (CEST)
-Message-Id: <043208173865575e0148ad19b8a3b4e1a96f0c4c.1715125376.git.balaton@eik.bme.hu>
+ id 445744E65CD; Wed, 08 May 2024 02:15:10 +0200 (CEST)
+Message-Id: <6fece3877d80ad4d82a36de3b10f61aedd796f62.1715125376.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1715125376.git.balaton@eik.bme.hu>
 References: <cover.1715125376.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v3 32/33] target/ppc/mmu-radix64.c: Drop a local variable
+Subject: [PATCH v3 17/33] target/ppc/mmu_common.c: Simplify
+ mmubooke206_get_physical_address()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -39,9 +40,9 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Wed, 08 May 2024 02:15:26 +0200 (CEST)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
+Date: Wed, 08 May 2024 02:15:10 +0200 (CEST)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -62,37 +63,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The value is only used once so no need to introduce a local variable
-for it.
+This function is similar to mmubooke_get_physical_address() and can be
+simplified the same way.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu-radix64.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ target/ppc/mmu_common.c | 26 +++++++++-----------------
+ 1 file changed, 9 insertions(+), 17 deletions(-)
 
-diff --git a/target/ppc/mmu-radix64.c b/target/ppc/mmu-radix64.c
-index 8daf71d2db..395ce3b782 100644
---- a/target/ppc/mmu-radix64.c
-+++ b/target/ppc/mmu-radix64.c
-@@ -185,7 +185,6 @@ static bool ppc_radix64_check_prot(PowerPCCPU *cpu, MMUAccessType access_type,
-                                    int mmu_idx, bool partition_scoped)
+diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+index 9793e6d282..a5bc747f40 100644
+--- a/target/ppc/mmu_common.c
++++ b/target/ppc/mmu_common.c
+@@ -859,15 +859,11 @@ static int mmubooke206_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
+                                             int mmu_idx)
  {
-     CPUPPCState *env = &cpu->env;
--    int need_prot;
+     ppcmas_tlb_t *tlb;
+-    hwaddr raddr;
+-    int i, j, ret;
+-
+-    ret = -1;
+-    raddr = (hwaddr)-1ULL;
++    hwaddr raddr = (hwaddr)-1ULL;
++    int i, j, ret = -1;
  
-     /* Check Page Attributes (pte58:59) */
-     if ((pte & R_PTE_ATT) == R_PTE_ATT_NI_IO && access_type == MMU_INST_FETCH) {
-@@ -210,8 +209,8 @@ static bool ppc_radix64_check_prot(PowerPCCPU *cpu, MMUAccessType access_type,
-     }
+     for (i = 0; i < BOOKE206_MAX_TLBN; i++) {
+         int ways = booke206_tlb_ways(env, i);
+-
+         for (j = 0; j < ways; j++) {
+             tlb = booke206_get_tlbm(env, i, address, j);
+             if (!tlb) {
+@@ -876,6 +872,9 @@ static int mmubooke206_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
+             ret = mmubooke206_check_tlb(env, tlb, &raddr, &ctx->prot, address,
+                                         access_type, mmu_idx);
+             if (ret != -1) {
++                if (ret >= 0) {
++                    ctx->raddr = raddr;
++                }
+                 goto found_tlb;
+             }
+         }
+@@ -883,17 +882,10 @@ static int mmubooke206_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
  
-     /* Check if requested access type is allowed */
--    need_prot = prot_for_access_type(access_type);
--    if (need_prot & ~*prot) { /* Page Protected for that Access */
-+    if (prot_for_access_type(access_type) & ~*prot) {
-+        /* Page Protected for that Access */
-         *fault_cause |= access_type == MMU_INST_FETCH ? SRR1_NOEXEC_GUARD :
-                                                         DSISR_PROTFAULT;
-         return true;
+ found_tlb:
+ 
+-    if (ret >= 0) {
+-        ctx->raddr = raddr;
+-         qemu_log_mask(CPU_LOG_MMU, "%s: access granted " TARGET_FMT_lx
+-                       " => " HWADDR_FMT_plx " %d %d\n", __func__, address,
+-                       ctx->raddr, ctx->prot, ret);
+-    } else {
+-         qemu_log_mask(CPU_LOG_MMU, "%s: access refused " TARGET_FMT_lx
+-                       " => " HWADDR_FMT_plx " %d %d\n", __func__, address,
+-                       raddr, ctx->prot, ret);
+-    }
+-
++    qemu_log_mask(CPU_LOG_MMU, "%s: access %s " TARGET_FMT_lx " => "
++                  HWADDR_FMT_plx " %d %d\n", __func__,
++                  ret < 0 ? "refused" : "granted", address, raddr,
++                  ctx->prot, ret);
+     return ret;
+ }
+ 
 -- 
 2.30.9
 
