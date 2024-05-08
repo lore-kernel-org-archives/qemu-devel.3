@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BBA9C41513
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 23:40:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C978C25B74
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 23:40:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4qqY-00053z-BO; Wed, 08 May 2024 19:37:14 -0400
+	id 1s4qpY-0002zG-Ma; Wed, 08 May 2024 19:36:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s4qqJ-0004W6-MO; Wed, 08 May 2024 19:37:02 -0400
+ id 1s4qpV-0002or-Nd; Wed, 08 May 2024 19:36:09 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s4qqF-0002dk-Tf; Wed, 08 May 2024 19:36:59 -0400
+ id 1s4qpT-0002Sg-JO; Wed, 08 May 2024 19:36:09 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 590E04E65D4;
- Thu, 09 May 2024 01:36:34 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id AB5114E64CB;
+ Thu, 09 May 2024 01:36:05 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id nfC1i5YAjleu; Thu,  9 May 2024 01:36:32 +0200 (CEST)
+ with ESMTP id mWp1tNPNgyoc; Thu,  9 May 2024 01:36:03 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 610D04E65DA; Thu, 09 May 2024 01:36:32 +0200 (CEST)
-Message-Id: <f210ac8286d231984c9b09dfbdebf24f01338f65.1715209155.git.balaton@eik.bme.hu>
+ id B6F9B4E6426; Thu, 09 May 2024 01:36:03 +0200 (CEST)
+Message-Id: <2ff176c8ab216ff63e7b7708f3390594532052ec.1715209155.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1715209155.git.balaton@eik.bme.hu>
 References: <cover.1715209155.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v4 28/33] target/ppc: Remove id_tlbs flag from CPU env
+Subject: [PATCH v4 01/33] target/ppc: Fix gen_sc to use correct nip
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -39,7 +39,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Thu, 09 May 2024 01:36:32 +0200 (CEST)
+Date: Thu, 09 May 2024 01:36:03 +0200 (CEST)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -62,207 +62,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This flag for split instruction/data TLBs is only set for 6xx soft TLB
-MMU model and not used otherwise so no need to have a separate flag
-for that.
+Most exceptions are raised with nip pointing to the faulting
+instruction but the sc instruction generating a syscall exception
+leaves nip pointing to next instruction. Fix gen_sc to not use
+gen_exception_err() which sets nip back but correctly set nip to
+pc_next so we don't have to patch this in the exception handlers.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/pegasos2.c        |  2 +-
- target/ppc/cpu.h         |  5 ++++-
- target/ppc/cpu_init.c    | 19 +++++--------------
- target/ppc/helper_regs.c |  1 -
- target/ppc/mmu_common.c  | 10 ++--------
- target/ppc/mmu_helper.c  | 12 ++----------
- 6 files changed, 14 insertions(+), 35 deletions(-)
+ linux-user/ppc/cpu_loop.c |  2 --
+ target/ppc/excp_helper.c  | 43 ++-------------------------------------
+ target/ppc/translate.c    |  6 ++----
+ 3 files changed, 4 insertions(+), 47 deletions(-)
 
-diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
-index 04d6decb2b..750f439c5d 100644
---- a/hw/ppc/pegasos2.c
-+++ b/hw/ppc/pegasos2.c
-@@ -984,7 +984,7 @@ static void *build_fdt(MachineState *machine, int *fdt_size)
-                           cpu->env.icache_line_size);
-     qemu_fdt_setprop_cell(fdt, cp, "i-cache-line-size",
-                           cpu->env.icache_line_size);
--    if (cpu->env.id_tlbs) {
-+    if (ppc_is_split_tlb(cpu)) {
-         qemu_fdt_setprop_cell(fdt, cp, "i-tlb-sets", cpu->env.nb_ways);
-         qemu_fdt_setprop_cell(fdt, cp, "i-tlb-size", cpu->env.tlb_per_way);
-         qemu_fdt_setprop_cell(fdt, cp, "d-tlb-sets", cpu->env.nb_ways);
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index 0ac55d6b25..cfb3ba5ac8 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -1260,7 +1260,6 @@ struct CPUArchState {
-     int tlb_per_way; /* Speed-up helper: used to avoid divisions at run time */
-     int nb_ways;     /* Number of ways in the TLB set */
-     int last_way;    /* Last used way used to allocate TLB in a LRU way */
--    int id_tlbs;     /* If 1, MMU has separated TLBs for instructions & data */
-     int nb_pids;     /* Number of available PID registers */
-     int tlb_type;    /* Type of TLB we're dealing with */
-     ppc_tlb_t tlb;   /* TLB is optional. Allocate them only if needed */
-@@ -2856,6 +2855,10 @@ static inline void booke206_fixed_size_tlbn(CPUPPCState *env, const int tlbn,
-     tlb->mas1 |= ((uint32_t)tsize) << MAS1_TSIZE_SHIFT;
+diff --git a/linux-user/ppc/cpu_loop.c b/linux-user/ppc/cpu_loop.c
+index 02204ad8be..0ebf7e9808 100644
+--- a/linux-user/ppc/cpu_loop.c
++++ b/linux-user/ppc/cpu_loop.c
+@@ -332,12 +332,10 @@ void cpu_loop(CPUPPCState *env)
+              * in syscalls.
+              */
+             env->crf[0] &= ~0x1;
+-            env->nip += 4;
+             ret = do_syscall(env, env->gpr[0], env->gpr[3], env->gpr[4],
+                              env->gpr[5], env->gpr[6], env->gpr[7],
+                              env->gpr[8], 0, 0);
+             if (ret == -QEMU_ERESTARTSYS) {
+-                env->nip -= 4;
+                 break;
+             }
+             if (ret == (target_ulong)(-QEMU_ESIGRETURN)) {
+diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+index 0712098cf7..92fe535815 100644
+--- a/target/ppc/excp_helper.c
++++ b/target/ppc/excp_helper.c
+@@ -116,7 +116,7 @@ static void dump_syscall(CPUPPCState *env)
+                   ppc_dump_gpr(env, 0), ppc_dump_gpr(env, 3),
+                   ppc_dump_gpr(env, 4), ppc_dump_gpr(env, 5),
+                   ppc_dump_gpr(env, 6), ppc_dump_gpr(env, 7),
+-                  ppc_dump_gpr(env, 8), env->nip);
++                  ppc_dump_gpr(env, 8), env->nip - 4);
  }
  
-+static inline bool ppc_is_split_tlb(PowerPCCPU *cpu)
-+{
-+    return cpu->env.tlb_type == TLB_6XX;
-+}
- #endif
+ static void dump_hcall(CPUPPCState *env)
+@@ -131,7 +131,7 @@ static void dump_hcall(CPUPPCState *env)
+                   ppc_dump_gpr(env, 7), ppc_dump_gpr(env, 8),
+                   ppc_dump_gpr(env, 9), ppc_dump_gpr(env, 10),
+                   ppc_dump_gpr(env, 11), ppc_dump_gpr(env, 12),
+-                  env->nip);
++                  env->nip - 4);
+ }
  
- static inline bool msr_is_64bit(CPUPPCState *env, target_ulong msr)
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index c11a69fd90..07ad788e54 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -2117,7 +2117,6 @@ static void init_proc_405(CPUPPCState *env)
- #if !defined(CONFIG_USER_ONLY)
-     env->nb_tlb = 64;
-     env->nb_ways = 1;
--    env->id_tlbs = 0;
-     env->tlb_type = TLB_EMB;
- #endif
-     init_excp_4xx(env);
-@@ -2190,7 +2189,6 @@ static void init_proc_440EP(CPUPPCState *env)
- #if !defined(CONFIG_USER_ONLY)
-     env->nb_tlb = 64;
-     env->nb_ways = 1;
--    env->id_tlbs = 0;
-     env->tlb_type = TLB_EMB;
- #endif
-     init_excp_BookE(env);
-@@ -2288,7 +2286,6 @@ static void init_proc_440GP(CPUPPCState *env)
- #if !defined(CONFIG_USER_ONLY)
-     env->nb_tlb = 64;
-     env->nb_ways = 1;
--    env->id_tlbs = 0;
-     env->tlb_type = TLB_EMB;
- #endif
-     init_excp_BookE(env);
-@@ -2362,7 +2359,6 @@ static void init_proc_440x5(CPUPPCState *env)
- #if !defined(CONFIG_USER_ONLY)
-     env->nb_tlb = 64;
-     env->nb_ways = 1;
--    env->id_tlbs = 0;
-     env->tlb_type = TLB_EMB;
- #endif
-     init_excp_BookE(env);
-@@ -2724,7 +2720,6 @@ static void init_proc_e200(CPUPPCState *env)
- #if !defined(CONFIG_USER_ONLY)
-     env->nb_tlb = 64;
-     env->nb_ways = 1;
--    env->id_tlbs = 0;
-     env->tlb_type = TLB_EMB;
- #endif
-     init_excp_e200(env, 0xFFFF0000UL);
-@@ -2843,7 +2838,6 @@ static void init_proc_e500(CPUPPCState *env, int version)
-     /* Memory management */
-     env->nb_pids = 3;
-     env->nb_ways = 2;
--    env->id_tlbs = 0;
-     switch (version) {
-     case fsl_e500v1:
-         tlbncfg[0] = register_tlbncfg(2, 1, 1, 0, 256);
-@@ -6800,20 +6794,17 @@ static void init_ppc_proc(PowerPCCPU *cpu)
-     }
-     /* Allocate TLBs buffer when needed */
- #if !defined(CONFIG_USER_ONLY)
--    if (env->nb_tlb != 0) {
--        int nb_tlb = env->nb_tlb;
--        if (env->id_tlbs != 0) {
--            nb_tlb *= 2;
--        }
-+    if (env->nb_tlb) {
-         switch (env->tlb_type) {
-         case TLB_6XX:
--            env->tlb.tlb6 = g_new0(ppc6xx_tlb_t, nb_tlb);
-+            /* 6xx has separate TLBs for instructions and data hence times 2 */
-+            env->tlb.tlb6 = g_new0(ppc6xx_tlb_t, 2 * env->nb_tlb);
-             break;
-         case TLB_EMB:
--            env->tlb.tlbe = g_new0(ppcemb_tlb_t, nb_tlb);
-+            env->tlb.tlbe = g_new0(ppcemb_tlb_t, env->nb_tlb);
-             break;
-         case TLB_MAS:
--            env->tlb.tlbm = g_new0(ppcmas_tlb_t, nb_tlb);
-+            env->tlb.tlbm = g_new0(ppcmas_tlb_t, env->nb_tlb);
-             break;
-         }
-         /* Pre-compute some useful values */
-diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
-index 25258986e3..ed583fe9b3 100644
---- a/target/ppc/helper_regs.c
-+++ b/target/ppc/helper_regs.c
-@@ -693,7 +693,6 @@ void register_6xx_7xx_soft_tlb(CPUPPCState *env, int nb_tlbs, int nb_ways)
- #if !defined(CONFIG_USER_ONLY)
-     env->nb_tlb = nb_tlbs;
-     env->nb_ways = nb_ways;
--    env->id_tlbs = 1;
-     env->tlb_type = TLB_6XX;
-     spr_register(env, SPR_DMISS, "DMISS",
-                  SPR_NOACCESS, SPR_NOACCESS,
-diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 1d56dca8ba..c185827658 100644
---- a/target/ppc/mmu_common.c
-+++ b/target/ppc/mmu_common.c
-@@ -90,8 +90,8 @@ int ppc6xx_tlb_getnum(CPUPPCState *env, target_ulong eaddr,
-     nr = (eaddr >> TARGET_PAGE_BITS) & (env->tlb_per_way - 1);
-     /* Select TLB way */
-     nr += env->tlb_per_way * way;
--    /* 6xx have separate TLBs for instructions and data */
--    if (is_code && env->id_tlbs == 1) {
-+    /* 6xx has separate TLBs for instructions and data */
-+    if (is_code) {
-         nr += env->nb_tlb;
-     }
- 
-@@ -1026,13 +1026,7 @@ static void mmu6xx_dump_mmu(CPUPPCState *env)
-     mmu6xx_dump_BATs(env, ACCESS_INT);
-     mmu6xx_dump_BATs(env, ACCESS_CODE);
- 
--    if (env->id_tlbs != 1) {
--        qemu_printf("ERROR: 6xx MMU should have separated TLB"
--                    " for code and data\n");
--    }
--
-     qemu_printf("\nTLBs                       [EPN    EPN + SIZE]\n");
--
-     for (type = 0; type < 2; type++) {
-         for (way = 0; way < env->nb_ways; way++) {
-             for (entry = env->nb_tlb * type + env->tlb_per_way * way;
-diff --git a/target/ppc/mmu_helper.c b/target/ppc/mmu_helper.c
-index 421e777ee6..680ca0b618 100644
---- a/target/ppc/mmu_helper.c
-+++ b/target/ppc/mmu_helper.c
-@@ -45,14 +45,8 @@
- static inline void ppc6xx_tlb_invalidate_all(CPUPPCState *env)
- {
-     ppc6xx_tlb_t *tlb;
--    int nr, max;
-+    int nr, max = 2 * env->nb_tlb;
- 
--    /* LOG_SWTLB("Invalidate all TLBs\n"); */
--    /* Invalidate all defined software TLB */
--    max = env->nb_tlb;
--    if (env->id_tlbs == 1) {
--        max *= 2;
--    }
-     for (nr = 0; nr < max; nr++) {
-         tlb = &env->tlb.tlb6[nr];
-         pte_invalidate(&tlb->pte0);
-@@ -308,9 +302,7 @@ void ppc_tlb_invalidate_one(CPUPPCState *env, target_ulong addr)
-     switch (env->mmu_model) {
-     case POWERPC_MMU_SOFT_6xx:
-         ppc6xx_tlb_invalidate_virt(env, addr, 0);
--        if (env->id_tlbs == 1) {
--            ppc6xx_tlb_invalidate_virt(env, addr, 1);
--        }
-+        ppc6xx_tlb_invalidate_virt(env, addr, 1);
+ #ifdef CONFIG_TCG
+@@ -516,12 +516,6 @@ static void powerpc_excp_40x(PowerPCCPU *cpu, int excp)
          break;
-     case POWERPC_MMU_32B:
+     case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
+         dump_syscall(env);
+-
+-        /*
+-         * We need to correct the NIP which in this case is supposed
+-         * to point to the next instruction
+-         */
+-        env->nip += 4;
+         break;
+     case POWERPC_EXCP_FIT:       /* Fixed-interval timer interrupt           */
+         trace_ppc_excp_print("FIT");
+@@ -632,12 +626,6 @@ static void powerpc_excp_6xx(PowerPCCPU *cpu, int excp)
+         break;
+     case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
+         dump_syscall(env);
+-
+-        /*
+-         * We need to correct the NIP which in this case is supposed
+-         * to point to the next instruction
+-         */
+-        env->nip += 4;
+         break;
+     case POWERPC_EXCP_FPU:       /* Floating-point unavailable exception     */
+     case POWERPC_EXCP_DECR:      /* Decrementer exception                    */
+@@ -780,13 +768,6 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
+         } else {
+             dump_syscall(env);
+         }
+-
+-        /*
+-         * We need to correct the NIP which in this case is supposed
+-         * to point to the next instruction
+-         */
+-        env->nip += 4;
+-
          /*
+          * The Virtual Open Firmware (VOF) relies on the 'sc 1'
+          * instruction to communicate with QEMU. The pegasos2 machine
+@@ -932,13 +913,6 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
+         } else {
+             dump_syscall(env);
+         }
+-
+-        /*
+-         * We need to correct the NIP which in this case is supposed
+-         * to point to the next instruction
+-         */
+-        env->nip += 4;
+-
+         /*
+          * The Virtual Open Firmware (VOF) relies on the 'sc 1'
+          * instruction to communicate with QEMU. The pegasos2 machine
+@@ -1098,12 +1072,6 @@ static void powerpc_excp_booke(PowerPCCPU *cpu, int excp)
+         break;
+     case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
+         dump_syscall(env);
+-
+-        /*
+-         * We need to correct the NIP which in this case is supposed
+-         * to point to the next instruction
+-         */
+-        env->nip += 4;
+         break;
+     case POWERPC_EXCP_FPU:       /* Floating-point unavailable exception     */
+     case POWERPC_EXCP_APU:       /* Auxiliary processor unavailable          */
+@@ -1428,13 +1396,6 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
+         } else {
+             dump_syscall(env);
+         }
+-
+-        /*
+-         * We need to correct the NIP which in this case is supposed
+-         * to point to the next instruction
+-         */
+-        env->nip += 4;
+-
+         /* "PAPR mode" built-in hypercall emulation */
+         if (lev == 1 && books_vhyp_handles_hcall(cpu)) {
+             PPCVirtualHypervisorClass *vhc =
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index 93ffec787c..fa72f17c3e 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -4479,15 +4479,13 @@ static void gen_hrfid(DisasContext *ctx)
+ #endif
+ static void gen_sc(DisasContext *ctx)
+ {
+-    uint32_t lev;
+-
+     /*
+      * LEV is a 7-bit field, but the top 6 bits are treated as a reserved
+      * field (i.e., ignored). ISA v3.1 changes that to 5 bits, but that is
+      * for Ultravisor which TCG does not support, so just ignore the top 6.
+      */
+-    lev = (ctx->opcode >> 5) & 0x1;
+-    gen_exception_err(ctx, POWERPC_SYSCALL, lev);
++    uint32_t lev = (ctx->opcode >> 5) & 0x1;
++    gen_exception_err_nip(ctx, POWERPC_SYSCALL, lev, ctx->base.pc_next);
+ }
+ 
+ #if defined(TARGET_PPC64)
 -- 
 2.30.9
 
