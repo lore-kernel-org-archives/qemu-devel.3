@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34214C04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 21:28:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB427C25B4F
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 21:42:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4opG-0003k9-NV; Wed, 08 May 2024 17:27:47 -0400
+	id 1s4p2n-0001Mu-2G; Wed, 08 May 2024 17:41:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4opE-0003jo-JT
- for qemu-devel@nongnu.org; Wed, 08 May 2024 17:27:44 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4p2l-0001Ma-PL
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 17:41:43 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4opC-0002w2-QA
- for qemu-devel@nongnu.org; Wed, 08 May 2024 17:27:44 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-573137ba8d7so2477859a12.0
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 14:27:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4p2k-0000MO-4c
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 17:41:43 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a599af16934so42798866b.1
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 14:41:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715203660; x=1715808460; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715204500; x=1715809300; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Mdjosks7r/KJkxwZhUwAHkrACfDKzq7Mygq7lPfzFcY=;
- b=TZ53IbJDfVqCTd5KPnvefKTajWQhZ7tA8mXEArLx7uyqbOJkmBibWiSO0s3zgbDcp9
- Y8/NlpEN3vbvoatPwtEd6Xmg5ptHJ2jLPCC/ti/7MdAvYle1bPlXvhbTblN5bpiTnYzq
- cfZ+zyg/ymiT1l3WINqTmOeTt7Ys/ogB+fG/0oBIRlTxcbvwPIyyA/bfUE0i3wk+z4PI
- 2RRpsbqePQZDLJ6p9DJLvd4muKWs8q/28XxGgt0CAwR2pzsoXp2ZUYwPGyQ2w3yJCRPy
- zj2WjeP2UsTeYBQF2YYOtDX3HA3Rsmsm/eP0Xnp8dTZ8lsQsZrUP+wI8PyEv/Ru/qWoe
- RtPw==
+ bh=cQLRzZVB5y+EtrJUjumGMzemKyn9Far6uFIyzgTKJ7Y=;
+ b=ttyzGj8ZnHqlxFBdpvJxOVIDqNwrlmkykh0BWPbM9W3PpSzlNPqGUVeKNEQjcaLjmG
+ 7AGBS7p8kyS6OoOmFbbtt4R6FFeNvjaw91IlzvRONUZ8EAViGnFB/P0KMcFnnfrnYfMt
+ ZzGrSRtfJtZ0H5Bym25I74wO4RYAcz+tjVhql5WpOnfJEEm832fPrcacRrNBJxUye8S4
+ IrehiWR5W5YOSYfN7GkUAfklBDy2fjwMLtLD6G1cMAXMTLR+5nzRGlJ6lUqmmDN9c8u+
+ 9MYdIh54aBwxxpElM4Ls/jxdamcARmFCbbnlTEafer8T4ezZzAu4D8Z78rth0t9mj1zw
+ mqJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715203660; x=1715808460;
+ d=1e100.net; s=20230601; t=1715204500; x=1715809300;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Mdjosks7r/KJkxwZhUwAHkrACfDKzq7Mygq7lPfzFcY=;
- b=EnWhUYV+OYOwl1POLSlz+P+PqUFAbp/EMKaiPnUz7weR9UcEwoZpMpyxrdwPF1fdXq
- FyBnTT9wOEHC+qY0JKzsWoquZ8RSDmvzwU2fpmSY7YC+rtZybVFU5SOgpaUeibMcQ0np
- uUTgAK51Zkp72rIZpKrKFDjebq56dJ4BYQufFv57yzsj9BC9CQ+D2vFQgzNlVvNX57F6
- lBzrqNO7SGkE03Lp55JMzJkTTwWR9Z+uIAspIpSkCG+u4w5KDJOCCCsz+9Ms3kozB73Q
- gtvRqmW8pnfg/Sin/FRaYr8/SZJFceEWLxpTw6xcU11PUnueIdwqZ7fiWuA0iR4bdE8d
- SyCg==
-X-Gm-Message-State: AOJu0YxwfE8BjT/jkNkoToWZ3kjBtThMpqPol6Px5qOMcF1Gm69/bqCI
- 7RRDnxjlHNNybjofkl6z7ZcborSUVFryJMjHDcZOQe2Sw9FpXaz5DmQRXQ/7Pfk=
-X-Google-Smtp-Source: AGHT+IHImM+TXbGXYmvYBNO1dxdgkij7yUod+2avs5MpDESTaXpqDNGlNeGDnjl45//IFvFfm5G83g==
-X-Received: by 2002:a17:907:76f4:b0:a59:c3a1:23f9 with SMTP id
- a640c23a62f3a-a5a1155b44cmr68595766b.7.1715203660449; 
- Wed, 08 May 2024 14:27:40 -0700 (PDT)
+ bh=cQLRzZVB5y+EtrJUjumGMzemKyn9Far6uFIyzgTKJ7Y=;
+ b=ClnRALAaucloaM/DV3ab3fTkVDVm1YIcTvupFv3h9AQiNWGLhgdJZVJZnbHYot84GH
+ 0IH+g6Y89yFxGN7+BVrgvIoxuxgzDMAfB12U6T9GrdCGxQ9IqW2SgBs8+uivG5HOEyLY
+ GQO/n9bAyBCkPN959BuKBxWzay8soN9/F0Ofhe0BVwjdFjsY7b40R6AsXsbXr6gD/bpQ
+ 9Cmfs7j5W+LsBpVJqP37R63fvQQYOWyTX/Avt8r7BSNFzNIgb9RTFf4KCIaLR/JI5tYM
+ PH7GOqSVbArYoR/p0MlUvOxk/JH2Ue4H4bg+ikwfvMwx1f2Xw5J8xs/CsQynWCYzXqmr
+ gNGw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXaC6i34RX47fcxtALOUZV82DAZHbQCFrKT8B5kTZ5sg4Q/DZn6+5/vdL1Vtet2l3vTOPPd2hjaB8JE54PCRCYv/9GHm20=
+X-Gm-Message-State: AOJu0YxUU4vFrtdaM3qLe7wLqJRunj2lKdIV3BWlcZPz2TjfcYe3YeDN
+ my8AmIJDYdaXX4UlHqAmC0RsnNFXiWli6YovYP3eAvD0eL8TBzRxUCCVXXGoGQM=
+X-Google-Smtp-Source: AGHT+IEzso1NDEvVXVFTEMOCb2YAdJo5u7Hnwg8ASt3rKA9ANrgWaJc1p3B/7ABHjEx2olp2Kq8dRw==
+X-Received: by 2002:a17:906:1957:b0:a59:a977:a157 with SMTP id
+ a640c23a62f3a-a59fb9f209dmr244556566b.73.1715204500146; 
+ Wed, 08 May 2024 14:41:40 -0700 (PDT)
 Received: from [192.168.69.100] (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
  [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a5a17b01d3dsm2914466b.186.2024.05.08.14.27.39
+ a640c23a62f3a-a5a179c7d9dsm4085566b.132.2024.05.08.14.41.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 May 2024 14:27:39 -0700 (PDT)
-Message-ID: <ba6c3173-12c2-45d8-ade4-b21598800f5b@linaro.org>
-Date: Wed, 8 May 2024 23:27:37 +0200
+ Wed, 08 May 2024 14:41:39 -0700 (PDT)
+Message-ID: <a9717e72-9de2-469f-89c1-8ae969b0031e@linaro.org>
+Date: Wed, 8 May 2024 23:41:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/clock: Expose 'freq-hz' QOM property
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Luc Michel <luc@lmichel.fr>,
- Damien Hedde <damien.hedde@dahe.fr>,
- =?UTF-8?Q?In=C3=A8s_Varhol?= <ines.varhol@telecom-paris.fr>
-References: <20240508141333.44610-1-philmd@linaro.org>
- <CAFEAcA84CfdNZSjZ1R96=5P-VhxGXyaaujF1Y8AxKa+Wvpdp3Q@mail.gmail.com>
+Subject: Re: [PATCH 0/5] hw/mips/loongson3_virt: Implement IPI support
+To: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+Cc: Huacai Chen <chenhuacai@kernel.org>, Song Gao <gaosong@loongson.cn>
+References: <20240508-loongson3-ipi-v1-0-1a7b67704664@flygoat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA84CfdNZSjZ1R96=5P-VhxGXyaaujF1Y8AxKa+Wvpdp3Q@mail.gmail.com>
+In-Reply-To: <20240508-loongson3-ipi-v1-0-1a7b67704664@flygoat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,36 +95,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/5/24 19:46, Peter Maydell wrote:
-> On Wed, 8 May 2024 at 15:13, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> Expose the clock frequency via the QOM 'freq-hz' property,
->> as it might be useful for QTests.
->>
->> HMP example:
->>
->>    $ qemu-system-mips -S -monitor stdio -M mipssim
->>    (qemu) qom-get /machine/cpu-refclk freq-hz
->>    12000000
->>
->> Inspired-by: Inès Varhol <ines.varhol@telecom-paris.fr>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On 8/5/24 15:06, Jiaxun Yang wrote:
+> Hi all,
 > 
-> So I have a couple of thoughts here:
-> 
-> (1) if this is intended for qtests, would exposing the period (i.e.
-> QOM equivalent of clock_get() rather than clock_get_hz()) be better?
-> A Hz figure has rounding so it's not as accurate.
+> This series enabled IPI support for loongson3 virt board, loosely
+> based on my previous work[1].
+> It generalized loongarch_ipi device to share among both loongarch
+> and MIPS machines.
 
-Indeed, simpler to compare from QTest perspective.
 
-> (2) We should document this in clocks.rst; I guess we want to say
-> "only intended for use in qtests" (i.e. if you're part of QEMU
-> use the existing function interface, not this).
+> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+> ---
+> Jiaxun Yang (5):
+>        hw/intc/loongarch_ipi: Remove pointless MAX_CPU check
+>        hw/intc/loongarch_ipi: Rename as loongson_ipi
+>        hw/intc/loongson_ipi: Implement IOCSR address space for MIPS
 
-OK, and we can also only expose this for QTest using:
-
-   if (qtest_enabled()) {
-       object_property_add(obj, "[qtest-]clock-period", ...);
-   }
+So far patches 1-3 queued to hw-misc tree, thanks.
 
