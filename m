@@ -4,82 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20D61C19F4F
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 15:20:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AF17C04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 15:24:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4j5V-00058z-OC; Wed, 08 May 2024 11:20:09 -0400
+	id 1s4j9F-0006BX-GK; Wed, 08 May 2024 11:24:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4j5U-00058l-5O
- for qemu-devel@nongnu.org; Wed, 08 May 2024 11:20:08 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4j5S-0002c3-GG
- for qemu-devel@nongnu.org; Wed, 08 May 2024 11:20:07 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-a59a934ad50so1066493566b.1
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 08:20:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715181605; x=1715786405; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=SVcPlbO2s26PlyrrMjby+JkTbGWLfVju1wec6fSphlI=;
- b=Gf9+87rMLBZaUP59ir05bDSG2twqOs2Ei0jFC23lkOUUXoQrJ9Sx5ha3jY4BL3awic
- BJaNsnNbo+/mzKiYwdJpRz/FbrG1GCnThRQGCJMuQsIky8pFfIlQRe+IGJIHBm6qFr8L
- ywQOeFb84zatZftxQSw4oynT+PKgcDgy3D8Bby4wVvwmwc6AbQRwoTb9QNeUji9x1KJj
- GQVcVtJ26hbSrq1IAx0Yvv82sDSCHoHNswpevdTEGvdmkA8R8olZpc4al05wnxw+3S6v
- hl23jIf19jh0n7bz/Uzr1EFgaFEDsqA5KZoAa5Qwpi7NdHdfK0X9V2NNYUVlRAHyXFsv
- WVLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715181605; x=1715786405;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SVcPlbO2s26PlyrrMjby+JkTbGWLfVju1wec6fSphlI=;
- b=V18TQYkDhgw8AX8Pp60N9gcKXVM8lbQeGIROwZffN/Nk9CXNzE1V4DUMyhZWijj+ML
- mj+DFASa1aKZ4QloLzV/5VBMLTPiVhfKQYaMbAuLE93Ob1BdzQLwnMbbScwTdGeHZb8t
- Q9y0Tv1CohOc+SfhqygLW2bJd32zxmFPD1HC36KRroPjmGo9/yxtItsjW73cus6epEfk
- 8g3ulvuHHmAzJfTUeTDzkydtkTyZffzfWipzhIGkXeybwWAo77N8lDrrgZnwmdoJl1xY
- t5t/VQJYVjTmOBeFRVoKdsYJ4sN6elIm9dk8ahZnj9h5fpQlCpSYytm7+HCteoBAlHz2
- UIeA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXuyCgpM7GA7/9BiVtWjmQBFHvYDDYeo3eK1DxdjUlWzbUqTMgYoG7551CSWD+1VkDm3VhZ+FUC2Yr8FXCyzLQvRA8y/RA=
-X-Gm-Message-State: AOJu0YxfofFGkjE50xA2OQbmbRRcI3fSAAytIaDYvYjDW79eQ1x2otAK
- S1c3P5MQ+bHL3AP/kAMEFCDBEWn1DVAZNkPFm6AAZrBpVrCbIimQ/qogULwp9G+QC9IC1CHVNrS
- D
-X-Google-Smtp-Source: AGHT+IGqcEhMbV9mTMGFyoaS4N541PxZ5MuDvPKsRcVWY28chvXwyvFmfGa676FnjwyGmRbgAbY7Wg==
-X-Received: by 2002:a50:a45d:0:b0:572:d1e1:b4b3 with SMTP id
- 4fb4d7f45d1cf-5731d9ce4f1mr2033203a12.7.1715181604657; 
- Wed, 08 May 2024 08:20:04 -0700 (PDT)
-Received: from [192.168.69.100] (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
- [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
- p5-20020a50cd85000000b0057259943ba2sm7945602edi.12.2024.05.08.08.20.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 May 2024 08:20:03 -0700 (PDT)
-Message-ID: <a19d84f5-d59e-4a59-a3ca-baa3a630eca1@linaro.org>
-Date: Wed, 8 May 2024 17:20:02 +0200
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1s4j9E-0006BA-1E; Wed, 08 May 2024 11:24:00 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1s4j9B-0004Eq-Aw; Wed, 08 May 2024 11:23:59 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id D4B304E6001;
+ Wed, 08 May 2024 17:23:54 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id nZfd8be1engg; Wed,  8 May 2024 17:23:52 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id D366D4E601B; Wed, 08 May 2024 17:23:52 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id D1515746E3B;
+ Wed, 08 May 2024 17:23:52 +0200 (CEST)
+Date: Wed, 8 May 2024 17:23:52 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Nicholas Piggin <npiggin@gmail.com>
+cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>
+Subject: Re: [PATCH v3 33/33] target/ppc: Add a macro to check for page
+ protection bit
+In-Reply-To: <D14ASGGTNSQB.3TX66EXAL001R@gmail.com>
+Message-ID: <6bb8ab43-e083-6ff8-5740-1cb16ef10304@eik.bme.hu>
+References: <cover.1715125376.git.balaton@eik.bme.hu>
+ <a91a1b9455f88cbbeff2652fc4f44acd89e98215.1715125376.git.balaton@eik.bme.hu>
+ <D14ASGGTNSQB.3TX66EXAL001R@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/33] accel/tcg: Implement translator_st
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20240424233131.988727-1-richard.henderson@linaro.org>
- <20240424233131.988727-11-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240424233131.988727-11-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,42 +66,249 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/4/24 01:31, Richard Henderson wrote:
-> Copy data out of a completed translation.  This will be used
-> for both plugins and disassembly.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   include/exec/translator.h | 23 ++++++++++++++++
->   accel/tcg/translator.c    | 55 +++++++++++++++++++++++++++++++++++++++
->   2 files changed, 78 insertions(+)
-> 
-> diff --git a/include/exec/translator.h b/include/exec/translator.h
-> index e92dfba035..3c354a4310 100644
-> --- a/include/exec/translator.h
-> +++ b/include/exec/translator.h
-> @@ -246,6 +246,29 @@ translator_ldq_swap(CPUArchState *env, DisasContextBase *db,
->    */
->   void translator_fake_ldb(DisasContextBase *db, vaddr pc, uint8_t insn8);
->   
-> +/**
-> + * translator_st
-> + * @db: disassembly context
-> + * @dest: address to copy into
+On Wed, 8 May 2024, Nicholas Piggin wrote:
+> On Wed May 8, 2024 at 10:15 AM AEST, BALATON Zoltan wrote:
+>> Checking if a page protection bit is set for a given access type is a
+>> common operation. Add a macro to avoid repeating the same check at
+>> multiple places and also avoid a function call. As this relies on
+>> access type and page protection bit values having certain relation
+>> also add an assert to ensure that this assumption holds.
+>>
+>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>> ---
+>>  target/ppc/cpu_init.c    |  4 ++++
+>>  target/ppc/internal.h    | 20 ++------------------
+>>  target/ppc/mmu-hash32.c  |  6 +++---
+>>  target/ppc/mmu-hash64.c  |  2 +-
+>>  target/ppc/mmu-radix64.c |  2 +-
+>>  target/ppc/mmu_common.c  | 26 +++++++++++++-------------
+>>  6 files changed, 24 insertions(+), 36 deletions(-)
+>>
+>> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+>> index 92c71b2a09..6639235544 100644
+>> --- a/target/ppc/cpu_init.c
+>> +++ b/target/ppc/cpu_init.c
+>> @@ -7377,6 +7377,10 @@ static void ppc_cpu_class_init(ObjectClass *oc, void *data)
+>>      resettable_class_set_parent_phases(rc, NULL, ppc_cpu_reset_hold, NULL,
+>>                                         &pcc->parent_phases);
+>>
+>> +    /* CHECK_PROT_ACCESS relies on this MMU access and PAGE bits relation */
+>> +    assert(MMU_DATA_LOAD == 0 && MMU_DATA_STORE == 1 && MMU_INST_FETCH == 2 &&
+>> +           PAGE_READ == 1 && PAGE_WRITE == 2 && PAGE_EXEC == 4);
+>> +
+>
+> Can you use qemu_build_assert() for this?
 
-Or s/address/buffer/
+First I've try #if and #error but seems access_type is an enum and the 
+preprocessor does not see those. If qemu_build_assert is a wrapper around 
+the same then it might not work but I'll check.
 
-> + * @addr: virtual address within TB
-> + * @len: length
-> + *
-> + * Copy @len bytes from @addr into @dest.
-> + * All bytes must have been read during translation.
-> + * Return true on success or false on failure.
-> + */
-> +bool translator_st(const DisasContextBase *db, void *dest,
-> +                   vaddr addr, size_t len);
+>>      cc->class_by_name = ppc_cpu_class_by_name;
+>>      cc->has_work = ppc_cpu_has_work;
+>>      cc->mmu_index = ppc_cpu_mmu_index;
+>> diff --git a/target/ppc/internal.h b/target/ppc/internal.h
+>> index 46176c4711..9880422ce3 100644
+>> --- a/target/ppc/internal.h
+>> +++ b/target/ppc/internal.h
+>> @@ -234,24 +234,8 @@ void destroy_ppc_opcodes(PowerPCCPU *cpu);
+>>  void ppc_gdb_init(CPUState *cs, PowerPCCPUClass *ppc);
+>>  const gchar *ppc_gdb_arch_name(CPUState *cs);
+>>
+>> -/**
+>> - * prot_for_access_type:
+>> - * @access_type: Access type
+>> - *
+>> - * Return the protection bit required for the given access type.
+>> - */
+>> -static inline int prot_for_access_type(MMUAccessType access_type)
+>> -{
+>> -    switch (access_type) {
+>> -    case MMU_INST_FETCH:
+>> -        return PAGE_EXEC;
+>> -    case MMU_DATA_LOAD:
+>> -        return PAGE_READ;
+>> -    case MMU_DATA_STORE:
+>> -        return PAGE_WRITE;
+>> -    }
+>> -    g_assert_not_reached();
+>> -}
+>> +/* Check if permission bit required for the access_type is set in prot */
+>> +#define CHECK_PROT_ACCESS(prot, access_type) ((prot) & (1 << (access_type)))
+>
+> We don't want to use a macro when an inline function will work.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+What's wrong with a macro? This has no local variables or any complex 
+operation that would warant a function IMO it's just a conditional named 
+for convenience so we don't have to type it everywhere and easier to see 
+what is it for. A macro is just right for that.
 
+> Does the compiler not see the pattern and transform the existing
+> code into a shift? If it does then I would leave it. If not, then
+> just keep prot_for_access_type but make it a shift and maybe
+> comment the logic.
 
+I don't know but prot_for_access_type is not even needed because this will 
+work for that too passing PAGE_RWX for prot as done below at one place so 
+no need for another function for that.
+
+> I would call the new function check_prot_for_access_type().
+
+I can rename it and could make it static inline but I like a macro for 
+this better.
+
+Regards,
+BALATON Zoltan
+
+>>
+>>  #ifndef CONFIG_USER_ONLY
+>>
+>> diff --git a/target/ppc/mmu-hash32.c b/target/ppc/mmu-hash32.c
+>> index b5d7aeed4e..fa4a4ced6d 100644
+>> --- a/target/ppc/mmu-hash32.c
+>> +++ b/target/ppc/mmu-hash32.c
+>> @@ -213,7 +213,7 @@ static bool ppc_hash32_direct_store(PowerPCCPU *cpu, target_ulong sr,
+>>      }
+>>
+>>      *prot = key ? PAGE_READ | PAGE_WRITE : PAGE_READ;
+>> -    if (*prot & prot_for_access_type(access_type)) {
+>> +    if (CHECK_PROT_ACCESS(*prot, access_type)) {
+>>          *raddr = eaddr;
+>>          return true;
+>>      }
+>
+> This does read better, and better than the check_prot() below
+> that it replaces too, so I like the cleanup.
+>
+> Thanks,
+> Nick
+>
+>> @@ -364,7 +364,7 @@ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
+>>      if (env->nb_BATs != 0) {
+>>          raddr = ppc_hash32_bat_lookup(cpu, eaddr, access_type, protp, mmu_idx);
+>>          if (raddr != -1) {
+>> -            if (prot_for_access_type(access_type) & ~*protp) {
+>> +            if (!CHECK_PROT_ACCESS(*protp, access_type)) {
+>>                  if (guest_visible) {
+>>                      if (access_type == MMU_INST_FETCH) {
+>>                          cs->exception_index = POWERPC_EXCP_ISI;
+>> @@ -432,7 +432,7 @@ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
+>>
+>>      prot = ppc_hash32_pte_prot(mmu_idx, sr, pte);
+>>
+>> -    if (prot_for_access_type(access_type) & ~prot) {
+>> +    if (!CHECK_PROT_ACCESS(prot, access_type)) {
+>>          /* Access right violation */
+>>          qemu_log_mask(CPU_LOG_MMU, "PTE access rejected\n");
+>>          if (guest_visible) {
+>> diff --git a/target/ppc/mmu-hash64.c b/target/ppc/mmu-hash64.c
+>> index 5a0d80feda..14c2116ae7 100644
+>> --- a/target/ppc/mmu-hash64.c
+>> +++ b/target/ppc/mmu-hash64.c
+>> @@ -1097,7 +1097,7 @@ bool ppc_hash64_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
+>>      amr_prot = ppc_hash64_amr_prot(cpu, pte);
+>>      prot = exec_prot & pp_prot & amr_prot;
+>>
+>> -    need_prot = prot_for_access_type(access_type);
+>> +    need_prot = CHECK_PROT_ACCESS(PAGE_RWX, access_type);
+>>      if (need_prot & ~prot) {
+>>          /* Access right violation */
+>>          qemu_log_mask(CPU_LOG_MMU, "PTE access rejected\n");
+>> diff --git a/target/ppc/mmu-radix64.c b/target/ppc/mmu-radix64.c
+>> index 395ce3b782..a72cd927c4 100644
+>> --- a/target/ppc/mmu-radix64.c
+>> +++ b/target/ppc/mmu-radix64.c
+>> @@ -209,7 +209,7 @@ static bool ppc_radix64_check_prot(PowerPCCPU *cpu, MMUAccessType access_type,
+>>      }
+>>
+>>      /* Check if requested access type is allowed */
+>> -    if (prot_for_access_type(access_type) & ~*prot) {
+>> +    if (!CHECK_PROT_ACCESS(*prot, access_type)) {
+>>          /* Page Protected for that Access */
+>>          *fault_cause |= access_type == MMU_INST_FETCH ? SRR1_NOEXEC_GUARD :
+>>                                                          DSISR_PROTFAULT;
+>> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+>> index eff015066d..24d68926b4 100644
+>> --- a/target/ppc/mmu_common.c
+>> +++ b/target/ppc/mmu_common.c
+>> @@ -76,11 +76,6 @@ void ppc_store_sdr1(CPUPPCState *env, target_ulong value)
+>>  /*****************************************************************************/
+>>  /* PowerPC MMU emulation */
+>>
+>> -static int check_prot(int prot, MMUAccessType access_type)
+>> -{
+>> -    return prot & prot_for_access_type(access_type) ? 0 : -2;
+>> -}
+>> -
+>>  int ppc6xx_tlb_getnum(CPUPPCState *env, target_ulong eaddr,
+>>                                      int way, int is_code)
+>>  {
+>> @@ -125,13 +120,14 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
+>>              /* Keep the matching PTE information */
+>>              ctx->raddr = pte1;
+>>              ctx->prot = ppc_hash32_pp_prot(ctx->key, pp, ctx->nx);
+>> -            ret = check_prot(ctx->prot, access_type);
+>> -            if (ret == 0) {
+>> +            if (CHECK_PROT_ACCESS(ctx->prot, access_type)) {
+>>                  /* Access granted */
+>>                  qemu_log_mask(CPU_LOG_MMU, "PTE access granted !\n");
+>> +                ret = 0;
+>>              } else {
+>>                  /* Access right violation */
+>>                  qemu_log_mask(CPU_LOG_MMU, "PTE access rejected\n");
+>> +                ret = -2;
+>>              }
+>>          }
+>>      }
+>> @@ -317,12 +313,14 @@ static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
+>>                      (virtual & 0x0001F000);
+>>                  /* Compute access rights */
+>>                  ctx->prot = prot;
+>> -                ret = check_prot(ctx->prot, access_type);
+>> -                if (ret == 0) {
+>> +                if (CHECK_PROT_ACCESS(ctx->prot, access_type)) {
+>>                      qemu_log_mask(CPU_LOG_MMU, "BAT %d match: r " HWADDR_FMT_plx
+>>                                    " prot=%c%c\n", i, ctx->raddr,
+>>                                    ctx->prot & PAGE_READ ? 'R' : '-',
+>>                                    ctx->prot & PAGE_WRITE ? 'W' : '-');
+>> +                    ret = 0;
+>> +                } else {
+>> +                    ret = -2;
+>>                  }
+>>                  break;
+>>              }
+>> @@ -540,9 +538,11 @@ static int mmu40x_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
+>>          check_perms:
+>>              /* Check from TLB entry */
+>>              ctx->prot = tlb->prot;
+>> -            ret = check_prot(ctx->prot, access_type);
+>> -            if (ret == -2) {
+>> +            if (CHECK_PROT_ACCESS(ctx->prot, access_type)) {
+>> +                ret = 0;
+>> +            } else {
+>>                  env->spr[SPR_40x_ESR] = 0;
+>> +                ret = -2;
+>>              }
+>>              break;
+>>          }
+>> @@ -607,7 +607,7 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppcemb_tlb_t *tlb,
+>>      } else {
+>>          *prot = (tlb->prot >> 4) & 0xF;
+>>      }
+>> -    if (*prot & prot_for_access_type(access_type)) {
+>> +    if (CHECK_PROT_ACCESS(*prot, access_type)) {
+>>          qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
+>>          return 0;
+>>      }
+>> @@ -811,7 +811,7 @@ found_tlb:
+>>              *prot |= PAGE_EXEC;
+>>          }
+>>      }
+>> -    if (*prot & prot_for_access_type(access_type)) {
+>> +    if (CHECK_PROT_ACCESS(*prot, access_type)) {
+>>          qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
+>>          return 0;
+>>      }
+>
+>
+>
 
