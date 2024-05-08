@@ -4,53 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C9D1C04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 08:02:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39ECCC25B5F
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 08:03:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4cF7-00073x-Hx; Wed, 08 May 2024 04:01:39 -0400
+	id 1s4cGQ-0008EV-A1; Wed, 08 May 2024 04:02:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangyuquan1236@phytium.com.cn>)
- id 1s4cEt-0006wG-Ry
- for qemu-devel@nongnu.org; Wed, 08 May 2024 04:01:23 -0400
-Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <wangyuquan1236@phytium.com.cn>) id 1s4cEp-0007Wh-8n
- for qemu-devel@nongnu.org; Wed, 08 May 2024 04:01:23 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwA3PhJAMTtm9yuWAQ--.3660S2;
- Wed, 08 May 2024 16:01:04 +0800 (CST)
-Received: from phytium.com.cn (unknown [123.150.8.50])
- by mail (Coremail) with SMTP id AQAAfwAHIjs5MTtmb2MAAA--.378S3;
- Wed, 08 May 2024 16:00:57 +0800 (CST)
-From: Yuquan Wang <wangyuquan1236@phytium.com.cn>
-To: Jonathan.Cameron@Huawei.com
-Cc: qemu-devel@nongnu.org,
-	linux-cxl@vger.kernel.org
-Subject: CXL numa error on arm64 qemu virt machine
-Date: Wed,  8 May 2024 16:00:51 +0800
-Message-Id: <20240508080051.3756934-1-wangyuquan1236@phytium.com.cn>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1s4cG2-00086N-LS
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 04:02:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1s4cFy-0008PA-M0
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 04:02:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715155348;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=9gxNroo/yIgDKQMkEv39lBtbUS5mR6uvbvpXdf7xFjQ=;
+ b=VeKkwqC4UQ1ngqCIIvxhsvHZDgbkqfzc8KlZrf65ooGC4nxRilRbZhyio3GP4quuV5dkUV
+ aFFEUZOrn1U1w3IX736dPd2dRQ8+jIFWRvE6PcQO3mlZdVreVPkDlLx0scK2nK9xRhqlel
+ eiD08iSChADWjBk+TE70CtPY9NC5JII=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-384-OH5ABRdrN9C-L0QAVFKUMg-1; Wed, 08 May 2024 04:02:21 -0400
+X-MC-Unique: OH5ABRdrN9C-L0QAVFKUMg-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id BE7C0101A525;
+ Wed,  8 May 2024 08:02:19 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.29])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id ECEC310000AD;
+ Wed,  8 May 2024 08:02:18 +0000 (UTC)
+Date: Wed, 8 May 2024 09:02:16 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ armbru@redhat.com, Claudio Fontana <cfontana@suse.de>,
+ Jim Fehlig <jfehlig@suse.com>
+Subject: Re: [PATCH 2/9] migration: Fix file migration with fdset
+Message-ID: <ZjsxiDEZgXycn_tl@redhat.com>
+References: <20240426142042.14573-1-farosas@suse.de>
+ <20240426142042.14573-3-farosas@suse.de> <ZjUPl6XwB3Zt3cKR@x1n>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwAHIjs5MTtmb2MAAA--.378S3
-X-CM-SenderInfo: 5zdqw5pxtxt0arstlqxsk13x1xpou0fpof0/1tbiAQATAWY6gmcCxgABsv
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=wangyuquan
- 1236@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxXw18KFW3Ar4rGF4kJFWrXwb_yoW5GF1DpF
- 42v3Wjgrs5JFnruw1kta4rJFyYqw4SvanrWry3AF1ruw1Utr18Xr1IyFy3KFykAw43GwnF
- va1ktFn0qa48Zw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=209.97.181.73;
- envelope-from=wangyuquan1236@phytium.com.cn;
- helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H2=-0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZjUPl6XwB3Zt3cKR@x1n>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -64,76 +81,40 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello, Jonathan
+On Fri, May 03, 2024 at 12:23:51PM -0400, Peter Xu wrote:
+> On Fri, Apr 26, 2024 at 11:20:35AM -0300, Fabiano Rosas wrote:
+> > When the migration using the "file:" URI was implemented, I don't
+> > think any of us noticed that if you pass in a file name with the
+> > format "/dev/fdset/N", this allows a file descriptor to be passed in
+> > to QEMU and that behaves just like the "fd:" URI. So the "file:"
+> > support has been added without regard for the fdset part and we got
+> > some things wrong.
+> > 
+> > The first issue is that we should not truncate the migration file if
+> > we're allowing an fd + offset. We need to leave the file contents
+> > untouched.
+> 
+> I'm wondering whether we can use fallocate() instead on the ranges so that
+> we always don't open() with O_TRUNC.  Before that..  could you remind me
+> why do we need to truncate in the first place?  I definitely missed
+> something else here too.
 
-Recently I run some cxl tests on qemu virt(branch:cxl-2024-04-22-draft) but met some
-problems.
-
-Problems: 
-1) the virt machine could not set the right numa topology from user input;
-
-My Qemu numa set:
--object memory-backend-ram,size=2G,id=mem0 \
--numa node,nodeid=0,cpus=0-1,memdev=mem0 \
--object memory-backend-ram,size=2G,id=mem1 \
--numa node,nodeid=1,cpus=2-3,memdev=mem1 \
-
-However, the system shows:
-root@ubuntu-jammy-arm64:~# numactl -H
-	available: 1 nodes (0)
-	node 0 cpus: 0 1 2 3
-	node 0 size: 4166 MB
-	node 0 free: 3920 MB
-	node distances:
-	node   0 
-	0:  10 
-
-Boot Kernel print:
-[    0.000000] ACPI: SRAT: Node 0 PXM 0 [mem 0x40000000-0xbfffffff]
-[    0.000000] ACPI: SRAT: Node 1 PXM 1 [mem 0xc0000000-0x13fffffff]
-[    0.000000] ACPI: Unknown target node for memory at 0x10000000000, assuming node 0
-[    0.000000] NUMA: Warning: invalid memblk node 16 [mem 0x0000000004000000-0x0000000007ffffff]
-[    0.000000] NUMA: Faking a node at [mem 0x0000000004000000-0x000000013fffffff]
-[    0.000000] NUMA: NODE_DATA [mem 0x13f7f89c0-0x13f7fafff]
-
-2) it seems like the problem of allocating numa node in arm for cxl memory still exists;
-Previous discussion: https://lore.kernel.org/linux-cxl/20231011150620.0000212a@Huawei.com/
-
-root@debian-bullseye-arm64:~# cxl create-region -d decoder0.0 -t ram
-[   68.653873] cxl region0: Bypassing cpu_cache_invalidate_memregion() for testing!
-[   68.660568] Unknown target node for memory at 0x10000000000, assuming node 0
-
-If not, maybe I could try to do something to help fix this problem.
+You're mixing distinct concepts here. fallocate makes a file region
+non-sparse, while O_TRUNC removes all existing allocation, making it
+sparse if we write at non-contiguous offsets. I don't think we would
+want to call fallocate, since we /want/ a sparse file so that we
+don't needlessly store large regions of all-zeros as RAM maps.
 
 
-My full qemu command line:
-qemu-system-aarch64 \
--M virt,gic-version=3,cxl=on \
--m 4G \
--smp 4 \
--object memory-backend-ram,size=2G,id=mem0 \
--numa node,nodeid=0,cpus=0-1,memdev=mem0 \
--object memory-backend-ram,size=2G,id=mem1 \
--numa node,nodeid=1,cpus=2-3,memdev=mem1 \
--cpu cortex-a57 \
--bios QEMU_EFI.fd.bak \
--device virtio-blk-pci,drive=hd,bus=pcie.0 \
--drive if=none,id=hd,file=../disk/debos_arm64.ext \
--nographic \
--object memory-backend-file,id=mem2,mem-path=/tmp/mem2,size=256M,share=true \
--device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
--device cxl-rp,port=0,bus=cxl.1,id=root_port13,chassis=0,slot=2 \
--device cxl-type3,bus=root_port13,volatile-memdev=mem2,id=cxl-mem1 \
--M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G \
--qmp tcp:127.0.0.1:4444,server,nowait \
-
-Qemu version: the lastest commit of branch cxl-2024-04-22-draft in "https://gitlab.com/jic23/qemu" 
-Kernel version: 6.6.0
-
-Many thanks
-Yuquan
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
