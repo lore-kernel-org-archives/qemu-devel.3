@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 861D1C04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 17:46:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56DABC04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 17:46:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4lM9-0000KP-9I; Wed, 08 May 2024 13:45:33 -0400
+	id 1s4lMe-0000O1-OY; Wed, 08 May 2024 13:46:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lM3-0000Ju-D7
- for qemu-devel@nongnu.org; Wed, 08 May 2024 13:45:24 -0400
-Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lM9-0000KT-0A
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 13:45:30 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lM1-0007Eo-IT
- for qemu-devel@nongnu.org; Wed, 08 May 2024 13:45:23 -0400
-Received: by mail-lf1-x129.google.com with SMTP id
- 2adb3069b0e04-51f17ac14daso5022891e87.1
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 10:45:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lM6-0007Ic-EJ
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 13:45:27 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-a59a5f81af4so1227611766b.3
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 10:45:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715190319; x=1715795119; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715190324; x=1715795124; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XlGsXUjV2W0lKSgAhb3hMEfQKjBImD4L/wTsIn42n4A=;
- b=W8Rhtlocu8pi5o+Z8UzyKLcoBMx8yifHG6WDL439iDao++k16NVfrQJf46JjR6lLFu
- WJKvp6XVl1k6JSdtqFZJBIz8dnv2e6Rg4RDTBYkjME0G74SkQkMk1FWe6KTox5pWUEq1
- XOGcRzlNZS8SMsDpg43l9XeCfiPNoo1OcjuZOZHvkigOZ+Uj6+I2ArLbADLc/UkqI50R
- ApCGMg3mlBV/gCGSeuehP5sUYJVSNrW7kJgPqvqrOCI5eGkSUsnw5ZVTdzAjsiozrkvK
- KDmGgVWwsyutvcbUVvVkdF/8AnycKqdxzcvGB48X/FxSOt5zgzo7qjbc9n7g5QLAdw79
- rSLQ==
+ bh=UIF3u0N5I7QP9EtogOTWS3nnNPFic90FVU2Lm7bwK+4=;
+ b=hMQCv4M5UWNYSO53L0UIrp4qg+W4zPVRPVXzumcndqPGS65zkcFOv/djRZ0i973XD2
+ x9d/lf3J51BNNKgL0rCuWSk0RZkwKIn4ilPBqefxKNCxD6VGH6GUPvgwuQch9fM56dSw
+ xqXvaXogCBhA0XzPdBYhodaLcA/fNOgIqNXQHOwtQzj3p3Q9G99t9BfJKKr9+k0P21HI
+ 4jA2voYm59IhBCLs5Z1U3iBf3tUKPJdpyWBsJWPU3aiYOTN1Dxiqjxc8zrMFBfBE3Q8E
+ s8DeMivA63wI8QRIjQ78lng7StlHrsE746Vpgh3qiqgTgWBdFYVNAhKATLHE3xyB8KtR
+ og2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715190319; x=1715795119;
+ d=1e100.net; s=20230601; t=1715190324; x=1715795124;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XlGsXUjV2W0lKSgAhb3hMEfQKjBImD4L/wTsIn42n4A=;
- b=nD3nln0iV5C5LFjJGuz5yVDazAlrea3FYG7w4PNNw/VM5fwqUH7ZR6KLWpPIo7/yrn
- NdfCJzQXeoopPoS8mAoXB+Tq0dQ9RydfrGkWi+A/2aMjonmRPesXMgPIEPViNHvgXzQJ
- MvIr/jSLGwBKaRlk+UCsBpaqDk6miekltIJQJxMSg7CLBay0QOFWwrM+cVjJtwTJxylV
- IvAdCiTFeT6BMx9hktsU+Zl9pinnyfBeCLO9/XLgILZZ4K5QFL0TRIMyV5fVxfVFCOO5
- YV66l4lzAbQXjAykw+6/AnPfQMsrg4Q0Z4TAzaFb0qJoJCAjGZDVtHuE+HPXN9vCxrJ0
- n1kw==
-X-Gm-Message-State: AOJu0YwwUXN27VUmGQmbpgP6XhVJLn7uVl+bPk2PaY+YQAPoA1NEp9KP
- tDD16Dlte8r1rKbvDrvzl7HxY1mFL7Voz7pV4J7NmH5rcPcOTgQgcQxJPpaA3s1LklqC4wiaUmo
- X
-X-Google-Smtp-Source: AGHT+IHqJ41t+W2NY1uEe4aJJR8EPf/cxDLZsAV30Odi/J8mVbO3UXhCM7U5C4hOExpdjJALQpaOfQ==
-X-Received: by 2002:ac2:53a1:0:b0:521:cee5:db36 with SMTP id
- 2adb3069b0e04-521cee5dbdbmr574063e87.48.1715190318753; 
- Wed, 08 May 2024 10:45:18 -0700 (PDT)
+ bh=UIF3u0N5I7QP9EtogOTWS3nnNPFic90FVU2Lm7bwK+4=;
+ b=YV/vvI4ZLcyQa6W2PDwmAm3C6xN5DylKkyD4kHQagzosjCzPAjRBUNB9oIt9WMbbqP
+ 7CYwNx/E+vEeE3sizjk5kKZp8UaeXQsaDkMuJ88a3oe/h8QLF/poUAgRS8pRdRLR0z0Q
+ FJoqIXcrJpfe89hbd5ippqYVO6Fhwfv9/oz/XCnA310hML7MXzCc7PuqVnSYil98qYpW
+ RMNi9WEV9FcGQuOuRxlNebRpdNmSJKgVFXAp5bfQoZ4lT3vuY89lye6hokoNhohsqIkT
+ swci4WCdfF/HGJzIZdp3niYkwDlN50q2PpnG0OP6+YI8jWJ2tvuzWGIDdP8yLfeMSLPi
+ udRw==
+X-Gm-Message-State: AOJu0YzocqTRb/a2irAn/vW/kCHhg0K8dUFLZsELCOC+D51xZriHzpyB
+ /8lEzmItQMkkOHz7Fpt0mS+q8Ui7LeBz0rdye/q3N5x8gjQUcIL5OiEg5wpDWao71fFcvEuwlsg
+ J
+X-Google-Smtp-Source: AGHT+IHFtNnKIpPHWs5X5ndEAEwcPC8b1aIJGPBTCnfSHnF8xy4tRg7n+BZkq+WGVvTU7Xx38vM5FQ==
+X-Received: by 2002:a17:906:f8c4:b0:a59:bf43:4e40 with SMTP id
+ a640c23a62f3a-a59fb94a651mr225408466b.14.1715190324214; 
+ Wed, 08 May 2024 10:45:24 -0700 (PDT)
 Received: from m1x-phil.lan (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
  [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
- oy6-20020a170907104600b00a59a86b85ecsm5746604ejb.78.2024.05.08.10.45.17
+ jl24-20020a17090775d800b00a599acaff03sm6667049ejc.19.2024.05.08.10.45.23
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 08 May 2024 10:45:18 -0700 (PDT)
+ Wed, 08 May 2024 10:45:23 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@redhat.com>,
- Eric Blake <eblake@redhat.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 01/26] block/qcow2-bitmap: Replace g_memdup() by g_memdup2()
-Date: Wed,  8 May 2024 19:44:45 +0200
-Message-ID: <20240508174510.60470-2-philmd@linaro.org>
+Subject: [PULL 02/26] target/ppc: Replace g_memdup() by g_memdup2()
+Date: Wed,  8 May 2024 19:44:46 +0200
+Message-ID: <20240508174510.60470-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240508174510.60470-1-philmd@linaro.org>
 References: <20240508174510.60470-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::129;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x129.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,26 +112,26 @@ Replace g_memdup() by the safer g_memdup2() wrapper.
 Trivially safe because the argument was directly from sizeof.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Message-Id: <20210903174510.751630-6-philmd@redhat.com>
+Acked-by: David Gibson <david@gibson.dropbear.id.au>
+Message-Id: <20210903174510.751630-27-philmd@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- block/qcow2-bitmap.c | 2 +-
+ target/ppc/mmu-hash64.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/qcow2-bitmap.c b/block/qcow2-bitmap.c
-index 874ea56948..256ec99878 100644
---- a/block/qcow2-bitmap.c
-+++ b/block/qcow2-bitmap.c
-@@ -1609,7 +1609,7 @@ bool qcow2_store_persistent_dirty_bitmaps(BlockDriverState *bs,
-                            name);
-                 goto fail;
-             }
--            tb = g_memdup(&bm->table, sizeof(bm->table));
-+            tb = g_memdup2(&bm->table, sizeof(bm->table));
-             bm->table.offset = 0;
-             bm->table.size = 0;
-             QSIMPLEQ_INSERT_TAIL(&drop_tables, tb, entry);
+diff --git a/target/ppc/mmu-hash64.c b/target/ppc/mmu-hash64.c
+index 5a0d80feda..0966422a55 100644
+--- a/target/ppc/mmu-hash64.c
++++ b/target/ppc/mmu-hash64.c
+@@ -1188,7 +1188,7 @@ void ppc_hash64_init(PowerPCCPU *cpu)
+         return;
+     }
+ 
+-    cpu->hash64_opts = g_memdup(pcc->hash64_opts, sizeof(*cpu->hash64_opts));
++    cpu->hash64_opts = g_memdup2(pcc->hash64_opts, sizeof(*cpu->hash64_opts));
+ }
+ 
+ void ppc_hash64_finalize(PowerPCCPU *cpu)
 -- 
 2.41.0
 
