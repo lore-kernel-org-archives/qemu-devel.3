@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0307C04FFE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E02FFC25B5F
 	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 10:26:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4eUd-000576-7X; Wed, 08 May 2024 06:25:47 -0400
+	id 1s4eUt-0005GJ-AQ; Wed, 08 May 2024 06:26:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4eUX-00052W-5d
- for qemu-devel@nongnu.org; Wed, 08 May 2024 06:25:42 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4eUf-0005A6-PR
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 06:25:49 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4eUJ-0001RM-9O
- for qemu-devel@nongnu.org; Wed, 08 May 2024 06:25:28 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-572baf393ddso1152949a12.1
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 03:25:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4eUb-0001WZ-6m
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 06:25:47 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a59ce1e8609so124589966b.0
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 03:25:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715163925; x=1715768725; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=KHP5dZHLTlMD54OFLJb+OOtWtf+YD8/0FHwOK39AkYg=;
- b=vy+9FNY42n57Rf53siolLZGwfHvYmAE+DWu5r7kyX0181kJCCAED093r3l/QN+SnO2
- 0OrKK7WxFxtdLoVApXYyts/NnP9sRN9iiVZZUmYifhK2tHf7KdytNUuYGuf7S/3L7ZdT
- GnQPlaplmBItToteGqIg6LWcT+UbbI4g7y4aqJLL2ql79X9gcMujhglSgUrEuLEZMIak
- nxB2cjTjIF43RQj5SFjw0LQdJj6E4XLydwSv89r7j+S49ylOsosW2wsS1NujKOB/kuSS
- VyCdymO10m3G4uc6+q7lmpwAAg/fLiLWY2vGrlp2QMf2N8qOSt14yEWJl0uUjk0S+Svx
- +uZQ==
+ d=linaro.org; s=google; t=1715163943; x=1715768743; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=IQUGn/mB5g+k/cBb8VnnAxL1e7dRKQZocnuvyNoXaC4=;
+ b=h7YH/f5lF6eZf/GacWY+G1NTjfllW8jggUzrxzxN56HpMTGbrd7mJWfF3QhAZ65NH9
+ lbjw1dWKtBU1ZAGBVD44xjiOq6j2Q3EUSA8luRizU0w9QbsCRUP7Fx7FxdUeEJ3IO76E
+ aSvZ/5XhCdPdIQFTaZWWXgjci/NLd/2+M4ulZNf6Zw71n0gwHSF43Mihfo2sWEMWCry+
+ Ph3cj5fLz4zx9Hq5QXyw5ulKgPmAEowwMmyCk75MWnC8QeTIbzokTn89FDnCYaoO9gcG
+ LolKxvWcgjY0k7MNK5rDw3nIvra0qnv/fSU1lK60+yXAQrr1ot9GpCtZuIEMsNCSoBXy
+ noMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715163925; x=1715768725;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1715163943; x=1715768743;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KHP5dZHLTlMD54OFLJb+OOtWtf+YD8/0FHwOK39AkYg=;
- b=wTNL6GvYiKe6z3iLU1+2CqKq0j8NfFsVEO6zQwFQKeamqEYPX6ogp6JqJr/03T678S
- OhEZ0HoknNGiku8NsPzQ40i2zGn/NzLeFFkRfMRTg9MAE0o8g/MnP2X4u/w/XqnOYZqJ
- N0Sy7CHSwqmF1oVvCqtibEFxGmaCy9Q5SMT2a8kLcFG0m3IzRGUh+Wos7gvv6N/ILeIW
- p6JVO6Lup8USm19A0rxo+b7p2KUv+kg+otV/7jRIqPRnOkRRS9ai6FB0XO6TQ8Q1jUK7
- HkIfTojxiTZxzphsPylqNjxCkao4BXRpVlNVZP7eN5Z+S+O3KTh8pknxO9+/hvJDh2cQ
- HS0A==
+ bh=IQUGn/mB5g+k/cBb8VnnAxL1e7dRKQZocnuvyNoXaC4=;
+ b=cBevFZB7KJBkHgcC4dQPBUlaVlzjyxdOcuZUepiwVFSNVtLGXSfbsm39SFGTD+6gTN
+ FVKH3HoXVy5EeoRgldbH9Pwmr7EY2KyRwLJKYqzwc3ebGE1I2ytwObqFRqPfpkJBxOCp
+ a/L40PRcyrQbYNwUsOH25uHAl7i0My2V6sJTD+hVmUvLrdLdKrISy+0BnyPjtvV+uuav
+ pd4M9kn4OWsipgfLrEW0RQ0OCw1gG02z0GTH16Q9mPPZV+Hjorrt2tLZvyTDFi03IfI5
+ hEQS22KyHUnux4lyPEIrAS4R8Rx8ZQkciu+KAgxw7OwLLYH3Sz3Rpxibw9BuKjlPJ0ED
+ 3hiQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWVPFisc9kMkKk5pOESZNRCSF0XblB8Ik4EF3XB3rLwjJYIepgWmhKoQMmT4yyBphjFqUT/l8040I1/ggw+mNNDuXjFi0E=
-X-Gm-Message-State: AOJu0Yx/6C6nLH7+89/J1MYpsrDdynuUQJqEI16ej90UD4dfkIq3LKpa
- fGSL+0ovauQysayllBslHRlr7qShOqpjAvZV7ku4LgTVPB9uuEP28oLBnOYf77Y=
-X-Google-Smtp-Source: AGHT+IEGy0JTm1d+g8GxvN++EdpMFKqhgh4oTrI3sLJx81KSloXHc7RD1G+kmMYsa9gaU1S1WbzWYA==
-X-Received: by 2002:a17:906:22cd:b0:a59:b17c:c9d2 with SMTP id
- a640c23a62f3a-a59e4cea47fmr371588966b.12.1715163925253; 
- Wed, 08 May 2024 03:25:25 -0700 (PDT)
+ AJvYcCVhaIH4z+tqcZ2bvTfuA79DGbjYY/iiIWexyuxBg2+oySSxFxYXFgrG/OaIR599nfnVhd5LFEt0JAaBvUbbJukYQ7pwmGE=
+X-Gm-Message-State: AOJu0Yzw7s/bOc/aZ2M/yxubj4LjQZa7f2d7dAHfJdGEoRwBQzkcDmJd
+ /Y2gF1Ic2JLKCiRTiZchqP94XeBqopoJ/Xp6gu1LsggllzALflIqL7wvw6+EMWk=
+X-Google-Smtp-Source: AGHT+IFVkO4y6kHbVeQHnIamL90xz7OYklIeqOmHKjS8H6UtuwIJnUXQ6ZXJ4IHeRd2vIJkzOtq9xw==
+X-Received: by 2002:a17:906:6852:b0:a59:92b0:e0d3 with SMTP id
+ a640c23a62f3a-a59e4e86143mr410512766b.34.1715163943056; 
+ Wed, 08 May 2024 03:25:43 -0700 (PDT)
 Received: from [192.168.69.100] (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
  [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
- b3-20020a170906d10300b00a59edf10304sm1803473ejz.76.2024.05.08.03.25.22
+ jw24-20020a17090776b800b00a599b64c09dsm6152508ejc.128.2024.05.08.03.25.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 May 2024 03:25:24 -0700 (PDT)
-Message-ID: <068c432a-d54b-454f-bed8-2c5dd9fe2284@linaro.org>
-Date: Wed, 8 May 2024 12:25:22 +0200
+ Wed, 08 May 2024 03:25:42 -0700 (PDT)
+Message-ID: <230985c9-fbd1-4a12-aba2-a74ca7def167@linaro.org>
+Date: Wed, 8 May 2024 12:25:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 05/12] contrib/vhost-user-blk: fix bind() using the
- right size of the address
+Subject: Re: [PATCH v4 06/12] contrib/vhost-user-*: use QEMU bswap helper
+ functions
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>, Coiby Xu <Coiby.Xu@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
@@ -78,14 +79,14 @@ Cc: Jason Wang <jasowang@redhat.com>, Coiby Xu <Coiby.Xu@gmail.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
 References: <20240508074457.12367-1-sgarzare@redhat.com>
- <20240508074457.12367-6-sgarzare@redhat.com>
+ <20240508074457.12367-7-sgarzare@redhat.com>
+ <d69b52ef-d801-47b2-9095-4c830cc58386@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240508074457.12367-6-sgarzare@redhat.com>
+In-Reply-To: <d69b52ef-d801-47b2-9095-4c830cc58386@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,39 +109,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/5/24 09:44, Stefano Garzarella wrote:
-> On macOS passing `-s /tmp/vhost.socket` parameter to the vhost-user-blk
-> application, the bind was done on `/tmp/vhost.socke` pathname,
-> missing the last character.
+On 8/5/24 12:13, Philippe Mathieu-Daudé wrote:
+> On 8/5/24 09:44, Stefano Garzarella wrote:
+>> Let's replace the calls to le*toh() and htole*() with qemu/bswap.h
+>> helpers to make the code more portable.
+>>
+>> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+>> ---
+>>   contrib/vhost-user-blk/vhost-user-blk.c |  9 +++++----
+>>   contrib/vhost-user-input/main.c         | 16 ++++++++--------
+>>   2 files changed, 13 insertions(+), 12 deletions(-)
 > 
-> This sounds like one of the portability problems described in the
-> unix(7) manpage:
-> 
->     Pathname sockets
->         When  binding  a socket to a pathname, a few rules should
->         be observed for maximum portability and ease of coding:
-> 
->         •  The pathname in sun_path should be null-terminated.
-> 
->         •  The length of the pathname, including the  terminating
->            null byte, should not exceed the size of sun_path.
-> 
->         •  The  addrlen  argument  that  describes  the enclosing
->            sockaddr_un structure should have a value of at least:
-> 
->                offsetof(struct sockaddr_un, sun_path) +
->                strlen(addr.sun_path)+1
-> 
->            or,  more  simply,  addrlen  can   be   specified   as
->            sizeof(struct sockaddr_un).
-> 
-> So let's follow the last advice and simplify the code as well.
+> Thanks,
 > 
 > Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-> ---
->   contrib/vhost-user-blk/vhost-user-blk.c | 4 +---
->   1 file changed, 1 insertion(+), 3 deletions(-)
 
 Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
