@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11E46C04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 17:46:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 495E7C04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 17:47:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4lNE-0000vX-OB; Wed, 08 May 2024 13:46:36 -0400
+	id 1s4lNM-0001QQ-EC; Wed, 08 May 2024 13:46:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lN6-0000eF-58
- for qemu-devel@nongnu.org; Wed, 08 May 2024 13:46:34 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lMt-0000ZQ-6u
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 13:46:21 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lN4-0007rC-DT
- for qemu-devel@nongnu.org; Wed, 08 May 2024 13:46:27 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-a59a352bbd9so7985666b.1
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 10:46:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4lMd-0007OW-SD
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 13:46:14 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-a59b097b202so2369166b.0
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 10:45:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715190384; x=1715795184; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715190357; x=1715795157; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JQ4w2/+EqpgnI71e92633PGSLkfTtg3h6pqel4U0YZE=;
- b=KsBl4vSgfvD7k5Z5erU5fDEwiMSzrVgksGpeJdzI8Nwgi+HvdPVrbfSnnTXmb2zaZw
- jQvAXW9F/7X0QHTPywN9ECDLpf2O9qIJHu7OP2Uf5Firs90mkr9RFjXdq7pfAYWBgZXb
- 12oHqLiQIU/5yNSdhLMs/OQQlgjrfqDPWHV8f3iURR4DNM6ofSKf8FyP/icTtzURtFYj
- BhOgd092Q/nwIfS95Z/EJzq5AkoEUrUo8i2lAfAFWEqH0eSW+uXy13Frbe/tYLNhh26j
- HJ8ZrOXPxHOzwJH5PvwYWi9QnO2hoMXqncl1Y4VYMsFbpWPgiaktxRFQxl84YvzTS+kz
- pXFA==
+ bh=0D+uasY/TC43VRHTmSE3t0bnWfF6sxB20nwUatSjI7g=;
+ b=Tqc4RXJi+azHFXIWMCtmjiNUJnAVlBSXuA8uhp5xS1k7WDpjKMWweRgknlxSwZKFQ7
+ 4G2faUxqS7rMjFeIn484ykRT8Zc4hLWROniIXsDftbFWP2bCR5b2mWGU9zn5IqkU7a9Q
+ oVS3OzUs4ULuzUCBjc1vfWDxTRdLPgatSE5Cx12xJ3jA7uMQ+JXTgirpJd2pvcfZqq35
+ vlcovXAw5OE2GuGYmjyY2beHyv5Qp01rpeKg2muZTzVannUxd8VKjfyCcKKMaE14HaYx
+ 0DBEocpMfbyPrT6o2/cnXMiV4FYJaCd+dWAEc8AKSFyLW3jIGHfQw5a4RqXtNuOKxu5F
+ kFQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715190384; x=1715795184;
+ d=1e100.net; s=20230601; t=1715190357; x=1715795157;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JQ4w2/+EqpgnI71e92633PGSLkfTtg3h6pqel4U0YZE=;
- b=lqh1/c24kcl86QXzH4T8utUDAliMF5U1Ty2gN2v1cunG/fR2vcPYJIN1SbMsgYhTeG
- rxvFLLD5DQ/1ih4swz+KIMfZNRI5gaCur1yXguL9gphPJSHsRIwHd2yHoD8PyElWi+A0
- naQWWiF0GkXuYtoYU8UOaPQMI5UWiPQehgfzJLz0UCpWLbIlF3II/CPQsJhMk4vIWNxy
- G+bgGWkf0XkRiR1JqvcNY+Bm5yJP1G8X+qTSc1iY/frbyQGFIWonnJBD77R4KZ+sjhh8
- 51TGFd74FROpbnGRorIad17uMl7/+/158YzFBcaL5UZSWAP3dQBmLCF+OKht+PpCQd0Z
- uW9g==
-X-Gm-Message-State: AOJu0YxEqhdUvhsJlfZts7ikpPmeHHCSxQO7ibD77G6oufxmjVvznXRH
- nvfpnYeWA965kj1rAwy7DfJqV9Iai8D9wKBuPv4e75/WAIA1/bAZKb5SDgz1c5oDXSMU5zIFXuP
- Z
-X-Google-Smtp-Source: AGHT+IEiKagKtza5aT6L4ZLuI7SQGF0EJkTsZHvIeE8YpRcTC+ECbCTzCurXnviFiIySRsajpy3OnQ==
-X-Received: by 2002:a17:907:7ea1:b0:a59:c698:41ae with SMTP id
- a640c23a62f3a-a5a1180eb0cmr29319766b.34.1715190384076; 
- Wed, 08 May 2024 10:46:24 -0700 (PDT)
+ bh=0D+uasY/TC43VRHTmSE3t0bnWfF6sxB20nwUatSjI7g=;
+ b=UbXLA1r9R2Y4nxaAeqkCR825QvDuZ2LXknSZmWGPOVloQQPU2Sh4/3w/y8VnE4lsY/
+ 3DQxVKzBUp2sLhHUsMI1mr+HcnjPFsmtu7SX3XQVRitZG4xY+Ta4W0EDmPSCzpw3LyWb
+ 6fDVL4bNQ4gS7VQRUw55JaUNpbRj3u4hQbVQep0ZdjyIeSih/7Xpml0/USsOjnjX0UtK
+ EThfqGaf1PCeTmkoQlw0F0NEaoeBBYUo0YewaKKVEX3NQK9s/idAcUuLCXD8fdhpqOIJ
+ q9J7Kbp1Y08VDOs1BgtoaIuqrALpXchPMyFNOMcGKDimKoEkHHjoURJBhLVK1wWOELGz
+ vNdw==
+X-Gm-Message-State: AOJu0Yys96Cs3ECTJ6Cswpr2/17BFim6ZPm5z7ezBkjcI9t2RjF2x+Z+
+ uSaSEDp+lzULwcMtV/T0zzOpoq3GueYzxKqY9BOEm07WLi/mkdS04vR8UD9fuGXrnWqpc8oGUTk
+ u
+X-Google-Smtp-Source: AGHT+IFshR1nZ1RiDiVUtREG2ykge8D2iiqGrsM1RmxBCUaNT8vS48pHGmR5uDCRnBe/O2LsrNg+Uw==
+X-Received: by 2002:a17:906:eb18:b0:a59:bde5:398 with SMTP id
+ a640c23a62f3a-a59fb9211f4mr209170266b.14.1715190357584; 
+ Wed, 08 May 2024 10:45:57 -0700 (PDT)
 Received: from m1x-phil.lan (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
  [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
- mb15-20020a170906eb0f00b00a59cc6d06f2sm4123186ejb.218.2024.05.08.10.46.23
+ ze15-20020a170906ef8f00b00a59ae3efb03sm5453965ejb.3.2024.05.08.10.45.56
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 08 May 2024 10:46:23 -0700 (PDT)
+ Wed, 08 May 2024 10:45:57 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Bernhard Beschow <shentey@gmail.com>,
+Cc: Mattias Nissler <mnissler@rivosinc.com>, Peter Xu <peterx@redhat.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 13/26] hw/i386: Have x86_bios_rom_init() take X86MachineState
- rather than MachineState
-Date: Wed,  8 May 2024 19:44:57 +0200
-Message-ID: <20240508174510.60470-14-philmd@linaro.org>
+Subject: [PULL 08/26] system/physmem: Per-AddressSpace bounce buffering
+Date: Wed,  8 May 2024 19:44:52 +0200
+Message-ID: <20240508174510.60470-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240508174510.60470-1-philmd@linaro.org>
 References: <20240508174510.60470-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,92 +94,248 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Mattias Nissler <mnissler@rivosinc.com>
 
-The function creates and leaks two MemoryRegion objects regarding the BIOS which
-will be moved into X86MachineState in the next steps to avoid the leakage.
+Instead of using a single global bounce buffer, give each AddressSpace
+its own bounce buffer. The MapClient callback mechanism moves to
+AddressSpace accordingly.
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+This is in preparation for generalizing bounce buffer handling further
+to allow multiple bounce buffers, with a total allocation limit
+configured per AddressSpace.
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Tested-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
+Message-ID: <20240507094210.300566-2-mnissler@rivosinc.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240430150643.111976-3-shentey@gmail.com>
+[PMD: Split patch, part 2/2]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/i386/x86.h | 2 +-
- hw/i386/microvm.c     | 2 +-
- hw/i386/pc_sysfw.c    | 4 ++--
- hw/i386/x86.c         | 4 ++--
- 4 files changed, 6 insertions(+), 6 deletions(-)
+ include/exec/memory.h | 19 +++++++++++
+ system/memory.c       |  7 +++++
+ system/physmem.c      | 73 ++++++++++++++++---------------------------
+ 3 files changed, 53 insertions(+), 46 deletions(-)
 
-diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
-index 4dc30dcb4d..cb07618d19 100644
---- a/include/hw/i386/x86.h
-+++ b/include/hw/i386/x86.h
-@@ -116,7 +116,7 @@ void x86_cpu_unplug_request_cb(HotplugHandler *hotplug_dev,
- void x86_cpu_unplug_cb(HotplugHandler *hotplug_dev,
-                        DeviceState *dev, Error **errp);
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index e1e0c5a3de..d417d7f363 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -1112,6 +1112,19 @@ struct MemoryListener {
+     QTAILQ_ENTRY(MemoryListener) link_as;
+ };
  
--void x86_bios_rom_init(MachineState *ms, const char *default_firmware,
-+void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
-                        MemoryRegion *rom_memory, bool isapc_ram_fw);
++typedef struct AddressSpaceMapClient {
++    QEMUBH *bh;
++    QLIST_ENTRY(AddressSpaceMapClient) link;
++} AddressSpaceMapClient;
++
++typedef struct {
++    MemoryRegion *mr;
++    void *buffer;
++    hwaddr addr;
++    hwaddr len;
++    bool in_use;
++} BounceBuffer;
++
+ /**
+  * struct AddressSpace: describes a mapping of addresses to #MemoryRegion objects
+  */
+@@ -1129,6 +1142,12 @@ struct AddressSpace {
+     struct MemoryRegionIoeventfd *ioeventfds;
+     QTAILQ_HEAD(, MemoryListener) listeners;
+     QTAILQ_ENTRY(AddressSpace) address_spaces_link;
++
++    /* Bounce buffer to use for this address space. */
++    BounceBuffer bounce;
++    /* List of callbacks to invoke when buffers free up */
++    QemuMutex map_client_list_lock;
++    QLIST_HEAD(, AddressSpaceMapClient) map_client_list;
+ };
  
- void x86_load_linux(X86MachineState *x86ms,
-diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
-index 61a772dfe6..fec63cacfa 100644
---- a/hw/i386/microvm.c
-+++ b/hw/i386/microvm.c
-@@ -278,7 +278,7 @@ static void microvm_devices_init(MicrovmMachineState *mms)
-     default_firmware = x86_machine_is_acpi_enabled(x86ms)
-             ? MICROVM_BIOS_FILENAME
-             : MICROVM_QBOOT_FILENAME;
--    x86_bios_rom_init(MACHINE(mms), default_firmware, get_system_memory(), true);
-+    x86_bios_rom_init(x86ms, default_firmware, get_system_memory(), true);
+ typedef struct AddressSpaceDispatch AddressSpaceDispatch;
+diff --git a/system/memory.c b/system/memory.c
+index 49f1cb2c38..642a449f8c 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -3174,6 +3174,9 @@ void address_space_init(AddressSpace *as, MemoryRegion *root, const char *name)
+     as->ioeventfds = NULL;
+     QTAILQ_INIT(&as->listeners);
+     QTAILQ_INSERT_TAIL(&address_spaces, as, address_spaces_link);
++    as->bounce.in_use = false;
++    qemu_mutex_init(&as->map_client_list_lock);
++    QLIST_INIT(&as->map_client_list);
+     as->name = g_strdup(name ? name : "anonymous");
+     address_space_update_topology(as);
+     address_space_update_ioeventfds(as);
+@@ -3181,6 +3184,10 @@ void address_space_init(AddressSpace *as, MemoryRegion *root, const char *name)
+ 
+ static void do_address_space_destroy(AddressSpace *as)
+ {
++    assert(!qatomic_read(&as->bounce.in_use));
++    assert(QLIST_EMPTY(&as->map_client_list));
++    qemu_mutex_destroy(&as->map_client_list_lock);
++
+     assert(QTAILQ_EMPTY(&as->listeners));
+ 
+     flatview_unref(as->current_map);
+diff --git a/system/physmem.c b/system/physmem.c
+index b76b3d2184..342b7a8fd4 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3047,26 +3047,8 @@ void cpu_flush_icache_range(hwaddr start, hwaddr len)
+                                      NULL, len, FLUSH_CACHE);
  }
  
- static void microvm_memory_init(MicrovmMachineState *mms)
-diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
-index 87b5bf59d6..59c7a81692 100644
---- a/hw/i386/pc_sysfw.c
-+++ b/hw/i386/pc_sysfw.c
-@@ -205,7 +205,7 @@ void pc_system_firmware_init(PCMachineState *pcms,
-     BlockBackend *pflash_blk[ARRAY_SIZE(pcms->flash)];
+-typedef struct {
+-    MemoryRegion *mr;
+-    void *buffer;
+-    hwaddr addr;
+-    hwaddr len;
+-    bool in_use;
+-} BounceBuffer;
+-
+-static BounceBuffer bounce;
+-
+-typedef struct MapClient {
+-    QEMUBH *bh;
+-    QLIST_ENTRY(MapClient) link;
+-} MapClient;
+-
+-QemuMutex map_client_list_lock;
+-static QLIST_HEAD(, MapClient) map_client_list
+-    = QLIST_HEAD_INITIALIZER(map_client_list);
+-
+-static void address_space_unregister_map_client_do(MapClient *client)
++static void
++address_space_unregister_map_client_do(AddressSpaceMapClient *client)
+ {
+     QLIST_REMOVE(client, link);
+     g_free(client);
+@@ -3074,10 +3056,10 @@ static void address_space_unregister_map_client_do(MapClient *client)
  
-     if (!pcmc->pci_enabled) {
--        x86_bios_rom_init(MACHINE(pcms), "bios.bin", rom_memory, true);
-+        x86_bios_rom_init(X86_MACHINE(pcms), "bios.bin", rom_memory, true);
-         return;
+ static void address_space_notify_map_clients_locked(AddressSpace *as)
+ {
+-    MapClient *client;
++    AddressSpaceMapClient *client;
+ 
+-    while (!QLIST_EMPTY(&map_client_list)) {
+-        client = QLIST_FIRST(&map_client_list);
++    while (!QLIST_EMPTY(&as->map_client_list)) {
++        client = QLIST_FIRST(&as->map_client_list);
+         qemu_bh_schedule(client->bh);
+         address_space_unregister_map_client_do(client);
+     }
+@@ -3085,14 +3067,14 @@ static void address_space_notify_map_clients_locked(AddressSpace *as)
+ 
+ void address_space_register_map_client(AddressSpace *as, QEMUBH *bh)
+ {
+-    MapClient *client = g_malloc(sizeof(*client));
++    AddressSpaceMapClient *client = g_malloc(sizeof(*client));
+ 
+-    QEMU_LOCK_GUARD(&map_client_list_lock);
++    QEMU_LOCK_GUARD(&as->map_client_list_lock);
+     client->bh = bh;
+-    QLIST_INSERT_HEAD(&map_client_list, client, link);
++    QLIST_INSERT_HEAD(&as->map_client_list, client, link);
+     /* Write map_client_list before reading in_use.  */
+     smp_mb();
+-    if (!qatomic_read(&bounce.in_use)) {
++    if (!qatomic_read(&as->bounce.in_use)) {
+         address_space_notify_map_clients_locked(as);
+     }
+ }
+@@ -3110,15 +3092,14 @@ void cpu_exec_init_all(void)
+     finalize_target_page_bits();
+     io_mem_init();
+     memory_map_init();
+-    qemu_mutex_init(&map_client_list_lock);
+ }
+ 
+ void address_space_unregister_map_client(AddressSpace *as, QEMUBH *bh)
+ {
+-    MapClient *client;
++    AddressSpaceMapClient *client;
+ 
+-    QEMU_LOCK_GUARD(&map_client_list_lock);
+-    QLIST_FOREACH(client, &map_client_list, link) {
++    QEMU_LOCK_GUARD(&as->map_client_list_lock);
++    QLIST_FOREACH(client, &as->map_client_list, link) {
+         if (client->bh == bh) {
+             address_space_unregister_map_client_do(client);
+             break;
+@@ -3128,7 +3109,7 @@ void address_space_unregister_map_client(AddressSpace *as, QEMUBH *bh)
+ 
+ static void address_space_notify_map_clients(AddressSpace *as)
+ {
+-    QEMU_LOCK_GUARD(&map_client_list_lock);
++    QEMU_LOCK_GUARD(&as->map_client_list_lock);
+     address_space_notify_map_clients_locked(as);
+ }
+ 
+@@ -3220,25 +3201,25 @@ void *address_space_map(AddressSpace *as,
+     mr = flatview_translate(fv, addr, &xlat, &l, is_write, attrs);
+ 
+     if (!memory_access_is_direct(mr, is_write)) {
+-        if (qatomic_xchg(&bounce.in_use, true)) {
++        if (qatomic_xchg(&as->bounce.in_use, true)) {
+             *plen = 0;
+             return NULL;
+         }
+         /* Avoid unbounded allocations */
+         l = MIN(l, TARGET_PAGE_SIZE);
+-        bounce.buffer = qemu_memalign(TARGET_PAGE_SIZE, l);
+-        bounce.addr = addr;
+-        bounce.len = l;
++        as->bounce.buffer = qemu_memalign(TARGET_PAGE_SIZE, l);
++        as->bounce.addr = addr;
++        as->bounce.len = l;
+ 
+         memory_region_ref(mr);
+-        bounce.mr = mr;
++        as->bounce.mr = mr;
+         if (!is_write) {
+             flatview_read(fv, addr, MEMTXATTRS_UNSPECIFIED,
+-                               bounce.buffer, l);
++                          as->bounce.buffer, l);
+         }
+ 
+         *plen = l;
+-        return bounce.buffer;
++        return as->bounce.buffer;
      }
  
-@@ -226,7 +226,7 @@ void pc_system_firmware_init(PCMachineState *pcms,
  
-     if (!pflash_blk[0]) {
-         /* Machine property pflash0 not set, use ROM mode */
--        x86_bios_rom_init(MACHINE(pcms), "bios.bin", rom_memory, false);
-+        x86_bios_rom_init(X86_MACHINE(pcms), "bios.bin", rom_memory, false);
-     } else {
-         if (kvm_enabled() && !kvm_readonly_mem_enabled()) {
-             /*
-diff --git a/hw/i386/x86.c b/hw/i386/x86.c
-index 2a4f3ee285..6d3c72f124 100644
---- a/hw/i386/x86.c
-+++ b/hw/i386/x86.c
-@@ -1128,7 +1128,7 @@ void x86_load_linux(X86MachineState *x86ms,
-     nb_option_roms++;
+@@ -3256,7 +3237,7 @@ void *address_space_map(AddressSpace *as,
+ void address_space_unmap(AddressSpace *as, void *buffer, hwaddr len,
+                          bool is_write, hwaddr access_len)
+ {
+-    if (buffer != bounce.buffer) {
++    if (buffer != as->bounce.buffer) {
+         MemoryRegion *mr;
+         ram_addr_t addr1;
+ 
+@@ -3272,14 +3253,14 @@ void address_space_unmap(AddressSpace *as, void *buffer, hwaddr len,
+         return;
+     }
+     if (is_write) {
+-        address_space_write(as, bounce.addr, MEMTXATTRS_UNSPECIFIED,
+-                            bounce.buffer, access_len);
++        address_space_write(as, as->bounce.addr, MEMTXATTRS_UNSPECIFIED,
++                            as->bounce.buffer, access_len);
+     }
+-    qemu_vfree(bounce.buffer);
+-    bounce.buffer = NULL;
+-    memory_region_unref(bounce.mr);
++    qemu_vfree(as->bounce.buffer);
++    as->bounce.buffer = NULL;
++    memory_region_unref(as->bounce.mr);
+     /* Clear in_use before reading map_client_list.  */
+-    qatomic_set_mb(&bounce.in_use, false);
++    qatomic_set_mb(&as->bounce.in_use, false);
+     address_space_notify_map_clients(as);
  }
  
--void x86_bios_rom_init(MachineState *ms, const char *default_firmware,
-+void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
-                        MemoryRegion *rom_memory, bool isapc_ram_fw)
- {
-     const char *bios_name;
-@@ -1138,7 +1138,7 @@ void x86_bios_rom_init(MachineState *ms, const char *default_firmware,
-     ssize_t ret;
- 
-     /* BIOS load */
--    bios_name = ms->firmware ?: default_firmware;
-+    bios_name = MACHINE(x86ms)->firmware ?: default_firmware;
-     filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
-     if (filename) {
-         bios_size = get_image_size(filename);
 -- 
 2.41.0
 
