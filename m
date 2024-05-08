@@ -4,80 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 220E3C04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 14:14:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93580C04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 14:24:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4i3H-0001Dl-BY; Wed, 08 May 2024 10:13:47 -0400
+	id 1s4iCV-00083A-3j; Wed, 08 May 2024 10:23:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4i3D-0001DL-Vt
- for qemu-devel@nongnu.org; Wed, 08 May 2024 10:13:44 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4i38-0004NL-Bd
- for qemu-devel@nongnu.org; Wed, 08 May 2024 10:13:43 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-34da35cd01cso4078367f8f.2
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 07:13:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715177616; x=1715782416; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=bPs0zsG9VK2wQ8xgMVPcc5ZG9na1Q66b8plpnDmTE4Q=;
- b=kNstpwFXfFa0JcEjWS3AuJQMfdll8UMKEVXLc6z8T6KehKhDCd5kqf/MDPsVisArYK
- HkK734C8+67MmF7TbFP9nXlzF53WBy42x7iYiwpLWepHxy7C56G3SMyFyBjMMLYaij5q
- AwTTQ12Sub4cUdxxt3SLUif8EQDekrJgJw0wxXykpcNcTh2O4WsK0BFsOFm0nK0RwXTx
- 5TPVrJwJtnuXAbmTmJft06VqDkCfqn7DHc4FWQwlxOQZLLca8PznU4CNzyBRDfMx+bl1
- jb4AKkZMd5mHPl0kW+ncEwJDJu3LkeGB4UBqUDSlCJGHBa/L9Xe8K5FSK3q47pLitIyO
- Na/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715177616; x=1715782416;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=bPs0zsG9VK2wQ8xgMVPcc5ZG9na1Q66b8plpnDmTE4Q=;
- b=eXMkoqrHn+1l+2GjNekESazq4RSyIY7NmWz5TgN+gaGx6uioIc2PTKe7Z/r3wWKr8+
- q9GyZBZfxYFzWHcchIAfAIGY+91MpHDEXkHwRtdB6zlCMOf0FlO+ce0eI9RunjY3JsRo
- 4uP96IzmDVDrBxDJ3NGzMBnXmYiy8iTBQsZ8SNieIZ2iMf1dq7+dcH+E8v2HZsmTauV6
- pgPEDEXoPVTUnASsoOUQ29pcPH0FD32q34WsOkF72Cgz+AzgcfAh7UVUhP9FrM3qUybd
- mbcQPtVA684wwU/8JaHn8Wms+wed0veWcwU6SQZgJS5JP2kDymeEsXvE1n2eZpePSEOt
- w6iA==
-X-Gm-Message-State: AOJu0YwDX2EbGlz7tW5lhPmDEyW0TjQYj7YhSyUx74qVYIwPsTDLEiuN
- IYb9XVfK8I+jwm5wfX+69sGNiwcBs9IqBvf+W2mZd9IcGEX/UP9WRoRds5mH26uGRbomIoCM+tw
- 4
-X-Google-Smtp-Source: AGHT+IFeFJ2JGx/ZmqmnLWoV4naAhKN//95DH/a/FJRlmyvlekEZnDKLAFljJJrZeKdNfWFT4+eRbQ==
-X-Received: by 2002:a05:6000:1104:b0:34f:96ba:ca3f with SMTP id
- ffacd0b85a97d-34fca621dbcmr3321638f8f.53.1715177616129; 
- Wed, 08 May 2024 07:13:36 -0700 (PDT)
-Received: from m1x-phil.lan (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
- [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
- d9-20020adff2c9000000b0034dd56189e8sm15448242wrp.22.2024.05.08.07.13.35
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 08 May 2024 07:13:35 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Luc Michel <luc@lmichel.fr>, Peter Maydell <peter.maydell@linaro.org>,
- Damien Hedde <damien.hedde@dahe.fr>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
-Subject: [PATCH] hw/clock: Expose 'freq-hz' QOM property
-Date: Wed,  8 May 2024 16:13:33 +0200
-Message-ID: <20240508141333.44610-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1s4iCT-000832-O5
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 10:23:17 -0400
+Received: from rev.ng ([5.9.113.41])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1s4iCR-0000FR-L0
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 10:23:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
+ :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=f1Lk5qRs/YvBXQV9R4mnp+GPaBVqrdmTaPNt3LhIbLE=; b=i+HNkV9nFrcFi4k
+ Ms8NNcbOOcknZaq7EYMrqekeWO1Gk0nk9w04wEJuf8rK0Px7r41SAfr6JJeMNd2B5rsOy48Mpc1L1
+ aUbqX1ovwPkeLQ7XdFzb+wgVSvQK/vixm2t1D4MsNXNxoy5uQxxDndoy270UAtKyP/T9gdsA9YDoV
+ ec=;
+Date: Wed, 8 May 2024 16:24:01 +0200
+To: ltaylorsimpson@gmail.com
+Cc: qemu-devel@nongnu.org, ale@rev.ng, bcain@quicinc.com
+Subject: Re: [PATCH 3/4] target/hexagon: idef-parser fix leak of init_list
+Message-ID: <jsusre6vphnnyoengz74djo2dvaoiz3auruhkmcc2pygv73w3u@hk7zhipgpbz6>
+References: <20240506183117.32268-1-anjo@rev.ng>
+ <20240506183117.32268-4-anjo@rev.ng>
+ <067f01da9fe7$51597590$f40c60b0$@gmail.com>
+ <f7fmzerjibovuo7uevxmold5g6jvvjazfckhtv6tqkatpgbtzy@ging72uqq27r>
+ <071701daa0c2$5988d450$0c9a7cf0$@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <071701daa0c2$5988d450$0c9a7cf0$@gmail.com>
+Received-SPF: pass client-ip=5.9.113.41; envelope-from=anjo@rev.ng; helo=rev.ng
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,62 +61,97 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  'Anton Johansson' <anjo@rev.ng>
+From:  'Anton Johansson' via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Expose the clock frequency via the QOM 'freq-hz' property,
-as it might be useful for QTests.
+On 07/05/24, ltaylorsimpson@gmail.com wrote:
+> 
+> 
+> > -----Original Message-----
+> > From: 'Anton Johansson' <anjo@rev.ng>
+> > Sent: Tuesday, May 7, 2024 4:47 AM
+> > To: ltaylorsimpson@gmail.com
+> > Cc: qemu-devel@nongnu.org; ale@rev.ng; bcain@quicinc.com
+> > Subject: Re: [PATCH 3/4] target/hexagon: idef-parser fix leak of init_list
+> > 
+> > On 06/05/24, ltaylorsimpson@gmail.com wrote:
+> > >
+> > >
+> > > > -----Original Message-----
+> > > > From: Anton Johansson <anjo@rev.ng>
+> > > > Sent: Monday, May 6, 2024 1:31 PM
+> > > > To: qemu-devel@nongnu.org
+> > > > Cc: ale@rev.ng; ltaylorsimpson@gmail.com; bcain@quicinc.com
+> > > > Subject: [PATCH 3/4] target/hexagon: idef-parser fix leak of
+> > > > init_list
+> > > >
+> > > > gen_inst_init_args() is called for instructions using a predicate as
+> > > > an
+> > > rvalue.
+> > > > Upon first call, the list of arguments which might need
+> > > > initialization
+> > > init_list is
+> > > > freed to indicate that they have been processed. For instructions
+> > > > without
+> > > an
+> > > > rvalue predicate,
+> > > > gen_inst_init_args() isn't called and init_list will never be freed.
+> > > >
+> > > > Free init_list from free_instruction() if it hasn't already been freed.
+> > > >
+> > > > Signed-off-by: Anton Johansson <anjo@rev.ng>
+> > > > ---
+> > > >  target/hexagon/idef-parser/parser-helpers.c | 7 +++++++
+> > > >  1 file changed, 7 insertions(+)
+> > > >
+> > > > diff --git a/target/hexagon/idef-parser/parser-helpers.c
+> > > > b/target/hexagon/idef-parser/parser-helpers.c
+> > > > index 95f2b43076..bae01c2bb8 100644
+> > > > --- a/target/hexagon/idef-parser/parser-helpers.c
+> > > > +++ b/target/hexagon/idef-parser/parser-helpers.c
+> > > > @@ -2121,6 +2121,13 @@ void free_instruction(Context *c)
+> > > >          g_string_free(g_array_index(c->inst.strings, GString*, i), TRUE);
+> > > >      }
+> > > >      g_array_free(c->inst.strings, TRUE);
+> > > > +    /*
+> > > > +     * Free list of arguments that might need initialization, if
+> > > > + they
+> > > haven't
+> > > > +     * already been free'd.
+> > > > +     */
+> > > > +    if (c->inst.init_list) {
+> > > > +        g_array_free(c->inst.init_list, TRUE);
+> > > > +    }
+> > > >      /* Free INAME token value */
+> > > >      g_string_free(c->inst.name, TRUE);
+> > > >      /* Free variables and registers */
+> > >
+> > > Why not do this in gen_inst_init_args just before this?
+> > >    /* Free argument init list once we have initialized everything */
+> > >     g_array_free(c->inst.init_list, TRUE);
+> > >     c->inst.init_list = NULL;
+> > 
+> > Thanks for the reviews Taylor! I'm not sure I understand what you mean
+> > here, we already free init_list in gen_inst_init_args, since gen_inst_init_args
+> > won't be called for all instructions we need to also free from a common
+> > place.
+> > 
+> > //Anton
+> 
+> It just seems more natural to free the elements of the array at the same place you free the array itself.  If there are valid reasons for doing it elsewhere, I'm OK with that.
+> 
+> Taylor
+> 
+> 
 
-HMP example:
+Ah I see what you mean. The array and its elements are either freed in
+gen_inst_init_args or free_instruction so they do occur together. The
+"freeing of variables and registers" comment only refers to declared
+TCGvs and has nothing to do with the arguments.
 
-  $ qemu-system-mips -S -monitor stdio -M mipssim
-  (qemu) qom-get /machine/cpu-refclk freq-hz
-  12000000
+Comment is a bit outdated so I've updated it.
 
-Inspired-by: Inès Varhol <ines.varhol@telecom-paris.fr>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/core/clock.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
-
-diff --git a/hw/core/clock.c b/hw/core/clock.c
-index e212865307..55f86ef483 100644
---- a/hw/core/clock.c
-+++ b/hw/core/clock.c
-@@ -13,6 +13,7 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/cutils.h"
-+#include "qapi/visitor.h"
- #include "hw/clock.h"
- #include "trace.h"
- 
-@@ -158,6 +159,14 @@ bool clock_set_mul_div(Clock *clk, uint32_t multiplier, uint32_t divider)
-     return true;
- }
- 
-+static void clock_prop_freq_get(Object *obj, Visitor *v, const char *name,
-+                                void *opaque, Error **errp)
-+{
-+    Clock *clk = CLOCK(obj);
-+    uint64_t freq_hz = clock_get_hz(clk);
-+    visit_type_uint64(v, name, &freq_hz, errp);
-+}
-+
- static void clock_initfn(Object *obj)
- {
-     Clock *clk = CLOCK(obj);
-@@ -166,6 +175,9 @@ static void clock_initfn(Object *obj)
-     clk->divider = 1;
- 
-     QLIST_INIT(&clk->children);
-+
-+    object_property_add(obj, "freq-hz", "uint64",
-+                        clock_prop_freq_get, NULL, NULL, NULL);
- }
- 
- static void clock_finalizefn(Object *obj)
--- 
-2.41.0
-
+//Anton
 
