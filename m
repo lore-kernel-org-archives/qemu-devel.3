@@ -4,84 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31B34C04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 12:50:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2798AC04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 12:51:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4gjf-0002qP-T1; Wed, 08 May 2024 08:49:31 -0400
+	id 1s4glw-0005PO-Io; Wed, 08 May 2024 08:51:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s4gjY-0002lu-0j
- for qemu-devel@nongnu.org; Wed, 08 May 2024 08:49:20 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1s4glt-0005Oj-M5
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 08:51:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s4gjV-00017c-9h
- for qemu-devel@nongnu.org; Wed, 08 May 2024 08:49:19 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1s4glq-00021T-TH
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 08:51:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715172555;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1715172701;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+UH2SLE6JiWPuwo29iAkiHoegHXd814nyvIRH8CH55c=;
- b=DvhAVuqFSZUcVcuzCDWR4lyCcpGpTq2/JC+abVFimVD120YjV1LL/6KOdLMRgW0I0v6k2R
- Ie1sDZYQGE+hPWz37LeY2lvJaGZuiRkNYW7oAskBPv72zu+3AO551OJZovU24i/SYpA6nq
- GUgy4synfwGEbObkmn+eu+BXyI0zjlk=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-68-3mHTp4Q3Oq-6mZ0tiJHbWQ-1; Wed, 08 May 2024 08:49:14 -0400
-X-MC-Unique: 3mHTp4Q3Oq-6mZ0tiJHbWQ-1
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-2b433dd1f24so1516859a91.3
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 05:49:14 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715172553; x=1715777353;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+UH2SLE6JiWPuwo29iAkiHoegHXd814nyvIRH8CH55c=;
- b=T6LqCWO1f967VXsGovUHPeNkbc+gK7fmUyomWuCBaabFDagVROynVb1NYhpfBf22Wy
- LMskd77Ig4Kw90o4wtZpeYwd0wRO3s33AxLxKz1yr7uo2ekQoMu7Ah78tSw+gQr0CScn
- M7KL82axNtO1gvWcVnYe29Q7zI39RN3tQL6GGoQ3EOySzM3Knj+294FOeUcWxN+vvXmF
- vDE02Qo2DF89rypduqMUBoTdgfvi93kW4BD1PFtL0GEii/xU9rYhUbdS+BhCkGCPy51Y
- U54boL3Ipa0BQUhQ7SSbLV/LDw7gDlLIcSrN2zsOFFF8fx7w/nA3i/ez18+qwX0zqV/9
- YaxQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW6L39h9mhQW8HXHJk9IjW3rm10+YxQGTpS74otcypIAbXicAcFGkt96bWtDZGV0DluK0C0fibzvxlMV0G2lwdR5ctbVVY=
-X-Gm-Message-State: AOJu0YyJd4SVG757GeY0F65RHY7/LY0H91G9P3ZXhfcPOAD/pr6tCq3k
- Ic/5BMowUSASsGJzhoov1LOI111PD+kr6H/KcJ8iFHTZTz+emzMFZa1RE2iLOPlSsO4nQ7jW8wW
- /f4hEYBH6/cqblKnfYGzuQryvBLpuI2ceSXMA5U0HeJVxSz1xhkWc
-X-Received: by 2002:a05:6a20:9693:b0:1ad:7bdd:361f with SMTP id
- adf61e73a8af0-1afc8de8c8emr2465762637.5.1715172552928; 
- Wed, 08 May 2024 05:49:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEjlA+i5KE/XBcCj7Y2V5zffPU0H5WXBpmmoIfjqwc9e4a5Av/SYkftc/lzZneCihWPtJVkHg==
-X-Received: by 2002:a05:6a20:9693:b0:1ad:7bdd:361f with SMTP id
- adf61e73a8af0-1afc8de8c8emr2465735637.5.1715172552252; 
- Wed, 08 May 2024 05:49:12 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2b628ea6ae7sm1336189a91.51.2024.05.08.05.49.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 May 2024 05:49:11 -0700 (PDT)
-Date: Wed, 8 May 2024 08:49:08 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- armbru@redhat.com, Claudio Fontana <cfontana@suse.de>,
- Jim Fehlig <jfehlig@suse.com>
-Subject: Re: [PATCH 2/9] migration: Fix file migration with fdset
-Message-ID: <Zjt0xELzTq2qWwc_@x1n>
-References: <20240426142042.14573-1-farosas@suse.de>
- <20240426142042.14573-3-farosas@suse.de> <ZjUPl6XwB3Zt3cKR@x1n>
- <ZjsxiDEZgXycn_tl@redhat.com>
+ bh=3W/ScREmjvqUXIhjdT57Hp+BVufKIZBlTgrfJcfKQhM=;
+ b=FKwsdUFoATQhTC9knudbf8x5MVAQQ20UN9IB3lq2Dlue9LidMfxyDxrTGHN7Qg1hAt1Zfb
+ j0lYE0reZ2PFda63Legu5CmDNUnGVNQm4x/kPStSeXsQKhPJBYsVOom0rAzvR4Xab4w3cC
+ KzPjj9oe8kgixBXoFD+Z3Jb0sEmGFIA=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-528-Wjl6glZ-NdS_KtiO_r3oMQ-1; Wed,
+ 08 May 2024 08:51:38 -0400
+X-MC-Unique: Wjl6glZ-NdS_KtiO_r3oMQ-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.8])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id F2B3F1C4C39B;
+ Wed,  8 May 2024 12:51:36 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.29])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id B5B18C0157C;
+ Wed,  8 May 2024 12:51:35 +0000 (UTC)
+Date: Wed, 8 May 2024 13:51:33 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>,
+ Roman Kiryanov <rkir@google.com>,
+ Peter Maydell <peter.maydell@linaro.org>, alex.bennee@linaro.org,
+ QEMU Developers <qemu-devel@nongnu.org>,
+ JP Cottin <jpcottin@google.com>, Erwin Jansen <jansene@google.com>,
+ Mehdi Alizadeh <mett@google.com>
+Subject: Re: Hermetic virtio-vsock in QEMU
+Message-ID: <Zjt1VdKQ3KIZChg9@redhat.com>
+References: <CAOGAQeqOVAHJ4VxQNKqO43hmLJdxpA6E_JEQrfL380SwT4Y73w@mail.gmail.com>
+ <Zh0NiI9ZfS5uzs5Z@redhat.com>
+ <CAOGAQerx0DmHvJNf05wuJFOtXVwDFTt7fy0-GmBZ7xKoLAHTKQ@mail.gmail.com>
+ <ZiDpM7ZusU0SvH7K@redhat.com>
+ <nga2k5uuvpqm2sovguofglw6u3reiqqurbn7vbdexanzrhmw42@vuje72e57egu>
+ <CAOGAQeqU692hHf3dU7udz8hwzP6KuFTNWir0mLcV-URF-JkFnA@mail.gmail.com>
+ <zyj7huwfzji6c5bkq44o56nizo7fju5kn2nqg2n5niuwdzsnkl@ykhg5yqruvwr>
+ <CAJ+F1CKvBW_khQ+zwKiunWGUQYtC_RKnVvUWbZpZALHv07efBw@mail.gmail.com>
+ <5o3xyylget6hqhdaya5cj5tnbmmpzxk6u53cp6jhpviev6ez4m@ri6ady5zc6n3>
+ <30baeb56-64d2-4ea3-8e53-6a5c50999979@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZjsxiDEZgXycn_tl@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <30baeb56-64d2-4ea3-8e53-6a5c50999979@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -102,40 +96,102 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 08, 2024 at 09:02:16AM +0100, Daniel P. Berrangé wrote:
-> On Fri, May 03, 2024 at 12:23:51PM -0400, Peter Xu wrote:
-> > On Fri, Apr 26, 2024 at 11:20:35AM -0300, Fabiano Rosas wrote:
-> > > When the migration using the "file:" URI was implemented, I don't
-> > > think any of us noticed that if you pass in a file name with the
-> > > format "/dev/fdset/N", this allows a file descriptor to be passed in
-> > > to QEMU and that behaves just like the "fd:" URI. So the "file:"
-> > > support has been added without regard for the fdset part and we got
-> > > some things wrong.
+On Wed, May 08, 2024 at 02:37:52PM +0200, Paolo Bonzini wrote:
+> On 5/8/24 11:38, Stefano Garzarella wrote:
+> > On Wed, May 08, 2024 at 01:13:09PM GMT, Marc-André Lureau wrote:
+> > > Hi
 > > > 
-> > > The first issue is that we should not truncate the migration file if
-> > > we're allowing an fd + offset. We need to leave the file contents
-> > > untouched.
+> > > On Wed, May 8, 2024 at 11:50 AM Stefano Garzarella
+> > > <sgarzare@redhat.com> wrote:
+> > > > 
+> > > > Hi Roman,
+> > > > 
+> > > > On Tue, May 07, 2024 at 11:20:50PM GMT, Roman Kiryanov wrote:
+> > > > >Hi Stefano,
+> > > > >
+> > > > >On Tue, May 7, 2024 at 1:10 AM Stefano Garzarella
+> > > > <sgarzare@redhat.com> wrote:
+> > > > >> I have no experience with Windows, but what we need for
+> > > > vhost-user is:
+> > > > >>
+> > > > >> - AF_UNIX and be able to send file descriptors using ancillary data
+> > > > >>    (i.e. SCM_RIGHTS)
+> > > > >
+> > > > >As far as I understand, Windows does NOT support SCM_RIGHTS
+> > > > over AF_UNIX.
+> > > > 
+> > > > Thank you for the information. This is unfortunate and does not allow
+> > > > us to use vhost-user as it is on Windows.
+> > > > 
+> > > 
+> > > fwiw, Windows has other mechanisms to share resources between processes.
+> > > 
+> > > To share/pass sockets, you can use WSADuplicateSocket. For shared
+> > > memory and other resources, DuplicateHandle API.
 > > 
-> > I'm wondering whether we can use fallocate() instead on the ranges so that
-> > we always don't open() with O_TRUNC.  Before that..  could you remind me
-> > why do we need to truncate in the first place?  I definitely missed
-> > something else here too.
+> > Cool, thanks for sharing that. So it could be done, but I think we need
+> > to extend the vhost-user protocol to work with Windows.
 > 
-> You're mixing distinct concepts here. fallocate makes a file region
-> non-sparse, while O_TRUNC removes all existing allocation, making it
-> sparse if we write at non-contiguous offsets. I don't think we would
-> want to call fallocate, since we /want/ a sparse file so that we
-> don't needlessly store large regions of all-zeros as RAM maps.
+> It would be possible to implement the memfd backend for Windows, using the
+> CreateFileMapping() API.
+> 
+> However, the vhost-user protocol's VHOST_USER_SET_MEM_TABLE requests do not
+> have any padding that can be used to pass the handle to the target. An
+> extended version would be necessary.
+> 
+> One difference between Unix and Windows is that, if the vhost-server messes
+> up the handling of messages from the socket, and therefore it does not close
+> the handle, it is leaked forever.  This is not a huge deal per se, but I
+> think it means that QEMU is not allowed to "open" a privileged vhost-user
+> server process with PROCESS_DUP_HANDLE rights (translation: QEMU cannot
+> provide duplicate handles to a privileged vhost-user server process).
+> 
+> Also I'm not sure what the cost of DuplicateHandle() is, and whether it's a
+> good idea to do it for every region on every VHOST_USER_SET_MEM_TABLE
+> request.  But VHOST_USER_SET_MEM_TABLE is not a fast path, so perhaps it's
+> okay.
+> 
+> I think a virtio-vsock implementation in QEMU would be easier, lacking
+> another usecase for vhost-user on Windows.
+> 
+> The main design question is whether multiple virtio-vsock devices for the
+> same guest should share the CID space or not (I think it should, but I'm not
+> 100% sure).  To connect host<->guest you could have a QOM object, here I am
+> naming it vsock-forward as an example:
 
-I meant fallocate() with FALLOC_FL_PUNCH_HOLE.  But now I think it'll be
-good we avoid both.
+Designwise, a native VSOCK backend in QEMU really should implement the
+same approach defined by firecracker, so that we have interoperability
+with systemd, firecracker and cloud-hypervisor. See
 
-Thanks,
+  https://gitlab.com/qemu-project/qemu/-/issues/2095
+  https://github.com/firecracker-microvm/firecracker/blob/main/docs/vsock.md#firecracker-virtio-vsock-design
 
+This involves multiple UNIX sockets on the host
+
+  1 * /some/path   - QEMU listens on this, and accepts connections
+                     from other host processes. The client sends
+                     "PORT <num>" to indicate that guest port it
+                     is connecting to
+
+  n * /some/path_$PORT - QEMU connect to this for outgoing connections
+                         from the guest. Other host processes need
+                         to listen on whatever path_$PORT need to be
+                         serviced
+
+IOW, from a CLI pov, QEMU should need nothing more than
+
+    -object vsock-forward,prefix=/some/path
+
+
+With regards,
+Daniel
 -- 
-Peter Xu
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
