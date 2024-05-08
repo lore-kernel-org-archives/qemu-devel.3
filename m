@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78E9DC04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 23:40:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4494BC04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 23:41:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4qpc-0003DR-W0; Wed, 08 May 2024 19:36:17 -0400
+	id 1s4qpn-0003QR-0a; Wed, 08 May 2024 19:36:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s4qpa-00034p-CV; Wed, 08 May 2024 19:36:14 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ id 1s4qpk-0003OD-3A; Wed, 08 May 2024 19:36:24 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s4qpY-0002Uh-H7; Wed, 08 May 2024 19:36:14 -0400
+ id 1s4qph-0002ZE-U9; Wed, 08 May 2024 19:36:23 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id D8ED34E6013;
- Thu, 09 May 2024 01:36:10 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 6E6434E65BB;
+ Thu, 09 May 2024 01:36:20 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id VgiCKJ3EABED; Thu,  9 May 2024 01:36:08 +0200 (CEST)
+ with ESMTP id kX1iSov-KLeY; Thu,  9 May 2024 01:36:18 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id EBE4B4E65D7; Thu, 09 May 2024 01:36:08 +0200 (CEST)
-Message-Id: <c61120b1b6f46aaf8e4c6d54be02136c65247691.1715209155.git.balaton@eik.bme.hu>
+ id 800244E65D7; Thu, 09 May 2024 01:36:18 +0200 (CEST)
+Message-Id: <dc97b91686ffc03dd23136c9db652f3d30c89c02.1715209155.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1715209155.git.balaton@eik.bme.hu>
 References: <cover.1715209155.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v4 06/33] target/ppc/mmu_common.c: Remove unneeded local
- variable
+Subject: [PATCH v4 15/33] target/ppc/mmu_common.c: Inline and remove
+ check_physical()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,9 +40,9 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Thu, 09 May 2024 01:36:08 +0200 (CEST)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
+Date: Thu, 09 May 2024 01:36:18 +0200 (CEST)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -63,103 +63,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In mmubooke_check_tlb() and mmubooke206_check_tlb() we can assign the
-value directly the the destination, no need to have a separate local
-variable for it.
+This function just does two assignments and and unnecessary check that
+is always true so inline it in the only caller left and remove it.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu_common.c | 30 +++++++++++++-----------------
- 1 file changed, 13 insertions(+), 17 deletions(-)
+ target/ppc/mmu_common.c | 26 +++-----------------------
+ 1 file changed, 3 insertions(+), 23 deletions(-)
 
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index f79e390306..09cbeb0052 100644
+index b13150ce23..2f412dd7c5 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -628,8 +628,6 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppcemb_tlb_t *tlb,
-                               hwaddr *raddr, int *prot, target_ulong address,
-                               MMUAccessType access_type, int i)
- {
--    int prot2;
+@@ -1145,28 +1145,6 @@ void dump_mmu(CPUPPCState *env)
+     }
+ }
+ 
+-static int check_physical(CPUPPCState *env, mmu_ctx_t *ctx, target_ulong eaddr,
+-                          MMUAccessType access_type)
+-{
+-    ctx->raddr = eaddr;
+-    ctx->prot = PAGE_READ | PAGE_EXEC;
 -
-     if (!mmubooke_check_pid(env, tlb, raddr, address, i)) {
-         qemu_log_mask(CPU_LOG_MMU, "%s: TLB entry not found\n", __func__);
-         return -1;
-@@ -644,17 +642,16 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppcemb_tlb_t *tlb,
+-    switch (env->mmu_model) {
+-    case POWERPC_MMU_SOFT_6xx:
+-    case POWERPC_MMU_SOFT_4xx:
+-    case POWERPC_MMU_REAL:
+-    case POWERPC_MMU_BOOKE:
+-        ctx->prot |= PAGE_WRITE;
+-        break;
+-
+-    default:
+-        /* Caller's checks mean we should never get here for other models */
+-        g_assert_not_reached();
+-    }
+-
+-    return 0;
+-}
+-
+ int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
+                                      target_ulong eaddr,
+                                      MMUAccessType access_type, int type,
+@@ -1186,7 +1164,9 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
+     if (real_mode && (env->mmu_model == POWERPC_MMU_SOFT_6xx ||
+                       env->mmu_model == POWERPC_MMU_SOFT_4xx ||
+                       env->mmu_model == POWERPC_MMU_REAL)) {
+-        return check_physical(env, ctx, eaddr, access_type);
++        ctx->raddr = eaddr;
++        ctx->prot = PAGE_RWX;
++        return 0;
      }
  
-     if (FIELD_EX64(env->msr, MSR, PR)) {
--        prot2 = tlb->prot & 0xF;
-+        *prot = tlb->prot & 0xF;
-     } else {
--        prot2 = (tlb->prot >> 4) & 0xF;
-+        *prot = (tlb->prot >> 4) & 0xF;
-     }
--    *prot = prot2;
--    if (prot2 & prot_for_access_type(access_type)) {
-+    if (*prot & prot_for_access_type(access_type)) {
-         qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
-         return 0;
-     }
- 
--    qemu_log_mask(CPU_LOG_MMU, "%s: no prot match: %x\n", __func__, prot2);
-+    qemu_log_mask(CPU_LOG_MMU, "%s: no prot match: %x\n", __func__, *prot);
-     return access_type == MMU_INST_FETCH ? -3 : -2;
- }
- 
-@@ -795,7 +792,6 @@ static int mmubooke206_check_tlb(CPUPPCState *env, ppcmas_tlb_t *tlb,
-                                  target_ulong address,
-                                  MMUAccessType access_type, int mmu_idx)
- {
--    int prot2 = 0;
-     uint32_t epid;
-     bool as, pr;
-     bool use_epid = mmubooke206_get_as(env, mmu_idx, &epid, &as, &pr);
-@@ -841,34 +837,34 @@ found_tlb:
-         return -1;
-     }
- 
-+    *prot = 0;
-     if (pr) {
-         if (tlb->mas7_3 & MAS3_UR) {
--            prot2 |= PAGE_READ;
-+            *prot |= PAGE_READ;
-         }
-         if (tlb->mas7_3 & MAS3_UW) {
--            prot2 |= PAGE_WRITE;
-+            *prot |= PAGE_WRITE;
-         }
-         if (tlb->mas7_3 & MAS3_UX) {
--            prot2 |= PAGE_EXEC;
-+            *prot |= PAGE_EXEC;
-         }
-     } else {
-         if (tlb->mas7_3 & MAS3_SR) {
--            prot2 |= PAGE_READ;
-+            *prot |= PAGE_READ;
-         }
-         if (tlb->mas7_3 & MAS3_SW) {
--            prot2 |= PAGE_WRITE;
-+            *prot |= PAGE_WRITE;
-         }
-         if (tlb->mas7_3 & MAS3_SX) {
--            prot2 |= PAGE_EXEC;
-+            *prot |= PAGE_EXEC;
-         }
-     }
--    *prot = prot2;
--    if (prot2 & prot_for_access_type(access_type)) {
-+    if (*prot & prot_for_access_type(access_type)) {
-         qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
-         return 0;
-     }
- 
--    qemu_log_mask(CPU_LOG_MMU, "%s: no prot match: %x\n", __func__, prot2);
-+    qemu_log_mask(CPU_LOG_MMU, "%s: no prot match: %x\n", __func__, *prot);
-     return access_type == MMU_INST_FETCH ? -3 : -2;
- }
- 
+     switch (env->mmu_model) {
 -- 
 2.30.9
 
