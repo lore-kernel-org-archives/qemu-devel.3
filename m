@@ -4,83 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9F7FC04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 13:00:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42971C19F4F
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 13:02:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4gtw-0002Pf-6r; Wed, 08 May 2024 09:00:04 -0400
+	id 1s4gvL-0003il-7q; Wed, 08 May 2024 09:01:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4gtu-0002Np-Ie; Wed, 08 May 2024 09:00:02 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4gts-0004pj-JS; Wed, 08 May 2024 09:00:02 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1ed41eb3382so32741505ad.0; 
- Wed, 08 May 2024 05:59:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715173199; x=1715777999; darn=nongnu.org;
- h=in-reply-to:references:from:subject:cc:to:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vFZl3AQdpM1NLeP9FGk3tiWhrfBRx5WhrsnxR+pehfU=;
- b=G9+jiISF5ACcbmAd7fXrAIk1kkRIU32Cp60E7LPewAWJzHeJFAiG0wq7zQfIqhpy5c
- U5BP1q5rYyxmVCSAgkSFQInJTMBMIlZfOyG06RQyoTD5X+5YLxucmtRrhrJhZESj5ysR
- M7pgwFRTVQBUdYby2of/61LeLTdaZGMSCkIoDwZNdsirqkXykQAj1X2VvcZRdGyYGluP
- SWL+bzrJEXCzsEr8LcGHjTJ5wAs0CQfz9hiLRyIPqHaMvbUBEhVyQJf0otBpo4hi9+/3
- 1/t9ziONgfVjWXd5S3Q+fJWkV0N6f83/tl4rgPurC4VqM/chN5a3VLaetSIur2rZW9AE
- IFKQ==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1s4gul-0003Sz-Gk
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 09:01:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1s4guj-0005HN-5I
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 09:00:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715173251;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+hOGAgJ8kVeI7/gi4mu8fpO+xHHgVmxDX+ubOjLaVUc=;
+ b=YHxi6A/nMFmcWiiXTwz7fRtjSR02hfKl8XV9Gw8vxKCy6H6t75XSUe1ZivHR/IqHZpXojb
+ UnJBWLK38QpCFs/qzSgZ5RaOv2AclMlZRY5cY6FzTCw3iUqLhrhgzYv3xPOm1fYcUG2JYP
+ VYRJB15eRXK5YGdaKRk/UHIrIFjOoLs=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-671-xjt2EiI6O4ygkTw2YwHtrw-1; Wed, 08 May 2024 09:00:46 -0400
+X-MC-Unique: xjt2EiI6O4ygkTw2YwHtrw-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-34eb54c888cso4241403f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 06:00:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715173199; x=1715777999;
- h=in-reply-to:references:from:subject:cc:to:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=vFZl3AQdpM1NLeP9FGk3tiWhrfBRx5WhrsnxR+pehfU=;
- b=vNBxQiBMttXd9Wj6/GxmR3qfxyI5hRUXhQ6TxqX/l7amcOdNFaGm+IO+YGZ2oYdAhC
- 7GesY/sUtD9vJDNSTCU2+QLhoWh1NFlkieE3o/lYy2wjby2I65hhVH3EZAYSRd3+Dt3l
- MRq2Ud3I6cCD6HHeQLldUQpqVg394F6RwST443jzeNSruEXdvEFrFFMcTvre17WlnnLe
- mDodwUDWr1WvgHpxB3MNr82vh1SnYrr8teNPnaUd/DAr7qt5Jvp3USO1up6XOj3saQk/
- 4So3exZEs9fYcMuIOIvmi8qzXzrgQuuRFBoaSpKraahpkU7SuoYbq+0Cq9yu830FhC7U
- 9AeA==
+ d=1e100.net; s=20230601; t=1715173245; x=1715778045;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+hOGAgJ8kVeI7/gi4mu8fpO+xHHgVmxDX+ubOjLaVUc=;
+ b=Asmo/NRLYQXzVOYYhsVaKfOuFsA+tF67OLu5RklwV89mR5OPPfGBhq3viD76xIm4rX
+ CIkZyBfeU071I1yBjepS0vSCmHvUguiv2eyRmSibvHfXgrY1eqPo8LqOLv2VSa14/TBQ
+ GVtV8JB5jxw1tRROQdMehVO3zO6KBOiAhdFSjodd6ibeWtP94c95GvRQpnP4PCN4Rec/
+ W+tUF0407Vf8UVKulbIUYIYMxg+7z7ItcbXIIoTd8wfV7kfX9ItHS4jxpIr2Xq2ssFbg
+ De+xKCzxYaCcs6YAlyQ88Q7W34705aVeoEV62rNQJP9eIUORupr7KwavlVmM+AHaElm6
+ PEGA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWaD/puqJphoexu1Yc62kgfhAYGVASXdhiAQ9jKO3fn1GsSDofmV0Fh5ZKZsftWFB8icAkLvvWYJxPJiKm0DPFSoSNFi/nDQT5MyS0aRcS25Sh1eNQjoNO1Ws0=
-X-Gm-Message-State: AOJu0Ywb1GTLbYrhM5DPJopf/eUgd/rDro6LdRwsAxYILi6Ao4OBJ8v/
- rgwKVxSJnxt8wvI6rxXRkh7HHTjD9tCfEs6PECRacegC2ZhXQT4I9EdkpA==
-X-Google-Smtp-Source: AGHT+IH7QRH1O9EtKck5VddwEkW1MoSEuBefVPTrE89klwJ2Y7xmDwBE1yXWb9cwuGC52SohKBkrQw==
-X-Received: by 2002:a17:903:41cb:b0:1e4:2b90:758e with SMTP id
- d9443c01a7336-1eeb03a6162mr32548185ad.39.1715173198716; 
- Wed, 08 May 2024 05:59:58 -0700 (PDT)
-Received: from localhost ([1.146.8.34]) by smtp.gmail.com with ESMTPSA id
- c4-20020a170903234400b001eb8fb27b59sm11786682plh.111.2024.05.08.05.59.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 May 2024 05:59:58 -0700 (PDT)
-Mime-Version: 1.0
+ AJvYcCV1bJE6svN9TF6KlnYO8oPMSGu8kqj5ZIy/NrYEpo5J20XeF7sueVT6dYl43pfNoB2k9yiEPOWsEuAgbk+rdXp1Hb0+A0s=
+X-Gm-Message-State: AOJu0Yye1mFHk/HPySP34XfKYdXCp+l/hgl16XOp1XESXPxzS2Bb7TcC
+ L5NA/KNPP49bdfdguwe62EH4SZDMfzdYCCEEIdMTXNk+9OzGAhcsGUI5JrSU40d5lGWBEOkRIcJ
+ ockHsFChZ15vGyYNSj1G+oZZciaURz40Hi12SEwzoAVII0zdexy09RL2ZOT/o1zl1nB7Cyx31pf
+ uDIc0/Tw1ZtBQQL248F9G4ZYHgcUo=
+X-Received: by 2002:a05:6000:146:b0:34d:a7bc:e647 with SMTP id
+ ffacd0b85a97d-34fca80df7cmr2608689f8f.62.1715173244252; 
+ Wed, 08 May 2024 06:00:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEKsjLGwL+mkKTd9Y+RqaOVwzDGYjU9iaVZz3Ct56pwT5al2Ur5nly6FWL6v9yninU93jsGAQXiu043zMimxQE=
+X-Received: by 2002:a05:6000:146:b0:34d:a7bc:e647 with SMTP id
+ ffacd0b85a97d-34fca80df7cmr2608642f8f.62.1715173243563; Wed, 08 May 2024
+ 06:00:43 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAOGAQeqOVAHJ4VxQNKqO43hmLJdxpA6E_JEQrfL380SwT4Y73w@mail.gmail.com>
+ <Zh0NiI9ZfS5uzs5Z@redhat.com>
+ <CAOGAQerx0DmHvJNf05wuJFOtXVwDFTt7fy0-GmBZ7xKoLAHTKQ@mail.gmail.com>
+ <ZiDpM7ZusU0SvH7K@redhat.com>
+ <nga2k5uuvpqm2sovguofglw6u3reiqqurbn7vbdexanzrhmw42@vuje72e57egu>
+ <CAOGAQeqU692hHf3dU7udz8hwzP6KuFTNWir0mLcV-URF-JkFnA@mail.gmail.com>
+ <zyj7huwfzji6c5bkq44o56nizo7fju5kn2nqg2n5niuwdzsnkl@ykhg5yqruvwr>
+ <CAJ+F1CKvBW_khQ+zwKiunWGUQYtC_RKnVvUWbZpZALHv07efBw@mail.gmail.com>
+ <5o3xyylget6hqhdaya5cj5tnbmmpzxk6u53cp6jhpviev6ez4m@ri6ady5zc6n3>
+ <30baeb56-64d2-4ea3-8e53-6a5c50999979@redhat.com>
+ <Zjt1VdKQ3KIZChg9@redhat.com>
+In-Reply-To: <Zjt1VdKQ3KIZChg9@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 8 May 2024 15:00:30 +0200
+Message-ID: <CABgObfb8o3L_FawdwFX7Ow-+LN7wyGbvSLWubJrpyTgH3uo-uQ@mail.gmail.com>
+Subject: Re: Hermetic virtio-vsock in QEMU
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>, 
+ Roman Kiryanov <rkir@google.com>, Peter Maydell <peter.maydell@linaro.org>,
+ alex.bennee@linaro.org, 
+ QEMU Developers <qemu-devel@nongnu.org>, JP Cottin <jpcottin@google.com>, 
+ Erwin Jansen <jansene@google.com>, Mehdi Alizadeh <mett@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 08 May 2024 22:59:53 +1000
-Message-Id: <D14A5JEZM7P0.3FB8K9W0R5PD8@gmail.com>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
- <qemu-ppc@nongnu.org>
-Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
-Subject: Re: [PATCH v3 23/33] target/ppc/mmu_common.c: Remove BookE from
- direct store handling
-From: "Nicholas Piggin" <npiggin@gmail.com>
-X-Mailer: aerc 0.17.0
-References: <cover.1715125376.git.balaton@eik.bme.hu>
- <e3b98c7e622d76e6eac1f29b84b3a73ac88f8159.1715125376.git.balaton@eik.bme.hu>
-In-Reply-To: <e3b98c7e622d76e6eac1f29b84b3a73ac88f8159.1715125376.git.balaton@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.582,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,36 +113,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed May 8, 2024 at 10:15 AM AEST, BALATON Zoltan wrote:
-> As BookE never returns -4 we can drop BookE from the direct store case
-> in ppc_jumbo_xlate().
+On Wed, May 8, 2024 at 2:51=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
+dhat.com> wrote:
+> Designwise, a native VSOCK backend in QEMU really should implement the
+> same approach defined by firecracker, so that we have interoperability
+> with systemd, firecracker and cloud-hypervisor. See
 >
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-
-> ---
->  target/ppc/mmu_common.c | 7 +------
->  1 file changed, 1 insertion(+), 6 deletions(-)
+>   https://gitlab.com/qemu-project/qemu/-/issues/2095
+>   https://github.com/firecracker-microvm/firecracker/blob/main/docs/vsock=
+.md#firecracker-virtio-vsock-design
 >
-> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-> index 87cac12d68..03b834eb77 100644
-> --- a/target/ppc/mmu_common.c
-> +++ b/target/ppc/mmu_common.c
-> @@ -1287,12 +1287,7 @@ static bool ppc_jumbo_xlate(PowerPCCPU *cpu, vaddr=
- eaddr,
->              /* Direct store exception */
->              /* No code fetch is allowed in direct-store areas */
->              cs->exception_index =3D POWERPC_EXCP_ISI;
-> -            if ((env->mmu_model =3D=3D POWERPC_MMU_BOOKE) ||
-> -                (env->mmu_model =3D=3D POWERPC_MMU_BOOKE206)) {
-> -                env->error_code =3D 0;
-> -            } else {
-> -                env->error_code =3D 0x10000000;
-> -            }
-> +            env->error_code =3D 0x10000000;
->              break;
->          }
->      } else {
+> This involves multiple UNIX sockets on the host
+>
+>   1 * /some/path   - QEMU listens on this, and accepts connections
+>                      from other host processes. The client sends
+>                      "PORT <num>" to indicate that guest port it
+>                      is connecting to
+>
+>   n * /some/path_$PORT - QEMU connect to this for outgoing connections
+>                          from the guest. Other host processes need
+>                          to listen on whatever path_$PORT need to be
+>                          serviced
+
+The former is quite horrible, but okay. Out of curiosity, which
+clients are using that convention?
+
+> IOW, from a CLI pov, QEMU should need nothing more than
+>
+>     -object vsock-forward,prefix=3D/some/path
+
+I would call this a "vsock-namespace" object with a matching namespace
+property on the virtio-vsock device.  The id on the vsock-namespace
+object would also allow 1) adding vsock-forward objects hanging from
+the namespace 2) omitting the prefix to only allow specifying
+connections via vsock-forward.
+
+I agree that allowing interoperability with existing implementations
+is nice to have, at least as a principle.
+
+Paolo
 
 
