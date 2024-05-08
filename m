@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88D88C25B77
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 23:43:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A46E7C25B4F
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 23:43:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4qpg-0003HQ-7V; Wed, 08 May 2024 19:36:20 -0400
+	id 1s4qph-0003JH-3b; Wed, 08 May 2024 19:36:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s4qpY-0002zd-OD; Wed, 08 May 2024 19:36:12 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ id 1s4qpa-00034k-AM; Wed, 08 May 2024 19:36:14 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s4qpV-0002TZ-CE; Wed, 08 May 2024 19:36:12 -0400
+ id 1s4qpX-0002UO-Dg; Wed, 08 May 2024 19:36:13 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id BABB14E65D4;
- Thu, 09 May 2024 01:36:07 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id D32894E65CE;
+ Thu, 09 May 2024 01:36:09 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id LElKPGIjaXYO; Thu,  9 May 2024 01:36:05 +0200 (CEST)
+ with ESMTP id pcQ0Z1BSlQ2D; Thu,  9 May 2024 01:36:07 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id CBBD74E64E0; Thu, 09 May 2024 01:36:05 +0200 (CEST)
-Message-Id: <b6e6f31a8f7dc460f77f78e74337b84be48e03e2.1715209155.git.balaton@eik.bme.hu>
+ id DE7494E65D5; Thu, 09 May 2024 01:36:07 +0200 (CEST)
+Message-Id: <041f79d05a1d5ae9c9158cf4777d414a6927d60c.1715209155.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1715209155.git.balaton@eik.bme.hu>
 References: <cover.1715209155.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v4 03/33] target/ppc: Simplify syscall exception handlers
+Subject: [PATCH v4 05/33] target/ppc/mmu_common.c: Move calculation of a value
+ closer to its usage
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -39,9 +40,9 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Thu, 09 May 2024 01:36:05 +0200 (CEST)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
+Date: Thu, 09 May 2024 01:36:07 +0200 (CEST)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -62,81 +63,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-After previous changes the hypercall handling in 7xx and 74xx
-exception handlers can be folded into one if statement to simplify
-this code. Also add "unlikely" to mark the less frequently used branch
-for the compiler.
+In mmubooke_check_tlb() and mmubooke206_check_tlb() prot2 is
+calculated first but only used after an unrelated check that can
+return before tha value is used. Move the calculation after the check,
+closer to where it is used, to keep them together and avoid computing
+it when not needed.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Reviwed-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/excp_helper.c | 22 ++++++----------------
- 1 file changed, 6 insertions(+), 16 deletions(-)
+ target/ppc/mmu_common.c | 36 +++++++++++++++++-------------------
+ 1 file changed, 17 insertions(+), 19 deletions(-)
 
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 5aa84bccd2..d19212f772 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -762,26 +762,21 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
-     case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
-     {
-         int lev = env->error_code;
--
--        if (lev == 1 && cpu->vhyp) {
--            dump_hcall(env);
--        } else {
--            dump_syscall(env);
--        }
-         /*
-          * The Virtual Open Firmware (VOF) relies on the 'sc 1'
-          * instruction to communicate with QEMU. The pegasos2 machine
-          * uses VOF and the 7xx CPUs, so although the 7xx don't have
-          * HV mode, we need to keep hypercall support.
-          */
--        if (lev == 1 && cpu->vhyp) {
-+        if (unlikely(lev == 1 && cpu->vhyp)) {
-             PPCVirtualHypervisorClass *vhc =
-                 PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-+            dump_hcall(env);
-             vhc->hypercall(cpu->vhyp, cpu);
-             powerpc_reset_excp_state(cpu);
-             return;
-         }
--
-+        dump_syscall(env);
-         break;
+diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+index 4fde7fd3bf..f79e390306 100644
+--- a/target/ppc/mmu_common.c
++++ b/target/ppc/mmu_common.c
+@@ -635,12 +635,6 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppcemb_tlb_t *tlb,
+         return -1;
      }
-     case POWERPC_EXCP_FPU:       /* Floating-point unavailable exception     */
-@@ -907,26 +902,21 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
-     case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
-     {
-         int lev = env->error_code;
+ 
+-    if (FIELD_EX64(env->msr, MSR, PR)) {
+-        prot2 = tlb->prot & 0xF;
+-    } else {
+-        prot2 = (tlb->prot >> 4) & 0xF;
+-    }
 -
--        if (lev == 1 && cpu->vhyp) {
--            dump_hcall(env);
--        } else {
--            dump_syscall(env);
--        }
-         /*
-          * The Virtual Open Firmware (VOF) relies on the 'sc 1'
-          * instruction to communicate with QEMU. The pegasos2 machine
-          * uses VOF and the 74xx CPUs, so although the 74xx don't have
-          * HV mode, we need to keep hypercall support.
-          */
--        if (lev == 1 && cpu->vhyp) {
-+        if (unlikely(lev == 1 && cpu->vhyp)) {
-             PPCVirtualHypervisorClass *vhc =
-                 PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-+            dump_hcall(env);
-             vhc->hypercall(cpu->vhyp, cpu);
-             powerpc_reset_excp_state(cpu);
-             return;
-         }
--
-+        dump_syscall(env);
-         break;
+     /* Check the address space */
+     if ((access_type == MMU_INST_FETCH ?
+         FIELD_EX64(env->msr, MSR, IR) :
+@@ -649,6 +643,11 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppcemb_tlb_t *tlb,
+         return -1;
      }
-     case POWERPC_EXCP_FPU:       /* Floating-point unavailable exception     */
+ 
++    if (FIELD_EX64(env->msr, MSR, PR)) {
++        prot2 = tlb->prot & 0xF;
++    } else {
++        prot2 = (tlb->prot >> 4) & 0xF;
++    }
+     *prot = prot2;
+     if (prot2 & prot_for_access_type(access_type)) {
+         qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
+@@ -830,6 +829,18 @@ static int mmubooke206_check_tlb(CPUPPCState *env, ppcmas_tlb_t *tlb,
+ 
+ found_tlb:
+ 
++    /* Check the address space and permissions */
++    if (access_type == MMU_INST_FETCH) {
++        /* There is no way to fetch code using epid load */
++        assert(!use_epid);
++        as = FIELD_EX64(env->msr, MSR, IR);
++    }
++
++    if (as != ((tlb->mas1 & MAS1_TS) >> MAS1_TS_SHIFT)) {
++        qemu_log_mask(CPU_LOG_MMU, "%s: AS doesn't match\n", __func__);
++        return -1;
++    }
++
+     if (pr) {
+         if (tlb->mas7_3 & MAS3_UR) {
+             prot2 |= PAGE_READ;
+@@ -851,19 +862,6 @@ found_tlb:
+             prot2 |= PAGE_EXEC;
+         }
+     }
+-
+-    /* Check the address space and permissions */
+-    if (access_type == MMU_INST_FETCH) {
+-        /* There is no way to fetch code using epid load */
+-        assert(!use_epid);
+-        as = FIELD_EX64(env->msr, MSR, IR);
+-    }
+-
+-    if (as != ((tlb->mas1 & MAS1_TS) >> MAS1_TS_SHIFT)) {
+-        qemu_log_mask(CPU_LOG_MMU, "%s: AS doesn't match\n", __func__);
+-        return -1;
+-    }
+-
+     *prot = prot2;
+     if (prot2 & prot_for_access_type(access_type)) {
+         qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
 -- 
 2.30.9
 
