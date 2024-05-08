@@ -4,91 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76F0FC25B74
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 07:50:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6356DC25B4F
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 07:51:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4c43-0005ME-0k; Wed, 08 May 2024 03:50:11 -0400
+	id 1s4c57-0006nl-Md; Wed, 08 May 2024 03:51:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1s4c3t-0005Jq-T2
- for qemu-devel@nongnu.org; Wed, 08 May 2024 03:50:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1s4c53-0006n7-QI
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 03:51:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1s4c3s-00037d-0i
- for qemu-devel@nongnu.org; Wed, 08 May 2024 03:50:01 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1s4c51-0003ck-Vo
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 03:51:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715154595;
+ s=mimecast20190719; t=1715154671;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cUwsiivt4wIpheqIiLMhaZ8u3qvativBF7BiLk6pO+c=;
- b=AXmwCtJv+h0qLlg6Q99JudVJPQlLQEZ3q4/7/uNOyUvR823QOw1A/midw96HUFhQgkCkNI
- tFLowO7Xrt1Svg/ia6Usnh68rPllLku7whLi5tU20P9mjJpKEpE7eb5xztsuk9CruukW3o
- hhE6nOZg3TEEdJVLG3rwBjO2V771pIw=
+ content-transfer-encoding:content-transfer-encoding;
+ bh=5Hawqc4eKsuRoEeNzhNfF11fxC7Y1Ie12gJ5KxWupCw=;
+ b=SnXwVbQu0qjL5c/tf69tQwEMkywkfz0xEEinlFGzO9cZH1IkrL/V1hOS16hVXSyftDBBkn
+ D3iJR69G6g1zgNLgtMpySuPXcx1XyhmGx0O6sBKpSasrkSTBrp1DDbspMfIp97yQReK8My
+ kNz15uzqbEB9M8UlQnMP4iEzcSmt5RM=
 Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
  [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-631-_Cn4TTmUPnKJkEQDTBXRGA-1; Wed, 08 May 2024 03:49:54 -0400
-X-MC-Unique: _Cn4TTmUPnKJkEQDTBXRGA-1
+ us-mta-554-e4iGkeGwMyuuRl-Y_8D5Gg-1; Wed, 08 May 2024 03:51:09 -0400
+X-MC-Unique: e4iGkeGwMyuuRl-Y_8D5Gg-1
 Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a59c3cf5f83so224250066b.2
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 00:49:54 -0700 (PDT)
+ a640c23a62f3a-a524b774e39so53104466b.1
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 00:51:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715154593; x=1715759393;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cUwsiivt4wIpheqIiLMhaZ8u3qvativBF7BiLk6pO+c=;
- b=bsE0oFh49Z1P/SoBUK/P+bSED6QPc036Duw5mzvC3ET5+46vZgg7zKM0eUWHq1wgyA
- U8dTulUUJdfMQwC31JyPPnqW47rm+qu8VqULxr3Gi4Fw2KWYUSAvc5WuLQyTb7x5BsYN
- 5mhCXXoduW9rCLVTbQnA2/JOc60IsuW8hQFSBi5O56Mxq+dLAzkeA9BzvLc1keZAZArg
- DZSFH0RO5pJqQ7+YkWv6QpGwA4h+tW5vWOqt+vwzgoJM5yr0JDuIPJPjkq22PAMkEPxu
- WPYS3W53GPjYXGMYlxiTOaC5fkSLqmjjQL5SwjkClORFQ9zTth7R0qkOYrm5bwYQjTsP
- VbgQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWuZD/l+V2MocoCqGy43mOJwdvO5VzibuwC5p1uaNVFM0CjCiz0QElHCoentgBDRtD2c6VD/T+LnKa033ABJsw7GZlZ9W8=
-X-Gm-Message-State: AOJu0YwWTrhnA8dKDEw+RnoRyqpZ2Qj92jcqDxPYFMjrA76mNaHyHDfB
- p1TBm2tcAgVR4rhGA5Z8aKtF8f3gmW91g0Os6hknHvs2VDMo6t/tKE/fbx2WtBoHoUGnMTW0xFE
- Vo7GPnBKJfij6N+KQ3j/aAxjjjNmsYN8mpTGip8kOpkY09ylVME63
-X-Received: by 2002:a17:906:3715:b0:a59:aae5:b0bc with SMTP id
- a640c23a62f3a-a59fb952c14mr94042866b.42.1715154593073; 
- Wed, 08 May 2024 00:49:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEG7LWBfK2/ClnLQVW1UbMCAY3zsKv3sytk8kwUbKcckx+3SQ7ck8HC+YFwaeyoeTko4kL5Nw==
-X-Received: by 2002:a17:906:3715:b0:a59:aae5:b0bc with SMTP id
- a640c23a62f3a-a59fb952c14mr94041966b.42.1715154592749; 
- Wed, 08 May 2024 00:49:52 -0700 (PDT)
-Received: from sgarzare-redhat (host-87-12-25-56.business.telecomitalia.it.
- [87.12.25.56]) by smtp.gmail.com with ESMTPSA id
- ag3-20020a1709069a8300b00a59a6fac3besm5286698ejc.211.2024.05.08.00.49.50
+ d=1e100.net; s=20230601; t=1715154667; x=1715759467;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=5Hawqc4eKsuRoEeNzhNfF11fxC7Y1Ie12gJ5KxWupCw=;
+ b=AQbfAjjnjxPps0+XMNA3m1bJ8tJnFiMse1Q65L3UMTNQ7VOK2tFvi6qr4oncEcU3mb
+ e7+2GFg5UNdFspFRpJqUH3Y6jT5qa47xc/0pLpgUIKyndMPo9OqJnxJZj8yUYMLALKGn
+ QFxsKrkqjbDnkFx1NWCNw9EgNU3ZBPG915c9hB8sdYIzu2RBXi1gUz7CtPzVXZ9x+w+p
+ 0OdS/FOQT8ioQjMSTFjIN3AvD5V9Yc3T57Hf89M+jC4e/y/keO8ksKA5FlVN4duTMqmB
+ 2YwO560G4fLQG7FVu9iaTkZr0zbwNEapUCBc06P1gp4034TllKqHgLJHduXtaShGMSWy
+ n64w==
+X-Gm-Message-State: AOJu0Yw0flenSn0r/otcuwbtCE2h3Mz/eSjT2xl22IWhoHgg9kwSzgkd
+ oUanyIPf9IUsQDKMGgamaIYtQmyM57rF7UNsmbcAqgjEbU9sYr0QgTMJ0HSQQJIlSqd1OyeO5cd
+ F5ak9smWUFWoXZoVK0/sAe5keVEVPoAJQ4CRhdjpQY5QIOFmUHOH9eB17wKs6DPEe2uEuNa4Fwg
+ G+gp3pL7/Se+RvV6kSzbsdwUEwMIDv1Rs8kDu/
+X-Received: by 2002:a17:906:d295:b0:a59:a85c:a5ca with SMTP id
+ a640c23a62f3a-a59fa863e37mr167404066b.7.1715154666924; 
+ Wed, 08 May 2024 00:51:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG9QGeQ7yhzoEWxc+hlgs6NRytazIsVpcOfJ74tQL4zTXaUVxJxbcg2QwrjtfI7c3HAzHpipA==
+X-Received: by 2002:a17:906:d295:b0:a59:a85c:a5ca with SMTP id
+ a640c23a62f3a-a59fa863e37mr167402266b.7.1715154666442; 
+ Wed, 08 May 2024 00:51:06 -0700 (PDT)
+Received: from avogadro.local ([151.95.155.52])
+ by smtp.gmail.com with ESMTPSA id
+ b8-20020a170906834800b00a59b126af69sm4678727ejy.159.2024.05.08.00.51.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 May 2024 00:49:51 -0700 (PDT)
-Date: Wed, 8 May 2024 09:49:47 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Roman Kiryanov <rkir@google.com>
-Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, alex.bennee@linaro.org,
- QEMU Developers <qemu-devel@nongnu.org>, 
- JP Cottin <jpcottin@google.com>, Erwin Jansen <jansene@google.com>, 
- Mehdi Alizadeh <mett@google.com>
-Subject: Re: Hermetic virtio-vsock in QEMU
-Message-ID: <zyj7huwfzji6c5bkq44o56nizo7fju5kn2nqg2n5niuwdzsnkl@ykhg5yqruvwr>
-References: <CAOGAQeqOVAHJ4VxQNKqO43hmLJdxpA6E_JEQrfL380SwT4Y73w@mail.gmail.com>
- <Zh0NiI9ZfS5uzs5Z@redhat.com>
- <CAOGAQerx0DmHvJNf05wuJFOtXVwDFTt7fy0-GmBZ7xKoLAHTKQ@mail.gmail.com>
- <ZiDpM7ZusU0SvH7K@redhat.com>
- <nga2k5uuvpqm2sovguofglw6u3reiqqurbn7vbdexanzrhmw42@vuje72e57egu>
- <CAOGAQeqU692hHf3dU7udz8hwzP6KuFTNWir0mLcV-URF-JkFnA@mail.gmail.com>
+ Wed, 08 May 2024 00:51:05 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: philmd@linaro.org
+Subject: [PATCH v2 0/6] kconfig: express dependency of individual boards on
+ libfdt
+Date: Wed,  8 May 2024 09:50:59 +0200
+Message-ID: <20240508075105.15510-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.45.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAOGAQeqU692hHf3dU7udz8hwzP6KuFTNWir0mLcV-URF-JkFnA@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -112,23 +100,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Roman,
+This is a follow up to the "default y" patch series at
+https://lore.kernel.org/qemu-devel/20240423131612.28362-1-pbonzini@redhat.com/
+and shows an example of what that series enables.
 
-On Tue, May 07, 2024 at 11:20:50PM GMT, Roman Kiryanov wrote:
->Hi Stefano,
->
->On Tue, May 7, 2024 at 1:10 AM Stefano Garzarella <sgarzare@redhat.com> wrote:
->> I have no experience with Windows, but what we need for vhost-user is:
->>
->> - AF_UNIX and be able to send file descriptors using ancillary data
->>    (i.e. SCM_RIGHTS)
->
->As far as I understand, Windows does NOT support SCM_RIGHTS over AF_UNIX.
+With this change, individual boards will be enabled/disabled depending
+on whether libfdt is present or not.  In particular, x86 will simply
+disable microvm and build the "traditional" chipsets if libfdt is not
+found.
 
-Thank you for the information. This is unfortunate and does not allow
-us to use vhost-user as it is on Windows.
+All boards or targets that need libfdt now have an explicit "depends on
+FDT" (sometimes the boards delegate that to the target).  TARGET_NEED_FDT
+is only used for targets that absolutely cannot build without libfdt,
+or for which all boards require it.
 
-Thanks,
-Stefano
+For simplicity, patch 1 simplifies the libfdt handling in meson.build,
+removing the ability to force use of the subproject.  There is no
+use case that I can imagine, if you want to use the subproject just
+delete libfdt from your OS installation.
+
+Paolo
+
+v1->v2:
+- use libfdt CPPFLAGS when building target-specific files
+- limited scope of libfdt detection changes: keep it enabled when building
+  --without-default-features (see commit message for 0577e84d374,
+  "configure: Disable capstone and slirp in the --without-default-features
+  mode", 2022-02-21)
+- patch 6 does not 
+- split patch 3 in two parts
+- fix compilation errors due to missing qmp_dumpdtb/hmp_dumpdtb
+- make MIPS_BOSTON depend on FDT
+
+Paolo Bonzini (6):
+  meson: pick libfdt from common_ss when building target-specific files
+  meson: move libfdt together with other dependencies
+  kconfig: allow compiling out QEMU device tree code per target
+  kconfig: express dependency of individual boards on libfdt
+  hw/xtensa: require libfdt
+  configs: disable emulators that require it if libfdt is not found
+
+ configs/targets/aarch64-softmmu.mak      |   1 +
+ configs/targets/arm-softmmu.mak          |   1 +
+ configs/targets/i386-softmmu.mak         |   1 -
+ configs/targets/loongarch64-softmmu.mak  |   1 +
+ configs/targets/microblaze-softmmu.mak   |   1 +
+ configs/targets/microblazeel-softmmu.mak |   1 +
+ configs/targets/mips64el-softmmu.mak     |   1 -
+ configs/targets/or1k-softmmu.mak         |   1 +
+ configs/targets/ppc-softmmu.mak          |   1 -
+ configs/targets/ppc64-softmmu.mak        |   1 +
+ configs/targets/riscv32-softmmu.mak      |   1 +
+ configs/targets/riscv64-softmmu.mak      |   1 +
+ configs/targets/rx-softmmu.mak           |   1 +
+ configs/targets/x86_64-softmmu.mak       |   1 -
+ meson.build                              | 100 +++++++++++++----------
+ include/monitor/hmp.h                    |   1 +
+ include/sysemu/device_tree.h             |   1 -
+ hw/xtensa/xtfpga.c                       |   9 --
+ monitor/hmp-cmds.c                       |  17 ++++
+ system/device_tree-stub.c                |  10 +++
+ system/device_tree.c                     |  14 ----
+ .gitlab-ci.d/buildtest.yml               |   8 +-
+ Kconfig.host                             |   3 +
+ hw/arm/Kconfig                           |   5 ++
+ hw/arm/meson.build                       |   2 +-
+ hw/core/Kconfig                          |   9 +-
+ hw/core/meson.build                      |   2 +-
+ hw/i386/Kconfig                          |   3 +-
+ hw/loongarch/Kconfig                     |   3 +-
+ hw/loongarch/meson.build                 |   2 +-
+ hw/mips/Kconfig                          |   3 +-
+ hw/mips/meson.build                      |   2 +-
+ hw/openrisc/Kconfig                      |   2 +
+ hw/openrisc/meson.build                  |   4 +-
+ hw/ppc/Kconfig                           |  15 ++--
+ hw/ppc/meson.build                       |   4 +-
+ hw/riscv/Kconfig                         |   4 +
+ hw/riscv/meson.build                     |   2 +-
+ hw/rx/Kconfig                            |   3 +-
+ hw/xtensa/Kconfig                        |   3 +-
+ system/meson.build                       |   4 +-
+ target/arm/Kconfig                       |   2 +
+ target/microblaze/Kconfig                |   1 +
+ target/openrisc/Kconfig                  |   1 +
+ target/riscv/Kconfig                     |   2 +
+ 45 files changed, 154 insertions(+), 101 deletions(-)
+ create mode 100644 system/device_tree-stub.c
+
+-- 
+2.45.0
 
 
