@@ -4,70 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F119FC25B75
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 08:54:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2248AC04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 08:55:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4d3r-0001Ih-2Z; Wed, 08 May 2024 04:54:03 -0400
+	id 1s4d5N-0002Gy-8l; Wed, 08 May 2024 04:55:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s4d3n-00018Z-5h
- for qemu-devel@nongnu.org; Wed, 08 May 2024 04:54:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s4d3i-0007wc-W5
- for qemu-devel@nongnu.org; Wed, 08 May 2024 04:53:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715158433;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=Z+SXa6ZH+M0Iix3vdbwNB6xSc6JQWCRkIX4/cPiCdBk=;
- b=GvgIhaaX4wcMcBtIWo0QEe9y8oytCsCRu/R7kklYUWzM/j1v7IXrSEHW7jLrtpyAV6+uj7
- ksX9NHQCMNZoQru2vdOA/RRTNBN5MFLXJqpTiPw/pM/Hykpzp+7dO5QjtxGRO04XdjH70v
- hzibo+vvdtvZ7gWryPLBKibklx59Gdo=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-63-IZANiXtCNS2bkNQnfVnidw-1; Wed,
- 08 May 2024 04:53:52 -0400
-X-MC-Unique: IZANiXtCNS2bkNQnfVnidw-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B94DF29AB410;
- Wed,  8 May 2024 08:53:51 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.29])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 9E0C03C25;
- Wed,  8 May 2024 08:53:50 +0000 (UTC)
-Date: Wed, 8 May 2024 09:53:48 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
- Claudio Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>
-Subject: Re: [PATCH 8/9] migration: Add support for fdset with multifd + file
-Message-ID: <Zjs9nI_Wgi5UIJba@redhat.com>
-References: <20240426142042.14573-1-farosas@suse.de>
- <20240426142042.14573-9-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1s4d5D-0002Ek-MS
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 04:55:29 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1s4d5A-0008Pk-ES
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 04:55:27 -0400
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8Bxc+rzPTtmlEsJAA--.12687S3;
+ Wed, 08 May 2024 16:55:15 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8DxXN7yPTtmamwVAA--.41658S2; 
+ Wed, 08 May 2024 16:55:15 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Thomas Huth <thuth@redhat.com>,
+	Laurent Vivier <lvivier@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH] tests/qtest/boot-serial-test: Add support on LoongArch system
+Date: Wed,  8 May 2024 16:55:14 +0800
+Message-Id: <20240508085514.2510592-1-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240426142042.14573-9-farosas@suse.de>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8DxXN7yPTtmamwVAA--.41658S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,193 +61,63 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 26, 2024 at 11:20:41AM -0300, Fabiano Rosas wrote:
-> Allow multifd to use an fdset when migrating to a file. This is useful
-> for the scenario where the management layer wants to have control over
-> the migration file.
-> 
-> By receiving the file descriptors directly, QEMU can delegate some
-> high level operating system operations to the management layer (such
-> as mandatory access control). The management layer might also want to
-> add its own headers before the migration stream.
-> 
-> Enable the "file:/dev/fdset/#" syntax for the multifd migration with
-> mapped-ram. The requirements for the fdset mechanism are:
-> 
-> On the migration source side:
-> 
-> - the fdset must contain two fds that are not duplicates between
->   themselves;
-> - if direct-io is to be used, exactly one of the fds must have the
->   O_DIRECT flag set;
-> - the file must be opened with WRONLY both times.
-> 
-> On the migration destination side:
-> 
-> - the fdset must contain one fd;
-> - the file must be opened with RDONLY.
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  docs/devel/migration/main.rst       | 18 ++++++++++++++
->  docs/devel/migration/mapped-ram.rst |  6 ++++-
->  migration/file.c                    | 38 ++++++++++++++++++++++++++++-
->  3 files changed, 60 insertions(+), 2 deletions(-)
-> 
-> diff --git a/docs/devel/migration/main.rst b/docs/devel/migration/main.rst
-> index 54385a23e5..50f6096470 100644
-> --- a/docs/devel/migration/main.rst
-> +++ b/docs/devel/migration/main.rst
-> @@ -47,6 +47,24 @@ over any transport.
->    QEMU interference. Note that QEMU does not flush cached file
->    data/metadata at the end of migration.
->  
-> +  The file migration also supports using a file that has already been
-> +  opened. A set of file descriptors is passed to QEMU via an "fdset"
-> +  (see add-fd QMP command documentation). This method allows a
-> +  management application to have control over the migration file
-> +  opening operation. There are, however, strict requirements to this
-> +  interface:
-> +
-> +  On the migration source side:
-> +    - if the multifd capability is to be used, the fdset must contain
-> +      two file descriptors that are not duplicates between themselves;
-> +    - if the direct-io capability is to be used, exactly one of the
-> +      file descriptors must have the O_DIRECT flag set;
-> +    - the file must be opened with WRONLY.
-> +
-> +  On the migration destination side:
-> +    - the fdset must contain one file descriptor;
-> +    - the file must be opened with RDONLY.
-> +
->  In addition, support is included for migration using RDMA, which
->  transports the page data using ``RDMA``, where the hardware takes care of
->  transporting the pages, and the load on the CPU is much lower.  While the
-> diff --git a/docs/devel/migration/mapped-ram.rst b/docs/devel/migration/mapped-ram.rst
-> index fa4cefd9fc..e6505511f0 100644
-> --- a/docs/devel/migration/mapped-ram.rst
-> +++ b/docs/devel/migration/mapped-ram.rst
-> @@ -16,7 +16,7 @@ location in the file, rather than constantly being added to a
->  sequential stream. Having the pages at fixed offsets also allows the
->  usage of O_DIRECT for save/restore of the migration stream as the
->  pages are ensured to be written respecting O_DIRECT alignment
-> -restrictions (direct-io support not yet implemented).
-> +restrictions.
->  
->  Usage
->  -----
-> @@ -35,6 +35,10 @@ Use a ``file:`` URL for migration:
->  Mapped-ram migration is best done non-live, i.e. by stopping the VM on
->  the source side before migrating.
->  
-> +For best performance enable the ``direct-io`` capability as well:
-> +
-> +    ``migrate_set_capability direct-io on``
-> +
->  Use-cases
->  ---------
->  
-> diff --git a/migration/file.c b/migration/file.c
-> index b9265b14dd..3bc8bc7463 100644
-> --- a/migration/file.c
-> +++ b/migration/file.c
-> @@ -17,6 +17,7 @@
->  #include "io/channel-file.h"
->  #include "io/channel-socket.h"
->  #include "io/channel-util.h"
-> +#include "monitor/monitor.h"
->  #include "options.h"
->  #include "trace.h"
->  
-> @@ -54,10 +55,18 @@ static void file_remove_fdset(void)
->      }
->  }
->  
-> +/*
-> + * With multifd, due to the behavior of the dup() system call, we need
-> + * the fdset to have two non-duplicate fds so we can enable direct IO
-> + * in the secondary channels without affecting the main channel.
-> + */
->  static bool file_parse_fdset(const char *filename, int64_t *fdset_id,
->                               Error **errp)
->  {
-> +    FdsetInfoList *fds_info;
-> +    FdsetFdInfoList *fd_info;
->      const char *fdset_id_str;
-> +    int nfds = 0;
->  
->      *fdset_id = -1;
->  
-> @@ -71,6 +80,32 @@ static bool file_parse_fdset(const char *filename, int64_t *fdset_id,
->          return false;
->      }
->  
-> +    if (!migrate_multifd() || !migrate_direct_io()) {
-> +        return true;
-> +    }
-> +
-> +    for (fds_info = qmp_query_fdsets(NULL); fds_info;
-> +         fds_info = fds_info->next) {
-> +
-> +        if (*fdset_id != fds_info->value->fdset_id) {
-> +            continue;
-> +        }
-> +
-> +        for (fd_info = fds_info->value->fds; fd_info; fd_info = fd_info->next) {
-> +            if (nfds++ > 2) {
-> +                break;
-> +            }
-> +        }
-> +    }
-> +
-> +    if (nfds != 2) {
-> +        error_setg(errp, "Outgoing migration needs two fds in the fdset, "
-> +                   "got %d", nfds);
-> +        qmp_remove_fd(*fdset_id, false, -1, NULL);
-> +        *fdset_id = -1;
-> +        return false;
-> +    }
-> +
->      return true;
->  }
+Add boot-serial-test test case support on LoongArch system.
 
-Related to my thoughts in an earlier patch, where I say that use of fdsets
-ought to be transparent to QEMU code, I'm not a fan of having this logic
-in migration code.
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ tests/qtest/boot-serial-test.c | 10 ++++++++++
+ tests/qtest/meson.build        |  4 ++++
+ 2 files changed, 14 insertions(+)
 
-IIUC, the migration code will call  qio_channel_file_new_path twice,
-once with O_DIRECT and once without. This should trigger two calls
-into monitor_fdset_dup_fd_add with different flags. If we're matching
-flags in that monitor_fdset_dup_fd_add(), then if only 1 FD was
-provided, are we not able to report an error there ?
+diff --git a/tests/qtest/boot-serial-test.c b/tests/qtest/boot-serial-test.c
+index e3b7d65fe5..631015e8c8 100644
+--- a/tests/qtest/boot-serial-test.c
++++ b/tests/qtest/boot-serial-test.c
+@@ -129,6 +129,14 @@ static const uint8_t kernel_stm32vldiscovery[] = {
+     0x04, 0x38, 0x01, 0x40                  /* 0x40013804 = USART1 TXD */
+ };
+ 
++static const uint8_t bios_loongarch64[] = {
++    0x0c, 0xc0, 0x3f, 0x14,                 /* lu12i.w $t0, 0x1fe00    */
++    0x8c, 0x81, 0x87, 0x03,                 /* ori     $t0, $t0, 0x1e0 */
++    0x0d, 0x50, 0x81, 0x03,                 /* li.w    $t1, 'T'        */
++    0x8d, 0x01, 0x00, 0x29,                 /* st.b    $t1, $t0, 0     */
++    0xff, 0xf3, 0xff, 0x53,                 /*  b      -16  # loop     */
++};
++
+ typedef struct testdef {
+     const char *arch;       /* Target architecture */
+     const char *machine;    /* Name of the machine */
+@@ -181,6 +189,8 @@ static const testdef_t tests[] = {
+     { "arm", "microbit", "", "T", sizeof(kernel_nrf51), kernel_nrf51 },
+     { "arm", "stm32vldiscovery", "", "T",
+       sizeof(kernel_stm32vldiscovery), kernel_stm32vldiscovery },
++    { "loongarch64", "virt", "-cpu max", "TT", sizeof(bios_loongarch64),
++      NULL, bios_loongarch64 },
+ 
+     { NULL }
+ };
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 6f2f594ace..6619b630e6 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -256,6 +256,10 @@ qtests_s390x = \
+ qtests_riscv32 = \
+   (config_all_devices.has_key('CONFIG_SIFIVE_E_AON') ? ['sifive-e-aon-watchdog-test'] : [])
+ 
++ qtests_loongarch64 = \
++  qtests_filter + \
++  ['boot-serial-test']
++
+ qos_test_ss = ss.source_set()
+ qos_test_ss.add(
+   'ac97-test.c',
 
->  
-> @@ -209,10 +244,11 @@ void file_start_incoming_migration(FileMigrationArgs *file_args, Error **errp)
->      g_autofree char *filename = g_strdup(file_args->filename);
->      QIOChannelFile *fioc = NULL;
->      uint64_t offset = file_args->offset;
-> +    int flags = O_RDONLY;
->  
->      trace_migration_file_incoming(filename);
->  
-> -    fioc = qio_channel_file_new_path(filename, O_RDONLY, 0, errp);
-> +    fioc = qio_channel_file_new_path(filename, flags, 0, errp);
->      if (!fioc) {
->          return;
->      }
-> -- 
-> 2.35.3
-> 
-
-With regards,
-Daniel
+base-commit: 4e66a08546a2588a4667766a1edab9caccf24ce3
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.39.3
 
 
