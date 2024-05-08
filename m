@@ -4,84 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1563C04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 21:21:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A17F6C04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 21:23:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4ojM-0000to-D7; Wed, 08 May 2024 17:21:41 -0400
+	id 1s4okW-0001e9-LH; Wed, 08 May 2024 17:22:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1s4ojF-0000qt-3B
- for qemu-devel@nongnu.org; Wed, 08 May 2024 17:21:33 -0400
-Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4okV-0001dn-4y
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 17:22:51 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1s4ojC-0000iH-Pt
- for qemu-devel@nongnu.org; Wed, 08 May 2024 17:21:32 -0400
-Received: by mail-ot1-x32f.google.com with SMTP id
- 46e09a7af769-6f05c6e36c8so92689a34.3
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 14:21:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4okT-00013e-Di
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 17:22:50 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-a59a0e4b773so39492466b.2
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 14:22:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1715203289; x=1715808089;
- darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1/A8CnZiJOjyHSowbW0/zPr5X6JZE4vjcH+gB4RVIWI=;
- b=BICnJpGjy0rl3KMt/GNAaZSAz9QRfrK6pGI+bVXVEvXy04pq7+fX8ybjFYSH0t++qq
- hmpScR8QLIqDVDxEO4WC1+nhDrO8OF1WJQDXC0f5mC8WA2dqXngIqgFVB4p3yxuVmeeF
- Fe3brT/dFj5ChAS6YjpRBnIl55/ui7j2tFPT89oBfBrCYLhV+wONRmc16rSSDM3Uf1ik
- OnN0941sv5fixyAEdUWtxmVB4nvdAl+anG61NnUjCTTXufUhLwDsTSgGlegVviRYIAiT
- uTVLIrsg6L7cw8BiXYbg0+k36jbZsQZDCqmpr7qVqLrK94zJZ7uM4cBWbtbkI83y//i9
- 68PA==
+ d=linaro.org; s=google; t=1715203368; x=1715808168; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=tXqHe/MV3BDh5ZPCOUmTruKZVVsG0iKlRzC+N1i2rbI=;
+ b=ZmVo2G3hfujDK6rqAy/JAwD8JF51dtr9JvUK17lRUZ0O4EUMZBipemI6+srV6ak2F7
+ YZZivOFjvefouUwKTAhVhHnDKcYwVQ2r0Xn4e7pBmq4q58CW0NtqnG0p5Y3L0ZFhhnjx
+ //vdZG4/31224vDCyKdlk+xM+b0VXqlQsgCNAOhd/cR2ifdwSWri0Vv65aBMqaf7Ia37
+ znNBUbfTIldi0zaAolGwC9KAI0lk9Mhco3KKEbHXT0gsVADv/Zbdk8at+XB8s51+KwM6
+ uNPXhk6mgkNiBZfeWU8FXTZpjL437Y5G4b3KQswzRqAykzzRoJjvqbwmqrgUu9yBQ3Ek
+ 08IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715203289; x=1715808089;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1/A8CnZiJOjyHSowbW0/zPr5X6JZE4vjcH+gB4RVIWI=;
- b=QRAkZLGMBzqSQLyn8n1r+OKGS82WEw7flvKSTkkzTMvP8Wakh12xuf9QEHyNfCpqGR
- q96IbRRcMxfUkqBBgKI1BznOpper6r7tDVk76n/rlO1fToSHxjrKQy5ofs856Wac6nJm
- CUsfXI0XUKQ2mX99d8WxroW5XHqmkJ3Oh3Tx4ojBWQulTE0xxlX54+H33qR7ZfbSFM4W
- 014FvGK4fd/qxb98+WvRyhba0AX8sPMhUXSeY5JnEllhp8FytaSausjvGEbEwCQwefsN
- 3jIFt7BswfBzGNc/5apmMYbujvLc3hO8jUYgU6ibn8+jECZhyVSkdr6rKw0p9yjOY24a
- Dbig==
+ d=1e100.net; s=20230601; t=1715203368; x=1715808168;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tXqHe/MV3BDh5ZPCOUmTruKZVVsG0iKlRzC+N1i2rbI=;
+ b=mQKbpDY8uyiF7MU5RSTGTjoRSb3ZejgL0OP9kvpOYJDYNti/DETCwDxOHeT7zYaAdL
+ 3eRNHXzgJypznT809yJErHqmeRCR4hAqXRs+JwXvmC0RLucueIfJwa0c7P3oj9u1Rg/r
+ s0E2V69TWFnKObYxx+B50J7aYU5XCxM/BFSCNrZOJm3bCRrOfFuRbH8b+BT0yuIHxjcO
+ ocwurmtwLRmexbOblVcG/adjqXtCoX1hd1aee4EJZKGQhs8W5etd1FGvTUbvIlUWFE8s
+ qZq6FmmgdjXlypYggmR5n1Z5EWVolmK43/EA6IQVaOST6LNfemekJQC9aLeeFemoDp9S
+ YaGA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWnMi7SDGu9XJ24XpnGZX0RMjn04BUD9Bz5Y4iauCtLu7pjd53yythrGbJr1A/7JPgCANfdbLtdbK52UnGfdC09NBU45hY=
-X-Gm-Message-State: AOJu0Yw/AsJsKCgN+71Yj3qmvM2ug/IhuJSQcRtkq+GA76FrleguYQG3
- n1+NAX+G5oVShbt50DqBqqVz9T5o4+tFIX2xJwPMpnSRo6Etmub4IZDEananH+DwI4GLPyxuoEA
- w9GlIk9jch1QVEMyZc7ivofW8A0+bV7Ic+HOD9g==
-X-Google-Smtp-Source: AGHT+IGYbjv6gej+wCyXyXUicv4KMsMmzf0BPYe1xoMKDRTUL5P6+VaGZlUDiAHcT66M8Llb4eliipZT+JFCcFOiY2I=
-X-Received: by 2002:a05:6870:1645:b0:23d:4123:6041 with SMTP id
- 586e51a60fabf-2409915a793mr4292714fac.44.1715203289230; Wed, 08 May 2024
- 14:21:29 -0700 (PDT)
+ AJvYcCWHS92rC7KA8HIki0q879CfhWsmjgqxNTcEVBdkb4kQ5REkaTRXd3NpfHsV07hSx250GTsC5/PYrNZvEyFIuYkQmmIgI/c=
+X-Gm-Message-State: AOJu0YyUJHJbFAfDZww8ZlUe0k87UMBt9udMKd510bST2+oiWQmhFTd7
+ mxHftAHtVdZZFi7OkT/Y6oJORxIEelVDnUAGWkCbdRJL1Ypqaezqj9B4PS4MCas=
+X-Google-Smtp-Source: AGHT+IGroSE0vQnuus8Xt2akGmQ0osUf+Z+E90stL3GdzxOMSqTEyy8AUWK+tv6jmUS35XD6w4M25Q==
+X-Received: by 2002:a17:906:1c06:b0:a59:c7d7:8b0f with SMTP id
+ a640c23a62f3a-a59fb9595f3mr201395866b.29.1715203367765; 
+ Wed, 08 May 2024 14:22:47 -0700 (PDT)
+Received: from [192.168.69.100] (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
+ [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a5a17892444sm3133766b.76.2024.05.08.14.22.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 08 May 2024 14:22:47 -0700 (PDT)
+Message-ID: <d38663b0-2f6f-4400-a590-aff76982df05@linaro.org>
+Date: Wed, 8 May 2024 23:22:27 +0200
 MIME-Version: 1.0
-References: <20240507143431.464382-1-mnissler@rivosinc.com>
- <94bb9721-831a-4572-9e00-94540203e5b7@linaro.org>
-In-Reply-To: <94bb9721-831a-4572-9e00-94540203e5b7@linaro.org>
-From: Mattias Nissler <mnissler@rivosinc.com>
-Date: Wed, 8 May 2024 23:21:17 +0200
-Message-ID: <CAGNS4Tb+K5HJeTmYJpoAiizVW=wsmmHzBpCO+1oi8SEg3KKkTg@mail.gmail.com>
-Subject: Re: [PATCH v10 0/7] Support message-based DMA in vfio-user server
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: jag.raman@oracle.com, peterx@redhat.com, stefanha@redhat.com, 
- qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- john.levon@nutanix.com, 
- David Hildenbrand <david@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Elena Ufimtseva <elena.ufimtseva@oracle.com>, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
- envelope-from=mnissler@rivosinc.com; helo=mail-ot1-x32f.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 00/28] glib: Replace g_memdup() by g_memdup2()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, Eric Blake <eblake@redhat.com>,
+ qemu-block@nongnu.org, David Hildenbrand <david@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Eduardo Habkost <ehabkost@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
+ John Snow <jsnow@redhat.com>, David Gibson <david@gibson.dropbear.id.au>,
+ Kevin Wolf <kwolf@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@virtuozzo.com>,
+ "Daniel P . Berrange" <berrange@redhat.com>, Hanna Reitz
+ <hreitz@redhat.com>, qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+References: <20210903174510.751630-1-philmd@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20210903174510.751630-1-philmd@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,24 +110,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 8, 2024 at 11:16=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> On 7/5/24 16:34, Mattias Nissler wrote:
-> > This series adds basic support for message-based DMA in qemu's vfio-use=
-r
-> > server. This is useful for cases where the client does not provide file
-> > descriptors for accessing system memory via memory mappings. My motivat=
-ing use
-> > case is to hook up device models as PCIe endpoints to a hardware design=
-. This
-> > works by bridging the PCIe transaction layer to vfio-user, and the endp=
-oint
-> > does not access memory directly, but sends memory requests TLPs to the =
-hardware
-> > design in order to perform DMA.
->
-> Patches 1-3 & 7 queued to hw-misc tree, thanks.
+On 3/9/21 19:44, Philippe Mathieu-Daudé wrote:
+> Per https://discourse.gnome.org/t/port-your-module-from-g-memdup-to-g-memdup2-now/5538
+> 
+>    The old API took the size of the memory to duplicate as a guint,
+>    whereas most memory functions take memory sizes as a gsize. This
+>    made it easy to accidentally pass a gsize to g_memdup(). For large
+>    values, that would lead to a silent truncation of the size from 64
+>    to 32 bits, and result in a heap area being returned which is
+>    significantly smaller than what the caller expects. This can likely
+>    be exploited in various modules to cause a heap buffer overflow.
+> 
+> g_memdup() as been deprecated in GLib 2.68. Since QEMU defines
+> GLIB_VERSION_MAX_ALLOWED to GLIB_VERSION_2_56, the deprecation
+> is not displayed (on GLib >= 2.68 such available on Fedora 34).
+> However the function is still unsafe, so it is better to avoid
+> its use.
+> 
+> This series provides the safely equivalent g_memdup2() wrapper,
+> and replace all g_memdup() calls by it.
 
-Excellent, thanks for picking these up!
+
+> Philippe Mathieu-Daudé (28):
+>    block/qcow2-bitmap: Replace g_memdup() by g_memdup2()
+>    hw/hppa/machine: Replace g_memdup() by g_memdup2()
+>    hw/ppc/spapr_pci: Replace g_memdup() by g_memdup2()
+>    target/ppc: Replace g_memdup() by g_memdup2()
+
+Thanks, patches 5, 11, 15 & 26 queued to hw-misc tree
+adding the comment suggested by Eric on patch 5.
 
