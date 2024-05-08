@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E05DC04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 22:16:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5916CC04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 22:26:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4pZl-0006h1-EU; Wed, 08 May 2024 18:15:49 -0400
+	id 1s4pjf-0002VU-5r; Wed, 08 May 2024 18:26:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4pZd-0006bh-GH
- for qemu-devel@nongnu.org; Wed, 08 May 2024 18:15:47 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4pjd-0002VJ-2W
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 18:26:01 -0400
+Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4pZa-0003m6-JM
- for qemu-devel@nongnu.org; Wed, 08 May 2024 18:15:41 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-41b7a26326eso2013565e9.3
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 15:15:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4pjb-0000M8-A4
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 18:26:00 -0400
+Received: by mail-lf1-x131.google.com with SMTP id
+ 2adb3069b0e04-51ffff16400so270210e87.2
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 15:25:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715206537; x=1715811337; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4D66cNAv7qIHWiiTBuwSDDuqQfsTkK/hRZN0LCYj6aY=;
- b=Wfkd+b8rfi5hPnJGLyqGtsO6ya9AUFiCOTNAuCAFG7YcIltzpNmmcT1DMlM0jz10IT
- qfKHknx1qpV9J7lCr1m2kHUThQ+DthNtlFztm5V3PQI+1HQV7j21gIudOj+zM09c7uH0
- OdcnTa97stz3i4u5nYT6T6rO4knHXMb8ApylPahaYEEMzeAJ8IALpvjaYqsyQooYT/42
- 8CWKEh+fJkcw3eITa3xcmLDWvyhAzzfrR+Za6sfIPmOvRZ7kb7Mb4VZ6ENENMIZiaXLX
- tQKslZ/j/1CKYzdBxVEglQ9/FZj6rVXr54PuQHkYGQTjJ3ygUasfvnwkz7HmKCM2giKb
- H+yQ==
+ d=linaro.org; s=google; t=1715207157; x=1715811957; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=dbBc98+zFeaVhgd8PdBcKMiD7Ph2Eef9azq2MGlTC0s=;
+ b=ed9brEQya8p3LI8li6gFzeqae46PNCUuD3AGdtycjfPmZdBL0/UjZAUNd9XlHlR5zv
+ VPZ1lTiRNvUojHLoko9ScwaMzxka1K3iigBCFXCnAzvoSyjapcBouuWqJm/ZzEHFzaDf
+ SDcxoIMK66NEQCEsu4Xno+oVd7GnHldW2nRtzb0zV/ucj2i92u03mi1I5QDC+izkWDvF
+ iDc74gFQX39Rn3pEAtVPRJEnPQMwQxzuMDgnFpKLTQuoTkDz/sEWDeizYKcNdN3PpSoo
+ yOZszRKXUE6w7T+N/XEqh9wkbEVti++9E7TwlZu5LMhMQPFOgmTRROlj67PSiXV/njWb
+ eL9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715206537; x=1715811337;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4D66cNAv7qIHWiiTBuwSDDuqQfsTkK/hRZN0LCYj6aY=;
- b=s5D2tVqfkH/YM4ty/1I6CljKTbIC9dtCCNvJXakaI4dF8m+zbnxrxr3GpHvLMoWEP1
- GqDIX6Ub/32IivNXRO+J/lSudzg+nW/KOAHTT6mA0q/2nLXcgZiOfUmISavdfPTmAEZi
- ilWONmIFrj/sFQuL8lyDLL/gxYvH2kHbDDEpBBCdnoKpn4eeVwAGtSLfCM3k5fPlZr2P
- i/KxFgjqNcvdQ4czlNeSBfazHRi60YKtr5DAr7bs2+/Im46qVjeWF24bztNi8wwZWO+G
- rYbm/TMiAI0t6pxKDRZ7xmNr8D8Rh16CD8radOCCDEYmid1m62Ao42vG9+aiktHMmdCS
- vteg==
-X-Gm-Message-State: AOJu0YxLxwD2hSixYsHeGzfzSArcNX8iOTaLJe0L4vS9BnhJoeEyK8lw
- En4p4FchouSWBAfI9NInZO3Bx8K7PFKb1okIbEYWe7gRMOBHpa+majfxUPynW8ar0Z8J3wHxO9k
- V
-X-Google-Smtp-Source: AGHT+IGgXjR5q5QwjFgDaeG6bUJ4eSMfbZ81WlZsNIcc48/DDGMkgwA+fO33uzYLaTA/e4Wv30bowg==
-X-Received: by 2002:a7b:c45a:0:b0:41b:d4a3:ad6a with SMTP id
- 5b1f17b1804b1-41f71ec1adcmr35196295e9.17.1715206536948; 
- Wed, 08 May 2024 15:15:36 -0700 (PDT)
-Received: from m1x-phil.lan (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
+ d=1e100.net; s=20230601; t=1715207157; x=1715811957;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=dbBc98+zFeaVhgd8PdBcKMiD7Ph2Eef9azq2MGlTC0s=;
+ b=S2AcJcXE6iuqJWMH6PewskU1y9wEJIVgXeOWa9ojkyg+b45vEwip+WYvTyNUNZB15f
+ kIeNZAEJDhQ/v9XIHK210uKTr4LynJJWvG+cEXpMeyNkFdiUcgw+GcsBKhD1NNJ9oLGs
+ RLxV5nYO7baVl26XsdhCi4wAEUh5VY8p3H58ISag2SD1cgjc1UAf/Y8ulHz50Bh+v55Q
+ 1Ir6xz7oG2BhttvRLwHGpdXwBmleFp/aGQ3A09KyqJO1XPcajJ8yyu7IetRSEXw1PifB
+ k0mQjOxsyMLm+f4SVns9Cg7zkTGgBwhGx3/LidWUpa+9ESS1bXIrZ1xaYnoKXZWCAroS
+ Tc+Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUT+5sIE0Tdm92dlcqqWgZ7bIW3y0HVbHakQE5qQWiTINvD7ZPJFKcM6im2cWWDFtwOFjBeIlq5KQ/QdB73vCOZvEf0u9I=
+X-Gm-Message-State: AOJu0YyYa1iejlcniQdr907MDTDLDdVVLWRuLx6Wi1gjyTdc0JatK4RN
+ PGas3RbYPLcleQlX74Fo8/vdNH4Dqo1q60DUDgsu7YqRktsR21QwPtD31UtYpFY=
+X-Google-Smtp-Source: AGHT+IHry1z4SuJTN+G0xAgi9aZk0iDqX/FyP7dv0+Hu6AASpJWwfhnIqgC4Rd4dUY7a5oYEnSvC8g==
+X-Received: by 2002:ac2:48b4:0:b0:51c:fd0a:7e37 with SMTP id
+ 2adb3069b0e04-5217c567393mr3288258e87.20.1715207156578; 
+ Wed, 08 May 2024 15:25:56 -0700 (PDT)
+Received: from [192.168.69.100] (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
  [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-41f87c254bfsm36824835e9.17.2024.05.08.15.15.35
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 08 May 2024 15:15:36 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL v2 16/28] hw/i386/x86: Extract x86_isa_bios_init() from
- x86_bios_rom_init()
-Date: Thu,  9 May 2024 00:15:18 +0200
-Message-ID: <20240508221518.72350-4-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240508221518.72350-1-philmd@linaro.org>
-References: <20240508221518.72350-1-philmd@linaro.org>
+ a640c23a62f3a-a5a1781cdb5sm7750866b.29.2024.05.08.15.25.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 08 May 2024 15:25:56 -0700 (PDT)
+Message-ID: <ef295b83-ae04-4b5c-abae-b1975933a2c4@linaro.org>
+Date: Thu, 9 May 2024 00:25:53 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] gitlab: Update msys2-64bit runner tags
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, thuth@redhat.com
+References: <20240507175356.281618-1-richard.henderson@linaro.org>
+ <f754d4a9-f481-4da7-ae7c-edbb013f55d9@linaro.org>
+Content-Language: en-US
+In-Reply-To: <f754d4a9-f481-4da7-ae7c-edbb013f55d9@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::131;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,85 +96,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+On 8/5/24 10:28, Philippe Mathieu-Daudé wrote:
+> On 7/5/24 19:53, Richard Henderson wrote:
+>> Gitlab has deprecated and removed support for windows-1809
+>> and shared-windows.  Update to saas-windows-medium-amd64 per
+>>
+>> https://about.gitlab.com/blog/2024/01/22/windows-2022-support-for-gitlab-saas-runners/
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   .gitlab-ci.d/windows.yml | 4 +---
+>>   1 file changed, 1 insertion(+), 3 deletions(-)
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-The function is inspired by pc_isa_bios_init() and should eventually replace it.
-Using x86_isa_bios_init() rather than pc_isa_bios_init() fixes pflash commands
-to work in the isa-bios region.
-
-While at it convert the magic number 0x100000 (== 1MiB) to increase readability.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Message-ID: <20240508175507.22270-6-shentey@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/i386/x86.h |  2 ++
- hw/i386/x86.c         | 25 ++++++++++++++++---------
- 2 files changed, 18 insertions(+), 9 deletions(-)
-
-diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
-index 55c6809ae0..d7b7d3f3ce 100644
---- a/include/hw/i386/x86.h
-+++ b/include/hw/i386/x86.h
-@@ -129,6 +129,8 @@ void x86_cpu_unplug_request_cb(HotplugHandler *hotplug_dev,
- void x86_cpu_unplug_cb(HotplugHandler *hotplug_dev,
-                        DeviceState *dev, Error **errp);
- 
-+void x86_isa_bios_init(MemoryRegion *isa_bios, MemoryRegion *isa_memory,
-+                       MemoryRegion *bios, bool read_only);
- void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
-                        MemoryRegion *rom_memory, bool isapc_ram_fw);
- 
-diff --git a/hw/i386/x86.c b/hw/i386/x86.c
-index 29167de97d..c61f4ebfa6 100644
---- a/hw/i386/x86.c
-+++ b/hw/i386/x86.c
-@@ -1128,12 +1128,25 @@ void x86_load_linux(X86MachineState *x86ms,
-     nb_option_roms++;
- }
- 
-+void x86_isa_bios_init(MemoryRegion *isa_bios, MemoryRegion *isa_memory,
-+                       MemoryRegion *bios, bool read_only)
-+{
-+    uint64_t bios_size = memory_region_size(bios);
-+    uint64_t isa_bios_size = MIN(bios_size, 128 * KiB);
-+
-+    memory_region_init_alias(isa_bios, NULL, "isa-bios", bios,
-+                             bios_size - isa_bios_size, isa_bios_size);
-+    memory_region_add_subregion_overlap(isa_memory, 1 * MiB - isa_bios_size,
-+                                        isa_bios, 1);
-+    memory_region_set_readonly(isa_bios, read_only);
-+}
-+
- void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
-                        MemoryRegion *rom_memory, bool isapc_ram_fw)
- {
-     const char *bios_name;
-     char *filename;
--    int bios_size, isa_bios_size;
-+    int bios_size;
-     ssize_t ret;
- 
-     /* BIOS load */
-@@ -1171,14 +1184,8 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
-     g_free(filename);
- 
-     /* map the last 128KB of the BIOS in ISA space */
--    isa_bios_size = MIN(bios_size, 128 * KiB);
--    memory_region_init_alias(&x86ms->isa_bios, NULL, "isa-bios", &x86ms->bios,
--                             bios_size - isa_bios_size, isa_bios_size);
--    memory_region_add_subregion_overlap(rom_memory,
--                                        0x100000 - isa_bios_size,
--                                        &x86ms->isa_bios,
--                                        1);
--    memory_region_set_readonly(&x86ms->isa_bios, !isapc_ram_fw);
-+    x86_isa_bios_init(&x86ms->isa_bios, rom_memory, &x86ms->bios,
-+                      !isapc_ram_fw);
- 
-     /* map all the bios at the top of memory */
-     memory_region_add_subregion(rom_memory,
--- 
-2.41.0
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
