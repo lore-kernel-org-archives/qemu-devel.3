@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71369C25B4F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C19C7C04FFE
 	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 07:52:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4c5f-00071w-Et; Wed, 08 May 2024 03:51:55 -0400
+	id 1s4c5R-0006uW-0G; Wed, 08 May 2024 03:51:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s4c57-0006nn-DM
- for qemu-devel@nongnu.org; Wed, 08 May 2024 03:51:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1s4c5C-0006oP-N6
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 03:51:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s4c55-0003dC-LU
- for qemu-devel@nongnu.org; Wed, 08 May 2024 03:51:17 -0400
+ id 1s4c5A-0003dl-GR
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 03:51:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715154674;
+ s=mimecast20190719; t=1715154680;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aF6SQzXi+7Oush+66RT8SAXzChZcE8LPXmBbHUWcUJI=;
- b=b5HttNku8EjwZOSBNaN7Ze+LIEa+qEJCsI8aVQQUWhBxOtbEEgiSiRI2hCa39quUF/AXdp
- 1s82V0/GrU6y5rBvAXPsZaVB2AHRLGywarmDvCjyJQScs+7sR76T0QqTpFF/Y783VpkNh3
- sri+AjCmR1UsT8ipuSO377Jmc5H5/EY=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/napxeXYVJfEIk7mLPLLFKGMsaq0EZv1d5O6ZzOMJfo=;
+ b=bW3kZwktlzQdzlY9fRmZICAttQhYgPe4+EssSK0bKjXfmmA+6JzAwMuTL9Ni9gvFGsiAD1
+ v8URVZmnofuzPlyj48A4V4WwEP4mcNDVHPfgO9omsK2EFKT/3127sonjVbMrgx+J0EBsWq
+ +Jl87JsswGn8igfKgVOOnfjtl3UZJDs=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-481-V8TBXfEGPHi6a5tz_qCzgw-1; Wed, 08 May 2024 03:51:13 -0400
-X-MC-Unique: V8TBXfEGPHi6a5tz_qCzgw-1
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-572a0c5ece9so2210010a12.2
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 00:51:13 -0700 (PDT)
+ us-mta-652-uip_iEpzMl6pUwsRVIiZpA-1; Wed, 08 May 2024 03:51:18 -0400
+X-MC-Unique: uip_iEpzMl6pUwsRVIiZpA-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-5725fffb621so1532360a12.0
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 00:51:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715154671; x=1715759471;
+ d=1e100.net; s=20230601; t=1715154676; x=1715759476;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aF6SQzXi+7Oush+66RT8SAXzChZcE8LPXmBbHUWcUJI=;
- b=u6Y2izUvVCobd1c2qQn6Olj+4vJ52gZMDXwnMQ2xOrslGd4zqoWSi0ROF+k6bHbLa6
- q+jGoGo1l7sf2FyTvWFUhE9Ba9HDxvGAvrAyIsUFAL0BpvKyLrOq6DHUtPSqpOV8OWYG
- Pxc8I5YXc88maPba+tIrxMnU7ohR4cBy0mnFAkqtzTGa6NAReT2ifjZyZLhxzKSTZGTn
- 8DoAZ2yMiFnccUNCRitjo7Y/QaksCbtD4QG0zeRt4UlLprX5UIDsV9mExovhe+4vXqn1
- hJO3tl2AHF/r9uVKn/WzoogC6qkUIhbNCGZ15kKwlff8CL0xWhTgU0AkQD8i77y2ueNp
- t9aQ==
-X-Gm-Message-State: AOJu0Yxvlac6hpz8ckBr/xXyM1EpKL+Ff9m/7G69X4e8rI0opkxB326F
- jI5laqxNA3fbeBobqToIdrwV9OnPb7Z9Xr9gcPviV2nfGL18su71QRVWUxLsHjlGGWr16nqnMjX
- Tpq9VQ8F5qJB7sZJ/fl/MlrK7ymyxojzUNepBjLWaeV1j5LBCgfgaOKFEmQflcy86eNi2H4iDfY
- 8NwRukQnUje6s1CnMQ5MPouqvwDjVgakElJn6A
-X-Received: by 2002:a50:c058:0:b0:56e:2daf:1ee6 with SMTP id
- 4fb4d7f45d1cf-5731d9d453bmr1040436a12.16.1715154671595; 
- Wed, 08 May 2024 00:51:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGV01I27rqhAqFQss75UdBEuV42V+CYWvqMC+VjX2bLX6QqiYcVrGE63vRD1q9xVDkJbGnwkA==
-X-Received: by 2002:a50:c058:0:b0:56e:2daf:1ee6 with SMTP id
- 4fb4d7f45d1cf-5731d9d453bmr1040426a12.16.1715154671247; 
- Wed, 08 May 2024 00:51:11 -0700 (PDT)
+ bh=/napxeXYVJfEIk7mLPLLFKGMsaq0EZv1d5O6ZzOMJfo=;
+ b=M5b+kyuiZpNVUBYltrOjVhv8TcHpoUkk7S62eW1+lpIlyYC57fiJZTxsE9Ll2DKZOB
+ tM67rP1VEo9ochSM273zNRTjfc9PHxtxCMnJblAW5yo4+t5kjakX7+khkBUS5ijgNnRx
+ 0gSAqdyqz397mXvaL7vjLATSMusJTRwdqoKuQr3CbfDfJMiqSEV/e8Uk/JfE5KPqTnRn
+ rJ/olXPbl6px6B/lbbWeD1dnMwq/4R8BXJyKy7q0eDpxZPcThIXIr2XXthYmmgfLuAMU
+ BmK5Vlz5XILlj9pnutNLs+dzqBbEN/zgGFZshttJeQuFaojN9fdJaZnNvJ6xGF44krzi
+ GO9A==
+X-Gm-Message-State: AOJu0YzOKfx/yCZlyGpu1f6m8GYncpoSJAGhuqIMldRHX0tvtBxCPGE2
+ uOn3cMyOrGDzUhs+Ix/72OGXu/NAl2xRyjGulhzucVuJG230sLlUa1wg7eDRe6LfVfRVmHsDyRw
+ DTyA7GFimNjKtBxLKRj9nBbBdj3p4LDlAYd35PZSKIZMEZ+O61mLfyeNiHOXF8wKm4xiEu+f71r
+ 3Rp3u241dqmDFk+CGF+m9x0UGw1/3lEscjmTJc
+X-Received: by 2002:a50:d590:0:b0:56f:e75b:83aa with SMTP id
+ 4fb4d7f45d1cf-5731d99b69cmr1376906a12.6.1715154676707; 
+ Wed, 08 May 2024 00:51:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH4Ue/4E4tIPoaGrBBp0z14WUJUMr3MvpP9s6dIdbdnfBOe6UYzqNSsfHU+XsrkLw+0g4+bGg==
+X-Received: by 2002:a50:d590:0:b0:56f:e75b:83aa with SMTP id
+ 4fb4d7f45d1cf-5731d99b69cmr1376891a12.6.1715154676370; 
+ Wed, 08 May 2024 00:51:16 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- d25-20020aa7ce19000000b00572a7127cb0sm7308880edv.50.2024.05.08.00.51.07
+ t25-20020a056402241900b005725de35790sm7316323eda.61.2024.05.08.00.51.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 May 2024 00:51:08 -0700 (PDT)
+ Wed, 08 May 2024 00:51:14 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org
-Subject: [PATCH 2/6] meson: move libfdt together with other dependencies
-Date: Wed,  8 May 2024 09:51:01 +0200
-Message-ID: <20240508075105.15510-3-pbonzini@redhat.com>
+Subject: [PATCH 4/6] kconfig: express dependency of individual boards on libfdt
+Date: Wed,  8 May 2024 09:51:03 +0200
+Message-ID: <20240508075105.15510-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240508075105.15510-1-pbonzini@redhat.com>
 References: <20240508075105.15510-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -102,147 +103,332 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the libfdt detection code together with other dependencies instead
-of keeping it with subprojects.  This has the disadvantage of performing
-the detection even if no target requires libfdt; but it has the advantage
-that Kconfig will be able to observe the availability of the library.
+Now that boards are enabled by default and the "CONFIG_FOO=y"
+entries are gone from configs/devices/, there cannot be any more
+a conflicts between the default contents of configs/devices/
+and a failed "depends on" clause.
 
+With this change, each individual board or target can express
+whether it needs FDT.  It can then include the common code in the
+build via "select DEVICE_TREE", which will also as tell meson to link
+with libfdt.
+
+This allows building non-microvm x86 emulators without having
+libfdt available.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- meson.build | 79 ++++++++++++++++++++++++++---------------------------
- 1 file changed, 38 insertions(+), 41 deletions(-)
+ Kconfig.host              |  1 -
+ hw/arm/Kconfig            |  5 +++++
+ hw/i386/Kconfig           |  3 ++-
+ hw/loongarch/Kconfig      |  3 ++-
+ hw/mips/Kconfig           |  3 ++-
+ hw/openrisc/Kconfig       |  2 ++
+ hw/ppc/Kconfig            | 15 ++++++++-------
+ hw/riscv/Kconfig          |  4 ++++
+ hw/rx/Kconfig             |  3 ++-
+ hw/xtensa/Kconfig         |  1 +
+ target/arm/Kconfig        |  2 ++
+ target/microblaze/Kconfig |  1 +
+ target/openrisc/Kconfig   |  1 +
+ target/riscv/Kconfig      |  2 ++
+ 14 files changed, 34 insertions(+), 12 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index 7ca0ba4987f..2e7e2b15406 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1858,6 +1858,34 @@ if numa.found() and not cc.links('''
-   endif
- endif
+diff --git a/Kconfig.host b/Kconfig.host
+index a0d4a52131e..17f405004b3 100644
+--- a/Kconfig.host
++++ b/Kconfig.host
+@@ -25,7 +25,6 @@ config TPM
  
-+fdt = not_found
-+fdt_opt = get_option('fdt')
-+if fdt_opt == 'enabled' and get_option('wrap_mode') == 'nodownload'
-+  fdt_opt = 'system'
-+endif
-+if fdt_opt in ['enabled', 'system'] or (fdt_opt == 'auto' and have_system)
-+  fdt = cc.find_library('fdt', required: fdt_opt == 'system')
-+  if fdt.found() and cc.links('''
-+     #include <libfdt.h>
-+     #include <libfdt_env.h>
-+     int main(void) { fdt_find_max_phandle(NULL, NULL); return 0; }''',
-+       dependencies: fdt)
-+    fdt_opt = 'system'
-+  elif fdt_opt != 'system'
-+    fdt_opt = get_option('wrap_mode') == 'nodownload' ? 'disabled' : 'internal'
-+    fdt = not_found
-+  else
-+    error('system libfdt is too old (1.5.1 or newer required)')
-+  endif
-+endif
-+if fdt_opt == 'internal'
-+  assert(not fdt.found())
-+  libfdt_proj = subproject('dtc', required: true,
-+                           default_options: ['tools=false',  'yaml=disabled',
-+                                             'python=disabled', 'default_library=static'])
-+  fdt = libfdt_proj.get_variable('libfdt_dep')
-+endif
+ config FDT
+     bool
+-    select DEVICE_TREE
+ 
+ config VHOST_USER
+     bool
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 98c264ed219..8b97683a45e 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -15,6 +15,7 @@ config ARM_VIRT
+     select ACPI
+     select ARM_SMMUV3
+     select GPIO_KEY
++    select DEVICE_TREE
+     select FW_CFG_DMA
+     select PCI_EXPRESS
+     select PCI_EXPRESS_GENERIC_BRIDGE
+@@ -265,6 +266,7 @@ config SBSA_REF
+     default y
+     depends on TCG && AARCH64
+     imply PCI_DEVICES
++    select DEVICE_TREE
+     select AHCI
+     select ARM_SMMUV3
+     select GPIO_KEY
+@@ -347,6 +349,7 @@ config VEXPRESS
+     bool
+     default y
+     depends on TCG && ARM
++    select DEVICE_TREE
+     select A9MPCORE
+     select A15MPCORE
+     select ARM_MPTIMER
+@@ -492,6 +495,7 @@ config XLNX_ZYNQMP_ARM
+     select CPU_CLUSTER
+     select DDC
+     select DPCD
++    select DEVICE_TREE
+     select SDHCI
+     select SSI
+     select SSI_M25P80
+@@ -509,6 +513,7 @@ config XLNX_VERSAL
+     depends on TCG && AARCH64
+     select ARM_GIC
+     select CPU_CLUSTER
++    select DEVICE_TREE
+     select PL011
+     select CADENCE
+     select VIRTIO_MMIO
+diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
+index 4362164962c..5af47f4bf2f 100644
+--- a/hw/i386/Kconfig
++++ b/hw/i386/Kconfig
+@@ -115,7 +115,8 @@ config Q35
+ config MICROVM
+     bool
+     default y
+-    depends on I386
++    depends on I386 && FDT
++    select DEVICE_TREE
+     select SERIAL_ISA # for serial_hds_isa_init()
+     select ISA_BUS
+     select APIC
+diff --git a/hw/loongarch/Kconfig b/hw/loongarch/Kconfig
+index 78640505630..830cfef72db 100644
+--- a/hw/loongarch/Kconfig
++++ b/hw/loongarch/Kconfig
+@@ -1,7 +1,8 @@
+ config LOONGARCH_VIRT
+     bool
+     default y
+-    depends on LOONGARCH64
++    depends on LOONGARCH64 && FDT
++    select DEVICE_TREE
+     select PCI
+     select PCI_EXPRESS_GENERIC_BRIDGE
+     imply VIRTIO_VGA
+diff --git a/hw/mips/Kconfig b/hw/mips/Kconfig
+index 9bccb363eb9..a7f26edebe8 100644
+--- a/hw/mips/Kconfig
++++ b/hw/mips/Kconfig
+@@ -80,9 +80,10 @@ config MIPS_CPS
+ config MIPS_BOSTON
+     bool
+     default y
+-    depends on MIPS64 && !TARGET_BIG_ENDIAN
++    depends on MIPS64 && !TARGET_BIG_ENDIAN && FDT
+     imply PCI_DEVICES
+     imply TEST_DEVICES
++    select DEVICE_TREE
+     select FITLOADER
+     select MIPS_CPS
+     select PCI_EXPRESS_XILINX
+diff --git a/hw/openrisc/Kconfig b/hw/openrisc/Kconfig
+index 9c9015e0a5d..76b953c62c2 100644
+--- a/hw/openrisc/Kconfig
++++ b/hw/openrisc/Kconfig
+@@ -2,6 +2,7 @@ config OR1K_SIM
+     bool
+     default y
+     depends on OPENRISC
++    select DEVICE_TREE
+     select SERIAL
+     select OPENCORES_ETH
+     select OMPIC
+@@ -14,6 +15,7 @@ config OR1K_VIRT
+     imply PCI_DEVICES
+     imply VIRTIO_VGA
+     imply TEST_DEVICES
++    select DEVICE_TREE
+     select PCI
+     select PCI_EXPRESS_GENERIC_BRIDGE
+     select GOLDFISH_RTC
+diff --git a/hw/ppc/Kconfig b/hw/ppc/Kconfig
+index 78f83e78ce5..347212f4dba 100644
+--- a/hw/ppc/Kconfig
++++ b/hw/ppc/Kconfig
+@@ -1,7 +1,7 @@
+ config PSERIES
+     bool
+     default y
+-    depends on PPC64
++    depends on PPC64 && FDT
+     imply USB_OHCI_PCI
+     imply PCI_DEVICES
+     imply TEST_DEVICES
+@@ -26,7 +26,7 @@ config SPAPR_RNG
+ config POWERNV
+     bool
+     default y
+-    depends on PPC64
++    depends on PPC64 && FDT
+     imply PCI_DEVICES
+     imply TEST_DEVICES
+     select ISA_IPMI_BT
+@@ -52,7 +52,7 @@ config PPC405
+ config PPC440
+     bool
+     default y
+-    depends on PPC
++    depends on PPC && FDT
+     imply PCI_DEVICES
+     imply TEST_DEVICES
+     imply E1000_PCI
+@@ -71,7 +71,7 @@ config PPC4XX
+ config SAM460EX
+     bool
+     default y
+-    depends on PPC
++    depends on PPC && FDT
+     select PFLASH_CFI01
+     select IDE_SII3112
+     select M41T80
+@@ -168,19 +168,19 @@ config E500
+ config E500PLAT
+     bool
+     default y
+-    depends on PPC
++    depends on PPC && FDT
+     select E500
+ 
+ config MPC8544DS
+     bool
+     default y
+-    depends on PPC
++    depends on PPC && FDT
+     select E500
+ 
+ config VIRTEX
+     bool
+     default y
+-    depends on PPC
++    depends on PPC && FDT
+     select PPC4XX
+     select PFLASH_CFI01
+     select SERIAL
+@@ -193,6 +193,7 @@ config FW_CFG_PPC
+     bool
+ 
+ config FDT_PPC
++    select DEVICE_TREE
+     bool
+ 
+ config VOF
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index 5f5f9e31bb0..a2030e3a6ff 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -12,6 +12,7 @@ config MICROCHIP_PFSOC
+     depends on RISCV64
+     select CADENCE_SDHCI
+     select CPU_CLUSTER
++    select DEVICE_TREE
+     select MCHP_PFSOC_DMC
+     select MCHP_PFSOC_IOSCB
+     select MCHP_PFSOC_MMUART
+@@ -37,6 +38,7 @@ config RISCV_VIRT
+     imply VIRTIO_VGA
+     imply TEST_DEVICES
+     imply TPM_TIS_SYSBUS
++    select DEVICE_TREE
+     select RISCV_NUMA
+     select GOLDFISH_RTC
+     select PCI
+@@ -82,6 +84,7 @@ config SIFIVE_U
+     depends on RISCV32 || RISCV64
+     select CADENCE
+     select CPU_CLUSTER
++    select DEVICE_TREE
+     select RISCV_ACLINT
+     select SIFIVE_GPIO
+     select SIFIVE_PDMA
+@@ -99,6 +102,7 @@ config SPIKE
+     bool
+     default y
+     depends on RISCV32 || RISCV64
++    select DEVICE_TREE
+     select RISCV_NUMA
+     select HTIF
+     select RISCV_ACLINT
+diff --git a/hw/rx/Kconfig b/hw/rx/Kconfig
+index b2fa2b7eec3..aa9242d1ef6 100644
+--- a/hw/rx/Kconfig
++++ b/hw/rx/Kconfig
+@@ -8,5 +8,6 @@ config RX62N_MCU
+ config RX_GDBSIM
+     bool
+     default y
+-    depends on RX
++    depends on RX && FDT
++    select DEVICE_TREE
+     select RX62N_MCU
+diff --git a/hw/xtensa/Kconfig b/hw/xtensa/Kconfig
+index 443b415c2ba..8ea283a7a3b 100644
+--- a/hw/xtensa/Kconfig
++++ b/hw/xtensa/Kconfig
+@@ -15,6 +15,7 @@ config XTENSA_XTFPGA
+     bool
+     default y
+     depends on XTENSA
++    imply DEVICE_TREE
+     select OPENCORES_ETH
+     select PFLASH_CFI01
+     select SERIAL
+diff --git a/target/arm/Kconfig b/target/arm/Kconfig
+index 5847c5a74a7..7f8a2217ae1 100644
+--- a/target/arm/Kconfig
++++ b/target/arm/Kconfig
+@@ -6,6 +6,8 @@ config ARM
+     # translate.c v7m helpers under ARM_V7M.
+     select ARM_V7M if TCG
+ 
++    select DEVICE_TREE # needed by boot.c
 +
- rdma = not_found
- if not get_option('rdma').auto() or have_system
-   libumad = cc.find_library('ibumad', required: get_option('rdma'))
-@@ -2199,6 +2227,7 @@ config_host_data.set('CONFIG_BSD', host_os in bsd_oses)
- config_host_data.set('CONFIG_CAPSTONE', capstone.found())
- config_host_data.set('CONFIG_COCOA', cocoa.found())
- config_host_data.set('CONFIG_DARWIN', host_os == 'darwin')
-+config_host_data.set('CONFIG_FDT', fdt.found())
- config_host_data.set('CONFIG_FUZZ', get_option('fuzzing'))
- config_host_data.set('CONFIG_GCOV', get_option('b_coverage'))
- config_host_data.set('CONFIG_LIBUDEV', libudev.found())
-@@ -3025,14 +3054,16 @@ foreach target : target_dirs
-     error('No accelerator available for target @0@'.format(target))
-   endif
+ config AARCH64
+     bool
+     select ARM
+diff --git a/target/microblaze/Kconfig b/target/microblaze/Kconfig
+index a5410d9218d..e91d58d88f2 100644
+--- a/target/microblaze/Kconfig
++++ b/target/microblaze/Kconfig
+@@ -1,2 +1,3 @@
+ config MICROBLAZE
+     bool
++    select DEVICE_TREE # needed by boot.c
+diff --git a/target/openrisc/Kconfig b/target/openrisc/Kconfig
+index e0da4ac1dfc..cd66c2e3b6c 100644
+--- a/target/openrisc/Kconfig
++++ b/target/openrisc/Kconfig
+@@ -1,2 +1,3 @@
+ config OPENRISC
+     bool
++    select DEVICE_TREE # needed by boot.c
+diff --git a/target/riscv/Kconfig b/target/riscv/Kconfig
+index adb7de3f37d..5f30df22f2f 100644
+--- a/target/riscv/Kconfig
++++ b/target/riscv/Kconfig
+@@ -1,7 +1,9 @@
+ config RISCV32
+     bool
+     select ARM_COMPATIBLE_SEMIHOSTING # for do_common_semihosting()
++    select DEVICE_TREE # needed by boot.c
  
--  actual_target_dirs += target
-   config_target += keyval.load('configs/targets' / target + '.mak')
-   config_target += { 'TARGET_' + config_target['TARGET_ARCH'].to_upper(): 'y' }
- 
--  if 'TARGET_NEED_FDT' in config_target
-+  if 'TARGET_NEED_FDT' in config_target and not fdt.found()
-     fdt_required += target
-+    continue
-   endif
- 
-+  actual_target_dirs += target
-+
-   # Add default keys
-   if 'TARGET_BASE_ARCH' not in config_target
-     config_target += {'TARGET_BASE_ARCH': config_target['TARGET_ARCH']}
-@@ -3120,6 +3151,10 @@ genh += custom_target('config-poison.h',
-                       command: [find_program('scripts/make-config-poison.sh'),
-                                 target_configs_h])
- 
-+if fdt_required.length() > 0
-+  error('fdt disabled but required by targets ' + ', '.join(fdt_required))
-+endif
-+
- ###############
- # Subprojects #
- ###############
-@@ -3130,44 +3165,6 @@ if have_system and vfio_user_server_allowed
-   libvfio_user_dep = libvfio_user_proj.get_variable('libvfio_user_dep')
- endif
- 
--fdt = not_found
--fdt_opt = get_option('fdt')
--if fdt_required.length() > 0 or fdt_opt == 'enabled'
--  if fdt_opt == 'disabled'
--    error('fdt disabled but required by targets ' + ', '.join(fdt_required))
--  endif
--
--  if fdt_opt in ['enabled', 'auto', 'system']
--    if get_option('wrap_mode') == 'nodownload'
--      fdt_opt = 'system'
--    endif
--    fdt = cc.find_library('fdt', required: fdt_opt == 'system')
--    if fdt.found() and cc.links('''
--       #include <libfdt.h>
--       #include <libfdt_env.h>
--       int main(void) { fdt_find_max_phandle(NULL, NULL); return 0; }''',
--         dependencies: fdt)
--      fdt_opt = 'system'
--    elif fdt_opt == 'system'
--       error('system libfdt requested, but it is too old (1.5.1 or newer required)')
--    else
--      fdt_opt = 'internal'
--      fdt = not_found
--    endif
--  endif
--  if not fdt.found()
--    assert(fdt_opt == 'internal')
--    libfdt_proj = subproject('dtc', required: true,
--                             default_options: ['tools=false',  'yaml=disabled',
--                                               'python=disabled', 'default_library=static'])
--    fdt = libfdt_proj.get_variable('libfdt_dep')
--  endif
--else
--  fdt_opt = 'disabled'
--endif
--
--config_host_data.set('CONFIG_FDT', fdt.found())
--
- vhost_user = not_found
- if host_os == 'linux' and have_vhost_user
-   libvhost_user = subproject('libvhost-user')
-@@ -4419,7 +4416,7 @@ summary_info += {'Linux AIO support': libaio}
- summary_info += {'Linux io_uring support': linux_io_uring}
- summary_info += {'ATTR/XATTR support': libattr}
- summary_info += {'RDMA support':      rdma}
--summary_info += {'fdt support':       fdt_opt == 'disabled' ? false : fdt_opt}
-+summary_info += {'fdt support':       fdt_opt == 'internal' ? 'internal' : fdt}
- summary_info += {'libcap-ng support': libcap_ng}
- summary_info += {'bpf support':       libbpf}
- summary_info += {'rbd support':       rbd}
+ config RISCV64
+     bool
+     select ARM_COMPATIBLE_SEMIHOSTING # for do_common_semihosting()
++    select DEVICE_TREE # needed by boot.c
 -- 
 2.45.0
 
