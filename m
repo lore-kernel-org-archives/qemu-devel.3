@@ -4,87 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55546C04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 12:57:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B4D0C19F4F
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 12:58:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4gqy-0000gQ-Vs; Wed, 08 May 2024 08:57:02 -0400
+	id 1s4gse-0001Pf-53; Wed, 08 May 2024 08:58:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1s4gqr-0000fs-Hp
- for qemu-devel@nongnu.org; Wed, 08 May 2024 08:56:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1s4gqp-0004E0-R8
- for qemu-devel@nongnu.org; Wed, 08 May 2024 08:56:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715173009;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NP7m8jbHeEA6zUp44J64q0lSjcdxEslJQ5pmld6tyCE=;
- b=iYfqmUaExWHD4jYov1SwTt93xb1hmT047jqvjRneo9eseT8phrpjWdijv0NMAi/HfuDvKz
- Yq535Mf15eMB/xUKL94karhA61tbCL8aWXpi+qjiCOxzXQObr/ypY5TnXHesQjGsn4xk/z
- 0LSNamHz7ikxLlvOtURA/IhavaNDHZY=
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-682-4vN6UKbCNWWeYCEV3slkmA-1; Wed, 08 May 2024 08:56:48 -0400
-X-MC-Unique: 4vN6UKbCNWWeYCEV3slkmA-1
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-61be5d44307so75018537b3.0
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 05:56:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1s4gsb-0001Oc-Gt; Wed, 08 May 2024 08:58:41 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1s4gsZ-0004Uk-JO; Wed, 08 May 2024 08:58:41 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-2b3c711dfd3so3331972a91.2; 
+ Wed, 08 May 2024 05:58:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1715173118; x=1715777918; darn=nongnu.org;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SnS0TPoxYOeZtdGUnATOlFKk6AxDQ1lpQMHgXYCINPk=;
+ b=SXBVFGSl8gae8v5GhVfpOsLRtLxWrzyXryl84GG4xhiQECy+ZD+GlPphC2AqHieldn
+ RU/dm6uw3f4LLVYmKmaGAZ224aGUtjHiuMtvpf0t7/YWcFG3xTfzrJb3FhvbMX4vGj29
+ FYiEeUYafJEqzmrleXSAnbUpM8+feQ3WiyOjN6XJc595NMUqPMzuewFyunXOUZ7jxYeK
+ BdkTOpYhLwvTGOfVhbQM8ZEEXyXIAYeb4Z201PavM2n0XtD0AtotvrGBcR6NmHqSnAN+
+ KqnmqI38JF1afGgnuZK+d7G5S12glNozZL+3eXATlLOiDKp9kFlUVJIMr0FQZMSyuHiN
+ 8iYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715173008; x=1715777808;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=NP7m8jbHeEA6zUp44J64q0lSjcdxEslJQ5pmld6tyCE=;
- b=ce4n88a3ACs+nzVDhXB/45URb1aSDDOZrc/BxKTQvQC12E5h+YEPRjxqlg6eiM5imQ
- 71pw59zlZwgnjzltd6jCqZkPEyFTJIK0IM1nC0a8UzTxI3ExZoJBWuoLQO64+VdqVZa4
- V2Gpw6pVimNkN9F42snL+O1RYxYtKyoeENOY1EY4uYEKFyElcosziTSzjeS3GsW5ENK/
- EznUm1RuKHyXvMEXbWCWCP65EmK4JHFJYjKu+Xf2ZlsD0HXvyD/d7VBxDwSptdNClLWs
- qDAXCpriTqrOPVudgU15lew+T7V/TXhc/8JlBaH7pxdkjhHNVXEiKNZ8DKDpQRdgn50I
- YKIw==
+ d=1e100.net; s=20230601; t=1715173118; x=1715777918;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=SnS0TPoxYOeZtdGUnATOlFKk6AxDQ1lpQMHgXYCINPk=;
+ b=tN0RATYnifeyif97Kkx3cPGimelCf9aGv3mE3e2xinoQjfPsiT1mGgI/Y/n3EMSXD+
+ zcuPTGAYmblUum+Z+DrIEkCZ9anA4rTL5Nld8R5CMLWyS4jnSFvnCsMenmZYdu2/iTEH
+ bjTVJ+IsNtrvsJPW+icw/lWIWdqcQjnJq2qdeNFqG13rE252nOF0kkudnowzygYAJtoD
+ +rwup4dEuta4RJOpIF4pOH4Tz/XScr3V/RMcC4z9EXPVsiqZLRvtFydyZWsdde8DMRSZ
+ KbQMNYjvq+abgSaCwBHvqY2DA4uPesm4KFzbgs8bcIIJnhvJPrsJcR8wUVOwuWdn6cH0
+ 1Fag==
 X-Forwarded-Encrypted: i=1;
- AJvYcCULo03XebSXVRnzmFxBkbbrqzlxmc2YegrUPyq/GBinSQsXGdTDKdhbbib4HfjyyAvq1RGTlAUvdAMmjIIabQSqrrOvVdc=
-X-Gm-Message-State: AOJu0YztdZzcYTFMhqoNxRVbl0SShAL6LR13EciHEzQEQdU3dshMWO1+
- DBLnD3U1JlvXAilRBFiPgWTR/dRYQWiqMnF1v8/nf9Zl2R+4WCdx86b9I/Y54oOhiLGSp7Ls6og
- bNAWWcjz8iwXi+/0l5BBVBy2Rtsn2ByJINqRML3uYewy2pY5TzStX5hnjRz3aP/d4j3y/CHAHXZ
- PmIQlBtNn+Nv6o7epSopSi9uxjJu0=
-X-Received: by 2002:a05:6902:24b:b0:de6:d19:837a with SMTP id
- 3f1490d57ef6-debb9dbb3d7mr2540996276.34.1715173007923; 
- Wed, 08 May 2024 05:56:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE2Xcmts07nbBz43bFf2Uf9kdrfBXX/I3RY+Q8qr6xKSMzfsyrq9znTS4VpUG3T5LjuagXyExOzJdBQ2BkP9WI=
-X-Received: by 2002:a05:6902:24b:b0:de6:d19:837a with SMTP id
- 3f1490d57ef6-debb9dbb3d7mr2540978276.34.1715173007654; Wed, 08 May 2024
- 05:56:47 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240422014041.5706-2-wafer@jaguarmicro.com>
-In-Reply-To: <20240422014041.5706-2-wafer@jaguarmicro.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Wed, 8 May 2024 14:56:11 +0200
-Message-ID: <CAJaqyWcgMFJL8y7wXwFZa6dny34WKDRH+tuEaCdP8oFN4Qf5fQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/virtio: Fix obtain the buffer id from the last
- descriptor
-To: Wafer <wafer@jaguarmicro.com>
-Cc: mst@redhat.com, jasowang@redhat.com, qemu-devel@nongnu.org, 
- angus.chen@jaguarmicro.com, Lei Yang <leiyang@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+ AJvYcCUfhE6LiKaCY9jei75FBfa9Sw61gjNMjuBc5tVF6rhJv/Jk+I/b9o2yZ3DnA/F/6PHO2Li+H7tFKzcivpQgSLGjzmCQEgY+e1+EmKJR5PFvtk7mCu+r0e0ajC4=
+X-Gm-Message-State: AOJu0YyPD3yQMFzQYbdYSfhFDEZ54E7EmvRznXCNcs0ZQtOuDx7YgO7Q
+ T+oOldEzTcOZnRFwwcwRytrAIopHc6J8Np9a5u399oy1VJ5XulfwlRuvow==
+X-Google-Smtp-Source: AGHT+IF9VO0OXgvWL+iNXJU9aLdtJ7w7j3BRG0smx7THFE4tBzUYaHIR9blfmjsUGKBcGbmLftpDbQ==
+X-Received: by 2002:a17:90a:885:b0:2b5:fcf8:6e43 with SMTP id
+ 98e67ed59e1d1-2b6169e1eebmr2483404a91.38.1715173117753; 
+ Wed, 08 May 2024 05:58:37 -0700 (PDT)
+Received: from localhost ([1.146.8.34]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2b628ca53c3sm1348853a91.46.2024.05.08.05.58.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 08 May 2024 05:58:37 -0700 (PDT)
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 08 May 2024 22:58:32 +1000
+Message-Id: <D14A4I716QEF.165UUHJMDA041@gmail.com>
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
+ <qemu-ppc@nongnu.org>
+Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
+Subject: Re: [PATCH v3 21/33] target/ppc/mmu_common.c: Make
+ get_physical_address_wtlb() static
+X-Mailer: aerc 0.17.0
+References: <cover.1715125376.git.balaton@eik.bme.hu>
+ <4f102d70464882b99b812092d3a65d6c867a0d2d.1715125376.git.balaton@eik.bme.hu>
+In-Reply-To: <4f102d70464882b99b812092d3a65d6c867a0d2d.1715125376.git.balaton@eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x102d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.582,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,61 +96,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 22, 2024 at 3:41=E2=80=AFAM Wafer <wafer@jaguarmicro.com> wrote=
-:
->
-> The virtio-1.3 specification
-> <https://docs.oasis-open.org/virtio/virtio/v1.3/virtio-v1.3.html> writes:
-> 2.8.6 Next Flag: Descriptor Chaining
->       Buffer ID is included in the last descriptor in the list.
->
-> If the feature (_F_INDIRECT_DESC) has been negotiated, install only
-> one descriptor in the virtqueue.
-> Therefor the buffer id should be obtained from the first descriptor.
->
-> In descriptor chaining scenarios, the buffer id should be obtained
-> from the last descriptor.
->
+On Wed May 8, 2024 at 10:15 AM AEST, BALATON Zoltan wrote:
+> This function is not used from any other files so make it static and
+> fix the maybe used uninitialised warnings this has uncovered. Also
+> remove mmu_ctx_t definition from internal.h as this type is only used
+> within this file.
 
-This is actually trickier. While it is true the standard mandates it,
-both linux virtio_ring driver and QEMU trusts the ID will be the first
-descriptor of the chain. Does merging this change in QEMU without
-merging the corresponding one in the linux kernel break things? Or am
-I missing something?
+If you add a /* quiet used uninitialized warning */ or similar comment
+on the memset then.
 
-If it breaks I guess this requires more thinking. I didn't check DPDK,
-neither as driver nor as vhost-user device.
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
-Thanks!
+If you respin you could, put the prot fixes as their own patch but
+pretty minor thing if you can't be bothered.
 
-> Fixes: 86044b24e8 ("virtio: basic packed virtqueue support")
 >
-> Signed-off-by: Wafer <wafer@jaguarmicro.com>
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->  hw/virtio/virtio.c | 5 +++++
->  1 file changed, 5 insertions(+)
+>  target/ppc/internal.h   | 17 +----------------
+>  target/ppc/mmu_common.c | 18 +++++++++++++++---
+>  2 files changed, 16 insertions(+), 19 deletions(-)
 >
-> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> index 871674f9be..f65d4b4161 100644
-> --- a/hw/virtio/virtio.c
-> +++ b/hw/virtio/virtio.c
-> @@ -1739,6 +1739,11 @@ static void *virtqueue_packed_pop(VirtQueue *vq, s=
-ize_t sz)
->              goto err_undo_map;
->          }
->
-> +        if (desc_cache !=3D &indirect_desc_cache) {
-> +            /* Buffer ID is included in the last descriptor in the list.=
- */
-> +            id =3D desc.id;
-> +        }
+> diff --git a/target/ppc/internal.h b/target/ppc/internal.h
+> index 98b41a970c..4a90dd2584 100644
+> --- a/target/ppc/internal.h
+> +++ b/target/ppc/internal.h
+> @@ -257,28 +257,13 @@ static inline int prot_for_access_type(MMUAccessTyp=
+e access_type)
+> =20
+>  /* PowerPC MMU emulation */
+> =20
+> -typedef struct mmu_ctx_t mmu_ctx_t;
+> -
+>  bool ppc_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
+>                        hwaddr *raddrp, int *psizep, int *protp,
+>                        int mmu_idx, bool guest_visible);
+> -int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
+> -                                     target_ulong eaddr,
+> -                                     MMUAccessType access_type, int type=
+,
+> -                                     int mmu_idx);
 > +
->          rc =3D virtqueue_packed_read_next_desc(vq, &desc, desc_cache, ma=
-x, &i,
->                                               desc_cache =3D=3D
->                                               &indirect_desc_cache);
-> --
-> 2.27.0
->
+>  /* Software driven TLB helpers */
+>  int ppc6xx_tlb_getnum(CPUPPCState *env, target_ulong eaddr,
+>                                      int way, int is_code);
+> -/* Context used internally during MMU translations */
+> -struct mmu_ctx_t {
+> -    hwaddr raddr;      /* Real address              */
+> -    hwaddr eaddr;      /* Effective address         */
+> -    int prot;                      /* Protection bits           */
+> -    hwaddr hash[2];    /* Pagetable hash values     */
+> -    target_ulong ptem;             /* Virtual segment ID | API  */
+> -    int key;                       /* Access key                */
+> -    int nx;                        /* Non-execute area          */
+> -};
+> =20
+>  #endif /* !CONFIG_USER_ONLY */
+> =20
+> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+> index 63b5fb98d1..d92c9607b8 100644
+> --- a/target/ppc/mmu_common.c
+> +++ b/target/ppc/mmu_common.c
+> @@ -36,6 +36,17 @@
+> =20
+>  /* #define DUMP_PAGE_TABLES */
+> =20
+> +/* Context used internally during MMU translations */
+> +typedef struct {
+> +    hwaddr raddr;      /* Real address             */
+> +    hwaddr eaddr;      /* Effective address        */
+> +    int prot;          /* Protection bits          */
+> +    hwaddr hash[2];    /* Pagetable hash values    */
+> +    target_ulong ptem; /* Virtual segment ID | API */
+> +    int key;           /* Access key               */
+> +    int nx;            /* Non-execute area         */
+> +} mmu_ctx_t;
+> +
+>  void ppc_store_sdr1(CPUPPCState *env, target_ulong value)
+>  {
+>      PowerPCCPU *cpu =3D env_archcpu(env);
+> @@ -667,7 +678,7 @@ static int mmubooke_get_physical_address(CPUPPCState =
+*env, mmu_ctx_t *ctx,
+>      qemu_log_mask(CPU_LOG_MMU,
+>                    "%s: access %s " TARGET_FMT_lx " =3D> " HWADDR_FMT_plx
+>                    " %d %d\n", __func__, ret < 0 ? "refused" : "granted",
+> -                  address, raddr, ctx->prot, ret);
+> +                  address, raddr, ret =3D=3D -1 ? 0 : ctx->prot, ret);
+>      return ret;
+>  }
+> =20
+> @@ -883,7 +894,7 @@ found_tlb:
+>      qemu_log_mask(CPU_LOG_MMU, "%s: access %s " TARGET_FMT_lx " =3D> "
+>                    HWADDR_FMT_plx " %d %d\n", __func__,
+>                    ret < 0 ? "refused" : "granted", address, raddr,
+> -                  ctx->prot, ret);
+> +                  ret =3D=3D -1 ? 0 : ctx->prot, ret);
+>      return ret;
+>  }
+> =20
+> @@ -1131,7 +1142,7 @@ void dump_mmu(CPUPPCState *env)
+>      }
+>  }
+> =20
+> -int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
+> +static int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
+>                                       target_ulong eaddr,
+>                                       MMUAccessType access_type, int type=
+,
+>                                       int mmu_idx)
+> @@ -1150,6 +1161,7 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu=
+_ctx_t *ctx,
+>      if (real_mode && (env->mmu_model =3D=3D POWERPC_MMU_SOFT_6xx ||
+>                        env->mmu_model =3D=3D POWERPC_MMU_SOFT_4xx ||
+>                        env->mmu_model =3D=3D POWERPC_MMU_REAL)) {
+> +        memset(ctx, 0, sizeof(*ctx));
+>          ctx->raddr =3D eaddr;
+>          ctx->prot =3D PAGE_RWX;
+>          return 0;
 
 
