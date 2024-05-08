@@ -4,116 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D76DC25B74
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 23:38:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2612C25B4F
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 23:39:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4qpS-0002gi-Ag; Wed, 08 May 2024 19:36:06 -0400
+	id 1s4qqg-000601-N8; Wed, 08 May 2024 19:37:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s4qpQ-0002g9-2B
- for qemu-devel@nongnu.org; Wed, 08 May 2024 19:36:04 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s4qpN-0002PL-AD
- for qemu-devel@nongnu.org; Wed, 08 May 2024 19:36:03 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id ED0F85D38D;
- Wed,  8 May 2024 23:35:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1715211360; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NC828tU6joOKcaR8xfW2xQsLwu3JPWLUWZIZkxbv6bU=;
- b=1gx0moKMAtSUbXrsUB7l4ybBuGQkg9ge3IomOA2Q0J4R2BxmgG3tUlGWR5UC29oFrj4G3N
- h0KrxFf2XKK3U6VNZqXQjZOoTAtYscE8Y4LvkG2/5HIcvh1zku1hreiSWcUsd7RHDMRF8h
- 14nPtLQBUhJEzWe4Sjzr00ZyZiB1krk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1715211360;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NC828tU6joOKcaR8xfW2xQsLwu3JPWLUWZIZkxbv6bU=;
- b=B3Lh7zikjMKgSryQe73PEjsWg34N8HwXlVVpyWoRtxzh7C9GKPZ/Ou5K15lF/qpJSebbkd
- 97IJmjPV0CFPacBQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=fC5HHXg1;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=7XI4X3At
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1715211359; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NC828tU6joOKcaR8xfW2xQsLwu3JPWLUWZIZkxbv6bU=;
- b=fC5HHXg1WXVbbKWw/MfPYJZe7LJ8sPwyJy+gOYypD1e/Zul/mHxf56JdJm5NLlr5C/2URp
- qi30YwtvkzAnhCBJb2CehJIxCioeFLi/J3ZBYxEwv367qvjfWIETCDV3dHXJzXN+h+CrKv
- q7x16e8498qfhUVXw4iajTNS12xm8GY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1715211359;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NC828tU6joOKcaR8xfW2xQsLwu3JPWLUWZIZkxbv6bU=;
- b=7XI4X3AtGFxKOhvEo8jnU9Qat/ndKQg5YgooEXNySInJJTpPVZpcvJiIwMM8i6+dguWNXy
- CHxn5ONaZpXqedDg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8DCDF13A27;
- Wed,  8 May 2024 23:35:58 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([10.150.64.162])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 8C8vFV4MPGZ7FQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 08 May 2024 23:35:58 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PULL v2 08/13] migration: Remove 'inc' option from migrate command
-Date: Wed,  8 May 2024 20:35:36 -0300
-Message-Id: <20240508233541.2403-9-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20240508233541.2403-1-farosas@suse.de>
-References: <20240508233541.2403-1-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1s4qqU-0004oA-C8; Wed, 08 May 2024 19:37:12 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1s4qqE-0002ct-Rj; Wed, 08 May 2024 19:37:10 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 27E7F4E65BB;
+ Thu, 09 May 2024 01:36:31 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id u8gqhSEhuKz8; Thu,  9 May 2024 01:36:29 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 3020B4E65D6; Thu, 09 May 2024 01:36:29 +0200 (CEST)
+Message-Id: <49e2b7e5a0fb98fd3f8a6d3c0c8ac2a05ebceb7a.1715209155.git.balaton@eik.bme.hu>
+In-Reply-To: <cover.1715209155.git.balaton@eik.bme.hu>
+References: <cover.1715209155.git.balaton@eik.bme.hu>
+From: BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PATCH v4 25/33] target/ppc/mmu_common.c: Split off BookE handling
+ from ppc_jumbo_xlate()
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
- FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FROM_EQ_ENVFROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: ED0F85D38D
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+To: qemu-devel@nongnu.org,
+    qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>
+Date: Thu, 09 May 2024 01:36:29 +0200 (CEST)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,506 +63,227 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The block incremental option for block migration has been deprecated
-in 8.2 in favor of using the block-mirror feature. Remove it now.
+Introduce ppc_booke_xlate() to handle BookE and BookE 2.06 cases to
+reduce ppc_jumbo_xlate() further.
 
-Deprecation commit 40101f320d ("migration: migrate 'inc' command
-option is deprecated.").
-
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- docs/about/deprecated.rst       |  9 ------
- docs/about/removed-features.rst | 14 +++++++++
- hmp-commands.hx                 | 13 +++-----
- migration/block.c               |  1 -
- migration/migration-hmp-cmds.c  | 18 ++---------
- migration/migration.c           | 24 +++++----------
- migration/options.c             | 30 +-----------------
- migration/options.h             |  5 ---
- qapi/migration.json             | 54 +++++++--------------------------
- 9 files changed, 39 insertions(+), 129 deletions(-)
+ target/ppc/mmu_common.c | 148 ++++++++++++++++++++++++++--------------
+ 1 file changed, 98 insertions(+), 50 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 94d3e53513..1dfbd5fad4 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -477,15 +477,6 @@ option).
- Migration
- ---------
- 
--``inc`` migrate command option (since 8.2)
--''''''''''''''''''''''''''''''''''''''''''
--
--Use blockdev-mirror with NBD instead.
--
--As an intermediate step the ``inc`` functionality can be achieved by
--setting the ``block-incremental`` migration parameter to ``true``.
--But this parameter is also deprecated.
--
- ``blk`` migrate command option (since 8.2)
- ''''''''''''''''''''''''''''''''''''''''''
- 
-diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-index c4cb2692d0..7da4b3df14 100644
---- a/docs/about/removed-features.rst
-+++ b/docs/about/removed-features.rst
-@@ -620,6 +620,13 @@ was superseded by ``sections``.
- Member ``skipped`` of the ``MigrationStats`` struct hasn't been used
- for more than 10 years. Removed with no replacement.
- 
-+``migrate`` command option ``inc`` (removed in 9.1)
-+'''''''''''''''''''''''''''''''''''''''''''''''''''
-+
-+Use blockdev-mirror with NBD instead. See "QMP invocation for live
-+storage migration with ``blockdev-mirror`` + NBD" in
-+docs/interop/live-block-operations.rst for a detailed explanation.
-+
- Human Monitor Protocol (HMP) commands
- -------------------------------------
- 
-@@ -680,6 +687,13 @@ This command didn't produce any output already. Removed with no replacement.
- The ``singlestep`` command has been replaced by the ``one-insn-per-tb``
- command, which has the same behaviour but a less misleading name.
- 
-+``migrate`` command ``-i`` option (removed in 9.1)
-+''''''''''''''''''''''''''''''''''''''''''''''''''
-+
-+Use blockdev-mirror with NBD instead. See "QMP invocation for live
-+storage migration with ``blockdev-mirror`` + NBD" in
-+docs/interop/live-block-operations.rst for a detailed explanation.
-+
- Host Architectures
- ------------------
- 
-diff --git a/hmp-commands.hx b/hmp-commands.hx
-index 2e2a3bcf98..7978302949 100644
---- a/hmp-commands.hx
-+++ b/hmp-commands.hx
-@@ -909,26 +909,21 @@ ERST
- 
-     {
-         .name       = "migrate",
--        .args_type  = "detach:-d,blk:-b,inc:-i,resume:-r,uri:s",
--        .params     = "[-d] [-b] [-i] [-r] uri",
-+        .args_type  = "detach:-d,blk:-b,resume:-r,uri:s",
-+        .params     = "[-d] [-b] [-r] uri",
-         .help       = "migrate to URI (using -d to not wait for completion)"
- 		      "\n\t\t\t -b for migration without shared storage with"
--		      " full copy of disk\n\t\t\t -i for migration without "
--		      "shared storage with incremental copy of disk "
--		      "(base image shared between src and destination)"
--                      "\n\t\t\t -r to resume a paused migration",
-+		      " full copy of disk\n\t\t\t -r to resume a paused migration",
-         .cmd        = hmp_migrate,
-     },
- 
- 
- SRST
--``migrate [-d] [-b] [-i]`` *uri*
-+``migrate [-d] [-b]`` *uri*
-   Migrate to *uri* (using -d to not wait for completion).
- 
-   ``-b``
-     for migration with full copy of disk
--  ``-i``
--    for migration with incremental copy of disk (base image is shared)
- ERST
- 
-     {
-diff --git a/migration/block.c b/migration/block.c
-index bae6e94891..87ec1a7e68 100644
---- a/migration/block.c
-+++ b/migration/block.c
-@@ -419,7 +419,6 @@ static int init_blk_migration(QEMUFile *f, Error **errp)
-         bmds->bulk_completed = 0;
-         bmds->total_sectors = sectors;
-         bmds->completed_sectors = 0;
--        bmds->shared_base = migrate_block_incremental();
- 
-         assert(i < num_bs);
-         bmds_bs[i].bmds = bmds;
-diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-index b6b2035f64..8446c0721a 100644
---- a/migration/migration-hmp-cmds.c
-+++ b/migration/migration-hmp-cmds.c
-@@ -332,10 +332,6 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
-         monitor_printf(mon, "%s: %u ms\n",
-             MigrationParameter_str(MIGRATION_PARAMETER_X_CHECKPOINT_DELAY),
-             params->x_checkpoint_delay);
--        assert(params->has_block_incremental);
--        monitor_printf(mon, "%s: %s\n",
--            MigrationParameter_str(MIGRATION_PARAMETER_BLOCK_INCREMENTAL),
--            params->block_incremental ? "on" : "off");
-         monitor_printf(mon, "%s: %u\n",
-             MigrationParameter_str(MIGRATION_PARAMETER_MULTIFD_CHANNELS),
-             params->multifd_channels);
-@@ -616,10 +612,6 @@ void hmp_migrate_set_parameter(Monitor *mon, const QDict *qdict)
-         p->has_x_checkpoint_delay = true;
-         visit_type_uint32(v, param, &p->x_checkpoint_delay, &err);
-         break;
--    case MIGRATION_PARAMETER_BLOCK_INCREMENTAL:
--        p->has_block_incremental = true;
--        visit_type_bool(v, param, &p->block_incremental, &err);
--        break;
-     case MIGRATION_PARAMETER_MULTIFD_CHANNELS:
-         p->has_multifd_channels = true;
-         visit_type_uint8(v, param, &p->multifd_channels, &err);
-@@ -767,18 +759,12 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
+diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+index 53ffcc795d..be0565f19c 100644
+--- a/target/ppc/mmu_common.c
++++ b/target/ppc/mmu_common.c
+@@ -1089,21 +1089,9 @@ static int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
+                                      MMUAccessType access_type, int type,
+                                      int mmu_idx)
  {
-     bool detach = qdict_get_try_bool(qdict, "detach", false);
-     bool blk = qdict_get_try_bool(qdict, "blk", false);
--    bool inc = qdict_get_try_bool(qdict, "inc", false);
-     bool resume = qdict_get_try_bool(qdict, "resume", false);
-     const char *uri = qdict_get_str(qdict, "uri");
-     Error *err = NULL;
-     g_autoptr(MigrationChannelList) caps = NULL;
-     g_autoptr(MigrationChannel) channel = NULL;
- 
--    if (inc) {
--        warn_report("option '-i' is deprecated;"
--                    " use blockdev-mirror with NBD instead");
+-    bool real_mode;
+-
+-    if (env->mmu_model == POWERPC_MMU_BOOKE) {
+-        return mmubooke_get_physical_address(env, &ctx->raddr, &ctx->prot,
+-                                             eaddr, access_type);
+-    } else if (env->mmu_model == POWERPC_MMU_BOOKE206) {
+-        return mmubooke206_get_physical_address(env, &ctx->raddr, &ctx->prot,
+-                                                eaddr, access_type, mmu_idx);
 -    }
 -
-     if (blk) {
-         warn_report("option '-b' is deprecated;"
-                     " use blockdev-mirror with NBD instead");
-@@ -790,8 +776,8 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
-     }
-     QAPI_LIST_PREPEND(caps, g_steal_pointer(&channel));
- 
--    qmp_migrate(NULL, true, caps, !!blk, blk, !!inc, inc,
--                 false, false, true, resume, &err);
-+    qmp_migrate(NULL, true, caps, !!blk, blk, false, false,
-+                true, resume, &err);
-     if (hmp_handle_error(mon, err)) {
-         return;
-     }
-diff --git a/migration/migration.c b/migration/migration.c
-index a4be929e40..11a13fa20c 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -1935,14 +1935,9 @@ bool migration_is_blocked(Error **errp)
+-    real_mode = (type == ACCESS_CODE) ? !FIELD_EX64(env->msr, MSR, IR)
+-                                      : !FIELD_EX64(env->msr, MSR, DR);
+-    if (real_mode && (env->mmu_model == POWERPC_MMU_SOFT_6xx ||
+-                      env->mmu_model == POWERPC_MMU_SOFT_4xx ||
+-                      env->mmu_model == POWERPC_MMU_REAL)) {
++    bool real_mode = (type == ACCESS_CODE) ? !FIELD_EX64(env->msr, MSR, IR)
++                                           : !FIELD_EX64(env->msr, MSR, DR);
++    if (real_mode) {
+         ctx->raddr = eaddr;
+         ctx->prot = PAGE_RWX;
+         return 0;
+@@ -1113,6 +1101,8 @@ static int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
+     case POWERPC_MMU_SOFT_6xx:
+         return mmu6xx_get_physical_address(env, ctx, eaddr, access_type, type);
+     case POWERPC_MMU_SOFT_4xx:
++        /* avoid maybe used uninitialized warnings for unused fields in ctx */
++        memset(ctx, 0, sizeof(*ctx));
+         return mmu40x_get_physical_address(env, &ctx->raddr, &ctx->prot, eaddr,
+                                            access_type);
+     case POWERPC_MMU_REAL:
+@@ -1177,6 +1167,93 @@ static void booke206_update_mas_tlb_miss(CPUPPCState *env, target_ulong address,
+     env->spr[SPR_BOOKE_MAS0] |= env->last_way << MAS0_NV_SHIFT;
  }
  
- /* Returns true if continue to migrate, or false if error detected */
--static bool migrate_prepare(MigrationState *s, bool blk, bool blk_inc,
--                            bool resume, Error **errp)
-+static bool migrate_prepare(MigrationState *s, bool blk, bool resume,
-+                            Error **errp)
- {
--    if (blk_inc) {
--        warn_report("parameter 'inc' is deprecated;"
--                    " use blockdev-mirror with NBD instead");
--    }
--
-     if (blk) {
-         warn_report("parameter 'blk' is deprecated;"
-                     " use blockdev-mirror with NBD instead");
-@@ -2032,12 +2027,12 @@ static bool migrate_prepare(MigrationState *s, bool blk, bool blk_inc,
-         }
-     }
- 
--    if (blk || blk_inc) {
-+    if (blk) {
-         if (migrate_colo()) {
-             error_setg(errp, "No disk migration is required in COLO mode");
-             return false;
-         }
--        if (migrate_block() || migrate_block_incremental()) {
-+        if (migrate_block()) {
-             error_setg(errp, "Command options are incompatible with "
-                        "current migration capabilities");
-             return false;
-@@ -2048,10 +2043,6 @@ static bool migrate_prepare(MigrationState *s, bool blk, bool blk_inc,
-         s->must_remove_block_options = true;
-     }
- 
--    if (blk_inc) {
--        migrate_set_block_incremental(true);
--    }
--
-     if (migrate_init(s, errp)) {
-         return false;
-     }
-@@ -2061,8 +2052,8 @@ static bool migrate_prepare(MigrationState *s, bool blk, bool blk_inc,
- 
- void qmp_migrate(const char *uri, bool has_channels,
-                  MigrationChannelList *channels, bool has_blk, bool blk,
--                 bool has_inc, bool inc, bool has_detach, bool detach,
--                 bool has_resume, bool resume, Error **errp)
-+                 bool has_detach, bool detach, bool has_resume, bool resume,
-+                 Error **errp)
- {
-     bool resume_requested;
-     Error *local_err = NULL;
-@@ -2101,8 +2092,7 @@ void qmp_migrate(const char *uri, bool has_channels,
-     }
- 
-     resume_requested = has_resume && resume;
--    if (!migrate_prepare(s, has_blk && blk, has_inc && inc,
--                         resume_requested, errp)) {
-+    if (!migrate_prepare(s, has_blk && blk, resume_requested, errp)) {
-         /* Error detected, put into errp */
-         return;
-     }
-diff --git a/migration/options.c b/migration/options.c
-index 239f5ecfb4..5b16d99bd9 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -486,7 +486,7 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
- 
- #ifndef CONFIG_LIVE_BLOCK_MIGRATION
-     if (new_caps[MIGRATION_CAPABILITY_BLOCK]) {
--        error_setg(errp, "QEMU compiled without old-style (blk/-b, inc/-i) "
-+        error_setg(errp, "QEMU compiled without old-style (blk/-b) "
-                    "block migration");
-         error_append_hint(errp, "Use blockdev-mirror with NBD instead.\n");
-         return false;
-@@ -763,13 +763,6 @@ bool migrate_has_block_bitmap_mapping(void)
-     return s->parameters.has_block_bitmap_mapping;
- }
- 
--bool migrate_block_incremental(void)
--{
--    MigrationState *s = migrate_get_current();
--
--    return s->parameters.block_incremental;
--}
--
- uint32_t migrate_checkpoint_delay(void)
- {
-     MigrationState *s = migrate_get_current();
-@@ -948,15 +941,6 @@ ZeroPageDetection migrate_zero_page_detection(void)
-     return s->parameters.zero_page_detection;
- }
- 
--/* parameter setters */
--
--void migrate_set_block_incremental(bool value)
--{
--    MigrationState *s = migrate_get_current();
--
--    s->parameters.block_incremental = value;
--}
--
- /* parameters helpers */
- 
- void block_cleanup_parameters(void)
-@@ -966,7 +950,6 @@ void block_cleanup_parameters(void)
-     if (s->must_remove_block_options) {
-         /* setting to false can never fail */
-         migrate_cap_set(MIGRATION_CAPABILITY_BLOCK, false, &error_abort);
--        migrate_set_block_incremental(false);
-         s->must_remove_block_options = false;
-     }
- }
-@@ -1020,8 +1003,6 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
-     params->downtime_limit = s->parameters.downtime_limit;
-     params->has_x_checkpoint_delay = true;
-     params->x_checkpoint_delay = s->parameters.x_checkpoint_delay;
--    params->has_block_incremental = true;
--    params->block_incremental = s->parameters.block_incremental;
-     params->has_multifd_channels = true;
-     params->multifd_channels = s->parameters.multifd_channels;
-     params->has_multifd_compression = true;
-@@ -1081,7 +1062,6 @@ void migrate_params_init(MigrationParameters *params)
-     params->has_max_bandwidth = true;
-     params->has_downtime_limit = true;
-     params->has_x_checkpoint_delay = true;
--    params->has_block_incremental = true;
-     params->has_multifd_channels = true;
-     params->has_multifd_compression = true;
-     params->has_multifd_zlib_level = true;
-@@ -1359,9 +1339,6 @@ static void migrate_params_test_apply(MigrateSetParameters *params,
-         dest->x_checkpoint_delay = params->x_checkpoint_delay;
-     }
- 
--    if (params->has_block_incremental) {
--        dest->block_incremental = params->block_incremental;
--    }
-     if (params->has_multifd_channels) {
-         dest->multifd_channels = params->multifd_channels;
-     }
-@@ -1502,11 +1479,6 @@ static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
-         colo_checkpoint_delay_set();
-     }
- 
--    if (params->has_block_incremental) {
--        warn_report("block migration is deprecated;"
--                    " use blockdev-mirror with NBD instead");
--        s->parameters.block_incremental = params->block_incremental;
--    }
-     if (params->has_multifd_channels) {
-         s->parameters.multifd_channels = params->multifd_channels;
-     }
-diff --git a/migration/options.h b/migration/options.h
-index ab8199e207..fa5eb177df 100644
---- a/migration/options.h
-+++ b/migration/options.h
-@@ -67,7 +67,6 @@ bool migrate_cap_set(int cap, bool value, Error **errp);
- const BitmapMigrationNodeAliasList *migrate_block_bitmap_mapping(void);
- bool migrate_has_block_bitmap_mapping(void);
- 
--bool migrate_block_incremental(void);
- uint32_t migrate_checkpoint_delay(void);
- int migrate_compress_level(void);
- int migrate_compress_threads(void);
-@@ -92,10 +91,6 @@ const char *migrate_tls_hostname(void);
- uint64_t migrate_xbzrle_cache_size(void);
- ZeroPageDetection migrate_zero_page_detection(void);
- 
--/* parameters setters */
--
--void migrate_set_block_incremental(bool value);
--
- /* parameters helpers */
- 
- bool migrate_params_check(MigrationParameters *params, Error **errp);
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 2dd70f1c0e..b7d3ad015a 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -839,13 +839,6 @@
- # @x-checkpoint-delay: The delay time (in ms) between two COLO
- #     checkpoints in periodic mode.  (Since 2.8)
- #
--# @block-incremental: Affects how much storage is migrated when the
--#     block migration capability is enabled.  When false, the entire
--#     storage backing chain is migrated into a flattened image at the
--#     destination; when true, only the active qcow2 layer is migrated
--#     and the destination must already have access to the same backing
--#     chain as was used on the source.  (since 2.10)
--#
- # @multifd-channels: Number of channels used to migrate data in
- #     parallel.  This is the same number that the number of sockets
- #     used for migration.  The default value is 2 (since 4.0)
-@@ -908,10 +901,9 @@
- #
- # Features:
- #
--# @deprecated: Member @block-incremental is deprecated.  Use
--#     blockdev-mirror with NBD instead.  Members @compress-level,
--#     @compress-threads, @decompress-threads and @compress-wait-thread
--#     are deprecated because @compression is deprecated.
-+# @deprecated: Members @compress-level, @compress-threads,
-+#     @decompress-threads and @compress-wait-thread are deprecated
-+#     because @compression is deprecated.
- #
- # @unstable: Members @x-checkpoint-delay and
- #     @x-vcpu-dirty-limit-period are experimental.
-@@ -931,7 +923,6 @@
-            'tls-creds', 'tls-hostname', 'tls-authz', 'max-bandwidth',
-            'avail-switchover-bandwidth', 'downtime-limit',
-            { 'name': 'x-checkpoint-delay', 'features': [ 'unstable' ] },
--           { 'name': 'block-incremental', 'features': [ 'deprecated' ] },
-            'multifd-channels',
-            'xbzrle-cache-size', 'max-postcopy-bandwidth',
-            'max-cpu-throttle', 'multifd-compression',
-@@ -1047,13 +1038,6 @@
- # @x-checkpoint-delay: The delay time (in ms) between two COLO
- #     checkpoints in periodic mode.  (Since 2.8)
- #
--# @block-incremental: Affects how much storage is migrated when the
--#     block migration capability is enabled.  When false, the entire
--#     storage backing chain is migrated into a flattened image at the
--#     destination; when true, only the active qcow2 layer is migrated
--#     and the destination must already have access to the same backing
--#     chain as was used on the source.  (since 2.10)
--#
- # @multifd-channels: Number of channels used to migrate data in
- #     parallel.  This is the same number that the number of sockets
- #     used for migration.  The default value is 2 (since 4.0)
-@@ -1116,10 +1100,9 @@
- #
- # Features:
- #
--# @deprecated: Member @block-incremental is deprecated.  Use
--#     blockdev-mirror with NBD instead.  Members @compress-level,
--#     @compress-threads, @decompress-threads and @compress-wait-thread
--#     are deprecated because @compression is deprecated.
-+# @deprecated: Members @compress-level, @compress-threads,
-+#     @decompress-threads and @compress-wait-thread are deprecated
-+#     because @compression is deprecated.
- #
- # @unstable: Members @x-checkpoint-delay and
- #     @x-vcpu-dirty-limit-period are experimental.
-@@ -1154,8 +1137,6 @@
-             '*downtime-limit': 'uint64',
-             '*x-checkpoint-delay': { 'type': 'uint32',
-                                      'features': [ 'unstable' ] },
--            '*block-incremental': { 'type': 'bool',
--                                    'features': [ 'deprecated' ] },
-             '*multifd-channels': 'uint8',
-             '*xbzrle-cache-size': 'size',
-             '*max-postcopy-bandwidth': 'size',
-@@ -1279,13 +1260,6 @@
- # @x-checkpoint-delay: the delay time between two COLO checkpoints.
- #     (Since 2.8)
- #
--# @block-incremental: Affects how much storage is migrated when the
--#     block migration capability is enabled.  When false, the entire
--#     storage backing chain is migrated into a flattened image at the
--#     destination; when true, only the active qcow2 layer is migrated
--#     and the destination must already have access to the same backing
--#     chain as was used on the source.  (since 2.10)
--#
- # @multifd-channels: Number of channels used to migrate data in
- #     parallel.  This is the same number that the number of sockets
- #     used for migration.  The default value is 2 (since 4.0)
-@@ -1348,10 +1322,9 @@
- #
- # Features:
- #
--# @deprecated: Member @block-incremental is deprecated.  Use
--#     blockdev-mirror with NBD instead.  Members @compress-level,
--#     @compress-threads, @decompress-threads and @compress-wait-thread
--#     are deprecated because @compression is deprecated.
-+# @deprecated: Members @compress-level, @compress-threads,
-+#     @decompress-threads and @compress-wait-thread are deprecated
-+#     because @compression is deprecated.
- #
- # @unstable: Members @x-checkpoint-delay and
- #     @x-vcpu-dirty-limit-period are experimental.
-@@ -1383,8 +1356,6 @@
-             '*downtime-limit': 'uint64',
-             '*x-checkpoint-delay': { 'type': 'uint32',
-                                      'features': [ 'unstable' ] },
--            '*block-incremental': { 'type': 'bool',
--                                    'features': [ 'deprecated' ] },
-             '*multifd-channels': 'uint8',
-             '*xbzrle-cache-size': 'size',
-             '*max-postcopy-bandwidth': 'size',
-@@ -1736,8 +1707,6 @@
- #
- # @blk: do block migration (full disk copy)
- #
--# @inc: incremental disk copy migration
--#
- # @detach: this argument exists only for compatibility reasons and is
- #     ignored by QEMU
- #
-@@ -1745,8 +1714,8 @@
- #
- # Features:
- #
--# @deprecated: Members @inc and @blk are deprecated.  Use
--#     blockdev-mirror with NBD instead.
-+# @deprecated: Member @blk is deprecated.  Use blockdev-mirror with
-+#     NBD instead.
- #
- # Since: 0.14
- #
-@@ -1814,7 +1783,6 @@
-   'data': {'*uri': 'str',
-            '*channels': [ 'MigrationChannel' ],
-            '*blk': { 'type': 'bool', 'features': [ 'deprecated' ] },
--           '*inc': { 'type': 'bool', 'features': [ 'deprecated' ] },
-            '*detach': 'bool', '*resume': 'bool' } }
- 
- ##
++static bool ppc_booke_xlate(PowerPCCPU *cpu, vaddr eaddr,
++                            MMUAccessType access_type,
++                            hwaddr *raddrp, int *psizep, int *protp,
++                            int mmu_idx, bool guest_visible)
++{
++    CPUState *cs = CPU(cpu);
++    CPUPPCState *env = &cpu->env;
++    hwaddr raddr;
++    int prot, ret;
++
++    if (env->mmu_model == POWERPC_MMU_BOOKE206) {
++        ret = mmubooke206_get_physical_address(env, &raddr, &prot, eaddr,
++                                               access_type, mmu_idx);
++    } else {
++        ret = mmubooke_get_physical_address(env, &raddr, &prot, eaddr,
++                                            access_type);
++    }
++    if (ret == 0) {
++        *raddrp = raddr;
++        *protp = prot;
++        *psizep = TARGET_PAGE_BITS;
++        return true;
++    } else if (!guest_visible) {
++        return false;
++    }
++
++    log_cpu_state_mask(CPU_LOG_MMU, cs, 0);
++    if (access_type == MMU_INST_FETCH) {
++        switch (ret) {
++        case -1:
++            /* No matches in page tables or TLB */
++            switch (env->mmu_model) {
++            case POWERPC_MMU_BOOKE206:
++                booke206_update_mas_tlb_miss(env, eaddr, access_type, mmu_idx);
++                /* fall through */
++            case POWERPC_MMU_BOOKE:
++                cs->exception_index = POWERPC_EXCP_ITLB;
++                env->error_code = 0;
++                env->spr[SPR_BOOKE_DEAR] = eaddr;
++                env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
++                break;
++            default:
++                g_assert_not_reached();
++            }
++            break;
++        case -2:
++            /* Access rights violation */
++            cs->exception_index = POWERPC_EXCP_ISI;
++            env->error_code = 0;
++            break;
++        case -3:
++            /* No execute protection violation */
++            cs->exception_index = POWERPC_EXCP_ISI;
++            env->spr[SPR_BOOKE_ESR] = 0;
++            env->error_code = 0;
++            break;
++        }
++    } else {
++        switch (ret) {
++        case -1:
++            /* No matches in page tables or TLB */
++            switch (env->mmu_model) {
++            case POWERPC_MMU_BOOKE206:
++                booke206_update_mas_tlb_miss(env, eaddr, access_type, mmu_idx);
++                /* fall through */
++            case POWERPC_MMU_BOOKE:
++                cs->exception_index = POWERPC_EXCP_DTLB;
++                env->error_code = 0;
++                env->spr[SPR_BOOKE_DEAR] = eaddr;
++                env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
++                break;
++            default:
++                g_assert_not_reached();
++            }
++            break;
++        case -2:
++            /* Access rights violation */
++            cs->exception_index = POWERPC_EXCP_DSI;
++            env->error_code = 0;
++            env->spr[SPR_BOOKE_DEAR] = eaddr;
++            env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
++            break;
++        }
++    }
++    return false;
++}
++
+ /* Perform address translation */
+ /* TODO: Split this by mmu_model. */
+ static bool ppc_jumbo_xlate(PowerPCCPU *cpu, vaddr eaddr,
+@@ -1229,15 +1306,6 @@ static bool ppc_jumbo_xlate(PowerPCCPU *cpu, vaddr eaddr,
+                 env->spr[SPR_40x_DEAR] = eaddr;
+                 env->spr[SPR_40x_ESR] = 0x00000000;
+                 break;
+-            case POWERPC_MMU_BOOKE206:
+-                booke206_update_mas_tlb_miss(env, eaddr, access_type, mmu_idx);
+-                /* fall through */
+-            case POWERPC_MMU_BOOKE:
+-                cs->exception_index = POWERPC_EXCP_ITLB;
+-                env->error_code = 0;
+-                env->spr[SPR_BOOKE_DEAR] = eaddr;
+-                env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
+-                break;
+             case POWERPC_MMU_REAL:
+                 cpu_abort(cs, "PowerPC in real mode should never raise "
+                               "any MMU exceptions\n");
+@@ -1248,23 +1316,12 @@ static bool ppc_jumbo_xlate(PowerPCCPU *cpu, vaddr eaddr,
+         case -2:
+             /* Access rights violation */
+             cs->exception_index = POWERPC_EXCP_ISI;
+-            if ((env->mmu_model == POWERPC_MMU_BOOKE) ||
+-                (env->mmu_model == POWERPC_MMU_BOOKE206)) {
+-                env->error_code = 0;
+-            } else {
+-                env->error_code = 0x08000000;
+-            }
++            env->error_code = 0x08000000;
+             break;
+         case -3:
+             /* No execute protection violation */
+-            if ((env->mmu_model == POWERPC_MMU_BOOKE) ||
+-                (env->mmu_model == POWERPC_MMU_BOOKE206)) {
+-                env->spr[SPR_BOOKE_ESR] = 0x00000000;
+-                env->error_code = 0;
+-            } else {
+-                env->error_code = 0x10000000;
+-            }
+             cs->exception_index = POWERPC_EXCP_ISI;
++            env->error_code = 0x10000000;
+             break;
+         case -4:
+             /* Direct store exception */
+@@ -1305,15 +1362,6 @@ static bool ppc_jumbo_xlate(PowerPCCPU *cpu, vaddr eaddr,
+                     env->spr[SPR_40x_ESR] = 0x00000000;
+                 }
+                 break;
+-            case POWERPC_MMU_BOOKE206:
+-                booke206_update_mas_tlb_miss(env, eaddr, access_type, mmu_idx);
+-                /* fall through */
+-            case POWERPC_MMU_BOOKE:
+-                cs->exception_index = POWERPC_EXCP_DTLB;
+-                env->error_code = 0;
+-                env->spr[SPR_BOOKE_DEAR] = eaddr;
+-                env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
+-                break;
+             case POWERPC_MMU_REAL:
+                 cpu_abort(cs, "PowerPC in real mode should never raise "
+                               "any MMU exceptions\n");
+@@ -1330,10 +1378,6 @@ static bool ppc_jumbo_xlate(PowerPCCPU *cpu, vaddr eaddr,
+                 if (access_type == MMU_DATA_STORE) {
+                     env->spr[SPR_40x_ESR] |= 0x00800000;
+                 }
+-            } else if ((env->mmu_model == POWERPC_MMU_BOOKE) ||
+-                       (env->mmu_model == POWERPC_MMU_BOOKE206)) {
+-                env->spr[SPR_BOOKE_DEAR] = eaddr;
+-                env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
+             } else {
+                 env->spr[SPR_DAR] = eaddr;
+                 if (access_type == MMU_DATA_STORE) {
+@@ -1412,6 +1456,10 @@ bool ppc_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
+     case POWERPC_MMU_32B:
+         return ppc_hash32_xlate(cpu, eaddr, access_type, raddrp,
+                                psizep, protp, mmu_idx, guest_visible);
++    case POWERPC_MMU_BOOKE:
++    case POWERPC_MMU_BOOKE206:
++        return ppc_booke_xlate(cpu, eaddr, access_type, raddrp,
++                               psizep, protp, mmu_idx, guest_visible);
+     case POWERPC_MMU_MPC8xx:
+         cpu_abort(env_cpu(&cpu->env), "MPC8xx MMU model is not implemented\n");
+     default:
 -- 
-2.35.3
+2.30.9
 
 
