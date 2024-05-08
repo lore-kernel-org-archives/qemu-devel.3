@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E001BC04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 12:32:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D8EBC04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 12:32:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4gSI-0005fQ-FG; Wed, 08 May 2024 08:31:30 -0400
+	id 1s4gS5-0005ar-Cx; Wed, 08 May 2024 08:31:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <minwoo.im.dev@gmail.com>)
- id 1s4gSD-0005eT-QE; Wed, 08 May 2024 08:31:25 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1s4gRz-0005Yu-A0; Wed, 08 May 2024 08:31:13 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <minwoo.im.dev@gmail.com>)
- id 1s4gSA-0003AS-3G; Wed, 08 May 2024 08:31:24 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-6f45f1179c3so3281205b3a.3; 
- Wed, 08 May 2024 05:31:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1s4gRv-00037b-DW; Wed, 08 May 2024 08:31:10 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-5ca29c131ebso3205738a12.0; 
+ Wed, 08 May 2024 05:31:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715171480; x=1715776280; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1715171464; x=1715776264; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ndv57RH03iIiitXdceTxAwpyOl6hTRdMizLr7f5jGsg=;
- b=TwqNuGr4qIdxjpvuQUKvylEHgW6T2PnkOlUFvznhvPnmv6VerEmn51HZVk0vuGKqo7
- ut2ytZ6taxIBzObyi1g82ctbbeXQENAtezw05GVi1CNyQzXHQAdKdbPaFMRnkdGptyDR
- nmFPQLqvUZawQyAK5NlnfORQK++tRewvZv6AQIWU3qU6YiSMmE582cV7jzEc8X++rixT
- FWNQlYFdoymZigw4eosfPetpEQfqU4IWk4YZdohQ68j0hHeXpf+9UgdsuOHf7mCViMHV
- jUXmaecPuxD5c2gcZFbu7HwuYfLui1gnQkM65xrDdHnHRkj6Pn5UA2cmAgOON2pkl7g0
- Q9rA==
+ bh=6GpM2Wau9g7vnLLFGS1shdiSHE3sPS8g3dHSCTmh/6c=;
+ b=fe5is1pz1W1OCy0exaVWf5NWeJOKnPP3laLpuYNUd106ZoihoODGH1gV/kTmEXU1id
+ gCauFOXxzcv4BBbP5PlNGQI7hnNZf4UxJAH/1oo+f+rGExBC42qcZnscZbbkKmz6I8b5
+ CGvWxHDZwgdBKVt0pww81i2GWoR1+oolzemC3NUwhmC7Z0SnLbsCDA5ZF4NcF5cWKLHS
+ Q7r5kyhDpGZgEKEzVWHpL+Hhx1Yey/pZUI3GyOiW5f1xWliFyAa/NsKw8WeRABSprmlO
+ JyYyfoVQ+0KDaoOF4Fy7hNLFYQGkObchoE/jJqWDLQ6RuctrH26v+cFwk+ioQRg7TOyQ
+ bECQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715171480; x=1715776280;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Ndv57RH03iIiitXdceTxAwpyOl6hTRdMizLr7f5jGsg=;
- b=QH/LY6iOim686NFWFljCXWbbBMsDrIi7Y60KIugRd4ksCTLuip5nWWTmZOctZG/N5k
- RKaAwlfGhJRmg8rZkhcALGzd97E+Tw2H6oDaP/++nvLZcswZUU7X4fEVp/X4U4DcxHWq
- UObGTD7z4MhG/Noqi5tf8Ja2mOuiqRZBrs1sWuvMG6Dle7ynlRFh9O6OqzlgLv8HD1un
- NGuSPd4YxFuukDO80O8NaI77xDHiZGjQB4tXu2En52Juhz/UCzH6nO21vzeOOJTrSf+z
- YvFInsoQKgmN5nG3lY6xkCEjrY1mDRijkfEj+J5N+kaJWQEmDL+yISksA9sBGSTCa7+b
- TcqQ==
+ d=1e100.net; s=20230601; t=1715171464; x=1715776264;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=6GpM2Wau9g7vnLLFGS1shdiSHE3sPS8g3dHSCTmh/6c=;
+ b=QV3LHzJp5ZyPa/h8sixMcwfMnx79rQIX5nn1PxceV/cuF6mJ4hVNlFKgHDkcZ2xpzK
+ VGDNsKah1hJ/JrBNv4Pduf2ghf9LOKXbFkRdnnvxnupk9QRvp5StIVLVKQ9ykagUOKvM
+ jsa/uWV7qW1Vq2NANOyKoboxlQNcSIlB9klf8CxveO/B6aTcnAjbU0wIx6MT5VeMrWWA
+ a8NqMmXTRMFr0n42BGPtiIByqcOyA5gy8IYoF7YDIgu3CLFPxRwSHbt/AQ3zRNRsyv9y
+ 4sngTaEVdyUAr0y/Kc2jSSX3Rw1isRaS13wHPrTNmc9LZd+in+zfvruSERLMwxAj4se1
+ GMqA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVzOYEcNk/jLlhy0MxHlw8dTmN1zIs4txQW+DtWoiJpDxTTQ/FFFlwMlEe7Op/pHsEIaIqLXyKBE2UCa7Dnfo1MzWxxB3E=
-X-Gm-Message-State: AOJu0Yy58gw5exvmCdk80rV/UW/O3x1mZwr07AbpPFHpTcXtQcLpd1Ms
- bcgM+xAgTNrrgxc3edN7OwYVLFYqF3oaUjCNrhUa0OiSysm563pw
-X-Google-Smtp-Source: AGHT+IEJ7kkrraMPmwlVk9h3wy5ZUoC0ChT6xWRa6783DpajgzkhqB7wDZVxTyDSPkiXkV7XWrfJbA==
-X-Received: by 2002:a05:6a21:6da4:b0:1af:8e88:2834 with SMTP id
- adf61e73a8af0-1afc8db7ebdmr3107623637.46.1715171479959; 
- Wed, 08 May 2024 05:31:19 -0700 (PDT)
-Received: from localhost ([116.121.76.56]) by smtp.gmail.com with ESMTPSA id
- bf5-20020a656d05000000b0062070308b0esm6922317pgb.46.2024.05.08.05.31.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 May 2024 05:31:19 -0700 (PDT)
-From: Minwoo Im <minwoo.im.dev@gmail.com>
-To: Klaus Jensen <its@irrelevant.dk>,
-	Keith Busch <kbusch@kernel.org>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Minwoo Im <minwoo.im@samsung.com>
-Subject: [PATCH v3 3/4] hw/nvme: Allocate sec-ctrl-list as a dynamic array
-Date: Wed,  8 May 2024 21:31:06 +0900
-Message-Id: <20240508123107.87919-4-minwoo.im.dev@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240508123107.87919-1-minwoo.im.dev@gmail.com>
-References: <20240508123107.87919-1-minwoo.im.dev@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=minwoo.im.dev@gmail.com; helo=mail-pf1-x42e.google.com
+ AJvYcCVA6U8D4IYf/21U8WnbQqO00MZ1MEook/iwJQi1C9YBA32CFChTMa5K4uIIlVy3FA6gffJ+LPec/0rtxMCKtL5dnAdNHHo=
+X-Gm-Message-State: AOJu0YwEVrug3FauYf3FPgctAp7U9GsmO/ZbVvZkVmLPmBwDtb0bo6xn
+ TLXFfkzRspTXnHVN/dW09X9OeFCvJdR5r2jwWQyGgpBqzNLsgnsrm24J/Q==
+X-Google-Smtp-Source: AGHT+IHsdEzOsg+0VUkyyAwLXWC3VdaTCWunh1jnlnKO+hWzfscOypM84mIX+IeF0DlvE2GOVvG6yg==
+X-Received: by 2002:a05:6a20:1592:b0:1a7:ae5d:5fb4 with SMTP id
+ adf61e73a8af0-1afc8d4df22mr2805232637.28.1715171464236; 
+ Wed, 08 May 2024 05:31:04 -0700 (PDT)
+Received: from localhost ([1.146.8.34]) by smtp.gmail.com with ESMTPSA id
+ bf5-20020a656d05000000b0062070308b0esm6921812pgb.46.2024.05.08.05.31.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 08 May 2024 05:31:03 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 08 May 2024 22:30:57 +1000
+Message-Id: <D149JDYPG4NB.GTUPG8F1OZL2@gmail.com>
+Cc: <qemu-ppc@nongnu.org>, "Thomas Huth" <thuth@redhat.com>
+Subject: Re: [PATCH v2] ppc: Deprecate 'ref405ep' machine and 405 CPUs
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, <qemu-devel@nongnu.org>
+X-Mailer: aerc 0.17.0
+References: <20240507123332.641708-1-clg@redhat.com>
+In-Reply-To: <20240507123332.641708-1-clg@redhat.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,89 +93,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Minwoo Im <minwoo.im@samsung.com>
+On Tue May 7, 2024 at 10:33 PM AEST, C=C3=A9dric Le Goater wrote:
+> The 'ref405ep' machine and PPC 405 CPU have no known users, firmware
+> images are not available, OpenWRT dropped support in 2019, U-Boot in
+> 2017, Linux also is dropping support in 2024. It is time to let go of
+> this ancient hardware and focus on newer CPUs and platforms.
+>
+> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
 
-To prevent further bumping up the number of maximum VF te support, this
-patch allocates a dynamic array (NvmeCtrl *)->sec_ctrl_list based on
-number of VF supported by sriov_max_vfs property.
+Acked-by: Nicholas Piggin <npiggin@gmail.com>
 
-Signed-off-by: Minwoo Im <minwoo.im@samsung.com>
----
- hw/nvme/ctrl.c   | 8 +-------
- hw/nvme/nvme.h   | 5 ++---
- hw/nvme/subsys.c | 2 ++
- 3 files changed, 5 insertions(+), 10 deletions(-)
-
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 7cf1e8e384b7..8db6828ab2a9 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -7863,12 +7863,6 @@ static bool nvme_check_params(NvmeCtrl *n, Error **errp)
-             return false;
-         }
- 
--        if (params->sriov_max_vfs > NVME_MAX_VFS) {
--            error_setg(errp, "sriov_max_vfs must be between 0 and %d",
--                       NVME_MAX_VFS);
--            return false;
--        }
--
-         if (params->cmb_size_mb) {
-             error_setg(errp, "CMB is not supported with SR-IOV");
-             return false;
-@@ -8461,7 +8455,7 @@ static Property nvme_props[] = {
-     DEFINE_PROP_UINT8("zoned.zasl", NvmeCtrl, params.zasl, 0),
-     DEFINE_PROP_BOOL("zoned.auto_transition", NvmeCtrl,
-                      params.auto_transition_zones, true),
--    DEFINE_PROP_UINT8("sriov_max_vfs", NvmeCtrl, params.sriov_max_vfs, 0),
-+    DEFINE_PROP_UINT32("sriov_max_vfs", NvmeCtrl, params.sriov_max_vfs, 0),
-     DEFINE_PROP_UINT16("sriov_vq_flexible", NvmeCtrl,
-                        params.sriov_vq_flexible, 0),
-     DEFINE_PROP_UINT16("sriov_vi_flexible", NvmeCtrl,
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index 485b42c104ea..cc6b4a3a64c2 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -26,7 +26,6 @@
- 
- #define NVME_MAX_CONTROLLERS 256
- #define NVME_MAX_NAMESPACES  256
--#define NVME_MAX_VFS 127
- #define NVME_EUI64_DEFAULT ((uint64_t)0x5254000000000000)
- #define NVME_FDP_MAX_EVENTS 63
- #define NVME_FDP_MAXPIDS 128
-@@ -532,7 +531,7 @@ typedef struct NvmeParams {
-     bool     auto_transition_zones;
-     bool     legacy_cmb;
-     bool     ioeventfd;
--    uint8_t  sriov_max_vfs;
-+    uint32_t  sriov_max_vfs;
-     uint16_t sriov_vq_flexible;
-     uint16_t sriov_vi_flexible;
-     uint8_t  sriov_max_vq_per_vf;
-@@ -614,7 +613,7 @@ typedef struct NvmeCtrl {
- 
-     NvmePriCtrlCap  pri_ctrl_cap;
-     uint32_t nr_sec_ctrls;
--    NvmeSecCtrlEntry sec_ctrl_list[NVME_MAX_VFS];
-+    NvmeSecCtrlEntry *sec_ctrl_list;
-     struct {
-         uint16_t    vqrfap;
-         uint16_t    virfap;
-diff --git a/hw/nvme/subsys.c b/hw/nvme/subsys.c
-index 561ed04a5317..77deaf2c2c97 100644
---- a/hw/nvme/subsys.c
-+++ b/hw/nvme/subsys.c
-@@ -61,6 +61,8 @@ int nvme_subsys_register_ctrl(NvmeCtrl *n, Error **errp)
-     if (pci_is_vf(&n->parent_obj)) {
-         cntlid = le16_to_cpu(sctrl->scid);
-     } else {
-+        n->sec_ctrl_list = g_new0(NvmeSecCtrlEntry, num_vfs);
-+
-         for (cntlid = 0; cntlid < ARRAY_SIZE(subsys->ctrls); cntlid++) {
-             if (!subsys->ctrls[cntlid]) {
-                 break;
--- 
-2.34.1
+> ---
+>  v2: fixed header line
+>
+>  docs/about/deprecated.rst | 8 ++++++++
+>  hw/ppc/ppc405_boards.c    | 1 +
+>  2 files changed, 9 insertions(+)
+>
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index 03f8b1b655e071432ecd9decf61e194821d06928..e22acb17f296362509a3e143b=
+a61bafd210a6c91 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -258,6 +258,14 @@ dropping the ``cheetah`` OMAP1 board, because we don=
+'t have any
+>  test images for it and don't know of anybody who does; the ``sx1``
+>  and ``sx1-v1`` OMAP1 machines remain supported for now.
+> =20
+> +PPC 405 ``ref405ep`` machine (since 9.1)
+> +''''''''''''''''''''''''''''''''''''''''
+> +
+> +The ``ref405ep`` machine and PPC 405 CPU have no known users, firmware
+> +images are not available, OpenWRT dropped support in 2019, U-Boot in
+> +2017, Linux also is dropping support in 2024. It is time to let go of
+> +this ancient hardware and focus on newer CPUs and platforms.
+> +
+>  Backend options
+>  ---------------
+> =20
+> diff --git a/hw/ppc/ppc405_boards.c b/hw/ppc/ppc405_boards.c
+> index 4092ebc1ab59de14b66ebad2be7eb019faf45db1..c44e7ed162fae5ec884ba4e45=
+8138f84430a8460 100644
+> --- a/hw/ppc/ppc405_boards.c
+> +++ b/hw/ppc/ppc405_boards.c
+> @@ -350,6 +350,7 @@ static void ppc405_machine_class_init(ObjectClass *oc=
+, void *data)
+>      mc->init =3D ppc405_init;
+>      mc->default_ram_size =3D 128 * MiB;
+>      mc->default_ram_id =3D "ppc405.ram";
+> +    mc->deprecation_reason =3D "machine is old and unmaintained";
+>  }
+> =20
+>  static const TypeInfo ppc405_machine_type =3D {
 
 
