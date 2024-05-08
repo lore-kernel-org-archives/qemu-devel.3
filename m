@@ -4,91 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D0F2C04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 18:23:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49EF0C25B5F
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 20:19:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4lwm-0004Ju-KH; Wed, 08 May 2024 14:23:20 -0400
+	id 1s4nk5-0005Iu-7S; Wed, 08 May 2024 16:18:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s4lwi-0004EG-4z
- for qemu-devel@nongnu.org; Wed, 08 May 2024 14:23:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1s4njz-0005IK-LL; Wed, 08 May 2024 16:18:17 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s4lwg-0001yR-3k
- for qemu-devel@nongnu.org; Wed, 08 May 2024 14:23:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715192591;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=fUO+i2hCIs/ZiSTwde+zUaEOA6fbVjtI3WKGsMf8x0w=;
- b=OEZoUWuAFlOCpNGOijD7m8NvmD83BoB2HZYs8N/+QXoQS61qPL7Fvdcu+9pxALkj61RJ84
- qvWN/jmnVCx99XKs72r7VcunyvyqwK2IfES23LeLfyN5/uxx4paPNgLUfpuiZliOCfFlWP
- oFBC/S48NvSsjOo/GpQhbBUNY+njkwY=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-394-kxl30Qe0NZiVi7Yr3i8mZA-1; Wed, 08 May 2024 14:23:09 -0400
-X-MC-Unique: kxl30Qe0NZiVi7Yr3i8mZA-1
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-2b2a1c121ebso17988a91.2
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 11:23:09 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715192588; x=1715797388;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fUO+i2hCIs/ZiSTwde+zUaEOA6fbVjtI3WKGsMf8x0w=;
- b=js6VENcDH+h7hiO/ieKgd2iBso+CwUV0fPopvNXEu1gc72b6Okj4EDCKW4bpRKDh0N
- X1W0zTu+sV8Gq1tQlEi+99AVr0MEXly3qa1or/i3PY8XVYkfL5O9WN89l/2eA0nikSoh
- ox79INhyzy4bc7JERVgFwSaILNIOZ3MyINeNJrAC41UpScviGA1i01IY+ib8u/SGiYZQ
- ac/M2nZptBJeIu9+viWgtMNkSZyDnAQ96JMOKnNypVK5TeEvzs2T/YSDL1sGvC6Cqgk1
- ZqVeeB8qNiing9tC3mm+9rn9olnTz5tnAbtELhMBaCxCCgPY+XaAEaBY9ahpM5aSWqHs
- H9qg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXohtRTFRP0eqo0ztLlkzc5O2c5Vd6p1CbHTugy9IdAGt2lDAKIBlSqcO9AsaKH4zcQI5tkB+35c+31oEC0s52BCWRBwvk=
-X-Gm-Message-State: AOJu0YxP4wKDAVn7S7cUf+nZG4tivtngiiYAHynXuas843PyBoxL94Wt
- meVKNTInmst7FJRsNfDoluwr8iWRcZhGyjNjyljWo1u1ShG/pL36UERC+jCJ+b6bMIxkBZCLTFS
- 1tqdYQ6edIspiiC1Q5M3qkp13P95C5GvpWq91odfNpJR7jHD0F7XP
-X-Received: by 2002:a17:903:2351:b0:1dd:85eb:b11 with SMTP id
- d9443c01a7336-1eeb017a51fmr39491965ad.1.1715192588205; 
- Wed, 08 May 2024 11:23:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEEJuLlukH7LKw/vtZY/Fb/0EvyLFi5t1WLinjTiqg16l2xPOPD3Wg9BYStliC3HSH856IrAw==
-X-Received: by 2002:a17:903:2351:b0:1dd:85eb:b11 with SMTP id
- d9443c01a7336-1eeb017a51fmr39491585ad.1.1715192587511; 
- Wed, 08 May 2024 11:23:07 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- e6-20020a170902784600b001eb6a881b88sm12478096pln.245.2024.05.08.11.23.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 May 2024 11:23:07 -0700 (PDT)
-Date: Wed, 8 May 2024 14:23:04 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- armbru@redhat.com, Claudio Fontana <cfontana@suse.de>,
- Jim Fehlig <jfehlig@suse.com>
-Subject: Re: [PATCH 8/9] migration: Add support for fdset with multifd + file
-Message-ID: <ZjvDCA9QvTI-zFf9@x1n>
-References: <20240426142042.14573-1-farosas@suse.de>
- <20240426142042.14573-9-farosas@suse.de>
- <Zjs9nI_Wgi5UIJba@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1s4njx-0000e8-AZ; Wed, 08 May 2024 16:18:15 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 61BE4655B8;
+ Wed,  8 May 2024 23:18:17 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 451F1C9CC3;
+ Wed,  8 May 2024 23:17:55 +0300 (MSK)
+Message-ID: <f1d4bddc-f2e9-4cb7-8866-5f010b21b756@tls.msk.ru>
+Date: Wed, 8 May 2024 23:17:55 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8] virtio-pci: fix use of a released vector
+To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
+Cc: Cindy Lu <lulu@redhat.com>, qemu-stable@nongnu.org,
+ Lei Yang <leiyang@redhat.com>, Jason Wang <jasowang@redhat.com>
+References: <2321ade5f601367efe7380c04e3f61379c59b48f.1713173550.git.mst@redhat.com>
+Content-Language: en-US
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <2321ade5f601367efe7380c04e3f61379c59b48f.1713173550.git.mst@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <Zjs9nI_Wgi5UIJba@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.582,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,181 +84,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 08, 2024 at 09:53:48AM +0100, Daniel P. Berrangé wrote:
-> On Fri, Apr 26, 2024 at 11:20:41AM -0300, Fabiano Rosas wrote:
-> > Allow multifd to use an fdset when migrating to a file. This is useful
-> > for the scenario where the management layer wants to have control over
-> > the migration file.
-> > 
-> > By receiving the file descriptors directly, QEMU can delegate some
-> > high level operating system operations to the management layer (such
-> > as mandatory access control). The management layer might also want to
-> > add its own headers before the migration stream.
-> > 
-> > Enable the "file:/dev/fdset/#" syntax for the multifd migration with
-> > mapped-ram. The requirements for the fdset mechanism are:
-> > 
-> > On the migration source side:
-> > 
-> > - the fdset must contain two fds that are not duplicates between
-> >   themselves;
-> > - if direct-io is to be used, exactly one of the fds must have the
-> >   O_DIRECT flag set;
-> > - the file must be opened with WRONLY both times.
-> > 
-> > On the migration destination side:
-> > 
-> > - the fdset must contain one fd;
-> > - the file must be opened with RDONLY.
-> > 
-> > Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> > ---
-> >  docs/devel/migration/main.rst       | 18 ++++++++++++++
-> >  docs/devel/migration/mapped-ram.rst |  6 ++++-
-> >  migration/file.c                    | 38 ++++++++++++++++++++++++++++-
-> >  3 files changed, 60 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/docs/devel/migration/main.rst b/docs/devel/migration/main.rst
-> > index 54385a23e5..50f6096470 100644
-> > --- a/docs/devel/migration/main.rst
-> > +++ b/docs/devel/migration/main.rst
-> > @@ -47,6 +47,24 @@ over any transport.
-> >    QEMU interference. Note that QEMU does not flush cached file
-> >    data/metadata at the end of migration.
-> >  
-> > +  The file migration also supports using a file that has already been
-> > +  opened. A set of file descriptors is passed to QEMU via an "fdset"
-> > +  (see add-fd QMP command documentation). This method allows a
-> > +  management application to have control over the migration file
-> > +  opening operation. There are, however, strict requirements to this
-> > +  interface:
-> > +
-> > +  On the migration source side:
-> > +    - if the multifd capability is to be used, the fdset must contain
-> > +      two file descriptors that are not duplicates between themselves;
-> > +    - if the direct-io capability is to be used, exactly one of the
-> > +      file descriptors must have the O_DIRECT flag set;
-> > +    - the file must be opened with WRONLY.
-> > +
-> > +  On the migration destination side:
-> > +    - the fdset must contain one file descriptor;
-> > +    - the file must be opened with RDONLY.
-> > +
-> >  In addition, support is included for migration using RDMA, which
-> >  transports the page data using ``RDMA``, where the hardware takes care of
-> >  transporting the pages, and the load on the CPU is much lower.  While the
-> > diff --git a/docs/devel/migration/mapped-ram.rst b/docs/devel/migration/mapped-ram.rst
-> > index fa4cefd9fc..e6505511f0 100644
-> > --- a/docs/devel/migration/mapped-ram.rst
-> > +++ b/docs/devel/migration/mapped-ram.rst
-> > @@ -16,7 +16,7 @@ location in the file, rather than constantly being added to a
-> >  sequential stream. Having the pages at fixed offsets also allows the
-> >  usage of O_DIRECT for save/restore of the migration stream as the
-> >  pages are ensured to be written respecting O_DIRECT alignment
-> > -restrictions (direct-io support not yet implemented).
-> > +restrictions.
-> >  
-> >  Usage
-> >  -----
-> > @@ -35,6 +35,10 @@ Use a ``file:`` URL for migration:
-> >  Mapped-ram migration is best done non-live, i.e. by stopping the VM on
-> >  the source side before migrating.
-> >  
-> > +For best performance enable the ``direct-io`` capability as well:
-> > +
-> > +    ``migrate_set_capability direct-io on``
-> > +
-> >  Use-cases
-> >  ---------
-> >  
-> > diff --git a/migration/file.c b/migration/file.c
-> > index b9265b14dd..3bc8bc7463 100644
-> > --- a/migration/file.c
-> > +++ b/migration/file.c
-> > @@ -17,6 +17,7 @@
-> >  #include "io/channel-file.h"
-> >  #include "io/channel-socket.h"
-> >  #include "io/channel-util.h"
-> > +#include "monitor/monitor.h"
-> >  #include "options.h"
-> >  #include "trace.h"
-> >  
-> > @@ -54,10 +55,18 @@ static void file_remove_fdset(void)
-> >      }
-> >  }
-> >  
-> > +/*
-> > + * With multifd, due to the behavior of the dup() system call, we need
-> > + * the fdset to have two non-duplicate fds so we can enable direct IO
-> > + * in the secondary channels without affecting the main channel.
-> > + */
-> >  static bool file_parse_fdset(const char *filename, int64_t *fdset_id,
-> >                               Error **errp)
-> >  {
-> > +    FdsetInfoList *fds_info;
-> > +    FdsetFdInfoList *fd_info;
-> >      const char *fdset_id_str;
-> > +    int nfds = 0;
-> >  
-> >      *fdset_id = -1;
-> >  
-> > @@ -71,6 +80,32 @@ static bool file_parse_fdset(const char *filename, int64_t *fdset_id,
-> >          return false;
-> >      }
-> >  
-> > +    if (!migrate_multifd() || !migrate_direct_io()) {
-> > +        return true;
-> > +    }
-> > +
-> > +    for (fds_info = qmp_query_fdsets(NULL); fds_info;
-> > +         fds_info = fds_info->next) {
-> > +
-> > +        if (*fdset_id != fds_info->value->fdset_id) {
-> > +            continue;
-> > +        }
-> > +
-> > +        for (fd_info = fds_info->value->fds; fd_info; fd_info = fd_info->next) {
-> > +            if (nfds++ > 2) {
-> > +                break;
-> > +            }
-> > +        }
-> > +    }
-> > +
-> > +    if (nfds != 2) {
-> > +        error_setg(errp, "Outgoing migration needs two fds in the fdset, "
-> > +                   "got %d", nfds);
-> > +        qmp_remove_fd(*fdset_id, false, -1, NULL);
-> > +        *fdset_id = -1;
-> > +        return false;
-> > +    }
-> > +
-> >      return true;
-> >  }
+15.04.2024 12:34, Michael S. Tsirkin wrote:
+> From: Cindy Lu <lulu@redhat.com>
 > 
-> Related to my thoughts in an earlier patch, where I say that use of fdsets
-> ought to be transparent to QEMU code, I'm not a fan of having this logic
-> in migration code.
+> During the booting process of the non-standard image, the behavior of the
+> called function in qemu is as follows:
 > 
-> IIUC, the migration code will call  qio_channel_file_new_path twice,
-> once with O_DIRECT and once without. This should trigger two calls
-> into monitor_fdset_dup_fd_add with different flags. If we're matching
-> flags in that monitor_fdset_dup_fd_add(), then if only 1 FD was
-> provided, are we not able to report an error there ?
+> 1. vhost_net_stop() was triggered by guest image. This will call the function
+> virtio_pci_set_guest_notifiers() with assgin= false,
+> virtio_pci_set_guest_notifiers(） will release the irqfd for vector 0
+> 
+> 2. virtio_reset() was triggered, this will set configure vector to VIRTIO_NO_VECTOR
+> 
+> 3.vhost_net_start() was called (at this time, the configure vector is
+> still VIRTIO_NO_VECTOR) and then call virtio_pci_set_guest_notifiers() with
+> assgin=true, so the irqfd for vector 0 is still not "init" during this process
+> 
+> 4. The system continues to boot and sets the vector back to 0. After that
+> msix_fire_vector_notifier() was triggered to unmask the vector 0 and  meet the crash
+> 
+> To fix the issue, we need to support changing the vector after VIRTIO_CONFIG_S_DRIVER_OK is set.
 
-Right, this sounds working.
+This change breaks both 9.0 and stable-8.2.3:
 
-For a real sanity check, we may want to somehow check the two fds returned
-from qio_channel_file_new_path() to point to the same file underneath.
+https://gitlab.com/qemu-project/qemu/-/issues/2321
+https://gitlab.com/qemu-project/qemu/-/issues/2334
 
-What mentioned in the other thread (kcmp with KCMP_FILE) might not work, as
-the whole purpose of having two fds is to make sure they have different
-struct file to back the fd (and only one of them has O_DIRECT).  fstat()
-might work in this case over the st_ino field, etc. maybe fstatfs() too but
-perhaps that's over cautious.  Just a pain to use two fds as a start..
+So something's not right here.
 
 Thanks,
 
+/mjt
+
+...
+> MST: coding style and typo fixups
+> 
+> Fixes: f9a09ca3ea ("vhost: add support for configure interrupt")
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Cindy Lu <lulu@redhat.com>
+> Message-Id: <20240412062750.475180-1-lulu@redhat.com>
+> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> ---
+>   hw/virtio/virtio-pci.c | 37 +++++++++++++++++++++++++++++++++++--
+>   1 file changed, 35 insertions(+), 2 deletions(-)
+> 
+> v7->v8:
+> more cleanups, suggested by Philip
+> 
+> still untested, i just got involved to help address coding style
+> issues
+> 
+> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> index cb6940fc0e..cb159fd078 100644
+> --- a/hw/virtio/virtio-pci.c
+> +++ b/hw/virtio/virtio-pci.c
+> @@ -1424,6 +1424,38 @@ static int virtio_pci_add_mem_cap(VirtIOPCIProxy *proxy,
+>       return offset;
+>   }
+>   
+> +static void virtio_pci_set_vector(VirtIODevice *vdev,
+> +                                  VirtIOPCIProxy *proxy,
+> +                                  int queue_no, uint16_t old_vector,
+> +                                  uint16_t new_vector)
+> +{
+> +    bool kvm_irqfd = (vdev->status & VIRTIO_CONFIG_S_DRIVER_OK) &&
+> +        msix_enabled(&proxy->pci_dev) && kvm_msi_via_irqfd_enabled();
+> +
+> +    if (new_vector == old_vector) {
+> +        return;
+> +    }
+> +
+> +    /*
+> +     * If the device uses irqfd and the vector changes after DRIVER_OK is
+> +     * set, we need to release the old vector and set up the new one.
+> +     * Otherwise just need to set the new vector on the device.
+> +     */
+> +    if (kvm_irqfd && old_vector != VIRTIO_NO_VECTOR) {
+> +        kvm_virtio_pci_vector_release_one(proxy, queue_no);
+> +    }
+> +    /* Set the new vector on the device. */
+> +    if (queue_no == VIRTIO_CONFIG_IRQ_IDX) {
+> +        vdev->config_vector = new_vector;
+> +    } else {
+> +        virtio_queue_set_vector(vdev, queue_no, new_vector);
+> +    }
+> +    /* If the new vector changed need to set it up. */
+> +    if (kvm_irqfd && new_vector != VIRTIO_NO_VECTOR) {
+> +        kvm_virtio_pci_vector_use_one(proxy, queue_no);
+> +    }
+> +}
+> +
+>   int virtio_pci_add_shm_cap(VirtIOPCIProxy *proxy,
+>                              uint8_t bar, uint64_t offset, uint64_t length,
+>                              uint8_t id)
+> @@ -1570,7 +1602,8 @@ static void virtio_pci_common_write(void *opaque, hwaddr addr,
+>           } else {
+>               val = VIRTIO_NO_VECTOR;
+>           }
+> -        vdev->config_vector = val;
+> +        virtio_pci_set_vector(vdev, proxy, VIRTIO_CONFIG_IRQ_IDX,
+> +                              vdev->config_vector, val);
+>           break;
+>       case VIRTIO_PCI_COMMON_STATUS:
+>           if (!(val & VIRTIO_CONFIG_S_DRIVER_OK)) {
+> @@ -1610,7 +1643,7 @@ static void virtio_pci_common_write(void *opaque, hwaddr addr,
+>           } else {
+>               val = VIRTIO_NO_VECTOR;
+>           }
+> -        virtio_queue_set_vector(vdev, vdev->queue_sel, val);
+> +        virtio_pci_set_vector(vdev, proxy, vdev->queue_sel, vector, val);
+>           break;
+>       case VIRTIO_PCI_COMMON_Q_ENABLE:
+>           if (val == 1) {
+
 -- 
-Peter Xu
+GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
+New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
+Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
+Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
 
 
