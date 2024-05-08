@@ -4,95 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37F50C04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 07:27:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4C44C25B4F
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 07:46:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4bhZ-0007y1-JY; Wed, 08 May 2024 03:26:57 -0400
+	id 1s4bzF-0003CB-VW; Wed, 08 May 2024 03:45:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1s4bhH-0007wj-3A
- for qemu-devel@nongnu.org; Wed, 08 May 2024 03:26:42 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1s4bh0-000206-SD
- for qemu-devel@nongnu.org; Wed, 08 May 2024 03:26:38 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-51f1bf83f06so4839618e87.1
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 00:26:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1715153179; x=1715757979; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QhpqB4afhdNcfZ8uKF6g7sebrO28AFEJ22i0nh9oysY=;
- b=g17AmGZIheTxVheAKdpjamyDDzn4IpV90yIP9b5UeEOlkcBhZAwTaEAEVO6/jyVRxV
- gUtkKmgiUG5x8WHEKAIumaRr1S5MISMW8j2fX6qgymhPcQzkS/qH9jbf2zooVSaDD88P
- /SSS5J6CRtTYsviL0UlWd/h7FF4mHwexaZeskjhaHsUYDfPZUGpKlCpyhGTZ8iH4HZKs
- OelbIuxkqKBeEASvf3xoAQkkYSuc/mNOQPrYL2fFN8YCoM8ur4yYCd/j5OV3U8WrkTBG
- n0Pp+UNXt1iGBqFNqvPqbOjjLy3mUzeX2lCcO4qn96UVQENpCIM4W7VM5GAsCCpjy6TK
- Wu0g==
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1s4bzE-0003BY-18
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 03:45:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1s4bzB-0000dl-JZ
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 03:45:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715154308;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=q+uxvdVSfMJ8ay9061nGF0CdmJNPyfYp9/s+mWt/0b4=;
+ b=CwEtQpBcQVSGCDFqUitVPoEnSk32UTznDxYc10U9YuZK0KKkM5Py2SICV5WSbU+j+rnWkl
+ NfZttB0QkArJDSe7UgqbfQggMwCTOrZKeCO+KL1I7Fu8TrU4pQHkXPLsmwVLN3cEuEYdcn
+ 5YPmqholkchQ/ZsN2wHiuL1WUQmg+0w=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-368-8dpQljbyPsOfPRYLSdeTFQ-1; Wed, 08 May 2024 03:45:07 -0400
+X-MC-Unique: 8dpQljbyPsOfPRYLSdeTFQ-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a59a5b06802so256110066b.1
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 00:45:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715153179; x=1715757979;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=QhpqB4afhdNcfZ8uKF6g7sebrO28AFEJ22i0nh9oysY=;
- b=ZCUjuf5yq53GgAKy7VLCv37NZ5BNtAonXPLQQe+nmEH3Lvky3JhBNSYXJRp8bOO8R5
- IXcsOxq788YXlLcQMARiXECAE6Cn7aRwvzgArB7ZLjuPh/5+tPjarvfQbhY5++lVr0PK
- gU/RJ9b34rTUTzRPP4PCK10Gij55VTXkXBab7NFapCH/Hzk+tD9ELBd2GU687PBf/WSJ
- IM6wvbfqEszoCIpfZ0XrpVbQs8jsyPJfeOe34VauWd3qxU46VYf2izfF9aPNHEYZ0j+5
- NYrhnoJm6rXv1BnjSZe5UFqXC+VEiWTMl5/UGb+dulQ4WOX5axgPIGRKKXAny8HU2tk4
- zaLg==
-X-Gm-Message-State: AOJu0YxUK4ebixPt0xJZgKz8Bg/aXqK8Q0kyYJM5GV2/OQbOLPKijrAY
- TQozB68NBgcktdkMR82GyXDyE1bsYgM66QHUlv0aDF89tU0lWJBbj1VyLnHqRlY3++857d5lXtR
- a2ampE14LWtUQJRpK+nxDFIoClb41olagcsFd9VVxaW3gnTL/qf707z72UJzkCcTUJ0LpgTjXf4
- Cf/WU/veGEc4Fe8CmTPCiqiAjXBQA4fPSNV9JdAdQVLA==
-X-Google-Smtp-Source: AGHT+IG/pduzd4ghCVqbCeLsld2w1B3yaqtaMfFvf45FjHQy/ekNqkpuj1SywX0QhHVJxpWV/oZ7Aw==
-X-Received: by 2002:ac2:54b7:0:b0:51f:d989:18f6 with SMTP id
- 2adb3069b0e04-5217c2794acmr1004621e87.13.1715153178333; 
- Wed, 08 May 2024 00:26:18 -0700 (PDT)
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com.
- [209.85.208.177]) by smtp.gmail.com with ESMTPSA id
- f14-20020a19ae0e000000b0051dc70a0a32sm2381068lfc.291.2024.05.08.00.26.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 May 2024 00:26:17 -0700 (PDT)
-Received: by mail-lj1-f177.google.com with SMTP id
- 38308e7fff4ca-2db17e8767cso50508251fa.3; 
- Wed, 08 May 2024 00:26:17 -0700 (PDT)
-X-Forwarded-Encrypted: i=1;
- AJvYcCWxfwoyLwfQ39I8f4aK9TlsFWfUV9+WiAKPvVOLxudzYKHvgP6qwKYAiooJ3gukQRQw8acQ3cls6cTc/X/PD/TYMs5jwEo=
-X-Received: by 2002:a2e:9d99:0:b0:2df:b800:5bff with SMTP id
- 38308e7fff4ca-2e446d86204mr10824151fa.7.1715153177358; Wed, 08 May 2024
- 00:26:17 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1715154305; x=1715759105;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=q+uxvdVSfMJ8ay9061nGF0CdmJNPyfYp9/s+mWt/0b4=;
+ b=NZQn3R3vcO0i9UyrfapV7LpRts6jw6Hut3AIdb01cmD4woGWYf1pd8CAA386jv71Oz
+ BYh3hmZ27Pq6ZptjOz6ydBwJzuiqCJLHauTpwScNZt7NlWRiDVz788NrZJtG3PRJPHxI
+ i1SpeInwdxN+VFqtVPlbMYwCyhu2OuYNBrDlpTDSKuouSsKj4apRpJTaMsv0HaqcNe9v
+ KbvM0TIlC+zFmbK62tsI/1RxKHdu06aT5tHQz+nxFtpJq6nTJRpIOt7j+2L/eiEeXojx
+ xhGKVe9fDzbTuscK/zcOX7ZE6PjsfeL1717heKCgraST1oLO0ULDQb7TA6S6Jb3849fh
+ 6djA==
+X-Gm-Message-State: AOJu0Yx+RoQl5LStOM03qzoGlVjJKPMDSTT/4eMG1kbXGGBLrF0hg4/5
+ fhGuccbbx1KiZjwTWlkJSbJM8ugwZwuQnSI6K4ZrlJalljppHWDEVMzdBTJhBsqv34LhC3PLavl
+ jOyIxx9ERbPL0azLpVcUd17/SsaDvAS/lJzZIys2zH0qYZ6OZKZ5tUzKQZngT598mVsBrxWLnHn
+ RsbvaKCCyu5Zm954EpNdwbyo3zCbgeXMqqUhYm
+X-Received: by 2002:a17:906:494d:b0:a59:a5c3:819e with SMTP id
+ a640c23a62f3a-a59fb9490f9mr111118866b.11.1715154305157; 
+ Wed, 08 May 2024 00:45:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFvY3X8BEI1ytr/yUhv3FrGadf0SsUl1CbnxU3bcX4A/XLklDgKI+9nwdbmA9dnb0Lx+CWN8g==
+X-Received: by 2002:a17:906:494d:b0:a59:a5c3:819e with SMTP id
+ a640c23a62f3a-a59fb9490f9mr111114766b.11.1715154304653; 
+ Wed, 08 May 2024 00:45:04 -0700 (PDT)
+Received: from localhost.localdomain
+ (host-87-12-25-56.business.telecomitalia.it. [87.12.25.56])
+ by smtp.gmail.com with ESMTPSA id
+ jw24-20020a17090776b800b00a599b64c09dsm6010486ejc.128.2024.05.08.00.45.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 08 May 2024 00:45:03 -0700 (PDT)
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Jason Wang <jasowang@redhat.com>, Coiby Xu <Coiby.Xu@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, slp@redhat.com,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Brad Smith <brad@comstyle.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Thomas Huth <thuth@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Raphael Norwitz <raphael@enfabrica.net>, gmaglione@redhat.com,
+ Laurent Vivier <lvivier@redhat.com>, stefanha@redhat.com,
+ David Hildenbrand <david@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PATCH v4 00/12] vhost-user: support any POSIX system (tested on
+ macOS, FreeBSD, OpenBSD)
+Date: Wed,  8 May 2024 09:44:44 +0200
+Message-ID: <20240508074457.12367-1-sgarzare@redhat.com>
+X-Mailer: git-send-email 2.45.0
 MIME-Version: 1.0
-References: <20240307160319.675044-1-dbarboza@ventanamicro.com>
- <20240307160319.675044-9-dbarboza@ventanamicro.com>
-In-Reply-To: <20240307160319.675044-9-dbarboza@ventanamicro.com>
-From: Frank Chang <frank.chang@sifive.com>
-Date: Wed, 8 May 2024 15:26:04 +0800
-X-Gmail-Original-Message-ID: <CANzO1D1hKidUTKeLrWoNsr4oCy_D6m0UEWAPYemFo5MzmJGuLQ@mail.gmail.com>
-Message-ID: <CANzO1D1hKidUTKeLrWoNsr4oCy_D6m0UEWAPYemFo5MzmJGuLQ@mail.gmail.com>
-Subject: Re: [PATCH v2 08/15] hw/riscv/riscv-iommu: add Address Translation
- Cache (IOATC)
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, ajones@ventanamicro.com, tjeznach@rivosinc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=frank.chang@sifive.com; helo=mail-lf1-x133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,333 +114,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Daniel,
+v1: https://patchew.org/QEMU/20240228114759.44758-1-sgarzare@redhat.com/
+v2: https://patchew.org/QEMU/20240326133936.125332-1-sgarzare@redhat.com/
+v3: https://patchew.org/QEMU/20240404122330.92710-1-sgarzare@redhat.com/
+v4:
+  - rebased on master (commit e116b92d01c2cd75957a9f8ad1d4932292867b81)
+  - added patch 6 to move using QEMU bswap helper functions in a separate
+    patch (Phil)
+  - fail if we find "share=off" in shm_backend_memory_alloc() (David)
+  - added Phil's R-b and David's A-b
 
-Daniel Henrique Barboza <dbarboza@ventanamicro.com> =E6=96=BC 2024=E5=B9=B4=
-3=E6=9C=888=E6=97=A5 =E9=80=B1=E4=BA=94 =E4=B8=8A=E5=8D=8812:05=E5=AF=AB=E9=
-=81=93=EF=BC=9A
->
-> From: Tomasz Jeznach <tjeznach@rivosinc.com>
->
-> The RISC-V IOMMU spec predicts that the IOMMU can use translation caches
-> to hold entries from the DDT. This includes implementation for all cache
-> commands that are marked as 'not implemented'.
->
-> There are some artifacts included in the cache that predicts s-stage and
-> g-stage elements, although we don't support it yet. We'll introduce them
-> next.
->
-> Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> ---
->  hw/riscv/riscv-iommu.c | 190 ++++++++++++++++++++++++++++++++++++++++-
->  hw/riscv/riscv-iommu.h |   2 +
->  2 files changed, 188 insertions(+), 4 deletions(-)
->
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index df534b99b0..0b93146327 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -63,6 +63,16 @@ struct RISCVIOMMUContext {
->      uint64_t msiptp;            /* MSI redirection page table pointer */
->  };
->
-> +/* Address translation cache entry */
-> +struct RISCVIOMMUEntry {
-> +    uint64_t iova:44;           /* IOVA Page Number */
-> +    uint64_t pscid:20;          /* Process Soft-Context identifier */
-> +    uint64_t phys:44;           /* Physical Page Number */
-> +    uint64_t gscid:16;          /* Guest Soft-Context identifier */
-> +    uint64_t perm:2;            /* IOMMU_RW flags */
-> +    uint64_t __rfu:2;
-> +};
-> +
->  /* IOMMU index for transactions without PASID specified. */
->  #define RISCV_IOMMU_NOPASID 0
->
-> @@ -629,14 +639,127 @@ static AddressSpace *riscv_iommu_space(RISCVIOMMUS=
-tate *s, uint32_t devid)
->      return &as->iova_as;
->  }
->
-> +/* Translation Object cache support */
-> +static gboolean __iot_equal(gconstpointer v1, gconstpointer v2)
-> +{
-> +    RISCVIOMMUEntry *t1 =3D (RISCVIOMMUEntry *) v1;
-> +    RISCVIOMMUEntry *t2 =3D (RISCVIOMMUEntry *) v2;
-> +    return t1->gscid =3D=3D t2->gscid && t1->pscid =3D=3D t2->pscid &&
-> +           t1->iova =3D=3D t2->iova;
-> +}
-> +
-> +static guint __iot_hash(gconstpointer v)
-> +{
-> +    RISCVIOMMUEntry *t =3D (RISCVIOMMUEntry *) v;
-> +    return (guint)t->iova;
-> +}
-> +
-> +/* GV: 1 PSCV: 1 AV: 1 */
-> +static void __iot_inval_pscid_iova(gpointer key, gpointer value, gpointe=
-r data)
-> +{
-> +    RISCVIOMMUEntry *iot =3D (RISCVIOMMUEntry *) value;
-> +    RISCVIOMMUEntry *arg =3D (RISCVIOMMUEntry *) data;
-> +    if (iot->gscid =3D=3D arg->gscid &&
-> +        iot->pscid =3D=3D arg->pscid &&
-> +        iot->iova =3D=3D arg->iova) {
-> +        iot->perm =3D 0;
+The vhost-user protocol is not really Linux-specific, so let's try support
+QEMU's frontends and backends (including libvhost-user) in any POSIX system
+with this series. The main use case is to be able to use virtio devices that
+we don't have built-in in QEMU (e.g. virtiofsd, vhost-user-vsock, etc.) even
+in non-Linux systems.
 
-Maybe using IOMMU_NONE would be clearer?
+The first 5 patches are more like fixes discovered at runtime on macOS or
+FreeBSD that could go even independently of this series.
 
-Otherwise,
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
+Patches 6, 7, 8, and 9 enable building of frontends and backends (including
+libvhost-user) with associated code changes to succeed in compilation.
 
-> +    }
-> +}
-> +
-> +/* GV: 1 PSCV: 1 AV: 0 */
-> +static void __iot_inval_pscid(gpointer key, gpointer value, gpointer dat=
-a)
-> +{
-> +    RISCVIOMMUEntry *iot =3D (RISCVIOMMUEntry *) value;
-> +    RISCVIOMMUEntry *arg =3D (RISCVIOMMUEntry *) data;
-> +    if (iot->gscid =3D=3D arg->gscid &&
-> +        iot->pscid =3D=3D arg->pscid) {
-> +        iot->perm =3D 0;
-> +    }
-> +}
-> +
-> +/* GV: 1 GVMA: 1 */
-> +static void __iot_inval_gscid_gpa(gpointer key, gpointer value, gpointer=
- data)
-> +{
-> +    RISCVIOMMUEntry *iot =3D (RISCVIOMMUEntry *) value;
-> +    RISCVIOMMUEntry *arg =3D (RISCVIOMMUEntry *) data;
-> +    if (iot->gscid =3D=3D arg->gscid) {
-> +        /* simplified cache, no GPA matching */
-> +        iot->perm =3D 0;
-> +    }
-> +}
-> +
-> +/* GV: 1 GVMA: 0 */
-> +static void __iot_inval_gscid(gpointer key, gpointer value, gpointer dat=
-a)
-> +{
-> +    RISCVIOMMUEntry *iot =3D (RISCVIOMMUEntry *) value;
-> +    RISCVIOMMUEntry *arg =3D (RISCVIOMMUEntry *) data;
-> +    if (iot->gscid =3D=3D arg->gscid) {
-> +        iot->perm =3D 0;
-> +    }
-> +}
-> +
-> +/* GV: 0 */
-> +static void __iot_inval_all(gpointer key, gpointer value, gpointer data)
-> +{
-> +    RISCVIOMMUEntry *iot =3D (RISCVIOMMUEntry *) value;
-> +    iot->perm =3D 0;
-> +}
-> +
-> +/* caller should keep ref-count for iot_cache object */
-> +static RISCVIOMMUEntry *riscv_iommu_iot_lookup(RISCVIOMMUContext *ctx,
-> +    GHashTable *iot_cache, hwaddr iova)
-> +{
-> +    RISCVIOMMUEntry key =3D {
-> +        .pscid =3D get_field(ctx->ta, RISCV_IOMMU_DC_TA_PSCID),
-> +        .iova  =3D PPN_DOWN(iova),
-> +    };
-> +    return g_hash_table_lookup(iot_cache, &key);
-> +}
-> +
-> +/* caller should keep ref-count for iot_cache object */
-> +static void riscv_iommu_iot_update(RISCVIOMMUState *s,
-> +    GHashTable *iot_cache, RISCVIOMMUEntry *iot)
-> +{
-> +    if (!s->iot_limit) {
-> +        return;
-> +    }
-> +
-> +    if (g_hash_table_size(s->iot_cache) >=3D s->iot_limit) {
-> +        iot_cache =3D g_hash_table_new_full(__iot_hash, __iot_equal,
-> +                                          g_free, NULL);
-> +        g_hash_table_unref(qatomic_xchg(&s->iot_cache, iot_cache));
-> +    }
-> +    g_hash_table_add(iot_cache, iot);
-> +}
-> +
-> +static void riscv_iommu_iot_inval(RISCVIOMMUState *s, GHFunc func,
-> +    uint32_t gscid, uint32_t pscid, hwaddr iova)
-> +{
-> +    GHashTable *iot_cache;
-> +    RISCVIOMMUEntry key =3D {
-> +        .gscid =3D gscid,
-> +        .pscid =3D pscid,
-> +        .iova  =3D PPN_DOWN(iova),
-> +    };
-> +
-> +    iot_cache =3D g_hash_table_ref(s->iot_cache);
-> +    g_hash_table_foreach(iot_cache, func, &key);
-> +    g_hash_table_unref(iot_cache);
-> +}
-> +
->  static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *=
-ctx,
-> -    IOMMUTLBEntry *iotlb)
-> +    IOMMUTLBEntry *iotlb, bool enable_cache)
->  {
-> +    RISCVIOMMUEntry *iot;
-> +    IOMMUAccessFlags perm;
->      bool enable_faults;
->      bool enable_pasid;
->      bool enable_pri;
-> +    GHashTable *iot_cache;
->      int fault;
->
-> +    iot_cache =3D g_hash_table_ref(s->iot_cache);
-> +
->      enable_faults =3D !(ctx->tc & RISCV_IOMMU_DC_TC_DTF);
->      /*
->       * TC[32] is reserved for custom extensions, used here to temporaril=
-y
-> @@ -645,9 +768,36 @@ static int riscv_iommu_translate(RISCVIOMMUState *s,=
- RISCVIOMMUContext *ctx,
->      enable_pri =3D (iotlb->perm =3D=3D IOMMU_NONE) && (ctx->tc & BIT_ULL=
-(32));
->      enable_pasid =3D (ctx->tc & RISCV_IOMMU_DC_TC_PDTV);
->
-> +    iot =3D riscv_iommu_iot_lookup(ctx, iot_cache, iotlb->iova);
-> +    perm =3D iot ? iot->perm : IOMMU_NONE;
-> +    if (perm !=3D IOMMU_NONE) {
-> +        iotlb->translated_addr =3D PPN_PHYS(iot->phys);
-> +        iotlb->addr_mask =3D ~TARGET_PAGE_MASK;
-> +        iotlb->perm =3D perm;
-> +        fault =3D 0;
-> +        goto done;
-> +    }
-> +
->      /* Translate using device directory / page table information. */
->      fault =3D riscv_iommu_spa_fetch(s, ctx, iotlb);
->
-> +    if (!fault && iotlb->target_as =3D=3D &s->trap_as) {
-> +        /* Do not cache trapped MSI translations */
-> +        goto done;
-> +    }
-> +
-> +    if (!fault && iotlb->translated_addr !=3D iotlb->iova && enable_cach=
-e) {
-> +        iot =3D g_new0(RISCVIOMMUEntry, 1);
-> +        iot->iova =3D PPN_DOWN(iotlb->iova);
-> +        iot->phys =3D PPN_DOWN(iotlb->translated_addr);
-> +        iot->pscid =3D get_field(ctx->ta, RISCV_IOMMU_DC_TA_PSCID);
-> +        iot->perm =3D iotlb->perm;
-> +        riscv_iommu_iot_update(s, iot_cache, iot);
-> +    }
-> +
-> +done:
-> +    g_hash_table_unref(iot_cache);
-> +
->      if (enable_pri && fault) {
->          struct riscv_iommu_pq_record pr =3D {0};
->          if (enable_pasid) {
-> @@ -794,13 +944,40 @@ static void riscv_iommu_process_cq_tail(RISCVIOMMUS=
-tate *s)
->              if (cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_PSCV) {
->                  /* illegal command arguments IOTINVAL.GVMA & PSCV =3D=3D=
- 1 */
->                  goto cmd_ill;
-> +            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_GV)) {
-> +                /* invalidate all cache mappings */
-> +                func =3D __iot_inval_all;
-> +            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_AV)) {
-> +                /* invalidate cache matching GSCID */
-> +                func =3D __iot_inval_gscid;
-> +            } else {
-> +                /* invalidate cache matching GSCID and ADDR (GPA) */
-> +                func =3D __iot_inval_gscid_gpa;
->              }
-> -            /* translation cache not implemented yet */
-> +            riscv_iommu_iot_inval(s, func,
-> +                get_field(cmd.dword0, RISCV_IOMMU_CMD_IOTINVAL_GSCID), 0=
-,
-> +                cmd.dword1 & TARGET_PAGE_MASK);
->              break;
->
->          case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IOTINVAL_FUNC_VMA,
->                               RISCV_IOMMU_CMD_IOTINVAL_OPCODE):
-> -            /* translation cache not implemented yet */
-> +            if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_GV)) {
-> +                /* invalidate all cache mappings, simplified model */
-> +                func =3D __iot_inval_all;
-> +            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_PSCV)) {
-> +                /* invalidate cache matching GSCID, simplified model */
-> +                func =3D __iot_inval_gscid;
-> +            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_AV)) {
-> +                /* invalidate cache matching GSCID and PSCID */
-> +                func =3D __iot_inval_pscid;
-> +            } else {
-> +                /* invalidate cache matching GSCID and PSCID and ADDR (I=
-OVA) */
-> +                func =3D __iot_inval_pscid_iova;
-> +            }
-> +            riscv_iommu_iot_inval(s, func,
-> +                get_field(cmd.dword0, RISCV_IOMMU_CMD_IOTINVAL_GSCID),
-> +                get_field(cmd.dword0, RISCV_IOMMU_CMD_IOTINVAL_PSCID),
-> +                cmd.dword1 & TARGET_PAGE_MASK);
->              break;
->
->          case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IODIR_FUNC_INVAL_DDT,
-> @@ -1290,6 +1467,8 @@ static void riscv_iommu_realize(DeviceState *dev, E=
-rror **errp)
->      /* Device translation context cache */
->      s->ctx_cache =3D g_hash_table_new_full(__ctx_hash, __ctx_equal,
->                                           g_free, NULL);
-> +    s->iot_cache =3D g_hash_table_new_full(__iot_hash, __iot_equal,
-> +                                         g_free, NULL);
->
->      s->iommus.le_next =3D NULL;
->      s->iommus.le_prev =3D NULL;
-> @@ -1313,6 +1492,7 @@ static void riscv_iommu_unrealize(DeviceState *dev)
->      qemu_thread_join(&s->core_proc);
->      qemu_cond_destroy(&s->core_cond);
->      qemu_mutex_destroy(&s->core_lock);
-> +    g_hash_table_unref(s->iot_cache);
->      g_hash_table_unref(s->ctx_cache);
->  }
->
-> @@ -1320,6 +1500,8 @@ static Property riscv_iommu_properties[] =3D {
->      DEFINE_PROP_UINT32("version", RISCVIOMMUState, version,
->          RISCV_IOMMU_SPEC_DOT_VER),
->      DEFINE_PROP_UINT32("bus", RISCVIOMMUState, bus, 0x0),
-> +    DEFINE_PROP_UINT32("ioatc-limit", RISCVIOMMUState, iot_limit,
-> +        LIMIT_CACHE_IOT),
->      DEFINE_PROP_BOOL("intremap", RISCVIOMMUState, enable_msi, TRUE),
->      DEFINE_PROP_BOOL("off", RISCVIOMMUState, enable_off, TRUE),
->      DEFINE_PROP_LINK("downstream-mr", RISCVIOMMUState, target_mr,
-> @@ -1372,7 +1554,7 @@ static IOMMUTLBEntry riscv_iommu_memory_region_tran=
-slate(
->          /* Translation disabled or invalid. */
->          iotlb.addr_mask =3D 0;
->          iotlb.perm =3D IOMMU_NONE;
-> -    } else if (riscv_iommu_translate(as->iommu, ctx, &iotlb)) {
-> +    } else if (riscv_iommu_translate(as->iommu, ctx, &iotlb, true)) {
->          /* Translation disabled or fault reported. */
->          iotlb.addr_mask =3D 0;
->          iotlb.perm =3D IOMMU_NONE;
-> diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
-> index 6f740de690..eea2123686 100644
-> --- a/hw/riscv/riscv-iommu.h
-> +++ b/hw/riscv/riscv-iommu.h
-> @@ -68,6 +68,8 @@ struct RISCVIOMMUState {
->      MemoryRegion trap_mr;
->
->      GHashTable *ctx_cache;          /* Device translation Context Cache =
-*/
-> +    GHashTable *iot_cache;          /* IO Translated Address Cache */
-> +    unsigned iot_limit;             /* IO Translation Cache size limit *=
-/
->
->      /* MMIO Hardware Interface */
->      MemoryRegion regs_mr;
-> --
-> 2.43.2
->
->
+Patch 10 adds `memory-backend-shm` that uses the POSIX shm_open() API to
+create shared memory which is identified by an fd that can be shared with
+vhost-user backends. This is useful on those systems (like macOS) where
+we don't have memfd_create() or special filesystems like "/dev/shm".
+
+Patches 11 and 12 use `memory-backend-shm` in some vhost-user tests.
+
+Maybe the first 5 patches can go separately, but I only discovered those
+problems after testing patches 6 - 9, so I have included them in this series
+for now. Please let me know if you prefer that I send them separately.
+
+I tested this series using vhost-user-blk and QSD on macOS Sonoma 14.4
+(aarch64), FreeBSD 14 (x86_64), OpenBSD 7.4 (x86_64), and Fedora 39 (x86_64)
+in this way:
+
+- Start vhost-user-blk or QSD (same commands for all systems)
+
+  vhost-user-blk -s /tmp/vhost.socket \
+    -b Fedora-Cloud-Base-39-1.5.x86_64.raw
+
+  qemu-storage-daemon \
+    --blockdev file,filename=Fedora-Cloud-Base-39-1.5.x86_64.qcow2,node-name=file \
+    --blockdev qcow2,file=file,node-name=qcow2 \
+    --export vhost-user-blk,addr.type=unix,addr.path=/tmp/vhost.socket,id=vub,num-queues=1,node-name=qcow2,writable=on
+
+- macOS (aarch64): start QEMU (using hvf accelerator)
+
+  qemu-system-aarch64 -smp 2 -cpu host -M virt,accel=hvf,memory-backend=mem \
+    -drive file=./build/pc-bios/edk2-aarch64-code.fd,if=pflash,format=raw,readonly=on \
+    -device virtio-net-device,netdev=net0 -netdev user,id=net0 \
+    -device ramfb -device usb-ehci -device usb-kbd \
+    -object memory-backend-shm,id=mem,size=512M \
+    -device vhost-user-blk-pci,num-queues=1,disable-legacy=on,chardev=char0 \
+    -chardev socket,id=char0,path=/tmp/vhost.socket
+
+- FreeBSD/OpenBSD (x86_64): start QEMU (no accelerators available)
+
+  qemu-system-x86_64 -smp 2 -M q35,memory-backend=mem \
+    -object memory-backend-shm,id=mem,size="512M" \
+    -device vhost-user-blk-pci,num-queues=1,chardev=char0 \
+    -chardev socket,id=char0,path=/tmp/vhost.socket
+
+- Fedora (x86_64): start QEMU (using kvm accelerator)
+
+  qemu-system-x86_64 -smp 2 -M q35,accel=kvm,memory-backend=mem \
+    -object memory-backend-shm,size="512M" \
+    -device vhost-user-blk-pci,num-queues=1,chardev=char0 \
+    -chardev socket,id=char0,path=/tmp/vhost.socket
+
+Branch pushed (and CI started) at https://gitlab.com/sgarzarella/qemu/-/tree/macos-vhost-user?ref_type=heads
+
+Thanks,
+Stefano
+
+Stefano Garzarella (12):
+  libvhost-user: set msg.msg_control to NULL when it is empty
+  libvhost-user: fail vu_message_write() if sendmsg() is failing
+  libvhost-user: mask F_INFLIGHT_SHMFD if memfd is not supported
+  vhost-user-server: do not set memory fd non-blocking
+  contrib/vhost-user-blk: fix bind() using the right size of the address
+  contrib/vhost-user-*: use QEMU bswap helper functions
+  vhost-user: enable frontends on any POSIX system
+  libvhost-user: enable it on any POSIX system
+  contrib/vhost-user-blk: enable it on any POSIX system
+  hostmem: add a new memory backend based on POSIX shm_open()
+  tests/qtest/vhost-user-blk-test: use memory-backend-shm
+  tests/qtest/vhost-user-test: add a test case for memory-backend-shm
+
+ docs/system/devices/vhost-user.rst        |   5 +-
+ meson.build                               |   5 +-
+ qapi/qom.json                             |  17 +++
+ subprojects/libvhost-user/libvhost-user.h |   2 +-
+ backends/hostmem-shm.c                    | 123 ++++++++++++++++++++++
+ contrib/vhost-user-blk/vhost-user-blk.c   |  27 +++--
+ contrib/vhost-user-input/main.c           |  16 +--
+ hw/net/vhost_net.c                        |   5 +
+ subprojects/libvhost-user/libvhost-user.c |  76 ++++++++++++-
+ tests/qtest/vhost-user-blk-test.c         |   2 +-
+ tests/qtest/vhost-user-test.c             |  23 ++++
+ util/vhost-user-server.c                  |  12 +++
+ backends/meson.build                      |   1 +
+ hw/block/Kconfig                          |   2 +-
+ qemu-options.hx                           |  13 +++
+ util/meson.build                          |   4 +-
+ 16 files changed, 305 insertions(+), 28 deletions(-)
+ create mode 100644 backends/hostmem-shm.c
+
+-- 
+2.45.0
+
 
