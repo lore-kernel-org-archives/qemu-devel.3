@@ -4,90 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A17F6C04FFE
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 21:23:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34214C04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 21:28:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4okW-0001e9-LH; Wed, 08 May 2024 17:22:52 -0400
+	id 1s4opG-0003k9-NV; Wed, 08 May 2024 17:27:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4okV-0001dn-4y
- for qemu-devel@nongnu.org; Wed, 08 May 2024 17:22:51 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4opE-0003jo-JT
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 17:27:44 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4okT-00013e-Di
- for qemu-devel@nongnu.org; Wed, 08 May 2024 17:22:50 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-a59a0e4b773so39492466b.2
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 14:22:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4opC-0002w2-QA
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 17:27:44 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-573137ba8d7so2477859a12.0
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 14:27:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715203368; x=1715808168; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715203660; x=1715808460; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=tXqHe/MV3BDh5ZPCOUmTruKZVVsG0iKlRzC+N1i2rbI=;
- b=ZmVo2G3hfujDK6rqAy/JAwD8JF51dtr9JvUK17lRUZ0O4EUMZBipemI6+srV6ak2F7
- YZZivOFjvefouUwKTAhVhHnDKcYwVQ2r0Xn4e7pBmq4q58CW0NtqnG0p5Y3L0ZFhhnjx
- //vdZG4/31224vDCyKdlk+xM+b0VXqlQsgCNAOhd/cR2ifdwSWri0Vv65aBMqaf7Ia37
- znNBUbfTIldi0zaAolGwC9KAI0lk9Mhco3KKEbHXT0gsVADv/Zbdk8at+XB8s51+KwM6
- uNPXhk6mgkNiBZfeWU8FXTZpjL437Y5G4b3KQswzRqAykzzRoJjvqbwmqrgUu9yBQ3Ek
- 08IQ==
+ bh=Mdjosks7r/KJkxwZhUwAHkrACfDKzq7Mygq7lPfzFcY=;
+ b=TZ53IbJDfVqCTd5KPnvefKTajWQhZ7tA8mXEArLx7uyqbOJkmBibWiSO0s3zgbDcp9
+ Y8/NlpEN3vbvoatPwtEd6Xmg5ptHJ2jLPCC/ti/7MdAvYle1bPlXvhbTblN5bpiTnYzq
+ cfZ+zyg/ymiT1l3WINqTmOeTt7Ys/ogB+fG/0oBIRlTxcbvwPIyyA/bfUE0i3wk+z4PI
+ 2RRpsbqePQZDLJ6p9DJLvd4muKWs8q/28XxGgt0CAwR2pzsoXp2ZUYwPGyQ2w3yJCRPy
+ zj2WjeP2UsTeYBQF2YYOtDX3HA3Rsmsm/eP0Xnp8dTZ8lsQsZrUP+wI8PyEv/Ru/qWoe
+ RtPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715203368; x=1715808168;
+ d=1e100.net; s=20230601; t=1715203660; x=1715808460;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tXqHe/MV3BDh5ZPCOUmTruKZVVsG0iKlRzC+N1i2rbI=;
- b=mQKbpDY8uyiF7MU5RSTGTjoRSb3ZejgL0OP9kvpOYJDYNti/DETCwDxOHeT7zYaAdL
- 3eRNHXzgJypznT809yJErHqmeRCR4hAqXRs+JwXvmC0RLucueIfJwa0c7P3oj9u1Rg/r
- s0E2V69TWFnKObYxx+B50J7aYU5XCxM/BFSCNrZOJm3bCRrOfFuRbH8b+BT0yuIHxjcO
- ocwurmtwLRmexbOblVcG/adjqXtCoX1hd1aee4EJZKGQhs8W5etd1FGvTUbvIlUWFE8s
- qZq6FmmgdjXlypYggmR5n1Z5EWVolmK43/EA6IQVaOST6LNfemekJQC9aLeeFemoDp9S
- YaGA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWHS92rC7KA8HIki0q879CfhWsmjgqxNTcEVBdkb4kQ5REkaTRXd3NpfHsV07hSx250GTsC5/PYrNZvEyFIuYkQmmIgI/c=
-X-Gm-Message-State: AOJu0YyUJHJbFAfDZww8ZlUe0k87UMBt9udMKd510bST2+oiWQmhFTd7
- mxHftAHtVdZZFi7OkT/Y6oJORxIEelVDnUAGWkCbdRJL1Ypqaezqj9B4PS4MCas=
-X-Google-Smtp-Source: AGHT+IGroSE0vQnuus8Xt2akGmQ0osUf+Z+E90stL3GdzxOMSqTEyy8AUWK+tv6jmUS35XD6w4M25Q==
-X-Received: by 2002:a17:906:1c06:b0:a59:c7d7:8b0f with SMTP id
- a640c23a62f3a-a59fb9595f3mr201395866b.29.1715203367765; 
- Wed, 08 May 2024 14:22:47 -0700 (PDT)
+ bh=Mdjosks7r/KJkxwZhUwAHkrACfDKzq7Mygq7lPfzFcY=;
+ b=EnWhUYV+OYOwl1POLSlz+P+PqUFAbp/EMKaiPnUz7weR9UcEwoZpMpyxrdwPF1fdXq
+ FyBnTT9wOEHC+qY0JKzsWoquZ8RSDmvzwU2fpmSY7YC+rtZybVFU5SOgpaUeibMcQ0np
+ uUTgAK51Zkp72rIZpKrKFDjebq56dJ4BYQufFv57yzsj9BC9CQ+D2vFQgzNlVvNX57F6
+ lBzrqNO7SGkE03Lp55JMzJkTTwWR9Z+uIAspIpSkCG+u4w5KDJOCCCsz+9Ms3kozB73Q
+ gtvRqmW8pnfg/Sin/FRaYr8/SZJFceEWLxpTw6xcU11PUnueIdwqZ7fiWuA0iR4bdE8d
+ SyCg==
+X-Gm-Message-State: AOJu0YxwfE8BjT/jkNkoToWZ3kjBtThMpqPol6Px5qOMcF1Gm69/bqCI
+ 7RRDnxjlHNNybjofkl6z7ZcborSUVFryJMjHDcZOQe2Sw9FpXaz5DmQRXQ/7Pfk=
+X-Google-Smtp-Source: AGHT+IHImM+TXbGXYmvYBNO1dxdgkij7yUod+2avs5MpDESTaXpqDNGlNeGDnjl45//IFvFfm5G83g==
+X-Received: by 2002:a17:907:76f4:b0:a59:c3a1:23f9 with SMTP id
+ a640c23a62f3a-a5a1155b44cmr68595766b.7.1715203660449; 
+ Wed, 08 May 2024 14:27:40 -0700 (PDT)
 Received: from [192.168.69.100] (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
  [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a5a17892444sm3133766b.76.2024.05.08.14.22.31
+ a640c23a62f3a-a5a17b01d3dsm2914466b.186.2024.05.08.14.27.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 May 2024 14:22:47 -0700 (PDT)
-Message-ID: <d38663b0-2f6f-4400-a590-aff76982df05@linaro.org>
-Date: Wed, 8 May 2024 23:22:27 +0200
+ Wed, 08 May 2024 14:27:39 -0700 (PDT)
+Message-ID: <ba6c3173-12c2-45d8-ade4-b21598800f5b@linaro.org>
+Date: Wed, 8 May 2024 23:27:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/28] glib: Replace g_memdup() by g_memdup2()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Eric Blake <eblake@redhat.com>,
- qemu-block@nongnu.org, David Hildenbrand <david@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Eduardo Habkost <ehabkost@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
- John Snow <jsnow@redhat.com>, David Gibson <david@gibson.dropbear.id.au>,
- Kevin Wolf <kwolf@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@virtuozzo.com>,
- "Daniel P . Berrange" <berrange@redhat.com>, Hanna Reitz
- <hreitz@redhat.com>, qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-References: <20210903174510.751630-1-philmd@redhat.com>
+Subject: Re: [PATCH] hw/clock: Expose 'freq-hz' QOM property
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Luc Michel <luc@lmichel.fr>,
+ Damien Hedde <damien.hedde@dahe.fr>,
+ =?UTF-8?Q?In=C3=A8s_Varhol?= <ines.varhol@telecom-paris.fr>
+References: <20240508141333.44610-1-philmd@linaro.org>
+ <CAFEAcA84CfdNZSjZ1R96=5P-VhxGXyaaujF1Y8AxKa+Wvpdp3Q@mail.gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20210903174510.751630-1-philmd@redhat.com>
+In-Reply-To: <CAFEAcA84CfdNZSjZ1R96=5P-VhxGXyaaujF1Y8AxKa+Wvpdp3Q@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,33 +96,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/9/21 19:44, Philippe Mathieu-Daudé wrote:
-> Per https://discourse.gnome.org/t/port-your-module-from-g-memdup-to-g-memdup2-now/5538
+On 8/5/24 19:46, Peter Maydell wrote:
+> On Wed, 8 May 2024 at 15:13, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>> Expose the clock frequency via the QOM 'freq-hz' property,
+>> as it might be useful for QTests.
+>>
+>> HMP example:
+>>
+>>    $ qemu-system-mips -S -monitor stdio -M mipssim
+>>    (qemu) qom-get /machine/cpu-refclk freq-hz
+>>    12000000
+>>
+>> Inspired-by: Inès Varhol <ines.varhol@telecom-paris.fr>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > 
->    The old API took the size of the memory to duplicate as a guint,
->    whereas most memory functions take memory sizes as a gsize. This
->    made it easy to accidentally pass a gsize to g_memdup(). For large
->    values, that would lead to a silent truncation of the size from 64
->    to 32 bits, and result in a heap area being returned which is
->    significantly smaller than what the caller expects. This can likely
->    be exploited in various modules to cause a heap buffer overflow.
+> So I have a couple of thoughts here:
 > 
-> g_memdup() as been deprecated in GLib 2.68. Since QEMU defines
-> GLIB_VERSION_MAX_ALLOWED to GLIB_VERSION_2_56, the deprecation
-> is not displayed (on GLib >= 2.68 such available on Fedora 34).
-> However the function is still unsafe, so it is better to avoid
-> its use.
-> 
-> This series provides the safely equivalent g_memdup2() wrapper,
-> and replace all g_memdup() calls by it.
+> (1) if this is intended for qtests, would exposing the period (i.e.
+> QOM equivalent of clock_get() rather than clock_get_hz()) be better?
+> A Hz figure has rounding so it's not as accurate.
 
+Indeed, simpler to compare from QTest perspective.
 
-> Philippe Mathieu-Daudé (28):
->    block/qcow2-bitmap: Replace g_memdup() by g_memdup2()
->    hw/hppa/machine: Replace g_memdup() by g_memdup2()
->    hw/ppc/spapr_pci: Replace g_memdup() by g_memdup2()
->    target/ppc: Replace g_memdup() by g_memdup2()
+> (2) We should document this in clocks.rst; I guess we want to say
+> "only intended for use in qtests" (i.e. if you're part of QEMU
+> use the existing function interface, not this).
 
-Thanks, patches 5, 11, 15 & 26 queued to hw-misc tree
-adding the comment suggested by Eric on patch 5.
+OK, and we can also only expose this for QTest using:
+
+   if (qtest_enabled()) {
+       object_property_add(obj, "[qtest-]clock-period", ...);
+   }
 
