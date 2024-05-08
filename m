@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1BE5C04FFE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB682C41513
 	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 15:09:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4iu6-0006Ag-8K; Wed, 08 May 2024 11:08:22 -0400
+	id 1s4iuP-0006NA-I8; Wed, 08 May 2024 11:08:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4iu3-00069m-3r
- for qemu-devel@nongnu.org; Wed, 08 May 2024 11:08:19 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4iuN-0006MN-Hu
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 11:08:39 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4iu1-0007Js-D0
- for qemu-devel@nongnu.org; Wed, 08 May 2024 11:08:18 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a59b178b75bso838340766b.0
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 08:08:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s4iuL-0007dI-VJ
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 11:08:39 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a59cc765c29so853575566b.3
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 08:08:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715180895; x=1715785695; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715180916; x=1715785716; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=sBfztSU1Xz8JnczzZBO/74iMyU3fwntHEQoamPACL2Q=;
- b=nPApDZcDCd4hq4rNkq7DVIkHuimYc1ctEy6faGoA5lQJrTB62ZWHD9P+mGdQX13lRq
- iFbWCbQvRDuR8oAEHjEHw/f34nhSgCltss/B79Kfxk+vb2fmbGCaz9pVdRNPfYNZk0fk
- g4hRFyMq1dRKB0y66bJytAARxTqg3hOp2lWoAr2IjBrOq1+JdhSkY8Hrtp0t2/lLwPwa
- F3ur4VZvo+IfELoyYLWh6bqK/q+VlwNx+umt/6WwM1FaHLhdKIWc9bBGdqdMgZRXcd98
- 2UFPvt9Rd0mYUNEpL1ddk4n94MnCuNhuIdeYl65jezN3KaD8SRWx2gCl/+m5ROPixOCs
- nPZg==
+ bh=ZMsHAJVvfu1B9SU7b9eMth8eSb5rkEdhG4+pXRBwaok=;
+ b=M3BF596NwI/vXGsACPzxrLEUS4viHHnvFNlG7lXpZRbXi89bhb8o3Rcfnm6RVu5D2q
+ LnM5Ao0zijrbolMCmWpSVS2NB20pjLl1JrRudHb4DJx03ls6p0qeBuIWQcxunhK3URVM
+ mGskw3SxRB8nmwj52JtaShoX5lWR/puNR4pljXSiiuDqFmFf5FTaSfPoXlvX7uiRAcEY
+ 1+ptzm3xQoJAY5g2kjrXd5svrRoRV80yg51C9izYTYayF4Zkn7mXgBsTXagHBFr42iWw
+ EDo9L3agRMYNyJswrW8tFR+5O1J7l+4k7pSWhU7yHCOoo2Ws0h2YUU4kzBJM443RR0fs
+ brig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715180895; x=1715785695;
+ d=1e100.net; s=20230601; t=1715180916; x=1715785716;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sBfztSU1Xz8JnczzZBO/74iMyU3fwntHEQoamPACL2Q=;
- b=fvKa+pxc9R9agWVbtpMFpV6iPEScW/A17J9BlZU4OcM532zoXhjGv4bhBJEx0uaPqG
- iEGxBAT2yqQqbI2580af/0lNy9Dt5wfKyoD2kOa/lk1M/64vPcI1oRSCQG2m1EV8SWkF
- XE8Cpexe9mtQPiwg93vvoK6Mko32mIKRdD/1pWR0O9TivtsnLQc7nT3eMR+r/rsbzbCO
- Ho+pa+xeGTaoFTq43NZXfps265+F1zhVf8zLqtIleI8bVQOh2lTIxCSQpdN04CGurZvt
- GaibYVLa13qrwn+eBOt3Bjgh3aag8fjCxGfhWg8PiyT4qJ5pqWo/rudBjFyPPT5qmeUA
- nJ5Q==
+ bh=ZMsHAJVvfu1B9SU7b9eMth8eSb5rkEdhG4+pXRBwaok=;
+ b=J8zTjZTPCBPuwj4TcjxUN5f5pkOh6CMfKvAQRltXTQmUZ6Sf6fhaHdG8NKe56o/ulA
+ knuTObrAa343nonmfYYY8inKEOcr6XaCzG1JWqI3tr8fNFQMw7Z+MtZf/S0oC+Rz8P+g
+ X0WB3b0husB4tlbloy4bufp5rVbTL/njuC49GQb0BolO1klmCi/5EN8kxGDuJlk4WL3u
+ 0Jma4eTKnb7ztqMzMdvzjwXsfupBG3J1ONqxm9GQVycu3DrCTrU/S/dARJi8ZnM0pqdE
+ GC2R+M+9r/1HGogLnaoUc4n5lgWuJOYGNjrFYRkH/rLv4ao4gPsGuWki++tHpnOwdfkT
+ sJhw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUCWxIUxenH5EgT/dVeUdycRon882X22IDwA/4ejDRgZG3DvL4L/e19Rs59ezj7rkME8SZAVzJNnDNihzKecBIWQR0yJ4Q=
-X-Gm-Message-State: AOJu0YynzNZAp/ZpxXJ+B6cEK46N/IlqLArsF3AogYiDDhGOtRWj6O4v
- +49VCqKCER+ap7IVBRpKZyblFdoNgg8u4ZmOCBbxjtY0130wlLVkDSFew4Xwnzk=
-X-Google-Smtp-Source: AGHT+IH8esw49twUyjZRB+6P01f+2ZOwSdYzxipW53jOWUaRtstOKHOvXsCbVa3zQoNQc4PEc0mxUQ==
-X-Received: by 2002:a17:906:7f8b:b0:a58:c80e:edd8 with SMTP id
- a640c23a62f3a-a59fb9f1250mr181221166b.70.1715180895381; 
- Wed, 08 May 2024 08:08:15 -0700 (PDT)
+ AJvYcCXtCkdAQhe5IXTkymwhe5WL0axObWvnUxQZdhpUpni//aD82qKoh0nJ9QbkDFAmAGs55iKrsL2ozUK8TI+60disq8oaV28=
+X-Gm-Message-State: AOJu0Yw3U2R1cwe92zR153QSXauXmmKSzuJIoKXWAOWBabLShwmFOvu4
+ /GeLxxRfUgYr1Mj7FJ4NOeBe1SSZNFS1ucvo0emFUdUcgzzr2QaCGyuqx1Gc7VI=
+X-Google-Smtp-Source: AGHT+IEFmmLvUtkU97kcgHwTVULmys0MccD3Qn5aC9QtfKUx4aUQ5q/uAj0fSil73dPKp7GsDrRhwA==
+X-Received: by 2002:a50:d796:0:b0:572:6ab0:6afc with SMTP id
+ 4fb4d7f45d1cf-5731da81847mr2107913a12.33.1715180916375; 
+ Wed, 08 May 2024 08:08:36 -0700 (PDT)
 Received: from [192.168.69.100] (sar95-h02-176-184-10-250.dsl.sta.abo.bbox.fr.
  [176.184.10.250]) by smtp.gmail.com with ESMTPSA id
- xh9-20020a170906da8900b00a597ff2fc0dsm7113951ejb.69.2024.05.08.08.08.13
+ l11-20020a056402028b00b00572bba6745esm7623119edv.81.2024.05.08.08.08.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 May 2024 08:08:14 -0700 (PDT)
-Message-ID: <5a73992e-0c7a-4f38-b78e-5df0d146134c@linaro.org>
-Date: Wed, 8 May 2024 17:08:12 +0200
+ Wed, 08 May 2024 08:08:35 -0700 (PDT)
+Message-ID: <36f2513b-7316-4544-bd83-8cd3bd7aad9f@linaro.org>
+Date: Wed, 8 May 2024 17:08:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/5] hw/loongarch: Rename LOONGARCH_MACHINE with
- LOONGARCH_VIRT_MACHINE
+Subject: Re: [PATCH v4 2/5] hw/loongarch: Rename LoongArchMachineState with
+ LoongArchVirtMachineState
 To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 References: <20240508031110.2507477-1-maobibo@loongson.cn>
- <20240508031110.2507477-2-maobibo@loongson.cn>
+ <20240508031110.2507477-3-maobibo@loongson.cn>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240508031110.2507477-2-maobibo@loongson.cn>
+In-Reply-To: <20240508031110.2507477-3-maobibo@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,18 +100,26 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/5/24 05:11, Bibo Mao wrote:
-> On LoongArch system, there is only virt machine type now, name
-> LOONGARCH_MACHINE is confused, rename it with LOONGARCH_VIRT_MACHINE.
-> Machine name about Other real hw boards can be added in future.
+> Rename LoongArchMachineState with LoongArchVirtMachineState, and change
+> variable name LoongArchMachineState *lams with LoongArchVirtMachineState
+> *lvms.
+> 
+> Rename function specific for virtmachine loongarch_xxx()
+> with virt_xxx(). However some common functions keep unchanged such as
+> loongarch_acpi_setup()/loongarch_load_kernel(), since there functions
+> can be used for real hw boards.
 > 
 > Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 > ---
->   hw/loongarch/acpi-build.c   |  8 ++++----
->   hw/loongarch/boot.c         |  2 +-
->   hw/loongarch/virt.c         | 19 +++++++++----------
->   include/hw/loongarch/virt.h |  4 ++--
->   4 files changed, 16 insertions(+), 17 deletions(-)
+>   hw/loongarch/acpi-build.c   |  89 +++++-----
+>   hw/loongarch/boot.c         |  10 +-
+>   hw/loongarch/fw_cfg.c       |   2 +-
+>   hw/loongarch/fw_cfg.h       |   2 +-
+>   hw/loongarch/virt.c         | 340 ++++++++++++++++++------------------
+>   include/hw/loongarch/virt.h |   7 +-
+>   6 files changed, 226 insertions(+), 224 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
 
