@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41F22C10F1A
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 00:18:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24275C10F1A
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 00:19:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4V0E-0003XJ-Ko; Tue, 07 May 2024 20:17:46 -0400
+	id 1s4Uxq-0006yd-Vy; Tue, 07 May 2024 20:15:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s4UyN-0007fR-30; Tue, 07 May 2024 20:15:51 -0400
+ id 1s4Uxb-0006sB-FU; Tue, 07 May 2024 20:15:03 -0400
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s4UyJ-0003nA-0X; Tue, 07 May 2024 20:15:50 -0400
+ id 1s4UxZ-0003X9-8L; Tue, 07 May 2024 20:15:03 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id C3A1C4E65CC;
- Wed, 08 May 2024 02:15:22 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 8B3E24E65C9;
+ Wed, 08 May 2024 02:14:59 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 3DPl441Qzp-6; Wed,  8 May 2024 02:15:20 +0200 (CEST)
+ with ESMTP id UYtc5gv1_60M; Wed,  8 May 2024 02:14:57 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id D2DBD4E65CF; Wed, 08 May 2024 02:15:20 +0200 (CEST)
-Message-Id: <491e06ba9f350c9c2843d92b25800dcda191e604.1715125376.git.balaton@eik.bme.hu>
+ id 90C404E65CB; Wed, 08 May 2024 02:14:57 +0200 (CEST)
+Message-Id: <b0140de7a3577e8ce3111c57af9d0de376e2f25d.1715125376.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1715125376.git.balaton@eik.bme.hu>
 References: <cover.1715125376.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v3 27/33] target/ppc/mmu_common.c: Simplify ppc_booke_xlate()
- part 2
+Subject: [PATCH v3 05/33] target/ppc/mmu_common.c: Move calculation of a value
+ closer to its usage
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,7 +40,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Wed, 08 May 2024 02:15:20 +0200 (CEST)
+Date: Wed, 08 May 2024 02:14:57 +0200 (CEST)
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
  envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -63,83 +63,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Merge the code fetch and data access cases in a common switch.
+In mmubooke_check_tlb() and mmubooke206_check_tlb() prot2 is
+calculated first but only used after an unrelated check that can
+return before tha value is used. Move the calculation after the check,
+closer to where it is used, to keep them together and avoid computing
+it when not needed.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviwed-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu_common.c | 50 +++++++++++++++++------------------------
- 1 file changed, 20 insertions(+), 30 deletions(-)
+ target/ppc/mmu_common.c | 36 +++++++++++++++++-------------------
+ 1 file changed, 17 insertions(+), 19 deletions(-)
 
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index c725a7932f..04e5ad661d 100644
+index 4fde7fd3bf..f79e390306 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -1206,45 +1206,35 @@ static bool ppc_booke_xlate(PowerPCCPU *cpu, vaddr eaddr,
- 
-     log_cpu_state_mask(CPU_LOG_MMU, cs, 0);
-     env->error_code = 0;
--    if (ret == -1) {
-+    switch (ret) {
-+    case -1:
-+        /* No matches in page tables or TLB */
-         if (env->mmu_model == POWERPC_MMU_BOOKE206) {
-             booke206_update_mas_tlb_miss(env, eaddr, access_type, mmu_idx);
-         }
--    }
--    if (access_type == MMU_INST_FETCH) {
--        switch (ret) {
--        case -1:
--            /* No matches in page tables or TLB */
--            cs->exception_index = POWERPC_EXCP_ITLB;
-+        cs->exception_index = (access_type == MMU_INST_FETCH) ?
-+                              POWERPC_EXCP_ITLB : POWERPC_EXCP_DTLB;
-+        env->spr[SPR_BOOKE_DEAR] = eaddr;
-+        env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
-+        break;
-+    case -2:
-+        /* Access rights violation */
-+        cs->exception_index = (access_type == MMU_INST_FETCH) ?
-+                              POWERPC_EXCP_ISI : POWERPC_EXCP_DSI;
-+        if (access_type != MMU_INST_FETCH) {
-             env->spr[SPR_BOOKE_DEAR] = eaddr;
-             env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
--            break;
--        case -2:
--            /* Access rights violation */
--            cs->exception_index = POWERPC_EXCP_ISI;
--            break;
--        case -3:
--            /* No execute protection violation */
-+        }
-+        break;
-+    case -3:
-+        /* No execute protection violation */
-+        if (access_type == MMU_INST_FETCH) {
-             cs->exception_index = POWERPC_EXCP_ISI;
-             env->spr[SPR_BOOKE_ESR] = 0;
--            break;
--        }
--    } else {
--        switch (ret) {
--        case -1:
--            /* No matches in page tables or TLB */
--            cs->exception_index = POWERPC_EXCP_DTLB;
--            env->spr[SPR_BOOKE_DEAR] = eaddr;
--            env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
--            break;
--        case -2:
--            /* Access rights violation */
--            cs->exception_index = POWERPC_EXCP_DSI;
--            env->spr[SPR_BOOKE_DEAR] = eaddr;
--            env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
--            break;
-         }
-+        break;
+@@ -635,12 +635,6 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppcemb_tlb_t *tlb,
+         return -1;
      }
-+
-     return false;
- }
  
+-    if (FIELD_EX64(env->msr, MSR, PR)) {
+-        prot2 = tlb->prot & 0xF;
+-    } else {
+-        prot2 = (tlb->prot >> 4) & 0xF;
+-    }
+-
+     /* Check the address space */
+     if ((access_type == MMU_INST_FETCH ?
+         FIELD_EX64(env->msr, MSR, IR) :
+@@ -649,6 +643,11 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppcemb_tlb_t *tlb,
+         return -1;
+     }
+ 
++    if (FIELD_EX64(env->msr, MSR, PR)) {
++        prot2 = tlb->prot & 0xF;
++    } else {
++        prot2 = (tlb->prot >> 4) & 0xF;
++    }
+     *prot = prot2;
+     if (prot2 & prot_for_access_type(access_type)) {
+         qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
+@@ -830,6 +829,18 @@ static int mmubooke206_check_tlb(CPUPPCState *env, ppcmas_tlb_t *tlb,
+ 
+ found_tlb:
+ 
++    /* Check the address space and permissions */
++    if (access_type == MMU_INST_FETCH) {
++        /* There is no way to fetch code using epid load */
++        assert(!use_epid);
++        as = FIELD_EX64(env->msr, MSR, IR);
++    }
++
++    if (as != ((tlb->mas1 & MAS1_TS) >> MAS1_TS_SHIFT)) {
++        qemu_log_mask(CPU_LOG_MMU, "%s: AS doesn't match\n", __func__);
++        return -1;
++    }
++
+     if (pr) {
+         if (tlb->mas7_3 & MAS3_UR) {
+             prot2 |= PAGE_READ;
+@@ -851,19 +862,6 @@ found_tlb:
+             prot2 |= PAGE_EXEC;
+         }
+     }
+-
+-    /* Check the address space and permissions */
+-    if (access_type == MMU_INST_FETCH) {
+-        /* There is no way to fetch code using epid load */
+-        assert(!use_epid);
+-        as = FIELD_EX64(env->msr, MSR, IR);
+-    }
+-
+-    if (as != ((tlb->mas1 & MAS1_TS) >> MAS1_TS_SHIFT)) {
+-        qemu_log_mask(CPU_LOG_MMU, "%s: AS doesn't match\n", __func__);
+-        return -1;
+-    }
+-
+     *prot = prot2;
+     if (prot2 & prot_for_access_type(access_type)) {
+         qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
 -- 
 2.30.9
 
