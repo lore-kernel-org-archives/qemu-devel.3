@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E7F2C19F4F
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 09:08:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E822C25B77
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 09:08:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4dGx-00007S-E3; Wed, 08 May 2024 05:07:35 -0400
+	id 1s4dGc-0008Vk-4s; Wed, 08 May 2024 05:07:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s4dGp-00006v-Uk
- for qemu-devel@nongnu.org; Wed, 08 May 2024 05:07:27 -0400
+ id 1s4dGY-0008Ud-Fs
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 05:07:11 -0400
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1s4dGe-0005QH-JJ
- for qemu-devel@nongnu.org; Wed, 08 May 2024 05:07:20 -0400
+ id 1s4dGW-0005QH-SL
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 05:07:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1715159237; x=1746695237;
+ t=1715159229; x=1746695229;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=zEb4sLTc/j+SaohFZy7OiH9RZU/pHjGFuDFgJP18iPQ=;
- b=c+s/ps6SqU7GHbOTlbIA/kiURHEM6h2Irc1B2JYhWnOfCE0rDfYI45vZ
- ilWsggoiemeiQOnLZ7p96K1RxpCx5P3hNBlhtLH+sM/gpesqW+qecA8Hu
- 0EBn8jVYRQp+ebZtDM42wwzP7wB/jly7AYWuenyXVpt1H6W0WmeIRFx+S
- 7SN53zar1u8jSiu0bWnAzU6v0aIjzWjuc7Ih67zHn2aOCQHcuJgSXoRZs
- +lPDoijISTIDPs2F+GM6i8F93XMWiof36h89L2kplbdu4On9ukoHAPBN2
- D3/Rhn84x9rnPEikYkeVuJ6MSjJ//Koaq3b1qy77oksB7wME9bO2q+XoJ Q==;
-X-CSE-ConnectionGUID: YzR8c7RwRVGhiqO8ZiJIBg==
-X-CSE-MsgGUID: K6aixxLNT46IBRqUMoQ9mg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11066"; a="11160926"
-X-IronPort-AV: E=Sophos;i="6.08,144,1712646000"; d="scan'208";a="11160926"
+ bh=p7P8aFLeoc4zseIGlhl+TlPbNc3qYP0grqWyfXSUiLo=;
+ b=BavdJXULHaVFunCCi5d6gzpay1jcf+67PBborRmGwhNx3l7S845ebJg5
+ q298eO6j3uqSpXyZIu1/eE7cWaw8qkEYsroqatZMObPls++296E/n0XiV
+ le5CIE/39WNF7t7rzDT+tryZQKSXRUjXoHSj+6V82aW3z+5PPwyCivnsn
+ pZ4nI6CDgodRIi2LfeU4eqsJPuXnpEmac5nM8veK4pJRivRkPQRMeqAG6
+ tKto56BzWqA3vtRrrOkvqCS7M8SwMvMl5kh4k7tGduHgYZLSIZzhwh1gG
+ 3LgNSMnixoPVFG3yTSgCR17S74i1p6Kbfl/bbmYavyBabFvl+bKwVV0F4 g==;
+X-CSE-ConnectionGUID: jPZqHAmXTICY08JxHntfSg==
+X-CSE-MsgGUID: xqpMtRcrRl20IqPPHuqoSQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11066"; a="11160880"
+X-IronPort-AV: E=Sophos;i="6.08,144,1712646000"; d="scan'208";a="11160880"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 May 2024 02:07:16 -0700
-X-CSE-ConnectionGUID: X/5fb+a+QzWF6sWRYSn7/g==
-X-CSE-MsgGUID: /uzBjO1kQsCBx5b1IA/KFQ==
+ 08 May 2024 02:07:08 -0700
+X-CSE-ConnectionGUID: RSq4WfkyTkORrXUGLzPYbA==
+X-CSE-MsgGUID: zLEC3WQjTCCCe7xLrD7z4Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,144,1712646000"; d="scan'208";a="29226472"
+X-IronPort-AV: E=Sophos;i="6.08,144,1712646000"; d="scan'208";a="29226462"
 Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.124])
  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 May 2024 02:07:12 -0700
+ 08 May 2024 02:07:04 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -53,10 +53,10 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  nicolinc@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v5 04/19] vfio/iommufd: Introduce
- TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO device
-Date: Wed,  8 May 2024 17:03:39 +0800
-Message-Id: <20240508090354.1815561-5-zhenzhong.duan@intel.com>
+Subject: [PATCH v5 02/19] vfio/container: Introduce
+ TYPE_HOST_IOMMU_DEVICE_LEGACY_VFIO device
+Date: Wed,  8 May 2024 17:03:37 +0800
+Message-Id: <20240508090354.1815561-3-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240508090354.1815561-1-zhenzhong.duan@intel.com>
 References: <20240508090354.1815561-1-zhenzhong.duan@intel.com>
@@ -87,52 +87,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO represents a host IOMMU device under
-VFIO iommufd backend. It will be created during VFIO device attaching
-and passed to vIOMMU.
+TYPE_HOST_IOMMU_DEVICE_LEGACY_VFIO represents a host IOMMU device under
+VFIO legacy container backend.
 
-It will have its own .realize() implementation.
+It will have its own realize implementation.
 
+Suggested-by: Eric Auger <eric.auger@redhat.com>
 Suggested-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
  include/hw/vfio/vfio-common.h | 3 +++
- hw/vfio/iommufd.c             | 5 ++++-
+ hw/vfio/container.c           | 5 ++++-
  2 files changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index 05a199ce65..affb73f209 100644
+index e4c60374fa..05a199ce65 100644
 --- a/include/hw/vfio/vfio-common.h
 +++ b/include/hw/vfio/vfio-common.h
-@@ -32,6 +32,7 @@
+@@ -31,6 +31,7 @@
+ #endif
  #include "sysemu/sysemu.h"
  #include "hw/vfio/vfio-container-base.h"
- #include "sysemu/host_iommu_device.h"
-+#include "sysemu/iommufd.h"
++#include "sysemu/host_iommu_device.h"
  
  #define VFIO_MSG_PREFIX "vfio %s: "
  
-@@ -149,6 +150,8 @@ typedef struct VFIOGroup {
+@@ -147,6 +148,8 @@ typedef struct VFIOGroup {
+     bool ram_block_discard_allowed;
  } VFIOGroup;
  
- #define TYPE_HOST_IOMMU_DEVICE_LEGACY_VFIO TYPE_HOST_IOMMU_DEVICE "-legacy-vfio"
-+#define TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO \
-+            TYPE_HOST_IOMMU_DEVICE_IOMMUFD "-vfio"
- 
++#define TYPE_HOST_IOMMU_DEVICE_LEGACY_VFIO TYPE_HOST_IOMMU_DEVICE "-legacy-vfio"
++
  typedef struct VFIODMABuf {
      QemuDmaBuf buf;
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 554f9a6292..e4a507d55c 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -624,7 +624,10 @@ static const TypeInfo types[] = {
-         .name = TYPE_VFIO_IOMMU_IOMMUFD,
+     uint32_t pos_x, pos_y, pos_updates;
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 86266f3b83..1b4fc2f3e8 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -1139,7 +1139,10 @@ static const TypeInfo types[] = {
+         .name = TYPE_VFIO_IOMMU_LEGACY,
          .parent = TYPE_VFIO_IOMMU,
-         .class_init = vfio_iommu_iommufd_class_init,
+         .class_init = vfio_iommu_legacy_class_init,
 -    },
 +    }, {
-+        .name = TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO,
-+        .parent = TYPE_HOST_IOMMU_DEVICE_IOMMUFD,
++        .name = TYPE_HOST_IOMMU_DEVICE_LEGACY_VFIO,
++        .parent = TYPE_HOST_IOMMU_DEVICE,
 +    }
  };
  
