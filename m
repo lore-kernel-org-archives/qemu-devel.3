@@ -4,106 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FB7BC25B4F
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 23:41:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7FE5C04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 23:41:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4qpI-0002dp-LO; Wed, 08 May 2024 19:35:56 -0400
+	id 1s4qpZ-000313-C5; Wed, 08 May 2024 19:36:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s4qpF-0002cq-6C
- for qemu-devel@nongnu.org; Wed, 08 May 2024 19:35:53 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s4qpD-0002Is-Mn
- for qemu-devel@nongnu.org; Wed, 08 May 2024 19:35:52 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 691EC5D38D;
- Wed,  8 May 2024 23:35:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1715211350; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PG6Nx43BubMRRi84xqVwyEY8NqHhUhF21gkA0aoI2Ws=;
- b=OVY4APoEgJ1to0zlSSDhF5QpxEfjhPrg0uwe/XnZLwr37QJboL1MnF4QqO8mX/eW519r+W
- kwIj6Jz/0NsUXuiEBIIdkteVAxfVdDyKuVMM2XVMY0J3EtKkHMmwmp1hAMoaabXq34xRKo
- pw48fWll5cLY1Y5yj+K/Klpee6p4JIk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1715211350;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PG6Nx43BubMRRi84xqVwyEY8NqHhUhF21gkA0aoI2Ws=;
- b=51AsjOeWVesdd0cnLp5EQZ7rWHsPsJlFJOGUORr8N5XuwmvV+br+IXqP3mJtvZBql6cBip
- oY6QBaxI0yaQrvDA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1715211350; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PG6Nx43BubMRRi84xqVwyEY8NqHhUhF21gkA0aoI2Ws=;
- b=OVY4APoEgJ1to0zlSSDhF5QpxEfjhPrg0uwe/XnZLwr37QJboL1MnF4QqO8mX/eW519r+W
- kwIj6Jz/0NsUXuiEBIIdkteVAxfVdDyKuVMM2XVMY0J3EtKkHMmwmp1hAMoaabXq34xRKo
- pw48fWll5cLY1Y5yj+K/Klpee6p4JIk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1715211350;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PG6Nx43BubMRRi84xqVwyEY8NqHhUhF21gkA0aoI2Ws=;
- b=51AsjOeWVesdd0cnLp5EQZ7rWHsPsJlFJOGUORr8N5XuwmvV+br+IXqP3mJtvZBql6cBip
- oY6QBaxI0yaQrvDA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0C4A313A27;
- Wed,  8 May 2024 23:35:48 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([10.150.64.162])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 0Pw9MVQMPGZ7FQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 08 May 2024 23:35:48 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PULL v2 03/13] migration: process_incoming_migration_co(): complete
- cleanup on failure
-Date: Wed,  8 May 2024 20:35:31 -0300
-Message-Id: <20240508233541.2403-4-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20240508233541.2403-1-farosas@suse.de>
-References: <20240508233541.2403-1-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1s4qpX-0002tF-BE; Wed, 08 May 2024 19:36:11 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1s4qpU-0002Sv-9h; Wed, 08 May 2024 19:36:11 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id B44514E65BB;
+ Thu, 09 May 2024 01:36:06 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id nBjqZhPJE8Wk; Thu,  9 May 2024 01:36:04 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id C16C54E646F; Thu, 09 May 2024 01:36:04 +0200 (CEST)
+Message-Id: <647b42c7dfc11e0e0faa78e7595be53f44a3b138.1715209155.git.balaton@eik.bme.hu>
+In-Reply-To: <cover.1715209155.git.balaton@eik.bme.hu>
+References: <cover.1715209155.git.balaton@eik.bme.hu>
+From: BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PATCH v4 02/33] target/ppc: Move patching nip from exception handler
+ to helper_scv
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
- RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+To: qemu-devel@nongnu.org,
+    qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>
+Date: Thu, 09 May 2024 01:36:04 +0200 (CEST)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,36 +63,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-Make call to migration_incoming_state_destroy(), instead of doing only
-partial of it.
+Unlike sc, for scv a facility unavailable interrupt must be generated
+if FSCR[SCV]=0 so we can't raise the exception with nip set to next
+instruction but we can move advancing nip if the FSCR check passes to
+helper_scv so the exception handler does not need to change it.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
+[balaton: added commit message]
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- migration/migration.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ target/ppc/excp_helper.c | 2 +-
+ target/ppc/translate.c   | 6 +++++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index 2dc6a063e9..0d26db47f7 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -799,10 +799,7 @@ process_incoming_migration_co(void *opaque)
- fail:
-     migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
-                       MIGRATION_STATUS_FAILED);
--    qemu_fclose(mis->from_src_file);
--
--    multifd_recv_cleanup();
--    compress_threads_load_cleanup();
-+    migration_incoming_state_destroy();
+diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+index 92fe535815..5aa84bccd2 100644
+--- a/target/ppc/excp_helper.c
++++ b/target/ppc/excp_helper.c
+@@ -1415,7 +1415,6 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
+     case POWERPC_EXCP_SYSCALL_VECTORED: /* scv exception                     */
+         lev = env->error_code;
+         dump_syscall(env);
+-        env->nip += 4;
+         new_msr |= env->msr & ((target_ulong)1 << MSR_EE);
+         new_msr |= env->msr & ((target_ulong)1 << MSR_RI);
  
-     exit(EXIT_FAILURE);
- }
+@@ -2524,6 +2523,7 @@ void helper_ppc_maybe_interrupt(CPUPPCState *env)
+ void helper_scv(CPUPPCState *env, uint32_t lev)
+ {
+     if (env->spr[SPR_FSCR] & (1ull << FSCR_SCV)) {
++        env->nip += 4;
+         raise_exception_err(env, POWERPC_EXCP_SYSCALL_VECTORED, lev);
+     } else {
+         raise_exception_err(env, POWERPC_EXCP_FU, FSCR_IC_SCV);
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index fa72f17c3e..0dbcf4b26f 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -4494,7 +4494,11 @@ static void gen_scv(DisasContext *ctx)
+ {
+     uint32_t lev = (ctx->opcode >> 5) & 0x7F;
+ 
+-    /* Set the PC back to the faulting instruction. */
++    /*
++     * Set the PC back to the scv instruction (unlike sc), because a facility
++     * unavailable interrupt must be generated if FSCR[SCV]=0. The helper
++     * advances nip if the FSCR check passes.
++     */
+     gen_update_nip(ctx, ctx->cia);
+     gen_helper_scv(tcg_env, tcg_constant_i32(lev));
+ 
 -- 
-2.35.3
+2.30.9
 
 
