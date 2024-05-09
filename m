@@ -4,83 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07138C10F1A
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 08:10:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 165D4C10F1A
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 08:37:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4yrQ-0000K5-TU; Thu, 09 May 2024 04:10:40 -0400
+	id 1s4zGI-0001rk-KM; Thu, 09 May 2024 04:36:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s4yrP-0000J6-HH
- for qemu-devel@nongnu.org; Thu, 09 May 2024 04:10:39 -0400
-Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s4yrN-0008SB-QE
- for qemu-devel@nongnu.org; Thu, 09 May 2024 04:10:39 -0400
-Received: by mail-lf1-x12a.google.com with SMTP id
- 2adb3069b0e04-51aa6a8e49aso652309e87.3
- for <qemu-devel@nongnu.org>; Thu, 09 May 2024 01:10:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715242236; x=1715847036; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=jMPRfd8rdH5pNKs5OTTNM86jfA0cFlcLaJJAhhHNZcg=;
- b=LixAPoyV2N5QQov57LpsaDDeSq7esau734YFiGQuA430NCaTvRN8PCg6c4TmuWMCKq
- 8DgVb33aXqQ/7mH2+CcXAvr2qVytYmNJaFslF5QqnK6dHF5GtwjSw17MC6kPmD7Doir4
- Dsy7kjGR3z44MnmU3HnwZDlrkdCqGWx0enCa1/UOGMHhCsnHL2by/J0m6UQaYjeb8fxY
- us7580eCUIcbGVor92vF7dzKcidClQdj5mSONwt5Qfmu8sMyXb+AT4kvh2JqWa3Eu6pq
- SNLgAHTIyniiQ2ElyvofB0MumXdBd09s1tw51+lqhSqJ/G2wf5t6z8S+BmVcKwDC8yXq
- kt+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715242236; x=1715847036;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jMPRfd8rdH5pNKs5OTTNM86jfA0cFlcLaJJAhhHNZcg=;
- b=GEVD8psOvvw2e9UErWqOT0aK2btTdDH3CXVf/3ZfIqlW5ne5MI67omW4akGxqQUjkI
- da5EuaIqm7PlaziQST/TdTKVQRuFYr3V2DacbOWWy6HvxfSW0jVQob8wYeYvVh+JRabb
- Sa7zbpkQEcVYRZOml8i1lKuMm35N/rZEg+yMSJVScRZDXtCKMDkGvcmNIu7628EUdapI
- 835LD3F3aigem2X6LYlOU+6znoUaFVQGMdmfIWxFq9+zjJU7c3qpKZctN5qxR6SWpKei
- oZn6Cp8GFPSdGqU+cIGTppGUHbp2v7YdKe+YXAXo7hRRxRl6r2Y5WW4KB3qyV2JwYqDo
- AOOw==
-X-Gm-Message-State: AOJu0Yw5WvJ8L9dMozOcUJupd4KuUkhUdE4mid5GS4KAhCX60YXgggZ2
- kjHoiwd1/ZJRpxllYaMNohjuwkgoR3XCbsymNcfjk1A3s6tO2GzmfyktU+zTav/c/uffOie7ip1
- QzJg=
-X-Google-Smtp-Source: AGHT+IE5eAIQ+92ZMCdHFZu1RJLEuH20p542t3Y5hev+2SmUnDqogyOhMBgef/yKYH2A8/ykpKZr5Q==
-X-Received: by 2002:a19:e04f:0:b0:520:b0fe:653f with SMTP id
- 2adb3069b0e04-5217cd48fa9mr2616881e87.67.1715242235760; 
- Thu, 09 May 2024 01:10:35 -0700 (PDT)
-Received: from [192.168.51.227] ([91.209.212.50])
- by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-521f39d2babsm184221e87.252.2024.05.09.01.10.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 May 2024 01:10:35 -0700 (PDT)
-Message-ID: <8f737296-0cb8-433b-8eee-8ca6c7bfa12a@linaro.org>
-Date: Thu, 9 May 2024 10:10:31 +0200
+ (Exim 4.90_1) (envelope-from <wangyuquan1236@phytium.com.cn>)
+ id 1s4zGD-0001rV-FW
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 04:36:17 -0400
+Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <wangyuquan1236@phytium.com.cn>) id 1s4zGA-0008GA-Nn
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 04:36:17 -0400
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwA3jBDxijxmuDC5AQ--.31648S2;
+ Thu, 09 May 2024 16:36:01 +0800 (CST)
+Received: from localhost (unknown [123.150.8.50])
+ by mail (Coremail) with SMTP id AQAAfwBn15fbijxmX4IAAA--.1030S2;
+ Thu, 09 May 2024 16:35:55 +0800 (CST)
+Date: Thu, 9 May 2024 16:35:34 +0800
+From: Yuquan Wang <wangyuquan1236@phytium.com.cn>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org
+Subject: Re: CXL numa error on arm64 qemu virt machine
+Message-ID: <ZjyK1tI0TtbAKhmh@phytium.com.cn>
+References: <20240508080051.3756934-1-wangyuquan1236@phytium.com.cn>
+ <20240508130252.00006367@Huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] gitlab: Update msys2-64bit runner tags
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, thuth@redhat.com
-References: <20240507175356.281618-1-richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20240507175356.281618-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
- envelope-from=richard.henderson@linaro.org; helo=mail-lf1-x12a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240508130252.00006367@Huawei.com>
+X-CM-TRANSID: AQAAfwBn15fbijxmX4IAAA--.1030S2
+X-CM-SenderInfo: 5zdqw5pxtxt0arstlqxsk13x1xpou0fpof0/1tbiAQAAAWY70+QC3QABs0
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=wangyuquan
+ 1236@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoW7CrW8GFWkZF1ktw1xuF45Wrg_yoW8tw4fpF
+ 4jgFn3CrWkJr1xKryktw43Jr15Awn5Ca1DWFyfGw18Arn8Xr1DJw17Kw1agF9xC3yfAw42
+ qFyDtr1qya1DZaDanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=209.97.181.73;
+ envelope-from=wangyuquan1236@phytium.com.cn;
+ helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H2=-0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,38 +66,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: 20240508130252.00006367@huawei.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/7/24 19:53, Richard Henderson wrote:
-> Gitlab has deprecated and removed support for windows-1809
-> and shared-windows.  Update to saas-windows-medium-amd64 per
+On Wed, May 08, 2024 at 01:02:52PM +0100, Jonathan Cameron wrote:
 > 
-> https://about.gitlab.com/blog/2024/01/22/windows-2022-support-for-gitlab-saas-runners/
+> > [    0.000000] ACPI: SRAT: Node 0 PXM 0 [mem 0x40000000-0xbfffffff]
+> > [    0.000000] ACPI: SRAT: Node 1 PXM 1 [mem 0xc0000000-0x13fffffff]
+> > [    0.000000] ACPI: Unknown target node for memory at 0x10000000000, assuming node 0
+> > [    0.000000] NUMA: Warning: invalid memblk node 16 [mem 0x0000000004000000-0x0000000007ffffff]
+> > [    0.000000] NUMA: Faking a node at [mem 0x0000000004000000-0x000000013fffffff]
+> > [    0.000000] NUMA: NODE_DATA [mem 0x13f7f89c0-0x13f7fafff]
+> > 
+> > Previous discussion: https://lore.kernel.org/linux-cxl/20231011150620.0000212a@Huawei.com/
+> > 
+> > root@debian-bullseye-arm64:~# cxl create-region -d decoder0.0 -t ram
+> > [   68.653873] cxl region0: Bypassing cpu_cache_invalidate_memregion() for testing!
+> > [   68.660568] Unknown target node for memory at 0x10000000000, assuming node 0
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   .gitlab-ci.d/windows.yml | 4 +---
->   1 file changed, 1 insertion(+), 3 deletions(-)
+> You need a load of kernel changes for NUMA nodes to work correctly with
+> CXL memory on arm64 platforms.  I have some working code but need to tidy
+> up a few corners that came up in an internal review earlier this week.
 > 
-> diff --git a/.gitlab-ci.d/windows.yml b/.gitlab-ci.d/windows.yml
-> index d26dbdd0c0..a83f23a786 100644
-> --- a/.gitlab-ci.d/windows.yml
-> +++ b/.gitlab-ci.d/windows.yml
-> @@ -1,9 +1,7 @@
->   msys2-64bit:
->     extends: .base_job_template
->     tags:
-> -  - shared-windows
-> -  - windows
-> -  - windows-1809
-> +  - saas-windows-medium-amd64
->     cache:
->       key: "$CI_JOB_NAME"
->       paths:
+> I have some travel coming up so may take a week or so to get those out.
+> 
+> Curiously that invalid memblk has nothing to do with the CXL fixed memory window
+> Could you check if that is happening for you without the CXL patches?
+> 
 
-Applied directly to master as a build fix.
+Thanks.
 
+I have checked it, the problem is caused by my bios firmware file. I
+change the bios file and the numa topology can works.
 
-r~
+BTW, if it is convenient, could you help to post the link of the patches of CXL 
+memory NUMA nodes on arm64 platforms?
+
+> 
+> Whilst it doesn't work yet (because of missing kernel support)
+> you'll need something that looks more like the generic ports test added in 
+> https://gitlab.com/jic23/qemu/-/commit/6589c527920ba22fe0923b60b58d33a8e9fd371e
+> 
+> Most importantly
+> -numa node,nodeid=2 -object acpi-generic-port,id=gp0,pci-bus-cxl.1,node=2
+> + the bits setting distances etc.  Note CXL memory does not provide SLIT like
+> data at the moment, so the test above won't help you identify if it is correctly
+> set up.  That's a gap in general in the kernel support. Whilst we'd love
+> it if everyone moved to hmat derived information we may need to provide
+> some fallback.
+> 
+> Jonathan
+> 
+
+Many thanks
+Yuquan
+
 
