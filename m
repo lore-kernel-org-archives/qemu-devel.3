@@ -4,45 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00A0EC25B10
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 20:32:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31551C10F1A
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 20:38:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5ALA-0000Je-DU; Thu, 09 May 2024 16:26:08 -0400
+	id 1s5AWS-00066c-Aa; Thu, 09 May 2024 16:37:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s5AL8-0000HU-5n; Thu, 09 May 2024 16:26:06 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ id 1s5AWQ-00066T-80
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 16:37:46 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s5AL4-000175-CJ; Thu, 09 May 2024 16:26:05 -0400
+ id 1s5AWN-0004Ui-Te
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 16:37:46 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id CEED24E65D6;
- Thu, 09 May 2024 22:25:59 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id BEB434E6106;
+ Thu, 09 May 2024 22:37:41 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 6teW5-2nb_Jm; Thu,  9 May 2024 22:25:57 +0200 (CEST)
+ with ESMTP id uU64Vjxk-kck; Thu,  9 May 2024 22:37:39 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id DF8CF4E65CE; Thu, 09 May 2024 22:25:57 +0200 (CEST)
-Message-Id: <f08537bb9beeb07d8017adc9ec34f7d54848dbc5.1715285340.git.balaton@eik.bme.hu>
-In-Reply-To: <cover.1715285340.git.balaton@eik.bme.hu>
-References: <cover.1715285340.git.balaton@eik.bme.hu>
+ id 7433B4E600E; Thu, 09 May 2024 22:37:39 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 71646746E3B;
+ Thu, 09 May 2024 22:37:39 +0200 (CEST)
+Date: Thu, 9 May 2024 22:37:39 +0200 (CEST)
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v5 23/32] target/ppc/mmu_common.c: Move mmu_ctx_t type to
- mmu_common.c
+To: Cord Amfmgm <dmamfmgm@gmail.com>
+cc: Peter Maydell <peter.maydell@linaro.org>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org, 
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: Re: hw/usb/hcd-ohci: Fix #1510, #303: pid not IN or OUT
+In-Reply-To: <CACBuX0SbF_eMT4XsDZsVVZSYF6fNgtX2fJFsahaThELoyGA9Jw@mail.gmail.com>
+Message-ID: <6fab2d56-84c4-15fa-bcaf-b08f2c8210aa@eik.bme.hu>
+References: <CACBuX0To1QWpOTE-HfbXv=tUVWVL0=pvn-+E28EL_mWuqfZ-sw@mail.gmail.com>
+ <dcaed5da-5e94-4cb6-b5b8-0a571eac371b@tls.msk.ru>
+ <CACBuX0Q_JOp1xGKZjnrBguiXVcM-ApfVrOs9UQE2B7sq=f5vLQ@mail.gmail.com>
+ <CACBuX0SUvsip=hj5NbE3g5gCxSmdRKbK-k=ZQz819TDEfvtXgw@mail.gmail.com>
+ <8dadea4d-ab16-4102-93e6-61559fb5b00c@linaro.org>
+ <CACBuX0QepgcGW=X9gYZzY9_9voZT1L+vstfqn_9FQmvpG0-sXQ@mail.gmail.com>
+ <CAFEAcA8sF4C-r2+Es4tqzXa_HsNVcMizN+eMCN2QM7guZPPYsg@mail.gmail.com>
+ <CACBuX0SbF_eMT4XsDZsVVZSYF6fNgtX2fJFsahaThELoyGA9Jw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: qemu-devel@nongnu.org,
-    qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Thu, 09 May 2024 22:25:57 +0200 (CEST)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
+Content-Type: multipart/mixed;
+ boundary="3866299591-550298523-1715287059=:42272"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -63,69 +75,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove mmu_ctx_t definition from internal.h as this type is only used
-within mmu_common.c.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
----
- target/ppc/internal.h   | 12 ------------
- target/ppc/mmu_common.c | 11 +++++++++++
- 2 files changed, 11 insertions(+), 12 deletions(-)
+--3866299591-550298523-1715287059=:42272
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-diff --git a/target/ppc/internal.h b/target/ppc/internal.h
-index 5b28e8f3b0..46176c4711 100644
---- a/target/ppc/internal.h
-+++ b/target/ppc/internal.h
-@@ -292,8 +292,6 @@ static inline int ppc_hash32_pp_prot(int key, int pp, int nx)
-     return nx ? prot : prot | PAGE_EXEC;
- }
- 
--typedef struct mmu_ctx_t mmu_ctx_t;
--
- bool ppc_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
-                       hwaddr *raddrp, int *psizep, int *protp,
-                       int mmu_idx, bool guest_visible);
-@@ -301,16 +299,6 @@ bool ppc_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
- /* Software driven TLB helpers */
- int ppc6xx_tlb_getnum(CPUPPCState *env, target_ulong eaddr,
-                                     int way, int is_code);
--/* Context used internally during MMU translations */
--struct mmu_ctx_t {
--    hwaddr raddr;      /* Real address              */
--    hwaddr eaddr;      /* Effective address         */
--    int prot;                      /* Protection bits           */
--    hwaddr hash[2];    /* Pagetable hash values     */
--    target_ulong ptem;             /* Virtual segment ID | API  */
--    int key;                       /* Access key                */
--    int nx;                        /* Non-execute area          */
--};
- 
- #endif /* !CONFIG_USER_ONLY */
- 
-diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index d7e4baa9cf..1ff2afdea7 100644
---- a/target/ppc/mmu_common.c
-+++ b/target/ppc/mmu_common.c
-@@ -36,6 +36,17 @@
- 
- /* #define DUMP_PAGE_TABLES */
- 
-+/* Context used internally during MMU translations */
-+typedef struct {
-+    hwaddr raddr;      /* Real address             */
-+    hwaddr eaddr;      /* Effective address        */
-+    int prot;          /* Protection bits          */
-+    hwaddr hash[2];    /* Pagetable hash values    */
-+    target_ulong ptem; /* Virtual segment ID | API */
-+    int key;           /* Access key               */
-+    int nx;            /* Non-execute area         */
-+} mmu_ctx_t;
-+
- void ppc_store_sdr1(CPUPPCState *env, target_ulong value)
- {
-     PowerPCCPU *cpu = env_archcpu(env);
--- 
-2.30.9
+On Thu, 9 May 2024, Cord Amfmgm wrote:
+> On Thu, May 9, 2024 at 12:48 PM Peter Maydell <peter.maydell@linaro.org>
+> wrote:
+>
+>> On Wed, 8 May 2024 at 16:29, Cord Amfmgm <dmamfmgm@gmail.com> wrote:
+>>> On Wed, May 8, 2024 at 3:45 AM Thomas Huth <thuth@redhat.com> wrote:
+>>>>
+>>>> Your Signed-off-by line does not match the From: line ... could you
+>> please
+>>>> fix this? (see
+>>>>
+>> https://www.qemu.org/docs/master/devel/submitting-a-patch.html#patch-emails-must-include-a-signed-off-by-line
+>>>> , too)
+>>>
+>>>
+>>> I'll submit the new patch request with my pseudonym in the From: and
+>> Signed-off-by: lines, per your request. Doesn't matter to me. However, this
+>> arises simply because I don't give gmail my real name -
+>> https://en.wikipedia.org/wiki/Nymwars
+>>
+>> I'm confused now. Of the two names you've used in this
+>> patch (Cord Amfmgm and David Hubbard), are they both
+>> pseudonyms, or is one a pseudonym and one your real name?
+>>
+>>
+> Hi Peter,
+>
+> I am attempting to submit a small patch. For context, I'm getting broader
+> attention now because apparently OHCI is one of the less used components of
+> qemu and maybe the review process was taking a while. That's relevant
+> because I wasn't able to get prompt feedback and am now choosing what
+> appears to be the most expeditious approach -- all I want is to get this
+> patch done and be out of your hair. If Thomas Huth wants me to use a
+> consistent name, have I not complied? Are you asking out of curiosity or is
+> there a valid reason why I should answer your question in order to get the
+> patch submitted? Would you like to have a friendly chat over virtual coffee
+> sometime (but off-list)?
 
+See here:
+https://www.qemu.org/docs/master/devel/submitting-a-patch.html#patch-emails-must-include-a-signed-off-by-line
+and also the document linked from there:
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/Documentation/SubmittingPatches?id=f6f94e2ab1b33f0082ac22d71f66385a60d8157f#n297
+
+As for getting the patch reviewed, it may be difficult as the USB 
+maintainer is practically absent and has no time for QEMU for a while and 
+as OHCI as you said is not odten used there aren't many people who could 
+review it. Getting at least the formal stuff out of the way may help 
+though to get somebody to try to review the patch.
+
+Regards,
+BALATON Zoltan
+--3866299591-550298523-1715287059=:42272--
 
