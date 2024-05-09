@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 564A1C41513
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 06:02:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03BC4C25B75
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 06:14:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4wqr-0007uX-Vm; Thu, 09 May 2024 02:01:58 -0400
+	id 1s4x2D-0002qK-Cb; Thu, 09 May 2024 02:13:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4wqq-0007uB-3v; Thu, 09 May 2024 02:01:56 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1s4x28-0002oD-3o; Thu, 09 May 2024 02:13:36 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4wqo-0002Ww-FV; Thu, 09 May 2024 02:01:55 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-6f489e64eb3so468419b3a.1; 
- Wed, 08 May 2024 23:01:53 -0700 (PDT)
+ id 1s4x25-00087Y-Cw; Thu, 09 May 2024 02:13:35 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-6f490b5c23bso483422b3a.3; 
+ Wed, 08 May 2024 23:13:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715234512; x=1715839312; darn=nongnu.org;
- h=in-reply-to:references:subject:cc:to:from:message-id:date
+ d=gmail.com; s=20230601; t=1715235210; x=1715840010; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nwnbxJwCm18pysvEpcmyCAsUosBoDkJ2x+/rUJUGr2s=;
- b=iJejlpmtLhh7jb/7mVgmjBgvFUE1CBCwZXBwXKa5KurKBLQSYCCNMRPmFSdrDAA2Tg
- Rtr3+8FcAK2MIyBQfhlUDctN8rsXr5tO8xk6Di8s8qrm9AD2yKvUSnU5BKlbYxPiD5Sd
- UIQoVGT+96WHZR8MUjb0B8c8b6KowIr/2AQnJMVD6GgMHAI7QHwgf9NrDz363ssNtLlF
- s0n9xPUDsFFcvfWufmhcsHkxVl73PTVl/2PaBcgnNinMR5TkfyzveSCQMqysPhNi2TID
- sfzBDupRP2yqW7QCaODfs8zt/ACeXaxm/9a8VaCk6GppjlOz2kzPiabiJBuyihsYdNKL
- SMCg==
+ bh=L6lHuETSaY4LNk4ufNyzYwS/HrxbDbWQnhPMSTE2ujY=;
+ b=IbO1d7XorYgZ7E4HA4/mn6yOi2t121YxMblkiCkR39FjiwN2IbrZZwsjz44Y2r0rSr
+ MyAlTeo3JIX2NjdNKis+atynzGxdQzUoJ3Zbl/qnUNpgoG7ImIzbjzUk1WZtURQEoyDd
+ tGDnzu5tpCscK4pChNydWLvYopxQt0CzD8bL31rQAiSGEO0lkGbyIRkD4egsr6XQqslJ
+ FWdfperC/04rnQ9c/NbC8Nzwuk/Tm9SjExWCoI8gcShAqy9yYclQSunda9Qfr2E1w+li
+ lWI5/Cs0YBm2Nj0o8J/DwwWhKzh+xUAsv4NKdlKKk2AE0xK3fC9/ynjp29LMIA3dGfyu
+ +F1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715234512; x=1715839312;
- h=in-reply-to:references:subject:cc:to:from:message-id:date
+ d=1e100.net; s=20230601; t=1715235210; x=1715840010;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=nwnbxJwCm18pysvEpcmyCAsUosBoDkJ2x+/rUJUGr2s=;
- b=SHJOmRiUCHHPRorLCQHVJIO3baqSn36Os86j6L/fBRtd9DguM+bh5ipLAoGc1Tl7Jw
- t+8eW+GPBeakt+0Mpomg8XRtzQkinXp5j+pCPA3YtdHDqUvHTrhCmgS3FIgDX1TmuDqN
- 1P5JzxTENjXL93/dtvemtcpXzQ8kVq5+R3oIMyOFkkcT/TrQxE3ZVGafra9vEaYykFbZ
- 7bsY5IhhUHwg/M8/IZ3g2Y8H4GFatpkI/Kmo8v6PfL6kp8bSwNZVnn9Ll/qbdHsOnD3C
- qT/UMUgC9cVE/x/VlzBkfUJtBxYGCDtyurUXGwiNXdFAFW+mxH4XVQC76ipd3JUWIdsT
- 0GkA==
+ bh=L6lHuETSaY4LNk4ufNyzYwS/HrxbDbWQnhPMSTE2ujY=;
+ b=knbfcwzlKJq9JI5tWuzbImYPHGdY4HzkABHVzMUBh+7JZoiLR6oUxE+0j2WyQNPlh6
+ je4b++BJxb5DFG/LG3wA7nCLNXP2iDBIhbKAnNT9FwJLf4z5o7v/r/vF0U1EKTcb51QO
+ Ygfj3IYtFjr3JFJBOVo5dUEipXHaHe5A/X82B/m8a35hVAK6JkwtjY50FmsWcQEvj5I1
+ VCQDmpWMIJmvYMbKT84UCGOxpAWIEITCdsV6ATrDX1EyfgqEIIePxiMXqG+8guWsc6mt
+ V/NU6h31J8Fo/dO41S9kV1pWfqY1OEbBnjLce1MkTjKprX018g9vUSuFv8y1cSOAxfjB
+ 8pMw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW4vrRXdFEcEEBciry3uu49KAbU2LVTXlwCWMNiTQ92aE/eiY+Uj13+Fp0bN7eoLzmAm59UGko9bgLF2QiqsozZ1SjT55+9Lu1gYiTxFjpkhnpJg6s+jzgq2CY=
-X-Gm-Message-State: AOJu0YxlHH/rgDaQ79QjzVsLwaLSkuSDqi06TrADdm/H4lNhAW7CvRCF
- sKDtPJizTImFGEldgzwtI3nMtk8T8hKDbMddnkhWu61FMiZBRniALUIbOA==
-X-Google-Smtp-Source: AGHT+IG3zqtuLXkigJrHbbvHboOYvJK9hJS3noTwhyuyiAQXB7ia6E3k6z7zvrAebLa3G/ooBwi+KA==
-X-Received: by 2002:a05:6a21:7882:b0:1aa:4289:5921 with SMTP id
- adf61e73a8af0-1afc8db8223mr5615795637.50.1715234512386; 
- Wed, 08 May 2024 23:01:52 -0700 (PDT)
+ AJvYcCU/WOoZQROVDMsM4pwGvUZFfy43YvNFl5+UpUDtGuq2ncJaBBbdtMjFsrU7uqbl2a3ZGnwtawbZsEC/90f6P2Jp8DjuAv96mxWXYjjBi2wTvMNHQ2fHTXZPjHQ=
+X-Gm-Message-State: AOJu0Yy+TI5LfnObY98bnF+koCXay63jOEIcVFhrW8MUZ3eC6+njQjgC
+ YYGsCuEfSr3y/jtH87kUcQPqGfViSt2mey3asiGvuveHkXHGl6Xu6+jGGg==
+X-Google-Smtp-Source: AGHT+IFdnR257JHniHA6HtiwwekhnolSxHZW3/BTAhpycdpFUBovIyQundNUE12m7Y9w3HM1HjEmEQ==
+X-Received: by 2002:a05:6a00:26d2:b0:6ee:1508:edc8 with SMTP id
+ d2e1a72fcca58-6f49c2943camr4415764b3a.23.1715235210022; 
+ Wed, 08 May 2024 23:13:30 -0700 (PDT)
 Received: from localhost (220-245-239-57.tpgi.com.au. [220.245.239.57])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-6340a447391sm529183a12.3.2024.05.08.23.01.50
+ d2e1a72fcca58-6f4d2ae0b8bsm560574b3a.131.2024.05.08.23.13.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 May 2024 23:01:52 -0700 (PDT)
+ Wed, 08 May 2024 23:13:29 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Thu, 09 May 2024 16:01:47 +1000
-Message-Id: <D14VVYX2BVWJ.R043K7RLC59V@gmail.com>
+Date: Thu, 09 May 2024 16:13:24 +1000
+Message-Id: <D14W4V2S0AHQ.K5CWOH967O5E@gmail.com>
+Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
+Subject: Re: [PATCH v4 19/33] target/ppc/mmu_common.c: Don't use mmu_ctx_t
+ for mmu40x_get_physical_address()
 From: "Nicholas Piggin" <npiggin@gmail.com>
 To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
  <qemu-ppc@nongnu.org>
-Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
-Subject: Re: [PATCH v4 11/33] target/ppc/mmu_common.c: Move some debug logging
 X-Mailer: aerc 0.17.0
 References: <cover.1715209155.git.balaton@eik.bme.hu>
- <5a82816a6aa18887e48f9d0b788f99f55277a980.1715209155.git.balaton@eik.bme.hu>
-In-Reply-To: <5a82816a6aa18887e48f9d0b788f99f55277a980.1715209155.git.balaton@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42a.google.com
+ <c70c4716eb59944e8eb810c2b1d57dc715ac551e.1715209155.git.balaton@eik.bme.hu>
+In-Reply-To: <c70c4716eb59944e8eb810c2b1d57dc715ac551e.1715209155.git.balaton@eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,115 +98,119 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Thu May 9, 2024 at 9:36 AM AEST, BALATON Zoltan wrote:
-> Move the debug logging within ppc6xx_tlb_check() from after its only
-> call to simplify the caller.
+> mmu40x_get_physical_address() only uses the raddr and prot fields from
+> mmu_ctx_t. Pass these directly instead of using a ctx struct.
 >
+
 > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> ---
+>  target/ppc/mmu_common.c | 38 ++++++++++++++++----------------------
+>  1 file changed, 16 insertions(+), 22 deletions(-)
+>
+> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+> index 6570b280ca..c5ef02f05e 100644
+> --- a/target/ppc/mmu_common.c
+> +++ b/target/ppc/mmu_common.c
+> @@ -519,20 +519,19 @@ int ppcemb_tlb_search(CPUPPCState *env, target_ulon=
+g address, uint32_t pid)
+>      return -1;
+>  }
+> =20
+> -static int mmu40x_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
+> -                                       target_ulong address,
+> +static int mmu40x_get_physical_address(CPUPPCState *env, hwaddr *raddr,
+> +                                       int *prot, target_ulong address,
+>                                         MMUAccessType access_type)
+>  {
+>      ppcemb_tlb_t *tlb;
+> -    hwaddr raddr;
+>      int i, ret, zsel, zpr, pr;
+> =20
+>      ret =3D -1;
+> -    raddr =3D (hwaddr)-1ULL;
+> +    *prot =3D 0;
+
+This is still doing some sneaky used-uninit things which I would
+rather not without a comment, but okay we can try untangle things
+more after this series.
 
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
-> ---
->  target/ppc/mmu_common.c | 54 ++++++++++++++++++-----------------------
->  1 file changed, 24 insertions(+), 30 deletions(-)
->
-> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-> index ba60b4902b..89bfd9aa45 100644
-> --- a/target/ppc/mmu_common.c
-> +++ b/target/ppc/mmu_common.c
-> @@ -225,17 +225,14 @@ static int ppc6xx_tlb_check(CPUPPCState *env, mmu_c=
-tx_t *ctx,
->                        access_type =3D=3D MMU_INST_FETCH ? 'I' : 'D');
->          switch (ppc6xx_tlb_pte_check(ctx, tlb->pte0, tlb->pte1,
->                                       0, access_type)) {
-> -        case -3:
-> -            /* TLB inconsistency */
-> -            return -1;
->          case -2:
->              /* Access violation */
->              ret =3D -2;
->              best =3D nr;
->              break;
-> -        case -1:
-> +        case -1: /* No match */
-> +        case -3: /* TLB inconsistency */
->          default:
-> -            /* No match */
->              break;
->          case 0:
->              /* access granted */
-> @@ -251,14 +248,34 @@ static int ppc6xx_tlb_check(CPUPPCState *env, mmu_c=
-tx_t *ctx,
+>      pr =3D FIELD_EX64(env->msr, MSR, PR);
+>      for (i =3D 0; i < env->nb_tlb; i++) {
+>          tlb =3D &env->tlb.tlbe[i];
+> -        if (!ppcemb_tlb_check(env, tlb, &raddr, address,
+> +        if (!ppcemb_tlb_check(env, tlb, raddr, address,
+>                                env->spr[SPR_40x_PID], i)) {
+>              continue;
 >          }
->      }
->      if (best !=3D -1) {
-> -    done:
-> +done:
->          qemu_log_mask(CPU_LOG_MMU, "found TLB at addr " HWADDR_FMT_plx
->                        " prot=3D%01x ret=3D%d\n",
->                        ctx->raddr & TARGET_PAGE_MASK, ctx->prot, ret);
->          /* Update page flags */
->          pte_update_flags(ctx, &env->tlb.tlb6[best].pte1, ret, access_typ=
-e);
->      }
-> -
-> +#if defined(DUMP_PAGE_TABLES)
-> +    if (qemu_loglevel_mask(CPU_LOG_MMU)) {
-> +        CPUState *cs =3D env_cpu(env);
-> +        hwaddr base =3D ppc_hash32_hpt_base(env_archcpu(env));
-> +        hwaddr len =3D ppc_hash32_hpt_mask(env_archcpu(env)) + 0x80;
-> +        uint32_t a0, a1, a2, a3;
+> @@ -550,40 +549,34 @@ static int mmu40x_get_physical_address(CPUPPCState =
+*env, mmu_ctx_t *ctx,
+>              /* fall through */
+>          case 0x3:
+>              /* All accesses granted */
+> -            ctx->prot =3D PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+> +            *prot =3D PAGE_RWX;
+>              ret =3D 0;
+>              break;
 > +
-> +        qemu_log("Page table: " HWADDR_FMT_plx " len " HWADDR_FMT_plx "\=
-n",
-> +                 base, len);
-> +        for (hwaddr curaddr =3D base; curaddr < base + len; curaddr +=3D=
- 16) {
-> +            a0 =3D ldl_phys(cs->as, curaddr);
-> +            a1 =3D ldl_phys(cs->as, curaddr + 4);
-> +            a2 =3D ldl_phys(cs->as, curaddr + 8);
-> +            a3 =3D ldl_phys(cs->as, curaddr + 12);
-> +            if (a0 !=3D 0 || a1 !=3D 0 || a2 !=3D 0 || a3 !=3D 0) {
-> +                qemu_log(HWADDR_FMT_plx ": %08x %08x %08x %08x\n",
-> +                         curaddr, a0, a1, a2, a3);
-> +            }
-> +        }
-> +    }
-> +#endif
+>          case 0x0:
+>              if (pr !=3D 0) {
+>                  /* Raise Zone protection fault.  */
+>                  env->spr[SPR_40x_ESR] =3D 1 << 22;
+> -                ctx->prot =3D 0;
+> +                *prot =3D 0;
+>                  ret =3D -2;
+>                  break;
+>              }
+>              /* fall through */
+>          case 0x1:
+> -        check_perms:
+> +check_perms:
+>              /* Check from TLB entry */
+> -            ctx->prot =3D tlb->prot;
+> -            ret =3D check_prot(ctx->prot, access_type);
+> +            *prot =3D tlb->prot;
+> +            ret =3D check_prot(*prot, access_type);
+>              if (ret =3D=3D -2) {
+>                  env->spr[SPR_40x_ESR] =3D 0;
+>              }
+>              break;
+>          }
+> -        if (ret >=3D 0) {
+> -            ctx->raddr =3D raddr;
+> -            qemu_log_mask(CPU_LOG_MMU, "%s: access granted " TARGET_FMT_=
+lx
+> -                          " =3D> " HWADDR_FMT_plx
+> -                          " %d %d\n", __func__, address, ctx->raddr, ctx=
+->prot,
+> -                          ret);
+> -            return 0;
+> -        }
+>      }
+> -    qemu_log_mask(CPU_LOG_MMU, "%s: access refused " TARGET_FMT_lx
+> -                  " =3D> " HWADDR_FMT_plx " %d %d\n",
+> -                  __func__, address, raddr, ctx->prot, ret);
+> +    qemu_log_mask(CPU_LOG_MMU, "%s: access %s " TARGET_FMT_lx " =3D> "
+> +                  HWADDR_FMT_plx " %d %d\n",  __func__,
+> +                  ret < 0 ? "refused" : "granted", address,
+> +                  ret < 0 ? 0 : *raddr, *prot, ret);
+> =20
 >      return ret;
 >  }
-> =20
-> @@ -420,29 +437,6 @@ static int mmu6xx_get_physical_address(CPUPPCState *=
-env, mmu_ctx_t *ctx,
->          ctx->raddr =3D (hwaddr)-1ULL;
->          /* Software TLB search */
->          ret =3D ppc6xx_tlb_check(env, ctx, eaddr, access_type);
-> -#if defined(DUMP_PAGE_TABLES)
-> -        if (qemu_loglevel_mask(CPU_LOG_MMU)) {
-> -            CPUState *cs =3D env_cpu(env);
-> -            hwaddr curaddr;
-> -            uint32_t a0, a1, a2, a3;
-> -
-> -            qemu_log("Page table: " HWADDR_FMT_plx " len " HWADDR_FMT_pl=
-x "\n",
-> -                     ppc_hash32_hpt_base(cpu), ppc_hash32_hpt_mask(cpu) =
-+ 0x80);
-> -            for (curaddr =3D ppc_hash32_hpt_base(cpu);
-> -                 curaddr < (ppc_hash32_hpt_base(cpu)
-> -                            + ppc_hash32_hpt_mask(cpu) + 0x80);
-> -                 curaddr +=3D 16) {
-> -                a0 =3D ldl_phys(cs->as, curaddr);
-> -                a1 =3D ldl_phys(cs->as, curaddr + 4);
-> -                a2 =3D ldl_phys(cs->as, curaddr + 8);
-> -                a3 =3D ldl_phys(cs->as, curaddr + 12);
-> -                if (a0 !=3D 0 || a1 !=3D 0 || a2 !=3D 0 || a3 !=3D 0) {
-> -                    qemu_log(HWADDR_FMT_plx ": %08x %08x %08x %08x\n",
-> -                             curaddr, a0, a1, a2, a3);
-> -                }
-> -            }
-> -        }
-> -#endif
->      } else {
->          qemu_log_mask(CPU_LOG_MMU, "direct store...\n");
->          /* Direct-store segment : absolutely *BUGGY* for now */
+> @@ -1171,7 +1164,8 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu=
+_ctx_t *ctx,
+>      case POWERPC_MMU_SOFT_6xx:
+>          return mmu6xx_get_physical_address(env, ctx, eaddr, access_type,=
+ type);
+>      case POWERPC_MMU_SOFT_4xx:
+> -        return mmu40x_get_physical_address(env, ctx, eaddr, access_type)=
+;
+> +        return mmu40x_get_physical_address(env, &ctx->raddr, &ctx->prot,=
+ eaddr,
+> +                                           access_type);
+>      case POWERPC_MMU_REAL:
+>          cpu_abort(env_cpu(env),
+>                    "PowerPC in real mode do not do any translation\n");
 
 
