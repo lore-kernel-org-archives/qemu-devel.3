@@ -4,76 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1069C25B4F
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 01:38:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CA49C04FFE
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 01:45:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4sin-0001CN-MI; Wed, 08 May 2024 21:37:21 -0400
+	id 1s4spf-0002JB-Kg; Wed, 08 May 2024 21:44:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1s4sik-0001C9-1k
- for qemu-devel@nongnu.org; Wed, 08 May 2024 21:37:18 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1s4sih-0003ck-7q
- for qemu-devel@nongnu.org; Wed, 08 May 2024 21:37:17 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-61f2dc31be4so1088401a12.1
- for <qemu-devel@nongnu.org>; Wed, 08 May 2024 18:35:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1715218509; x=1715823309;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=r60Klc+glqB6qsb95g/t7LoeJ5fA/8nA5CnSdTvVGNo=;
- b=0r3ivmEU07jQ6NxQ64o9zipB1qKkLTLx4oAm3eOvlHL61zv8RenH6cNY3+3ijUIacD
- 9Y2y4EWtwWIH9Ok84nertsUA8sEaqwkMRXSpAzIuzdY1XIs7kkkRtQcAlQpDtfceY2cZ
- 0KQTigEPBsPreF0i44hocH8PZOqoJ6pD5D4YdBtAZHhihr56g+003KbzL0LuGOmZ8pLk
- IOZQ5fLB1wOFrlwwhkSDEOTdQOlV5K9afQVcJ0XvYQxC8dEIN3wGLTB9Z7Zj2Hl+33NZ
- A73vClLps+G5aVhT46VrMazR4zxBoYzflgxStMiOqR0D4SggzkxmRIXjzoqDlUBuCzgg
- 4d1w==
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1s4spe-0002IV-2K
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 21:44:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1s4spY-00075p-Lw
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 21:44:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715219058;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=L0ch3dnprGpG9REkrjtdgTKwOBcY49IcOqMEAXZVZgo=;
+ b=HDjVymM94muThEJyPGmMusJt9hkuMn2bG0h/B5o4REfNisLYGZ+mhUGDbnrODJlLGlJ8CG
+ +9vxqOJbvMsiiJV72Ck5sb7XVa2w706nu88u/NiZAm4zSGHE4r4Kl7nHCtKjoKEMHbchIY
+ jJS6MVVyAF18SaZUEYT4AyGfZtyC/7k=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-180-wfCDajwhPd2E7AIQeqDDlA-1; Wed, 08 May 2024 21:44:15 -0400
+X-MC-Unique: wfCDajwhPd2E7AIQeqDDlA-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-34eb54c888cso243662f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 18:44:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715218509; x=1715823309;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=r60Klc+glqB6qsb95g/t7LoeJ5fA/8nA5CnSdTvVGNo=;
- b=U4FzE/f4ZEepQcIVbFfw2SLtVm1gmEGi1IRqSRjljHRFtefuaRdYcXK8QncnzmZw0f
- HHqZwvG7fyASwxMCbftR5unYzzFA12DOv0f1uQKUlHdzIM8dZYh9DfnSUZECSOcgCU0m
- CT5yBKsDVDRY/L3FM59X14hYUR8kxi9BPWC2++fT45+E+uzg6WL5KGiyljQ4GzSoqjE+
- I931dwWjE8R9y1a8T9CZEeDFwyi4lGOblpeqnppDGltRMpAuCDF46bFTpBCLD4VFDicA
- Ud5NidqEYrH3apRfzDvh34qWDbsE9wDx485+mgmsDXUToA4Nd7C7AcaZpklvD2jDfaff
- 2wTw==
-X-Gm-Message-State: AOJu0YyO7e6s42ySXwtr05TSdRRBF2ROW3fccml7GB4cxw/lnZgexOA+
- B34extcK5wPfyYQXQtepdeygKd/fG9pOHgul81ToY3h5djonVtPCjlX6n04+dlot7zso0VRp05A
- 9DSSoW5gnVgZBdVtFlso7GcD5jKkXPQNGr4mLuygx2EczB30YzilGBKz9
-X-Google-Smtp-Source: AGHT+IEIE5Q5Lom9um8mtT6CjhpCzVSTGUjyuzPvDTYA9uE26VIEuISUYq5bib6uEi4U0JFs2KenuiB5+Kil4sgaKTM=
-X-Received: by 2002:a17:90a:6304:b0:2aa:c389:c9f0 with SMTP id
- 98e67ed59e1d1-2b65fb18cadmr1877666a91.12.1715218508977; Wed, 08 May 2024
- 18:35:08 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1715219054; x=1715823854;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=L0ch3dnprGpG9REkrjtdgTKwOBcY49IcOqMEAXZVZgo=;
+ b=f0CmI4aDNUqqSOohYsFO96OEgzAQXgyhoawWEXFu9TZTLPYMB+y3UIeXt1zSjcb77L
+ hgaVVE94IbK8157van/xqQmYB+sBpeuV9omwfcQ9DvDIk3fXWb0AHeFAYF+UkGmPiYsW
+ 7vIMLBER9WrUmMm37r1Sj6ifRboNMeTcM2T6VmzaUr93G4xfHpn7aVndXZrvlETQXua6
+ q8hyEzc05ocMggoSJ8IFDRV5U1737fuSozV29kBo2yniR5OQcAWuHIqid+pGBhwiB7/x
+ gGn4XzAEELa2XJ3BaWC0Q2GfUEuI8Fzz2F1+BCttciJumOutZnVmClcTMA4dwbijRLsM
+ kEYg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUU+onBptSMthpCctXPSvuq/TGGGT0m7uZJoEN5lPy3CrCjASGW/7LQu17FHnd+inktdy3z8+xcsPiJofRMFaIfHTm4KoE=
+X-Gm-Message-State: AOJu0YwYx7/dG9PuiCaTZIRJm8ii2bnV2vY2iTtBf63XcTc4VGm1rwXR
+ C5E5nDAMWt5HdcJLRPIEa5D9FyqxBG77rsZbO7scGQdqrfKO3tf1dUdt55QriU/fiBCHIs8cflB
+ kyVnmzvykvT84VJEgcQWY85cQH70AwUmUkNV4qnQWYvEAZjvzRuQoE62co7+h4L3xWQ2s4cKGpc
+ fK9GGXGzO3mLLJO7AJWXYSdsb7r2Y=
+X-Received: by 2002:adf:e84e:0:b0:346:bc1b:4e7c with SMTP id
+ ffacd0b85a97d-34fca24486fmr3842122f8f.35.1715219054148; 
+ Wed, 08 May 2024 18:44:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH/sxY1lv4huJU8CvRNafeMhszS2BQm3ZqIwhkzMhaVrhMM9JcXJQA4vB06lBpycV56CUfj5H739WUBK1xD6uw=
+X-Received: by 2002:adf:e84e:0:b0:346:bc1b:4e7c with SMTP id
+ ffacd0b85a97d-34fca24486fmr3842111f8f.35.1715219053819; Wed, 08 May 2024
+ 18:44:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1712577715.git.yong.huang@smartx.com>
- <CAK9dgmaHJF-JWSRww1raYFYxCZ4b19ydH3nWQzv1-VqzqiJuDA@mail.gmail.com>
-In-Reply-To: <CAK9dgmaHJF-JWSRww1raYFYxCZ4b19ydH3nWQzv1-VqzqiJuDA@mail.gmail.com>
-From: Yong Huang <yong.huang@smartx.com>
-Date: Thu, 9 May 2024 09:34:52 +0800
-Message-ID: <CAK9dgmYfqNjRGEK40t32ZK5mV-+kCGidR6k33sbOoDxW41NUaw@mail.gmail.com>
-Subject: Re: [PATCH RESEND 0/2] Fix crash of VMs configured with the CDROM
- device
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>
-Content-Type: multipart/alternative; boundary="000000000000f0b2420617fb6dce"
-Received-SPF: none client-ip=2607:f8b0:4864:20::52e;
- envelope-from=yong.huang@smartx.com; helo=mail-pg1-x52e.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+References: <2321ade5f601367efe7380c04e3f61379c59b48f.1713173550.git.mst@redhat.com>
+ <f1d4bddc-f2e9-4cb7-8866-5f010b21b756@tls.msk.ru>
+In-Reply-To: <f1d4bddc-f2e9-4cb7-8866-5f010b21b756@tls.msk.ru>
+From: Cindy Lu <lulu@redhat.com>
+Date: Thu, 9 May 2024 09:43:35 +0800
+Message-ID: <CACLfguUF7+Kyafo-pkRpM94m-r7UPqet6xNuP6NDVXxAAD3ccQ@mail.gmail.com>
+Subject: Re: [PATCH v8] virtio-pci: fix use of a released vector
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
+ qemu-stable@nongnu.org, 
+ Lei Yang <leiyang@redhat.com>, Jason Wang <jasowang@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=lulu@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.582,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,115 +100,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f0b2420617fb6dce
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Ping2
-
-Make sure that this patchset is not overlooked.
-
-Yong
-
-On Tue, Apr 23, 2024 at 9:45=E2=80=AFAM Yong Huang <yong.huang@smartx.com> =
-wrote:
-
-> Ping.
-> I would appreciate comments on this series. Thanks,
+On Thu, May 9, 2024 at 4:18=E2=80=AFAM Michael Tokarev <mjt@tls.msk.ru> wro=
+te:
 >
-> Yong
+> 15.04.2024 12:34, Michael S. Tsirkin wrote:
+> > From: Cindy Lu <lulu@redhat.com>
+> >
+> > During the booting process of the non-standard image, the behavior of t=
+he
+> > called function in qemu is as follows:
+> >
+> > 1. vhost_net_stop() was triggered by guest image. This will call the fu=
+nction
+> > virtio_pci_set_guest_notifiers() with assgin=3D false,
+> > virtio_pci_set_guest_notifiers(=EF=BC=89 will release the irqfd for vec=
+tor 0
+> >
+> > 2. virtio_reset() was triggered, this will set configure vector to VIRT=
+IO_NO_VECTOR
+> >
+> > 3.vhost_net_start() was called (at this time, the configure vector is
+> > still VIRTIO_NO_VECTOR) and then call virtio_pci_set_guest_notifiers() =
+with
+> > assgin=3Dtrue, so the irqfd for vector 0 is still not "init" during thi=
+s process
+> >
+> > 4. The system continues to boot and sets the vector back to 0. After th=
+at
+> > msix_fire_vector_notifier() was triggered to unmask the vector 0 and  m=
+eet the crash
+> >
+> > To fix the issue, we need to support changing the vector after VIRTIO_C=
+ONFIG_S_DRIVER_OK is set.
 >
-> On Mon, Apr 8, 2024 at 8:08=E2=80=AFPM Hyman Huang <yong.huang@smartx.com=
-> wrote:
+> This change breaks both 9.0 and stable-8.2.3:
 >
->> This patchset fixes the crash of VMs configured with the CDROM device
->> on the destination during live migration. See the commit message for
->> details.
->>
->> The previous patchset does not show up at https://patchew.org/QEMU.
->> Just resend it to ensure the email gets to the inbox.
->>
->> Please review.
->>
->> Yong
->>
->> Hyman Huang (2):
->>   scsi-disk: Introduce the migrate_emulate_scsi_request field
->>   scsi-disk: Fix crash of VMs configured with the CDROM device
->>
->>  hw/scsi/scsi-disk.c | 35 ++++++++++++++++++++++++++++++++++-
->>  1 file changed, 34 insertions(+), 1 deletion(-)
->>
->> --
->> 2.39.3
->>
->>
+> https://gitlab.com/qemu-project/qemu/-/issues/2321
+> https://gitlab.com/qemu-project/qemu/-/issues/2334
+>
+> So something's not right here.
+>
+> Thanks,
+>
+I have checked the stack, seems there is a  crash while set the vector
+to NO_VECTOER?
+
+#0  kvm_virtio_pci_vq_vector_release (proxy=3D0x55bd979fd130,
+vector=3D<optimized out>) at ../hw/virtio/virtio-pci.c:834
+#1  kvm_virtio_pci_vector_release_one
+(proxy=3Dproxy@entry=3D0x55bd979fd130, queue_no=3Dqueue_no@entry=3D0) at
+../hw/virtio/virtio-pci.c:965
+#2  0x000055bd9380c430 in virtio_pci_set_vector (vdev=3D0x55bd97a05500,
+proxy=3D0x55bd979fd130, queue_no=3D0, old_vector=3D1, new_vector=3D65535)
+    at ../hw/virtio/virtio-pci.c:1445
+#3  0x000055bd939c5490 in memory_region_write_accessor
+(mr=3D0x55bd979fdc70, addr=3D26, value=3D<optimized out>, size=3D2,
+shift=3D<optimized out>,
+    mask=3D<optimized out>, attrs=3D...) at ../system/memory.c:497
+
+I will try to reproduce and work in it
+
+thanks
+Cindy
+
+
+> /mjt
+>
+> ...
+> > MST: coding style and typo fixups
+> >
+> > Fixes: f9a09ca3ea ("vhost: add support for configure interrupt")
+> > Cc: qemu-stable@nongnu.org
+> > Signed-off-by: Cindy Lu <lulu@redhat.com>
+> > Message-Id: <20240412062750.475180-1-lulu@redhat.com>
+> > Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+> > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> > ---
+> >   hw/virtio/virtio-pci.c | 37 +++++++++++++++++++++++++++++++++++--
+> >   1 file changed, 35 insertions(+), 2 deletions(-)
+> >
+> > v7->v8:
+> > more cleanups, suggested by Philip
+> >
+> > still untested, i just got involved to help address coding style
+> > issues
+> >
+> > diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> > index cb6940fc0e..cb159fd078 100644
+> > --- a/hw/virtio/virtio-pci.c
+> > +++ b/hw/virtio/virtio-pci.c
+> > @@ -1424,6 +1424,38 @@ static int virtio_pci_add_mem_cap(VirtIOPCIProxy=
+ *proxy,
+> >       return offset;
+> >   }
+> >
+> > +static void virtio_pci_set_vector(VirtIODevice *vdev,
+> > +                                  VirtIOPCIProxy *proxy,
+> > +                                  int queue_no, uint16_t old_vector,
+> > +                                  uint16_t new_vector)
+> > +{
+> > +    bool kvm_irqfd =3D (vdev->status & VIRTIO_CONFIG_S_DRIVER_OK) &&
+> > +        msix_enabled(&proxy->pci_dev) && kvm_msi_via_irqfd_enabled();
+> > +
+> > +    if (new_vector =3D=3D old_vector) {
+> > +        return;
+> > +    }
+> > +
+> > +    /*
+> > +     * If the device uses irqfd and the vector changes after DRIVER_OK=
+ is
+> > +     * set, we need to release the old vector and set up the new one.
+> > +     * Otherwise just need to set the new vector on the device.
+> > +     */
+> > +    if (kvm_irqfd && old_vector !=3D VIRTIO_NO_VECTOR) {
+> > +        kvm_virtio_pci_vector_release_one(proxy, queue_no);
+> > +    }
+> > +    /* Set the new vector on the device. */
+> > +    if (queue_no =3D=3D VIRTIO_CONFIG_IRQ_IDX) {
+> > +        vdev->config_vector =3D new_vector;
+> > +    } else {
+> > +        virtio_queue_set_vector(vdev, queue_no, new_vector);
+> > +    }
+> > +    /* If the new vector changed need to set it up. */
+> > +    if (kvm_irqfd && new_vector !=3D VIRTIO_NO_VECTOR) {
+> > +        kvm_virtio_pci_vector_use_one(proxy, queue_no);
+> > +    }
+> > +}
+> > +
+> >   int virtio_pci_add_shm_cap(VirtIOPCIProxy *proxy,
+> >                              uint8_t bar, uint64_t offset, uint64_t len=
+gth,
+> >                              uint8_t id)
+> > @@ -1570,7 +1602,8 @@ static void virtio_pci_common_write(void *opaque,=
+ hwaddr addr,
+> >           } else {
+> >               val =3D VIRTIO_NO_VECTOR;
+> >           }
+> > -        vdev->config_vector =3D val;
+> > +        virtio_pci_set_vector(vdev, proxy, VIRTIO_CONFIG_IRQ_IDX,
+> > +                              vdev->config_vector, val);
+> >           break;
+> >       case VIRTIO_PCI_COMMON_STATUS:
+> >           if (!(val & VIRTIO_CONFIG_S_DRIVER_OK)) {
+> > @@ -1610,7 +1643,7 @@ static void virtio_pci_common_write(void *opaque,=
+ hwaddr addr,
+> >           } else {
+> >               val =3D VIRTIO_NO_VECTOR;
+> >           }
+> > -        virtio_queue_set_vector(vdev, vdev->queue_sel, val);
+> > +        virtio_pci_set_vector(vdev, proxy, vdev->queue_sel, vector, va=
+l);
+> >           break;
+> >       case VIRTIO_PCI_COMMON_Q_ENABLE:
+> >           if (val =3D=3D 1) {
 >
 > --
-> Best regards
+> GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
+> New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D=
+98 ECDF 2C8E
+> Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0=
+A0 8044 65C5
+> Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
 >
 
-
---=20
-Best regards
-
---000000000000f0b2420617fb6dce
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
-t-family:&quot;comic sans ms&quot;,sans-serif">Ping2</div><div class=3D"gma=
-il_default" style=3D"font-family:&quot;comic sans ms&quot;,sans-serif"><br>=
-</div><div class=3D"gmail_default" style=3D"font-family:&quot;comic sans ms=
-&quot;,sans-serif">Make sure that this patchset is not overlooked.<br></div=
-><div class=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&quot=
-;,sans-serif"><br></div><div class=3D"gmail_default" style=3D"font-family:&=
-quot;comic sans ms&quot;,sans-serif">Yong</div></div><br><div class=3D"gmai=
-l_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Apr 23, 2024 at 9:45=
-=E2=80=AFAM Yong Huang &lt;<a href=3D"mailto:yong.huang@smartx.com">yong.hu=
-ang@smartx.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" st=
-yle=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:sol=
-id;border-left-color:rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><d=
-iv style=3D"font-family:&quot;comic sans ms&quot;,sans-serif">Ping.</div><d=
-iv style=3D"font-family:&quot;comic sans ms&quot;,sans-serif">I would appre=
-ciate comments on this series. Thanks,</div><div style=3D"font-family:&quot=
-;comic sans ms&quot;,sans-serif"><br></div><div style=3D"font-family:&quot;=
-comic sans ms&quot;,sans-serif">Yong</div></div><br><div class=3D"gmail_quo=
-te"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Apr 8, 2024 at 8:08=E2=80=
-=AFPM Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com" target=3D"_b=
-lank">yong.huang@smartx.com</a>&gt; wrote:<br></div><blockquote class=3D"gm=
-ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-l=
-eft-style:solid;border-left-color:rgb(204,204,204);padding-left:1ex">This p=
-atchset fixes the crash of VMs configured with the CDROM device<br>
-on the destination during live migration. See the commit message for<br>
-details.<br>
-<br>
-The previous patchset does not show up at <a href=3D"https://patchew.org/QE=
-MU" rel=3D"noreferrer" target=3D"_blank">https://patchew.org/QEMU</a>.<br>
-Just resend it to ensure the email gets to the inbox.<br>
-<br>
-Please review.<br>
-<br>
-Yong<br>
-<br>
-Hyman Huang (2):<br>
-=C2=A0 scsi-disk: Introduce the migrate_emulate_scsi_request field<br>
-=C2=A0 scsi-disk: Fix crash of VMs configured with the CDROM device<br>
-<br>
-=C2=A0hw/scsi/scsi-disk.c | 35 ++++++++++++++++++++++++++++++++++-<br>
-=C2=A01 file changed, 34 insertions(+), 1 deletion(-)<br>
-<br>
--- <br>
-2.39.3<br>
-<br>
-</blockquote></div><br clear=3D"all"><div><br></div><span class=3D"gmail_si=
-gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><d=
-iv dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best regards</font>=
-</div></div>
-</blockquote></div><br clear=3D"all"><div><br></div><span class=3D"gmail_si=
-gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><d=
-iv dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best regards</font>=
-</div></div></div>
-
---000000000000f0b2420617fb6dce--
 
