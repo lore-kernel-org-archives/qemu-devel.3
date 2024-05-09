@@ -4,79 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 154B6C10F1A
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 05:59:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5349DC10F1A
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 06:02:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4wo3-0006ra-PM; Thu, 09 May 2024 01:59:03 -0400
+	id 1s4wqR-0007nH-55; Thu, 09 May 2024 02:01:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4wo0-0006rE-5H; Thu, 09 May 2024 01:59:01 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1s4wqD-0007ll-N9; Thu, 09 May 2024 02:01:18 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4wnx-0001kH-1n; Thu, 09 May 2024 01:58:59 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-1ed96772f92so3993035ad.0; 
- Wed, 08 May 2024 22:58:55 -0700 (PDT)
+ id 1s4wqA-0002IJ-UM; Thu, 09 May 2024 02:01:16 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-5e152c757a5so325061a12.2; 
+ Wed, 08 May 2024 23:01:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715234334; x=1715839134; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1715234473; x=1715839273; darn=nongnu.org;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Msw3yMNt09dpy0EpHwPl7f/EyCepMzXGNFkvIh20Bdk=;
- b=NYEGJEaeHdoBOOr0JZun838ETZMvMM9bVbAAf0iOQ/jy7mXJ20N7wTqXw89dJyJy89
- Ya+NC/X8TaDzvO4cpMuE7U31lG1hBb4gUxH8bVclr/X9CqBkUySroFqGhREvxbRi+U0+
- 83wbJ5mp1/pDXf5ilAtAGV6YGh3HnQi5MsFUhkFj2bFgpvHPL6/oKGJXyUsyvs/Idt42
- 7yKcktS8IHan+zxoa/lXDIg1QVFms4wvOJxd+3oQjhJ01xeiIthjvtG+rUAfATEMIkKo
- eFsXB3ek3XzrXMjTpIS7q6SVhlCBeummuaGd2wY2AugQhSwjy12O0qX6ugGB3u6pPwfp
- HQdg==
+ bh=iYghtmEU3Ova8Cj8/5R1jBc8IJ1vFh2gb5KFJgj7R4U=;
+ b=BLKRlaN1EzT9eh8YGjzBmwspWg+sKImkreOywIuS5Y703C3ymtqh/UfmYxQpQa4Mye
+ /dlJTxPaFLmznGNIzdG/6xKp1kFU3k3VNk1b//t8NaF1/JDPPmLo/GiaThifEYzK/ySc
+ 6zqd8/Xa3QMFle5wLtcOeG5AjjTPveG1jLdCcyjFL7yigYeFhxg8O1q5WC4ecUedzlRs
+ w66xGCFTCI343z3m5z9JH754spAauhIedPU5eiOJzaku6Ty/yTSuGD2vlPgmngRfeuZi
+ +EBIYDF/lqznYUd/zD06nAR+Bi87nYBqMmT4hSYCM90e5SvD7CuTYvpCTI5Cagiq5tF8
+ I8Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715234334; x=1715839134;
+ d=1e100.net; s=20230601; t=1715234473; x=1715839273;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Msw3yMNt09dpy0EpHwPl7f/EyCepMzXGNFkvIh20Bdk=;
- b=MTeo0W/tkEKeO0sZfmJfTc1TbhI+po8GpHFEpfl4G6spsgtLT6L8apUuK364OikN1s
- ly5AWZuRn4ptpr8KQckKSDbkc0+rgzKOU+srSEfnWmFOJZVgdLQZzRYZ3uaN7QayBI+x
- DT+7HM/7FthR4sh3OSyNLVNPiVZ09R+PO80i4zBgqg2feOtA/urmtPb1i73MsXjm8u7I
- RQZM5LpsvhcquUJX0pK4BIrkCbz/+Ag66gy/jUO44rveqqnhCbyA5oPUk/XTomuVqU8P
- BJK7a8a5SN/4NN8gYMhsAO0eq+XsOseDd5GhuK/6LOiP47QdmGtZaMwizBYaI1m/v+d5
- AdRQ==
+ bh=iYghtmEU3Ova8Cj8/5R1jBc8IJ1vFh2gb5KFJgj7R4U=;
+ b=DhJIA/x5w6a3G0k6Hk7slMLbYBxs3M8U+0wV1nHcGJpI/vnDTUVOQdth/3pHRvhY1F
+ VMECp+3Aym2Y6koCvpId++QUJPhFi/XtCdbLknZCtt/gjKh5NYbMnxX4LnwW0NwcMG5C
+ 9LT1U4srpR7Xp2CCXX40AkdlfgMzMHn8njsHHZmG0yrCNWlFvlMDwN6KGUy57gC4BCE+
+ 9CTZJ0k/hrWKkI/5OKah0wI2duf5wl48xu3FpWdU/Ty6obrfVsXVF0h6T0bATUl/lGCE
+ eV9FzsaQJCgLypuAa1Ng8jxTaUzPHTDjk6riSVQ2SWTBDWcEvKRS6L8GNzOARZB8ORrR
+ zjFQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCURikRuGhk3uS2tOrHsDmfOnDoLKyGQcLKAxljSsds2zjlssqX5DaIM97gRXbntM79ByvMK2mTqYQEMBOgsP+4D5zKG
-X-Gm-Message-State: AOJu0YyA64Sasfv+j/GOTgeu+vm1Rn27pKz6ivCr0oBYaDSpxs+sIzVe
- s8HrsvuYrNXprNKEx6la2lOTXoVgqWQy2d+LEh4Z90h0YzkxlmgH
-X-Google-Smtp-Source: AGHT+IFrb8Vojuz2lrDAGSxMJaKalda7zthPGQ39rDXL7lnJkO88HP1psL+D2Jj2R4NS2zz74jwGhQ==
-X-Received: by 2002:a17:903:1c7:b0:1eb:fb02:c454 with SMTP id
- d9443c01a7336-1eeb059f16dmr55492045ad.53.1715234334217; 
- Wed, 08 May 2024 22:58:54 -0700 (PDT)
+ AJvYcCVy8NUbYzLQizuzJ3WuTdsv28KTUvuPO7FC+cCkF1DYAAVJYebeO+AWRVhPAponp0SiSiN0cS02n4QzEcRqRSYa/71R/Mw6gvGmuP8nrbYovDr53p7x797YC58=
+X-Gm-Message-State: AOJu0Yz8gMlGg5siNMoiF7WfRwuaBewpiO0/zys33XrddK06RwkLFa41
+ mh26ht89ZAjjFcOh05bUy3zg+cNNq4v3E8mYeXvhRgSm3UbTrvuYTpf8vQ==
+X-Google-Smtp-Source: AGHT+IEmbvg4ulIWf/GfjnpEMBAmB32TwWTAH6mr9pn/EiLx9BmjRAWidAYzD8woJsIpH5MVHNXGZA==
+X-Received: by 2002:a05:6a20:9745:b0:1a7:7fbb:262d with SMTP id
+ adf61e73a8af0-1afc8d6bcb4mr4667380637.36.1715234473191; 
+ Wed, 08 May 2024 23:01:13 -0700 (PDT)
 Received: from localhost (220-245-239-57.tpgi.com.au. [220.245.239.57])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ef0c13805asm5487525ad.264.2024.05.08.22.58.52
+ 98e67ed59e1d1-2b5d4c8cc5asm2945866a91.0.2024.05.08.23.01.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 May 2024 22:58:53 -0700 (PDT)
+ Wed, 08 May 2024 23:01:12 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Thu, 09 May 2024 15:58:49 +1000
-Message-Id: <D14VTP1B4TNR.M9SZAKYV0101@gmail.com>
-Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>, "Daniel Henrique
- Barboza" <danielhb413@gmail.com>
-Subject: Re: [PATCH v3 33/33] target/ppc: Add a macro to check for page
- protection bit
+Date: Thu, 09 May 2024 16:01:07 +1000
+Message-Id: <D14VVGBLHU3B.3IUZU1YZ8CQ40@gmail.com>
+Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
+Subject: Re: [PATCH v4 08/33] target/ppc/mmu_common.c: Drop cases for
+ unimplemented MPC8xx MMU
 From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
+ <qemu-ppc@nongnu.org>
 X-Mailer: aerc 0.17.0
-References: <cover.1715125376.git.balaton@eik.bme.hu>
- <a91a1b9455f88cbbeff2652fc4f44acd89e98215.1715125376.git.balaton@eik.bme.hu>
- <D14ASGGTNSQB.3TX66EXAL001R@gmail.com>
- <7c4e51de-fdff-37b6-ffe5-2e7e26cffc17@eik.bme.hu>
-In-Reply-To: <7c4e51de-fdff-37b6-ffe5-2e7e26cffc17@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62f.google.com
+References: <cover.1715209155.git.balaton@eik.bme.hu>
+ <71aafa52bdf95e4c82e0ed2f6ca045eaccb56abe.1715209155.git.balaton@eik.bme.hu>
+In-Reply-To: <71aafa52bdf95e4c82e0ed2f6ca045eaccb56abe.1715209155.git.balaton@eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,97 +97,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu May 9, 2024 at 9:35 AM AEST, BALATON Zoltan wrote:
-> On Wed, 8 May 2024, Nicholas Piggin wrote:
-> > On Wed May 8, 2024 at 10:15 AM AEST, BALATON Zoltan wrote:
-> >> Checking if a page protection bit is set for a given access type is a
-> >> common operation. Add a macro to avoid repeating the same check at
-> >> multiple places and also avoid a function call. As this relies on
-> >> access type and page protection bit values having certain relation
-> >> also add an assert to ensure that this assumption holds.
-> >>
-> >> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> >> ---
-> >>  target/ppc/cpu_init.c    |  4 ++++
-> >>  target/ppc/internal.h    | 20 ++------------------
-> >>  target/ppc/mmu-hash32.c  |  6 +++---
-> >>  target/ppc/mmu-hash64.c  |  2 +-
-> >>  target/ppc/mmu-radix64.c |  2 +-
-> >>  target/ppc/mmu_common.c  | 26 +++++++++++++-------------
-> >>  6 files changed, 24 insertions(+), 36 deletions(-)
-> >>
-> >> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> >> index 92c71b2a09..6639235544 100644
-> >> --- a/target/ppc/cpu_init.c
-> >> +++ b/target/ppc/cpu_init.c
-> >> @@ -7377,6 +7377,10 @@ static void ppc_cpu_class_init(ObjectClass *oc,=
- void *data)
-> >>      resettable_class_set_parent_phases(rc, NULL, ppc_cpu_reset_hold, =
-NULL,
-> >>                                         &pcc->parent_phases);
-> >>
-> >> +    /* CHECK_PROT_ACCESS relies on this MMU access and PAGE bits rela=
-tion */
-> >> +    assert(MMU_DATA_LOAD =3D=3D 0 && MMU_DATA_STORE =3D=3D 1 && MMU_I=
-NST_FETCH =3D=3D 2 &&
-> >> +           PAGE_READ =3D=3D 1 && PAGE_WRITE =3D=3D 2 && PAGE_EXEC =3D=
-=3D 4);
-> >> +
-> >
-> > Can you use qemu_build_assert() for this?
+On Thu May 9, 2024 at 9:36 AM AEST, BALATON Zoltan wrote:
+> Drop MPC8xx cases from get_physical_address_wtlb() and ppc_jumbo_xlate().
+> The default case would still catch this and abort the same way and
+> there is still a warning about it in ppc_tlb_invalidate_all() which is
+> called in ppc_cpu_reset_hold() so likely we never get here but to make
+> sure add a case to ppc_xlate() to the same effect.
 >
-> I've changed it to qemu_build_assert and seems to work.
->
-> >>      cc->class_by_name =3D ppc_cpu_class_by_name;
-> >>      cc->has_work =3D ppc_cpu_has_work;
-> >>      cc->mmu_index =3D ppc_cpu_mmu_index;
-> >> diff --git a/target/ppc/internal.h b/target/ppc/internal.h
-> >> index 46176c4711..9880422ce3 100644
-> >> --- a/target/ppc/internal.h
-> >> +++ b/target/ppc/internal.h
-> >> @@ -234,24 +234,8 @@ void destroy_ppc_opcodes(PowerPCCPU *cpu);
-> >>  void ppc_gdb_init(CPUState *cs, PowerPCCPUClass *ppc);
-> >>  const gchar *ppc_gdb_arch_name(CPUState *cs);
-> >>
-> >> -/**
-> >> - * prot_for_access_type:
-> >> - * @access_type: Access type
-> >> - *
-> >> - * Return the protection bit required for the given access type.
-> >> - */
-> >> -static inline int prot_for_access_type(MMUAccessType access_type)
-> >> -{
-> >> -    switch (access_type) {
-> >> -    case MMU_INST_FETCH:
-> >> -        return PAGE_EXEC;
-> >> -    case MMU_DATA_LOAD:
-> >> -        return PAGE_READ;
-> >> -    case MMU_DATA_STORE:
-> >> -        return PAGE_WRITE;
-> >> -    }
-> >> -    g_assert_not_reached();
-> >> -}
-> >> +/* Check if permission bit required for the access_type is set in pro=
-t */
-> >> +#define CHECK_PROT_ACCESS(prot, access_type) ((prot) & (1 << (access_=
-type)))
-> >
-> > We don't want to use a macro when an inline function will work.
-> >
-> > Does the compiler not see the pattern and transform the existing
-> > code into a shift? If it does then I would leave it. If not, then
-> > just keep prot_for_access_type but make it a shift and maybe
-> > comment the logic.
-> >
-> > I would call the new function check_prot_for_access_type().
->
-> That would be too long and does not fit on one line. Long names with=20
-> underscore and 80 char line limit does not go well together. I've left=20
-> this unchanged for now and wait for your reply on this.
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 
-Just split the line at the second argument. Better name is more
-important than minimising line count.
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
-Thanks,
-Nick
+> ---
+>  target/ppc/mmu_common.c | 12 ++----------
+>  1 file changed, 2 insertions(+), 10 deletions(-)
+>
+> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+> index 886fb6a657..3391df61cb 100644
+> --- a/target/ppc/mmu_common.c
+> +++ b/target/ppc/mmu_common.c
+> @@ -1219,10 +1219,6 @@ int get_physical_address_wtlb(CPUPPCState *env, mm=
+u_ctx_t *ctx,
+>          ret =3D mmubooke206_get_physical_address(env, ctx, eaddr, access=
+_type,
+>                                                 mmu_idx);
+>          break;
+> -    case POWERPC_MMU_MPC8xx:
+> -        /* XXX: TODO */
+> -        cpu_abort(env_cpu(env), "MPC8xx MMU model is not implemented\n")=
+;
+> -        break;
+>      case POWERPC_MMU_REAL:
+>          if (real_mode) {
+>              ret =3D check_physical(env, ctx, eaddr, access_type);
+> @@ -1353,8 +1349,6 @@ static bool ppc_jumbo_xlate(PowerPCCPU *cpu, vaddr =
+eaddr,
+>                      env->spr[SPR_BOOKE_DEAR] =3D eaddr;
+>                      env->spr[SPR_BOOKE_ESR] =3D mmubooke206_esr(mmu_idx,=
+ MMU_DATA_LOAD);
+>                      break;
+> -                case POWERPC_MMU_MPC8xx:
+> -                    cpu_abort(cs, "MPC8xx MMU model is not implemented\n=
+");
+>                  case POWERPC_MMU_REAL:
+>                      cpu_abort(cs, "PowerPC in real mode should never rai=
+se "
+>                                "any MMU exceptions\n");
+> @@ -1427,9 +1421,6 @@ static bool ppc_jumbo_xlate(PowerPCCPU *cpu, vaddr =
+eaddr,
+>                          env->spr[SPR_40x_ESR] =3D 0x00000000;
+>                      }
+>                      break;
+> -                case POWERPC_MMU_MPC8xx:
+> -                    /* XXX: TODO */
+> -                    cpu_abort(cs, "MPC8xx MMU model is not implemented\n=
+");
+>                  case POWERPC_MMU_BOOKE206:
+>                      booke206_update_mas_tlb_miss(env, eaddr, access_type=
+, mmu_idx);
+>                      /* fall through */
+> @@ -1539,7 +1530,8 @@ bool ppc_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAcc=
+essType access_type,
+>      case POWERPC_MMU_32B:
+>          return ppc_hash32_xlate(cpu, eaddr, access_type, raddrp,
+>                                 psizep, protp, mmu_idx, guest_visible);
+> -
+> +    case POWERPC_MMU_MPC8xx:
+> +        cpu_abort(env_cpu(&cpu->env), "MPC8xx MMU model is not implement=
+ed\n");
+>      default:
+>          return ppc_jumbo_xlate(cpu, eaddr, access_type, raddrp,
+>                                 psizep, protp, mmu_idx, guest_visible);
+
 
