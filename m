@@ -4,88 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFBA0C10F1A
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 13:25:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B58FC25B10
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 13:29:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s53l9-0003X5-CG; Thu, 09 May 2024 09:24:31 -0400
+	id 1s53ok-00057u-P1; Thu, 09 May 2024 09:28:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s53l3-0003Wa-JC
- for qemu-devel@nongnu.org; Thu, 09 May 2024 09:24:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s53kz-0007bw-0J
- for qemu-devel@nongnu.org; Thu, 09 May 2024 09:24:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715261060;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=gN+nQyDatopODvfSymDv7FCngENgrrYpqvpUO7SO4l4=;
- b=YGoEqSr5b3iFnCGlXKakGGeNRrbdVa4UDaHnP3SDBSbSKsOqBDNL9i4fdkDJpa6bXfTNr8
- 7a36UswJTs0JM6jYqYoDccd6JvmRphzZgZ/UaXZa03obu9QKFGefP6epl0zqWluHsLCdBV
- mBOVowsaHAI0wTHYF4pp5exNvq3GDvA=
-Received: from mail-oi1-f198.google.com (mail-oi1-f198.google.com
- [209.85.167.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-314-hAg5-tDRPX6UuNr9oajpXA-1; Thu, 09 May 2024 09:24:18 -0400
-X-MC-Unique: hAg5-tDRPX6UuNr9oajpXA-1
-Received: by mail-oi1-f198.google.com with SMTP id
- 5614622812f47-3c972a13172so154891b6e.2
- for <qemu-devel@nongnu.org>; Thu, 09 May 2024 06:24:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <rsamarnz@gmail.com>)
+ id 1s53oj-00057i-Vv; Thu, 09 May 2024 09:28:14 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <rsamarnz@gmail.com>)
+ id 1s53oi-0000ZO-G4; Thu, 09 May 2024 09:28:13 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-6f45020ac2cso754141b3a.0; 
+ Thu, 09 May 2024 06:28:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1715261290; x=1715866090; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ES82ewI1NIHI1vn/pNjCtvapE45ezZFMf+6qtK8J3mk=;
+ b=JXowYWv9rYJyWvZ6Na4C+oZoKK/WYltv2Wz+mYyIoAOZHNjF8LW0FTTOgj4KbrPcl1
+ BE+pnSkmyCEAPo8tyxKjr+WbevCCZOBX0CfzABsK7PacrbgiBlDMYlVC4wZ2cKbzW5V3
+ tRh68IBJHU85eHzCUROxYEKcKIm28E+y6VCMAoFBTbwW1G8tfl4IgJSHZmj0OugkBNXL
+ N8ImNqHRvVNCQ4yK4pXQldBfXh6cFLhG+S1T9lF2VpaOuOAeBsyqT+Ab32Jhelesh0D2
+ N3kUkIZ/IlKNqYQy22mIcS+w3bFFTQTxnctg9e9sBs8qCPaKCArfHIfYRA0U8U+FKFUa
+ pJuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715261058; x=1715865858;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gN+nQyDatopODvfSymDv7FCngENgrrYpqvpUO7SO4l4=;
- b=KVtN2H3i0+PK09yi3s+1ewuYr1PwC/Z7PIGkicCK7JWyqr0jZw6hoXpAVzNQnHhw74
- ZwubVxig2CzcRsVs14WgOD1vwcGvLtx7dQQ2RvlbRVuZ6hxOR1iYPmThEOztBdJInoiG
- fQTf7cXT4zU+u6I8MzV29/g8YEUnO8pEYCK+DsniJuK18H5l9o+ETLOJiDZD/xHjt0Nv
- gduVstc//wQsqYqaV4Cw8598GX+SaZyzl3yi5Dy9OpS44Gx8yrDYE8LuY3o/bWe5IqML
- On+zHa9ux+zKx5+sz1Fr2Cb9QLk/z3+PQBTvgr6jQ8krGwJTjVIJH8A5u/acXxnDgvP5
- wB4g==
-X-Gm-Message-State: AOJu0Yw6zZumY2yi5f57xIjCx/e+apnKslco4+2Fk8YvNlB+CDLfxz27
- wr37ttNEIBYJVEgXqmSwHjnlWhFxpaB34ryUW5yTHgAeclfm1qBN2u5Dt3BOB0aZ2Kt+No4LNw1
- DtMKGqBZMAtk5aLrZOoWX+ZMfIfA2j6J2+k0DBfNY5KcccFIgF2Z/
-X-Received: by 2002:a05:6808:1796:b0:3c8:64c2:73fa with SMTP id
- 5614622812f47-3c9851e5985mr5955877b6e.0.1715261057670; 
- Thu, 09 May 2024 06:24:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEpAO3X2Q9Z2MG3aWBcHpIffTi/i9DgVvLIFdLeqRC57nWjWjjStZhEG7TfFoKKM5SOok0/Dw==
-X-Received: by 2002:a05:6808:1796:b0:3c8:64c2:73fa with SMTP id
- 5614622812f47-3c9851e5985mr5955841b6e.0.1715261057023; 
- Thu, 09 May 2024 06:24:17 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6a15f17a3d6sm6926726d6.18.2024.05.09.06.24.16
+ d=1e100.net; s=20230601; t=1715261290; x=1715866090;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ES82ewI1NIHI1vn/pNjCtvapE45ezZFMf+6qtK8J3mk=;
+ b=L2h/uSUK1WgLZfZ0iS8SNuWhy8DM2aso8aYD3rF4MdGFaugq6auPaNSEr7XvAcnMx8
+ 2TpNNJnFC0dnGpz408gT1O3ueQPm3K+x4tXEyDM5tMHw3c1ku1oM81X0ziQD7oxcuNxd
+ VB47FA7/znp/y6a6FxSjEK55OhL5M1QId4G5BJd+ehhx9P9dQ/XtIIabpPD7yNKSKk1f
+ yLeiJdY5xkDVcMUgT9ju5KGeIiz8SVclRCdVSVwo8u8pAxe12rIA2H44DUXvjqWQF5ah
+ f33vL1bDpwMpc9AHhbqocubfH+Vem94h/SD1/4cvJicrc5fpQfSa65OCg9tIzfZwKU7a
+ fHYQ==
+X-Gm-Message-State: AOJu0Yw8veP86jCXYs2QGBV1agL9FP1V+isWhJPSPJIU7TPM6Gfs9r+t
+ NchGQdGHmG7qUB72sfXAFOJM2oVHd/Ok8tuhs1HjMW3gft78/DLBbHtWwg==
+X-Google-Smtp-Source: AGHT+IGrdaOqmIij8VL+i4U/wIL2ZrZvQb3tcT4nag7867Rb38x0hFeCFp3MpdrTTcgrxTKOojEmFA==
+X-Received: by 2002:a05:6a00:1387:b0:6ea:d7b6:f4b4 with SMTP id
+ d2e1a72fcca58-6f49c292487mr6799321b3a.21.1715261290010; 
+ Thu, 09 May 2024 06:28:10 -0700 (PDT)
+Received: from rs.ip (115-189-84-241.mobile.spark.co.nz. [115.189.84.241])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-6f4d2ae0dd5sm1265247b3a.135.2024.05.09.06.28.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 May 2024 06:24:16 -0700 (PDT)
-Date: Thu, 9 May 2024 09:24:15 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, philmd@linaro.org,
- peter.maydell@linaro.org, richard.henderson@linaro.org,
- pbonzini@redhat.com, maobibo@loongson.cn, zhaotianrui@loongson.cn,
- lixianglai@loongson.cn
-Subject: Re: [PATCH v2] target/loongarch/kvm: Fix VM recovery from disk
- failures
-Message-ID: <ZjzOf4kl4SLstkKA@x1n>
-References: <20240508024732.3127792-1-gaosong@loongson.cn>
+ Thu, 09 May 2024 06:28:09 -0700 (PDT)
+From: "R.Samarasekara" <rsamarnz@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, gaosong@loongson.cn, raj3sr@gmail.com,
+ "R.Samarasekara" <rsamarnz@gmail.com>
+Subject: [PATCH] hw/loongarch/virt.c: Fixes memory leak in ramName during loop
+ iterations
+Date: Fri, 10 May 2024 01:28:02 +1200
+Message-Id: <20240509132802.247147-1-rsamarnz@gmail.com>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240508024732.3127792-1-gaosong@loongson.cn>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=rsamarnz@gmail.com; helo=mail-pf1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,15 +90,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 08, 2024 at 10:47:32AM +0800, Song Gao wrote:
-> vmstate does not save kvm_state_conter,
-> which can cause VM recovery from disk to fail.
-> 
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
+This patch fixes a memory leak in the ramName variable within the
+hw/loongarch/virt.c file. The leak occurs due to repeated calls to
+g_strdup_printf within a loop, causing memory allocated for ramName on
+previous iterations to be unfreed.
 
-Acked-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: R.Samarasekara <rsamarnz@gmail.com>
+---
+ hw/loongarch/virt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index c0999878df..1fe02f8501 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -954,6 +954,7 @@ static void loongarch_init(MachineState *machine)
+         fdt_add_memory_node(machine, phyAddr, numa_info[i].node_mem, i);
+         offset += numa_info[i].node_mem;
+         phyAddr += numa_info[i].node_mem;
++        g_free(ramName);
+     }
+ 
+     /* initialize device memory address space */
 -- 
-Peter Xu
+2.40.1
 
 
