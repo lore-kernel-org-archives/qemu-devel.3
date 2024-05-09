@@ -4,108 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0DB3C10F1A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F497C41513
 	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 18:17:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s58Jv-0007xc-VE; Thu, 09 May 2024 14:16:44 -0400
+	id 1s58KO-00080K-F4; Thu, 09 May 2024 14:17:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s58Jm-0007wx-WD
- for qemu-devel@nongnu.org; Thu, 09 May 2024 14:16:36 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <dmamfmgm@gmail.com>)
+ id 1s58KM-00080B-UU
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 14:17:10 -0400
+Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s58Jj-0002qW-7y
- for qemu-devel@nongnu.org; Thu, 09 May 2024 14:16:34 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id AA8F86058B;
- Thu,  9 May 2024 18:16:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1715278588; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=k+9ASo/GDl/QrqMg7La6I3/8Mun4hx69e1lPJi/ro1U=;
- b=p+57+KbjpU1FPDWNrF2Z+CBnLXzCy4QZmbdC2dW+VMXcMR6U4z5tszylp3cwuyieT9WxRn
- FRvY1QZs+K3GtV+5NKOESPjDSQ2xHlgrTrVIsdmOqq1BnzF6MLPaNV9PPsFqIT2XyrKp6M
- x2Zx7Avnv4nOF23Vx0ICHLW1HRpPRJE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1715278588;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=k+9ASo/GDl/QrqMg7La6I3/8Mun4hx69e1lPJi/ro1U=;
- b=kjz7AZYg/UGAFNa7ML0a3SOCzywB5chgJtjbSbevCaknn9Trjqsj0xs2yXFb8DmxyCasTX
- EZPGCwkY/5LyRDAw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1715278588; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=k+9ASo/GDl/QrqMg7La6I3/8Mun4hx69e1lPJi/ro1U=;
- b=p+57+KbjpU1FPDWNrF2Z+CBnLXzCy4QZmbdC2dW+VMXcMR6U4z5tszylp3cwuyieT9WxRn
- FRvY1QZs+K3GtV+5NKOESPjDSQ2xHlgrTrVIsdmOqq1BnzF6MLPaNV9PPsFqIT2XyrKp6M
- x2Zx7Avnv4nOF23Vx0ICHLW1HRpPRJE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1715278588;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=k+9ASo/GDl/QrqMg7La6I3/8Mun4hx69e1lPJi/ro1U=;
- b=kjz7AZYg/UGAFNa7ML0a3SOCzywB5chgJtjbSbevCaknn9Trjqsj0xs2yXFb8DmxyCasTX
- EZPGCwkY/5LyRDAw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 345BE13941;
- Thu,  9 May 2024 18:16:27 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id RocPO/sSPWZRQgAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 09 May 2024 18:16:27 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, Igor
- Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Philippe Mathieu-Daude
- <philmd@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, "Daniel P.
- Berrange" <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: Re: [PATCH V1 24/26] seccomp: cpr-exec blocker
-In-Reply-To: <1714406135-451286-25-git-send-email-steven.sistare@oracle.com>
-References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
- <1714406135-451286-25-git-send-email-steven.sistare@oracle.com>
-Date: Thu, 09 May 2024 15:16:25 -0300
-Message-ID: <87o79ekg06.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <dmamfmgm@gmail.com>)
+ id 1s58KL-0002y6-51
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 14:17:10 -0400
+Received: by mail-ot1-x332.google.com with SMTP id
+ 46e09a7af769-6f04f01f29aso720062a34.0
+ for <qemu-devel@nongnu.org>; Thu, 09 May 2024 11:17:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1715278627; x=1715883427; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=YddP+uW0vZ5rv5ICzqmidP81Gty7647owFzaMFMpKro=;
+ b=RMBiyw7mqczqqCpK3CCWXBwdQsj49sySBFjsC+ik8PmWTOn4unKtqbgYbEaWvwXEre
+ BR2KtWaDiFsEXxKTsndq2gvNxa1rSCj1vCfFDuTaTTmDn9/EfXBzAvw3pyM8awGXSaLs
+ woEWAAXKtdxiSDih46b38s9of1T8soSpYhYKvYw6hQazfTRI16wZPNKWX2jMiZxgYP0X
+ ZmMbcxMJtcwRtJz63r4Afhijp9sHWz9MMm3Qn78U1d6RgsT5aNKSELZ5CHWGkXKR8n9Y
+ XTWZOTxLHl1YBzLkYlJX2/xZYdut9ckCx091+Qg9ihzo8H0dRXct224o1BVS+3MUmqZQ
+ z9+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715278627; x=1715883427;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=YddP+uW0vZ5rv5ICzqmidP81Gty7647owFzaMFMpKro=;
+ b=uG1tFPtGLkAbmnENM69AlWFyABAQpMWYLl/ELsA9ZDyv98eHSVLWjrau8Q1aPnC38z
+ /S8vbNGWYC2b/0WEnpmE/WLFghe/IAqIkcSbCE6na7UqRCNlS9q7mTUC8vLmdKPEL3WE
+ Yx7/Q/EZTvUCPhpQFhTwpLqiMBFEWaWAOxYKtFu4kBZwi30rbDN/tg0sXxIww21zt7Kw
+ T9gi2XFFpXhxIbf7zegHAbhSL/OBGLueMeHCK4ZtjnpoY/yMMdGpBL9Q3tn+YytolHn4
+ /oL8hGpnOSSbYMkCROD1xDdwfecnPuLRuuEIPvshmohWOMg8cL9M8mJUgC6Btl8IjYTS
+ hjRw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXAKZ41w1Wst9JypUIjJxE3hXq01RDQHYFmhXFstECiqdsKfCpsZ85yTokaTqPnhVOXghtmBOFJyHgAPXnOwqazOe4uNC4=
+X-Gm-Message-State: AOJu0YyYJxl8S8BUA4oKxJBIYG2o/Srj7KQF2rBzvc8JWfrn+1lXG8kj
+ NGbrvdCoXbzaZBJc56I4z0UIXCqwPJZC5/nfhtEO/j9aWL+osvYl2XrnGYbmptY6JgxoWElshdU
+ pL+oOM8T2HkTVS9yQ3J30djrPQG8=
+X-Google-Smtp-Source: AGHT+IEu6Zmo8S518bx6l/X0CQW+Ys+rcaWJakWmnVkcYyrhwoRFtvhy4DTgn5xb90TnokmD8HoM1JQrUbtJYfUdXys=
+X-Received: by 2002:a05:6358:27aa:b0:186:4ada:4256 with SMTP id
+ e5c5f4694b2df-193bcfe35cfmr17673155d.22.1715278627457; Thu, 09 May 2024
+ 11:17:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-2.79 / 50.00]; BAYES_HAM(-2.99)[99.97%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; RCVD_VIA_SMTP_AUTH(0.00)[];
- ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- TAGGED_RCPT(0.00)[]; RCPT_COUNT_TWELVE(0.00)[12];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[redhat.com,habkost.net,gmail.com,linaro.org,oracle.com];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <CACBuX0To1QWpOTE-HfbXv=tUVWVL0=pvn-+E28EL_mWuqfZ-sw@mail.gmail.com>
+ <dcaed5da-5e94-4cb6-b5b8-0a571eac371b@tls.msk.ru>
+ <CACBuX0Q_JOp1xGKZjnrBguiXVcM-ApfVrOs9UQE2B7sq=f5vLQ@mail.gmail.com>
+ <CACBuX0SUvsip=hj5NbE3g5gCxSmdRKbK-k=ZQz819TDEfvtXgw@mail.gmail.com>
+ <8dadea4d-ab16-4102-93e6-61559fb5b00c@linaro.org>
+ <CACBuX0QepgcGW=X9gYZzY9_9voZT1L+vstfqn_9FQmvpG0-sXQ@mail.gmail.com>
+ <CAFEAcA8sF4C-r2+Es4tqzXa_HsNVcMizN+eMCN2QM7guZPPYsg@mail.gmail.com>
+In-Reply-To: <CAFEAcA8sF4C-r2+Es4tqzXa_HsNVcMizN+eMCN2QM7guZPPYsg@mail.gmail.com>
+From: Cord Amfmgm <dmamfmgm@gmail.com>
+Date: Thu, 9 May 2024 13:16:56 -0500
+Message-ID: <CACBuX0SbF_eMT4XsDZsVVZSYF6fNgtX2fJFsahaThELoyGA9Jw@mail.gmail.com>
+Subject: Re: hw/usb/hcd-ohci: Fix #1510, #303: pid not IN or OUT
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
+ Gerd Hoffmann <kraxel@redhat.com>
+Content-Type: multipart/alternative; boundary="00000000000047d4060618096d9f"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::332;
+ envelope-from=dmamfmgm@gmail.com; helo=mail-ot1-x332.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,11 +98,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Steve Sistare <steven.sistare@oracle.com> writes:
+--00000000000047d4060618096d9f
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> cpr-exec mode needs permission to exec.  Block it if permission is denied.
+On Thu, May 9, 2024 at 12:48=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
+.org>
+wrote:
+
+> On Wed, 8 May 2024 at 16:29, Cord Amfmgm <dmamfmgm@gmail.com> wrote:
+> > On Wed, May 8, 2024 at 3:45=E2=80=AFAM Thomas Huth <thuth@redhat.com> w=
+rote:
+> >>
+> >> Your Signed-off-by line does not match the From: line ... could you
+> please
+> >> fix this? (see
+> >>
+> https://www.qemu.org/docs/master/devel/submitting-a-patch.html#patch-emai=
+ls-must-include-a-signed-off-by-line
+> >> , too)
+> >
+> >
+> > I'll submit the new patch request with my pseudonym in the From: and
+> Signed-off-by: lines, per your request. Doesn't matter to me. However, th=
+is
+> arises simply because I don't give gmail my real name -
+> https://en.wikipedia.org/wiki/Nymwars
 >
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> I'm confused now. Of the two names you've used in this
+> patch (Cord Amfmgm and David Hubbard), are they both
+> pseudonyms, or is one a pseudonym and one your real name?
+>
+>
+Hi Peter,
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+I am attempting to submit a small patch. For context, I'm getting broader
+attention now because apparently OHCI is one of the less used components of
+qemu and maybe the review process was taking a while. That's relevant
+because I wasn't able to get prompt feedback and am now choosing what
+appears to be the most expeditious approach -- all I want is to get this
+patch done and be out of your hair. If Thomas Huth wants me to use a
+consistent name, have I not complied? Are you asking out of curiosity or is
+there a valid reason why I should answer your question in order to get the
+patch submitted? Would you like to have a friendly chat over virtual coffee
+sometime (but off-list)?
+
+If you could please clarify I'm sure the answer is an easy one.
+
+Thanks
+
+--00000000000047d4060618096d9f
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
+<div dir=3D"ltr" class=3D"gmail_attr">On Thu, May 9, 2024 at 12:48=E2=80=AF=
+PM Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linaro.org">peter.mayd=
+ell@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" st=
+yle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padd=
+ing-left:1ex">On Wed, 8 May 2024 at 16:29, Cord Amfmgm &lt;<a href=3D"mailt=
+o:dmamfmgm@gmail.com" target=3D"_blank">dmamfmgm@gmail.com</a>&gt; wrote:<b=
+r>
+&gt; On Wed, May 8, 2024 at 3:45=E2=80=AFAM Thomas Huth &lt;<a href=3D"mail=
+to:thuth@redhat.com" target=3D"_blank">thuth@redhat.com</a>&gt; wrote:<br>
+&gt;&gt;<br>
+&gt;&gt; Your Signed-off-by line does not match the From: line ... could yo=
+u please<br>
+&gt;&gt; fix this? (see<br>
+&gt;&gt; <a href=3D"https://www.qemu.org/docs/master/devel/submitting-a-pat=
+ch.html#patch-emails-must-include-a-signed-off-by-line" rel=3D"noreferrer" =
+target=3D"_blank">https://www.qemu.org/docs/master/devel/submitting-a-patch=
+.html#patch-emails-must-include-a-signed-off-by-line</a><br>
+&gt;&gt; , too)<br>
+&gt;<br>
+&gt;<br>
+&gt; I&#39;ll submit the new patch request with my pseudonym in the From: a=
+nd Signed-off-by: lines, per your request. Doesn&#39;t matter to me. Howeve=
+r, this arises simply because I don&#39;t give gmail my real name - <a href=
+=3D"https://en.wikipedia.org/wiki/Nymwars" rel=3D"noreferrer" target=3D"_bl=
+ank">https://en.wikipedia.org/wiki/Nymwars</a><br>
+<br>
+I&#39;m confused now. Of the two names you&#39;ve used in this<br>
+patch (Cord Amfmgm and David Hubbard), are they both<br>
+pseudonyms, or is one a pseudonym and one your real name?<br>
+<br></blockquote><div><br></div><div>Hi Peter,</div><div><br></div><div>I a=
+m attempting to submit a small patch. For context, I&#39;m getting broader =
+attention now because apparently OHCI is one of the less used components of=
+ qemu and maybe the review process was taking a while. That&#39;s relevant =
+because I wasn&#39;t able to get prompt feedback and am now choosing what a=
+ppears to be the most expeditious approach -- all I want is to get this pat=
+ch done and be out of your hair. If Thomas Huth wants me to use a consisten=
+t name, have I not complied? Are you asking out of curiosity or is there a =
+valid reason why I should answer your question in order to get the patch su=
+bmitted? Would you like to have a friendly chat over virtual coffee sometim=
+e (but off-list)?</div><div><br></div><div>If you could please clarify I&#3=
+9;m sure the answer is an easy one.</div><div><br></div><div>Thanks</div></=
+div></div>
+
+--00000000000047d4060618096d9f--
 
