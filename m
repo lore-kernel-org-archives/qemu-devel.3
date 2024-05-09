@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D139EC10F1A
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 20:29:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80F7AC25B10
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 20:29:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5ALB-0000Km-VI; Thu, 09 May 2024 16:26:09 -0400
+	id 1s5AKs-00008p-Oz; Thu, 09 May 2024 16:25:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s5AKs-00008X-G7; Thu, 09 May 2024 16:25:50 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1s5AKp-000053-42; Thu, 09 May 2024 16:25:47 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s5AKq-00011y-CC; Thu, 09 May 2024 16:25:50 -0400
+ id 1s5AKl-0000xX-9Q; Thu, 09 May 2024 16:25:46 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 20A104E65D7;
- Thu, 09 May 2024 22:25:46 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id B08A94E6426;
+ Thu, 09 May 2024 22:25:36 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 8onzk5yPNL3i; Thu,  9 May 2024 22:25:44 +0200 (CEST)
+ with ESMTP id GA05wJX_XTQz; Thu,  9 May 2024 22:25:34 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 338B24E65D8; Thu, 09 May 2024 22:25:44 +0200 (CEST)
-Message-Id: <e1354c02f7aa206c90ef88cb839eca660229a64c.1715285340.git.balaton@eik.bme.hu>
+ id BD2374E6028; Thu, 09 May 2024 22:25:34 +0200 (CEST)
+Message-Id: <e90cb18e473a4bff1c9e29935d6470380ddf99f0.1715285340.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1715285340.git.balaton@eik.bme.hu>
 References: <cover.1715285340.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v5 10/32] target/ppc/mmu_common.c: Split out BookE cases
- before checking real mode
+Subject: [PATCH v5 01/32] target/ppc: Remove unused helper
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,9 +39,9 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Thu, 09 May 2024 22:25:44 +0200 (CEST)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Date: Thu, 09 May 2024 22:25:34 +0200 (CEST)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -63,48 +62,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-BookE does not have real mode so split off and handle it first in
-get_physical_address_wtlb() before checking for real mode for other
-MMU models.
+The helper_rac function is defined but not used, remove it.
 
+Fixes: 005b69fdcc (target/ppc: Remove PowerPC 601 CPUs)
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Reviwed-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu_common.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ target/ppc/helper.h     |  2 --
+ target/ppc/mmu_helper.c | 24 ------------------------
+ 2 files changed, 26 deletions(-)
 
-diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 03d9e6bfda..9f177b6976 100644
---- a/target/ppc/mmu_common.c
-+++ b/target/ppc/mmu_common.c
-@@ -1175,6 +1175,13 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
-     int ret = -1;
-     bool real_mode;
+diff --git a/target/ppc/helper.h b/target/ppc/helper.h
+index 86f97ee1e7..f769e01c3d 100644
+--- a/target/ppc/helper.h
++++ b/target/ppc/helper.h
+@@ -700,8 +700,6 @@ DEF_HELPER_2(book3s_msgclr, void, env, tl)
  
-+    if (env->mmu_model == POWERPC_MMU_BOOKE) {
-+        return mmubooke_get_physical_address(env, ctx, eaddr, access_type);
-+    } else if (env->mmu_model == POWERPC_MMU_BOOKE206) {
-+        return mmubooke206_get_physical_address(env, ctx, eaddr, access_type,
-+                                                mmu_idx);
-+    }
-+
-     real_mode = (type == ACCESS_CODE) ? !FIELD_EX64(env->msr, MSR, IR)
-                                       : !FIELD_EX64(env->msr, MSR, DR);
+ DEF_HELPER_4(dlmzb, tl, env, tl, tl, i32)
+ #if !defined(CONFIG_USER_ONLY)
+-DEF_HELPER_2(rac, tl, env, tl)
+-
+ DEF_HELPER_2(load_dcr, tl, env, tl)
+ DEF_HELPER_3(store_dcr, void, env, tl, tl)
+ #endif
+diff --git a/target/ppc/mmu_helper.c b/target/ppc/mmu_helper.c
+index b35a93c198..421e777ee6 100644
+--- a/target/ppc/mmu_helper.c
++++ b/target/ppc/mmu_helper.c
+@@ -596,30 +596,6 @@ void helper_6xx_tlbi(CPUPPCState *env, target_ulong EPN)
+     do_6xx_tlb(env, EPN, 1);
+ }
  
-@@ -1195,13 +1202,6 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
-             ret = mmu40x_get_physical_address(env, ctx, eaddr, access_type);
-         }
-         break;
--    case POWERPC_MMU_BOOKE:
--        ret = mmubooke_get_physical_address(env, ctx, eaddr, access_type);
--        break;
--    case POWERPC_MMU_BOOKE206:
--        ret = mmubooke206_get_physical_address(env, ctx, eaddr, access_type,
--                                               mmu_idx);
--        break;
-     case POWERPC_MMU_REAL:
-         if (real_mode) {
-             ret = check_physical(env, ctx, eaddr, access_type);
+-/*****************************************************************************/
+-/* PowerPC 601 specific instructions (POWER bridge) */
+-
+-target_ulong helper_rac(CPUPPCState *env, target_ulong addr)
+-{
+-    mmu_ctx_t ctx;
+-    int nb_BATs;
+-    target_ulong ret = 0;
+-
+-    /*
+-     * We don't have to generate many instances of this instruction,
+-     * as rac is supervisor only.
+-     *
+-     * XXX: FIX THIS: Pretend we have no BAT
+-     */
+-    nb_BATs = env->nb_BATs;
+-    env->nb_BATs = 0;
+-    if (get_physical_address_wtlb(env, &ctx, addr, 0, ACCESS_INT, 0) == 0) {
+-        ret = ctx.raddr;
+-    }
+-    env->nb_BATs = nb_BATs;
+-    return ret;
+-}
+-
+ static inline target_ulong booke_tlb_to_page_size(int size)
+ {
+     return 1024 << (2 * size);
 -- 
 2.30.9
 
