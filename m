@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AEFFC10F1A
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 20:26:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FCBFC10F1A
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 20:27:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5AKw-0000Bm-1T; Thu, 09 May 2024 16:25:54 -0400
+	id 1s5AKq-000060-2k; Thu, 09 May 2024 16:25:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s5AKs-00008l-JC; Thu, 09 May 2024 16:25:50 -0400
+ id 1s5AKn-0008WF-Je; Thu, 09 May 2024 16:25:45 -0400
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s5AKq-00011z-BN; Thu, 09 May 2024 16:25:50 -0400
+ id 1s5AKl-0000yT-8A; Thu, 09 May 2024 16:25:45 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 1DC4C4E65BB;
- Thu, 09 May 2024 22:25:45 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id C1AA44E646F;
+ Thu, 09 May 2024 22:25:37 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 1-ZfiFXunV2S; Thu,  9 May 2024 22:25:43 +0200 (CEST)
+ with ESMTP id YFiQF8NAHSEJ; Thu,  9 May 2024 22:25:35 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 2A8184E65D7; Thu, 09 May 2024 22:25:43 +0200 (CEST)
-Message-Id: <f2583540e2e54d4cae57c172b0aa16631b36056e.1715285340.git.balaton@eik.bme.hu>
+ id CC6534E6106; Thu, 09 May 2024 22:25:35 +0200 (CEST)
+Message-Id: <9a0b54cedae03047a65ca2329a75b6970ade59a4.1715285340.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1715285340.git.balaton@eik.bme.hu>
 References: <cover.1715285340.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v5 09/32] target/ppc/mmu_common.c: Eliminate ret from
- mmu6xx_get_physical_address()
+Subject: [PATCH v5 02/32] target/ppc/mmu_common.c: Move calculation of a value
+ closer to its usage
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,7 +40,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Thu, 09 May 2024 22:25:43 +0200 (CEST)
+Date: Thu, 09 May 2024 22:25:35 +0200 (CEST)
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
  envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -63,126 +63,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Return directly, which is simpler than dragging a return value through
-multpile if and else blocks.
+In mmubooke_check_tlb() and mmubooke206_check_tlb() prot2 is
+calculated first but only used after an unrelated check that can
+return before tha value is used. Move the calculation after the check,
+closer to where it is used, to keep them together and avoid computing
+it when not needed.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Reviwed-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu_common.c | 84 +++++++++++++++++++----------------------
- 1 file changed, 39 insertions(+), 45 deletions(-)
+ target/ppc/mmu_common.c | 36 +++++++++++++++++-------------------
+ 1 file changed, 17 insertions(+), 19 deletions(-)
 
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 89bfd9aa45..03d9e6bfda 100644
+index 4fde7fd3bf..f79e390306 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -386,7 +386,6 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
-     target_ulong vsid, sr, pgidx;
-     int ds, target_page_bits;
-     bool pr;
--    int ret;
- 
-     /* First try to find a BAT entry if there are any */
-     if (env->nb_BATs && get_bat_6xx_tlb(env, ctx, eaddr, access_type) == 0) {
-@@ -419,7 +418,6 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
-     qemu_log_mask(CPU_LOG_MMU,
-             "pte segment: key=%d ds %d nx %d vsid " TARGET_FMT_lx "\n",
-             ctx->key, ds, ctx->nx, vsid);
--    ret = -1;
-     if (!ds) {
-         /* Check if instruction fetch is allowed, if needed */
-         if (type == ACCESS_CODE && ctx->nx) {
-@@ -436,51 +434,47 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
-         /* Initialize real address with an invalid value */
-         ctx->raddr = (hwaddr)-1ULL;
-         /* Software TLB search */
--        ret = ppc6xx_tlb_check(env, ctx, eaddr, access_type);
--    } else {
--        qemu_log_mask(CPU_LOG_MMU, "direct store...\n");
--        /* Direct-store segment : absolutely *BUGGY* for now */
--
--        switch (type) {
--        case ACCESS_INT:
--            /* Integer load/store : only access allowed */
--            break;
--        case ACCESS_CODE:
--            /* No code fetch is allowed in direct-store areas */
--            return -4;
--        case ACCESS_FLOAT:
--            /* Floating point load/store */
--            return -4;
--        case ACCESS_RES:
--            /* lwarx, ldarx or srwcx. */
--            return -4;
--        case ACCESS_CACHE:
--            /*
--             * dcba, dcbt, dcbtst, dcbf, dcbi, dcbst, dcbz, or icbi
--             *
--             * Should make the instruction do no-op.  As it already do
--             * no-op, it's quite easy :-)
--             */
--            ctx->raddr = eaddr;
--            return 0;
--        case ACCESS_EXT:
--            /* eciwx or ecowx */
--            return -4;
--        default:
--            qemu_log_mask(CPU_LOG_MMU, "ERROR: instruction should not need "
--                          "address translation\n");
--            return -4;
--        }
--        if ((access_type == MMU_DATA_STORE || ctx->key != 1) &&
--            (access_type == MMU_DATA_LOAD || ctx->key != 0)) {
--            ctx->raddr = eaddr;
--            ret = 2;
--        } else {
--            ret = -2;
--        }
-+        return ppc6xx_tlb_check(env, ctx, eaddr, access_type);
+@@ -635,12 +635,6 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppcemb_tlb_t *tlb,
+         return -1;
      }
  
--    return ret;
-+    /* Direct-store segment : absolutely *BUGGY* for now */
-+    qemu_log_mask(CPU_LOG_MMU, "direct store...\n");
-+    switch (type) {
-+    case ACCESS_INT:
-+        /* Integer load/store : only access allowed */
-+        break;
-+    case ACCESS_CODE:
-+        /* No code fetch is allowed in direct-store areas */
-+        return -4;
-+    case ACCESS_FLOAT:
-+        /* Floating point load/store */
-+        return -4;
-+    case ACCESS_RES:
-+        /* lwarx, ldarx or srwcx. */
-+        return -4;
-+    case ACCESS_CACHE:
-+        /*
-+         * dcba, dcbt, dcbtst, dcbf, dcbi, dcbst, dcbz, or icbi
-+         *
-+         * Should make the instruction do no-op.  As it already do
-+         * no-op, it's quite easy :-)
-+         */
-+        ctx->raddr = eaddr;
-+        return 0;
-+    case ACCESS_EXT:
-+        /* eciwx or ecowx */
-+        return -4;
-+    default:
-+        qemu_log_mask(CPU_LOG_MMU, "ERROR: instruction should not need address"
-+                                   " translation\n");
-+        return -4;
-+    }
-+    if ((access_type == MMU_DATA_STORE || ctx->key != 1) &&
-+        (access_type == MMU_DATA_LOAD || ctx->key != 0)) {
-+        ctx->raddr = eaddr;
-+        return 2;
-+    }
-+    return -2;
- }
+-    if (FIELD_EX64(env->msr, MSR, PR)) {
+-        prot2 = tlb->prot & 0xF;
+-    } else {
+-        prot2 = (tlb->prot >> 4) & 0xF;
+-    }
+-
+     /* Check the address space */
+     if ((access_type == MMU_INST_FETCH ?
+         FIELD_EX64(env->msr, MSR, IR) :
+@@ -649,6 +643,11 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppcemb_tlb_t *tlb,
+         return -1;
+     }
  
- /* Generic TLB check function for embedded PowerPC implementations */
++    if (FIELD_EX64(env->msr, MSR, PR)) {
++        prot2 = tlb->prot & 0xF;
++    } else {
++        prot2 = (tlb->prot >> 4) & 0xF;
++    }
+     *prot = prot2;
+     if (prot2 & prot_for_access_type(access_type)) {
+         qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
+@@ -830,6 +829,18 @@ static int mmubooke206_check_tlb(CPUPPCState *env, ppcmas_tlb_t *tlb,
+ 
+ found_tlb:
+ 
++    /* Check the address space and permissions */
++    if (access_type == MMU_INST_FETCH) {
++        /* There is no way to fetch code using epid load */
++        assert(!use_epid);
++        as = FIELD_EX64(env->msr, MSR, IR);
++    }
++
++    if (as != ((tlb->mas1 & MAS1_TS) >> MAS1_TS_SHIFT)) {
++        qemu_log_mask(CPU_LOG_MMU, "%s: AS doesn't match\n", __func__);
++        return -1;
++    }
++
+     if (pr) {
+         if (tlb->mas7_3 & MAS3_UR) {
+             prot2 |= PAGE_READ;
+@@ -851,19 +862,6 @@ found_tlb:
+             prot2 |= PAGE_EXEC;
+         }
+     }
+-
+-    /* Check the address space and permissions */
+-    if (access_type == MMU_INST_FETCH) {
+-        /* There is no way to fetch code using epid load */
+-        assert(!use_epid);
+-        as = FIELD_EX64(env->msr, MSR, IR);
+-    }
+-
+-    if (as != ((tlb->mas1 & MAS1_TS) >> MAS1_TS_SHIFT)) {
+-        qemu_log_mask(CPU_LOG_MMU, "%s: AS doesn't match\n", __func__);
+-        return -1;
+-    }
+-
+     *prot = prot2;
+     if (prot2 & prot_for_access_type(access_type)) {
+         qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
 -- 
 2.30.9
 
