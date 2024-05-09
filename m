@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1367C25B10
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 20:28:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6DE9C25B10
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 20:28:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5ALF-0000Ng-BQ; Thu, 09 May 2024 16:26:13 -0400
+	id 1s5AL9-0000JE-UG; Thu, 09 May 2024 16:26:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s5AKz-0000Eu-V7; Thu, 09 May 2024 16:25:59 -0400
+ id 1s5AKs-00008V-DR; Thu, 09 May 2024 16:25:50 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s5AKy-00015N-4n; Thu, 09 May 2024 16:25:57 -0400
+ id 1s5AKp-00011E-3B; Thu, 09 May 2024 16:25:50 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 83F434E6426;
- Thu, 09 May 2024 22:25:54 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id EDABF4E65D4;
+ Thu, 09 May 2024 22:25:42 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 1cIMqKxd4_Ce; Thu,  9 May 2024 22:25:52 +0200 (CEST)
+ with ESMTP id Yp5yoZFszfH1; Thu,  9 May 2024 22:25:41 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 996D84E600E; Thu, 09 May 2024 22:25:52 +0200 (CEST)
-Message-Id: <39b356de922f6bac4a3f75f16d7ef819d4d36bc4.1715285340.git.balaton@eik.bme.hu>
+ id 0B41D4E65D6; Thu, 09 May 2024 22:25:41 +0200 (CEST)
+Message-Id: <cc150f50906038895d6dc86a773b4e525be54c57.1715285340.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1715285340.git.balaton@eik.bme.hu>
 References: <cover.1715285340.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v5 18/32] target/ppc/mmu_common.c: Don't use mmu_ctx_t in
- mmubooke206_get_physical_address()
+Subject: [PATCH v5 07/32] target/ppc/mmu_common.c: Move else branch to avoid
+ large if block
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,7 +40,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Thu, 09 May 2024 22:25:52 +0200 (CEST)
+Date: Thu, 09 May 2024 22:25:41 +0200 (CEST)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -63,84 +63,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-mmubooke206_get_physical_address() only uses the raddr and prot fields
-from mmu_ctx_t. Pass these directly instead of using a ctx struct.
+In mmu6xx_get_physical_address() we have a large if block with a two
+line else branch that effectively returns. Invert the condition and
+move the else there to allow deindenting the large if block to make
+the flow easier to follow.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu_common.c | 32 ++++++++++----------------------
- 1 file changed, 10 insertions(+), 22 deletions(-)
+ target/ppc/mmu_common.c | 71 ++++++++++++++++++++---------------------
+ 1 file changed, 34 insertions(+), 37 deletions(-)
 
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 12dac9e63a..004ea2111d 100644
+index b7c07cf515..ba60b4902b 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -836,27 +836,22 @@ found_tlb:
-     return access_type == MMU_INST_FETCH ? -3 : -2;
- }
- 
--static int mmubooke206_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
--                                            target_ulong address,
-+static int mmubooke206_get_physical_address(CPUPPCState *env, hwaddr *raddr,
-+                                            int *prot, target_ulong address,
-                                             MMUAccessType access_type,
-                                             int mmu_idx)
- {
-     ppcmas_tlb_t *tlb;
--    hwaddr raddr;
--    int i, j, ret;
+@@ -405,47 +405,44 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
+     ret = -1;
+     if (!ds) {
+         /* Check if instruction fetch is allowed, if needed */
+-        if (type != ACCESS_CODE || ctx->nx == 0) {
+-            /* Page address translation */
+-            qemu_log_mask(CPU_LOG_MMU, "htab_base " HWADDR_FMT_plx
+-                    " htab_mask " HWADDR_FMT_plx
+-                    " hash " HWADDR_FMT_plx "\n",
+-                    ppc_hash32_hpt_base(cpu), ppc_hash32_hpt_mask(cpu), hash);
+-            ctx->hash[0] = hash;
+-            ctx->hash[1] = ~hash;
 -
--    ret = -1;
--    raddr = (hwaddr)-1ULL;
-+    int i, j, ret = -1;
- 
-     for (i = 0; i < BOOKE206_MAX_TLBN; i++) {
-         int ways = booke206_tlb_ways(env, i);
+-            /* Initialize real address with an invalid value */
+-            ctx->raddr = (hwaddr)-1ULL;
+-            /* Software TLB search */
+-            ret = ppc6xx_tlb_check(env, ctx, eaddr, access_type);
++        if (type == ACCESS_CODE && ctx->nx) {
++            qemu_log_mask(CPU_LOG_MMU, "No access allowed\n");
++            return -3;
++        }
++        /* Page address translation */
++        qemu_log_mask(CPU_LOG_MMU, "htab_base " HWADDR_FMT_plx " htab_mask "
++                      HWADDR_FMT_plx " hash " HWADDR_FMT_plx "\n",
++                      ppc_hash32_hpt_base(cpu), ppc_hash32_hpt_mask(cpu), hash);
++        ctx->hash[0] = hash;
++        ctx->hash[1] = ~hash;
++
++        /* Initialize real address with an invalid value */
++        ctx->raddr = (hwaddr)-1ULL;
++        /* Software TLB search */
++        ret = ppc6xx_tlb_check(env, ctx, eaddr, access_type);
+ #if defined(DUMP_PAGE_TABLES)
+-            if (qemu_loglevel_mask(CPU_LOG_MMU)) {
+-                CPUState *cs = env_cpu(env);
+-                hwaddr curaddr;
+-                uint32_t a0, a1, a2, a3;
 -
-         for (j = 0; j < ways; j++) {
-             tlb = booke206_get_tlbm(env, i, address, j);
-             if (!tlb) {
-                 continue;
+-                qemu_log("Page table: " HWADDR_FMT_plx " len " HWADDR_FMT_plx
+-                         "\n", ppc_hash32_hpt_base(cpu),
+-                         ppc_hash32_hpt_mask(cpu) + 0x80);
+-                for (curaddr = ppc_hash32_hpt_base(cpu);
+-                     curaddr < (ppc_hash32_hpt_base(cpu)
+-                                + ppc_hash32_hpt_mask(cpu) + 0x80);
+-                     curaddr += 16) {
+-                    a0 = ldl_phys(cs->as, curaddr);
+-                    a1 = ldl_phys(cs->as, curaddr + 4);
+-                    a2 = ldl_phys(cs->as, curaddr + 8);
+-                    a3 = ldl_phys(cs->as, curaddr + 12);
+-                    if (a0 != 0 || a1 != 0 || a2 != 0 || a3 != 0) {
+-                        qemu_log(HWADDR_FMT_plx ": %08x %08x %08x %08x\n",
+-                                 curaddr, a0, a1, a2, a3);
+-                    }
++        if (qemu_loglevel_mask(CPU_LOG_MMU)) {
++            CPUState *cs = env_cpu(env);
++            hwaddr curaddr;
++            uint32_t a0, a1, a2, a3;
++
++            qemu_log("Page table: " HWADDR_FMT_plx " len " HWADDR_FMT_plx "\n",
++                     ppc_hash32_hpt_base(cpu), ppc_hash32_hpt_mask(cpu) + 0x80);
++            for (curaddr = ppc_hash32_hpt_base(cpu);
++                 curaddr < (ppc_hash32_hpt_base(cpu)
++                            + ppc_hash32_hpt_mask(cpu) + 0x80);
++                 curaddr += 16) {
++                a0 = ldl_phys(cs->as, curaddr);
++                a1 = ldl_phys(cs->as, curaddr + 4);
++                a2 = ldl_phys(cs->as, curaddr + 8);
++                a3 = ldl_phys(cs->as, curaddr + 12);
++                if (a0 != 0 || a1 != 0 || a2 != 0 || a3 != 0) {
++                    qemu_log(HWADDR_FMT_plx ": %08x %08x %08x %08x\n",
++                             curaddr, a0, a1, a2, a3);
+                 }
              }
--            ret = mmubooke206_check_tlb(env, tlb, &raddr, &ctx->prot, address,
-+            ret = mmubooke206_check_tlb(env, tlb, raddr, prot, address,
-                                         access_type, mmu_idx);
-             if (ret != -1) {
-                 goto found_tlb;
-@@ -866,17 +861,10 @@ static int mmubooke206_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
- 
- found_tlb:
- 
--    if (ret >= 0) {
--        ctx->raddr = raddr;
--         qemu_log_mask(CPU_LOG_MMU, "%s: access granted " TARGET_FMT_lx
--                       " => " HWADDR_FMT_plx " %d %d\n", __func__, address,
--                       ctx->raddr, ctx->prot, ret);
--    } else {
--         qemu_log_mask(CPU_LOG_MMU, "%s: access refused " TARGET_FMT_lx
--                       " => " HWADDR_FMT_plx " %d %d\n", __func__, address,
--                       raddr, ctx->prot, ret);
--    }
--
-+    qemu_log_mask(CPU_LOG_MMU, "%s: access %s " TARGET_FMT_lx " => "
-+                  HWADDR_FMT_plx " %d %d\n", __func__,
-+                  ret < 0 ? "refused" : "granted", address,
-+                  ret < 0 ? -1 : *raddr, ret == -1 ? 0 : *prot, ret);
-     return ret;
- }
- 
-@@ -1135,8 +1123,8 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
-         return mmubooke_get_physical_address(env, &ctx->raddr, &ctx->prot,
-                                              eaddr, access_type);
-     } else if (env->mmu_model == POWERPC_MMU_BOOKE206) {
--        return mmubooke206_get_physical_address(env, ctx, eaddr, access_type,
--                                                mmu_idx);
-+        return mmubooke206_get_physical_address(env, &ctx->raddr, &ctx->prot,
-+                                                eaddr, access_type, mmu_idx);
-     }
- 
-     real_mode = (type == ACCESS_CODE) ? !FIELD_EX64(env->msr, MSR, IR)
+-#endif
+-        } else {
+-            qemu_log_mask(CPU_LOG_MMU, "No access allowed\n");
+-            ret = -3;
+         }
++#endif
+     } else {
+         qemu_log_mask(CPU_LOG_MMU, "direct store...\n");
+         /* Direct-store segment : absolutely *BUGGY* for now */
 -- 
 2.30.9
 
