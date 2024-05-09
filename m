@@ -4,81 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCDD7C41513
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 14:10:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03488C10F1A
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 14:11:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s54SS-0008Eb-MY; Thu, 09 May 2024 10:09:16 -0400
+	id 1s54Uh-0001Fm-OM; Thu, 09 May 2024 10:11:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1s54SR-0008EQ-9g
- for qemu-devel@nongnu.org; Thu, 09 May 2024 10:09:15 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1s54Ue-0001Ap-9Q
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 10:11:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1s54SP-0005jW-6g
- for qemu-devel@nongnu.org; Thu, 09 May 2024 10:09:15 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1s54Ub-0006gt-RI
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 10:11:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715263752;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QcDlEInEE+lxtzTRhb2xwAAma+0g1x25vdI1AGC9KKA=;
- b=gpVToWsNtDzPW6BaJJLoG3B56syXx5nmyid36UMH6L3rw8u+wBf34WMi4XgyGJOichG8be
- WTw6Q/jvIO8fBkPQxOv1VM/HkuvHctd0J7/b+I0Tjc9IR/d9xSi9O1cqs7wWgOyIqz2Yfs
- UAGSIMS3+kTtc8/jP9NOA7aSn2MNMjE=
-Received: from mail-yb1-f200.google.com (mail-yb1-f200.google.com
- [209.85.219.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ s=mimecast20190719; t=1715263888;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=MwDf4z2qPk9gIInCEQqfGV/TxXqVFqrdl4H4xc+6TvM=;
+ b=Fk7oUK3OM9DBaM30wBGf39++PnCvDZ8SfAYMZWNAXw3d8H6r+C8WKNTtZHSgi6YYo7uKX8
+ QAOEkLBur6uFJ0UxYN2sb5S+nK8VSGeLFS0Z+2kFWCf8/c/XWgrU/oAZayGNuqpkRhB29T
+ WPe/an5b6T/g1m1s3z5mmZv2ugFPsW4=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-645-oSk_RpDAMRalqmx-ki5-QQ-1; Thu, 09 May 2024 10:09:07 -0400
-X-MC-Unique: oSk_RpDAMRalqmx-ki5-QQ-1
-Received: by mail-yb1-f200.google.com with SMTP id
- 3f1490d57ef6-deb45f85880so1400933276.2
- for <qemu-devel@nongnu.org>; Thu, 09 May 2024 07:09:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715263746; x=1715868546;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=QcDlEInEE+lxtzTRhb2xwAAma+0g1x25vdI1AGC9KKA=;
- b=g+4t8w7B36od+ZxHaMMwVWI9PmnT1rVaAzacbst2yaQUVHJGquHnpU3wHy2XeXDUyo
- YcyJw3MgQxu1IF3fkC7rRfCTq+jviYLcHhiWmqe7zgzciA9vyj8cIvuSMvfUsJfBr5zh
- Kl19n1EKhd/VzCGnC9sd0Y0ASMdtPcesodTkqbTEeDGNu2E/yGU/tp/qvGNy7gsJnJ6g
- X1Tut6ZXLqawe4CjiCMBsfcx+BY/7mIvsxm5TACwNJ/1v/yrHLAkzwN05P9UNpZQh0eS
- v7W7g6sejenjKXAsdxZdcKyTd2ypctUA0efIcq0rOkGGkOKuP1GZxArtJMmL2xnq1Doy
- JPFQ==
-X-Gm-Message-State: AOJu0YzMqz4hgIlYqEkCIxXLTBpgdmUXxQdj5sCF+YqTedZuPhRPZlou
- sgELXNc5aEPIJk4pgAelfWPML+h1VZhRihsaMQPe56sRNsR+Q6X6Rof4iNnVlcCdcaf5Faf6Hzd
- HrLrX2dbfyML67+5ZsUAbsJP0aRBYYaFWwwAYaufFX4FmnbL130C55K+B/BiE2SKiKlVi1oMGFY
- zFppIc1SuFqmqQ+3CafFUnYzEzkmo=
-X-Received: by 2002:a5b:64c:0:b0:dda:a4ba:2a5 with SMTP id
- 3f1490d57ef6-debb9dd94c2mr5756720276.63.1715263746634; 
- Thu, 09 May 2024 07:09:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFplgAc9BugENhNfTYu2SQLewArgeXQNAEFenvlIUMcnDEn0GNuPrsjJ/+qLHk5ljL1f3/RBixyjp8XvDXCiaQ=
-X-Received: by 2002:a5b:64c:0:b0:dda:a4ba:2a5 with SMTP id
- 3f1490d57ef6-debb9dd94c2mr5756693276.63.1715263746265; 
- Thu, 09 May 2024 07:09:06 -0700 (PDT)
+ us-mta-615-yXt33DdxN3G2tAfz5FD_og-1; Thu, 09 May 2024 10:11:22 -0400
+X-MC-Unique: yXt33DdxN3G2tAfz5FD_og-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4F806800656;
+ Thu,  9 May 2024 14:11:21 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.79])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 62ADC403BF6F;
+ Thu,  9 May 2024 14:11:17 +0000 (UTC)
+Date: Thu, 9 May 2024 15:11:14 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: Babu Moger <babu.moger@amd.com>, pbonzini@redhat.com,
+ richard.henderson@linaro.org, weijiang.yang@intel.com,
+ philmd@linaro.org, dwmw@amazon.co.uk, paul@xen.org,
+ joao.m.martins@oracle.com, qemu-devel@nongnu.org,
+ mtosatti@redhat.com, kvm@vger.kernel.org, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, yang.zhong@intel.com,
+ jing2.liu@intel.com, vkuznets@redhat.com, michael.roth@amd.com,
+ wei.huang2@amd.com, bdas@redhat.com, eduardo@habkost.net,
+ qemu-stable <qemu-stable@nongnu.org>
+Subject: Re: [PATCH v3] target/i386: Fix CPUID encoding of Fn8000001E_ECX
+Message-ID: <ZjzZgmt-UMFsGjvZ@redhat.com>
+References: <20240102231738.46553-1-babu.moger@amd.com>
+ <0ee4b0a8293188a53970a2b0e4f4ef713425055e.1714757834.git.babu.moger@amd.com>
+ <89911cf2-7048-4571-a39a-8fa44d7efcda@tls.msk.ru>
 MIME-Version: 1.0
-References: <20240506150428.1203387-1-jonah.palmer@oracle.com>
- <20240506150428.1203387-4-jonah.palmer@oracle.com>
-In-Reply-To: <20240506150428.1203387-4-jonah.palmer@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Thu, 9 May 2024 16:08:29 +0200
-Message-ID: <CAJaqyWcTSQ4hyzfYRENE93GnHMhgvY4X_gz3ydnpYUMz1_J8aA@mail.gmail.com>
-Subject: Re: [PATCH 3/6] virtio: virtqueue_ordered_fill - VIRTIO_F_IN_ORDER
- support
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, raphael@enfabrica.net, 
- kwolf@redhat.com, hreitz@redhat.com, jasowang@redhat.com, pbonzini@redhat.com, 
- fam@euphon.net, stefanha@redhat.com, qemu-block@nongnu.org, 
- schalla@marvell.com, leiyang@redhat.com, virtio-fs@lists.linux.dev, 
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <89911cf2-7048-4571-a39a-8fa44d7efcda@tls.msk.ru>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -86,7 +75,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,103 +88,66 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 6, 2024 at 5:05=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.co=
-m> wrote:
->
-> Add VIRTIO_F_IN_ORDER feature support for virtqueue_fill operations.
->
-> The goal of the virtqueue_fill operation when the VIRTIO_F_IN_ORDER
-> feature has been negotiated is to search for this now-used element,
-> set its length, and mark the element as filled in the VirtQueue's
-> used_elems array.
->
-> By marking the element as filled, it will indicate that this element is
-> ready to be flushed, so long as the element is in-order.
->
-> Tested-by: Lei Yang <leiyang@redhat.com>
-> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
-> ---
->  hw/virtio/virtio.c | 26 +++++++++++++++++++++++++-
->  1 file changed, 25 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> index e6eb1bb453..064046b5e2 100644
-> --- a/hw/virtio/virtio.c
-> +++ b/hw/virtio/virtio.c
-> @@ -873,6 +873,28 @@ static void virtqueue_packed_fill(VirtQueue *vq, con=
-st VirtQueueElement *elem,
->      vq->used_elems[idx].ndescs =3D elem->ndescs;
->  }
->
-> +static void virtqueue_ordered_fill(VirtQueue *vq, const VirtQueueElement=
- *elem,
-> +                                   unsigned int len)
-> +{
-> +    unsigned int i =3D vq->used_idx;
-> +
-> +    /* Search for element in vq->used_elems */
-> +    while (i !=3D vq->last_avail_idx) {
-> +        /* Found element, set length and mark as filled */
-> +        if (vq->used_elems[i].index =3D=3D elem->index) {
-> +            vq->used_elems[i].len =3D len;
-> +            vq->used_elems[i].filled =3D true;
-> +            break;
-> +        }
-> +
-> +        i +=3D vq->used_elems[i].ndescs;
-> +
-> +        if (i >=3D vq->vring.num) {
-> +            i -=3D vq->vring.num;
-> +        }
-> +    }
+On Thu, May 09, 2024 at 04:54:16PM +0300, Michael Tokarev wrote:
+> 03.05.2024 20:46, Babu Moger wrote:
+> > Observed the following failure while booting the SEV-SNP guest and the
+> > guest fails to boot with the smp parameters:
+> > "-smp 192,sockets=1,dies=12,cores=8,threads=2".
+> > 
+> > qemu-system-x86_64: sev_snp_launch_update: SNP_LAUNCH_UPDATE ret=-5 fw_error=22 'Invalid parameter'
+> > qemu-system-x86_64: SEV-SNP: CPUID validation failed for function 0x8000001e, index: 0x0.
+> > provided: eax:0x00000000, ebx: 0x00000100, ecx: 0x00000b00, edx: 0x00000000
+> > expected: eax:0x00000000, ebx: 0x00000100, ecx: 0x00000300, edx: 0x00000000
+> > qemu-system-x86_64: SEV-SNP: failed update CPUID page
+> ...
+> > Cc: qemu-stable@nongnu.org
+> > Fixes: 31ada106d891 ("Simplify CPUID_8000_001E for AMD")
+> > Link: https://bugzilla.kernel.org/show_bug.cgi?id=206537
+> > Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> > Signed-off-by: Babu Moger <babu.moger@amd.com>
+> > ---
+> > v3:
+> >    Rebased to the latest tree.
+> >    Updated the pc_compat_9_0 for the new flag.
+> 
+> > diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> > index 08c7de416f..46235466d7 100644
+> > --- a/hw/i386/pc.c
+> > +++ b/hw/i386/pc.c
+> > @@ -81,6 +81,7 @@
+> >   GlobalProperty pc_compat_9_0[] = {
+> >       { TYPE_X86_CPU, "guest-phys-bits", "0" },
+> >       { "sev-guest", "legacy-vm-type", "true" },
+> > +    { TYPE_X86_CPU, "legacy-multi-node", "on" },
+> >   };
+> 
+> Should this legacy-multi-node property be added to previous
+> machine types when applying to stable?  How about stable-8.2
+> and stable-7.2?
 
-This has a subtle problem: ndescs and elems->id are controlled by the
-guest, so it could make QEMU to loop forever looking for the right
-descriptor. For each iteration, the code must control that the
-variable "i" will be different for the next iteration, and that there
-will be no more than vq->last_avail_idx - vq->used_idx iterations.
+machine types are considered to express a fixed guest ABI
+once part of a QEMU release. Given that we should not be
+changing existing machine types in stable branches.
 
-Apart of that, I think it makes more sense to split the logical
-sections of the function this way:
-/* declarations */
-i =3D vq->used_idx
+In theory we could create new "bug fix" machine types in stable
+branches. To support live migration, we would then need to also
+add those same stable branch "bug fix" machine type versions in
+all future QEMU versions. This is generally not worth the hassle
+of exploding the number of machine types.
 
-/* Search for element in vq->used_elems */
-while (vq->used_elems[i].index !=3D elem->index &&
-vq->used_elems[i].index i !=3D vq->last_avail_idx && ...) {
-...
-}
+If you backport the patch, minus the machine type, then users
+can still get the fix but they'll need to manually set the
+property to enable it.
 
-/* Set length and mark as filled */
-vq->used_elems[i].len =3D len;
-vq->used_elems[i].filled =3D true;
----
-
-But I'm ok either way.
-
-> +}
-> +
->  static void virtqueue_packed_fill_desc(VirtQueue *vq,
->                                         const VirtQueueElement *elem,
->                                         unsigned int idx,
-> @@ -923,7 +945,9 @@ void virtqueue_fill(VirtQueue *vq, const VirtQueueEle=
-ment *elem,
->          return;
->      }
->
-> -    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) {
-> +    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_IN_ORDER)) {
-> +        virtqueue_ordered_fill(vq, elem, len);
-> +    } else if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) =
-{
->          virtqueue_packed_fill(vq, elem, len, idx);
->      } else {
->          virtqueue_split_fill(vq, elem, len, idx);
-> --
-> 2.39.3
->
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
