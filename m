@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45D0AC10F1A
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 05:54:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D9B8C10F1A
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 05:57:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4wj9-0004Nk-8E; Thu, 09 May 2024 01:53:59 -0400
+	id 1s4wmU-00067j-VF; Thu, 09 May 2024 01:57:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4wj7-0004LV-Tw; Thu, 09 May 2024 01:53:57 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1s4wmR-00066K-IS; Thu, 09 May 2024 01:57:23 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4wj6-0000NI-1U; Thu, 09 May 2024 01:53:57 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-1edfc57ac0cso3612195ad.3; 
- Wed, 08 May 2024 22:53:53 -0700 (PDT)
+ id 1s4wmQ-0001NW-0L; Thu, 09 May 2024 01:57:23 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-1ed96772f92so3985055ad.0; 
+ Wed, 08 May 2024 22:57:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715234032; x=1715838832; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=gmail.com; s=20230601; t=1715234240; x=1715839040; darn=nongnu.org;
+ h=in-reply-to:references:cc:to:from:subject:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pbcTmQEl8eT2YSFfhtVpXRl/f6DtUmWWjA7373ukXXA=;
- b=ejdnBC9jNg9ix8gEllCjkszd3jQF5g4OtRR0thptXl9z/yMwd6X+29s3+IMcp75etf
- YYE2jB72DauEaeqw+V0ZpWcBqgM1Ql+i7bPEfC08ymiGZjz4AyTTq1SCdgJqNsvK4QxE
- SVYPdR+A+yaa2Budb+ehlEFn9SSNmXWpoTuAmA+ITsOlc99qIHeRTuPw/FnLeYJus4Ri
- ast+T9y2BID6PUSyBSCjbJxY6JbY0SIYBwp/t8GCNJ01IlFSuyEhDQ+BQKYpm0iUxEse
- DXtVLOQixy21w5J019qt18QFj3+9SPpBDbubcAEqtJN6JjNzDoJOsgMVq+t0VSE3JbJ2
- XFfg==
+ bh=meMw/nsJto10956YHL1zX7FTwYO6aB+sep7NnZeX3VU=;
+ b=YRAIukzC3rx60OGrvl0tZB90LMS63VEm5pxlYE7ky58rxI+vsTLXHztJmZOpdVSF8k
+ C/ooDylPU9v9p6IktqCX7kL3TU3Dt2YHJVOSVm1/R06BgaIiINl9q9nh7a0IXTtPM3w3
+ Pn3j8pBilMuPtAM1Xgm9NrjlSgQhHZE/OKNOtGjwODBjQ5M9tX/AKNP3g/IzZh+RmSgZ
+ +69f/fgcBm8tuvsPLtdYBbhuGiH+fnVqvZnLk/ZV14YQ5FMu6a6tjbZa5HXMUKyc5a43
+ phSS6Z+vfq5/w55n84+I1kVHwKsrQtp8A/wCjuC86Jw5bZsG6zjAWh/1C3nLSEugCQ63
+ v5iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715234032; x=1715838832;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=1e100.net; s=20230601; t=1715234240; x=1715839040;
+ h=in-reply-to:references:cc:to:from:subject:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=pbcTmQEl8eT2YSFfhtVpXRl/f6DtUmWWjA7373ukXXA=;
- b=WU6YgEAp7GDdnaZvf7yyz4le1njGtovKueRd1eaf/j0cVx6A5Ng1DwmDlgnxhdKUhA
- LaNU+0UrHjAzlR1U8kUfCLufedRqFbFgky8qp597AqXMGBgS42yXqHHgIqh67ugFXOIz
- o/N7SjeaVkJxFmIkdBoYoqv6qpMun/uNGtYpRp4psa0DEiYwfzssmSN0RBvP7mvODCtR
- f20sC6ls0+XxH06fiQ2RnxssK6Mv1S1BCCMplsCqAOARnUlmpnP4XZV+JjqCvpC674tC
- lRdNQ0taKqZUZGuK8wXgAzizhZuseEDnbey96DfjAGWPe19pkyKh1dinvprLYzEKUie9
- gg8g==
+ bh=meMw/nsJto10956YHL1zX7FTwYO6aB+sep7NnZeX3VU=;
+ b=mo4XwJ6okvBbgMhKkgWI2mbpQkuOTRDFHNfaukH43vXb+42G0lx8X0u6itPK0Ao1Hi
+ bVw5zq/RGJ/I/Jl7wLzvg1X/SuJou7EuRkjZreDuRVfG0XomVzXLqz8Xozlx6cbhaBWT
+ amrDW074fyvjwbFKG9odehnFc9+PQGlMF9ZkfSSgia3wTthSYA3ypPS9eUeLJnBKTd+j
+ fP0z90vygIx/7pPHLkXQOITk5pmSdjCAZ9A9tZKT/4f6+qAwhaIoMayaXeUbaOWeClrR
+ r//TMYpJ2h6u1P3Vp/sCC/3Pw9JEDlS/f6UQTi4ce/XSBs9uyMr5Dq6pg/kf1gFDxBFm
+ oCHw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXhW60db2oeDANYjSNeTg1og1kFD3aAQsEyDVX9ZVnZ+e2HNsNhBLhRgZf+z7AxrsKAlZeASR0opr9p/1xNL032OVot
-X-Gm-Message-State: AOJu0Yys0K0zXDIKPD+QTyuaE18+2y4KqkLTS+t7yY1yTiMDAtYP4jsk
- RAhoTOLKKkQ+9l/E2Bz56ywhHbVs8mhUJSiAoRZbj63+mt/56Z27/C5U9w==
-X-Google-Smtp-Source: AGHT+IGbc6DtemzySid5rJjw1f5kN9ZYXMjv+sxGmZO8kWaRGMSKzkSGjVcpDM08+Xv8TqXp1yjNFA==
-X-Received: by 2002:a17:902:848e:b0:1ec:3ae4:cfe9 with SMTP id
- d9443c01a7336-1eeb0697e47mr42489615ad.33.1715234032113; 
- Wed, 08 May 2024 22:53:52 -0700 (PDT)
+ AJvYcCW5rOja+qHKNswmWgZGe6KCKzXmJay6T/t9KvgCopNJEX5JSnd68U6H6rWnF5hx88MXU6qCQyz+j7fAmevfcBplxzSN
+X-Gm-Message-State: AOJu0YzsB79OP2TyEIrWJ4HTOCJULGwMfMN8lD9zmPBnRswrGqA4mpli
+ YuEcNPMp10wFtRIi4u4x/Iy2wlo9IovA7R3/nje0HP1eJTTf17QaJl3cPA==
+X-Google-Smtp-Source: AGHT+IFizC0efr7164IYuqKyd4UbIfdPDUHiHDMTtn6iFOPpGnCCFhTbF0yibghbHC2BNn3bACBF4Q==
+X-Received: by 2002:a17:902:d902:b0:1eb:7832:8d93 with SMTP id
+ d9443c01a7336-1eeb01831demr45409635ad.23.1715234240203; 
+ Wed, 08 May 2024 22:57:20 -0700 (PDT)
 Received: from localhost (220-245-239-57.tpgi.com.au. [220.245.239.57])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ef0b9d1807sm5469875ad.59.2024.05.08.22.53.49
+ d9443c01a7336-1ef0c134b1csm5408185ad.234.2024.05.08.22.57.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 May 2024 22:53:51 -0700 (PDT)
+ Wed, 08 May 2024 22:57:19 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Thu, 09 May 2024 15:53:47 +1000
-Message-Id: <D14VPU4PT8Q4.3U8CM56ADMAZO@gmail.com>
-Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>, "Daniel Henrique
- Barboza" <danielhb413@gmail.com>
-Subject: Re: [PATCH v3 26/33] target/ppc/mmu_common.c: Simplify
- ppc_booke_xlate() part 1
+Date: Thu, 09 May 2024 15:57:15 +1000
+Message-Id: <D14VSHM1NK7T.NIK3CLN49192@gmail.com>
+Subject: Re: [PATCH v2 26/28] target/ppc/mmu_common.c: Move BookE MMU
+ functions together
 From: "Nicholas Piggin" <npiggin@gmail.com>
 To: "BALATON Zoltan" <balaton@eik.bme.hu>
+Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>, "Daniel Henrique
+ Barboza" <danielhb413@gmail.com>
 X-Mailer: aerc 0.17.0
-References: <cover.1715125376.git.balaton@eik.bme.hu>
- <5074c129ebfea0e1dfc22ef4691d8b62038d59b2.1715125376.git.balaton@eik.bme.hu>
- <D14AJB3VXJL0.18D5ZU7FZFOLN@gmail.com>
- <8ea53cfc-963f-000c-f5dc-d6bd61db3fbb@eik.bme.hu>
-In-Reply-To: <8ea53cfc-963f-000c-f5dc-d6bd61db3fbb@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x634.google.com
+References: <cover.1714606359.git.balaton@eik.bme.hu>
+ <d5d70791bdf598cd28ee70fd058f51c257a2b969.1714606359.git.balaton@eik.bme.hu>
+ <D13EMTIRPDQJ.2LCAHIOTN0W5N@gmail.com>
+ <090308e7-e3c0-8129-bdae-c2e3a41a2aa5@eik.bme.hu>
+ <D149IYMCXH4Z.ZPIXWOVQVOZO@gmail.com>
+ <841877bd-04d6-7608-b762-322962afad59@eik.bme.hu>
+In-Reply-To: <841877bd-04d6-7608-b762-322962afad59@eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,89 +101,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu May 9, 2024 at 1:25 AM AEST, BALATON Zoltan wrote:
+On Thu May 9, 2024 at 9:33 AM AEST, BALATON Zoltan wrote:
 > On Wed, 8 May 2024, Nicholas Piggin wrote:
-> > On Wed May 8, 2024 at 10:15 AM AEST, BALATON Zoltan wrote:
-> >> Move setting error_code that appears in every case out in front and
-> >> hoist the common fall through case for BOOKE206 as well which allows
-> >> removing the nested switches.
+> > On Tue May 7, 2024 at 10:31 PM AEST, BALATON Zoltan wrote:
+> >> On Tue, 7 May 2024, Nicholas Piggin wrote:
+> >>> What do you think about adding mmu-book3e.c instead?
 > >>
+> >> I have considered that but found that some functions have to be in the
+> >> same file and declared static for the compiler to inline them otherwis=
+e I
+> >> get worse performance. Maybe after these rearrangments it's now possib=
+le
+> >> to move these out but as this series got a bit long already I dod not =
+go
+> >> through with that and left it for a follow up but I can give it a try.
 > >
-> > Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-> >
-> >> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> >> ---
-> >>  target/ppc/mmu_common.c | 41 ++++++++++++----------------------------=
--
-> >>  1 file changed, 12 insertions(+), 29 deletions(-)
-> >>
-> >> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-> >> index 788e2bebd5..c725a7932f 100644
-> >> --- a/target/ppc/mmu_common.c
-> >> +++ b/target/ppc/mmu_common.c
-> >> @@ -1205,58 +1205,41 @@ static bool ppc_booke_xlate(PowerPCCPU *cpu, v=
-addr eaddr,
-> >>      }
-> >>
-> >>      log_cpu_state_mask(CPU_LOG_MMU, cs, 0);
-> >> +    env->error_code =3D 0;
-> >> +    if (ret =3D=3D -1) {
-> >> +        if (env->mmu_model =3D=3D POWERPC_MMU_BOOKE206) {
-> >> +            booke206_update_mas_tlb_miss(env, eaddr, access_type, mmu=
-_idx);
-> >> +        }
-> >> +    }
-> >>      if (access_type =3D=3D MMU_INST_FETCH) {
-> >>          switch (ret) {
-> >>          case -1:
-> >>              /* No matches in page tables or TLB */
-> >> -            switch (env->mmu_model) {
-> >> -            case POWERPC_MMU_BOOKE206:
-> >> -                booke206_update_mas_tlb_miss(env, eaddr, access_type,=
- mmu_idx);
-> >> -                /* fall through */
-> >> -            case POWERPC_MMU_BOOKE:
-> >> -                cs->exception_index =3D POWERPC_EXCP_ITLB;
-> >> -                env->error_code =3D 0;
-> >> -                env->spr[SPR_BOOKE_DEAR] =3D eaddr;
-> >> -                env->spr[SPR_BOOKE_ESR] =3D mmubooke206_esr(mmu_idx, =
-access_type);
-> >> -                break;
-> >> -            default:
-> >> -                g_assert_not_reached();
-> >> -            }
-> >> +            cs->exception_index =3D POWERPC_EXCP_ITLB;
-> >> +            env->spr[SPR_BOOKE_DEAR] =3D eaddr;
-> >> +            env->spr[SPR_BOOKE_ESR] =3D mmubooke206_esr(mmu_idx, acce=
-ss_type);
-> >>              break;
-> >>          case -2:
-> >>              /* Access rights violation */
-> >>              cs->exception_index =3D POWERPC_EXCP_ISI;
-> >> -            env->error_code =3D 0;
-> >>              break;
-> >>          case -3:
-> >>              /* No execute protection violation */
-> >>              cs->exception_index =3D POWERPC_EXCP_ISI;
-> >>              env->spr[SPR_BOOKE_ESR] =3D 0;
-> >
-> > I don't know BookE well but AFAIKS it says ESR if not set explicitly
-> > is generally cleared to 0 by interrupts which I guess is the case here.
-> > I don't see why the same would not apply to the -2 case either. That
-> > would reduce special cases.
-> >
-> > Although that's a behaviour change. It's possible current beahviour is
-> > deliberate or matches some particular CPU. Not something for this
-> > series.
+> > It would be nice.
 >
-> I don't know what the correct behaviour should be so I just tried to keep=
+> OK I've done that now as this also helps with some of the unint warnings=
 =20
-> what was there. After this clean it should be simpler to find out and=20
-> correct this later.
+> but I could not get rid of all work arounds completely.
 
-Right. Keeping exact behaviour is the right thing to do for such a
-series, so it's good you have been doing it. It was just an offhand
-comment because the special case annoyed me :)
+Great, thank you.
+
+> > What host machines are you using? I'm surprised inlining is causing
+> > so much performance unless it is something older or in-order.
+>
+> Maybe it depends more on the compiler than host. I still use gcc 10 with=
+=20
+> default -O2 level. Some people found that -O3 and LTO may help a bit but =
+I=20
+> test with default QEMU settings as that may be what most use.
+
+I was thinking just the cost of call/return should not be great.
+
+It is definitely possible for inlining to allow compiler to make
+more significant optimisations.
+
+Since you're looking closely at performance and probably nobody
+else has for a while I have no problem with it if you find it
+faster, mind you.
 
 Thanks,
 Nick
