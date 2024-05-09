@@ -4,74 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45E80C10F1A
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 19:10:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C89AC10F1A
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 19:15:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s599k-0006Tg-Aw; Thu, 09 May 2024 15:10:16 -0400
+	id 1s59E2-0008AX-DD; Thu, 09 May 2024 15:14:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1s599g-0006TT-9Q
- for qemu-devel@nongnu.org; Thu, 09 May 2024 15:10:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
+ id 1s59Dr-00087l-Lw; Thu, 09 May 2024 15:14:33 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1s599X-0002WW-2t
- for qemu-devel@nongnu.org; Thu, 09 May 2024 15:10:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715281801;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=d0CXcrpiKWu1rAvtl188qZbqFYhCG0ZtWXYemmoO8vc=;
- b=ZJtJIVfzBG+bntWZiNE8uiEfH3dnfH4Gj4CXKjVNQSQA0irsSHv2dqeTvjiR/j48ehq67g
- jKxHxtZ9yYgjjSzVUlKA7b40rG2VjsV3erimJ+yHw6DEv91IIbpGt917LuQqhsl6p7QPmS
- kvuadl/dNYyfd5lxQOKSURznwoFJkLE=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-26-IfW-tn9IMcGTnLhzeA-eZg-1; Thu, 09 May 2024 15:09:56 -0400
-X-MC-Unique: IfW-tn9IMcGTnLhzeA-eZg-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id CC6F9800262;
- Thu,  9 May 2024 19:09:55 +0000 (UTC)
-Received: from localhost (unknown [10.39.192.35])
- by smtp.corp.redhat.com (Postfix) with ESMTP id F033F10B3063;
- Thu,  9 May 2024 19:09:54 +0000 (UTC)
-Date: Thu, 9 May 2024 15:09:53 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Changqi Lu <luchangqi.123@bytedance.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, kwolf@redhat.com,
- hreitz@redhat.com, fam@euphon.net, ronniesahlberg@gmail.com,
- pbonzini@redhat.com, pl@dlhnet.de, kbusch@kernel.org,
- its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org,
- zhenwei pi <pizhenwei@bytedance.com>
-Subject: Re: [PATCH 5/9] hw/scsi: add persistent reservation in/out api for
- scsi device
-Message-ID: <20240509190953.GK515246@fedora.redhat.com>
-References: <20240508093629.441057-1-luchangqi.123@bytedance.com>
- <20240508093629.441057-6-luchangqi.123@bytedance.com>
+ (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
+ id 1s59Do-0003lD-Qj; Thu, 09 May 2024 15:14:30 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 449J29t1001876; Thu, 9 May 2024 19:14:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : from : to : cc
+ : date : message-id : mime-version : content-type :
+ content-transfer-encoding; s=pp1;
+ bh=qzCEGxxoE4Gk0vI6CCISnG8LnPo3AA24mRp9PWFkId8=;
+ b=lcXfa1j0f80xKzPF4XpK6lRto9B3DwzOKZBLGDXFosHZdL9mK0jTNKqQY1LjMUXWpePf
+ hECB3IrcrVbLZgPodouW7gT2p8O4lsFIhSGkpqvpVvPOU0Dh01qHU3yWAZW2udYu1tpF
+ W9eUqWPYaXdl49cnHS2W4GU2EqOLisOvdAj0ZaKJvwnV75T5OoVeCQ28jVGIJX3mU62e
+ U1Un8UJr+umO3477z0l58uo81SZtdFU67ZzS/7/XB1Bsf1zoQ5aWFaIJm9aulHamwNpE
+ heZw/4ceyiQdVqHh7TRI7TijyAIW9yDcBYKFiKgTMxX390Rnfe0lJUOa2zlwcEZ3Nt7y 4A== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y13qar3ee-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 09 May 2024 19:14:12 +0000
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 449JECZm020391;
+ Thu, 9 May 2024 19:14:12 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y13qar3e9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 09 May 2024 19:14:12 +0000
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 449IRIjE017553; Thu, 9 May 2024 19:14:11 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xysht4n48-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 09 May 2024 19:14:11 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 449JE5A732571978
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 9 May 2024 19:14:07 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AEC302004D;
+ Thu,  9 May 2024 19:14:05 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 39ADB2004E;
+ Thu,  9 May 2024 19:14:04 +0000 (GMT)
+Received: from ltcd48-lp2.aus.stglabs.ibm.com (unknown [9.3.101.175])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  9 May 2024 19:14:04 +0000 (GMT)
+Subject: [PATCH] vfio: container: Fix missing allocation of VFIOSpaprContainer
+From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+To: harshpb@linux.ibm.com, clg@kaod.org, npiggin@gmail.com
+Cc: danielhb413@gmail.com, david@gibson.dropbear.id.au, sbhat@linux.ibm.com,
+ alex.williamson@redhat.com, qemu-ppc@nongnu.org,
+ zhenzhong.duan@intel.com, qemu-devel@nongnu.org
+Date: Thu, 09 May 2024 14:14:03 -0500
+Message-ID: <171528203026.8420.10620440513237875837.stgit@ltcd48-lp2.aus.stglabs.ibm.com>
+User-Agent: StGit/1.5
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="uATZH0nsn8RjHLgv"
-Content-Disposition: inline
-In-Reply-To: <20240508093629.441057-6-luchangqi.123@bytedance.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: fgSpq5bt5fkOMJaPnKs284KTsghczeOQ
+X-Proofpoint-ORIG-GUID: hgEqH-KO2_KD-IgDvAsKAaAG6jMYEohE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-09_10,2024-05-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 clxscore=1011
+ spamscore=0 lowpriorityscore=0 impostorscore=0 mlxlogscore=999
+ malwarescore=0 suspectscore=0 priorityscore=1501 bulkscore=0 mlxscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2405010000 definitions=main-2405090135
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=sbhat@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,414 +113,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The commit 6ad359ec29 "(vfio/spapr: Move prereg_listener into
+spapr container)" began to use the newly introduced VFIOSpaprContainer
+structure.
 
---uATZH0nsn8RjHLgv
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+After several refactors, today the container_of(container,
+VFIOSpaprContainer, ABC) is used when VFIOSpaprContainer is actually
+not allocated. On PPC64 systems, this dereference is leading to corruption
+showing up as glibc malloc assertion during guest start when using vfio.
 
-On Wed, May 08, 2024 at 05:36:25PM +0800, Changqi Lu wrote:
-> Add persistent reservation in/out operations in the
-> SCSI device layer. By introducing the persistent
-> reservation in/out api, this enables the SCSI device
-> to perform reservation-related tasks, including querying
-> keys, querying reservation status, registering reservation
-> keys, initiating and releasing reservations, as well as
-> clearing and preempting reservations held by other keys.
->=20
-> These operations are crucial for management and control of
-> shared storage resources in a persistent manner.
->=20
-> Signed-off-by: Changqi Lu <luchangqi.123@bytedance.com>
-> Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
-> ---
->  hw/scsi/scsi-disk.c | 302 ++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 302 insertions(+)
+Patch adds the missing allocation while also making the structure movement
+to vfio common header file.
 
-Does sg_persist --report-capabilities
-(https://linux.die.net/man/8/sg_persist) show that persistent
-reservations are supported? Maybe some INQUIRY data still needs to be
-added.
+Fixes: 6ad359ec29 "(vfio/spapr: Move prereg_listener into spapr container)"
+Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+---
+ hw/vfio/container.c           |    6 ++++--
+ hw/vfio/spapr.c               |    6 ------
+ include/hw/vfio/vfio-common.h |    6 ++++++
+ 3 files changed, 10 insertions(+), 8 deletions(-)
 
->=20
-> diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-> index 4bd7af9d0c..bdd66c4026 100644
-> --- a/hw/scsi/scsi-disk.c
-> +++ b/hw/scsi/scsi-disk.c
-> @@ -32,6 +32,7 @@
->  #include "migration/vmstate.h"
->  #include "hw/scsi/emulation.h"
->  #include "scsi/constants.h"
-> +#include "scsi/utils.h"
->  #include "sysemu/block-backend.h"
->  #include "sysemu/blockdev.h"
->  #include "hw/block/block.h"
-> @@ -1474,6 +1475,296 @@ static void scsi_disk_emulate_read_data(SCSIReque=
-st *req)
->      scsi_req_complete(&r->req, GOOD);
->  }
-> =20
-> +typedef struct SCSIPrReadKeys {
-> +    uint32_t generation;
-> +    uint32_t num_keys;
-> +    uint64_t *keys;
-> +    void     *req;
-> +} SCSIPrReadKeys;
-> +
-> +typedef struct SCSIPrReadReservation {
-> +    uint32_t generation;
-> +    uint64_t key;
-> +    BlockPrType type;
-> +    void *req;
-> +} SCSIPrReadReservation;
-> +
-> +static void scsi_pr_read_keys_complete(void *opaque, int ret)
-> +{
-> +    int num_keys;
-> +    uint8_t *buf;
-> +    SCSIPrReadKeys *blk_keys =3D (SCSIPrReadKeys *)opaque;
-> +    SCSIDiskReq *r =3D (SCSIDiskReq *)blk_keys->req;
-> +    SCSIDiskState *s =3D DO_UPCAST(SCSIDiskState, qdev, r->req.dev);
-> +
-> +    assert(blk_get_aio_context(s->qdev.conf.blk) =3D=3D
-> +            qemu_get_current_aio_context());
-> +
-> +    assert(r->req.aiocb !=3D NULL);
-> +    r->req.aiocb =3D NULL;
-> +
-> +    if (scsi_disk_req_check_error(r, ret, true)) {
-> +        goto done;
-> +    }
-> +
-> +    buf =3D scsi_req_get_buf(&r->req);
-> +    num_keys =3D MIN(blk_keys->num_keys, ret);
-> +    blk_keys->generation =3D cpu_to_be32(blk_keys->generation);
-> +    memcpy(&buf[0], &blk_keys->generation, 4);
-> +    for (int i =3D 0; i < num_keys; i++) {
-> +        blk_keys->keys[i] =3D cpu_to_be64(blk_keys->keys[i]);
-> +        memcpy(&buf[8 + i * 8], &blk_keys->keys[i], 8);
-> +    }
-> +    num_keys =3D cpu_to_be32(num_keys * 8);
-> +    memcpy(&buf[4], &num_keys, 4);
-> +
-> +    scsi_req_data(&r->req, r->buflen);
-> +done:
-> +    scsi_req_unref(&r->req);
-> +    g_free(blk_keys->keys);
-> +    g_free(blk_keys);
-> +}
-> +
-> +static int scsi_disk_emulate_pr_read_keys(SCSIRequest *req)
-> +{
-> +    SCSIPrReadKeys *blk_keys;
-> +    SCSIDiskReq *r =3D DO_UPCAST(SCSIDiskReq, req, req);
-> +    SCSIDiskState *s =3D DO_UPCAST(SCSIDiskState, qdev, req->dev);
-> +    int buflen =3D MIN(r->req.cmd.xfer, r->buflen);
-> +    int num_keys =3D (buflen - sizeof(uint32_t) * 2) / sizeof(uint64_t);
-> +
-> +    blk_keys =3D g_new0(SCSIPrReadKeys, 1);
-> +    blk_keys->generation =3D 0;
-> +    /* num_keys is the maximum number of keys that can be transmitted */
-> +    blk_keys->num_keys =3D num_keys;
-> +    blk_keys->keys =3D g_malloc(sizeof(uint64_t) * num_keys);
-> +    blk_keys->req =3D r;
-> +
-> +    scsi_req_ref(&r->req);
-> +    r->req.aiocb =3D blk_aio_pr_read_keys(s->qdev.conf.blk, &blk_keys->g=
-eneration,
-> +                                        blk_keys->num_keys, blk_keys->ke=
-ys,
-> +                                        scsi_pr_read_keys_complete, blk_=
-keys);
-> +    return 0;
-> +}
-> +
-> +static void scsi_pr_read_reservation_complete(void *opaque, int ret)
-> +{
-> +    uint8_t *buf;
-> +    uint32_t num_keys =3D 0;
-> +    SCSIPrReadReservation *blk_rsv =3D (SCSIPrReadReservation *)opaque;
-> +    SCSIDiskReq *r =3D (SCSIDiskReq *)blk_rsv->req;
-> +    SCSIDiskState *s =3D DO_UPCAST(SCSIDiskState, qdev, r->req.dev);
-> +
-> +    assert(blk_get_aio_context(s->qdev.conf.blk) =3D=3D
-> +            qemu_get_current_aio_context());
-> +
-> +    assert(r->req.aiocb !=3D NULL);
-> +    r->req.aiocb =3D NULL;
-> +
-> +    if (scsi_disk_req_check_error(r, ret, true)) {
-> +        goto done;
-> +    }
-> +
-> +    buf =3D scsi_req_get_buf(&r->req);
-> +    blk_rsv->generation =3D cpu_to_be32(blk_rsv->generation);
-> +    memcpy(&buf[0], &blk_rsv->generation, 4);
-> +    if (ret) {
-> +        num_keys =3D cpu_to_be32(16);
-> +        blk_rsv->key =3D cpu_to_be64(blk_rsv->key);
-> +        memcpy(&buf[8], &blk_rsv->key, 8);
-> +        buf[21] =3D block_pr_type_to_scsi(blk_rsv->type) & 0xf;
-> +    } else {
-> +        num_keys =3D cpu_to_be32(0);
-> +    }
-> +
-> +    memcpy(&buf[4], &num_keys, 4);
-> +    scsi_req_data(&r->req, r->buflen);
-> +
-> +done:
-> +    scsi_req_unref(&r->req);
-> +    g_free(blk_rsv);
-> +}
-> +
-> +static int scsi_disk_emulate_pr_read_reservation(SCSIRequest *req)
-> +{
-> +    SCSIPrReadReservation *blk_rsv;
-> +    SCSIDiskReq *r =3D DO_UPCAST(SCSIDiskReq, req, req);
-> +    SCSIDiskState *s =3D DO_UPCAST(SCSIDiskState, qdev, req->dev);
-> +
-> +    blk_rsv =3D g_malloc(sizeof(*blk_rsv));
-> +    blk_rsv->generation =3D 0;
-> +    blk_rsv->key =3D 0;
-> +    blk_rsv->type =3D 0;
-> +    blk_rsv->req =3D r;
-> +
-> +    scsi_req_ref(&r->req);
-> +    r->req.aiocb =3D blk_aio_pr_read_reservation(s->qdev.conf.blk,
-> +                   &blk_rsv->generation, &blk_rsv->key, &blk_rsv->type,
-> +                   scsi_pr_read_reservation_complete, blk_rsv);
-> +    return 0;
-> +}
-> +
-> +static void scsi_aio_pr_complete(void *opaque, int ret)
-> +{
-> +    SCSIDiskReq *r =3D (SCSIDiskReq *)opaque;
-> +    SCSIDiskState *s =3D DO_UPCAST(SCSIDiskState, qdev, r->req.dev);
-> +
-> +    /* The request must only run in the BlockBackend's AioContext */
-> +    assert(blk_get_aio_context(s->qdev.conf.blk) =3D=3D
-> +           qemu_get_current_aio_context());
-> +
-> +    assert(r->req.aiocb !=3D NULL);
-> +    r->req.aiocb =3D NULL;
-> +
-> +    if (scsi_disk_req_check_error(r, ret, true)) {
-> +        goto done;
-> +    }
-> +
-> +    scsi_req_complete(&r->req, GOOD);
-> +
-> +done:
-> +    scsi_req_unref(&r->req);
-> +}
-> +
-> +static int scsi_disk_emulate_pr_register(SCSIDiskReq *r, uint64_t old_ke=
-y,
-> +                                         uint64_t new_key, SCSIPrType ty=
-pe,
-> +                                         bool ignore_key)
-> +{
-> +    SCSIRequest *req =3D &r->req;
-> +    SCSIDiskState *s =3D DO_UPCAST(SCSIDiskState, qdev, req->dev);
-> +
-> +    scsi_req_ref(&r->req);
-> +    r->req.aiocb =3D blk_aio_pr_register(s->qdev.conf.blk, old_key, new_=
-key,
-> +                                       scsi_pr_type_to_block(type),
-> +                                       ignore_key, scsi_aio_pr_complete,=
- r);
-> +
-> +    return 0;
-> +}
-> +
-> +static int scsi_disk_emulate_pr_reserve(SCSIDiskReq *r, uint64_t key,
-> +                                        SCSIPrType type)
-> +{
-> +    SCSIRequest *req =3D &r->req;
-> +    SCSIDiskState *s =3D DO_UPCAST(SCSIDiskState, qdev, req->dev);
-> +
-> +    scsi_req_ref(&r->req);
-> +    r->req.aiocb =3D blk_aio_pr_reserve(s->qdev.conf.blk, key,
-> +                                      scsi_pr_type_to_block(type),
-> +                                      scsi_aio_pr_complete, r);
-> +
-> +    return 0;
-> +}
-> +
-> +static int scsi_disk_emulate_pr_release(SCSIDiskReq *r, uint64_t key,
-> +                                        SCSIPrType type)
-> +{
-> +    SCSIRequest *req =3D &r->req;
-> +    SCSIDiskState *s =3D DO_UPCAST(SCSIDiskState, qdev, req->dev);
-> +
-> +    scsi_req_ref(&r->req);
-> +    r->req.aiocb =3D blk_aio_pr_release(s->qdev.conf.blk, key,
-> +                                      scsi_pr_type_to_block(type),
-> +                                      scsi_aio_pr_complete, r);
-> +
-> +    return 0;
-> +}
-> +
-> +static int scsi_disk_emulate_pr_clear(SCSIDiskReq *r, uint64_t key)
-> +{
-> +    SCSIRequest *req =3D &r->req;
-> +    SCSIDiskState *s =3D DO_UPCAST(SCSIDiskState, qdev, req->dev);
-> +
-> +    scsi_req_ref(&r->req);
-> +    r->req.aiocb =3D blk_aio_pr_clear(s->qdev.conf.blk, key,
-> +                                    scsi_aio_pr_complete, r);
-> +
-> +    return 0;
-> +}
-> +
-> +static int scsi_disk_emulate_pr_preempt(SCSIDiskReq *r, uint64_t new_key,
-> +                                        uint64_t old_key, SCSIPrType typ=
-e,
-> +                                        bool abort)
-> +{
-> +    SCSIRequest *req =3D &r->req;
-> +    SCSIDiskState *s =3D DO_UPCAST(SCSIDiskState, qdev, req->dev);
-> +
-> +    scsi_req_ref(&r->req);
-> +    r->req.aiocb =3D blk_aio_pr_preempt(s->qdev.conf.blk, new_key, old_k=
-ey,
-> +                                      scsi_pr_type_to_block(type), abort,
-> +                                      scsi_aio_pr_complete, r);
-> +
-> +    return 0;
-> +}
-> +
-> +static int scsi_disk_emulate_pr_in(SCSIRequest *req)
-> +{
-> +    int rc;
-> +    SCSIPrInAction action =3D req->cmd.buf[1] & 0x1f;
-> +
-> +    switch (action) {
-> +    case SCSI_PR_IN_READ_KEYS:
-> +        rc =3D scsi_disk_emulate_pr_read_keys(req);
-> +        break;
-> +    case SCSI_PR_IN_READ_RESERVATION:
-> +        rc =3D scsi_disk_emulate_pr_read_reservation(req);
-> +        break;
-> +    default:
-> +        return -ENOTSUP;
-> +    }
-> +
-> +    return rc;
-> +}
-> +
-> +static int scsi_disk_emulate_pr_out(SCSIDiskReq *r, uint8_t *inbuf)
-> +{
-> +    int rc;
-> +    uint64_t old_key, new_key;
-> +    SCSIPrOutAction action;
-> +    SCSIPrScope scope;
-> +    SCSIPrType type;
-> +    SCSIRequest *req =3D &r->req;
-> +
-> +    memcpy(&old_key, &inbuf[0], 8);
-> +    old_key =3D be64_to_cpu(old_key);
-> +    memcpy(&new_key, &inbuf[8], 8);
-> +    new_key =3D be64_to_cpu(new_key);
-> +    action =3D req->cmd.buf[1] & 0x1f;
-> +    scope =3D (req->cmd.buf[2] >> 4) & 0x0f;
-> +    type =3D req->cmd.buf[2] & 0x0f;
-> +
-> +    if (scope !=3D SCSI_PR_LU_SCOPE) {
-> +        return -ENOTSUP;
-> +    }
-> +
-> +    switch (action) {
-> +    case SCSI_PR_OUT_REGISTER:
-> +        rc =3D scsi_disk_emulate_pr_register(r, old_key, new_key, type, =
-false);
-> +        break;
-> +    case SCSI_PR_OUT_REG_AND_IGNORE_KEY:
-> +        rc =3D scsi_disk_emulate_pr_register(r, old_key, new_key, type, =
-true);
-> +        break;
-> +    case SCSI_PR_OUT_RESERVE:
-> +        rc =3D scsi_disk_emulate_pr_reserve(r, old_key, type);
-> +        break;
-> +    case SCSI_PR_OUT_RELEASE:
-> +        rc =3D scsi_disk_emulate_pr_release(r, old_key, type);
-> +        break;
-> +    case SCSI_PR_OUT_CLEAR:
-> +        rc =3D scsi_disk_emulate_pr_clear(r, old_key);
-> +        break;
-> +    case SCSI_PR_OUT_PREEMPT:
-> +        rc =3D scsi_disk_emulate_pr_preempt(r, old_key, new_key, type, f=
-alse);
-> +        break;
-> +    case SCSI_PR_OUT_PREEMPT_AND_ABORT:
-> +        rc =3D scsi_disk_emulate_pr_preempt(r, old_key, new_key, type, t=
-rue);
-> +        break;
-> +    default:
-> +        return -ENOTSUP;
-> +    }
-> +
-> +    return rc;
-> +}
-> +
->  static int scsi_disk_check_mode_select(SCSIDiskState *s, int page,
->                                         uint8_t *inbuf, int inlen)
->  {
-> @@ -1957,6 +2248,9 @@ static void scsi_disk_emulate_write_data(SCSIReques=
-t *req)
->          scsi_req_complete(&r->req, GOOD);
->          break;
-> =20
-> +    case PERSISTENT_RESERVE_OUT:
-> +        scsi_disk_emulate_pr_out(r, r->iov.iov_base);
-> +        break;
->      default:
->          abort();
->      }
-> @@ -2213,6 +2507,12 @@ static int32_t scsi_disk_emulate_command(SCSIReque=
-st *req, uint8_t *buf)
->      case FORMAT_UNIT:
->          trace_scsi_disk_emulate_command_FORMAT_UNIT(r->req.cmd.xfer);
->          break;
-> +    case PERSISTENT_RESERVE_OUT:
-> +        break;
-> +    case PERSISTENT_RESERVE_IN:
-> +        scsi_req_ref(&r->req);
-> +        scsi_disk_emulate_pr_in(req);
-> +        return 0;
->      default:
->          trace_scsi_disk_emulate_command_UNKNOWN(buf[0],
->                                                  scsi_command_name(buf[0]=
-));
-> @@ -2632,6 +2932,8 @@ static const SCSIReqOps *const scsi_disk_reqops_dis=
-patch[256] =3D {
->      [VERIFY_12]                       =3D &scsi_disk_emulate_reqops,
->      [VERIFY_16]                       =3D &scsi_disk_emulate_reqops,
->      [FORMAT_UNIT]                     =3D &scsi_disk_emulate_reqops,
-> +    [PERSISTENT_RESERVE_IN]           =3D &scsi_disk_emulate_reqops,
-> +    [PERSISTENT_RESERVE_OUT]          =3D &scsi_disk_emulate_reqops,
-> =20
->      [READ_6]                          =3D &scsi_disk_dma_reqops,
->      [READ_10]                         =3D &scsi_disk_dma_reqops,
-> --=20
-> 2.20.1
->=20
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 77bdec276e..ecaf5786d9 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -539,6 +539,7 @@ static int vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+ {
+     VFIOContainer *container;
+     VFIOContainerBase *bcontainer;
++    VFIOSpaprContainer *scontainer;
+     int ret, fd;
+     VFIOAddressSpace *space;
 
---uATZH0nsn8RjHLgv
-Content-Type: application/pgp-signature; name="signature.asc"
+@@ -611,7 +612,8 @@ static int vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+         goto close_fd_exit;
+     }
 
------BEGIN PGP SIGNATURE-----
+-    container = g_malloc0(sizeof(*container));
++    scontainer = g_malloc0(sizeof(*scontainer));
++    container = &scontainer->container;
+     container->fd = fd;
+     bcontainer = &container->bcontainer;
 
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmY9H4EACgkQnKSrs4Gr
-c8iwXQgAmZ+m0Wl7XEnJiDQ5HeGWU4PhWomjGm+/+1B/OrGIbwjtAtq0cqrUeIw4
-UFlKD2eQ48u44ncdOwgzO+eDOO7MimWvyzdXgDrwzVfzLLaYbvzHE45W2rR7c2X/
-cfJhMUaUgjjwOeTLBsbATzchqg7kOG/WbedrABjJPOfejTHzU5FRzp16KT6PRWAH
-teZ7j7RVAWhMCthCd45YYW0S9vtXuKK+UrFBD/Qo3T/0tAYVKL9KWdbPGSxHZY6L
-MyDtBMOaHxjPjpuQXqz7yfhrNMQQ9iJrQPqP2V0+Ce8ZqZK2OVh4sIzGdefcTYUZ
-/w2hBDfj4Wv+/lvyXqplMwC9dpsszw==
-=eQks
------END PGP SIGNATURE-----
+@@ -675,7 +677,7 @@ unregister_container_exit:
+     vfio_cpr_unregister_container(bcontainer);
 
---uATZH0nsn8RjHLgv--
+ free_container_exit:
+-    g_free(container);
++    g_free(scontainer);
+
+ close_fd_exit:
+     close(fd);
+diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
+index 0d949bb728..78d218b7e7 100644
+--- a/hw/vfio/spapr.c
++++ b/hw/vfio/spapr.c
+@@ -24,12 +24,6 @@
+ #include "qapi/error.h"
+ #include "trace.h"
+
+-typedef struct VFIOSpaprContainer {
+-    VFIOContainer container;
+-    MemoryListener prereg_listener;
+-    QLIST_HEAD(, VFIOHostDMAWindow) hostwin_list;
+-} VFIOSpaprContainer;
+-
+ static bool vfio_prereg_listener_skipped_section(MemoryRegionSection *section)
+ {
+     if (memory_region_is_iommu(section->mr)) {
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index b9da6c08ef..010fa68ac6 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -82,6 +82,12 @@ typedef struct VFIOContainer {
+     QLIST_HEAD(, VFIOGroup) group_list;
+ } VFIOContainer;
+
++typedef struct VFIOSpaprContainer {
++    VFIOContainer container;
++    MemoryListener prereg_listener;
++    QLIST_HEAD(, VFIOHostDMAWindow) hostwin_list;
++} VFIOSpaprContainer;
++
+ typedef struct VFIOHostDMAWindow {
+     hwaddr min_iova;
+     hwaddr max_iova;
+
 
 
