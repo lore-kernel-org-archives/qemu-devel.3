@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEADAC25B74
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 20:31:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FE4BC25B10
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 20:31:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5AKu-0000Ar-PY; Thu, 09 May 2024 16:25:52 -0400
+	id 1s5ALW-0000ij-6N; Thu, 09 May 2024 16:26:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s5AKr-000073-0p; Thu, 09 May 2024 16:25:49 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1s5ALR-0000UO-2U; Thu, 09 May 2024 16:26:25 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s5AKp-00011D-37; Thu, 09 May 2024 16:25:48 -0400
+ id 1s5ALP-00017Q-HI; Thu, 09 May 2024 16:26:24 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 08A7B4E65D6;
- Thu, 09 May 2024 22:25:44 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id D7F144E65CE;
+ Thu, 09 May 2024 22:26:00 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id NBc8zhvjGSHh; Thu,  9 May 2024 22:25:42 +0200 (CEST)
+ with ESMTP id r8yBOgnMOI7Z; Thu,  9 May 2024 22:25:58 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 195D14E65BB; Thu, 09 May 2024 22:25:42 +0200 (CEST)
-Message-Id: <f7b3176f06b9936bed9f30993e6e7a0c84821841.1715285340.git.balaton@eik.bme.hu>
+ id E9B114E65D5; Thu, 09 May 2024 22:25:58 +0200 (CEST)
+Message-Id: <052395ad8b1f691cef6d31773010f8e3ad452629.1715285340.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1715285340.git.balaton@eik.bme.hu>
 References: <cover.1715285340.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v5 08/32] target/ppc/mmu_common.c: Move some debug logging
+Subject: [PATCH v5 24/32] target/ppc/mmu_common.c: Simplify ppc_booke_xlate()
+ part 1
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -39,9 +40,9 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Thu, 09 May 2024 22:25:42 +0200 (CEST)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Date: Thu, 09 May 2024 22:25:58 +0200 (CEST)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -62,106 +63,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the debug logging within ppc6xx_tlb_check() from after its only
-call to simplify the caller.
+Move setting error_code that appears in every case out in front and
+hoist the common fall through case for BOOKE206 as well which allows
+removing the nested switches.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu_common.c | 54 ++++++++++++++++++-----------------------
- 1 file changed, 24 insertions(+), 30 deletions(-)
+ target/ppc/mmu_common.c | 41 ++++++++++++-----------------------------
+ 1 file changed, 12 insertions(+), 29 deletions(-)
 
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index ba60b4902b..89bfd9aa45 100644
+index 1ff2afdea7..87f28efbf9 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -225,17 +225,14 @@ static int ppc6xx_tlb_check(CPUPPCState *env, mmu_ctx_t *ctx,
-                       access_type == MMU_INST_FETCH ? 'I' : 'D');
-         switch (ppc6xx_tlb_pte_check(ctx, tlb->pte0, tlb->pte1,
-                                      0, access_type)) {
--        case -3:
--            /* TLB inconsistency */
--            return -1;
-         case -2:
-             /* Access violation */
-             ret = -2;
-             best = nr;
-             break;
--        case -1:
-+        case -1: /* No match */
-+        case -3: /* TLB inconsistency */
-         default:
--            /* No match */
-             break;
-         case 0:
-             /* access granted */
-@@ -251,14 +248,34 @@ static int ppc6xx_tlb_check(CPUPPCState *env, mmu_ctx_t *ctx,
-         }
+@@ -1164,58 +1164,41 @@ static bool ppc_booke_xlate(PowerPCCPU *cpu, vaddr eaddr,
      }
-     if (best != -1) {
--    done:
-+done:
-         qemu_log_mask(CPU_LOG_MMU, "found TLB at addr " HWADDR_FMT_plx
-                       " prot=%01x ret=%d\n",
-                       ctx->raddr & TARGET_PAGE_MASK, ctx->prot, ret);
-         /* Update page flags */
-         pte_update_flags(ctx, &env->tlb.tlb6[best].pte1, ret, access_type);
-     }
--
-+#if defined(DUMP_PAGE_TABLES)
-+    if (qemu_loglevel_mask(CPU_LOG_MMU)) {
-+        CPUState *cs = env_cpu(env);
-+        hwaddr base = ppc_hash32_hpt_base(env_archcpu(env));
-+        hwaddr len = ppc_hash32_hpt_mask(env_archcpu(env)) + 0x80;
-+        uint32_t a0, a1, a2, a3;
-+
-+        qemu_log("Page table: " HWADDR_FMT_plx " len " HWADDR_FMT_plx "\n",
-+                 base, len);
-+        for (hwaddr curaddr = base; curaddr < base + len; curaddr += 16) {
-+            a0 = ldl_phys(cs->as, curaddr);
-+            a1 = ldl_phys(cs->as, curaddr + 4);
-+            a2 = ldl_phys(cs->as, curaddr + 8);
-+            a3 = ldl_phys(cs->as, curaddr + 12);
-+            if (a0 != 0 || a1 != 0 || a2 != 0 || a3 != 0) {
-+                qemu_log(HWADDR_FMT_plx ": %08x %08x %08x %08x\n",
-+                         curaddr, a0, a1, a2, a3);
-+            }
+ 
+     log_cpu_state_mask(CPU_LOG_MMU, cs, 0);
++    env->error_code = 0;
++    if (ret == -1) {
++        if (env->mmu_model == POWERPC_MMU_BOOKE206) {
++            booke206_update_mas_tlb_miss(env, eaddr, access_type, mmu_idx);
 +        }
 +    }
-+#endif
-     return ret;
- }
- 
-@@ -420,29 +437,6 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
-         ctx->raddr = (hwaddr)-1ULL;
-         /* Software TLB search */
-         ret = ppc6xx_tlb_check(env, ctx, eaddr, access_type);
--#if defined(DUMP_PAGE_TABLES)
--        if (qemu_loglevel_mask(CPU_LOG_MMU)) {
--            CPUState *cs = env_cpu(env);
--            hwaddr curaddr;
--            uint32_t a0, a1, a2, a3;
--
--            qemu_log("Page table: " HWADDR_FMT_plx " len " HWADDR_FMT_plx "\n",
--                     ppc_hash32_hpt_base(cpu), ppc_hash32_hpt_mask(cpu) + 0x80);
--            for (curaddr = ppc_hash32_hpt_base(cpu);
--                 curaddr < (ppc_hash32_hpt_base(cpu)
--                            + ppc_hash32_hpt_mask(cpu) + 0x80);
--                 curaddr += 16) {
--                a0 = ldl_phys(cs->as, curaddr);
--                a1 = ldl_phys(cs->as, curaddr + 4);
--                a2 = ldl_phys(cs->as, curaddr + 8);
--                a3 = ldl_phys(cs->as, curaddr + 12);
--                if (a0 != 0 || a1 != 0 || a2 != 0 || a3 != 0) {
--                    qemu_log(HWADDR_FMT_plx ": %08x %08x %08x %08x\n",
--                             curaddr, a0, a1, a2, a3);
--                }
+     if (access_type == MMU_INST_FETCH) {
+         switch (ret) {
+         case -1:
+             /* No matches in page tables or TLB */
+-            switch (env->mmu_model) {
+-            case POWERPC_MMU_BOOKE206:
+-                booke206_update_mas_tlb_miss(env, eaddr, access_type, mmu_idx);
+-                /* fall through */
+-            case POWERPC_MMU_BOOKE:
+-                cs->exception_index = POWERPC_EXCP_ITLB;
+-                env->error_code = 0;
+-                env->spr[SPR_BOOKE_DEAR] = eaddr;
+-                env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
+-                break;
+-            default:
+-                g_assert_not_reached();
 -            }
--        }
--#endif
++            cs->exception_index = POWERPC_EXCP_ITLB;
++            env->spr[SPR_BOOKE_DEAR] = eaddr;
++            env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
+             break;
+         case -2:
+             /* Access rights violation */
+             cs->exception_index = POWERPC_EXCP_ISI;
+-            env->error_code = 0;
+             break;
+         case -3:
+             /* No execute protection violation */
+             cs->exception_index = POWERPC_EXCP_ISI;
+             env->spr[SPR_BOOKE_ESR] = 0;
+-            env->error_code = 0;
+             break;
+         }
      } else {
-         qemu_log_mask(CPU_LOG_MMU, "direct store...\n");
-         /* Direct-store segment : absolutely *BUGGY* for now */
+         switch (ret) {
+         case -1:
+             /* No matches in page tables or TLB */
+-            switch (env->mmu_model) {
+-            case POWERPC_MMU_BOOKE206:
+-                booke206_update_mas_tlb_miss(env, eaddr, access_type, mmu_idx);
+-                /* fall through */
+-            case POWERPC_MMU_BOOKE:
+-                cs->exception_index = POWERPC_EXCP_DTLB;
+-                env->error_code = 0;
+-                env->spr[SPR_BOOKE_DEAR] = eaddr;
+-                env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
+-                break;
+-            default:
+-                g_assert_not_reached();
+-            }
++            cs->exception_index = POWERPC_EXCP_DTLB;
++            env->spr[SPR_BOOKE_DEAR] = eaddr;
++            env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
+             break;
+         case -2:
+             /* Access rights violation */
+             cs->exception_index = POWERPC_EXCP_DSI;
+-            env->error_code = 0;
+             env->spr[SPR_BOOKE_DEAR] = eaddr;
+             env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
+             break;
 -- 
 2.30.9
 
