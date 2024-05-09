@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3847C10F1A
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 17:01:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CC35C25B74
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 17:01:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s578Z-0002D0-U1; Thu, 09 May 2024 13:00:55 -0400
+	id 1s578x-0002Kx-PX; Thu, 09 May 2024 13:01:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s578Y-0002Bu-2t
- for qemu-devel@nongnu.org; Thu, 09 May 2024 13:00:54 -0400
+ id 1s578v-0002Je-Cy
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 13:01:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s578V-0003UR-P6
- for qemu-devel@nongnu.org; Thu, 09 May 2024 13:00:53 -0400
+ id 1s578s-0003ZV-Ly
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 13:01:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715274051;
+ s=mimecast20190719; t=1715274074;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CSdbbijnqqu6Q0jIu+Qkk/Gmy2abee1VL3NL5PRrhBA=;
- b=LmOsU/dOeHaBGR6KF1+Vzn135yS0WVs/Xa+C002GCVhvUDLu3G79VwPIgoLHBilvQVMBtb
- 5oHwXE3WS3z8GpJDc6fSr5knc70MbfPKUbSnR7ppsog3Exir1h0oPdOjGNT+RHih6V9bI1
- QdCcPjkT7U+hqia1wY9arBH+4ncf2Hg=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=fwfrX5iNrX5LjziOh1abTyopnwgbwoodYNJhfUqWXtg=;
+ b=Ha0sYl826d+sm8GEXgB2upB2qsQBPwPjHrAr2+Xlx9sojFPwJb5da/zjEDFZfyOJ85ij4N
+ NncT43OIDql1beOVgsGg6tpmoULphzOpLl4S6tf0L3yh0i35+C0XrsDrdhkeTSFax5EXmi
+ B3SXEsQjrvdGGnXvb4AiVMRAuEiIeSE=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-477-XQXVVISGMwGRnXM6zyidXA-1; Thu, 09 May 2024 13:00:49 -0400
-X-MC-Unique: XQXVVISGMwGRnXM6zyidXA-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a5966e85bf6so191860666b.0
- for <qemu-devel@nongnu.org>; Thu, 09 May 2024 10:00:49 -0700 (PDT)
+ us-mta-511-g070jOb6N5yBaZwlWBLLoQ-1; Thu, 09 May 2024 13:01:12 -0400
+X-MC-Unique: g070jOb6N5yBaZwlWBLLoQ-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-572a203c05dso650085a12.0
+ for <qemu-devel@nongnu.org>; Thu, 09 May 2024 10:01:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715274047; x=1715878847;
+ d=1e100.net; s=20230601; t=1715274070; x=1715878870;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CSdbbijnqqu6Q0jIu+Qkk/Gmy2abee1VL3NL5PRrhBA=;
- b=EjK5W5WZwABhwOKcZKkHA/iPPqIz2YodlQOcSaXZo2pUR8L1a1fWm5O4Bt1TUNpw0M
- RKyafDMR0gMROMNSXHu9ItPB7EzFJPXJPbfjJhSo0YoyKfKXJfVfdOxCP8IjCoVTm54P
- Ow0bd9bbF92zbdI6RFuHS6Ah6JHUnXpwXblesHAjpfKr9cpzCJCsnMmt8DHhZaDdvSVx
- ZnebBgiYILvdL2O4yAYytJ84dtIxVAOr5nY6YOx5sxMjO/SLCwFlQoatAoE4AaqKg4Si
- nXnREX7Evi1ek0+mTKI97HbSwK+sRbJE4PJsT+06LrikV3FwgDp/WcPnxR+bH79OBeln
- yadw==
-X-Gm-Message-State: AOJu0YxmrGE4JCFRis0OXfX4HG1+Jg1YJXG/voqS9jPnNZ/qya2EVlU4
- iZVz7d+GA9ZQKb81phnpEodRGayigqdsxd6feD+apf5hh46LOw/3GrLoxd+7X03hlv1qUiFuA2g
- kagVwAHcDxUg85mrt9RUXz6QYJuNBd3RwVeGZOYYqKges19NJFcDSg+mhgwcUf4ZYRON1ryIC9i
- KiOBpc/u7IM7YwwLmWP19chz5S/cPaNVcvAqOm
-X-Received: by 2002:a17:906:308b:b0:a58:9a67:967b with SMTP id
- a640c23a62f3a-a5a11844720mr261523066b.27.1715274047016; 
- Thu, 09 May 2024 10:00:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH9w7WUbqsGUYP9TFk+LYI8lDiO+u2ZSHR2NmcOcxtMBWkBS8hpZkMnI/0Qf3m6oIbjlQ/R8w==
-X-Received: by 2002:a17:906:308b:b0:a58:9a67:967b with SMTP id
- a640c23a62f3a-a5a11844720mr261519966b.27.1715274046408; 
- Thu, 09 May 2024 10:00:46 -0700 (PDT)
+ bh=fwfrX5iNrX5LjziOh1abTyopnwgbwoodYNJhfUqWXtg=;
+ b=jq6vFsVPrFNaBCjUTlxLN0Z+JObmPMse2kLilE6D/WYWWjR8hPZOCj3sVUtMcwE7uK
+ CKkduuPlUf4ZsHeh/GkhMkqkUz7qPdWA4vSnK8a8kqJlept07ShNYxxZk3GE/ugF5Xwn
+ 0p1lFk16HKTTBdhCws4XYTJSdbX/BNGIo21N2K/w1CRtIRcVrRImvP+7urUz8gbz+Eun
+ iIk0l/ZiYc7M1vIBbSjGuTZjPX0m4wbBgn8OUaI5F3jTVqo2Iug8u/VSottrHuEZa8dh
+ oFks5JtOub282PF0V/4WbL+7dsAI8bFOIJS6V8mU7Q2JpyVXUHROwo0j4nn3B+kEQ9tY
+ wrhg==
+X-Gm-Message-State: AOJu0Yy7yHtaG5NGJLVfrJRUAudgo/n+iBXnHScf8Hgw1mqCJ2p6C7Pk
+ 7jibjqRo2JID6gQr0aoUvjnMkzsm/+psoXByHKgmlNPxTmP/K1r6dDLLMrUNvB61AbuV9p6tCu6
+ WCOiUwWUM8EK65+9C/bwceCE6R3R/WRCu98YQwNiuQ1LdKS0GqWidvhl4ZiXIQWhmM6zT/Myujg
+ 1ey2G/pKvsXYTCVPx1l3LF8sYep0y0r1RlxwjZ
+X-Received: by 2002:a50:d503:0:b0:56e:215b:75c2 with SMTP id
+ 4fb4d7f45d1cf-5734d5c137amr195830a12.17.1715274070740; 
+ Thu, 09 May 2024 10:01:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHuyDFUhwHoku1yoYmYcumNHRkiRzP2CH4HGjIYCJ20G0msQfFbPjf/fDOUhKZ1ULrAnVyJww==
+X-Received: by 2002:a50:d503:0:b0:56e:215b:75c2 with SMTP id
+ 4fb4d7f45d1cf-5734d5c137amr195820a12.17.1715274070446; 
+ Thu, 09 May 2024 10:01:10 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a5a1781cd90sm92868066b.20.2024.05.09.10.00.45
+ 4fb4d7f45d1cf-5734d4cf324sm96876a12.24.2024.05.09.10.01.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 May 2024 10:00:46 -0700 (PDT)
+ Thu, 09 May 2024 10:01:10 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: thuth@redhat.com
-Subject: [PATCH 01/13] s390x: move s390_cpu_addr2state to target/s390x/sigp.c
-Date: Thu,  9 May 2024 19:00:32 +0200
-Message-ID: <20240509170044.190795-2-pbonzini@redhat.com>
+Subject: [PATCH 11/13] hw/i386: move rtc-reset-reinjection command out of
+ hw/rtc
+Date: Thu,  9 May 2024 19:00:42 +0200
+Message-ID: <20240509170044.190795-12-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240509170044.190795-1-pbonzini@redhat.com>
 References: <20240509170044.190795-1-pbonzini@redhat.com>
@@ -102,81 +103,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This function has no dependency on the virtio-ccw machine type, though it
-assumes that the CPU address corresponds to the core_id and the index.
-
-If there is any need of something different or more fancy (unlikely)
-S390 can include a MachineClass subclass and implement it there.  For
-now, move it to sigp.c for simplicity.
+The rtc-reset-reinjection QMP command is specific to x86, other boards do not
+have the ACK tracking functionality that is needed for RTC interrupt
+reinjection.  Therefore the QMP command is only included in x86, but
+qmp_rtc_reset_reinjection() is implemented by hw/rtc/mc146818rtc.c
+and requires tracking of all created RTC devices.  Move the implementation
+to hw/i386, so that 1) it is available even if no RTC device exist
+2) the only RTC that exists is easily found in x86ms->rtc.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/s390x/s390-virtio-ccw.c | 16 ----------------
- target/s390x/sigp.c        | 17 +++++++++++++++++
- 2 files changed, 17 insertions(+), 16 deletions(-)
+ include/hw/rtc/mc146818rtc.h |  2 +-
+ hw/i386/monitor.c            | 46 ++++++++++++++++++++++++++++++++++++
+ hw/rtc/mc146818rtc.c         | 12 ++--------
+ hw/i386/meson.build          |  1 +
+ 4 files changed, 50 insertions(+), 11 deletions(-)
+ create mode 100644 hw/i386/monitor.c
 
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index 4dcc2138200..feabc173eb3 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -50,22 +50,6 @@
+diff --git a/include/hw/rtc/mc146818rtc.h b/include/hw/rtc/mc146818rtc.h
+index 97cec0b3e84..64893be1515 100644
+--- a/include/hw/rtc/mc146818rtc.h
++++ b/include/hw/rtc/mc146818rtc.h
+@@ -55,6 +55,6 @@ MC146818RtcState *mc146818_rtc_init(ISABus *bus, int base_year,
+                                     qemu_irq intercept_irq);
+ void mc146818rtc_set_cmos_data(MC146818RtcState *s, int addr, int val);
+ int mc146818rtc_get_cmos_data(MC146818RtcState *s, int addr);
+-void qmp_rtc_reset_reinjection(Error **errp);
++void rtc_reset_reinjection(MC146818RtcState *rtc);
  
- static Error *pv_mig_blocker;
- 
--S390CPU *s390_cpu_addr2state(uint16_t cpu_addr)
--{
--    static MachineState *ms;
--
--    if (!ms) {
--        ms = MACHINE(qdev_get_machine());
--        g_assert(ms->possible_cpus);
--    }
--
--    /* CPU address corresponds to the core_id and the index */
--    if (cpu_addr >= ms->possible_cpus->len) {
--        return NULL;
--    }
--    return S390_CPU(ms->possible_cpus->cpus[cpu_addr].cpu);
--}
--
- static S390CPU *s390x_new_cpu(const char *typename, uint32_t core_id,
-                               Error **errp)
- {
-diff --git a/target/s390x/sigp.c b/target/s390x/sigp.c
-index 9dd977349ab..ad0ad61177d 100644
---- a/target/s390x/sigp.c
-+++ b/target/s390x/sigp.c
-@@ -11,6 +11,7 @@
- #include "qemu/osdep.h"
- #include "cpu.h"
- #include "s390x-internal.h"
-+#include "hw/boards.h"
- #include "sysemu/hw_accel.h"
- #include "sysemu/runstate.h"
- #include "exec/address-spaces.h"
-@@ -435,6 +436,22 @@ static int sigp_set_architecture(S390CPU *cpu, uint32_t param,
-     return SIGP_CC_STATUS_STORED;
+ #endif /* HW_RTC_MC146818RTC_H */
+diff --git a/hw/i386/monitor.c b/hw/i386/monitor.c
+new file mode 100644
+index 00000000000..1ebd3564bf2
+--- /dev/null
++++ b/hw/i386/monitor.c
+@@ -0,0 +1,46 @@
++/*
++ * QEMU monitor
++ *
++ * Copyright (c) 2003-2004 Fabrice Bellard
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice shall be included in
++ * all copies or substantial portions of the Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
++ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++ * THE SOFTWARE.
++ */
++
++#include "qemu/osdep.h"
++#include "monitor/monitor.h"
++#include "qapi/qmp/qdict.h"
++#include "qapi/error.h"
++#include "qapi/qapi-commands-misc-target.h"
++#include "hw/i386/x86.h"
++#include "hw/rtc/mc146818rtc.h"
++
++#include CONFIG_DEVICES
++
++void qmp_rtc_reset_reinjection(Error **errp)
++{
++    X86MachineState *x86ms = X86_MACHINE(qdev_get_machine());
++
++#ifdef CONFIG_MC146818RTC
++    if (x86ms->rtc) {
++        rtc_reset_reinjection(MC146818_RTC(x86ms->rtc));
++    }
++#else
++    assert(!x86ms->rtc);
++#endif
++}
+diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
+index 3379f92748b..8ccee9a385d 100644
+--- a/hw/rtc/mc146818rtc.c
++++ b/hw/rtc/mc146818rtc.c
+@@ -104,16 +104,9 @@ static void rtc_coalesced_timer_update(MC146818RtcState *s)
+     }
  }
  
-+S390CPU *s390_cpu_addr2state(uint16_t cpu_addr)
-+{
-+    static MachineState *ms;
-+
-+    if (!ms) {
-+        ms = MACHINE(qdev_get_machine());
-+        g_assert(ms->possible_cpus);
-+    }
-+
-+    /* CPU address corresponds to the core_id and the index */
-+    if (cpu_addr >= ms->possible_cpus->len) {
-+        return NULL;
-+    }
-+    return S390_CPU(ms->possible_cpus->cpus[cpu_addr].cpu);
-+}
-+
- int handle_sigp(CPUS390XState *env, uint8_t order, uint64_t r1, uint64_t r3)
+-static QLIST_HEAD(, MC146818RtcState) rtc_devices =
+-    QLIST_HEAD_INITIALIZER(rtc_devices);
+-
+-void qmp_rtc_reset_reinjection(Error **errp)
++void rtc_reset_reinjection(MC146818RtcState *rtc)
  {
-     uint64_t *status_reg = &env->regs[r1];
+-    MC146818RtcState *s;
+-
+-    QLIST_FOREACH(s, &rtc_devices, link) {
+-        s->irq_coalesced = 0;
+-    }
++    rtc->irq_coalesced = 0;
+ }
+ 
+ static bool rtc_policy_slew_deliver_irq(MC146818RtcState *s)
+@@ -941,7 +934,6 @@ static void rtc_realizefn(DeviceState *dev, Error **errp)
+     object_property_add_tm(OBJECT(s), "date", rtc_get_date);
+ 
+     qdev_init_gpio_out(dev, &s->irq, 1);
+-    QLIST_INSERT_HEAD(&rtc_devices, s, link);
+ }
+ 
+ MC146818RtcState *mc146818_rtc_init(ISABus *bus, int base_year,
+diff --git a/hw/i386/meson.build b/hw/i386/meson.build
+index 3437da0aad1..03aad10df7a 100644
+--- a/hw/i386/meson.build
++++ b/hw/i386/meson.build
+@@ -2,6 +2,7 @@ i386_ss = ss.source_set()
+ i386_ss.add(files(
+   'fw_cfg.c',
+   'e820_memory_layout.c',
++  'monitor.c',
+   'multiboot.c',
+   'x86.c',
+   'x86-cpu.c',
 -- 
 2.45.0
 
