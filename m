@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D9B8C10F1A
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 05:57:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 154B6C10F1A
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 05:59:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4wmU-00067j-VF; Thu, 09 May 2024 01:57:27 -0400
+	id 1s4wo3-0006ra-PM; Thu, 09 May 2024 01:59:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4wmR-00066K-IS; Thu, 09 May 2024 01:57:23 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1s4wo0-0006rE-5H; Thu, 09 May 2024 01:59:01 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1s4wmQ-0001NW-0L; Thu, 09 May 2024 01:57:23 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1ed96772f92so3985055ad.0; 
- Wed, 08 May 2024 22:57:21 -0700 (PDT)
+ id 1s4wnx-0001kH-1n; Thu, 09 May 2024 01:58:59 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1ed96772f92so3993035ad.0; 
+ Wed, 08 May 2024 22:58:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715234240; x=1715839040; darn=nongnu.org;
- h=in-reply-to:references:cc:to:from:subject:message-id:date
+ d=gmail.com; s=20230601; t=1715234334; x=1715839134; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=meMw/nsJto10956YHL1zX7FTwYO6aB+sep7NnZeX3VU=;
- b=YRAIukzC3rx60OGrvl0tZB90LMS63VEm5pxlYE7ky58rxI+vsTLXHztJmZOpdVSF8k
- C/ooDylPU9v9p6IktqCX7kL3TU3Dt2YHJVOSVm1/R06BgaIiINl9q9nh7a0IXTtPM3w3
- Pn3j8pBilMuPtAM1Xgm9NrjlSgQhHZE/OKNOtGjwODBjQ5M9tX/AKNP3g/IzZh+RmSgZ
- +69f/fgcBm8tuvsPLtdYBbhuGiH+fnVqvZnLk/ZV14YQ5FMu6a6tjbZa5HXMUKyc5a43
- phSS6Z+vfq5/w55n84+I1kVHwKsrQtp8A/wCjuC86Jw5bZsG6zjAWh/1C3nLSEugCQ63
- v5iw==
+ bh=Msw3yMNt09dpy0EpHwPl7f/EyCepMzXGNFkvIh20Bdk=;
+ b=NYEGJEaeHdoBOOr0JZun838ETZMvMM9bVbAAf0iOQ/jy7mXJ20N7wTqXw89dJyJy89
+ Ya+NC/X8TaDzvO4cpMuE7U31lG1hBb4gUxH8bVclr/X9CqBkUySroFqGhREvxbRi+U0+
+ 83wbJ5mp1/pDXf5ilAtAGV6YGh3HnQi5MsFUhkFj2bFgpvHPL6/oKGJXyUsyvs/Idt42
+ 7yKcktS8IHan+zxoa/lXDIg1QVFms4wvOJxd+3oQjhJ01xeiIthjvtG+rUAfATEMIkKo
+ eFsXB3ek3XzrXMjTpIS7q6SVhlCBeummuaGd2wY2AugQhSwjy12O0qX6ugGB3u6pPwfp
+ HQdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715234240; x=1715839040;
- h=in-reply-to:references:cc:to:from:subject:message-id:date
+ d=1e100.net; s=20230601; t=1715234334; x=1715839134;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=meMw/nsJto10956YHL1zX7FTwYO6aB+sep7NnZeX3VU=;
- b=mo4XwJ6okvBbgMhKkgWI2mbpQkuOTRDFHNfaukH43vXb+42G0lx8X0u6itPK0Ao1Hi
- bVw5zq/RGJ/I/Jl7wLzvg1X/SuJou7EuRkjZreDuRVfG0XomVzXLqz8Xozlx6cbhaBWT
- amrDW074fyvjwbFKG9odehnFc9+PQGlMF9ZkfSSgia3wTthSYA3ypPS9eUeLJnBKTd+j
- fP0z90vygIx/7pPHLkXQOITk5pmSdjCAZ9A9tZKT/4f6+qAwhaIoMayaXeUbaOWeClrR
- r//TMYpJ2h6u1P3Vp/sCC/3Pw9JEDlS/f6UQTi4ce/XSBs9uyMr5Dq6pg/kf1gFDxBFm
- oCHw==
+ bh=Msw3yMNt09dpy0EpHwPl7f/EyCepMzXGNFkvIh20Bdk=;
+ b=MTeo0W/tkEKeO0sZfmJfTc1TbhI+po8GpHFEpfl4G6spsgtLT6L8apUuK364OikN1s
+ ly5AWZuRn4ptpr8KQckKSDbkc0+rgzKOU+srSEfnWmFOJZVgdLQZzRYZ3uaN7QayBI+x
+ DT+7HM/7FthR4sh3OSyNLVNPiVZ09R+PO80i4zBgqg2feOtA/urmtPb1i73MsXjm8u7I
+ RQZM5LpsvhcquUJX0pK4BIrkCbz/+Ag66gy/jUO44rveqqnhCbyA5oPUk/XTomuVqU8P
+ BJK7a8a5SN/4NN8gYMhsAO0eq+XsOseDd5GhuK/6LOiP47QdmGtZaMwizBYaI1m/v+d5
+ AdRQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW5rOja+qHKNswmWgZGe6KCKzXmJay6T/t9KvgCopNJEX5JSnd68U6H6rWnF5hx88MXU6qCQyz+j7fAmevfcBplxzSN
-X-Gm-Message-State: AOJu0YzsB79OP2TyEIrWJ4HTOCJULGwMfMN8lD9zmPBnRswrGqA4mpli
- YuEcNPMp10wFtRIi4u4x/Iy2wlo9IovA7R3/nje0HP1eJTTf17QaJl3cPA==
-X-Google-Smtp-Source: AGHT+IFizC0efr7164IYuqKyd4UbIfdPDUHiHDMTtn6iFOPpGnCCFhTbF0yibghbHC2BNn3bACBF4Q==
-X-Received: by 2002:a17:902:d902:b0:1eb:7832:8d93 with SMTP id
- d9443c01a7336-1eeb01831demr45409635ad.23.1715234240203; 
- Wed, 08 May 2024 22:57:20 -0700 (PDT)
+ AJvYcCURikRuGhk3uS2tOrHsDmfOnDoLKyGQcLKAxljSsds2zjlssqX5DaIM97gRXbntM79ByvMK2mTqYQEMBOgsP+4D5zKG
+X-Gm-Message-State: AOJu0YyA64Sasfv+j/GOTgeu+vm1Rn27pKz6ivCr0oBYaDSpxs+sIzVe
+ s8HrsvuYrNXprNKEx6la2lOTXoVgqWQy2d+LEh4Z90h0YzkxlmgH
+X-Google-Smtp-Source: AGHT+IFrb8Vojuz2lrDAGSxMJaKalda7zthPGQ39rDXL7lnJkO88HP1psL+D2Jj2R4NS2zz74jwGhQ==
+X-Received: by 2002:a17:903:1c7:b0:1eb:fb02:c454 with SMTP id
+ d9443c01a7336-1eeb059f16dmr55492045ad.53.1715234334217; 
+ Wed, 08 May 2024 22:58:54 -0700 (PDT)
 Received: from localhost (220-245-239-57.tpgi.com.au. [220.245.239.57])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ef0c134b1csm5408185ad.234.2024.05.08.22.57.17
+ d9443c01a7336-1ef0c13805asm5487525ad.264.2024.05.08.22.58.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 May 2024 22:57:19 -0700 (PDT)
+ Wed, 08 May 2024 22:58:53 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Thu, 09 May 2024 15:57:15 +1000
-Message-Id: <D14VSHM1NK7T.NIK3CLN49192@gmail.com>
-Subject: Re: [PATCH v2 26/28] target/ppc/mmu_common.c: Move BookE MMU
- functions together
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>
+Date: Thu, 09 May 2024 15:58:49 +1000
+Message-Id: <D14VTP1B4TNR.M9SZAKYV0101@gmail.com>
 Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>, "Daniel Henrique
  Barboza" <danielhb413@gmail.com>
+Subject: Re: [PATCH v3 33/33] target/ppc: Add a macro to check for page
+ protection bit
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>
 X-Mailer: aerc 0.17.0
-References: <cover.1714606359.git.balaton@eik.bme.hu>
- <d5d70791bdf598cd28ee70fd058f51c257a2b969.1714606359.git.balaton@eik.bme.hu>
- <D13EMTIRPDQJ.2LCAHIOTN0W5N@gmail.com>
- <090308e7-e3c0-8129-bdae-c2e3a41a2aa5@eik.bme.hu>
- <D149IYMCXH4Z.ZPIXWOVQVOZO@gmail.com>
- <841877bd-04d6-7608-b762-322962afad59@eik.bme.hu>
-In-Reply-To: <841877bd-04d6-7608-b762-322962afad59@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62a.google.com
+References: <cover.1715125376.git.balaton@eik.bme.hu>
+ <a91a1b9455f88cbbeff2652fc4f44acd89e98215.1715125376.git.balaton@eik.bme.hu>
+ <D14ASGGTNSQB.3TX66EXAL001R@gmail.com>
+ <7c4e51de-fdff-37b6-ffe5-2e7e26cffc17@eik.bme.hu>
+In-Reply-To: <7c4e51de-fdff-37b6-ffe5-2e7e26cffc17@eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,46 +99,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu May 9, 2024 at 9:33 AM AEST, BALATON Zoltan wrote:
+On Thu May 9, 2024 at 9:35 AM AEST, BALATON Zoltan wrote:
 > On Wed, 8 May 2024, Nicholas Piggin wrote:
-> > On Tue May 7, 2024 at 10:31 PM AEST, BALATON Zoltan wrote:
-> >> On Tue, 7 May 2024, Nicholas Piggin wrote:
-> >>> What do you think about adding mmu-book3e.c instead?
+> > On Wed May 8, 2024 at 10:15 AM AEST, BALATON Zoltan wrote:
+> >> Checking if a page protection bit is set for a given access type is a
+> >> common operation. Add a macro to avoid repeating the same check at
+> >> multiple places and also avoid a function call. As this relies on
+> >> access type and page protection bit values having certain relation
+> >> also add an assert to ensure that this assumption holds.
 > >>
-> >> I have considered that but found that some functions have to be in the
-> >> same file and declared static for the compiler to inline them otherwis=
-e I
-> >> get worse performance. Maybe after these rearrangments it's now possib=
-le
-> >> to move these out but as this series got a bit long already I dod not =
-go
-> >> through with that and left it for a follow up but I can give it a try.
+> >> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> >> ---
+> >>  target/ppc/cpu_init.c    |  4 ++++
+> >>  target/ppc/internal.h    | 20 ++------------------
+> >>  target/ppc/mmu-hash32.c  |  6 +++---
+> >>  target/ppc/mmu-hash64.c  |  2 +-
+> >>  target/ppc/mmu-radix64.c |  2 +-
+> >>  target/ppc/mmu_common.c  | 26 +++++++++++++-------------
+> >>  6 files changed, 24 insertions(+), 36 deletions(-)
+> >>
+> >> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+> >> index 92c71b2a09..6639235544 100644
+> >> --- a/target/ppc/cpu_init.c
+> >> +++ b/target/ppc/cpu_init.c
+> >> @@ -7377,6 +7377,10 @@ static void ppc_cpu_class_init(ObjectClass *oc,=
+ void *data)
+> >>      resettable_class_set_parent_phases(rc, NULL, ppc_cpu_reset_hold, =
+NULL,
+> >>                                         &pcc->parent_phases);
+> >>
+> >> +    /* CHECK_PROT_ACCESS relies on this MMU access and PAGE bits rela=
+tion */
+> >> +    assert(MMU_DATA_LOAD =3D=3D 0 && MMU_DATA_STORE =3D=3D 1 && MMU_I=
+NST_FETCH =3D=3D 2 &&
+> >> +           PAGE_READ =3D=3D 1 && PAGE_WRITE =3D=3D 2 && PAGE_EXEC =3D=
+=3D 4);
+> >> +
 > >
-> > It would be nice.
+> > Can you use qemu_build_assert() for this?
 >
-> OK I've done that now as this also helps with some of the unint warnings=
-=20
-> but I could not get rid of all work arounds completely.
-
-Great, thank you.
-
-> > What host machines are you using? I'm surprised inlining is causing
-> > so much performance unless it is something older or in-order.
+> I've changed it to qemu_build_assert and seems to work.
 >
-> Maybe it depends more on the compiler than host. I still use gcc 10 with=
-=20
-> default -O2 level. Some people found that -O3 and LTO may help a bit but =
-I=20
-> test with default QEMU settings as that may be what most use.
+> >>      cc->class_by_name =3D ppc_cpu_class_by_name;
+> >>      cc->has_work =3D ppc_cpu_has_work;
+> >>      cc->mmu_index =3D ppc_cpu_mmu_index;
+> >> diff --git a/target/ppc/internal.h b/target/ppc/internal.h
+> >> index 46176c4711..9880422ce3 100644
+> >> --- a/target/ppc/internal.h
+> >> +++ b/target/ppc/internal.h
+> >> @@ -234,24 +234,8 @@ void destroy_ppc_opcodes(PowerPCCPU *cpu);
+> >>  void ppc_gdb_init(CPUState *cs, PowerPCCPUClass *ppc);
+> >>  const gchar *ppc_gdb_arch_name(CPUState *cs);
+> >>
+> >> -/**
+> >> - * prot_for_access_type:
+> >> - * @access_type: Access type
+> >> - *
+> >> - * Return the protection bit required for the given access type.
+> >> - */
+> >> -static inline int prot_for_access_type(MMUAccessType access_type)
+> >> -{
+> >> -    switch (access_type) {
+> >> -    case MMU_INST_FETCH:
+> >> -        return PAGE_EXEC;
+> >> -    case MMU_DATA_LOAD:
+> >> -        return PAGE_READ;
+> >> -    case MMU_DATA_STORE:
+> >> -        return PAGE_WRITE;
+> >> -    }
+> >> -    g_assert_not_reached();
+> >> -}
+> >> +/* Check if permission bit required for the access_type is set in pro=
+t */
+> >> +#define CHECK_PROT_ACCESS(prot, access_type) ((prot) & (1 << (access_=
+type)))
+> >
+> > We don't want to use a macro when an inline function will work.
+> >
+> > Does the compiler not see the pattern and transform the existing
+> > code into a shift? If it does then I would leave it. If not, then
+> > just keep prot_for_access_type but make it a shift and maybe
+> > comment the logic.
+> >
+> > I would call the new function check_prot_for_access_type().
+>
+> That would be too long and does not fit on one line. Long names with=20
+> underscore and 80 char line limit does not go well together. I've left=20
+> this unchanged for now and wait for your reply on this.
 
-I was thinking just the cost of call/return should not be great.
-
-It is definitely possible for inlining to allow compiler to make
-more significant optimisations.
-
-Since you're looking closely at performance and probably nobody
-else has for a while I have no problem with it if you find it
-faster, mind you.
+Just split the line at the second argument. Better name is more
+important than minimising line count.
 
 Thanks,
 Nick
