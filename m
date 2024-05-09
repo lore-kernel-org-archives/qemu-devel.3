@@ -4,49 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B300C25B4F
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 May 2024 23:44:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC74BC04FFE
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 00:30:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s4qpi-0003MJ-RD; Wed, 08 May 2024 19:36:22 -0400
+	id 1s4rfR-0003j0-I9; Wed, 08 May 2024 20:29:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s4qpf-0003Gj-KX; Wed, 08 May 2024 19:36:19 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s4qpd-0002XH-Nw; Wed, 08 May 2024 19:36:19 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 3A7F34E65BB;
- Thu, 09 May 2024 01:36:16 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id QcTXckfpjEhb; Thu,  9 May 2024 01:36:14 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 47D1E4E64CB; Thu, 09 May 2024 01:36:14 +0200 (CEST)
-Message-Id: <5a82816a6aa18887e48f9d0b788f99f55277a980.1715209155.git.balaton@eik.bme.hu>
-In-Reply-To: <cover.1715209155.git.balaton@eik.bme.hu>
-References: <cover.1715209155.git.balaton@eik.bme.hu>
-From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v4 11/33] target/ppc/mmu_common.c: Move some debug logging
+ (Exim 4.90_1) (envelope-from <dmamfmgm@gmail.com>)
+ id 1s4rfP-0003if-V0
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 20:29:47 -0400
+Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dmamfmgm@gmail.com>)
+ id 1s4rfN-00060H-VT
+ for qemu-devel@nongnu.org; Wed, 08 May 2024 20:29:47 -0400
+Received: by mail-oi1-x230.google.com with SMTP id
+ 5614622812f47-3c98820fc92so170925b6e.1
+ for <qemu-devel@nongnu.org>; Wed, 08 May 2024 17:29:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1715214583; x=1715819383; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=TcxPz/j7uQmgiv8dY8Bjvqko1FYFFlvbV7izjEyHil8=;
+ b=VmreaRGAAUNKYeMsZ+6JTNHEZg923x+BTmi7fAbFhn1u4iLJu6Otad0Ikffy2OtiAS
+ 06e+2DT6CP79mc/Uu2zJcpYUCH32EPdVKsxyZ3RlMc12ziz9py27WeR8V1JiuDwY8krv
+ z5QDExHMa0U2fFg0fOPh1BRstl7KJB4VjOm5xO2rSnt3t+F318LeRPWCLE5R+GbHZjf5
+ yQl58qSg+t1kxyzuAsbZRLIr+azbs2JiYN6SrJc78yoZfCLgZVhXhdi0NNqUYfkBHnDs
+ x2GWQ/9BNSlxYxjAbz499UhotWAV5CGNhkbzL24CONkeCC7eZQtJUhGhzHyGexWszL1F
+ K29Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715214583; x=1715819383;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TcxPz/j7uQmgiv8dY8Bjvqko1FYFFlvbV7izjEyHil8=;
+ b=YkasmmJc785bhncE0KQzjY0tpCiOh0irUPmKOYPKGNwTeWgd1QHaMMTCDgfCpBCfxc
+ oiQql/61ffcpXIUkWOS3Zo7Uj1EtKvYGIZz1sBpuR1UZEz+i02vWB14ltmrUrto4H7bh
+ xhUTS9MMltZEunxIb2WL1Um8sNLlz86M2EQXIqiUMoNGo6kdZxzijULnvzG6mT9ItUq/
+ 937ujFN+NmhF0ysk/jv7aAUX/uyw9rxdmz6hG1M9OyQjIo1hYUnOQsKXpGQ9sFItbwjA
+ 1z5GxzQQpjiPRG5+rlxt4ORpk1ILFeOTjRpXlnVGF0WxHQ8isK0cNPJhvwfl9pQ7Xjhc
+ Pz6Q==
+X-Gm-Message-State: AOJu0YyW84Orn6nOcWJGqg/lN8DVoxraVotKwR2kYUMSFTHDEtvGqEHL
+ iRv8Qa82bjr87HnaXOUDhRDjJJxj8Zbw/A6AOkxCi27gECtXEZ4dOjQjrg==
+X-Google-Smtp-Source: AGHT+IHAldNvvtuyRh2ermQJBnqwjuMnJDcz3TL9m/NcPWRkmQSNcJmR7RGRX3nxrAzjPrCxvwchYQ==
+X-Received: by 2002:a05:6808:1707:b0:3c8:42ea:ec52 with SMTP id
+ 5614622812f47-3c98d911c70mr518546b6e.16.1715214583244; 
+ Wed, 08 May 2024 17:29:43 -0700 (PDT)
+Received: from mintleaf.lan ([136.49.150.227])
+ by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-3c98fd13eb7sm45315b6e.47.2024.05.08.17.29.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 08 May 2024 17:29:42 -0700 (PDT)
+From: David Hubbard <dmamfmgm@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Philippe Mathieu-Daude <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>, Gerd Hoffmann <kraxel@redhat.com>,
+ Cord Amfmgm <dmamfmgm@gmail.com>
+Subject: [PATCH 1/2] hw/usb/hcd-ohci: Fix #1510, #303: pid not IN or OUT
+Date: Wed,  8 May 2024 19:29:16 -0500
+Message-Id: <20240509002916.138802-1-dmamfmgm@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-To: qemu-devel@nongnu.org,
-    qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Thu, 09 May 2024 01:36:14 +0200 (CEST)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Received-SPF: pass client-ip=2607:f8b0:4864:20::230;
+ envelope-from=dmamfmgm@gmail.com; helo=mail-oi1-x230.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,106 +92,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the debug logging within ppc6xx_tlb_check() from after its only
-call to simplify the caller.
+From: Cord Amfmgm <dmamfmgm@gmail.com>
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+This changes the ohci validation to not assert if invalid data is fed to the
+ohci controller. The poc in https://bugs.launchpad.net/qemu/+bug/1907042 and
+migrated to bug #303 does the following to feed it a SETUP pid (valid)
+at an EndPt of 1 (invalid - all SETUP pids must be addressed to EndPt 0):
+
+        uint32_t MaxPacket = 64;
+        uint32_t TDFormat = 0;
+        uint32_t Skip = 0;
+        uint32_t Speed = 0;
+        uint32_t Direction = 0;  /* #define OHCI_TD_DIR_SETUP 0 */
+        uint32_t EndPt = 1;
+        uint32_t FuncAddress = 0;
+        ed->attr = (MaxPacket << 16) | (TDFormat << 15) | (Skip << 14)
+                   | (Speed << 13) | (Direction << 11) | (EndPt << 7)
+                   | FuncAddress;
+        ed->tailp = /*TDQTailPntr= */ 0;
+        ed->headp = ((/*TDQHeadPntr= */ &td[0]) & 0xfffffff0)
+                   | (/* ToggleCarry= */ 0 << 1);
+        ed->next_ed = (/* NextED= */ 0 & 0xfffffff0)
+
+qemu-fuzz also caught the same issue in #1510. They are both fixed by this
+patch.
+
+With a tiny OS[1] that boots and executes the poc the repro shows the issue:
+
+* OS that sends USB requests to a USB mass storage device
+  but sends a SETUP with EndPt = 1
+* qemu 6.2.0 (Debian 1:6.2+dfsg-2ubuntu6.19)
+* qemu HEAD (4e66a0854)
+* Actual OHCI controller (hardware)
+
+Command line:
+qemu-system-x86_64 -m 20 \
+ -device pci-ohci,id=ohci \
+ -drive if=none,format=raw,id=d,file=testmbr.raw \
+ -device usb-storage,bus=ohci.0,drive=d \
+ --trace "usb_*" --trace "ohci_*" -D qemu.log
+
+Results are:
+
+ qemu 6.2.0 | qemu HEAD | actual HW
+------------+-----------+----------------
+ assertion  | assertion | sets stall bit
+
+The assertion message is:
+
+> qemu-system-x86_64: ../../hw/usb/core.c:744: usb_ep_get: Assertion `pid == USB_TOKEN_IN || pid == USB_TOKEN_OUT' failed.
+> Aborted (core dumped)
+
+Tip: if the flags "-serial pty -serial stdio" are added to the command line
+the poc outputs its USB requests like this:
+
+> Free mem 2M ohci port0 conn FS
+> setup { 80 6 0 1 0 0 8 0 }
+> ED info=80000 { mps=8 en=0 d=0 } tail=c20920
+>   td0 c20880 nxt=c20960 f2000000 setup cbp=c20900 be=c20907       cbp=0 be=c20907
+>   td1 c20960 nxt=c20980 f3140000    in cbp=c20908 be=c2090f       cbp=0 be=c2090f
+>   td2 c20980 nxt=c20920 f3080000   out cbp=0 be=0                 cbp=0 be=0
+>    rx { 12 1 0 2 0 0 0 8 }
+> setup { 0 5 1 0 0 0 0 0 } tx {}
+> ED info=80000 { mps=8 en=0 d=0 } tail=c20880
+>   td0 c20920 nxt=c20960 f2000000 setup cbp=c20900 be=c20907       cbp=0 be=c20907
+>   td1 c20960 nxt=c20880 f3100000    in cbp=0 be=0                 cbp=0 be=0
+> setup { 80 6 0 1 0 0 12 0 }
+> ED info=80081 { mps=8 en=0 d=1 } tail=c20960
+>   td0 c20880 nxt=c209c0 f2000000 setup cbp=c20920 be=c20927
+>   td1 c209c0 nxt=c209e0 f3140000    in cbp=c20928 be=c20939
+>   td2 c209e0 nxt=c20960 f3080000   out cbp=0 be=0qemu-system-x86_64: ../../hw/usb/core.c:744: usb_ep_get: Assertion `pid == USB_TOKEN_IN || pid == USB_TOKEN_OUT' failed.
+> Aborted (core dumped)
+
+[1] The OS disk image has been emailed to philmd@linaro.org, mjt@tls.msk.ru,
+and kraxel@redhat.com:
+
+* testBadSetup.img.xz
+* sha256: 045b43f4396de02b149518358bf8025d5ba11091e86458875339fc649e6e5ac6
+
+Signed-off-by: Cord Amfmgm <dmamfmgm@gmail.com>
 ---
- target/ppc/mmu_common.c | 54 ++++++++++++++++++-----------------------
- 1 file changed, 24 insertions(+), 30 deletions(-)
+ hw/usb/hcd-ohci.c   | 5 +++++
+ hw/usb/trace-events | 1 +
+ 2 files changed, 6 insertions(+)
 
-diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index ba60b4902b..89bfd9aa45 100644
---- a/target/ppc/mmu_common.c
-+++ b/target/ppc/mmu_common.c
-@@ -225,17 +225,14 @@ static int ppc6xx_tlb_check(CPUPPCState *env, mmu_ctx_t *ctx,
-                       access_type == MMU_INST_FETCH ? 'I' : 'D');
-         switch (ppc6xx_tlb_pte_check(ctx, tlb->pte0, tlb->pte1,
-                                      0, access_type)) {
--        case -3:
--            /* TLB inconsistency */
--            return -1;
-         case -2:
-             /* Access violation */
-             ret = -2;
-             best = nr;
-             break;
--        case -1:
-+        case -1: /* No match */
-+        case -3: /* TLB inconsistency */
-         default:
--            /* No match */
-             break;
-         case 0:
-             /* access granted */
-@@ -251,14 +248,34 @@ static int ppc6xx_tlb_check(CPUPPCState *env, mmu_ctx_t *ctx,
-         }
-     }
-     if (best != -1) {
--    done:
-+done:
-         qemu_log_mask(CPU_LOG_MMU, "found TLB at addr " HWADDR_FMT_plx
-                       " prot=%01x ret=%d\n",
-                       ctx->raddr & TARGET_PAGE_MASK, ctx->prot, ret);
-         /* Update page flags */
-         pte_update_flags(ctx, &env->tlb.tlb6[best].pte1, ret, access_type);
-     }
--
-+#if defined(DUMP_PAGE_TABLES)
-+    if (qemu_loglevel_mask(CPU_LOG_MMU)) {
-+        CPUState *cs = env_cpu(env);
-+        hwaddr base = ppc_hash32_hpt_base(env_archcpu(env));
-+        hwaddr len = ppc_hash32_hpt_mask(env_archcpu(env)) + 0x80;
-+        uint32_t a0, a1, a2, a3;
-+
-+        qemu_log("Page table: " HWADDR_FMT_plx " len " HWADDR_FMT_plx "\n",
-+                 base, len);
-+        for (hwaddr curaddr = base; curaddr < base + len; curaddr += 16) {
-+            a0 = ldl_phys(cs->as, curaddr);
-+            a1 = ldl_phys(cs->as, curaddr + 4);
-+            a2 = ldl_phys(cs->as, curaddr + 8);
-+            a3 = ldl_phys(cs->as, curaddr + 12);
-+            if (a0 != 0 || a1 != 0 || a2 != 0 || a3 != 0) {
-+                qemu_log(HWADDR_FMT_plx ": %08x %08x %08x %08x\n",
-+                         curaddr, a0, a1, a2, a3);
-+            }
+diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
+index fc8fc91a1d..acd6016980 100644
+--- a/hw/usb/hcd-ohci.c
++++ b/hw/usb/hcd-ohci.c
+@@ -927,6 +927,11 @@ static int ohci_service_td(OHCIState *ohci, struct ohci_ed *ed)
+     case OHCI_TD_DIR_SETUP:
+         str = "setup";
+         pid = USB_TOKEN_SETUP;
++        if (OHCI_BM(ed->flags, ED_EN) > 0) {  /* setup only allowed to ep 0 */
++            trace_usb_ohci_td_bad_pid(str, ed->flags, td.flags);
++            ohci_die(ohci);
++            return 1;
 +        }
-+    }
-+#endif
-     return ret;
- }
- 
-@@ -420,29 +437,6 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
-         ctx->raddr = (hwaddr)-1ULL;
-         /* Software TLB search */
-         ret = ppc6xx_tlb_check(env, ctx, eaddr, access_type);
--#if defined(DUMP_PAGE_TABLES)
--        if (qemu_loglevel_mask(CPU_LOG_MMU)) {
--            CPUState *cs = env_cpu(env);
--            hwaddr curaddr;
--            uint32_t a0, a1, a2, a3;
--
--            qemu_log("Page table: " HWADDR_FMT_plx " len " HWADDR_FMT_plx "\n",
--                     ppc_hash32_hpt_base(cpu), ppc_hash32_hpt_mask(cpu) + 0x80);
--            for (curaddr = ppc_hash32_hpt_base(cpu);
--                 curaddr < (ppc_hash32_hpt_base(cpu)
--                            + ppc_hash32_hpt_mask(cpu) + 0x80);
--                 curaddr += 16) {
--                a0 = ldl_phys(cs->as, curaddr);
--                a1 = ldl_phys(cs->as, curaddr + 4);
--                a2 = ldl_phys(cs->as, curaddr + 8);
--                a3 = ldl_phys(cs->as, curaddr + 12);
--                if (a0 != 0 || a1 != 0 || a2 != 0 || a3 != 0) {
--                    qemu_log(HWADDR_FMT_plx ": %08x %08x %08x %08x\n",
--                             curaddr, a0, a1, a2, a3);
--                }
--            }
--        }
--#endif
-     } else {
-         qemu_log_mask(CPU_LOG_MMU, "direct store...\n");
-         /* Direct-store segment : absolutely *BUGGY* for now */
+         break;
+     default:
+         trace_usb_ohci_td_bad_direction(dir);
+diff --git a/hw/usb/trace-events b/hw/usb/trace-events
+index ed7dc210d3..fd7b90d70c 100644
+--- a/hw/usb/trace-events
++++ b/hw/usb/trace-events
+@@ -28,6 +28,7 @@ usb_ohci_iso_td_data_overrun(int ret, ssize_t len) "DataOverrun %d > %zu"
+ usb_ohci_iso_td_data_underrun(int ret) "DataUnderrun %d"
+ usb_ohci_iso_td_nak(int ret) "got NAK/STALL %d"
+ usb_ohci_iso_td_bad_response(int ret) "Bad device response %d"
++usb_ohci_td_bad_pid(const char *s, uint32_t edf, uint32_t tdf) "Bad pid %s: ed.flags 0x%x td.flags 0x%x"
+ usb_ohci_port_attach(int index) "port #%d"
+ usb_ohci_port_detach(int index) "port #%d"
+ usb_ohci_port_wakeup(int index) "port #%d"
 -- 
-2.30.9
+2.34.1
 
 
