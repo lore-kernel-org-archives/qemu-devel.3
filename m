@@ -4,77 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CC61C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 794E3C25B10
 	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 17:02:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5790-0002M2-Uz; Thu, 09 May 2024 13:01:23 -0400
+	id 1s578Z-0002CI-7K; Thu, 09 May 2024 13:00:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s578w-0002KP-Dh
- for qemu-devel@nongnu.org; Thu, 09 May 2024 13:01:18 -0400
+ id 1s578X-0002Bm-Fd
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 13:00:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s578h-0003XB-Rt
- for qemu-devel@nongnu.org; Thu, 09 May 2024 13:01:17 -0400
+ id 1s578V-0003UC-IV
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 13:00:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715274062;
+ s=mimecast20190719; t=1715274050;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6WAHTvAaE6sY6xhH4JOpgzSpMmfvt1RmbHZ80hmJ/+E=;
- b=VEBlLBivj9FjRlOb1jKgJvV+teJ5aK4HnONALqcp2C8M6FubMw9P9AXjytko1w1DqxeRkH
- z8UnTiDP29Vp7f8qBiQmJJrrcSMiS6Rj94xbeHcMe2fjiBjjLTZ/WdBZc2YhXwQt3L2Vsa
- FjJLBZLJuiSqo7KIsjEyCK7tf5JBaFc=
-Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
- [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=itudZeYBfZ/5DukRK1hcaOOUBJNhWgbPK+Y48SKsq5Q=;
+ b=FvTch1plpv9Ec7Uq9xJW8uCXrePgFiV05iqGwUl8HPfoN5OyR4MqG5Gdy3X984k6AKqVU/
+ rb8thEwl+Pm9DC/SDySIDnKMEuckpGIuewiLZ/zlduILuhwgcfWT5zi9vxc/UKdkNhYG1s
+ mVg/y0gMd4xULCoLHWC9ChjSdgPbcGo=
+Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
+ [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-653-hdMl6wfLPwG1Mo2gagOh7Q-1; Thu, 09 May 2024 13:01:01 -0400
-X-MC-Unique: hdMl6wfLPwG1Mo2gagOh7Q-1
-Received: by mail-lf1-f70.google.com with SMTP id
- 2adb3069b0e04-51f98fc5a80so952136e87.1
- for <qemu-devel@nongnu.org>; Thu, 09 May 2024 10:01:00 -0700 (PDT)
+ us-mta-647-VXa4herLNMy389UVJsCMrQ-1; Thu, 09 May 2024 13:00:48 -0400
+X-MC-Unique: VXa4herLNMy389UVJsCMrQ-1
+Received: by mail-lj1-f197.google.com with SMTP id
+ 38308e7fff4ca-2e2ec0c8807so8256911fa.1
+ for <qemu-devel@nongnu.org>; Thu, 09 May 2024 10:00:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715274059; x=1715878859;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6WAHTvAaE6sY6xhH4JOpgzSpMmfvt1RmbHZ80hmJ/+E=;
- b=SlUzMSII4ViYEFcmQjxomAa7mJY4GUEgyYh5lMGVpsTP8T8TAOBw5TcaT2+gt7FN5b
- Q9UDKpup8qmUTAoYQv8Zv89kF4qDj8UpwUoqNGKwHmJ2b630W0q9OKIY6nF/bc/Pwjbd
- nhX/AqLSV+rFrrmInT3PRySEfGXdDJzz5dVxUcIvw6jIHJsNHp7xnpDHJp7IQneuiluz
- WzJhkD7P96tfXMDs8jpfKQdPpOsFqOg4jShpNnT486HeydNIeXXDRp8xSVP8njX7ZUsa
- /xbG0MqsacpDA9l5bVoYCu59zq/UfNJC+iV5QdYyHFXJrJChikI1JMzKRHgjU4GbMtR4
- 54jg==
-X-Gm-Message-State: AOJu0YykGnhScE4CUsp3IzDtGnzVxc48HL4t7Y0126DohDJaVY+Ip4Pn
- sez0HF2mm5bjOiCRoLdDwAyS7UxPQF95rkFSFvhuLifpbVb1DOfQeIDnPg39qjgM3TjrbzZHFDc
- Mm7t4X57EwR8fvWjs/wwAZVJ0X4VRCkLNM6iRzf0Io7e9+HIp6mD+RF57CgFldUncwGrl5nIszF
- b64GxSYCrj2xkdXAKKauFpc+1EvKkRDjnXfqlT
-X-Received: by 2002:a05:6512:e81:b0:51b:6ed6:af3f with SMTP id
- 2adb3069b0e04-5221006e630mr82583e87.16.1715274058822; 
- Thu, 09 May 2024 10:00:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IERzlguJhi1uTwj2+3mHaHADh5DS+tmJn6GHgD9UDre8mMOfIWMRii+3e2JZ5PaXFxTmqi71w==
-X-Received: by 2002:a05:6512:e81:b0:51b:6ed6:af3f with SMTP id
- 2adb3069b0e04-5221006e630mr82562e87.16.1715274058295; 
- Thu, 09 May 2024 10:00:58 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1715274046; x=1715878846;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=itudZeYBfZ/5DukRK1hcaOOUBJNhWgbPK+Y48SKsq5Q=;
+ b=fHlrIKhzF8UDqGDiFu20TtiruCqSp5qeG7q0RNudfMahzoJniEOUxhuT2tY8zGOlPJ
+ 3Vz9Pd8t2hhUxA+7oM58dck/S/Nxo5XDxLWgKvsgc3+0SDe46kfUtx0ryPsjX/DN0UVA
+ i0F7GOPhHMQFUEJxi1I8pUUKagc6IWn+8QEUIq9KAWzhL+U+O+xlOVIBatward8Qi0g6
+ EUBFkzbodlR4iLtITDPnknHvz5fXnC3Gb1rVGfw2cwuR3MKGU9JbOShTj6cqAVsUQ6/c
+ cd1S3TZazXEMZHTYA/ETppP/+lXJlVE8b7Gjm91d0Mnkj3dT7qwkt+ePwywSVD0xwRML
+ gVYg==
+X-Gm-Message-State: AOJu0Yz5zvdgoTIO/YtrmeiV+JO9JfSUgDYADg1llINqj8rT3p5hUG6j
+ AnGMACzCX3TNM4yvLYfX1JBzALL9k9C8jC0dAfplfIBSXJuAYN8FatZGVVHi2SSfpsR3jRCTP+b
+ uj5yRRvwGNDKIhnzHA4xbllcOZkw5SL3b34Yiib5R6vj363/68IQ7hd/c7GJxKDSJDC8P06fujn
+ L6/se+aF7ezwQyB9u7gSB5v/uxHNH+ZqhPJctG
+X-Received: by 2002:a2e:a417:0:b0:2d8:713c:8313 with SMTP id
+ 38308e7fff4ca-2e5205ec6dbmr99811fa.45.1715274045911; 
+ Thu, 09 May 2024 10:00:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGCQyTtokRLq1NXdxk9IxZ1YPOirbwFdnaenp6H5qOiP8OWN3PgsDeonDdE+JBh9RyQZ1aEKQ==
+X-Received: by 2002:a2e:a417:0:b0:2d8:713c:8313 with SMTP id
+ 38308e7fff4ca-2e5205ec6dbmr99661fa.45.1715274045331; 
+ Thu, 09 May 2024 10:00:45 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a5a1781d342sm92958566b.6.2024.05.09.10.00.56
+ 4fb4d7f45d1cf-5733becfb77sm920595a12.41.2024.05.09.10.00.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 May 2024 10:00:56 -0700 (PDT)
+ Thu, 09 May 2024 10:00:44 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: thuth@redhat.com
-Subject: [PATCH 06/13] xen: initialize legacy backends from xen_bus_init()
-Date: Thu,  9 May 2024 19:00:37 +0200
-Message-ID: <20240509170044.190795-7-pbonzini@redhat.com>
+Subject: [PATCH 00/13] fix --without-default-devices build and (mostly) tests
+Date: Thu,  9 May 2024 19:00:31 +0200
+Message-ID: <20240509170044.190795-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.0
-In-Reply-To: <20240509170044.190795-1-pbonzini@redhat.com>
-References: <20240509170044.190795-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -85,6 +82,7 @@ X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,94 +99,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prepare for moving the calls to xen_be_register() under the
-control of xen_bus_init(), using the normal xen_backend_init()
-method that is used by the "modern" backends.
+The recent change to make boards "default y" made them go away from
+a --without-default-devices build, because the boards are not anymore
+enabled explicitly in configs/devices/.
 
-This requires the xenstore global variable to be initialized,
-which is done by xen_be_init().  To ensure that everything is
-ready at the time the xen_backend_init() functions are called,
-remove the xen_be_init() function from all the boards and
-place it directly in xen_bus_init().
+This is a problem for some targets that were not fully ready for this
+and have generic target code that needs symbols from boards or devices.
+The more complicated ones are s390x and i386.  In some cases some
+components simply have to be required by target/ARCH/, but often
+it is better to move some code around, associating it with boards
+instead of targets or vice versa.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- hw/i386/pc.c              | 1 -
- hw/xen/xen-bus.c          | 4 ++++
- hw/xen/xen-hvm-common.c   | 2 --
- hw/xenpv/xen_machine_pv.c | 5 +----
- 4 files changed, 5 insertions(+), 7 deletions(-)
+--without-default-devices builds in practice will always use a
+custom config, but let's keep things tidy.  This series does
+this for s390x (patches 1 to 5) and x86 (patches 6 to 12).  As a
+small addendum, patch 13 fixes qtest for ARM (32- and 64-bit) on a
+--without-default-devices build.
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 505ea750f4d..19f21953b4a 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1250,7 +1250,6 @@ void pc_basic_device_init(struct PCMachineState *pcms,
-             pci_create_simple(pcms->pcibus, -1, "xen-platform");
-         }
-         xen_bus_init();
--        xen_be_init();
-     }
- #endif
- 
-diff --git a/hw/xen/xen-bus.c b/hw/xen/xen-bus.c
-index fb82cc33e48..95b207ac8b4 100644
---- a/hw/xen/xen-bus.c
-+++ b/hw/xen/xen-bus.c
-@@ -13,6 +13,7 @@
- #include "hw/sysbus.h"
- #include "hw/xen/xen.h"
- #include "hw/xen/xen-backend.h"
-+#include "hw/xen/xen-legacy-backend.h" /* xen_be_init() */
- #include "hw/xen/xen-bus.h"
- #include "hw/xen/xen-bus-helper.h"
- #include "monitor/monitor.h"
-@@ -329,6 +330,9 @@ static void xen_bus_realize(BusState *bus, Error **errp)
-         goto fail;
-     }
- 
-+    /* Initialize legacy backend core & drivers */
-+    xen_be_init();
-+
-     if (xs_node_scanf(xenbus->xsh, XBT_NULL, "", /* domain root node */
-                       "domid", NULL, "%u", &domid) == 1) {
-         xenbus->backend_id = domid;
-diff --git a/hw/xen/xen-hvm-common.c b/hw/xen/xen-hvm-common.c
-index 1627da73982..2d1b0321214 100644
---- a/hw/xen/xen-hvm-common.c
-+++ b/hw/xen/xen-hvm-common.c
-@@ -872,8 +872,6 @@ void xen_register_ioreq(XenIOState *state, unsigned int max_cpus,
- 
-     xen_bus_init();
- 
--    xen_be_init();
--
-     return;
- 
- err:
-diff --git a/hw/xenpv/xen_machine_pv.c b/hw/xenpv/xen_machine_pv.c
-index 1130d1a1479..b500ce09891 100644
---- a/hw/xenpv/xen_machine_pv.c
-+++ b/hw/xenpv/xen_machine_pv.c
-@@ -34,8 +34,7 @@ static void xen_init_pv(MachineState *machine)
- {
-     setup_xen_backend_ops();
- 
--    /* Initialize backend core & drivers */
--    xen_be_init();
-+    xen_bus_init();
- 
-     switch (xen_mode) {
-     case XEN_ATTACH:
-@@ -60,8 +59,6 @@ static void xen_init_pv(MachineState *machine)
-         vga_interface_created = true;
-     }
- 
--    xen_bus_init();
--
-     /* config cleanup hook */
-     atexit(xen_config_cleanup);
- }
+The series seems huge, but it's mostly code movement.  Patch 10
+in particular moves board building code, which is unrelated to the
+X86MachineState superclass and has many dependencies on NUMA or
+hw/i386/pc-sysfw.c.
+
+I suspect that there are more issues, for example when building
+a CONFIG_MICROVM-only binary.  Fixing builds without boards on vanilla
+upstream configs is the more pressing problem, though.
+
+Patches 6 and 7 were tested with the Avocado Xen-on-KVM tests.
+
+Paolo
+
+
+Paolo Bonzini (13):
+  s390x: move s390_cpu_addr2state to target/s390x/sigp.c
+  s390_flic: add migration-enabled property
+  s390: move css_migration_enabled from machine to css.c
+  s390x: select correct components for no-board build
+  tests/qtest: s390x: fix operation in a build without any boards or
+    devices
+  xen: initialize legacy backends from xen_bus_init()
+  xen: register legacy backends via xen_backend_init
+  i386: correctly select code in hw/i386 that depends on other
+    components
+  i386: pc: remove unnecessary MachineClass overrides
+  hw/i386: split x86.c in multiple parts
+  hw/i386: move rtc-reset-reinjection command out of hw/rtc
+  i386: select correct components for no-board build
+  tests/qtest: arm: fix operation in a build without any boards or
+    devices
+
+ include/hw/i386/x86.h               |   10 +-
+ include/hw/rtc/mc146818rtc.h        |    2 +-
+ include/hw/s390x/css.h              |    6 +
+ include/hw/s390x/s390-virtio-ccw.h  |    7 -
+ include/hw/s390x/s390_flic.h        |    1 +
+ include/hw/xen/xen-legacy-backend.h |   14 +-
+ include/hw/xen/xen_pvdev.h          |    1 -
+ hw/9pfs/xen-9p-backend.c            |    8 +-
+ hw/display/xenfb.c                  |    8 +-
+ hw/i386/fw_cfg.c                    |    2 +
+ hw/i386/monitor.c                   |   46 ++
+ hw/i386/pc.c                        |    4 -
+ hw/i386/x86-common.c                | 1007 +++++++++++++++++++++++++
+ hw/i386/x86-cpu.c                   |   97 +++
+ hw/i386/x86.c                       | 1058 +--------------------------
+ hw/intc/ioapic-stub.c               |   29 +
+ hw/intc/s390_flic.c                 |    6 +-
+ hw/rtc/mc146818rtc.c                |   12 +-
+ hw/s390x/css.c                      |   10 +-
+ hw/s390x/s390-virtio-ccw.c          |   32 +-
+ hw/usb/xen-usb.c                    |   14 +-
+ hw/xen/xen-bus.c                    |    4 +
+ hw/xen/xen-hvm-common.c             |    2 -
+ hw/xen/xen-legacy-backend.c         |   16 -
+ hw/xenpv/xen_machine_pv.c           |    5 +-
+ target/s390x/sigp.c                 |   17 +
+ tests/qtest/arm-cpu-features.c      |    4 +
+ tests/qtest/drive_del-test.c        |    7 +-
+ tests/qtest/migration-test.c        |    6 +
+ tests/qtest/numa-test.c             |    4 +
+ .gitlab-ci.d/buildtest.yml          |    4 +-
+ hw/i386/meson.build                 |    7 +-
+ hw/intc/meson.build                 |    2 +-
+ target/i386/Kconfig                 |    1 +
+ target/s390x/Kconfig                |    2 +
+ 35 files changed, 1289 insertions(+), 1166 deletions(-)
+ create mode 100644 hw/i386/monitor.c
+ create mode 100644 hw/i386/x86-common.c
+ create mode 100644 hw/i386/x86-cpu.c
+ create mode 100644 hw/intc/ioapic-stub.c
+
 -- 
 2.45.0
 
