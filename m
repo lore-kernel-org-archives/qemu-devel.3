@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22BAFC25B10
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 13:37:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3494C10F1A
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 13:38:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s53xR-0007sr-Gn; Thu, 09 May 2024 09:37:13 -0400
+	id 1s53yU-0000HR-HJ; Thu, 09 May 2024 09:38:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s53xP-0007si-TH
- for qemu-devel@nongnu.org; Thu, 09 May 2024 09:37:11 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s53yS-0000D0-C3
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 09:38:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s53xO-0003JX-3z
- for qemu-devel@nongnu.org; Thu, 09 May 2024 09:37:11 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s53yQ-0003ZX-SX
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 09:38:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715261828;
+ s=mimecast20190719; t=1715261894;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=i8RP4jXw+e/Y50GiZFO1hO2NeXJULrT2cM9EU2hEeJ4=;
- b=eatS0Nnois6/FuK6FulevYgmhfy/rsNC65fepwA0dqGQA5aSSPkfHfwhIke6t0z2N5DUgR
- AxuslCA0aJ4zd541TS0hj7xBrVKO5A6p+c3lpNZBRsvkoKguM3qb6axvYm/+8EGeHrWXZ7
- pId+xL4/wMz16X9+yyDnsoaiIGPzXL8=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dJ2ItHeiShGhQ2LSCdlOrwvvo11oLvGXjQvPyADsKNI=;
+ b=PMqvnJXdqbRngDBgUALDrsgiwSadC9OyQ2jqOaW4sZd+uYmcmthxZDg7eRS1miLks/YdOP
+ DMSp27wMfwbD+3AkZNqMFPIWLRsJvZemt13qvOrPW14fuYUhj9dgJcsZQOXYRdzJShYSy1
+ 1T+ZC+KhM6ZSCMWweanZoCr1d9IKmTQ=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-269-fLco9wWtN5inL9jkAaI5kA-1; Thu, 09 May 2024 09:37:07 -0400
-X-MC-Unique: fLco9wWtN5inL9jkAaI5kA-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6a0bd0aee32so682106d6.2
- for <qemu-devel@nongnu.org>; Thu, 09 May 2024 06:37:07 -0700 (PDT)
+ us-mta-29-ChDNVuqSM3uNW4nd6Jg3ug-1; Thu, 09 May 2024 09:38:12 -0400
+X-MC-Unique: ChDNVuqSM3uNW4nd6Jg3ug-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6a0e9eddad0so3044866d6.0
+ for <qemu-devel@nongnu.org>; Thu, 09 May 2024 06:38:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715261827; x=1715866627;
+ d=1e100.net; s=20230601; t=1715261892; x=1715866692;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=i8RP4jXw+e/Y50GiZFO1hO2NeXJULrT2cM9EU2hEeJ4=;
- b=LxZuEeCsIhSSAcQWsofxwz1oMkobXf6NQI26ON24FFMJxOh9ytDlWv6hiI5azHmQz3
- tD9gOfYBuA/gTorCzexTChrDv6OSZfSYy9UQ74JkZsk2io4nh/8og1X4Jclu5Kt0eDLA
- gqZHO7kEQxzeWUnY7HSF2K9kr1wOX+rA3mPc3LhB4D1MlzgsVgiwGb7GjRRDAMSfP6PD
- 8CTwNyq8UHy0R/tDdRMSfgsZZDyQhjmoBHAmV7m1zYG8BeeUQoDAEkqo09rtkvYoy/wJ
- SBeGegtjDXew6fbn12qN8VuuByliriDjtDYEBXm16yTvxlMBxN7vshVouH7HpfrvZYsk
- ELeQ==
+ bh=dJ2ItHeiShGhQ2LSCdlOrwvvo11oLvGXjQvPyADsKNI=;
+ b=gwMKixboII33idB0PvcQK1M4FVJuxXX2pIaBy122jooicJiXPUn8Z5qNuZGdOI6RqK
+ Iu66LKAtnmUAHN5j5nIHnvWaIsqy+oPGrIYvbmgKWEjgrYmQl39z4egLG6Xd9T68hZEx
+ LG2+5PZD3ip1BIxeO846lRdD2d1EOdGn9NiOEPuKNtWCbwmxZ4XiRX6319ibopBR+F+/
+ wH6UUNhPLS6PNDVrkUo5ZsXbfG9w7UxaSTDCLDmsRkud4JzBZUBeSvVO90vs84zMWCow
+ tgs1sN+LdAoDJaik1McSaUD1Z1dnudLRa52L63v4KlTZt/R1mt/JcySKGH0OaZrcEH42
+ PM4g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVswdfC/If00ASiQZj53bbf7riPbdXBd1FV2OQrlkaEGsYJTjCUUahF+m6w/JtjPyFam2o7EsoYT37bbcCVcPVuRzl3tlk=
-X-Gm-Message-State: AOJu0YwyJe9N/huWVIeAWyzWi78u9/2hXXkcN28KLCA3Ay4mBDTIxSBX
- Jz+05MGxG6x4MRutjaVM2bpIQlFmD3yI598hAzRn1skW5qG6TwHHYEdwwvlASZw5q/i+wEWZ0nr
- /wbqhJnOng5V5DXbvFab7hawjnOvjEIg4ya6KKDdZVowEQOdcV7xS
-X-Received: by 2002:a05:620a:190f:b0:792:bcc1:1ef7 with SMTP id
- af79cd13be357-792bcc123b7mr267812685a.7.1715261826646; 
- Thu, 09 May 2024 06:37:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG7d+6zhgGWKSWSpxKC4XEC77Dq5Ggicfw9s1QYWqoH5Fo+mRNiN00HkaO9BpduD5qY8dj2pg==
-X-Received: by 2002:a05:620a:190f:b0:792:bcc1:1ef7 with SMTP id
- af79cd13be357-792bcc123b7mr267807985a.7.1715261825784; 
- Thu, 09 May 2024 06:37:05 -0700 (PDT)
+ AJvYcCVhudT+0DVP6tkcZaVcyH4KgAbNeDmIlwFSbQw+sCgzgOHNV88nfPGtv7KzMjsxzDugWoZmtLDyttrrZNBcz4mc1gfljME=
+X-Gm-Message-State: AOJu0Yw0IvAi8kRQxmev86BVQGrMTbNN9NjrkkoD4YXgtcDZapXqHCOE
+ H9wUtD1GnP1MU0oNIEg8Dub7a9v4w3RCzXPNQqqBEihSYWsIBRQzX5gwzfaLZAEvuYRWs3IY2Jq
+ gwdpb1JstoFNj1ZT6T4JLn3utDznhATk/aFJVgM63acB5odN2A9Jp
+X-Received: by 2002:a05:6214:e69:b0:6a0:cd65:599a with SMTP id
+ 6a1803df08f44-6a15143eaa5mr64301336d6.2.1715261892004; 
+ Thu, 09 May 2024 06:38:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IENhY2Tfr7wEmUencavtr2gz91dxPkjjEkgx8k/slRoKfMjLfAzApB0WCbb+ujYXh95lhyemQ==
+X-Received: by 2002:a05:6214:e69:b0:6a0:cd65:599a with SMTP id
+ 6a1803df08f44-6a15143eaa5mr64300386d6.2.1715261890100; 
+ Thu, 09 May 2024 06:38:10 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-792bf3185efsm67949285a.117.2024.05.09.06.37.04
+ 6a1803df08f44-6a15f179649sm7077176d6.16.2024.05.09.06.38.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 May 2024 06:37:05 -0700 (PDT)
-Date: Thu, 9 May 2024 09:37:04 -0400
+ Thu, 09 May 2024 06:38:09 -0700 (PDT)
+Date: Thu, 9 May 2024 09:38:08 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Li Zhijian <lizhijian@fujitsu.com>
 Cc: Fabiano Rosas <farosas@suse.de>,
  Hailiang Zhang <zhanghailiang@xfusion.com>, qemu-devel@nongnu.org,
- Zhang Chen <chen.zhang@intel.com>
-Subject: Re: [PATCH 2/3] migration/colo: make colo_incoming_co() return void
-Message-ID: <ZjzRgBd8vUaz9Z7x@x1n>
+ Zhang Chen <chen.zhang@intel.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: Re: [PATCH 3/3] migration/colo: Tidy up bql_unlock() around
+ bdrv_activate_all()
+Message-ID: <ZjzRwLOijr91ir2M@x1n>
 References: <20240509033106.1321880-1-lizhijian@fujitsu.com>
- <20240509033106.1321880-2-lizhijian@fujitsu.com>
+ <20240509033106.1321880-3-lizhijian@fujitsu.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240509033106.1321880-2-lizhijian@fujitsu.com>
+In-Reply-To: <20240509033106.1321880-3-lizhijian@fujitsu.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
@@ -102,16 +103,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 09, 2024 at 11:31:05AM +0800, Li Zhijian via wrote:
-> Currently, it always returns 0, no need to check the return value at all.
-> In addition, enter colo coroutine only if migration_incoming_colo_enabled()
-> is true.
-> Once the destination side enters the COLO* state, the COLO process will
-> take over the remaining processes until COLO exits.
+On Thu, May 09, 2024 at 11:31:06AM +0800, Li Zhijian via wrote:
+> Make the code more tight.
 > 
+> Cc: Michael Tokarev <mjt@tls.msk.ru>
 > Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
+
+> ---
+> This change/comment suggested by "Michael Tokarev <mjt@tls.msk.ru>" came
+> a bit late at that time, let's update it together in these minor set
+> this time.
+
+You can use a tag next time:
+
+Suggested-by: Michael Tokarev <mjt@tls.msk.ru>
+
+> ---
+>  migration/colo.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/migration/colo.c b/migration/colo.c
+> index 991806c06a..1b6d9da1c8 100644
+> --- a/migration/colo.c
+> +++ b/migration/colo.c
+> @@ -838,12 +838,11 @@ static void *colo_process_incoming_thread(void *opaque)
+>      /* Make sure all file formats throw away their mutable metadata */
+>      bql_lock();
+>      bdrv_activate_all(&local_err);
+> +    bql_unlock();
+>      if (local_err) {
+> -        bql_unlock();
+>          error_report_err(local_err);
+>          return NULL;
+>      }
+> -    bql_unlock();
+>  
+>      failover_init_state();
+>  
+> -- 
+> 2.31.1
+> 
+> 
 
 -- 
 Peter Xu
