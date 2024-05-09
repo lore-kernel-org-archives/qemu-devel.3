@@ -4,121 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE57DC25B10
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 14:33:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02008C10F1A
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 14:40:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s54og-00054m-UE; Thu, 09 May 2024 10:32:15 -0400
+	id 1s54vw-0006kK-6o; Thu, 09 May 2024 10:39:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s54of-00054a-Mm
- for qemu-devel@nongnu.org; Thu, 09 May 2024 10:32:13 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s54od-0005iK-S6
- for qemu-devel@nongnu.org; Thu, 09 May 2024 10:32:13 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1s54vu-0006jr-El
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 10:39:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1s54vl-0007r6-OX
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 10:39:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715265572;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aqBjtWmAXGIf1xZK1tR3gw9ucmdTyfAwlqRToX1QtVI=;
+ b=RQfruDDXQdcLxDboHBpy+TLHnuQ/sU8sYdnZjhfh5oJD8khaXWEcHMeI21G2tRui3AH+bw
+ XdGCszRmd4Fwl53wbpqR1KlYOAsHV5ONjBq9k0CGvnTsh5onpMS18MD/+xrbzeS2gjQGt/
+ 0pv96GS4I2gQZt4l42MnQBcb4ATn//Y=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-382-PV2F2NTUN46BT5MOYXS82A-1; Thu, 09 May 2024 10:39:28 -0400
+X-MC-Unique: PV2F2NTUN46BT5MOYXS82A-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 20F6838752;
- Thu,  9 May 2024 14:32:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1715265130; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=yBkvD8bdm1D7PAV4LlihF0KXZAm9mbaWmTOgMz6uOnA=;
- b=JhktrUPEFS/ShRHnOdBlIQ6R1hku+VeU+8mdgIMiJRWx6aklEnqm0vW9sIf9TV+9giDg6S
- 4Fx8UafrMC75uXzkMFozxhbt/WvM2a7g59HTNnJsCzuxcbZ1e1cBOoSQLb4iN1D9MwNO1y
- jMFFSOA40n1nZRLm2+N8aN+rKgBOrYQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1715265130;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=yBkvD8bdm1D7PAV4LlihF0KXZAm9mbaWmTOgMz6uOnA=;
- b=LGWgoAUXg0W9YIAp+KJLqQw7Xaz8geXt1n7xXNjsfqlCw9IErHKuw8iJOhxmJaka5QqKyT
- eVkIiHTyoG/KuPDQ==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=JhktrUPE;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=LGWgoAUX
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1715265130; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=yBkvD8bdm1D7PAV4LlihF0KXZAm9mbaWmTOgMz6uOnA=;
- b=JhktrUPEFS/ShRHnOdBlIQ6R1hku+VeU+8mdgIMiJRWx6aklEnqm0vW9sIf9TV+9giDg6S
- 4Fx8UafrMC75uXzkMFozxhbt/WvM2a7g59HTNnJsCzuxcbZ1e1cBOoSQLb4iN1D9MwNO1y
- jMFFSOA40n1nZRLm2+N8aN+rKgBOrYQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1715265130;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=yBkvD8bdm1D7PAV4LlihF0KXZAm9mbaWmTOgMz6uOnA=;
- b=LGWgoAUXg0W9YIAp+KJLqQw7Xaz8geXt1n7xXNjsfqlCw9IErHKuw8iJOhxmJaka5QqKyT
- eVkIiHTyoG/KuPDQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 984E213941;
- Thu,  9 May 2024 14:32:09 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id a46YF2nePGYmBQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 09 May 2024 14:32:09 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, Igor
- Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Philippe Mathieu-Daude
- <philmd@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, "Daniel P.
- Berrange" <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: Re: [PATCH V1 09/26] migration: vmstate_register_named
-In-Reply-To: <874jb7kqya.fsf@suse.de>
-References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
- <1714406135-451286-10-git-send-email-steven.sistare@oracle.com>
- <874jb7kqya.fsf@suse.de>
-Date: Thu, 09 May 2024 11:32:07 -0300
-Message-ID: <871q6bkqe0.fsf@suse.de>
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 88C54801211;
+ Thu,  9 May 2024 14:39:27 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.79])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 631B91D43C12;
+ Thu,  9 May 2024 14:39:23 +0000 (UTC)
+Date: Thu, 9 May 2024 15:39:21 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clegoate@redhat.com>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Laurent Vivier <laurent@vivier.eu>, qemu-arm@nongnu.org,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>, qemu-ppc@nongnu.org,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org
+Subject: Re: [PATCH 01/14] include/hw: add helpers for defining versioned
+ machine types
+Message-ID: <ZjzgGZYnJbB0nO1A@redhat.com>
+References: <20240501182759.2934195-1-berrange@redhat.com>
+ <20240501182759.2934195-2-berrange@redhat.com>
+ <07cdc5df-781d-4833-9092-af3ef520dbed@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FREEMAIL_ENVRCPT(0.00)[gmail.com];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCPT_COUNT_TWELVE(0.00)[12]; FUZZY_BLOCKED(0.00)[rspamd.com];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- FREEMAIL_CC(0.00)[redhat.com,habkost.net,gmail.com,linaro.org,oracle.com];
- DKIM_TRACE(0.00)[suse.de:+]; TO_DN_SOME(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MISSING_XM_UA(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; TAGGED_RCPT(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:email,
- imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 20F6838752
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <07cdc5df-781d-4833-9092-af3ef520dbed@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,50 +100,79 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
+On Thu, May 02, 2024 at 12:34:49PM +0200, Thomas Huth wrote:
+> On 01/05/2024 20.27, Daniel P. Berrangé wrote:
+> > The various targets which define versioned machine types have
+> > a bunch of obfuscated macro code for defining unique function
+> > and variable names using string concatenation.
+> > 
+> > This addes a couple of helpers to improve the clarity of such
+> > code macro.
+> > 
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > ---
+> >   include/hw/boards.h | 166 ++++++++++++++++++++++++++++++++++++++++++++
+> >   1 file changed, 166 insertions(+)
+> > 
+> > diff --git a/include/hw/boards.h b/include/hw/boards.h
+> > index 2fa800f11a..47ca450fca 100644
+> > --- a/include/hw/boards.h
+> > +++ b/include/hw/boards.h
+> > @@ -414,6 +414,172 @@ struct MachineState {
+> >       struct NumaState *numa_state;
+> >   };
+> > +/*
+> > + * The macros which follow are intended to facilitate the
+> > + * definition of versioned machine types, using a somewhat
+> > + * similar pattern across targets:
+> 
+> I'd suggest to add a sentence at the end saying something like this: "For
+> example, to create the macro for setting up a versioned "virt" machine could
+> look like this:" (otherwise it's not immediately clear whether the example
+> is about only the "macros which follow" or whether it's about how to set up
+> a machine type)
 
-> Steve Sistare <steven.sistare@oracle.com> writes:
->
->> Define vmstate_register_named which takes the instance name as its first
->> parameter, instead of generating the name from VMStateIf of the Object.
->> This will be needed to register objects that are not Objects.  Pass the
->> new name parameter to vmstate_register_with_alias_id.
->>
->> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
->
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Yes, will do
 
-Actually, can't we define a wrapper type just for this purpose? For
-example, looking at dbus-vmstate.c:
+> 
+> > + *  #define DEFINE_VIRT_MACHINE_IMPL(latest, ...) \
+> > + *      static void MACHINE_VER_SYM(class_init, virt, __VA_ARGS__)( \
+> > + *          ObjectClass *oc, \
+> > + *          void *data) \
 
-static void dbus_vmstate_class_init(ObjectClass *oc, void *data)
-{
-...
-    VMStateIfClass *vc = VMSTATE_IF_CLASS(oc);
+> > + *  #define DEFINE_VIRT_MACHINE_TAGGED(major, minor, micro, tag) \
+> > + *      DEFINE_VIRT_MACHINE_IMPL(false, major, minor, micro, _, tag)
+> > + */
+> 
+> I'd suggest to add a separate comment for the macro below, explaining that
+> it is supposed to be used with __VA_ARGS__ to pick a certain other macro
+> depending on the amount of entries in __VA_ARGS__.
 
-    vc->get_id = dbus_vmstate_get_id;
-...
-}
+Yep, Eric had the same suggestion
 
-static const TypeInfo dbus_vmstate_info = {
-    .name = TYPE_DBUS_VMSTATE,
-    .parent = TYPE_OBJECT,
-    .instance_size = sizeof(DBusVMState),
-    .instance_finalize = dbus_vmstate_finalize,
-    .class_init = dbus_vmstate_class_init,
-    .interfaces = (InterfaceInfo[]) {
-        { TYPE_USER_CREATABLE },   // without this one
-        { TYPE_VMSTATE_IF },
-        { }
-    }
-};
+> 
+> > +#define _MACHINE_VER_PICK(x1, x2, x3, x4, x5, x6, ...) x6
+> > +
+> > +/*
+> > + * Construct a human targetted machine version string.
+> 
+> s/targetted/targeted/ according to my spell checker ?
+> 
+> Apart from the nits:
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> 
+>  Thomas
+> 
 
-static void register_types(void)
-{
-    type_register_static(&dbus_vmstate_info);
-}
-type_init(register_types);
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
