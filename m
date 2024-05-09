@@ -4,90 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3494C10F1A
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 13:38:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A5EFC10F1A
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 13:41:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s53yU-0000HR-HJ; Thu, 09 May 2024 09:38:18 -0400
+	id 1s540l-000217-CF; Thu, 09 May 2024 09:40:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s53yS-0000D0-C3
- for qemu-devel@nongnu.org; Thu, 09 May 2024 09:38:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s53yQ-0003ZX-SX
- for qemu-devel@nongnu.org; Thu, 09 May 2024 09:38:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715261894;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dJ2ItHeiShGhQ2LSCdlOrwvvo11oLvGXjQvPyADsKNI=;
- b=PMqvnJXdqbRngDBgUALDrsgiwSadC9OyQ2jqOaW4sZd+uYmcmthxZDg7eRS1miLks/YdOP
- DMSp27wMfwbD+3AkZNqMFPIWLRsJvZemt13qvOrPW14fuYUhj9dgJcsZQOXYRdzJShYSy1
- 1T+ZC+KhM6ZSCMWweanZoCr1d9IKmTQ=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-29-ChDNVuqSM3uNW4nd6Jg3ug-1; Thu, 09 May 2024 09:38:12 -0400
-X-MC-Unique: ChDNVuqSM3uNW4nd6Jg3ug-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6a0e9eddad0so3044866d6.0
- for <qemu-devel@nongnu.org>; Thu, 09 May 2024 06:38:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s540j-00020t-TG
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 09:40:37 -0400
+Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s540i-0004iI-B0
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 09:40:37 -0400
+Received: by mail-lj1-x230.google.com with SMTP id
+ 38308e7fff4ca-2dac77cdf43so10882951fa.2
+ for <qemu-devel@nongnu.org>; Thu, 09 May 2024 06:40:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1715262034; x=1715866834; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=2xYoSIZ6oXWZ4DewpOXG2jAh+KmA/4F353mZO4bdEjE=;
+ b=MkpAMWnI50y51lAhWyuJUr5P+HvMG0kNy7gM9HEjoFU/BN2uQPEMivVeIXLKiJxRbD
+ kZWgcnQhER1nrev50F7QoufImjIhU0TI24b1tixAqFf5344Qar3IgQIBVShaWt1Muz0c
+ R4ukPLcNVyUvTQqyXLF2gR0uZZKCMJOVMWOBzRyd4qRHmZiBdHLI1fg4YScsudgPUgfO
+ eEvk07CzsBt0EoadZ9EyZY2vYf+0m9jwBY2BH90o0brUFfrSmCiLNYAcmD7DF26IlqAK
+ b45Hw5rGrN7JtsvO2nEGagMM08aTH2WgZUwtFO200Qc07um25D39v40rfOt/3l4Z3BaF
+ qnlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715261892; x=1715866692;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dJ2ItHeiShGhQ2LSCdlOrwvvo11oLvGXjQvPyADsKNI=;
- b=gwMKixboII33idB0PvcQK1M4FVJuxXX2pIaBy122jooicJiXPUn8Z5qNuZGdOI6RqK
- Iu66LKAtnmUAHN5j5nIHnvWaIsqy+oPGrIYvbmgKWEjgrYmQl39z4egLG6Xd9T68hZEx
- LG2+5PZD3ip1BIxeO846lRdD2d1EOdGn9NiOEPuKNtWCbwmxZ4XiRX6319ibopBR+F+/
- wH6UUNhPLS6PNDVrkUo5ZsXbfG9w7UxaSTDCLDmsRkud4JzBZUBeSvVO90vs84zMWCow
- tgs1sN+LdAoDJaik1McSaUD1Z1dnudLRa52L63v4KlTZt/R1mt/JcySKGH0OaZrcEH42
- PM4g==
+ d=1e100.net; s=20230601; t=1715262034; x=1715866834;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=2xYoSIZ6oXWZ4DewpOXG2jAh+KmA/4F353mZO4bdEjE=;
+ b=Z3NpXtekePletwTS6BsB015V4g/OUNMDpTqpdB4rPyyoPkBWbTAp30cBmBJq7jOQjF
+ +Gx4CS5oZRLcmruuYF0Kd4HMC8lMNMpmpuIlKu+I+vqhE4VTy4qT1QQnXANBQIrVCpUD
+ LbgixquqkftW6S01E1oG8/RR/7FsV1WVl9AWqiRhspcO1Y8VDhEEuFBVoUCtZiPJjM6y
+ 0Vi+1XOZ2ct7K34qc2gc4Ashj9iEpvHjmxUNCsrSoBYqUCvMQewdv8dKLYmwTpm+EU0c
+ JnDdpDZu0gLI05kUVFqyRMeZsWtR8+osjGSKZTcbRQCFX2anbM1tbSWjRy+OkbgEiaL+
+ Wuuw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVhudT+0DVP6tkcZaVcyH4KgAbNeDmIlwFSbQw+sCgzgOHNV88nfPGtv7KzMjsxzDugWoZmtLDyttrrZNBcz4mc1gfljME=
-X-Gm-Message-State: AOJu0Yw0IvAi8kRQxmev86BVQGrMTbNN9NjrkkoD4YXgtcDZapXqHCOE
- H9wUtD1GnP1MU0oNIEg8Dub7a9v4w3RCzXPNQqqBEihSYWsIBRQzX5gwzfaLZAEvuYRWs3IY2Jq
- gwdpb1JstoFNj1ZT6T4JLn3utDznhATk/aFJVgM63acB5odN2A9Jp
-X-Received: by 2002:a05:6214:e69:b0:6a0:cd65:599a with SMTP id
- 6a1803df08f44-6a15143eaa5mr64301336d6.2.1715261892004; 
- Thu, 09 May 2024 06:38:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IENhY2Tfr7wEmUencavtr2gz91dxPkjjEkgx8k/slRoKfMjLfAzApB0WCbb+ujYXh95lhyemQ==
-X-Received: by 2002:a05:6214:e69:b0:6a0:cd65:599a with SMTP id
- 6a1803df08f44-6a15143eaa5mr64300386d6.2.1715261890100; 
- Thu, 09 May 2024 06:38:10 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6a15f179649sm7077176d6.16.2024.05.09.06.38.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 May 2024 06:38:09 -0700 (PDT)
-Date: Thu, 9 May 2024 09:38:08 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Li Zhijian <lizhijian@fujitsu.com>
-Cc: Fabiano Rosas <farosas@suse.de>,
- Hailiang Zhang <zhanghailiang@xfusion.com>, qemu-devel@nongnu.org,
- Zhang Chen <chen.zhang@intel.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: Re: [PATCH 3/3] migration/colo: Tidy up bql_unlock() around
- bdrv_activate_all()
-Message-ID: <ZjzRwLOijr91ir2M@x1n>
-References: <20240509033106.1321880-1-lizhijian@fujitsu.com>
- <20240509033106.1321880-3-lizhijian@fujitsu.com>
+ AJvYcCWMmOMOn3AuUJvLLmLkPRM/jD8vU55Ss3ekXVyuaquCiV93qWwHDDAwzRFxZm/vCZ/+95zsuXHVNz1V1Gag39kv7ZZoJaw=
+X-Gm-Message-State: AOJu0YzPomC7bJnT7g0h/14ePx0kbaBvNB83lSYgngMU3eqmjEuW8PoU
+ 7w61iaMwsVSn5qeMvSWPt6bD4HD5e0Czc1ZVGZc8yIEm3RXpC+AHw/ehIlV7WW8=
+X-Google-Smtp-Source: AGHT+IFGsfo3HWNOdw4viqaG42XILkntAioH1XCIHVTVOgpZ3Kfx+vKMLERiR8M5BFITMzlFlE8iIw==
+X-Received: by 2002:a2e:9d91:0:b0:2e0:ffea:4298 with SMTP id
+ 38308e7fff4ca-2e4475a1987mr42619891fa.34.1715262034277; 
+ Thu, 09 May 2024 06:40:34 -0700 (PDT)
+Received: from [192.168.51.227] (56.red-79-159-217.dynamicip.rima-tde.net.
+ [79.159.217.56]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-41f882085c5sm61502905e9.40.2024.05.09.06.40.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 May 2024 06:40:33 -0700 (PDT)
+Message-ID: <b66b782f-c6a2-4ab9-84d3-4e1dabd1159f@linaro.org>
+Date: Thu, 9 May 2024 15:40:31 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240509033106.1321880-3-lizhijian@fujitsu.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/i386: remove PCOMMIT from TCG, deprecate property
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20240508154421.61419-1-pbonzini@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240508154421.61419-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::230;
+ envelope-from=richard.henderson@linaro.org; helo=mail-lj1-x230.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,51 +96,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 09, 2024 at 11:31:06AM +0800, Li Zhijian via wrote:
-> Make the code more tight.
+On 5/8/24 17:44, Paolo Bonzini wrote:
+> The PCOMMIT instruction was never included in any physical processor.
+> TCG implements it as a no-op instruction, but its utility is debatable
+> to say the least.  Drop it from the decoder since it is only available
+> with "-cpu max", which does not guarantee migration compatibility
+> across versions, and deprecate the property just in case someone is
+> using it as "pcommit=off".
 > 
-> Cc: Michael Tokarev <mjt@tls.msk.ru>
-> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-
-Reviewed-by: Peter Xu <peterx@redhat.com>
-
+> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
 > ---
-> This change/comment suggested by "Michael Tokarev <mjt@tls.msk.ru>" came
-> a bit late at that time, let's update it together in these minor set
-> this time.
+>   docs/about/deprecated.rst   |  8 ++++++++
+>   target/i386/cpu.h           |  2 --
+>   target/i386/cpu.c           |  2 +-
+>   target/i386/tcg/translate.c | 12 +-----------
+>   4 files changed, 10 insertions(+), 14 deletions(-)
 
-You can use a tag next time:
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Suggested-by: Michael Tokarev <mjt@tls.msk.ru>
-
-> ---
->  migration/colo.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
-> 
-> diff --git a/migration/colo.c b/migration/colo.c
-> index 991806c06a..1b6d9da1c8 100644
-> --- a/migration/colo.c
-> +++ b/migration/colo.c
-> @@ -838,12 +838,11 @@ static void *colo_process_incoming_thread(void *opaque)
->      /* Make sure all file formats throw away their mutable metadata */
->      bql_lock();
->      bdrv_activate_all(&local_err);
-> +    bql_unlock();
->      if (local_err) {
-> -        bql_unlock();
->          error_report_err(local_err);
->          return NULL;
->      }
-> -    bql_unlock();
->  
->      failover_init_state();
->  
-> -- 
-> 2.31.1
-> 
-> 
-
--- 
-Peter Xu
-
+r~
 
