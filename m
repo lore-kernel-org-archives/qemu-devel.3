@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A32B3C25B10
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 20:30:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59EF8C10F1A
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 20:30:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5ALW-0000lu-JJ; Thu, 09 May 2024 16:26:30 -0400
+	id 1s5AKv-0000BG-0B; Thu, 09 May 2024 16:25:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s5ALU-0000gS-5t; Thu, 09 May 2024 16:26:28 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1s5AKq-00006g-QJ; Thu, 09 May 2024 16:25:48 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s5ALQ-00017w-VM; Thu, 09 May 2024 16:26:27 -0400
+ id 1s5AKp-00011A-1v; Thu, 09 May 2024 16:25:48 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id F206E4E65D7;
- Thu, 09 May 2024 22:26:02 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id E60614E65DA;
+ Thu, 09 May 2024 22:25:41 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id WfGmX60OGqWR; Thu,  9 May 2024 22:26:01 +0200 (CEST)
+ with ESMTP id wthppnU0paih; Thu,  9 May 2024 22:25:40 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 0A0F54E65D8; Thu, 09 May 2024 22:26:01 +0200 (CEST)
-Message-Id: <5f60a46eb25d87ead4970db9b0954f39e8698050.1715285340.git.balaton@eik.bme.hu>
+ id F41794E65D4; Thu, 09 May 2024 22:25:39 +0200 (CEST)
+Message-Id: <68484f16af6b4e222c83bb1fbd0ff7ac39b6d4bb.1715285340.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1715285340.git.balaton@eik.bme.hu>
 References: <cover.1715285340.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v5 26/32] target/ppc: Remove id_tlbs flag from CPU env
+Subject: [PATCH v5 06/32] target/ppc/mmu_common.c: Introduce
+ mmu6xx_get_physical_address()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -39,9 +40,9 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Thu, 09 May 2024 22:26:01 +0200 (CEST)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Date: Thu, 09 May 2024 22:25:39 +0200 (CEST)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -62,207 +63,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This flag for split instruction/data TLBs is only set for 6xx soft TLB
-MMU model and not used otherwise so no need to have a separate flag
-for that.
+Repurpose get_segment_6xx_tlb() to do the whole address translation
+for POWERPC_MMU_SOFT_6xx MMU model by moving the BAT check there and
+renaming it to match other similar functions. These are only called
+once together so no need to keep these separate functions and
+combining them simplifies the caller allowing further restructuring.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/pegasos2.c        |  2 +-
- target/ppc/cpu.h         |  5 ++++-
- target/ppc/cpu_init.c    | 19 +++++--------------
- target/ppc/helper_regs.c |  1 -
- target/ppc/mmu_common.c  | 10 ++--------
- target/ppc/mmu_helper.c  | 12 ++----------
- 6 files changed, 14 insertions(+), 35 deletions(-)
+ target/ppc/mmu_common.c | 26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
 
-diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
-index 04d6decb2b..750f439c5d 100644
---- a/hw/ppc/pegasos2.c
-+++ b/hw/ppc/pegasos2.c
-@@ -984,7 +984,7 @@ static void *build_fdt(MachineState *machine, int *fdt_size)
-                           cpu->env.icache_line_size);
-     qemu_fdt_setprop_cell(fdt, cp, "i-cache-line-size",
-                           cpu->env.icache_line_size);
--    if (cpu->env.id_tlbs) {
-+    if (ppc_is_split_tlb(cpu)) {
-         qemu_fdt_setprop_cell(fdt, cp, "i-tlb-sets", cpu->env.nb_ways);
-         qemu_fdt_setprop_cell(fdt, cp, "i-tlb-size", cpu->env.tlb_per_way);
-         qemu_fdt_setprop_cell(fdt, cp, "d-tlb-sets", cpu->env.nb_ways);
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index 0ac55d6b25..cfb3ba5ac8 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -1260,7 +1260,6 @@ struct CPUArchState {
-     int tlb_per_way; /* Speed-up helper: used to avoid divisions at run time */
-     int nb_ways;     /* Number of ways in the TLB set */
-     int last_way;    /* Last used way used to allocate TLB in a LRU way */
--    int id_tlbs;     /* If 1, MMU has separated TLBs for instructions & data */
-     int nb_pids;     /* Number of available PID registers */
-     int tlb_type;    /* Type of TLB we're dealing with */
-     ppc_tlb_t tlb;   /* TLB is optional. Allocate them only if needed */
-@@ -2856,6 +2855,10 @@ static inline void booke206_fixed_size_tlbn(CPUPPCState *env, const int tlbn,
-     tlb->mas1 |= ((uint32_t)tsize) << MAS1_TSIZE_SHIFT;
- }
- 
-+static inline bool ppc_is_split_tlb(PowerPCCPU *cpu)
-+{
-+    return cpu->env.tlb_type == TLB_6XX;
-+}
- #endif
- 
- static inline bool msr_is_64bit(CPUPPCState *env, target_ulong msr)
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index c11a69fd90..07ad788e54 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -2117,7 +2117,6 @@ static void init_proc_405(CPUPPCState *env)
- #if !defined(CONFIG_USER_ONLY)
-     env->nb_tlb = 64;
-     env->nb_ways = 1;
--    env->id_tlbs = 0;
-     env->tlb_type = TLB_EMB;
- #endif
-     init_excp_4xx(env);
-@@ -2190,7 +2189,6 @@ static void init_proc_440EP(CPUPPCState *env)
- #if !defined(CONFIG_USER_ONLY)
-     env->nb_tlb = 64;
-     env->nb_ways = 1;
--    env->id_tlbs = 0;
-     env->tlb_type = TLB_EMB;
- #endif
-     init_excp_BookE(env);
-@@ -2288,7 +2286,6 @@ static void init_proc_440GP(CPUPPCState *env)
- #if !defined(CONFIG_USER_ONLY)
-     env->nb_tlb = 64;
-     env->nb_ways = 1;
--    env->id_tlbs = 0;
-     env->tlb_type = TLB_EMB;
- #endif
-     init_excp_BookE(env);
-@@ -2362,7 +2359,6 @@ static void init_proc_440x5(CPUPPCState *env)
- #if !defined(CONFIG_USER_ONLY)
-     env->nb_tlb = 64;
-     env->nb_ways = 1;
--    env->id_tlbs = 0;
-     env->tlb_type = TLB_EMB;
- #endif
-     init_excp_BookE(env);
-@@ -2724,7 +2720,6 @@ static void init_proc_e200(CPUPPCState *env)
- #if !defined(CONFIG_USER_ONLY)
-     env->nb_tlb = 64;
-     env->nb_ways = 1;
--    env->id_tlbs = 0;
-     env->tlb_type = TLB_EMB;
- #endif
-     init_excp_e200(env, 0xFFFF0000UL);
-@@ -2843,7 +2838,6 @@ static void init_proc_e500(CPUPPCState *env, int version)
-     /* Memory management */
-     env->nb_pids = 3;
-     env->nb_ways = 2;
--    env->id_tlbs = 0;
-     switch (version) {
-     case fsl_e500v1:
-         tlbncfg[0] = register_tlbncfg(2, 1, 1, 0, 256);
-@@ -6800,20 +6794,17 @@ static void init_ppc_proc(PowerPCCPU *cpu)
-     }
-     /* Allocate TLBs buffer when needed */
- #if !defined(CONFIG_USER_ONLY)
--    if (env->nb_tlb != 0) {
--        int nb_tlb = env->nb_tlb;
--        if (env->id_tlbs != 0) {
--            nb_tlb *= 2;
--        }
-+    if (env->nb_tlb) {
-         switch (env->tlb_type) {
-         case TLB_6XX:
--            env->tlb.tlb6 = g_new0(ppc6xx_tlb_t, nb_tlb);
-+            /* 6xx has separate TLBs for instructions and data hence times 2 */
-+            env->tlb.tlb6 = g_new0(ppc6xx_tlb_t, 2 * env->nb_tlb);
-             break;
-         case TLB_EMB:
--            env->tlb.tlbe = g_new0(ppcemb_tlb_t, nb_tlb);
-+            env->tlb.tlbe = g_new0(ppcemb_tlb_t, env->nb_tlb);
-             break;
-         case TLB_MAS:
--            env->tlb.tlbm = g_new0(ppcmas_tlb_t, nb_tlb);
-+            env->tlb.tlbm = g_new0(ppcmas_tlb_t, env->nb_tlb);
-             break;
-         }
-         /* Pre-compute some useful values */
-diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
-index 25258986e3..ed583fe9b3 100644
---- a/target/ppc/helper_regs.c
-+++ b/target/ppc/helper_regs.c
-@@ -693,7 +693,6 @@ void register_6xx_7xx_soft_tlb(CPUPPCState *env, int nb_tlbs, int nb_ways)
- #if !defined(CONFIG_USER_ONLY)
-     env->nb_tlb = nb_tlbs;
-     env->nb_ways = nb_ways;
--    env->id_tlbs = 1;
-     env->tlb_type = TLB_6XX;
-     spr_register(env, SPR_DMISS, "DMISS",
-                  SPR_NOACCESS, SPR_NOACCESS,
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 5f5ac1f2e9..6502568da4 100644
+index 3391df61cb..b7c07cf515 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -90,8 +90,8 @@ int ppc6xx_tlb_getnum(CPUPPCState *env, target_ulong eaddr,
-     nr = (eaddr >> TARGET_PAGE_BITS) & (env->tlb_per_way - 1);
-     /* Select TLB way */
-     nr += env->tlb_per_way * way;
--    /* 6xx have separate TLBs for instructions and data */
--    if (is_code && env->id_tlbs == 1) {
-+    /* 6xx has separate TLBs for instructions and data */
-+    if (is_code) {
-         nr += env->nb_tlb;
-     }
+@@ -360,19 +360,23 @@ static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
+     return ret;
+ }
  
-@@ -1025,13 +1025,7 @@ static void mmu6xx_dump_mmu(CPUPPCState *env)
-     mmu6xx_dump_BATs(env, ACCESS_INT);
-     mmu6xx_dump_BATs(env, ACCESS_CODE);
- 
--    if (env->id_tlbs != 1) {
--        qemu_printf("ERROR: 6xx MMU should have separated TLB"
--                    " for code and data\n");
--    }
--
-     qemu_printf("\nTLBs                       [EPN    EPN + SIZE]\n");
--
-     for (type = 0; type < 2; type++) {
-         for (way = 0; way < env->nb_ways; way++) {
-             for (entry = env->nb_tlb * type + env->tlb_per_way * way;
-diff --git a/target/ppc/mmu_helper.c b/target/ppc/mmu_helper.c
-index 421e777ee6..680ca0b618 100644
---- a/target/ppc/mmu_helper.c
-+++ b/target/ppc/mmu_helper.c
-@@ -45,14 +45,8 @@
- static inline void ppc6xx_tlb_invalidate_all(CPUPPCState *env)
+-/* Perform segment based translation */
+-static int get_segment_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
+-                               target_ulong eaddr, MMUAccessType access_type,
+-                               int type)
++static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
++                                       target_ulong eaddr,
++                                       MMUAccessType access_type, int type)
  {
-     ppc6xx_tlb_t *tlb;
--    int nr, max;
-+    int nr, max = 2 * env->nb_tlb;
+     PowerPCCPU *cpu = env_archcpu(env);
+     hwaddr hash;
+-    target_ulong vsid;
++    target_ulong vsid, sr, pgidx;
+     int ds, target_page_bits;
+     bool pr;
+     int ret;
+-    target_ulong sr, pgidx;
  
--    /* LOG_SWTLB("Invalidate all TLBs\n"); */
--    /* Invalidate all defined software TLB */
--    max = env->nb_tlb;
--    if (env->id_tlbs == 1) {
--        max *= 2;
--    }
-     for (nr = 0; nr < max; nr++) {
-         tlb = &env->tlb.tlb6[nr];
-         pte_invalidate(&tlb->pte0);
-@@ -308,9 +302,7 @@ void ppc_tlb_invalidate_one(CPUPPCState *env, target_ulong addr)
-     switch (env->mmu_model) {
-     case POWERPC_MMU_SOFT_6xx:
-         ppc6xx_tlb_invalidate_virt(env, addr, 0);
--        if (env->id_tlbs == 1) {
--            ppc6xx_tlb_invalidate_virt(env, addr, 1);
--        }
-+        ppc6xx_tlb_invalidate_virt(env, addr, 1);
++    /* First try to find a BAT entry if there are any */
++    if (env->nb_BATs && get_bat_6xx_tlb(env, ctx, eaddr, access_type) == 0) {
++        return 0;
++    }
++
++    /* Perform segment based translation when no BATs matched */
+     pr = FIELD_EX64(env->msr, MSR, PR);
+     ctx->eaddr = eaddr;
+ 
+@@ -1194,14 +1198,8 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
+         if (real_mode) {
+             ret = check_physical(env, ctx, eaddr, access_type);
+         } else {
+-            /* Try to find a BAT */
+-            if (env->nb_BATs != 0) {
+-                ret = get_bat_6xx_tlb(env, ctx, eaddr, access_type);
+-            }
+-            if (ret < 0) {
+-                /* We didn't match any BAT entry or don't have BATs */
+-                ret = get_segment_6xx_tlb(env, ctx, eaddr, access_type, type);
+-            }
++            ret = mmu6xx_get_physical_address(env, ctx, eaddr, access_type,
++                                              type);
+         }
          break;
-     case POWERPC_MMU_32B:
-         /*
+ 
 -- 
 2.30.9
 
