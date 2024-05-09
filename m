@@ -4,98 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CEAFC25B10
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 12:48:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDBC7C10F1A
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 13:14:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s53Ba-0006KB-I8; Thu, 09 May 2024 08:47:46 -0400
+	id 1s53bG-0005cd-Lj; Thu, 09 May 2024 09:14:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
- id 1s53BX-0006Jb-To; Thu, 09 May 2024 08:47:43 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1s53b1-0005aD-SH
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 09:14:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
- id 1s53BW-0004LQ-0L; Thu, 09 May 2024 08:47:43 -0400
-Received: from pps.filterd (m0353727.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 4499enqM023143; Thu, 9 May 2024 12:47:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : to : cc : subject
- : date : message-id : mime-version : content-transfer-encoding; s=pp1;
- bh=/g8SNACxoKYF4gqlVJ0Oa/d743GgeWqnhl5U466S8cU=;
- b=JOraUqsbFurAFGxMZ+ZJhtvf4C6SZyEqNjPJ1+GYpOTQPVzoWz759n5nzLxpevS0JxUs
- vu6jZ/jQvk1koGDlzfDO+XaMQRdXHwQfkVtwLiFoVk1cLzZ0MO2ESHleAg3eY0kr4uDU
- lfE1PSk41UDfXGJH/uP0G3tJLS5hNJ2GSNKUmm2mNZiuzbEpmuRPRBmS/iKqIYEa5F62
- ewLGW0HFOM3X9WQ9yx88W00vDLzA/g0tEhzKjzjMrQiPxcuzDP+oMxPRtx5WcP7YJuUE
- lhvLY61ZLggtoNfUilW5cvxfsv3a7JgQeMR4JgctPpq540NzlXpjVuDrumH+paCAaqtZ xw== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y0uxkggdn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 May 2024 12:47:33 +0000
-Received: from m0353727.ppops.net (m0353727.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 449ClWj8026528;
- Thu, 9 May 2024 12:47:32 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y0uxkggdd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 May 2024 12:47:32 +0000
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 449BXRPf009268; Thu, 9 May 2024 12:47:30 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3xyshtaw1r-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 May 2024 12:47:30 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 449ClSW111928304
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 9 May 2024 12:47:30 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F242A58061;
- Thu,  9 May 2024 12:47:27 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A35AD58057;
- Thu,  9 May 2024 12:47:27 +0000 (GMT)
-Received: from gfwr515.rchland.ibm.com (unknown [9.10.239.103])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  9 May 2024 12:47:27 +0000 (GMT)
-From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-To: kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, npiggin@gmail.com,
- saif.abrar@linux.vnet.ibm.com
-Subject: [PATCH] hw/nvme: Add CLI options for PCI vendor/device IDs and
- IEEE-OUI ID
-Date: Thu,  9 May 2024 07:47:23 -0500
-Message-Id: <20240509124723.3930-1-saif.abrar@linux.vnet.ibm.com>
-X-Mailer: git-send-email 2.39.3
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1s53b0-0004E9-2B
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 09:14:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715260439;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=vo0rdvNCtADGJUOZEToQ/LD1I8me2EZpGdoGQrmHLOg=;
+ b=EyPJS/EfVN2p8EGOo2VdDKUS/SZikfMeN7yCPl6B9uKcVI1ortX+ZNcY9tmeHL1YwM3Ssa
+ cj6XHr9PvI7pKYY4Z8vphFWm9/M9wPYX1TgCOi3IEkcxWR7Y+ZC99X3A9ID9BYGJ6+PzUm
+ immIEncyeKNDJ+Z5LBLbIhS0FEL6M1g=
+Received: from mail-yb1-f199.google.com (mail-yb1-f199.google.com
+ [209.85.219.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-691-dAcSTA_HPnuWcUSJeIUlmw-1; Thu, 09 May 2024 09:13:58 -0400
+X-MC-Unique: dAcSTA_HPnuWcUSJeIUlmw-1
+Received: by mail-yb1-f199.google.com with SMTP id
+ 3f1490d57ef6-de57643041bso1476705276.0
+ for <qemu-devel@nongnu.org>; Thu, 09 May 2024 06:13:58 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715260438; x=1715865238;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vo0rdvNCtADGJUOZEToQ/LD1I8me2EZpGdoGQrmHLOg=;
+ b=FtF6kHVBHWTvwXw/D/YEPsLe+8pExcP/juHmehWs1oj34I811cRBpSmcU2x7MLbPjt
+ Ibyqrw7ohT+4K61dtOEpWRyaH5ps4to8jK1tS2jjkAFP3TwTxSghW/2tkRkLUruzRGtI
+ xVuHarxMe7agOgsocYjCpbXB8XndutgyLp1yedUg87wV7xaWCO5LutKBP4sYxu/doPX5
+ AaSFxn7gOQ+Q87Pzpug1K0PjWHg2Inefdid/W3AvSmL+vh4cGtjKP4cswcb6mtwBjLBl
+ 8yAi4TxPZu2/hEWvNvMvvesunCWcGVkMRkLFB8omhh/LrF2V0aXSKfbvaVMClBbwgv7t
+ UikA==
+X-Gm-Message-State: AOJu0YxPXn0RkoPs2vnSzjh21PhFkbOmMMmn+yHYONBgASSZgDLeSkEf
+ fyheqOZSb9RwwMXVZ4muBwDmVNWW8Vw/+qzmpwFXTfwMh89lUy50sZQINDsIH9ErT2DPNixDtpo
+ DiqL4tXrByTy8IXcj6X7n9c5pZeRRmGQ6lh+f4uHHCT9zcbirORJ1+BhwgBZ1qQdLN90d7VR/rn
+ LZkXsOtUz3rpnwD8nAdAV7cUZcLQs=
+X-Received: by 2002:a25:8151:0:b0:deb:c936:abf6 with SMTP id
+ 3f1490d57ef6-debc936af36mr3725928276.24.1715260437494; 
+ Thu, 09 May 2024 06:13:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGONfrpqmIcMELAUBDnfsvHxU0WLuUoopLIbdS4VMP4j2x+TBBXXj08cQmBmG2QaWU1aSnr9k6nKk09ob4wT48=
+X-Received: by 2002:a25:8151:0:b0:deb:c936:abf6 with SMTP id
+ 3f1490d57ef6-debc936af36mr3725843276.24.1715260435683; Thu, 09 May 2024
+ 06:13:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: Eyw-x0NdaLd47T5iftBUftfj0eapzEpI
-X-Proofpoint-GUID: gvU4qIRM4CspPjuQd_hDdmV5rxKQmTIR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-09_06,2024-05-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1011
- bulkscore=0 impostorscore=0 spamscore=0 priorityscore=1501 adultscore=0
- lowpriorityscore=0 mlxlogscore=999 phishscore=0 malwarescore=0 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2405010000
- definitions=main-2405090085
-Received-SPF: none client-ip=148.163.156.1;
- envelope-from=saif.abrar@linux.vnet.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20240506150428.1203387-1-jonah.palmer@oracle.com>
+ <20240506150428.1203387-3-jonah.palmer@oracle.com>
+In-Reply-To: <20240506150428.1203387-3-jonah.palmer@oracle.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Thu, 9 May 2024 15:13:19 +0200
+Message-ID: <CAJaqyWeASizkBEmef4Yo7Mv0hF2zKe2p627G4ZEgVG0kMkCCOg@mail.gmail.com>
+Subject: Re: [PATCH 2/6] virtio: virtqueue_pop - VIRTIO_F_IN_ORDER support
+To: Jonah Palmer <jonah.palmer@oracle.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, raphael@enfabrica.net, 
+ kwolf@redhat.com, hreitz@redhat.com, jasowang@redhat.com, pbonzini@redhat.com, 
+ fam@euphon.net, stefanha@redhat.com, qemu-block@nongnu.org, 
+ schalla@marvell.com, leiyang@redhat.com, virtio-fs@lists.linux.dev, 
+ si-wei.liu@oracle.com, boris.ostrovsky@oracle.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,123 +101,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add CLI options for user specified
-- PCI vendor, device, subsystem vendor and subsystem IDs
-- IEEE-OUI ID
+On Mon, May 6, 2024 at 5:06=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.co=
+m> wrote:
+>
+> Add VIRTIO_F_IN_ORDER feature support in virtqueue_split_pop and
+> virtqueue_packed_pop.
+>
+> VirtQueueElements popped from the available/descritpor ring are added to
+> the VirtQueue's used_elems array in-order and in the same fashion as
+> they would be added the used and descriptor rings, respectively.
+>
+> This will allow us to keep track of the current order, what elements
+> have been written, as well as an element's essential data after being
+> processed.
+>
+> Tested-by: Lei Yang <leiyang@redhat.com>
+> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+> ---
+>  hw/virtio/virtio.c | 17 ++++++++++++++++-
+>  1 file changed, 16 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index 893a072c9d..e6eb1bb453 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+> @@ -1506,7 +1506,7 @@ static void *virtqueue_alloc_element(size_t sz, uns=
+igned out_num, unsigned in_nu
+>
+>  static void *virtqueue_split_pop(VirtQueue *vq, size_t sz)
+>  {
+> -    unsigned int i, head, max;
+> +    unsigned int i, j, head, max;
+>      VRingMemoryRegionCaches *caches;
+>      MemoryRegionCache indirect_desc_cache;
+>      MemoryRegionCache *desc_cache;
+> @@ -1539,6 +1539,8 @@ static void *virtqueue_split_pop(VirtQueue *vq, siz=
+e_t sz)
+>          goto done;
+>      }
+>
+> +    j =3D vq->last_avail_idx;
+> +
+>      if (!virtqueue_get_head(vq, vq->last_avail_idx++, &head)) {
+>          goto done;
+>      }
+> @@ -1630,6 +1632,12 @@ static void *virtqueue_split_pop(VirtQueue *vq, si=
+ze_t sz)
+>          elem->in_sg[i] =3D iov[out_num + i];
+>      }
+>
+> +    if (virtio_vdev_has_feature(vdev, VIRTIO_F_IN_ORDER)) {
+> +        vq->used_elems[j].index =3D elem->index;
+> +        vq->used_elems[j].len =3D elem->len;
+> +        vq->used_elems[j].ndescs =3D elem->ndescs;
+> +    }
+> +
+>      vq->inuse++;
+>
+>      trace_virtqueue_pop(vq, elem, elem->in_num, elem->out_num);
+> @@ -1758,6 +1766,13 @@ static void *virtqueue_packed_pop(VirtQueue *vq, s=
+ize_t sz)
+>
+>      elem->index =3D id;
+>      elem->ndescs =3D (desc_cache =3D=3D &indirect_desc_cache) ? 1 : elem=
+_entries;
+> +
+> +    if (virtio_vdev_has_feature(vdev, VIRTIO_F_IN_ORDER)) {
+> +        vq->used_elems[vq->last_avail_idx].index =3D elem->index;
+> +        vq->used_elems[vq->last_avail_idx].len =3D elem->len;
+> +        vq->used_elems[vq->last_avail_idx].ndescs =3D elem->ndescs;
+> +    }
+> +
 
-e.g. PCI IDs to be specified as follows:
--device nvme,id_vendor=0xABCD,id_device=0xA0B0,id_subsys_vendor=0xEF00,id_subsys=0xEF01
+I suggest using a consistent style between packed and split: Either
+always use vq->last_avail_idx or j. If you use j, please rename to
+something more related to the usage, as j is usually for iterations.
 
-IEEE-OUI ID (Identify Controller bytes 75:73) is to be
-specified in LE format.
-(e.g. ieee_oui=0xABCDEF => Byte[73]=0xEF, Byte[74]=0xCD, Byte[75]=0xAB).
+In my opinion I think vq->last_avail_idx is better.
 
-Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
----
- hw/nvme/nvme.h |  5 +++++
- hw/nvme/ctrl.c | 44 ++++++++++++++++++++++++++++++++++++++++----
- 2 files changed, 45 insertions(+), 4 deletions(-)
 
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index bed8191bd5..6e19a479d1 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -537,6 +537,11 @@ typedef struct NvmeParams {
-     uint8_t  sriov_max_vq_per_vf;
-     uint8_t  sriov_max_vi_per_vf;
-     bool     msix_exclusive_bar;
-+    uint16_t id_vendor;
-+    uint16_t id_device;
-+    uint16_t id_subsys_vendor;
-+    uint16_t id_subsys;
-+    uint32_t ieee_oui;
- } NvmeParams;
- 
- typedef struct NvmeCtrl {
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 127c3d2383..35aeb48e0b 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -8050,8 +8050,9 @@ out:
- 
- static void nvme_init_sriov(NvmeCtrl *n, PCIDevice *pci_dev, uint16_t offset)
- {
--    uint16_t vf_dev_id = n->params.use_intel_id ?
--                         PCI_DEVICE_ID_INTEL_NVME : PCI_DEVICE_ID_REDHAT_NVME;
-+    uint16_t vf_dev_id = n->params.id_device ? n->params.id_device :
-+                        (n->params.use_intel_id ?
-+                         PCI_DEVICE_ID_INTEL_NVME : PCI_DEVICE_ID_REDHAT_NVME);
-     NvmePriCtrlCap *cap = &n->pri_ctrl_cap;
-     uint64_t bar_size = nvme_mbar_size(le16_to_cpu(cap->vqfrsm),
-                                       le16_to_cpu(cap->vifrsm),
-@@ -8098,7 +8099,13 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
-     pci_conf[PCI_INTERRUPT_PIN] = 1;
-     pci_config_set_prog_interface(pci_conf, 0x2);
- 
--    if (n->params.use_intel_id) {
-+    if (n->params.id_vendor) {
-+        pci_config_set_vendor_id(pci_conf, n->params.id_vendor);
-+        pci_config_set_device_id(pci_conf, n->params.id_device);
-+        pci_set_word(pci_conf + PCI_SUBSYSTEM_VENDOR_ID,
-+                                                    n->params.id_subsys_vendor);
-+        pci_set_word(pci_conf + PCI_SUBSYSTEM_ID, n->params.id_subsys);
-+    } else if (n->params.use_intel_id) {
-         pci_config_set_vendor_id(pci_conf, PCI_VENDOR_ID_INTEL);
-         pci_config_set_device_id(pci_conf, PCI_DEVICE_ID_INTEL_NVME);
-     } else {
-@@ -8206,7 +8213,11 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
- 
-     id->rab = 6;
- 
--    if (n->params.use_intel_id) {
-+    if (n->params.ieee_oui) {
-+        id->ieee[0] = extract32(n->params.ieee_oui, 0,  8);
-+        id->ieee[1] = extract32(n->params.ieee_oui, 8,  8);
-+        id->ieee[2] = extract32(n->params.ieee_oui, 16, 8);
-+    } else if (n->params.use_intel_id) {
-         id->ieee[0] = 0xb3;
-         id->ieee[1] = 0x02;
-         id->ieee[2] = 0x00;
-@@ -8419,6 +8430,24 @@ static void nvme_exit(PCIDevice *pci_dev)
-     memory_region_del_subregion(&n->bar0, &n->iomem);
- }
- 
-+static void nvme_prop_ieee_set(Object *obj, Visitor *v, const char *name,
-+        void *opaque, Error **errp)
-+{
-+    Property *prop = opaque;
-+    uint32_t *val = object_field_prop_ptr(obj, prop);
-+    if (!visit_type_uint32(v, name, val, errp)) {
-+        return;
-+    }
-+}
-+
-+static const PropertyInfo nvme_prop_ieee = {
-+    .name  = "uint32",
-+    .description = "IEEE OUI: Identify Controller bytes 75:73\
-+ in LE format. (e.g. ieee_oui=0xABCDEF => Byte[73]=0xEF, Byte[74]=0xCD,\
-+ Byte[75]=0xAB)",
-+    .set = nvme_prop_ieee_set,
-+};
-+
- static Property nvme_props[] = {
-     DEFINE_BLOCK_PROPERTIES(NvmeCtrl, namespace.blkconf),
-     DEFINE_PROP_LINK("pmrdev", NvmeCtrl, pmr.dev, TYPE_MEMORY_BACKEND,
-@@ -8451,6 +8480,13 @@ static Property nvme_props[] = {
-                       params.sriov_max_vq_per_vf, 0),
-     DEFINE_PROP_BOOL("msix-exclusive-bar", NvmeCtrl, params.msix_exclusive_bar,
-                      false),
-+    DEFINE_PROP_UINT16("id_vendor", NvmeCtrl, params.id_vendor, 0),
-+    DEFINE_PROP_UINT16("id_device", NvmeCtrl, params.id_device, 0),
-+    DEFINE_PROP_UINT16("id_subsys_vendor", NvmeCtrl,
-+                                                    params.id_subsys_vendor, 0),
-+    DEFINE_PROP_UINT16("id_subsys", NvmeCtrl, params.id_subsys, 0),
-+    DEFINE_PROP("ieee_oui", NvmeCtrl, params.ieee_oui, nvme_prop_ieee,
-+                                                                      uint32_t),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
--- 
-2.39.3
+>      vq->last_avail_idx +=3D elem->ndescs;
+>      vq->inuse +=3D elem->ndescs;
+>
+> --
+> 2.39.3
+>
 
 
