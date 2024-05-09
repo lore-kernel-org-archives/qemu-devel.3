@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 521D1C10F1A
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 12:30:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46D09C10F1A
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 May 2024 12:33:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s52ty-0002A2-Qv; Thu, 09 May 2024 08:29:35 -0400
+	id 1s52xb-0003Ia-G7; Thu, 09 May 2024 08:33:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1s52tv-00029f-Lx
- for qemu-devel@nongnu.org; Thu, 09 May 2024 08:29:32 -0400
-Received: from madrid.collaboradmins.com ([2a00:1098:ed:100::25])
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1s52xY-0003IB-3v
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 08:33:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1s52tt-0006C8-GZ
- for qemu-devel@nongnu.org; Thu, 09 May 2024 08:29:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
- s=mail; t=1715257763;
- bh=qn6h4FrjvgbyJKON+1eyO0aA0YCNOuUvhRDlvIbmTRs=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=d7G5MO1y9yEJ8F6pjnN052iA/8UwyU7+iPP7VPtQwqjVQH16nuEjXrElvC5mtqHKp
- YHlGZShhjWqCHXFOH3nOBTE1+IfNb8Bp+DFAB6eVrorYdqYID+dfNC02D7JbXZG7ce
- QHwseHlmxjpVpJCN2ZePUj8h36wl4M/QhAqvjDafAEUFpAQb2Sl3xPr3FBL1t3kima
- ETYUMY27WUXlhwHSZ8aJU62sMWMQ0o/IVEAVEmGpoyb3UrXucMUPH7d8D/UUlQJ+Ot
- NuRbzVSk+yT7ZDp3it6I1rlrX81MCQ7QOSxbqLM2opqycYUSoLtYZMq8MPQRvjsr94
- Nk6VITR1B31jA==
-Received: from [100.109.49.129] (cola.collaboradmins.com [195.201.22.229])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- (Authenticated sender: dmitry.osipenko)
- by madrid.collaboradmins.com (Postfix) with ESMTPSA id 9A3F037810EF;
- Thu,  9 May 2024 12:29:21 +0000 (UTC)
-Message-ID: <1847a882-2199-4d1b-b86a-832a9d33d283@collabora.com>
-Date: Thu, 9 May 2024 15:29:18 +0300
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1s52xV-0007gH-9q
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 08:33:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715257992;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aTfIGJcFdzJQwTmvkwZdfYxzltdUjfBTO20WHVEG6aI=;
+ b=US/s2jDfhXQJ2RrFJTaNVtutnDysBqCEpoW6B6jNfdQl2fyTf/g21mFswpVZuGALTXLa1b
+ zwTDaTuOi7nGgRdps4w5ZcbOo3Lnh8933+PuuVzHQDMO6X+4Z9yWtdKTN0pUc0A6ytk/80
+ JixG7xTAV/b8uPeoRdl5dSkaybpFd40=
+Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
+ [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-630-GSn67E_rP2K0JMV58HZOqQ-1; Thu, 09 May 2024 08:33:10 -0400
+X-MC-Unique: GSn67E_rP2K0JMV58HZOqQ-1
+Received: by mail-yb1-f198.google.com with SMTP id
+ 3f1490d57ef6-dcc0bcf9256so1275033276.3
+ for <qemu-devel@nongnu.org>; Thu, 09 May 2024 05:33:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715257990; x=1715862790;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=aTfIGJcFdzJQwTmvkwZdfYxzltdUjfBTO20WHVEG6aI=;
+ b=WKJCAqRGSVxoy+ikACST3cJYMwYGeOTSLTYyayTlwGvrr9aIHv+f3F3xIzCDCud8TK
+ FVBzFMuivTjjdrYMSDxyPsw/As6qR8QvQbUeCGh3wjCYkOYo4OoCaZg6O8uKmakSB/t9
+ 5NuHem27Vx5Sy0Rqns4FdaHrlW9d8LQ4sXP9Mz6NR6c43JCe184UC2Fgujv4XNyal2/r
+ FDXfv2aj6vYdzSH77/DXVeufPxWNo4/eM8Yqc+8BfoddUL59DgDxfhLg+P9/AvqMBvRc
+ LQnu1IAMr6Zhh6hiJuBZJfK0wlimx5InHD0IAtHC/MyDKbjMQSVJfWHqhVpC5rXOGk5d
+ LVYQ==
+X-Gm-Message-State: AOJu0YwzFvahGOZ510r75/TjSask+3ykVhPbKVFYsG80UCtBDVlfWXU7
+ pRu6GjylWNulMlCAFiQTbvaojob5XciUd5gkSojhIGdrqTAwCMa2iq4l2oaQbyUxEECTPaJM5vg
+ mHV58cO9D2DOK+KPPk2jvDz27Uf/qYG3oJJphnT5J296iXiMhijpA41shCGiCGUhqm0lKpcBiHq
+ 3hgQvYcrPTNXH8JQ7n9K/3a5BPqXc=
+X-Received: by 2002:a25:868d:0:b0:de8:bdd3:c113 with SMTP id
+ 3f1490d57ef6-debb9d88cebmr5104902276.25.1715257990109; 
+ Thu, 09 May 2024 05:33:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGHd7wVkLpRhvoT2EdR+x4C4Ic3RUl/kFAq9rPrXBfXobueUXJ7fzEZdGAgcweZtMhLXG6IqtFWL9aLe40XY9I=
+X-Received: by 2002:a25:868d:0:b0:de8:bdd3:c113 with SMTP id
+ 3f1490d57ef6-debb9d88cebmr5104857276.25.1715257988475; Thu, 09 May 2024
+ 05:33:08 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 08/11] virtio-gpu: Handle resource blob commands
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony.perard@citrix.com>,
- Antonio Caggiano <quic_acaggian@quicinc.com>,
- "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
- Robert Beckett <bob.beckett@collabora.com>,
- Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
- ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-References: <20240418190040.1110210-1-dmitry.osipenko@collabora.com>
- <20240418190040.1110210-9-dmitry.osipenko@collabora.com>
- <2c5a0b2e-58ef-4766-baea-5df98fa6fc2f@daynix.com>
- <51b45c53-b7d3-4f3c-984c-44a94e6cf5af@collabora.com>
- <a0808d93-fb2c-4663-bd5b-8ae06e813492@daynix.com>
- <b4d78255-cc83-482b-a9f6-781c1b795ee9@collabora.com>
- <48d03070-6002-4953-aa09-47ae72b8f291@daynix.com>
-Content-Language: en-US
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-In-Reply-To: <48d03070-6002-4953-aa09-47ae72b8f291@daynix.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1098:ed:100::25;
- envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240506150428.1203387-1-jonah.palmer@oracle.com>
+ <20240506150428.1203387-2-jonah.palmer@oracle.com>
+In-Reply-To: <20240506150428.1203387-2-jonah.palmer@oracle.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Thu, 9 May 2024 14:32:32 +0200
+Message-ID: <CAJaqyWeitQo0rqR5+q7e1OjBF=zWHpg++cwyH3dRhaNaM6bB+w@mail.gmail.com>
+Subject: Re: [PATCH 1/6] virtio: Add bool to VirtQueueElement
+To: Jonah Palmer <jonah.palmer@oracle.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, raphael@enfabrica.net, 
+ kwolf@redhat.com, hreitz@redhat.com, jasowang@redhat.com, pbonzini@redhat.com, 
+ fam@euphon.net, stefanha@redhat.com, qemu-block@nongnu.org, 
+ schalla@marvell.com, leiyang@redhat.com, virtio-fs@lists.linux.dev, 
+ si-wei.liu@oracle.com, boris.ostrovsky@oracle.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,54 +101,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/5/24 09:47, Akihiko Odaki wrote:
-> On 2024/05/02 4:20, Dmitry Osipenko wrote:
->> On 4/27/24 08:52, Akihiko Odaki wrote:
->>> On 2024/04/24 19:30, Dmitry Osipenko wrote:
->>>> On 4/19/24 12:18, Akihiko Odaki wrote:
->>>>>> @@ -61,6 +61,10 @@ struct virtio_gpu_simple_resource {
->>>>>>         int dmabuf_fd;
->>>>>>         uint8_t *remapped;
->>>>>>     +    MemoryRegion *mr;
->>>>>> +    bool async_unmap_completed;
->>>>>> +    bool async_unmap_in_progress;
->>>>>> +
->>>>>
->>>>> Don't add fields to virtio_gpu_simple_resource but instead create a
->>>>> struct that embeds virtio_gpu_simple_resource in virtio-gpu-virgl.c.
->>>>
->>>> Please give a justification. I'd rather rename
->>>> virtio_gpu_simple_resource s/_simple//. Simple resource already
->>>> supports
->>>> blob and the added fields are directly related to the blob. Don't see
->>>> why another struct is needed.
->>>>
->>>
->>> Because mapping is only implemented in virtio-gpu-gl while blob itself
->>> is implemented also in virtio-gpu.
->>
->> Rutubaga maps blobs and it should do unmapping blobs asynchronously as
->> well, AFAICT.
->>
-> 
-> Right. It makes sense to put mr in struct virtio_gpu_simple_resource in
-> preparation for such a situation.
-> 
-> Based on this discussion, I think it is fine to put mr either in struct
-> virtio_gpu_simple_resource or a distinct struct. However if you put mr
-> in struct virtio_gpu_simple_resource, the logic that manages
-> MemoryRegion should also be moved to virtio-gpu.c for consistency.
+On Mon, May 6, 2024 at 5:06=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.co=
+m> wrote:
+>
+> Add the boolean 'filled' member to the VirtQueueElement structure. The
+> use of this boolean will signify if the element has been written to the
+> used / descriptor ring or not. This boolean is used to support the
+> VIRTIO_F_IN_ORDER feature.
+>
+> Tested-by: Lei Yang <leiyang@redhat.com>
+> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+> ---
+>  include/hw/virtio/virtio.h | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+> index 7d5ffdc145..9ed9c3763c 100644
+> --- a/include/hw/virtio/virtio.h
+> +++ b/include/hw/virtio/virtio.h
+> @@ -69,6 +69,7 @@ typedef struct VirtQueueElement
+>      unsigned int ndescs;
+>      unsigned int out_num;
+>      unsigned int in_num;
+> +    bool filled;
 
-Rutabaga uses static MRs. It will either need a different workaround or
-will have to move to dynamic MRs. I'll keep using distinct struct for now.
+in_order_filled? I cannot come with a good name for this. Maybe we can
+add a comment on top of the variable so we know what it is used for?
 
-AFAICT, its a lesser problem for rutabaga because static MR isn't
-subjected to the dynamic MR UAF problem that virgl has. On the other
-hand, rutabaga is re-initing already inited static MR object on each new
-mapping, that looks like a bug and it will need to move to dynamic MRs.
-
--- 
-Best regards,
-Dmitry
+>      hwaddr *in_addr;
+>      hwaddr *out_addr;
+>      struct iovec *in_sg;
+> --
+> 2.39.3
+>
 
 
