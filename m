@@ -4,95 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B60C4C25B10
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 10:54:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29E70C25B10
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 10:56:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5Ntc-0007uX-TK; Fri, 10 May 2024 06:54:36 -0400
+	id 1s5NvJ-0000JV-3N; Fri, 10 May 2024 06:56:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s5NtX-0007u4-S8
- for qemu-devel@nongnu.org; Fri, 10 May 2024 06:54:34 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1s5NvF-0000JD-FS
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 06:56:17 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s5NtW-0002WV-Cm
- for qemu-devel@nongnu.org; Fri, 10 May 2024 06:54:31 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-41b2119da94so12299585e9.0
- for <qemu-devel@nongnu.org>; Fri, 10 May 2024 03:54:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1s5NvD-0002vq-4s
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 06:56:16 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-1e4c4fb6af3so11709815ad.0
+ for <qemu-devel@nongnu.org>; Fri, 10 May 2024 03:56:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715338469; x=1715943269; darn=nongnu.org;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1715338573; x=1715943373;
+ darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=b/gvCAi1zlCAYH14fL0c2cBEHtiLhWTS2B8PVHhwG3Y=;
- b=IxIH3ASVYyZ+garH+3rbkTZQ4miGAB5dglVsmRm5VeTqXTSEeOq8WcbPEDTjxWUbCL
- 1yiBtOkWiRPflQbiHe6X2Ca1mF0vNNju/CbQcMfgdbynRBZjmsBDM5ge37PHvtEXPPaF
- 5R+WqwXIsRkJs99R5XUG1p0DfDfHlqm6srj830mqhyJoPMsOPilwcPLp0oK/cRAGdJnp
- ukFMJBBsbvIvrGOJIHQn3FkCnLLwPJy1MB5JNPk6cY9k1CGrrRp9X+lz0clF4LPvrP1j
- if+fqOm2EIkWxfcsj7xdCOfSDqeerh3lpGUgCnjXPSSh/+ZEXnfvQipm/S5MFsBC2SAf
- GXvA==
+ bh=zkFkqEFCjyo203k/RBxP+TefND6H+hFF7ONitKHgC4s=;
+ b=uBBqddSBuclnZiRYW5TupJvTElzzhTH7QTzpePxHvgrD00eGQLDhzuSDovrF9zzXQW
+ mG3AJFQRygaPQeQfzufIwBm2e/FEYKWxnOfGvB3A2qmk14Dh63/GvD9FtAsYUaTk8beF
+ dYb1mCaVKPgcrASjgO+BLQCWGp2c/CwEWA39SVd3YSo27YYIJHAET28Mga4SygBTrtGz
+ DIonPPcVsErdhz+66d/Ey2eZ3upyW7bRtzgofeWU3o1VsXfKkBHherpLbk2Xn/I1a4iS
+ Ol9lV+VLlSax+UUN0mv/o//14ewzgiZfLU4vJvtdZeaUfe7vEbvnlxmahzdRiL/HmOAO
+ W0sQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715338469; x=1715943269;
+ d=1e100.net; s=20230601; t=1715338573; x=1715943373;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=b/gvCAi1zlCAYH14fL0c2cBEHtiLhWTS2B8PVHhwG3Y=;
- b=m8BlQ1tIn/eZBMYu7k5akD8JZAMfs749TYLmGfHgt8st8f3T8v2PrbvNBkhDpp0mHd
- zAOiCntzNbYCTqg6ztkBE31bWgGaA8UMhkFCi4Y0cbB4lvwD2+nJEcfs5EbMKGWcnxLM
- pz+O0mCAHAJJsTKpxWKaeGpXZ7MuaQNYqEf9BHQoDRGsnB3ca0QBOl0bsCRtgW4nrQxi
- eJCJSVc2Z4ANamU4gccgfnzD3R01rV6HdQdntEyaBroMZ5GrUrXo3DoCFImW5owOFSJH
- jbBUAFmna1UMl8iPIFC8+m0MCuR32T2kTwqQmDNCEUtGEBbGYzbfER6Agej0G5kIh9Zt
- lDaw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUdSlPgp2KB2wFOayQFtCVzVa9KETf0qSjV/qMKTnKBHDP+hqv0KOl2vdN2WDzv0/L/hUJrj1TfkvdVO7ex0laB8AzZ9VA=
-X-Gm-Message-State: AOJu0Yzg+bNCoP5K4z3p47/PKeR4lGygbFLT55CrEYnrxtGr1SJijCvk
- ydcqBHL67Os+mECKpqwpJDRmEZZu0uCbg5wP57d8Okf4G6K4FEgkWygcWn37DvE=
-X-Google-Smtp-Source: AGHT+IETaFI4wzYDlQEewG6JVLqj8ozUGj33leaj71GTsbkcbp67ZKYf6Qt294GpXgmF7ds9Smu/xQ==
-X-Received: by 2002:a05:600c:4f93:b0:418:c2af:ab83 with SMTP id
- 5b1f17b1804b1-41fead6dc58mr19013245e9.36.1715338468879; 
- Fri, 10 May 2024 03:54:28 -0700 (PDT)
-Received: from [192.168.69.100] (sev93-h02-176-184-17-152.dsl.sta.abo.bbox.fr.
- [176.184.17.152]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-41f882085c5sm94888075e9.40.2024.05.10.03.54.26
+ bh=zkFkqEFCjyo203k/RBxP+TefND6H+hFF7ONitKHgC4s=;
+ b=mSHg6iWiCmrVCL6ynMwq5umZcgEuKWAmXj5TqQSLv27kXbdDY5Jr/7qqZsX8sACoRj
+ +GASfdcuOTOqLMQ4kSMAIqzZv6oBHDZ9ZDlOc9e3ET0bHB5NL3aHAfPuWnYhHk7MFrx9
+ pRluwpv18tmu4rfAEri9klAjyiTbTtUS14JFA5Q9OiIEOBcvsQH3Y+iSoSEI+XjWzeBI
+ rBG1nexE9x7AQi06ySZt3DUALbjm/hiTJm/26K8WwmzXyCLiVjPJZnQfosgL/gxviAe5
+ 7V2sZX20lwHINy/Gi3KdfsZywNQF6l5ZkuRE4KMAGJnTv/UXQwnG6p9pPI3yCuWmp6Ob
+ PEzA==
+X-Gm-Message-State: AOJu0Yz7fFadpVMRLpYesJRNEXYTOwYGN1rARUrSBIBWLCCqcapWMJe5
+ wyLbAH1ZPHIUX8UR0fIK4D60/Xe68e1SKxcByYv4knsRWdsMdxMeEZvNEsre9wY=
+X-Google-Smtp-Source: AGHT+IEsByg7knry0wPb5Y6WLqpY2x9tJfvQ15qjv+GmLKywWIun9aHZpAIPX5h7nMUGaE8/xwkDiw==
+X-Received: by 2002:a17:902:c947:b0:1e5:5760:a6c1 with SMTP id
+ d9443c01a7336-1ef4318d79fmr37270595ad.21.1715338573443; 
+ Fri, 10 May 2024 03:56:13 -0700 (PDT)
+Received: from [157.82.202.162] ([157.82.202.162])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1ef0c256a4esm29242925ad.309.2024.05.10.03.56.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 May 2024 03:54:28 -0700 (PDT)
-Message-ID: <22d4a43c-f69e-4a69-b1ec-6d7414f1a123@linaro.org>
-Date: Fri, 10 May 2024 12:54:25 +0200
+ Fri, 10 May 2024 03:56:13 -0700 (PDT)
+Message-ID: <e4c9c32d-31ad-414c-8713-9faee92f81e9@daynix.com>
+Date: Fri, 10 May 2024 19:56:07 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 11/12] tests/qtest/vhost-user-blk-test: use
- memory-backend-shm
-To: Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>, Coiby Xu <Coiby.Xu@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, slp@redhat.com,
- Brad Smith <brad@comstyle.com>, Eduardo Habkost <eduardo@habkost.net>,
- Thomas Huth <thuth@redhat.com>, Eric Blake <eblake@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Raphael Norwitz <raphael@enfabrica.net>, gmaglione@redhat.com,
- Laurent Vivier <lvivier@redhat.com>, stefanha@redhat.com,
- David Hildenbrand <david@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20240508074457.12367-1-sgarzare@redhat.com>
- <20240508074457.12367-12-sgarzare@redhat.com>
+Subject: Re: [PATCH v8 07/11] virtio-gpu: Support suspension of commands
+ processing
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Huang Rui <ray.huang@amd.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony.perard@citrix.com>,
+ Antonio Caggiano <quic_acaggian@quicinc.com>,
+ "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Robert Beckett <bob.beckett@collabora.com>,
+ Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
+ ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
+References: <20240418190040.1110210-1-dmitry.osipenko@collabora.com>
+ <20240418190040.1110210-8-dmitry.osipenko@collabora.com>
+ <8a153bf1-f86c-46c8-a29a-08e9a0197dc3@daynix.com>
+ <4c6b3ca0-4813-48f4-87f8-a94e911c02d3@collabora.com>
+ <10337ba0-70ce-436c-9cac-398851ebdfc9@daynix.com>
+ <5b240c8a-f1c5-487f-a528-cbb4f440094f@collabora.com>
+ <0360512c-eb25-4c93-adb3-7f43395ae699@daynix.com>
+ <8007338d-72ea-4896-89d3-ff98c66f979e@collabora.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240508074457.12367-12-sgarzare@redhat.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <8007338d-72ea-4896-89d3-ff98c66f979e@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::629;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x629.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,17 +123,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/5/24 09:44, Stefano Garzarella wrote:
-> `memory-backend-memfd` is available only on Linux while the new
-> `memory-backend-shm` can be used on any POSIX-compliant operating
-> system. Let's use it so we can run the test in multiple environments.
+On 2024/05/09 21:39, Dmitry Osipenko wrote:
+> On 5/5/24 09:37, Akihiko Odaki wrote:
+>> On 2024/05/02 4:02, Dmitry Osipenko wrote:
+>>> On 4/27/24 08:48, Akihiko Odaki wrote:
+>>>>>
+>>>>> The VIRTIO_GPU_FILL_CMD() macro returns void and this macro is used by
+>>>>> every function processing commands. Changing process_cmd() to return
+>>>>> bool will require to change all those functions. Not worthwhile to
+>>>>> change it, IMO. >
+>>>>> The flag reflects the exact command status. The !finished + !suspended
+>>>>> means that command is fenced, i.e. these flags don't have exactly same
+>>>>> meaning.
+>>>>
+>>>> It is not necessary to change the signature of process_cmd(). You can
+>>>> just refer to !finished. No need to have the suspended flag.
+>>>
+>>> Not sure what you're meaning. The !finished says that cmd is fenced,
+>>> this fenced command is added to the polling list and the fence is
+>>> checked periodically by the fence_poll timer, meanwhile next virgl
+>>> commands are executed in the same time.
+>>>
+>>> This is completely different from the suspension where whole cmd
+>>> processing is blocked until command is resumed.
+>>>
+>>
+>> !finished means you have not sent a response with
+>> virtio_gpu_ctrl_response(). Currently such a situation only happens when
+>> a fence is requested and virtio_gpu_process_cmdq() exploits the fact,
+>> but we are adding a new case without a fence.
+>>
+>> So we need to add code to check if we are fencing or not in
+>> virtio_gpu_process_cmdq(). This can be achieved by evaluating the
+>> following expression as done in virtio_gpu_virgl_process_cmd():
+>> cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_FENCE
 > 
-> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-> ---
->   tests/qtest/vhost-user-blk-test.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> This works, but then I'll add back the res->async_unmap_in_progress
+> because we need to know whether unmapping has been started.
+> 
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(on macOS)
+Isn't the command processing paused when an unmapping operation is in 
+progress?
 
