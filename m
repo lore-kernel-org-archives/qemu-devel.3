@@ -4,103 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E0B4C25B10
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 10:47:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C57E2C25B10
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 10:48:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5Nlh-0005fp-JT; Fri, 10 May 2024 06:46:25 -0400
+	id 1s5NnR-0007ag-ET; Fri, 10 May 2024 06:48:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1s5NlW-0005dx-P6
- for qemu-devel@nongnu.org; Fri, 10 May 2024 06:46:16 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1s5NnK-0007X2-LI
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 06:48:06 -0400
+Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1s5NlU-0000xP-UP
- for qemu-devel@nongnu.org; Fri, 10 May 2024 06:46:14 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-41fd5dc0508so10822125e9.0
- for <qemu-devel@nongnu.org>; Fri, 10 May 2024 03:46:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1s5NnH-0001Ka-Nj
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 06:48:06 -0400
+Received: by mail-lj1-x22f.google.com with SMTP id
+ 38308e7fff4ca-2e0933d3b5fso26156971fa.2
+ for <qemu-devel@nongnu.org>; Fri, 10 May 2024 03:48:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715337966; x=1715942766; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=KgJOnQwl9JhI5CyhmJ0xRwMDn0YiGrrAK3h5qtdYD98=;
- b=Bav9KA+EvR9j8Ke2p16WmdtHZ5YFL3yURewryGbh24WVjCzMBg9DedSHuzyle0wMpf
- 0mlYauPD7WqP7gIHMh5iTpV7fC+SCBxz7HlvNvFmnOMOGkoY3CnOxmfy8pU50Bj1i/sx
- zhBmBzOSrxa1SuCLMQrLVdeDXLuwrLFSDsf8XefkElPmqzvBKbdCBhcghEbtIgMPgJdH
- qW9etMtzhaZcbteAGt6N7+lGczbNvP8V9I77n11Mbr6fVd5j8sDi0ELb8EJeZI7sy4tQ
- 6IAAJLjEW3LCRxkFMEXMSDi/c4wy1d9n0nDDPU1/qUwmbJDV4Zue/u/64CvzcOFRWbEz
- QoWQ==
+ d=sifive.com; s=google; t=1715338082; x=1715942882; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4Y9akE0REaLDZgWsRgZpLu1R9ryJVuhFVT9XTqY1ygc=;
+ b=dQRvxuU4bOoixxghkmXegioVJHzIhthcO+TOxxYAUAUh7MobkeoYO5oBnT9h8DP7LK
+ wTKKn/3wvoUTZDJzrH3lyEwg9akcWDu2B70gxMiyVPCWcdNDjy1sXYpWN4ykRU1tDj/B
+ Dm+5po3XbBGDqnb3iEqzSMvILatDv129J+ZqtawXMJm1rtWbkmSmWb0T8vdvzJuevixh
+ zCZVgeybQMkaqqaH+JgLsRIWj84fljdgROV5q0solqfKkhUHzbTYnQ2gULRjwup6pbLi
+ O5nM9jzDQWZ6CvfNdg3PMx3v9V2L8UDrfZK0rRWsRfmv7kGhlLtfV6U3+4dQEa7Uqyh8
+ wCrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715337966; x=1715942766;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1715338082; x=1715942882;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KgJOnQwl9JhI5CyhmJ0xRwMDn0YiGrrAK3h5qtdYD98=;
- b=Ul7b56KhE0ocipHBbAxmlL1QwWlru4vo7weDZxyzgNpYrZLOZ6EjcSp+oTlvzBeZLc
- K8UCrZW8j3BeFs57cXrweApv847LtZ43kHclTT3o3eiZl0sqJ2e5kAlkgGJNQ+ny4OxS
- JfWFwbfEz8y5vzsx16+Gy9Ze5PdUtogNxx9175CxGviKeosuAduG2sVhur5o8+5f8MRg
- uZybP7Su24PMQo1Lio5jdN+2D0+1R8vd7+HGt3jqmIjdKYWRY8HNE0WoXJkC5YtKp6CT
- vS1kXtk6EfdEfgNZAxmQGvGZmwPJKOWCaSAecYIQs+dgf2MHMFoocwg9t/cVN6jIRavv
- xtWg==
+ bh=4Y9akE0REaLDZgWsRgZpLu1R9ryJVuhFVT9XTqY1ygc=;
+ b=gy/CS0CkxoZBGu1PfGSLF9lMMr1Yt6yjGc4Dr8z1zFukgkSyWWUywQ3o2icKdNmo00
+ kNwyosi7832cDoR3EIMyIGEzrywuv4pCbrWyLIsH/6QC2ax8OpW8LhrxccIjyEGmWEnU
+ Q2iEqNGC2NPEfRrB85pb/xGmi6Ow3YDJlLdybsgZd9XiM+5g2TVT7jEkn+trb5D1TmAf
+ iO8xnXXQu1gIzQ8FJ5funLYFowMlOXEeDatW3hCGugtxMbpOiETYec82uOQ8LVshkBF4
+ 8nthePkFNcnL/L5KcjnOWe6/zfXbL/XlvXtwBh48b0M4bFts2pIbx7uAwrUFG2jQn2Q2
+ DAag==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWCrkI5E+boaurGd3WwqpWE1SYahCK4FYpFDvdw3YU0Zu9BDr0uSSyw8WubVt8s2rdzwtnvdFIjOLVC35Xp5W+0eJy4xMg=
-X-Gm-Message-State: AOJu0YwMEWaopTOWwhVbCN3IlTB+7QUIMeQT06kiJ4VmWObIRxoVt96X
- i1un9GPyS+xrVOMvYkjzp/WO/UCo3XUHgUwV9m9wUd73yd073zsTqUYBqaVZdeA=
-X-Google-Smtp-Source: AGHT+IH8102WNxixY+OfuJkHZm6t/+sAI+xJ4Od9FoRl/2OhITMpxLx9ktkiQWNs6mQK/J6CgNaW9A==
-X-Received: by 2002:a05:600c:4fcd:b0:41c:2931:e670 with SMTP id
- 5b1f17b1804b1-41fea9320acmr16543495e9.2.1715337965620; 
- Fri, 10 May 2024 03:46:05 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502b896a1dsm4204862f8f.32.2024.05.10.03.46.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 May 2024 03:46:05 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9026F5F88D;
- Fri, 10 May 2024 11:46:04 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,  Huang Rui
- <ray.huang@amd.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gerd Hoffmann
- <kraxel@redhat.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Stefano
- Stabellini <sstabellini@kernel.org>,  Anthony PERARD
- <anthony.perard@citrix.com>,  Antonio Caggiano
- <quic_acaggian@quicinc.com>,  "Dr . David Alan Gilbert"
- <dgilbert@redhat.com>,  Robert Beckett <bob.beckett@collabora.com>,  Gert
- Wollny <gert.wollny@collabora.com>,  qemu-devel@nongnu.org,  Gurchetan
- Singh <gurchetansingh@chromium.org>,  ernunes@redhat.com,  Alyssa Ross
- <hi@alyssa.is>,  Roger Pau =?utf-8?Q?Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,  Stefano Stabellini
- <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K=C3=B6nig?=
- <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,  Pierre-Eric Pelloux-Prayer
- <pierre-eric.pelloux-prayer@amd.com>,  Honglei Huang
- <honglei1.huang@amd.com>,  Julia Zhang <julia.zhang@amd.com>,  Chen Jiqian
- <Jiqian.Chen@amd.com>,  Yiwei Zhang <zzyiwei@chromium.org>
-Subject: Re: [PATCH v8 01/11] linux-headers: Update to Linux v6.9-rc3
-In-Reply-To: <20240418190040.1110210-2-dmitry.osipenko@collabora.com> (Dmitry
- Osipenko's message of "Thu, 18 Apr 2024 22:00:30 +0300")
-References: <20240418190040.1110210-1-dmitry.osipenko@collabora.com>
- <20240418190040.1110210-2-dmitry.osipenko@collabora.com>
-Date: Fri, 10 May 2024 11:46:04 +0100
-Message-ID: <87wmo2j66r.fsf@draig.linaro.org>
+ AJvYcCUUa0US/zbvdv0j62c22B0BlRajLuHKgU2C2oj+6Ux4ER9gUR9MC6nLzpul14Y75roX+Wyv2JMMnnF8il7wiR7cFrsOTNM=
+X-Gm-Message-State: AOJu0Yy3EIovtcG/Xq+MTEBdiNT6C2q/3qFKCyaKyBiuPaQPF8hWq+82
+ 2iXjLorkWboUvmn5WufmhTGQucr70QUL5mICVpf2IocBaWcl9ZI7757XF1f3XHCJ0iiJkHV0Dtd
+ 8AcerivG8B5BNsBdFlbMss6utx2SGa6lggkT+Cp3xvJ6PdglDRgPHQrNnFNiciqbW9S8gt4xzUg
+ dFgC2Df2RyavwJmLasAL7zmyDZ4Inx7mZBSht3KfAVwg==
+X-Google-Smtp-Source: AGHT+IGSXrlWEBzxhMGLVEqjNeCYyDETYMmvaMSBM6XS89XvAJ+zlLrAekVvmxj3Av4qAk/840LFnw==
+X-Received: by 2002:a2e:a71f:0:b0:2dd:987f:f9d7 with SMTP id
+ 38308e7fff4ca-2e51ff5e559mr11974841fa.25.1715338081669; 
+ Fri, 10 May 2024 03:48:01 -0700 (PDT)
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com.
+ [209.85.208.172]) by smtp.gmail.com with ESMTPSA id
+ 38308e7fff4ca-2e4d0ce39e6sm4864081fa.46.2024.05.10.03.48.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 10 May 2024 03:48:01 -0700 (PDT)
+Received: by mail-lj1-f172.google.com with SMTP id
+ 38308e7fff4ca-2dcc8d10d39so21261851fa.3; 
+ Fri, 10 May 2024 03:48:01 -0700 (PDT)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUCfZFUec5OMXfj3CGQ+XO+4WJRogdyMGmuR3EqfPVKqJ0T8gXMPZq+gvaDo/653BKQ1Q744b1WrieXzK+hIrirtCnkNTsLVIwE5zvkaGIjpGGMdNpDP/6BPE3cVQ==
+X-Received: by 2002:a2e:e02:0:b0:2e2:72a7:843b with SMTP id
+ 38308e7fff4ca-2e52038a326mr12324901fa.34.1715338081048; Fri, 10 May 2024
+ 03:48:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20240503124244.8804-1-dbarboza@ventanamicro.com>
+ <CAFEAcA_gu40QoTXUPP2f=8vGvEOTbGWKtqR3b-e7YYhbFG0aiw@mail.gmail.com>
+ <d8fcb94e-86cf-4497-b450-1a32e4606512@ventanamicro.com>
+In-Reply-To: <d8fcb94e-86cf-4497-b450-1a32e4606512@ventanamicro.com>
+From: Frank Chang <frank.chang@sifive.com>
+Date: Fri, 10 May 2024 18:47:49 +0800
+X-Gmail-Original-Message-ID: <CANzO1D1VmQhETKY7zFC7PTu-QntOnZVmXcYor3m2B+6RVcC5mQ@mail.gmail.com>
+Message-ID: <CANzO1D1VmQhETKY7zFC7PTu-QntOnZVmXcYor3m2B+6RVcC5mQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/1] pci: allocate a PCI ID for RISC-V IOMMU
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, 
+ alistair.francis@wdc.com, bmeng@tinylab.org, liwei1518@gmail.com, 
+ zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com, ajones@ventanamicro.com, 
+ kraxel@redhat.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
+ envelope-from=frank.chang@sifive.com; helo=mail-lj1-x22f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,117 +112,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
+Hi Daniel,
 
-> Update kernel headers to get new VirtIO-GPU capsets, in particular the
-> Venus capset.
+Daniel Henrique Barboza <dbarboza@ventanamicro.com> =E6=96=BC 2024=E5=B9=B4=
+5=E6=9C=888=E6=97=A5 =E9=80=B1=E4=B8=89 =E4=B8=8B=E5=8D=888:42=E5=AF=AB=E9=
+=81=93=EF=BC=9A
 >
-> Signed-off-by: Huang Rui <ray.huang@amd.com>
-> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> ---
->  hw/i386/x86.c                                 |   8 -
->  include/standard-headers/asm-x86/bootparam.h  |  17 +-
->  include/standard-headers/asm-x86/kvm_para.h   |   3 +-
->  include/standard-headers/asm-x86/setup_data.h |  83 +++
->  include/standard-headers/linux/ethtool.h      |  48 ++
->  include/standard-headers/linux/fuse.h         |  39 +-
->  .../linux/input-event-codes.h                 |   1 +
->  include/standard-headers/linux/virtio_gpu.h   |   2 +
->  include/standard-headers/linux/virtio_pci.h   |  10 +-
->  include/standard-headers/linux/virtio_snd.h   | 154 ++++
->  linux-headers/asm-arm64/kvm.h                 |  15 +-
->  linux-headers/asm-arm64/sve_context.h         |  11 +
->  linux-headers/asm-generic/bitsperlong.h       |   4 +
->  linux-headers/asm-loongarch/kvm.h             |   2 -
->  linux-headers/asm-mips/kvm.h                  |   2 -
->  linux-headers/asm-powerpc/kvm.h               |  45 +-
->  linux-headers/asm-riscv/kvm.h                 |   3 +-
->  linux-headers/asm-s390/kvm.h                  | 315 +++++++-
->  linux-headers/asm-x86/kvm.h                   | 308 +++++++-
->  linux-headers/linux/bits.h                    |  15 +
->  linux-headers/linux/kvm.h                     | 689 +-----------------
->  linux-headers/linux/psp-sev.h                 |  59 ++
->  linux-headers/linux/vhost.h                   |   7 +
->  scripts/update-linux-headers.sh               |   5 +-
->  24 files changed, 1106 insertions(+), 739 deletions(-)
->  create mode 100644 include/standard-headers/asm-x86/setup_data.h
->  create mode 100644 linux-headers/linux/bits.h
 >
-> diff --git a/hw/i386/x86.c b/hw/i386/x86.c
-> index ffbda48917fd..84a48019770b 100644
-> --- a/hw/i386/x86.c
-> +++ b/hw/i386/x86.c
-> @@ -679,14 +679,6 @@ DeviceState *ioapic_init_secondary(GSIState *gsi_sta=
-te)
->      return dev;
->  }
->=20=20
-> -struct setup_data {
-> -    uint64_t next;
-> -    uint32_t type;
-> -    uint32_t len;
-> -    uint8_t data[];
-> -} __attribute__((packed));
-> -
-> -
+>
+> On 5/7/24 12:44, Peter Maydell wrote:
+> > On Fri, 3 May 2024 at 13:43, Daniel Henrique Barboza
+> > <dbarboza@ventanamicro.com> wrote:
+> >>
+> >> Hi,
+> >>
+> >> In this RFC I want to check with Gerd and others if it's ok to add a P=
+CI
+> >> id for the RISC-V IOMMU device. It's currently under review in [1]. Th=
+e
+> >> idea is to fold this patch into the RISC-V IOMMU series if we're all o=
+k
+> >> with this change.
+> >
+> > My question here would be "why is this risc-v specific?" (and more
+> > generally "what is this for?" -- the cover letter and patch and
+> > documentation page provide almost no information about what this
+> > device is and why it needs to exist rather than using either
+> > virtio-iommu or else a model of a real hardware IOMMU.)
+>
+> The RISC-V IOMMU device emulation under review ([1]) is a reference imple=
+mentation of
+> the riscv-iommu spec [2]. AFAIK it is similar to what we already have wit=
+h aarch64 'smmuv3'
+> 'virt' bus, i.e. an impl of ARM's SMMUv3 that isn't tied to a specific ve=
+ndor.
+>
+> The difference here is that the riscv-iommu spec, ratified by RISC-V Inte=
+rnational (RVI),
+> predicts that the device could be implemented as a PCIe device. But RVI d=
+idn't bother
+> assigning a PCI ID for their reference IOMMU. The existing implementation=
+ in [1] is using
+> a Rivos PCI ID that we're treating as a placeholder only. We need an ID t=
+hat reflects that
+> this is a device that adheres to the riscv-iommu spec, not to an IOMMU of=
+ any particular
+> vendor.
+>
+> Since RVI doesn't provide a PCI ID for it we went to Red Hat, and they we=
+re kind enough
+> to give us a PCI ID for the RISC-V IOMMU reference device.
 
-This isn't part of the header import. I'd rather see
+That's great. Thanks to Red Hat.
+I'm wondering do we have the plan to document the new PCI ID to the IOMMU s=
+pec
+or somewhere else that's publicly accessible?
 
-  - import the current header set
-  - update to the script
-  - clean-ups and additions
+Regards,
+Frank Chang
 
-why are we migrating to using the kernels non-uapi assembler headers?
-
-<snip>
-> --- a/scripts/update-linux-headers.sh
-> +++ b/scripts/update-linux-headers.sh
-> @@ -62,6 +62,7 @@ cp_portable() {
->                                       -e 'linux/kernel' \
->                                       -e 'linux/sysinfo' \
->                                       -e 'asm-generic/kvm_para' \
-> +                                     -e 'asm-x86/setup_data.h' \
-
-some justification for this/
-
->                                       > /dev/null
->      then
->          echo "Unexpected #include in input file $f".
-> @@ -149,9 +150,11 @@ for arch in $ARCHLIST; do
->          cp "$tmpdir/include/asm/unistd_x32.h" "$output/linux-headers/asm=
--x86/"
->          cp "$tmpdir/include/asm/unistd_64.h" "$output/linux-headers/asm-=
-x86/"
->          cp_portable "$tmpdir/include/asm/kvm_para.h" "$output/include/st=
-andard-headers/asm-$arch"
-> +        cp_portable "$tmpdir/include/asm/setup_data.h" "$output/include/=
-standard-headers/asm-$arch"
-
-is there a portable setup_data.h? why is it asm-x86 above?
-
->          # Remove everything except the macros from bootparam.h avoiding =
-the
->          # unnecessary import of several video/ist/etc headers
->          sed -e '/__ASSEMBLY__/,/__ASSEMBLY__/d' \
-> +            -e 's/<asm\/\([^>]*\)>/"standard-headers\/asm-x86\/\1"/' \
->                 "$tmpdir/include/asm/bootparam.h" > "$tmpdir/bootparam.h"
->          cp_portable "$tmpdir/bootparam.h" \
->                      "$output/include/standard-headers/asm-$arch"
-> @@ -165,7 +168,7 @@ rm -rf "$output/linux-headers/linux"
->  mkdir -p "$output/linux-headers/linux"
->  for header in const.h stddef.h kvm.h vfio.h vfio_ccw.h vfio_zdev.h vhost=
-.h \
->                psci.h psp-sev.h userfaultfd.h memfd.h mman.h nvme_ioctl.h=
- \
-> -              vduse.h iommufd.h; do
-> +              vduse.h iommufd.h bits.h; do
-
-What do we need bits for here?=20
-
->      cp "$tmpdir/include/linux/$header" "$output/linux-headers/linux"
->  done
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+>
+> I'll do a proper job this time and add all this context in the commit msg=
+. Including a
+> proper shout-out to Gerd and Red Hat.
+>
+>
+>
+> Thanks,
+>
+>
+> Daniel
+>
+>
+> [1] https://lore.kernel.org/qemu-riscv/20240307160319.675044-1-dbarboza@v=
+entanamicro.com/
+> [2] https://github.com/riscv-non-isa/riscv-iommu/releases/tag/v1.0.0
+>
+> >
+> > thanks
+> > -- PMM
+>
 
