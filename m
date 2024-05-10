@@ -4,68 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B3F6C25B10
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 14:18:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 701B6C25B10
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 14:18:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5R4Q-0006x7-Ms; Fri, 10 May 2024 10:17:58 -0400
+	id 1s5R4I-0006uu-S9; Fri, 10 May 2024 10:17:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rayhan.faizel@gmail.com>)
- id 1s5R4O-0006wj-Om; Fri, 10 May 2024 10:17:56 -0400
+ id 1s5R4G-0006tn-Qc; Fri, 10 May 2024 10:17:48 -0400
 Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <rayhan.faizel@gmail.com>)
- id 1s5R4C-0001SX-Po; Fri, 10 May 2024 10:17:56 -0400
+ id 1s5R4E-0001Sz-Ig; Fri, 10 May 2024 10:17:48 -0400
 Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a59b49162aeso505146366b.3; 
- Fri, 10 May 2024 07:17:42 -0700 (PDT)
+ a640c23a62f3a-a59ab4f60a6so464540366b.0; 
+ Fri, 10 May 2024 07:17:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715350661; x=1715955461; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=0X08T+k5cn0w6oTynEC8kV54PftNRadYl3T03e4UFIc=;
- b=NGa/x6trkJClzW6nvANL6p1BdYrVn/50eAzgRPWXjOKx09/Gbi/BpyIgtgH/VDtIp8
- cCyNaVS8lz+uWoZdS3kIVORCEKlzXqSM1CIPTUiC6SJzFfVN2tGPE0qtM0OyDj5wbEHB
- VCgbvpB00gXmMGolsggnH0o/iYyz4aGYTuakR3h/mD6YentR9n70AlkmpkHPFVA8cb8T
- xwvneT6gIWhvB+DnWvjr/Q5D1cbanxBr1r28Gcg7us+fE8wgH/0gVPNFTq6HZRVZr5ox
- 5M8p8pca0I+mrunzcgr/u6Dzf0FM+ax45voT4cSggsKwhHkI8RF8KbOltaLr5044tFl5
- QyfQ==
+ d=gmail.com; s=20230601; t=1715350664; x=1715955464; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/QJTpK5sg88UhGs/NKN8PlzaLghfj83OQw0oUqUPB0U=;
+ b=nUuRBq/lMsssgKu5AURlgJOhZ19xDafbUl2s19IQjB4IY0tPPXnRZg8xFk+VN0AFse
+ LWrxhnU5zZ0KvBPZxkJ8UDma+36dJrnsVEK5mF6u95PoXq6pu4FcEn4jihIkEEBM9EUJ
+ 924nA6RqpaodeTz799jGAQ2+rzZyK89vVR6Iavsv/UIwU7dgEtY7Fh2DbigspLB5VXTV
+ 3W9QSfO9PzCGqe8VeHQUx6PbvMwAa7y6XazqZ+SLSvzAwCK4c4/BNGNi2zn0UBFNB3S2
+ r65mdSZM+Vfr/lfDOkQDNR5NCAfJxKlxP1celxTvE+Bv5snJlhI2fojUllB8kOTAy8/W
+ 9EqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715350661; x=1715955461;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0X08T+k5cn0w6oTynEC8kV54PftNRadYl3T03e4UFIc=;
- b=f+2smpeYlST2DssYwjnuFYAXKUWUxl1aCTiAtpOLCrq0TtWUxYNDOJsvIsneYmr4af
- 2yal4d6u2f3ngfcIMbvryx6/oXbwawQxoSwsmVYfPgkamq1KLq5aQ7DdNQGBXWaeu+jo
- Dv3w9aPGvvjCDoIM1rOvKil4lzU7mU+JUJ8kYepJXlEPcxTy6fyhJDzW9m3S9/1vGwh0
- 6VlDci/Uaq/Ro7GbsEb1UZwfBPr3/BUTYAVVhnNUie0aTs8PbyyX/DMz0BMCGtdFrtIz
- /sp+g/rEm/YLsycMTs0xDAgG54k+kidvfeUJxgPsq9yrhVv20elg7+/V4/e4CXe4RVZ9
- 5DiA==
+ d=1e100.net; s=20230601; t=1715350664; x=1715955464;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/QJTpK5sg88UhGs/NKN8PlzaLghfj83OQw0oUqUPB0U=;
+ b=pCgWQeNjwO/IPTvJfgf5InPEauXlEXO/kQixjqnTOu/ABXnQzJeHMxwoVPVV8c0h1z
+ VpDR8ZWfts2+pB3zS+l+kT1GAY+0r5BrmmSQKGvtHa4uv1Q/S+J6R6R6l3xm/hYVbvpj
+ KKk9vnmhfXoemU+TJlFunTnU5S9mp/QHgnalt1kBd2qVXM0AKkjJLPaSiz0PjesWKDDI
+ nvh7O5Rkbhbyd3jqS+xASFqZYvO1yDBaxzkZjD9ptNSKZwtladcqChmaDMB5JIVsxD+U
+ g5IMfSZsf1jBsm52H1TAxP5dbY7u5KUf349GwxmEJZGDYqgjFaOueyH4h1E2WDLzP18F
+ S5BA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVOFHDs4jib9vRwC+GtdY0wjIDJ/fXUSzTXhWcNZfWAOgb2gYxQxm5HNL/mcW8sG1yTMQgpNwMc9vnL0Q62Ubeemi7w
-X-Gm-Message-State: AOJu0YwLDBG3MslzcA9+/ComeVIfKlCJm8J4P+wYXGD2vXbHIx3E3Q7R
- TtbHo8WBAP93efQLfzsH+8/YaMloSly/Q5MKRj3n2QS1gzKmP1rx2rUTkg==
-X-Google-Smtp-Source: AGHT+IHKNDGc61uzMkB/jkVuYUXC3kZI+qLC9aAe08xWaeUBbvOnaIK6XoQO5fAPCBnDSurK3+ihWQ==
-X-Received: by 2002:a17:906:b7c6:b0:a59:ef1f:83e4 with SMTP id
- a640c23a62f3a-a5a2d6417f0mr180172466b.59.1715350660801; 
- Fri, 10 May 2024 07:17:40 -0700 (PDT)
+ AJvYcCUz/eFva683RSwy2947wljiqVgDbCiDdU7yEPKnBBJUF8a7hPg2trKg1eTXDI5bUmNM1mZuQQyO8Ab78yOPPz5NAjF3
+X-Gm-Message-State: AOJu0YxfVanwhVQ7l2fBEtEdj7nq9FB5OLzfElTrwD9FSVtQnvDEmSWY
+ G8KwZGeP95+pJzNl+aN80L5PsmX7u//3h298WFgmh0BvMRGomX4ZrLVChw==
+X-Google-Smtp-Source: AGHT+IFgHgoroFxgpNwu6AAwABpFYOhUJXePt0GzToVqBYft/DdIy2wtc8Uk+9VIk8sWJrlCNSlcsw==
+X-Received: by 2002:a17:906:3809:b0:a59:a05c:b553 with SMTP id
+ a640c23a62f3a-a5a2d572471mr293679366b.17.1715350664618; 
+ Fri, 10 May 2024 07:17:44 -0700 (PDT)
 Received: from localhost.localdomain ([212.70.119.83])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a5a17891f6esm190093466b.54.2024.05.10.07.17.39
+ a640c23a62f3a-a5a17891f6esm190093466b.54.2024.05.10.07.17.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 May 2024 07:17:40 -0700 (PDT)
+ Fri, 10 May 2024 07:17:44 -0700 (PDT)
 From: Rayhan Faizel <rayhan.faizel@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org, peter.maydell@linaro.org, qemu-arm@nongnu.org,
  Rayhan Faizel <rayhan.faizel@gmail.com>
-Subject: [PATCH 0/3] Initial support for One-Time Programmable Memory (OTP) in
- BCM2835
-Date: Fri, 10 May 2024 19:40:07 +0530
-Message-Id: <20240510141010.656561-1-rayhan.faizel@gmail.com>
+Subject: [PATCH 2/3] hw/arm: Connect OTP device to BCM2835
+Date: Fri, 10 May 2024 19:40:09 +0530
+Message-Id: <20240510141010.656561-3-rayhan.faizel@gmail.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240510141010.656561-1-rayhan.faizel@gmail.com>
+References: <20240510141010.656561-1-rayhan.faizel@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
@@ -75,7 +77,8 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,27 +94,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All BCM2835 boards have on-board OTP memory with 66 32-bit rows. Usually,
-its contents are accessible via mailbox commands.
+Signed-off-by: Rayhan Faizel <rayhan.faizel@gmail.com>
+---
+ hw/arm/bcm2835_peripherals.c         | 13 ++++++++++++-
+ include/hw/arm/bcm2835_peripherals.h |  3 ++-
+ 2 files changed, 14 insertions(+), 2 deletions(-)
 
-Rayhan Faizel (3):
-  hw/nvram: Add BCM2835 OTP device
-  hw/arm: Connect OTP device to BCM2835
-  hw/misc: Implement mailbox properties for customer OTP and device
-    specific private keys
-
- hw/arm/bcm2835_peripherals.c         |  15 ++-
- hw/misc/bcm2835_property.c           |  71 ++++++++++
- hw/nvram/bcm2835_otp.c               | 187 +++++++++++++++++++++++++++
- hw/nvram/meson.build                 |   1 +
- include/hw/arm/bcm2835_peripherals.h |   3 +-
- include/hw/arm/raspberrypi-fw-defs.h |   2 +
- include/hw/misc/bcm2835_property.h   |   2 +
- include/hw/nvram/bcm2835_otp.h       |  43 ++++++
- 8 files changed, 322 insertions(+), 2 deletions(-)
- create mode 100644 hw/nvram/bcm2835_otp.c
- create mode 100644 include/hw/nvram/bcm2835_otp.h
-
+diff --git a/hw/arm/bcm2835_peripherals.c b/hw/arm/bcm2835_peripherals.c
+index 1695d8b453..7d735bb56c 100644
+--- a/hw/arm/bcm2835_peripherals.c
++++ b/hw/arm/bcm2835_peripherals.c
+@@ -116,6 +116,10 @@ static void raspi_peripherals_base_init(Object *obj)
+     object_property_add_const_link(OBJECT(&s->fb), "dma-mr",
+                                    OBJECT(&s->gpu_bus_mr));
+ 
++    /* OTP */
++    object_initialize_child(obj, "bcm2835-otp", &s->otp,
++                            TYPE_BCM2835_OTP);
++
+     /* Property channel */
+     object_initialize_child(obj, "property", &s->property,
+                             TYPE_BCM2835_PROPERTY);
+@@ -374,6 +378,14 @@ void bcm_soc_peripherals_common_realize(DeviceState *dev, Error **errp)
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->fb), 0,
+                        qdev_get_gpio_in(DEVICE(&s->mboxes), MBOX_CHAN_FB));
+ 
++    /* OTP */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->otp), errp)) {
++        return;
++    }
++
++    memory_region_add_subregion(&s->peri_mr, OTP_OFFSET,
++                sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->otp), 0));
++
+     /* Property channel */
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->property), errp)) {
+         return;
+@@ -500,7 +512,6 @@ void bcm_soc_peripherals_common_realize(DeviceState *dev, Error **errp)
+     create_unimp(s, &s->i2s, "bcm2835-i2s", I2S_OFFSET, 0x100);
+     create_unimp(s, &s->smi, "bcm2835-smi", SMI_OFFSET, 0x100);
+     create_unimp(s, &s->bscsl, "bcm2835-spis", BSC_SL_OFFSET, 0x100);
+-    create_unimp(s, &s->otp, "bcm2835-otp", OTP_OFFSET, 0x80);
+     create_unimp(s, &s->dbus, "bcm2835-dbus", DBUS_OFFSET, 0x8000);
+     create_unimp(s, &s->ave0, "bcm2835-ave0", AVE0_OFFSET, 0x8000);
+     create_unimp(s, &s->v3d, "bcm2835-v3d", V3D_OFFSET, 0x1000);
+diff --git a/include/hw/arm/bcm2835_peripherals.h b/include/hw/arm/bcm2835_peripherals.h
+index 636203baa5..1eeaeec9e0 100644
+--- a/include/hw/arm/bcm2835_peripherals.h
++++ b/include/hw/arm/bcm2835_peripherals.h
+@@ -33,6 +33,7 @@
+ #include "hw/usb/hcd-dwc2.h"
+ #include "hw/ssi/bcm2835_spi.h"
+ #include "hw/i2c/bcm2835_i2c.h"
++#include "hw/nvram/bcm2835_otp.h"
+ #include "hw/misc/unimp.h"
+ #include "qom/object.h"
+ 
+@@ -71,7 +72,7 @@ struct BCMSocPeripheralBaseState {
+     BCM2835SPIState spi[1];
+     BCM2835I2CState i2c[3];
+     OrIRQState orgated_i2c_irq;
+-    UnimplementedDeviceState otp;
++    BCM2835OTPState otp;
+     UnimplementedDeviceState dbus;
+     UnimplementedDeviceState ave0;
+     UnimplementedDeviceState v3d;
 -- 
 2.34.1
 
