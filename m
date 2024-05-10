@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3D1FC25B75
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 09:14:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E851DC25B10
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 09:17:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5MKQ-0007Ej-1M; Fri, 10 May 2024 05:14:10 -0400
+	id 1s5MNW-0002hO-MQ; Fri, 10 May 2024 05:17:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s5MKN-0007DD-Us
- for qemu-devel@nongnu.org; Fri, 10 May 2024 05:14:07 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s5MNU-0002Zb-30
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 05:17:20 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s5MKM-0008UD-F3
- for qemu-devel@nongnu.org; Fri, 10 May 2024 05:14:07 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a599eedc8eeso461902266b.1
- for <qemu-devel@nongnu.org>; Fri, 10 May 2024 02:14:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1s5MNR-0000Rb-UP
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 05:17:19 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-41b782405d5so18259025e9.2
+ for <qemu-devel@nongnu.org>; Fri, 10 May 2024 02:17:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715332444; x=1715937244; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715332635; x=1715937435; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=iFdY3M1Za2O2qEH61bAgpoQ5QG/XSkkLmrULTnILsIc=;
- b=YZSKsJg3JQHQ3xNn+lxyB6zdYM0IKz+AlYBi7txVIgovuLttdzovbKNaLzqCm9EAU3
- isbkHlICT/rlqMNU9bVqu/4I8ljUotMPEyF6bnEonlfh03D1mYGEOZbxi7z46x//oyK0
- 03DUr3jw1p0RSFQs6dxi33oBMdCP0a6g8v5kgxb4jnQA6Qh/Cme0URPNggtTGM/7S6ga
- pEC7VrrU3wA6l71ssYr3xpAlKXN9QhhDBxmMoPdr2srzHCCuS6Zk7wMmhDg4T3u/58WS
- yq0x/CWieBn/qg4Uex2P+U33ivK1HiJ97C12MBhyL1DLEYK4gE87v/4vrl53RTOU9byM
- moXg==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=vFho2fKDG0hRyOS6vufwIlS0egOjLZqm6sKixgtyUhw=;
+ b=fTcNzR8nm6NJHk/zm0YRGiWw1/9Vqi5wWEu2ajSr9ZRkXakAFBcDICfPOwa/OXoWW9
+ 7D1gw0wvvlsL+tVPnXpR2ZGKvr1Y6VCZplLLxYhUlDtV09Nluu8QZyAZbJPIh3IzL84Z
+ kpl3+rssT1q7/ObjwZT6ualpQLzsJ6rxh5X23FtlaF79x3t1vEYdHVDvhROeSt2XmOPb
+ PFP9CyMzAXmq48npLnYrF8+GBJtah58hPE/ju2i6tUY8uNsXWwc2zl/wDsJUTBdJW/2c
+ 7dyTowO8JLynxzKabcp3h2s6MG3HclYaZAqFdUaK6h82HlHXcixG2zlhQVrR0StetNvo
+ 9wCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715332444; x=1715937244;
+ d=1e100.net; s=20230601; t=1715332635; x=1715937435;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iFdY3M1Za2O2qEH61bAgpoQ5QG/XSkkLmrULTnILsIc=;
- b=gJ1D9Q0SG/uZftySp7iaxTOu9VKvXbGo1LupqV7+FLSS9p0PVu3kfOKbDjy1Mqm2Li
- Cz571etnh+iww70SHMeFOO9GW/53+TY4/NmxOnqgtHTsk/8FUkzPMMEhmurNZygFxw5K
- cuBVCW9RRhchDPVgsrcf2pFDfN1j8q99WxNVFRoNCn5E01gcQUU376lVFoyEeXSUk3ke
- lBdWUruHK1c9FGLgO/pAyu7D0XuXjEdshMVblucTtViu+I9bHenasK8fO69975Y6Rayk
- AChAWTs4w1KzUu602BK99IMrJO+GU7rKjZNuPQ5jsCTyzm0nhcHUBNQN/j32g8Xc9bgD
- W44w==
+ bh=vFho2fKDG0hRyOS6vufwIlS0egOjLZqm6sKixgtyUhw=;
+ b=FEun+qxrwBv2HcHRs23oNfuzj80tr05g/fwVm73/R1BiNNFrirg/2ZdMhvSq6as+se
+ sfPYddf04ijow+zZiAsh/Aj/K+sRRI0IyinvkoJr8uYM1eiSm/tvMplcQepfebQP17ep
+ F1VXlMnAo1YwdyRVt/XOwvN48XHOIW/ma/hv/onktCAlDLKGGfJ39fL7rM/YgNGmgMMI
+ GE8vSNmGHvFR28znk+EkX0aA1znrJkvktM3sAHgLFyySwRF9nHyjpRGulTD3D8Ngw345
+ 00iccQ06sTng80BvztBMR7RTV4NFMi10bONeu8mqff/szG9Vr2K6lFaJGbhwkeM28kzA
+ s+qQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU3UTLqkgOjcdR1+V8Xp4jXJCMSvWcN4Is82eXlzcEITa7sujai0AprM7UhArZFTqNIjwz+VoEnZUB+lmhj1/nw0EZik3I=
-X-Gm-Message-State: AOJu0YxrTVX4hG/gYqPGo4fd7b5xsMnlwdTr99pQndRdRiYagtjJ+ju8
- e8PhpKd64CDA0uiR4CaCk+Ds2MLaqSfZq14c4nc5x/T6k+pEKIY/0bPWprZtRIU=
-X-Google-Smtp-Source: AGHT+IF+4zbq6azOIkZLrqbZRy0me14Mxl3BVVYmBuP7JqjLf8NQuRlLq0ib+twiDfV4xrx8f2giMA==
-X-Received: by 2002:a50:a45b:0:b0:568:32cc:f808 with SMTP id
- 4fb4d7f45d1cf-5734d5cf9a5mr1335470a12.15.1715332444409; 
- Fri, 10 May 2024 02:14:04 -0700 (PDT)
-Received: from [192.168.69.100] (sev93-h02-176-184-17-152.dsl.sta.abo.bbox.fr.
- [176.184.17.152]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57359e84dc1sm179025a12.23.2024.05.10.02.14.03
+ AJvYcCWf12CBuy+ssEkLeoFF1TqwmcYYHUyLB4H4W3+zhqusih5hay3vo5PIP/dsMUVShWbuMJgRegE6QvX1seuRloG9Y2vj+do=
+X-Gm-Message-State: AOJu0YzML2uTLFMh1mvThO+BsiBk0vXnUNPjc+4BiP4/Fg9WUkOptmDS
+ EMZ3Ndgj4NYV2+/tnFAuaI9KwgrAGj+LE5b2QgzNGcyj6oKrxQtxX56zdgc1aE0=
+X-Google-Smtp-Source: AGHT+IEvN0A9Zf+FRQ7cW9HFuAp8X1mqyDRdEsgbKwSZMieU5hhuSxdCvqKS2mwEcJDkoA2p4bZZ+Q==
+X-Received: by 2002:a05:600c:26cc:b0:418:4aac:a576 with SMTP id
+ 5b1f17b1804b1-41fead64fdemr19515215e9.39.1715332635304; 
+ Fri, 10 May 2024 02:17:15 -0700 (PDT)
+Received: from [192.168.51.227] (56.red-79-159-217.dynamicip.rima-tde.net.
+ [79.159.217.56]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3502b896a11sm4020574f8f.38.2024.05.10.02.17.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 May 2024 02:14:03 -0700 (PDT)
-Message-ID: <11e3ddeb-cf82-47ed-a02d-29822bb55ae3@linaro.org>
-Date: Fri, 10 May 2024 11:14:02 +0200
+ Fri, 10 May 2024 02:17:15 -0700 (PDT)
+Message-ID: <7a9941c8-d34e-4631-a48d-8f7dee1b2093@linaro.org>
+Date: Fri, 10 May 2024 11:17:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/13] tests/qtest: arm: fix operation in a build without
- any boards or devices
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: thuth@redhat.com
-References: <20240509170044.190795-1-pbonzini@redhat.com>
- <20240509170044.190795-14-pbonzini@redhat.com>
+Subject: Re: [PULL 0/8] s390x and misc patches
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+References: <20240510064001.26002-1-thuth@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240509170044.190795-14-pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240510064001.26002-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,18 +96,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/5/24 19:00, Paolo Bonzini wrote:
-> ARM/aarch64 are easy to fix because they already have to pass a machine
-> type by hand.  Just guard the tests with a check that the machine actually
-> exists.
+On 5/10/24 08:39, Thomas Huth wrote:
+> The following changes since commit 36fa7c686e9eac490002ffc439c4affaa352c17c:
 > 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   tests/qtest/arm-cpu-features.c | 4 ++++
->   tests/qtest/migration-test.c   | 6 ++++++
->   tests/qtest/numa-test.c        | 4 ++++
->   3 files changed, 14 insertions(+)
+>    gitlab: Update msys2-64bit runner tags (2024-05-09 05:46:21 +0200)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/thuth/qemu.git  tags/pull-request-2024-05-10
+> 
+> for you to fetch changes up to 0d497106a71a3b17b0228cb87922ef794296cb24:
+> 
+>    tests/qtest: Add some test cases support on LoongArch (2024-05-10 08:34:29 +0200)
+> 
+> ----------------------------------------------------------------
+> * Attach s390x sclpconsole to a proper parent in the QOM tree
+> * SCLP related clean-ups
+> * Report deprecated-props in cpu-model-expansion reply on s390x
+> * Deprecate "-runas" and introduce "-run-with user=..." instead
+> * Add some more qtest cases on LoongArch
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+
+
+r~
 
 
