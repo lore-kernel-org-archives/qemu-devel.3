@@ -4,163 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B550CC25B4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 07:34:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 205FAC25B10
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 07:50:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5Kli-0008V0-GF; Fri, 10 May 2024 03:34:14 -0400
+	id 1s5L0G-0004NY-06; Fri, 10 May 2024 03:49:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wafer@jaguarmicro.com>)
- id 1s5Kle-0008Us-Fh
- for qemu-devel@nongnu.org; Fri, 10 May 2024 03:34:10 -0400
-Received: from mail-psaapc01on2132.outbound.protection.outlook.com
- ([40.107.255.132] helo=APC01-PSA-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1s5L0D-0004ID-Tb
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 03:49:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wafer@jaguarmicro.com>)
- id 1s5Klb-0007j4-Lq
- for qemu-devel@nongnu.org; Fri, 10 May 2024 03:34:10 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=FEbOMV2+Gm4XPydQy5L7MVbglPQKest3/KLG8b2CcABXZWdqQXuTJUqjcOFQTABN1+oEft5HjGBUwEdiAnxRbj9S9YqYMzycPF7JHzm0TloK3sEYsdUtag0Y5Oa7rj92mxJE6DcEbipGoSk3zUXSu1G4M7a4GYYFcJl0EUKxKnhJ1RBXXL/U+IxB1xrKlhEiH42qxF36jo72PFEL3Fa2POH9BNmSpWaSQzX83gJqqxph5fTviphuEizQF5+XwJ2m7Foq5X7d84b008bP71ipr3pybltrwIPbayV2F2yupa2GXoE7LfeSSeRpivlrrFjwFVz3X83VPQfzn6Usp/dYCw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=o4SyXo5LCdaGG7sh5s3v/VTZLyCIQcxRld+eOfuga2M=;
- b=bk/VOmcZEicZR+CugRpdJNUmOxN+7FqJdcpxPiNmSGbBPu9oCp/gLQh+jVITsWNT4bWZtm2N0EBq/4S6/yhInDDunkEmXUHgDmh8hBh2uLEGcVbS/5PMPN4PxEp7F9b9VWlGBjc0TTKSj66QK150UF53N+csRJDGmcXBM9AHX7XHyiZ6ac/sY1KLAmVRFDNjtz0XuuJDo7zFFd3pCTHNlRCv3pNHlsQRXhgTvFSnN8qktvibL8/mYP2yfCfby+AoDuk/aurIdLnS+jNHKaNrdk6mvqa/x5zzz8ZoDljGE0CAM74K5L2B6/JWJDwAwkIhW6SVAInIbJMyyoi+1mHfkw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=jaguarmicro.com; dmarc=pass action=none
- header.from=jaguarmicro.com; dkim=pass header.d=jaguarmicro.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jaguarmicro.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=o4SyXo5LCdaGG7sh5s3v/VTZLyCIQcxRld+eOfuga2M=;
- b=M7xWpXgDa4HCJIaATRrOfz0qWyyHSzItbHIYI6LeVwYnCwufQZcWwt7SVwYsvbg6Wxqhvs4awLtsjLCFcX/ids2SdqElJ3HW8unl7afYHoIZmsURKDo138n4lj70iBcuUobh6ojwCFehWhIX5ZMW8JOJ5l5CSiCUofj7Apsbb/evnchUPcmnbJM+UBQhnwcIzBr1ibFHRe0OoJMAxppZlOIoKDOBYUQnpcEJeXyVHbWAXIxBB+2yP9Dcdbh8XR1tV5NJjBx/PsHu/4KL/KavFXyHBzSpB++jXWPCY2DhNQkbtTKlH3HF0a0MYGplpjYS8N2BqykUCsGtszwh9/OD/g==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=jaguarmicro.com;
-Received: from PUZPR06MB4713.apcprd06.prod.outlook.com (2603:1096:301:b4::10)
- by KL1PR06MB5969.apcprd06.prod.outlook.com (2603:1096:820:ca::15)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.45; Fri, 10 May
- 2024 07:28:58 +0000
-Received: from PUZPR06MB4713.apcprd06.prod.outlook.com
- ([fe80::b6f8:321a:6742:9bde]) by PUZPR06MB4713.apcprd06.prod.outlook.com
- ([fe80::b6f8:321a:6742:9bde%6]) with mapi id 15.20.7544.048; Fri, 10 May 2024
- 07:28:56 +0000
-From: Wafer <wafer@jaguarmicro.com>
-To: eperezma@redhat.com,
-	mst@redhat.com,
-	jasowang@redhat.com
-Cc: qemu-devel@nongnu.org, angus.chen@jaguarmicro.com,
- Wafer <wafer@jaguarmicro.com>
-Subject: [PATCH v3] hw/virtio: Fix obtain the buffer id from the last
- descriptor
-Date: Fri, 10 May 2024 15:27:53 +0800
-Message-Id: <20240510072753.26158-2-wafer@jaguarmicro.com>
-X-Mailer: git-send-email 2.27.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SI1PR02CA0009.apcprd02.prod.outlook.com
- (2603:1096:4:1f7::10) To PUZPR06MB4713.apcprd06.prod.outlook.com
- (2603:1096:301:b4::10)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1s5L0A-0002XT-Eo
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 03:49:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715327347;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Wt0dTIt6d4wjvyBofQFW28KQCSensSnHLBQWx9Uno0Q=;
+ b=CMfUug0s0c8SvIg6XUfRxNofouOU8xQpPSuHCdzxr00t1w30fKO+1C7mFI8chdY4xoB67r
+ vqk1ctWxF4V1rS0C77eE/QXU8UDIxgUXznOLGdiH8A8vr4M3Ib7lChKO0q9Ty3Y4eaZw+w
+ dvMnkj2jkxf/lFr5UF1sHQymSwlq2T0=
+Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
+ [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-57-l9_3rDeON5WbTMuRor523Q-1; Fri, 10 May 2024 03:49:06 -0400
+X-MC-Unique: l9_3rDeON5WbTMuRor523Q-1
+Received: by mail-yb1-f198.google.com with SMTP id
+ 3f1490d57ef6-de617c7649dso2620760276.0
+ for <qemu-devel@nongnu.org>; Fri, 10 May 2024 00:49:06 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715327346; x=1715932146;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Wt0dTIt6d4wjvyBofQFW28KQCSensSnHLBQWx9Uno0Q=;
+ b=HM/ySNfrsBqA7CETb1quBaPEgHOr9hHgYyVpNVoODWdbGxOZ45+1OhWTfOhlkfwTJb
+ HKMMFG2Dlh2kdf3MBGllQuGz8r7u2Kaqs6nvdTH8wZT3Y5uVYJ8GxMz8Id8OPo0dP0Qn
+ /R2EXRv0PRXvJcDVjY9wZBnSlSnEvMcv0lZp4X3h6ozsp9hznBLLW/90/YJ21ke8u78u
+ 9E2S6KKnJ0h4OI/QTAf5+0n8zYhJu8/us/SN+zYNq2ndYjHebNwk2z8bc7NoMZwHZZD8
+ cRCzG5VypR3kL+ZaqvpDsQs1+dkvJBNUcJYNELaedFtextWilFjp6uXICFvpGS2Q0ShS
+ PhkA==
+X-Gm-Message-State: AOJu0YyJu7IWBnFQD+avtJWXwoPjc1yNA1u2DU9BgeQfh0TP281x0bw9
+ CBRg23JtGvhhkxP73r20ha7mas7hwYx8EWG8upFsU02+tHNG8ezHKTeftdE93yBvwOWD5ldEnGm
+ grK9s7FK4nBAuZBSsiFS3Vdmvs/6P3YRYxEC6CcZtjfYY8xcsgTdfqa/pR4soSFSZPK/F5i9+l4
+ 353qT58WQRpq8WXf5Up3Zm/j9VmWA=
+X-Received: by 2002:a25:c7d1:0:b0:de5:9d13:48ac with SMTP id
+ 3f1490d57ef6-dee4f2f6deemr1926648276.5.1715327345871; 
+ Fri, 10 May 2024 00:49:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFW6lIvSV6PJRfNnt0MAg8Qx5Eu3tgVC7KaSPbS66wUMfqoTkFK3NWaxowvf0IHZGExOZtYhdIRSzeah6BJyWI=
+X-Received: by 2002:a25:c7d1:0:b0:de5:9d13:48ac with SMTP id
+ 3f1490d57ef6-dee4f2f6deemr1926624276.5.1715327345511; Fri, 10 May 2024
+ 00:49:05 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PUZPR06MB4713:EE_|KL1PR06MB5969:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1661f4f7-6055-4bdb-d499-08dc70c2da0e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230031|366007|52116005|1800799015|376005|38350700005; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?T3hJRUhHYWN0bUJTbk9TWFhoUWtQd0pCcy9tV1BnOWM5WXoycHVmWStkNFJ5?=
- =?utf-8?B?OTQ2ZERxSmRMWlpKU3ptdmNjR0VGVHBvQmRyK0dOZytjVmJKWWdrVVlUKzJl?=
- =?utf-8?B?VStKcFdzNWI3blFBRjN5U3VOU0dlakhIeWxIOGtiU0cyd0d1VXRYa2hsaTVW?=
- =?utf-8?B?dk8vd2VmR2VydWFqc2VjeFJNeXZqaVVmeXRkRjlzQU1HY0dyY1k2UytHaGZi?=
- =?utf-8?B?S3ZHTHJ0Q290SjBLakNkeCs3Zm9ST3JQRzl0UGRvRGtTVkxVOTBQaEQ5M1dJ?=
- =?utf-8?B?NEFvcUQrUTd4eVQ2NDEyZFBuL1hMTFFKYUF4ME1VY0F0b05ucEtNUjl1WmlI?=
- =?utf-8?B?WlVoaFRmT3E1YjdYaWxaMjR2aVhJclVGN0t4TGdpQ3J0Q3BVcldoMGZPU2N5?=
- =?utf-8?B?a29PTWdDZ2ZzMEhoRXVsN2NzOGFTbGczQVNUSjhPdUs0OHVGU1NWMEtaaGlC?=
- =?utf-8?B?N0t2Rk1tRTJKMDNKRzVQQkxMV3gzRzZDckhjcGJrVDB2RmFnUHYrYUFzVVlG?=
- =?utf-8?B?S3FWMm9oNFRRNTBhdWxCOWhOcGhZV3M3UXRtTjhNUHBnU1NyY01sT0cveXJH?=
- =?utf-8?B?S3NSSXMvVm1uTFFmQlQvdVU1TmRQMjBiekxFdmJRMXpwcjFXNnYwTW9vK05G?=
- =?utf-8?B?OWZxbTcvSnJlbXNOc1E3aklJeXRWNzBtWHZ6UVJVVHZRRXdhMGMvN2RyQ0ox?=
- =?utf-8?B?aWpKdFNnT3RqWVlzemc5YS9TQ1RTVUlJcFVoUnZ2a20vT0pQa1JJVGIyMzRJ?=
- =?utf-8?B?bjBUaTJVdUdBOEhXQWxCSXRCOTczMVVTSWw2dTF3TGU2QjVJNXdKazQxNElG?=
- =?utf-8?B?QXdQZmZvbnVaY2hGNk43dlVQRzczdDd0dXZ2Sml1MnRVYUZUYkpYMHFEdEZK?=
- =?utf-8?B?TENHVWQ4bzZXVENENmV0RHVodlBoWTdvWUJLalBFRHp6YWxuL3lua0dFRTVX?=
- =?utf-8?B?MndVQzhRcGloS21YbzBER3Zqb1hoUkpQRmpCdUhXMjlqT3FPeUpHL3oxdWNp?=
- =?utf-8?B?TFp4T3hYb2RUeTczTGtvL1F2S1IrLzY1RUYybVo2TWJqUWJ1ZWdZQzk5K3Ir?=
- =?utf-8?B?QjdTL2pVd2pwVUpHbVF4UEFTQ0p4ZjBYS0VYdnBlUURxMmZuOERORWtQdkkz?=
- =?utf-8?B?Z1RPRlFTNEc2M3RMazRLVDhNYUNuZXZnZ0xCYWRMZG1EMUVYRXF1N2lGRUpo?=
- =?utf-8?B?bWVWNktQdkdvNG9HK2IvdDI0SlRBYnJ5K0E0ajFueFhnSndXWjliU0VteHNS?=
- =?utf-8?B?bTBoSWoyZXAwWnU0U1VpV21pQ2xXa0FSTzlxMlc1dEpCaWFxSzd5ZHpNL1pP?=
- =?utf-8?B?N01kQmhLenpmTkxtVk04dUFDMjFFTzdlS00zYmk5a1hzU1dHTDJPYUxXKzNE?=
- =?utf-8?B?UHJ0NWtvU2VKVFR3UHV4VDVmbWVsZmxyWVBHQW1PbTdPWDRRMnV0aTFtb0dO?=
- =?utf-8?B?ZEtHK3RtZ2craXY2NlNybGFXd2tJNjJ6RXlWVDhwSjYrWEYzZHJyN1NDY0NR?=
- =?utf-8?B?R1NoTnBpSGc3d1FNZ1pDalZ0eDhRZjdhakNUZHBoKzhMUFhrNnR3c2ExczZw?=
- =?utf-8?B?dndBaHFKbzlZOTdDSEZybDVudmtoWjUxNjlublRKU3lqQUVUNWZXS0x0Um1X?=
- =?utf-8?B?d2E3N09QdGxOSG1uV0k4NmZuQ2had0FpR0Ntb1gyNWg5T1ZFU3UzU3JMS3Ez?=
- =?utf-8?B?dVZYSmUrWXdIWmFXMHhRd3R6TjYzK1JJNUlTWmJyejV2NzlEZ3VFeUZ3PT0=?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PUZPR06MB4713.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(366007)(52116005)(1800799015)(376005)(38350700005); DIR:OUT;
- SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MDF6amVBZjY2RDhGWkJoaXlYTHhGcHV5Lytzcm4raitrWGcrcXNjNWd1Zlgz?=
- =?utf-8?B?dkszbm9iczI1ZmVVNVpQcTNlRDQ1ZzU1WWI2TWN5N042bkRGdHYrRmRWemxC?=
- =?utf-8?B?UGdIZ29qTTlsYlRHeitSK0hTSm1FYW11WFhxR1lzMkd2SGNzQWNZSTRsN1hv?=
- =?utf-8?B?NER0dkxETzU2VGxvbHlSM3dXVGZnNkZiZVpYQ3ViWDdpRzU3andiMHhBZFVo?=
- =?utf-8?B?ellkMDByUnh0bTFzR3o1S21Sd1ovZWZKZ2E5dS9waHE2NTF6WjNKWEd1azdK?=
- =?utf-8?B?SldsMjFDWHl2M1AvUnZXejkzeFk5cFBaVmZhdlczVXI4Wnp0a0VxUGV6TnpG?=
- =?utf-8?B?VW1aWFRtaFk2WEZrVGNIaFBZNXFhYW4zQVdPZmJxNGNkQll2eXk1aTdmUnI5?=
- =?utf-8?B?ZjdtNktqMHRrVEcxQ3NGR2V0ZjJBZFV1bmxFNC91ZHJobWVRVmowNUV1a2Zv?=
- =?utf-8?B?MDg0N2RxK3plUVozWnVDYVdGazJEZ3c5emNwWEFWZTVEOFppMFFDNTFqbS9R?=
- =?utf-8?B?dTR4NXFlMWhMdjIxM2s2WFNLYXBJYmF4elBQbGJrOFQxQU9ycnBEYXJqNVp3?=
- =?utf-8?B?OVFLbkd0WmxaSzF6Zys2MGp2dGplOXlCOVVsM2tVYnJXNUJmdlcva1ZaR201?=
- =?utf-8?B?MjI2ZTYxRzgwdk54ektSMlBEQ2Y5L0VPTXpRcFFQZFRrbkt6ZEpySEVqcW5C?=
- =?utf-8?B?RlVUYmlYUGYrRWU4a0gvd2RwZCt4WlRpN1JRQ0dJbU1xd1JVMGJTNVplVmRF?=
- =?utf-8?B?MG5XcU9zQllmVUlxeHVrVEd4UXorOGRmMHY5OVIrYnFreExOaWZ0bEVPVUo3?=
- =?utf-8?B?K0VuK0RQcjZBZHgydFJHYVN2bmhkeW1yNnd1VFJOY3k2T1BrY05qUU9iMlpy?=
- =?utf-8?B?UGRGNmpCMHkyQWtibEs5VDY1TUxJOEhSalJGeXBhOGZYQTNFTG9JZG1mK2Zy?=
- =?utf-8?B?ZFdobkhFNTZ5bXUxMG1iUDRteXgxK2xEUkJDN2RzLytDb1NZOXBicVArQ01u?=
- =?utf-8?B?cEpIQ0FUbjBObVVLQTFqZ3hZSGpiV3piYTArNEhKeVBOazhqQ3NWRHh3ZU90?=
- =?utf-8?B?c0d1Nm9vNlJheGljSkl1OXorY3dLOER1aFIxaWxuaGhHMm92QUxTaXZubGtS?=
- =?utf-8?B?ZVYzd1g1NkdaZjVncmVEekFJaEg0R203WHE1bkFyRmsrcnBkaUF0WkxVNGpx?=
- =?utf-8?B?cG53cEg3ZVBIWjllTTdhMlcvVkZTRFVFUlVtYmhwMkZFMEw4MzU0NmtLSk9K?=
- =?utf-8?B?eDFaQUd4T2RXalNZdVdmNm93Vks4Ymo2NlVseDdHc0xhU0lwbjN0anJ3V2hX?=
- =?utf-8?B?d0svR2tZU09XdU1UVllPdTFlSlFQMExxOEdPUmdkVVNZMHVMRVlibFJrNndE?=
- =?utf-8?B?cTRadTM5ekhoUVp1WXZxalJGdW9sZDVpaVUrWXBLbGZoRXRrYk91clYxWEpM?=
- =?utf-8?B?b0N6SkJDcm1ncklIYWtCWUZESmdPQTJIUWh4VHNCekZBUFVwSzlMdURremxI?=
- =?utf-8?B?dzNEOGhhbnVDbkZPKzBRSGhGMmlBanJiRWI5V0Q5eitJZW51OExQeEk2VUs5?=
- =?utf-8?B?eFZvWCtiSnJ2NUJVQXVyQjlvZEtWTkN3eFlPamRERll5Ui9laXFXWXJnSlRx?=
- =?utf-8?B?TkdVbkFZM24xQkdKcE1oSGZrMkd5S2x1Q2ErVjVEYllveE1kSmowdVNiUVdo?=
- =?utf-8?B?NFlaWW5McmVMc1J3UU4vcnp5SGRMVEQ2M2o4dVZ5UzVBTGxWelllSE92clJH?=
- =?utf-8?B?U0tYY3dKS3F6dkhNZS8xN200bTc3VVRVMnIwcUhQV1NuWmllMjZ4cm80cmlS?=
- =?utf-8?B?c2FmcUJEVXhqeFdudWFmS2tmQW1jN3I3NGZlMTBQL05rSml6a1B4K0xGWmg3?=
- =?utf-8?B?Ymx5QUVQSmtmb09WQU50TUNVTW9kbk5aYm12MkduYnNRUzBNajEzclF4dVIz?=
- =?utf-8?B?TmFKcTRKMXF2cENhTFBvVC9odXR0YUEyYlpsQzRSblhPZ1hMRWJ1bmJuM3hD?=
- =?utf-8?B?Y2JXSjE5OGZya1V5eENBTzJaNkE0bjE5MmRIZ2t3SUhFekUyWlVuaG5ndm9a?=
- =?utf-8?B?eWFPUGdRZVdXdkRMT1hTRWZxTHNzSGRYWE9mNjZXMHp2VWtRczJQZUNMOGJv?=
- =?utf-8?Q?8uhxi2POCf5j0fz1DrE0pRPM2?=
-X-OriginatorOrg: jaguarmicro.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1661f4f7-6055-4bdb-d499-08dc70c2da0e
-X-MS-Exchange-CrossTenant-AuthSource: PUZPR06MB4713.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 May 2024 07:28:56.6490 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 1e45a5c2-d3e1-46b3-a0e6-c5ebf6d8ba7b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 7Yf3hTW957Vu5icS2CMX6/oBuke3Al+7fJOx9U0PgI5sFLFHoR7HZiNyljbUEO/vXB6doK6uba0k3VYtoxLiDA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR06MB5969
-Received-SPF: pass client-ip=40.107.255.132;
- envelope-from=wafer@jaguarmicro.com;
- helo=APC01-PSA-obe.outbound.protection.outlook.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20240506150428.1203387-1-jonah.palmer@oracle.com>
+ <20240506150428.1203387-5-jonah.palmer@oracle.com>
+In-Reply-To: <20240506150428.1203387-5-jonah.palmer@oracle.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Fri, 10 May 2024 09:48:29 +0200
+Message-ID: <CAJaqyWd8ALnpr5BVOFpWo1ndUu9Y3XHO0UKtHFzEOFW3FsmWpA@mail.gmail.com>
+Subject: Re: [PATCH 4/6] virtio: virtqueue_ordered_flush - VIRTIO_F_IN_ORDER
+ support
+To: Jonah Palmer <jonah.palmer@oracle.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, raphael@enfabrica.net, 
+ kwolf@redhat.com, hreitz@redhat.com, jasowang@redhat.com, pbonzini@redhat.com, 
+ fam@euphon.net, stefanha@redhat.com, qemu-block@nongnu.org, 
+ schalla@marvell.com, leiyang@redhat.com, virtio-fs@lists.linux.dev, 
+ si-wei.liu@oracle.com, boris.ostrovsky@oracle.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -176,52 +102,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The virtio-1.3 specification
-<https://docs.oasis-open.org/virtio/virtio/v1.3/virtio-v1.3.html> writes:
-2.8.6 Next Flag: Descriptor Chaining
-      Buffer ID is included in the last descriptor in the list.
+On Mon, May 6, 2024 at 5:06=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.co=
+m> wrote:
+>
+> Add VIRTIO_F_IN_ORDER feature support for virtqueue_flush operations.
+>
+> The goal of the virtqueue_flush operation when the VIRTIO_F_IN_ORDER
+> feature has been negotiated is to write elements to the used/descriptor
+> ring in-order and then update used_idx.
+>
+> The function iterates through the VirtQueueElement used_elems array
+> in-order starting at vq->used_idx. If the element is valid (filled), the
+> element is written to the used/descriptor ring. This process continues
+> until we find an invalid (not filled) element.
+>
+> If any elements were written, the used_idx is updated.
+>
+> Tested-by: Lei Yang <leiyang@redhat.com>
+> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+> ---
+>  hw/virtio/virtio.c | 75 +++++++++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 74 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index 064046b5e2..0efed2c88e 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+> @@ -1006,6 +1006,77 @@ static void virtqueue_packed_flush(VirtQueue *vq, =
+unsigned int count)
+>      }
+>  }
+>
+> +static void virtqueue_ordered_flush(VirtQueue *vq)
+> +{
+> +    unsigned int i =3D vq->used_idx;
+> +    unsigned int ndescs =3D 0;
+> +    uint16_t old =3D vq->used_idx;
+> +    bool packed;
+> +    VRingUsedElem uelem;
+> +
+> +    packed =3D virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED);
+> +
+> +    if (packed) {
+> +        if (unlikely(!vq->vring.desc)) {
+> +            return;
+> +        }
+> +    } else if (unlikely(!vq->vring.used)) {
+> +        return;
+> +    }
+> +
+> +    /* First expected in-order element isn't ready, nothing to do */
+> +    if (!vq->used_elems[i].filled) {
+> +        return;
+> +    }
+> +
+> +    /* Write first expected in-order element to used ring (split VQs) */
+> +    if (!packed) {
+> +        uelem.id =3D vq->used_elems[i].index;
+> +        uelem.len =3D vq->used_elems[i].len;
+> +        vring_used_write(vq, &uelem, i);
+> +    }
+> +
+> +    ndescs +=3D vq->used_elems[i].ndescs;
+> +    i +=3D ndescs;
+> +    if (i >=3D vq->vring.num) {
+> +        i -=3D vq->vring.num;
+> +    }
+> +
+> +    /* Search for more filled elements in-order */
+> +    while (vq->used_elems[i].filled) {
+> +        if (packed) {
+> +            virtqueue_packed_fill_desc(vq, &vq->used_elems[i], ndescs, f=
+alse);
+> +        } else {
+> +            uelem.id =3D vq->used_elems[i].index;
+> +            uelem.len =3D vq->used_elems[i].len;
+> +            vring_used_write(vq, &uelem, i);
+> +        }
+> +
+> +        vq->used_elems[i].filled =3D false;
+> +        ndescs +=3D vq->used_elems[i].ndescs;
+> +        i +=3D ndescs;
+> +        if (i >=3D vq->vring.num) {
+> +            i -=3D vq->vring.num;
+> +        }
+> +    }
+> +
 
-If the feature (_F_INDIRECT_DESC) has been negotiated, install only
-one descriptor in the virtqueue.
-Therefor the buffer id should be obtained from the first descriptor.
+I may be missing something, but you have split out the first case as a
+special one, totally out of the while loop. Can't it be contained in
+the loop checking !(packed && i =3D=3D vq->used_idx)? That would avoid
+code duplication.
 
-In descriptor chaining scenarios, the buffer id should be obtained
-from the last descriptor.
+A comment can be added in the line of "first entry of packed is
+written the last so the guest does not see invalid descriptors".
 
-Fixes: 86044b24e8 ("virtio: basic packed virtqueue support")
-
-Signed-off-by: Wafer <wafer@jaguarmicro.com>
-Reviewed-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-
---
-Changes in v3:
- - Add Acked-by Jason Wang
-
-Changes in v2:
- - Use Jason suggestion: Move the code out of the loop.
----
- hw/virtio/virtio.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 871674f9be..e9e8447878 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -1744,6 +1744,11 @@ static void *virtqueue_packed_pop(VirtQueue *vq, size_t sz)
-                                              &indirect_desc_cache);
-     } while (rc == VIRTQUEUE_READ_DESC_MORE);
- 
-+    if (desc_cache != &indirect_desc_cache) {
-+        /* Buffer ID is included in the last descriptor in the list. */
-+        id = desc.id;
-+    }
-+
-     /* Now copy what we have collected and mapped */
-     elem = virtqueue_alloc_element(sz, out_num, in_num);
-     for (i = 0; i < out_num; i++) {
--- 
-2.27.0
+> +    if (packed) {
+> +        virtqueue_packed_fill_desc(vq, &vq->used_elems[vq->used_idx], 0,=
+ true);
+> +        vq->used_idx +=3D ndescs;
+> +        if (vq->used_idx >=3D vq->vring.num) {
+> +            vq->used_idx -=3D vq->vring.num;
+> +            vq->used_wrap_counter ^=3D 1;
+> +            vq->signalled_used_valid =3D false;
+> +        }
+> +    } else {
+> +        vring_used_idx_set(vq, i);
+> +        if (unlikely((int16_t)(i - vq->signalled_used) < (uint16_t)(i - =
+old))) {
+> +            vq->signalled_used_valid =3D false;
+> +        }
+> +    }
+> +    vq->inuse -=3D ndescs;
+> +}
+> +
+>  void virtqueue_flush(VirtQueue *vq, unsigned int count)
+>  {
+>      if (virtio_device_disabled(vq->vdev)) {
+> @@ -1013,7 +1084,9 @@ void virtqueue_flush(VirtQueue *vq, unsigned int co=
+unt)
+>          return;
+>      }
+>
+> -    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) {
+> +    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_IN_ORDER)) {
+> +        virtqueue_ordered_flush(vq);
+> +    } else if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) =
+{
+>          virtqueue_packed_flush(vq, count);
+>      } else {
+>          virtqueue_split_flush(vq, count);
+> --
+> 2.39.3
+>
 
 
