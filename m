@@ -4,84 +4,202 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11BD1C25B10
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 11:58:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07972C41513
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 12:03:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5Osr-0001HR-SK; Fri, 10 May 2024 07:57:53 -0400
+	id 1s5Owq-000301-KB; Fri, 10 May 2024 08:02:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1s5Osn-0001Gy-Oq
- for qemu-devel@nongnu.org; Fri, 10 May 2024 07:57:50 -0400
-Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1s5Osj-00034V-9L
- for qemu-devel@nongnu.org; Fri, 10 May 2024 07:57:47 -0400
-Received: by mail-qt1-x82b.google.com with SMTP id
- d75a77b69052e-43df23e034cso16333911cf.0
- for <qemu-devel@nongnu.org>; Fri, 10 May 2024 04:57:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
+ id 1s5Owo-0002zc-1h; Fri, 10 May 2024 08:01:58 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
+ id 1s5Owm-0004lj-1m; Fri, 10 May 2024 08:01:57 -0400
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44AB5Y4D023151; Fri, 10 May 2024 12:01:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
+ h=message-id : date :
+ subject : to : cc : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=corp-2023-11-20;
+ bh=fUGIJBXf3LeM2EKUzFzZprw8aDPFgwSWrsEBjN74n6Q=;
+ b=L1d5opSstbrfmmlKW1Q/p+T3iTrXo2DPmi8oFOO80TI5MXqpw6PIIdYfpRy4gsRROTjG
+ EwiTaLQJF/2FeYLAS3VWWqGKIrsWe64rZVs6gD/BJHnV1HvDTa5PYayOyxW3kzlYqepA
+ G4eT51fOCNaz8/KsjgNNJrJwn5IQlaN5h6Bn4gmvhy/XnFmSO0gKLQsXPCQuzmLtWzo0
+ +VtiOCzlD0/Q9m5D//79KbsA9Xej2kucBUC7sgkmF7dMVH56oQORdP9rCnfiX6NILG7k
+ m5Rvh+zcprd0gde1swNAPM9mFbIwkPra5hvk12fJcF7Nai6TqBsz9yECnaWKZcRA4G+F lg== 
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3y1jd302nv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 10 May 2024 12:01:40 +0000
+Received: from pps.filterd
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 44ABPJNJ019108; Fri, 10 May 2024 12:01:39 GMT
+Received: from nam11-bn8-obe.outbound.protection.outlook.com
+ (mail-bn8nam11lp2168.outbound.protection.outlook.com [104.47.58.168])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 3xysfpf8ev-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 10 May 2024 12:01:39 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=j8ISike0ExCtd9t1Fvb1cC8PoXoD6ZwOu9RjG38sgL4XV8BnX6oidZD/bFUr1Qq8OeG2nXvHA69rn3DOcQhvUbGnTs136tVNiGmuHXKXeaQGDv/JPZpY44tUw3b0UVwQ/qIRyfeJ1FEozijQDgNCk5KguCd+7LOQVia+rIcJvkfowLbJyf2a1tOhOjShq+XWHUDCwGlElK7TpIi89hvpib+wDMKsH9OmVS2LR+NICh4vShRivTmYnQTIlEUmkfKaBDfQeG/LeiLmLpo5TRIgvoMIC1vTvYfV5/+cyhiAVkpPSb129ckJLSVztLkACqQ/5K38E7PLfqfIT59EIpEEiQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fUGIJBXf3LeM2EKUzFzZprw8aDPFgwSWrsEBjN74n6Q=;
+ b=fEwoS0nSle536kjc2vDWpwaeEdz0/Ec+A5jofycnfJSpqDYVHlDxgMMdxMbb+j24WRTdiWCCpnA2oRGT7CrKto6Mkw6bXY4whCzXg3HZmDwtB4mZ3vquIYnV4QuFftWl31MYyakARiCDodar8fX5lgzuq3ClEzkGLPz3MXZJTGKdSDJ8YLlcr0wDiFxNGsW2rb/Lztuc6Fhl7B3TYvDwphww4lggogUr4acVhvdMX3RmBg1jVR8EF+eHSwdDrt08NijATGcfhrTcLIQth0FIA+1ObHylEVN07UnxOUPuSZ/SPLDBUMH3Hbf36uJUsreVlXwZ928WZfcblYFbRYGNTg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715342263; x=1715947063; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Fn4Pf9ecUA7ubOppugIw2zV+f8eXujTzwhZrdELeslA=;
- b=kqmNBGFunIjEf8uKgn7UFSOA17L28A+a7xONDzc4p1SY191EbPFlXpj25gST6VnyKT
- psxEc/mrzLL8pLlhyLz2g6CLx2wynT69j/TcIFQ3I+5W8ZKEj/Ib3d+6GWj2GL9ufOff
- 2qk5p6kzJd+owYNJgibK6AuK0XpPdQDGgFaI1bw5O5UoJEXr7c6JsL2h82wb/qV4AL8B
- gy/JigglAlMWXDh/VFpP+ZMpCejAMrOqR07u5x3OlX5TzUeu55u6mvfB7kQ923d9H6Qn
- OMQ0jlVazQr9nnMZys2Bspt2XCuo87in4y1WEZekt7cA3NEegi1vFICOnjBMOHHuzMxq
- jVOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715342263; x=1715947063;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Fn4Pf9ecUA7ubOppugIw2zV+f8eXujTzwhZrdELeslA=;
- b=tHHREdIJHdPDSJLcAygONwGg5H2BdcWmNrMcj2B/o/eG6ZBBB7PSAJQFNjuF+pvsiL
- r30UOWdPFZtn778DgIj3ri5SIePs9TclnTZtbCpT91C9oKq62Q1B64kn23cRUZM18OXH
- 5BMOayzX0XdkIVcrngIxJYysSUpKZBkc/TFz1rKiOp9WElrVVqSuKp4E1TMKIwb5Relt
- XNd5R2GiMWZ0npmBkYEUMmuMRuw7an/P0SXFE3fR+F+cxQUv/SFmV4S2GlFkdYzpha1v
- 9NNECGzS445QXKjlDaCl3RHAvM1D1BHnHV6d7wnW8REgFMQIqeuZSu9+XJjdNzJGaOa9
- XtcA==
-X-Gm-Message-State: AOJu0YynlSMOt/yXO6eHGtX0XqCHKNRgqUTf9iFGOHk08z39/BzOMOET
- I9v2FrsWOu1lVlfR0Ueteq7gDLzDgJd5JongyrEk1Ufno0xg2Yl6yUixvf+yaE7g5QZkq62ivLo
- 7osN2tKoCYpHYw/sFgoDagWq5zWQ=
-X-Google-Smtp-Source: AGHT+IHmn/iApU/TlGAlG5lEZS8zDBaZ/tzIFjNAJVlPPfiEOuaWWhhk22rl4gTV4Kju8W2ImFxKwr/5Rj1+Zfglrdk=
-X-Received: by 2002:ac8:580c:0:b0:43a:b66d:1a67 with SMTP id
- d75a77b69052e-43dfce3d0camr48513291cf.29.1715342262872; Fri, 10 May 2024
- 04:57:42 -0700 (PDT)
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fUGIJBXf3LeM2EKUzFzZprw8aDPFgwSWrsEBjN74n6Q=;
+ b=bfn/6trdWtS9DHStmwlqqSaCJ3dBTUallDNLDaMZIddJF0A0NWzPLvKJEmG/QfdBJes6ly96OQYZMOiKdCv6SHSrJ4Com2rl2jqwqEZbslC8mF2ko75EmXDojiJbzXCAsKQzk4B8xMuYW3oZ4s1jE+P6qMfld8/5czt6mdF3wJQ=
+Received: from PH0PR10MB4664.namprd10.prod.outlook.com (2603:10b6:510:41::11)
+ by PH0PR10MB7025.namprd10.prod.outlook.com (2603:10b6:510:283::19)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.47; Fri, 10 May
+ 2024 12:01:36 +0000
+Received: from PH0PR10MB4664.namprd10.prod.outlook.com
+ ([fe80::7635:ba00:5d5:c935]) by PH0PR10MB4664.namprd10.prod.outlook.com
+ ([fe80::7635:ba00:5d5:c935%3]) with mapi id 15.20.7544.046; Fri, 10 May 2024
+ 12:01:36 +0000
+Message-ID: <53a4505e-c9e3-482e-b84a-7246769b18a6@oracle.com>
+Date: Fri, 10 May 2024 08:01:27 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/6] virtio: virtqueue_ordered_fill - VIRTIO_F_IN_ORDER
+ support
+Content-Language: en-US
+To: Eugenio Perez Martin <eperezma@redhat.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, raphael@enfabrica.net,
+ kwolf@redhat.com, hreitz@redhat.com, jasowang@redhat.com,
+ pbonzini@redhat.com, fam@euphon.net, stefanha@redhat.com,
+ qemu-block@nongnu.org, schalla@marvell.com, leiyang@redhat.com,
+ virtio-fs@lists.linux.dev, si-wei.liu@oracle.com,
+ boris.ostrovsky@oracle.com
+References: <20240506150428.1203387-1-jonah.palmer@oracle.com>
+ <20240506150428.1203387-4-jonah.palmer@oracle.com>
+ <CAJaqyWcTSQ4hyzfYRENE93GnHMhgvY4X_gz3ydnpYUMz1_J8aA@mail.gmail.com>
+From: Jonah Palmer <jonah.palmer@oracle.com>
+In-Reply-To: <CAJaqyWcTSQ4hyzfYRENE93GnHMhgvY4X_gz3ydnpYUMz1_J8aA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: LO4P265CA0261.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:37c::14) To PH0PR10MB4664.namprd10.prod.outlook.com
+ (2603:10b6:510:41::11)
 MIME-Version: 1.0
-References: <20240507111920.1594897-1-marcandre.lureau@redhat.com>
- <20240507111920.1594897-4-marcandre.lureau@redhat.com>
- <20240510062414-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20240510062414-mutt-send-email-mst@kernel.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Fri, 10 May 2024 15:57:31 +0400
-Message-ID: <CAJ+F1CLG3MgaEp6-okcRcAW9Mx5qu5bGXdPdPNxgOYfnLpKdMA@mail.gmail.com>
-Subject: Re: [PATCH 3/4] virtio-gpu: use a VMState variant for the scanout
- field
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- Sebastian Ott <sebott@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Eduardo Habkost <eduardo@habkost.net>, Fiona Ebner <f.ebner@proxmox.com>, 
- Gerd Hoffmann <kraxel@redhat.com>, Peter Xu <peterx@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, peter.maydell@linaro.org, 
- Yanan Wang <wangyanan55@huawei.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82b;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82b.google.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR10MB4664:EE_|PH0PR10MB7025:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2250e68f-dea4-4d90-5037-08dc70e8f147
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230031|376005|7416005|1800799015|366007;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?eGlnSTQ0R2NCSG9pdzNKcS9yVGlJcklyYWJ0bEZWcy9aeUNuaVRCdVZ2bEcx?=
+ =?utf-8?B?WGJwSlFRUGx5OWdrdDV4RityQ2JrUTZja3NSQ3JiSXRITHMyRys5dkdGWmRK?=
+ =?utf-8?B?RWJQVEhGWDc0OXp4Yi9LZER1K0o1aTVENWhSOEt0L0JLZG1pdDhNako3Zk9Q?=
+ =?utf-8?B?SUhETlk4emI5Nkdsa215YmZvR0o0ZFdmTGNQZWltSWJBdnhBWTRaUSt1NVo4?=
+ =?utf-8?B?TS9oQmxMYklhRm1saE9jbWIveUxvTE1qUDFkbGZGdGswemdQbXozVVYwSGl4?=
+ =?utf-8?B?eTBJWnNBbVBNNkdQVkRsUmdxUG5adUFaRy9Bc1VYem1ZNTVYVWlwQzBzM3R0?=
+ =?utf-8?B?U0d0dFIwWVJ0NzduekNTN0tZRkhxbzRjc3hablp3eUl4bStMbXNHMndqVTNz?=
+ =?utf-8?B?aHdUWDMvSUozQ3BLMXRrV1RYaDhCNjNnZUplSGczclNXWEFmQlpydEtwbFZC?=
+ =?utf-8?B?SVE1Uy9nSHNnVHUwbWJ4enc2OS9NMmZMYk5JSm13UkNkbEhRdjg2d3RNUVlO?=
+ =?utf-8?B?TEVDSWlvL3JILzlmQVhRQkgvY2UyNGtoU3V4UkV2V2pJTW1TWG1XQWsyK2t5?=
+ =?utf-8?B?ajN5RXRFaW9GajZuMXlRQTBEL0Z0eDl4aXl2Rk92NXhENDMzM0JnMDRvdXlK?=
+ =?utf-8?B?UzJTTURIeEF4YjBJQUIzenkydDFPS1VPM3BoRlhUemRZL1Nta0NKdzEvZDYv?=
+ =?utf-8?B?clpEMFp5WnZyd2dMdy9oUksyY2hrR3lXanFpKzJrMjRUZXFLdHo3Vkw2bTdi?=
+ =?utf-8?B?TkYrOEZ1cFgvS1diQndHR0R4VTVwZGpHM2x2dEVNRW1KNWY5SVVON29sY2JM?=
+ =?utf-8?B?QUl3ajFWQVVyTmpRQ1dyUW5RVlBWZDRlZFNjUDNtekZVSHYvRTNkeTdOcUpp?=
+ =?utf-8?B?QjFKZ2Zqa21TUExhSjlHdkt3b2ZRN1RrUlFUc1U1b3BTOTlKQytoM0lDdnZ1?=
+ =?utf-8?B?UGdEcFBNR0hLM3ZWVjRwcFQ2eHZxdmc3VFh2dDIxVFNpTGR5R0pWQTZxTE1M?=
+ =?utf-8?B?ZHl1TVVhTVMvcXlwWURCT25rUU5oMEpYZGlpSFdRT2JHL1J3SmY4NVp1TGoy?=
+ =?utf-8?B?UEhJcG44MisxWnkzc01SZ0FTMzZaS0RMakdkb1VoN0lSWEo1WVZCdnR3SGRu?=
+ =?utf-8?B?NVFHNlc4c2FjN1prdnFjNDc5MzNwcXVRMVVMcW5qSXNUV1lQeU5udVUrUWNw?=
+ =?utf-8?B?dHhqS3kvTVV0SmVHdDF4Rml1UmszelEwOHRWMlV0WXhJRjFKSDRqVVJSb2p1?=
+ =?utf-8?B?RzZvRTlFVEkxTStIQW5YNHRRbUM5anFSSThncUxsMDF4bFc4ZXpCSHlPMTZx?=
+ =?utf-8?B?b0duZzlmU3FyU1l4MytPVGlidFZoUVVFV1BwcHJhVjhwZkpZTjA0ZGtpcHph?=
+ =?utf-8?B?ekcvSFU0Tk1vcTVWUnVZb2xsNDhReExQY3Iza1VhQzhZMlBjY2oyZStGYlBO?=
+ =?utf-8?B?ek5xakJycVcra1E0ZHFBc2w5L1YyNi90d2NRSXl5NTdHK0Mxbzc0S3N3MFlq?=
+ =?utf-8?B?QTRaSzZMMmFPek5jQllIMGhvQlBMUFI1MGdYc1ZtOE1ubmJ0MmRRZmJNNEV1?=
+ =?utf-8?B?cWJUNWZBam9oSnVvQXVwY0lCOGVXRmdDVkFHaVp2SWU1M2xkMmF5SHlHK2ty?=
+ =?utf-8?B?NkpiS2V2RVFQQmVkRi9Od2dtYjFqdzgwYk5uZUw0d212SmJZbXNIZ2FpRThE?=
+ =?utf-8?B?eDA1MHJjTU1SRnVqRjJTZys3WElIeDd3d1QvNDBhYVBYeDlQSU05alNRPT0=?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR10MB4664.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(376005)(7416005)(1800799015)(366007); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cG45YXpFZUZnT0hLQnlyTXdqbU5hdzZoL2xlN2UxZEhRV0M0NVdqS0lIY1Jh?=
+ =?utf-8?B?OFVsNW5ZSzZOY2pZQy9TSjA1clJld0NLa25VKzR6QytPZ2gwYk5FSHNyWUpM?=
+ =?utf-8?B?MmZZNWo3cm55dE4xSFI0aFR4NzlzaVhTUFZDZkUzc2NDRTdyNXMwazl2Rkxx?=
+ =?utf-8?B?QXEveXl0QStOWXdmek1maGkwNmpoQnVEMDRDVFJrM2IxTjlkVGVRZ0YwUjc5?=
+ =?utf-8?B?RTFYNTc2dFJYdFdWVzJ3TGZiT1NrbEhkaE95ZjF1eEFsN3FsWFdZYk95R0pD?=
+ =?utf-8?B?TUtWNHFTNCtoTEh6UzYxSFlOb0lIcHQ1UFZsWkpycnkyeWdQNU9lWHlZZkxm?=
+ =?utf-8?B?MzUwUkI3RzdGMFRsRVlUZGtXdkgwbk9ZV1RzcDdib3Qybm9kaG5aeWJVc0FG?=
+ =?utf-8?B?WEYzcG5EUnRONjhINm83Zkg1N3hLZGlUTDRvb0ZxTkg3MExhRHU3NTlxVGFi?=
+ =?utf-8?B?UUsrM1ErMUxQQjdWNmxuWUV6ZVJBaitLTTZCOXp5Z09aUmVHT3l3MTBTejdP?=
+ =?utf-8?B?T0hFcUEwUGZLMXJNemsvUytDNFB5YXAwR1pxZ09sSHR0MWtKdFFPdnlvNm9y?=
+ =?utf-8?B?ZTEvSkl5dW9kZzhibTN5cEg5ckkxVnlSV1Jad0NFaHR4SDlaN0s5dmxJQUVX?=
+ =?utf-8?B?K3Z0V3VndG9aWlY4aWJRNCswNW5xYXNlUTFna3ovRld4U3hWM0NaVE0zQVpi?=
+ =?utf-8?B?UDVIYmxPUENqZmxTby9obERrQ0RodXo3ai95Lzh6dWdpbnQxTk0ydnZCREp2?=
+ =?utf-8?B?R2JQOUpUOXZuSUZxMUd2d0kvS29Gd2JEakE1TFZEY2kyRkN4K2txZU9yK0ov?=
+ =?utf-8?B?dk1MamtnSGlUeFdzcjl1UEJ6UWh5RkhsWlI3NFN2MjRndU5zUmJlN1NYN1dQ?=
+ =?utf-8?B?WUlyRjF2R0V3RS9odmpzWS9lOWR5dCs4Q2ptU0J3dlhMZ1RUUC9SMHNqam4y?=
+ =?utf-8?B?SW9SVTM5ZUxjVXVYaFBjcjNiRm1CbUcyejhqK2pyblo4QVhZbXMwQmxVUUFT?=
+ =?utf-8?B?UVlpSGdnMzVrUlA5ejRLNlorcE04dCtUL1AvZkZ0YUVaUEdHZS9KdlJ2SExj?=
+ =?utf-8?B?YkdPNUp0bVVQc1ozZTRPekVSSTAwMmhnVGdzZ1Y0RkM5WDllWVRwTWV5SEdo?=
+ =?utf-8?B?cGpQcmJ6TWZOZkw0TzEzdEcxUnArQ2dYL0dSWTRCN1lKSDJKOVp0bVRFU1dR?=
+ =?utf-8?B?SGRSNjVpalo3T2cyVVV3OE1aSjlIanc1cVY0bUxnRXhZUDI2MmpYNnRaR3Zl?=
+ =?utf-8?B?WmxPVnlDUURZOGZhNnZSZ25McWRsRDIzU3hUMm1IZFcvZ29iMysxN05RcWtv?=
+ =?utf-8?B?UEFTaTc5RVZZVWdxRTBPV0dSM0d2ZkNZdjUrSHZGTFlHWWxuanhpL094VTgx?=
+ =?utf-8?B?VzNzRmlPUWNDK3VrbWNhOHJTaXU3d2I5d2tEemRwZURmNmRUWVYzNnNJQ3pM?=
+ =?utf-8?B?MUVsVVM0U2ViSmZFeFlaWXlnaHlYYzkxY2hIcjlnUFdmdThCYjRGV21WY1pz?=
+ =?utf-8?B?REtSUnFBQWdzcDNrbzhFSEVYdlN3c1RSaklxTFM2M0pITEUzZjAwNWVqd2ZV?=
+ =?utf-8?B?UFFkSDRDYTAzaXN3ekJ6T1JPWnM4YzlRc0Iwb2JEQXptdW01S1lpS0RpeFV6?=
+ =?utf-8?B?RUFTOFZrc2VnVzZxa1B0V2U3VnRKTWFtbENtbENDdloxL01OVWNrRG8wcUk0?=
+ =?utf-8?B?bHVteWRVWFNGMEhnNmR4WjQ2a1JKMG96dENLNWttbUdRdDZDVFVIMmhNTjdM?=
+ =?utf-8?B?R3ZsR0F1YmduMk84REM2SnJqV0hQS0VIY0RLamlKYUc5VVFTQWZLL2Z3NFMv?=
+ =?utf-8?B?Sk9SdjZiSXZBSTFaYVg5N2NacUFHeVNHMVBRYnhzQ1hrUUVXQnU1SUJQdjRy?=
+ =?utf-8?B?WnJmUzQrVkROUWY1c3ZtbURSSTZ4L0VZZ2ZreUU4YzBTem9aZnNZQWhiQnN4?=
+ =?utf-8?B?eDVWNEg2YTl1YzdQa1VXVmFQSVByMmxCNzI5eGJraFBFY2IwRHZSckhGRXdX?=
+ =?utf-8?B?Z2JmY3BxTkttV09iSTBFdkFoY2laQy96dkhnMEtkUjdpblJJNFg1aXpwWnE1?=
+ =?utf-8?B?S0N6MVZ6VWIyVXNua0xaU05Lekc5WS8yMXlTeTFzdFNGYVdZKzc3UjZhOUZI?=
+ =?utf-8?B?QlkvaXhrSE5JMmZTWjhyblZDeDJiRjRaeGR1WTM4VUkxbDFMYnB0bk1SMHZJ?=
+ =?utf-8?Q?b/f5Ji6zxz9R0cUw2mmAcls=3D?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: lBXuohz2HtQ43M0KmyOL6QR7OKORnpQErgm/JB+gFNgFXtPtyZER9jpr9eB8PjFaFjzuxNGdXjU+8lUgn5duCBuoYwkdBxR2Aeld4iFL3Mh7u/+9nDZc3xu+Nuz3u1vJdG1Qk/0vnGaHB45pp7jLN/RVZB5qrX5SoU4K73/1ixdZK2wGwKKAM3DTX3eezelT8PRmZ4B2v3h9yxD7u0mbFN7XMOHaGsaoUypAZz1ffI0+SgpTxF1O3qb7uMgReUZndh102G7GJ85/ELuZZ8GsLmNXod2Onc6nebAHJxFJJpEiMU1Vn27Uqug4aR43xgaM2iq5/Gh7BZpE91mRj3K2OygQUyZdUAyhlPHh/8dKtcXckaKMpmhLIQGM0/2ypwQZI+kYS0gaK+fuReROBSFX0xR4N8XBdleIwodFmd8IHB6Vyf+p/oZpAE3N+uRtJ0h2xDt4WBIrBO5qHm3FKiBzFK1NFw9qvdAZpMIqdnFkH0TJZfR6kBEmmZ/mbk8EwIs5DLuninmVNbQ1iwrElIG6+DKTOQBo+SGec+FMqCq/K5rSY4SeZxP9z1DsyJRBQ9fboET/yo1HbBT+UG16dbHD4MiKyg0E4fMnFTCXErsjMqQ=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2250e68f-dea4-4d90-5037-08dc70e8f147
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB4664.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 May 2024 12:01:36.5062 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: CpOCPWwthvEL7z11hLSvTUeNsO06uYiOhlHSn5pA+va3uSpNF/3L14dMJRkfF+pkE8c8c9RhGe8KGPqMQWvAew==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR10MB7025
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-10_07,2024-05-10_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ bulkscore=0 mlxscore=0
+ suspectscore=0 spamscore=0 malwarescore=0 mlxlogscore=999 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2405010000
+ definitions=main-2405100085
+X-Proofpoint-GUID: kz2zSDtGI5kuhTuZ4zDl5vomsoKoy0gL
+X-Proofpoint-ORIG-GUID: kz2zSDtGI5kuhTuZ4zDl5vomsoKoy0gL
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=jonah.palmer@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,84 +216,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Michael
-
-On Fri, May 10, 2024 at 2:26=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com>=
- wrote:
->
-> On Tue, May 07, 2024 at 03:19:19PM +0400, marcandre.lureau@redhat.com wro=
-te:
-> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >
-> > Depending on the version, use v1 or v2 of the scanout VM state.
-> >
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >  hw/display/virtio-gpu.c | 22 +++++++++++++++++-----
-> >  1 file changed, 17 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> > index ae831b6b3e..4fd72caf3f 100644
-> > --- a/hw/display/virtio-gpu.c
-> > +++ b/hw/display/virtio-gpu.c
-> > @@ -1191,17 +1191,29 @@ static const VMStateDescription vmstate_virtio_=
-gpu_scanout =3D {
-> >      },
-> >  };
-> >
-> > +static bool vmstate_before_v2(void *opaque, int version)
-> > +{
-> > +    return version <=3D 1;
-> > +}
-> > +
-> >  static const VMStateDescription vmstate_virtio_gpu_scanouts =3D {
-> >      .name =3D "virtio-gpu-scanouts",
-> > -    .version_id =3D 1,
-> > +    .version_id =3D 2,
-> > +    .minimum_version_id =3D 1,
-> >      .fields =3D (const VMStateField[]) {
-> >          VMSTATE_INT32(parent_obj.enable, struct VirtIOGPU),
-> >          VMSTATE_UINT32_EQUAL(parent_obj.conf.max_outputs,
-> >                               struct VirtIOGPU, NULL),
-> > -        VMSTATE_STRUCT_VARRAY_UINT32(parent_obj.scanout, struct VirtIO=
-GPU,
-> > -                                     parent_obj.conf.max_outputs, 1,
-> > -                                     vmstate_virtio_gpu_scanout,
-> > -                                     struct virtio_gpu_scanout),
-> > +        VMSTATE_VSTRUCT_TEST_VARRAY_UINT32(parent_obj.scanout, struct =
-VirtIOGPU,
-> > +                                           vmstate_before_v2,
-> > +                                           parent_obj.conf.max_outputs=
-, 1,
-> > +                                           vmstate_virtio_gpu_scanout,
-> > +                                           struct virtio_gpu_scanout, =
-1),
-> > +        VMSTATE_VSTRUCT_TEST_VARRAY_UINT32(parent_obj.scanout, struct =
-VirtIOGPU,
-> > +                                           NULL,
-> > +                                           parent_obj.conf.max_outputs=
-, 2,
-> > +                                           vmstate_virtio_gpu_scanout,
-> > +                                           struct virtio_gpu_scanout, =
-2),
-> >          VMSTATE_END_OF_LIST()
-> >      },
->
->
-> Just don't, please.
-> Add a property and add a conditional field based on property, set
-> from the compat machinery.
->
-
-The version isn't propagated through the nested VMSDs, so
-vmstate_virtio_gpu_scanout would only have v1, whether we have a field
-test or not.
-
-Can you be more explicit what alternative solution you propose?
-
-thanks
 
 
---=20
-Marc-Andr=C3=A9 Lureau
+On 5/9/24 10:08 AM, Eugenio Perez Martin wrote:
+> On Mon, May 6, 2024 at 5:05 PM Jonah Palmer <jonah.palmer@oracle.com> wrote:
+>>
+>> Add VIRTIO_F_IN_ORDER feature support for virtqueue_fill operations.
+>>
+>> The goal of the virtqueue_fill operation when the VIRTIO_F_IN_ORDER
+>> feature has been negotiated is to search for this now-used element,
+>> set its length, and mark the element as filled in the VirtQueue's
+>> used_elems array.
+>>
+>> By marking the element as filled, it will indicate that this element is
+>> ready to be flushed, so long as the element is in-order.
+>>
+>> Tested-by: Lei Yang <leiyang@redhat.com>
+>> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+>> ---
+>>   hw/virtio/virtio.c | 26 +++++++++++++++++++++++++-
+>>   1 file changed, 25 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+>> index e6eb1bb453..064046b5e2 100644
+>> --- a/hw/virtio/virtio.c
+>> +++ b/hw/virtio/virtio.c
+>> @@ -873,6 +873,28 @@ static void virtqueue_packed_fill(VirtQueue *vq, const VirtQueueElement *elem,
+>>       vq->used_elems[idx].ndescs = elem->ndescs;
+>>   }
+>>
+>> +static void virtqueue_ordered_fill(VirtQueue *vq, const VirtQueueElement *elem,
+>> +                                   unsigned int len)
+>> +{
+>> +    unsigned int i = vq->used_idx;
+>> +
+>> +    /* Search for element in vq->used_elems */
+>> +    while (i != vq->last_avail_idx) {
+>> +        /* Found element, set length and mark as filled */
+>> +        if (vq->used_elems[i].index == elem->index) {
+>> +            vq->used_elems[i].len = len;
+>> +            vq->used_elems[i].filled = true;
+>> +            break;
+>> +        }
+>> +
+>> +        i += vq->used_elems[i].ndescs;
+>> +
+>> +        if (i >= vq->vring.num) {
+>> +            i -= vq->vring.num;
+>> +        }
+>> +    }
+> 
+> This has a subtle problem: ndescs and elems->id are controlled by the
+> guest, so it could make QEMU to loop forever looking for the right
+> descriptor. For each iteration, the code must control that the
+> variable "i" will be different for the next iteration, and that there
+> will be no more than vq->last_avail_idx - vq->used_idx iterations.
+> 
+
+Very true and something I was worried about, e.g. what if, for some 
+strange reason, we could never get i == vq->last_avail_idx.
+
+Perhaps as a surefire way to make sure we terminate appropriately, as 
+you mentioned, 'i' should not increase by more than the distance between 
+used_idx and last_avail_idx. If it does, we exit the while loop:
+
+unsigned int steps = 0;
+unsigned int max_steps = (vq->last_avail_idx + vq->vring.num -
+                           vq->used_idx) % vq->vring.num;
+while (steps <= max_steps) {
+     ...
+     steps += vq->used_elems[i].ndescs;
+     ...
+}
+
+Though if we do find that steps <= max_steps, should we treat this as an 
+error or give some kind of warning? Since I believe that, under normal 
+behavior, we shouldn't find ourselves in a situation where we weren't 
+able to find the matching VirtQueueElement in the used_elems array. And 
+not setting 'vq->used_elems[i].filled = true' may cause issues later.
+
+> Apart of that, I think it makes more sense to split the logical
+> sections of the function this way:
+> /* declarations */
+> i = vq->used_idx
+> 
+> /* Search for element in vq->used_elems */
+> while (vq->used_elems[i].index != elem->index &&
+> vq->used_elems[i].index i != vq->last_avail_idx && ...) {
+> ...
+> }
+> 
+> /* Set length and mark as filled */
+> vq->used_elems[i].len = len;
+> vq->used_elems[i].filled = true;
+> ---
+> 
+> But I'm ok either way.
+> 
+
+Let me know what you think of the proposed solution above. It doesn't 
+explicitly separate the search and find operation like you're proposing 
+here but it does clearly show the bounds of our search.
+
+But doing:
+
+while (vq->used_elems[i].index != elem->index &&
+        vq->used_elems[i].index != vq->last_avail_idx &&
+        steps <= max_steps) {
+     ...
+}
+
+Works too.
+
+>> +}
+>> +
+>>   static void virtqueue_packed_fill_desc(VirtQueue *vq,
+>>                                          const VirtQueueElement *elem,
+>>                                          unsigned int idx,
+>> @@ -923,7 +945,9 @@ void virtqueue_fill(VirtQueue *vq, const VirtQueueElement *elem,
+>>           return;
+>>       }
+>>
+>> -    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) {
+>> +    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_IN_ORDER)) {
+>> +        virtqueue_ordered_fill(vq, elem, len);
+>> +    } else if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) {
+>>           virtqueue_packed_fill(vq, elem, len, idx);
+>>       } else {
+>>           virtqueue_split_fill(vq, elem, len, idx);
+>> --
+>> 2.39.3
+>>
+> 
 
