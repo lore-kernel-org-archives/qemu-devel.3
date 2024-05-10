@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EA7CC25B10
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 05:00:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E55B7C25B10
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 05:07:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5IM3-0004cN-TH; Fri, 10 May 2024 00:59:35 -0400
+	id 1s5ITG-00061L-VF; Fri, 10 May 2024 01:07:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s5ILt-0004bu-2Q
- for qemu-devel@nongnu.org; Fri, 10 May 2024 00:59:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s5ISr-0005x3-0k
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 01:06:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s5ILp-0008Dp-N6
- for qemu-devel@nongnu.org; Fri, 10 May 2024 00:59:23 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s5ISn-0001Qy-6g
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 01:06:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715317158;
+ s=mimecast20190719; t=1715317585;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=hJ1TBXh7f+m6U2S5c89NUjlUpknx9Ozp41FoK5h5lxg=;
- b=CsSGTKNqUnXbnlA5ognxQLSUz3cz0qkU6jzgeE2JVufXS+K86vz0rY/s6OxtRSrocNlpCY
- wemSduYJ5QHJ15tdoSfDBjr5xOIh1BMUD8YJuxOzSm7/VUbn1llBiYmFjtCeIetPazyiFH
- JYbPk/BYJAmN5omy4sNHKj651D0DwLE=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=w2m5DNLVEiWVj1ShvMgM77Yi4EjyMdQwLXJFXjNG2xM=;
+ b=CqWBwPr4Wp6WqFhAdfqHcvdC45FJRP1ru6b4IWZEw6h/R2G0B2LCYW0DejLPYMpmeo+rLp
+ UCQL/8Znb43e2jehIsxAFQxezc+P71SkuciQAmy+v/HGLwUq10ycQltHMzHxFumxqScKtf
+ bJ9Vz0frbkRVbXFAuoKWlGp/ZpnyA0E=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-13-6qnImKalOoa9GVzi5UpA_Q-1; Fri, 10 May 2024 00:59:16 -0400
-X-MC-Unique: 6qnImKalOoa9GVzi5UpA_Q-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a59c3cf5f83so94915066b.2
- for <qemu-devel@nongnu.org>; Thu, 09 May 2024 21:59:16 -0700 (PDT)
+ us-mta-248-xomTfvqOOAq0Zx7jgVU1FA-1; Fri, 10 May 2024 01:06:23 -0400
+X-MC-Unique: xomTfvqOOAq0Zx7jgVU1FA-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-56e645a8762so1041071a12.3
+ for <qemu-devel@nongnu.org>; Thu, 09 May 2024 22:06:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715317155; x=1715921955;
- h=content-transfer-encoding:in-reply-to:autocrypt:cc:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hJ1TBXh7f+m6U2S5c89NUjlUpknx9Ozp41FoK5h5lxg=;
- b=iZHi0PYiLj9OlZC3UhsZ9WWK+km+f11OnslUEslHEgraVnKuM6vdgIqP4GPAm00yho
- RqDkDMwGHAiG1mJwlfu8jR/R7nIPkojijdX1rbrRPyxOSCh8+ooZbcXZLlr98+1PT2P3
- 4MGyMTp/N1+TDMEzT4NI7kj2r3hZbX7FXNamNbIOvFr0X35+xTPKFFIUUYQ5sw6SfiMn
- YLu0iBRTLzi4MOLeHiFBg+CQd/R77mxa2nz01yyRHsrCqKbFZCpHsISWcU/Y1+BJnyzQ
- yx1FrfSGZPmys6TiY8oqu2Wn7E8yDJQaQGLHXo7eJndhwT8HRl2/NjD8ljmvaXcgJrsb
- P7SA==
+ d=1e100.net; s=20230601; t=1715317582; x=1715922382;
+ h=content-transfer-encoding:in-reply-to:autocrypt:cc:from
+ :content-language:references:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=w2m5DNLVEiWVj1ShvMgM77Yi4EjyMdQwLXJFXjNG2xM=;
+ b=CuwjPXvEyEfaCfo6nyISRWUd1K7G2GTkAdGTbZRrtwoYEvZBLVB95urq0rXiM1oKNd
+ xSQzceFJRpaU3lMzOy64AiBvTxV7Gzymc6WWpkVDeicR6Y9p5lPepi34r8WUC3aBq1rq
+ BZt85dePWIGi8THxI2qcSxMadEHNL7uJYCKL5w22jjAUNsqSmQ2VGWdldEaR63HCacWy
+ Q5FIG3xui+9q0LoGMjLDpdoyrtR/K2VjRwWemq+42BjW7cA7fp9owRGj+Qr8Q8ywQgiT
+ nK/Mds9WSvjyo8M3oJrQUZh4z0COWUVoD8gYAvNzG0l/OKdouO+rHQ0Dee2WHR079b1r
+ DBbQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUtLv6GfWPVYLPJU5f315y7sLrgqtdXM51lXLkR7uI3+IXzUFuom1LjOuoQ2NnnxmAODYY+nqF910uiFe3KhmsqM1jFGyo=
-X-Gm-Message-State: AOJu0Yz1O2AR5dkpEYQYDSCuRbrcrv+rGGEMlQxwMesMvbA18hM82bRf
- ONpLV/KKzhDLozyFTK9o4Toy/Y+ZPqbWT5B5CCUrEsEa9l3EAZkGMIWwWIpOL8h97NknUIzEGB0
- lYslOhii/ohLHfcIu+X4NGgbKEFZ/GHoPZorUKqESs1t0gH4NeLsL
-X-Received: by 2002:a17:906:590a:b0:a59:a2c0:3252 with SMTP id
- a640c23a62f3a-a5a2d681287mr86348166b.76.1715317155336; 
- Thu, 09 May 2024 21:59:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEYXnp8uSpOKy2ORU46ABEIjMKJvJZbJQo8e9yVlbGZDG/iuRxFLKOxKOIuCC06H1lDIjR5wA==
-X-Received: by 2002:a17:906:590a:b0:a59:a2c0:3252 with SMTP id
- a640c23a62f3a-a5a2d681287mr86347266b.76.1715317155006; 
- Thu, 09 May 2024 21:59:15 -0700 (PDT)
+ AJvYcCWiA4jU3cjaPPsYS3nkWPB2BCwUmq9OsxmkpP7sBvKUD3FqvZsAq8n3ZQWyL09hycx2ZtPVPGGWHec+bf9lUKNSEEYxZ8o=
+X-Gm-Message-State: AOJu0Yyc13OduZPiGwJscojFM7XGI5QXqs/LUXCaunV7Oixn7V0O4BOh
+ oKD0nDni/TEE85K8wUBgq4wO0IBXz4PgsxgSdDt48j9RaPn9gWBOF40AeD6C6XmFBOXIt5c5/jT
+ wX5sElxXufjB1JYSWTlWN725R/79cykX9Ft54bkqUJaaBnCRtJaoQ
+X-Received: by 2002:a50:8adb:0:b0:572:a22b:12db with SMTP id
+ 4fb4d7f45d1cf-5734d67f00fmr1063315a12.28.1715317582651; 
+ Thu, 09 May 2024 22:06:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFJ9/YuWNtjvdxO8kIINpj75RSWtZZLHf1yHO6Tf7FJ9D7lGWlowLa+PMsQl8F+e2Yq9CJxWA==
+X-Received: by 2002:a50:8adb:0:b0:572:a22b:12db with SMTP id
+ 4fb4d7f45d1cf-5734d67f00fmr1063301a12.28.1715317582233; 
+ Thu, 09 May 2024 22:06:22 -0700 (PDT)
 Received: from [192.168.0.9] (ip-109-40-241-109.web.vodafone.de.
  [109.40.241.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a5a179c7fc4sm144043266b.135.2024.05.09.21.59.14
+ 4fb4d7f45d1cf-5733c2c7d58sm1418411a12.77.2024.05.09.22.06.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 May 2024 21:59:14 -0700 (PDT)
-Message-ID: <993a7077-9038-434d-ae22-c6d836534f24@redhat.com>
-Date: Fri, 10 May 2024 06:59:13 +0200
+ Thu, 09 May 2024 22:06:21 -0700 (PDT)
+Message-ID: <687bbd1b-2481-4044-a432-d786025a355b@redhat.com>
+Date: Fri, 10 May 2024 07:06:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/13] s390x: move s390_cpu_addr2state to
- target/s390x/sigp.c
+Subject: Re: [PATCH 02/13] s390_flic: add migration-enabled property
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 References: <20240509170044.190795-1-pbonzini@redhat.com>
- <20240509170044.190795-2-pbonzini@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
+ <20240509170044.190795-3-pbonzini@redhat.com>
 Content-Language: en-US
-Cc: qemu-s390x <qemu-s390x@nongnu.org>
+From: Thomas Huth <thuth@redhat.com>
+Cc: qemu-s390x <qemu-s390x@nongnu.org>,
+ "Daniel P. Berrange" <berrange@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -119,10 +120,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240509170044.190795-2-pbonzini@redhat.com>
+In-Reply-To: <20240509170044.190795-3-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -147,84 +148,69 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 09/05/2024 19.00, Paolo Bonzini wrote:
-> This function has no dependency on the virtio-ccw machine type, though it
-> assumes that the CPU address corresponds to the core_id and the index.
-> 
-> If there is any need of something different or more fancy (unlikely)
-> S390 can include a MachineClass subclass and implement it there.  For
-> now, move it to sigp.c for simplicity.
+> Instead of mucking with css_migration_enabled(), add a property specific to
+> the FLIC device, similar to what is done for TYPE_S390_STATTRIB.
 > 
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   hw/s390x/s390-virtio-ccw.c | 16 ----------------
->   target/s390x/sigp.c        | 17 +++++++++++++++++
->   2 files changed, 17 insertions(+), 16 deletions(-)
+>   include/hw/s390x/s390_flic.h | 1 +
+>   hw/intc/s390_flic.c          | 6 +++++-
+>   hw/s390x/s390-virtio-ccw.c   | 1 +
+>   3 files changed, 7 insertions(+), 1 deletion(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
+(BTW: It's really good that Daniel's patch series is going to mark the old 
+machine types as deprecated, too ... migration stuff has been so hacky in 
+the 2.x days...)
 
-
-> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-> index 4dcc2138200..feabc173eb3 100644
-> --- a/hw/s390x/s390-virtio-ccw.c
-> +++ b/hw/s390x/s390-virtio-ccw.c
-> @@ -50,22 +50,6 @@
+> diff --git a/include/hw/s390x/s390_flic.h b/include/hw/s390x/s390_flic.h
+> index 3907a13d076..bcb081def58 100644
+> --- a/include/hw/s390x/s390_flic.h
+> +++ b/include/hw/s390x/s390_flic.h
+> @@ -47,6 +47,7 @@ struct S390FLICState {
+>       /* to limit AdapterRoutes.num_routes for compat */
+>       uint32_t adapter_routes_max_batch;
+>       bool ais_supported;
+> +    bool migration_enabled;
+>   };
 >   
->   static Error *pv_mig_blocker;
 >   
-> -S390CPU *s390_cpu_addr2state(uint16_t cpu_addr)
-> -{
-> -    static MachineState *ms;
-> -
-> -    if (!ms) {
-> -        ms = MACHINE(qdev_get_machine());
-> -        g_assert(ms->possible_cpus);
-> -    }
-> -
-> -    /* CPU address corresponds to the core_id and the index */
-> -    if (cpu_addr >= ms->possible_cpus->len) {
-> -        return NULL;
-> -    }
-> -    return S390_CPU(ms->possible_cpus->cpus[cpu_addr].cpu);
-> -}
-> -
->   static S390CPU *s390x_new_cpu(const char *typename, uint32_t core_id,
->                                 Error **errp)
+> diff --git a/hw/intc/s390_flic.c b/hw/intc/s390_flic.c
+> index f4a848460b8..7f930800877 100644
+> --- a/hw/intc/s390_flic.c
+> +++ b/hw/intc/s390_flic.c
+> @@ -405,6 +405,8 @@ static void qemu_s390_flic_class_init(ObjectClass *oc, void *data)
+>   static Property s390_flic_common_properties[] = {
+>       DEFINE_PROP_UINT32("adapter_routes_max_batch", S390FLICState,
+>                          adapter_routes_max_batch, ADAPTER_ROUTES_MAX_GSI),
+> +    DEFINE_PROP_BOOL("migration-enabled", S390FLICState,
+> +                     migration_enabled, true),
+>       DEFINE_PROP_END_OF_LIST(),
+>   };
+>   
+> @@ -457,7 +459,9 @@ type_init(qemu_s390_flic_register_types)
+>   
+>   static bool adapter_info_so_needed(void *opaque)
 >   {
-> diff --git a/target/s390x/sigp.c b/target/s390x/sigp.c
-> index 9dd977349ab..ad0ad61177d 100644
-> --- a/target/s390x/sigp.c
-> +++ b/target/s390x/sigp.c
-> @@ -11,6 +11,7 @@
->   #include "qemu/osdep.h"
->   #include "cpu.h"
->   #include "s390x-internal.h"
-> +#include "hw/boards.h"
->   #include "sysemu/hw_accel.h"
->   #include "sysemu/runstate.h"
->   #include "exec/address-spaces.h"
-> @@ -435,6 +436,22 @@ static int sigp_set_architecture(S390CPU *cpu, uint32_t param,
->       return SIGP_CC_STATUS_STORED;
+> -    return css_migration_enabled();
+> +    S390FLICState *fs = S390_FLIC_COMMON(opaque);
+> +
+> +    return fs->migration_enabled;
 >   }
 >   
-> +S390CPU *s390_cpu_addr2state(uint16_t cpu_addr)
-> +{
-> +    static MachineState *ms;
-> +
-> +    if (!ms) {
-> +        ms = MACHINE(qdev_get_machine());
-> +        g_assert(ms->possible_cpus);
-> +    }
-> +
-> +    /* CPU address corresponds to the core_id and the index */
-> +    if (cpu_addr >= ms->possible_cpus->len) {
-> +        return NULL;
-> +    }
-> +    return S390_CPU(ms->possible_cpus->cpus[cpu_addr].cpu);
-> +}
-> +
->   int handle_sigp(CPUS390XState *env, uint8_t order, uint64_t r1, uint64_t r3)
->   {
->       uint64_t *status_reg = &env->regs[r1];
+>   const VMStateDescription vmstate_adapter_info_so = {
+> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+> index feabc173eb3..1383e47eeb5 100644
+> --- a/hw/s390x/s390-virtio-ccw.c
+> +++ b/hw/s390x/s390-virtio-ccw.c
+> @@ -1174,6 +1174,7 @@ static void ccw_machine_2_9_class_options(MachineClass *mc)
+>       S390CcwMachineClass *s390mc = S390_CCW_MACHINE_CLASS(mc);
+>       static GlobalProperty compat[] = {
+>           { TYPE_S390_STATTRIB, "migration-enabled", "off", },
+> +        { TYPE_S390_FLIC_COMMON, "migration-enabled", "off", },
+>       };
+>   
+>       ccw_machine_2_10_class_options(mc);
 
 
