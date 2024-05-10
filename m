@@ -4,87 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6508DC25B10
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 16:14:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CED4C25B10
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 16:16:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5Srl-0000TF-OB; Fri, 10 May 2024 12:13:01 -0400
+	id 1s5Sv3-0001cK-Ts; Fri, 10 May 2024 12:16:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1s5Srk-0000T5-LL
- for qemu-devel@nongnu.org; Fri, 10 May 2024 12:13:00 -0400
-Received: from madrid.collaboradmins.com ([2a00:1098:ed:100::25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1s5Srg-0003BO-Av
- for qemu-devel@nongnu.org; Fri, 10 May 2024 12:13:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
- s=mail; t=1715357572;
- bh=m/rQTQDppKZ7z01cIIx46COhlpVHi55xijTUkMW2V7w=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=mFyuicgNXJNy7inC0IS9HEQ1xA4WO7t4Qtj7QojzkdknuoU4OpE2d01t660hzafcU
- mHUcuEQ48V8+nsITqQI2FyuUwdjhreQjkOtEEqtYjCM08VexA2wHp3guKFxgJICjPz
- LLi3Wv00vk5+Xm0vitZoBkzu/EaR5jS9dOFCs/m3CMTZN2SRXBFJcHgPrHHbmkVFTK
- VpE1xOQ2cEdTTFZ+KZ/64AVUDvw9YaeeKja+8M/PCcB7dGuHgUn3xiP+icD7TLWvUo
- du8jjioRwzwmph8E5MXydtJw+DUMZANZ/0dYog69MDc+mVSaj5hsN2b6Gz4XdYE1WR
- 91N8IAy0W5dwg==
-Received: from [100.109.49.129] (cola.collaboradmins.com [195.201.22.229])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- (Authenticated sender: dmitry.osipenko)
- by madrid.collaboradmins.com (Postfix) with ESMTPSA id A69AE3782189;
- Fri, 10 May 2024 16:12:50 +0000 (UTC)
-Message-ID: <d7e9d5e6-f4d3-402f-b803-7ef6b74c8039@collabora.com>
-Date: Fri, 10 May 2024 19:12:47 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s5Suz-0001ar-OM
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 12:16:22 -0400
+Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s5Sux-0003je-Go
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 12:16:21 -0400
+Received: by mail-lj1-x235.google.com with SMTP id
+ 38308e7fff4ca-2e3fa13f018so26511781fa.3
+ for <qemu-devel@nongnu.org>; Fri, 10 May 2024 09:16:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1715357776; x=1715962576; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LLdTeDNjA6HeGlyD31S7ZLtiY2wluJxt83tGOKtheD0=;
+ b=MbOg1rPVBKYEYenw2UbyCy0Q/BzUcehp7VnowPqRC6Bm2anJIjmCeicpGUyGIuvafW
+ i9SjOXgG6SLLxSLIVSeoCMQE6Tr9P9LVgqhyZI8y0XhTF4goMKMcjegWm4vAF4gmjMSu
+ +ZFaBarSFQvhytkbcvZ25zdoiCSgGlMEyzHlUnT88EwbYfrnO3MA6k27ip5ObFPns3W4
+ AtQIN0CXkBrmUqukTnXwHD2JS4tZG7J20bURrBQNtbYmvICCHbaU7YsvBeAUF4Mv252E
+ ahVg6c2cRNzNmTxdWVr8CXT3ZoK46vNmpdpm4IUvbDugeDTrLd/yb45JBiA7lIPnzuCR
+ l2vg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715357776; x=1715962576;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=LLdTeDNjA6HeGlyD31S7ZLtiY2wluJxt83tGOKtheD0=;
+ b=tpZLDhc4fUKCALxG6vZ3vNgrx26CSdWpxcDMliQp0Sf1nYdsTg0ceFceicYJzyWazc
+ XNxE8NKX+LwAPmx7dK5wTp/ipOV5uK7vmhUwUqBJXP8dPAJ5hE34vxn3iXBmP1Tktkov
+ QjjXwtoTdHWCmLXgdCKvGKxq6rFejswhh4tl0ydQCot4Fx2olpmI8OtOkwDeV3meD/PK
+ dd2QOSN1yAMqJWLF2cGeuQNRHZX0Cf56e7gKGY5YbMJfG0jH7fimU/8mV40YNmh8YyEj
+ gzM5RODhsWWUUpmo38A9vLirCCNvScViWvdJEZNiLidiHqaHf2Tx2d8N98HFXsofOxo4
+ gycg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXzBGpp7dvQm3ZqFXZF5LT/hRWtbgCEhw2MMjl5rQj20TC/J4/rwJdEVz3yabD4QNk3tqooBnMQEF/RSoT4ScCAHuANVvc=
+X-Gm-Message-State: AOJu0Yyg88mHMPoJnvsib0v0JKx15wLDK3UXyp798kWUFhdlO2MICC3Q
+ XEoCz74VouGOGOpxOjON88FkG1OzDHahyNPctD5wAxzGUeN+VU/fq2nlobi6soQ=
+X-Google-Smtp-Source: AGHT+IFpKzMt3o0gGZ2v+D/mKp5lViQITX8wohBmtZWkCtnKBia39xjID9xSFKuQnwZGpVXMAKowyQ==
+X-Received: by 2002:a05:6512:3b07:b0:51b:de3a:33ac with SMTP id
+ 2adb3069b0e04-5221058453amr2331780e87.59.1715357776442; 
+ Fri, 10 May 2024 09:16:16 -0700 (PDT)
+Received: from [192.168.69.100] (sev93-h02-176-184-17-152.dsl.sta.abo.bbox.fr.
+ [176.184.17.152]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a5a1787c715sm198090166b.46.2024.05.10.09.16.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 10 May 2024 09:16:15 -0700 (PDT)
+Message-ID: <18ae7061-fd52-47ad-873a-142dce18d9d1@linaro.org>
+Date: Fri, 10 May 2024 18:16:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 07/11] virtio-gpu: Support suspension of commands
- processing
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony.perard@citrix.com>,
- Antonio Caggiano <quic_acaggian@quicinc.com>,
- "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
- Robert Beckett <bob.beckett@collabora.com>,
- Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
- ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-References: <20240418190040.1110210-1-dmitry.osipenko@collabora.com>
- <20240418190040.1110210-8-dmitry.osipenko@collabora.com>
- <8a153bf1-f86c-46c8-a29a-08e9a0197dc3@daynix.com>
- <4c6b3ca0-4813-48f4-87f8-a94e911c02d3@collabora.com>
- <10337ba0-70ce-436c-9cac-398851ebdfc9@daynix.com>
- <5b240c8a-f1c5-487f-a528-cbb4f440094f@collabora.com>
- <0360512c-eb25-4c93-adb3-7f43395ae699@daynix.com>
- <8007338d-72ea-4896-89d3-ff98c66f979e@collabora.com>
- <e4c9c32d-31ad-414c-8713-9faee92f81e9@daynix.com>
+Subject: Re: [PATCH 14/41] target/sparc: Implement ADDXC, ADDXCcc
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: mark.cave-ayland@ilande.co.uk, atar4qemu@gmail.com
+References: <20240302051601.53649-1-richard.henderson@linaro.org>
+ <20240302051601.53649-15-richard.henderson@linaro.org>
 Content-Language: en-US
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-In-Reply-To: <e4c9c32d-31ad-414c-8713-9faee92f81e9@daynix.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1098:ed:100::25;
- envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240302051601.53649-15-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::235;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x235.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,58 +96,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/10/24 13:56, Akihiko Odaki wrote:
-> On 2024/05/09 21:39, Dmitry Osipenko wrote:
->> On 5/5/24 09:37, Akihiko Odaki wrote:
->>> On 2024/05/02 4:02, Dmitry Osipenko wrote:
->>>> On 4/27/24 08:48, Akihiko Odaki wrote:
->>>>>>
->>>>>> The VIRTIO_GPU_FILL_CMD() macro returns void and this macro is
->>>>>> used by
->>>>>> every function processing commands. Changing process_cmd() to return
->>>>>> bool will require to change all those functions. Not worthwhile to
->>>>>> change it, IMO. >
->>>>>> The flag reflects the exact command status. The !finished +
->>>>>> !suspended
->>>>>> means that command is fenced, i.e. these flags don't have exactly
->>>>>> same
->>>>>> meaning.
->>>>>
->>>>> It is not necessary to change the signature of process_cmd(). You can
->>>>> just refer to !finished. No need to have the suspended flag.
->>>>
->>>> Not sure what you're meaning. The !finished says that cmd is fenced,
->>>> this fenced command is added to the polling list and the fence is
->>>> checked periodically by the fence_poll timer, meanwhile next virgl
->>>> commands are executed in the same time.
->>>>
->>>> This is completely different from the suspension where whole cmd
->>>> processing is blocked until command is resumed.
->>>>
->>>
->>> !finished means you have not sent a response with
->>> virtio_gpu_ctrl_response(). Currently such a situation only happens when
->>> a fence is requested and virtio_gpu_process_cmdq() exploits the fact,
->>> but we are adding a new case without a fence.
->>>
->>> So we need to add code to check if we are fencing or not in
->>> virtio_gpu_process_cmdq(). This can be achieved by evaluating the
->>> following expression as done in virtio_gpu_virgl_process_cmd():
->>> cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_FENCE
->>
->> This works, but then I'll add back the res->async_unmap_in_progress
->> because we need to know whether unmapping has been started.
->>
-> 
-> Isn't the command processing paused when an unmapping operation is in
-> progress?
+On 2/3/24 06:15, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/sparc/translate.c  | 14 ++++++++++++++
+>   target/sparc/insns.decode |  3 +++
+>   2 files changed, 17 insertions(+)
 
-The virtio_gpu_process_cmdq() continues to be invoked periodically while
-unmapping is paused. Should be console doing that, see
-virtio_gpu_handle_gl_flushed().
-
--- 
-Best regards,
-Dmitry
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
