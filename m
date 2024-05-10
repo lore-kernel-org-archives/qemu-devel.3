@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CDB8C25B10
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 06:41:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32A2BC25B10
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 06:41:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5JwH-0001Nl-SV; Fri, 10 May 2024 02:41:05 -0400
+	id 1s5Jvu-0001FM-Sn; Fri, 10 May 2024 02:40:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s5Jvd-00017c-To
- for qemu-devel@nongnu.org; Fri, 10 May 2024 02:40:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s5Jvd-00017e-WC
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 02:40:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s5JvR-0001Y4-EI
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s5JvZ-0001ZA-In
  for qemu-devel@nongnu.org; Fri, 10 May 2024 02:40:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715323212;
+ s=mimecast20190719; t=1715323220;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tnQHlqbpbwtC41oePd9E7PL+QKFsjDBZiYZDh48F+io=;
- b=K6KPNk0HmPI/tw8xuuaojDL922Y67xMXB+TtB9aMZMtTI+iDjx0FIJWq++ivk6Uid5d4Lm
- QRC6FujgE6dup8XZSXWL4WhyV9bd8Xn3hnheCQHPtJt06WnQ3Uv4N1Ya8lYgKDhSHD2k2T
- deJxbM0Gitvex0BqrfbvbLOIB23e5ZA=
+ bh=Nd+475C9gFveQQ9v96nw/BgXcs4ZqBPdYgTk/af/SC8=;
+ b=TdEIyef6BdXYQF9JES2S1tUoXUMaVPwNE0/3XlNeQxoIYu8t0FvdyH5BpzqlXpyxeBTbI+
+ 9EKO5EKpShoQwFMVDs8GAHKgYyH1+EXzJRr+2cCmitJfLJiMh4Ybyzb1F/mnPAjqzG0URQ
+ V0sB4gDqEqpoR27impRkEkhTyfCWQ/c=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-590-QI7Tx3fiMJK61xFSjblK7Q-1; Fri, 10 May 2024 02:40:11 -0400
-X-MC-Unique: QI7Tx3fiMJK61xFSjblK7Q-1
+ us-mta-13-OzyRQs8_M0qxBp5FbMkzkA-1; Fri, 10 May 2024 02:40:16 -0400
+X-MC-Unique: OzyRQs8_M0qxBp5FbMkzkA-1
 Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
  [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id DCB13800206;
- Fri, 10 May 2024 06:40:10 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 45D8E800A03;
+ Fri, 10 May 2024 06:40:16 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.229])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 51C4D2087D72;
- Fri, 10 May 2024 06:40:08 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id EB2A82079267;
+ Fri, 10 May 2024 06:40:14 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 4/8] s390x/sclp: Simplify get_sclp_device()
-Date: Fri, 10 May 2024 08:39:57 +0200
-Message-ID: <20240510064001.26002-5-thuth@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 7/8] qemu-options: Deprecate "-runas" and introduce "-run-with
+ user=..." instead
+Date: Fri, 10 May 2024 08:40:00 +0200
+Message-ID: <20240510064001.26002-8-thuth@redhat.com>
 In-Reply-To: <20240510064001.26002-1-thuth@redhat.com>
 References: <20240510064001.26002-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,42 +81,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+The old "-runas" option has the disadvantage that it is not visible
+in the QAPI schema, so it is not available via the normal introspection
+mechanisms. We've recently introduced the "-run-with" option for exactly
+this purpose, which is meant to handle the options that affect the
+runtime behavior. Thus let's introduce a "user=..." parameter here now
+and deprecate the old "-runas" option.
 
-get_sclp_device() scans the whole machine to find a TYPE_SCLP object.
-Now that the SCLPDevice instance is available under the machine state,
-use it to simplify the lookup. While at it, remove the inline to let
-the compiler decide on how to optimize.
-
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-Message-ID: <20240502131533.377719-4-clg@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20240506112058.51446-1-thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/s390x/sclp.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ docs/about/deprecated.rst |  6 ++++++
+ system/vl.c               | 15 +++++++++++++++
+ qemu-options.hx           | 15 +++++++++++----
+ 3 files changed, 32 insertions(+), 4 deletions(-)
 
-diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
-index d236dbaf0b..e725dcd5fd 100644
---- a/hw/s390x/sclp.c
-+++ b/hw/s390x/sclp.c
-@@ -21,13 +21,14 @@
- #include "hw/s390x/s390-pci-bus.h"
- #include "hw/s390x/ipl.h"
- #include "hw/s390x/cpu-topology.h"
-+#include "hw/s390x/s390-virtio-ccw.h"
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index e22acb17f2..6f709746db 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -61,6 +61,12 @@ configurations (e.g. -smp drawers=1,books=1,clusters=1 for x86 PC machine) is
+ marked deprecated since 9.0, users have to ensure that all the topology members
+ described with -smp are supported by the target machine.
  
--static inline SCLPDevice *get_sclp_device(void)
-+static SCLPDevice *get_sclp_device(void)
- {
-     static SCLPDevice *sclp;
++``-runas`` (since 9.1)
++----------------------
++
++Use ``-run-with user=..`` instead.
++
++
+ User-mode emulator command line arguments
+ -----------------------------------------
  
-     if (!sclp) {
--        sclp = SCLP(object_resolve_path_type("", TYPE_SCLP, NULL));
-+        sclp = S390_CCW_MACHINE(qdev_get_machine())->sclp;
-     }
-     return sclp;
- }
+diff --git a/system/vl.c b/system/vl.c
+index 7756eac81e..b031427440 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -773,6 +773,10 @@ static QemuOptsList qemu_run_with_opts = {
+             .name = "chroot",
+             .type = QEMU_OPT_STRING,
+         },
++        {
++            .name = "user",
++            .type = QEMU_OPT_STRING,
++        },
+         { /* end of list */ }
+     },
+ };
+@@ -3586,6 +3590,7 @@ void qemu_init(int argc, char **argv)
+                 break;
+ #if defined(CONFIG_POSIX)
+             case QEMU_OPTION_runas:
++                warn_report("-runas is deprecated, use '-run-with user=...' instead");
+                 if (!os_set_runas(optarg)) {
+                     error_report("User \"%s\" doesn't exist"
+                                  " (and is not <uid>:<gid>)",
+@@ -3612,6 +3617,16 @@ void qemu_init(int argc, char **argv)
+                 if (str) {
+                     os_set_chroot(str);
+                 }
++                str = qemu_opt_get(opts, "user");
++                if (str) {
++                    if (!os_set_runas(str)) {
++                        error_report("User \"%s\" doesn't exist"
++                                     " (and is not <uid>:<gid>)",
++                                     optarg);
++                        exit(1);
++                    }
++                }
++
+                 break;
+             }
+ #endif /* CONFIG_POSIX */
+diff --git a/qemu-options.hx b/qemu-options.hx
+index cf61f6b863..f5c01eeeb4 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -4824,7 +4824,8 @@ DEF("runas", HAS_ARG, QEMU_OPTION_runas, \
+ SRST
+ ``-runas user``
+     Immediately before starting guest execution, drop root privileges,
+-    switching to the specified user.
++    switching to the specified user. This option is deprecated, use
++    ``-run-with user=...`` instead.
+ ERST
+ 
+ DEF("prom-env", HAS_ARG, QEMU_OPTION_prom_env,
+@@ -4990,13 +4991,15 @@ DEF("qtest-log", HAS_ARG, QEMU_OPTION_qtest_log, "", QEMU_ARCH_ALL)
+ 
+ #ifdef CONFIG_POSIX
+ DEF("run-with", HAS_ARG, QEMU_OPTION_run_with,
+-    "-run-with [async-teardown=on|off][,chroot=dir]\n"
++    "-run-with [async-teardown=on|off][,chroot=dir][user=username|uid:gid]\n"
+     "                Set miscellaneous QEMU process lifecycle options:\n"
+     "                async-teardown=on enables asynchronous teardown (Linux only)\n"
+-    "                chroot=dir chroot to dir just before starting the VM\n",
++    "                chroot=dir chroot to dir just before starting the VM\n"
++    "                user=username switch to the specified user before starting the VM\n"
++    "                user=uid:gid ditto, but use specified user-ID and group-ID instead\n",
+     QEMU_ARCH_ALL)
+ SRST
+-``-run-with [async-teardown=on|off][,chroot=dir]``
++``-run-with [async-teardown=on|off][,chroot=dir][user=username|uid:gid]``
+     Set QEMU process lifecycle options.
+ 
+     ``async-teardown=on`` enables asynchronous teardown. A new process called
+@@ -5013,6 +5016,10 @@ SRST
+     ``chroot=dir`` can be used for doing a chroot to the specified directory
+     immediately before starting the guest execution. This is especially useful
+     in combination with -runas.
++
++    ``user=username`` or ``user=uid:gid`` can be used to drop root privileges
++    by switching to the specified user (via username) or user and group
++    (via uid:gid) immediately before starting guest execution.
+ ERST
+ #endif
+ 
 -- 
 2.45.0
 
