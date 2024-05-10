@@ -4,67 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E12FDC25B5F
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 03:20:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C97CAC25B10
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 03:49:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5Gmn-00054Z-Jl; Thu, 09 May 2024 23:19:05 -0400
+	id 1s5HF1-0005oe-1W; Thu, 09 May 2024 23:48:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1s5Gmm-0004zH-6r
- for qemu-devel@nongnu.org; Thu, 09 May 2024 23:19:04 -0400
-Received: from mgamail.intel.com ([198.175.65.19])
+ (Exim 4.90_1) (envelope-from <inspiremenow@murena.io>)
+ id 1s5HEv-0005mh-HY
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 23:48:11 -0400
+Received: from mail2.ecloud.global ([135.181.6.248])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1s5Gmj-0001UG-GN
- for qemu-devel@nongnu.org; Thu, 09 May 2024 23:19:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1715311142; x=1746847142;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=CJ3KlYTcjdnRs3fHwf04DggSIHS8T4nETNQRTM8+ldU=;
- b=YHNpAG+yRuRci+PYXJADbs4d0CDqNfBOlCSWjg0znYBc2JFPYlTIvkGY
- x9LTuVQgft1xUB1IiVPcAnYcmiflfnNtVEvleoous06DPEr/zxVE5jSbO
- RdlCrLGbxOhGY3IJ66oAVACFw60AbPdhIe6iRje7U2G/iybwJf5q8W1ps
- 974XuBjoQyKJfI1/vb8hGd3CJqxgV2onNR5knrOJJ2/1PdTi2kXhHGs9g
- 4hT4QGVRiyqLOY6qR/VkH6QJp4+wC1/t2Hs43A9AsNxDydKw91PIu0Cyd
- e1HCTOcyXhQcgmn7RAEM2uRShsybjBN3pe3/Cjrxjbs8pdJuguYGWvUli w==;
-X-CSE-ConnectionGUID: hsbZaw8WTvu1L6Gr6Cdp0Q==
-X-CSE-MsgGUID: HBp7dsFpTuqHqdm8av2RFw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11068"; a="11121706"
-X-IronPort-AV: E=Sophos;i="6.08,149,1712646000"; d="scan'208";a="11121706"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 May 2024 20:18:59 -0700
-X-CSE-ConnectionGUID: u+snQdThQPidAaOjDPsL4w==
-X-CSE-MsgGUID: FZ6/zf3DRsysIpwCVPAAOA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,149,1712646000"; d="scan'208";a="30015510"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa008.jf.intel.com with ESMTP; 09 May 2024 20:18:57 -0700
-Date: Fri, 10 May 2024 11:33:11 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] target/i386: add feature dependency for XSAVE
-Message-ID: <Zj2Vd1WSX2qXyj+T@intel.com>
-References: <20240509153952.143805-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <inspiremenow@murena.io>)
+ id 1s5HEn-0000H8-De
+ for qemu-devel@nongnu.org; Thu, 09 May 2024 23:48:04 -0400
+Received: from authenticated-user (mail2.ecloud.global [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail2.ecloud.global (Postfix) with ESMTPSA id BC2E77209E6;
+ Fri, 10 May 2024 03:47:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=murena.io; s=mail2;
+ t=1715312874;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Z65wjwDgprkqeJhsXJkstYfG5OFuHaoHMGv1y04PTA0=;
+ b=P6LNaq8M00d60vfZZvBygUCZ5uBiIl0m5pvvIvBnGa5wyHonoLQH8P0bCvHGhxbdu91dYD
+ IB1Td5aFPtccc7cpbOinkJrN7op+MXPiJ45FT8rdefXEKP1t7uG6b7kzybcS017Es9QWT4
+ EqUk+ACoo1I74cN//1xVqnNP/he5Zq4=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=murena.io;
+ s=mail2; t=1715312874;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Z65wjwDgprkqeJhsXJkstYfG5OFuHaoHMGv1y04PTA0=;
+ b=uB8GPsre7U9XywFgachXUxz/FVxXaUGUf77SP24PYds/cfOuN94xJTxyxJaJbl3xnmdYPi
+ d4qGjS9hGB5gmEXRoEprFmGowIQ1SbinK5uW/q6lLXR2hpBGtRJHRrnf8hTor8H/nhRT3X
+ wmtjpM93kei9BEljXiTZmjs4epl5KJs=
+ARC-Authentication-Results: i=1; mail2.ecloud.global;
+ auth=pass smtp.mailfrom=inspiremenow@murena.io
+ARC-Seal: i=1; s=mail2; d=murena.io; t=1715312874; a=rsa-sha256; cv=none;
+ b=P9SbaieDWcKJnyBzqFfrhWzw/isOuGghrHjlfwHGGGPNXOEesuLZ3AlmVX/iYSdoCG/6GI
+ i/mHJwauhPunK2LNQIJBuRNmeLf41kdQK2zMBbVjgbeSk1LYnCF2L8uMJJ8d3J+aeYKM3v
+ EXx7qzBxvDUdP2QUfPPymvonVgPnu4A=
+From: inspireMeNow <inspiremenow@murena.io>
+To: qemu-devel@nongnu.org
+Cc: inspireMeNow <inspiremenow@murena.io>
+Subject: [PATCH] fix: correct typo in ext_zvkb configuration variable
+ Signed-off-by: Kaiyao Duan <inspiremenow@murena.io>
+Date: Fri, 10 May 2024 11:47:42 +0800
+Message-ID: <20240510034747.116408-1-inspiremenow@murena.io>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240509153952.143805-1-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=135.181.6.248;
+ envelope-from=inspiremenow@murena.io; helo=mail2.ecloud.global
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,20 +83,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 09, 2024 at 05:39:52PM +0200, Paolo Bonzini wrote:
-> Date: Thu,  9 May 2024 17:39:52 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH] target/i386: add feature dependency for XSAVE
-> X-Mailer: git-send-email 2.45.0
-> 
-> The XSAVEOPT, XSAVEC, XGETBV1, XSAVES features make no sense if you
-> cannot enable XSAVE in the first place.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  target/i386/cpu.c | 4 ++++
->  1 file changed, 4 insertions(+)
+---
+ target/riscv/cpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index eb1a2e7d6d..13cd34adbd 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1535,7 +1535,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+     /* Vector cryptography extensions */
+     MULTI_EXT_CFG_BOOL("zvbb", ext_zvbb, false),
+     MULTI_EXT_CFG_BOOL("zvbc", ext_zvbc, false),
+-    MULTI_EXT_CFG_BOOL("zvkb", ext_zvkg, false),
++    MULTI_EXT_CFG_BOOL("zvkb", ext_zvkb, false),
+     MULTI_EXT_CFG_BOOL("zvkg", ext_zvkg, false),
+     MULTI_EXT_CFG_BOOL("zvkned", ext_zvkned, false),
+     MULTI_EXT_CFG_BOOL("zvknha", ext_zvknha, false),
+-- 
+2.45.0
 
 
