@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02973C25B10
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 10:49:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2343FC25B10
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 10:50:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5Nol-0001b5-Ur; Fri, 10 May 2024 06:49:36 -0400
+	id 1s5NpA-0001xc-Oa; Fri, 10 May 2024 06:50:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s5Noe-0001O9-Bs
- for qemu-devel@nongnu.org; Fri, 10 May 2024 06:49:29 -0400
-Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s5Noy-0001ob-75
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 06:49:49 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s5Noc-0001V8-Cl
- for qemu-devel@nongnu.org; Fri, 10 May 2024 06:49:28 -0400
-Received: by mail-lj1-x22d.google.com with SMTP id
- 38308e7fff4ca-2e0a34b2899so27370091fa.3
- for <qemu-devel@nongnu.org>; Fri, 10 May 2024 03:49:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s5Nou-0001Wv-MD
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 06:49:46 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-41fd5dc04f0so9555255e9.0
+ for <qemu-devel@nongnu.org>; Fri, 10 May 2024 03:49:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715338164; x=1715942964; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715338183; x=1715942983; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WG6hHvxHnsfDLBmoixzqYQgPTY2J5n6T9oUHauE6pdQ=;
- b=vNUWPEL137vpjkzPtZF64LgBDtsJHfrQ4caQX8a9BfK0hB60QVQhFzs9qnfepcTFhJ
- v75LtWMSYAlcusxKQwYDdg2iDZyROIIV9hIFrIOEe4zvxx4nKYxx9td6o+xKYF7cioqr
- MUCFS2r1NfS6hkphAHFncAiJnYI5+yOcZK2rSBQQOoH5IzoyqP0Cff1uyRGh4IDPGd8F
- 1wYk164FDp4RD0XwbvBfTFmOGNPGSkn+o4qEuCgu9ZNOTzpf2cQ/2OHdqvkoFaC62lsx
- +mzmLS0tW2Qxz5qXHExorVToMX0Dfhd+VIrEjv1IdKGFtloWJGRSvPRvaj7mUevZteDx
- NgEg==
+ bh=f6xsQqOmikZFwXbyDk6ZpqqheWDHvbw4l/2JG+MVzRA=;
+ b=ByLvpVQETrEL0LhjnwyS/H2dH8apyGyxayszlwbsr5shLr6TWCJa1RlAJLncUCAP1d
+ SEYGbxY7M9wxz7T46ArOORat3VSfk+PqbRGAXap8UERMC50GjMAfCbpZOwlufTQGRmsQ
+ HN7JejWk3VIpoFLERcO1ibwPKb905O1rzWgZ3KFJzdBK4klNnnrgeoA8BqPCK2Bxt09/
+ r9PT6cWcryce2vZc/UNJRODsRPns8VbrnQWs3Q+1vBPq67K3npKtKtWm2WnINTGnK+E9
+ VV0GBn0stE0iSfmK0sjfqCFrGrDXplhPdK5rWAf3Hpy91VglOpjb5nZ2vkQBdntlyaQY
+ FSow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715338164; x=1715942964;
+ d=1e100.net; s=20230601; t=1715338183; x=1715942983;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WG6hHvxHnsfDLBmoixzqYQgPTY2J5n6T9oUHauE6pdQ=;
- b=j8iuJHBrqC/OpByFuVo6+QHpdMb87AEsTbvLkfisLKmjarU5XV/Wgq7sbJlWQhJ+yo
- ums9yBL1xVCfh2/8QpoISAVUSjzEW+Gt+D9yfnDXysYZZ/zCkOtKlD5tA1zJJzq4QGc1
- KTvSqwefK41fvM/6tfle0KvUHNilOPLd69jX0nT190YL490ciYdYWHaR1R/t69SHhBkJ
- wen0QikOhGAF2/YmDLtYvh1XkSDCoff4cvysGOEYbJ/gz5j0812u0aehjCpuzY0wGhY9
- uQ2xmDAnQ2dPnzg3GLOudFjUlErN47bu2HyuLWPTBEpe5gQ7hFR6xGV84RRz4hz/hnF4
- xb8Q==
-X-Gm-Message-State: AOJu0YyZkEH7Y5npHTQrsF5DhMt6N5DZqKAPKbpAZKxiH03teHdqF90M
- 7SoPqZPmTMG8jzd2jNeb5zN3BNclpTH/ohtEa74qe42QUOmT8R2EU5mZkqUJh/ckpJo1igfORRo
- b
-X-Google-Smtp-Source: AGHT+IFmnZ+GsRWrg13UBzYocLVh19CoDwULJS52v4mItPwgRYVUMX2l1wSejvKjHmjEdqsBZaZvSw==
-X-Received: by 2002:a2e:859:0:b0:2e5:4171:1808 with SMTP id
- 38308e7fff4ca-2e541711898mr7342581fa.51.1715338163501; 
- Fri, 10 May 2024 03:49:23 -0700 (PDT)
+ bh=f6xsQqOmikZFwXbyDk6ZpqqheWDHvbw4l/2JG+MVzRA=;
+ b=b8DfjKhYlxJgQafsfQHcBhwrxVNFFrlkwhoz9TNHkByZ12Pq3XasdajAAy69VOlRCL
+ 5aO0KzFRGewAzwbp8D1vNoJBhUnFzn+7XSbSzun+JMOXA3pXrKI/srqlYgmkXqPF+Ojr
+ pIBu0k/SkQrG/i81cQnd2j5UO316kszFIuJxmp0G9aFUVum9XhLxEGu9YH8+Eqjrobxu
+ quEeTmmB//tWER1BvdRQFCIYehUJdbJDdcH/D4ZbjbrhfSVBjbnXlpKfiyveV/Hu60p2
+ Oz9CfmK2g7J+h8MZ1lW64AnICoGs1KPvIm3TSTBtTobPfqfYEdPbJNVzn2fMzxzIHI7c
+ IGEw==
+X-Gm-Message-State: AOJu0Yxu1U4ra6bPqOu0BY/5rWRQYCe0Z9BQtYBp7vYsv6EEdE54fxZU
+ XQwmENs+MvlppOPVyv8xaML1ql+KflJJnIKQ5EH4HYyNy1y6yOVJr98wydTtobaU3TeRfpwuA2e
+ +
+X-Google-Smtp-Source: AGHT+IH3RnmZXXuxt2IBSPxIon61ivul84ejF6Ul9PK/puKcX3RJUgwhud+k6udV+bWCsrG6K2uZGg==
+X-Received: by 2002:a05:600c:490a:b0:41f:dcdd:5631 with SMTP id
+ 5b1f17b1804b1-41feaa30cfamr23776095e9.13.1715338182860; 
+ Fri, 10 May 2024 03:49:42 -0700 (PDT)
 Received: from m1x-phil.lan (sev93-h02-176-184-17-152.dsl.sta.abo.bbox.fr.
  [176.184.17.152]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502b896a06sm4231043f8f.27.2024.05.10.03.49.21
+ ffacd0b85a97d-3502baacf52sm4278278f8f.87.2024.05.10.03.49.41
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 10 May 2024 03:49:23 -0700 (PDT)
+ Fri, 10 May 2024 03:49:42 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Paolo Bonzini <pbonzini@redhat.com>
@@ -69,17 +69,17 @@ Cc: Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Gerd Hoffmann <kraxel@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 2/7] hw/xen: Constify XenLegacyDevice::XenDevOps
-Date: Fri, 10 May 2024 12:49:03 +0200
-Message-ID: <20240510104908.76908-3-philmd@linaro.org>
+Subject: [PATCH v2 5/7] hw/xen: initialize legacy backends from xen_bus_init()
+Date: Fri, 10 May 2024 12:49:06 +0200
+Message-ID: <20240510104908.76908-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240510104908.76908-1-philmd@linaro.org>
 References: <20240510104908.76908-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,40 +102,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-XenDevOps @ops is not updated, mark it const.
+From: Paolo Bonzini <pbonzini@redhat.com>
 
+Prepare for moving the calls to xen_be_register() under the
+control of xen_bus_init(), using the normal xen_backend_init()
+method that is used by the "modern" backends.
+
+This requires the xenstore global variable to be initialized,
+which is done by xen_be_init().  To ensure that everything is
+ready at the time the xen_backend_init() functions are called,
+remove the xen_be_init() function from all the boards and
+place it directly in xen_bus_init().
+
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240509170044.190795-7-pbonzini@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/xen/xen_pvdev.h  | 2 +-
- hw/xen/xen-legacy-backend.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ hw/i386/pc.c              | 1 -
+ hw/xen/xen-bus.c          | 4 ++++
+ hw/xen/xen-hvm-common.c   | 2 --
+ hw/xenpv/xen_machine_pv.c | 5 +----
+ 4 files changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/include/hw/xen/xen_pvdev.h b/include/hw/xen/xen_pvdev.h
-index ddad4b9f36..fd9a33e6ab 100644
---- a/include/hw/xen/xen_pvdev.h
-+++ b/include/hw/xen/xen_pvdev.h
-@@ -53,7 +53,7 @@ struct XenLegacyDevice {
-     xenevtchn_handle   *evtchndev;
-     xengnttab_handle   *gnttabdev;
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 505ea750f4..19f21953b4 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -1250,7 +1250,6 @@ void pc_basic_device_init(struct PCMachineState *pcms,
+             pci_create_simple(pcms->pcibus, -1, "xen-platform");
+         }
+         xen_bus_init();
+-        xen_be_init();
+     }
+ #endif
  
--    struct XenDevOps   *ops;
-+    const struct XenDevOps *ops;
-     QTAILQ_ENTRY(XenLegacyDevice) next;
- };
+diff --git a/hw/xen/xen-bus.c b/hw/xen/xen-bus.c
+index fb82cc33e4..95b207ac8b 100644
+--- a/hw/xen/xen-bus.c
++++ b/hw/xen/xen-bus.c
+@@ -13,6 +13,7 @@
+ #include "hw/sysbus.h"
+ #include "hw/xen/xen.h"
+ #include "hw/xen/xen-backend.h"
++#include "hw/xen/xen-legacy-backend.h" /* xen_be_init() */
+ #include "hw/xen/xen-bus.h"
+ #include "hw/xen/xen-bus-helper.h"
+ #include "monitor/monitor.h"
+@@ -329,6 +330,9 @@ static void xen_bus_realize(BusState *bus, Error **errp)
+         goto fail;
+     }
  
-diff --git a/hw/xen/xen-legacy-backend.c b/hw/xen/xen-legacy-backend.c
-index 124dd5f3d6..35f2b57560 100644
---- a/hw/xen/xen-legacy-backend.c
-+++ b/hw/xen/xen-legacy-backend.c
-@@ -170,7 +170,7 @@ int xen_be_copy_grant_refs(struct XenLegacyDevice *xendev,
-  */
- static struct XenLegacyDevice *xen_be_get_xendev(const char *type, int dom,
-                                                  int dev,
--                                                 struct XenDevOps *ops)
-+                                                 const struct XenDevOps *ops)
++    /* Initialize legacy backend core & drivers */
++    xen_be_init();
++
+     if (xs_node_scanf(xenbus->xsh, XBT_NULL, "", /* domain root node */
+                       "domid", NULL, "%u", &domid) == 1) {
+         xenbus->backend_id = domid;
+diff --git a/hw/xen/xen-hvm-common.c b/hw/xen/xen-hvm-common.c
+index 1627da7398..2d1b032121 100644
+--- a/hw/xen/xen-hvm-common.c
++++ b/hw/xen/xen-hvm-common.c
+@@ -872,8 +872,6 @@ void xen_register_ioreq(XenIOState *state, unsigned int max_cpus,
+ 
+     xen_bus_init();
+ 
+-    xen_be_init();
+-
+     return;
+ 
+ err:
+diff --git a/hw/xenpv/xen_machine_pv.c b/hw/xenpv/xen_machine_pv.c
+index 1130d1a147..b500ce0989 100644
+--- a/hw/xenpv/xen_machine_pv.c
++++ b/hw/xenpv/xen_machine_pv.c
+@@ -34,8 +34,7 @@ static void xen_init_pv(MachineState *machine)
  {
-     struct XenLegacyDevice *xendev;
+     setup_xen_backend_ops();
  
+-    /* Initialize backend core & drivers */
+-    xen_be_init();
++    xen_bus_init();
+ 
+     switch (xen_mode) {
+     case XEN_ATTACH:
+@@ -60,8 +59,6 @@ static void xen_init_pv(MachineState *machine)
+         vga_interface_created = true;
+     }
+ 
+-    xen_bus_init();
+-
+     /* config cleanup hook */
+     atexit(xen_config_cleanup);
+ }
 -- 
 2.41.0
 
