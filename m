@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E851DC25B10
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 09:17:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67BD9C25B10
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 09:21:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5MNW-0002hO-MQ; Fri, 10 May 2024 05:17:22 -0400
+	id 1s5MQe-00054V-9i; Fri, 10 May 2024 05:20:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s5MNU-0002Zb-30
- for qemu-devel@nongnu.org; Fri, 10 May 2024 05:17:20 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s5MNR-0000Rb-UP
- for qemu-devel@nongnu.org; Fri, 10 May 2024 05:17:19 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-41b782405d5so18259025e9.2
- for <qemu-devel@nongnu.org>; Fri, 10 May 2024 02:17:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715332635; x=1715937435; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=vFho2fKDG0hRyOS6vufwIlS0egOjLZqm6sKixgtyUhw=;
- b=fTcNzR8nm6NJHk/zm0YRGiWw1/9Vqi5wWEu2ajSr9ZRkXakAFBcDICfPOwa/OXoWW9
- 7D1gw0wvvlsL+tVPnXpR2ZGKvr1Y6VCZplLLxYhUlDtV09Nluu8QZyAZbJPIh3IzL84Z
- kpl3+rssT1q7/ObjwZT6ualpQLzsJ6rxh5X23FtlaF79x3t1vEYdHVDvhROeSt2XmOPb
- PFP9CyMzAXmq48npLnYrF8+GBJtah58hPE/ju2i6tUY8uNsXWwc2zl/wDsJUTBdJW/2c
- 7dyTowO8JLynxzKabcp3h2s6MG3HclYaZAqFdUaK6h82HlHXcixG2zlhQVrR0StetNvo
- 9wCg==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1s5MQS-00052n-38
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 05:20:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1s5MQP-0001Cg-Vg
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 05:20:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715332819;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=QMsT+bIrXtgcL6SXjD9Dpnx0OqUe5rSLDxu/TF05m8U=;
+ b=E17EJKwJbXkH1WCW26qiUL9X3DmPl3r+xISmJ7QV3VyGHeon9BWGHGrTLdc/FVIJni7zIB
+ ZMpRiUATxUgF0CzbtKNw1aYMWocysn4IZe1DkJ8ANjG7W0pqymk3oQgxiAHQZvLCWcYqF6
+ KGcoVos4Jh+9795IyNtk1nwUZ0ZzHa0=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-561-6dd8QDENNumj5ELNiqCB2g-1; Fri, 10 May 2024 05:19:18 -0400
+X-MC-Unique: 6dd8QDENNumj5ELNiqCB2g-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-349cafdc8f0so925556f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 10 May 2024 02:19:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715332635; x=1715937435;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vFho2fKDG0hRyOS6vufwIlS0egOjLZqm6sKixgtyUhw=;
- b=FEun+qxrwBv2HcHRs23oNfuzj80tr05g/fwVm73/R1BiNNFrirg/2ZdMhvSq6as+se
- sfPYddf04ijow+zZiAsh/Aj/K+sRRI0IyinvkoJr8uYM1eiSm/tvMplcQepfebQP17ep
- F1VXlMnAo1YwdyRVt/XOwvN48XHOIW/ma/hv/onktCAlDLKGGfJ39fL7rM/YgNGmgMMI
- GE8vSNmGHvFR28znk+EkX0aA1znrJkvktM3sAHgLFyySwRF9nHyjpRGulTD3D8Ngw345
- 00iccQ06sTng80BvztBMR7RTV4NFMi10bONeu8mqff/szG9Vr2K6lFaJGbhwkeM28kzA
- s+qQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWf12CBuy+ssEkLeoFF1TqwmcYYHUyLB4H4W3+zhqusih5hay3vo5PIP/dsMUVShWbuMJgRegE6QvX1seuRloG9Y2vj+do=
-X-Gm-Message-State: AOJu0YzML2uTLFMh1mvThO+BsiBk0vXnUNPjc+4BiP4/Fg9WUkOptmDS
- EMZ3Ndgj4NYV2+/tnFAuaI9KwgrAGj+LE5b2QgzNGcyj6oKrxQtxX56zdgc1aE0=
-X-Google-Smtp-Source: AGHT+IEvN0A9Zf+FRQ7cW9HFuAp8X1mqyDRdEsgbKwSZMieU5hhuSxdCvqKS2mwEcJDkoA2p4bZZ+Q==
-X-Received: by 2002:a05:600c:26cc:b0:418:4aac:a576 with SMTP id
- 5b1f17b1804b1-41fead64fdemr19515215e9.39.1715332635304; 
- Fri, 10 May 2024 02:17:15 -0700 (PDT)
-Received: from [192.168.51.227] (56.red-79-159-217.dynamicip.rima-tde.net.
- [79.159.217.56]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502b896a11sm4020574f8f.38.2024.05.10.02.17.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 May 2024 02:17:15 -0700 (PDT)
-Message-ID: <7a9941c8-d34e-4631-a48d-8f7dee1b2093@linaro.org>
-Date: Fri, 10 May 2024 11:17:13 +0200
+ d=1e100.net; s=20230601; t=1715332756; x=1715937556;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=QMsT+bIrXtgcL6SXjD9Dpnx0OqUe5rSLDxu/TF05m8U=;
+ b=RK6BHlLmlQsTOfZv+ma5JOE/UxYrfykOLDOMx3bLRBwzloJps0WmWVJCqawVgrD//3
+ rs8ix3Qq0dscSGgwecq2NiXZMI0ohmU0QP32BI9dVY1wXqttkFeaBby067ozc9zkzoOS
+ qSCFrIZLLI/uXKG+cHS1iDXHNwqqjqHh2sjA4/+iU+wS8w/3RL/JvtUCetjW3f4I98AZ
+ en0/XL/xS9PFxi7ZUuOuWXvKJQKkXmT4Sh9hAOx4X0/bHTj39ElkD0iNmAZbNwLsFuFL
+ xmplfBv/J1K5rQqbjD6eMKhQTmDETDnpHntVJGrGGatVU/kRjsxVe3ciCKRBMQbfZlFL
+ wTIg==
+X-Gm-Message-State: AOJu0YyeGGyDzXNCcLExBjMd6m6A6kaHTgE/smsZgipWL353aNkkB34D
+ Mr6dCe4PD/05VFQ6lSl35LkOJEQ1b1YtEbnWzqSWY++t8UXDTvYZ7cOruOnW8R1RKiOi5ddYapZ
+ iAxPW9XK4uqOrAVvI/iKyRFZYnnKksFur1vDuWpduIWlT09xBUONRdVkR0IH302tsYKIdTFsyM/
+ nJDaXG4oZ0+WqmIEpzxBnPXl6SqdlIhYbmaRANnw==
+X-Received: by 2002:a5d:4050:0:b0:34f:3293:83d9 with SMTP id
+ ffacd0b85a97d-3504aa6321fmr1768648f8f.57.1715332756671; 
+ Fri, 10 May 2024 02:19:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF+XaDshGn4UYGkWVUFH5tyWszTl7KW2UxFqDcf/+zgR1Z7drlt/gDsKl4/jdFZpwOKhe59MWYKkjfSUBPpaJY=
+X-Received: by 2002:a5d:4050:0:b0:34f:3293:83d9 with SMTP id
+ ffacd0b85a97d-3504aa6321fmr1768631f8f.57.1715332756327; Fri, 10 May 2024
+ 02:19:16 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/8] s390x and misc patches
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-References: <20240510064001.26002-1-thuth@redhat.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240510064001.26002-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240509170044.190795-1-pbonzini@redhat.com>
+ <20240509170044.190795-4-pbonzini@redhat.com>
+ <549e6861-b868-43d3-be7c-d99981fd6aa7@redhat.com>
+In-Reply-To: <549e6861-b868-43d3-be7c-d99981fd6aa7@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 10 May 2024 11:19:00 +0200
+Message-ID: <CABgObfYn8Sx_cDap33eMEQj2+MLk0_T2a2=7SXrqh_djTXewzw@mail.gmail.com>
+Subject: Re: [PATCH 03/13] s390: move css_migration_enabled from machine to
+ css.c
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000009ceccf0618160796"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,29 +98,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/10/24 08:39, Thomas Huth wrote:
-> The following changes since commit 36fa7c686e9eac490002ffc439c4affaa352c17c:
-> 
->    gitlab: Update msys2-64bit runner tags (2024-05-09 05:46:21 +0200)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/thuth/qemu.git  tags/pull-request-2024-05-10
-> 
-> for you to fetch changes up to 0d497106a71a3b17b0228cb87922ef794296cb24:
-> 
->    tests/qtest: Add some test cases support on LoongArch (2024-05-10 08:34:29 +0200)
-> 
-> ----------------------------------------------------------------
-> * Attach s390x sclpconsole to a proper parent in the QOM tree
-> * SCLP related clean-ups
-> * Report deprecated-props in cpu-model-expansion reply on s390x
-> * Deprecate "-runas" and introduce "-run-with user=..." instead
-> * Add some more qtest cases on LoongArch
+--0000000000009ceccf0618160796
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+On Fri, May 10, 2024 at 7:38=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrot=
+e:
+> I think this is wrong: By adding this to ccw_machine_2_9_class_options th=
+e
+> variable now always gets set to false, even for newer machines, since the
+> *class_options functions are part of the "class_init" which is always
+done.
+> You have to add it to ccw_machine_2_9_instance_options() instead to make
+it
+> work as expected.
 
+Indeed, this has to be squashed in:
 
-r~
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index aa90703d518..b7ddd36b8ba 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -1159,6 +1159,7 @@ static void
+ccw_machine_2_9_instance_options(MachineState *machine)
+     s390_cpudef_featoff_greater(12, 1, S390_FEAT_ZPCI);
+     s390_cpudef_featoff_greater(12, 1, S390_FEAT_ADAPTER_INT_SUPPRESSION);
+     s390_cpudef_featoff_greater(12, 1,
+S390_FEAT_ADAPTER_EVENT_NOTIFICATION);
++    css_migration_enabled =3D false;
+ }
+
+ static void ccw_machine_2_9_class_options(MachineClass *mc)
+@@ -1171,7 +1172,6 @@ static void
+ccw_machine_2_9_class_options(MachineClass *mc)
+     ccw_machine_2_10_class_options(mc);
+     compat_props_add(mc->compat_props, hw_compat_2_9, hw_compat_2_9_len);
+     compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+-    css_migration_enabled =3D false;
+ }
+ DEFINE_CCW_MACHINE(2_9, "2.9", false);
+
+--0000000000009ceccf0618160796
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><span style=3D"font-family:arial,sans-serif"><br><font siz=
+e=3D"2"><br>On Fri, May 10, 2024 at 7:38=E2=80=AFAM Thomas Huth &lt;<a href=
+=3D"mailto:thuth@redhat.com">thuth@redhat.com</a>&gt; wrote:<br>&gt; I thin=
+k this is wrong: By adding this to ccw_machine_2_9_class_options the<br>&gt=
+; variable now always gets set to false, even for newer machines, since the=
+<br>&gt; *class_options functions are part of the &quot;class_init&quot; wh=
+ich is always done.<br>&gt; You have to add it to ccw_machine_2_9_instance_=
+options() instead to make it<br></font></span><div><font size=3D"2"><span s=
+tyle=3D"font-family:arial,sans-serif">&gt; work as expected.</span></font><=
+/div><div><font size=3D"2"><span style=3D"font-family:arial,sans-serif"><br=
+></span></font></div><div><div class=3D"gmail_default"><font size=3D"2"><sp=
+an style=3D"font-family:arial,sans-serif">Indeed, this has to be squashed i=
+n:<br></span></font></div><font size=3D"2"><span style=3D"font-family:arial=
+,sans-serif"></span></font></div><br><span style=3D"font-family:monospace">=
+<span class=3D"gmail_default" style=3D"font-family:monospace,monospace;font=
+-size:x-small"></span>diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s3=
+90-virtio-ccw.c<br>index aa90703d518..b7ddd36b8ba 100644<br>--- a/hw/s390x/=
+s390-virtio-ccw.c<br>+++ b/hw/s390x/s390-virtio-ccw.c<br>@@ -1159,6 +1159,7=
+ @@ static void ccw_machine_2_9_instance_options(MachineState *machine)<br>=
+=C2=A0 =C2=A0 =C2=A0s390_cpudef_featoff_greater(12, 1, S390_FEAT_ZPCI);<br>=
+=C2=A0 =C2=A0 =C2=A0s390_cpudef_featoff_greater(12, 1, S390_FEAT_ADAPTER_IN=
+T_SUPPRESSION);<br>=C2=A0 =C2=A0 =C2=A0s390_cpudef_featoff_greater(12, 1, S=
+390_FEAT_ADAPTER_EVENT_NOTIFICATION);<br>+ =C2=A0 =C2=A0css_migration_enabl=
+ed =3D false;<br>=C2=A0}<br>=C2=A0<br>=C2=A0static void ccw_machine_2_9_cla=
+ss_options(MachineClass *mc)<br>@@ -1171,7 +1172,6 @@ static void ccw_machi=
+ne_2_9_class_options(MachineClass *mc)<br>=C2=A0 =C2=A0 =C2=A0ccw_machine_2=
+_10_class_options(mc);<br>=C2=A0 =C2=A0 =C2=A0compat_props_add(mc-&gt;compa=
+t_props, hw_compat_2_9, hw_compat_2_9_len);<br>=C2=A0 =C2=A0 =C2=A0compat_p=
+rops_add(mc-&gt;compat_props, compat, G_N_ELEMENTS(compat));<br>- =C2=A0 =
+=C2=A0css_migration_enabled =3D false;<br>=C2=A0}<br>=C2=A0DEFINE_CCW_MACHI=
+NE(2_9, &quot;2.9&quot;, false);</span><br>=C2=A0<br></div>
+
+--0000000000009ceccf0618160796--
 
 
