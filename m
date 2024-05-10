@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95E59C25B10
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 09:43:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49C44C25B10
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 09:55:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5MmM-0004Y0-Cv; Fri, 10 May 2024 05:43:02 -0400
+	id 1s5Mxq-0000rJ-SE; Fri, 10 May 2024 05:54:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s5MmL-0004Xp-9d
- for qemu-devel@nongnu.org; Fri, 10 May 2024 05:43:01 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s5Mxq-0000r8-4Q
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 05:54:54 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s5MmJ-0007ip-S9
- for qemu-devel@nongnu.org; Fri, 10 May 2024 05:43:01 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-34d8d11a523so1153188f8f.2
- for <qemu-devel@nongnu.org>; Fri, 10 May 2024 02:42:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s5Mxo-0002Ig-Kc
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 05:54:53 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a599eedc8eeso471543166b.1
+ for <qemu-devel@nongnu.org>; Fri, 10 May 2024 02:54:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715334178; x=1715938978; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715334891; x=1715939691; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=UQzZTZdJSm8Nmq8HILM3PNirrsLGQ2TIjaHN8g+Slj0=;
- b=P1JgHU4/s3REZoTO4KyUdcPql12ZbG/ZAUhrqZWY+gspHIljp9364liUldyM6CqPmm
- PS4qWaG6zcsozUJQPfFPKGhCKggq7zRM00a95k9NLrbQ+v3b7K5dRu6naAfaOAVycNp6
- dqCx/pc2vxy+9w7S3LcOOtsozKBSiDuUGZgdpaA62x2X8M4Cou+/OzPHAPADJ5F6b0Se
- oKMUY4G8q8Dy9eBxDVRnWQnsVc2rgL81vQZ0dd+RCQK+BU2gMEn/vF1gcTiQonySXUzA
- mKxSroV4nlUNl1SxUCQk96g1bKTtWEkILL5Dk9fH2HiQAPADdCW9jPoK9PLNnZoHG5gC
- xGRA==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=UCIU/5F/IQvR5oTCFId/ZxqooeGFTpmW7bXcpwpkBu4=;
+ b=TD8thOUjj8MYoAo45l2KeWTof1u4+Bt4Uck3ZprX3zQpe0e/aseBS/2KcquwXuVb6A
+ Ca53vR+CqIYJepygiBIF69wLlWlWFc8CZl8jUjZLkFTV8xs8bILkDCZg09m4eGezfRBn
+ EXGzjBkfX+MdYBb7mMfjEYfACRQAVKJ/IPWWwZqBfNkhI+nxFBFh/w++vFJd+XSiXYFe
+ guz3c4DiM5+HUAJaY2CQOebXrVV4ZW1uvMLIhVgPbRRiqM5m3knyWwFO14891APtZWOC
+ FFnT1gOj7zDYokewgwyAiyFiMyd0K1ZrdjYJ2u4WCmjjsTVQDtfIoiNy7UKocedwYixO
+ 27mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715334178; x=1715938978;
+ d=1e100.net; s=20230601; t=1715334891; x=1715939691;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UQzZTZdJSm8Nmq8HILM3PNirrsLGQ2TIjaHN8g+Slj0=;
- b=pYRc9dzKc7g7lXTvEtZUthmBAiTUMXND+Cku6yLoYz9uc0YyGQhlZzyryY2Ec5GMte
- Z1Fwnz8QvjreTrtVvkGH41y7Yhf3q4SPT/LTZr00qbQJk1OrbkvpRiItFN1bJpYEkOSm
- qQjmMEUNnw5IEIafeSNN/Q+1HNORD1K+xD9EVC9LgKkyigc3P5ZvvrYgCFpenbJHaOBS
- 3/uW7AkKdbY5Rlpcl0hybAS8kZbq5dXoilanCOTRJt+E37ZXWoaTj2IoN3xlPzy5H/GZ
- 8rFBkVbkxCQk9IrP+AUJ5hxUH0ijDdCWy/M+wU5BizrYht+Qws3/h3GMZdsbTD/kp8xv
- tPYQ==
+ bh=UCIU/5F/IQvR5oTCFId/ZxqooeGFTpmW7bXcpwpkBu4=;
+ b=sjvwwAcHflSVzdgje7FaYgu3H+bnpNWQOywOOkEZfaO8I0gfDOC+nHf3TZvivEEiag
+ Pa5An8CAYNQ7wiXc5pFThY3HcPoafUhWGsTQaeqYI/1RLM5ZylKy7qKvJlwfqpgLAXHL
+ p2BDjCR4Ic1VGfvh1v+4+CBrPeVMiFo0dzft4SrNDOF5O4UuRm38ARDR5kRrOK1iNZMr
+ aUt5t5d7D9svv6I9d5cUfAMsV4PiuPGnc2w47O8vOnrz7eWkKjumOF5pGCGEznxkH8Wm
+ Xs8YZf9TAm0fhaV47XC3Lw/a5iLTb+N0jLkmeon4O927x8H8DS9A/cX04r91dSkUqECA
+ eWuQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWdFokfLRA9ksa5C7aoiINyEKbScJ02n5fyYEpkFQ7uIMU7ERx16D23H+8SuYAvCebxO5u8jw0RQaAGRYkdqsoXwwPZJdw=
-X-Gm-Message-State: AOJu0Yyw1K9OIGc5pI33UzrWJGLuk3EWpw4+clqbzPUzhJE+eOmohRpN
- Aat08hvKoV2rHRYoFIsN7bQP+BX7mRizjZMQji1ANDuygeXhBgfdRCkwsb7lSUW5/yAqdMsqH3z
- JOYM=
-X-Google-Smtp-Source: AGHT+IFprgrGtOixlMfEr0Kiv+APsssU2Be92N3RwgXnbBCcmhOn8WfiBcMWfenfuhWbLt+5IZ9CZg==
-X-Received: by 2002:a5d:5448:0:b0:346:85a0:20a4 with SMTP id
- ffacd0b85a97d-3504a73db7emr1423882f8f.34.1715334178134; 
- Fri, 10 May 2024 02:42:58 -0700 (PDT)
-Received: from [192.168.51.227] (56.red-79-159-217.dynamicip.rima-tde.net.
- [79.159.217.56]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502baad0absm4047602f8f.69.2024.05.10.02.42.56
+ AJvYcCWLX++TTB7AAqwimKFtVydZ3Os/xjCuFqo77ME0EFn682fc3RTjB3Wx02IHpqrW24qZVv07rnvCsMq/kG6Po9lyi8SAymc=
+X-Gm-Message-State: AOJu0YzJslGVZh2NSnUu9HELCT3BOKmg2n9sAM6pzyXUmJytVaXarcMy
+ Sdq3yaemrcYYaSVeNMd3boKAz5gR6lM6Ldpv7RmmXLbehwsL9Wp70LUMJnkLjrotjadVKG0iW0G
+ D
+X-Google-Smtp-Source: AGHT+IG/Fyw8Y5Reys8Dp9a+aQ1uT9NOJcqMAFpQGCGICPk8HWSiTgjGNJk/h4O7COU+bp+RKBpsDA==
+X-Received: by 2002:a50:c349:0:b0:572:8b30:bef7 with SMTP id
+ 4fb4d7f45d1cf-5734d5c172cmr1651319a12.2.1715334890854; 
+ Fri, 10 May 2024 02:54:50 -0700 (PDT)
+Received: from [192.168.69.100] (sev93-h02-176-184-17-152.dsl.sta.abo.bbox.fr.
+ [176.184.17.152]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5733becfcccsm1629032a12.40.2024.05.10.02.54.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 May 2024 02:42:57 -0700 (PDT)
-Message-ID: <4b45c823-f278-44a0-a98e-176032c8765b@linaro.org>
-Date: Fri, 10 May 2024 11:42:54 +0200
+ Fri, 10 May 2024 02:54:50 -0700 (PDT)
+Message-ID: <53f5cfba-ce73-40ed-bc7e-fd4923dec764@linaro.org>
+Date: Fri, 10 May 2024 11:54:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 18/33] disas: Split disas.c
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20240424233131.988727-1-richard.henderson@linaro.org>
- <20240424233131.988727-19-richard.henderson@linaro.org>
- <a73858d1-c744-4a9b-b688-098e5dda9e12@linaro.org>
+Subject: Re: [PULL 05/26] hw/remote/vfio-user: Fix config space access byte
+ order
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: Mattias Nissler <mnissler@rivosinc.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Jagannathan Raman <jag.raman@oracle.com>
+References: <20240508174510.60470-1-philmd@linaro.org>
+ <20240508174510.60470-6-philmd@linaro.org>
+ <287e1fdc-3662-48a3-a6cb-bc5008d96525@tls.msk.ru>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <a73858d1-c744-4a9b-b688-098e5dda9e12@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <287e1fdc-3662-48a3-a6cb-bc5008d96525@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,22 +101,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/8/24 17:26, Philippe Mathieu-Daudé wrote:
->> @@ -2,13 +2,17 @@
->>   #define QEMU_DISAS_H
->>   /* Disassemble this for me please... (debugging). */
->> +#ifdef CONFIG_TCG
->>   void disas(FILE *out, const void *code, size_t size);
->>   void target_disas(FILE *out, CPUState *cpu, uint64_t code, size_t size);
->> +#endif
->>   void monitor_disas(Monitor *mon, CPUState *cpu, uint64_t pc,
->>                      int nb_insn, bool is_physical);
->> +#ifdef CONFIG_PLUGIN
+On 10/5/24 10:18, Michael Tokarev wrote:
+> 08.05.2024 20:44, Philippe Mathieu-Daudé wrote:
+>> From: Mattias Nissler <mnissler@rivosinc.com>
+>>
+>> PCI config space is little-endian, so on a big-endian host we need to
+>> perform byte swaps for values as they are passed to and received from
+>> the generic PCI config space access machinery.
 > 
-> Although implied, could be within the previous CONFIG_TCG block.
+> Is this a material for stable?
 
-I thought about that, but this was the more minimal change.
+Yes, sorry for not adding the tag :\
 
+> 
+> Thanks,
+> 
+> /mjt
 
-r~
 
