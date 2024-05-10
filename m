@@ -4,55 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1AA4C41513
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 06:41:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29BA9C25B4F
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 06:41:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5Jvm-000196-NT; Fri, 10 May 2024 02:40:35 -0400
+	id 1s5Jvp-0001AW-CM; Fri, 10 May 2024 02:40:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s5JvO-000155-0W
- for qemu-devel@nongnu.org; Fri, 10 May 2024 02:40:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s5JvR-00015W-4Z
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 02:40:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s5JvL-0001WI-0P
- for qemu-devel@nongnu.org; Fri, 10 May 2024 02:40:08 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s5JvO-0001X9-Dl
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 02:40:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715323206;
+ s=mimecast20190719; t=1715323209;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=1froynyYaz/+qgfV59l89I9485QKIPsqzAocbiLlcyc=;
- b=QCbXG7ekLMLCAUAXmZFTqpeoIuOV0EYgJrN8BlYsRWJhybMTYBFuob1ZvehXpYrqKIKFEa
- ecs+KFnXhQweC/p+JgdoJjd2Y2opDpvo0tnv0wwzywbHwHDB1soyTMwP69yMqSbv2cFg8p
- 2rhwpsY0E2hRsXtZjz4GljRKLdUToN0=
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9IMt1Iki+bGdU0k9hfLiLzd7efUNV5kkdo6ol/E5A5Y=;
+ b=XwhjGJFx5V8pKXXQhzjlg+EcRDLYuun1ZEa00T0j1jVZEKujGMFsuIs9snU4qWLEQLFnd6
+ kvduTpBzqetWaihravtbXQ1UWRt17oFl37E7uf0kyVMwKqO1WMVQ74VM019ZJfHsnHQF0q
+ huSNhJsgkY5PAi0pkVG5gMInTdP7Wbs=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-550-OILuKjHPOr61Wtd7BGXe2g-1; Fri, 10 May 2024 02:40:03 -0400
-X-MC-Unique: OILuKjHPOr61Wtd7BGXe2g-1
+ us-mta-167-GTH30Qg8Owe6FbaVklMCkw-1; Fri, 10 May 2024 02:40:07 -0400
+X-MC-Unique: GTH30Qg8Owe6FbaVklMCkw-1
 Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
  [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1A550800656;
- Fri, 10 May 2024 06:40:03 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1F64D801211;
+ Fri, 10 May 2024 06:40:07 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.229])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 25AEA2087D72;
- Fri, 10 May 2024 06:40:01 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id BA8722079B08;
+ Fri, 10 May 2024 06:40:05 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 0/8] s390x and misc patches
-Date: Fri, 10 May 2024 08:39:53 +0200
-Message-ID: <20240510064001.26002-1-thuth@redhat.com>
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 2/8] s390x: Introduce a SCLPDevice pointer under the machine
+Date: Fri, 10 May 2024 08:39:55 +0200
+Message-ID: <20240510064001.26002-3-thuth@redhat.com>
+In-Reply-To: <20240510064001.26002-1-thuth@redhat.com>
+References: <20240510064001.26002-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -76,61 +80,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 36fa7c686e9eac490002ffc439c4affaa352c17c:
+From: Cédric Le Goater <clg@redhat.com>
 
-  gitlab: Update msys2-64bit runner tags (2024-05-09 05:46:21 +0200)
+Initialize directly SCLPDevice from the machine init handler and
+remove s390_sclp_init(). We will use the SCLPDevice pointer later to
+create the consoles.
 
-are available in the Git repository at:
-
-  https://gitlab.com/thuth/qemu.git tags/pull-request-2024-05-10
-
-for you to fetch changes up to 0d497106a71a3b17b0228cb87922ef794296cb24:
-
-  tests/qtest: Add some test cases support on LoongArch (2024-05-10 08:34:29 +0200)
-
-----------------------------------------------------------------
-* Attach s390x sclpconsole to a proper parent in the QOM tree
-* SCLP related clean-ups
-* Report deprecated-props in cpu-model-expansion reply on s390x
-* Deprecate "-runas" and introduce "-run-with user=..." instead
-* Add some more qtest cases on LoongArch
-
-NB: I'm seeing test failures with "tsan-build" job in my CI, but
-    they also occur on the master branch in my repository, so
-    I assume they are not related to the patches in this PR.
-
-----------------------------------------------------------------
-Bibo Mao (1):
-      tests/qtest: Add some test cases support on LoongArch
-
-Collin L. Walling (2):
-      target/s390x: report deprecated-props in cpu-model-expansion reply
-      target/s390x: flag te and cte as deprecated
-
-Cédric Le Goater (3):
-      s390x: Introduce a SCLPDevice pointer under the machine
-      s390x/event-facility: Simplify sclp_get_event_facility_bus()
-      s390x/sclp: Simplify get_sclp_device()
-
-Thomas Huth (2):
-      hw/s390x: Attach the sclpconsole to /machine/sclp/s390-sclp-event-facility
-      qemu-options: Deprecate "-runas" and introduce "-run-with user=..." instead
-
- docs/about/deprecated.rst          |  6 ++++++
- qapi/machine-target.json           |  7 ++++++-
- include/hw/s390x/event-facility.h  |  2 +-
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Message-ID: <20240502131533.377719-2-clg@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
  include/hw/s390x/s390-virtio-ccw.h |  3 +++
  include/hw/s390x/sclp.h            |  2 --
- target/s390x/cpu_features.h        |  1 +
- hw/s390x/event-facility.c          | 13 ++-----------
- hw/s390x/s390-virtio-ccw.c         | 18 +++++++++++++-----
- hw/s390x/sclp.c                    | 15 +++------------
- system/vl.c                        | 15 +++++++++++++++
- target/s390x/cpu_features.c        | 17 +++++++++++++++++
- target/s390x/cpu_models_sysemu.c   |  8 ++++++++
- tests/qtest/boot-serial-test.c     | 10 ++++++++++
- qemu-options.hx                    | 15 +++++++++++----
- tests/qtest/meson.build            |  3 +++
- 15 files changed, 99 insertions(+), 36 deletions(-)
+ hw/s390x/s390-virtio-ccw.c         |  6 +++++-
+ hw/s390x/sclp.c                    | 10 ----------
+ 4 files changed, 8 insertions(+), 13 deletions(-)
+
+diff --git a/include/hw/s390x/s390-virtio-ccw.h b/include/hw/s390x/s390-virtio-ccw.h
+index c1d46e78af..7605d06bff 100644
+--- a/include/hw/s390x/s390-virtio-ccw.h
++++ b/include/hw/s390x/s390-virtio-ccw.h
+@@ -13,6 +13,7 @@
+ 
+ #include "hw/boards.h"
+ #include "qom/object.h"
++#include "hw/s390x/sclp.h"
+ 
+ #define TYPE_S390_CCW_MACHINE               "s390-ccw-machine"
+ 
+@@ -28,6 +29,8 @@ struct S390CcwMachineState {
+     bool dea_key_wrap;
+     bool pv;
+     uint8_t loadparm[8];
++
++    SCLPDevice *sclp;
+ };
+ 
+ #define S390_PTF_REASON_NONE (0x00 << 8)
+diff --git a/include/hw/s390x/sclp.h b/include/hw/s390x/sclp.h
+index b405a387b6..d32f6180e0 100644
+--- a/include/hw/s390x/sclp.h
++++ b/include/hw/s390x/sclp.h
+@@ -221,8 +221,6 @@ static inline int sccb_data_len(SCCB *sccb)
+     return be16_to_cpu(sccb->h.length) - sizeof(sccb->h);
+ }
+ 
+-
+-void s390_sclp_init(void);
+ void sclp_service_interrupt(uint32_t sccb);
+ void raise_irq_cpu_hotplug(void);
+ int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code);
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index 726c2ab436..159f67d05c 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -251,11 +251,15 @@ static void s390_create_sclpconsole(const char *type, Chardev *chardev)
+ static void ccw_init(MachineState *machine)
+ {
+     MachineClass *mc = MACHINE_GET_CLASS(machine);
++    S390CcwMachineState *ms = S390_CCW_MACHINE(machine);
+     int ret;
+     VirtualCssBus *css_bus;
+     DeviceState *dev;
+ 
+-    s390_sclp_init();
++    ms->sclp = SCLP(object_new(TYPE_SCLP));
++    object_property_add_child(OBJECT(machine), TYPE_SCLP, OBJECT(ms->sclp));
++    qdev_realize_and_unref(DEVICE(ms->sclp), NULL, &error_fatal);
++
+     /* init memory + setup max page size. Required for the CPU model */
+     s390_memory_init(machine->ram);
+ 
+diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
+index 893e71a41b..d236dbaf0b 100644
+--- a/hw/s390x/sclp.c
++++ b/hw/s390x/sclp.c
+@@ -378,16 +378,6 @@ void sclp_service_interrupt(uint32_t sccb)
+ }
+ 
+ /* qemu object creation and initialization functions */
+-
+-void s390_sclp_init(void)
+-{
+-    Object *new = object_new(TYPE_SCLP);
+-
+-    object_property_add_child(qdev_get_machine(), TYPE_SCLP, new);
+-    object_unref(new);
+-    qdev_realize(DEVICE(new), NULL, &error_fatal);
+-}
+-
+ static void sclp_realize(DeviceState *dev, Error **errp)
+ {
+     MachineState *machine = MACHINE(qdev_get_machine());
+-- 
+2.45.0
 
 
