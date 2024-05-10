@@ -4,91 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45C11C25B74
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 02:37:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78DB9C25B5F
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 03:08:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5G8s-0001FW-HO; Thu, 09 May 2024 22:37:50 -0400
+	id 1s5Gc6-0000cP-Hc; Thu, 09 May 2024 23:08:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pizhenwei@bytedance.com>)
- id 1s5G8r-0001FE-3l
- for qemu-devel@nongnu.org; Thu, 09 May 2024 22:37:49 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pizhenwei@bytedance.com>)
- id 1s5G8p-0000dn-07
- for qemu-devel@nongnu.org; Thu, 09 May 2024 22:37:48 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-6f4551f2725so1412060b3a.1
- for <qemu-devel@nongnu.org>; Thu, 09 May 2024 19:37:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1715308663; x=1715913463; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ATsNZcDEu/d8bOr7MgG2WaxuNkDKPY9EO0q7o5pFbJA=;
- b=S9wbEJlTdw/8+PViKcIzo4qZZJBFo7gSNWtZUYcgoSbNwYXEhkdjKhmL5Wx3liMrrd
- AhZv9kN75AAexJlXcooM7UMTsG7EFBDfrxsL7ckLUqm1wTgb0VNgvgNETwjo9x18qBCn
- 57NG+s52LPSM5h25B8UJITGCpq72J2/TutSdIvEU3L/cJixW4f/lWwfz3B52+yIJ7hVA
- erHWtQ2ynDBrjEQboSj25k8snd4GJZ9QyJcd5w7M0PV7g2gDRJyA28CJp9Y60tlMzkVT
- tWB20qh51RzhDw86PppTYhjA3f23NAKAvAsEwEWyuPmXYk1BYmpZtkp7+oVH6hNntTuT
- Rh9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715308663; x=1715913463;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ATsNZcDEu/d8bOr7MgG2WaxuNkDKPY9EO0q7o5pFbJA=;
- b=IWYQ/JlIPGMJfMNlnZVtoDM3W0Aqbzae25ZffDrA+0RRTfr7fEKLAmYoqwKrTT0aZM
- TJUQ344bFYm6KXvRqIuaeqj0gRH3bMtTcMSw2Ai1GA8od4y1s8XfongXyywcbaHnWMkZ
- q+E+llhwWPQJGGFDhZaFPxFitI5djUIO2dkk9zRrnVygzcajtigi0vr2vR06m/gxFETl
- Xuj3kjUgXtnEOZXmsQ4zibEWwj0nHERfbRc0F9DkZn30uvsfrLT+pYWdnoK6RH8L3Lwp
- POrgiv88WYIGXpeY04NFFJJWP+wYmODMa0UOyCbVOp+NqTyPF55rTYIUK4COipjORzYa
- vC5A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWNZdf2SQDA8JRGzMMqjGxBzEkL/q16ZqG+T0RGeimX10Unh6kWUTAKuHoyFCuBB0UvgmmikZNKm1dsc72d+i/TT7aBX0s=
-X-Gm-Message-State: AOJu0Yy9xgxSXEkVRxngrWqZEVVSzuAIlpbnsEzw/ZodKXstohdFTskK
- 4OLrQpqZhw3jpEM7lfvPN2hc9uL6WsL9oQHH0t9eOZaUPzb5BZWtgfWUSbYAFQjrfr/RPoFstyR
- 9
-X-Google-Smtp-Source: AGHT+IGL1uRXcrM7juwa0qSkzTpESXnNglXGDvObhZGvwZ24AW8E5EwkZouye4UznX+Wvyy1yZKzqA==
-X-Received: by 2002:a05:6a00:1901:b0:6f3:ead3:c274 with SMTP id
- d2e1a72fcca58-6f4e026bc30mr1360383b3a.1.1715308663136; 
- Thu, 09 May 2024 19:37:43 -0700 (PDT)
-Received: from [10.3.43.196] ([61.213.176.12])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-6f4d2a84b6bsm1975641b3a.74.2024.05.09.19.37.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 May 2024 19:37:42 -0700 (PDT)
-Message-ID: <1d368bb6-a9ee-472d-aec0-b2e11589fee6@bytedance.com>
-Date: Fri, 10 May 2024 10:37:36 +0800
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1s5Gc4-0000c9-Fg; Thu, 09 May 2024 23:08:00 -0400
+Received: from mgamail.intel.com ([198.175.65.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1s5Gc1-0007L5-Gj; Thu, 09 May 2024 23:08:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1715310477; x=1746846477;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=lYBfDHg9AieJIAdlgk9noVfnLMDkO62rNJNLtajijaA=;
+ b=hDsT4JQLs4QAgU6IACbpRzMDyxZnGfRU4ysGKytAdxB+pvMOgYYfDIUi
+ CQOO2I7iXcHA4d9j0hv5ZM3oqcDFhlIGiZTf3+yCBEuhMogxT0P5+0GKu
+ uhdSJdtdapZA+P2TWvqDzs89rMB8tJgjstMoSrxu75BYH+j11mINyUGCo
+ Wtl2bpE+srVJttl5AnxnN+U73joNP5J8baXjus8VFIpJOvNcvtZU0ttax
+ FHzqQgFW/0Tnrc40eH3HPxZirtw8x85uFDJXQ3mrOBQuLHLVO/8UJ/aOm
+ +SKcczeG1BOj+1Xz5XsnUvqIiyPYy0jBFXoJp9W+6EsyEqoqihjyuJKeZ A==;
+X-CSE-ConnectionGUID: g1f+dFNdSCCVI0weWlht5g==
+X-CSE-MsgGUID: tNFKsSxJQwGNswra6iDYaQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11068"; a="15069954"
+X-IronPort-AV: E=Sophos;i="6.08,149,1712646000"; d="scan'208";a="15069954"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 May 2024 20:07:53 -0700
+X-CSE-ConnectionGUID: jODW4HGwS8eq5LdkEHFUPQ==
+X-CSE-MsgGUID: mTX/FzpgQ9WAPX9GBBJlrQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,149,1712646000"; d="scan'208";a="34243785"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa005.jf.intel.com with ESMTP; 09 May 2024 20:07:52 -0700
+Date: Fri, 10 May 2024 11:22:05 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Subject: Re: [PATCH] target/i386: fix feature dependency for WAITPKG
+Message-ID: <Zj2S3QrJkxmeX1Cw@intel.com>
+References: <20240509153950.143766-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Re: [PATCH 1/9] block: add persistent reservation in/out api
-To: Stefan Hajnoczi <stefanha@redhat.com>,
- Changqi Lu <luchangqi.123@bytedance.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, kwolf@redhat.com,
- hreitz@redhat.com, fam@euphon.net, ronniesahlberg@gmail.com,
- pbonzini@redhat.com, pl@dlhnet.de, kbusch@kernel.org, its@irrelevant.dk,
- foss@defmacro.it, philmd@linaro.org
-References: <20240508093629.441057-1-luchangqi.123@bytedance.com>
- <20240508093629.441057-2-luchangqi.123@bytedance.com>
- <20240509182228.GC515246@fedora.redhat.com>
-Content-Language: en-US
-From: zhenwei pi <pizhenwei@bytedance.com>
-In-Reply-To: <20240509182228.GC515246@fedora.redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=pizhenwei@bytedance.com; helo=mail-pf1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240509153950.143766-1-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,93 +78,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 5/10/24 02:22, Stefan Hajnoczi wrote:
-> On Wed, May 08, 2024 at 05:36:21PM +0800, Changqi Lu wrote:
-
-[SNIP]
-
->> +
->> +    /**
->> +     * Persist Through Power Loss(PTPL) is considered as required in QEMU
->> +     * block layer, the block driver need always enable PTPL.
->> +     */
+On Thu, May 09, 2024 at 05:39:50PM +0200, Paolo Bonzini wrote:
+> Date: Thu,  9 May 2024 17:39:50 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH] target/i386: fix feature dependency for WAITPKG
+> X-Mailer: git-send-email 2.45.0
 > 
-> What is the reasoning behind this? Will applications that rely on PTPL=0
-> work?
+> The VMX feature bit depends on general availability of WAITPKG,
+> not the other way round.
 > 
+> Fixes: 33cc88261c3 ("target/i386: add support for VMX_SECONDARY_EXEC_ENABLE_USER_WAIT_PAUSE", 2023-08-28)
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  target/i386/cpu.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 
-Hi Stefan,
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
-PTPL needs to be supported at QEMU block layer in theory, include 
-reporting PTPL capability and PTPL flag in PR OUT command. However, in 
-the real production environment, both SCSI driver and NVMe driver, even 
-linux block layer always enable PTPL nnconditionally on a linux platform.
-
-Ref the latest code:
-1, SCSI:
-https://github.com/torvalds/linux/blob/master/drivers/scsi/sd.c#L1978
-static int sd_pr_register(struct block_device *bdev, u64 old_key, u64 
-new_key,
-		u32 flags)
-{
-	if (flags & ~PR_FL_IGNORE_KEY)
-		return -EOPNOTSUPP;
-	return sd_pr_out_command(bdev, (flags & PR_FL_IGNORE_KEY) ? 0x06 : 0x00,
-			old_key, new_key, 0,
-			(1 << 0) /* APTPL */);
-}
-
-2, NVMe:
-https://github.com/torvalds/linux/blob/master/drivers/nvme/host/pr.c#L127
-static int nvme_pr_register(struct block_device *bdev, u64 old,
-		u64 new, unsigned flags)
-{
-	u32 cdw10;
-
-	if (flags & ~PR_FL_IGNORE_KEY)
-		return -EOPNOTSUPP;
-
-	cdw10 = old ? 2 : 0;
-	cdw10 |= (flags & PR_FL_IGNORE_KEY) ? 1 << 3 : 0;
-	cdw10 |= (1 << 30) | (1 << 31); /* PTPL=1 */
-	return nvme_pr_command(bdev, cdw10, old, new, nvme_cmd_resv_register);
-}
-
-3, linux block layers also hides PTPL flag:
-https://github.com/torvalds/linux/blob/master/block/ioctl.c#L283
-static int blkdev_pr_register(struct block_device *bdev, blk_mode_t mode,
-		struct pr_registration __user *arg)
-{
-	const struct pr_ops *ops = bdev->bd_disk->fops->pr_ops;
-	struct pr_registration reg;
-
-	if (!blkdev_pr_allowed(bdev, mode))
-		return -EPERM;
-	if (!ops || !ops->pr_register)
-		return -EOPNOTSUPP;
-	if (copy_from_user(&reg, arg, sizeof(reg)))
-		return -EFAULT;
-
-	if (reg.flags & ~PR_FL_IGNORE_KEY)
-		return -EOPNOTSUPP;
-	return ops->pr_register(bdev, reg.old_key, reg.new_key, reg.flags);
-}
-
-
-So we(Changqi and me) wanted to keep PR a bit simple in QEMU block layer:
-- consider PTPL is required in QEMU block, then we don't need an extra flag
-- the block backend driver always request PR OUT with PTPL flag
-
-Then: Will applications that rely on PTPL=0 work?
-Yes, a guest PR out without PTPL will work, but the backend uses PTPL=1 
-instead.
-
-Will this request succeed?
-If the backend driver' supports PTPL capability, it will succeed. 
-Otherwise it will fail.
-
--- 
-zhenwei pi
 
