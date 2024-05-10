@@ -4,23 +4,23 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26C9DC25B10
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 13:18:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C0DDC25B10
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 13:18:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5Q7l-0005ay-Rl; Fri, 10 May 2024 09:17:21 -0400
+	id 1s5Q7n-0005cJ-GA; Fri, 10 May 2024 09:17:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1s5Q7Y-0005VI-H9; Fri, 10 May 2024 09:17:10 -0400
+ id 1s5Q7j-0005YQ-0f; Fri, 10 May 2024 09:17:19 -0400
 Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1s5Q7T-0002Ac-EY; Fri, 10 May 2024 09:17:07 -0400
+ id 1s5Q7a-0002DU-O0; Fri, 10 May 2024 09:17:18 -0400
 Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 1EA13473CD;
- Fri, 10 May 2024 15:16:54 +0200 (CEST)
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 76891473ED;
+ Fri, 10 May 2024 15:16:57 +0200 (CEST)
 From: Fiona Ebner <f.ebner@proxmox.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, armbru@redhat.com, eblake@redhat.com,
@@ -28,9 +28,9 @@ Cc: qemu-block@nongnu.org, armbru@redhat.com, eblake@redhat.com,
  jsnow@redhat.com, f.gruenbichler@proxmox.com, t.lamprecht@proxmox.com,
  mahaocong@didichuxing.com, xiechanglong.d@gmail.com,
  wencongyang2@huawei.com
-Subject: [PATCH v3 3/5] mirror: allow specifying working bitmap
-Date: Fri, 10 May 2024 15:16:45 +0200
-Message-Id: <20240510131647.1256467-4-f.ebner@proxmox.com>
+Subject: [PATCH v3 4/5] iotests: add test for bitmap mirror
+Date: Fri, 10 May 2024 15:16:46 +0200
+Message-Id: <20240510131647.1256467-5-f.ebner@proxmox.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240510131647.1256467-1-f.ebner@proxmox.com>
 References: <20240510131647.1256467-1-f.ebner@proxmox.com>
@@ -59,487 +59,3852 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: John Snow <jsnow@redhat.com>
+From: Fabian Grünbichler <f.gruenbichler@proxmox.com>
 
-for the mirror job. The bitmap's granularity is used as the job's
-granularity.
+heavily based on/practically forked off iotest 257 for bitmap backups,
+but:
 
-The new @bitmap parameter is marked unstable in the QAPI and can
-currently only be used for @sync=full mode.
+- no writes to filter node 'mirror-top' between completion and
+finalization, as those seem to deadlock?
+- extra set of reference/test mirrors to verify that writes in parallel
+with active mirror work
 
-Clusters initially dirty in the bitmap as well as new writes are
-copied to the target.
+Intentionally keeping copyright and ownership of original test case to
+honor provenance.
 
-Using block-dirty-bitmap-clear and block-dirty-bitmap-merge API,
-callers can simulate the three kinds of @BitmapSyncMode (which is used
-by backup):
-1. always: default, just pass bitmap as working bitmap.
-2. never: copy bitmap and pass copy to the mirror job.
-3. on-success: copy bitmap and pass copy to the mirror job and if
-   successful, merge bitmap into original afterwards.
+The test was originally adapted by Fabian from 257, but has seen
+rather big changes, because the interface for mirror with bitmap was
+changed, i.e. no @bitmap-mode parameter anymore and bitmap is used as
+the working bitmap, and the test was changed to use backing images and
+@sync-mode=write-blocking.
 
-When the target image is a non-COW "diff image", i.e. one that was not
-used as the target of a previous mirror and the target image's cluster
-size is larger than the bitmap's granularity, or when
-@copy-mode=write-blocking is used, there is a pitfall, because the
-cluster in the target image will be allocated, but not contain all the
-data corresponding to the same region in the source image.
-
-An idea to avoid the limitation would be to mark clusters which are
-affected by unaligned writes and are not allocated in the target image
-dirty, so they would be copied fully later. However, for migration,
-the invariant that an actively synced mirror stays actively synced
-(unless an error happens) is useful, because without that invariant,
-migration might inactivate block devices when mirror still got work
-to do and run into an assertion failure [0].
-
-Another approach would be to read the missing data from the source
-upon unaligned writes to be able to write the full target cluster
-instead.
-
-But certain targets like NBD do not allow querying the cluster size.
-To avoid limiting/breaking the use case of syncing to an existing
-target, which is arguably more common than the diff image use case,
-document the limitation in QAPI.
-
-This patch was originally based on one by Ma Haocong, but it has since
-been modified pretty heavily, first by John and then again by Fiona.
-
-[0]: https://lore.kernel.org/qemu-devel/1db7f571-cb7f-c293-04cc-cd856e060c3f@proxmox.com/
-
-Suggested-by: Ma Haocong <mahaocong@didichuxing.com>
-Signed-off-by: Ma Haocong <mahaocong@didichuxing.com>
-Signed-off-by: John Snow <jsnow@redhat.com>
-[FG: switch to bdrv_dirty_bitmap_merge_internal]
 Signed-off-by: Fabian Grünbichler <f.gruenbichler@proxmox.com>
 Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
 [FE: rebase for 9.1
-     get rid of bitmap mode parameter
-     use caller-provided bitmap as working bitmap
-     turn bitmap parameter experimental]
+     adapt to changes to mirror bitmap interface
+     rename test from '384' to 'mirror-bitmap'
+     use backing files, copy-mode=write-blocking, larger cluster size]
 Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 ---
 
 Changes in v3:
-* remove duplicate "use" in QAPI description
-* clarify that cluster size caveats only applies to non-COW diff image
-* split changing is_none_mode to sync_mode in job struct into a
-  separate patch
-* use shorter sync_mode != none rather than sync_mode == top || full
-  in an if condition
-* also disallow read-only bitmap (cannot be used as working bitmap)
-* require that bitmap is enabled at the start of the job
+* avoid script potentially waiting on non-existent job when
+  blockdev-mirror QMP command fails by asserting that there is no
+  error when none is expected.
+* fix pylint issues
+* rename test from sync-bitmap-mirror to mirror-bitmap
+* use backing files (rather than stand-alone diff images) in
+  combination with copy-mode=write-blocking and larger cluster size
+  for target images, to have a more realistic use-case and show that
+  COW prevents ending up with cluster with partial data upon unaligned
+  writes
 
- block/mirror.c                         | 80 +++++++++++++++++++++-----
- blockdev.c                             | 44 +++++++++++---
- include/block/block_int-global-state.h |  5 +-
- qapi/block-core.json                   | 37 +++++++++++-
- tests/unit/test-block-iothread.c       |  2 +-
- 5 files changed, 143 insertions(+), 25 deletions(-)
+ tests/qemu-iotests/tests/mirror-bitmap     |  597 ++++
+ tests/qemu-iotests/tests/mirror-bitmap.out | 3191 ++++++++++++++++++++
+ 2 files changed, 3788 insertions(+)
+ create mode 100755 tests/qemu-iotests/tests/mirror-bitmap
+ create mode 100644 tests/qemu-iotests/tests/mirror-bitmap.out
 
-diff --git a/block/mirror.c b/block/mirror.c
-index ca23d6ef65..d3d0698116 100644
---- a/block/mirror.c
-+++ b/block/mirror.c
-@@ -73,6 +73,11 @@ typedef struct MirrorBlockJob {
-     size_t buf_size;
-     int64_t bdev_length;
-     unsigned long *cow_bitmap;
-+    /*
-+     * Whether the bitmap is created locally or provided by the caller (for
-+     * incremental sync).
-+     */
-+    bool dirty_bitmap_is_local;
-     BdrvDirtyBitmap *dirty_bitmap;
-     BdrvDirtyBitmapIter *dbi;
-     uint8_t *buf;
-@@ -691,7 +696,11 @@ static int mirror_exit_common(Job *job)
-         bdrv_unfreeze_backing_chain(mirror_top_bs, target_bs);
-     }
- 
--    bdrv_release_dirty_bitmap(s->dirty_bitmap);
-+    if (s->dirty_bitmap_is_local) {
-+        bdrv_release_dirty_bitmap(s->dirty_bitmap);
-+    } else {
-+        bdrv_enable_dirty_bitmap(s->dirty_bitmap);
-+    }
- 
-     /* Make sure that the source BDS doesn't go away during bdrv_replace_node,
-      * before we can call bdrv_drained_end */
-@@ -820,6 +829,16 @@ static void mirror_abort(Job *job)
-     assert(ret == 0);
- }
- 
-+/* Always called after commit/abort. */
-+static void mirror_clean(Job *job)
-+{
-+    MirrorBlockJob *s = container_of(job, MirrorBlockJob, common.job);
+diff --git a/tests/qemu-iotests/tests/mirror-bitmap b/tests/qemu-iotests/tests/mirror-bitmap
+new file mode 100755
+index 0000000000..37bbe0f241
+--- /dev/null
++++ b/tests/qemu-iotests/tests/mirror-bitmap
+@@ -0,0 +1,597 @@
++#!/usr/bin/env python3
++# group: rw
++#
++# Test bitmap-sync mirrors (incremental, differential, and partials)
++#
++# Copyright (c) 2019 John Snow for Red Hat, Inc.
++#
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 2 of the License, or
++# (at your option) any later version.
++#
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++#
++# You should have received a copy of the GNU General Public License
++# along with this program.  If not, see <http://www.gnu.org/licenses/>.
++#
++# owner=jsnow@redhat.com
 +
-+    if (!s->dirty_bitmap_is_local && s->dirty_bitmap) {
-+        bdrv_dirty_bitmap_set_busy(s->dirty_bitmap, false);
-+    }
++import os
++
++import iotests
++from iotests import log, qemu_img
++
++SIZE = 64 * 1024 * 1024
++GRANULARITY = 64 * 1024
++IMAGE_CLUSTER_SIZE = 128 * 1024
++
++
++class Pattern:
++    def __init__(self, byte, offset, size=GRANULARITY):
++        self.byte = byte
++        self.offset = offset
++        self.size = size
++
++    def bits(self, granularity):
++        lower = self.offset // granularity
++        upper = (self.offset + self.size - 1) // granularity
++        return set(range(lower, upper + 1))
++
++
++class PatternGroup:
++    """Grouping of Pattern objects. Initialize with an iterable of Patterns."""
++    def __init__(self, patterns):
++        self.patterns = patterns
++
++    def bits(self, granularity):
++        """Calculate the unique bits dirtied by this pattern grouping"""
++        res = set()
++        for pattern in self.patterns:
++            res |= pattern.bits(granularity)
++        return res
++
++
++GROUPS = [
++    PatternGroup([
++        # Batch 0: 4 clusters
++        Pattern('0x49', 0x0000000),
++        Pattern('0x6c', 0x0100000),   # 1M
++        Pattern('0x6f', 0x2000000),   # 32M
++        Pattern('0x76', 0x3ff0000)]), # 64M - 64K
++    PatternGroup([
++        # Batch 1: 6 clusters (3 new)
++        Pattern('0x65', 0x0000000),   # Full overwrite
++        Pattern('0x77', 0x00f8000),   # Partial-left (1M-32K)
++        Pattern('0x72', 0x2008000),   # Partial-right (32M+32K)
++        Pattern('0x69', 0x3fe0000)]), # Adjacent-left (64M - 128K)
++    PatternGroup([
++        # Batch 2: 7 clusters (3 new)
++        Pattern('0x74', 0x0010000),   # Adjacent-right
++        Pattern('0x69', 0x00e8000),   # Partial-left  (1M-96K)
++        Pattern('0x6e', 0x2018000),   # Partial-right (32M+96K)
++        Pattern('0x67', 0x3fe0000,
++                2*GRANULARITY)]),     # Overwrite [(64M-128K)-64M)
++    PatternGroup([
++        # Batch 3: 8 clusters (5 new)
++        # Carefully chosen such that nothing re-dirties the one cluster
++        # that copies out successfully before failure in Group #1.
++        Pattern('0xaa', 0x0010000,
++                3*GRANULARITY),       # Overwrite and 2x Adjacent-right
++        Pattern('0xbb', 0x00d8000),   # Partial-left (1M-160K)
++        Pattern('0xcc', 0x2028000),   # Partial-right (32M+160K)
++        Pattern('0xdd', 0x3fc0000)]), # New; leaving a gap to the right
++]
++
++
++class EmulatedBitmap:
++    def __init__(self, granularity=GRANULARITY):
++        self._bits = set()
++        self.granularity = granularity
++
++    def dirty_bits(self, bits):
++        self._bits |= set(bits)
++
++    def dirty_group(self, n):
++        self.dirty_bits(GROUPS[n].bits(self.granularity))
++
++    def clear(self):
++        self._bits = set()
++
++    def clear_bits(self, bits):
++        self._bits -= set(bits)
++
++    def clear_bit(self, bit):
++        self.clear_bits({bit})
++
++    def clear_group(self, n):
++        self.clear_bits(GROUPS[n].bits(self.granularity))
++
++    @property
++    def first_bit(self):
++        return sorted(self.bits)[0]
++
++    @property
++    def bits(self):
++        return self._bits
++
++    @property
++    def count(self):
++        return len(self.bits)
++
++    def compare(self, qmp_bitmap):
++        """
++        Print a nice human-readable message checking that a bitmap as reported
++        by the QMP interface has as many bits set as we expect it to.
++        """
++
++        name = qmp_bitmap.get('name', '(anonymous)')
++        log("= Checking Bitmap {:s} =".format(name))
++
++        want = self.count
++        have = qmp_bitmap['count'] // qmp_bitmap['granularity']
++
++        log("expecting {:d} dirty sectors; have {:d}. {:s}".format(
++            want, have, "OK!" if want == have else "ERROR!"))
++        log('')
++
++
++class Drive:
++    """Represents, vaguely, a drive attached to a VM.
++    Includes format, graph, and device information."""
++
++    def __init__(self, path, vm=None):
++        self.path = path
++        self.vm = vm
++        self.fmt = None
++        self.size = None
++        self.node = None
++        self.file_node = None
++
++    def img_create(self, fmt, size):
++        self.fmt = fmt
++        self.size = size
++        iotests.qemu_img_create('-f', self.fmt, self.path, str(self.size))
++
++    def create_target(self, name, fmt, size, backing_file):
++        basename = os.path.basename(self.path)
++        file_node_name = "file_{}".format(basename)
++        vm = self.vm
++
++        log(vm.cmd('blockdev-create', job_id='bdc-file-job',
++                   options={
++                       'driver': 'file',
++                       'filename': self.path,
++                       'size': 0,
++                   }))
++        vm.run_job('bdc-file-job')
++        log(vm.cmd('blockdev-add', driver='file',
++                   node_name=file_node_name, filename=self.path))
++
++        bdc_fmt_opts = {
++            'driver': fmt,
++            'file': file_node_name,
++            'size': size,
++            'cluster-size': IMAGE_CLUSTER_SIZE,
++        }
++
++        if backing_file is not None:
++            bdc_fmt_opts['backing-file'] = backing_file
++
++        log(vm.cmd('blockdev-create', job_id='bdc-fmt-job',
++                   options=bdc_fmt_opts))
++        vm.run_job('bdc-fmt-job')
++        log(vm.cmd('blockdev-add', driver=fmt,
++                   node_name=name,
++                   file=file_node_name))
++        self.fmt = fmt
++        self.size = size
++        self.node = name
++        self.file_node = file_node_name
++
++    def detach_target(self):
++        vm = self.vm
++        log('--- Detaching {} ---'.format(self.node))
++        log(vm.cmd('blockdev-del', node_name=self.node))
++        log(vm.cmd('blockdev-del', node_name=self.file_node))
++        log('')
++
++
++def blockdev_mirror(vm, device, target, sync, **kwargs):
++    # Strip any arguments explicitly nulled by the caller:
++    kwargs = {key: val for key, val in kwargs.items() if val is not None}
++    result = vm.qmp_log('blockdev-mirror',
++                        device=device,
++                        target=target,
++                        sync=sync,
++                        copy_mode='write-blocking',
++                        filter_node_name='mirror-top',
++                        **kwargs)
++    return result
++
++def blockdev_mirror_mktarget(drive, target_id, filepath, target_backing, sync,
++                             **kwargs):
++    target_drive = Drive(filepath, vm=drive.vm)
++    target_drive.create_target(target_id, drive.fmt, drive.size,
++                               target_backing)
++    result = blockdev_mirror(drive.vm, drive.node, target_id, sync, **kwargs)
++    assert result.get("error") is None
++    return target_drive
++
++def reference_mirror(drive, n, filepath):
++    log("--- Reference mirror #{:d} ---\n".format(n))
++    target_id = "ref_target_{:d}".format(n)
++    job_id = "ref_mirror_{:d}".format(n)
++    target_drive = blockdev_mirror_mktarget(drive, target_id, filepath, None,
++                                            "full", job_id=job_id)
++    drive.vm.run_job(job_id, auto_dismiss=True)
++    log('')
++    target_drive.detach_target()
++    return target_drive
++
++def bitmap_sync_pre(drive, bitmap_sync, bitmap):
++    vm = drive.vm
++    log("--- Prepare bitmap for sync mode '{}' ---\n".format(bitmap_sync))
++    if bitmap_sync in ('never', 'on-success'):
++        vm.qmp_log("block-dirty-bitmap-add", node=drive.node,
++                   name="mirror-bitmap", granularity=GRANULARITY)
++        vm.qmp_log("block-dirty-bitmap-merge", node=drive.node,
++                   target="mirror-bitmap", bitmaps=[bitmap])
++        log('')
++        return "mirror-bitmap"
++    elif bitmap_sync == 'always':
++        log("passing current bitmap '{}'\n".format(bitmap))
++        return bitmap
++    else:
++        raise ValueError("unkown bitmap sync mode '{}'".format(bitmap_sync))
++
++def bitmap_sync_post(drive, bitmap_sync, bitmap, success):
++    vm = drive.vm
++    log("--- Post-process bitmap for sync mode '{}' ---\n".format(bitmap_sync))
++    if bitmap_sync == 'never':
++        vm.qmp_log("block-dirty-bitmap-remove", node=drive.node,
++                   name="mirror-bitmap")
++        log('')
++        return
++    elif bitmap_sync == 'on-success':
++        if success:
++            vm.qmp_log("block-dirty-bitmap-clear", node=drive.node,
++                       name=bitmap)
++            vm.qmp_log("block-dirty-bitmap-merge", node=drive.node,
++                       target=bitmap, bitmaps=["mirror-bitmap"])
++        vm.qmp_log("block-dirty-bitmap-remove", node=drive.node,
++                   name="mirror-bitmap")
++        log('')
++        return
++    elif bitmap_sync == 'always':
++        log('nothing to do\n')
++        return
++    else:
++        raise ValueError("unkown bitmap sync mode '{}'".format(bitmap_sync))
++
++def mirror(drive, n, filepath, target_backing, sync, **kwargs):
++    log("--- Test mirror #{:d} ---\n".format(n))
++    target_id = "mirror_target_{:d}".format(n)
++    job_id = "mirror_{:d}".format(n)
++    kwargs.setdefault('auto-finalize', False)
++    target_drive = blockdev_mirror_mktarget(drive, target_id, filepath,
++                                            target_backing, sync,
++                                            job_id=job_id, **kwargs)
++    return (job_id, target_drive)
++
++def perform_writes(drive, n, filter_node_name=None):
++    log("--- Write #{:d} ---\n".format(n))
++    for pattern in GROUPS[n].patterns:
++        cmd = "write -P{:s} 0x{:07x} 0x{:x}".format(
++            pattern.byte,
++            pattern.offset,
++            pattern.size)
++        log(cmd)
++        log(drive.vm.hmp_qemu_io(filter_node_name or drive.node, cmd))
++    bitmaps = drive.vm.query_bitmaps()
++    log({'bitmaps': bitmaps}, indent=2)
++    log('')
++    return bitmaps
++
++
++def compare_images(image, reference, baseimg=None, expected_match=True):
++    """
++    Print a nice human-readable message comparing these images.
++    """
++    expected_ret = 0 if expected_match else 1
++    if baseimg:
++        qemu_img("rebase", "-u", "-b", baseimg, '-F', iotests.imgfmt, image)
++
++    sub = qemu_img("compare", image, reference, check=False)
++
++    log('qemu_img compare "{:s}" "{:s}" ==> {:s}, {:s}'.format(
++        image, reference,
++        "Identical" if sub.returncode == 0 else "Mismatch",
++        "OK!" if sub.returncode == expected_ret else "ERROR!"),
++        filters=[iotests.filter_testfiles])
++
++def test_bitmap_sync(bsync_mode, failure=None):
++    """
++    Test bitmap mirror routines.
++
++    :param bsync_mode: Is the Bitmap Sync mode, and can be any of:
++        - on-success: This is the "incremental" style mode. Bitmaps are
++                      synchronized to what was copied out only on success.
++                      (Partial images must be discarded.)
++        - never:      This is the "differential" style mode.
++                      Bitmaps are never synchronized.
++        - always:     This is a "best effort" style mode.
++                      Bitmaps are always synchronized, regardless of failure.
++                      (Partial images must be kept.)
++
++    :param failure: Is the (optional) failure mode, and can be any of:
++        - None:         No failure. Test the normative path. Default.
++        - simulated:    Cancel the job right before it completes.
++                        This also tests writes "during" the job.
++        - intermediate: This tests a job that fails mid-process and produces
++                        an incomplete mirror. Testing limitations prevent
++                        testing competing writes.
++    """
++    with iotests.FilePath('img', 'bsync1', 'bsync2', 'bsync3',
++                          'fmirror0', 'fmirror1', 'fmirror2', 'fmirror3') as \
++                          (img_path, bsync1, bsync2, bsync3,
++                           fmirror0, fmirror1, fmirror2, fmirror3), \
++         iotests.VM() as vm:
++
++        mode = "Bitmap Sync {:s}".format(bsync_mode)
++        preposition = "with" if failure else "without"
++        cond = "{:s} {:s}".format(preposition,
++                                  "{:s} failure".format(failure) if failure
++                                  else "failure")
++        log("\n=== {:s} {:s} ===\n".format(mode, cond))
++
++        log('--- Preparing image & VM ---\n')
++        drive0 = Drive(img_path, vm=vm)
++        drive0.img_create(iotests.imgfmt, SIZE)
++        vm.add_device("virtio-scsi,id=scsi0")
++        vm.launch()
++
++        file_config = {
++            'driver': 'file',
++            'filename': drive0.path
++        }
++
++        if failure == 'intermediate':
++            file_config = {
++                'driver': 'blkdebug',
++                'image': file_config,
++                'set-state': [{
++                    'event': 'flush_to_disk',
++                    'state': 1,
++                    'new_state': 2
++                }, {
++                    'event': 'read_aio',
++                    'state': 2,
++                    'new_state': 3
++                }, {
++                    'event': 'read_aio',
++                    'state': 3,
++                    'new_state': 4
++                }],
++                'inject-error': [{
++                    'event': 'read_aio',
++                    'errno': 5,
++                    'state': 3,
++                    'immediately': False,
++                    'once': True
++                }, {
++                    'event': 'read_aio',
++                    'errno': 5,
++                    'state': 4,
++                    'immediately': False,
++                    'once': True
++                }]
++            }
++
++        drive0.node = 'drive0'
++        vm.qmp_log('blockdev-add',
++                   filters=[iotests.filter_qmp_testfiles],
++                   node_name=drive0.node,
++                   driver=drive0.fmt,
++                   file=file_config)
++        log('')
++
++        # 0 - Writes and Reference mirror
++        perform_writes(drive0, 0)
++        fmirror0_target = reference_mirror(drive0, 0, fmirror0)
++        log('--- Add Bitmap ---\n')
++        vm.qmp_log("block-dirty-bitmap-add", node=drive0.node,
++                   name="bitmap0", granularity=GRANULARITY)
++        log('')
++        ebitmap = EmulatedBitmap()
++
++        # 1 - Writes and Reference mirror
++        bitmaps = perform_writes(drive0, 1)
++        ebitmap.dirty_group(1)
++        bitmap = vm.get_bitmap(drive0.node, 'bitmap0', bitmaps=bitmaps)
++        ebitmap.compare(bitmap)
++        reference_mirror(drive0, 1, fmirror1)
++
++        # 1 - Test mirror (w/ Optional induced failure)
++        if failure == 'intermediate':
++            # Activate blkdebug induced failure for second-to-next read
++            log(vm.hmp_qemu_io(drive0.node, 'flush'))
++            log('')
++        mirror_bitmap = bitmap_sync_pre(drive0, bsync_mode, "bitmap0")
++        # First reference mirror is used as the inital base image
++        (job, bsync1_target) = mirror(drive0, 1, bsync1, fmirror0_target.path,
++                                      'full', bitmap=mirror_bitmap)
++
++        vm.run_job(job, auto_dismiss=True, auto_finalize=False,
++                   cancel=failure == 'simulated')
++        bsync1_target.detach_target()
++        bitmap_sync_post(drive0, bsync_mode, "bitmap0", not failure)
++
++        bitmaps = vm.query_bitmaps()
++        log({'bitmaps': bitmaps}, indent=2)
++        log('')
++
++        if bsync_mode == 'always':
++            if failure == 'intermediate':
++                # We manage to copy one sector (one bit) before the error.
++                ebitmap.clear_bit(ebitmap.first_bit)
++            else:
++                # successful mirror / cancelled complete mirror
++                ebitmap.clear()
++
++        if bsync_mode == 'on-success' and not failure:
++            ebitmap.clear()
++
++        ebitmap.compare(vm.get_bitmap(drive0.node, 'bitmap0', bitmaps=bitmaps))
++
++        # 2 - Reference mirror
++        reference_mirror(drive0, 2, fmirror2)
++
++        # 2 - Bitmap mirror with writes before completion
++        mirror_bitmap = bitmap_sync_pre(drive0, bsync_mode, "bitmap0")
++        (job, bsync2_target) = mirror(drive0, 2, bsync2, bsync1_target.path,
++                                      "full", bitmap=mirror_bitmap)
++
++        bitmaps = perform_writes(drive0, 2, filter_node_name='mirror-top')
++        ebitmap.dirty_group(2)
++
++        # Can't compare against bitmap0 if used as the mirror bitmap, because
++        # mirror could already clear it.
++        if mirror_bitmap != "bitmap0":
++            ebitmap.compare(vm.get_bitmap(drive0.node, "bitmap0",
++                                          bitmaps=bitmaps))
++
++        # don't use run_job as that logs too much even with use_log=False
++        events = [('JOB_STATUS_CHANGE', {'data': {'id': job}})]
++        while True:
++            ev = iotests.filter_qmp_event(vm.events_wait(events, timeout=10))
++            status = ev['data']['status']
++            if status == 'ready':
++                vm.qmp('job-complete', id=job)
++            elif status == 'standby':
++                vm.qmp('job-resume', id=job)
++            elif status == 'pending':
++                vm.qmp('job-finalize', id=job)
++            elif status == 'null':
++                break
++
++        bsync2_target.detach_target()
++        bitmap_sync_post(drive0, bsync_mode, "bitmap0", True)
++
++        if bsync_mode != 'never':
++            ebitmap.clear()
++
++        bitmaps = vm.query_bitmaps()
++        ebitmap.compare(vm.get_bitmap(drive0.node, 'bitmap0', bitmaps=bitmaps))
++
++        # 3 - Writes and Reference mirror
++        bitmaps = perform_writes(drive0, 3)
++        ebitmap.dirty_group(3)
++        ebitmap.compare(vm.get_bitmap(drive0.node, 'bitmap0', bitmaps=bitmaps))
++        reference_mirror(drive0, 3, fmirror3)
++
++        # 3 - Bitmap mirror (In failure modes, this is a recovery.)
++        mirror_bitmap = bitmap_sync_pre(drive0, bsync_mode, "bitmap0")
++        (job, bsync3_target) = mirror(drive0, 3, bsync3, bsync2_target.path,
++                                      "full", bitmap=mirror_bitmap)
++
++        vm.run_job(job, auto_dismiss=True, auto_finalize=False)
++        bsync3_target.detach_target()
++        bitmap_sync_post(drive0, bsync_mode, "bitmap0", True)
++        bitmaps = vm.query_bitmaps()
++
++        log({'bitmaps': bitmaps}, indent=2)
++        log('')
++        if bsync_mode != 'never':
++            ebitmap.clear()
++        ebitmap.compare(vm.get_bitmap(drive0.node, 'bitmap0', bitmaps=bitmaps))
++
++        log('--- Cleanup ---\n')
++        vm.qmp_log("block-dirty-bitmap-remove",
++                   node=drive0.node, name="bitmap0")
++        bitmaps = vm.query_bitmaps()
++        log({'bitmaps': bitmaps}, indent=2)
++        vm.shutdown()
++        log('')
++
++        log('--- Verification ---\n')
++        compare_images(bsync1, fmirror1, baseimg=fmirror0,
++                       expected_match=failure != 'intermediate')
++        if not failure or bsync_mode == 'always':
++            # Always keep the last mirror on success or when using 'always'
++            base = bsync1
++        else:
++            base = fmirror1
++
++        compare_images(bsync2, fmirror2, baseimg=base, expected_match=0)
++        compare_images(bsync3, fmirror3, baseimg=bsync2)
++        compare_images(img_path, fmirror3)
++        log('')
++
++def test_mirror_api():
++    """
++    Test malformed and prohibited invocations of the mirror API.
++    """
++    with iotests.FilePath('img', 'bsync1') as \
++         (img_path, mirror_path), \
++         iotests.VM() as vm:
++
++        log("\n=== API failure tests ===\n")
++        log('--- Preparing image & VM ---\n')
++        drive0 = Drive(img_path, vm=vm)
++        drive0.img_create(iotests.imgfmt, SIZE)
++        vm.add_device("virtio-scsi,id=scsi0")
++        vm.launch()
++
++        file_config = {
++            'driver': 'file',
++            'filename': drive0.path
++        }
++
++        drive0.node = 'drive0'
++        vm.qmp_log('blockdev-add',
++                   filters=[iotests.filter_qmp_testfiles],
++                   node_name=drive0.node,
++                   driver=drive0.fmt,
++                   file=file_config)
++        log('')
++
++        target0 = Drive(mirror_path, vm=vm)
++        target0.create_target("mirror_target", drive0.fmt, drive0.size, None)
++        log('')
++
++        vm.qmp_log("block-dirty-bitmap-add", node=drive0.node,
++                   name="bitmap0", granularity=GRANULARITY)
++        log('')
++
++        log('-- Testing invalid QMP commands --\n')
++
++        error_cases = {
++            'full' : ['bitmap404'],
++            'top' : ['bitmap404', 'bitmap0'],
++            'none' : ['bitmap404', 'bitmap0'],
++        }
++
++        # Dicts, as always, are not stably-ordered prior to 3.7, so use tuples:
++        for sync_mode in ('full', 'top', 'none'):
++            log("-- Sync mode {:s} tests --\n".format(sync_mode))
++            for bitmap in error_cases[sync_mode]:
++                blockdev_mirror(drive0.vm, drive0.node, "mirror_target",
++                                sync_mode, job_id='api_job',
++                                bitmap=bitmap)
++                log('')
++
++
++def main():
++    for bsync_mode in ("never", "on-success", "always"):
++        for failure in ("simulated", "intermediate", None):
++            test_bitmap_sync(bsync_mode, failure)
++
++    test_mirror_api()
++
++if __name__ == '__main__':
++    iotests.script_main(main, supported_fmts=['qcow2'],
++                        supported_protocols=['file'])
+diff --git a/tests/qemu-iotests/tests/mirror-bitmap.out b/tests/qemu-iotests/tests/mirror-bitmap.out
+new file mode 100644
+index 0000000000..5c8acc1d69
+--- /dev/null
++++ b/tests/qemu-iotests/tests/mirror-bitmap.out
+@@ -0,0 +1,3191 @@
++
++=== Bitmap Sync never with simulated failure ===
++
++--- Preparing image & VM ---
++
++{"execute": "blockdev-add", "arguments": {"driver": "qcow2", "file": {"driver": "file", "filename": "TEST_DIR/PID-img"}, "node-name": "drive0"}}
++{"return": {}}
++
++--- Write #0 ---
++
++write -P0x49 0x0000000 0x10000
++{"return": ""}
++write -P0x6c 0x0100000 0x10000
++{"return": ""}
++write -P0x6f 0x2000000 0x10000
++{"return": ""}
++write -P0x76 0x3ff0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {}
 +}
 +
- static void coroutine_fn mirror_throttle(MirrorBlockJob *s)
- {
-     int64_t now = qemu_clock_get_ns(QEMU_CLOCK_REALTIME);
-@@ -1016,7 +1035,7 @@ static int coroutine_fn mirror_run(Job *job, Error **errp)
-     mirror_free_init(s);
- 
-     s->last_pause_ns = qemu_clock_get_ns(QEMU_CLOCK_REALTIME);
--    if (s->sync_mode != MIRROR_SYNC_MODE_NONE) {
-+    if (s->sync_mode != MIRROR_SYNC_MODE_NONE && s->dirty_bitmap_is_local) {
-         ret = mirror_dirty_init(s);
-         if (ret < 0 || job_is_cancelled(&s->common.job)) {
-             goto immediate_exit;
-@@ -1029,6 +1048,14 @@ static int coroutine_fn mirror_run(Job *job, Error **errp)
-      */
-     mirror_top_opaque->job = s;
- 
-+    /*
-+     * External/caller-provided bitmap can only be disabled now that
-+     * bdrv_mirror_top_do_write() can access it.
-+     */
-+    if (!s->dirty_bitmap_is_local) {
-+        bdrv_disable_dirty_bitmap(s->dirty_bitmap);
-+    }
++--- Reference mirror #0 ---
 +
-     assert(!s->dbi);
-     s->dbi = bdrv_dirty_iter_new(s->dirty_bitmap);
-     for (;;) {
-@@ -1305,6 +1332,7 @@ static const BlockJobDriver mirror_job_driver = {
-         .run                    = mirror_run,
-         .prepare                = mirror_prepare,
-         .abort                  = mirror_abort,
-+        .clean                  = mirror_clean,
-         .pause                  = mirror_pause,
-         .complete               = mirror_complete,
-         .cancel                 = mirror_cancel,
-@@ -1323,6 +1351,7 @@ static const BlockJobDriver commit_active_job_driver = {
-         .run                    = mirror_run,
-         .prepare                = mirror_prepare,
-         .abort                  = mirror_abort,
-+        .clean                  = mirror_clean,
-         .pause                  = mirror_pause,
-         .complete               = mirror_complete,
-         .cancel                 = commit_active_cancel,
-@@ -1716,6 +1745,7 @@ static BlockJob *mirror_start_job(
-                              void *opaque,
-                              const BlockJobDriver *driver,
-                              MirrorSyncMode sync_mode,
-+                             BdrvDirtyBitmap *bitmap,
-                              BlockDriverState *base,
-                              bool auto_complete, const char *filter_node_name,
-                              bool is_mirror, MirrorCopyMode copy_mode,
-@@ -1730,10 +1760,15 @@ static BlockJob *mirror_start_job(
- 
-     GLOBAL_STATE_CODE();
- 
--    if (granularity == 0) {
-+    /* QMP interface ensures these conditions */
-+    assert(!bitmap || sync_mode == MIRROR_SYNC_MODE_FULL);
-+    assert(!(bitmap && granularity));
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_0", "sync": "full", "target": "ref_target_0"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_0"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_0", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_0", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
 +
-+    if (bitmap) {
-+        granularity = bdrv_dirty_bitmap_granularity(bitmap);
-+    } else if (granularity == 0) {
-         granularity = bdrv_get_default_bitmap_granularity(target);
-     }
--
-     assert(is_power_of_2(granularity));
- 
-     if (buf_size < 0) {
-@@ -1887,17 +1922,27 @@ static BlockJob *mirror_start_job(
-     }
-     bdrv_graph_rdunlock_main_loop();
- 
--    s->dirty_bitmap = bdrv_create_dirty_bitmap(s->mirror_top_bs, granularity,
--                                               NULL, errp);
--    if (!s->dirty_bitmap) {
--        goto fail;
-+    if (bitmap) {
-+        s->dirty_bitmap_is_local = false;
-+        s->dirty_bitmap = bitmap;
-+        bdrv_dirty_bitmap_set_busy(s->dirty_bitmap, true);
-+    } else {
-+        s->dirty_bitmap_is_local = true;
-+        s->dirty_bitmap = bdrv_create_dirty_bitmap(s->mirror_top_bs,
-+                                                   granularity, NULL, errp);
-+        if (!s->dirty_bitmap) {
-+            goto fail;
-+        }
-     }
- 
-     /*
-      * The dirty bitmap is set by bdrv_mirror_top_do_write() when not in active
--     * mode.
-+     * mode. For external/caller-provided bitmap, need to wait until
-+     * bdrv_mirror_top_do_write() can actually access it before disabling.
-      */
--    bdrv_disable_dirty_bitmap(s->dirty_bitmap);
-+    if (s->dirty_bitmap_is_local) {
-+        bdrv_disable_dirty_bitmap(s->dirty_bitmap);
-+    }
- 
-     bdrv_graph_wrlock();
-     ret = block_job_add_bdrv(&s->common, "source", bs, 0,
-@@ -1979,7 +2024,11 @@ fail:
-         blk_unref(s->target);
-         bs_opaque->job = NULL;
-         if (s->dirty_bitmap) {
--            bdrv_release_dirty_bitmap(s->dirty_bitmap);
-+            if (s->dirty_bitmap_is_local) {
-+                bdrv_release_dirty_bitmap(s->dirty_bitmap);
-+            } else {
-+                bdrv_dirty_bitmap_set_busy(s->dirty_bitmap, false);
-+            }
-         }
-         job_early_fail(&s->common.job);
-     }
-@@ -2003,7 +2052,8 @@ void mirror_start(const char *job_id, BlockDriverState *bs,
-                   BlockDriverState *target, const char *replaces,
-                   int creation_flags, int64_t speed,
-                   uint32_t granularity, int64_t buf_size,
--                  MirrorSyncMode mode, BlockMirrorBackingMode backing_mode,
-+                  MirrorSyncMode mode, BdrvDirtyBitmap *bitmap,
-+                  BlockMirrorBackingMode backing_mode,
-                   bool zero_target,
-                   BlockdevOnError on_source_error,
-                   BlockdevOnError on_target_error,
-@@ -2021,7 +2071,7 @@ void mirror_start(const char *job_id, BlockDriverState *bs,
-     mirror_start_job(job_id, bs, creation_flags, target, replaces,
-                      speed, granularity, buf_size, backing_mode, zero_target,
-                      on_source_error, on_target_error, unmap, NULL, NULL,
--                     &mirror_job_driver, mode, base, false,
-+                     &mirror_job_driver, mode, bitmap, base, false,
-                      filter_node_name, true, copy_mode, errp);
- }
- 
-@@ -2049,8 +2099,8 @@ BlockJob *commit_active_start(const char *job_id, BlockDriverState *bs,
-                      job_id, bs, creation_flags, base, NULL, speed, 0, 0,
-                      MIRROR_LEAVE_BACKING_CHAIN, false,
-                      on_error, on_error, true, cb, opaque,
--                     &commit_active_job_driver, MIRROR_SYNC_MODE_FULL, base,
--                     auto_complete, filter_node_name, false,
-+                     &commit_active_job_driver, MIRROR_SYNC_MODE_FULL, NULL,
-+                     base, auto_complete, filter_node_name, false,
-                      MIRROR_COPY_MODE_BACKGROUND, errp);
-     if (!job) {
-         goto error_restore_flags;
-diff --git a/blockdev.c b/blockdev.c
-index 32c93869ae..4f72a72dc7 100644
---- a/blockdev.c
-+++ b/blockdev.c
-@@ -2776,6 +2776,7 @@ static void blockdev_mirror_common(const char *job_id, BlockDriverState *bs,
-                                    BlockDriverState *target,
-                                    const char *replaces,
-                                    enum MirrorSyncMode sync,
-+                                   const char *bitmap_name,
-                                    BlockMirrorBackingMode backing_mode,
-                                    bool zero_target,
-                                    bool has_speed, int64_t speed,
-@@ -2794,6 +2795,7 @@ static void blockdev_mirror_common(const char *job_id, BlockDriverState *bs,
- {
-     BlockDriverState *unfiltered_bs;
-     int job_flags = JOB_DEFAULT;
-+    BdrvDirtyBitmap *bitmap = NULL;
- 
-     GLOBAL_STATE_CODE();
-     GRAPH_RDLOCK_GUARD_MAINLOOP();
-@@ -2844,6 +2846,33 @@ static void blockdev_mirror_common(const char *job_id, BlockDriverState *bs,
-         return;
-     }
- 
-+    if (bitmap_name) {
-+        if (sync != MIRROR_SYNC_MODE_FULL) {
-+            error_setg(errp, "Sync mode '%s' not supported with bitmap.",
-+                       MirrorSyncMode_str(sync));
-+            return;
-+        }
-+        if (granularity) {
-+            error_setg(errp, "Granularity and bitmap cannot both be set");
-+            return;
-+        }
++--- Detaching ref_target_0 ---
++{}
++{}
 +
-+        bitmap = bdrv_find_dirty_bitmap(bs, bitmap_name);
-+        if (!bitmap) {
-+            error_setg(errp, "Dirty bitmap '%s' not found", bitmap_name);
-+            return;
-+        }
++--- Add Bitmap ---
 +
-+        if (bdrv_dirty_bitmap_check(bitmap, BDRV_BITMAP_DEFAULT, errp)) {
-+            return;
-+        }
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "bitmap0", "node": "drive0"}}
++{"return": {}}
 +
-+        if (!bdrv_dirty_bitmap_enabled(bitmap)) {
-+            error_setg(errp, "Bitmap '%s' is not enabled", bitmap_name);
-+            return;
-+        }
-+    }
++--- Write #1 ---
 +
-     if (!bdrv_backing_chain_next(bs) && sync == MIRROR_SYNC_MODE_TOP) {
-         sync = MIRROR_SYNC_MODE_FULL;
-     }
-@@ -2889,10 +2918,9 @@ static void blockdev_mirror_common(const char *job_id, BlockDriverState *bs,
-      * and will allow to check whether the node still exist at mirror completion
-      */
-     mirror_start(job_id, bs, target,
--                 replaces, job_flags,
--                 speed, granularity, buf_size, sync, backing_mode, zero_target,
--                 on_source_error, on_target_error, unmap, filter_node_name,
--                 copy_mode, errp);
-+                 replaces, job_flags, speed, granularity, buf_size, sync,
-+                 bitmap, backing_mode, zero_target, on_source_error,
-+                 on_target_error, unmap, filter_node_name, copy_mode, errp);
- }
- 
- void qmp_drive_mirror(DriveMirror *arg, Error **errp)
-@@ -3033,7 +3061,7 @@ void qmp_drive_mirror(DriveMirror *arg, Error **errp)
-     }
- 
-     blockdev_mirror_common(arg->job_id, bs, target_bs,
--                           arg->replaces, arg->sync,
-+                           arg->replaces, arg->sync, arg->bitmap,
-                            backing_mode, zero_target,
-                            arg->has_speed, arg->speed,
-                            arg->has_granularity, arg->granularity,
-@@ -3053,6 +3081,7 @@ void qmp_blockdev_mirror(const char *job_id,
-                          const char *device, const char *target,
-                          const char *replaces,
-                          MirrorSyncMode sync,
-+                         const char *bitmap,
-                          bool has_speed, int64_t speed,
-                          bool has_granularity, uint32_t granularity,
-                          bool has_buf_size, int64_t buf_size,
-@@ -3093,8 +3122,9 @@ void qmp_blockdev_mirror(const char *job_id,
-     }
- 
-     blockdev_mirror_common(job_id, bs, target_bs,
--                           replaces, sync, backing_mode,
--                           zero_target, has_speed, speed,
-+                           replaces, sync, bitmap,
-+                           backing_mode, zero_target,
-+                           has_speed, speed,
-                            has_granularity, granularity,
-                            has_buf_size, buf_size,
-                            has_on_source_error, on_source_error,
-diff --git a/include/block/block_int-global-state.h b/include/block/block_int-global-state.h
-index 54f8c8cbcb..8b93db017e 100644
---- a/include/block/block_int-global-state.h
-+++ b/include/block/block_int-global-state.h
-@@ -138,6 +138,8 @@ BlockJob *commit_active_start(const char *job_id, BlockDriverState *bs,
-  * @granularity: The chosen granularity for the dirty bitmap.
-  * @buf_size: The amount of data that can be in flight at one time.
-  * @mode: Whether to collapse all images in the chain to the target.
-+ * @bitmap: Use this bitmap as a working bitmap, i.e. non-dirty clusters are
-+            only mirrored if written to later.
-  * @backing_mode: How to establish the target's backing chain after completion.
-  * @zero_target: Whether the target should be explicitly zero-initialized
-  * @on_source_error: The action to take upon error reading from the source.
-@@ -158,7 +160,8 @@ void mirror_start(const char *job_id, BlockDriverState *bs,
-                   BlockDriverState *target, const char *replaces,
-                   int creation_flags, int64_t speed,
-                   uint32_t granularity, int64_t buf_size,
--                  MirrorSyncMode mode, BlockMirrorBackingMode backing_mode,
-+                  MirrorSyncMode mode, BdrvDirtyBitmap *bitmap,
-+                  BlockMirrorBackingMode backing_mode,
-                   bool zero_target,
-                   BlockdevOnError on_source_error,
-                   BlockdevOnError on_target_error,
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 9d94129ea2..5ddebe71ee 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -2191,6 +2191,18 @@
- #     destination (all the disk, only the sectors allocated in the
- #     topmost image, or only new I/O).
- #
-+# @bitmap: The name of a bitmap to use as a working bitmap for
-+#     sync=full mode.  This argument must be not be present for other
-+#     sync modes and not at the same time as @granularity.  The
-+#     bitmap's granularity is used as the job's granularity.  When
-+#     the target does not support COW and is a diff image, i.e. one
-+#     that should only contain the delta and was not synced to
-+#     previously, the target's cluster size must not be larger than
-+#     the bitmap's granularity and copy-mode=write-blocking should not
-+#     be used. That is, because unaligned writes will lead to
-+#     allocated clusters with partial data in the target image!
-+#     (Since 9.1)
-+#
- # @granularity: granularity of the dirty bitmap, default is 64K if the
- #     image format doesn't have clusters, 4K if the clusters are
- #     smaller than that, else the cluster size.  Must be a power of 2
-@@ -2228,12 +2240,18 @@
- #     disappear from the query list without user intervention.
- #     Defaults to true.  (Since 3.1)
- #
-+# Features:
-+#
-+# @unstable: Member @bitmap is experimental.
-+#
- # Since: 1.3
- ##
- { 'struct': 'DriveMirror',
-   'data': { '*job-id': 'str', 'device': 'str', 'target': 'str',
-             '*format': 'str', '*node-name': 'str', '*replaces': 'str',
--            'sync': 'MirrorSyncMode', '*mode': 'NewImageMode',
-+            'sync': 'MirrorSyncMode',
-+            '*bitmap': { 'type': 'str', 'features': [ 'unstable' ] },
-+            '*mode': 'NewImageMode',
-             '*speed': 'int', '*granularity': 'uint32',
-             '*buf-size': 'int', '*on-source-error': 'BlockdevOnError',
-             '*on-target-error': 'BlockdevOnError',
-@@ -2513,6 +2531,18 @@
- #     destination (all the disk, only the sectors allocated in the
- #     topmost image, or only new I/O).
- #
-+# @bitmap: The name of a bitmap to use as a working bitmap for
-+#     sync=full mode.  This argument must be not be present for other
-+#     sync modes and not at the same time as @granularity.  The
-+#     bitmap's granularity is used as the job's granularity.  When
-+#     the target does not support COW and is a diff image, i.e. one
-+#     that should only contain the delta and was not synced to
-+#     previously, the target's cluster size must not be larger than
-+#     the bitmap's granularity and copy-mode=write-blocking should not
-+#     be used. That is, because unaligned writes will lead to
-+#     allocated clusters with partial data in the target image!
-+#     (Since 9.1)
-+#
- # @granularity: granularity of the dirty bitmap, default is 64K if the
- #     image format doesn't have clusters, 4K if the clusters are
- #     smaller than that, else the cluster size.  Must be a power of 2
-@@ -2548,6 +2578,10 @@
- #     disappear from the query list without user intervention.
- #     Defaults to true.  (Since 3.1)
- #
-+# Features:
-+#
-+# @unstable: Member @bitmap is experimental.
-+#
- # Since: 2.6
- #
- # Example:
-@@ -2562,6 +2596,7 @@
-   'data': { '*job-id': 'str', 'device': 'str', 'target': 'str',
-             '*replaces': 'str',
-             'sync': 'MirrorSyncMode',
-+            '*bitmap': { 'type': 'str', 'features': [ 'unstable' ] },
-             '*speed': 'int', '*granularity': 'uint32',
-             '*buf-size': 'int', '*on-source-error': 'BlockdevOnError',
-             '*on-target-error': 'BlockdevOnError',
-diff --git a/tests/unit/test-block-iothread.c b/tests/unit/test-block-iothread.c
-index 3766d5de6b..b64158aa11 100644
---- a/tests/unit/test-block-iothread.c
-+++ b/tests/unit/test-block-iothread.c
-@@ -755,7 +755,7 @@ static void test_propagate_mirror(void)
- 
-     /* Start a mirror job */
-     mirror_start("job0", src, target, NULL, JOB_DEFAULT, 0, 0, 0,
--                 MIRROR_SYNC_MODE_NONE, MIRROR_OPEN_BACKING_CHAIN, false,
-+                 MIRROR_SYNC_MODE_NONE, NULL, MIRROR_OPEN_BACKING_CHAIN, false,
-                  BLOCKDEV_ON_ERROR_REPORT, BLOCKDEV_ON_ERROR_REPORT,
-                  false, "filter_node", MIRROR_COPY_MODE_BACKGROUND,
-                  &error_abort);
++write -P0x65 0x0000000 0x10000
++{"return": ""}
++write -P0x77 0x00f8000 0x10000
++{"return": ""}
++write -P0x72 0x2008000 0x10000
++{"return": ""}
++write -P0x69 0x3fe0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 393216,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 6 dirty sectors; have 6. OK!
++
++--- Reference mirror #1 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_1", "sync": "full", "target": "ref_target_1"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_1"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_1", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_1", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_1 ---
++{}
++{}
++
++--- Prepare bitmap for sync mode 'never' ---
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-merge", "arguments": {"bitmaps": ["bitmap0"], "node": "drive0", "target": "mirror-bitmap"}}
++{"return": {}}
++
++--- Test mirror #1 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "mirror-bitmap", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_1", "sync": "full", "target": "mirror_target_1"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "mirror_1"}}
++{"return": {}}
++{"data": {"device": "mirror_1", "len": 393216, "offset": 393216, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"execute": "job-cancel", "arguments": {"id": "mirror_1"}}
++{"return": {}}
++{"data": {"id": "mirror_1", "type": "mirror"}, "event": "BLOCK_JOB_PENDING", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "mirror_1", "len": 393216, "offset": 393216, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_CANCELLED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++--- Detaching mirror_target_1 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'never' ---
++
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 393216,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 6 dirty sectors; have 6. OK!
++
++--- Reference mirror #2 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_2", "sync": "full", "target": "ref_target_2"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_2"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_2", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_2", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_2 ---
++{}
++{}
++
++--- Prepare bitmap for sync mode 'never' ---
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-merge", "arguments": {"bitmaps": ["bitmap0"], "node": "drive0", "target": "mirror-bitmap"}}
++{"return": {}}
++
++--- Test mirror #2 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "mirror-bitmap", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_2", "sync": "full", "target": "mirror_target_2"}}
++{"return": {}}
++--- Write #2 ---
++
++write -P0x74 0x0010000 0x10000
++{"return": ""}
++write -P0x69 0x00e8000 0x10000
++{"return": ""}
++write -P0x6e 0x2018000 0x10000
++{"return": ""}
++write -P0x67 0x3fe0000 0x20000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": true,
++        "count": 0,
++        "granularity": 65536,
++        "name": "mirror-bitmap",
++        "persistent": false,
++        "recording": false
++      },
++      {
++        "busy": false,
++        "count": 655360,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 10 dirty sectors; have 10. OK!
++
++--- Detaching mirror_target_2 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'never' ---
++
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++
++= Checking Bitmap bitmap0 =
++expecting 10 dirty sectors; have 10. OK!
++
++--- Write #3 ---
++
++write -P0xaa 0x0010000 0x30000
++{"return": ""}
++write -P0xbb 0x00d8000 0x10000
++{"return": ""}
++write -P0xcc 0x2028000 0x10000
++{"return": ""}
++write -P0xdd 0x3fc0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 983040,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 15 dirty sectors; have 15. OK!
++
++--- Reference mirror #3 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_3", "sync": "full", "target": "ref_target_3"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_3"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_3", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_3", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_3 ---
++{}
++{}
++
++--- Prepare bitmap for sync mode 'never' ---
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-merge", "arguments": {"bitmaps": ["bitmap0"], "node": "drive0", "target": "mirror-bitmap"}}
++{"return": {}}
++
++--- Test mirror #3 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "mirror-bitmap", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_3", "sync": "full", "target": "mirror_target_3"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "mirror_3"}}
++{"return": {}}
++{"data": {"device": "mirror_3", "len": 983040, "offset": 983040, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"execute": "job-finalize", "arguments": {"id": "mirror_3"}}
++{"return": {}}
++{"data": {"id": "mirror_3", "type": "mirror"}, "event": "BLOCK_JOB_PENDING", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "mirror_3", "len": 983040, "offset": 983040, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++--- Detaching mirror_target_3 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'never' ---
++
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 983040,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 15 dirty sectors; have 15. OK!
++
++--- Cleanup ---
++
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "bitmap0", "node": "drive0"}}
++{"return": {}}
++{
++  "bitmaps": {}
++}
++
++--- Verification ---
++
++qemu_img compare "TEST_DIR/PID-bsync1" "TEST_DIR/PID-fmirror1" ==> Identical, OK!
++qemu_img compare "TEST_DIR/PID-bsync2" "TEST_DIR/PID-fmirror2" ==> Mismatch, OK!
++qemu_img compare "TEST_DIR/PID-bsync3" "TEST_DIR/PID-fmirror3" ==> Identical, OK!
++qemu_img compare "TEST_DIR/PID-img" "TEST_DIR/PID-fmirror3" ==> Identical, OK!
++
++
++=== Bitmap Sync never with intermediate failure ===
++
++--- Preparing image & VM ---
++
++{"execute": "blockdev-add", "arguments": {"driver": "qcow2", "file": {"driver": "blkdebug", "image": {"driver": "file", "filename": "TEST_DIR/PID-img"}, "inject-error": [{"errno": 5, "event": "read_aio", "immediately": false, "once": true, "state": 3}, {"errno": 5, "event": "read_aio", "immediately": false, "once": true, "state": 4}], "set-state": [{"event": "flush_to_disk", "new-state": 2, "state": 1}, {"event": "read_aio", "new-state": 3, "state": 2}, {"event": "read_aio", "new-state": 4, "state": 3}]}, "node-name": "drive0"}}
++{"return": {}}
++
++--- Write #0 ---
++
++write -P0x49 0x0000000 0x10000
++{"return": ""}
++write -P0x6c 0x0100000 0x10000
++{"return": ""}
++write -P0x6f 0x2000000 0x10000
++{"return": ""}
++write -P0x76 0x3ff0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {}
++}
++
++--- Reference mirror #0 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_0", "sync": "full", "target": "ref_target_0"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_0"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_0", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_0", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_0 ---
++{}
++{}
++
++--- Add Bitmap ---
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "bitmap0", "node": "drive0"}}
++{"return": {}}
++
++--- Write #1 ---
++
++write -P0x65 0x0000000 0x10000
++{"return": ""}
++write -P0x77 0x00f8000 0x10000
++{"return": ""}
++write -P0x72 0x2008000 0x10000
++{"return": ""}
++write -P0x69 0x3fe0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 393216,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 6 dirty sectors; have 6. OK!
++
++--- Reference mirror #1 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_1", "sync": "full", "target": "ref_target_1"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_1"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_1", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_1", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_1 ---
++{}
++{}
++
++{"return": ""}
++
++--- Prepare bitmap for sync mode 'never' ---
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-merge", "arguments": {"bitmaps": ["bitmap0"], "node": "drive0", "target": "mirror-bitmap"}}
++{"return": {}}
++
++--- Test mirror #1 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "mirror-bitmap", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_1", "sync": "full", "target": "mirror_target_1"}}
++{"return": {}}
++{"data": {"action": "report", "device": "mirror_1", "operation": "read"}, "event": "BLOCK_JOB_ERROR", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"action": "report", "device": "mirror_1", "operation": "read"}, "event": "BLOCK_JOB_ERROR", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "mirror_1", "error": "Input/output error", "len": 393216, "offset": 65536, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++--- Detaching mirror_target_1 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'never' ---
++
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 393216,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 6 dirty sectors; have 6. OK!
++
++--- Reference mirror #2 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_2", "sync": "full", "target": "ref_target_2"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_2"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_2", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_2", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_2 ---
++{}
++{}
++
++--- Prepare bitmap for sync mode 'never' ---
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-merge", "arguments": {"bitmaps": ["bitmap0"], "node": "drive0", "target": "mirror-bitmap"}}
++{"return": {}}
++
++--- Test mirror #2 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "mirror-bitmap", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_2", "sync": "full", "target": "mirror_target_2"}}
++{"return": {}}
++--- Write #2 ---
++
++write -P0x74 0x0010000 0x10000
++{"return": ""}
++write -P0x69 0x00e8000 0x10000
++{"return": ""}
++write -P0x6e 0x2018000 0x10000
++{"return": ""}
++write -P0x67 0x3fe0000 0x20000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": true,
++        "count": 0,
++        "granularity": 65536,
++        "name": "mirror-bitmap",
++        "persistent": false,
++        "recording": false
++      },
++      {
++        "busy": false,
++        "count": 655360,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 10 dirty sectors; have 10. OK!
++
++--- Detaching mirror_target_2 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'never' ---
++
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++
++= Checking Bitmap bitmap0 =
++expecting 10 dirty sectors; have 10. OK!
++
++--- Write #3 ---
++
++write -P0xaa 0x0010000 0x30000
++{"return": ""}
++write -P0xbb 0x00d8000 0x10000
++{"return": ""}
++write -P0xcc 0x2028000 0x10000
++{"return": ""}
++write -P0xdd 0x3fc0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 983040,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 15 dirty sectors; have 15. OK!
++
++--- Reference mirror #3 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_3", "sync": "full", "target": "ref_target_3"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_3"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_3", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_3", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_3 ---
++{}
++{}
++
++--- Prepare bitmap for sync mode 'never' ---
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-merge", "arguments": {"bitmaps": ["bitmap0"], "node": "drive0", "target": "mirror-bitmap"}}
++{"return": {}}
++
++--- Test mirror #3 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "mirror-bitmap", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_3", "sync": "full", "target": "mirror_target_3"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "mirror_3"}}
++{"return": {}}
++{"data": {"device": "mirror_3", "len": 983040, "offset": 983040, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"execute": "job-finalize", "arguments": {"id": "mirror_3"}}
++{"return": {}}
++{"data": {"id": "mirror_3", "type": "mirror"}, "event": "BLOCK_JOB_PENDING", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "mirror_3", "len": 983040, "offset": 983040, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++--- Detaching mirror_target_3 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'never' ---
++
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 983040,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 15 dirty sectors; have 15. OK!
++
++--- Cleanup ---
++
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "bitmap0", "node": "drive0"}}
++{"return": {}}
++{
++  "bitmaps": {}
++}
++
++--- Verification ---
++
++qemu_img compare "TEST_DIR/PID-bsync1" "TEST_DIR/PID-fmirror1" ==> Mismatch, OK!
++qemu_img compare "TEST_DIR/PID-bsync2" "TEST_DIR/PID-fmirror2" ==> Mismatch, OK!
++qemu_img compare "TEST_DIR/PID-bsync3" "TEST_DIR/PID-fmirror3" ==> Identical, OK!
++qemu_img compare "TEST_DIR/PID-img" "TEST_DIR/PID-fmirror3" ==> Identical, OK!
++
++
++=== Bitmap Sync never without failure ===
++
++--- Preparing image & VM ---
++
++{"execute": "blockdev-add", "arguments": {"driver": "qcow2", "file": {"driver": "file", "filename": "TEST_DIR/PID-img"}, "node-name": "drive0"}}
++{"return": {}}
++
++--- Write #0 ---
++
++write -P0x49 0x0000000 0x10000
++{"return": ""}
++write -P0x6c 0x0100000 0x10000
++{"return": ""}
++write -P0x6f 0x2000000 0x10000
++{"return": ""}
++write -P0x76 0x3ff0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {}
++}
++
++--- Reference mirror #0 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_0", "sync": "full", "target": "ref_target_0"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_0"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_0", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_0", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_0 ---
++{}
++{}
++
++--- Add Bitmap ---
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "bitmap0", "node": "drive0"}}
++{"return": {}}
++
++--- Write #1 ---
++
++write -P0x65 0x0000000 0x10000
++{"return": ""}
++write -P0x77 0x00f8000 0x10000
++{"return": ""}
++write -P0x72 0x2008000 0x10000
++{"return": ""}
++write -P0x69 0x3fe0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 393216,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 6 dirty sectors; have 6. OK!
++
++--- Reference mirror #1 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_1", "sync": "full", "target": "ref_target_1"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_1"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_1", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_1", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_1 ---
++{}
++{}
++
++--- Prepare bitmap for sync mode 'never' ---
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-merge", "arguments": {"bitmaps": ["bitmap0"], "node": "drive0", "target": "mirror-bitmap"}}
++{"return": {}}
++
++--- Test mirror #1 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "mirror-bitmap", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_1", "sync": "full", "target": "mirror_target_1"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "mirror_1"}}
++{"return": {}}
++{"data": {"device": "mirror_1", "len": 393216, "offset": 393216, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"execute": "job-finalize", "arguments": {"id": "mirror_1"}}
++{"return": {}}
++{"data": {"id": "mirror_1", "type": "mirror"}, "event": "BLOCK_JOB_PENDING", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "mirror_1", "len": 393216, "offset": 393216, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++--- Detaching mirror_target_1 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'never' ---
++
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 393216,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 6 dirty sectors; have 6. OK!
++
++--- Reference mirror #2 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_2", "sync": "full", "target": "ref_target_2"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_2"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_2", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_2", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_2 ---
++{}
++{}
++
++--- Prepare bitmap for sync mode 'never' ---
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-merge", "arguments": {"bitmaps": ["bitmap0"], "node": "drive0", "target": "mirror-bitmap"}}
++{"return": {}}
++
++--- Test mirror #2 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "mirror-bitmap", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_2", "sync": "full", "target": "mirror_target_2"}}
++{"return": {}}
++--- Write #2 ---
++
++write -P0x74 0x0010000 0x10000
++{"return": ""}
++write -P0x69 0x00e8000 0x10000
++{"return": ""}
++write -P0x6e 0x2018000 0x10000
++{"return": ""}
++write -P0x67 0x3fe0000 0x20000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": true,
++        "count": 0,
++        "granularity": 65536,
++        "name": "mirror-bitmap",
++        "persistent": false,
++        "recording": false
++      },
++      {
++        "busy": false,
++        "count": 655360,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 10 dirty sectors; have 10. OK!
++
++--- Detaching mirror_target_2 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'never' ---
++
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++
++= Checking Bitmap bitmap0 =
++expecting 10 dirty sectors; have 10. OK!
++
++--- Write #3 ---
++
++write -P0xaa 0x0010000 0x30000
++{"return": ""}
++write -P0xbb 0x00d8000 0x10000
++{"return": ""}
++write -P0xcc 0x2028000 0x10000
++{"return": ""}
++write -P0xdd 0x3fc0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 983040,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 15 dirty sectors; have 15. OK!
++
++--- Reference mirror #3 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_3", "sync": "full", "target": "ref_target_3"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_3"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_3", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_3", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_3 ---
++{}
++{}
++
++--- Prepare bitmap for sync mode 'never' ---
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-merge", "arguments": {"bitmaps": ["bitmap0"], "node": "drive0", "target": "mirror-bitmap"}}
++{"return": {}}
++
++--- Test mirror #3 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "mirror-bitmap", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_3", "sync": "full", "target": "mirror_target_3"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "mirror_3"}}
++{"return": {}}
++{"data": {"device": "mirror_3", "len": 983040, "offset": 983040, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"execute": "job-finalize", "arguments": {"id": "mirror_3"}}
++{"return": {}}
++{"data": {"id": "mirror_3", "type": "mirror"}, "event": "BLOCK_JOB_PENDING", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "mirror_3", "len": 983040, "offset": 983040, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++--- Detaching mirror_target_3 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'never' ---
++
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 983040,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 15 dirty sectors; have 15. OK!
++
++--- Cleanup ---
++
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "bitmap0", "node": "drive0"}}
++{"return": {}}
++{
++  "bitmaps": {}
++}
++
++--- Verification ---
++
++qemu_img compare "TEST_DIR/PID-bsync1" "TEST_DIR/PID-fmirror1" ==> Identical, OK!
++qemu_img compare "TEST_DIR/PID-bsync2" "TEST_DIR/PID-fmirror2" ==> Mismatch, OK!
++qemu_img compare "TEST_DIR/PID-bsync3" "TEST_DIR/PID-fmirror3" ==> Identical, OK!
++qemu_img compare "TEST_DIR/PID-img" "TEST_DIR/PID-fmirror3" ==> Identical, OK!
++
++
++=== Bitmap Sync on-success with simulated failure ===
++
++--- Preparing image & VM ---
++
++{"execute": "blockdev-add", "arguments": {"driver": "qcow2", "file": {"driver": "file", "filename": "TEST_DIR/PID-img"}, "node-name": "drive0"}}
++{"return": {}}
++
++--- Write #0 ---
++
++write -P0x49 0x0000000 0x10000
++{"return": ""}
++write -P0x6c 0x0100000 0x10000
++{"return": ""}
++write -P0x6f 0x2000000 0x10000
++{"return": ""}
++write -P0x76 0x3ff0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {}
++}
++
++--- Reference mirror #0 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_0", "sync": "full", "target": "ref_target_0"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_0"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_0", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_0", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_0 ---
++{}
++{}
++
++--- Add Bitmap ---
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "bitmap0", "node": "drive0"}}
++{"return": {}}
++
++--- Write #1 ---
++
++write -P0x65 0x0000000 0x10000
++{"return": ""}
++write -P0x77 0x00f8000 0x10000
++{"return": ""}
++write -P0x72 0x2008000 0x10000
++{"return": ""}
++write -P0x69 0x3fe0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 393216,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 6 dirty sectors; have 6. OK!
++
++--- Reference mirror #1 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_1", "sync": "full", "target": "ref_target_1"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_1"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_1", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_1", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_1 ---
++{}
++{}
++
++--- Prepare bitmap for sync mode 'on-success' ---
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-merge", "arguments": {"bitmaps": ["bitmap0"], "node": "drive0", "target": "mirror-bitmap"}}
++{"return": {}}
++
++--- Test mirror #1 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "mirror-bitmap", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_1", "sync": "full", "target": "mirror_target_1"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "mirror_1"}}
++{"return": {}}
++{"data": {"device": "mirror_1", "len": 393216, "offset": 393216, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"execute": "job-cancel", "arguments": {"id": "mirror_1"}}
++{"return": {}}
++{"data": {"id": "mirror_1", "type": "mirror"}, "event": "BLOCK_JOB_PENDING", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "mirror_1", "len": 393216, "offset": 393216, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_CANCELLED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++--- Detaching mirror_target_1 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'on-success' ---
++
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 393216,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 6 dirty sectors; have 6. OK!
++
++--- Reference mirror #2 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_2", "sync": "full", "target": "ref_target_2"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_2"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_2", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_2", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_2 ---
++{}
++{}
++
++--- Prepare bitmap for sync mode 'on-success' ---
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-merge", "arguments": {"bitmaps": ["bitmap0"], "node": "drive0", "target": "mirror-bitmap"}}
++{"return": {}}
++
++--- Test mirror #2 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "mirror-bitmap", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_2", "sync": "full", "target": "mirror_target_2"}}
++{"return": {}}
++--- Write #2 ---
++
++write -P0x74 0x0010000 0x10000
++{"return": ""}
++write -P0x69 0x00e8000 0x10000
++{"return": ""}
++write -P0x6e 0x2018000 0x10000
++{"return": ""}
++write -P0x67 0x3fe0000 0x20000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": true,
++        "count": 0,
++        "granularity": 65536,
++        "name": "mirror-bitmap",
++        "persistent": false,
++        "recording": false
++      },
++      {
++        "busy": false,
++        "count": 655360,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 10 dirty sectors; have 10. OK!
++
++--- Detaching mirror_target_2 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'on-success' ---
++
++{"execute": "block-dirty-bitmap-clear", "arguments": {"name": "bitmap0", "node": "drive0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-merge", "arguments": {"bitmaps": ["mirror-bitmap"], "node": "drive0", "target": "bitmap0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++
++= Checking Bitmap bitmap0 =
++expecting 0 dirty sectors; have 0. OK!
++
++--- Write #3 ---
++
++write -P0xaa 0x0010000 0x30000
++{"return": ""}
++write -P0xbb 0x00d8000 0x10000
++{"return": ""}
++write -P0xcc 0x2028000 0x10000
++{"return": ""}
++write -P0xdd 0x3fc0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 524288,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 8 dirty sectors; have 8. OK!
++
++--- Reference mirror #3 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_3", "sync": "full", "target": "ref_target_3"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_3"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_3", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_3", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_3 ---
++{}
++{}
++
++--- Prepare bitmap for sync mode 'on-success' ---
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-merge", "arguments": {"bitmaps": ["bitmap0"], "node": "drive0", "target": "mirror-bitmap"}}
++{"return": {}}
++
++--- Test mirror #3 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "mirror-bitmap", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_3", "sync": "full", "target": "mirror_target_3"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "mirror_3"}}
++{"return": {}}
++{"data": {"device": "mirror_3", "len": 524288, "offset": 524288, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"execute": "job-finalize", "arguments": {"id": "mirror_3"}}
++{"return": {}}
++{"data": {"id": "mirror_3", "type": "mirror"}, "event": "BLOCK_JOB_PENDING", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "mirror_3", "len": 524288, "offset": 524288, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++--- Detaching mirror_target_3 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'on-success' ---
++
++{"execute": "block-dirty-bitmap-clear", "arguments": {"name": "bitmap0", "node": "drive0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-merge", "arguments": {"bitmaps": ["mirror-bitmap"], "node": "drive0", "target": "bitmap0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 0,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 0 dirty sectors; have 0. OK!
++
++--- Cleanup ---
++
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "bitmap0", "node": "drive0"}}
++{"return": {}}
++{
++  "bitmaps": {}
++}
++
++--- Verification ---
++
++qemu_img compare "TEST_DIR/PID-bsync1" "TEST_DIR/PID-fmirror1" ==> Identical, OK!
++qemu_img compare "TEST_DIR/PID-bsync2" "TEST_DIR/PID-fmirror2" ==> Mismatch, OK!
++qemu_img compare "TEST_DIR/PID-bsync3" "TEST_DIR/PID-fmirror3" ==> Identical, OK!
++qemu_img compare "TEST_DIR/PID-img" "TEST_DIR/PID-fmirror3" ==> Identical, OK!
++
++
++=== Bitmap Sync on-success with intermediate failure ===
++
++--- Preparing image & VM ---
++
++{"execute": "blockdev-add", "arguments": {"driver": "qcow2", "file": {"driver": "blkdebug", "image": {"driver": "file", "filename": "TEST_DIR/PID-img"}, "inject-error": [{"errno": 5, "event": "read_aio", "immediately": false, "once": true, "state": 3}, {"errno": 5, "event": "read_aio", "immediately": false, "once": true, "state": 4}], "set-state": [{"event": "flush_to_disk", "new-state": 2, "state": 1}, {"event": "read_aio", "new-state": 3, "state": 2}, {"event": "read_aio", "new-state": 4, "state": 3}]}, "node-name": "drive0"}}
++{"return": {}}
++
++--- Write #0 ---
++
++write -P0x49 0x0000000 0x10000
++{"return": ""}
++write -P0x6c 0x0100000 0x10000
++{"return": ""}
++write -P0x6f 0x2000000 0x10000
++{"return": ""}
++write -P0x76 0x3ff0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {}
++}
++
++--- Reference mirror #0 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_0", "sync": "full", "target": "ref_target_0"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_0"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_0", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_0", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_0 ---
++{}
++{}
++
++--- Add Bitmap ---
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "bitmap0", "node": "drive0"}}
++{"return": {}}
++
++--- Write #1 ---
++
++write -P0x65 0x0000000 0x10000
++{"return": ""}
++write -P0x77 0x00f8000 0x10000
++{"return": ""}
++write -P0x72 0x2008000 0x10000
++{"return": ""}
++write -P0x69 0x3fe0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 393216,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 6 dirty sectors; have 6. OK!
++
++--- Reference mirror #1 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_1", "sync": "full", "target": "ref_target_1"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_1"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_1", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_1", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_1 ---
++{}
++{}
++
++{"return": ""}
++
++--- Prepare bitmap for sync mode 'on-success' ---
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-merge", "arguments": {"bitmaps": ["bitmap0"], "node": "drive0", "target": "mirror-bitmap"}}
++{"return": {}}
++
++--- Test mirror #1 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "mirror-bitmap", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_1", "sync": "full", "target": "mirror_target_1"}}
++{"return": {}}
++{"data": {"action": "report", "device": "mirror_1", "operation": "read"}, "event": "BLOCK_JOB_ERROR", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"action": "report", "device": "mirror_1", "operation": "read"}, "event": "BLOCK_JOB_ERROR", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "mirror_1", "error": "Input/output error", "len": 393216, "offset": 65536, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++--- Detaching mirror_target_1 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'on-success' ---
++
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 393216,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 6 dirty sectors; have 6. OK!
++
++--- Reference mirror #2 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_2", "sync": "full", "target": "ref_target_2"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_2"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_2", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_2", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_2 ---
++{}
++{}
++
++--- Prepare bitmap for sync mode 'on-success' ---
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-merge", "arguments": {"bitmaps": ["bitmap0"], "node": "drive0", "target": "mirror-bitmap"}}
++{"return": {}}
++
++--- Test mirror #2 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "mirror-bitmap", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_2", "sync": "full", "target": "mirror_target_2"}}
++{"return": {}}
++--- Write #2 ---
++
++write -P0x74 0x0010000 0x10000
++{"return": ""}
++write -P0x69 0x00e8000 0x10000
++{"return": ""}
++write -P0x6e 0x2018000 0x10000
++{"return": ""}
++write -P0x67 0x3fe0000 0x20000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": true,
++        "count": 0,
++        "granularity": 65536,
++        "name": "mirror-bitmap",
++        "persistent": false,
++        "recording": false
++      },
++      {
++        "busy": false,
++        "count": 655360,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 10 dirty sectors; have 10. OK!
++
++--- Detaching mirror_target_2 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'on-success' ---
++
++{"execute": "block-dirty-bitmap-clear", "arguments": {"name": "bitmap0", "node": "drive0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-merge", "arguments": {"bitmaps": ["mirror-bitmap"], "node": "drive0", "target": "bitmap0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++
++= Checking Bitmap bitmap0 =
++expecting 0 dirty sectors; have 0. OK!
++
++--- Write #3 ---
++
++write -P0xaa 0x0010000 0x30000
++{"return": ""}
++write -P0xbb 0x00d8000 0x10000
++{"return": ""}
++write -P0xcc 0x2028000 0x10000
++{"return": ""}
++write -P0xdd 0x3fc0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 524288,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 8 dirty sectors; have 8. OK!
++
++--- Reference mirror #3 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_3", "sync": "full", "target": "ref_target_3"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_3"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_3", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_3", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_3 ---
++{}
++{}
++
++--- Prepare bitmap for sync mode 'on-success' ---
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-merge", "arguments": {"bitmaps": ["bitmap0"], "node": "drive0", "target": "mirror-bitmap"}}
++{"return": {}}
++
++--- Test mirror #3 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "mirror-bitmap", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_3", "sync": "full", "target": "mirror_target_3"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "mirror_3"}}
++{"return": {}}
++{"data": {"device": "mirror_3", "len": 524288, "offset": 524288, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"execute": "job-finalize", "arguments": {"id": "mirror_3"}}
++{"return": {}}
++{"data": {"id": "mirror_3", "type": "mirror"}, "event": "BLOCK_JOB_PENDING", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "mirror_3", "len": 524288, "offset": 524288, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++--- Detaching mirror_target_3 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'on-success' ---
++
++{"execute": "block-dirty-bitmap-clear", "arguments": {"name": "bitmap0", "node": "drive0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-merge", "arguments": {"bitmaps": ["mirror-bitmap"], "node": "drive0", "target": "bitmap0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 0,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 0 dirty sectors; have 0. OK!
++
++--- Cleanup ---
++
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "bitmap0", "node": "drive0"}}
++{"return": {}}
++{
++  "bitmaps": {}
++}
++
++--- Verification ---
++
++qemu_img compare "TEST_DIR/PID-bsync1" "TEST_DIR/PID-fmirror1" ==> Mismatch, OK!
++qemu_img compare "TEST_DIR/PID-bsync2" "TEST_DIR/PID-fmirror2" ==> Mismatch, OK!
++qemu_img compare "TEST_DIR/PID-bsync3" "TEST_DIR/PID-fmirror3" ==> Identical, OK!
++qemu_img compare "TEST_DIR/PID-img" "TEST_DIR/PID-fmirror3" ==> Identical, OK!
++
++
++=== Bitmap Sync on-success without failure ===
++
++--- Preparing image & VM ---
++
++{"execute": "blockdev-add", "arguments": {"driver": "qcow2", "file": {"driver": "file", "filename": "TEST_DIR/PID-img"}, "node-name": "drive0"}}
++{"return": {}}
++
++--- Write #0 ---
++
++write -P0x49 0x0000000 0x10000
++{"return": ""}
++write -P0x6c 0x0100000 0x10000
++{"return": ""}
++write -P0x6f 0x2000000 0x10000
++{"return": ""}
++write -P0x76 0x3ff0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {}
++}
++
++--- Reference mirror #0 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_0", "sync": "full", "target": "ref_target_0"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_0"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_0", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_0", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_0 ---
++{}
++{}
++
++--- Add Bitmap ---
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "bitmap0", "node": "drive0"}}
++{"return": {}}
++
++--- Write #1 ---
++
++write -P0x65 0x0000000 0x10000
++{"return": ""}
++write -P0x77 0x00f8000 0x10000
++{"return": ""}
++write -P0x72 0x2008000 0x10000
++{"return": ""}
++write -P0x69 0x3fe0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 393216,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 6 dirty sectors; have 6. OK!
++
++--- Reference mirror #1 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_1", "sync": "full", "target": "ref_target_1"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_1"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_1", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_1", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_1 ---
++{}
++{}
++
++--- Prepare bitmap for sync mode 'on-success' ---
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-merge", "arguments": {"bitmaps": ["bitmap0"], "node": "drive0", "target": "mirror-bitmap"}}
++{"return": {}}
++
++--- Test mirror #1 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "mirror-bitmap", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_1", "sync": "full", "target": "mirror_target_1"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "mirror_1"}}
++{"return": {}}
++{"data": {"device": "mirror_1", "len": 393216, "offset": 393216, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"execute": "job-finalize", "arguments": {"id": "mirror_1"}}
++{"return": {}}
++{"data": {"id": "mirror_1", "type": "mirror"}, "event": "BLOCK_JOB_PENDING", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "mirror_1", "len": 393216, "offset": 393216, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++--- Detaching mirror_target_1 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'on-success' ---
++
++{"execute": "block-dirty-bitmap-clear", "arguments": {"name": "bitmap0", "node": "drive0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-merge", "arguments": {"bitmaps": ["mirror-bitmap"], "node": "drive0", "target": "bitmap0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 0,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 0 dirty sectors; have 0. OK!
++
++--- Reference mirror #2 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_2", "sync": "full", "target": "ref_target_2"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_2"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_2", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_2", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_2 ---
++{}
++{}
++
++--- Prepare bitmap for sync mode 'on-success' ---
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-merge", "arguments": {"bitmaps": ["bitmap0"], "node": "drive0", "target": "mirror-bitmap"}}
++{"return": {}}
++
++--- Test mirror #2 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "mirror-bitmap", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_2", "sync": "full", "target": "mirror_target_2"}}
++{"return": {}}
++--- Write #2 ---
++
++write -P0x74 0x0010000 0x10000
++{"return": ""}
++write -P0x69 0x00e8000 0x10000
++{"return": ""}
++write -P0x6e 0x2018000 0x10000
++{"return": ""}
++write -P0x67 0x3fe0000 0x20000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": true,
++        "count": 0,
++        "granularity": 65536,
++        "name": "mirror-bitmap",
++        "persistent": false,
++        "recording": false
++      },
++      {
++        "busy": false,
++        "count": 458752,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 7 dirty sectors; have 7. OK!
++
++--- Detaching mirror_target_2 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'on-success' ---
++
++{"execute": "block-dirty-bitmap-clear", "arguments": {"name": "bitmap0", "node": "drive0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-merge", "arguments": {"bitmaps": ["mirror-bitmap"], "node": "drive0", "target": "bitmap0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++
++= Checking Bitmap bitmap0 =
++expecting 0 dirty sectors; have 0. OK!
++
++--- Write #3 ---
++
++write -P0xaa 0x0010000 0x30000
++{"return": ""}
++write -P0xbb 0x00d8000 0x10000
++{"return": ""}
++write -P0xcc 0x2028000 0x10000
++{"return": ""}
++write -P0xdd 0x3fc0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 524288,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 8 dirty sectors; have 8. OK!
++
++--- Reference mirror #3 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_3", "sync": "full", "target": "ref_target_3"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_3"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_3", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_3", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_3 ---
++{}
++{}
++
++--- Prepare bitmap for sync mode 'on-success' ---
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-merge", "arguments": {"bitmaps": ["bitmap0"], "node": "drive0", "target": "mirror-bitmap"}}
++{"return": {}}
++
++--- Test mirror #3 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "mirror-bitmap", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_3", "sync": "full", "target": "mirror_target_3"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "mirror_3"}}
++{"return": {}}
++{"data": {"device": "mirror_3", "len": 524288, "offset": 524288, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"execute": "job-finalize", "arguments": {"id": "mirror_3"}}
++{"return": {}}
++{"data": {"id": "mirror_3", "type": "mirror"}, "event": "BLOCK_JOB_PENDING", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "mirror_3", "len": 524288, "offset": 524288, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++--- Detaching mirror_target_3 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'on-success' ---
++
++{"execute": "block-dirty-bitmap-clear", "arguments": {"name": "bitmap0", "node": "drive0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-merge", "arguments": {"bitmaps": ["mirror-bitmap"], "node": "drive0", "target": "bitmap0"}}
++{"return": {}}
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "mirror-bitmap", "node": "drive0"}}
++{"return": {}}
++
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 0,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 0 dirty sectors; have 0. OK!
++
++--- Cleanup ---
++
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "bitmap0", "node": "drive0"}}
++{"return": {}}
++{
++  "bitmaps": {}
++}
++
++--- Verification ---
++
++qemu_img compare "TEST_DIR/PID-bsync1" "TEST_DIR/PID-fmirror1" ==> Identical, OK!
++qemu_img compare "TEST_DIR/PID-bsync2" "TEST_DIR/PID-fmirror2" ==> Mismatch, OK!
++qemu_img compare "TEST_DIR/PID-bsync3" "TEST_DIR/PID-fmirror3" ==> Identical, OK!
++qemu_img compare "TEST_DIR/PID-img" "TEST_DIR/PID-fmirror3" ==> Identical, OK!
++
++
++=== Bitmap Sync always with simulated failure ===
++
++--- Preparing image & VM ---
++
++{"execute": "blockdev-add", "arguments": {"driver": "qcow2", "file": {"driver": "file", "filename": "TEST_DIR/PID-img"}, "node-name": "drive0"}}
++{"return": {}}
++
++--- Write #0 ---
++
++write -P0x49 0x0000000 0x10000
++{"return": ""}
++write -P0x6c 0x0100000 0x10000
++{"return": ""}
++write -P0x6f 0x2000000 0x10000
++{"return": ""}
++write -P0x76 0x3ff0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {}
++}
++
++--- Reference mirror #0 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_0", "sync": "full", "target": "ref_target_0"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_0"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_0", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_0", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_0 ---
++{}
++{}
++
++--- Add Bitmap ---
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "bitmap0", "node": "drive0"}}
++{"return": {}}
++
++--- Write #1 ---
++
++write -P0x65 0x0000000 0x10000
++{"return": ""}
++write -P0x77 0x00f8000 0x10000
++{"return": ""}
++write -P0x72 0x2008000 0x10000
++{"return": ""}
++write -P0x69 0x3fe0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 393216,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 6 dirty sectors; have 6. OK!
++
++--- Reference mirror #1 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_1", "sync": "full", "target": "ref_target_1"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_1"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_1", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_1", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_1 ---
++{}
++{}
++
++--- Prepare bitmap for sync mode 'always' ---
++
++passing current bitmap 'bitmap0'
++
++--- Test mirror #1 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "bitmap0", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_1", "sync": "full", "target": "mirror_target_1"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "mirror_1"}}
++{"return": {}}
++{"data": {"device": "mirror_1", "len": 393216, "offset": 393216, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"execute": "job-cancel", "arguments": {"id": "mirror_1"}}
++{"return": {}}
++{"data": {"id": "mirror_1", "type": "mirror"}, "event": "BLOCK_JOB_PENDING", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "mirror_1", "len": 393216, "offset": 393216, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_CANCELLED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++--- Detaching mirror_target_1 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'always' ---
++
++nothing to do
++
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 0,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 0 dirty sectors; have 0. OK!
++
++--- Reference mirror #2 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_2", "sync": "full", "target": "ref_target_2"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_2"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_2", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_2", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_2 ---
++{}
++{}
++
++--- Prepare bitmap for sync mode 'always' ---
++
++passing current bitmap 'bitmap0'
++
++--- Test mirror #2 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "bitmap0", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_2", "sync": "full", "target": "mirror_target_2"}}
++{"return": {}}
++--- Write #2 ---
++
++write -P0x74 0x0010000 0x10000
++{"return": ""}
++write -P0x69 0x00e8000 0x10000
++{"return": ""}
++write -P0x6e 0x2018000 0x10000
++{"return": ""}
++write -P0x67 0x3fe0000 0x20000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": true,
++        "count": 0,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": false
++      }
++    ]
++  }
++}
++
++--- Detaching mirror_target_2 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'always' ---
++
++nothing to do
++
++= Checking Bitmap bitmap0 =
++expecting 0 dirty sectors; have 0. OK!
++
++--- Write #3 ---
++
++write -P0xaa 0x0010000 0x30000
++{"return": ""}
++write -P0xbb 0x00d8000 0x10000
++{"return": ""}
++write -P0xcc 0x2028000 0x10000
++{"return": ""}
++write -P0xdd 0x3fc0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 524288,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 8 dirty sectors; have 8. OK!
++
++--- Reference mirror #3 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_3", "sync": "full", "target": "ref_target_3"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_3"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_3", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_3", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_3 ---
++{}
++{}
++
++--- Prepare bitmap for sync mode 'always' ---
++
++passing current bitmap 'bitmap0'
++
++--- Test mirror #3 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "bitmap0", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_3", "sync": "full", "target": "mirror_target_3"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "mirror_3"}}
++{"return": {}}
++{"data": {"device": "mirror_3", "len": 524288, "offset": 524288, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"execute": "job-finalize", "arguments": {"id": "mirror_3"}}
++{"return": {}}
++{"data": {"id": "mirror_3", "type": "mirror"}, "event": "BLOCK_JOB_PENDING", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "mirror_3", "len": 524288, "offset": 524288, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++--- Detaching mirror_target_3 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'always' ---
++
++nothing to do
++
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 0,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 0 dirty sectors; have 0. OK!
++
++--- Cleanup ---
++
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "bitmap0", "node": "drive0"}}
++{"return": {}}
++{
++  "bitmaps": {}
++}
++
++--- Verification ---
++
++qemu_img compare "TEST_DIR/PID-bsync1" "TEST_DIR/PID-fmirror1" ==> Identical, OK!
++qemu_img compare "TEST_DIR/PID-bsync2" "TEST_DIR/PID-fmirror2" ==> Mismatch, OK!
++qemu_img compare "TEST_DIR/PID-bsync3" "TEST_DIR/PID-fmirror3" ==> Identical, OK!
++qemu_img compare "TEST_DIR/PID-img" "TEST_DIR/PID-fmirror3" ==> Identical, OK!
++
++
++=== Bitmap Sync always with intermediate failure ===
++
++--- Preparing image & VM ---
++
++{"execute": "blockdev-add", "arguments": {"driver": "qcow2", "file": {"driver": "blkdebug", "image": {"driver": "file", "filename": "TEST_DIR/PID-img"}, "inject-error": [{"errno": 5, "event": "read_aio", "immediately": false, "once": true, "state": 3}, {"errno": 5, "event": "read_aio", "immediately": false, "once": true, "state": 4}], "set-state": [{"event": "flush_to_disk", "new-state": 2, "state": 1}, {"event": "read_aio", "new-state": 3, "state": 2}, {"event": "read_aio", "new-state": 4, "state": 3}]}, "node-name": "drive0"}}
++{"return": {}}
++
++--- Write #0 ---
++
++write -P0x49 0x0000000 0x10000
++{"return": ""}
++write -P0x6c 0x0100000 0x10000
++{"return": ""}
++write -P0x6f 0x2000000 0x10000
++{"return": ""}
++write -P0x76 0x3ff0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {}
++}
++
++--- Reference mirror #0 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_0", "sync": "full", "target": "ref_target_0"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_0"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_0", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_0", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_0 ---
++{}
++{}
++
++--- Add Bitmap ---
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "bitmap0", "node": "drive0"}}
++{"return": {}}
++
++--- Write #1 ---
++
++write -P0x65 0x0000000 0x10000
++{"return": ""}
++write -P0x77 0x00f8000 0x10000
++{"return": ""}
++write -P0x72 0x2008000 0x10000
++{"return": ""}
++write -P0x69 0x3fe0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 393216,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 6 dirty sectors; have 6. OK!
++
++--- Reference mirror #1 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_1", "sync": "full", "target": "ref_target_1"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_1"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_1", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_1", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_1 ---
++{}
++{}
++
++{"return": ""}
++
++--- Prepare bitmap for sync mode 'always' ---
++
++passing current bitmap 'bitmap0'
++
++--- Test mirror #1 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "bitmap0", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_1", "sync": "full", "target": "mirror_target_1"}}
++{"return": {}}
++{"data": {"action": "report", "device": "mirror_1", "operation": "read"}, "event": "BLOCK_JOB_ERROR", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"action": "report", "device": "mirror_1", "operation": "read"}, "event": "BLOCK_JOB_ERROR", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "mirror_1", "error": "Input/output error", "len": 393216, "offset": 65536, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++--- Detaching mirror_target_1 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'always' ---
++
++nothing to do
++
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 327680,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 5 dirty sectors; have 5. OK!
++
++--- Reference mirror #2 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_2", "sync": "full", "target": "ref_target_2"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_2"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_2", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_2", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_2 ---
++{}
++{}
++
++--- Prepare bitmap for sync mode 'always' ---
++
++passing current bitmap 'bitmap0'
++
++--- Test mirror #2 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "bitmap0", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_2", "sync": "full", "target": "mirror_target_2"}}
++{"return": {}}
++--- Write #2 ---
++
++write -P0x74 0x0010000 0x10000
++{"return": ""}
++write -P0x69 0x00e8000 0x10000
++{"return": ""}
++write -P0x6e 0x2018000 0x10000
++{"return": ""}
++write -P0x67 0x3fe0000 0x20000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": true,
++        "count": 0,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": false
++      }
++    ]
++  }
++}
++
++--- Detaching mirror_target_2 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'always' ---
++
++nothing to do
++
++= Checking Bitmap bitmap0 =
++expecting 0 dirty sectors; have 0. OK!
++
++--- Write #3 ---
++
++write -P0xaa 0x0010000 0x30000
++{"return": ""}
++write -P0xbb 0x00d8000 0x10000
++{"return": ""}
++write -P0xcc 0x2028000 0x10000
++{"return": ""}
++write -P0xdd 0x3fc0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 524288,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 8 dirty sectors; have 8. OK!
++
++--- Reference mirror #3 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_3", "sync": "full", "target": "ref_target_3"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_3"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_3", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_3", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_3 ---
++{}
++{}
++
++--- Prepare bitmap for sync mode 'always' ---
++
++passing current bitmap 'bitmap0'
++
++--- Test mirror #3 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "bitmap0", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_3", "sync": "full", "target": "mirror_target_3"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "mirror_3"}}
++{"return": {}}
++{"data": {"device": "mirror_3", "len": 524288, "offset": 524288, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"execute": "job-finalize", "arguments": {"id": "mirror_3"}}
++{"return": {}}
++{"data": {"id": "mirror_3", "type": "mirror"}, "event": "BLOCK_JOB_PENDING", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "mirror_3", "len": 524288, "offset": 524288, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++--- Detaching mirror_target_3 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'always' ---
++
++nothing to do
++
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 0,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 0 dirty sectors; have 0. OK!
++
++--- Cleanup ---
++
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "bitmap0", "node": "drive0"}}
++{"return": {}}
++{
++  "bitmaps": {}
++}
++
++--- Verification ---
++
++qemu_img compare "TEST_DIR/PID-bsync1" "TEST_DIR/PID-fmirror1" ==> Mismatch, OK!
++qemu_img compare "TEST_DIR/PID-bsync2" "TEST_DIR/PID-fmirror2" ==> Mismatch, OK!
++qemu_img compare "TEST_DIR/PID-bsync3" "TEST_DIR/PID-fmirror3" ==> Identical, OK!
++qemu_img compare "TEST_DIR/PID-img" "TEST_DIR/PID-fmirror3" ==> Identical, OK!
++
++
++=== Bitmap Sync always without failure ===
++
++--- Preparing image & VM ---
++
++{"execute": "blockdev-add", "arguments": {"driver": "qcow2", "file": {"driver": "file", "filename": "TEST_DIR/PID-img"}, "node-name": "drive0"}}
++{"return": {}}
++
++--- Write #0 ---
++
++write -P0x49 0x0000000 0x10000
++{"return": ""}
++write -P0x6c 0x0100000 0x10000
++{"return": ""}
++write -P0x6f 0x2000000 0x10000
++{"return": ""}
++write -P0x76 0x3ff0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {}
++}
++
++--- Reference mirror #0 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_0", "sync": "full", "target": "ref_target_0"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_0"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_0", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_0", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_0 ---
++{}
++{}
++
++--- Add Bitmap ---
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "bitmap0", "node": "drive0"}}
++{"return": {}}
++
++--- Write #1 ---
++
++write -P0x65 0x0000000 0x10000
++{"return": ""}
++write -P0x77 0x00f8000 0x10000
++{"return": ""}
++write -P0x72 0x2008000 0x10000
++{"return": ""}
++write -P0x69 0x3fe0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 393216,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 6 dirty sectors; have 6. OK!
++
++--- Reference mirror #1 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_1", "sync": "full", "target": "ref_target_1"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_1"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_1", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_1", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_1 ---
++{}
++{}
++
++--- Prepare bitmap for sync mode 'always' ---
++
++passing current bitmap 'bitmap0'
++
++--- Test mirror #1 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "bitmap0", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_1", "sync": "full", "target": "mirror_target_1"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "mirror_1"}}
++{"return": {}}
++{"data": {"device": "mirror_1", "len": 393216, "offset": 393216, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"execute": "job-finalize", "arguments": {"id": "mirror_1"}}
++{"return": {}}
++{"data": {"id": "mirror_1", "type": "mirror"}, "event": "BLOCK_JOB_PENDING", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "mirror_1", "len": 393216, "offset": 393216, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++--- Detaching mirror_target_1 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'always' ---
++
++nothing to do
++
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 0,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 0 dirty sectors; have 0. OK!
++
++--- Reference mirror #2 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_2", "sync": "full", "target": "ref_target_2"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_2"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_2", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_2", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_2 ---
++{}
++{}
++
++--- Prepare bitmap for sync mode 'always' ---
++
++passing current bitmap 'bitmap0'
++
++--- Test mirror #2 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "bitmap0", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_2", "sync": "full", "target": "mirror_target_2"}}
++{"return": {}}
++--- Write #2 ---
++
++write -P0x74 0x0010000 0x10000
++{"return": ""}
++write -P0x69 0x00e8000 0x10000
++{"return": ""}
++write -P0x6e 0x2018000 0x10000
++{"return": ""}
++write -P0x67 0x3fe0000 0x20000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": true,
++        "count": 0,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": false
++      }
++    ]
++  }
++}
++
++--- Detaching mirror_target_2 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'always' ---
++
++nothing to do
++
++= Checking Bitmap bitmap0 =
++expecting 0 dirty sectors; have 0. OK!
++
++--- Write #3 ---
++
++write -P0xaa 0x0010000 0x30000
++{"return": ""}
++write -P0xbb 0x00d8000 0x10000
++{"return": ""}
++write -P0xcc 0x2028000 0x10000
++{"return": ""}
++write -P0xdd 0x3fc0000 0x10000
++{"return": ""}
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 524288,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 8 dirty sectors; have 8. OK!
++
++--- Reference mirror #3 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "ref_mirror_3", "sync": "full", "target": "ref_target_3"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "ref_mirror_3"}}
++{"return": {}}
++{"data": {"device": "ref_mirror_3", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "ref_mirror_3", "len": 67108864, "offset": 67108864, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++
++--- Detaching ref_target_3 ---
++{}
++{}
++
++--- Prepare bitmap for sync mode 'always' ---
++
++passing current bitmap 'bitmap0'
++
++--- Test mirror #3 ---
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++{"execute": "blockdev-mirror", "arguments": {"auto-finalize": false, "bitmap": "bitmap0", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "mirror_3", "sync": "full", "target": "mirror_target_3"}}
++{"return": {}}
++{"execute": "job-complete", "arguments": {"id": "mirror_3"}}
++{"return": {}}
++{"data": {"device": "mirror_3", "len": 524288, "offset": 524288, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"execute": "job-finalize", "arguments": {"id": "mirror_3"}}
++{"return": {}}
++{"data": {"id": "mirror_3", "type": "mirror"}, "event": "BLOCK_JOB_PENDING", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"data": {"device": "mirror_3", "len": 524288, "offset": 524288, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++--- Detaching mirror_target_3 ---
++{}
++{}
++
++--- Post-process bitmap for sync mode 'always' ---
++
++nothing to do
++
++{
++  "bitmaps": {
++    "drive0": [
++      {
++        "busy": false,
++        "count": 0,
++        "granularity": 65536,
++        "name": "bitmap0",
++        "persistent": false,
++        "recording": true
++      }
++    ]
++  }
++}
++
++= Checking Bitmap bitmap0 =
++expecting 0 dirty sectors; have 0. OK!
++
++--- Cleanup ---
++
++{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "bitmap0", "node": "drive0"}}
++{"return": {}}
++{
++  "bitmaps": {}
++}
++
++--- Verification ---
++
++qemu_img compare "TEST_DIR/PID-bsync1" "TEST_DIR/PID-fmirror1" ==> Identical, OK!
++qemu_img compare "TEST_DIR/PID-bsync2" "TEST_DIR/PID-fmirror2" ==> Mismatch, OK!
++qemu_img compare "TEST_DIR/PID-bsync3" "TEST_DIR/PID-fmirror3" ==> Identical, OK!
++qemu_img compare "TEST_DIR/PID-img" "TEST_DIR/PID-fmirror3" ==> Identical, OK!
++
++
++=== API failure tests ===
++
++--- Preparing image & VM ---
++
++{"execute": "blockdev-add", "arguments": {"driver": "qcow2", "file": {"driver": "file", "filename": "TEST_DIR/PID-img"}, "node-name": "drive0"}}
++{"return": {}}
++
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-file-job"}}
++{"return": {}}
++{}
++{}
++{"execute": "job-dismiss", "arguments": {"id": "bdc-fmt-job"}}
++{"return": {}}
++{}
++
++{"execute": "block-dirty-bitmap-add", "arguments": {"granularity": 65536, "name": "bitmap0", "node": "drive0"}}
++{"return": {}}
++
++-- Testing invalid QMP commands --
++
++-- Sync mode full tests --
++
++{"execute": "blockdev-mirror", "arguments": {"bitmap": "bitmap404", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "api_job", "sync": "full", "target": "mirror_target"}}
++{"error": {"class": "GenericError", "desc": "Dirty bitmap 'bitmap404' not found"}}
++
++-- Sync mode top tests --
++
++{"execute": "blockdev-mirror", "arguments": {"bitmap": "bitmap404", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "api_job", "sync": "top", "target": "mirror_target"}}
++{"error": {"class": "GenericError", "desc": "Sync mode 'top' not supported with bitmap."}}
++
++{"execute": "blockdev-mirror", "arguments": {"bitmap": "bitmap0", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "api_job", "sync": "top", "target": "mirror_target"}}
++{"error": {"class": "GenericError", "desc": "Sync mode 'top' not supported with bitmap."}}
++
++-- Sync mode none tests --
++
++{"execute": "blockdev-mirror", "arguments": {"bitmap": "bitmap404", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "api_job", "sync": "none", "target": "mirror_target"}}
++{"error": {"class": "GenericError", "desc": "Sync mode 'none' not supported with bitmap."}}
++
++{"execute": "blockdev-mirror", "arguments": {"bitmap": "bitmap0", "copy-mode": "write-blocking", "device": "drive0", "filter-node-name": "mirror-top", "job-id": "api_job", "sync": "none", "target": "mirror_target"}}
++{"error": {"class": "GenericError", "desc": "Sync mode 'none' not supported with bitmap."}}
++
 -- 
 2.39.2
 
