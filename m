@@ -4,96 +4,163 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43F5AC25B10
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 17:34:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E7F9C25B75
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 19:30:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5U8B-0006GS-TR; Fri, 10 May 2024 13:34:03 -0400
+	id 1s5VvP-0003KV-N1; Fri, 10 May 2024 15:28:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s5U88-0006GD-Ew
- for qemu-devel@nongnu.org; Fri, 10 May 2024 13:34:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1s5VvL-0003K4-80; Fri, 10 May 2024 15:28:55 -0400
+Received: from mail-vi1eur05on20700.outbound.protection.outlook.com
+ ([2a01:111:f403:2613::700]
+ helo=EUR05-VI1-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1s5U7w-0005Or-Fe
- for qemu-devel@nongnu.org; Fri, 10 May 2024 13:34:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715362427;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=oClqf0IBPfeyE52Yw+hVaOzTGdtEAD+IWsLO57huaic=;
- b=g6xMGJboFdU5asEAHVdL0IBl+l8B40TyqMyThdcsgdvyz2qFE5nAyis52WAY6gaUyTVZBv
- Uw1fYa/ELj5PeYDgEdAPvnAVj3MuDIBittDUvdSoznRLKH+C9usYFMaL6LwNkRFAUaEMBl
- CTuurDd8VQLw49/v9s6CekUyhVa/gfE=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-249-w2zW0s3_OA67FXsd_0VXbA-1; Fri, 10 May 2024 13:33:45 -0400
-X-MC-Unique: w2zW0s3_OA67FXsd_0VXbA-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6a0f16e37b3so8512576d6.3
- for <qemu-devel@nongnu.org>; Fri, 10 May 2024 10:33:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715362425; x=1715967225;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oClqf0IBPfeyE52Yw+hVaOzTGdtEAD+IWsLO57huaic=;
- b=eDWRQIbuOfU2rvgSZmqWxg2qulJ6iGaiI+/VsbNkDV8jMt4y3//kStI4iAuzPqkQgN
- EVO8IN8LYNHRteILY3nV2kSGTUTrv703hvd0P73QLDO8r66SZ1c21y4H1vSBh11/HMmd
- MaY4NUzRiUZX8qXDkOlNr2iMLSPx19SlA38lbT9DXfIdMAjez02DHu+24YLsRTf675Gb
- XGEdPDnFebgRfUJYRUO7hppHDFQ9uolxHS/cJFoCKp/Tfk45DQHKoQVjASp18AnEAwFZ
- lbPCH/Upm1Fsf+FXbEwjNiBXpK8xKTu2U4rnOUfud7d5F2tFI/DJKeBBNmIaTLtsnGjy
- DAWQ==
-X-Gm-Message-State: AOJu0YyxL4rk451a44glwYOip/7MTPjRojVcrtnYs/vLrQZcRluy1sq+
- 2iAmz88eP+gpwG02nmTwRT9csaaCptKkCrGjY9bV/cwaK9UO9ZMml3J7J7GFBL0l7TNlrWpdeHh
- ZCbXph/3QCR8ot2fc+rhoBS7cyKSZ2DM9xeg3SbYH7hHfyTw2raJG
-X-Received: by 2002:ac8:7f8e:0:b0:43a:b82a:5571 with SMTP id
- d75a77b69052e-43dfde9b0c4mr35749951cf.6.1715362424897; 
- Fri, 10 May 2024 10:33:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGb6L5gw9SHNkx63VyasGaNGeKObSQJtY8C5bLaxXzSsQKYxzLu+TRZQme7MLZ0OAUxP1wsXA==
-X-Received: by 2002:ac8:7f8e:0:b0:43a:b82a:5571 with SMTP id
- d75a77b69052e-43dfde9b0c4mr35749471cf.6.1715362424156; 
- Fri, 10 May 2024 10:33:44 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-43e046467a4sm6454641cf.83.2024.05.10.10.33.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 May 2024 10:33:43 -0700 (PDT)
-Date: Fri, 10 May 2024 13:33:41 -0400
-From: Peter Xu <peterx@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Sebastian Ott <sebott@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Eduardo Habkost <eduardo@habkost.net>, Fiona Ebner <f.ebner@proxmox.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- peter.maydell@linaro.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Yanan Wang <wangyanan55@huawei.com>
-Subject: Re: [PATCH 3/4] virtio-gpu: use a VMState variant for the scanout
- field
-Message-ID: <Zj5adUCIINuv42ua@x1n>
-References: <20240507111920.1594897-1-marcandre.lureau@redhat.com>
- <20240507111920.1594897-4-marcandre.lureau@redhat.com>
- <ZjqILU7qxlTGN4OD@x1n>
- <CAJ+F1CJjNnHoX=LvSsh5M_fiZg-n5K=KEgPRh+2gAjRij4Oq-w@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1s5VvI-0007sd-G8; Fri, 10 May 2024 15:28:54 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=VPAQG1wefTFPvuVDt9RVXJpC0e1L1xpyvzEOyzTOZbjETO/AIWO9mIWm3C8HubX/DWtX5WLzlGvIwrUwTKkdTmx0RXKTR4HXfNiyS3i0nhDj86Vs9RToS4w4oCrIhR2N6Sk4CLHna6DMnQDH3IAU4uyrYTzawb51Ru5erBwBe0gZqAaDA2y6Mwr/0n2x/CSUqdL3koz5Js8ggkxS79FpkZWIcQmUbfxj4KirFce3PDfQFEw8f8ekfTlBdXhHCpOGik4y1Q6IYCQCWeiU4OcC5QcndM3Zzkj2KCs1ZdPZpVzskr5TZq8u1M1OAMrnw+7KUogMCNbjILRpYhXZLWz2Hw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=xzTKX5b0Sh5MWyXziEsAGnZRZkAsb23vmWPGZC40W0s=;
+ b=j3vLaqTv88OkIK0sQ89UkKh/apKt/Hu3ks/tCN2IywkAsXaH9RkJoENBnWK8XIkb91iMrN+1hIV/5gBeY4lHK8NGRoRIbHVmsMwP/UQMZtgyfa+bKyY/BwCb+Iy+6mHDlZSWL0G1iqRifpHYTkMK9e2P4b9lYX8D3kFJ0lS5lw0YkoRSVATcGYmrHMnXldareXN6UrTiMdyZ7PunqdyRnuVvymdzH4swso8Ff6qAIhBbVXnPnboTapbk+mUBNYMJ2bkI8ZeyroI6HvVcRkhOaEMYvrcu+tRwBHOWdKibXcARSD8xWQvH/QN2gmYTdPvBId+PWVfHF3o9psGTIuLr/g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=xzTKX5b0Sh5MWyXziEsAGnZRZkAsb23vmWPGZC40W0s=;
+ b=r5hGVWiqQ+5K46oLz6uKLeGxtM1cQkziPgbfuV7Yq8+h2HFTZe8hKp6bZ+ZTHKWhO4f7ES0FHXcyyENz8bPfjcT8zDaHE+O4K5buLovdF7X6PElvuU3SI/yeQcK8gWRO/9m1L+kOX3IE0AVe6Z4eQ8KnTNKrzvLty2cz4k82Q/rWbUbmcST0WqQOiijbfm9WBCthvT+SPG/K4ZAXlol3syL2/CZWWqG3SE3dm9loH2a5dLjRo+mvVKe2euL75CbkCPBgeYrZXe0OHt8lB6ZSA6kWHD5h7TW9U1Bbl67OgfliJN66uIVPGRoKMM9rtIkjg7pnMXqttXaEbdzuOTOA0g==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12) by VE1PR08MB5677.eurprd08.prod.outlook.com
+ (2603:10a6:800:1ab::17) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.52; Fri, 10 May
+ 2024 19:28:44 +0000
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::7f30:b6c:9887:74a7]) by VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::7f30:b6c:9887:74a7%6]) with mapi id 15.20.7544.046; Fri, 10 May 2024
+ 19:28:44 +0000
+Message-ID: <7a998b0a-3d48-430b-a945-3d350f605ab3@virtuozzo.com>
+Date: Fri, 10 May 2024 22:29:46 +0300
+User-Agent: Mozilla Thunderbird
+Subject: Re: [BUG, RFC] Base node is in RW after making external snapshot
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Eric Blake <eblake@redhat.com>, "Denis V. Lunev" <den@virtuozzo.com>,
+ Pavel Ganyushin <pganyushin@virtuozzo.com>
+References: <fa7a3d64-aa65-444b-8e65-87a64e47684a@virtuozzo.com>
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+In-Reply-To: <fa7a3d64-aa65-444b-8e65-87a64e47684a@virtuozzo.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: FR3P281CA0079.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:1f::7) To VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJ+F1CJjNnHoX=LvSsh5M_fiZg-n5K=KEgPRh+2gAjRij4Oq-w@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|VE1PR08MB5677:EE_
+X-MS-Office365-Filtering-Correlation-Id: c8d4e9b0-e936-4ddf-8b58-08dc7127681c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230031|376005|1800799015|366007;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?QjRYZVhsN2NXbWZRQjNMWERvcVZZVmhVM0U2d05hQ29nVC9laEtaVmpJSDRv?=
+ =?utf-8?B?UDVTa2xsMUFFeGFZN3E4eWVkUzlBSmJtWnJwbmJaYzdBY2xEK1U4U1pwT0Vk?=
+ =?utf-8?B?ME53WHJzSjl6Z3lyb0V5N0lFUmhHSnlSeTJwRzE3OWRtY1FhVWovWG5ESTIv?=
+ =?utf-8?B?Z2M3M0hNOEhxYjVYcmxLWEUwSzltci85UGFYQytIUCs4Mmd4eWNZdVU0OTQx?=
+ =?utf-8?B?azVBNllhcEtZQVcvVDZmaU5hUGxiZEgwZFkzVG1vMHVPNEdMelZSQldxUFBs?=
+ =?utf-8?B?T2hPazkrcXJWUG1iSDNtb2Y3L2toUkkvMjZmcmhGRXlsQnBiNFlETmhzOGt6?=
+ =?utf-8?B?Z0lDcFdxeEdDZXJBR0cvaXc2Yy9lOTNCdlIxYm1nNkJkck5BMEpPMFYwNzBD?=
+ =?utf-8?B?NGdubWRvRm1DejRSYk9veGZqREp5NCs5Z3pCa2VEazlKdnl6SWlOc0JYMFd0?=
+ =?utf-8?B?a2lvQ3ZlZU9JRG0yTEpOWEluV3Rsd2NRQ1FNNVA3YlZBM1FLanF6UTN1T2c4?=
+ =?utf-8?B?Ymw4WEJnZkFnWmc4YWE0OTdFdWxZOTY3ckQ0Z3lKSG82Ym1SWW5IaUoyTzk1?=
+ =?utf-8?B?YmZtMmpsRVlDMlNtUGtuM2FKY296b3ppakFDNmsvb2c3WUY4NEI1dlZkNkkr?=
+ =?utf-8?B?czdPZ2ZXRS9PYWt0NFBxekJ6OEg0L2dTclluVGNHRHBJc29sUG5NVXF4QWpX?=
+ =?utf-8?B?R3pkaGhORFdONXZ3UVRoQ3JEWkNSM1NGM2VnbVlmOEJlbUxReXYzaURlRi9E?=
+ =?utf-8?B?RW1jc3FKNU5ueXhKbnBTMWgxTVFOOExlemJqV1ZEbUlHbFRZcXVHVjhsVk56?=
+ =?utf-8?B?eVdSQW5KVTVMMHJ2YndRdEUrUndGaTFTUmRZK1hEdHZha2REME1TNVFBNjNL?=
+ =?utf-8?B?VXBCZldLaS9CdzRMODZQaU9UNmI2TytOaEhTTXhEcWZqTjE4SUF6RDAwQmU0?=
+ =?utf-8?B?bUVMcW9CS3Mxc1hPWUFZVW02ODQ5eXFPSGpocFZYUWhyNDd2ZGdBRk95VWRi?=
+ =?utf-8?B?cS8zZ2EzSys3ZzQzbXo1OTBzNnlSUEtqMTM4MndYODVjNnBaeG5Ya28yUmpL?=
+ =?utf-8?B?OWxxRzlmWjVJOXhvdjJwRWlaTTlxMGsvWnJPREtRS0hmSTAybFNwbUsyblB4?=
+ =?utf-8?B?SDA1ZWpwN3AwYnl0b0YxeWhFYjVwVW52VDBTRVBmTE8rdjg5cGJhTElDZ3hR?=
+ =?utf-8?B?Yk41aDdVVW5yNjVtRnNpSksvazF1a2tnRWRlRGthckdvVDZJcUlxeWdlUGJq?=
+ =?utf-8?B?OGNjQmwvVWRPWk5tZGpyOTY1MDZXVjh5SmczTEdRZWFNMlBHLzFsVFcyYVBx?=
+ =?utf-8?B?bE5hMmpaTmhkOEVhNlUrZERGOFBNUGYvdVdRTmd2NGNkaSsxR01YdHVFeEp5?=
+ =?utf-8?B?VFh1dzhEa0NZbG83QXdsbUU4dW9wNUpIN09VNFh6Ym9mQ1FlcTE2aU9mRHN5?=
+ =?utf-8?B?OWdSaEZtaVZwazI3ei9DRTBKTURJenhIM1BoNVNKR0g1M0hYRWFzN1JHODFZ?=
+ =?utf-8?B?Z1RsdS83U1F3OEc2Q0xKck5vZ0IxQ3ZvaEJuVHBLck9QZGpVWDd2bmdmYVhM?=
+ =?utf-8?B?L0Nycm00RzgrK0hSd2dheGsvcE5jakZKN0U3Z05DcVFHR3J0cGFWVStXaFRB?=
+ =?utf-8?B?QWMrNXNuSGg2YURqRUpFbExYUFgvcWVpZUhtczUwMEt5a3N1TjdQRzBldGpr?=
+ =?utf-8?B?ZVY4SnFuU0FHMElJYmVTV2lXVHF2eVFab1l5bEF5MWtuUzB6dlRld1hRPT0=?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(376005)(1800799015)(366007); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aW9ZTUlIbWt0S2dyNFY1bVE5WUd1cWNNUTdVWmpRcnhqMWtndlp6b3R6eWNh?=
+ =?utf-8?B?K0g4dThFMXB6a3JHUnlFRnFmZTAvWkZhcjZ0c2pqRnUvRGExVWcrNGxlMHJh?=
+ =?utf-8?B?ZEtsT2xSMWptMVd2M1hQSWR6TThHcEl6SmorR2RmUXVOYWVpamx6V3U3Z1dE?=
+ =?utf-8?B?YlBWeFYwK2lpUzN5TnFSbXlyalhHallvQlN3NEtET1NQcnM4M1RRb0RjWlo2?=
+ =?utf-8?B?RDVaWitrQ2FZaVZQb1hENTg2RFRJWXBtSUJKV1ZsWUQvVnJoZm10WmxIQlFP?=
+ =?utf-8?B?TldrVlc2YXlmcEg5ZXBTN3hkQVhsT2MySEd3bDZmVW1NSU8xVEtPY096alha?=
+ =?utf-8?B?REZodm1lNnFKZlVDOWp6SHNtVWNFeUJWRzkwUEtSSDBXYTN2WWFHelhpV0hE?=
+ =?utf-8?B?bnNsTG81RC9GcnVwMkplV0pNK015UzllcG00c2JYUnVyamN0Z2YrSDlvWDFu?=
+ =?utf-8?B?ODk2NTZtM2p2NXJlTWZYNTFCQmxPZTNsaTBpZmM1eXQ1RXI3ck5Yc2F3Ri9K?=
+ =?utf-8?B?ZTZ0V1NPYXR4N0dSc3RlSFFlM0ZXYUtwYkhtMThxcEd5WC82WDJtZXN2SFNs?=
+ =?utf-8?B?VGltUzNYU1A3OVNnR0I0amZmeW05Y0c3ZTM2Z0x3a2Q4MENZek1HOG1DZXZV?=
+ =?utf-8?B?aTVqV0xiZ2w4eDFwZE9uQWNaTlE5aVNCTDh5QkZpUTBYZmxCaGMwMUJsdTBI?=
+ =?utf-8?B?N0VhVFlCWFNiTUh4YlVrTFRTc1k0MDQvbWZrS2p4NDcwanZJQ2E2aFlEaGFm?=
+ =?utf-8?B?U3RJYzc3UTZ3RXBJU2xFVC9LQTJvcHdMbTNKMjRhRnFVdU9WcjdxWWNaSHBO?=
+ =?utf-8?B?VU5NQTB4TnRQVkNhS3BHampLSXV3VzAydXE0cExMYVhEU3BCeEU2UGg1Qkdw?=
+ =?utf-8?B?NXF2K09kRCttcG1pQmhleDF5bTJiRysvRk0yS2tKSHVOaXp6OGpRUFFMZ055?=
+ =?utf-8?B?Y2NSSnp5OVZNUXBIU1VSTXBObHNPMUJVWHk1a2FNZDk4ZHlPL2xaNTNGd2V4?=
+ =?utf-8?B?OEdKUG9qOEtrM25ETWkzdENNQ2hVQVArYzFPd1FsYkhkRXVjSkNycnB5eWlE?=
+ =?utf-8?B?S0xmMWtlcXBoWlcwL1VzNVg2MlNadDZQVlJYNUlxZEJjLzVmY1VzMEpDZnhm?=
+ =?utf-8?B?RGN3K2l0WDBNckIySzFIWE95ZkQyUHpMMkI1cmhCNnlWUHNtOWtRV052ZzRC?=
+ =?utf-8?B?T1kyMTNZdS9Oc3NkOGVwQlJONytFL1hobzZVbVU2OXNKeDdwa3dCVm91UzBW?=
+ =?utf-8?B?dFhBckhDNjNKQ2ZZRkdRMTZVWHk2LzlheFc2dXNTQmlwWk9SdzJub3J2VVdP?=
+ =?utf-8?B?akdQTVVUNWs5eGtPWFVPaFpDdUJrQ0M3YVc0RHpyK3RCNFFlU3VmZVlSMVpz?=
+ =?utf-8?B?ZHFIMzlYbWVwNm5peU1FOTdYUHpaTVhqV0JLbk1pVFg1YVEyMWdEY2pFZ1Fp?=
+ =?utf-8?B?K3Z4ajdDeHRnWlJJd25hMC9xV3dCb2VrRGJUQTl0Vjc2dTZSUk0vMThlNGR1?=
+ =?utf-8?B?VThqbHcxdllsUndibFEyTGZzSnF2ME9mMXJxOVY0TFFxK2Jma3JTZjRacG00?=
+ =?utf-8?B?bnVLOEtwMzBsb1cwdHJpNUxGbzgvaFVvd0JIR2hhL1h0WDB1dHRaTDZ5NzNi?=
+ =?utf-8?B?YVhSWFlBNzZ6em04b2xEcXVYOUJOcktuWE5KV0pIanREN1lQYVM3VlVIcElk?=
+ =?utf-8?B?SEhGSTNQeityWnh4SWNBYWNTUmNIbzI2ZkQxcFlXeWhoNWI0WG9vY1lLOFNU?=
+ =?utf-8?B?a0JBV0RPMlhKaHNNUWlYNGtnVHdSZ3EwTk9aZVN5SVYzVGJaSmFNYWt0U2VX?=
+ =?utf-8?B?eCtvSjVhWHVUNXZvaGZMUDBpenpKV0Q2U1Ftai9pRStRZ3RKanhwM3JpQTdq?=
+ =?utf-8?B?OXpzNUhibTZORnQ5OGZjdnZleXJreVY5QlpzVjE1Q1EvWW1FUFV2NWE5bDRQ?=
+ =?utf-8?B?N0lWQlowSm5HcWVFWnEyOWxDME1mZFBCMkVxYlpDdHQxMms1RmZyZlBpR093?=
+ =?utf-8?B?UmJDRFpWMkxSN0ZNVEJqSENkeHVrZDRzdTlxcUVWNngxbU1TZDk2TVd3TExY?=
+ =?utf-8?B?RHFjanZTTGdFMGpaWUx1emNtd0MzVEg5ZVpqUEJlSHNqUlJQc0VybzQ2NkxM?=
+ =?utf-8?B?NEpCWko4ZG9UemVKOHdoMkVuU1lCTytDSndYbVdOd28ya0RlbER1Q1hPVmxO?=
+ =?utf-8?Q?et4DLuGYWAXMWvAlNpeCbWI=3D?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c8d4e9b0-e936-4ddf-8b58-08dc7127681c
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 May 2024 19:28:44.5833 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 4lEep2Tmh1bC1wMw923WZ1C8ELXCerdEFpRWiC8z5JX7q5Psy7rTrOsorJJH1pVju2FWR7U54LIA8OSV1FgKDtRBU2yKT/PvlXmujPlaK2Y=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VE1PR08MB5677
+Received-SPF: pass client-ip=2a01:111:f403:2613::700;
+ envelope-from=andrey.drobyshev@virtuozzo.com;
+ helo=EUR05-VI1-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.586,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,175 +176,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, Marc-André,
+On 4/24/24 21:00, Andrey Drobyshev wrote:
+> Hi everyone,
+> 
+> When making an external snapshot, we end up in a situation when 2 block
+> graph nodes related to the same image file (format and storage nodes)
+> have different RO flags set on them.
+> 
+> E.g.
+> 
+> # ls -la /proc/PID/fd
+> lrwx------ 1 root qemu 64 Apr 24 20:14 12 -> /path/to/harddisk.hdd
+> 
+> # virsh qemu-monitor-command VM '{"execute": "query-named-block-nodes"}'
+> --pretty | egrep '"node-name"|"ro"'
+>       "ro": false,
+>       "node-name": "libvirt-1-format",
+>       "ro": false,
+>       "node-name": "libvirt-1-storage",
+> 
+> # virsh snapshot-create-as VM --name snap --disk-only
+> Domain snapshot snap created
+> 
+> # ls -la /proc/PID/fd
+> lr-x------ 1 root qemu 64 Apr 24 20:14 134 -> /path/to/harddisk.hdd
+> lrwx------ 1 root qemu 64 Apr 24 20:14 135 -> /path/to/harddisk.snap
+> 
+> # virsh qemu-monitor-command VM '{"execute": "query-named-block-nodes"}'
+> --pretty | egrep '"node-name"|"ro"'
+>       "ro": false,
+>       "node-name": "libvirt-2-format",
+>       "ro": false,
+>       "node-name": "libvirt-2-storage",
+>       "ro": true,
+>       "node-name": "libvirt-1-format",
+>       "ro": false,                        <--------------
+>       "node-name": "libvirt-1-storage",
+> 
+> File descriptor has been reopened in RO, but "libvirt-1-storage" node
+> still has RW permissions set.
+> 
+> I'm wondering it this a bug or this is intended?  Looks like a bug to
+> me, although I see that some iotests (e.g. 273) expect 2 nodes related
+> to the same image file to have different RO flags.
+> 
+> bdrv_reopen_set_read_only()
+>   bdrv_reopen()
+>     bdrv_reopen_queue()
+>       bdrv_reopen_queue_child()
+>     bdrv_reopen_multiple()
+>       bdrv_list_refresh_perms()
+>         bdrv_topological_dfs()
+>         bdrv_do_refresh_perms()
+>       bdrv_reopen_commit()
+> 
+> In the stack above bdrv_reopen_set_read_only() is only being called for
+> the parent (libvirt-1-format) node.  There're 2 lists: BDSs from
+> refresh_list are used by bdrv_drv_set_perm and this leads to actual
+> reopen with RO of the file descriptor.  And then there's reopen queue
+> bs_queue -- BDSs from this queue get their parameters updated.  While
+> refresh_list ends up having the whole subtree (including children, this
+> is done in bdrv_topological_dfs()) bs_queue only has the parent.  And
+> that is because storage (child) node's (bs->inherits_from == NULL), so
+> bdrv_reopen_queue_child() never adds it to the queue.  Could it be the
+> source of this bug?
+> 
+> Anyway, would greatly appreciate a clarification.
+> 
+> Andrey
 
-On Fri, May 10, 2024 at 12:39:34PM +0400, Marc-André Lureau wrote:
-> Since we don't have per VMSD version information on the wire, nested
-> struct versioning is quite limited and cumbersome. I am not sure it
-> can be changed without breaking the stream format, and whether it's
-> worthwhile.
-
-Right that's a major pain, and actually I just notice it..
-
-I think it'll be much, much simpler if we keep vmsd version on the wire for
-each VMSD (including struct fields), then it makes more sense to me.
-
-Then when I went back and see again the VSTRUCT thing...  I can hardly
-understand what it is doing, and also how it works at all.
-
-Look at the current only IPMI user, who has:
-
-        VMSTATE_VSTRUCT_V(kcs, ISAIPMIKCSDevice, 2, vmstate_IPMIKCS,
-                          IPMIKCS, 2),
-
-It is setting both vmsd version and struct_version to 2.  I can't tell why
-it matters then if anyway both of the fields are the same..
-
-When we do save(), there is:
-
-                } else if (field->flags & VMS_STRUCT) {
-                    ret = vmstate_save_state(f, field->vmsd, curr_elem,
-                                             vmdesc_loop);
-                } else if (field->flags & VMS_VSTRUCT) {
-                    ret = vmstate_save_state_v(f, field->vmsd, curr_elem,
-                                               vmdesc_loop,
-                                               field->struct_version_id, errp);
-
-When we load():
-
-                } else if (field->flags & VMS_STRUCT) {
-                    ret = vmstate_load_state(f, field->vmsd, curr_elem,
-                                             field->vmsd->version_id);
-                } else if (field->flags & VMS_VSTRUCT) {
-                    ret = vmstate_load_state(f, field->vmsd, curr_elem,
-                                             field->struct_version_id);
-                } else {
-
-In this case, passing in struct_version==version should have zero effect
-afaict, because the default behavior is passing in vmsd->version_id anyway.
-
-Moreover, now I highly doubt whether the VMS_STRUCT whole thing makes sense
-at all as you mentioned.  Especially on the load side, here we should rely
-on vmstate_load_state() taking the last parameter as version_id on the
-wire.  Here we're passing in the struct's version_id or struct_version_id,
-and neither of them makes sense to me... if we miss that version_id
-information, afaiu we should simply fix it and put it on the wire..  It'll
-break migration, we may need to work that out, but I don't see a better
-way.  Keeping it like this like a nightmare to me.. :-(
-
-Irrelevant of all these mess.. For this specific problem, what I meant is
-exactly what Michael was requesting too (hopefully), I'd want to avoid
-further extending the complexity in this area.  I have a patch attached at
-last which I also tested 8.2<->9.0 bi-directional migrations and it worked
-for me when I smoked it.  Please have a look to see whether that makes
-sense and at the meantime avoid most of the tricks.
-
-I'd also like to mention one more thing just in case this can cause some
-more attention to virtio guys..
-
-Normally I ran vmstate-static-checker.py before softfreeze, and I did it
-for 9.0 too without seeing this problem.  It isn't raised because all
-virtio devices are using the "self managed" VMSTATE_VIRTIO_DEVICE to
-migrate.  In that case I am out of luck.  We can further extend what
-Fabiano mentioned in the other thread to cover migration stream validations
-in the future, but just to mention IMHO that needs extra work, and may work
-most likely the same as vmstate static checker but just waste many more cpu
-resources.  It'll be good if someone could still help move virtio towards
-like most of the rest devices, or at least get covered by the static
-checker, too.  But that definitely is a separate topic too.. so we can
-address the immediate breakage first.
-
-Thanks,
-
-==8<==
-From a24ef99670fa7102da461d795aed4a957bad86b1 Mon Sep 17 00:00:00 2001
-From: Peter Xu <peterx@redhat.com>
-Date: Fri, 10 May 2024 12:33:34 -0400
-Subject: [PATCH] fix gpu
-
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- include/hw/virtio/virtio-gpu.h |  2 +-
- hw/core/machine.c              |  1 +
- hw/display/virtio-gpu.c        | 21 +++++++++++++++------
- 3 files changed, 17 insertions(+), 7 deletions(-)
-
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index ed44cdad6b..e128501bdc 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -176,7 +176,7 @@ typedef struct VGPUDMABuf {
- 
- struct VirtIOGPU {
-     VirtIOGPUBase parent_obj;
--
-+    uint8_t vmstate_version;
-     uint64_t conf_max_hostmem;
- 
-     VirtQueue *ctrl_vq;
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 4ff60911e7..8f6f0dda7c 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -42,6 +42,7 @@ GlobalProperty hw_compat_8_2[] = {
-     { "migration", "zero-page-detection", "legacy"},
-     { TYPE_VIRTIO_IOMMU_PCI, "granule", "4k" },
-     { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "64" },
-+    { "virtio-gpu-device", "x-vmstate-version", "1" },
- };
- const size_t hw_compat_8_2_len = G_N_ELEMENTS(hw_compat_8_2);
- 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index ae831b6b3e..c53f55404c 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -1166,6 +1166,14 @@ static void virtio_gpu_cursor_bh(void *opaque)
-     virtio_gpu_handle_cursor(&g->parent_obj.parent_obj, g->cursor_vq);
- }
- 
-+static bool vmstate_after_v2(void *opaque, int version)
-+{
-+    struct VirtIOGPUBase *base = container_of(opaque, VirtIOGPUBase, scanout);
-+    struct VirtIOGPU *gpu = container_of(base, VirtIOGPU, parent_obj);
-+
-+    return gpu->vmstate_version >= 2;
-+}
-+
- static const VMStateDescription vmstate_virtio_gpu_scanout = {
-     .name = "virtio-gpu-one-scanout",
-     .version_id = 2,
-@@ -1181,12 +1189,12 @@ static const VMStateDescription vmstate_virtio_gpu_scanout = {
-         VMSTATE_UINT32(cursor.hot_y, struct virtio_gpu_scanout),
-         VMSTATE_UINT32(cursor.pos.x, struct virtio_gpu_scanout),
-         VMSTATE_UINT32(cursor.pos.y, struct virtio_gpu_scanout),
--        VMSTATE_UINT32_V(fb.format, struct virtio_gpu_scanout, 2),
--        VMSTATE_UINT32_V(fb.bytes_pp, struct virtio_gpu_scanout, 2),
--        VMSTATE_UINT32_V(fb.width, struct virtio_gpu_scanout, 2),
--        VMSTATE_UINT32_V(fb.height, struct virtio_gpu_scanout, 2),
--        VMSTATE_UINT32_V(fb.stride, struct virtio_gpu_scanout, 2),
--        VMSTATE_UINT32_V(fb.offset, struct virtio_gpu_scanout, 2),
-+        VMSTATE_UINT32_TEST(fb.format, struct virtio_gpu_scanout,vmstate_after_v2),
-+        VMSTATE_UINT32_TEST(fb.bytes_pp, struct virtio_gpu_scanout,vmstate_after_v2),
-+        VMSTATE_UINT32_TEST(fb.width, struct virtio_gpu_scanout,vmstate_after_v2),
-+        VMSTATE_UINT32_TEST(fb.height, struct virtio_gpu_scanout,vmstate_after_v2),
-+        VMSTATE_UINT32_TEST(fb.stride, struct virtio_gpu_scanout,vmstate_after_v2),
-+        VMSTATE_UINT32_TEST(fb.offset, struct virtio_gpu_scanout,vmstate_after_v2),
-         VMSTATE_END_OF_LIST()
-     },
- };
-@@ -1659,6 +1667,7 @@ static Property virtio_gpu_properties[] = {
-     DEFINE_PROP_BIT("blob", VirtIOGPU, parent_obj.conf.flags,
-                     VIRTIO_GPU_FLAG_BLOB_ENABLED, false),
-     DEFINE_PROP_SIZE("hostmem", VirtIOGPU, parent_obj.conf.hostmem, 0),
-+    DEFINE_PROP_UINT8("x-vmstate-version", VirtIOGPU, vmstate_version, 2),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
--- 
-2.44.0
-
-
--- 
-Peter Xu
+Friendly ping.  Could somebody confirm that it is a bug indeed?
 
 
