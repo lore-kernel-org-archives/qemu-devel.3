@@ -4,47 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CA9AC25B10
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 13:17:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E5D3C25B10
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 13:18:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5Q7k-0005a4-0y; Fri, 10 May 2024 09:17:20 -0400
+	id 1s5Q8M-0005rX-OH; Fri, 10 May 2024 09:17:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1s5Q7a-0005VP-Fc; Fri, 10 May 2024 09:17:12 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1s5Q7T-0002AP-PO; Fri, 10 May 2024 09:17:08 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 574FB473F9;
- Fri, 10 May 2024 15:16:52 +0200 (CEST)
-From: Fiona Ebner <f.ebner@proxmox.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, armbru@redhat.com, eblake@redhat.com,
- hreitz@redhat.com, kwolf@redhat.com, vsementsov@yandex-team.ru,
- jsnow@redhat.com, f.gruenbichler@proxmox.com, t.lamprecht@proxmox.com,
- mahaocong@didichuxing.com, xiechanglong.d@gmail.com,
- wencongyang2@huawei.com
-Subject: [PATCH v3 2/5] block/mirror: replace is_none_mode with sync_mode in
- MirrorBlockJob struct
-Date: Fri, 10 May 2024 15:16:44 +0200
-Message-Id: <20240510131647.1256467-3-f.ebner@proxmox.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240510131647.1256467-1-f.ebner@proxmox.com>
-References: <20240510131647.1256467-1-f.ebner@proxmox.com>
+ (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
+ id 1s5K8U-0001gM-Pc
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 02:53:42 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
+ id 1s5K8T-0004pQ-2M
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 02:53:42 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1ec4dc64c6cso11652905ad.0
+ for <qemu-devel@nongnu.org>; Thu, 09 May 2024 23:53:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1715324019; x=1715928819; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=myUSGxZ6KvD2m50MweZ9w07eN6Ng2ZhuGkrMddDWFfY=;
+ b=YhzqElQQG35Qnc+odVyaNYcKY0j9zfsGFTYe1DMUsHRsyqjkUXZMi6eUAotdmMCrrF
+ QLlcbYGIlEY660mPofqwYKGs2JGVRcwPpFyeUD840q8SgxtrabdD9cXpTphxaqnT6HYj
+ aB3tmcTpujhsLLhpTvy+JAWswRGOg16M+Y9SO9YDYkrg/8Yu80AMX495Wx/nqUpsw1r4
+ LZzPJDFhs9wAEQhB0sqnh9hKAvs2oELXLuYLxI1dJlpAaPBixRlPp9y5n98A1P3n51ad
+ B+tErjxAJ8FYdm9qTa67a0MheM2773WvjXGuvpS5Q59A8X+eMUURH4WuPhYdQoiDnndS
+ qHuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715324019; x=1715928819;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=myUSGxZ6KvD2m50MweZ9w07eN6Ng2ZhuGkrMddDWFfY=;
+ b=th06z/9jaRxJKX4WxLHzLqn4fYdfC3hBtGh5baS81S3/zlRBPmOim8Zl6bSQIFhmbx
+ phNhFkSDGmB8H0x+FuRd64lDW9yeE/Pv5CLndIO9ZoayFSmQ4BjDvUyROh8YjXMc48qG
+ 96y6n8+4gthNYTcVIp0kP2v89dXTIXTcij+v7IIr7M6sa9HyoHIGzdVRU+xMstcEo+Us
+ qLuXfLkVocNNfDyr7sD1RwlxS8zK66MXEwv9z2qU0y+HE1yXc7BBVY6ysxD9XexId9vO
+ Syi+8TwrIT+oBZUWvgWRYVOOkCaq1gFR8GscZSwLW4zvPgovAukK+0snFgHmGt8FuVgb
+ jswA==
+X-Gm-Message-State: AOJu0YwJkr6+raVfoGKc/u6A3fcZSfSwmlr0OcPNzpJCxlT0SvU4yA6+
+ tKW0r568L4VRML6mrsTLTzYR6Uhpf9GugKPFBqNi/o09mGdsVcgMY7qHM9y88PO4wqGsjqusp2N
+ UClCTw4Ebsbh62I85rmwMokn5IJsodIEybnPqNd3xNtLHYxJDLQk4XOW9O3cS8DfTD/e6RCnKHw
+ 2mdNfjbjgllWcwhOQTm8ZV9LKHjYdJh7ScJMkTsg==
+X-Google-Smtp-Source: AGHT+IFGUFRFueFUDNZ9d5BFLoP8Hn1ZDnL5G0nYVH3EA/EArusX9dl1OazLYLdkHre6SLyO/nAP/g==
+X-Received: by 2002:a17:903:8c3:b0:1e8:a63b:d427 with SMTP id
+ d9443c01a7336-1ef43f522b1mr22968315ad.49.1715324019119; 
+ Thu, 09 May 2024 23:53:39 -0700 (PDT)
+Received: from hsinchu36-syssw02.internal.sifive.com
+ (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1ef0bf31a7asm25579175ad.140.2024.05.09.23.53.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 09 May 2024 23:53:38 -0700 (PDT)
+From: "Fea.Wang" <fea.wang@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: "Fea.Wang" <fea.wang@sifive.com>, Frank Chang <frank.chang@sifive.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH 3/5] target/riscv: Add 'P1P13' bit in SMSTATEEN0
+Date: Fri, 10 May 2024 14:58:53 +0800
+Message-Id: <20240510065856.2436870-4-fea.wang@sifive.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240510065856.2436870-1-fea.wang@sifive.com>
+References: <20240510065856.2436870-1-fea.wang@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=fea.wang@sifive.com; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 10 May 2024 09:17:57 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -59,108 +103,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is more flexible and is done in preparation to support specifying a
-working bitmap for mirror jobs. In particular, this makes it possible
-to assert that @sync_mode=full when a bitmap is used. That assertion
-is just to be sure, of course the mirror QMP commands will be made to
-fail earlier with a clean error.
+Based on privilege 1.13 spec, there should be a bit56 for 'P1P13' in
+SMSTATEEN0 that controls access to the hedeleg.
 
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Signed-off-by: Fea.Wang <fea.wang@sifive.com>
+Reviewed-by: Frank Chang <frank.chang@sifive.com>
 ---
+ target/riscv/cpu_bits.h |  1 +
+ target/riscv/csr.c      | 10 ++++++++++
+ 2 files changed, 11 insertions(+)
 
-New in v3.
-
- block/mirror.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
-
-diff --git a/block/mirror.c b/block/mirror.c
-index c0597039a5..ca23d6ef65 100644
---- a/block/mirror.c
-+++ b/block/mirror.c
-@@ -51,7 +51,7 @@ typedef struct MirrorBlockJob {
-     BlockDriverState *to_replace;
-     /* Used to block operations on the drive-mirror-replace target */
-     Error *replace_blocker;
--    bool is_none_mode;
-+    MirrorSyncMode sync_mode;
-     BlockMirrorBackingMode backing_mode;
-     /* Whether the target image requires explicit zero-initialization */
-     bool zero_target;
-@@ -722,7 +722,8 @@ static int mirror_exit_common(Job *job)
-                              &error_abort);
+diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+index 74318a925c..28bd3fb0b4 100644
+--- a/target/riscv/cpu_bits.h
++++ b/target/riscv/cpu_bits.h
+@@ -315,6 +315,7 @@
+ #define SMSTATEEN0_CS       (1ULL << 0)
+ #define SMSTATEEN0_FCSR     (1ULL << 1)
+ #define SMSTATEEN0_JVT      (1ULL << 2)
++#define SMSTATEEN0_P1P13    (1ULL << 56)
+ #define SMSTATEEN0_HSCONTXT (1ULL << 57)
+ #define SMSTATEEN0_IMSIC    (1ULL << 58)
+ #define SMSTATEEN0_AIA      (1ULL << 59)
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 6b460ee0e8..d844ce770e 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -2248,6 +2248,11 @@ static RISCVException write_mstateen0(CPURISCVState *env, int csrno,
+         wr_mask |= SMSTATEEN0_FCSR;
+     }
  
-     if (!abort && s->backing_mode == MIRROR_SOURCE_BACKING_CHAIN) {
--        BlockDriverState *backing = s->is_none_mode ? src : s->base;
-+        BlockDriverState *backing;
-+        backing = s->sync_mode == MIRROR_SYNC_MODE_NONE ? src : s->base;
-         BlockDriverState *unfiltered_target = bdrv_skip_filters(target_bs);
- 
-         if (bdrv_cow_bs(unfiltered_target) != backing) {
-@@ -1015,7 +1016,7 @@ static int coroutine_fn mirror_run(Job *job, Error **errp)
-     mirror_free_init(s);
- 
-     s->last_pause_ns = qemu_clock_get_ns(QEMU_CLOCK_REALTIME);
--    if (!s->is_none_mode) {
-+    if (s->sync_mode != MIRROR_SYNC_MODE_NONE) {
-         ret = mirror_dirty_init(s);
-         if (ret < 0 || job_is_cancelled(&s->common.job)) {
-             goto immediate_exit;
-@@ -1714,7 +1715,8 @@ static BlockJob *mirror_start_job(
-                              BlockCompletionFunc *cb,
-                              void *opaque,
-                              const BlockJobDriver *driver,
--                             bool is_none_mode, BlockDriverState *base,
-+                             MirrorSyncMode sync_mode,
-+                             BlockDriverState *base,
-                              bool auto_complete, const char *filter_node_name,
-                              bool is_mirror, MirrorCopyMode copy_mode,
-                              Error **errp)
-@@ -1871,7 +1873,7 @@ static BlockJob *mirror_start_job(
-     s->replaces = g_strdup(replaces);
-     s->on_source_error = on_source_error;
-     s->on_target_error = on_target_error;
--    s->is_none_mode = is_none_mode;
-+    s->sync_mode = sync_mode;
-     s->backing_mode = backing_mode;
-     s->zero_target = zero_target;
-     qatomic_set(&s->copy_mode, copy_mode);
-@@ -2008,20 +2010,18 @@ void mirror_start(const char *job_id, BlockDriverState *bs,
-                   bool unmap, const char *filter_node_name,
-                   MirrorCopyMode copy_mode, Error **errp)
- {
--    bool is_none_mode;
-     BlockDriverState *base;
- 
-     GLOBAL_STATE_CODE();
- 
-     bdrv_graph_rdlock_main_loop();
--    is_none_mode = mode == MIRROR_SYNC_MODE_NONE;
-     base = mode == MIRROR_SYNC_MODE_TOP ? bdrv_backing_chain_next(bs) : NULL;
-     bdrv_graph_rdunlock_main_loop();
- 
-     mirror_start_job(job_id, bs, creation_flags, target, replaces,
-                      speed, granularity, buf_size, backing_mode, zero_target,
-                      on_source_error, on_target_error, unmap, NULL, NULL,
--                     &mirror_job_driver, is_none_mode, base, false,
-+                     &mirror_job_driver, mode, base, false,
-                      filter_node_name, true, copy_mode, errp);
++    RISCVCPU *cpu = env_archcpu(env);
++    if (cpu->env.priv_ver >= PRIV_VERSION_1_13_0) {
++        wr_mask |= SMSTATEEN0_P1P13;
++    }
++
+     return write_mstateen(env, csrno, wr_mask, new_val);
  }
  
-@@ -2049,9 +2049,9 @@ BlockJob *commit_active_start(const char *job_id, BlockDriverState *bs,
-                      job_id, bs, creation_flags, base, NULL, speed, 0, 0,
-                      MIRROR_LEAVE_BACKING_CHAIN, false,
-                      on_error, on_error, true, cb, opaque,
--                     &commit_active_job_driver, false, base, auto_complete,
--                     filter_node_name, false, MIRROR_COPY_MODE_BACKGROUND,
--                     errp);
-+                     &commit_active_job_driver, MIRROR_SYNC_MODE_FULL, base,
-+                     auto_complete, filter_node_name, false,
-+                     MIRROR_COPY_MODE_BACKGROUND, errp);
-     if (!job) {
-         goto error_restore_flags;
-     }
+@@ -2283,6 +2288,11 @@ static RISCVException write_mstateen0h(CPURISCVState *env, int csrno,
+ {
+     uint64_t wr_mask = SMSTATEEN_STATEEN | SMSTATEEN0_HSENVCFG;
+ 
++    RISCVCPU *cpu = env_archcpu(env);
++    if (cpu->env.priv_ver >= PRIV_VERSION_1_13_0) {
++            wr_mask |= SMSTATEEN0_P1P13;
++    }
++
+     return write_mstateenh(env, csrno, wr_mask, new_val);
+ }
+ 
 -- 
-2.39.2
-
+2.34.1
 
 
