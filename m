@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BDD0C25B10
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 10:49:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECD86C25B10
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 10:49:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5NoT-00019F-7n; Fri, 10 May 2024 06:49:17 -0400
+	id 1s5Nog-0001OA-5t; Fri, 10 May 2024 06:49:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s5NoR-00017k-KP
- for qemu-devel@nongnu.org; Fri, 10 May 2024 06:49:15 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s5NoX-0001Ko-Kl
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 06:49:23 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s5NoP-0001T3-Qq
- for qemu-devel@nongnu.org; Fri, 10 May 2024 06:49:15 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-41ba1ba55ffso10387365e9.1
- for <qemu-devel@nongnu.org>; Fri, 10 May 2024 03:49:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s5NoV-0001UQ-Ec
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 06:49:20 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-41ffad2426eso3650795e9.3
+ for <qemu-devel@nongnu.org>; Fri, 10 May 2024 03:49:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715338152; x=1715942952; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=cZjM77xwKEbJpKmLT3A1NDbHI9hBidp1PDA51BLQSpY=;
- b=hjE/wIYWUhneWovl2gClxrYF0lU7iScjn+HnlmN311WO2QWzaFbs+fLR9ezrLHD+Z7
- 8fluLeqKn5Vkvg53SQINkLh6gcNmKLM09djswq8ZeNBK6Ukqc8sTk29R+yrEcx8xWXNv
- CWr/41WZTS4YohyE/V7yWPlkB1gCYiI65uJLVoQCi3DGYHOLULowtneE437MqhLSc9e5
- jLf4cMU2n+EQAlSN9iqKLAY05W8FgvympyJTMbNbnXhebIaTMOOPPlwid8wIdrwA/ERY
- C/XV3MLbpcisK/xf/9Dg8hL6fLuJmQVY9CT9g/lQ/haWFKsYMXtAjmpsSyOzA8Bq8lK7
- bHPQ==
+ d=linaro.org; s=google; t=1715338157; x=1715942957; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XVbCv81rAzGflBvcSrzxqDvQbbVCQ+aUGbh/Oa+Rhcw=;
+ b=GpfH6ElDBYL62gof87k7LDlCzRrUU37KUmj4oMkRWiwHb5Ey9EVi2EY5dCkMCs5bJw
+ xgABtdLLEHDi4/qY8sUCaUN968R0AanIkgcriC+J2K1aXEpdyJAxCsf+e+DEz3hKCn35
+ CCUrTMNJOghpb6GqiR/o+CNK757EW4YlfVv8nvOtw9tiPSVws4Ok31XJl+sk43+ZAHS5
+ p+KidkmzyBepcVWXnttuXeTeSPRSVKmy8TECG4m0sk/9rQYMU9ud+Fi9Q9NJlnmyQCVu
+ c7wsM4nSlw5+rlgs/h2AEh4wACdJQrVvpASAPwFKRBiXL25YCvGhccsIG8jWc4igN9+d
+ 2jvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715338152; x=1715942952;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=cZjM77xwKEbJpKmLT3A1NDbHI9hBidp1PDA51BLQSpY=;
- b=w9AczoFAGvpDEsnekJbxxqjXyczVqVVNghwwvCv0ooieEAYcGI8x+nosUs07JllM0G
- pa3OiM/s+FOCaRJ9kUMrv2PTmDHJKd4rKl6vvIcpExhLWYv3OudUmC3A021Ymaofq272
- DcN/kXhhvGYezpAjzSbH5X+5W4q9Yo7EU3Bv9xsvt4OTc04uTCSHnRAGOznaAN7noeqp
- eQTXnpS9v0j5mAcMVe5m4b8yVJJ4GMJ0BDt52bHPdr3QKPG8yDUMWQFdsVvANojlg9SS
- 4qQvkFwtoSPdcVwV/qXWPx+eMKR7VjqJ9KOO8BpdmjLkTtYJlMXPdBs+SEIoDN/Pk5Pl
- 4MtQ==
-X-Gm-Message-State: AOJu0YwmSMuOcrBaecYhI9X0k1rcW25k7vKxPCrKBdbLnEW/b/3DSYnM
- +Mku5r6/mBaxDeKXEMidiFtD6bii3ibLeZQsfjkba8a5Ckkue5gR5KCafgsoan5Ned0lzPZ7mUk
- X
-X-Google-Smtp-Source: AGHT+IH46uVuTTAQ+BBftsxQmGw9P4+zW2TPR3t6Wdb1Buyly/dSLdeEPF5bm3XgUtGobYA/S4G4qg==
-X-Received: by 2002:a05:600c:450b:b0:41a:7c1d:3326 with SMTP id
- 5b1f17b1804b1-41feaa30479mr20356075e9.8.1715338151876; 
- Fri, 10 May 2024 03:49:11 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1715338157; x=1715942957;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=XVbCv81rAzGflBvcSrzxqDvQbbVCQ+aUGbh/Oa+Rhcw=;
+ b=otkpM4uYIxe5ITq0Nhy7Uiq3AqaVrvalCvUH/Sogd8jxQzWJ2X/hZMlFRYSvfecEcw
+ O88zAmUALU1RULmKVZ7HU/1DoNyEcFqrEPLV9e/fwsetZ4VBa4oBoDiJw5ERSFVzIUG6
+ XCXjN7r6e9Q8GVfi3wBAgeVxZcp3DYdB/EHMOvT5BgvtLP/tUjoQlRUbfoe7xbf13BBB
+ yTbhMPJ2+ZsLHhd0vhKONRTZFAg2PATYe+hSdonBcwz9IpAFHhJIoMXKGJldMMdHRjuh
+ 7dXOqIskwmHWjEX1+B8K47WDouxI/AS8v79ynyuTr1dZqd6YW66iUElWRpUN8bjvuNjk
+ DYCA==
+X-Gm-Message-State: AOJu0Yw0EOa/zPaT7FETZdlsPOCBUOdDB90lF00LP5+m1WL1PHCaw8+G
+ npHVRRmWqTNIo2WoG3p+HATL1T8EluCEuBMX2EnX+x6z71Pi3wr0rr8cIvzNmfwzje8eccUwp8X
+ T
+X-Google-Smtp-Source: AGHT+IHdk5RMerXt6xlL7OKXtzLIPevwNSQsVWTfglLFy+cVjQ0DDHmvBq710DZ/D55SqgKGH3hL1w==
+X-Received: by 2002:a05:600c:3508:b0:41b:f116:8868 with SMTP id
+ 5b1f17b1804b1-41feaa38a79mr24859125e9.12.1715338157651; 
+ Fri, 10 May 2024 03:49:17 -0700 (PDT)
 Received: from m1x-phil.lan (sev93-h02-176-184-17-152.dsl.sta.abo.bbox.fr.
  [176.184.17.152]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-41f87b2648fsm94463915e9.7.2024.05.10.03.49.10
+ ffacd0b85a97d-3502b79bdbcsm4196331f8f.23.2024.05.10.03.49.16
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 10 May 2024 03:49:11 -0700 (PDT)
+ Fri, 10 May 2024 03:49:17 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Paolo Bonzini <pbonzini@redhat.com>
@@ -67,16 +68,19 @@ Cc: Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
  Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Gerd Hoffmann <kraxel@redhat.com>,
- Philippe =?unknown-8bit?q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 0/7] hw/xen: Simplify legacy backends handling
-Date: Fri, 10 May 2024 12:49:01 +0200
-Message-ID: <20240510104908.76908-1-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 1/7] hw/xen: Remove declarations left over in
+ 'xen-legacy-backend.h'
+Date: Fri, 10 May 2024 12:49:02 +0200
+Message-ID: <20240510104908.76908-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240510104908.76908-1-philmd@linaro.org>
+References: <20240510104908.76908-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,34 +103,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Respin of Paolo's Xen patches from
-https://lore.kernel.org/qemu-devel/20240509170044.190795-1-pbonzini@redhat.com/
-rebased on one of my cleanup branches making backend
-structures const. Treat xenfb as other backends.
+'xen_blkdev_ops' was removed in commit 19f87870ba ("xen: remove
+the legacy 'xen_disk' backend"), 'xen_netdev_ops' in commit
+25967ff69f ("hw/xen: update Xen PV NIC to XenDevice model") and
+'xen_console_ops' in commit 9b77374690 ("hw/xen: update Xen
+console to XenDevice model"). Remove them.
 
-Paolo Bonzini (2):
-  hw/xen: initialize legacy backends from xen_bus_init()
-  hw/xen: register legacy backends via xen_backend_init
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/xen/xen-legacy-backend.h | 3 ---
+ 1 file changed, 3 deletions(-)
 
-Philippe Mathieu-Daudé (5):
-  hw/xen: Remove declarations left over in 'xen-legacy-backend.h'
-  hw/xen: Constify XenLegacyDevice::XenDevOps
-  hw/xen: Constify xenstore_be::XenDevOps
-  hw/xen: Make XenDevOps structures const
-  hw/xen: Register framebuffer backend via xen_backend_init()
-
- include/hw/xen/xen-legacy-backend.h | 15 +--------------
- include/hw/xen/xen_pvdev.h          |  3 +--
- hw/9pfs/xen-9p-backend.c            |  8 +++++++-
- hw/display/xenfb.c                  | 15 +++++++++++++--
- hw/i386/pc.c                        |  1 -
- hw/usb/xen-usb.c                    | 14 ++++----------
- hw/xen/xen-bus.c                    |  4 ++++
- hw/xen/xen-hvm-common.c             |  2 --
- hw/xen/xen-legacy-backend.c         | 24 ++++--------------------
- hw/xenpv/xen_machine_pv.c           |  7 +------
- 10 files changed, 35 insertions(+), 58 deletions(-)
-
+diff --git a/include/hw/xen/xen-legacy-backend.h b/include/hw/xen/xen-legacy-backend.h
+index 2cca174778..eb22633caa 100644
+--- a/include/hw/xen/xen-legacy-backend.h
++++ b/include/hw/xen/xen-legacy-backend.h
+@@ -67,14 +67,11 @@ static inline void xen_be_unmap_grant_ref(struct XenLegacyDevice *xendev,
+ }
+ 
+ /* actual backend drivers */
+-extern struct XenDevOps xen_console_ops;      /* xen_console.c     */
+ extern struct XenDevOps xen_kbdmouse_ops;     /* xen_framebuffer.c */
+ extern struct XenDevOps xen_framebuffer_ops;  /* xen_framebuffer.c */
+-extern struct XenDevOps xen_blkdev_ops;       /* xen_disk.c        */
+ #ifdef CONFIG_VIRTFS
+ extern struct XenDevOps xen_9pfs_ops;       /* xen-9p-backend.c        */
+ #endif
+-extern struct XenDevOps xen_netdev_ops;       /* xen_nic.c         */
+ #ifdef CONFIG_USB_LIBUSB
+ extern struct XenDevOps xen_usb_ops;          /* xen-usb.c         */
+ #endif
 -- 
 2.41.0
 
