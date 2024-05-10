@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5805FC25B10
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 10:50:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6503C25B10
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 10:50:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5Nom-0001da-Sz; Fri, 10 May 2024 06:49:36 -0400
+	id 1s5Not-0001mG-9R; Fri, 10 May 2024 06:49:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s5Noj-0001Zy-GN
- for qemu-devel@nongnu.org; Fri, 10 May 2024 06:49:33 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s5Nor-0001kY-EX
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 06:49:41 -0400
+Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s5Noh-0001Vf-Q9
- for qemu-devel@nongnu.org; Fri, 10 May 2024 06:49:33 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-41fd5dc04e2so9604645e9.3
- for <qemu-devel@nongnu.org>; Fri, 10 May 2024 03:49:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s5Nop-0001WK-JK
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 06:49:41 -0400
+Received: by mail-lj1-x229.google.com with SMTP id
+ 38308e7fff4ca-2e271acb015so23950521fa.1
+ for <qemu-devel@nongnu.org>; Fri, 10 May 2024 03:49:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715338169; x=1715942969; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715338177; x=1715942977; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lLydyXWVq+dvuttt9ieifXl3jWWZU+LQZOiqeB7g+WE=;
- b=i6RSJQh65O6XC6dxR/GxkbxNFFPmqg6wVsXvGt+3NT/2UWZy0u4DeIkmq59Paj0A10
- uVEdZk5nzEQnUMzFOAKEjbksjIFzld79cJp4nufbxKSkcugC9QWq5OoNken9Xqo5O/6c
- mw8f7ZQpZ3XvMWlnIk6O/rXuLK18QNIoSuvjamqoyuzSUdAr7FwwXeC2xeSAOxXOFqbS
- rmKLsP2anpZq9zYXEuBAxCdqVfrvPdPxzxig4IOfPdl8yj5VP6JSTbl/hb28MycH1axc
- TAKmYaaGqawnbasrAA9tX5mRnSlMV5AH3nuhO6alslrFBLm3WVuwU6BKY0VOcWl8HfeY
- 3Z8A==
+ bh=4TpUZ8CKDgQBKN9dqD4YnU9Z+7ud1E8NXp6jYp8jowk=;
+ b=Q6MxdewPyisYACr1va8rpSIDpuEv6nM3bDu7i7DMnUd5upAfNt5VbIXgYJk4a3+Jl0
+ t9cjgVJfTEb+R1iomIWH6vyBq9dloT3QJfVgjsD12zr74eEhwFBBPYQAKsO8DZkDjexj
+ Q5BWLk6wYOOgR6yZwdywmtCHJy0LPyl4ggmY1abCycpyuDS/axJS37P23obVpoC9WC0B
+ DUY3xfE0o2zGZU+vkrKZhoU8+8A+qyLaOsc+krxLnbWf9H5tIwuztd/gDTasOmdGRU6/
+ bWpwuLX4Inx3qb9gdNtCoLyXUVIIU3aroFJOJy7n9W9R6ivXd5VjnUDs7ZqbVafi+10v
+ IBsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715338169; x=1715942969;
+ d=1e100.net; s=20230601; t=1715338177; x=1715942977;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lLydyXWVq+dvuttt9ieifXl3jWWZU+LQZOiqeB7g+WE=;
- b=eZHp6BMWGavgLa84tkdCeUuUnxaD4VgIXVpe2d5OKhBoUdl4Ri2jL+Vdrzt9ujDA51
- R+smakX50PLy9ZOMdkLTHeLpkwbqDI7KQVP9uL8hhKgon6KTG/7tbb7dKpKGPqk9CWoW
- /bbX57VwPCOUQD8HtzqNeR2EGpStYbKp6yGFznX734Gm5/v/cDjUtNfUvT4ld+elKova
- pvOtPD1AF6I1CEyIWd3NVPhNvTBsnFt4sfBwfCuUuyxzFl1SUcbOLEkqi1lZO89rdQ1R
- C8QKOzsHlUI4HGpcZMh739irHsL/s3/pC10DX9fsDeAMRj2ejB7hDPuSgW95PzklrDj3
- an2Q==
-X-Gm-Message-State: AOJu0YxAfbIKADHaKx5TlsBgoMbhU9ydQmFLxJdVk/W/L+oxuDnkXfXw
- SirysyALqCR6oXRVm2opNF8VXruuycbNMP5K6ABG7x8cHhcuTNwZ7OGAUrv5qV2HDvTJMQ3tN+2
- Z
-X-Google-Smtp-Source: AGHT+IHGIbDdIaTxFsBrR2IWNVmIfQPPJ+675dXTXWbJ7moWgoCOFX7c+yR+LoYYFbbyaZxuWDMrRA==
-X-Received: by 2002:a05:600c:3b26:b0:419:f241:633c with SMTP id
- 5b1f17b1804b1-41feaa2f3b9mr18911745e9.4.1715338169611; 
- Fri, 10 May 2024 03:49:29 -0700 (PDT)
+ bh=4TpUZ8CKDgQBKN9dqD4YnU9Z+7ud1E8NXp6jYp8jowk=;
+ b=Rt5VvdeC+WhD4F9bGxw8/Lr0UErqHQrdTI/vYQMOCR1v/a958XTtVMAWRCENYKVIeE
+ X5SV7QtFGJWi4g1sIEOKUUGx3p3WvBOrH3Ng2pLT8Qjpvpjyy0UV9lpFLFdsd+7wFpaq
+ eAiuujP6ydrxsfGZvpoK1kzaPvdY/tjfVvwTMX5myAt6WgQ98JPLWDVXPdXbez+9o+Ih
+ jaYtYyoOpoYAPM7ayTB4fzJmx2E7OruS58H96GxOygGOPlacKrLA4dgrC9v7oPqFI2oa
+ QUOWvu5Q56xJzdp/2RdO4Pq25HBQDrkQNNgAu1q6+pcIPE73xrvry/X0VhKiUG8PkIy7
+ wfpQ==
+X-Gm-Message-State: AOJu0YwUk1vHtCrNIimLQCytzQMjbQz1QNCcGkjGrdD8myD2vL0PCaZ4
+ YjbXLpyP3KpoM55lyP//9pwsBHx069CWTawrqVdniEM/4plDSDotDewOxkgAwNEwTUZeWE0rtnv
+ N
+X-Google-Smtp-Source: AGHT+IF8RYJPL89SDGvqPQidQK0KvxqcH+BiwQtlAacHw890jlHQhQtuBmxCLpPl4I/7qfyZFdFshA==
+X-Received: by 2002:a2e:93cf:0:b0:2e4:9606:6b86 with SMTP id
+ 38308e7fff4ca-2e51fd42c6dmr14616001fa.8.1715338176994; 
+ Fri, 10 May 2024 03:49:36 -0700 (PDT)
 Received: from m1x-phil.lan (sev93-h02-176-184-17-152.dsl.sta.abo.bbox.fr.
  [176.184.17.152]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-41fccce2580sm58674215e9.18.2024.05.10.03.49.27
+ 5b1f17b1804b1-41fe004eae9sm42086695e9.1.2024.05.10.03.49.35
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 10 May 2024 03:49:29 -0700 (PDT)
+ Fri, 10 May 2024 03:49:36 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Paolo Bonzini <pbonzini@redhat.com>
@@ -69,17 +69,17 @@ Cc: Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Gerd Hoffmann <kraxel@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 3/7] hw/xen: Constify xenstore_be::XenDevOps
-Date: Fri, 10 May 2024 12:49:04 +0200
-Message-ID: <20240510104908.76908-4-philmd@linaro.org>
+Subject: [PATCH v2 4/7] hw/xen: Make XenDevOps structures const
+Date: Fri, 10 May 2024 12:49:05 +0200
+Message-ID: <20240510104908.76908-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240510104908.76908-1-philmd@linaro.org>
 References: <20240510104908.76908-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::229;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x229.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,58 +102,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-XenDevOps @ops is not updated, mark it const.
+Keep XenDevOps structures in .rodata.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/xen/xen-legacy-backend.h | 2 +-
- hw/xen/xen-legacy-backend.c         | 6 +++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ include/hw/xen/xen-legacy-backend.h | 8 ++++----
+ hw/9pfs/xen-9p-backend.c            | 2 +-
+ hw/display/xenfb.c                  | 4 ++--
+ hw/usb/xen-usb.c                    | 4 ++--
+ 4 files changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/include/hw/xen/xen-legacy-backend.h b/include/hw/xen/xen-legacy-backend.h
-index eb22633caa..2b2e43c7e7 100644
+index 2b2e43c7e7..cfa43a984a 100644
 --- a/include/hw/xen/xen-legacy-backend.h
 +++ b/include/hw/xen/xen-legacy-backend.h
-@@ -40,7 +40,7 @@ void xen_be_check_state(struct XenLegacyDevice *xendev);
+@@ -67,13 +67,13 @@ static inline void xen_be_unmap_grant_ref(struct XenLegacyDevice *xendev,
+ }
  
- /* xen backend driver bits */
- void xen_be_init(void);
--int xen_be_register(const char *type, struct XenDevOps *ops);
-+int xen_be_register(const char *type, const struct XenDevOps *ops);
- int xen_be_set_state(struct XenLegacyDevice *xendev, enum xenbus_state state);
- int xen_be_bind_evtchn(struct XenLegacyDevice *xendev);
- void xen_be_set_max_grant_refs(struct XenLegacyDevice *xendev,
-diff --git a/hw/xen/xen-legacy-backend.c b/hw/xen/xen-legacy-backend.c
-index 35f2b57560..4dc3a561cf 100644
---- a/hw/xen/xen-legacy-backend.c
-+++ b/hw/xen/xen-legacy-backend.c
-@@ -520,7 +520,7 @@ void xen_be_check_state(struct XenLegacyDevice *xendev)
- struct xenstore_be {
-     const char *type;
-     int dom;
--    struct XenDevOps *ops;
-+    const struct XenDevOps *ops;
+ /* actual backend drivers */
+-extern struct XenDevOps xen_kbdmouse_ops;     /* xen_framebuffer.c */
+-extern struct XenDevOps xen_framebuffer_ops;  /* xen_framebuffer.c */
++extern const struct XenDevOps xen_kbdmouse_ops;     /* xen_framebuffer.c */
++extern const struct XenDevOps xen_framebuffer_ops;  /* xen_framebuffer.c */
+ #ifdef CONFIG_VIRTFS
+-extern struct XenDevOps xen_9pfs_ops;       /* xen-9p-backend.c        */
++extern const struct XenDevOps xen_9pfs_ops;         /* xen-9p-backend.c  */
+ #endif
+ #ifdef CONFIG_USB_LIBUSB
+-extern struct XenDevOps xen_usb_ops;          /* xen-usb.c         */
++extern const struct XenDevOps xen_usb_ops;          /* xen-usb.c         */
+ #endif
+ 
+ /* configuration (aka xenbus setup) */
+diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
+index 4aa9c8c736..b1780eb819 100644
+--- a/hw/9pfs/xen-9p-backend.c
++++ b/hw/9pfs/xen-9p-backend.c
+@@ -513,7 +513,7 @@ static void xen_9pfs_alloc(struct XenLegacyDevice *xendev)
+     xenstore_write_be_int(xendev, "max-ring-page-order", MAX_RING_ORDER);
+ }
+ 
+-struct XenDevOps xen_9pfs_ops = {
++const struct XenDevOps xen_9pfs_ops = {
+     .size       = sizeof(Xen9pfsDev),
+     .flags      = DEVOPS_FLAG_NEED_GNTDEV,
+     .alloc      = xen_9pfs_alloc,
+diff --git a/hw/display/xenfb.c b/hw/display/xenfb.c
+index b2130a0d70..dd83d0f5a5 100644
+--- a/hw/display/xenfb.c
++++ b/hw/display/xenfb.c
+@@ -972,7 +972,7 @@ static void fb_event(struct XenLegacyDevice *xendev)
+ 
+ /* -------------------------------------------------------------------- */
+ 
+-struct XenDevOps xen_kbdmouse_ops = {
++const struct XenDevOps xen_kbdmouse_ops = {
+     .size       = sizeof(struct XenInput),
+     .init       = input_init,
+     .initialise = input_initialise,
+@@ -981,7 +981,7 @@ struct XenDevOps xen_kbdmouse_ops = {
+     .event      = input_event,
  };
  
- static void xenstore_update_be(void *opaque, const char *watch)
-@@ -557,7 +557,7 @@ static void xenstore_update_be(void *opaque, const char *watch)
-     }
+-struct XenDevOps xen_framebuffer_ops = {
++const struct XenDevOps xen_framebuffer_ops = {
+     .size       = sizeof(struct XenFB),
+     .init       = fb_init,
+     .initialise = fb_initialise,
+diff --git a/hw/usb/xen-usb.c b/hw/usb/xen-usb.c
+index 09ec326aea..95a901e81f 100644
+--- a/hw/usb/xen-usb.c
++++ b/hw/usb/xen-usb.c
+@@ -1083,7 +1083,7 @@ static void usbback_event(struct XenLegacyDevice *xendev)
+     qemu_bh_schedule(usbif->bh);
  }
  
--static int xenstore_scan(const char *type, int dom, struct XenDevOps *ops)
-+static int xenstore_scan(const char *type, int dom, const struct XenDevOps *ops)
- {
-     struct XenLegacyDevice *xendev;
-     char path[XEN_BUFSIZE];
-@@ -632,7 +632,7 @@ void xen_be_init(void)
- #endif
+-struct XenDevOps xen_usb_ops = {
++const struct XenDevOps xen_usb_ops = {
+     .size            = sizeof(struct usbback_info),
+     .flags           = DEVOPS_FLAG_NEED_GNTDEV,
+     .init            = usbback_init,
+@@ -1102,7 +1102,7 @@ static int usbback_not_supported(void)
+     return -EINVAL;
  }
  
--int xen_be_register(const char *type, struct XenDevOps *ops)
-+int xen_be_register(const char *type, const struct XenDevOps *ops)
- {
-     char path[50];
-     int rc;
+-struct XenDevOps xen_usb_ops = {
++const struct XenDevOps xen_usb_ops = {
+     .backend_register = usbback_not_supported,
+ };
+ 
 -- 
 2.41.0
 
