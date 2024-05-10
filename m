@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF776C25B10
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 17:28:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C0E6C25B10
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 17:31:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5U2a-0004Xr-Ru; Fri, 10 May 2024 13:28:16 -0400
+	id 1s5U5q-0005ST-6n; Fri, 10 May 2024 13:31:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s5U2Z-0004Xf-Ga
- for qemu-devel@nongnu.org; Fri, 10 May 2024 13:28:15 -0400
-Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s5U5o-0005SJ-Dp
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 13:31:36 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s5U2X-0004Ez-UY
- for qemu-devel@nongnu.org; Fri, 10 May 2024 13:28:15 -0400
-Received: by mail-lf1-x12f.google.com with SMTP id
- 2adb3069b0e04-51aa6a8e49aso2890863e87.3
- for <qemu-devel@nongnu.org>; Fri, 10 May 2024 10:28:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s5U5m-0004ox-Sm
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 13:31:36 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a5a1192c664so606126366b.2
+ for <qemu-devel@nongnu.org>; Fri, 10 May 2024 10:31:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715362092; x=1715966892; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=vR9nXVWLEOzjPn5kDxpTCuv4QCdc05kNgOMi32amDhc=;
- b=OVEbE5C3fLMzDfPgegbgpY3HRUpl9X+oLm+P54+Y8FWPOzxx5kPLkW14O6Sr2HVIAH
- f0Et367zdyGtQVZr4uLS96cJM96VOjXSUPiBntfqU5nq2x1E0HpbOlk5wn0F3k0pJkMb
- u7X70DZ7Ok9YEu45xJYU3yxA6ZDqEHdOewlheN9WYnqde/Ya4bWJ1wWUyor77FLNPIh1
- QKLh9S+DmiqzdO6b2JbReZ0spzo1eL+VFCu83CYCbmx+vMzUrAI/6p3dlw5d0BBtoAJc
- 4NiGaWZ/ve63iOiGakQ/HryuEi2dVS4hXplNjfhvMS1pbpVd9UQ+X4kpPkNH0bG+1vUr
- R+4w==
+ d=linaro.org; s=google; t=1715362293; x=1715967093; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=IAkAjxKOTWlqCrbAoBhZ6a/vsUWyrKQOk7M2z63g7y4=;
+ b=xpJ/XnIPZ9GJFeaxk1ytRBsh79/56oCJKZAUk/8wdc7FB559ThLbZ/Du9+IpypfkI0
+ 9b4dOTOFWp6cy9rhrAp0ZUbhC6orGtIkHb1/uzBa2Qyl0zEdmHmOOUvXchZ07dCwPtHP
+ c6cD+JaISekNrRUdjWnoPkMP2NZPh1X6x9mV8dsrlABncy4FGHW8wOKR2lms7iHQ2lQ6
+ YrYRQttgqBHZdlMAYRvzHWRt9Ssq0fYK6ol2DCSUiOMsKGz+c2o8qR44e9rxNqftj3ax
+ 1cVP1eLj4YgBQ10nAkrKHueSicXzX8YbFQKuJuWMIDTyU/jh0lauPet+wTvRAd+uF4+L
+ c9bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715362092; x=1715966892;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1715362293; x=1715967093;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vR9nXVWLEOzjPn5kDxpTCuv4QCdc05kNgOMi32amDhc=;
- b=MvvVYBc4jRPwKJFCtSezB3I5sxJjP0Eiw7Pd39g+WknK1mXL8UPY2kWPSSwkvHgmb1
- L+RH8GQNRZ5MspTr8hMjw62clQLo13V63g3NsF4O7GwNiAX8gbJzXVGQ580rwABf0nlk
- /pVIXxWQQxhRVck2HSBzFFLyHFd/orymn8k2O7UxLQ1Mgs4tlVqeinaIarmuy9ZE2ty3
- jhXT3ytfU/zOuddqzvwjAXvnRY18OuomiYeuWziAKu8kQbIRRHhKC7Wjwm7Lp1RV/q0O
- 9UprlEbx+5j7oLs3z6s88+dxf+ptjXeALJwrIWz6HZPjc7HLDbbH2wKsZWCFEydOWQvN
- aRBg==
+ bh=IAkAjxKOTWlqCrbAoBhZ6a/vsUWyrKQOk7M2z63g7y4=;
+ b=PodJho4edfv42L9WgVl7hF9vKTf1pNquk4uOQL6lhpz/JwsyDCh+j8TIpYN8W7jdtj
+ wngXp8KnzEmP5D0zLP6A3As/g2eT6Ds/dnj0/3CHGGC13WkL9UYBau2b4eNqQ9SI/TvR
+ Wor85XpPfsQ4O9NM9P7ygz/UUT6/94+7h+oy6cWiRXgvEDDFZqs8eE4h4D+uMtdGbJGC
+ 0+qbZgzdM2DXwVxpF29Pz71yYwrbBPDHpFDbKsqtADfmblpYcMAVkO04mQ5xIhHeoF1R
+ TpEqyZ41/cSWpTOsHpp0izDHFPovbhO0LIKjs4ycPDfDkIreyJ8b1b+GhYQb4EVCAflE
+ yL+g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUDILRQDWqKbEnrWjnK9aGmJhLYJYwADDicl7T3AwKRUDf4l1UyWSXNvlGyoOe8nubwrEiMPO42e6viFxvEJLU7eufSJ04=
-X-Gm-Message-State: AOJu0YxRu8KRx89c/iaqC26j5by+cW7GwFLOU/UMiYCcnqWCG+WbhBLS
- 4qLuX6zhxBsAMw/n9Gp4JcduHLN8dpGLhfN57nCXzePKKl+fPNIiyryjuydPjA69MyaXznTiu4r
- B
-X-Google-Smtp-Source: AGHT+IGgNbJUTTy0vnJStDSVDq8ZVfxWYYez/Se8J46flL7ooueuuyabT9PLWIYyyUPGaYCM59rhOw==
-X-Received: by 2002:a05:6512:33ce:b0:513:edf4:6f20 with SMTP id
- 2adb3069b0e04-5220fe79457mr2339675e87.54.1715362091990; 
- Fri, 10 May 2024 10:28:11 -0700 (PDT)
+ AJvYcCWGXa8QqtLo+q6qE1jh1TYDXV7imJTYMmnwAcp9XT6Ij+VlIwO8JLZ9h8LDN8RPI/dMJrvAEmoW1f1YBvSmAHSV/cHYkQg=
+X-Gm-Message-State: AOJu0YyEA0SSw8i4BanghRtBsh5AX5gQi7j8H4LnhCXDQ8f7rS3Yz10/
+ UhisKu4ppo9U6lSqFQEkMLdSyEy2ua1CG0qV9+Y2xETF+fqdMnuZWDOykNUpc6yym91Oo6hVzS8
+ Y
+X-Google-Smtp-Source: AGHT+IHv88ZzWzHkKTtZ8hdHcFWsqoOz3fJgT2WghtcI3zONQ5SRvlb4DDwATOHzZgsMVpnY7HRKpw==
+X-Received: by 2002:a17:906:ca4d:b0:a59:af4c:c7d1 with SMTP id
+ a640c23a62f3a-a5a2d65ecf4mr306153266b.49.1715362293188; 
+ Fri, 10 May 2024 10:31:33 -0700 (PDT)
 Received: from [192.168.69.100] (sev93-h02-176-184-17-152.dsl.sta.abo.bbox.fr.
  [176.184.17.152]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-521f35ba3e1sm755252e87.66.2024.05.10.10.28.10
+ a640c23a62f3a-a5a17b17727sm203980466b.208.2024.05.10.10.31.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 May 2024 10:28:11 -0700 (PDT)
-Message-ID: <f44a4dd3-6cbc-4115-a0da-9b4334bca7ae@linaro.org>
-Date: Fri, 10 May 2024 19:28:09 +0200
+ Fri, 10 May 2024 10:31:32 -0700 (PDT)
+Message-ID: <3bb21d14-5370-49bb-a071-20cd86aa3e12@linaro.org>
+Date: Fri, 10 May 2024 19:31:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 28/41] target/sparc: Implement PDISTN
+Subject: Re: [PATCH 41/41] target/sparc: Enable VIS4 feature bit
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: mark.cave-ayland@ilande.co.uk, atar4qemu@gmail.com
 References: <20240302051601.53649-1-richard.henderson@linaro.org>
- <20240302051601.53649-29-richard.henderson@linaro.org>
+ <20240302051601.53649-42-richard.henderson@linaro.org>
+ <72849956-04b9-4d52-9f32-098a2ea691a6@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240302051601.53649-29-richard.henderson@linaro.org>
+In-Reply-To: <72849956-04b9-4d52-9f32-098a2ea691a6@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,21 +98,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/3/24 06:15, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/sparc/translate.c  | 11 +++++++++++
->   target/sparc/insns.decode |  1 +
->   2 files changed, 12 insertions(+)
+On 10/5/24 19:16, Philippe Mathieu-Daudé wrote:
+> On 2/3/24 06:16, Richard Henderson wrote:
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   target/sparc/cpu.c | 3 +++
+>>   1 file changed, 3 insertions(+)
+> 
+> 
+>> @@ -882,6 +883,8 @@ static Property sparc_cpu_properties[] = {
+>>                       CPU_FEATURE_BIT_VIS3, false),
+>>       DEFINE_PROP_BIT("ima",      SPARCCPU, env.def.features,
+>>                       CPU_FEATURE_BIT_IMA, false),
+>> +    DEFINE_PROP_BIT("vis4",     SPARCCPU, env.def.features,
+>> +                    CPU_FEATURE_BIT_VIS4, false),
+> 
+> I don't see any current CPU with this bit enabled. Nitpicking,
+> maybe use "Allow enabling VIS4 feature" as subject? (I suppose
+> you tried using -cpu foo,vis4=on).
 
+Doh this is what you mentioned in the cover letter...
 
-> +static void gen_op_pdistn(TCGv dst, TCGv_i64 src1, TCGv_i64 src2)
-> +{
-> +#ifdef TARGET_SPARC64
-> +    gen_helper_pdist(dst, tcg_constant_i64(0), src1, src2);
-
-I node pdist[n] could benefit from gvec.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Could we add the M7 to sparc_defs[]?
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
 
 
