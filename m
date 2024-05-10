@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13BC6C25B77
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 09:39:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95E59C25B10
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 09:43:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5MiK-0002OC-Vu; Fri, 10 May 2024 05:38:53 -0400
+	id 1s5MmM-0004Y0-Cv; Fri, 10 May 2024 05:43:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s5MiJ-0002Nf-QI
- for qemu-devel@nongnu.org; Fri, 10 May 2024 05:38:51 -0400
-Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
+ id 1s5MmL-0004Xp-9d
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 05:43:01 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s5MiH-0006os-HA
- for qemu-devel@nongnu.org; Fri, 10 May 2024 05:38:51 -0400
-Received: by mail-lj1-x233.google.com with SMTP id
- 38308e7fff4ca-2e3e1ad0b19so23029711fa.0
- for <qemu-devel@nongnu.org>; Fri, 10 May 2024 02:38:48 -0700 (PDT)
+ id 1s5MmJ-0007ip-S9
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 05:43:01 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-34d8d11a523so1153188f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 10 May 2024 02:42:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715333927; x=1715938727; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715334178; x=1715938978; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=g3WMqZesMaZs7nhNmHYUjyGHChDsch5qF5LmkjI43j4=;
- b=an+jfmHwJB1G/keCutiY+0Btqdd8WL/UkNTST4YleTscfxsvc2brdy4dVju3FuhDjk
- 0/pATkHq2q82kxaL38g8gR/pgy3nQ5dVIMumxQkjIJesVu0tvb5OYPQQv+56rwkERBdY
- O/oLDIgfZbj3KFiWXnz9ZfCJDwULbJUIG45Io7PpJWMEuGC6waS/vv3UQ212lajTuJVX
- 1fd+v4iXR17Mkfn3W6U6CFtwV6SIyhukdMseZqJlTbZXHOmC2YjUQdgn9/WasDKSVMt/
- rkx1/qnITuKudpmpZ8y418VWKe2QfWYrvO6hBxy+NQPxX7bzIaK+OSaMp30jP5i8+1Ff
- 8kWw==
+ bh=UQzZTZdJSm8Nmq8HILM3PNirrsLGQ2TIjaHN8g+Slj0=;
+ b=P1JgHU4/s3REZoTO4KyUdcPql12ZbG/ZAUhrqZWY+gspHIljp9364liUldyM6CqPmm
+ PS4qWaG6zcsozUJQPfFPKGhCKggq7zRM00a95k9NLrbQ+v3b7K5dRu6naAfaOAVycNp6
+ dqCx/pc2vxy+9w7S3LcOOtsozKBSiDuUGZgdpaA62x2X8M4Cou+/OzPHAPADJ5F6b0Se
+ oKMUY4G8q8Dy9eBxDVRnWQnsVc2rgL81vQZ0dd+RCQK+BU2gMEn/vF1gcTiQonySXUzA
+ mKxSroV4nlUNl1SxUCQk96g1bKTtWEkILL5Dk9fH2HiQAPADdCW9jPoK9PLNnZoHG5gC
+ xGRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715333927; x=1715938727;
+ d=1e100.net; s=20230601; t=1715334178; x=1715938978;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=g3WMqZesMaZs7nhNmHYUjyGHChDsch5qF5LmkjI43j4=;
- b=IlTsh2ZCDYA0IWxe/lWj2VPG/GQQXlwyKfGRxCID7x6ZD/leRqnfWqraqRByzSNAIA
- TpCvsz3bVvJ1tI7Un3qmaxHBz6IJV4vQQmZuy9OgxBL5CtHctLX944EaBhMhWjE6OhSp
- G5rbOA9nA3NXJVTYxG2JjX39403A+oPMVhP8ppI90g6xwWa8eAqcpF8tKIiM4QJtfmw5
- QzacEeiMtSe1HZLtWJ17w9SuwrVS9ljs0fP4SI8mq2mqDZGrUnOVJlKKY9S3dQdLWkRn
- tyT+kuIL7QTVq7iimWDnWJKjNGAR5S07mAt7XZRVItUZmFOheCJqHjn0slY6w/uRr+km
- 2q9Q==
+ bh=UQzZTZdJSm8Nmq8HILM3PNirrsLGQ2TIjaHN8g+Slj0=;
+ b=pYRc9dzKc7g7lXTvEtZUthmBAiTUMXND+Cku6yLoYz9uc0YyGQhlZzyryY2Ec5GMte
+ Z1Fwnz8QvjreTrtVvkGH41y7Yhf3q4SPT/LTZr00qbQJk1OrbkvpRiItFN1bJpYEkOSm
+ qQjmMEUNnw5IEIafeSNN/Q+1HNORD1K+xD9EVC9LgKkyigc3P5ZvvrYgCFpenbJHaOBS
+ 3/uW7AkKdbY5Rlpcl0hybAS8kZbq5dXoilanCOTRJt+E37ZXWoaTj2IoN3xlPzy5H/GZ
+ 8rFBkVbkxCQk9IrP+AUJ5hxUH0ijDdCWy/M+wU5BizrYht+Qws3/h3GMZdsbTD/kp8xv
+ tPYQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWxI5BqUhMvlKfhB8GCwwceYa6IAKdD0UpPC0SBixQTOb2D5geupShXx8rwHr/f2+Ek1ip9l+bo5xs5zGmUuhXAGczwIJE=
-X-Gm-Message-State: AOJu0YwAt28pn+1giMq2addzloB3fgmz/F3i2bDLukWFtK+JcozKoF3c
- nQVFG9Um9SJNhlue/2mltSy11eOk9pwQsAyDwy4AagyGb/IdXhmBxTnfF5qSh1wXKntGyMssxLG
- VjTM=
-X-Google-Smtp-Source: AGHT+IGNO46b2SiG+PCRZ/YbvBBySWtPyNRrbSGHXW6p76oRwTes0LFZvckC4ZZXDH56N4K97iGBCA==
-X-Received: by 2002:a2e:4c12:0:b0:2da:49cc:ef3f with SMTP id
- 38308e7fff4ca-2e52039c482mr11650421fa.42.1715333927198; 
- Fri, 10 May 2024 02:38:47 -0700 (PDT)
+ AJvYcCWdFokfLRA9ksa5C7aoiINyEKbScJ02n5fyYEpkFQ7uIMU7ERx16D23H+8SuYAvCebxO5u8jw0RQaAGRYkdqsoXwwPZJdw=
+X-Gm-Message-State: AOJu0Yyw1K9OIGc5pI33UzrWJGLuk3EWpw4+clqbzPUzhJE+eOmohRpN
+ Aat08hvKoV2rHRYoFIsN7bQP+BX7mRizjZMQji1ANDuygeXhBgfdRCkwsb7lSUW5/yAqdMsqH3z
+ JOYM=
+X-Google-Smtp-Source: AGHT+IFprgrGtOixlMfEr0Kiv+APsssU2Be92N3RwgXnbBCcmhOn8WfiBcMWfenfuhWbLt+5IZ9CZg==
+X-Received: by 2002:a5d:5448:0:b0:346:85a0:20a4 with SMTP id
+ ffacd0b85a97d-3504a73db7emr1423882f8f.34.1715334178134; 
+ Fri, 10 May 2024 02:42:58 -0700 (PDT)
 Received: from [192.168.51.227] (56.red-79-159-217.dynamicip.rima-tde.net.
  [79.159.217.56]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-41fa90e93absm77298785e9.9.2024.05.10.02.38.46
+ ffacd0b85a97d-3502baad0absm4047602f8f.69.2024.05.10.02.42.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 May 2024 02:38:46 -0700 (PDT)
-Message-ID: <d7dffb6c-9f59-463d-960a-9e8fd863a118@linaro.org>
-Date: Fri, 10 May 2024 11:38:44 +0200
+ Fri, 10 May 2024 02:42:57 -0700 (PDT)
+Message-ID: <4b45c823-f278-44a0-a98e-176032c8765b@linaro.org>
+Date: Fri, 10 May 2024 11:42:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386: move prefetch and multi-byte UD/NOP to new
- decoder
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20240509153755.143456-1-pbonzini@redhat.com>
+Subject: Re: [PATCH v2 18/33] disas: Split disas.c
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20240424233131.988727-1-richard.henderson@linaro.org>
+ <20240424233131.988727-19-richard.henderson@linaro.org>
+ <a73858d1-c744-4a9b-b688-098e5dda9e12@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240509153755.143456-1-pbonzini@redhat.com>
+In-Reply-To: <a73858d1-c744-4a9b-b688-098e5dda9e12@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::233;
- envelope-from=richard.henderson@linaro.org; helo=mail-lj1-x233.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,20 +100,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/9/24 17:37, Paolo Bonzini wrote:
-> +    [0x18] = X86_OP_ENTRY1(NOP,  nop,v),  /* prefetch/reserved NOP */
-> +    [0x19] = X86_OP_ENTRY1(NOP,  nop,v),  /* reserved NOP */
-> +    [0x1c] = X86_OP_ENTRY1(NOP,  nop,v),  /* reserved NOP */
-> +    [0x1d] = X86_OP_ENTRY1(NOP,  nop,v),  /* reserved NOP */
-> +    [0x1e] = X86_OP_ENTRY1(NOP,  nop,v),  /* reserved NOP */
-> +    [0x1f] = X86_OP_ENTRY1(NOP,  nop,v),  /* reserved NOP */
+On 5/8/24 17:26, Philippe Mathieu-Daudé wrote:
+>> @@ -2,13 +2,17 @@
+>>   #define QEMU_DISAS_H
+>>   /* Disassemble this for me please... (debugging). */
+>> +#ifdef CONFIG_TCG
+>>   void disas(FILE *out, const void *code, size_t size);
+>>   void target_disas(FILE *out, CPUState *cpu, uint64_t code, size_t size);
+>> +#endif
+>>   void monitor_disas(Monitor *mon, CPUState *cpu, uint64_t pc,
+>>                      int nb_insn, bool is_physical);
+>> +#ifdef CONFIG_PLUGIN
+> 
+> Although implied, could be within the previous CONFIG_TCG block.
 
-Maybe clearer as "NOP/reserved NOP" for 0x1f.
-
-Anyway,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+I thought about that, but this was the more minimal change.
 
 
 r~
-
 
