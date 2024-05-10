@@ -4,68 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6855C25B10
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 10:09:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 093B5C25B10
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 10:19:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5NBL-0005NJ-MQ; Fri, 10 May 2024 06:08:51 -0400
+	id 1s5NLH-0000cJ-03; Fri, 10 May 2024 06:19:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1s5NBH-0005KZ-1N; Fri, 10 May 2024 06:08:47 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>)
- id 1s5NBD-0006AU-E9; Fri, 10 May 2024 06:08:46 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8AxiPAg8j1m_oUKAA--.27072S3;
- Fri, 10 May 2024 18:08:32 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8Dx9VYd8j1mPJgYAA--.29480S3; 
- Fri, 10 May 2024 18:08:31 +0800 (CST)
-Subject: Re: [PATCH] tcg/loongarch64: Fill out tcg_out_{ld, st} for vector regs
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: git@xen0n.name, qemu-stable@nongnu.org
-References: <20240510091251.7975-1-richard.henderson@linaro.org>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <d4efa83c-4e34-a3a9-6112-26b24cfbd101@loongson.cn>
-Date: Fri, 10 May 2024 18:08:29 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1s5NLF-0000UQ-7Z
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 06:19:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1s5NL5-0000VR-0J
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 06:18:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715336332;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/5+ENNkiMenRVoDACceZVQb0Vc6Y9v1VUu46MRWWdLo=;
+ b=S2+Ke+B3CkgC3O5fa+gouNtjzNEMDskP0hVbeMffohacXXwVLp3n5lhs8JePwUQDh6BQ2E
+ dT8WQNY5bTJun9KGqJJn0TaUB8q8KNO02r7A/cI/bIotX9ZN/msbSoN+nQvQHtjTe8ckiv
+ 1CQmCTueLsUyeVO/fd2Q7ay1d4Zq27w=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-2-YoU4LFGpPUm72Gpjgue8Tw-1; Fri, 10 May 2024 06:18:50 -0400
+X-MC-Unique: YoU4LFGpPUm72Gpjgue8Tw-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-41ff1a36e7bso4658385e9.1
+ for <qemu-devel@nongnu.org>; Fri, 10 May 2024 03:18:50 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715336329; x=1715941129;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/5+ENNkiMenRVoDACceZVQb0Vc6Y9v1VUu46MRWWdLo=;
+ b=rF9Gvr5LElQTM5rM7SGireYM2BgIfap52jFnp86Z7TnGgNRXFKvyNo3wR8KFqXq1Q8
+ aPqcFWcaoaLIU7vAliL/npMtbSdZaii6F1IENXit+FtS+IHBfLw59n7+GoU9ttK7KNsV
+ I0NI2yeqBxoNxHrVxzx+GyoWcUCUKnBllySI+DCTSfSG8Q9XNCeV7oRFPELA2Kt7AIk6
+ N93t7xsH9sFttLDWiXpq6XzveirAJBlX68SEKtPkCDu1Szyh1StuQuvxH4/fr7XUkNjW
+ 2Dy5GtufmEiAr5vrlFgsd+64DOQ/lG871E+0f/xJQUDw3Yot7WRHlgkNM9h5dpldmFYZ
+ l9eQ==
+X-Gm-Message-State: AOJu0Yz/Twf+LGThMQCg/QuimfthpGA7kjxWU1LN1RV3QRt/AXfaptUC
+ 0NF5egoRTCF/v5yWuuaEIB3pQfGXR6LK9BHN2vkImjNHo+bPCh9hBSHLElY+2G32I6zy3F1RjSO
+ uyYF0H9f9BDu0bkrqPluGkoFKuSIa3xLzbmvzRiJ1WBFrYs9cCvLU
+X-Received: by 2002:a05:600c:3b26:b0:41a:5521:d82c with SMTP id
+ 5b1f17b1804b1-41feac55e1bmr20041315e9.29.1715336329583; 
+ Fri, 10 May 2024 03:18:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFC2uCV0jZWbq9lZ5QZehvN5OMDcvDZHnAnx1hMToineJ6/7WckijLlStej8AHtX4I0uYupzA==
+X-Received: by 2002:a05:600c:3b26:b0:41a:5521:d82c with SMTP id
+ 5b1f17b1804b1-41feac55e1bmr20041075e9.29.1715336328968; 
+ Fri, 10 May 2024 03:18:48 -0700 (PDT)
+Received: from redhat.com ([2a06:c701:7408:4800:68b:bbd9:73c8:fb50])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-41fccbe8e3csm58887155e9.1.2024.05.10.03.18.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 10 May 2024 03:18:48 -0700 (PDT)
+Date: Fri, 10 May 2024 06:18:46 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Jiqian Chen <Jiqian.Chen@amd.com>
+Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
+ Huang Rui <Ray.Huang@amd.com>
+Subject: Re: [RFC QEMU PATCH v9 1/2] virtio-pci: only reset pm state during
+ resetting
+Message-ID: <20240510061603-mutt-send-email-mst@kernel.org>
+References: <20240416070127.116922-1-Jiqian.Chen@amd.com>
+ <20240416070127.116922-2-Jiqian.Chen@amd.com>
 MIME-Version: 1.0
-In-Reply-To: <20240510091251.7975-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=gbk; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: AQAAf8Dx9VYd8j1mPJgYAA--.29480S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxWFykZrykur1rGry5Aw4kZrc_yoW7Jr1Dpr
- 15XrZIvas8AanxArWayF1DGa4vganayryqqFs3GFW8XFWDKw1kZws5Jr4ag34jq34S9r4D
- A3Z8Jr13CF4qyabCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8cz
- VUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240416070127.116922-2-Jiqian.Chen@amd.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-3.372, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.581,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,156 +100,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ÔÚ 2024/5/10 ÏÂÎç5:12, Richard Henderson Ð´µÀ:
-> TCG register spill/fill uses tcg_out_ld/st with all types,
-> not necessarily going through INDEX_op_{ld,st}_vec.
->
-> Cc: qemu-stable@nongnu.org
-> Fixes: 16288ded944 ("tcg/loongarch64: Lower basic tcg vec ops to LSX")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2336
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On Tue, Apr 16, 2024 at 03:01:26PM +0800, Jiqian Chen wrote:
+> Fix bug imported by 27ce0f3afc9dd25d21b43bbce505157afd93d111
+> (fix Power Management Control Register for PCI Express virtio devices)
+
+
+should be:
+
+27ce0f3afc9dd ("fix Power Management Control Register for PCI Express virtio devices"
+
+Pls include a bit more info about the bug: after this change, we observe ...... .
+
+> Only state of PM_CTRL is writable.
+> Only when flag VIRTIO_PCI_FLAG_INIT_PM is set, need to reset state.
+
+
+
+and here, add:
+
+Fixes: 27ce0f3afc9dd ("fix Power Management Control Register for PCI Express virtio devices"
+
+> Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
 > ---
->   tcg/loongarch64/tcg-target.c.inc | 103 ++++++++++++++++++++++++-------
->   1 file changed, 80 insertions(+), 23 deletions(-)
-
-Tested-by: Song Gao <gaosong@loongson.cn>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-
-Thanks.
-Song Gao
-> diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
-> index 69c5b8ac4f..06ca1ab11c 100644
-> --- a/tcg/loongarch64/tcg-target.c.inc
-> +++ b/tcg/loongarch64/tcg-target.c.inc
-> @@ -808,18 +808,88 @@ static void tcg_out_ldst(TCGContext *s, LoongArchInsn opc, TCGReg data,
->       }
->   }
->   
-> -static void tcg_out_ld(TCGContext *s, TCGType type, TCGReg arg,
-> -                       TCGReg arg1, intptr_t arg2)
-> +static void tcg_out_ld(TCGContext *s, TCGType type, TCGReg dest,
-> +                       TCGReg base, intptr_t offset)
->   {
-> -    bool is_32bit = type == TCG_TYPE_I32;
-> -    tcg_out_ldst(s, is_32bit ? OPC_LD_W : OPC_LD_D, arg, arg1, arg2);
-> +    switch (type) {
-> +    case TCG_TYPE_I32:
-> +        if (dest < TCG_REG_V0) {
-> +            tcg_out_ldst(s, OPC_LD_W, dest, base, offset);
-> +        } else {
-> +            tcg_out_dupm_vec(s, TCG_TYPE_I128, MO_32, dest, base, offset);
+>  hw/virtio/virtio-pci.c | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> index cb159fd0785c..a1b61308e7a0 100644
+> --- a/hw/virtio/virtio-pci.c
+> +++ b/hw/virtio/virtio-pci.c
+> @@ -2300,10 +2300,16 @@ static void virtio_pci_bus_reset_hold(Object *obj)
+>      virtio_pci_reset(qdev);
+>  
+>      if (pci_is_express(dev)) {
+> +        VirtIOPCIProxy *proxy = VIRTIO_PCI(dev);
+> +
+>          pcie_cap_deverr_reset(dev);
+>          pcie_cap_lnkctl_reset(dev);
+>  
+> -        pci_set_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL, 0);
+> +        if (proxy->flags & VIRTIO_PCI_FLAG_INIT_PM) {
+> +            pci_word_test_and_clear_mask(
+> +                dev->config + dev->exp.pm_cap + PCI_PM_CTRL,
+> +                PCI_PM_CTRL_STATE_MASK);
 > +        }
-> +        break;
-> +    case TCG_TYPE_I64:
-> +        if (dest < TCG_REG_V0) {
-> +            tcg_out_ldst(s, OPC_LD_D, dest, base, offset);
-> +        } else {
-> +            tcg_out_dupm_vec(s, TCG_TYPE_I128, MO_64, dest, base, offset);
-> +        }
-> +        break;
-> +    case TCG_TYPE_V128:
-> +        if (-0x800 <= offset && offset <= 0x7ff) {
-> +            tcg_out_opc_vld(s, dest, base, offset);
-> +        } else {
-> +            tcg_out_movi(s, TCG_TYPE_PTR, TCG_REG_TMP0, offset);
-> +            tcg_out_opc_vldx(s, dest, base, TCG_REG_TMP0);
-> +        }
-> +        break;
-> +    default:
-> +        g_assert_not_reached();
-> +    }
->   }
->   
-> -static void tcg_out_st(TCGContext *s, TCGType type, TCGReg arg,
-> -                       TCGReg arg1, intptr_t arg2)
-> +static void tcg_out_st(TCGContext *s, TCGType type, TCGReg src,
-> +                       TCGReg base, intptr_t offset)
->   {
-> -    bool is_32bit = type == TCG_TYPE_I32;
-> -    tcg_out_ldst(s, is_32bit ? OPC_ST_W : OPC_ST_D, arg, arg1, arg2);
-> +    switch (type) {
-> +    case TCG_TYPE_I32:
-> +        if (src < TCG_REG_V0) {
-> +            tcg_out_ldst(s, OPC_ST_W, src, base, offset);
-> +        } else {
-> +            /* TODO: Could use fst_s, fstx_s */
-> +            if (offset < -0x100 || offset > 0xff || (offset & 3)) {
-> +                if (-0x800 <= offset && offset <= 0x7ff) {
-> +                    tcg_out_opc_addi_d(s, TCG_REG_TMP0, base, offset);
-> +                } else {
-> +                    tcg_out_movi(s, TCG_TYPE_PTR, TCG_REG_TMP0, offset);
-> +                    tcg_out_opc_add_d(s, TCG_REG_TMP0, TCG_REG_TMP0, base);
-> +                }
-> +                base = TCG_REG_TMP0;
-> +                offset = 0;
-> +            }
-> +            tcg_out_opc_vstelm_w(s, src, base, offset, 0);
-> +        }
-> +        break;
-> +    case TCG_TYPE_I64:
-> +        if (src < TCG_REG_V0) {
-> +            tcg_out_ldst(s, OPC_ST_D, src, base, offset);
-> +        } else {
-> +            /* TODO: Could use fst_d, fstx_d */
-> +            if (offset < -0x100 || offset > 0xff || (offset & 7)) {
-> +                if (-0x800 <= offset && offset <= 0x7ff) {
-> +                    tcg_out_opc_addi_d(s, TCG_REG_TMP0, base, offset);
-> +                } else {
-> +                    tcg_out_movi(s, TCG_TYPE_PTR, TCG_REG_TMP0, offset);
-> +                    tcg_out_opc_add_d(s, TCG_REG_TMP0, TCG_REG_TMP0, base);
-> +                }
-> +                base = TCG_REG_TMP0;
-> +                offset = 0;
-> +            }
-> +            tcg_out_opc_vstelm_d(s, src, base, offset, 0);
-> +        }
-> +        break;
-> +    case TCG_TYPE_V128:
-> +        if (-0x800 <= offset && offset <= 0x7ff) {
-> +            tcg_out_opc_vst(s, src, base, offset);
-> +        } else {
-> +            tcg_out_movi(s, TCG_TYPE_PTR, TCG_REG_TMP0, offset);
-> +            tcg_out_opc_vstx(s, src, base, TCG_REG_TMP0);
-> +        }
-> +        break;
-> +    default:
-> +        g_assert_not_reached();
-> +    }
->   }
->   
->   static bool tcg_out_sti(TCGContext *s, TCGType type, TCGArg val,
-> @@ -1740,7 +1810,6 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
->   {
->       TCGType type = vecl + TCG_TYPE_V64;
->       TCGArg a0, a1, a2, a3;
-> -    TCGReg temp = TCG_REG_TMP0;
->       TCGReg temp_vec = TCG_VEC_TMP0;
->   
->       static const LoongArchInsn cmp_vec_insn[16][4] = {
-> @@ -1820,22 +1889,10 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
->   
->       switch (opc) {
->       case INDEX_op_st_vec:
-> -        /* Try to fit vst imm */
-> -        if (-0x800 <= a2 && a2 <= 0x7ff) {
-> -            tcg_out_opc_vst(s, a0, a1, a2);
-> -        } else {
-> -            tcg_out_movi(s, TCG_TYPE_I64, temp, a2);
-> -            tcg_out_opc_vstx(s, a0, a1, temp);
-> -        }
-> +        tcg_out_st(s, type, a0, a1, a2);
->           break;
->       case INDEX_op_ld_vec:
-> -        /* Try to fit vld imm */
-> -        if (-0x800 <= a2 && a2 <= 0x7ff) {
-> -            tcg_out_opc_vld(s, a0, a1, a2);
-> -        } else {
-> -            tcg_out_movi(s, TCG_TYPE_I64, temp, a2);
-> -            tcg_out_opc_vldx(s, a0, a1, temp);
-> -        }
-> +        tcg_out_ld(s, type, a0, a1, a2);
->           break;
->       case INDEX_op_and_vec:
->           tcg_out_opc_vand_v(s, a0, a1, a2);
+>      }
+>  }
+>  
+> -- 
+> 2.34.1
 
 
