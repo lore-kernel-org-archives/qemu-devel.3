@@ -4,71 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57D81C25B10
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 20:46:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40318C25B10
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 May 2024 20:53:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5X7l-0007eX-I8; Fri, 10 May 2024 16:45:49 -0400
+	id 1s5XEm-0003H4-FW; Fri, 10 May 2024 16:53:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s5X7Y-0007TQ-4p
- for qemu-devel@nongnu.org; Fri, 10 May 2024 16:45:41 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s5XEl-0003Gk-2s
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 16:53:03 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s5X7R-0001x7-Rs
- for qemu-devel@nongnu.org; Fri, 10 May 2024 16:45:35 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s5XEi-0003HV-ST
+ for qemu-devel@nongnu.org; Fri, 10 May 2024 16:53:02 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id C1BE5210ED;
- Fri, 10 May 2024 20:45:23 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id A74DF1FD0E;
+ Fri, 10 May 2024 20:52:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1715373924; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1715374378; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=RZA4coa7AkwxOJHahD9/dYwWYb2q7GMzIy/spZk/mXw=;
- b=P29SA/Llf0rV0/ENdpp9qysaNgbo82fpCQjLy0vo6Camcjxf1gBLRDbO0OAYRwB30YoFuj
- oG2RPn51x7BBQXIqDhh09BA3mQ7Xe6CvyZ4Z5p69Kf6ZaM3r2ZSWuaJWXqK3EZycbnpvJ/
- J9U1J9z8fisEYMVn8EF9K5cPqDxTDNA=
+ bh=avoDxbbBc5toDLcPxlFPJ7ZCQTF4EEZ1zr8gqU9BxvA=;
+ b=vi1UZ9+mobyxVU45ddPuIqTfvlHH1PtUdbKeyFDBuKoVtoSaSshGvFJ5OANoKuZd5KrN0J
+ vKfszUaI7uF2fgLjvtTVbtyupnryFt7CIPe1HhJ1DxyGTcpHiXRa60O3P5+lu2jSRNok9T
+ us4HG11a4439ntnHD8S/6e2zTANQvDQ=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1715373924;
+ s=susede2_ed25519; t=1715374378;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=RZA4coa7AkwxOJHahD9/dYwWYb2q7GMzIy/spZk/mXw=;
- b=GwbzBzG3/U9QLmTM98OVTXpJPLJPRFgfOm8oDRCP40kKO2uSZvr+6vhBDBMH8qs2D1tTfD
- Hd7tKQudHud3CuCg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=y2Sup55D;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=bhJZHTWC
+ bh=avoDxbbBc5toDLcPxlFPJ7ZCQTF4EEZ1zr8gqU9BxvA=;
+ b=45TyqAu+QKQ/6OD9PPQw36lvSieMsVJXwNDyqn5bNkxkB/ZL9M4xF//EGz0Lbhvnt0QsJg
+ v0Mw5zV545deLMBA==
+Authentication-Results: smtp-out2.suse.de;
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1715373923; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1715374378; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=RZA4coa7AkwxOJHahD9/dYwWYb2q7GMzIy/spZk/mXw=;
- b=y2Sup55DXpVLLl2ipyT1vRmeYY2yZoeGuwBzmyQFith4uFW7t5bATCAeFpGumwKeeIZ9ex
- NL45SZBYrLTp5+EuE37htL6V5bsxQRTCsbcH2oyp3Rc6y7l5KQvgDedQNp9cW3xwjRynWF
- yFwa6zLGGzBh4UsFXrPGJ+W5pJxTzus=
+ bh=avoDxbbBc5toDLcPxlFPJ7ZCQTF4EEZ1zr8gqU9BxvA=;
+ b=vi1UZ9+mobyxVU45ddPuIqTfvlHH1PtUdbKeyFDBuKoVtoSaSshGvFJ5OANoKuZd5KrN0J
+ vKfszUaI7uF2fgLjvtTVbtyupnryFt7CIPe1HhJ1DxyGTcpHiXRa60O3P5+lu2jSRNok9T
+ us4HG11a4439ntnHD8S/6e2zTANQvDQ=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1715373923;
+ s=susede2_ed25519; t=1715374378;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=RZA4coa7AkwxOJHahD9/dYwWYb2q7GMzIy/spZk/mXw=;
- b=bhJZHTWCIgmRL7O2Y/QsrRa7uDtvD3MVSEy+/I6/ySOyaguHDZTCF3/UOOimo3QHRD8xOa
- eatLG41CDlTkbgCA==
+ bh=avoDxbbBc5toDLcPxlFPJ7ZCQTF4EEZ1zr8gqU9BxvA=;
+ b=45TyqAu+QKQ/6OD9PPQw36lvSieMsVJXwNDyqn5bNkxkB/ZL9M4xF//EGz0Lbhvnt0QsJg
+ v0Mw5zV545deLMBA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4D6111386E;
- Fri, 10 May 2024 20:45:23 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 30A2C1386E;
+ Fri, 10 May 2024 20:52:57 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id HWy4BWOHPmaXBwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 10 May 2024 20:45:23 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id m5FbOimJPmZ1CQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 10 May 2024 20:52:57 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Yuan Liu <yuan1.liu@intel.com>, peterx@redhat.com
 Cc: qemu-devel@nongnu.org, yuan1.liu@intel.com, nanhai.zou@intel.com
@@ -77,32 +75,25 @@ Subject: Re: [PATCH v6 5/7] migration/multifd: implement initialization of
 In-Reply-To: <20240505165751.2392198-6-yuan1.liu@intel.com>
 References: <20240505165751.2392198-1-yuan1.liu@intel.com>
  <20240505165751.2392198-6-yuan1.liu@intel.com>
-Date: Fri, 10 May 2024 17:45:20 -0300
-Message-ID: <87o79dflb3.fsf@suse.de>
+Date: Fri, 10 May 2024 17:52:55 -0300
+Message-ID: <87le4hfkyg.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: C1BE5210ED
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-6.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- DWL_DNSWL_MED(-2.00)[suse.de:dkim];
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+ ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MISSING_XM_UA(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
+ imap1.dmz-prg2.suse.org:rdns, intel.com:email]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -137,9 +128,6 @@ Yuan Liu <yuan1.liu@intel.com> writes:
 >
 > Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
 > Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
-
-Looks good, just some nits below.
-
 > ---
 >  migration/multifd-qpl.c | 272 +++++++++++++++++++++++++++++++++++++++-
 >  1 file changed, 271 insertions(+), 1 deletion(-)
@@ -157,6 +145,9 @@ Looks good, just some nits below.
 >  #include "qemu/module.h"
 > +#include "qapi/error.h"
 > +#include "migration.h"
+
+Where is this used? I think you only need qapi/qapi-types-migration.h
+
 > +#include "multifd.h"
 > +#include "qpl/qpl.h"
 > +
@@ -167,13 +158,7 @@ Looks good, just some nits below.
 > +    /* compressed data buffer */
 > +    uint8_t *zbuf;
 > +    /* the length of compressed data */
-
-array of lenghts
-
 > +    uint32_t *zbuf_hdr;
-
-Why the _hdr suffix if the lengths are the only data stored here?
-
 > +    /* the status of IAA device */
 > +    bool iaa_avail;
 > +} QplData;
@@ -270,9 +255,6 @@ Why the _hdr suffix if the lengths are the only data stored here?
 > + * Returns QplData pointer for success or NULL for error
 > + *
 > + * @job_num: pointer to the QplData structure
-
-This needs updating^
-
 > + * @job_size: the buffer size of the job
 > + * @chan_id: multifd channel number
 > + * @errp: pointer to an error
@@ -298,9 +280,6 @@ This needs updating^
 > + * multifd_qpl_deinit: cleanup QplData structure
 > + *
 > + * Free jobs, comprssed buffers and QplData structure
-
-compressed
-
 > + *
 > + * @qpl: pointer to the QplData structure
 > + */
@@ -318,9 +297,6 @@ compressed
 > + * multifd_qpl_send_setup: setup send side
 > + *
 > + * Setup each channel with QPL compression.
-
-s/each/the/
-
 > + *
 > + * Returns 0 for success or -1 for error
 > + *
