@@ -4,54 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98364C25B4F
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 May 2024 03:43:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD7CDC04FFE
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 May 2024 04:01:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5dd6-0006RB-6t; Fri, 10 May 2024 23:42:36 -0400
+	id 1s5dv2-0005Jz-6Z; Sat, 11 May 2024 00:01:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1s5dd3-0006QG-Cp
- for qemu-devel@nongnu.org; Fri, 10 May 2024 23:42:33 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1s5dd0-0003UZ-DJ
- for qemu-devel@nongnu.org; Fri, 10 May 2024 23:42:33 -0400
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8BxFvAg6T5mk_MKAA--.27907S3;
- Sat, 11 May 2024 11:42:24 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8Cx4VUc6T5m2MkZAA--.30926S5; 
- Sat, 11 May 2024 11:42:23 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v5 3/3] tests: Add migration test for loongarch64
-Date: Sat, 11 May 2024 11:42:20 +0800
-Message-Id: <20240511034220.3030560-4-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20240511034220.3030560-1-maobibo@loongson.cn>
-References: <20240511034220.3030560-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1s5dv0-0005Jp-GA
+ for qemu-devel@nongnu.org; Sat, 11 May 2024 00:01:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1s5duw-0007QA-8o
+ for qemu-devel@nongnu.org; Sat, 11 May 2024 00:01:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715400059;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=nPPdCdQmsblOA1KRDSZCGovDPEpe3Hc8jGIhDfW7fxM=;
+ b=IDKxtM6CVQcXAbIwI/F/wYCNxZi24TntyIGXL1dWjBC0U9bS6ObIXmweOXXIuVlj1F6SJw
+ S4FHpxo/ssykBV2fcTm39JrggBVJTz7GMmq8f+KAeVhBNUc+75Gl3uC502/vOozYDTWrzo
+ NZ/rBrkd9eenrqw6Xz6qE48klZydYow=
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-117-D8wvHucLNOaCy19vi-bEJg-1; Sat, 11 May 2024 00:00:52 -0400
+X-MC-Unique: D8wvHucLNOaCy19vi-bEJg-1
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-6331e4c809fso2408597a12.2
+ for <qemu-devel@nongnu.org>; Fri, 10 May 2024 21:00:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715400051; x=1716004851;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=nPPdCdQmsblOA1KRDSZCGovDPEpe3Hc8jGIhDfW7fxM=;
+ b=R2s3xRy0xKTVuYjuyrKUP2VRfb1m7gH3MH/OPAtACukQv/GfTjEYOs/sVlTH/zo/Rt
+ NLmqDluz4k5XC9BImirK0U+TUXSUbY/f/4XDZQdfDZMh6b9Ho0mwymhfRL9f9VUXYt/X
+ wgwXGw49x4K7ghaMy5kMkArjFsYfBintpfu+d7slLUYFzHjUudmpv61k1Pg+CxxafYNF
+ 3iWgVzq1gZSLZinrmDhJUQL5X5uMzTTOSAbm7ZrZ6AmTLIzC7rpIZxy444l5p/kZ1IhZ
+ wwMxIs8bbz62PmqLik3pU6lhcljMJPC/Ws4RIsgofhJCYPm1zsZS7FP9lUr585dZmXEd
+ IyLA==
+X-Gm-Message-State: AOJu0YwTlYlSb1yHKpQHhzGoHOmhZNqLQCWQE11LvT1eMAu3dMao9C9l
+ Tdrn+fWBj9Xfj77srKGA+gHeOjMH+xAmZYEFR+tY02Avb5sgRALD1EDPWNGgtXt7ZU06rQpxDIY
+ LgPN9J+2XjEms0OQAECSTite/LOHgu7iJtLs/hA3FXhOoY2xU9GANFrKZPLDflRwLSdwxsEp8iD
+ QAxG7uDj+zNiRBr/f2kyAEU0lraG0=
+X-Received: by 2002:a05:6a20:9717:b0:1af:ac6c:367f with SMTP id
+ adf61e73a8af0-1afde19799emr4364614637.44.1715400050906; 
+ Fri, 10 May 2024 21:00:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFYtknOJAucSsEn1fZodFkOREsm8A3qWzdTfjYZ0dtZmHm2fQS0jgO575UXIth3ru9mOEqd2eJKOVTT44qWKfo=
+X-Received: by 2002:a05:6a20:9717:b0:1af:ac6c:367f with SMTP id
+ adf61e73a8af0-1afde19799emr4364593637.44.1715400050265; Fri, 10 May 2024
+ 21:00:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8Cx4VUc6T5m2MkZAA--.30926S5
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240410100345.389462-1-eperezma@redhat.com>
+ <CACGkMEuJc1ba67Hge+MfpV6npy9KJf84q=uMSP3VYDEA4FiZ=A@mail.gmail.com>
+ <CAJaqyWemfoCTLr21ukNszqnqaaEbuB_h+s3R4j-eC_YvHJpEGg@mail.gmail.com>
+ <CACGkMEtZEe=ONRcrmm5TNdcxkJx=p4m24VD0yx5w0u+Rn854hQ@mail.gmail.com>
+ <CAJaqyWdoCYFEEQdwZiCxzaX6HuJE-0QWctJ4WBnOd97zDwbPnw@mail.gmail.com>
+ <CACGkMEu328ksfMDtJheH+sdTdV4E=pJFEa5Zco2_ecskubCAGg@mail.gmail.com>
+ <CAJaqyWdZFUw8H7_2Jw3j9JxLj9+3p53QZg=DF3o4OgWJYC-SaQ@mail.gmail.com>
+ <CACGkMEvdBDFvwvqb_7YXqiPd-ax4Xw7e0BLBhCt_uD6-Uf+DgA@mail.gmail.com>
+ <CAJaqyWdA_6Mx3mkcobmBjB5NDJt3tyqTJv2JijF0agnnBFxQxw@mail.gmail.com>
+ <CACGkMEv7wukFdXrA--DzA7U7VYWQq6UAVmi-0=pTAOuJ1nc_7Q@mail.gmail.com>
+ <CAJaqyWdtdfbQi4PrbC-ASRo7dHsT7Nw3dmw66K9D9ZeoqyV=ng@mail.gmail.com>
+In-Reply-To: <CAJaqyWdtdfbQi4PrbC-ASRo7dHsT7Nw3dmw66K9D9ZeoqyV=ng@mail.gmail.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Sat, 11 May 2024 12:00:39 +0800
+Message-ID: <CACGkMEs=-teddtO4ctLdJiwm2gu3sZrKOww-TC+5o2_19Sph4w@mail.gmail.com>
+Subject: Re: [RFC 0/2] Identify aliased maps in vdpa SVQ iova_tree
+To: Eugenio Perez Martin <eperezma@redhat.com>
+Cc: qemu-devel@nongnu.org, Si-Wei Liu <si-wei.liu@oracle.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Lei Yang <leiyang@redhat.com>,
+ Peter Xu <peterx@redhat.com>, 
+ Jonah Palmer <jonah.palmer@oracle.com>, Dragos Tatulea <dtatulea@nvidia.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.586,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,206 +109,216 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds migration test support for loongarch64. The test code
-comes from aarch64 mostly, only that it booted as bios in qemu since
-kernel requires elf format and bios uses binary format.
+On Fri, May 10, 2024 at 3:16=E2=80=AFPM Eugenio Perez Martin
+<eperezma@redhat.com> wrote:
+>
+> On Fri, May 10, 2024 at 6:29=E2=80=AFAM Jason Wang <jasowang@redhat.com> =
+wrote:
+> >
+> > On Thu, May 9, 2024 at 3:10=E2=80=AFPM Eugenio Perez Martin <eperezma@r=
+edhat.com> wrote:
+> > >
+> > > On Thu, May 9, 2024 at 8:27=E2=80=AFAM Jason Wang <jasowang@redhat.co=
+m> wrote:
+> > > >
+> > > > On Thu, May 9, 2024 at 1:16=E2=80=AFAM Eugenio Perez Martin <eperez=
+ma@redhat.com> wrote:
+> > > > >
+> > > > > On Wed, May 8, 2024 at 4:29=E2=80=AFAM Jason Wang <jasowang@redha=
+t.com> wrote:
+> > > > > >
+> > > > > > On Tue, May 7, 2024 at 6:57=E2=80=AFPM Eugenio Perez Martin <ep=
+erezma@redhat.com> wrote:
+> > > > > > >
+> > > > > > > On Tue, May 7, 2024 at 9:29=E2=80=AFAM Jason Wang <jasowang@r=
+edhat.com> wrote:
+> > > > > > > >
+> > > > > > > > On Fri, Apr 12, 2024 at 3:56=E2=80=AFPM Eugenio Perez Marti=
+n
+> > > > > > > > <eperezma@redhat.com> wrote:
+> > > > > > > > >
+> > > > > > > > > On Fri, Apr 12, 2024 at 8:47=E2=80=AFAM Jason Wang <jasow=
+ang@redhat.com> wrote:
+> > > > > > > > > >
+> > > > > > > > > > On Wed, Apr 10, 2024 at 6:03=E2=80=AFPM Eugenio P=C3=A9=
+rez <eperezma@redhat.com> wrote:
+> > > > > > > > > > >
+> > > > > > > > > > > The guest may have overlapped memory regions, where d=
+ifferent GPA leads
+> > > > > > > > > > > to the same HVA.  This causes a problem when overlapp=
+ed regions
+> > > > > > > > > > > (different GPA but same translated HVA) exists in the=
+ tree, as looking
+> > > > > > > > > > > them by HVA will return them twice.
+> > > > > > > > > >
+> > > > > > > > > > I think I don't understand if there's any side effect f=
+or shadow virtqueue?
+> > > > > > > > > >
+> > > > > > > > >
+> > > > > > > > > My bad, I totally forgot to put a reference to where this=
+ comes from.
+> > > > > > > > >
+> > > > > > > > > Si-Wei found that during initialization this sequences of=
+ maps /
+> > > > > > > > > unmaps happens [1]:
+> > > > > > > > >
+> > > > > > > > > HVA                    GPA                IOVA
+> > > > > > > > > ---------------------------------------------------------=
+----------------------------------------------------------------
+> > > > > > > > > Map
+> > > > > > > > > [0x7f7903e00000, 0x7f7983e00000)    [0x0, 0x80000000) [0x=
+1000, 0x80000000)
+> > > > > > > > > [0x7f7983e00000, 0x7f9903e00000)    [0x100000000, 0x20800=
+00000)
+> > > > > > > > > [0x80001000, 0x2000001000)
+> > > > > > > > > [0x7f7903ea0000, 0x7f7903ec0000)    [0xfeda0000, 0xfedc00=
+00)
+> > > > > > > > > [0x2000001000, 0x2000021000)
+> > > > > > > > >
+> > > > > > > > > Unmap
+> > > > > > > > > [0x7f7903ea0000, 0x7f7903ec0000)    [0xfeda0000, 0xfedc00=
+00) [0x1000,
+> > > > > > > > > 0x20000) ???
+> > > > > > > > >
+> > > > > > > > > The third HVA range is contained in the first one, but ex=
+posed under a
+> > > > > > > > > different GVA (aliased). This is not "flattened" by QEMU,=
+ as GPA does
+> > > > > > > > > not overlap, only HVA.
+> > > > > > > > >
+> > > > > > > > > At the third chunk unmap, the current algorithm finds the=
+ first chunk,
+> > > > > > > > > not the second one. This series is the way to tell the di=
+fference at
+> > > > > > > > > unmap time.
+> > > > > > > > >
+> > > > > > > > > [1] https://lists.nongnu.org/archive/html/qemu-devel/2024=
+-04/msg00079.html
+> > > > > > > > >
+> > > > > > > > > Thanks!
+> > > > > > > >
+> > > > > > > > Ok, I was wondering if we need to store GPA(GIOVA) to HVA m=
+appings in
+> > > > > > > > the iova tree to solve this issue completely. Then there wo=
+n't be
+> > > > > > > > aliasing issues.
+> > > > > > > >
+> > > > > > >
+> > > > > > > I'm ok to explore that route but this has another problem. Bo=
+th SVQ
+> > > > > > > vrings and CVQ buffers also need to be addressable by VhostIO=
+VATree,
+> > > > > > > and they do not have GPA.
+> > > > > > >
+> > > > > > > At this moment vhost_svq_translate_addr is able to handle thi=
+s
+> > > > > > > transparently as we translate vaddr to SVQ IOVA. How can we s=
+tore
+> > > > > > > these new entries? Maybe a (hwaddr)-1 GPA to signal it has no=
+ GPA and
+> > > > > > > then a list to go through other entries (SVQ vaddr and CVQ bu=
+ffers).
+> > > > > >
+> > > > > > This seems to be tricky.
+> > > > > >
+> > > > > > As discussed, it could be another iova tree.
+> > > > > >
+> > > > >
+> > > > > Yes but there are many ways to add another IOVATree. Let me expan=
+d & recap.
+> > > > >
+> > > > > Option 1 is to simply add another iova tree to VhostShadowVirtque=
+ue.
+> > > > > Let's call it gpa_iova_tree, as opposed to the current iova_tree =
+that
+> > > > > translates from vaddr to SVQ IOVA. To know which one to use is ea=
+sy at
+> > > > > adding or removing, like in the memory listener, but how to know =
+at
+> > > > > vhost_svq_translate_addr?
+> > > >
+> > > > Then we won't use virtqueue_pop() at all, we need a SVQ version of
+> > > > virtqueue_pop() to translate GPA to SVQ IOVA directly?
+> > > >
+> > >
+> > > The problem is not virtqueue_pop, that's out of the
+> > > vhost_svq_translate_addr. The problem is the need of adding
+> > > conditionals / complexity in all the callers of
+> > >
+> > > > >
+> > > > > The easiest way for me is to rely on memory_region_from_host(). W=
+hen
+> > > > > vaddr is from the guest, it returns a valid MemoryRegion. When it=
+ is
+> > > > > not, it returns NULL. I'm not sure if this is a valid use case, i=
+t
+> > > > > just worked in my tests so far.
+> > > > >
+> > > > > Now we have the second problem: The GPA values of the regions of =
+the
+> > > > > two IOVA tree must be unique. We need to be able to find unalloca=
+ted
+> > > > > regions in SVQ IOVA. At this moment there is only one IOVATree, s=
+o
+> > > > > this is done easily by vhost_iova_tree_map_alloc. But it is very
+> > > > > complicated with two trees.
+> > > >
+> > > > Would it be simpler if we decouple the IOVA allocator? For example,=
+ we
+> > > > can have a dedicated gtree to track the allocated IOVA ranges. It i=
+s
+> > > > shared by both
+> > > >
+> > > > 1) Guest memory (GPA)
+> > > > 2) SVQ virtqueue and buffers
+> > > >
+> > > > And another gtree to track the GPA to IOVA.
+> > > >
+> > > > The SVQ code could use either
+> > > >
+> > > > 1) one linear mappings that contains both SVQ virtqueue and buffers
+> > > >
+> > > > or
+> > > >
+> > > > 2) dynamic IOVA allocation/deallocation helpers
+> > > >
+> > > > So we don't actually need the third gtree for SVQ HVA -> SVQ IOVA?
+> > > >
+> > >
+> > > That's possible, but that scatters the IOVA handling code instead of
+> > > keeping it self-contained in VhostIOVATree.
+> >
+> > To me, the IOVA range/allocation is orthogonal to how IOVA is used.
+> >
+> > An example is the iova allocator in the kernel.
+> >
+> > Note that there's an even simpler IOVA "allocator" in NVME passthrough
+> > code, not sure it is useful here though (haven't had a deep look at
+> > that).
+> >
+>
+> I don't know enough about them to have an opinion. I keep seeing the
+> drawback of needing to synchronize both allocation & adding in all the
+> places we want to modify the IOVATree. At this moment, these are the
+> vhost-vdpa memory listener, the SVQ vring creation and removal, and
+> net CVQ buffers. But it may be more in the future.
+>
+> What are the advantages of keeping these separated that justifies
+> needing to synchronize in all these places, compared with keeping them
+> synchronized in VhostIOVATree?
 
-In addition to providing the binary, this patch also includes the source
-code and the build script in tests/migration/loongarch64. So users can
-change the source and/or re-compile the binary as they wish.
+It doesn't need to be synchronized.
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Acked-by: Thomas Huth <thuth@redhat.com>
-Acked-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
----
- tests/migration/Makefile                 |  2 +-
- tests/migration/loongarch64/Makefile     | 18 +++++++++
- tests/migration/loongarch64/a-b-kernel.S | 49 ++++++++++++++++++++++++
- tests/migration/loongarch64/a-b-kernel.h | 16 ++++++++
- tests/migration/migration-test.h         |  3 ++
- tests/qtest/meson.build                  |  2 +-
- tests/qtest/migration-test.c             | 10 +++++
- 7 files changed, 98 insertions(+), 2 deletions(-)
- create mode 100644 tests/migration/loongarch64/Makefile
- create mode 100644 tests/migration/loongarch64/a-b-kernel.S
- create mode 100644 tests/migration/loongarch64/a-b-kernel.h
+Assuming guest and SVQ shares IOVA range. IOVA only needs to track
+which part of the range has been used.
 
-diff --git a/tests/migration/Makefile b/tests/migration/Makefile
-index 13e99b1692..cfebfe23f8 100644
---- a/tests/migration/Makefile
-+++ b/tests/migration/Makefile
-@@ -5,7 +5,7 @@
- # See the COPYING file in the top-level directory.
- #
- 
--TARGET_LIST = i386 aarch64 s390x
-+TARGET_LIST = i386 aarch64 s390x loongarch64
- 
- SRC_PATH = ../..
- 
-diff --git a/tests/migration/loongarch64/Makefile b/tests/migration/loongarch64/Makefile
-new file mode 100644
-index 0000000000..5d8719205f
---- /dev/null
-+++ b/tests/migration/loongarch64/Makefile
-@@ -0,0 +1,18 @@
-+# To specify cross compiler prefix, use CROSS_PREFIX=
-+#   $ make CROSS_PREFIX=loongarch64-linux-gnu-
-+
-+.PHONY: all clean
-+all: a-b-kernel.h
-+
-+a-b-kernel.h: loongarch64.kernel
-+	echo "$$__note" > $@
-+	xxd -i $< | sed -e 's/.*int.*//' >> $@
-+
-+loongarch64.kernel: loongarch64.elf
-+	$(CROSS_PREFIX)objcopy -j .text -O binary $< $@
-+
-+loongarch64.elf: a-b-kernel.S
-+	$(CROSS_PREFIX)gcc -o $@ -nostdlib -Wl,--build-id=none $<
-+
-+clean:
-+	$(RM) *.kernel *.elf
-diff --git a/tests/migration/loongarch64/a-b-kernel.S b/tests/migration/loongarch64/a-b-kernel.S
-new file mode 100644
-index 0000000000..cd543345fe
---- /dev/null
-+++ b/tests/migration/loongarch64/a-b-kernel.S
-@@ -0,0 +1,49 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Copyright (c) 2024 Loongson Technology Corporation Limited
-+ */
-+#include "../migration-test.h"
-+
-+#define LOONGARCH_CSR_CRMD          0
-+#define LOONGARCH_VIRT_UART         0x1FE001E0
-+.section .text
-+
-+    .globl  _start
-+_start:
-+    /* output char 'A' to UART16550 */
-+    li.d    $t0, LOONGARCH_VIRT_UART
-+    li.w    $t1, 'A'
-+    st.b    $t1, $t0, 0
-+
-+    /* traverse test memory region */
-+    li.d    $t0, LOONGARCH_TEST_MEM_START
-+    li.d    $t1, LOONGARCH_TEST_MEM_END
-+    li.d    $t2, TEST_MEM_PAGE_SIZE
-+    li.d    $t4, LOONGARCH_VIRT_UART
-+    li.w    $t5, 'B'
-+
-+clean:
-+    st.b    $zero, $t0, 0
-+    add.d   $t0,   $t0, $t2
-+    bne     $t0,   $t1, clean
-+    /* keeps a counter so we can limit the output speed */
-+    addi.d  $t6,   $zero, 0
-+
-+mainloop:
-+    li.d    $t0, LOONGARCH_TEST_MEM_START
-+
-+innerloop:
-+    ld.bu   $t3, $t0, 0
-+    addi.w  $t3, $t3, 1
-+    ext.w.b $t3, $t3
-+    st.b    $t3, $t0, 0
-+    add.d   $t0, $t0, $t2
-+    bne     $t0, $t1, innerloop
-+
-+    addi.d  $t6, $t6, 1
-+    andi    $t6, $t6, 31
-+    bnez    $t6, mainloop
-+
-+    st.b    $t5, $t4, 0
-+    b       mainloop
-+    nop
-diff --git a/tests/migration/loongarch64/a-b-kernel.h b/tests/migration/loongarch64/a-b-kernel.h
-new file mode 100644
-index 0000000000..b3fe466754
---- /dev/null
-+++ b/tests/migration/loongarch64/a-b-kernel.h
-@@ -0,0 +1,16 @@
-+/* This file is automatically generated from the assembly file in
-+* tests/migration/loongarch64. Edit that file and then run "make all"
-+* inside tests/migration to update, and then remember to send both
-+* the header and the assembler differences in your patch submission.
-+*/
-+unsigned char loongarch64_kernel[] = {
-+  0x0c, 0xc0, 0x3f, 0x14, 0x8c, 0x81, 0x87, 0x03, 0x0d, 0x04, 0x81, 0x03,
-+  0x8d, 0x01, 0x00, 0x29, 0x0c, 0x00, 0x04, 0x14, 0x0d, 0x80, 0x0c, 0x14,
-+  0x2e, 0x00, 0x00, 0x14, 0x10, 0xc0, 0x3f, 0x14, 0x10, 0x82, 0x87, 0x03,
-+  0x11, 0x08, 0x81, 0x03, 0x80, 0x01, 0x00, 0x29, 0x8c, 0xb9, 0x10, 0x00,
-+  0x8d, 0xf9, 0xff, 0x5f, 0x12, 0x00, 0xc0, 0x02, 0x0c, 0x00, 0x04, 0x14,
-+  0x8f, 0x01, 0x00, 0x2a, 0xef, 0x05, 0x80, 0x02, 0xef, 0x5d, 0x00, 0x00,
-+  0x8f, 0x01, 0x00, 0x29, 0x8c, 0xb9, 0x10, 0x00, 0x8d, 0xed, 0xff, 0x5f,
-+  0x52, 0x06, 0xc0, 0x02, 0x52, 0x7e, 0x40, 0x03, 0x5f, 0xde, 0xff, 0x47,
-+  0x11, 0x02, 0x00, 0x29, 0xff, 0xd7, 0xff, 0x53, 0x00, 0x00, 0x40, 0x03
-+};
-diff --git a/tests/migration/migration-test.h b/tests/migration/migration-test.h
-index 68512c0b1b..f402e48349 100644
---- a/tests/migration/migration-test.h
-+++ b/tests/migration/migration-test.h
-@@ -32,4 +32,7 @@
-  */
- #define ARM_TEST_MAX_KERNEL_SIZE (512 * 1024)
- 
-+/* LoongArch64 */
-+#define LOONGARCH_TEST_MEM_START (32 * 1024 * 1024)
-+#define LOONGARCH_TEST_MEM_END   (100 * 1024 * 1024)
- #endif /* MIGRATION_TEST_H */
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 86293051dc..8d5d8a05d7 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -140,7 +140,7 @@ qtests_hppa = ['boot-serial-test'] + \
-   (config_all_devices.has_key('CONFIG_VGA') ? ['display-vga-test'] : [])
- 
- qtests_loongarch64 = qtests_filter + \
--  ['boot-serial-test']
-+  ['boot-serial-test', 'migration-test']
- 
- qtests_m68k = ['boot-serial-test'] + \
-   qtests_filter
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 7a1345f80f..95bd4e9756 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -128,6 +128,7 @@ static char *bootpath;
- #include "tests/migration/i386/a-b-bootblock.h"
- #include "tests/migration/aarch64/a-b-kernel.h"
- #include "tests/migration/s390x/a-b-bios.h"
-+#include "tests/migration/loongarch64/a-b-kernel.h"
- 
- static void bootfile_create(char *dir, bool suspend_me)
- {
-@@ -154,6 +155,9 @@ static void bootfile_create(char *dir, bool suspend_me)
-         content = aarch64_kernel;
-         len = sizeof(aarch64_kernel);
-         g_assert(sizeof(aarch64_kernel) <= ARM_TEST_MAX_KERNEL_SIZE);
-+    } else if (strcmp(arch, "loongarch64") == 0) {
-+        content = loongarch64_kernel;
-+        len = sizeof(loongarch64_kernel);
-     } else {
-         g_assert_not_reached();
-     }
-@@ -750,6 +754,12 @@ static int test_migrate_start(QTestState **from, QTestState **to,
-         arch_opts = g_strdup_printf("-cpu max -kernel %s", bootpath);
-         start_address = ARM_TEST_MEM_START;
-         end_address = ARM_TEST_MEM_END;
-+    } else if (strcmp(arch, "loongarch64") == 0) {
-+        memory_size = "256M";
-+        machine_alias = "virt";
-+        arch_opts = g_strdup_printf("-cpu la464 -bios %s", bootpath);
-+        start_address = LOONGARCH_TEST_MEM_START;
-+        end_address = LOONGARCH_TEST_MEM_END;
-     } else {
-         g_assert_not_reached();
-     }
--- 
-2.39.3
+This simplifies things, we can store GPA->IOVA mappings and SVQ ->
+IOVA mappings separately.
+
+Thanks
+
+>
+> Thanks!
+>
 
 
