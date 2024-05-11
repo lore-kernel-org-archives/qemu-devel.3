@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E10C8C25B4F
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 May 2024 01:48:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0394EC25B4F
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 May 2024 01:48:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5bpj-0007Zn-Eg; Fri, 10 May 2024 21:47:31 -0400
+	id 1s5bpl-0007ob-BS; Fri, 10 May 2024 21:47:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s5box-0005DB-Jy; Fri, 10 May 2024 21:46:46 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1s5bp2-0005GE-69; Fri, 10 May 2024 21:46:49 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s5boo-0003c0-TG; Fri, 10 May 2024 21:46:43 -0400
+ id 1s5boz-0003ij-H7; Fri, 10 May 2024 21:46:47 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 74B1F4E677C;
- Sat, 11 May 2024 03:46:13 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 02E394E6788;
+ Sat, 11 May 2024 03:46:24 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id duayewdYu6cP; Sat, 11 May 2024 03:46:11 +0200 (CEST)
+ with ESMTP id oC-pNvVz76K7; Sat, 11 May 2024 03:46:22 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 893424E6778; Sat, 11 May 2024 03:46:11 +0200 (CEST)
-Message-Id: <1ab4666839e1027d122e3e0bde074b9c38314c68.1715390232.git.balaton@eik.bme.hu>
+ id 12FEA4E678A; Sat, 11 May 2024 03:46:22 +0200 (CEST)
+Message-Id: <219df9bb29be086a933c1068009525b3be7e4fa7.1715390232.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1715390232.git.balaton@eik.bme.hu>
 References: <cover.1715390232.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v6 31/48] target/ppc: Split off common embedded TLB init
+Subject: [PATCH v6 41/48] target/ppc/mmu_common.c: Return directly in
+ ppc6xx_tlb_pte_check()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -39,9 +40,9 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Sat, 11 May 2024 03:46:11 +0200 (CEST)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Date: Sat, 11 May 2024 03:46:22 +0200 (CEST)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -62,107 +63,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Several 4xx CPUs and e200 share the same TLB settings enclosed in an
-ifdef. Split it off in a common function to reduce code duplication
-and the number of ifdefs.
+Instead of using a local ret variable return directly and remove the
+local.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/cpu_init.c | 46 ++++++++++++++++---------------------------
- 1 file changed, 17 insertions(+), 29 deletions(-)
+ target/ppc/mmu_common.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 07ad788e54..92c71b2a09 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -2107,18 +2107,22 @@ static int check_pow_hid0_74xx(CPUPPCState *env)
-     return 0;
+diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+index 0c7cbab2bc..a035cefcad 100644
+--- a/target/ppc/mmu_common.c
++++ b/target/ppc/mmu_common.c
+@@ -98,9 +98,6 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
+                                 target_ulong pte1, int pteh,
+                                 MMUAccessType access_type)
+ {
+-    int ret;
+-
+-    ret = -1;
+     /* Check validity and table match */
+     if (pte_is_valid(pte0) && ((pte0 >> 6) & 1) == pteh) {
+         /* Check vsid & api */
+@@ -119,16 +116,15 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
+             if (check_prot_access_type(ctx->prot, access_type)) {
+                 /* Access granted */
+                 qemu_log_mask(CPU_LOG_MMU, "PTE access granted !\n");
+-                ret = 0;
++                return 0;
+             } else {
+                 /* Access right violation */
+                 qemu_log_mask(CPU_LOG_MMU, "PTE access rejected\n");
+-                ret = -2;
++                return -2;
+             }
+         }
+     }
+-
+-    return ret;
++    return -1;
  }
  
-+static void init_tlbs_emb(CPUPPCState *env)
-+{
-+#ifndef CONFIG_USER_ONLY
-+    env->nb_tlb = 64;
-+    env->nb_ways = 1;
-+    env->tlb_type = TLB_EMB;
-+#endif
-+}
-+
- static void init_proc_405(CPUPPCState *env)
- {
-     register_40x_sprs(env);
-     register_405_sprs(env);
-     register_usprgh_sprs(env);
- 
--    /* Memory management */
--#if !defined(CONFIG_USER_ONLY)
--    env->nb_tlb = 64;
--    env->nb_ways = 1;
--    env->tlb_type = TLB_EMB;
--#endif
-+    init_tlbs_emb(env);
-     init_excp_4xx(env);
-     env->dcache_line_size = 32;
-     env->icache_line_size = 32;
-@@ -2185,12 +2189,8 @@ static void init_proc_440EP(CPUPPCState *env)
-                  SPR_NOACCESS, SPR_NOACCESS,
-                  &spr_read_generic, &spr_write_generic,
-                  0x00000000);
--    /* Memory management */
--#if !defined(CONFIG_USER_ONLY)
--    env->nb_tlb = 64;
--    env->nb_ways = 1;
--    env->tlb_type = TLB_EMB;
--#endif
-+
-+    init_tlbs_emb(env);
-     init_excp_BookE(env);
-     env->dcache_line_size = 32;
-     env->icache_line_size = 32;
-@@ -2282,12 +2282,7 @@ static void init_proc_440GP(CPUPPCState *env)
-     register_440_sprs(env);
-     register_usprgh_sprs(env);
- 
--    /* Memory management */
--#if !defined(CONFIG_USER_ONLY)
--    env->nb_tlb = 64;
--    env->nb_ways = 1;
--    env->tlb_type = TLB_EMB;
--#endif
-+    init_tlbs_emb(env);
-     init_excp_BookE(env);
-     env->dcache_line_size = 32;
-     env->icache_line_size = 32;
-@@ -2355,12 +2350,8 @@ static void init_proc_440x5(CPUPPCState *env)
-                  SPR_NOACCESS, SPR_NOACCESS,
-                  &spr_read_generic, &spr_write_generic,
-                  0x00000000);
--    /* Memory management */
--#if !defined(CONFIG_USER_ONLY)
--    env->nb_tlb = 64;
--    env->nb_ways = 1;
--    env->tlb_type = TLB_EMB;
--#endif
-+
-+    init_tlbs_emb(env);
-     init_excp_BookE(env);
-     env->dcache_line_size = 32;
-     env->icache_line_size = 32;
-@@ -2717,11 +2708,8 @@ static void init_proc_e200(CPUPPCState *env)
-                  SPR_NOACCESS, SPR_NOACCESS,
-                  &spr_read_generic, &spr_write_generic,
-                  0x00000000);
--#if !defined(CONFIG_USER_ONLY)
--    env->nb_tlb = 64;
--    env->nb_ways = 1;
--    env->tlb_type = TLB_EMB;
--#endif
-+
-+    init_tlbs_emb(env);
-     init_excp_e200(env, 0xFFFF0000UL);
-     env->dcache_line_size = 32;
-     env->icache_line_size = 32;
+ /* Software driven TLB helpers */
 -- 
 2.30.9
 
