@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C2F0C25B75
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 May 2024 01:49:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76D8CC25B4F
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 May 2024 01:49:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5bpl-0007lb-1u; Fri, 10 May 2024 21:47:33 -0400
+	id 1s5boN-0004uk-6A; Fri, 10 May 2024 21:46:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s5bp0-0005Fw-Qe; Fri, 10 May 2024 21:46:49 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ id 1s5bo6-0004jo-8h; Fri, 10 May 2024 21:45:50 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s5boz-0003fR-Bs; Fri, 10 May 2024 21:46:46 -0400
+ id 1s5bo3-0003Lu-Lq; Fri, 10 May 2024 21:45:50 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id EB8034E6789;
- Sat, 11 May 2024 03:46:21 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id CDE074E6775;
+ Sat, 11 May 2024 03:45:43 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id WydPFYEfMk3k; Sat, 11 May 2024 03:46:19 +0200 (CEST)
+ with ESMTP id rH5gakHYMLS1; Sat, 11 May 2024 03:45:41 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id F1F814E6784; Sat, 11 May 2024 03:46:19 +0200 (CEST)
-Message-Id: <94a0933bce3d78578cdd4b5f65d269676489f284.1715390232.git.balaton@eik.bme.hu>
+ id DF6E14E6776; Sat, 11 May 2024 03:45:41 +0200 (CEST)
+Message-Id: <475a65336ba2765b7d1fca91b2943ccb9cb1c7cc.1715390232.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1715390232.git.balaton@eik.bme.hu>
 References: <cover.1715390232.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v6 39/48] target/ppc/mmu_common.c: Remove another single use
- local
+Subject: [PATCH v6 03/48] target/ppc/mmu_common.c: Move calculation of a value
+ closer to its usage
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,9 +40,9 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Sat, 11 May 2024 03:46:19 +0200 (CEST)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
+Date: Sat, 11 May 2024 03:45:41 +0200 (CEST)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -63,38 +63,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In ppc6xx_tlb_pte_check() the pteh variable is used only once to
-compare to the h parameter of the function. Inline its value and use
-pteh name for the function parameter which is more descriptive.
+In mmubooke_check_tlb() and mmubooke206_check_tlb() prot2 is
+calculated first but only used after an unrelated check that can
+return before tha value is used. Move the calculation after the check,
+closer to where it is used, to keep them together and avoid computing
+it when not needed.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviwed-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu_common.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ target/ppc/mmu_common.c | 36 +++++++++++++++++-------------------
+ 1 file changed, 17 insertions(+), 19 deletions(-)
 
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index b25c77c618..7026b6a62c 100644
+index 4fde7fd3bf..f79e390306 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -95,15 +95,14 @@ int ppc6xx_tlb_getnum(CPUPPCState *env, target_ulong eaddr,
- }
+@@ -635,12 +635,6 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppcemb_tlb_t *tlb,
+         return -1;
+     }
  
- static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
--                                target_ulong pte1, int h,
-+                                target_ulong pte1, int pteh,
-                                 MMUAccessType access_type)
- {
--    int ret, pteh, pp;
-+    int ret, pp;
+-    if (FIELD_EX64(env->msr, MSR, PR)) {
+-        prot2 = tlb->prot & 0xF;
+-    } else {
+-        prot2 = (tlb->prot >> 4) & 0xF;
+-    }
+-
+     /* Check the address space */
+     if ((access_type == MMU_INST_FETCH ?
+         FIELD_EX64(env->msr, MSR, IR) :
+@@ -649,6 +643,11 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppcemb_tlb_t *tlb,
+         return -1;
+     }
  
-     ret = -1;
-     /* Check validity and table match */
--    pteh = (pte0 >> 6) & 1;
--    if (pte_is_valid(pte0) && h == pteh) {
-+    if (pte_is_valid(pte0) && ((pte0 >> 6) & 1) == pteh) {
-         /* Check vsid & api */
-         pp = pte1 & 0x00000003;
-         if ((pte0 & PTE_PTEM_MASK) == ctx->ptem) {
++    if (FIELD_EX64(env->msr, MSR, PR)) {
++        prot2 = tlb->prot & 0xF;
++    } else {
++        prot2 = (tlb->prot >> 4) & 0xF;
++    }
+     *prot = prot2;
+     if (prot2 & prot_for_access_type(access_type)) {
+         qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
+@@ -830,6 +829,18 @@ static int mmubooke206_check_tlb(CPUPPCState *env, ppcmas_tlb_t *tlb,
+ 
+ found_tlb:
+ 
++    /* Check the address space and permissions */
++    if (access_type == MMU_INST_FETCH) {
++        /* There is no way to fetch code using epid load */
++        assert(!use_epid);
++        as = FIELD_EX64(env->msr, MSR, IR);
++    }
++
++    if (as != ((tlb->mas1 & MAS1_TS) >> MAS1_TS_SHIFT)) {
++        qemu_log_mask(CPU_LOG_MMU, "%s: AS doesn't match\n", __func__);
++        return -1;
++    }
++
+     if (pr) {
+         if (tlb->mas7_3 & MAS3_UR) {
+             prot2 |= PAGE_READ;
+@@ -851,19 +862,6 @@ found_tlb:
+             prot2 |= PAGE_EXEC;
+         }
+     }
+-
+-    /* Check the address space and permissions */
+-    if (access_type == MMU_INST_FETCH) {
+-        /* There is no way to fetch code using epid load */
+-        assert(!use_epid);
+-        as = FIELD_EX64(env->msr, MSR, IR);
+-    }
+-
+-    if (as != ((tlb->mas1 & MAS1_TS) >> MAS1_TS_SHIFT)) {
+-        qemu_log_mask(CPU_LOG_MMU, "%s: AS doesn't match\n", __func__);
+-        return -1;
+-    }
+-
+     *prot = prot2;
+     if (prot2 & prot_for_access_type(access_type)) {
+         qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
 -- 
 2.30.9
 
