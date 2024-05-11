@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F9D7C04FFE
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 May 2024 11:56:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B33F0C25B5F
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 May 2024 11:56:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5lIt-0000KO-FD; Sat, 11 May 2024 07:54:15 -0400
+	id 1s5lIu-0000Kz-Rv; Sat, 11 May 2024 07:54:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s5lIr-0000JN-Ms
- for qemu-devel@nongnu.org; Sat, 11 May 2024 07:54:13 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1s5lIt-0000KB-6m
+ for qemu-devel@nongnu.org; Sat, 11 May 2024 07:54:15 -0400
+Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s5lIp-0006yS-Ql
- for qemu-devel@nongnu.org; Sat, 11 May 2024 07:54:13 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3504f34a086so1337674f8f.1
- for <qemu-devel@nongnu.org>; Sat, 11 May 2024 04:54:11 -0700 (PDT)
+ id 1s5lIr-0006ym-GR
+ for qemu-devel@nongnu.org; Sat, 11 May 2024 07:54:14 -0400
+Received: by mail-lf1-x130.google.com with SMTP id
+ 2adb3069b0e04-51fc01b6fe7so2986530e87.0
+ for <qemu-devel@nongnu.org>; Sat, 11 May 2024 04:54:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715428450; x=1716033250; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715428451; x=1716033251; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AMtGB7SdOO69qhWqUoEC0VG8+kqB1EisNhBCOHuP3kg=;
- b=mUPRLVI6FX5E0XkZkpwku1p+C8OVUBr6373mCqg8W6Txv/t8rTjU1jlWk0xZLeEGAo
- YU9m97BAEKKdNYHN0JJ8hxY6ksi1r+77vDqSX0Zj/BXqGznNSiA+m78KKnH0/vPYnbC9
- s4iptqU44iYejg+EMyhIgTJWtoOUsGOrmSbahogtdqk9V6gEtfAKHD0p0njpOJr9Slqk
- PW51YwI9qaP6RIaDnOVIX73/0UJS1G0S9jL4BPqVCJ2jjI5kuPJmKeXFzhLp6/ydLyOX
- XeM+GezaYvyEnovEaH2GEGJw8tOD6jtw2aT7aamkR1s43/pK+Uvdq9QRvTqz3QzjbdZT
- FZ6A==
+ bh=M2krjFClQtt6ewuvoLiaCYVCPhv1mkrudW+d9ZYqpvE=;
+ b=OuDha/HbAEvMAA/AZ4WjmBozPBkAaxl+vOZP+yE0egI0+VhUriHSSm797fzs2RJUd+
+ XohqjRmbDRVl6Ze8YVQc8GkL5W3xsTiizV5RRfCDNc0M1FtHy05FazIa/Dj//XSz1nrM
+ 46EvoVA0bsbd0wB2uTKXVeHEGqK7wEAk8deHPgc3uyO64nuMXU73307U1MTYexqVS8MB
+ kUPj6N9i4PD8L/nWy9d1qF+K+Vhq36FH2H0wN004zZNp/35wUz9DZnPS87xEMeWMFdGF
+ UcW3QvIf71N+4QmkPhf5o1Z0QrvoQnRESY9UEVjpPKayOGym6Hse/q3Fp0egvuiKk/zm
+ NBBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715428450; x=1716033250;
+ d=1e100.net; s=20230601; t=1715428451; x=1716033251;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AMtGB7SdOO69qhWqUoEC0VG8+kqB1EisNhBCOHuP3kg=;
- b=SYS8MQ+psxHkCoVjpiLQWH0EvHsR98RQklGaOtuLQp86ZTsy7xKPw9uksm6Mbur94n
- Ti08YUxQQCUkTMDpoc9J2hBGFX8UwOGAnu/xN9MOdwFS3HbeOJi0fyj/E+WO+dDey3DX
- qMC8L/gDvAUL2NF/12fLV2cXVdwcCgaMrAP0VCn2pOO5VthKl8yogW5EWIn3VASZEDOi
- UE9NlQ5DN8H/XmSRZdYpLCI4sYiCQtqP+a8mkBn5JzpwK9lnNmI9K7lCWfm6KzCgcpqy
- qX+zgDugx/fS6HfxyyuZ3pploeC+Efee+zZVa1hfiHO3bBk0Xu3X/465YGvo94AZvkdg
- a0pA==
-X-Gm-Message-State: AOJu0YxJ8KAdd+l5zaKH40trxrmfutmVBsxkEeyxWVvIBvK4DJsuBiWk
- y9aDDbwVNH37/TKuq5ODvAuJGXTKFs/ZCVliXNzgnT/kDQ5Kn13uQZ+7yvzO92pQ6+strXeVKQI
- Xznw=
-X-Google-Smtp-Source: AGHT+IFYdfEMVbDqUwGL9dZZEosJ0J9+/IiaKIhl6shyMkoeI3hlio74PUAs5QhGAbZ/7LiQXAK2gA==
-X-Received: by 2002:adf:f8c4:0:b0:34c:6677:b7de with SMTP id
- ffacd0b85a97d-3504a632e11mr3986688f8f.2.1715428450334; 
- Sat, 11 May 2024 04:54:10 -0700 (PDT)
+ bh=M2krjFClQtt6ewuvoLiaCYVCPhv1mkrudW+d9ZYqpvE=;
+ b=KJ37eT8JqqOTjbINpJ8KT1XOqU27Ldg6ZSv6ex/wVx9Curz2/pd5xALW6Yh720xLDc
+ rFrOEpIvTDxuIfmIaTzyQPNIYDkXPaWprhmfhGj4S7uXJsDh4KX71h8K/gHbtlQqyCqV
+ vlHaw/5ZqrVq4VJFYSzW4iPlF+trMK9MS/ShooLqijgquSmUk9VkYGGRY40EyAzKx6q/
+ taV3rNIlj87IPpFeLfvXA0Lc2wDpRuYnS6KfnUcrDp1BSA1J4nynyxl0um1o2lLRZA6Q
+ Gsil/9br9t6gRQcxsyoGqGZ9yY1cfkyHC/Eg1DMervl2MkMMyXlVUWd4dDSBT+LRrwqP
+ FmBA==
+X-Gm-Message-State: AOJu0YyD+t/RPZrGioCwKmsO3gDna9zqhZPWTXZdK3Gctux4gpyw4ZrB
+ 9TGuoNPP1tY2/EQLdNNeNcL5RQywtDcwXq8M7bkm6bEs8oV5DdVLE29xJiGJudpYiYxSb5JPd+L
+ Rws4=
+X-Google-Smtp-Source: AGHT+IG6l7v4tIhLFQzBgJn9n8SIws77LlPkOfBOoN8fvoy1RRLSV2j0oMlilu5Mn1fgv1j34oKzhA==
+X-Received: by 2002:ac2:4831:0:b0:51d:38ee:ddda with SMTP id
+ 2adb3069b0e04-5221057932amr3200192e87.52.1715428451509; 
+ Sat, 11 May 2024 04:54:11 -0700 (PDT)
 Received: from stoup.. ([195.76.196.165]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502bbbbf20sm6764797f8f.93.2024.05.11.04.54.09
+ ffacd0b85a97d-3502bbbbf20sm6764797f8f.93.2024.05.11.04.54.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 11 May 2024 04:54:10 -0700 (PDT)
+ Sat, 11 May 2024 04:54:11 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org
-Subject: [PATCH 08/17] ppc64: Simplify reginfo_is_eq
-Date: Sat, 11 May 2024 13:53:51 +0200
-Message-Id: <20240511115400.7587-9-richard.henderson@linaro.org>
+Subject: [PATCH 09/17] ppc64: Clean up reginfo_dump
+Date: Sat, 11 May 2024 13:53:52 +0200
+Message-Id: <20240511115400.7587-10-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240511115400.7587-1-richard.henderson@linaro.org>
 References: <20240511115400.7587-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::130;
+ envelope-from=richard.henderson@linaro.org; helo=mail-lf1-x130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,57 +93,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since we now only copy into reginfo exactly what we want to compare,
-and since we zero all unused padding and reserved space, we need not
-enumerate each field for comparison, but defer to memcmp.
+Dump only the registers that we copied in reginfo_init.
+Improve the formatting and layout of what we do dump.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- risu_reginfo_ppc64.c | 31 +------------------------------
- 1 file changed, 1 insertion(+), 30 deletions(-)
+ risu_reginfo_ppc64.c | 51 ++++++++++++++++++--------------------------
+ 1 file changed, 21 insertions(+), 30 deletions(-)
 
 diff --git a/risu_reginfo_ppc64.c b/risu_reginfo_ppc64.c
-index 109b87b..e0c650b 100644
+index e0c650b..730a565 100644
 --- a/risu_reginfo_ppc64.c
 +++ b/risu_reginfo_ppc64.c
-@@ -67,36 +67,7 @@ void reginfo_init(struct reginfo *ri, ucontext_t *uc, void *siaddr)
- /* reginfo_is_eq: compare the reginfo structs, returns nonzero if equal */
- int reginfo_is_eq(struct reginfo *m, struct reginfo *a)
+@@ -75,38 +75,29 @@ void reginfo_dump(struct reginfo *ri, FILE * f)
  {
--    int i;
--    for (i = 0; i < 32; i++) {
--        if (m->gregs[i] != a->gregs[i]) {
--            return 0;
--        }
--    }
--
--    if (m->gregs[XER] != a->gregs[XER]) {
--        return 0;
--    }
--
--    if (m->gregs[CCR] != a->gregs[CCR]) {
--        return 0;
--    }
--
--    for (i = 0; i < 32; i++) {
--        if (m->fpregs[i] != a->fpregs[i]) {
--            return 0;
--        }
--    }
--
--    for (i = 0; i < 32; i++) {
--        if (m->vrregs.vrregs[i][0] != a->vrregs.vrregs[i][0] ||
--            m->vrregs.vrregs[i][1] != a->vrregs.vrregs[i][1] ||
--            m->vrregs.vrregs[i][2] != a->vrregs.vrregs[i][2] ||
--            m->vrregs.vrregs[i][3] != a->vrregs.vrregs[i][3]) {
--            return 0;
--        }
--    }
--    return 1;
-+    return memcmp(m, a, sizeof(*m)) == 0;
- }
+     int i;
  
- /* reginfo_dump: print state to a stream */
+-    fprintf(f, "  faulting insn 0x%x\n", ri->faulting_insn);
+-    fprintf(f, "  prev insn     0x%x\n", ri->prev_insn);
+-    fprintf(f, "  prev addr    0x%" PRIx64 "\n\n", ri->nip);
+-
+-    for (i = 0; i < 16; i++) {
+-        fprintf(f, "\tr%2d: %16lx\tr%2d: %16lx\n", i, ri->gregs[i],
+-                i + 16, ri->gregs[i + 16]);
+-    }
+-
+-    fprintf(f, "\n");
+-    fprintf(f, "\tnip    : %16lx\n", ri->gregs[32]);
+-    fprintf(f, "\tmsr    : %16lx\n", ri->gregs[33]);
+-    fprintf(f, "\torig r3: %16lx\n", ri->gregs[34]);
+-    fprintf(f, "\tctr    : %16lx\n", ri->gregs[35]);
+-    fprintf(f, "\tlnk    : %16lx\n", ri->gregs[36]);
+-    fprintf(f, "\txer    : %16lx\n", ri->gregs[37]);
+-    fprintf(f, "\tccr    : %16lx\n", ri->gregs[38]);
+-    fprintf(f, "\tmq     : %16lx\n", ri->gregs[39]);
+-    fprintf(f, "\ttrap   : %16lx\n", ri->gregs[40]);
+-    fprintf(f, "\tdar    : %16lx\n", ri->gregs[41]);
+-    fprintf(f, "\tdsisr  : %16lx\n", ri->gregs[42]);
+-    fprintf(f, "\tresult : %16lx\n", ri->gregs[43]);
+-    fprintf(f, "\tdscr   : %16lx\n\n", ri->gregs[44]);
+-
+-    for (i = 0; i < 16; i++) {
+-        fprintf(f, "\tf%2d: %016lx\tf%2d: %016lx\n", i, ri->fpregs[i],
+-                i + 16, ri->fpregs[i + 16]);
+-    }
+-    fprintf(f, "\tfpscr: %016lx\n\n", ri->fpscr);
++    fprintf(f, "%6s: %08x\n", "insn", ri->faulting_insn);
++    fprintf(f, "%6s: %016lx\n", "pc", ri->nip);
+ 
+     for (i = 0; i < 32; i++) {
+-        fprintf(f, "vr%02d: %8x, %8x, %8x, %8x\n", i,
++        fprintf(f, "%*s%d: %016lx%s",
++                6 - (i < 10 ? 1 : 2), "r", i, ri->gregs[i],
++                i & 1 ? "\n" : "  ");
++    }
++
++    fprintf(f, "%6s: %016lx  %6s: %016lx\n",
++            "xer", ri->gregs[XER],
++            "ccr", ri->gregs[CCR]);
++
++    for (i = 0; i < 32; i++) {
++        fprintf(f, "%*s%d: %016lx%s",
++                6 - (i < 10 ? 1 : 2), "f", i, ri->fpregs[i],
++                i & 1 ? "\n" : "  ");
++    }
++    fprintf(f, "%6s: %016lx\n", "fpscr", ri->fpscr);
++
++    for (i = 0; i < 32; i++) {
++        fprintf(f, "%*s%d: %08x %08x %08x %08x\n",
++                6 - (i < 10 ? 1 : 2), "vr", i,
+                 ri->vrregs.vrregs[i][0], ri->vrregs.vrregs[i][1],
+                 ri->vrregs.vrregs[i][2], ri->vrregs.vrregs[i][3]);
+     }
 -- 
 2.34.1
 
