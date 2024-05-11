@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C87AC04FFE
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 May 2024 11:55:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 827ABC04FFE
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 May 2024 11:55:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5lIz-0000N4-I6; Sat, 11 May 2024 07:54:21 -0400
+	id 1s5lIo-0000HS-Ep; Sat, 11 May 2024 07:54:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s5lIx-0000Lo-86
- for qemu-devel@nongnu.org; Sat, 11 May 2024 07:54:19 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1s5lIm-0000Gi-Tp
+ for qemu-devel@nongnu.org; Sat, 11 May 2024 07:54:08 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s5lIv-00070K-Mf
- for qemu-devel@nongnu.org; Sat, 11 May 2024 07:54:19 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-34da04e44a2so2095194f8f.1
- for <qemu-devel@nongnu.org>; Sat, 11 May 2024 04:54:17 -0700 (PDT)
+ id 1s5lIl-0006wu-5q
+ for qemu-devel@nongnu.org; Sat, 11 May 2024 07:54:08 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-34e0d8b737eso2208501f8f.1
+ for <qemu-devel@nongnu.org>; Sat, 11 May 2024 04:54:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715428456; x=1716033256; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715428445; x=1716033245; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=G/dRk75Xa2dli8e7P8dUDOHpTSk+dp2zsSzv4pGi5N4=;
- b=QD47BkWW9q96XcJcMaBATjXWSH81ks9IjNgK8qQ2XOETSOy++Zo5G4iPmyBiwaMFvX
- snFAHCeEQy58+9uuzNSNuRcNxV9ccV6Iih7qDB89AhgPXHoxI9je/SD1Jp6oEggXlAPq
- imEPJw1CdXNbSwUXVuhKyckmKH0MELbYWJ9RhZVxIPGy9L67XucXyT11PbHN0MzCsHmC
- q/0ZMPapjz9kTWMb+NdMlfCDo3Jrr3/VuNaEIkX4mcFVs2Wpthx6fe37RAELaKSvzcw2
- 7xiySVMiE9yMGWDeV8Y5xxu+eqGPtXPAPyfioailaDl9EhjCN05iAMnp3aXPlS7eA8gq
- A2xw==
+ bh=+j17CWT0LGOl4p0U3kdloXB6QscEHqrtuA6J/qKLXl4=;
+ b=vVHqsLXPNxYuVbhbWU93fxnm7NecPSh0RNaNNte4T8kNlCJHXKG59PoQbnhmRqqMri
+ PaiNzIh9lqRgv+PNRyvPDywV0Z4OqN+A/YwiQ9/0KaBsoy3ZZt2eFSdSdoukkXDBfsPq
+ 4pNjPN5G8vz599rNJq7A0ZQiyl1+34c9Tcz/yz7INdcNKO+LhrF6d99YbfPs2UoWZA4y
+ Y2vaD4tHv4qNfnLUEBbGwlTs6TncbNGr3T3e0zS/4AOCio5D6slPKzxCoMCAN603308g
+ AaRj8yG2NRJjQHgbPYl0OI4fANENHRYyLaDNmsWpObax8NxQ5oiPC7+mW3iggjqrD6pm
+ 3UYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715428456; x=1716033256;
+ d=1e100.net; s=20230601; t=1715428445; x=1716033245;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=G/dRk75Xa2dli8e7P8dUDOHpTSk+dp2zsSzv4pGi5N4=;
- b=mGkYcV03+5t9GeIjFVrQg9MV/zKD8PldNA+TEF3Akc7KRNNMJmhM6Qunlt1tUJ2VJ4
- NgW3vgb4HET8ePZUffTyg3XYpuXsTU38rP3ZIpRccJAQuCcL/CvR6HfI9DW7Ycp+y1X5
- 29EnWumnOibWPI76wPfPpR4/4+8dbDBtO1i0u1FVzVY0lZxdJ5Q7jwmlMVzGRPDDn3Pk
- 79EIkcy6bm8KOwcudcUzLjQprS5i+8IQFNJzh2G7DIXNOoaG60o9J9MTb9SeeAwXQloy
- Qr+eU0BTO+5LQ7zOMOsBtL3B8+LLXhlhgJpgHqHRy1q38q8jO+tD/JRwD45tshuM3vsv
- a8XA==
-X-Gm-Message-State: AOJu0Yzt/e/at2Xj716CHFeyBNkehg36jAcNKJFS1tpU2M5j8//ypH9z
- ddlpcR86ESCdEMPbi3jZVPoA75o0+/fYbdYWy3Cj4nyDncFcQSrB9X228K74HQXwbT5gaKOR8Nf
- aB4w=
-X-Google-Smtp-Source: AGHT+IEo1X/3tbOuwLKXh8uynojPItWy1B1ixA7c78ZF8mRgb7G66oZm8q5Gkrryh8ZirwBoV3QsXg==
-X-Received: by 2002:adf:f98e:0:b0:34f:4e40:c05c with SMTP id
- ffacd0b85a97d-3504a738b54mr3195196f8f.34.1715428456209; 
- Sat, 11 May 2024 04:54:16 -0700 (PDT)
+ bh=+j17CWT0LGOl4p0U3kdloXB6QscEHqrtuA6J/qKLXl4=;
+ b=bjzbs4OzJR6qa2SQ7ntPqEoAOTQjiK0Us5U24EbvEdP8otANSYakcckyKn9PtXgluv
+ o33rmDB3PJjdxVD7kwV2ZQp6flbEixNpBisvuWInEA7Qgv+7VFrKgyAhMaL1620B/gW6
+ uVZHoc5sQeitvZTP8ECJ9hd4F8LvfkGBdS/ligj1kIkrJu9RSuNUuObZc80vZ0xvfo5y
+ cvCSmwKntQAisnbG4gocqFGxVix/XgxEdCwY3+ti2KKc4kCNPwpW09UEIHJTrQBVBfIT
+ GnqAr0Ir+F3gystUIrK9kzHLbMoMYZ3FbBmKCP4i4ydEc47OGU5+oDoqgTxqdzMwGVwE
+ 06Vg==
+X-Gm-Message-State: AOJu0YylhVBomnuiFoIe0jtcdsRPhYRWjBdZ5XU7dR5YUfxpEC88PrD/
+ 9kTFE44plJOgj4ZrVnivXe2hZCfAEsjKOEHngbxNOCEUu17zoUjcZQxq8Bx6M+NrFP14ipZ1LVc
+ J/7E=
+X-Google-Smtp-Source: AGHT+IFr4C3gvHo1cHIEG6/1tTC1W/BSVKtAdIY4/Hmw6XA228rk17CpXjeWPfMIEF39Sh9q59eFLg==
+X-Received: by 2002:a5d:6952:0:b0:34d:8d11:f8c0 with SMTP id
+ ffacd0b85a97d-350498a4abfmr4192581f8f.18.1715428444827; 
+ Sat, 11 May 2024 04:54:04 -0700 (PDT)
 Received: from stoup.. ([195.76.196.165]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502bbbbf20sm6764797f8f.93.2024.05.11.04.54.15
+ ffacd0b85a97d-3502bbbbf20sm6764797f8f.93.2024.05.11.04.54.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 11 May 2024 04:54:16 -0700 (PDT)
+ Sat, 11 May 2024 04:54:04 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org
-Subject: [PATCH 14/17] aarch64: Use bool for sve_{z,p}reg_is_eq
-Date: Sat, 11 May 2024 13:53:57 +0200
-Message-Id: <20240511115400.7587-15-richard.henderson@linaro.org>
+Subject: [PATCH 02/17] Fix load_image error check for mmap
+Date: Sat, 11 May 2024 13:53:45 +0200
+Message-Id: <20240511115400.7587-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240511115400.7587-1-richard.henderson@linaro.org>
 References: <20240511115400.7587-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,32 +93,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The functions results are more naturally boolean.
+mmap does not return null on failure, but MAP_FAILED.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- risu_reginfo_aarch64.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ risu.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/risu_reginfo_aarch64.c b/risu_reginfo_aarch64.c
-index 55a9ef6..6323eef 100644
---- a/risu_reginfo_aarch64.c
-+++ b/risu_reginfo_aarch64.c
-@@ -268,12 +268,12 @@ bool reginfo_is_eq(struct reginfo *r1, struct reginfo *r2)
-     return memcmp(r1, r2, reginfo_size(r1)) == 0;
- }
- 
--static int sve_zreg_is_eq(int vq, const void *z1, const void *z2)
-+static bool sve_zreg_is_eq(int vq, const void *z1, const void *z2)
- {
-     return memcmp(z1, z2, vq * 16) == 0;
- }
- 
--static int sve_preg_is_eq(int vq, const void *p1, const void *p2)
-+static bool sve_preg_is_eq(int vq, const void *p1, const void *p2)
- {
-     return memcmp(p1, p2, vq * 2) == 0;
- }
+diff --git a/risu.c b/risu.c
+index 36fc82a..6b6295c 100644
+--- a/risu.c
++++ b/risu.c
+@@ -362,10 +362,9 @@ static void load_image(const char *imgfile)
+     /* Map writable because we include the memory area for store
+      * testing in the image.
+      */
+-    addr =
+-        mmap(0, len, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE, fd,
+-             0);
+-    if (!addr) {
++    addr = mmap(0, len, PROT_READ | PROT_WRITE | PROT_EXEC,
++                MAP_PRIVATE, fd, 0);
++    if (addr == MAP_FAILED) {
+         perror("mmap");
+         exit(EXIT_FAILURE);
+     }
 -- 
 2.34.1
 
