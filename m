@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33D04C25B10
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 May 2024 01:49:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C2F0C25B75
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 May 2024 01:49:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5bpW-00061M-4s; Fri, 10 May 2024 21:47:18 -0400
+	id 1s5bpl-0007lb-1u; Fri, 10 May 2024 21:47:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s5boR-0004yh-T0; Fri, 10 May 2024 21:46:12 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1s5bp0-0005Fw-Qe; Fri, 10 May 2024 21:46:49 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s5boP-0003ZO-Oq; Fri, 10 May 2024 21:46:11 -0400
+ id 1s5boz-0003fR-Bs; Fri, 10 May 2024 21:46:46 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 7905C4E6789;
- Sat, 11 May 2024 03:45:57 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id EB8034E6789;
+ Sat, 11 May 2024 03:46:21 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id iJYGntgy8sPf; Sat, 11 May 2024 03:45:55 +0200 (CEST)
+ with ESMTP id WydPFYEfMk3k; Sat, 11 May 2024 03:46:19 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 8B0554E678A; Sat, 11 May 2024 03:45:55 +0200 (CEST)
-Message-Id: <a449ebb07db382b08e551f913d881fda10e9415b.1715390232.git.balaton@eik.bme.hu>
+ id F1F814E6784; Sat, 11 May 2024 03:46:19 +0200 (CEST)
+Message-Id: <94a0933bce3d78578cdd4b5f65d269676489f284.1715390232.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1715390232.git.balaton@eik.bme.hu>
 References: <cover.1715390232.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v6 16/48] target/ppc/mmu_common.c: Replace hard coded
- constants in ppc_jumbo_xlate()
+Subject: [PATCH v6 39/48] target/ppc/mmu_common.c: Remove another single use
+ local
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,9 +40,9 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Sat, 11 May 2024 03:45:55 +0200 (CEST)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Date: Sat, 11 May 2024 03:46:19 +0200 (CEST)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -63,39 +63,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The "2" in booke206_update_mas_tlb_miss() call corresponds to
-MMU_INST_FETCH which is the value of access_type in this branch;
-mmubooke206_esr() only checks for MMU_DATA_STORE and it's called from
-code access so using MMU_DATA_LOAD here seems wrong so replace it with
-access_type here as well that yields the same result. This also makes
-these calls the same as the data access branch further down.
+In ppc6xx_tlb_pte_check() the pteh variable is used only once to
+compare to the h parameter of the function. Inline its value and use
+pteh name for the function parameter which is more descriptive.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu_common.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/ppc/mmu_common.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index f40481b4b1..6570b280ca 100644
+index b25c77c618..7026b6a62c 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -1287,13 +1287,13 @@ static bool ppc_jumbo_xlate(PowerPCCPU *cpu, vaddr eaddr,
-                 env->spr[SPR_40x_ESR] = 0x00000000;
-                 break;
-             case POWERPC_MMU_BOOKE206:
--                booke206_update_mas_tlb_miss(env, eaddr, 2, mmu_idx);
-+                booke206_update_mas_tlb_miss(env, eaddr, access_type, mmu_idx);
-                 /* fall through */
-             case POWERPC_MMU_BOOKE:
-                 cs->exception_index = POWERPC_EXCP_ITLB;
-                 env->error_code = 0;
-                 env->spr[SPR_BOOKE_DEAR] = eaddr;
--                env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, MMU_DATA_LOAD);
-+                env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
-                 break;
-             case POWERPC_MMU_REAL:
-                 cpu_abort(cs, "PowerPC in real mode should never raise "
+@@ -95,15 +95,14 @@ int ppc6xx_tlb_getnum(CPUPPCState *env, target_ulong eaddr,
+ }
+ 
+ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
+-                                target_ulong pte1, int h,
++                                target_ulong pte1, int pteh,
+                                 MMUAccessType access_type)
+ {
+-    int ret, pteh, pp;
++    int ret, pp;
+ 
+     ret = -1;
+     /* Check validity and table match */
+-    pteh = (pte0 >> 6) & 1;
+-    if (pte_is_valid(pte0) && h == pteh) {
++    if (pte_is_valid(pte0) && ((pte0 >> 6) & 1) == pteh) {
+         /* Check vsid & api */
+         pp = pte1 & 0x00000003;
+         if ((pte0 & PTE_PTEM_MASK) == ctx->ptem) {
 -- 
 2.30.9
 
