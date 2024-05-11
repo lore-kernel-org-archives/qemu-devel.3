@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2EB5C25B75
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 May 2024 01:50:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60314C25B4F
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 May 2024 01:50:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5bpd-0006xE-AU; Fri, 10 May 2024 21:47:25 -0400
+	id 1s5bpX-0006D9-MA; Fri, 10 May 2024 21:47:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s5bog-00055j-PN; Fri, 10 May 2024 21:46:27 -0400
+ id 1s5bow-0005Cz-Pt; Fri, 10 May 2024 21:46:46 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s5boQ-0003Za-Cr; Fri, 10 May 2024 21:46:26 -0400
+ id 1s5bos-0003cn-8W; Fri, 10 May 2024 21:46:42 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 9F8814E678B;
- Sat, 11 May 2024 03:45:59 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id A173A4E6783;
+ Sat, 11 May 2024 03:46:16 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id UYZZWImSyiOX; Sat, 11 May 2024 03:45:57 +0200 (CEST)
+ with ESMTP id sAqc1O2f6y3N; Sat, 11 May 2024 03:46:14 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id AC98B4E678C; Sat, 11 May 2024 03:45:57 +0200 (CEST)
-Message-Id: <e6a81058f1962f824690095b1ac1f5461d81ab56.1715390232.git.balaton@eik.bme.hu>
+ id ACB094E6780; Sat, 11 May 2024 03:46:14 +0200 (CEST)
+Message-Id: <5628a7d28d242ac1663a2e0d43a9e084a917a547.1715390232.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1715390232.git.balaton@eik.bme.hu>
 References: <cover.1715390232.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v6 18/48] target/ppc/mmu_common.c: Don't use mmu_ctx_t in
- mmubooke_get_physical_address()
+Subject: [PATCH v6 34/48] target/ppc: Add a function to check for page
+ protection bit
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,7 +40,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Sat, 11 May 2024 03:45:57 +0200 (CEST)
+Date: Sat, 11 May 2024 03:46:14 +0200 (CEST)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -63,74 +63,214 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-mmubooke_get_physical_address() only uses the raddr and prot fields
-from mmu_ctx_t. Pass these directly instead of using a ctx struct.
+Checking if a page protection bit is set for a given access type is a
+common operation. Add a function to avoid repeating the same check at
+multiple places. As this relies on access type and page protection bit
+values having certain relation also add an assert to ensure that this
+assumption holds.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu_common.c | 30 ++++++++++--------------------
- 1 file changed, 10 insertions(+), 20 deletions(-)
+ target/ppc/cpu_init.c    |  5 +++++
+ target/ppc/internal.h    | 23 +++++------------------
+ target/ppc/mmu-hash32.c  |  6 +++---
+ target/ppc/mmu-hash64.c  |  2 +-
+ target/ppc/mmu-radix64.c |  2 +-
+ target/ppc/mmu_common.c  | 26 +++++++++++++-------------
+ 6 files changed, 28 insertions(+), 36 deletions(-)
 
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 92c71b2a09..d3b92d9f0e 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -7388,6 +7388,11 @@ static void ppc_cpu_class_init(ObjectClass *oc, void *data)
+ #ifndef CONFIG_USER_ONLY
+     cc->sysemu_ops = &ppc_sysemu_ops;
+     INTERRUPT_STATS_PROVIDER_CLASS(oc)->get_statistics = ppc_get_irq_stats;
++
++    /* check_prot_access_type relies on MMU access and PAGE bits relations */
++    qemu_build_assert(MMU_DATA_LOAD == 0 && MMU_DATA_STORE == 1 &&
++                      MMU_INST_FETCH == 2 && PAGE_READ == 1 &&
++                      PAGE_WRITE == 2 && PAGE_EXEC == 4);
+ #endif
+ 
+     cc->gdb_num_core_regs = 71;
+diff --git a/target/ppc/internal.h b/target/ppc/internal.h
+index 46176c4711..9cdb797dc0 100644
+--- a/target/ppc/internal.h
++++ b/target/ppc/internal.h
+@@ -234,27 +234,14 @@ void destroy_ppc_opcodes(PowerPCCPU *cpu);
+ void ppc_gdb_init(CPUState *cs, PowerPCCPUClass *ppc);
+ const gchar *ppc_gdb_arch_name(CPUState *cs);
+ 
+-/**
+- * prot_for_access_type:
+- * @access_type: Access type
+- *
+- * Return the protection bit required for the given access type.
+- */
+-static inline int prot_for_access_type(MMUAccessType access_type)
++#ifndef CONFIG_USER_ONLY
++
++/* Check if permission bit required for the access_type is set in prot */
++static inline int check_prot_access_type(int prot, MMUAccessType access_type)
+ {
+-    switch (access_type) {
+-    case MMU_INST_FETCH:
+-        return PAGE_EXEC;
+-    case MMU_DATA_LOAD:
+-        return PAGE_READ;
+-    case MMU_DATA_STORE:
+-        return PAGE_WRITE;
+-    }
+-    g_assert_not_reached();
++    return prot & (1 << access_type);
+ }
+ 
+-#ifndef CONFIG_USER_ONLY
+-
+ /* PowerPC MMU emulation */
+ static inline int ppc_hash32_pp_prot(int key, int pp, int nx)
+ {
+diff --git a/target/ppc/mmu-hash32.c b/target/ppc/mmu-hash32.c
+index bf5ce129d2..d5f2057eb1 100644
+--- a/target/ppc/mmu-hash32.c
++++ b/target/ppc/mmu-hash32.c
+@@ -207,7 +207,7 @@ static bool ppc_hash32_direct_store(PowerPCCPU *cpu, target_ulong sr,
+     }
+ 
+     *prot = key ? PAGE_READ | PAGE_WRITE : PAGE_READ;
+-    if (*prot & prot_for_access_type(access_type)) {
++    if (check_prot_access_type(*prot, access_type)) {
+         *raddr = eaddr;
+         return true;
+     }
+@@ -358,7 +358,7 @@ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
+     if (env->nb_BATs != 0) {
+         raddr = ppc_hash32_bat_lookup(cpu, eaddr, access_type, protp, mmu_idx);
+         if (raddr != -1) {
+-            if (prot_for_access_type(access_type) & ~*protp) {
++            if (!check_prot_access_type(*protp, access_type)) {
+                 if (guest_visible) {
+                     if (access_type == MMU_INST_FETCH) {
+                         cs->exception_index = POWERPC_EXCP_ISI;
+@@ -426,7 +426,7 @@ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
+ 
+     prot = ppc_hash32_pte_prot(mmu_idx, sr, pte);
+ 
+-    if (prot_for_access_type(access_type) & ~prot) {
++    if (!check_prot_access_type(prot, access_type)) {
+         /* Access right violation */
+         qemu_log_mask(CPU_LOG_MMU, "PTE access rejected\n");
+         if (guest_visible) {
+diff --git a/target/ppc/mmu-hash64.c b/target/ppc/mmu-hash64.c
+index 0966422a55..d9626f6aab 100644
+--- a/target/ppc/mmu-hash64.c
++++ b/target/ppc/mmu-hash64.c
+@@ -1097,7 +1097,7 @@ bool ppc_hash64_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
+     amr_prot = ppc_hash64_amr_prot(cpu, pte);
+     prot = exec_prot & pp_prot & amr_prot;
+ 
+-    need_prot = prot_for_access_type(access_type);
++    need_prot = check_prot_access_type(PAGE_RWX, access_type);
+     if (need_prot & ~prot) {
+         /* Access right violation */
+         qemu_log_mask(CPU_LOG_MMU, "PTE access rejected\n");
+diff --git a/target/ppc/mmu-radix64.c b/target/ppc/mmu-radix64.c
+index 395ce3b782..2c5ade5cea 100644
+--- a/target/ppc/mmu-radix64.c
++++ b/target/ppc/mmu-radix64.c
+@@ -209,7 +209,7 @@ static bool ppc_radix64_check_prot(PowerPCCPU *cpu, MMUAccessType access_type,
+     }
+ 
+     /* Check if requested access type is allowed */
+-    if (prot_for_access_type(access_type) & ~*prot) {
++    if (!check_prot_access_type(*prot, access_type)) {
+         /* Page Protected for that Access */
+         *fault_cause |= access_type == MMU_INST_FETCH ? SRR1_NOEXEC_GUARD :
+                                                         DSISR_PROTFAULT;
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index adce6cceb8..12dac9e63a 100644
+index b14421b8c0..ca914fefea 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -634,36 +634,25 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppcemb_tlb_t *tlb,
-     return access_type == MMU_INST_FETCH ? -3 : -2;
- }
+@@ -76,11 +76,6 @@ void ppc_store_sdr1(CPUPPCState *env, target_ulong value)
+ /*****************************************************************************/
+ /* PowerPC MMU emulation */
  
--static int mmubooke_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
--                                         target_ulong address,
-+static int mmubooke_get_physical_address(CPUPPCState *env, hwaddr *raddr,
-+                                         int *prot, target_ulong address,
-                                          MMUAccessType access_type)
+-static int check_prot(int prot, MMUAccessType access_type)
+-{
+-    return prot & prot_for_access_type(access_type) ? 0 : -2;
+-}
+-
+ int ppc6xx_tlb_getnum(CPUPPCState *env, target_ulong eaddr,
+                                     int way, int is_code)
  {
-     ppcemb_tlb_t *tlb;
--    hwaddr raddr;
--    int i, ret;
-+    int i, ret = -1;
- 
--    ret = -1;
--    raddr = (hwaddr)-1ULL;
-     for (i = 0; i < env->nb_tlb; i++) {
-         tlb = &env->tlb.tlbe[i];
--        ret = mmubooke_check_tlb(env, tlb, &raddr, &ctx->prot, address,
-+        ret = mmubooke_check_tlb(env, tlb, raddr, prot, address,
-                                  access_type, i);
-         if (ret != -1) {
-             break;
+@@ -125,13 +120,14 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
+             /* Keep the matching PTE information */
+             ctx->raddr = pte1;
+             ctx->prot = ppc_hash32_pp_prot(ctx->key, pp, ctx->nx);
+-            ret = check_prot(ctx->prot, access_type);
+-            if (ret == 0) {
++            if (check_prot_access_type(ctx->prot, access_type)) {
+                 /* Access granted */
+                 qemu_log_mask(CPU_LOG_MMU, "PTE access granted !\n");
++                ret = 0;
+             } else {
+                 /* Access right violation */
+                 qemu_log_mask(CPU_LOG_MMU, "PTE access rejected\n");
++                ret = -2;
+             }
          }
      }
--
--    if (ret >= 0) {
--        ctx->raddr = raddr;
--        qemu_log_mask(CPU_LOG_MMU, "%s: access granted " TARGET_FMT_lx
--                      " => " HWADDR_FMT_plx " %d %d\n", __func__,
--                      address, ctx->raddr, ctx->prot, ret);
--    } else {
--         qemu_log_mask(CPU_LOG_MMU, "%s: access refused " TARGET_FMT_lx
--                       " => " HWADDR_FMT_plx " %d %d\n", __func__,
--                       address, raddr, ctx->prot, ret);
--    }
--
-+    qemu_log_mask(CPU_LOG_MMU,
-+                  "%s: access %s " TARGET_FMT_lx " => " HWADDR_FMT_plx
-+                  " %d %d\n", __func__, ret < 0 ? "refused" : "granted",
-+                  address, ret < 0 ? -1 : *raddr, ret == -1 ? 0 : *prot, ret);
-     return ret;
- }
- 
-@@ -1143,7 +1132,8 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
-     bool real_mode;
- 
-     if (env->mmu_model == POWERPC_MMU_BOOKE) {
--        return mmubooke_get_physical_address(env, ctx, eaddr, access_type);
-+        return mmubooke_get_physical_address(env, &ctx->raddr, &ctx->prot,
-+                                             eaddr, access_type);
-     } else if (env->mmu_model == POWERPC_MMU_BOOKE206) {
-         return mmubooke206_get_physical_address(env, ctx, eaddr, access_type,
-                                                 mmu_idx);
+@@ -299,12 +295,14 @@ static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
+                     (virtual & 0x0001F000);
+                 /* Compute access rights */
+                 ctx->prot = prot;
+-                ret = check_prot(ctx->prot, access_type);
+-                if (ret == 0) {
++                if (check_prot_access_type(ctx->prot, access_type)) {
+                     qemu_log_mask(CPU_LOG_MMU, "BAT %d match: r " HWADDR_FMT_plx
+                                   " prot=%c%c\n", i, ctx->raddr,
+                                   ctx->prot & PAGE_READ ? 'R' : '-',
+                                   ctx->prot & PAGE_WRITE ? 'W' : '-');
++                    ret = 0;
++                } else {
++                    ret = -2;
+                 }
+                 break;
+             }
+@@ -521,9 +519,11 @@ static int mmu40x_get_physical_address(CPUPPCState *env, hwaddr *raddr,
+ check_perms:
+             /* Check from TLB entry */
+             *prot = tlb->prot;
+-            ret = check_prot(*prot, access_type);
+-            if (ret == -2) {
++            if (check_prot_access_type(*prot, access_type)) {
++                ret = 0;
++            } else {
+                 env->spr[SPR_40x_ESR] = 0;
++                ret = -2;
+             }
+             break;
+         }
+@@ -581,7 +581,7 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppcemb_tlb_t *tlb,
+     } else {
+         *prot = (tlb->prot >> 4) & 0xF;
+     }
+-    if (*prot & prot_for_access_type(access_type)) {
++    if (check_prot_access_type(*prot, access_type)) {
+         qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
+         return 0;
+     }
+@@ -783,7 +783,7 @@ found_tlb:
+             *prot |= PAGE_EXEC;
+         }
+     }
+-    if (*prot & prot_for_access_type(access_type)) {
++    if (check_prot_access_type(*prot, access_type)) {
+         qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
+         return 0;
+     }
 -- 
 2.30.9
 
