@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 786F9C04FFE
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 May 2024 10:12:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0300AC25B5F
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 May 2024 10:13:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5jhh-0005Zn-98; Sat, 11 May 2024 06:11:45 -0400
+	id 1s5jhH-0005V0-Vt; Sat, 11 May 2024 06:11:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dario.binacchi@amarulasolutions.com>)
- id 1s5jhf-0005Y3-Kq
- for qemu-devel@nongnu.org; Sat, 11 May 2024 06:11:43 -0400
-Received: from mail-yb1-xb2d.google.com ([2607:f8b0:4864:20::b2d])
+ (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
+ id 1s5jhD-0005SK-Ub; Sat, 11 May 2024 06:11:15 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dario.binacchi@amarulasolutions.com>)
- id 1s5jhZ-0002CP-Hs
- for qemu-devel@nongnu.org; Sat, 11 May 2024 06:11:43 -0400
-Received: by mail-yb1-xb2d.google.com with SMTP id
- 3f1490d57ef6-de610800da0so2546614276.2
- for <qemu-devel@nongnu.org>; Sat, 11 May 2024 03:11:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
+ id 1s5jhB-0002Ah-Mo; Sat, 11 May 2024 06:11:15 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a599a298990so681352466b.2; 
+ Sat, 11 May 2024 03:11:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amarulasolutions.com; s=google; t=1715422294; x=1716027094; darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1715422272; x=1716027072; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UyBQoo06HsWvTXRFgcJgiznhcvxeBnn+oXzUfipf4C0=;
- b=mPOGFGYpbs14jdwxyyEa+wB9w+Tqo46ycQG0QAtMonON8dPqDmeWW8UNzMCikEgyUP
- PtM9F+eZYcKEBxRX682SF2GwBvL6oCu+L//oWvcooz9jLcLfnfnSHi98zg4chXO/UgUn
- qc9TxZgIq205Q5wbrGmIrkiEzZ8VqK3f4kGGQ=
+ bh=JcjfiQqdszD/zdWCJfe58zMToJNsLVZqVDYZoGGq41I=;
+ b=I3GX4H4Q5zewIu3Os11Gz9VLZ3eS6wBbEYvF4ysfFg2QJ6vKPE+9ClskxaA25WcCKa
+ ozr6jFm5f7VllDiyzfILh5FoTp2u9mNi2QNytEce1J2vWBNAc9kfH7ZceaFwquMph/DO
+ P63UoMfmXjMAfle7nE4Mxj0euimcGLtLLZcLBYVJFxkIlVFe2dxg00DcrwkdMYP/zP9H
+ Ddjr4ahmVUmPjR7G5IFPwXxHIlHALRhE7o5eS/xcegxQvuRpjbzhzC5DZmsOYaht3VvZ
+ gKAXJSgh4RnhSXtWTgo92NPmguKWt8H2BOWOMTXX1Bo4770kV9JrghGQfw4x9TFnGIDg
+ 3vLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715422294; x=1716027094;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1715422272; x=1716027072;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UyBQoo06HsWvTXRFgcJgiznhcvxeBnn+oXzUfipf4C0=;
- b=bfRrH6cWtvAySqZNKqJKeUGE4HUdpBmKorhe504x/qRm1/PXGG41X70W9EJW4nKqIn
- cGEvlmkwDyq1Nhk6qXVyElAZseyGof/pUj8LkHSTm/sUTHzkXn9gYGFbEJDETddbFIMX
- 20Ko4ued5I8u4T6IP1GSljrhZZ+dcZD5wc99g5ZYTx5LsUYQ4PJs0Eq0hISOCwbgT+jy
- cQalNfDF1lhzo8n2GGjqdRf/1ncpEtMcuHygHf+fdARau4YixneKsGkmsogkU0tvJGed
- LmUh9/kpa4um4WlSW1mV4YgV1ZS1nBbWYRKQlyUgID0g+0fFrybDdk02lrMQdnDXe9YQ
- 9sMw==
-X-Gm-Message-State: AOJu0YwXy7ccMLJrb+VhEGunyy5y/7vAcyd0Pwgk4NeW1yhYvU+viefd
- P6u3OQBNs5wwy6fHEccce+Jxh4MtPvudZGyXbKnqt0T4citz4YlnDWUMNav0srcoqdj+wncVFO3
- b8TLBdvsBcLFWDjBk17r3BP/ARAyseVszo+c95w==
-X-Google-Smtp-Source: AGHT+IF6jJbzrZ04wA9YYPi6L+tJgMoi9yXj94RvVVejE9n0GOXnKtyblQDIwRnJR4gmgp6dwmoVIuTPdGiKOh2JehE=
-X-Received: by 2002:a25:ae90:0:b0:dcd:2f89:6aac with SMTP id
- 3f1490d57ef6-dee4f1b7b86mr4937243276.10.1715422294274; Sat, 11 May 2024
- 03:11:34 -0700 (PDT)
+ bh=JcjfiQqdszD/zdWCJfe58zMToJNsLVZqVDYZoGGq41I=;
+ b=LVWQHcIffTMIL/9DR/ylIjvtLdZFixMX9DskcDKk6vslqoxB7IWH7ARYxzLcw+8wC5
+ LehfkoQbtqAWoVXuvyX43DyJriWGChIvcCK56Rc+A02G+Tle3neyfkDuxzdk23zVFcXB
+ mN1kI0mrVbiMkT5l3Rub00eDOHMZRIIVT5DPmFVBAIR4DJcuJ9rjis+4rzYCxdbCUb1x
+ eWqN3wzZd3M8GNXfHBhAcHw57W/znWa6AzlVuBYHCIvPOlSDKmHTmgyC2ZEQiYyoOUco
+ y3+GmzcxHNCmTbAz6xPjRrYIOGxvchImCqGzNEn1SGRdsWfZMjP70IXCb07TgbLow3Ic
+ u76w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXCXFngu5sXvOXsN/kbHfowT0roGjHjjdQkFER14l8tcWxG1C7b22Q3sE2Psi56zfLqBpoO5eVlNZBfiLuxto3oQ2LBRe3mureBS9pXQjAZmVV80zpJ+Fy8kDDBCw==
+X-Gm-Message-State: AOJu0YwnVQCw1lboI+/PmvT3i40zKHM+PtIpzRMCFMum4kmSxlF7HPKh
+ acfMcM5Ysk724WbkNmHQd1+hlbnic6uX+8l2xfW5Zx/1Pwj1jjJ4
+X-Google-Smtp-Source: AGHT+IHug6BV5TDF5TUi77yCbX10LzsD5H9oymYIOhNHlZu++vmMVp/oemS4IBT0Q8dOtR80+4hc5w==
+X-Received: by 2002:a17:906:d9d9:b0:a59:b807:330a with SMTP id
+ a640c23a62f3a-a5a2d55e4b8mr343451166b.32.1715422271976; 
+ Sat, 11 May 2024 03:11:11 -0700 (PDT)
+Received: from freya.midgard (broadband-188-255-126-251.ip.moscow.rt.ru.
+ [188.255.126.251]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a5a1781d27bsm301687166b.21.2024.05.11.03.11.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 11 May 2024 03:11:11 -0700 (PDT)
+From: Alexey Baturo <baturo.alexey@gmail.com>
+X-Google-Original-From: Alexey Baturo <me@deliversmonkey.space>
+To: 
+Cc: baturo.alexey@gmail.com, richard.henderson@linaro.org,
+ space.monkey.delivers@gmail.com, palmer@dabbelt.com,
+ Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu,
+ kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
+Subject: [PATCH v9 6/6] target/riscv: Enable updates for pointer masking
+ variables and thus enable pointer masking extension
+Date: Sat, 11 May 2024 13:10:53 +0300
+Message-Id: <20240511101053.1875596-7-me@deliversmonkey.space>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240511101053.1875596-1-me@deliversmonkey.space>
+References: <20240511101053.1875596-1-me@deliversmonkey.space>
 MIME-Version: 1.0
-References: <20240430164752.645521-1-dario.binacchi@amarulasolutions.com>
- <63094227-235e-4274-b308-2d7c27e50b81@linaro.org>
- <CABGWkvrCNoWDB=V5f_7qwCd97dAfOC3XT2ukXYt-FsxuUKK-KQ@mail.gmail.com>
- <4ad368ae-74d0-4a38-b4d9-d907c1b8dc7c@linaro.org>
- <CABGWkvo_eaDFC15JQF8+Pu14M75CKWvVr8JWQ7XJuHc8fCc7LA@mail.gmail.com>
-In-Reply-To: <CABGWkvo_eaDFC15JQF8+Pu14M75CKWvVr8JWQ7XJuHc8fCc7LA@mail.gmail.com>
-From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Date: Sat, 11 May 2024 12:11:23 +0200
-Message-ID: <CABGWkvqXdJtiiO2gWC2VTcLvYD33KHe5Rb49Q=VDrtkEiODxOw@mail.gmail.com>
-Subject: Re: [PATCH 1/1] tests/fp/meson: don't build fp-bench test if fenv.h
- is missing
-To: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Thomas Huth <thuth@redhat.com>, michael@amarulasolutions.com, 
- linux-amarula@amarulasolutions.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2d;
- envelope-from=dario.binacchi@amarulasolutions.com;
- helo=mail-yb1-xb2d.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=baturo.alexey@gmail.com; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,116 +99,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gentle ping.
+From: Alexey Baturo <baturo.alexey@gmail.com>
 
-Thanks,
-Dario
+Signed-off-by: Alexey Baturo <baturo.alexey@gmail.com>
 
-On Wed, May 1, 2024 at 4:17=E2=80=AFPM Dario Binacchi
-<dario.binacchi@amarulasolutions.com> wrote:
->
-> Hello Richard,
->
-> On Wed, May 1, 2024 at 3:31=E2=80=AFPM Richard Henderson
-> <richard.henderson@linaro.org> wrote:
-> >
-> > On 5/1/24 05:18, Dario Binacchi wrote:
-> > > Hello Richard,
-> > >
-> > > On Tue, Apr 30, 2024 at 8:15=E2=80=AFPM Richard Henderson
-> > > <richard.henderson@linaro.org> wrote:
-> > >>
-> > >> On 4/30/24 09:47, Dario Binacchi wrote:
-> > >>> The fp-bench test (i. e. tests/fp/fp-bench.c) use fenv.h that is no=
-t
-> > >>> always provided by the libc (uClibc). The patch disables its compil=
-ation
-> > >>> in case the header is not available.
-> > >>
-> > >> Since uclibc has had fenv.h since 2008, are you sure this isn't simp=
-ly a case of a corrupt
-> > >> installation?
-> > >
-> > >>
-> > >>
-> > >> r~
-> > >
-> > > It's not an issue of corrupted installation but rather of compilation=
-:
-> >
-> > Installation of your cross-compiler or buildroot, I mean.
-> >
-> > >
-> > > ../tests/fp/fp-bench.c:15:10: fatal error: fenv.h: No such file or di=
-rectory
-> > >     15 | #include <fenv.h>
-> > >        |          ^~~~~~~~
-> > > compilation terminated.
-> >
-> > Yes, yes.  However, <fenv.h> is present in uclibc-ng, and has been sinc=
-e 2008.
-> > So *why* is fenv.h not present?
->
-> I found the fenv.h files here:
-> out/emulator/host/opt/ext-toolchain/i686-buildroot-linux-uclibc/include/c=
-++/11.3.0/tr1/fenv.h
-> out/emulator/host/opt/ext-toolchain/i686-buildroot-linux-uclibc/include/c=
-++/11.3.0/fenv.h
->
-> But the compiler expects them in:
-> out/emulator/host/i686-buildroot-linux-uclibc/sysroot/usr/include/
->
-> So, I think that the fenv support has not been enabled in uClibc
-> configuration of Buildroot.
->
-> Thanks and regards,
-> Dario
->
-> >
-> >
-> > r~
->
->
->
-> --
->
-> Dario Binacchi
->
-> Senior Embedded Linux Developer
->
-> dario.binacchi@amarulasolutions.com
->
-> __________________________________
->
->
-> Amarula Solutions SRL
->
-> Via Le Canevare 30, 31100 Treviso, Veneto, IT
->
-> T. +39 042 243 5310
-> info@amarulasolutions.com
->
-> www.amarulasolutions.com
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ target/riscv/cpu.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 1e350e9bd8..b3b3a6275f 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -192,6 +192,9 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(svinval, PRIV_VERSION_1_12_0, ext_svinval),
+     ISA_EXT_DATA_ENTRY(svnapot, PRIV_VERSION_1_12_0, ext_svnapot),
+     ISA_EXT_DATA_ENTRY(svpbmt, PRIV_VERSION_1_12_0, ext_svpbmt),
++    ISA_EXT_DATA_ENTRY(ssnpm, PRIV_VERSION_1_12_0, ext_ssnpm),
++    ISA_EXT_DATA_ENTRY(smnpm, PRIV_VERSION_1_12_0, ext_smnpm),
++    ISA_EXT_DATA_ENTRY(smmpm, PRIV_VERSION_1_12_0, ext_smmpm),
+     ISA_EXT_DATA_ENTRY(xtheadba, PRIV_VERSION_1_11_0, ext_xtheadba),
+     ISA_EXT_DATA_ENTRY(xtheadbb, PRIV_VERSION_1_11_0, ext_xtheadbb),
+     ISA_EXT_DATA_ENTRY(xtheadbs, PRIV_VERSION_1_11_0, ext_xtheadbs),
+@@ -1565,6 +1568,11 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[] = {
+ 
+ /* These are experimental so mark with 'x-' */
+ const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
++    /* Zjpm v0.8 extensions */
++    MULTI_EXT_CFG_BOOL("x-ssnpm", ext_ssnpm, false),
++    MULTI_EXT_CFG_BOOL("x-smnpm", ext_smnpm, false),
++    MULTI_EXT_CFG_BOOL("x-smmpm", ext_smmpm, false),
++
+     DEFINE_PROP_END_OF_LIST(),
+ };
+ 
+-- 
+2.34.1
 
-
---=20
-
-Dario Binacchi
-
-Senior Embedded Linux Developer
-
-dario.binacchi@amarulasolutions.com
-
-__________________________________
-
-
-Amarula Solutions SRL
-
-Via Le Canevare 30, 31100 Treviso, Veneto, IT
-
-T. +39 042 243 5310
-info@amarulasolutions.com
-
-www.amarulasolutions.com
 
