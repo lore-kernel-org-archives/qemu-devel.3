@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACCACC04FFE
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 May 2024 14:44:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DF68C04FFE
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 May 2024 14:46:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5nvn-0000SM-Qz; Sat, 11 May 2024 10:42:35 -0400
+	id 1s5nzN-0004ed-0n; Sat, 11 May 2024 10:46:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <liwei1518@gmail.com>)
- id 1s5nuT-0000I3-Ms; Sat, 11 May 2024 10:41:13 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1s5nzJ-0004e1-HH; Sat, 11 May 2024 10:46:15 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <liwei1518@gmail.com>)
- id 1s5nuQ-0002rS-MM; Sat, 11 May 2024 10:41:12 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-5d81b08d6f2so2020298a12.0; 
- Sat, 11 May 2024 07:41:09 -0700 (PDT)
+ id 1s5nzF-0003PY-QU; Sat, 11 May 2024 10:46:12 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-1ed96772f92so25285825ad.0; 
+ Sat, 11 May 2024 07:46:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715438468; x=1716043268; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1715438768; x=1716043568; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Ow12iNDRPOo0ZKTkxNNess96Ou/IKCUWN0i1g+fyGMg=;
- b=cd5PClLF/Blf3z70Oi/g9dHG/LOq8CVxD/8RMz/x6einS8torD3BISKft+D2jgFkYp
- kRx/JvuPvghMtEubeR/uzXwGD/4LQ5sKiiuSmRfdpGuY42o3l6GIZMMrh0bAH8MEWQgb
- BGW+gtt/ZfQg69Q3rQd6X/OW5JkjLIdEVo+7tugSI/MU29Pz3VhTyDBHnxD5IwKk+EBJ
- 7vaSprPKJ0jVzbTtTm5lCaW+9aXXVwwS5fPjP2pGlO06Vsix05V8fIE2QjRnwSHTisQJ
- J0TaDrBP+i3V7bhKBDo9a3KTTZZ/XtUwKTwOygBZHIDmwrbv322PUzOZGVz2WZoDuMaI
- 2Grw==
+ bh=4mHeM8v46H5GqBx8ufyPG6XyaVrl3itP3tCb1h5Q0Hk=;
+ b=KawPyY0X+cRG0QrG8tAzxJEbRrP1cL5H10nPYs7aZXa/3fH5MweHroSRpntrvR3GZb
+ lXOrwgs8+tZZEzCOojUuAAE73Dy1lmbWe8USgHvEVQCm7W6gCDe0j0LZaJI2LLScyHO6
+ eybNI8tHAacMJPLKEbor962UeFAG1fYYjW/Zx228N82qHEAxeOAvL2gzU+LPmDN3OpAD
+ tyPUEZLrVAZWKEqmPpxeq+HLwhN60IB7RqnVJW1CU4ZS6WwRC47CG6Y1AHDJyoIQoqxx
+ VLQ9co0VHwQ2N22rK8zSLpmhlc4+yYkMR7dFRSyBu/53Gd3sOUHaUxFs/N8qVSsz4MCU
+ 68JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715438468; x=1716043268;
+ d=1e100.net; s=20230601; t=1715438768; x=1716043568;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ow12iNDRPOo0ZKTkxNNess96Ou/IKCUWN0i1g+fyGMg=;
- b=XN7/ylKvdiQvRiHehWiRxFS7EW7soCZi8jCLjSxEf47dXkBdoXhqy/xQOVx45x823H
- EubrETkAqJmTu6fyt9hJ7MAg2FHcAqi+6IKDxyXC8w21S78ad27rQzTc42k98WgadUPp
- JX4yDitHDuvBkor/AHD7hCr7xbCtUzWCzEpUpF17Ln4sd/bd7palsvfZHq99fJZ2bdNa
- Ra+Cdfl97mvAG5hVGFfcout/jydExZhc1P3rWe7jzTJZouz8jg2e3ivbihsl61N22I03
- eeHWhq+oJlNrEKX7bSwB+AcE5/lj922mZJ21YvFY4IhBF1iKSJDEatLj+aMx1Y0elIpm
- U2Eg==
+ bh=4mHeM8v46H5GqBx8ufyPG6XyaVrl3itP3tCb1h5Q0Hk=;
+ b=BfUT6TXNLe24OpxX+BYT/HpKNIPKH8dTTKjTaxvatI+mjITaG47ug7kwi9PVgg4RBN
+ mHbRI8gea5gER5EzNxHh0Rn/Pzk2rsm2Jo7Xr0lhr0ODbOWKrRkUKhH9738OSD+ohY6f
+ e5irEnaYWKVooqIC/xda/t6BlkVTgZCUBmgA04QWeoKoCadhgsgc3C9MQPTbs41Kmc/l
+ P8y000AZSjIuOt1UgT/V8Fu/bJJNchRqdrWi6D7aSLsc3qPI6xfgZxBIsgyzSP88GZQE
+ q9T794BgYhIC2boQoFrgWf6vjHxwEqs4t0Oy5ihawwefYP3SSL0asczHBT/Jv+glUQfY
+ N7+w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUnFojxa+pHr6Tm5VnZDn5Wc4VM8y6IgAkek277RP4rY8rGmTFLF8pM3C71By4WDsjPCRdg8nPC3WNGtyZU420X8KZizJ7AlFwcqPfdTUGQKt51hFhYEu6GuYfzEA==
-X-Gm-Message-State: AOJu0YwKHNoxboGL8DRDOesq+ZLu430um76giBXDOaPimoshrGBU21Be
- frPDl5D4uDuoChXty7/djIjTgfHLkztu8sguCYcJV5CVpq9shgbS
-X-Google-Smtp-Source: AGHT+IFeo6WITafvO6/AnDAPJVrGCyL5xshUswj704Js30KHcX+bwpAui863BuL4zPJGobpxRtWS0w==
-X-Received: by 2002:a17:902:cf10:b0:1e2:ae83:3197 with SMTP id
- d9443c01a7336-1ef43d155a4mr64425675ad.10.1715438467726; 
- Sat, 11 May 2024 07:41:07 -0700 (PDT)
+ AJvYcCXHR5JiTI9uvSOGqsMjbcUfg/7YCpoGixfS4LWfvQLmObX8SY2I53b2swJoDxAayFo6qkKXSQ8GpNwv44cMjwZ5T9UzsSW/it5oPd8BGxTt30fkzuf9A4CZNdKxAg==
+X-Gm-Message-State: AOJu0YznpL66e2tXQZvd6yoyx8gK8nlJYGyctCW6Q0U2Iy2MW/dls997
+ c//SIpafVgoNJU6PePVDvUcFrKQxaCDfs3ZNCd62dDrC77pFcdh6
+X-Google-Smtp-Source: AGHT+IHUD/rFfTgTMwuGDaZ34AgDLv8VRvMRr3bleX168NoEA5Mj8AI+q/RsY0oaNu2a8daLVntsTA==
+X-Received: by 2002:a17:902:6e01:b0:1eb:51a4:3685 with SMTP id
+ d9443c01a7336-1ef4404944emr54609265ad.52.1715438767864; 
+ Sat, 11 May 2024 07:46:07 -0700 (PDT)
 Received: from [192.168.0.120] ([114.95.238.28])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ef0bf31000sm49535505ad.145.2024.05.11.07.41.04
+ d9443c01a7336-1ef0c264e68sm49708435ad.302.2024.05.11.07.46.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 11 May 2024 07:41:07 -0700 (PDT)
-Message-ID: <11addfd0-d350-4c73-a856-8b7dec2f8ffa@gmail.com>
-Date: Sat, 11 May 2024 22:41:00 +0800
+ Sat, 11 May 2024 07:46:07 -0700 (PDT)
+Message-ID: <fa17c12e-18d9-42b9-a58f-df05fae294fa@gmail.com>
+Date: Sat, 11 May 2024 22:46:02 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] target/riscv: Reuse the conversion function of
- priv_spec and string
+Subject: Re: [PATCH 3/5] target/riscv: Add 'P1P13' bit in SMSTATEEN0
 To: "Fea.Wang" <fea.wang@sifive.com>, qemu-devel@nongnu.org,
  qemu-riscv@nongnu.org
-Cc: Jim Shu <jim.shu@sifive.com>, Frank Chang <frank.chang@sifive.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: Frank Chang <frank.chang@sifive.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Alistair Francis <alistair.francis@wdc.com>,
  Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Andrew Jones <ajones@ventanamicro.com>, Max Chou <max.chou@sifive.com>
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
 References: <20240510065856.2436870-1-fea.wang@sifive.com>
- <20240510065856.2436870-2-fea.wang@sifive.com>
+ <20240510065856.2436870-4-fea.wang@sifive.com>
 Content-Language: en-US
 From: liwei <liwei1518@gmail.com>
-In-Reply-To: <20240510065856.2436870-2-fea.wang@sifive.com>
+In-Reply-To: <20240510065856.2436870-4-fea.wang@sifive.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=liwei1518@gmail.com; helo=mail-pg1-x529.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=liwei1518@gmail.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -91,7 +88,6 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sat, 11 May 2024 10:42:31 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -108,85 +104,57 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 2024/5/10 14:58, Fea.Wang wrote:
-> From: Jim Shu <jim.shu@sifive.com>
+> Based on privilege 1.13 spec, there should be a bit56 for 'P1P13' in
+> SMSTATEEN0 that controls access to the hedeleg.
 >
-> Public the conversion function of priv_spec and string in cpu.h, so that
-> tcg-cpu.c could also use it.
->
-> Signed-off-by: Jim Shu <jim.shu@sifive.com>
 > Signed-off-by: Fea.Wang <fea.wang@sifive.com>
 > Reviewed-by: Frank Chang <frank.chang@sifive.com>
 > ---
->   target/riscv/cpu.c         |  4 ++--
->   target/riscv/cpu.h         |  3 +++
->   target/riscv/tcg/tcg-cpu.c | 13 +++++--------
->   3 files changed, 10 insertions(+), 10 deletions(-)
->
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index a74f0eb29c..b6b48e5620 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -1769,7 +1769,7 @@ static const PropertyInfo prop_pmp = {
->       .set = prop_pmp_set,
->   };
->   
-> -static int priv_spec_from_str(const char *priv_spec_str)
-> +int priv_spec_from_str(const char *priv_spec_str)
-
-This change seems unnecessary in this patch.
-
-Regards,
+>   target/riscv/cpu_bits.h |  1 +
+>   target/riscv/csr.c      | 10 ++++++++++
+>   2 files changed, 11 insertions(+)
+Reviewed-by:  Weiwei Li <liwei1518@gmail.com>
 
 Weiwei Li
-
->   {
->       int priv_version = -1;
->   
-> @@ -1784,7 +1784,7 @@ static int priv_spec_from_str(const char *priv_spec_str)
->       return priv_version;
->   }
->   
-> -static const char *priv_spec_to_str(int priv_version)
-> +const char *priv_spec_to_str(int priv_version)
->   {
->       switch (priv_version) {
->       case PRIV_VERSION_1_10_0:
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index e0dd1828b5..7696102697 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -829,4 +829,7 @@ target_ulong riscv_new_csr_seed(target_ulong new_value,
->   uint8_t satp_mode_max_from_map(uint32_t map);
->   const char *satp_mode_str(uint8_t satp_mode, bool is_32_bit);
->   
-> +const char *priv_spec_to_str(int priv_version);
-> +int priv_spec_from_str(const char *priv_spec_str);
-> +
->   #endif /* RISCV_CPU_H */
-> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index 4ebebebe09..faa8de9b83 100644
-> --- a/target/riscv/tcg/tcg-cpu.c
-> +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -76,16 +76,13 @@ static void riscv_cpu_write_misa_bit(RISCVCPU *cpu, uint32_t bit,
->   
->   static const char *cpu_priv_ver_to_str(int priv_ver)
->   {
-> -    switch (priv_ver) {
-> -    case PRIV_VERSION_1_10_0:
-> -        return "v1.10.0";
-> -    case PRIV_VERSION_1_11_0:
-> -        return "v1.11.0";
-> -    case PRIV_VERSION_1_12_0:
-> -        return "v1.12.0";
-> +    const char *priv_spec_str = priv_spec_to_str(priv_ver);
-> +
-> +    if (priv_spec_str == NULL) {
-> +        g_assert_not_reached();
+>
+> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+> index 74318a925c..28bd3fb0b4 100644
+> --- a/target/riscv/cpu_bits.h
+> +++ b/target/riscv/cpu_bits.h
+> @@ -315,6 +315,7 @@
+>   #define SMSTATEEN0_CS       (1ULL << 0)
+>   #define SMSTATEEN0_FCSR     (1ULL << 1)
+>   #define SMSTATEEN0_JVT      (1ULL << 2)
+> +#define SMSTATEEN0_P1P13    (1ULL << 56)
+>   #define SMSTATEEN0_HSCONTXT (1ULL << 57)
+>   #define SMSTATEEN0_IMSIC    (1ULL << 58)
+>   #define SMSTATEEN0_AIA      (1ULL << 59)
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index 6b460ee0e8..d844ce770e 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -2248,6 +2248,11 @@ static RISCVException write_mstateen0(CPURISCVState *env, int csrno,
+>           wr_mask |= SMSTATEEN0_FCSR;
 >       }
 >   
-> -    g_assert_not_reached();
-> +    return priv_spec_str;
+> +    RISCVCPU *cpu = env_archcpu(env);
+> +    if (cpu->env.priv_ver >= PRIV_VERSION_1_13_0) {
+> +        wr_mask |= SMSTATEEN0_P1P13;
+> +    }
+> +
+>       return write_mstateen(env, csrno, wr_mask, new_val);
 >   }
 >   
->   static void riscv_cpu_synchronize_from_tb(CPUState *cs,
+> @@ -2283,6 +2288,11 @@ static RISCVException write_mstateen0h(CPURISCVState *env, int csrno,
+>   {
+>       uint64_t wr_mask = SMSTATEEN_STATEEN | SMSTATEEN0_HSENVCFG;
+>   
+> +    RISCVCPU *cpu = env_archcpu(env);
+> +    if (cpu->env.priv_ver >= PRIV_VERSION_1_13_0) {
+> +            wr_mask |= SMSTATEEN0_P1P13;
+> +    }
+> +
+>       return write_mstateenh(env, csrno, wr_mask, new_val);
+>   }
+>   
 
