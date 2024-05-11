@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8CB3C25B74
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 May 2024 18:26:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 218E2C25B4F
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 May 2024 18:26:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5rPP-0000Hn-G2; Sat, 11 May 2024 14:25:24 -0400
+	id 1s5rPZ-0000K7-H4; Sat, 11 May 2024 14:25:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1s5rPM-0000HA-Jb
- for qemu-devel@nongnu.org; Sat, 11 May 2024 14:25:20 -0400
-Received: from madrid.collaboradmins.com ([2a00:1098:ed:100::25])
+ id 1s5rPX-0000JS-Us
+ for qemu-devel@nongnu.org; Sat, 11 May 2024 14:25:31 -0400
+Received: from madrid.collaboradmins.com ([46.235.227.194])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1s5rPK-0004y3-Ek
- for qemu-devel@nongnu.org; Sat, 11 May 2024 14:25:19 -0400
+ id 1s5rPU-0004zS-TL
+ for qemu-devel@nongnu.org; Sat, 11 May 2024 14:25:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
- s=mail; t=1715451915;
- bh=3bQCBHzTAYsqEJFg3UkbvZGLZxQ6fvJwm6Hfq6oVsPY=;
+ s=mail; t=1715451925;
+ bh=XkGEJowXsaobsuCyn7JXewaWmvdES6n2Hv+/cjLkoyg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=IZWG3Pu55IwAL+0tUIFQxB2KAP0zrXwkXPAE+58o8oLCTMRAOqH0SvQpPHYAY32oP
- hC3oh+iAxpgo8O7gYgpcfN4vemkkErxOH55PTDXaLi7JwnUy6j2WK1/+4Iz+zdP7GJ
- ucR4M+Ebmx/CHhUNxFIac3c2geO3jKGdOFi5tNnQKYWIGuiBZT96bWYfizjESV9gRW
- Qf0Zgche8ODwdqsk0DPA1yKlzIEO7etHemx8sxo708LAo1oddZTH3fMVkHAZJPPTAG
- iSmNl5WCm9aoOoAm9UXb4R1hTxR0SFkq/SjdlfhMpjv3Uc99QDB/V8nNzuHfenIIBL
- UKPL3dM93bT+g==
+ b=sW7MCpoPHssUYVaZmSGu4ki0o0rj+grnq6cZonymWAzdGbOvRgmTR+lMRIVqmNaR9
+ dFM7EG5UukxiZSw/0R6nxYfOKDo1AnCXlRdDMId1V5yzOCiiHNl14RiG5BBIFFKEEy
+ WL5ZoweOmU445WMfMoedz17XKlCzpCCw2XGg8bjpOE5ecqLjmCvQVJF6MVjujDiaLJ
+ XQZvIUlgUF2+ScebAFNTvBSsLpEmWOaL7NGTmVF9UdhNaWqN/DGzNYcF2tYf2FkbiF
+ QQCXGbQ1TcQIL4AkPl2L4HrLhKaF7KIkN6v+Ww+gwPXhPGy09A7x575I0vuzTxeYGf
+ 2RplrlojO7Rtw==
 Received: from workpc.. (cola.collaboradmins.com [195.201.22.229])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
  (Authenticated sender: dmitry.osipenko)
- by madrid.collaboradmins.com (Postfix) with ESMTPSA id 885AB3782190;
- Sat, 11 May 2024 18:25:13 +0000 (UTC)
+ by madrid.collaboradmins.com (Postfix) with ESMTPSA id 541C63780BFE;
+ Sat, 11 May 2024 18:25:23 +0000 (UTC)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>,
@@ -59,15 +59,15 @@ Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
  Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-Subject: [PATCH v11 01/10] virtio-gpu: Unrealize GL device
-Date: Sat, 11 May 2024 21:22:42 +0300
-Message-ID: <20240511182251.1442078-2-dmitry.osipenko@collabora.com>
+Subject: [PATCH v11 05/10] virtio-gpu: Add virgl resource management
+Date: Sat, 11 May 2024 21:22:46 +0300
+Message-ID: <20240511182251.1442078-6-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240511182251.1442078-1-dmitry.osipenko@collabora.com>
 References: <20240511182251.1442078-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1098:ed:100::25;
+Received-SPF: pass client-ip=46.235.227.194;
  envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -90,74 +90,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Even though GL GPU doesn't support hotplugging today, free virgl
-resources when GL device is unrealized. For consistency.
+From: Huang Rui <ray.huang@amd.com>
 
+In a preparation to adding host blobs support to virtio-gpu, add virgl
+resource management that allows to retrieve resource based on its ID
+and virgl resource wrapper on top of simple resource that will be contain
+fields specific to virgl.
+
+Signed-off-by: Huang Rui <ray.huang@amd.com>
+Reviewed-by: Antonio Caggiano <quic_acaggian@quicinc.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- hw/display/virtio-gpu-gl.c     | 11 +++++++++++
- hw/display/virtio-gpu-virgl.c  |  9 +++++++++
- include/hw/virtio/virtio-gpu.h |  1 +
- 3 files changed, 21 insertions(+)
+ hw/display/virtio-gpu-virgl.c | 76 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 76 insertions(+)
 
-diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
-index e06be60dfbfc..0c0a8d136954 100644
---- a/hw/display/virtio-gpu-gl.c
-+++ b/hw/display/virtio-gpu-gl.c
-@@ -136,6 +136,16 @@ static Property virtio_gpu_gl_properties[] = {
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
-+static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
-+{
-+    VirtIOGPU *g = VIRTIO_GPU(qdev);
-+    VirtIOGPUGL *gl = VIRTIO_GPU_GL(qdev);
-+
-+    if (gl->renderer_inited) {
-+        virtio_gpu_virgl_deinit(g);
-+    }
-+}
-+
- static void virtio_gpu_gl_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-@@ -149,6 +159,7 @@ static void virtio_gpu_gl_class_init(ObjectClass *klass, void *data)
-     vgc->update_cursor_data = virtio_gpu_gl_update_cursor_data;
- 
-     vdc->realize = virtio_gpu_gl_device_realize;
-+    vdc->unrealize = virtio_gpu_gl_device_unrealize;
-     vdc->reset = virtio_gpu_gl_reset;
-     device_class_set_props(dc, virtio_gpu_gl_properties);
- }
 diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 9f34d0e6619c..b0500eccf8e0 100644
+index 8306961ad502..c6c63ca1c373 100644
 --- a/hw/display/virtio-gpu-virgl.c
 +++ b/hw/display/virtio-gpu-virgl.c
-@@ -665,3 +665,12 @@ int virtio_gpu_virgl_get_num_capsets(VirtIOGPU *g)
+@@ -22,6 +22,23 @@
  
-     return capset2_max_ver ? 2 : 1;
- }
+ #include <virglrenderer.h>
+ 
++struct virtio_gpu_virgl_resource {
++    struct virtio_gpu_simple_resource base;
++};
 +
-+void virtio_gpu_virgl_deinit(VirtIOGPU *g)
++static struct virtio_gpu_virgl_resource *
++virtio_gpu_virgl_find_resource(VirtIOGPU *g, uint32_t resource_id)
 +{
-+    if (g->fence_poll) {
-+        timer_free(g->fence_poll);
++    struct virtio_gpu_simple_resource *res;
++
++    res = virtio_gpu_find_resource(g, resource_id);
++    if (!res) {
++        return NULL;
 +    }
 +
-+    virgl_renderer_cleanup(NULL);
++    return container_of(res, struct virtio_gpu_virgl_resource, base);
 +}
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index ed44cdad6b34..b657187159d9 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -336,6 +336,7 @@ void virtio_gpu_virgl_fence_poll(VirtIOGPU *g);
- void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g);
- void virtio_gpu_virgl_reset(VirtIOGPU *g);
- int virtio_gpu_virgl_init(VirtIOGPU *g);
-+void virtio_gpu_virgl_deinit(VirtIOGPU *g);
- int virtio_gpu_virgl_get_num_capsets(VirtIOGPU *g);
++
+ #if VIRGL_RENDERER_CALLBACKS_VERSION >= 4
+ static void *
+ virgl_get_egl_display(G_GNUC_UNUSED void *cookie)
+@@ -35,11 +52,34 @@ static void virgl_cmd_create_resource_2d(VirtIOGPU *g,
+ {
+     struct virtio_gpu_resource_create_2d c2d;
+     struct virgl_renderer_resource_create_args args;
++    struct virtio_gpu_virgl_resource *res;
  
- #endif
+     VIRTIO_GPU_FILL_CMD(c2d);
+     trace_virtio_gpu_cmd_res_create_2d(c2d.resource_id, c2d.format,
+                                        c2d.width, c2d.height);
+ 
++    if (c2d.resource_id == 0) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: resource id 0 is not allowed\n",
++                      __func__);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
++        return;
++    }
++
++    res = virtio_gpu_virgl_find_resource(g, c2d.resource_id);
++    if (res) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: resource already exists %d\n",
++                      __func__, c2d.resource_id);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
++        return;
++    }
++
++    res = g_new0(struct virtio_gpu_virgl_resource, 1);
++    res->base.width = c2d.width;
++    res->base.height = c2d.height;
++    res->base.format = c2d.format;
++    res->base.resource_id = c2d.resource_id;
++    QTAILQ_INSERT_HEAD(&g->reslist, &res->base, next);
++
+     args.handle = c2d.resource_id;
+     args.target = 2;
+     args.format = c2d.format;
+@@ -59,11 +99,34 @@ static void virgl_cmd_create_resource_3d(VirtIOGPU *g,
+ {
+     struct virtio_gpu_resource_create_3d c3d;
+     struct virgl_renderer_resource_create_args args;
++    struct virtio_gpu_virgl_resource *res;
+ 
+     VIRTIO_GPU_FILL_CMD(c3d);
+     trace_virtio_gpu_cmd_res_create_3d(c3d.resource_id, c3d.format,
+                                        c3d.width, c3d.height, c3d.depth);
+ 
++    if (c3d.resource_id == 0) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: resource id 0 is not allowed\n",
++                      __func__);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
++        return;
++    }
++
++    res = virtio_gpu_virgl_find_resource(g, c3d.resource_id);
++    if (res) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: resource already exists %d\n",
++                      __func__, c3d.resource_id);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
++        return;
++    }
++
++    res = g_new0(struct virtio_gpu_virgl_resource, 1);
++    res->base.width = c3d.width;
++    res->base.height = c3d.height;
++    res->base.format = c3d.format;
++    res->base.resource_id = c3d.resource_id;
++    QTAILQ_INSERT_HEAD(&g->reslist, &res->base, next);
++
+     args.handle = c3d.resource_id;
+     args.target = c3d.target;
+     args.format = c3d.format;
+@@ -82,12 +145,21 @@ static void virgl_cmd_resource_unref(VirtIOGPU *g,
+                                      struct virtio_gpu_ctrl_command *cmd)
+ {
+     struct virtio_gpu_resource_unref unref;
++    struct virtio_gpu_virgl_resource *res;
+     struct iovec *res_iovs = NULL;
+     int num_iovs = 0;
+ 
+     VIRTIO_GPU_FILL_CMD(unref);
+     trace_virtio_gpu_cmd_res_unref(unref.resource_id);
+ 
++    res = virtio_gpu_virgl_find_resource(g, unref.resource_id);
++    if (!res) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: resource does not exist %d\n",
++                      __func__, unref.resource_id);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
++        return;
++    }
++
+     virgl_renderer_resource_detach_iov(unref.resource_id,
+                                        &res_iovs,
+                                        &num_iovs);
+@@ -95,6 +167,10 @@ static void virgl_cmd_resource_unref(VirtIOGPU *g,
+         virtio_gpu_cleanup_mapping_iov(g, res_iovs, num_iovs);
+     }
+     virgl_renderer_resource_unref(unref.resource_id);
++
++    QTAILQ_REMOVE(&g->reslist, &res->base, next);
++
++    g_free(res);
+ }
+ 
+ static void virgl_cmd_context_create(VirtIOGPU *g,
 -- 
 2.44.0
 
