@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09730C25B4F
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 23:38:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11584C25B4F
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 23:39:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6IdN-0003t5-CT; Sun, 12 May 2024 19:29:37 -0400
+	id 1s6Ibc-000125-7e; Sun, 12 May 2024 19:27:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s6Ict-0002Gm-5X; Sun, 12 May 2024 19:29:09 -0400
+ id 1s6Iba-00011C-V7; Sun, 12 May 2024 19:27:46 -0400
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s6Icr-0000V0-I2; Sun, 12 May 2024 19:29:06 -0400
+ id 1s6IbT-0000Dn-Of; Sun, 12 May 2024 19:27:46 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 7DC574E65C7;
- Mon, 13 May 2024 01:28:37 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 5B3704E65C4;
+ Mon, 13 May 2024 01:27:38 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id aFUKf9aAz_QC; Mon, 13 May 2024 01:28:35 +0200 (CEST)
+ with ESMTP id o7Psv-Fm8xcf; Mon, 13 May 2024 01:27:36 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 889BB4E65C4; Mon, 13 May 2024 01:28:35 +0200 (CEST)
-Message-Id: <0a0548395dc44e97ae7f919f7eecc277bb2b9991.1715555763.git.balaton@eik.bme.hu>
+ id 6EA474E65C6; Mon, 13 May 2024 01:27:36 +0200 (CEST)
+Message-Id: <20b23099bc0e51eedb7a97e1c34b582a95a38239.1715555763.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1715555763.git.balaton@eik.bme.hu>
 References: <cover.1715555763.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v7 60/61] target/ppc/mmu_common.c: Remove mmu_ctx_t
+Subject: [PATCH v7 04/61] target/ppc/mmu_common.c: Remove unneeded local
+ variable
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -39,7 +40,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Mon, 13 May 2024 01:28:35 +0200 (CEST)
+Date: Mon, 13 May 2024 01:27:36 +0200 (CEST)
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
  envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -62,101 +63,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Completely get rid of mmu_ctx_t after converting the remaining
-functions to pass raddr and prot without the context struct.
+In mmubooke_check_tlb() and mmubooke206_check_tlb() we can assign the
+value of prot2 directly to the destination, no need to have a separate
+local variable for it.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu_common.c | 25 +++++++------------------
- 1 file changed, 7 insertions(+), 18 deletions(-)
+ target/ppc/mmu_common.c | 30 +++++++++++++-----------------
+ 1 file changed, 13 insertions(+), 17 deletions(-)
 
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 6d588b6795..51ef59cdf1 100644
+index f79e390306..09cbeb0052 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -37,12 +37,6 @@
- 
- /* #define DUMP_PAGE_TABLES */
- 
--/* Context used internally during MMU translations */
--typedef struct {
--    hwaddr raddr;      /* Real address             */
--    int prot;          /* Protection bits          */
--} mmu_ctx_t;
--
- void ppc_store_sdr1(CPUPPCState *env, target_ulong value)
+@@ -628,8 +628,6 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppcemb_tlb_t *tlb,
+                               hwaddr *raddr, int *prot, target_ulong address,
+                               MMUAccessType access_type, int i)
  {
-     PowerPCCPU *cpu = env_archcpu(env);
-@@ -264,8 +258,8 @@ static int get_bat_6xx_tlb(CPUPPCState *env, hwaddr *raddr, int *prot,
-     return ret;
+-    int prot2;
+-
+     if (!mmubooke_check_pid(env, tlb, raddr, address, i)) {
+         qemu_log_mask(CPU_LOG_MMU, "%s: TLB entry not found\n", __func__);
+         return -1;
+@@ -644,17 +642,16 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppcemb_tlb_t *tlb,
+     }
+ 
+     if (FIELD_EX64(env->msr, MSR, PR)) {
+-        prot2 = tlb->prot & 0xF;
++        *prot = tlb->prot & 0xF;
+     } else {
+-        prot2 = (tlb->prot >> 4) & 0xF;
++        *prot = (tlb->prot >> 4) & 0xF;
+     }
+-    *prot = prot2;
+-    if (prot2 & prot_for_access_type(access_type)) {
++    if (*prot & prot_for_access_type(access_type)) {
+         qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
+         return 0;
+     }
+ 
+-    qemu_log_mask(CPU_LOG_MMU, "%s: no prot match: %x\n", __func__, prot2);
++    qemu_log_mask(CPU_LOG_MMU, "%s: no prot match: %x\n", __func__, *prot);
+     return access_type == MMU_INST_FETCH ? -3 : -2;
  }
  
--static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
--                                       target_ulong eaddr,
-+static int mmu6xx_get_physical_address(CPUPPCState *env, hwaddr *raddr,
-+                                       int *prot, target_ulong eaddr,
-                                        hwaddr *hashp, bool *keyp,
-                                        MMUAccessType access_type, int type)
+@@ -795,7 +792,6 @@ static int mmubooke206_check_tlb(CPUPPCState *env, ppcmas_tlb_t *tlb,
+                                  target_ulong address,
+                                  MMUAccessType access_type, int mmu_idx)
  {
-@@ -277,8 +271,7 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
+-    int prot2 = 0;
+     uint32_t epid;
+     bool as, pr;
+     bool use_epid = mmubooke206_get_as(env, mmu_idx, &epid, &as, &pr);
+@@ -841,34 +837,34 @@ found_tlb:
+         return -1;
+     }
  
-     /* First try to find a BAT entry if there are any */
-     if (env->nb_BATs &&
--        get_bat_6xx_tlb(env, &ctx->raddr, &ctx->prot, eaddr,
--                        access_type, pr) == 0) {
-+        get_bat_6xx_tlb(env, raddr, prot, eaddr, access_type, pr) == 0) {
++    *prot = 0;
+     if (pr) {
+         if (tlb->mas7_3 & MAS3_UR) {
+-            prot2 |= PAGE_READ;
++            *prot |= PAGE_READ;
+         }
+         if (tlb->mas7_3 & MAS3_UW) {
+-            prot2 |= PAGE_WRITE;
++            *prot |= PAGE_WRITE;
+         }
+         if (tlb->mas7_3 & MAS3_UX) {
+-            prot2 |= PAGE_EXEC;
++            *prot |= PAGE_EXEC;
+         }
+     } else {
+         if (tlb->mas7_3 & MAS3_SR) {
+-            prot2 |= PAGE_READ;
++            *prot |= PAGE_READ;
+         }
+         if (tlb->mas7_3 & MAS3_SW) {
+-            prot2 |= PAGE_WRITE;
++            *prot |= PAGE_WRITE;
+         }
+         if (tlb->mas7_3 & MAS3_SX) {
+-            prot2 |= PAGE_EXEC;
++            *prot |= PAGE_EXEC;
+         }
+     }
+-    *prot = prot2;
+-    if (prot2 & prot_for_access_type(access_type)) {
++    if (*prot & prot_for_access_type(access_type)) {
+         qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
          return 0;
      }
  
-@@ -316,7 +309,7 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
-         *hashp = hash;
+-    qemu_log_mask(CPU_LOG_MMU, "%s: no prot match: %x\n", __func__, prot2);
++    qemu_log_mask(CPU_LOG_MMU, "%s: no prot match: %x\n", __func__, *prot);
+     return access_type == MMU_INST_FETCH ? -3 : -2;
+ }
  
-         /* Software TLB search */
--        return ppc6xx_tlb_check(env, &ctx->raddr, &ctx->prot, eaddr,
-+        return ppc6xx_tlb_check(env, raddr, prot, eaddr,
-                                 access_type, ptem, key, nx);
-     }
- 
-@@ -333,7 +326,7 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
-          * Should make the instruction do no-op.  As it already do
-          * no-op, it's quite easy :-)
-          */
--        ctx->raddr = eaddr;
-+        *raddr = eaddr;
-         return 0;
-     case ACCESS_CODE: /* No code fetch is allowed in direct-store areas */
-     case ACCESS_FLOAT: /* Floating point load/store */
-@@ -343,7 +336,7 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
-     }
-     if ((access_type == MMU_DATA_STORE || !key) &&
-         (access_type == MMU_DATA_LOAD || key)) {
--        ctx->raddr = eaddr;
-+        *raddr = eaddr;
-         return 2;
-     }
-     return -2;
-@@ -681,7 +674,6 @@ static bool ppc_6xx_xlate(PowerPCCPU *cpu, vaddr eaddr,
- {
-     CPUState *cs = CPU(cpu);
-     CPUPPCState *env = &cpu->env;
--    mmu_ctx_t ctx;
-     hwaddr hash = 0; /* init to 0 to avoid used uninit warning */
-     bool key;
-     int type, ret;
-@@ -700,12 +692,9 @@ static bool ppc_6xx_xlate(PowerPCCPU *cpu, vaddr eaddr,
-         type = ACCESS_INT;
-     }
- 
--    ctx.prot = 0;
--    ret = mmu6xx_get_physical_address(env, &ctx, eaddr, &hash, &key,
-+    ret = mmu6xx_get_physical_address(env, raddrp, protp, eaddr, &hash, &key,
-                                       access_type, type);
-     if (ret == 0) {
--        *raddrp = ctx.raddr;
--        *protp = ctx.prot;
-         *psizep = TARGET_PAGE_BITS;
-         return true;
-     } else if (!guest_visible) {
 -- 
 2.30.9
 
