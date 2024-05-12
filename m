@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD089C25B4F
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 23:38:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62718C25B4F
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 23:38:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6IdM-0003l8-Bq; Sun, 12 May 2024 19:29:36 -0400
+	id 1s6Ibc-000120-5X; Sun, 12 May 2024 19:27:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s6Icu-0002Gs-6D; Sun, 12 May 2024 19:29:09 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1s6Iba-00010x-Aj; Sun, 12 May 2024 19:27:46 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s6Ics-0000W0-Ks; Sun, 12 May 2024 19:29:07 -0400
+ id 1s6IbX-0000Ef-Pp; Sun, 12 May 2024 19:27:46 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 86C6E4E65C8;
- Mon, 13 May 2024 01:28:38 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 70FDE4E676F;
+ Mon, 13 May 2024 01:27:39 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id KIZAJznwpzQx; Mon, 13 May 2024 01:28:36 +0200 (CEST)
+ with ESMTP id kjHHtWbnOz5s; Mon, 13 May 2024 01:27:37 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 968814E65C6; Mon, 13 May 2024 01:28:36 +0200 (CEST)
-Message-Id: <7b7f74372f1e8fd9dbe9ebac95f68bc79191f851.1715555763.git.balaton@eik.bme.hu>
+ id 791404E65C8; Mon, 13 May 2024 01:27:37 +0200 (CEST)
+Message-Id: <00b0f72159e9be28c722e642827f92a23ea1ab2d.1715555763.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1715555763.git.balaton@eik.bme.hu>
 References: <cover.1715555763.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v7 61/61] target/ppc/mmu_common.c: Remove a local variable
+Subject: [PATCH v7 05/61] target/ppc/mmu_common.c: Simplify checking for real
+ mode
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -39,9 +40,9 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Mon, 13 May 2024 01:28:36 +0200 (CEST)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Date: Mon, 13 May 2024 01:27:37 +0200 (CEST)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -62,37 +63,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In mmu6xx_get_physical_address() the cpu variable is only used for
-debug logging which is normally disabled. Inline the value and remove
-local variable to avoid computing it when not needed.
+In get_physical_address_wtlb() the real_mode flag depends on either
+the MSR[IR] or MSR[DR] bit depending on access_type. Extract just the
+needed bit in a more straight forward way instead of doing unnecessary
+computation.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu_common.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/ppc/mmu_common.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 51ef59cdf1..5d944ced07 100644
+index 09cbeb0052..886fb6a657 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -263,7 +263,6 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, hwaddr *raddr,
-                                        hwaddr *hashp, bool *keyp,
-                                        MMUAccessType access_type, int type)
+@@ -1184,8 +1184,10 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
+                                      int mmu_idx)
  {
--    PowerPCCPU *cpu = env_archcpu(env);
-     hwaddr hash;
-     target_ulong vsid, sr, pgidx, ptem;
-     bool key, ds, nx;
-@@ -305,7 +304,8 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, hwaddr *raddr,
-         /* Page address translation */
-         qemu_log_mask(CPU_LOG_MMU, "htab_base " HWADDR_FMT_plx " htab_mask "
-                       HWADDR_FMT_plx " hash " HWADDR_FMT_plx "\n",
--                      ppc_hash32_hpt_base(cpu), ppc_hash32_hpt_mask(cpu), hash);
-+                      ppc_hash32_hpt_base(env_archcpu(env)),
-+                      ppc_hash32_hpt_mask(env_archcpu(env)), hash);
-         *hashp = hash;
+     int ret = -1;
+-    bool real_mode = (type == ACCESS_CODE && !FIELD_EX64(env->msr, MSR, IR)) ||
+-                     (type != ACCESS_CODE && !FIELD_EX64(env->msr, MSR, DR));
++    bool real_mode;
++
++    real_mode = (type == ACCESS_CODE) ? !FIELD_EX64(env->msr, MSR, IR)
++                                      : !FIELD_EX64(env->msr, MSR, DR);
  
-         /* Software TLB search */
+     switch (env->mmu_model) {
+     case POWERPC_MMU_SOFT_6xx:
 -- 
 2.30.9
 
