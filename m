@@ -4,98 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EBC0C25B5F
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 09:40:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BCA3C10F1A
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 10:00:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s65fu-0004xC-AI; Sun, 12 May 2024 05:39:22 -0400
+	id 1s65zs-0000bT-Te; Sun, 12 May 2024 06:00:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1s65fs-0004wz-Kv; Sun, 12 May 2024 05:39:20 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1s65fq-0000LS-Ej; Sun, 12 May 2024 05:39:20 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44C8vo6Y000932; Sun, 12 May 2024 09:39:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : to : cc : subject
- : date : message-id : content-transfer-encoding : mime-version; s=pp1;
- bh=cVJ7yvPe4l6dKdQJOqlpPAwMabyPMDRDnsoYy4wARYA=;
- b=k7Kb6Woplzgpt83tAfqkA6hWFdv1T5Nh/PY9BLBjxamMkxmmuAWAzOu0+QUE+B9/7AH3
- YLJW/VFrHSRsKwQRbHV/SuNL7qARt58vY4Z83oa1N/cl074fLkgRvecbuzjUiydYyEeG
- +Kg+F6n8qsbeMsfgVhObsrZcfvL/9whV1slrbLCo3TnxiLIhAqDWuW9bFqo8joO5Iz1H
- 9EYqDxkQjmmCikNwn3Eh3VtZoQHwV7a2U7HjW8glJEMhWssaUw0YmBDZUA0Blek3r/vL
- LTNzs/PX3N5xhfFFCRPMXAQv4VrhLZVdC2rqr6ExZPNduesW/YN3jQckGYtIZOQr/epe Pw== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y2tq301ew-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 12 May 2024 09:39:11 +0000
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44C9dBre024690;
- Sun, 12 May 2024 09:39:11 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y2tq301et-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 12 May 2024 09:39:11 +0000
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44C5XTCZ002339; Sun, 12 May 2024 09:39:09 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3y2m0nsq51-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 12 May 2024 09:39:09 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 44C9d5jM20513276
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sun, 12 May 2024 09:39:07 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A81EF2004F;
- Sun, 12 May 2024 09:39:05 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 60DB32004D;
- Sun, 12 May 2024 09:39:03 +0000 (GMT)
-Received: from localhost.localdomain.com (unknown [9.171.34.11])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Sun, 12 May 2024 09:39:03 +0000 (GMT)
-From: Chinmay Rath <rathc@linux.ibm.com>
-To: qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
- richard.henderson@linaro.org, harshpb@linux.ibm.com,
- lucas.araujo@eldorado.org.br
-Subject: target/ppc: Move VMX int add/sub saturate insns to decodetree. 
-Date: Sun, 12 May 2024 15:08:46 +0530
-Message-Id: <20240512093847.18099-1-rathc@linux.ibm.com>
-X-Mailer: git-send-email 2.39.3
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: H1UKoqi_x04yuZICy7iGchFGkipBnM7h
-X-Proofpoint-ORIG-GUID: _inGbfGKv8sypvh5TkwVIAzXafne9AVm
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1s65zq-0000au-73
+ for qemu-devel@nongnu.org; Sun, 12 May 2024 05:59:58 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1s65zo-0004kr-R8
+ for qemu-devel@nongnu.org; Sun, 12 May 2024 05:59:57 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4200ee78f35so7908365e9.1
+ for <qemu-devel@nongnu.org>; Sun, 12 May 2024 02:59:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1715507994; x=1716112794; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=y/uBphHmmPv9z/as7JOnNYaoi1OreX05Ww8SM9wCY5Y=;
+ b=b5WsUk3NgeZCcPXOcVN6UWFuCLL3c47dlBejh6SfJyOx+pW9lISWqDqoshpudYmQC3
+ idxnBlpXB5RjHbjISFTqMtoE7QcPs/FMpS7/+frYR0T1mFn1PiZDlf0mtQI5Lz75we4o
+ Q9eXZvNBA//YDuFRDW0EN4DwDps3KLkYo1tw7lPRK9jLEY4xe1vhrK9y66RRpup5nybr
+ m+7RZjS/5GHUmPu7oknCCWXJLXoi0SuO+h8R3CZ38GUpaHNRBCXuX7N+0cVKC9PbJmX6
+ CfCmtZ83ls5L4gq0/WMUfNRztWf04YnrteV9oNnTlepJZ7+Wukd6FPbMnwWxVIZU1j+7
+ xb8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715507994; x=1716112794;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=y/uBphHmmPv9z/as7JOnNYaoi1OreX05Ww8SM9wCY5Y=;
+ b=R20GgC44wG6sHFbzhiA1Gbqytzlj6+Zu7m/VH9DWExTVc5V3NAi5tPQaiv28S9yXlq
+ C9Tqvs52hIsH4Bj5Ejl7zkavRgVHhAY2WDAH2RNVJdXj8Vzv42W9qQnAfN+sji7Z+tfS
+ 45jmWatDVpnBQTdjtKGl4ck1r9bP8gJv1VX8YETVye8P2oZdp8iXBpqtMBuB/nz9/JVg
+ RP9qTrStVmqSveesyDD5b0ZgBORLzU4Qw2ZEElxUTe31CCEpWHj16swlebxwybLoRONA
+ 87tNnU+jbteGSPB4IWcYormdaGvMp5fb8rSdpKC/qZUYgj1pijWW1vJzbDUPgFEv0hw/
+ MoXw==
+X-Gm-Message-State: AOJu0YzAAAJNaMZH/R1bFu8Fwe3exfAia2EhPklMhQVQ4RXbsCcAIkJa
+ Kg5IkzjloMH63fXXDZH0A92UzVOh5LFSoqJLMpqp1QW39JMtHLVkeBByvg==
+X-Google-Smtp-Source: AGHT+IESiivUqtrQZKxwA4NJCNj8T1iqwjkKTvP5P1dxxlZMVSjfQndiveeqqSSetk6IUJNCxy6bOg==
+X-Received: by 2002:a05:600c:4487:b0:41b:60ae:7827 with SMTP id
+ 5b1f17b1804b1-41feaa443d4mr71865915e9.24.1715507993913; 
+ Sun, 12 May 2024 02:59:53 -0700 (PDT)
+Received: from archlinux.. (dynamic-077-191-209-238.77.191.pool.telefonica.de.
+ [77.191.209.238]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-41fccee934csm122175715e9.38.2024.05.12.02.59.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 12 May 2024 02:59:53 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH] ui/sdl2: Allow host to power down screen
+Date: Sun, 12 May 2024 11:59:45 +0200
+Message-ID: <20240512095945.1879-1-shentey@gmail.com>
+X-Mailer: git-send-email 2.45.0
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-12_06,2024-05-10_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0
- clxscore=1011 spamscore=0 priorityscore=1501 mlxscore=0 lowpriorityscore=0
- malwarescore=0 impostorscore=0 mlxlogscore=770 adultscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2405010000
- definitions=main-2405120072
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,70 +89,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Moving the following instructions to decodetree :
-  v{add,sub}{u,s}{b,h,w}s   : VX-form
+By default, SDL disables the screen saver which prevents the host from powering
+down the screen even if the screen is locked. This results in draining the
+battery needlessly when the host isn't connected to a wall charger. Fix that by
+enabling the screen saver.
 
-However, the following instructions were paired using the
-GEN_VXFORM_DUAL macros in the vmx-impl and vmx-ops files :
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ ui/sdl2.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-  vaddubs and vmul10uq
-  vadduhs and vmul10euq
-  vaddshs and bcdcpsgn
-  vsububs and bcdadd
-  vsubuhs and bcdsub
-  vsubsbs and bcdtrunc
-  vsubsws and xpnd04_2
-
-Out of those 7 above mentioned pairs, I have moved the first one of
-each pair and added respective entry of the 2nd one in the vmx-ops file.
-However, I lack some clarity on those flag checks added for those insns
-in the ops file. It would be great if someone sheds some light at this.
-
-The issue; let's take the following example :
-
-1. vsubsbs and bcdtrunc :
-
-In this pair, bcdtrunc has the insn flag check PPC2_ISA300 in the
-vmx-impl file, within the GEN_VXFORM_DUAL macro, which does this flag
-check.
-However it also has this flag check in the vmx-ops file.
-Hence I have retained the same in the new entry in the vmx-ops file.
-This is consistent with the behaviour in done in the following commit :
-https://github.com/qemu/qemu/commit/b132be53a4ba6a0a40d5643d791822f958a36e53
-So even though the flag check is removed from the vmx-impl file, it is
-retained in the vmx-ops file. All good here.
-
-2. vadduhs and vmul10euq :
-
-In this pair, vmul10euq has the insn flag check PPC2_ISA300 in the
-vmx-impl file, check done within the GEN_VXFORM_DUAL macro. 
-However the same flag was NOT originally present in the
-vmx-ops file, so I have NOT included in its new entry in the vmx-ops
-file. I have done this, following the behaviour done in the following
-commit : 
-https://github.com/qemu/qemu/commit/c85929b2ddf6bbad737635c9b85213007ec043af
-So this flag check for vmul10euq is excluded now. Is this not a problem ?
-I feel that this leads to the flag check being skipped now, however this
-behaviour was followed in the above mentioned commit.
-
-Requesting anyone to please let me know why this behaviour was followed and
-how the flag checks are retained here, or if they are really skipped,
-why is it okay to skip them here ? 
-
-Regards,
-Chinmay
-
-Chinmay Rath (1):
-  target/ppc: Move VMX integer add/sub saturate insns to decodetree.
-
- target/ppc/helper.h                 |  24 +--
- target/ppc/insn32.decode            |  16 ++
- target/ppc/int_helper.c             |  22 +--
- target/ppc/translate/vmx-impl.c.inc | 242 ++++++++++++++++++++--------
- target/ppc/translate/vmx-ops.c.inc  |  19 +--
- 5 files changed, 224 insertions(+), 99 deletions(-)
-
+diff --git a/ui/sdl2.c b/ui/sdl2.c
+index 4971963f00..0a0eb5a42d 100644
+--- a/ui/sdl2.c
++++ b/ui/sdl2.c
+@@ -874,6 +874,7 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
+     SDL_SetHint(SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED, "0");
+ #endif
+     SDL_SetHint(SDL_HINT_WINDOWS_NO_CLOSE_ON_ALT_F4, "1");
++    SDL_EnableScreenSaver();
+     memset(&info, 0, sizeof(info));
+     SDL_VERSION(&info.version);
+ 
 -- 
-2.39.3
+2.45.0
 
 
