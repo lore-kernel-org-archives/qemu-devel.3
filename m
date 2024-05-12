@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FEEDC25B4F
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 23:38:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3B89C25B77
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 23:38:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6Icc-0001xP-1c; Sun, 12 May 2024 19:28:50 -0400
+	id 1s6IcX-0001sE-6k; Sun, 12 May 2024 19:28:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s6IcR-0001jG-Rs; Sun, 12 May 2024 19:28:39 -0400
+ id 1s6IcP-0001h0-UC; Sun, 12 May 2024 19:28:38 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s6IcP-0000Oj-BV; Sun, 12 May 2024 19:28:38 -0400
+ id 1s6IcL-0000OM-RY; Sun, 12 May 2024 19:28:35 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 4D8594E677C;
- Mon, 13 May 2024 01:28:13 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 3EE9B4E6777;
+ Mon, 13 May 2024 01:28:12 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id hpmyxe90gV7H; Mon, 13 May 2024 01:28:11 +0200 (CEST)
+ with ESMTP id 46H_CQ5CLMR9; Mon, 13 May 2024 01:28:10 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 5C5AF4E6779; Mon, 13 May 2024 01:28:11 +0200 (CEST)
-Message-Id: <a5c692860c5d9e22803b301b3e21900a2a941434.1715555763.git.balaton@eik.bme.hu>
+ id 4CB6C4E677C; Mon, 13 May 2024 01:28:10 +0200 (CEST)
+Message-Id: <b9605839090fd145b067db34b2bdce45548c0631.1715555763.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1715555763.git.balaton@eik.bme.hu>
 References: <cover.1715555763.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v7 37/61] target/ppc/mmu_common.c: Remove single use local
- variable
+Subject: [PATCH v7 36/61] target/ppc/mmu_common.c: Remove local name for a
+ constant
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,7 +40,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Mon, 13 May 2024 01:28:11 +0200 (CEST)
+Date: Mon, 13 May 2024 01:28:10 +0200 (CEST)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -63,38 +63,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ptem variable in ppc6xx_tlb_pte_check() is used only once,
-simplify by removing it as the value is already clear itself without
-adding a local name for it.
+The mmask local variable is a less descriptive local name for a
+constant. Drop it and use the constant directly in the two places it
+is needed.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- target/ppc/mmu_common.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ target/ppc/mmu_common.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 5d0090014a..4ca700e31b 100644
+index 9e0bfbda67..5d0090014a 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -98,7 +98,6 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
+@@ -98,7 +98,7 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
                                  target_ulong pte1, int h,
                                  MMUAccessType access_type)
  {
--    target_ulong ptem;
+-    target_ulong ptem, mmask;
++    target_ulong ptem;
      int ret, pteh, ptev, pp;
  
      ret = -1;
-@@ -107,9 +106,8 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
-     pteh = (pte0 >> 6) & 1;
+@@ -108,12 +108,11 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
      if (ptev && h == pteh) {
          /* Check vsid & api */
--        ptem = pte0 & PTE_PTEM_MASK;
+         ptem = pte0 & PTE_PTEM_MASK;
+-        mmask = PTE_CHECK_MASK;
          pp = pte1 & 0x00000003;
--        if (ptem == ctx->ptem) {
-+        if ((pte0 & PTE_PTEM_MASK) == ctx->ptem) {
+         if (ptem == ctx->ptem) {
              if (ctx->raddr != (hwaddr)-1ULL) {
                  /* all matches should have equal RPN, WIMG & PP */
-                 if ((ctx->raddr & PTE_CHECK_MASK) != (pte1 & PTE_CHECK_MASK)) {
+-                if ((ctx->raddr & mmask) != (pte1 & mmask)) {
++                if ((ctx->raddr & PTE_CHECK_MASK) != (pte1 & PTE_CHECK_MASK)) {
+                     qemu_log_mask(CPU_LOG_MMU, "Bad RPN/WIMG/PP\n");
+                     return -3;
+                 }
 -- 
 2.30.9
 
