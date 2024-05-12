@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA6CEC25B4F
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 23:29:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3D71C25B4F
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 23:29:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6Ibg-00015b-Hr; Sun, 12 May 2024 19:27:52 -0400
+	id 1s6IcI-0001RH-2l; Sun, 12 May 2024 19:28:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s6Ibd-00012n-84; Sun, 12 May 2024 19:27:49 -0400
+ id 1s6IcF-0001P5-ML; Sun, 12 May 2024 19:28:27 -0400
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s6Iba-0000Ev-4q; Sun, 12 May 2024 19:27:48 -0400
+ id 1s6IcC-0000ME-4A; Sun, 12 May 2024 19:28:27 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 8D83B4E6774;
- Mon, 13 May 2024 01:27:42 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id AD0D04E600F;
+ Mon, 13 May 2024 01:28:02 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id hW1sB7Imo9S2; Mon, 13 May 2024 01:27:40 +0200 (CEST)
+ with ESMTP id OoYJd3bS2bZz; Mon, 13 May 2024 01:28:00 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 9D4514E6776; Mon, 13 May 2024 01:27:40 +0200 (CEST)
-Message-Id: <7e7c9abd1d12171129dfb66e801f6bc6e79d4ccd.1715555763.git.balaton@eik.bme.hu>
+ id BEBA74E6777; Mon, 13 May 2024 01:28:00 +0200 (CEST)
+Message-Id: <4aa4059610419c27436a64f08333f211caec4b67.1715555763.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1715555763.git.balaton@eik.bme.hu>
 References: <cover.1715555763.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v7 08/61] target/ppc/mmu_common.c: Move else branch to avoid
- large if block
+Subject: [PATCH v7 27/61] target/ppc/mmu_common.c: Move mmu_ctx_t type to
+ mmu_common.c
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,7 +40,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Mon, 13 May 2024 01:27:40 +0200 (CEST)
+Date: Mon, 13 May 2024 01:28:00 +0200 (CEST)
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
  envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -63,103 +63,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In mmu6xx_get_physical_address() we have a large if block with a two
-line else branch that effectively returns. Invert the condition and
-move the else there to allow deindenting the large if block to make
-the flow easier to follow.
+Remove mmu_ctx_t definition from internal.h as this type is only used
+within mmu_common.c.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu_common.c | 71 ++++++++++++++++++++---------------------
- 1 file changed, 34 insertions(+), 37 deletions(-)
+ target/ppc/internal.h   | 12 ------------
+ target/ppc/mmu_common.c | 11 +++++++++++
+ 2 files changed, 11 insertions(+), 12 deletions(-)
 
+diff --git a/target/ppc/internal.h b/target/ppc/internal.h
+index 4a4f9b9ec8..4a90dd2584 100644
+--- a/target/ppc/internal.h
++++ b/target/ppc/internal.h
+@@ -257,8 +257,6 @@ static inline int prot_for_access_type(MMUAccessType access_type)
+ 
+ /* PowerPC MMU emulation */
+ 
+-typedef struct mmu_ctx_t mmu_ctx_t;
+-
+ bool ppc_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
+                       hwaddr *raddrp, int *psizep, int *protp,
+                       int mmu_idx, bool guest_visible);
+@@ -266,16 +264,6 @@ bool ppc_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
+ /* Software driven TLB helpers */
+ int ppc6xx_tlb_getnum(CPUPPCState *env, target_ulong eaddr,
+                                     int way, int is_code);
+-/* Context used internally during MMU translations */
+-struct mmu_ctx_t {
+-    hwaddr raddr;      /* Real address              */
+-    hwaddr eaddr;      /* Effective address         */
+-    int prot;                      /* Protection bits           */
+-    hwaddr hash[2];    /* Pagetable hash values     */
+-    target_ulong ptem;             /* Virtual segment ID | API  */
+-    int key;                       /* Access key                */
+-    int nx;                        /* Non-execute area          */
+-};
+ 
+ #endif /* !CONFIG_USER_ONLY */
+ 
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index b7c07cf515..ba60b4902b 100644
+index 961062bca1..34200d9cb1 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -405,47 +405,44 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
-     ret = -1;
-     if (!ds) {
-         /* Check if instruction fetch is allowed, if needed */
--        if (type != ACCESS_CODE || ctx->nx == 0) {
--            /* Page address translation */
--            qemu_log_mask(CPU_LOG_MMU, "htab_base " HWADDR_FMT_plx
--                    " htab_mask " HWADDR_FMT_plx
--                    " hash " HWADDR_FMT_plx "\n",
--                    ppc_hash32_hpt_base(cpu), ppc_hash32_hpt_mask(cpu), hash);
--            ctx->hash[0] = hash;
--            ctx->hash[1] = ~hash;
--
--            /* Initialize real address with an invalid value */
--            ctx->raddr = (hwaddr)-1ULL;
--            /* Software TLB search */
--            ret = ppc6xx_tlb_check(env, ctx, eaddr, access_type);
-+        if (type == ACCESS_CODE && ctx->nx) {
-+            qemu_log_mask(CPU_LOG_MMU, "No access allowed\n");
-+            return -3;
-+        }
-+        /* Page address translation */
-+        qemu_log_mask(CPU_LOG_MMU, "htab_base " HWADDR_FMT_plx " htab_mask "
-+                      HWADDR_FMT_plx " hash " HWADDR_FMT_plx "\n",
-+                      ppc_hash32_hpt_base(cpu), ppc_hash32_hpt_mask(cpu), hash);
-+        ctx->hash[0] = hash;
-+        ctx->hash[1] = ~hash;
+@@ -36,6 +36,17 @@
+ 
+ /* #define DUMP_PAGE_TABLES */
+ 
++/* Context used internally during MMU translations */
++typedef struct {
++    hwaddr raddr;      /* Real address             */
++    hwaddr eaddr;      /* Effective address        */
++    int prot;          /* Protection bits          */
++    hwaddr hash[2];    /* Pagetable hash values    */
++    target_ulong ptem; /* Virtual segment ID | API */
++    int key;           /* Access key               */
++    int nx;            /* Non-execute area         */
++} mmu_ctx_t;
 +
-+        /* Initialize real address with an invalid value */
-+        ctx->raddr = (hwaddr)-1ULL;
-+        /* Software TLB search */
-+        ret = ppc6xx_tlb_check(env, ctx, eaddr, access_type);
- #if defined(DUMP_PAGE_TABLES)
--            if (qemu_loglevel_mask(CPU_LOG_MMU)) {
--                CPUState *cs = env_cpu(env);
--                hwaddr curaddr;
--                uint32_t a0, a1, a2, a3;
--
--                qemu_log("Page table: " HWADDR_FMT_plx " len " HWADDR_FMT_plx
--                         "\n", ppc_hash32_hpt_base(cpu),
--                         ppc_hash32_hpt_mask(cpu) + 0x80);
--                for (curaddr = ppc_hash32_hpt_base(cpu);
--                     curaddr < (ppc_hash32_hpt_base(cpu)
--                                + ppc_hash32_hpt_mask(cpu) + 0x80);
--                     curaddr += 16) {
--                    a0 = ldl_phys(cs->as, curaddr);
--                    a1 = ldl_phys(cs->as, curaddr + 4);
--                    a2 = ldl_phys(cs->as, curaddr + 8);
--                    a3 = ldl_phys(cs->as, curaddr + 12);
--                    if (a0 != 0 || a1 != 0 || a2 != 0 || a3 != 0) {
--                        qemu_log(HWADDR_FMT_plx ": %08x %08x %08x %08x\n",
--                                 curaddr, a0, a1, a2, a3);
--                    }
-+        if (qemu_loglevel_mask(CPU_LOG_MMU)) {
-+            CPUState *cs = env_cpu(env);
-+            hwaddr curaddr;
-+            uint32_t a0, a1, a2, a3;
-+
-+            qemu_log("Page table: " HWADDR_FMT_plx " len " HWADDR_FMT_plx "\n",
-+                     ppc_hash32_hpt_base(cpu), ppc_hash32_hpt_mask(cpu) + 0x80);
-+            for (curaddr = ppc_hash32_hpt_base(cpu);
-+                 curaddr < (ppc_hash32_hpt_base(cpu)
-+                            + ppc_hash32_hpt_mask(cpu) + 0x80);
-+                 curaddr += 16) {
-+                a0 = ldl_phys(cs->as, curaddr);
-+                a1 = ldl_phys(cs->as, curaddr + 4);
-+                a2 = ldl_phys(cs->as, curaddr + 8);
-+                a3 = ldl_phys(cs->as, curaddr + 12);
-+                if (a0 != 0 || a1 != 0 || a2 != 0 || a3 != 0) {
-+                    qemu_log(HWADDR_FMT_plx ": %08x %08x %08x %08x\n",
-+                             curaddr, a0, a1, a2, a3);
-                 }
-             }
--#endif
--        } else {
--            qemu_log_mask(CPU_LOG_MMU, "No access allowed\n");
--            ret = -3;
-         }
-+#endif
-     } else {
-         qemu_log_mask(CPU_LOG_MMU, "direct store...\n");
-         /* Direct-store segment : absolutely *BUGGY* for now */
+ void ppc_store_sdr1(CPUPPCState *env, target_ulong value)
+ {
+     PowerPCCPU *cpu = env_archcpu(env);
 -- 
 2.30.9
 
