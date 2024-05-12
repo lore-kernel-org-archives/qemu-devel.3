@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CD78C25B74
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 23:35:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA529C25B4F
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 23:35:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6Id7-0002p0-9W; Sun, 12 May 2024 19:29:21 -0400
+	id 1s6Id9-0002v1-7M; Sun, 12 May 2024 19:29:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s6Icf-00021D-2k; Sun, 12 May 2024 19:28:53 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1s6Icd-00020z-TB; Sun, 12 May 2024 19:28:53 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s6Icd-0000Ri-A4; Sun, 12 May 2024 19:28:52 -0400
+ id 1s6Icb-0000Qu-3y; Sun, 12 May 2024 19:28:51 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 17B764E678C;
- Mon, 13 May 2024 01:28:29 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id CBDB84E6787;
+ Mon, 13 May 2024 01:28:23 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id jAeRcyTP1tBo; Mon, 13 May 2024 01:28:27 +0200 (CEST)
+ with ESMTP id vajg1yB-yD97; Mon, 13 May 2024 01:28:21 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 2A86C4E678D; Mon, 13 May 2024 01:28:27 +0200 (CEST)
-Message-Id: <d57adbc137f68713cc34a2982ed414f82c6ffaa0.1715555763.git.balaton@eik.bme.hu>
+ id DAE704E6788; Mon, 13 May 2024 01:28:21 +0200 (CEST)
+Message-Id: <447b618211423732bb6b3c7e12982a7c9ea2d042.1715555763.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1715555763.git.balaton@eik.bme.hu>
 References: <cover.1715555763.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v7 52/61] target/ppc/mmu-hash32.c: Inline and remove
- ppc_hash32_pte_prot()
+Subject: [PATCH v7 47/61] target/ppc/mmu_common.c: Remove single use local
+ variable
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,9 +40,9 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Mon, 13 May 2024 01:28:27 +0200 (CEST)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Date: Mon, 13 May 2024 01:28:21 +0200 (CEST)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -63,59 +63,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is used only once and can be inlined.
+In mmu6xx_get_physical_address() tagtet_page_bits local is declared
+only to use TARGET_PAGE_BITS once. Drop the unneeded variable.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- target/ppc/mmu-hash32.c | 19 ++++---------------
- 1 file changed, 4 insertions(+), 15 deletions(-)
+ target/ppc/mmu_common.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/target/ppc/mmu-hash32.c b/target/ppc/mmu-hash32.c
-index 8e5e83f46a..9de42713b3 100644
---- a/target/ppc/mmu-hash32.c
-+++ b/target/ppc/mmu-hash32.c
-@@ -37,17 +37,6 @@
- #  define LOG_BATS(...) do { } while (0)
- #endif
+diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+index 9b73581fc7..1a2b4158d5 100644
+--- a/target/ppc/mmu_common.c
++++ b/target/ppc/mmu_common.c
+@@ -321,7 +321,6 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
+     PowerPCCPU *cpu = env_archcpu(env);
+     hwaddr hash;
+     target_ulong vsid, sr, pgidx;
+-    int target_page_bits;
+     bool pr, ds, nx;
  
--static int ppc_hash32_pte_prot(int mmu_idx,
--                               target_ulong sr, ppc_hash_pte32_t pte)
--{
--    unsigned pp, key;
--
--    key = ppc_hash32_key(mmuidx_pr(mmu_idx), sr);
--    pp = pte.pte1 & HPTE32_R_PP;
--
--    return ppc_hash32_pp_prot(key, pp, !!(sr & SR32_NX));
--}
--
- static target_ulong hash32_bat_size(int mmu_idx,
-                                     target_ulong batu, target_ulong batl)
- {
-@@ -341,10 +330,10 @@ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
-     CPUState *cs = CPU(cpu);
-     CPUPPCState *env = &cpu->env;
-     target_ulong sr;
--    hwaddr pte_offset;
-+    hwaddr pte_offset, raddr;
-     ppc_hash_pte32_t pte;
-+    bool key;
-     int prot;
--    hwaddr raddr;
+     /* First try to find a BAT entry if there are any */
+@@ -338,7 +337,6 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
+     ds = sr & SR32_T;
+     nx = sr & SR32_NX;
+     vsid = sr & SR32_VSID;
+-    target_page_bits = TARGET_PAGE_BITS;
+     qemu_log_mask(CPU_LOG_MMU,
+                   "Check segment v=" TARGET_FMT_lx " %d " TARGET_FMT_lx
+                   " nip=" TARGET_FMT_lx " lr=" TARGET_FMT_lx
+@@ -347,7 +345,7 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
+                   (int)FIELD_EX64(env->msr, MSR, IR),
+                   (int)FIELD_EX64(env->msr, MSR, DR), pr ? 1 : 0,
+                   access_type == MMU_DATA_STORE, type);
+-    pgidx = (eaddr & ~SEGMENT_MASK_256M) >> target_page_bits;
++    pgidx = (eaddr & ~SEGMENT_MASK_256M) >> TARGET_PAGE_BITS;
+     hash = vsid ^ pgidx;
+     ctx->ptem = (vsid << 7) | (pgidx >> 10);
  
-     /* There are no hash32 large pages. */
-     *psizep = TARGET_PAGE_BITS;
-@@ -426,8 +415,8 @@ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
-                 "found PTE at offset %08" HWADDR_PRIx "\n", pte_offset);
- 
-     /* 7. Check access permissions */
--
--    prot = ppc_hash32_pte_prot(mmu_idx, sr, pte);
-+    key = ppc_hash32_key(mmuidx_pr(mmu_idx), sr);
-+    prot = ppc_hash32_pp_prot(key, pte.pte1 & HPTE32_R_PP, sr & SR32_NX);
- 
-     if (!check_prot_access_type(prot, access_type)) {
-         /* Access right violation */
 -- 
 2.30.9
 
