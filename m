@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DAC6C04FFE
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 May 2024 20:33:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 563AFC25B5F
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 09:01:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s5tOe-0000s3-Kf; Sat, 11 May 2024 16:32:44 -0400
+	id 1s6548-0004cp-TS; Sun, 12 May 2024 05:00:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sungdgdhtryrt@gmail.com>)
- id 1s5t8q-0006CL-IG
- for qemu-devel@nongnu.org; Sat, 11 May 2024 16:16:25 -0400
-Received: from mail-ej1-x642.google.com ([2a00:1450:4864:20::642])
+ (Exim 4.90_1) (envelope-from <rayhan.faizel@gmail.com>)
+ id 1s6546-0004cF-Sh; Sun, 12 May 2024 05:00:18 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sungdgdhtryrt@gmail.com>)
- id 1s5t8p-0000fB-1x
- for qemu-devel@nongnu.org; Sat, 11 May 2024 16:16:24 -0400
-Received: by mail-ej1-x642.google.com with SMTP id
- a640c23a62f3a-a5a5cce2ce6so7818066b.3
- for <qemu-devel@nongnu.org>; Sat, 11 May 2024 13:16:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <rayhan.faizel@gmail.com>)
+ id 1s6545-0000pz-AW; Sun, 12 May 2024 05:00:18 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a5a5cce2ce6so69198966b.3; 
+ Sun, 12 May 2024 02:00:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715458580; x=1716063380; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1715504414; x=1716109214; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=tHc8jWr6neTfVZis48MOJndabsjYnaeMztjifiW7VB0=;
- b=m+lLi0FTljA75E/yVgN0ZyDpGhSHu6/8aSmSIPzO/aQ2L5aulCITivvSa0hc7lT1m6
- YbMIja6thfC+fZmcHa9vf9U1/u3h02XvOrGkxDt9wqbPc6mmspPeI32bShgkWxwn9T8q
- Pj7Tqs4tmhFAcNfEzxPP+9hknV6vU2LRh3LQiRnVCNC4Y4wnDDmej9ywBE0md8bLOokk
- NcroPARD6EeLUTOZ/7SbrwMQK5XyHUltyXbb9q5FeV5pa22swYwK3QLpBO0Si50vRa67
- lHEjQ84aCzZkxhUAcnsmVck15xKcpXfWycxWqnl3C+V3oG4/A67QUkZ0nHgPiFAA8fzz
- mu3w==
+ bh=s2HUUSV/R8kHZKSr121aPfLsWX8/+1NKAhwK3cedQig=;
+ b=CnSae8VyhVRHxPbnvqPS6aYSGk5WL8H9EQMiX7YhegCcAvk7crL/JmfjLxmWXUsuQW
+ zEp+i5/N8Mq4CsSO0dKt9oGIOq5SE7xgl1HaKYixaDqIfobMMjo0y9HZ1pXg6t50MD3x
+ ryFB3Dx4lKjYyahOAYE7nfqY/5SrzntY5ibfCxqHIfry2OZ9R1seTKBCDFjvsR0V6XoU
+ 0cKE1gu3paasdceMA4Y15td+kB+4LLi1Wua8uv81OdZcd58Qhrj5lXOmu/zf35mxZ63H
+ 4FBZMqIZYkuuxUmdoYZZ2+uyeteqk7J0YMGzmscXvYP50eUPTwth4RIE2liNtFmQAx0A
+ DDfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715458580; x=1716063380;
+ d=1e100.net; s=20230601; t=1715504414; x=1716109214;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=tHc8jWr6neTfVZis48MOJndabsjYnaeMztjifiW7VB0=;
- b=WlACKQcTlpXSLLQRe6vibBlEAlvbI/in12QD8Mg5975VTg9YjOg+T6lRMN//SrGlCj
- VFpxvvyykJPC6wOyDDvQeh2D6PyHQyB9ghWJQWpVqylqMKw0jmJCRRaU0MhHIUXv/63C
- DETA114lKldASDU4jY7/ayjp7hhNjB7FbBcz2p7lcjtW4uHSMPBuy8arZiVwLil7xeih
- Cy8QcQJMyVqcFjlneULzNZFcUXgEwAD06yulrOgH5sH7T+pRzmknhee/SJz8h2RKhc70
- RF+6OS7Dh1i1X3ajfjEZSrKBfPqvyBsaCC3IZdiXS64oOMGZXSsRIzRAVhThkE82bCx3
- 60lg==
-X-Gm-Message-State: AOJu0YwcoKfnNlqeunAEujypuob/dqC7L/jjR7o/Ak/qZFHl6pu5BJdW
- UBKyjis/XWsNPf9lSHyufwBwq7V4ngbHIn13s/MSageHwIslzWSW90ts4Ptl
-X-Google-Smtp-Source: AGHT+IFvdzQIwntlxWVQ9ZCxtGdeI33MwYjFl9I1ojz1S7E/u/1A/h8zULJM3EGmW14E3A70vbtFig==
-X-Received: by 2002:a17:906:4ecb:b0:a59:cdf4:f939 with SMTP id
- a640c23a62f3a-a5a2d54c60cmr401643266b.3.1715458580245; 
- Sat, 11 May 2024 13:16:20 -0700 (PDT)
-Received: from be-Latitude-E6510.home ([2a01:8b82:54fe:b800::4bb])
+ bh=s2HUUSV/R8kHZKSr121aPfLsWX8/+1NKAhwK3cedQig=;
+ b=ZQIn9J80SgWPwSzv8NSOY0pqeHGKdiz8ZPh83Zce/6PZtTAC3VkIRxluw8el2jOTr2
+ TUX73tBiCwmCPqDE6LfSugKKQjWzqb1Eply820B8Gjy+WKu6XVZJKY8KkHxrSULuADUg
+ gP0qzfY53Mhi6y9I0fVJSGX8GtKrqcZ3nQ+YdTldIXswGq1BnS7S6RZveFufQH5N1unT
+ 44DjWmldNirn/54MpWFWVcR8qSDIL43yUSlHSCEIwpwE6EQyc9TKOS4GcunQnYUX63xP
+ LAYFXv0NjLbNp55WravYH2R6EM3YkEqTu56GPu+E4MAEDb34FfJjNfUPxvgM3QYz49uB
+ apDA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWuPx01AfotSquAmMuIJXr8wnARAD6/2SJFI/L09AeA7kEXYUEOh0z/zIiIaYpo0hsDPhX8BSa0t7NWT0gDUOFqvsO6
+X-Gm-Message-State: AOJu0YwPEenOnNTt/IeUlqmPFi5bETdFX4uFMq0o9cWQ90ekPqRlVdx7
+ SsVflGG8Q8L30vpV8CX71Qc74YJ1u4Gx03B7zb9CIFsNzwfmsIJc+9spGw==
+X-Google-Smtp-Source: AGHT+IF0TbT2N6rFBEBx9taO0of0xFoGS8TLGmiKYBj3TU6h0qZ8S8KIq2QNQQlclcsJ8lwvb4BdBQ==
+X-Received: by 2002:a17:906:17c5:b0:a59:c9ad:bd26 with SMTP id
+ a640c23a62f3a-a5a2d54c601mr431144566b.12.1715504413771; 
+ Sun, 12 May 2024 02:00:13 -0700 (PDT)
+Received: from localhost.localdomain ([212.70.119.223])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a5a17b014f6sm376143666b.145.2024.05.11.13.16.19
+ a640c23a62f3a-a5a1781cf9csm432214366b.7.2024.05.12.02.00.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 11 May 2024 13:16:20 -0700 (PDT)
-From: Hans <sungdgdhtryrt@gmail.com>
+ Sun, 12 May 2024 02:00:13 -0700 (PDT)
+From: Rayhan Faizel <rayhan.faizel@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: jasowang@redhat.com,
-	Hans <sungdgdhtryrt@gmail.com>
-Subject: [PATCH] Fixes rtl8139 driver for old kernels.
-Date: Sat, 11 May 2024 22:15:24 +0200
-Message-Id: <20240511201523.47443-1-sungdgdhtryrt@gmail.com>
+Cc: qemu-trivial@nongnu.org, Rayhan Faizel <rayhan.faizel@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org (open list:Raspberry Pi)
+Subject: [PATCH] docs/system: Remove ADC from raspi documentation
+Date: Sun, 12 May 2024 14:27:16 +0530
+Message-Id: <20240512085716.222326-1-rayhan.faizel@gmail.com>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::642;
- envelope-from=sungdgdhtryrt@gmail.com; helo=mail-ej1-x642.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=rayhan.faizel@gmail.com; helo=mail-ej1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sat, 11 May 2024 16:32:38 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,30 +93,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Old linux kernel rtl8139 drivers (ex. debian 2.1) uses outb to set the rx
-mode for RxConfig. Unfortunatelly qemu does not support outb for RxConfig.
+None of the RPi boards have ADC on-board. In real life, an external ADC chip
+is required to operate on analog signals.
 
-Signed-off-by: Hans <sungdgdhtryrt@gmail.com>
+Signed-off-by: Rayhan Faizel <rayhan.faizel@gmail.com>
 ---
- hw/net/rtl8139.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ docs/system/arm/raspi.rst | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
-index 897c86ec41..e6244cfd7f 100644
---- a/hw/net/rtl8139.c
-+++ b/hw/net/rtl8139.c
-@@ -2738,7 +2738,10 @@ static void rtl8139_io_writeb(void *opaque, uint8_t addr, uint32_t val)
-             }
+diff --git a/docs/system/arm/raspi.rst b/docs/system/arm/raspi.rst
+index fbec1da6a1..44eec3f1c3 100644
+--- a/docs/system/arm/raspi.rst
++++ b/docs/system/arm/raspi.rst
+@@ -40,7 +40,6 @@ Implemented devices
+ Missing devices
+ ---------------
  
-             break;
--
-+        case RxConfig:
-+            DPRINTF("RxConfig write(b) val=0x%02x\n", val);
-+            rtl8139_RxConfig_write(s, (rtl8139_RxConfig_read(s) & 0xFFFFFF00) | val );
-+            break;
-         default:
-             DPRINTF("not implemented write(b) addr=0x%x val=0x%02x\n", addr,
-                 val);
+- * Analog to Digital Converter (ADC)
+  * Pulse Width Modulation (PWM)
+  * PCIE Root Port (raspi4b)
+  * GENET Ethernet Controller (raspi4b)
 -- 
 2.34.1
 
