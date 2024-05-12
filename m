@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03A0EC25B74
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 10:51:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCA38C10F1A
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 10:51:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s66n0-0003VF-Ep; Sun, 12 May 2024 06:50:46 -0400
+	id 1s66nB-0003eJ-AY; Sun, 12 May 2024 06:50:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s66mx-0003Tr-Dp
- for qemu-devel@nongnu.org; Sun, 12 May 2024 06:50:43 -0400
+ id 1s66n5-0003XR-1P
+ for qemu-devel@nongnu.org; Sun, 12 May 2024 06:50:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s66mv-00068e-KY
- for qemu-devel@nongnu.org; Sun, 12 May 2024 06:50:42 -0400
+ id 1s66n1-00069k-Os
+ for qemu-devel@nongnu.org; Sun, 12 May 2024 06:50:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715511041;
+ s=mimecast20190719; t=1715511047;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XMPW7RaN31/d3EofsRKsCOwatebZUsT4SXbPctQRYS0=;
- b=Xt74/QY2fbrQjiJweS1iJbrMF/vO52kfouBRR6Myl+/o/aLe9ewWoh5bxFMMW2U6JYm0Kk
- zErJz/sB9oHTNj+L04/mNiSTPzbf2wtMROjHXCgr40s1ZtLOO8XvIOuShkv/0/Wtk+zHDv
- uflLL/3KL4V/v/VQpjJJrESafYrMIOg=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=6sCNMrkKeZGAI3K68LvfjrDFWNMHzM25PeT31SaOJsk=;
+ b=E2iMLhtEOXqXSQIzd6bOVowuZHEGxyKe8lPY+Lmw0cuU2BL8L6d8Pf4yKsTcXp0ZGN3ARq
+ IWFBzr/u0r5fym6hgmj+LgTbwRaFqFpjnoIgH5Hpsu57u1MCbDfJ68fagBQbLW1WoAeij/
+ 2EqHEp7En9vTBPCSJ3icfs4jY0IJ8/A=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-315-467YmX9VMoCkjR6X1YqsJg-1; Sun, 12 May 2024 06:50:31 -0400
-X-MC-Unique: 467YmX9VMoCkjR6X1YqsJg-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a51fdbd06c8so247443766b.3
- for <qemu-devel@nongnu.org>; Sun, 12 May 2024 03:50:31 -0700 (PDT)
+ us-mta-473-AvdETE70O5GBFWf4gMrlgg-1; Sun, 12 May 2024 06:50:45 -0400
+X-MC-Unique: AvdETE70O5GBFWf4gMrlgg-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-572babec6c6so4570876a12.0
+ for <qemu-devel@nongnu.org>; Sun, 12 May 2024 03:50:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715511030; x=1716115830;
+ d=1e100.net; s=20230601; t=1715511043; x=1716115843;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XMPW7RaN31/d3EofsRKsCOwatebZUsT4SXbPctQRYS0=;
- b=uuApXeONA7j32YlT8DAFN0ubH1eAmpAOyn5haehwODZlFhklIlA6SHEfeQ8b7PRdjK
- rNhPM1at8Z+4YQggVkFt1+DH07HSiHjnFBXc/pc8xmpJooZSumrz47Kda084J61ez+B7
- RWfwtZaIRw6QjEMWvCrd8Y50eZfj/5mlRjBEaaASd7tyAiYMcYZ9lZd3oPoDrbu1X9nh
- caPj836x5Qdt9z9oZ0ax1rYjUE/XMVNd6afzmiRag/duWa6whPZoCOGzF9yfRH+w1y6B
- sTxRUsxYgSU89Q/ou8FbXWP1ScI8/zyBg8s3jRnO+zroShedr//8kIIlFuLrUgxcuAcC
- 3dtw==
-X-Gm-Message-State: AOJu0YxPANVVV5/cf5vS7GWpVQLn8FPEQKlVekN7smplUA8LLddwjUmH
- GPF7asDYZ1RJQEPccwPyWeb3TRVpwoboXEC+qe6IGchR9OIbruZrlo2e7rEUVZpSPkyZIg+neQi
- /ycJKxum2f8AAUlGJwS1xCRSqsrncv3UZloKF0eNV/j+0iaWTsaR/xRYXXF7h4q8yhkeF6lPnly
- +/iesIPnqg7i8a41B1FFj6fcn5tbi5f8V4niCk
-X-Received: by 2002:a17:906:2514:b0:a59:cbff:a05 with SMTP id
- a640c23a62f3a-a5a2d5819b0mr454937966b.20.1715511030159; 
- Sun, 12 May 2024 03:50:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF3ZkVj7s69kUzojiLlOEDh6/EJaoxR1z21vXcRphluPD1vki437PkwhVCGjZlLdMJhDSs8AQ==
-X-Received: by 2002:a17:906:2514:b0:a59:cbff:a05 with SMTP id
- a640c23a62f3a-a5a2d5819b0mr454936966b.20.1715511029854; 
- Sun, 12 May 2024 03:50:29 -0700 (PDT)
+ bh=6sCNMrkKeZGAI3K68LvfjrDFWNMHzM25PeT31SaOJsk=;
+ b=BDxoqgE2oUkRLkufTnq928nm3mckCaB4GiKYkKwWeAFoV4oCwAbBFy6joANGzj8Lif
+ SZlnpIOJqnL/hakCoUmmZ88L5XnBv+CU3mG4rQ68HJMLLY2nhBwV6NaGaYnYCXDjbDlz
+ bwSf28TwxsVnQuZ7rvHHkhmMSRqnRm70RiSRsQ6XZ5IxJb7FHzc0fMlTNuMRkdF5CxJK
+ +zCY8VGxJ+erINK3kPgDbwZxGdc2fMDOFM54wizoYi7rdeSqau0jOUogJEOGVy0LKeBM
+ Yl8pbggnXx0UzWha6MOdlO/wpnjPdKc0WZ7rXExXa+oetxCDQr2QTpyfwutXZBR/6MXZ
+ Avcg==
+X-Gm-Message-State: AOJu0Yw/Xoo1tEhmaFOLWFXuwOJVD+BFrYbhnUYEpSkt3Jr90LmQBWfy
+ iBAF/LV76wWtJIHEiX3z//N9Tc1NoHnXiujIQF70mQNUbyZUoG2QVzYj9pbYDt0SSuXcfpBhe9e
+ bm7RGPdPuEOS8RMwBA2CNqu4yQffUiClB0KZg/jU7sCgHwwcU71zIoVBU/zNCez0XvYIKrZ2kHN
+ nG3a/uYNe1eUDe4G1svzgmD8WO/V0Cyv1qKsQR
+X-Received: by 2002:a50:9fa7:0:b0:572:a172:be71 with SMTP id
+ 4fb4d7f45d1cf-5734d6f2765mr6393879a12.14.1715511042948; 
+ Sun, 12 May 2024 03:50:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH0VGSDA5320UpaDj/jn4GtDtC1jpN2ruo/6zUcyMc9EIMpgmu1B+zOSgmfHlsV1AP2PEkQvg==
+X-Received: by 2002:a50:9fa7:0:b0:572:a172:be71 with SMTP id
+ 4fb4d7f45d1cf-5734d6f2765mr6393870a12.14.1715511042604; 
+ Sun, 12 May 2024 03:50:42 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a5a5c033afasm91778766b.156.2024.05.12.03.50.27
+ 4fb4d7f45d1cf-57421480d99sm2581389a12.8.2024.05.12.03.50.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 12 May 2024 03:50:27 -0700 (PDT)
+ Sun, 12 May 2024 03:50:40 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 17/27] i386: pc: remove unnecessary MachineClass overrides
-Date: Sun, 12 May 2024 12:49:35 +0200
-Message-ID: <20240512104945.130198-18-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 22/27] meson: pick libfdt from common_ss when building
+ target-specific files
+Date: Sun, 12 May 2024 12:49:40 +0200
+Message-ID: <20240512104945.130198-23-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240512104945.130198-1-pbonzini@redhat.com>
 References: <20240512104945.130198-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -102,79 +104,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is no need to override these fields of MachineClass because they are
-already set to the right value in the superclass.
+Avoid having to list dependencies such as libfdt twice, both on common_ss
+and specific_ss.  Instead, just take all the dependencies in common_ss
+and allow the target-specific libqemu-*.fa library to use them.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Message-ID: <20240509170044.190795-10-pbonzini@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/hw/i386/x86.h | 4 ----
- hw/i386/pc.c          | 3 ---
- hw/i386/x86.c         | 6 +++---
- 3 files changed, 3 insertions(+), 10 deletions(-)
+ meson.build              | 14 +++++++++++---
+ hw/arm/meson.build       |  2 +-
+ hw/loongarch/meson.build |  2 +-
+ hw/mips/meson.build      |  2 +-
+ hw/openrisc/meson.build  |  4 ++--
+ hw/ppc/meson.build       |  4 +---
+ hw/riscv/meson.build     |  2 +-
+ 7 files changed, 18 insertions(+), 12 deletions(-)
 
-diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
-index d7b7d3f3ce0..c2062db13f5 100644
---- a/include/hw/i386/x86.h
-+++ b/include/hw/i386/x86.h
-@@ -114,10 +114,6 @@ uint32_t x86_cpu_apic_id_from_index(X86MachineState *pcms,
+diff --git a/meson.build b/meson.build
+index 83ae4347c7f..ab1f44b25c2 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3867,15 +3867,23 @@ foreach target : target_dirs
  
- void x86_cpu_new(X86MachineState *pcms, int64_t apic_id, Error **errp);
- void x86_cpus_init(X86MachineState *pcms, int default_cpu_version);
--CpuInstanceProperties x86_cpu_index_to_props(MachineState *ms,
--                                             unsigned cpu_index);
--int64_t x86_get_default_cpu_node_id(const MachineState *ms, int idx);
--const CPUArchIdList *x86_possible_cpu_arch_ids(MachineState *ms);
- CPUArchId *x86_find_cpu_slot(MachineState *ms, uint32_t id, int *idx);
- void x86_rtc_set_cpus_count(ISADevice *rtc, uint16_t cpus_count);
- void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 19f21953b4a..bfb46e9b548 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1826,9 +1826,6 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
-     assert(!mc->get_hotplug_handler);
-     mc->get_hotplug_handler = pc_get_hotplug_handler;
-     mc->hotplug_allowed = pc_hotplug_allowed;
--    mc->cpu_index_to_instance_props = x86_cpu_index_to_props;
--    mc->get_default_cpu_node_id = x86_get_default_cpu_node_id;
--    mc->possible_cpu_arch_ids = x86_possible_cpu_arch_ids;
-     mc->auto_enable_numa_with_memhp = true;
-     mc->auto_enable_numa_with_memdev = true;
-     mc->has_hotpluggable_cpus = true;
-diff --git a/hw/i386/x86.c b/hw/i386/x86.c
-index c61f4ebfa6a..fcef652c1e3 100644
---- a/hw/i386/x86.c
-+++ b/hw/i386/x86.c
-@@ -443,7 +443,7 @@ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
-     numa_cpu_pre_plug(cpu_slot, dev, errp);
- }
+   target_common = common_ss.apply(config_target, strict: false)
+   objects = common_all.extract_objects(target_common.sources())
+-  deps = target_common.dependencies()
++  arch_deps += target_common.dependencies()
  
--CpuInstanceProperties
-+static CpuInstanceProperties
- x86_cpu_index_to_props(MachineState *ms, unsigned cpu_index)
- {
-     MachineClass *mc = MACHINE_GET_CLASS(ms);
-@@ -453,7 +453,7 @@ x86_cpu_index_to_props(MachineState *ms, unsigned cpu_index)
-     return possible_cpus->cpus[cpu_index].props;
- }
+   target_specific = specific_ss.apply(config_target, strict: false)
+   arch_srcs += target_specific.sources()
+   arch_deps += target_specific.dependencies()
  
--int64_t x86_get_default_cpu_node_id(const MachineState *ms, int idx)
-+static int64_t x86_get_default_cpu_node_id(const MachineState *ms, int idx)
- {
-    X86CPUTopoIDs topo_ids;
-    X86MachineState *x86ms = X86_MACHINE(ms);
-@@ -467,7 +467,7 @@ int64_t x86_get_default_cpu_node_id(const MachineState *ms, int idx)
-    return topo_ids.pkg_id % ms->numa_state->num_nodes;
- }
++  # allow using headers from the dependencies but do not include the sources,
++  # because this emulator only needs those in "objects".  For external
++  # dependencies, the full dependency is included below in the executable.
++  lib_deps = []
++  foreach dep : arch_deps
++    lib_deps += dep.partial_dependency(compile_args: true, includes: true)
++  endforeach
++
+   lib = static_library('qemu-' + target,
+                  sources: arch_srcs + genh,
+-                 dependencies: arch_deps,
++                 dependencies: lib_deps,
+                  objects: objects,
+                  include_directories: target_inc,
+                  c_args: c_args,
+@@ -3923,7 +3931,7 @@ foreach target : target_dirs
+     emulator = executable(exe_name, exe['sources'],
+                install: true,
+                c_args: c_args,
+-               dependencies: arch_deps + deps + exe['dependencies'],
++               dependencies: arch_deps + exe['dependencies'],
+                objects: lib.extract_all_objects(recursive: true),
+                link_depends: [block_syms, qemu_syms],
+                link_args: link_args,
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index 6808135c1f7..aefde0c69a3 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -1,5 +1,5 @@
+ arm_ss = ss.source_set()
+-arm_ss.add(files('boot.c'), fdt)
++arm_ss.add(files('boot.c'))
+ arm_ss.add(when: 'CONFIG_ARM_VIRT', if_true: files('virt.c'))
+ arm_ss.add(when: 'CONFIG_ACPI', if_true: files('virt-acpi-build.c'))
+ arm_ss.add(when: 'CONFIG_DIGIC', if_true: files('digic_boards.c'))
+diff --git a/hw/loongarch/meson.build b/hw/loongarch/meson.build
+index d306d82c2ee..bce7ebac97e 100644
+--- a/hw/loongarch/meson.build
++++ b/hw/loongarch/meson.build
+@@ -3,7 +3,7 @@ loongarch_ss.add(files(
+     'fw_cfg.c',
+     'boot.c',
+ ))
+-loongarch_ss.add(when: 'CONFIG_LOONGARCH_VIRT', if_true: [files('virt.c'), fdt])
++loongarch_ss.add(when: 'CONFIG_LOONGARCH_VIRT', if_true: files('virt.c'))
+ loongarch_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-build.c'))
  
--const CPUArchIdList *x86_possible_cpu_arch_ids(MachineState *ms)
-+static const CPUArchIdList *x86_possible_cpu_arch_ids(MachineState *ms)
- {
-     X86MachineState *x86ms = X86_MACHINE(ms);
-     unsigned int max_cpus = ms->smp.max_cpus;
+ hw_arch += {'loongarch': loongarch_ss}
+diff --git a/hw/mips/meson.build b/hw/mips/meson.build
+index f06d88f3430..ca37c42d900 100644
+--- a/hw/mips/meson.build
++++ b/hw/mips/meson.build
+@@ -9,7 +9,7 @@ if 'CONFIG_TCG' in config_all_accel
+ mips_ss.add(when: 'CONFIG_JAZZ', if_true: files('jazz.c'))
+ mips_ss.add(when: 'CONFIG_MIPSSIM', if_true: files('mipssim.c'))
+ mips_ss.add(when: 'CONFIG_FULOONG', if_true: files('fuloong2e.c'))
+-mips_ss.add(when: 'CONFIG_MIPS_BOSTON', if_true: [files('boston.c'), fdt])
++mips_ss.add(when: 'CONFIG_MIPS_BOSTON', if_true: files('boston.c'))
+ endif
+ 
+ hw_arch += {'mips': mips_ss}
+diff --git a/hw/openrisc/meson.build b/hw/openrisc/meson.build
+index 2dbc6365bb7..82f1f0ef1cc 100644
+--- a/hw/openrisc/meson.build
++++ b/hw/openrisc/meson.build
+@@ -1,7 +1,7 @@
+ openrisc_ss = ss.source_set()
+ openrisc_ss.add(files('cputimer.c'))
+ openrisc_ss.add(files('boot.c'))
+-openrisc_ss.add(when: 'CONFIG_OR1K_SIM', if_true: [files('openrisc_sim.c'), fdt])
+-openrisc_ss.add(when: 'CONFIG_OR1K_VIRT', if_true: [files('virt.c'), fdt])
++openrisc_ss.add(when: 'CONFIG_OR1K_SIM', if_true: files('openrisc_sim.c'))
++openrisc_ss.add(when: 'CONFIG_OR1K_VIRT', if_true: files('virt.c'))
+ 
+ hw_arch += {'openrisc': openrisc_ss}
+diff --git a/hw/ppc/meson.build b/hw/ppc/meson.build
+index d096636ee7f..3ebbf329bcc 100644
+--- a/hw/ppc/meson.build
++++ b/hw/ppc/meson.build
+@@ -3,9 +3,7 @@ ppc_ss.add(files(
+   'ppc.c',
+   'ppc_booke.c',
+ ))
+-ppc_ss.add(when: 'CONFIG_FDT_PPC', if_true: [files(
+-  'fdt.c',
+-), fdt])
++ppc_ss.add(when: 'CONFIG_FDT_PPC', if_true: files('fdt.c'))
+ ppc_ss.add(when: 'CONFIG_FW_CFG_PPC', if_true: files('fw_cfg.c'))
+ 
+ # IBM pSeries (sPAPR)
+diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
+index 2f7ee81be3c..f872674093a 100644
+--- a/hw/riscv/meson.build
++++ b/hw/riscv/meson.build
+@@ -1,5 +1,5 @@
+ riscv_ss = ss.source_set()
+-riscv_ss.add(files('boot.c'), fdt)
++riscv_ss.add(files('boot.c'))
+ riscv_ss.add(when: 'CONFIG_RISCV_NUMA', if_true: files('numa.c'))
+ riscv_ss.add(files('riscv_hart.c'))
+ riscv_ss.add(when: 'CONFIG_OPENTITAN', if_true: files('opentitan.c'))
 -- 
 2.45.0
 
