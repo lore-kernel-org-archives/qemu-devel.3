@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 609D9C10F1A
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 10:52:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 519F0C25B5F
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 10:52:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s66mt-0003RE-II; Sun, 12 May 2024 06:50:41 -0400
+	id 1s66nQ-0004Bq-5K; Sun, 12 May 2024 06:51:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s66mm-0003KD-G0
- for qemu-devel@nongnu.org; Sun, 12 May 2024 06:50:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1s66nO-0004BB-Gj
+ for qemu-devel@nongnu.org; Sun, 12 May 2024 06:51:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s66mk-00065L-Fe
- for qemu-devel@nongnu.org; Sun, 12 May 2024 06:50:32 -0400
+ id 1s66nL-0006By-RP
+ for qemu-devel@nongnu.org; Sun, 12 May 2024 06:51:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715511028;
+ s=mimecast20190719; t=1715511067;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Gg0/8OEdOJATol7CmuQ+nthGOZbWRnfNOiRj2A7n9c0=;
- b=CprhyGxWGXB7x8HyIvvHCfW8M3w2sOxn5OYX1LTE1LslGZP1HlE8OD3SPaEnDV/JBL59oZ
- EA6RLf1tHIYvHybU5C7/vJbpAwGu6zD3N0LGKtCVlu4prCYh+3WqLXqplBwavp3ldmJ0my
- TnVE6kWjAWv5sPhtRFEPt5qBtRlpono=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hW5lAzuYFmwUJnqjO73xIeOPUtbnvcAIpBiDfIIrD/Q=;
+ b=NBa1Qt8KnZshvrMs22Kp+70pSWpeJM0lE0AGm3Q7Gv80dFIge+kGeV38GeiySfiMlcKIA4
+ 97yr3+y89YlBYY76JQXniLXnmZdO4IdjMNmcdbAKV/TygQ0unVn7XFGmVRzkgEdQDweiN9
+ GpFdj+6NOioXn9l8cExigcIvnWagxjA=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-152-Fps4fZjaObyOM-SADQkSmg-1; Sun, 12 May 2024 06:50:25 -0400
-X-MC-Unique: Fps4fZjaObyOM-SADQkSmg-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a59c69844aaso207767266b.0
- for <qemu-devel@nongnu.org>; Sun, 12 May 2024 03:50:25 -0700 (PDT)
+ us-mta-631-I7Sx8uUrNa2rMlbF8NMmaA-1; Sun, 12 May 2024 06:50:50 -0400
+X-MC-Unique: I7Sx8uUrNa2rMlbF8NMmaA-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a5a2adccf95so95437366b.0
+ for <qemu-devel@nongnu.org>; Sun, 12 May 2024 03:50:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715511022; x=1716115822;
+ d=1e100.net; s=20230601; t=1715511049; x=1716115849;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Gg0/8OEdOJATol7CmuQ+nthGOZbWRnfNOiRj2A7n9c0=;
- b=IWAXO8NQHl1BBpA1JQUIuKg8ZkY4uItNkJu7AUugC19maTFWTfMZDk8RvJoaKgA0/2
- OxOnFRtGZtihIJcGtWL/TZzNeXyfr07vnU2tOdhL8XxJxm7mm3Dz6OT+2C8fCIt8ZxAp
- 1qcwKJrNky83txj/7qsfTuJ4oaKl3vIajYaGGCOBBQPZKiuVI25hPVkzXyRNTC6t9EYt
- Ud3iZwHQ7pAqPcsvXQLGxEUq0iFMBkXIlqVfRqoI5nHgb7ijQMUPQLexRPUOeVik3EKr
- uaC2gY3QRClhc/vTKOB10kUr6TxSgIy4ICM6aDOxhB2Uo8xGhXnhjdfGnr3WZIBdgbrY
- j9Ug==
-X-Gm-Message-State: AOJu0YzhsePxCDgxF0ScSwynUENImK1AkRZvh7syD0ZAXr3WRhNn3OCL
- nYIfLboY5WRWlHQf0cF/5Tjh+YVfDscqkfcnIp9M5IyzrV0ZPnDF1wRTAEhqPE/eA8ViVer3vdd
- ceZce5+woDs9sMz3s51h9736QVS5AppKAqCS8Gwf4GC+X+dgxVJyFXsvrePx5pqP2+l3i6+fOeV
- pYQMLhDiKXUtbTGZ5+opuU7ImAzxq8xQd9hJNY
-X-Received: by 2002:a17:906:2dd0:b0:a59:cfe5:947d with SMTP id
- a640c23a62f3a-a5a2d5f1569mr497867366b.40.1715511022458; 
- Sun, 12 May 2024 03:50:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFdvYhROVrS9O6mAElgd92Jwz+1YgT4jc4eaASbcgNxqMgpMZSL9LubZksugO8ZbR5SmTcbmw==
-X-Received: by 2002:a17:906:2dd0:b0:a59:cfe5:947d with SMTP id
- a640c23a62f3a-a5a2d5f1569mr497866766b.40.1715511022106; 
- Sun, 12 May 2024 03:50:22 -0700 (PDT)
+ bh=hW5lAzuYFmwUJnqjO73xIeOPUtbnvcAIpBiDfIIrD/Q=;
+ b=K9GqJRtcfJ86I9jc/uQs8Uq5xY4F5fQwQ0VL0Ozbk3Dc4YcE6FV67OchfoEvJqSPsB
+ cNbL0mN0GqboFC8SlfKv05FYlGiD+E5lohzXbLGWCfKuJsweJGuK8adzQ6jp50LG3ohS
+ KRYNgyOhBFBZSWeNSztIvvkndFZpK57+PjrvJ2NLCMhEIxKVCt1C19m9kXbxe4UAw1JS
+ tf0h4kEDR4mg63cENAFARN3wwDas/8TEuwUgLYATXQH2mEDdcs9CWXjRYDU+AdoLpHNS
+ apTa4xBzJhSgI2GeIGdc9uZrlqUn1IhIrkN/MPQczBV4pkYk5GZeKrk4NqLnpba9J8EG
+ y/Hw==
+X-Gm-Message-State: AOJu0YzEyzGLM+rknF32G+Y5HR+VSSGlckSgZaWx68t63OLlsaeXDSOR
+ CnOg+ZKq3c4PzWrxEjDqZTN3NLlfoTqqDtX1KAwhlX49bGO01sT/NKLAOaIIO0ptawL41uHkT9R
+ 4uSthRsfMvaKPUJCjOypuK5GEC50zebEBm6D9s8cQFnmkySuZeidaCPvbC0w+jO/qoXGsWG5imq
+ na46CrPzlkQRoEiFhwGihruXbDTgg6lfRi0Tov
+X-Received: by 2002:a50:d793:0:b0:570:5bcc:f749 with SMTP id
+ 4fb4d7f45d1cf-5734d67f3ccmr6207830a12.29.1715511049249; 
+ Sun, 12 May 2024 03:50:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH8NrPDl2tJJ2XaqRWa2SXq43FoPTjdrixtU/l7nU7BSqMfFhu66zyuUJhBK9ezffuNFyU7fg==
+X-Received: by 2002:a50:d793:0:b0:570:5bcc:f749 with SMTP id
+ 4fb4d7f45d1cf-5734d67f3ccmr6207818a12.29.1715511048808; 
+ Sun, 12 May 2024 03:50:48 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a5a17894d6dsm444472866b.71.2024.05.12.03.50.20
+ 4fb4d7f45d1cf-5733bea65aasm4581623a12.5.2024.05.12.03.50.46
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 12 May 2024 03:50:20 -0700 (PDT)
+ Sun, 12 May 2024 03:50:46 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>
-Subject: [PULL 13/27] tests/qtest: s390x: fix operation in a build without any
- boards or devices
-Date: Sun, 12 May 2024 12:49:31 +0200
-Message-ID: <20240512104945.130198-14-pbonzini@redhat.com>
+Subject: [PULL 24/27] kconfig: allow compiling out QEMU device tree code per
+ target
+Date: Sun, 12 May 2024 12:49:42 +0200
+Message-ID: <20240512104945.130198-25-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240512104945.130198-1-pbonzini@redhat.com>
 References: <20240512104945.130198-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -103,52 +103,212 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Do the bare minimum to ensure that at least a vanilla
---without-default-devices build works for all targets except i386,
-x86_64 and ppc64.  In particular this fixes s390x-softmmu; i386 and
-x86_64 have about a dozen failing tests that do not pass -M and therefore
-require a default machine type; ppc64 has the same issue, though only
-with numa-test.
+Introduce a new Kconfig symbol, CONFIG_DEVICE_TREE, that specifies whether
+to include the common device tree code in system/device_tree.c and to
+link to libfdt.  For now, include it unconditionally if libfdt is
+available.
 
-If we can for now ignore the cases where boards and devices are picked
-by hand, drive_del-test however can be fixed easily; almost all tests
-check for the virtio-blk or virtio-scsi device that they use, and are
-already skipped.  Only one didn't get the memo; plus another one does
-not need a machine at all and can be run with -M none.
-
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20240509170044.190795-6-pbonzini@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- tests/qtest/drive_del-test.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ meson.build                  |  1 +
+ include/monitor/hmp.h        |  1 +
+ include/sysemu/device_tree.h |  1 -
+ monitor/hmp-cmds.c           | 17 +++++++++++++++++
+ system/device_tree-stub.c    | 10 ++++++++++
+ system/device_tree.c         | 14 --------------
+ Kconfig.host                 |  4 ++++
+ hw/core/Kconfig              |  9 ++++++++-
+ hw/core/meson.build          |  2 +-
+ system/meson.build           |  4 +++-
+ 10 files changed, 45 insertions(+), 18 deletions(-)
+ create mode 100644 system/device_tree-stub.c
 
-diff --git a/tests/qtest/drive_del-test.c b/tests/qtest/drive_del-test.c
-index 8a6f3ac963d..7b67a4bbee4 100644
---- a/tests/qtest/drive_del-test.c
-+++ b/tests/qtest/drive_del-test.c
-@@ -173,7 +173,7 @@ static void test_drive_without_dev(void)
-     QTestState *qts;
+diff --git a/meson.build b/meson.build
+index dd4a28f8f8f..8b90ea6cf70 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2989,6 +2989,7 @@ host_kconfig = \
+   (have_ivshmem ? ['CONFIG_IVSHMEM=y'] : []) + \
+   (opengl.found() ? ['CONFIG_OPENGL=y'] : []) + \
+   (x11.found() ? ['CONFIG_X11=y'] : []) + \
++  (fdt.found() ? ['CONFIG_FDT=y'] : []) + \
+   (have_vhost_user ? ['CONFIG_VHOST_USER=y'] : []) + \
+   (have_vhost_vdpa ? ['CONFIG_VHOST_VDPA=y'] : []) + \
+   (have_vhost_kernel ? ['CONFIG_VHOST_KERNEL=y'] : []) + \
+diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
+index f4cf8f6717d..954f3c83ad9 100644
+--- a/include/monitor/hmp.h
++++ b/include/monitor/hmp.h
+@@ -180,5 +180,6 @@ void hmp_ioport_write(Monitor *mon, const QDict *qdict);
+ void hmp_boot_set(Monitor *mon, const QDict *qdict);
+ void hmp_info_mtree(Monitor *mon, const QDict *qdict);
+ void hmp_info_cryptodev(Monitor *mon, const QDict *qdict);
++void hmp_dumpdtb(Monitor *mon, const QDict *qdict);
  
-     /* Start with an empty drive */
--    qts = qtest_init("-drive if=none,id=drive0");
-+    qts = qtest_init("-drive if=none,id=drive0 -M none");
+ #endif
+diff --git a/include/sysemu/device_tree.h b/include/sysemu/device_tree.h
+index 8eab3959341..eb601522f88 100644
+--- a/include/sysemu/device_tree.h
++++ b/include/sysemu/device_tree.h
+@@ -134,7 +134,6 @@ int qemu_fdt_add_path(void *fdt, const char *path);
+     } while (0)
  
-     /* Delete the drive */
-     drive_del(qts);
-@@ -192,6 +192,11 @@ static void test_after_failed_device_add(void)
-     QDict *response;
-     QTestState *qts;
+ void qemu_fdt_dumpdtb(void *fdt, int size);
+-void hmp_dumpdtb(Monitor *mon, const QDict *qdict);
  
-+    if (!has_device_builtin("virtio-blk")) {
-+        g_test_skip("Device virtio-blk is not available");
+ /**
+  * qemu_fdt_setprop_sized_cells_from_array:
+diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+index 871898ac46b..ea79148ee85 100644
+--- a/monitor/hmp-cmds.c
++++ b/monitor/hmp-cmds.c
+@@ -22,6 +22,7 @@
+ #include "monitor/monitor-internal.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-control.h"
++#include "qapi/qapi-commands-machine.h"
+ #include "qapi/qapi-commands-misc.h"
+ #include "qapi/qmp/qdict.h"
+ #include "qemu/cutils.h"
+@@ -443,3 +444,19 @@ void hmp_info_mtree(Monitor *mon, const QDict *qdict)
+ 
+     mtree_info(flatview, dispatch_tree, owner, disabled);
+ }
++
++#if defined(CONFIG_FDT)
++void hmp_dumpdtb(Monitor *mon, const QDict *qdict)
++{
++    const char *filename = qdict_get_str(qdict, "filename");
++    Error *local_err = NULL;
++
++    qmp_dumpdtb(filename, &local_err);
++
++    if (hmp_handle_error(mon, local_err)) {
 +        return;
 +    }
 +
-     snprintf(driver, sizeof(driver), "virtio-blk-%s",
-              qvirtio_get_dev_type());
++    monitor_printf(mon, "dtb dumped to %s", filename);
++}
++#endif
+diff --git a/system/device_tree-stub.c b/system/device_tree-stub.c
+new file mode 100644
+index 00000000000..bddda6fa37a
+--- /dev/null
++++ b/system/device_tree-stub.c
+@@ -0,0 +1,10 @@
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "qapi/qapi-commands-machine.h"
++
++#ifdef CONFIG_FDT
++void qmp_dumpdtb(const char *filename, Error **errp)
++{
++    error_setg(errp, "This machine doesn't have a FDT");
++}
++#endif
+diff --git a/system/device_tree.c b/system/device_tree.c
+index eb5166ca360..2e38259d34f 100644
+--- a/system/device_tree.c
++++ b/system/device_tree.c
+@@ -668,20 +668,6 @@ void qmp_dumpdtb(const char *filename, Error **errp)
+     }
+ }
  
+-void hmp_dumpdtb(Monitor *mon, const QDict *qdict)
+-{
+-    const char *filename = qdict_get_str(qdict, "filename");
+-    Error *local_err = NULL;
+-
+-    qmp_dumpdtb(filename, &local_err);
+-
+-    if (hmp_handle_error(mon, local_err)) {
+-        return;
+-    }
+-
+-    info_report("dtb dumped to %s", filename);
+-}
+-
+ void qemu_fdt_randomize_seeds(void *fdt)
+ {
+     int noffset, poffset, len;
+diff --git a/Kconfig.host b/Kconfig.host
+index f6a2a131e6c..a0d4a52131e 100644
+--- a/Kconfig.host
++++ b/Kconfig.host
+@@ -23,6 +23,10 @@ config IVSHMEM
+ config TPM
+     bool
+ 
++config FDT
++    bool
++    select DEVICE_TREE
++
+ config VHOST_USER
+     bool
+ 
+diff --git a/hw/core/Kconfig b/hw/core/Kconfig
+index 9397503656d..24411f59306 100644
+--- a/hw/core/Kconfig
++++ b/hw/core/Kconfig
+@@ -4,8 +4,14 @@ config EMPTY_SLOT
+ config PTIMER
+     bool
+ 
++config DEVICE_TREE
++    bool
++    # fail the build if libfdt not found
++    depends on FDT
++
+ config FITLOADER
+     bool
++    depends on DEVICE_TREE
+ 
+ config GENERIC_LOADER
+     bool
+@@ -14,13 +20,14 @@ config GENERIC_LOADER
+ config GUEST_LOADER
+     bool
+     default y
+-    depends on TCG
++    depends on TCG && DEVICE_TREE
+ 
+ config OR_IRQ
+     bool
+ 
+ config PLATFORM_BUS
+     bool
++    depends on DEVICE_TREE
+ 
+ config REGISTER
+     bool
+diff --git a/hw/core/meson.build b/hw/core/meson.build
+index f20d4143f7a..a3d9bab9f42 100644
+--- a/hw/core/meson.build
++++ b/hw/core/meson.build
+@@ -16,7 +16,7 @@ common_ss.add(files('cpu-common.c'))
+ common_ss.add(files('machine-smp.c'))
+ system_ss.add(when: 'CONFIG_FITLOADER', if_true: files('loader-fit.c'))
+ system_ss.add(when: 'CONFIG_GENERIC_LOADER', if_true: files('generic-loader.c'))
+-system_ss.add(when: ['CONFIG_GUEST_LOADER', fdt], if_true: files('guest-loader.c'))
++system_ss.add(when: 'CONFIG_GUEST_LOADER', if_true: files('guest-loader.c'))
+ system_ss.add(when: 'CONFIG_OR_IRQ', if_true: files('or-irq.c'))
+ system_ss.add(when: 'CONFIG_PLATFORM_BUS', if_true: files('platform-bus.c'))
+ system_ss.add(when: 'CONFIG_PTIMER', if_true: files('ptimer.c'))
+diff --git a/system/meson.build b/system/meson.build
+index 25e21172505..a296270cb00 100644
+--- a/system/meson.build
++++ b/system/meson.build
+@@ -32,7 +32,9 @@ if have_tpm
+ endif
+ 
+ system_ss.add(when: seccomp, if_true: files('qemu-seccomp.c'))
+-system_ss.add(when: fdt, if_true: files('device_tree.c'))
++system_ss.add(when: 'CONFIG_DEVICE_TREE',
++              if_true: [fdt, files('device_tree.c')],
++              if_false: files('device_tree-stub.c'))
+ if host_os == 'linux'
+   system_ss.add(files('async-teardown.c'))
+ endif
 -- 
 2.45.0
 
