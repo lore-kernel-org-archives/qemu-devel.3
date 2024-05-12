@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0A8CC25B4F
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 23:37:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FEEDC25B4F
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 23:38:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6IdA-00031y-EK; Sun, 12 May 2024 19:29:24 -0400
+	id 1s6Icc-0001xP-1c; Sun, 12 May 2024 19:28:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s6Ict-0002Gl-0v; Sun, 12 May 2024 19:29:09 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1s6IcR-0001jG-Rs; Sun, 12 May 2024 19:28:39 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s6Icr-0000Uz-GR; Sun, 12 May 2024 19:29:06 -0400
+ id 1s6IcP-0000Oj-BV; Sun, 12 May 2024 19:28:38 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 6ECC84E65C5;
- Mon, 13 May 2024 01:28:36 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 4D8594E677C;
+ Mon, 13 May 2024 01:28:13 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id qTY6aqICWiJk; Mon, 13 May 2024 01:28:34 +0200 (CEST)
+ with ESMTP id hpmyxe90gV7H; Mon, 13 May 2024 01:28:11 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 7E8B94E6543; Mon, 13 May 2024 01:28:34 +0200 (CEST)
-Message-Id: <be24fd5e89840b061ba438ab9f6a7611386df51e.1715555763.git.balaton@eik.bme.hu>
+ id 5C5AF4E6779; Mon, 13 May 2024 01:28:11 +0200 (CEST)
+Message-Id: <a5c692860c5d9e22803b301b3e21900a2a941434.1715555763.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1715555763.git.balaton@eik.bme.hu>
 References: <cover.1715555763.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v7 59/61] target/ppc/mmu_common.c: Stop using ctx in
- get_bat_6xx_tlb()
+Subject: [PATCH v7 37/61] target/ppc/mmu_common.c: Remove single use local
+ variable
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,9 +40,9 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Mon, 13 May 2024 01:28:34 +0200 (CEST)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Date: Mon, 13 May 2024 01:28:11 +0200 (CEST)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -63,59 +63,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pass raddr and prot in function parameters instead
+The ptem variable in ppc6xx_tlb_pte_check() is used only once,
+simplify by removing it as the value is already clear itself without
+adding a local name for it.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- target/ppc/mmu_common.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ target/ppc/mmu_common.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index ba54c40048..6d588b6795 100644
+index 5d0090014a..4ca700e31b 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -193,7 +193,7 @@ static int ppc6xx_tlb_check(CPUPPCState *env, hwaddr *raddr, int *prot,
-     return ret;
- }
- 
--static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
-+static int get_bat_6xx_tlb(CPUPPCState *env, hwaddr *raddr, int *prot,
-                            target_ulong eaddr, MMUAccessType access_type,
-                            bool pr)
+@@ -98,7 +98,6 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
+                                 target_ulong pte1, int h,
+                                 MMUAccessType access_type)
  {
-@@ -224,16 +224,16 @@ static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
-             if ((eaddr & BATU32_BEPIU) == BEPIu &&
-                 ((eaddr & BATU32_BEPIL) & ~bl) == BEPIl) {
-                 /* Get physical address */
--                ctx->raddr = (*BATl & BATU32_BEPIU) |
-+                *raddr = (*BATl & BATU32_BEPIU) |
-                     ((eaddr & BATU32_BEPIL & bl) | (*BATl & BATU32_BEPIL)) |
-                     (eaddr & 0x0001F000);
-                 /* Compute access rights */
--                ctx->prot = ppc_hash32_bat_prot(*BATu, *BATl);
--                if (check_prot_access_type(ctx->prot, access_type)) {
-+                *prot = ppc_hash32_bat_prot(*BATu, *BATl);
-+                if (check_prot_access_type(*prot, access_type)) {
-                     qemu_log_mask(CPU_LOG_MMU, "BAT %d match: r " HWADDR_FMT_plx
--                                  " prot=%c%c\n", i, ctx->raddr,
--                                  ctx->prot & PAGE_READ ? 'R' : '-',
--                                  ctx->prot & PAGE_WRITE ? 'W' : '-');
-+                                  " prot=%c%c\n", i, *raddr,
-+                                  *prot & PAGE_READ ? 'R' : '-',
-+                                  *prot & PAGE_WRITE ? 'W' : '-');
-                     ret = 0;
-                 } else {
-                     ret = -2;
-@@ -277,7 +277,8 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
+-    target_ulong ptem;
+     int ret, pteh, ptev, pp;
  
-     /* First try to find a BAT entry if there are any */
-     if (env->nb_BATs &&
--        get_bat_6xx_tlb(env, ctx, eaddr, access_type, pr) == 0) {
-+        get_bat_6xx_tlb(env, &ctx->raddr, &ctx->prot, eaddr,
-+                        access_type, pr) == 0) {
-         return 0;
-     }
- 
+     ret = -1;
+@@ -107,9 +106,8 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
+     pteh = (pte0 >> 6) & 1;
+     if (ptev && h == pteh) {
+         /* Check vsid & api */
+-        ptem = pte0 & PTE_PTEM_MASK;
+         pp = pte1 & 0x00000003;
+-        if (ptem == ctx->ptem) {
++        if ((pte0 & PTE_PTEM_MASK) == ctx->ptem) {
+             if (ctx->raddr != (hwaddr)-1ULL) {
+                 /* all matches should have equal RPN, WIMG & PP */
+                 if ((ctx->raddr & PTE_CHECK_MASK) != (pte1 & PTE_CHECK_MASK)) {
 -- 
 2.30.9
 
