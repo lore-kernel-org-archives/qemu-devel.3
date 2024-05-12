@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C700DC25B5F
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 10:52:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 609D9C10F1A
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 10:52:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s66nB-0003eQ-AH; Sun, 12 May 2024 06:50:57 -0400
+	id 1s66mt-0003RE-II; Sun, 12 May 2024 06:50:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s66mz-0003VB-ET
- for qemu-devel@nongnu.org; Sun, 12 May 2024 06:50:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1s66mm-0003KD-G0
+ for qemu-devel@nongnu.org; Sun, 12 May 2024 06:50:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s66mw-00068r-4v
- for qemu-devel@nongnu.org; Sun, 12 May 2024 06:50:45 -0400
+ id 1s66mk-00065L-Fe
+ for qemu-devel@nongnu.org; Sun, 12 May 2024 06:50:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715511041;
+ s=mimecast20190719; t=1715511028;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6KAgxrPk7qgofAnBxYawC+GAMA6BaH6EyGuv3lOcUvQ=;
- b=Mthmq27WE8joTBrrDLtKVCJcyTN6jMScUowHzboF9XfxQBLPaZl435xbWup4By3lMeO0wa
- ZJEM3W9uuXryx3GFl6no3mymMUfw2+5QMZfq3Y/+1BHv23O6iOARh20NlBrd08Z/Mq1Wi4
- NDx9XwY1t6wC9LgoV6hgmVZjRJb8g68=
-Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
- [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Gg0/8OEdOJATol7CmuQ+nthGOZbWRnfNOiRj2A7n9c0=;
+ b=CprhyGxWGXB7x8HyIvvHCfW8M3w2sOxn5OYX1LTE1LslGZP1HlE8OD3SPaEnDV/JBL59oZ
+ EA6RLf1tHIYvHybU5C7/vJbpAwGu6zD3N0LGKtCVlu4prCYh+3WqLXqplBwavp3ldmJ0my
+ TnVE6kWjAWv5sPhtRFEPt5qBtRlpono=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-489-scLgQEXBOIieo8xs01p6ug-1; Sun, 12 May 2024 06:50:29 -0400
-X-MC-Unique: scLgQEXBOIieo8xs01p6ug-1
-Received: by mail-lf1-f70.google.com with SMTP id
- 2adb3069b0e04-51fa2c23f62so3185099e87.1
- for <qemu-devel@nongnu.org>; Sun, 12 May 2024 03:50:29 -0700 (PDT)
+ us-mta-152-Fps4fZjaObyOM-SADQkSmg-1; Sun, 12 May 2024 06:50:25 -0400
+X-MC-Unique: Fps4fZjaObyOM-SADQkSmg-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a59c69844aaso207767266b.0
+ for <qemu-devel@nongnu.org>; Sun, 12 May 2024 03:50:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715511027; x=1716115827;
+ d=1e100.net; s=20230601; t=1715511022; x=1716115822;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6KAgxrPk7qgofAnBxYawC+GAMA6BaH6EyGuv3lOcUvQ=;
- b=GdYh+w1HtTL9REt100LJHopUi6oAkzdPL93Rlwq+1fVlqvCpZhiQZ2crhjDTnp0vb2
- 6dZvVqKJH2csMFyt/EKNdcAhUZ1vwPcdfAnlxSmlEncCs32Ej7o/owLwbjPngwuadLMV
- ajJXKjp1tovzMJOb/syYfm03D0gBsYPHuh7Es7H84wg4NFD+KRCnZpWCoKH48nxqtenJ
- 8H3L5tt7E4R2cFN645oZntexXXDTUgsTJmKvvZC6bunQTu7uSbZ/3d3gkGlK84Z3cgt3
- 22vDJzM30U39Y+QcUx3TcXtkJWslucI01yV1P8uTFmvfXgzD5sTdemz+ujRvedPIyuBq
- dCMw==
-X-Gm-Message-State: AOJu0YyzVvijCb0AtwK3azELLSV6yxUT5sg/sLezaACsJWQVjfcAOX0S
- Ch47rOc58P7DpfsclMbfn0WueDE6NxjAdhHy+ZVQX1qSIX21t+SM5yWjd3IANTQBDQmIaB0qtM0
- hbgUjRwWWFiJmlQ+Gyuc+5KLMGYnAZs9+ey51TRvYZjjZG2kMv1tk9AG+dIkQaCz87jlu4hk0Pc
- QGXyIEYBXJWbT31fySGoF5w+QYiSrJpQ6BtLoG
-X-Received: by 2002:ac2:4ace:0:b0:521:92f6:3089 with SMTP id
- 2adb3069b0e04-5220ff73877mr4175459e87.60.1715511027402; 
- Sun, 12 May 2024 03:50:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHCcKYCBodKFNLRRDdSsXODcrEBG4Jpgra6HT3oEoroWWd4T04tYgssZTbDJJmKUa1c6aNvlQ==
-X-Received: by 2002:ac2:4ace:0:b0:521:92f6:3089 with SMTP id
- 2adb3069b0e04-5220ff73877mr4175452e87.60.1715511027026; 
- Sun, 12 May 2024 03:50:27 -0700 (PDT)
+ bh=Gg0/8OEdOJATol7CmuQ+nthGOZbWRnfNOiRj2A7n9c0=;
+ b=IWAXO8NQHl1BBpA1JQUIuKg8ZkY4uItNkJu7AUugC19maTFWTfMZDk8RvJoaKgA0/2
+ OxOnFRtGZtihIJcGtWL/TZzNeXyfr07vnU2tOdhL8XxJxm7mm3Dz6OT+2C8fCIt8ZxAp
+ 1qcwKJrNky83txj/7qsfTuJ4oaKl3vIajYaGGCOBBQPZKiuVI25hPVkzXyRNTC6t9EYt
+ Ud3iZwHQ7pAqPcsvXQLGxEUq0iFMBkXIlqVfRqoI5nHgb7ijQMUPQLexRPUOeVik3EKr
+ uaC2gY3QRClhc/vTKOB10kUr6TxSgIy4ICM6aDOxhB2Uo8xGhXnhjdfGnr3WZIBdgbrY
+ j9Ug==
+X-Gm-Message-State: AOJu0YzhsePxCDgxF0ScSwynUENImK1AkRZvh7syD0ZAXr3WRhNn3OCL
+ nYIfLboY5WRWlHQf0cF/5Tjh+YVfDscqkfcnIp9M5IyzrV0ZPnDF1wRTAEhqPE/eA8ViVer3vdd
+ ceZce5+woDs9sMz3s51h9736QVS5AppKAqCS8Gwf4GC+X+dgxVJyFXsvrePx5pqP2+l3i6+fOeV
+ pYQMLhDiKXUtbTGZ5+opuU7ImAzxq8xQd9hJNY
+X-Received: by 2002:a17:906:2dd0:b0:a59:cfe5:947d with SMTP id
+ a640c23a62f3a-a5a2d5f1569mr497867366b.40.1715511022458; 
+ Sun, 12 May 2024 03:50:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFdvYhROVrS9O6mAElgd92Jwz+1YgT4jc4eaASbcgNxqMgpMZSL9LubZksugO8ZbR5SmTcbmw==
+X-Received: by 2002:a17:906:2dd0:b0:a59:cfe5:947d with SMTP id
+ a640c23a62f3a-a5a2d5f1569mr497866766b.40.1715511022106; 
+ Sun, 12 May 2024 03:50:22 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5733bea653bsm4654570a12.1.2024.05.12.03.50.26
+ a640c23a62f3a-a5a17894d6dsm444472866b.71.2024.05.12.03.50.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 12 May 2024 03:50:26 -0700 (PDT)
+ Sun, 12 May 2024 03:50:20 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 16/27] i386: correctly select code in hw/i386 that depends on
- other components
-Date: Sun, 12 May 2024 12:49:34 +0200
-Message-ID: <20240512104945.130198-17-pbonzini@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>
+Subject: [PULL 13/27] tests/qtest: s390x: fix operation in a build without any
+ boards or devices
+Date: Sun, 12 May 2024 12:49:31 +0200
+Message-ID: <20240512104945.130198-14-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240512104945.130198-1-pbonzini@redhat.com>
 References: <20240512104945.130198-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -103,55 +103,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-fw_cfg.c and vapic.c are currently included unconditionally but
-depend on other components.  vapic.c depends on the local APIC,
-while fw_cfg.c includes a piece of AML builder code that depends
-on CONFIG_ACPI.
+Do the bare minimum to ensure that at least a vanilla
+--without-default-devices build works for all targets except i386,
+x86_64 and ppc64.  In particular this fixes s390x-softmmu; i386 and
+x86_64 have about a dozen failing tests that do not pass -M and therefore
+require a default machine type; ppc64 has the same issue, though only
+with numa-test.
+
+If we can for now ignore the cases where boards and devices are picked
+by hand, drive_del-test however can be fixed easily; almost all tests
+check for the virtio-blk or virtio-scsi device that they use, and are
+already skipped.  Only one didn't get the memo; plus another one does
+not need a machine at all and can be run with -M none.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Message-ID: <20240509170044.190795-9-pbonzini@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20240509170044.190795-6-pbonzini@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/i386/fw_cfg.c    | 2 ++
- hw/i386/meson.build | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ tests/qtest/drive_del-test.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
-index d802d2787f0..6e0d9945d07 100644
---- a/hw/i386/fw_cfg.c
-+++ b/hw/i386/fw_cfg.c
-@@ -203,6 +203,7 @@ void fw_cfg_build_feature_control(MachineState *ms, FWCfgState *fw_cfg)
-     fw_cfg_add_file(fw_cfg, "etc/msr_feature_control", val, sizeof(*val));
- }
+diff --git a/tests/qtest/drive_del-test.c b/tests/qtest/drive_del-test.c
+index 8a6f3ac963d..7b67a4bbee4 100644
+--- a/tests/qtest/drive_del-test.c
++++ b/tests/qtest/drive_del-test.c
+@@ -173,7 +173,7 @@ static void test_drive_without_dev(void)
+     QTestState *qts;
  
-+#ifdef CONFIG_ACPI
- void fw_cfg_add_acpi_dsdt(Aml *scope, FWCfgState *fw_cfg)
- {
-     /*
-@@ -229,3 +230,4 @@ void fw_cfg_add_acpi_dsdt(Aml *scope, FWCfgState *fw_cfg)
-     aml_append(dev, aml_name_decl("_CRS", crs));
-     aml_append(scope, dev);
- }
-+#endif
-diff --git a/hw/i386/meson.build b/hw/i386/meson.build
-index d8b70ef3e9c..d9da676038c 100644
---- a/hw/i386/meson.build
-+++ b/hw/i386/meson.build
-@@ -1,12 +1,12 @@
- i386_ss = ss.source_set()
- i386_ss.add(files(
-   'fw_cfg.c',
--  'vapic.c',
-   'e820_memory_layout.c',
-   'multiboot.c',
-   'x86.c',
- ))
+     /* Start with an empty drive */
+-    qts = qtest_init("-drive if=none,id=drive0");
++    qts = qtest_init("-drive if=none,id=drive0 -M none");
  
-+i386_ss.add(when: 'CONFIG_APIC', if_true: files('vapic.c'))
- i386_ss.add(when: 'CONFIG_X86_IOMMU', if_true: files('x86-iommu.c'),
-                                       if_false: files('x86-iommu-stub.c'))
- i386_ss.add(when: 'CONFIG_AMD_IOMMU', if_true: files('amd_iommu.c'),
+     /* Delete the drive */
+     drive_del(qts);
+@@ -192,6 +192,11 @@ static void test_after_failed_device_add(void)
+     QDict *response;
+     QTestState *qts;
+ 
++    if (!has_device_builtin("virtio-blk")) {
++        g_test_skip("Device virtio-blk is not available");
++        return;
++    }
++
+     snprintf(driver, sizeof(driver), "virtio-blk-%s",
+              qvirtio_get_dev_type());
+ 
 -- 
 2.45.0
 
