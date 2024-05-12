@@ -4,83 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A6AEC10F1A
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 10:29:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8D98C41513
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 10:51:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s66SH-0007WA-TI; Sun, 12 May 2024 06:29:21 -0400
+	id 1s66mg-0003HI-Kx; Sun, 12 May 2024 06:50:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s66SG-0007Vl-Ag
- for qemu-devel@nongnu.org; Sun, 12 May 2024 06:29:20 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s66SE-0001Un-O6
- for qemu-devel@nongnu.org; Sun, 12 May 2024 06:29:20 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-34da35cd01cso3101363f8f.2
- for <qemu-devel@nongnu.org>; Sun, 12 May 2024 03:29:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715509756; x=1716114556; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QwPr5EtNNaz/C16YN205D9pkomcVcn8tvY+4+dDIYaM=;
- b=rAjbX6Td9DGm+msEx8+vcRPqgW4i3UFzur+OxQPIx3yKV/9pIcOLmX040HaaqsYjry
- 9pKmqUyUNe+EZ/t73LIN5cPIbwlT3vOyKpcHgB41lNdGPboLWDFdimL0hlsppu2wn2PX
- vkFg2a5g8eVf1gx4UYSCdNCqfxccoTYArLvRg54JjURmC5yXsfFaGCFmTG95bDX+PaEF
- P7gqfHnitN/49FZBFNu/2ytf3OpLuAY2xS7mfZ9XUM0FeJgABrFuOzE6wRm18OdMc1f9
- LB/ZiThjuRLQUx+G4WHB+PMSy8aJbqitM2WKU8ojI18aCscNG4/dLOCJqbqKsZjFq7LV
- gblA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1s66mg-0003H5-1Z
+ for qemu-devel@nongnu.org; Sun, 12 May 2024 06:50:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1s66mb-0005z9-L8
+ for qemu-devel@nongnu.org; Sun, 12 May 2024 06:50:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715511021;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zF5LVRbs0/4q2/lIEg0QJLc1GOZk9sPQzeFoK9/sVOo=;
+ b=BWAW3fO7vZ3N/+j64x029EOti3ivrd5sSNmZTeCzWYSkw4zMGtlJX5U9Kg0YAZdspGZXYm
+ 4SduxAqXbiDQUIaCODc+T6VEbGUkfBgsO8vkeNZICabzVUNeSdGXD0c9MkMNEQKI4/k9Uz
+ vz+drGuwidrklHBID1wIoOoP6FxJCAc=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-245-sfOXU9euPJ605m8L_FFx-A-1; Sun, 12 May 2024 06:50:09 -0400
+X-MC-Unique: sfOXU9euPJ605m8L_FFx-A-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a59c2583f0bso196887566b.1
+ for <qemu-devel@nongnu.org>; Sun, 12 May 2024 03:50:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715509756; x=1716114556;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QwPr5EtNNaz/C16YN205D9pkomcVcn8tvY+4+dDIYaM=;
- b=MyNbYavlHKScNK/fw13/EOu/FzjBM/a6oUBFKORW3FpQyrfBAM2DSKwcUrhkvVHcmh
- 9NAUZDZz9aleuDTRF63XNpc6wKvJXD06T6/lUExx4FoNcGAisUQ1cm66D+4QegTxUhB7
- VlXu137aZEpm/wVzObfVTTs/dYSSf8Vaj9wcAOfqKpGvvzvCMwNISxxBe+wyaTvJAUMy
- FD1OBDxm79OVl71U1JU1fqZ7wj2MzuRJGHtgzim8qJg5SONwfsphsatIc5nwvNdLpvQj
- pD0S3Q+SXGrD4p/o66Kk5MCcMeUpR2kJyM3woDnjx/JIL7/eQ0WCiQsqA1Jm0NWpwkSn
- rClA==
-X-Gm-Message-State: AOJu0YyxGgBg0SLITjEb3OzcyekRCxZpVzTPmkbRVaqktzIu2GDVCDuM
- LQpwjkSzULoGqfs9DcvdlMQSfZVpxCtHfMsTdFTWDceaBPdCXBY3Fq/ez+m2OsU=
-X-Google-Smtp-Source: AGHT+IE9N9OC4mNm5Odq+RbI5+5G1wlZqamZUwYc1yQdb6OQlRA7K5Xe1ktYf/QxVfWnOlw4Z/h6Gw==
-X-Received: by 2002:a5d:53c5:0:b0:34a:9adc:c364 with SMTP id
- ffacd0b85a97d-3504a630f38mr5987908f8f.8.1715509755958; 
- Sun, 12 May 2024 03:29:15 -0700 (PDT)
-Received: from [192.168.51.227] (12.red-213-97-13.staticip.rima-tde.net.
- [213.97.13.12]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502b896ab0sm8671590f8f.41.2024.05.12.03.29.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 12 May 2024 03:29:15 -0700 (PDT)
-Message-ID: <b85e90da-cf99-431c-8a64-80cbba21ea89@linaro.org>
-Date: Sun, 12 May 2024 12:29:13 +0200
+ d=1e100.net; s=20230601; t=1715511008; x=1716115808;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=zF5LVRbs0/4q2/lIEg0QJLc1GOZk9sPQzeFoK9/sVOo=;
+ b=iD5jzmaMiDeWKxpEcETuWkuogXJIRsScPHw3PoiQMlhW49soz8vpUUNrWB6huW1e8G
+ XqNX0Pc0ymHZGpjzNxqevORskwOjK+UtPOyOoantolx6GkIZqsdldGnqjmBLBHJqboQb
+ 71SH9pJY3+GB88qmqkfzkCaQ9k08Ji739Mhcwh5aQIBKVDWsDmoc55MkK9jRFa0YEm/G
+ WiW2Dmg39qIl3n/SR7qGi0BUBIHje77ablZBGNF9Y2IisOG63BuOAeQbamC/uZ/F3wi5
+ 0rFWx/Yi4SqzfeGRygB6IOHwCpJAt+vsXS8tQVMcoDwog5jhWUV5c8m+8pJS24vQnCJe
+ xCpg==
+X-Gm-Message-State: AOJu0YymVfVjqyeK/SV4lXf912/LlQFzT4rawwtdKjqA0Chv2MrA6NgN
+ SjlgSpFu5stcACdtj07iNZfXg9+S25Pu2YOVYvzOyP4uNvtNF/+1g7kPIlAdnNjqF6/VQEPy6kC
+ 3IsE2jeDZJyFjwOQoK5D+dP1Ap+iWfFUG7hgAoPzMJQTXnBar69MGD7nFKYRksOkLJY4iE5NVuz
+ V5FYU4x6p3/cPvqAwkse0AZWwSKgjzjbuNGREZ
+X-Received: by 2002:a17:906:f296:b0:a59:c833:d272 with SMTP id
+ a640c23a62f3a-a5a2d5356eamr516731866b.13.1715511007850; 
+ Sun, 12 May 2024 03:50:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IExouaiLBy+L56RxCCT7GX1h+JKb6y41Fy6mcMrB5VCNyLHuMyN4a4KPHlLNAK1mvX6AEE6bQ==
+X-Received: by 2002:a17:906:f296:b0:a59:c833:d272 with SMTP id
+ a640c23a62f3a-a5a2d5356eamr516730666b.13.1715511007517; 
+ Sun, 12 May 2024 03:50:07 -0700 (PDT)
+Received: from avogadro.local ([151.95.155.52])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a5a179c8173sm444164866b.109.2024.05.12.03.50.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 12 May 2024 03:50:05 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+	Thomas Huth <thuth@redhat.com>
+Subject: [PULL 07/27] configure: quote -D options that are passed through to
+ meson
+Date: Sun, 12 May 2024 12:49:25 +0200
+Message-ID: <20240512104945.130198-8-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.45.0
+In-Reply-To: <20240512104945.130198-1-pbonzini@redhat.com>
+References: <20240512104945.130198-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: target/ppc: Move VMX int add/sub saturate insns to decodetree.
-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
- harshpb@linux.ibm.com, lucas.araujo@eldorado.org.br
-References: <20240512093847.18099-1-rathc@linux.ibm.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240512093847.18099-1-rathc@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.587,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,37 +104,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/12/24 11:38, Chinmay Rath wrote:
-> 1. vsubsbs and bcdtrunc :
-> 
-> In this pair, bcdtrunc has the insn flag check PPC2_ISA300 in the
-> vmx-impl file, within the GEN_VXFORM_DUAL macro, which does this flag
-> check.
-> However it also has this flag check in the vmx-ops file.
-> Hence I have retained the same in the new entry in the vmx-ops file.
-> This is consistent with the behaviour in done in the following commit :
-> https://github.com/qemu/qemu/commit/b132be53a4ba6a0a40d5643d791822f958a36e53
-> So even though the flag check is removed from the vmx-impl file, it is
-> retained in the vmx-ops file. All good here.
-> 
-> 2. vadduhs and vmul10euq :
-> 
-> In this pair, vmul10euq has the insn flag check PPC2_ISA300 in the
-> vmx-impl file, check done within the GEN_VXFORM_DUAL macro.
-> However the same flag was NOT originally present in the
-> vmx-ops file, so I have NOT included in its new entry in the vmx-ops
-> file. I have done this, following the behaviour done in the following
-> commit :
-> https://github.com/qemu/qemu/commit/c85929b2ddf6bbad737635c9b85213007ec043af
-> So this flag check for vmul10euq is excluded now. Is this not a problem ?
-> I feel that this leads to the flag check being skipped now, however this
-> behaviour was followed in the above mentioned commit.
+Ensure that they go through unmodified, instead of removing one layer
+of quoting.
 
-This second link is for VAVG* and VABSD*.
+-D is a pretty specialized option and most options that can have spaces
+do not need it (for example, c_args is covered by --extra-cflags).
+Therefore it's unlikely that this causes actual trouble.  However,
+a somewhat realistic failure case would be with -Dpkg_config_path
+and a pkg-config directory that contains spaces.
 
-Yes you are correct that this second case was done incorrectly. Thankfully the mistake was 
-fixed in the very next commit, when VABSD* was converted to decodetree as well.
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/configure b/configure
+index 1dca3d94c04..330664786dc 100755
+--- a/configure
++++ b/configure
+@@ -762,7 +762,7 @@ for opt do
+   --*) meson_option_parse "$opt" "$optarg"
+   ;;
+   # Pass through -Dxxxx options to meson
+-  -D*) meson_options="$meson_options $opt"
++  -D*) meson_option_add "$opt"
+   ;;
+   esac
+ done
+-- 
+2.45.0
 
-r~
 
