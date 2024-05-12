@@ -4,78 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91AEDC10F1A
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 10:53:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9954C10F1A
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 10:53:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s66mn-0003K0-38; Sun, 12 May 2024 06:50:33 -0400
+	id 1s66mL-00039B-Jy; Sun, 12 May 2024 06:50:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s66mh-0003I8-PS
- for qemu-devel@nongnu.org; Sun, 12 May 2024 06:50:28 -0400
+ id 1s66mK-00038P-K9
+ for qemu-devel@nongnu.org; Sun, 12 May 2024 06:50:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s66mc-0005yp-6B
- for qemu-devel@nongnu.org; Sun, 12 May 2024 06:50:27 -0400
+ id 1s66mI-0005iM-HA
+ for qemu-devel@nongnu.org; Sun, 12 May 2024 06:50:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715511020;
+ s=mimecast20190719; t=1715511001;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gfN5pIMWePirJMYr8BLI6kCZBJjEIGwqQo+31f8yoso=;
- b=NZLPMaqgDrxSOsBqY5GnjUsN/z4lU5yLhTrDaHCeVPT94nHaryyPOos10gwkcegKwOo3q4
- 3RokoXaUlhGK4/tZ3FA53R1oLDLfa14BZxUxSB57V2yQUbyGgrLJTa61aGC8Dv+cGIr35/
- hI4aS+GacAC+pLyPN1Z3Ucckyt9nC8g=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:mime-version:mime-version:  content-type:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ZBK/0J79AFkGIYrouMMvcVR75PpIU5FUpx+qVNNoumU=;
+ b=M2CgZv70yIhwTH6OPvRi7HiTc+n4YigOwOgllCpel3bL+E3UA96wLPCuCLAOMNf9+2MlZA
+ psaOlhdQXn74HyRonkThdyE3tkTlntxIqqKbkJYpWBll1zst2O7zy3Z8CH3YmQdvIhG43C
+ Hpbqt4EmGqYvAgtpUmF+YqRR/9BerAE=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-453-FwzJYihPN_mw7YOdGf24FQ-1; Sun, 12 May 2024 06:50:18 -0400
-X-MC-Unique: FwzJYihPN_mw7YOdGf24FQ-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a59a5b06802so183941066b.1
- for <qemu-devel@nongnu.org>; Sun, 12 May 2024 03:50:18 -0700 (PDT)
+ us-mta-547-duJDW5iMMCCAHLme1BD3Rg-1; Sun, 12 May 2024 06:49:49 -0400
+X-MC-Unique: duJDW5iMMCCAHLme1BD3Rg-1
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-5732229087bso2154481a12.0
+ for <qemu-devel@nongnu.org>; Sun, 12 May 2024 03:49:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715511017; x=1716115817;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=gfN5pIMWePirJMYr8BLI6kCZBJjEIGwqQo+31f8yoso=;
- b=gDPTNO7Nyr5o3PE45HuDkrH4BzT912aA+rOAfMYPVRoQyTZsTaU7+Zwq6l3nTMEq4G
- xrXZVUKsCj9zIL3CvzI4/BLT5UFLn0Oc/j8lNgog5JfnnGPoVST+tslBtM1dEJcAs1FD
- udHUqsrco3Ii7Eot8X8XddX8bOHlT8VbOBewPhWo3JNShyHmpc+hrHsu8ECBPLt7kzFP
- eAwtASBoH91kdZNsBhaz0+d56ID67jRYnoAlYIHeDvgVQy/eExJVDruJeT1QUcnRX10g
- vHPP/n1sgNYqTec8H7z0b2ZFunBh/BMaP0ShXbCUMcrxLqZy1qZvo2vn9crIc/kWsg1a
- kJVw==
-X-Gm-Message-State: AOJu0Yw9ZM4TOECn6pgqwxq2SaEzTQq15DZwDAeiBVtsd07CYHLadwm7
- uXFMHGs5zDkmERJdbOhx+XejemkkQK08O23wukqN8Ih981wLPCF77EOOKNQNyhzQytPUMA0amqX
- QNB3Lzml+YeZRDEVjfXOnx1JAlD6zv21mFgieLA9RqX789KW+KARK+iC000tYkqFE9ThhXtdVdi
- YCpkM3T8YcC34x72pT+NC/efyZ5qNXrO/MvZwJ
-X-Received: by 2002:a17:906:13c8:b0:a59:cbb5:e09e with SMTP id
- a640c23a62f3a-a5a2d6669b6mr458407766b.58.1715511016928; 
- Sun, 12 May 2024 03:50:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGTBdq/PtFKE3Kd5gsBGvxpmDaY7rjCnTkAsGbZEyLx7yRKhUaLxtf+NaWp/QmaT9JlCcFHAQ==
-X-Received: by 2002:a17:906:13c8:b0:a59:cbb5:e09e with SMTP id
- a640c23a62f3a-a5a2d6669b6mr458407266b.58.1715511016463; 
- Sun, 12 May 2024 03:50:16 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1715510988; x=1716115788;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZBK/0J79AFkGIYrouMMvcVR75PpIU5FUpx+qVNNoumU=;
+ b=ViZNouL2cJFDf55sLMSvzOVP+saQBDUFl5/qnJbihyzp/tHOJgFSWc4mO2YHo4EMSJ
+ fV5wgLFFl/t1a6AKGKzZnSDKEmopIC0irO4KGof0k3k+VlppqF9tS2SNpu7VhNIAyQig
+ DpSKadQjX3hy2MGnexDecrCgc3hzW/hlfpRfzhgXbzy8ScodEfj7ynb9TCO9Uw3b5qTX
+ fXry62pZO4fzTIT35vs6NamIQlWxVTUIzCkEHng7600VnWBNPu7TB+4/xz94RPEgYxMf
+ Mrz839gYo8V6psZ4z6rWjhKvMvMxsxMpW4nfAd/jZG2WsDZtUqefW7JYU/J6DZ6jTzfz
+ +MzA==
+X-Gm-Message-State: AOJu0YyXWZzZF9m1XSCQrc3tUHThMEHC2DslPJbsSjpc7TDQn9SlAE27
+ Cj9hNXDv1XdC2Uw/EcbtbvBU1w7lZOtaNFOjteNfC7ZaQ/pXkii1Lv6g/6XQacjjT78NSbH/b6C
+ cGMWDRcx5A+CPTPqA2cLJwJwCwGJUQSHfxWpoqP7MrQimLb2aLL+OKTB3rWH8PyMeueJku9sVNG
+ rWt2DF+Bv7+yAE8RR+HXH2zfSxkxeo2PFD9ClW
+X-Received: by 2002:a50:baeb:0:b0:56e:2e0:79d1 with SMTP id
+ 4fb4d7f45d1cf-5734d5973b7mr5083268a12.4.1715510988022; 
+ Sun, 12 May 2024 03:49:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFE/b5Rz7jF00tc/9QJv9/pDunoGVPiqAC++6gltrsGatOgVSx5NPjO9jaj2YCnPSBrmrlP8Q==
+X-Received: by 2002:a50:baeb:0:b0:56e:2e0:79d1 with SMTP id
+ 4fb4d7f45d1cf-5734d5973b7mr5083251a12.4.1715510987523; 
+ Sun, 12 May 2024 03:49:47 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a5a534bfb05sm182150566b.36.2024.05.12.03.50.15
+ 4fb4d7f45d1cf-5733becfcccsm4555918a12.40.2024.05.12.03.49.46
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 12 May 2024 03:50:16 -0700 (PDT)
+ Sun, 12 May 2024 03:49:47 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 11/27] s390: move css_migration_enabled from machine to css.c
-Date: Sun, 12 May 2024 12:49:29 +0200
-Message-ID: <20240512104945.130198-12-pbonzini@redhat.com>
+Subject: [PULL 00/27] Build/arch cleanups, target/i386 fixes for 2024-05-10
+Date: Sun, 12 May 2024 12:49:18 +0200
+Message-ID: <20240512104945.130198-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.0
-In-Reply-To: <20240512104945.130198-1-pbonzini@redhat.com>
-References: <20240512104945.130198-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -102,156 +99,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The CSS subsystem uses global variables, just face the truth and use
-a variable also for whether the CSS vmstate is in use; remove the
-indirection of fetching it from the machine type, which makes the
-TCG code depend unnecessarily on the virtio-ccw machine.
+The following changes since commit dafec285bdbfe415ac6823abdc510e0b92c3f094:
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <20240509170044.190795-4-pbonzini@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- include/hw/s390x/css.h             |  6 ++++++
- include/hw/s390x/s390-virtio-ccw.h |  7 -------
- hw/s390x/css.c                     | 10 +++++++---
- hw/s390x/s390-virtio-ccw.c         | 15 +++------------
- 4 files changed, 16 insertions(+), 22 deletions(-)
+  Merge tag 'pull-request-2024-05-10' of https://gitlab.com/thuth/qemu into staging (2024-05-10 09:41:35 +0200)
 
-diff --git a/include/hw/s390x/css.h b/include/hw/s390x/css.h
-index ba72ee3dd20..8289e458370 100644
---- a/include/hw/s390x/css.h
-+++ b/include/hw/s390x/css.h
-@@ -333,4 +333,10 @@ static inline int ccw_dstream_read_buf(CcwDataStream *cds, void *buff, int len)
- #define ccw_dstream_read(cds, v) ccw_dstream_read_buf((cds), &(v), sizeof(v))
- #define ccw_dstream_write(cds, v) ccw_dstream_write_buf((cds), &(v), sizeof(v))
- 
-+/**
-+ * true if (vmstate based) migration of the channel subsystem
-+ * is enabled, false if it is disabled.
-+ */
-+extern bool css_migration_enabled;
-+
- #endif
-diff --git a/include/hw/s390x/s390-virtio-ccw.h b/include/hw/s390x/s390-virtio-ccw.h
-index 7605d06bff1..996864a34e2 100644
---- a/include/hw/s390x/s390-virtio-ccw.h
-+++ b/include/hw/s390x/s390-virtio-ccw.h
-@@ -46,7 +46,6 @@ struct S390CcwMachineClass {
-     /*< public >*/
-     bool ri_allowed;
-     bool cpu_model_allowed;
--    bool css_migration_enabled;
-     bool hpage_1m_allowed;
-     int max_threads;
- };
-@@ -58,10 +57,4 @@ bool cpu_model_allowed(void);
- /* 1M huge page mappings allowed by the machine */
- bool hpage_1m_allowed(void);
- 
--/**
-- * Returns true if (vmstate based) migration of the channel subsystem
-- * is enabled, false if it is disabled.
-- */
--bool css_migration_enabled(void);
--
- #endif
-diff --git a/hw/s390x/css.c b/hw/s390x/css.c
-index 295530963a6..b2d5327dbf4 100644
---- a/hw/s390x/css.c
-+++ b/hw/s390x/css.c
-@@ -23,6 +23,8 @@
- #include "hw/s390x/s390-virtio-ccw.h"
- #include "hw/s390x/s390-ccw.h"
- 
-+bool css_migration_enabled = true;
-+
- typedef struct CrwContainer {
-     CRW crw;
-     QTAILQ_ENTRY(CrwContainer) sibling;
-@@ -180,7 +182,7 @@ static const VMStateDescription vmstate_orb = {
- 
- static bool vmstate_schdev_orb_needed(void *opaque)
- {
--    return css_migration_enabled();
-+    return css_migration_enabled;
- }
- 
- static const VMStateDescription vmstate_schdev_orb = {
-@@ -388,7 +390,7 @@ static int subch_dev_post_load(void *opaque, int version_id)
-         css_subch_assign(s->cssid, s->ssid, s->schid, s->devno, s);
-     }
- 
--    if (css_migration_enabled()) {
-+    if (css_migration_enabled) {
-         /* No compat voodoo to do ;) */
-         return 0;
-     }
-@@ -412,7 +414,9 @@ static int subch_dev_post_load(void *opaque, int version_id)
- 
- void css_register_vmstate(void)
- {
--    vmstate_register(NULL, 0, &vmstate_css, &channel_subsys);
-+    if (css_migration_enabled) {
-+        vmstate_register(NULL, 0, &vmstate_css, &channel_subsys);
-+    }
- }
- 
- IndAddr *get_indicator(hwaddr ind_addr, int len)
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index 756b4f40aed..3d0bc3e7f2e 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -283,11 +283,9 @@ static void ccw_init(MachineState *machine)
-     s390_enable_css_support(s390_cpu_addr2state(0));
- 
-     ret = css_create_css_image(VIRTUAL_CSSID, true);
--
-     assert(ret == 0);
--    if (css_migration_enabled()) {
--        css_register_vmstate();
--    }
-+
-+    css_register_vmstate();
- 
-     /* Create VirtIO network adapters */
-     s390_create_virtio_net(BUS(css_bus), mc->default_nic);
-@@ -749,7 +747,6 @@ static void ccw_machine_class_init(ObjectClass *oc, void *data)
- 
-     s390mc->ri_allowed = true;
-     s390mc->cpu_model_allowed = true;
--    s390mc->css_migration_enabled = true;
-     s390mc->hpage_1m_allowed = true;
-     s390mc->max_threads = 1;
-     mc->init = ccw_init;
-@@ -819,11 +816,6 @@ static const TypeInfo ccw_machine_info = {
-     },
- };
- 
--bool css_migration_enabled(void)
--{
--    return get_machine_class()->css_migration_enabled;
--}
--
- #define DEFINE_CCW_MACHINE(suffix, verstr, latest)                            \
-     static void ccw_machine_##suffix##_class_init(ObjectClass *oc,            \
-                                                   void *data)                 \
-@@ -1179,7 +1171,6 @@ static void ccw_machine_2_9_instance_options(MachineState *machine)
- 
- static void ccw_machine_2_9_class_options(MachineClass *mc)
- {
--    S390CcwMachineClass *s390mc = S390_CCW_MACHINE_CLASS(mc);
-     static GlobalProperty compat[] = {
-         { TYPE_S390_STATTRIB, "migration-enabled", "off", },
-         { TYPE_S390_FLIC_COMMON, "migration-enabled", "off", },
-@@ -1188,7 +1179,7 @@ static void ccw_machine_2_9_class_options(MachineClass *mc)
-     ccw_machine_2_10_class_options(mc);
-     compat_props_add(mc->compat_props, hw_compat_2_9, hw_compat_2_9_len);
-     compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
--    s390mc->css_migration_enabled = false;
-+    css_migration_enabled = false;
- }
- DEFINE_CCW_MACHINE(2_9, "2.9", false);
- 
+are available in the Git repository at:
+
+  https://gitlab.com/bonzini/qemu.git tags/for-upstream
+
+for you to fetch changes up to 9b089d254a5623baef01f7d0ec37331c1155f1ce:
+
+  configs: disable emulators that require it if libfdt is not found (2024-05-10 15:45:15 +0200)
+
+----------------------------------------------------------------
+* target/i386: miscellaneous changes, mostly TCG-related
+* fix --without-default-devices build
+* fix --without-default-devices qtests on s390x and arm
+
+----------------------------------------------------------------
+Paolo Bonzini (27):
+      target/i386: remove PCOMMIT from TCG, deprecate property
+      target/i386: fix operand size for DATA16 REX.W POPCNT
+      target/i386: rdpkru/wrpkru are no-prefix instructions
+      target/i386: move prefetch and multi-byte UD/NOP to new decoder
+      target/i386: fix feature dependency for WAITPKG
+      tests/tcg: cover lzcnt/tzcnt/popcnt
+      configure: quote -D options that are passed through to meson
+      sh4: select correct components for no-board build
+      s390x: move s390_cpu_addr2state to target/s390x/sigp.c
+      s390_flic: add migration-enabled property
+      s390: move css_migration_enabled from machine to css.c
+      s390x: select correct components for no-board build
+      tests/qtest: s390x: fix operation in a build without any boards or devices
+      xen: initialize legacy backends from xen_bus_init()
+      xen: register legacy backends via xen_backend_init
+      i386: correctly select code in hw/i386 that depends on other components
+      i386: pc: remove unnecessary MachineClass overrides
+      hw/i386: split x86.c in multiple parts
+      hw/i386: move rtc-reset-reinjection command out of hw/rtc
+      i386: select correct components for no-board build
+      tests/qtest: arm: fix operation in a build without any boards or devices
+      meson: pick libfdt from common_ss when building target-specific files
+      meson: move libfdt together with other dependencies
+      kconfig: allow compiling out QEMU device tree code per target
+      kconfig: express dependency of individual boards on libfdt
+      hw/xtensa: require libfdt
+      configs: disable emulators that require it if libfdt is not found
+
+ docs/about/deprecated.rst                |    8 +
+ configure                                |    2 +-
+ configs/targets/aarch64-softmmu.mak      |    1 +
+ configs/targets/arm-softmmu.mak          |    1 +
+ configs/targets/i386-softmmu.mak         |    1 -
+ configs/targets/loongarch64-softmmu.mak  |    1 +
+ configs/targets/microblaze-softmmu.mak   |    1 +
+ configs/targets/microblazeel-softmmu.mak |    1 +
+ configs/targets/mips64el-softmmu.mak     |    1 -
+ configs/targets/or1k-softmmu.mak         |    1 +
+ configs/targets/ppc-softmmu.mak          |    1 -
+ configs/targets/ppc64-softmmu.mak        |    1 +
+ configs/targets/riscv32-softmmu.mak      |    1 +
+ configs/targets/riscv64-softmmu.mak      |    1 +
+ configs/targets/rx-softmmu.mak           |    1 +
+ configs/targets/x86_64-softmmu.mak       |    1 -
+ meson.build                              |  100 +--
+ include/hw/i386/x86.h                    |   10 +-
+ include/hw/rtc/mc146818rtc.h             |    2 +-
+ include/hw/s390x/css.h                   |    6 +
+ include/hw/s390x/s390-virtio-ccw.h       |    7 -
+ include/hw/s390x/s390_flic.h             |    1 +
+ include/hw/xen/xen-legacy-backend.h      |   14 +-
+ include/hw/xen/xen_pvdev.h               |    1 -
+ include/monitor/hmp.h                    |    1 +
+ include/sysemu/device_tree.h             |    1 -
+ target/i386/cpu.h                        |    2 -
+ target/i386/tcg/decode-new.h             |    1 +
+ hw/9pfs/xen-9p-backend.c                 |    8 +-
+ hw/display/xenfb.c                       |    8 +-
+ hw/i386/fw_cfg.c                         |    2 +
+ hw/i386/monitor.c                        |   46 ++
+ hw/i386/pc.c                             |    4 -
+ hw/i386/x86-common.c                     | 1007 ++++++++++++++++++++++++++++
+ hw/i386/x86-cpu.c                        |   97 +++
+ hw/i386/x86.c                            | 1058 +-----------------------------
+ hw/intc/ioapic-stub.c                    |   29 +
+ hw/intc/s390_flic.c                      |    6 +-
+ hw/rtc/mc146818rtc.c                     |   12 +-
+ hw/s390x/css.c                           |   10 +-
+ hw/s390x/s390-virtio-ccw.c               |   32 +-
+ hw/usb/xen-usb.c                         |   14 +-
+ hw/xen/xen-bus.c                         |    4 +
+ hw/xen/xen-hvm-common.c                  |    2 -
+ hw/xen/xen-legacy-backend.c              |   16 -
+ hw/xenpv/xen_machine_pv.c                |    5 +-
+ hw/xtensa/xtfpga.c                       |    9 -
+ monitor/hmp-cmds.c                       |   17 +
+ system/device_tree-stub.c                |   10 +
+ system/device_tree.c                     |   14 -
+ target/i386/cpu.c                        |    6 +-
+ target/i386/tcg/translate.c              |   65 +-
+ target/s390x/sigp.c                      |   17 +
+ tests/qtest/arm-cpu-features.c           |    4 +
+ tests/qtest/drive_del-test.c             |    7 +-
+ tests/qtest/migration-test.c             |    6 +
+ tests/qtest/numa-test.c                  |    4 +
+ tests/tcg/i386/test-i386.c               |   25 +
+ target/i386/tcg/decode-new.c.inc         |   24 +-
+ target/i386/tcg/emit.c.inc               |    5 +
+ .gitlab-ci.d/buildtest.yml               |    9 +-
+ Kconfig.host                             |    3 +
+ hw/arm/Kconfig                           |    5 +
+ hw/arm/meson.build                       |    2 +-
+ hw/core/Kconfig                          |    9 +-
+ hw/core/meson.build                      |    2 +-
+ hw/i386/Kconfig                          |    3 +-
+ hw/i386/meson.build                      |    7 +-
+ hw/intc/meson.build                      |    2 +-
+ hw/loongarch/Kconfig                     |    3 +-
+ hw/loongarch/meson.build                 |    2 +-
+ hw/mips/Kconfig                          |    3 +-
+ hw/mips/meson.build                      |    2 +-
+ hw/openrisc/Kconfig                      |    2 +
+ hw/openrisc/meson.build                  |    4 +-
+ hw/ppc/Kconfig                           |   15 +-
+ hw/ppc/meson.build                       |    4 +-
+ hw/riscv/Kconfig                         |    4 +
+ hw/riscv/meson.build                     |    2 +-
+ hw/rx/Kconfig                            |    3 +-
+ hw/sh4/meson.build                       |    2 +-
+ hw/xtensa/Kconfig                        |    3 +-
+ system/meson.build                       |    4 +-
+ target/arm/Kconfig                       |    2 +
+ target/i386/Kconfig                      |    1 +
+ target/microblaze/Kconfig                |    1 +
+ target/openrisc/Kconfig                  |    1 +
+ target/riscv/Kconfig                     |    2 +
+ target/s390x/Kconfig                     |    2 +
+ target/sh4/Kconfig                       |    2 +
+ 90 files changed, 1515 insertions(+), 1334 deletions(-)
+ create mode 100644 hw/i386/monitor.c
+ create mode 100644 hw/i386/x86-common.c
+ create mode 100644 hw/i386/x86-cpu.c
+ create mode 100644 hw/intc/ioapic-stub.c
+ create mode 100644 system/device_tree-stub.c
 -- 
 2.45.0
 
