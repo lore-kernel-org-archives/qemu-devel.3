@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3D71C25B4F
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 23:29:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B88CFC25B4F
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 23:30:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6IcI-0001RH-2l; Sun, 12 May 2024 19:28:30 -0400
+	id 1s6Id2-0002Tr-Ms; Sun, 12 May 2024 19:29:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s6IcF-0001P5-ML; Sun, 12 May 2024 19:28:27 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1s6Ico-0002Dn-JA; Sun, 12 May 2024 19:29:02 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1s6IcC-0000ME-4A; Sun, 12 May 2024 19:28:27 -0400
+ id 1s6Icl-0000T7-Sq; Sun, 12 May 2024 19:29:01 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id AD0D04E600F;
- Mon, 13 May 2024 01:28:02 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 4D6F44E600F;
+ Mon, 13 May 2024 01:28:33 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id OoYJd3bS2bZz; Mon, 13 May 2024 01:28:00 +0200 (CEST)
+ with ESMTP id Tzu_NG-FOE9K; Mon, 13 May 2024 01:28:31 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id BEBA74E6777; Mon, 13 May 2024 01:28:00 +0200 (CEST)
-Message-Id: <4aa4059610419c27436a64f08333f211caec4b67.1715555763.git.balaton@eik.bme.hu>
+ id 5D0924E6791; Mon, 13 May 2024 01:28:31 +0200 (CEST)
+Message-Id: <495b2a1a3cb2394ede0272c1063b761f6ed00f31.1715555763.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1715555763.git.balaton@eik.bme.hu>
 References: <cover.1715555763.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v7 27/61] target/ppc/mmu_common.c: Move mmu_ctx_t type to
- mmu_common.c
+Subject: [PATCH v7 56/61] target/ppc/mmu_common.c: Rename function parameter
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,9 +39,9 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Mon, 13 May 2024 01:28:00 +0200 (CEST)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Date: Mon, 13 May 2024 01:28:31 +0200 (CEST)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -63,68 +62,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove mmu_ctx_t definition from internal.h as this type is only used
-within mmu_common.c.
+Rename parameter of get_bat_6xx_tlb() from virtual to eaddr to match
+other functions.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/internal.h   | 12 ------------
- target/ppc/mmu_common.c | 11 +++++++++++
- 2 files changed, 11 insertions(+), 12 deletions(-)
+ target/ppc/mmu_common.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/target/ppc/internal.h b/target/ppc/internal.h
-index 4a4f9b9ec8..4a90dd2584 100644
---- a/target/ppc/internal.h
-+++ b/target/ppc/internal.h
-@@ -257,8 +257,6 @@ static inline int prot_for_access_type(MMUAccessType access_type)
- 
- /* PowerPC MMU emulation */
- 
--typedef struct mmu_ctx_t mmu_ctx_t;
--
- bool ppc_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
-                       hwaddr *raddrp, int *psizep, int *protp,
-                       int mmu_idx, bool guest_visible);
-@@ -266,16 +264,6 @@ bool ppc_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
- /* Software driven TLB helpers */
- int ppc6xx_tlb_getnum(CPUPPCState *env, target_ulong eaddr,
-                                     int way, int is_code);
--/* Context used internally during MMU translations */
--struct mmu_ctx_t {
--    hwaddr raddr;      /* Real address              */
--    hwaddr eaddr;      /* Effective address         */
--    int prot;                      /* Protection bits           */
--    hwaddr hash[2];    /* Pagetable hash values     */
--    target_ulong ptem;             /* Virtual segment ID | API  */
--    int key;                       /* Access key                */
--    int nx;                        /* Non-execute area          */
--};
- 
- #endif /* !CONFIG_USER_ONLY */
- 
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 961062bca1..34200d9cb1 100644
+index 1137ec197b..fd8767879d 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -36,6 +36,17 @@
+@@ -221,7 +221,7 @@ static inline void bat_size_prot(CPUPPCState *env, target_ulong *blp,
+ }
  
- /* #define DUMP_PAGE_TABLES */
- 
-+/* Context used internally during MMU translations */
-+typedef struct {
-+    hwaddr raddr;      /* Real address             */
-+    hwaddr eaddr;      /* Effective address        */
-+    int prot;          /* Protection bits          */
-+    hwaddr hash[2];    /* Pagetable hash values    */
-+    target_ulong ptem; /* Virtual segment ID | API */
-+    int key;           /* Access key               */
-+    int nx;            /* Non-execute area         */
-+} mmu_ctx_t;
-+
- void ppc_store_sdr1(CPUPPCState *env, target_ulong value)
+ static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
+-                           target_ulong virtual, MMUAccessType access_type)
++                           target_ulong eaddr, MMUAccessType access_type)
  {
-     PowerPCCPU *cpu = env_archcpu(env);
+     target_ulong *BATlt, *BATut, *BATu, *BATl;
+     target_ulong BEPIl, BEPIu, bl;
+@@ -230,7 +230,7 @@ static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
+     bool ifetch = access_type == MMU_INST_FETCH;
+ 
+     qemu_log_mask(CPU_LOG_MMU, "%s: %cBAT v " TARGET_FMT_lx "\n", __func__,
+-                  ifetch ? 'I' : 'D', virtual);
++                  ifetch ? 'I' : 'D', eaddr);
+     if (ifetch) {
+         BATlt = env->IBAT[1];
+         BATut = env->IBAT[0];
+@@ -246,15 +246,15 @@ static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
+         bat_size_prot(env, &bl, &valid, &prot, BATu, BATl);
+         qemu_log_mask(CPU_LOG_MMU, "%s: %cBAT%d v " TARGET_FMT_lx " BATu "
+                       TARGET_FMT_lx " BATl " TARGET_FMT_lx "\n", __func__,
+-                      ifetch ? 'I' : 'D', i, virtual, *BATu, *BATl);
+-        if ((virtual & 0xF0000000) == BEPIu &&
+-            ((virtual & 0x0FFE0000) & ~bl) == BEPIl) {
++                      ifetch ? 'I' : 'D', i, eaddr, *BATu, *BATl);
++        if ((eaddr & 0xF0000000) == BEPIu &&
++            ((eaddr & 0x0FFE0000) & ~bl) == BEPIl) {
+             /* BAT matches */
+             if (valid != 0) {
+                 /* Get physical address */
+                 ctx->raddr = (*BATl & 0xF0000000) |
+-                    ((virtual & 0x0FFE0000 & bl) | (*BATl & 0x0FFE0000)) |
+-                    (virtual & 0x0001F000);
++                    ((eaddr & 0x0FFE0000 & bl) | (*BATl & 0x0FFE0000)) |
++                    (eaddr & 0x0001F000);
+                 /* Compute access rights */
+                 ctx->prot = prot;
+                 if (check_prot_access_type(ctx->prot, access_type)) {
+@@ -273,7 +273,7 @@ static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
+     if (ret < 0) {
+         if (qemu_log_enabled()) {
+             qemu_log_mask(CPU_LOG_MMU, "no BAT match for "
+-                          TARGET_FMT_lx ":\n", virtual);
++                          TARGET_FMT_lx ":\n", eaddr);
+             for (i = 0; i < 4; i++) {
+                 BATu = &BATut[i];
+                 BATl = &BATlt[i];
+@@ -284,7 +284,7 @@ static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
+                               " BATu " TARGET_FMT_lx " BATl " TARGET_FMT_lx
+                               "\n\t" TARGET_FMT_lx " " TARGET_FMT_lx " "
+                               TARGET_FMT_lx "\n", __func__, ifetch ? 'I' : 'D',
+-                              i, virtual, *BATu, *BATl, BEPIu, BEPIl, bl);
++                              i, eaddr, *BATu, *BATl, BEPIu, BEPIl, bl);
+             }
+         }
+     }
 -- 
 2.30.9
 
