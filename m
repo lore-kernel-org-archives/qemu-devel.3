@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E69BC25B5F
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 10:53:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 162B5C10F1A
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 May 2024 10:53:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s66mT-0003C9-GZ; Sun, 12 May 2024 06:50:13 -0400
+	id 1s66nA-0003by-3j; Sun, 12 May 2024 06:50:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s66mO-0003An-Ig
- for qemu-devel@nongnu.org; Sun, 12 May 2024 06:50:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1s66my-0003Ud-LH
+ for qemu-devel@nongnu.org; Sun, 12 May 2024 06:50:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1s66mN-0005kj-4N
- for qemu-devel@nongnu.org; Sun, 12 May 2024 06:50:08 -0400
+ id 1s66mj-00065N-EU
+ for qemu-devel@nongnu.org; Sun, 12 May 2024 06:50:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715511006;
+ s=mimecast20190719; t=1715511028;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iwo7BsnwcP82yreks1wX75A1VxKsNz9996vExb/jyP0=;
- b=h7YMH5VJIGogZa0YJg8O6PTIN1gQSQ5A3JAc8DODLU+Hlyjy/qWK/fNBOO2bPSS8M+/qVE
- X0IvdFQ/6lQSZIqV3hxvcExeYrofeu5wt25rV84nEZd9iIXRv0VI4zcjMquVahEQ47whbH
- N9WdUH7j14wO0M77uwBvcnERNHxn1mo=
-Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
- [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=MwL5OXC5zx1oU7jPsvk03CZtymhzKTh+ZmsFA1G7QZs=;
+ b=PBjCRkM8k7lCZHcQVBL+yNTddnZ4ETIKhY1hrVdx1urHERS9fTuXegO6BDghHJ7FDHzslc
+ xBYv7GyPENT0OJjFG9qNoZhzruZTJRejzj5WgHEw8kwAOvOSp1mjX6s4c66CtcLPJ5sA/n
+ ovzEmNvXVEy1SdLJhmyCPE+VhFF4MAg=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-163-oIEXNUg_N1SpidCCTfw9Hg-1; Sun, 12 May 2024 06:50:05 -0400
-X-MC-Unique: oIEXNUg_N1SpidCCTfw9Hg-1
-Received: by mail-lf1-f70.google.com with SMTP id
- 2adb3069b0e04-5222a0800f0so1691175e87.2
- for <qemu-devel@nongnu.org>; Sun, 12 May 2024 03:50:04 -0700 (PDT)
+ us-mta-604-_r35OW57ODKjhZk1K0upoQ-1; Sun, 12 May 2024 06:50:12 -0400
+X-MC-Unique: _r35OW57ODKjhZk1K0upoQ-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a55709e5254so151010966b.3
+ for <qemu-devel@nongnu.org>; Sun, 12 May 2024 03:50:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715511002; x=1716115802;
+ d=1e100.net; s=20230601; t=1715511010; x=1716115810;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iwo7BsnwcP82yreks1wX75A1VxKsNz9996vExb/jyP0=;
- b=sXt/hI4sUwKhOd2Am7H7y3Mj3cdiYKTBtN0r5iuBxjBSjwIftP8BCYrCX5sW/+GSm5
- mxkrY0YnRl9VYlEmIx116iL646+DV+6/UaTWHjsOE99P6cnkCykSugYsp7iJfgiGrycW
- Vtf8acCZqnAa0M8TN0zSUhRIwtzYeTGAcXclyz73sNX02B54i6fpqC6fY4fKOmxat+MG
- BoxIbPAlpBIL5e+TMMYRn2HWVdHj1+N4rwjnzptWCnBe9MByBWgueE8Tk2kyVGYbfOs1
- eRiIn9xHPj/XqwHHvpgG1D9Vj0EPSiPp2i/9RrJ0DkyGoQLmocxDrlTg2KjbKqbnJqS9
- aLAw==
-X-Gm-Message-State: AOJu0YyA/qf/17dXbEKdv5JtoMJYnS2SaXCZ5f8jddNxL7shziIR4xVr
- LU2bGjn2zWrdBzHxrvmJx1IGIfonXnJoGTsmTljvQifEk7/UCf4nuJIwQpIOHk/OE0tf7hULtvb
- li54HzRouTrb+AaveWhNteXbp1JADcwMv+T4qhlqJ3cJoTDRkpX9A3duczxWT6hUagXG5CHE9yt
- QPplngl2T9++hUDuYG6B5Jy/zgiTdu/V3oq501
-X-Received: by 2002:ac2:43a8:0:b0:51f:488d:274b with SMTP id
- 2adb3069b0e04-5220fc7c51emr5565816e87.9.1715511002525; 
- Sun, 12 May 2024 03:50:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IErL2eFXDAdNljIaOx0awTzYibrCMd0B1P0uKGzoAzIeHuYYVMM/f79pH+uf6GEwN3bFURi9A==
-X-Received: by 2002:ac2:43a8:0:b0:51f:488d:274b with SMTP id
- 2adb3069b0e04-5220fc7c51emr5565806e87.9.1715511002042; 
- Sun, 12 May 2024 03:50:02 -0700 (PDT)
+ bh=MwL5OXC5zx1oU7jPsvk03CZtymhzKTh+ZmsFA1G7QZs=;
+ b=MVXd7wcJw791musJrgIFND1uj3DoWVdfWELkYWBZpI4CM4BZK0JdCMkpG8yMea5SxK
+ Twq+tGsymCX1G5qwG6S33XLuO6M4uj/OK8u71nolAUmvHj/0qi54VVwjJ1i6LSk8sf95
+ YcvLLNtBgwLN5zS+Rc6xTP0y8jAvYEez5QbkfM0YPEODqYnlCA9ghF8AgOjk5xyKI18B
+ A+vmv02ER8PkrhFJUxLWiDYWL0mC4T0ZiMySX7+Neo0OqbQhOtJMHQTYeQ06K9lnk92d
+ fM8shOUSS9izCPvnzvMof3aNNNha+DaJNCsjF4M3Kv2/sIgU8KW/N14RolAqgXB8jjrA
+ gx0Q==
+X-Gm-Message-State: AOJu0YxS8riMfWyHRDIOSClmewzcF9c3b7oOro8dgo9+XRfxQxjKXI+L
+ ES5EbOYkH8mrh7fldH4icc9MvNhrK6eqf9r1EUVGcpTu1DCVwJrYCU35OHPrrNYvldvnA8yuKbh
+ TU7Rf2KiGOpvDFxW46RX6N4jEYvr3qIZ0/N6Z/cgVxtJeDqZIk0UWNwHJGU3Rg2VPbgbdsPN7c7
+ m44wrMiCcHvas5kqiX8Q2bl5xkJSsy1ZuGWbVP
+X-Received: by 2002:a17:906:6805:b0:a59:bfab:b257 with SMTP id
+ a640c23a62f3a-a5a2d6761d9mr443923766b.65.1715511010212; 
+ Sun, 12 May 2024 03:50:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGk7zX7uw/ah3Oc7ESgoy80OxMu8Ido3+jta8+9JS48lmeCkCerdIkcOSYDXMPW+TISn5pfyA==
+X-Received: by 2002:a17:906:6805:b0:a59:bfab:b257 with SMTP id
+ a640c23a62f3a-a5a2d6761d9mr443923166b.65.1715511009804; 
+ Sun, 12 May 2024 03:50:09 -0700 (PDT)
 Received: from avogadro.local ([151.95.155.52])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a5a1781cd85sm450869066b.15.2024.05.12.03.49.59
+ a640c23a62f3a-a5a1781cd9csm440935266b.37.2024.05.12.03.50.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 12 May 2024 03:50:00 -0700 (PDT)
+ Sun, 12 May 2024 03:50:08 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
-	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 05/27] target/i386: fix feature dependency for WAITPKG
-Date: Sun, 12 May 2024 12:49:23 +0200
-Message-ID: <20240512104945.130198-6-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 08/27] sh4: select correct components for no-board build
+Date: Sun, 12 May 2024 12:49:26 +0200
+Message-ID: <20240512104945.130198-9-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240512104945.130198-1-pbonzini@redhat.com>
 References: <20240512104945.130198-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.587,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,32 +102,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The VMX feature bit depends on general availability of WAITPKG,
-not the other way round.
-
-Fixes: 33cc88261c3 ("target/i386: add support for VMX_SECONDARY_EXEC_ENABLE_USER_WAIT_PAUSE", 2023-08-28)
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Acked-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .gitlab-ci.d/buildtest.yml | 5 +++--
+ hw/sh4/meson.build         | 2 +-
+ target/sh4/Kconfig         | 2 ++
+ 3 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 79372de8c5a..cfe7c92d6bc 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -1551,8 +1551,8 @@ static FeatureDep feature_dependencies[] = {
-         .to = { FEAT_SVM,                   ~0ull },
-     },
-     {
--        .from = { FEAT_VMX_SECONDARY_CTLS,  VMX_SECONDARY_EXEC_ENABLE_USER_WAIT_PAUSE },
--        .to = { FEAT_7_0_ECX,               CPUID_7_0_ECX_WAITPKG },
-+        .from = { FEAT_7_0_ECX,             CPUID_7_0_ECX_WAITPKG },
-+        .to = { FEAT_VMX_SECONDARY_CTLS,    VMX_SECONDARY_EXEC_ENABLE_USER_WAIT_PAUSE },
-     },
- };
- 
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index 9836d81c24d..786c8f92090 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -650,7 +650,7 @@ build-tci:
+ # Check our reduced build configurations
+ # requires libfdt: aarch64, arm, i386, loongarch64, microblaze, microblazeel,
+ #   mips64el, or1k, ppc, ppc64, riscv32, riscv64, rx, x86_64
+-# does not build without boards: i386, s390x, sh4, sh4eb, x86_64
++# does not build without boards: i386, s390x, x86_64
+ build-without-defaults:
+   extends: .native_build_job_template
+   needs:
+@@ -665,7 +665,8 @@ build-without-defaults:
+       --disable-qom-cast-debug
+       --disable-strip
+     TARGETS: alpha-softmmu avr-softmmu cris-softmmu hppa-softmmu m68k-softmmu
+-      mips-softmmu mips64-softmmu mipsel-softmmu sparc-softmmu
++      mips-softmmu mips64-softmmu mipsel-softmmu
++      sh4-softmmu sh4eb-softmmu sparc-softmmu
+       sparc64-softmmu tricore-softmmu xtensa-softmmu xtensaeb-softmmu
+       hexagon-linux-user i386-linux-user s390x-linux-user
+     MAKE_CHECK_ARGS: check
+diff --git a/hw/sh4/meson.build b/hw/sh4/meson.build
+index 424d5674dea..70e814c3a28 100644
+--- a/hw/sh4/meson.build
++++ b/hw/sh4/meson.build
+@@ -1,5 +1,5 @@
+ sh4_ss = ss.source_set()
+-sh4_ss.add(files(
++sh4_ss.add(when: 'CONFIG_SH7750', if_true: files(
+   'sh7750.c',
+   'sh7750_regnames.c',
+ ))
+diff --git a/target/sh4/Kconfig b/target/sh4/Kconfig
+index 2397c860280..93b92f1e480 100644
+--- a/target/sh4/Kconfig
++++ b/target/sh4/Kconfig
+@@ -1,2 +1,4 @@
+ config SH4
+     bool
++    # needed for sh_intc_get_pending_vector
++    select SH_INTC
 -- 
 2.45.0
 
