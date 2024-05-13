@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 892E6C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 07:50:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85E5DC25B79
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 07:51:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6QPR-0002uB-EQ; Mon, 13 May 2024 03:47:45 -0400
+	id 1s6QPI-0002qN-HV; Mon, 13 May 2024 03:47:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s6QPA-0002lm-3r
- for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:28 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1s6QPF-0002nb-SC
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:33 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s6QP8-0001Kc-Es
- for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:27 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-420180b58c5so2777935e9.3
- for <qemu-devel@nongnu.org>; Mon, 13 May 2024 00:47:25 -0700 (PDT)
+ id 1s6QPE-0001MR-1h
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:33 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-420160f8f52so3883365e9.0
+ for <qemu-devel@nongnu.org>; Mon, 13 May 2024 00:47:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715586445; x=1716191245; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715586450; x=1716191250; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eXFpuVHpxKbMUJ9pV2dQPsLv9dNGE0YAs5T7H/TUn1I=;
- b=Jdh8UeR3l5zbMMygcvJu/q42TJH14+wXZN6U/HLhL/k8Pt5OOeO8lYWpPgTiMP5FLf
- SLe70u+m//+54xOz0hxOsHE8qhUS3Rnf5e6B1/yoG/OImQV1753lnKrDI+RUmy0GG2g+
- OyxS2Myz4zFnVxdrwkWG0dBVFlDDTM5bllwbfz1DpTmrho6RmaziiTghPmn6BbTAJosm
- DMFwqUPfBGzbGMpJzi2LH0q9J9LWU3rKIIJ9rlvjCZnIh1A3UeOTcomNyGq6C/gLFID1
- XQ/pz9/OfnKmdI4E/T14mqI6AsO4nR0MMleVj3+1+eESh/7mag7mfppy2lCbY3/NkKS5
- mU4A==
+ bh=iNBogQkAhCPuNJXeM44os2k6SzPQFDH25UufdeGcgDY=;
+ b=fqPb4JBNn9AkE9sD5LasSmWmhOAvcCr79udD8f1GULMGk53DuqUtSafjkFkZVRU5r8
+ Of5ClKe8ocgIAkB/nxMqRcMS3SJQX+xB+ibaxRX0+NdUyy8DKLvWbzxD6kCr+7OTWjUO
+ zPOeyV4i+SWMzz7Nzffp7j98CdrdaG0lgNHqr7cjKJoZBTwPR6EDTzRUdFTQfHz017Np
+ 49Nln+tOuju3JIAf/9B1qLHaddaaYTho0VIdTL/z2rX1SddNM4q16SsKQemWvDvczm6Q
+ 2ty+RC/d8o+OhpIHqY8N4HV/Q7OsiNzan6Qa35jP0RcPcAxaKgqUWrWMB/mOjnhWacSE
+ /Jfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715586445; x=1716191245;
+ d=1e100.net; s=20230601; t=1715586450; x=1716191250;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=eXFpuVHpxKbMUJ9pV2dQPsLv9dNGE0YAs5T7H/TUn1I=;
- b=mg7vcmpO2PHW47D/iVnnRHIIQgJxow9yuLj4SKil44KR3VOK3qg1a5t8eVI58QI2fZ
- Ofzb/eduUJOof5wdT+G8/ecG9bQQeQF3taErfuaXHc5pF9vK2XX23FLEjGLrEUpWAdWh
- zQkhqMSHsovqOe6jlVpK2AQbpaPmuJuxb2l1POebe0q4ag4+ylAFcr0e//rj+Lil9Iww
- cJMus+jzlXrV4+xQUATBj2doAu2QPk+qGXSSjulHaaYDtZdhbq+UNkkQOnksdrFi2UvW
- BFlg5oS+06aQBHC4QgDMRaerKfx4undHZ0hmSmDzrkxlKfI/FnGujpwtQ3VGp0KdmvLn
- Oagw==
-X-Gm-Message-State: AOJu0Yw+/NjgT4bk0o784wKx+3Bn8p7Kv5rDVzrbDv4zkbtr7sBTUkNy
- nAnreMUoVoK1G+4p7qBNVVwVOfZQCaOOws4kdJWxSEcmHX8GxXVU7c4w0QCKrwocA3BTGip1uhP
- 7eKY=
-X-Google-Smtp-Source: AGHT+IESW9pwJLP+NuMrYV11aAZpqdaCaax6uxkv2tzt9qTJ6C8q24sCa+d83YWeuzkZNjiVvxTx9g==
-X-Received: by 2002:a05:600c:3b23:b0:41b:f3b6:e5da with SMTP id
- 5b1f17b1804b1-41fead61b59mr82069875e9.36.1715586444799; 
- Mon, 13 May 2024 00:47:24 -0700 (PDT)
+ bh=iNBogQkAhCPuNJXeM44os2k6SzPQFDH25UufdeGcgDY=;
+ b=NxTNev9/kWqa9ltvvsf90aYhWX6b0+1lWANLyLO5RfWi+R4BfcY1xU9mY8nHYE5/yz
+ NlXCYk4XMrvS/i8XNAozENAfh4+R06IBhxPhPBK/SBiKe+HRf8lnZjfwbGA/REI2m6o0
+ bpD+6qpaBHaPudNy3K5CDRe+xGCciKyBVijE6FIwvkToFBZ/dSBuUxnU3peTUeLuGo5/
+ DXT/WItwUspMpY5F5+F6qhNVC6BY0A8BuVIGuiuTF+9hW8u940zHv6CTcl9Dpb3OREPu
+ h+RM8C6XYQUu0VUAqpGmbgG8aGAv/7G08Eqt2orlRQn1uBZwc/YhZLftWBwoqoMQI4aL
+ 0SKA==
+X-Gm-Message-State: AOJu0YxFqY6IFaGsyMC3rVCDJ1QdF35mmAf7j7AIiXALOFEvA/PEj5Al
+ J9P8iVI+8koHrn5HtDRYtGQtuaRzxm+Bz6VfM4iRMWUeZMzlGosTdHScTjIJ5XLKVoc2pjLDZ0F
+ pqeM=
+X-Google-Smtp-Source: AGHT+IFq3oye8xPiD2NZHqnoa0BmhJennWaDnc0zf4Uzw44F9ZuKp2OMJayd3iQVEFOAdwqauxlM/Q==
+X-Received: by 2002:a05:600c:3b26:b0:41c:73d:62fe with SMTP id
+ 5b1f17b1804b1-41fead7a82emr55008395e9.41.1715586450705; 
+ Mon, 13 May 2024 00:47:30 -0700 (PDT)
 Received: from stoup.. (12.red-213-97-13.staticip.rima-tde.net. [213.97.13.12])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-41fccee9318sm148204765e9.30.2024.05.13.00.47.24
+ 5b1f17b1804b1-41fccee9318sm148204765e9.30.2024.05.13.00.47.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 May 2024 00:47:24 -0700 (PDT)
+ Mon, 13 May 2024 00:47:30 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: deller@gmx.de
-Subject: [PATCH v2 08/45] target/hppa: Add install_link
-Date: Mon, 13 May 2024 09:46:40 +0200
-Message-Id: <20240513074717.130949-9-richard.henderson@linaro.org>
+Subject: [PATCH v2 16/45] target/hppa: Always make a copy in do_ibranch_priv
+Date: Mon, 13 May 2024 09:46:48 +0200
+Message-Id: <20240513074717.130949-17-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240513074717.130949-1-richard.henderson@linaro.org>
 References: <20240513074717.130949-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,131 +94,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a common routine for writing the return address.
+This simplifies callers, which might otherwise have
+to make another copy.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/translate.c | 54 +++++++++++++++++++++++------------------
- 1 file changed, 31 insertions(+), 23 deletions(-)
+ target/hppa/translate.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 08d5e2a4bc..f816b337ee 100644
+index 22935f4645..f267de14c6 100644
 --- a/target/hppa/translate.c
 +++ b/target/hppa/translate.c
-@@ -634,6 +634,23 @@ static void install_iaq_entries(DisasContext *ctx, uint64_t bi, TCGv_i64 bv,
-     }
- }
- 
-+static void install_link(DisasContext *ctx, unsigned link, bool with_sr0)
-+{
-+    tcg_debug_assert(ctx->null_cond.c == TCG_COND_NEVER);
-+    if (link) {
-+        if (ctx->iaoq_b == -1) {
-+            tcg_gen_addi_i64(cpu_gr[link], cpu_iaoq_b, 4);
-+        } else {
-+            tcg_gen_movi_i64(cpu_gr[link], ctx->iaoq_b + 4);
-+        }
-+#ifndef CONFIG_USER_ONLY
-+        if (with_sr0) {
-+            tcg_gen_mov_i64(cpu_sr[0], cpu_iasq_b);
-+        }
-+#endif
-+    }
-+}
-+
- static inline uint64_t iaoq_dest(DisasContext *ctx, int64_t disp)
+@@ -1967,18 +1967,17 @@ static bool do_ibranch(DisasContext *ctx, TCGv_i64 dest, TCGv_i64 dspc,
+  */
+ static TCGv_i64 do_ibranch_priv(DisasContext *ctx, TCGv_i64 offset)
  {
-     return ctx->iaoq_f + disp + 8;
-@@ -1787,9 +1804,7 @@ static bool do_dbranch(DisasContext *ctx, int64_t disp,
-     uint64_t dest = iaoq_dest(ctx, disp);
- 
-     if (ctx->null_cond.c == TCG_COND_NEVER && ctx->null_lab == NULL) {
--        if (link != 0) {
--            copy_iaoq_entry(ctx, cpu_gr[link], ctx->iaoq_n, ctx->iaoq_n_var);
--        }
-+        install_link(ctx, link, false);
-         ctx->iaoq_n = dest;
-         if (is_n) {
-             ctx->null_cond.c = TCG_COND_ALWAYS;
-@@ -1797,10 +1812,7 @@ static bool do_dbranch(DisasContext *ctx, int64_t disp,
-     } else {
-         nullify_over(ctx);
- 
--        if (link != 0) {
--            copy_iaoq_entry(ctx, cpu_gr[link], ctx->iaoq_n, ctx->iaoq_n_var);
--        }
--
-+        install_link(ctx, link, false);
-         if (is_n && use_nullify_skip(ctx)) {
-             nullify_set(ctx, 0);
-             gen_goto_tb(ctx, 0, dest, dest + 4);
-@@ -1892,9 +1904,7 @@ static bool do_ibranch(DisasContext *ctx, TCGv_i64 dest,
-         next = tcg_temp_new_i64();
-         tcg_gen_mov_i64(next, dest);
- 
--        if (link != 0) {
--            copy_iaoq_entry(ctx, cpu_gr[link], ctx->iaoq_n, ctx->iaoq_n_var);
--        }
-+        install_link(ctx, link, false);
-         if (is_n) {
-             if (use_nullify_skip(ctx)) {
-                 install_iaq_entries(ctx, -1, next, -1, NULL);
-@@ -1911,16 +1921,17 @@ static bool do_ibranch(DisasContext *ctx, TCGv_i64 dest,
- 
-     nullify_over(ctx);
- 
-+    next = tcg_temp_new_i64();
-+    tcg_gen_mov_i64(next, dest);
-+
-+    install_link(ctx, link, false);
-     if (is_n && use_nullify_skip(ctx)) {
--        install_iaq_entries(ctx, -1, dest, -1, NULL);
-+        install_iaq_entries(ctx, -1, next, -1, NULL);
-         nullify_set(ctx, 0);
-     } else {
--        install_iaq_entries(ctx, ctx->iaoq_b, cpu_iaoq_b, -1, dest);
-+        install_iaq_entries(ctx, ctx->iaoq_b, cpu_iaoq_b, -1, next);
-         nullify_set(ctx, is_n);
-     }
--    if (link != 0) {
--        copy_iaoq_entry(ctx, cpu_gr[link], ctx->iaoq_n, ctx->iaoq_n_var);
--    }
- 
-     tcg_gen_lookup_and_goto_ptr();
-     ctx->base.is_jmp = DISAS_NORETURN;
-@@ -3899,10 +3910,7 @@ static bool trans_be(DisasContext *ctx, arg_be *a)
-     nullify_over(ctx);
- 
-     load_spr(ctx, new_spc, a->sp);
--    if (a->l) {
--        copy_iaoq_entry(ctx, cpu_gr[31], ctx->iaoq_n, ctx->iaoq_n_var);
--        tcg_gen_mov_i64(cpu_sr[0], cpu_iasq_b);
--    }
-+    install_link(ctx, a->l, true);
-     if (a->n && use_nullify_skip(ctx)) {
-         install_iaq_entries(ctx, -1, tmp, -1, NULL);
-         tcg_gen_mov_i64(cpu_iasq_f, new_spc);
-@@ -4019,16 +4027,16 @@ static bool trans_bve(DisasContext *ctx, arg_bve *a)
-     return do_ibranch(ctx, dest, a->l, a->n);
- #else
-     nullify_over(ctx);
--    dest = do_ibranch_priv(ctx, load_gpr(ctx, a->b));
-+    dest = tcg_temp_new_i64();
-+    tcg_gen_mov_i64(dest, load_gpr(ctx, a->b));
-+    dest = do_ibranch_priv(ctx, dest);
- 
-+    install_link(ctx, a->l, false);
-     install_iaq_entries(ctx, ctx->iaoq_b, cpu_iaoq_b, -1, dest);
-     if (ctx->iaoq_b == -1) {
-         tcg_gen_mov_i64(cpu_iasq_f, cpu_iasq_b);
-     }
-     tcg_gen_mov_i64(cpu_iasq_b, space_select(ctx, 0, dest));
--    if (a->l) {
--        copy_iaoq_entry(ctx, cpu_gr[a->l], ctx->iaoq_n, ctx->iaoq_n_var);
--    }
-     nullify_set(ctx, a->n);
-     tcg_gen_lookup_and_goto_ptr();
-     ctx->base.is_jmp = DISAS_NORETURN;
+-    TCGv_i64 dest;
++    TCGv_i64 dest = tcg_temp_new_i64();
+     switch (ctx->privilege) {
+     case 0:
+         /* Privilege 0 is maximum and is allowed to decrease.  */
+-        return offset;
++        tcg_gen_mov_i64(dest, offset);
++        break;
+     case 3:
+         /* Privilege 3 is minimum and is never allowed to increase.  */
+-        dest = tcg_temp_new_i64();
+         tcg_gen_ori_i64(dest, offset, 3);
+         break;
+     default:
+-        dest = tcg_temp_new_i64();
+         tcg_gen_andi_i64(dest, offset, -4);
+         tcg_gen_ori_i64(dest, dest, ctx->privilege);
+         tcg_gen_umax_i64(dest, dest, offset);
 -- 
 2.34.1
 
