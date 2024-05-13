@@ -4,187 +4,186 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C25F1C25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 19:28:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0135CC25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 19:29:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6bKx-0008F5-KN; Mon, 13 May 2024 15:27:51 -0400
+	id 1s6bM2-0000O1-Lp; Mon, 13 May 2024 15:28:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1s6bKw-0008Es-2P
- for qemu-devel@nongnu.org; Mon, 13 May 2024 15:27:50 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ id 1s6bLz-0000Mj-Bl
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 15:28:55 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1s6bKt-0008Gd-9T
- for qemu-devel@nongnu.org; Mon, 13 May 2024 15:27:49 -0400
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ id 1s6bLv-0008MK-MJ
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 15:28:53 -0400
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 44DJGg83015243; Mon, 13 May 2024 19:27:43 GMT
+ 44DJBZXQ009886; Mon, 13 May 2024 19:28:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
  h=message-id : date :
  subject : to : cc : references : from : in-reply-to : content-type :
  content-transfer-encoding : mime-version; s=corp-2023-11-20;
- bh=1R4X6aJ1GTx9u2/5myXw+ZKBrLJ+JLEjk8Heme9JsYk=;
- b=XK2cjPRC9HGmIRBREXqRD++qN8rO+oqj/pZzSZ9mHLu5BlrNVcUb38ltyal+IFHzrzCy
- SJNUbtTYNw26L3BtIDmS7LY7NGjr53bZ8RFQUsdXbxMWTCIkTrkb/Sa5LWYm0kCbt/k3
- WsLaNnOkF3LTENYppGvCLVxClNkQnNJXYj8h9YxRJ0mNhs5PMhP3Zf5yGT7yO4rCFviE
- kHDKmHlb8kFTXUK9jJbtD/UpRLhTdNPg3IAMu8nFI1baTa4Et90kvIo6TJRs9TQ2AUlw
- 0tLuBAwP5eKKwzIhf476DsZx+EH1SIGr4mCWAZNf1VllH76Iz08mZKzkV9MFunRxcNAS DQ== 
+ bh=JsJFCS/g+iMY1/VIKYbbRQ8IYdR14Nwi7q7TOWYWcN4=;
+ b=kOGc48IN6dQBurCH2Z9h5dvK140DTJ2H3PLpKkidYAF6SIHTQMdziILkhMWFJyzdPviZ
+ HOP60yg84Fou6h/rbrwXY9t4pc5o8jnA+n03xZC+uKEn/3a1SLJkaWwDzwu4jonifjxo
+ dXTeewCX1MYvOihelD2HmnyLIbQIvxaMN0k9Ni4s8nkAwSu9CHtBn+z6HETRklQbIrg+
+ x3xU1wvJ9+zAeswh8tkWcHPFZsankUXHATArkQVsmHuCQ8WA5Ek91lzlqfxRcnYEHncv
+ OoWEck1kYxDZ2t+s3OCRKL8QBI32w94NqbROVZ+Js3xFeXM9B6FYaFSGr5ae22qG4rl/ 0g== 
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3y3qgv08pj-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3y3r5j846s-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 13 May 2024 19:27:42 +0000
+ Mon, 13 May 2024 19:28:46 +0000
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 44DIgBPO038340; Mon, 13 May 2024 19:27:41 GMT
-Received: from nam11-co1-obe.outbound.protection.outlook.com
- (mail-co1nam11lp2168.outbound.protection.outlook.com [104.47.56.168])
+ with ESMTP id 44DIiSbo038269; Mon, 13 May 2024 19:28:46 GMT
+Received: from nam04-bn8-obe.outbound.protection.outlook.com
+ (mail-bn8nam04lp2040.outbound.protection.outlook.com [104.47.74.40])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 3y24pv2nu9-1
+ 3y24pv2q0y-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 13 May 2024 19:27:41 +0000
+ Mon, 13 May 2024 19:28:46 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=kGZsaQka4WwUl6RfpZxtAtN4MbIxrq30iv+5y3l17EXPx+d/7MIoik7yGPi1a4E4X58Dktq5lUS0meok9EXuGpeLnCR1ina3mksez7oHokTvjbr3DOicwlPtRHnOZ9ofNMwaMonw+6grGaZiC+8Lh4K0wL1RNokM1ZX7uIGUFqQCjpmykYgDgSuFZ44aYUlwtWYMDF1gfDZHZM0S66L0jl0m/Amkf6NEhIDmAeP80lo5o0eVJEUhXLDhHqoRMyS1b/rCeoMIqGMBEpiaGrvc1ahG833Id+9ZjDotHgbSIsBjsBR3XFM5ZZoz4mFWsNyILcNhhPdjwQPkKgNzrNAfKw==
+ b=H7gTDGtQtCuTP0R4rHSfHZgb5/yib5iAxl1GOVi68EJHbt9h/2CpA2tVnVgyVj2d0EDoC4okfoJ71qTs5NKMJc1zkd6flccX4njbP461Lg6ge/rDZlFsl+WA7EnYJ2Bq/q56qq9I75J+TecJeXm6KBeTtkUX/0JVY0n17Fm3Qt8Ax0wnmYyMNub6lubITQHf6UMOsJCdKlNUitDQ1AZp3jDBS+JOQ0k/2VjiPHpNriwS5ix7p+gjqyA1e+M7yhvxC8cErrmcWJ5evkLlDRgzx1SLaWY551/ggywESfzhdzz97YIQ7jRr3Ml7G/Rtk5sTl3Va5mpc5TKis8/P3g1pqQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1R4X6aJ1GTx9u2/5myXw+ZKBrLJ+JLEjk8Heme9JsYk=;
- b=DW791BEwWCBW8NyCQsOKIBq9aLpqIwdZ6v3bMGi9XFbePddhz2/xhD2b1FDjDVqfRwgOcSterdrBNvhx8dg/glov08h/NwSrV3ypqtvW8O0x12UOhlJG+Fst82yW5o3A3d03IwxB8mTHm9t2ZjJeIFLaE8l/8m4jXOaWtlGPQ0iBsldFcR35xtTMP4I6OyNeTYr+nmhFLwM64vhZxDey+koUyuDaupn1Xt7WIFDysuKXJFemUqOGDeGB1/5hWPBjFbctAAcoOyvkmtxvvPOBJNFxmnTOWshqwkPki5GX0TiJswhRYjkKA8Fu+uRmNthN4tFNBwKyqVW9xctRS23tVQ==
+ bh=JsJFCS/g+iMY1/VIKYbbRQ8IYdR14Nwi7q7TOWYWcN4=;
+ b=CInmKhmlAEHlizn2WStv6XbTWClkElUWQnsQV2KVV97UTQxLlZAGD7H4UIQQOnronpf/hBJVC3gZQ5nnM2tAVOoEkPVYdbH+9pljq9kfy+N37pEvFq/UP7VutuMIHwcsGamg3qiVrpPVXFmIz0zstqD7v2WqP4y2NY1lRBjd7NCHxK8/BanV/QxUBkyCcd1q4qYrB54thvNshx/zf+0j1Goc7n2G4qWOwaCLG1rQx6x40oZalPZ3UU+hXrXaZTZ5elQM31aniQxDFd1R/1fXBYR7DvEM5AKHLWbQ56TP4HOS5GIAsK25ySY6yqbed1ZhjYIS30dD9Vp0KNrjSIVp1A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
  dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1R4X6aJ1GTx9u2/5myXw+ZKBrLJ+JLEjk8Heme9JsYk=;
- b=d8+rg3xfh0YM/Ai+BVsTkIxnWtVrhFfHDmMMZKKybRGDnJuoE+bI9aXptENZbYt5x37kMxq1KL7a7QrYHfFlMsUlueBnS1/dHwTWy11vE27btXzhKlFYwb7pRaM6mdvcFbHQf907e2aLoXJNaHUmXhftEBQxPKnAjzsPRvhlkAU=
+ bh=JsJFCS/g+iMY1/VIKYbbRQ8IYdR14Nwi7q7TOWYWcN4=;
+ b=ZEQmqAhIZTt9G5kCeG150Xn5DgX3tdeCKu1JB/Milsdv5uegmVAet2nCqiH6d5ny0MzeGnaxDxFh7D50EOTeMisV2eYiJutpdoxNGsK6W/9T5zkwtkLIdBCjk1/x0Z1XkZm5pV59B30pX8PvYTmL2p3vIKDo1lj6i47mj9lQ37A=
 Received: from SA2PR10MB4684.namprd10.prod.outlook.com (2603:10b6:806:119::14)
- by IA1PR10MB6856.namprd10.prod.outlook.com (2603:10b6:208:423::6)
+ by PH0PR10MB5756.namprd10.prod.outlook.com (2603:10b6:510:146::19)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.55; Mon, 13 May
- 2024 19:27:34 +0000
+ 2024 19:28:43 +0000
 Received: from SA2PR10MB4684.namprd10.prod.outlook.com
  ([fe80::e06f:6709:57b4:91a2]) by SA2PR10MB4684.namprd10.prod.outlook.com
  ([fe80::e06f:6709:57b4:91a2%4]) with mapi id 15.20.7544.052; Mon, 13 May 2024
- 19:27:34 +0000
-Message-ID: <819578ba-c92b-4589-8916-f085d0e7a92f@oracle.com>
-Date: Mon, 13 May 2024 15:27:30 -0400
+ 19:28:42 +0000
+Message-ID: <6950e549-4714-44e7-b6ee-641649024215@oracle.com>
+Date: Mon, 13 May 2024 15:28:39 -0400
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1 03/26] migration: SAVEVM_FOREACH
-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Peter Xu <peterx@redhat.com>
-Cc: David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
+Subject: Re: [PATCH V1 06/26] migration: precreate vmstate for exec
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Philippe Mathieu-Daude <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
  <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>
 References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
- <1714406135-451286-4-git-send-email-steven.sistare@oracle.com>
- <878r0mmsxx.fsf@suse.de>
+ <1714406135-451286-7-git-send-email-steven.sistare@oracle.com>
+ <8734qums4h.fsf@suse.de>
 Content-Language: en-US
 From: Steven Sistare <steven.sistare@oracle.com>
 Organization: Oracle Corporation
-In-Reply-To: <878r0mmsxx.fsf@suse.de>
+In-Reply-To: <8734qums4h.fsf@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BL1P223CA0028.NAMP223.PROD.OUTLOOK.COM
- (2603:10b6:208:2c4::33) To SA2PR10MB4684.namprd10.prod.outlook.com
+X-ClientProxiedBy: BL1PR13CA0100.namprd13.prod.outlook.com
+ (2603:10b6:208:2b9::15) To SA2PR10MB4684.namprd10.prod.outlook.com
  (2603:10b6:806:119::14)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA2PR10MB4684:EE_|IA1PR10MB6856:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8a048f78-b579-4264-58cb-08dc7382bd6d
+X-MS-TrafficTypeDiagnostic: SA2PR10MB4684:EE_|PH0PR10MB5756:EE_
+X-MS-Office365-Filtering-Correlation-Id: bb7d15fe-255e-417c-a2c0-08dc7382e643
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230031|366007|7416005|1800799015|376005;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?MkNrWS9KV0JIczhVZUVKRnRacitseHcrOHZhUnl4K0VEcG5OdkJnelNZN2Z6?=
- =?utf-8?B?eUp5YStrdWJhR0JSS1FVYVIxUHBRL2IxYkFrWlJYclNXVTdZbmpLNjRYbVZJ?=
- =?utf-8?B?N2VmdkRyc3dvU1VKeDFuUW9MZHhRZng1TEhyc05iRWNMc0luNEN2RFpqMUk5?=
- =?utf-8?B?RG9USWFuRERZOFQyRHRGNkhHaEdpamtOY2s0YTczU3dzWDA4Nyt2ZllLR1Yx?=
- =?utf-8?B?dnFyMWhtTlJRMG9zY2tFelVJYmUzdWNwaitNOWJXV1JaSE0wZWRnVy9NN3Q3?=
- =?utf-8?B?S0RLS2hhbU96VHlDVzg3bXlpYXZJRkRNWWo0RHVtTFJvbEFOYVk0OUNyTzJk?=
- =?utf-8?B?VjBTcXNqVWhrd2VRRDNwOXRCTHo1WVp0NThYYlU2ZGhaMDVpWmJ1MXVFVVJp?=
- =?utf-8?B?aEhjcWNNeHA5Y1R1czRtYjNmUTRPL3FscTZKYVEvQWVWQm9tekh2Z1hXYVM1?=
- =?utf-8?B?d1g0akJyRC9uSTg0YjY1TkZlYk9DOWNGUmxDT0llaG1IWW43MktEd2VnRTlM?=
- =?utf-8?B?SGFsVXVtckl4Z0NUZXNINDQ5WWZxTkRsMmNqOHlyU01tYkgvcGNXYjNLUm5x?=
- =?utf-8?B?SThHeHZxZmZDOVJQZ1Bsa1ZmSWJGbmlZNGZkTEtaZzd5aFlhU1pHWkdNVkEv?=
- =?utf-8?B?SXFSRWxmYVlJT1JhUzhWWVhVaU1lNTJPSHc3WUMrSVpLSUhrSGRrcEJTUEdT?=
- =?utf-8?B?WENoRG1JNUkzME54QW4rNnZMYUlQL2dJRUhQdDBFb0ZxZlpZVFN6YW1LN0M0?=
- =?utf-8?B?Z1NEeS9sTEw4anpOZUVaN2tMdzdCUmFreTF3TnZDeTJHeERNcVFiQnpWMjdm?=
- =?utf-8?B?OUQ4U1doZVduanZsS2FNU1NEd0xEWFM1K3o1b2d0SXBaR0RNRlgwNUpGU3lS?=
- =?utf-8?B?L2dtTEN5VnkrS1RGYzVIajV1bWNtQ2NDaGxCeVF5QVBrVVI2NzVsYmZZQlh0?=
- =?utf-8?B?N0dINXI4YWdtWGRpdWVGVTRTYmdNcVNWc1l1V2I5TERUZmxYcXVQNlREQU8v?=
- =?utf-8?B?MkIzMi8rejc1ZVlNeUJiYXNwdFoyQys4bDNCeS9BY0tyckhDOXdUZkU1MFlE?=
- =?utf-8?B?c0tQUjUvTGpJK3o3TVJpQ0MzSDZTa1NiV0gvaFg4dlVmVjF0R2NUUXBXK3Z2?=
- =?utf-8?B?alRXOFVEejdHUEJBRkxVRWZOV3FSQW83YnJlVHlVK29NdHQvRHNoQThLaEY3?=
- =?utf-8?B?cWljb0p2QkFwSzRkUUxtYmRtdWExc005N2NtU1RPWjFSQ0t3RGhHamdNMkhK?=
- =?utf-8?B?WCswbXF6dUtkQS9SaUNEMEllQXBXNkpWRHpQM0xrbzhsN21zdnZ5d2ZtQ2xP?=
- =?utf-8?B?OE5ScjMyTXgxeGg4aEtoaHg3K1U0aGhJampFU25uM2hIaHgxMVNQQVZDdG5p?=
- =?utf-8?B?NDY5aFBUQTU1V0xXdjRDcUEwSGZCbmVXODhacXJ2UUdMSytoZ2hYcEtDSmpG?=
- =?utf-8?B?N3hIN2pKNkFmbjFhdSt5VnhrekJFcDZ4MzFha2tjMkF2NUFmNyt3MU9ZMnRG?=
- =?utf-8?B?SmFJVDBVUjdZa1pKNDJiYXd5c2JKaXZEV20vbGFFRjkzK0hIVUF1OTdTNzhx?=
- =?utf-8?B?QmQ2Mzgyb1FKV0lSQmpoZllDK0M1K1ZaNEd0empKYUtnb3o1RGJPSnpFMWoz?=
- =?utf-8?B?Y2pxWkpWLzJ4QW1HaGtIZ3FnMHlFTS9PWEtnazlFaUljRkY0WEhGd2xyT09u?=
- =?utf-8?B?OVBMcmNNMm5kazdGdUd2cXVtQWFsWFdNa2h6VEVkQTFhRFFPNC9QQ0FnPT0=?=
+X-Microsoft-Antispam: BCL:0;ARA:13230031|7416005|1800799015|366007|376005;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?TVZ6RXVmeVEyUG5VTmsyWUZqdUhoYXJuc3hqbm94NnlFK1dKVHgwMEhaQ3Bn?=
+ =?utf-8?B?UEVHZkJ6NWRvVGplM2VOdDZQVmJ3Mit3djd4U1dpb1ZwZS9ERWkyOW5IN2x6?=
+ =?utf-8?B?eWU0cmhZQ3VCdHpxUW5uOWhpeTVjRzczc0hXb3RRQVlMM2c0S1lhMm95R0FZ?=
+ =?utf-8?B?MmVXQzZGdldmem1Xbm9CYkVIbnh1RHlJOU9PazR4bHBlZWEyVmJWRlU1QmhU?=
+ =?utf-8?B?OVZOdDFnTElhYjBwM2xMQ0RJU0Fxd2RudTMyVjBvS3VUWDAzc0NzMDZ6RHdN?=
+ =?utf-8?B?ZlNGbVFueWk1TUFmcVI1K0hyeUhvSFp4ZTdhU3hicDNaeU9Wc3k4bWd1WFlH?=
+ =?utf-8?B?anZ1dXMrVDhGcUFaRVJGQkp6ZzZnR2lyclV5MFVmRzR2Y2dsSWsxNk5jZmRj?=
+ =?utf-8?B?emoxWnNSU09aVmswUVJ2R0drRSt4enN1aWVITEIwRUl2bXM4QUY2RzEzakwx?=
+ =?utf-8?B?TTdjRDRpd3I0S1AxYURWZ1YxMlJKWjlRQUVra1hJd2RIRDdxTUxkZzBtM3dy?=
+ =?utf-8?B?SFZIYXJLQ1RaVG9LTHJLbVpjV09sY0FsQkVWRG9JR2hFZ3puc3lKYkJwWW50?=
+ =?utf-8?B?NkJlYllWblY3TkM0KzdUYkFBeXRiQnlhVEZ2MVhNV052SlgwWWt0bE9nazBu?=
+ =?utf-8?B?Tnp4WGlsekNZczBLL0tudFJTcnhMSW1jZ3Z6Zjg5dUNnZlhUNVNNanhFMndD?=
+ =?utf-8?B?Y1JFS0JydDF5TVhVdGlFUGhIYzhCclVkTXFZb2RjSlVrWWROemkxSWJvYnlo?=
+ =?utf-8?B?MmIvNXpZbGJEcWx4eXBhZEw5eDR1UWMrcVkwVk9XVVNNNnZsMzJYYU5Tc1N0?=
+ =?utf-8?B?cHBPK2VzQzROb2w0d3VzVnNIZnU2emk0RC82NGQvNXN4VGJwVmlxMkp6M2pw?=
+ =?utf-8?B?WG9IVnY5dkRSZEtQQUpMNG5VOVpudEZCL2tRMWc3VkNYbURJN043YTZzajh1?=
+ =?utf-8?B?aitRWXQ3RndMRVRNblFyNnh4cGlRQjV4TWNxVTVxa0JSeHR1bm9CYlpJNFBL?=
+ =?utf-8?B?blc1UVZMZmFITFQrcExvUWxhNC9Ucncwc2N5SStPR282dlF3VkpjUzM5THlp?=
+ =?utf-8?B?MmVLY1JyeW51eHJvUUR4VDFpYk5uWnR4UDRjOWRIS3JTMUNSMVd4UUo2Y1pZ?=
+ =?utf-8?B?dmtYWkFqSFJNWCtrQm5ZMFlxbjVFQVZHQUp5K1d4WTVIeW9UVldJemJoMXhB?=
+ =?utf-8?B?cmlOL0ZiSGRVeUk4MitWa2dmbzYvSEJBQm9BT3JhS1p2TG15bElGRFZFd2wr?=
+ =?utf-8?B?L29INTN1R2xxUmZkckgwZlVQVlJkdGN4TVhLMWg4R2wrbkJvYnI2b2x5cWJY?=
+ =?utf-8?B?RlB5Zkx0N2FuTUtjUDhjNGpSbXJDZDhCVlExazZ6VnVsTVNsdm5WTVE2S1Rh?=
+ =?utf-8?B?U0Rpa1czRW9aVzNpVjlFNDJIMDRCSFBlZEpOY0hRSUN2c21vZ2xhMjBxVmNh?=
+ =?utf-8?B?RGNDamdjZmtJakEyRUJZaTk1R21Lelc2VmY3YlUzd3dqSTl0cDdOcHZ5bE9S?=
+ =?utf-8?B?MytNRGpzZzJjWGcyMmw3ZFd0cThDQ1hwdk45UXNFVXJnR1FFL2Fwb3NsUVA1?=
+ =?utf-8?B?SEhiWWVZWEkzSVlQS3YrZ2R0a2FaaHNQeWhBNnBuKzBzbFlxVStvVXQ4aDNH?=
+ =?utf-8?B?T0tmZEtDLzVpTVVkM3dNUGpaWndDOWlTUThvcXF4TUxUM0JoZDJLQ1prQm92?=
+ =?utf-8?B?MXoxTW5mY1J3WXFCVmhHMU9sdHV1WTYrQVFXRVZhcUppMGhVQklCN1NRPT0=?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SA2PR10MB4684.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(366007)(7416005)(1800799015)(376005); DIR:OUT; SFP:1101; 
+ SFS:(13230031)(7416005)(1800799015)(366007)(376005); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?U0k0VnVOdCtmQXJRc3k4YXJSL3RwbnhGMnlZcEVUeGpxOTlsbHNsMVpGOWk2?=
- =?utf-8?B?RjQzOStPOGNOYis1TFNXN2JUd2pxak5XdDdwMVRkaFVGYXZHMjJSZnJZcVR3?=
- =?utf-8?B?dyt2Qm5GOHYyOTNJUiszYTF3ZHdvVGMwejRZR2kwOS82aHhwU0JzT2xzQ0Vi?=
- =?utf-8?B?TUNON0VuR1o3TjE1OHNXVjNlTXgyZXFLYWptSWp2R3haV0tTTk95UURZbHF0?=
- =?utf-8?B?U3VsdVlQT0s5ejgwcnFGcUFncTBsQU1TdE1XVzRocnk3STFPRkowWmtzVFY0?=
- =?utf-8?B?SXdXWFRzVzdBWDhNTDJRYm5ISjJycG1TTHJJZ05XayszcFFqbmNwWnl1Y3g1?=
- =?utf-8?B?VW5KMW81UUlYNy91RGl2c0ZxMEdMZWV5YTZkMldqSkE5YVpGVDYrdFBKYWdY?=
- =?utf-8?B?bS9BWUF0anI5Vmd0MXI0Myt0Rm5aU0k0UjRmemhpQzB4c0QzSll5cXhrZnBa?=
- =?utf-8?B?VFZQMzZwSEFkUFFEckZKQ0YrYVU5QjZjeEpLaVVUZHJKRkNJa3lhbGFmK05W?=
- =?utf-8?B?RVJOaHg0bGEzZ2pGcW1oUlZHOVhTci9ValVZZkxXcjB1YkdlSCtDYnprMG96?=
- =?utf-8?B?VnlVam1qNi9OdkNURnd4bFVMUWpaOTRKZk10NnZWUFNJR0YyVzBpaDExVW1v?=
- =?utf-8?B?N2xWRTljcTRiNzh4VlNDOFE1aVBVaGhSMzVqUDdoY2NJb0VaL1FUUnBnMk1F?=
- =?utf-8?B?bGkyVEhpYW9ZWm1iRDBqYTZpS25ZRU4yTXM2TTJkL04vYTB6b0cySVJvUmtN?=
- =?utf-8?B?bFdoZmVCcGJrU3Ftc0o1dTBxOHI2SGZJbnVBUCtmQ1lySk41NTVLamVZNDNS?=
- =?utf-8?B?Q2lJalRmajZrRFZGV20zeVN5UjhSaVR4cEtUZ3BQZnpyenJUY0ZxZ2t2OXZz?=
- =?utf-8?B?UkcvUVNuVnFlVHhjTVRnUnVrSmtOTkdMUHZOUnpuTVdhbUUzNWpzWkVhMjhM?=
- =?utf-8?B?cFdPcGkyV0tvSlNEdGZIYWd3MU9pVnZzbVlBZ1lSRnVNSkM1ckgzZVIrN1Fi?=
- =?utf-8?B?MHp6NXNGeUp1dUQ2T09PTXN6alBTV2FDbTBsOExFcDBKclBLRndnT1F0aVdO?=
- =?utf-8?B?b2VvYUtrY1NJcTFLRkh6ajZ4ZlJOQzFUWGFnS0haVU5wTUVFd3dJL2pseDc0?=
- =?utf-8?B?cjZhejZuY2EzQ0V0NXA5RVF0OUNlZVRBWTNBYjZJNGlXSUh5Ym1RQ3F5QXNk?=
- =?utf-8?B?U0YyNXp0WnVjRXBoWlJLRnA5R2JRTnY1SVkxU1AxbXpwL3JhbURwam9yOE9n?=
- =?utf-8?B?MGdFUFExV3JheHZ2L296cWJxUW9VOVNwdVQ1MW84c2NCTW45RlhDWGRrT0NG?=
- =?utf-8?B?Z1lWMGVIY1lUbjllaDREL2lvUjNJTldHTm5yK21uZE5pRm1TN2FNNHdhKzdB?=
- =?utf-8?B?V1BqRHRmRUdUNkY1LzdFbkdPZ3A2SkRHbmhMbXh1Z2NZeGtscGY0TjV1OUNp?=
- =?utf-8?B?N3hpTEdveHliVnZmYUIzQ0JhZlVkQ0ZWelhxMjFRcXc2Z2NvR1oxZzRuTHdC?=
- =?utf-8?B?OUlMNXFIVmRjRG5tMWZxWXNSa3FDRWJHRnhhYURyMnd1SXMzS01uK2RVa0hC?=
- =?utf-8?B?dTRVZnVFMTltWTY2OWRjL3JSd1BzTmZ2eSszRmpNcG1EeXJyYUxQWFJKSG5w?=
- =?utf-8?B?blI1Wmd6blV3T1JNT01qWUxGenl0OUpQdWxvc0JlbmhmbXg0MGg2ZGl3bTlX?=
- =?utf-8?B?Mjl0aSthZnNJNlZMZGY5V0U4ei9HTzdkc29vOXpVWDk4RDZrb0sxYWpBaURo?=
- =?utf-8?B?Z29PM1JBUFcxSHVPd1dlcUVHMEc5MVNrOGRSVFhUS0FibXdFMXlQVEtDK0lG?=
- =?utf-8?B?VTRRQlExVFppc3hNdjNoZlVCVnZxMWo2cjFQUWdKdk52UE5rRU4zUFlMcGFm?=
- =?utf-8?B?ZXF0alZFSXBFUjRuckhVcWs0MUF3T0sxSGtwZGtRMlVWL3ZGd1JiRFJtT0Fl?=
- =?utf-8?B?ZlY1dVNDR0hDdVVoZHBFV1I1ZkI4ZXRaQzdSYWx3N3BwT3dSWjdzTXNoak56?=
- =?utf-8?B?ekpYWUg3Wm1sVW1vWm15UmhaWWlQdlBWcXhkMWFZQnlNc0Uyamc0d3p3eVhK?=
- =?utf-8?B?T0hJcWF3QXhkN3NSYWhSQkNtK2o5UHdMS0MzRVFiZE5GT0I0cXRmdThhMU5B?=
- =?utf-8?B?ZWlqS2srWHZEemhZMHc0d0VZcnJRb2VYbWZWQVhFN05MQ3FiMzZGZTNRamNx?=
- =?utf-8?B?Y1E9PQ==?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WnBVT1VwcU9VYTBQbFUwWjloeFltRkpKRm5FemtPcmVGS0ZjTSswZjB3cDZ3?=
+ =?utf-8?B?TWRVWjM5SkhVZDcyZmNMODVDbUdQUlcvUlRwcy8wSUgySTlFVUdkalZBVExU?=
+ =?utf-8?B?S2sxKzh0aEJZTjVFZlp0VVBtYkFWeVdLNW5oSFFuNUdYUXN1YTJremZsV1BF?=
+ =?utf-8?B?Si8wdDlaeUtQSmJaZzJzT0s5Y0hhaUtGUmpIZUp1MnJZRUx3cWhaUTY4UGZv?=
+ =?utf-8?B?dk8vakY0RlJPQW5tN2NCajBKOWRoM0EvSThqZXZPL24rTFlGNU5TeVNVMFdp?=
+ =?utf-8?B?d2xXWTFteDZkTHJ1aVhMQXgxYmZORXEzTlMzSnl5YzJQd1hxbERXK2RMNkJo?=
+ =?utf-8?B?S2FHWlFwL0RYOFhzTzJ3ckcyeFVwMEhJODFlYm8yb2s5VG9JMDZFYzB5N2hj?=
+ =?utf-8?B?dFFRUXNOMFdWWUxpcnR1TndIWXU4SE1PRjZsVXlpVFF1L2Q1bE1oV1pZL0dS?=
+ =?utf-8?B?WmNHSG1qRDFGcW9MamRLcWRFTDFuZDNTWWM3N0ZHRldQZ3BnNjVjTFB0Z2Ji?=
+ =?utf-8?B?U2lSWHpDWWl1K3FobDRaM1lqVmxxdDZxcnlYanpuSXA5OU5yWXhsaFhhZTZX?=
+ =?utf-8?B?c2hqQU5FZE85cTNQVFg4N3dnbUlVQlVvclBta1VQZFFCM09hU2trLzlpeTBo?=
+ =?utf-8?B?REpLd3Foc1hHT3Q0RDFZdGo5TTNrUjNPVDY4T0ZmZjNaK3dpUnZWU0xJUUZZ?=
+ =?utf-8?B?amg1ME1ISGgrQXo4VkQ3ZjBPQitjUUMzZ3JuVFBEcGZucHRDRjV4QXdFeU9N?=
+ =?utf-8?B?SGJXY0F2VHQvZDZ4T1J0cGtxdDhycEFjcElaNDZHOVQ2YWo1aDAwcXE3ZHVt?=
+ =?utf-8?B?MjVuOGxMVTRCOW5KMWZFR3hZT3lUV2xaSnNCblI4bTZtWTY3K1JzMlRPODlC?=
+ =?utf-8?B?NXI4WWM5VWJySnJiWVd1MFFHbXFPNjd5TnV4WDAwR0hXYUlaRmNXMngxUVc4?=
+ =?utf-8?B?Tmc2MU8rbEZ3bWUzUXgzejZCbkZaamI4bkdDUnZuUjl0Tzg5UlN0RFhlc1BR?=
+ =?utf-8?B?YWtUNEhmbUFnR2RLNy9tSlVHWG1wR3dFMHpvdThWekMyVnh0NUtFazRtRGZ2?=
+ =?utf-8?B?YkNmeDM4ZmJPY0x2dEdleEpKYm9MRmhoZmxFOFFRWldLTWtoTk1CT2NLMHQ2?=
+ =?utf-8?B?OEdJakZjUTd5Z0tNeWxsN25JTVM3NXlUUGpoYTdpciszU0ZDSHBmYVlaaWRI?=
+ =?utf-8?B?cE9aVERabjhnZ3pXT2dCRGNUMk9ESmNDdmZUOFprQW15UUVkV0FCTXhBelI4?=
+ =?utf-8?B?Y29adkNDWkw1UzhUcGdJOW5nWGVjd0F0QjEzVWlKQUFKa1NWdFhaaisvaFBa?=
+ =?utf-8?B?c256Z0pXQ2JwbjRyd2ZuSXp2K203V0hReER4dzNEWi9weGtUWXFKMXc1Y2NI?=
+ =?utf-8?B?bVpPeGhvUENjUzRQdUZoOS90b3lTSDg3Um5hM0w0UDV6N2ltemVvTGpyNFh2?=
+ =?utf-8?B?Q2JCdVg2ZkRQSkg0OWlSaXRrZUV5UzVJY29ZdWFUd2h4OVdwVHhWL1BjclNB?=
+ =?utf-8?B?UWVPYjFXVzEvUEk0VVFFeXdCTUFnT0hQVmVtYzF1a05oTkxsTHdOS3ZhOXl6?=
+ =?utf-8?B?c2QvaUovRE5hSGMwbHlSZ25nallIVnJlVGE1NEczeEwycmVXTVdrbHBhczJM?=
+ =?utf-8?B?WkNKQlV5ZFJMajdaZDlGNStiRDhVQzUxRUw2bUxzUWNaRkNiWXEwMUxJWFFQ?=
+ =?utf-8?B?RWFqU3pjdDFVYUg1MlBxRC8waVI2ejV5eFJwa0wrZG5tbHZUSkNWaFhoeG9m?=
+ =?utf-8?B?b0ptT2t5Y1h5OGkxTlpCZENpTkF6VHg4M3kyMHB1S0FGbGs3ZmhWTHVJbXBG?=
+ =?utf-8?B?TXlaTXVpTGdLR25LakQwNmw1NlFBRGxwRC9iem02L1JLcVY3TC9hWG9FTlNu?=
+ =?utf-8?B?Zk00Rzd4SzJWVmdjVEoySzNtZlA1VzF2M2xoWFN0NkhSQnhYZ1FlSVJSaHlB?=
+ =?utf-8?B?NHpSK1BzRDVDWHJTWEowa0ZuRWZUUTUxYTVVUjR3WHY3S2ZiZ1YvcTA4MHBh?=
+ =?utf-8?B?cEFJUE1XenJ3NG1aT1dFTzZ6WXdHRHRnUDNWbW1aaDFneGdCZTY3NmNVcUxN?=
+ =?utf-8?B?dDJsQnFlWXRiRnJ4M2NBZnF2dVpuOTdqaWNhVHNSejVPUjk0UmVFTFBKVWZy?=
+ =?utf-8?B?L25WemdSdVY3QnErOEs3K1JSSUkwYUxBZW5OdE1tRk9IQ0lZU0NGeXJvMmtk?=
+ =?utf-8?B?T1E9PQ==?=
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 2q7xnvx03ZAIs0UcdLrxKnnwYyPqBKIFxnQ+ZgMzZyBEmYN0sZqvY+j/RWCncGaYnzV8+2oKIXw2r3yXKg4hKKjGY5n7g6+cpy5cQnIHoZgC442S6eInFLGNGghgsGkughMRxTm7miiKvvaljxj5HWaVlcZF2N1XgconSKwmDWG2VakdLBYTwXLx9BLY51yYpfAflOh5ctEH90j62YXC6CDSlzx+SqxXXc32KIJjV0xQRpFTEaAXOxYDZVNHsdbIiRoBiB4jhHNKOldcUYCq5NLbB+3Qq9HBEKnwBIPi0NFA9xi5clXXKX//cRlW8eZnifyjola5DsYdiXDXcJQX/35Wt100VJOnLUTUNI5LXHJIgPLb2KjDOx9S2+Vvaj7Zfc2KdvmE+rFQTkgHitdO8mNV4gE5AZulo95ovR/DaNngi3gcIdDwFapXkcLTBrU2LkpPkMFJoKixjMLsSardJtHpXZL056K1lXjB0Cx9SjC7vhdsa63SRY+UCeUYBmFpnBhHpE06Upsf3Tgx6VF475U5N58Ukll4Zi9Gjcc9i29hNp/WHQrwaa+cARt8enFBQp04AGYXQZXusitbmmMlJGMlbK9x8kk90P0gj+FHRfw=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: yF6N6enFhD9JYcDwA5jii+jaG5wB4I2aP6Wmnh2M6lLOfD2d7HcBFwBqZ8tZfp1l+GHCGQ2MBUFOi9xfJuqsJ9R44+qUTZujF6npPABd7NA02LotZ2+IE1eUCDQhmrnghsnUbkagclYbxN0acWTdFn1bTuGDE1N90iBX5WO2k8Qa4gyV7r5Sx/L4MMlZiXbENeSSrM8DC/lxRdDX8pCWR4JoVwHjHDlRO2YuOyKT5Q2fqZuB1acxE36z/2Vwzr8LDJgkl745bcyLpW3C3SeKeDpjtsI5P9JkGDS9HdaRWxBqUJSWXH9x1GfdFo6N5YxFmVZEewnMG/PSaX0vTlq23QOW/tBxl5s8Epnk08fl6b9EthMNoEXLcgUxdxMh/bgnp1DEgd7JjfrqxPADen01iAfbySu4lEudn1XXEBkIb2bhYSZvCckgNdFx8cPD47lpbcNTRo9ZgoENOaniAzizk+ASX3O5dp4cemn6vtIKFT4mYq45bYqrSyB2dd9btBiGILM5o3Exj3l0EFEeZ2fMISYKh9K+n8wFxUwJAKdCcNkuTIlmQf66xblygyxU1979eGdz8qDOL0dWDlnRo3ZBxkeGQd45y3Wrsjf5ZzggCZM=
 X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8a048f78-b579-4264-58cb-08dc7382bd6d
+X-MS-Exchange-CrossTenant-Network-Message-Id: bb7d15fe-255e-417c-a2c0-08dc7382e643
 X-MS-Exchange-CrossTenant-AuthSource: SA2PR10MB4684.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 May 2024 19:27:34.2012 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 May 2024 19:28:42.6815 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: i5ZAeadYCt4ZFUbb1DdJsWlKfWgXw8sQ3oin4pWONt+z4kxFCVetr8sZCpz3VvFIOmsSQIDgn7kmg4JD26+iMTeyfB9FbobZEfAlG61fPgs=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR10MB6856
+X-MS-Exchange-CrossTenant-UserPrincipalName: MnMyW2JJoRRUUBzxlKKRUY4+ZzCuvxZrYIfREQqR0IRtchyiTeHqLiwE5MFHQi0pjWE0htwepqWtOVDrDJXTCkbxWdwNyr1hwvJW54uG0oE=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR10MB5756
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
  definitions=2024-05-13_14,2024-05-10_02,2023-05-22_02
@@ -192,18 +191,18 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
  adultscore=0 mlxscore=0
  spamscore=0 phishscore=0 suspectscore=0 mlxlogscore=999 malwarescore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2405010000
- definitions=main-2405130131
-X-Proofpoint-GUID: h2G6Stjja8yQdVKSTfdn9V31zMHBEWoB
-X-Proofpoint-ORIG-GUID: h2G6Stjja8yQdVKSTfdn9V31zMHBEWoB
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ definitions=main-2405130132
+X-Proofpoint-ORIG-GUID: aVu6b5bdbRVKv4-PwB65cv9tdee2shC3
+X-Proofpoint-GUID: aVu6b5bdbRVKv4-PwB65cv9tdee2shC3
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -219,266 +218,201 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/6/2024 7:17 PM, Fabiano Rosas wrote:
+On 5/6/2024 7:34 PM, Fabiano Rosas wrote:
 > Steve Sistare <steven.sistare@oracle.com> writes:
 > 
->> Define an abstraction SAVEVM_FOREACH to loop over all savevm state
->> handlers, and replace QTAILQ_FOREACH.  Define variants for ALL so
->> we can loop over all handlers vs a subset of handlers in a subsequent
->> patch, but at this time there is no distinction between the two.
->> No functional change.
+>> Provide migration_precreate_save for saving precreate vmstate across exec.
+>> Create a memfd, save its value in the environment, and serialize state
+>> to it.  Reverse the process in migration_precreate_load.
 >>
 >> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 >> ---
->>   migration/savevm.c | 55 +++++++++++++++++++++++++++++++-----------------------
->>   1 file changed, 32 insertions(+), 23 deletions(-)
+>>   include/migration/misc.h |   5 ++
+>>   migration/meson.build    |   1 +
+>>   migration/precreate.c    | 139 +++++++++++++++++++++++++++++++++++++++++++++++
+>>   3 files changed, 145 insertions(+)
+>>   create mode 100644 migration/precreate.c
 >>
->> diff --git a/migration/savevm.c b/migration/savevm.c
->> index 4509482..6829ba3 100644
->> --- a/migration/savevm.c
->> +++ b/migration/savevm.c
->> @@ -237,6 +237,15 @@ static SaveState savevm_state = {
->>       .global_section_id = 0,
->>   };
+>> diff --git a/include/migration/misc.h b/include/migration/misc.h
+>> index c9e200f..cf30351 100644
+>> --- a/include/migration/misc.h
+>> +++ b/include/migration/misc.h
+>> @@ -56,6 +56,11 @@ AnnounceParameters *migrate_announce_params(void);
 >>   
->> +#define SAVEVM_FOREACH(se, entry)                                    \
->> +    QTAILQ_FOREACH(se, &savevm_state.handlers, entry)                \
+>>   void dump_vmstate_json_to_file(FILE *out_fp);
+>>   
+>> +/* migration/precreate.c */
+>> +int migration_precreate_save(Error **errp);
+>> +void migration_precreate_unsave(void);
+>> +int migration_precreate_load(Error **errp);
 >> +
->> +#define SAVEVM_FOREACH_ALL(se, entry)                                \
->> +    QTAILQ_FOREACH(se, &savevm_state.handlers, entry)
-> 
-> This feels worse than SAVEVM_FOREACH_NOT_PRECREATED. We'll have to keep
-> coming back to the definition to figure out which FOREACH is the real
-> deal.
-
-I take your point, but the majority of the loops do not care about precreated
-objects, so it seems backwards to make them more verbose with 
-SAVEVM_FOREACH_NOT_PRECREATE.  I can go either way, but we need
-Peter's opinion also.
-
+>>   /* migration/migration.c */
+>>   void migration_object_init(void);
+>>   void migration_shutdown(void);
+>> diff --git a/migration/meson.build b/migration/meson.build
+>> index f76b1ba..50e7cb2 100644
+>> --- a/migration/meson.build
+>> +++ b/migration/meson.build
+>> @@ -26,6 +26,7 @@ system_ss.add(files(
+>>     'ram-compress.c',
+>>     'options.c',
+>>     'postcopy-ram.c',
+>> +  'precreate.c',
+>>     'savevm.c',
+>>     'socket.c',
+>>     'tls.c',
+>> diff --git a/migration/precreate.c b/migration/precreate.c
+>> new file mode 100644
+>> index 0000000..0bf5e1f
+>> --- /dev/null
+>> +++ b/migration/precreate.c
+>> @@ -0,0 +1,139 @@
+>> +/*
+>> + * Copyright (c) 2022, 2024 Oracle and/or its affiliates.
+>> + *
+>> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+>> + * See the COPYING file in the top-level directory.
+>> + */
 >> +
->> +#define SAVEVM_FOREACH_SAFE_ALL(se, entry, new_se)                   \
->> +    QTAILQ_FOREACH_SAFE(se, &savevm_state.handlers, entry, new_se)
+>> +#include "qemu/osdep.h"
+>> +#include "qemu/cutils.h"
+>> +#include "qemu/memfd.h"
+>> +#include "qapi/error.h"
+>> +#include "io/channel-file.h"
+>> +#include "migration/misc.h"
+>> +#include "migration/qemu-file.h"
+>> +#include "migration/savevm.h"
 >> +
->>   static SaveStateEntry *find_se(const char *idstr, uint32_t instance_id);
->>   
->>   static bool should_validate_capability(int capability)
->> @@ -674,7 +683,7 @@ static uint32_t calculate_new_instance_id(const char *idstr)
->>       SaveStateEntry *se;
->>       uint32_t instance_id = 0;
->>   
->> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
->> +    SAVEVM_FOREACH_ALL(se, entry) {
+>> +#define PRECREATE_STATE_NAME "QEMU_PRECREATE_STATE"
+>> +
+>> +static QEMUFile *qemu_file_new_fd_input(int fd, const char *name)
+>> +{
+>> +    g_autoptr(QIOChannelFile) fioc = qio_channel_file_new_fd(fd);
+>> +    QIOChannel *ioc = QIO_CHANNEL(fioc);
+>> +    qio_channel_set_name(ioc, name);
+>> +    return qemu_file_new_input(ioc);
+>> +}
+>> +
+>> +static QEMUFile *qemu_file_new_fd_output(int fd, const char *name)
+>> +{
+>> +    g_autoptr(QIOChannelFile) fioc = qio_channel_file_new_fd(fd);
+>> +    QIOChannel *ioc = QIO_CHANNEL(fioc);
+>> +    qio_channel_set_name(ioc, name);
+>> +    return qemu_file_new_output(ioc);
+>> +}
+>> +
+>> +static int memfd_create_named(const char *name, Error **errp)
+>> +{
+>> +    int mfd;
+>> +    char val[16];
+>> +
+>> +    mfd = memfd_create(name, 0);
+>> +    if (mfd < 0) {
+>> +        error_setg_errno(errp, errno, "memfd_create failed");
+>> +        return -1;
+>> +    }
+>> +
+>> +    /* Remember mfd in environment for post-exec load */
+>> +    qemu_clear_cloexec(mfd);
+>> +    snprintf(val, sizeof(val), "%d", mfd);
+>> +    g_setenv(name, val, 1);
+>> +
+>> +    return mfd;
+>> +}
+>> +
+>> +static int memfd_find_named(const char *name, int *mfd_p, Error **errp)
+>> +{
+>> +    const char *val = g_getenv(name);
+>> +
+>> +    if (!val) {
+>> +        *mfd_p = -1;
+>> +        return 0;       /* No memfd was created, not an error */
+>> +    }
+>> +    g_unsetenv(name);
+>> +    if (qemu_strtoi(val, NULL, 10, mfd_p)) {
+>> +        error_setg(errp, "Bad %s env value %s", PRECREATE_STATE_NAME, val);
+>> +        return -1;
+>> +    }
+>> +    lseek(*mfd_p, 0, SEEK_SET);
+>> +    return 0;
+>> +}
+>> +
+>> +static void memfd_delete_named(const char *name)
+>> +{
+>> +    int mfd;
+>> +    const char *val = g_getenv(name);
+>> +
+>> +    if (val) {
+>> +        g_unsetenv(name);
+>> +        if (!qemu_strtoi(val, NULL, 10, &mfd)) {
+>> +            close(mfd);
+>> +        }
+>> +    }
+>> +}
+>> +
+>> +static QEMUFile *qemu_file_new_memfd_output(const char *name, Error **errp)
+>> +{
+>> +    int mfd = memfd_create_named(name, errp);
+>> +
+>> +    if (mfd < 0) {
+>> +        return NULL;
+>> +    }
+>> +
+>> +    return qemu_file_new_fd_output(mfd, name);
+>> +}
+>> +
+>> +static QEMUFile *qemu_file_new_memfd_input(const char *name, Error **errp)
+>> +{
+>> +    int ret, mfd;
+>> +
+>> +    ret = memfd_find_named(name, &mfd, errp);
+>> +    if (ret || mfd < 0) {
+>> +        return NULL;
+>> +    }
+>> +
+>> +    return qemu_file_new_fd_input(mfd, name);
+>> +}
+>> +
+>> +int migration_precreate_save(Error **errp)
+>> +{
+>> +    QEMUFile *f = qemu_file_new_memfd_output(PRECREATE_STATE_NAME, errp);
+>> +
+>> +    if (!f) {
+>> +        return -1;
+>> +    } else if (qemu_savevm_precreate_save(f, errp)) {
+>> +        memfd_delete_named(PRECREATE_STATE_NAME);
+>> +        return -1;
+>> +    } else {
+>> +        /* Do not close f, as mfd must remain open. */
+>> +        return 0;
+>> +    }
+>> +}
+>> +
+>> +void migration_precreate_unsave(void)
+>> +{
+>> +    memfd_delete_named(PRECREATE_STATE_NAME);
+>> +}
+>> +
+>> +int migration_precreate_load(Error **errp)
+>> +{
+>> +    int ret;
+>> +    QEMUFile *f = qemu_file_new_memfd_input(PRECREATE_STATE_NAME, errp);
 > 
-> In this patch we can't have both instances...
-> 
->>           if (strcmp(idstr, se->idstr) == 0
->>               && instance_id <= se->instance_id) {
->>               instance_id = se->instance_id + 1;
->> @@ -690,7 +699,7 @@ static int calculate_compat_instance_id(const char *idstr)
->>       SaveStateEntry *se;
->>       int instance_id = 0;
->>   
->> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
->> +    SAVEVM_FOREACH(se, entry) {
-> 
-> ...otherwise one of the two changes will go undocumented because the
-> actual reason for it will only be described in the next patch.
+> Can we avoid the QEMUFile? I don't see it being exported from this file.
 
-Sure, I'll move this to the precreate patch.
+It is not exported, but within this file, it is the basis for all read and
+write operations, via the existing functions qemu_file_new_input() and 
+qemu_file_new_output()
 
 - Steve
 
->>           if (!se->compat) {
->>               continue;
->>           }
->> @@ -816,7 +825,7 @@ void unregister_savevm(VMStateIf *obj, const char *idstr, void *opaque)
->>       }
->>       pstrcat(id, sizeof(id), idstr);
->>   
->> -    QTAILQ_FOREACH_SAFE(se, &savevm_state.handlers, entry, new_se) {
->> +    SAVEVM_FOREACH_SAFE_ALL(se, entry, new_se) {
->>           if (strcmp(se->idstr, id) == 0 && se->opaque == opaque) {
->>               savevm_state_handler_remove(se);
->>               g_free(se->compat);
->> @@ -939,7 +948,7 @@ void vmstate_unregister(VMStateIf *obj, const VMStateDescription *vmsd,
->>   {
->>       SaveStateEntry *se, *new_se;
->>   
->> -    QTAILQ_FOREACH_SAFE(se, &savevm_state.handlers, entry, new_se) {
->> +    SAVEVM_FOREACH_SAFE_ALL(se, entry, new_se) {
->>           if (se->vmsd == vmsd && se->opaque == opaque) {
->>               savevm_state_handler_remove(se);
->>               g_free(se->compat);
->> @@ -1223,7 +1232,7 @@ bool qemu_savevm_state_blocked(Error **errp)
->>   {
->>       SaveStateEntry *se;
->>   
->> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
->> +    SAVEVM_FOREACH(se, entry) {
->>           if (se->vmsd && se->vmsd->unmigratable) {
->>               error_setg(errp, "State blocked by non-migratable device '%s'",
->>                          se->idstr);
->> @@ -1237,7 +1246,7 @@ void qemu_savevm_non_migratable_list(strList **reasons)
->>   {
->>       SaveStateEntry *se;
->>   
->> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
->> +    SAVEVM_FOREACH(se, entry) {
->>           if (se->vmsd && se->vmsd->unmigratable) {
->>               QAPI_LIST_PREPEND(*reasons,
->>                                 g_strdup_printf("non-migratable device: %s",
->> @@ -1276,7 +1285,7 @@ bool qemu_savevm_state_guest_unplug_pending(void)
->>   {
->>       SaveStateEntry *se;
->>   
->> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
->> +    SAVEVM_FOREACH(se, entry) {
->>           if (se->vmsd && se->vmsd->dev_unplug_pending &&
->>               se->vmsd->dev_unplug_pending(se->opaque)) {
->>               return true;
->> @@ -1291,7 +1300,7 @@ int qemu_savevm_state_prepare(Error **errp)
->>       SaveStateEntry *se;
->>       int ret;
->>   
->> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
->> +    SAVEVM_FOREACH(se, entry) {
->>           if (!se->ops || !se->ops->save_prepare) {
->>               continue;
->>           }
->> @@ -1321,7 +1330,7 @@ int qemu_savevm_state_setup(QEMUFile *f, Error **errp)
->>       json_writer_start_array(ms->vmdesc, "devices");
->>   
->>       trace_savevm_state_setup();
->> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
->> +    SAVEVM_FOREACH(se, entry) {
->>           if (se->vmsd && se->vmsd->early_setup) {
->>               ret = vmstate_save(f, se, ms->vmdesc, errp);
->>               if (ret) {
->> @@ -1365,7 +1374,7 @@ int qemu_savevm_state_resume_prepare(MigrationState *s)
->>   
->>       trace_savevm_state_resume_prepare();
->>   
->> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
->> +    SAVEVM_FOREACH(se, entry) {
->>           if (!se->ops || !se->ops->resume_prepare) {
->>               continue;
->>           }
->> @@ -1396,7 +1405,7 @@ int qemu_savevm_state_iterate(QEMUFile *f, bool postcopy)
->>       int ret;
->>   
->>       trace_savevm_state_iterate();
->> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
->> +    SAVEVM_FOREACH(se, entry) {
->>           if (!se->ops || !se->ops->save_live_iterate) {
->>               continue;
->>           }
->> @@ -1461,7 +1470,7 @@ void qemu_savevm_state_complete_postcopy(QEMUFile *f)
->>       SaveStateEntry *se;
->>       int ret;
->>   
->> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
->> +    SAVEVM_FOREACH(se, entry) {
->>           if (!se->ops || !se->ops->save_live_complete_postcopy) {
->>               continue;
->>           }
->> @@ -1495,7 +1504,7 @@ int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy)
->>       SaveStateEntry *se;
->>       int ret;
->>   
->> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
->> +    SAVEVM_FOREACH(se, entry) {
->>           if (!se->ops ||
->>               (in_postcopy && se->ops->has_postcopy &&
->>                se->ops->has_postcopy(se->opaque)) ||
->> @@ -1543,7 +1552,7 @@ int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
->>       Error *local_err = NULL;
->>       int ret;
->>   
->> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
->> +    SAVEVM_FOREACH(se, entry) {
->>           if (se->vmsd && se->vmsd->early_setup) {
->>               /* Already saved during qemu_savevm_state_setup(). */
->>               continue;
->> @@ -1649,7 +1658,7 @@ void qemu_savevm_state_pending_estimate(uint64_t *must_precopy,
->>       *must_precopy = 0;
->>       *can_postcopy = 0;
->>   
->> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
->> +    SAVEVM_FOREACH(se, entry) {
->>           if (!se->ops || !se->ops->state_pending_estimate) {
->>               continue;
->>           }
->> @@ -1670,7 +1679,7 @@ void qemu_savevm_state_pending_exact(uint64_t *must_precopy,
->>       *must_precopy = 0;
->>       *can_postcopy = 0;
->>   
->> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
->> +    SAVEVM_FOREACH(se, entry) {
->>           if (!se->ops || !se->ops->state_pending_exact) {
->>               continue;
->>           }
->> @@ -1693,7 +1702,7 @@ void qemu_savevm_state_cleanup(void)
->>       }
->>   
->>       trace_savevm_state_cleanup();
->> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
->> +    SAVEVM_FOREACH(se, entry) {
->>           if (se->ops && se->ops->save_cleanup) {
->>               se->ops->save_cleanup(se->opaque);
->>           }
->> @@ -1778,7 +1787,7 @@ int qemu_save_device_state(QEMUFile *f)
->>       }
->>       cpu_synchronize_all_states();
->>   
->> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
->> +    SAVEVM_FOREACH(se, entry) {
->>           int ret;
->>   
->>           if (se->is_ram) {
->> @@ -1801,7 +1810,7 @@ static SaveStateEntry *find_se(const char *idstr, uint32_t instance_id)
->>   {
->>       SaveStateEntry *se;
->>   
->> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
->> +    SAVEVM_FOREACH_ALL(se, entry) {
->>           if (!strcmp(se->idstr, idstr) &&
->>               (instance_id == se->instance_id ||
->>                instance_id == se->alias_id))
->> @@ -2680,7 +2689,7 @@ qemu_loadvm_section_part_end(QEMUFile *f, MigrationIncomingState *mis,
->>       }
->>   
->>       trace_qemu_loadvm_state_section_partend(section_id);
->> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
->> +    SAVEVM_FOREACH(se, entry) {
->>           if (se->load_section_id == section_id) {
->>               break;
->>           }
->> @@ -2755,7 +2764,7 @@ static void qemu_loadvm_state_switchover_ack_needed(MigrationIncomingState *mis)
->>   {
->>       SaveStateEntry *se;
->>   
->> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
->> +    SAVEVM_FOREACH(se, entry) {
->>           if (!se->ops || !se->ops->switchover_ack_needed) {
->>               continue;
->>           }
->> @@ -2775,7 +2784,7 @@ static int qemu_loadvm_state_setup(QEMUFile *f, Error **errp)
->>       int ret;
->>   
->>       trace_loadvm_state_setup();
->> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
->> +    SAVEVM_FOREACH(se, entry) {
->>           if (!se->ops || !se->ops->load_setup) {
->>               continue;
->>           }
->> @@ -2801,7 +2810,7 @@ void qemu_loadvm_state_cleanup(void)
->>       SaveStateEntry *se;
->>   
->>       trace_loadvm_state_cleanup();
->> -    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
->> +    SAVEVM_FOREACH(se, entry) {
->>           if (se->ops && se->ops->load_cleanup) {
->>               se->ops->load_cleanup(se->opaque);
->>           }
+>> +
+>> +    if (!f) {
+>> +        return -1;
+>> +    }
+>> +    ret = qemu_savevm_precreate_load(f, errp);
+>> +    qemu_fclose(f);
+>> +    g_unsetenv(PRECREATE_STATE_NAME);
+>> +    return ret;
+>> +}
 
