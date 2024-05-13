@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85E5DC25B79
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 07:51:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C35A0C25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 07:51:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6QPI-0002qN-HV; Mon, 13 May 2024 03:47:36 -0400
+	id 1s6QQi-0004A1-UR; Mon, 13 May 2024 03:49:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s6QPF-0002nb-SC
- for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:33 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1s6QPW-0002yf-LC
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:50 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s6QPE-0001MR-1h
- for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:33 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-420160f8f52so3883365e9.0
- for <qemu-devel@nongnu.org>; Mon, 13 May 2024 00:47:31 -0700 (PDT)
+ id 1s6QPT-0001QU-0j
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:50 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-41ff5e3dc3bso17922065e9.1
+ for <qemu-devel@nongnu.org>; Mon, 13 May 2024 00:47:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715586450; x=1716191250; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715586465; x=1716191265; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iNBogQkAhCPuNJXeM44os2k6SzPQFDH25UufdeGcgDY=;
- b=fqPb4JBNn9AkE9sD5LasSmWmhOAvcCr79udD8f1GULMGk53DuqUtSafjkFkZVRU5r8
- Of5ClKe8ocgIAkB/nxMqRcMS3SJQX+xB+ibaxRX0+NdUyy8DKLvWbzxD6kCr+7OTWjUO
- zPOeyV4i+SWMzz7Nzffp7j98CdrdaG0lgNHqr7cjKJoZBTwPR6EDTzRUdFTQfHz017Np
- 49Nln+tOuju3JIAf/9B1qLHaddaaYTho0VIdTL/z2rX1SddNM4q16SsKQemWvDvczm6Q
- 2ty+RC/d8o+OhpIHqY8N4HV/Q7OsiNzan6Qa35jP0RcPcAxaKgqUWrWMB/mOjnhWacSE
- /Jfw==
+ bh=e5GRNpEQvFWJc+tF6eTBVa97b3dnETbzXExkDc8WgAI=;
+ b=bRnU31lbRThKVjamRSWRV4tRWEMwInbq6T/yw1cHp1hx6xtKNSxWh2ckjB5/HeuRkB
+ +nafIWRJUukeU1lLyZPt89SWrBdZvyzr0o6/VJZ0Y0Ht42W9FNLgLiCNIcKzyOQOt9J+
+ uqtCbBjutY/6krV3aUwJVsUlUUxQafg6BexUdAZcuYO7AosYaLlcCs/oZbTF7GCjCm4T
+ TL+QUD4iA20Cgpfvqik7ZW20SA8D9Le9+nVVVrNrGZzuJzdFy6EVb22RA3UbaxrIYJRg
+ On6HiBFTdiyt7AnUPn7/UMlII/iNWLkPJZvVQU/PV/xaB+oPNNzm8kALcsfN0TdtYuSn
+ w3XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715586450; x=1716191250;
+ d=1e100.net; s=20230601; t=1715586465; x=1716191265;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iNBogQkAhCPuNJXeM44os2k6SzPQFDH25UufdeGcgDY=;
- b=NxTNev9/kWqa9ltvvsf90aYhWX6b0+1lWANLyLO5RfWi+R4BfcY1xU9mY8nHYE5/yz
- NlXCYk4XMrvS/i8XNAozENAfh4+R06IBhxPhPBK/SBiKe+HRf8lnZjfwbGA/REI2m6o0
- bpD+6qpaBHaPudNy3K5CDRe+xGCciKyBVijE6FIwvkToFBZ/dSBuUxnU3peTUeLuGo5/
- DXT/WItwUspMpY5F5+F6qhNVC6BY0A8BuVIGuiuTF+9hW8u940zHv6CTcl9Dpb3OREPu
- h+RM8C6XYQUu0VUAqpGmbgG8aGAv/7G08Eqt2orlRQn1uBZwc/YhZLftWBwoqoMQI4aL
- 0SKA==
-X-Gm-Message-State: AOJu0YxFqY6IFaGsyMC3rVCDJ1QdF35mmAf7j7AIiXALOFEvA/PEj5Al
- J9P8iVI+8koHrn5HtDRYtGQtuaRzxm+Bz6VfM4iRMWUeZMzlGosTdHScTjIJ5XLKVoc2pjLDZ0F
- pqeM=
-X-Google-Smtp-Source: AGHT+IFq3oye8xPiD2NZHqnoa0BmhJennWaDnc0zf4Uzw44F9ZuKp2OMJayd3iQVEFOAdwqauxlM/Q==
-X-Received: by 2002:a05:600c:3b26:b0:41c:73d:62fe with SMTP id
- 5b1f17b1804b1-41fead7a82emr55008395e9.41.1715586450705; 
- Mon, 13 May 2024 00:47:30 -0700 (PDT)
+ bh=e5GRNpEQvFWJc+tF6eTBVa97b3dnETbzXExkDc8WgAI=;
+ b=DaQGk1oz1f9fNJOf9oOxVAPkPfQttzahWZm/avMfdFnvdTTWJpFBsEPMC/uUSRnqmh
+ Sri8qIEv3D9RcMlCVbjphaAwn5bWwgmzMKkJrN3a03Iw2BNow8bXBJR89SA+1jJSid2P
+ BdHUzlbyUX8EIz4pxVWdHud3f0PGcci7G8DMWGiByDxne5eRfj3PrPuUVgA4CTBur1/t
+ oR0NUYa4u/gUNzolYoqS+3mc85MRL+9o2crvylwy/G3qnQv5sH3klvWx5rmgcXE72oJq
+ XdnpjnGIlAbpZOntj3Cpd3tRUWja15rP4dHvRKoV4zo9xX57/QN55g/2ypNZnKWEg7SJ
+ NhZw==
+X-Gm-Message-State: AOJu0YxYc0hTmcbnsHtf1sP110u29EgZCy5+jJ8WCDEWN4/AP44fzAHE
+ SBfYkbbMwRjkzZWSYW5zlEEVXeOkT1Cpd4GRAeXaS9cw1NGctbl1BxTuEZ79LLTcaF/DTlV27/y
+ CsFQ=
+X-Google-Smtp-Source: AGHT+IHO/w8dlaY4PL/nHAw9GUPeAfqhDiPAAWIOTNAIIhCUx6L1QcsT8Ugfe6YJ7S896z2jVPkUcg==
+X-Received: by 2002:a05:600c:1c9a:b0:41b:8660:c530 with SMTP id
+ 5b1f17b1804b1-41fea932021mr76999535e9.5.1715586465612; 
+ Mon, 13 May 2024 00:47:45 -0700 (PDT)
 Received: from stoup.. (12.red-213-97-13.staticip.rima-tde.net. [213.97.13.12])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-41fccee9318sm148204765e9.30.2024.05.13.00.47.30
+ 5b1f17b1804b1-41fccee9318sm148204765e9.30.2024.05.13.00.47.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 May 2024 00:47:30 -0700 (PDT)
+ Mon, 13 May 2024 00:47:45 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: deller@gmx.de
-Subject: [PATCH v2 16/45] target/hppa: Always make a copy in do_ibranch_priv
-Date: Mon, 13 May 2024 09:46:48 +0200
-Message-Id: <20240513074717.130949-17-richard.henderson@linaro.org>
+Subject: [PATCH v2 37/45] target/hppa: Implement PSW_B
+Date: Mon, 13 May 2024 09:47:09 +0200
+Message-Id: <20240513074717.130949-38-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240513074717.130949-1-richard.henderson@linaro.org>
 References: <20240513074717.130949-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,40 +94,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This simplifies callers, which might otherwise have
-to make another copy.
+PSW_B causes B,GATE to trap as an illegal instruction, removing
+the sequential execution test that was merely an approximation.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/translate.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ target/hppa/translate.c | 25 ++++++-------------------
+ 1 file changed, 6 insertions(+), 19 deletions(-)
 
 diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 22935f4645..f267de14c6 100644
+index 1a6a140d6f..2d8410b8ea 100644
 --- a/target/hppa/translate.c
 +++ b/target/hppa/translate.c
-@@ -1967,18 +1967,17 @@ static bool do_ibranch(DisasContext *ctx, TCGv_i64 dest, TCGv_i64 dspc,
-  */
- static TCGv_i64 do_ibranch_priv(DisasContext *ctx, TCGv_i64 offset)
+@@ -2061,11 +2061,8 @@ static void do_page_zero(DisasContext *ctx)
+         g_assert_not_reached();
+     }
+ 
+-    /* Check that we didn't arrive here via some means that allowed
+-       non-sequential instruction execution.  Normally the PSW[B] bit
+-       detects this by disallowing the B,GATE instruction to execute
+-       under such conditions.  */
+-    if (iaqe_variable(&ctx->iaq_b) || ctx->iaq_b.disp != 4) {
++    /* If PSW[B] is set, the B,GATE insn would trap. */
++    if (ctx->psw_xb & PSW_B) {
+         goto do_sigill;
+     }
+ 
+@@ -3964,23 +3961,13 @@ static bool trans_b_gate(DisasContext *ctx, arg_b_gate *a)
  {
--    TCGv_i64 dest;
-+    TCGv_i64 dest = tcg_temp_new_i64();
-     switch (ctx->privilege) {
-     case 0:
-         /* Privilege 0 is maximum and is allowed to decrease.  */
--        return offset;
-+        tcg_gen_mov_i64(dest, offset);
-+        break;
-     case 3:
-         /* Privilege 3 is minimum and is never allowed to increase.  */
--        dest = tcg_temp_new_i64();
-         tcg_gen_ori_i64(dest, offset, 3);
-         break;
-     default:
--        dest = tcg_temp_new_i64();
-         tcg_gen_andi_i64(dest, offset, -4);
-         tcg_gen_ori_i64(dest, dest, ctx->privilege);
-         tcg_gen_umax_i64(dest, dest, offset);
+     int64_t disp = a->disp;
+ 
+-    nullify_over(ctx);
+-
+-    /* Make sure the caller hasn't done something weird with the queue.
+-     * ??? This is not quite the same as the PSW[B] bit, which would be
+-     * expensive to track.  Real hardware will trap for
+-     *    b  gateway
+-     *    b  gateway+4  (in delay slot of first branch)
+-     * However, checking for a non-sequential instruction queue *will*
+-     * diagnose the security hole
+-     *    b  gateway
+-     *    b  evil
+-     * in which instructions at evil would run with increased privs.
+-     */
+-    if (iaqe_variable(&ctx->iaq_b) || ctx->iaq_b.disp != ctx->iaq_f.disp + 4) {
++    /* Trap if PSW[B] is set. */
++    if (ctx->psw_xb & PSW_B) {
+         return gen_illegal(ctx);
+     }
+ 
++    nullify_over(ctx);
++
+ #ifndef CONFIG_USER_ONLY
+     if (ctx->tb_flags & PSW_C) {
+         int type = hppa_artype_for_page(cpu_env(ctx->cs), ctx->base.pc_next);
 -- 
 2.34.1
 
