@@ -4,63 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7CC0C25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 11:40:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAC15C25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 11:42:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6U2g-0008JX-6w; Mon, 13 May 2024 07:40:30 -0400
+	id 1s6U3z-0000I5-Vs; Mon, 13 May 2024 07:41:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6U2e-0008JI-WB
- for qemu-devel@nongnu.org; Mon, 13 May 2024 07:40:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6U2d-0002NG-6P
- for qemu-devel@nongnu.org; Mon, 13 May 2024 07:40:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715600426;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=uUNxuHwJiWqM0BhbdrZV0kxAAWI9ME5sT0VL8kotzX8=;
- b=JWdg84sxm+nq5nEyjC3+02EoJmOkCDhxpj+UuV/Xc0n+eI7EyrAMvWkK+RdwyWdtai1+Xa
- 486GiOawMnKL0W7TK47vkH3eMyx3A+cFckcPZmszUS/jg53aFytHZCEV3tMBg2JDTv9hPx
- F1AQWQukMcSVfBGdy2v8vQGSog3LVfY=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-588-01S7Up08PBqi-iC_PAtk7w-1; Mon,
- 13 May 2024 07:40:12 -0400
-X-MC-Unique: 01S7Up08PBqi-iC_PAtk7w-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 427AA1C0515F;
- Mon, 13 May 2024 11:40:12 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.51])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 11B881C00A8F;
- Mon, 13 May 2024 11:40:10 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v2] configure: Fix error message when C compiler is not working
-Date: Mon, 13 May 2024 13:40:10 +0200
-Message-ID: <20240513114010.51608-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <philippe.mathieu-daude@linaro.org>)
+ id 1s6U3p-0000FF-MG
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 07:41:42 -0400
+Received: from mail-io1-xd33.google.com ([2607:f8b0:4864:20::d33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philippe.mathieu-daude@linaro.org>)
+ id 1s6U3l-0002aQ-Fn
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 07:41:41 -0400
+Received: by mail-io1-xd33.google.com with SMTP id
+ ca18e2360f4ac-7e1b4f96994so192963339f.2
+ for <qemu-devel@nongnu.org>; Mon, 13 May 2024 04:41:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1715600491; x=1716205291; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=s7Bv9T2I+JD4H04PCwBmUc+ZcldaNG/7gTeBCfpATZk=;
+ b=ag2+BB9Yw5ZwpBM1ZRFRHpRgfGIukEGsZqN3gdmSkcNQrN7T+a+v+NZtYwIBmXDaNe
+ IfbRvMNz3G48WoExqF6fqk5M22d2EQ9LleYcgJKdyI8jHraJExwuGkZXQXXHVfXwXJgv
+ yprx3hTTRarn4Ei7BSgLuoYE3UlOs1OhzNTL5M8avtBK0/L+szrGUKgLEs97lttMgWh2
+ cHJXc+WBrTPAKXQmcY9660ztyI0pCpYh5lNXtumOcddTemDF8FkYlAh2+gYs8rAUVcFr
+ Lnk+lUjm3iQvVuJA+MHHD4bRbJyfT3Uw6yhfP+MJDhOvzLVoNq4b2kgpB+kuoaKFV0jK
+ kZUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715600491; x=1716205291;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=s7Bv9T2I+JD4H04PCwBmUc+ZcldaNG/7gTeBCfpATZk=;
+ b=uZ3Mj53+L+5BvbwK4v/s84/IdEGtwS2LZl3IsQaXpZck+ONHgCSF197UAFhWHRPct9
+ RFunWauk2+Ox0w939fHqldn5d7Cp9kh+MkCaTZ49ugtZVOfTd19W0+PyFNcZaYRv6jm/
+ rkXis1C2Pfcom5+3Cll564NrqG2MmN7rdvZzM181QHzJg1KNLjLpsBZvjTEdsZkfPb4u
+ GBZAjN5Q4+at+Gd+3AonbsqQX2qY1ylvrY9FTrJnKaSppGHtF8iiEaBIL74Y3v4Nb5jN
+ kbOjXk+DH5yYrMf7gTsL5MmiLMV8JMRTnIcK1LbWMyx90/GB5I66cGaYujnesU2wcm8m
+ ib6Q==
+X-Gm-Message-State: AOJu0YyjgLkZ8Ovbs2IxCKSnhx/pbkufZWamZ0QF0DW1dX6+TWnB5V7H
+ cCYd9qSwI9dHjtxf/YYqbd1f2GEyg+c/RWpkZo9hi53nll/M9OICoJD1rugnMH/L6/qN10GWwEf
+ LrBoc7jvYlL89T88LR6ZPD3sSU9kLRl+k/SdJm//5nlOHtDwSZOleHJTT
+X-Google-Smtp-Source: AGHT+IHbOwRRtRlKlkkfpwba1jcrAHcW7c/htsmS55ga6CDzuSAkkf2eg2o47AX+GfvIbtjnfC/7Hynb+WPHqpPPMDc=
+X-Received: by 2002:a5d:8c86:0:b0:7e1:7d63:887 with SMTP id
+ ca18e2360f4ac-7e1b5217766mr1167777439f.18.1715600491182; Mon, 13 May 2024
+ 04:41:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240425000023.1002026-1-richard.henderson@linaro.org>
+ <20240425000023.1002026-5-richard.henderson@linaro.org>
+In-Reply-To: <20240425000023.1002026-5-richard.henderson@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Date: Mon, 13 May 2024 13:41:20 +0200
+Message-ID: <CAPMQPEKpVPG96L5FMLpvmNm00ynPyK1f-FVY6yUWp0_RvjRmtg@mail.gmail.com>
+Subject: Re: [PATCH 04/45] target/hppa: Pass displacement to do_dbranch
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d33;
+ envelope-from=philippe.mathieu-daude@linaro.org; helo=mail-io1-xd33.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,62 +90,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If you try to run the configure script on a system without a working
-C compiler, you get a very misleading error message:
+On Thu, 25 Apr 2024 at 02:11, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Pass a displacement instead of an absolute value.
+>
+> In trans_be, remove the user-only do_dbranch case.  The branch we are
+> attempting to optimize is to the zero page, which is perforce on a
+> different page than the code currently executing, which means that
+> we will *not* use a goto_tb.  Use a plain indirect branch instead,
+> which is what we got out of the attempted direct branch anyway.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/hppa/translate.c | 33 +++++++++------------------------
+>  1 file changed, 9 insertions(+), 24 deletions(-)
 
- ERROR: Unrecognized host OS (uname -s reports 'Linux')
-
-Some people already opened bug tickets because of this problem:
-
- https://gitlab.com/qemu-project/qemu/-/issues/2057
- https://gitlab.com/qemu-project/qemu/-/issues/2288
-
-We should rather tell the user that we were not able to use the C
-compiler instead, otherwise they will have a hard time to figure
-out what was going wrong.
-
-While we're at it, let's also suppress the "unrecognized host CPU"
-message in this case since it is rather misleading than helpful.
-
-Fixes: 264b803721 ("configure: remove compiler sanity check")
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- v2: Reworked the patch according to Peter's suggestions:
-     https://lists.gnu.org/archive/html/qemu-devel/2024-03/msg04643.html
-
- configure | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
-
-diff --git a/configure b/configure
-index 1dca3d94c0..519f1bb6e2 100755
---- a/configure
-+++ b/configure
-@@ -411,7 +411,9 @@ else
-   # Using uname is really broken, but it is just a fallback for architectures
-   # that are going to use TCI anyway
-   cpu=$(uname -m)
--  echo "WARNING: unrecognized host CPU, proceeding with 'uname -m' output '$cpu'"
-+  if test "$host_os" != "bogus"; then
-+    echo "WARNING: unrecognized host CPU, proceeding with 'uname -m' output '$cpu'"
-+  fi
- fi
- 
- # Normalise host CPU name to the values used by Meson cross files and in source
-@@ -894,6 +896,13 @@ EOF
- exit 0
- fi
- 
-+# Now that we are sure that the user did not only want to print the --help
-+# information, we should double-check that the C compiler really works:
-+write_c_skeleton
-+if ! compile_object ; then
-+    error_exit "C compiler \"$cc\" either does not exist or does not work."
-+fi
-+
- # Remove old dependency files to make sure that they get properly regenerated
- rm -f ./*/config-devices.mak.d
- 
--- 
-2.45.0
-
+Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
