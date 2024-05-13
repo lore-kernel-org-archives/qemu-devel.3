@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E94EEC25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 07:54:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A0D7C25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 07:54:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6QPU-0002v3-4k; Mon, 13 May 2024 03:47:48 -0400
+	id 1s6QPK-0002rE-RW; Mon, 13 May 2024 03:47:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s6QPE-0002nE-AL
- for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:33 -0400
-Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
+ id 1s6QP8-0002kQ-Dp
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:27 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s6QP4-0001Jm-J7
- for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:32 -0400
-Received: by mail-lj1-x231.google.com with SMTP id
- 38308e7fff4ca-2e43c481b53so50102431fa.2
- for <qemu-devel@nongnu.org>; Mon, 13 May 2024 00:47:22 -0700 (PDT)
+ id 1s6QP6-0001K7-8y
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:26 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-41fe54cb0e3so24585415e9.2
+ for <qemu-devel@nongnu.org>; Mon, 13 May 2024 00:47:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715586441; x=1716191241; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715586442; x=1716191242; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+9boudcCOGEVYkNrscgu8HWtkLEddppv4wDb4lWwH3M=;
- b=THxqmqN/EmdmzAsZggy5Yy5EsG3gfyPi4QfcDX+iOWx8fX/+SwXCaU7WlyYh3CsQ15
- B8TCM+Phly6xRjuOUIhWMebqEKdA4UdJ0Syf+ZEEEUCY7KQgWLcfuDm57hDR84kDvtxj
- f7sXmuQ60gyeiTCiPd/nAV8PvW5/zbNB+5tZi2vTnxc/Ms286txvQ2z6xsyAMuteJ4kb
- xP4g2UOLmrm3TowuA/LYQXLsV6M9p3Nr0cEvDHjNSFLnCX3Foty8FhMonB4Hs4ma5FTW
- ItAVM+5qZgsr1ZelRKttrkJweNuk5Zl5TPEKKsmAfBR3gfvVDpEwmhs9TyuWTFupEgjF
- yKCQ==
+ bh=EF71oCEKPx9KffJ0nhQbR+6fCow0EB4c3hkf8VxLkbs=;
+ b=MYpWRI/2Xf8UQ8dnUCdBm2fjM/mLe4wUep1V/aFN0zp4gUTbzwkAarDNM+FwO+muYJ
+ IWvPZeRHWF/MnbtwHIRuQLb4C7MamnWBF3lij6I8PB+jr50E9T2GyUuyvnmSbxn5tYUR
+ N3ZN6DDnEx2AwxLi1AEQpRkw03BfKXUgLjpIU4WMgikyN/HpPfNww/EtWaRzaUpQEvpR
+ DZ35dFWkpErLR3CLTleC2jM6nLVVdHLf2q3lL4PtYYwO2HBffY0KsAVphWKzK6HcWUxh
+ viQnhOqwkylmMRfRtoztUuhHzmZnIIENj75fULmKi2xkgdr32KHBHiVdSPhUjiPfjYHT
+ +17g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715586441; x=1716191241;
+ d=1e100.net; s=20230601; t=1715586442; x=1716191242;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+9boudcCOGEVYkNrscgu8HWtkLEddppv4wDb4lWwH3M=;
- b=wZb2TQSloOOIU/2E22cMbQchtVxdUna7jTW1e0krhLOLZO+toydC0XFRIRNcVE99JY
- QmHXDoxwV3eo71EkCoj1EUZ+i2zudZmkChmUdfMjQ26JkcovEtRrfIq8XoPWsx2v1ML5
- M7hm4klVz5NOdBdisABdnFg7+WP/Mo9rKfL2xTtEhAXUfvLsVHwYxp4MMxzJTCee5/6a
- e3l8tf/3jYvFzMG6lb8nCssL+8oja4dZs5ymXmmhYMAhy+LxippG6iFrS4knSijLezAB
- hQGzDlMIdRn+C9Incarp7M/cswnB8wazeHI1YRIoC8Z7y3zN7zhfYs4otamKWnTqfs7Y
- 2Fag==
-X-Gm-Message-State: AOJu0Yz4uLX3O/n30j2pFBnj60VJosbcbGlILgCvkt1aT8aa8P+ppvW7
- vqufOPeD/uDrAFWhl15kEfecqQj+9qliEpD38alb4wlYCwo1K877J3u5+sPzDEY0UTGsydJDef2
- UKyY=
-X-Google-Smtp-Source: AGHT+IH+Vvm/I2rgO34Jclmma7qPq440dWyEREmjFlB+26uERjUq7JtIyp2GKkk0qzVtJ9Fd0xvdCg==
-X-Received: by 2002:a2e:8748:0:b0:2d8:a921:dfc1 with SMTP id
- 38308e7fff4ca-2e51fd4b3c2mr56017951fa.20.1715586440666; 
- Mon, 13 May 2024 00:47:20 -0700 (PDT)
+ bh=EF71oCEKPx9KffJ0nhQbR+6fCow0EB4c3hkf8VxLkbs=;
+ b=Nq+JNAb2ePynh+BO3Zg9kEQ2FK7i8Mx7Vx5rNKemMLnAzvctqiLcmv1TvzBh1GeBr0
+ 2h6m9pC+fhTXeQRaK0NMsnrUeXay+X26JCgebMheE7Qj0BloAFAbVUX5Huzz4AuHFf+a
+ 840DxGFAFFJUM2hUChpZf3ma2fzJfvl3l/WVxnovuLkky4yotPORAdu6Dfw4qVQPSMGI
+ j1fFLW83QiKIPqMa23IUJozGM1pOMSruNHLdQvjGHaYBcGWLDZmFPG7c0GWvtoM6CYnG
+ OEbyrs4YDfh39LV4n28V4Rxa7aG2UWB3ija9h7qObiE4Mv2PV5M6UVsxYxoNh0kNmo2K
+ 9ajQ==
+X-Gm-Message-State: AOJu0YyLsx2fr+VW/0nJJAgVacJthxsQQLx7Mx4qYihGBJbUiTzyr9kj
+ 7CGtRU2N41kLIzd+kQw3NToaDfhngzWnIxu80fzLH3bAp++h14eZQ7L74IztQCvBGjNnFtWL7wk
+ XNGs=
+X-Google-Smtp-Source: AGHT+IH0MP3m7Lw4XERojhlCysB49zTKxNdd4hpNuj2kz3lKHqAdjeLRkhzZhMCXeJ5D67E+jJpaZA==
+X-Received: by 2002:a05:600c:1f93:b0:41e:dc7f:e2c with SMTP id
+ 5b1f17b1804b1-41feac59cddmr61728755e9.30.1715586442305; 
+ Mon, 13 May 2024 00:47:22 -0700 (PDT)
 Received: from stoup.. (12.red-213-97-13.staticip.rima-tde.net. [213.97.13.12])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-41fccee9318sm148204765e9.30.2024.05.13.00.47.20
+ 5b1f17b1804b1-41fccee9318sm148204765e9.30.2024.05.13.00.47.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 May 2024 00:47:20 -0700 (PDT)
+ Mon, 13 May 2024 00:47:22 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: deller@gmx.de
-Subject: [PATCH v2 02/45] target/hppa: Use hppa_form_gva_psw in hppa_cpu_get_pc
-Date: Mon, 13 May 2024 09:46:34 +0200
-Message-Id: <20240513074717.130949-3-richard.henderson@linaro.org>
+Subject: [PATCH v2 04/45] target/hppa: Pass displacement to do_dbranch
+Date: Mon, 13 May 2024 09:46:36 +0200
+Message-Id: <20240513074717.130949-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240513074717.130949-1-richard.henderson@linaro.org>
 References: <20240513074717.130949-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::231;
- envelope-from=richard.henderson@linaro.org; helo=mail-lj1-x231.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,41 +94,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This function is for log_pc(), which needs to produce a
-similar result to cpu_get_tb_cpu_state().
+Pass a displacement instead of an absolute value.
+
+In trans_be, remove the user-only do_dbranch case.  The branch we are
+attempting to optimize is to the zero page, which is perforce on a
+different page than the code currently executing, which means that
+we will *not* use a goto_tb.  Use a plain indirect branch instead,
+which is what we got out of the attempted direct branch anyway.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/cpu.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ target/hppa/translate.c | 33 +++++++++------------------------
+ 1 file changed, 9 insertions(+), 24 deletions(-)
 
-diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
-index 582036b31e..be8c558014 100644
---- a/target/hppa/cpu.c
-+++ b/target/hppa/cpu.c
-@@ -38,9 +38,10 @@ static void hppa_cpu_set_pc(CPUState *cs, vaddr value)
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index 398803981c..4c42b518c5 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -1766,9 +1766,11 @@ static bool do_fop_dedd(DisasContext *ctx, unsigned rt,
  
- static vaddr hppa_cpu_get_pc(CPUState *cs)
+ /* Emit an unconditional branch to a direct target, which may or may not
+    have already had nullification handled.  */
+-static bool do_dbranch(DisasContext *ctx, uint64_t dest,
++static bool do_dbranch(DisasContext *ctx, int64_t disp,
+                        unsigned link, bool is_n)
  {
--    HPPACPU *cpu = HPPA_CPU(cs);
-+    CPUHPPAState *env = cpu_env(cs);
++    uint64_t dest = iaoq_dest(ctx, disp);
++
+     if (ctx->null_cond.c == TCG_COND_NEVER && ctx->null_lab == NULL) {
+         if (link != 0) {
+             copy_iaoq_entry(ctx, cpu_gr[link], ctx->iaoq_n, ctx->iaoq_n_var);
+@@ -1815,10 +1817,7 @@ static bool do_cbranch(DisasContext *ctx, int64_t disp, bool is_n,
  
--    return cpu->env.iaoq_f;
-+    return hppa_form_gva_psw(env->psw, (env->psw & PSW_C ? env->iasq_f : 0),
-+                             env->iaoq_f & -4);
+     /* Handle TRUE and NEVER as direct branches.  */
+     if (c == TCG_COND_ALWAYS) {
+-        return do_dbranch(ctx, dest, 0, is_n && disp >= 0);
+-    }
+-    if (c == TCG_COND_NEVER) {
+-        return do_dbranch(ctx, ctx->iaoq_n, 0, is_n && disp < 0);
++        return do_dbranch(ctx, disp, 0, is_n && disp >= 0);
+     }
+ 
+     taken = gen_new_label();
+@@ -3914,22 +3913,6 @@ static bool trans_be(DisasContext *ctx, arg_be *a)
+ {
+     TCGv_i64 tmp;
+ 
+-#ifdef CONFIG_USER_ONLY
+-    /* ??? It seems like there should be a good way of using
+-       "be disp(sr2, r0)", the canonical gateway entry mechanism
+-       to our advantage.  But that appears to be inconvenient to
+-       manage along side branch delay slots.  Therefore we handle
+-       entry into the gateway page via absolute address.  */
+-    /* Since we don't implement spaces, just branch.  Do notice the special
+-       case of "be disp(*,r0)" using a direct branch to disp, so that we can
+-       goto_tb to the TB containing the syscall.  */
+-    if (a->b == 0) {
+-        return do_dbranch(ctx, a->disp, a->l, a->n);
+-    }
+-#else
+-    nullify_over(ctx);
+-#endif
+-
+     tmp = tcg_temp_new_i64();
+     tcg_gen_addi_i64(tmp, load_gpr(ctx, a->b), a->disp);
+     tmp = do_ibranch_priv(ctx, tmp);
+@@ -3939,6 +3922,8 @@ static bool trans_be(DisasContext *ctx, arg_be *a)
+ #else
+     TCGv_i64 new_spc = tcg_temp_new_i64();
+ 
++    nullify_over(ctx);
++
+     load_spr(ctx, new_spc, a->sp);
+     if (a->l) {
+         copy_iaoq_entry(ctx, cpu_gr[31], ctx->iaoq_n, ctx->iaoq_n_var);
+@@ -3968,7 +3953,7 @@ static bool trans_be(DisasContext *ctx, arg_be *a)
+ 
+ static bool trans_bl(DisasContext *ctx, arg_bl *a)
+ {
+-    return do_dbranch(ctx, iaoq_dest(ctx, a->disp), a->l, a->n);
++    return do_dbranch(ctx, a->disp, a->l, a->n);
  }
  
- void cpu_get_tb_cpu_state(CPUHPPAState *env, vaddr *pc,
-@@ -61,8 +62,7 @@ void cpu_get_tb_cpu_state(CPUHPPAState *env, vaddr *pc,
-     flags |= env->psw & (PSW_W | PSW_C | PSW_D | PSW_P);
-     flags |= (env->iaoq_f & 3) << TB_FLAG_PRIV_SHIFT;
+ static bool trans_b_gate(DisasContext *ctx, arg_b_gate *a)
+@@ -4022,7 +4007,7 @@ static bool trans_b_gate(DisasContext *ctx, arg_b_gate *a)
+         save_gpr(ctx, a->l, tmp);
+     }
  
--    *pc = hppa_form_gva_psw(env->psw, (env->psw & PSW_C ? env->iasq_f : 0),
--                            env->iaoq_f & -4);
-+    *pc = hppa_cpu_get_pc(env_cpu(env));
-     *cs_base = env->iasq_f;
+-    return do_dbranch(ctx, dest, 0, a->n);
++    return do_dbranch(ctx, dest - iaoq_dest(ctx, 0), 0, a->n);
+ }
  
-     /* Insert a difference between IAOQ_B and IAOQ_F within the otherwise zero
+ static bool trans_blr(DisasContext *ctx, arg_blr *a)
+@@ -4035,7 +4020,7 @@ static bool trans_blr(DisasContext *ctx, arg_blr *a)
+         return do_ibranch(ctx, tmp, a->l, a->n);
+     } else {
+         /* BLR R0,RX is a good way to load PC+8 into RX.  */
+-        return do_dbranch(ctx, ctx->iaoq_f + 8, a->l, a->n);
++        return do_dbranch(ctx, 0, a->l, a->n);
+     }
+ }
+ 
 -- 
 2.34.1
 
