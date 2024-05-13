@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2978C25B78
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 07:53:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B602C25B7A
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 07:53:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6QRB-0006Lj-7E; Mon, 13 May 2024 03:49:33 -0400
+	id 1s6QR4-0005BA-19; Mon, 13 May 2024 03:49:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s6QPX-0002zA-FJ
+ id 1s6QPY-0002zD-0d
  for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:53 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s6QPS-0001QJ-Og
+ id 1s6QPW-0001SQ-BH
  for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:51 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-42011507a57so9658565e9.1
- for <qemu-devel@nongnu.org>; Mon, 13 May 2024 00:47:46 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-420180b5897so2670395e9.3
+ for <qemu-devel@nongnu.org>; Mon, 13 May 2024 00:47:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715586464; x=1716191264; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715586467; x=1716191267; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=E8/1fo4XxPxuANS4fw7f9IOfFNtGCwACN8n5KfI7MiY=;
- b=ZLnZ4lTS6WPgJzNZ04u8Okzcerm99/WU+3DtuV+fxy/BBGTArVdAN2x9zy5gIYnQBg
- Av6tB8W4Ca/n7f92SLqLYvJGRoCQ+jfIBkahCEdGGKovR55KzflU/1HVKHPO+chGrd/h
- UQsd02wsFCXAK0yGctUGccJ62kzbZrpTyJH4lqjzhGbriJpfnof1Qkg21bQwuQ7X70gA
- LE2TYx0ueQpb4Ldc835lh8HP5Zky92m4MdQ73Nb0opsn9I/Zv/maoGhb8SNOj6W2s+Lv
- 2eaaH3YsdTJLk0WpsCngOq9dk7vwH9m7dexBmWzYNQLQ7kxcvcY0jrAer1/7vZVpZQs7
- y33w==
+ bh=IqZwbuhaC0QOpVi9GDZS/pvS08Z41AQGVLa7yPdeApE=;
+ b=W/yVSJkdd4pOZXCBB66qD+P3sy2ewlkiWvpbFuj42Vy9pymIPkvLVV01OvxL0tptWq
+ 2RH8uuMjmFZDp9UzhgMEcMGE/Yn+G2+fiOZnMlSivdNR26/z11c1DOvLVbMJhjreXfKM
+ l/piu708vqnDsYrtGfWOkMsrSrQOCDApcAQlyRBEowsXnLhnBT5TyAfSEMmKbTeXj2b7
+ ywe0/autNEq9c4YqfkNK2iIJo++PdvtpcY9mbt+wzuskS7PZhHcyh5xkD8vKxpPXSz6h
+ T1vQKGa0GLmBrMeTkloKTWAIYmGygYZ1gaN9He01+I1T+02FhOqjmxJU9tDKBaBwwFN5
+ +SDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715586464; x=1716191264;
+ d=1e100.net; s=20230601; t=1715586467; x=1716191267;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=E8/1fo4XxPxuANS4fw7f9IOfFNtGCwACN8n5KfI7MiY=;
- b=lvQYAkQ59PQqs7CbOVMXkA4zVVavKSi67XbotnNFcDXnLS9igOpetiIUSt1y6Qq1by
- tqUgh6ba/hFGb67i7WVrseydjkg+PS7rlALXJOqhW/r8SWO4sKNwRPJuIJ2bES6jv0o8
- G4zR6KV4eQFDTUHK3rQIT9zgQymJNZ3ZWYZ099hiUXSLRP07+yGn39kS30o0iM8mAwlv
- BylF6ylGF2yZLutA5dnM++qo+OCV+x7eVok+QBaf0FjPc34/TGZTnjsn9sPfYzri8dJ2
- X4uxIxL69+zaSmnk7cHIs6307BzjnfVWbgi/2XP2dMM4nF+lecGa69YWDioZK3WfmZo4
- FzYQ==
-X-Gm-Message-State: AOJu0YzY6QPheld/QbVdYFJQWovERIHyjhdcF3kHzhrUiWN9gjQ6bsOs
- 2QCV35Q44RiosCMleaPgFyPklE98XrdUXPcYG84NYVC434H3kRgWFloeB0mOj18AamuvqsZsNxr
- 1K9M=
-X-Google-Smtp-Source: AGHT+IEhseMmHyfHtOgN0lOBClYyPXYRIjh1i7uZPys6LpxqhsGtiHQEuoCOtMP7arc9XIzHMO8zqA==
-X-Received: by 2002:a05:600c:1d1c:b0:420:98d:e101 with SMTP id
- 5b1f17b1804b1-420098de3c7mr49278315e9.15.1715586464420; 
- Mon, 13 May 2024 00:47:44 -0700 (PDT)
+ bh=IqZwbuhaC0QOpVi9GDZS/pvS08Z41AQGVLa7yPdeApE=;
+ b=w5MHok/3Wkt/IgPp/nF/qJvLBvXTy6QNqO59RqdHyrzqFwQ97B4CpkC2jeEJKACh+h
+ EV2CIZo2HlIaJDWtOPNrXWGE6sxrEnHnniWtQrVcSjymYLu10tYwY7H/g7K1QNy+pivK
+ X9rlL5rjJA/La0VFrREBWlRiFFLtSbirVuP0h1ZyB7Vg9Psv1HzPEGA1ZBIHmziFRN0i
+ aMRSEFce+qDyF5oqqr4e6oUgBE3k9j1TufUZS7XRoMqYqsOqtfPLchEH4Oo3MzrcufAj
+ UffrxNBpJ7BxmGveeMsX+jvzDa9Py9b/P9zd+N+mZOX3aY6rTlg29LroSP4h1sbl9Fp2
+ uVcg==
+X-Gm-Message-State: AOJu0YyDYFDEaVPiN8bW3AilNKTRIL8GdOicEy0wezVFMIQHHkd7KDPq
+ p5XHkZPu+8dbuYxBtIwtFspg19mwLOeKyhTvta3FaFaq6HNtbtCDQq/bOUnuKeHg2Z9ZHfhrZlN
+ okwc=
+X-Google-Smtp-Source: AGHT+IGXLwsD3p+T/YA61TZd8uvEMY2ULcZGeBqSKWKhyQWff7q2FM+L4k8QLt7CdlDjDeYt3tqZ3A==
+X-Received: by 2002:a05:600c:434a:b0:41b:e55c:8e14 with SMTP id
+ 5b1f17b1804b1-41feaa38a5cmr67252675e9.14.1715586467647; 
+ Mon, 13 May 2024 00:47:47 -0700 (PDT)
 Received: from stoup.. (12.red-213-97-13.staticip.rima-tde.net. [213.97.13.12])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-41fccee9318sm148204765e9.30.2024.05.13.00.47.43
+ 5b1f17b1804b1-41fccee9318sm148204765e9.30.2024.05.13.00.47.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 May 2024 00:47:44 -0700 (PDT)
+ Mon, 13 May 2024 00:47:47 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: deller@gmx.de
-Subject: [PATCH v2 35/45] target/hppa: Split PSW X and B into their own field
-Date: Mon, 13 May 2024 09:47:07 +0200
-Message-Id: <20240513074717.130949-36-richard.henderson@linaro.org>
+Subject: [PATCH v2 38/45] target/hppa: Implement PSW_X
+Date: Mon, 13 May 2024 09:47:10 +0200
+Message-Id: <20240513074717.130949-39-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240513074717.130949-1-richard.henderson@linaro.org>
 References: <20240513074717.130949-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,54 +94,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Generally, both of these bits are cleared at the end of each
-instruction.  By separating these, we will be able to clear
-both with a single insn, instead of 2 or 3.
+Use PAGE_WRITE_INV to temporarily enable write permission
+on for a given page, driven by PSW_X being set.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/cpu.h    | 3 ++-
- target/hppa/helper.c | 6 +++---
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ target/hppa/mem_helper.c | 46 +++++++++++++++++++++++-----------------
+ 1 file changed, 27 insertions(+), 19 deletions(-)
 
-diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-index 1232a4cef2..f247ad56d7 100644
---- a/target/hppa/cpu.h
-+++ b/target/hppa/cpu.h
-@@ -208,7 +208,8 @@ typedef struct CPUArchState {
-     uint64_t fr[32];
-     uint64_t sr[8];          /* stored shifted into place for gva */
- 
--    target_ulong psw;        /* All psw bits except the following:  */
-+    uint32_t psw;            /* All psw bits except the following:  */
-+    uint32_t psw_xb;         /* X and B, in their normal positions */
-     target_ulong psw_n;      /* boolean */
-     target_long psw_v;       /* in most significant bit */
- 
-diff --git a/target/hppa/helper.c b/target/hppa/helper.c
-index 7d22c248fb..b79ddd8184 100644
---- a/target/hppa/helper.c
-+++ b/target/hppa/helper.c
-@@ -54,7 +54,7 @@ target_ulong cpu_hppa_get_psw(CPUHPPAState *env)
- 
-     psw |= env->psw_n * PSW_N;
-     psw |= (env->psw_v < 0) * PSW_V;
--    psw |= env->psw;
-+    psw |= env->psw | env->psw_xb;
- 
-     return psw;
- }
-@@ -76,8 +76,8 @@ void cpu_hppa_put_psw(CPUHPPAState *env, target_ulong psw)
+diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
+index d09877afd7..ca7bbe0a7c 100644
+--- a/target/hppa/mem_helper.c
++++ b/target/hppa/mem_helper.c
+@@ -296,30 +296,38 @@ int hppa_get_physical_address(CPUHPPAState *env, vaddr addr, int mmu_idx,
+         goto egress;
      }
-     psw &= ~reserved;
  
--    env->psw = psw & (uint32_t)~(PSW_N | PSW_V | PSW_CB);
--
-+    env->psw = psw & (uint32_t)~(PSW_B | PSW_N | PSW_V | PSW_X | PSW_CB);
-+    env->psw_xb = psw & (PSW_X | PSW_B);
-     env->psw_n = (psw / PSW_N) & 1;
-     env->psw_v = -((psw / PSW_V) & 1);
+-    /* In reverse priority order, check for conditions which raise faults.
+-       As we go, remove PROT bits that cover the condition we want to check.
+-       In this way, the resulting PROT will force a re-check of the
+-       architectural TLB entry for the next access.  */
+-    if (unlikely(!ent->d)) {
+-        if (type & PAGE_WRITE) {
+-            /* The D bit is not set -- TLB Dirty Bit Fault.  */
+-            ret = EXCP_TLB_DIRTY;
+-        }
+-        prot &= PAGE_READ | PAGE_EXEC;
+-    }
+-    if (unlikely(ent->b)) {
+-        if (type & PAGE_WRITE) {
+-            /* The B bit is set -- Data Memory Break Fault.  */
+-            ret = EXCP_DMB;
+-        }
+-        prot &= PAGE_READ | PAGE_EXEC;
+-    }
++    /*
++     * In priority order, check for conditions which raise faults.
++     * Remove PROT bits that cover the condition we want to check,
++     * so that the resulting PROT will force a re-check of the
++     * architectural TLB entry for the next access.
++     */
+     if (unlikely(ent->t)) {
++        prot &= PAGE_EXEC;
+         if (!(type & PAGE_EXEC)) {
+             /* The T bit is set -- Page Reference Fault.  */
+             ret = EXCP_PAGE_REF;
+         }
+-        prot &= PAGE_EXEC;
++    } else if (!ent->d) {
++        prot &= PAGE_READ | PAGE_EXEC;
++        if (type & PAGE_WRITE) {
++            /* The D bit is not set -- TLB Dirty Bit Fault.  */
++            ret = EXCP_TLB_DIRTY;
++        }
++    } else if (unlikely(ent->b)) {
++        prot &= PAGE_READ | PAGE_EXEC;
++        if (type & PAGE_WRITE) {
++            /*
++             * The B bit is set -- Data Memory Break Fault.
++             * Except when PSW_X is set, allow this single access to succeed.
++             * The write bit will be invalidated for subsequent accesses.
++             */
++            if (env->psw_xb & PSW_X) {
++                prot |= PAGE_WRITE_INV;
++            } else {
++                ret = EXCP_DMB;
++            }
++        }
+     }
  
+  egress:
 -- 
 2.34.1
 
