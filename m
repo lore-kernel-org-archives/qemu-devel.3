@@ -4,96 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC6A1C25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 14:02:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87725C25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 14:09:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6WFg-0002u8-Ez; Mon, 13 May 2024 10:02:04 -0400
+	id 1s6WLm-0005VD-Kk; Mon, 13 May 2024 10:08:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s6WFe-0002tB-PU
- for qemu-devel@nongnu.org; Mon, 13 May 2024 10:02:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1s6WLl-0005V5-N2
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 10:08:21 -0400
+Received: from mgamail.intel.com ([198.175.65.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1s6WFb-00051w-OI
- for qemu-devel@nongnu.org; Mon, 13 May 2024 10:02:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715608916;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=CQGgBUXKtbpDLx7+/NLYGPfp6n3rmsAldIdvBRk7bP4=;
- b=bT7bJ1Uf6re9uxXgvpfkdz8ybhluAd7j50a4+IxfLzsB/ybq8BspGuA7P8zJ+IyiOG00H2
- 51FsZzfahYZsBRWYRYiGfdt0zvy6G/Ds+8LLe5OPyvzTompE+KRc0a0mzWJzrWIgOo9MgN
- V/DMa1NvYSsIwS3n7mDWSnhvgA/njr0=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-257-IugvM_M-MBKfur-29T89eA-1; Mon, 13 May 2024 10:01:40 -0400
-X-MC-Unique: IugvM_M-MBKfur-29T89eA-1
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-43de2f59d09so56217921cf.0
- for <qemu-devel@nongnu.org>; Mon, 13 May 2024 07:01:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715608893; x=1716213693;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CQGgBUXKtbpDLx7+/NLYGPfp6n3rmsAldIdvBRk7bP4=;
- b=CKu4kxptN8aFQxzUgUa8D38YZCrGD/qTZ7P3Jh0sDNEpdXALX4KniPkvumgEEE1LAw
- kFnRjpr+HCFVQE4iT/hAjPpO18NKRy52WvrhhtImzwCf2bP7zOt5ycVyX81nOzac5vvu
- Qi9nxj0KjwoG+ed3jzLG0TUJ8a0OCIJSdFJiYtyrwZD49QprADGqi6JulOMJjqrOId4r
- tPXzEtFiXZOfOS7bG/R/FH9k5B1E0WPzZW0TR7k+X+8VA147yvk9fhn9VLPuULYOO8pp
- hbtORn3ZCzZ3Cdxv4KLKZOT10pfcHqQZqbQiWYCl94BYfaFbyEYLjVXLjO3HLERZOkGd
- Sm5g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXDnTOGKAOwNFJ7q//2OlYNwyQOMF3Gu3QB3aW1Ox9JaDFSAHpLdd5WBDddMof+mOK6Sm1EXEVEvqSPWcfahoc1RXStv4o=
-X-Gm-Message-State: AOJu0Yy0JGx8Zmr41YhphcbeltY0RCXCD51GLwCqnrz+gQ2Si3fpTi8H
- Y8iRg4bSXCHxSS1nrsl0kVnxmC/Hu8nURq91cIBXGJ6N+LX1P+sYmNL4ZWG4xma12lk1pQc1Ea3
- WTV0jikyVtlNjf73cDd5hnYj+NXfWfGrlHyMRePmEVtXJ09v8K6jh
-X-Received: by 2002:ac8:58c9:0:b0:43b:70f:64b1 with SMTP id
- d75a77b69052e-43dfdaf7863mr114496661cf.25.1715608892783; 
- Mon, 13 May 2024 07:01:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHjONQQfpd25DUep9OxHbjxYMpwxiCBrfRpouIvJUsZY6FzFtx/kCPbjMZWHI5YK5IK1y5qJA==
-X-Received: by 2002:ac8:58c9:0:b0:43b:70f:64b1 with SMTP id
- d75a77b69052e-43dfdaf7863mr114496231cf.25.1715608892357; 
- Mon, 13 May 2024 07:01:32 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-43e0bf64844sm28674001cf.62.2024.05.13.07.01.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 May 2024 07:01:31 -0700 (PDT)
-Message-ID: <8fe65dfe-dd9c-47c0-8769-3479484b3e5e@redhat.com>
-Date: Mon, 13 May 2024 16:01:27 +0200
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1s6WLf-0006IQ-Md
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 10:08:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1715609296; x=1747145296;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=WsU0YTZZ6yJOQ7T5hG4osWxzTIYWzDTn0bE+/jzR/ss=;
+ b=iB7TXu2lRKhOW4vmPZAktn9z0S9CrJ4X5hjUq/WJPzvTvehKrTWtIg6T
+ eZN7WLFNhwVK53ytUTCy+66PSkNlYuoinpEykFgMCrA//Zk6/4SE4nEmT
+ 1fb3vvnRdKwe9GiCV3cUoWvHAc+bIJypTpHylZlly9K8O4RV0NVQawMwf
+ dCCsfzQk17GbfrFgg9ZMFl/HnXZV/789Sbx11LmyW3s6sxsDWabmB7MMR
+ 6ES2XXgouUqxU4C+eV6n5ervkR9c7cz3oPlJNadej0/k7YMQTopw4JkpF
+ Yvddc5lplGcePdGytQA4skdzGJHKTQjj/6UAyHCpGWtNu6fTOztfZ8s8T w==;
+X-CSE-ConnectionGUID: dIQF/j2kSP2dDPtPyZ/A2g==
+X-CSE-MsgGUID: zraL+047SYK1EPk2vApp4A==
+X-IronPort-AV: E=McAfee;i="6600,9927,11072"; a="22949772"
+X-IronPort-AV: E=Sophos;i="6.08,158,1712646000"; d="scan'208";a="22949772"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 May 2024 07:08:10 -0700
+X-CSE-ConnectionGUID: m2XnHfnKSPm6rrgaPm9rew==
+X-CSE-MsgGUID: 5kSCVEiiRraP6rafsZNWog==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,158,1712646000"; d="scan'208";a="30299320"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa007.fm.intel.com with ESMTP; 13 May 2024 07:08:07 -0700
+Date: Mon, 13 May 2024 22:22:22 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ devel@lists.libvirt.org,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Krempa <pkrempa@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH 1/2] hw/core: allow parameter=1 for SMP topology on any
+ machine
+Message-ID: <ZkIiHgw9rQActD2i@intel.com>
+References: <20240513123358.612355-1-berrange@redhat.com>
+ <20240513123358.612355-2-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] vfio/migration: Emit VFIO migration QAPI event
-To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Joao Martins <joao.m.martins@oracle.com>,
- Maor Gottlieb <maorg@nvidia.com>
-References: <20240509090954.16447-1-avihaih@nvidia.com>
- <20240509090954.16447-3-avihaih@nvidia.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240509090954.16447-3-avihaih@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240513123358.612355-2-berrange@redhat.com>
+Received-SPF: pass client-ip=198.175.65.12; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,154 +90,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/9/24 11:09, Avihai Horon wrote:
-> Emit VFIO migration QAPI event when a VFIO device changes its migration
-> state. This can be used by management applications to get updates on the
-> current state of the VFIO device for their own purposes.
+Cc Paolo for x86 topology part
+
+Hi Daniel,
+
+On Mon, May 13, 2024 at 01:33:57PM +0100, Daniel P. Berrangé wrote:
+> Date: Mon, 13 May 2024 13:33:57 +0100
+> From: "Daniel P. Berrangé" <berrange@redhat.com>
+> Subject: [PATCH 1/2] hw/core: allow parameter=1 for SMP topology on any
+>  machine
 > 
-> A new per VFIO device capability, "migration-events", is added so events
-> can be enabled only for the required devices. It is disabled by default.
+> This effectively reverts
 > 
-> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
-> ---
->   include/hw/vfio/vfio-common.h |  1 +
->   hw/vfio/migration.c           | 56 +++++++++++++++++++++++++++++++++--
->   hw/vfio/pci.c                 |  2 ++
->   3 files changed, 56 insertions(+), 3 deletions(-)
+>   commit 54c4ea8f3ae614054079395842128a856a73dbf9
+>   Author: Zhao Liu <zhao1.liu@intel.com>
+>   Date:   Sat Mar 9 00:01:37 2024 +0800
 > 
-> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-> index b9da6c08ef..3ec5f2425e 100644
-> --- a/include/hw/vfio/vfio-common.h
-> +++ b/include/hw/vfio/vfio-common.h
-> @@ -115,6 +115,7 @@ typedef struct VFIODevice {
->       bool no_mmap;
->       bool ram_block_discard_allowed;
->       OnOffAuto enable_migration;
-> +    bool migration_events;
->       VFIODeviceOps *ops;
->       unsigned int num_irqs;
->       unsigned int num_regions;
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index 06ae40969b..5a359c4c78 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -24,6 +24,7 @@
->   #include "migration/register.h"
->   #include "migration/blocker.h"
->   #include "qapi/error.h"
-> +#include "qapi/qapi-events-vfio.h"
->   #include "exec/ramlist.h"
->   #include "exec/ram_addr.h"
->   #include "pci.h"
-> @@ -80,6 +81,55 @@ static const char *mig_state_to_str(enum vfio_device_mig_state state)
->       }
->   }
->   
-> +static VfioMigrationState
-> +mig_state_to_qapi_state(enum vfio_device_mig_state state)
-> +{
-> +    switch (state) {
-> +    case VFIO_DEVICE_STATE_STOP:
-> +        return QAPI_VFIO_MIGRATION_STATE_STOP;
-> +    case VFIO_DEVICE_STATE_RUNNING:
-> +        return QAPI_VFIO_MIGRATION_STATE_RUNNING;
-> +    case VFIO_DEVICE_STATE_STOP_COPY:
-> +        return QAPI_VFIO_MIGRATION_STATE_STOP_COPY;
-> +    case VFIO_DEVICE_STATE_RESUMING:
-> +        return QAPI_VFIO_MIGRATION_STATE_RESUMING;
-> +    case VFIO_DEVICE_STATE_RUNNING_P2P:
-> +        return QAPI_VFIO_MIGRATION_STATE_RUNNING_P2P;
-> +    case VFIO_DEVICE_STATE_PRE_COPY:
-> +        return QAPI_VFIO_MIGRATION_STATE_PRE_COPY;
-> +    case VFIO_DEVICE_STATE_PRE_COPY_P2P:
-> +        return QAPI_VFIO_MIGRATION_STATE_PRE_COPY_P2P;
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-> +}
-> +
-> +static void vfio_migration_send_event(VFIODevice *vbasedev)
-> +{
-> +    VFIOMigration *migration = vbasedev->migration;
-> +    DeviceState *dev = vbasedev->dev;
-> +    g_autofree char *qom_path = NULL;
-> +    Object *obj;
-> +
-> +    if (!vbasedev->migration_events) {
-> +        return;
-> +    }
+>     hw/core/machine-smp: Deprecate unsupported "parameter=1" SMP configurations
+> 
+> but is not done as a 'git revert' since the part of the changes to the
+> file hw/core/machine-smp.c which add 'has_XXX' checks remain desirable.
+> Furthermore, we have to tweak the subsequently added unit test to
+> account for differing warning message.
+> 
+> The rationale for the original deprecation was:
+> 
+>   "Currently, it was allowed for users to specify the unsupported
+>    topology parameter as "1". For example, x86 PC machine doesn't
+>    support drawer/book/cluster topology levels, but user could specify
+>    "-smp drawers=1,books=1,clusters=1".
+> 
+>    This is meaningless and confusing, so that the support for this kind
+>    of configurations is marked deprecated since 9.0."
+> 
+> There are varying POVs on the topic of 'unsupported' topology levels.
+> 
+> It is common to say that on a system without hyperthreading, that there
+> is always 1 thread. Likewise when new CPUs introduced a concept of
+> multiple "dies', it was reasonable to say that all historical CPUs
+> before that implicitly had 1 'die'. Likewise for the more recently
+> introduced 'modules' and 'clusters' parameter'. From this POV, it is
+> valid to set 'parameter=1' on the -smp command line for any machine,
+> only a value > 1 is strictly an error condition.
 
-I would add an assert on vbasedev->ops->vfio_get_object
+Currently QEMU has become more and more difficult to maintain a general
+topology hierarchy, there are two recent examples:
 
-> +    obj = vbasedev->ops->vfio_get_object(vbasedev);
+1. as you mentioned "module" v.s. "cluster", one reason for introducing
+"module" is because it is difficult to define what "cluster" is for x86,
+the cluster in the device tree can be nested, then it can correspond to
+an x86 die, or it can correspond to an x86 module. Therefore, specifying
+"clusters=1" for x86 is ambiguous.
 
-and another assert on obj.
+2. s390 introduces book and drawer, which are above socket/package
+level, but for x86, the level above the package names "cluster" (yeah,
+"cluster" again :-(). So if user sets "books=1" or "drawers=1" for x86,
+then it's meaningless. Similarly, "clusters=1" is also very confusing for
+x86 machine.
 
-> +    qom_path = object_get_canonical_path(obj);
-> +
-> +    qapi_event_send_vfio_migration(
-> +        dev->id, qom_path, mig_state_to_qapi_state(migration->device_state));
-> +}
-> +
-> +static void set_state(VFIODevice *vbasedev, enum vfio_device_mig_state state)
+I think that only thread/core/socket are architecturally general, the
+other topology levels are hard to define across architectures, then
+allowing unsupported topology=1 is always confusing...
 
-to avoid the conflict with vfio_migration_set_state(), let's call it :
-vfio_migration_set_device_state() ? We want a 'vfio_migration_' prefix.
+Moreover, QEMU currently requires a clear topology containment
+relationship when defining a topology, after which it will become
+increasingly difficult to define a generic topology containment
+relationship when new topology levels are introduced in the future...
 
+> It doesn't cause any functional difficulty for QEMU, because internally
+> the QEMU code is itself assuming that all "unsupported" parameters
+> implicitly have a value of '1'.
+> 
+> At the libvirt level, we've allowed applications to set 'parameter=1'
+> when configuring a guest, and pass that through to QEMU.
+> 
+> Deprecating this creates extra difficulty for because there's no info
+> exposed from QEMU about which machine types "support" which parameters.
+> Thus, libvirt can't know whether it is valid to pass 'parameter=1' for
+> a given machine type, or whether it will trigger deprecation messages.
 
-Thanks,
+I understand that libvirt is having trouble because there is no interface
+to expose which topology levels the current machine supports. As a
+workaround to eliminate the difficulties at the libvirt level, it's
+ok for me.
 
-C.
+But I believe deprecating the unsupported topology is necessary, so do
+you think it's acceptable to include an interface to expose the supported
+topology if it's going to be deprecated again later?
 
-
-
-
-> +{
-> +    VFIOMigration *migration = vbasedev->migration;
-> +
-> +    migration->device_state = state;
-> +    vfio_migration_send_event(vbasedev);
-> +}
-> +
->   static int vfio_migration_set_state(VFIODevice *vbasedev,
->                                       enum vfio_device_mig_state new_state,
->                                       enum vfio_device_mig_state recover_state)
-> @@ -125,12 +175,12 @@ static int vfio_migration_set_state(VFIODevice *vbasedev,
->               goto reset_device;
->           }
->   
-> -        migration->device_state = recover_state;
-> +        set_state(vbasedev, recover_state);
->   
->           return ret;
->       }
->   
-> -    migration->device_state = new_state;
-> +    set_state(vbasedev, new_state);
->       if (mig_state->data_fd != -1) {
->           if (migration->data_fd != -1) {
->               /*
-> @@ -156,7 +206,7 @@ reset_device:
->                    strerror(errno));
->       }
->   
-> -    migration->device_state = VFIO_DEVICE_STATE_RUNNING;
-> +    set_state(vbasedev, VFIO_DEVICE_STATE_RUNNING);
->   
->       return ret;
->   }
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 64780d1b79..8840602c50 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -3362,6 +3362,8 @@ static Property vfio_pci_dev_properties[] = {
->                       VFIO_FEATURE_ENABLE_IGD_OPREGION_BIT, false),
->       DEFINE_PROP_ON_OFF_AUTO("enable-migration", VFIOPCIDevice,
->                               vbasedev.enable_migration, ON_OFF_AUTO_AUTO),
-> +    DEFINE_PROP_BOOL("migration-events", VFIOPCIDevice,
-> +                     vbasedev.migration_events, false),
->       DEFINE_PROP_BOOL("x-no-mmap", VFIOPCIDevice, vbasedev.no_mmap, false),
->       DEFINE_PROP_BOOL("x-balloon-allowed", VFIOPCIDevice,
->                        vbasedev.ram_block_discard_allowed, false),
+Regards,
+Zhao
 
 
