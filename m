@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99764C25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 14:24:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40720C25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 14:24:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6Wb1-00019F-VL; Mon, 13 May 2024 10:24:07 -0400
+	id 1s6WbJ-00022Y-14; Mon, 13 May 2024 10:24:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s6Wb1-00018o-5z
- for qemu-devel@nongnu.org; Mon, 13 May 2024 10:24:07 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s6Way-0001Bl-Kw
- for qemu-devel@nongnu.org; Mon, 13 May 2024 10:24:06 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-42016c8daa7so6384815e9.2
- for <qemu-devel@nongnu.org>; Mon, 13 May 2024 07:24:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715610242; x=1716215042; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=H8gMrWF430J36N9AnIKeDwdDy+iJAsYK2gLkVjhskPY=;
- b=nsgnqS58kSqM5pudr9G9ckmi0mEqLlZ6pdFc5J+t9ttgqUgSwe/Km9efO7LsyGtokI
- hKxQ4i5VlArtKR9FQ9RG+jkFVRbRUCEdQKSYdk1reXx/SVS+TfBTkizjWk0y0Hi5e/zz
- BeJS3WvSHekcTrf+5AenRH/RbPyieQVstUYLmBU4mS5tJVsiHJ6kH9gih+SsOwKzH+os
- dECBJljdeUX4VRDn0fgPruAprXl4zw6JSOg2a0KoNGz1VEKW5uev0XV+NFrA2pRksPY0
- B0B58sc7vd04Z7OlBG1Q06xaGva3uZ2HQQejxIIpW9P6kHIAFgRqNKduD+ylhoCv7KKD
- t0uQ==
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1s6WbF-0001wF-E4
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 10:24:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1s6WbD-0001FX-La
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 10:24:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715610259;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=fly/DQ4jQRVsjWcafPVaXrMwiqZtcTcNxfO/l4xbgwQ=;
+ b=Fdo+AkxKI344QIjyB/M7Wj37V6aFqLyIOSRaOJ3e9OOIkW4KSRZImcIqR8VhPw8flxPSMt
+ 2xe4nag/woWoDeChN7OQfqJVp++bDwb1B65g5nP6J/EB7OhkXDHXtQt9bDq9VNAfcsqc/4
+ 1TgOwC37Wi3TAtblO5huqrpKTNMncTU=
+Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
+ [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-468-QJAAYZLMNYOGtVQelFjUFQ-1; Mon, 13 May 2024 10:24:17 -0400
+X-MC-Unique: QJAAYZLMNYOGtVQelFjUFQ-1
+Received: by mail-yw1-f198.google.com with SMTP id
+ 00721157ae682-622ccd54587so39608707b3.0
+ for <qemu-devel@nongnu.org>; Mon, 13 May 2024 07:24:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715610242; x=1716215042;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=H8gMrWF430J36N9AnIKeDwdDy+iJAsYK2gLkVjhskPY=;
- b=BBRqmIG/fyctee9XhuxrzubJOxuIvyrj0Ag4WdjUel94WE1mJc+/G2jfnSAt40bmzO
- RSdy/4cJXOIbhgPg1912EmdPB9PYY0cJ0Uaw3My04d81nd7MNFr0Vvpc+3JhPxsj1CzH
- +2BB5M2KYGVDsAO7vZOs0LtGkGnjCv/ymqdBKG5wOESx3rF+7OSSxVoufWMkWSfsr3Xl
- 2ucsGFdNDs2RPYrX++c+JUwzwW3p7slUdpCGJ+b+aoWyqzeWveZPVlQDxIbRbyPLKcQg
- d9bwkTiDb1IQxpoDYmfRhiSak7Np+5k3gFD9PHTLDLpfJhBmmY/BNogBcj8Xc5f4nv8P
- G2IA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVwSpEd11igHFuMu/133F5AA4t1p48d9baq2q3s++3NeM5l7ZbJ6bhP7wFFAkUNDl8sF2R7MERSyPVD/Sxz1cBD4Uh6xxo=
-X-Gm-Message-State: AOJu0Yyk3xeZa2VEMYk+qxcdbcBYXJoc+7a7qJGXaEoMfeyVln+XfG8L
- lUA7maHoHyzsSSjKY3nkvac9kJrDI5VycF8PO8U0z7ShX8MdNCuU54hgBd5L2KY=
-X-Google-Smtp-Source: AGHT+IHzF7Kxs4uGWEAexa7BDlJCAgIAO8feJXxSzRoqdiKg84vpMgxAkbINIyf9XV5Ry2kfuYcH4g==
-X-Received: by 2002:adf:e8cc:0:b0:34d:71a9:8837 with SMTP id
- ffacd0b85a97d-3504a954ebbmr7168360f8f.44.1715610242290; 
- Mon, 13 May 2024 07:24:02 -0700 (PDT)
-Received: from [10.1.2.72] ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502b8a77easm11209136f8f.53.2024.05.13.07.24.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 May 2024 07:24:01 -0700 (PDT)
-Message-ID: <4df52eea-4eac-4537-9167-fd2fdbe06872@linaro.org>
-Date: Mon, 13 May 2024 16:24:00 +0200
+ d=1e100.net; s=20230601; t=1715610257; x=1716215057;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=fly/DQ4jQRVsjWcafPVaXrMwiqZtcTcNxfO/l4xbgwQ=;
+ b=F3VLo/BucuFpu6KP1/BkuWg4HACU/pHHswZFrtl6H3iCr1BWV9KhHnGvoV7guYdn8V
+ 6+mtbyEUDA+SXqBOQxDko9y/9drDUFXnSrx6cAp5b3klhI980H1ZQKsJQN3MhPYohT2G
+ EY1W35s7fWE26BIhWqLPwzpXiIMcKFCFsNoItaIcSC+P/XM1Y9VK5h/VL/QAgfSR7l/D
+ +UXYzofdwN5r2nNzuDwn8CP+/TfzDIrawiJGsgf8IgNPPRL89QMYU+4yqO6Sy+p1HYe0
+ d3RXLNsmhWo7p+qbWt7I6RtQr2v9ZClGrkQ1wsyUl/Q5aWGeh5OqYkqThjDRpJzdeDzB
+ 77KQ==
+X-Gm-Message-State: AOJu0YzLUotLZzB1cVCDM8u5YPt7Rm6WXmVXJn6UQStwHZKQ5zqkwQKB
+ u8aDEItP2ZgfY1MVajmioJailxgJhwLeNQ5MLcksRSIXcph7b9seVY8z4xPFP3uyFPJgEv63J1L
+ LBCRIEqtt1cznJV8+tqHcC21XwjRQMg+mveA6QGz77wg3Xjjzdz5xd11YbX6n0H3F7Ko1A+lOg2
+ Am1Oq8w7+XguD9fYlSEZndnq5+VS4=
+X-Received: by 2002:a05:6902:2205:b0:de5:5bd1:7ae6 with SMTP id
+ 3f1490d57ef6-dee4f512832mr13668570276.64.1715610257240; 
+ Mon, 13 May 2024 07:24:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGUN7J9RXxTZpxNNSGIbWq+BaSw/bRjNMsPLKq6eWMroy0AJkXCx8K1gaZ8jbe+WG3S+SRARVYJTVbaB6Wi2aM=
+X-Received: by 2002:a05:6902:2205:b0:de5:5bd1:7ae6 with SMTP id
+ 3f1490d57ef6-dee4f512832mr13668550276.64.1715610256879; Mon, 13 May 2024
+ 07:24:16 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/6] migration: Rephrase message on failure to save / load
- Xen device state
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: fam@euphon.net, kwolf@redhat.com, hreitz@redhat.com,
- marcandre.lureau@redhat.com, peterx@redhat.com, farosas@suse.de,
- pbonzini@redhat.com, richard.henderson@linaro.org, qemu-block@nongnu.org
-References: <20240513141703.549874-1-armbru@redhat.com>
- <20240513141703.549874-6-armbru@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240513141703.549874-6-armbru@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <13625712.uLZWGnKmhe@valdaarhun>
+ <CAJaqyWeYtyfGav9Ppx=FgRg_Gzucaoz4T3kVi9EbzrDwwEBsyQ@mail.gmail.com>
+ <12430761.O9o76ZdvQC@valdaarhun> <2282965.iZASKD2KPV@valdaarhun>
+In-Reply-To: <2282965.iZASKD2KPV@valdaarhun>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Mon, 13 May 2024 16:23:40 +0200
+Message-ID: <CAJaqyWfbHgVA7f81C6phouSUEb7bVwXFRDWTHeie7Vax13zWZw@mail.gmail.com>
+Subject: Re: Intention to work on GSoC project
+To: Sahil <icegambit91@gmail.com>
+Cc: qemu-level <qemu-devel@nongnu.org>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,40 +99,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/5/24 16:17, Markus Armbruster wrote:
-> Functions that use an Error **errp parameter to return errors should
-> not also report them to the user, because reporting is the caller's
-> job.  When the caller does, the error is reported twice.  When it
-> doesn't (because it recovered from the error), there is no error to
-> report, i.e. the report is bogus.
-> 
-> qmp_xen_save_devices_state() and qmp_xen_load_devices_state() violate
-> this principle: they call qemu_save_device_state() and
-> qemu_loadvm_state(), which call error_report_err().
-> 
-> I wish I could clean this up now, but migration's error reporting is
-> too complicated (confused?) for me to mess with it.
-> 
-> Instead, I'm merely improving the error reported by
-> qmp_xen_load_devices_state() and qmp_xen_load_devices_state() to the
-> QMP core from
-> 
->      An IO error has occurred
-> 
-> to
->      saving Xen device state failed
-> 
-> and
-> 
->      loading Xen device state failed
-> 
-> respectively.
-> 
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> ---
->   migration/savevm.c | 5 ++---
->   1 file changed, 2 insertions(+), 3 deletions(-)
+On Mon, May 13, 2024 at 3:49=E2=80=AFPM Sahil <icegambit91@gmail.com> wrote=
+:
+>
+> Hi,
+>
+> On Wednesday, May 8, 2024 8:53:12=E2=80=AFAM GMT+5:30 Sahil wrote:
+> > Hi,
+> >
+> > On Tuesday, May 7, 2024 12:44:33=E2=80=AFPM IST Eugenio Perez Martin wr=
+ote:
+> > > [...]
+> > >
+> > > > Shall I start by implementing a mechanism to check if the feature b=
+it
+> > > > "VIRTIO_F_RING_PACKED" is set (using "virtio_vdev_has_feature")? An=
+d
+> > > > if it's supported, "vhost_svq_add" should call "vhost_svq_add_packe=
+d".
+> > > > Following this, I can then start implementing "vhost_svq_add_packed=
+"
+> > > > and progress from there.
+> > > >
+> > > > What are your thoughts on this?
+> > >
+> > > Yes, that's totally right.
+> > >
+> > > I recommend you to also disable _F_EVENT_IDX to start, so the first
+> > > version is easier.
+> > >
+> > > Also, you can send as many incomplete RFCs as you want. For example,
+> > > you can send a first version that only implements reading of the gues=
+t
+> > > avail ring, so we know we're aligned on that. Then, we can send
+> > > subsequents RFCs adding features on top.
+> >
+>
+> I have started working on implementing packed virtqueue support in
+> vhost-shadow-virtqueue.c. The changes I have made so far are very
+> minimal. I have one confusion as well.
+>
+> In "vhost_svq_add()" [1], a structure of type "VhostShadowVirtqueue"
+> is being used. My initial idea was to create a whole new structure (eg:
+> VhostShadowVirtqueuePacked). But I realized that "VhostShadowVirtqueue"
+> is being used in a lot of other places such as in "struct vhost_vdpa" [2]
+> (in "vhost-vdpa.h"). So maybe this isn't a good idea.
+>
+> The problem is that "VhostShadowVirtqueue" has a member of type "struct
+> vring" [3] which represents a split virtqueue [4]. My idea now is to inst=
+ead
+> wrap this member in a union so that the struct would look something like
+> this.
+>
+> struct VhostShadowVirtqueue {
+>         union {
+>                 struct vring vring;
+>                 struct packed_vring vring;
+>         }
+>         ...
+> }
+>
+> I am not entirely sure if this is a good idea. It is similar to what's be=
+en done
+> in linux's "drivers/virtio/virtio_ring.c" ("struct vring_virtqueue" [5]).
+>
+> I thought I would ask this first before continuing further.
+>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+That's right, this second option makes perfect sense.
+
+VhostShadowVirtqueue should abstract both split and packed. You'll see
+that some members are reused, while others are only used in one
+version so they are placed after a union. They should follow the same
+pattern, although it is not a problem if we need to divert a little
+bit from the kernel's code.
+
+Thanks!
+
+> Thanks,
+> Sahil
+>
+> [1] https://gitlab.com/qemu-project/qemu/-/blob/master/hw/virtio/vhost-sh=
+adow-virtqueue.c#L249
+> [2] https://gitlab.com/qemu-project/qemu/-/blob/master/include/hw/virtio/=
+vhost-vdpa.h#L69
+> [3] https://gitlab.com/qemu-project/qemu/-/blob/master/hw/virtio/vhost-sh=
+adow-virtqueue.h#L52
+> [4] https://gitlab.com/qemu-project/qemu/-/blob/master/include/standard-h=
+eaders/linux/virtio_ring.h#L156
+> [5] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tr=
+ee/drivers/virtio/virtio_ring.c#n199
+>
+>
 
 
