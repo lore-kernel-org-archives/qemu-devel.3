@@ -4,67 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FA6AC25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 07:20:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF0F8C25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 07:24:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6PyP-00012J-4I; Mon, 13 May 2024 03:19:49 -0400
+	id 1s6Q2Z-0005AT-0u; Mon, 13 May 2024 03:24:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1s6PyG-0000rj-8J
- for qemu-devel@nongnu.org; Mon, 13 May 2024 03:19:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s6Q2K-00056x-TE
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 03:23:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1s6Py8-0004Md-Q4
- for qemu-devel@nongnu.org; Mon, 13 May 2024 03:19:36 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s6Q2J-0005oo-D0
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 03:23:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715584770;
+ s=mimecast20190719; t=1715585030;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vXEf6MzzW2iiMzYA77qN4WzMwGtff1QqnKjBRadxhlQ=;
- b=F3KHe1W+u9IYx2OcreNgmW5ita+I85j/TopiZAc9EJ0DDJWPzRMazmLQCU6sBttI+v/Cvh
- J0bXO7g7rIQKaIqD6R5NbxJQzX22Kedbn4HaGmuS34WhOFD3GnlSyu55SJn4Jd3KjFXH7x
- fvH5fzvzGKiwAQH3LvHJ/I2jWIhyvTA=
+ bh=HZGApIurcdsnIGwnOrwHMkNwPsnHqxAS3zMciEUQqlE=;
+ b=UwCS19mOV610lJPcczjSr/UofHd14NbsIQpFcK7J1VGKekyicwyrT2K6akX8Fx/+IY3QkB
+ 1vVmynsqkt2S2c0ykcRn/6c01nU8Vm8QONzkhTVq/Hik0+sAep89VdW4SH4pdJoGeZVV5w
+ n+0lecFhaKdKEPE2pZ6eTR9TnVqKegE=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-477-WT8S0rX_OpKgik_JtUUpgw-1; Mon, 13 May 2024 03:19:25 -0400
-X-MC-Unique: WT8S0rX_OpKgik_JtUUpgw-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
+ us-mta-646-KEKI_0mjP3CQcoFHpk0gSw-1; Mon, 13 May 2024 03:23:47 -0400
+X-MC-Unique: KEKI_0mjP3CQcoFHpk0gSw-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.8])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id F31201818690;
- Mon, 13 May 2024 07:19:23 +0000 (UTC)
-Received: from localhost (unknown [10.39.208.9])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 6411140AD3C5;
- Mon, 13 May 2024 07:19:22 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v2 3/4] virtio-gpu: add x-vmstate-version
-Date: Mon, 13 May 2024 11:19:04 +0400
-Message-ID: <20240513071905.499143-4-marcandre.lureau@redhat.com>
-In-Reply-To: <20240513071905.499143-1-marcandre.lureau@redhat.com>
-References: <20240513071905.499143-1-marcandre.lureau@redhat.com>
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E69D68030A4;
+ Mon, 13 May 2024 07:23:46 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.193.21])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 8CF31C15BB9;
+ Mon, 13 May 2024 07:23:46 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4A51521E66E5; Mon, 13 May 2024 09:23:45 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+Cc: kbusch@kernel.org,  its@irrelevant.dk,  foss@defmacro.it,
+ qemu-block@nongnu.org,  qemu-devel@nongnu.org,  npiggin@gmail.com
+Subject: Re: [PATCH] hw/nvme: Add CLI options for PCI vendor/device IDs and
+ IEEE-OUI ID
+In-Reply-To: <20240509124723.3930-1-saif.abrar@linux.vnet.ibm.com> (Saif
+ Abrar's message of "Thu, 9 May 2024 07:47:23 -0500")
+References: <20240509124723.3930-1-saif.abrar@linux.vnet.ibm.com>
+Date: Mon, 13 May 2024 09:23:45 +0200
+Message-ID: <87ttj2b2f2.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -88,76 +83,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+Saif Abrar <saif.abrar@linux.vnet.ibm.com> writes:
 
-Machine <= 8.2 use v1.
+> Add CLI options for user specified
+> - PCI vendor, device, subsystem vendor and subsystem IDs
+> - IEEE-OUI ID
+>
+> e.g. PCI IDs to be specified as follows:
+> -device nvme,id_vendor=0xABCD,id_device=0xA0B0,id_subsys_vendor=0xEF00,id_subsys=0xEF01
+>
+> IEEE-OUI ID (Identify Controller bytes 75:73) is to be
+> specified in LE format.
+> (e.g. ieee_oui=0xABCDEF => Byte[73]=0xEF, Byte[74]=0xCD, Byte[75]=0xAB).
+>
+> Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
 
-Following patch will adjust to v2 for other machines to fix migration.
+[...]
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
----
- include/hw/virtio/virtio-gpu.h | 1 +
- hw/core/machine.c              | 1 +
- hw/display/virtio-gpu.c        | 6 ++++--
- 3 files changed, 6 insertions(+), 2 deletions(-)
+> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> index 127c3d2383..35aeb48e0b 100644
+> --- a/hw/nvme/ctrl.c
+> +++ b/hw/nvme/ctrl.c
 
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index ed44cdad6b..af1c77eb3f 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -177,6 +177,7 @@ typedef struct VGPUDMABuf {
- struct VirtIOGPU {
-     VirtIOGPUBase parent_obj;
- 
-+    uint8_t vmstate_version;
-     uint64_t conf_max_hostmem;
- 
-     VirtQueue *ctrl_vq;
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index c7ceb11501..cf840e0502 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -42,6 +42,7 @@ GlobalProperty hw_compat_8_2[] = {
-     { "migration", "zero-page-detection", "legacy"},
-     { TYPE_VIRTIO_IOMMU_PCI, "granule", "4k" },
-     { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "64" },
-+    { "virtio-gpu-device", "x-vmstate-version", "1" },
- };
- const size_t hw_compat_8_2_len = G_N_ELEMENTS(hw_compat_8_2);
- 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index ae831b6b3e..7f9fb5eacc 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -1234,7 +1234,8 @@ static int virtio_gpu_save(QEMUFile *f, void *opaque, size_t size,
-     }
-     qemu_put_be32(f, 0); /* end of list */
- 
--    return vmstate_save_state(f, &vmstate_virtio_gpu_scanouts, g, NULL);
-+    return vmstate_save_state_v(f, &vmstate_virtio_gpu_scanouts, g,
-+                                NULL, g->vmstate_version, NULL);
- }
- 
- static bool virtio_gpu_load_restore_mapping(VirtIOGPU *g,
-@@ -1339,7 +1340,7 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
-     }
- 
-     /* load & apply scanout state */
--    vmstate_load_state(f, &vmstate_virtio_gpu_scanouts, g, 1);
-+    vmstate_load_state(f, &vmstate_virtio_gpu_scanouts, g, g->vmstate_version);
- 
-     return 0;
- }
-@@ -1659,6 +1660,7 @@ static Property virtio_gpu_properties[] = {
-     DEFINE_PROP_BIT("blob", VirtIOGPU, parent_obj.conf.flags,
-                     VIRTIO_GPU_FLAG_BLOB_ENABLED, false),
-     DEFINE_PROP_SIZE("hostmem", VirtIOGPU, parent_obj.conf.hostmem, 0),
-+    DEFINE_PROP_UINT8("x-vmstate-version", VirtIOGPU, vmstate_version, 1),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
--- 
-2.41.0.28.gd7d8841f67
+[...]
+
+> @@ -8451,6 +8480,13 @@ static Property nvme_props[] = {
+>                        params.sriov_max_vq_per_vf, 0),
+>      DEFINE_PROP_BOOL("msix-exclusive-bar", NvmeCtrl, params.msix_exclusive_bar,
+>                       false),
+> +    DEFINE_PROP_UINT16("id_vendor", NvmeCtrl, params.id_vendor, 0),
+> +    DEFINE_PROP_UINT16("id_device", NvmeCtrl, params.id_device, 0),
+> +    DEFINE_PROP_UINT16("id_subsys_vendor", NvmeCtrl,
+> +                                                    params.id_subsys_vendor, 0),
+> +    DEFINE_PROP_UINT16("id_subsys", NvmeCtrl, params.id_subsys, 0),
+> +    DEFINE_PROP("ieee_oui", NvmeCtrl, params.ieee_oui, nvme_prop_ieee,
+> +                                                                      uint32_t),
+>      DEFINE_PROP_END_OF_LIST(),
+>  };
+
+You add properties, not CLI options.  Properties are accessible via CLI
+-device, but also via monitor device_add, qom-set, qom-get.
+
+Please rephrase your commit message like "Add properties for".
 
 
