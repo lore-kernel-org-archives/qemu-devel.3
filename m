@@ -4,85 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E59FC25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 18:17:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 622F6C25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 18:23:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6aEU-0003JM-FC; Mon, 13 May 2024 14:17:06 -0400
+	id 1s6aK3-0005Mp-PO; Mon, 13 May 2024 14:22:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1s6aEC-0003IA-BI
- for qemu-devel@nongnu.org; Mon, 13 May 2024 14:16:51 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1s6aE7-0008N0-K5
- for qemu-devel@nongnu.org; Mon, 13 May 2024 14:16:45 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-1ee42b97b32so37546005ad.2
- for <qemu-devel@nongnu.org>; Mon, 13 May 2024 11:16:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715624200; x=1716229000; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=IyfEN31ifLD4bI2m0rA2lacVq0HAqkLdbqYZAXv5wPk=;
- b=sMo1Td8Dq4N1WcnKWmNi3vLpM8Fv67ddfR8EGUycNOlGrU1Unsr5IHCz27dq+qRqY+
- 2z23yH+mPYPSF4dXKLbbl/7ZVh8rTH8h69i77V4yZ2GTkMdo+Yzl3yEyiyZ6jLk4vxxc
- zedCHOsphyb6UYs848xFHiTUh+YK1g9rnV2h+KFq2NvFK1TaNDaBBQ2/gRspNSq0aRqX
- o6CEUtHs5gy/yXTun6WGIex3XTuC40QdWUQjk/fFOwRLNOsmv9XeiXgzqKTZKoJ9aRnN
- STUTX8dvtq+jDL2zGx4VEDUzscg8A4wKFsNGp8CCV4frvePZC18pf5fY4mrLt8VYjXHe
- IaPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715624200; x=1716229000;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IyfEN31ifLD4bI2m0rA2lacVq0HAqkLdbqYZAXv5wPk=;
- b=wXbYi9zTOqBY3LWr/cjblQK5o+IAVXtOFQpxXKF+u3SCJ7kdb+KmfoMoMAyYphkmlM
- 4iHyVlL5gy4FDE2TVv3Q9TV13IwxSi4wM5XJtOK0ufeErKqqOMoinTmBUpE2zyHZ5Zmc
- auBh2hdbPVfkqNXI/Oa8cTMFNb/3QEBpf69b0aGkapDf7gMUQTEwQ/Yza0eInou4Ma0G
- wMBReiWU8JRObj9iEAn+WHVQc0jqNjt/hRNkvKOEatAZEm7R0owVZW/5s+piY4NG0EOe
- 0UIeTkOJAP2lYtFjAiaXc2G3yhRi8rVvO3/r4mz+gQmZ/ZZbEpYJITeg4RXwRupIxyA1
- mpzA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV9L6g+mT5ep5xe4KX7Kv6OuzfPn89zQWK9rmLSEJ9i6uTl+Q2iDughuk0p9mU4R33Faea/eKLlSwEjqPS1hcrXdKX0DKU=
-X-Gm-Message-State: AOJu0Yx8p2txIVAqNI8KtFKltEiHc7Oe7Iv0isWsc/yHztjrWlAc5KiF
- 8ITAnv6fAheEmqwuFCJxS4+eSdkrVoHj9ZL08+CSF4TYEE2XURHeg+a1pchkgG4=
-X-Google-Smtp-Source: AGHT+IHXyzOyt7cr+cnMnVrfqbL2wVBUV6i9msSvZVWsY3ScM1D/w7oVtwKvH1KOlbehhgG21EUNrg==
-X-Received: by 2002:a17:903:22c1:b0:1ee:b490:2855 with SMTP id
- d9443c01a7336-1ef43d18600mr144093885ad.25.1715624199999; 
- Mon, 13 May 2024 11:16:39 -0700 (PDT)
-Received: from ?IPV6:2604:3d08:9384:1d00::ecd0? ([2604:3d08:9384:1d00::ecd0])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ef0bf31229sm82085515ad.138.2024.05.13.11.16.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 May 2024 11:16:39 -0700 (PDT)
-Message-ID: <93475b5b-10ee-4d7a-9736-c838143bc8e4@linaro.org>
-Date: Mon, 13 May 2024 11:16:38 -0700
+ (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
+ id 1s6aK1-0005MU-3d
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 14:22:49 -0400
+Received: from mx0a-00190b01.pphosted.com ([67.231.149.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
+ id 1s6aJy-000119-Em
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 14:22:48 -0400
+Received: from pps.filterd (m0409408.ppops.net [127.0.0.1])
+ by m0409408.ppops.net-00190b01. (8.18.1.2/8.18.1.2) with ESMTP id
+ 44DHnJhH018155; Mon, 13 May 2024 19:22:41 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=
+ content-type:message-id:date:mime-version:subject:to:cc
+ :references:from:in-reply-to; s=jan2016.eng; bh=XLkBaHlBLk0/kTHb
+ 3/YbIwZy+/LBMQqFTyeWYwReTUI=; b=hTX7HBBGilHOEFnUuvzIRCcvcqOhqdRo
+ MnrPuzmPEzLH/Q4AfPUwJFssxFesy2QAGjhcIjUTKS7XcLo9dhAtDD67xRG27kXJ
+ EaYFFM08gFxohihv9yZ8669r0qTmE3rVhTKqEA4yL2mD2qY8v/qMQWzIJcU9nCUI
+ 70vjk1dKRWZQjlnk7EmHfQfuTgeP70xYrE9FJa29HkGd7pVR+4O2Hgz6ugpDbGLw
+ bL3M1X9SCC1g0nvsaR199gKzZLt09ZRqbJNm2iYfo+FroPSrvGDciLfmjBoVYXvq
+ 24K4ZkNbyYzli3Rb4NquODOf35bOyA0pgV3I+5IW7jwzF3FDpUPChQ==
+Received: from prod-mail-ppoint1 (prod-mail-ppoint1.akamai.com [184.51.33.18]
+ (may be forged))
+ by m0409408.ppops.net-00190b01. (PPS) with ESMTPS id 3y2kkkb26u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 13 May 2024 19:22:40 +0100 (BST)
+Received: from pps.filterd (prod-mail-ppoint1.akamai.com [127.0.0.1])
+ by prod-mail-ppoint1.akamai.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 44DEwwPf026109; Mon, 13 May 2024 14:22:39 -0400
+Received: from prod-mail-relay11.akamai.com ([172.27.118.250])
+ by prod-mail-ppoint1.akamai.com (PPS) with ESMTP id 3y240xx7rq-1;
+ Mon, 13 May 2024 14:22:38 -0400
+Received: from [100.64.0.1] (prod-aoa-csiteclt14.bos01.corp.akamai.com
+ [172.27.97.51])
+ by prod-mail-relay11.akamai.com (Postfix) with ESMTP id 019B93338A;
+ Mon, 13 May 2024 18:22:36 +0000 (GMT)
+Content-Type: multipart/alternative;
+ boundary="------------XQK7VD1l8l1z0ImYdIwhtVIt"
+Message-ID: <f855963e-b7dd-4ce8-89dc-dfaa87e896c4@akamai.com>
+Date: Mon, 13 May 2024 13:22:36 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 13/33] plugins: Use DisasContextBase for
- qemu_plugin_insn_haddr
+Subject: CPR/liveupdate: test results using prior bug fix
+To: peterx@redhat.com, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Jason Wang <jasowang@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>,
+ "Hunt, Joshua" <johunt@akamai.com>
+References: <20240228051315.400759-1-peterx@redhat.com>
+ <20240228051315.400759-21-peterx@redhat.com>
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20240424233131.988727-1-richard.henderson@linaro.org>
- <20240424233131.988727-14-richard.henderson@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20240424233131.988727-14-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Michael Galaxy <mgalaxy@akamai.com>
+In-Reply-To: <20240228051315.400759-21-peterx@redhat.com>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-13_12,2024-05-10_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ mlxlogscore=999
+ phishscore=0 bulkscore=0 spamscore=0 suspectscore=0 mlxscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2405010000 definitions=main-2405130122
+X-Proofpoint-ORIG-GUID: tu2uNo625_XZ1qzL17_zi07G8YRkM5_Z
+X-Proofpoint-GUID: tu2uNo625_XZ1qzL17_zi07G8YRkM5_Z
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-13_12,2024-05-10_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
+ priorityscore=1501 bulkscore=0
+ malwarescore=0 lowpriorityscore=0 suspectscore=0 spamscore=0 clxscore=1011
+ adultscore=0 impostorscore=0 mlxscore=0 mlxlogscore=999 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405010000
+ definitions=main-2405130123
+Received-SPF: pass client-ip=67.231.149.131; envelope-from=mgalaxy@akamai.com;
+ helo=mx0a-00190b01.pphosted.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,113 +116,438 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/24/24 16:31, Richard Henderson wrote:
-> We can delay the computation of haddr until the plugin
-> actually requests it.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   include/qemu/plugin.h  |  4 ----
->   accel/tcg/plugin-gen.c | 20 --------------------
->   plugins/api.c          | 25 ++++++++++++++++++++++++-
->   3 files changed, 24 insertions(+), 25 deletions(-)
-> 
-> diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
-> index 03081be543..3db0e75d16 100644
-> --- a/include/qemu/plugin.h
-> +++ b/include/qemu/plugin.h
-> @@ -98,7 +98,6 @@ struct qemu_plugin_dyn_cb {
->   /* Internal context for instrumenting an instruction */
->   struct qemu_plugin_insn {
->       uint64_t vaddr;
-> -    void *haddr;
->       GArray *insn_cbs;
->       GArray *mem_cbs;
->       uint8_t len;
-> @@ -119,9 +118,6 @@ struct qemu_plugin_tb {
->       GPtrArray *insns;
->       size_t n;
->       uint64_t vaddr;
-> -    uint64_t vaddr2;
-> -    void *haddr1;
-> -    void *haddr2;
->   
->       /* if set, the TB calls helpers that might access guest memory */
->       bool mem_helper;
-> diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
-> index a4656859c6..b036773d3c 100644
-> --- a/accel/tcg/plugin-gen.c
-> +++ b/accel/tcg/plugin-gen.c
-> @@ -319,9 +319,6 @@ bool plugin_gen_tb_start(CPUState *cpu, const DisasContextBase *db)
->           ret = true;
->   
->           ptb->vaddr = db->pc_first;
-> -        ptb->vaddr2 = -1;
-> -        ptb->haddr1 = db->host_addr[0];
-> -        ptb->haddr2 = NULL;
->           ptb->mem_helper = false;
->   
->           tcg_gen_plugin_cb(PLUGIN_GEN_FROM_TB);
-> @@ -363,23 +360,6 @@ void plugin_gen_insn_start(CPUState *cpu, const DisasContextBase *db)
->       pc = db->pc_next;
->       insn->vaddr = pc;
->   
-> -    /*
-> -     * Detect page crossing to get the new host address.
-> -     * Note that we skip this when haddr1 == NULL, e.g. when we're
-> -     * fetching instructions from a region not backed by RAM.
-> -     */
-> -    if (ptb->haddr1 == NULL) {
-> -        insn->haddr = NULL;
-> -    } else if (is_same_page(db, db->pc_next)) {
-> -        insn->haddr = ptb->haddr1 + pc - ptb->vaddr;
-> -    } else {
-> -        if (ptb->vaddr2 == -1) {
-> -            ptb->vaddr2 = TARGET_PAGE_ALIGN(db->pc_first);
-> -            get_page_addr_code_hostp(cpu_env(cpu), ptb->vaddr2, &ptb->haddr2);
-> -        }
-> -        insn->haddr = ptb->haddr2 + pc - ptb->vaddr2;
-> -    }
-> -
->       tcg_gen_plugin_cb(PLUGIN_GEN_FROM_INSN);
->   }
->   
-> diff --git a/plugins/api.c b/plugins/api.c
-> index 39895a1cb1..4b6690c7d6 100644
-> --- a/plugins/api.c
-> +++ b/plugins/api.c
-> @@ -242,7 +242,30 @@ uint64_t qemu_plugin_insn_vaddr(const struct qemu_plugin_insn *insn)
->   
->   void *qemu_plugin_insn_haddr(const struct qemu_plugin_insn *insn)
->   {
-> -    return insn->haddr;
-> +    const DisasContextBase *db = tcg_ctx->plugin_db;
-> +    vaddr page0_last = db->pc_first | ~TARGET_PAGE_MASK;
-> +
-> +    if (db->fake_insn) {
-> +        return NULL;
-> +    }
-> +
-> +    /*
-> +     * ??? The return value is not intended for use of host memory,
-> +     * but as a proxy for address space and physical address.
-> +     * Thus we are only interested in the first byte and do not
-> +     * care about spanning pages.
-> +     */
-> +    if (insn->vaddr <= page0_last) {
-> +        if (db->host_addr[0] == NULL) {
-> +            return NULL;
-> +        }
-> +        return db->host_addr[0] + insn->vaddr - db->pc_first;
-> +    } else {
-> +        if (db->host_addr[1] == NULL) {
-> +            return NULL;
-> +        }
-> +        return db->host_addr[1] + insn->vaddr - (page0_last + 1);
-> +    }
->   }
->   
->   char *qemu_plugin_insn_disas(const struct qemu_plugin_insn *insn)
+This is a multi-part message in MIME format.
+--------------XQK7VD1l8l1z0ImYdIwhtVIt
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Hi Steve,
+
+We found that this specific change in particular ("migration: stop vm 
+for cpr") fixes a bug that we've identified in testing back-to-back live 
+updates in a lab environment.
+
+More specifically, *without* this change (which is not available in 
+8.2.2, but *is* available in 9.0.0) causes the metadata save file to be 
+corrupted when doing live updates one after another. Typically we see a 
+corrupted save file somewhere in between 20 and 30 live updates and 
+while doing a git bisect, we found that this change makes the problem go 
+away.
+
+Were you aware? Is there any plan in place to cherry pick this for 
+8.2.3, perhaps or a plan to release 8.2.3 at some point?
+
+Here are some examples of how the bug manifests in different locations 
+of the QEMU metadata save file:
+
+2024-04-26T13:28:53Z qemu-system-x86_64: Failed to load mtrr_var:base
+2024-04-26T13:28:53Z qemu-system-x86_64: Failed to load cpu:env.mtrr_var
+2024-04-26T13:28:53Z qemu-system-x86_64: error while loading state for instance 0x1b of device 'cpu'
+2024-04-26T13:28:53Z qemu-system-x86_64: load of migration failed: Input/output error
+
+And another:
+
+2024-04-17T16:09:47Z qemu-system-x86_64: check_section_footer: Read section footer failed: -5
+2024-04-17T16:09:47Z qemu-system-x86_64: load of migration failed: Invalid argument
+
+And another:
+
+2024-04-30T21:53:29Z qemu-system-x86_64: Unable to read ID string for section 163
+2024-04-30T21:53:29Z qemu-system-x86_64: load of migration failed: Invalid argument
+
+And another:
+
+2024-05-01T16:01:44Z qemu-system-x86_64: Unable to read ID string for section 164
+2024-05-01T16:01:44Z qemu-system-x86_64: load of migration failed: Invalid argument
+  
+
+As you can see, they occur quite randomly, but generally it takes at 
+least 20-30+ live updates before the problem occurs.
+
+- Michael
+
+On 2/27/24 23:13, peterx@redhat.com wrote:
+> From: Steve Sistare<steven.sistare@oracle.com>
+>
+> When migration for cpr is initiated, stop the vm and set state
+> RUN_STATE_FINISH_MIGRATE before ram is saved.  This eliminates the
+> possibility of ram and device state being out of sync, and guarantees
+> that a guest in the suspended state remains suspended, because qmp_cont
+> rejects a cont command in the RUN_STATE_FINISH_MIGRATE state.
+>
+> Signed-off-by: Steve Sistare<steven.sistare@oracle.com>
+> Reviewed-by: Peter Xu<peterx@redhat.com>
+> Link:https://urldefense.com/v3/__https://lore.kernel.org/r/1708622920-68779-11-git-send-email-steven.sistare@oracle.com__;!!GjvTz_vk!QLsFOCX-x2U9bzAo98SdidKlomHrmf_t0UmQKtgudoIcaDVoAJOPm39ZqaNP_nT5I8QqVfSgwhDZmg$  
+> Signed-off-by: Peter Xu<peterx@redhat.com>
+> ---
+>   include/migration/misc.h |  1 +
+>   migration/migration.h    |  2 --
+>   migration/migration.c    | 51 ++++++++++++++++++++++++----------------
+>   3 files changed, 32 insertions(+), 22 deletions(-)
+>
+> diff --git a/include/migration/misc.h b/include/migration/misc.h
+> index e4933b815b..5d1aa593ed 100644
+> --- a/include/migration/misc.h
+> +++ b/include/migration/misc.h
+> @@ -60,6 +60,7 @@ void migration_object_init(void);
+>   void migration_shutdown(void);
+>   bool migration_is_idle(void);
+>   bool migration_is_active(MigrationState *);
+> +bool migrate_mode_is_cpr(MigrationState *);
+>   
+>   typedef enum MigrationEventType {
+>       MIG_EVENT_PRECOPY_SETUP,
+> diff --git a/migration/migration.h b/migration/migration.h
+> index aef8afbe1f..65c0b61cbd 100644
+> --- a/migration/migration.h
+> +++ b/migration/migration.h
+> @@ -541,6 +541,4 @@ int migration_rp_wait(MigrationState *s);
+>    */
+>   void migration_rp_kick(MigrationState *s);
+>   
+> -int migration_stop_vm(RunState state);
+> -
+>   #endif
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 37c836b0b0..90a90947fb 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -167,11 +167,19 @@ static gint page_request_addr_cmp(gconstpointer ap, gconstpointer bp)
+>       return (a > b) - (a < b);
+>   }
+>   
+> -int migration_stop_vm(RunState state)
+> +static int migration_stop_vm(MigrationState *s, RunState state)
+>   {
+> -    int ret = vm_stop_force_state(state);
+> +    int ret;
+> +
+> +    migration_downtime_start(s);
+> +
+> +    s->vm_old_state = runstate_get();
+> +    global_state_store();
+> +
+> +    ret = vm_stop_force_state(state);
+>   
+>       trace_vmstate_downtime_checkpoint("src-vm-stopped");
+> +    trace_migration_completion_vm_stop(ret);
+>   
+>       return ret;
+>   }
+> @@ -1602,6 +1610,11 @@ bool migration_is_active(MigrationState *s)
+>               s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE);
+>   }
+>   
+> +bool migrate_mode_is_cpr(MigrationState *s)
+> +{
+> +    return s->parameters.mode == MIG_MODE_CPR_REBOOT;
+> +}
+> +
+>   int migrate_init(MigrationState *s, Error **errp)
+>   {
+>       int ret;
+> @@ -2454,10 +2467,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+>       bql_lock();
+>       trace_postcopy_start_set_run();
+>   
+> -    migration_downtime_start(ms);
+> -
+> -    global_state_store();
+> -    ret = migration_stop_vm(RUN_STATE_FINISH_MIGRATE);
+> +    ret = migration_stop_vm(ms, RUN_STATE_FINISH_MIGRATE);
+>       if (ret < 0) {
+>           goto fail;
+>       }
+> @@ -2652,15 +2662,12 @@ static int migration_completion_precopy(MigrationState *s,
+>       int ret;
+>   
+>       bql_lock();
+> -    migration_downtime_start(s);
+> -
+> -    s->vm_old_state = runstate_get();
+> -    global_state_store();
+>   
+> -    ret = migration_stop_vm(RUN_STATE_FINISH_MIGRATE);
+> -    trace_migration_completion_vm_stop(ret);
+> -    if (ret < 0) {
+> -        goto out_unlock;
+> +    if (!migrate_mode_is_cpr(s)) {
+> +        ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
+> +        if (ret < 0) {
+> +            goto out_unlock;
+> +        }
+>       }
+>   
+>       ret = migration_maybe_pause(s, current_active_state,
+> @@ -3500,15 +3507,10 @@ static void *bg_migration_thread(void *opaque)
+>       s->setup_time = qemu_clock_get_ms(QEMU_CLOCK_HOST) - setup_start;
+>   
+>       trace_migration_thread_setup_complete();
+> -    migration_downtime_start(s);
+>   
+>       bql_lock();
+>   
+> -    s->vm_old_state = runstate_get();
+> -
+> -    global_state_store();
+> -    /* Forcibly stop VM before saving state of vCPUs and devices */
+> -    if (migration_stop_vm(RUN_STATE_PAUSED)) {
+> +    if (migration_stop_vm(s, RUN_STATE_PAUSED)) {
+>           goto fail;
+>       }
+>       /*
+> @@ -3584,6 +3586,7 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
+>       Error *local_err = NULL;
+>       uint64_t rate_limit;
+>       bool resume = s->state == MIGRATION_STATUS_POSTCOPY_PAUSED;
+> +    int ret;
+>   
+>       /*
+>        * If there's a previous error, free it and prepare for another one.
+> @@ -3655,6 +3658,14 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
+>           return;
+>       }
+>   
+> +    if (migrate_mode_is_cpr(s)) {
+> +        ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
+> +        if (ret < 0) {
+> +            error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
+> +            goto fail;
+> +        }
+> +    }
+> +
+>       if (migrate_background_snapshot()) {
+>           qemu_thread_create(&s->thread, "bg_snapshot",
+>                   bg_migration_thread, s, QEMU_THREAD_JOINABLE);
+--------------XQK7VD1l8l1z0ImYdIwhtVIt
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>Hi Steve,<br>
+      <br>
+      We found that this specific change in particular ("migration: stop
+      vm for cpr") fixes a bug that we've identified in testing
+      back-to-back live updates in a lab environment.<br>
+      <br>
+      More specifically, *without* this change (which is not available
+      in 8.2.2, but *is* available in 9.0.0) causes the metadata save
+      file to be corrupted when doing live updates one after another.
+      Typically we see a corrupted save file somewhere in between 20 and
+      30 live updates and while doing a git bisect, we found that this
+      change makes the problem go away.<br>
+      <br>
+      Were you aware? Is there any plan in place to cherry pick this for
+      8.2.3, perhaps or a plan to release 8.2.3 at some point?<br>
+      <br>
+      Here are some examples of how the bug manifests in different
+      locations of the QEMU metadata save file:<br>
+      <br>
+    </p>
+    <div class="preformatted panel" style="border-width: 1px;">
+      <div class="preformattedContent panelContent">
+        <pre>2024-04-26T13:28:53Z qemu-system-x86_64: Failed to load mtrr_var:base
+2024-04-26T13:28:53Z qemu-system-x86_64: Failed to load cpu:env.mtrr_var
+2024-04-26T13:28:53Z qemu-system-x86_64: error while loading state for instance 0x1b of device 'cpu'
+2024-04-26T13:28:53Z qemu-system-x86_64: load of migration failed: Input/output error </pre>
+      </div>
+    </div>
+    <p>And another:<br>
+    </p>
+    <div class="preformatted panel" style="border-width: 1px;">
+      <div class="preformattedContent panelContent">
+        <pre>2024-04-17T16:09:47Z qemu-system-x86_64: check_section_footer: Read section footer failed: -5
+2024-04-17T16:09:47Z qemu-system-x86_64: load of migration failed: Invalid argument </pre>
+      </div>
+    </div>
+    <p>And another:<br>
+    </p>
+    <div class="preformatted panel" style="border-width: 1px;">
+      <div class="preformattedContent panelContent">
+        <pre>2024-04-30T21:53:29Z qemu-system-x86_64: Unable to read ID string for section 163
+2024-04-30T21:53:29Z qemu-system-x86_64: load of migration failed: Invalid argument </pre>
+      </div>
+    </div>
+    <p>And another:<br>
+    </p>
+    <div class="preformatted panel" style="border-width: 1px;">
+      <div class="preformattedContent panelContent">
+        <pre>2024-05-01T16:01:44Z qemu-system-x86_64: Unable to read ID string for section 164
+2024-05-01T16:01:44Z qemu-system-x86_64: load of migration failed: Invalid argument
+ </pre>
+      </div>
+    </div>
+    <p>As you can see, they occur quite randomly, but generally it takes
+      at least 20-30+ live updates before the problem occurs.<br>
+      <br>
+      - Michael<br>
+    </p>
+    <div class="moz-cite-prefix">On 2/27/24 23:13, <a class="moz-txt-link-abbreviated" href="mailto:peterx@redhat.com">peterx@redhat.com</a>
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:20240228051315.400759-21-peterx@redhat.com">
+      <pre class="moz-quote-pre" wrap="">From: Steve Sistare <a class="moz-txt-link-rfc2396E" href="mailto:steven.sistare@oracle.com">&lt;steven.sistare@oracle.com&gt;</a>
+
+When migration for cpr is initiated, stop the vm and set state
+RUN_STATE_FINISH_MIGRATE before ram is saved.  This eliminates the
+possibility of ram and device state being out of sync, and guarantees
+that a guest in the suspended state remains suspended, because qmp_cont
+rejects a cont command in the RUN_STATE_FINISH_MIGRATE state.
+
+Signed-off-by: Steve Sistare <a class="moz-txt-link-rfc2396E" href="mailto:steven.sistare@oracle.com">&lt;steven.sistare@oracle.com&gt;</a>
+Reviewed-by: Peter Xu <a class="moz-txt-link-rfc2396E" href="mailto:peterx@redhat.com">&lt;peterx@redhat.com&gt;</a>
+Link: <a class="moz-txt-link-freetext" href="https://urldefense.com/v3/__https://lore.kernel.org/r/1708622920-68779-11-git-send-email-steven.sistare@oracle.com__;!!GjvTz_vk!QLsFOCX-x2U9bzAo98SdidKlomHrmf_t0UmQKtgudoIcaDVoAJOPm39ZqaNP_nT5I8QqVfSgwhDZmg$">https://urldefense.com/v3/__https://lore.kernel.org/r/1708622920-68779-11-git-send-email-steven.sistare@oracle.com__;!!GjvTz_vk!QLsFOCX-x2U9bzAo98SdidKlomHrmf_t0UmQKtgudoIcaDVoAJOPm39ZqaNP_nT5I8QqVfSgwhDZmg$</a> 
+Signed-off-by: Peter Xu <a class="moz-txt-link-rfc2396E" href="mailto:peterx@redhat.com">&lt;peterx@redhat.com&gt;</a>
+---
+ include/migration/misc.h |  1 +
+ migration/migration.h    |  2 --
+ migration/migration.c    | 51 ++++++++++++++++++++++++----------------
+ 3 files changed, 32 insertions(+), 22 deletions(-)
+
+diff --git a/include/migration/misc.h b/include/migration/misc.h
+index e4933b815b..5d1aa593ed 100644
+--- a/include/migration/misc.h
++++ b/include/migration/misc.h
+@@ -60,6 +60,7 @@ void migration_object_init(void);
+ void migration_shutdown(void);
+ bool migration_is_idle(void);
+ bool migration_is_active(MigrationState *);
++bool migrate_mode_is_cpr(MigrationState *);
+ 
+ typedef enum MigrationEventType {
+     MIG_EVENT_PRECOPY_SETUP,
+diff --git a/migration/migration.h b/migration/migration.h
+index aef8afbe1f..65c0b61cbd 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -541,6 +541,4 @@ int migration_rp_wait(MigrationState *s);
+  */
+ void migration_rp_kick(MigrationState *s);
+ 
+-int migration_stop_vm(RunState state);
+-
+ #endif
+diff --git a/migration/migration.c b/migration/migration.c
+index 37c836b0b0..90a90947fb 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -167,11 +167,19 @@ static gint page_request_addr_cmp(gconstpointer ap, gconstpointer bp)
+     return (a &gt; b) - (a &lt; b);
+ }
+ 
+-int migration_stop_vm(RunState state)
++static int migration_stop_vm(MigrationState *s, RunState state)
+ {
+-    int ret = vm_stop_force_state(state);
++    int ret;
++
++    migration_downtime_start(s);
++
++    s-&gt;vm_old_state = runstate_get();
++    global_state_store();
++
++    ret = vm_stop_force_state(state);
+ 
+     trace_vmstate_downtime_checkpoint("src-vm-stopped");
++    trace_migration_completion_vm_stop(ret);
+ 
+     return ret;
+ }
+@@ -1602,6 +1610,11 @@ bool migration_is_active(MigrationState *s)
+             s-&gt;state == MIGRATION_STATUS_POSTCOPY_ACTIVE);
+ }
+ 
++bool migrate_mode_is_cpr(MigrationState *s)
++{
++    return s-&gt;parameters.mode == MIG_MODE_CPR_REBOOT;
++}
++
+ int migrate_init(MigrationState *s, Error **errp)
+ {
+     int ret;
+@@ -2454,10 +2467,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+     bql_lock();
+     trace_postcopy_start_set_run();
+ 
+-    migration_downtime_start(ms);
+-
+-    global_state_store();
+-    ret = migration_stop_vm(RUN_STATE_FINISH_MIGRATE);
++    ret = migration_stop_vm(ms, RUN_STATE_FINISH_MIGRATE);
+     if (ret &lt; 0) {
+         goto fail;
+     }
+@@ -2652,15 +2662,12 @@ static int migration_completion_precopy(MigrationState *s,
+     int ret;
+ 
+     bql_lock();
+-    migration_downtime_start(s);
+-
+-    s-&gt;vm_old_state = runstate_get();
+-    global_state_store();
+ 
+-    ret = migration_stop_vm(RUN_STATE_FINISH_MIGRATE);
+-    trace_migration_completion_vm_stop(ret);
+-    if (ret &lt; 0) {
+-        goto out_unlock;
++    if (!migrate_mode_is_cpr(s)) {
++        ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
++        if (ret &lt; 0) {
++            goto out_unlock;
++        }
+     }
+ 
+     ret = migration_maybe_pause(s, current_active_state,
+@@ -3500,15 +3507,10 @@ static void *bg_migration_thread(void *opaque)
+     s-&gt;setup_time = qemu_clock_get_ms(QEMU_CLOCK_HOST) - setup_start;
+ 
+     trace_migration_thread_setup_complete();
+-    migration_downtime_start(s);
+ 
+     bql_lock();
+ 
+-    s-&gt;vm_old_state = runstate_get();
+-
+-    global_state_store();
+-    /* Forcibly stop VM before saving state of vCPUs and devices */
+-    if (migration_stop_vm(RUN_STATE_PAUSED)) {
++    if (migration_stop_vm(s, RUN_STATE_PAUSED)) {
+         goto fail;
+     }
+     /*
+@@ -3584,6 +3586,7 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
+     Error *local_err = NULL;
+     uint64_t rate_limit;
+     bool resume = s-&gt;state == MIGRATION_STATUS_POSTCOPY_PAUSED;
++    int ret;
+ 
+     /*
+      * If there's a previous error, free it and prepare for another one.
+@@ -3655,6 +3658,14 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
+         return;
+     }
+ 
++    if (migrate_mode_is_cpr(s)) {
++        ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
++        if (ret &lt; 0) {
++            error_setg(&amp;local_err, "migration_stop_vm failed, error %d", -ret);
++            goto fail;
++        }
++    }
++
+     if (migrate_background_snapshot()) {
+         qemu_thread_create(&amp;s-&gt;thread, "bg_snapshot",
+                 bg_migration_thread, s, QEMU_THREAD_JOINABLE);
+</pre>
+    </blockquote>
+  </body>
+</html>
+
+--------------XQK7VD1l8l1z0ImYdIwhtVIt--
 
