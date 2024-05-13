@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EAB0C25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 07:50:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B708C25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 07:50:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6QPc-00031E-6r; Mon, 13 May 2024 03:47:59 -0400
+	id 1s6QR8-00062q-OE; Mon, 13 May 2024 03:49:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s6QPI-0002q9-1e
- for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:36 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1s6QPU-0002wS-AQ
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:48 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s6QPG-0001N0-3N
- for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:35 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-41fc5645bb1so30505765e9.1
- for <qemu-devel@nongnu.org>; Mon, 13 May 2024 00:47:33 -0700 (PDT)
+ id 1s6QPP-0001Pn-S3
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:48 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-420180b5897so2669745e9.3
+ for <qemu-devel@nongnu.org>; Mon, 13 May 2024 00:47:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715586453; x=1716191253; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715586462; x=1716191262; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fgExMg673JAx2cq5L5XNhe8VfWiBmskFq1MitzRUfrY=;
- b=TMPO7lsqoLJn4EcjGPKXwK+eqkDFIWwPbc1Q4MwC4vt251XtQ58Wg2i9QsIUxv/VZT
- QAwTOhrIpzjgUCILWBiLYogpMiNNaFqt3MjWDeQPIBQpO1wOL3k+UXLRIlI0igdvtpmo
- D5bmo5b5ugOfhh1O4LLsTVQgztS24ohrJiFgk3UlnADQeWMqdt4nNZHiIOLRz8EzDeia
- ponZTjalW8dhzXnlc1kiOh7T5b5+pW9WJS37HyFl7ugyfEdJYXdXTivB+4uF1YKp4ujX
- 3T6Jm5/NkDFjGe39vBmtjC0GQnbKYoS731JXd27xwZ9kXQIgK/z3aSObZ5mLhZrH4g8Z
- uV1A==
+ bh=p6q1brGiaM7JKUk74R+0kS4pUgiSskJRKzJ4QnaV9A0=;
+ b=AXHlXLproRTEH+3UGGzfHfGdp0/UmNVJ6GNBU2uoZFz7oGSz6ULG0/NA5IBZ56j/VF
+ ru29WumqMH2Oqzfjs89q1Je/ZUdzruo3mf5K7G/4pVfolSSUaSSNv0Tbwz6POJiRBTtF
+ JvTYeM0d1cgcQ8sh+84AaaiWx7YAURN16jFFDBK3p8DU8TAU4O8nemP7b6gXq6KtiLF9
+ BcVMuZ2EztgDint53YRDeSCXP/nfpxPIhhOkpW+D4hYmDO1h6NClYhTfTWgtp8KV/W1w
+ LA5oREET8+r/NYlAFWihZnFkySPbEjwb+Q+9SryRoPJlI8vjIiFIMxt9Dzq31S2KMGE8
+ cVOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715586453; x=1716191253;
+ d=1e100.net; s=20230601; t=1715586462; x=1716191262;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fgExMg673JAx2cq5L5XNhe8VfWiBmskFq1MitzRUfrY=;
- b=R8dH01BreP7V0p5DKazWiXeJFaPhwpM9BVCyUdVO/Ban9bWJbZB13XJJvcSr/Y+df7
- lP6gWwCeK3kO10yLDM3Rl6oMPmEOHndQOhhrNB87e8Zw6GZb5S82+VlrznLRc0bjOE4j
- TRv4pjBV4utWnEnXZ5UoGV5Nt2KxAAg3AVQOHDq3Kuby4NvKmuUL9trZyCFG8dbMzDN0
- PLjdAKHJLu5gLU59ZdWDXZfoAyibmmjm9rLU10h2muRTnZkZSnQNvHUCKhVGdt3TaF5c
- ujlG1fIF3Ocpg3Ahzhyr47ZT51bMag8sUvvWmDBq/Ehv8QbNwKlP1E1w0AYZKFvWrfd8
- mb2Q==
-X-Gm-Message-State: AOJu0YwGCfxctxWKTbQ+2os3Zq5HyFOq0ZuRyBLClFRzG4P/YMBCveU1
- o45Oz8efe5iC+22ysHBlYyor7DE4RJWaA0jGFvVQ4GVm2AzipUzUsXNrO7vLueqQmQUXb3A8W3I
- qumk=
-X-Google-Smtp-Source: AGHT+IGwnpDU2OZy7V9x7Fnoo7ALYTPmXigXTchhdFsqm8lOFYWVlPNsEGP/njDEtXaaljW8IWAPrQ==
-X-Received: by 2002:a05:600c:4688:b0:420:e63:5b2b with SMTP id
- 5b1f17b1804b1-4200e635cdbmr45513355e9.18.1715586452679; 
- Mon, 13 May 2024 00:47:32 -0700 (PDT)
+ bh=p6q1brGiaM7JKUk74R+0kS4pUgiSskJRKzJ4QnaV9A0=;
+ b=DelDKcTh6cHkd9k+AUPKKHBkdX2Ojz3onD/Ud6MCPouTktMsWpDWJMAcPD8ObqKt4S
+ s7v/dkYwnpkNzd3FBIQ5fqi6axXTyKSylTH7TvRd0yb4K2MRri5WXH082Pnj8tYrizy/
+ 1TA4bPHawjPpLtTiN4+clOmASNkvGqm1XSJo4OR2Q6fomnp6xp3//WRV9GUY1ZxC6zwl
+ V8EeTV4VqjeNOlx+O7p91I/dck9JiVC+VpxCDj0EMvTO4x3EDVfUo2NF0Y0c2EE+VMHe
+ tsZNtWXGcJ1QJgzHPfpV5ImrAGyB23bneqf4nMRmGut/DI7anqgLUeSfdlmug8N5KJHA
+ dqqA==
+X-Gm-Message-State: AOJu0Yze9+y9JT0mFpcbFz5Z+P9wmdjG1utZAPY5xyLxfkWQtSWTD/ee
+ z6gvtdgBsTBEF6efzbu09/3FPKbApk4ai0EirivlHS1ZhMaztgwbJcFKc9diI4wr4eXghg19PRd
+ DH7k=
+X-Google-Smtp-Source: AGHT+IFK1501WAGmdx22Fj1xDOZZijUpnuMEoUc2voOLw3XZd7RmKhtuWqb5xw6QeUsosi/HvP4BzA==
+X-Received: by 2002:a05:600c:434a:b0:41b:e55c:8e14 with SMTP id
+ 5b1f17b1804b1-41feaa38a5cmr67251155e9.14.1715586462080; 
+ Mon, 13 May 2024 00:47:42 -0700 (PDT)
 Received: from stoup.. (12.red-213-97-13.staticip.rima-tde.net. [213.97.13.12])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-41fccee9318sm148204765e9.30.2024.05.13.00.47.32
+ 5b1f17b1804b1-41fccee9318sm148204765e9.30.2024.05.13.00.47.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 May 2024 00:47:32 -0700 (PDT)
+ Mon, 13 May 2024 00:47:41 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: deller@gmx.de
-Subject: [PATCH v2 19/45] target/hppa: Rename cond_make_* helpers
-Date: Mon, 13 May 2024 09:46:51 +0200
-Message-Id: <20240513074717.130949-20-richard.henderson@linaro.org>
+Subject: [PATCH v2 32/45] target/hppa: Store full iaoq_f and page offset of
+ iaoq_b in TB
+Date: Mon, 13 May 2024 09:47:04 +0200
+Message-Id: <20240513074717.130949-33-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240513074717.130949-1-richard.henderson@linaro.org>
 References: <20240513074717.130949-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,210 +95,210 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use 'v' for a variable that needs copying, 't' for a temp that
-doesn't need copying, and 'i' for an immediate, and use this
-naming for both arguments of the comparison.  So:
+In preparation for CF_PCREL. store the iaoq_f in 3 parts: high
+bits in cs_base, middle bits in pc, and low bits in priv.
+For iaoq_b, set a bit for either of space or page differing,
+else the page offset.
 
-   cond_make_tmp -> cond_make_tt
-   cond_make_0_tmp -> cond_make_ti
-   cond_make_0 -> cond_make_vi
-   cond_make -> cond_make_vv
-
-Pass 0 explictly, rather than implicitly in the function name.
+Install iaq entries before goto_tb. The change to not record
+the full direct branch difference in TB means that we have to
+store at least iaoq_b before goto_tb.  But we since we'll need
+both updated before goto_tb for CF_PCREL, do that now.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/translate.c | 52 ++++++++++++++++++++---------------------
- 1 file changed, 26 insertions(+), 26 deletions(-)
+ target/hppa/cpu.h       |  2 ++
+ target/hppa/cpu.c       | 72 ++++++++++++++++++-----------------------
+ target/hppa/translate.c | 29 +++++++++--------
+ 3 files changed, 48 insertions(+), 55 deletions(-)
 
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index 5a1e720bb6..1232a4cef2 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -341,6 +341,8 @@ hwaddr hppa_abs_to_phys_pa2_w1(vaddr addr);
+ #define TB_FLAG_SR_SAME     PSW_I
+ #define TB_FLAG_PRIV_SHIFT  8
+ #define TB_FLAG_UNALIGN     0x400
++#define CS_BASE_DIFFPAGE    (1 << 12)
++#define CS_BASE_DIFFSPACE   (1 << 13)
+ 
+ void cpu_get_tb_cpu_state(CPUHPPAState *env, vaddr *pc,
+                           uint64_t *cs_base, uint32_t *pflags);
+diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
+index a007de5521..003af63e20 100644
+--- a/target/hppa/cpu.c
++++ b/target/hppa/cpu.c
+@@ -48,36 +48,43 @@ static vaddr hppa_cpu_get_pc(CPUState *cs)
+ }
+ 
+ void cpu_get_tb_cpu_state(CPUHPPAState *env, vaddr *pc,
+-                          uint64_t *cs_base, uint32_t *pflags)
++                          uint64_t *pcsbase, uint32_t *pflags)
+ {
+     uint32_t flags = env->psw_n * PSW_N;
++    uint64_t cs_base = 0;
++
++    /*
++     * TB lookup assumes that PC contains the complete virtual address.
++     * If we leave space+offset separate, we'll get ITLB misses to an
++     * incomplete virtual address.  This also means that we must separate
++     * out current cpu privilege from the low bits of IAOQ_F.
++     */
++    *pc = hppa_cpu_get_pc(env_cpu(env));
++    flags |= (env->iaoq_f & 3) << TB_FLAG_PRIV_SHIFT;
++
++    if (hppa_is_pa20(env)) {
++        cs_base = env->iaoq_f & MAKE_64BIT_MASK(32, 32);
++    }
++
++    /*
++     * The only really interesting case is if IAQ_Back is on the same page
++     * as IAQ_Front, so that we can use goto_tb between the blocks.  In all
++     * other cases, we'll be ending the TranslationBlock with one insn and
++     * not linking between them.
++     */
++    if (env->iasq_f != env->iasq_b) {
++        cs_base |= CS_BASE_DIFFSPACE;
++    } else if ((env->iaoq_f ^ env->iaoq_b) & TARGET_PAGE_MASK) {
++        cs_base |= CS_BASE_DIFFPAGE;
++    } else {
++        cs_base |= env->iaoq_b & ~TARGET_PAGE_MASK;
++    }
+ 
+-    /* TB lookup assumes that PC contains the complete virtual address.
+-       If we leave space+offset separate, we'll get ITLB misses to an
+-       incomplete virtual address.  This also means that we must separate
+-       out current cpu privilege from the low bits of IAOQ_F.  */
+ #ifdef CONFIG_USER_ONLY
+-    *pc = env->iaoq_f & -4;
+-    *cs_base = env->iaoq_b & -4;
+     flags |= TB_FLAG_UNALIGN * !env_cpu(env)->prctl_unalign_sigbus;
+ #else
+     /* ??? E, T, H, L, B bits need to be here, when implemented.  */
+     flags |= env->psw & (PSW_W | PSW_C | PSW_D | PSW_P);
+-    flags |= (env->iaoq_f & 3) << TB_FLAG_PRIV_SHIFT;
+-
+-    *pc = hppa_cpu_get_pc(env_cpu(env));
+-    *cs_base = env->iasq_f;
+-
+-    /* Insert a difference between IAOQ_B and IAOQ_F within the otherwise zero
+-       low 32-bits of CS_BASE.  This will succeed for all direct branches,
+-       which is the primary case we care about -- using goto_tb within a page.
+-       Failure is indicated by a zero difference.  */
+-    if (env->iasq_f == env->iasq_b) {
+-        target_long diff = env->iaoq_b - env->iaoq_f;
+-        if (diff == (int32_t)diff) {
+-            *cs_base |= (uint32_t)diff;
+-        }
+-    }
+     if ((env->sr[4] == env->sr[5])
+         & (env->sr[4] == env->sr[6])
+         & (env->sr[4] == env->sr[7])) {
+@@ -85,6 +92,7 @@ void cpu_get_tb_cpu_state(CPUHPPAState *env, vaddr *pc,
+     }
+ #endif
+ 
++    *pcsbase = cs_base;
+     *pflags = flags;
+ }
+ 
+@@ -93,25 +101,7 @@ static void hppa_cpu_synchronize_from_tb(CPUState *cs,
+ {
+     HPPACPU *cpu = HPPA_CPU(cs);
+ 
+-    tcg_debug_assert(!tcg_cflags_has(cs, CF_PCREL));
+-
+-#ifdef CONFIG_USER_ONLY
+-    cpu->env.iaoq_f = tb->pc | PRIV_USER;
+-    cpu->env.iaoq_b = tb->cs_base | PRIV_USER;
+-#else
+-    /* Recover the IAOQ values from the GVA + PRIV.  */
+-    uint32_t priv = (tb->flags >> TB_FLAG_PRIV_SHIFT) & 3;
+-    target_ulong cs_base = tb->cs_base;
+-    target_ulong iasq_f = cs_base & ~0xffffffffull;
+-    int32_t diff = cs_base;
+-
+-    cpu->env.iasq_f = iasq_f;
+-    cpu->env.iaoq_f = (tb->pc & ~iasq_f) + priv;
+-    if (diff) {
+-        cpu->env.iaoq_b = cpu->env.iaoq_f + diff;
+-    }
+-#endif
+-
++    /* IAQ is always up-to-date before goto_tb. */
+     cpu->env.psw_n = (tb->flags & PSW_N) != 0;
+ }
+ 
 diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 196297422b..5e32d985c9 100644
+index aad5323a53..67197e98b3 100644
 --- a/target/hppa/translate.c
 +++ b/target/hppa/translate.c
-@@ -345,32 +345,32 @@ static DisasCond cond_make_n(void)
-     };
- }
- 
--static DisasCond cond_make_tmp(TCGCond c, TCGv_i64 a0, TCGv_i64 a1)
-+static DisasCond cond_make_tt(TCGCond c, TCGv_i64 a0, TCGv_i64 a1)
+@@ -769,12 +769,11 @@ static bool use_nullify_skip(DisasContext *ctx)
+ static void gen_goto_tb(DisasContext *ctx, int which,
+                         const DisasIAQE *f, const DisasIAQE *b)
  {
-     assert (c != TCG_COND_NEVER && c != TCG_COND_ALWAYS);
-     return (DisasCond){ .c = c, .a0 = a0, .a1 = a1 };
- }
- 
--static DisasCond cond_make_0_tmp(TCGCond c, TCGv_i64 a0)
-+static DisasCond cond_make_ti(TCGCond c, TCGv_i64 a0, uint64_t imm)
- {
--    return cond_make_tmp(c, a0, tcg_constant_i64(0));
-+    return cond_make_tt(c, a0, tcg_constant_i64(imm));
- }
- 
--static DisasCond cond_make_0(TCGCond c, TCGv_i64 a0)
-+static DisasCond cond_make_vi(TCGCond c, TCGv_i64 a0, uint64_t imm)
- {
-     TCGv_i64 tmp = tcg_temp_new_i64();
-     tcg_gen_mov_i64(tmp, a0);
--    return cond_make_0_tmp(c, tmp);
-+    return cond_make_ti(c, tmp, imm);
- }
- 
--static DisasCond cond_make(TCGCond c, TCGv_i64 a0, TCGv_i64 a1)
-+static DisasCond cond_make_vv(TCGCond c, TCGv_i64 a0, TCGv_i64 a1)
- {
-     TCGv_i64 t0 = tcg_temp_new_i64();
-     TCGv_i64 t1 = tcg_temp_new_i64();
- 
-     tcg_gen_mov_i64(t0, a0);
-     tcg_gen_mov_i64(t1, a1);
--    return cond_make_tmp(c, t0, t1);
-+    return cond_make_tt(c, t0, t1);
- }
- 
- static void cond_free(DisasCond *cond)
-@@ -788,7 +788,7 @@ static DisasCond do_cond(DisasContext *ctx, unsigned cf, bool d,
-             tcg_gen_ext32u_i64(tmp, res);
-             res = tmp;
-         }
--        cond = cond_make_0(TCG_COND_EQ, res);
-+        cond = cond_make_vi(TCG_COND_EQ, res, 0);
-         break;
-     case 2: /* < / >=        (N ^ V / !(N ^ V) */
-         tmp = tcg_temp_new_i64();
-@@ -796,7 +796,7 @@ static DisasCond do_cond(DisasContext *ctx, unsigned cf, bool d,
-         if (!d) {
-             tcg_gen_ext32s_i64(tmp, tmp);
-         }
--        cond = cond_make_0_tmp(TCG_COND_LT, tmp);
-+        cond = cond_make_ti(TCG_COND_LT, tmp, 0);
-         break;
-     case 3: /* <= / >        (N ^ V) | Z / !((N ^ V) | Z) */
-         /*
-@@ -818,10 +818,10 @@ static DisasCond do_cond(DisasContext *ctx, unsigned cf, bool d,
-             tcg_gen_sari_i64(tmp, tmp, 63);
-             tcg_gen_and_i64(tmp, tmp, res);
-         }
--        cond = cond_make_0_tmp(TCG_COND_EQ, tmp);
-+        cond = cond_make_ti(TCG_COND_EQ, tmp, 0);
-         break;
-     case 4: /* NUV / UV      (!UV / UV) */
--        cond = cond_make_0(TCG_COND_EQ, uv);
-+        cond = cond_make_vi(TCG_COND_EQ, uv, 0);
-         break;
-     case 5: /* ZNV / VNZ     (!UV | Z / UV & !Z) */
-         tmp = tcg_temp_new_i64();
-@@ -829,7 +829,7 @@ static DisasCond do_cond(DisasContext *ctx, unsigned cf, bool d,
-         if (!d) {
-             tcg_gen_ext32u_i64(tmp, tmp);
-         }
--        cond = cond_make_0_tmp(TCG_COND_EQ, tmp);
-+        cond = cond_make_ti(TCG_COND_EQ, tmp, 0);
-         break;
-     case 6: /* SV / NSV      (V / !V) */
-         if (!d) {
-@@ -837,12 +837,12 @@ static DisasCond do_cond(DisasContext *ctx, unsigned cf, bool d,
-             tcg_gen_ext32s_i64(tmp, sv);
-             sv = tmp;
-         }
--        cond = cond_make_0(TCG_COND_LT, sv);
-+        cond = cond_make_ti(TCG_COND_LT, sv, 0);
-         break;
-     case 7: /* OD / EV */
-         tmp = tcg_temp_new_i64();
-         tcg_gen_andi_i64(tmp, res, 1);
--        cond = cond_make_0_tmp(TCG_COND_NE, tmp);
-+        cond = cond_make_ti(TCG_COND_NE, tmp, 0);
-         break;
-     default:
-         g_assert_not_reached();
-@@ -904,9 +904,9 @@ static DisasCond do_sub_cond(DisasContext *ctx, unsigned cf, bool d,
-             tcg_gen_ext32s_i64(t1, in1);
-             tcg_gen_ext32s_i64(t2, in2);
-         }
--        return cond_make_tmp(tc, t1, t2);
-+        return cond_make_tt(tc, t1, t2);
-     }
--    return cond_make(tc, in1, in2);
-+    return cond_make_vv(tc, in1, in2);
- }
- 
- /*
-@@ -978,9 +978,9 @@ static DisasCond do_log_cond(DisasContext *ctx, unsigned cf, bool d,
-         } else {
-             tcg_gen_ext32s_i64(tmp, res);
-         }
--        return cond_make_0_tmp(tc, tmp);
-+        return cond_make_ti(tc, tmp, 0);
-     }
--    return cond_make_0(tc, res);
-+    return cond_make_vi(tc, res, 0);
- }
- 
- /* Similar, but for shift/extract/deposit conditions.  */
-@@ -1039,7 +1039,7 @@ static DisasCond do_unit_zero_cond(unsigned cf, bool d, TCGv_i64 res)
-     tcg_gen_andc_i64(tmp, tmp, res);
-     tcg_gen_andi_i64(tmp, tmp, sgns);
- 
--    return cond_make_0_tmp(cf & 1 ? TCG_COND_EQ : TCG_COND_NE, tmp);
-+    return cond_make_ti(cf & 1 ? TCG_COND_EQ : TCG_COND_NE, tmp, 0);
- }
- 
- static TCGv_i64 get_carry(DisasContext *ctx, bool d,
-@@ -1453,7 +1453,7 @@ static void do_unit_addsub(DisasContext *ctx, unsigned rt, TCGv_i64 in1,
-         }
- 
-         tcg_gen_andi_i64(cb, cb, test_cb);
--        cond = cond_make_0_tmp(cf & 1 ? TCG_COND_EQ : TCG_COND_NE, cb);
-+        cond = cond_make_ti(cf & 1 ? TCG_COND_EQ : TCG_COND_NE, cb, 0);
-     }
- 
-     if (is_tc) {
-@@ -3542,7 +3542,7 @@ static bool trans_bb_sar(DisasContext *ctx, arg_bb_sar *a)
-         tcg_gen_shl_i64(tmp, tcg_r, tmp);
-     }
- 
--    cond = cond_make_0_tmp(a->c ? TCG_COND_GE : TCG_COND_LT, tmp);
-+    cond = cond_make_ti(a->c ? TCG_COND_GE : TCG_COND_LT, tmp, 0);
-     return do_cbranch(ctx, a->disp, a->n, &cond);
- }
- 
-@@ -3559,7 +3559,7 @@ static bool trans_bb_imm(DisasContext *ctx, arg_bb_imm *a)
-     p = a->p | (a->d ? 0 : 32);
-     tcg_gen_shli_i64(tmp, tcg_r, p);
- 
--    cond = cond_make_0(a->c ? TCG_COND_GE : TCG_COND_LT, tmp);
-+    cond = cond_make_ti(a->c ? TCG_COND_GE : TCG_COND_LT, tmp, 0);
-     return do_cbranch(ctx, a->disp, a->n, &cond);
- }
- 
-@@ -4363,7 +4363,7 @@ static bool trans_ftest(DisasContext *ctx, arg_ftest *a)
-         switch (a->c) {
-         case 0: /* simple */
-             tcg_gen_andi_i64(t, t, 0x4000000);
--            ctx->null_cond = cond_make_0(TCG_COND_NE, t);
-+            ctx->null_cond = cond_make_ti(TCG_COND_NE, t, 0);
-             goto done;
-         case 2: /* rej */
-             inv = true;
-@@ -4393,16 +4393,16 @@ static bool trans_ftest(DisasContext *ctx, arg_ftest *a)
-         if (inv) {
-             TCGv_i64 c = tcg_constant_i64(mask);
-             tcg_gen_or_i64(t, t, c);
--            ctx->null_cond = cond_make(TCG_COND_EQ, t, c);
-+            ctx->null_cond = cond_make_tt(TCG_COND_EQ, t, c);
-         } else {
-             tcg_gen_andi_i64(t, t, mask);
--            ctx->null_cond = cond_make_0(TCG_COND_EQ, t);
-+            ctx->null_cond = cond_make_ti(TCG_COND_EQ, t, 0);
-         }
++    install_iaq_entries(ctx, f, b);
+     if (use_goto_tb(ctx, f, b)) {
+         tcg_gen_goto_tb(which);
+-        install_iaq_entries(ctx, f, b);
+         tcg_gen_exit_tb(ctx->base.tb, which);
      } else {
-         unsigned cbit = (a->y ^ 1) - 1;
- 
-         tcg_gen_extract_i64(t, t, 21 - cbit, 1);
--        ctx->null_cond = cond_make_0(TCG_COND_NE, t);
-+        ctx->null_cond = cond_make_ti(TCG_COND_NE, t, 0);
+-        install_iaq_entries(ctx, f, b);
+         tcg_gen_lookup_and_goto_ptr();
      }
+ }
+@@ -4575,6 +4574,7 @@ static bool trans_diag_unimp(DisasContext *ctx, arg_diag_unimp *a)
+ static void hppa_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+ {
+     DisasContext *ctx = container_of(dcbase, DisasContext, base);
++    uint64_t cs_base, iaoq_f, iaoq_b;
+     int bound;
  
-  done:
+     ctx->cs = cs;
+@@ -4584,29 +4584,30 @@ static void hppa_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+ #ifdef CONFIG_USER_ONLY
+     ctx->privilege = PRIV_USER;
+     ctx->mmu_idx = MMU_USER_IDX;
+-    ctx->iaoq_first = ctx->base.pc_first | ctx->privilege;
+-    ctx->iaq_b.disp = ctx->base.tb->cs_base - ctx->base.pc_first;
+     ctx->unalign = (ctx->tb_flags & TB_FLAG_UNALIGN ? MO_UNALN : MO_ALIGN);
+ #else
+     ctx->privilege = (ctx->tb_flags >> TB_FLAG_PRIV_SHIFT) & 3;
+     ctx->mmu_idx = (ctx->tb_flags & PSW_D
+                     ? PRIV_P_TO_MMU_IDX(ctx->privilege, ctx->tb_flags & PSW_P)
+                     : ctx->tb_flags & PSW_W ? MMU_ABS_W_IDX : MMU_ABS_IDX);
++#endif
+ 
+     /* Recover the IAOQ values from the GVA + PRIV.  */
+-    uint64_t cs_base = ctx->base.tb->cs_base;
+-    uint64_t iasq_f = cs_base & ~0xffffffffull;
+-    int32_t diff = cs_base;
++    cs_base = ctx->base.tb->cs_base;
++    iaoq_f = cs_base & MAKE_64BIT_MASK(32, 32);
++    iaoq_f |= ctx->base.pc_first & MAKE_64BIT_MASK(2, 30);
++    iaoq_f |= ctx->privilege;
++    ctx->iaoq_first = iaoq_f;
+ 
+-    ctx->iaoq_first = (ctx->base.pc_first & ~iasq_f) + ctx->privilege;
+-
+-    if (diff) {
+-        ctx->iaq_b.disp = diff;
+-    } else {
+-        ctx->iaq_b.base = cpu_iaoq_b;
++    if (unlikely(cs_base & CS_BASE_DIFFSPACE)) {
+         ctx->iaq_b.space = cpu_iasq_b;
++        ctx->iaq_b.base = cpu_iaoq_b;
++    } else if (unlikely(cs_base & CS_BASE_DIFFPAGE)) {
++        ctx->iaq_b.base = cpu_iaoq_b;
++    } else {
++        iaoq_b = (iaoq_f & TARGET_PAGE_MASK) | (cs_base & ~TARGET_PAGE_MASK);
++        ctx->iaq_b.disp = iaoq_b - iaoq_f;
+     }
+-#endif
+ 
+     ctx->zero = tcg_constant_i64(0);
+ 
 -- 
 2.34.1
 
