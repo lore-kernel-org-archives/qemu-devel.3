@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DB5BC25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 03:56:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C014C25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 04:08:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6MnZ-0000b7-QU; Sun, 12 May 2024 23:56:25 -0400
+	id 1s6MyW-0002Oh-DK; Mon, 13 May 2024 00:07:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1s6MnU-0000aD-6F; Sun, 12 May 2024 23:56:20 -0400
-Received: from mail-vs1-xe2b.google.com ([2607:f8b0:4864:20::e2b])
+ id 1s6MyF-0002OA-8Y; Mon, 13 May 2024 00:07:28 -0400
+Received: from mail-vk1-xa35.google.com ([2607:f8b0:4864:20::a35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1s6MnS-0000eH-21; Sun, 12 May 2024 23:56:19 -0400
-Received: by mail-vs1-xe2b.google.com with SMTP id
- ada2fe7eead31-47f1100e05bso731044137.2; 
- Sun, 12 May 2024 20:56:17 -0700 (PDT)
+ id 1s6Mxx-0002UT-Ve; Mon, 13 May 2024 00:07:26 -0400
+Received: by mail-vk1-xa35.google.com with SMTP id
+ 71dfb90a1353d-4df3f7b93a7so984470e0c.1; 
+ Sun, 12 May 2024 21:07:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715572576; x=1716177376; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1715573228; x=1716178028; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=03sqOwm5zCap8IA9yNiAEqe6zbS/Z3wNJuNh5s4B7Vo=;
- b=mqiyE3iLOdAIHqMCKEtUSGx25rpNdy+r8KY75e8TSUQed6u4bxAKic8/D9zuX1Zecf
- fyhhRZRrL2xokdj3Ynb2MsQlNiFFLEfYhwrCPNWUsdnGaQe5NjQj5uxLL0W7Us+Of54i
- pCoDmsLpRroV89/Dedt85FJKMolBP6uuVdDXKdPhjZ85ORWYKNKBg+1AaDe8Hjiht/WD
- v3lhag6DyC5MuRlQD94rWk+LSYBl7/UHm0YCs1R2r3FIZLCQlnh1y/juLBfFDCztz6MD
- gH7ggrP8IB5f5qcWS7H5lEYIVdCC2UkoslcEOGFLi4C2vCdl9Tkwd92vuW/+454z4tMO
- w4/w==
+ bh=I5IKMKHDMv2So9ueaEu7fZnePMMLqzgNKoCO9ZCKWec=;
+ b=QHGqpY4slLIITH52nem5HvHDpgGybPx7GXk8i/7DjPZB36CoJwiiHrKTR8gc1+eNvz
+ Bdp6YdIc3khFPmNsPyh4XIvr3R5/yfmVQsvufo3+fJ1tzFlJYB+FOFl3qRCjFEIwhuAw
+ xdy9aBaGVazcg9a0AwzFBsPyvbXE6cWcHYwXRu+wdAx/x6mFlT0vQ5LZmW491Tqj+Gpu
+ MoRoCarW8Stcb6eWSo6Ks1IbpgQv5jYZpZgOh6Xz1EUIICQzyZ63yIVoameTqXY/Rhvd
+ 7yjNY4bbiKM4hsbVbseOgUgLbD4EVgtBbZ/B75wNOoDCo9hiD10z8cQ6AotwQp3sz9Ot
+ wJ9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715572576; x=1716177376;
+ d=1e100.net; s=20230601; t=1715573228; x=1716178028;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=03sqOwm5zCap8IA9yNiAEqe6zbS/Z3wNJuNh5s4B7Vo=;
- b=G7xb2qZvXyP7pvMdllbYA65WVj6G23lqJ77NO+nL1HsB4po8S+NXuLCRdU9PoBGapx
- ++55scyN+a0p3JAJnWm9/LTqQY6oMfewO9eGRVaQke+Fq/wr5ZX/ibpNVFduCiFHg8fp
- oD01qVsT53Gji0r057WgrG8RHhVHcD2y6boVPZYH2BCHTtuhLOg6UAj7kEMi5MY+5xbV
- pPui4O213yE2tdYCvA9/Ndq0X79b7ZLxSNCUtFCqaWYa5nKE8m1wsbfse/Y1WVpwYrp4
- yPpbjH73EZAYaUI40Yb4REPV8Rz6/gHL62vGDNY7yL3S3+2hOD0ppN2BzUSGjGe4/lBE
- 5Xtg==
+ bh=I5IKMKHDMv2So9ueaEu7fZnePMMLqzgNKoCO9ZCKWec=;
+ b=UrUrat1P6zZhSD1IA2iC+JhU+NtbokstY88Q+U5OAcxTgW7Q6gLt97/uyQkabU8Pal
+ pJLkxySA/huCdKsoEYSTVSN1ZEdNEgTd7LiGM+NnhH1Vga5v3INQavqjZSNT0o33gxp3
+ q1YgMJv/jQ4BAz6nTm1pwTQqKxdRiWz6+G5/bPJCBIlPpvRdIlCyxKkSFOxeqyOuQgNm
+ FVtkgXijfXKKUpEHpvitHWCZ8SR5sfAQmo6foCsg+hKllcJLEN2i822iP2KU5iM/fugV
+ 91GibdDBoZq0hm91J37EP7Xi//NvisyD0kTAL/fHF3aOJswva1buQvMdH8kvuwnGIhrw
+ QwtA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX48MuSezdYidiu8YoxYO3jFHoe9gtjc4D4wSQ7C/qFtUimN2kaSDOs+vycesRs66JrYnKVICuAEEg+/d4W6OZSx98RwuI/KlYbt3hOaVAfzEo+yRvIa6QOsSPFjw==
-X-Gm-Message-State: AOJu0YwGR+4ipTDa0yrypidtjgGIBEQjOVUvnbEOAt27BMc+f2U/KQ/Z
- cNiTJV9UA3fFJi1xcEqtJTEkIW39jJopkBFy10XfP8KEmtBzxetmJrGk02rJMSAa6o2Zj7aVgeE
- +OnGzQS510uBJldw5IupMrhAidEY=
-X-Google-Smtp-Source: AGHT+IEQTrak1Phmu/TODOZag0u3wcRVXU1WngRuf6dFLt5+kiMqTjpB4UGgY9YpeyPJituAfl1Gry5SzegZS9j40qo=
-X-Received: by 2002:a05:6102:dcb:b0:47c:2d52:8c08 with SMTP id
- ada2fe7eead31-48077e16d27mr6494190137.17.1715572576164; Sun, 12 May 2024
- 20:56:16 -0700 (PDT)
+ AJvYcCUDbGvjILA9iFwQ6QUHR6SfMvd9XLjlEQAYXs8qtU2e+6GR2P2yvuTOCCrZv/Vpy4S/C6jQ7a26JBlHYuAHOjOyfigpfURnWw==
+X-Gm-Message-State: AOJu0YzzqyUa2WPk3WiWOLIEn8GQIqIA5XRBGWVlQGz94FHiXt1OXSCt
+ v/vkLN2hG/ddqizAxjadfNJmqUNmcADNpVLAG5S/TTKvBMwOekpH+lniShPLU9Bsb1gfPx9ZcEP
+ int/i/iyIuwlYzttyTR9xKihHhNw=
+X-Google-Smtp-Source: AGHT+IGWmyfCDeckncnUt7RQ8IAlMvLUdwX4ffoBM5fBH/bVAbdYda6fsGhl0yvrcCMmm8SPfNIEMRWiU1lp13fcA8s=
+X-Received: by 2002:a05:6122:3128:b0:4db:1b9d:c70a with SMTP id
+ 71dfb90a1353d-4df88180aefmr7050950e0c.0.1715573228199; Sun, 12 May 2024
+ 21:07:08 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240507052212.291137-1-jeeheng.sia@starfivetech.com>
- <20240507052212.291137-2-jeeheng.sia@starfivetech.com>
-In-Reply-To: <20240507052212.291137-2-jeeheng.sia@starfivetech.com>
+References: <20240503071634.841103-1-mjt@tls.msk.ru>
+In-Reply-To: <20240503071634.841103-1-mjt@tls.msk.ru>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 13 May 2024 13:55:50 +1000
-Message-ID: <CAKmqyKOmt1UAbSnVbQ2fLVwoPP3u=6r5hX+gVO2xhLKidQ-8-A@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] qtest: allow SPCR acpi table changes
-To: Sia Jee Heng <jeeheng.sia@starfivetech.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com, 
- peter.maydell@linaro.org, shannon.zhaosl@gmail.com, sunilvl@ventanamicro.com, 
- palmer@dabbelt.com, alistair.francis@wdc.com, bin.meng@windriver.com, 
- liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com
+Date: Mon, 13 May 2024 14:06:41 +1000
+Message-ID: <CAKmqyKOC+o5-H-Yo=8J1XaDJzTavqvUAQ9CvDk8muFeiWrAUBg@mail.gmail.com>
+Subject: Re: [PATCH v2] Re-enable riscv64-debian-cross-container (debian
+ riscv64 is finally usable again!)
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, 
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2b;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a35;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa35.google.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,31 +92,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 7, 2024 at 3:24=E2=80=AFPM Sia Jee Heng
-<jeeheng.sia@starfivetech.com> wrote:
+On Fri, May 3, 2024 at 5:17=E2=80=AFPM Michael Tokarev <mjt@tls.msk.ru> wro=
+te:
+>
+> Revert "gitlab-ci: Disable the riscv64-debian-cross-container by default"
+> This reverts commit f51f90c65ed7706c3c4f7a889ce3d6b7ab75ef6a.
+>
+> riscv64 in debian has been non-functioning for almost a year, after the
+> architecture has been promoted to release architecture and all binary
+> packages started to be re-built, making the port not multi-arch-co-instal=
+lable
+> for a long time (in debian, multi-arch packages must be of the same versi=
+on,
+> but when a package is rebuilt on one architecture it gets a version bump =
+too).
+> Later on, debiah had a long time64_t transition which made sid unusable f=
+or
+> quite some time too.  Both such events happens in debian very rarely (lik=
+e,
+> once in 10 years or so - for example, previous big transition like that w=
+as
+> libc5 =3D> libc6 transition).  Now both of these are finished (where qemu=
+ is
+> concerned anyway).
+>
+> Hopefully debian unstable wont be very unstable.  At the very least it is
+> better to have sporadic CI failures here than no riscv64 coverage at all.
+>
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-Can you describe why you are doing this and that it will be reverted
-in the commit message?
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
->
-> Signed-off-by: Sia Jee Heng <jeeheng.sia@starfivetech.com>
 > ---
->  tests/qtest/bios-tables-test-allowed-diff.h | 2 ++
->  1 file changed, 2 insertions(+)
+> v2: drop a TODO comment which turned out to be confused, replacing it
+>  with the description why debian riscv64 were unusable.
 >
-> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bi=
-os-tables-test-allowed-diff.h
-> index dfb8523c8b..3f12ca546b 100644
-> --- a/tests/qtest/bios-tables-test-allowed-diff.h
-> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
-> @@ -1 +1,3 @@
->  /* List of comma-separated changed AML files to ignore */
-> +"tests/data/acpi/virt/riscv64/SPCR",
-> +"tests/data/acpi/virt/aarch64/SPCR",
+>  .gitlab-ci.d/container-cross.yml | 1 -
+>  1 file changed, 1 deletion(-)
+>
+> diff --git a/.gitlab-ci.d/container-cross.yml b/.gitlab-ci.d/container-cr=
+oss.yml
+> index e3103940a0..dbffed3f21 100644
+> --- a/.gitlab-ci.d/container-cross.yml
+> +++ b/.gitlab-ci.d/container-cross.yml
+> @@ -77,7 +77,6 @@ riscv64-debian-cross-container:
+>    allow_failure: true
+>    variables:
+>      NAME: debian-riscv64-cross
+> -    QEMU_JOB_OPTIONAL: 1
+>
+>  s390x-debian-cross-container:
+>    extends: .container_job_template
 > --
-> 2.34.1
+> 2.39.2
 >
 >
 
