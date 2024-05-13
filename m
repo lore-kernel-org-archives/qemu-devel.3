@@ -4,94 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A27E0C25B78
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 22:02:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86C8DC25B78
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 22:20:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6dkS-0008Gu-Dy; Mon, 13 May 2024 18:02:20 -0400
+	id 1s6e16-000381-Hm; Mon, 13 May 2024 18:19:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=856bc4aeb=derekmn@amazon.com>)
- id 1s6dkN-000898-Ed
- for qemu-devel@nongnu.org; Mon, 13 May 2024 18:02:16 -0400
-Received: from smtp-fw-9105.amazon.com ([207.171.188.204])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=856bc4aeb=derekmn@amazon.com>)
- id 1s6dkL-0006gG-5l
- for qemu-devel@nongnu.org; Mon, 13 May 2024 18:02:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
- t=1715637734; x=1747173734;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=5+iQQpOEZdEkzvrHSJ41DjlAjDtbE5SACcQXxQVlFBs=;
- b=YM0fzoYhz8qGsunBElkHLQDbg2oiVC5oknDhL7SIRcyoYEfYopn7y07y
- rNT5DUq7fUA2/dTV9ujZNyXiOM00LvZU2lMvXTeyKtasocNUShutmIJuW
- Myh51Mah2vyFno03eaiEkgNc7l8g75pHYbyEk2MkZSjHRcpGCWeVE/uT3 w=;
-X-IronPort-AV: E=Sophos;i="6.08,159,1712620800"; d="scan'208";a="726172843"
-Received: from pdx4-co-svc-p1-lb2-vlan2.amazon.com (HELO
- smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.210])
- by smtp-border-fw-9105.sea19.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 May 2024 22:02:08 +0000
-Received: from EX19MTAUWA001.ant.amazon.com [10.0.21.151:19998]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.44.254:2525]
- with esmtp (Farcaster)
- id 166c483a-d211-48eb-b873-34e5ed9da520; Mon, 13 May 2024 22:01:52 +0000 (UTC)
-X-Farcaster-Flow-ID: 166c483a-d211-48eb-b873-34e5ed9da520
-Received: from EX19D003UWC002.ant.amazon.com (10.13.138.169) by
- EX19MTAUWA001.ant.amazon.com (10.250.64.204) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1258.28; Mon, 13 May 2024 22:01:49 +0000
-Received: from [192.168.232.44] (10.106.101.48) by
- EX19D003UWC002.ant.amazon.com (10.13.138.169) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1258.28; Mon, 13 May 2024 22:01:48 +0000
-Message-ID: <7107a45b-0635-4040-9f4c-288708b13c04@amazon.com>
-Date: Mon, 13 May 2024 15:01:46 -0700
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s6e14-00037s-La
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 18:19:30 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s6e11-0000Th-OE
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 18:19:29 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id B944C5D150;
+ Mon, 13 May 2024 22:19:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1715638764; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SMJClt3VrwLq2dKhRHXDq/nqq2UBVWz/RNDQTfT2TEw=;
+ b=USZbGUMO1qgtIO6xsU3sL15mRJVzzKrUjd8F2TunnYYWscufhMif61d+jiFp6HrYtsvmqp
+ sn/IxPszGMNaZk7B8buDbJ5QVHdpTsFtiJCVyZ9WuWzrSnj5fsVxUcCunyuSQFpPquY3Zg
+ F9BfpaeeYNMa9hajimZuXANydX9Wk64=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1715638764;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SMJClt3VrwLq2dKhRHXDq/nqq2UBVWz/RNDQTfT2TEw=;
+ b=d3J866qu1RDA1ykvnKGKoe/kCI0ldia8dtsIZTfMukcToWvhqqlQ8F/sAmG1QJEEiKwd/d
+ WqZiwsZSyidiRSDQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1715638764; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SMJClt3VrwLq2dKhRHXDq/nqq2UBVWz/RNDQTfT2TEw=;
+ b=USZbGUMO1qgtIO6xsU3sL15mRJVzzKrUjd8F2TunnYYWscufhMif61d+jiFp6HrYtsvmqp
+ sn/IxPszGMNaZk7B8buDbJ5QVHdpTsFtiJCVyZ9WuWzrSnj5fsVxUcCunyuSQFpPquY3Zg
+ F9BfpaeeYNMa9hajimZuXANydX9Wk64=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1715638764;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SMJClt3VrwLq2dKhRHXDq/nqq2UBVWz/RNDQTfT2TEw=;
+ b=d3J866qu1RDA1ykvnKGKoe/kCI0ldia8dtsIZTfMukcToWvhqqlQ8F/sAmG1QJEEiKwd/d
+ WqZiwsZSyidiRSDQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4290B1372E;
+ Mon, 13 May 2024 22:19:24 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id g6vfAuyRQmajPgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 13 May 2024 22:19:24 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Alex Williamson
+ <alex.williamson@redhat.com>, Avihai Horon <avihaih@nvidia.com>, Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Markus Armbruster
+ <armbru@redhat.com>, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Subject: Re: [PATCH v5 03/10] vfio: Extend migration_file_set_error() with
+ Error** argument
+In-Reply-To: <20240506092053.388578-4-clg@redhat.com>
+References: <20240506092053.388578-1-clg@redhat.com>
+ <20240506092053.388578-4-clg@redhat.com>
+Date: Mon, 13 May 2024 19:19:21 -0300
+Message-ID: <87zfste4nq.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Unmapping KVM Guest Memory from Host Kernel
-To: Sean Christopherson <seanjc@google.com>, James Gowans <jgowans@amazon.com>
-CC: "kvm@vger.kernel.org" <kvm@vger.kernel.org>, "linux-coco@lists.linux.dev"
- <linux-coco@lists.linux.dev>, Nikita Kalyazin <kalyazin@amazon.co.uk>,
- "rppt@kernel.org" <rppt@kernel.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, Patrick Roy <roypat@amazon.co.uk>, "somlo@cmu.edu"
- <somlo@cmu.edu>, "vbabka@suse.cz" <vbabka@suse.cz>,
- "akpm@linux-foundation.org" <akpm@linux-foundation.org>,
- "kirill.shutemov@linux.intel.com" <kirill.shutemov@linux.intel.com>,
- "Liam.Howlett@oracle.com" <Liam.Howlett@oracle.com>, David Woodhouse
- <dwmw@amazon.co.uk>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "linux-mm@kvack.org" <linux-mm@kvack.org>, Alexander Graf <graf@amazon.de>,
- "chao.p.peng@linux.intel.com" <chao.p.peng@linux.intel.com>,
- "lstoakes@gmail.com" <lstoakes@gmail.com>, "mst@redhat.com" <mst@redhat.com>, 
- Moritz Lipp <mlipp@amazon.at>, Claudio Canella <canellac@amazon.at>
-References: <cc1bb8e9bc3e1ab637700a4d3defeec95b55060a.camel@amazon.com>
- <ZeudRmZz7M6fWPVM@google.com> <ZexEkGkNe_7UY7w6@kernel.org>
- <58f39f23-0314-4e34-a8c7-30c3a1ae4777@amazon.co.uk>
- <ZkI0SCMARCB9bAfc@google.com>
- <aaf684b5eb3a3fe9cfbb6205c16f0973c6f8bb07.camel@amazon.com>
- <ZkJFIpEHIQvfuzx1@google.com>
- <f880d0187e2d482bc8a8095cf5b7404ea9d6fb03.camel@amazon.com>
- <ZkJ37uwNOPis0EnW@google.com>
-Content-Language: en-US
-From: "Manwaring, Derek" <derekmn@amazon.com>
-In-Reply-To: <ZkJ37uwNOPis0EnW@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.106.101.48]
-X-ClientProxiedBy: EX19D043UWC001.ant.amazon.com (10.13.139.202) To
- EX19D003UWC002.ant.amazon.com (10.13.138.169)
-Received-SPF: pass client-ip=207.171.188.204;
- envelope-from=prvs=856bc4aeb=derekmn@amazon.com; helo=smtp-fw-9105.amazon.com
-X-Spam_score_int: -128
-X-Spam_score: -12.9
-X-Spam_bar: ------------
-X-Spam_report: (-12.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.26 / 50.00]; BAYES_HAM(-2.96)[99.82%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[8]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,30 +123,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024-05-13 13:36-0700, Sean Christopherson wrote:
-> Hmm, a slightly crazy idea (ok, maybe wildly crazy) would be to support mapping
-> all of guest_memfd into kernel address space, but as USER=1 mappings.  I.e. don't
-> require a carve-out from userspace, but do require CLAC/STAC when access guest
-> memory from the kernel.  I think/hope that would provide the speculative execution
-> mitigation properties you're looking for?
+C=C3=A9dric Le Goater <clg@redhat.com> writes:
 
-This is interesting. I'm hesitant to rely on SMAP since it can be
-enforced too late by the microarchitecture. But Canella, et al. [1] did
-say in 2019 that the kernel->user access route seemed to be free of any
-"Meltdown" effects. LASS sounds like it will be even stronger, though
-it's not clear to me from Intel's programming reference that speculative
-scenarios are in scope [2]. AMD does list SMAP specifically as a
-feature that can control speculation [3].
+> Use it to update the current error of the migration stream if
+> available and if not, simply print out the error. Next changes will
+> update with an error to report.
+>
+> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
 
-I don't see an equivalent read-access control on ARM. It has PXN for
-execute. Read access can probably also be controlled?  But I think for
-the non-CoCo case we should favor solutions that are less dependent on
-hardware-specific protections.
-
-Derek
-
-
-[1] https://www.usenix.org/system/files/sec19-canella.pdf
-[2] https://cdrdv2.intel.com/v1/dl/getContent/671368
-[3] https://www.amd.com/content/dam/amd/en/documents/epyc-technical-docs/tuning-guides/software-techniques-for-managing-speculation.pdf
+Acked-by: Fabiano Rosas <farosas@suse.de>
 
