@@ -4,82 +4,165 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1564C25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 13:30:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECDC8C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 13:31:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6Vl2-00061r-7i; Mon, 13 May 2024 09:30:24 -0400
+	id 1s6VlR-00064r-5Q; Mon, 13 May 2024 09:30:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s6Vky-0005zc-Ms
- for qemu-devel@nongnu.org; Mon, 13 May 2024 09:30:20 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s6Vkw-00068S-L5
- for qemu-devel@nongnu.org; Mon, 13 May 2024 09:30:20 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-34da4d6f543so3197548f8f.3
- for <qemu-devel@nongnu.org>; Mon, 13 May 2024 06:30:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715607016; x=1716211816; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=JIXZ57XSBqv04yqVQhcI1lAtcTMOxTYPB/N8kZSEFag=;
- b=WaULQTZm+XUzvK6+j8JdBhNlPPrSBKtl9IkV5Bj8tsgFcr7bJdOrwr/ToN7BH2wTLR
- 56U4ZIPD/G3VqRhll82ImUdRuX6R4C7a7Ws3ObZZ5x31vhRsQY1Nhh6Ar178OimbEDiF
- jTpnKYIpB3qCX2aXNqVcGc+utKflViw9Z55S61FOJcw/95dR7DfHM0vLH8bowWkYWrQb
- xwByqsU+t3D6lOBv0KiQfC/uB/0Dkxj09Z5uVSCrDjijaekJNkKfvX/PwLi9j4KHxC+5
- TDRlpw2ZPgeKjWjYih1P3k+hFV9uQj68YtHt5TGecua78CNwHGajmWKMXBb2DaAG8yeK
- tNVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715607016; x=1716211816;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JIXZ57XSBqv04yqVQhcI1lAtcTMOxTYPB/N8kZSEFag=;
- b=Ex4Rb8akRFiuDhUhMH48oT1hT+q11+Bgl7kCNxe0wUDNDkqpo/YzI5b6Pyf3jUDgHS
- 2IaK2VI2YE1NR9gIEuMhnpyxrdhVOZHdTWUbCOeSWUKOy1ZhLsQSuepIcocCuvI0vutS
- 5yjPVZKUzi7k6oxUNk137cxXVIF0Dh4jC3HrMIIg8sMYYKC7114Qy65LMF00p5+zmGVG
- 3OM03cCxsWAIS0pV0U+IQ1I8A1KByc3SG2QFc6qEGcLAXlgRj6wHwmZdcN+GZ02WDUgB
- Q4+9Stzgdpurs2MSKOt9VhN/eddMPhUdI5/1pBI9J5G4Lqjr1WFloyjg0ZlMDb0XnOkp
- a3iQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUPJ90Qs5QVMYmGSPVeKVUCgvEdbLjgMeAnjUYiayFKZ5P6dhJ44ghnRT+mk4TvTVEbMQV/2CThY2SjdkJtDbfHntACJmY=
-X-Gm-Message-State: AOJu0YzmnH+sIRNScvujOJsZnGixLOuQXymlgkI1ZMidzW6UWzY757PX
- BFi5KPTcGWUKP9I44D+nuHIsgTIOVAlm0Pw49v90jeoRWlEMZk/ne0NMSlbOC5I=
-X-Google-Smtp-Source: AGHT+IHlJ2gVQ0ioPrg2T3gTSEUvFclY8yKwWQq0uImfc3+XceI7q3magXVqW4iiY7QS0VB+ju6X4Q==
-X-Received: by 2002:adf:fa4d:0:b0:34f:fd71:9af with SMTP id
- ffacd0b85a97d-3504a73edbfmr7026811f8f.39.1715607015860; 
- Mon, 13 May 2024 06:30:15 -0700 (PDT)
-Received: from [10.1.2.72] ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502b896a89sm10992838f8f.31.2024.05.13.06.30.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 May 2024 06:30:15 -0700 (PDT)
-Message-ID: <6bb04e15-5bfd-4ac6-98a1-33c65a6f1663@linaro.org>
-Date: Mon, 13 May 2024 15:30:14 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1s6VlL-000649-0K
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 09:30:43 -0400
+Received: from mail-bn8nam11on20601.outbound.protection.outlook.com
+ ([2a01:111:f403:2414::601]
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1s6Vl9-0006MC-KS
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 09:30:40 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Kw/Fanka1SencsUH5G79H8uHSQ7oHZZ1hwA/k4L4/N4nEJvQcrecXpDcCV5zSUwX5EnQOapkKflLyX8eDaOppMNNST+6yzEUsGZcWa3irMVSTA1XW13K7uHhuhhoaGVNHDVf95uFAbXJnzUDppfSpl51XMoHLNuC5HNZ6yZHOEy77kZwI4b88iM/Tp419kICmk/jY5fuDxm+v9kvwcWki1TjLlqM1teKvwXSR7BxuUcQ/U72BSMJ7qq6cowe7mD5h4bTlW5GwRbBx8iNb9g0DzdngHkvfjBVEAMJt2SbsT3uRUPg+nr+b5MNIcINoX7fo0Gz6Kyu7AmxZQY48A+nXg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=q4W0mBcJqlr/etSfpFkFy3LzcYHJasf3As46fS/KW9M=;
+ b=ZDxLdMtjAOjFXXFNt7ZFaUP20/kRT3GDiaJF6lTMp2fvkvO+39fYJNqtcx9sOe6sZxVwD52y4dBpejyFCCkJdQ40DY10/4oBbSsRGmwaW4AEDk7111a7N8wxWDLhEVuMCJsHCIgyYKaLRoyf5JoD9BfUggj+wltqYP1mbRo7Kxezyc9uLG/5wiAreXVH9yXUwcrcmZs2bzjg6M84oYWaXbSM3Hx8tlmzc4KUncR8+bAR6krIlah8m+jWRqKUJGevB5IRQlefzS0lK+gkXyVRsbxqKxXweFt0CI0YNOcD0XAjtAvQlQj6HS/xyXKs5P86bBV1BlEBnEsQ1J2L636PgA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=q4W0mBcJqlr/etSfpFkFy3LzcYHJasf3As46fS/KW9M=;
+ b=l30P15ibYNF44CuTeBjaHWPcymE4D68E+JwgHIMe4v4M1KufFuAOXv5YqHXzxteju347tTLRvHkzp/TB8+XdJF/WvXMYyK7crUACIKwXkB67iva0vWsxYPaz6GTT+LYXaOUXTZd51XkQACyAG4yPh0wpWQAESLjYkowPfWgmn556f6GqQHZZcxmswDoa6V+/YUGY4S1rUMkJ2IlQpfQwQ+00MYZH8k4UetY5Kzwmsu31aj2vCna2ac58JdyDFcTvPjCX7Irrh4WucARTrpA3CZT6VIzuCOvupqZVP0qrmROABec+YEZMPSzWYMdPm/Jf17H2hLo9n6lcAZduRWbwTA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB5549.namprd12.prod.outlook.com (2603:10b6:5:209::13)
+ by CH2PR12MB4104.namprd12.prod.outlook.com (2603:10b6:610:a4::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.55; Mon, 13 May
+ 2024 13:30:27 +0000
+Received: from DM6PR12MB5549.namprd12.prod.outlook.com
+ ([fe80::d830:10ba:ec9e:7b80]) by DM6PR12MB5549.namprd12.prod.outlook.com
+ ([fe80::d830:10ba:ec9e:7b80%5]) with mapi id 15.20.7544.052; Mon, 13 May 2024
+ 13:30:27 +0000
+Message-ID: <894a958e-f804-46e9-a511-c7f62d3ec414@nvidia.com>
+Date: Mon, 13 May 2024 16:30:21 +0300
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] hw/nvram: Add BCM2835 OTP device
-To: Rayhan Faizel <rayhan.faizel@gmail.com>, qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, qemu-arm@nongnu.org
-References: <20240510141010.656561-1-rayhan.faizel@gmail.com>
- <20240510141010.656561-2-rayhan.faizel@gmail.com>
+Subject: Re: [PATCH v5 05/10] vfio: Add Error** argument to
+ .vfio_save_config() handler
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>
+References: <20240506092053.388578-1-clg@redhat.com>
+ <20240506092053.388578-6-clg@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240510141010.656561-2-rayhan.faizel@gmail.com>
+From: Avihai Horon <avihaih@nvidia.com>
+In-Reply-To: <20240506092053.388578-6-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: LO4P123CA0476.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:1a8::13) To DM6PR12MB5549.namprd12.prod.outlook.com
+ (2603:10b6:5:209::13)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB5549:EE_|CH2PR12MB4104:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2ddb4cd9-8e4b-4766-d6d3-08dc7350d9d2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230031|366007|1800799015|376005;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?UXdOMEUzWk5ReWtMR2NEUlpKQ1dXcStrQkRlcWFOVTVVK0c3bmZtK1Y0bEVU?=
+ =?utf-8?B?WDUrZ0N0UEZBdDQxcTcwcDhpSWhoQXQ0M0xtZ0Z3TmJFV3Y2RnFmQndOeVJy?=
+ =?utf-8?B?Y2xEOHE3T1pEU3ViU09mQzdWSDBJYkxQakpWTkhoT09CaWNhRDJFcGVpeUF5?=
+ =?utf-8?B?cG5yblJzMGFVRDZGZkxKaUlJN0ZwSzhMVFh3MmxxblJTb2UzNkdrK1FCVUZN?=
+ =?utf-8?B?ckNUdWxsSkd0OFBCeWJiNG52T2dLaGFqdFZkQVN0L3FBbUQ5UXJMWk0xQ2lp?=
+ =?utf-8?B?bGY3T3VJTTQzdXVDWDVPZkNRbEhsNzVHZFhEM0VReGxWdFRoTGU1OER5MXUx?=
+ =?utf-8?B?RVZZNXZiamNRZEtkTXdsSTJpWk5mbGVETTJTeW05aEttYUdrYWNxVjVlcWhS?=
+ =?utf-8?B?SUtUNklKUE1TRHVJNE9Oc0MxcXZ6V2JvSzhnTWtjL3JhMFdPQWcxVXd1ZTFu?=
+ =?utf-8?B?c1NJOEt2TWIvV3VSUWJzVmFvMkovdXMzdDlMYnJCTXFHUitCaWJkQ29LTEI1?=
+ =?utf-8?B?Wm5Zc01RRG1PMUMzOXZFRXBxZzJoekpEcmhiRE9ZWkNVako0VE5VcEk5YWJr?=
+ =?utf-8?B?TnhJSmpXSytjWFMxRUZMZDlQQk8ySTAzT1BhNE5XNXhSYkJiVEpaeGZrclRD?=
+ =?utf-8?B?Z283VDMrTFRwbDJ3SDNMK3M5Tjd1M2dCVTRTQXhHUEZGdTI2eDZ5YXdkbUpa?=
+ =?utf-8?B?VmUwcEtGWHZqVDNtaUcxeWR6T0VMOGJPdlhLMHgxMWttQzUvYkUwdFhINEJj?=
+ =?utf-8?B?UFpJZUl4ZXlqUWw5N24raDJGREVURlc1R1JyTjJnTGd0MDErbEpNQWZPUzdB?=
+ =?utf-8?B?bzJHcFkyL0RUdWRJZ1JqQTdWK2UyNVFGQ2pHT25sYjBtQnNXVitBNnkyZHM1?=
+ =?utf-8?B?aGM1MXQ5cFo1aUU3aUdkNi9ScDFjSWFkQnNQdE1zUzEyTGNkSGpuVWhMOWpk?=
+ =?utf-8?B?UmVDSmNOS3cvOGJhSGUwSXN6SmFPMHNwZ2NoSXNIM1FzaXVveDFwR0t3NDNY?=
+ =?utf-8?B?SlhSbzJJZjdzZVpocEhGMVowYVJxOW5Gcm1zQzBqQmFKVU5lTDBsOVNZWkpQ?=
+ =?utf-8?B?bUpMWG1QcitQZWdybGJ1c0dzU0Q1MEVHMjVEZWVJS3FUMXhjYVhuSEtoaHRx?=
+ =?utf-8?B?WmsxZnFZZFczeFczcHZQQ1dWMW5NQ28vK3dlNlhUN20wb3czaVhNZlEyR2Vo?=
+ =?utf-8?B?TGpnbXRtK1hYc1czMzZTRE00Mm5ZRDRxRWpzbTJkUVlEMzJicGwwbElrVWpI?=
+ =?utf-8?B?NjRta0lGTHc1L1VPeC9tUmlrS0JYRUliMFNjVkxZd0lmNC9aNUdIbGdJS2xX?=
+ =?utf-8?B?U2VRendudVZTdXFrVHk5NkhqRVdRbUFGQWFyU3BPODMzM3FKdnR0T2N5K0Fp?=
+ =?utf-8?B?NTJURlluRHZYZUlESmJDU3RlMUt1Wjl4d0hlcCtQaEluMVE4YU8wSEdaSWI5?=
+ =?utf-8?B?QmUwa1NqY05PK3FyNFp6UVF0L095d2Fzbjc5OXNON0F0Z2YzTjRYSmN2MWtV?=
+ =?utf-8?B?VlhHcnl0QjNJVXpTUngra1FPWEdicmpYSTlId1NwUnpVbnZGeWdtb1BpRzc1?=
+ =?utf-8?B?NGpWeEdyZ3dkZmE0MnljUVJFYyt5ZEw1S3pTaVlnMjd2NGYwcU5URlFFSXk3?=
+ =?utf-8?B?ekpYVk5QaGpMcTN5T2k1MEREUUY4YVo0NEZHKzVrUjhYZUJhT1NSNUNKWkJv?=
+ =?utf-8?B?NlN4aWRYUHF1VzNSQkFqNkFFYVl3U1FrWk1sRTQ1QWRJajRVSHNyME9BPT0=?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM6PR12MB5549.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(366007)(1800799015)(376005); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dktmOWcwMk9PQmhqTFVtaitOdWRGMGIvUEoyVmIvbzhXRFRNVXR0dVpkSXkv?=
+ =?utf-8?B?V0FTOWxSWnhSd2VNK0dTSEgyYUxhWnFmZ0RvQTRIbzBvbUhRVjBLTGRaN0Ux?=
+ =?utf-8?B?eGk4a281ZUZyUU5INEIyQm5Bbk1BSVBaQXJZNlp1ZkppT3BaazZMZCsyRVI0?=
+ =?utf-8?B?Q2FXblFSemZDTC9XZGxCNlhzZjBQV1QxT1ZkZXErUkwvMmcwU08vWjFHblZu?=
+ =?utf-8?B?R1dTTmtnVExqQnFJRUh3cmc4S0t1YXhMbTV0WThUUGFrN2FiMmN2MDhBV2t4?=
+ =?utf-8?B?ZW9vK2hoa2ZTWmJ0eWxqdHM5MlZnNXlNb1VGVXYzQy9FVXBuTWdHUjJIcUlK?=
+ =?utf-8?B?Rjg1OURRYmdGdDUrSkN6UzB0SjJKeTNRanNGZ2RYOU1UMUtsRW9GVXBIa2g3?=
+ =?utf-8?B?d1ZlY1BzMjFkNjBCTzk5ZUM4MmRBeUpLSXEzOGVySGQzMURWZTNxRTRCa0ow?=
+ =?utf-8?B?Zm5pTVVsbkdJei80bFdHcWtBTXRiaXFPeDZJQzRRUmRvQ3VCNXFDbk0rSTFr?=
+ =?utf-8?B?cWpaZDV5bUlaZ29mcHZKRjY0cWdLOGlkVnlEUDJ4ZTh2OERoSzM3TnkvcDZt?=
+ =?utf-8?B?M3kram9wTE9PRjR0NENtdG1NWkwwMWNWa3F1ZldWM0VZOFlUWHJoRTdueGEy?=
+ =?utf-8?B?UTVRdDgxeXlvWEpZMVJTT3NOOEY2VmU3RGpxQk01cGJOcG52Y0lmUWtnaU1i?=
+ =?utf-8?B?THpZQzhJSXNSMVVWa2ZHL0kvTkFxdThkeU4zNlpQUS9ycHVLU1pTSWlNZHZL?=
+ =?utf-8?B?NGZjRndWemdId0xNQlF1RVZLZk9LdVRKcGJCMVZPeXhKSGJKYUs2WVJmSkQw?=
+ =?utf-8?B?TmRQY3FMREpyMjNSb3ZnWkpBWnQvYkVHdlNZdzN2YkgzemxlMTE3N0dTSFNB?=
+ =?utf-8?B?TlFNcXZzcjBZc2JlUithbmdPNHZ5SHBwaSt6UUx2bUl6dzcyTGl5NGZybkNw?=
+ =?utf-8?B?MXNzenp2cWpnWjhVeG1xc2FqbENrUWRON0hlM2dIRDNBOHFVMnM0SE1CbXBh?=
+ =?utf-8?B?aHJOVm5aZlRqTzFTeVNOZzBpc1hsT2JDVG1UWC9SQkVjbTRUODEwdUZ6bDgx?=
+ =?utf-8?B?eHJEelBpbi9EMGM3ZE5lYkxsWDlMZ0FxS0h6bHRBc0VjQUY4aVBIWURCbG92?=
+ =?utf-8?B?TXZyZkRrZWxNVlkyc20zWUNzQWdqbFNpelJreFhid0hzaWgybVFXUUJVM1Mx?=
+ =?utf-8?B?WEFDQnhtRFpNSnFFanNWNVlOaVNkOWt0VFFwNXgvYUFXdE5sa0NMU0orZjhJ?=
+ =?utf-8?B?cEh6WEIxTHhDRm1NdG5GRGtUNmtqcTRjME1ncVRCTndxRW1lQ2dNeC9yNDhT?=
+ =?utf-8?B?R0xRQzlZTWgrZzhmU1RrTWZLemc4b3JRVHo3NVJ2U2dHdElNWWo2UFA2ODdH?=
+ =?utf-8?B?WERsYUtieEwrZWlQMTY2N1RpdkZ4YTYzY0hFRXlnQWhvYW0wWFkybEtycHZi?=
+ =?utf-8?B?U0dibnVWQjVLQUJOaHo3N2ZRODBEZ0o0VUgxZWdqZlY3bEtjNDVIRCt1aXU0?=
+ =?utf-8?B?a0ZxWnV6aklBWGloOS85RWFTMzZsN0FEc3dTRmxGanBPMzgyTHlsQjZ3aTZD?=
+ =?utf-8?B?cWIzNjlwZFAya3BHNVRJUHdNZ1Bac3hPR2taVHZFUjg3bDdFNHBJQXMvWFEz?=
+ =?utf-8?B?d216TjA2VGc5NW9YOXNvcU9wQTRNWnZrODNjTC9oYjFtb1JiL2hDOW5LMlF5?=
+ =?utf-8?B?MlZWWUpFL2Y3SW9teGQvMmZlU3NFU1VHYTgyWTJNMTllbXRZSXhHN2YvV2w3?=
+ =?utf-8?B?dGc1VWJHcU5HRjRMOGpRcTJJZ2FqL0pWMmVQQXRBa2ljbURvTHU2QWVRanZ1?=
+ =?utf-8?B?ZUlGclRTWmRZdTcxbjB0QStNZHNoWVcvQW9HYzNocEtRWjBqMnRQTnhWaC9N?=
+ =?utf-8?B?am9uYTRJTGt6N01yaUZZcTVkVzhRald4YXJ2Z0lnRmhWOTBxTVJwYXZmRW1P?=
+ =?utf-8?B?Y1RtMWhhclVDc1RuUy9YUFYxL2M1UUZ0T0N4eVozalJiMWtuN1BqWS9EMmpz?=
+ =?utf-8?B?NWtDMlAwaUpsemcremZwMm9UYjl6QTRjaEFySVJaUzJRVEEyT085VElLM1E2?=
+ =?utf-8?B?NVBVeGZLaEp0L3p1THFpcEhURU84UGZkM3dSQVFMTytHK3pRWkl4aVFUMFA1?=
+ =?utf-8?Q?gieBhRQSN83tZLtjuE1BgMgWw?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2ddb4cd9-8e4b-4766-d6d3-08dc7350d9d2
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB5549.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 May 2024 13:30:27.0912 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: HDMRVbzUQiEHQZaFBz25QZxJlUlSVdoVQvtujlWmZ9Tk7U2eLv9D4OTZLsqsJaXw6EOQP2VmXVDGPBaXLreusQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4104
+Received-SPF: softfail client-ip=2a01:111:f403:2414::601;
+ envelope-from=avihaih@nvidia.com;
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,96 +178,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Rayhan,
 
-On 10/5/24 16:10, Rayhan Faizel wrote:
-> The OTP device registers are currently stubbed. For now, the device
-> houses the OTP rows which will be accessed directly by other peripherals.
-> 
-> Signed-off-by: Rayhan Faizel <rayhan.faizel@gmail.com>
+On 06/05/2024 12:20, Cédric Le Goater wrote:
+> External email: Use caution opening links or attachments
+>
+>
+> Use vmstate_save_state_with_err() to improve error reporting in the
+> callers and store a reported error under the migration stream. Add
+> documentation while at it.
+>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
->   hw/nvram/bcm2835_otp.c         | 187 +++++++++++++++++++++++++++++++++
->   hw/nvram/meson.build           |   1 +
->   include/hw/nvram/bcm2835_otp.h |  43 ++++++++
->   3 files changed, 231 insertions(+)
->   create mode 100644 hw/nvram/bcm2835_otp.c
->   create mode 100644 include/hw/nvram/bcm2835_otp.h
-
-
-> +static void bcm2835_otp_write(void *opaque, hwaddr addr,
-> +                              uint64_t value, unsigned int size)
-> +{
-> +    switch (addr) {
-> +    case BCM2835_OTP_BOOTMODE_REG:
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "bcm2835_otp: BCM2835_OTP_BOOTMODE_REG\n");
-> +        break;
-> +    case BCM2835_OTP_CONFIG_REG:
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "bcm2835_otp: BCM2835_OTP_CONFIG_REG\n");
-> +        break;
-> +    case BCM2835_OTP_CTRL_LO_REG:
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "bcm2835_otp: BCM2835_OTP_CTRL_LO_REG\n");
-> +        break;
-> +    case BCM2835_OTP_CTRL_HI_REG:
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "bcm2835_otp: BCM2835_OTP_CTRL_HI_REG\n");
-> +        break;
-> +    case BCM2835_OTP_STATUS_REG:
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "bcm2835_otp: BCM2835_OTP_STATUS_REG\n");
-> +        break;
-> +    case BCM2835_OTP_BITSEL_REG:
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "bcm2835_otp: BCM2835_OTP_BITSEL_REG\n");
-> +        break;
-> +    case BCM2835_OTP_DATA_REG:
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "bcm2835_otp: BCM2835_OTP_DATA_REG\n");
-> +        break;
-> +    case BCM2835_OTP_ADDR_REG:
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "bcm2835_otp: BCM2835_OTP_ADDR_REG\n");
-> +        break;
-> +    case BCM2835_OTP_WRITE_DATA_READ_REG:
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "bcm2835_otp: BCM2835_OTP_WRITE_DATA_READ_REG\n");
-> +        break;
-> +    case BCM2835_OTP_INIT_STATUS_REG:
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "bcm2835_otp: BCM2835_OTP_INIT_STATUS_REG\n");
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: Bad offset 0x%" HWADDR_PRIx "\n", __func__, addr);
-> +    }
-> +}
+>   include/hw/vfio/vfio-common.h | 25 ++++++++++++++++++++++++-
+>   hw/vfio/migration.c           | 18 ++++++++++++------
+>   hw/vfio/pci.c                 |  5 +++--
+>   3 files changed, 39 insertions(+), 9 deletions(-)
+>
+> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+> index b9da6c08ef41174610eb92726c590309a53696a3..46f88493634b5634a9c14a5caa33a463fbf2c50d 100644
+> --- a/include/hw/vfio/vfio-common.h
+> +++ b/include/hw/vfio/vfio-common.h
+> @@ -133,7 +133,30 @@ struct VFIODeviceOps {
+>       int (*vfio_hot_reset_multi)(VFIODevice *vdev);
+>       void (*vfio_eoi)(VFIODevice *vdev);
+>       Object *(*vfio_get_object)(VFIODevice *vdev);
+> -    void (*vfio_save_config)(VFIODevice *vdev, QEMUFile *f);
 > +
-> +static const MemoryRegionOps bcm2835_otp_ops = {
-> +    .read = bcm2835_otp_read,
-> +    .write = bcm2835_otp_write,
-> +    .endianness = DEVICE_NATIVE_ENDIAN,
-> +    .valid = {
+> +    /**
+> +     * @vfio_save_config
+> +     *
+> +     * Save device config state
+> +     *
+> +     * @vdev: #VFIODevice for which to save the config
+> +     * @f: #QEMUFile where to send the data
+> +     * @errp: pointer to Error*, to store an error if it happens.
+> +     *
+> +     * Returns zero to indicate success and negative for error
+> +     */
+> +    int (*vfio_save_config)(VFIODevice *vdev, QEMUFile *f, Error **errp);
+> +
+> +    /**
+> +     * @vfio_load_config
+> +     *
+> +     * Load device config state
+> +     *
+> +     * @vdev: #VFIODevice for which to load the config
+> +     * @f: #QEMUFile where to get the data
+> +     *
+> +     * Returns zero to indicate success and negative for error
+> +     */
+>       int (*vfio_load_config)(VFIODevice *vdev, QEMUFile *f);
+>   };
+>
+> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+> index 9b6375c949f7a8dca857ead2506855f63fa051e4..87437490bd50321b3eb27770c932078597053746 100644
+> --- a/hw/vfio/migration.c
+> +++ b/hw/vfio/migration.c
+> @@ -189,14 +189,19 @@ static int vfio_load_buffer(QEMUFile *f, VFIODevice *vbasedev,
+>       return ret;
+>   }
+>
+> -static int vfio_save_device_config_state(QEMUFile *f, void *opaque)
+> +static int vfio_save_device_config_state(QEMUFile *f, void *opaque,
+> +                                         Error **errp)
+>   {
+>       VFIODevice *vbasedev = opaque;
+> +    int ret;
+>
+>       qemu_put_be64(f, VFIO_MIG_FLAG_DEV_CONFIG_STATE);
+>
+>       if (vbasedev->ops && vbasedev->ops->vfio_save_config) {
+> -        vbasedev->ops->vfio_save_config(vbasedev, f);
+> +        ret = vbasedev->ops->vfio_save_config(vbasedev, f, errp);
+> +        if (ret) {
+> +            return ret;
+> +        }
+>       }
+>
+>       qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
 
-s/valid/impl/ here, this is your implementation. It isn't illegal to
-access these registers with a non 32-bit size.
+Below we have:
 
-> +        .min_access_size = 4,
-> +        .max_access_size = 4,
-> +    },
-> +};
+return qemu_file_get_error(f);
 
+Need to set errp in case of error.
 
-> +/* https://elinux.org/BCM2835_registers#OTP */
-> +#define BCM2835_OTP_BOOTMODE_REG            0x00
-> +#define BCM2835_OTP_CONFIG_REG              0x04
-> +#define BCM2835_OTP_CTRL_LO_REG             0x08
-> +#define BCM2835_OTP_CTRL_HI_REG             0x0c
-> +#define BCM2835_OTP_STATUS_REG              0x10
-> +#define BCM2835_OTP_BITSEL_REG              0x14
-> +#define BCM2835_OTP_DATA_REG                0x18
-> +#define BCM2835_OTP_ADDR_REG                0x1c
-> +#define BCM2835_OTP_WRITE_DATA_READ_REG     0x20
-> +#define BCM2835_OTP_INIT_STATUS_REG         0x24
+> @@ -588,13 +593,14 @@ static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
+>   static void vfio_save_state(QEMUFile *f, void *opaque)
+>   {
+>       VFIODevice *vbasedev = opaque;
+> +    Error *local_err = NULL;
+>       int ret;
+>
+> -    ret = vfio_save_device_config_state(f, opaque);
+> +    ret = vfio_save_device_config_state(f, opaque, &local_err);
+>       if (ret) {
+> -        error_report("%s: Failed to save device config space",
+> -                     vbasedev->name);
+> -        qemu_file_set_error(f, ret);
+> +        error_prepend(&local_err, "%s: Failed to save device config space",
+
+Add " - " ("... device config space - "), like in the other patches?
+
+Thanks.
+
+> +                      vbasedev->name);
+> +        qemu_file_set_error_obj(f, ret, local_err);
+>       }
+>   }
+>
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index 64780d1b793345c8e8996fe6b7987059ce831c11..fc6e54e871508bb0e2a3ac9079a195c086531f21 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -2586,11 +2586,12 @@ static const VMStateDescription vmstate_vfio_pci_config = {
+>       }
+>   };
+>
+> -static void vfio_pci_save_config(VFIODevice *vbasedev, QEMUFile *f)
+> +static int vfio_pci_save_config(VFIODevice *vbasedev, QEMUFile *f, Error **errp)
+>   {
+>       VFIOPCIDevice *vdev = container_of(vbasedev, VFIOPCIDevice, vbasedev);
+>
+> -    vmstate_save_state(f, &vmstate_vfio_pci_config, vdev, NULL);
+> +    return vmstate_save_state_with_err(f, &vmstate_vfio_pci_config, vdev, NULL,
+> +                                       errp);
+>   }
+>
+>   static int vfio_pci_load_config(VFIODevice *vbasedev, QEMUFile *f)
+> --
+> 2.45.0
+>
 
