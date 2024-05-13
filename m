@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB0FEC25B10
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2555C25B75
 	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 12:35:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6Usw-0004ON-Lr; Mon, 13 May 2024 08:34:30 -0400
+	id 1s6Use-0004MA-C6; Mon, 13 May 2024 08:34:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s6Usn-0004ND-2W
- for qemu-devel@nongnu.org; Mon, 13 May 2024 08:34:23 -0400
+ id 1s6UsY-0004LM-NW
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 08:34:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1s6Usk-0004Vc-Tz
- for qemu-devel@nongnu.org; Mon, 13 May 2024 08:34:20 -0400
+ id 1s6UsW-0004R6-29
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 08:34:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715603657;
+ s=mimecast20190719; t=1715603642;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mZ785zT+qMcpYwxB8fMfufyghsbSHwxj2i1XQxD081o=;
- b=h4tbAhAqYXjW8UbY5StFBGkSVIJ+qKqmRaWEkG7JeR9wF3FbEvHjuWW//tUkhhWTnAJ/bG
- dgqtwtfGSMdS0vXVXtKSIoz4kthTnGJkWIvZziAtQhPTQ6ylc3mEG+jvwDMm05cUaCnSYL
- t7fipbGhTWG5btfP1IRlIGAH+9r00wQ=
+ content-transfer-encoding:content-transfer-encoding;
+ bh=h2gl8kDkJZAKDuXKZnVpLGTGOVhZWkwGBCYxPm/BOmU=;
+ b=GQ8bMl3lI4Yy0tl0k9jSY5Z9UW/oGZm2AtYwXyrXsR4v8T18W2+N4/xBuznFWnGG5nJylY
+ Om7wqSvUbyIC+lblpDOn+EmgJW1kfLuTb8T0uA9RBuqh0Jn1GmKtegHRwAMdQMqYfZyV04
+ ImIcQ0Kbhbn7UCSCIFTnXdqaW4yc/ok=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-115-k8ZYeKBjO5KdnJZGFwLxSg-1; Mon, 13 May 2024 08:34:04 -0400
-X-MC-Unique: k8ZYeKBjO5KdnJZGFwLxSg-1
+ us-mta-613-zCUrESxvOXi-EArQ96tckA-1; Mon, 13 May 2024 08:34:00 -0400
+X-MC-Unique: zCUrESxvOXi-EArQ96tckA-1
 Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
  [10.11.54.5])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7A3F7809F64;
- Mon, 13 May 2024 12:34:03 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4FC598030C8;
+ Mon, 13 May 2024 12:34:00 +0000 (UTC)
 Received: from toolbox.default.com (unknown [10.42.28.55])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 4EDEB7414;
- Mon, 13 May 2024 12:34:02 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id C22F97412;
+ Mon, 13 May 2024 12:33:58 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, devel@lists.libvirt.org,
@@ -54,13 +53,12 @@ Cc: Thomas Huth <thuth@redhat.com>, devel@lists.libvirt.org,
  Peter Krempa <pkrempa@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  Yanan Wang <wangyanan55@huawei.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 2/2] tests: add testing of parameter=1 for SMP topology
-Date: Mon, 13 May 2024 13:33:58 +0100
-Message-ID: <20240513123358.612355-3-berrange@redhat.com>
-In-Reply-To: <20240513123358.612355-1-berrange@redhat.com>
-References: <20240513123358.612355-1-berrange@redhat.com>
+Subject: [PATCH 0/2] hw/core: revert deprecation of 'parameter=1' for SMP
+ topology
+Date: Mon, 13 May 2024 13:33:56 +0100
+Message-ID: <20240513123358.612355-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
@@ -87,34 +85,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Validate that it is possible to pass 'parameter=1' for any SMP topology
-parameter, since unsupported parameters are implicitly considered to
-always have a value of 1.
+Since QEMU 9.0, users are complaining that depecation messages are shown
+for every VM libvirt starts. This is due to the newly introduced
+deprecation of 'parameter=1' for -smp. This proposes reverting that, see
+the 1st patch for further commentary.
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- tests/unit/test-smp-parse.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Daniel P. Berrangé (2):
+  hw/core: allow parameter=1 for CPU topology on any machine
+  tests: add testing of parameter=1 for SMP topology
 
-diff --git a/tests/unit/test-smp-parse.c b/tests/unit/test-smp-parse.c
-index 56165e6644..56ce5128f1 100644
---- a/tests/unit/test-smp-parse.c
-+++ b/tests/unit/test-smp-parse.c
-@@ -330,6 +330,14 @@ static const struct SMPTestData data_generic_valid[] = {
-         .config = SMP_CONFIG_GENERIC(T, 8, T, 2, T, 4, T, 2, T, 16),
-         .expect_prefer_sockets = CPU_TOPOLOGY_GENERIC(8, 2, 4, 2, 16),
-         .expect_prefer_cores   = CPU_TOPOLOGY_GENERIC(8, 2, 4, 2, 16),
-+    }, {
-+        /*
-+         * Unsupported parameters are always allowed to be set to '1'
-+         * config: -smp 8,books=1,drawers=1,sockets=2,modules=1,dies=1,cores=4,threads=2,maxcpus=8
-+         * expect: cpus=8,sockets=2,cores=2,threads=2,maxcpus=8 */
-+        .config = SMP_CONFIG_WITH_FULL_TOPO(8, 1, 1, 2, 1, 1, 2, 2, 8),
-+        .expect_prefer_sockets = CPU_TOPOLOGY_GENERIC(8, 2, 2, 2, 8),
-+        .expect_prefer_cores   = CPU_TOPOLOGY_GENERIC(8, 2, 2, 2, 8),
-     },
- };
- 
+ docs/about/deprecated.rst   | 14 -------
+ hw/core/machine-smp.c       | 82 ++++++++++++-------------------------
+ tests/unit/test-smp-parse.c | 16 ++++++--
+ 3 files changed, 38 insertions(+), 74 deletions(-)
+
 -- 
 2.43.0
 
