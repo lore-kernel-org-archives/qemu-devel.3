@@ -4,84 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DDE6C25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 14:29:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6596C25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 14:31:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6WfT-00052y-FO; Mon, 13 May 2024 10:28:44 -0400
+	id 1s6Wi7-0006iu-0x; Mon, 13 May 2024 10:31:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s6WfO-0004z2-MU
- for qemu-devel@nongnu.org; Mon, 13 May 2024 10:28:38 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s6WfN-0001kl-3m
- for qemu-devel@nongnu.org; Mon, 13 May 2024 10:28:38 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-a59a387fbc9so1143397066b.1
- for <qemu-devel@nongnu.org>; Mon, 13 May 2024 07:28:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715610516; x=1716215316; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=LJ39PRoLaa/csDYpSELX4LdZVipjV77ybqt6C6rULCw=;
- b=aS7/7Iv1Yzi9fVi5cUIYEFIDLhKHkv7Nnrn9iuFmOImcOyM4O9cRgSknTKFObQLz6Y
- Gka9mscCY6PraEenyZqa++x9mF8sVytB5c9K44FkMJwjYsd+QqNOM9J8V755jU2kr+/a
- ZtqxEwXFZOWYV3Q/AhvzI+z/RGiZq5CY4+suvo7AUO9wQdqeXx2F273kY7Lnzk6El/qN
- glhry4JmU2o1wlsyjI5D7ew3f09C8Tx4zXbJrvOmfUrNieMre0fun+XrryIVvVaOCBv9
- jVTw9ye2TQSBY58A408VSGOCsQn9cVLQlcVF/gqEJ6O9mlAHSo4zZGeYS7QZF+YO0yLn
- tdGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715610516; x=1716215316;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LJ39PRoLaa/csDYpSELX4LdZVipjV77ybqt6C6rULCw=;
- b=NhQdbJSS/VWJBPnIkIU7pYOj5Sy6o902kSNsYFNTMfSHPHq3F7EJZd6lOXQE0Vu2kS
- 14LiJ8MI5sYKLMem3rwfgb4tDskqLqDZxBC2CyriEJFC6QRbD48UI8esMbsKvfH5v6a4
- FS4/g5r9IdGfhNzaII1GPp7WIN2KYiqOwhRrJHHVmENqllmVrBP5ivV5fP0T4JV40dCy
- haVWL3WmcZGgDQEZJc6ydgKcq7y+NQBM037AKMfuRwVv8i7QHGjCpWzaTeripDFto0pE
- PcIKQAL7Z1Lpa2RXUot5p40YR6mqmUrpozlxWF11iL3tkBfDqCJ+v1yuM/a3SkqNl632
- kCIw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVw1SRT2WnNCmWZUJukeJoUsUGEjtWLZL3rWx+s68D22Lb1LteehV7EyQ5ksYhUKpUv7OGPbTqSYl+k56+woePerxazmzU=
-X-Gm-Message-State: AOJu0Yzmn/S0Iab+gUOzxbWzSh+8/OZT3v94csWQ4du7n4+uQDNN+PMZ
- PMdGaWu2RdYa0YIQN0nxf5f3dp9C6pzs42re078LcofeY2gGlgUecJ3iYCslXeQ=
-X-Google-Smtp-Source: AGHT+IG3JFoJEcijdDDNvGtm0mcvdVqRPGmJT1jLJm9Z3Ip3VnOJlCiVOcuBoHa26ev5UdMGtBj/Gg==
-X-Received: by 2002:a17:906:17c5:b0:a59:c9ad:bd26 with SMTP id
- a640c23a62f3a-a5a2d54c601mr634760466b.12.1715610515725; 
- Mon, 13 May 2024 07:28:35 -0700 (PDT)
-Received: from [10.1.2.72] ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a5a179c7f32sm607349466b.106.2024.05.13.07.28.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 May 2024 07:28:35 -0700 (PDT)
-Message-ID: <99342f96-1a9c-414b-8cf4-fe2d3830464d@linaro.org>
-Date: Mon, 13 May 2024 16:28:34 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1s6Wi5-0006iN-4Q
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 10:31:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1s6Wi2-0002BF-Rh
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 10:31:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715610681;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4js0GywERsc8aXXdPlgEI13IPolZmURJ6aQxvtqNJcI=;
+ b=h79pmvugO4zYwbjaVkJ8NhlcOPgvsU5kD+T6ywAqG41UAX84PgNMwP7WYSR1cfT214LNpt
+ iLhZOAJDMS82fxs+MsZCntYFBABmkXuQb6ClyvFb8xV5Bx5b1j7OlYpwrbM5l6Fq22TBtc
+ WHH3qCvzVHVMSk+85/NRtI8ohgPILWY=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-591-zNrWLvSwOme_kfU-B66brQ-1; Mon, 13 May 2024 10:26:20 -0400
+X-MC-Unique: zNrWLvSwOme_kfU-B66brQ-1
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1E2861818680;
+ Mon, 13 May 2024 14:26:20 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.55])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 301E247B;
+ Mon, 13 May 2024 14:26:19 +0000 (UTC)
+Date: Mon, 13 May 2024 15:26:17 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH 2/4] tests/lcitool: Remove g++ from the containers
+ (except for the MinGW one)
+Message-ID: <ZkIjCWlQyUws3y2P@redhat.com>
+References: <20240513102252.48884-1-thuth@redhat.com>
+ <20240513102252.48884-3-thuth@redhat.com>
+ <ZkHrXOR05UkkMn2X@redhat.com>
+ <41974e51-cee5-4a62-bcab-db9b78f76aee@redhat.com>
+ <ZkIDYTTtMlX20-xW@redhat.com>
+ <22d84c81-7c7b-4656-8606-cf919b26d0a1@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] qerror: QERR_IO_ERROR is no longer used, drop
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: fam@euphon.net, kwolf@redhat.com, hreitz@redhat.com,
- marcandre.lureau@redhat.com, peterx@redhat.com, farosas@suse.de,
- pbonzini@redhat.com, richard.henderson@linaro.org, qemu-block@nongnu.org
-References: <20240513141703.549874-1-armbru@redhat.com>
- <20240513141703.549874-7-armbru@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240513141703.549874-7-armbru@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <22d84c81-7c7b-4656-8606-cf919b26d0a1@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,18 +89,55 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/5/24 16:17, Markus Armbruster wrote:
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> ---
->   include/qapi/qmp/qerror.h | 3 ---
->   1 file changed, 3 deletions(-)
+On Mon, May 13, 2024 at 04:22:00PM +0200, Thomas Huth wrote:
+> On 13/05/2024 14.11, Daniel P. Berrangé wrote:
+> > On Mon, May 13, 2024 at 02:05:16PM +0200, Thomas Huth wrote:
+> > > On 13/05/2024 12.28, Daniel P. Berrangé wrote:
+> > > > A better way to handle this would be to define a separate project
+> > > > 
+> > > >     'tests/lcitool/projects/qemu-win-installer.yml'
+> > > > 
+> > > > With
+> > > > 
+> > > >      packages
+> > > >        - g++
+> > > > 
+> > > > Then enable the extra project for win64
+> > > > 
+> > > >       generate_dockerfile("fedora-win64-cross", "fedora-38",
+> > > >                           project='qemu,qemu-win-installer',
+> > > >                           cross="mingw64",
+> > > >                           trailer=cross_build("x86_64-w64-mingw32-",
+> > > >                                               "x86_64-softmmu"))
+> > > > 
+> > > > which should result in an identical container to what we have today
+> > > > for win64, while letting us slim the other containers.
+> > > 
+> > > Ok, good idea! ... but then we need to teach lcitool about mingw-w64-tools
+> > > first, otherwise that vss code won't get built due to the missing "widl"
+> > > tool.
+> > 
+> > Why is that a pre-requisite ?   What i've suggested will result in a
+> > Dockerfile for win64 that is 100% identical to what we already have
+> > in git today. So surely that will already succeed to the same extent
+> > that CI succeeds today ?
+> 
+> If you want to have the same result, we can also simply remove g++
+> everywhere, also for the mingw cross containers, since the vss code is
+> currently not built at all due to the missing widl program.
 
-One less!
+Oh, I'm getting mixed up between the qemu-setup.exe and the qga installer
+exe.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
