@@ -4,61 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B525C25B79
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 14:17:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27496C25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 14:18:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6WUY-0000U7-E3; Mon, 13 May 2024 10:17:26 -0400
+	id 1s6WUS-0000SD-Em; Mon, 13 May 2024 10:17:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s6WUT-0000TA-EJ
- for qemu-devel@nongnu.org; Mon, 13 May 2024 10:17:21 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s6WUL-0000Q7-2v
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 10:17:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s6WUR-0008Nr-Q4
- for qemu-devel@nongnu.org; Mon, 13 May 2024 10:17:21 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1s6WUJ-0008Lz-Ho
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 10:17:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715609839;
+ s=mimecast20190719; t=1715609830;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=t10/czODNqwBfnDPoFoZUKAF4MFjQlpjG+9InR7NQlo=;
- b=KSA96VUSV/DEOvDP9DatyDSDwrZ+sDDMYwQXgF1UabmVBz+f6HX8co5Y7AenDO+bTiA+j+
- aY/gSpmpFx9IWcjWEmEIj06mMebAF+JHfHpeLoGDmdLZ9hyPSGMl3a7R20M0hfeXV+HbqH
- 3s14m+7gqbjeyM0ctZ41M2HsgN89OPw=
+ content-transfer-encoding:content-transfer-encoding;
+ bh=bx3UL4SYHMDFFnXTY7xupY/gHtgqaCr2T/9HvSHE3YM=;
+ b=YwS9Ue3+VMYYLGbewzxf9dteTBkryIv718ni7jH9Tbi0ibqnP+xJF6TupKAhxUbpiyg73H
+ yCn5n0YhrMC58Q6t7lQtSNjlVYFLTD7+yTVHVHZzvnKbQK/gGsPjtUoS457px4v5QWyO1L
+ zAC5Sc9nZUQpu8vrwPn114vdTnezBWs=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-679-E07hga-nMlK9FvRWpJLOyw-1; Mon, 13 May 2024 10:17:05 -0400
-X-MC-Unique: E07hga-nMlK9FvRWpJLOyw-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
+ us-mta-621-cM4syfI4N7yCNnlN4xJdnA-1; Mon, 13 May 2024 10:17:05 -0400
+X-MC-Unique: cM4syfI4N7yCNnlN4xJdnA-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D4E438088C0;
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id BC6408030BE;
  Mon, 13 May 2024 14:17:04 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.193.21])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 8B0611050176;
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 8ADB449B520;
  Mon, 13 May 2024 14:17:04 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 6420321E5E75; Mon, 13 May 2024 16:17:03 +0200 (CEST)
+ id 5BB7321E5E5A; Mon, 13 May 2024 16:17:03 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org, fam@euphon.net, kwolf@redhat.com, hreitz@redhat.com,
  marcandre.lureau@redhat.com, peterx@redhat.com, farosas@suse.de,
  pbonzini@redhat.com, richard.henderson@linaro.org, qemu-block@nongnu.org
-Subject: [PATCH 3/6] block/vmdk: Improve error messages on extent write error
-Date: Mon, 13 May 2024 16:17:00 +0200
-Message-ID: <20240513141703.549874-4-armbru@redhat.com>
-In-Reply-To: <20240513141703.549874-1-armbru@redhat.com>
-References: <20240513141703.549874-1-armbru@redhat.com>
+Subject: [PATCH 0/6] error: Eliminate QERR_IO_ERROR
+Date: Mon, 13 May 2024 16:16:57 +0200
+Message-ID: <20240513141703.549874-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
@@ -83,67 +80,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-vmdk_init_extent() reports blk_co_pwrite() failure to its caller as
+Markus Armbruster (6):
+  block: Improve error message when external snapshot can't flush
+  dump/win_dump: Improve error messages on write error
+  block/vmdk: Improve error messages on extent write error
+  cpus: Improve error messages on memsave, pmemsave write error
+  migration: Rephrase message on failure to save / load Xen device state
+  qerror: QERR_IO_ERROR is no longer used, drop
 
-    An IO error has occurred
+ include/qapi/qmp/qerror.h |  3 ---
+ block/vmdk.c              | 10 +++++-----
+ blockdev.c                |  6 ++++--
+ dump/win_dump.c           |  7 ++++---
+ migration/savevm.c        |  5 ++---
+ system/cpus.c             |  6 ++++--
+ 6 files changed, 19 insertions(+), 18 deletions(-)
 
-The errno code returned by blk_co_pwrite() is lost.
-
-Improve this to
-
-    failed to write VMDK <what>: <description of errno>
-
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
----
- block/vmdk.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/block/vmdk.c b/block/vmdk.c
-index 3b82979fdf..78f6433607 100644
---- a/block/vmdk.c
-+++ b/block/vmdk.c
-@@ -28,7 +28,6 @@
- #include "block/block_int.h"
- #include "sysemu/block-backend.h"
- #include "qapi/qmp/qdict.h"
--#include "qapi/qmp/qerror.h"
- #include "qemu/error-report.h"
- #include "qemu/module.h"
- #include "qemu/option.h"
-@@ -2278,12 +2277,12 @@ vmdk_init_extent(BlockBackend *blk, int64_t filesize, bool flat, bool compress,
-     /* write all the data */
-     ret = blk_co_pwrite(blk, 0, sizeof(magic), &magic, 0);
-     if (ret < 0) {
--        error_setg(errp, QERR_IO_ERROR);
-+        error_setg_errno(errp, -ret, "failed to write VMDK magic");
-         goto exit;
-     }
-     ret = blk_co_pwrite(blk, sizeof(magic), sizeof(header), &header, 0);
-     if (ret < 0) {
--        error_setg(errp, QERR_IO_ERROR);
-+        error_setg_errno(errp, -ret, "failed to write VMDK header");
-         goto exit;
-     }
- 
-@@ -2303,7 +2302,7 @@ vmdk_init_extent(BlockBackend *blk, int64_t filesize, bool flat, bool compress,
-     ret = blk_co_pwrite(blk, le64_to_cpu(header.rgd_offset) * BDRV_SECTOR_SIZE,
-                         gd_buf_size, gd_buf, 0);
-     if (ret < 0) {
--        error_setg(errp, QERR_IO_ERROR);
-+        error_setg_errno(errp, -ret, "failed to write VMDK grain directory");
-         goto exit;
-     }
- 
-@@ -2315,7 +2314,8 @@ vmdk_init_extent(BlockBackend *blk, int64_t filesize, bool flat, bool compress,
-     ret = blk_co_pwrite(blk, le64_to_cpu(header.gd_offset) * BDRV_SECTOR_SIZE,
-                         gd_buf_size, gd_buf, 0);
-     if (ret < 0) {
--        error_setg(errp, QERR_IO_ERROR);
-+        error_setg_errno(errp, -ret,
-+                         "failed to write VMDK backup grain directory");
-     }
- 
-     ret = 0;
 -- 
 2.45.0
 
