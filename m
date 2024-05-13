@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 641B4C25B74
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 07:49:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 863E9C25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 07:49:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6QPC-0002mP-4g; Mon, 13 May 2024 03:47:30 -0400
+	id 1s6QR2-0004sf-8n; Mon, 13 May 2024 03:49:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s6QP6-0002js-Ut
- for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:25 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1s6QPU-0002vj-1i
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:48 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s6QP4-0001JS-0l
- for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:24 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-420104e5336so8096025e9.1
- for <qemu-devel@nongnu.org>; Mon, 13 May 2024 00:47:21 -0700 (PDT)
+ id 1s6QPO-0001PW-LT
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:47 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-41f9ce16ed8so40523375e9.0
+ for <qemu-devel@nongnu.org>; Mon, 13 May 2024 00:47:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715586440; x=1716191240; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715586460; x=1716191260; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eUEXDe4PCMsFe4DA4mYg1FIK58I7QokH1/RCklBXYEQ=;
- b=pLH1zIaDc9P8rE9vv0YKAjGi5YiH15l2aAvqnOSu/Ltm5F6r7kRka6idvNPuPb3mSy
- ebO4CjKSVgUJkNPpKOpCyLFHWAwy8rouSZEvBC2/j1zlVSMGjE/Xbi3eOsF55mKAXPAd
- Gx1VS6FGMmHg3+ecWyq9sX2vKO8lUGUVc/gjm6S6Mvn6VVp/hq5Mr7+Usmb/OzsX8Hz0
- Uy4Y8Hv2dOGXXRD1u/I0Z3BQ34z8ynGmr5NvMjNn2z3CKOaz/SvpzZXuEamyhE6tabNE
- FUytLZmj6DaIoz1a+sLpDRaRFcg5n8uoeuV7rl60wJwHPjGZBXRITmNwLK5JHfLqS2Xp
- P5rA==
+ bh=LWVLc39b8wIMsAc1+ocgu4+wlVtjWoOjilzL1JEXEXE=;
+ b=Kz15b5vpiZSsTCdQCR5u9rBtGOy21eyjt7wB/lzkqm3vLI3W05sAy+cL0I7Urmap2P
+ k3eruzTXNgk0emg4EeaGrINmwtaOjcl34D4/9zVWBpn/+vYOZJhgsuKVUnsqYN5xUt2n
+ UJCfMtIMv3N+wmmyUHdOTnzqFJwP7M6xM1vSXuGb1jdbTJqeLyJbFeVtRJzZZn85nAvb
+ UOJaugitj/Fxtrn2NKHFebECeduYrAOgiI7GlfxoESxqnBUovRNKIwq+LhNgRgaBKeEy
+ 1scGX2oA5DMjZnC4AZjF9IlslvMadSEQwbk8F34vRRpqhZtPsm1ZmB4QUBPgf598920C
+ Hhng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715586440; x=1716191240;
+ d=1e100.net; s=20230601; t=1715586460; x=1716191260;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=eUEXDe4PCMsFe4DA4mYg1FIK58I7QokH1/RCklBXYEQ=;
- b=SQ8BrwCvaVzsk48BC/v4wvMZM42Sehv3dIB71zyYsFFXqjxVMoxfVia/9OOrGoB2Cx
- 7YtcnDvSDk44o47uiv2R1aEdvtqC38CgyWTbY+BRgSmlKXUJ4AvssJEAFMVX0gIe1OE+
- FzD4eORECobxYjYX4rIRvbKTGeH5RLEnU9B5tPFtw2RdWcxGOHqC1F6rwfBoZ2+IAgu0
- suTcJPDMsb0M9rtK4wNrBHdW86/9Zsm5gYwdEBGGDnRWPd+C5WVGLcub2cntaEnkZ+kh
- j9Alnb5QabB+zdy/8A6rDGHAF1H4jC0arY6GVquiohIsVQKs/LwnSXWG4BEeOH4XY7en
- Bksg==
-X-Gm-Message-State: AOJu0YzowRNdkh43BV/bzeR25XATJjUkDLn5eMQYavplp8bu2fzs5tUN
- TA5NmcKpiFrBAH6gmPZtVXzLkq5ae9bCjA2598nPAg2fFxjVb2R+laTDyK+SDdQBf7UcemN8EoW
- MqmI=
-X-Google-Smtp-Source: AGHT+IEZLzEwwa9i3/2iW6KJtd9IJTESLn48CFGTWL22gABI2u1nauODrPeuy5s9SM91ITrdtUq9kg==
-X-Received: by 2002:a05:600c:3c83:b0:41b:8041:53c2 with SMTP id
- 5b1f17b1804b1-41feac51e04mr88420345e9.15.1715586439836; 
- Mon, 13 May 2024 00:47:19 -0700 (PDT)
+ bh=LWVLc39b8wIMsAc1+ocgu4+wlVtjWoOjilzL1JEXEXE=;
+ b=gJmgDFSTJDBFFyld+XRDPtcGBPjfR+PHDUpw/O8pof85ZgStUutNVt++zOxoDX7GRz
+ eJbntTB5aJjqaSgCxjeDP9hrQ2VuwAR2IpK6yzA1CU9jmn7pRcLxev95alcJr+QhTulX
+ Mx0vZrMmrSTgTRXTZlO/UVAa3vbqJy7o8WZ4B0F6u1aKM+pKwNR3GCjNUnm+9z8XJM5W
+ yQMgJ4YuCMq/aMdDcMDfrE+O8nhf03YBYnsf7VtDmdB3Mb2AkMQi3qBb8iQW0XwjCLxn
+ bR2pzwXo85ytlgsNlJAD+W/tzxtZnmws9k9bYjmHo3uqUkY9nFzCXgDCqyKmYzSe/Lsz
+ WMOQ==
+X-Gm-Message-State: AOJu0YxVJtqNcOHkXv60uUI4UhWb9NF2gIYouCzQcWHPP1uZEnkLX9fj
+ J44wXGYKbsoVi5vaCXvGuWQWE7qD8tiO36DgIJuA0qnhf71zVAAKG1QME95og4e06RBHNF4kRpM
+ BU3s=
+X-Google-Smtp-Source: AGHT+IHJjLiQmsvXTSlWJhfiQzRxfPQ17XqU0KhdlxHJxFK0ByaWqSrf86//e3RL2MXisHCF3590Vw==
+X-Received: by 2002:a05:600c:3548:b0:41a:6edd:6c1d with SMTP id
+ 5b1f17b1804b1-41feac55e10mr78362825e9.32.1715586460562; 
+ Mon, 13 May 2024 00:47:40 -0700 (PDT)
 Received: from stoup.. (12.red-213-97-13.staticip.rima-tde.net. [213.97.13.12])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-41fccee9318sm148204765e9.30.2024.05.13.00.47.19
+ 5b1f17b1804b1-41fccee9318sm148204765e9.30.2024.05.13.00.47.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 May 2024 00:47:19 -0700 (PDT)
+ Mon, 13 May 2024 00:47:40 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: deller@gmx.de
-Subject: [PATCH v2 01/45] target/hppa: Move cpu_get_tb_cpu_state out of line
-Date: Mon, 13 May 2024 09:46:33 +0200
-Message-Id: <20240513074717.130949-2-richard.henderson@linaro.org>
+Subject: [PATCH v2 30/45] target/hppa: Use delay_excp for conditional trap on
+ overflow
+Date: Mon, 13 May 2024 09:47:02 +0200
+Message-Id: <20240513074717.130949-31-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240513074717.130949-1-richard.henderson@linaro.org>
 References: <20240513074717.130949-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,117 +97,105 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/cpu.h | 43 ++-----------------------------------------
- target/hppa/cpu.c | 42 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 44 insertions(+), 41 deletions(-)
+ target/hppa/helper.h     |  1 -
+ target/hppa/int_helper.c |  2 +-
+ target/hppa/op_helper.c  |  7 -------
+ target/hppa/translate.c  | 21 +++++++++++++--------
+ 4 files changed, 14 insertions(+), 17 deletions(-)
 
-diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-index fb2e4c4a98..61f1353133 100644
---- a/target/hppa/cpu.h
-+++ b/target/hppa/cpu.h
-@@ -314,47 +314,8 @@ hwaddr hppa_abs_to_phys_pa2_w1(vaddr addr);
- #define TB_FLAG_PRIV_SHIFT  8
- #define TB_FLAG_UNALIGN     0x400
+diff --git a/target/hppa/helper.h b/target/hppa/helper.h
+index 3d0d143aed..c12b48a04a 100644
+--- a/target/hppa/helper.h
++++ b/target/hppa/helper.h
+@@ -1,5 +1,4 @@
+ DEF_HELPER_2(excp, noreturn, env, int)
+-DEF_HELPER_FLAGS_2(tsv, TCG_CALL_NO_WG, void, env, tl)
  
--static inline void cpu_get_tb_cpu_state(CPUHPPAState *env, vaddr *pc,
--                                        uint64_t *cs_base, uint32_t *pflags)
--{
--    uint32_t flags = env->psw_n * PSW_N;
--
--    /* TB lookup assumes that PC contains the complete virtual address.
--       If we leave space+offset separate, we'll get ITLB misses to an
--       incomplete virtual address.  This also means that we must separate
--       out current cpu privilege from the low bits of IAOQ_F.  */
--#ifdef CONFIG_USER_ONLY
--    *pc = env->iaoq_f & -4;
--    *cs_base = env->iaoq_b & -4;
--    flags |= TB_FLAG_UNALIGN * !env_cpu(env)->prctl_unalign_sigbus;
--#else
--    /* ??? E, T, H, L, B bits need to be here, when implemented.  */
--    flags |= env->psw & (PSW_W | PSW_C | PSW_D | PSW_P);
--    flags |= (env->iaoq_f & 3) << TB_FLAG_PRIV_SHIFT;
--
--    *pc = hppa_form_gva_psw(env->psw, (env->psw & PSW_C ? env->iasq_f : 0),
--                            env->iaoq_f & -4);
--    *cs_base = env->iasq_f;
--
--    /* Insert a difference between IAOQ_B and IAOQ_F within the otherwise zero
--       low 32-bits of CS_BASE.  This will succeed for all direct branches,
--       which is the primary case we care about -- using goto_tb within a page.
--       Failure is indicated by a zero difference.  */
--    if (env->iasq_f == env->iasq_b) {
--        target_long diff = env->iaoq_b - env->iaoq_f;
--        if (diff == (int32_t)diff) {
--            *cs_base |= (uint32_t)diff;
--        }
--    }
--    if ((env->sr[4] == env->sr[5])
--        & (env->sr[4] == env->sr[6])
--        & (env->sr[4] == env->sr[7])) {
--        flags |= TB_FLAG_SR_SAME;
--    }
--#endif
--
--    *pflags = flags;
--}
-+void cpu_get_tb_cpu_state(CPUHPPAState *env, vaddr *pc,
-+                          uint64_t *cs_base, uint32_t *pflags);
+ DEF_HELPER_FLAGS_3(stby_b, TCG_CALL_NO_WG, void, env, tl, tl)
+ DEF_HELPER_FLAGS_3(stby_b_parallel, TCG_CALL_NO_WG, void, env, tl, tl)
+diff --git a/target/hppa/int_helper.c b/target/hppa/int_helper.c
+index 1aa3e88ef1..97e5f0b9a7 100644
+--- a/target/hppa/int_helper.c
++++ b/target/hppa/int_helper.c
+@@ -134,13 +134,13 @@ void hppa_cpu_do_interrupt(CPUState *cs)
+         switch (i) {
+         case EXCP_ILL:
+         case EXCP_BREAK:
++        case EXCP_OVERFLOW:
+         case EXCP_COND:
+         case EXCP_PRIV_REG:
+         case EXCP_PRIV_OPR:
+             /* IIR set via translate.c.  */
+             break;
  
- target_ulong cpu_hppa_get_psw(CPUHPPAState *env);
- void cpu_hppa_put_psw(CPUHPPAState *env, target_ulong);
-diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
-index 393a81988d..582036b31e 100644
---- a/target/hppa/cpu.c
-+++ b/target/hppa/cpu.c
-@@ -43,6 +43,48 @@ static vaddr hppa_cpu_get_pc(CPUState *cs)
-     return cpu->env.iaoq_f;
+-        case EXCP_OVERFLOW:
+         case EXCP_ASSIST:
+         case EXCP_DTLB_MISS:
+         case EXCP_NA_ITLB_MISS:
+diff --git a/target/hppa/op_helper.c b/target/hppa/op_helper.c
+index a8b69fd481..66cad78a57 100644
+--- a/target/hppa/op_helper.c
++++ b/target/hppa/op_helper.c
+@@ -42,13 +42,6 @@ G_NORETURN void hppa_dynamic_excp(CPUHPPAState *env, int excp, uintptr_t ra)
+     cpu_loop_exit_restore(cs, ra);
  }
  
-+void cpu_get_tb_cpu_state(CPUHPPAState *env, vaddr *pc,
-+                          uint64_t *cs_base, uint32_t *pflags)
+-void HELPER(tsv)(CPUHPPAState *env, target_ulong cond)
+-{
+-    if (unlikely((target_long)cond < 0)) {
+-        hppa_dynamic_excp(env, EXCP_OVERFLOW, GETPC());
+-    }
+-}
+-
+ static void atomic_store_mask32(CPUHPPAState *env, target_ulong addr,
+                                 uint32_t val, uint32_t mask, uintptr_t ra)
+ {
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index 7fa0c86a8f..d061b30191 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -1135,6 +1135,17 @@ static void gen_tc(DisasContext *ctx, DisasCond *cond)
+     }
+ }
+ 
++static void gen_tsv(DisasContext *ctx, TCGv_i64 *sv, bool d)
 +{
-+    uint32_t flags = env->psw_n * PSW_N;
++    DisasCond cond = do_cond(ctx, /* SV */ 12, d, NULL, NULL, *sv);
++    DisasDelayException *e = delay_excp(ctx, EXCP_OVERFLOW);
 +
-+    /* TB lookup assumes that PC contains the complete virtual address.
-+       If we leave space+offset separate, we'll get ITLB misses to an
-+       incomplete virtual address.  This also means that we must separate
-+       out current cpu privilege from the low bits of IAOQ_F.  */
-+#ifdef CONFIG_USER_ONLY
-+    *pc = env->iaoq_f & -4;
-+    *cs_base = env->iaoq_b & -4;
-+    flags |= TB_FLAG_UNALIGN * !env_cpu(env)->prctl_unalign_sigbus;
-+#else
-+    /* ??? E, T, H, L, B bits need to be here, when implemented.  */
-+    flags |= env->psw & (PSW_W | PSW_C | PSW_D | PSW_P);
-+    flags |= (env->iaoq_f & 3) << TB_FLAG_PRIV_SHIFT;
++    tcg_gen_brcond_i64(cond.c, cond.a0, cond.a1, e->lab);
 +
-+    *pc = hppa_form_gva_psw(env->psw, (env->psw & PSW_C ? env->iasq_f : 0),
-+                            env->iaoq_f & -4);
-+    *cs_base = env->iasq_f;
-+
-+    /* Insert a difference between IAOQ_B and IAOQ_F within the otherwise zero
-+       low 32-bits of CS_BASE.  This will succeed for all direct branches,
-+       which is the primary case we care about -- using goto_tb within a page.
-+       Failure is indicated by a zero difference.  */
-+    if (env->iasq_f == env->iasq_b) {
-+        target_long diff = env->iaoq_b - env->iaoq_f;
-+        if (diff == (int32_t)diff) {
-+            *cs_base |= (uint32_t)diff;
-+        }
-+    }
-+    if ((env->sr[4] == env->sr[5])
-+        & (env->sr[4] == env->sr[6])
-+        & (env->sr[4] == env->sr[7])) {
-+        flags |= TB_FLAG_SR_SAME;
-+    }
-+#endif
-+
-+    *pflags = flags;
++    /* In the non-trap path, V is known zero. */
++    *sv = tcg_constant_i64(0);
 +}
 +
- static void hppa_cpu_synchronize_from_tb(CPUState *cs,
-                                          const TranslationBlock *tb)
- {
+ static void do_add(DisasContext *ctx, unsigned rt, TCGv_i64 orig_in1,
+                    TCGv_i64 in2, unsigned shift, bool is_l,
+                    bool is_tsv, bool is_tc, bool is_c, unsigned cf, bool d)
+@@ -1177,10 +1188,7 @@ static void do_add(DisasContext *ctx, unsigned rt, TCGv_i64 orig_in1,
+     if (is_tsv || cond_need_sv(c)) {
+         sv = do_add_sv(ctx, dest, in1, in2, orig_in1, shift, d);
+         if (is_tsv) {
+-            if (!d) {
+-                tcg_gen_ext32s_i64(sv, sv);
+-            }
+-            gen_helper_tsv(tcg_env, sv);
++            gen_tsv(ctx, &sv, d);
+         }
+     }
+ 
+@@ -1281,10 +1289,7 @@ static void do_sub(DisasContext *ctx, unsigned rt, TCGv_i64 in1,
+     if (is_tsv || cond_need_sv(c)) {
+         sv = do_sub_sv(ctx, dest, in1, in2);
+         if (is_tsv) {
+-            if (!d) {
+-                tcg_gen_ext32s_i64(sv, sv);
+-            }
+-            gen_helper_tsv(tcg_env, sv);
++            gen_tsv(ctx, &sv, d);
+         }
+     }
+ 
 -- 
 2.34.1
 
