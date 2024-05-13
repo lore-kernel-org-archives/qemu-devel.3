@@ -4,88 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5503CC25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 12:38:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CD00C25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 12:40:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6UwC-0007rt-TX; Mon, 13 May 2024 08:37:52 -0400
+	id 1s6UyH-0000Uv-IY; Mon, 13 May 2024 08:40:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1s6UwB-0007rO-0j
- for qemu-devel@nongnu.org; Mon, 13 May 2024 08:37:51 -0400
-Received: from mail-oa1-x35.google.com ([2001:4860:4864:20::35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1s6Uw7-0005A8-Hq
- for qemu-devel@nongnu.org; Mon, 13 May 2024 08:37:50 -0400
-Received: by mail-oa1-x35.google.com with SMTP id
- 586e51a60fabf-23d3d092a1bso2496493fac.1
- for <qemu-devel@nongnu.org>; Mon, 13 May 2024 05:37:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1s6UyG-0000U4-BU; Mon, 13 May 2024 08:40:00 -0400
+Received: from out30-119.freemail.mail.aliyun.com ([115.124.30.119])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1s6UyD-0005JS-OD; Mon, 13 May 2024 08:40:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1715603866; x=1716208666; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=RGxD/2XGpAQIi5feYNIuhxyTTKbdciv5sChM+mU8WMc=;
- b=WkkOkoyMseCqMcu7xrnaFiMNhsylkTX7Y8//+aGj+ZT0BxQNVJB+dSWY+RcbCPsH9B
- rzVPMibQrHvtSjHGW5hvl9le5NMVoyOnko6bCn4s/RM84WJorF91YJVUZb3CeiXCVfQF
- z1MDMlZCY7IPiHVbPFdf4sFLgYO3kLbXFREPbNcsgT7goH6FMnRVZyNAnU4kShuzgHxs
- twogh8Z+BW3WfETY5+kgDi3LUxoRxAaJgYQzrvFrDstjM5Df945C8aDBRtjFFk+gRLOC
- DE+8t1mBSo0mBHBOljJFtRdWMXDyEDCZdWQt+doxT5UL+jcUmvOi5UDCItMB4cyJyA90
- p5JQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715603866; x=1716208666;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RGxD/2XGpAQIi5feYNIuhxyTTKbdciv5sChM+mU8WMc=;
- b=IbBJ3g4lI+BwlQmqMWKDrzeDu29D711r7Y04shvEdFJ/Mcaq7fRTxvzazKLC7rqPmE
- idhk1fXqWzfxQ3PS/EmdvBq8RPGrAxi3o7Ppi3bfnK5BYL9nDYFHZ+Os3oHNMUdqH0FZ
- SGz/tt7w36RdwG4fkC7qr7W7yf1qiG71ix96XbjWsDeRI0ciwQh3WN0sK65bDYWbuUSj
- 606+lgJpf2taNOOVyi+OBynatkH02/Qs19EO75PBWPxU11i4XCrPFBY9R5UO4gLXpGxD
- g0ILXpPnL9YUTnjMsCZkp3st+Dbe+rZll1YMa6OXo8TpZNzJXioNNKDdgdQ9CPA8QJws
- Q1qA==
-X-Gm-Message-State: AOJu0YwcR0yYEOYimmwe5qprv5vzVGuLSWIxCeCw07R6SQpKDmpjZGG+
- IThZeJAn7maZX9+bIstvm+MaEstrk7biK9ZBnEp2G2t7XpUN/skaapdEwVaqAbk=
-X-Google-Smtp-Source: AGHT+IEE1a7OHdTeGhWDQY8R7NuTeUOOGuIYes1HPIubEIMBUxDo4B6WNv2UzDA7X1QcDS+MR3Sbmg==
-X-Received: by 2002:a05:6870:2494:b0:221:9013:d783 with SMTP id
- 586e51a60fabf-24172c2ad03mr12114351fac.34.1715603865808; 
- Mon, 13 May 2024 05:37:45 -0700 (PDT)
-Received: from [192.168.68.110] ([177.94.42.57])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-6f4d2b2646esm7602403b3a.184.2024.05.13.05.37.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 May 2024 05:37:45 -0700 (PDT)
-Message-ID: <abd1e74a-8d74-4ef9-b917-ce1a3c8e6af9@ventanamicro.com>
-Date: Mon, 13 May 2024 09:37:40 -0300
+ d=linux.alibaba.com; s=default;
+ t=1715603992; h=Content-Type:Message-ID:Date:MIME-Version:Subject:From:To;
+ bh=Ax6EznOYH/R13xwfdkiuc6uU67DsJ3fV5HQfpKmyZdw=;
+ b=jeYjlqs/ZTBda4HjT90lj4um8StL2OJ+4qtjiTpHUrWySvS0JWXYBq956OCZuGzlx82ZwheaUxwmGxwXZYmycbhrvOSmJWBxVp/hk4aBo6lL3uK2/E09V3bMBR9hWZVU4mNaYalljZjuybO4MWcwJv/DR9z5XCwEjh9JBURVlkA=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R151e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032014031;
+ MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
+ TI=SMTPD_---0W6QUYIV_1715603989; 
+Received: from 30.198.0.184(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0W6QUYIV_1715603989) by smtp.aliyun-inc.com;
+ Mon, 13 May 2024 20:39:51 +0800
+Content-Type: multipart/alternative;
+ boundary="------------v83NsPecDEsYkHg9T0G4Ld00"
+Message-ID: <efd5be9c-8577-485e-bdfe-411b4a2932b2@linux.alibaba.com>
+Date: Mon, 13 May 2024 20:39:04 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/15] hw/riscv: add RISC-V IOMMU base emulation
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: Frank Chang <frank.chang@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- palmer@rivosinc.com, ajones@ventanamicro.com, tjeznach@rivosinc.com,
- Sebastien Boeuf <seb@rivosinc.com>
-References: <20240307160319.675044-1-dbarboza@ventanamicro.com>
- <20240307160319.675044-4-dbarboza@ventanamicro.com>
- <CANzO1D35eYan8axod37tAg88r=qg4Jt0CVTvO+0AiwRLbbV64A@mail.gmail.com>
- <09dc2e36-741d-44de-aac8-4ed2495eaeb1@ventanamicro.com>
+Subject: Re: [PATCH v9 3/6] target/riscv: Add helper functions to calculate
+ current number of masked bits for pointer masking
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+To: Alexey Baturo <baturo.alexey@gmail.com>
+Cc: richard.henderson@linaro.org, space.monkey.delivers@gmail.com,
+ palmer@dabbelt.com, Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu,
+ kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+References: <20240511101053.1875596-1-me@deliversmonkey.space>
+ <20240511101053.1875596-4-me@deliversmonkey.space>
+ <58fe0789-4f1b-4c13-bab9-977c18787095@linux.alibaba.com>
 Content-Language: en-US
-In-Reply-To: <09dc2e36-741d-44de-aac8-4ed2495eaeb1@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::35;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-oa1-x35.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+In-Reply-To: <58fe0789-4f1b-4c13-bab9-977c18787095@linux.alibaba.com>
+Received-SPF: pass client-ip=115.124.30.119;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-119.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,420 +74,261 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Frank,
+This is a multi-part message in MIME format.
+--------------v83NsPecDEsYkHg9T0G4Ld00
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 
-On 5/8/24 08:15, Daniel Henrique Barboza wrote:
-> Hi Frank,
-> 
-> I'll reply with that I've done so far. Still missing some stuff:
-> 
-> On 5/2/24 08:37, Frank Chang wrote:
->> Hi Daniel,
+On 2024/5/13 20:35, LIU Zhiwei wrote:
+>
+>
+> On 2024/5/11 18:10, Alexey Baturo wrote:
+>> From: Alexey Baturo<baturo.alexey@gmail.com>
 >>
->> Daniel Henrique Barboza <dbarboza@ventanamicro.com> 於 2024年3月8日 週五 上午12:04寫道：
->>>
->>> From: Tomasz Jeznach <tjeznach@rivosinc.com>
->>>
->>> The RISC-V IOMMU specification is now ratified as-per the RISC-V
->>> international process. The latest frozen specifcation can be found
->>> at:
->>>
->>> https://github.com/riscv-non-isa/riscv-iommu/releases/download/v1.0/riscv-iommu.pdf
->>>
->>> Add the foundation of the device emulation for RISC-V IOMMU, which
->>> includes an IOMMU that has no capabilities but MSI interrupt support and
->>> fault queue interfaces. We'll add add more features incrementally in the
->>> next patches.
->>>
->>> Co-developed-by: Sebastien Boeuf <seb@rivosinc.com>
->>> Signed-off-by: Sebastien Boeuf <seb@rivosinc.com>
->>> Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
->>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->>> ---
->>>   hw/riscv/Kconfig         |    4 +
-
-(...)
-
->>> +
->>> +    s->iommus.le_next = NULL;
->>> +    s->iommus.le_prev = NULL;
->>> +    QLIST_INIT(&s->spaces);
->>> +    qemu_cond_init(&s->core_cond);
->>> +    qemu_mutex_init(&s->core_lock);
->>> +    qemu_spin_init(&s->regs_lock);
->>> +    qemu_thread_create(&s->core_proc, "riscv-iommu-core",
->>> +        riscv_iommu_core_proc, s, QEMU_THREAD_JOINABLE);
+>> Signed-off-by: Alexey Baturo<baturo.alexey@gmail.com>
 >>
->> In our experience, using QEMU thread increases the latency of command
->> queue processing,
->> which leads to the potential IOMMU fence timeout in the Linux driver
->> when using IOMMU with KVM,
->> e.g. booting the guest Linux.
+>> Reviewed-by: Alistair Francis<alistair.francis@wdc.com>
+>> ---
+>>   target/riscv/cpu.h        |  5 ++++
+>>   target/riscv/cpu_helper.c | 58 +++++++++++++++++++++++++++++++++++++++
+>>   2 files changed, 63 insertions(+)
 >>
->> Is it possible to remove the thread from the IOMMU just like ARM, AMD,
->> and Intel IOMMU models?
-> 
-> Interesting. We've been using this emulation internally in Ventana, with
-> KVM and VFIO, and didn't experience this issue. Drew is on CC and can talk
-> more about it.
-> 
-> That said, I don't mind this change, assuming it's feasible to make it for this
-> first version.  I'll need to check it how other IOMMUs are doing it.
+>> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+>> index 52b6ba73c8..9cac723b19 100644
+>> --- a/target/riscv/cpu.h
+>> +++ b/target/riscv/cpu.h
+>> @@ -698,8 +698,13 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
+>>   
+>>   bool riscv_cpu_is_32bit(RISCVCPU *cpu);
+>>   
+>> +bool riscv_cpu_virt_mem_enabled(CPURISCVState *env);
+>> +RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env);
+>> +int riscv_pm_get_pmlen(RISCVPmPmm pmm);
+>> +
+>>   RISCVException riscv_csrr(CPURISCVState *env, int csrno,
+>>                             target_ulong *ret_value);
+>> +
+>>   RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
+>>                              target_ulong *ret_value,
+>>                              target_ulong new_value, target_ulong write_mask);
+>> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+>> index bf58350669..e4a127ca84 100644
+>> --- a/target/riscv/cpu_helper.c
+>> +++ b/target/riscv/cpu_helper.c
+>> @@ -142,6 +142,64 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
+>>       *pflags = flags;
+>>   }
+>>   
+>> +RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env)
+>
+> I think we should process XLEN here.
+>
+> Pack *XL32 into PMM_FIELD_DISABLED
+>
+Please ignore this comment. I see you have considered the XLEN in patch 5/6.
+> Zhiwei
+>> +{
+>> +    int pmm = 0;
+>> +#ifndef CONFIG_USER_ONLY
+>> +    int priv_mode = cpu_address_mode(env);
+>> +    /* Get current PMM field */
+>> +    switch (priv_mode) {
+>> +    case PRV_M:
+>> +        pmm = riscv_cpu_cfg(env)->ext_smmpm ?
+>> +                  get_field(env->mseccfg, MSECCFG_PMM) : PMM_FIELD_DISABLED;
+>> +        break;
+>> +    case PRV_S:
+>> +        pmm = riscv_cpu_cfg(env)->ext_smnpm ?
+>> +                  get_field(env->menvcfg, MENVCFG_PMM) : PMM_FIELD_DISABLED;
+>> +        break;
+>> +    case PRV_U:
+>> +        pmm = riscv_cpu_cfg(env)->ext_ssnpm ?
+>> +                  get_field(env->senvcfg, SENVCFG_PMM) : PMM_FIELD_DISABLED;
+>> +        break;
+>> +    default:
+>> +        g_assert_not_reached();
+>> +    }
+>> +#endif
+>> +    return pmm;
+>> +}
+>> +
+>> +bool riscv_cpu_virt_mem_enabled(CPURISCVState *env)
+>> +{
+>> +    bool virt_mem_en = false;
+>> +#ifndef CONFIG_USER_ONLY
+>> +    int satp_mode = 0;
+>> +    int priv_mode = cpu_address_mode(env);
+>> +    /* Get current PMM field */
+>> +    if (riscv_cpu_mxl(env) == MXL_RV32) {
+>> +        satp_mode = get_field(env->satp, SATP32_MODE);
+>> +    } else {
+>> +        satp_mode = get_field(env->satp, SATP64_MODE);
+>> +    }
+>> +    virt_mem_en = ((satp_mode != VM_1_10_MBARE) && (priv_mode != PRV_M));
+>> +#endif
+>> +    return virt_mem_en;
+>> +}
+>> +
+>> +int riscv_pm_get_pmlen(RISCVPmPmm pmm)
+>> +{
+>> +    switch (pmm) {
+>> +    case PMM_FIELD_DISABLED:
+>> +        return 0;
+>> +    case PMM_FIELD_PMLEN7:
+>> +        return 7;
+>> +    case PMM_FIELD_PMLEN16:
+>> +        return 16;
+>> +    default:
+>> +        g_assert_not_reached();
+>> +    }
+>> +    return -1;
+>> +}
+>> +
+>>   #ifndef CONFIG_USER_ONLY
+>>   
+>>   /*
+--------------v83NsPecDEsYkHg9T0G4Ld00
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 2024/5/13 20:35, LIU Zhiwei wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:58fe0789-4f1b-4c13-bab9-977c18787095@linux.alibaba.com">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <p><br>
+      </p>
+      <div class="moz-cite-prefix">On 2024/5/11 18:10, Alexey Baturo
+        wrote:<br>
+      </div>
+      <blockquote type="cite"
+        cite="mid:20240511101053.1875596-4-me@deliversmonkey.space">
+        <pre class="moz-quote-pre" wrap="">From: Alexey Baturo <a
+        class="moz-txt-link-rfc2396E"
+        href="mailto:baturo.alexey@gmail.com" moz-do-not-send="true">&lt;baturo.alexey@gmail.com&gt;</a>
 
-I removed the threading and it seems to be working fine without it. I'll commit this
-change for v3.
+Signed-off-by: Alexey Baturo <a class="moz-txt-link-rfc2396E"
+        href="mailto:baturo.alexey@gmail.com" moz-do-not-send="true">&lt;baturo.alexey@gmail.com&gt;</a>
 
-> 
-> 
-> 
->>
->>> +}
->>> +
-> 
-> (...)
-> 
->>> +
->>> +static AddressSpace *riscv_iommu_find_as(PCIBus *bus, void *opaque, int devfn)
->>> +{
->>> +    RISCVIOMMUState *s = (RISCVIOMMUState *) opaque;
->>> +    PCIDevice *pdev = pci_find_device(bus, pci_bus_num(bus), devfn);
->>> +    AddressSpace *as = NULL;
->>> +
->>> +    if (pdev && pci_is_iommu(pdev)) {
->>> +        return s->target_as;
->>> +    }
->>> +
->>> +    /* Find first registered IOMMU device */
->>> +    while (s->iommus.le_prev) {
->>> +        s = *(s->iommus.le_prev);
->>> +    }
->>> +
->>> +    /* Find first matching IOMMU */
->>> +    while (s != NULL && as == NULL) {
->>> +        as = riscv_iommu_space(s, PCI_BUILD_BDF(pci_bus_num(bus), devfn));
->>
->> For pci_bus_num(),
->> riscv_iommu_find_as() can be called at the very early stage
->> where software has no chance to enumerate the bus numbers.
+Reviewed-by: Alistair Francis <a class="moz-txt-link-rfc2396E"
+        href="mailto:alistair.francis@wdc.com" moz-do-not-send="true">&lt;alistair.francis@wdc.com&gt;</a>
+---
+ target/riscv/cpu.h        |  5 ++++
+ target/riscv/cpu_helper.c | 58 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 63 insertions(+)
 
-I investigated and this doesn't seem to be a problem. This function is called at the
-last step of the realize() steps of both riscv_iommu_pci_realize() and
-riscv_iommu_sys_realize(), and by that time the pci_bus_num() is already assigned.
-Other iommus use pci_bus_num() into their own get_address_space() callbacks like
-this too.
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 52b6ba73c8..9cac723b19 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -698,8 +698,13 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
+ 
+ bool riscv_cpu_is_32bit(RISCVCPU *cpu);
+ 
++bool riscv_cpu_virt_mem_enabled(CPURISCVState *env);
++RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env);
++int riscv_pm_get_pmlen(RISCVPmPmm pmm);
++
+ RISCVException riscv_csrr(CPURISCVState *env, int csrno,
+                           target_ulong *ret_value);
++
+ RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
+                            target_ulong *ret_value,
+                            target_ulong new_value, target_ulong write_mask);
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index bf58350669..e4a127ca84 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -142,6 +142,64 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
+     *pflags = flags;
+ }
+ 
++RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env)</pre>
+      </blockquote>
+      <p>I think we should process XLEN here.</p>
+      <p>Pack *XL32 into <span style="white-space: pre-wrap">PMM_FIELD_DISABLED</span></p>
+    </blockquote>
+    Please ignore this comment. I see you have considered the XLEN in
+    patch 5/6.<br>
+    <blockquote type="cite"
+      cite="mid:58fe0789-4f1b-4c13-bab9-977c18787095@linux.alibaba.com">
+      Zhiwei<br>
+      <blockquote type="cite"
+        cite="mid:20240511101053.1875596-4-me@deliversmonkey.space">
+        <pre class="moz-quote-pre" wrap="">+{
++    int pmm = 0;
++#ifndef CONFIG_USER_ONLY
++    int priv_mode = cpu_address_mode(env);
++    /* Get current PMM field */
++    switch (priv_mode) {
++    case PRV_M:
++        pmm = riscv_cpu_cfg(env)-&gt;ext_smmpm ?
++                  get_field(env-&gt;mseccfg, MSECCFG_PMM) : PMM_FIELD_DISABLED;
++        break;
++    case PRV_S:
++        pmm = riscv_cpu_cfg(env)-&gt;ext_smnpm ?
++                  get_field(env-&gt;menvcfg, MENVCFG_PMM) : PMM_FIELD_DISABLED;
++        break;
++    case PRV_U:
++        pmm = riscv_cpu_cfg(env)-&gt;ext_ssnpm ?
++                  get_field(env-&gt;senvcfg, SENVCFG_PMM) : PMM_FIELD_DISABLED;
++        break;
++    default:
++        g_assert_not_reached();
++    }
++#endif
++    return pmm;
++}
++
++bool riscv_cpu_virt_mem_enabled(CPURISCVState *env)
++{
++    bool virt_mem_en = false;
++#ifndef CONFIG_USER_ONLY
++    int satp_mode = 0;
++    int priv_mode = cpu_address_mode(env);
++    /* Get current PMM field */
++    if (riscv_cpu_mxl(env) == MXL_RV32) {
++        satp_mode = get_field(env-&gt;satp, SATP32_MODE);
++    } else {
++        satp_mode = get_field(env-&gt;satp, SATP64_MODE);
++    }
++    virt_mem_en = ((satp_mode != VM_1_10_MBARE) &amp;&amp; (priv_mode != PRV_M));
++#endif
++    return virt_mem_en;
++}
++
++int riscv_pm_get_pmlen(RISCVPmPmm pmm)
++{
++    switch (pmm) {
++    case PMM_FIELD_DISABLED:
++        return 0;
++    case PMM_FIELD_PMLEN7:
++        return 7;
++    case PMM_FIELD_PMLEN16:
++        return 16;
++    default:
++        g_assert_not_reached();
++    }
++    return -1;
++}
++
+ #ifndef CONFIG_USER_ONLY
+ 
+ /*
+</pre>
+      </blockquote>
+    </blockquote>
+  </body>
+</html>
 
-
-Thanks,
-
-
-Daniel
-
-
-> 
-> I'll see how other IOMMUs are handling their iommu_find_as()
-> 
-> 
-> Thanks,
-> 
-> 
-> Daniel
-> 
-> 
->>
->>
->>
->>
->>> +        s = s->iommus.le_next;
->>> +    }
->>> +
->>> +    return as ? as : &address_space_memory;
->>> +}
->>> +
->>> +static const PCIIOMMUOps riscv_iommu_ops = {
->>> +    .get_address_space = riscv_iommu_find_as,
->>> +};
->>> +
->>> +void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
->>> +        Error **errp)
->>> +{
->>> +    if (bus->iommu_ops &&
->>> +        bus->iommu_ops->get_address_space == riscv_iommu_find_as) {
->>> +        /* Allow multiple IOMMUs on the same PCIe bus, link known devices */
->>> +        RISCVIOMMUState *last = (RISCVIOMMUState *)bus->iommu_opaque;
->>> +        QLIST_INSERT_AFTER(last, iommu, iommus);
->>> +    } else if (bus->iommu_ops == NULL) {
->>> +        pci_setup_iommu(bus, &riscv_iommu_ops, iommu);
->>> +    } else {
->>> +        error_setg(errp, "can't register secondary IOMMU for PCI bus #%d",
->>> +            pci_bus_num(bus));
->>> +    }
->>> +}
->>> +
->>> +static int riscv_iommu_memory_region_index(IOMMUMemoryRegion *iommu_mr,
->>> +    MemTxAttrs attrs)
->>> +{
->>> +    return attrs.unspecified ? RISCV_IOMMU_NOPASID : (int)attrs.pasid;
->>> +}
->>> +
->>> +static int riscv_iommu_memory_region_index_len(IOMMUMemoryRegion *iommu_mr)
->>> +{
->>> +    RISCVIOMMUSpace *as = container_of(iommu_mr, RISCVIOMMUSpace, iova_mr);
->>> +    return 1 << as->iommu->pasid_bits;
->>> +}
->>> +
->>> +static void riscv_iommu_memory_region_init(ObjectClass *klass, void *data)
->>> +{
->>> +    IOMMUMemoryRegionClass *imrc = IOMMU_MEMORY_REGION_CLASS(klass);
->>> +
->>> +    imrc->translate = riscv_iommu_memory_region_translate;
->>> +    imrc->notify_flag_changed = riscv_iommu_memory_region_notify;
->>> +    imrc->attrs_to_index = riscv_iommu_memory_region_index;
->>> +    imrc->num_indexes = riscv_iommu_memory_region_index_len;
->>> +}
->>> +
->>> +static const TypeInfo riscv_iommu_memory_region_info = {
->>> +    .parent = TYPE_IOMMU_MEMORY_REGION,
->>> +    .name = TYPE_RISCV_IOMMU_MEMORY_REGION,
->>> +    .class_init = riscv_iommu_memory_region_init,
->>> +};
->>> +
->>> +static void riscv_iommu_register_mr_types(void)
->>> +{
->>> +    type_register_static(&riscv_iommu_memory_region_info);
->>> +    type_register_static(&riscv_iommu_info);
->>> +}
->>> +
->>> +type_init(riscv_iommu_register_mr_types);
->>> diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
->>> new file mode 100644
->>> index 0000000000..6f740de690
->>> --- /dev/null
->>> +++ b/hw/riscv/riscv-iommu.h
->>> @@ -0,0 +1,141 @@
->>> +/*
->>> + * QEMU emulation of an RISC-V IOMMU (Ziommu)
->>> + *
->>> + * Copyright (C) 2022-2023 Rivos Inc.
->>> + *
->>> + * This program is free software; you can redistribute it and/or modify
->>> + * it under the terms of the GNU General Public License as published by
->>> + * the Free Software Foundation; either version 2 of the License.
->>> + *
->>> + * This program is distributed in the hope that it will be useful,
->>> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
->>> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
->>> + * GNU General Public License for more details.
->>> + *
->>> + * You should have received a copy of the GNU General Public License along
->>> + * with this program; if not, see <http://www.gnu.org/licenses/>.
->>> + */
->>> +
->>> +#ifndef HW_RISCV_IOMMU_STATE_H
->>> +#define HW_RISCV_IOMMU_STATE_H
->>> +
->>> +#include "qemu/osdep.h"
->>> +#include "qom/object.h"
->>> +
->>> +#include "hw/riscv/iommu.h"
->>> +
->>> +struct RISCVIOMMUState {
->>> +    /*< private >*/
->>> +    DeviceState parent_obj;
->>> +
->>> +    /*< public >*/
->>> +    uint32_t version;     /* Reported interface version number */
->>> +    uint32_t pasid_bits;  /* process identifier width */
->>> +    uint32_t bus;         /* PCI bus mapping for non-root endpoints */
->>> +
->>> +    uint64_t cap;         /* IOMMU supported capabilities */
->>> +    uint64_t fctl;        /* IOMMU enabled features */
->>> +
->>> +    bool enable_off;      /* Enable out-of-reset OFF mode (DMA disabled) */
->>> +    bool enable_msi;      /* Enable MSI remapping */
->>> +
->>> +    /* IOMMU Internal State */
->>> +    uint64_t ddtp;        /* Validated Device Directory Tree Root Pointer */
->>> +
->>> +    dma_addr_t cq_addr;   /* Command queue base physical address */
->>> +    dma_addr_t fq_addr;   /* Fault/event queue base physical address */
->>> +    dma_addr_t pq_addr;   /* Page request queue base physical address */
->>> +
->>> +    uint32_t cq_mask;     /* Command queue index bit mask */
->>> +    uint32_t fq_mask;     /* Fault/event queue index bit mask */
->>> +    uint32_t pq_mask;     /* Page request queue index bit mask */
->>> +
->>> +    /* interrupt notifier */
->>> +    void (*notify)(RISCVIOMMUState *iommu, unsigned vector);
->>> +
->>> +    /* IOMMU State Machine */
->>> +    QemuThread core_proc; /* Background processing thread */
->>> +    QemuMutex core_lock;  /* Global IOMMU lock, used for cache/regs updates */
->>> +    QemuCond core_cond;   /* Background processing wake up signal */
->>> +    unsigned core_exec;   /* Processing thread execution actions */
->>> +
->>> +    /* IOMMU target address space */
->>> +    AddressSpace *target_as;
->>> +    MemoryRegion *target_mr;
->>> +
->>> +    /* MSI / MRIF access trap */
->>> +    AddressSpace trap_as;
->>> +    MemoryRegion trap_mr;
->>> +
->>> +    GHashTable *ctx_cache;          /* Device translation Context Cache */
->>> +
->>> +    /* MMIO Hardware Interface */
->>> +    MemoryRegion regs_mr;
->>> +    QemuSpin regs_lock;
->>> +    uint8_t *regs_rw;  /* register state (user write) */
->>> +    uint8_t *regs_wc;  /* write-1-to-clear mask */
->>> +    uint8_t *regs_ro;  /* read-only mask */
->>> +
->>> +    QLIST_ENTRY(RISCVIOMMUState) iommus;
->>> +    QLIST_HEAD(, RISCVIOMMUSpace) spaces;
->>> +};
->>> +
->>> +void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
->>> +         Error **errp);
->>> +
->>> +/* private helpers */
->>> +
->>> +/* Register helper functions */
->>> +static inline uint32_t riscv_iommu_reg_mod32(RISCVIOMMUState *s,
->>> +    unsigned idx, uint32_t set, uint32_t clr)
->>> +{
->>> +    uint32_t val;
->>> +    qemu_spin_lock(&s->regs_lock);
->>> +    val = ldl_le_p(s->regs_rw + idx);
->>> +    stl_le_p(s->regs_rw + idx, (val & ~clr) | set);
->>> +    qemu_spin_unlock(&s->regs_lock);
->>> +    return val;
->>> +}
->>> +
->>> +static inline void riscv_iommu_reg_set32(RISCVIOMMUState *s,
->>> +    unsigned idx, uint32_t set)
->>> +{
->>> +    qemu_spin_lock(&s->regs_lock);
->>> +    stl_le_p(s->regs_rw + idx, set);
->>> +    qemu_spin_unlock(&s->regs_lock);
->>> +}
->>> +
->>> +static inline uint32_t riscv_iommu_reg_get32(RISCVIOMMUState *s,
->>> +    unsigned idx)
->>> +{
->>> +    return ldl_le_p(s->regs_rw + idx);
->>> +}
->>> +
->>> +static inline uint64_t riscv_iommu_reg_mod64(RISCVIOMMUState *s,
->>> +    unsigned idx, uint64_t set, uint64_t clr)
->>> +{
->>> +    uint64_t val;
->>> +    qemu_spin_lock(&s->regs_lock);
->>> +    val = ldq_le_p(s->regs_rw + idx);
->>> +    stq_le_p(s->regs_rw + idx, (val & ~clr) | set);
->>> +    qemu_spin_unlock(&s->regs_lock);
->>> +    return val;
->>> +}
->>> +
->>> +static inline void riscv_iommu_reg_set64(RISCVIOMMUState *s,
->>> +    unsigned idx, uint64_t set)
->>> +{
->>> +    qemu_spin_lock(&s->regs_lock);
->>> +    stq_le_p(s->regs_rw + idx, set);
->>> +    qemu_spin_unlock(&s->regs_lock);
->>> +}
->>> +
->>> +static inline uint64_t riscv_iommu_reg_get64(RISCVIOMMUState *s,
->>> +    unsigned idx)
->>> +{
->>> +    return ldq_le_p(s->regs_rw + idx);
->>> +}
->>> +
->>> +
->>> +
->>> +#endif
->>> diff --git a/hw/riscv/trace-events b/hw/riscv/trace-events
->>> new file mode 100644
->>> index 0000000000..42a97caffa
->>> --- /dev/null
->>> +++ b/hw/riscv/trace-events
->>> @@ -0,0 +1,11 @@
->>> +# See documentation at docs/devel/tracing.rst
->>> +
->>> +# riscv-iommu.c
->>> +riscv_iommu_new(const char *id, unsigned b, unsigned d, unsigned f) "%s: device attached %04x:%02x.%d"
->>> +riscv_iommu_flt(const char *id, unsigned b, unsigned d, unsigned f, uint64_t reason, uint64_t iova) "%s: fault %04x:%02x.%u reason: 0x%"PRIx64" iova: 0x%"PRIx64
->>> +riscv_iommu_pri(const char *id, unsigned b, unsigned d, unsigned f, uint64_t iova) "%s: page request %04x:%02x.%u iova: 0x%"PRIx64
->>> +riscv_iommu_dma(const char *id, unsigned b, unsigned d, unsigned f, unsigned pasid, const char *dir, uint64_t iova, uint64_t phys) "%s: translate %04x:%02x.%u #%u %s 0x%"PRIx64" -> 0x%"PRIx64
->>> +riscv_iommu_msi(const char *id, unsigned b, unsigned d, unsigned f, uint64_t iova, uint64_t phys) "%s: translate %04x:%02x.%u MSI 0x%"PRIx64" -> 0x%"PRIx64
->>> +riscv_iommu_cmd(const char *id, uint64_t l, uint64_t u) "%s: command 0x%"PRIx64" 0x%"PRIx64
->>> +riscv_iommu_notifier_add(const char *id) "%s: dev-iotlb notifier added"
->>> +riscv_iommu_notifier_del(const char *id) "%s: dev-iotlb notifier removed"
->>> diff --git a/hw/riscv/trace.h b/hw/riscv/trace.h
->>> new file mode 100644
->>> index 0000000000..b88504b750
->>> --- /dev/null
->>> +++ b/hw/riscv/trace.h
->>> @@ -0,0 +1,2 @@
->>> +#include "trace/trace-hw_riscv.h"
->>> +
->>> diff --git a/include/hw/riscv/iommu.h b/include/hw/riscv/iommu.h
->>> new file mode 100644
->>> index 0000000000..403b365893
->>> --- /dev/null
->>> +++ b/include/hw/riscv/iommu.h
->>> @@ -0,0 +1,36 @@
->>> +/*
->>> + * QEMU emulation of an RISC-V IOMMU (Ziommu)
->>> + *
->>> + * Copyright (C) 2022-2023 Rivos Inc.
->>> + *
->>> + * This program is free software; you can redistribute it and/or modify
->>> + * it under the terms of the GNU General Public License as published by
->>> + * the Free Software Foundation; either version 2 of the License.
->>> + *
->>> + * This program is distributed in the hope that it will be useful,
->>> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
->>> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
->>> + * GNU General Public License for more details.
->>> + *
->>> + * You should have received a copy of the GNU General Public License along
->>> + * with this program; if not, see <http://www.gnu.org/licenses/>.
->>> + */
->>> +
->>> +#ifndef HW_RISCV_IOMMU_H
->>> +#define HW_RISCV_IOMMU_H
->>> +
->>> +#include "qemu/osdep.h"
->>> +#include "qom/object.h"
->>> +
->>> +#define TYPE_RISCV_IOMMU "riscv-iommu"
->>> +OBJECT_DECLARE_SIMPLE_TYPE(RISCVIOMMUState, RISCV_IOMMU)
->>> +typedef struct RISCVIOMMUState RISCVIOMMUState;
->>> +
->>> +#define TYPE_RISCV_IOMMU_MEMORY_REGION "riscv-iommu-mr"
->>> +typedef struct RISCVIOMMUSpace RISCVIOMMUSpace;
->>> +
->>> +#define TYPE_RISCV_IOMMU_PCI "riscv-iommu-pci"
->>> +OBJECT_DECLARE_SIMPLE_TYPE(RISCVIOMMUStatePci, RISCV_IOMMU_PCI)
->>> +typedef struct RISCVIOMMUStatePci RISCVIOMMUStatePci;
->>> +
->>> +#endif
->>> diff --git a/meson.build b/meson.build
->>> index c59ca496f2..75e56f3282 100644
->>> --- a/meson.build
->>> +++ b/meson.build
->>> @@ -3361,6 +3361,7 @@ if have_system
->>>       'hw/rdma',
->>>       'hw/rdma/vmw',
->>>       'hw/rtc',
->>> +    'hw/riscv',
->>>       'hw/s390x',
->>>       'hw/scsi',
->>>       'hw/sd',
->>> -- 
->>> 2.43.2
->>>
->>>
+--------------v83NsPecDEsYkHg9T0G4Ld00--
 
