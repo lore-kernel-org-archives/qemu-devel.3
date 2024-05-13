@@ -4,59 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC157C25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 12:15:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CB7DC25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 12:21:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6Ua1-0006jV-IO; Mon, 13 May 2024 08:14:57 -0400
+	id 1s6Ug9-00016P-3X; Mon, 13 May 2024 08:21:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1s6UZz-0006il-Gk; Mon, 13 May 2024 08:14:56 -0400
-Received: from out30-118.freemail.mail.aliyun.com ([115.124.30.118])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1s6UZw-0000sk-PB; Mon, 13 May 2024 08:14:55 -0400
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1s6Ug7-00015g-40
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 08:21:15 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1s6Ug4-0002UA-QB
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 08:21:14 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-a59c448b44aso1111398966b.2
+ for <qemu-devel@nongnu.org>; Mon, 13 May 2024 05:21:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1715602488; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=LrcHvHPIyppc1Q6BtBKhiT4eE60/hxFLh8TTRdFWio4=;
- b=c0HMduSEmShloWG0XYPaU9mTAiFx+pmw8QBoO0hTY4V1hz69hNL9btf/cb0TGFI3ucjmOsO7rkYImhptkeXaYbmMU8C+zDKuRvDBRcpsjgnotegrWZpOCqN8TAMkiyvTgXZcLJRZjRMgR3YIogD3RJCyyDv8qfWISudmEFcodnA=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R131e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032014031;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
- TI=SMTPD_---0W6QXVUA_1715602485; 
-Received: from 30.198.0.184(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0W6QXVUA_1715602485) by smtp.aliyun-inc.com;
- Mon, 13 May 2024 20:14:46 +0800
-Message-ID: <6a56f942-f346-4737-9ec9-03bf3023d78c@linux.alibaba.com>
-Date: Mon, 13 May 2024 20:13:59 +0800
+ d=linaro.org; s=google; t=1715602870; x=1716207670; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=0FpwzmDIh/pYzgDKLIzIRbHkD9xfCa5MYy8mX9Qfb8Q=;
+ b=SXsQ1QlUDttW5CEfObeFIZODcsLn6iCB86VtfPQ5f+NBviC3L+kzthC+fDWWrS2hFq
+ i5gyfSGznab8TaewuPnKI9zueQ6TMraLQtfCky4IEA4is/nM/DrsnPgTRXrVveMt7Qcn
+ 9IJedXTWsFf2Y5EcNT4o4Ed0YHhtKBpLXzGAzyiL/7AxwdLLMcLk7Lne53lzAFP4SvSq
+ jwN5RAyR97a+gfGb+mNj6472otKPUzcbi5uXyeUxkHYIfZpwSP8ETXgM/i6lUD3ypVOi
+ Z4FF/a3x73idBy2hueFMsVibTtRE/iPGhx/IQ3hsRPjkNnKj2a+uvG/xS5p2lpS6Asgc
+ EUHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715602871; x=1716207671;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=0FpwzmDIh/pYzgDKLIzIRbHkD9xfCa5MYy8mX9Qfb8Q=;
+ b=sJ+0+hW92WD3C6LVNxhhaFwXDMePcH749L5GAxklcZU0ybW3vpL2bw+flBEbDEh/FQ
+ dMjNoKEdo1ymjIfLMwIYUq7wsgyU9+sFSFj33Ew+yfoLJ1o/MGNbeAph+PW05ZzWYXo5
+ WVZ1sQBYpjgs93A7PPdRJiWXT06Xp7ejs27uYPhWvgtDkaTlxQj0iOg7QbVBhzzQLgjb
+ 0YYwZ0bZtd0OurTTyyQKklHbaw6u9aZ74ZxRXOrk72xPCu4s/1uk0D/rt/ARm+CyatD8
+ bnZLXn/eHEkKD6XCmjP1Ofxky5c4Nu23I+rngNqeZMKn+baaZ/3Pl7MfmkfywwnWrmHu
+ nf6Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXREMyP6XLJsWH8Tx+7QQgA7UWPURz80XufWb5MNv5LG/dYQjdM7zpGku84vQes+g5zFKNVyfR/3dr4f9FKOHVW+qWk2n0=
+X-Gm-Message-State: AOJu0Yw5DLN+LvMrFeT/pkb4YAEdESp2visqW5AG0ZzcTyKQ5sS2aJ/4
+ FtJaFq+fMqBtaCFuNoRwpWQNbDev2n55e/yvYHoiRPlXVStLV50r86hk5BtLmjE=
+X-Google-Smtp-Source: AGHT+IGN0t3NyTgvqxW9Tqx7/71PthTFrXd/J2o9o0q1CCJ1jygJNmy9VJUGBBtr7b+SUhpue/9LPQ==
+X-Received: by 2002:a17:906:75a:b0:a5a:15f6:157f with SMTP id
+ a640c23a62f3a-a5a2d54c7fdmr608028866b.14.1715602870590; 
+ Mon, 13 May 2024 05:21:10 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a5a17894d35sm585179166b.81.2024.05.13.05.21.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 13 May 2024 05:21:10 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 872BF5F8B5;
+ Mon, 13 May 2024 13:21:09 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathie?=
+ =?utf-8?Q?u-Daud=C3=A9?=
+ <philmd@linaro.org>,  Thomas Huth <thuth@redhat.com>,
+ michael@amarulasolutions.com,  linux-amarula@amarulasolutions.com
+Subject: Re: [PATCH 1/1] tests/fp/meson: don't build fp-bench test if fenv.h
+ is missing
+In-Reply-To: <CABGWkvom8s3KEV=9wKxp1=UK+r1jaOns9MqK9OhuMUyxVskznA@mail.gmail.com>
+ (Dario Binacchi's message of "Sat, 11 May 2024 13:09:21 +0200")
+References: <20240430164752.645521-1-dario.binacchi@amarulasolutions.com>
+ <63094227-235e-4274-b308-2d7c27e50b81@linaro.org>
+ <CABGWkvrCNoWDB=V5f_7qwCd97dAfOC3XT2ukXYt-FsxuUKK-KQ@mail.gmail.com>
+ <4ad368ae-74d0-4a38-b4d9-d907c1b8dc7c@linaro.org>
+ <CABGWkvo_eaDFC15JQF8+Pu14M75CKWvVr8JWQ7XJuHc8fCc7LA@mail.gmail.com>
+ <CABGWkvqXdJtiiO2gWC2VTcLvYD33KHe5Rb49Q=VDrtkEiODxOw@mail.gmail.com>
+ <8b84b9ae-fda6-49c2-90dd-40d8660561c5@linaro.org>
+ <CABGWkvom8s3KEV=9wKxp1=UK+r1jaOns9MqK9OhuMUyxVskznA@mail.gmail.com>
+Date: Mon, 13 May 2024 13:21:09 +0100
+Message-ID: <87h6f1rjgq.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 4/6] target/riscv: Add pointer masking tb flags
-To: Alexey Baturo <baturo.alexey@gmail.com>
-Cc: richard.henderson@linaro.org, space.monkey.delivers@gmail.com,
- palmer@dabbelt.com, Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu,
- kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-References: <20240511101053.1875596-1-me@deliversmonkey.space>
- <20240511101053.1875596-5-me@deliversmonkey.space>
-Content-Language: en-US
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <20240511101053.1875596-5-me@deliversmonkey.space>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=115.124.30.118;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-118.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,81 +109,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Dario Binacchi <dario.binacchi@amarulasolutions.com> writes:
 
-On 2024/5/11 18:10, Alexey Baturo wrote:
-> From: Alexey Baturo <baturo.alexey@gmail.com>
+> On Sat, May 11, 2024 at 12:25=E2=80=AFPM Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> On 5/11/24 12:11, Dario Binacchi wrote:
+>> > Gentle ping.
+>>
+>> Gentle reminder that I strongly suspect that your buildroot is corrupt.
+>> There *should* be a <fenv.h> present.
 >
-> Signed-off-by: Alexey Baturo <baturo.alexey@gmail.com>
+> I don't think so. In fact, the patch has already been merged into Buildro=
+ot:
+> https://patchwork.ozlabs.org/project/buildroot/patch/20240502072327.74146=
+3-1-dario.binacchi@amarulasolutions.com/
 >
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-> ---
->   target/riscv/cpu.h        | 3 +++
->   target/riscv/cpu_helper.c | 3 +++
->   target/riscv/translate.c  | 5 +++++
->   3 files changed, 11 insertions(+)
->
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 9cac723b19..bbf3a0f64e 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -564,6 +564,9 @@ FIELD(TB_FLAGS, ITRIGGER, 20, 1)
->   FIELD(TB_FLAGS, VIRT_ENABLED, 21, 1)
->   FIELD(TB_FLAGS, PRIV, 22, 2)
->   FIELD(TB_FLAGS, AXL, 24, 2)
-> +/* If pointer masking should be applied and address sign extended */
-> +FIELD(TB_FLAGS, PM_PMM, 26, 2)
-> +FIELD(TB_FLAGS, PM_SIGNEXTEND, 28, 1)
->   
->   #ifdef TARGET_RISCV32
->   #define riscv_cpu_mxl(env)  ((void)(env), MXL_RV32)
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index e4a127ca84..3f2473bd73 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -68,6 +68,7 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
->       RISCVCPU *cpu = env_archcpu(env);
->       RISCVExtStatus fs, vs;
->       uint32_t flags = 0;
-> +    bool pm_signext = riscv_cpu_virt_mem_enabled(env);
->   
->       *pc = env->xl == MXL_RV32 ? env->pc & UINT32_MAX : env->pc;
->       *cs_base = 0;
-> @@ -138,6 +139,8 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
->       flags = FIELD_DP32(flags, TB_FLAGS, VS, vs);
->       flags = FIELD_DP32(flags, TB_FLAGS, XL, env->xl);
->       flags = FIELD_DP32(flags, TB_FLAGS, AXL, cpu_address_xl(env));
-> +    flags = FIELD_DP32(flags, TB_FLAGS, PM_PMM, riscv_pm_get_pmm(env));
-> +    flags = FIELD_DP32(flags, TB_FLAGS, PM_SIGNEXTEND, pm_signext);
->   
->       *pflags = flags;
->   }
-> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-> index e5b339b1fa..3f578d6dd8 100644
-> --- a/target/riscv/translate.c
-> +++ b/target/riscv/translate.c
-> @@ -103,6 +103,9 @@ typedef struct DisasContext {
->       bool vl_eq_vlmax;
->       CPUState *cs;
->       TCGv zero;
-> +    /* actual address width */
-> +    uint8_t addr_width;
-> +    bool addr_signed;
->       /* Ztso */
->       bool ztso;
->       /* Use icount trigger for native debug */
-> @@ -1185,6 +1188,8 @@ static void riscv_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
->       ctx->xl = FIELD_EX32(tb_flags, TB_FLAGS, XL);
->       ctx->address_xl = FIELD_EX32(tb_flags, TB_FLAGS, AXL);
->       ctx->cs = cs;
-> +    ctx->addr_width = 0;
-> +    ctx->addr_signed = false;
+> As mentioned earlier:
+> "The fenv support is not enabled in our default uClibc configurations"
+> https://lists.buildroot.org/pipermail/buildroot/2013-May/072440.html
 
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Given this is outside of the general QEMU support matrix (we have Musl
+but we make no comment about uClibc) and doesn't address the other users
+of fenv.h (check-tcg binaries built with host compiler) I think this
+patch probably should just live on in the downstream.
 
-Zhiwei
-
->       ctx->ztso = cpu->cfg.ext_ztso;
->       ctx->itrigger = FIELD_EX32(tb_flags, TB_FLAGS, ITRIGGER);
->       ctx->zero = tcg_constant_tl(0);
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
