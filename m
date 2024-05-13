@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CA2AC25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 07:52:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6798CC25B74
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 07:52:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6QSc-0005Oh-N9; Mon, 13 May 2024 03:51:02 -0400
+	id 1s6QQ6-0003k2-Ua; Mon, 13 May 2024 03:48:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s6QSX-0005FC-Tt
- for qemu-devel@nongnu.org; Mon, 13 May 2024 03:50:57 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ id 1s6QPE-0002nH-NC
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:33 -0400
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1s6QSU-0001zD-W3
- for qemu-devel@nongnu.org; Mon, 13 May 2024 03:50:57 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-34e28e32ea4so2520456f8f.2
- for <qemu-devel@nongnu.org>; Mon, 13 May 2024 00:50:54 -0700 (PDT)
+ id 1s6QPA-0001LA-4A
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 03:47:32 -0400
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-2e538a264f7so36924351fa.0
+ for <qemu-devel@nongnu.org>; Mon, 13 May 2024 00:47:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715586653; x=1716191453; darn=nongnu.org;
+ d=linaro.org; s=google; t=1715586446; x=1716191246; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IL2hAokqpmQr3sSx0rCsqvvhI5ki9eqOu02SaoXaEMQ=;
- b=wqDvvEL66jQSH8KvL0FPFNSZOR4vRc16C+dKHkpq/5/arxF54cNdxDRwlh2sBrfjWU
- oUuq5eKmdVfxO7NSc+vICJiy5Zq3K7L9m/vXZAKu55q7TwR96nzpuRNv4q3WNfVX3OMX
- 0xHV4JrgvVjBTT7QU4C3mNsQIA2vSIdNS+3rj54terTxzYbdRPrqZISZ1aw1PfdjeG/K
- r1cE99I4ZXvGYR38RsaEaaMbcyz/ebCuq0rmATR9BLwuqfiWC1Rmi6TgZ7EczesQuh8M
- nWmIvxzkQARztLaD9R8QqW74fZ3q9ndKFfKU6hXsXZK0TWiRmklgCKQznGgutWrbI5XB
- i++A==
+ bh=2VF6uhgMTXvCNMpmE9TGG3M5Ce9XJhasOpTWLXUhXUs=;
+ b=to7oM5G24BtaTUdtK9pxsvaVdbime/xj0/94FS3BsXOTK9mbgeFC2VW0+gW2LH+a0P
+ H9o22rCLxNOrbUfOABirSZvflEDQ21yW7XL5+gemBR+Sl0HQ8Vk6QN/qdu93UhdD8WUU
+ GD6zuCDuur9EJFyKF7B/1VFB6uglEOLLaLP9x3EPe6+ayBRkQiCp4vato/doCnEog0oN
+ mRTxCeIAuCPLnBG4Me68R1kAKaP1AFw77UXV+Dxx11gCOLgwHB4deo8clukrh+XWZSQb
+ i/o7CC4oKMlnHNqwqNyXve6un8snW3lgLaAqgEwhF9Dg0rnqGG2efBq2klYkQnrkhgFC
+ AghQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715586653; x=1716191453;
+ d=1e100.net; s=20230601; t=1715586446; x=1716191246;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IL2hAokqpmQr3sSx0rCsqvvhI5ki9eqOu02SaoXaEMQ=;
- b=PcWsWzJFcL1l5LdRWYmpNPEYC4yXZB0SvNBEYLnq2w29FT13Jjv2eU/R8k+baU45TZ
- SVJS3dUKC8bazCPZsx8DJUUPywoQdgZKS5pzV8Vy1xt3867+M9hJJA4ZiPXnWK6A4R4b
- ifJdIh0OihwByPROXI89tL5M24kChWtaJWLjHH5f8DcjFiJoXwaR1zNA+sp59J2bdn2/
- K723IDg/29ny2u2mSoQX3YRqE8IJoE8fSta2gk9mzIQ6VGUyn77PbYdk8HyLGiwy/2Bm
- vAblgiQMf6NpXHqvw2ny7pjeDiFqZk30Q3IeXFxL8eyTyo+lZ6JULhM8vC53e9ldqDJ6
- JGwg==
-X-Gm-Message-State: AOJu0Yw/Nh7P1vblfXgaldauBqAI32p/VQAK2Udhoh2qIiAzA9nLKLOg
- 8TX3EKRZCXbqgQxlWLCL0hGRfUWc1TmCPiNhOGu8AKKt465KW1CCm6dXYShnKyIgRfH+Ud6ANyQ
- O744=
-X-Google-Smtp-Source: AGHT+IFXCNQkKT6F9xFmWb1yRl1jHxWjLWM7fQQV+7dDAx1w6JBgoZ+GYV7fdAVXMW7KAklDxJCWcQ==
-X-Received: by 2002:adf:e649:0:b0:34b:81b3:2c62 with SMTP id
- ffacd0b85a97d-3504a73e850mr5604558f8f.35.1715586653713; 
- Mon, 13 May 2024 00:50:53 -0700 (PDT)
+ bh=2VF6uhgMTXvCNMpmE9TGG3M5Ce9XJhasOpTWLXUhXUs=;
+ b=bECxkDoBeZHuMuqor7Rt0QnRoR7wjMizsm6uOcq4oyKoRgfjhfag8roP7lK/dst3iM
+ MoF0Yh4H2JaTHKGF5e5atR02A7MS1wKxHrmcmoyUz5LfMFoYqoEG6Xlh54YVZgIrJCvM
+ OevC3e/6kKGT7gKMQPokTLm5iyTNfN8tu0l14pBQ9K4u75M1Mwm0t/jy9PcMbnHhtYG6
+ z8QIwGxnXdU8rUjA47GqrFh89HpckTJ/q46Ajxe5dS4s6hGSt37bzVrtvkgdd9rZXbnu
+ 0pj8p1sw0lkySyTVsPgc0FuQYzJdAYgctWcncsVDBDsQMrZ0OK3AFBLkmLLvCwWJcrEN
+ IlWw==
+X-Gm-Message-State: AOJu0Ywt1f145K7edK369TgeiBt3xwc3IyR/0t1DtnaJUdFBn98yehyB
+ BhAFzqEnzJ2evZKGh5Yv2qfX/LS4fhUzSUnrOpTwL4Jxqxae6JGK94Vb8zCB/2ogy49DoskDN1o
+ 8xgY=
+X-Google-Smtp-Source: AGHT+IE7OJEj23f1JpsbYCQLKloqFDRUyouRNsdIa8vd7zjTHaSfIjNBG9zb/9rG1En9Wc5KYp86Sg==
+X-Received: by 2002:a2e:b04b:0:b0:2e3:cba4:234 with SMTP id
+ 38308e7fff4ca-2e51fd2dccbmr59550281fa.10.1715586446495; 
+ Mon, 13 May 2024 00:47:26 -0700 (PDT)
 Received: from stoup.. (12.red-213-97-13.staticip.rima-tde.net. [213.97.13.12])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3502b896a50sm10374262f8f.30.2024.05.13.00.50.53
+ 5b1f17b1804b1-41fccee9318sm148204765e9.30.2024.05.13.00.47.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 May 2024 00:50:53 -0700 (PDT)
+ Mon, 13 May 2024 00:47:26 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: deller@gmx.de
-Subject: [PATCH v2 45/45] target/hppa: Log cpu state on return-from-interrupt
-Date: Mon, 13 May 2024 09:47:17 +0200
-Message-Id: <20240513074717.130949-46-richard.henderson@linaro.org>
+Subject: [PATCH v2 10/45] target/hppa: Skip nullified insns in unconditional
+ dbranch path
+Date: Mon, 13 May 2024 09:46:42 +0200
+Message-Id: <20240513074717.130949-11-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240513074717.130949-1-richard.henderson@linaro.org>
 References: <20240513074717.130949-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=richard.henderson@linaro.org; helo=mail-lj1-x233.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,43 +95,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Inverse of the logging on taking an interrupt.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/sys_helper.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ target/hppa/translate.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/target/hppa/sys_helper.c b/target/hppa/sys_helper.c
-index 22d6c89964..9b43b556fd 100644
---- a/target/hppa/sys_helper.c
-+++ b/target/hppa/sys_helper.c
-@@ -18,6 +18,7 @@
-  */
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index a9196050dc..ca979f4137 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -1805,11 +1805,17 @@ static bool do_dbranch(DisasContext *ctx, int64_t disp,
  
- #include "qemu/osdep.h"
-+#include "qemu/log.h"
- #include "cpu.h"
- #include "exec/exec-all.h"
- #include "exec/helper-proto.h"
-@@ -93,6 +94,17 @@ void HELPER(rfi)(CPUHPPAState *env)
-     env->iaoq_b = env->cr_back[1];
-     env->iasq_f = (env->cr[CR_IIASQ] << 32) & ~(env->iaoq_f & mask);
-     env->iasq_b = (env->cr_back[0] << 32) & ~(env->iaoq_b & mask);
-+
-+    if (qemu_loglevel_mask(CPU_LOG_INT)) {
-+        FILE *logfile = qemu_log_trylock();
-+        if (logfile) {
-+            CPUState *cs = env_cpu(env);
-+
-+            fprintf(logfile, "RFI: cpu %d\n", cs->cpu_index);
-+            hppa_cpu_dump_state(cs, logfile, 0);
-+            qemu_log_unlock(logfile);
-+        }
-+    }
- }
+     if (ctx->null_cond.c == TCG_COND_NEVER && ctx->null_lab == NULL) {
+         install_link(ctx, link, false);
+-        ctx->iaoq_n = dest;
+-        ctx->iaoq_n_var = NULL;
+         if (is_n) {
++            if (use_nullify_skip(ctx)) {
++                nullify_set(ctx, 0);
++                gen_goto_tb(ctx, 0, dest, dest + 4);
++                ctx->base.is_jmp = DISAS_NORETURN;
++                return true;
++            }
+             ctx->null_cond.c = TCG_COND_ALWAYS;
+         }
++        ctx->iaoq_n = dest;
++        ctx->iaoq_n_var = NULL;
+     } else {
+         nullify_over(ctx);
  
- static void getshadowregs(CPUHPPAState *env)
 -- 
 2.34.1
 
