@@ -4,124 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D61DC25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 06:12:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97633C25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 06:29:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6Oum-0006VL-Cl; Mon, 13 May 2024 02:12:02 -0400
+	id 1s6PAp-0004q7-Bx; Mon, 13 May 2024 02:28:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1s6Oue-0006Ry-3P
- for qemu-devel@nongnu.org; Mon, 13 May 2024 02:11:52 -0400
-Received: from mout.gmx.net ([212.227.15.15])
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1s6PAn-0004ps-Ga
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 02:28:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1s6OuY-0000z3-6y
- for qemu-devel@nongnu.org; Mon, 13 May 2024 02:11:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1715580697; x=1716185497; i=deller@gmx.de;
- bh=tsAr8Gm6FjXDpXxRDhcTKTVc8PuSeo0DWj4WUCRcmbY=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=XI34TkWk/imSVufI7lRa5+aptB0FwjdD5r7cKJhNmvinW+CWFkyTBamol3JdOIe9
- oY3RJbZDfJSf+f2aohg6OTc8aShKGQUWiSw/uGmCp3tKgDGGjmIoKKeZt2xHD+/IN
- KvEtRgUlKVEhNOHo/sq3Z2vDDBMIYDGd+Xvuivn34zVHAkrbxU7xWo8KfZX0CW0Hq
- Jz3B2SznKuhCdiHFbM5dYgEXbtVF5fj3c4Uboa0vQRBqbkk41wglNLB6bl02JAfQ6
- 6JRhYptD4ZXGJlNAsszSzvwLNEiM4PuyoIwPNaSfiTzP3DPiG6f1JlBelTH/R3b1T
- /q95t67bSohTI9VtEQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.55] ([89.244.182.132]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MHXBj-1sJJ4y2uI5-00DWZ3; Mon, 13
- May 2024 08:11:37 +0200
-Message-ID: <5d5147ce-62f3-4785-a633-bd77d7eb3fc3@gmx.de>
-Date: Mon, 13 May 2024 08:11:37 +0200
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1s6PAl-0003Ru-5G
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 02:28:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715581709;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=eW5FqkiVA0diQls1d+ZwaIgAr8PQu1ut6MVq6dQZdMU=;
+ b=foQBxyMtBkROfDg2zzgqhiIh08ivRhvf8LSIOd0PCQqQiB/CfJW32qTt8PxdXMhrgFCTBn
+ scpF3Y42OsvkExB6958yq9DrPoGRjIRSvD7LRB0qGv1sRjHqzVvqFs3P5fsd36X8lrrI3F
+ bGWOD0mSRMSXWhNaLi/vaC1jfCboR/8=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-115-tOVAiXNbPuGxGHwZm3pDeA-1; Mon, 13 May 2024 02:28:04 -0400
+X-MC-Unique: tOVAiXNbPuGxGHwZm3pDeA-1
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-61b1200cc92so70296607b3.0
+ for <qemu-devel@nongnu.org>; Sun, 12 May 2024 23:28:04 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715581683; x=1716186483;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=eW5FqkiVA0diQls1d+ZwaIgAr8PQu1ut6MVq6dQZdMU=;
+ b=I68UQz2VMagzEyy0UH4JsJmWIi04xXs2VlEroH9OI3VOfaJiuiFnUmM0z+8oh6DwBk
+ RDIxAJ2gg5kDExrZuHAXB4JHim3XJGtqxLA/UTXbyXsfwvE/LlHnbbLlcF3w1I/lRh+5
+ TQlpdPCbYAcBNWabsrwr0mwTSrpOuc+jKJJAGkG78hyICGXWke9HKmXKoJX5/Rw/1+3l
+ ZfToARVGH4Hbo42YCn0i22a77OtoCXmI4fsKZLa8i8a+voGV0H1n15BuWOKTAkxg27u2
+ EqUteAPlzC4yLijRI54GQvsuT4ZJU4CDZ+X3KccWp3A+mQLA5fCns3P3GqbKDlYKyxbc
+ UPrw==
+X-Gm-Message-State: AOJu0YwQ4kkyhI+c21PcMrDIYA42k3UFk4wboyl4irO2j96YQLonFXcJ
+ U44HW+tvggD6/shP4+BHUkNMxgSd8ufyi89xF67D2X6OCdyHIobuCzfNYc0IlqhiLGRAJMvQXTy
+ D18+DKqprzMVgc3qvABcPHZUZiBhHiZUxR2fiRiYCw30UJ10iQiCMl5gVFRGUZhMeIPsArhJMRM
+ x4YgIy3HFTHK1JdQhi2MExjVqH0zM=
+X-Received: by 2002:a05:690c:6a0e:b0:61b:33b4:b83c with SMTP id
+ 00721157ae682-622aff9028bmr104080667b3.7.1715581682053; 
+ Sun, 12 May 2024 23:28:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGI6kXVWVpBwuk/Pu4lBphswrcdyQgT08XXhLtdANbv5u2VhtqIvg0XlNGXeijoB4/GtAa4SjjF1mChF7aiJ8c=
+X-Received: by 2002:a05:690c:6a0e:b0:61b:33b4:b83c with SMTP id
+ 00721157ae682-622aff9028bmr104080237b3.7.1715581680278; Sun, 12 May 2024
+ 23:28:00 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/45] target/hppa: Misc improvements
-To: Sven Schnelle <svens@stackframe.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-References: <20240425000023.1002026-1-richard.henderson@linaro.org>
- <9e271098-ce7b-46ad-9eb8-b49b912eaa49@linaro.org>
- <875xvjovwc.fsf@t14.stackframe.org>
-Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- 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
-In-Reply-To: <875xvjovwc.fsf@t14.stackframe.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+References: <20240410100345.389462-1-eperezma@redhat.com>
+ <CACGkMEuJc1ba67Hge+MfpV6npy9KJf84q=uMSP3VYDEA4FiZ=A@mail.gmail.com>
+ <CAJaqyWemfoCTLr21ukNszqnqaaEbuB_h+s3R4j-eC_YvHJpEGg@mail.gmail.com>
+ <CACGkMEtZEe=ONRcrmm5TNdcxkJx=p4m24VD0yx5w0u+Rn854hQ@mail.gmail.com>
+ <CAJaqyWdoCYFEEQdwZiCxzaX6HuJE-0QWctJ4WBnOd97zDwbPnw@mail.gmail.com>
+ <CACGkMEu328ksfMDtJheH+sdTdV4E=pJFEa5Zco2_ecskubCAGg@mail.gmail.com>
+ <CAJaqyWdZFUw8H7_2Jw3j9JxLj9+3p53QZg=DF3o4OgWJYC-SaQ@mail.gmail.com>
+ <CACGkMEvdBDFvwvqb_7YXqiPd-ax4Xw7e0BLBhCt_uD6-Uf+DgA@mail.gmail.com>
+ <CAJaqyWdA_6Mx3mkcobmBjB5NDJt3tyqTJv2JijF0agnnBFxQxw@mail.gmail.com>
+ <CACGkMEv7wukFdXrA--DzA7U7VYWQq6UAVmi-0=pTAOuJ1nc_7Q@mail.gmail.com>
+ <CAJaqyWdtdfbQi4PrbC-ASRo7dHsT7Nw3dmw66K9D9ZeoqyV=ng@mail.gmail.com>
+ <CACGkMEs=-teddtO4ctLdJiwm2gu3sZrKOww-TC+5o2_19Sph4w@mail.gmail.com>
+In-Reply-To: <CACGkMEs=-teddtO4ctLdJiwm2gu3sZrKOww-TC+5o2_19Sph4w@mail.gmail.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Mon, 13 May 2024 08:27:24 +0200
+Message-ID: <CAJaqyWeKfVXYj61sgvFrUTpOgy0k-zsLoR4JePEo0Q8XuXYbmA@mail.gmail.com>
+Subject: Re: [RFC 0/2] Identify aliased maps in vdpa SVQ iova_tree
+To: Jason Wang <jasowang@redhat.com>
+Cc: qemu-devel@nongnu.org, Si-Wei Liu <si-wei.liu@oracle.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Lei Yang <leiyang@redhat.com>,
+ Peter Xu <peterx@redhat.com>, 
+ Jonah Palmer <jonah.palmer@oracle.com>, Dragos Tatulea <dtatulea@nvidia.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:5lnB3yrqF98Ehq0QKCHAp2G+VIsZQCxL67tMsqk7cJPFqaU17ig
- 7JNSDFDM2EZU3Y2jVAP2kVuv+1cp8qa/4we7hrH6gDK3kGZ6A9k0kdtIJIjeM972rxJp4Y/
- FDDAOGkMFmHbVM7BqsDj5jSSTx9R6lXiFp7GoYu0TjAcqKNC6RyvW6oTe7iw173O+v5+Lof
- OEec03NvuIc0okCCdFQ0g==
-UI-OutboundReport: notjunk:1;M01:P0:Xn8zPZbBEoE=;v3LhLtqSVesh2WVYJjly35tAMbY
- VAOEjASyBv7OHaIdf5rk93JjRKhzS3qh9xxeA9H0OhCRka9H+tpeQ/khx3VthmhW8d4Sc+g4n
- dur4YyuhJx09KUeu381NCfuLXqsYqLoULq6/J8VQOYOnLpjFmVuBebzPAi592qdNxKJXIEEiM
- Ox3OtTYnusQj8/0zb+TF5iHszNBZ5flgwpnasDZtXH7MxHta/uGcr9QTlORmgiUornQGzhxYp
- XIGg2f/1MjN2yJyQf3/OEBBslcJcrtSDwAAw/I7G/MEUyiP/w5Q0/jXuD/sLopo4kqA+TQVZO
- za9XRLhGmLG2nqGO+dztuEnBUOQGnd3JPGgnaV74glEJVEpCVTcz9L7PhY4fsG/uqw+0WUm/R
- 5LZBTu+xaHEIBgbxLKe4BLLg8TDA2Bbxtfv1nG4jDeOqsjDYko6ZB/13X4WiPl9XcHZ1EPrQ2
- CnIChEmD0DpByFa4e1V9uA4rxsVQk1c96d6kwXgRl8CfTXnx8qu7cbaublY/aIgcaaZgcMHJ+
- ZpzX804U6kv9Zc/GdzCtx45f4hAyYIbwBfsRToURK5UdWbBHIMogE8Dq/JvhnWlUaZtFIjong
- 8+esXAqz8IvwZkjY7/Dqv2u67/3sqND1LQeBi5vdbK5FfMz9iKhlk+IRa96/GqMdc8KrvPWL8
- VTAY5xJ/9JOy/K2G6t3huPAphRQYeSoE98/jMnSEIBhSEnei70j/6r+oY9OsQ4ywOtCzrLtJt
- hTy0fFajk9QcnqXPB62ig5+kyPhvRRLlZ//6rdRgrSxXEj7xoTA4XiwllIkxqX5I+j83D2uZa
- FFMxGh7QpyMM36pydowB6XmYQ6tWckAS/vHRrV3leORi8=
-Received-SPF: pass client-ip=212.227.15.15; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,44 +110,245 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/12/24 18:08, Sven Schnelle wrote:
-> Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+On Sat, May 11, 2024 at 6:07=E2=80=AFAM Jason Wang <jasowang@redhat.com> wr=
+ote:
 >
->> Cc'ing Helge & Sven as I'm going to skip this series.
->>
->> Suggestion:
->>
->> -- >8 --
->> diff --git a/MAINTAINERS b/MAINTAINERS
->> index 1b79767d61..be7535b55e 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -254,6 +254,8 @@ F: target/hexagon/gen_idef_parser_funcs.py
->>
->>   HPPA (PA-RISC) TCG CPUs
->>   M: Richard Henderson <richard.henderson@linaro.org>
->> +R: Helge Deller <deller@gmx.de>
->> +R: Sven Schnelle <svens@stackframe.org>
->>   S: Maintained
->>   F: target/hppa/
->>   F: disas/hppa.c
->> @@ -1214,6 +1216,7 @@ HP-PARISC Machines
->>   HP B160L, HP C3700
->>   M: Richard Henderson <richard.henderson@linaro.org>
->>   R: Helge Deller <deller@gmx.de>
->> +R: Sven Schnelle <svens@stackframe.org>
->>   S: Odd Fixes
->>   F: configs/devices/hppa-softmmu/default.mak
->>   F: hw/display/artist.c
+> On Fri, May 10, 2024 at 3:16=E2=80=AFPM Eugenio Perez Martin
+> <eperezma@redhat.com> wrote:
+> >
+> > On Fri, May 10, 2024 at 6:29=E2=80=AFAM Jason Wang <jasowang@redhat.com=
+> wrote:
+> > >
+> > > On Thu, May 9, 2024 at 3:10=E2=80=AFPM Eugenio Perez Martin <eperezma=
+@redhat.com> wrote:
+> > > >
+> > > > On Thu, May 9, 2024 at 8:27=E2=80=AFAM Jason Wang <jasowang@redhat.=
+com> wrote:
+> > > > >
+> > > > > On Thu, May 9, 2024 at 1:16=E2=80=AFAM Eugenio Perez Martin <eper=
+ezma@redhat.com> wrote:
+> > > > > >
+> > > > > > On Wed, May 8, 2024 at 4:29=E2=80=AFAM Jason Wang <jasowang@red=
+hat.com> wrote:
+> > > > > > >
+> > > > > > > On Tue, May 7, 2024 at 6:57=E2=80=AFPM Eugenio Perez Martin <=
+eperezma@redhat.com> wrote:
+> > > > > > > >
+> > > > > > > > On Tue, May 7, 2024 at 9:29=E2=80=AFAM Jason Wang <jasowang=
+@redhat.com> wrote:
+> > > > > > > > >
+> > > > > > > > > On Fri, Apr 12, 2024 at 3:56=E2=80=AFPM Eugenio Perez Mar=
+tin
+> > > > > > > > > <eperezma@redhat.com> wrote:
+> > > > > > > > > >
+> > > > > > > > > > On Fri, Apr 12, 2024 at 8:47=E2=80=AFAM Jason Wang <jas=
+owang@redhat.com> wrote:
+> > > > > > > > > > >
+> > > > > > > > > > > On Wed, Apr 10, 2024 at 6:03=E2=80=AFPM Eugenio P=C3=
+=A9rez <eperezma@redhat.com> wrote:
+> > > > > > > > > > > >
+> > > > > > > > > > > > The guest may have overlapped memory regions, where=
+ different GPA leads
+> > > > > > > > > > > > to the same HVA.  This causes a problem when overla=
+pped regions
+> > > > > > > > > > > > (different GPA but same translated HVA) exists in t=
+he tree, as looking
+> > > > > > > > > > > > them by HVA will return them twice.
+> > > > > > > > > > >
+> > > > > > > > > > > I think I don't understand if there's any side effect=
+ for shadow virtqueue?
+> > > > > > > > > > >
+> > > > > > > > > >
+> > > > > > > > > > My bad, I totally forgot to put a reference to where th=
+is comes from.
+> > > > > > > > > >
+> > > > > > > > > > Si-Wei found that during initialization this sequences =
+of maps /
+> > > > > > > > > > unmaps happens [1]:
+> > > > > > > > > >
+> > > > > > > > > > HVA                    GPA                IOVA
+> > > > > > > > > > -------------------------------------------------------=
+------------------------------------------------------------------
+> > > > > > > > > > Map
+> > > > > > > > > > [0x7f7903e00000, 0x7f7983e00000)    [0x0, 0x80000000) [=
+0x1000, 0x80000000)
+> > > > > > > > > > [0x7f7983e00000, 0x7f9903e00000)    [0x100000000, 0x208=
+0000000)
+> > > > > > > > > > [0x80001000, 0x2000001000)
+> > > > > > > > > > [0x7f7903ea0000, 0x7f7903ec0000)    [0xfeda0000, 0xfedc=
+0000)
+> > > > > > > > > > [0x2000001000, 0x2000021000)
+> > > > > > > > > >
+> > > > > > > > > > Unmap
+> > > > > > > > > > [0x7f7903ea0000, 0x7f7903ec0000)    [0xfeda0000, 0xfedc=
+0000) [0x1000,
+> > > > > > > > > > 0x20000) ???
+> > > > > > > > > >
+> > > > > > > > > > The third HVA range is contained in the first one, but =
+exposed under a
+> > > > > > > > > > different GVA (aliased). This is not "flattened" by QEM=
+U, as GPA does
+> > > > > > > > > > not overlap, only HVA.
+> > > > > > > > > >
+> > > > > > > > > > At the third chunk unmap, the current algorithm finds t=
+he first chunk,
+> > > > > > > > > > not the second one. This series is the way to tell the =
+difference at
+> > > > > > > > > > unmap time.
+> > > > > > > > > >
+> > > > > > > > > > [1] https://lists.nongnu.org/archive/html/qemu-devel/20=
+24-04/msg00079.html
+> > > > > > > > > >
+> > > > > > > > > > Thanks!
+> > > > > > > > >
+> > > > > > > > > Ok, I was wondering if we need to store GPA(GIOVA) to HVA=
+ mappings in
+> > > > > > > > > the iova tree to solve this issue completely. Then there =
+won't be
+> > > > > > > > > aliasing issues.
+> > > > > > > > >
+> > > > > > > >
+> > > > > > > > I'm ok to explore that route but this has another problem. =
+Both SVQ
+> > > > > > > > vrings and CVQ buffers also need to be addressable by Vhost=
+IOVATree,
+> > > > > > > > and they do not have GPA.
+> > > > > > > >
+> > > > > > > > At this moment vhost_svq_translate_addr is able to handle t=
+his
+> > > > > > > > transparently as we translate vaddr to SVQ IOVA. How can we=
+ store
+> > > > > > > > these new entries? Maybe a (hwaddr)-1 GPA to signal it has =
+no GPA and
+> > > > > > > > then a list to go through other entries (SVQ vaddr and CVQ =
+buffers).
+> > > > > > >
+> > > > > > > This seems to be tricky.
+> > > > > > >
+> > > > > > > As discussed, it could be another iova tree.
+> > > > > > >
+> > > > > >
+> > > > > > Yes but there are many ways to add another IOVATree. Let me exp=
+and & recap.
+> > > > > >
+> > > > > > Option 1 is to simply add another iova tree to VhostShadowVirtq=
+ueue.
+> > > > > > Let's call it gpa_iova_tree, as opposed to the current iova_tre=
+e that
+> > > > > > translates from vaddr to SVQ IOVA. To know which one to use is =
+easy at
+> > > > > > adding or removing, like in the memory listener, but how to kno=
+w at
+> > > > > > vhost_svq_translate_addr?
+> > > > >
+> > > > > Then we won't use virtqueue_pop() at all, we need a SVQ version o=
+f
+> > > > > virtqueue_pop() to translate GPA to SVQ IOVA directly?
+> > > > >
+> > > >
+> > > > The problem is not virtqueue_pop, that's out of the
+> > > > vhost_svq_translate_addr. The problem is the need of adding
+> > > > conditionals / complexity in all the callers of
+> > > >
+> > > > > >
+> > > > > > The easiest way for me is to rely on memory_region_from_host().=
+ When
+> > > > > > vaddr is from the guest, it returns a valid MemoryRegion. When =
+it is
+> > > > > > not, it returns NULL. I'm not sure if this is a valid use case,=
+ it
+> > > > > > just worked in my tests so far.
+> > > > > >
+> > > > > > Now we have the second problem: The GPA values of the regions o=
+f the
+> > > > > > two IOVA tree must be unique. We need to be able to find unallo=
+cated
+> > > > > > regions in SVQ IOVA. At this moment there is only one IOVATree,=
+ so
+> > > > > > this is done easily by vhost_iova_tree_map_alloc. But it is ver=
+y
+> > > > > > complicated with two trees.
+> > > > >
+> > > > > Would it be simpler if we decouple the IOVA allocator? For exampl=
+e, we
+> > > > > can have a dedicated gtree to track the allocated IOVA ranges. It=
+ is
+> > > > > shared by both
+> > > > >
+> > > > > 1) Guest memory (GPA)
+> > > > > 2) SVQ virtqueue and buffers
+> > > > >
+> > > > > And another gtree to track the GPA to IOVA.
+> > > > >
+> > > > > The SVQ code could use either
+> > > > >
+> > > > > 1) one linear mappings that contains both SVQ virtqueue and buffe=
+rs
+> > > > >
+> > > > > or
+> > > > >
+> > > > > 2) dynamic IOVA allocation/deallocation helpers
+> > > > >
+> > > > > So we don't actually need the third gtree for SVQ HVA -> SVQ IOVA=
+?
+> > > > >
+> > > >
+> > > > That's possible, but that scatters the IOVA handling code instead o=
+f
+> > > > keeping it self-contained in VhostIOVATree.
+> > >
+> > > To me, the IOVA range/allocation is orthogonal to how IOVA is used.
+> > >
+> > > An example is the iova allocator in the kernel.
+> > >
+> > > Note that there's an even simpler IOVA "allocator" in NVME passthroug=
+h
+> > > code, not sure it is useful here though (haven't had a deep look at
+> > > that).
+> > >
+> >
+> > I don't know enough about them to have an opinion. I keep seeing the
+> > drawback of needing to synchronize both allocation & adding in all the
+> > places we want to modify the IOVATree. At this moment, these are the
+> > vhost-vdpa memory listener, the SVQ vring creation and removal, and
+> > net CVQ buffers. But it may be more in the future.
+> >
+> > What are the advantages of keeping these separated that justifies
+> > needing to synchronize in all these places, compared with keeping them
+> > synchronized in VhostIOVATree?
 >
-> Please don't add me as reviewer - i'm only looking in irregular
-> intervals at hppa tcg in qemu.
+> It doesn't need to be synchronized.
+>
+> Assuming guest and SVQ shares IOVA range. IOVA only needs to track
+> which part of the range has been used.
+>
 
-I'm open to be a reviewer for hppa.
-I already briefly tested and looked into this patch series and
-hope to finish in the next few days. Sadly it doesn't apply
-on top of git head any longer...
+Not sure if I follow, that is what I mean with "synchronized".
 
-Helge
+> This simplifies things, we can store GPA->IOVA mappings and SVQ ->
+> IOVA mappings separately.
+>
+
+Sorry, I still cannot see the whole picture :).
+
+Let's assume we have all the GPA mapped to specific IOVA regions, so
+we have the first IOVA tree (GPA -> IOVA) filled. Now we enable SVQ
+because of the migration. How can we know where we can place SVQ
+vrings without having them synchronized?
+
+At this moment we're using a tree. The tree nature of the current SVQ
+IOVA -> VA makes all nodes ordered so it is more or less easy to look
+for holes.
+
+Now your proposal uses the SVQ IOVA as tree values. Should we iterate
+over all of them, order them, of the two trees, and then look for
+holes there?
+
+> Thanks
+>
+> >
+> > Thanks!
+> >
+>
 
 
