@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50E5CC25B5F
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 02:58:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C599EC25B77
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 03:31:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6Lt9-0002LN-7M; Sun, 12 May 2024 22:58:07 -0400
+	id 1s6MOC-0006Fi-QV; Sun, 12 May 2024 23:30:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1s6Lt6-0002KP-RY; Sun, 12 May 2024 22:58:04 -0400
-Received: from mail-vk1-xa35.google.com ([2607:f8b0:4864:20::a35])
+ id 1s6MOB-0006FP-7f; Sun, 12 May 2024 23:30:11 -0400
+Received: from mail-vk1-xa29.google.com ([2607:f8b0:4864:20::a29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1s6Lt5-0006zf-9h; Sun, 12 May 2024 22:58:04 -0400
-Received: by mail-vk1-xa35.google.com with SMTP id
- 71dfb90a1353d-4df36a7a6f3so1458993e0c.0; 
- Sun, 12 May 2024 19:58:02 -0700 (PDT)
+ id 1s6MO1-0003rp-Af; Sun, 12 May 2024 23:30:10 -0400
+Received: by mail-vk1-xa29.google.com with SMTP id
+ 71dfb90a1353d-4e12478c3f8so189614e0c.3; 
+ Sun, 12 May 2024 20:30:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1715569081; x=1716173881; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1715570999; x=1716175799; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LZ7ba1DGDxR5WoyIdaA7skRpAqKyJ2BY1my8U5HygUg=;
- b=AOFPzrxFzjkppratTzQ3a6qI56Uz4zjT2atpajB5mqCROf75taaQivz9dceUFLX8YD
- 48p/4njCLzx+wpRgSwcZSyfae4XaXMJRaOoOBW9DmZtr/i7sND6RbZ68JQmOlXvXiaEj
- Sf9DVEWoqhnp6fFTAVqYJxMB3BZDyX6CbdgNWTps27VottIlnonus6xSX3NRfe8RtBjk
- 9Mv4hAC5NA/P7g9AgpOvSqMFGjTIpftARpc42iGLY9Y8SucYs7XrQ7uL8qXxAKoNBLWP
- UNmjcp8xhxkdVFuJ0hNjak9sxhW73PUpSTspyBPiAvgQlq6gsg0LAxshnVcbBCKEmKcy
- wI/g==
+ bh=hKqoXSKL2OiQgLPxrNJOEgJBv5k5HlX2kE2+Xn9eBr8=;
+ b=YIf2Q1PyZi1ULJa2OU+uHY8s9i4Lj4NkQGvUVQBPzuRVj211+c1cpXjtiCfKyx2123
+ 7ztd3H0fbrRxRrX3mhz+NINzaRWKS/2TjB7/0lAgLfZRTuZbDZVRumL+GxJWrqwIEoR2
+ cndS2HvbCxMILuHJrjglbRCiZNrOAS5p5qkatKBNjcTTddERZXP/kZf618dxziGDjHh5
+ 7OxPxLP4PnjgaWSYtLpA2mBcNYaHoyfJQkHSN+NJfd4KvENifNM+FBdGMWxGxUOOAUkF
+ 7mH1lZNGmyk5g3VwNgZvFOUaa3EEDCEzclIx32NMLlkKe7BygFn5SomU0TFi8QpUmw7M
+ clrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715569081; x=1716173881;
+ d=1e100.net; s=20230601; t=1715570999; x=1716175799;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LZ7ba1DGDxR5WoyIdaA7skRpAqKyJ2BY1my8U5HygUg=;
- b=YWdEndiPrGOr6j6Pc+NABY4qcJc0Ft3Eo+8H6CJti2jIfD2dLNg+bdPb3EpUxWVXE4
- r30LEeoMP0q8HApQoAAsLI5R9UKYF1aSZC4MkS8ChMIU/UymciJObfCN6CB6VLNDLXmn
- ztavYBV68BH3od2aiCg74wtg4S5iEW2e2sgSCJN+VLbJZt9gTdEd5YcjwYZzhF/gYazN
- KSY7AYFFJT5zJwAp+q5+lFfPEPlQvY9X/yDdjfrC+AZts1ur5k39w7sULWM8kes+CkU8
- E6ZFBv3CAvz/ARL5LG6vUIbghmSpBKp4YYBIfZ+KRUVWUTLPaErOHTmKpSOj7XUciqkk
- W1lw==
+ bh=hKqoXSKL2OiQgLPxrNJOEgJBv5k5HlX2kE2+Xn9eBr8=;
+ b=Vpy9edZCdvG3lyAMtecO2gzQ0EeOh5uSc6dfX4h2e20pmTbSbSEzUgL1Es8t7bGWHO
+ tv+0qrYLrMjTjbPdsL5i8rLaLTGltLkuLa6IuieckapYHnq2atSkaiESSwVn89SqACt8
+ CFFgOaswzCfIitG/eH+QyqUWXJgIjgFiCZT8kJk0QbihSphyTvnhoNIRDQZ0ExhCLrm6
+ l/+UTAQVHh6sapZ7Ww/CIJsqQlUAPTeLn7EjfLIRwsWwasUsQL9oktie/0Oy9UQSrIgZ
+ cMm4mcIGwCV3aTvo7duMjFxkaggYsQWz3nplLRx28gnm3xDW5MTbBNSxsCyFGZbaEX6w
+ aaxw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUOJTCIyQNvK4W0WdqNTqPHozRkgo0GAwq3MVsipu+Mi8zY7j14yVtLXQ3vGF9LLkX/wtiulZn12qgcc23hy8FUx5h3MZI=
-X-Gm-Message-State: AOJu0YzzreKIw/xpnW41z1QnC/9bFutuB08JU+FWUCia/eeEEbFKkHPg
- QjR+dIEMkxImh94CKj55CgpSKJj2kJ4Y6S6jNBPyHcdytcxftKxKWqET/fgfocGuYOV27QV2kSA
- n5rOsIE98+pu6FW7aGw+8MjNOKgw=
-X-Google-Smtp-Source: AGHT+IGx3mOtFP2/aMkmcunHJ+XCgF3HUtuh3aE+csfyWlkQYEXiUCUds3w5FVwxuz5DAw0195Glh4w/l8nz0Avfy2E=
-X-Received: by 2002:a05:6122:4699:b0:4da:e199:4411 with SMTP id
- 71dfb90a1353d-4df790f5f50mr10161460e0c.7.1715569081384; Sun, 12 May 2024
- 19:58:01 -0700 (PDT)
+ AJvYcCV4nwHWxg/fO6oS7cB/8j7aUwfgoH/4+iIrpXs7c4arRz7EbUlDg9u6qL4VC6t0gMsizcWg8VvT691aSf7E02iuADPlVss=
+X-Gm-Message-State: AOJu0YxhdSxrgD6bxlc1Proq+QejwdeaLzmDEOMVpWMHucBo/kjcQmKT
+ LGlJNjVxlasygcsL+8bsTqopCC6FW8AHTikxO2aoAv/1ushQ8J5gT1H7xPlAbEydYAOszxZ8U+C
+ KpMPtNt5Bhs6bIFGD24NIUAHuv7o=
+X-Google-Smtp-Source: AGHT+IGiajIcYAmGAl3FATzoLBR9f3iJY3Apify8Li1XcihuxVZiacGeab9CL8MU5pKgf62N4wtTlCgg0jBYdJYA658=
+X-Received: by 2002:a05:6122:178f:b0:4d8:690d:c02a with SMTP id
+ 71dfb90a1353d-4df8829eb9bmr5678866e0c.6.1715570999251; Sun, 12 May 2024
+ 20:29:59 -0700 (PDT)
 MIME-Version: 1.0
 References: <tencent_7E34EEF0F90B9A68BF38BEE09EC6D4877C0A@qq.com>
 In-Reply-To: <tencent_7E34EEF0F90B9A68BF38BEE09EC6D4877C0A@qq.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 13 May 2024 12:57:35 +1000
-Message-ID: <CAKmqyKOYDQXXVRbSqMZbzS6+YVxQvaktw3eRVj_eJawqynzTqQ@mail.gmail.com>
+Date: Mon, 13 May 2024 13:29:33 +1000
+Message-ID: <CAKmqyKPOmcJxXhb-RGqxj=hPWOk-dkSVb7kt9vBCFXfnzp-Hhw@mail.gmail.com>
 Subject: Re: [PATCH RESEND] target/riscv/cpu.c: fix Zvkb extension config
 To: Yangyu Chen <cyy@cyyself.name>
 Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
@@ -70,8 +70,8 @@ Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Max Chou <max.chou@sifive.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a35;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa35.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a29;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa29.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -106,7 +106,9 @@ e:
 v_cpu_extensions")
 > Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
