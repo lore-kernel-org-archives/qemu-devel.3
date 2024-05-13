@@ -4,84 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF081C25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 12:36:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73989C25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 12:36:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6UuY-0006Sv-Vh; Mon, 13 May 2024 08:36:11 -0400
+	id 1s6Uv9-00076x-5z; Mon, 13 May 2024 08:36:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1s6UuX-0006SU-QT
- for qemu-devel@nongnu.org; Mon, 13 May 2024 08:36:09 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1s6UuV-00054Z-Kl
- for qemu-devel@nongnu.org; Mon, 13 May 2024 08:36:09 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-51f3a49ff7dso5623424e87.2
- for <qemu-devel@nongnu.org>; Mon, 13 May 2024 05:36:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1s6Uv6-00074X-0P; Mon, 13 May 2024 08:36:44 -0400
+Received: from out30-111.freemail.mail.aliyun.com ([115.124.30.111])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1s6Uv0-00055X-CG; Mon, 13 May 2024 08:36:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715603766; x=1716208566; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=kDeqcSWLmBNVGHQ6wU60jHVGTMOs2+iW8Wk5yin0P5c=;
- b=LtEcWmqE0hBamkDrPdyNV2wUdjCaC4WIWmV/fXfDhwqhYtyFrSoy3Qc5OdrspqcX6m
- p00aXfzomT3qdyDDSCDxWrKxjVEultDdFQqQw7KnBtWV3wknqKS1/4fyknO+AlL34RfD
- ggZSxyqdXxwaCd/9QwDG9dOajCmNg8OYQfBf411imhlDdrxMQr1jg0D6EQFK7bVgsb7d
- yx45oDWc4oBM79yNk8TO7FIqqOgzpG5wcdWUcni6Ji5AUBk3TV42DSJJzh6UY18zAJh5
- 7aQZ7Gp67z0+2VaYx3GhPz+o8GPpDXdv9rCUxeKYJ+pShi6kd2Z3qRynjNBDrXg0hgWy
- nfxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715603766; x=1716208566;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kDeqcSWLmBNVGHQ6wU60jHVGTMOs2+iW8Wk5yin0P5c=;
- b=dlTXnTGMWRfXO5SywQ8fZV1JjjySMcCFUs9I5Fuou5MRsz1Hs/OS9VqnHYFsWgVqg+
- 4PV5eB6qVnktkGIfbsptlyt9SNPwuSMgiOzhn5Ad/c/Ld2/Dr8z8UFdNWIhHcx/lmCGR
- D6hezHsjBDQ4kQ/ILlrva7XNUJcNPX43erdjPuTF9njI+pnnGyeh1jQY3G3nJViB+zf3
- xua6P+RiAoH1oTxmpaWFj8IST6GLIehcueZepONSbMLLloQQVFxLo4ZAER1kux/UBAK/
- ahIl5iEU9BOeH5Dw8i1MQ6ScxFCxyDIeQ/xVtItjb0dNQnz84Z17/wRoqOpHEFVfTM0+
- hiZg==
-X-Gm-Message-State: AOJu0YxTVjhLFpUc4Qxc/EchuMNnukNxgBXWwpwtkzQvR9RS/8MqV8z+
- tYhDcW4S57CzpL/cdC0pDEDQ6S7mvxT0Z7Aqu458V4mDRGARA6N8D63GlHnjhNE=
-X-Google-Smtp-Source: AGHT+IFgU25YXlMUAMjT2n/W0l+Y+5doOfdmdoeFjmyQqpvFDTxY6r4nRJSS+qYdW5ZjE8vOak6OaQ==
-X-Received: by 2002:a19:f601:0:b0:522:b1f:24c1 with SMTP id
- 2adb3069b0e04-5220fc7dd36mr5438306e87.19.1715603765649; 
- Mon, 13 May 2024 05:36:05 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5733c2c7dafsm6120224a12.65.2024.05.13.05.36.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 May 2024 05:36:05 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B55945F8B5;
- Mon, 13 May 2024 13:36:04 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [Semihosting Tests PATCH 3/3] add SYS_GET_CMDLINE test
-In-Reply-To: <20240513113513.640007-4-alex.bennee@linaro.org> ("Alex
- =?utf-8?Q?Benn=C3=A9e=22's?=
- message of "Mon, 13 May 2024 12:35:13 +0100")
-References: <20240513113513.640007-1-alex.bennee@linaro.org>
- <20240513113513.640007-4-alex.bennee@linaro.org>
-Date: Mon, 13 May 2024 13:36:04 +0100
-Message-ID: <87cypprirv.fsf@draig.linaro.org>
+ d=linux.alibaba.com; s=default;
+ t=1715603786; h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:From;
+ bh=2QQ2fNmmv6JvHJczTVLxsBOIzDXJdhvrb4eu1nq9fEw=;
+ b=v+DVntBnshueOJYfP1OluTlh2mGopi8D/pbV+8SdPBYaQUOn7BJXadaU1mR6dir8h1JnLiwevkr7Ev4xwJMX4gNl5m7TTdfXAvET6f3psdnbGM1QmfmseCrpYXmreVz+E87TXP1ScW3RtSdctwFL4gb8zReHtZQR3leXJMAF9Zc=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R141e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033068173054;
+ MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
+ TI=SMTPD_---0W6QUXRp_1715603783; 
+Received: from 30.198.0.184(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0W6QUXRp_1715603783) by smtp.aliyun-inc.com;
+ Mon, 13 May 2024 20:36:24 +0800
+Content-Type: multipart/alternative;
+ boundary="------------kvDv8Xha1E9KcNpvyJ4BjWZp"
+Message-ID: <58fe0789-4f1b-4c13-bab9-977c18787095@linux.alibaba.com>
+Date: Mon, 13 May 2024 20:35:37 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 3/6] target/riscv: Add helper functions to calculate
+ current number of masked bits for pointer masking
+To: Alexey Baturo <baturo.alexey@gmail.com>
+Cc: richard.henderson@linaro.org, space.monkey.delivers@gmail.com,
+ palmer@dabbelt.com, Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu,
+ kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+References: <20240511101053.1875596-1-me@deliversmonkey.space>
+ <20240511101053.1875596-4-me@deliversmonkey.space>
+Content-Language: en-US
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <20240511101053.1875596-4-me@deliversmonkey.space>
+Received-SPF: pass client-ip=115.124.30.111;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-111.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,67 +73,241 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+This is a multi-part message in MIME format.
+--------------kvDv8Xha1E9KcNpvyJ4BjWZp
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> We actually had the stubs to implement this. The main pain is getting
-> the binary name into the program so we can validate the result.
+
+On 2024/5/11 18:10, Alexey Baturo wrote:
+> From: Alexey Baturo<baturo.alexey@gmail.com>
 >
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Signed-off-by: Alexey Baturo<baturo.alexey@gmail.com>
+>
+> Reviewed-by: Alistair Francis<alistair.francis@wdc.com>
 > ---
->  Makefile   | 22 +++++++++++-----------
->  usertest.c | 24 ++++++++++++++++++++++++
->  2 files changed, 35 insertions(+), 11 deletions(-)
+>   target/riscv/cpu.h        |  5 ++++
+>   target/riscv/cpu_helper.c | 58 +++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 63 insertions(+)
 >
-> diff --git a/Makefile b/Makefile
-> index 59fd831..f77665f 100644
-> --- a/Makefile
-> +++ b/Makefile
-<snip>
-> --- a/usertest.c
-> +++ b/usertest.c
-> @@ -315,6 +315,26 @@ static int test_feature_detect(void)
->      return 0;
->  }
->=20=20
-> +static int test_cmdline(void)
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 52b6ba73c8..9cac723b19 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -698,8 +698,13 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
+>   
+>   bool riscv_cpu_is_32bit(RISCVCPU *cpu);
+>   
+> +bool riscv_cpu_virt_mem_enabled(CPURISCVState *env);
+> +RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env);
+> +int riscv_pm_get_pmlen(RISCVPmPmm pmm);
+> +
+>   RISCVException riscv_csrr(CPURISCVState *env, int csrno,
+>                             target_ulong *ret_value);
+> +
+>   RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
+>                              target_ulong *ret_value,
+>                              target_ulong new_value, target_ulong write_mask);
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index bf58350669..e4a127ca84 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -142,6 +142,64 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
+>       *pflags = flags;
+>   }
+>   
+> +RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env)
+
+I think we should process XLEN here.
+
+Pack *XL32 into PMM_FIELD_DISABLED
+
+Zhiwei
 > +{
-> +    char cmdline[256];
-> +    int actual;
-> +    const char *s, *c;
-> +
-> +    if (semi_get_cmdline(&cmdline[0], sizeof(cmdline), &actual)) {
-> +        semi_write0("FAIL could recover command line\n");
-> +        return 1;
+> +    int pmm = 0;
+> +#ifndef CONFIG_USER_ONLY
+> +    int priv_mode = cpu_address_mode(env);
+> +    /* Get current PMM field */
+> +    switch (priv_mode) {
+> +    case PRV_M:
+> +        pmm = riscv_cpu_cfg(env)->ext_smmpm ?
+> +                  get_field(env->mseccfg, MSECCFG_PMM) : PMM_FIELD_DISABLED;
+> +        break;
+> +    case PRV_S:
+> +        pmm = riscv_cpu_cfg(env)->ext_smnpm ?
+> +                  get_field(env->menvcfg, MENVCFG_PMM) : PMM_FIELD_DISABLED;
+> +        break;
+> +    case PRV_U:
+> +        pmm = riscv_cpu_cfg(env)->ext_ssnpm ?
+> +                  get_field(env->senvcfg, SENVCFG_PMM) : PMM_FIELD_DISABLED;
+> +        break;
+> +    default:
+> +        g_assert_not_reached();
 > +    }
-> +
-> +    if (strcmp(&cmdline[0], BINARY_NAME) !=3D 0) {
-> +        semi_write0("FAIL unexpected command line:");
-> +        semi_write0(&cmdline[0]);
-
-oops need an error leg here.
-
-> +    }
-> +
-> +    semi_write0("PASS command line test\n");
-> +    return 0;
+> +#endif
+> +    return pmm;
 > +}
 > +
->  int main(void)
->  {
->      void *bufp;
-> @@ -366,6 +386,10 @@ int main(void)
->          return 1;
->      }
->=20=20
-> +    if (test_cmdline()) {
-> +        return 1;
+> +bool riscv_cpu_virt_mem_enabled(CPURISCVState *env)
+> +{
+> +    bool virt_mem_en = false;
+> +#ifndef CONFIG_USER_ONLY
+> +    int satp_mode = 0;
+> +    int priv_mode = cpu_address_mode(env);
+> +    /* Get current PMM field */
+> +    if (riscv_cpu_mxl(env) == MXL_RV32) {
+> +        satp_mode = get_field(env->satp, SATP32_MODE);
+> +    } else {
+> +        satp_mode = get_field(env->satp, SATP64_MODE);
 > +    }
+> +    virt_mem_en = ((satp_mode != VM_1_10_MBARE) && (priv_mode != PRV_M));
+> +#endif
+> +    return virt_mem_en;
+> +}
 > +
->      semi_write0("ALL TESTS PASSED\n");
->=20=20
->      /* If we have EXIT_EXTENDED then use it */
+> +int riscv_pm_get_pmlen(RISCVPmPmm pmm)
+> +{
+> +    switch (pmm) {
+> +    case PMM_FIELD_DISABLED:
+> +        return 0;
+> +    case PMM_FIELD_PMLEN7:
+> +        return 7;
+> +    case PMM_FIELD_PMLEN16:
+> +        return 16;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +    return -1;
+> +}
+> +
+>   #ifndef CONFIG_USER_ONLY
+>   
+>   /*
+--------------kvDv8Xha1E9KcNpvyJ4BjWZp
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 2024/5/11 18:10, Alexey Baturo
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:20240511101053.1875596-4-me@deliversmonkey.space">
+      <pre class="moz-quote-pre" wrap="">From: Alexey Baturo <a class="moz-txt-link-rfc2396E" href="mailto:baturo.alexey@gmail.com">&lt;baturo.alexey@gmail.com&gt;</a>
+
+Signed-off-by: Alexey Baturo <a class="moz-txt-link-rfc2396E" href="mailto:baturo.alexey@gmail.com">&lt;baturo.alexey@gmail.com&gt;</a>
+
+Reviewed-by: Alistair Francis <a class="moz-txt-link-rfc2396E" href="mailto:alistair.francis@wdc.com">&lt;alistair.francis@wdc.com&gt;</a>
+---
+ target/riscv/cpu.h        |  5 ++++
+ target/riscv/cpu_helper.c | 58 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 63 insertions(+)
+
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 52b6ba73c8..9cac723b19 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -698,8 +698,13 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
+ 
+ bool riscv_cpu_is_32bit(RISCVCPU *cpu);
+ 
++bool riscv_cpu_virt_mem_enabled(CPURISCVState *env);
++RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env);
++int riscv_pm_get_pmlen(RISCVPmPmm pmm);
++
+ RISCVException riscv_csrr(CPURISCVState *env, int csrno,
+                           target_ulong *ret_value);
++
+ RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
+                            target_ulong *ret_value,
+                            target_ulong new_value, target_ulong write_mask);
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index bf58350669..e4a127ca84 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -142,6 +142,64 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
+     *pflags = flags;
+ }
+ 
++RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env)</pre>
+    </blockquote>
+    <p>I think we should process XLEN here.</p>
+    <p>Pack *XL32 into <span style="white-space: pre-wrap">PMM_FIELD_DISABLED</span></p>
+    Zhiwei<br>
+    <blockquote type="cite"
+      cite="mid:20240511101053.1875596-4-me@deliversmonkey.space">
+      <pre class="moz-quote-pre" wrap="">
++{
++    int pmm = 0;
++#ifndef CONFIG_USER_ONLY
++    int priv_mode = cpu_address_mode(env);
++    /* Get current PMM field */
++    switch (priv_mode) {
++    case PRV_M:
++        pmm = riscv_cpu_cfg(env)-&gt;ext_smmpm ?
++                  get_field(env-&gt;mseccfg, MSECCFG_PMM) : PMM_FIELD_DISABLED;
++        break;
++    case PRV_S:
++        pmm = riscv_cpu_cfg(env)-&gt;ext_smnpm ?
++                  get_field(env-&gt;menvcfg, MENVCFG_PMM) : PMM_FIELD_DISABLED;
++        break;
++    case PRV_U:
++        pmm = riscv_cpu_cfg(env)-&gt;ext_ssnpm ?
++                  get_field(env-&gt;senvcfg, SENVCFG_PMM) : PMM_FIELD_DISABLED;
++        break;
++    default:
++        g_assert_not_reached();
++    }
++#endif
++    return pmm;
++}
++
++bool riscv_cpu_virt_mem_enabled(CPURISCVState *env)
++{
++    bool virt_mem_en = false;
++#ifndef CONFIG_USER_ONLY
++    int satp_mode = 0;
++    int priv_mode = cpu_address_mode(env);
++    /* Get current PMM field */
++    if (riscv_cpu_mxl(env) == MXL_RV32) {
++        satp_mode = get_field(env-&gt;satp, SATP32_MODE);
++    } else {
++        satp_mode = get_field(env-&gt;satp, SATP64_MODE);
++    }
++    virt_mem_en = ((satp_mode != VM_1_10_MBARE) &amp;&amp; (priv_mode != PRV_M));
++#endif
++    return virt_mem_en;
++}
++
++int riscv_pm_get_pmlen(RISCVPmPmm pmm)
++{
++    switch (pmm) {
++    case PMM_FIELD_DISABLED:
++        return 0;
++    case PMM_FIELD_PMLEN7:
++        return 7;
++    case PMM_FIELD_PMLEN16:
++        return 16;
++    default:
++        g_assert_not_reached();
++    }
++    return -1;
++}
++
+ #ifndef CONFIG_USER_ONLY
+ 
+ /*
+</pre>
+    </blockquote>
+  </body>
+</html>
+
+--------------kvDv8Xha1E9KcNpvyJ4BjWZp--
 
