@@ -4,73 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEB85C25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 13:56:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 778D2C25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 13:59:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6W9x-0000LK-OY; Mon, 13 May 2024 09:56:09 -0400
+	id 1s6WBu-0001JA-CM; Mon, 13 May 2024 09:58:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jtomko@redhat.com>) id 1s6W9v-0000Ke-I0
- for qemu-devel@nongnu.org; Mon, 13 May 2024 09:56:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <julien@xen.org>)
+ id 1s6WBq-0001G3-B6; Mon, 13 May 2024 09:58:08 -0400
+Received: from mail.xenproject.org ([104.130.215.37])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jtomko@redhat.com>) id 1s6W9t-0003MZ-Pw
- for qemu-devel@nongnu.org; Mon, 13 May 2024 09:56:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715608562;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=i+nhtBC5YZ3baXbA9zDxbgVzhViy97TsucEvvvZhL/I=;
- b=KGcVteFbdYxA0DetOYZEw5Cr4By4LoUnkLoW9QAIfvucdpR5BZGEyiC7zSYTnoPKFgU2W6
- eUcqmFx3ujN0kQPqF6v5oHw2c+o2AwuglmAQCNLtZwQEr+FrJkgh612UM6f/SsZs8WAQMF
- pX+7wBOXdte5lCnOAVap+bUyezlDLuM=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-349-nmsk0Y1VPbGX-o0PRyH8mA-1; Mon, 13 May 2024 09:54:05 -0400
-X-MC-Unique: nmsk0Y1VPbGX-o0PRyH8mA-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6F33881227E;
- Mon, 13 May 2024 13:54:04 +0000 (UTC)
-Received: from fedora (unknown [10.45.224.110])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id EECB32026D68;
- Mon, 13 May 2024 13:54:01 +0000 (UTC)
-Date: Mon, 13 May 2024 15:53:59 +0200
-From: =?iso-8859-1?B?SuFu?= Tomko <jtomko@redhat.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- devel@lists.libvirt.org,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Krempa <pkrempa@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Yanan Wang <wangyanan55@huawei.com>
-Subject: Re: [PATCH 0/2] hw/core: revert deprecation of 'parameter=1' for SMP
- topology
-Message-ID: <ZkIbd1B9PQOi60gP@fedora>
-References: <20240513123358.612355-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <julien@xen.org>)
+ id 1s6WBi-0003ji-6R; Mon, 13 May 2024 09:57:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+ s=20200302mail; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+ References:Cc:To:Subject:MIME-Version:Date:Message-ID;
+ bh=+VNh/kHYnh/7Z34zKfP/vR99iIquYdkKDu1MTgWSTIo=; b=6oAI7d+slUEQimBzi7y3XdyGeq
+ vfL8Ia5DQmgyFsMsP573P40VjC1GJdGxwH5YvQma0ZKDRu9QayBg6HsybJ5w0JkwqlaKRTmiNG/sY
+ PK26o0dpNvGvoSvd0ogEmyXI+m4YRI9GCGG8f/SDuwxtdwgmxusvFFnwo7xzUzIaMjG0=;
+Received: from xenbits.xenproject.org ([104.239.192.120])
+ by mail.xenproject.org with esmtp (Exim 4.92)
+ (envelope-from <julien@xen.org>)
+ id 1s6WBX-0005GJ-6w; Mon, 13 May 2024 13:57:47 +0000
+Received: from gw1.octic.net ([88.97.20.152] helo=[10.0.0.211])
+ by xenbits.xenproject.org with esmtpsa
+ (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.92)
+ (envelope-from <julien@xen.org>)
+ id 1s6WBX-0007Bh-00; Mon, 13 May 2024 13:57:47 +0000
+Message-ID: <b537180b-56b6-4d9c-adea-b3d57d188404@xen.org>
+Date: Mon, 13 May 2024 14:57:44 +0100
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="KMBx+CMLht41t/qf"
-Content-Disposition: inline
-In-Reply-To: <20240513123358.612355-1-berrange@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jtomko@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v3 00/18] SMMUv3 nested translation support
+Content-Language: en-GB
+To: Mostafa Saleh <smostafa@google.com>, qemu-arm@nongnu.org,
+ eric.auger@redhat.com, peter.maydell@linaro.org, qemu-devel@nongnu.org
+Cc: jean-philippe@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
+ nicolinc@nvidia.com, richard.henderson@linaro.org,
+ marcin.juszkiewicz@linaro.org
+References: <20240429032403.74910-1-smostafa@google.com>
+From: Julien Grall <julien@xen.org>
+In-Reply-To: <20240429032403.74910-1-smostafa@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=104.130.215.37; envelope-from=julien@xen.org;
+ helo=mail.xenproject.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,43 +73,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Mostafa,
 
---KMBx+CMLht41t/qf
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 29/04/2024 04:23, Mostafa Saleh wrote:
+> Future improvements:
+> =====================
+> 1) One small improvement, that I don’t think it’s worth the extra
+>     complexity, is in case of Stage-1 TLB miss for nested translation,
+>     we can do stage-1 walk and lookup for stage-2 TLBs, instead of
+>     doing the full walk.
+> 
+> Testing
+> ========
+> 1) IOMMUFD + VFIO
+>     Kernel: https://lore.kernel.org/all/cover.1683688960.git.nicolinc@nvidia.com/
+>     VMM: https://qemu-devel.nongnu.narkive.com/o815DqpI/rfc-v5-0-8-arm-smmuv3-emulation-support
+> 
+>     By assigning “virtio-net-pci,netdev=net0,disable-legacy=on,iommu_platform=on,ats=on”,
+>     to a guest VM (on top of QEMU guest) with VIFO and IOMMUFD.
+> 
+> 2) Work in progress prototype I am hacking on for nesting on KVM
+>     (this is nowhere near complete, and misses many stuff but it
+>     doesn't require VMs/VFIO) also with virtio-net-pci and git
+>     cloning a bunch of stuff and also observing traces.
+>     https://android-kvm.googlesource.com/linux/+log/refs/heads/smostafa/android15-6.6-smmu-nesting-wip
+> 
+> I also modified the Linux driver to test with mixed granules/levels.
 
-On a Monday in 2024, Daniel P. Berrang=E9 wrote:
->Since QEMU 9.0, users are complaining that depecation messages are shown
->for every VM libvirt starts. This is due to the newly introduced
->deprecation of 'parameter=3D1' for -smp. This proposes reverting that, see
->the 1st patch for further commentary.
->
->Daniel P. Berrang=E9 (2):
->  hw/core: allow parameter=3D1 for CPU topology on any machine
->  tests: add testing of parameter=3D1 for SMP topology
->
-> docs/about/deprecated.rst   | 14 -------
-> hw/core/machine-smp.c       | 82 ++++++++++++-------------------------
-> tests/unit/test-smp-parse.c | 16 ++++++--
-> 3 files changed, 38 insertions(+), 74 deletions(-)
->
+We have tested the series as well:
 
-Reviewed-by: J=E1n Tomko <jtomko@redhat.com>
+Tested-by: Julien Grall <jgrall@amazon.co.uk>
 
-Jano
+Cheers,
 
---KMBx+CMLht41t/qf
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEARYKAB0WIQT+Rn5j0qdK2hQgnuAU0rOr/y4PvAUCZkIbcgAKCRAU0rOr/y4P
-vNNTAQDEXAR5xP+hgnHjTy1A+KL/YZ7coXyQ8QyRtcdMjtXByAEAz6VhIeKcdYo1
-1rIGbVwCIxqwMpHXzjG8+HIOr9avnAk=
-=57D5
------END PGP SIGNATURE-----
-
---KMBx+CMLht41t/qf--
-
+-- 
+Julien Grall
 
