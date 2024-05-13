@@ -4,76 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65312C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 10:12:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A405C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 10:12:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6SeX-0005sO-Lp; Mon, 13 May 2024 06:11:29 -0400
+	id 1s6SeS-0005pX-Ns; Mon, 13 May 2024 06:11:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1s6SeS-0005p6-ES; Mon, 13 May 2024 06:11:24 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ id 1s6SeQ-0005ok-S8; Mon, 13 May 2024 06:11:22 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1s6SeP-0006Nn-HT; Mon, 13 May 2024 06:11:24 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a59a9d66a51so947604666b.2; 
+ id 1s6SeP-0006Nl-5R; Mon, 13 May 2024 06:11:22 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a59b81d087aso1036142866b.3; 
  Mon, 13 May 2024 03:11:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=gmail.com; s=20230601; t=1715595077; x=1716199877; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zXM+rlyySsEepbdMWPSfQWIUt/cvfwCazjiSQXOTYgA=;
- b=abgTgV/2ZXL4b709ITYeFKE9gjLK41zQ34pOgMROprDEoVwsx3DAWxElJB8k5r62om
- MaZ5397dnvfUGhc7spyCB+9A5o49IyldbFGoRi5BqUL2VDTlhtlPk4IngW/29ecvchuq
- kuHA/hAWoqkHHP8b5s0d4OwV07EwVKPsrX6hlLHZELABZgtGSp5g2qSpDBb/az1cs/gn
- srJ6a50NngLmnLteX0OkYji99I3Fyl0bnJqWvpLRXyY6usLVDGjNU4zPsfYN63c2K9C0
- rdhdEX8GLlsUyuUkLg3+NSP/dSmeW/N1wsLHfANwXnJvSWJzV+iRVcS+F5AseUIXzcgQ
- wEhw==
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=3yXxmMXz6raz0yk5kfkPN65fGosWmMze3CL97q/kGb8=;
+ b=OsJ70k2LDdxPvGdXRxlNKyTZV5Okg0OyrMrCf1pe7djzt164GPyehr2ajxzBf9+D/d
+ SFHrv90wjC3Cg7X/jzN277rOetRkQgsV1uJj4GapfBFAEcnXZDF3KOgQ6XSkUoSm5MYX
+ 0s6TMOXxSPUxuabKF237K8k6MTsI72wDEZVHKgE8dOUJCLe/l9++cOTiJfBZFD2XyAtA
+ 6Fh7Z3zhkR5QKaD9kA8vSNqZGg2//THGNz1OhtQ0pKOx1NqzuQEid5oe9Xa4HsRjGqGq
+ 2v4dNQkTUqfxDs/aSnHc1i/++uQ+Ty0+e7koq0i2xy/r16cIRw/d9ITpZZ1zVtt5vcFw
+ iT4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1715595077; x=1716199877;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zXM+rlyySsEepbdMWPSfQWIUt/cvfwCazjiSQXOTYgA=;
- b=HYKOM+zafer5tz8GQIKKphXOA3M5vF1pnJ2If01t34kOAnUKA1W2mgX49jQeqEKHDs
- FQd0iiWLtimExIkKxLVsQYjr0op4MI4tOnQSQoWedUz1K3yaMaaPxXEU96FWQqVesjjX
- BtsMIqb5LBgmOmupxblQ/YJuamKINGvU0v+/PWXd2vh76/zFkaTCxjUo6IxfMFKKA64B
- +VFJacQb8ruvnyyE8rDKq3XV/OgxPG8pPRjaCteqrrgdY+vWHKN+HjwsVr2lPpllu4wK
- pdogh37oC7kufDlSsq+9cEkRyzp7J2SccRdpnu6AFRb1fN59Jjn/7Tq9JBob7jjmbK2T
- 7zNA==
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=3yXxmMXz6raz0yk5kfkPN65fGosWmMze3CL97q/kGb8=;
+ b=vTW8Ltyv1rIJKz1NMOg2o2IXfxy4ru2WBpHuVt9C5NErqiIKrodd+x3Vm4Lq+0eoMl
+ lkojoMPnEBMQF2i5z+qRZ097mhcwceGwRlDJm2cU1aU6bkdw++E68H2R0eP9DptXG3v+
+ vHqNCqKp0iCSw42rf4K/nR/3oFKjTOmGgBY2BJXElusoW8Lmv8DYpxKkg+0bYfSpQ1xJ
+ fXkS2KBsVwGCSx1dnUcoAcD705IDX3d5bQbgbZZFvm9lvaIurDU/AevZGBKZk0cq7IkY
+ KrMqdlm/dns/WKfXdHqt5YvPOQYzxSjeVDo1+BUeRHUaMu15f5UVeJCunG2xnV8Efcw3
+ wC6g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVTI1BSArs9rqKkLjuWHTdBtupj4RArxi0Jae70rYfJH9cwHbS1+fZFtP7P9LEahY4HKyfk/BqTP2W0RJS4XIso1prrNd0pDSp2jWu/MViOJY7nvjQ+p0Ftwg8qWQ==
-X-Gm-Message-State: AOJu0YxtbtEcuOT/WjDUrVxVmxjenuttgWJgHjMaDEvUWGQwGjbvvEd4
- mEYD6o6e/E6Os0Y7Pl30jOQXy71BzyuY3SnEnAtqN36hNkW2AqVaQy28MA==
-X-Google-Smtp-Source: AGHT+IEt8WtVpk63r6wGHTE4JR4MhZ5JCRDj+lR3y5Ct7HVCy8DgfS48+bJsGX2ffNP5vf7xIrcw1A==
-X-Received: by 2002:a17:907:6d12:b0:a59:a532:ed5b with SMTP id
- a640c23a62f3a-a5a2d665e29mr756501466b.50.1715595077452; 
- Mon, 13 May 2024 03:11:17 -0700 (PDT)
+ AJvYcCUP4ou7g0dE7knRM/q0UC+S9qADl0SIvAzoYO2x3aqrXIWExKhfiCi9sJB8FKCWdhpF2d8xFsT92CmGSNqZt93SJqZCDa0P85UcDjLBi70+5BvLSI5JZZJ3gRVHEg==
+X-Gm-Message-State: AOJu0Yzb7VVj9LhuyqIgH30gXBJM3QCQ7gqC+RdcHIuq67Lnt6DV/avH
+ zpKEJdvGcXhCgwqJyAPyJxaKybdOQtyQDfcM9KHUuI6JfBvYTCPbOy7f2w==
+X-Google-Smtp-Source: AGHT+IEx8gcj5bGokGVyKMB/94BfU3JzwTai1LOpxID13VP2mRwyneYTT+NcVZ755kI00lz1gAfmxQ==
+X-Received: by 2002:a17:906:f59a:b0:a55:6602:e3a9 with SMTP id
+ a640c23a62f3a-a5a2d53b27fmr1096572866b.1.1715595076679; 
+ Mon, 13 May 2024 03:11:16 -0700 (PDT)
 Received: from archlinux.. (business-90-187-110-129.pool2.vodafone-ip.de.
  [90.187.110.129]) by smtp.gmail.com with ESMTPSA id
  a640c23a62f3a-a5a17894d2asm574906666b.87.2024.05.13.03.11.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 May 2024 03:11:17 -0700 (PDT)
+ Mon, 13 May 2024 03:11:16 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>,
  Laurent Vivier <laurent@vivier.eu>,
  Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-trivial@nongnu.org,
  qemu-arm@nongnu.org, Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 1/3] hw/rtc/ds1338: Trace send and receive operations
-Date: Mon, 13 May 2024 12:11:06 +0200
-Message-ID: <20240513101108.5237-2-shentey@gmail.com>
+Subject: [PATCH 0/3] Trivial ARM changes
+Date: Mon, 13 May 2024 12:11:05 +0200
+Message-ID: <20240513101108.5237-1-shentey@gmail.com>
 X-Mailer: git-send-email 2.45.0
-In-Reply-To: <20240513101108.5237-1-shentey@gmail.com>
-References: <20240513101108.5237-1-shentey@gmail.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62a.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,59 +94,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
- hw/rtc/ds1338.c     | 6 ++++++
- hw/rtc/trace-events | 4 ++++
- 2 files changed, 10 insertions(+)
-
-diff --git a/hw/rtc/ds1338.c b/hw/rtc/ds1338.c
-index e479661c39..ec1b6c40b1 100644
---- a/hw/rtc/ds1338.c
-+++ b/hw/rtc/ds1338.c
-@@ -17,6 +17,7 @@
- #include "qemu/module.h"
- #include "qom/object.h"
- #include "sysemu/rtc.h"
-+#include "trace.h"
- 
- /* Size of NVRAM including both the user-accessible area and the
-  * secondary register area.
-@@ -126,6 +127,9 @@ static uint8_t ds1338_recv(I2CSlave *i2c)
-     uint8_t res;
- 
-     res  = s->nvram[s->ptr];
-+
-+    trace_ds1338_recv(s->ptr, res);
-+
-     inc_regptr(s);
-     return res;
- }
-@@ -134,6 +138,8 @@ static int ds1338_send(I2CSlave *i2c, uint8_t data)
- {
-     DS1338State *s = DS1338(i2c);
- 
-+    trace_ds1338_send(s->ptr, data);
-+
-     if (s->addr_byte) {
-         s->ptr = data & (NVRAM_SIZE - 1);
-         s->addr_byte = false;
-diff --git a/hw/rtc/trace-events b/hw/rtc/trace-events
-index ebb311a5b0..8012afe102 100644
---- a/hw/rtc/trace-events
-+++ b/hw/rtc/trace-events
-@@ -22,6 +22,10 @@ pl031_set_alarm(uint32_t ticks) "alarm set for %u ticks"
- aspeed_rtc_read(uint64_t addr, uint64_t value) "addr 0x%02" PRIx64 " value 0x%08" PRIx64
- aspeed_rtc_write(uint64_t addr, uint64_t value) "addr 0x%02" PRIx64 " value 0x%08" PRIx64
- 
-+# ds1338.c
-+ds1338_recv(uint32_t addr, uint8_t value) "[0x%" PRIx32 "] -> 0x%02" PRIx8
-+ds1338_send(uint32_t addr, uint8_t value) "[0x%" PRIx32 "] <- 0x%02" PRIx8
-+
- # m48t59.c
- m48txx_nvram_io_read(uint64_t addr, uint64_t value) "io read addr:0x%04" PRIx64 " value:0x%02" PRIx64
- m48txx_nvram_io_write(uint64_t addr, uint64_t value) "io write addr:0x%04" PRIx64 " value:0x%02" PRIx64
--- 
-2.45.0
-
+This series improves the tracing experience in two devices used in ARM cont=
+ext.=0D
+It also removes a duplicate statement in an IMX watchdog which may indicate=
+ a=0D
+bug (see comment underneath commit message).=0D
+=0D
+Best regards,=0D
+Bernhard=0D
+=0D
+Bernhard Beschow (3):=0D
+  hw/rtc/ds1338: Trace send and receive operations=0D
+  hw/timer/imx_gpt: Convert DPRINTF to trace events=0D
+  hw/watchdog/wdt_imx2: Remove redundant assignment=0D
+=0D
+ hw/rtc/ds1338.c        |  6 ++++++=0D
+ hw/timer/imx_gpt.c     | 18 +++++-------------=0D
+ hw/watchdog/wdt_imx2.c |  1 -=0D
+ hw/rtc/trace-events    |  4 ++++=0D
+ hw/timer/trace-events  |  6 ++++++=0D
+ 5 files changed, 21 insertions(+), 14 deletions(-)=0D
+=0D
+-- =0D
+2.45.0=0D
+=0D
 
