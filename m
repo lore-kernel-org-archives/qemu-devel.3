@@ -4,123 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 127F2C25B78
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 22:28:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36FA3C25B79
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 May 2024 00:58:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6e8Y-0005Db-Ml; Mon, 13 May 2024 18:27:14 -0400
+	id 1s6gUQ-0000kR-Mk; Mon, 13 May 2024 20:57:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s6e8X-0005DM-85
- for qemu-devel@nongnu.org; Mon, 13 May 2024 18:27:13 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <perry@mosi.io>) id 1s6fAO-0004Yr-NA
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 19:33:12 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1s6e8V-0002p7-Ik
- for qemu-devel@nongnu.org; Mon, 13 May 2024 18:27:12 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id B2FDF5D671;
- Mon, 13 May 2024 22:27:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1715639229; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/WEmrC+NUuZeqCd5Rd/mRk4Gc0bFiVaaqTNlqv1d7wY=;
- b=EwzwyH05r8rnddGrED1drL2F4mXbbhidL74jZJwYqq3BHj4TXOJ+upTUAzR6SADsRQZoTZ
- 3IkzPrvd73xAmnwuBitVPAgse3SyDea7CcIL79PgSObfEHLH8CZzSLlpARcY1r3ML3kaG9
- w+/WiHOpUvjEIIqwpt2CoYU1xmSPANI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1715639229;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/WEmrC+NUuZeqCd5Rd/mRk4Gc0bFiVaaqTNlqv1d7wY=;
- b=f6OfuAZoaZi4tjCUVHszcKnSMEE0KhBNl5Ac1JwNJEwKpA/+7kieIQCCA1X6tDGrMUQkQc
- fhGk1hkLIgMUZxDQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=EwzwyH05;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=f6OfuAZo
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1715639229; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/WEmrC+NUuZeqCd5Rd/mRk4Gc0bFiVaaqTNlqv1d7wY=;
- b=EwzwyH05r8rnddGrED1drL2F4mXbbhidL74jZJwYqq3BHj4TXOJ+upTUAzR6SADsRQZoTZ
- 3IkzPrvd73xAmnwuBitVPAgse3SyDea7CcIL79PgSObfEHLH8CZzSLlpARcY1r3ML3kaG9
- w+/WiHOpUvjEIIqwpt2CoYU1xmSPANI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1715639229;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/WEmrC+NUuZeqCd5Rd/mRk4Gc0bFiVaaqTNlqv1d7wY=;
- b=f6OfuAZoaZi4tjCUVHszcKnSMEE0KhBNl5Ac1JwNJEwKpA/+7kieIQCCA1X6tDGrMUQkQc
- fhGk1hkLIgMUZxDQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3277E1372E;
- Mon, 13 May 2024 22:27:08 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id NKpjOryTQmZYQAAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 13 May 2024 22:27:08 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Peter Xu <peterx@redhat.com>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, Yanan Wang <wangyanan55@huawei.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Eduardo
- Habkost <eduardo@habkost.net>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH v2 2/4] migration: fix a typo
-In-Reply-To: <20240513071905.499143-3-marcandre.lureau@redhat.com>
-References: <20240513071905.499143-1-marcandre.lureau@redhat.com>
- <20240513071905.499143-3-marcandre.lureau@redhat.com>
-Date: Mon, 13 May 2024 19:27:06 -0300
-Message-ID: <87wmnxe4at.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <perry@mosi.io>) id 1s6fAN-00022n-0d
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 19:33:12 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1ed41eb3382so35768635ad.0
+ for <qemu-devel@nongnu.org>; Mon, 13 May 2024 16:33:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mosi-io.20230601.gappssmtp.com; s=20230601; t=1715643188; x=1716247988;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=53Jt6gMAorAi5CZBeF/uqWTQ338ADSVXOncCzDFWhtY=;
+ b=DQ5QgotT1uqKoZQyhMZdPt6AwjvJNASpzAOH5+r2XzPWhsJNx6YBQ2gh4Z0WG+Ya3I
+ YT6vfNAbc+EDa/d76DnrTMkLFWCmFe/yndKFpdVnIXWCMirjjl/tT+QNMVoucu9Qp3jn
+ 6N4wx0Qys9elrXYMwvxvL2ofKCp9+B9KVePHZwXCIMHaDseMwcbtT+86ok6vGj+5u4UA
+ 4zwUIyKsyfAcEuyhFngBZkkoOv0v/VCGtuLcwl8KYuY0GnS5/uBJ/O2re24uUx/YSINQ
+ pIo7ET5PmMzbsy/JR9eUpu9SkRp0QLlsIXDppoiNx0zK4r0svNky2PocT2lK5C2JOSW5
+ A5XA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1715643188; x=1716247988;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=53Jt6gMAorAi5CZBeF/uqWTQ338ADSVXOncCzDFWhtY=;
+ b=dmFRIAUI+ZUFPUwPIG4aGvO5qws7uECpfz+K6++eNDcbgk+uLmaxw9CMHsJjadV9tu
+ Ibt7PqrKCP1pFujRMyGzQURFoSlautZ2k2BaB5/i0OheeXI4kXTeubGKFpTFj+fC0E4a
+ LRp53AgygIBpXfAcPnHAb2+RjUiQm8HkgZ4hjzyup2yAjk54oUs/YX16U5EfdjTKaAeq
+ +gYfD8gNGPCWQVAMKJ6DNTG8t6rYCd/z38GW0fevpnw3F0pgBMNzgYRAbzqh0ChupMW0
+ kC8kRNpff5K7NC2wsjKxaj+JnYWaT+YcOkDglmw2UBHhOeNA6Bi5uftHIguTLq97qPRf
+ O7xA==
+X-Gm-Message-State: AOJu0YwMXMV9jjnTKSjQhaGO8nn9IKZ4Iej+gOCVIlKMy227y35AC0tt
+ XRkjHsUq1713wPqbuQsTgxgRjxyEEO3D8kFo1mjKZ/a6MR0LvOb12ADrn3Sx8iPv+xGbyinOfoY
+ 8R4w=
+X-Google-Smtp-Source: AGHT+IHw9dD3I2/NyDElq8gV0krFctYIcSX25jkdGB3c3XKaxBob1Dm1J44J0WM1WFoujHME7mnmAA==
+X-Received: by 2002:a17:902:ecc7:b0:1ec:7b0d:9eb9 with SMTP id
+ d9443c01a7336-1ef4404e44bmr176914715ad.64.1715643188420; 
+ Mon, 13 May 2024 16:33:08 -0700 (PDT)
+Received: from lsp.pagetable.io
+ (108-78-254-250.lightspeed.sntcca.sbcglobal.net. [108.78.254.250])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1ef0c03aadbsm84596215ad.227.2024.05.13.16.33.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 13 May 2024 16:33:08 -0700 (PDT)
+From: Perry Hung <perry@mosi.io>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, peterx@redhat.com, david@redhat.com,
+ philmd@linaro.org, Perry Hung <perry@mosi.io>
+Subject: [PATCH] physmem: allow debug writes to MMIO regions
+Date: Mon, 13 May 2024 16:33:05 -0700
+Message-ID: <20240513233305.2975295-1-perry@mosi.io>
+X-Mailer: git-send-email 2.45.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: B2FDF5D671
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmail.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_TRACE(0.00)[0:+];
- FREEMAIL_CC(0.00)[redhat.com,gmail.com,huawei.com,linaro.org,habkost.net];
- ARC_NA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- MISSING_XM_UA(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCPT_COUNT_SEVEN(0.00)[10]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; TAGGED_RCPT(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=perry@mosi.io; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 13 May 2024 20:57:56 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -135,29 +92,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-marcandre.lureau@redhat.com writes:
+Writes from GDB to memory-mapped IO regions are currently silently
+dropped. cpu_memory_rw_debug() calls address_space_write_rom(), which
+calls address_space_write_rom_internal(), which ignores all non-ram/rom
+regions.
 
-> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> ---
->  migration/vmstate.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/migration/vmstate.c b/migration/vmstate.c
-> index b51212a75b..ff5d589a6d 100644
-> --- a/migration/vmstate.c
-> +++ b/migration/vmstate.c
-> @@ -479,7 +479,7 @@ static int vmstate_subsection_load(QEMUFile *f, const=
- VMStateDescription *vmsd,
->=20=20
->          len =3D qemu_peek_byte(f, 1);
->          if (len < strlen(vmsd->name) + 1) {
-> -            /* subsection name has be be "section_name/a" */
-> +            /* subsection name has to be "section_name/a" */
->              trace_vmstate_subsection_load_bad(vmsd->name, "(short)", "");
->              return 0;
->          }
+Add a check for MMIO regions and direct those to address_space_rw()
+instead.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/213
+Signed-off-by: Perry Hung <perry@mosi.io>
+---
+ system/physmem.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/system/physmem.c b/system/physmem.c
+index 342b7a8fd4..013cdd2ab1 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3508,7 +3508,10 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+         if (l > len)
+             l = len;
+         phys_addr += (addr & ~TARGET_PAGE_MASK);
+-        if (is_write) {
++        if (cpu_physical_memory_is_io(phys_addr)) {
++            res = address_space_rw(cpu->cpu_ases[asidx].as, phys_addr, attrs,
++                                   buf, l, is_write);
++        } else if (is_write) {
+             res = address_space_write_rom(cpu->cpu_ases[asidx].as, phys_addr,
+                                           attrs, buf, l);
+         } else {
+-- 
+2.45.0
+
 
