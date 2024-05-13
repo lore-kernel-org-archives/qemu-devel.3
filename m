@@ -4,87 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16EF3C25B5F
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 05:17:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5038C25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 06:10:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6O2z-00051c-5s; Mon, 13 May 2024 01:16:25 -0400
+	id 1s6OsW-0005PF-8O; Mon, 13 May 2024 02:09:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1s6O2x-00051B-Ub
- for qemu-devel@nongnu.org; Mon, 13 May 2024 01:16:23 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1s6O2v-0006f5-PQ
- for qemu-devel@nongnu.org; Mon, 13 May 2024 01:16:23 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-5ce6b5e3c4eso2254356a12.2
- for <qemu-devel@nongnu.org>; Sun, 12 May 2024 22:16:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1715577379; x=1716182179; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=n2IOHQ65EfdwQczJm0hHK3bvEwyI09Ss5Cfek0liOFw=;
- b=OIioIRh958uI5jwEv1JVfJa+MfD1ebFj/7k8S27FIdjwS0rEuWLQcWTMOX3DEN1ArY
- m3T3Pg9ixD8+xpVZiGJb0ISZc6QdwmG/WB42VeqL5lSnbx8qCWLp2KtsJHE7VPOsMcS1
- SFeF7q08N3QGGTjpy1dBr7TzkjiQcofOqReGSU1AIn3B9Stdy7iDytiCzbhCjJ/X+EVb
- VJ6RCZyX6v9/DqinDwl9EL+DqTSNx6vR1r26xHYSwZELfMnI4uPjoZJ2aJboCa8X7SIE
- PTv2+OUxxUxf3SrxFAegsRqC8LMXoS9uIX3PGkmi/1fCl5eXxmCMY2SFMnVP6k56RFso
- tZDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715577379; x=1716182179;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=n2IOHQ65EfdwQczJm0hHK3bvEwyI09Ss5Cfek0liOFw=;
- b=WzjIoLsR074cdNiCLDvj4yF4vwlJHDtrSL8FZJ7eyy3QyzYoIsHjF01ANDu/txf0yd
- 9dr83ML9Nh1BaMRZfNFi6q3cizrvLvKj7Z//Gwt6qUkZLD2Qnjea7XYueVDuJQEOXjAL
- jWEA8UrnWpghiAt/Qb7sa7izQGnNoIDzkKYYN0E8WzdsbTirjGv+UjxlcnoVv1ZS6vKZ
- yTdwQLrTK73hfxIt41uhZAGEVVphp3DdmaC1he+8EghbcZQTzHn9vvZWMQXU2m8l6NhT
- /wEni774uwr3M8NBpVhwxKFfnFAKHi77P9IcCbW5BIlzGzChe6idvahGV6F8cn7bu9no
- qdhQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWUszSnQXh1ry3E4i4gXYKcgJwNPMZNxWrKXjwe79GUDdt638Cxxc7xHAidwpvFwLvTLM7E/88UZJeMWpjEEcGutAG0+8g=
-X-Gm-Message-State: AOJu0YzAthCMa8Nv8GSnBSMSbqDaZOHTI2joGp+WOup+JhEucEseFDTb
- Lh48PswtE1TNlKCAyG9UlSC3jM/yZFLLrSNVc2P+TnY0xlcY8B/hioxmve4qZW8=
-X-Google-Smtp-Source: AGHT+IFpaskb5xClzeKMjlbSY4S+OO6xPemioOiA24IHeYIDUaQzWuRvjHUiWOL/Eli5kfVkgir44A==
-X-Received: by 2002:a05:6a20:729b:b0:1ad:9adf:febf with SMTP id
- adf61e73a8af0-1afde120efcmr9501373637.31.1715577379463; 
- Sun, 12 May 2024 22:16:19 -0700 (PDT)
-Received: from sunil-laptop ([106.51.188.31]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ef0bf31229sm70072385ad.138.2024.05.12.22.16.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 12 May 2024 22:16:19 -0700 (PDT)
-Date: Mon, 13 May 2024 10:46:03 +0530
-From: Sunil V L <sunilvl@ventanamicro.com>
-To: Sia Jee Heng <jeeheng.sia@starfivetech.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
- peter.maydell@linaro.org, shannon.zhaosl@gmail.com,
- palmer@dabbelt.com, alistair.francis@wdc.com,
- bin.meng@windriver.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com
-Subject: Re: [PATCH v2 2/3] hw/acpi: Upgrade ACPI SPCR table to support SPCR
- table version 4 format
-Message-ID: <ZkGiE68wMiVwZi/E@sunil-laptop>
-References: <20240507052212.291137-1-jeeheng.sia@starfivetech.com>
- <20240507052212.291137-3-jeeheng.sia@starfivetech.com>
+ (Exim 4.90_1) (envelope-from <SRS0=xtei=MQ=kaod.org=clg@ozlabs.org>)
+ id 1s6OsU-0005Oy-A1; Mon, 13 May 2024 02:09:38 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=xtei=MQ=kaod.org=clg@ozlabs.org>)
+ id 1s6OsQ-0000YO-Qw; Mon, 13 May 2024 02:09:38 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Vd8Ft70hqz4wxt;
+ Mon, 13 May 2024 16:09:22 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Vd8Fr4mPCz4wcp;
+ Mon, 13 May 2024 16:09:20 +1000 (AEST)
+Message-ID: <36696eb8-162f-48a9-a569-a4fbb2045109@kaod.org>
+Date: Mon, 13 May 2024 08:09:18 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240507052212.291137-3-jeeheng.sia@starfivetech.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=sunilvl@ventanamicro.com; helo=mail-pg1-x536.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] ppc/pnv: Begin a more complete ADU LPC model for
+ POWER9/10
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>
+References: <20240510141446.108360-1-npiggin@gmail.com>
+ <20240510141446.108360-2-npiggin@gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240510141446.108360-2-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=xtei=MQ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,172 +66,344 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Sia Jee Heng,
+On 5/10/24 16:14, Nicholas Piggin wrote:
+> This implements a framework for an ADU unit model.
+> 
+> The ADU unit actually implements XSCOM, which is the bridge between MMIO
+> and PIB. However it also includes control and status registers and other
+> functions that are exposed as PIB (xscom) registers.
+> 
+> To keep things simple, pnv_xscom.c remains the XSCOM bridge
+> implementation, and pnv_adu.c implements the ADU registers and other
+> functions.
+> 
+> So far, just the ADU no-op registers in the pnv_xscom.c default handler
+> are moved over to the adu model.
+> 
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 
-On Mon, May 06, 2024 at 10:22:11PM -0700, Sia Jee Heng wrote:
-> Update the SPCR table to accommodate the SPCR Table version 4 [1].
-> The SPCR table has been modified to adhere to the version 4 format [2].
-> 
-> [1]: https://learn.microsoft.com/en-us/windows-hardware/drivers/serports/serial-port-console-redirection-table
-> [2]: https://github.com/acpica/acpica/pull/931
-> 
-> Signed-off-by: Sia Jee Heng <jeeheng.sia@starfivetech.com>
+
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+
+Thanks,
+
+C.
+
+
 > ---
->  hw/acpi/aml-build.c         | 14 +++++++++++---
->  hw/arm/virt-acpi-build.c    | 10 ++++++++--
->  hw/riscv/virt-acpi-build.c  | 12 +++++++++---
->  include/hw/acpi/acpi-defs.h |  7 +++++--
->  include/hw/acpi/aml-build.h |  2 +-
->  5 files changed, 34 insertions(+), 11 deletions(-)
+>   include/hw/ppc/pnv_adu.h   |  25 +++++++++
+>   include/hw/ppc/pnv_chip.h  |   3 +
+>   include/hw/ppc/pnv_xscom.h |   6 ++
+>   hw/ppc/pnv.c               |  16 ++++++
+>   hw/ppc/pnv_adu.c           | 111 +++++++++++++++++++++++++++++++++++++
+>   hw/ppc/pnv_xscom.c         |   9 ---
+>   hw/ppc/meson.build         |   1 +
+>   hw/ppc/trace-events        |   4 ++
+>   8 files changed, 166 insertions(+), 9 deletions(-)
+>   create mode 100644 include/hw/ppc/pnv_adu.h
+>   create mode 100644 hw/ppc/pnv_adu.c
 > 
-> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-> index 6d4517cfbe..7c43573eef 100644
-> --- a/hw/acpi/aml-build.c
-> +++ b/hw/acpi/aml-build.c
-> @@ -1996,7 +1996,7 @@ static void build_processor_hierarchy_node(GArray *tbl, uint32_t flags,
->  
->  void build_spcr(GArray *table_data, BIOSLinker *linker,
->                  const AcpiSpcrData *f, const uint8_t rev,
-> -                const char *oem_id, const char *oem_table_id)
-> +                const char *oem_id, const char *oem_table_id, const char *name)
->  {
->      AcpiTable table = { .sig = "SPCR", .rev = rev, .oem_id = oem_id,
->                          .oem_table_id = oem_table_id };
-> @@ -2042,8 +2042,16 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
->      build_append_int_noprefix(table_data, f->pci_flags, 4);
->      /* PCI Segment */
->      build_append_int_noprefix(table_data, f->pci_segment, 1);
-> -    /* Reserved */
-> -    build_append_int_noprefix(table_data, 0, 4);
-> +    /* UartClkFreq */
-> +    build_append_int_noprefix(table_data, f->uart_clk_freq, 4);
-> +    /* PreciseBaudrate */
-> +    build_append_int_noprefix(table_data, f->precise_baudrate, 4);
-> +    /* NameSpaceStringLength */
-> +    build_append_int_noprefix(table_data, f->namespace_string_length, 2);
-> +    /* NameSpaceStringOffset */
-> +    build_append_int_noprefix(table_data, f->namespace_string_offset, 2);
-> +    /* NamespaceString[] */
-> +    g_array_append_vals(table_data, name, f->namespace_string_length);
->  
-Is it possible to check the revision here and add new fields only if the
-revision supports it? ARM maintainers are better to comment but IMO, we
-better keep ARM's SPCR in the same current version since I don't know
-how consumers like linux (and other OSs) react to the change.
+> diff --git a/include/hw/ppc/pnv_adu.h b/include/hw/ppc/pnv_adu.h
+> new file mode 100644
+> index 0000000000..b5f308627b
+> --- /dev/null
+> +++ b/include/hw/ppc/pnv_adu.h
+> @@ -0,0 +1,25 @@
+> +/*
+> + * QEMU PowerPC PowerNV Emulation of some ADU behaviour
+> + *
+> + * Copyright (c) 2024, IBM Corporation.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef PPC_PNV_ADU_H
+> +#define PPC_PNV_ADU_H
+> +
+> +#include "hw/ppc/pnv.h"
+> +#include "hw/qdev-core.h"
+> +
+> +#define TYPE_PNV_ADU "pnv-adu"
+> +
+> +OBJECT_DECLARE_TYPE(PnvADU, PnvADUClass, PNV_ADU)
+> +
+> +struct PnvADU {
+> +    DeviceState xd;
+> +
+> +    MemoryRegion xscom_regs;
+> +};
+> +
+> +#endif /* PPC_PNV_ADU_H */
+> diff --git a/include/hw/ppc/pnv_chip.h b/include/hw/ppc/pnv_chip.h
+> index 8589f3291e..96e50a2983 100644
+> --- a/include/hw/ppc/pnv_chip.h
+> +++ b/include/hw/ppc/pnv_chip.h
+> @@ -2,6 +2,7 @@
+>   #define PPC_PNV_CHIP_H
+>   
+>   #include "hw/pci-host/pnv_phb4.h"
+> +#include "hw/ppc/pnv_adu.h"
+>   #include "hw/ppc/pnv_chiptod.h"
+>   #include "hw/ppc/pnv_core.h"
+>   #include "hw/ppc/pnv_homer.h"
+> @@ -77,6 +78,7 @@ struct Pnv9Chip {
+>       PnvChip      parent_obj;
+>   
+>       /*< public >*/
+> +    PnvADU       adu;
+>       PnvXive      xive;
+>       Pnv9Psi      psi;
+>       PnvLpcController lpc;
+> @@ -110,6 +112,7 @@ struct Pnv10Chip {
+>       PnvChip      parent_obj;
+>   
+>       /*< public >*/
+> +    PnvADU       adu;
+>       PnvXive2     xive;
+>       Pnv9Psi      psi;
+>       PnvLpcController lpc;
+> diff --git a/include/hw/ppc/pnv_xscom.h b/include/hw/ppc/pnv_xscom.h
+> index 6209e18492..e93d310e79 100644
+> --- a/include/hw/ppc/pnv_xscom.h
+> +++ b/include/hw/ppc/pnv_xscom.h
+> @@ -82,6 +82,9 @@ struct PnvXScomInterfaceClass {
+>   #define PNV_XSCOM_PBCQ_SPCI_BASE  0x9013c00
+>   #define PNV_XSCOM_PBCQ_SPCI_SIZE  0x5
+>   
+> +#define PNV9_XSCOM_ADU_BASE       0x0090000
+> +#define PNV9_XSCOM_ADU_SIZE       0x55
+> +
+>   /*
+>    * Layout of the XSCOM PCB addresses (POWER 9)
+>    */
+> @@ -128,6 +131,9 @@ struct PnvXScomInterfaceClass {
+>   #define PNV9_XSCOM_PEC_PCI_STK1   0x140
+>   #define PNV9_XSCOM_PEC_PCI_STK2   0x180
+>   
+> +#define PNV10_XSCOM_ADU_BASE      0x0090000
+> +#define PNV10_XSCOM_ADU_SIZE      0x55
+> +
+>   /*
+>    * Layout of the XSCOM PCB addresses (POWER 10)
+>    */
+> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+> index 6e3a5ccdec..5869aac89a 100644
+> --- a/hw/ppc/pnv.c
+> +++ b/hw/ppc/pnv.c
+> @@ -1530,6 +1530,7 @@ static void pnv_chip_power9_instance_init(Object *obj)
+>       PnvChipClass *pcc = PNV_CHIP_GET_CLASS(obj);
+>       int i;
+>   
+> +    object_initialize_child(obj, "adu",  &chip9->adu, TYPE_PNV_ADU);
+>       object_initialize_child(obj, "xive", &chip9->xive, TYPE_PNV_XIVE);
+>       object_property_add_alias(obj, "xive-fabric", OBJECT(&chip9->xive),
+>                                 "xive-fabric");
+> @@ -1640,6 +1641,13 @@ static void pnv_chip_power9_realize(DeviceState *dev, Error **errp)
+>           return;
+>       }
+>   
+> +    /* ADU */
+> +    if (!qdev_realize(DEVICE(&chip9->adu), NULL, errp)) {
+> +        return;
+> +    }
+> +    pnv_xscom_add_subregion(chip, PNV9_XSCOM_ADU_BASE,
+> +                            &chip9->adu.xscom_regs);
+> +
+>       pnv_chip_quad_realize(chip9, &local_err);
+>       if (local_err) {
+>           error_propagate(errp, local_err);
+> @@ -1806,6 +1814,7 @@ static void pnv_chip_power10_instance_init(Object *obj)
+>       PnvChipClass *pcc = PNV_CHIP_GET_CLASS(obj);
+>       int i;
+>   
+> +    object_initialize_child(obj, "adu",  &chip10->adu, TYPE_PNV_ADU);
+>       object_initialize_child(obj, "xive", &chip10->xive, TYPE_PNV_XIVE2);
+>       object_property_add_alias(obj, "xive-fabric", OBJECT(&chip10->xive),
+>                                 "xive-fabric");
+> @@ -1898,6 +1907,13 @@ static void pnv_chip_power10_realize(DeviceState *dev, Error **errp)
+>           return;
+>       }
+>   
+> +    /* ADU */
+> +    if (!qdev_realize(DEVICE(&chip10->adu), NULL, errp)) {
+> +        return;
+> +    }
+> +    pnv_xscom_add_subregion(chip, PNV10_XSCOM_ADU_BASE,
+> +                            &chip10->adu.xscom_regs);
+> +
+>       pnv_chip_power10_quad_realize(chip10, &local_err);
+>       if (local_err) {
+>           error_propagate(errp, local_err);
+> diff --git a/hw/ppc/pnv_adu.c b/hw/ppc/pnv_adu.c
+> new file mode 100644
+> index 0000000000..8279bc8b26
+> --- /dev/null
+> +++ b/hw/ppc/pnv_adu.c
+> @@ -0,0 +1,111 @@
+> +/*
+> + * QEMU PowerPC PowerNV ADU unit
+> + *
+> + * The ADU unit actually implements XSCOM, which is the bridge between MMIO
+> + * and PIB. However it also includes control and status registers and other
+> + * functions that are exposed as PIB (xscom) registers.
+> + *
+> + * To keep things simple, pnv_xscom.c remains the XSCOM bridge
+> + * implementation, and pnv_adu.c implements the ADU registers and other
+> + * functions.
+> + *
+> + * Copyright (c) 2024, IBM Corporation.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/log.h"
+> +
+> +#include "hw/qdev-properties.h"
+> +#include "hw/ppc/pnv.h"
+> +#include "hw/ppc/pnv_adu.h"
+> +#include "hw/ppc/pnv_chip.h"
+> +#include "hw/ppc/pnv_xscom.h"
+> +#include "trace.h"
+> +
+> +static uint64_t pnv_adu_xscom_read(void *opaque, hwaddr addr, unsigned width)
+> +{
+> +    uint32_t offset = addr >> 3;
+> +    uint64_t val = 0;
+> +
+> +    switch (offset) {
+> +    case 0x18:     /* Receive status reg */
+> +    case 0x12:     /* log register */
+> +    case 0x13:     /* error register */
+> +        break;
+> +
+> +    default:
+> +        qemu_log_mask(LOG_UNIMP, "ADU Unimplemented read register: Ox%08x\n",
+> +                                                                     offset);
+> +    }
+> +
+> +    trace_pnv_adu_xscom_read(addr, val);
+> +
+> +    return val;
+> +}
+> +
+> +static void pnv_adu_xscom_write(void *opaque, hwaddr addr, uint64_t val,
+> +                                unsigned width)
+> +{
+> +    uint32_t offset = addr >> 3;
+> +
+> +    trace_pnv_adu_xscom_write(addr, val);
+> +
+> +    switch (offset) {
+> +    case 0x18:     /* Receive status reg */
+> +    case 0x12:     /* log register */
+> +    case 0x13:     /* error register */
+> +        break;
+> +
+> +    default:
+> +        qemu_log_mask(LOG_UNIMP, "ADU Unimplemented write register: Ox%08x\n",
+> +                                                                     offset);
+> +    }
+> +}
+> +
+> +const MemoryRegionOps pnv_adu_xscom_ops = {
+> +    .read = pnv_adu_xscom_read,
+> +    .write = pnv_adu_xscom_write,
+> +    .valid.min_access_size = 8,
+> +    .valid.max_access_size = 8,
+> +    .impl.min_access_size = 8,
+> +    .impl.max_access_size = 8,
+> +    .endianness = DEVICE_BIG_ENDIAN,
+> +};
+> +
+> +static void pnv_adu_realize(DeviceState *dev, Error **errp)
+> +{
+> +    PnvADU *adu = PNV_ADU(dev);
+> +
+> +    /* XScom regions for ADU registers */
+> +    pnv_xscom_region_init(&adu->xscom_regs, OBJECT(dev),
+> +                          &pnv_adu_xscom_ops, adu, "xscom-adu",
+> +                          PNV9_XSCOM_ADU_SIZE);
+> +}
+> +
+> +static void pnv_adu_class_init(ObjectClass *klass, void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +
+> +    dc->realize = pnv_adu_realize;
+> +    dc->desc = "PowerNV ADU";
+> +    dc->user_creatable = false;
+> +}
+> +
+> +static const TypeInfo pnv_adu_type_info = {
+> +    .name          = TYPE_PNV_ADU,
+> +    .parent        = TYPE_DEVICE,
+> +    .instance_size = sizeof(PnvADU),
+> +    .class_init    = pnv_adu_class_init,
+> +    .interfaces    = (InterfaceInfo[]) {
+> +        { TYPE_PNV_XSCOM_INTERFACE },
+> +        { } },
+> +};
+> +
+> +static void pnv_adu_register_types(void)
+> +{
+> +    type_register_static(&pnv_adu_type_info);
+> +}
+> +
+> +type_init(pnv_adu_register_types);
+> diff --git a/hw/ppc/pnv_xscom.c b/hw/ppc/pnv_xscom.c
+> index a17816d072..d192bbe2c2 100644
+> --- a/hw/ppc/pnv_xscom.c
+> +++ b/hw/ppc/pnv_xscom.c
+> @@ -75,11 +75,6 @@ static uint64_t xscom_read_default(PnvChip *chip, uint32_t pcba)
+>       case PRD_P9_IPOLL_REG_MASK:
+>       case PRD_P9_IPOLL_REG_STATUS:
+>   
+> -        /* P9 xscom reset */
+> -    case 0x0090018:     /* Receive status reg */
+> -    case 0x0090012:     /* log register */
+> -    case 0x0090013:     /* error register */
+> -
+>           /* P8 xscom reset */
+>       case 0x2020007:     /* ADU stuff, log register */
+>       case 0x2020009:     /* ADU stuff, error register */
+> @@ -119,10 +114,6 @@ static bool xscom_write_default(PnvChip *chip, uint32_t pcba, uint64_t val)
+>       case 0x1010c03:     /* PIBAM FIR MASK */
+>       case 0x1010c04:     /* PIBAM FIR MASK */
+>       case 0x1010c05:     /* PIBAM FIR MASK */
+> -        /* P9 xscom reset */
+> -    case 0x0090018:     /* Receive status reg */
+> -    case 0x0090012:     /* log register */
+> -    case 0x0090013:     /* error register */
+>   
+>           /* P8 xscom reset */
+>       case 0x2020007:     /* ADU stuff, log register */
+> diff --git a/hw/ppc/meson.build b/hw/ppc/meson.build
+> index d096636ee7..932ade7b21 100644
+> --- a/hw/ppc/meson.build
+> +++ b/hw/ppc/meson.build
+> @@ -44,6 +44,7 @@ endif
+>   ppc_ss.add(when: 'CONFIG_POWERNV', if_true: files(
+>     'pnv.c',
+>     'pnv_xscom.c',
+> +  'pnv_adu.c',
+>     'pnv_core.c',
+>     'pnv_i2c.c',
+>     'pnv_lpc.c',
+> diff --git a/hw/ppc/trace-events b/hw/ppc/trace-events
+> index bf29bbfd4b..1f125ce841 100644
+> --- a/hw/ppc/trace-events
+> +++ b/hw/ppc/trace-events
+> @@ -95,6 +95,10 @@ vof_write(uint32_t ih, unsigned cb, const char *msg) "ih=0x%x [%u] \"%s\""
+>   vof_avail(uint64_t start, uint64_t end, uint64_t size) "0x%"PRIx64"..0x%"PRIx64" size=0x%"PRIx64
+>   vof_claimed(uint64_t start, uint64_t end, uint64_t size) "0x%"PRIx64"..0x%"PRIx64" size=0x%"PRIx64
+>   
+> +# pnv_adu.c
+> +pnv_adu_xscom_read(uint64_t addr, uint64_t val) "addr 0x%" PRIx64 " val 0x%" PRIx64
+> +pnv_adu_xscom_write(uint64_t addr, uint64_t val) "addr 0x%" PRIx64 " val 0x%" PRIx64
+> +
+>   # pnv_chiptod.c
+>   pnv_chiptod_xscom_read(uint64_t addr, uint64_t val) "addr 0x%" PRIx64 " val 0x%" PRIx64
+>   pnv_chiptod_xscom_write(uint64_t addr, uint64_t val) "addr 0x%" PRIx64 " val 0x%" PRIx64
 
-Thanks!
-Sunil
->      acpi_table_end(linker, &table);
->  }
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index 6a1bde61ce..cb345e8659 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -428,11 +428,12 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->  
->  /*
->   * Serial Port Console Redirection Table (SPCR)
-> - * Rev: 1.07
-> + * Rev: 1.10
->   */
->  static void
->  spcr_setup(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->  {
-> +    const char name[] = ".";
->      AcpiSpcrData serial = {
->          .interface_type = 3,       /* ARM PL011 UART */
->          .base_addr.id = AML_AS_SYSTEM_MEMORY,
-> @@ -456,9 +457,14 @@ spcr_setup(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->          .pci_function = 0,
->          .pci_flags = 0,
->          .pci_segment = 0,
-> +        .uart_clk_freq = 0,
-> +        .precise_baudrate = 0,
-> +        .namespace_string_length = sizeof(name),
-> +        .namespace_string_offset = 88,
->      };
->  
-> -    build_spcr(table_data, linker, &serial, 2, vms->oem_id, vms->oem_table_id);
-> +    build_spcr(table_data, linker, &serial, 4, vms->oem_id, vms->oem_table_id,
-> +               name);
->  }
->  
->  /*
-> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-> index 0925528160..5fa3942491 100644
-> --- a/hw/riscv/virt-acpi-build.c
-> +++ b/hw/riscv/virt-acpi-build.c
-> @@ -176,14 +176,15 @@ acpi_dsdt_add_uart(Aml *scope, const MemMapEntry *uart_memmap,
->  
->  /*
->   * Serial Port Console Redirection Table (SPCR)
-> - * Rev: 1.07
-> + * Rev: 1.10
->   */
->  
->  static void
->  spcr_setup(GArray *table_data, BIOSLinker *linker, RISCVVirtState *s)
->  {
-> +    const char name[] = ".";
->      AcpiSpcrData serial = {
-> -        .interface_type = 0,       /* 16550 compatible */
-> +        .interface_type = 0x12,       /* 16550 compatible */
->          .base_addr.id = AML_AS_SYSTEM_MEMORY,
->          .base_addr.width = 32,
->          .base_addr.offset = 0,
-> @@ -205,9 +206,14 @@ spcr_setup(GArray *table_data, BIOSLinker *linker, RISCVVirtState *s)
->          .pci_function = 0,
->          .pci_flags = 0,
->          .pci_segment = 0,
-> +        .uart_clk_freq = 0,
-> +        .precise_baudrate = 0,
-> +        .namespace_string_length = sizeof(name),
-> +        .namespace_string_offset = 88,
->      };
->  
-> -    build_spcr(table_data, linker, &serial, 2, s->oem_id, s->oem_table_id);
-> +    build_spcr(table_data, linker, &serial, 4, s->oem_id, s->oem_table_id,
-> +               name);
->  }
->  
->  /* RHCT Node[N] starts at offset 56 */
-> diff --git a/include/hw/acpi/acpi-defs.h b/include/hw/acpi/acpi-defs.h
-> index 0e6e82b339..2e6e341998 100644
-> --- a/include/hw/acpi/acpi-defs.h
-> +++ b/include/hw/acpi/acpi-defs.h
-> @@ -112,7 +112,6 @@ typedef struct AcpiSpcrData {
->      uint8_t flow_control;
->      uint8_t terminal_type;
->      uint8_t language;
-> -    uint8_t reserved1;
->      uint16_t pci_device_id;    /* Must be 0xffff if not PCI device */
->      uint16_t pci_vendor_id;    /* Must be 0xffff if not PCI device */
->      uint8_t pci_bus;
-> @@ -120,7 +119,11 @@ typedef struct AcpiSpcrData {
->      uint8_t pci_function;
->      uint32_t pci_flags;
->      uint8_t pci_segment;
-> -    uint32_t reserved2;
-> +    uint32_t uart_clk_freq;
-> +    uint32_t precise_baudrate;
-> +    uint32_t namespace_string_length;
-> +    uint32_t namespace_string_offset;
-> +    char namespace_string[];
->  } AcpiSpcrData;
->  
->  #define ACPI_FADT_ARM_PSCI_COMPLIANT  (1 << 0)
-> diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
-> index a3784155cb..68c0f2dbee 100644
-> --- a/include/hw/acpi/aml-build.h
-> +++ b/include/hw/acpi/aml-build.h
-> @@ -500,5 +500,5 @@ void build_tpm2(GArray *table_data, BIOSLinker *linker, GArray *tcpalog,
->  
->  void build_spcr(GArray *table_data, BIOSLinker *linker,
->                  const AcpiSpcrData *f, const uint8_t rev,
-> -                const char *oem_id, const char *oem_table_id);
-> +                const char *oem_id, const char *oem_table_id, const char *name);
->  #endif
-> -- 
-> 2.34.1
-> 
 
