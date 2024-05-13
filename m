@@ -4,104 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B91E9C25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 20:37:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6923C25B78
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 20:43:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6cPY-00036w-Is; Mon, 13 May 2024 16:36:40 -0400
+	id 1s6cUm-0004dH-9O; Mon, 13 May 2024 16:42:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3znlCZgYKCgUxjfsohlttlqj.htrvjrz-ij0jqstslsz.twl@flex--seanjc.bounces.google.com>)
- id 1s6cPW-00035e-I0
- for qemu-devel@nongnu.org; Mon, 13 May 2024 16:36:38 -0400
-Received: from mail-yw1-x114a.google.com ([2607:f8b0:4864:20::114a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3znlCZgYKCgUxjfsohlttlqj.htrvjrz-ij0jqstslsz.twl@flex--seanjc.bounces.google.com>)
- id 1s6cPS-0005q8-77
- for qemu-devel@nongnu.org; Mon, 13 May 2024 16:36:37 -0400
-Received: by mail-yw1-x114a.google.com with SMTP id
- 00721157ae682-620a2321b0fso75047867b3.3
- for <qemu-devel@nongnu.org>; Mon, 13 May 2024 13:36:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1715632591; x=1716237391; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:from:subject:message-id:references
- :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
- :reply-to; bh=RTqdF/Fyy9v2rp3elmPXvaESz+kmdh+eg2ABVOfbt3w=;
- b=ZIoOfl6vTYx+7opW36sUoAZsI9Hb3vVP6Dqnqdn+eCqAwlJVScSs5sP+tLdpHYUVPn
- 686mEsOQ597XXFvacqZkl8nvj+x9JgT2wjZHMm7hxH+Mnb3KPu4Z04CKQAgoCPbf3iYE
- FVtEt8KPRW/mb6XE+4NtIsc6yALAvPcLhFioQsIHKzwhkpXbuzWrr1CgWggs4+utdcqp
- QzoCZat6/z0w2DkULjfChssOBSwgzbnH5kROYvgwzdQlDvszPoDOOd5B952BE/5iLqvr
- GbfCHSYeufkm0JXJeVEXO2hy/BOVfH8PWNea6qL7Y8AtaFSvIgUAMl6SWSiruxY5EbBm
- rO0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715632591; x=1716237391;
- h=content-transfer-encoding:cc:to:from:subject:message-id:references
- :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=RTqdF/Fyy9v2rp3elmPXvaESz+kmdh+eg2ABVOfbt3w=;
- b=e64q6xrZQkCI2U/zlFy4RHrFU/xMVe2AwJpK1s7d7Zxjm6g3HeaIpRQdeQmGIXGLMz
- 0O118Cdzd9C1Yi264Q7DymBWT0+JFfUoutUqSF8r1MxQeOZqYqtBByJQbx5go2TwS3QV
- kOQaQIrwth4pOg5oPfb3jQxU1W6VBsgT+A/ABjvTHcCaNIVoc0jParFs+RqvklohLppW
- FBjP7o277ieAmbqu/fuZBY+0qZXcvVDNqxsxQTDAT8o6P99aY6GxercFDhrgKnVB1NEh
- yyDeyIfwYRwm/6cra1BCSA9SHXblaRgbBH3aapF8wuhM15tnYKPZa39KolqsI9YFkdPB
- oHcQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVvlEJdG81LHbDUUXyWWU7zOvoJlkVTGCVRybeOUgpsEeozp665ocGtPdLXBnV/lcNPr0Rg9LssPzYZIpkZRUJLbfNvNQE=
-X-Gm-Message-State: AOJu0YwVPlyT4/85KN1iKlezPIKPrKU5szjxhKnXPWSsxmXeovN+sSKA
- C3djNy97hG3R6YDHVONnGCx6Miqznjtua7vABvrp/MytT1nE3LJUdy5GXeaIPU24ucQfQfB8ORu
- o0g==
-X-Google-Smtp-Source: AGHT+IFxSaf5ALbxAjGJ4irStP0T4VQiFrWgBxguuMjd3vTUy8dpIf11/Kw31vWLIOru5J9yUqNrB2dHqIA=
-X-Received: from zagreus.c.googlers.com
- ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
- (user=seanjc job=sendgmr) by 2002:a05:6902:120d:b0:dee:690f:af35 with SMTP id
- 3f1490d57ef6-dee690fbad4mr609613276.8.1715632590827; Mon, 13 May 2024
- 13:36:30 -0700 (PDT)
-Date: Mon, 13 May 2024 13:36:29 -0700
-In-Reply-To: <f880d0187e2d482bc8a8095cf5b7404ea9d6fb03.camel@amazon.com>
-Mime-Version: 1.0
-References: <cc1bb8e9bc3e1ab637700a4d3defeec95b55060a.camel@amazon.com>
- <ZeudRmZz7M6fWPVM@google.com> <ZexEkGkNe_7UY7w6@kernel.org>
- <58f39f23-0314-4e34-a8c7-30c3a1ae4777@amazon.co.uk>
- <ZkI0SCMARCB9bAfc@google.com>
- <aaf684b5eb3a3fe9cfbb6205c16f0973c6f8bb07.camel@amazon.com>
- <ZkJFIpEHIQvfuzx1@google.com>
- <f880d0187e2d482bc8a8095cf5b7404ea9d6fb03.camel@amazon.com>
-Message-ID: <ZkJ37uwNOPis0EnW@google.com>
-Subject: Re: Unmapping KVM Guest Memory from Host Kernel
-From: Sean Christopherson <seanjc@google.com>
-To: James Gowans <jgowans@amazon.com>
-Cc: "kvm@vger.kernel.org" <kvm@vger.kernel.org>, 
- "linux-coco@lists.linux.dev" <linux-coco@lists.linux.dev>,
- Nikita Kalyazin <kalyazin@amazon.co.uk>, 
- "rppt@kernel.org" <rppt@kernel.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
- Patrick Roy <roypat@amazon.co.uk>, "somlo@cmu.edu" <somlo@cmu.edu>,
- "vbabka@suse.cz" <vbabka@suse.cz>, 
- "akpm@linux-foundation.org" <akpm@linux-foundation.org>, 
- "kirill.shutemov@linux.intel.com" <kirill.shutemov@linux.intel.com>, 
- "Liam.Howlett@oracle.com" <Liam.Howlett@oracle.com>,
- David Woodhouse <dwmw@amazon.co.uk>, 
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "linux-mm@kvack.org" <linux-mm@kvack.org>, 
- Alexander Graf <graf@amazon.de>, Derek Manwaring <derekmn@amazon.com>, 
- "chao.p.peng@linux.intel.com" <chao.p.peng@linux.intel.com>,
- "lstoakes@gmail.com" <lstoakes@gmail.com>, 
- "mst@redhat.com" <mst@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1s6cUk-0004cx-3p; Mon, 13 May 2024 16:42:02 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1s6cUi-0006XF-1C; Mon, 13 May 2024 16:42:01 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id E34A566678;
+ Mon, 13 May 2024 23:42:02 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id 81EEFCE0A4;
+ Mon, 13 May 2024 23:41:54 +0300 (MSK)
+Received: (nullmailer pid 1013790 invoked by uid 1000);
+ Mon, 13 May 2024 20:41:54 -0000
+Subject: [ANNOUNCE] QEMU 8.2.4 Stable released
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::114a;
- envelope-from=3znlCZgYKCgUxjfsohlttlqj.htrvjrz-ij0jqstslsz.twl@flex--seanjc.bounces.google.com;
- helo=mail-yw1-x114a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+Date: Mon, 13 May 2024 23:41:54 +0300
+Message-Id: <1715632914.382233.1013785.nullmailer@tls.msk.ru>
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,144 +57,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 13, 2024, James Gowans wrote:
-> On Mon, 2024-05-13 at 10:09 -0700, Sean Christopherson wrote:
-> > On Mon, May 13, 2024, James Gowans wrote:
-> > > On Mon, 2024-05-13 at 08:39 -0700, Sean Christopherson wrote:
-> > > > > Sean, you mentioned that you envision guest_memfd also supporting=
- non-CoCo VMs.
-> > > > > Do you have some thoughts about how to make the above cases work =
-in the
-> > > > > guest_memfd context?
-> > > >=20
-> > > > Yes.=C2=A0 The hand-wavy plan is to allow selectively mmap()ing gue=
-st_memfd().=C2=A0 There
-> > > > is a long thread[*] discussing how exactly we want to do that.=C2=
-=A0 The TL;DR is that
-> > > > the basic functionality is also straightforward; the bulk of the di=
-scussion is
-> > > > around gup(), reclaim, page migration, etc.
-> > >=20
-> > > I still need to read this long thread, but just a thought on the word
-> > > "restricted" here: for MMIO the instruction can be anywhere and
-> > > similarly the load/store MMIO data can be anywhere. Does this mean th=
-at
-> > > for running unmodified non-CoCo VMs with guest_memfd backend that we'=
-ll
-> > > always need to have the whole of guest memory mmapped?
-> >=20
-> > Not necessarily, e.g. KVM could re-establish the direct map or mremap()=
- on-demand.
-> > There are variation on that, e.g. if ASI[*] were to ever make it's way =
-upstream,
-> > which is a huge if, then we could have guest_memfd mapped into a KVM-on=
-ly CR3.
->=20
-> Yes, on-demand mapping in of guest RAM pages is definitely an option. It
-> sounds quite challenging to need to always go via interfaces which
-> demand map/fault memory, and also potentially quite slow needing to
-> unmap and flush afterwards.=20
->=20
-> Not too sure what you have in mind with "guest_memfd mapped into KVM-
-> only CR3" - could you expand?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Remove guest_memfd from the kernel's direct map, e.g. so that the kernel at=
--large
-can't touch guest memory, but have a separate set of page tables that have =
-the
-direct map, userspace page tables, _and_ kernel mappings for guest_memfd.  =
-On
-KVM_RUN (or vcpu_load()?), switch to KVM's CR3 so that KVM always map/unmap=
- are
-free (literal nops).
+Hi everyone,
 
-That's an imperfect solution as IRQs and NMIs will run kernel code with KVM=
-'s
-page tables, i.e. guest memory would still be exposed to the host kernel.  =
-And
-of course we'd need to get buy in from multiple architecturs and maintainer=
-s,
-etc.
+The QEMU v8.2.4 stable release is now available.
 
-> > > I guess the idea is that this use case will still be subject to the
-> > > normal restriction rules, but for a non-CoCo non-pKVM VM there will b=
-e
-> > > no restriction in practice, and userspace will need to mmap everythin=
-g
-> > > always?
-> > >=20
-> > > It really seems yucky to need to have all of guest RAM mmapped all th=
-e
-> > > time just for MMIO to work... But I suppose there is no way around th=
-at
-> > > for Intel x86.
-> >=20
-> > It's not just MMIO.=C2=A0 Nested virtualization, and more specifically =
-shadowing nested
-> > TDP, is also problematic (probably more so than MMIO).=C2=A0 And there =
-are more cases,
-> > i.e. we'll need a generic solution for this.=C2=A0 As above, there are =
-a variety of
-> > options, it's largely just a matter of doing the work.=C2=A0 I'm not sa=
-ying it's a
-> > trivial amount of work/effort, but it's far from an unsolvable problem.
->=20
-> I didn't even think of nested virt, but that will absolutely be an even
-> bigger problem too. MMIO was just the first roadblock which illustrated
-> the problem.
-> Overall what I'm trying to figure out is whether there is any sane path
-> here other than needing to mmap all guest RAM all the time. Trying to
-> get nested virt and MMIO and whatever else needs access to guest RAM
-> working by doing just-in-time (aka: on-demand) mappings and unmappings
-> of guest RAM sounds like a painful game of whack-a-mole, potentially
-> really bad for performance too.
+You can grab the tarball from our download page here:
 
-It's a whack-a-mole game that KVM already plays, e.g. for dirty tracking, p=
-ost-copy
-demand paging, etc..  There is still plenty of room for improvement, e.g. t=
-o reduce
-the number of touchpoints and thus the potential for missed cases.  But KVM=
- more
-or less needs to solve this basic problem no matter what, so I don't think =
-that
-guest_memfd adds much, if any, burden.
+  https://www.qemu.org/download/#source
 
-> Do you think we should look at doing this on-demand mapping, or, for
-> now, simply require that all guest RAM is mmapped all the time and KVM
-> be given a valid virtual addr for the memslots?
+  https://download.qemu.org/qemu-8.2.4.tar.xz
+  https://download.qemu.org/qemu-8.2.4.tar.xz.sig (signature)
 
-I don't think "map everything into userspace" is a viable approach, precise=
-ly
-because it requires reflecting that back into KVM's memslots, which in turn
-means guest_memfd needs to allow gup().  And I don't think we want to allow=
- gup(),
-because that opens a rather large can of worms (see the long thread I linke=
-d).
+v8.2.4 is now tagged in the official qemu.git repository, and the
+stable-8.2 branch has been updated accordingly:
 
-Hmm, a slightly crazy idea (ok, maybe wildly crazy) would be to support map=
-ping
-all of guest_memfd into kernel address space, but as USER=3D1 mappings.  I.=
-e. don't
-require a carve-out from userspace, but do require CLAC/STAC when access gu=
-est
-memory from the kernel.  I think/hope that would provide the speculative ex=
-ecution
-mitigation properties you're looking for?
+  https://gitlab.com/qemu-project/qemu/-/commits/stable-8.2
 
-Userspace would still have access to guest memory, but it would take a trul=
-y
-malicious userspace for that to matter.  And when CPUs that support LASS co=
-me
-along, userspace would be completely unable to access guest memory through =
-KVM's
-magic mapping.
+There are 16 changes since the previous v8.2.3 release.
 
-This too would require a decent amount of buy-in from outside of KVM, e.g. =
-to
-carve out the virtual address range in the kernel.  But the performance ove=
-rhead
-would be identical to the status quo.  And there could be advantages to bei=
-ng
-able to identify accesses to guest memory based purely on kernel virtual ad=
-dress.
+Thank you everyone who has been involved and helped with the stable series!
+
+/mjt
+
+Changelog (stable-8.2-hash master-hash Author Name: Commmit-Subject):
+
+1332b8dd43 Michael Tokarev:
+ Update version for 8.2.4 release
+07d46408cb e88a856efd Philippe Mathieu-Daud=C3=A9:
+ target/sh4: Fix SUBV opcode
+dc5390a0ca c365e6b070 Philippe Mathieu-Daud=C3=A9:
+ target/sh4: Fix ADDV opcode
+7b4804c965 eb656a60fd Philippe Mathieu-Daud=C3=A9:
+ hw/arm/npcm7xx: Store derivative OTP fuse key in little endian
+dfcbb9ef24 4b00855f0e Alexandra Diupina:
+ hw/dmax/xlnx_dpdma: fix handling of address_extension descriptor fields
+d5cf8bed29 f2c8aeb1af Jeuk Kim:
+ hw/ufs: Fix buffer overflow bug
+5479d911bc a88a04906b Thomas Huth:
+ .gitlab-ci.d/cirrus.yml: Shorten the runtime of the macOS and FreeBSD jobs
+5b5655fdb7 dcc5c018c7 Peter Maydell:
+ tests/avocado: update sunxi kernel from armbian to 6.6.16
+7e5f59326d 0cbb322f70 Michael Tokarev:
+ target/loongarch/cpu.c: typo fix: expection
+f6abce29cc 06479dbf3d Li Zhijian:
+ backends/cryptodev-builtin: Fix local_error leaks
+37751067b1 4fa333e08d Eric Blake:
+ nbd/server: Mark negotiation functions as coroutine_fn
+cb4c222add ae6d91a7e9 Zhu Yangyang:
+ nbd/server: do not poll within a coroutine context
+6fee9efc2e 04f6fb897a Michael Tokarev:
+ linux-user: do_setsockopt: fix SOL_ALG.ALG_SET_KEY
+55b88e61ed 2cc637f1ea Li Zhijian:
+ migration/colo: Fix bdrv_graph_rdlock_main_loop: Assertion `!qemu_in_corou=
+tine()' failed.
+cbae108098 10f86d1b84 Daniel Henrique Barboza:
+ target/riscv/kvm: change timer regs size to u64
+125b95d79e 450bd6618f Daniel Henrique Barboza:
+ target/riscv/kvm: change KVM_REG_RISCV_FP_D to u64
+bbdcc89678 49c211ffca Daniel Henrique Barboza:
+ target/riscv/kvm: change KVM_REG_RISCV_FP_F to u32
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEe3O61ovnosKJMUsicBtPaxppPlkFAmZCexIACgkQcBtPaxpp
+PlkwiQgAinEkfIr7ShAXPx4L1GrE9S4HbuF4cZrtJqcbSB6XN7v+zSKeWW89iNhX
+6/UDcP57ORtincZyhlqzj/MEoOFiUgpEz9pAlJn12QlDZDOFGOD7yISibCKSZVsL
+OKPOOH7HB6/koUmKKXij2JAc73G95ZkGrsvPS/ThiQbh89R1wGuarmvO447lgLZx
+a4tlGa70hmu3+GGPYRUT4W+TNMvUP/jLj3BHq6PlMSz0cpr/REAsG93h5Bq1axwL
+8bDSw2HSX09wE4yp4AalT+ymnphZ7oh3kDniLn/DDjRXmlatSuLJADzK0Q0ksoWm
+rPY9ZLDOYaNAd1z29V6k8z2gG1rKtA=3D=3D
+=3DiFlq
+-----END PGP SIGNATURE-----
 
