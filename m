@@ -4,91 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C869C25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 12:42:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D07A9C25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 12:44:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6V0C-0001vG-Lx; Mon, 13 May 2024 08:42:00 -0400
+	id 1s6V1y-0003YL-Dn; Mon, 13 May 2024 08:43:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1s6V01-0001iy-EL
- for qemu-devel@nongnu.org; Mon, 13 May 2024 08:41:56 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1s6Uzy-0005gg-3T
- for qemu-devel@nongnu.org; Mon, 13 May 2024 08:41:49 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-1ee38966529so35916515ad.1
- for <qemu-devel@nongnu.org>; Mon, 13 May 2024 05:41:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <prvs=8567b36a1=roypat@amazon.co.uk>)
+ id 1s6SyP-0004aN-Tx
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 06:32:05 -0400
+Received: from smtp-fw-52005.amazon.com ([52.119.213.156])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <prvs=8567b36a1=roypat@amazon.co.uk>)
+ id 1s6SyL-0002Jd-Eq
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 06:32:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1715604103; x=1716208903; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=yZJuNduezXByrvGVedsU6H/cBA77tzZtHiuVJXMTknA=;
- b=Z3A+8JEKNaY1UbGFZTGZl77XUJPBRQTq6ysisKfYvF72g8h/w53nTN0s0i8qxeFydG
- sjGFkhjfFP7WMEo6Ude3IbUMxm853AbmjiaofGef3YkhmLXT9qJrVIx6mXsyG5ZQNOpX
- DLkTua4Dw72EDmWj0VAuHvMTZwmf5zoiNAPe+y9tDA72dLkuclmqoMaO+RXREbFa6fQn
- p2gcXA11FgiZ2m+w/pZZ9OB2MvhWXWJyS+rr9DUm+YnR0y+NdJcO4h3Xv+4v9TT2gNPs
- V7ydjwHAHuC0bB1cOwvK58hJoXkNZkfFBsnx+e4b3r7DG+7CRcR2gyqwPr32Oj5YmZY8
- Ja/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715604103; x=1716208903;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yZJuNduezXByrvGVedsU6H/cBA77tzZtHiuVJXMTknA=;
- b=M7DpboRSVUcl66LhoGyC1bRPBLPNsz3efaswSJ+fY50uyNI1JQ1t+N79L+6SMoKoEl
- 0vzqcbI9hvG+9FYH1sMqmlhk0heidKOcfFk42BkD0nMSldPIxtYwlAy6NAoYCWBJ+qe0
- SuN98kyM8FmWSwfLB9QOonZnvQPE1Z1UkppEyi8c8jbG0DmArpsje5oU+A14ko8/6Cay
- 4Uf0Q8qyWvVtPndN3B/01UxBz1FVH/Lq/jSQigtQlvLLgoVKU54GdSU0HS6wxLrd/VoA
- ciajJu7XcmfaFF+V/5ds7Pkx5a+ELQ9WD1nbibOwETGj2pE+ph7n1MfreJdgnsP4wnHg
- bcZw==
-X-Gm-Message-State: AOJu0YyYWQioEiIXV51XeGSB3HZTu0Dxmp9PYKNOTikrqJu/NPCv875W
- v0aVpYIFSXgQj1fyvFQg9ZTNczALsp/FGI/qjfiltXhmbsnYgmITEKD43E40j8Gd50wnjXJMF4c
- k
-X-Google-Smtp-Source: AGHT+IE3ngIMe5cUy/MWvIlyBUrn2IWN+Ionoq1v2ZjlCKVZLCt8bnXsZdMCqhDVdk/P3627ibIL5A==
-X-Received: by 2002:a17:902:e892:b0:1eb:309b:6712 with SMTP id
- d9443c01a7336-1eefa58c068mr196734465ad.29.1715604102699; 
- Mon, 13 May 2024 05:41:42 -0700 (PDT)
-Received: from [192.168.68.110] ([177.94.42.57])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ef0b9d1807sm78164755ad.59.2024.05.13.05.41.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 May 2024 05:41:42 -0700 (PDT)
-Message-ID: <8c81b30c-85f3-4d42-bf7e-8b8e8ecabd21@ventanamicro.com>
-Date: Mon, 13 May 2024 09:41:38 -0300
+ d=amazon.co.uk; i=@amazon.co.uk; q=dns/txt;
+ s=amazon201209; t=1715596318; x=1747132318;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=uQIw9i/g+I3Ll0Kcnj1kLLWW5A3sw6sKhdQsGDX0E88=;
+ b=JjWla/uwjMwRUNXOhkxG+7f+zVreNbnoe5sBuOdub0f6Zt1qw8wRd55G
+ tqfkyW4C2DPojB7aRv9EJTK+rCSFL+IWmlEdcpSeAxSUgB4tHc8z6HowI
+ eF+B6lOi3AKBrksiJSwLcpLpS3/1w0z0Rta8R63gD7ajQAEdvoybcfhMI g=;
+X-IronPort-AV: E=Sophos;i="6.08,158,1712620800"; d="scan'208";a="653737330"
+Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO
+ smtpout.prod.us-east-1.prod.farcaster.email.amazon.dev) ([10.43.8.6])
+ by smtp-border-fw-52005.iad7.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 May 2024 10:31:53 +0000
+Received: from EX19MTAUEB001.ant.amazon.com [10.0.44.209:28793]
+ by smtpin.naws.us-east-1.prod.farcaster.email.amazon.dev [10.0.82.155:2525]
+ with esmtp (Farcaster)
+ id 24678bc8-ee46-4086-b40e-d21a7295c070; Mon, 13 May 2024 10:31:51 +0000 (UTC)
+X-Farcaster-Flow-ID: 24678bc8-ee46-4086-b40e-d21a7295c070
+Received: from EX19D008UEA003.ant.amazon.com (10.252.134.116) by
+ EX19MTAUEB001.ant.amazon.com (10.252.135.108) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1258.28; Mon, 13 May 2024 10:31:51 +0000
+Received: from EX19MTAUEB001.ant.amazon.com (10.252.135.35) by
+ EX19D008UEA003.ant.amazon.com (10.252.134.116) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1258.28; Mon, 13 May 2024 10:31:51 +0000
+Received: from [127.0.0.1] (172.19.88.180) by mail-relay.amazon.com
+ (10.252.135.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.28 via Frontend
+ Transport; Mon, 13 May 2024 10:31:49 +0000
+Message-ID: <58f39f23-0314-4e34-a8c7-30c3a1ae4777@amazon.co.uk>
+Date: Mon, 13 May 2024 11:31:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/15] hw/riscv: add RISC-V IOMMU base emulation
-To: Frank Chang <frank.chang@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- palmer@rivosinc.com, ajones@ventanamicro.com, tjeznach@rivosinc.com,
- Sebastien Boeuf <seb@rivosinc.com>
-References: <20240307160319.675044-1-dbarboza@ventanamicro.com>
- <20240307160319.675044-4-dbarboza@ventanamicro.com>
- <CANzO1D35eYan8axod37tAg88r=qg4Jt0CVTvO+0AiwRLbbV64A@mail.gmail.com>
- <09dc2e36-741d-44de-aac8-4ed2495eaeb1@ventanamicro.com>
- <CANzO1D1xhowifFZJc8e9VQxcTpix_MvbVNHpx9fd1AxoikNV6Q@mail.gmail.com>
+Subject: Re: Unmapping KVM Guest Memory from Host Kernel
+To: Mike Rapoport <rppt@kernel.org>, Sean Christopherson <seanjc@google.com>
+CC: James Gowans <jgowans@amazon.com>, "akpm@linux-foundation.org"
+ <akpm@linux-foundation.org>, "chao.p.peng@linux.intel.com"
+ <chao.p.peng@linux.intel.com>, Derek Manwaring <derekmn@amazon.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>, David Woodhouse
+ <dwmw@amazon.co.uk>, Nikita Kalyazin <kalyazin@amazon.co.uk>,
+ "lstoakes@gmail.com" <lstoakes@gmail.com>, "Liam.Howlett@oracle.com"
+ <Liam.Howlett@oracle.com>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "kirill.shutemov@linux.intel.com" <kirill.shutemov@linux.intel.com>,
+ "vbabka@suse.cz" <vbabka@suse.cz>, "mst@redhat.com" <mst@redhat.com>,
+ "somlo@cmu.edu" <somlo@cmu.edu>, Alexander Graf <graf@amazon.de>,
+ "kvm@vger.kernel.org" <kvm@vger.kernel.org>, "linux-coco@lists.linux.dev"
+ <linux-coco@lists.linux.dev>
+References: <cc1bb8e9bc3e1ab637700a4d3defeec95b55060a.camel@amazon.com>
+ <ZeudRmZz7M6fWPVM@google.com> <ZexEkGkNe_7UY7w6@kernel.org>
 Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <CANzO1D1xhowifFZJc8e9VQxcTpix_MvbVNHpx9fd1AxoikNV6Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Patrick Roy <roypat@amazon.co.uk>
+Autocrypt: addr=roypat@amazon.co.uk; keydata=
+ xjMEY0UgYhYJKwYBBAHaRw8BAQdA7lj+ADr5b96qBcdINFVJSOg8RGtKthL5x77F2ABMh4PN
+ NVBhdHJpY2sgUm95IChHaXRodWIga2V5IGFtYXpvbikgPHJveXBhdEBhbWF6b24uY28udWs+
+ wpMEExYKADsWIQQ5DAcjaM+IvmZPLohVg4tqeAbEAgUCY0UgYgIbAwULCQgHAgIiAgYVCgkI
+ CwIEFgIDAQIeBwIXgAAKCRBVg4tqeAbEAmQKAQC1jMl/KT9pQHEdALF7SA1iJ9tpA5ppl1J9
+ AOIP7Nr9SwD/fvIWkq0QDnq69eK7HqW14CA7AToCF6NBqZ8r7ksi+QLOOARjRSBiEgorBgEE
+ AZdVAQUBAQdAqoMhGmiXJ3DMGeXrlaDA+v/aF/ah7ARbFV4ukHyz+CkDAQgHwngEGBYKACAW
+ IQQ5DAcjaM+IvmZPLohVg4tqeAbEAgUCY0UgYgIbDAAKCRBVg4tqeAbEAtjHAQDkh5jZRIsZ
+ 7JMNkPMSCd5PuSy0/Gdx8LGgsxxPMZwePgEAn5Tnh4fVbf00esnoK588bYQgJBioXtuXhtom
+ 8hlxFQM=
+In-Reply-To: <ZexEkGkNe_7UY7w6@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=52.119.213.156;
+ envelope-from=prvs=8567b36a1=roypat@amazon.co.uk;
+ helo=smtp-fw-52005.amazon.com
+X-Spam_score_int: -122
+X-Spam_score: -12.3
+X-Spam_bar: ------------
+X-Spam_report: (-12.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 13 May 2024 08:43:48 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,399 +114,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Frank,
+Hi all,
 
-On 5/10/24 07:58, Frank Chang wrote:
-> Hi Daniel,
-> 
-> Daniel Henrique Barboza <dbarboza@ventanamicro.com> 於 2024年5月8日 週三 下午7:16寫道：
->>
->> Hi Frank,
->>
->> I'll reply with that I've done so far. Still missing some stuff:
->>
->> On 5/2/24 08:37, Frank Chang wrote:
->>> Hi Daniel,
->>>
->>> Daniel Henrique Barboza <dbarboza@ventanamicro.com> 於 2024年3月8日 週五 上午12:04寫道：
+On 3/9/24 11:14, Mike Rapoport wrote:
 
+>>> >>> With this in mind, what’s the best way to solve getting guest RAM out of
+>>> >>> the direct map? Is memfd_secret integration with KVM the way to go, or
+>>> >>> should we build a solution on top of guest_memfd, for example via some
+>>> >>> flag that causes it to leave memory in the host userspace’s page tables,
+>>> >>> but removes it from the direct map?
+>> >> memfd_secret obviously gets you a PoC much faster, but in the long term I'm quite
+>> >> sure you'll be fighting memfd_secret all the way.  E.g. it's not dumpable, it
+>> >> deliberately allocates at 4KiB granularity (though I suspect the bug you found
+>> >> means that it can be inadvertantly mapped with 2MiB hugepages), it has no line
+>> >> of sight to taking userspace out of the equation, etc.
+>> >>
+>> >> With guest_memfd on the other hand, everyone contributing to and maintaining it
+>> >> has goals that are *very* closely aligned with what you want to do.
+> > I agree with Sean, guest_memfd seems a better interface to use. It's
+> > integrated by design with KVM and removing guest memory from the direct map
+> > looks like a natural enhancement to guest_memfd.
+> >
+> > Unless I'm missing something, for fast-and-dirty POC it'll be a oneliner
+> > that adds set_memory_np() to kvm_gmem_get_folio() and then figuring out
+> > what to do with virtio :)
 
-(...)
+We’ve been playing around with extending guest_memfd to remove guest memory
+from the direct map. Removal from direct map aspect is indeed fairly
+straight-forward; since we cannot map guest_memfd, we don’t need to worry about
+folios without direct map entries getting to places where they will cause
+kernel panics.
 
+However, we ran into problems running non-CoCo VMs with guest_memfd for guest
+memory, independent of direct map entries being available or not. There’s a
+handful of places where a traditional KVM / Userspace setup currently touches
+guest memory:
 
->>> In our experience, using QEMU thread increases the latency of command
->>> queue processing,
->>> which leads to the potential IOMMU fence timeout in the Linux driver
->>> when using IOMMU with KVM,
->>> e.g. booting the guest Linux.
->>>
->>> Is it possible to remove the thread from the IOMMU just like ARM, AMD,
->>> and Intel IOMMU models?
->>
->> Interesting. We've been using this emulation internally in Ventana, with
->> KVM and VFIO, and didn't experience this issue. Drew is on CC and can talk
->> more about it.
-> 
-> We've developed IOFENCE timeout detection mechanism in our Linux
-> driver internally
-> to detect the long-run IOFENCE command on the hardware.
-> 
-> However, we hit the assertion when running on QEMU
-> and the issue was resolved after we removed the thread from IOMMU model.
-> However, the assertion didn't happen on our hardware.
-> 
-> Regards,
-> Frank CHang
+* Loading the Guest Kernel into guest-owned memory
+* Instruction fetch from arbitrary guest addresses and guest page table walks  
+  for MMIO emulation (for example for IOAPIC accesses)
+* kvm-clock
+* I/O devices
 
+With guest_memfd, if the guest is running from guest-private memory, these need
+to be rethought, since now the memory is unavailable to userspace, and KVM is
+not enlightened about guest_memfd’s existance everywhere (when I was
+experimenting with this, it generally read garbage data from the shared VMA,
+but I think I’ve since seen some patches floating around that would make it
+return -EFAULT instead).
 
-I see. Well, one more reason to remove the threading for v3 then. I removed it and
-it seems to be working as usual in my tests, i.e. no perceptible performance or
-behavior impacts. Thanks,
+CoCo VMs have various methods for working around these: You load a guest kernel
+using some “populate on first access” mechanism [1], kvm-clock and I/O is
+solved by having the guest mark the relevant address ranges as “shared” ahead
+of time [2] and bounce buffering via swiotlb [4], and Intel TDX solves the
+instruction emulation problem for MMIO by injecting a #VE and having the guest
+do the emulation itself [3].
 
+For non-CoCo VMs, where memory is not encrypted, and the threat model assumes a
+trusted host userspace, we would like to avoid changing the VM model so
+completely. If we adopt CoCo’s approaches where KVM / Userspace touches guest
+memory we would get all the complexity, yet none of the encryption.
+Particularly the complexity on the MMIO path seems nasty, but x86 does not
+pre-decode instructions on MMIO exits (which are just EPT_VIOLATIONs) like it
+does for PIO exits, so I also don’t really see a way around it in the
+guest_memfd model.
 
-Daniel
+We’ve played around a lot with allowing userspace mappings of guest_memfd, and
+then having KVM internally access guest_memfd via userspace page tables (and
+came up with multiple hacky ways to boot simple Linux initrds from
+guest_memfd), but this is fairly awkward for two reasons:
 
+1. Now lots of codepaths in KVM end up accessing guest_memfd, which from my
+understanding goes against the guest_memfd goal of making machine checks
+because of incorrect accesses to TDX memory impossible, and
+2. We need to somehow get a userspace mapping of guest_memfd into KVM (a hacky
+way I could make this work was setting up kvm_user_memory_region2 with
+userspace_addr set to a mmap of guest_memory, which actually "works" for
+everything but kvm-clock, but I also realized later that this is just
+memfd_secret with extra steps).
 
-> 
->>
->> That said, I don't mind this change, assuming it's feasible to make it for this
->> first version.  I'll need to check it how other IOMMUs are doing it.
->>
->>
->>
->>>
->>>> +}
->>>> +
->>
->> (...)
->>
->>>> +
->>>> +static AddressSpace *riscv_iommu_find_as(PCIBus *bus, void *opaque, int devfn)
->>>> +{
->>>> +    RISCVIOMMUState *s = (RISCVIOMMUState *) opaque;
->>>> +    PCIDevice *pdev = pci_find_device(bus, pci_bus_num(bus), devfn);
->>>> +    AddressSpace *as = NULL;
->>>> +
->>>> +    if (pdev && pci_is_iommu(pdev)) {
->>>> +        return s->target_as;
->>>> +    }
->>>> +
->>>> +    /* Find first registered IOMMU device */
->>>> +    while (s->iommus.le_prev) {
->>>> +        s = *(s->iommus.le_prev);
->>>> +    }
->>>> +
->>>> +    /* Find first matching IOMMU */
->>>> +    while (s != NULL && as == NULL) {
->>>> +        as = riscv_iommu_space(s, PCI_BUILD_BDF(pci_bus_num(bus), devfn));
->>>
->>> For pci_bus_num(),
->>> riscv_iommu_find_as() can be called at the very early stage
->>> where software has no chance to enumerate the bus numbers.
->>
->> I'll see how other IOMMUs are handling their iommu_find_as()
->>
->>
->> Thanks,
->>
->>
->> Daniel
->>
->>
->>>
->>>
->>>
->>>
->>>> +        s = s->iommus.le_next;
->>>> +    }
->>>> +
->>>> +    return as ? as : &address_space_memory;
->>>> +}
->>>> +
->>>> +static const PCIIOMMUOps riscv_iommu_ops = {
->>>> +    .get_address_space = riscv_iommu_find_as,
->>>> +};
->>>> +
->>>> +void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
->>>> +        Error **errp)
->>>> +{
->>>> +    if (bus->iommu_ops &&
->>>> +        bus->iommu_ops->get_address_space == riscv_iommu_find_as) {
->>>> +        /* Allow multiple IOMMUs on the same PCIe bus, link known devices */
->>>> +        RISCVIOMMUState *last = (RISCVIOMMUState *)bus->iommu_opaque;
->>>> +        QLIST_INSERT_AFTER(last, iommu, iommus);
->>>> +    } else if (bus->iommu_ops == NULL) {
->>>> +        pci_setup_iommu(bus, &riscv_iommu_ops, iommu);
->>>> +    } else {
->>>> +        error_setg(errp, "can't register secondary IOMMU for PCI bus #%d",
->>>> +            pci_bus_num(bus));
->>>> +    }
->>>> +}
->>>> +
->>>> +static int riscv_iommu_memory_region_index(IOMMUMemoryRegion *iommu_mr,
->>>> +    MemTxAttrs attrs)
->>>> +{
->>>> +    return attrs.unspecified ? RISCV_IOMMU_NOPASID : (int)attrs.pasid;
->>>> +}
->>>> +
->>>> +static int riscv_iommu_memory_region_index_len(IOMMUMemoryRegion *iommu_mr)
->>>> +{
->>>> +    RISCVIOMMUSpace *as = container_of(iommu_mr, RISCVIOMMUSpace, iova_mr);
->>>> +    return 1 << as->iommu->pasid_bits;
->>>> +}
->>>> +
->>>> +static void riscv_iommu_memory_region_init(ObjectClass *klass, void *data)
->>>> +{
->>>> +    IOMMUMemoryRegionClass *imrc = IOMMU_MEMORY_REGION_CLASS(klass);
->>>> +
->>>> +    imrc->translate = riscv_iommu_memory_region_translate;
->>>> +    imrc->notify_flag_changed = riscv_iommu_memory_region_notify;
->>>> +    imrc->attrs_to_index = riscv_iommu_memory_region_index;
->>>> +    imrc->num_indexes = riscv_iommu_memory_region_index_len;
->>>> +}
->>>> +
->>>> +static const TypeInfo riscv_iommu_memory_region_info = {
->>>> +    .parent = TYPE_IOMMU_MEMORY_REGION,
->>>> +    .name = TYPE_RISCV_IOMMU_MEMORY_REGION,
->>>> +    .class_init = riscv_iommu_memory_region_init,
->>>> +};
->>>> +
->>>> +static void riscv_iommu_register_mr_types(void)
->>>> +{
->>>> +    type_register_static(&riscv_iommu_memory_region_info);
->>>> +    type_register_static(&riscv_iommu_info);
->>>> +}
->>>> +
->>>> +type_init(riscv_iommu_register_mr_types);
->>>> diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
->>>> new file mode 100644
->>>> index 0000000000..6f740de690
->>>> --- /dev/null
->>>> +++ b/hw/riscv/riscv-iommu.h
->>>> @@ -0,0 +1,141 @@
->>>> +/*
->>>> + * QEMU emulation of an RISC-V IOMMU (Ziommu)
->>>> + *
->>>> + * Copyright (C) 2022-2023 Rivos Inc.
->>>> + *
->>>> + * This program is free software; you can redistribute it and/or modify
->>>> + * it under the terms of the GNU General Public License as published by
->>>> + * the Free Software Foundation; either version 2 of the License.
->>>> + *
->>>> + * This program is distributed in the hope that it will be useful,
->>>> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
->>>> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
->>>> + * GNU General Public License for more details.
->>>> + *
->>>> + * You should have received a copy of the GNU General Public License along
->>>> + * with this program; if not, see <http://www.gnu.org/licenses/>.
->>>> + */
->>>> +
->>>> +#ifndef HW_RISCV_IOMMU_STATE_H
->>>> +#define HW_RISCV_IOMMU_STATE_H
->>>> +
->>>> +#include "qemu/osdep.h"
->>>> +#include "qom/object.h"
->>>> +
->>>> +#include "hw/riscv/iommu.h"
->>>> +
->>>> +struct RISCVIOMMUState {
->>>> +    /*< private >*/
->>>> +    DeviceState parent_obj;
->>>> +
->>>> +    /*< public >*/
->>>> +    uint32_t version;     /* Reported interface version number */
->>>> +    uint32_t pasid_bits;  /* process identifier width */
->>>> +    uint32_t bus;         /* PCI bus mapping for non-root endpoints */
->>>> +
->>>> +    uint64_t cap;         /* IOMMU supported capabilities */
->>>> +    uint64_t fctl;        /* IOMMU enabled features */
->>>> +
->>>> +    bool enable_off;      /* Enable out-of-reset OFF mode (DMA disabled) */
->>>> +    bool enable_msi;      /* Enable MSI remapping */
->>>> +
->>>> +    /* IOMMU Internal State */
->>>> +    uint64_t ddtp;        /* Validated Device Directory Tree Root Pointer */
->>>> +
->>>> +    dma_addr_t cq_addr;   /* Command queue base physical address */
->>>> +    dma_addr_t fq_addr;   /* Fault/event queue base physical address */
->>>> +    dma_addr_t pq_addr;   /* Page request queue base physical address */
->>>> +
->>>> +    uint32_t cq_mask;     /* Command queue index bit mask */
->>>> +    uint32_t fq_mask;     /* Fault/event queue index bit mask */
->>>> +    uint32_t pq_mask;     /* Page request queue index bit mask */
->>>> +
->>>> +    /* interrupt notifier */
->>>> +    void (*notify)(RISCVIOMMUState *iommu, unsigned vector);
->>>> +
->>>> +    /* IOMMU State Machine */
->>>> +    QemuThread core_proc; /* Background processing thread */
->>>> +    QemuMutex core_lock;  /* Global IOMMU lock, used for cache/regs updates */
->>>> +    QemuCond core_cond;   /* Background processing wake up signal */
->>>> +    unsigned core_exec;   /* Processing thread execution actions */
->>>> +
->>>> +    /* IOMMU target address space */
->>>> +    AddressSpace *target_as;
->>>> +    MemoryRegion *target_mr;
->>>> +
->>>> +    /* MSI / MRIF access trap */
->>>> +    AddressSpace trap_as;
->>>> +    MemoryRegion trap_mr;
->>>> +
->>>> +    GHashTable *ctx_cache;          /* Device translation Context Cache */
->>>> +
->>>> +    /* MMIO Hardware Interface */
->>>> +    MemoryRegion regs_mr;
->>>> +    QemuSpin regs_lock;
->>>> +    uint8_t *regs_rw;  /* register state (user write) */
->>>> +    uint8_t *regs_wc;  /* write-1-to-clear mask */
->>>> +    uint8_t *regs_ro;  /* read-only mask */
->>>> +
->>>> +    QLIST_ENTRY(RISCVIOMMUState) iommus;
->>>> +    QLIST_HEAD(, RISCVIOMMUSpace) spaces;
->>>> +};
->>>> +
->>>> +void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
->>>> +         Error **errp);
->>>> +
->>>> +/* private helpers */
->>>> +
->>>> +/* Register helper functions */
->>>> +static inline uint32_t riscv_iommu_reg_mod32(RISCVIOMMUState *s,
->>>> +    unsigned idx, uint32_t set, uint32_t clr)
->>>> +{
->>>> +    uint32_t val;
->>>> +    qemu_spin_lock(&s->regs_lock);
->>>> +    val = ldl_le_p(s->regs_rw + idx);
->>>> +    stl_le_p(s->regs_rw + idx, (val & ~clr) | set);
->>>> +    qemu_spin_unlock(&s->regs_lock);
->>>> +    return val;
->>>> +}
->>>> +
->>>> +static inline void riscv_iommu_reg_set32(RISCVIOMMUState *s,
->>>> +    unsigned idx, uint32_t set)
->>>> +{
->>>> +    qemu_spin_lock(&s->regs_lock);
->>>> +    stl_le_p(s->regs_rw + idx, set);
->>>> +    qemu_spin_unlock(&s->regs_lock);
->>>> +}
->>>> +
->>>> +static inline uint32_t riscv_iommu_reg_get32(RISCVIOMMUState *s,
->>>> +    unsigned idx)
->>>> +{
->>>> +    return ldl_le_p(s->regs_rw + idx);
->>>> +}
->>>> +
->>>> +static inline uint64_t riscv_iommu_reg_mod64(RISCVIOMMUState *s,
->>>> +    unsigned idx, uint64_t set, uint64_t clr)
->>>> +{
->>>> +    uint64_t val;
->>>> +    qemu_spin_lock(&s->regs_lock);
->>>> +    val = ldq_le_p(s->regs_rw + idx);
->>>> +    stq_le_p(s->regs_rw + idx, (val & ~clr) | set);
->>>> +    qemu_spin_unlock(&s->regs_lock);
->>>> +    return val;
->>>> +}
->>>> +
->>>> +static inline void riscv_iommu_reg_set64(RISCVIOMMUState *s,
->>>> +    unsigned idx, uint64_t set)
->>>> +{
->>>> +    qemu_spin_lock(&s->regs_lock);
->>>> +    stq_le_p(s->regs_rw + idx, set);
->>>> +    qemu_spin_unlock(&s->regs_lock);
->>>> +}
->>>> +
->>>> +static inline uint64_t riscv_iommu_reg_get64(RISCVIOMMUState *s,
->>>> +    unsigned idx)
->>>> +{
->>>> +    return ldq_le_p(s->regs_rw + idx);
->>>> +}
->>>> +
->>>> +
->>>> +
->>>> +#endif
->>>> diff --git a/hw/riscv/trace-events b/hw/riscv/trace-events
->>>> new file mode 100644
->>>> index 0000000000..42a97caffa
->>>> --- /dev/null
->>>> +++ b/hw/riscv/trace-events
->>>> @@ -0,0 +1,11 @@
->>>> +# See documentation at docs/devel/tracing.rst
->>>> +
->>>> +# riscv-iommu.c
->>>> +riscv_iommu_new(const char *id, unsigned b, unsigned d, unsigned f) "%s: device attached %04x:%02x.%d"
->>>> +riscv_iommu_flt(const char *id, unsigned b, unsigned d, unsigned f, uint64_t reason, uint64_t iova) "%s: fault %04x:%02x.%u reason: 0x%"PRIx64" iova: 0x%"PRIx64
->>>> +riscv_iommu_pri(const char *id, unsigned b, unsigned d, unsigned f, uint64_t iova) "%s: page request %04x:%02x.%u iova: 0x%"PRIx64
->>>> +riscv_iommu_dma(const char *id, unsigned b, unsigned d, unsigned f, unsigned pasid, const char *dir, uint64_t iova, uint64_t phys) "%s: translate %04x:%02x.%u #%u %s 0x%"PRIx64" -> 0x%"PRIx64
->>>> +riscv_iommu_msi(const char *id, unsigned b, unsigned d, unsigned f, uint64_t iova, uint64_t phys) "%s: translate %04x:%02x.%u MSI 0x%"PRIx64" -> 0x%"PRIx64
->>>> +riscv_iommu_cmd(const char *id, uint64_t l, uint64_t u) "%s: command 0x%"PRIx64" 0x%"PRIx64
->>>> +riscv_iommu_notifier_add(const char *id) "%s: dev-iotlb notifier added"
->>>> +riscv_iommu_notifier_del(const char *id) "%s: dev-iotlb notifier removed"
->>>> diff --git a/hw/riscv/trace.h b/hw/riscv/trace.h
->>>> new file mode 100644
->>>> index 0000000000..b88504b750
->>>> --- /dev/null
->>>> +++ b/hw/riscv/trace.h
->>>> @@ -0,0 +1,2 @@
->>>> +#include "trace/trace-hw_riscv.h"
->>>> +
->>>> diff --git a/include/hw/riscv/iommu.h b/include/hw/riscv/iommu.h
->>>> new file mode 100644
->>>> index 0000000000..403b365893
->>>> --- /dev/null
->>>> +++ b/include/hw/riscv/iommu.h
->>>> @@ -0,0 +1,36 @@
->>>> +/*
->>>> + * QEMU emulation of an RISC-V IOMMU (Ziommu)
->>>> + *
->>>> + * Copyright (C) 2022-2023 Rivos Inc.
->>>> + *
->>>> + * This program is free software; you can redistribute it and/or modify
->>>> + * it under the terms of the GNU General Public License as published by
->>>> + * the Free Software Foundation; either version 2 of the License.
->>>> + *
->>>> + * This program is distributed in the hope that it will be useful,
->>>> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
->>>> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
->>>> + * GNU General Public License for more details.
->>>> + *
->>>> + * You should have received a copy of the GNU General Public License along
->>>> + * with this program; if not, see <http://www.gnu.org/licenses/>.
->>>> + */
->>>> +
->>>> +#ifndef HW_RISCV_IOMMU_H
->>>> +#define HW_RISCV_IOMMU_H
->>>> +
->>>> +#include "qemu/osdep.h"
->>>> +#include "qom/object.h"
->>>> +
->>>> +#define TYPE_RISCV_IOMMU "riscv-iommu"
->>>> +OBJECT_DECLARE_SIMPLE_TYPE(RISCVIOMMUState, RISCV_IOMMU)
->>>> +typedef struct RISCVIOMMUState RISCVIOMMUState;
->>>> +
->>>> +#define TYPE_RISCV_IOMMU_MEMORY_REGION "riscv-iommu-mr"
->>>> +typedef struct RISCVIOMMUSpace RISCVIOMMUSpace;
->>>> +
->>>> +#define TYPE_RISCV_IOMMU_PCI "riscv-iommu-pci"
->>>> +OBJECT_DECLARE_SIMPLE_TYPE(RISCVIOMMUStatePci, RISCV_IOMMU_PCI)
->>>> +typedef struct RISCVIOMMUStatePci RISCVIOMMUStatePci;
->>>> +
->>>> +#endif
->>>> diff --git a/meson.build b/meson.build
->>>> index c59ca496f2..75e56f3282 100644
->>>> --- a/meson.build
->>>> +++ b/meson.build
->>>> @@ -3361,6 +3361,7 @@ if have_system
->>>>        'hw/rdma',
->>>>        'hw/rdma/vmw',
->>>>        'hw/rtc',
->>>> +    'hw/riscv',
->>>>        'hw/s390x',
->>>>        'hw/scsi',
->>>>        'hw/sd',
->>>> --
->>>> 2.43.2
->>>>
->>>>
->>
+We also played around with having KVM access guest_memfd through the direct map
+(by temporarily reinserting pages into it when needed), but this again means
+lots of KVM code learns about how to access guest RAM via guest_memfd.
+
+There are a few other features we need to support, such as serving page faults
+using UFFD, which we are not too sure how to realize with guest_memfd since
+UFFD is VMA based (although to me some sort of “UFFD-for-FD” sounds like
+something that’d be useful even outside of our guest_memfd usecase).
+
+With these challenges in mind, some variant of memfd_secret continues to look
+attractive for the non-CoCo case. Perhaps a variant that supports in-kernel
+faults and provides some way for gfn_to_pfn_cache users like kvm-clock to
+restore the direct map entries.
+
+Sean, you mentioned that you envision guest_memfd also supporting non-CoCo VMs.
+Do you have some thoughts about how to make the above cases work in the
+guest_memfd context?
+
+> > --
+> > Sincerely yours,
+> > Mike.
+
+Best,
+Patrick
+
+[1]: https://lore.kernel.org/kvm/20240404185034.3184582-1-pbonzini@redhat.com/T/#m4cc08ce3142a313d96951c2b1286eb290c7d1dac
+[2]: https://elixir.bootlin.com/linux/latest/source/arch/x86/kernel/kvmclock.c#L227
+[3]: https://www.kernel.org/doc/html/next/x86/tdx.html#mmio-handling
+[4]: https://www.kernel.org/doc/html/next/x86/tdx.html#shared-memory-conversions
+
 
