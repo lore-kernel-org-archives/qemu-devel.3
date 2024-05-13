@@ -4,83 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 699A0C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 11:27:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B18DC25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 11:30:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6Tpg-0000Tr-Bd; Mon, 13 May 2024 07:27:04 -0400
+	id 1s6Ts4-0001Qh-3B; Mon, 13 May 2024 07:29:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s6Tpd-0000TO-3h
- for qemu-devel@nongnu.org; Mon, 13 May 2024 07:27:01 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1s6Ts2-0001QR-26; Mon, 13 May 2024 07:29:30 -0400
+Received: from mail-vs1-xe36.google.com ([2607:f8b0:4864:20::e36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1s6Tpa-00008x-Vz
- for qemu-devel@nongnu.org; Mon, 13 May 2024 07:27:00 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-34e667905d2so2859679f8f.1
- for <qemu-devel@nongnu.org>; Mon, 13 May 2024 04:26:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1s6Ts0-0000Op-3B; Mon, 13 May 2024 07:29:29 -0400
+Received: by mail-vs1-xe36.google.com with SMTP id
+ ada2fe7eead31-47f298cedcfso1322649137.1; 
+ Mon, 13 May 2024 04:29:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715599617; x=1716204417; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/G7MfgzCcN0jtEglp0t6kBbppY8sZFYe8E6d/jwHYcg=;
- b=DfDgY65CkKaOX+Cpy8Eikx6rhzf/S9sY1ZJY9EuB+hmYAfGFX0wLckwm6y/aR6y6PW
- 9O0sAZUfVyJkrYKrj7CDArEaBOT4UN9tik5wWS/3LLCpAEb+wJN2ucNIFQXrH9AaBUm+
- HakPhTMvv3RX2qVB+RCSFVbt5qlQUqWXLZ/EfV9hUjyBgAowH5P11hZ70N8XnFB/RPEC
- 5/L34AZ5N+Knl3OC7vSTbz+4QUfyOhVP/zBAm2lFUjFXwlwZVtQu6UzHl92ULiHGhCUX
- eqU2PNe85tOusHPRTKq+8tnzLoTfuAEwhi+2aXLc6V6Y3BQbluO1cN5md/0jPJAD816w
- /Tuw==
+ d=gmail.com; s=20230601; t=1715599767; x=1716204567; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=f4Dgtj+sRzu9i/CBiOXyf3zOO/a+FxLVTQv+xvnAbLc=;
+ b=YHT6NceNhE0pYkMv9KsP1OECqcv8fPnuaQE3MiNsUf6HAFmCMJAGc9T4OT65UwVFDd
+ ML/EbhYUnApY9ESb9zWAlFxhyngA13UzJuW7i8dahkhqgzt18oLiwPg3oEJ33m5n3yGR
+ m/o0dz+2XwXY46s+8CfES6w57edBgAsm2cqooR432elpc1tz0hTc15Gf3KgWnaMIH63f
+ F05rlbHa3mpuvYXHBSwnxqNenpW2INSKz6ynrwZQ/Z+e1YODmYa3P8WkgoZaYmHZNiC8
+ GkeQI5qMS2uYd1DrN7h8DKIulawP/LPaPIVZoMsW0S5ZdpmaJeY12f3osnsQvKjLjbjN
+ d0eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715599617; x=1716204417;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/G7MfgzCcN0jtEglp0t6kBbppY8sZFYe8E6d/jwHYcg=;
- b=SeF7uyNX+8BSrHwA7zeMPoqPCaZDq36H3UME3XBa7V+Yb4InknuUXGq8Q1VioiXYy7
- NfDtsKeCPmBis6Cr2JGwpQ8Lmv+I2rb/tGEot5iNYUVFDZjoOB9aR/VKgkT/Eg3Lm8PT
- F29REwDqv0S30mjvUcQaQdJ9hsGHgM2aOc5iJmYhqhInPF09adXlpM3JtNkGCC6RATId
- ZZlVF4oL0c9S5h7JoOqnJuL32HllPtxaqRvhbA0vP7CYZM/tpgHsVWFSQ7JIMQxQ/ZPW
- Pbd8quexpPtHTVrCd8wcTMjZkh8JLrVumDTKKRWG1crqOEcmoLhocpAd5gtDD9Uz/YuO
- cYzg==
+ d=1e100.net; s=20230601; t=1715599767; x=1716204567;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=f4Dgtj+sRzu9i/CBiOXyf3zOO/a+FxLVTQv+xvnAbLc=;
+ b=B84dmEcCkJcWe5lssxyPEei9xhbazpS0ZaIyzN2hwNeYvWxFMfB83lCFt8BZ7fJQHH
+ eBIxNObHkwiVBd5Fol+Gc6yNACv9QSv1mYH3Svyd5N6+PpRiMGAEmhpwpjdqHPrRxHlN
+ pG28REXuv9QA3C7HzQEFD8QZ++q6c2eqSQovWAJZDLmMnGOmpdRkK8whPWJnM314OEom
+ 16UquTlBUVjLvsJukQpuqk7XK36WSMB4aoEHPBV+QTq+iUHMknVFXHsBu2MmssIOKChg
+ SQYe7TlHCh/32xWK2MLDBkcILLVnEXvJsPihnFiWLyWjntvzMBtqNZ8g94B6YefhAm36
+ Dc8A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXeE5zWUrGDDRf6FKAQzpyN5c+YTFahPPgQT7WFqFuEmXy8WjbOO8DEiL0G5AD6AXYuSLhHn5osqLRhVcwmovMi/oNNGYY=
-X-Gm-Message-State: AOJu0YzA/7AlDFk+QFTNXKibjyVvzC6MVqvXS6S1dW3riL27hgAvYUdu
- Czr5WbpT/J6mRr41LN72VOibqo+FGNaHAr++x/1H1jiog1GkynjwsYyBxUsqqMk=
-X-Google-Smtp-Source: AGHT+IHHKRugbe7S2sosZWTGK6SMaDiKH339rK6MCwqegI28M3lHkG/hP7jmXPxx25wWZ8lnz7TgUw==
-X-Received: by 2002:adf:fa4d:0:b0:34f:fd71:9af with SMTP id
- ffacd0b85a97d-3504a73edbfmr6780716f8f.39.1715599617085; 
- Mon, 13 May 2024 04:26:57 -0700 (PDT)
-Received: from [10.1.2.72] ([149.14.240.163]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-351b79e8e6bsm3274119f8f.65.2024.05.13.04.26.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 May 2024 04:26:56 -0700 (PDT)
-Message-ID: <93836d9f-56b7-464e-84a2-a101ca78e360@linaro.org>
-Date: Mon, 13 May 2024 13:26:55 +0200
+ AJvYcCVtPKM1y1+7I1EFcmOYfCiNB/cDLwps/qwbzZ8UIsgrPaA6XE0nYcSb8R931Rldaam9V+aSH52rhpqS+9JvN2UZhjnH2Lo20cq5JuWBvTyOgkGCi8qzgrwZI1wtFw==
+X-Gm-Message-State: AOJu0YyBKQfqCMB7A84Xd5lswMSNvpM5d3DyjebfhlmpwJaa+7zOBxzB
+ GKyFlI28pbyHqbF+mG5NEyqe5H59vFInZWdLavMwV7VFVUwjXM3yIYEt8ABXJOhtuSjYib8vRtI
+ JpAe8hD0CPJJeY7IatTc4k0YM48U=
+X-Google-Smtp-Source: AGHT+IES0bev5VIb3PvzjriWL3Rb8644Jj2C+6/i2rPVWHNtXpVCdyu3Xz5z6IWnY/sap8WvZZtIFOO5Xk3EAIHuwcE=
+X-Received: by 2002:a05:6102:5088:b0:47c:549c:d6a3 with SMTP id
+ ada2fe7eead31-48077dcd792mr7359303137.2.1715599766728; Mon, 13 May 2024
+ 04:29:26 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] hw/rtc/ds1338: Trace send and receive operations
-To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev
- <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>,
- Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-trivial@nongnu.org,
- qemu-arm@nongnu.org
-References: <20240513101108.5237-1-shentey@gmail.com>
- <20240513101108.5237-2-shentey@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240513101108.5237-2-shentey@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240511101053.1875596-1-me@deliversmonkey.space>
+ <20240511101053.1875596-3-me@deliversmonkey.space>
+In-Reply-To: <20240511101053.1875596-3-me@deliversmonkey.space>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 13 May 2024 21:29:00 +1000
+Message-ID: <CAKmqyKOHdei-1r46=te7W01qwrOH3ShT4FGcWkMioRMAhLhU9w@mail.gmail.com>
+Subject: Re: [PATCH v9 2/6] target/riscv: Add new CSR fields for S{sn, mn,
+ m}pm extensions as part of Zjpm v0.8
+To: Alexey Baturo <baturo.alexey@gmail.com>
+Cc: richard.henderson@linaro.org, space.monkey.delivers@gmail.com, 
+ palmer@dabbelt.com, Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu, 
+ kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e36;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe36.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -98,34 +94,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/5/24 12:11, Bernhard Beschow wrote:
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+On Sat, May 11, 2024 at 8:12=E2=80=AFPM Alexey Baturo <baturo.alexey@gmail.=
+com> wrote:
+>
+> From: Alexey Baturo <baturo.alexey@gmail.com>
+>
+> Signed-off-by: Alexey Baturo <baturo.alexey@gmail.com>
+>
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 > ---
->   hw/rtc/ds1338.c     | 6 ++++++
->   hw/rtc/trace-events | 4 ++++
->   2 files changed, 10 insertions(+)
+>  target/riscv/cpu.h      |  8 ++++++++
+>  target/riscv/cpu_bits.h |  3 +++
+>  target/riscv/cpu_cfg.h  |  3 +++
+>  target/riscv/csr.c      | 11 +++++++++++
+>  target/riscv/machine.c  | 10 +++++++---
+>  target/riscv/pmp.c      | 13 ++++++++++---
+>  target/riscv/pmp.h      | 11 ++++++-----
+>  7 files changed, 48 insertions(+), 11 deletions(-)
 
+This patch generates warnings/errors
 
-> @@ -134,6 +138,8 @@ static int ds1338_send(I2CSlave *i2c, uint8_t data)
->   {
->       DS1338State *s = DS1338(i2c);
->   
-> +    trace_ds1338_send(s->ptr, data);
+include/qemu/compiler.h:70:35: error: invalid operands to binary -
+(have =E2=80=98uint32_t *=E2=80=99 {aka =E2=80=98unsigned int *=E2=80=99} a=
+nd =E2=80=98uint64_t *=E2=80=99 {aka =E2=80=98long
+unsigned int *=E2=80=99})
+   70 | #define type_check(t1,t2) ((t1*)0 - (t2*)0)
+      |                                   ^
+...
+../target/riscv/machine.c:167:9: note: in expansion of macro =E2=80=98VMSTA=
+TE_UINTTL=E2=80=99
+  167 |         VMSTATE_UINTTL(env.menvcfg, RISCVCPU),
+      |         ^~~~~~~~~~~~~~
 
-
-> --- a/hw/rtc/trace-events
-> +++ b/hw/rtc/trace-events
-> @@ -22,6 +22,10 @@ pl031_set_alarm(uint32_t ticks) "alarm set for %u ticks"
->   aspeed_rtc_read(uint64_t addr, uint64_t value) "addr 0x%02" PRIx64 " value 0x%08" PRIx64
->   aspeed_rtc_write(uint64_t addr, uint64_t value) "addr 0x%02" PRIx64 " value 0x%08" PRIx64
->   
-> +# ds1338.c
-> +ds1338_recv(uint32_t addr, uint8_t value) "[0x%" PRIx32 "] -> 0x%02" PRIx8
-> +ds1338_send(uint32_t addr, uint8_t value) "[0x%" PRIx32 "] <- 0x%02" PRIx8
-
-DS1338State::ptr is signed, although being an offset, odd. Using
-unsigned in traces seems better anyway,
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+Alistair
 
