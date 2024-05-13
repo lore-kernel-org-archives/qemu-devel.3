@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A740C25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 11:18:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65DD7C25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 11:19:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6ThI-00047L-C6; Mon, 13 May 2024 07:18:24 -0400
+	id 1s6Thl-0004N6-Ec; Mon, 13 May 2024 07:18:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6ThH-00046x-4f
- for qemu-devel@nongnu.org; Mon, 13 May 2024 07:18:23 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6The-0004G3-7f
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 07:18:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6ThF-0005kb-P8
- for qemu-devel@nongnu.org; Mon, 13 May 2024 07:18:22 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6Thc-0005nH-PC
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 07:18:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715599100;
+ s=mimecast20190719; t=1715599122;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=WEDpAdPRecjFTsN7kiBPxwifUd54MKsnP7MS6Iyn8G0=;
- b=OJ1af9CC6KDEKO+GTZ1vipTbLETzscII8dwnM+BjwbLLmaRRBgHhgNXxDnOH7BbJ6Ar5ep
- JeTsRBCb26LirEt2IHMlDMbEmSotyJEnBBgFcN/aicJhtBf/bB6/4qfRNAApYOmGUg1Xmy
- 6QRrcBLjDsZyKmY5fwY4uzL/MY86Qj8=
-Received: from mail-vk1-f200.google.com (mail-vk1-f200.google.com
- [209.85.221.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=4C/DrAz9EbVE4AF6jb7NrvoJ04rhzf7dSVuH+LrtHlk=;
+ b=LHrHh18WtQ6hsK7G3VF/j3f+J3wFFaRDnu5N+zUheSJzJTg7wWDX7yCTkqNvO+XTxmcxTY
+ F9qnw/4mUCD4hznxVnOwSqLbdb+skfGfYv79Xe/Zldit8tWtZnZIsv81kMs41m1xT4rDWF
+ 6Payh1UQGEsuAQxi3JoEV5lsvzFhRiA=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-125-EuWwv4IxN-yfajjqUKUOlg-1; Mon, 13 May 2024 07:18:09 -0400
-X-MC-Unique: EuWwv4IxN-yfajjqUKUOlg-1
-Received: by mail-vk1-f200.google.com with SMTP id
- 71dfb90a1353d-4df4a72d5efso1622383e0c.3
- for <qemu-devel@nongnu.org>; Mon, 13 May 2024 04:18:09 -0700 (PDT)
+ us-mta-683-5gFu8A5CPa2jO-Pd5AgTVg-1; Mon, 13 May 2024 07:18:41 -0400
+X-MC-Unique: 5gFu8A5CPa2jO-Pd5AgTVg-1
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-792ba8e4c06so660095385a.2
+ for <qemu-devel@nongnu.org>; Mon, 13 May 2024 04:18:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715599089; x=1716203889;
+ d=1e100.net; s=20230601; t=1715599121; x=1716203921;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=WEDpAdPRecjFTsN7kiBPxwifUd54MKsnP7MS6Iyn8G0=;
- b=R7sqa21yQNapcreUz+8wfHV5D8TJ207JFkTnk53VmXMMCFI3TI/IselWmLfJkqHwan
- jZyVOp67mrCAVn6bzMC5rsRAmvIqmf5R5dmgRhqdXEYIzuU2egVVESedrHcKyvJchiM+
- 2BXQw5BBHEC1QY2Y+WwgYlg9EoIGegy4j/glbO4xi1y86SZwKzgZ06DBaL2NTYW57aFw
- jARUFxxCeDk4cHdrIpEZYRAYtXOlZ/rzKqgQfhVyt9bzJMyvdYgWVQtXzuOsRwvZ3qyC
- 5I+g+/zVd7aclr6g1kppjprOMvQ7/3wSWLmLyzJKxvwJmksa9BLEjbpOcGADjIcLYv//
- q/Ig==
+ bh=4C/DrAz9EbVE4AF6jb7NrvoJ04rhzf7dSVuH+LrtHlk=;
+ b=uq9iV+Lb3cnkkHSowKc6NxvaKkSvtC0v8d3elcVjYGUxnTSecsr+LyZaiMi8+GdqHY
+ DBxsgQRB+Z/ePqtfj/erkQJv/l4ke21BOLujpiMMJLKlUowW2t2Q0LGuGPWyYpPVcaXT
+ ZTB7K5uhN7/RWz/f0kj0bSidVc55FMNQkq5xTbfbnP0XnWlqcCvsgDYj0/mtOHtFzkht
+ ktchzarY2Y9ntcxJ+38RUv2qnPyVPterO6Co3tK1MfDMVuebKeCbrCPY3iwo5g5RNmHb
+ 1fGGHUakSrZtqE0VVsn0J+WftmHQswpxftpCPf4ZNsr782738lgJV3cszQaTvZ1SZVoq
+ VJpw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUhvtlQcbMoOM8Nadvz6/awyLmaV+y4LBPdZWSYpGalZDNWyvVRJ3omJHNvnGlFOolU+Rdm4+3/jqC16QOP7Fnknxyngag=
-X-Gm-Message-State: AOJu0Yxpjas6aNcxvh+5BA5VKYaO0J/JG6/86DZaca1JUOlXYiyVQCcV
- ghXzGMmzkdUJGKrfOWff91JfT9bfSEaG/c8Bo7FcWH2oneAnuJ7j7X4nXk61wY2Tfk66y30lTeT
- 4FP2gOSZJKVnBBZXcfNU3848x0sOfL/p87rW5Y7WKd3RYaBoKTlul
-X-Received: by 2002:a05:6122:a0f:b0:4da:a82e:95f5 with SMTP id
- 71dfb90a1353d-4df882a1747mr6643503e0c.5.1715599087534; 
- Mon, 13 May 2024 04:18:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IET4HOgQbY/+NoxO0F1i3muC5wSLcpquVhZLhmQW2cuj/dnjr/iTVU5LK7rkV3C2N7P4TiY/Q==
-X-Received: by 2002:a05:6122:a0f:b0:4da:a82e:95f5 with SMTP id
- 71dfb90a1353d-4df882a1747mr6643399e0c.5.1715599085625; 
- Mon, 13 May 2024 04:18:05 -0700 (PDT)
+ AJvYcCUtqX+iSjQUjcfCvj9iCpz1bjxGsSLUMaGkq4XEWiNDjiz2Kf3ecfwiTPeD0xfWRBxdpXPcgquOG3XaVlbWlf6QAxp+ueQ=
+X-Gm-Message-State: AOJu0YyluIsMgII6v323UT3gNU2EzV8n0T3HZPwsgRdyIwRSdan04HZh
+ KNK5P+HozVve4AVr+skhvk9uRiAEdcBCHofR5p7EYdm36P2l0253GJ0V8fNBh4srTFtOFx64B3V
+ h43bzBX8Fyqwe7LxEl+De9IkgAie3iSTyUNI17LlohXCyTGHu2vId
+X-Received: by 2002:a05:620a:21c2:b0:792:a238:4a03 with SMTP id
+ af79cd13be357-792c7577254mr989549085a.10.1715599120674; 
+ Mon, 13 May 2024 04:18:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH+M3FRS7ay9KQcLRmb0l3aeJmzwWsHitNWE5Uc1X47gK8f4EX95IFnYbCT3H+DtqYLsECyiw==
+X-Received: by 2002:a05:620a:21c2:b0:792:a238:4a03 with SMTP id
+ af79cd13be357-792c7577254mr989547285a.10.1715599120301; 
+ Mon, 13 May 2024 04:18:40 -0700 (PDT)
 Received: from [192.168.0.9] (ip-109-40-241-109.web.vodafone.de.
  [109.40.241.109]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-792bf3116b0sm444123285a.113.2024.05.13.04.18.03
+ af79cd13be357-792e11de78esm76152585a.124.2024.05.13.04.18.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 May 2024 04:18:05 -0700 (PDT)
-Message-ID: <6c9494b1-a0d8-43ba-b581-0b36085fff11@redhat.com>
-Date: Mon, 13 May 2024 13:18:01 +0200
+ Mon, 13 May 2024 04:18:40 -0700 (PDT)
+Message-ID: <03077c20-d2ad-4d83-849f-b98fbeaff13c@redhat.com>
+Date: Mon, 13 May 2024 13:18:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dockerfiles: add 'MAKE' env variable to remaining
- containers
+Subject: Re: [PATCH 2/3] gitlab: use $MAKE instead of 'make'
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -79,7 +78,7 @@ Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Beraldo Leal <bleal@redhat.com>
 References: <20240513111551.488088-1-berrange@redhat.com>
- <20240513111551.488088-2-berrange@redhat.com>
+ <20240513111551.488088-3-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -124,7 +123,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240513111551.488088-2-berrange@redhat.com>
+In-Reply-To: <20240513111551.488088-3-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -153,19 +152,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 13/05/2024 13.15, Daniel P. Berrangé wrote:
-> All the lcitool generated containers define a "MAKE" env. It will be
-> convenient for later patches if all containers do this.
+> The lcitool generated containers have '$MAKE' set to the path
+> of the right 'make' binary. Using the env variable makes it
+> possible to override the choice per job.
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   tests/docker/dockerfiles/debian-all-test-cross.docker    | 1 +
->   tests/docker/dockerfiles/debian-hexagon-cross.docker     | 1 +
->   tests/docker/dockerfiles/debian-legacy-test-cross.docker | 1 +
->   tests/docker/dockerfiles/debian-loongarch-cross.docker   | 1 +
->   tests/docker/dockerfiles/debian-tricore-cross.docker     | 1 +
->   tests/docker/dockerfiles/debian-xtensa-cross.docker      | 1 +
->   tests/docker/dockerfiles/fedora-cris-cross.docker        | 1 +
->   7 files changed, 7 insertions(+)
+>   .gitlab-ci.d/buildtest-template.yml | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
