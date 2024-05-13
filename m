@@ -4,95 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1255C25B5F
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 06:33:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 918DBC25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 06:33:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6PEH-0006xn-0i; Mon, 13 May 2024 02:32:09 -0400
+	id 1s6PEQ-0007BB-UR; Mon, 13 May 2024 02:32:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1s6PEC-0006vd-Dw
- for qemu-devel@nongnu.org; Mon, 13 May 2024 02:32:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1s6PEO-00079B-8j; Mon, 13 May 2024 02:32:16 -0400
+Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1s6PEA-0003up-SH
- for qemu-devel@nongnu.org; Mon, 13 May 2024 02:32:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1715581922;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jvbzGvPlv8G9dFmGbcvmUmCem2OFs6nu+A474Eosqec=;
- b=YKbyvCeCTlkZcK5RleoYhoap57Ro2rwynIFcexQlGB52SBT726Z8d2VixOapJWTFgHCUaN
- 0cqmFg7mCscIWVnUszMLPjlfSB3SCgSxPYrXsNvtnS1hljXs1Z1Y9foFeVdN/lQsKPYJ75
- EHaydPfFf3E6J9t5mSSSa/CMYKQiet0=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-286-vsDX1vnUMhmmNgNAbdaI0w-1; Mon, 13 May 2024 02:31:50 -0400
-X-MC-Unique: vsDX1vnUMhmmNgNAbdaI0w-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-572ba1df326so663428a12.2
- for <qemu-devel@nongnu.org>; Sun, 12 May 2024 23:31:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715581909; x=1716186709;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jvbzGvPlv8G9dFmGbcvmUmCem2OFs6nu+A474Eosqec=;
- b=OBWfWkCJsyn4QS+hpXev9xa4+UwVhcdJLZximfV0jst7hNMLL1eXbM7n9YSs6Wnz/b
- pUHec84P/6xZVA3JJsesSydGge/XqmFQPZwhqms9AO7bdPOCdxeGwOzT+w0754aK9q67
- mP0y4ydur9bBRHEWhYkdzFIH+4Uvh11gYOqODBvbqNQm4ZlCQQGZuKkSnUycbJQrnFwB
- jqXvvppsosNCHbK5nRWOLZnwoHgfTnifWuRPhsd+4AYlnWLG4a6+oklU8LoIRn93ngci
- eC8B6eZ1WU6oC+AaEKnji1/LbHhFvwWTNPGiiiR/N3GsM0kR6sw+t7Kb0HUqh1xZQcED
- RS8A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXGPD3a7bkIVvaEEeGlzYlmiQasG7EZxLOs7EmTPWik001zmc34lUQ+eNrugq7Q/jtzCBzVft6oePY+sbIy7oVSqJVJMEY=
-X-Gm-Message-State: AOJu0YwkH/wPEcHvwGnc52yyHC222CJJXsnlN1fhyacDMOnov8sWnc99
- GnZkvxymvlr0gHwyDeC+cKPSa2GG9Wg3Btyt6wn9tMzRaVwyrT0G2lqq+Jumx5LaTs9Lz1YzUhr
- z7js4+HHDcvDNya+6DPh9Ois/FYjOhTAZe8DzoqG47fag33APfKBE
-X-Received: by 2002:a50:d482:0:b0:56e:2b80:d87e with SMTP id
- 4fb4d7f45d1cf-5734d597b89mr8748065a12.2.1715581909113; 
- Sun, 12 May 2024 23:31:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG5Fr9xvTd7bFqbxH7cfszxEr5/57Yp4oNXvOxV9Hjjs2KeAXpNieKI5zZgcUTHZi2fsZQb3g==
-X-Received: by 2002:a50:d482:0:b0:56e:2b80:d87e with SMTP id
- 4fb4d7f45d1cf-5734d597b89mr8748029a12.2.1715581908511; 
- Sun, 12 May 2024 23:31:48 -0700 (PDT)
-Received: from redhat.com ([31.187.78.170]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5733bea6557sm5732886a12.13.2024.05.12.23.31.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 12 May 2024 23:31:47 -0700 (PDT)
-Date: Mon, 13 May 2024 02:31:42 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Alistair Francis <alistair23@gmail.com>
-Cc: Sia Jee Heng <jeeheng.sia@starfivetech.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org, imammedo@redhat.com,
- anisinha@redhat.com, peter.maydell@linaro.org,
- shannon.zhaosl@gmail.com, sunilvl@ventanamicro.com,
- palmer@dabbelt.com, alistair.francis@wdc.com,
- bin.meng@windriver.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com
-Subject: Re: [PATCH v2 1/3] qtest: allow SPCR acpi table changes
-Message-ID: <20240513023110-mutt-send-email-mst@kernel.org>
-References: <20240507052212.291137-1-jeeheng.sia@starfivetech.com>
- <20240507052212.291137-2-jeeheng.sia@starfivetech.com>
- <CAKmqyKOmt1UAbSnVbQ2fLVwoPP3u=6r5hX+gVO2xhLKidQ-8-A@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1s6PEI-0003wf-TZ; Mon, 13 May 2024 02:32:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=virtuozzo.com; s=relay; h=MIME-Version:Message-Id:Date:Subject:From:
+ Content-Type; bh=afmMQBYPVFqA9hUT8kDIJTrtZLuMX7/UhyFk5X7Sruk=; b=UgvNoqs2U05B
+ QOKfrTbXs+2Fumy8O0jeVkuKuQJ+z6puE6PI0i8OhTDM5s14I6q6RnFDuydocWkwkdDSV8kLc0JNm
+ qt68tksRbzwRQjuchFgzxjzMu9U1UNzfFzp9S8Cdy8UsQvPwFFkHHGJdgH8WTM8A9I+QNcIjPEn11
+ rBtRBsqq7wEpS41wwKjY+bgpa+gln0YkUZh1Rm/qJFPlH0xrjw08bK3AKbpwNDFIF4bv4Fr0/uK00
+ NVsF8/E689tOyOchD435nW1pQam/TBfQP9jDcBlXtrsPlcoxxwDiFZimJNfnjYNdnknL+pwNf4Sze
+ /JRhksCIZsr75D+2fmM6ug==;
+Received: from [130.117.225.1] (helo=dev005.ch-qa.vzint.dev)
+ by relay.virtuozzo.com with esmtp (Exim 4.96)
+ (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1s6PAR-000qpR-1m;
+ Mon, 13 May 2024 08:31:56 +0200
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
+ eblake@redhat.com, berto@igalia.com, jean-louis@dupond.be,
+ andrey.drobyshev@virtuozzo.com, den@virtuozzo.com
+Subject: [PATCH v2 00/11] qcow2: make subclusters discardable
+Date: Mon, 13 May 2024 09:31:52 +0300
+Message-Id: <20240513063203.113911-1-andrey.drobyshev@virtuozzo.com>
+X-Mailer: git-send-email 2.39.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKmqyKOmt1UAbSnVbQ2fLVwoPP3u=6r5hX+gVO2xhLKidQ-8-A@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=130.117.225.111;
+ envelope-from=andrey.drobyshev@virtuozzo.com; helo=relay.virtuozzo.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,35 +65,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 13, 2024 at 01:55:50PM +1000, Alistair Francis wrote:
-> On Tue, May 7, 2024 at 3:24 PM Sia Jee Heng
-> <jeeheng.sia@starfivetech.com> wrote:
-> 
-> Can you describe why you are doing this and that it will be reverted
-> in the commit message?
-> 
-> Alistair
+v1: https://lists.nongnu.org/archive/html/qemu-devel/2023-10/msg07223.html
 
-What motivation are you asking? This follows the normal acpi test update
-procedure.
+Andrey Drobyshev (11):
+  qcow2: make function update_refcount_discard() global
+  qcow2: simplify L2 entries accounting for discard-no-unref
+  qcow2: put discard requests in the common queue when discard-no-unref
+    enabled
+  block/file-posix: add trace event for fallocate() calls
+  iotests/common.rc: add disk_usage function
+  iotests/290: add test case to check 'discard-no-unref' option behavior
+  qcow2: add get_sc_range_info() helper for working with subcluster
+    ranges
+  qcow2: zeroize the entire cluster when there're no non-zero
+    subclusters
+  qcow2: make subclusters discardable
+  qcow2: zero_l2_subclusters: fall through to discard operation when
+    requested
+  iotests/271: add test cases for subcluster-based discard/unmap
 
-> >
-> > Signed-off-by: Sia Jee Heng <jeeheng.sia@starfivetech.com>
-> > ---
-> >  tests/qtest/bios-tables-test-allowed-diff.h | 2 ++
-> >  1 file changed, 2 insertions(+)
-> >
-> > diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-> > index dfb8523c8b..3f12ca546b 100644
-> > --- a/tests/qtest/bios-tables-test-allowed-diff.h
-> > +++ b/tests/qtest/bios-tables-test-allowed-diff.h
-> > @@ -1 +1,3 @@
-> >  /* List of comma-separated changed AML files to ignore */
-> > +"tests/data/acpi/virt/riscv64/SPCR",
-> > +"tests/data/acpi/virt/aarch64/SPCR",
-> > --
-> > 2.34.1
-> >
-> >
+ block/file-posix.c           |   1 +
+ block/qcow2-cluster.c        | 346 ++++++++++++++++++++++++++++-------
+ block/qcow2-refcount.c       |   8 +-
+ block/qcow2-snapshot.c       |   6 +-
+ block/qcow2.c                |  25 +--
+ block/qcow2.h                |   6 +-
+ block/trace-events           |   1 +
+ tests/qemu-iotests/250       |   5 -
+ tests/qemu-iotests/271       |  72 ++++++--
+ tests/qemu-iotests/271.out   |  69 ++++++-
+ tests/qemu-iotests/290       |  34 ++++
+ tests/qemu-iotests/290.out   |  28 +++
+ tests/qemu-iotests/common.rc |   6 +
+ 13 files changed, 490 insertions(+), 117 deletions(-)
+
+-- 
+2.39.3
 
 
