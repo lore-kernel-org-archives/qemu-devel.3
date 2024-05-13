@@ -4,52 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEA0EC25B75
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 12:12:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC157C25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 12:15:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6UXr-0005cY-3e; Mon, 13 May 2024 08:12:43 -0400
+	id 1s6Ua1-0006jV-IO; Mon, 13 May 2024 08:14:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1s6UXn-0005cB-PP; Mon, 13 May 2024 08:12:40 -0400
-Received: from out30-99.freemail.mail.aliyun.com ([115.124.30.99])
+ id 1s6UZz-0006il-Gk; Mon, 13 May 2024 08:14:56 -0400
+Received: from out30-118.freemail.mail.aliyun.com ([115.124.30.118])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1s6UXk-0000hD-7T; Mon, 13 May 2024 08:12:39 -0400
+ id 1s6UZw-0000sk-PB; Mon, 13 May 2024 08:14:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1715602347; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=3bsaTVSr0mjC0IjmYhqj/27PCFnH14V7jA4qFuLo6RY=;
- b=MVAXlODoAd4FccbbRid/qL2RkrCLlOR8wDIpAfNwjTwDOqbvDIeA3jLsTDV+rws/XnSJ1Zdh0f+ovsjdBF46s14R3EeJHTb+43IAHLEObzsOP3r5LKe5AVXzkH24btF9yDxLMJjeSJ8qfzcFANPGa7gG3tRSXQzxACuVzVPvWjU=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R841e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037067111;
+ t=1715602488; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=LrcHvHPIyppc1Q6BtBKhiT4eE60/hxFLh8TTRdFWio4=;
+ b=c0HMduSEmShloWG0XYPaU9mTAiFx+pmw8QBoO0hTY4V1hz69hNL9btf/cb0TGFI3ucjmOsO7rkYImhptkeXaYbmMU8C+zDKuRvDBRcpsjgnotegrWZpOCqN8TAMkiyvTgXZcLJRZjRMgR3YIogD3RJCyyDv8qfWISudmEFcodnA=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R131e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032014031;
  MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
- TI=SMTPD_---0W6PXFHz_1715602344; 
+ TI=SMTPD_---0W6QXVUA_1715602485; 
 Received: from 30.198.0.184(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0W6PXFHz_1715602344) by smtp.aliyun-inc.com;
- Mon, 13 May 2024 20:12:25 +0800
-Message-ID: <186ca6a0-0faf-4639-83e8-17fc211ef407@linux.alibaba.com>
-Date: Mon, 13 May 2024 20:11:39 +0800
+ fp:SMTPD_---0W6QXVUA_1715602485) by smtp.aliyun-inc.com;
+ Mon, 13 May 2024 20:14:46 +0800
+Message-ID: <6a56f942-f346-4737-9ec9-03bf3023d78c@linux.alibaba.com>
+Date: Mon, 13 May 2024 20:13:59 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 3/6] target/riscv: Add helper functions to calculate
- current number of masked bits for pointer masking
+Subject: Re: [PATCH v9 4/6] target/riscv: Add pointer masking tb flags
 To: Alexey Baturo <baturo.alexey@gmail.com>
 Cc: richard.henderson@linaro.org, space.monkey.delivers@gmail.com,
  palmer@dabbelt.com, Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu,
  kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
 References: <20240511101053.1875596-1-me@deliversmonkey.space>
- <20240511101053.1875596-4-me@deliversmonkey.space>
+ <20240511101053.1875596-5-me@deliversmonkey.space>
 Content-Language: en-US
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <20240511101053.1875596-4-me@deliversmonkey.space>
+In-Reply-To: <20240511101053.1875596-5-me@deliversmonkey.space>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.99;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=115.124.30.118;
  envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-99.freemail.mail.aliyun.com
+ helo=out30-118.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -79,114 +78,75 @@ On 2024/5/11 18:10, Alexey Baturo wrote:
 >
 > Signed-off-by: Alexey Baturo <baturo.alexey@gmail.com>
 >
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 > ---
->   target/riscv/cpu.h        |  5 ++++
->   target/riscv/cpu_helper.c | 58 +++++++++++++++++++++++++++++++++++++++
->   2 files changed, 63 insertions(+)
+>   target/riscv/cpu.h        | 3 +++
+>   target/riscv/cpu_helper.c | 3 +++
+>   target/riscv/translate.c  | 5 +++++
+>   3 files changed, 11 insertions(+)
 >
 > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 52b6ba73c8..9cac723b19 100644
+> index 9cac723b19..bbf3a0f64e 100644
 > --- a/target/riscv/cpu.h
 > +++ b/target/riscv/cpu.h
-> @@ -698,8 +698,13 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
+> @@ -564,6 +564,9 @@ FIELD(TB_FLAGS, ITRIGGER, 20, 1)
+>   FIELD(TB_FLAGS, VIRT_ENABLED, 21, 1)
+>   FIELD(TB_FLAGS, PRIV, 22, 2)
+>   FIELD(TB_FLAGS, AXL, 24, 2)
+> +/* If pointer masking should be applied and address sign extended */
+> +FIELD(TB_FLAGS, PM_PMM, 26, 2)
+> +FIELD(TB_FLAGS, PM_SIGNEXTEND, 28, 1)
 >   
->   bool riscv_cpu_is_32bit(RISCVCPU *cpu);
->   
-> +bool riscv_cpu_virt_mem_enabled(CPURISCVState *env);
-> +RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env);
-> +int riscv_pm_get_pmlen(RISCVPmPmm pmm);
-> +
->   RISCVException riscv_csrr(CPURISCVState *env, int csrno,
->                             target_ulong *ret_value);
-> +
->   RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
->                              target_ulong *ret_value,
->                              target_ulong new_value, target_ulong write_mask);
+>   #ifdef TARGET_RISCV32
+>   #define riscv_cpu_mxl(env)  ((void)(env), MXL_RV32)
 > diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index bf58350669..e4a127ca84 100644
+> index e4a127ca84..3f2473bd73 100644
 > --- a/target/riscv/cpu_helper.c
 > +++ b/target/riscv/cpu_helper.c
-> @@ -142,6 +142,64 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
+> @@ -68,6 +68,7 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
+>       RISCVCPU *cpu = env_archcpu(env);
+>       RISCVExtStatus fs, vs;
+>       uint32_t flags = 0;
+> +    bool pm_signext = riscv_cpu_virt_mem_enabled(env);
+>   
+>       *pc = env->xl == MXL_RV32 ? env->pc & UINT32_MAX : env->pc;
+>       *cs_base = 0;
+> @@ -138,6 +139,8 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
+>       flags = FIELD_DP32(flags, TB_FLAGS, VS, vs);
+>       flags = FIELD_DP32(flags, TB_FLAGS, XL, env->xl);
+>       flags = FIELD_DP32(flags, TB_FLAGS, AXL, cpu_address_xl(env));
+> +    flags = FIELD_DP32(flags, TB_FLAGS, PM_PMM, riscv_pm_get_pmm(env));
+> +    flags = FIELD_DP32(flags, TB_FLAGS, PM_SIGNEXTEND, pm_signext);
+>   
 >       *pflags = flags;
 >   }
->   
-> +RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env)
-> +{
-> +    int pmm = 0;
-> +#ifndef CONFIG_USER_ONLY
-> +    int priv_mode = cpu_address_mode(env);
+> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+> index e5b339b1fa..3f578d6dd8 100644
+> --- a/target/riscv/translate.c
+> +++ b/target/riscv/translate.c
+> @@ -103,6 +103,9 @@ typedef struct DisasContext {
+>       bool vl_eq_vlmax;
+>       CPUState *cs;
+>       TCGv zero;
+> +    /* actual address width */
+> +    uint8_t addr_width;
+> +    bool addr_signed;
+>       /* Ztso */
+>       bool ztso;
+>       /* Use icount trigger for native debug */
+> @@ -1185,6 +1188,8 @@ static void riscv_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+>       ctx->xl = FIELD_EX32(tb_flags, TB_FLAGS, XL);
+>       ctx->address_xl = FIELD_EX32(tb_flags, TB_FLAGS, AXL);
+>       ctx->cs = cs;
+> +    ctx->addr_width = 0;
+> +    ctx->addr_signed = false;
 
-This takes care of the MPRV and MPP, but is not enough.
-
-When MPRV == 1 and MXR == 1, we should ignore the address. In this case, 
-we should return PMM_FIELD_DISABLED.
-
-We should also consider the MPV  field, see the  comments below.
-
-> +    /* Get current PMM field */
-> +    switch (priv_mode) {
-> +    case PRV_M:
-> +        pmm = riscv_cpu_cfg(env)->ext_smmpm ?
-> +                  get_field(env->mseccfg, MSECCFG_PMM) : PMM_FIELD_DISABLED;
-> +        break;
-> +    case PRV_S:
-> +        pmm = riscv_cpu_cfg(env)->ext_smnpm ?
-> +                  get_field(env->menvcfg, MENVCFG_PMM) : PMM_FIELD_DISABLED;
-When in virtualization mode, we should use henvcfg instead of menvcfg .
-> +        break;
-> +    case PRV_U:
-> +        pmm = riscv_cpu_cfg(env)->ext_ssnpm ?
-> +                  get_field(env->senvcfg, SENVCFG_PMM) : PMM_FIELD_DISABLED;
-
-When Smode is not implemented, we should use smnpm here.
-
-> +        break;
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-> +#endif
-> +    return pmm;
-> +}
-> +
-> +bool riscv_cpu_virt_mem_enabled(CPURISCVState *env)
-> +{
-> +    bool virt_mem_en = false;
-> +#ifndef CONFIG_USER_ONLY
-> +    int satp_mode = 0;
-> +    int priv_mode = cpu_address_mode(env);
-
-Or S mode is not implemented.
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 
 Zhiwei
 
-> +    /* Get current PMM field */
-> +    if (riscv_cpu_mxl(env) == MXL_RV32) {
-> +        satp_mode = get_field(env->satp, SATP32_MODE);
-> +    } else {
-> +        satp_mode = get_field(env->satp, SATP64_MODE);
-> +    }
-> +    virt_mem_en = ((satp_mode != VM_1_10_MBARE) && (priv_mode != PRV_M));
-> +#endif
-> +    return virt_mem_en;
-> +}
-> +
-> +int riscv_pm_get_pmlen(RISCVPmPmm pmm)
-> +{
-> +    switch (pmm) {
-> +    case PMM_FIELD_DISABLED:
-> +        return 0;
-> +    case PMM_FIELD_PMLEN7:
-> +        return 7;
-> +    case PMM_FIELD_PMLEN16:
-> +        return 16;
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-> +    return -1;
-> +}
-> +
->   #ifndef CONFIG_USER_ONLY
->   
->   /*
+>       ctx->ztso = cpu->cfg.ext_ztso;
+>       ctx->itrigger = FIELD_EX32(tb_flags, TB_FLAGS, ITRIGGER);
+>       ctx->zero = tcg_constant_tl(0);
 
