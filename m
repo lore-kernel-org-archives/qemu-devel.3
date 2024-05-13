@@ -4,81 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C42EC25B10
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 11:36:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7CC0C25B10
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 May 2024 11:40:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1s6Ty3-0005SO-9v; Mon, 13 May 2024 07:35:43 -0400
+	id 1s6U2g-0008JX-6w; Mon, 13 May 2024 07:40:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1s6Txh-0005AL-82
- for qemu-devel@nongnu.org; Mon, 13 May 2024 07:35:21 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1s6Txf-0001QZ-N5
- for qemu-devel@nongnu.org; Mon, 13 May 2024 07:35:20 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-420104e5390so16567505e9.1
- for <qemu-devel@nongnu.org>; Mon, 13 May 2024 04:35:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1715600116; x=1716204916; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=X9jZxcJ5ik0WjtOOJEXtKwHbeCe/bdGG2ZPreWMpmg4=;
- b=L3jvxBepr2retLRMDTPxXIsAg4s9Cfu6GJs4XF7rHiIVAGPsM+AezIGW4ASOwRvKmX
- 9wuWpi5m4Sy/XdupCGRp98z6+qMAtC0FLsVMFLtN78yMLxdmWO3L845WtPYOZ7n6vdWd
- /YaQxbA9/i+UW7vwF8uhPwZlLsB2UCOHrW+/GDdpAktFIcfp0xkbRUbpafpVoluWK/hY
- Ms4UfupsNs7TwJ3Cit9QRrtYZLUuHRUv8HquS7lwNdlTcus+FBXx5kphEWKVfWgskxkX
- tNHOlrk3oVGF4yyoinV132iz/0dHaGxTDEQmVfXHnBvSynOqwfQ9/p8DS1sD6S2TcidP
- PX/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715600116; x=1716204916;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=X9jZxcJ5ik0WjtOOJEXtKwHbeCe/bdGG2ZPreWMpmg4=;
- b=Rhq0pJ6DeYy7raLs+nEogmtFnHCw7okWf0XwtFx9NoKz9ImgFlSZmm8SQmgL6jByAZ
- 7KLAkV3fRw4hmy13zg22033bJ1WAk9TA37bmWNHwWkzB6mR1bzeTiOAAEAXwDSeWv8x4
- jBlPvzR4s5kO0WPCU+IxJbnDNRhmkzSJZ5Tb3uGzVXk+HDyD7sbVw5is/VZOu756feqv
- Bc6PQNqY7WEqB05HH8NpREEZtl9rWgZjWzF1UuCREcWZKylBnKw20eNwq8KnXrEGIYvy
- mVQ88W5w3++OCY3AbhSc1ZUDZSEAMM/SkqFzdWr+Ht48Dg48FQ2+d6PvyNW4ae67V+LR
- 6lbA==
-X-Gm-Message-State: AOJu0YzlMIctK88u0GtDuL9MbL2ew1INhdwmeqVcVgDkzhVoCAm8hfkc
- urIp2QplZfD9ysQupX808OaqJuZLlcuKRQRTO6r/xZ1f3de5t6Zy/1xZlXQLk2Y=
-X-Google-Smtp-Source: AGHT+IHfoPd1wkEKzEiMszs6hcP8/nsMcoYZjpV3KEkUXA4ALIjpu0e7qhV63swvCoWgcmIjf/q7Ag==
-X-Received: by 2002:a05:600c:3548:b0:41a:6edd:6c1d with SMTP id
- 5b1f17b1804b1-41feac55e10mr83254315e9.32.1715600116338; 
- Mon, 13 May 2024 04:35:16 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-41ff5e3dcfbsm116015205e9.22.2024.05.13.04.35.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 May 2024 04:35:14 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5038E5F8B5;
- Mon, 13 May 2024 12:35:13 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [Semihosting Tests PATCH 0/3] add SYS_GET_CMDLINE test
-Date: Mon, 13 May 2024 12:35:10 +0100
-Message-Id: <20240513113513.640007-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.2
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6U2e-0008JI-WB
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 07:40:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1s6U2d-0002NG-6P
+ for qemu-devel@nongnu.org; Mon, 13 May 2024 07:40:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1715600426;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=uUNxuHwJiWqM0BhbdrZV0kxAAWI9ME5sT0VL8kotzX8=;
+ b=JWdg84sxm+nq5nEyjC3+02EoJmOkCDhxpj+UuV/Xc0n+eI7EyrAMvWkK+RdwyWdtai1+Xa
+ 486GiOawMnKL0W7TK47vkH3eMyx3A+cFckcPZmszUS/jg53aFytHZCEV3tMBg2JDTv9hPx
+ F1AQWQukMcSVfBGdy2v8vQGSog3LVfY=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-588-01S7Up08PBqi-iC_PAtk7w-1; Mon,
+ 13 May 2024 07:40:12 -0400
+X-MC-Unique: 01S7Up08PBqi-iC_PAtk7w-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 427AA1C0515F;
+ Mon, 13 May 2024 11:40:12 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.51])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 11B881C00A8F;
+ Mon, 13 May 2024 11:40:10 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH v2] configure: Fix error message when C compiler is not working
+Date: Mon, 13 May 2024 13:40:10 +0200
+Message-ID: <20240513114010.51608-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.974,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,29 +76,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+If you try to run the configure script on a system without a working
+C compiler, you get a very misleading error message:
 
-Looking at bug #2322 I wanted to make sure SYS_GET_CMDLINE works as I
-expected. While at it I needed to fix a compile error with headers
-which I guess we got away with on earlier compilers.
+ ERROR: Unrecognized host OS (uname -s reports 'Linux')
 
-I've added an editorconfig for good measure.
+Some people already opened bug tickets because of this problem:
 
-Alex Bennée (3):
-  .editorconfig: add code conventions for tooling
-  update includes for bare metal compiling
-  add SYS_GET_CMDLINE test
+ https://gitlab.com/qemu-project/qemu/-/issues/2057
+ https://gitlab.com/qemu-project/qemu/-/issues/2288
 
- .editorconfig | 28 ++++++++++++++++++++++++++++
- Makefile      | 22 +++++++++++-----------
- semihosting.c |  4 ++--
- semihosting.h |  2 +-
- string.c      |  2 +-
- usertest.c    | 26 +++++++++++++++++++++++++-
- 6 files changed, 68 insertions(+), 16 deletions(-)
- create mode 100644 .editorconfig
+We should rather tell the user that we were not able to use the C
+compiler instead, otherwise they will have a hard time to figure
+out what was going wrong.
 
+While we're at it, let's also suppress the "unrecognized host CPU"
+message in this case since it is rather misleading than helpful.
+
+Fixes: 264b803721 ("configure: remove compiler sanity check")
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ v2: Reworked the patch according to Peter's suggestions:
+     https://lists.gnu.org/archive/html/qemu-devel/2024-03/msg04643.html
+
+ configure | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/configure b/configure
+index 1dca3d94c0..519f1bb6e2 100755
+--- a/configure
++++ b/configure
+@@ -411,7 +411,9 @@ else
+   # Using uname is really broken, but it is just a fallback for architectures
+   # that are going to use TCI anyway
+   cpu=$(uname -m)
+-  echo "WARNING: unrecognized host CPU, proceeding with 'uname -m' output '$cpu'"
++  if test "$host_os" != "bogus"; then
++    echo "WARNING: unrecognized host CPU, proceeding with 'uname -m' output '$cpu'"
++  fi
+ fi
+ 
+ # Normalise host CPU name to the values used by Meson cross files and in source
+@@ -894,6 +896,13 @@ EOF
+ exit 0
+ fi
+ 
++# Now that we are sure that the user did not only want to print the --help
++# information, we should double-check that the C compiler really works:
++write_c_skeleton
++if ! compile_object ; then
++    error_exit "C compiler \"$cc\" either does not exist or does not work."
++fi
++
+ # Remove old dependency files to make sure that they get properly regenerated
+ rm -f ./*/config-devices.mak.d
+ 
 -- 
-2.39.2
+2.45.0
 
 
